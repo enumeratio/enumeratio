@@ -6,7 +6,7 @@ import { data } from './data/relations.data.ts'
 
 A crosswalk of the external systems and inspirations enumeratio relates to — the sources cross-referenced against
 the library's own registry, `base_reference`. Each section below links into a pre-filtered view of the full
-[Relations](/develop/data/relations) table (in [Data](/develop/data/)) rather than embedding its own; a stale link
+[Relations](/develop/data/relations) table (in [Data Reference](/develop/data/)) rather than embedding its own; a stale link
 means the registry is stale, not this page.
 
 ## OEIS
