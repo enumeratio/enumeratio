@@ -1,4 +1,4 @@
--- requires: set_compositions, signed_subsets, dissections, realizer, utilities
+-- requires: set_compositions, signed_subsets, dissections, subsets, simplex, realizer, utilities
 -- The polytopes as their OWN collections, in bijection with their combinatorial representatives. A set composition
 -- is the natural combinatorial object; the `permutahedron` face is the geometric one — same data, distinct role.
 -- Each polytope collection is an ORDER-ISOMORPHIC SIBLING of its representative (it borrows the representative's
@@ -61,6 +61,41 @@ CREATE FUNCTION dissection_id(d dissection) RETURNS dissection LANGUAGE sql IMMU
 INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat) VALUES
   ('associahedron','dissection','dissection_id','dissections','Dissection',NULL);
 
+-- ── hypercube = the faces of [0,1]^n — the SAME (coords,n) carrier as the cross-polytope, dual reading ────
+-- No new collection: this row lives directly on `signed_subsets`, reusing its 3^n signed-subset carrier (#232
+-- chunk 1). An axis named in `coords` is now FIXED (+k ⇒ that axis = 1, −k ⇒ that axis = 0); an axis absent is
+-- FREE (the face spans that whole edge). dim = n − |coords| (the free axes): a vertex fixes every axis (dim 0),
+-- the unconstrained coords={} face is the whole cube (dim n) — the reverse of the cross-polytope's dim, on the
+-- identical data. This is the classical fact that the n-cube's face lattice and the n-cross-polytope's face
+-- lattice share one 3^n-element indexing set (fix/free per axis vs. signed-support), just read in dual directions.
+CREATE FUNCTION signed_subset_hypercube_face_dim(s signed_subset) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+  SELECT (s).n - coalesce(array_length((s).coords, 1), 0) $$;
+-- coordinate: a fixed axis takes its 0/1 value; a free axis reports the face's base corner (0) — always an actual
+-- vertex of the face, exact and integer (no barycentre needed for the generic viewer).
+CREATE FUNCTION signed_subset_hypercube_point(s signed_subset) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$
+  SELECT ARRAY(SELECT coalesce((SELECT (c > 0)::int FROM unnest((s).coords) c WHERE abs(c) = k), 0)
+               FROM generate_series(1, (s).n) k) $$;
+-- face-poset containment: `big`'s fixed axes must be a subset of `small`'s (small refines big) — the dual
+-- direction of the cross-polytope's contains_fn, on the same <@ primitive.
+CREATE FUNCTION signed_subset_hypercube_face_contains(big signed_subset, small signed_subset) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT (big).coords <@ (small).coords $$;
+INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
+  ('signed_subsets','signed_subset_hypercube_face_dim','signed_subset_hypercube_point','signed_subset_hypercube_face_contains','Hypercube');
+
+-- ── simplex = the faces of Δ_{n−1} (already exists as `simplex`, ≅ non-empty subsets) ──────────────────────
+-- No new collection here either: `simplex` was missing from base_polytope (only permutahedron/associahedron/
+-- cross_polytope were registered) — this fills that gap on its existing finset carrier. dim_fn already exists
+-- (`simplex_face_dim`, |S|−1); only point_fn and contains_fn are new.
+-- coordinate: the 0/1 membership indicator over the n axes — exact; singletons (vertices) land on the standard
+-- basis e_i, a higher face's indicator is the (unscaled) sum of the vertices it spans.
+CREATE FUNCTION simplex_point(s finset) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$
+  SELECT ARRAY(SELECT (k = ANY((s).members))::int FROM generate_series(1, (s).n) k) $$;
+-- face-poset containment: simplex faces are ordered by plain set inclusion.
+CREATE FUNCTION simplex_face_contains(big finset, small finset) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT (small).members <@ (big).members $$;
+INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
+  ('simplex','simplex_face_dim','simplex_point','simplex_face_contains','Simplex');
+
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutahedron','the permutahedron is a distinct collection, in bijection with set_compositions','eq','75|75','same cardinality (order-iso sibling); Fubini(4)',$q$
@@ -83,4 +118,38 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            EXISTS(SELECT 1 FROM base_map WHERE collection='associahedron' AND codomain='dissections')::text $q$),
   ('associahedron','a vertex (triangulation) of associahedron(3) carries a Loday centre on the hyperplane Σ=6','eq','true','the point_fn is exact on the vertices',$q$
     SELECT bool_and((SELECT sum(x) FROM unnest(dissection_loday_point((e).value)) x) = 6)::text
-    FROM elements(associahedron(3)) e WHERE dissection_face_dim((e).value) = 0 $q$);
+    FROM elements(associahedron(3)) e WHERE dissection_face_dim((e).value) = 0 $q$),
+  ('signed_subsets','the hypercube is now registered in base_polytope, on the SAME collection as the cross-polytope (#232)','eq','true|Hypercube','a second polytope row can share a carrier/collection with a different reading',$q$
+    SELECT EXISTS(SELECT 1 FROM base_polytope WHERE collection='signed_subsets')::text || '|' ||
+           (SELECT title FROM base_polytope WHERE collection='signed_subsets') $q$),
+  ('signed_subsets','cube f-vector over signed_subsets(3): 8 vertices, 12 edges, 6 square faces, 1 body','eq','8,12,6,1','the dual reading of the same 3^3 carrier',$q$
+    SELECT string_agg(cnt::text, ',' ORDER BY d) FROM (
+      SELECT signed_subset_hypercube_face_dim((e).value) d, count(*) cnt FROM elements(signed_subsets(3)) e GROUP BY 1) t(d, cnt) $q$),
+  ('signed_subsets','known cube floors hold for n=1..5: vertices 2^n, edges n·2^(n−1)','eq','2,4,8,16,32|1,4,12,32,80','vertex/edge counts via the dim_fn, not hardcoded beyond small n',$q$
+    SELECT string_agg(v::text, ',' ORDER BY n) || '|' || string_agg(ed::text, ',' ORDER BY n) FROM (
+      SELECT n,
+             (SELECT count(*) FROM elements(signed_subsets(n)) e WHERE signed_subset_hypercube_face_dim((e).value) = 0) v,
+             (SELECT count(*) FROM elements(signed_subsets(n)) e WHERE signed_subset_hypercube_face_dim((e).value) = 1) ed
+      FROM generate_series(1,5) n) t $q$),
+  ('signed_subsets','the cube''s vertex point_fn is the plain 0/1 corner; a free axis on a higher face reports its base corner (0)','eq','(1,0,0)|(0,1,1)|(1,1,0)','vertex {+1,-2,-3}, vertex {-1,2,3}, and the edge {1,2} (axis 3 free)',$q$
+    SELECT '(' || array_to_string(signed_subset_hypercube_point(ROW(ARRAY[1,-2,-3], 3)::signed_subset), ',') || ')|(' ||
+                 array_to_string(signed_subset_hypercube_point(ROW(ARRAY[-1,2,3], 3)::signed_subset), ',') || ')|(' ||
+                 array_to_string(signed_subset_hypercube_point(ROW(ARRAY[1,2], 3)::signed_subset), ',') || ')' $q$),
+  ('signed_subsets','cube face containment: the edge {1,2} (axis 3 free) contains vertex {1,2,3}, not the axis-2-flipped vertex {1,-2,3}','eq','true|false','contains_fn: big.coords ⊆ small.coords',$q$
+    SELECT signed_subset_hypercube_face_contains(ROW(ARRAY[1,2], 3)::signed_subset, ROW(ARRAY[1,2,3], 3)::signed_subset)::text || '|' ||
+           signed_subset_hypercube_face_contains(ROW(ARRAY[1,2], 3)::signed_subset, ROW(ARRAY[1,-2,3], 3)::signed_subset)::text $q$),
+  ('simplex','the simplex now carries the polytope registration (previously only permutahedron/associahedron/cross_polytope did)','eq','true|Simplex','base_polytope row filled in for the pre-existing collection (#232)',$q$
+    SELECT EXISTS(SELECT 1 FROM base_polytope WHERE collection='simplex')::text || '|' ||
+           (SELECT title FROM base_polytope WHERE collection='simplex') $q$),
+  ('simplex','Δ_{n−1} vertex/edge floors for n=3..6: vertices = n, edges = C(n,2)','eq','3,4,5,6|3,6,10,15','via the (pre-existing) dim_fn, floors not exact-count pins',$q$
+    SELECT string_agg(v::text, ',' ORDER BY n) || '|' || string_agg(ed::text, ',' ORDER BY n) FROM (
+      SELECT n,
+             (SELECT count(*) FROM elements(simplex(n)) e WHERE simplex_face_dim((e).value) = 0) v,
+             (SELECT count(*) FROM elements(simplex(n)) e WHERE simplex_face_dim((e).value) = 1) ed
+      FROM generate_series(3,6) n) t $q$),
+  ('simplex','the simplex point_fn is the 0/1 membership indicator: vertex {2} of Δ2 is e2, the top face {1,2,3} sums all three','eq','(0,1,0)|(1,1,1)','point_fn on a vertex vs. the whole body',$q$
+    SELECT '(' || array_to_string(simplex_point(ROW(ARRAY[2], 3)::finset), ',') || ')|(' ||
+                 array_to_string(simplex_point(ROW(ARRAY[1,2,3], 3)::finset), ',') || ')' $q$),
+  ('simplex','simplex face containment: edge {1,2} contains vertex {1}, not vertex {3}','eq','true|false','contains_fn: small.members ⊆ big.members',$q$
+    SELECT simplex_face_contains(ROW(ARRAY[1,2], 3)::finset, ROW(ARRAY[1], 3)::finset)::text || '|' ||
+           simplex_face_contains(ROW(ARRAY[1,2], 3)::finset, ROW(ARRAY[3], 3)::finset)::text $q$);
