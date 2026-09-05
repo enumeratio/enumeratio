@@ -116,14 +116,13 @@ const ident = (s: string) => (/^[a-z_][a-z0-9_]*$/.test(s) ? s : `"${s.replace(/
 // a second filter state beside the chips.
 type Constraint = { value: unknown; matchMode: string }
 type FilterMeta = { operator: 'and' | 'or'; constraints: Constraint[] }
-const NUMERIC = new Set(['axis', 'rank', 'ordinality', 'stat', 'count', 'level', 'agg', 'pivot', 'over'])
 const filterCols = computed(() => columns.value.filter((c) => props.filterable && c.kind !== 'map'))
 // a stat can be TEXT (`carrier` on the collections meta-collection), so the kind is only the fallback — the loaded
 // rows are the evidence, and they pick the match modes, the input widget, and how the literal is spelled
 const colTypes = computed<Record<string, 'numeric' | 'text'>>(() => {
   const t: Record<string, 'numeric' | 'text'> = {}
   for (const c of columns.value) {
-    let ty: 'numeric' | 'text' = NUMERIC.has(c.kind) ? 'numeric' : 'text'
+    let ty: 'numeric' | 'text' = numericKinds.has(c.kind) ? 'numeric' : 'text'
     for (const r of props.table?.rows ?? []) { const v = r[c.id]; if (v != null) { ty = typeof v === 'number' ? 'numeric' : 'text'; break } }
     t[c.id] = ty
   }

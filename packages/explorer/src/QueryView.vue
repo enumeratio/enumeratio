@@ -10,6 +10,7 @@ import StatementBar from './StatementBar.vue'
 import RowTable from './RowTable.vue'
 import NameThisPanel from './NameThisPanel.vue'
 import { distributionOf } from './distribution'
+import { useRowWindow, isFiberArchetype } from './rowWindow'
 import {
   provideDb, makeWorkerDb, collections as loadCollections, constructionNames as loadConstructions, planRows, planDeferred, rowQueryFromSearch, searchFromRowQuery,
   parseHandle, handleText, gradeChain, parseGroupBy, resolveFrom,
@@ -23,8 +24,7 @@ const table = ref<RowTableData | null>(null)
 const error = ref<string | null>(null)
 const loading = ref(false)
 const colls = ref<string[]>([])
-const count = ref(100)          // element window
-const fiberLimit = ref(200)     // fiber window
+const rowWindow = useRowWindow()   // element/fiber page sizes, shared with CollectionView (#208)
 
 let timer: ReturnType<typeof setTimeout> | undefined
 function schedule() { clearTimeout(timer); timer = setTimeout(() => void run(), 400) }
@@ -32,7 +32,7 @@ async function run() {
   if (!q.value.from.trim()) { table.value = null; error.value = null; return }
   loading.value = true
   try {
-    const win = { first: 0, count: count.value, fiberLimit: fiberLimit.value }
+    const win = { first: 0, count: rowWindow.count.value, fiberLimit: rowWindow.fiberLimit.value }
     const sel = { select: q.value.select }
     table.value = await planRows(q.value, win, sel)
     if (table.value.deferred.length) {   // §4: the heavy columns arrive by a keyed fetch for the rows in view
@@ -49,11 +49,30 @@ watch(q, schedule, { deep: true })
 // the FROM datalist offers collections AND the FROM-able constructions (finsets_of(…), maps_of(…, …))
 onMounted(async () => { const [c, k] = await Promise.all([loadCollections(), loadConstructions()]); colls.value = [...k.map((n) => `${n}(`), ...c]; void run() })
 
-function more() {
-  if (!table.value) return
-  if (table.value.archetype === 'elements' || table.value.archetype === 'rowgroup') count.value += 100
-  else fiberLimit.value += 200
-  void run()
+/** Load more (#208): 'elements'/'rowgroup' page via first+count — fetch just the NEW slice and append it rather
+ *  than re-planning the prefix already on screen. A fiber-shaped table has no offset into `fibers(handle, n)`, so
+ *  there growing fiberLimit means re-running the whole plan from zero. */
+async function more() {
+  const t = table.value
+  if (!t) return
+  const page = 100
+  rowWindow.grow(t.archetype, page, 200)
+  if (isFiberArchetype(t.archetype)) { await run(); return }
+  loading.value = true
+  try {
+    const win = { first: t.rows.length, count: page, fiberLimit: rowWindow.fiberLimit.value }
+    const sel = { select: q.value.select }
+    const next = await planRows(q.value, win, sel)
+    let rows = next.rows
+    if (next.deferred.length) {
+      const byAddr = new Map((await planDeferred(q.value, rows.map((r) => String(r.address)), win, sel)).map((r) => [String(r.address), r]))
+      rows = rows.map((r) => ({ ...r, ...(byAddr.get(String(r.address)) ?? {}) }))
+    }
+    table.value = { ...next, rows: [...t.rows, ...rows] }
+    error.value = null
+  } catch (e) {
+    error.value = (e as Error).message
+  } finally { loading.value = false }
 }
 
 // ── descend: a fiber row's keys become BINDINGS in the FROM; those axes leave the GROUP BY ─────────────────────

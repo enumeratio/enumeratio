@@ -23,6 +23,7 @@ import { distributionOf } from './distribution'
 import type { Facet, FacetOption } from './PredChips.vue'
 import { type PropRow, type PropDef, buildPropDefs, nextPropRowUid, seedRows } from './propRows'
 import { parseRoute, routeFor, resolveCollectionAlias, type ParsedRoute } from './route'
+import { useRowWindow, isFiberArchetype } from './rowWindow'
 import {
   provideDb, makeWorkerDb, setPerf, describe, Handle, planRows, planDeferred, parseHandle, handleText, parsePreds, predsToSql,
   parseGroupBy, policyResolved,
@@ -46,7 +47,7 @@ const category = ref<CollectionCategory>('mathematical')
 const error = ref<string | null>(null)
 const loading = ref(false)
 const booting = ref(true)
-const count = ref(100)   // reset per collection to the policy's window size (openCollection)
+const rowWindow = useRowWindow()   // element/fiber page sizes — reset per collection (openCollection), grown by more()
 
 const collMeta = ref<Record<string, CollectionMeta>>({})
 const aliasMap = ref<Record<string, string>>({})
@@ -256,7 +257,7 @@ async function openCollection(c: string, route: ParsedRoute | null) {
   axes.value = d.axes
   category.value = d.category
   policy.value = d.policy
-  count.value = d.policy?.windowSize ?? 100
+  rowWindow.reset(d.policy?.windowSize ?? 100)
   const vq = route?.viewQuery
   // §6/#245: the URL's own group_by always wins (an explicit empty ?group_by= included); absent falls to the
   // collection's own policy default — a triangle (k_subsets) opens as its (n, k) fiber table. EXCEPT when the URL
@@ -331,10 +332,10 @@ async function run() {
     for (const [ax, v] of Object.entries(bindings.value)) if (ax !== axes.value[0]) handle = handle.withGrade(ax, v)
     card.value = await handle.card()
     // eager: ONE call for the whole table; streamed: an element/fiber window sized by the policy (#245)
-    const whole = eager.value
-    const winSize = policy.value?.windowSize ?? 100
-    const win = whole ? { first: 0, count: Math.max(1, card.value ?? winSize), fiberLimit: 2000 } : { first: 0, count: count.value, fiberLimit: winSize }
-    const sel = { select: selectList.value, repr: repr.value || undefined, eager: whole }
+    const win = eager.value
+      ? { first: 0, count: Math.max(1, card.value ?? rowWindow.count.value), fiberLimit: 2000 }
+      : { first: 0, count: rowWindow.count.value, fiberLimit: rowWindow.fiberLimit.value }
+    const sel = { select: selectList.value, repr: repr.value || undefined, eager: eager.value }
     table.value = await planRows(q.value, win, sel)
     // §4: the heavy columns (glyph) skipped the window — fetch them for the rows on screen and merge by address
     if (table.value.deferred.length) {
@@ -353,7 +354,35 @@ let timer: ReturnType<typeof setTimeout> | undefined
 function schedule() { clearTimeout(timer); timer = setTimeout(() => void run(), 400) }
 watch(q, schedule, { deep: true })
 watch([selectList, repr], () => { if (table.value) void run() }, { deep: true })
-function more() { count.value += (policy.value?.windowSize ?? 100); void run() }
+
+/** Load more (#208): grow whichever window the current archetype streams from, then fetch just the NEW slice and
+ *  append it — 'elements'/'rowgroup' page via first+count (no re-plan of the prefix already on screen). A
+ *  fiber-shaped table (fibers/rollup/distribution) has no offset into `fibers(handle, n)`, so there growing
+ *  fiberLimit means re-running the whole plan from zero — that's inherent to the fiber route, not this view. */
+async function more() {
+  const t = table.value
+  if (!t || !coll.value) return
+  const page = policy.value?.windowSize ?? 100
+  const arch = t.archetype
+  rowWindow.grow(arch, page, 200)
+  if (isFiberArchetype(arch)) { await run(); return }
+  loading.value = true
+  try {
+    const win = { first: t.rows.length, count: page, fiberLimit: rowWindow.fiberLimit.value }
+    const sel = { select: selectList.value, repr: repr.value || undefined, eager: false }
+    const next = await planRows(q.value, win, sel)
+    let rows = next.rows
+    if (next.deferred.length) {
+      const keyed = await planDeferred(q.value, rows.map((r) => String(r.address)), win, sel)
+      const byAddr = new Map(keyed.map((r) => [String(r.address), r]))
+      rows = rows.map((r) => ({ ...r, ...(byAddr.get(String(r.address)) ?? {}) }))
+    }
+    table.value = { ...next, rows: [...t.rows, ...rows] }
+    error.value = null
+  } catch (e) {
+    error.value = (e as Error).message
+  } finally { loading.value = false }
+}
 
 // ── the table's one-way editors (eager mode) ──────────────────────────────────────────────────────────────────
 function onSort(orderBy: string) { q.value = { ...q.value, orderBy: orderBy || undefined } }
@@ -428,12 +457,12 @@ onMounted(async () => {
     booting.value = false
     void Promise.all([
       polytopeCollections().then((ps) => { polyColls.value = Object.fromEntries(ps.map((p) => [p.collection, p.title])) }).catch(() => {}),
-      loadCarriers().then((c) => { carrierMap.value = c }).catch(() => {}),
+      // one collection→carrier map serves both the per-page glyph lookup (carrierMap) and the facet counts (allCarriers)
+      loadCarriers().then((c) => { carrierMap.value = c; allCarriers.value = c }).catch(() => {}),
       loadSvgCarriers().then((s) => { svgCarrierSet.value = s }).catch(() => { svgCarrierSet.value = new Set() }),
       Promise.all([loadTags(), loadCollTags()]).then(([t, ct]) => { tagVocab.value = t; collTags.value = ct }).catch(() => {}),
       Promise.all([loadTraits(), loadCollTraits()]).then(([t, ct]) => { traitVocab.value = t; collTraits.value = ct }).catch(() => {}),
       Promise.all([loadCategories(), loadCollCats()]).then(([c, cc]) => { catVocab.value = c; collCats.value = cc }).catch(() => {}),
-      loadCarriers().then((c) => { allCarriers.value = c }).catch(() => {}),
     ])
     window.addEventListener('popstate', async () => {
       const rr = readUrl()
