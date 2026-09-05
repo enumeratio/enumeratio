@@ -114,7 +114,7 @@ onBeforeUnmount(() => clearTimeout(timer))
         <div class="grid">
           <div v-for="mv in mapVals" :key="mv.m.id" class="cell">
             <span class="k">{{ mv.m.id }} <i>→ {{ mv.m.codomain }}</i></span>
-            <a :href="mapHref(mv.m, mv.value)" class="v maplink">{{ mv.value }}</a>
+            <a :href="mapHref(mv.m, mv.value)" :data-via="mv.m.title || mv.m.id" class="v maplink">{{ mv.value }}</a>
           </div>
         </div>
       </div>

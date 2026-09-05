@@ -18,10 +18,14 @@ import PropertiesPane from './PropertiesPane.vue'
 import ElementPane from './ElementPane.vue'
 import IdentityPane from './IdentityPane.vue'
 import AlgebraEvaluator from './AlgebraEvaluator.vue'
+import Breadcrumbs from './Breadcrumbs.vue'
 import { distributionOf } from './distribution'
 import type { Facet, FacetOption } from './PredChips.vue'
 import { type PropRow, type PropDef, buildPropDefs, nextPropRowUid, seedRows } from './propRows'
-import { parseRoute, routeFor, resolveCollectionAlias, type ParsedRoute } from './route'
+import {
+  parseRoute, routeFor, resolveCollectionAlias, pushCrumb, reconcileCrumbs,
+  type ParsedRoute, type RouteCrumb,
+} from './route'
 import { useRowWindow, isFiberArchetype } from './rowWindow'
 import {
   provideDb, makeWorkerDb, setPerf, describe, Handle, planRows, planDeferred, parseHandle, handleText, parsePreds, predsToSql,
@@ -184,6 +188,8 @@ const inElementView = ref(false)
 const pinned = ref('')
 const pendingSel = ref<string | null>(null)
 let pendingView: ParsedRoute | null = null
+// the breadcrumb trail (#181) — session-local; see route.ts's header comment for why in-memory is the right call
+const crumbs = ref<RouteCrumb[]>([])
 
 function currentRoute(): ParsedRoute {
   const b = { ...bindings.value }
@@ -225,6 +231,15 @@ function readUrl() {
   if (r.address.element !== null) { inElementView.value = true; pendingSel.value = r.address.element }
   else { inElementView.value = false; pendingSel.value = null; selRank.value = null; selRow.value = null; pinned.value = '' }
   return r
+}
+
+/** Land on a parsed route already reflected in `window.location` (readUrl already ran): a different collection
+ *  reloads its shape (openCollection); the same collection just resolves the element the URL now names. Shared by
+ *  every way the address can change client-side — popstate, an intercepted cross-link, a breadcrumb click. */
+async function applyCurrentLocation(rr: ParsedRoute) {
+  const c = rr.address.collection ?? 'collections'
+  if (c !== coll.value) await openCollection(c, rr)
+  else await applyPendingSel()
 }
 
 // ── the per-collection shape, memoized (the core DB never changes under us) ───────────────────────────────────
@@ -350,8 +365,13 @@ async function run() {
       table.value = { ...table.value, rows: table.value.rows.map((r) => ({ ...r, ...(byAddr.get(String(r.address)) ?? {}) })) }
     }
     error.value = null
-    if (!pendingView) writeUrl()
+    // resolve the pending element FIRST (#181): applyPendingSel is what sets `pinned` to the resolved element's own
+    // canonical serialization, and writeUrl reads `pinned` right back out via currentRoute — writing first wrote
+    // whatever `pinned` was left over from wherever we navigated FROM, then never got a second chance to correct it
+    // (a hop that lands on the same collection never calls run() again on its own). Harmless when there's no pending
+    // element (applyPendingSel is then a no-op) or on first boot (pinned is still '' either way).
     await applyPendingSel()
+    if (!pendingView) writeUrl()
   } catch (e) {
     error.value = (e as Error).message
   } finally { loading.value = false }
@@ -440,7 +460,51 @@ async function onRowClick(row: Record<string, unknown>) {
   const r = await handle.rankOf(String(ser))
   if (r != null) await select(r)
 }
-const mapLink = (m: MapInfo) => `/explore/collection/${encodeURIComponent(m.codomain)}`
+/** a map's own href (ElementPane's Maps block): the SPECIFIC element it maps to, in the codomain's own page — not
+ *  just the bare codomain collection (that was #181's dead-link bug: the value was shown but never actually linked
+ *  to). Mirrors RowTable's own cellHref for a `map:`/`through:` column. */
+const mapLink = (m: MapInfo, value: unknown) =>
+  value == null ? `/explore/collection/${encodeURIComponent(m.codomain)}`
+                : `/explore/collection/${encodeURIComponent(m.codomain)}/${encodeURIComponent(String(value))}`
+
+// ── cross-link navigation + the breadcrumb trail (#181) ──────────────────────────────────────────────────────────
+// Every internal /explore/collection/* link (a map/through image, a drill-element, a sibling, the root back-link)
+// targets the SAME not-found route VitePress renders this app into (#158) — so a hop between two such addresses
+// never crosses VitePress's own page boundary. VitePress's click router (a window-capture listener registered at
+// boot, ahead of anything this component adds later) still claims the click and pushes the URL, but since nothing
+// changed on ITS side (still not-found → not-found) it never remounts anything — the app silently keeps showing the
+// PREVIOUS collection while the address bar quietly moves on. This capture listener on our own root fires right
+// after that, in the very same synchronous dispatch (same node, same phase — later listeners on window run after
+// earlier ones; ours is added when this component mounts, well after VitePress's own), before VitePress's async
+// continuation resumes — so by the time it would `history.pushState` too, we've already done it and it's a no-op.
+function isModifiedClick(e: MouseEvent) { return e.button !== 0 || e.ctrlKey || e.shiftKey || e.altKey || e.metaKey }
+function currentCrumb(via?: string): RouteCrumb { return { address: currentRoute().address, title: titleOf(coll.value), via } }
+async function onNavClick(e: MouseEvent) {
+  // NOT an `e.defaultPrevented` guard: VitePress's own window-capture listener runs first (registered at boot) and
+  // ALREADY calls preventDefault on every internal html link, including every one we need to catch here — checking
+  // that flag would make this a no-op for exactly the links it exists to fix.
+  if (isModifiedClick(e)) return
+  const a = (e.target as HTMLElement | null)?.closest?.('a')
+  if (!a || a.hasAttribute('download') || a.target) return   // downloads / target=_blank (external refs) are not ours
+  const hrefAttr = a.getAttribute('href')
+  if (!hrefAttr) return
+  let url: URL
+  try { url = new URL(hrefAttr, location.href) } catch { return }
+  if (url.origin !== location.origin || !/^\/explore\/collection(\/|$)/.test(url.pathname)) return   // not our space
+  if (url.pathname === location.pathname && url.search === location.search) return   // already here — nothing to hop
+  e.preventDefault()
+  crumbs.value = pushCrumb(crumbs.value, currentCrumb(a.dataset.via || undefined), parseRoute({ pathname: url.pathname, search: url.search }).address)
+  history.pushState({}, '', url.pathname + url.search)
+  await applyCurrentLocation(readUrl())
+}
+/** A breadcrumb click: jump back to that place, dropping it and everything hopped since off the trail. */
+async function goToCrumb(i: number) {
+  const target = crumbs.value[i]
+  if (!target) return
+  crumbs.value = crumbs.value.slice(0, i)
+  history.pushState({}, '', routeFor({ address: target.address, viewQuery: {} }))
+  await applyCurrentLocation(readUrl())
+}
 
 // ── boot ──────────────────────────────────────────────────────────────────────────────────────────────────────
 onMounted(async () => {
@@ -472,9 +536,8 @@ onMounted(async () => {
     ])
     window.addEventListener('popstate', async () => {
       const rr = readUrl()
-      const c = rr.address.collection ?? 'collections'
-      if (c !== coll.value) await openCollection(c, rr)
-      else await applyPendingSel()
+      crumbs.value = reconcileCrumbs(crumbs.value, rr.address)   // browser back/forward: drop what's now ahead of us
+      await applyCurrentLocation(rr)
     })
     window.addEventListener('keydown', (e) => {
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return
@@ -491,7 +554,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="wrap">
+  <div class="wrap" @click.capture="onNavClick">
+    <!-- the breadcrumb trail (#181): every cross-link click above is caught here first (onNavClick), so it's the
+         one place that both routes AND records the hop — see the header comment by onNavClick/currentCrumb -->
+    <Breadcrumbs v-if="!booting" :crumbs="crumbs" :currentTitle="titleOf(coll)" :currentElement="inElementView ? pinned : null" @go="goToCrumb" />
+
     <!-- header: the collection AS DATA — a back link when inside one, then its title, description, and size -->
     <header class="chead">
       <a v-if="!atRoot" href="/explore/collection/" class="rootlink">‹ Collections</a>

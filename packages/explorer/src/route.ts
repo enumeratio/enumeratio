@@ -141,3 +141,49 @@ export function routeFor({ address, viewQuery }: ParsedRoute): string {
 export function resolveCollectionAlias(id: string, aliasMap: Record<string, string>): string {
   return aliasMap[id] ?? id
 }
+
+// ── the breadcrumb trail (#181) ──────────────────────────────────────────────────────────────────────────────────
+// A cross-link — a map/through image, a drill-element, a sibling, the root back-link — hops the address (PATH) to
+// somewhere else entirely, not just deeper into the same collection's view-config. CollectionView owns navigating
+// those hops itself (VitePress's own router pushes the URL but never remounts the app across two /explore/collection
+// addresses — both land in the SAME not-found slot, #158) and, while it's at it, records each one as a CRUMB: the
+// address being left behind. The trail is session-local (an in-memory stack, not URL/localStorage state) — it
+// exists only because the app now truly persists across every in-app hop; a hard reload starts a fresh trail, which
+// is the right behavior for "where have I been," not a limitation to work around.
+
+/** One past place on the trail: the address left behind by a hop, its display title, and — when the hop followed a
+ *  map/through image — the map's own label, so the trail can say `Permutations —inverse→ Permutations` rather than
+ *  just repeating collection names. */
+export interface RouteCrumb {
+  address: RouteAddress
+  title: string
+  via?: string
+}
+
+/** A stable equality key for an address, blind to view-config and to `axes` key-insertion order — reuses routeFor's
+ *  own canonical serialization (routeFor itself preserves binding order, #39, since THAT'S what the URL bar should
+ *  show) over the axes sorted by name, rather than a bespoke comparison. */
+export function addressKey(address: RouteAddress): string {
+  const sortedAxes = Object.fromEntries(Object.entries(address.fiberBinding.axes).sort(([a], [b]) => a.localeCompare(b)))
+  return routeFor({ address: { ...address, fiberBinding: { ...address.fiberBinding, axes: sortedAxes } }, viewQuery: {} })
+}
+
+/** Push the address being left onto the trail, right before hopping to `to`. A no-op when the hop doesn't actually
+ *  go anywhere (a link back to the exact place you're standing) or when `from` is already the trail's own top (a
+ *  double-fire of the same click) — so the trail only ever grows by real hops. */
+export function pushCrumb(crumbs: RouteCrumb[], from: RouteCrumb, to: RouteAddress): RouteCrumb[] {
+  if (addressKey(from.address) === addressKey(to)) return crumbs
+  const top = crumbs[crumbs.length - 1]
+  if (top && addressKey(top.address) === addressKey(from.address)) return crumbs
+  return [...crumbs, from]
+}
+
+/** Reconcile the trail against a browser back/forward landing: if the new address matches an earlier crumb, that
+ *  crumb — and everything recorded after it, all now ahead of where we've landed again — drops off the trail.
+ *  Landing somewhere the trail never recorded (the very first load, a manual URL edit) leaves the trail untouched:
+ *  best-effort bookkeeping, not a hard invariant. */
+export function reconcileCrumbs(crumbs: RouteCrumb[], landedOn: RouteAddress): RouteCrumb[] {
+  const key = addressKey(landedOn)
+  const i = crumbs.findIndex((c) => addressKey(c.address) === key)
+  return i < 0 ? crumbs : crumbs.slice(0, i)
+}

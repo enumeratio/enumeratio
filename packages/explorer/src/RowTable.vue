@@ -243,6 +243,7 @@ const subtotalOf = computed(() => {
         <a v-if="drillElements && c.kind === 'element' && data[c.id] != null" :href="`/explore/collection/${encodeURIComponent(String(data[c.id]))}`"
            class="drill" :title="String(data[c.id])" @click.stop>{{ fmt(data[c.id]) }}</a>
         <a v-else-if="printerOf(c) === 'link' && cellHref(c, data[c.id])" :href="cellHref(c, data[c.id])" class="drill"
+           :data-via="(c.kind === 'map' || c.kind === 'through') ? defOf(c.id)?.label : undefined"
            :title="String(data[c.id])" @click.stop>{{ fmt(data[c.id]) }}</a>
         <span v-else-if="printerOf(c) === 'katex'" class="tex" v-html="texHtml(data[c.id])" />
         <span v-else-if="printerOf(c) === 'svg'" class="cellsvg" v-html="String(data[c.id] ?? '')" />

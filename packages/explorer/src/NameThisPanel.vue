@@ -31,7 +31,7 @@ void runName()
 const REL_SYM: Record<Related['relation'], string> = {
   equals: '=', refines: '⊂', coarsens: '⊃', child: '↳', parent: '↰', triangle: '△', 'row-sums': 'Σ', construction: 'λ', sibling: '≀' }
 function queryLink(coll: string) { return `/explore/query?from=${encodeURIComponent(coll)}` }
-function collLink(coll: string) { return `/explore/collection/${coll}` }
+function collLink(coll: string) { return `/explore/collection/${encodeURIComponent(coll)}` }
 </script>
 
 <template>

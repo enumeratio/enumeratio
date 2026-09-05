@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { rowQueryFromSearch, searchFromRowQuery } from '@enumeratio/client'
-import { parseRoute, routeFor, resolveCollectionAlias, type ParsedRoute } from './route'
+import {
+  parseRoute, routeFor, resolveCollectionAlias, addressKey, pushCrumb, reconcileCrumbs,
+  type ParsedRoute, type RouteAddress, type RouteCrumb,
+} from './route'
 
 function loc(pathname: string, search = '') {
   return { pathname, search }
@@ -109,6 +112,61 @@ describe('resolveCollectionAlias (#101: the shared-tower alias mechanism)', () =
     const canonical = resolveCollectionAlias(route.address.collection!, { power_set: 'subsets' })
     const redirected: ParsedRoute = { ...route, address: { ...route.address, collection: canonical } }
     expect(routeFor(redirected)).toBe('/explore/collection/subsets;n=4/1%2C2?repr=oneline')
+  })
+})
+
+describe('breadcrumb trail helpers (#181)', () => {
+  const addr = (collection: string, element: string | null = null, n: number | null = null): RouteAddress =>
+    ({ collection, fiberBinding: { n, axes: {} }, element })
+  const crumb = (collection: string, element: string | null = null, via?: string): RouteCrumb =>
+    ({ address: addr(collection, element), title: collection, via })
+
+  it('addressKey matches the same address regardless of axes insertion order', () => {
+    const a: RouteAddress = { collection: 'k_subsets', fiberBinding: { n: 5, axes: { k: 2, j: 1 } }, element: null }
+    const b: RouteAddress = { collection: 'k_subsets', fiberBinding: { n: 5, axes: { j: 1, k: 2 } }, element: null }
+    expect(addressKey(a)).toBe(addressKey(b))
+  })
+
+  it('addressKey differs across collection, binding, or element', () => {
+    const base = addressKey(addr('permutations', '1'))
+    expect(addressKey(addr('permutations', '2'))).not.toBe(base)
+    expect(addressKey(addr('subsets', '1'))).not.toBe(base)
+    expect(addressKey(addr('permutations', '1', 4))).not.toBe(base)
+  })
+
+  it('pushCrumb grows the trail with the address being left, tagged with the map that was followed', () => {
+    const c1 = crumb('permutations', '1')
+    const out = pushCrumb([], c1, addr('binary_trees', '100'))
+    expect(out).toEqual([c1])
+  })
+
+  it('pushCrumb is a no-op for a link back to the exact place you already are', () => {
+    const c1 = crumb('permutations', '1')
+    expect(pushCrumb([], c1, addr('permutations', '1'))).toEqual([])
+  })
+
+  it('pushCrumb is a no-op when the trail\'s own top already IS the address being left (a double-fired click)', () => {
+    const c1 = crumb('permutations', '1')
+    const trail = [c1]
+    expect(pushCrumb(trail, c1, addr('binary_trees', '100'))).toBe(trail)
+  })
+
+  it('pushCrumb accumulates across multiple hops, in order', () => {
+    let trail: RouteCrumb[] = []
+    trail = pushCrumb(trail, crumb('permutations', '1', 'inverse'), addr('permutations', '2'))
+    trail = pushCrumb(trail, crumb('permutations', '2'), addr('binary_trees', '100'))
+    expect(trail.map((c) => c.address.collection)).toEqual(['permutations', 'permutations'])
+    expect(trail[0].via).toBe('inverse')
+  })
+
+  it('reconcileCrumbs drops a matched crumb and everything recorded after it (a browser back lands there again)', () => {
+    const trail = [crumb('permutations', '1'), crumb('permutations', '2'), crumb('binary_trees', '100')]
+    expect(reconcileCrumbs(trail, addr('permutations', '2'))).toEqual([crumb('permutations', '1')])
+  })
+
+  it('reconcileCrumbs leaves an unmatched landing untouched (a fresh load, a manual URL edit)', () => {
+    const trail = [crumb('permutations', '1')]
+    expect(reconcileCrumbs(trail, addr('subsets', null))).toBe(trail)
   })
 })
 

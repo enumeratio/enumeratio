@@ -27,7 +27,10 @@ const emit = defineEmits<{ 'update:modelValue': [PropRow[]] }>()
 
 const defById = (id: string) => props.defs.find((d) => d.id === id)
 const texHtml = (s: unknown) => { try { return katex.renderToString(String(s ?? ''), { throwOnError: false, displayMode: false }) } catch { return String(s ?? '') } }
-const mapHref = (codomain?: string | null) => (codomain ? `/explore/collection/${encodeURIComponent(codomain)}` : undefined)
+/** the codomain's SPECIFIC element (#181 — a bare codomain link was dead-ended: it never named which element the
+ *  map actually reached), matching RowTable's own cellHref for the same map/through columns */
+const mapHref = (codomain?: string | null, value?: unknown) =>
+  (codomain && value != null ? `/explore/collection/${encodeURIComponent(codomain)}/${encodeURIComponent(String(value))}` : undefined)
 
 // ---- fixed preview strip: the selected element's index / value / address (read-only) ----
 const preview = computed(() => {
@@ -42,7 +45,7 @@ function renderRow(row: PropRow): Rendered {
   if (!d || !props.elementEnabled || !props.selRow) return { text: '—' }
   const v = props.selRow[d.id]
   if (v == null) return { text: '—', findstat: d.findstatId }
-  if (d.kind === 'map') return { text: String(v), href: mapHref(d.codomain), findstat: d.findstatId }
+  if (d.kind === 'map') return { text: String(v), href: mapHref(d.codomain, v), findstat: d.findstatId }
   const text = row.format === 'grouped' && typeof v === 'number' ? v.toLocaleString() : String(v)
   return { text, findstat: d.findstatId }
 }
@@ -111,7 +114,7 @@ function openCfg(ev: Event, uid: number) { cfgPop.value.open(ev, uid) }
       </Column>
       <Column header="Value" bodyClass="xprop-c-val">
         <template #body="{ data }">
-          <a v-if="data.r.href && data.row.showLink !== false" :href="data.r.href" class="xprop-val xprop-link" @click.stop>{{ data.r.text }}</a>
+          <a v-if="data.r.href && data.row.showLink !== false" :href="data.r.href" :data-via="data.def?.label" class="xprop-val xprop-link" @click.stop>{{ data.r.text }}</a>
           <span v-else class="xprop-val">{{ data.r.text }}</span>
           <a v-if="data.r.findstat" class="xprop-fs" :href="`https://www.findstat.org/${data.r.findstat}`" target="_blank" rel="noopener" v-tooltip.top="'FindStat entry'">{{ data.r.findstat }}</a>
         </template>
