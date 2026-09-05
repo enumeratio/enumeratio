@@ -13,6 +13,15 @@
 -- One imprecision, by design: an inherited MAP keeps the codomain the base collection registered (a k-part
 -- composition reversed is still k parts, but the codomain reads `integer_compositions`). The image is still valid.
 
+-- Per-collection suppression of an otherwise-inherited stat (#292): carrier inheritance has no notion of a
+-- positivity precondition some stats carry (area/bounce/dinv assume the path stays weakly above the axis) and
+-- others don't (peaks/height/major_index/...). Rather than redesign resolution around validity predicates, a
+-- suppressed row here just removes one (collection, stat_id) pair from base_stat_resolved — narrow, doesn't
+-- generalize, but nothing today needs it to. Only meaningful for an INHERITED stat; suppressing a collection's
+-- own stat_id would just be deleting the base_stat row instead.
+CREATE TABLE base_stat_suppressed (collection text NOT NULL REFERENCES base_collection, stat_id text NOT NULL,
+                                    reason text NOT NULL, PRIMARY KEY (collection, stat_id));
+
 CREATE VIEW base_stat_resolved AS
   SELECT DISTINCT ON (c.id, s.stat_id)
          c.id AS collection, s.stat_id, s.value_fn, s.title, s.codomain, (s.collection = c.id) AS own
@@ -20,6 +29,7 @@ CREATE VIEW base_stat_resolved AS
   JOIN base_stat s ON s.collection = c.id
     OR EXISTS (SELECT 1 FROM pg_proc p JOIN pg_type t ON t.oid = p.proargtypes[0]
                WHERE p.proname = s.value_fn AND p.pronargs >= 1 AND t.typtype = 'c' AND t.typname = c.carrier)
+  WHERE NOT EXISTS (SELECT 1 FROM base_stat_suppressed x WHERE x.collection = c.id AND x.stat_id = s.stat_id)
   ORDER BY c.id, s.stat_id, (s.collection = c.id) DESC;   -- a collection's OWN row wins a stat_id collision
 
 CREATE VIEW base_map_resolved AS
