@@ -8,3 +8,4 @@ export * from "./catalan.js";
 export * from "./complex.js";
 export * from "./multicomplex.js";
 export * from "./compositions.js";
+export * from "./permutations.js";
