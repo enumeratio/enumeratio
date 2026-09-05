@@ -1,16 +1,13 @@
--- requires: realizer, subsets, utilities
+-- requires: dyck_paths, realizer, utilities
 -- narayana_numbers — Dyck paths of semilength n with EXACTLY k peaks (a peak = an up-step immediately followed
 -- by a down-step). Multi-grade chain [n (semilength), k (number of peaks)]; k defaults to its full range 1..n,
 -- so narayana_numbers(n) unfolds fibers over k and the global order is (n, k, ordinality). The count of fiber
 -- [n,k] is the Narayana number N(n,k) = C(n,k)·C(n,k-1)/n, and sum over k=1..n of N(n,k) = Catalan(n) — the
--- Narayana numbers refine the Catalan numbers by peak count. A fresh `narayana_dyck` carrier (distinct from
--- `dyck_path`, which is ungraded by peak count).
-
--- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
-CREATE TYPE narayana_dyck AS (steps int[]);                          -- ±1 word, length 2n; e.g. {1,1,-1,-1} = UUDD
-CREATE FUNCTION notation(p narayana_dyck) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce(string_agg(CASE WHEN s = 1 THEN 'U' ELSE 'D' END, '' ORDER BY o), '')
-  FROM unnest((p).steps) WITH ORDINALITY AS t(s, o) $$;
+-- Narayana numbers refine the Catalan numbers by peak count. #236: folded onto the `dyck_path` carrier —
+-- narayana_dyck was byte-identical (same ±1 steps int[], same U/D notation, same lex-DESC order), so the
+-- bijection to dyck_path is literally the identity on the same representation (order-preserving by
+-- construction). narayana_numbers now inherits dyck_paths' full stat/repr/glyph surface for free (see
+-- narayana_numbers.stats.sql and narayana_dyck_glyph.sql, both retired as redundant).
 
 CREATE FUNCTION narayana_number(n int, k int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$   -- N(n,k) = C(n,k)·C(n,k-1)/n
   SELECT CASE WHEN n = 0 THEN 0::numeric
@@ -21,7 +18,7 @@ CREATE FUNCTION narayana_number(n int, k int) RETURNS numeric LANGUAGE sql IMMUT
 -- dyck_paths), KEPT only when it has exactly address[2] peaks (adjacent U,D pair), emitted in lex order
 -- (U < D; array DESC on the ±1 word == lex U<D, per dyck_paths).
 CREATE TYPE narayana_numbers_fiber AS (n natural_number, k natural_number);   -- typed fiber; axes: n, k
-CREATE FUNCTION fiber_elements(f narayana_numbers_fiber, element_limit int) RETURNS SETOF narayana_dyck LANGUAGE sql STABLE AS $$
+CREATE FUNCTION fiber_elements(f narayana_numbers_fiber, element_limit int) RETURNS SETOF dyck_path LANGUAGE sql STABLE AS $$
   WITH RECURSIVE gen(steps, h, len) AS (
       SELECT ARRAY[]::int[], 0, 0
     UNION ALL
@@ -39,14 +36,14 @@ CREATE FUNCTION fiber_elements(f narayana_numbers_fiber, element_limit int) RETU
             ) q WHERE s = 1 AND s2 = -1) AS peak_count
     FROM paths p
   )
-  SELECT ROW(steps)::narayana_dyck FROM peaks
+  SELECT ROW(steps)::dyck_path FROM peaks
   WHERE peak_count = (f).k::int
   ORDER BY steps DESC LIMIT element_limit $$;
 
 CREATE FUNCTION fiber_count(f narayana_numbers_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT narayana_number((f).n::int, (f).k::int) $$;
 -- contains: a valid Dyck path (±1 steps, length 2n, every prefix ≥ 0, total 0) with EXACTLY k peaks (a U·D adjacency)
-CREATE FUNCTION contains_in_fiber(f narayana_numbers_fiber, v narayana_dyck) RETURNS boolean LANGUAGE sql STABLE AS $$
+CREATE FUNCTION contains_in_fiber(f narayana_numbers_fiber, v dyck_path) RETURNS boolean LANGUAGE sql STABLE AS $$
   WITH s AS (SELECT step, sum(step) OVER (ORDER BY o) AS pre, lead(step) OVER (ORDER BY o) AS nxt
              FROM unnest((v).steps) WITH ORDINALITY AS t(step, o))
   SELECT coalesce(array_length((v).steps, 1), 0) = 2 * (f).n::int
@@ -56,7 +53,7 @@ CREATE FUNCTION contains_in_fiber(f narayana_numbers_fiber, v narayana_dyck) RET
      AND (SELECT count(*) FROM s WHERE step = 1 AND nxt = -1) = (f).k::int $$;
 
 -- declare it as DATA + realize
-INSERT INTO base_collection VALUES ('narayana_numbers', 'narayana_dyck');
+INSERT INTO base_collection VALUES ('narayana_numbers', 'dyck_path');
 INSERT INTO base_grade VALUES
   ('narayana_numbers', 1, 'n', NULL, NULL),
   ('narayana_numbers', 2, 'k', '1', 'g1');                          -- k ranges 1..n by default
@@ -72,13 +69,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(notation((e).value), ',' ORDER BY ordinality(e)) FROM elements(narayana_numbers(4,1)) e $q$),
   ('narayana_numbers','fiber [3,2] listed in lex order (U<D)','eq','UUDUDD,UUDDUD,UDUUDD','N(3,2)=3, the three 2-peak paths',$q$
     SELECT string_agg(notation((e).value), ',' ORDER BY ordinality(e)) FROM elements(narayana_numbers(3,2)) e $q$),
-  ('narayana_numbers','every element of fiber [4,2] has exactly 2 peaks (structural invariant)','eq','true','count adjacent U,D pairs per path',$q$
-    SELECT bool_and(
-        (SELECT count(*) FROM (
-           SELECT s, lead(s) OVER (ORDER BY o) AS s2
-           FROM unnest(((e).value).steps) WITH ORDINALITY AS t(s, o)
-         ) q WHERE s = 1 AND s2 = -1) = 2
-      )::text FROM elements(narayana_numbers(4,2)) e $q$),
+  ('narayana_numbers','every element of fiber [4,2] has exactly 2 peaks (structural invariant, via the inherited dyck_peaks stat)','eq','true','narayana_numbers now shares dyck_path''s carrier, so dyck_peaks resolves on it directly',$q$
+    SELECT bool_and(dyck_peaks((e).value) = 2)::text FROM elements(narayana_numbers(4,2)) e $q$),
   ('narayana_numbers','fibers(narayana_numbers(4)) unfold to k = 1,2,3,4','eq','1,2,3,4','the second grade ranges 1..n',$q$
     SELECT string_agg((f).k::text, ',' ORDER BY (f).k) FROM fibers(narayana_numbers(4)) f $q$),
   ('narayana_numbers','multi-grade chain: fiber = (n,k) named axes','eq','4|2','unrank(...).fiber is (n=4,k=2)',$q$
@@ -86,5 +78,11 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('narayana_numbers','cardinality(narayana_numbers(5,3)) = 20 (accel)','eq','20','N(5,3) = C(5,3)·C(5,2)/5 = 10·10/5',$q$
     SELECT cardinality(narayana_numbers(5,3))::text $q$),
   ('narayana_numbers','contains via <@: the 2-peak UUDUDD ∈ N(3,2); the 1-peak UUUDDD ∉ (it is N(3,1))','eq','true|false','a valid Dyck path with exactly k peaks',$q$
-    SELECT (ROW(ARRAY[1,1,-1,1,-1,-1])::narayana_dyck <@ narayana_numbers(3,2))::text || '|' ||
-           (ROW(ARRAY[1,1,1,-1,-1,-1])::narayana_dyck <@ narayana_numbers(3,2))::text $q$);
+    SELECT (ROW(ARRAY[1,1,-1,1,-1,-1])::dyck_path <@ narayana_numbers(3,2))::text || '|' ||
+           (ROW(ARRAY[1,1,1,-1,-1,-1])::dyck_path <@ narayana_numbers(3,2))::text $q$),
+  ('narayana_numbers','#236: narayana_numbers now shares the dyck_path carrier — every dyck_paths stat resolves on it, not just peaks','eq','true','base_stat_resolved inheritance, not a bespoke registration',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'narayana_numbers' AND stat_id = 'valleys') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'narayana_numbers' AND stat_id = 'double_rises') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'narayana_numbers' AND stat_id = 'peaks'))::text $q$),
+  ('narayana_numbers','#236: narayana_numbers renders a glyph too (inherited from dyck_path, no bespoke glyph file)','eq','true','carrier_renders_svg resolves via dyck_path''s glyph_svg overload',$q$
+    SELECT carrier_renders_svg('dyck_path')::text $q$);

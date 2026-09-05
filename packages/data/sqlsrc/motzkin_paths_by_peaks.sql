@@ -2,8 +2,8 @@
 -- motzkin_paths_by_peaks(n,k) — the MOTZKIN TRIANGLE (OEIS A055151): Motzkin paths of length n with exactly k
 -- peaks (a peak = a U immediately followed by a D, the same `peaks` statistic motzkin_paths already carries).
 -- Reuses the motzkin_path carrier directly (steps int[] of +1/0/-1) rather than a fresh bespoke type — the
--- carrier already fits, per the audit's "one family, one carrier" rule (§3.2), unlike narayana_numbers'
--- narayana_dyck (a pre-existing instance of the friction this batch avoids repeating). Registered against
+-- carrier already fits, per the audit's "one family, one carrier" rule (§3.2) — narayana_numbers now follows
+-- the same pattern too (#236, folded onto dyck_path). Registered against
 -- `triangle_refines` as a genuine refinement of motzkin_paths by its own `peaks` stat, differential-checked
 -- below. fiber_count is an independent DP over (position, height, peaks-so-far) — not a re-scan of the floor.
 

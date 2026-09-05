@@ -1,12 +1,13 @@
--- requires: little_schroder_triangle, realizer, utilities
--- little_schroder_triangle statistics — little_schroder_triangle_path is a BESPOKE carrier (distinct from
--- schroeder_path / schroeder_triangle_path), so it carries no inherited stats. `hills` names the grading axis k
--- directly (a hill = a U-D adjacency whose U leaves height 0 — the file's own hill-counting definition), giving the
--- query view a column to GROUP BY on an ungraded little_schroder_triangle(n) row-set.
+-- requires: little_schroder_triangle, schroeder_paths, realizer, utilities
+-- little_schroder_triangle statistics — #236: little_schroder_triangle now shares the `schroeder_path` carrier
+-- (see little_schroder_triangle.sql), so it already inherits schroeder_paths' flat_steps/peaks/height for free.
+-- `hills` is NOT one of those (schroeder_paths itself has no notion of a hill), so it stays its own registration
+-- here, taking schroeder_path directly — it names the grading axis k directly (a hill = a U-D adjacency whose U
+-- leaves height 0), giving the query view a column to GROUP BY on an ungraded little_schroder_triangle(n) row-set.
 
--- ── statistics (carrier: little_schroder_triangle_path(steps int[]) of {-1,0,1}) ───────────────────────
+-- ── statistics (carrier: schroeder_path(steps int[]) of {-1,0,1}) ───────────────────────────────────────
 -- hills: a U-D adjacency whose U leaves height 0. Equals the k grade on every element of fiber [n,k].
-CREATE FUNCTION little_schroder_hills(p little_schroder_triangle_path) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION little_schroder_hills(p schroeder_path) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(*)::int FROM (
     SELECT s, lead(s) OVER (ORDER BY o) AS s2,
            sum(s) OVER (ORDER BY o ROWS BETWEEN UNBOUNDED PRECEDING AND 1 PRECEDING) AS h_before
