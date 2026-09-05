@@ -7,4 +7,8 @@ INSERT INTO base_collection VALUES ('perfect_power_numbers','numeric',true);
 SELECT base_realize('perfect_power_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('perfect_power_numbers','first ten','eq','1,4,8,9,16,25,27,32,36,49','m^k, k>=2',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(perfect_power_numbers(),10) e $q$),
-  ('perfect_power_numbers','contains: 81 ∈ (3^4), 72 ∉ (achilles)','eq','true|false','',$q$ SELECT (81::numeric <@ perfect_power_numbers())::text||'|'||(72::numeric <@ perfect_power_numbers())::text $q$);
+  ('perfect_power_numbers','contains: 81 ∈ (3^4), 72 ∉ (achilles)','eq','true|false','',$q$ SELECT (81::numeric <@ perfect_power_numbers())::text||'|'||(72::numeric <@ perfect_power_numbers())::text $q$),
+  ('perfect_power_numbers','decomposed: 64 = 2^6, exponent_gcd = 6 >= 2 — checked directly, not via is_perfect_power','eq','6|true','',$q$
+    SELECT exponent_gcd(64)::text || '|' || (exponent_gcd(64) >= 2)::text $q$),
+  ('perfect_power_numbers','1 is a perfect power vacuously (1 = 1^k for any k), a special case outside exponent_gcd','eq','true','',$q$
+    SELECT is_perfect_power(1)::text $q$);

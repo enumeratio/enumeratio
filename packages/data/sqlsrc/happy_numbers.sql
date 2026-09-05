@@ -13,4 +13,8 @@ CREATE FUNCTION fiber_symbol(f happy_numbers_fiber) RETURNS text LANGUAGE sql IM
 SELECT base_realize('happy_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('happy_numbers','first ten','eq','1,7,10,13,19,23,28,31,32,44','digit-square-sum reaches 1',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(happy_numbers(),10) e $q$),
-  ('happy_numbers','contains: 19 ∈, 2 ∉','eq','true|false','',$q$ SELECT (19::numeric <@ happy_numbers())::text||'|'||(2::numeric <@ happy_numbers())::text $q$);
+  ('happy_numbers','contains: 19 ∈, 2 ∉','eq','true|false','',$q$ SELECT (19::numeric <@ happy_numbers())::text||'|'||(2::numeric <@ happy_numbers())::text $q$),
+  ('happy_numbers','decomposed: 19 → 82 → 68 → 100 → 1 via digit_square_sum, not is_happy','eq','1','four iterations of digit_square_sum from 19',$q$
+    SELECT digit_square_sum(digit_square_sum(digit_square_sum(digit_square_sum(19))))::text $q$),
+  ('happy_numbers','unhappy fixed cycle: iterating digit_square_sum from 4 returns to 4 after 8 steps (4-16-37-58-89-145-42-20 loop)','eq','4','confirms unhappy numbers never reach 1',$q$
+    SELECT digit_square_sum(digit_square_sum(digit_square_sum(digit_square_sum(digit_square_sum(digit_square_sum(digit_square_sum(digit_square_sum(4))))))))::text $q$);
