@@ -277,6 +277,40 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('carriers',                    'Carriers',                    'The distinct carrier types collections are built on.'),
   ('traits',                      'Traits',                      'The capability + organization trait vocabulary.');
 
+-- ── #275: collections that shipped without a title row (fell back to the raw id in the explorer) ──────────────
+INSERT INTO base_collection_meta (collection, title, description) VALUES
+  ('all_ones',                    'All Ones',                    'The constant sequence 1,1,1,… (OEIS A000012).'),
+  ('collatz_trajectories',        'Collatz Trajectories',        'The 3n+1 trajectory of n, as a word ending at 1.'),
+  ('connected_labeled_graphs',    'Connected Labeled Graphs',    'Connected simple graphs on [n] (A001187).'),
+  ('continued_fractions',         'Continued Fractions',        'The canonical CF expansion [a₀;a₁,a₂,…] of a reduced fraction p/q.'),
+  ('dyck_paths_by_height',        'Dyck Paths by Height',        'Dyck paths of semilength n with maximum height exactly h.'),
+  ('egyptian_fractions',          'Egyptian Fractions',          'Sets of k distinct unit-fraction denominators summing to 1.'),
+  ('farey_sequences',             'Farey Sequences',             'Reduced fractions p/q with 0 ≤ p ≤ q ≤ n, in increasing order.'),
+  ('fine_paths',                  'Fine Paths',                  'Dyck paths of semilength n with no hills — the Fine numbers (A000957).'),
+  ('goldbach_partitions',         'Goldbach Partitions',         'Unordered prime pairs (p,q) with p+q = 2n.'),
+  ('grand_dyck_paths',            'Grand Dyck Paths',           'Free ±1 paths of length 2n returning to 0 — no positivity constraint.'),
+  ('increasing_binary_trees',     'Increasing Binary Trees',    'Binary trees on n labeled nodes, heap-ordered by label — n! of them.'),
+  ('k_ary_trees',                 'k-ary Trees',                 'Trees where every internal node has exactly k children — the Fuss-Catalan count.'),
+  ('k_inversion_permutations',    'k-Inversion Permutations',   'Permutations of [n] with exactly k inversions — the Mahonian triangle.'),
+  ('labeled_graphs',              'Labeled Graphs',              'Simple undirected graphs on the labeled vertex set [n].'),
+  ('labeled_graphs_by_edges',     'Labeled Graphs by Edges',    'Graphs on [n] with exactly m edges — the (n,m) refinement of labeled_graphs.'),
+  ('lukasiewicz_paths',           'Łukasiewicz Paths',          'Length-(n+1) step words in bijection with plane trees, via child counts.'),
+  ('motzkin_paths_by_peaks',      'Motzkin Paths by Peaks',     'The Motzkin triangle — paths of length n with exactly k peaks (A055151).'),
+  ('pythagorean_triples',         'Pythagorean Triples',        'Triples (a,b,c) with a²+b²=c², graded by hypotenuse c.'),
+  ('rational_dyck_paths',         'Rational Dyck Paths',        '(a,b)-Dyck paths — lattice paths from (0,0) to (b,a) staying above the diagonal.'),
+  ('recursive_trees',             'Recursive Trees',            'Increasing trees on n labeled vertices — (n−1)! of them.'),
+  ('shifted_standard_tableaux',   'Shifted Standard Tableaux',  'Standard tableaux on shifted diagrams of strict partitions.'),
+  ('skew_standard_tableaux',      'Skew Standard Tableaux',     'Standard tableaux on reduced skew shapes λ/μ.'),
+  ('sums_of_two_squares',         'Sums of Two Squares',        'Representations n = a²+b² with 0 ≤ a ≤ b.'),
+  ('tournaments',                 'Tournaments',                 'Orientations of the complete graph on [n].');
+
+-- ── #275: registry self-test — every collection must carry a real Title Case title, never a bare id / underscored
+-- fallback (base_catalog's LEFT JOIN means a missing row silently shows the id in the explorer). Floor of 0, not a
+-- fixed count, so it stays green as the catalog grows — see CLAUDE.md's "registry self-tests assert floors" rule.
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('catalog','every collection has a real title: none falls back to its bare id or an underscored name','eq','0','base_catalog LEFT JOINs base_collection_meta — a missing/underscored row means the explorer would show the raw id',$q$
+    SELECT count(*) FROM base_catalog WHERE alias_of IS NULL AND (title IS NULL OR title = id OR title LIKE '%\_%') $q$);
+
 -- ── the collection family tree, as queryable data (carrier = organization root; base_collection_parent = specialization) ──
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('catalog','the family tree records specialization edges: odd_partitions restricts integer_partitions','eq','integer_partitions|is_odd_partition','base_restrict persists (parent, predicate) as data',$q$
