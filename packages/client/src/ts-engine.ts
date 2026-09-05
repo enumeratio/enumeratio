@@ -31,11 +31,22 @@ export class InexactResult extends Error {
   }
 }
 
-/** Printers, by the result's declared kind. A composite (a Gaussian integer, a multicomplex, a permutation) has
- *  no agreed spelling on the TS side yet, so the engine declines rather than inventing one that pg would not
- *  print — the gap is stated in `why()` and closed by a render twin, not by guessing here. */
-function printable(kind: TypeKind): boolean { return kind === 'int' || kind === 'numeric' || kind === 'float' || kind === 'text' || kind === 'bool' }
-function print(v: unknown): string {
+/** Printers. A scalar prints itself; a COMPOSITE prints through the TS twin of its SQL `notation(<carrier>)`
+ *  overload, looked up by convention as `notation_<carrier>` on the math namespace — the same "derive it from
+ *  the implementation's existence" move `carrier_renders_svg` makes for glyphs, rather than a registry row that
+ *  could disagree with reality. A carrier with no such twin is still declined: the engine says so instead of
+ *  inventing a spelling pg would not print (#289). */
+const printerFor = (returnType: string): ((v: never) => string) | undefined => {
+  const f = NS[`notation_${returnType}`]
+  return typeof f === 'function' ? (f as (v: never) => string) : undefined
+}
+function printable(kind: TypeKind, returnType: string): boolean {
+  if (kind === 'composite') return printerFor(returnType) !== undefined
+  return kind === 'int' || kind === 'numeric' || kind === 'float' || kind === 'text' || kind === 'bool'
+}
+function print(v: unknown, returnType?: string): string {
+  const printer = returnType ? printerFor(returnType) : undefined
+  if (printer) return printer(v as never)
   if (typeof v === 'bigint') return v.toString()
   if (typeof v === 'boolean') return v ? 'true' : 'false'
   return String(v)
@@ -70,7 +81,7 @@ export function tsEngine(reg: Registry): Engine {
   }
 
   /** resolve every apply bottom-up, so a nested call's RETURN kind types the outer call's argument */
-  function resolveTree(e: SelectExpr, representation?: Representation): { kind: TypeKind; impl?: ImplRow } | string {
+  function resolveTree(e: SelectExpr, representation?: Representation): { kind: TypeKind; impl?: ImplRow; carrier?: string } | string {
     if (e.kind === 'lit') return { kind: kindOfValue(e.value) }
     if (e.kind !== 'apply') return `ts cannot evaluate a ${e.kind} node`
     const kinds: TypeKind[] = []
@@ -80,6 +91,13 @@ export function tsEngine(reg: Registry): Engine {
       kinds.push(r.kind)
     }
     const id = String(e.fn)
+    // a carrier CONSTRUCTION — `gaussian_integer(2, 3)` — is not a function call at all; it builds a value of
+    // that composite type from its declared fields, and every engine does it its own way
+    const carrier = reg.carrier(id)
+    if (carrier) {
+      if (carrier.fields.length !== kinds.length) return `${id} takes ${carrier.fields.length} field${carrier.fields.length === 1 ? '' : 's'} (${carrier.fields.map((f) => f.name).join(', ')}); got ${kinds.length}`
+      return { kind: 'composite', carrier: id }
+    }
     if (!reg.curated(id)) return `"${id}" is not a registered function`
     const impl = reg.resolveImpl(id, 'ts', kinds, representation)
     if (!impl) return `no ts implementation of ${id}(${kinds.join(', ')})${representation ? ` at ${representation}` : ''}`
@@ -89,7 +107,8 @@ export function tsEngine(reg: Registry): Engine {
   function rejectTree(e: SelectExpr, representation?: Representation): string | undefined {
     const r = resolveTree(e, representation)
     if (typeof r === 'string') return r
-    if (!printable(r.kind)) return `ts has no printer for a ${r.kind} result (${r.impl?.returnType ?? '?'})`
+    const ty = r.impl?.returnType ?? r.carrier ?? '?'
+    if (!printable(r.kind, ty)) return `ts has no printer for a ${r.kind} result (${ty}) — it needs a notation_${ty} twin`
     return undefined
   }
 
@@ -98,8 +117,20 @@ export function tsEngine(reg: Registry): Engine {
     if (e.kind !== 'apply') throw new Error(`ts-engine: cannot evaluate a ${e.kind} node`)
     const args = e.args.map((a) => evalTree(a, representation))
     const id = String(e.fn)
-    const impl = reg.resolveImpl(id, 'ts', args.map(kindOfValue), representation)
-    if (!impl) throw new Error(`ts-engine: no implementation of ${id} for these arguments`)
+    const carrier = reg.carrier(id)
+    // A SINGLE-FIELD carrier is the bare field value in TS (`permutation` is a `number[]`, not `{image}`), while
+    // a multi-field one is an object keyed by the pg attribute names. That asymmetry is packages/math's own
+    // convention, and the field count is exactly what tells the two apart.
+    if (carrier) {
+      if (carrier.fields.length === 1) return args[0]
+      return Object.fromEntries(carrier.fields.map((f, i) => [f.name, args[i]]))
+    }
+    // Resolve the overload from the TREE, never from the values. A single-field carrier's TS value is a bare
+    // array, so asking `kindOfValue` would say 'array' where the impl row says 'composite' — the two views
+    // disagreed, and every composite-argument call failed with "no implementation" until they were unified.
+    const r = resolveTree(e, representation)
+    const impl = typeof r === 'string' ? undefined : r.impl
+    if (!impl) throw new Error(`ts-engine: ${typeof r === 'string' ? r : `no implementation of ${id} for these arguments`}`)
     const body = reg.body(impl.implRef) ?? NS[impl.implRef]
     if (typeof body !== 'function') throw new Error(`ts-engine: impl "${impl.implRef}" of ${id} is not an exported function`)
     const v = (body as (...a: unknown[]) => unknown)(...args)
@@ -121,7 +152,8 @@ export function tsEngine(reg: Registry): Engine {
       for (const [i, c] of expr.select.entries()) {
         const r = resolveTree(c)
         if (typeof r !== 'string' && r.impl) impl = r.impl.implRef
-        row[cols[i].id] = print(evalTree(c))
+        const ty = typeof r === 'string' ? undefined : (r.impl?.returnType ?? r.carrier)
+        row[cols[i].id] = print(evalTree(c), ty)
       }
       const rows = opts.signal?.aborted ? [] : [row]
       const plan: Plan = {

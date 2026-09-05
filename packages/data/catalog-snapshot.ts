@@ -10,7 +10,10 @@
 // Everything here is therefore split so nothing DEPENDS on the artifact existing: `buildCatalogSnapshot(pg)` is
 // pure and callable in-process (which is how the tests get one), and `loadCatalogSnapshot()` returns null when the
 // file is absent. A missing or stale snapshot means an engine that needs it simply declines — never a wrong answer.
-import type { PGlite } from '@electric-sql/pglite'
+/** Anything that can answer SQL — a PGlite, a pooled Postgres client, or the client's own `runSql`. Taking the
+ *  query function rather than a database means a test can build a snapshot off the connection it ALREADY has,
+ *  which is what keeps every test independent of whether the release artifact was ever generated. */
+export type SnapshotSource = <T>(sql: string) => Promise<T[]>
 
 export type Representation = 'numeric' | 'bigint' | 'float64' | 'i64' | 'text'
 
@@ -53,6 +56,12 @@ export type CollectionRow = {
 export type GrantRow = { engine: string; columnGroup: string; scopeKind: string; scope: string; mode: string }
 export type ColumnGroupRow = { id: string; kinds: string[] }
 export type EngineRow = { id: string; description: string }
+
+/** A composite carrier's shape, for engines that must CONSTRUCT one from arguments. Only the carriers some impl
+ *  row actually mentions travel — this is the Expr vocabulary, not a mirror of the type catalog. A single-field
+ *  carrier is the interesting case: `permutation` is one `int[]` in pg and a bare `number[]` in TS, so an engine
+ *  needs the field count to know which shape it is building. */
+export type CarrierRow = { name: string; fields: { name: string; type: string; kind: TypeKind }[] }
 /** A non-pg engine that can evaluate this statistic itself, so a predicate on it pushes down. pg rows are NOT
  *  stored (see buildCatalogSnapshot) — pg is foldable for everything by construction. */
 export type FoldableRow = { collection: string; stat: string; engine: string }
@@ -63,13 +72,18 @@ export type CatalogSnapshot = {
   builtAt: string
   functions: FunctionRow[]
   collections: CollectionRow[]
+  carriers: CarrierRow[]
   engines: EngineRow[]
   columnGroups: ColumnGroupRow[]
   grants: GrantRow[]
   foldable: FoldableRow[]
 }
 
-type Q = <T>(sql: string) => Promise<T[]>
+type Q = SnapshotSource
+
+/** `integer[]` → `integer`, `character varying(8)` → `character varying` — format_type's spelling reduced to the
+ *  bare type name pg_type is keyed by. An array field keeps kind 'array' via the [] check in the caller. */
+export const baseName = (ty: string): string => ty.replace(/\[\]$/, '').replace(/\(.*\)$/, '').trim()
 
 /** the spellings pg_type has no row for under that exact name (SQL-standard aliases the parser expands) */
 const ALIASES: Record<string, TypeKind> = { int: 'int', integer: 'int', bigint: 'int', smallint: 'int', 'double precision': 'float', real: 'float', decimal: 'numeric', boolean: 'bool' }
@@ -88,9 +102,9 @@ function typeKind(category: string, base: string): TypeKind {
   return 'other'
 }
 
-/** Build the snapshot from a LIVE core. Pure: takes the database, returns the object, writes nothing. */
-export async function buildCatalogSnapshot(pg: PGlite, hash: string): Promise<CatalogSnapshot> {
-  const q: Q = async <T>(sql: string) => (await pg.query(sql)).rows as T[]
+/** Build the snapshot from a LIVE core. Pure: reads, returns the object, writes nothing. */
+export async function buildCatalogSnapshot(source: SnapshotSource, hash: string): Promise<CatalogSnapshot> {
+  const q: Q = source
 
   // Every type name any impl row mentions, reduced to its TypeKind. A DOMAIN resolves to its base type
   // (typbasetype), so `term_index` answers 'int' — the TS resolver matches base kinds and never has to carry the
@@ -145,6 +159,19 @@ export async function buildCatalogSnapshot(pg: PGlite, hash: string): Promise<Ca
       hooks: { fiberCount: r.h_count === true, fiberUnrank: r.h_unrank === true, fiberElements: r.h_elements === true, containsInFiber: r.h_contains === true },
     }))
 
+  // the composite types some impl row names, and their attribute layout — what an engine needs to build one
+  const composites = [...new Set(impls.flatMap((r) => [...pgArray(String(r.arg_types)), String(r.return_type)]))]
+    .filter((t) => kindOf(t) === 'composite')
+  const carriers: CarrierRow[] = []
+  for (const name of composites.sort()) {
+    const fields = await q<{ attname: string; ty: string }>(`
+      SELECT a.attname, format_type(a.atttypid, a.atttypmod) AS ty
+        FROM pg_attribute a JOIN pg_class c ON c.oid = a.attrelid
+       WHERE c.relname = '${name}' AND a.attnum > 0 AND NOT a.attisdropped
+       ORDER BY a.attnum`)
+    carriers.push({ name, fields: fields.map((f) => { const ty = String(f.ty); return { name: String(f.attname), type: ty, kind: ty.endsWith('[]') ? 'array' as TypeKind : kindOf(baseName(ty)) } }) })
+  }
+
   const engines = await q<EngineRow>(`SELECT id, description FROM base_engine ORDER BY id`)
   const columnGroups = (await q<Record<string, unknown>>(`SELECT id, kinds::text AS kinds FROM base_column_group ORDER BY id`))
     .map((r): ColumnGroupRow => ({ id: String(r.id), kinds: pgArray(String(r.kinds)) }))
@@ -158,7 +185,7 @@ export async function buildCatalogSnapshot(pg: PGlite, hash: string): Promise<Ca
     `SELECT collection, stat_id, engine FROM base_stat_foldable WHERE engine <> 'pg' ORDER BY collection, stat_id, engine`))
     .map((r): FoldableRow => ({ collection: String(r.collection), stat: String(r.stat_id), engine: String(r.engine) }))
 
-  return { hash, builtAt: new Date().toISOString(), functions, collections, engines, columnGroups, grants, foldable }
+  return { hash, builtAt: new Date().toISOString(), functions, collections, carriers, engines, columnGroups, grants, foldable }
 }
 
 /** Postgres array literal → string[]. The snapshot casts arrays to ::text so the driver hands back one shape on

@@ -97,8 +97,13 @@ export function engine(): Promise<Engine> {
 /** Evaluate an expression. The façade: additive, and it never changes what an existing export returns. */
 export function evaluate(expr: Expr, opts: EngineOpts = {}): EvaluateResult {
   const inner = ready().then((eng) => eng.evaluate(expr, opts))
+  const plan = inner.then((r) => r.plan)
+  // A caller may legitimately consume only `rows`. Mark the plan's rejection observed so a failed evaluation
+  // surfaces once, where the caller is awaiting, instead of also crashing the process as an unhandled rejection.
+  // The returned promise still rejects for anyone who does await it.
+  plan.catch(() => {})
   return {
-    plan: inner.then((r) => r.plan),
+    plan,
     rows: {
       async *[Symbol.asyncIterator]() { yield* (await inner).rows },
     },

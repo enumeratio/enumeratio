@@ -9,7 +9,7 @@ import { buildCatalogSnapshot } from './catalog-snapshot.ts'
 
 const out = join(dirname(fileURLToPath(import.meta.url)), 'catalog-snapshot.json')
 const pg = await bootCore()
-const snap = await buildCatalogSnapshot(pg, coreBundleHash())
+const snap = await buildCatalogSnapshot(async <T>(sql: string) => (await pg.query(sql)).rows as T[], coreBundleHash())
 await pg.close()
 const json = JSON.stringify(snap)
 await writeFile(out, json)

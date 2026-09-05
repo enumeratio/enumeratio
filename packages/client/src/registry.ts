@@ -8,18 +8,18 @@
 // dirty and every non-pg engine's `can()` collapses to false: whatever else happens, an engine must never answer
 // from a picture of a world that has moved. Same for a snapshot whose hash does not match the live core, and for
 // no snapshot at all (a source checkout, where the artifact was never generated).
-import type { CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind } from '@enumeratio/data/catalog-snapshot'
+import type { CarrierRow, CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind } from '@enumeratio/data/catalog-snapshot'
 import { grantsFor, isFoldable } from '@enumeratio/data/catalog-snapshot'
 import { onDbExtended } from './core'
 import type { Representation } from './engine'
 
-export type { CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind }
+export type { CarrierRow, CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind }
 
 /** What an entry knows: the artifact (or null), and the hash of the core actually running. */
 export type CatalogSource = () => Promise<{ snapshot: CatalogSnapshot | null; liveHash: string }>
 
 const EMPTY: CatalogSnapshot = {
-  hash: '', builtAt: '', functions: [], collections: [], engines: [], columnGroups: [], grants: [], foldable: [],
+  hash: '', builtAt: '', functions: [], collections: [], carriers: [], engines: [], columnGroups: [], grants: [], foldable: [],
 }
 
 let source: CatalogSource | null = null
@@ -91,6 +91,8 @@ export class Registry {
   }
 
   collection(id: string): CollectionRow | undefined { return this.base.collections.find((c) => c.id === id) }
+  /** A composite carrier's layout — what an engine needs to CONSTRUCT one from a `carrier(a, b)` call. */
+  carrier(name: string): CarrierRow | undefined { return this.base.carriers.find((c) => c.name === name) }
   grants(engine: string, coll: string | null): string[] { return grantsFor(this.base, engine, coll) }
   foldable(engine: string, coll: string, stat: string): boolean { return isFoldable(this.base, engine, coll, stat) }
 
@@ -145,6 +147,7 @@ export function carriesExactly(representation: string, v: unknown): boolean {
 
 /** The kind of a JavaScript value, for overload resolution. */
 export function kindOfValue(v: unknown): TypeKind {
+  if (Array.isArray(v)) return 'array'
   if (typeof v === 'bigint') return 'int'
   if (typeof v === 'number') return Number.isInteger(v) ? 'int' : 'float'
   if (typeof v === 'string') return 'text'

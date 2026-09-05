@@ -13,14 +13,20 @@
 //
 //   node --import tsx selfcert-engine.mts [filter]
 import {
-  close, evaluate, exprFromStatement, extendDb, InexactResult, makeDb, parseCalc, pgEngine, provideDb,
-  provideEngine, registry, resetRegistry, routerEngine, rowSql, runSql, tsEngine, type Expr,
+  close, evaluate, exprFromStatement, extendDb, InexactResult, lowerScalar, makeDb, parseCalc, pgEngine,
+  provideCatalog, provideDb, provideEngine, registry, resetRegistry, routerEngine, rowSql, runSql, tsEngine,
+  type Expr,
 } from './src/index.ts'
-import { grantsFor } from '@enumeratio/data/catalog-snapshot'
+import { buildCatalogSnapshot, grantsFor } from '@enumeratio/data/catalog-snapshot'
+import { coreBundleHash } from '@enumeratio/data/node'
 
 provideDb(() => makeDb())
 const filter = process.argv[2] ?? null
 
+// Build the catalog off THIS connection rather than reading the release artifact. The artifact is generated at
+// pack time and gitignored, so certifying against it would mean certifying whether someone had run a build —
+// and would go red on every sqlsrc edit until they did.
+provideCatalog(async () => ({ snapshot: await buildCatalogSnapshot(runSql, coreBundleHash()), liveHash: coreBundleHash() }))
 const reg = await registry()
 if (reg.dirty) { console.error(`cannot self-certify: ${reg.dirty}`); process.exit(1) }
 const pg = pgEngine()
@@ -41,7 +47,32 @@ const range = (lo: number, hi: number): number[] => Array.from({ length: hi - lo
 const pairs = (ns: number[], k: (n: number) => number[]): number[][] => ns.flatMap((n) => k(n).map((x) => [n, x]))
 const upTo = (n: number): number[] => range(-1, n + 1)
 
-const DOMAINS: Record<string, number[][]> = {
+/** An argument spelled as calc text rather than a bare number — a carrier construction (#289). Kept as text so
+ *  the sweep exercises the SAME grammar a user types, constructors and array literals included. */
+type Arg = number | string
+const gauss = (re: number, im: number): string => `gaussian_integer(${re}, ${im})`
+const mc = (cs: number[], m: number): string => `multicomplex([${cs.join(', ')}], ${m})`
+const perm = (image: number[]): string => `permutation([${image.join(', ')}])`
+
+/** every permutation of [1..n], in lex order — small n, for the permutation-argument sweeps */
+function perms(n: number): number[][] {
+  if (n === 0) return [[]]
+  const out: number[][] = []
+  const walk = (left: number[], acc: number[]) => {
+    if (!left.length) { out.push(acc); return }
+    for (let i = 0; i < left.length; i++) walk([...left.slice(0, i), ...left.slice(i + 1)], [...acc, left[i]])
+  }
+  walk(range(1, n), [])
+  return out
+}
+
+const GAUSS_PTS = pairs(range(-4, 4), () => range(-4, 4))
+const MC_VECS: number[][][] = [
+  [[2, 3], [5, 7]], [[0, 0], [1, 1]], [[96, 1], [1, 96]], [[2, 3, 4, 5], [5, 7, 1, 2]],
+  [[1, 0, 0, 0], [0, 1, 0, 0]], [[48, 49, 50, 51], [96, 95, 94, 93]],
+]
+
+const DOMAINS: Record<string, Arg[][]> = {
   catalan_number: range(0, 60).map((n) => [n]),
   little_schroder_number: range(0, 40).map((n) => [n]),
   factorial: range(0, 40).map((n) => [n]),
@@ -58,17 +89,35 @@ const DOMAINS: Record<string, number[][]> = {
   gcd: pairs(range(-12, 12), () => range(-12, 12)),
   lcm: pairs(range(-12, 12), () => range(-12, 12)),
   pow: pairs(range(-4, 6), () => range(0, 20)),
+
+  // composite carriers (#289) — arguments built with the calc grammar's own constructors, results printed
+  // through the notation_<carrier> twins. These are the rows ts declined outright until it had a printer.
+  gaussian_add: GAUSS_PTS.flatMap(([a, b]) => GAUSS_PTS.slice(0, 9).map(([c, d]) => [gauss(a, b), gauss(c, d)])),
+  gaussian_mul: GAUSS_PTS.flatMap(([a, b]) => GAUSS_PTS.slice(0, 9).map(([c, d]) => [gauss(a, b), gauss(c, d)])),
+  gaussian_neg: GAUSS_PTS.map(([a, b]) => [gauss(a, b)]),
+  gaussian_norm: GAUSS_PTS.map(([a, b]) => [gauss(a, b)]),
+  mc_add: MC_VECS.map(([a, b]) => [mc(a, 97), mc(b, 97)]),
+  mc_mul: MC_VECS.map(([a, b]) => [mc(a, 97), mc(b, 97)]),
+  mc_neg: MC_VECS.map(([a]) => [mc(a, 97)]),
+  mc_conj: MC_VECS.map(([a]) => [mc(a, 97)]),
+  permutation_unrank: [1, 2, 3, 4, 5].flatMap((n) => range(0, Math.min(23, [1, 1, 2, 6, 24, 120][n] - 1)).map((r) => [n, r])),
+  composition_from_mask: range(0, 8).flatMap((n) => range(0, Math.max(0, 2 ** Math.max(0, n - 1) - 1)).map((m) => [n, m])),
+  inversions: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
+  lehmer_code: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
 }
 
-const call = (fn: string, args: number[]): string => `${fn}(${args.join(', ')})`
+const call = (fn: string, args: Arg[]): string => `${fn}(${args.join(', ')})`
 
 /** pg's answer for many calls at once — one query per batch, not per case (a 3000-case sweep is otherwise minutes
  *  of round-trips for arithmetic that takes microseconds). */
-async function pgBatch(fn: string, impl: string, cases: number[][]): Promise<string[]> {
+async function pgBatch(fn: string, _impl: string, cases: Arg[][]): Promise<string[]> {
   const out: string[] = []
   for (let i = 0; i < cases.length; i += 100) {
     const slice = cases.slice(i, i + 100)
-    const cols = slice.map((a, n) => `(${impl}(${a.join(', ')}))::text AS c${n}`).join(', ')
+    // lower through pg-engine itself rather than splicing text here: the point is to certify the ENGINE's
+    // lowering (impl_ref substitution, ROW(...)::carrier construction, ARRAY[...] literals), not a second
+    // hand-written one that could agree with ts while both disagree with the database.
+    const cols = slice.map((a, n) => `(${lowerScalar(parseCalc(call(fn, a)).select[0])})::text AS c${n}`).join(', ')
     const [row] = await runSql<Record<string, string>>(`SELECT ${cols}`)
     out.push(...slice.map((_, n) => String(row[`c${n}`])))
   }
@@ -99,6 +148,7 @@ for (const f of reg.base.functions) {
   if (!tsImpls.length || !pgImpl) { notes.push(`${f.id}: only one engine implements it (${tsImpls.length ? 'ts' : 'pg'} only) — nothing to diff`); continue }
 
   const expected = await pgBatch(f.id, pgImpl.implRef, domain)
+  const before = mismatches.length
   let agreed = 0, declined = 0
   let frontier: number[] | null = null
   for (const [i, args] of domain.entries()) {
@@ -115,8 +165,9 @@ for (const f of reg.base.functions) {
     else agreed++
   }
   const exact = reg.impls(f.id, 'ts').some((i) => i.representation === 'bigint' || i.representation === 'numeric')
+  const bad = mismatches.length - before
   const mark = declined ? `${agreed} agree, ${declined} declined past ${call(f.id, frontier!)}` : `${agreed} agree`
-  console.log(`  ${mismatches.length ? '✗' : '✓'} ${f.id.padEnd(28)} ${mark}${exact ? ' · exact twin available' : ''}`)
+  console.log(`  ${bad ? '✗' : '✓'} ${f.id.padEnd(28)} ${mark}${bad ? `, ${bad} MISMATCHED` : ''}${exact ? ' · exact twin available' : ''}`)
 }
 
 // ── the two grant folds ───────────────────────────────────────────────────────────────────────────────────────────
@@ -169,6 +220,7 @@ if (!filter) {
 // shadow wins.
 if (!filter) {
   console.log('── extend(): a new identity, in both engines at once ────────────────────────────────────────────')
+  const extendBad = mismatches.length
   const router = routerEngine([ts, pg])
   await router.extend({
     functions: [{ id: 'triangular', title: 'Triangular number', description: 'T(n) = n(n+1)/2.' }],
@@ -185,7 +237,7 @@ if (!filter) {
     checked++
     if (got.value !== row.v) mismatches.push(`extend: triangular(${n}) pg=${row.v} ts=${got.value ?? got.declined}`)
   }
-  console.log(`  ${mismatches.length ? '✗' : '✓'} triangular: ts == pg on the extended identity`)
+  console.log(`  ${extendBad === mismatches.length ? '✓' : '✗'} triangular: ts == pg on the extended identity`)
 
   await router.extend({
     impls: [{ function: 'triangular', engine: 'ts', implRef: 'triangular', argTypes: ['int'], returnType: 'numeric',

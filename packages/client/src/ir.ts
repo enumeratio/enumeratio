@@ -28,6 +28,8 @@ import { parseSelect, selectText, type AggFn, type SelectSpec } from './select'
  *  brand but additionally checks the id against the catalog, so an unknown function fails at build time, not at
  *  evaluation time. */
 export type FnRef = string & { readonly __fnRef: unique symbol }
+export type Scalar = string | number | bigint
+export type LitValue = Scalar | readonly Scalar[]
 
 const FN_ID = /^[A-Za-z_][A-Za-z0-9_]*$/
 /** Mint a FnRef. Shape-checked only — see the registry for the catalog-checked mint. */
@@ -37,8 +39,10 @@ export function fnRef(id: string): FnRef {
 }
 
 export type SelectExpr =
-  /** a constant — an argument to an apply, or a whole FROM-less scalar */
-  | { kind: 'lit'; value: string | number | bigint }
+  /** a constant — an argument to an apply, or a whole FROM-less scalar. An ARRAY constant is a literal too: a
+   *  composite carrier's field is often `int[]` (a permutation's image, a multicomplex's coefficients), and
+   *  building one needs the array to be expressible without a node kind of its own. */
+  | { kind: 'lit'; value: LitValue }
   /** the element under FROM; a select closed of `subject` is FROM-less-legal */
   | { kind: 'subject' }
   /** a value_fn / mapping_fn / render_fn, or one of the printer-only pseudo-functions below */
@@ -64,7 +68,7 @@ export const PSEUDO_FNS = [
 
 const AGGS: string[] = ['min', 'max', 'sum', 'avg']
 const SUBJECT: SelectExpr = { kind: 'subject' }
-const lit = (value: string | number | bigint): SelectExpr => ({ kind: 'lit', value })
+const lit = (value: LitValue): SelectExpr => ({ kind: 'lit', value })
 const apply = (fn: string, ...args: SelectExpr[]): SelectExpr => ({ kind: 'apply', fn: fnRef(fn), args })
 const aggregate = (fn: string, over: SelectExpr): SelectExpr => ({ kind: 'aggregate', fn: fnRef(fn), over })
 
@@ -295,9 +299,13 @@ export function functionsIn(e: SelectExpr, out: FnRef[] = []): FnRef[] {
 // over the algebra registry, and its grammar is not Apply-shaped. This is the surface `enumeratio calc` parses and
 // the shape an engine's `can()` walks.
 //
-//   binomial(5, 2)            → apply(binomial, [5, 2])
-//   cardinality(permutations(4))  → apply(cardinality, [apply(permutations, [4])])
-//   pi                        → apply(pi, [])
+//   binomial(5, 2)                    → apply(binomial, [5, 2])
+//   cardinality(permutations(4))      → apply(cardinality, [apply(permutations, [4])])
+//   gaussian_add(gaussian_integer(2, 3), gaussian_integer(1, -4))
+//                                     → a CARRIER CONSTRUCTION nested inside an apply; each engine builds the
+//                                       composite its own way (pg `ROW(2,3)::gaussian_integer`, ts `{re,im}`)
+//   multicomplex([2, 3], 97)          → an array literal as a carrier field
+//   pi                                → apply(pi, [])
 
 const CALC_TOKEN = /\s*(?:([A-Za-z_][A-Za-z0-9_]*)|(-?\d+)|'((?:[^']|'')*)'|(.))/y
 
@@ -319,10 +327,23 @@ export function parseCalc(text: string): Expr {
   const eat = (p: string): boolean => { const t = peekTok(); if (t?.kind === 'punct' && t.text === p) { at = CALC_TOKEN.lastIndex; return true } return false }
 
   function parseOne(): SelectExpr {
+    if (eat('[')) {
+      const items: Scalar[] = []
+      if (!eat(']')) {
+        for (;;) {
+          const e = parseOne()
+          if (e.kind !== 'lit' || Array.isArray(e.value)) return fail('an array literal holds constants, not nested arrays or calls')
+          items.push(e.value as Scalar)
+          if (eat(']')) break
+          if (!eat(',')) return fail('expected "," or "]" in an array literal')
+        }
+      }
+      return { kind: 'lit', value: items }
+    }
     const t = take()
     if (t.kind === 'int') return { kind: 'lit', value: Number(t.text) }
     if (t.kind === 'str') return { kind: 'lit', value: t.text }
-    if (t.kind !== 'id') return fail(`expected a function, a number or a quoted string, got "${t.text}"`)
+    if (t.kind !== 'id') return fail(`expected a function, a number, a quoted string or an array, got "${t.text}"`)
     const fn = fnRef(t.text)
     if (!eat('(')) return { kind: 'apply', fn, args: [] }
     const args: SelectExpr[] = []
@@ -341,10 +362,13 @@ export function parseCalc(text: string): Expr {
   return { select: [e] }
 }
 
+const constText = (v: LitValue): string =>
+  Array.isArray(v) ? `[${v.map(constText).join(', ')}]` : typeof v === 'string' ? `'${String(v).replace(/'/g, "''")}'` : String(v)
+
 /** The canonical text of a scalar tree — the inverse of parseCalc, and what `--explain` echoes back. */
 export function calcText(e: SelectExpr): string {
   switch (e.kind) {
-    case 'lit': return typeof e.value === 'string' ? `'${e.value.replace(/'/g, "''")}'` : String(e.value)
+    case 'lit': return constText(e.value)
     case 'apply': return e.args.length ? `${e.fn}(${e.args.map(calcText).join(', ')})` : String(e.fn)
     case 'aggregate': return `${e.fn}(${calcText(e.over)})`
     case 'subject': return 'element'

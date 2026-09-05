@@ -4,13 +4,21 @@
 //   2. an AbortSignal really interrupts, on a backend that can interrupt. The node worker is that backend: a tight
 //      enumeration ignores statement_timeout, so terminate() is the only thing that stops it.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
+import { coreBundleHash } from '@enumeratio/data/node'
 import {
-  cancelDb, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, makeDb, makeWorkerDb, parseCalc,
-  pgEngine, planRows, provideDb, provideEngine, registry, Registry, resetRegistry, routerEngine, runSql,
+  cancelDb, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, provideCatalog, makeDb, makeWorkerDb, parseCalc,
+  lowerScalar, pgEngine, planRows, provideDb, provideEngine, registry, Registry, resetRegistry, routerEngine, runSql,
   setQueryTimeout, tsEngine, type Expr, type RowQuery,
 } from '../src/index.ts'
 
 const collect = async <T>(it: AsyncIterable<T>): Promise<T[]> => { const o: T[] = []; for await (const x of it) o.push(x); return o }
+
+/** Build the catalog snapshot off the connection this test already has, instead of reading the release artifact.
+ *  The artifact is generated at pack time and gitignored, so a suite that read it would be testing whether
+ *  someone had run a build — and would go red on every sqlsrc edit until they did. */
+const useLiveCatalog = () =>
+  provideCatalog(async () => ({ snapshot: await buildCatalogSnapshot(runSql, coreBundleHash()), liveHash: coreBundleHash() }))
 
 describe('pg-engine · the row half is planRows, unchanged', () => {
   // eagerly, so the Db factory is registered before anything calls a legacy export (see pgEngine's docstring)
@@ -80,6 +88,7 @@ describe('ts-engine · capability is data, and correctness beats speed', () => {
   beforeAll(async () => {
     resetRegistry()
     pg = pgEngine(() => makeDb())
+    useLiveCatalog()
     reg = await registry()
     ts = tsEngine(reg)
     router = routerEngine([ts, pg])
@@ -198,5 +207,62 @@ describe('ts-engine · capability is data, and correctness beats speed', () => {
     expect(reg.dirty).toMatch(/extended with raw SQL/)
     expect(ts.can(parseCalc('gcd(12, 18)'))).toBe(false)
     expect(pg.can(parseCalc('gcd(12, 18)'))).toBe(true)
+  })
+})
+
+describe('composite carriers · ts answers what it can print, and declines what it cannot', () => {
+  let reg: Awaited<ReturnType<typeof registry>>
+  let ts: ReturnType<typeof tsEngine>
+  let pg: ReturnType<typeof pgEngine>
+
+  beforeAll(async () => {
+    resetRegistry()
+    pg = pgEngine(() => makeDb())
+    useLiveCatalog()
+    reg = await registry()
+    ts = tsEngine(reg)
+  })
+  afterAll(async () => { await close(); resetRegistry() })
+
+  const value = async (e: ReturnType<typeof tsEngine>, text: string): Promise<string> => {
+    const r = e.evaluate(parseCalc(text))
+    for await (const row of r.rows) return String(Object.values(row)[0])
+    throw new Error('no rows')
+  }
+
+  it('builds a composite argument from the calc grammar and agrees with pg', async () => {
+    for (const text of [
+      'gaussian_add(gaussian_integer(2, 3), gaussian_integer(1, -4))',
+      'gaussian_mul(gaussian_integer(2, 3), gaussian_integer(1, -4))',
+      'gaussian_norm(gaussian_integer(2, 3))',
+      'mc_mul(multicomplex([2, 3, 4, 5], 97), multicomplex([5, 7, 1, 2], 97))',
+      'inversions(permutation([2, 4, 1, 3]))',
+    ]) expect([text, await value(ts, text)]).toEqual([text, await value(pg, text)])
+  })
+
+  it('prints a composite RESULT through the notation twin, not through String()', async () => {
+    // the ±1 coefficient cases are exactly where a naive interpolation would say 3+-1i
+    expect(await value(ts, 'gaussian_add(gaussian_integer(2, 3), gaussian_integer(1, -4))')).toBe('3-i')
+    expect(await value(ts, 'gaussian_neg(gaussian_integer(0, 1))')).toBe('-i')
+    expect(await value(ts, 'mc_add(multicomplex([2, 3], 97), multicomplex([5, 7], 97))')).toBe('7 + 10j1')
+    expect(await value(ts, 'permutation_unrank(4, 5)')).toBe('1432')
+    expect(await value(ts, 'composition_from_mask(5, 6)')).toBe('2+1+2')
+  })
+
+  it('pg lowers a carrier construction to ROW(...)::carrier, arrays included', () => {
+    expect(lowerScalar(parseCalc('gaussian_norm(gaussian_integer(2, 3))').select[0]))
+      .toBe('gaussian_norm(ROW(2, 3)::gaussian_integer)')
+    expect(lowerScalar(parseCalc('mc_neg(multicomplex([2, 3], 97))').select[0]))
+      .toBe('mc_neg(ROW(ARRAY[2, 3], 97)::multicomplex)')
+  })
+
+  it('a carrier construction is checked against its declared fields', () => {
+    expect(ts.why(parseCalc('gaussian_integer(1)'))).toMatch(/takes 2 fields \(re, im\); got 1/)
+  })
+
+  it('lehmer_code stays pg-only: the two sides hold different arrays for the same code (#293)', () => {
+    expect(reg.impls('lehmer_code', 'ts')).toHaveLength(0)
+    expect(reg.impls('lehmer_code', 'pg')).toHaveLength(1)
+    expect(ts.why(parseCalc('lehmer_code(permutation([2, 4, 1, 3]))'))).toMatch(/no ts implementation/)
   })
 })

@@ -144,6 +144,12 @@ function resolve(reg: Registry, e: SelectExpr, representation?: CanOpts['represe
     kinds.push(r.kind)
   }
   const id = String(e.fn)
+  // a carrier CONSTRUCTION lowers to pg's own composite constructor, not to a function call
+  if (reg.carrier(id)) {
+    const c = reg.carrier(id)!
+    if (c.fields.length !== kinds.length) return `${id} takes ${c.fields.length} field${c.fields.length === 1 ? '' : 's'} (${c.fields.map((f) => f.name).join(', ')}); got ${kinds.length}`
+    return { kind: 'composite', ref: id }
+  }
   if (!reg.curated(id)) return { kind: 'other', ref: id }   // outside the registry's authority — let SQL decide
   const impl = reg.resolveImpl(id, 'pg', kinds, representation)
   if (!impl) return `no pg implementation of ${id}(${kinds.join(', ')})`
@@ -151,16 +157,29 @@ function resolve(reg: Registry, e: SelectExpr, representation?: CanOpts['represe
 }
 
 const lit = (v: string): string => `'${v.replace(/'/g, "''")}'`
+/** a constant as SQL: an array constant becomes an ARRAY[...] constructor, which is what a carrier field wants */
+const constSql = (v: unknown): string =>
+  Array.isArray(v) ? `ARRAY[${v.map(constSql).join(', ')}]` : typeof v === 'string' ? lit(v) : String(v)
 
 /** The tree as SQL. Only the impl pointer is substituted; nothing else about the expression is rewritten. */
 function toSqlScalar(reg: Registry, e: SelectExpr, representation?: CanOpts['representation']): string {
-  if (e.kind === 'lit') return typeof e.value === 'string' ? lit(e.value) : String(e.value)
+  if (e.kind === 'lit') return constSql(e.value)
   if (e.kind === 'raw') return e.sql
   if (e.kind !== 'apply') throw new Error(`pg-engine: cannot lower a ${e.kind} node outside a FROM`)
   const r = resolve(reg, e, representation)
   if (typeof r === 'string') throw new Error(`pg-engine: ${r}`)
   const args = e.args.map((a) => toSqlScalar(reg, a, representation))
+  if (reg.carrier(String(e.fn))) return `ROW(${args.join(', ')})::${String(e.fn)}`
   return args.length ? `${r.ref}(${args.join(', ')})` : r.ref
+}
+
+/** The SQL pg-engine would run for one scalar column. Exported so a differential can certify THE ENGINE'S OWN
+ *  lowering — impl_ref substitution, `ROW(…)::carrier` construction, `ARRAY[…]` literals — instead of a second,
+ *  hand-written spelling that could agree with another engine while both disagree with the database. */
+export function lowerScalar(e: SelectExpr, representation?: CanOpts['representation']): string {
+  const reg = registrySync()
+  if (!reg) throw new Error('pg-engine: the catalog registry has not loaded — await engine.ready() first')
+  return toSqlScalar(reg, e, representation)
 }
 
 function scalar(expr: Expr, opts: EngineOpts): EvaluateResult {

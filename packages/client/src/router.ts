@@ -45,10 +45,9 @@ export function routerEngine(engines: Engine[]): Engine {
         }
         throw last instanceof Error ? last : new Error('no engine could evaluate this expression')
       })()
-      return {
-        plan: run.then((r) => r.plan),
-        rows: { async *[Symbol.asyncIterator]() { yield* (await run).rows } },
-      }
+      const plan = run.then((r) => r.plan)
+      plan.catch(() => {})   // see engine.ts: a caller consuming only `rows` must not also crash the process
+      return { plan, rows: { async *[Symbol.asyncIterator]() { yield* (await run).rows } } }
     },
 
     async extend(delta: EngineDelta): Promise<void> { await Promise.all(engines.map((e) => e.extend(delta))) },
