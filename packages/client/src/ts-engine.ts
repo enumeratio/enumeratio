@@ -16,7 +16,7 @@
 // router falls through to the oracle. Refusing to print a near-miss is the whole reason a router is safe.
 import * as math from '@enumeratio/math'
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan, Representation } from './engine'
-import { functionsIn, irToSpec, type Expr, type SelectExpr } from './ir'
+import { functionsIn, handleColl, handleExprText, irToSpec, type Expr, type SelectExpr } from './ir'
 import { carriesExactly, kindOfValue, type ImplRow, type Registry, type TypeKind } from './registry'
 import type { Row } from './core'
 
@@ -56,7 +56,7 @@ export function tsEngine(reg: Registry): Engine {
   /** the first reason this engine declines `expr`, or undefined */
   function reject(expr: Expr, opts: CanOpts = {}): string | undefined {
     if (reg.dirty) return reg.dirty
-    const coll = expr.from?.from.coll ?? null
+    const coll = expr.from ? handleColl(expr.from.from) : null
     const granted = reg.grants('ts', coll)
 
     // A FROM means ENUMERATING the collection, which is not a column-group question at all — the grants say what
@@ -64,7 +64,7 @@ export function tsEngine(reg: Registry): Engine {
     // it declines every FROM outright. This check has to be first and explicit: a statement with an EMPTY select
     // still projects the archetype's default columns, so the per-column basket loop below would wave it through
     // on a technicality (found by selfcert-engine, which watched ts answer a grouped query with one blank row).
-    if (expr.from) return `ts has no enumerator for ${expr.from.from.coll} — the row half needs an enumerator twin (#281), not a grant`
+    if (expr.from) return `ts has no enumerator for ${coll ?? handleExprText(expr.from.from)} — the row half needs an enumerator twin (#281), not a grant`
     if (!expr.select.length) return 'an expression with no columns denotes nothing'
 
     for (const col of expr.select) {

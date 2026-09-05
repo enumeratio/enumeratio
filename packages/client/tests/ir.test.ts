@@ -5,7 +5,7 @@
 // deliberate edit to this file rather than a surprise in the explorer's URLs.
 import { describe, expect, it } from 'vitest'
 import {
-  calcText, exprFromStatement, fnRef, functionsIn, parseCalc, handleExprText, groupingText, irToSpec, isClosed, orderByText, parseOrderBy,
+  calcText, exprFromStatement, fnRef, functionsIn, handleColl, parseCalc, parseFrom, handleExprText, groupingText, irToSpec, isClosed, orderByText, parseOrderBy,
   relFromRowQuery, rowQueryFromRel, selectFromText, specToIr, statementFromExpr, textFromSelect,
   parseSelect, rowQueryFromSearch, searchFromRowQuery, type RowQuery, type SelectExpr,
 } from '../src/index.ts'
@@ -54,6 +54,20 @@ describe('the row half: RowQuery ⇄ Rel', () => {
     'round-trips %s unchanged', (_id, q) => {
       expect(rowQueryFromRel(relFromRowQuery(q))).toEqual(q)
     })
+
+  it('keeps a construction-FROM verbatim — its arguments are TYPES, not axis bindings', () => {
+    for (const from of ['finsets_of(natural_number)', 'maps_of(fin(3), fin(2))', 'products_of(permutations(n), words(n, 2))']) {
+      const rel = relFromRowQuery({ from })
+      expect(rel.from).toEqual({ raw: from })
+      expect(handleColl(rel.from)).toBeNull()          // only the catalog can say which collection this resolves to
+      expect(rowQueryFromRel(rel).from).toBe(from)     // byte-identical, like every other raw clause
+    }
+  })
+
+  it('parses an ordinary handle rather than falling back to raw', () => {
+    expect(parseFrom('k_subsets(n=2..4, k=2)')).toEqual({ coll: 'k_subsets', named: { n: [2, 4], k: 2 }, positional: [] })
+    expect(handleColl(parseFrom('permutations(4)'))).toBe('permutations')
+  })
 
   it('keeps an unrepresentable WHERE verbatim (faithful or nothing)', () => {
     const q: RowQuery = { from: 'permutations(4)', where: 'descents >= 2 OR inversions < 3' }

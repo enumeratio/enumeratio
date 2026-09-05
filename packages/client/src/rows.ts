@@ -803,7 +803,7 @@ export async function planRows(q: RowQuery, w: RowWindow = {}, select: RowSelect
     if (prefix.length === s.axes.length) return fiberRows.map((r) => ({ ...r, count: cardText(r.count) }))
     const acc = new Map<string, Row>()
     for (const r of fiberRows) {
-      const k = prefix.map((a) => String(r[a])).join(' ')
+      const k = prefix.map((a) => String(r[a])).join('\u0000')
       const cur = acc.get(k)
       if (!cur) acc.set(k, { ...Object.fromEntries(prefix.map((a) => [a, r[a]])), count: cardText(r.count) })
       else cur.count = addCards(String(cur.count), cardText(r.count))

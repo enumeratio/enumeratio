@@ -160,8 +160,17 @@ export const textFromSelect = (select: SelectExpr[]): string => selectText(selec
 
 // ── the row half ──────────────────────────────────────────────────────────────────────────────────────────────────
 
-/** The FROM: a collection and its bindings, keeping positional-vs-named so the print is the caller's own spelling. */
-export type HandleExpr = { coll: string; named: Record<string, ParamValue>; positional: ParamValue[] }
+/** The FROM: a collection and its bindings, keeping positional-vs-named so the print is the caller's own spelling.
+ *
+ *  A CONSTRUCTION-FROM (`finsets_of(natural_number)`, `maps_of(fin(3), fin(2))`) has no such structure — its
+ *  arguments are TYPES, not axis bindings, and resolving it to a realized collection is an async catalog read
+ *  (`resolveFrom`), not a parse. So it stays `{ raw }`, the same faithful-or-nothing escape WHERE and ORDER BY
+ *  already use, and the engines hand it to the row half as text exactly as they always did. Without this an
+ *  `Expr` simply could not denote a construction, and `evaluate()` threw on one. */
+export type HandleExpr = { coll: string; named: Record<string, ParamValue>; positional: ParamValue[] } | { raw: string }
+
+/** The collection a FROM names, or null when it is an unresolved construction (only the catalog knows). */
+export const handleColl = (h: HandleExpr): string | null => ('raw' in h ? null : h.coll)
 export type OrderKey = { col: string; dir?: 'asc' | 'desc'; nulls?: 'first' | 'last' }
 /** a conjunction of chip terms, or the clause text the codec declined to reinterpret */
 export type Where = Pred[] | { raw: string }
@@ -184,6 +193,7 @@ const paramText = (v: ParamValue) => (Array.isArray(v) ? `${v[0]}..${v[1]}` : St
 /** The canonical text of a FROM: positional bindings first, then named, `coll(a, k=2)`. Unbound axes are absent —
  *  parseHandle drops `axis=0..`, so it never round-trips back into the text. */
 export function handleExprText(h: HandleExpr): string {
+  if ('raw' in h) return h.raw
   const parts = [...h.positional.map(paramText), ...Object.entries(h.named).map(([k, v]) => `${k}=${paramText(v)}`)]
   return parts.length ? `${h.coll}(${parts.join(', ')})` : h.coll
 }
@@ -237,9 +247,19 @@ export function parseOrderBy(text: string): OrderKey[] | null {
 export const orderByText = (keys: OrderKey[]): string =>
   keys.map((k) => `${ident(k.col)}${k.dir ? ` ${k.dir.toUpperCase()}` : ''}${k.nulls ? ` NULLS ${k.nulls.toUpperCase()}` : ''}`).join(', ')
 
+/** The FROM as a tree, or `{ raw }` when it is not an axis-bound handle — a construction-FROM, whose arguments
+ *  are types rather than bindings and which only the catalog can resolve. */
+export function parseFrom(text: string): HandleExpr {
+  try {
+    return parseHandle(text)
+  } catch {
+    return { raw: text.trim() }
+  }
+}
+
 /** A RowQuery → the row half of the tree. Every clause it cannot represent is kept verbatim as `{ raw }`. */
 export function relFromRowQuery(q: RowQuery): Rel {
-  const r: Rel = { from: parseHandle(q.from) }
+  const r: Rel = { from: parseFrom(q.from) }
   const w = q.where?.trim(); if (w) r.where = parsePreds(w) ?? { raw: w }
   const g = q.groupBy?.trim(); if (g) r.groupBy = parseGroupBy(g)
   const h = q.having?.trim(); if (h) r.having = parsePreds(h) ?? { raw: h }

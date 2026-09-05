@@ -48,6 +48,15 @@ describe('pg-engine · the row half is planRows, unchanged', () => {
     expect(await collect(rows)).toEqual(direct.rows)
   })
 
+  it('a construction-FROM evaluates through the seam, resolved by the row half as it always was', async () => {
+    const q = { from: 'maps_of(fin(3), fin(2))' }
+    const w = { count: 5 }
+    const direct = await planRows(q, w, {})
+    const { plan, rows } = evaluate(exprFromStatement(q), { window: w })
+    expect((await plan).sql).toBe(direct.sql)
+    expect(await collect(rows)).toEqual(direct.rows)
+  })
+
   it('a bare literal is a legal scalar expression — pg claims it and prints it', async () => {
     const e = pgEngine()
     await e.ready?.()
