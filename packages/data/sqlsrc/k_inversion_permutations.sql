@@ -43,6 +43,28 @@ CREATE FUNCTION fiber_symbol(f k_inversion_permutations_fiber) RETURNS text LANG
 
 INSERT INTO base_collection VALUES ('k_inversion_permutations', 'permutation');
 INSERT INTO base_grade VALUES ('k_inversion_permutations', 1, 'n', NULL, NULL), ('k_inversion_permutations', 2, 'k', '0', 'g1*(g1-1)/2');   -- k = inversions, 0..C(n,2)
+
+-- direct unrank: a Lehmer-code digit decode, exactly like permutation_unrank_lex, but each digit's WEIGHT is the
+-- Mahonian count of completions instead of a factorial — because the Lehmer digit chosen at each step (its 0-indexed
+-- rank among the remaining values) is EXACTLY the number of inversions it contributes (that many smaller values are
+-- left to appear after it), so inversions decompose additively across positions just like the plain factorial radix.
+CREATE FUNCTION fiber_unrank(f k_inversion_permutations_fiber, rank rank_index) RETURNS permutation LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE n int := (f).n::int; avail int[] := ARRAY(SELECT generate_series(1,n)); res int[] := '{}';
+          remrank numeric := rank; remaining_k int := (f).k::int; m int; r int; cnt numeric; chosen_r int;
+  BEGIN
+    FOR m IN REVERSE n..1 LOOP                                      -- m = # remaining slots (avail has length m)
+      chosen_r := m - 1;                                            -- fallback (only reached if rank was out of range)
+      FOR r IN 0..m-1 LOOP
+        cnt := mahonian_number(m - 1, remaining_k - r);              -- completions if this step contributes r inversions
+        IF remrank < cnt THEN chosen_r := r; EXIT; END IF;
+        remrank := remrank - cnt;
+      END LOOP;
+      res := res || avail[chosen_r + 1];
+      avail := avail[1:chosen_r] || avail[chosen_r + 2:array_length(avail,1)];
+      remaining_k := remaining_k - chosen_r;
+    END LOOP;
+    RETURN ROW(res)::permutation;
+  END $fu$;
 SELECT base_realize('k_inversion_permutations');
 
 -- register with the triangle-slicing machinery: row-sum recovers n! (same as k_descent_permutations / k_cycle_permutations).
@@ -67,4 +89,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
           = ARRAY(SELECT cardinality(k_inversion_permutations(4,k)) FROM generate_series(6,0,-1) k))::text $q$),
   ('k_inversion_permutations','contains via <@: 213 ∈ (3,1) (one inversion), ∉ (3,0)','eq','true|false','exactly k inversions',$q$
     SELECT (ROW(ARRAY[2,1,3])::permutation <@ k_inversion_permutations(3,1))::text || '|' ||
-           (ROW(ARRAY[2,1,3])::permutation <@ k_inversion_permutations(3,0))::text $q$);
+           (ROW(ARRAY[2,1,3])::permutation <@ k_inversion_permutations(3,0))::text $q$),
+  ('k_inversion_permutations','fiber_unrank(k_inversion_permutations(5,4), 0..21) are all members (accel floor)','eq','true','the Lehmer-digit unrank lands inside the T(5,4)=22 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(k_inversion_permutations(5,4)) f), ord::rank_index) <@ k_inversion_permutations(5,4))::text
+      FROM generate_series(0, cardinality(k_inversion_permutations(5,4))::int - 1) ord $q$);
