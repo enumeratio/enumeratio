@@ -70,4 +70,16 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
    'permutations(3) has 6 elements: [4,100) yields the last two',
    $q$ SELECT string_agg(render(e), ',' ORDER BY rank(e)) FROM elements(permutations(3), rank_index_range(4, 100, '[)')) e $q$),
   ('handle-windows','empty slice','eq','0','',
-   $q$ SELECT count(*)::text FROM elements(permutations(3), rank_index_range(2, 2, '[)')) e $q$);
+   $q$ SELECT count(*)::text FROM elements(permutations(3), rank_index_range(2, 2, '[)')) e $q$),
+
+  -- #254: an open walk whose fibers run barren has no next element in the handle's own fiber_address order, so it
+  -- must stop rather than ride the iteration backstop for 20s. Both element windows carry the barren-fiber budget.
+  ('handle-windows','an open walk over a barren ray terminates','eq','1',
+   'singleton_species is nonempty only at n=1: the walk yields that one element and stops instead of raying on empty fibers',
+   $q$ SELECT count(*)::text FROM elements(singleton_species(), 100) e $q$),
+  ('handle-windows','a slice over a barren ray terminates too','eq','1',
+   'the same budget on elements(h, slice), where a fiber is barren when it adds nothing to the running index',
+   $q$ SELECT count(*)::text FROM elements(singleton_species(), rank_index_range(0, 5, '[)')) e $q$),
+  ('handle-windows','the budget never truncates a productive walk','eq','100',
+   'permutations yields on every fiber, so the barren counter never advances and the element limit still binds',
+   $q$ SELECT count(*)::text FROM elements(permutations(), 100) e $q$);

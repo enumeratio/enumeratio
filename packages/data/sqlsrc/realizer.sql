@@ -557,18 +557,27 @@ BEGIN
   -- can't produce it today, since Handle.built()'s "trailing unbound" ctor convention drops a bound axis behind an
   -- unbound one) is effectively pinned at its lower bound rather than dovetailed — a real but incomplete slice, not
   -- an error, and a fine default until a genuine multi-axis open walk is worth building.
+  --
+  -- The BARREN-FIBER BUDGET (`dry`, #254) is what makes that slice terminate. `got` only advances on a fiber that
+  -- yields something, so a ray of empty fibers never reaches element_limit and the walk ran to the 1e6 iteration
+  -- backstop instead — 20s+, i.e. a hang. Two shapes hit it: a collection empty off one grade value
+  -- (singleton_species is nonempty only at n=1), and the pinned-inner-axis slice above (multisets pins n=0 and rays
+  -- on k, where every fiber past k=0 is empty). Neither has a next element in the handle's own fiber_address order,
+  -- so stopping and returning what was found is the honest answer, not a truncation of something reachable.
+  -- The budget counts barren fibers CUMULATIVELY, never resetting, so the total walk is bounded by
+  -- element_limit + 1000 fibers; a productive fiber is never cut off by it.
   EXECUTE format(
     'CREATE FUNCTION elements(h %I, element_limit int DEFAULT 5000) RETURNS SETOF %I LANGUAGE plpgsql STABLE AS $b$ '
-    'DECLARE f %I; got int := 0; d int; iter int := 0; BEGIN '
+    'DECLARE f %I; got int := 0; d int; iter int := 0; dry int := 0; BEGIN '
     'IF NOT (%s) THEN '
     'RETURN QUERY SELECT (e).* FROM fibers(h) ff, LATERAL elements(ff, element_limit) e ORDER BY fiber_address(ff), (e).rank LIMIT element_limit; '
     'RETURN; '
     'END IF; '
     'f := clamp_fiber(ROW(%s)::%I); '
-    'WHILE got < element_limit AND f IS NOT NULL AND iter < 1000000 LOOP '
+    'WHILE got < element_limit AND f IS NOT NULL AND iter < 1000000 AND dry < 1000 LOOP '
     'IF %s THEN EXIT; END IF; '
     'RETURN QUERY SELECT (e).* FROM elements(f, element_limit - got) e; '
-    'GET DIAGNOSTICS d = ROW_COUNT; got := got + d; f := next(f); iter := iter + 1; '
+    'GET DIAGNOSTICS d = ROW_COUNT; IF d = 0 THEN dry := dry + 1; END IF; got := got + d; f := next(f); iter := iter + 1; '
     'END LOOP; '
     'END $b$',
     coll, coll || '_element', coll || '_fiber',
@@ -631,25 +640,29 @@ BEGIN
   -- fibers by the odometer (works on an OPEN handle), skips whole fibers by cardinality, and jumps straight to each
   -- element via element_at when fiber_unrank exists — else scans only that fiber's prefix. Nothing past the slice's
   -- upper bound is ever materialized; the client's paging (OFFSET over elements(h, first+count)) can retire onto this.
+  -- Carries the same barren-fiber budget as elements(h, element_limit) above, for the same reason — here a fiber is
+  -- barren when it adds nothing to `run`, which covers both an empty fiber and one outside the handle's ranges.
   slice_emit := CASE WHEN has_fiber_unrank
     THEN 'RETURN QUERY SELECT (element_at(f, i::rank_index)).* FROM generate_series(a::bigint, (b - 1)::bigint) i; GET DIAGNOSTICS d = ROW_COUNT;'
     ELSE 'RETURN QUERY SELECT (e).* FROM elements(f, least(b, 2147483647)::int) e OFFSET a LIMIT (b - a); GET DIAGNOSTICS d = ROW_COUNT;' END;
   EXECUTE format(
     'CREATE FUNCTION elements(h %1$I, s rank_index_range) RETURNS SETOF %2$I LANGUAGE plpgsql STABLE AS $b$ '
-    'DECLARE f %3$I; lo numeric; hi numeric; run numeric := 0; c numeric; a numeric; b numeric; d int; iter int := 0; BEGIN '
+    'DECLARE f %3$I; lo numeric; hi numeric; run numeric := 0; r0 numeric; c numeric; a numeric; b numeric; d int; iter int := 0; dry int := 0; BEGIN '
     'IF isempty(s) THEN RETURN; END IF; '
     'IF upper(s) IS NULL THEN RAISE EXCEPTION ''elements(handle, slice): the slice needs a finite upper bound''; END IF; '
     'lo := coalesce(lower(s), 0) + CASE WHEN lower(s) IS NOT NULL AND NOT lower_inc(s) THEN 1 ELSE 0 END; '
     'hi := upper(s) + CASE WHEN upper_inc(s) THEN 1 ELSE 0 END; '
     'f := %4$s::%3$I; '
-    'WHILE f IS NOT NULL AND run < hi AND iter < 1000000 LOOP '
+    'WHILE f IS NOT NULL AND run < hi AND iter < 1000000 AND dry < 1000 LOOP '
     'IF %5$s THEN EXIT; END IF; '
+    'r0 := run; '
     'IF %6$s THEN '
     'c := cardinality(f); a := greatest(lo - run, 0); b := hi - run; d := 0; '
     'IF c IS NOT NULL THEN b := least(b, c); END IF; '
     'IF a < b THEN %7$s END IF; '
     'run := run + CASE WHEN c IS NULL THEN a + d ELSE c END; '
     'END IF; '
+    'IF run = r0 THEN dry := dry + 1; END IF; '
     'f := next(f); iter := iter + 1; '
     'END LOOP; END $b$',
     coll, coll || '_element', coll || '_fiber', first_fiber, past_h, within_h, slice_emit);
