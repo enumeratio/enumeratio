@@ -52,6 +52,67 @@ CREATE FUNCTION contains_in_fiber(f standard_tableaux_fiber, v standard_tableau)
     RETURN true;
   END $$;
 
+-- accel hook: fiber_unrank via cell-by-cell digit-DP over the row_word, in the same lex order fiber_elements builds
+-- (ORDER BY w). At each position we need, for a candidate row r, the number of ballot-word completions of the
+-- remaining cells — NOT a closed form (unlike fiber_count's telephone-number sum over shapes), so it's computed by a
+-- level-synchronized frontier DP: the state is the partial shape (row lengths so far, always a partition under the
+-- ballot condition) and each step aggregates ways-to-reach BY SHAPE before advancing — this keeps the state space
+-- bounded by the number of partitions of size ≤ n (not the much larger leaf-count of naive branching, which would be
+-- O(telephone_number) per call). shape completions are independent of which specific tableau produced that shape
+-- (only row lengths gate future growth), so this is exact, not an approximation.
+CREATE FUNCTION standard_tableaux_shape_completions(shape int[], remaining int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE
+    frontier jsonb := jsonb_build_object(array_to_string(shape, ','), to_jsonb(1::numeric));
+    nxt jsonb; key text; ways numeric; row int[]; nr int; r int; new_row int[]; new_key text; step int;
+  BEGIN
+    FOR step IN 1..remaining LOOP
+      nxt := '{}'::jsonb;
+      FOR key, ways IN SELECT k, (frontier->>k)::numeric FROM jsonb_object_keys(frontier) k LOOP
+        row := CASE WHEN key = '' THEN ARRAY[]::int[] ELSE string_to_array(key, ',')::int[] END;
+        nr := coalesce(array_length(row,1), 0);
+        FOR r IN 0..nr LOOP                                                        -- same addable-row rule as fiber_elements
+          IF coalesce(row[r+1], 0) < (CASE WHEN r = 0 THEN 2147483647 ELSE row[r] END) THEN
+            new_row := row[1:r] || (coalesce(row[r+1], 0) + 1) || row[r+2:];
+            new_key := array_to_string(new_row, ',');
+            nxt := jsonb_set(nxt, ARRAY[new_key], to_jsonb(coalesce((nxt->>new_key)::numeric, 0) + ways), true);
+          END IF;
+        END LOOP;
+      END LOOP;
+      frontier := nxt;
+    END LOOP;
+    RETURN (SELECT coalesce(sum((frontier->>k)::numeric), 0) FROM jsonb_object_keys(frontier) k);
+  END $$;
+CREATE FUNCTION fiber_unrank(f standard_tableaux_fiber, rank rank_index) RETURNS standard_tableau LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE
+    n int := (f).size::int;
+    w int[] := ARRAY[]::int[];
+    counts int[] := ARRAY[]::int[];
+    rk numeric := rank::numeric;
+    i int; nr int; r int; new_counts int[]; cnt numeric; chosen boolean;
+  BEGIN
+    IF rank IS NULL OR rank < 0 OR rank >= telephone_number(n) THEN RETURN NULL; END IF;
+    FOR i IN 1..n LOOP
+      nr := coalesce(array_length(counts,1), 0);
+      chosen := false;
+      FOR r IN 0..nr LOOP
+        IF coalesce(counts[r+1], 0) < (CASE WHEN r = 0 THEN 2147483647 ELSE counts[r] END) THEN
+          new_counts := counts[1:r] || (coalesce(counts[r+1], 0) + 1) || counts[r+2:];
+          cnt := standard_tableaux_shape_completions(new_counts, n - i);
+          IF rk < cnt THEN
+            w := w || r;
+            counts := new_counts;
+            chosen := true;
+            EXIT;
+          ELSE
+            rk := rk - cnt;
+          END IF;
+        END IF;
+      END LOOP;
+      IF NOT chosen THEN RETURN NULL; END IF;
+    END LOOP;
+    RETURN ROW(w)::standard_tableau;
+  END $fu$;
+
 -- ── declare as DATA + realize ──────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('standard_tableaux', 'standard_tableau');
 INSERT INTO base_grade VALUES ('standard_tableaux', 1, 'size', NULL, NULL);
@@ -71,4 +132,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[0,1,0])::standard_tableau <@ standard_tableaux(3))::text || '|' ||
            (ROW(ARRAY[0,2,0])::standard_tableau <@ standard_tableaux(3))::text $q$),
   ('standard_tableaux','range constructor standard_tableaux(0,3): fibers unfold to sizes 0,1,2,3','eq','0,1,2,3','the (lo,hi) range form',$q$
-    SELECT string_agg((f).size::text, ',' ORDER BY (f).size) FROM fibers(standard_tableaux(0,3)) f $q$);
+    SELECT string_agg((f).size::text, ',' ORDER BY (f).size) FROM fibers(standard_tableaux(0,3)) f $q$),
+  ('standard_tableaux','fiber_unrank(standard_tableaux(5), 0..25) are all members (accel floor, |·|=26)','eq','true','the shape-completions DP lands inside the fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(standard_tableaux(5)) f), ord::rank_index) <@ standard_tableaux(5))::text
+      FROM generate_series(0, cardinality(standard_tableaux(5))::int - 1) ord $q$),
+  ('standard_tableaux','fiber_unrank(standard_tableaux(5), ord) matches the ord-th element in the floor''s own lex order, for every ord','eq','true','not just membership — the DP reproduces fiber_elements'' ORDER BY w exactly',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(standard_tableaux(5)) f), ordinality(e)::rank_index) = (e).value)::text
+    FROM elements(standard_tableaux(5)) e $q$);
