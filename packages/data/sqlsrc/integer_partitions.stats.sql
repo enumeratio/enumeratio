@@ -6,11 +6,13 @@
 CREATE FUNCTION partition_distinct_parts(x integer_partition) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(DISTINCT part)::int FROM unnest((x).parts) part $$;                     -- empty ⇒ 0
 
--- number of odd parts (FindStat St000257). e.g. 3+2+1 → 2 (the 3 and the 1).
+-- number of odd parts. e.g. 3+2+1 → 2 (the 3 and the 1). NOTE: NOT FindStat St000257 — that is "number of
+-- distinct parts occurring at least twice" ([1,1] → 1, but odd_parts([1,1]) = 2); verified against findstat.org (#263).
 CREATE FUNCTION partition_odd_parts(x integer_partition) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(*)::int FROM unnest((x).parts) part WHERE part % 2 = 1 $$;
 
--- number of even parts (FindStat St000256). e.g. 4+2 → 2, 3+2+1 → 1.
+-- number of even parts. e.g. 4+2 → 2, 3+2+1 → 1. NOTE: NOT FindStat St000256 — that is "number of parts from
+-- which one can subtract 2 and still get a partition" ([2,2] → 1, but even_parts([2,2]) = 2); verified (#263).
 CREATE FUNCTION partition_even_parts(x integer_partition) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(*)::int FROM unnest((x).parts) part WHERE part % 2 = 0 $$;
 
