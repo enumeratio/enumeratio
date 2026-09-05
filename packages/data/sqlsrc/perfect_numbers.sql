@@ -7,8 +7,11 @@
 
 CREATE TYPE perfect_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f perfect_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
-  -- scan a generous bound (10000 covers 6,28,496,8128); stream in ascending order and stop after element_limit hits
-  SELECT n::numeric FROM generate_series(1, 10000) n WHERE is_perfect_number(n::numeric) LIMIT element_limit $$;
+  -- window SCALES with element_limit (#296) instead of always paying the full fixed bound, but is CAPPED at the
+  -- original 10000 (covers 6,28,496,8128) — aliquot_sum(n) costs O(n), so the 5th perfect number (33,550,336) is
+  -- not reachable by widening the scan; beyond the cap this still under-returns, same as before the fix.
+  SELECT n::numeric FROM generate_series(1, least(greatest(element_limit * 3000, 200), 10000)) n
+   WHERE is_perfect_number(n::numeric) ORDER BY n LIMIT element_limit $$;
 CREATE FUNCTION contains_in_fiber(f perfect_numbers_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT is_perfect_number(v) $$;
 
 INSERT INTO base_collection VALUES ('perfect_numbers', 'numeric', true);   -- unbounded, ungraded
