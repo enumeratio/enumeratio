@@ -1,4 +1,4 @@
--- requires: grand_dyck_paths, dyck_paths.stats2, realizer, utilities
+-- requires: grand_dyck_paths, dyck_paths.stats2, catalog-resolution, realizer, utilities
 -- grand_dyck_paths statistics — NOT new registrations: grand_dyck_paths shares the dyck_path carrier with
 -- dyck_paths, and base_stat_resolved (catalog-resolution.sql) already resolves every carrier-typed dyck_paths
 -- stat here automatically (own=false) — adding explicit base_stat rows would be a harmful duplicate (see the
@@ -6,11 +6,24 @@
 -- batch). This file is examples only, confirming the POSITIVITY-independent stats behave correctly on a path
 -- that dips below the axis: peaks/valleys/double_rises/longest_ascent/longest_descent/returns/touch_points/
 -- hills/initial_rise/major_index are well-defined on any ±1 word, and `height` (max prefix sum) stays ≥ 0 even
--- here — the free path still returns to 0, so some prefix sum is ≥ 0, hence so is the max. (`area`/`bounce`/
--- `dinv` DO also resolve here via the same carrier inheritance, but are semantically iffy on a dipping path —
--- area in particular can go negative — a pre-existing inheritance-model gap, out of scope to fix here.)
+-- here — the free path still returns to 0, so some prefix sum is ≥ 0, hence so is the max. `area`/`bounce`/
+-- `dinv` also inherit via the same carrier match, but are semantically ill-defined on a dipping path — area in
+-- particular can go negative — so they're suppressed here (#292; base_stat_suppressed, catalog-resolution.sql),
+-- narrowly, for grand_dyck_paths only. dyck_paths keeps them: they're valid there (the carrier's positivity
+-- constraint holds by construction).
+INSERT INTO base_stat_suppressed (collection, stat_id, reason) VALUES
+  ('grand_dyck_paths', 'area',   'assumes the path stays weakly above the axis; can go negative on a dipping free path (#292)'),
+  ('grand_dyck_paths', 'bounce', 'defined relative to the positivity setting; ill-defined on a dipping free path (#292)'),
+  ('grand_dyck_paths', 'dinv',   'defined relative to the positivity setting; ill-defined on a dipping free path (#292)');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('grand_dyck_paths','area/bounce/dinv are suppressed on grand_dyck_paths (ill-defined on a dipping path, #292), but still resolve on dyck_paths','eq','false|false|false|true|true|true','not resolved on grand_dyck_paths; still resolved on dyck_paths',$q$
+    SELECT EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'grand_dyck_paths' AND stat_id = 'area')::text || '|' ||
+           EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'grand_dyck_paths' AND stat_id = 'bounce')::text || '|' ||
+           EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'grand_dyck_paths' AND stat_id = 'dinv')::text || '|' ||
+           EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'dyck_paths' AND stat_id = 'area')::text || '|' ||
+           EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'dyck_paths' AND stat_id = 'bounce')::text || '|' ||
+           EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'dyck_paths' AND stat_id = 'dinv')::text $q$),
   ('grand_dyck_paths','the dyck_paths stats resolve here too (carrier inheritance, not a new registration)','eq','true','base_stat_resolved sees height on this collection without its own base_stat row',$q$
     SELECT EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'grand_dyck_paths' AND stat_id = 'height' AND NOT own)::text $q$),
   ('grand_dyck_paths','height on DUUD (dips below the axis, n=2): height 1, and it is still ≥ 0','eq','1','free path that dips to -1 before recovering',$q$
