@@ -65,6 +65,57 @@ CREATE FUNCTION contains_in_fiber(f alternating_sign_matrices_fiber, v alternati
     RETURN true;
   END $$;
 
+-- direct unrank: the ASM ↔ monotone-triangle bijection reframed as a bitmask transfer DP. Row r's "active-column
+-- set" S_r (columns whose running partial sum has reached 1) grows by exactly one net column per row — S_0 = ∅,
+-- S_n = {1..n} — and given S_{r-1}, S_r the row's actual entries are FULLY DETERMINED: v_j = [j∈S_r] − [j∈S_{r-1}]
+-- (both 0/1, so v_j ∈ {-1,0,1} automatically). The row-prefix-in-{0,1} / column-partial-sum-in-{0,1} floor
+-- constraints reduce to one clean check on the two sets: for every column-prefix length j, the CUMULATIVE
+-- popcounts must satisfy popcount(S_r∩[1,j]) − popcount(S_{r-1}∩[1,j]) ∈ {0,1} (it's literally the row's own
+-- running prefix sum). completions(S) = # ways to finish rows from state S to S_n; unranking a row tries every
+-- valid S_r extending the current S in ASCENDING order of the induced row vector (v, matching the floor's
+-- generate_series(-1,1) then final ORDER BY flat) and descends via completions(S_r).
+CREATE FUNCTION fiber_unrank(f alternating_sign_matrices_fiber, rank rank_index) RETURNS alternating_sign_matrix LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE
+    n int := (f).size::int; nmasks int; full_mask int;
+    pc numeric[]; dp numeric[];       -- pc[m+1] = popcount(m); dp[m+1] = completions remaining from state m
+    m int; s int; t int; r int; rnk numeric := rank;
+    cur int := 0; flat int[] := '{}'; cand RECORD;
+  BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[]::int[])::alternating_sign_matrix; END IF;
+    nmasks := 1 << n; full_mask := nmasks - 1;
+    pc := array_fill(0::numeric, ARRAY[nmasks]);
+    FOR m IN 1..nmasks - 1 LOOP pc[m + 1] := pc[(m >> 1) + 1] + (m & 1); END LOOP;
+    dp := array_fill(0::numeric, ARRAY[nmasks]);
+    dp[full_mask + 1] := 1;
+    FOR r IN REVERSE (n - 1)..0 LOOP
+      FOR s IN 0..nmasks - 1 LOOP
+        IF pc[s + 1] <> r THEN CONTINUE; END IF;
+        dp[s + 1] := (
+          SELECT coalesce(sum(dp[t2 + 1]), 0) FROM generate_series(0, nmasks - 1) t2
+          WHERE pc[t2 + 1] = r + 1
+            AND NOT EXISTS (SELECT 1 FROM generate_series(1, n - 1) jj
+                            WHERE (pc[(t2 & ((1 << jj) - 1)) + 1] - pc[(s & ((1 << jj) - 1)) + 1]) NOT IN (0, 1)));
+      END LOOP;
+    END LOOP;
+    FOR r IN 1..n LOOP
+      FOR cand IN
+        SELECT t2, ARRAY(SELECT ((t2 >> (jj - 1)) & 1) - ((cur >> (jj - 1)) & 1) FROM generate_series(1, n) jj) AS vrow
+        FROM generate_series(0, nmasks - 1) t2
+        WHERE pc[t2 + 1] = r
+          AND NOT EXISTS (SELECT 1 FROM generate_series(1, n - 1) jj
+                          WHERE (pc[(t2 & ((1 << jj) - 1)) + 1] - pc[(cur & ((1 << jj) - 1)) + 1]) NOT IN (0, 1))
+        ORDER BY (ARRAY(SELECT ((t2 >> (jj - 1)) & 1) - ((cur >> (jj - 1)) & 1) FROM generate_series(1, n) jj))
+      LOOP
+        IF rnk < dp[cand.t2 + 1] THEN
+          flat := flat || cand.vrow; cur := cand.t2; EXIT;
+        ELSE
+          rnk := rnk - dp[cand.t2 + 1];
+        END IF;
+      END LOOP;
+    END LOOP;
+    RETURN ROW(flat)::alternating_sign_matrix;
+  END $fu$;
+
 -- ── declare as DATA + realize ──────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('alternating_sign_matrices', 'alternating_sign_matrix');
 INSERT INTO base_grade VALUES ('alternating_sign_matrices', 1, 'size', NULL, NULL);
@@ -87,4 +138,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[0,1,0,1,-1,1,0,1,0])::alternating_sign_matrix <@ alternating_sign_matrices(3))::text || '|' ||
            (ROW(ARRAY[1,1,0,0,0,1,0,0,1])::alternating_sign_matrix <@ alternating_sign_matrices(3))::text $q$),
   ('alternating_sign_matrices','range constructor alternating_sign_matrices(0,3): fibers unfold to sizes 0,1,2,3','eq','0,1,2,3','the (lo,hi) range form',$q$
-    SELECT string_agg((f).size::text, ',' ORDER BY (f).size) FROM fibers(alternating_sign_matrices(0,3)) f $q$);
+    SELECT string_agg((f).size::text, ',' ORDER BY (f).size) FROM fibers(alternating_sign_matrices(0,3)) f $q$),
+  ('alternating_sign_matrices','fiber_unrank(alternating_sign_matrices(4), 0..N-1) reproduces the floor element-for-element, in order','eq','true','the bitmask transfer-DP unrank against the actual flattened-matrix-lex enumeration order',$q$
+    SELECT bool_and(render_value(fiber_unrank((SELECT f FROM fibers(alternating_sign_matrices(4)) f), ord::rank_index)) = expect)::text
+    FROM (SELECT render(e) AS expect, (row_number() OVER (ORDER BY e) - 1) AS ord FROM elements(alternating_sign_matrices(4)) e) t $q$);
