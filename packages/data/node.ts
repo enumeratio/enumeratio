@@ -8,10 +8,10 @@ import { fileURLToPath } from 'node:url'
 import { PGlite } from '@electric-sql/pglite'
 import { applyPackSegments, orderPacks, segmentByPack, type Pack, type SqlFile } from './sqlsrc-order.ts'
 import { readPacksFromDisk } from './pack-loader.ts'
-import { bundleHash } from './hash.ts'
+import { bundleHash, packHashes, profileHash, stalePacks, type PackHash } from './hash.ts'
 import type { CatalogSnapshot } from './catalog-snapshot.ts'
 export type { CatalogSnapshot } from './catalog-snapshot.ts'
-export { bundleHash } from './hash.ts'   // so a consumer can hash a bundle it already read, without a second read
+export { bundleHash, stalePacks, type PackHash } from './hash.ts'   // so a consumer can hash a bundle it already read, without a second read
 
 const here = dirname(fileURLToPath(import.meta.url))
 export const sqlsrcDir = join(here, 'sqlsrc')
@@ -68,6 +68,19 @@ export function coreBundleHash(): string {
   return bundleHash(coreBundle())
 }
 
+/** Per-pack hashes for the CURRENT core+packs on disk, in profile order (core first, §7). One row per loaded
+ *  pack — with zero packs extracted (today) this is a single 'core' row whose hash equals coreBundleHash(). */
+export function corePackHashes(): PackHash[] {
+  const { core, packs } = loadCoreAndPacks()
+  return packHashes(segmentByPack(orderPacks(core, packs), core, packs))
+}
+
+/** The profile hash (§7): hash of the ordered per-pack hashes for the current core+packs. Distinct from
+ *  coreBundleHash() (the plain concatenated-bundle hash the catalog snapshot versions against). */
+export function coreProfileHash(): string {
+  return profileHash(corePackHashes())
+}
+
 /** Apply core + packs into a fresh PGlite, per-file in dependency order (a single giant exec can choke pglite),
  *  bracketing each pack's files with `set_config('enumeratio.pack', …)` (see applyPackSegments). */
 export async function buildCore(): Promise<PGlite> {
@@ -80,19 +93,27 @@ export async function buildCore(): Promise<PGlite> {
 }
 
 // Boot the core in node, FAST — the node analogue of the client's browser boot.ts. MOUNT the prebuilt dump
-// (loadDataDir, ~1s) instead of re-exec'ing sqlsrc (~10s at the current catalog size), but only when its stamped
-// bundle hash matches the live sqlsrc — a stale or missing dump self-heals by rebuilding from source. This is what
-// makes "always mount" safe for the test/build consumers, which must see the CURRENT schema.
+// (loadDataDir, ~1s) instead of re-exec'ing sqlsrc (~10s at the current catalog size), but only when EVERY pack's
+// stamped hash (in `_pack_version`, one row per loaded pack — #283 phase 1.4) matches its live hash — a stale or
+// missing dump self-heals by rebuilding from source. This is what makes "always mount" safe for the test/build
+// consumers, which must see the CURRENT schema.
+//
+// The rebuild itself is still all-or-nothing (buildCore() re-execs core+packs from scratch): today's loader
+// applies each pack's files as one exec pass with no support for tearing down and re-applying a single pack in
+// isolation (a pack's DDL isn't written to be idempotent against an already-loaded pack). A correct whole rebuild
+// that REPORTS which pack forced it beats a per-pack rebuild that silently gets pack boundaries wrong.
 export async function bootCore(): Promise<PGlite> {
   try {
     const bytes = await readFile(coreDumpPath)
     const pg = new PGlite({ loadDataDir: new Blob([bytes]) })
     await pg.waitReady
     const r = await pg
-      .query<{ hash: string }>('SELECT hash FROM _core_version LIMIT 1')
-      .catch(() => ({ rows: [] as { hash: string }[] }))
-    if (r.rows[0]?.hash === coreBundleHash()) return pg   // fresh dump → the fast path
-    await pg.close()                                       // stale dump → rebuild from source below
+      .query<{ pack: string; hash: string }>('SELECT pack, hash FROM _pack_version')
+      .catch(() => ({ rows: [] as { pack: string; hash: string }[] }))
+    const stale = stalePacks(r.rows, corePackHashes())
+    if (r.rows.length > 0 && stale.length === 0) return pg   // every pack's stamped hash matches live → fast path
+    if (stale.length) console.warn(`enumeratio: bootCore self-heal — rebuilding (stale pack(s): ${stale.join(', ')})`)
+    await pg.close()                                          // stale/missing dump → rebuild from source below
   } catch {
     /* dump absent / failed to mount → build from source */
   }

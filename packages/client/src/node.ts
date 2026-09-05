@@ -7,7 +7,7 @@
 //                      `terminate()`d any other way — so long-running / untrusted-size embedders want this one.
 import { Worker } from 'node:worker_threads'
 import debug from 'debug'
-import { bootCore, bundleHash, coreBundle, coreBundleHash, coreDumpPath, loadCatalogSnapshot } from '@enumeratio/data/node'
+import { bootCore, coreBundle, coreBundleHash, coreDumpPath, corePackHashes, loadCatalogSnapshot } from '@enumeratio/data/node'
 import type { Db, Row } from './core'
 import { debugGucSetSql, routeNotice } from './debug-env'
 import { provideCatalog } from './registry'
@@ -50,11 +50,12 @@ export function makeWorkerDb(): Db {
   let closed = false   // a fire-and-forget query (the printer prime) must not respawn a worker past close()
   let seq = 0
   const pending = new Map<number, Pending>()
-  // Hand the worker everything it needs to boot self-contained: the dump PATH + the expected hash (mount fast when
-  // fresh), and the sqlsrc bundle as the rebuild fallback. The worker reads the dump itself (it has fs) — no
-  // cross-package core-loader import, which the spawned tsx context can't resolve for the loader's internals.
+  // Hand the worker everything it needs to boot self-contained: the dump PATH + the expected PER-PACK hashes
+  // (mount fast when every pack is fresh), and the sqlsrc bundle as the rebuild fallback. The worker reads the
+  // dump itself (it has fs) — no cross-package core-loader import, which the spawned tsx context can't resolve
+  // for the loader's internals.
   const bundle = coreBundle()
-  const boot = { dumpPath: coreDumpPath, expectedHash: bundleHash(bundle), bundle }
+  const boot = { dumpPath: coreDumpPath, expectedPackHashes: corePackHashes(), bundle }
 
   function failAll(err: Error) {
     for (const p of pending.values()) {

@@ -109,12 +109,23 @@ moves.sort((a, b) => a.name.localeCompare(b.name))
 
 // ---- which packs need a _pack.sql (any extracted pack that owns >=1 file after the moves) ----
 const extractedInScope = restrictPacks ? EXTRACTED_PACKS.filter(p => restrictPacks.includes(p)) : EXTRACTED_PACKS
+
+// A pack's MANIFEST `requires-pack` only names dependencies actually materialized as `packs/<p>/` directories
+// (§5's PACK_DEPS is the full aspirational graph — most of it still lives in sqlsrc/ mid-split). A dependency
+// that hasn't been extracted yet needs no graph edge: its files are still core, already the implicit dependency
+// of every pack, and `orderPacks` errors on a `requires-pack` naming a pack it can't find on disk. Staged as the
+// split lands lane-by-lane (#283 §10 phase 3) — a dep here starts appearing in the manifest the moment ITS OWN
+// pack is extracted, no manual bookkeeping.
+function materializedDeps(pack: PackName): PackName[] {
+  return PACK_DEPS[pack].filter(dep => dep === 'core' || EXTRACTED_PACKS.includes(dep))
+}
+
 type PackManifestStatus = { pack: PackName; exists: boolean; stale: boolean; path: string; requires: string; description: string | null; version: string }
 const manifestStatuses: PackManifestStatus[] = []
 for (const pack of extractedInScope) {
   const dir = join(packsDir, pack)
   const path = join(dir, '_pack.sql')
-  const deps = PACK_DEPS[pack]
+  const deps = materializedDeps(pack)
   const requiresLine = deps.join(', ') || '(none)'
   let exists = existsSync(path)
   let description: string | null = null
@@ -122,8 +133,14 @@ for (const pack of extractedInScope) {
   let stale = !exists
   if (exists) {
     const content = readFileSync(path, 'utf8')
-    const descMatch = content.match(/^--\s*(?!pack:|requires-pack:)(.+)$/m)
-    description = descMatch ? descMatch[1] : null
+    // First `-- ...` comment line that isn't the `pack:`/`requires-pack:` header (a bare negative-lookahead regex
+    // here mismatches: `\s*` backtracks to zero chars so the lookahead sees a leading space instead of "pack:"
+    // and matches anyway — filter line-by-line instead of relying on one regex to reject the header lines).
+    const descLine = content.split('\n').find(l => {
+      const m = /^--\s*(.+)$/.exec(l)
+      return m && !/^(pack|requires-pack):/.test(m[1])
+    })
+    description = descLine ? /^--\s*(.+)$/.exec(descLine)![1] : null
     const versionMatch = content.match(/VALUES\s*\(\s*'[^']*'\s*,\s*'([^']+)'/)
     if (versionMatch) version = versionMatch[1]
     const reqMatch = content.match(/^--\s*requires-pack:\s*(.*)$/m)
@@ -135,7 +152,7 @@ for (const pack of extractedInScope) {
 }
 
 function renderPackManifest(pack: PackName, description: string, version: string): string {
-  const deps = PACK_DEPS[pack]
+  const deps = materializedDeps(pack)
   return [
     `-- pack: ${pack}`,
     `-- requires-pack: ${deps.join(', ') || '(none)'}`,

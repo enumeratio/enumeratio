@@ -1,4 +1,4 @@
--- requires: realizer, polytope-collections, references
+-- requires: realizer, references
 -- base_function: the curated "named math identity" ledger — the registry gap wiki/Catalog-Audit.md names directly
 -- ("we have no identity ledger — the 'one identity, many roles' thesis"). A retired math_* naming convention was
 -- this ledger implicitly (pre-2026-08 C-extension); the individual functions survived un-prefixed in the pure-SQL
@@ -54,8 +54,19 @@ CREATE TABLE base_function_attribute (
   id          text PRIMARY KEY,        -- 'flat', 'orderless', 'one_identity'
   title       text,
   description text NOT NULL,
-  implies     text[] NOT NULL DEFAULT '{}',
-  polytope    text REFERENCES base_polytope(collection)   -- nullable; one_identity has none
+  implies     text[] NOT NULL DEFAULT '{}'
+);
+
+-- The polytope correspondence itself is a SIDE TABLE (#283 phase 2.2, §3.3's pack-contract precedent), not a
+-- column on base_function_attribute: both curated correspondences ('flat'→associahedron, 'orderless'→
+-- permutahedron) name packs/polytopes collections, and a pack may only INSERT rows, never UPDATE a row core
+-- already inserted — so the pairing is populated from packs/polytopes/identities.polytopes.sql, joined in at
+-- read time (docs/develop/data/functions.data.ts). Empty here when polytopes isn't loaded; the docs page's
+-- "corresponds to" decoration just doesn't render, same graceful-absence shape as an unmounted profile.
+CREATE TABLE base_function_attribute_polytope (
+  attribute  text NOT NULL REFERENCES base_function_attribute,
+  collection text NOT NULL REFERENCES base_collection,
+  PRIMARY KEY (attribute, collection)
 );
 
 -- function ↔ attribute, the editorial assignments (mirrors base_collection_trait_manual). FK on both sides
@@ -66,19 +77,19 @@ CREATE TABLE base_function_attribute_manual (
   PRIMARY KEY (function, attribute)
 );
 
-INSERT INTO base_function_attribute (id, title, description, implies, polytope) VALUES
+INSERT INTO base_function_attribute (id, title, description, implies) VALUES
   ('flat', 'Flat (associative)',
    'f(f(a,b),f(c,d)) = f(a,b,c,d) for any bracketing — Wolfram Language''s Flat attribute. For an n-ary '
    'endo-operation, every bracketing of the same operands is a distinct Associahedron vertex; Flat means they '
-   'all collapse to one value. Exploratory framing, not a load-bearing proof.', '{}', 'associahedron'),
+   'all collapse to one value. Exploratory framing, not a load-bearing proof.', '{}'),
   ('orderless', 'Orderless (commutative)',
    'Argument order doesn''t matter — Wolfram Language''s Orderless attribute. For an n-ary endo-operation, '
    'every ordering of the same operands is a distinct Permutahedron vertex; Orderless means they all collapse. '
-   'Exploratory framing, not a load-bearing proof.', '{}', 'permutahedron'),
+   'Exploratory framing, not a load-bearing proof.', '{}'),
   ('one_identity', 'OneIdentity',
    'f(f(x)) = f(x) = x — the degenerate unary/identity collapse, Wolfram Language''s OneIdentity attribute. '
    'No polytope correspondence. No identity below is curated with this attribute yet — it needs a genuinely '
-   'variadic n-ary function to exhibit (none of the fixed-arity-2 operations here qualify).', '{}', NULL);
+   'variadic n-ary function to exhibit (none of the fixed-arity-2 operations here qualify).', '{}');
 
 -- Curation batch 1 — 28 identities covering packages/math's ~45 exported functions (see function_impls.sql for
 -- the 59 impl rows backing them — every one with a real bare-callable SQL function, a packages/math TS twin, or

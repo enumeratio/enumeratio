@@ -1,12 +1,14 @@
 -- requires: realizer
--- requires-tag: collection
 -- examples.golden_parity — issue #79: a parity audit of the precursor `numbers` repo's worked-examples corpus
 -- (numbers/src/examples.ts) against this repo's base_example golden suite. Most of examples.ts's ~110 facts
 -- already have an equivalent base_example row somewhere in the per-collection seed files (same fact, checked
 -- against the realized surface rather than the old TS library). This file carries only the GAPS: facts that
--- had no equivalent row anywhere in the catalog. Loaded late (after realizer + every collection) so it can
--- reach across collections freely. See the issue close-out for the full parity accounting (covered / ported /
--- un-portable).
+-- had no equivalent row anywhere in the catalog. Every example below only calls CORE functions (eulerian_number,
+-- stern_diatomic_sequence, radix_value, mixed_radix_value, k_subsets, nth_prime) — this pack loading after all of
+-- core (#283 phase 2.2) already satisfies the original "after realizer + every collection" intent, so the
+-- `requires-tag: collection` this file carried under the monolithic load order is dropped as stale (it no longer
+-- has any provider to wait for within this pack's own files — §3.2 scopes the tag to the pack). See the issue
+-- close-out for the full parity accounting (covered / ported / un-portable).
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   -- Eulerian numbers: eulerian_number(n,k) exists (k_descent_permutations.sql) but isn't a registered

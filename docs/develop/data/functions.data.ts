@@ -85,7 +85,7 @@ function hasExportModifier(node: ts.Node): boolean {
 }
 
 export default {
-  watch: ['../packages/data/sqlsrc/identities.sql', '../packages/data/sqlsrc/function_impls.sql', '../packages/math/src/*.ts'],
+  watch: ['../packages/data/sqlsrc/identities.sql', '../packages/data/sqlsrc/function_impls.sql', '../packages/math/src/*.ts', '../packages/data/packs/polytopes/identities.polytopes.sql'],
   async load(): Promise<FunctionsData> {
     const pg = await bootCore()
     const q = async (sql: string) => (await pg.query(sql)).rows as any[]
@@ -94,12 +94,17 @@ export default {
     const implRows = await q(`
       SELECT function, engine, impl_ref, arg_types, return_type, representation, note
         FROM base_function_impl ORDER BY function, engine, impl_ref`)
+    // `polytope` is a LEFT JOIN, not a column on base_function_attribute (#283 phase 2.2): the correspondence
+    // targets packs/polytopes collections, so it's populated from that pack's own row
+    // (packs/polytopes/identities.polytopes.sql) — absent entirely when the pack isn't in the loaded profile.
     const attributeDefs = await q(
-      `SELECT id, title, description, polytope FROM base_function_attribute ORDER BY id`,
+      `SELECT a.id, a.title, a.description, p.collection AS polytope FROM base_function_attribute a
+         LEFT JOIN base_function_attribute_polytope p ON p.attribute = a.id ORDER BY a.id`,
     )
     const attrRows = await q(`
-      SELECT m.function, a.id, a.title, a.polytope FROM base_function_attribute_manual m
-        JOIN base_function_attribute a ON a.id = m.attribute`)
+      SELECT m.function, a.id, a.title, p.collection AS polytope FROM base_function_attribute_manual m
+        JOIN base_function_attribute a ON a.id = m.attribute
+        LEFT JOIN base_function_attribute_polytope p ON p.attribute = a.id`)
     const refRows = await q(`
       SELECT subject AS function, system, identity, url, delta, relation FROM base_reference
        WHERE subject_kind = 'function'`)

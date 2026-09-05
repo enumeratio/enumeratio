@@ -58,3 +58,103 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:build
+
+  # --- Per-pack gating (#283 §6) -------------------------------------------------------------------------------
+  # `pack-map.ts`'s `EXTRACTED_PACKS` is the single source of truth for which packs actually exist as
+  # `packs/<name>/` directories. Today it's `[]` (pre-phase-3: everything still loads as core) so `packs-setup`
+  # emits `packs: '[]'` and `packs-pack-matrix` below is skipped entirely — a new lane needs no CI edit, it just
+  # appears in the matrix once its name lands in EXTRACTED_PACKS.
+  packs-setup:
+    name: "packs: discover extracted"
+    runs-on: ubuntu-latest
+    outputs:
+      packs: ${{ steps.list.outputs.packs }}
+      has_packs: ${{ steps.list.outputs.has_packs }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - id: list
+        # `list-packs` prints EXTRACTED_PACKS (or ENUMERATIO_PACKS_OVERRIDE) as a JSON array, e.g. `[]` or
+        # `["refs","polytopes"]`. `--silent` strips pnpm's own "> script ..." banner so stdout is bare JSON.
+        run: |
+          PACKS=$(pnpm --filter @enumeratio/data run --silent list-packs)
+          echo "packs=$PACKS" >> "$GITHUB_OUTPUT"
+          if [ "$PACKS" = "[]" ]; then
+            echo "has_packs=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_packs=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  packs-core:
+    name: "packs: core (self-containment)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # core alone, closed-world toposort + core's own examples — asserts core never leans on a pack file.
+      - run: pnpm --filter @enumeratio/data run test:packs-core
+
+  packs-pack-matrix:
+    name: "packs: pack:${{ matrix.pack }}"
+    needs: packs-setup
+    # Guard the matrix job itself, not a step inside it: a false job-level `if` skips the job before its
+    # `strategy.matrix` is ever expanded, so `fromJSON('[]')` is never evaluated — that's what keeps this
+    # empty-safe. (Letting the matrix expand unconditionally is what triggers GitHub's "matrix must define at
+    # least one vector" error on an empty array; gating expansion itself, not just the steps, avoids it.)
+    if: needs.packs-setup.outputs.has_packs == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pack: ${{ fromJSON(needs.packs-setup.outputs.packs) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # core + closure(pack) + pack; asserts the pack's own examples AND core's examples again (regression).
+      - run: pnpm --filter @enumeratio/data exec node --import tsx run.mts --packs core,${{ matrix.pack }}
+      # additivity differential (#283 §6): the pack may only ADD rows/signatures to core, never patch it.
+      - run: pnpm --filter @enumeratio/data exec node --import tsx pack-additivity.mts --pack ${{ matrix.pack }}
+
+  packs-lint:
+    name: "packs: lint + migrate --check"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Report-only for now: pack-lint checks the FULL trial partition (pack-map.ts) against the monolithic
+      # sqlsrc/, which today still has ~50 real cross-pack `requires:` edges the split hasn't undone yet — a
+      # hard-failing gate here would break every build until phase 3 (#283 §10) lands every domain pack. Flip
+      # this step's `continue-on-error` to false once phase 3 completes and the edge count is genuinely zero.
+      - run: pnpm --filter @enumeratio/data run pack-lint
+        continue-on-error: true
+      # Blocking: pack-migrate --check only asserts today's ACTUAL placement (EXTRACTED_PACKS) is self-consistent
+      # (no misplaced file, no stale manifest) — that's true today (nothing extracted yet) and must stay true.
+      - run: pnpm --filter @enumeratio/data run pack-migrate:check

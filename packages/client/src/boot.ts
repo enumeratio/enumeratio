@@ -5,7 +5,7 @@
 // __ENUMERATIO_CORE_TAR__ — we MOUNT it (loadDataDir, ~400ms) instead. A bundle-hash version check makes a stale or
 // absent dump safe: on any miss we fall back to building from sqlsrc, per-file (never one giant exec).
 import { PGlite } from '@electric-sql/pglite'
-import { coreFiles, coreBundleHash } from '@enumeratio/data'
+import { coreFiles, corePackHashes, stalePacks, type PackHash } from '@enumeratio/data'
 import { debugGucSetSql } from './debug-env'
 
 declare const __ENUMERATIO_CORE_TAR__: string | undefined
@@ -34,10 +34,11 @@ export async function bootPglite(): Promise<PGlite> {
         const pg = new PGlite({ loadDataDir: await resp.blob() })
         await pg.waitReady
         const r = await pg
-          .query<{ hash: string }>('SELECT hash FROM _core_version LIMIT 1')
-          .catch(() => ({ rows: [] as { hash: string }[] }))
-        if (r.rows[0]?.hash === coreBundleHash) return withDebugLift(pg) // fresh dump → the fast path (~1s mount vs a full rebuild)
-        await pg.close() // stale dump → rebuild from source below
+          .query<PackHash>('SELECT pack, hash FROM _pack_version')
+          .catch(() => ({ rows: [] as PackHash[] }))
+        const stale = stalePacks(r.rows, corePackHashes)
+        if (r.rows.length > 0 && stale.length === 0) return withDebugLift(pg) // every pack fresh → the fast path (~1s mount vs a full rebuild)
+        await pg.close() // stale/missing dump → rebuild from source below
       }
     } catch {
       /* dump unavailable / failed to mount → build from source */

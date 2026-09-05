@@ -35,6 +35,13 @@ export function enumeratioCore(): Plugin {
           res.end(Buffer.from(b))
         } catch (e) { res.statusCode = 500; res.end(String(e)) }
       })
+      // Stays WHOLE-CORPUS on any touched file, not scoped to the touched pack (#283 phase 1.4): the dump is one
+      // dumpDataDir() snapshot of a single PGlite instance per PROFILE (§7 — one dump per profile, not per pack,
+      // to avoid 2^N), so there's no partial dump to patch in place — rebuilding means re-exec'ing core+packs from
+      // scratch regardless of which one file changed. Scoping the REBUILD TRIGGER to "only rebuild if a file in
+      // pack P changed" would still buy nothing here since there's only one dump target (the dev server always
+      // serves the 'core' profile) — the node-side self-heal (bootCore/node-worker.ts) is where per-pack scoping
+      // actually pays off, by reporting which pack's mismatch forced the (still whole) rebuild.
       const onChange = (file: string) => {
         const posix = file.replace(/\\/g, '/')
         if (!/\/(sqlsrc|packs)\//.test(posix) || !posix.endsWith('.sql')) return   // packs/*/*.sql alongside sqlsrc/*.sql (#283 phase 1.2)

@@ -144,25 +144,36 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
       WHERE NOT EXISTS (SELECT 1 FROM information_schema.columns c
                           WHERE c.table_name = t.table_name AND c.column_name = 'pack' AND c.is_nullable = 'NO') $q$),
 
-  ('pack', 'every row in every owning registry is pack = core today', 'eq', '0',
-   'phase 0.2 is data-only plumbing — zero behaviour change means nothing but core has ever loaded',
-   $q$ SELECT count(*)::text FROM (
-         SELECT count(*) n FROM base_collection WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_stat WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_map WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_example WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_function WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_function_impl WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_engine_grant WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_reference WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_glyph WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_species WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_generating_function WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_sequence_transform WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_stat_suppressed WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_triangle_refines WHERE pack <> 'core'
-         UNION ALL SELECT count(*) FROM base_set_builder WHERE pack <> 'core'
-       ) x WHERE n <> 0 $q$),
+  ('pack', 'every row in every owning registry references a real base_pack id, and core still owns rows', 'eq', 'true',
+   'phases 2.1/2.2 extracted refs + polytopes out of core — this is no longer "nothing but core has ever loaded" '
+   '(a FLOOR/containment check per AGENTS.md, not the exact "core-only" count phase 0.2 asserted before extraction '
+   'existed): every row''s pack FK-targets a real base_pack row, and core still owns at least one row per table',
+   $q$ SELECT (NOT EXISTS (SELECT 1 FROM (
+         SELECT pack FROM base_collection UNION ALL SELECT pack FROM base_stat UNION ALL SELECT pack FROM base_map
+         UNION ALL SELECT pack FROM base_example UNION ALL SELECT pack FROM base_function
+         UNION ALL SELECT pack FROM base_function_impl UNION ALL SELECT pack FROM base_engine_grant
+         UNION ALL SELECT pack FROM base_reference UNION ALL SELECT pack FROM base_glyph
+         UNION ALL SELECT pack FROM base_species UNION ALL SELECT pack FROM base_generating_function
+         UNION ALL SELECT pack FROM base_sequence_transform UNION ALL SELECT pack FROM base_stat_suppressed
+         UNION ALL SELECT pack FROM base_triangle_refines UNION ALL SELECT pack FROM base_set_builder
+       ) x WHERE pack NOT IN (SELECT id FROM base_pack))
+     AND NOT EXISTS (SELECT 1 FROM (
+         SELECT count(*) n FROM base_collection WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_stat WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_map WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_example WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_function WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_function_impl WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_engine_grant WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_reference WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_glyph WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_species WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_generating_function WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_sequence_transform WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_stat_suppressed WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_triangle_refines WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_set_builder WHERE pack = 'core'
+       ) y WHERE n = 0))::text $q$),
 
   ('pack', 'base_guard_pack fires when a foreign pack touches a core-owned row', 'eq', 'true',
    'the probe sets enumeratio.pack to a bogus value then updates a real base_collection row — must raise. Uses its '

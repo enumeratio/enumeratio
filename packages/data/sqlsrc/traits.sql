@@ -1,4 +1,4 @@
--- requires: realizer, catalog-resolution, glyphs, polytope-collections, categories, constructions, prime_compositions, carlitz_compositions, zigzag_composition, ascent_sequences, simple_permutations, pattern_avoiding_permutations, non_crossing_permutations
+-- requires: realizer, catalog-resolution, glyphs, categories, constructions, prime_compositions, carlitz_compositions, zigzag_composition, ascent_sequences, simple_permutations, pattern_avoiding_permutations, non_crossing_permutations
 -- requires-tag: collection
 -- The trait vocabulary + the derived collection→trait assignment. Traits are real rows (id, description, implies);
 -- assignments are computed from the registries and closed transitively over `implies` (has_glyph/has_polytope ⇒
@@ -52,7 +52,7 @@ CREATE TABLE base_collection_trait_manual (
 );
 INSERT INTO base_collection_trait_manual (trait, collection) VALUES
   ('repetition_free', 'subsets'), ('repetition_free', 'k_subsets'), ('repetition_free', 'finsets'),
-  ('repetition_free', 'boolean_algebra'), ('repetition_free', 'simplex');   -- NOT multisets (repetition allowed)
+  ('repetition_free', 'boolean_algebra');   -- NOT multisets (repetition allowed); simplex is packs/polytopes' row
 
 -- no_closed_form_count (issue #172's fiber_count accel audit): collections confirmed to have no known simple
 -- closed form, each checked against its own file's header comment / OEIS entry rather than asserted from memory —
@@ -74,7 +74,7 @@ INSERT INTO base_collection_trait_manual (trait, collection) VALUES
 INSERT INTO base_collection_trait_manual (trait, collection) VALUES
   -- strictly increasing: the finset carrier (members int[]) lists members ascending with no repeats
   ('strictly_increasing', 'subsets'), ('strictly_increasing', 'k_subsets'), ('strictly_increasing', 'finsets'),
-  ('strictly_increasing', 'boolean_algebra'), ('strictly_increasing', 'simplex'),
+  ('strictly_increasing', 'boolean_algebra'),   -- simplex's strictly_increasing row is packs/polytopes'
   -- weakly increasing: a multiset is sorted ascending with repetition
   ('weakly_increasing', 'multisets'),
   -- weakly decreasing: the integer_partition carrier (parts int[]) is a descending part sequence

@@ -5,19 +5,31 @@ import { debugGucSetSql } from './debug-env.ts'
 
 // The node worker body for the PURE-SQL core. Boot self-contained (no cross-package core-loader import, which the
 // spawned tsx context can't resolve for the loader's internals): MOUNT the prebuilt dump handed over via
-// workerData when its stamped hash matches the live sqlsrc, else re-exec the sqlsrc BUNDLE. Then answer
-// {id,sql,params} messages with {id,rows} or {id,error}. A never-returning query simply never replies — the
-// host's watchdog (node.ts makeWorkerDb) terminates the whole worker.
-type Boot = { dumpPath: string; expectedHash: string; bundle: string }
+// workerData when every pack's stamped hash (`_pack_version`) matches the live sqlsrc, else re-exec the sqlsrc
+// BUNDLE. Then answer {id,sql,params} messages with {id,rows} or {id,error}. A never-returning query simply never
+// replies — the host's watchdog (node.ts makeWorkerDb) terminates the whole worker.
+type PackHash = { pack: string; hash: string }
+type Boot = { dumpPath: string; expectedPackHashes: PackHash[]; bundle: string }
+
+// Local, self-contained mirror of hash.ts's stalePacks (this worker can't cross-package-import the loader's
+// internals — see the comment above): packs whose stamped hash differs from the live expected hash.
+function stalePacks(stored: PackHash[], live: PackHash[]): string[] {
+  const s = new Map(stored.map(r => [r.pack, r.hash]))
+  const l = new Map(live.map(r => [r.pack, r.hash]))
+  const names = new Set([...s.keys(), ...l.keys()])
+  return [...names].filter(n => s.get(n) !== l.get(n)).sort()
+}
+
 const ready = (async () => {
-  const { dumpPath, expectedHash, bundle } = workerData as Boot
+  const { dumpPath, expectedPackHashes, bundle } = workerData as Boot
   try {
     const bytes = await readFile(dumpPath)
     const pg = new PGlite({ loadDataDir: new Blob([bytes]) })
     await pg.waitReady
-    const r = await pg.query<{ hash: string }>('SELECT hash FROM _core_version LIMIT 1').catch(() => ({ rows: [] as { hash: string }[] }))
-    if (r.rows[0]?.hash === expectedHash) return withDebug(pg)   // fresh dump → fast mount
-    await pg.close()                                              // stale → rebuild below
+    const r = await pg.query<PackHash>('SELECT pack, hash FROM _pack_version').catch(() => ({ rows: [] as PackHash[] }))
+    const stale = stalePacks(r.rows, expectedPackHashes)
+    if (r.rows.length > 0 && stale.length === 0) return withDebug(pg)   // every pack fresh → fast mount
+    await pg.close()                                                     // stale/missing → rebuild below
   } catch {
     /* dump absent / mount failed → build from source */
   }

@@ -55,6 +55,10 @@ INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
 
 -- ── the count snapshot (built AFTER the base_stat INSERT above) ───────────────────────────────────────────
 -- collection-keyed: tags + traits in one pass. Every collection appears (LEFT JOIN off base_collection), 0 where absent.
+-- NOTE (#283 phase 1.3): this is a whole-catalog materialization built ONCE at core-load time — the exact shape
+-- that goes stale the moment a pack loads afterwards and adds collections/tags/traits (see meta_pack_finalize_counts
+-- below, registered as a pack-scope base_finalizer to re-sweep it after each pack). Any FUTURE whole-catalog
+-- CREATE TABLE AS SELECT snapshot like this one must register its own finalizer rather than compute once at load.
 CREATE TABLE meta_collection_counts AS
   SELECT c.id AS collection, coalesce(tg.n, 0) AS tags, coalesce(tr.n, 0) AS traits
     FROM base_collection c
@@ -65,6 +69,26 @@ CREATE UNIQUE INDEX ON meta_collection_counts (collection);
 CREATE TABLE meta_trait_counts AS
   SELECT trait, count(*)::int AS collections FROM base_collection_trait GROUP BY trait;
 CREATE UNIQUE INDEX ON meta_trait_counts (trait);
+
+-- meta_pack_finalize_counts: refreshes BOTH cache tables above from the live registry views. Registered as a
+-- pack-scope finalizer (fires once per pack, not per-collection) so it re-runs after core AND after every later
+-- pack via base_pack_finalize — keeping the caches live as packs add collections/tags/traits. The initial
+-- CREATE TABLE AS SELECT above still does the first build; this just re-derives it in place.
+CREATE FUNCTION meta_pack_finalize_counts(p_pack text) RETURNS void LANGUAGE plpgsql AS $$
+BEGIN
+  TRUNCATE meta_collection_counts;
+  INSERT INTO meta_collection_counts
+    SELECT c.id, coalesce(tg.n, 0), coalesce(tr.n, 0)
+      FROM base_collection c
+      LEFT JOIN (SELECT collection, count(*)::int n FROM base_collection_tag   GROUP BY collection) tg ON tg.collection = c.id
+      LEFT JOIN (SELECT collection, count(*)::int n FROM base_collection_trait GROUP BY collection) tr ON tr.collection = c.id;
+  TRUNCATE meta_trait_counts;
+  INSERT INTO meta_trait_counts
+    SELECT trait, count(*)::int FROM base_collection_trait GROUP BY trait;
+END $$;
+INSERT INTO base_finalizer (id, fn, description, scope) VALUES
+  ('meta_pack_finalize_counts', 'meta_pack_finalize_counts',
+   'refreshes meta_collection_counts/meta_trait_counts from the live registry after each pack loads', 'pack');
 
 CREATE FUNCTION meta_collection_tags(v text) RETURNS int LANGUAGE sql STABLE AS $$
   SELECT coalesce((SELECT tags FROM meta_collection_counts WHERE collection = v), 0) $$;

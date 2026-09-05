@@ -2,8 +2,9 @@
 // (e.g. enumeratio-docs) can load the whole core into an in-browser pglite and read its catalog. Vite inlines the
 // SQL at build via import.meta.glob(?raw); the node runner (run.mts) reads the same files from disk instead.
 // Files are ordered by their `-- requires:` dependency headers (bootstrap.sql first) — the same toposort run.mts uses.
-import { orderPacks, parsePackManifest, PACK_MANIFEST, type Pack } from './sqlsrc-order'
-import { bundleHash } from './hash'
+import { orderPacks, parsePackManifest, PACK_MANIFEST, segmentByPack, type Pack } from './sqlsrc-order'
+import { bundleHash, packHashes, profileHash, type PackHash } from './hash'
+export { stalePacks, type PackHash } from './hash'
 
 // @ts-ignore — import.meta.glob is a Vite compile-time transform (typed via vite/client in the docs app); this
 // file is also type-checked by consumers that lack vite/client, so ignore the missing-type there. Vite still
@@ -46,6 +47,13 @@ export const coreBundle: string = ordered.map(f => `-- ═══ ${f.name}.sql �
 // Content hash of the bundle — the client compares it against the version stamped into a prebuilt dump to decide
 // whether the dump is fresh (mount it) or stale (rebuild from sqlsrc). Must match node.ts's coreBundleHash().
 export const coreBundleHash: string = bundleHash(coreBundle)
+
+// Per-pack hashes (§7), one row per loaded pack — with zero packs extracted (today) a single 'core' row whose
+// hash equals coreBundleHash. Lets the client detect exactly which pack(s) went stale in a mounted dump.
+export const corePackHashes: PackHash[] = packHashes(segmentByPack(ordered, core, packs))
+
+// The profile hash (§7): hash of the ordered per-pack hashes — distinct from coreBundleHash (see hash.ts).
+export const coreProfileHash: string = profileHash(corePackHashes)
 
 // The build-time catalog snapshot, when the artifact exists. import.meta.glob (not a static import) because the
 // file is a generated, gitignored release artifact: a glob that matches nothing is an empty record, while a static

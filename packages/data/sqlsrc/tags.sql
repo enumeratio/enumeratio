@@ -116,8 +116,9 @@ SELECT tag, collection FROM (VALUES
   ('set_partition', 'set_compositions'), ('set_partition', 'restricted_growth_strings'), ('set_partition', 'signed_set_compositions'),
   -- selections
   ('selection', 'subsets'), ('selection', 'k_subsets'), ('selection', 'multisets'), ('selection', 'finsets'), ('selection', 'sparse_subsets'), ('selection', 'signed_subsets'), ('selection', 'arrangements'),
-  -- polytope faces
-  ('polytope', 'associahedron'), ('polytope', 'cross_polytope'), ('polytope', 'permutahedron'), ('polytope', 'dissections'),
+  -- polytope faces (associahedron/cross_polytope/permutahedron moved to packs/polytopes/tags.polytopes.sql — #283
+  -- phase 2.2, they're that pack's own collections; dissections stays here, it's core)
+  ('polytope', 'dissections'),
   -- signed / symmetric
   ('symmetric', 'signed_permutations'), ('symmetric', 'signed_subsets'), ('symmetric', 'k_colored_permutations'), ('symmetric', 'signed_set_compositions'),
   -- matrices
@@ -141,7 +142,8 @@ SELECT tag, collection FROM (VALUES
   -- base_restrict / borrow-carrier ports (backlog #1)
   ('composition', 'zigzag_composition'),
   ('word', 'calkin_wilf_paths'), ('word', 'stern_brocot_paths'), ('word', 'hyperbinary_representations'), ('recurrence', 'hyperbinary_representations'), ('tree', 'prufer_sequences'),
-  ('selection', 'boolean_algebra'), ('selection', 'simplex'), ('polytope', 'simplex'),
+  -- simplex's tags moved to packs/polytopes/tags.polytopes.sql — #283 phase 2.2, it's that pack's own collection
+  ('selection', 'boolean_algebra'),
   ('set_partition', 'partition_algebra')
 ) AS a(tag, collection);
 

@@ -1,4 +1,4 @@
--- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_permutations, signed_subsets, set_compositions, surjections, parking_functions, fractional_numbers, colored_motzkin_paths, seed.render_corpus
+-- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_permutations, signed_subsets, set_compositions, surjections, parking_functions, fractional_numbers, colored_motzkin_paths
 -- representations — Phase 3 of the catalog port: named alternate renderings, registered in base_repr so the
 -- client's -R flag can pick one (permutation cycle notation, set-partition blocks, Dyck parens). render_fn takes
 -- the CARRIER; the client calls render_fn((element).value). The `canonical` repr matches the default render()
@@ -464,15 +464,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
         AND perm_from_oneline_dense(perm_oneline_dense(ROW(ARRAY(SELECT generate_series(1,36)))::permutation)) = ROW(ARRAY(SELECT generate_series(1,36)))::permutation)::text $q$),
   ('representations','dense base-36 is registered as a non-canonical alternate base_repr for permutations, with its parse_fn','eq','perm_oneline_dense|perm_from_oneline_dense|false','base_repr row',$q$
     SELECT render_fn || '|' || parse_fn || '|' || canonical::text FROM base_repr WHERE collection = 'permutations' AND repr = 'dense' $q$),
-  ('representations','dense base-36 matches the render-corpus oracle (#193): permutations~size/10@1 and ~size/40@0','eq','true','seed.render_corpus.sql''s aspirational base-36 golden rows',$q$
-    SELECT (perm_oneline_dense(ROW(ARRAY[1,2,3,4,5,6,7,8,10,9])::permutation)
-              = split_part((SELECT unicode FROM base_render_corpus WHERE family_path = 'permutations~size/10@1'), ' ∈ ', 1)
-        AND perm_oneline_dense(ROW(ARRAY(SELECT generate_series(1,40)))::permutation)
-              = split_part((SELECT unicode FROM base_render_corpus WHERE family_path = 'permutations~size/40@0'), ' ∈ ', 1))::text $q$),
   -- ── medium dispatch through base_repr (#138): the `oneline` repr carries a katex sibling row ──
-  ('representations','the oneline katex sibling matches the render-corpus oracle: n=10 rank1 → (1,2,3,4,5,6,7,8,10,9)','eq','true','split_part(katex, '' ∈ '', 1) from permutations~size/10@1',$q$
-    SELECT (perm_oneline_katex(ROW(ARRAY[1,2,3,4,5,6,7,8,10,9])::permutation)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'permutations~size/10@1'), ' ∈ ', 1))::text $q$),
   ('representations','base_repr medium dispatch: the oneline repr resolves to one_line at medium=unicode, perm_oneline_katex at medium=latex','eq','one_line|perm_oneline_katex','same (collection,repr), two medium rows — PK (collection,repr,medium)',$q$
     SELECT (SELECT render_fn FROM base_repr_resolved WHERE collection = 'permutations' AND repr = 'oneline' AND medium = 'unicode') || '|' ||
            (SELECT render_fn FROM base_repr_resolved WHERE collection = 'permutations' AND repr = 'oneline' AND medium = 'latex') $q$),
@@ -481,23 +473,13 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('representations','a medium with no sibling row leaves exactly the one (default unicode) row — the default medium is unaffected by adding a sibling elsewhere','eq','1','base_repr row count for a repr with no katex sibling (cycle)',$q$
     SELECT count(*)::text FROM base_repr WHERE collection = 'permutations' AND repr = 'cycle' $q$),
   -- ── further medium siblings (#141): compositions `parts`, set_partitions `blocks`, the new finset `members` ──
-  ('representations','the composition parts katex sibling matches the render-corpus oracle: n=4@7 → (1,1,1,1)','eq','true','split_part(katex, '' ∈ '', 1) from integer_compositions~size/4@7',$q$
-    SELECT (composition_parts_katex(ROW(ARRAY[1,1,1,1])::composition)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'integer_compositions~size/4@7'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) parts repr is unchanged by adding the katex sibling: n=4@7 → 1+1+1+1','eq','1+1+1+1','notation(composition) still the plain-sum form',$q$
     SELECT notation(ROW(ARRAY[1,1,1,1])::composition) $q$),
   ('representations','base_repr medium dispatch on integer_compositions: parts resolves to notation at unicode, composition_parts_katex at latex','eq','notation|composition_parts_katex','same (collection,repr), two medium rows',$q$
     SELECT (SELECT render_fn FROM base_repr_resolved WHERE collection = 'integer_compositions' AND repr = 'parts' AND medium = 'unicode') || '|' ||
            (SELECT render_fn FROM base_repr_resolved WHERE collection = 'integer_compositions' AND repr = 'parts' AND medium = 'latex') $q$),
-  ('representations','the set_partition blocks katex sibling matches the render-corpus oracle: rgs 0,1,0,2 → {{1,3},{2},{4}}','eq','true','split_part(katex, '' ∈ '', 1) from set_partitions~size/4@rgs:0,1,0,2',$q$
-    SELECT (set_partition_blocks_katex(ROW(ARRAY[0,1,0,2])::set_partition)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'set_partitions~size/4@rgs:0,1,0,2'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) blocks repr is unchanged by adding the katex sibling: rgs 0,1,0,2 → {1,3}/{2}/{4}','eq','{1,3}/{2}/{4}','set_partition_blocks still slash-separated',$q$
     SELECT set_partition_blocks(ROW(ARRAY[0,1,0,2])::set_partition) $q$),
-  ('representations','the finset members repr and its katex sibling match the render-corpus oracle: n=5, members {1,3}','eq','{1,3}|true','split_part(katex, '' ∈ '', 1) from subsets~n/5@members:1,3',$q$
-    SELECT finset_members(ROW(ARRAY[1,3],5)::finset) || '|' ||
-           (finset_members_katex(ROW(ARRAY[1,3],5)::finset)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'subsets~n/5@members:1,3'), ' ∈ ', 1))::text $q$),
   ('representations','the finset members repr is CARRIER-inherited: subsets and k_subsets both resolve it at unicode and latex','eq','true','base_repr_resolved carries the finsets-registered repr to its carrier siblings',$q$
     SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'subsets'   AND repr = 'members' AND medium = 'unicode')
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'subsets'   AND repr = 'members' AND medium = 'latex')
@@ -506,71 +488,35 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('representations','the default finite-ground notation() is unchanged by adding members: subsets(5) rank still renders the bit register, not braces','eq','true','notation(finset) keeps its ground-dispatched register/braces split',$q$
     SELECT (notation((unrank(subsets(5), 4)).value) !~ '[{}]')::text $q$),
   -- ── #141 coverage expansion: five more collections, each getting its first base_repr rows ──
-  ('representations','signed_permutation katex bars negatives and matches the render-corpus oracle: n=3 rank47 → (3̅,2̅,1̅)','eq','true','split_part(katex, '' ∈ '', 1) from signed_permutations~size/3@47',$q$
-    SELECT (signed_permutation_katex(ROW(ARRAY[-3,-2,-1])::signed_permutation)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'signed_permutations~size/3@47'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) signed_permutation notation is unchanged: {-3,-2,-1} → -3,-2,-1','eq','-3,-2,-1','plain minus signs, no bars',$q$
     SELECT notation(ROW(ARRAY[-3,-2,-1])::signed_permutation) $q$),
   ('representations','base_repr medium dispatch on signed_permutations: oneline resolves to notation at unicode, signed_permutation_katex at latex','eq','notation|signed_permutation_katex','same (collection,repr), two medium rows',$q$
     SELECT (SELECT render_fn FROM base_repr_resolved WHERE collection = 'signed_permutations' AND repr = 'oneline' AND medium = 'unicode') || '|' ||
            (SELECT render_fn FROM base_repr_resolved WHERE collection = 'signed_permutations' AND repr = 'oneline' AND medium = 'latex') $q$),
-  ('representations','signed_subset katex escapes braces + bars negatives, matches the render-corpus oracle: n=4 rank15 → {1,2̅,3}','eq','true','split_part(katex, '' ∈ '', 1) from signed_subsets~size/4@15',$q$
-    SELECT (signed_subset_members_katex(ROW(ARRAY[1,-2,3],4)::signed_subset)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'signed_subsets~size/4@15'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) signed_subset notation is unchanged: ({1,-2,3},4) → {1,-2,3}','eq','{1,-2,3}','bare braces + minus sign',$q$
     SELECT notation(ROW(ARRAY[1,-2,3],4)::signed_subset) $q$),
-  ('representations','the signed_subset members repr is CARRIER-inherited: cross_polytope resolves it at unicode and latex','eq','true','base_repr_resolved carries the signed_subsets-registered repr to its polytope carrier sibling',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'cross_polytope' AND repr = 'members' AND medium = 'unicode')
-        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'cross_polytope' AND repr = 'members' AND medium = 'latex'))::text $q$),
-  ('representations','set_composition katex escapes braces but keeps block ORDER as a tuple, matches the render-corpus oracle: n=4 blocks {1,2}{3,4} → ({1,2},{3,4})','eq','true','split_part(katex, '' ∈ '', 1) from set_compositions~size/4@1,2!3,4',$q$
-    SELECT (set_composition_blocks_katex(ROW(ARRAY[1,1,2,2])::set_composition)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'set_compositions~size/4@1,2!3,4'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) set_composition notation is unchanged: labels 1,1,2,2 → 1,2|3,4','eq','1,2|3,4','comma within a block, pipe between blocks',$q$
     SELECT notation(ROW(ARRAY[1,1,2,2])::set_composition) $q$),
-  ('representations','the set_composition blocks repr is CARRIER-inherited: permutahedron resolves it at unicode and latex','eq','true','base_repr_resolved carries the set_compositions-registered repr to its polytope carrier sibling',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'permutahedron' AND repr = 'blocks' AND medium = 'unicode')
-        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'permutahedron' AND repr = 'blocks' AND medium = 'latex'))::text $q$),
-  ('representations','surjection katex wraps the word as a tuple, matches the render-corpus oracle: k=3 n=3 rank0 → (1,2,3)','eq','true','split_part(katex, '' ∈ '', 1) from surjections~k=3~size/3@1,2,3',$q$
-    SELECT (surjection_tuple_katex(ROW(ARRAY[1,2,3])::surjection)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'surjections~k=3~size/3@1,2,3'), ' ∈ ', 1))::text $q$),
+  -- the two CARRIER-inherited examples over permutahedron/cross_polytope moved to
+  -- packs/polytopes/examples.representations.sql (#283 phase 2.2) — both target collections are that pack's rows.
   ('representations','the default (unicode) surjection notation is unchanged: 1,2,3 → 1,2,3 (bare word)','eq','1,2,3','no parens at unicode',$q$
     SELECT notation(ROW(ARRAY[1,2,3])::surjection) $q$),
   ('representations','the surjection tuple repr is CARRIER-inherited: surjections_onto_k resolves it at unicode and latex','eq','true','base_repr_resolved carries the surjections-registered repr to its restriction sibling',$q$
     SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'surjections_onto_k' AND repr = 'tuple' AND medium = 'unicode')
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'surjections_onto_k' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
-  ('representations','parking_function katex wraps the sequence as a tuple, matches the render-corpus oracle: n=3 all-ones → (1,1,1)','eq','true','split_part(katex, '' ∈ '', 1) from parking_functions~size/3@1,1,1',$q$
-    SELECT (parking_function_tuple_katex(ROW(ARRAY[1,1,1])::parking_function)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'parking_functions~size/3@1,1,1'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) parking_function notation is unchanged: 1,1,1 → 1,1,1 (bare sequence)','eq','1,1,1','no parens at unicode',$q$
     SELECT notation(ROW(ARRAY[1,1,1])::parking_function) $q$),
   ('representations','the parking_function tuple repr is CARRIER-inherited: non_decreasing_parking_functions resolves it at unicode and latex','eq','true','base_repr_resolved carries the parking_functions-registered repr to its restriction sibling',$q$
     SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'unicode')
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
   -- ── #285 coverage expansion, round 2: binary_words `digits`, fractional_numbers `fraction`, colored_motzkin_paths `steps` ──
-  ('representations','binary_word digits katex matches the render-corpus oracle across all four verified restrictions: fib/lucas/tri/primitive','eq','true','each split_part(katex, '' ∈ '', 1) from its own corpus row',$q$
-    SELECT (binary_word_digits_katex((unrank(fib_strings(3), 4)).value)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'fib_strings~size/3@4'), ' ∈ ', 1)
-        AND binary_word_digits_katex((unrank(lucas_strings(4), 4)).value)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'lucas_strings~size/4@4'), ' ∈ ', 1)
-        AND binary_word_digits_katex((unrank(tri_strings(3), 6)).value)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'tri_strings~size/3@6'), ' ∈ ', 1)
-        AND binary_word_digits_katex((unrank(primitive_binary_strings(4), 0)).value)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'primitive_binary_strings~size/4@0'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) binary_word notation is unchanged: fib_strings(3) rank4 → 101 (bare digits)','eq','101','notation(binary_word) still bare concatenation',$q$
     SELECT notation((unrank(fib_strings(3), 4)).value) $q$),
   ('representations','the binary_words digits repr is CARRIER-inherited: primitive_binary_strings resolves it at unicode and latex','eq','true','base_repr_resolved carries the binary_words-registered repr to a carrier sibling',$q$
     SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'unicode')
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'latex'))::text $q$),
-  ('representations','fractional_number katex is a genuine \frac{a}{b}, matches the render-corpus oracle: 6/8','eq','true','split_part(katex, '' ∈ '', 1) from fractional_numbers/@6,8',$q$
-    SELECT (fractional_number_katex(ROW(6,8)::fractional_number)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'fractional_numbers/@6,8'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) fractional_number notation is unchanged: 6/8 stays unreduced, 5/1 stays bare 5','eq','6/8|5','notation(fractional_number) keeps its denominator=1 branch',$q$
     SELECT notation(ROW(6,8)::fractional_number) || '|' || notation(ROW(5,1)::fractional_number) $q$),
-  ('representations','colored_motzkin_path katex bars nothing but arrows the steps, matches the render-corpus oracle: UH0D and H1H1H1 (k=2,n=3)','eq','true','split_part(katex, '' ∈ '', 1) from two colored_motzkin_paths~k=2~n/3 corpus rows',$q$
-    SELECT (colored_motzkin_path_katex(ROW(ARRAY[1,0,-1],ARRAY[-1,0,-1])::colored_motzkin_path)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'colored_motzkin_paths~k=2~n/3@UH0D'), ' ∈ ', 1)
-        AND colored_motzkin_path_katex(ROW(ARRAY[0,0,0],ARRAY[1,1,1])::colored_motzkin_path)
-              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'colored_motzkin_paths~k=2~n/3@H1H1H1'), ' ∈ ', 1))::text $q$),
   ('representations','the default (unicode) colored_motzkin_path notation is unchanged: UH0D stays UH0D (bare step letters)','eq','UH0D','notation(colored_motzkin_path) still the plain U/D/H_c word',$q$
     SELECT notation(ROW(ARRAY[1,0,-1],ARRAY[-1,0,-1])::colored_motzkin_path) $q$),
   -- ── medium spellings of the ambient-set symbol (katex / asciimath), checked against the render corpus ──
