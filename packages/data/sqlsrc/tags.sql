@@ -103,7 +103,7 @@ SELECT tag, collection FROM (VALUES
   ('path', 'dyck_paths'), ('path', 'k_dyck_paths'), ('path', 'motzkin_paths'), ('path', 'k_motzkin_paths'), ('path', 'colored_motzkin_paths'), ('path', 'schroeder_paths'), ('path', 'delannoy_paths'),
   ('path', 'riordan_paths'), ('path', 'ballot_sequences'), ('path', 'narayana_numbers'),
   -- trees
-  ('tree', 'binary_trees'), ('tree', 'ordered_trees'), ('tree', 'plane_trees'), ('tree', 'labeled_trees'), ('tree', 'labeled_forests'),
+  ('tree', 'binary_trees'), ('tree', 'ordered_trees'), ('tree', 'plane_trees'), ('tree', 'labeled_trees'), ('tree', 'labeled_forests'), ('tree', 'rooted_unlabeled_trees'),
   -- tableaux
   ('tableau', 'standard_tableaux'), ('tableau', 'semistandard_tableaux'), ('tableau', 'gelfand_tsetlin'),
   -- words / strings
