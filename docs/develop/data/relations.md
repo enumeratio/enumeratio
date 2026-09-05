@@ -49,6 +49,6 @@ examples:
 ## What's not here yet
 
 Aggregate stats (like `fubini_numbers`) show up as rows once they carry a `base_reference` entry, but there's no
-link yet from an aggregate stat to the underlying math function it's built from — that needs
-[a real functions reference page](/develop/data/functions) to point at, which is still a stub.
+link yet from an aggregate stat to the underlying math function it's built from — [the functions
+reference](/develop/data/functions) now exists to point at, it just isn't wired up from here yet.
 Representations and glyphs aren't rows here yet either; both are natural future subject kinds for this same table.

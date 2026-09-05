@@ -199,8 +199,8 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta)
   ('collection','weak3_compositions','oeis','A000217','https://oeis.org/A000217','fiber n has C(n+2,2) elements — the triangular numbers (A000217 shifted)');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('references','every OEIS pointer resolves to a real collection (integrity, no FK)','eq','0','no dangling subject in the oeis layer',$q$
-    SELECT count(*)::text FROM base_reference r WHERE r.system='oeis'
+  ('references','every OEIS pointer resolves to a real collection (integrity, no FK)','eq','0','no dangling subject in the oeis layer — scoped to subject_kind=''collection''; a non-collection subject_kind (e.g. ''function'', base_function.sql) resolves against its own registry instead',$q$
+    SELECT count(*)::text FROM base_reference r WHERE r.system='oeis' AND r.subject_kind='collection'
       AND NOT EXISTS (SELECT 1 FROM base_collection c WHERE c.id = r.subject) $q$),
   ('references','a shared sequence points from many collections: A000108 (Catalan) covers at least 17 (a floor — more may be added)','eq','true','one identity, many roles — the reason oeis lives in base_reference not base_oeis',$q$
     SELECT (count(*) >= 17)::text FROM base_reference WHERE system='oeis' AND identity='A000108' $q$),

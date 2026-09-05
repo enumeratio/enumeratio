@@ -14,10 +14,10 @@ entries by a single realizer. This page is the argument for why that pays off, t
 
 If you're here to build rather than read the argument: **[Packages](/develop/packages/)** is the four packages
 themselves and how they stack; **[Data Reference](/develop/data/)** is the generated Collections/Statistics/Maps/
-Relations tables plus the still-stubbed Functions page; **[API Reference](/develop/api)** is the generated SQL
-surface; **[Sources](/develop/sources)** is the crosswalk against external systems (OEIS, FindStat, Sage, …);
-**[Contributing](/develop/contributing/)** is everything about adding to the library — repo shape, the model, the
-rules; **[Playground](/develop/playground/)** is the curated index of live toys.
+Functions/Relations tables; **[API Reference](/develop/api)** is the generated SQL surface; **[Sources](/develop/sources)**
+is the crosswalk against external systems (OEIS, FindStat, Sage, …); **[Contributing](/develop/contributing/)** is
+everything about adding to the library — repo shape, the model, the rules; **[Playground](/develop/playground/)**
+is the curated index of live toys.
 
 ## 1. The math *is* data
 
