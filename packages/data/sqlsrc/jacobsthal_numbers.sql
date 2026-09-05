@@ -15,4 +15,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('jacobsthal_numbers','synthesized contains handles the plateau: 21 ∈, 1 ∈ (repeated term), 4 ∉','eq','true|true|false','non-decreasing scan is plateau-safe',$q$ SELECT (21::numeric<@jacobsthal_numbers())::text||'|'||(1::numeric<@jacobsthal_numbers())::text||'|'||(4::numeric<@jacobsthal_numbers())::text $q$),
   ('jacobsthal_numbers','recurrence holds off the floor: J(n) = J(n-1) + 2·J(n-2) for n=2..8','eq','true','accelerated unrank cross-checked against its own recurrence',$q$
     SELECT bool_and((unrank(jacobsthal_numbers(), n)).value = (unrank(jacobsthal_numbers(), n-1)).value + 2*(unrank(jacobsthal_numbers(), n-2)).value)
-    FROM generate_series(2, 8) n $q$);
+    FROM generate_series(2, 8) n $q$),
+  ('jacobsthal_numbers','unrank(10) = 341 = (2^10 - 1)/3','eq','341','off the floor, past the first-terms window',$q$
+    SELECT (unrank(jacobsthal_numbers(), 10)).value::text $q$),
+  ('jacobsthal_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
+    SELECT cardinality(jacobsthal_numbers())::text $q$);

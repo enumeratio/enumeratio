@@ -13,4 +13,7 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('hexagonal_numbers','unrank(10)=190','eq','190','H(10)',$q$ SELECT (unrank(hexagonal_numbers(),10)).value::text $q$),
   ('hexagonal_numbers','H(n) = T(2n-1) for n=1..8 (every hexagonal is triangular)','eq','true','cross-check against the triangular_numbers floor',$q$
     SELECT bool_and((unrank(hexagonal_numbers(), n)).value = (unrank(triangular_numbers(), 2*n-1)).value)
-    FROM generate_series(1, 8) n $q$);
+    FROM generate_series(1, 8) n $q$),
+  ('hexagonal_numbers','synthesized monotonic contains via <@: 66 ∈ (H(6)), 67 ∉','eq','true|false','scan the non-decreasing floor',$q$ SELECT (66::numeric <@ hexagonal_numbers())::text || '|' || (67::numeric <@ hexagonal_numbers())::text $q$),
+  ('hexagonal_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
+    SELECT cardinality(hexagonal_numbers())::text $q$);

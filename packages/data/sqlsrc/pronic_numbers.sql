@@ -14,4 +14,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('pronic_numbers','contains: 30 ∈, 31 ∉','eq','true|false','4n+1 square',$q$ SELECT (30::numeric <@ pronic_numbers())::text||'|'||(31::numeric <@ pronic_numbers())::text $q$),
   ('pronic_numbers','P(n) = 2·T(n) for n=0..8 (pronic is twice triangular)','eq','true','cross-check against the triangular_numbers floor',$q$
     SELECT bool_and((unrank(pronic_numbers(), n)).value = 2*(unrank(triangular_numbers(), n)).value)
-    FROM generate_series(0, 8) n $q$);
+    FROM generate_series(0, 8) n $q$),
+  ('pronic_numbers','unrank(10) = 110 = 10·11','eq','110','off the floor',$q$
+    SELECT (unrank(pronic_numbers(), 10)).value::text $q$),
+  ('pronic_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
+    SELECT cardinality(pronic_numbers())::text $q$);

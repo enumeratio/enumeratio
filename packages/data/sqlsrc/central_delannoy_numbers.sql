@@ -18,4 +18,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('central_delannoy_numbers','unrank(3) = D(3) = 63','eq','63','off the floor',$q$
     SELECT (unrank(central_delannoy_numbers(), 3)).value::text $q$),
   ('central_delannoy_numbers','cardinality = infinity','eq','Infinity','unbounded sequence',$q$
-    SELECT cardinality(central_delannoy_numbers())::text $q$);
+    SELECT cardinality(central_delannoy_numbers())::text $q$),
+  ('central_delannoy_numbers','unrank(6) = D(6) = 8989','eq','8989','off the floor, past the first-six window',$q$
+    SELECT (unrank(central_delannoy_numbers(), 6)).value::text $q$),
+  ('central_delannoy_numbers','synthesized monotonic contains via <@: 8989 ∈ (D(6)), 8990 ∉','eq','true|false','scan the non-decreasing floor',$q$
+    SELECT (8989::numeric <@ central_delannoy_numbers())::text || '|' || (8990::numeric <@ central_delannoy_numbers())::text $q$);
