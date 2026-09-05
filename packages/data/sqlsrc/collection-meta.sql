@@ -212,6 +212,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('arrangements',                'Arrangements',                'Ordered selections without repetition (partial permutations).'),
   -- ── polytope faces ──────────────────────────────────────────────────────────────────────────────────────────
   ('associahedron',               'Associahedron',               'Faces of the associahedron (polygon dissections).'),
+  ('cyclohedron',                 'Cyclohedron',                 'Faces of the type-B associahedron / Bott–Taubes polytope (centrally symmetric polygon dissections).'),
   ('cross_polytope',              'Cross-Polytope',              'Faces of the n-dimensional cross-polytope.'),
   ('permutahedron',               'Permutahedron',               'Faces of the permutahedron (ordered set partitions).'),
   ('dissections',                 'Dissections',                 'Dissections of a convex polygon by non-crossing diagonals.'),

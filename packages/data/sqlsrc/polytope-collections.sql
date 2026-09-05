@@ -164,6 +164,58 @@ CREATE FUNCTION signed_permutation_typeb_adjacent(a signed_permutation, b signed
     END IF;
   END $$;
 
+-- ── cyclohedron = the faces of the type-B associahedron / Bott–Taubes polytope W_n (#232 chunk 4) ──────────
+-- W_n's vertices are the CENTRALLY SYMMETRIC triangulations of a (2n+2)-gon (Simion's model) — the fixed polytope of
+-- the associahedron's own 180°-rotation involution, so it reuses `dissection` (m = 2n+2, i.e. dissections' own axis
+-- at 2n) as its carrier, filtered to the diagonal sets invariant under that rotation, at every level (not just
+-- vertices — a partial CS dissection is a higher face, exactly as for the associahedron).
+CREATE FUNCTION dissection_diagonal_rotate(c int, m int) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+  SELECT least(a, b) * m + greatest(a, b)
+  FROM (SELECT (c / m + m / 2) % m AS a, (c % m + m / 2) % m AS b) t $$;
+CREATE FUNCTION dissection_centrally_symmetric(d dissection) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT (d).diagonals = ARRAY(
+    SELECT dissection_diagonal_rotate(c, (d).m) FROM unnest((d).diagonals) c
+     ORDER BY dissection_diagonal_rotate(c, (d).m)) $$;
+CREATE TYPE cyclohedron_fiber AS (n natural_number);   -- typed fiber; axis: n = the polytope's OWN dimension (W_n)
+CREATE FUNCTION fiber_elements(f cyclohedron_fiber, element_limit int) RETURNS SETOF dissection LANGUAGE sql STABLE AS $$
+  SELECT d FROM fiber_elements(ROW(2 * (f).n)::dissections_fiber, little_schroeder((2 * (f).n)::int)::int) d
+   WHERE dissection_centrally_symmetric(d)
+   ORDER BY coalesce(array_length((d).diagonals, 1), 0), (d).diagonals
+   LIMIT element_limit $$;
+CREATE FUNCTION fiber_count(f cyclohedron_fiber) RETURNS numeric LANGUAGE sql STABLE AS $$
+  SELECT count(*) FROM fiber_elements(ROW(2 * (f).n)::dissections_fiber, little_schroeder((2 * (f).n)::int)::int) d
+   WHERE dissection_centrally_symmetric(d) $$;
+CREATE FUNCTION contains_in_fiber(f cyclohedron_fiber, v dissection) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT contains_in_fiber(ROW(2 * (f).n)::dissections_fiber, v) AND dissection_centrally_symmetric(v) $$;
+INSERT INTO base_collection VALUES ('cyclohedron', 'dissection');
+INSERT INTO base_grade VALUES ('cyclohedron', 1, 'n', NULL, NULL);
+CREATE FUNCTION fiber_symbol(f cyclohedron_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'W' || to_unicode_subscript((f).n) $$;   -- corpus symbol
+SELECT base_realize('cyclohedron');
+-- face dimension: n minus the number of diagonal ORBITS used (a fixed/central diagonal is its own orbit; every
+-- other diagonal pairs with its rotate-image) — a CS triangulation (max orbits = n) is a vertex (dim 0), the empty
+-- dissection (0 orbits) is the whole body (dim n). n itself is recovered from m = 2n+2, so this needs no extra param.
+CREATE FUNCTION dissection_symmetry_orbit_count(d dissection) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+  SELECT count(DISTINCT least(c, dissection_diagonal_rotate(c, (d).m))) FROM unnest((d).diagonals) c $$;
+CREATE FUNCTION dissection_cyclohedron_face_dim(d dissection) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+  SELECT ((d).m / 2 - 1) - dissection_symmetry_orbit_count(d) $$;
+-- point_fn and contains_fn are the SAME dissection_loday_point / dissection_face_contains the associahedron uses —
+-- legitimate reuse, not a shortcut: a CS triangulation is still an ordinary triangulation (dissection_face_dim(d)=0
+-- holds regardless of symmetry), so Loday's recursive apex coordinate is exact on it, and face refinement is still
+-- plain diagonal-set inclusion.
+INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
+  ('cyclohedron','dissection_cyclohedron_face_dim','dissection_loday_point','dissection_face_contains','Cyclohedron');
+INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat) VALUES
+  ('cyclohedron','dissection','dissection_id','dissections','Dissection',NULL);
+-- edge floor: two CS triangulations differing by EXACTLY one diagonal on each side (symmetric difference of size 2)
+-- — necessarily a swap of the fixed/central diagonal for another (any other diagonal moves in a symmetric PAIR, so
+-- flipping just one would break central symmetry and give symmetric difference ≥ 4). This central-diagonal flip is
+-- always legal (the quadrilateral it sits in is itself symmetry-invariant), so it is a SAFE, PROVEN floor — the
+-- richer paired-diagonal-flip edges (more of them, for n≥3) are deferred, per the ticket's "compute a floor" rule.
+CREATE FUNCTION dissection_cyclohedron_adjacent(a dissection, b dissection) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT (a).m = (b).m
+     AND (SELECT count(*) FROM unnest((a).diagonals) x WHERE NOT (x = ANY((b).diagonals)))
+       + (SELECT count(*) FROM unnest((b).diagonals) x WHERE NOT (x = ANY((a).diagonals))) = 2 $$;
+
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutahedron','the permutahedron is a distinct collection, in bijection with set_compositions','eq','75|75','same cardinality (order-iso sibling); Fubini(4)',$q$
@@ -269,4 +321,24 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            signed_permutation_typeb_adjacent(ROW(ARRAY[-2,1,-3])::signed_permutation, ROW(ARRAY[3,-2,1])::signed_permutation)::text $q$),
   ('signed_permutations','type-B permutahedron edge floor for n=3: at least 144 = 48·(3+C(3,2))/2 adjacent pairs (sign-flip + transposition generators), computed not guessed','eq','true','vertices+edges only (chunk 3); other zonotope generators would only add more edges',$q$
     SELECT ((SELECT count(*) FROM elements(signed_permutations(3)) e1, elements(signed_permutations(3)) e2
-              WHERE ordinality(e1) < ordinality(e2) AND signed_permutation_typeb_adjacent((e1).value,(e2).value)) >= 144)::text $q$);
+              WHERE ordinality(e1) < ordinality(e2) AND signed_permutation_typeb_adjacent((e1).value,(e2).value)) >= 144)::text $q$),
+  ('cyclohedron','the cyclohedron is now registered in base_polytope (#232 chunk 4 — polytope batch complete)','eq','true|Cyclohedron','base_polytope row for the new collection',$q$
+    SELECT EXISTS(SELECT 1 FROM base_polytope WHERE collection='cyclohedron')::text || '|' ||
+           (SELECT title FROM base_polytope WHERE collection='cyclohedron') $q$),
+  ('cyclohedron','vertex count W_n = C(2n,n), the type-B Catalan / central-binomial family, for n=1..4 — computed against the closed form, not guessed','eq','true,true,true,true','count(dim-0 faces) of cyclohedron(n) vs. binomial(2n,n)',$q$
+    SELECT string_agg(
+      ((SELECT count(*) FROM elements(cyclohedron(n)) e WHERE dissection_cyclohedron_face_dim((e).value) = 0) = binomial(2*n, n))::text,
+      ',' ORDER BY n) FROM generate_series(1,4) n $q$),
+  ('cyclohedron','it maps back to dissections (its underlying carrier''s parent collection), like the associahedron','eq','true','base_map row present',$q$
+    SELECT EXISTS(SELECT 1 FROM base_map WHERE collection='cyclohedron' AND codomain='dissections')::text $q$),
+  ('cyclohedron','a CS vertex of cyclohedron(2) (the hexagon, m=6) carries a Loday centre on the hyperplane Σ=C(m-1,2)=10','eq','true','the point_fn is exact on the vertices, reused from the associahedron',$q$
+    SELECT bool_and((SELECT sum(x) FROM unnest(dissection_loday_point((e).value)) x) = 10)::text
+    FROM elements(cyclohedron(2)) e WHERE dissection_cyclohedron_face_dim((e).value) = 0 $q$),
+  ('cyclohedron','contains: the hexagon triangulation {0-2,0-3,3-5} is centrally symmetric (central diagonal 0-3, pair 0-2/3-5); the fan {0-2,0-3,0-4} is not','eq','true|false','contains_in_fiber layers the CS predicate over the parent dissections membership',$q$
+    SELECT contains(cyclohedron(2), ROW(ARRAY[0*6+2, 0*6+3, 3*6+5], 6)::dissection)::text || '|' ||
+           contains(cyclohedron(2), ROW(ARRAY[0*6+2, 0*6+3, 0*6+4], 6)::dissection)::text $q$),
+  ('cyclohedron','edge floor for W_3 (octagon-based, 20 vertices): at least 10 = V/2 central-diagonal-swap edges (every CS triangulation has exactly one central-flip neighbor), computed via an adjacency self-join over the dim-0 faces, not guessed','eq','true','vertices + central-flip edges only; paired-diagonal-flip edges (more of them) deferred',$q$
+    SELECT ((SELECT count(*) FROM elements(cyclohedron(3)) e1, elements(cyclohedron(3)) e2
+              WHERE ordinality(e1) < ordinality(e2)
+                AND dissection_cyclohedron_face_dim((e1).value) = 0 AND dissection_cyclohedron_face_dim((e2).value) = 0
+                AND dissection_cyclohedron_adjacent((e1).value, (e2).value)) >= 10)::text $q$);
