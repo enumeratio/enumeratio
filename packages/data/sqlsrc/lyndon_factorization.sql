@@ -30,6 +30,18 @@ CREATE FUNCTION word_lyndon_factor_lengths(w word) RETURNS composition LANGUAGE 
 CREATE FUNCTION word_lyndon_first_factor(w word) RETURNS word LANGUAGE sql IMMUTABLE AS $$
   SELECT ROW((w).letters[1:coalesce((word_lyndon_factor_lengths_array(w))[1],0)])::word $$;
 
+-- the full factor list (not just the first) — used only by the round-trip/non-increasing examples below.
+CREATE FUNCTION word_lyndon_factors(w word) RETURNS word[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE lens int[] := word_lyndon_factor_lengths_array(w); letters int[] := (w).letters;
+          i int := 1; result word[] := '{}'; l int;
+  BEGIN
+    FOREACH l IN ARRAY lens LOOP
+      result := result || ROW(letters[i:i+l-1])::word;
+      i := i + l;
+    END LOOP;
+    RETURN result;
+  END $$;
+
 -- ── register ─────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat) VALUES
   ('words','lyndon_factor_lengths','word_lyndon_factor_lengths','integer_compositions','Lyndon factorization (factor lengths)',NULL),
@@ -55,4 +67,21 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(
       (SELECT sum(x) FROM unnest(word_lyndon_factor_lengths_array((e).value)) x) = 5
       AND is_word_lyndon(word_lyndon_first_factor((e).value))
-    )::text FROM elements(words(5,2)) e $q$);
+    )::text FROM elements(words(5,2)) e $q$),
+  ('words','concatenating the Lyndon factors reconstructs the original word, over words(5,2)','eq','true',
+   'round-trip: factors are contiguous by construction, but this confirms the boundaries Duval''s algorithm picks are exactly right, not just sum-to-n. NOTE: pglite''s unnest() of an array whose element type is a single-array-field composite (word[]) flattens straight to the underlying int[] — so `f` below IS the letters array, no `.letters` projection needed or even possible',$q$
+    SELECT bool_and(
+      (SELECT array_agg(l ORDER BY fo, lo) FROM unnest(word_lyndon_factors((e).value)) WITH ORDINALITY t(f, fo),
+                                            LATERAL unnest(f) WITH ORDINALITY u(l, lo))
+      = ((e).value).letters
+    )::text FROM elements(words(5,2)) e $q$),
+  ('words','every factor list is lexicographically non-increasing (w1 ≥ w2 ≥ … ≥ wk), over words(6,2)','eq','true',
+   'the defining CFL property, checked over ALL factors — not just that the first one is Lyndon',$q$
+    SELECT bool_and(
+      NOT EXISTS (
+        SELECT 1 FROM (
+          SELECT f AS cur, lag(f) OVER (ORDER BY fo) AS prev
+          FROM unnest(word_lyndon_factors((e).value)) WITH ORDINALITY t(f, fo)
+        ) x WHERE prev IS NOT NULL AND cur > prev
+      )
+    )::text FROM elements(words(6,2)) e $q$);
