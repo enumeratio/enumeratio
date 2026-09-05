@@ -18,7 +18,7 @@ Two pieces:
 
 - **`/develop/data/collections`** (this page, eventually) — a flat, sortable/filterable index of all 242
   collections, one row each: id, title, carrier, grade axes, cardinality. Generated the same way
-  `statistics.md`/`api-reference.md` are (a build-time `.data.ts` loader reading the registry).
+  `statistics.md`/`api.md` are (a build-time `.data.ts` loader reading the registry).
 - **`/develop/data/collection/[id]`** — the per-collection spec sheet. **Not** VitePress's static route
   prebuilding — that only works for collections known at build time, and this needs to render collections that
   weren't (a user-defined one added at runtime, once that's possible). Self-routing instead, the same pattern

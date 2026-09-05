@@ -5,17 +5,9 @@ import { data } from './data/relations.data.ts'
 </script>
 
 A crosswalk of the external systems and inspirations enumeratio relates to — the sources cross-referenced against
-the library's own registry, and where each one's own overview page in [Data](/develop/data/) links out to a
-pre-filtered slice of the full picture.
-
-- **[Statistics](/develop/data/statistics)** — every named per-element invariant (`inversions`, `descents`, …)
-  registered against every collection, generated fresh from the registry with a live worked example each.
-- **[Relations](/develop/data/relations)** — the full cross-reference table below, in one filterable,
-  shareable-URL view.
-
-Every system below is generated from the library's own `base_reference` registry, so a stale link means the
-registry is stale, not this page — each section links into a pre-filtered [Relations](/develop/data/relations)
-view rather than embedding its own table.
+the library's own registry, `base_reference`. Each section below links into a pre-filtered view of the full
+[Relations](/develop/data/relations) table (in [Data](/develop/data/)) rather than embedding its own; a stale link
+means the registry is stale, not this page.
 
 ## OEIS
 
