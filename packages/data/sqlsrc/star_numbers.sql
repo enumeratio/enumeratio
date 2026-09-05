@@ -8,4 +8,7 @@ INSERT INTO base_collection VALUES ('star_numbers','numeric',true);
 INSERT INTO base_monotonic_sequence VALUES ('star_numbers');   -- non-decreasing: synth a scanning contains
 SELECT base_realize('star_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
-  ('star_numbers','first terms','eq','1,13,37,73,121,181,253,337,433','6n(n+1)+1',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(star_numbers(),9) e $q$);
+  ('star_numbers','first terms','eq','1,13,37,73,121,181,253,337,433','6n(n+1)+1',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(star_numbers(),9) e $q$),
+  ('star_numbers','unrank(9) = 541 = 6·9·10+1','eq','541','off the floor',$q$ SELECT (unrank(star_numbers(), 9)).value::text $q$),
+  ('star_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$ SELECT cardinality(star_numbers())::text $q$),
+  ('star_numbers','contains via synthesized scan: 433 ∈, 434 ∉','eq','true|false','monotonic-sequence contains + <@',$q$ SELECT (433::numeric <@ star_numbers())::text || '|' || (434::numeric <@ star_numbers())::text $q$);

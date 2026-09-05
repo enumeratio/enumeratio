@@ -8,4 +8,7 @@ INSERT INTO base_collection VALUES ('centered_triangular_numbers','numeric',true
 INSERT INTO base_monotonic_sequence VALUES ('centered_triangular_numbers');   -- non-decreasing: synth a scanning contains
 SELECT base_realize('centered_triangular_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
-  ('centered_triangular_numbers','first terms','eq','1,4,10,19,31,46,64,85,109','(3n(n+1)+2)/2',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(centered_triangular_numbers(),9) e $q$);
+  ('centered_triangular_numbers','first terms','eq','1,4,10,19,31,46,64,85,109','(3n(n+1)+2)/2',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(centered_triangular_numbers(),9) e $q$),
+  ('centered_triangular_numbers','unrank(9) = 136 = (3·9·10+2)/2','eq','136','off the floor',$q$ SELECT (unrank(centered_triangular_numbers(), 9)).value::text $q$),
+  ('centered_triangular_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$ SELECT cardinality(centered_triangular_numbers())::text $q$),
+  ('centered_triangular_numbers','contains via synthesized scan: 109 ∈, 110 ∉','eq','true|false','monotonic-sequence contains + <@',$q$ SELECT (109::numeric <@ centered_triangular_numbers())::text || '|' || (110::numeric <@ centered_triangular_numbers())::text $q$);
