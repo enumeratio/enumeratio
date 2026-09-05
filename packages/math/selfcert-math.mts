@@ -156,6 +156,17 @@ for (const a of mcs) {
   record(`mc_conj(${JSON.stringify(a)})`, sqlConj, M.mc_conj(a).coeffs.join(","));
 }
 
+// ---- integer compositions (gap-cut bijection) ----
+for (let n = 0; n <= 12; n++) {
+  const total = n >= 1 ? 1 << (n - 1) : 1;
+  for (let mask = 0; mask < total; mask++) {
+    const [[sql]] = await q(`SELECT array_to_string((composition_from_mask(${n},${mask}::bigint)).parts, ',')`);
+    record(`composition_from_mask(${n},${mask})`, sql, M.composition_from_mask(n, mask).join(","));
+    // and the inverse round-trips back to the same mask (no separate SQL rank fn to twin against — see module header)
+    record(`composition_rank(inverse of mask ${mask}, n=${n})`, mask, M.composition_rank(M.composition_from_mask(n, mask)));
+  }
+}
+
 await pg.close();
 
 console.log(`checked ${checked} cases across ${Object.keys(M).length} exports`);
