@@ -21,8 +21,10 @@ import { parsePackArg, requireNonEmptySelection } from './pack-filter'
 const log = debug('enumeratio:data:selfcert')
 
 const CAP_COUNT = 20_000   // largest fiber we enumerate-and-count (the closed-form is checked only up to here)
+const COUNT_BUDGETS = [CAP_COUNT, 200]   // stepped down once on a watchdog kill (#307), like UNRANK_BUDGETS
 const CAP_UNRANK = 300     // terms checked per fiber for element_at-vs-sequential — a recurrence unrank is O(ord), so
                            // this is O(N²) per fiber; 300 terms is plenty to catch a wrong formula
+const UNRANK_BUDGETS = [CAP_UNRANK, 40]   // stepped down once on a watchdog kill (#307) — see the ladder comment below
 const NMAX = 8             // sizes swept for a graded collection: 0..NMAX (oversized fibers are skipped, not failed)
 const STMT_TIMEOUT = '8s'  // belt: honoured by a real Postgres, IGNORED by pglite — see WATCHDOG_MS
 const WATCHDOG_MS = 20_000 // braces: the query runs in a worker process, and a query that outruns this is SIGKILLed.
@@ -55,6 +57,8 @@ const mismatches: Mismatch[] = []
 type Skip = { coll: string; n: number | null; reason: string }
 const skips: Skip[] = []
 let checkedCount = 0, checkedUnrank = 0, collsWithAccel = 0, collsNoAccel = 0
+const narrowed = new Map<string, number>()        // collection -> the reduced unrank budget it needed (#307)
+const narrowedCount = new Map<string, number>()   // collection -> the reduced enumerate-and-count cap it needed
 
 const cats = await q<{ id: string; grades: string; pack: string }>(
   `SELECT cat.id, cat.grades::text AS grades, col.pack FROM base_catalog cat JOIN base_collection col ON col.id = cat.id ORDER BY cat.id`)
@@ -89,11 +93,25 @@ for (const c of selected) {
     const handle = n === null ? `${c.id}()` : `${c.id}(${n})`
     try {
       if (hasCount) {
-        const rows = await q<{ fib: string; closed: string | null; enumerated: string | null }>(
-          `SELECT fiber_address(f)::text AS fib, fiber_count(f)::text AS closed,
-                  CASE WHEN fiber_count(f) >= 0 AND fiber_count(f) <= ${CAP_COUNT}
-                       THEN (SELECT count(*)::text FROM elements(f, ${CAP_COUNT + 1}) v) END AS enumerated
-             FROM fibers(${handle}) f`)
+        // Same ladder as the unrank check below: a smaller cap certifies the SMALL fibers of a collection whose
+        // floor is too slow to enumerate the large ones, instead of certifying none of them. What is dropped is
+        // the big fibers, and the reduced cap is reported so nobody reads it as full coverage.
+        let rows: { fib: string; closed: string | null; enumerated: string | null }[] = []
+        let usedCount = 0
+        for (const cap of COUNT_BUDGETS) {
+          try {
+            rows = await q<{ fib: string; closed: string | null; enumerated: string | null }>(
+              `SELECT fiber_address(f)::text AS fib, fiber_count(f)::text AS closed,
+                      CASE WHEN fiber_count(f) >= 0 AND fiber_count(f) <= ${cap}
+                           THEN (SELECT count(*)::text FROM elements(f, ${cap + 1}) v) END AS enumerated
+                 FROM fibers(${handle}) f`)
+            usedCount = cap
+            break
+          } catch (e: any) {
+            if (!(e instanceof QTimeout) || cap === COUNT_BUDGETS[COUNT_BUDGETS.length - 1]) throw e
+          }
+        }
+        if (usedCount && usedCount !== CAP_COUNT) narrowedCount.set(c.id, usedCount)
         for (const r of rows) {
           if (!isFinite_(r.closed) || r.enumerated == null) continue   // ∞ / unknown / too-big-to-enumerate
           anyChecked = true; checkedCount++
@@ -101,17 +119,34 @@ for (const c of selected) {
         }
       }
       if (hasUnrank) {
+        // Budget LADDER (#307). element_at(f, ord) for ord = 0..N is O(N · cost(unrank)), and a recurrence unrank
+        // is O(ord) — so this check is quadratic or worse in exactly the collections whose unrank is expensive.
+        // primorial_numbers: 100 terms 2.1s, 300 terms 83s. At a single fixed budget those collections certify
+        // NOTHING; they time out and report as a skip. Stepping the budget down instead buys a true, smaller
+        // statement — "agrees on the first 40 terms" — which is strictly better than "unverified". Each step down
+        // costs one worker respawn, so the ladder is short and the budget actually used is reported.
         // element_at vs sequential — applies to INFINITE fibers too (check the first CAP_UNRANK terms); this is what
         // certifies the closed-form term formulas of the unbounded number sequences (Catalan, factorial, …).
-        const rows = await q<{ fib: string; bad: number | null }>(
-          `SELECT fiber_address(f)::text AS fib,
-                  CASE WHEN cardinality(f) IS NULL OR (cardinality(f))::numeric = 'infinity'
-                            OR (cardinality(f))::numeric <= ${CAP_UNRANK} THEN (
-                    SELECT count(*) FILTER (WHERE render(element_at(f, s.ord)) IS DISTINCT FROM s.r)
-                      FROM (SELECT (row_number() OVER (ORDER BY e) - 1)::rank_index AS ord, render(e) AS r
-                              FROM elements(f, ${CAP_UNRANK}) e) s
-                  ) END AS bad
-             FROM fibers(${handle}) f`)
+        let rows: { fib: string; bad: number | null }[] = []
+        let usedBudget = 0
+        for (const budget of UNRANK_BUDGETS) {
+          try {
+            rows = await q<{ fib: string; bad: number | null }>(
+              `SELECT fiber_address(f)::text AS fib,
+                      CASE WHEN cardinality(f) IS NULL OR (cardinality(f))::numeric = 'infinity'
+                                OR (cardinality(f))::numeric <= ${budget} THEN (
+                        SELECT count(*) FILTER (WHERE render(element_at(f, s.ord)) IS DISTINCT FROM s.r)
+                          FROM (SELECT (row_number() OVER (ORDER BY e) - 1)::rank_index AS ord, render(e) AS r
+                                  FROM elements(f, ${budget}) e) s
+                      ) END AS bad
+                 FROM fibers(${handle}) f`)
+            usedBudget = budget
+            break
+          } catch (e: any) {
+            if (!(e instanceof QTimeout) || budget === UNRANK_BUDGETS[UNRANK_BUDGETS.length - 1]) throw e
+          }
+        }
+        if (usedBudget && usedBudget !== CAP_UNRANK) narrowed.set(c.id, usedBudget)
         for (const r of rows) {
           if (r.bad == null) continue
           anyChecked = true; checkedUnrank++
@@ -141,6 +176,11 @@ console.log(`\nself-certification (accelerated == naive)\n`)
 console.log(`collections with an accel: ${collsWithAccel}   (no accel, skipped: ${collsNoAccel})`)
 console.log(`fiber checks: ${checkedCount} count + ${checkedUnrank} unrank   (worker spawns: ${channel.spawns} — one per killed query, plus the first)`)
 console.log(`swept in ${secs(Date.now() - started)}`)
+if (narrowed.size || narrowedCount.size) {
+  console.log(`\ncertified on a REDUCED budget (${narrowed.size + narrowedCount.size}) — a true statement about less, not a skip:`)
+  for (const [coll, b] of narrowed) console.log(`  ${coll} — unrank: first ${b} terms (of ${CAP_UNRANK}); its unrank is too costly per element for the full budget`)
+  for (const [coll, b] of narrowedCount) console.log(`  ${coll} — count: fibers up to ${b} elements (of ${CAP_COUNT}); its floor is too slow to enumerate the larger ones`)
+}
 if (skips.length) {
   console.log(`\nskipped (${skips.length}):`)
   for (const s of skips) console.log(`  ${s.coll}${s.n != null ? `(${s.n})` : ''} — ${s.reason}`)

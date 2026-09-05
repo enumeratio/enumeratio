@@ -3,7 +3,15 @@
 CREATE FUNCTION primorial_term(r term_index) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
   DECLARE p numeric:=1; i int; BEGIN FOR i IN 1..r LOOP p:=p*nth_prime(i); END LOOP; RETURN p; END $$;
 CREATE TYPE primorial_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
-CREATE FUNCTION fiber_elements(f primorial_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$ SELECT primorial_term(r) FROM generate_series(0,element_limit-1) r $$;
+-- Each term from the one before it (#307). primorial_term(r) loops 1..r over nth_prime, so calling it once per
+-- term made the window O(N²) in prime lookups — 300 terms cost ~45,000 of them, past the selfcert watchdog, and
+-- the accel could not be certified at all. The running product is O(N). primorial_term stays as the named twin.
+CREATE FUNCTION fiber_elements(f primorial_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
+  WITH RECURSIVE t(k, val) AS (
+    SELECT 0, 1::numeric                                            -- primorial_term(0) = the empty product
+     UNION ALL
+    SELECT k + 1, val * nth_prime(k + 1) FROM t WHERE k + 1 <= element_limit - 1)
+  SELECT val FROM t WHERE k <= element_limit - 1 ORDER BY k $$;
 CREATE FUNCTION contains_in_fiber(f primorial_numbers_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$   -- scan the monotonic floor until ≥ v
   WITH RECURSIVE t(k, val) AS (SELECT 0, primorial_term(0) UNION ALL SELECT k+1, primorial_term(k+1) FROM t WHERE val < v)
   SELECT EXISTS (SELECT 1 FROM t WHERE val = v) $$;
