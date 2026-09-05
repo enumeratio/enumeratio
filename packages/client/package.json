@@ -1,7 +1,7 @@
 {
   "name": "@enumeratio/client",
   "version": "0.1.0",
-  "description": "TypeScript read-through client for the pure-SQL enumeratio core (pg-enumeratio) running in PGlite \u2014 the math API everything else consumes.",
+  "description": "TypeScript read-through client for the pure-SQL enumeratio core (pg-enumeratio) running in PGlite — the math API everything else consumes.",
   "type": "module",
   "license": "Unlicense",
   "homepage": "https://enumeratio.dev",
@@ -40,7 +40,8 @@
     "selfcert:rows": "node --import tsx selfcert-rows.mts",
     "selfcert:resolve": "node --import tsx selfcert-resolve.mts",
     "test": "vitest run",
-    "selfcert:engine": "node --import tsx selfcert-engine.mts"
+    "selfcert:engine": "node --import tsx selfcert-engine.mts",
+    "bench:engine": "node --import tsx bench-engine.mts"
   },
   "dependencies": {
     "@electric-sql/pglite": "^0.5.3",
