@@ -50,6 +50,40 @@ CREATE FUNCTION contains_in_fiber(f integer_partitions_fiber, v integer_partitio
 INSERT INTO base_collection VALUES ('integer_partitions', 'integer_partition');
 INSERT INTO base_grade VALUES ('integer_partitions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f integer_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'p(' || (f).n::int || ')' $$;   -- corpus symbol
+
+-- direct unrank: q(a,b) = #partitions of a into parts ≤ b, via the standard 2-D recurrence q(a,b) = q(a,b-1) +
+-- q(a-b,b) (either no part equals b, or peel one part = b off the largest). q(a,b) for b > a saturates to q(a,a)
+-- automatically (the b<=a guard just stops adding an infeasible term), so no extra clamping is needed on lookup.
+-- Reused by every capped/bounded sibling (bounded_part_partitions, largest_part_partitions) by passing their own
+-- cap in place of n — this is exactly partition_generate's own recursion (peel a leading part p from
+-- min(n,cap) downto 1, recurse on n-p bounded by p), just counted instead of generated, matching its order exactly.
+CREATE FUNCTION integer_partition_unrank(n int, cap int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE q numeric[]; a int; b int; out int[] := '{}'; x numeric := ord; rem int := n; capv int := cap; p int; blk numeric; chosen boolean;
+  BEGIN
+    IF n = 0 THEN RETURN out; END IF;
+    q := array_fill(0::numeric, ARRAY[n+1, n+1]);              -- q[a+1][b+1] = partitions of a into parts ≤ b
+    FOR a IN 0..n LOOP q[a+1][1] := (a = 0)::int; END LOOP;    -- b=0: only a=0 has a (empty) partition
+    FOR b IN 1..n LOOP
+      FOR a IN 0..n LOOP
+        q[a+1][b+1] := q[a+1][b] + CASE WHEN b <= a THEN q[a-b+1][b+1] ELSE 0 END;
+      END LOOP;
+    END LOOP;
+    WHILE rem > 0 LOOP
+      chosen := false;
+      FOR p IN REVERSE least(rem, capv)..1 LOOP
+        blk := q[rem-p+1][p+1];                                -- q(rem-p, p): completions after choosing leading part p
+        IF x < blk THEN
+          out := out || p; rem := rem - p; capv := p; chosen := true; EXIT;
+        ELSE
+          x := x - blk;
+        END IF;
+      END LOOP;
+      EXIT WHEN NOT chosen;                                    -- defensive: shouldn't happen for a valid rank
+    END LOOP;
+    RETURN out;
+  END $$;
+CREATE FUNCTION fiber_unrank(f integer_partitions_fiber, rank rank_index) RETURNS integer_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(integer_partition_unrank((f).n::int, (f).n::int, rank::bigint))::integer_partition $fu$;
 SELECT base_realize('integer_partitions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -86,3 +120,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('integer_partitions','cardinality(integer_partitions()) = ∞, not 0 (#151)','eq','Infinity',
     'same open-WHOLE-handle bug as integer_compositions: n unbounded ⇒ fibers() cannot unfold it',$q$
     SELECT cardinality(integer_partitions())::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('integer_partitions','fiber_unrank(integer_partitions(7), 0..14) are all members (accel floor)','eq','true','partition-count DP unrank lands inside the p(7)=15 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(integer_partitions(7)) f), ord::rank_index) <@ integer_partitions(7))::text
+      FROM generate_series(0, cardinality(integer_partitions(7))::int - 1) ord $q$);

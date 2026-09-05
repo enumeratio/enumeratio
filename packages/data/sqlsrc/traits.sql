@@ -178,8 +178,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('capabilities','k_subsets carries the full ladder: count + membership + direct unrank + samplable','eq','countable,decidable,enumerable,indexable,samplable','fiber_count + contains_in_fiber + fiber_unrank + finite',$q$
     SELECT string_agg(trait, ',' ORDER BY trait) FROM base_collection_trait
     WHERE collection = 'k_subsets' AND trait IN ('enumerable','countable','decidable','indexable','samplable') $q$),
-  ('capabilities','integer_partitions is countable + samplable but NOT indexable (no direct unrank hook)','eq','countable:t indexable:f samplable:t','a finite collection whose floor scans',$q$
-    SELECT string_agg(t || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection='integer_partitions' AND trait=t) THEN 't' ELSE 'f' END, ' ' ORDER BY t)
+  ('capabilities','distinct_partitions is countable + samplable but NOT indexable (no direct unrank hook)','eq','countable:t indexable:f samplable:t','a finite collection whose floor scans',$q$
+    SELECT string_agg(t || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection='distinct_partitions' AND trait=t) THEN 't' ELSE 'f' END, ' ' ORDER BY t)
     FROM unnest(ARRAY['countable','indexable','samplable']) t $q$),
   ('capabilities','factorial_numbers is indexable (ord! is O(1)) + decidable, but NOT countable/samplable (unbounded)','eq','countable:f decidable:t indexable:t samplable:f','an infinite sequence with a direct term',$q$
     SELECT string_agg(t || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection='factorial_numbers' AND trait=t) THEN 't' ELSE 'f' END, ' ' ORDER BY t)

@@ -40,6 +40,11 @@ CREATE FUNCTION contains_in_fiber(f largest_part_partitions_fiber, v integer_par
 -- declare it as DATA + realize
 INSERT INTO base_collection VALUES ('largest_part_partitions', 'integer_partition');
 INSERT INTO base_grade VALUES ('largest_part_partitions', 1, 'n', NULL, NULL), ('largest_part_partitions', 2, 'm', '1', 'g1');   -- m ranges 1..n
+
+-- direct unrank: m prepended to integer_partitions' own capped-DP unrank of the tail (n-m, parts ≤ m) — the
+-- same recursion partition_generate((f).n - (f).m, (f).m) follows, so the order matches exactly.
+CREATE FUNCTION fiber_unrank(f largest_part_partitions_fiber, rank rank_index) RETURNS integer_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(ARRAY[(f).m::int] || integer_partition_unrank((f).n::int - (f).m::int, (f).m::int, rank::bigint))::integer_partition $fu$;
 SELECT base_realize('largest_part_partitions');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -64,3 +69,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[3,2])::integer_partition <@ largest_part_partitions(5,3))::text || '|' ||
            (ROW(ARRAY[2,2,1])::integer_partition <@ largest_part_partitions(5,3))::text || '|' ||
            (ROW(ARRAY[3,2])::integer_partition <@ largest_part_partitions(5,2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('largest_part_partitions','fiber_unrank(largest_part_partitions(6,3), 0..) are all members (accel floor)','eq','true','m-prepended capped-DP unrank lands inside fiber [6,3] for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(largest_part_partitions(6,3)) f), ord::rank_index) <@ largest_part_partitions(6,3))::text
+      FROM generate_series(0, cardinality(largest_part_partitions(6,3))::int - 1) ord $q$);

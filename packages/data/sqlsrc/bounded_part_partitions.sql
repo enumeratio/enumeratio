@@ -29,6 +29,9 @@ INSERT INTO base_grade VALUES
   ('bounded_part_partitions', 2, 'k', '1', 'g1');                                            -- part-bound k ranges 1..n
 CREATE FUNCTION fiber_symbol(f bounded_part_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'p(' || (f).n::int || ',≤' || (f).k::int || ')' $$;   -- corpus symbol
 
+-- direct unrank: this fiber IS partition_generate(n,k) — integer_partitions' own capped DP, cap=k instead of n.
+CREATE FUNCTION fiber_unrank(f bounded_part_partitions_fiber, rank rank_index) RETURNS integer_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(integer_partition_unrank((f).n::int, (f).k::int, rank::bigint))::integer_partition $fu$;
 SELECT base_realize('bounded_part_partitions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -50,3 +53,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[3,2,1])::integer_partition <@ bounded_part_partitions(6,3))::text || '|' ||
            (ROW(ARRAY[4,2])::integer_partition <@ bounded_part_partitions(6,3))::text || '|' ||
            (ROW(ARRAY[3,3])::integer_partition <@ bounded_part_partitions(6,3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('bounded_part_partitions','fiber_unrank(bounded_part_partitions(6,3), 0..8) are all members (accel floor)','eq','true','capped-DP unrank lands inside fiber [6,3] for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(bounded_part_partitions(6,3)) f), ord::rank_index) <@ bounded_part_partitions(6,3))::text
+      FROM generate_series(0, cardinality(bounded_part_partitions(6,3))::int - 1) ord $q$);
