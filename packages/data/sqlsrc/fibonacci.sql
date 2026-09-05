@@ -29,4 +29,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('fibonacci_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
     SELECT cardinality(fibonacci_numbers())::text $q$),
   ('fibonacci_numbers','contains is rank-agnostic: 8 ∈, 4 ∉ (via <@)','eq','true|false','generated contains + operator',$q$
-    SELECT (8::numeric <@ fibonacci_numbers())::text || '|' || (4::numeric <@ fibonacci_numbers())::text $q$);
+    SELECT (8::numeric <@ fibonacci_numbers())::text || '|' || (4::numeric <@ fibonacci_numbers())::text $q$),
+  ('fibonacci_numbers','the recurrence F(r) = F(r-1) + F(r-2) holds off the floor for r=2..30','eq','true','a cross-check of unrank against its own defining recurrence, not just the closed-form loop that computes it',$q$
+    SELECT bool_and((unrank(fibonacci_numbers(), r)).value = (unrank(fibonacci_numbers(), r-1)).value + (unrank(fibonacci_numbers(), r-2)).value)
+    FROM generate_series(2,30) r $q$);

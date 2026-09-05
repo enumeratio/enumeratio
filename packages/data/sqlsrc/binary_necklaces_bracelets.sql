@@ -52,4 +52,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(cardinality(binary_bracelets(n))::text, ',' ORDER BY n) FROM generate_series(1,7) n $q$),
   ('binary_bracelets','at n=6 the chiral necklace 001101 ∈ necklaces but ∉ bracelets','eq','true|false','reflection = reversal: reverse(001101)=101100, whose min-rotation necklace rep 001011 is lex-smaller, so it wins the bracelet',$q$
     SELECT (ROW(ARRAY[0,0,1,1,0,1])::binary_word <@ binary_necklaces(6))::text || '|' ||
-           (ROW(ARRAY[0,0,1,1,0,1])::binary_word <@ binary_bracelets(6))::text $q$);
+           (ROW(ARRAY[0,0,1,1,0,1])::binary_word <@ binary_bracelets(6))::text $q$),
+  ('binary_bracelets','|bracelets(n)| ≤ |necklaces(n)| for n=1..10 — the dihedral group only ever coarsens the rotation-only orbits','eq','true','a structural cross-check, not a re-assertion of either count sequence',$q$
+    SELECT bool_and(cardinality(binary_bracelets(n)) <= cardinality(binary_necklaces(n))) FROM generate_series(1,10) n $q$),
+  ('binary_bracelets','every binary_bracelets(6) element is also a binary_necklaces(6) element — bracelet reps are a subset of necklace reps','eq','true','the reflection constraint only removes representatives, never adds one',$q$
+    SELECT bool_and((e).value <@ binary_necklaces(6)) FROM elements(binary_bracelets(6)) e $q$);
