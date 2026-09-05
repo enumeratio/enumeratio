@@ -11,7 +11,7 @@
 //
 // It needs a live core because the statement depends on the collection's registered stats, reprs and accels.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { close, makeDb, provideDb, rowSql, type RowQuery, type RowSelect, type RowWindow } from '../src/index.ts'
+import { close, makeDb, planRows, provideDb, rowSql, runSql, type RowQuery, type RowSelect, type RowWindow } from '../src/index.ts'
 
 type Case = { id: string; q: RowQuery; w?: RowWindow; sel?: RowSelect }
 
@@ -50,6 +50,14 @@ const CASES: Case[] = [
   { id: 'kernel · GROUP BY map', q: { from: 'permutations(4)', groupBy: 'map:inverse' } },
   { id: 'order · graded cover relation', q: { from: 'permutations(4)', orderBy: 'weak_order' } },
   { id: 'facet · meta collection', q: { from: 'collections', where: `carrier = 'permutation'` } },
+  { id: 'facet · tag membership', q: { from: 'collections', where: `element IN (SELECT collection FROM base_collection_tag WHERE tag = 'classical')` } },
+  { id: 'restriction · fn predicate on the carrier', q: { from: 'permutations(4)', where: 'is_derangement(value)' } },
+  // #288: a kernel token appearing INSIDE a string literal must survive — a global regex rewrote it and silently
+  // changed what the user searched for
+  { id: 'kernel · token inside a LIKE pattern', q: { from: 'permutations(4)', groupBy: 'map:inverse', having: `count(*) > 0` } },
+  { id: 'kernel · token inside a string literal, unparseable clause', q: { from: 'words(4, 2)', groupBy: 'orbit:rotation', having: `count(*) > 0 AND 'orbit:rotation' <> ''` } },
+  { id: 'clause · an OR falls back to verbatim splicing', q: { from: 'permutations(size=4)', where: 'descents >= 2 OR inversions < 3' } },
+  { id: 'clause · non-canonical spacing is canonicalized by composition', q: { from: 'permutations(size=4)', where: 'descents>=2' } },
 ]
 
 describe('generated SQL is pinned, so a refactor of the row half has to re-bless it', () => {
@@ -62,5 +70,26 @@ describe('generated SQL is pinned, so a refactor of the row half has to re-bless
     const parts: string[] = []
     for (const c of CASES) parts.push(`── ${c.id} ${'─'.repeat(Math.max(0, 96 - c.id.length))}\n${await rowSql(c.q, c.w ?? {}, c.sel ?? {})}`)
     await expect(parts.join('\n\n') + '\n').toMatchFileSnapshot('./__snapshots__/rowsql.golden.sql')
+  })
+
+  // #288: a kernel token is a COLUMN reference, and a global regex could not tell one from the inside of a
+  // string. `element LIKE '%map:inverse%'` became `element LIKE '%"map:inverse"%'` — a silently different search.
+  it('a kernel token inside a string literal is left alone, parsed clause or not', async () => {
+    const parsed = await rowSql({ from: 'permutations(4)', groupBy: 'map:inverse', where: `element LIKE '%map:inverse%'` }, {}, {})
+    expect(parsed).toContain(`element LIKE '%map:inverse%'`)
+    expect(parsed).not.toContain(`'%"map:inverse"%'`)
+
+    // and in a clause too rich to parse into terms, which still has to be spliced verbatim
+    const raw = await rowSql({ from: 'words(4, 2)', groupBy: 'orbit:rotation', having: `count(*) > 0 AND 'orbit:rotation' <> ''` }, {}, {})
+    expect(raw).toContain(`'orbit:rotation' <> ''`)
+    expect(raw).toContain(`GROUP BY "orbit:rotation"`)   // the real column reference IS still rewritten
+  })
+
+  it('a composed clause still selects the same rows as the text it replaced', async () => {
+    const q = { from: 'permutations(size=4)', where: 'descents >= 2' }
+    const rows = await planRows(q, { count: 100 }, {})
+    const naive = await runSql<Record<string, unknown>>(await rowSql(q, { count: 100 }, {}))
+    expect(rows.rows.length).toBe(12)
+    expect(rows.rows.map((r) => String(r.element))).toEqual(naive.map((r) => String(r.element)))
   })
 })
