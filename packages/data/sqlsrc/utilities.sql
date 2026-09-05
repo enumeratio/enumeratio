@@ -64,6 +64,21 @@ CREATE FUNCTION eulerian_number(n int, k int) RETURNS numeric LANGUAGE plpgsql I
     RETURN coalesce(row[k+1], 0);
   END $$;
 
+-- Motzkin(n): M(0)=M(1)=1, M(n)=M(n-1)+Σ_{k=0}^{n-2} M(k)·M(n-2-k). Hoisted here (#283 phase 3 — was
+-- motzkin_paths.sql, a `paths` file) because core's motzkin_numbers.sql calls it directly for its own floor;
+-- packs/paths/motzkin_paths.sql still `-- requires: utilities` and calls it from here for its own fiber_count.
+CREATE FUNCTION motzkin(n int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE m numeric[]; i int; k int; s numeric; BEGIN
+    IF n < 0 THEN RETURN 0; END IF;
+    m := ARRAY[1::numeric];
+    FOR i IN 1..n LOOP
+      s := m[i];                                    -- M(i-1)
+      FOR k IN 0..i-2 LOOP s := s + m[k+1]*m[i-1-k]; END LOOP;   -- Σ M(k)·M(i-2-k)
+      m[i+1] := s;                                  -- M(i)
+    END LOOP;
+    RETURN m[n+1];
+  END $$;
+
 -- Low-precision variants: native bigint (int8) arithmetic instead of arbitrary-precision numeric. Same value on the
 -- int8-representable domain, but machine integers — a real win (≈1.5–2×) in tight enumeration loops (e.g. a
 -- combinatorial-number-system unrank) whose results are known bounded. Overflow RAISES ('bigint out of range'),

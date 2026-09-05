@@ -1,4 +1,4 @@
--- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_subsets, set_compositions, fractional_numbers, colored_motzkin_paths
+-- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_subsets, set_compositions, fractional_numbers
 -- representations — Phase 3 of the catalog port: named alternate renderings, registered in base_repr so the
 -- client's -R flag can pick one (permutation cycle notation, set-partition blocks, Dyck parens). render_fn takes
 -- the CARRIER; the client calls render_fn((element).value). The `canonical` repr matches the default render()
@@ -279,15 +279,9 @@ CREATE FUNCTION fractional_number_katex(f fractional_number) RETURNS text LANGUA
   SELECT CASE WHEN (f).denominator = 1 THEN (f).numerator::text
               ELSE '\frac{' || (f).numerator::text || '}{' || (f).denominator::text || '}' END $$;
 
--- katex spelling of the colored_motzkin_path default U/D/H_c step word: arrows for the three step kinds — U → \uparrow,
--- D → \downarrow, a colored level step H_c → \rightarrow_{c} — joined by a thin space, e.g. "UH0D" → "\uparrow\,
--- \rightarrow_{0}\,\downarrow" — matches the render-corpus oracle's r≥2 rows (the r=1 corpus rows use a bare "H" with
--- no color digit; our own notation() always includes the color index even at r=1, so those specific rows aren't a
--- usable oracle — not a bug, just unresolvable, same shape as `redirected_paths`). asciimath coincides with the
--- unicode default (bare step letters either way) — no sibling.
-CREATE FUNCTION colored_motzkin_path_katex(p colored_motzkin_path) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce(string_agg(CASE s WHEN 1 THEN '\uparrow' WHEN -1 THEN '\downarrow' ELSE '\rightarrow_{' || c || '}' END, '\,' ORDER BY o), '')
-  FROM unnest((p).steps, (p).colors) WITH ORDINALITY AS t(s, c, o) $$;
+-- (colored_motzkin_path_katex + its base_repr rows + example moved to
+-- packs/paths/examples.representations.paths.sql — colored_motzkin_path is a `paths`-pack carrier, so a function
+-- taking it as a parameter can't even CREATE loading core alone, #283 phase 3)
 
 -- ── register in base_repr (collection, repr, render_fn, title, canonical, parse_fn) ──────────────────────
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical, parse_fn) VALUES
@@ -318,16 +312,15 @@ INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VA
   ('set_compositions','blocks','set_composition_blocks_katex','Block notation (KaTeX)',false,'latex');
 -- #285: binary_words `digits` is a non-canonical alternate (binary_word's actual canonical repr varies — calkin_wilf_
 -- paths/stern_brocot_paths override it with their own rational/turns reading — same reason `members`/`dots` below
--- stay non-canonical); fractional_numbers `fraction` and colored_motzkin_paths `steps` ARE each collection's
--- unconditional default (render_fn='notation', no branching besides what the katex sibling already replicates).
+-- stay non-canonical); fractional_numbers `fraction` IS its collection's unconditional default (render_fn='notation',
+-- no branching besides what the katex sibling already replicates). colored_motzkin_paths' `steps` rows moved to
+-- packs/paths/examples.representations.paths.sql — base_repr.collection REFERENCES base_collection, #283 phase 3.
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
   ('binary_words','digits','notation','Digit string',false),
-  ('fractional_numbers','fraction','notation','Fraction',true),
-  ('colored_motzkin_paths','steps','notation','Step word',true);
+  ('fractional_numbers','fraction','notation','Fraction',true);
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VALUES
   ('binary_words','digits','binary_word_digits_katex','Digit string (KaTeX monospace)',false,'latex'),
-  ('fractional_numbers','fraction','fractional_number_katex','Fraction (KaTeX)',false,'latex'),
-  ('colored_motzkin_paths','steps','colored_motzkin_path_katex','Step word (KaTeX arrows)',false,'latex');
+  ('fractional_numbers','fraction','fractional_number_katex','Fraction (KaTeX)',false,'latex');
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
   ('set_partitions','rgs','notation','Restricted growth string',true),
   ('set_partitions','blocks','set_partition_blocks','Block notation',false),
@@ -482,8 +475,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'latex'))::text $q$),
   ('representations','the default (unicode) fractional_number notation is unchanged: 6/8 stays unreduced, 5/1 stays bare 5','eq','6/8|5','notation(fractional_number) keeps its denominator=1 branch',$q$
     SELECT notation(ROW(6,8)::fractional_number) || '|' || notation(ROW(5,1)::fractional_number) $q$),
-  ('representations','the default (unicode) colored_motzkin_path notation is unchanged: UH0D stays UH0D (bare step letters)','eq','UH0D','notation(colored_motzkin_path) still the plain U/D/H_c word',$q$
-    SELECT notation(ROW(ARRAY[1,0,-1],ARRAY[-1,0,-1])::colored_motzkin_path) $q$),
+  -- (the colored_motzkin_path notation example moved to packs/paths/examples.representations.paths.sql — the
+  -- ROW(...)::colored_motzkin_path cast needs that pack's own TYPE, #283 phase 3)
   -- ── medium spellings of the ambient-set symbol (katex / asciimath), checked against the render corpus ──
   ('representations','fiber symbol S₄ across media: unicode Sₙ, katex S_{n}, asciimath S_n','eq','S₄|S_{4}|S_4','the three spellings of the symmetric-group symbol match the corpus',$q$
     SELECT fiber_symbol((unrank(permutations(4),0)).fiber) || '|' || fiber_symbol_katex((unrank(permutations(4),0)).fiber)

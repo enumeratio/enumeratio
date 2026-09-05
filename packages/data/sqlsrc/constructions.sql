@@ -59,8 +59,10 @@ INSERT INTO base_type_former (id, arity, produces_kind, skeleton, mathlib, descr
   -- a COLLECTION is a type-former too: its fiber at bound axes is a finite type with decidable equality, so it can fill
   -- a hole — the factors of a product, the base of a Σ. Arity = its grade count; its enumeration is itself.
   ('permutations',  1, 'finite', 'permutations ·',   'Equiv.Perm (Fin ·)', 'the permutations of [·] as a type — Sₙ'),
-  ('words',         2, 'finite', 'words · ·',        'Fin · → Fin ·',      'words of length · over · letters — the maps Fin m → Fin n'),
-  ('motzkin_paths', 1, 'finite', 'motzkin_paths ·',  NULL,                 'the Motzkin paths of length · as a type');
+  ('words',         2, 'finite', 'words · ·',        'Fin · → Fin ·',      'words of length · over · letters — the maps Fin m → Fin n');
+-- (motzkin_paths' type_former + enumeration rows moved to packs/paths/constructions.paths.sql, together — its
+-- enumeration row REFERENCES base_collection, so it would FK-fail loading core alone; the type_former row travels
+-- with it for cohesion even though it has no FK of its own, #283 phase 3)
 
 -- ── layer 3: a former's inhabitants, materialized as one of our collections (the alphabet as a pickable set) ──────
 -- A DOWNSTREAM UI link, keyed on the former (Fin's inhabitants are [n], enumerated by finite_set_elements; ℕ's are the
@@ -73,8 +75,7 @@ INSERT INTO base_type_former_enumeration (type_former, enumeration) VALUES
   ('Fin', 'finite_set_elements'),
   ('ℕ',   'natural_numbers'),
   ('permutations',  'permutations'),   -- a collection-former enumerates itself
-  ('words',         'words'),
-  ('motzkin_paths', 'motzkin_paths');
+  ('words',         'words');
 
 -- ── layer 2: constructions (the functor skeletons) ─────────────────────────────────────────────────────────────
 -- `requires_kind` is the constraint a construction imposes on its α. `dependent` distinguishes a UNIFORM hole (one α
@@ -169,10 +170,9 @@ INSERT INTO base_alpha (collection, construction, pos, type_former, param, alpha
   ('binary_words',    'maps',            1, 'Fin', 'n',     'n',    false, 'domain Fin n — the length'),
   ('binary_words',    'maps',            2, 'Fin', '2',     NULL,   false, 'codomain Fin 2 (alphabet {0,1}); type-param FIXED, no ranging axis; 2ⁿ'),
   ('signed_subsets',  'maps',            1, 'Fin', 'n',     'n',    false, 'domain Fin n — the axes'),
-  ('signed_subsets',  'maps',            2, 'Fin', '3',     NULL,   false, 'codomain Fin 3 = {absent, +, −}: a signed subset IS this function; 3ⁿ (equally Σ over subsets S of maps(S, Fin 2))'),
-  -- a dependent sum: the colours live on the path''s OWN level steps, so the second type depends on the first''s value
-  ('colored_motzkin_paths',  'sigma',   1, 'motzkin_paths','n',           'n',      false, 'a Motzkin path a of length n'),
-  ('colored_motzkin_paths',  'sigma',   2, 'Fin',          'r',           'r',      true,  'β a = maps(Fin levels(a), Fin r): one of r colours on each of a''s level steps; |Σ| = Σₐ r^levels(a) — symbolic, no product formula');
+  ('signed_subsets',  'maps',            2, 'Fin', '3',     NULL,   false, 'codomain Fin 3 = {absent, +, −}: a signed subset IS this function; 3ⁿ (equally Σ over subsets S of maps(S, Fin 2))');
+-- (colored_motzkin_paths' dependent-sum row moved to packs/paths/constructions.paths.sql — it also names the
+-- 'motzkin_paths' type_former as its first hole, another pack-only row, #283 phase 3)
 -- RESTRICTED applications: a sub-family of a construction's output that keeps its own carrier (the type-model page's
 -- bespoke-carrier + inclusion-map case). Recorded on the binding so the construction graph is complete — a bare
 -- maps_of(fin(n), fin(k)) still resolves to the WHOLE application (words), never to a restricted instance, and the
@@ -351,17 +351,18 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            EXISTS (SELECT 1 FROM base_construction_primary WHERE collection='multisets')::text $q$),
 
   -- the ADT rig's remaining rungs: product (a collection-former fills each hole), sum (no instance), sigma (dependent)
-  ('constructions','a collection is a type-former: permutations / words / motzkin_paths enumerate themselves and can fill a hole','eq','true','arity = grade count; enumeration = itself',$q$
-    SELECT (bool_and(e.enumeration = tf.id) AND count(*) >= 3)::text FROM base_type_former tf JOIN base_type_former_enumeration e ON e.type_former = tf.id
+  -- floor >= 2 (was >= 3, permutations/words/motzkin_paths): motzkin_paths' own type_former + enumeration rows
+  -- moved to packs/paths/constructions.paths.sql (#283 phase 3), so core alone sees only permutations + words;
+  -- the full profile still registers 3+ once the pack reloads it.
+  ('constructions','a collection is a type-former: permutations / words (+ pack collections) enumerate themselves and can fill a hole','eq','true','arity = grade count; enumeration = itself',$q$
+    SELECT (bool_and(e.enumeration = tf.id) AND count(*) >= 2)::text FROM base_type_former tf JOIN base_type_former_enumeration e ON e.type_former = tf.id
      WHERE tf.id IN (SELECT id FROM base_collection) $q$),
   -- (the wreath-product/product-oracle examples for k_colored_permutations/signed_permutations moved to
   -- packs/permutations-plus/constructions.permutations-plus.sql, same reason as their base_alpha bindings)
   ('constructions','a signed subset is the map [n] → {absent, +, −}: maps(Fin n, Fin 3), 3ⁿ — the oracle agrees','eq','true','the Σ over subsets of sign words collapses to one exponential',$q$
     SELECT bool_and(construction_cardinality(f) = cardinality(f) AND cardinality(f) = 3 ^ (f).n)::text FROM fibers(signed_subsets(0, 5)) f $q$),
-  ('constructions','the dependent sum: colored_motzkin_paths is a Σ whose second type depends on the path; its cardinality is symbolic, the oracle abstains','eq','sigma|true|true','Σₐ r^levels(a) has no c1·c2 form',$q$
-    SELECT (SELECT construction FROM base_alpha WHERE collection = 'colored_motzkin_paths' AND pos = 1) || '|' ||
-           (SELECT dependent FROM base_construction_param WHERE construction = 'sigma' AND pos = 2)::text || '|' ||
-           (construction_cardinality(ROW(4, 2)::colored_motzkin_paths_fiber) IS NULL)::text $q$),
+  -- (the colored_motzkin_paths dependent-sum example moved to packs/paths/constructions.paths.sql, same reason
+  -- as its base_alpha rows)
   ('constructions','sum (α ⊕ β) is registered with no instance: the catalog''s unions are grade-range unfolds','eq','0','a known gap, as data',$q$
     SELECT count(*)::text FROM base_alpha WHERE construction = 'sum' $q$),
   -- (the surjections_onto_k/arrangements restricted-application examples moved to the pack, same FK reason)

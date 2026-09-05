@@ -408,14 +408,14 @@ INSERT INTO base_species (collection, expr, egf, note, graded) VALUES
 
 -- unlabelled: OGF fixed points Y = F(X, Y), solved by Picard iteration and checked against the sequence (fiber count for
 -- the graded collections, element value for the unbounded number-sequences). Every Y is X-guarded ⇒ division-free.
+-- (motzkin_paths/schroeder_paths rows moved to packs/paths/base_species.paths.sql — collection REFERENCES
+-- base_collection, so those rows would FK-fail loading core alone, #283 phase 3)
 INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
   ('catalan_numbers', '1+X·Y^2',      'C=1+xC^2',         'Catalan OGF; C_n = 1,1,2,5,14,…',              true),
   ('dyck_paths',      '1+X·Y^2',      'C=1+xC^2',         'Dyck paths of semilength n; Catalan',          true),
   ('binary_trees',    '1+X·Y^2',      'C=1+xC^2',         'binary trees by internal nodes; Catalan',      true),
   ('motzkin_numbers', '1+X·Y+X^2·Y^2','M=1+xM+x^2M^2',    'Motzkin OGF; M_n = 1,1,2,4,9,21,…',            true),
-  ('motzkin_paths',   '1+X·Y+X^2·Y^2','M=1+xM+x^2M^2',    'Motzkin paths of length n',                    true),
   ('schroeder_numbers','1+X·Y+X·Y^2', 'S=1+xS+xS^2',      'large Schröder OGF; S_n = 1,2,6,22,90,…',       true),
-  ('schroeder_paths', '1+X·Y+X·Y^2',  'S=1+xS+xS^2',      'large Schröder paths of size n',               true),
   ('plane_trees',     'X+Y^2',        'P=x+P^2',          'plane trees by NODES; C_{n-1} (shifted Catalan)', true),
   ('ordered_trees',   '1+X·Y^2',      'C=1+xC^2',         'ordered trees by edges; Catalan',             true);
 

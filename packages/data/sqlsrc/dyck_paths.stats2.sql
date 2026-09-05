@@ -55,8 +55,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(dyck_touch_points((e).value)::text, ',' ORDER BY ordinality(e)) FROM elements(dyck_paths(3)) e $q$),
   ('dyck_paths','hills over dyck_paths(3) in rank order is 0,0,1,1,3','eq','0,0,1,1,3','ground-level peaks per path (UDUDUD has 3, one per arch)',$q$
     SELECT string_agg(dyck_hills((e).value)::text, ',' ORDER BY ordinality(e)) FROM elements(dyck_paths(3)) e $q$),
-  ('dyck_paths','hills=0 characterizes fine_paths: dyck_paths(4) filtered by hills=0 has the same count as fine_paths(4)','eq','true','cross-check against the Fine-path restriction',$q$
-    SELECT ((SELECT count(*) FROM elements(dyck_paths(4)) e WHERE dyck_hills((e).value) = 0) = cardinality(fine_paths(4)))::text $q$),
+  -- (the fine_paths cross-check example moved to packs/paths/dyck_paths.stats2.paths.sql — fine_paths is a
+  -- `paths`-pack collection, #283 phase 3)
   ('dyck_paths','empty path (n=0): all four new stats are 0','eq','0|0|0|0','edge case, no steps',$q$
     SELECT dyck_major_index((unrank(dyck_paths(0),0)).value)::text || '|' ||
            dyck_initial_rise((unrank(dyck_paths(0),0)).value)::text || '|' ||

@@ -1,7 +1,9 @@
--- requires: motzkin_paths, realizer
+-- requires: realizer, utilities
 -- motzkin_numbers — the Motzkin-number sequence M(n) as a first-class UNBOUNDED numeric collection (A001006):
--- 1,1,2,4,9,21,51,127,323,… Sibling of motzkin_paths (whose fiber cardinalities these are). Reuses the existing
--- motzkin(n) helper. Ported from old-backup linear-and-figurate-sequences.sql. No closed-form inverse ⇒ contains scans the monotonic floor until ≥ v.
+-- 1,1,2,4,9,21,51,127,323,… Sibling of motzkin_paths (whose fiber cardinalities these are, packs/paths — #283
+-- phase 3). Reuses the motzkin(n) helper, hoisted to sqlsrc/utilities.sql (was motzkin_paths.sql) because this
+-- core file calls it directly. Ported from old-backup linear-and-figurate-sequences.sql. No closed-form inverse ⇒
+-- contains scans the monotonic floor until ≥ v.
 CREATE TYPE motzkin_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f motzkin_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
   SELECT motzkin(r) FROM generate_series(0, element_limit - 1) r $$;

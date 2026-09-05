@@ -7,6 +7,7 @@
 -- unrelated argument shape onto its one existing (steps int[]) signature. A dedicated helper draws the actual
 -- monotone staircase instead — same visual language (border axes, light fill under the walk, accent polyline)
 -- as lattice_path_svg, just built from real (x,y) points so diagonal D steps render as diagonals.
+-- layer: glyph
 CREATE FUNCTION delannoy_path_svg(steps int[], unit numeric DEFAULT 18) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH pts AS (                                              -- the (x,y) staircase, incl. the (0,0) origin
     SELECT 0 AS o, 0 AS x, 0 AS y                             -- E(0)=(1,0) N(1)=(0,1) D(2)=(1,1) — see delannoy_paths.sql

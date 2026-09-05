@@ -7,6 +7,7 @@
 -- mode on lattice_path_svg — segment-per-step is a different enough drawing strategy (and colored_motzkin_path
 -- carries a second array lattice_path_svg's (steps int[]) signature has no room for) that bolting it on would
 -- only compromise the single-carrier callers it already serves.
+-- layer: glyph
 CREATE FUNCTION colored_motzkin_svg(steps int[], colors int[], unit numeric DEFAULT 18)
 RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH pts AS (                                              -- the walk in page space, incl. the (0,0) origin

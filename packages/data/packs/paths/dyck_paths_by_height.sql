@@ -4,36 +4,9 @@
 -- row-sum over h recovers the Catalan numbers (every path has SOME max height, 0 ≤ h ≤ n). fiber_count is an
 -- independent DP over (position, height capped at h, "has the walk touched h yet") — not a floor re-scan.
 
-CREATE FUNCTION dyck_height_exactly_count(n int, h int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE cur numeric[][]; nxt numeric[][]; ht int; touched int; step int; nh int; w numeric; BEGIN
-    IF n < 0 OR h < 0 OR h > n THEN RETURN 0; END IF;
-    IF n = 0 THEN RETURN CASE WHEN h = 0 THEN 1 ELSE 0 END; END IF;
-    -- cur[height+1][touched+1]: ways to be at this height, having (not) yet reached h; height is capped at h —
-    -- a step that would exceed h is simply never taken (dead end, contributes to no cell, as intended).
-    cur := array_fill(0::numeric, ARRAY[h + 1, 2]);
-    cur[1][1] := 1;                                               -- height 0, not yet touched h
-    FOR step IN 1..2 * n LOOP
-      nxt := array_fill(0::numeric, ARRAY[h + 1, 2]);
-      FOR ht IN 0..h LOOP
-        FOR touched IN 0..1 LOOP
-          w := cur[ht + 1][touched + 1];
-          IF w = 0 THEN CONTINUE; END IF;
-          -- up step: allowed only while it stays ≤ h
-          IF ht + 1 <= h THEN
-            nh := ht + 1;
-            nxt[nh + 1][GREATEST(touched, CASE WHEN nh = h THEN 1 ELSE 0 END) + 1] :=
-              nxt[nh + 1][GREATEST(touched, CASE WHEN nh = h THEN 1 ELSE 0 END) + 1] + w;
-          END IF;
-          -- down step: allowed while height ≥ 1
-          IF ht - 1 >= 0 THEN
-            nxt[ht][touched + 1] := nxt[ht][touched + 1] + w;
-          END IF;
-        END LOOP;
-      END LOOP;
-      cur := nxt;
-    END LOOP;
-    RETURN cur[1][2];                                             -- height 0, touched = true (max height was exactly h)
-  END $$;
+-- dyck_height_exactly_count(n,h) — hoisted to sqlsrc/dyck_paths.sql (#283 phase 3): core's
+-- generating_functions.sql calls it directly, so it can't stay only in this pack file. Still
+-- `-- requires: dyck_paths, ... utilities` above, same as any core file that calls it.
 
 CREATE TYPE dyck_paths_by_height_fiber AS (n natural_number, h natural_number);
 -- FLOOR: the same bounded walk as dyck_paths, additionally capped at height h, keeping only paths whose max

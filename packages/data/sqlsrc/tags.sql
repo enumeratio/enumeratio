@@ -82,9 +82,8 @@ SELECT tag, collection FROM (VALUES
   ('permutation', 'permutations'), ('permutation', 'derangements'),
   ('permutation', 'involutions'), ('permutation', 'even_permutations'),
   ('permutation', 'rook_placements'),
-  -- lattice paths
-  ('path', 'dyck_paths'), ('path', 'k_dyck_paths'), ('path', 'motzkin_paths'), ('path', 'k_motzkin_paths'), ('path', 'colored_motzkin_paths'), ('path', 'schroeder_paths'), ('path', 'delannoy_paths'),
-  ('path', 'riordan_paths'), ('path', 'ballot_sequences'), ('path', 'narayana_numbers'),
+  -- lattice paths (core-owned members only — the rest are in packs/paths/tags.paths.sql, #283 phase 3)
+  ('path', 'dyck_paths'), ('path', 'narayana_numbers'),
   -- trees
   ('tree', 'binary_trees'), ('tree', 'ordered_trees'), ('tree', 'plane_trees'), ('tree', 'labeled_trees'), ('tree', 'labeled_forests'), ('tree', 'rooted_unlabeled_trees'),
   -- tableaux

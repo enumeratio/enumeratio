@@ -6,6 +6,7 @@
 -- output it already serves. A dedicated helper — walking (x,y) directly instead of (ordinality,height) — keeps
 -- that helper untouched and gives F its correct width; everything else (fill polygon, polyline styling) mirrors
 -- lattice_path_svg's convention so the glyph still reads as the same family.
+-- layer: glyph
 CREATE FUNCTION schroeder_path_svg(steps int[], unit numeric DEFAULT 18) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH pts AS (                                              -- the walk in page space, incl. the (0,0) origin;
     SELECT 0 AS o, 0 AS x, 0 AS y                             -- x advances 1 per U/D, 2 per F (its x-width)

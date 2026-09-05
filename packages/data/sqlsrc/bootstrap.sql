@@ -150,7 +150,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('pack', 'every row in every owning registry references a real base_pack id, and core still owns rows', 'eq', 'true',
    'phases 2.1/2.2 extracted refs + polytopes out of core — this is no longer "nothing but core has ever loaded" '
    '(a FLOOR/containment check per AGENTS.md, not the exact "core-only" count phase 0.2 asserted before extraction '
-   'existed): every row''s pack FK-targets a real base_pack row, and core still owns at least one row per table',
+   'existed): every row''s pack FK-targets a real base_pack row, and core still owns at least one row per table — '
+   'except base_stat_suppressed (#283 phase 3, paths lane): its only occupant, grand_dyck_paths'' area/bounce/dinv '
+   'suppression, is itself a `paths`-pack collection, so under core alone this table is legitimately empty. The '
+   'FK-containment half above still covers it; only the per-table floor is narrowed.',
    $q$ SELECT (NOT EXISTS (SELECT 1 FROM (
          SELECT pack FROM base_collection UNION ALL SELECT pack FROM base_stat UNION ALL SELECT pack FROM base_map
          UNION ALL SELECT pack FROM base_example UNION ALL SELECT pack FROM base_function
@@ -173,7 +176,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
          UNION ALL SELECT count(*) FROM base_species WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_generating_function WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_sequence_transform WHERE pack = 'core'
-         UNION ALL SELECT count(*) FROM base_stat_suppressed WHERE pack = 'core'
+         -- base_stat_suppressed excluded here (see the title's note above): its only row, ever, was
+         -- grand_dyck_paths' — now a `paths`-pack collection, so core alone legitimately has none.
          UNION ALL SELECT count(*) FROM base_triangle_refines WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_set_builder WHERE pack = 'core'
        ) y WHERE n = 0))::text $q$),

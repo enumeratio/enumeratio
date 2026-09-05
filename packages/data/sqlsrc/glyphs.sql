@@ -3,10 +3,10 @@
 -- Page-space glyph registry: which SVG glyph KIND each carrier casts into (the client maps `kind` to a renderer).
 -- Keyed by carrier, so every collection sharing it inherits the glyph for free — the page-space sibling of
 -- base_polytope. A candidate home for richer per-space cast metadata later (see https://github.com/enumeratio/enumeratio/wiki/Visual-Representations).
+-- (motzkin_path's row moved to packs/paths/motzkin_path_glyph.sql — it's that pack's own carrier, #283 phase 3)
 INSERT INTO base_glyph (carrier, kind, title) VALUES
   ('integer_partition', 'ferrers', 'Ferrers diagram'),   -- rows of boxes, one per part
   ('dyck_path',         'path',    'lattice path'),       -- ±1 steps → a mountain range
-  ('motzkin_path',      'path',    'lattice path'),       -- +1/0/−1 steps (level steps allowed)
   ('binary_word',       'cells',   'bit cells'),          -- a row of 0/1 cells
   ('finset',            'cells',   'indicator cells');    -- register over [n] (α=Fin n) or up to max member (α=ℕ)
 
@@ -45,7 +45,8 @@ CREATE FUNCTION lattice_path_svg(steps int[], unit numeric DEFAULT 18) RETURNS t
   FROM geo;
 $$;
 CREATE FUNCTION glyph_svg(p dyck_path)    RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT lattice_path_svg((p).steps) $$;
-CREATE FUNCTION glyph_svg(p motzkin_path) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT lattice_path_svg((p).steps) $$;
+-- (glyph_svg(motzkin_path) moved to packs/paths/motzkin_path_glyph.sql — motzkin_path is that pack's own carrier
+-- type, so the overload can't even CREATE loading core alone; lattice_path_svg stays here, shared by both)
 
 -- ferrers: one row of boxes per part (the SQL twin of <ferrers-glyph>). parts descending; a box per cell.
 CREATE FUNCTION ferrers_svg(parts int[], unit numeric DEFAULT 18) RETURNS text LANGUAGE sql IMMUTABLE AS $$
@@ -260,11 +261,13 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT substring(glyph_svg((unrank(dyck_paths(2),0)).value) FROM 'points="([0-9, ]+)" fill="none"') $q$),
   ('glyphs','lattice-path viewBox tracks length × height','eq','-1 -1 74 38','4 steps × peak 2, unit 18, +1 pad',$q$
     SELECT substring(glyph_svg((unrank(dyck_paths(2),0)).value) FROM 'viewBox="([^"]+)"') $q$),
-  ('glyphs','glyph_svg is polymorphic over path carriers','eq','true','dyck + motzkin share lattice_path_svg',$q$
-    SELECT (glyph_svg(ROW(ARRAY[1,-1])::dyck_path) = glyph_svg(ROW(ARRAY[1,-1])::motzkin_path))::text $q$),
-  ('glyphs','carrier_renders_svg is derived from the overloads','eq','binary_word:t dyck_path:t finset:t integer_partition:t motzkin_path:t subset:f','no second registry; subset:f is the negative control — no glyph_svg(subset) type/overload. subsets ride the finset carrier (below), so they render there, not under a bare `subset` name',$q$
+  -- (the "dyck + motzkin share lattice_path_svg" polymorphism example moved to
+  -- packs/paths/motzkin_path_glyph.sql — motzkin_path is that pack's own carrier, #283 phase 3)
+  -- motzkin_path dropped from this ARRAY (was 'binary_word:t dyck_path:t finset:t integer_partition:t
+  -- motzkin_path:t subset:f') — its own carrier_renders_svg check lives with its glyph, in the pack.
+  ('glyphs','carrier_renders_svg is derived from the overloads','eq','binary_word:t dyck_path:t finset:t integer_partition:t subset:f','no second registry; subset:f is the negative control — no glyph_svg(subset) type/overload. subsets ride the finset carrier (below), so they render there, not under a bare `subset` name',$q$
     SELECT string_agg(c || ':' || left(carrier_renders_svg(c)::text, 1), ' ' ORDER BY c)
-    FROM unnest(ARRAY['dyck_path','motzkin_path','integer_partition','binary_word','finset','subset']) c $q$),
+    FROM unnest(ARRAY['dyck_path','integer_partition','binary_word','finset','subset']) c $q$),
   -- A subset renders through its REAL carrier (finset), the exact path the client takes: glyph_svg((e).value). The
   -- finset value carries the fiber's ground n, so the register is fiber-aware for free — width = [n], members set.
   ('glyphs','a subset emits its length-n register via the finset carrier','eq','<svg…</svg>|3','glyph_svg((e).value); {1,2} ⊆ [3] ↦ a 3-cell register',$q$

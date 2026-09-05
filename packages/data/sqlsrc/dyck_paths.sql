@@ -19,6 +19,42 @@ CREATE FUNCTION catalan(n int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$ 
     RETURN c;
   END $$;
 
+-- dyck_height_exactly_count(n,h): the number of Dyck paths of semilength n with max height EXACTLY h — a DP over
+-- (position, height capped at h, "has the walk touched h yet"). Hoisted here (#283 phase 3 — was
+-- dyck_paths_by_height.sql, a `paths` file) because core's generating_functions.sql (gf_dyck_height_row) reuses
+-- it directly for its own height-distribution GF on dyck_paths; packs/paths/dyck_paths_by_height.sql still
+-- `-- requires: utilities` and calls it from here for its own fiber_count.
+CREATE FUNCTION dyck_height_exactly_count(n int, h int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE cur numeric[][]; nxt numeric[][]; ht int; touched int; step int; nh int; w numeric; BEGIN
+    IF n < 0 OR h < 0 OR h > n THEN RETURN 0; END IF;
+    IF n = 0 THEN RETURN CASE WHEN h = 0 THEN 1 ELSE 0 END; END IF;
+    -- cur[height+1][touched+1]: ways to be at this height, having (not) yet reached h; height is capped at h —
+    -- a step that would exceed h is simply never taken (dead end, contributes to no cell, as intended).
+    cur := array_fill(0::numeric, ARRAY[h + 1, 2]);
+    cur[1][1] := 1;                                               -- height 0, not yet touched h
+    FOR step IN 1..2 * n LOOP
+      nxt := array_fill(0::numeric, ARRAY[h + 1, 2]);
+      FOR ht IN 0..h LOOP
+        FOR touched IN 0..1 LOOP
+          w := cur[ht + 1][touched + 1];
+          IF w = 0 THEN CONTINUE; END IF;
+          -- up step: allowed only while it stays ≤ h
+          IF ht + 1 <= h THEN
+            nh := ht + 1;
+            nxt[nh + 1][GREATEST(touched, CASE WHEN nh = h THEN 1 ELSE 0 END) + 1] :=
+              nxt[nh + 1][GREATEST(touched, CASE WHEN nh = h THEN 1 ELSE 0 END) + 1] + w;
+          END IF;
+          -- down step: allowed while height ≥ 1
+          IF ht - 1 >= 0 THEN
+            nxt[ht][touched + 1] := nxt[ht][touched + 1] + w;
+          END IF;
+        END LOOP;
+      END LOOP;
+      cur := nxt;
+    END LOOP;
+    RETURN cur[1][2];                                             -- height 0, touched = true (max height was exactly h)
+  END $$;
+
 -- ── the engines a collection provides ────────────────────────────────────────────────────────────────
 CREATE TYPE dyck_paths_fiber AS (n natural_number);   -- typed fiber; axis: n
 -- FLOOR: every Dyck path of semilength (f).n, emitted in lex order with U(+1) before D(-1). Grow all

@@ -12,18 +12,8 @@ CREATE FUNCTION notation(p motzkin_path) RETURNS text LANGUAGE sql IMMUTABLE AS 
   SELECT coalesce(string_agg(CASE s WHEN 1 THEN 'U' WHEN -1 THEN 'D' ELSE 'L' END, '' ORDER BY ord), '')
   FROM unnest((p).steps) WITH ORDINALITY AS t(s, ord) $$;
 
--- Motzkin(n): M(0)=M(1)=1, M(n)=M(n-1)+Σ_{k=0}^{n-2} M(k)·M(n-2-k)  (1-based DP array m[j]=M(j-1))
-CREATE FUNCTION motzkin(n int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE m numeric[]; i int; k int; s numeric; BEGIN
-    IF n < 0 THEN RETURN 0; END IF;
-    m := ARRAY[1::numeric];
-    FOR i IN 1..n LOOP
-      s := m[i];                                    -- M(i-1)
-      FOR k IN 0..i-2 LOOP s := s + m[k+1]*m[i-1-k]; END LOOP;   -- Σ M(k)·M(i-2-k)
-      m[i+1] := s;                                  -- M(i)
-    END LOOP;
-    RETURN m[n+1];
-  END $$;
+-- Motzkin(n) — hoisted to sqlsrc/utilities.sql (#283 phase 3): core's motzkin_numbers.sql calls it directly, so it
+-- can't stay only in this pack file. Still `-- requires: utilities` above, same as any core file that calls it.
 
 -- ── the engines a collection provides ────────────────────────────────────────────────────────────────
 -- the FLOOR: all Motzkin paths of length n=address[1], in ascending-step (D<L<U) array order. A bounded lattice

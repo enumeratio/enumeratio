@@ -2,6 +2,7 @@
 -- k_motzkin_path_glyph — k_motzkin_path's steps are +1/0/-1 (U/H/D; see k_motzkin_paths.sql), byte-for-byte the
 -- same encoding as motzkin_path's steps. Reuses lattice_path_svg (glyphs.sql:20) as-is — the H-count grade (k)
 -- is a fibering distinction, not a different step geometry.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(p k_motzkin_path) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT lattice_path_svg((p).steps) $$;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

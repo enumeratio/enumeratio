@@ -2,6 +2,7 @@
 -- k_dyck_path_glyph — k_dyck_path's steps are already signed height deltas (+(k−1) up, −1 down; see
 -- k_dyck_paths.sql), the same shape lattice_path_svg (glyphs.sql:20) expects: one unit of x-width per step,
 -- y = running height. No k-specific geometry needed — the walk just gets taller per up-step at higher k.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(p k_dyck_path) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT lattice_path_svg((p).steps) $$;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
