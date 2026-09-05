@@ -29,6 +29,48 @@ CREATE FUNCTION contains_in_fiber(f non_crossing_partitions_fiber, v set_partiti
 INSERT INTO base_collection VALUES ('non_crossing_partitions', 'set_partition');
 INSERT INTO base_grade VALUES ('non_crossing_partitions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f non_crossing_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'NC([' || (f).n::int || '])' $$;   -- corpus symbol
+
+-- direct unrank: a STACK-of-open-blocks DP. Non-crossing ⟺ reusing a label is only safe while it's still on a
+-- stack of "open" blocks (pushed in label order, since labels are numbered by first appearance): appending an
+-- EXISTING label at stack depth k permanently closes every block above it (they can never be reused — reusing one
+-- later would cross the block just re-touched), then re-pushes the touched label on top; appending a NEW label
+-- (mx+1) just pushes. Since the stack is ordered bottom→top by increasing label value, ascending value order at
+-- each position is exactly: truncate-to-depth 1,2,…,s (ascending labels) then push (mx+1, the largest).
+-- C(m,s) = #completions with m positions left and stack depth s: C(0,s)=1; C(m,s) = C(m-1,s+1) [push] +
+-- Σ_{k=1}^s C(m-1,k) [truncate to k]. C(n,0) = Catalan(n) (verified by hand against 1,1,2,5,14 for n=0..4).
+CREATE FUNCTION non_crossing_unrank_word(n int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE
+    C numeric[]; m int; s int; k int; i int; rem int; depth int;
+    w int[] := '{}'; x numeric := ord; stack int[] := '{}'; mx int := -1;
+    cnt numeric; chosen boolean;
+  BEGIN
+    C := array_fill(0::numeric, ARRAY[n + 1, n + 2]);          -- C[m+1][s+1], m=0..n, s=0..n+1
+    FOR s IN 0..n LOOP C[1][s + 1] := 1; END LOOP;              -- m=0: any depth, 1 completion (empty tail)
+    FOR m IN 1..n LOOP
+      FOR s IN 0..n LOOP
+        cnt := C[m][s + 2];                                    -- push branch: C(m-1, s+1)
+        FOR k IN 1..s LOOP cnt := cnt + C[m][k + 1]; END LOOP;  -- truncate-to-k branches: C(m-1, k)
+        C[m + 1][s + 1] := cnt;
+      END LOOP;
+    END LOOP;
+    FOR i IN 1..n LOOP
+      rem := n - i; depth := coalesce(array_length(stack, 1), 0); chosen := false;
+      FOR k IN 1..depth LOOP
+        cnt := C[rem + 1][k + 1];                               -- C(rem, k)
+        IF x < cnt THEN
+          w := w || stack[k]; stack := stack[1:k]; chosen := true; EXIT;
+        ELSE
+          x := x - cnt;
+        END IF;
+      END LOOP;
+      IF NOT chosen THEN                                        -- push new label mx+1
+        mx := mx + 1; w := w || mx; stack := stack || mx;
+      END IF;
+    END LOOP;
+    RETURN w;
+  END $$;
+CREATE FUNCTION fiber_unrank(f non_crossing_partitions_fiber, rank rank_index) RETURNS set_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(non_crossing_unrank_word((f).n::int, rank::bigint))::set_partition $fu$;
 SELECT base_realize('non_crossing_partitions');
 
 
@@ -61,3 +103,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            contains(non_crossing_partitions(4), ROW(ARRAY[0,1,0,1])::set_partition)::text $q$),
   ('non_crossing_partitions','the <@ operator: {0,1,2} <@ non_crossing_partitions(3)','eq','true','operator wrapper over contains',$q$
     SELECT (ROW(ARRAY[0,1,2])::set_partition <@ non_crossing_partitions(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('non_crossing_partitions','fiber_unrank(non_crossing_partitions(4), 0..13) are all members (accel floor)','eq','true','stack-DP unrank lands inside NC([4]) (14 = Catalan(4)) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(non_crossing_partitions(4)) f), ord::rank_index) <@ non_crossing_partitions(4))::text
+      FROM generate_series(0, cardinality(non_crossing_partitions(4))::int - 1) ord $q$);
