@@ -226,6 +226,12 @@ function fromFor(c: string, chain: string[], n: number | null, ax: Record<string
 }
 
 function readUrl() {
+  // Dev deep-link restore (#158): the vitepress dev middleware 302-redirects a hard-loaded deep
+  // /explore/collection/<slice> to the base page (so relative module/wasm URLs resolve against root, not the deep
+  // path) with the original URL parked in ?__restore=. Put it back into the address bar BEFORE parsing, so the deep
+  // hard-load lands exactly where asked. No-op in prod (the built site serves the deep path via the not-found slot).
+  const restore = new URLSearchParams(location.search).get('__restore')
+  if (restore) { try { history.replaceState({}, '', decodeURIComponent(restore)) } catch { /* leave the URL as-is */ } }
   const r = parseRoute(location)
   pendingView = r
   if (r.address.element !== null) { inElementView.value = true; pendingSel.value = r.address.element }

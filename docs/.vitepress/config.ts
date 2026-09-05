@@ -231,12 +231,21 @@ export default defineConfig({
         // not-found slot.)
         name: 'explorer-path-fallback',
         configureServer(server: any) {
-          server.middlewares.use((req: any, _res: any, next: any) => {
+          server.middlewares.use((req: any, res: any, next: any) => {
             // Only fold NAVIGATIONS (Accept: text/html) for a deep /explore/collection/<slice> hard-load — never
             // asset/module/wasm requests (which would otherwise be served the HTML page → MIME errors, breaking
-            // pglite's wasm load).
-            const path = (req.url || '').split('?')[0]
-            if (/^\/explore\/collection\/.+/.test(path) && (req.headers.accept || '').includes('text/html')) req.url = '/explore/collection/'
+            // pglite's wasm load). #158: REDIRECT (not internal rewrite) so the browser's base URL becomes
+            // /explore/collection/ — a rewrite left the address bar at the deep path, so the page's relative
+            // module/wasm imports still resolved against /explore/collection/<slice>/ and 404'd. The original deep
+            // URL rides along in ?__restore= and the Explorer puts it back via replaceState after boot (readUrl).
+            const url = req.url || ''
+            const path = url.split('?')[0]
+            if (/^\/explore\/collection\/.+/.test(path) && (req.headers.accept || '').includes('text/html')) {
+              res.statusCode = 302
+              res.setHeader('Location', '/explore/collection/?__restore=' + encodeURIComponent(url))
+              res.end()
+              return
+            }
             next()
           })
         },
