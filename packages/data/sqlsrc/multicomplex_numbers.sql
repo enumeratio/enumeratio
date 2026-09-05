@@ -94,7 +94,11 @@ CREATE FUNCTION fiber_unrank(f multicomplex_numbers_fiber, rank rank_index) RETU
 CREATE FUNCTION fiber_count(f multicomplex_numbers_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT trunc(power((f).modulus::numeric, power(2::numeric, (f).level))) $$;   -- |ℂn(ℤ/M)| = M^(2ⁿ), exact (scale 0)
 CREATE FUNCTION fiber_elements(f multicomplex_numbers_fiber, element_limit int) RETURNS SETOF multicomplex LANGUAGE sql STABLE AS $$
-  WITH w AS (SELECT CASE WHEN power(2::numeric, (f).level) * log(2.0, greatest((f).modulus, 2)::numeric) > 45
+  -- M < 2 is degenerate (ℤ/0 is empty, ℤ/1 the zero ring) and the log-scale test below can't see it: greatest(M, 2)
+  -- read both as M=2, so the shortcut claimed a full window for a fiber holding 0 or 1 elements — cardinality said 1
+  -- while elements() yielded 5000, and unranking mod 0 divided by zero (#254). Take those two counts directly.
+  WITH w AS (SELECT CASE WHEN (f).modulus < 2 THEN least((f).modulus::bigint, element_limit::bigint)
+                         WHEN power(2::numeric, (f).level) * log(2.0, (f).modulus::numeric) > 45
                          THEN element_limit::bigint                                          -- count ≫ any window: don't compute it
                          ELSE least(power((f).modulus::numeric, power(2::numeric, (f).level))::bigint, element_limit::bigint)
                     END AS n)
@@ -109,7 +113,11 @@ CREATE FUNCTION fiber_symbol(f multicomplex_numbers_fiber) RETURNS text LANGUAGE
 INSERT INTO base_collection VALUES ('multicomplex_numbers', 'multicomplex');   -- bounded (finite, huge fibers)
 INSERT INTO base_grade VALUES
   ('multicomplex_numbers', 1, 'modulus', NULL, NULL),   -- the base ring ℤ/M (required)
-  ('multicomplex_numbers', 2, 'level',   NULL, NULL);   -- the tower order n (required — no sane range to unfold)
+  -- The tower order carries a DEFAULT extent, unlike the modulus: an unbounded inner axis never lets the odometer
+  -- carry, so the open handle pinned M at its lower bound and rayed on the level forever — and a 2ⁿ-place numeral
+  -- runs past int at level 31 regardless (#254). hi_expr bounds the DEFAULT unfold only; multicomplex_numbers(5, 9)
+  -- still constructs and enumerates ℂ9(ℤ/5) exactly as before.
+  ('multicomplex_numbers', 2, 'level',   '0',  '4');    -- the tower order n — ℂ4 is 16 places, the marquee example
 SELECT base_realize('multicomplex_numbers');
 
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -153,4 +161,11 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (ROW(ARRAY[1,1],5)::multicomplex     <@ multicomplex_numbers(5,2))::text || '|' ||
            (ROW(ARRAY[1,2,0,7],5)::multicomplex <@ multicomplex_numbers(5,2))::text $q$),
   ('multicomplex_numbers','set_notation: rank 0 of ℂ2(ℤ/5) ↦ 0 ∈ ℂ2(ℤ/5)','eq','0 ∈ ℂ2(ℤ/5)','the fiber symbol carries both grades',$q$
-    SELECT set_notation(unrank(multicomplex_numbers(5,2), 0)) $q$);
+    SELECT set_notation(unrank(multicomplex_numbers(5,2), 0)) $q$),
+  ('multicomplex_numbers','degenerate moduli count what they enumerate: ℤ/0 is empty, ℤ/1 the zero ring','eq','0|0|1|1','#254 — the log-scale shortcut used to claim a full window for both',$q$
+    SELECT cardinality(multicomplex_numbers(0,6))::text || '|' || (SELECT count(*) FROM elements(multicomplex_numbers(0,6)) e)::text || '|' ||
+           cardinality(multicomplex_numbers(1,6))::text || '|' || (SELECT count(*) FROM elements(multicomplex_numbers(1,6)) e)::text $q$),
+  ('multicomplex_numbers','the open handle fills its window','eq','100','#254 — the level axis''s default extent lets the odometer carry to the next modulus',$q$
+    SELECT count(*)::text FROM elements(multicomplex_numbers(), 100) e $q$),
+  ('multicomplex_numbers','the default extent bounds the unfold, not the collection','eq','155','ℂ9(ℤ/2) past the level-4 default still constructs and counts: 2^(2^9) = 2^512, a 155-digit integer',$q$
+    SELECT length(cardinality(multicomplex_numbers(2,9))::text)::text $q$);

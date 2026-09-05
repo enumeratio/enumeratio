@@ -15,10 +15,15 @@ CREATE FUNCTION multiset_unrank(n int, k int, ord bigint) RETURNS multiset LANGU
 
 CREATE TYPE multisets_fiber AS (n natural_number, k natural_number);   -- typed fiber; axes: n (ground), k (size)
 CREATE FUNCTION fiber_elements(f multisets_fiber, element_limit int) RETURNS SETOF multiset LANGUAGE sql STABLE AS $$
-  SELECT multiset_unrank((f).n::int, (f).k::int, ord)
-    FROM generate_series(0, binomial((f).n::int + (f).k::int - 1, (f).k::int)::int - 1) ord LIMIT element_limit $$;
+  SELECT CASE WHEN (f).n = 0 THEN ROW(ARRAY[]::int[], 0)::multiset ELSE multiset_unrank((f).n::int, (f).k::int, ord) END
+    FROM generate_series(0, CASE WHEN (f).n = 0 THEN (CASE WHEN (f).k = 0 THEN 1 ELSE 0 END)
+                                 ELSE binomial((f).n::int + (f).k::int - 1, (f).k::int)::int END - 1) ord
+   LIMIT element_limit $$;
 CREATE FUNCTION fiber_count(f multisets_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
-  SELECT binomial((f).n::int + (f).k::int - 1, (f).k::int)::numeric $$;   -- (n multichoose k)
+  -- ((0,0)) = 1 — the empty multiset over the empty ground — but the multichoose spells it C(−1, 0), and binomial's
+  -- k > n guard reads that as 0, so the n=0 fiber went missing (#254). ((0,k)) = 0 for k > 0 either way.
+  SELECT CASE WHEN (f).n = 0 THEN (CASE WHEN (f).k = 0 THEN 1 ELSE 0 END)::numeric
+              ELSE binomial((f).n::int + (f).k::int - 1, (f).k::int)::numeric END $$;   -- (n multichoose k)
 CREATE FUNCTION contains_in_fiber(f multisets_fiber, m multiset) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$   -- ground-aware: same n, ⊆ [n] w/ repetition, size k, sorted
   SELECT (m).n = (f).n::int
      AND coalesce(array_length((m).elements, 1), 0) = (f).k::int
@@ -116,4 +121,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('multisets','the exponential repr is registered as data (base_repr)','eq','multiset_frequency','render_fn on the exponential row',$q$
     SELECT render_fn FROM base_repr WHERE collection = 'multisets' AND repr = 'exponential' $q$),
   ('multisets','mathlib anchor for the additive union (base_reference)','eq','Multiset.instAdd','the hard pointer for s + t',$q$
-    SELECT identity FROM base_reference WHERE subject='multiset_add' AND system='mathlib4' $q$);
+    SELECT identity FROM base_reference WHERE subject='multiset_add' AND system='mathlib4' $q$),
+  ('multisets','the empty ground: ((0,0)) = 1 and ((0,k)) = 0','eq','1|1|0|0','#254 — C(−1,0) read as 0 lost the empty multiset',$q$
+    SELECT cardinality(multisets(0,0))::text || '|' || (SELECT count(*) FROM elements(multisets(0,0)) e)::text || '|' ||
+           cardinality(multisets(0,3))::text || '|' || (SELECT count(*) FROM elements(multisets(0,3)) e)::text $q$);
