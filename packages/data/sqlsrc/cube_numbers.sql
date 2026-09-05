@@ -12,4 +12,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('cube_numbers','synthesized monotonic contains via <@: 27 ∈, 26 ∉','eq','true|false','scan the non-decreasing floor until the term meets/passes v',$q$ SELECT (27::numeric<@cube_numbers())::text||'|'||(26::numeric<@cube_numbers())::text $q$),
   ('cube_numbers','Nicomachus: sum of 1^3..n^3 = (n(n+1)/2)^2 for n=1..8','eq','true','partial sums of the unrank floor vs. the triangular-square closed form',$q$
     SELECT bool_and((SELECT sum((unrank(cube_numbers(), k)).value) FROM generate_series(1, n) k) = div(n::numeric*(n+1), 2) * div(n::numeric*(n+1), 2))
-    FROM generate_series(1, 8) n $q$);
+    FROM generate_series(1, 8) n $q$),
+  ('cube_numbers','unrank(10) = 1000 = 10^3','eq','1000','off the floor',$q$
+    SELECT (unrank(cube_numbers(), 10)).value::text $q$),
+  ('cube_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
+    SELECT cardinality(cube_numbers())::text $q$);

@@ -15,4 +15,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('tetrahedral_numbers','contains via <@: 20 ∈ (Te(4)), 21 ∉','eq','true|false','bounded-search membership',$q$ SELECT (20::numeric <@ tetrahedral_numbers())::text || '|' || (21::numeric <@ tetrahedral_numbers())::text $q$),
   ('tetrahedral_numbers','Te(n) - Te(n-1) = T(n) for n=1..8 (tetrahedral is the partial sums of triangular)','eq','true','cross-check against the triangular_numbers floor',$q$
     SELECT bool_and((unrank(tetrahedral_numbers(), n)).value - (unrank(tetrahedral_numbers(), n-1)).value = (unrank(triangular_numbers(), n)).value)
-    FROM generate_series(1, 8) n $q$);
+    FROM generate_series(1, 8) n $q$),
+  ('tetrahedral_numbers','unrank(10) = 220 = Te(10)','eq','220','off the floor',$q$
+    SELECT (unrank(tetrahedral_numbers(), 10)).value::text $q$),
+  ('tetrahedral_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
+    SELECT cardinality(tetrahedral_numbers())::text $q$);

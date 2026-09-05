@@ -16,4 +16,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('tribonacci_numbers','indexable + synthesized contains: unrank(8)=24, 24 ∈, 25 ∉','eq','24|true|false','fiber_unrank + the non-decreasing scan',$q$ SELECT (unrank(tribonacci_numbers(),8)).value::text||'|'||(24::numeric<@tribonacci_numbers())::text||'|'||(25::numeric<@tribonacci_numbers())::text $q$),
   ('tribonacci_numbers','recurrence holds off the floor: T(n) = T(n-1)+T(n-2)+T(n-3) for n=3..8','eq','true','accelerated unrank cross-checked against its own recurrence',$q$
     SELECT bool_and((unrank(tribonacci_numbers(), n)).value = (unrank(tribonacci_numbers(), n-1)).value + (unrank(tribonacci_numbers(), n-2)).value + (unrank(tribonacci_numbers(), n-3)).value)
-    FROM generate_series(3, 8) n $q$);
+    FROM generate_series(3, 8) n $q$),
+  ('tribonacci_numbers','unrank(10) = 81','eq','81','off the floor, past the first-terms window',$q$
+    SELECT (unrank(tribonacci_numbers(), 10)).value::text $q$),
+  ('tribonacci_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
+    SELECT cardinality(tribonacci_numbers())::text $q$);
