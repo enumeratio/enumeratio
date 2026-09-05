@@ -47,6 +47,56 @@ CREATE FUNCTION contains_in_fiber(f k_ary_trees_fiber, v k_ary_tree) RETURNS boo
 INSERT INTO base_collection VALUES ('k_ary_trees', 'k_ary_tree');
 INSERT INTO base_grade VALUES ('k_ary_trees', 1, 'n', NULL, NULL), ('k_ary_trees', 2, 'k', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f k_ary_trees_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'KT' || to_unicode_subscript((f).k) || '(' || (f).n::int || ')' $$;
+
+-- direct unrank: same forced-final-leaf reduction binary_trees uses (the preorder word's LAST symbol is always a
+-- leaf — slots hits exactly 1 right before it), leaving kn symbols (n ups of rise u=k−1, n·u downs of fall 1) to
+-- unrank against a generalized ballot count. Unlike the ±1 case (dyck_completions' reflection-principle closed
+-- form), asymmetric step sizes have no such O(1) formula here, so completions(p,q,h) — p remaining ups, q
+-- remaining downs, height h, stay ≥0, land on exactly 0 — is filled bottom-up as a DP cube (linear-indexed
+-- numeric[]; p ascending outer needs only smaller-p layers already filled, q ascending inner only smaller-q
+-- within the same p-layer): O(n²·(k−1)) cells, each O(1). Preference order matches the floor's ASCENDING shape
+-- order (0 before 1): try a down/leaf step first.
+CREATE FUNCTION fiber_unrank(f k_ary_trees_fiber, rank rank_index) RETURNS k_ary_tree LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE
+    n int := (f).n::int; k int := (f).k::int; u int := k - 1;
+    qmax int := n * u; hmax int := n * u;               -- max remaining downs / max reachable height
+    qw int := qmax + 1; hw int := hmax + 1;              -- (q,h)-plane width for linear indexing into dp
+    dp numeric[]; p int; q int; h int; idx int; up_v numeric; down_v numeric;
+    shape int[] := '{}'; ru int := n; rd int := qmax; hh int := 0; r numeric := rank; cd numeric; i int;
+  BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[0])::k_ary_tree; END IF;      -- the single leaf (k irrelevant)
+    dp := array_fill(0::numeric, ARRAY[(n + 1) * qw * hw]);
+    FOR p IN 0..n LOOP
+      FOR q IN 0..qmax LOOP
+        FOR h IN 0..hmax LOOP
+          idx := p * qw * hw + q * hw + h;                       -- 0-based; +1 on every array access below
+          IF p = 0 AND q = 0 THEN
+            dp[idx + 1] := CASE WHEN h = 0 THEN 1 ELSE 0 END;
+          ELSE
+            up_v := 0; down_v := 0;
+            IF p > 0 AND h + u <= hmax THEN                      -- take an up-step (+u): one fewer up, height h+u
+              up_v := dp[(p - 1) * qw * hw + q * hw + (h + u) + 1];
+            END IF;
+            IF q > 0 AND h - 1 >= 0 THEN                         -- take a down-step (-1): one fewer down, height h-1
+              down_v := dp[p * qw * hw + (q - 1) * hw + (h - 1) + 1];
+            END IF;
+            dp[idx + 1] := up_v + down_v;
+          END IF;
+        END LOOP;
+      END LOOP;
+    END LOOP;
+    FOR i IN 1..(k * n) LOOP
+      cd := CASE WHEN rd > 0 AND hh - 1 >= 0 THEN dp[ru * qw * hw + (rd - 1) * hw + (hh - 1) + 1] ELSE 0 END;
+      IF rd > 0 AND hh - 1 >= 0 AND r < cd THEN
+        shape := shape || 0; rd := rd - 1; hh := hh - 1;
+      ELSE
+        IF rd > 0 AND hh - 1 >= 0 THEN r := r - cd; END IF;
+        shape := shape || 1; ru := ru - 1; hh := hh + u;
+      END IF;
+    END LOOP;
+    shape := shape || 0;   -- the forced trailing leaf (slots always lands at exactly 0 here)
+    RETURN ROW(shape)::k_ary_tree;
+  END $fu$;
 SELECT base_realize('k_ary_trees');
 
 -- ── map to k-Dyck paths ───────────────────────────────────────────────────────────────────────────────
@@ -81,4 +131,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('k_ary_trees','to_k_dyck_path: the image of k_ary_trees(2,3) IS exactly k_dyck_paths(2,3)','eq','true','the bijection — image set equals the codomain fiber',$q$
     SELECT (
       (SELECT array_agg(s ORDER BY s) FROM (SELECT notation(k_ary_tree_to_k_dyck_path((e).value, 3)) s FROM elements(k_ary_trees(2,3)) e) t)
-      = (SELECT array_agg(s ORDER BY s) FROM (SELECT notation((d).value) s FROM elements(k_dyck_paths(2,3)) d) t))::text $q$);
+      = (SELECT array_agg(s ORDER BY s) FROM (SELECT notation((d).value) s FROM elements(k_dyck_paths(2,3)) d) t))::text $q$),
+  ('k_ary_trees','fiber_unrank(k_ary_trees(3,3), 0..11) are all members (accel floor)','eq','true','generalized ballot-DP unrank lands inside the Fuss-Catalan(3,3)=12 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(k_ary_trees(3,3)) f), ord::rank_index) <@ k_ary_trees(3,3))::text
+      FROM generate_series(0, cardinality(k_ary_trees(3,3))::int - 1) ord $q$),
+  ('k_ary_trees','fiber_unrank(k_ary_trees(4,2), 0..13) are all members (k=2 slice matches binary_trees'' own DP shape)','eq','true','u=1 degenerates cleanly to the ordinary Catalan(4)=14 fiber',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(k_ary_trees(4,2)) f), ord::rank_index) <@ k_ary_trees(4,2))::text
+      FROM generate_series(0, cardinality(k_ary_trees(4,2))::int - 1) ord $q$);
