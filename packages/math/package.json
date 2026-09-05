@@ -1,0 +1,42 @@
+{
+  "name": "@enumeratio/math",
+  "version": "0.1.0",
+  "description": "Pure-TypeScript, zero-dependency twins of enumeratio's SQL math primitives (factorial, binomial, bell, fubini, catalan, gaussian/multicomplex arithmetic, …) — same names, same numbers, verified against the SQL core by a differential oracle.",
+  "type": "module",
+  "license": "Unlicense",
+  "homepage": "https://enumeratio.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enumeratio/enumeratio.git",
+    "directory": "packages/math"
+  },
+  "sideEffects": false,
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "selfcert": "node --import tsx selfcert-math.mts"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.3",
+    "@enumeratio/data": "workspace:^",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
