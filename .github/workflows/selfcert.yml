@@ -4,21 +4,11 @@ name: Self-certification
 # packages/data/selfcert.mts) — it caught a real bug (standard_tableau_pairs silent truncation)
 # that the regular test suite missed, but it runs nowhere in CI today. This wires it in.
 #
-# Trigger/scope choice: the full sweep takes ~4-5 minutes locally (119 collections w/ an accel,
-# ~1300 fiber checks) — fast enough to run in full rather than inventing a partial-coverage cap.
-# So push/PR gets the FULL sweep too, just scoped via `paths` to when it can actually catch
-# anything (sqlsrc changes or the harness itself); the weekly schedule is an unconditional
-# full sweep as a backstop against drift with no matching source change (e.g. a pglite bump).
+# The per-push/PR fast verification now lives in quickcheck.yml (property-based SAMPLING). This EXHAUSTIVE sweep is
+# no longer a per-push gate: the catalog has grown and element_at-vs-sequential is O(N²) for generic-unrank
+# collections, so the full sweep no longer finishes in reasonable time (#294/#295). Kept as a weekly backstop
+# against drift with no matching source change (e.g. a pglite bump) + on-demand via workflow_dispatch.
 on:
-  push:
-    branches: [main]
-    paths:
-      - packages/data/sqlsrc/**
-      - packages/data/selfcert.mts
-  pull_request:
-    paths:
-      - packages/data/sqlsrc/**
-      - packages/data/selfcert.mts
   schedule:
     - cron: '17 3 * * 0'   # weekly, Sunday 03:17 UTC
   workflow_dispatch:

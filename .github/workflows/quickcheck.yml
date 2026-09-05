@@ -1,0 +1,117 @@
+name: Quickcheck
+
+# Property-based (QuickCheck-style) SAMPLING verification (packages/data/quickcheck.mts) — the fast sibling of the
+# exhaustive selfcert. Most collections are infinite and element_at-vs-sequential is O(N²) for generic-unrank
+# collections, so the full selfcert sweep no longer finishes in reasonable time (see #294/#295). Two tiers:
+#   push / PR  — a FAST sampled gate (few points/collection, small enumeration cap), scoped to when it can catch
+#                something (sqlsrc or the harness itself). Its failure fails the job = the gate.
+#   nightly    — a DEEPER sample (more points), which does NOT block anything; on failure it opens (or reopens) a
+#                single tracking issue with the seed + summary + a link to the run, and closes it again on recovery.
+on:
+  push:
+    branches: [main]
+    paths:
+      - packages/data/sqlsrc/**
+      - packages/data/quickcheck.mts
+  pull_request:
+    paths:
+      - packages/data/sqlsrc/**
+      - packages/data/quickcheck.mts
+  schedule:
+    - cron: '41 4 * * *'   # nightly, 04:41 UTC (distinct from selfcert's weekly 17 3 * * 0)
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write   # the nightly tier opens/reopens/closes its tracking issue
+
+concurrency:
+  group: quickcheck-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quickcheck:
+    name: quickcheck (property-based sampling)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: run quickcheck
+        id: run
+        # scheduled = deep sample; push/PR = fast sample (fewer points + a smaller enumeration cap). set -o pipefail
+        # so a harness failure survives the tee. On the nightly tier we capture the outcome instead of failing here,
+        # so the issue steps below can react; on push/PR a failure fails the job directly (the gate).
+        continue-on-error: ${{ github.event_name == 'schedule' }}
+        run: |
+          set -o pipefail
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            export QUICKCHECK_POINTS=5
+          else
+            export QUICKCHECK_POINTS=1
+            export QUICKCHECK_CAP_COUNT=2000
+          fi
+          pnpm --filter @enumeratio/data quickcheck 2>&1 | tee quickcheck.log
+
+      - name: nightly — open/reopen issue on failure
+        if: ${{ github.event_name == 'schedule' && steps.run.outcome == 'failure' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs')
+            const TITLE = 'quickcheck nightly regression'
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            let log = ''
+            try { log = fs.readFileSync('quickcheck.log', 'utf8') } catch {}
+            const tail = log.split('\n').slice(-60).join('\n')
+            const body = [
+              `The nightly **quickcheck** sampling run FAILED — a sampled property does not hold.`,
+              ``,
+              `Run: ${runUrl}`,
+              ``,
+              `The harness prints the SEED needed to replay deterministically (\`pnpm --filter @enumeratio/data quickcheck <coll> <seed>\`). Tail of the output:`,
+              ``,
+              '```',
+              tail,
+              '```',
+            ].join('\n')
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${TITLE}"`,
+            })
+            const existing = found.data.items.find(i => i.title === TITLE)
+            if (existing) {
+              if (existing.state === 'closed') {
+                await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'open' })
+              }
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body })
+            } else {
+              await github.rest.issues.create({ ...context.repo, title: TITLE, body, labels: ['bug'] })
+            }
+
+      - name: nightly — close issue on green recovery
+        if: ${{ github.event_name == 'schedule' && steps.run.outcome == 'success' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const TITLE = 'quickcheck nightly regression'
+            const found = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${TITLE}"`,
+            })
+            const existing = found.data.items.find(i => i.title === TITLE)
+            if (existing) {
+              const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+              await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body: `Green again — nightly quickcheck passed. ${runUrl}` })
+              await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'closed' })
+            }
+
+      - name: nightly — fail the job if quickcheck failed
+        if: ${{ github.event_name == 'schedule' && steps.run.outcome == 'failure' }}
+        run: exit 1
