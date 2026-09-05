@@ -99,7 +99,7 @@ INSERT INTO base_function_attribute (id, title, description, implies) VALUES
 -- (follow-up: the GitHub issue tracking this registry): every "No bare SQL fn (generic dispatch)" rank/unrank
 -- export (integerPartitionRank/Unrank/KRank/KUnrank, rgsRank/Unrank, setPartitionsIntoKBlocksRank/Unrank,
 -- permutation_rank, composition_rank) — these are the READ direction of a bijection whose SQL side is dispatched
--- generically through unrank(<collection>(...), r), not a separately named identity; gaussian_sub/mc_sub (each
+-- generically through unrank(<collection>(...), r), not a separately named identity; gaussian_sub/multicomplex_sub (each
 -- file's own comment: "defined as a + (-b) there too" — definitional, not a distinct identity); and
 -- countSurjections/setCompositionRank/setCompositionUnrank (the only SQL counterpart,
 -- set_composition_surjections(n,k), is an ENUMERATOR — SETOF int[] — not a scalar count/rank function; the shape
@@ -133,12 +133,12 @@ INSERT INTO base_function (id, title, description) VALUES
    '(a+bi)(c+di) = (ac-bd) + (ad+bc)i — the commutative-ring multiplication on ℤ[i].'),
   ('gaussian_neg', 'Gaussian integer negation', '-(a+bi) = -a-bi — the additive inverse on ℤ[i].'),
   ('gaussian_norm', 'Gaussian integer norm', 'N(a+bi) = a²+b² — the multiplicative Euclidean gauge on ℤ[i].'),
-  ('mc_add', 'Multicomplex addition', 'Componentwise addition mod M on the multicomplex ring ℂₙ(ℤ/Mℤ).'),
-  ('mc_mul', 'Multicomplex multiplication',
+  ('multicomplex_add', 'Multicomplex addition', 'Componentwise addition mod M on the multicomplex ring ℂₙ(ℤ/Mℤ).'),
+  ('multicomplex_mul', 'Multicomplex multiplication',
    'XOR-convolution with a Thue–Morse overlap sign: out[i⊻j] += (−1)^popcount(i∧j)·a[i]·b[j] (mod M).'),
-  ('mc_neg', 'Multicomplex negation', 'Componentwise negation mod M.'),
-  ('mc_conj', 'Multicomplex conjugation', 'Flips every "odious" (odd-popcount-indexed) coefficient''s sign.'),
-  ('mc_popcount', 'Popcount', 'The Hamming weight of a non-negative bitmask (0..30 bits) — the sign exponent '
+  ('multicomplex_neg', 'Multicomplex negation', 'Componentwise negation mod M.'),
+  ('multicomplex_conj', 'Multicomplex conjugation', 'Flips every "odious" (odd-popcount-indexed) coefficient''s sign.'),
+  ('multicomplex_popcount', 'Popcount', 'The Hamming weight of a non-negative bitmask (0..30 bits) — the sign exponent '
    'multicomplex multiplication is built from.'),
   ('composition_from_mask', 'Composition from gap-cut mask',
    'The bijection: an integer composition of n ↔ a subset of the n-1 gaps between n unit cells (the mask IS the '
@@ -162,8 +162,8 @@ INSERT INTO base_function (id, title, description) VALUES
 
 -- Attribute assignments — every one below is independently demonstrated (not just asserted) by a base_example
 -- further down. gcd/lcm: associative + commutative, standard number theory. gaussian_add/gaussian_mul:
--- ℤ[i] is a commutative ring — both operations are. mc_add: componentwise mod-M addition, trivially both.
--- mc_mul: ORDERLESS ONLY — commutativity is proved algebraically below (swapping a,b relabels the same sum,
+-- ℤ[i] is a commutative ring — both operations are. multicomplex_add: componentwise mod-M addition, trivially both.
+-- multicomplex_mul: ORDERLESS ONLY — commutativity is proved algebraically below (swapping a,b relabels the same sum,
 -- since AND and popcount are symmetric in their operands) and demonstrated live; associativity of this specific
 -- XOR-convolution/Thue-Morse-cocycle construction is NOT verified here and is deliberately left unassigned
 -- rather than guessed (Cayley-Dickson-style doubling constructions are known to lose associativity at exactly
@@ -173,8 +173,8 @@ INSERT INTO base_function_attribute_manual (function, attribute) VALUES
   ('lcm', 'flat'), ('lcm', 'orderless'),
   ('gaussian_add', 'flat'), ('gaussian_add', 'orderless'),
   ('gaussian_mul', 'flat'), ('gaussian_mul', 'orderless'),
-  ('mc_add', 'flat'), ('mc_add', 'orderless'),
-  ('mc_mul', 'orderless');
+  ('multicomplex_add', 'flat'), ('multicomplex_add', 'orderless'),
+  ('multicomplex_mul', 'orderless');
   -- everything else above: no attribute rows — proves attributes are optional (factorial/catalan_number/etc.
   -- are all zero-attribute cases: counting sequences and non-endo functions, not combining operations)
 
@@ -215,7 +215,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'eq','true',NULL,$q$
      SELECT (gaussian_mul(ROW(2,3)::gaussian_integer, ROW(1,-4)::gaussian_integer)
              = gaussian_mul(ROW(1,-4)::gaussian_integer, ROW(2,3)::gaussian_integer))::text $q$),
-  ('base_function','mc_mul is commutative on a sample pair (Orderless, demonstrated — associativity deliberately NOT claimed)',
+  ('base_function','multicomplex_mul is commutative on a sample pair (Orderless, demonstrated — associativity deliberately NOT claimed)',
    'eq','true',NULL,$q$
-     SELECT (mc_mul(ROW(ARRAY[2,3],97)::multicomplex, ROW(ARRAY[5,7],97)::multicomplex)
-             = mc_mul(ROW(ARRAY[5,7],97)::multicomplex, ROW(ARRAY[2,3],97)::multicomplex))::text $q$);
+     SELECT (multicomplex_mul(ROW(ARRAY[2,3],97)::multicomplex, ROW(ARRAY[5,7],97)::multicomplex)
+             = multicomplex_mul(ROW(ARRAY[5,7],97)::multicomplex, ROW(ARRAY[2,3],97)::multicomplex))::text $q$);

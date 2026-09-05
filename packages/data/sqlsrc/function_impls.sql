@@ -103,20 +103,20 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   ('gaussian_norm', 'pg', 'gaussian_norm', '{gaussian_integer}', 'int', 'numeric', NULL),
   ('gaussian_norm', 'ts', 'gaussian_norm', '{gaussian_integer}', 'int', 'float64', NULL),
 
-  ('mc_add', 'pg', 'mc_add', '{multicomplex,multicomplex}', 'multicomplex', 'numeric', NULL),
-  ('mc_add', 'ts', 'mc_add', '{multicomplex,multicomplex}', 'multicomplex', 'float64', NULL),
+  ('multicomplex_add', 'pg', 'multicomplex_add', '{multicomplex,multicomplex}', 'multicomplex', 'numeric', NULL),
+  ('multicomplex_add', 'ts', 'multicomplex_add', '{multicomplex,multicomplex}', 'multicomplex', 'float64', NULL),
 
-  ('mc_mul', 'pg', 'mc_mul', '{multicomplex,multicomplex}', 'multicomplex', 'numeric', NULL),
-  ('mc_mul', 'ts', 'mc_mul', '{multicomplex,multicomplex}', 'multicomplex', 'float64', NULL),
+  ('multicomplex_mul', 'pg', 'multicomplex_mul', '{multicomplex,multicomplex}', 'multicomplex', 'numeric', NULL),
+  ('multicomplex_mul', 'ts', 'multicomplex_mul', '{multicomplex,multicomplex}', 'multicomplex', 'float64', NULL),
 
-  ('mc_neg', 'pg', 'mc_neg', '{multicomplex}', 'multicomplex', 'numeric', NULL),
-  ('mc_neg', 'ts', 'mc_neg', '{multicomplex}', 'multicomplex', 'float64', NULL),
+  ('multicomplex_neg', 'pg', 'multicomplex_neg', '{multicomplex}', 'multicomplex', 'numeric', NULL),
+  ('multicomplex_neg', 'ts', 'multicomplex_neg', '{multicomplex}', 'multicomplex', 'float64', NULL),
 
-  ('mc_conj', 'pg', 'mc_conj', '{multicomplex}', 'multicomplex', 'numeric', NULL),
-  ('mc_conj', 'ts', 'mc_conj', '{multicomplex}', 'multicomplex', 'float64', NULL),
+  ('multicomplex_conj', 'pg', 'multicomplex_conj', '{multicomplex}', 'multicomplex', 'numeric', NULL),
+  ('multicomplex_conj', 'ts', 'multicomplex_conj', '{multicomplex}', 'multicomplex', 'float64', NULL),
 
-  ('mc_popcount', 'pg', 'mc_popcount', '{int}', 'int', 'numeric', NULL),
-  ('mc_popcount', 'ts', 'mc_popcount', '{int}', 'int', 'float64', NULL),
+  ('multicomplex_popcount', 'pg', 'multicomplex_popcount', '{int}', 'int', 'numeric', NULL),
+  ('multicomplex_popcount', 'ts', 'multicomplex_popcount', '{int}', 'int', 'float64', NULL),
 
   ('composition_from_mask', 'pg', 'composition_from_mask', '{int,bigint}', 'composition', 'numeric', NULL),
   ('composition_from_mask', 'ts', 'composition_from_mask', '{int,bigint}', 'composition', 'float64', NULL),

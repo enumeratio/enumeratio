@@ -23,7 +23,7 @@
 -- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────────
 CREATE TYPE multicomplex AS (coeffs int[], modulus int);
 
-CREATE FUNCTION mc_popcount(x int) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION multicomplex_popcount(x int) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(*)::int FROM generate_series(0, 30) b WHERE (x >> b) & 1 = 1 $$;
 
 -- balanced coefficient form: a0 + a1·j1 − 2·j3, coefficients folded into (−M/2, M/2], unit names j<idx> (j0 = scalar).
@@ -46,41 +46,41 @@ BEGIN
 END $$;
 
 -- ── commutative-ring arithmetic (per (M, order); operands must share modulus AND dimension) ──────────────────
-CREATE FUNCTION mc_add(a multicomplex, b multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION multicomplex_add(a multicomplex, b multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
   SELECT CASE WHEN (a).modulus = (b).modulus AND array_length((a).coeffs, 1) = array_length((b).coeffs, 1) THEN
     ROW((SELECT array_agg((((a).coeffs[i] + (b).coeffs[i]) % (a).modulus + (a).modulus) % (a).modulus ORDER BY i)
            FROM generate_series(1, array_length((a).coeffs, 1)) i), (a).modulus)::multicomplex END $$;
-CREATE FUNCTION mc_neg(a multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION multicomplex_neg(a multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
   SELECT ROW((SELECT array_agg(((-(a).coeffs[i]) % (a).modulus + (a).modulus) % (a).modulus ORDER BY i)
                 FROM generate_series(1, array_length((a).coeffs, 1)) i), (a).modulus)::multicomplex $$;
-CREATE FUNCTION mc_sub(a multicomplex, b multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
-  SELECT mc_add(a, mc_neg(b)) $$;
+CREATE FUNCTION multicomplex_sub(a multicomplex, b multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
+  SELECT multicomplex_add(a, multicomplex_neg(b)) $$;
 -- multiplication = XOR-convolution with Thue–Morse overlap signs: out[a⊻b] += (−1)^popcount(a∧b)·ca·cb  (mod M).
-CREATE FUNCTION mc_mul(a multicomplex, b multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION multicomplex_mul(a multicomplex, b multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
   SELECT CASE WHEN (a).modulus = (b).modulus AND array_length((a).coeffs, 1) = array_length((b).coeffs, 1) THEN
     ROW((SELECT array_agg(coeff ORDER BY k) FROM (
            SELECT k, ((sum(term) % (a).modulus + (a).modulus) % (a).modulus)::int AS coeff FROM (
              SELECT (i - 1) # (j - 1) AS k,
-                    (CASE WHEN mc_popcount((i - 1) & (j - 1)) % 2 = 0 THEN 1 ELSE -1 END)::bigint
+                    (CASE WHEN multicomplex_popcount((i - 1) & (j - 1)) % 2 = 0 THEN 1 ELSE -1 END)::bigint
                       * ((a).coeffs[i] % (a).modulus) * ((b).coeffs[j] % (a).modulus) AS term
              FROM generate_series(1, array_length((a).coeffs, 1)) i, generate_series(1, array_length((a).coeffs, 1)) j
            ) prod GROUP BY k
          ) g), (a).modulus)::multicomplex END $$;
 -- conjugation flipping every unit (i_k ↦ −i_k): a ring automorphism, coeff m negated iff m is odious.
-CREATE FUNCTION mc_conj(a multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION multicomplex_conj(a multicomplex) RETURNS multicomplex LANGUAGE sql IMMUTABLE AS $$
   SELECT ROW((SELECT array_agg(
-                CASE WHEN mc_popcount(i - 1) % 2 = 0 THEN (a).coeffs[i]
+                CASE WHEN multicomplex_popcount(i - 1) % 2 = 0 THEN (a).coeffs[i]
                      ELSE ((-(a).coeffs[i]) % (a).modulus + (a).modulus) % (a).modulus END ORDER BY i)
               FROM generate_series(1, array_length((a).coeffs, 1)) i), (a).modulus)::multicomplex $$;
 
-CREATE OPERATOR + (LEFTARG = multicomplex, RIGHTARG = multicomplex, FUNCTION = mc_add, COMMUTATOR = +);
-CREATE OPERATOR * (LEFTARG = multicomplex, RIGHTARG = multicomplex, FUNCTION = mc_mul, COMMUTATOR = *);
-CREATE OPERATOR - (LEFTARG = multicomplex, RIGHTARG = multicomplex, FUNCTION = mc_sub);
-CREATE OPERATOR - (RIGHTARG = multicomplex, FUNCTION = mc_neg);
+CREATE OPERATOR + (LEFTARG = multicomplex, RIGHTARG = multicomplex, FUNCTION = multicomplex_add, COMMUTATOR = +);
+CREATE OPERATOR * (LEFTARG = multicomplex, RIGHTARG = multicomplex, FUNCTION = multicomplex_mul, COMMUTATOR = *);
+CREATE OPERATOR - (LEFTARG = multicomplex, RIGHTARG = multicomplex, FUNCTION = multicomplex_sub);
+CREATE OPERATOR - (RIGHTARG = multicomplex, FUNCTION = multicomplex_neg);
 
 INSERT INTO base_type_structure VALUES ('multicomplex', 'commutative_ring');   -- NOT ordered (a ring of zero divisors)
 INSERT INTO base_type_operation (type, op, symbol, impl_fn) VALUES
-  ('multicomplex', 'add', '+', 'mc_add'), ('multicomplex', 'mul', '·', 'mc_mul'), ('multicomplex', 'neg', '−', 'mc_neg');
+  ('multicomplex', 'add', '+', 'multicomplex_add'), ('multicomplex', 'mul', '·', 'multicomplex_mul'), ('multicomplex', 'neg', '−', 'multicomplex_neg');
 
 -- ── the collection: ℂn(ℤ/M) as an enumerable, browsable set, graded by (modulus, level=n) ─────────────────────
 CREATE TYPE multicomplex_numbers_fiber AS (modulus natural_number, level natural_number);   -- axes: modulus M, tower order n
@@ -149,7 +149,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT notation(ROW(ARRAY[3,4],5)::multicomplex + ROW(ARRAY[4,2],5)::multicomplex) || '|' ||
            notation(- ROW(ARRAY[1,1],5)::multicomplex) $q$),
   ('multicomplex_numbers','conjugation flips every unit: conj(1 + j1 + j2 + j3) = 1 − j1 − j2 + j3','eq','1 - j1 - j2 + j3','odious units negate, evil (1, j3) survive',$q$
-    SELECT notation(mc_conj(ROW(ARRAY[1,1,1,1],5)::multicomplex)) $q$),
+    SELECT notation(multicomplex_conj(ROW(ARRAY[1,1,1,1],5)::multicomplex)) $q$),
   ('multicomplex_numbers','registered as a commutative ring (⇒ ring, semiring, …)','eq','true',NULL,$q$
     SELECT EXISTS(SELECT 1 FROM base_type_structure ts JOIN base_structure_closure c ON c.structure = ts.structure
                   WHERE ts.type = 'multicomplex' AND c.is_a = 'ring')::text $q$),

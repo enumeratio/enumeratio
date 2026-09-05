@@ -122,7 +122,7 @@ describe('ts-engine · capability is data, and correctness beats speed', () => {
     const args: Record<string, number[]> = {
       catalan_number: [6], little_schroder_number: [5], factorial: [10], binomial: [10, 4], bell: [8],
       fubini: [6], stirling_second: [7, 3], partition_number: [12], gcd: [12, 18], lcm: [4, 6], pow: [3, 5],
-      double_factorial_odd: [6], gaussian_norm: [0], mc_popcount: [23], inversions: [0], stirling1: [6, 3],
+      double_factorial_odd: [6], gaussian_norm: [0], multicomplex_popcount: [23], inversions: [0], stirling1: [6, 3],
       eulerianA: [6, 2], integer_partition_k_count: [10, 3],
     }
     let checked = 0
@@ -244,7 +244,7 @@ describe('composite carriers · ts answers what it can print, and declines what 
       'gaussian_add(gaussian_integer(2, 3), gaussian_integer(1, -4))',
       'gaussian_mul(gaussian_integer(2, 3), gaussian_integer(1, -4))',
       'gaussian_norm(gaussian_integer(2, 3))',
-      'mc_mul(multicomplex([2, 3, 4, 5], 97), multicomplex([5, 7, 1, 2], 97))',
+      'multicomplex_mul(multicomplex([2, 3, 4, 5], 97), multicomplex([5, 7, 1, 2], 97))',
       'inversions(permutation([2, 4, 1, 3]))',
     ]) expect([text, await value(ts, text)]).toEqual([text, await value(pg, text)])
   })
@@ -253,7 +253,7 @@ describe('composite carriers · ts answers what it can print, and declines what 
     // the ±1 coefficient cases are exactly where a naive interpolation would say 3+-1i
     expect(await value(ts, 'gaussian_add(gaussian_integer(2, 3), gaussian_integer(1, -4))')).toBe('3-i')
     expect(await value(ts, 'gaussian_neg(gaussian_integer(0, 1))')).toBe('-i')
-    expect(await value(ts, 'mc_add(multicomplex([2, 3], 97), multicomplex([5, 7], 97))')).toBe('7 + 10j1')
+    expect(await value(ts, 'multicomplex_add(multicomplex([2, 3], 97), multicomplex([5, 7], 97))')).toBe('7 + 10j1')
     expect(await value(ts, 'permutation_unrank(4, 5)')).toBe('1432')
     expect(await value(ts, 'composition_from_mask(5, 6)')).toBe('2+1+2')
   })
@@ -261,8 +261,8 @@ describe('composite carriers · ts answers what it can print, and declines what 
   it('pg lowers a carrier construction to ROW(...)::carrier, arrays included', () => {
     expect(lowerScalar(parseCalc('gaussian_norm(gaussian_integer(2, 3))').select[0]))
       .toBe('gaussian_norm(ROW(2, 3)::gaussian_integer)')
-    expect(lowerScalar(parseCalc('mc_neg(multicomplex([2, 3], 97))').select[0]))
-      .toBe('mc_neg(ROW(ARRAY[2, 3], 97)::multicomplex)')
+    expect(lowerScalar(parseCalc('multicomplex_neg(multicomplex([2, 3], 97))').select[0]))
+      .toBe('multicomplex_neg(ROW(ARRAY[2, 3], 97)::multicomplex)')
   })
 
   it('a carrier construction is checked against its declared fields', () => {
