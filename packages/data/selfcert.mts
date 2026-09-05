@@ -12,9 +12,11 @@
 //
 //   node --import tsx selfcert.mts            # sweep all collections, report mismatches, exit nonzero on any
 //   node --import tsx selfcert.mts perm       # only collections whose id contains "perm"
+//   node --import tsx selfcert.mts --pack polytopes  # only collections owned by the "polytopes" pack
 import debug from 'debug'
 import { debugGucSetSql } from './debug-env'
 import { openWorkerChannel, QTimeout } from './pg-worker-channel'
+import { parsePackArg, requireNonEmptySelection } from './pack-filter'
 
 const log = debug('enumeratio:data:selfcert')
 
@@ -30,7 +32,8 @@ const WATCHDOG_MS = 20_000 // braces: the query runs in a worker process, and a 
                            // could never finish: `cyclohedron`'s fiber_count enumerates every dissection of a
                            // (2n+2)-gon over an unbounded axis. Now that is a printed SKIP, like selfcert-rows'.
 
-const filter = process.argv[2] ?? null
+const { pack, rest } = parsePackArg(process.argv.slice(2))
+const filter = rest[0] ?? null
 
 // Session GUCs do not survive a worker kill, so they are re-applied on every (re)spawn.
 const debugSetSql = debugGucSetSql()   // lift DEBUG (if it names an enumeratio: namespace) into the session GUC
@@ -53,7 +56,12 @@ type Skip = { coll: string; n: number | null; reason: string }
 const skips: Skip[] = []
 let checkedCount = 0, checkedUnrank = 0, collsWithAccel = 0, collsNoAccel = 0
 
-const cats = await q<{ id: string; grades: string }>(`SELECT id, grades::text AS grades FROM base_catalog ORDER BY id`)
+const cats = await q<{ id: string; grades: string; pack: string }>(
+  `SELECT cat.id, cat.grades::text AS grades, col.pack FROM base_catalog cat JOIN base_collection col ON col.id = cat.id ORDER BY cat.id`)
+
+const selected = cats.filter((c) => (!pack || c.pack === pack) && (!filter || c.id.includes(filter)))
+if (pack) console.log(`--pack ${pack} → ${selected.length} collection(s)${filter ? ` matching "${filter}"` : ''}: ${selected.map((c) => c.id).join(', ') || '(none)'}`)
+requireNonEmptySelection('selfcert', pack, filter, selected.length, () => channel.close())
 
 // Progress chatter goes to stderr as the sweep runs, and it earns its keep: each line is written WITHOUT its
 // terminator until the collection finishes, so the tail of the log always names the collection currently being
@@ -63,9 +71,8 @@ const started = Date.now()
 const secs = (ms: number): string => `${(ms / 1000).toFixed(1)}s`
 let idx = 0
 
-for (const c of cats) {
+for (const c of selected) {
   idx++
-  if (filter && !c.id.includes(filter)) continue
   const gradeCount = (c.grades.replace(/^\{|\}$/g, '').match(/[^,]+/g) ?? []).length
   const hasCount = await regproc(`fiber_count(${c.id}_fiber)`)
   const hasUnrank = await regproc(`fiber_unrank(${c.id}_fiber, rank_index)`)
@@ -73,7 +80,7 @@ for (const c of cats) {
   collsWithAccel++
   const tColl = Date.now()
   const checks0 = checkedCount + checkedUnrank
-  process.stderr.write(`  · [${String(idx).padStart(3)}/${cats.length}] ${c.id.padEnd(34)}${(hasCount ? '[count]' : '').padEnd(8)}${(hasUnrank ? '[unrank]' : '').padEnd(9)}`)
+  process.stderr.write(`  · [${String(idx).padStart(3)}/${selected.length}] ${c.id.padEnd(34)}${(hasCount ? '[count]' : '').padEnd(8)}${(hasUnrank ? '[unrank]' : '').padEnd(9)}`)
   const sizes: (number | null)[] = gradeCount === 0 ? [null] : Array.from({ length: NMAX + 1 }, (_, i) => i)
   let anyChecked = false
   let timedOut: string | null = null

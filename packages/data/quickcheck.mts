@@ -26,18 +26,18 @@
 //   node --import tsx quickcheck.mts                 # sample every collection with a fresh seed
 //   node --import tsx quickcheck.mts perm            # only collections whose id contains "perm"
 //   node --import tsx quickcheck.mts perm 123456      # reproduce a specific run (filter + seed)
+//   node --import tsx quickcheck.mts --pack polytopes       # only collections owned by the "polytopes" pack
+//   node --import tsx quickcheck.mts --pack polytopes perm  # pack membership AND id-substring, intersected
 //   QUICKCHECK_POINTS=5 node --import tsx quickcheck.mts  # more sampled points per collection (default 2)
-import { readdirSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import debug from 'debug'
-import { orderSqlsrc } from './sqlsrc-order'
+import { loadCoreAndPacks } from './node.ts'
+import { orderPacks, segmentByPack, applyPackSegments } from './sqlsrc-order'
 import { debugGucSetSql, routeNotice } from './debug-env'
+import { parsePackArg, requireNonEmptySelection } from './pack-filter'
 
 const log = debug('enumeratio:data:quickcheck')
 
-const here = dirname(fileURLToPath(import.meta.url))
 const req = createRequire(import.meta.url)
 const { PGlite } = req('@electric-sql/pglite') as typeof import('@electric-sql/pglite')
 
@@ -55,8 +55,9 @@ const CAP_COUNT = Number(process.env.QUICKCHECK_CAP_COUNT ?? 20_000) // largest 
 const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 2)         // sampled (fiber, rank) points per collection
 const STMT_TIMEOUT = '8s'
 
-const filter = process.argv[2] || null
-const seed = ((process.argv[3] ? Number(process.argv[3]) : Number(process.env.QUICKCHECK_SEED ?? Date.now())) >>> 0)
+const { pack, rest } = parsePackArg(process.argv.slice(2))
+const filter = rest[0] || null
+const seed = ((rest[1] ? Number(rest[1]) : Number(process.env.QUICKCHECK_SEED ?? Date.now())) >>> 0)
 
 // mulberry32 — a tiny, deterministic, lib-free PRNG. Same seed ⇒ same stream ⇒ same sampled points, forever.
 function mulberry32(a: number) {
@@ -70,19 +71,18 @@ function mulberry32(a: number) {
 const rng = mulberry32(seed)
 const randInt = (n: number) => (n <= 0 ? 0 : Math.min(n - 1, Math.floor(rng() * n)))
 
-console.log(`quickcheck seed=${seed}${filter ? ` filter=${filter}` : ''} (points/coll=${POINTS} nmax=${NMAX} rankcap=${RANK_CAP})`)
+console.log(`quickcheck seed=${seed}${filter ? ` filter=${filter}` : ''}${pack ? ` pack=${pack}` : ''} (points/coll=${POINTS} nmax=${NMAX} rankcap=${RANK_CAP})`)
 
-const dir = join(here, 'sqlsrc')
-const files = orderSqlsrc(
-  readdirSync(dir).filter((f) => f.endsWith('.sql')).map((f) => ({ name: f.replace(/\.sql$/, ''), content: readFileSync(join(dir, f), 'utf8') })),
-).map((f) => `${f.name}.sql`)
-
+// Full profile — core + every extracted pack (#283 phase 3.4): a --pack filter over a corpus that never loaded
+// the pack would silently select nothing, which is exactly the failure mode this tool must not have.
+const { core, packs } = loadCoreAndPacks()
+const segments = segmentByPack(orderPacks(core, packs), core, packs)
 const pg = new PGlite()
 await pg.waitReady
-for (const f of files) {
-  try { await pg.exec(readFileSync(join(dir, f), 'utf8')) }
-  catch (e: any) { console.error(`\n✗ FAILED applying ${f}\n  ${e.message.split('\n')[0]}\n`); await pg.close(); process.exit(1) }
-}
+await applyPackSegments(segments, async (label, sql) => {
+  try { await pg.exec(sql) }
+  catch (e: any) { console.error(`\n✗ FAILED applying ${label}\n  ${e.message.split('\n')[0]}\n`); await pg.close(); process.exit(1) }
+})
 
 await pg.exec(`SET statement_timeout = '${STMT_TIMEOUT}'`)
 const debugSetSql = debugGucSetSql()
@@ -239,12 +239,16 @@ const mismatches: Mismatch[] = []
 const skips: Skip[] = []
 let pointsSampled = 0, propChecks = 0, propPass = 0
 
-const cats = await q<{ id: string; carrier: string; grades: string; alias_of: string | null }>(
-  `SELECT id, carrier, grades::text AS grades, alias_of FROM base_catalog ORDER BY id`)
+const cats = await q<{ id: string; carrier: string; grades: string; alias_of: string | null; pack: string }>(
+  `SELECT cat.id, cat.carrier, cat.grades::text AS grades, cat.alias_of, col.pack
+     FROM base_catalog cat JOIN base_collection col ON col.id = cat.id ORDER BY cat.id`)
+
+const selected = cats.filter((c) => (!pack || c.pack === pack) && (!filter || c.id.includes(filter)))
+if (pack) console.log(`--pack ${pack} → ${selected.length} collection(s)${filter ? ` matching "${filter}"` : ''}: ${selected.map((c) => c.id).join(', ') || '(none)'}`)
+requireNonEmptySelection('quickcheck', pack, filter, selected.length, () => { void pg.close() })
 
 let collsConsidered = 0
-for (const c of cats) {
-  if (filter && !c.id.includes(filter)) continue
+for (const c of selected) {
   if (c.alias_of) { skips.push({ coll: c.id, property: '*', reason: 'alias — no realized surface' }); continue }
   collsConsidered++
   const gradeCount = (c.grades.replace(/^\{|\}$/g, '').match(/[^,]+/g) ?? []).length

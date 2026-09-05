@@ -22,13 +22,12 @@
 //
 //   node --import tsx selfcert-view.mts            # sweep all bounded collections, report mismatches, exit nonzero on any
 //   node --import tsx selfcert-view.mts k_subset   # only collections whose id contains "k_subset"
-import { readdirSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+//   node --import tsx selfcert-view.mts --pack polytopes  # only collections owned by the "polytopes" pack
 import { createRequire } from 'node:module'
-import { orderSqlsrc } from './sqlsrc-order'
+import { loadCoreAndPacks } from './node.ts'
+import { orderPacks, segmentByPack, applyPackSegments } from './sqlsrc-order'
+import { parsePackArg, requireNonEmptySelection } from './pack-filter'
 
-const here = dirname(fileURLToPath(import.meta.url))
 const req = createRequire(import.meta.url)
 const { PGlite } = req('@electric-sql/pglite') as typeof import('@electric-sql/pglite')
 
@@ -39,19 +38,19 @@ const LIMIT_MAX = 10         // rows kept in the ROWVIEW config
 const BIG = 2147483647       // the "materialize everything" emit cap (matches the core's own unrank scan cap)
 const STMT_TIMEOUT = '8s'    // a pathological config is skipped (recorded), not left to hang the sweep
 
-const filter = process.argv[2] ?? null
+const { pack, rest } = parsePackArg(process.argv.slice(2))
+const filter = rest[0] ?? null
 
-const dir = join(here, 'sqlsrc')
-const files = orderSqlsrc(
-  readdirSync(dir).filter((f) => f.endsWith('.sql')).map((f) => ({ name: f.replace(/\.sql$/, ''), content: readFileSync(join(dir, f), 'utf8') })),
-).map((f) => `${f.name}.sql`)
-
+// Full profile — core + every extracted pack (#283 phase 3.4): a --pack filter over a corpus that never loaded
+// the pack would silently select nothing.
+const { core, packs } = loadCoreAndPacks()
+const segments = segmentByPack(orderPacks(core, packs), core, packs)
 const pg = new PGlite()
 await pg.waitReady
-for (const f of files) {
-  try { await pg.exec(readFileSync(join(dir, f), 'utf8')) }
-  catch (e: any) { console.error(`\n✗ FAILED applying ${f}\n  ${e.message.split('\n')[0]}\n`); await pg.close(); process.exit(1) }
-}
+await applyPackSegments(segments, async (label, sql) => {
+  try { await pg.exec(sql) }
+  catch (e: any) { console.error(`\n✗ FAILED applying ${label}\n  ${e.message.split('\n')[0]}\n`); await pg.close(); process.exit(1) }
+})
 
 await pg.exec(`SET statement_timeout = '${STMT_TIMEOUT}'`)
 const q = async <T = any,>(sql: string): Promise<T[]> => (await pg.query(sql)).rows as T[]
@@ -81,12 +80,16 @@ const check = async (coll: string, config: Config, handle: string, accelSql: str
   return true
 }
 
-const cats = await q<{ id: string; arity: number; unbounded: boolean }>(
-  `SELECT id, cardinality(grades) AS arity, unbounded FROM base_catalog ORDER BY id`,
+const cats = await q<{ id: string; arity: number; unbounded: boolean; pack: string }>(
+  `SELECT cat.id, cardinality(cat.grades) AS arity, cat.unbounded, col.pack
+     FROM base_catalog cat JOIN base_collection col ON col.id = cat.id ORDER BY cat.id`,
 )
 
-for (const c of cats) {
-  if (filter && !c.id.includes(filter)) continue
+const selected = cats.filter((c) => (!pack || c.pack === pack) && (!filter || c.id.includes(filter)))
+if (pack) console.log(`--pack ${pack} → ${selected.length} collection(s)${filter ? ` matching "${filter}"` : ''}: ${selected.map((c) => c.id).join(', ') || '(none)'}`)
+requireNonEmptySelection('selfcert-view', pack, filter, selected.length, () => { void pg.close() })
+
+for (const c of selected) {
   if (c.unbounded) continue                                // the naive path materializes the whole fiber set — bounded only
   const hasCount = await regproc(`fiber_count(${c.id}_fiber)`)
 

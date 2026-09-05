@@ -1,27 +1,14 @@
-// Persistent pglite worker. Boots the full sqlsrc catalog ONCE, then answers one JSON request per stdin line with
-// one JSON response per stdout line ({id, rows} or {id, error}). Split into its own process so the driver can
-// SIGKILL + respawn it on a slow/hung query — pglite ignores statement_timeout, so killing the process is the only
-// real cancellation there is. Driven through pg-worker-channel.ts by render-corpus-check.mts and selfcert.mts.
-import { readdirSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { createRequire } from 'node:module'
+// Persistent pglite worker. Boots the full catalog ONCE — core + every extracted pack (#283 phase 3.4; buildCore()
+// is the same loader node.ts's bootCore()/the CLI use, so this worker sees whatever's on disk under packs/*, not
+// just sqlsrc/) — then answers one JSON request per stdin line with one JSON response per stdout line ({id, rows}
+// or {id, error}). Split into its own process so the driver can SIGKILL + respawn it on a slow/hung query — pglite
+// ignores statement_timeout, so killing the process is the only real cancellation there is. Driven through
+// pg-worker-channel.ts by render-corpus-check.mts and selfcert.mts.
 import { createInterface } from 'node:readline'
-import { orderSqlsrc } from './sqlsrc-order'
+import { buildCore } from './node.ts'
 import { routeNotice } from './debug-env'
 
-const here = dirname(fileURLToPath(import.meta.url))
-const req = createRequire(import.meta.url)
-const { PGlite } = req('@electric-sql/pglite') as typeof import('@electric-sql/pglite')
-
-const dir = join(here, 'sqlsrc')
-const files = orderSqlsrc(
-  readdirSync(dir).filter((f) => f.endsWith('.sql')).map((f) => ({ name: f.replace(/\.sql$/, ''), content: readFileSync(join(dir, f), 'utf8') })),
-).map((f) => `${f.name}.sql`)
-
-const pg = new PGlite()
-await pg.waitReady
-for (const f of files) await pg.exec(readFileSync(join(dir, f), 'utf8'))
+const pg = await buildCore()
 process.stdout.write(JSON.stringify({ ready: true }) + '\n')
 
 createInterface({ input: process.stdin }).on('line', async (line) => {
