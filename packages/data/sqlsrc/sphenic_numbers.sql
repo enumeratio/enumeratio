@@ -1,4 +1,4 @@
--- requires: power-shapes, realizer
+-- requires: number-theory, realizer
 -- sphenic_numbers — products of 3 distinct primes (A007304): 30,42,66,70,78,… (Ω=3 and ω=3).
 CREATE TYPE sphenic_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f sphenic_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$ SELECT n::numeric FROM generate_series(2,element_limit*20+200) n WHERE is_sphenic(n::numeric) LIMIT element_limit $$;

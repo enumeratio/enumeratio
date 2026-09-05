@@ -108,13 +108,20 @@ BEGIN
   RETURN n;
 END $$;
 
--- run once at load time: every already-realized collection + every titled facet function.
-DO $$
-DECLARE coll text; total int := 0;
-BEGIN
-  FOR coll IN SELECT id FROM base_collection LOOP total := total + base_comment_collection(coll); END LOOP;
-  total := total + base_comment_facets();
-END $$;
+-- register the per-collection COMMENT pass as a finalizer (#283 phase 1.3), not a load-time loop over
+-- base_collection: this file loads once, as part of core — a pack's collections don't exist yet when it does, so a
+-- loop here could never comment them. base_pack_finalize(pack) now runs base_comment_collection(coll) once per
+-- collection owned by that pack, after the pack's own files (§3.5). Core's own call is wired at the tail of the
+-- last core file in load order (meta-collections.stats.sql); the per-pack calls come from the loader, not yet built.
+INSERT INTO base_finalizer (id, fn, description, scope) VALUES
+  ('comment', 'base_comment_collection', 'COMMENT ON the generated per-collection surface (handle/element types, '
+   'constructor, key handle-level functions), sourced from base_collection_meta.', 'collection');
+
+-- base_comment_facets() is a BOUNDED whole-registry sweep over titled base_stat/base_repr/base_map rows (not
+-- one-per-collection, and every row it reads is already core's — no pack besides core is ever loaded yet). It stays
+-- a direct call here, unlike the loop above; see base_stat_derived.sql for the "genuinely not per-collection"
+-- finalizer shape this would take if/when it needs to run per-pack.
+SELECT base_comment_facets();
 
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -135,4 +142,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
       (SELECT count(*) FROM pg_description d JOIN pg_proc p ON p.oid = d.objoid AND d.classoid = 'pg_proc'::regclass
          WHERE p.proname IN (SELECT id FROM base_collection)
             OR p.proname IN ('cardinality','elements','unrank','fibers','random_element','carriers','unnest','contains','range'))
-    ) > 1000)::text $q$);
+    ) > 1000)::text $q$),
+  ('documentation','the COMMENT pass is a registered "collection"-scope finalizer, not a load-time loop','eq','true','#283 phase 1.3 — base_finalizer carries the comment row',$q$
+    SELECT EXISTS (SELECT 1 FROM base_finalizer WHERE id = 'comment' AND fn = 'base_comment_collection'::regproc AND scope = 'collection')::text $q$),
+  ('documentation','at least 100 realized collections carry a non-null handle-type comment (a floor, not a count)','eq','true','proves base_pack_finalize(''core'') actually ran the finalizer over core''s collections',$q$
+    SELECT ((SELECT count(*) FROM base_collection c
+              WHERE obj_description(to_regtype(c.id), 'pg_type') IS NOT NULL) > 100)::text $q$);

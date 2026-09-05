@@ -16,6 +16,24 @@ export type Pack = { name: string; requiresPack: string[]; files: SqlFile[] }
 
 const BOOTSTRAP = 'bootstrap'
 
+/** Basename of a pack's manifest file (`packs/<p>/_pack.sql`, wiki Core-And-Packs §3.1) — the pack's own implicit
+ *  seed, the way `bootstrap` is core's: every other file in the pack implicitly follows it, with no `requires:`
+ *  to write. `pack-migrate.mts` generates the file this parses. */
+export const PACK_MANIFEST = '_pack'
+
+/** Parse a pack manifest's two headers: `-- pack: <name>` and `-- requires-pack: a, b` (or `(none)`, or absent —
+ *  both mean no deps). Pure — no fs — so both the node loaders and the Vite-bundled browser entry (index.ts) share
+ *  one parser instead of each screen-scraping the header format. */
+export function parsePackManifest(content: string): { pack: string; requiresPack: string[] } {
+  const packMatch = content.match(/^--\s*pack:\s*(.+)$/im)
+  if (!packMatch) throw new Error(`pack manifest missing "-- pack: <name>" header`)
+  const pack = packMatch[1].trim()
+  const reqMatch = content.match(/^--\s*requires-pack:\s*(.*)$/im)
+  const raw = reqMatch ? reqMatch[1].trim() : ''
+  const requiresPack = raw === '' || raw === '(none)' ? [] : raw.split(',').map(s => s.trim()).filter(Boolean)
+  return { pack, requiresPack }
+}
+
 export function parseRequires(content: string): string[] {
   const m = content.match(/^--\s*requires:\s*(.+)$/im)
   return m ? m[1].split(',').map(s => s.trim()).filter(Boolean) : []
@@ -36,11 +54,14 @@ export function parseProvides(content: string): string[] {
 // Shared Kahn toposort over one file set. `externals` (default empty) are basenames already loaded elsewhere — a
 // `requires: x` on an external is satisfied with no edge; `requires-tag` still expands only over `files` (its own
 // set), never `externals`. `packName` + `ownerOf` are only used to shape the "owned by pack" error for orderPacks;
-// orderSqlsrc's plain-file call omits them and gets today's "requires unknown" wording unchanged.
+// orderSqlsrc's plain-file call omits them and gets today's "requires unknown" wording unchanged. `impliedSeed`
+// (default `bootstrap`) is the one file every other file in the set implicitly follows with no `requires:` to
+// write — core's `bootstrap`, or a pack's `_pack` manifest (orderPacks passes `PACK_MANIFEST` for pack file sets).
 function orderFiles(
   files: SqlFile[],
-  opts: { externals?: Set<string>; packName?: string; ownerOf?: Map<string, string> } = {},
+  opts: { externals?: Set<string>; packName?: string; ownerOf?: Map<string, string>; impliedSeed?: string } = {},
 ): SqlFile[] {
+  const impliedSeed = opts.impliedSeed ?? BOOTSTRAP
   const externals = opts.externals ?? new Set<string>()
   const names = new Set(files.map(f => f.name))
   // tag → the file names that provide it (a file also implicitly provides its own name, handled by name-requires)
@@ -72,7 +93,7 @@ function orderFiles(
       }
       ownReq.push(d)
     }
-    if (f.name !== BOOTSTRAP && names.has(BOOTSTRAP) && !ownReq.includes(BOOTSTRAP)) ownReq.push(BOOTSTRAP)   // implicit seed
+    if (f.name !== impliedSeed && names.has(impliedSeed) && !ownReq.includes(impliedSeed)) ownReq.push(impliedSeed)   // implicit seed
     deps.set(f.name, ownReq)
   }
   const indeg = new Map([...names].map(n => [n, 0] as [string, number]))
@@ -148,7 +169,47 @@ export function orderPacks(core: Pack, packs: Pack[]): SqlFile[] {
   const out: SqlFile[] = [...orderFiles(core.files, { packName: core.name, ownerOf })]
   for (const packName of packOrder) {
     const pack = packMap.get(packName)!
-    out.push(...orderFiles(pack.files, { externals: closureFiles(packName), packName, ownerOf }))
+    out.push(...orderFiles(pack.files, { externals: closureFiles(packName), packName, ownerOf, impliedSeed: PACK_MANIFEST }))
   }
   return out
+}
+
+export type PackSegment = { pack: string; files: SqlFile[] }
+
+/** Group `orderPacks()`'s flat output into contiguous per-pack segments (core's segment first, then each pack in
+ *  pack order — contiguous by construction, since orderPacks emits one pack's files at a time). A loader wraps
+ *  each non-core segment with `set_config('enumeratio.pack', …)` / resets to 'core' after (see applyPackSegments,
+ *  and node.ts/run.mts for the pglite-specific wiring). */
+export function segmentByPack(ordered: SqlFile[], core: Pack, packs: Pack[]): PackSegment[] {
+  const owners = new Map<string, string>()
+  for (const f of core.files) owners.set(f.name, core.name)
+  for (const p of packs) for (const f of p.files) owners.set(f.name, p.name)
+  const segments: PackSegment[] = []
+  for (const f of ordered) {
+    const owner = owners.get(f.name) ?? core.name
+    const last = segments[segments.length - 1]
+    if (last && last.pack === owner) last.files.push(f)
+    else segments.push({ pack: owner, files: [f] })
+  }
+  return segments
+}
+
+export type ApplyFn = (label: string, sql: string) => Promise<void>
+
+/** Apply pack segments to a session (pglite or real Postgres — `apply` owns the actual `.exec`/`.query`, so this
+ *  stays backend-agnostic), bracketing each non-core segment with `set_config('enumeratio.pack', <p>, false)` and
+ *  resetting to the concrete value `'core'` afterward — never `NULL` (that resets a placeholder GUC to `''`, not
+ *  NULL; see AGENTS.md "Common gotchas"). Each pack is finalized with `base_pack_finalize(<pack>)` before the
+ *  reset, so a finalizer sees that pack's collections and only those. Core finalizes itself at the tail of its own
+ *  load (meta-collections.stats.sql), since core is not a segment the loader brackets. */
+export async function applyPackSegments(segments: PackSegment[], apply: ApplyFn): Promise<void> {
+  for (const seg of segments) {
+    const inPack = seg.pack !== 'core'
+    if (inPack) await apply(`set_config(enumeratio.pack='${seg.pack}')`, `SELECT set_config('enumeratio.pack', '${seg.pack.replace(/'/g, "''")}', false)`)
+    for (const f of seg.files) await apply(`${f.name}.sql`, f.content)
+    if (inPack) {
+      await apply(`base_pack_finalize('${seg.pack}')`, `SELECT base_pack_finalize('${seg.pack.replace(/'/g, "''")}')`)
+      await apply(`set_config(enumeratio.pack='core')`, `SELECT set_config('enumeratio.pack', 'core', false)`)
+    }
+  }
 }

@@ -1,4 +1,4 @@
--- requires: narcissistic_numbers, realizer, utilities
+-- requires: realizer, utilities
 -- gray_codes — for each n, the reflected binary Gray code: all 2^n n-bit binary words ordered so that
 -- consecutive words differ in exactly one bit. Element r (r = 0..2^n-1) has integer value g = r XOR (r >> 1);
 -- its bits are the n-bit big-endian expansion of g. Single grade [n]. Provides the floor (emitted in Gray

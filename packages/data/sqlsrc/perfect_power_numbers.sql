@@ -1,4 +1,4 @@
--- requires: power-shapes, realizer
+-- requires: number-theory, realizer
 -- perfect_power_numbers — m^k with k>=2 (A001597): 1,4,8,9,16,25,27,32,36,49,… (gcd of prime exponents >= 2).
 CREATE TYPE perfect_power_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f perfect_power_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$ SELECT n::numeric FROM generate_series(1,element_limit*element_limit*2+50) n WHERE is_perfect_power(n::numeric) LIMIT element_limit $$;

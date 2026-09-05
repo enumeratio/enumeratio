@@ -1,4 +1,4 @@
--- requires: power-shapes, realizer
+-- requires: number-theory, realizer
 -- achilles_numbers — powerful but NOT a perfect power (A052486): 72,108,200,288,392,432,…
 CREATE TYPE achilles_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f achilles_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$ SELECT n::numeric FROM generate_series(2,element_limit*100+200) n WHERE is_achilles(n::numeric) LIMIT element_limit $$;

@@ -1,6 +1,6 @@
 // Vite plugin: serve the prebuilt DB dump (a gzipped pgdata tar) so the browser MOUNTS it (loadDataDir) instead of
 // rebuilding the core from sqlsrc on every load. In dev it builds once (warm at server start), serves it at a fixed
-// path, and REBUILDS — debounced — when any sqlsrc file changes (then triggers a reload). In prod it emits the tar as a
+// path, and REBUILDS — debounced — when any sqlsrc or pack file changes (then triggers a reload). In prod it emits the tar as a
 // static asset. It also `define`s the fixed URL so the client (boot.ts) knows where to fetch it; without this plugin the
 // client just falls back to building from sqlsrc (the bundle-hash version check makes a stale/absent dump safe).
 import type { Plugin } from 'vite'
@@ -36,7 +36,8 @@ export function enumeratioCore(): Plugin {
         } catch (e) { res.statusCode = 500; res.end(String(e)) }
       })
       const onChange = (file: string) => {
-        if (!file.replace(/\\/g, '/').includes('/sqlsrc/') || !file.endsWith('.sql')) return
+        const posix = file.replace(/\\/g, '/')
+        if (!/\/(sqlsrc|packs)\//.test(posix) || !posix.endsWith('.sql')) return   // packs/*/*.sql alongside sqlsrc/*.sql (#283 phase 1.2)
         if (timer) clearTimeout(timer)
         timer = setTimeout(() => { cache = null; building = null; void build(); server.ws.send({ type: 'full-reload' }) }, 400) // debounce
       }

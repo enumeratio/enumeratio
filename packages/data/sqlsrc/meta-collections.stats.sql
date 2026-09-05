@@ -97,3 +97,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (CASE WHEN NOT EXISTS (SELECT 1 FROM meta_trait_counts c
                  FULL JOIN (SELECT trait, count(*)::int n FROM base_collection_trait GROUP BY trait) t USING (trait)
                  WHERE c.collections IS DISTINCT FROM coalesce(t.n, 0)) THEN 'ok' ELSE 'stale' END) $q$);
+
+-- ── core load complete (#283 phase 1.3) ─────────────────────────────────────────────────────────────────────
+-- This is the last core file in today's toposort order (no requires-tag/collection-loop forces it last on
+-- purpose — it just happens to have nothing left depending on it). Core runs its own finalizers here, over its
+-- own collections (base_collection.pack = 'core'). The per-pack loader that will call base_pack_finalize(<pack>)
+-- after EACH pack's own files doesn't exist yet (another agent is building it) — this is only core's own tail call.
+SELECT base_pack_finalize('core');

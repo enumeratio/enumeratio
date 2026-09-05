@@ -6,7 +6,8 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { PGlite } from '@electric-sql/pglite'
-import { orderSqlsrc, type SqlFile } from './sqlsrc-order.ts'
+import { applyPackSegments, orderPacks, segmentByPack, type Pack, type SqlFile } from './sqlsrc-order.ts'
+import { readPacksFromDisk } from './pack-loader.ts'
 import { bundleHash } from './hash.ts'
 import type { CatalogSnapshot } from './catalog-snapshot.ts'
 export type { CatalogSnapshot } from './catalog-snapshot.ts'
@@ -14,6 +15,7 @@ export { bundleHash } from './hash.ts'   // so a consumer can hash a bundle it a
 
 const here = dirname(fileURLToPath(import.meta.url))
 export const sqlsrcDir = join(here, 'sqlsrc')
+export const packsDir = join(here, 'packs')
 
 /** The prebuilt gzipped-tar dump (built by build-pgdata.mts / the client build). Mounted by bootCore(). */
 export const coreDumpPath = join(here, 'enumeratio-core.pgdata')
@@ -33,16 +35,30 @@ export async function loadCatalogSnapshot(): Promise<CatalogSnapshot | null> {
   }
 }
 
-/** The ordered sqlsrc files (bootstrap first), read from disk. */
-export function coreFiles(): SqlFile[] {
-  return orderSqlsrc(
-    readdirSync(sqlsrcDir)
+/** Core, read from disk, as a `Pack` (name 'core', no requiresPack — it's always the implicit dependency). */
+export function corePack(): Pack {
+  return {
+    name: 'core',
+    requiresPack: [],
+    files: readdirSync(sqlsrcDir)
       .filter(f => f.endsWith('.sql'))
       .map(f => ({ name: f.replace(/\.sql$/, ''), content: readFileSync(join(sqlsrcDir, f), 'utf8') })),
-  )
+  }
 }
 
-/** The whole core as one concatenated bundle, dependency-ordered. */
+/** Core + every extracted pack under `packs/*`, both read from disk (#283 phase 1.2). */
+export function loadCoreAndPacks(): { core: Pack; packs: Pack[] } {
+  return { core: corePack(), packs: readPacksFromDisk(packsDir) }
+}
+
+/** The ordered files (bootstrap first, then any extracted packs in `requires-pack` order), read from disk. With
+ *  zero packs under `packs/*` (today) this is byte-identical to `orderSqlsrc(sqlsrc/*)` — see sqlsrc-order.test.ts. */
+export function coreFiles(): SqlFile[] {
+  const { core, packs } = loadCoreAndPacks()
+  return orderPacks(core, packs)
+}
+
+/** The whole core (+ packs) as one concatenated bundle, dependency-ordered. */
 export function coreBundle(): string {
   return coreFiles().map(f => `-- ═══ ${f.name}.sql ═══\n${f.content}`).join('\n')
 }
@@ -52,11 +68,14 @@ export function coreBundleHash(): string {
   return bundleHash(coreBundle())
 }
 
-/** Apply the sqlsrc into a fresh PGlite, per-file in dependency order (a single giant exec can choke pglite). */
+/** Apply core + packs into a fresh PGlite, per-file in dependency order (a single giant exec can choke pglite),
+ *  bracketing each pack's files with `set_config('enumeratio.pack', …)` (see applyPackSegments). */
 export async function buildCore(): Promise<PGlite> {
   const pg = new PGlite()
   await pg.waitReady
-  for (const f of coreFiles()) await pg.exec(f.content)
+  const { core, packs } = loadCoreAndPacks()
+  const segments = segmentByPack(orderPacks(core, packs), core, packs)
+  await applyPackSegments(segments, async (_label, sql) => { await pg.exec(sql) })
   return pg
 }
 

@@ -8,6 +8,9 @@ CREATE FUNCTION pow_int(b int, e int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE
 CREATE FUNCTION gcd_int(a int, b int) RETURNS int LANGUAGE plpgsql IMMUTABLE AS $$
   DECLARE t int; BEGIN WHILE b <> 0 LOOP t := b; b := a % b; a := t; END LOOP; RETURN abs(a); END $$;
 
+CREATE FUNCTION binary_popcount(n numeric) RETURNS int LANGUAGE plpgsql IMMUTABLE AS $$   -- # of 1-bits (hoisted from evil_numbers; shared with k_bounded_compositions)
+  DECLARE m numeric:=trunc(n); c int:=0; BEGIN WHILE m>0 LOOP c:=c+mod(m,2)::int; m:=div(m,2); END LOOP; RETURN c; END $$;
+
 CREATE FUNCTION to_unicode_subscript(n numeric) RETURNS text LANGUAGE sql IMMUTABLE AS $$   -- 42 → ₄₂ (U+2080…2089, minus → ₋)
   SELECT string_agg(CASE WHEN ch = '-' THEN '₋' ELSE chr(8320 + ch::int) END, '' ORDER BY o)
   FROM unnest(string_to_array(n::text, NULL)) WITH ORDINALITY AS t(ch, o) $$;

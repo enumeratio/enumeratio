@@ -10,7 +10,7 @@ import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseRequires, parseRequiresTags, parseProvides } from './sqlsrc-order'
-import { packOf, isGlyphLayer, packClosure, PACK_DEPS, type PackName } from './pack-map'
+import { packOf, packOfFile, isGlyphLayer, packClosure, PACK_DEPS, type PackName } from './pack-map'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const dir = join(here, 'sqlsrc')
@@ -24,10 +24,16 @@ const files: File[] = readdirSync(dir).filter(f => f.endsWith('.sql')).map(f => 
   return { name, content, requires: parseRequires(content), requiresTags: parseRequiresTags(content), provides: parseProvides(content) }
 })
 
+// glyph->carrier resolution (O.4) — shared with pack-migrate.mts so a glyph file classifies as its carrier's
+// pack, not core (its basename doesn't match any domain regex in PACK_MAP).
+const basenameSet = new Set(files.map(f => f.name))
+const requiresByName = new Map(files.map(f => [f.name, f.requires]))
+const requiresOf = (name: string) => requiresByName.get(name) ?? []
+
 // ---- (a) file count per pack, with glyph-layer sub-count ----------------------------------------------------
 const perPack = new Map<PackName, { files: number; glyph: number }>()
 for (const f of files) {
-  const pack = packOf(f.name)
+  const pack = packOfFile(f.name, basenameSet, requiresOf)
   const entry = perPack.get(pack) ?? { files: 0, glyph: 0 }
   entry.files++
   if (isGlyphLayer(f.name)) entry.glyph++
@@ -41,9 +47,9 @@ const packCounts = [...perPack.entries()]
 type Edge = { from: string; to: string }
 const groups = new Map<string, Edge[]>()   // "packOf(X) -> packOf(Y)" -> edges
 for (const f of files) {
-  const fromPack = packOf(f.name)
+  const fromPack = packOfFile(f.name, basenameSet, requiresOf)
   for (const dep of f.requires) {
-    const toPack = packOf(dep)
+    const toPack = packOfFile(dep, basenameSet, requiresOf)
     if (toPack === 'core' || toPack === fromPack) continue
     const key = `${fromPack} -> ${toPack}`
     if (!groups.has(key)) groups.set(key, [])

@@ -1,4 +1,4 @@
--- requires: narcissistic_numbers, realizer, utilities
+-- requires: realizer, utilities
 -- endofunctions — all functions f:{1..n}->{1..n}, counted by n^n (n=0 is the single empty function, 0^0=1).
 -- Single grade [n]. Provides the floor (tuples in lexicographic order of the images array) + an n^n count
 -- accel + a contains engine; base_realize generates handle/fiber/element + constructor (incl. the (lo,hi)

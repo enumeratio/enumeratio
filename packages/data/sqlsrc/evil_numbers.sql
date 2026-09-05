@@ -1,7 +1,6 @@
--- requires: realizer
+-- requires: realizer, utilities
 -- evil_numbers — nonneg integers with an EVEN number of 1s in binary (A001969): 0,3,5,6,9,10,12,15,… Number set.
-CREATE FUNCTION binary_popcount(n numeric) RETURNS int LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE m numeric:=trunc(n); c int:=0; BEGIN WHILE m>0 LOOP c:=c+mod(m,2)::int; m:=div(m,2); END LOOP; RETURN c; END $$;
+-- binary_popcount lives in utilities.sql (shared with k_bounded_compositions).
 CREATE FUNCTION is_evil(n numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT n>=0 AND mod(binary_popcount(n),2)=0 $$;
 CREATE TYPE evil_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f evil_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$

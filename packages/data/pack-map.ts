@@ -43,7 +43,7 @@ export const PACK_MAP: [PackName, RegExp][] = [
   ['trees-graphs', /^(ordered_trees|plane_trees|labeled_trees|labeled_forests|k_ary_trees|increasing_binary|recursive_trees|phylogenetic|non_crossing_trees|rooted_unlabeled|unlabeled_free|prufer|labeled_graphs|connected_labeled|independent_sets|dissections|non_crossing_matchings|non_nesting_matchings|perfect_matchings|non_crossing_partitions|non_nesting_partitions)/],
   ['words-plus', /^(binary_necklaces|lyndon|gray_codes|ternary_gray|thue_morse|fib_strings|lucas_strings|binary_palindromes|primitive_binary|k_ary_word|ascent_sequences|tri_strings|binary_words_by_weight|restricted_growth_strings|words\.stats|binary_words\.stats)/],
   ['compositions-plus', /^(carlitz|dyadic_comp|fibonacci_comp|odd_comp|palindromic_comp|prime_comp|proper_comp|step_comp|tetra_comp|tri_comp|triangular_comp|zigzag_comp|k_bounded_comp|weak3|compositions_into_k|weak_compositions_into_k|composition_maps|signed_set_comp|set_compositions\.stats|integer_compositions\.stats)/],
-  ['polytopes', /^(polytope-collections|simplex|power-shapes)$/],
+  ['polytopes', /^(polytope-collections|simplex)$/],
 ]
 
 /** The pack that would own `name` (basename, no extension). */
@@ -54,6 +54,35 @@ export function packOf(name: string): PackName {
 
 export function isGlyphLayer(name: string): boolean {
   return GLYPH_LAYER.test(name)
+}
+
+/**
+ * Resolve a `<carrier>_glyph` file's carrier (O.4 — glyph SQL travels with its carrier's pack): strip the
+ * trailing `_glyph`, try the carrier name then carrier+'s', else fall back to the first `-- requires:` entry
+ * that resolves to a real file. Returns null for a non-glyph name, or an unresolved glyph (caller's choice how
+ * to report/fall back). `allNames` is every known basename; `requiresOf` reads a file's `-- requires:` list —
+ * kept pure by taking both as arguments rather than touching the filesystem here.
+ */
+export function carrierOfGlyph(name: string, allNames: Set<string>, requiresOf: (name: string) => string[]): string | null {
+  const m = /^(.*)_glyph$/.exec(name)
+  if (!m) return null
+  const stem = m[1]
+  if (allNames.has(stem) && stem !== name) return stem
+  if (allNames.has(stem + 's')) return stem + 's'
+  for (const dep of requiresOf(name)) {
+    if (allNames.has(dep)) return dep
+  }
+  return null
+}
+
+/**
+ * The pack that would own `name`, resolving a glyph file to its carrier's pack first (O.4) so glyph->carrier
+ * edges don't misreport as cross-pack (glyph basenames don't match the domain regexes in PACK_MAP). Falls back
+ * to plain `packOf(name)` for non-glyph names and for glyphs whose carrier can't be resolved.
+ */
+export function packOfFile(name: string, allNames: Set<string>, requiresOf: (name: string) => string[]): PackName {
+  const carrier = carrierOfGlyph(name, allNames, requiresOf)
+  return packOf(carrier ?? name)
 }
 
 /** Transitive `requires-pack` closure of `pack`, including itself. */

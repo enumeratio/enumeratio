@@ -1,4 +1,4 @@
--- requires: power-shapes, realizer, utilities
+-- requires: realizer, utilities
 -- rational_numbers — ported from pg-enumeratio-core_old_backup/sqlsrc/rational-numbers.sql. The old file authored
 -- the rationals as (numerator, denominator) with a private base composite + two domain layers (fractional_number
 -- unreduced, rational_number reduced/coprime) and enumerated ℚ⁺ via the Calkin-Wilf sequence (Newman's map:

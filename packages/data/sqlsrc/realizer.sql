@@ -13,6 +13,41 @@ CREATE TABLE base_collection (id text PRIMARY KEY, carrier text NOT NULL, unboun
                               alias_of text REFERENCES base_collection,
                               pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
 CREATE TRIGGER base_collection_pack_guard BEFORE UPDATE OR DELETE ON base_collection FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
+
+-- ── finalizers (#283 phase 1.3) — the answer for load-time whole-catalog sweeps ─────────────────────────────
+-- Two core files used to sweep EVERY collection at their own load time (documentation.sql's COMMENT loop,
+-- base_stat_derived.sql's composition pass). Under packs that breaks silently: a core-time sweep can't see a
+-- pack's collections, because the pack's files load LATER. A finalizer is the fix — a registry row naming a
+-- function to run AFTER a pack's own files, once the whole pack (not just this file) is on the table.
+-- scope 'collection': fn(coll text) runs once per collection owned by the pack (base_collection.pack = $1) — the
+--   shape for "comment every collection", "derive every collection's X". scope 'pack': fn(pack text) runs ONCE,
+--   for a sweep that isn't shaped per-collection at all (a bounded pass over a small curated registry, e.g.
+--   base_stat_derived — filtering that registry BY pack is the fn's own job, not this table's).
+CREATE TABLE base_finalizer (id text PRIMARY KEY, fn regproc NOT NULL, description text NOT NULL,
+                             scope text NOT NULL DEFAULT 'collection' CHECK (scope IN ('collection', 'pack')));
+
+-- base_pack_finalize(pack): runs every registered finalizer for one pack's collections. Core calls this itself at
+-- the tail of its own load (wired at the end of the last core file, sqlsrc/meta-collections.stats.sql — the
+-- per-pack loader that will call this after EACH pack's files doesn't exist yet; another agent is building it).
+CREATE FUNCTION base_pack_finalize(p_pack text) RETURNS void LANGUAGE plpgsql AS $$
+DECLARE f base_finalizer%ROWTYPE; coll text;
+BEGIN
+  FOR f IN SELECT * FROM base_finalizer ORDER BY id LOOP
+    IF f.scope = 'pack' THEN
+      EXECUTE format('SELECT %s(%L)', f.fn, p_pack);
+    ELSE
+      FOR coll IN SELECT id FROM base_collection WHERE base_collection.pack = p_pack LOOP
+        EXECUTE format('SELECT %s(%L)', f.fn, coll);
+      END LOOP;
+    END IF;
+  END LOOP;
+END $$;
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('finalizer', 'base_pack_finalize on a pack owning no collections is a safe no-op', 'ok', NULL,
+   'a "collection"-scope finalizer''s inner loop finds nothing to iterate; a "pack"-scope finalizer still fires '
+   'once but must tolerate finding no rows for the pack — neither should raise', $q$ SELECT base_pack_finalize('__nonexistent_pack__') $q$);
+
 CREATE TABLE base_grade (collection text NOT NULL REFERENCES base_collection, pos int NOT NULL, name text NOT NULL,
                          lo_expr text, hi_expr text, PRIMARY KEY (collection, pos));
 -- base_collection_parent: the SPECIALIZATION edge of the collection family tree — a base_restrict child records the

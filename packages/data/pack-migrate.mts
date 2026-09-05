@@ -16,7 +16,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
 import { parseRequires } from './sqlsrc-order'
-import { packOf, isGlyphLayer, packClosure, PACK_DEPS, extractedPacks, placementOf, dirOf, type PackName } from './pack-map'
+import { packOf, isGlyphLayer, packClosure, PACK_DEPS, extractedPacks, placementOf, dirOf, carrierOfGlyph, type PackName } from './pack-map'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const sqlsrcDir = join(here, 'sqlsrc')
@@ -60,21 +60,14 @@ const basenameSet = new Set(allLocs.map(l => l.name))
 const locByName = new Map(allLocs.map(l => [l.name, l]))
 
 // ---- glyph carrier resolution (O.4) — packOf can't see it: glyph basenames don't match the domain regexes ----
-// strip a trailing `_glyph`, try the carrier name then carrier+'s'; else fall back to the first `-- requires:`
-// entry that resolves to a real file. Files matched by GLYPH_LAYER but with no trailing `_glyph` (glyph_kinds,
-// hasse_svg) are core machinery, not per-carrier — they get the header edit but no carrier-pack override.
+// resolution itself lives in pack-map.ts (carrierOfGlyph), shared with pack-lint.mts. Files matched by
+// GLYPH_LAYER but with no trailing `_glyph` (glyph_kinds, hasse_svg) are core machinery, not per-carrier —
+// they get the header edit but no carrier-pack override.
 const unresolvedGlyphs: string[] = []
 function carrierOf(loc: Loc): string | null {
-  const m = /^(.*)_glyph$/.exec(loc.name)
-  if (!m) return null
-  const stem = m[1]
-  if (basenameSet.has(stem) && stem !== loc.name) return stem
-  if (basenameSet.has(stem + 's')) return stem + 's'
-  for (const dep of parseRequires(readContent(loc))) {
-    if (basenameSet.has(dep)) return dep
-  }
-  unresolvedGlyphs.push(loc.name)
-  return null
+  const carrier = carrierOfGlyph(loc.name, basenameSet, () => parseRequires(readContent(loc)))
+  if (/^(.*)_glyph$/.test(loc.name) && carrier === null) unresolvedGlyphs.push(loc.name)
+  return carrier
 }
 
 // ---- desired directory for each file, honouring the glyph-carrier override ----

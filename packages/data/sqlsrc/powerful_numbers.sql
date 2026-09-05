@@ -1,4 +1,4 @@
--- requires: power-shapes, realizer
+-- requires: number-theory, realizer
 -- powerful_numbers — every prime factor appears with exponent >= 2 (A001694): 1,4,8,9,16,25,27,32,36,49,…
 CREATE TYPE powerful_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f powerful_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$ SELECT n::numeric FROM generate_series(1,element_limit*element_limit*2+50) n WHERE is_powerful(n::numeric) LIMIT element_limit $$;

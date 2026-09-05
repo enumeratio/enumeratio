@@ -15,11 +15,17 @@ CREATE TABLE base_stat_derived (collection text NOT NULL REFERENCES base_collect
                                 expr text NOT NULL, title text, codomain text,
                                 PRIMARY KEY (collection, stat_id));
 
-CREATE FUNCTION base_realize_stat_derived() RETURNS void LANGUAGE plpgsql AS $$
+-- base_realize_stat_derived(p_pack): NOT per-collection — this sweeps base_stat_derived's own small curated
+-- registry (~10 rows today, spanning 4 collections), not base_collection. Registered below as a "pack"-scope
+-- finalizer (#283 phase 1.3): base_pack_finalize(pack) calls this ONCE with the pack id, and the join to
+-- base_collection here does the pack-filtering — the finalizer table itself only knows collection vs pack shape,
+-- not which registry a "pack" fn reads.
+CREATE FUNCTION base_realize_stat_derived(p_pack text) RETURNS void LANGUAGE plpgsql AS $$
 DECLARE
   d record; carrier text; fn_name text; body text; ref record;
 BEGIN
-  FOR d IN SELECT * FROM base_stat_derived ORDER BY collection, stat_id LOOP
+  FOR d IN SELECT bsd.* FROM base_stat_derived bsd JOIN base_collection c ON c.id = bsd.collection
+            WHERE c.pack = p_pack ORDER BY bsd.collection, bsd.stat_id LOOP
     SELECT c.carrier INTO carrier FROM base_collection c WHERE c.id = d.collection;
     body := d.expr;
 
@@ -75,7 +81,9 @@ INSERT INTO base_stat_derived (collection, stat_id, expr, title, codomain) VALUE
   ('integer_partitions','conjugate_odd_parts','odd_parts(conjugate)','Odd parts of the conjugate',NULL),
   ('integer_partitions','conjugate_distinct_parts','distinct_parts(conjugate)','Distinct parts of the conjugate',NULL);
 
-SELECT base_realize_stat_derived();
+INSERT INTO base_finalizer (id, fn, description, scope) VALUES
+  ('stat_derived', 'base_realize_stat_derived', 'Realize base_stat_derived compositions (stat/map token-substitution) '
+   'for the pack''s own curated rows.', 'pack');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────────────
 -- Each asserts the IDENTITY on n ≤ 5: the generated function agrees, elementwise, with a hand-composed reference
@@ -116,4 +124,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(EXISTS (SELECT 1 FROM base_stat s WHERE s.collection = d.collection AND s.stat_id = d.stat_id))::text
     FROM base_stat_derived d $q$),
   ('stat_derived','a derived stat''s value_fn is a real, callable function on the carrier','eq','true','spot check: permutations_largest_run_length_derived(identity of 4) = 4 (one ascending run of length 4)',$q$
-    SELECT (permutations_largest_run_length_derived(ROW(ARRAY[1,2,3,4])::permutation) = 4)::text $q$);
+    SELECT (permutations_largest_run_length_derived(ROW(ARRAY[1,2,3,4])::permutation) = 4)::text $q$),
+  ('stat_derived','the composition pass is a registered "pack"-scope finalizer, not a load-time sweep','eq','true','#283 phase 1.3 — this sweep is bounded/curated, not per-collection, so it runs once per pack',$q$
+    SELECT EXISTS (SELECT 1 FROM base_finalizer WHERE id = 'stat_derived' AND fn = 'base_realize_stat_derived'::regproc AND scope = 'pack')::text $q$);

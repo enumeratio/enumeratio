@@ -1,4 +1,4 @@
--- requires: evil_numbers, integer_compositions, realizer, subsets, utilities
+-- requires: integer_compositions, realizer, subsets, utilities
 -- k_bounded_compositions — ported from pg-enumeratio-core_old_backup/sqlsrc/k-bounded-compositions.sql.
 -- Ordered sequences of POSITIVE parts summing to n, using AT MOST k parts (k = 'max_parts'). Multi-grade
 -- chain [n (ground total), max_parts]; unlike the exact-k siblings (compositions_into_k_parts,
@@ -7,7 +7,7 @@
 -- count, so max_parts defaults to a SINGLE point (n itself — "no bound", i.e. every composition of n) rather
 -- than unfolding a range; the old backup handled this the same way, dispatching the unbound case straight to
 -- integer_compositions_count. Reuses the `composition` carrier + notation from integer_compositions,
--- composition_from_mask's gap-cut bijection, binomial from subsets, and binary_popcount from evil_numbers.
+-- composition_from_mask's gap-cut bijection, binomial from subsets, and binary_popcount from utilities.
 --
 -- Fiber [n, m] = compositions of n with <= m parts. A composition of n corresponds to a gap-cut mask over the
 -- n-1 gaps between n unit cells (see integer_compositions); its number of parts is popcount(mask)+1, so

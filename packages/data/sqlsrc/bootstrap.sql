@@ -92,6 +92,29 @@ LANGUAGE plpgsql AS $$
     END LOOP;
   END $$;
 
+-- Per-pack overload (#283 phase 0.3): `packs` NULL = every pack (today's behaviour, unchanged). `packs` non-NULL
+-- filters on `base_example.pack`, the same column base_guard_pack already enforces — `run.mts --packs core`
+-- passes `ARRAY['core']` for the self-containment probe (core's own examples, run alone, on a catalog with no
+-- packs loaded at all). GOTCHA: `base_run_examples(true)` — the bare 1-arg call — is genuinely AMBIGUOUS once
+-- this overload exists; Postgres does NOT prefer the candidate needing fewer defaults filled in, it just errors
+-- "function … is not unique". The 1-arg function above stays for source compat (nothing outside this file ever
+-- called the bare form), but every real call site (run.mts) now passes both args explicitly — never rely on the
+-- 1-arg form resolving once a second overload is in scope.
+CREATE FUNCTION base_run_examples(include_slow boolean, packs text[] DEFAULT NULL)
+RETURNS TABLE(suite text, title text, passed boolean, expected text, actual text)
+LANGUAGE plpgsql AS $$
+  DECLARE e record; res text; ok boolean;
+  BEGIN
+    FOR e IN SELECT * FROM base_example WHERE (include_slow OR NOT slow) AND (packs IS NULL OR pack = ANY(packs)) LOOP
+      BEGIN
+        IF e.kind = 'ok' THEN EXECUTE e.sql; res := NULL; ok := true;                 -- ran without error
+        ELSE EXECUTE e.sql INTO res; ok := (res IS NOT DISTINCT FROM e.expected); END IF;   -- 'eq': value = expected
+      EXCEPTION WHEN OTHERS THEN res := SQLERRM; ok := false;
+      END;
+      suite := e.suite; title := e.title; passed := ok; expected := e.expected; actual := res; RETURN NEXT;
+    END LOOP;
+  END $$;
+
 -- base_raises(sql): true iff running `sql` raises — for LIVING negative assertions (a 'eq' example expecting 'true').
 CREATE FUNCTION base_raises(sql text) RETURNS boolean LANGUAGE plpgsql AS $$
   BEGIN EXECUTE sql; RETURN false; EXCEPTION WHEN OTHERS THEN RETURN true; END $$;
@@ -151,3 +174,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'regression guard for map_compose.sql / standard_tableaux.demotion.sql / integer_partitions.cores_quotients.sql '
    '/ example-tiers.sql: an unset GUC coalesces to core on both sides, so core may still touch its own rows',
    $q$ SELECT base_pack_guard_allows_same_pack_test()::text $q$);
+-- NOTE (#283 phase 0.3): no base_example row here exercises `base_run_examples(include_slow, packs)` by CALLING
+-- it — an example's `sql` runs FROM INSIDE a live base_run_examples() invocation (the FOR loop above), and pglite
+-- silently returns zero rows from a plpgsql set-returning function invoked recursively from within its own
+-- execution (confirmed by hand: real Postgres tolerates this, pglite/wasm does not) — a far worse failure mode
+-- than a normal exception, since it zeroes out EVERY row of the outer run, not just this one. The functional proof
+-- is `run.mts --packs core` producing today's exact example count (verified as part of this task, not re-asserted
+-- as a base_example row to dodge the recursion trap and keep the example count byte-for-byte unchanged).
