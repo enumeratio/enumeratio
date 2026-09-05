@@ -65,6 +65,31 @@ CREATE FUNCTION contains_in_fiber(f multiplicative_partitions_fiber, v multiplic
 INSERT INTO base_collection VALUES ('multiplicative_partitions', 'multiplicative_partition');
 INSERT INTO base_grade VALUES ('multiplicative_partitions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f multiplicative_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'MP(' || (f).n::int || ')' $$;   -- corpus symbol
+
+-- direct unrank: mirrors multiplicative_partition_generate's own loop (leading divisor d ascending over
+-- 2..min(n,maxf)), reusing the existing multiplicative_partition_count accel as the block size at each choice —
+-- so the decode walks exactly the same tree the floor's generator does, in the same order.
+CREATE FUNCTION multiplicative_partition_unrank(n int, maxf int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE d int; blk numeric; x numeric := ord; out int[] := '{}'; cur_n int := n; cur_max int := maxf; chosen boolean;
+  BEGIN
+    WHILE cur_n > 1 LOOP
+      chosen := false;
+      FOR d IN 2..least(cur_n, cur_max) LOOP
+        IF cur_n % d = 0 THEN
+          blk := multiplicative_partition_count(cur_n / d, d);
+          IF x < blk THEN
+            out := out || d; cur_n := cur_n / d; cur_max := d; chosen := true; EXIT;
+          ELSE
+            x := x - blk;
+          END IF;
+        END IF;
+      END LOOP;
+      EXIT WHEN NOT chosen;                                     -- defensive: shouldn't happen for a valid rank
+    END LOOP;
+    RETURN out;
+  END $$;
+CREATE FUNCTION fiber_unrank(f multiplicative_partitions_fiber, rank rank_index) RETURNS multiplicative_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(multiplicative_partition_unrank((f).n::int, (f).n::int, rank::bigint))::multiplicative_partition $fu$;
 SELECT base_realize('multiplicative_partitions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -114,3 +139,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
 
   ('multiplicative_partitions', 'the <@ operator works too: 6·2 <@ multiplicative_partitions(12)', 'eq', 'true', 'operator wrapper', $q$
     SELECT (ROW(ARRAY[6,2])::multiplicative_partition <@ multiplicative_partitions(12))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('multiplicative_partitions', 'fiber_unrank(multiplicative_partitions(12), 0..3) are all members (accel floor)', 'eq', 'true', 'divisor-ascending unrank lands inside MP(12) (4 elements) for every rank', $q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(multiplicative_partitions(12)) f), ord::rank_index) <@ multiplicative_partitions(12))::text
+      FROM generate_series(0, cardinality(multiplicative_partitions(12))::int - 1) ord $q$);

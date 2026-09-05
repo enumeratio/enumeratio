@@ -19,6 +19,44 @@ CREATE FUNCTION contains_in_fiber(f box_confined_partitions_fiber, p integer_par
 INSERT INTO base_collection VALUES ('box_confined_partitions', 'integer_partition');
 INSERT INTO base_grade VALUES ('box_confined_partitions', 1, 'parts', NULL, NULL), ('box_confined_partitions', 2, 'max_part', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f box_confined_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '[' || (f).parts::int || '×' || (f).max_part::int || ']' $$;
+
+-- direct unrank: the floor's explicit "ORDER BY pp" is plain int[] ascending lex (a proper prefix sorts before
+-- any of its extensions), which is a clean pre-order trie walk: at each node (rem parts left, next value ≤ last)
+-- "stop here" sorts first, then each extension v=1..last (ascending) in turn, recursively. C(rem,last) = 1 (stop)
+-- + Σ_{v=1}^{last} C(rem-1,v) counts the subtree; decoding against it reproduces that walk exactly.
+CREATE FUNCTION box_confined_partition_unrank(parts int, max_part int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE C numeric[]; rem int; last int; v int; s numeric; x numeric := ord; out int[] := '{}'; blk numeric; chosen boolean;
+  BEGIN
+    C := array_fill(0::numeric, ARRAY[parts+1, max_part+1]);    -- C[rem+1][last+1] = 1 + Σ_{v=1}^{last} C[rem-1][v]
+    FOR last IN 0..max_part LOOP C[1][last+1] := 1; END LOOP;   -- rem=0: only the stop option
+    FOR rem IN 1..parts LOOP
+      C[rem+1][1] := 1;                                         -- last=0: only the stop option
+      s := 0;
+      FOR last IN 1..max_part LOOP
+        s := s + C[rem][last+1];                                -- C[rem-1][last]
+        C[rem+1][last+1] := 1 + s;
+      END LOOP;
+    END LOOP;
+    rem := parts; last := max_part;
+    LOOP
+      EXIT WHEN rem = 0;                                        -- no room left; only the stop option remains
+      IF x = 0 THEN EXIT; END IF;                                -- stop here: this prefix is the answer
+      x := x - 1;
+      chosen := false;
+      FOR v IN 1..last LOOP
+        blk := C[rem][v+1];                                     -- C[rem-1][v]
+        IF x < blk THEN
+          out := out || v; rem := rem - 1; last := v; chosen := true; EXIT;
+        ELSE
+          x := x - blk;
+        END IF;
+      END LOOP;
+      EXIT WHEN NOT chosen;                                     -- defensive: shouldn't happen for a valid rank
+    END LOOP;
+    RETURN out;
+  END $$;
+CREATE FUNCTION fiber_unrank(f box_confined_partitions_fiber, rank rank_index) RETURNS integer_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(box_confined_partition_unrank((f).parts::int, (f).max_part::int, rank::bigint))::integer_partition $fu$;
 SELECT base_realize('box_confined_partitions');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -42,3 +80,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (SELECT string_agg(c::text, ',' ORDER BY s) FROM (   -- partitions in the 2×2 box by size
               SELECT coalesce((SELECT sum(x) FROM unnest(((e).value).parts) x), 0) s, count(*) c
               FROM elements(box_confined_partitions(2,2)) e GROUP BY 1) t) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('box_confined_partitions','fiber_unrank(box_confined_partitions(2,3), 0..9) are all members (accel floor)','eq','true','trie-walk unrank lands inside box(2,3) (10 elements) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(box_confined_partitions(2,3)) f), ord::rank_index) <@ box_confined_partitions(2,3))::text
+      FROM generate_series(0, cardinality(box_confined_partitions(2,3))::int - 1) ord $q$);

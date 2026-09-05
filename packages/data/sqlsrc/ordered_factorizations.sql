@@ -54,6 +54,30 @@ CREATE FUNCTION contains_in_fiber(f ordered_factorizations_fiber, v ordered_fact
 INSERT INTO base_collection VALUES ('ordered_factorizations', 'ordered_factorization');
 INSERT INTO base_grade VALUES ('ordered_factorizations', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f ordered_factorizations_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'OF(' || (f).n::int || ')' $$;   -- corpus symbol
+
+-- direct unrank: mirrors the floor's own divisor-peel (leading divisor d ascending over 2..remaining), reusing
+-- ordered_factorization_count as the block size at each choice — walks the same tree the generator does, in order.
+CREATE FUNCTION ordered_factorization_unrank(n int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE cur int := n; x numeric := ord; out int[] := '{}'; d int; blk numeric; chosen boolean;
+  BEGIN
+    WHILE cur > 1 LOOP
+      chosen := false;
+      FOR d IN 2..cur LOOP
+        IF cur % d = 0 THEN
+          blk := ordered_factorization_count(cur / d);
+          IF x < blk THEN
+            out := out || d; cur := cur / d; chosen := true; EXIT;
+          ELSE
+            x := x - blk;
+          END IF;
+        END IF;
+      END LOOP;
+      EXIT WHEN NOT chosen;                                     -- defensive: shouldn't happen for a valid rank
+    END LOOP;
+    RETURN out;
+  END $$;
+CREATE FUNCTION fiber_unrank(f ordered_factorizations_fiber, rank rank_index) RETURNS ordered_factorization LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(ordered_factorization_unrank((f).n::int, rank::bigint))::ordered_factorization $fu$;
 SELECT base_realize('ordered_factorizations');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -108,3 +132,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('ordered_factorizations','a(2^k) = 2^(k-1) (compositions of k ones-and-twos... just the doubling pattern)','eq','1,2,4,8,16','prime powers: a(2)=1,a(4)=2,a(8)=4,a(16)=8,a(32)=16',$q$
     SELECT string_agg(cardinality(ordered_factorizations((2^k)::int))::text, ',' ORDER BY k) FROM generate_series(1,5) k
   $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('ordered_factorizations','fiber_unrank(ordered_factorizations(12), 0..7) are all members (accel floor)','eq','true','divisor-ascending unrank lands inside OF(12) (8 elements) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(ordered_factorizations(12)) f), ord::rank_index) <@ ordered_factorizations(12))::text
+      FROM generate_series(0, cardinality(ordered_factorizations(12))::int - 1) ord $q$);
