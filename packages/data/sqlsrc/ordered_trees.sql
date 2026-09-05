@@ -44,6 +44,10 @@ CREATE FUNCTION contains_in_fiber(f ordered_trees_fiber, v ordered_tree) RETURNS
 -- declare it as DATA + realize
 INSERT INTO base_collection VALUES ('ordered_trees', 'ordered_tree');
 INSERT INTO base_grade VALUES ('ordered_trees', 1, 'n', NULL, NULL);
+-- direct unrank: the carrier (±1 DFS word) and the floor's order (steps DESC = '(' before ')') are IDENTICAL to
+-- dyck_paths' own — same word, same emission order — so just borrow dyck_paths' ballot/reflection-principle accel.
+CREATE FUNCTION fiber_unrank(f ordered_trees_fiber, rank rank_index) RETURNS ordered_tree LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW((fiber_unrank(ROW((f).n::int)::dyck_paths_fiber, rank)).steps)::ordered_tree $fu$;
 SELECT base_realize('ordered_trees');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -82,3 +86,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('ordered_trees','contains: (()) ∈ ordered_trees(2), )(() ∉ (via <@)','eq','true|false','generated contains + operator',$q$
     SELECT (ROW(ARRAY[1,1,-1,-1])::ordered_tree <@ ordered_trees(2))::text || '|' ||
            (ROW(ARRAY[-1,1,1,-1])::ordered_tree <@ ordered_trees(2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('ordered_trees','fiber_unrank(ordered_trees(4), 0..13) are all members (accel floor)','eq','true','dyck_paths-borrowed unrank lands inside the Catalan(4)=14 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(ordered_trees(4)) f), ord::rank_index) <@ ordered_trees(4))::text
+      FROM generate_series(0, cardinality(ordered_trees(4))::int - 1) ord $q$);

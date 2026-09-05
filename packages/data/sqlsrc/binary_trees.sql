@@ -55,6 +55,27 @@ CREATE FUNCTION contains_in_fiber(f binary_trees_fiber, v binary_tree) RETURNS b
 INSERT INTO base_collection VALUES ('binary_trees', 'binary_tree');
 INSERT INTO base_grade VALUES ('binary_trees', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f binary_trees_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'BT(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: the preorder word, minus its FORCED final leaf (slots always hits exactly 0 there), is exactly a
+-- Dyck path of semilength n (1↦U, 0↦D) — same non-negativity + n-ups/n-downs structure, just re-lettered. The floor's
+-- ASCENDING order (0 before 1, i.e. D before U) is the MIRROR of dyck_paths' own U-before-D convention, so reuse
+-- dyck_completions (requires: dyck_paths) but prefer D first at each of the first 2n steps, then append the fixed
+-- trailing leaf.
+CREATE FUNCTION fiber_unrank(f binary_trees_fiber, rank rank_index) RETURNS binary_tree LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE n int := (f).n::int; shape int[] := '{}'; ru int := n; rd int := n; h int := 0; r numeric := rank;
+          cd numeric; i int; BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[0])::binary_tree; END IF;
+    FOR i IN 1..2 * n LOOP
+      cd := CASE WHEN rd > 0 AND h - 1 >= 0 THEN dyck_completions(ru, rd - 1, h - 1) ELSE 0 END;
+      IF rd > 0 AND h - 1 >= 0 AND r < cd THEN
+        shape := shape || 0; rd := rd - 1; h := h - 1;
+      ELSE
+        IF rd > 0 AND h - 1 >= 0 THEN r := r - cd; END IF;
+        shape := shape || 1; ru := ru - 1; h := h + 1;
+      END IF;
+    END LOOP;
+    shape := shape || 0;   -- the forced trailing leaf (slots always lands at exactly 0 here)
+    RETURN ROW(shape)::binary_tree;
+  END $fu$;
 SELECT base_realize('binary_trees');
 
 -- ── associahedron realization ────────────────────────────────────────────────────────────────────────
@@ -166,3 +187,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT cardinality(binary_trees(3))::text || '|' ||
            (SELECT count(*) FROM binary_tree_flips((unrank(binary_trees(3),0)).value))::text || '|' ||
            (SELECT (count(*)/2)::text FROM elements(binary_trees(3)) e, binary_tree_flips((e).value) f) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('binary_trees','fiber_unrank(binary_trees(4), 0..13) are all members (accel floor)','eq','true','Dyck-completions unrank lands inside the Catalan(4)=14 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(binary_trees(4)) f), ord::rank_index) <@ binary_trees(4))::text
+      FROM generate_series(0, cardinality(binary_trees(4))::int - 1) ord $q$);

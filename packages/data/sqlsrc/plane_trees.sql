@@ -78,6 +78,10 @@ CREATE FUNCTION contains_in_fiber(f plane_trees_fiber, v plane_tree) RETURNS boo
 INSERT INTO base_collection VALUES ('plane_trees', 'plane_tree');
 INSERT INTO base_grade VALUES ('plane_trees', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f plane_trees_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'PT(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: same borrow-the-Dyck-floor trick as fiber_elements above — unrank the semilength-(n-1) Dyck path
+-- at this rank (dyck_paths' own ballot/reflection-principle accel) and decode it to its plane tree.
+CREATE FUNCTION fiber_unrank(f plane_trees_fiber, rank rank_index) RETURNS plane_tree LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT plane_tree_from_dyck(fiber_unrank(ROW((f).n::int - 1)::dyck_paths_fiber, rank)) $fu$;
 SELECT base_realize('plane_trees');
 
 -- the manifest bijection to dyck_paths (DFS pre-order child-count ↔ U/D word)
@@ -115,3 +119,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[2,0,0])::plane_tree <@ plane_trees(3))::text || '|' ||
            (ROW(ARRAY[0,2,0])::plane_tree <@ plane_trees(3))::text || '|' ||
            (ROW(ARRAY[1,1,0])::plane_tree <@ plane_trees(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('plane_trees','fiber_unrank(plane_trees(5), 0..13) are all members (accel floor)','eq','true','dyck-borrowed unrank lands inside the Catalan(4)=14 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(plane_trees(5)) f), ord::rank_index) <@ plane_trees(5))::text
+      FROM generate_series(0, cardinality(plane_trees(5))::int - 1) ord $q$);
