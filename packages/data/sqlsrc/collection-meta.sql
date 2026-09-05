@@ -201,6 +201,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('non_crossing_partitions',     'Non-Crossing Partitions',     'Set partitions with no crossing blocks.'),
   ('non_nesting_partitions',      'Non-Nesting Partitions',      'Set partitions with no nesting blocks — the nesting-dual of non-crossing; also Catalan.'),
   ('set_compositions',            'Set Compositions',            'Ordered set partitions of [n].'),
+  ('signed_set_compositions',     'Signed Set Compositions',     'Ordered set partitions of [n] with a ± sign per block — faces of the type-B permutahedron.'),
   -- ── selections ──────────────────────────────────────────────────────────────────────────────────────────────
   ('subsets',                     'Subsets',                     'All subsets of [n] — the powerset 2^[n], graded by n alone (one fiber per n).'),
   ('finsets',                 'Finite Sets',                 'Finite sets of positive integers, no ambient ground (Lean Finset ℕ) — unbounded, ranked by the characteristic number ({1,3} ↔ 5).'),
