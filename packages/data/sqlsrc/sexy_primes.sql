@@ -24,4 +24,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('sexy_primes','each member p has p+6 also prime','eq','true','structural invariant over the first window',$q$
     SELECT bool_and(is_prime_number((e).value) AND is_prime_number((e).value + 6))::text FROM elements(sexy_primes(), 12) e $q$),
   ('sexy_primes','contains: 5 ∈ (5,11 both prime), 19 ∉ (19+6=25 not prime)','eq','true|false','',$q$
-    SELECT (5::numeric <@ sexy_primes())::text || '|' || (19::numeric <@ sexy_primes())::text $q$);
+    SELECT (5::numeric <@ sexy_primes())::text || '|' || (19::numeric <@ sexy_primes())::text $q$),
+  ('sexy_primes','unrank(7) = 37 (the 8th sexy prime)','eq','37','rank 7 (0-based)',$q$
+    SELECT (unrank(sexy_primes(), 7)).value::text $q$),
+  ('sexy_primes','cardinality = infinity','eq','Infinity','unbounded',$q$
+    SELECT cardinality(sexy_primes())::text $q$);

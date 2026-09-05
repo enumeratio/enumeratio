@@ -14,4 +14,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('evil_numbers','first ten','eq','0,3,5,6,9,10,12,15,17,18','even binary digit sum',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(evil_numbers(),10) e $q$),
   ('evil_numbers','contains: 6 ∈ (110), 7 ∉ (111)','eq','true|false','',$q$ SELECT (6::numeric <@ evil_numbers())::text||'|'||(7::numeric <@ evil_numbers())::text $q$),
   ('evil_numbers','decomposed: binary_popcount(9)=2 (1001), even — checked directly, not via is_evil','eq','2|true','',$q$
-    SELECT binary_popcount(9)::text || '|' || (mod(binary_popcount(9),2)=0)::text $q$);
+    SELECT binary_popcount(9)::text || '|' || (mod(binary_popcount(9),2)=0)::text $q$),
+  ('evil_numbers','unrank(9) = 18 (the 10th evil number)','eq','18','rank 9 (0-based)',$q$
+    SELECT (unrank(evil_numbers(), 9)).value::text $q$),
+  ('evil_numbers','cardinality = infinity','eq','Infinity','unbounded',$q$
+    SELECT cardinality(evil_numbers())::text $q$);
