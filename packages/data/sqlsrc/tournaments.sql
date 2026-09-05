@@ -29,6 +29,10 @@ CREATE FUNCTION fiber_symbol(f tournaments_fiber) RETURNS text LANGUAGE sql IMMU
 
 INSERT INTO base_collection VALUES ('tournaments', 'tournament');
 INSERT INTO base_grade VALUES ('tournaments', 1, 'n', NULL, NULL);
+-- direct unrank: a tournament on [n] is a choice of orientation (a subset of the C(n,2) edge slots to reverse); the
+-- fiber is that powerset in (k ascending, colex within) order, so unrank the reversed-edge set via subsets' powerset unrank.
+CREATE FUNCTION fiber_unrank(f tournaments_fiber, rank rank_index) RETURNS tournament LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW((f).n::int, (powerset_unrank(graph_edge_count((f).n::int), rank::bigint)).members)::tournament $fu$;
 SELECT base_realize('tournaments');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -42,3 +46,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT notation(ROW(3, ARRAY[2])::tournament) $q$),
   ('tournaments','contains via <@: reversed={2} ∈ tournaments(3), an out-of-range edge-index ∉','eq','true|false','ground-aware containment',$q$
     SELECT (ROW(3, ARRAY[2])::tournament <@ tournaments(3))::text || '|' || (ROW(3, ARRAY[99])::tournament <@ tournaments(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('tournaments','fiber_unrank(tournaments(4), 0..63) are all members (accel floor)','eq','true','orientation powerset unrank lands inside the 2^C(4,2)=64 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(tournaments(4)) f), ord::rank_index) <@ tournaments(4))::text
+      FROM generate_series(0, cardinality(tournaments(4))::int - 1) ord $q$);

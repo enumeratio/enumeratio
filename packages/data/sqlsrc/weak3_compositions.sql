@@ -27,6 +27,9 @@ CREATE FUNCTION contains_in_fiber(f weak3_compositions_fiber, v weak_composition
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('weak3_compositions', 'weak_composition');
 INSERT INTO base_grade VALUES ('weak3_compositions', 1, 'n', NULL, NULL);
+-- direct unrank: the exactly-3-parts case of the weak-composition stars-and-bars unrank (lex on (a,b,c), c = n-a-b).
+CREATE FUNCTION fiber_unrank(f weak3_compositions_fiber, rank rank_index) RETURNS weak_composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT weak_composition_unrank((f).n::int, 3, rank::bigint) $fu$;
 SELECT base_realize('weak3_compositions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -56,3 +59,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (ROW(ARRAY[1,2,1])::weak_composition <@ weak3_compositions(3))::text || '|' ||
            (ROW(ARRAY[2,2,0])::weak_composition <@ weak3_compositions(4))::text || '|' ||
            (ROW(ARRAY[1,3])::weak_composition   <@ weak3_compositions(4))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('weak3_compositions','fiber_unrank(weak3_compositions(5), 0..) are all members (accel floor)','eq','true','direct unrank lands inside the C(7,2)=21 fiber',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(weak3_compositions(5)) f), ord::rank_index) <@ weak3_compositions(5))::text
+      FROM generate_series(0, cardinality(weak3_compositions(5))::int - 1) ord $q$);

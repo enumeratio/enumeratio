@@ -39,6 +39,11 @@ CREATE FUNCTION contains_in_fiber(f endofunctions_fiber, v endofunction) RETURNS
 INSERT INTO base_collection VALUES ('endofunctions', 'endofunction');
 INSERT INTO base_grade VALUES ('endofunctions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f endofunctions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'End(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: images are a length-n word over [n] in lex order = a base-n odometer (position 1 most significant).
+CREATE FUNCTION fiber_unrank(f endofunctions_fiber, rank rank_index) RETURNS endofunction LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(ARRAY(
+    SELECT (div(rank::numeric, pow_int((f).n::int, (f).n::int - i)) % (f).n::numeric)::int + 1
+    FROM generate_series(1, (f).n::int) i))::endofunction $fu$;
 SELECT base_realize('endofunctions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -72,3 +77,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('endofunctions','contains: {1,1} ∈ endofunctions(2), {1,3} ∉ (image out of range) (via <@)','eq','true|false','generated contains + operator',$q$
     SELECT (ROW(ARRAY[1,1])::endofunction <@ endofunctions(2))::text || '|' ||
            (ROW(ARRAY[1,3])::endofunction <@ endofunctions(2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('endofunctions','fiber_unrank(endofunctions(3), 0..26) are all members (accel floor)','eq','true','base-n odometer lands inside End([3]) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(endofunctions(3)) f), ord::rank_index) <@ endofunctions(3))::text
+      FROM generate_series(0, cardinality(endofunctions(3))::int - 1) ord $q$);

@@ -27,6 +27,10 @@ CREATE FUNCTION contains_in_fiber(f standard_tableau_pairs_fiber, v standard_tab
 -- ── declare as DATA + realize ──────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('standard_tableau_pairs', 'standard_tableau_pair');
 INSERT INTO base_grade VALUES ('standard_tableau_pairs', 1, 'size', NULL, NULL);
+-- direct unrank: the fiber is RSK applied to S_n in perm-rank order, so the ord-th pair is RSK of the ord-th
+-- permutation — jump straight there via the permutation unrank (RSK is a bijection S_n ↔ same-shape SYT pairs).
+CREATE FUNCTION fiber_unrank(f standard_tableau_pairs_fiber, rank rank_index) RETURNS standard_tableau_pair LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT perm_rsk(permutation_unrank_lex((f).size::int, rank::bigint)) $fu$;
 SELECT base_realize('standard_tableau_pairs');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -47,3 +51,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
               <@ standard_tableau_pairs(3))::text $q$),
   ('standard_tableau_pairs','range constructor standard_tableau_pairs(0,3): fibers unfold to sizes 0,1,2,3','eq','0,1,2,3','the (lo,hi) range form',$q$
     SELECT string_agg((f).size::text, ',' ORDER BY (f).size) FROM fibers(standard_tableau_pairs(0,3)) f $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('standard_tableau_pairs','fiber_unrank(standard_tableau_pairs(4), 0..23) are all members (accel floor)','eq','true','RSK-of-perm unrank lands inside the n!=24 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(standard_tableau_pairs(4)) f), ord::rank_index) <@ standard_tableau_pairs(4))::text
+      FROM generate_series(0, cardinality(standard_tableau_pairs(4))::int - 1) ord $q$);

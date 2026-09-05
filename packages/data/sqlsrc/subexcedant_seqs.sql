@@ -21,6 +21,18 @@ CREATE FUNCTION contains_in_fiber(f subexcedant_seqs_fiber, s subexcedant_seq) R
 INSERT INTO base_collection VALUES ('subexcedant_seqs', 'subexcedant_seq');
 INSERT INTO base_grade VALUES ('subexcedant_seqs', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f subexcedant_seqs_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'Sub(' || (f).n::int || ')' $$;
+-- direct unrank: the factorial mixed-radix odometer. Position i has base i (term ∈ [1,i]); lex order ⇒ position 1 is
+-- most significant, and the block size below position i is n!/i! = the number of completions of positions i+1..n.
+CREATE FUNCTION subexcedant_seq_unrank(n int, ord bigint) RETURNS subexcedant_seq LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE terms int[] := '{}'; x numeric := ord; bs numeric; d numeric; i int; BEGIN
+    FOR i IN 1..n LOOP
+      bs := factorial(n) / factorial(i);            -- n!/i! completions after position i
+      d := div(x, bs); terms := terms || (d + 1)::int; x := x - d * bs;
+    END LOOP;
+    RETURN ROW(terms)::subexcedant_seq;
+  END $$;
+CREATE FUNCTION fiber_unrank(f subexcedant_seqs_fiber, rank rank_index) RETURNS subexcedant_seq LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT subexcedant_seq_unrank((f).n::int, rank::bigint) $fu$;
 SELECT base_realize('subexcedant_seqs');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -32,3 +44,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[1,2,3])::subexcedant_seq <@ subexcedant_seqs(3))::text || '|' ||
            (ROW(ARRAY[1,1,4])::subexcedant_seq <@ subexcedant_seqs(3))::text || '|' ||
            (ROW(ARRAY[1,3,1])::subexcedant_seq <@ subexcedant_seqs(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('subexcedant_seqs','fiber_unrank(subexcedant_seqs(4), 0..23) are all members (accel floor)','eq','true','factorial-radix odometer lands inside Sub(4) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(subexcedant_seqs(4)) f), ord::rank_index) <@ subexcedant_seqs(4))::text
+      FROM generate_series(0, cardinality(subexcedant_seqs(4))::int - 1) ord $q$);

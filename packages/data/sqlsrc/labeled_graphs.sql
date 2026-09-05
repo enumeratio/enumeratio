@@ -41,6 +41,10 @@ CREATE FUNCTION fiber_symbol(f labeled_graphs_fiber) RETURNS text LANGUAGE sql I
 -- declare it as DATA + realize
 INSERT INTO base_collection VALUES ('labeled_graphs', 'labeled_graph');
 INSERT INTO base_grade VALUES ('labeled_graphs', 1, 'n', NULL, NULL);
+-- direct unrank: a labeled graph on [n] is a subset of the C(n,2) edge slots; the fiber is that powerset in
+-- (k ascending, colex within) order, so unrank the edge set via subsets' powerset unrank.
+CREATE FUNCTION fiber_unrank(f labeled_graphs_fiber, rank rank_index) RETURNS labeled_graph LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW((f).n::int, (powerset_unrank(graph_edge_count((f).n::int), rank::bigint)).members)::labeled_graph $fu$;
 SELECT base_realize('labeled_graphs');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -59,3 +63,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(4, ARRAY[1,3,6])::labeled_graph <@ labeled_graphs(4))::text || '|' || (ROW(4, ARRAY[99])::labeled_graph <@ labeled_graphs(4))::text $q$),
   ('labeled_graphs','set_notation: rank 0 of labeled_graphs(3) (the empty graph) ↦ 000 ∈ G([3])','eq','000 ∈ G([3])','generic <element> ∈ <fiber symbol>',$q$
     SELECT set_notation(unrank(labeled_graphs(3), 0)) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('labeled_graphs','fiber_unrank(labeled_graphs(4), 0..63) are all members (accel floor)','eq','true','edge-set powerset unrank lands inside the 2^C(4,2)=64 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(labeled_graphs(4)) f), ord::rank_index) <@ labeled_graphs(4))::text
+      FROM generate_series(0, cardinality(labeled_graphs(4))::int - 1) ord $q$);

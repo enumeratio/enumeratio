@@ -21,6 +21,9 @@ CREATE FUNCTION labeled_tree_id(t labeled_tree) RETURNS labeled_tree LANGUAGE sq
 INSERT INTO base_collection VALUES ('labeled_forests', 'labeled_tree');
 INSERT INTO base_grade VALUES ('labeled_forests', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f labeled_forests_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'F(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: forests on [n] ARE trees on [n+1] (the shared root), enumerated in the same order — delegate.
+CREATE FUNCTION fiber_unrank(f labeled_forests_fiber, rank rank_index) RETURNS labeled_tree LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT fiber_unrank(ROW((f).n::int + 1)::labeled_trees_fiber, rank) $fu$;
 SELECT base_realize('labeled_forests');
 
 -- the super-root bijection: a forest on {1..n} IS its labeled tree on {1..n+1} (identity on the shared Prüfer carrier)
@@ -53,3 +56,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('labeled_forests','contains via <@: (2,2) is a super-root Prüfer of n=3 (over {1..4}), (2,5) is not','eq','true|false','length n-1 over {1..n+1}',$q$
     SELECT (ROW(ARRAY[2,2])::labeled_tree <@ labeled_forests(3))::text || '|' ||
            (ROW(ARRAY[2,5])::labeled_tree <@ labeled_forests(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('labeled_forests','fiber_unrank(labeled_forests(3), 0..) are all members (accel floor)','eq','true','delegated tree-on-[n+1] unrank lands inside F(3) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(labeled_forests(3)) f), ord::rank_index) <@ labeled_forests(3))::text
+      FROM generate_series(0, cardinality(labeled_forests(3))::int - 1) ord $q$);

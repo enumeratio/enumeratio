@@ -61,6 +61,9 @@ INSERT INTO base_collection VALUES ('set_partitions_into_k_blocks', 'set_partiti
 INSERT INTO base_grade VALUES
   ('set_partitions_into_k_blocks', 1, 'n', NULL, NULL),
   ('set_partitions_into_k_blocks', 2, 'k', '1', 'g1');                     -- k ranges 1..n by default
+-- direct unrank: the exactly-k-blocks RGS unrank (Stirling S(n,k) words in lex order).
+CREATE FUNCTION fiber_unrank(f set_partitions_into_k_blocks_fiber, rank rank_index) RETURNS set_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(rgs_unrank_word((f).n::int, rank::bigint, (f).k::int))::set_partition $fu$;
 SELECT base_realize('set_partitions_into_k_blocks');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -82,3 +85,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[0,1,0,1])::set_partition <@ set_partitions_into_k_blocks(4,2))::text || '|' ||
            (ROW(ARRAY[0,0,0,0])::set_partition <@ set_partitions_into_k_blocks(4,2))::text || '|' ||
            (ROW(ARRAY[0,1,2,0])::set_partition <@ set_partitions_into_k_blocks(4,2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('set_partitions_into_k_blocks','fiber_unrank(set_partitions_into_k_blocks(5,2), 0..) are all members (accel floor)','eq','true','exactly-k RGS unrank lands inside the S(5,2)=15 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(set_partitions_into_k_blocks(5,2)) f), ord::rank_index) <@ set_partitions_into_k_blocks(5,2))::text
+      FROM generate_series(0, cardinality(set_partitions_into_k_blocks(5,2))::int - 1) ord $q$);

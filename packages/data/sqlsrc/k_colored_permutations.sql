@@ -37,6 +37,17 @@ CREATE FUNCTION fiber_symbol(f k_colored_permutations_fiber) RETURNS text LANGUA
 
 INSERT INTO base_collection VALUES ('k_colored_permutations', 'colored_permutation');
 INSERT INTO base_grade VALUES ('k_colored_permutations', 1, 'size', NULL, NULL), ('k_colored_permutations', 2, 'colors', '1', 'g1');   -- colors = k, 1..n by default
+-- direct unrank: the fiber is the (perm rank, color-word) product in that order, so rank = ord·colorsⁿ + cr;
+-- recover ord = rank div colorsⁿ, cr = rank mod colorsⁿ, then read cr as a base-`colors` word (position 1 first).
+CREATE FUNCTION colored_permutation_unrank(sz int, cols int, ord bigint) RETURNS colored_permutation LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE cpow numeric := pow_int(cols, sz); pr bigint := div(ord::numeric, cpow)::bigint; cr numeric := mod(ord::numeric, cpow); BEGIN
+    RETURN ROW(
+      (permutation_unrank_lex(sz, pr)).image,
+      ARRAY(SELECT mod(div(cr, pow_int(cols, sz - i)), cols::numeric)::int FROM generate_series(1, sz) i)
+    )::colored_permutation;
+  END $$;
+CREATE FUNCTION fiber_unrank(f k_colored_permutations_fiber, rank rank_index) RETURNS colored_permutation LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT colored_permutation_unrank((f).size::int, (f).colors::int, rank::bigint) $fu$;
 SELECT base_realize('k_colored_permutations');
 
 INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
@@ -61,3 +72,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (ROW(ARRAY[1,2],ARRAY[0,1])::colored_permutation <@ k_colored_permutations(3,3))::text $q$),
   ('k_colored_permutations','color_sum stat: (2,4,1,3 : 0,1,0,1) has colour sum 2','eq','2','Σ cᵢ',$q$
     SELECT color_sum(ROW(ARRAY[2,4,1,3],ARRAY[0,1,0,1])::colored_permutation)::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('k_colored_permutations','fiber_unrank(k_colored_permutations(3,2), 0..) are all members (accel floor)','eq','true','(perm,color-word) unrank lands inside the 3!·2³=48 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(k_colored_permutations(3,2)) f), ord::rank_index) <@ k_colored_permutations(3,2))::text
+      FROM generate_series(0, cardinality(k_colored_permutations(3,2))::int - 1) ord $q$);

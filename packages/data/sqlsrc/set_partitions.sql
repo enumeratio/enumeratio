@@ -52,6 +52,39 @@ CREATE FUNCTION contains_in_fiber(f set_partitions_fiber, v set_partition) RETUR
 INSERT INTO base_collection VALUES ('set_partitions', 'set_partition');
 INSERT INTO base_grade VALUES ('set_partitions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f set_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'Π([' || (f).n::int || '])' $$;   -- corpus symbol
+-- direct unrank of a restricted-growth string in lex order. T(m, j) = #completions of m positions when the current
+-- max is j-1 (j = max+1): T(0,·)=1, T(m,j) = j·T(m-1,j) + T(m-1,j+1) (keep an existing label, or open the new one).
+-- Walk the DP: at each position try v = 0,1,… subtracting the block T(remaining, max(mx,v)+1) until the rank lands.
+-- `kblocks` (>0) caps the label count at k AND requires exactly k blocks (Stirling S(n,k)); 0 = uncapped (Bell n).
+CREATE FUNCTION rgs_unrank_word(n int, ord bigint, kblocks int DEFAULT 0) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE w int[] := '{}'; x numeric := ord; mx int := -1; i int; v int; nj int; blk numeric;
+          cap int := CASE WHEN kblocks > 0 THEN kblocks ELSE n + 1 END;   -- max #labels allowed (j ≤ cap)
+          T numeric[];                                                     -- T[m+1][j+1], m=0..n, j=0..n+1
+  BEGIN
+    T := array_fill(0::numeric, ARRAY[n + 1, n + 2]);
+    FOR v IN 0..n LOOP                                                     -- m=0 base row
+      T[1][v + 1] := CASE WHEN kblocks > 0 THEN (v = kblocks)::int ELSE 1 END;   -- exact-k requires final max = k-1 (j=k)
+    END LOOP;
+    FOR i IN 1..n LOOP                                                     -- m = i
+      FOR v IN 0..n LOOP                                                   -- j = v (mx = v-1)
+        T[i + 1][v + 1] := CASE WHEN v <= cap THEN v * T[i][v + 1] ELSE 0 END   -- keep an existing label (only if allowed)
+                         + CASE WHEN v + 1 <= cap THEN COALESCE(T[i][v + 2], 0) ELSE 0 END;   -- open the new label
+      END LOOP;
+    END LOOP;
+    FOR i IN 1..n LOOP
+      v := 0;
+      LOOP
+        nj := greatest(mx, v) + 1;                                         -- j after choosing v
+        blk := CASE WHEN nj <= cap THEN T[(n - i) + 1][nj + 1] ELSE 0 END; -- completions with this prefix
+        EXIT WHEN x < blk;
+        x := x - blk; v := v + 1;
+      END LOOP;
+      w := w || v; mx := greatest(mx, v);
+    END LOOP;
+    RETURN w;
+  END $$;
+CREATE FUNCTION fiber_unrank(f set_partitions_fiber, rank rank_index) RETURNS set_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(rgs_unrank_word((f).n::int, rank::bigint))::set_partition $fu$;
 SELECT base_realize('set_partitions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -87,3 +120,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
           = (SELECT array_agg(x::text ORDER BY x::text) FROM carriers(set_partitions(3)) x))::text $q$),
   ('set_partitions','unnest of an OPEN handle raises','eq','true','set_partitions() has an unbounded axis — no finite carrier set',$q$
     SELECT base_raises($e$ SELECT count(*) FROM unnest(set_partitions()) $e$)::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('set_partitions','fiber_unrank(set_partitions(4), 0..14) are all members (accel floor)','eq','true','RGS lex unrank lands inside Π([4]) (15 = Bell(4)) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(set_partitions(4)) f), ord::rank_index) <@ set_partitions(4))::text
+      FROM generate_series(0, cardinality(set_partitions(4))::int - 1) ord $q$);

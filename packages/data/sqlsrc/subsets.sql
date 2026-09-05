@@ -59,6 +59,16 @@ CREATE FUNCTION fiber_symbol(f subsets_fiber) RETURNS text LANGUAGE sql IMMUTABL
 -- declare it as DATA + realize
 INSERT INTO base_collection VALUES ('subsets', 'finset');
 INSERT INTO base_grade VALUES ('subsets', 1, 'n', NULL, NULL);
+-- direct unrank: the powerset is enumerated in (k ascending, colex within) order, so find the cardinality block k by
+-- subtracting C(n,0), C(n,1), … until the rank lands, then colex-unrank the residue within that block. Reused by any
+-- collection whose fiber IS a powerset in this order (labeled_graphs, tournaments over the edge set).
+CREATE FUNCTION powerset_unrank(n int, ord bigint) RETURNS finset LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE k int := 0; x numeric := ord; cnt numeric; BEGIN
+    LOOP cnt := binomial(n, k); EXIT WHEN x < cnt; x := x - cnt; k := k + 1; END LOOP;
+    RETURN subset_unrank_colex(n, k, x::bigint);
+  END $$;
+CREATE FUNCTION fiber_unrank(f subsets_fiber, rank rank_index) RETURNS finset LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT powerset_unrank((f).n::int, rank::bigint) $fu$;
 SELECT base_realize('subsets');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -76,3 +86,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT notation(fiber_address((unrank(subsets(3), 0)).fiber)) $q$),
   ('subsets','set_notation renders the element in its ambient set: rank 4 of subsets(3) ↦ 110 ∈ 2^[3]','eq','110 ∈ 2^[3]','generic <element> ∈ <fiber symbol>',$q$
     SELECT set_notation(unrank(subsets(3), 4)) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('subsets','fiber_unrank(subsets(4), 0..15) are all members (accel floor)','eq','true','graded-powerset unrank lands inside 2^[4] for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(subsets(4)) f), ord::rank_index) <@ subsets(4))::text
+      FROM generate_series(0, cardinality(subsets(4))::int - 1) ord $q$);

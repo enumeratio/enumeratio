@@ -41,6 +41,22 @@ INSERT INTO base_collection VALUES ('compositions_into_k_parts', 'composition');
 INSERT INTO base_grade VALUES
   ('compositions_into_k_parts', 1, 'n', NULL, NULL),
   ('compositions_into_k_parts', 2, 'k', '1', 'g1');                            -- k ranges 1..n
+-- direct unrank: lex over parts (first part ascending). #compositions of `rem` into `rp` positive parts with first
+-- part = a is C(rem-a-1, rp-2); walk a upward subtracting those blocks until the rank lands, then recurse.
+CREATE FUNCTION composition_unrank_positive(n int, k int, ord bigint) RETURNS composition LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE parts int[] := '{}'; rem int := n; rp int := k; a int; bs numeric; x numeric := ord; BEGIN
+    WHILE rp > 0 LOOP
+      IF rp = 1 THEN parts := parts || rem; rem := 0; rp := 0;
+      ELSE
+        a := 1;
+        LOOP bs := binomial(rem - a - 1, rp - 2); EXIT WHEN x < bs; x := x - bs; a := a + 1; END LOOP;
+        parts := parts || a; rem := rem - a; rp := rp - 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(parts)::composition;
+  END $$;
+CREATE FUNCTION fiber_unrank(f compositions_into_k_parts_fiber, rank rank_index) RETURNS composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT composition_unrank_positive((f).n::int, (f).k::int, rank::bigint) $fu$;
 SELECT base_realize('compositions_into_k_parts');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -70,3 +86,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[1,3])::composition <@ compositions_into_k_parts(4,2))::text || '|' ||
            (ROW(ARRAY[1,3])::composition <@ compositions_into_k_parts(4,3))::text || '|' ||
            (ROW(ARRAY[2,2])::composition <@ compositions_into_k_parts(4,2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('compositions_into_k_parts','fiber_unrank(compositions_into_k_parts(6,3), 0..) are all members (accel floor)','eq','true','direct unrank lands inside the C(5,2)=10 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(compositions_into_k_parts(6,3)) f), ord::rank_index) <@ compositions_into_k_parts(6,3))::text
+      FROM generate_series(0, cardinality(compositions_into_k_parts(6,3))::int - 1) ord $q$);

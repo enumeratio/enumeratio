@@ -23,6 +23,9 @@ CREATE FUNCTION contains_in_fiber(f prufer_sequences_fiber, v labeled_tree) RETU
 INSERT INTO base_collection VALUES ('prufer_sequences', 'labeled_tree');
 INSERT INTO base_grade VALUES ('prufer_sequences', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f prufer_sequences_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '[' || (f).n::int || ']^{' || (f).n::int || '-2}' $$;   -- corpus symbol
+-- direct unrank: same elements/order as labeled_trees(n) (the Prüfer bijection) — delegate.
+CREATE FUNCTION fiber_unrank(f prufer_sequences_fiber, rank rank_index) RETURNS labeled_tree LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT fiber_unrank(ROW((f).n)::labeled_trees_fiber, rank) $fu$;
 SELECT base_realize('prufer_sequences');
 
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
@@ -48,3 +51,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and((a).value = (b).value) FROM elements(prufer_sequences(4)) a JOIN elements(labeled_trees(4)) b ON ordinality(a) = ordinality(b) $q$),
   ('prufer_sequences','contains via <@: ⟨2,2⟩ ∈ prufer_sequences(4), ⟨2,5⟩ ∉ (5 out of range)','eq','true|false','borrowed contains engine',$q$
     SELECT (ROW(ARRAY[2,2])::labeled_tree <@ prufer_sequences(4))::text || '|' || (ROW(ARRAY[2,5])::labeled_tree <@ prufer_sequences(4))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('prufer_sequences','fiber_unrank(prufer_sequences(4), 0..15) are all members (accel floor)','eq','true','delegated labeled_trees unrank lands inside the n^(n-2)=16 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(prufer_sequences(4)) f), ord::rank_index) <@ prufer_sequences(4))::text
+      FROM generate_series(0, cardinality(prufer_sequences(4))::int - 1) ord $q$);

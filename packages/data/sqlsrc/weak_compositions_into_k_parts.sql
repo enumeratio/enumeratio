@@ -48,6 +48,22 @@ INSERT INTO base_collection VALUES ('weak_compositions_into_k_parts', 'weak_comp
 INSERT INTO base_grade VALUES
   ('weak_compositions_into_k_parts', 1, 'n', NULL, NULL),
   ('weak_compositions_into_k_parts', 2, 'k', '0', 'g1');                     -- k ranges 0..n by default
+-- direct unrank: lex over parts (first part ascending, 0 allowed). #weak compositions of `rem` into `rp` parts with
+-- first part = a is C(rem-a + rp-2, rp-2); walk a up subtracting blocks, then recurse. rp=0 ⇒ the empty tuple (n=0).
+CREATE FUNCTION weak_composition_unrank(n int, k int, ord bigint) RETURNS weak_composition LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE parts int[] := '{}'; rem int := n; rp int := k; a int; bs numeric; x numeric := ord; BEGIN
+    WHILE rp > 0 LOOP
+      IF rp = 1 THEN parts := parts || rem; rem := 0; rp := 0;
+      ELSE
+        a := 0;
+        LOOP bs := binomial(rem - a + rp - 2, rp - 2); EXIT WHEN x < bs; x := x - bs; a := a + 1; END LOOP;
+        parts := parts || a; rem := rem - a; rp := rp - 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(parts)::weak_composition;
+  END $$;
+CREATE FUNCTION fiber_unrank(f weak_compositions_into_k_parts_fiber, rank rank_index) RETURNS weak_composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT weak_composition_unrank((f).n::int, (f).k::int, rank::bigint) $fu$;
 SELECT base_realize('weak_compositions_into_k_parts');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -79,3 +95,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[1,2])::weak_composition <@ weak_compositions_into_k_parts(3,2))::text || '|' ||
            (ROW(ARRAY[1,2])::weak_composition <@ weak_compositions_into_k_parts(3,3))::text || '|' ||
            (ROW(ARRAY[0,3])::weak_composition <@ weak_compositions_into_k_parts(3,2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('weak_compositions_into_k_parts','fiber_unrank(weak_compositions_into_k_parts(4,3), 0..) are all members (accel floor)','eq','true','direct stars-and-bars unrank lands inside the C(6,2)=15 fiber',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(weak_compositions_into_k_parts(4,3)) f), ord::rank_index) <@ weak_compositions_into_k_parts(4,3))::text
+      FROM generate_series(0, cardinality(weak_compositions_into_k_parts(4,3))::int - 1) ord $q$);

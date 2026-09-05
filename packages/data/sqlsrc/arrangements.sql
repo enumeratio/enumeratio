@@ -57,6 +57,22 @@ INSERT INTO base_grade VALUES
   ('arrangements', 2, 'length', '0', 'g1');                          -- length ranges 0..size by default
 CREATE FUNCTION fiber_symbol(f arrangements_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$   -- [n]^(k̲), the falling factorial
   SELECT '[' || (f).size::int || ']^(' || to_combining_underline((f).length) || ')' $$;
+-- direct unrank: lex over the injective words. Keep [1..size] available; at position p, the block below each choice
+-- is P(size-p, length-p) = (size-p)!/(size-length)! completions, so digit = ⌊x/block⌋ picks the digit-th smallest
+-- still-available value (0-based). The classic k-permutation (falling-factorial) unrank.
+CREATE FUNCTION arrangement_unrank(sz int, len int, ord bigint) RETURNS arrangement LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE avail int[] := ARRAY(SELECT generate_series(1, sz)); word int[] := '{}'; x numeric := ord; bs numeric; d int; p int; BEGIN
+    FOR p IN 1..len LOOP
+      bs := factorial(sz - p) / factorial(sz - len);   -- P(sz-p, len-p): completions of the remaining len-p positions
+      d := div(x, bs)::int;                             -- 0-based index into the sorted available values
+      word := word || avail[d + 1];
+      avail := avail[1:d] || avail[d + 2:];             -- drop the chosen value
+      x := x - d * bs;
+    END LOOP;
+    RETURN ROW(word)::arrangement;
+  END $$;
+CREATE FUNCTION fiber_unrank(f arrangements_fiber, rank rank_index) RETURNS arrangement LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT arrangement_unrank((f).size::int, (f).length::int, rank::bigint) $fu$;
 SELECT base_realize('arrangements');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -90,3 +106,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[1,3])::arrangement <@ arrangements(3,2))::text || '|' ||
            (ROW(ARRAY[1,3])::arrangement <@ arrangements(3,3))::text || '|' ||
            (ROW(ARRAY[1,1])::arrangement <@ arrangements(3,2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('arrangements','fiber_unrank(arrangements(4,2), 0..11) are all members (accel floor)','eq','true','k-permutation unrank lands inside the P(4,2)=12 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(arrangements(4,2)) f), ord::rank_index) <@ arrangements(4,2))::text
+      FROM generate_series(0, cardinality(arrangements(4,2))::int - 1) ord $q$);

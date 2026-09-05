@@ -1,4 +1,4 @@
--- requires: traits, realizer, subsets, k_subsets, factorial_numbers
+-- requires: traits, realizer, subsets, k_subsets, factorial_numbers, integer_partitions
 -- requires-tag: collection
 -- Asymptotic-cost heuristic for the enumeration-capability traits, made queryable, plus the resolved per-collection
 -- random-access cost. The realizer already emits random_element(fiber)/random_element(handle) (uniform only when the
@@ -38,12 +38,12 @@ SELECT c.id AS collection,
 FROM base_collection c JOIN t ON t.collection = c.id;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('sampling','draw_cost heuristic as data: k_subsets O(1) (indexable) | subsets O(n) (scan floor) | factorial_numbers none (∞)','eq','factorial_numbers:none k_subsets:O(1) subsets:O(n)','the per-collection sampling cost, queryable not prose',$q$
+  ('sampling','draw_cost heuristic as data: k_subsets O(1) (indexable) | integer_partitions O(n) (scan floor) | factorial_numbers none (∞)','eq','factorial_numbers:none integer_partitions:O(n) k_subsets:O(1)','the per-collection sampling cost, queryable not prose',$q$
     SELECT string_agg(collection || ':' || draw_cost, ' ' ORDER BY collection)
-    FROM base_collection_sampling WHERE collection IN ('k_subsets','subsets','factorial_numbers') $q$),
+    FROM base_collection_sampling WHERE collection IN ('k_subsets','integer_partitions','factorial_numbers') $q$),
   ('sampling','samplable ⇔ a finite draw_cost, never ''none'' (the trait and the resolved cost agree)','eq','true','samplable is exactly the collections random_element draws from',$q$
     SELECT bool_and(samplable = (draw_cost <> 'none'))::text FROM base_collection_sampling $q$),
   ('sampling','draw_cost O(1) ⇒ indexable, and only indexable samplables are O(1) (the O(1) class = direct unrank)','eq','true','the heuristic tracks the direct-unrank capability exactly',$q$
     SELECT bool_and((draw_cost = 'O(1)') = indexable)::text FROM base_collection_sampling WHERE samplable $q$),
-  ('sampling','a SCAN-path draw is still a member: random_element(subsets(4)) ∈ subsets(4) over many draws (O(n) floor, no unrank)','eq','true','the scan fallback stays uniform-in-collection',$q$
-    SELECT bool_and((random_element(subsets(4))).value <@ subsets(4))::text FROM generate_series(1, 40) $q$);
+  ('sampling','a SCAN-path draw is still a member: random_element(integer_partitions(6)) ∈ integer_partitions(6) over many draws (O(n) floor, no unrank)','eq','true','the scan fallback stays uniform-in-collection',$q$
+    SELECT bool_and((random_element(integer_partitions(6))).value <@ integer_partitions(6))::text FROM generate_series(1, 40) $q$);

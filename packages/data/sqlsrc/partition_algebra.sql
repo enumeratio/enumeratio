@@ -16,6 +16,9 @@ CREATE FUNCTION contains_in_fiber(f partition_algebra_fiber, v set_partition) RE
 INSERT INTO base_collection VALUES ('partition_algebra', 'set_partition');
 INSERT INTO base_grade VALUES ('partition_algebra', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f partition_algebra_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'P(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: same elements/order as set_partitions(n) — delegate to its RGS unrank.
+CREATE FUNCTION fiber_unrank(f partition_algebra_fiber, rank rank_index) RETURNS set_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT fiber_unrank(ROW((f).n)::set_partitions_fiber, rank) $fu$;
 SELECT base_realize('partition_algebra');
 
 INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
@@ -33,3 +36,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and((a).value = (b).value) FROM elements(partition_algebra(4)) a JOIN elements(set_partitions(4)) b ON ordinality(a) = ordinality(b) $q$),
   ('partition_algebra','contains via <@: 0,1,2 ∈ P(3) (all-singletons), malformed 0,2,1 ∉','eq','true|false','borrowed contains engine (valid RGS)',$q$
     SELECT (ROW(ARRAY[0,1,2])::set_partition <@ partition_algebra(3))::text || '|' || (ROW(ARRAY[0,2,1])::set_partition <@ partition_algebra(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('partition_algebra','fiber_unrank(partition_algebra(4), 0..14) are all members (accel floor)','eq','true','delegated RGS unrank lands inside P(4) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(partition_algebra(4)) f), ord::rank_index) <@ partition_algebra(4))::text
+      FROM generate_series(0, cardinality(partition_algebra(4))::int - 1) ord $q$);

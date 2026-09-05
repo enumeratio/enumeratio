@@ -43,6 +43,22 @@ CREATE FUNCTION contains_in_fiber(f sparse_subsets_fiber, v sparse_subset) RETUR
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('sparse_subsets', 'sparse_subset');
 INSERT INTO base_grade VALUES ('sparse_subsets', 1, 'n', NULL, NULL);
+-- direct unrank: lex over the 0/1 words (0 before 1). #valid completions of `rem` positions after a 0 is F(rem+2)
+-- (the block below choosing 0); after a 1 the next bit is forced to 0. Walk position by position.
+CREATE FUNCTION sparse_subset_unrank(n int, ord bigint) RETURNS sparse_subset LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE bits int[] := '{}'; x numeric := ord; prev int := 0; i int; blk numeric; bit int; BEGIN
+    FOR i IN 1..n LOOP
+      IF prev = 1 THEN bit := 0;                                        -- forced: no two adjacent 1s
+      ELSE
+        blk := fibonacci_term((n - i) + 2);                            -- completions if we place 0 here
+        IF x < blk THEN bit := 0; ELSE x := x - blk; bit := 1; END IF;  -- else place 1 (allowed, prev = 0)
+      END IF;
+      bits := bits || bit; prev := bit;
+    END LOOP;
+    RETURN ROW(bits)::sparse_subset;
+  END $$;
+CREATE FUNCTION fiber_unrank(f sparse_subsets_fiber, rank rank_index) RETURNS sparse_subset LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT sparse_subset_unrank((f).n::int, rank::bigint) $fu$;
 SELECT base_realize('sparse_subsets');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -80,3 +96,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[0,1,0,1])::sparse_subset <@ sparse_subsets(4))::text || '|' ||
            (ROW(ARRAY[0,1,1,0])::sparse_subset <@ sparse_subsets(4))::text || '|' ||
            (ROW(ARRAY[1,0,1])::sparse_subset <@ sparse_subsets(4))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('sparse_subsets','fiber_unrank(sparse_subsets(6), 0..) are all members (accel floor)','eq','true','Fibonacci-constrained unrank lands inside the F(8)=21 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(sparse_subsets(6)) f), ord::rank_index) <@ sparse_subsets(6))::text
+      FROM generate_series(0, cardinality(sparse_subsets(6))::int - 1) ord $q$);

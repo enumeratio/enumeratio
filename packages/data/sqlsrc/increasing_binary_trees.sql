@@ -86,6 +86,10 @@ CREATE FUNCTION contains_in_fiber(f increasing_binary_trees_fiber, v increasing_
 CREATE FUNCTION fiber_symbol(f increasing_binary_trees_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'IBT(' || (f).n::int || ')' $$;   -- corpus symbol
 INSERT INTO base_collection VALUES ('increasing_binary_trees', 'increasing_binary_tree');
 INSERT INTO base_grade VALUES ('increasing_binary_trees', 1, 'n', NULL, NULL);
+-- direct unrank: the fiber IS S_n pushed through the perm↦increasing-tree bijection in perm-rank order — unrank the
+-- rank-th permutation and map it.
+CREATE FUNCTION fiber_unrank(f increasing_binary_trees_fiber, rank rank_index) RETURNS increasing_binary_tree LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT increasing_binary_tree_from_permutation((permutation_unrank_lex((f).n::int, rank::bigint)).image) $fu$;
 SELECT base_realize('increasing_binary_trees');
 
 -- ── the bijection with permutations (a base_map worth registering, per the ticket) ──────────────────────
@@ -126,3 +130,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('increasing_binary_trees','contains via <@: the 312-derived tree is a valid n=3 tree; a mislabeled variant is not','eq','true|false','generated from contains_in_fiber',$q$
     SELECT (permutation_to_increasing_binary_tree(ROW(ARRAY[3,1,2])::permutation) <@ increasing_binary_trees(3))::text || '|' ||
            (ROW(1, ARRAY[0,0,0], ARRAY[0,0,0])::increasing_binary_tree <@ increasing_binary_trees(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('increasing_binary_trees','fiber_unrank(increasing_binary_trees(4), 0..23) are all members (accel floor)','eq','true','perm↦tree bijection unrank lands inside the n!=24 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(increasing_binary_trees(4)) f), ord::rank_index) <@ increasing_binary_trees(4))::text
+      FROM generate_series(0, cardinality(increasing_binary_trees(4))::int - 1) ord $q$);

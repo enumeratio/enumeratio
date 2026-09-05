@@ -47,6 +47,24 @@ CREATE FUNCTION contains_in_fiber(f perfect_matchings_fiber, v perfect_matching)
 INSERT INTO base_collection VALUES ('perfect_matchings', 'perfect_matching');
 INSERT INTO base_grade VALUES ('perfect_matchings', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f perfect_matchings_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'M([' || (2 * (f).n::int) || '])' $$;   -- corpus symbol
+-- direct unrank: lex over the pair-list. Always match the smallest free point with a partner; the block below a given
+-- partner is (m-3)!! = the matchings of the m-2 points left after that pair (m = current #free points). digit picks
+-- the partner (0-based among the free points, ascending), then recurse.
+CREATE FUNCTION perfect_matching_unrank(n int, ord bigint) RETURNS perfect_matching LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE rem int[] := ARRAY(SELECT generate_series(1, 2 * n)); pairs int[] := '{}'; x numeric := ord; bs numeric; d int; m int; a int; e int; BEGIN
+    WHILE coalesce(array_length(rem, 1), 0) >= 2 LOOP
+      m := array_length(rem, 1); a := rem[1];
+      bs := double_factorial_odd(m / 2 - 1);   -- (m-3)!! = matchings of the remaining m-2 points (double_factorial_odd(j) = (2j-1)!!)
+      d := div(x, bs)::int;                                                 -- 0-based into rem[2:] (ascending partners)
+      e := rem[2 + d];
+      pairs := pairs || ARRAY[a, e];
+      rem := ARRAY(SELECT r FROM unnest(rem) r WHERE r <> a AND r <> e ORDER BY r);
+      x := x - d * bs;
+    END LOOP;
+    RETURN ROW(pairs)::perfect_matching;
+  END $$;
+CREATE FUNCTION fiber_unrank(f perfect_matchings_fiber, rank rank_index) RETURNS perfect_matching LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT perfect_matching_unrank((f).n::int, rank::bigint) $fu$;
 SELECT base_realize('perfect_matchings');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -77,3 +95,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            contains(perfect_matchings(2), ROW(ARRAY[2,1,3,4])::perfect_matching)::text $q$),
   ('perfect_matchings','the <@ operator works too: (1,4)(2,3) <@ perfect_matchings(2)','eq','true','operator wrapper',$q$
     SELECT (ROW(ARRAY[1,4,2,3])::perfect_matching <@ perfect_matchings(2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('perfect_matchings','fiber_unrank(perfect_matchings(3), 0..14) are all members (accel floor)','eq','true','pair-list unrank lands inside M([6]) (15 = 5!!) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(perfect_matchings(3)) f), ord::rank_index) <@ perfect_matchings(3))::text
+      FROM generate_series(0, cardinality(perfect_matchings(3))::int - 1) ord $q$);

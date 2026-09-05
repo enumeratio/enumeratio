@@ -48,6 +48,16 @@ CREATE FUNCTION contains_in_fiber(f signed_permutations_fiber, v signed_permutat
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('signed_permutations', 'signed_permutation');
 INSERT INTO base_grade VALUES ('signed_permutations', 1, 'size', NULL, NULL);
+-- direct unrank: the fiber is the (perm rank, sign mask) product in that order, so rank = ord·2ⁿ + sgn; recover
+-- ord = rank div 2ⁿ, sgn = rank mod 2ⁿ, then flip the sign of position i when bit i-1 of sgn is set.
+CREATE FUNCTION signed_permutation_unrank(sz int, ord bigint) RETURNS signed_permutation LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE p2 bigint := (1::bigint << sz); pr bigint := ord / p2; sg bigint := ord % p2; img int[]; BEGIN
+    img := (permutation_unrank_lex(sz, pr)).image;
+    RETURN ROW(ARRAY(SELECT img[i] * CASE WHEN ((sg >> (i - 1)) & 1) = 1 THEN -1 ELSE 1 END
+                     FROM generate_series(1, sz) i))::signed_permutation;
+  END $$;
+CREATE FUNCTION fiber_unrank(f signed_permutations_fiber, rank rank_index) RETURNS signed_permutation LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT signed_permutation_unrank((f).size::int, rank::bigint) $fu$;
 SELECT base_realize('signed_permutations');
 
 INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
@@ -83,3 +93,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT negatives_count(ROW(ARRAY[-2,1,-3])::signed_permutation)::text $q$),
   ('signed_permutations','n=0 => the single empty signed permutation','eq','1|','2^0·0! = 1, the empty word',$q$
     SELECT cardinality(signed_permutations(0))::text || '|' || notation((unrank(signed_permutations(0), 0)).value) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('signed_permutations','fiber_unrank(signed_permutations(3), 0..) are all members (accel floor)','eq','true','(perm,sign) product unrank lands inside B_3 (48 = 3!·2³) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(signed_permutations(3)) f), ord::rank_index) <@ signed_permutations(3))::text
+      FROM generate_series(0, cardinality(signed_permutations(3))::int - 1) ord $q$);

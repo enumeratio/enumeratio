@@ -58,6 +58,9 @@ CREATE FUNCTION contains_in_fiber(f restricted_growth_strings_fiber, v rgs_word)
 INSERT INTO base_collection VALUES ('restricted_growth_strings', 'rgs_word');
 INSERT INTO base_grade VALUES ('restricted_growth_strings', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f restricted_growth_strings_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'RGS(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: the RGS lex-order unrank (shared with set_partitions, same carrier data).
+CREATE FUNCTION fiber_unrank(f restricted_growth_strings_fiber, rank rank_index) RETURNS rgs_word LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(rgs_unrank_word((f).n::int, rank::bigint))::rgs_word $fu$;
 SELECT base_realize('restricted_growth_strings');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -92,3 +95,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            contains(restricted_growth_strings(3), ROW(ARRAY[0,2,1])::rgs_word)::text $q$),
   ('restricted_growth_strings','the <@ operator: {0,1,2} <@ restricted_growth_strings(3)','eq','true','operator wrapper over contains',$q$
     SELECT (ROW(ARRAY[0,1,2])::rgs_word <@ restricted_growth_strings(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('restricted_growth_strings','fiber_unrank(restricted_growth_strings(4), 0..14) are all members (accel floor)','eq','true','RGS lex unrank lands inside RGS(4) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(restricted_growth_strings(4)) f), ord::rank_index) <@ restricted_growth_strings(4))::text
+      FROM generate_series(0, cardinality(restricted_growth_strings(4))::int - 1) ord $q$);

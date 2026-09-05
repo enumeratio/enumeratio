@@ -15,6 +15,9 @@ CREATE FUNCTION contains_in_fiber(f boolean_algebra_fiber, v finset) RETURNS boo
 INSERT INTO base_collection VALUES ('boolean_algebra', 'finset');
 INSERT INTO base_grade VALUES ('boolean_algebra', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f boolean_algebra_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'B(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: same elements/order as subsets(n) — delegate to its powerset unrank.
+CREATE FUNCTION fiber_unrank(f boolean_algebra_fiber, rank rank_index) RETURNS finset LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT fiber_unrank(ROW((f).n)::subsets_fiber, rank) $fu$;
 SELECT base_realize('boolean_algebra');
 
 INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
@@ -61,3 +64,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
           = finset_meet(finset_complement(ROW(ARRAY[1,2],4)::finset), finset_complement(ROW(ARRAY[2,3],4)::finset)))::text $q$),
   ('boolean_algebra','construction decides the ops: complement is NULL for a finset of ℕ (no bounded ground)','eq','true','finsets are a distributive lattice but NOT boolean',$q$
     SELECT (finset_complement(ROW(ARRAY[1,3], NULL::int)::finset) IS NULL)::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('boolean_algebra','fiber_unrank(boolean_algebra(4), 0..15) are all members (accel floor)','eq','true','delegated powerset unrank lands inside B(4) for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(boolean_algebra(4)) f), ord::rank_index) <@ boolean_algebra(4))::text
+      FROM generate_series(0, cardinality(boolean_algebra(4))::int - 1) ord $q$);

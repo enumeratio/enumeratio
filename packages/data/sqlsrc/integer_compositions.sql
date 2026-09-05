@@ -39,6 +39,9 @@ CREATE FUNCTION contains_in_fiber(f integer_compositions_fiber, v composition) R
 INSERT INTO base_collection VALUES ('integer_compositions', 'composition');
 INSERT INTO base_grade VALUES ('integer_compositions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f integer_compositions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'Comp(' || (f).n::int || ')' $$;   -- corpus symbol
+-- direct unrank: the ord-th mask IS ord (fiber_elements streams masks 0,1,2,… in order), decoded by the gap-cut bijection.
+CREATE FUNCTION fiber_unrank(f integer_compositions_fiber, rank rank_index) RETURNS composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT composition_from_mask((f).n::int, rank::bigint) $fu$;
 SELECT base_realize('integer_compositions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -69,3 +72,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('integer_compositions','cardinality(integer_compositions()) = ∞, not 0 (#151)','eq','Infinity',
     'the fully-ungraded WHOLE handle (n unbounded) is OPEN — fibers() cannot unfold it, so the naive fiber-sum used to silently see zero fibers and coalesce to 0',$q$
     SELECT cardinality(integer_compositions())::text $q$);
+
+-- direct-unrank floor: every fiber_unrank element is a genuine member (order/count are covered by selfcert)
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('integer_compositions','fiber_unrank(compositions(4), 0..7) are all members (accel floor)','eq','true','the O(1) jump lands inside the fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(integer_compositions(4)) f), ord::rank_index) <@ integer_compositions(4))::text
+      FROM generate_series(0, cardinality(integer_compositions(4))::int - 1) ord $q$);
