@@ -49,6 +49,65 @@ CREATE FUNCTION contains_in_fiber(f parking_functions_fiber, v parking_function)
        WHERE sorted.x > sorted.i
      ) $$;
 
+-- ── unrank: completion-count DP against the generator's exact lex-over-spots order ──────────────────────
+-- A sequence is a parking function of length n iff its sorted rearrangement b satisfies b_i<=i for all i,
+-- an equivalent CDF condition that depends only on which VALUES appear (any order of a fixed multiset is
+-- equally valid or invalid) — so "how many valid completions remain" after fixing a prefix depends only on
+-- that prefix's per-threshold cumulative count `cum[t]` = #{fixed values <= t}, not on the order they were
+-- fixed in. parking_function_completions computes, for m still-unassigned positions (each free to take any
+-- value in [1,n]) and a given cum, the exact count of completions whose FINAL combined CDF dominates the
+-- identity (cum[t] + #{new values <= t} >= t for every t=1..n) — an integer DP processing thresholds
+-- t=1..n, tracking only "how many of the m positions have been assigned a value <= t so far" (0..m): to
+-- assign x of the still-unassigned positions to value t, choose which x of the (m − already-assigned)
+-- positions via a plain binomial (positions are otherwise interchangeable within a threshold, since they'd
+-- all get the same value) — no factorials/division needed, so it stays exact integer arithmetic. A cell is
+-- pruned to 0 the moment its running count falls short of `t − cum[t]` (the deficiency can never be made up
+-- by later, larger-valued assignments, since CDF(t) is fixed once thresholds ≤ t are done).
+CREATE FUNCTION parking_function_completions(cum int[], n int, m int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE prev numeric[] := array_fill(0::numeric, ARRAY[m+1]); curr numeric[]; t int; c int; x int; req int; s numeric;
+  BEGIN
+    prev[1] := 1;                                              -- h[0][0] = 1 (no thresholds processed, 0 assigned)
+    FOR t IN 1..n LOOP
+      req := greatest(0, t - cum[t]);                          -- deficiency still owed at threshold t
+      curr := array_fill(0::numeric, ARRAY[m+1]);
+      FOR c IN 0..m LOOP
+        IF c < req THEN CONTINUE; END IF;                      -- unrecoverable shortfall — leave pruned at 0
+        s := 0;
+        FOR x IN 0..c LOOP                                     -- x of the m positions get value t this round
+          IF prev[c-x+1] <> 0 THEN s := s + prev[c-x+1] * binomial(m-(c-x), x); END IF;
+        END LOOP;
+        curr[c+1] := s;
+      END LOOP;
+      prev := curr;
+    END LOOP;
+    RETURN prev[m+1];                                          -- h[n][m]: all m positions assigned, every threshold satisfied
+  END $$;
+
+-- Position-by-position trie decode: at each of the n positions, try candidate values w=1..n ascending
+-- (matching the generator's lex order), price each by its completion count (cum updated as if w were
+-- fixed), and descend/subtract exactly as a combinatorial-number-system unrank does.
+CREATE FUNCTION parking_function_unrank(n int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE cum int[] := array_fill(0, ARRAY[n]); spots int[] := '{}'; k int; m int; w int; new_cum int[]; cnt numeric; x numeric := ord; t int;
+  BEGIN
+    IF n = 0 THEN RETURN spots; END IF;
+    FOR k IN 0..n-1 LOOP
+      m := n - k;                                              -- remaining positions, including this one
+      FOR w IN 1..n LOOP
+        new_cum := cum;
+        FOR t IN w..n LOOP new_cum[t] := new_cum[t] + 1; END LOOP;
+        cnt := parking_function_completions(new_cum, n, m - 1);
+        IF x < cnt THEN
+          spots := spots || w; cum := new_cum; EXIT;
+        ELSE
+          x := x - cnt;
+        END IF;
+      END LOOP;
+    END LOOP;
+    RETURN spots;
+  END $$;
+CREATE FUNCTION fiber_unrank(f parking_functions_fiber, rank rank_index) RETURNS parking_function LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(parking_function_unrank((f).n::int, rank::bigint))::parking_function $fu$;
+
 -- declare it as DATA + realize
 INSERT INTO base_collection VALUES ('parking_functions', 'parking_function');
 INSERT INTO base_grade VALUES ('parking_functions', 1, 'n', NULL, NULL);
@@ -83,4 +142,11 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (unrank(parking_functions(2), 1)).fiber.n::text || '|' || ordinality(unrank(parking_functions(2), 1))::text $q$),
   ('parking_functions','contains: {1,2} ∈ parking_functions(2), {2,2} ∉ (via <@)','eq','true|false','generated contains + operator',$q$
     SELECT (ROW(ARRAY[1,2])::parking_function <@ parking_functions(2))::text || '|' ||
-           (ROW(ARRAY[2,2])::parking_function <@ parking_functions(2))::text $q$);
+           (ROW(ARRAY[2,2])::parking_function <@ parking_functions(2))::text $q$),
+
+  ('parking_functions','fiber_unrank(parking_functions(4), 0..cardinality-1) are all members (accel floor)','eq','true','completion-count DP lands inside the fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(parking_functions(4)) f), ord::rank_index) <@ parking_functions(4))::text
+      FROM generate_series(0, cardinality(parking_functions(4))::int - 1) ord $q$),
+  ('parking_functions','fiber_unrank reproduces the floor''s exact lex-over-spots order for n=3 (16 elements)','eq','true','accel == naive enumeration order, element by element',$q$
+    SELECT bool_and(notation((unrank(parking_functions(3), ordinality(e)::rank_index)).value) = notation((e).value))::text
+      FROM elements(parking_functions(3)) e $q$);

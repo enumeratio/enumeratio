@@ -56,6 +56,19 @@ CREATE FUNCTION contains_in_fiber(f boxed_plane_partitions_fiber, v plane_partit
 CREATE FUNCTION fiber_symbol(f boxed_plane_partitions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   SELECT 'PP[' || (f).a::int || '×' || (f).b::int || '×' || (f).c::int || ']' $$;
 
+-- SKIPPED (fiber_unrank): the (shape,entries) composite order decomposes into TWO nested unranks — (1) a shape trie
+-- (row-length sequences only, weakly decr ≤b, ≤a of them) identical in shape to box_confined_partitions' own trie,
+-- BUT weighted at each "stop here" node not by 1 but by Ffill(shape,c) = the number of distinct cell-fillings for
+-- that EXACT finished shape (values 1..c, weakly decr along rows AND down columns) — a classical hook-content-type
+-- product over the shape's cells (MacMahon's box formula is the special case where the shape is the full a×b
+-- rectangle); and (2) within a fixed complete shape, a SEPARATE entries trie (lex order over the concatenated row
+-- values) that itself needs its own row-by-row rank-decomposition against a variable, filled-in-so-far ceiling.
+-- Both phases are individually nontrivial new math (no existing template covers either — box_confined_partitions'
+-- DP has constant per-node weight 1, not a shape-dependent hook-content count), and I couldn't derive + hand-verify
+-- phase (2)'s decoder with the confidence this file's SELF-VERIFYING bar requires without an independent oracle to
+-- check the hook-content formula and the entries-decoder against. Left unaccelerated rather than ship a decomposition
+-- I can't prove matches fiber_elements' exact order (#284 follow-up candidate).
+
 -- declare it as DATA (three independent unbounded axes) + realize
 INSERT INTO base_collection VALUES ('boxed_plane_partitions', 'plane_partition');
 INSERT INTO base_grade VALUES
