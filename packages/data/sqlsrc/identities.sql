@@ -34,31 +34,34 @@ CREATE TRIGGER base_function_pack_guard BEFORE UPDATE OR DELETE ON base_function
 
 -- base_function_attribute: named FUNCTION-level capabilities, mirroring base_trait's shape (id/title/description/
 -- implies) rather than base_structure.axioms text[] (unstructured strings nothing reads — confirmed zero
--- references outside algebra.sql). Seeded with the Wolfram Language function-attribute vocabulary that applies
--- to named identities here: Flat (associative), Orderless (commutative), OneIdentity (f(f(x))=f(x)=x) — real WL
--- terms, see reference.wolfram.com/language/ref/Flat.html and siblings. These describe N-ARY ENDO-OPERATIONS
+-- references outside algebra.sql). The vocabulary is Wolfram Language's function-attribute set, but named for the
+-- PROPERTY each one is (a property of a function) rather than WL's own keyword: associativity (WL Flat),
+-- commutativity (WL Orderless), threadability (WL Listable), idempotency, and one_identity (WL OneIdentity). The
+-- WL keyword is kept in each title/description as a cross-reference, see reference.wolfram.com/language/ref/Flat.html
+-- and siblings. associativity/commutativity/idempotency/threadability describe N-ARY ENDO-OPERATIONS
 -- ONLY (arity ≥ 2, return type = an argument type being recombined) — gcd/gaussian_add-shaped, never
 -- catalan_number/stirling1-shaped (a counting sequence, or a function whose args and return type differ, doesn't
 -- type-check for "regroup the same operands"). This is a CURATION GUIDELINE, checked below by a base_example
 -- against pg_proc.pronargs, not a DB CHECK (Postgres can't self-inspect another function's own signature against
 -- a curated attribute row without a trigger).
 --
--- `polytope` is optional, EXPLORATORY framing new to this repo (not a previously documented correspondence,
--- confirmed by full-text search of sqlsrc + wiki): Flat ↔ the Associahedron — every bracketing of an n-ary
--- endo-operation's operands is a distinct Associahedron vertex (binary-tree shape / dissection); Flat means they
--- all collapse to the same value. Orderless ↔ the Permutahedron — every ordering is a distinct vertex; Orderless
--- means they all collapse. Both vertex correspondences are standard combinatorics; their pairing with Wolfram
--- attributes is this project's own synthesis. Treat as decoration on the docs page ("corresponds to"), never as
--- a proof the schema enforces — OneIdentity has no such correspondence (nullable, not required).
+-- The polytope correspondence (side table below) is optional, EXPLORATORY framing new to this repo (not a
+-- previously documented correspondence, confirmed by full-text search of sqlsrc + wiki): associativity ↔ the
+-- Associahedron — every bracketing of an n-ary endo-operation's operands is a distinct Associahedron vertex
+-- (binary-tree shape / dissection); associativity means they all collapse to the same value. commutativity ↔ the
+-- Permutahedron — every ordering is a distinct vertex; commutativity means they all collapse. Both vertex
+-- correspondences are standard combinatorics; their pairing with these properties is this project's own synthesis.
+-- Treat as decoration on the docs page ("corresponds to"), never as a proof the schema enforces — idempotency /
+-- threadability / one_identity have no such correspondence (the side table simply omits them).
 CREATE TABLE base_function_attribute (
-  id          text PRIMARY KEY,        -- 'flat', 'orderless', 'one_identity'
+  id          text PRIMARY KEY,        -- descriptive property nouns: 'associativity','commutativity','threadability','idempotency','one_identity'
   title       text,
   description text NOT NULL,
   implies     text[] NOT NULL DEFAULT '{}'
 );
 
 -- The polytope correspondence itself is a SIDE TABLE (#283 phase 2.2, §3.3's pack-contract precedent), not a
--- column on base_function_attribute: both curated correspondences ('flat'→associahedron, 'orderless'→
+-- column on base_function_attribute: both curated correspondences ('associativity'→associahedron, 'commutativity'→
 -- permutahedron) name packs/polytopes collections, and a pack may only INSERT rows, never UPDATE a row core
 -- already inserted — so the pairing is populated from packs/polytopes/identities.polytopes.sql, joined in at
 -- read time (docs/develop/data/functions.data.ts). Empty here when polytopes isn't loaded; the docs page's
@@ -78,18 +81,29 @@ CREATE TABLE base_function_attribute_manual (
 );
 
 INSERT INTO base_function_attribute (id, title, description, implies) VALUES
-  ('flat', 'Flat (associative)',
-   'f(f(a,b),f(c,d)) = f(a,b,c,d) for any bracketing — Wolfram Language''s Flat attribute. For an n-ary '
-   'endo-operation, every bracketing of the same operands is a distinct Associahedron vertex; Flat means they '
-   'all collapse to one value. Exploratory framing, not a load-bearing proof.', '{}'),
-  ('orderless', 'Orderless (commutative)',
-   'Argument order doesn''t matter — Wolfram Language''s Orderless attribute. For an n-ary endo-operation, '
-   'every ordering of the same operands is a distinct Permutahedron vertex; Orderless means they all collapse. '
-   'Exploratory framing, not a load-bearing proof.', '{}'),
-  ('one_identity', 'OneIdentity',
-   'f(f(x)) = f(x) = x — the degenerate unary/identity collapse, Wolfram Language''s OneIdentity attribute. '
-   'No polytope correspondence. No identity below is curated with this attribute yet — it needs a genuinely '
-   'variadic n-ary function to exhibit (none of the fixed-arity-2 operations here qualify).', '{}');
+  ('associativity', 'Associativity (WL Flat)',
+   'f(f(a,b),f(c,d)) = f(a,b,c,d) for any bracketing — Wolfram Language calls this Flat. For an n-ary '
+   'endo-operation, every bracketing of the same operands is a distinct Associahedron vertex; associativity '
+   'means they all collapse to one value.', '{}'),
+  ('commutativity', 'Commutativity (WL Orderless)',
+   'Argument order doesn''t matter — Wolfram Language calls this Orderless. For an n-ary endo-operation, '
+   'every ordering of the same operands is a distinct Permutahedron vertex; commutativity means they all '
+   'collapse.', '{}'),
+  ('idempotency', 'Idempotency',
+   'The idempotent (semilattice) law x∘x = x — combining an operand with itself yields it unchanged. Sits '
+   'beside associativity + commutativity: an operation with all three is a semilattice (gcd/lcm are the '
+   'meet/join of the divisibility lattice). Distinct from Wolfram OneIdentity (below) and from the unary '
+   'compose-twice law f(f(x)) = f(x) that arity-1 functions/maps carry.', '{}'),
+  ('threadability', 'Threadability (WL Listable)',
+   'Automatically threads elementwise over lists/arrays in argument position — f({a,b},{c,d}) = '
+   '{f(a,c),f(b,d)}. Wolfram Language calls this Listable. No identity below is curated with it yet (no '
+   'current SQL impl provides an array-threading overload) — vocabulary, ready for one that does.', '{}'),
+  ('one_identity', 'One-identity (WL OneIdentity)',
+   'The single-argument application of a variadic head collapses to its argument: f(x) ≡ x (e.g. Add[x] → x). '
+   'Wolfram Language calls this OneIdentity; it is a REWRITE/pattern-matching rule, not idempotency (Plus has '
+   'OneIdentity yet 1+1 ≠ 1, and idempotent Abs has no OneIdentity — the two are orthogonal). Kept as its own '
+   'property because the IR wants exactly this normalization (Head[x] → x) for substitution. No identity below '
+   'is curated with it yet — vocabulary.', '{}');
 
 -- Curation batch 1 — 28 identities covering packages/math's ~45 exported functions (see function_impls.sql for
 -- the 59 impl rows backing them — every one with a real bare-callable SQL function, a packages/math TS twin, or
@@ -167,20 +181,22 @@ INSERT INTO base_function (id, title, description) VALUES
 -- (k_part_partition_count) lives in that pack's k_part_partitions.sql.
 
 -- Attribute assignments — every one below is independently demonstrated (not just asserted) by a base_example
--- further down. gcd/lcm: associative + commutative, standard number theory. gaussian_add/gaussian_mul:
--- ℤ[i] is a commutative ring — both operations are. multicomplex_add: componentwise mod-M addition, trivially both.
--- multicomplex_mul: ORDERLESS ONLY — commutativity is proved algebraically below (swapping a,b relabels the same sum,
--- since AND and popcount are symmetric in their operands) and demonstrated live; associativity of this specific
--- XOR-convolution/Thue-Morse-cocycle construction is NOT verified here and is deliberately left unassigned
--- rather than guessed (Cayley-Dickson-style doubling constructions are known to lose associativity at exactly
--- this kind of higher dimension — asserting Flat without proof would be worse than leaving it uncurated).
+-- further down. gcd/lcm: associative + commutative + idempotent — they're the meet/join of the divisibility
+-- lattice, so all three semilattice laws hold (gcd(a,a)=a, lcm(a,a)=a). gaussian_add/gaussian_mul: ℤ[i] is a
+-- commutative ring — both operations are associative + commutative (NOT idempotent: a+a=2a). multicomplex_add:
+-- componentwise mod-M addition, associative + commutative (not idempotent). multicomplex_mul: COMMUTATIVITY ONLY —
+-- commutativity is proved algebraically below (swapping a,b relabels the same sum, since AND and popcount are
+-- symmetric in their operands) and demonstrated live; associativity of this specific XOR-convolution/Thue-Morse-
+-- cocycle construction is NOT verified here and is deliberately left unassigned rather than guessed (Cayley-
+-- Dickson-style doubling constructions are known to lose associativity at exactly this kind of higher dimension —
+-- asserting associativity without proof would be worse than leaving it uncurated).
 INSERT INTO base_function_attribute_manual (function, attribute) VALUES
-  ('gcd', 'flat'), ('gcd', 'orderless'),
-  ('lcm', 'flat'), ('lcm', 'orderless'),
-  ('gaussian_add', 'flat'), ('gaussian_add', 'orderless'),
-  ('gaussian_mul', 'flat'), ('gaussian_mul', 'orderless'),
-  ('multicomplex_add', 'flat'), ('multicomplex_add', 'orderless'),
-  ('multicomplex_mul', 'orderless');
+  ('gcd', 'associativity'), ('gcd', 'commutativity'), ('gcd', 'idempotency'),
+  ('lcm', 'associativity'), ('lcm', 'commutativity'), ('lcm', 'idempotency'),
+  ('gaussian_add', 'associativity'), ('gaussian_add', 'commutativity'),
+  ('gaussian_mul', 'associativity'), ('gaussian_mul', 'commutativity'),
+  ('multicomplex_add', 'associativity'), ('multicomplex_add', 'commutativity'),
+  ('multicomplex_mul', 'commutativity');
   -- everything else above: no attribute rows — proves attributes are optional (factorial/catalan_number/etc.
   -- are all zero-attribute cases: counting sequences and non-endo functions, not combining operations)
 
@@ -208,20 +224,22 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta,
 -- the sql_fn-integrity and arity-2 attribute checks that used to live here now live in function_impls.sql, over
 -- base_function_impl — the join table replaced the columns they were checking.
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('base_function','gcd_int is associative on a sample triple (Flat, demonstrated not just asserted)',
+  ('base_function','gcd_int is associative on a sample triple (associativity, demonstrated not just asserted)',
    'eq','true',NULL,$q$
      SELECT (gcd_int(gcd_int(12,18),30) = gcd_int(12,gcd_int(18,30)))::text $q$),
-  ('base_function','gcd_int is commutative on a sample pair (Orderless, demonstrated not just asserted)',
+  ('base_function','gcd_int is commutative on a sample pair (commutativity, demonstrated not just asserted)',
    'eq','true',NULL,$q$ SELECT (gcd_int(12,18) = gcd_int(18,12))::text $q$),
-  ('base_function','gaussian_add is commutative on a sample pair (Orderless, demonstrated not just asserted)',
+  ('base_function','gcd_int is idempotent: gcd(a,a)=a (idempotency, demonstrated not just asserted)',
+   'eq','true',NULL,$q$ SELECT (gcd_int(18,18) = 18)::text $q$),
+  ('base_function','gaussian_add is commutative on a sample pair (commutativity, demonstrated not just asserted)',
    'eq','true',NULL,$q$
      SELECT (gaussian_add(ROW(2,3)::gaussian_integer, ROW(1,-4)::gaussian_integer)
              = gaussian_add(ROW(1,-4)::gaussian_integer, ROW(2,3)::gaussian_integer))::text $q$),
-  ('base_function','gaussian_mul is commutative on a sample pair (Orderless, demonstrated not just asserted)',
+  ('base_function','gaussian_mul is commutative on a sample pair (commutativity, demonstrated not just asserted)',
    'eq','true',NULL,$q$
      SELECT (gaussian_mul(ROW(2,3)::gaussian_integer, ROW(1,-4)::gaussian_integer)
              = gaussian_mul(ROW(1,-4)::gaussian_integer, ROW(2,3)::gaussian_integer))::text $q$),
-  ('base_function','multicomplex_mul is commutative on a sample pair (Orderless, demonstrated — associativity deliberately NOT claimed)',
+  ('base_function','multicomplex_mul is commutative on a sample pair (commutativity, demonstrated — associativity deliberately NOT claimed)',
    'eq','true',NULL,$q$
      SELECT (multicomplex_mul(ROW(ARRAY[2,3],97)::multicomplex, ROW(ARRAY[5,7],97)::multicomplex)
              = multicomplex_mul(ROW(ARRAY[5,7],97)::multicomplex, ROW(ARRAY[2,3],97)::multicomplex))::text $q$);

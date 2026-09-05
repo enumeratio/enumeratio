@@ -160,13 +160,15 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'no FK is possible (impl_ref is plain text, not a DB object reference) — this is the integrity check',$q$
      SELECT count(*)::text FROM base_function_impl WHERE engine = 'pg'
        AND NOT EXISTS (SELECT 1 FROM pg_proc WHERE proname = impl_ref) $q$),
-  ('base_function_impl', 'flat/orderless are only assigned to SQL-backed functions of arity >= 2', 'eq', '0',
-   'operationalizes the endo-operation curation guideline as a check, not a DB CHECK constraint — rewritten to '
-   'join through the pg impl row now that sql_fn is gone',$q$
+  ('base_function_impl', 'function attributes are only assigned to SQL-backed functions of arity >= 2', 'eq', '0',
+   'operationalizes the endo-operation curation guideline as a check, not a DB CHECK constraint — every attribute '
+   'in base_function_attribute (associativity/commutativity/idempotency/threadability/one_identity) describes an '
+   'n-ary endo-op, so any assignment with a pg impl must be arity >= 2; joins through the pg impl row (a TS-only '
+   'function like lcm has no pg_proc to check and is simply not covered here)',$q$
      SELECT count(*)::text FROM base_function_attribute_manual m
        JOIN base_function_impl i ON i.function = m.function AND i.engine = 'pg'
        JOIN pg_proc p ON p.proname = i.impl_ref
-      WHERE m.attribute IN ('flat','orderless') AND p.pronargs < 2 $q$);
+      WHERE p.pronargs < 2 $q$);
 
 -- The representation claim is itself checkable, and this is the floor that keeps it honest: every ts impl is
 -- 'float64' or 'bigint', never 'numeric'. packages/math is a JS library — `number` up to 2^53, `bigint` beyond —

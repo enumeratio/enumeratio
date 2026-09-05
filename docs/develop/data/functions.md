@@ -56,14 +56,27 @@ TypeScript-AST walk of `packages/math/src/*.ts` for TS), not hand-copied — the
 dispatch rank/unrank plumbing, mostly) and what's still to curate.
 :::
 
-Three identities can carry a Wolfram Language-style [function attribute](https://reference.wolfram.com/language/ref/Flat.html):
-**Flat** (associative), **Orderless** (commutative), and **OneIdentity** (`f(f(x)) = f(x) = x`). Flat and
-Orderless each *correspond to* — this is this project's own framing, not a proof the schema enforces — a
-polytope already in [the Explorer](/explore/collection/): every bracketing of an n-ary endo-operation's operands
-is a distinct [Associahedron](/explore/collection/associahedron) vertex, and Flat means they all collapse to one
-value; every ordering is a distinct [Permutahedron](/explore/collection/permutahedron) vertex, and Orderless
-means they all collapse. Every attribute assignment below is backed by a live `base_example` proof (an actual
-computed equality, not just an asserted claim) — see each identity's expanded detail.
+An identity can carry a **function property** — named for the property itself, not Wolfram Language's keyword,
+though the [WL attribute](https://reference.wolfram.com/language/ref/Flat.html) each borrows from is kept as a
+cross-reference:
+
+- **associativity** (WL `Flat`) — `f(f(a,b),f(c,d)) = f(a,b,c,d)` for any bracketing.
+- **commutativity** (WL `Orderless`) — argument order doesn't matter.
+- **idempotency** — the semilattice law `x∘x = x` (gcd/lcm are the meet/join of the divisibility lattice).
+- **threadability** (WL `Listable`) — threads elementwise over lists in argument position. Vocabulary; nothing
+  curated yet (no SQL impl provides an array-threading overload).
+- **one_identity** (WL `OneIdentity`) — the single-argument application of a variadic head collapses to its
+  argument, `f(x) ≡ x` (e.g. `Add[x] → x`). This is a **rewrite/pattern-matching rule, not idempotency** — `Plus`
+  has it yet `1+1 ≠ 1`, and idempotent `Abs` lacks it; the two are orthogonal. Kept as its own property because
+  the IR wants exactly this normalization. Vocabulary; nothing curated yet.
+
+associativity and commutativity each *correspond to* — this is this project's own framing, not a proof the schema
+enforces — a polytope already in [the Explorer](/explore/collection/): every bracketing of an n-ary endo-operation's
+operands is a distinct [Associahedron](/explore/collection/associahedron) vertex, and associativity means they all
+collapse to one value; every ordering is a distinct [Permutahedron](/explore/collection/permutahedron) vertex, and
+commutativity means they all collapse. Every attribute assignment below that has a live SQL implementation is backed
+by a `base_example` proof (an actual computed equality, not just an asserted claim) — see each identity's expanded
+detail.
 
 <div class="fn-toolbar">
   <input v-model="search" type="search" placeholder="Filter by id, title, description, or implementation…" class="fn-search" />
