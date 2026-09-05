@@ -1,4 +1,4 @@
--- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_permutations, signed_subsets, set_compositions, surjections, parking_functions, seed.render_corpus
+-- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_permutations, signed_subsets, set_compositions, surjections, parking_functions, fractional_numbers, colored_motzkin_paths, seed.render_corpus
 -- representations — Phase 3 of the catalog port: named alternate renderings, registered in base_repr so the
 -- client's -R flag can pick one (permutation cycle notation, set-partition blocks, Dyck parens). render_fn takes
 -- the CARRIER; the client calls render_fn((element).value). The `canonical` repr matches the default render()
@@ -31,6 +31,39 @@
 -- element-level katex oracle for it, just the ambient symbol repeated); prufer_sequences' `sequence` repr (⟨…⟩
 -- angle brackets already parse as plain unicode text in KaTeX — nothing to escape, so a macro sibling would be
 -- decorative, not corrective).
+-- #285 (coverage expansion, round 2) audited every remaining base_render_corpus row with a mapped collection and
+-- element rows, cross-checked against our OWN notation()/set_notation() output (not just the corpus's internal
+-- unicode/katex diff) — a corpus row is only a usable oracle when its `unicode` column matches what we actually
+-- render today. THREE more collections passed that bar and get a fresh canonical row + katex sibling: binary_words
+-- `digits` (carrier-scoped — fib_strings/lucas_strings/tri_strings/primitive_binary_strings all confirmed bare-digit-
+-- concatenation matches; inherits harmlessly to the carrier's other siblings too, same "one function, whole carrier"
+-- shape as `dots` below), fractional_numbers `fraction` (unreduced a/b → \frac{a}{b}, confirmed against @6,8; the
+-- denominator=1 case stays a bare integer, matching notation()'s own branch), and colored_motzkin_paths `steps`
+-- (U/D/H_c → \uparrow/\downarrow/\rightarrow_{c}, confirmed against the r=2 corpus rows — the r=1 corpus rows use a
+-- bare "H" with no color digit, but our own notation() always includes the color index even at r=1, so those rows
+-- aren't a usable oracle; not a translation bug, just an unresolvable row, same as a `redirected_paths` gap). All
+-- three asciimath columns coincide with unicode in the corpus (bare braces-free text already) — no ascii siblings.
+-- Everything else audited was SKIPPED, each for a documented reason: nothing to translate (corpus katex ==
+-- corpus unicode at the element level — arrangements, ascent_sequences, ballot_sequences, dyck_paths, delannoy_paths,
+-- integer_numbers, k_dyck_paths, riordan_paths, rook_placements, schroeder_paths); decorative not corrective, same
+-- angle-bracket reasoning already established for prufer_sequences (binary_bracelets, binary_necklaces,
+-- binary_palindromes, k_bracelets, k_necklaces, k_lyndon_words, lyndon_words, plane_trees, restricted_growth_strings,
+-- subexcedant_seqs); index/rank-based ambient notation, not a carrier render_fn's shape (every plain numeric-carrier
+-- sequence — bell_numbers, catalan_numbers, prime_numbers, etc. — plus associahedron, dissections, schroeder_triangle,
+-- whose corpus katex is the fiber symbol repeated, not a per-element spelling); a wholly different mathematical
+-- object requiring a NEW repr, not an escape of an existing one (integer_partitions' Frobenius-coordinate matrix;
+-- syt_hook_shape/syt_two_column/syt_two_row's `\begin{array}` tableau grid); and — the most common reason — our OWN
+-- unicode rendering doesn't match the corpus's baseline at all, so its katex column isn't a trustworthy target for
+-- OUR notation (perfect_matchings/non_crossing_matchings: arc-parens vs the corpus's brace-set; independent_sets_cycle:
+-- our set_notation is the bare bit string, not the corpus's brace-set; multisets: ours is a brace multiset, the
+-- corpus's is a bare sorted digit string — a different convention entirely, not a format nuance; every
+-- integer_partition-carrier restriction with size-graded parts — bounded_part_partitions, box_confined_partitions,
+-- distinct_partitions, k_part_partitions, odd_partitions, self_conjugate_partitions, square_partitions,
+-- triangular_partitions — the corpus's unicode is comma-joined, ours is "+"-joined via the shared carrier's own
+-- notation(); labeled_forests/labeled_trees: the corpus's own unicode/katex split (bare vs parens) doesn't line up
+-- with ours, which is always parens-wrapped; motzkin_paths: the corpus's U/H/D letters don't match our own U/L/D
+-- alphabet (L for the level step), so even a verified arrow map for colored_motzkin_paths doesn't carry over; words:
+-- comma-joined by us, bare-concatenated by the corpus).
 
 -- ── new alternate renderings ────────────────────────────────────────────────────────────────────────────
 -- permutation cycle notation: decompose the one-line image into disjoint cycles, e.g. {2,3,1} → "(1 2 3)".
@@ -246,6 +279,33 @@ CREATE FUNCTION surjection_tuple_katex(w surjection) RETURNS text LANGUAGE sql I
 CREATE FUNCTION parking_function_tuple_katex(p parking_function) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   SELECT '(' || array_to_string((p).spots, ',') || ')' $$;
 
+-- ── #285 coverage expansion, round 2: three more, each verified against a corpus row our own notation() matches ──
+
+-- katex spelling of the binary_word default digit string: wrap it in \mathtt{…} (monospace), e.g. "101" → "\mathtt{101}"
+-- — matches the render-corpus oracle for fib_strings/lucas_strings/tri_strings/primitive_binary_strings, the four
+-- restrictions whose corpus row actually agrees with our own bare-digit-concatenation notation(binary_word). Carrier-
+-- scoped (like `dots` below), so it also reaches the carrier's other siblings (bracelets, necklaces, …) for free —
+-- mechanically correct there too (same function, same carrier), just not independently corpus-verified for them.
+CREATE FUNCTION binary_word_digits_katex(w binary_word) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT '\mathtt{' || array_to_string((w).bits, '') || '}' $$;
+
+-- katex spelling of the fractional_number default a/b notation: a genuine \frac{a}{b}, e.g. "6/8" → "\frac{6}{8}"
+-- — matches the render-corpus oracle. Denominator 1 stays a bare integer (same branch notation() already takes),
+-- so eg 5/1 renders "5" at both media. asciimath coincides with the unicode default ("6/8" either way) — no sibling.
+CREATE FUNCTION fractional_number_katex(f fractional_number) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT CASE WHEN (f).denominator = 1 THEN (f).numerator::text
+              ELSE '\frac{' || (f).numerator::text || '}{' || (f).denominator::text || '}' END $$;
+
+-- katex spelling of the colored_motzkin_path default U/D/H_c step word: arrows for the three step kinds — U → \uparrow,
+-- D → \downarrow, a colored level step H_c → \rightarrow_{c} — joined by a thin space, e.g. "UH0D" → "\uparrow\,
+-- \rightarrow_{0}\,\downarrow" — matches the render-corpus oracle's r≥2 rows (the r=1 corpus rows use a bare "H" with
+-- no color digit; our own notation() always includes the color index even at r=1, so those specific rows aren't a
+-- usable oracle — not a bug, just unresolvable, same shape as `redirected_paths`). asciimath coincides with the
+-- unicode default (bare step letters either way) — no sibling.
+CREATE FUNCTION colored_motzkin_path_katex(p colored_motzkin_path) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT coalesce(string_agg(CASE s WHEN 1 THEN '\uparrow' WHEN -1 THEN '\downarrow' ELSE '\rightarrow_{' || c || '}' END, '\,' ORDER BY o), '')
+  FROM unnest((p).steps, (p).colors) WITH ORDINALITY AS t(s, c, o) $$;
+
 -- ── register in base_repr (collection, repr, render_fn, title, canonical, parse_fn) ──────────────────────
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical, parse_fn) VALUES
   ('permutations','oneline','one_line','One-line notation',true,'perm_from_oneline'),
@@ -277,6 +337,18 @@ INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VA
   ('set_compositions','blocks','set_composition_blocks_katex','Block notation (KaTeX)',false,'latex'),
   ('surjections','tuple','surjection_tuple_katex','Surjection word (KaTeX tuple)',false,'latex'),
   ('parking_functions','tuple','parking_function_tuple_katex','Preference sequence (KaTeX tuple)',false,'latex');
+-- #285: binary_words `digits` is a non-canonical alternate (binary_word's actual canonical repr varies — calkin_wilf_
+-- paths/stern_brocot_paths override it with their own rational/turns reading — same reason `members`/`dots` below
+-- stay non-canonical); fractional_numbers `fraction` and colored_motzkin_paths `steps` ARE each collection's
+-- unconditional default (render_fn='notation', no branching besides what the katex sibling already replicates).
+INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
+  ('binary_words','digits','notation','Digit string',false),
+  ('fractional_numbers','fraction','notation','Fraction',true),
+  ('colored_motzkin_paths','steps','notation','Step word',true);
+INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VALUES
+  ('binary_words','digits','binary_word_digits_katex','Digit string (KaTeX monospace)',false,'latex'),
+  ('fractional_numbers','fraction','fractional_number_katex','Fraction (KaTeX)',false,'latex'),
+  ('colored_motzkin_paths','steps','colored_motzkin_path_katex','Step word (KaTeX arrows)',false,'latex');
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
   ('set_partitions','rgs','notation','Restricted growth string',true),
   ('set_partitions','blocks','set_partition_blocks','Block notation',false),
@@ -474,6 +546,33 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('representations','the parking_function tuple repr is CARRIER-inherited: non_decreasing_parking_functions resolves it at unicode and latex','eq','true','base_repr_resolved carries the parking_functions-registered repr to its restriction sibling',$q$
     SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'unicode')
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
+  -- ── #285 coverage expansion, round 2: binary_words `digits`, fractional_numbers `fraction`, colored_motzkin_paths `steps` ──
+  ('representations','binary_word digits katex matches the render-corpus oracle across all four verified restrictions: fib/lucas/tri/primitive','eq','true','each split_part(katex, '' ∈ '', 1) from its own corpus row',$q$
+    SELECT (binary_word_digits_katex((unrank(fib_strings(3), 4)).value)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'fib_strings~size/3@4'), ' ∈ ', 1)
+        AND binary_word_digits_katex((unrank(lucas_strings(4), 4)).value)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'lucas_strings~size/4@4'), ' ∈ ', 1)
+        AND binary_word_digits_katex((unrank(tri_strings(3), 6)).value)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'tri_strings~size/3@6'), ' ∈ ', 1)
+        AND binary_word_digits_katex((unrank(primitive_binary_strings(4), 0)).value)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'primitive_binary_strings~size/4@0'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) binary_word notation is unchanged: fib_strings(3) rank4 → 101 (bare digits)','eq','101','notation(binary_word) still bare concatenation',$q$
+    SELECT notation((unrank(fib_strings(3), 4)).value) $q$),
+  ('representations','the binary_words digits repr is CARRIER-inherited: primitive_binary_strings resolves it at unicode and latex','eq','true','base_repr_resolved carries the binary_words-registered repr to a carrier sibling',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'unicode')
+        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'latex'))::text $q$),
+  ('representations','fractional_number katex is a genuine \frac{a}{b}, matches the render-corpus oracle: 6/8','eq','true','split_part(katex, '' ∈ '', 1) from fractional_numbers/@6,8',$q$
+    SELECT (fractional_number_katex(ROW(6,8)::fractional_number)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'fractional_numbers/@6,8'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) fractional_number notation is unchanged: 6/8 stays unreduced, 5/1 stays bare 5','eq','6/8|5','notation(fractional_number) keeps its denominator=1 branch',$q$
+    SELECT notation(ROW(6,8)::fractional_number) || '|' || notation(ROW(5,1)::fractional_number) $q$),
+  ('representations','colored_motzkin_path katex bars nothing but arrows the steps, matches the render-corpus oracle: UH0D and H1H1H1 (k=2,n=3)','eq','true','split_part(katex, '' ∈ '', 1) from two colored_motzkin_paths~k=2~n/3 corpus rows',$q$
+    SELECT (colored_motzkin_path_katex(ROW(ARRAY[1,0,-1],ARRAY[-1,0,-1])::colored_motzkin_path)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'colored_motzkin_paths~k=2~n/3@UH0D'), ' ∈ ', 1)
+        AND colored_motzkin_path_katex(ROW(ARRAY[0,0,0],ARRAY[1,1,1])::colored_motzkin_path)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'colored_motzkin_paths~k=2~n/3@H1H1H1'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) colored_motzkin_path notation is unchanged: UH0D stays UH0D (bare step letters)','eq','UH0D','notation(colored_motzkin_path) still the plain U/D/H_c word',$q$
+    SELECT notation(ROW(ARRAY[1,0,-1],ARRAY[-1,0,-1])::colored_motzkin_path) $q$),
   -- ── medium spellings of the ambient-set symbol (katex / asciimath), checked against the render corpus ──
   ('representations','fiber symbol S₄ across media: unicode Sₙ, katex S_{n}, asciimath S_n','eq','S₄|S_{4}|S_4','the three spellings of the symmetric-group symbol match the corpus',$q$
     SELECT fiber_symbol((unrank(permutations(4),0)).fiber) || '|' || fiber_symbol_katex((unrank(permutations(4),0)).fiber)
