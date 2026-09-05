@@ -50,8 +50,8 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta)
   ('collection','arrangements',                 'wolfram','FactorialPower','https://reference.wolfram.com/language/ref/FactorialPower.html','fiber_count(n,k) = P(n,k) = n!/(n-k)! = FactorialPower[n,k], the 2-argument falling-factorial form');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('references','every Wolfram pointer resolves to a real collection (integrity, no FK)','eq','0','no dangling subject in the wolfram layer',$q$
-    SELECT count(*)::text FROM base_reference r WHERE r.system='wolfram'
+  ('references','every Wolfram pointer resolves to a real collection (integrity, no FK)','eq','0','no dangling subject in the wolfram layer — scoped to subject_kind=''collection''; a non-collection subject_kind (e.g. ''function'', base_function.sql) resolves against its own registry instead',$q$
+    SELECT count(*)::text FROM base_reference r WHERE r.system='wolfram' AND r.subject_kind='collection'
       AND NOT EXISTS (SELECT 1 FROM base_collection c WHERE c.id = r.subject) $q$),
   ('references','PolygonalNumber covers all six named shape collections','eq','6','triangular/square/pentagonal/hexagonal/heptagonal/octagonal, one row each',$q$
     SELECT count(*)::text FROM base_reference WHERE system='wolfram' AND identity='PolygonalNumber' $q$),

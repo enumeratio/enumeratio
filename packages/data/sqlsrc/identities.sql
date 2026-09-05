@@ -1,0 +1,228 @@
+-- requires: realizer, polytope-collections, references
+-- base_function: the curated "named math identity" ledger — the registry gap wiki/Catalog-Audit.md names directly
+-- ("we have no identity ledger — the 'one identity, many roles' thesis"). A retired math_* naming convention was
+-- this ledger implicitly (pre-2026-08 C-extension); the individual functions survived un-prefixed in the pure-SQL
+-- rewrite, the central registry didn't. Distinct from base_operation/base_structure (algebra.sql) — that registry
+-- is which ALGEBRAIC STRUCTURES a TYPE belongs to (15 fixed operators: add, mul, le, …); this is a catalog of
+-- named IDENTITIES (catalan_number, stirling1, gcd_int, …), each optionally backed by a live SQL function, a
+-- packages/math TS twin, or both.
+--
+-- `id` is a curated slug, decoupled from BOTH impl pointers — mirrors base_map's map_id/mapping_fn split, so a
+-- rename of either impl never cascades through every attribute/reference row naming this identity. This split is
+-- load-bearing, not decorative: lehmer_code below is the concrete case where it matters — a SQL function named
+-- `lehmer_code` already exists (lehmer_codes.sql), but it SERIALIZES an already-built permutation_inversion to
+-- text; the actual encoding computation TS's lehmer_code() twins is `to_inversion`. Naming this row's sql_fn
+-- 'lehmer_code' by string-matching the id would silently point at the wrong function.
+--
+-- Mechanical facts (arity, variadic-ness, the live function body) are NEVER stored here — always derived via
+-- pg_proc/AST introspection at docs-build time (docs/develop/data/functions.data.ts), the same "curate the
+-- pointer, introspect the rest" split base_stat/base_map already use.
+CREATE TABLE base_function (
+  id          text PRIMARY KEY,        -- curated identity slug, e.g. 'catalan_number', 'stirling1', 'lcm_int'
+  title       text,
+  description text NOT NULL,
+  sql_fn      text,                    -- pg_proc.proname of the SQL twin (packages/data/sqlsrc); NULL if TS-only
+  ts_export   text,                    -- packages/math export name; NULL if SQL-only
+  CHECK (sql_fn IS NOT NULL OR ts_export IS NOT NULL)   -- a function with neither pointer documents nothing
+);
+
+-- base_function_attribute: named FUNCTION-level capabilities, mirroring base_trait's shape (id/title/description/
+-- implies) rather than base_structure.axioms text[] (unstructured strings nothing reads — confirmed zero
+-- references outside algebra.sql). Seeded with the Wolfram Language function-attribute vocabulary that applies
+-- to named identities here: Flat (associative), Orderless (commutative), OneIdentity (f(f(x))=f(x)=x) — real WL
+-- terms, see reference.wolfram.com/language/ref/Flat.html and siblings. These describe N-ARY ENDO-OPERATIONS
+-- ONLY (arity ≥ 2, return type = an argument type being recombined) — gcd_int/gaussian_add-shaped, never
+-- catalan_number/stirling1-shaped (a counting sequence, or a function whose args and return type differ, doesn't
+-- type-check for "regroup the same operands"). This is a CURATION GUIDELINE, checked below by a base_example
+-- against pg_proc.pronargs, not a DB CHECK (Postgres can't self-inspect another function's own signature against
+-- a curated attribute row without a trigger).
+--
+-- `polytope` is optional, EXPLORATORY framing new to this repo (not a previously documented correspondence,
+-- confirmed by full-text search of sqlsrc + wiki): Flat ↔ the Associahedron — every bracketing of an n-ary
+-- endo-operation's operands is a distinct Associahedron vertex (binary-tree shape / dissection); Flat means they
+-- all collapse to the same value. Orderless ↔ the Permutahedron — every ordering is a distinct vertex; Orderless
+-- means they all collapse. Both vertex correspondences are standard combinatorics; their pairing with Wolfram
+-- attributes is this project's own synthesis. Treat as decoration on the docs page ("corresponds to"), never as
+-- a proof the schema enforces — OneIdentity has no such correspondence (nullable, not required).
+CREATE TABLE base_function_attribute (
+  id          text PRIMARY KEY,        -- 'flat', 'orderless', 'one_identity'
+  title       text,
+  description text NOT NULL,
+  implies     text[] NOT NULL DEFAULT '{}',
+  polytope    text REFERENCES base_polytope(collection)   -- nullable; one_identity has none
+);
+
+-- function ↔ attribute, the editorial assignments (mirrors base_collection_trait_manual). FK on both sides
+-- catches a typo'd id at load time.
+CREATE TABLE base_function_attribute_manual (
+  function  text NOT NULL REFERENCES base_function,
+  attribute text NOT NULL REFERENCES base_function_attribute,
+  PRIMARY KEY (function, attribute)
+);
+
+INSERT INTO base_function_attribute (id, title, description, implies, polytope) VALUES
+  ('flat', 'Flat (associative)',
+   'f(f(a,b),f(c,d)) = f(a,b,c,d) for any bracketing — Wolfram Language''s Flat attribute. For an n-ary '
+   'endo-operation, every bracketing of the same operands is a distinct Associahedron vertex; Flat means they '
+   'all collapse to one value. Exploratory framing, not a load-bearing proof.', '{}', 'associahedron'),
+  ('orderless', 'Orderless (commutative)',
+   'Argument order doesn''t matter — Wolfram Language''s Orderless attribute. For an n-ary endo-operation, '
+   'every ordering of the same operands is a distinct Permutahedron vertex; Orderless means they all collapse. '
+   'Exploratory framing, not a load-bearing proof.', '{}', 'permutahedron'),
+  ('one_identity', 'OneIdentity',
+   'f(f(x)) = f(x) = x — the degenerate unary/identity collapse, Wolfram Language''s OneIdentity attribute. '
+   'No polytope correspondence. No identity below is curated with this attribute yet — it needs a genuinely '
+   'variadic n-ary function to exhibit (none of the fixed-arity-2 operations here qualify).', '{}', NULL);
+
+-- Curation batch 1 — 30 of packages/math's ~45 exported functions, every one with either a real bare-callable
+-- SQL function or (lcm_int) a genuine TS-only identity. Deliberately EXCLUDED from this batch (follow-up: the
+-- GitHub issue tracking this registry): every "No bare SQL fn (generic dispatch)" rank/unrank export
+-- (integerPartitionRank/Unrank/KRank/KUnrank, rgsRank/Unrank, setPartitionsIntoKBlocksRank/Unrank,
+-- permutation_rank, composition_rank) — these are the READ direction of a bijection whose SQL side is dispatched
+-- generically through unrank(<collection>(...), r), not a separately named identity; gaussian_sub/mc_sub (each
+-- file's own comment: "defined as a + (-b) there too" — definitional, not a distinct identity); and
+-- countSurjections/setCompositionRank/setCompositionUnrank (the only SQL counterpart,
+-- set_composition_surjections(n,k), is an ENUMERATOR — SETOF int[] — not a scalar count/rank function; the shape
+-- doesn't match cleanly enough to curate without guessing).
+INSERT INTO base_function (id, title, description, sql_fn, ts_export) VALUES
+  ('catalan_number', 'Catalan number',
+   'Cₖ = C(2k,k)/(k+1) — counts balanced bracketings, binary trees, Dyck paths, and triangulations of a convex '
+   '(k+2)-gon.', 'catalan_number', 'catalan_number'),
+  ('little_schroder_number', 'Little Schröder (super-Catalan) number',
+   's(m) — counts dissections of a convex polygon by non-crossing diagonals, among other bracketing-adjacent '
+   'structures. 1, 1, 3, 11, 45, 197, …', 'little_schroder_number', 'little_schroder_number'),
+  ('factorial', 'Factorial', 'n! = 1·2·…·n — counts permutations of n distinct objects.',
+   'factorial', 'factorial'),
+  ('factorial_bigint', 'Factorial (exact bigint)',
+   'n! as an exact bigint — factorial() switches to floating precision loss beyond n=18.',
+   'factorial_bigint', 'factorial_bigint'),
+  ('binomial', 'Binomial coefficient', 'C(n,k) — the number of k-subsets of an n-set.', 'binomial', 'binomial'),
+  ('binomial_bigint', 'Binomial coefficient (exact bigint)',
+   'C(n,k) as an exact bigint via an interleaved product/quotient — no intermediate rounding.',
+   'binomial_bigint', 'binomial_bigint'),
+  ('bell', 'Bell number', 'B(n) — the number of set partitions of an n-set.', 'bell', 'bell'),
+  ('fubini', 'Fubini (ordered Bell) number', 'a(n) — the number of set compositions (ordered set partitions) of '
+   'an n-set.', 'fubini', 'fubini'),
+  ('stirling_second', 'Stirling number of the second kind',
+   'S(n,k) — the number of set partitions of an n-set into exactly k blocks.', 'stirling_second', 'stirling_second'),
+  ('partition_number', 'Partition number', 'p(n) — the number of integer partitions of n.',
+   'partition_number', 'partition_number'),
+  ('gcd_int', 'Greatest common divisor', 'gcd(a,b) via Euclid''s algorithm, always non-negative.',
+   'gcd_int', 'gcd_int'),
+  ('lcm_int', 'Least common multiple', 'lcm(a,b) = |a·b| / gcd(a,b), 0 if either input is 0. TS-only — '
+   'utilities.sql has no SQL lcm implementation today.', NULL, 'lcm_int'),
+  ('pow_int', 'Integer power', 'bᵉ via exact repeated integer multiplication (no float ^ scaling/rounding).',
+   'pow_int', 'pow_int'),
+  ('double_factorial_odd', 'Double factorial (odd)', '(2n-1)!! = 1·3·5·…·(2n-1).',
+   'double_factorial_odd', 'double_factorial_odd'),
+  ('gaussian_add', 'Gaussian integer addition',
+   'Componentwise addition on ℤ[i]: (a+bi) + (c+di) = (a+c) + (b+d)i — the additive group operation.',
+   'gaussian_add', 'gaussian_add'),
+  ('gaussian_mul', 'Gaussian integer multiplication',
+   '(a+bi)(c+di) = (ac-bd) + (ad+bc)i — the commutative-ring multiplication on ℤ[i].',
+   'gaussian_mul', 'gaussian_mul'),
+  ('gaussian_neg', 'Gaussian integer negation', '-(a+bi) = -a-bi — the additive inverse on ℤ[i].',
+   'gaussian_neg', 'gaussian_neg'),
+  ('gaussian_norm', 'Gaussian integer norm', 'N(a+bi) = a²+b² — the multiplicative Euclidean gauge on ℤ[i].',
+   'gaussian_norm', 'gaussian_norm'),
+  ('mc_add', 'Multicomplex addition', 'Componentwise addition mod M on the multicomplex ring ℂₙ(ℤ/Mℤ).',
+   'mc_add', 'mc_add'),
+  ('mc_mul', 'Multicomplex multiplication',
+   'XOR-convolution with a Thue–Morse overlap sign: out[i⊻j] += (−1)^popcount(i∧j)·a[i]·b[j] (mod M).',
+   'mc_mul', 'mc_mul'),
+  ('mc_neg', 'Multicomplex negation', 'Componentwise negation mod M.', 'mc_neg', 'mc_neg'),
+  ('mc_conj', 'Multicomplex conjugation', 'Flips every "odious" (odd-popcount-indexed) coefficient''s sign.',
+   'mc_conj', 'mc_conj'),
+  ('mc_popcount', 'Popcount', 'The Hamming weight of a non-negative bitmask (0..30 bits) — the sign exponent '
+   'multicomplex multiplication is built from.', 'mc_popcount', 'mc_popcount'),
+  ('composition_from_mask', 'Composition from gap-cut mask',
+   'The bijection: an integer composition of n ↔ a subset of the n-1 gaps between n unit cells (the mask IS the '
+   'rank).', 'composition_from_mask', 'composition_from_mask'),
+  ('permutation_unrank', 'Permutation unrank (lexicographic)',
+   'The r-th permutation of [n] in lexicographic order — Lehmer-code decode.',
+   'permutation_unrank_lex', 'permutation_unrank'),
+  ('lehmer_code', 'Lehmer code',
+   'L[i] = #{ j > i : perm[j] < perm[i] } for every position — the inversion table of a permutation. SQL twin '
+   'is to_inversion(p).code, NOT the SQL function literally named lehmer_code() (that one serializes an '
+   'already-built permutation_inversion to text — a naming collision with this identity, not a match). The SQL '
+   'array is length n-1 (the always-0 trailing entry is dropped from the stored carrier); the TS array keeps it.',
+   'to_inversion', 'lehmer_code'),
+  ('inversions', 'Inversions (Coxeter length)',
+   'The number of pairs out of order in a permutation — the sum of its Lehmer code, and its Coxeter length.',
+   'perm_inversions', 'inversions'),
+  ('stirling1', 'Unsigned Stirling number of the first kind',
+   'c(n,k) — the number of permutations of n elements having exactly k cycles.',
+   'stirling_first_unsigned', 'stirling1'),
+  ('eulerianA', 'Eulerian number', 'A(n,k) — the number of permutations of n elements having exactly k descents.',
+   'eulerian_number', 'eulerianA'),
+  ('integer_partition_k_count', 'k-part partition count',
+   'p(n,k) — the number of integer partitions of n into exactly k parts.',
+   'k_part_partition_count', 'integerPartitionKCount');
+
+-- Attribute assignments — every one below is independently demonstrated (not just asserted) by a base_example
+-- further down. gcd_int/lcm_int: associative + commutative, standard number theory. gaussian_add/gaussian_mul:
+-- ℤ[i] is a commutative ring — both operations are. mc_add: componentwise mod-M addition, trivially both.
+-- mc_mul: ORDERLESS ONLY — commutativity is proved algebraically below (swapping a,b relabels the same sum,
+-- since AND and popcount are symmetric in their operands) and demonstrated live; associativity of this specific
+-- XOR-convolution/Thue-Morse-cocycle construction is NOT verified here and is deliberately left unassigned
+-- rather than guessed (Cayley-Dickson-style doubling constructions are known to lose associativity at exactly
+-- this kind of higher dimension — asserting Flat without proof would be worse than leaving it uncurated).
+INSERT INTO base_function_attribute_manual (function, attribute) VALUES
+  ('gcd_int', 'flat'), ('gcd_int', 'orderless'),
+  ('lcm_int', 'flat'), ('lcm_int', 'orderless'),
+  ('gaussian_add', 'flat'), ('gaussian_add', 'orderless'),
+  ('gaussian_mul', 'flat'), ('gaussian_mul', 'orderless'),
+  ('mc_add', 'flat'), ('mc_add', 'orderless'),
+  ('mc_mul', 'orderless');
+  -- everything else above: no attribute rows — proves attributes are optional (factorial/catalan_number/etc.
+  -- are all zero-attribute cases: counting sequences and non-endo functions, not combining operations)
+
+-- Cross-system references — authored directly with subject_kind='function' (no single dominant external system
+-- the way FindStat is for maps, so no new convenience column; base_reference already anticipates 'wolfram' as a
+-- system value, unused until now). Conservative: only identities with a citation I'm confident is correct are
+-- included here — no fabricated A-numbers or WL symbol names for the rest; the remaining 21 curated rows above
+-- can gain references incrementally without a schema change.
+INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta, relation) VALUES
+  ('function','catalan_number','oeis','A000108','https://oeis.org/A000108','','isomorphic'),
+  ('function','catalan_number','wolfram','CatalanNumber','https://reference.wolfram.com/language/ref/CatalanNumber.html','','isomorphic'),
+  ('function','little_schroder_number','oeis','A001003','https://oeis.org/A001003','','isomorphic'),
+  ('function','factorial','wolfram','Factorial','https://reference.wolfram.com/language/ref/Factorial.html','','isomorphic'),
+  ('function','factorial','mathlib4','Nat.factorial','https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorial/Basic.html','','isomorphic'),
+  ('function','binomial','wolfram','Binomial','https://reference.wolfram.com/language/ref/Binomial.html','','isomorphic'),
+  ('function','bell','oeis','A000110','https://oeis.org/A000110','','isomorphic'),
+  ('function','bell','wolfram','BellB','https://reference.wolfram.com/language/ref/BellB.html','','isomorphic'),
+  ('function','fubini','oeis','A000670','https://oeis.org/A000670','','isomorphic'),
+  ('function','partition_number','oeis','A000041','https://oeis.org/A000041','','isomorphic'),
+  ('function','partition_number','wolfram','PartitionsP','https://reference.wolfram.com/language/ref/PartitionsP.html','','isomorphic'),
+  ('function','stirling_second','wolfram','StirlingS2','https://reference.wolfram.com/language/ref/StirlingS2.html','','isomorphic'),
+  ('function','stirling1','wolfram','StirlingS1','https://reference.wolfram.com/language/ref/StirlingS1.html',
+   'WL StirlingS1 is SIGNED; stirling1 here is the UNSIGNED cycle-count c(n,k) = |StirlingS1(n,k)|','isomorphic');
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('base_function','every base_function.sql_fn resolves to a real pg_proc function',
+   'eq','0','no FK is possible (sql_fn is plain text, not a DB object reference) — this is the integrity check',$q$
+     SELECT count(*)::text FROM base_function WHERE sql_fn IS NOT NULL
+       AND NOT EXISTS (SELECT 1 FROM pg_proc WHERE proname = sql_fn) $q$),
+  ('base_function','flat/orderless are only assigned to SQL-backed functions of arity >= 2',
+   'eq','0','operationalizes the endo-operation curation guideline as a check, not a DB CHECK constraint',$q$
+     SELECT count(*)::text FROM base_function_attribute_manual m
+       JOIN base_function f ON f.id = m.function
+       JOIN pg_proc p ON p.proname = f.sql_fn
+      WHERE m.attribute IN ('flat','orderless') AND p.pronargs < 2 $q$),
+  ('base_function','gcd_int is associative on a sample triple (Flat, demonstrated not just asserted)',
+   'eq','true',NULL,$q$
+     SELECT (gcd_int(gcd_int(12,18),30) = gcd_int(12,gcd_int(18,30)))::text $q$),
+  ('base_function','gcd_int is commutative on a sample pair (Orderless, demonstrated not just asserted)',
+   'eq','true',NULL,$q$ SELECT (gcd_int(12,18) = gcd_int(18,12))::text $q$),
+  ('base_function','gaussian_add is commutative on a sample pair (Orderless, demonstrated not just asserted)',
+   'eq','true',NULL,$q$
+     SELECT (gaussian_add(ROW(2,3)::gaussian_integer, ROW(1,-4)::gaussian_integer)
+             = gaussian_add(ROW(1,-4)::gaussian_integer, ROW(2,3)::gaussian_integer))::text $q$),
+  ('base_function','gaussian_mul is commutative on a sample pair (Orderless, demonstrated not just asserted)',
+   'eq','true',NULL,$q$
+     SELECT (gaussian_mul(ROW(2,3)::gaussian_integer, ROW(1,-4)::gaussian_integer)
+             = gaussian_mul(ROW(1,-4)::gaussian_integer, ROW(2,3)::gaussian_integer))::text $q$),
+  ('base_function','mc_mul is commutative on a sample pair (Orderless, demonstrated — associativity deliberately NOT claimed)',
+   'eq','true',NULL,$q$
+     SELECT (mc_mul(ROW(ARRAY[2,3],97)::multicomplex, ROW(ARRAY[5,7],97)::multicomplex)
+             = mc_mul(ROW(ARRAY[5,7],97)::multicomplex, ROW(ARRAY[2,3],97)::multicomplex))::text $q$);
