@@ -177,10 +177,39 @@ CREATE FUNCTION dissection_centrally_symmetric(d dissection) RETURNS boolean LAN
     SELECT dissection_diagonal_rotate(c, (d).m) FROM unnest((d).diagonals) c
      ORDER BY dissection_diagonal_rotate(c, (d).m)) $$;
 CREATE TYPE cyclohedron_fiber AS (n natural_number);   -- typed fiber; axis: n = the polytope's OWN dimension (W_n)
+-- The floor generates the CS dissections DIRECTLY, by choosing rotation ORBITS rather than by generating every
+-- dissection of the (2n+2)-gon and filtering (#307). Filtering meant paying little_schroeder(2n) — 103,049 at
+-- n=4 — to keep 321 of them, so enumeration outran the watchdog past n=4 and the accel could only ever be
+-- certified on the tiny fibers. Same include/exclude shape as dissections' own floor, one step per orbit: a
+-- diagonal's orbit under the half-turn is itself (a main diagonal) or a pair, and a CS dissection is exactly a
+-- union of orbits that stays non-crossing. Each is therefore generated once, and the closing ORDER BY is the
+-- same (size, then the diagonal array) the filtered scan produced, so the enumeration order is unchanged.
 CREATE FUNCTION fiber_elements(f cyclohedron_fiber, element_limit int) RETURNS SETOF dissection LANGUAGE sql STABLE AS $$
-  SELECT d FROM fiber_elements(ROW(2 * (f).n)::dissections_fiber, little_schroeder((2 * (f).n)::int)::int) d
-   WHERE dissection_centrally_symmetric(d)
-   ORDER BY coalesce(array_length((d).diagonals, 1), 0), (d).diagonals
+  WITH RECURSIVE
+    orb AS (   -- one row per orbit, in code order; `diags` is the orbit expanded (1 diagonal if central, else 2)
+      SELECT row_number() OVER (ORDER BY key) AS idx, diags FROM (
+        SELECT DISTINCT least(c, dissection_diagonal_rotate(c, 2 * (f).n::int + 2)) AS key,
+               CASE WHEN dissection_diagonal_rotate(c, 2 * (f).n::int + 2) = c THEN ARRAY[c]
+                    ELSE ARRAY[least(c, dissection_diagonal_rotate(c, 2 * (f).n::int + 2)),
+                               greatest(c, dissection_diagonal_rotate(c, 2 * (f).n::int + 2))] END AS diags
+          FROM (SELECT i * (2 * (f).n::int + 2) + j AS c
+                  FROM generate_series(0, 2 * (f).n::int + 1) i, generate_series(0, 2 * (f).n::int + 1) j
+                 WHERE i < j AND j - i >= 2 AND NOT (i = 0 AND j = 2 * (f).n::int + 1)) t) u),
+    total AS (SELECT coalesce(max(idx), 0)::int AS n_orb FROM orb),
+    gen(chosen, k) AS (
+      SELECT ARRAY[]::int[], 1
+       UNION ALL
+      SELECT CASE WHEN b.inc THEN (SELECT array_agg(x ORDER BY x) FROM unnest(gen.chosen || o.diags) x)
+                  ELSE gen.chosen END,
+             gen.k + 1
+        FROM gen, total, LATERAL (SELECT diags FROM orb WHERE idx = gen.k) o, LATERAL (VALUES (false), (true)) b(inc)
+       WHERE gen.k <= total.n_orb
+         AND (NOT b.inc OR NOT EXISTS (          -- the orbit must cross nothing chosen, nor itself
+               SELECT 1 FROM unnest(o.diags) nd, unnest(gen.chosen || o.diags) e
+                WHERE nd <> e AND diagonals_cross(nd, e, 2 * (f).n::int + 2))))
+  SELECT ROW(gen.chosen, 2 * (f).n::int + 2)::dissection FROM gen, total
+   WHERE gen.k = total.n_orb + 1
+   ORDER BY coalesce(array_length(gen.chosen, 1), 0), gen.chosen
    LIMIT element_limit $$;
 -- The f-vector in closed form (#307). A face of W_n is a centrally symmetric partial dissection, identified by
 -- which diagonal ORBITS it uses (dissection_symmetry_orbit_count, below), and the faces using exactly k of them
@@ -230,10 +259,14 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('cyclohedron','face count is the central Delannoy number: 1,3,13,63,321 for n=0..4 (#307 accel)','eq','1,3,13,63,321',
    'Σ_k C(n,k)C(n+k,k) = D(n,n), A001850 — closed form, no dissection scan',
    $q$ SELECT string_agg(cardinality(cyclohedron(n))::text, ',' ORDER BY n) FROM generate_series(0,4) n $q$),
-  ('cyclohedron','the closed form agrees with enumerating the faces, n=0..4','eq','true',
-   'the differential this accel exists to make possible — previously a scan compared against itself',
-   $q$ SELECT bool_and(cardinality(cyclohedron(n)) = (SELECT count(*) FROM elements(cyclohedron(n)) e))
-         FROM generate_series(0,4) n $q$),
+  ('cyclohedron','the closed form agrees with enumerating the faces, n=0..6','eq','true',
+   'the differential this accel exists to make possible — previously a scan compared against itself, and only reachable to n=4',
+   $q$ SELECT bool_and(cardinality(cyclohedron(n)) = (SELECT count(*) FROM elements(ROW(n)::cyclohedron_fiber, 2147483647) e))
+         FROM generate_series(0,6) n $q$),
+  ('cyclohedron','the orbit floor still yields genuine CS dissections of the (2n+2)-gon','eq','true',
+   'it no longer goes through the parent to get there, so this pins that it produces the same things: every face centrally symmetric and a member of dissections(2n)',
+   $q$ SELECT bool_and(dissection_centrally_symmetric((e).value) AND ((e).value <@ dissections(10)))
+         FROM elements(cyclohedron(5)) e $q$),
   ('cyclohedron','the f-vector by orbit count at n=4: 1,20,90,140,70','eq','1,20,90,140,70',
    'C(n,k)C(n+k,k) per k, checked against the enumerated faces grouped by their orbit count',
    $q$ SELECT string_agg(cnt::text, ',' ORDER BY k) FROM (
