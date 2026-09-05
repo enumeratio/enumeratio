@@ -293,6 +293,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('grand_dyck_paths',            'Grand Dyck Paths',           'Free ±1 paths of length 2n returning to 0 — no positivity constraint.'),
   ('increasing_binary_trees',     'Increasing Binary Trees',    'Binary trees on n labeled nodes, heap-ordered by label — n! of them.'),
   ('k_ary_trees',                 'k-ary Trees',                 'Trees where every internal node has exactly k children — the Fuss-Catalan count.'),
+  ('non_crossing_trees',          'Non-Crossing Trees',         'Spanning trees on n+1 circle-labeled vertices with no crossing chords — C(3n,n)/(2n+1), A001764.'),
   ('k_inversion_permutations',    'k-Inversion Permutations',   'Permutations of [n] with exactly k inversions — the Mahonian triangle.'),
   ('labeled_graphs',              'Labeled Graphs',              'Simple undirected graphs on the labeled vertex set [n].'),
   ('labeled_graphs_by_edges',     'Labeled Graphs by Edges',    'Graphs on [n] with exactly m edges — the (n,m) refinement of labeled_graphs.'),
