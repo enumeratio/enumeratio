@@ -8,4 +8,7 @@ INSERT INTO base_collection VALUES ('centered_square_numbers','numeric',true);
 INSERT INTO base_monotonic_sequence VALUES ('centered_square_numbers');   -- non-decreasing: synth a scanning contains
 SELECT base_realize('centered_square_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
-  ('centered_square_numbers','first terms','eq','1,5,13,25,41,61,85,113,145','2n(n+1)+1',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(centered_square_numbers(),9) e $q$);
+  ('centered_square_numbers','first terms','eq','1,5,13,25,41,61,85,113,145','2n(n+1)+1',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(centered_square_numbers(),9) e $q$),
+  ('centered_square_numbers','unrank(9) = 181 = 2·9·10+1','eq','181','off the floor',$q$ SELECT (unrank(centered_square_numbers(), 9)).value::text $q$),
+  ('centered_square_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$ SELECT cardinality(centered_square_numbers())::text $q$),
+  ('centered_square_numbers','contains via synthesized scan: 145 ∈, 146 ∉','eq','true|false','monotonic-sequence contains + <@',$q$ SELECT (145::numeric <@ centered_square_numbers())::text || '|' || (146::numeric <@ centered_square_numbers())::text $q$);
