@@ -942,9 +942,26 @@ BEGIN
                       THEN format('coalesce((SELECT fiber_count(%s)), 2147483647)::int', parent_row)
                       WHEN p.unbounded THEN format('(element_limit * %s)', scan_factor)   -- infinite floor: over-scan
                       ELSE '2147483647' END;                                               -- bounded but uncounted: whole fiber
-  EXECUTE format('CREATE FUNCTION fiber_elements(f %I, element_limit int) RETURNS SETOF %s LANGUAGE sql STABLE AS $b$ '
-                 'SELECT v FROM fiber_elements(%s, %s) v WHERE %I(v) LIMIT element_limit $b$',
-                 coll || '_fiber', carrier, parent_row, window_expr, predicate);
+  -- The floor: scan the parent's fiber and filter. When the child supplies BOTH accel hooks, build it from the
+  -- unrank instead (#299) — for a restriction the comparison is known and lopsided, because the alternative is
+  -- scanning a STRICTLY LARGER parent to find a sparse subset. boolean_permutations(10) filters 10! = 3,628,800
+  -- permutations down to F(11) = 89: 199s scanning, 14ms unranking.
+  --
+  -- This is deliberately NOT the general rule #299 asked for (prefer fiber_unrank wherever a collection has one).
+  -- Unranking per row is O(N · cost(unrank)) and a recurrence unrank is O(ord), so a full window costs O(N²)
+  -- where the sequential floor costs O(N); routing the whole catalog through unrank took the selfcert sweep from
+  -- 4 stalled collections to 10, and 331s to 499s. A restriction is the case where the scan being replaced is
+  -- known to be the expensive one.
+  IF count_fn IS NOT NULL AND unrank_fn IS NOT NULL THEN
+    EXECUTE format('CREATE FUNCTION fiber_elements(f %1$I, element_limit int) RETURNS SETOF %2$s LANGUAGE sql STABLE AS $b$ '
+                   'SELECT %3$I(%5$s, i::rank_index) '
+                   'FROM generate_series(0, least(%4$I(%5$s), element_limit::numeric)::bigint - 1) i $b$',
+                   coll || '_fiber', carrier, unrank_fn, count_fn, parent_row);
+  ELSE
+    EXECUTE format('CREATE FUNCTION fiber_elements(f %I, element_limit int) RETURNS SETOF %s LANGUAGE sql STABLE AS $b$ '
+                   'SELECT v FROM fiber_elements(%s, %s) v WHERE %I(v) LIMIT element_limit $b$',
+                   coll || '_fiber', carrier, parent_row, window_expr, predicate);
+  END IF;
   IF to_regprocedure(format('contains_in_fiber(%I, %s)', parent || '_fiber', carrier)) IS NOT NULL THEN
     EXECUTE format('CREATE FUNCTION contains_in_fiber(f %I, v %s) RETURNS boolean LANGUAGE sql STABLE AS $b$ '
                    'SELECT contains_in_fiber(%s, v) AND %I(v) $b$', coll || '_fiber', carrier, parent_row, predicate);
