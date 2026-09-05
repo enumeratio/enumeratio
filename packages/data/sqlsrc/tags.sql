@@ -41,27 +41,18 @@ INSERT INTO base_tag (id, title, description, implies) VALUES
 
 -- collection → tag (editorial). Leaf tags only; ancestors follow from `implies` in the view. integer_sequence and
 -- infinite are NOT listed — they derive from carrier='numeric' / unbounded.
+-- The figurate/prime_family/factorization/divisor/digit_based rows for number-sets collections live in
+-- packs/number-sets/tags.number-sets.sql (#283 phase 3 extraction) — base_collection_tag does not filter to
+-- existing base_collection rows, so an orphaned row here would break the count-cache guard under core alone
+-- (the same bug the polytopes extraction hit — see meta-collections.stats.sql).
 INSERT INTO base_collection_tag_manual (tag, collection)
 SELECT tag, collection FROM (VALUES
-  -- figurate
-  ('figurate', 'triangular_numbers'), ('figurate', 'square_numbers'), ('figurate', 'pentagonal_numbers'),
-  ('figurate', 'hexagonal_numbers'), ('figurate', 'heptagonal_numbers'), ('figurate', 'octagonal_numbers'),
-  ('figurate', 'centered_triangular_numbers'), ('figurate', 'centered_square_numbers'), ('figurate', 'centered_hexagonal_numbers'),
-  ('figurate', 'star_numbers'), ('figurate', 'pronic_numbers'), ('figurate', 'cube_numbers'),
-  ('figurate', 'tetrahedral_numbers'), ('figurate', 'square_pyramidal_numbers'), ('figurate', 'pentatope_numbers'),
-  -- primes
-  ('prime_family', 'prime_numbers'), ('prime_family', 'twin_primes'), ('prime_family', 'cousin_primes'),
-  ('prime_family', 'sexy_primes'), ('prime_family', 'safe_primes'), ('prime_family', 'sophie_germain_primes'),
-  ('prime_family', 'semiprime_numbers'), ('prime_family', 'squarefree_semiprimes'), ('prime_family', 'k_almost_primes'),
-  ('prime_family', 'prime_power_numbers'), ('prime_family', 'primorial_numbers'),
-  -- factorization shape
-  ('factorization', 'semiprime_numbers'), ('factorization', 'squarefree_semiprimes'), ('factorization', 'sphenic_numbers'),
-  ('factorization', 'square_free_numbers'), ('factorization', 'powerful_numbers'), ('factorization', 'perfect_power_numbers'),
-  ('factorization', 'achilles_numbers'), ('factorization', 'prime_power_numbers'), ('factorization', 'k_almost_primes'),
+  -- figurate (core-owned members only)
+  ('figurate', 'triangular_numbers'), ('figurate', 'square_numbers'), ('figurate', 'cube_numbers'),
+  -- primes (core-owned members only)
+  ('prime_family', 'prime_numbers'), ('prime_family', 'primorial_numbers'),
+  -- factorization shape (core-owned members only)
   ('factorization', 'integer_factorizations'),
-  -- divisor sums
-  ('divisor', 'abundant_numbers'), ('divisor', 'deficient_numbers'), ('divisor', 'perfect_numbers'),
-  ('divisor', 'amicable_numbers'), ('divisor', 'practical_numbers'), ('divisor', 'arithmetic_numbers'),
   -- recurrences
   ('recurrence', 'fibonacci_numbers'), ('recurrence', 'lucas_numbers'), ('recurrence', 'pell_numbers'),
   ('recurrence', 'jacobsthal_numbers'), ('recurrence', 'padovan_sequence'), ('recurrence', 'perrin_sequence'),
@@ -71,11 +62,6 @@ SELECT tag, collection FROM (VALUES
   ('counting_sequence', 'schroeder_numbers'), ('counting_sequence', 'central_delannoy_numbers'),
   ('counting_sequence', 'partition_numbers'), ('counting_sequence', 'factorial_numbers'), ('counting_sequence', 'narayana_numbers'),
   ('counting_sequence', 'double_factorial_numbers'),
-  -- digit-based
-  ('digit_based', 'happy_numbers'), ('digit_based', 'kaprekar_numbers'), ('digit_based', 'narcissistic_numbers'),
-  ('digit_based', 'automorphic_numbers'), ('digit_based', 'evil_numbers'), ('digit_based', 'odious_numbers'),
-  ('digit_based', 'pernicious_numbers'), ('digit_based', 'smith_numbers'), ('digit_based', 'harshad_numbers'),
-  ('digit_based', 'thue_morse_numbers'),
   -- other numbers
   ('number', 'rational_numbers'), ('number', 'cardinal_numbers'), ('number', 'integer_numbers'),
   ('number', 'gaussian_integers'), ('number', 'omega_ordinals'), ('modular', 'modular_residues'), ('modular', 'multicomplex_numbers'),
@@ -141,7 +127,7 @@ SELECT tag, collection FROM (VALUES
   ('species', 'singleton_species'),
   -- base_restrict / borrow-carrier ports (backlog #1)
   ('composition', 'zigzag_composition'),
-  ('word', 'calkin_wilf_paths'), ('word', 'stern_brocot_paths'), ('word', 'hyperbinary_representations'), ('recurrence', 'hyperbinary_representations'), ('tree', 'prufer_sequences'),
+  ('tree', 'prufer_sequences'),
   -- simplex's tags moved to packs/polytopes/tags.polytopes.sql — #283 phase 2.2, it's that pack's own collection
   ('selection', 'boolean_algebra'),
   ('set_partition', 'partition_algebra')

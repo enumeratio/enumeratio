@@ -1,4 +1,4 @@
--- requires: number-theory, integer_factorizations, harshad_numbers, evil_numbers, tags, realizer
+-- requires: number-theory, integer_factorizations, utilities, tags, realizer
 -- requires-tag: collection
 -- (the safe late anchor, per set_builders.sql: the registration below reads base_collection as a one-shot
 -- INSERT ... SELECT snapshot, not a view, so every numeric collection must already be registered before this
@@ -75,21 +75,32 @@ CREATE FUNCTION digit_count(n numeric) RETURNS int LANGUAGE plpgsql IMMUTABLE AS
 CREATE FUNCTION parity(n numeric) RETURNS int LANGUAGE sql IMMUTABLE AS $$ SELECT mod(trunc(abs(n)), 2)::int $$;
 
 -- ── data-driven registration: every carrier='numeric' collection × the eight stats above ──────────────────
-INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain)
-SELECT c.id, s.stat_id, s.value_fn, s.title, s.codomain
-FROM base_collection c
-JOIN base_collection_tag ct ON ct.collection = c.id AND ct.tag = 'integer_sequence'
-CROSS JOIN (VALUES
-  ('big_omega',     'big_omega',         'Ω — prime factors with multiplicity', 'natural_numbers'),
-  ('little_omega',  'little_omega',      'ω — distinct prime factors',          'natural_numbers'),
-  ('divisor_count', 'divisor_count',     'τ = σ₀ — number of divisors',         'natural_numbers'),
-  ('divisor_sum',   'divisor_sum',       'σ = σ₁ — sum of divisors',            'natural_numbers'),
-  ('digit_sum',     'decimal_digit_sum', 'Decimal digit sum',                   'natural_numbers'),
-  ('digit_count',   'digit_count',       'Decimal digit count',                 'natural_numbers'),
-  ('binary_weight', 'binary_popcount',   'Binary weight (popcount)',            'natural_numbers'),
-  ('parity',        'parity',            'Parity (0 = even, 1 = odd)',          'natural_numbers')
-) AS s(stat_id, value_fn, title, codomain)
-WHERE c.carrier = 'numeric';
+-- FINALIZER, not a one-shot INSERT (#283 phase 3): a bulk `INSERT ... SELECT FROM base_collection` here would only
+-- ever see core's own collections (this file loads once, at core-load time), going stale the moment a pack loads
+-- afterwards and adds its own carrier='numeric' collections — the same whole-catalog-sweep trap meta_collection_counts
+-- hit (see meta-collections.stats.sql). Registered 'collection'-scope, so base_pack_finalize(pack) calls it once per
+-- collection owned by that pack, for core AND for every later pack.
+CREATE FUNCTION number_stats_finalize(p_collection text) RETURNS void LANGUAGE plpgsql AS $$
+BEGIN
+  INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain)
+  SELECT c.id, s.stat_id, s.value_fn, s.title, s.codomain
+  FROM base_collection c
+  JOIN base_collection_tag ct ON ct.collection = c.id AND ct.tag = 'integer_sequence'
+  CROSS JOIN (VALUES
+    ('big_omega',     'big_omega',         'Ω — prime factors with multiplicity', 'natural_numbers'),
+    ('little_omega',  'little_omega',      'ω — distinct prime factors',          'natural_numbers'),
+    ('divisor_count', 'divisor_count',     'τ = σ₀ — number of divisors',         'natural_numbers'),
+    ('divisor_sum',   'divisor_sum',       'σ = σ₁ — sum of divisors',            'natural_numbers'),
+    ('digit_sum',     'decimal_digit_sum', 'Decimal digit sum',                   'natural_numbers'),
+    ('digit_count',   'digit_count',       'Decimal digit count',                 'natural_numbers'),
+    ('binary_weight', 'binary_popcount',   'Binary weight (popcount)',            'natural_numbers'),
+    ('parity',        'parity',            'Parity (0 = even, 1 = odd)',          'natural_numbers')
+  ) AS s(stat_id, value_fn, title, codomain)
+  WHERE c.id = p_collection AND c.carrier = 'numeric';
+END $$;
+INSERT INTO base_finalizer (id, fn, description, scope) VALUES
+  ('number_stats_finalize', 'number_stats_finalize',
+   'registers the 8 numeric-carrier stats on a newly-loaded integer_sequence collection', 'collection');
 
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -133,9 +144,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
             AND bool_and(own))::text
     FROM base_stat_resolved WHERE collection = 'natural_numbers' $q$),
 
-  ('number-stats','a formerly-zero-stat numeric collection now resolves statistics (e.g. square_free_numbers)','eq','true',
-   'base_stat_resolved count > 0 — was 0 for every numeric collection before issue #169',$q$
-    SELECT (count(*) > 0)::text FROM base_stat_resolved WHERE collection = 'square_free_numbers' $q$),
+  ('number-stats','a formerly-zero-stat numeric collection now resolves statistics (e.g. triangular_numbers)','eq','true',
+   'base_stat_resolved count > 0 — was 0 for every numeric collection before issue #169; any carrier=numeric
+    collection demonstrates it, so this picks a core one rather than a number-sets collection (#283 phase 3)',$q$
+    SELECT (count(*) > 0)::text FROM base_stat_resolved WHERE collection = 'triangular_numbers' $q$),
 
   ('number-stats','coverage: every carrier=numeric collection now carries exactly the 8 registered stats — no gaps, no dupes','eq','true',
    'a structural check (no hardcoded collection count, so it stays true as numeric collections are added)',$q$

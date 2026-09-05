@@ -549,6 +549,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'lyndon_words' AND repr = 'dots')
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'k_subsets'    AND repr = 'dots'))::text $q$),
   ('representations','scope fence (#140): the Stern–Brocot rational is collection-scoped, so binary_words does NOT inherit a rational repr','eq','false','a collection-scoped repr never leaks onto its carrier siblings',$q$
-    SELECT EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'binary_words' AND repr = 'rational')::text $q$),
-  ('representations','the turns/rational reprs still resolve on their OWN collections (own rows ignore scope)','eq','2','stern_brocot_paths keeps turns + rational',$q$
-    SELECT count(*)::text FROM base_repr_resolved WHERE collection = 'stern_brocot_paths' AND repr IN ('turns','rational') $q$);
+    SELECT EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'binary_words' AND repr = 'rational')::text $q$);
+  -- the "own rows ignore scope" companion check (stern_brocot_paths keeps turns + rational) moved to
+  -- packs/number-sets/examples.representations.number-sets.sql (#283 phase 3) — stern_brocot_paths is that pack's collection.

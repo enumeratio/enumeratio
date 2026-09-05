@@ -444,23 +444,13 @@ INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
   ('perrin_sequence',    '3-X^2+X^2·Y+X^3·Y',   '\frac{3-x^2}{1-x^2-x^3}', 'a_n = 3,0,2,3,2,5,5,7,10,…',     true);
 
 -- polynomial (figurate) sequences: closed rational OGFs poly/(1-X)^d — written directly with the / operator (no Y). The
--- polygonal family is x((s−3)x+1)/(1-x)^3; the pyramidal/simplex family raises the denominator power.
+-- polygonal family is x((s−3)x+1)/(1-x)^3; the pyramidal/simplex family raises the denominator power. The rest of the
+-- figurate family (pentagonal/hexagonal/pronic/tetrahedral/… — number-sets collections) is registered in
+-- packs/number-sets/base_species.number-sets.sql; only the three named counting sequences (§4) stay here.
 INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
   ('triangular_numbers',      'X/(1-X)^3',            '\frac{x}{(1-x)^3}',        'C(n+1,2); 0,1,3,6,10,…',   true),
   ('square_numbers',          'X·(1+X)/(1-X)^3',      '\frac{x(1+x)}{(1-x)^3}',   'n²; 0,1,4,9,16,…',         true),
-  ('pentagonal_numbers',      'X·(1+2·X)/(1-X)^3',    '\frac{x(1+2x)}{(1-x)^3}',  'n(3n−1)/2; 0,1,5,12,…',    true),
-  ('hexagonal_numbers',       'X·(1+3·X)/(1-X)^3',    '\frac{x(1+3x)}{(1-x)^3}',  'n(2n−1); 0,1,6,15,28,…',   true),
-  ('pronic_numbers',          '2·X/(1-X)^3',          '\frac{2x}{(1-x)^3}',       'n(n+1); 0,2,6,12,20,…',    true),
-  ('tetrahedral_numbers',     'X/(1-X)^4',            '\frac{x}{(1-x)^4}',        'C(n+2,3); 0,1,4,10,20,…',  true),
-  ('square_pyramidal_numbers','X·(1+X)/(1-X)^4',      '\frac{x(1+x)}{(1-x)^4}',   'Σk²; 0,1,5,14,30,55,…',    true),
-  ('pentatope_numbers',       'X/(1-X)^5',            '\frac{x}{(1-x)^5}',        'C(n+3,4); 0,1,5,15,35,…',  true),
-  ('cube_numbers',            'X·(1+4·X+X^2)/(1-X)^4','\frac{x(1+4x+x^2)}{(1-x)^4}','n³; 0,1,8,27,64,…',      true),
-  ('heptagonal_numbers',      'X·(1+4·X)/(1-X)^3',    '\frac{x(1+4x)}{(1-x)^3}',  'n(5n−3)/2; 0,1,7,18,…',    true),
-  ('octagonal_numbers',       'X·(1+5·X)/(1-X)^3',    '\frac{x(1+5x)}{(1-x)^3}',  'n(3n−2); 0,1,8,21,40,…',   true),
-  ('centered_triangular_numbers','(1+X+X^2)/(1-X)^3', '\frac{1+x+x^2}{(1-x)^3}',  '1+3·T_n; 1,4,10,19,…',     true),
-  ('centered_square_numbers', '(1+2·X+X^2)/(1-X)^3',  '\frac{1+2x+x^2}{(1-x)^3}', '1+4·T_n; 1,5,13,25,…',     true),
-  ('centered_hexagonal_numbers','(1+4·X+X^2)/(1-X)^3','\frac{1+4x+x^2}{(1-x)^3}', '1+6·T_n; 1,7,19,37,61,…',  true),
-  ('star_numbers',            '(1+10·X+X^2)/(1-X)^3', '\frac{1+10x+x^2}{(1-x)^3}','centered 12-gonal; 1,13,37,…', true);
+  ('cube_numbers',            'X·(1+4·X+X^2)/(1-X)^4','\frac{x(1+4x+x^2)}{(1-x)^4}','n³; 0,1,8,27,64,…',      true);
 
 -- infinite-product families: a leading ∏ means ∏_{k≥1} of the per-k factor (X^k = the index power).
 INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES

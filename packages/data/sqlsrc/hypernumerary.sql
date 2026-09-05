@@ -1,4 +1,4 @@
--- requires: hyperbinary_representations, realizer
+-- requires: realizer
 -- hypernumerary — the GENERAL widened-alphabet base-b numeral family: base-b digit words d (MSB-first) over the
 -- widened alphabet {0,1,…,b−1+k} with Σ dᵢ·bⁱ = n. Standard base-b numerals use only {0..b−1}; admitting k extra
 -- top digits lets an integer have several valid numerals (each a different way to "carry" against the same
@@ -107,14 +107,9 @@ CREATE FUNCTION fiber_symbol(f hypernumerary_fiber) RETURNS text LANGUAGE sql IM
 SELECT base_realize('hypernumerary');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
+-- the b=2,k=1 == hyperbinary_representations cross-check lives in packs/number-sets/examples.hypernumerary.sql
+-- (hyperbinary_representations is a number-sets collection; core can't assert against it).
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('hypernumerary','b=2,k=1 IS hyperbinary_representations: identical numeral encoding, element-for-element, n=0..8','eq','true','not just equal counts — equal notations, in rank order — ties the general engine to the trusted instance',$q$
-    SELECT bool_and(
-      (SELECT string_agg(notation((e).value), ',' ORDER BY ordinality(e)) FROM elements(hypernumerary(2,1,n)) e)
-      = (SELECT string_agg(notation((e).value), ',' ORDER BY ordinality(e)) FROM elements(hyperbinary_representations(n)) e))::text
-    FROM generate_series(0,8) n $q$),
-  ('hypernumerary','cardinality of hypernumerary(2,1,n) matches fusc(n+1), n=0..8','eq','1,1,2,1,3,2,3,1,4','A002487 shifted — the b=2,k=1 slice reproduces hyperbinary_representations exactly (independent accel)',$q$
-    SELECT string_agg(cardinality(hypernumerary(2,1,n))::text, ',' ORDER BY n) FROM generate_series(0,8) n $q$),
   ('hypernumerary','hypernumerary(3,1,3) = {10,03}; hypernumerary(3,1,4) = {11}','eq','10,03|11','worked by hand: alphabet {0,1,2,3}, Σdᵢ3ⁱ=n (3 = 1·3+0 = 0·3+3)',$q$
     SELECT (SELECT string_agg(notation((e).value), ',' ORDER BY ordinality(e)) FROM elements(hypernumerary(3,1,3)) e) || '|' ||
            (SELECT string_agg(notation((e).value), ',' ORDER BY ordinality(e)) FROM elements(hypernumerary(3,1,4)) e) $q$),

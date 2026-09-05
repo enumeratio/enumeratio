@@ -1,7 +1,6 @@
--- requires: realizer
+-- requires: utilities, realizer
 -- harshad_numbers (Niven) — n divisible by its decimal digit sum (A005349): 1..10,12,18,20,21,… Number set.
-CREATE FUNCTION decimal_digit_sum(n numeric) RETURNS int LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE m numeric:=trunc(abs(n)); s int:=0; BEGIN WHILE m>0 LOOP s:=s+mod(m,10)::int; m:=div(m,10); END LOOP; RETURN s; END $$;
+-- decimal_digit_sum lives in utilities.sql (shared with number.stats + smith_numbers, both cross-pack).
 CREATE FUNCTION is_harshad(n numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT n>=1 AND decimal_digit_sum(n)>0 AND mod(n, decimal_digit_sum(n))=0 $$;
 CREATE TYPE harshad_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f harshad_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$ SELECT n::numeric FROM generate_series(1,element_limit*3+20) n WHERE is_harshad(n::numeric) LIMIT element_limit $$;

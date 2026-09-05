@@ -10,7 +10,10 @@ export type PackName =
 /** Declared pack dependencies (§5). A cross-pack edge X→Y is a violation unless Y ∈ closure(deps[X]). */
 export const PACK_DEPS: Record<PackName, PackName[]> = {
   'core': [],
-  'number-sets': ['core'],
+  // zeckendorf_representations is a MAP natural_numbers <-> fib_strings (not a shared helper — fib_strings is a
+  // full words-plus collection, base_restrict + its own invariant predicate) — a genuine leaf-pack dependency,
+  // same shape as tableaux->partitions-plus / trees-graphs->paths below.
+  'number-sets': ['core', 'words-plus'],
   'paths': ['core'],
   'permutations-plus': ['core'],
   'partitions-plus': ['core'],
@@ -35,7 +38,7 @@ export const PACK_MAP: [PackName, RegExp][] = [
   // … and the number domains + number machinery
   ['core', /^(natural_numbers|integer_numbers|rational_numbers|fractional_numbers|gaussian_integers|gaussian_rationals|gaussian_fractionals|multicomplex_numbers|cardinal_numbers|omega_ordinals|modular_residues|number-theory|number-gradings|number-predicates|number\.stats|aliquot|padic_notation|radix_notation|residue_notation|integer_factorizations)$/],
 
-  ['number-sets', /^(.*_numbers|.*_primes|prime_gaps|collatz_trajectories|pythagorean_triples|sums_of_two_squares|goldbach_partitions|square_decompositions|egyptian_fractions|farey_sequences(\.maps)?|continued_fractions|calkin_wilf_paths|stern_brocot_paths|squarefree_semiprimes|k_almost_primes|zeckendorf_representations|hyperbinary_representations(\.stats)?)$/],
+  ['number-sets', /^(.*_numbers|.*_primes|prime_gaps|collatz_trajectories|pythagorean_triples|sums_of_two_squares|goldbach_partitions|square_decompositions|egyptian_fractions|farey_sequences(\.maps)?|continued_fractions|calkin_wilf_paths|stern_brocot_paths|squarefree_semiprimes|k_almost_primes|zeckendorf_representations|hyperbinary_representations(\.stats)?|examples\.hypernumerary|number-gradings\.number-sets|base_species\.number-sets|fiber_unrank_verify\.number-sets|tags\.number-sets|examples\.representations\.number-sets|example-tiers\.number-sets|search_sequence\.number-sets)$/],
   ['paths', /^(motzkin_paths|schroeder_paths|schroeder_triangle|delannoy|fine_|lukasiewicz|riordan|k_dyck|k_motzkin|colored_motzkin|rational_dyck|grand_dyck|dyck_paths_by_height|little_schroder_triangle|ballot_sequences)/],
   ['permutations-plus', /^(pattern_avoiding|baxter|grassmannian|cograssmannian|simple_perm|smooth_perm|connected_perm|boolean_perm|alternating_perm|cyclic_perm|k_colored|k_cycle|k_descent|k_inversion|affine_perm|decorated_perm|signed_perm|arrangements|permutations\.(stats2|stats3|findstat|denert|rsk_shape|equivalences|relations)|permutation_maps|orbit_maps_permutations_subsets|symmetry_orbit_maps|lehmer_codes|subexcedant_seqs|endofunctions|surjections|surjections_onto_k|parking_functions|non_decreasing_parking|non_crossing_perm|tournaments)/],
   ['partitions-plus', /^(distinct_partitions|odd_partitions|self_conjugate|core_partitions|bounded_part|box_confined|boxed_plane|k_part_partitions|largest_part|skew_partitions|plane_partitions|square_partitions|triangular_partitions|multiplicative_partitions|prime_partition|partitions_restrictions|integer_partitions\.(cores_quotients|dominance|frobenius_abacus|rank_crank|relations)|ordered_factorizations|partition_algebra|total_partitions)/],
@@ -105,7 +108,7 @@ export function packClosure(pack: PackName): Set<PackName> {
  * `placementOf`, not `packOf`, so both are correct mid-split. A lane lands by adding its name here and
  * re-running the codemod.
  */
-export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs']
+export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets']
 
 /**
  * The extracted set in effect. `ENUMERATIO_PACKS_OVERRIDE=a,b` substitutes for `EXTRACTED_PACKS` so a lane can be

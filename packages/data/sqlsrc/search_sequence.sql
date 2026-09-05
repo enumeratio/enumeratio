@@ -125,9 +125,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_or(collection = 'prime_numbers' AND sequence_kind = 'elements' AND oeis_id = 'A000040')::text
     FROM search_sequence(ARRAY[2,3,5,7,11]) $q$),
 
-  ('search_sequence','a mid-sequence paste still matches — offset tolerance is free from the contiguous search','eq','5',
-   'square_free_numbers starts 1,2,3,5,6,7,10,11,13,14; pasting from the 6-th term (0-based offset 5) lands at offset 5',$q$
-    SELECT offset_index::text FROM search_sequence(ARRAY[7,10,11,13,14]) WHERE collection = 'square_free_numbers' $q$),
+  -- the mid-sequence-paste offset-tolerance example (against square_free_numbers) moved to
+  -- packs/number-sets/search_sequence.number-sets.sql (#283 phase 3) — square_free_numbers is that pack's collection.
 
   ('search_sequence','no match for an unrelated run returns no rows','eq','0','a sequence no realized collection produces in the swept window',$q$
     SELECT count(*)::text FROM search_sequence(ARRAY[3,1,4,1,5,9,2,6]) $q$);
