@@ -23,6 +23,25 @@ CREATE FUNCTION fiber_elements(f grand_dyck_paths_fiber, element_limit int) RETU
 CREATE FUNCTION fiber_count(f grand_dyck_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT binomial(2 * (f).n::int, (f).n::int) $$;
 
+-- #286: fiber_unrank — no positivity constraint, so it's just "which of the remaining positions is U", a plain
+-- combinatorial-number-system choice: C(remaining-1, ups-1) completions choose U at this position (fix U here,
+-- choose the rest among what's left); U preferred first matches the floor's DESC/U<D order.
+CREATE FUNCTION fiber_unrank(f grand_dyck_paths_fiber, rank rank_index) RETURNS dyck_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; steps int[] := '{}'; ru int := n; remaining int := 2 * n; r numeric := rank;
+          cu numeric; i int; BEGIN
+    FOR i IN 1..2 * n LOOP
+      cu := CASE WHEN ru > 0 THEN binomial(remaining - 1, ru - 1) ELSE 0 END;
+      IF ru > 0 AND r < cu THEN
+        steps := steps || 1; ru := ru - 1;
+      ELSE
+        IF ru > 0 THEN r := r - cu; END IF;
+        steps := steps || -1;
+      END IF;
+      remaining := remaining - 1;
+    END LOOP;
+    RETURN ROW(steps)::dyck_path;
+  END $$;
+
 -- contains: length 2n, steps ±1, exactly n ups (⇒ n downs, sum = 0) — no non-negativity requirement.
 CREATE FUNCTION contains_in_fiber(f grand_dyck_paths_fiber, v dyck_path) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).steps, 1), 0) = 2 * (f).n::int
@@ -51,4 +70,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(
         coalesce(array_length(((e).value).steps, 1), 0) = 6
         AND (SELECT sum(x) FROM unnest(((e).value).steps) x) = 0
-      )::text FROM elements(grand_dyck_paths(3)) e $q$);
+      )::text FROM elements(grand_dyck_paths(3)) e $q$),
+  ('grand_dyck_paths','#286: element_at(grand_dyck_paths(2), 4) = DUDU (direct fiber_unrank accel)','eq','DUDU','rank 4 of the 6 in DESC/U<D order (UUDD,UDUD,UDDU,DUUD,DUDU,DDUU)',$q$
+    SELECT notation((unrank(grand_dyck_paths(2), 4)).value) $q$);

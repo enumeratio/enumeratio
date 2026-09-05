@@ -60,6 +60,73 @@ CREATE FUNCTION fiber_elements(f motzkin_paths_by_peaks_fiber, element_limit int
 CREATE FUNCTION fiber_count(f motzkin_paths_by_peaks_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT motzkin_peak_count((f).n::int, (f).k::int) $$;
 
+-- #286: fiber_unrank — two path-history-dependent bits (last_was_u is a one-step lookback; the remaining-peaks
+-- budget accumulates over the whole walk), neither derivable from remaining-steps alone, so the walk carries both
+-- forward itself, driven by a suffix-completions table mirroring motzkin_peak_count's cur/nxt but keeping every
+-- layer AND counting DOWN remaining peaks (rp = k − peaks-so-far) instead of up: tbl[remaining][height][rp][lu].
+CREATE FUNCTION motzkin_peak_completions_table(n int, k int) RETURNS numeric[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE tbl numeric[]; rem int; h int; rp int; lu int; w numeric; idx int; BEGIN
+    -- flattened 1-based: idx(rem,h,rp,lu) = ((rem*(n+1) + h)*(k+1) + rp)*2 + lu + 1
+    tbl := array_fill(0::numeric, ARRAY[(n + 1) * (n + 1) * (k + 1) * 2]);
+    tbl[((0 * (n + 1) + 0) * (k + 1) + 0) * 2 + 0 + 1] := 1;   -- remaining=0, height=0, rp=0, lu=0: done
+    tbl[((0 * (n + 1) + 0) * (k + 1) + 0) * 2 + 1 + 1] := 1;   -- remaining=0, height=0, rp=0, lu=1: done (lu moot)
+    FOR rem IN 1..n LOOP
+      FOR h IN 0..n LOOP
+        FOR rp IN 0..k LOOP
+          FOR lu IN 0..1 LOOP
+            w := 0;
+            IF h + 1 <= n THEN   -- take U: height+1, rp unchanged, lu := true
+              idx := ((rem - 1) * (n + 1) + (h + 1)) * (k + 1) + rp; idx := idx * 2 + 1 + 1;
+              w := w + tbl[idx];
+            END IF;
+            -- take L: height/rp unchanged, lu := false
+            idx := ((rem - 1) * (n + 1) + h) * (k + 1) + rp; idx := idx * 2 + 0 + 1;
+            w := w + tbl[idx];
+            IF h - 1 >= 0 THEN   -- take D: a peak completes iff lu (needs rp ≥ 1 to spend it); lu := false
+              IF lu = 0 THEN
+                idx := ((rem - 1) * (n + 1) + (h - 1)) * (k + 1) + rp; idx := idx * 2 + 0 + 1;
+                w := w + tbl[idx];
+              ELSIF rp >= 1 THEN
+                idx := ((rem - 1) * (n + 1) + (h - 1)) * (k + 1) + (rp - 1); idx := idx * 2 + 0 + 1;
+                w := w + tbl[idx];
+              END IF;
+            END IF;
+            tbl[((rem * (n + 1) + h) * (k + 1) + rp) * 2 + lu + 1] := w;
+          END LOOP;
+        END LOOP;
+      END LOOP;
+    END LOOP;
+    RETURN tbl;
+  END $$;
+
+CREATE FUNCTION fiber_unrank(f motzkin_paths_by_peaks_fiber, rank rank_index) RETURNS motzkin_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; k int := (f).k::int; tbl numeric[] := motzkin_peak_completions_table(n, k);
+          steps int[] := '{}'; h int := 0; rp int := k; lu int := 0; rem int; r numeric := rank;
+          cd numeric; cl numeric; i int; idx int; BEGIN
+    FOR i IN 1..n LOOP
+      rem := n - i + 1;
+      cd := 0;
+      IF h - 1 >= 0 THEN
+        IF lu = 0 THEN
+          idx := ((rem - 1) * (n + 1) + (h - 1)) * (k + 1) + rp; idx := idx * 2 + 0 + 1; cd := tbl[idx];
+        ELSIF rp >= 1 THEN
+          idx := ((rem - 1) * (n + 1) + (h - 1)) * (k + 1) + (rp - 1); idx := idx * 2 + 0 + 1; cd := tbl[idx];
+        END IF;
+      END IF;
+      idx := ((rem - 1) * (n + 1) + h) * (k + 1) + rp; idx := idx * 2 + 0 + 1;
+      cl := tbl[idx];
+      IF r < cd THEN
+        h := h - 1; rp := CASE WHEN lu = 1 THEN rp - 1 ELSE rp END; lu := 0;
+        steps := steps || -1;
+      ELSIF r < cd + cl THEN
+        r := r - cd; lu := 0; steps := steps || 0;
+      ELSE
+        r := r - cd - cl; h := h + 1; lu := 1; steps := steps || 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::motzkin_path;
+  END $$;
+
 CREATE FUNCTION contains_in_fiber(f motzkin_paths_by_peaks_fiber, v motzkin_path) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).steps, 1), 0) = (f).n::int
      AND NOT EXISTS (SELECT 1 FROM unnest((v).steps) s WHERE s NOT IN (-1, 0, 1))
@@ -99,4 +166,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT triangle_refines_agrees('motzkin_paths_by_peaks', 'motzkin_paths', 'peaks', 6)::text $q$),
   ('motzkin_paths_by_peaks','contains via <@: UD ∈ motzkin_paths_by_peaks(2,1), LL ∉ (0 peaks, not 1)','eq','true|false','membership = parent path ∧ peaks = k',$q$
     SELECT (ROW(ARRAY[1,-1])::motzkin_path <@ motzkin_paths_by_peaks(2,1))::text || '|' ||
-           (ROW(ARRAY[0,0])::motzkin_path <@ motzkin_paths_by_peaks(2,1))::text $q$);
+           (ROW(ARRAY[0,0])::motzkin_path <@ motzkin_paths_by_peaks(2,1))::text $q$),
+  ('motzkin_paths_by_peaks','#286: element_at(motzkin_paths_by_peaks(5,1), 4) matches sequential unrank (direct fiber_unrank accel)','eq','true','the peaks+last-was-u suffix-table unrank agrees with the floor',$q$
+    SELECT (render(element_at(f, 4)) = (SELECT render(e) FROM elements(f, 5) e ORDER BY e OFFSET 4 LIMIT 1))::text
+      FROM fibers(motzkin_paths_by_peaks(5,1)) f $q$);

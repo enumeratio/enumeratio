@@ -57,6 +57,55 @@ CREATE FUNCTION fiber_elements(f dyck_paths_by_height_fiber, element_limit int) 
 CREATE FUNCTION fiber_count(f dyck_paths_by_height_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT dyck_height_exactly_count((f).n::int, (f).h::int) $$;
 
+-- #286: fiber_unrank — "touched" is a running-max-so-far flag (whether the walk has already reached height h at
+-- least once), which is genuinely path-history-dependent (not derivable from remaining ups/downs the way plain
+-- height is); the walk carries it forward itself, driven by a suffix-completions table mirroring
+-- dyck_height_exactly_count's cur/nxt but keeping every layer: tbl[remaining][height][touched].
+CREATE FUNCTION dyck_height_completions_table(n int, h int) RETURNS numeric[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE tbl numeric[]; rem int; ht int; touched int; w numeric; idx int; nh int; BEGIN
+    -- flattened [remaining 0..2n][height 0..h][touched 0..1], 1-based: idx(rem,ht,tc) = rem*(h+1)*2 + ht*2 + tc + 1
+    tbl := array_fill(0::numeric, ARRAY[(2 * n + 1) * (h + 1) * 2]);
+    tbl[0 * (h + 1) * 2 + 0 * 2 + 1 + 1] := 1;   -- remaining=0, height=0, touched=1 (max height was reached): done
+    FOR rem IN 1..2 * n LOOP
+      FOR ht IN 0..h LOOP
+        FOR touched IN 0..1 LOOP
+          w := 0;
+          IF ht + 1 <= h THEN   -- take U: allowed only while it stays ≤ h; touched flips on iff this reaches h
+            nh := ht + 1;
+            idx := (rem - 1) * (h + 1) * 2 + nh * 2 + GREATEST(touched, (CASE WHEN nh = h THEN 1 ELSE 0 END)) + 1;
+            w := w + tbl[idx];
+          END IF;
+          IF ht - 1 >= 0 THEN   -- take D: allowed while height ≥ 1
+            idx := (rem - 1) * (h + 1) * 2 + (ht - 1) * 2 + touched + 1;
+            w := w + tbl[idx];
+          END IF;
+          tbl[rem * (h + 1) * 2 + ht * 2 + touched + 1] := w;
+        END LOOP;
+      END LOOP;
+    END LOOP;
+    RETURN tbl;
+  END $$;
+
+CREATE FUNCTION fiber_unrank(f dyck_paths_by_height_fiber, rank rank_index) RETURNS dyck_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; hcap int := (f).h::int; tbl numeric[] := dyck_height_completions_table(n, hcap);
+          steps int[] := '{}'; ht int := 0; touched int := 0; rem int; r numeric := rank; cu numeric; i int; nh int; BEGIN
+    FOR i IN 1..2 * n LOOP
+      rem := 2 * n - i + 1;
+      cu := 0;
+      IF ht + 1 <= hcap THEN
+        nh := ht + 1;
+        cu := tbl[(rem - 1) * (hcap + 1) * 2 + nh * 2 + GREATEST(touched, (CASE WHEN nh = hcap THEN 1 ELSE 0 END)) + 1];
+      END IF;
+      IF ht + 1 <= hcap AND r < cu THEN
+        touched := GREATEST(touched, (CASE WHEN ht + 1 = hcap THEN 1 ELSE 0 END));
+        ht := ht + 1; steps := steps || 1;
+      ELSE
+        r := r - cu; ht := ht - 1; steps := steps || -1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::dyck_path;
+  END $$;
+
 CREATE FUNCTION contains_in_fiber(f dyck_paths_by_height_fiber, v dyck_path) RETURNS boolean LANGUAGE sql STABLE AS $$
   SELECT v <@ dyck_paths((f).n::int) AND dyck_height(v) = (f).h::int $$;
 
@@ -85,4 +134,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT count(*)::text || '|' || notation((unrank(dyck_paths_by_height(4,4), 0)).value) FROM elements(dyck_paths_by_height(4,4)) e $q$),
   ('dyck_paths_by_height','contains via <@: UUDD ∈ dyck_paths_by_height(2,2), UDUD ∉ (height 1, not 2)','eq','true|false','membership = parent path ∧ height = h',$q$
     SELECT (ROW(ARRAY[1,1,-1,-1])::dyck_path <@ dyck_paths_by_height(2,2))::text || '|' ||
-           (ROW(ARRAY[1,-1,1,-1])::dyck_path <@ dyck_paths_by_height(2,2))::text $q$);
+           (ROW(ARRAY[1,-1,1,-1])::dyck_path <@ dyck_paths_by_height(2,2))::text $q$),
+  ('dyck_paths_by_height','#286: element_at(dyck_paths_by_height(4,2), 3) matches sequential unrank (direct fiber_unrank accel)','eq','true','the touched-flag suffix-table unrank agrees with the floor',$q$
+    SELECT (render(element_at(f, 3)) = (SELECT render(e) FROM elements(f, 4) e ORDER BY e OFFSET 3 LIMIT 1))::text
+      FROM fibers(dyck_paths_by_height(4,2)) f $q$);

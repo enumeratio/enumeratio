@@ -1,8 +1,10 @@
--- requires: realizer
+-- requires: dyck_paths, realizer, utilities
 -- motzkin_paths — realized from data. Single grade [n]. A Motzkin path of length n is a word over the steps
 -- U(+1)/L(0)/D(-1) whose prefix sums stay >= 0 and whose total is 0 (a lattice path that never dips below the
 -- axis and returns to it). The floor generates one fiber [n] by a bounded lattice walk; a closed-form Motzkin(n)
 -- count + a validity-predicate contains engine are the accelerations.
+-- #286: fiber_unrank via motzkin_completions(l,h) — insert l−h−m U/D steps and m level steps anywhere (level
+-- steps don't touch height, so the U/D subsequence alone must be dyck_completions-valid); a sum over m.
 
 -- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
 CREATE TYPE motzkin_path AS (steps int[]);                             -- +1 up, 0 level, -1 down; e.g. {1,0,-1}
@@ -43,6 +45,39 @@ CREATE FUNCTION fiber_elements(f motzkin_paths_fiber, element_limit int) RETURNS
   ORDER BY steps
   LIMIT element_limit $$;
 CREATE FUNCTION fiber_count(f motzkin_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT motzkin((f).n::int) $$;
+
+-- motzkin_completions(l,h): # of U(+1)/L(0)/D(-1) words of length l, from height h, staying ≥ 0, ending at 0.
+-- Choose which m of the l positions are L (C(l,m) ways); the remaining l−m positions are a ±1 word that must
+-- itself be dyck_completions-valid from height h (level steps don't move the height, so they're free inserts).
+CREATE FUNCTION motzkin_completions(l int, h int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE total numeric := 0; m int; p int; BEGIN
+    IF l < 0 OR h < 0 OR h > l THEN RETURN 0; END IF;
+    FOR m IN 0..(l - h) LOOP
+      IF (l - m - h) % 2 = 0 THEN
+        p := (l - m - h) / 2;
+        total := total + binomial(l, m) * dyck_completions(p, p + h, h);
+      END IF;
+    END LOOP;
+    RETURN total;
+  END $$;
+
+-- fiber_unrank: walk the n positions preferring D, then L, then U (the floor's ASC/D<L<U order).
+CREATE FUNCTION fiber_unrank(f motzkin_paths_fiber, rank rank_index) RETURNS motzkin_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; steps int[] := '{}'; h int := 0; l int; r numeric := rank; cd numeric; cl numeric; i int; BEGIN
+    FOR i IN 1..n LOOP
+      l := n - i + 1;   -- remaining length INCLUDING this step
+      cd := motzkin_completions(l - 1, h - 1);
+      cl := motzkin_completions(l - 1, h);
+      IF r < cd THEN
+        steps := steps || -1; h := h - 1;
+      ELSIF r < cd + cl THEN
+        r := r - cd; steps := steps || 0;
+      ELSE
+        r := r - cd - cl; steps := steps || 1; h := h + 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::motzkin_path;
+  END $$;
 CREATE FUNCTION contains_in_fiber(f motzkin_paths_fiber, v motzkin_path) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).steps, 1), 0) = (f).n::int
      AND NOT EXISTS (SELECT 1 FROM unnest((v).steps) s WHERE s NOT IN (-1, 0, 1))
@@ -70,6 +105,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT notation((unrank(motzkin_paths(3), 0)).value) $q$),
   ('motzkin_paths','unrank(motzkin_paths(3), 2) = UDL','eq','UDL','ranks 0..3 = LLL,LUD,UDL,ULD',$q$
     SELECT notation((unrank(motzkin_paths(3), 2)).value) $q$),
+  ('motzkin_paths','#286: element_at(motzkin_paths(6), 7) matches sequential unrank (direct fiber_unrank accel)','eq','true','the O(n) DP unrank agrees with the floor',$q$
+    SELECT (render(element_at(f, 7)) = (SELECT render(e) FROM elements(f, 8) e ORDER BY e OFFSET 7 LIMIT 1))::text
+      FROM fibers(motzkin_paths(6)) f $q$),
   ('motzkin_paths','element carries a TYPED point fiber [n]','eq','4|5','unrank(motzkin_paths(4),5): fiber length + ordinality',$q$
     SELECT (unrank(motzkin_paths(4), 5)).fiber.n::text || '|' || ordinality(unrank(motzkin_paths(4), 5))::text $q$),
   ('motzkin_paths','every enumerated path stays >=0 and ends at 0 (n=5)','eq','true','floor cross-checked by the contains predicate',$q$
