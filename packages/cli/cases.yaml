@@ -6,32 +6,69 @@
 # args: `size` is the primary dimension; any other key is a grade axis bound to a value. Only grade axes
 # with a realized unrank engine can be bound (currently the legacy extension's enum_meta.configs; the core's
 # catalog_grade_axis / catalog_collection_order once the client is repointed — see .scratch task H).
+#
+# stats (optional): {our stat id: a sage expression over `el`, the sage element}. The oracle then also pins our
+# per-element statistic against sage's own method, keyed by the element's serial. Where a convention differs
+# (0-based vs 1-based positions, parity bit vs ±1 sign) the expression adapts sage's side and says so.
 
 # --- base constructions (whole collection at a size) ---
 - collection: permutations
   args: { size: 5 }
   sage: Permutations(5)
+  stats:
+    descents: el.number_of_descents()
+    inversions: el.number_of_inversions()
+    major_index: el.major_index()
+    fixed_points: el.number_of_fixed_points()
+    sign: (1 - el.sign()) // 2          # ours is the parity BIT (0 even, 1 odd); sage's is ±1
+    cycles: len(el.to_cycles())
+    peaks: len(el.peaks())
+    longest_increasing_subsequence: el.longest_increasing_subsequence_length()
 - collection: signed_permutations
   args: { size: 4 }
   sage: SignedPermutations(4)
 - collection: subsets
   args: { size: 6 }
   sage: Subsets(6)
+  stats:
+    cardinality: len(el)
+    sum: sum(el)
 - collection: integer_partitions
   args: { size: 15 }
   sage: Partitions(15)
+  stats:
+    length: len(el)
+    largest_part: el[0]
+    durfee_square: el.frobenius_rank()
+    sum_of_hook_lengths: sum(sum(r) for r in el.hook_lengths())
+    number_of_standard_tableaux: el.dimension()
 - collection: integer_compositions
   args: { size: 10 }
   sage: Compositions(10)
+  stats:
+    parts_count: len(el)
+    largest_part: max(el)
+    smallest_part: min(el)
 - collection: set_partitions
   args: { size: 6 }
   sage: SetPartitions(6)
+  stats:
+    blocks: len(el)
+    crossings: len(el.crossings())
+    nestings: len(el.nestings())
+    largest_block: max(len(b) for b in el)
 - collection: restricted_growth_strings   # the WORD side of the same objects (sage has no RGS parent)
   args: { size: 6 }
   sage: SetPartitions(6)
 - collection: set_compositions
   args: { size: 4 }
   sage: OrderedSetPartitions(4)
+  stats:
+    number_of_blocks: len(el)
+    largest_block: max(len(b) for b in el)
+    smallest_block: min(len(b) for b in el)
+    first_block_size: len(el[0])
+    last_block_size: len(el[-1])
 - collection: surjections                 # the WORD side: surjections of [4] onto an initial segment
   args: { size: 4 }
   sage: OrderedSetPartitions(4)
@@ -83,6 +120,9 @@
 - collection: perfect_matchings            # perfect matchings of [2n] (n pairs); (2n-1)!!
   args: { size: 3 }
   sage: PerfectMatchings(6)
+  stats:
+    crossings: len(el.crossings())
+    nestings: len(el.nestings())
 - collection: non_nesting_matchings      # perfect matchings with no nested chords (Catalan)
   args: { size: 3 }
   sage: "[m for m in PerfectMatchings(6) if not any(a<c and d<b for (a,b) in m for (c,d) in m if (a,b)!=(c,d))]"
@@ -104,6 +144,11 @@
 - collection: derangements                 # permutations with no fixed point
   args: { size: 5 }
   sage: Derangements(5)
+  stats:                                     # a sage Derangement is a plain word — wrap it for the permutation methods
+    inversions: Permutation(list(el)).number_of_inversions()
+    major_index: Permutation(list(el)).major_index()
+    cycles: len(Permutation(list(el)).to_cycles())
+    excedances: len(Permutation(list(el)).weak_excedences())   # a derangement has no fixed point, so weak = strict
 - collection: alternating_permutations     # up-down: a1<a2>a3<a4>… (Euler zigzag)
   args: { size: 6 }
   sage: "[p for p in Permutations(6) if all((p[i] < p[i+1]) == (i % 2 == 0) for i in range(len(p)-1))]"
@@ -215,12 +260,25 @@
 - collection: dyck_paths
   args: { size: 5 }
   sage: DyckWords(5)
+  stats:
+    area: el.area()
+    major_index: sum(p + 1 for p in el.peaks())   # ours sums 1-based peak positions; sage's peaks() is 0-based
+    peaks: len(el.peaks())
+    height: el.height()
+    bounce: DyckWord([1 - int(x) for x in reversed(list(el))]).bounce()   # ours bounces off the path read the other way (sage's bounce of the reverse-complement)
+    dinv: el.dinv()
+    returns: len(el.returns_to_zero())
 - collection: binary_trees           # trees with n internal nodes; sage BinaryTrees via its Dyck word
   args: { size: 4 }
   sage: binary_tree_parens(4)
 - collection: standard_tableaux      # SYT with n cells over all shapes; sage StandardTableaux(n)
   args: { size: 4 }
   sage: StandardTableaux(4)
+  stats:
+    rows: len(el)
+    columns: len(el[0])
+    major_index: el.standard_major_index()
+    descents: len(el.standard_descents())
 - collection: skew_partitions        # reduced skew partitions with n cells; sage SkewPartitions(n)
   args: { size: 4 }
   sage: SkewPartitions(4)
@@ -239,6 +297,11 @@
 - collection: semistandard_tableaux    # SSYT, n cells, entries ≤ k; sage SemistandardTableaux(n, max_entry=k)
   args: { size: 3, max_entry: 3 }
   sage: SemistandardTableaux(3, max_entry=3)
+  stats:
+    rows: len(el)
+    columns: len(el[0])
+    entry_sum: sum(sum(int(v) for v in r) for r in el)
+    max_entry: max(int(v) for r in el for v in r)
 - collection: alternating_sign_matrices # n×n ASMs; sage AlternatingSignMatrices(n)
   args: { size: 3 }
   sage: AlternatingSignMatrices(3)
@@ -411,3 +474,359 @@
 - collection: motzkin_paths
   args: { size: 1 }
   sage: motzkin_words(1)
+
+# --- compositions, partitions and factorizations (#223) ---
+- collection: fibonacci_compositions
+  args: { n: 7 }
+  sage: "[c for c in Compositions(7) if all(x in (1,2) for x in c)]"
+- collection: step_compositions
+  args: { n: 7 }
+  sage: "[c for c in Compositions(7) if all(x in (1,2) for x in c)]"
+- collection: tri_compositions
+  args: { n: 7 }
+  sage: "[c for c in Compositions(7) if all(x in (1,2,3) for x in c)]"
+- collection: tetra_compositions
+  args: { n: 7 }
+  sage: "[c for c in Compositions(7) if all(x in (1,2,3,4) for x in c)]"
+- collection: dyadic_compositions
+  args: { n: 7 }
+  sage: "[c for c in Compositions(7) if all(x in (1,2,4) for x in c)]"
+- collection: prime_compositions
+  args: { n: 9 }
+  sage: "[c for c in Compositions(9) if all(is_prime(x) for x in c)]"
+- collection: triangular_composition
+  args: { n: 9 }
+  sage: "[c for c in Compositions(9) if all(x in (1,3,6) for x in c)]"
+- collection: zigzag_composition
+  args: { n: 7 }
+  sage: "[c for c in Compositions(7) if is_zigzag(list(c))]"
+- collection: k_bounded_compositions
+  args: { n: 6, max_parts: 3 }
+  sage: Compositions(6, max_length=3)
+- collection: weak3_compositions
+  args: { n: 5 }
+  sage: IntegerVectors(5, 3)
+- collection: prime_partition
+  args: { n: 12 }
+  sage: Partitions(12, parts_in=[2,3,5,7,11])
+- collection: square_partitions
+  args: { n: 12 }
+  sage: Partitions(12, parts_in=[1,4,9])
+- collection: triangular_partitions
+  args: { n: 12 }
+  sage: Partitions(12, parts_in=[1,3,6,10])
+- collection: largest_part_partitions
+  args: { n: 9, m: 4 }
+  sage: PartitionsGreatestEQ(9, 4)
+- collection: multiplicative_partitions
+  args: { n: 24 }
+  sage: unordered_factorizations(24)
+- collection: ordered_factorizations
+  args: { n: 24 }
+  sage: ordered_factorizations_of(24)
+- collection: goldbach_partitions
+  args: { n: 15 }
+  sage: goldbach_pairs(15)
+
+# --- words and strings (#223) ---
+
+- collection: binary_words_by_weight        # (n,k): length-n binary words of Hamming weight k — C(n,k)
+  args: { size: 5, k: 2 }
+  sage: weight_words_over(5, 2)
+- collection: binary_words_by_weight
+  args: { size: 6, k: 3 }
+  sage: weight_words_over(6, 3)
+- collection: fib_strings                    # binary words with no two consecutive 1s (Fibonacci, F(n+2))
+  args: { size: 6 }
+  sage: fib_strings_over(6)
+- collection: lucas_strings                  # CIRCULAR binary words with no two consecutive 1s (wrap included)
+  args: { size: 6 }
+  sage: lucas_strings_over(6)
+- collection: tri_strings                    # binary words with no three consecutive 1s (tribonacci)
+  args: { size: 6 }
+  sage: tri_strings_over(6)
+- collection: calkin_wilf_paths              # length-n L/R paths — ALL 2^n binary words, no filter
+  args: { size: 4 }
+  sage: binary_words_over(4)
+- collection: stern_brocot_paths             # same underlying set as calkin_wilf_paths (different tree descent)
+  args: { size: 4 }
+  sage: binary_words_over(4)
+- collection: ternary_gray_codes             # the SET is every length-n word over {0,1,2}; any Gray order is a
+  args: { size: 3 }                          # reordering of it, and the oracle compares sets, not sequences
+  sage: ternary_words_over(3)
+- collection: ternary_gray_codes
+  args: { size: 4 }
+  sage: ternary_words_over(4)
+- collection: hyperbinary_representations    # base-2 numerals of n over digits {0,1,2}, padded to width = bit_length(n)
+  args: { size: 8 }
+  sage: hyperbinary_over(8)
+- collection: hyperbinary_representations
+  args: { size: 12 }
+  sage: hyperbinary_over(12)
+- collection: ascent_sequences               # x_1=0; x_i <= 1 + (ascents so far) — Fishburn numbers
+  args: { size: 5 }
+  sage: ascent_sequences_over(5)
+
+# --- lattice paths (#223) ---
+- collection: ballot_sequences        # ±1 word, semilength n, ballot condition — literally the dyck_path carrier
+  args: { n: 4 }
+  sage: dyck_words(4)
+- collection: dyck_paths_by_height    # semilength n, MAX height exactly h
+  args: { n: 4, h: 2 }
+  sage: dyck_paths_by_height_words(4, 2)
+- collection: dyck_paths_by_height
+  args: { n: 5, h: 3 }
+  sage: dyck_paths_by_height_words(5, 3)
+- collection: fine_paths              # semilength n, no hills (no UD peak at height 0) — A000957
+  args: { n: 4 }
+  sage: fine_words(4)
+- collection: fine_paths
+  args: { n: 5 }
+  sage: fine_words(5)
+- collection: grand_dyck_paths        # free ±1 walk of length 2n back to 0, no positivity constraint
+  args: { n: 3 }
+  sage: grand_words(3)
+- collection: grand_dyck_paths
+  args: { n: 4 }
+  sage: grand_words(4)
+- collection: narayana_numbers        # semilength n, EXACTLY k peaks
+  args: { n: 4, k: 2 }
+  sage: narayana_words(4, 2)
+- collection: narayana_numbers
+  args: { n: 5, k: 3 }
+  sage: narayana_words(5, 3)
+- collection: lukasiewicz_paths       # length n+1 words, steps >= -1, proper prefixes >= 0, total = -1
+  args: { n: 3 }
+  sage: lukasiewicz_words(3)
+- collection: lukasiewicz_paths
+  args: { n: 4 }
+  sage: lukasiewicz_words(4)
+- collection: delannoy_paths          # king-move corner-to-corner paths (0,0) -> (n,n), steps E/N/D
+  args: { n: 2 }
+  sage: delannoy_words(2)
+- collection: delannoy_paths
+  args: { n: 3 }
+  sage: delannoy_words(3)
+- collection: schroeder_paths         # large Schroeder: U/D/F steps, semilength n, never below the axis
+  args: { n: 3 }
+  sage: schroeder_words(3)
+- collection: schroeder_triangle      # large Schroeder paths by number of flat (F) steps, T(n,k)
+  args: { n: 4, k: 2 }
+  sage: "[w for w in schroeder_words(4) if w.count(0) == 2]"
+- collection: little_schroder_triangle  # little Schroeder (no F at height 0) by number of hills, s(n,k)
+  args: { n: 4, k: 1 }
+  sage: "[w for w in little_schroeder_words(4) if little_hills(w) == 1]"
+- collection: motzkin_paths_by_peaks  # Motzkin paths of length n with exactly k peaks (A055151)
+  args: { n: 5, k: 1 }
+  sage: "[w for w in motzkin_words(5) if motzkin_peak_count(w) == 1]"
+- collection: motzkin_paths_by_peaks
+  args: { n: 4, k: 1 }
+  sage: "[w for w in motzkin_words(4) if motzkin_peak_count(w) == 1]"
+- collection: riordan_paths           # Motzkin paths with no level (L) step on the x-axis
+  args: { n: 6 }
+  sage: riordan_words(6)
+- collection: rational_dyck_paths     # (a,b)-Dyck: (0,0) -> (b,a) via E/N, staying weakly above the diagonal
+  args: { a: 2, b: 3 }
+  sage: rational_dyck_words(2, 3)
+- collection: rational_dyck_paths
+  args: { a: 3, b: 4 }
+  sage: rational_dyck_words(3, 4)
+- collection: k_ary_trees             # every internal node has exactly k children (Fuss-Catalan)
+  args: { n: 3, k: 2 }
+  sage: k_ary_words(3, 2)
+- collection: k_ary_trees
+  args: { n: 2, k: 3 }
+  sage: k_ary_words(2, 3)
+
+# --- sets, matchings and permutation restrictions (#223) ---
+- collection: boolean_algebra           # the Boolean lattice 2^[n]; borrows subsets' bitstring notation
+  args: { size: 4 }
+  sage: Subsets(4)
+- collection: simplex                   # faces of the (n-1)-simplex = NON-EMPTY subsets of [n]
+  args: { size: 4 }
+  sage: "[S for S in Subsets(4) if len(S) > 0]"
+- collection: signed_subsets            # faces of the cross-polytope: per-axis absent/+k/-k, 3^n
+  args: { size: 3 }
+  sage: signed_subsets_over(3)
+- collection: cross_polytope            # same carrier/floor as signed_subsets (borrowed)
+  args: { size: 3 }
+  sage: signed_subsets_over(3)
+- collection: multisets                 # k-element multisets over [n]; C(n+k-1,k)
+  args: { size: 4, k: 3 }
+  sage: multisets_over(4, 3)
+- collection: permutahedron             # faces of the permutahedron = ordered set partitions of [n] (borrowed)
+  args: { size: 4 }
+  sage: OrderedSetPartitions(4)
+- collection: signed_set_compositions   # ordered set partitions of [n] with a +/- sign per block
+  args: { size: 3 }
+  sage: signed_set_compositions_over(3)
+- collection: non_crossing_matchings    # perfect matchings of [2n] with no crossing chords (Catalan)
+  args: { size: 4 }
+  sage: "[m for m in PerfectMatchings(8) if is_non_crossing(m)]"
+- collection: non_decreasing_parking_functions   # parking functions that are weakly increasing (Catalan)
+  args: { size: 5 }
+  sage: ndpf_over(5)
+- collection: partition_algebra         # the set-partition diagram basis on [n] (borrows set_partitions, RGS render)
+  args: { size: 4 }
+  sage: SetPartitions(4)
+- collection: set_partitions_into_k_blocks   # partitions of [n] into exactly k blocks (Stirling 2nd kind)
+  args: { size: 6, k: 3 }
+  sage: SetPartitions(6, 3)
+- collection: boolean_permutations      # no non-adjacent inversion (independent sets of the path graph); F(n+1)
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if is_boolean_perm(list(p))]"
+- collection: smooth_permutations       # Av(3412, 4231) (Lakshmibai-Sandhya)
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([3,4,1,2]) and p.avoids([4,2,3,1])]"
+- collection: k_inversion_permutations  # permutations of [n] with exactly k inversions (Mahonian triangle)
+  args: { size: 5, k: 4 }
+  sage: "[p for p in Permutations(5) if p.number_of_inversions() == 4]"
+
+# --- tableaux, dissections and polytope faces (#223) ---
+- collection: syt_hook_shape          # SYT of hook shape (a,1^b), n cells — 2^(n-1)
+  args: { size: 6 }
+  sage: standard_tableaux_of_shapes(hook_shapes(6))
+- collection: syt_two_row             # SYT in <= 2 rows — central binomial C(n, floor(n/2))
+  args: { size: 6 }
+  sage: standard_tableaux_of_shapes(two_row_shapes(6))
+- collection: syt_two_column          # SYT in <= 2 columns (conjugate of two_row)
+  args: { size: 6 }
+  sage: standard_tableaux_of_shapes(two_column_shapes(6))
+- collection: shifted_standard_tableaux   # standard tableaux on shifted diagrams of STRICT partitions of n
+  args: { size: 6 }
+  sage: shifted_standard_tableaux_of(6)
+- collection: skew_standard_tableaux  # standard tableaux on reduced skew shapes lambda/mu with n cells
+  args: { size: 4 }
+  sage: StandardSkewTableaux(4)
+- collection: standard_tableau_pairs  # RSK codomain: pairs (P,Q) of same-shape SYT, n cells — n!
+  args: { size: 4 }
+  sage: rsk_pairs(4)
+- collection: boxed_plane_partitions  # plane partitions fitting in an a x b x c box (MacMahon box formula)
+  args: { a: 2, b: 2, c: 2 }
+  sage: PlanePartitions([2,2,2])
+- collection: boxed_plane_partitions
+  args: { a: 3, b: 2, c: 1 }
+  sage: PlanePartitions([3,2,1])
+- collection: associahedron           # faces of the associahedron = non-crossing diagonal sets of the (n+2)-gon
+  args: { n: 3 }
+  sage: all_dissections(5)
+- collection: associahedron
+  args: { n: 4 }
+  sage: all_dissections(6)
+- collection: cyclohedron             # faces of the type-B associahedron: centrally symmetric dissections of the (2n+2)-gon
+  args: { n: 2 }
+  sage: cyclohedron_faces(2)
+- collection: cyclohedron
+  args: { n: 3 }
+  sage: cyclohedron_faces(3)
+- collection: dissections             # non-crossing diagonal sets of the (n+2)-gon
+  args: { n: 4 }
+  sage: all_dissections(6)
+
+# --- trees and graphs (#223) ---
+- collection: prufer_sequences        # words of length n-2 over {1..n}; n^(n-2) = 125
+  args: { size: 5 }
+  sage: prufer_words(5)
+- collection: prufer_sequences        # n<=2 boundary: the single empty code
+  args: { size: 2 }
+  sage: prufer_words(2)
+- collection: recursive_trees         # increasing trees on n labeled vertices; (n-1)! = 120
+  args: { size: 6 }
+  sage: recursive_trees_over(6)
+- collection: rooted_unlabeled_trees  # rooted trees on n unlabeled nodes up to isomorphism; A000081(8) = 115
+  args: { size: 8 }
+  sage: rooted_unlabeled_trees_over(8)
+- collection: unlabeled_free_trees    # free trees on n unlabeled nodes, centroid-canonical; A000055(8) = 23
+  args: { size: 8 }
+  sage: unlabeled_free_trees_over(8)
+- collection: non_crossing_trees      # non-crossing spanning trees on n+1 circle vertices; A001764(4) = 55
+  args: { size: 4 }
+  sage: non_crossing_trees_over(4)
+- collection: increasing_binary_trees # heap-ordered binary trees on n labeled nodes; n! = 24
+  args: { size: 4 }
+  sage: increasing_binary_trees_over(4)
+- collection: phylogenetic_trees      # rooted binary trees, n labeled leaves; (2n-3)!! = 105
+  args: { size: 5 }
+  sage: phylogenetic_words(5)
+- collection: total_partitions        # Schröder's fourth problem, total bracketings; A001003(5) = 197
+  args: { size: 6 }
+  sage: total_partitions_over(6)
+- collection: labeled_graphs          # all simple graphs on [n]; 2^C(4,2) = 64
+  args: { size: 4 }
+  sage: labeled_graphs_over(4)
+- collection: labeled_graphs_by_edges # graphs on [n] with exactly m edges; C(6,2) = 15
+  args: { n: 4, m: 2 }
+  sage: labeled_graphs_by_edges_over(4, 2)
+- collection: connected_labeled_graphs # connected simple graphs on [n]; A001187(4) = 38
+  args: { size: 4 }
+  sage: connected_labeled_graphs_over(4)
+- collection: tournaments              # orientations of K_n; 2^C(4,2) = 64
+  args: { size: 4 }
+  sage: tournaments_over(4)
+
+# --- number-theoretic and misc (#223) ---
+- collection: farey_sequences               # reduced p/q, 0<=p<=q<=n, in increasing order; brute force from the definition
+  args: { n: 4 }
+  sage: farey_set(4)
+- collection: continued_fractions            # canonical CF expansion of every reduced p/q, 1<=p<=q, graded by q; sage's own continued_fraction_list
+  args: { q: 7 }
+  sage: continued_fractions_set(7)
+- collection: continued_fractions            # boundary: q=1 is the single-term fiber [1] (p=q=1)
+  args: { q: 1 }
+  sage: continued_fractions_set(1)
+- collection: sums_of_two_squares            # n = a^2+b^2, 0<=a<=b; brute force isqrt search from the definition
+  args: { n: 25 }
+  sage: sums_two_squares_set(25)
+- collection: pythagorean_triples            # a^2+b^2=c^2, 0<a<b<c, graded by hypotenuse c; brute force from the definition
+  args: { hypotenuse: 25 }
+  sage: pythagorean_triples_set(25)
+- collection: collatz_trajectories           # the 3n+1 trajectory as a word ending at 1; direct simulation, singleton fiber
+  args: { n: 6 }
+  sage: "[collatz_traj(6)]"
+- collection: collatz_trajectories
+  args: { n: 27 }                            # classic long/high trajectory (stopping time 111) — still instant
+  sage: "[collatz_traj(27)]"
+- collection: fibonacci_primes                # A005478 recomputed: sweep Fibonacci numbers up to MAX_SAFE_INTEGER, keep the primes
+  args: {}
+  sage: fibonacci_primes_set()
+- collection: idoneal_numbers                 # Euler's numeri idonei recomputed via the genus/ambiguous-form criterion (BinaryQF), not the stored list
+  args: {}
+  sage: idoneal_numbers_set(2000)
+- collection: egyptian_fractions              # k distinct unit-fraction denominators summing to 1; independent Fraction-exact backtracking search
+  args: { k: 1 }
+  sage: egypt_search(1)
+- collection: egyptian_fractions
+  args: { k: 3 }                              # the proven-unique decomposition 1/2+1/3+1/6
+  sage: egypt_search(3)
+- collection: multicomplex_numbers            # Cn(Z/M): every 2^n-coefficient vector over Z/M — the full Cartesian product, by definition
+  args: { modulus: 3, level: 1 }
+  sage: list(cartesian_product([range(3)]*2))
+- collection: multicomplex_numbers
+  args: { modulus: 2, level: 2 }              # a second, cheap (modulus,level) pair — 2^4 = 16 elements
+  sage: list(cartesian_product([range(2)]*4))
+- collection: singleton_species               # the atomic species X: one structure at n=1, none elsewhere
+  args: { n: 1 }
+  sage: "[1]"
+- collection: singleton_species
+  args: { n: 2 }
+  sage: "[]"
+- collection: affine_permutations             # window a_i = u(i) + n*c_i, u in S_n, c in [-r,r]^n with sum 0; brute force from the definition
+  args: { n: 3, radius: 1 }
+  sage: affine_perms_set(3, 1)
+
+# --- the bounded collections deliberately NOT covered ---
+# carriers / collections / traits / glyphs: our own REGISTRY meta-collections (rows of the catalog itself), not
+#   mathematical objects sage has any notion of — nothing to check against.
+# giuga_numbers: the 7 known terms run up to ~4.3e14; the collection's floor is the complete literal set, so an
+#   honest oracle case would need to SWEEP every n up to ~4.3e14 testing the Giuga divisibility predicate — utterly
+#   infeasible in oracle time. A bounded sweep (e.g. n<10^6) only recovers a subset (30,858,1722,66198) and would
+#   never set-equal the full 7-element collection. Dropped rather than faked.
+- collection: hypernumerary            # (b,k,n): base-b numerals over the widened digit alphabet {0..b-1+k}
+  args: { b: 2, k: 1, n: 8 }
+  sage: hypernumerary_words(2, 1, 8)
+- collection: hypernumerary            # b=2,k=1 IS hyperbinary_representations; b=3 exercises the general engine
+  args: { b: 3, k: 1, n: 11 }
+  sage: hypernumerary_words(3, 1, 11)
+- collection: hypernumerary            # a wider alphabet still: digits 0..4 in base 3
+  args: { b: 3, k: 2, n: 7 }
+  sage: hypernumerary_words(3, 2, 7)

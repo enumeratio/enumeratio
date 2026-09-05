@@ -15,8 +15,8 @@ import { provideDb, makeDb, construct, close } from '@enumeratio/client'
 // to have sage" an explicit, enforced contract rather than a silent skip.
 provideDb(() => makeDb())
 
-type Case = { collection: string; args: Record<string, number>; sage: string }
-type SageOut = { card?: number; elements?: string[]; error?: string }
+type Case = { collection: string; args: Record<string, number>; sage: string; stats?: Record<string, string> }
+type SageOut = { card?: number; elements?: string[]; stats?: Record<string, Record<string, string>>; error?: string }
 
 const casesPath = fileURLToPath(new URL('../cases.yaml', import.meta.url))
 const scriptPath = fileURLToPath(new URL('./oracle_sage.py', import.meta.url))
@@ -41,6 +41,14 @@ beforeAll(() => {
   oracle = JSON.parse(out)
 })
 afterAll(() => close())
+
+// stat values cross the wire as pg text / js numbers / sage strings — compare numerically when both sides parse as
+// numbers ('3' vs 3 vs '3.0'), by text otherwise (a cycle type or other structured stat).
+const norm = (v: unknown): string => {
+  const t = String(v)
+  const n = Number(t)
+  return t.trim() !== '' && Number.isFinite(n) ? String(n) : t
+}
 
 const label = (c: Case) => `${c.collection}(${Object.entries(c.args).map(([k, v]) => `${k}=${v}`).join(', ')})`
 
@@ -73,6 +81,19 @@ describe.skipIf(!expectSage)('sage oracle', () => {
       expect(ours.length, 'cardinality').toBe(spec.card)
       expect([...O].filter((x) => !T.has(x)), 'elements we have that sage does not').toEqual([])
       expect([...T].filter((x) => !O.has(x)), 'elements sage has that we do not').toEqual([])
+
+      // STATISTICS: a case may also pin our per-element stats against sage's own methods (cases.yaml `stats:`).
+      // Compared per ELEMENT (keyed by the serial), so it is independent of enumeration order.
+      if (c.stats) {
+        const ids = Object.keys(c.stats)
+        const win = await construct(c.collection, c.args).window(0, ours.length, { stats: ids })
+        for (const id of ids) {
+          const mine = new Map(win.map((r) => [String(r.element), norm(r[id])]))
+          const theirs = spec.stats?.[id] ?? {}
+          const wrong = Object.entries(theirs).filter(([serial, v]) => mine.get(serial) !== norm(v)).slice(0, 4)
+          expect(wrong.map(([serial, v]) => `${serial}: ours=${mine.get(serial)} sage=${norm(v)}`), `stat ${id}`).toEqual([])
+        }
+      }
     })
   })
 })
