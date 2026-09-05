@@ -299,6 +299,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('labeled_graphs_by_edges',     'Labeled Graphs by Edges',    'Graphs on [n] with exactly m edges — the (n,m) refinement of labeled_graphs.'),
   ('lukasiewicz_paths',           'Łukasiewicz Paths',          'Length-(n+1) step words in bijection with plane trees, via child counts.'),
   ('motzkin_paths_by_peaks',      'Motzkin Paths by Peaks',     'The Motzkin triangle — paths of length n with exactly k peaks (A055151).'),
+  ('phylogenetic_trees',          'Phylogenetic Trees',          'Rooted binary trees on n labeled leaves, unlabeled internal nodes — (2n−3)!!, A001147.'),
   ('pythagorean_triples',         'Pythagorean Triples',        'Triples (a,b,c) with a²+b²=c², graded by hypotenuse c.'),
   ('rational_dyck_paths',         'Rational Dyck Paths',        '(a,b)-Dyck paths — lattice paths from (0,0) to (b,a) staying above the diagonal.'),
   ('recursive_trees',             'Recursive Trees',            'Increasing trees on n labeled vertices — (n−1)! of them.'),
