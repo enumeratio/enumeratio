@@ -265,7 +265,10 @@ for (const c of cats) {
     ['accel==naive', mkCheckAccelNaive(caps), true],
     ['count', mkCheckCount(caps), false],
     ['membership', mkCheckMembership(caps), true],
-    ['order', mkCheckOrder(), true],
+    // NB: no `order` property — rank/enumeration order is NOT the carrier's `<` (they're independent); asserting
+    // element_at(r) < element_at(r+1) is a non-invariant that false-fails ~41/109 collections (#298). round-trip
+    // (rank∘unrank=id) + accel==naive already pin the enumeration contract. A monotonicity check would need a
+    // per-collection order-isomorphism declaration, not a universal assumption.
   ]
 
   const collT0 = Date.now()

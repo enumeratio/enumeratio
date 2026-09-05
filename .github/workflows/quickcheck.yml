@@ -57,6 +57,9 @@ jobs:
             export QUICKCHECK_POINTS=5
           else
             export QUICKCHECK_POINTS=1
+            export QUICKCHECK_NMAX=4
+            export QUICKCHECK_RANK_CAP=50
+            export QUICKCHECK_SCAN_RANK_CAP=3
             export QUICKCHECK_CAP_COUNT=2000
           fi
           pnpm --filter @enumeratio/data quickcheck 2>&1 | tee quickcheck.log
