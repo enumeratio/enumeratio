@@ -3,6 +3,7 @@
 -- itself (light outline), with each diagonal drawn as a chord. Vertex k (0-indexed, 0..m-1) sits at angle
 -- 2πk/m − π/2 (12 o'clock, clockwise) on a circle — diagonals.sql's own code c=i·m+j decodes straight to the two
 -- vertex indices i=c/m, j=c%m (integer division/modulo, the same decode notation() uses).
+-- layer: glyph
 CREATE FUNCTION dissection_polygon_svg(diagonals int[], m int, unit numeric DEFAULT 16, r numeric DEFAULT 3)
 RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT greatest(3, coalesce(m, 0)) AS mm),

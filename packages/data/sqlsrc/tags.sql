@@ -84,23 +84,22 @@ SELECT tag, collection FROM (VALUES
   ('permutation', 'rook_placements'),
   -- lattice paths (core-owned members only — the rest are in packs/paths/tags.paths.sql, #283 phase 3)
   ('path', 'dyck_paths'), ('path', 'narayana_numbers'),
-  -- trees
-  ('tree', 'binary_trees'), ('tree', 'ordered_trees'), ('tree', 'plane_trees'), ('tree', 'labeled_trees'), ('tree', 'labeled_forests'), ('tree', 'rooted_unlabeled_trees'),
+  -- trees (core-owned members only — the rest are in packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3)
+  ('tree', 'binary_trees'),
   -- tableaux
   ('tableau', 'standard_tableaux'), ('tableau', 'semistandard_tableaux'), ('tableau', 'gelfand_tsetlin'),
-  -- words / strings
-  ('word', 'words'), ('word', 'k_necklaces'), ('word', 'k_bracelets'), ('word', 'k_lyndon_words'), ('word', 'binary_words'), ('word', 'binary_palindromes'), ('word', 'primitive_binary_strings'), ('word', 'lyndon_words'), ('word', 'independent_sets_cycle'), ('word', 'binary_necklaces'), ('word', 'binary_bracelets'), ('word', 'gray_codes'), ('word', 'ascent_sequences'),
+  -- words / strings (independent_sets_cycle moved to packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3)
+  ('word', 'words'), ('word', 'k_necklaces'), ('word', 'k_bracelets'), ('word', 'k_lyndon_words'), ('word', 'binary_words'), ('word', 'binary_palindromes'), ('word', 'primitive_binary_strings'), ('word', 'lyndon_words'), ('word', 'binary_necklaces'), ('word', 'binary_bracelets'), ('word', 'gray_codes'), ('word', 'ascent_sequences'),
   ('word', 'restricted_growth_strings'),
-  -- matchings
-  ('matching', 'perfect_matchings'), ('matching', 'non_crossing_matchings'), ('matching', 'non_nesting_matchings'),
-  -- set partitions
-  ('set_partition', 'set_partitions'), ('set_partition', 'set_partitions_into_k_blocks'), ('set_partition', 'non_crossing_partitions'), ('set_partition', 'non_nesting_partitions'),
+  -- matchings moved to packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3
+  -- set partitions (non_crossing_partitions/non_nesting_partitions moved to packs/trees-graphs/tags.trees-graphs.sql)
+  ('set_partition', 'set_partitions'), ('set_partition', 'set_partitions_into_k_blocks'),
   ('set_partition', 'set_compositions'), ('set_partition', 'restricted_growth_strings'), ('set_partition', 'signed_set_compositions'),
   -- selections (arrangements moved to packs/permutations-plus/tags.permutations-plus.sql)
   ('selection', 'subsets'), ('selection', 'k_subsets'), ('selection', 'multisets'), ('selection', 'finsets'), ('selection', 'sparse_subsets'), ('selection', 'signed_subsets'),
   -- polytope faces (associahedron/cross_polytope/permutahedron moved to packs/polytopes/tags.polytopes.sql — #283
-  -- phase 2.2, they're that pack's own collections; dissections stays here, it's core)
-  ('polytope', 'dissections'),
+  -- phase 2.2; dissections moved to packs/trees-graphs/tags.trees-graphs.sql — #283 phase 3, it's that pack's own
+  -- collection, despite the earlier note here claiming otherwise)
   -- signed / symmetric (signed_permutations/k_colored_permutations moved to permutations-plus)
   ('symmetric', 'signed_subsets'), ('symmetric', 'signed_set_compositions'),
   -- matrices
@@ -121,7 +120,7 @@ SELECT tag, collection FROM (VALUES
   ('species', 'singleton_species'),
   -- base_restrict / borrow-carrier ports (backlog #1)
   ('composition', 'zigzag_composition'),
-  ('tree', 'prufer_sequences'),
+  -- prufer_sequences' tag row moved to packs/trees-graphs/tags.trees-graphs.sql — #283 phase 3
   -- simplex's tags moved to packs/polytopes/tags.polytopes.sql — #283 phase 2.2, it's that pack's own collection
   -- partition_algebra's tag row moved to tags.partitions-plus.sql — #283 phase 3, it's that pack's own collection
   ('selection', 'boolean_algebra')

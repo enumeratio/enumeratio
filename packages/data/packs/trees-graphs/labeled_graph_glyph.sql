@@ -3,6 +3,7 @@
 -- figure — n vertices placed evenly on a circle (vertex i at angle 2π(i-1)/n, so labels read clockwise from the
 -- top), edges drawn as straight chords between their endpoints. (A second "kind" for the adjacency MATRIX itself
 -- is deferred to whenever multi-kind figures land — base_glyph's `kind` column, catalog-audit.md §3 friction 6.)
+-- layer: glyph
 CREATE FUNCTION labeled_graph_circle_svg(n int, edges int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT greatest(n, 1) AS nn, unit * (greatest(n, 3)::numeric / 2) AS r, unit * 0.16 AS pr),
   pts AS (

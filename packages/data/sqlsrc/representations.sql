@@ -1,4 +1,4 @@
--- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_subsets, set_compositions, fractional_numbers
+-- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_subsets, set_compositions, fractional_numbers
 -- representations — Phase 3 of the catalog port: named alternate renderings, registered in base_repr so the
 -- client's -R flag can pick one (permutation cycle notation, set-partition blocks, Dyck parens). render_fn takes
 -- the CARRIER; the client calls render_fn((element).value). The `canonical` repr matches the default render()
@@ -97,10 +97,9 @@ CREATE FUNCTION integer_partition_frequency(p integer_partition) RETURNS text LA
   SELECT coalesce(string_agg(CASE WHEN m = 1 THEN part::text ELSE part || '^' || m END, ' ' ORDER BY part DESC), '0')
   FROM (SELECT x AS part, count(*)::int AS m FROM unnest((p).parts) x GROUP BY x) g $$;
 
--- perfect matching as arcs: the pairs [a1,b1,a2,b2,…] read as (a1,b1)(a2,b2)…. Inherited by non_crossing_matchings.
-CREATE FUNCTION perfect_matching_arcs(m perfect_matching) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce(string_agg('(' || (m).pairs[2*i-1] || ',' || (m).pairs[2*i] || ')', '' ORDER BY i), '')
-  FROM generate_series(1, coalesce(array_length((m).pairs,1),0)/2) i $$;
+-- (perfect_matching_arcs + its base_repr row + example moved to
+-- packs/trees-graphs/examples.representations.trees-graphs.sql — perfect_matching is a `trees-graphs`-pack
+-- carrier, so a function taking it as a parameter can't even CREATE loading core alone, #283 phase 3)
 
 -- ── rich-text (pure-unicode) renderings, one per carrier — the line-space cast of a glyph, no SVG ─────────
 -- These are CARRIER renderings (they inherit to every collection over the carrier), the text-space siblings of
@@ -328,8 +327,8 @@ INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
   ('dyck_paths','parens','dyck_parens','Balanced parentheses',false),
   ('integer_partitions','parts','notation','Parts',true),
   ('integer_partitions','exponential','integer_partition_frequency','Exponential (multiplicity) notation',false),
-  ('integer_compositions','parts','notation','Parts',true),
-  ('perfect_matchings','arcs','perfect_matching_arcs','Arc notation',false);
+  ('integer_compositions','parts','notation','Parts',true);
+-- (perfect_matchings 'arcs' repr row moved to packs/trees-graphs/examples.representations.trees-graphs.sql, #283 phase 3)
 
 -- the rich-text reprs, one registered per carrier's base collection — carrier-scoped (the default), so each inherits
 -- to every collection over that carrier (binary_word 13 + finset 5 = 18 dot indicators, 15 composition bars, 10 Ferrers).
@@ -369,7 +368,9 @@ CREATE FUNCTION fiber_symbol_katex(f integer_compositions_fiber) RETURNS text LA
 CREATE FUNCTION fiber_symbol_asciimath(f integer_compositions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '"Comp"(' || (f).n::int || ')' $$;
 CREATE FUNCTION fiber_symbol_katex(f dyck_paths_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '\mathcal{D}_{' || (f).n::int || '}' $$;            -- 𝒟ₙ (semilength n)
 CREATE FUNCTION fiber_symbol_asciimath(f dyck_paths_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'cc"D"_' || (f).n::int $$;
-CREATE FUNCTION fiber_symbol_katex(f perfect_matchings_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '\mathrm{M}([' || (2 * (f).n::int) || '])' $$; -- M([2n]) (asciimath spelling coincides with unicode)
+-- (fiber_symbol_katex(perfect_matchings_fiber) + its example moved to
+-- packs/trees-graphs/examples.representations.trees-graphs.sql — perfect_matchings_fiber is a `trees-graphs`-pack
+-- type, #283 phase 3)
 
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -386,8 +387,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('representations','exponential partition notation: 3+2+2+1 → 3 2^2 1, empty → 0','eq','3 2^2 1|0','multiplicity form, largest part first',$q$
     SELECT integer_partition_frequency(ROW(ARRAY[3,2,2,1])::integer_partition) || '|' ||
            integer_partition_frequency(ROW(ARRAY[]::int[])::integer_partition) $q$),
-  ('representations','arc notation: the matching [1,4,2,3] → (1,4)(2,3)','eq','(1,4)(2,3)','perfect matching pairs as arcs',$q$
-    SELECT perfect_matching_arcs(ROW(ARRAY[1,4,2,3])::perfect_matching) $q$),
+  -- (the arc-notation example moved to packs/trees-graphs/examples.representations.trees-graphs.sql — the
+  -- ROW(...)::perfect_matching cast needs that pack's own TYPE, #283 phase 3)
   ('representations','fiber_symbol (the ambient-set symbol, from the corpus): p(4), Π([3]), Dyck(3), Comp(4)','eq','p(4)|Π([3])|Dyck(3)|Comp(4)','the set_notation building block across collections',$q$
     SELECT fiber_symbol((unrank(integer_partitions(4),0)).fiber) || '|' || fiber_symbol((unrank(set_partitions(3),0)).fiber) || '|' ||
            fiber_symbol((unrank(dyck_paths(3),0)).fiber)         || '|' || fiber_symbol((unrank(integer_compositions(4),0)).fiber) $q$),
@@ -489,9 +490,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
         || '|' || fiber_symbol_asciimath((unrank(integer_compositions(6),0)).fiber) $q$),
   ('representations','fiber symbol Dyck(3) across media: math media use the calligraphic 𝒟ₙ (katex \mathcal{D}_{n}, asciimath cc"D"_n)','eq','Dyck(3)|\mathcal{D}_{3}|cc"D"_3','the Dyck symbol is spelled as a word in unicode, as 𝒟 in math media (corpus convention)',$q$
     SELECT fiber_symbol((unrank(dyck_paths(3),0)).fiber) || '|' || fiber_symbol_katex((unrank(dyck_paths(3),0)).fiber)
-        || '|' || fiber_symbol_asciimath((unrank(dyck_paths(3),0)).fiber) $q$),
-  ('representations','fiber symbol M([2n]) katex uses upright \mathrm{M}; the asciimath spelling coincides with unicode M([4])','eq','M([4])|\mathrm{M}([4])','perfect-matching ambient symbol — only the katex form is distinct',$q$
-    SELECT fiber_symbol((unrank(perfect_matchings(2),0)).fiber) || '|' || fiber_symbol_katex((unrank(perfect_matchings(2),0)).fiber) $q$);
+        || '|' || fiber_symbol_asciimath((unrank(dyck_paths(3),0)).fiber) $q$);
+  -- (the perfect_matchings fiber-symbol-M([2n]) example moved to
+  -- packs/trees-graphs/examples.representations.trees-graphs.sql — calls perfect_matchings() directly, #283 phase 3)
 
 -- ── rich-text reprs + the repr-scope leak fence (#143, #140) ─────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

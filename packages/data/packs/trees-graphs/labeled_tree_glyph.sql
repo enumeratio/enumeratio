@@ -11,6 +11,7 @@
 -- No base_glyph registry row on purpose (the composition/word precedent above): that table curates a prototype
 -- subset feeding the `glyphs` meta-collection's floor, pinned to its current kinds — the overload alone is enough,
 -- carrier_renders_svg('labeled_tree') derives straight from pg_proc/pg_type (see glyphs.sql).
+-- layer: glyph
 
 -- ── decode: Prüfer sequence → edge list (the standard leaf-picking reconstruction) ──────────────────────────────
 CREATE FUNCTION labeled_tree_edges(prufer int[], n int) RETURNS TABLE(u int, v int) LANGUAGE plpgsql IMMUTABLE AS $$

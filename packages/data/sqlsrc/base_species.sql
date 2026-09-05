@@ -408,24 +408,21 @@ INSERT INTO base_species (collection, expr, egf, note, graded) VALUES
 
 -- unlabelled: OGF fixed points Y = F(X, Y), solved by Picard iteration and checked against the sequence (fiber count for
 -- the graded collections, element value for the unbounded number-sequences). Every Y is X-guarded ⇒ division-free.
--- (motzkin_paths/schroeder_paths rows moved to packs/paths/base_species.paths.sql — collection REFERENCES
--- base_collection, so those rows would FK-fail loading core alone, #283 phase 3)
+-- (motzkin_paths/schroeder_paths rows moved to packs/paths/base_species.paths.sql; plane_trees/ordered_trees rows
+-- moved to packs/trees-graphs/base_species.trees-graphs.sql — collection REFERENCES base_collection, so those
+-- rows would FK-fail loading core alone, #283 phase 3)
 INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
   ('catalan_numbers', '1+X·Y^2',      'C=1+xC^2',         'Catalan OGF; C_n = 1,1,2,5,14,…',              true),
   ('dyck_paths',      '1+X·Y^2',      'C=1+xC^2',         'Dyck paths of semilength n; Catalan',          true),
   ('binary_trees',    '1+X·Y^2',      'C=1+xC^2',         'binary trees by internal nodes; Catalan',      true),
   ('motzkin_numbers', '1+X·Y+X^2·Y^2','M=1+xM+x^2M^2',    'Motzkin OGF; M_n = 1,1,2,4,9,21,…',            true),
-  ('schroeder_numbers','1+X·Y+X·Y^2', 'S=1+xS+xS^2',      'large Schröder OGF; S_n = 1,2,6,22,90,…',       true),
-  ('plane_trees',     'X+Y^2',        'P=x+P^2',          'plane trees by NODES; C_{n-1} (shifted Catalan)', true),
-  ('ordered_trees',   '1+X·Y^2',      'C=1+xC^2',         'ordered trees by edges; Catalan',             true);
+  ('schroeder_numbers','1+X·Y+X·Y^2', 'S=1+xS+xS^2',      'large Schröder OGF; S_n = 1,2,6,22,90,…',       true);
 
 -- LABELLED implicit (EGF fixed points Y = F(X,Y), solved by species_solve): rooted forests.
--- (parking_functions moved to packs/permutations-plus/base_species.permutations-plus.sql)
-INSERT INTO base_species (collection, expr, egf, note, implicit) VALUES
-  ('labeled_forests',   'E∘(X·Y)', 'F=e^{xF}', 'rooted labelled forests; (n+1)ⁿ⁻¹ = 1,1,3,16,125,…', true);
--- two-stage: Y = the rooted-tree function (solve_for). (endofunctions moved to the pack, same reason)
-INSERT INTO base_species (collection, expr, egf, note, implicit, solve_for) VALUES
-  ('labeled_trees', '1+Y-Y·Y/2', '1+T-\tfrac{T^2}{2}', 'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2, +1 for the collection''s empty-tree convention (n≤2 ↦ 1)', true, 'X·(E∘Y)');
+-- (parking_functions moved to packs/permutations-plus/base_species.permutations-plus.sql; labeled_forests row
+-- moved to packs/trees-graphs/base_species.trees-graphs.sql, #283 phase 3)
+-- two-stage: Y = the rooted-tree function (solve_for). (endofunctions moved to the pack; labeled_trees row moved
+-- to packs/trees-graphs/base_species.trees-graphs.sql, #283 phase 3)
 
 -- rational OGFs (linear recurrences) as X-guarded fixed points Y = P(X) + (recurrence)·Y — need the scalar + subtraction.
 INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES

@@ -5,6 +5,7 @@
 -- order, then draw a semicircular arc — radius = half the label gap — joining each pair. Nesting/crossing structure
 -- (which the recursive fiber_elements order visits in a fixed sequence) reads directly off the arcs' radii: a pair
 -- that spans other pairs draws a taller arc that visibly contains theirs.
+-- layer: glyph
 CREATE FUNCTION perfect_matching_arc_svg(pairs int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT coalesce(array_length(pairs, 1), 0) AS m, unit * 0.16 AS pr),   -- pr = point-dot radius
   pts AS (SELECT o AS i, (o - 1) * unit AS x FROM dim, LATERAL generate_series(1, m) o),

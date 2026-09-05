@@ -67,9 +67,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('catalog','compositions_into_k_parts inherits its composition-carrier stats (registers none itself)','eq','0|true','own base_stat rows | any resolved stats (a floor — the carrier may gain more)',$q$
     SELECT (SELECT count(*) FROM base_stat WHERE collection = 'compositions_into_k_parts')::text || '|' ||
            (SELECT count(*) > 0 FROM base_stat_resolved WHERE collection = 'compositions_into_k_parts')::text $q$),
-  ('catalog','non_crossing_partitions inherits set_partitions stats + maps via the shared carrier','eq','true','resolved stats include blocks; resolved maps include shape',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'non_crossing_partitions' AND stat_id = 'blocks') AND
-            EXISTS (SELECT 1 FROM base_map_resolved WHERE collection = 'non_crossing_partitions' AND map_id = 'shape'))::text $q$),
+  -- (the non_crossing_partitions carrier-inheritance example moved to
+  -- packs/trees-graphs/catalog-resolution.trees-graphs.sql, #283 phase 3)
   ('catalog','inheritance is carrier-gated: the numeric families do NOT cross-inherit (own stats OK; #169)','eq','0','natural_numbers may register its OWN numeric stats, but inherits NONE from sibling numeric collections (numeric is a scalar carrier)',$q$
     SELECT count(*)::text FROM base_stat_resolved WHERE collection = 'natural_numbers' AND NOT own $q$),
   ('catalog','a base collection keeps exactly its own stats (nothing spurious inherited)','eq','true','integer_compositions resolved = its own registry',$q$

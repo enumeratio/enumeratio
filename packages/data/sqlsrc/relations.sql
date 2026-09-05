@@ -46,8 +46,8 @@ INSERT INTO base_finalizer (id, fn, description, scope) VALUES
 
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('relations','each collection-scoped bijection PAIR is ONE base_relation row (a floor of 4: Euler, crossing↔nesting, binary_words↔k_subsets, RSK — later batches only add rows)','eq','true','a floor, not an exact count — new collection-scoped bijections add rows',$q$
-    SELECT (count(*) >= 4)::text FROM base_relation $q$),
+  ('relations','each collection-scoped bijection PAIR is ONE base_relation row (a floor of 3 core-only: integer_compositions↔subsets, binary_words↔k_subsets, RSK; Euler, crossing↔nesting and increasing_binary_trees↔permutations are pack-owned and only add rows once their pack loads too — later batches only add rows)','eq','true','a floor, not an exact count — new collection-scoped bijections add rows',$q$
+    SELECT (count(*) >= 3)::text FROM base_relation $q$),
   ('relations','the order-iso relation is flagged: binary_words_by_weight ↔ k_subsets is the only is_order_iso row','eq','binary_words_by_weight→k_subsets','is_order_iso holds exactly where declared',$q$
     SELECT string_agg(domain||'→'||codomain, ',' ORDER BY domain) FROM base_relation WHERE is_order_iso $q$),
   ('relations','every relation IS a declared bijection (is_order_iso ⊃ is_bijection: no non-bijective relations)','eq','true','the promotion pulls only is_bijection maps',$q$

@@ -3,6 +3,7 @@
 -- shared tree_layout_svg design note). plane_tree's word (degrees[i] = pre-order child count of the i-th node) IS
 -- already exactly the child_count array tree_preorder_decode wants — no conversion, no own decode function needed;
 -- glyph_svg dispatches straight into the shared binary_tree_glyph.sql helpers.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(t plane_tree) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   SELECT tree_layout_svg(d.parent, d.depth) FROM tree_preorder_decode((t).degrees) d $$;
 

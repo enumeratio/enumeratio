@@ -16,10 +16,12 @@ export const PACK_DEPS: Record<PackName, PackName[]> = {
   'number-sets': ['core', 'words-plus'],
   'paths': ['core'],
   // non_crossing_permutations borrows non_crossing_partitions's crossing check, tournaments reuses labeled_graphs'
-  // edge-index engine (both real calls, not stale headers — grepped); orbit_maps_permutations_subsets reuses
-  // symmetry_orbit_maps' word_canonical_rotation for its subset-necklace map. Same shape as number-sets ->
-  // words-plus: neither dependency pack is extracted yet, so the files stay physically in core (sqlsrc/) and
-  // load before permutations-plus regardless — this declares the logical edge for pack-lint.
+  // edge-index engine (both real calls, not stale headers — grepped, and both already declared in their own
+  // `-- requires:` headers): trees-graphs is extracted (#316), so this edge is now materialized — permutations-plus
+  // loads after trees-graphs. orbit_maps_permutations_subsets reuses symmetry_orbit_maps' word_canonical_rotation
+  // for its subset-necklace map — same shape as number-sets -> words-plus: words-plus isn't extracted yet, so
+  // that file stays physically in core (sqlsrc/) and loads before permutations-plus regardless — this declares
+  // the logical edge for pack-lint, ready for when words-plus extracts.
   'permutations-plus': ['core', 'trees-graphs', 'words-plus'],
   'partitions-plus': ['core'],
   'compositions-plus': ['core'],
@@ -45,14 +47,7 @@ export const PACK_MAP: [PackName, RegExp][] = [
 
   ['number-sets', /^(.*_numbers|.*_primes|prime_gaps|collatz_trajectories|pythagorean_triples|sums_of_two_squares|goldbach_partitions|square_decompositions|egyptian_fractions|farey_sequences(\.maps)?|continued_fractions|calkin_wilf_paths|stern_brocot_paths|squarefree_semiprimes|k_almost_primes|zeckendorf_representations|hyperbinary_representations(\.stats)?|examples\.hypernumerary|number-gradings\.number-sets|base_species\.number-sets|fiber_unrank_verify\.number-sets|tags\.number-sets|examples\.representations\.number-sets|example-tiers\.number-sets|search_sequence\.number-sets)$/],
   ['paths', /^(motzkin_paths|schroeder_paths|schroeder_triangle|delannoy|fine_|lukasiewicz|riordan|k_dyck|k_motzkin|colored_motzkin|rational_dyck|grand_dyck|dyck_paths_by_height|little_schroder_triangle|ballot_sequences|base_species\.paths|constructions\.paths|fiber_unrank_verify\.paths|tags\.paths|triangle_refines\.paths|triangle_slices\.paths|dyck_paths\.stats2\.paths|examples\.representations\.paths)/],
-  // k_ary_trees is genuinely a `trees-graphs`-pack collection (§5), but trees-graphs hasn't been extracted yet —
-  // its CREATE FUNCTION k_ary_tree_to_k_dyck_path(...) RETURNS k_dyck_path names a `paths`-pack TYPE in its own
-  // signature, so once k_dyck_paths leaves sqlsrc/, core can no longer even CREATE the function (a DDL-time
-  // failure, not just a missing-FK one — same shape as skew_standard_tableaux -> skew_partitions, #283 phase 3
-  // lane 2). Forced out early, into `paths`, ahead of its own pack: matched BEFORE the `trees-graphs` pattern
-  // below so this wins. Revisit when `trees-graphs` is extracted: move k_ary_trees.sql there and delete this entry.
-  ['paths', /^k_ary_trees$/],
-  ['permutations-plus', /^(pattern_avoiding|baxter|grassmannian|cograssmannian|simple_perm|smooth_perm|connected_perm|boolean_perm|alternating_perm|cyclic_perm|k_colored|k_cycle|k_descent|k_inversion|affine_perm|decorated_perm|signed_perm|arrangements|permutations\.(stats2|stats3|findstat|denert|rsk_shape|equivalences|relations)|permutation_maps|orbit_maps_permutations_subsets|lehmer_codes|subexcedant_seqs|endofunctions|surjections|surjections_onto_k|parking_functions|non_decreasing_parking|non_crossing_perm|tournaments|base_species\.permutations-plus|constructions\.permutations-plus|cross-collection-maps\.permutations-plus|example-tiers\.permutations-plus|examples\.representations\.permutations-plus|fiber_unrank_verify\.permutations-plus|function_impls\.permutations-plus|map_compose\.permutations-plus|set_builders\.permutations-plus|species\.permutations-plus|tags\.permutations-plus|traits\.permutations-plus|triangle_refines\.permutations-plus|triangle_slices\.permutations-plus)/],
+  ['permutations-plus', /^(pattern_avoiding|baxter|grassmannian|cograssmannian|simple_perm|smooth_perm|connected_perm|boolean_perm|alternating_perm|cyclic_perm|k_colored|k_cycle|k_descent|k_inversion|affine_perm|decorated_perm|signed_perm|arrangements|permutations\.(stats2|stats3|findstat|denert|rsk_shape|equivalences|relations|maps\.findstat)|permutation_maps|orbit_maps_permutations_subsets|lehmer_codes|subexcedant_seqs|endofunctions|surjections|surjections_onto_k|parking_functions|non_decreasing_parking|non_crossing_perm|tournaments|base_species\.permutations-plus|constructions\.permutations-plus|cross-collection-maps\.permutations-plus|example-tiers\.permutations-plus|examples\.representations\.permutations-plus|fiber_unrank_verify\.permutations-plus|function_impls\.permutations-plus|map_compose\.permutations-plus|set_builders\.permutations-plus|species\.permutations-plus|tags\.permutations-plus|traits\.permutations-plus|triangle_refines\.permutations-plus|triangle_slices\.permutations-plus)/],
   ['partitions-plus', /^(distinct_partitions|odd_partitions|self_conjugate|core_partitions|bounded_part|box_confined|boxed_plane|k_part_partitions|largest_part|skew_partitions|plane_partitions|square_partitions|triangular_partitions|multiplicative_partitions|prime_partition|partitions_restrictions|integer_partitions\.(cores_quotients|dominance|frobenius_abacus|rank_crank|relations)|ordered_factorizations|partition_algebra|total_partitions|maps-bijections\.partitions-plus|base_species\.partitions-plus|traits\.partitions-plus|relations\.partitions-plus|random_element\.partitions-plus|triangle_slices\.partitions-plus|triangle_refines\.partitions-plus|collection-meta\.partitions-plus|catalog-resolution\.partitions-plus|function_impls\.partitions-plus|tags\.partitions-plus|identities\.partitions-plus)/],
   // skew_standard_tableaux is genuinely a `tableaux`-pack collection (§5), but tableaux hasn't been extracted yet —
   // its base_collection sits directly on skew_partitions' floor/fiber engine (calls skew_partitions(n) at runtime,
@@ -63,7 +58,7 @@ export const PACK_MAP: [PackName, RegExp][] = [
   // (skew_standard_tableaux + skew_standard_tableaux.jeu_de_taquin) into packs/tableaux/ and delete this entry.
   ['partitions-plus', /^skew_standard/],
   ['tableaux', /^(semistandard|shifted_standard|syt_|gelfand_tsetlin|standard_tableau_pairs|standard_tableaux\.(demotion|evacuation|promotion|reading_word|findstat)|alternating_sign|rook_placements)/],
-  ['trees-graphs', /^(ordered_trees|plane_trees|labeled_trees|labeled_forests|k_ary_trees|increasing_binary|recursive_trees|phylogenetic|non_crossing_trees|rooted_unlabeled|unlabeled_free|prufer|labeled_graphs|connected_labeled|independent_sets|dissections|non_crossing_matchings|non_nesting_matchings|perfect_matchings|non_crossing_partitions|non_nesting_partitions)/],
+  ['trees-graphs', /^(ordered_trees|plane_trees|labeled_trees|labeled_forests|k_ary_trees|increasing_binary|recursive_trees|phylogenetic|non_crossing_trees|rooted_unlabeled|unlabeled_free|prufer|labeled_graphs|connected_labeled|independent_sets|dissections|non_crossing_matchings|non_nesting_matchings|perfect_matchings|non_crossing_partitions|non_nesting_partitions|base_species\.trees-graphs|tags\.trees-graphs|maps-bijections\.trees-graphs|cross-collection-maps\.trees-graphs|set_partitions\.relations\.trees-graphs|catalog-resolution\.trees-graphs|fiber_unrank_verify\.trees-graphs|examples\.representations\.trees-graphs)/],
   // symmetry_orbit_maps is misfiled OUT of permutations-plus deliberately (#313 grep): it operates on
   // `words`/`k_necklaces`/`k_bracelets`/`k_lyndon_words` (all words-plus), not on any permutation collection,
   // despite the "orbit_maps" name overlap with permutations-plus's orbit_maps_permutations_subsets (which
@@ -132,7 +127,7 @@ export function packClosure(pack: PackName): Set<PackName> {
  * `placementOf`, not `packOf`, so both are correct mid-split. A lane lands by adding its name here and
  * re-running the codemod.
  */
-export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus', 'permutations-plus', 'paths']
+export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus', 'permutations-plus', 'paths', 'trees-graphs']
 
 /**
  * The extracted set in effect. `ENUMERATIO_PACKS_OVERRIDE=a,b` substitutes for `EXTRACTED_PACKS` so a lane can be

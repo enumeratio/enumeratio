@@ -5,6 +5,7 @@
 -- and -1 returns to the parent, and the node count (n+1) differs from the word length (2n). So instead of building a
 -- child_count array and feeding tree_preorder_decode, this walks the word directly with a stack of the CURRENT
 -- root→here path, minting a new node id (and recording its parent + depth) on every +1.
+-- layer: glyph
 CREATE FUNCTION ordered_tree_layout_decode(steps int[], OUT parent int[], OUT depth int[]) LANGUAGE plpgsql IMMUTABLE AS $$
   DECLARE
     m int := coalesce(array_length(steps, 1), 0);
