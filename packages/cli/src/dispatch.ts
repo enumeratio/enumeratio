@@ -41,7 +41,14 @@ export interface Client {
   /** the terminal environment's resolved SELECT list (elements archetype) — the CLI's default projection when no
    *  --select is given (#246); always the registry (policy_resolve), never a hardcoded list here. */
   terminalSelect(collection: string): Promise<string[]>
+  /** Evaluate a scalar expression through the engine seam (#278). OPTIONAL: a host that wired only a Db and no
+   *  engine simply doesn't offer `calc`, and the command says so instead of failing somewhere deeper. */
+  calc?(text: string): Promise<CalcResult>
 }
+
+/** What `calc` reports: the value, and WHICH engine produced it with which implementation — the provenance is the
+ *  point of routing, so `--explain` can show it rather than asking anyone to trust the router. */
+export type CalcResult = { value: string; engine: string; impl?: string; declined?: { engine: string; why: string }[] }
 
 export const USAGE = `
 enumeratio — enumerate a combinatorial collection and stream its elements
@@ -50,6 +57,7 @@ enumeratio — enumerate a combinatorial collection and stream its elements
   enumeratio list [collection]                         list the realized collections (or one's catalog shape)
   enumeratio table                                     show all collections as an aligned catalog grid
   enumeratio maps [collection]                          the map graph: every map as source → codomain (or one's)
+  enumeratio calc '<fn>(<args>)'                       evaluate a scalar expression (add --explain for provenance)
   enumeratio examples [collection]                     a collection's verified examples (or all, with counts)
   enumeratio --help
 
@@ -114,6 +122,7 @@ const OPTS: Record<string, { type: OptType; short?: string }> = {
   through: { type: 'string' },
   json: { type: 'boolean' },
   fields: { type: 'string' },
+  explain: { type: 'boolean' },
   help: { type: 'boolean', short: 'h' },
 }
 const SHORT: Record<string, string> = Object.fromEntries(
@@ -259,6 +268,7 @@ export async function runCli(argv: string[], opts: RunOpts): Promise<void> {
   if (collection === 'table') return printTable(write, client)
   if (collection === 'maps') return printMapGraph(positionals[1], write, client)
   if (collection === 'examples') return printExamples(positionals[1], opts, write)
+  if (collection === 'calc') return printCalc(positionals.slice(1).join(' '), !!values.explain, opts, write)
 
   const args = parseArgsList(positionals.slice(1))
   const handle = client.construct(collection, args)
@@ -449,6 +459,22 @@ async function printTable(write: Writer, client: Client) {
 /** `examples [collection]` — a collection's VERIFIED examples: the living assertions from base_example (the title
  * is the claim, `= expected` its answer — the same rows that run as the test suite). With no collection, list the
  * collections that have examples, with counts. */
+/** `enumeratio calc 'binomial(5, 2)'` — the proving consumer for the engine seam. The dispatcher stays
+ *  environment-agnostic: it never imports an engine, it asks the injected client, and the ROUTER decides who
+ *  answers. `--explain` prints that decision, including who declined and why, because a router nobody can
+ *  interrogate is a router nobody should trust. */
+async function printCalc(text: string, explain: boolean, opts: RunOpts, write: Writer) {
+  const expr = text.trim()
+  if (!expr) throw new CliError(`calc needs an expression, e.g. enumeratio calc 'binomial(5, 2)'`)
+  if (!opts.client.calc) throw new CliError('calc needs an engine — this host wired a Db but no engine (provideEngine)')
+  const r = await opts.client.calc(expr)
+  await write(r.value + '\n')
+  if (explain) {
+    await write(`# engine=${r.engine}${r.impl ? ` impl=${r.impl}` : ''}\n`)
+    for (const d of r.declined ?? []) await write(`# declined ${d.engine}: ${d.why}\n`)
+  }
+}
+
 async function printExamples(collection: string | undefined, opts: RunOpts, write: Writer) {
   if (!collection) {
     for (const c of (await opts.client.summary()).filter((s) => s.examplesCount > 0)) {

@@ -21,3 +21,11 @@ export const coreBundle: string = ordered.map(f => `-- ═══ ${f.name}.sql �
 // Content hash of the bundle — the client compares it against the version stamped into a prebuilt dump to decide
 // whether the dump is fresh (mount it) or stale (rebuild from sqlsrc). Must match node.ts's coreBundleHash().
 export const coreBundleHash: string = bundleHash(coreBundle)
+
+// The build-time catalog snapshot, when the artifact exists. import.meta.glob (not a static import) because the
+// file is a generated, gitignored release artifact: a glob that matches nothing is an empty record, while a static
+// import of a missing file is a build error. Absent ⇒ null ⇒ the engine that needs it declines.
+// @ts-ignore — import.meta.glob is a Vite compile-time transform (see the note above)
+const _snapshot = import.meta.glob('./catalog-snapshot.json', { import: 'default', eager: true }) as Record<string, unknown>
+export const catalogSnapshot = (Object.values(_snapshot)[0] ?? null) as import('./catalog-snapshot').CatalogSnapshot | null
+export type { CatalogSnapshot } from './catalog-snapshot'

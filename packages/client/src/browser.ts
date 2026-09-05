@@ -4,9 +4,15 @@
 //                      with its own line cap); a big enumeration would block the UI.
 //   • makeWorkerDb() — OFF-THREAD: the pglite lives in a Web Worker (browser-worker.ts), proxied by pglite's
 //                      PGliteWorker, so calculation never blocks the main thread. What the explorer uses.
+import { catalogSnapshot, coreBundleHash } from '@enumeratio/data'
 import { bootPglite } from './boot'
+import { provideCatalog } from './registry'
 import { setDebug, type Db, type Row } from './core'
 import { routeNotice } from './debug-env'
+
+// The browser's half of the catalog-snapshot split: Vite resolves the artifact through import.meta.glob at build
+// time (an empty record, not a build error, when it was never generated). See client/src/node.ts for the other half.
+provideCatalog(async () => ({ snapshot: catalogSnapshot, liveHash: coreBundleHash }))
 
 // Log query failures with their Postgres context whenever running a local dev build (Vite import.meta.env.DEV) — the
 // "always debug locally" default. Prod builds stay quiet; setDebug()/?debug/localStorage still override either way.

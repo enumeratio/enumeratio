@@ -4,7 +4,10 @@
 // the node plumbing around it — stdout with backpressure, EPIPE, the main-thread db, and turning a CliError into
 // stderr + a non-zero exit. Everything routes through enumeratio-client (the pure-SQL core).
 import debug from 'debug'
-import { close, provideDb, makeDb, collections, construct, describe, summary, mapGraph, terminalSelect } from '@enumeratio/client'
+import {
+  close, provideDb, provideEngine, makeDb, standardEngine, evaluate, parseCalc, whyNot,
+  collections, construct, describe, summary, mapGraph, terminalSelect,
+} from '@enumeratio/client'
 import { runCli, CliError, type Client } from './dispatch.js'
 
 const log = debug('enumeratio:cli:run')
@@ -27,8 +30,26 @@ async function main() {
   // Run pglite in-process (not the worker): the one-shot CLI doesn't need the worker's watchdog — Ctrl-C or an
   // external `timeout` wrapper kills a runaway, and skipping the worker spawn shaves cold-start time. The CLI now
   // drives the PURE-SQL core (bare pglite, zero C) via the injected client.
+  // The DATABASE is wired eagerly (every legacy export reads it from the first call); the ENGINE lazily, because
+  // building it loads the catalog snapshot and a bare `enumeratio permutations 4` never needs one.
   provideDb(() => makeDb())
-  const client: Client = { collections, construct, describe, summary, mapGraph, terminalSelect }
+  provideEngine(() => standardEngine())
+  const client: Client = {
+    collections, construct, describe, summary, mapGraph, terminalSelect,
+    async calc(text) {
+      const expr = parseCalc(text)
+      const { plan, rows } = evaluate(expr)
+      const out: Record<string, unknown>[] = []
+      try {
+        for await (const r of rows) out.push(r as Record<string, unknown>)
+      } catch (e) {
+        const why = await whyNot(expr)
+        throw new CliError(`${(e as Error).message}${why ? `\n  ${why}` : ''}`)
+      }
+      const p = await plan
+      return { value: String(Object.values(out[0] ?? {})[0] ?? ''), engine: p.engine, impl: p.impl }
+    },
+  }
   log('dispatching argv=%o', process.argv.slice(2))
   const t0 = Date.now()
   await runCli(process.argv.slice(2), { client, write })

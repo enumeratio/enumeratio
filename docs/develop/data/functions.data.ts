@@ -1,7 +1,8 @@
-// Build-time data loader for the identity registry (base_function, issue #282). Two independent extraction
-// paths merged by base_function.id: curated rows + pg_proc introspection (SQL-backed identities), and a
-// TypeScript-compiler-API walk of packages/math/src/*.ts (TS-backed identities). Regex extraction was ruled out
-// during design — the "SQL twin: ..." doc-comment convention there has at least 4 inconsistent shapes.
+// Build-time data loader for the identity registry (base_function, issue #282; base_function_impl join table
+// #278 increment 2). Three independent extraction paths merged: curated base_function/base_function_impl rows,
+// pg_proc introspection per pg impl row, and a TypeScript-compiler-API walk of packages/math/src/*.ts per ts
+// impl row. Regex extraction was ruled out during design — the "SQL twin: ..." doc-comment convention there has
+// at least 4 inconsistent shapes.
 import { bootCore } from '@enumeratio/data/node'
 import { readFileSync, readdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
@@ -16,19 +17,30 @@ const mathSrcDir = join(dirname(fileURLToPath(import.meta.url)), '../../../packa
 
 export interface AttributeRef { id: string; title: string | null; polytope: string | null }
 export interface CrossReference { system: string; identity: string; url: string | null; delta: string; relation: string }
+
+// One base_function_impl row, its introspected/extracted detail merged in. pg-only fields (argTypes/returnType/
+// signature/ret/variadic) and ts-only fields (file/comment) are null on the other engine's rows rather than
+// split into two interfaces — functions.md loops `impls` uniformly and only reads the fields present.
+export interface ImplRow {
+  engine: string
+  implRef: string
+  argTypes: string[]
+  returnType: string
+  representation: string
+  note: string | null
+  signature: string | null   // pg only: `${implRef}(${args})`
+  ret: string | null         // pg only: pg_get_function_result
+  variadic: boolean          // pg only
+  body: string | null        // pg: pg_get_functiondef; ts: the export's source text
+  file: string | null        // ts only: which packages/math/src/*.ts file
+  comment: string | null     // ts only: the export's leading comment, if any
+}
+
 export interface FunctionRow {
   id: string
   title: string | null
   description: string
-  sqlFn: string | null
-  sqlSignature: string | null
-  sqlReturn: string | null
-  sqlVariadic: boolean
-  sqlBody: string | null
-  tsExport: string | null
-  tsFile: string | null
-  tsComment: string | null
-  tsBody: string | null
+  impls: ImplRow[]
   attributes: AttributeRef[]
   references: CrossReference[]
 }
@@ -73,12 +85,15 @@ function hasExportModifier(node: ts.Node): boolean {
 }
 
 export default {
-  watch: ['../packages/data/sqlsrc/identities.sql', '../packages/math/src/*.ts'],
+  watch: ['../packages/data/sqlsrc/identities.sql', '../packages/data/sqlsrc/function_impls.sql', '../packages/math/src/*.ts'],
   async load(): Promise<FunctionsData> {
     const pg = await bootCore()
     const q = async (sql: string) => (await pg.query(sql)).rows as any[]
 
-    const funcs = await q(`SELECT id, title, description, sql_fn, ts_export FROM base_function ORDER BY id`)
+    const funcs = await q(`SELECT id, title, description FROM base_function ORDER BY id`)
+    const implRows = await q(`
+      SELECT function, engine, impl_ref, arg_types, return_type, representation, note
+        FROM base_function_impl ORDER BY function, engine, impl_ref`)
     const attributeDefs = await q(
       `SELECT id, title, description, polytope FROM base_function_attribute ORDER BY id`,
     )
@@ -89,48 +104,76 @@ export default {
       SELECT subject AS function, system, identity, url, delta, relation FROM base_reference
        WHERE subject_kind = 'function'`)
 
-    // pg_proc introspection per SQL-backed identity — same pg_get_function_arguments/pg_get_function_result
-    // pattern api.data.ts already uses; provariadic <> 0 is the mechanical is-variadic test (confirmed live
-    // against pglite during design); pg_get_functiondef is a new call for this repo but standard Postgres —
-    // it's how the full SQL body gets onto the page.
+    // pg_proc introspection per pg impl row — same pg_get_function_arguments/pg_get_function_result pattern
+    // api.data.ts already uses; provariadic <> 0 is the mechanical is-variadic test (confirmed live against
+    // pglite during design); pg_get_functiondef is a new call for this repo but standard Postgres — it's how
+    // the full SQL body gets onto the page. Keyed by (function, engine, impl_ref), the row's own primary key,
+    // not bare impl_ref — a name collision across two functions would otherwise silently merge their metadata.
     const sqlMeta = new Map<string, { args: string; ret: string; variadic: boolean; def: string }>()
-    for (const f of funcs) {
-      if (!f.sql_fn) continue
+    for (const i of implRows) {
+      if (i.engine !== 'pg') continue
+      const key = `${i.function}|${i.engine}|${i.impl_ref}`
       const rows = await q(
         `SELECT pg_get_function_arguments(p.oid) args, pg_get_function_result(p.oid) ret,
                 p.provariadic <> 0 AS variadic, pg_get_functiondef(p.oid) def
            FROM pg_proc p JOIN pg_namespace ns ON ns.oid = p.pronamespace
-          WHERE ns.nspname = 'public' AND p.proname = '${f.sql_fn}'
+          WHERE ns.nspname = 'public' AND p.proname = '${i.impl_ref}'
           ORDER BY length(pg_get_function_arguments(p.oid)) LIMIT 1`,
       )
-      if (!rows.length) throw new Error(`functions.data.ts: base_function '${f.id}' names sql_fn '${f.sql_fn}', but no such function exists in pg_proc`)
-      sqlMeta.set(f.id, rows[0])
+      if (!rows.length) throw new Error(`functions.data.ts: base_function '${i.function}' names a pg impl_ref '${i.impl_ref}', but no such function exists in pg_proc`)
+      sqlMeta.set(key, rows[0])
     }
     await pg.close()
 
     const tsExports = extractTsExports()
-    for (const f of funcs) {
-      if (f.ts_export && !tsExports.has(f.ts_export)) {
-        throw new Error(`functions.data.ts: base_function '${f.id}' names ts_export '${f.ts_export}', but no such export was found in packages/math/src/*.ts`)
+    for (const i of implRows) {
+      if (i.engine === 'ts' && !tsExports.has(i.impl_ref)) {
+        throw new Error(`functions.data.ts: base_function '${i.function}' names a ts impl_ref '${i.impl_ref}', but no such export was found in packages/math/src/*.ts`)
       }
     }
 
     const rows: FunctionRow[] = funcs.map((f) => {
-      const meta = sqlMeta.get(f.id)
-      const tsInfo = f.ts_export ? tsExports.get(f.ts_export) : undefined
+      const impls: ImplRow[] = implRows
+        .filter((i) => i.function === f.id)
+        .map((i): ImplRow => {
+          if (i.engine === 'pg') {
+            const meta = sqlMeta.get(`${i.function}|${i.engine}|${i.impl_ref}`)
+            return {
+              engine: i.engine,
+              implRef: i.impl_ref,
+              argTypes: i.arg_types,
+              returnType: i.return_type,
+              representation: i.representation,
+              note: i.note,
+              signature: meta ? `${i.impl_ref}(${meta.args})` : null,
+              ret: meta?.ret ?? null,
+              variadic: meta?.variadic ?? false,
+              body: meta?.def ?? null,
+              file: null,
+              comment: null,
+            }
+          }
+          const tsInfo = tsExports.get(i.impl_ref)
+          return {
+            engine: i.engine,
+            implRef: i.impl_ref,
+            argTypes: i.arg_types,
+            returnType: i.return_type,
+            representation: i.representation,
+            note: i.note,
+            signature: null,
+            ret: null,
+            variadic: false,
+            body: tsInfo?.body ?? null,
+            file: tsInfo?.file ?? null,
+            comment: tsInfo?.comment ?? null,
+          }
+        })
       return {
         id: f.id,
         title: f.title,
         description: f.description,
-        sqlFn: f.sql_fn,
-        sqlSignature: meta ? `${f.sql_fn}(${meta.args})` : null,
-        sqlReturn: meta?.ret ?? null,
-        sqlVariadic: meta?.variadic ?? false,
-        sqlBody: meta?.def ?? null,
-        tsExport: f.ts_export,
-        tsFile: tsInfo?.file ?? null,
-        tsComment: tsInfo?.comment ?? null,
-        tsBody: tsInfo?.body ?? null,
+        impls,
         attributes: attrRows
           .filter((a) => a.function === f.id)
           .map(({ id, title, polytope }) => ({ id, title, polytope })),

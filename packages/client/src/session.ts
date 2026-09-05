@@ -138,6 +138,9 @@ export function makeServiceWorkerDb(): SessionDb {
         send({ kind: 'query', id, sql, params })
       })
     },
+    // No `cancel`: shared-worker.ts serializes every query on the one engine and the protocol carries no cancel
+    // message, so there is nothing honest to implement here — leaving it undefined makes cancelDb() report false
+    // rather than claim an abort did something. Fixed by #279 (the queue-based calc worker).
     async close(): Promise<void> {
       // A shared surface is NOT ours to close — just detach this tab. The engine lives while any tab is open (in the
       // dedicated-fallback case the per-tab worker is reclaimed when the page unloads).

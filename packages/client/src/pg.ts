@@ -406,6 +406,18 @@ export async function makePgDb(options: PgDbOptions = {}): Promise<PgDb> {
       }
     },
 
+    /** Interrupt every in-flight statement with pg_cancel_backend, over the standalone diagnostic connection — the
+     *  pool itself may be saturated by exactly what we are cancelling. Connections survive; only the queries die. */
+    async cancel(): Promise<void> {
+      const pids = [...sessions.values()].filter(x => x.inFlight && x.pid != null).map(x => x.pid as number)
+      if (!pids.length) return
+      try {
+        const c = await diag()
+        await c.query('SELECT pg_cancel_backend(pid) FROM unnest($1::int[]) AS t(pid)', [pids])
+      } catch (e) {
+        log('cancel failed: %s', (e as Error).message)
+      }
+    },
     async close(): Promise<void> {
       closed = true
       if (watchdog) clearInterval(watchdog)

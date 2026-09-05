@@ -22,12 +22,14 @@ function toggle(id) {
   expanded.has(id) ? expanded.delete(id) : expanded.add(id)
 }
 
+function hasEngine(r, engine) { return r.impls.some((i) => i.engine === engine) }
+
 const filtered = computed(() => {
   const q = search.value.trim().toLowerCase()
   const rows = q
     ? data.rows.filter((r) =>
         r.id.includes(q) || (r.title ?? '').toLowerCase().includes(q) || r.description.toLowerCase().includes(q) ||
-        (r.sqlFn ?? '').includes(q) || (r.tsExport ?? '').includes(q))
+        r.impls.some((i) => i.implRef.toLowerCase().includes(q)))
     : data.rows
   const key = sortKey.value
   return [...rows].sort((a, b) => {
@@ -39,11 +41,12 @@ const filtered = computed(() => {
 })
 </script>
 
-A curated ledger of named math identities — `catalan_number`, `factorial`, `stirling1`, `gcd_int`, … — each
-optionally backed by a live SQL function, a [`@enumeratio/math`](https://github.com/enumeratio/enumeratio/tree/main/packages/math)
-TS twin, or both. Generated at build time by
+A curated ledger of named math identities — `catalan_number`, `factorial`, `stirling1`, `gcd`, … — each backed by
+one or more implementations (`base_function_impl`): a live SQL function, a
+[`@enumeratio/math`](https://github.com/enumeratio/enumeratio/tree/main/packages/math) TS twin, or both, at one or
+more representations (exact `numeric`, native `bigint`, …). Generated at build time by
 [`functions.data.ts`](https://github.com/enumeratio/enumeratio/blob/main/docs/develop/data/functions.data.ts)
-reading `base_function` directly, the same pattern as [the collections index](/develop/data/collections) and
+reading `base_function`/`base_function_impl` directly, the same pattern as [the collections index](/develop/data/collections) and
 [the maps reference](/develop/data/maps). SQL/TS bodies below are pulled live (`pg_get_functiondef` for SQL, a
 TypeScript-AST walk of `packages/math/src/*.ts` for TS), not hand-copied — they can't go stale.
 
@@ -81,8 +84,8 @@ computed equality, not just an asserted claim) — see each identity's expanded 
 <template v-for="r in filtered" :key="r.id">
 <tr class="fn-row" @click="toggle(r.id)">
 <td><code>{{ r.id }}</code><br/><span class="fn-title">{{ r.title }}</span></td>
-<td><span v-if="r.sqlFn" class="fn-yes" title="has a live SQL implementation">✓</span><span v-else class="fn-none">—</span></td>
-<td><span v-if="r.tsExport" class="fn-yes" title="has a @enumeratio/math TS implementation">✓</span><span v-else class="fn-none">—</span></td>
+<td><span v-if="hasEngine(r, 'pg')" class="fn-yes" title="has a live SQL implementation">✓</span><span v-else class="fn-none">—</span></td>
+<td><span v-if="hasEngine(r, 'ts')" class="fn-yes" title="has a @enumeratio/math TS implementation">✓</span><span v-else class="fn-none">—</span></td>
 <td>
 <span v-if="r.attributes.length === 0" class="fn-none">—</span>
 <span v-for="a in r.attributes" :key="a.id" class="fn-badge">{{ a.title }}</span>
@@ -102,14 +105,21 @@ computed equality, not just an asserted claim) — see each identity's expanded 
 </div>
 
 <div class="fn-bodies">
-<div v-if="r.sqlBody" class="fn-body">
-<div class="fn-body-label"><code>{{ r.sqlSignature }}</code> → <code>{{ r.sqlReturn }}</code><span v-if="r.sqlVariadic" class="fn-badge">variadic</span></div>
-<pre><code>{{ r.sqlBody }}</code></pre>
-</div>
-<div v-if="r.tsBody" class="fn-body">
-<div class="fn-body-label"><code>{{ r.tsExport }}</code> — <a :href="`https://github.com/enumeratio/enumeratio/blob/main/packages/math/src/${r.tsFile}`">{{ r.tsFile }}</a></div>
-<pre v-if="r.tsComment"><code>{{ r.tsComment }}</code></pre>
-<pre><code>{{ r.tsBody }}</code></pre>
+<div v-for="impl in r.impls" :key="`${impl.engine}:${impl.implRef}`" class="fn-body">
+<template v-if="impl.engine === 'pg'">
+<div class="fn-body-label"><code>{{ impl.signature }}</code> → <code>{{ impl.ret }}</code>
+<span class="fn-badge">{{ impl.representation }}</span><span v-if="impl.variadic" class="fn-badge">variadic</span></div>
+<p v-if="impl.note" class="fn-impl-note">{{ impl.note }}</p>
+<pre v-if="impl.body"><code>{{ impl.body }}</code></pre>
+</template>
+<template v-else>
+<div class="fn-body-label"><code>{{ impl.implRef }}</code>
+<span class="fn-badge">{{ impl.engine }}</span><span class="fn-badge">{{ impl.representation }}</span>
+<a v-if="impl.file" :href="`https://github.com/enumeratio/enumeratio/blob/main/packages/math/src/${impl.file}`">{{ impl.file }}</a></div>
+<p v-if="impl.note" class="fn-impl-note">{{ impl.note }}</p>
+<pre v-if="impl.comment"><code>{{ impl.comment }}</code></pre>
+<pre v-if="impl.body"><code>{{ impl.body }}</code></pre>
+</template>
 </div>
 </div>
 
@@ -165,6 +175,7 @@ the registered `base_map` identities specifically.
 .fn-bodies { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 @media (max-width: 800px) { .fn-bodies { grid-template-columns: 1fr; } }
 .fn-body-label { font-size: 0.85em; margin-bottom: 0.3rem; }
+.fn-impl-note { font-size: 0.82em; color: var(--vp-c-text-2); margin: 0.2rem 0 0.4rem; }
 .fn-body pre { margin: 0 0 0.5rem; max-height: 20rem; overflow: auto; font-size: 0.82em; }
 .fn-refs { width: 100%; font-size: 0.85em; margin-top: 0.75rem; border-collapse: collapse; }
 .fn-refs th, .fn-refs td { text-align: left; padding: 0.2rem 0.5rem; border-bottom: 1px solid var(--vp-c-divider); }

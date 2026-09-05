@@ -7,9 +7,15 @@
 //                      `terminate()`d any other way — so long-running / untrusted-size embedders want this one.
 import { Worker } from 'node:worker_threads'
 import debug from 'debug'
-import { bootCore, bundleHash, coreBundle, coreDumpPath } from '@enumeratio/data/node'
+import { bootCore, bundleHash, coreBundle, coreBundleHash, coreDumpPath, loadCatalogSnapshot } from '@enumeratio/data/node'
 import type { Db, Row } from './core'
 import { debugGucSetSql, routeNotice } from './debug-env'
+import { provideCatalog } from './registry'
+
+// The node entry knows how to find the build-time catalog snapshot: read it off disk. (The browser entry can't —
+// it uses import.meta.glob instead. Neither can do the other's trick, which is why the registry takes a source
+// rather than importing one.)
+provideCatalog(async () => ({ snapshot: await loadCatalogSnapshot(), liveHash: coreBundleHash() }))
 
 const log = debug('enumeratio:client:db')
 
@@ -102,6 +108,15 @@ export function makeWorkerDb(): Db {
         pending.set(id, { resolve: resolve as Pending['resolve'], reject, timer })
         w.postMessage({ id, sql, params })
       })
+    },
+    /** Interrupt without closing: terminate the worker (the ONLY way to stop a non-terminating enumeration — a
+     *  tight plpgsql loop ignores statement_timeout) and let the next query respawn a fresh one. */
+    async cancel(): Promise<void> {
+      const w = worker
+      if (!w) return
+      log('cancel — terminating worker')
+      failAll(new Error('enumeratio: query cancelled'))
+      await w.terminate()
     },
     async close(): Promise<void> {
       closed = true

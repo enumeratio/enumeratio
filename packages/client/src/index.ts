@@ -5,6 +5,12 @@ export * from './core'
 export * from './rows'
 export * from './select'
 export * from './preds'
+export * from './ir'
+export * from './engine'
+export { pgEngine } from './pg-engine'
+export { tsEngine, InexactResult } from './ts-engine'
+export { routerEngine, standardEngine } from './router'
+export * from './registry'
 export { makeDb, makeWorkerDb, setQueryTimeout } from './node'
 // Dev/test only: a real-Postgres Db over a throwaway scratch database (see pg.ts). Node-only — deliberately absent
 // from index.browser.ts so `pg` never reaches a browser bundle.

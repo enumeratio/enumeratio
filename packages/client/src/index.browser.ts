@@ -5,6 +5,12 @@ export * from './core'
 export * from './rows'
 export * from './select'
 export * from './preds'
+export * from './ir'
+export * from './engine'
+export { pgEngine } from './pg-engine'
+export { tsEngine, InexactResult } from './ts-engine'
+export { routerEngine, standardEngine } from './router'
+export * from './registry'
 export { makeDb, makeWorkerDb, setQueryTimeout } from './browser'
 // Session mode: one shared, observable calculation surface across all tabs (SharedWorker engine + ServiceWorker
 // controller). See https://github.com/enumeratio/enumeratio/wiki/Service-Worker-And-Session.

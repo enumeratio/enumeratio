@@ -8,6 +8,8 @@ import { fileURLToPath } from 'node:url'
 import { PGlite } from '@electric-sql/pglite'
 import { orderSqlsrc, type SqlFile } from './sqlsrc-order.ts'
 import { bundleHash } from './hash.ts'
+import type { CatalogSnapshot } from './catalog-snapshot.ts'
+export type { CatalogSnapshot } from './catalog-snapshot.ts'
 export { bundleHash } from './hash.ts'   // so a consumer can hash a bundle it already read, without a second read
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -15,6 +17,21 @@ export const sqlsrcDir = join(here, 'sqlsrc')
 
 /** The prebuilt gzipped-tar dump (built by build-pgdata.mts / the client build). Mounted by bootCore(). */
 export const coreDumpPath = join(here, 'enumeratio-core.pgdata')
+
+/** The build-time catalog snapshot (built by build-catalog-snapshot.mts). Sibling artifact of the dump, same
+ *  lifecycle: generated, gitignored, shipped in the tarball. */
+export const catalogSnapshotPath = join(here, 'catalog-snapshot.json')
+
+/** The snapshot, or null when it was never built (a source checkout) or is unreadable. Never throws — an absent
+ *  snapshot must degrade to "the engine that needs it declines", never to a crash. Staleness is the CALLER's
+ *  check: compare `hash` against coreBundleHash(). */
+export async function loadCatalogSnapshot(): Promise<CatalogSnapshot | null> {
+  try {
+    return JSON.parse(await readFile(catalogSnapshotPath, 'utf8')) as CatalogSnapshot
+  } catch {
+    return null
+  }
+}
 
 /** The ordered sqlsrc files (bootstrap first), read from disk. */
 export function coreFiles(): SqlFile[] {

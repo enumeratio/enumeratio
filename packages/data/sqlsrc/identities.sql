@@ -4,26 +4,30 @@
 -- this ledger implicitly (pre-2026-08 C-extension); the individual functions survived un-prefixed in the pure-SQL
 -- rewrite, the central registry didn't. Distinct from base_operation/base_structure (algebra.sql) — that registry
 -- is which ALGEBRAIC STRUCTURES a TYPE belongs to (15 fixed operators: add, mul, le, …); this is a catalog of
--- named IDENTITIES (catalan_number, stirling1, gcd_int, …), each optionally backed by a live SQL function, a
--- packages/math TS twin, or both.
+-- named IDENTITIES (catalan_number, stirling1, gcd, …), each backed by one or more IMPLEMENTATIONS —
+-- function_impls.sql's base_function_impl, loaded right after this file — rather than a fixed sql_fn/ts_export
+-- pair inline here (#278 increment 2: a function can have multiple impls per engine at different
+-- representations, e.g. factorial vs the bigint-exact factorial_bigint, or none at all on one engine, e.g. lcm
+-- is TS-only).
 --
--- `id` is a curated slug, decoupled from BOTH impl pointers — mirrors base_map's map_id/mapping_fn split, so a
--- rename of either impl never cascades through every attribute/reference row naming this identity. This split is
+-- `id` is a curated slug, decoupled from every impl pointer — mirrors base_map's map_id/mapping_fn split, so a
+-- rename of an impl never cascades through every attribute/reference row naming this identity. This split is
 -- load-bearing, not decorative: lehmer_code below is the concrete case where it matters — a SQL function named
 -- `lehmer_code` already exists (lehmer_codes.sql), but it SERIALIZES an already-built permutation_inversion to
--- text; the actual encoding computation TS's lehmer_code() twins is `to_inversion`. Naming this row's sql_fn
--- 'lehmer_code' by string-matching the id would silently point at the wrong function.
+-- text; the actual encoding computation TS's lehmer_code() twins is `to_inversion`. Naming this row's pg impl
+-- 'lehmer_code' by string-matching the id would silently point at the wrong function. It's also decoupled from
+-- TYPE-HINT suffixes on an impl name specifically: gcd/lcm/pow are curated here without their `_int` suffix even
+-- though every impl_ref pointing at them keeps it (gcd_int, lcm_int, pow_int) — the suffix documents an
+-- implementation detail (int arithmetic) that the identity itself (gcd, lcm, pow) doesn't need to carry, and
+-- renaming the live SQL/TS functions themselves is out of scope here.
 --
 -- Mechanical facts (arity, variadic-ness, the live function body) are NEVER stored here — always derived via
 -- pg_proc/AST introspection at docs-build time (docs/develop/data/functions.data.ts), the same "curate the
 -- pointer, introspect the rest" split base_stat/base_map already use.
 CREATE TABLE base_function (
-  id          text PRIMARY KEY,        -- curated identity slug, e.g. 'catalan_number', 'stirling1', 'lcm_int'
+  id          text PRIMARY KEY,        -- curated identity slug, e.g. 'catalan_number', 'stirling1', 'lcm'
   title       text,
-  description text NOT NULL,
-  sql_fn      text,                    -- pg_proc.proname of the SQL twin (packages/data/sqlsrc); NULL if TS-only
-  ts_export   text,                    -- packages/math export name; NULL if SQL-only
-  CHECK (sql_fn IS NOT NULL OR ts_export IS NOT NULL)   -- a function with neither pointer documents nothing
+  description text NOT NULL
 );
 
 -- base_function_attribute: named FUNCTION-level capabilities, mirroring base_trait's shape (id/title/description/
@@ -31,7 +35,7 @@ CREATE TABLE base_function (
 -- references outside algebra.sql). Seeded with the Wolfram Language function-attribute vocabulary that applies
 -- to named identities here: Flat (associative), Orderless (commutative), OneIdentity (f(f(x))=f(x)=x) — real WL
 -- terms, see reference.wolfram.com/language/ref/Flat.html and siblings. These describe N-ARY ENDO-OPERATIONS
--- ONLY (arity ≥ 2, return type = an argument type being recombined) — gcd_int/gaussian_add-shaped, never
+-- ONLY (arity ≥ 2, return type = an argument type being recombined) — gcd/gaussian_add-shaped, never
 -- catalan_number/stirling1-shaped (a counting sequence, or a function whose args and return type differ, doesn't
 -- type-check for "regroup the same operands"). This is a CURATION GUIDELINE, checked below by a base_example
 -- against pg_proc.pronargs, not a DB CHECK (Postgres can't self-inspect another function's own signature against
@@ -74,93 +78,75 @@ INSERT INTO base_function_attribute (id, title, description, implies, polytope) 
    'No polytope correspondence. No identity below is curated with this attribute yet — it needs a genuinely '
    'variadic n-ary function to exhibit (none of the fixed-arity-2 operations here qualify).', '{}', NULL);
 
--- Curation batch 1 — 30 of packages/math's ~45 exported functions, every one with either a real bare-callable
--- SQL function or (lcm_int) a genuine TS-only identity. Deliberately EXCLUDED from this batch (follow-up: the
--- GitHub issue tracking this registry): every "No bare SQL fn (generic dispatch)" rank/unrank export
--- (integerPartitionRank/Unrank/KRank/KUnrank, rgsRank/Unrank, setPartitionsIntoKBlocksRank/Unrank,
+-- Curation batch 1 — 28 identities covering packages/math's ~45 exported functions (see function_impls.sql for
+-- the 59 impl rows backing them — every one with a real bare-callable SQL function, a packages/math TS twin, or
+-- both; lcm is TS-only). factorial_bigint and binomial_bigint are NOT separate identities here — they were in
+-- the original 30-row batch, back when the inline sql_fn/ts_export pair left nowhere else to put a second impl;
+-- they're now impl rows (representation 'bigint') on factorial/binomial. Deliberately EXCLUDED from this batch
+-- (follow-up: the GitHub issue tracking this registry): every "No bare SQL fn (generic dispatch)" rank/unrank
+-- export (integerPartitionRank/Unrank/KRank/KUnrank, rgsRank/Unrank, setPartitionsIntoKBlocksRank/Unrank,
 -- permutation_rank, composition_rank) — these are the READ direction of a bijection whose SQL side is dispatched
 -- generically through unrank(<collection>(...), r), not a separately named identity; gaussian_sub/mc_sub (each
 -- file's own comment: "defined as a + (-b) there too" — definitional, not a distinct identity); and
 -- countSurjections/setCompositionRank/setCompositionUnrank (the only SQL counterpart,
 -- set_composition_surjections(n,k), is an ENUMERATOR — SETOF int[] — not a scalar count/rank function; the shape
 -- doesn't match cleanly enough to curate without guessing).
-INSERT INTO base_function (id, title, description, sql_fn, ts_export) VALUES
+INSERT INTO base_function (id, title, description) VALUES
   ('catalan_number', 'Catalan number',
    'Cₖ = C(2k,k)/(k+1) — counts balanced bracketings, binary trees, Dyck paths, and triangulations of a convex '
-   '(k+2)-gon.', 'catalan_number', 'catalan_number'),
+   '(k+2)-gon.'),
   ('little_schroder_number', 'Little Schröder (super-Catalan) number',
    's(m) — counts dissections of a convex polygon by non-crossing diagonals, among other bracketing-adjacent '
-   'structures. 1, 1, 3, 11, 45, 197, …', 'little_schroder_number', 'little_schroder_number'),
-  ('factorial', 'Factorial', 'n! = 1·2·…·n — counts permutations of n distinct objects.',
-   'factorial', 'factorial'),
-  ('factorial_bigint', 'Factorial (exact bigint)',
-   'n! as an exact bigint — factorial() switches to floating precision loss beyond n=18.',
-   'factorial_bigint', 'factorial_bigint'),
-  ('binomial', 'Binomial coefficient', 'C(n,k) — the number of k-subsets of an n-set.', 'binomial', 'binomial'),
-  ('binomial_bigint', 'Binomial coefficient (exact bigint)',
-   'C(n,k) as an exact bigint via an interleaved product/quotient — no intermediate rounding.',
-   'binomial_bigint', 'binomial_bigint'),
-  ('bell', 'Bell number', 'B(n) — the number of set partitions of an n-set.', 'bell', 'bell'),
+   'structures. 1, 1, 3, 11, 45, 197, …'),
+  ('factorial', 'Factorial',
+   'n! = 1·2·…·n — counts permutations of n distinct objects. factorial() switches to floating precision loss '
+   'beyond n=18; an exact-bigint variant is also available (impl representation ''bigint'', valid through n=20).'),
+  ('binomial', 'Binomial coefficient',
+   'C(n,k) — the number of k-subsets of an n-set. An exact-bigint variant is also available (impl representation '
+   '''bigint'', via an interleaved product/quotient — no intermediate rounding).'),
+  ('bell', 'Bell number', 'B(n) — the number of set partitions of an n-set.'),
   ('fubini', 'Fubini (ordered Bell) number', 'a(n) — the number of set compositions (ordered set partitions) of '
-   'an n-set.', 'fubini', 'fubini'),
+   'an n-set.'),
   ('stirling_second', 'Stirling number of the second kind',
-   'S(n,k) — the number of set partitions of an n-set into exactly k blocks.', 'stirling_second', 'stirling_second'),
-  ('partition_number', 'Partition number', 'p(n) — the number of integer partitions of n.',
-   'partition_number', 'partition_number'),
-  ('gcd_int', 'Greatest common divisor', 'gcd(a,b) via Euclid''s algorithm, always non-negative.',
-   'gcd_int', 'gcd_int'),
-  ('lcm_int', 'Least common multiple', 'lcm(a,b) = |a·b| / gcd(a,b), 0 if either input is 0. TS-only — '
-   'utilities.sql has no SQL lcm implementation today.', NULL, 'lcm_int'),
-  ('pow_int', 'Integer power', 'bᵉ via exact repeated integer multiplication (no float ^ scaling/rounding).',
-   'pow_int', 'pow_int'),
-  ('double_factorial_odd', 'Double factorial (odd)', '(2n-1)!! = 1·3·5·…·(2n-1).',
-   'double_factorial_odd', 'double_factorial_odd'),
+   'S(n,k) — the number of set partitions of an n-set into exactly k blocks.'),
+  ('partition_number', 'Partition number', 'p(n) — the number of integer partitions of n.'),
+  ('gcd', 'Greatest common divisor', 'gcd(a,b) via Euclid''s algorithm, always non-negative.'),
+  ('lcm', 'Least common multiple', 'lcm(a,b) = |a·b| / gcd(a,b), 0 if either input is 0.'),
+  ('pow', 'Integer power', 'bᵉ via exact repeated integer multiplication (no float ^ scaling/rounding).'),
+  ('double_factorial_odd', 'Double factorial (odd)', '(2n-1)!! = 1·3·5·…·(2n-1).'),
   ('gaussian_add', 'Gaussian integer addition',
-   'Componentwise addition on ℤ[i]: (a+bi) + (c+di) = (a+c) + (b+d)i — the additive group operation.',
-   'gaussian_add', 'gaussian_add'),
+   'Componentwise addition on ℤ[i]: (a+bi) + (c+di) = (a+c) + (b+d)i — the additive group operation.'),
   ('gaussian_mul', 'Gaussian integer multiplication',
-   '(a+bi)(c+di) = (ac-bd) + (ad+bc)i — the commutative-ring multiplication on ℤ[i].',
-   'gaussian_mul', 'gaussian_mul'),
-  ('gaussian_neg', 'Gaussian integer negation', '-(a+bi) = -a-bi — the additive inverse on ℤ[i].',
-   'gaussian_neg', 'gaussian_neg'),
-  ('gaussian_norm', 'Gaussian integer norm', 'N(a+bi) = a²+b² — the multiplicative Euclidean gauge on ℤ[i].',
-   'gaussian_norm', 'gaussian_norm'),
-  ('mc_add', 'Multicomplex addition', 'Componentwise addition mod M on the multicomplex ring ℂₙ(ℤ/Mℤ).',
-   'mc_add', 'mc_add'),
+   '(a+bi)(c+di) = (ac-bd) + (ad+bc)i — the commutative-ring multiplication on ℤ[i].'),
+  ('gaussian_neg', 'Gaussian integer negation', '-(a+bi) = -a-bi — the additive inverse on ℤ[i].'),
+  ('gaussian_norm', 'Gaussian integer norm', 'N(a+bi) = a²+b² — the multiplicative Euclidean gauge on ℤ[i].'),
+  ('mc_add', 'Multicomplex addition', 'Componentwise addition mod M on the multicomplex ring ℂₙ(ℤ/Mℤ).'),
   ('mc_mul', 'Multicomplex multiplication',
-   'XOR-convolution with a Thue–Morse overlap sign: out[i⊻j] += (−1)^popcount(i∧j)·a[i]·b[j] (mod M).',
-   'mc_mul', 'mc_mul'),
-  ('mc_neg', 'Multicomplex negation', 'Componentwise negation mod M.', 'mc_neg', 'mc_neg'),
-  ('mc_conj', 'Multicomplex conjugation', 'Flips every "odious" (odd-popcount-indexed) coefficient''s sign.',
-   'mc_conj', 'mc_conj'),
+   'XOR-convolution with a Thue–Morse overlap sign: out[i⊻j] += (−1)^popcount(i∧j)·a[i]·b[j] (mod M).'),
+  ('mc_neg', 'Multicomplex negation', 'Componentwise negation mod M.'),
+  ('mc_conj', 'Multicomplex conjugation', 'Flips every "odious" (odd-popcount-indexed) coefficient''s sign.'),
   ('mc_popcount', 'Popcount', 'The Hamming weight of a non-negative bitmask (0..30 bits) — the sign exponent '
-   'multicomplex multiplication is built from.', 'mc_popcount', 'mc_popcount'),
+   'multicomplex multiplication is built from.'),
   ('composition_from_mask', 'Composition from gap-cut mask',
    'The bijection: an integer composition of n ↔ a subset of the n-1 gaps between n unit cells (the mask IS the '
-   'rank).', 'composition_from_mask', 'composition_from_mask'),
+   'rank).'),
   ('permutation_unrank', 'Permutation unrank (lexicographic)',
-   'The r-th permutation of [n] in lexicographic order — Lehmer-code decode.',
-   'permutation_unrank_lex', 'permutation_unrank'),
+   'The r-th permutation of [n] in lexicographic order — Lehmer-code decode.'),
   ('lehmer_code', 'Lehmer code',
    'L[i] = #{ j > i : perm[j] < perm[i] } for every position — the inversion table of a permutation. SQL twin '
    'is to_inversion(p).code, NOT the SQL function literally named lehmer_code() (that one serializes an '
    'already-built permutation_inversion to text — a naming collision with this identity, not a match). The SQL '
-   'array is length n-1 (the always-0 trailing entry is dropped from the stored carrier); the TS array keeps it.',
-   'to_inversion', 'lehmer_code'),
+   'array is length n-1 (the always-0 trailing entry is dropped from the stored carrier); the TS array keeps it.'),
   ('inversions', 'Inversions (Coxeter length)',
-   'The number of pairs out of order in a permutation — the sum of its Lehmer code, and its Coxeter length.',
-   'perm_inversions', 'inversions'),
+   'The number of pairs out of order in a permutation — the sum of its Lehmer code, and its Coxeter length.'),
   ('stirling1', 'Unsigned Stirling number of the first kind',
-   'c(n,k) — the number of permutations of n elements having exactly k cycles.',
-   'stirling_first_unsigned', 'stirling1'),
-  ('eulerianA', 'Eulerian number', 'A(n,k) — the number of permutations of n elements having exactly k descents.',
-   'eulerian_number', 'eulerianA'),
+   'c(n,k) — the number of permutations of n elements having exactly k cycles.'),
+  ('eulerianA', 'Eulerian number', 'A(n,k) — the number of permutations of n elements having exactly k descents.'),
   ('integer_partition_k_count', 'k-part partition count',
-   'p(n,k) — the number of integer partitions of n into exactly k parts.',
-   'k_part_partition_count', 'integerPartitionKCount');
+   'p(n,k) — the number of integer partitions of n into exactly k parts.');
 
 -- Attribute assignments — every one below is independently demonstrated (not just asserted) by a base_example
--- further down. gcd_int/lcm_int: associative + commutative, standard number theory. gaussian_add/gaussian_mul:
+-- further down. gcd/lcm: associative + commutative, standard number theory. gaussian_add/gaussian_mul:
 -- ℤ[i] is a commutative ring — both operations are. mc_add: componentwise mod-M addition, trivially both.
 -- mc_mul: ORDERLESS ONLY — commutativity is proved algebraically below (swapping a,b relabels the same sum,
 -- since AND and popcount are symmetric in their operands) and demonstrated live; associativity of this specific
@@ -168,8 +154,8 @@ INSERT INTO base_function (id, title, description, sql_fn, ts_export) VALUES
 -- rather than guessed (Cayley-Dickson-style doubling constructions are known to lose associativity at exactly
 -- this kind of higher dimension — asserting Flat without proof would be worse than leaving it uncurated).
 INSERT INTO base_function_attribute_manual (function, attribute) VALUES
-  ('gcd_int', 'flat'), ('gcd_int', 'orderless'),
-  ('lcm_int', 'flat'), ('lcm_int', 'orderless'),
+  ('gcd', 'flat'), ('gcd', 'orderless'),
+  ('lcm', 'flat'), ('lcm', 'orderless'),
   ('gaussian_add', 'flat'), ('gaussian_add', 'orderless'),
   ('gaussian_mul', 'flat'), ('gaussian_mul', 'orderless'),
   ('mc_add', 'flat'), ('mc_add', 'orderless'),
@@ -180,7 +166,7 @@ INSERT INTO base_function_attribute_manual (function, attribute) VALUES
 -- Cross-system references — authored directly with subject_kind='function' (no single dominant external system
 -- the way FindStat is for maps, so no new convenience column; base_reference already anticipates 'wolfram' as a
 -- system value, unused until now). Conservative: only identities with a citation I'm confident is correct are
--- included here — no fabricated A-numbers or WL symbol names for the rest; the remaining 21 curated rows above
+-- included here — no fabricated A-numbers or WL symbol names for the rest; the remaining 19 curated rows above
 -- can gain references incrementally without a schema change.
 INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta, relation) VALUES
   ('function','catalan_number','oeis','A000108','https://oeis.org/A000108','','isomorphic'),
@@ -198,17 +184,9 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta,
   ('function','stirling1','wolfram','StirlingS1','https://reference.wolfram.com/language/ref/StirlingS1.html',
    'WL StirlingS1 is SIGNED; stirling1 here is the UNSIGNED cycle-count c(n,k) = |StirlingS1(n,k)|','isomorphic');
 
+-- the sql_fn-integrity and arity-2 attribute checks that used to live here now live in function_impls.sql, over
+-- base_function_impl — the join table replaced the columns they were checking.
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('base_function','every base_function.sql_fn resolves to a real pg_proc function',
-   'eq','0','no FK is possible (sql_fn is plain text, not a DB object reference) — this is the integrity check',$q$
-     SELECT count(*)::text FROM base_function WHERE sql_fn IS NOT NULL
-       AND NOT EXISTS (SELECT 1 FROM pg_proc WHERE proname = sql_fn) $q$),
-  ('base_function','flat/orderless are only assigned to SQL-backed functions of arity >= 2',
-   'eq','0','operationalizes the endo-operation curation guideline as a check, not a DB CHECK constraint',$q$
-     SELECT count(*)::text FROM base_function_attribute_manual m
-       JOIN base_function f ON f.id = m.function
-       JOIN pg_proc p ON p.proname = f.sql_fn
-      WHERE m.attribute IN ('flat','orderless') AND p.pronargs < 2 $q$),
   ('base_function','gcd_int is associative on a sample triple (Flat, demonstrated not just asserted)',
    'eq','true',NULL,$q$
      SELECT (gcd_int(gcd_int(12,18),30) = gcd_int(12,gcd_int(18,30)))::text $q$),

@@ -1,7 +1,7 @@
 {
   "name": "@enumeratio/data",
   "version": "0.1.0",
-  "description": "The enumeratio database as a package — the combinatorial catalog and its whole schema as pure SQL (zero C): ~150 collections realized by a data-driven generator into a uniform handle/fiber/element/notation/membership layer. Under the hood a pure-SQL Postgres extension; runs in any Postgres and in-browser via PGlite.",
+  "description": "The enumeratio database as a package \u2014 the combinatorial catalog and its whole schema as pure SQL (zero C): ~150 collections realized by a data-driven generator into a uniform handle/fiber/element/notation/membership layer. Under the hood a pure-SQL Postgres extension; runs in any Postgres and in-browser via PGlite.",
   "type": "module",
   "license": "Unlicense",
   "homepage": "https://enumeratio.dev",
@@ -17,18 +17,21 @@
     "./node": "./node.ts",
     "./vite": "./vite.ts",
     "./enumeratio-core.pgdata": "./enumeratio-core.pgdata",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./catalog-snapshot.json": "./catalog-snapshot.json",
+    "./catalog-snapshot": "./catalog-snapshot.ts"
   },
   "files": [
     "*.ts",
     "sqlsrc",
     "enumeratio-core.pgdata",
+    "catalog-snapshot.json",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
-    "prepack": "node --import tsx build-pgdata.mts",
-    "build": "node --import tsx build-pgdata.mts",
+    "prepack": "node --import tsx build-pgdata.mts && node --import tsx build-catalog-snapshot.mts",
+    "build": "node --import tsx build-pgdata.mts && node --import tsx build-catalog-snapshot.mts",
     "typecheck": "tsgo --noEmit",
     "test": "node --import tsx run.mts",
     "selfcert": "node --import tsx selfcert.mts",

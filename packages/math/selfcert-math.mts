@@ -1,6 +1,12 @@
-// Differential oracle for @enumeratio/math: every ported primitive that has an SQL twin must return the exact
-// same value as its twin, across a range of inputs. Mirrors the style of packages/data/selfcert.mts (accelerated
-// == naive), but here the two sides are TS == SQL rather than two SQL paths.
+// Differential oracle for @enumeratio/math's RANK/UNRANK round-trips: a rank decoded and re-encoded must recover
+// itself, and where a decode has an SQL twin the two must agree.
+//
+// The scalar TS == SQL half of this file has MOVED to packages/client/selfcert-engine.mts (#278 increment 6),
+// which sweeps the same comparison driven by base_function_impl rather than by a hand-written loop per function —
+// so a new implementation row is certified the moment it lands, and the sweep also locates each float64 twin's
+// exactness frontier. What stays here is the part that is not an engine differential at all: the bijection
+// round-trips, whose SQL side is dispatched generically through unrank(<collection>, r) rather than being a
+// separately named identity (see identities.sql's exclusion note).
 //
 //   node --import tsx selfcert-math.mts
 //
@@ -19,141 +25,6 @@ const mismatches: string[] = [];
 function record(label: string, expected: unknown, got: unknown) {
   checked++;
   if (String(expected) !== String(got)) mismatches.push(`${label}: SQL=${expected} TS=${got}`);
-}
-
-// ---- number theory ----
-for (let a = -15; a <= 15; a++) {
-  for (let b = -15; b <= 15; b++) {
-    const [[sql]] = await q(`SELECT gcd_int(${a},${b})::text`);
-    record(`gcd_int(${a},${b})`, sql, M.gcd_int(a, b));
-  }
-}
-for (let b = -5; b <= 5; b++) {
-  for (let e = 0; e <= 8; e++) {
-    if (b === 0 && e === 0) continue; // 0^0 — pow_int loop gives 1 either side, skip nothing actually; keep for parity
-    const [[sql]] = await q(`SELECT pow_int(${b},${e})::text`);
-    record(`pow_int(${b},${e})`, sql, M.pow_int(b, e));
-  }
-}
-for (let n = 0; n <= 12; n++) {
-  const [[sql]] = await q(`SELECT double_factorial_odd(${n})::text`);
-  record(`double_factorial_odd(${n})`, sql, M.double_factorial_odd(n));
-}
-
-// ---- combinat ----
-for (let n = 0; n <= 15; n++) {
-  const [[sql]] = await q(`SELECT factorial(${n})::text`);
-  record(`factorial(${n})`, sql, M.factorial(n));
-}
-for (let n = 0; n <= 20; n++) {
-  const [[sql]] = await q(`SELECT factorial_bigint(${n})::text`);
-  record(`factorial_bigint(${n})`, sql, M.factorial_bigint(n));
-}
-for (let n = 0; n <= 30; n++) {
-  for (let k = -1; k <= n + 1; k++) {
-    const [[sql]] = await q(`SELECT binomial(${n},${k})::text`);
-    record(`binomial(${n},${k})`, sql, M.binomial(n, k));
-  }
-}
-for (let n = 0; n <= 40; n++) {
-  for (let k = -1; k <= n + 1; k++) {
-    const [[sql]] = await q(`SELECT binomial_bigint(${n},${k})::text`);
-    record(`binomial_bigint(${n},${k})`, sql, M.binomial_bigint(n, k));
-  }
-}
-for (let n = 0; n <= 18; n++) {
-  const [[sql]] = await q(`SELECT bell(${n})::text`);
-  record(`bell(${n})`, sql, M.bell(n));
-}
-for (let n = 0; n <= 15; n++) {
-  const [[sql]] = await q(`SELECT fubini(${n})::text`);
-  record(`fubini(${n})`, sql, M.fubini(n));
-}
-for (let n = 0; n <= 15; n++) {
-  for (let k = 0; k <= n + 1; k++) {
-    const [[sql]] = await q(`SELECT stirling_second(${n},${k})::text`);
-    record(`stirling_second(${n},${k})`, sql, M.stirling_second(n, k));
-  }
-}
-for (let n = 0; n <= 40; n++) {
-  const [[sql]] = await q(`SELECT partition_number(${n})::text`);
-  record(`partition_number(${n})`, sql, M.partition_number(n));
-}
-
-// ---- catalan family ----
-for (let k = 0; k <= 20; k++) {
-  const [[sql]] = await q(`SELECT catalan_number(${k})::text`);
-  record(`catalan_number(${k})`, sql, M.catalan_number(k));
-}
-for (let m = 0; m <= 15; m++) {
-  const [[sql]] = await q(`SELECT little_schroder_number(${m})::text`);
-  record(`little_schroder_number(${m})`, sql, M.little_schroder_number(m));
-}
-
-// ---- gaussian integers ----
-const gpts: M.GaussianInteger[] = [
-  { re: 0, im: 0 }, { re: 1, im: 0 }, { re: 0, im: 1 }, { re: -1, im: -1 },
-  { re: 3, im: -4 }, { re: -7, im: 2 }, { re: 5, im: 5 }, { re: -2, im: 3 },
-];
-const grow = (g: M.GaussianInteger) => `ROW(${g.re},${g.im})::gaussian_integer`;
-for (const a of gpts) {
-  for (const b of gpts) {
-    {
-      const [[sql]] = await q(`SELECT (gaussian_add(${grow(a)},${grow(b)})).re::text || ',' || (gaussian_add(${grow(a)},${grow(b)})).im::text`);
-      const r = M.gaussian_add(a, b);
-      record(`gaussian_add(${a.re}+${a.im}i,${b.re}+${b.im}i)`, sql, `${r.re},${r.im}`);
-    }
-    {
-      const [[sql]] = await q(`SELECT (gaussian_sub(${grow(a)},${grow(b)})).re::text || ',' || (gaussian_sub(${grow(a)},${grow(b)})).im::text`);
-      const r = M.gaussian_sub(a, b);
-      record(`gaussian_sub(${a.re}+${a.im}i,${b.re}+${b.im}i)`, sql, `${r.re},${r.im}`);
-    }
-    {
-      const [[sql]] = await q(`SELECT (gaussian_mul(${grow(a)},${grow(b)})).re::text || ',' || (gaussian_mul(${grow(a)},${grow(b)})).im::text`);
-      const r = M.gaussian_mul(a, b);
-      record(`gaussian_mul(${a.re}+${a.im}i,${b.re}+${b.im}i)`, sql, `${r.re},${r.im}`);
-    }
-  }
-  const [[sql]] = await q(`SELECT (gaussian_neg(${grow(a)})).re::text || ',' || (gaussian_neg(${grow(a)})).im::text`);
-  const r = M.gaussian_neg(a);
-  record(`gaussian_neg(${a.re}+${a.im}i)`, sql, `${r.re},${r.im}`);
-  const [[sqln]] = await q(`SELECT gaussian_norm(${grow(a)})::text`);
-  record(`gaussian_norm(${a.re}+${a.im}i)`, sqln, M.gaussian_norm(a));
-}
-
-// ---- multicomplex ----
-const mcRow = (z: M.Multicomplex) => `ROW(ARRAY[${z.coeffs.join(",")}],${z.modulus})::multicomplex`;
-const mcs: M.Multicomplex[] = [
-  { coeffs: [3], modulus: 5 },
-  { coeffs: [0, 1], modulus: 5 },
-  { coeffs: [1, 1], modulus: 5 },
-  { coeffs: [3, 4], modulus: 5 },
-  { coeffs: [0, 1, 0, 0], modulus: 5 },
-  { coeffs: [0, 0, 1, 0], modulus: 5 },
-  { coeffs: [1, 2, 0, 3], modulus: 5 },
-  { coeffs: [4, 4, 4, 4], modulus: 5 },
-  { coeffs: [1, 0, 0, 0], modulus: 7 },
-  { coeffs: [2, 3, 1, 6], modulus: 7 },
-];
-const mcVal = (z: M.Multicomplex) => `(SELECT array_to_string((${mcRow(z)}).coeffs, ','))`;
-for (const a of mcs) {
-  for (const b of mcs) {
-    if (a.coeffs.length !== b.coeffs.length) continue; // mc_* requires matching dimension (and here, modulus)
-    if (a.modulus !== b.modulus) continue;
-    for (const [label, sqlFn, tsFn] of [
-      ["mc_add", "mc_add", M.mc_add],
-      ["mc_sub", "mc_sub", M.mc_sub],
-      ["mc_mul", "mc_mul", M.mc_mul],
-    ] as const) {
-      const [[sql]] = await q(`SELECT array_to_string((${sqlFn}(${mcRow(a)},${mcRow(b)})).coeffs, ',')`);
-      const r = (tsFn as (a: M.Multicomplex, b: M.Multicomplex) => M.Multicomplex)(a, b);
-      record(`${label}(${JSON.stringify(a)},${JSON.stringify(b)})`, sql, r.coeffs.join(","));
-    }
-  }
-  const [[sqlNeg]] = await q(`SELECT array_to_string((mc_neg(${mcRow(a)})).coeffs, ',')`);
-  record(`mc_neg(${JSON.stringify(a)})`, sqlNeg, M.mc_neg(a).coeffs.join(","));
-  const [[sqlConj]] = await q(`SELECT array_to_string((mc_conj(${mcRow(a)})).coeffs, ',')`);
-  record(`mc_conj(${JSON.stringify(a)})`, sqlConj, M.mc_conj(a).coeffs.join(","));
 }
 
 // ---- integer compositions (gap-cut bijection) ----

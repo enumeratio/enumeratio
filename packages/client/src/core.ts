@@ -49,6 +49,12 @@ export type Example = { title: string; description: string | null; kind: string;
 export interface Db {
   query<T = Row>(sql: string, params?: unknown[]): Promise<{ rows: T[] }>
   close(): Promise<void>
+  /** Stop whatever is running, WITHOUT closing the Db — the next query must still work. Only the backends that can
+   *  really interrupt a running statement implement it: the node worker (terminate + respawn) and real Postgres
+   *  (pg_cancel_backend). An in-process PGlite cannot be interrupted at all, and the SharedWorker session serializes
+   *  every query with no cancel message (#279), so both leave this undefined and an AbortSignal only stops the
+   *  CALLER waiting. */
+  cancel?(): Promise<void>
 }
 
 let factory: (() => Db | Promise<Db>) | null = null
@@ -93,12 +99,46 @@ async function rows<T = Row>(sql: string, params: unknown[] = []): Promise<T[]> 
     throw e
   }
 }
+/** Ask the live Db to interrupt what it is running. Returns false when this backend cannot (see Db.cancel), which
+ *  is what an engine reports rather than pretending an AbortSignal did more than it did. Never boots a Db. */
+export async function cancelDb(): Promise<boolean> {
+  if (!dbP) return false
+  const d = await dbP
+  if (!d.cancel) return false
+  await d.cancel()
+  return true
+}
+
 export async function close(): Promise<void> {
   closed = true
   if (primeP) { await primeP.catch(() => {}); primeP = null }
   const p = dbP
   dbP = null
   if (p) await (await p).close()
+}
+
+/** Is a Db provider wired? The engine seam (engine.ts) asks, so that a consumer which only ever called provideDb()
+ *  still gets `evaluate()` — it falls back to a pg engine over this same memoized Db. core.ts must not import
+ *  engine.ts (the dependency runs one way), so the question is answered here rather than reaching in. */
+export function hasDbProvider(): boolean { return factory !== null }
+
+// A raw `extendDb` can define anything — a function, a glyph overload, a whole table — so nothing built from a
+// build-time catalog snapshot can still be trusted afterwards. Listeners registered here are told, and the engine
+// registry marks itself dirty, which collapses capability to the one engine that reads the live database (#278 D2).
+const extendListeners = new Set<() => void>()
+/** Be told when the live database is extended with raw SQL. Returns an unsubscribe. */
+export function onDbExtended(cb: () => void): () => void {
+  extendListeners.add(cb)
+  return () => { extendListeners.delete(cb) }
+}
+
+let describing = 0
+/** Run extensions that are FULLY DESCRIBED by a structured delta — the registry is told about them by other
+ *  means, so they must not trip the raw-SQL alarm. The distinction is the whole point: raw SQL is unknown and
+ *  collapses capability, a structured extend is known and does not. */
+export async function asDescribedExtension<T>(fn: () => Promise<T>): Promise<T> {
+  describing++
+  try { return await fn() } finally { describing-- }
 }
 
 /** Extend the LIVE database with SQL — the augmentable "representations as data" path (wiki: Render-Assets).
@@ -108,7 +148,9 @@ export async function close(): Promise<void> {
  *  without touching @enumeratio/data. One statement per call for now (dollar-quoted bodies fine). Returns any rows the
  *  statement produced (empty for pure DDL). It runs raw SQL against your Db — only pass SQL you trust. */
 export async function extendDb<T = Row>(sql: string): Promise<T[]> {
-  return (await (await db()).query<T>(sql)).rows
+  const out = (await (await db()).query<T>(sql)).rows
+  if (!describing) for (const cb of extendListeners) try { cb() } catch { /* a listener must never break an extension */ }
+  return out
 }
 
 const isIdent = (s: string) => /^[a-z_][a-z0-9_]*$/.test(s)
