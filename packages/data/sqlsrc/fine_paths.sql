@@ -59,6 +59,53 @@ CREATE FUNCTION fiber_elements(f fine_paths_fiber, element_limit int) RETURNS SE
 
 CREATE FUNCTION fiber_count(f fine_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT fine_count((f).n::int) $$;
 
+-- #286: fiber_unrank — the no-hill flag is a ONE-STEP lookback (only depends on whether the immediately
+-- preceding step was a ground-U), so the walk just carries it forward itself; no reflection-principle closed
+-- form exists (the flag breaks the simple ballot recurrence), so this precomputes a suffix-completions table:
+-- tbl[remaining][height][flag] = # of ways to complete a no-hill path from here. Filled bottom-up by INCREASING
+-- remaining (same direction fine_count fills forward by elapsed steps — this is its mirror, indexed by what's left).
+CREATE FUNCTION fine_completions_table(n int) RETURNS numeric[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE tbl numeric[]; rem int; h int; fl int; w numeric; idx int; BEGIN
+    -- flattened [remaining 0..2n][height 0..n][flag 0..1], 1-based: idx(rem,h,fl) = rem*(n+1)*2 + h*2 + fl + 1
+    tbl := array_fill(0::numeric, ARRAY[(2 * n + 1) * (n + 1) * 2]);
+    tbl[0 * (n + 1) * 2 + 0 * 2 + 0 + 1] := 1;   -- remaining=0, height=0, flag=0: done
+    tbl[0 * (n + 1) * 2 + 0 * 2 + 1 + 1] := 1;   -- remaining=0, height=0, flag=1: done (flag is moot at completion)
+    FOR rem IN 1..2 * n LOOP
+      FOR h IN 0..n LOOP
+        FOR fl IN 0..1 LOOP
+          w := 0;
+          IF h + 1 <= n THEN   -- take U: new height h+1, new flag := (h=0) — a ground-U iff taken from height 0
+            idx := (rem - 1) * (n + 1) * 2 + (h + 1) * 2 + (CASE WHEN h = 0 THEN 1 ELSE 0 END) + 1;
+            w := w + tbl[idx];
+          END IF;
+          IF h - 1 >= 0 AND fl = 0 THEN   -- take D: forbidden right after a ground-U (that would complete a hill)
+            idx := (rem - 1) * (n + 1) * 2 + (h - 1) * 2 + 0 + 1;
+            w := w + tbl[idx];
+          END IF;
+          tbl[rem * (n + 1) * 2 + h * 2 + fl + 1] := w;
+        END LOOP;
+      END LOOP;
+    END LOOP;
+    RETURN tbl;
+  END $$;
+
+CREATE FUNCTION fiber_unrank(f fine_paths_fiber, rank rank_index) RETURNS dyck_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; tbl numeric[] := fine_completions_table(n); steps int[] := '{}';
+          h int := 0; fl int := 0; rem int; r numeric := rank; cu numeric; i int; ohgt int; BEGIN
+    FOR i IN 1..2 * n LOOP
+      rem := 2 * n - i + 1;   -- remaining INCLUDING this step
+      cu := CASE WHEN h + 1 <= n THEN tbl[(rem - 1) * (n + 1) * 2 + (h + 1) * 2 + (CASE WHEN h = 0 THEN 1 ELSE 0 END) + 1] ELSE 0 END;
+      IF r < cu THEN
+        ohgt := h; h := h + 1; fl := CASE WHEN ohgt = 0 THEN 1 ELSE 0 END;
+        steps := steps || 1;
+      ELSE
+        r := r - cu; h := h - 1; fl := 0;
+        steps := steps || -1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::dyck_path;
+  END $$;
+
 -- contains: a valid Dyck path of semilength n with no U-at-height-0 immediately followed by D.
 CREATE FUNCTION contains_in_fiber(f fine_paths_fiber, v dyck_path) RETURNS boolean LANGUAGE sql STABLE AS $$
   WITH s AS (SELECT step, sum(step) OVER (ORDER BY o) - step AS pre, lead(step) OVER (ORDER BY o) AS nxt
@@ -88,4 +135,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and((e).value <@ dyck_paths(4))::text FROM elements(fine_paths(4)) e $q$),
   ('fine_paths','contains via <@: UUDUDD ∈ fine_paths(3), UDUUDD ∉ (starts with a hill)','eq','true|false','no-hill membership',$q$
     SELECT (ROW(ARRAY[1,1,-1,1,-1,-1])::dyck_path <@ fine_paths(3))::text || '|' ||
-           (ROW(ARRAY[1,-1,1,1,-1,-1])::dyck_path <@ fine_paths(3))::text $q$);
+           (ROW(ARRAY[1,-1,1,1,-1,-1])::dyck_path <@ fine_paths(3))::text $q$),
+  ('fine_paths','#286: element_at(fine_paths(3), 1) = UUDUDD (direct fiber_unrank accel)','eq','UUDUDD','rank 1 of UUUDDD,UUDUDD (DESC/U<D order)',$q$
+    SELECT notation((element_at((SELECT f FROM fibers(fine_paths(3)) f), 1)).value) $q$);

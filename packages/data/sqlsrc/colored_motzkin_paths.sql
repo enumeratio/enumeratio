@@ -44,6 +44,41 @@ CREATE FUNCTION colored_motzkin_count(n int, r int) RETURNS numeric LANGUAGE plp
   END $$;
 CREATE FUNCTION fiber_count(f colored_motzkin_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT colored_motzkin_count((f).n::int, (f).r::int) $$;
+
+-- #286: colored_motzkin_completions(l,h,r) — colored_motzkin_count generalized to an arbitrary current height h
+-- (not just h=0): choose which m of the l positions are H (C(l,m) ways, each independently r-colored, r^m), the
+-- rest form a dyck_completions-valid ±1 word from height h.
+CREATE FUNCTION colored_motzkin_completions(l int, h int, r int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE total numeric := 0; m int; p int; BEGIN
+    IF l < 0 OR h < 0 OR h > l THEN RETURN 0; END IF;
+    FOR m IN 0..(l - h) LOOP
+      IF (l - m - h) % 2 = 0 THEN
+        p := (l - m - h) / 2;
+        total := total + binomial(l, m) * pow_int(r, m) * dyck_completions(p, p + h, h);
+      END IF;
+    END LOOP;
+    RETURN total;
+  END $$;
+
+-- fiber_unrank: walk n positions preferring U, then H_0..H_{r-1} in order, then D (the floor's U<H₀<…<D order).
+CREATE FUNCTION fiber_unrank(f colored_motzkin_paths_fiber, rank rank_index) RETURNS colored_motzkin_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; rc int := (f).r::int; steps int[] := '{}'; colors int[] := '{}';
+          h int := 0; l int; r numeric := rank; cu numeric; ch numeric; col int; i int; BEGIN
+    FOR i IN 1..n LOOP
+      l := n - i + 1;
+      cu := colored_motzkin_completions(l - 1, h + 1, rc);
+      ch := colored_motzkin_completions(l - 1, h, rc);
+      IF r < cu THEN
+        steps := steps || 1; colors := colors || -1; h := h + 1;
+      ELSIF ch > 0 AND r < cu + rc * ch THEN
+        r := r - cu; col := floor(r / ch)::int; r := r - col * ch;
+        steps := steps || 0; colors := colors || col;
+      ELSE
+        r := r - cu - rc * ch; steps := steps || -1; colors := colors || -1; h := h - 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps, colors)::colored_motzkin_path;
+  END $$;
 CREATE FUNCTION contains_in_fiber(f colored_motzkin_paths_fiber, v colored_motzkin_path) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).steps, 1), 0) = (f).n::int
      AND array_length((v).steps, 1) IS NOT DISTINCT FROM array_length((v).colors, 1)                 -- parallel arrays
@@ -85,4 +120,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(contains(colored_motzkin_paths(3,2), (e).value))::text FROM elements(colored_motzkin_paths(3,2)) e $q$),
   ('colored_motzkin_paths','contains via <@: UH0D ∈ M_2(3), UH2D ∉ (color 2 out of range for r=2)','eq','true|false','H color must be 0..r-1',$q$
     SELECT (ROW(ARRAY[1,0,-1], ARRAY[-1,0,-1])::colored_motzkin_path <@ colored_motzkin_paths(3,2))::text || '|' ||
-           (ROW(ARRAY[1,0,-1], ARRAY[-1,2,-1])::colored_motzkin_path <@ colored_motzkin_paths(3,2))::text $q$);
+           (ROW(ARRAY[1,0,-1], ARRAY[-1,2,-1])::colored_motzkin_path <@ colored_motzkin_paths(3,2))::text $q$),
+  ('colored_motzkin_paths','#286: element_at(M_2(3), 13) = H1H1H1 (direct fiber_unrank accel)','eq','H1H1H1','the same last rank as the corpus anchor above, via the O(n) DP unrank',$q$
+    SELECT notation((element_at((SELECT f FROM fibers(colored_motzkin_paths(3,2)) f), 13)).value) $q$);

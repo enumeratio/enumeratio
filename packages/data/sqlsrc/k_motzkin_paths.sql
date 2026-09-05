@@ -35,6 +35,33 @@ CREATE FUNCTION fiber_elements(f k_motzkin_paths_fiber, element_limit int) RETUR
 CREATE FUNCTION fiber_count(f k_motzkin_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT CASE WHEN (f).n::int - (f).k::int < 0 OR ((f).n::int - (f).k::int) % 2 <> 0 THEN 0::numeric
               ELSE binomial((f).n::int, (f).k::int)::numeric * catalan(((f).n::int - (f).k::int) / 2) END $$;
+
+-- #286: k_motzkin_completions(l,h,k) — the fiber_count formula generalized to an arbitrary current height h and
+-- an EXACT remaining-H-count k (not "up to"): choose the k H-positions among the l remaining (C(l,k), a single
+-- term, no sum — k is exact), the rest form a dyck_completions-valid ±1 word from height h.
+CREATE FUNCTION k_motzkin_completions(l int, h int, k int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT CASE WHEN l < 0 OR h < 0 OR k < 0 OR k > l OR h > l - k OR (l - k - h) % 2 <> 0 THEN 0::numeric
+              ELSE binomial(l, k) * dyck_completions((l - k - h) / 2, (l - k - h) / 2 + h, h) END $$;
+
+-- fiber_unrank: walk n positions preferring U, then H, then D (the floor's DESC/U<H<D order); k tracks the
+-- remaining (not-yet-placed) H-steps still owed.
+CREATE FUNCTION fiber_unrank(f k_motzkin_paths_fiber, rank rank_index) RETURNS k_motzkin_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; rk int := (f).k::int; steps int[] := '{}'; h int := 0; l int; r numeric := rank;
+          cu numeric; ch numeric; i int; BEGIN
+    FOR i IN 1..n LOOP
+      l := n - i + 1;
+      cu := k_motzkin_completions(l - 1, h + 1, rk);
+      ch := CASE WHEN rk > 0 THEN k_motzkin_completions(l - 1, h, rk - 1) ELSE 0 END;
+      IF r < cu THEN
+        steps := steps || 1; h := h + 1;
+      ELSIF rk > 0 AND r < cu + ch THEN
+        r := r - cu; steps := steps || 0; rk := rk - 1;
+      ELSE
+        r := r - cu - ch; steps := steps || -1; h := h - 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::k_motzkin_path;
+  END $$;
 CREATE FUNCTION contains_in_fiber(f k_motzkin_paths_fiber, v k_motzkin_path) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).steps, 1), 0) = (f).n::int
      AND NOT EXISTS (SELECT 1 FROM unnest((v).steps) s WHERE s NOT IN (-1, 0, 1))
@@ -76,4 +103,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('k_motzkin_paths','contains via <@: UHD ∈ (3,1), HHH ∉ (3,1) (3 H steps), UD ∉ (3,1) (wrong length)','eq','true|false|false','generated from contains_in_fiber',$q$
     SELECT (ROW(ARRAY[1,0,-1])::k_motzkin_path <@ k_motzkin_paths(3,1))::text || '|' ||
            (ROW(ARRAY[0,0,0])::k_motzkin_path <@ k_motzkin_paths(3,1))::text || '|' ||
-           (ROW(ARRAY[1,-1])::k_motzkin_path <@ k_motzkin_paths(3,1))::text $q$);
+           (ROW(ARRAY[1,-1])::k_motzkin_path <@ k_motzkin_paths(3,1))::text $q$),
+  ('k_motzkin_paths','#286: element_at(k_motzkin_paths(3,1), 2) = HUD (direct fiber_unrank accel)','eq','HUD','rank 2 of UHD,UDH,HUD (U<H<D order)',$q$
+    SELECT notation((element_at((SELECT f FROM fibers(k_motzkin_paths(3,1)) f), 2)).value) $q$);

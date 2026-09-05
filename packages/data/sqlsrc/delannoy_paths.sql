@@ -1,9 +1,11 @@
--- requires: realizer
+-- requires: realizer, utilities
 -- delannoy_paths — central Delannoy paths: lattice paths from (0,0) to (n,n) using steps E=(1,0), N=(0,1), and
 -- D=(1,1) (diagonal). The count is the central Delannoy number: 1,3,13,63,321,1683 for n=0..5 (n=0 is the single
--- empty path). Single grade [n]. Provides the floor (paths in lex order, E<N<D) + a contains engine (no closed-form
--- accel: cardinality counts the floor); base_realize generates handle/fiber/element + constructor (incl. the
--- (lo,hi) range form) + the full surface.
+-- empty path). Single grade [n]. Provides the floor (paths in lex order, E<N<D) + a contains engine; base_realize
+-- generates handle/fiber/element + constructor (incl. the (lo,hi) range form) + the full surface.
+-- #286: fiber_count + fiber_unrank — delannoy_number(m,n) = Σ_k C(m,k)·C(n,k)·2^k is the GENERAL (rectangular)
+-- Delannoy number (paths (0,0)→(m,n)); the central one is delannoy_number(n,n). The same closed form gives the
+-- suffix-completion count at any partial position (rx,ry remaining in each direction), so it drives the unrank too.
 
 -- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
 CREATE TYPE delannoy_path AS (steps int[]);                          -- alphabet 0=E, 1=N, 2=D; e.g. {2,0,1} = DEN
@@ -12,6 +14,13 @@ CREATE FUNCTION notation(p delannoy_path) RETURNS text LANGUAGE sql IMMUTABLE AS
   FROM unnest((p).steps) WITH ORDINALITY AS t(s, o) $$;
 
 -- ── the engines a collection provides ────────────────────────────────────────────────────────────────
+CREATE FUNCTION delannoy_number(m int, n int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$   -- Σ_k C(m,k)·C(n,k)·2^k
+  DECLARE total numeric := 0; k int; BEGIN
+    IF m < 0 OR n < 0 THEN RETURN 0; END IF;
+    FOR k IN 0..least(m, n) LOOP total := total + binomial(m, k) * binomial(n, k) * pow_int(2, k); END LOOP;
+    RETURN total;
+  END $$;
+
 CREATE TYPE delannoy_paths_fiber AS (n natural_number);   -- typed fiber; axis: n
 -- FLOOR: every path from (0,0) to (n,n) over {E,N,D}, emitted in lex order (E<N<D, i.e. steps ASC). Grow all
 -- valid prefixes tracking position (x,y); E advances x, N advances y, D advances both — each only while it
@@ -32,6 +41,28 @@ CREATE FUNCTION fiber_elements(f delannoy_paths_fiber, element_limit int) RETURN
   SELECT ROW(steps)::delannoy_path FROM gen
   WHERE x = (f).n::int AND y = (f).n::int
   ORDER BY steps ASC LIMIT element_limit $$;
+
+CREATE FUNCTION fiber_count(f delannoy_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT delannoy_number((f).n::int, (f).n::int) $$;
+
+-- fiber_unrank: the path length is VARIABLE (n..2n, depending on how many diagonal steps), so walk with a
+-- WHILE loop over remaining (rx,ry) rather than a fixed step count. Order E<N<D (ascending); at each step,
+-- delannoy_number(remaining after taking that step) gives the O(sum) completion count for each candidate.
+CREATE FUNCTION fiber_unrank(f delannoy_paths_fiber, rank rank_index) RETURNS delannoy_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; steps int[] := '{}'; rx int := n; ry int := n; r numeric := rank; ce numeric; cn numeric; BEGIN
+    WHILE rx > 0 OR ry > 0 LOOP
+      ce := CASE WHEN rx > 0 THEN delannoy_number(rx - 1, ry) ELSE 0 END;
+      cn := CASE WHEN ry > 0 THEN delannoy_number(rx, ry - 1) ELSE 0 END;
+      IF rx > 0 AND r < ce THEN
+        steps := steps || 0; rx := rx - 1;
+      ELSIF ry > 0 AND r < ce + cn THEN
+        r := r - ce; steps := steps || 1; ry := ry - 1;
+      ELSE
+        r := r - ce - cn; steps := steps || 2; rx := rx - 1; ry := ry - 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::delannoy_path;
+  END $$;
 
 -- contains: v reaches (n,n) from the origin using only E/N/D moves, and never overshoots n on either axis
 -- along the way (equivalently: every prefix's x,y ≤ n, and the final x,y = n — steps are non-decreasing so
@@ -56,7 +87,7 @@ SELECT base_realize('delannoy_paths');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('delannoy_paths','cardinality anchor = central Delannoy numbers for n=0..5 (floor count, no accel)','eq','1,3,13,63,321,1683','1,3,13,63,321,1683',$q$
+  ('delannoy_paths','cardinality anchor = central Delannoy numbers for n=0..5 (accel)','eq','1,3,13,63,321,1683','delannoy_number(n,n), Σ_k C(n,k)²·2^k',$q$
     SELECT string_agg(cardinality(delannoy_paths(n))::text, ',' ORDER BY n) FROM generate_series(0,5) n $q$),
   ('delannoy_paths','n=0 ⇒ one empty path','eq','1|','the empty word, no steps needed',$q$
     SELECT count(*)::text || '|' || notation((unrank(delannoy_paths(0), 0)).value) FROM elements(delannoy_paths(0)) e $q$),
@@ -81,4 +112,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (unrank(delannoy_paths(2), 1)).fiber.n::text || '|' || ordinality(unrank(delannoy_paths(2), 1))::text $q$),
   ('delannoy_paths','contains: DD ∈ delannoy_paths(2), EE ∉ (via <@)','eq','true|false','generated contains + operator',$q$
     SELECT (ROW(ARRAY[2,2])::delannoy_path <@ delannoy_paths(2))::text || '|' ||
-           (ROW(ARRAY[0,0])::delannoy_path <@ delannoy_paths(2))::text $q$);
+           (ROW(ARRAY[0,0])::delannoy_path <@ delannoy_paths(2))::text $q$),
+  ('delannoy_paths','#286: element_at(delannoy_paths(2), 3) = END (direct fiber_unrank accel)','eq','END','rank 3 of the 13 in ascending E<N<D order',$q$
+    SELECT notation((unrank(delannoy_paths(2), 3)).value) $q$);

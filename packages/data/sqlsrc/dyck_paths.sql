@@ -1,7 +1,10 @@
--- requires: realizer
+-- requires: realizer, utilities
 -- dyck_paths — lattice paths of n up (+1) and n down (-1) steps that never dip below 0 (semilength n).
 -- Single grade [n]. Provides the floor (paths in lex order, U<D) + a Catalan count accel + a contains engine;
 -- base_realize generates handle/fiber/element + constructor (incl. the (lo,hi) range form) + the full surface.
+-- #286: fiber_unrank via the ballot problem's reflection-principle formula — dyck_completions(p,q,h) is the
+-- number of ±1 paths (p remaining ups, q remaining downs, current height h, q must equal p+h to reach 0) that
+-- stay ≥ 0, reused by the sibling path families below (motzkin/k_motzkin/colored_motzkin all reduce to it).
 
 -- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
 CREATE TYPE dyck_path AS (steps int[]);                               -- ±1 word, length 2n; e.g. {1,1,-1,-1} = UUDD
@@ -36,6 +39,30 @@ CREATE FUNCTION fiber_elements(f dyck_paths_fiber, element_limit int) RETURNS SE
   ORDER BY steps DESC LIMIT element_limit $$;
 
 CREATE FUNCTION fiber_count(f dyck_paths_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT catalan((f).n::int) $$;
+
+-- dyck_completions(p,q,h): # of ±1 paths with p ups and q downs remaining, from height h, staying ≥ 0, that end
+-- at height 0 — forces q = p+h (else unreachable). Reflection principle: C(p+q,p) − C(p+q,p+h+1) (the bad paths,
+-- reflected at their first dip to −1, biject onto p+h+1-subsets). Verified against catalan(n) = dyck_completions(n,n,0).
+CREATE FUNCTION dyck_completions(p int, q int, h int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT CASE WHEN p < 0 OR q < 0 OR h < 0 OR q <> p + h THEN 0::numeric
+              ELSE binomial(p + q, p) - binomial(p + q, p + h + 1) END $$;
+
+-- fiber_unrank: walk the 2n positions, at each preferring U (the floor's DESC/U<D order) iff rank falls within
+-- the completions reachable by taking U now; dyck_completions gives that count in O(1), no per-step scan.
+CREATE FUNCTION fiber_unrank(f dyck_paths_fiber, rank rank_index) RETURNS dyck_path LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE n int := (f).n::int; steps int[] := '{}'; ru int := n; rd int := n; h int := 0; r numeric := rank;
+          cu numeric; i int; BEGIN
+    FOR i IN 1..2 * n LOOP
+      cu := CASE WHEN ru > 0 THEN dyck_completions(ru - 1, rd, h + 1) ELSE 0 END;
+      IF ru > 0 AND r < cu THEN
+        steps := steps || 1; ru := ru - 1; h := h + 1;
+      ELSE
+        IF ru > 0 THEN r := r - cu; END IF;
+        steps := steps || -1; rd := rd - 1; h := h - 1;
+      END IF;
+    END LOOP;
+    RETURN ROW(steps)::dyck_path;
+  END $$;
 
 -- contains: v is a Dyck path of semilength n iff length 2n, every step ±1, ends at 0, and no prefix goes < 0.
 CREATE FUNCTION contains_in_fiber(f dyck_paths_fiber, v dyck_path) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
@@ -86,4 +113,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(notation((e).value), '|' ORDER BY e) FROM elements(dyck_paths(1,2)) e $q$),
   ('dyck_paths','contains: UUDD ∈ dyck_paths(2), DUUD ∉ (via <@)','eq','true|false','generated contains + operator',$q$
     SELECT (ROW(ARRAY[1,1,-1,-1])::dyck_path <@ dyck_paths(2))::text || '|' ||
-           (ROW(ARRAY[-1,1,1,-1])::dyck_path <@ dyck_paths(2))::text $q$);
+           (ROW(ARRAY[-1,1,1,-1])::dyck_path <@ dyck_paths(2))::text $q$),
+  ('dyck_paths','#286: element_at(dyck_paths(5), 10) matches sequential unrank (direct fiber_unrank accel)','eq','true','the O(1) ballot unrank agrees with the floor',$q$
+    SELECT (render(element_at(f, 10)) = (SELECT render(e) FROM elements(f, 11) e ORDER BY e OFFSET 10 LIMIT 1))::text
+      FROM fibers(dyck_paths(5)) f $q$);
