@@ -122,14 +122,11 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   ('permutation_unrank', 'pg', 'permutation_unrank_lex', '{int,bigint}', 'permutation', 'numeric', NULL),
   ('permutation_unrank', 'ts', 'permutation_unrank', '{int,bigint}', 'permutation', 'float64', NULL),
 
-  ('lehmer_code', 'pg', 'to_inversion', '{permutation}', 'permutation_inversion', 'numeric',
-   'the array field is length n-1 (trailing always-0 entry dropped from the stored carrier)'),
-  -- lehmer_code has NO ts impl row, deliberately. packages/math's lehmer_code() returns the code INCLUDING the
-  -- always-zero final entry; the permutation_inversion carrier stores it WITHOUT (identities.sql says so), and
-  -- notation() puts the zero back on the way out. So the two sides hold genuinely different arrays for the same
-  -- object, and a ts row claiming return_type 'permutation_inversion' would be false: selfcert-engine caught it
-  -- printing 20100 where pg prints 2010, on every permutation of [1..4]. Restoring this row means agreeing on one
-  -- representation first (#293) — not adding a special case to the printer.
+  -- #293: both sides now hold the same length-(n-1) array — the always-0 trailing entry is dropped from the
+  -- stored permutation_inversion carrier, and packages/math's lehmer_code() drops it too (notation() appends it
+  -- back on serialization). So the twin is honest and selfcert-engine differentials pg==ts.
+  ('lehmer_code', 'pg', 'to_inversion', '{permutation}', 'permutation_inversion', 'numeric', NULL),
+  ('lehmer_code', 'ts', 'lehmer_code', '{permutation}', 'permutation_inversion', 'float64', NULL),
 
   ('inversions', 'pg', 'perm_inversions', '{permutation}', 'int', 'numeric', NULL),
   ('inversions', 'ts', 'inversions', '{permutation}', 'int', 'float64', NULL),

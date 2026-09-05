@@ -136,7 +136,8 @@ INSERT INTO base_function (id, title, description) VALUES
    'L[i] = #{ j > i : perm[j] < perm[i] } for every position — the inversion table of a permutation. SQL twin '
    'is to_inversion(p).code, NOT the SQL function literally named lehmer_code() (that one serializes an '
    'already-built permutation_inversion to text — a naming collision with this identity, not a match). The SQL '
-   'array is length n-1 (the always-0 trailing entry is dropped from the stored carrier); the TS array keeps it.'),
+   'array is length n-1 (the always-0 trailing entry is dropped from the stored carrier); the TS array matches '
+   '(#293). Lehmer codes embed into factoradics, which keep the trailing place — the drop is Lehmer-specific.'),
   ('inversions', 'Inversions (Coxeter length)',
    'The number of pairs out of order in a permutation — the sum of its Lehmer code, and its Coxeter length.'),
   ('stirling1', 'Unsigned Stirling number of the first kind',

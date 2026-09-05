@@ -48,9 +48,9 @@ for (let n = 0; n <= 6; n++) {
     // round-trip: TS rank of the (SQL-matching) TS unrank result must recover r — permutation_rank has no
     // bare SQL twin, so this is its differential (see permutations.ts header)
     record(`permutation_rank(round-trip n=${n} r=${r})`, r, M.permutation_rank(tsPerm));
-    // lehmer_code: SQL's to_inversion(...).code drops the always-0 trailing entry; TS keeps it
+    // lehmer_code: both sides drop the always-0 trailing entry (#293) — same length-(n-1) array
     const [[code]] = await q(`SELECT array_to_string((to_inversion(permutation_unrank_lex(${n},${r}))).code, ',')`);
-    record(`lehmer_code(${n},${r})`, code, M.lehmer_code(tsPerm).slice(0, -1).join(","));
+    record(`lehmer_code(${n},${r})`, code, M.lehmer_code(tsPerm).join(","));
     const [[inv]] = await q(`SELECT perm_inversions(permutation_unrank_lex(${n},${r}))::text`);
     record(`inversions(${n},${r})`, inv, M.inversions(tsPerm));
   }

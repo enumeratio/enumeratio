@@ -3,8 +3,8 @@
 //   numbers-repo name      →  SQL name (file)
 //   permutationUnrank      →  permutation_unrank_lex (permutations.sql) — a bare-callable SQL fn, twinned directly
 //   permutationRank        →  no bare SQL fn; twinned by round-tripping permutation_unrank_lex's own output
-//   lehmerCode             →  to_inversion(p).code (lehmer_codes.sql) — SQL drops the trailing 0, TS keeps it
-//                              (see header note in lehmer_codes.sql); slice(0,-1) to compare
+//   lehmerCode             →  to_inversion(p).code (lehmer_codes.sql) — both sides drop the always-0 trailing
+//                              entry (#293), so the array is the permutation_inversion carrier's, length n-1
 //   inversions             →  perm_inversions(p) (statistics.sql) — direct stat, same value as sum(lehmerCode)
 
 import { factorial } from "./combinat.js";
@@ -44,13 +44,15 @@ export function permutation_rank(perm: Permutation): number {
 }
 
 /**
- * Lehmer code: L[i] = #{ j > i : perm[j] < perm[i] } for every position (length n, last entry always 0).
- * SQL twin: to_inversion(p permutation).code (lehmer_codes.sql) — same formula, but the array there is length
- * n-1 (the always-0 trailing entry is dropped from the stored `permutation_inversion` carrier).
+ * Lehmer code: L[i] = #{ j > i : perm[j] < perm[i] }, for positions 0..n-2 (length n-1). The final entry is
+ * always 0 and carries no information, so it's dropped — this IS the `permutation_inversion` carrier's array
+ * (#293); notation() appends the 0 back when serializing. Lehmer codes embed into factoradics, which keep the
+ * trailing place; the drop is Lehmer-specific.
+ * SQL twin: to_inversion(p permutation).code (lehmer_codes.sql) — same array, same length.
  */
 export function lehmer_code(perm: Permutation): number[] {
   const avail = perm.map((_, i) => i + 1);
-  return perm.map((x) => {
+  return perm.slice(0, -1).map((x) => {
     const idx = avail.indexOf(x);
     avail.splice(idx, 1);
     return idx;

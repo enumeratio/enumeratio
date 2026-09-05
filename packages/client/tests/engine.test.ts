@@ -269,9 +269,9 @@ describe('composite carriers · ts answers what it can print, and declines what 
     expect(ts.why(parseCalc('gaussian_integer(1)'))).toMatch(/takes 2 fields \(re, im\); got 1/)
   })
 
-  it('lehmer_code stays pg-only: the two sides hold different arrays for the same code (#293)', () => {
-    expect(reg.impls('lehmer_code', 'ts')).toHaveLength(0)
+  it('lehmer_code has a ts twin: both sides drop the always-0 trailing entry (#293)', () => {
+    expect(reg.impls('lehmer_code', 'ts')).toHaveLength(1)
     expect(reg.impls('lehmer_code', 'pg')).toHaveLength(1)
-    expect(ts.why(parseCalc('lehmer_code(permutation([2, 4, 1, 3]))'))).toMatch(/no ts implementation/)
+    expect(ts.why(parseCalc('lehmer_code(permutation([2, 4, 1, 3]))'))).toBeUndefined()
   })
 })
