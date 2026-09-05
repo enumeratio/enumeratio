@@ -15,7 +15,6 @@ import Select from 'primevue/select'
 import StatementBar from './StatementBar.vue'
 import RowTable from './RowTable.vue'
 import PropertiesPane from './PropertiesPane.vue'
-import DetailPane from './DetailPane.vue'
 import ElementPane from './ElementPane.vue'
 import IdentityPane from './IdentityPane.vue'
 import AlgebraEvaluator from './AlgebraEvaluator.vue'
@@ -27,7 +26,7 @@ import { useRowWindow, isFiberArchetype } from './rowWindow'
 import {
   provideDb, makeWorkerDb, setPerf, describe, Handle, planRows, planDeferred, parseHandle, handleText, parsePreds, predsToSql,
   parseGroupBy, policyResolved,
-  collectionMeta as loadCollMeta, aliases as loadAliases, polytopeCollections, carriers as loadCarriers,
+  collectionMeta as loadCollMeta, aliases as loadAliases, carriers as loadCarriers,
   svgCarriers as loadSvgCarriers, tags as loadTags, collectionTags as loadCollTags, traits as loadTraits,
   collectionTraits as loadCollTraits, categories as loadCategories, collectionCategories as loadCollCats,
   type CollectionCategory, type DataResult, type MapInfo, type Pred, type RowQuery, type RowTable as RowTableData, type Stat, type CollectionMeta,
@@ -147,15 +146,13 @@ const selRow = ref<DataResult | null>(null)
 const selRank = ref<number | null>(null)
 const elementEnabled = computed(() => selRank.value != null && !!selRow.value)
 
-// ── collection-wide detail ────────────────────────────────────────────────────────────────────────────────────
-const polyColls = ref<Record<string, string>>({})
+// ── inline glyphs (#178) ──────────────────────────────────────────────────────────────────────────────────────
+// a carrier that draws a page-space glyph (carrier_renders_svg) gets the `glyph` column in the table BY DEFAULT —
+// this replaces the old Detail panel's element gallery, which showed the same glyphs but off to the side.
 const carrierMap = ref<Record<string, string>>({})
 const svgCarrierSet = ref<Set<string>>(new Set())
-const isPolytope = computed(() => !!coll.value && coll.value in polyColls.value)
-const polyTitle = computed(() => (coll.value && polyColls.value[coll.value]) || 'Polytope')
 const carrierOf = computed(() => (coll.value && carrierMap.value[coll.value]) || null)
 const hasPageGlyph = computed(() => !!carrierOf.value && svgCarrierSet.value.has(carrierOf.value))
-const detailEnabled = computed(() => isPolytope.value || hasPageGlyph.value)
 const showChart = ref(true)
 const whereFace = ref<'chips' | 'raw'>('raw')
 
@@ -273,6 +270,15 @@ async function openCollection(c: string, route: ParsedRoute | null) {
     where: vq?.where, groupBy, having: vq?.having, orderBy: vq?.orderBy,
   }
   properties.value = seedRows({ stats: d.stats, maps: d.maps, axes: d.axes, selectText: openingSelectText(d.policy, groupBy) })
+  // #178: splice a visible `glyph` column right after `element` when the carrier draws one and the seed didn't
+  // already ask for it — propDefs drops it again on a grouped (fiber-level) open, so this is harmless there
+  if (hasPageGlyph.value && !properties.value.some((p) => p.propId === 'glyph')) {
+    const i = properties.value.findIndex((p) => p.propId === 'element')
+    const glyphRow: PropRow = { uid: nextPropRowUid(), propId: 'glyph', visible: true }
+    properties.value = i >= 0
+      ? [...properties.value.slice(0, i + 1), glyphRow, ...properties.value.slice(i + 1)]
+      : [...properties.value, glyphRow]
+  }
   defaultSelect.value = selectList.value
   restorePrinters(canonical)
   repr.value = vq?.repr && d.reprs.includes(vq.repr) ? vq.repr : ''
@@ -434,32 +440,32 @@ async function onRowClick(row: Record<string, unknown>) {
   const r = await handle.rankOf(String(ser))
   if (r != null) await select(r)
 }
-async function onDetailSelect(v: number | string | null) {
-  if (v == null) { await select(null); return }
-  if (typeof v === 'number') { await select(v); return }
-  const r = handle ? await handle.rankOf(v) : null
-  if (r != null) await select(r)
-}
 const mapLink = (m: MapInfo) => `/explore/collection/${encodeURIComponent(m.codomain)}`
 
 // ── boot ──────────────────────────────────────────────────────────────────────────────────────────────────────
 onMounted(async () => {
   try {
-    const [meta, am] = await Promise.all([
+    // carriers/svgCarriers ride the SAME Promise.all as meta/aliases (not the later fire-and-forget batch, #178):
+    // openCollection's glyph auto-seed reads hasPageGlyph, which needs carrierMap + svgCarrierSet already populated
+    // for the FIRST collection too, not just ones navigated to after boot — both are cheap (carriers() reuses the
+    // catalogMap the meta/aliases calls just warmed; svgCarriers() is one small pg_proc introspection query).
+    const [meta, am, carrierMapVal, svgSet] = await Promise.all([
       loadCollMeta().catch(() => ({} as Record<string, CollectionMeta>)),
       loadAliases().catch(() => ({} as Record<string, string>)),
+      loadCarriers().catch(() => ({} as Record<string, string>)),
+      loadSvgCarriers().catch(() => new Set<string>()),
     ])
     collMeta.value = meta
     aliasMap.value = am
+    // one collection→carrier map serves both the per-page glyph lookup (carrierMap) and the facet counts (allCarriers)
+    carrierMap.value = carrierMapVal
+    allCarriers.value = carrierMapVal
+    svgCarrierSet.value = svgSet
     const r = readUrl()
     await openCollection(r.address.collection ?? 'collections', r)
     if (!r.address.collection) writeUrl()   // canonicalize bare /explore/collection(/) → /explore/collection/collections
     booting.value = false
     void Promise.all([
-      polytopeCollections().then((ps) => { polyColls.value = Object.fromEntries(ps.map((p) => [p.collection, p.title])) }).catch(() => {}),
-      // one collection→carrier map serves both the per-page glyph lookup (carrierMap) and the facet counts (allCarriers)
-      loadCarriers().then((c) => { carrierMap.value = c; allCarriers.value = c }).catch(() => {}),
-      loadSvgCarriers().then((s) => { svgCarrierSet.value = s }).catch(() => { svgCarrierSet.value = new Set() }),
       Promise.all([loadTags(), loadCollTags()]).then(([t, ct]) => { tagVocab.value = t; collTags.value = ct }).catch(() => {}),
       Promise.all([loadTraits(), loadCollTraits()]).then(([t, ct]) => { traitVocab.value = t; collTraits.value = ct }).catch(() => {}),
       Promise.all([loadCategories(), loadCollCats()]).then(([c, cc]) => { catVocab.value = c; collCats.value = cc }).catch(() => {}),
@@ -540,13 +546,6 @@ onMounted(async () => {
         <p v-else class="empty">No element selected — the collection's null (bottom) element.</p>
       </Panel>
 
-      <Panel v-if="detailEnabled" header="Detail" toggleable class="belowpane">
-        <p v-if="boundN == null" class="fallbackn">No size bound — showing <code>{{ coll }}({{ axes[0] ?? 'n' }} = {{ displayN }})</code>. Bind the axis in FROM to change it.</p>
-        <DetailPane :collection="coll" :n="displayN" :isPolytope="isPolytope" :polyTitle="polyTitle"
-                    :hasPageGlyph="hasPageGlyph" :sizeGraded="axes.length > 0" :selected="selRank" :selectedSer="pinned || null"
-                    @select="onDetailSelect" />
-      </Panel>
-
       <IdentityPane v-if="coll" :collection="coll" :n="displayN" :titleOf="titleOf" class="belowpane" />
     </template>
   </div>
@@ -574,6 +573,5 @@ body { margin: 0; font-family: ui-sans-serif, system-ui, sans-serif; background:
 .abovepane, .belowpane { margin: 1rem 0; }
 .reprsel { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--p-text-muted-color); }
 .hint { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--e-color-text-subtle, #888); border: 1px dashed var(--e-color-border, #ddd); border-radius: 999px; padding: 0.1rem 0.55rem; }
-.fallbackn { margin: 0 0 0.75rem; font-size: 0.82rem; color: var(--p-text-muted-color); }
 .empty { padding: 1rem; color: var(--p-text-muted-color); }
 </style>

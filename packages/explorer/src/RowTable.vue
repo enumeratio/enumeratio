@@ -55,7 +55,8 @@ const defOf = (id: string) => props.defs?.find((d) => d.id === id)
 const headerOf = (id: string) => cfgOf(id)?.name || id
 const widthOf = (c: { id: string; kind: string }) => {
   const w = cfgOf(c.id)?.width
-  return w ? `min-width: ${w}px` : c.kind === 'element' || c.kind === 'dist' ? 'min-width: 9rem' : 'min-width: 5rem'
+  if (w) return `min-width: ${w}px`
+  return c.kind === 'element' || c.kind === 'dist' || c.kind === 'glyph' ? 'min-width: 9rem' : 'min-width: 5rem'
 }
 // no chosen printer = the first one this environment grants the column's kind (§9). `level` is the rollup's own
 // GROUPING() column, not a source — it prints plain.
