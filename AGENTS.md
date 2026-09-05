@@ -1,128 +1,89 @@
-# Working in enumeratio
+# enumeratio — working notes for coding agents
 
-A **pure-SQL, data-driven Postgres combinatorics library** and its consumers. The spine is
-`packages/pg-enumeratio` — combinatorial + number-theoretic collections (subsets, permutations,
-partitions, compositions, paths, trees, matchings, primes, number sequences/sets, …) defined as **catalog rows + SQL authored as data**, realized by a generator into a uniform handle/element/notation/membership layer. It
-runs in a bare PostgreSQL / [PGlite](https://pglite.dev) with **zero C** — no `CREATE EXTENSION`. Consumers: a
-TypeScript client (`enumeratio-client`), a terminal enumerator (`enumeratio-cli`, home of the sage oracle
-tests), a Vue/PrimeVue explorer (`enumeratio-explorer`), and docs. pnpm workspace.
+A data-driven library of combinatorial collections — the math is data (pure-SQL core over pglite, a TS client, a
+CLI, web components, and a VitePress docs site + explorer). pnpm monorepo under `packages/`.
 
-> The original C/PGXS extension (`packages/pg-enumeratio`) and its WASM build (`pglite-enumeratio`) are the
-> **legacy** precursor — superseded by the pure-SQL core. Don't build new work there.
+This file holds the LLM-agnostic project knowledge. Tool- or assistant-specific guidance (Claude Code harness,
+subagent/model choices, browser-preview tooling, local session conventions) lives outside it and is not committed.
 
-## The one architectural invariant
+## Git workflow
 
-**Everything is data, including the DDL.** A collection is rows in the `catalog_*` tables plus its carrier type
-and engine functions — and those types/functions/casts are *themselves* inserted as rows into the staging
-tables `enumeratio_type` / `enumeratio_function` / `enumeratio_cast`, then emitted by `SELECT
-enumeratio_commit();` (one insertion-ordered DDL stream, with a precise inverse for revert). Almost nothing is a
-raw hand-written `CREATE`.
+- **Commit freely inside your own worktree.** When working in a session-owned worktree/branch (not `main`), commit as
+  you go without asking — small, frequent commits are fine during active development.
+- **Flatten before merging to `main`.** When folding a worktree branch back, squash the branch's commits down to a
+  single clean commit (occasionally a few, if they're genuinely separable) with a good message. Don't carry the
+  work-in-progress history onto `main`.
+- **Merges are local for now.** No GitHub/GitLab MR flow yet — merge back to `main` directly in the local checkout.
+  Once the project is published *and* we start taking outside contributors, we'll switch to GitHub MRs; until then,
+  keep it local.
+- No `Co-Authored-By` lines in commit messages.
+- **Worktrees live in `.claude/worktrees/<name>` — never a repo-root `worktrees/` dir.** This repo overrides the
+  common `worktrees/` convention: keeping them under `.claude/` keeps editor search, `.claude/` settings, and IDE
+  config working, and `.claude/worktrees/` is gitignored. **Shared primary checkout:** parallel sessions share this
+  one checkout, so a peer can switch its branch under you — before committing there run `git rev-parse --abbrev-ref
+  HEAD`, and do main-side commits from a dedicated `.claude/worktrees/` worktree, never by `git checkout` in the shared
+  dir while a peer is live in it.
 
-- **The catalog is the database.** `catalog_collection`, `catalog_grade_axis`, `catalog_collection_order`,
-  `catalog_example`. A generator — `enumeratio_realize_collection(coll)` / `enumeratio_realize_sequence(coll)` —
-  turns each row into the generic layer: the handle composite type + constructor, `cardinality(handle)`,
-  `unrank(handle, r)`, `contains(handle, x)` + membership operators `<@` / `@>`, `notation(handle)`,
-  `elements`/`fibers`, the located-element type + implicit cast, and `COMMENT ON` docs from the row's
-  `description`.
-- **The registry stays fully reconfigurable from data.** Never add per-collection special-casing in the
-  generator or the client — add catalog rows. Reuse a carrier and *borrow* rankings via an order-isomorphic
-  bijection where one exists; record subset relationships with `catalog_collection.specializes`.
-- **`natural_number` / `cardinal_number` are unbounded `numeric` domains** — counts get huge, and cardinality
-  is ∞-aware.
+## GitHub wiki (`wiki/`)
 
-**Public surface vs. implementation — a hard line.** User-level code calls only the *public* surface: the
-constructors and the generic layer the generator emits (`cardinality`, `unrank`/`rank`, `contains` + `<@`/`@>`,
-`notation`, `elements`/`fibers`, exposed stats/maps). The *internal* engines a collection hand-authors —
-combinatorial `<coll>_count(n int, grades int[])` + `<coll>_unrank_<order>(n int, grades int[], r
-natural_number)`, numeric `<coll>_term(r)` + `<coll>_count_below(bound)` (`grades[]` positional by axis, `NULL`
-= unbound) — are trampolined to by the generic names and **very likely to change** (followon: genericization to
-fiber-taking functions bound by catalog reference, not name-mangling). Never build consumer code against the
-`<coll>_` names. (Open, undecided: whether the core lives in a shared DB as a real PG extension or owns its own
-DB — the public/internal split holds either way; enforcement mechanism waits on that call.)
+Design docs (architecture, spikes, roadmap, surveys) live in the [GitHub wiki](https://github.com/enumeratio/enumeratio/wiki),
+not under `docs/` (public docs site) and not committed to this repo.
 
-## Layout, ordering, and the apply flow
+- **`wiki/` is a plain git clone of `https://github.com/enumeratio/enumeratio.wiki.git`, at the root of the MAIN
+  checkout only.** It's gitignored (`wiki/` in `.gitignore`) — anything placed there is structurally unable to be
+  committed to this repo, so there's no risk of it becoming a tracked staging folder again (it was one before
+  2026-09-04; retired in favor of this clone). If `wiki/` doesn't exist yet, clone it; don't recreate it per-worktree.
+- Interact with it as its own git repo (`cd wiki && git ...`) — commit and `git push origin master` directly. This
+  is a separate remote from `origin` in the main repo; don't confuse the two. Going through git avoids GitHub API
+  rate limits — never use the GitHub API for routine wiki reads or writes.
+- Page files are flat (`Some-Page.md`), no subfolders — GitHub wiki has no real directory support. Wire new pages
+  into `_Sidebar.md`.
+- **`spikes-private` branch** (local-only, never pushed) holds raw/half-baked material that isn't prose-ready for
+  the public wiki — spike scripts, dumps, anything not meant to go public yet. Fold pieces of it into `master` once
+  they're ready; don't push the branch itself.
 
-`packages/pg-enumeratio/sqlsrc/`: `bootstrap.sql` (number tower, math identities, catalog tables, the
-data-DDL stage/commit machinery, the generator) always loads first. Every other file is one collection with a
-sensible name and a dependency header:
+## Verifying changes
 
-```sql
--- requires: set-partitions, dyck-paths
-```
+- Docs / components / explorer: `pnpm docs:dev` (VitePress). From a worktree, run it in the worktree itself (a
+  backgrounded process) and drive that — verify functionally (DOM/HTTP), not by eye.
+- Full gate: `pnpm test` (`test:core` data suites, `test:stack` typecheck + CLI tests, `test:build` explorer + docs
+  build). For a quick loop, run just the relevant package's typecheck/test.
 
-Load order is a topological sort over those headers (`sqlsrc-order.ts`) — **no numeric filename prefixes**.
-Examples live beside each collection as `catalog_example` rows (living assertions).
+## Running long processes & verifying autonomously
 
-```sh
-# from packages/pg-enumeratio:
-node --import tsx run.mts             # apply all sqlsrc (toposorted) into PGlite, run the example suite
-node --import tsx run.mts cand.sql    # + apply a candidate last, in a rolled-back txn (prototype a collection)
-node --import tsx overview.mts        # generate overview.html from the live catalog
-```
+- **State an ETA up front for any command over ~20s, and run it in the BACKGROUND** so the user isn't blocked. Known
+  durations: `pnpm test` (full gate) ~5–6 min (test:core ~2–3m · test:stack ~1m · test:build ~2m); `run.mts` /
+  `test:core` ~2–3 min; `pnpm docs:build` ~2 min; `selfcert.mts <coll>` secs–30s; `pnpm install` (warm) ~1–3s.
+  **Overrunning the stated ETA — not elapsed time alone — is the "hung" signal**; then diagnose, don't just keep waiting.
+- **Don't shorten the gate by package unless the diff really is confined to it** — check which packages changed (a docs
+  data-loader still needs `test:build`; a data-only change is fully covered by `test:core`).
+- **Don't trust a delegated "green" — re-verify independently before merging.** Run `run.mts` under an OS `timeout` so
+  a runaway surfaces as exit 124, not a silent hang (a tight plpgsql loop ignores `statement_timeout`). The cli
+  `worker.test.ts` (worker_threads) is fragile — heavy per-query work in the worker tips its teardown into a hang.
 
-`run.mts` / `overview.mts` are **temporary scaffolding**. The DB is self-describing (catalog + `COMMENT ON` +
-example assertions); the intended end state is a Vue/PrimeVue component that introspects the PGlite DB and
-generates docs from code + data.
+## Common gotchas (read before starting — these come up every time)
 
-## Adding / porting a collection
-
-Prefer wrapping an existing carrier; borrow a ranking through an order-isomorphic bijection where one exists
-(the generator produces the engine). Author the file data-style (like `subsets.sql` / `integer-partitions.sql`),
-give it a `-- requires:` header, ship `catalog_example` rows as its regression + docs, and run `run.mts` to a
-green example suite. When porting from the `numbers` repo or the legacy extension, **anchor counts to the
-source's own recurrence / OEIS id, not memory** — ad-hoc cross-check anchors have been wrong before.
-
-**Gotchas (these will bite you):**
-
-- `numeric /` rounds — use `div()` for integer division.
-- Domain `CHECK`s must be flat — no nested plpgsql calls.
-- Composite `::text` casts don't round-trip (malformed record literal); build handles via `unrank(...)`.
-- Reserved keywords as unquoted identifiers break the DDL (`left`, …). `guards.sql` asserts no catalog
-  identifier collides with a reserved keyword — keep it green.
-- `$body$` can't appear inside an `enumeratio_function` body (it's the outer dollar-quote).
-- `enumeratio_type` handles both composite types and domains (via `kind = 'domain'`); stage both as rows.
-
-## Collection lifecycle
-
-Collections are **immutable in the wild** — augment or tombstone-with-deprecation, never rename. Rename only at
-design time against a fresh DB; there is no DB rename helper.
-
-## Conventions & working with Dean
-
-Dean's global working style lives in `~/.config/opencode/AGENTS.md` — read/honor it (senior dev, concise +
-direct, self-documenting code with short comments for funky bits, no unsolicited tests unless
-fast/reliable/useful, don't summarize diffs). Repo-specific:
-
-- **Main is fine here.** Dean has OK'd working directly on `main` in this repo; keep each change a clean,
-  self-contained commit. Branch/worktree for genuinely long parallel work — clean it up after.
-- **No scratch in the repo.** Session notes, throwaway scripts, analysis → `.scratch/` (gitignored) or `/tmp`.
-  One-off analysis prefers a committed, re-runnable `tsx` script over inline `node -e`.
-- **Commits:** concise, intent not minutiae; approximate counts ("a few", not "3"). **No `Co-Authored-By`
-  trailer** — Dean's standing rule forbids it.
-- **Ask on ambiguity** before implementing, even in build mode — especially for core-carrier changes.
-- **Don't trust self-justifying comments.** Ported/generated comments sometimes rationalize whatever shape
-  exists as "correct"; believe the design goal over the comment, and fix the comment.
-
----
-
-## Output style (caveman mode)
-
-This repo runs caveman mode for every IDE agent. Code, commits, PRs, and security warnings are written
-normally; only prose is compressed.
-
-Respond terse like smart caveman. All technical substance stay. Only fluff die.
-
-Rules:
-
-- Drop: articles (a/an/the), filler (just/really/basically), pleasantries, hedging
-- Fragments OK. Short synonyms. Technical terms exact. Code unchanged.
-- Pattern: [thing] [action] [reason]. [next step].
-- Not: "Sure! I'd be happy to help you with that."
-- Yes: "Bug in auth middleware. Fix:"
-
-Switch level: /caveman lite|full|ultra|wenyan
-Stop: "stop caveman" or "normal mode"
-
-Auto-Clarity: drop caveman for security warnings, irreversible actions, user confused. Resume after.
-
-Boundaries: code/commits/PRs written normal.
+- **A fresh worktree has NO `node_modules`.** Run `pnpm install` once before any `run.mts` / build. (This is the
+  single most-repeated startup step — just do it first.)
+- **`-- requires:` names are FILE BASENAMES**, resolved by `sqlsrc-order.ts` — not collection or module names.
+  `requires: k_colored_permutations`, not `colored_permutations`. A wrong name throws `requires unknown "…"`.
+  `requires-tag: collection` (+ `requires: realizer`) is the safe "load last" anchor when a file reads all collections.
+- **pglite = Postgres; a few real SQL gotchas:** no `round(double precision, int)` — cast the arg `::numeric` first
+  (also fixes `11.0000…` display via `trim_scale(round(x::numeric, 2))`); no `min`/`max(boolean)` — register a
+  boolean-ish stat as int `0/1` (the client builds min/max/sum over every stat and crashes on a boolean); STRICT
+  `generate_series(lo, hi)` yields ZERO rows when `hi IS NULL` (the open-handle trap — `fibers()`/`cardinality()`
+  guard against it); a plpgsql `generate_series(...) x` alias collides with a declared variable named `x`
+  (rename one); `sum()` of an empty array is `NULL`; `unnest()` over an array whose element is a single-array-field
+  composite (e.g. `word = (letters int[])`) flattens to the inner `int[]` — `(x).letters` then fails; treat the
+  unnested value as the plain array.
+- **Glyphs:** put a new carrier's glyph in its own `<carrier>_glyph.sql` (don't edit `glyphs.sql`); wrap SVG
+  coordinates in `trim_scale(round(…::numeric, 2))`; do NOT add a `base_glyph` registry row (it bumps the
+  glyphs-meta count example) — `carrier_renders_svg(<carrier>)` derives automatically from the overload's existence.
+- **Registry self-tests assert FLOORS/containment, not exact counts** (post-#171) — when you add rows, existing
+  examples should still pass; if one pins an exact count/list, that's a bug to soften (`>= N` / `@>`), not to match.
+- **selfcert (`node --import tsx selfcert.mts [coll]`) catches what `run.mts` misses** — the accelerated==naive
+  differential (fiber_count vs enumeration; element_at vs sequential). Run it after adding a `fiber_count` accel or an
+  unrank/element engine; the example suite alone won't catch a truncation/off-by-one at large n.
+- **Explorer verification in a worktree:** `pnpm docs:dev` from a worktree serves the worktree's own tree — run it
+  there (backgrounded) and drive that, not a preview pointed at the main checkout. Deep `/explore/collection/<slice>`
+  hard-loads hit a dev MIME quirk (#158) — load the base and route in-app.

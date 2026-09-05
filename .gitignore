@@ -4,5 +4,6 @@ dist/
 .DS_Store
 .scratch/
 .claude/
+CLAUDE.local.md
 *.timestamp-*.mjs
 wiki/
