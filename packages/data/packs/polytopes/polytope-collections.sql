@@ -182,9 +182,18 @@ CREATE FUNCTION fiber_elements(f cyclohedron_fiber, element_limit int) RETURNS S
    WHERE dissection_centrally_symmetric(d)
    ORDER BY coalesce(array_length((d).diagonals, 1), 0), (d).diagonals
    LIMIT element_limit $$;
-CREATE FUNCTION fiber_count(f cyclohedron_fiber) RETURNS numeric LANGUAGE sql STABLE AS $$
-  SELECT count(*) FROM fiber_elements(ROW(2 * (f).n)::dissections_fiber, little_schroeder((2 * (f).n)::int)::int) d
-   WHERE dissection_centrally_symmetric(d) $$;
+-- The f-vector in closed form (#307). A face of W_n is a centrally symmetric partial dissection, identified by
+-- which diagonal ORBITS it uses (dissection_symmetry_orbit_count, below), and the faces using exactly k of them
+-- number C(n,k)·C(n+k,k). So the k=n term is C(2n,n), the CS triangulations, i.e. the vertices; and the whole sum
+-- is the central Delannoy number A001850 (1, 3, 13, 63, 321, …) — the identity Σ_k C(n,k)C(n+k,k) = D(n,n).
+--
+-- This replaces a fiber_count that was the naive scan itself: it enumerated every dissection of a (2n+2)-gon and
+-- filtered. That is not an accelerator — the differential compared a scan against itself, expensively, and past
+-- n=4 it outran the selfcert watchdog so the collection certified nothing at all.
+CREATE FUNCTION cyclohedron_face_count(n int, k int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT binomial(n, k) * binomial(n + k, k) $$;   -- faces of W_n using exactly k diagonal orbits
+CREATE FUNCTION fiber_count(f cyclohedron_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT coalesce(sum(cyclohedron_face_count((f).n::int, k)), 0) FROM generate_series(0, (f).n::int) k $$;
 CREATE FUNCTION contains_in_fiber(f cyclohedron_fiber, v dissection) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT contains_in_fiber(ROW(2 * (f).n)::dissections_fiber, v) AND dissection_centrally_symmetric(v) $$;
 INSERT INTO base_collection VALUES ('cyclohedron', 'dissection');
@@ -218,6 +227,25 @@ CREATE FUNCTION dissection_cyclohedron_adjacent(a dissection, b dissection) RETU
 
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('cyclohedron','face count is the central Delannoy number: 1,3,13,63,321 for n=0..4 (#307 accel)','eq','1,3,13,63,321',
+   'Σ_k C(n,k)C(n+k,k) = D(n,n), A001850 — closed form, no dissection scan',
+   $q$ SELECT string_agg(cardinality(cyclohedron(n))::text, ',' ORDER BY n) FROM generate_series(0,4) n $q$),
+  ('cyclohedron','the closed form agrees with enumerating the faces, n=0..4','eq','true',
+   'the differential this accel exists to make possible — previously a scan compared against itself',
+   $q$ SELECT bool_and(cardinality(cyclohedron(n)) = (SELECT count(*) FROM elements(cyclohedron(n)) e))
+         FROM generate_series(0,4) n $q$),
+  ('cyclohedron','the f-vector by orbit count at n=4: 1,20,90,140,70','eq','1,20,90,140,70',
+   'C(n,k)C(n+k,k) per k, checked against the enumerated faces grouped by their orbit count',
+   $q$ SELECT string_agg(cnt::text, ',' ORDER BY k) FROM (
+         SELECT dissection_symmetry_orbit_count((e).value) k, count(*) cnt
+           FROM elements(cyclohedron(4)) e GROUP BY 1) g $q$),
+  ('cyclohedron','the closed form reproduces that f-vector','eq','true','cyclohedron_face_count(4,k) == the grouped enumeration',
+   $q$ SELECT bool_and(cyclohedron_face_count(4, k) = cnt) FROM (
+         SELECT dissection_symmetry_orbit_count((e).value) k, count(*) cnt
+           FROM elements(cyclohedron(4)) e GROUP BY 1) g $q$),
+  ('cyclohedron','vertices are the k=n term, C(2n,n): 1,2,6,20,70','eq','1,2,6,20,70',
+   'the CS triangulations of a (2n+2)-gon — the faces using every orbit',
+   $q$ SELECT string_agg(cyclohedron_face_count(n, n)::text, ',' ORDER BY n) FROM generate_series(0,4) n $q$),
   ('permutahedron','the permutahedron is a distinct collection, in bijection with set_compositions','eq','75|75','same cardinality (order-iso sibling); Fubini(4)',$q$
     SELECT cardinality(permutahedron(4))::text || '|' || cardinality(set_compositions(4))::text $q$),
   ('permutahedron','it carries the polytope (set_compositions no longer does)','eq','true|false','base_polytope moved onto the geometric collection',$q$
