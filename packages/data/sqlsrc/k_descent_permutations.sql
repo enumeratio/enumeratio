@@ -36,6 +36,70 @@ CREATE FUNCTION fiber_symbol(f k_descent_permutations_fiber) RETURNS text LANGUA
 
 INSERT INTO base_collection VALUES ('k_descent_permutations', 'permutation');
 INSERT INTO base_grade VALUES ('k_descent_permutations', 1, 'n', NULL, NULL), ('k_descent_permutations', 2, 'k', '0', 'greatest(g1 - 1, 0)');   -- k = descents, 0..n-1
+
+-- direct unrank: unlike inversions, a descent depends on comparing TWO consecutive chosen values, so the digit
+-- picked at a step doesn't contribute a fixed count on its own — it needs the state "a" = the 0-indexed rank of the
+-- PREVIOUS chosen value among the values still available at this step (avail is disjoint from prev, so a ranges
+-- 0..m where m=|avail|). Picking the digit at rank r (0-indexed within avail) creates a descent iff r < a — a
+-- smaller remaining value than prev. Removing it leaves a NEW previous-rank a' = r exactly (nothing smaller than
+-- the removed value changes rank). So: g(m,a,d) = # ways to arrange m remaining values, given previous-rank a,
+-- creating exactly d further descents = Σ_{r=0}^{m-1} g(m-1, r, d - [r<a]); g(0,0,0)=1. The first digit (no
+-- previous) draws directly from g(n-1, r, k). This is the same "insertion-relative-rank" recursion that proves the
+-- Eulerian numbers; verified by hand against ⟨2,·⟩ and ⟨3,1⟩=4 before coding, and selfcert checks it exhaustively.
+CREATE FUNCTION fiber_unrank(f k_descent_permutations_fiber, rank rank_index) RETURNS permutation LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE n int := (f).n::int; k int := (f).k::int; stride int := (n + 1) * (k + 1);
+          flat numeric[] := ARRAY[]::numeric[];                     -- flat[m*stride + a*(k+1) + d + 1] = g(m,a,d)
+          avail int[] := ARRAY(SELECT generate_series(1,n)); res int[] := '{}';
+          remrank numeric := rank; remaining_k int; cur_a int; m int; a int; d int; r int; total numeric; cnt numeric;
+          chosen_r int; need_descent boolean;
+  BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[]::int[])::permutation; END IF;
+    -- level m=0: only (a=0,d=0) survives
+    FOR a IN 0..n LOOP FOR d IN 0..k LOOP
+      flat[a*(k+1) + d + 1] := CASE WHEN a = 0 AND d = 0 THEN 1::numeric ELSE 0::numeric END;
+    END LOOP; END LOOP;
+    FOR m IN 1..n-1 LOOP
+      FOR a IN 0..n LOOP FOR d IN 0..k LOOP
+        IF a > m THEN total := 0;
+        ELSE
+          total := 0;
+          FOR r IN 0..m-1 LOOP
+            IF r < a THEN
+              IF d >= 1 THEN total := total + flat[(m-1)*stride + r*(k+1) + (d-1) + 1]; END IF;
+            ELSE total := total + flat[(m-1)*stride + r*(k+1) + d + 1];
+            END IF;
+          END LOOP;
+        END IF;
+        flat[m*stride + a*(k+1) + d + 1] := total;
+      END LOOP; END LOOP;
+    END LOOP;
+    -- decode: first digit draws from level (n-1), no previous-rank constraint
+    remaining_k := k; chosen_r := n - 1;
+    FOR r IN 0..n-1 LOOP
+      cnt := flat[(n-1)*stride + r*(k+1) + remaining_k + 1];
+      IF remrank < cnt THEN chosen_r := r; EXIT; END IF;
+      remrank := remrank - cnt;
+    END LOOP;
+    res := res || avail[chosen_r + 1]; avail := avail[1:chosen_r] || avail[chosen_r + 2:array_length(avail,1)];
+    cur_a := chosen_r;
+    FOR m IN REVERSE (n-1)..1 LOOP                                  -- m = # remaining slots BEFORE this pick
+      chosen_r := m - 1;
+      FOR r IN 0..m-1 LOOP
+        need_descent := r < cur_a;
+        IF need_descent THEN
+          cnt := CASE WHEN remaining_k >= 1 THEN flat[(m-1)*stride + r*(k+1) + (remaining_k-1) + 1] ELSE 0 END;
+        ELSE cnt := flat[(m-1)*stride + r*(k+1) + remaining_k + 1];
+        END IF;
+        IF remrank < cnt THEN
+          chosen_r := r; IF need_descent THEN remaining_k := remaining_k - 1; END IF; EXIT;
+        END IF;
+        remrank := remrank - cnt;
+      END LOOP;
+      res := res || avail[chosen_r + 1]; avail := avail[1:chosen_r] || avail[chosen_r + 2:array_length(avail,1)];
+      cur_a := chosen_r;
+    END LOOP;
+    RETURN ROW(res)::permutation;
+  END $fu$;
 SELECT base_realize('k_descent_permutations');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -53,4 +117,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(cardinality(k_descent_permutations(5,k))::text, ',' ORDER BY k) FROM generate_series(0,4) k $q$),
   ('k_descent_permutations','contains via <@: 213 ∈ (3,1) (one descent), ∉ (3,0)','eq','true|false','exactly k descents',$q$
     SELECT (ROW(ARRAY[2,1,3])::permutation <@ k_descent_permutations(3,1))::text || '|' ||
-           (ROW(ARRAY[2,1,3])::permutation <@ k_descent_permutations(3,0))::text $q$);
+           (ROW(ARRAY[2,1,3])::permutation <@ k_descent_permutations(3,0))::text $q$),
+  ('k_descent_permutations','fiber_unrank(k_descent_permutations(5,2), 0..65) are all members (accel floor)','eq','true','the previous-rank descent unrank lands inside the ⟨5,2⟩=66 fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(k_descent_permutations(5,2)) f), ord::rank_index) <@ k_descent_permutations(5,2))::text
+      FROM generate_series(0, cardinality(k_descent_permutations(5,2))::int - 1) ord $q$);
