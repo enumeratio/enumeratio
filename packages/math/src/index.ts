@@ -10,3 +10,6 @@ export * from "./multicomplex.js";
 export * from "./compositions.js";
 export * from "./permutations.js";
 export * from "./permutation_statistics.js";
+export * from "./integer_partitions.js";
+export * from "./set_partitions.js";
+export * from "./set_compositions.js";

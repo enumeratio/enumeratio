@@ -199,6 +199,90 @@ for (let n = 0; n <= 15; n++) {
   }
 }
 
+// ---- integer_partitions rank/unrank (generic dispatch — no bare SQL fn) ----
+const ipNotation = (parts: number[]) => (parts.length ? parts.join("+") : "0");
+for (let n = 0; n <= 12; n++) {
+  const total = M.partition_number(n);
+  for (let r = 0; r < total; r++) {
+    const [[sql]] = await q(`SELECT notation((unrank(integer_partitions(${n}), ${r})).value)`);
+    const p = M.integerPartitionUnrank(n, r);
+    record(`integerPartitionUnrank(${n},${r})`, sql, ipNotation(p));
+    record(`integerPartitionRank(round-trip n=${n} r=${r})`, r, M.integerPartitionRank(p, n));
+  }
+}
+
+// ---- k_part_partitions rank/unrank (generic dispatch — no bare SQL fn) ----
+for (let n = 0; n <= 10; n++) {
+  for (let k = 1; k <= n; k++) {
+    const [[cnt]] = await q(`SELECT k_part_partition_count(${n},${k})::text`);
+    record(`integerPartitionKCount(${n},${k})`, cnt, M.integerPartitionKCount(n, k));
+    const total = M.integerPartitionKCount(n, k);
+    for (let r = 0; r < total; r++) {
+      const [[sql]] = await q(`SELECT notation((unrank(k_part_partitions(${n},${k}), ${r})).value)`);
+      const p = M.integerPartitionKUnrank(n, k, r);
+      record(`integerPartitionKUnrank(${n},${k},${r})`, sql, ipNotation(p));
+      record(`integerPartitionKRank(round-trip n=${n} k=${k} r=${r})`, r, M.integerPartitionKRank(p, n));
+    }
+  }
+}
+
+// ---- set_partitions rank/unrank via RGS (generic dispatch — no bare SQL fn) ----
+for (let n = 0; n <= 7; n++) {
+  const total = M.bell(n);
+  for (let r = 0; r < total; r++) {
+    const [[sql]] = await q(`SELECT notation((unrank(set_partitions(${n}), ${r})).value)`);
+    const w = M.rgsUnrank(n, r);
+    record(`rgsUnrank(${n},${r})`, sql, w.join(""));
+    record(`rgsRank(round-trip n=${n} r=${r})`, r, M.rgsRank(w));
+  }
+}
+
+// ---- set_partitions_into_k_blocks rank/unrank (generic dispatch — no bare SQL fn) ----
+for (let n = 0; n <= 7; n++) {
+  for (let k = 1; k <= n; k++) {
+    const total = M.stirling_second(n, k);
+    for (let r = 0; r < total; r++) {
+      const [[sql]] = await q(`SELECT notation((unrank(set_partitions_into_k_blocks(${n},${k}), ${r})).value)`);
+      const w = M.setPartitionsIntoKBlocksUnrank(n, k, r);
+      record(`setPartitionsIntoKBlocksUnrank(${n},${k},${r})`, sql, w.join(""));
+      record(`setPartitionsIntoKBlocksRank(round-trip n=${n} k=${k} r=${r})`, r, M.setPartitionsIntoKBlocksRank(w, k));
+    }
+  }
+}
+
+// ---- set_compositions rank/unrank (generic dispatch — no bare SQL fn; different carrier/order than the
+// numbers-repo's mask-based SetComposition, see set_compositions.ts header) ----
+const scNotation = (labels: number[]) => {
+  const byLabel = new Map<number, number[]>();
+  labels.forEach((l, i) => {
+    if (!byLabel.has(l)) byLabel.set(l, []);
+    byLabel.get(l)!.push(i + 1);
+  });
+  return [...byLabel.keys()].sort((a, b) => a - b).map((k) => byLabel.get(k)!.join(",")).join("|");
+};
+for (let n = 0; n <= 5; n++) {
+  const total = M.fubini(n);
+  for (let r = 0; r < total; r++) {
+    const [[sql]] = await q(`SELECT notation((unrank(set_compositions(${n}), ${r})).value)`);
+    const labels = M.setCompositionUnrank(n, r);
+    record(`setCompositionUnrank(${n},${r})`, sql, scNotation(labels));
+    record(`setCompositionRank(round-trip n=${n} r=${r})`, r, M.setCompositionRank(labels, n));
+  }
+}
+// n=6 sampled (fubini(6)=4683 — full range is overkill; boundary + a spread of ranks)
+{
+  const n = 6;
+  const total = M.fubini(n);
+  const samples = new Set([0, 1, total - 2, total - 1]);
+  for (let r = 0; r < total; r += 37) samples.add(r);
+  for (const r of [...samples].sort((a, b) => a - b)) {
+    const [[sql]] = await q(`SELECT notation((unrank(set_compositions(${n}), ${r})).value)`);
+    const labels = M.setCompositionUnrank(n, r);
+    record(`setCompositionUnrank(${n},${r})`, sql, scNotation(labels));
+    record(`setCompositionRank(round-trip n=${n} r=${r})`, r, M.setCompositionRank(labels, n));
+  }
+}
+
 await pg.close();
 
 console.log(`checked ${checked} cases across ${Object.keys(M).length} exports`);
