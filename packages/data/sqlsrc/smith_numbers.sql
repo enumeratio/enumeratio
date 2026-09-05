@@ -6,8 +6,10 @@ CREATE FUNCTION is_smith(n numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
      AND decimal_digit_sum(n) = (SELECT sum(e * decimal_digit_sum(p)) FROM unnest((factorize(n)).primes, (factorize(n)).powers) AS t(p, e))
 $$;
 CREATE TYPE smith_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
+-- first 8 members land by 166 (~25/element); window SCALES with element_limit (#296) instead of a fixed 200.
 CREATE FUNCTION fiber_elements(f smith_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
-  SELECT n::numeric FROM generate_series(1, 200) n WHERE is_smith(n::numeric) LIMIT element_limit $$;
+  SELECT n::numeric FROM generate_series(1, element_limit * 30 + 50) n
+   WHERE is_smith(n::numeric) ORDER BY n LIMIT element_limit $$;
 CREATE FUNCTION contains_in_fiber(f smith_numbers_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT is_smith(v) $$;
 INSERT INTO base_collection VALUES ('smith_numbers','numeric',true);
 CREATE FUNCTION fiber_symbol(f smith_numbers_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'Smith' $$;   -- corpus symbol

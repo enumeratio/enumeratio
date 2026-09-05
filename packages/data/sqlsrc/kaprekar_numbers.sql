@@ -21,10 +21,11 @@ CREATE FUNCTION is_kaprekar(n numeric) RETURNS boolean LANGUAGE plpgsql IMMUTABL
   END $$;
 
 -- ── the engines a collection provides ────────────────────────────────────────────────────────────────
--- FLOOR: search window of 1000 comfortably contains the first 8 members (1,9,45,55,99,297,703,999).
+-- FLOOR: first 8 members land by 999 (~125/element); window SCALES with element_limit (#296) instead of a fixed 1000.
 CREATE TYPE kaprekar_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f kaprekar_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
-  SELECT n::numeric FROM generate_series(1, 1000) n WHERE is_kaprekar(n::numeric) LIMIT element_limit $$;
+  SELECT n::numeric FROM generate_series(1, element_limit * 150 + 200) n
+   WHERE is_kaprekar(n::numeric) ORDER BY n LIMIT element_limit $$;
 
 CREATE FUNCTION contains_in_fiber(f kaprekar_numbers_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT is_kaprekar(v) $$;

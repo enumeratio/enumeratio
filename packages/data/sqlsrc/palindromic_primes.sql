@@ -1,8 +1,9 @@
 -- requires: number-theory, realizer
 -- palindromic_primes — primes reading the same forwards and backwards in base 10 (A002385): 2,3,5,7,11,101,131,…
 -- An ungraded / infinite number SET (carrier numeric), sibling of prime_numbers. The predicate is the cheap
--- palindrome string test AND is_prime_number; the floor scans a generous bound, palindrome-filtering FIRST (string
--- test is far cheaper than primality) so only the handful of palindromes pay for a primality check. Base-10 specific.
+-- palindrome string test AND is_prime_number; the floor scans a bound that SCALES with element_limit (#296,
+-- capped at the original 200000), palindrome-filtering FIRST (string test is far cheaper than primality) so only
+-- the handful of palindromes pay for a primality check. Base-10 specific.
 -- 11 is the only even-digit palindromic prime (2k-digit palindromes are divisible by 11). Unbounded ⇒ cardinality ∞.
 
 CREATE FUNCTION is_palindromic_prime(n numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
@@ -10,7 +11,8 @@ CREATE FUNCTION is_palindromic_prime(n numeric) RETURNS boolean LANGUAGE sql IMM
 
 CREATE TYPE palindromic_primes_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f palindromic_primes_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
-  SELECT p FROM (SELECT g::numeric p FROM generate_series(1, 200000) g WHERE g::text = reverse(g::text)) q
+  SELECT p FROM (SELECT g::numeric p FROM generate_series(1, least(greatest(element_limit * 300, 2000), 200000)) g
+                  WHERE g::text = reverse(g::text)) q
    WHERE is_prime_number(p) ORDER BY p LIMIT element_limit $$;
 CREATE FUNCTION contains_in_fiber(f palindromic_primes_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT is_palindromic_prime(v) $$;
 

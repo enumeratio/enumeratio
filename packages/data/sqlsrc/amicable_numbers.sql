@@ -7,9 +7,11 @@ CREATE FUNCTION is_amicable(n numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS
   SELECT n > 0 AND aliquot_sum(n) <> n AND aliquot_sum(aliquot_sum(n)) = n $$;
 
 CREATE TYPE amicable_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
--- sparse: first member is 220, sixth is 2924 — a fixed search window of 3200 comfortably contains them
+-- sparse: first member is 220, sixth is 2924 (~500/element); window SCALES with element_limit (#296) so a small
+-- request doesn't re-pay a fixed 3200-wide scan — floor keeps the first six comfortably in range.
 CREATE FUNCTION fiber_elements(f amicable_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
-  SELECT n::numeric FROM generate_series(1, 3200) n WHERE is_amicable(n::numeric) LIMIT element_limit $$;
+  SELECT n::numeric FROM generate_series(1, element_limit * 600 + 200) n
+   WHERE is_amicable(n::numeric) ORDER BY n LIMIT element_limit $$;
 CREATE FUNCTION contains_in_fiber(f amicable_numbers_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT is_amicable(v) $$;
 
