@@ -9,7 +9,8 @@ generated, always-current tables over the same registry.
 - **[Maps](/develop/data/maps)** — every registered bijection/morphism: source, codomain, bijection/order-iso
   flags, inverse, FindStat cross-reference.
 - **[Functions](/develop/data/functions)** — a curated ledger of named math identities (`catalan_number`,
-  `stirling1`, `gcd_int`, …), each with its live SQL and/or `@enumeratio/math` TS implementation, Wolfram-style
-  function attributes, and cross-system references.
+  `stirling1`, `gcd`, …), each with its implementations: one row per (engine, overload, representation), so a
+  single identity can carry a SQL twin, an `@enumeratio/math` TS twin, and an exact-bigint variant of either.
+  Plus Wolfram-style function attributes and cross-system references.
 - **[Relations](/develop/data/relations)** — the full `base_reference` cross-reference table (OEIS, FindStat,
   Sage, mathlib4, …), one filterable, shareable-URL view.
