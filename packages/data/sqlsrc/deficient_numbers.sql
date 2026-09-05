@@ -9,4 +9,8 @@ CREATE FUNCTION fiber_symbol(f deficient_numbers_fiber) RETURNS text LANGUAGE sq
 SELECT base_realize('deficient_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('deficient_numbers','first ten','eq','1,2,3,4,5,7,8,9,10,11','aliquot < n',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(deficient_numbers(),10) e $q$),
-  ('deficient_numbers','contains: 8 ∈, 12 ∉ (abundant)','eq','true|false','',$q$ SELECT (8::numeric <@ deficient_numbers())::text||'|'||(12::numeric <@ deficient_numbers())::text $q$);
+  ('deficient_numbers','contains: 8 ∈, 12 ∉ (abundant)','eq','true|false','',$q$ SELECT (8::numeric <@ deficient_numbers())::text||'|'||(12::numeric <@ deficient_numbers())::text $q$),
+  ('deficient_numbers','aliquot_sum(21) = 11 (1+3+7), so 21 is deficient','eq','11|true','decomposed via aliquot_sum, not is_deficient_number',$q$
+    SELECT aliquot_sum(21)::text || '|' || (aliquot_sum(21) < 21)::text $q$),
+  ('deficient_numbers','every prime p has aliquot_sum(p) = 1 < p, hence deficient','eq','true','decomposed cross-check over several primes',$q$
+    SELECT bool_and(aliquot_sum(p::numeric) = 1 AND aliquot_sum(p::numeric) < p)::text FROM (VALUES (2),(3),(5),(7),(11),(97)) t(p) $q$);

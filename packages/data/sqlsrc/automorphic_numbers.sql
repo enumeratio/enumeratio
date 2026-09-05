@@ -10,4 +10,6 @@ CREATE FUNCTION fiber_symbol(f automorphic_numbers_fiber) RETURNS text LANGUAGE 
 SELECT base_realize('automorphic_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('automorphic_numbers','first six','eq','0,1,5,6,25,76','n^2 ends in n',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(automorphic_numbers(),6) e $q$),
-  ('automorphic_numbers','contains: 76 ∈ (76^2=5776), 7 ∉','eq','true|false','',$q$ SELECT (76::numeric <@ automorphic_numbers())::text||'|'||(7::numeric <@ automorphic_numbers())::text $q$);
+  ('automorphic_numbers','contains: 76 ∈ (76^2=5776), 7 ∉','eq','true|false','',$q$ SELECT (76::numeric <@ automorphic_numbers())::text||'|'||(7::numeric <@ automorphic_numbers())::text $q$),
+  ('automorphic_numbers','decomposed: 376^2 mod 1000 = 376, checked directly (not via is_automorphic)','eq','141376|true','3-digit automorphic',$q$
+    SELECT (376*376)::text || '|' || (mod(376*376, 1000) = 376)::text $q$);

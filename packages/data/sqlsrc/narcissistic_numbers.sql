@@ -17,4 +17,8 @@ CREATE FUNCTION fiber_symbol(f narcissistic_numbers_fiber) RETURNS text LANGUAGE
 SELECT base_realize('narcissistic_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('narcissistic_numbers','first eleven (single digits + 153)','eq','0,1,2,3,4,5,6,7,8,9,153','sum of digit^(#digits)',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(narcissistic_numbers(),11) e $q$),
-  ('narcissistic_numbers','contains: 153 ∈ (1+125+27), 154 ∉','eq','true|false','',$q$ SELECT (153::numeric <@ narcissistic_numbers())::text||'|'||(154::numeric <@ narcissistic_numbers())::text $q$);
+  ('narcissistic_numbers','contains: 153 ∈ (1+125+27), 154 ∉','eq','true|false','',$q$ SELECT (153::numeric <@ narcissistic_numbers())::text||'|'||(154::numeric <@ narcissistic_numbers())::text $q$),
+  ('narcissistic_numbers','decomposed: 1^3+5^3+3^3 = 153, computed directly (not via is_narcissistic)','eq','153|true','',$q$
+    SELECT (pow_int(1,3)+pow_int(5,3)+pow_int(3,3))::text || '|' || (pow_int(1,3)+pow_int(5,3)+pow_int(3,3) = 153)::text $q$),
+  ('narcissistic_numbers','1634 is a 4-digit narcissistic number (1^4+6^4+3^4+4^4)','eq','true','',$q$
+    SELECT is_narcissistic(1634)::text $q$);

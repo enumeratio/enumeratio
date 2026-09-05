@@ -10,4 +10,6 @@ CREATE FUNCTION fiber_symbol(f odious_numbers_fiber) RETURNS text LANGUAGE sql I
 SELECT base_realize('odious_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('odious_numbers','first ten','eq','1,2,4,7,8,11,13,14,16,19','odd binary digit sum',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(odious_numbers(),10) e $q$),
-  ('odious_numbers','contains: 7 ∈ (111), 6 ∉ (110)','eq','true|false','',$q$ SELECT (7::numeric <@ odious_numbers())::text||'|'||(6::numeric <@ odious_numbers())::text $q$);
+  ('odious_numbers','contains: 7 ∈ (111), 6 ∉ (110)','eq','true|false','',$q$ SELECT (7::numeric <@ odious_numbers())::text||'|'||(6::numeric <@ odious_numbers())::text $q$),
+  ('odious_numbers','complement: every n in 0..100 is evil XOR odious (popcount parity partitions ℕ)','eq','true','',$q$
+    SELECT bool_and(is_evil(n::numeric) <> is_odious(n::numeric))::text FROM generate_series(0,100) n $q$);
