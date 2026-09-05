@@ -76,7 +76,9 @@ not under `docs/` (public docs site) and not committed to this repo.
   boolean-ish stat as int `0/1` (the client builds min/max/sum over every stat and crashes on a boolean); STRICT
   `generate_series(lo, hi)` yields ZERO rows when `hi IS NULL` (the open-handle trap — `fibers()`/`cardinality()`
   guard against it); a plpgsql `generate_series(...) x` alias collides with a declared variable named `x`
-  (rename one); `sum()` of an empty array is `NULL`.
+  (rename one); `sum()` of an empty array is `NULL`; `unnest()` over an array whose element is a single-array-field
+  composite (e.g. `word = (letters int[])`) flattens to the inner `int[]` — `(x).letters` then fails; treat the
+  unnested value as the plain array.
 - **Glyphs:** put a new carrier's glyph in its own `<carrier>_glyph.sql` (don't edit `glyphs.sql`); wrap SVG
   coordinates in `trim_scale(round(…::numeric, 2))`; do NOT add a `base_glyph` registry row (it bumps the
   glyphs-meta count example) — `carrier_renders_svg(<carrier>)` derives automatically from the overload's existence.
