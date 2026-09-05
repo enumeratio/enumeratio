@@ -14,4 +14,7 @@ CREATE FUNCTION fiber_symbol(f primorial_numbers_fiber) RETURNS text LANGUAGE sq
 SELECT base_realize('primorial_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('primorial_numbers','first terms','eq','1,2,6,30,210,2310,30030','product of first r primes',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(primorial_numbers(),7) e $q$),
-  ('primorial_numbers','contains via <@: 2310 ∈ (P(5)), 2311 ∉','eq','true|false','floor-scan membership',$q$ SELECT (2310::numeric <@ primorial_numbers())::text || '|' || (2311::numeric <@ primorial_numbers())::text $q$);
+  ('primorial_numbers','contains via <@: 2310 ∈ (P(5)), 2311 ∉','eq','true|false','floor-scan membership',$q$ SELECT (2310::numeric <@ primorial_numbers())::text || '|' || (2311::numeric <@ primorial_numbers())::text $q$),
+  ('primorial_numbers','primorial(n) / primorial(n-1) = nth_prime(n) for n=1..6','eq','true','each step multiplies in exactly the next prime',$q$
+    SELECT bool_and((unrank(primorial_numbers(), n)).value / (unrank(primorial_numbers(), n-1)).value = nth_prime(n))
+    FROM generate_series(1, 6) n $q$);

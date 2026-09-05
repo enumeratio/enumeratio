@@ -15,4 +15,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('all_ones','first terms via the realized floor','eq','1,1,1,1,1,1','the constant-1 sequence (A000012)',$q$
     SELECT string_agg((e).value::text, ',' ORDER BY ordinality(e)) FROM elements(all_ones(), 6) e $q$),
   ('all_ones','unrank(4) = 1; cardinality = Infinity','eq','1|Infinity','one endless fiber',$q$
-    SELECT (unrank(all_ones(), 4)).value::text || '|' || cardinality(all_ones())::text $q$);
+    SELECT (unrank(all_ones(), 4)).value::text || '|' || cardinality(all_ones())::text $q$),
+  ('all_ones','constant off the floor for r=0..49 (well past the display window)','eq','true','unrank never drifts from 1 at larger ranks',$q$
+    SELECT bool_and((unrank(all_ones(), r)).value = 1) FROM generate_series(0, 49) r $q$);

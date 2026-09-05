@@ -12,4 +12,7 @@ INSERT INTO base_monotonic_sequence VALUES ('jacobsthal_numbers');   -- non-decr
 SELECT base_realize('jacobsthal_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('jacobsthal_numbers','first terms','eq','0,1,1,3,5,11,21,43,85','J(n-1)+2J(n-2)',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(jacobsthal_numbers(),9) e $q$),
-  ('jacobsthal_numbers','synthesized contains handles the plateau: 21 ∈, 1 ∈ (repeated term), 4 ∉','eq','true|true|false','non-decreasing scan is plateau-safe',$q$ SELECT (21::numeric<@jacobsthal_numbers())::text||'|'||(1::numeric<@jacobsthal_numbers())::text||'|'||(4::numeric<@jacobsthal_numbers())::text $q$);
+  ('jacobsthal_numbers','synthesized contains handles the plateau: 21 ∈, 1 ∈ (repeated term), 4 ∉','eq','true|true|false','non-decreasing scan is plateau-safe',$q$ SELECT (21::numeric<@jacobsthal_numbers())::text||'|'||(1::numeric<@jacobsthal_numbers())::text||'|'||(4::numeric<@jacobsthal_numbers())::text $q$),
+  ('jacobsthal_numbers','recurrence holds off the floor: J(n) = J(n-1) + 2·J(n-2) for n=2..8','eq','true','accelerated unrank cross-checked against its own recurrence',$q$
+    SELECT bool_and((unrank(jacobsthal_numbers(), n)).value = (unrank(jacobsthal_numbers(), n-1)).value + 2*(unrank(jacobsthal_numbers(), n-2)).value)
+    FROM generate_series(2, 8) n $q$);
