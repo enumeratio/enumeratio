@@ -113,13 +113,13 @@ SELECT tag, collection FROM (VALUES
   ('matching', 'perfect_matchings'), ('matching', 'non_crossing_matchings'), ('matching', 'non_nesting_matchings'),
   -- set partitions
   ('set_partition', 'set_partitions'), ('set_partition', 'set_partitions_into_k_blocks'), ('set_partition', 'non_crossing_partitions'), ('set_partition', 'non_nesting_partitions'),
-  ('set_partition', 'set_compositions'), ('set_partition', 'restricted_growth_strings'),
+  ('set_partition', 'set_compositions'), ('set_partition', 'restricted_growth_strings'), ('set_partition', 'signed_set_compositions'),
   -- selections
   ('selection', 'subsets'), ('selection', 'k_subsets'), ('selection', 'multisets'), ('selection', 'finsets'), ('selection', 'sparse_subsets'), ('selection', 'signed_subsets'), ('selection', 'arrangements'),
   -- polytope faces
   ('polytope', 'associahedron'), ('polytope', 'cross_polytope'), ('polytope', 'permutahedron'), ('polytope', 'dissections'),
   -- signed / symmetric
-  ('symmetric', 'signed_permutations'), ('symmetric', 'signed_subsets'), ('symmetric', 'k_colored_permutations'),
+  ('symmetric', 'signed_permutations'), ('symmetric', 'signed_subsets'), ('symmetric', 'k_colored_permutations'), ('symmetric', 'signed_set_compositions'),
   -- matrices
   ('matrix', 'alternating_sign_matrices'),
   -- functions

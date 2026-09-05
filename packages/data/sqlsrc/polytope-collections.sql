@@ -1,4 +1,4 @@
--- requires: set_compositions, signed_subsets, dissections, subsets, simplex, k_subsets, permutations, realizer, utilities
+-- requires: set_compositions, signed_subsets, dissections, subsets, simplex, k_subsets, permutations, signed_permutations, realizer, utilities
 -- The polytopes as their OWN collections, in bijection with their combinatorial representatives. A set composition
 -- is the natural combinatorial object; the `permutahedron` face is the geometric one — same data, distinct role.
 -- Each polytope collection is an ORDER-ISOMORPHIC SIBLING of its representative (it borrows the representative's
@@ -137,6 +137,33 @@ INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VAL
 CREATE FUNCTION permutation_birkhoff_adjacent(a permutation, b permutation) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT (SELECT count(*) FROM generate_subscripts((a).image,1) i WHERE (a).image[i] <> (b).image[i]) = 2 $$;
 
+-- ── type-B permutahedron = the faces of the hyperoctahedral zonotope — reuses signed_permutations(n)'s carrier
+-- directly (#232 chunk 3). Vertices only for now (dim_fn flat 0, contains_fn identity), mirroring the Birkhoff/
+-- hypersimplex vertex-only pattern (#232 chunk 2): the natural combinatorial face representative for the richer
+-- face lattice is `signed_set_compositions` (a signed ordered set partition — the type-B analog of how
+-- set_compositions represents permutahedron faces), but wiring that face structure onto this polytope row is
+-- deferred to a later chunk.
+CREATE FUNCTION signed_permutation_typeb_face_dim(p signed_permutation) RETURNS int LANGUAGE sql IMMUTABLE AS $$ SELECT 0 $$;
+-- coordinate: the signed one-line vector itself — already an exact integer point (the view projects it).
+CREATE FUNCTION signed_permutation_typeb_point(p signed_permutation) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$ SELECT (p).image $$;
+CREATE FUNCTION signed_permutation_typeb_face_contains(big signed_permutation, small signed_permutation) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT big = small $$;
+INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
+  ('signed_permutations','signed_permutation_typeb_face_dim','signed_permutation_typeb_point','signed_permutation_typeb_face_contains','Type-B permutahedron');
+-- edge floor: two Coxeter-generator families are safe (proven) edges of the type-B permutahedron zonotope — a single
+-- sign flip on one entry (differ at exactly 1 position, same |value|), or a transposition of two entries with their
+-- signs traveling with them (differ at exactly 2 positions, each swapped value matching the other's). Other zonotope
+-- generators (e.g. e_i+e_j) likely add more edges — deferred, per the ticket's "compute a floor, don't guess" rule.
+CREATE FUNCTION signed_permutation_typeb_adjacent(a signed_permutation, b signed_permutation) RETURNS boolean LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE ai int[] := (a).image; bi int[] := (b).image; diffs int[]; d int;
+  BEGIN
+    SELECT array_agg(i ORDER BY i) INTO diffs FROM generate_subscripts(ai,1) i WHERE ai[i] <> bi[i];
+    d := coalesce(array_length(diffs, 1), 0);
+    IF d = 1 THEN RETURN abs(ai[diffs[1]]) = abs(bi[diffs[1]]);                                    -- single sign flip
+    ELSIF d = 2 THEN RETURN ai[diffs[1]] = bi[diffs[2]] AND ai[diffs[2]] = bi[diffs[1]];           -- a transposition
+    ELSE RETURN false;
+    END IF;
+  END $$;
+
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutahedron','the permutahedron is a distinct collection, in bijection with set_compositions','eq','75|75','same cardinality (order-iso sibling); Fubini(4)',$q$
@@ -225,4 +252,21 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            permutation_birkhoff_adjacent(ROW(ARRAY[2,3,1])::permutation, ROW(ARRAY[1,2,3])::permutation)::text $q$),
   ('permutations','edge floor for B_4: transposition-adjacent pairs number at least 72 = 4!·C(4,2)/2 — a proven-correct floor on B_4''s true edge count (longer-cycle edges add more, deferred), computed not guessed','eq','true','vertices+edges only (chunk 2); full face lattice deferred',$q$
     SELECT ((SELECT count(*) FROM elements(permutations(4)) e1, elements(permutations(4)) e2
-              WHERE ordinality(e1) < ordinality(e2) AND permutation_birkhoff_adjacent((e1).value,(e2).value)) >= 72)::text $q$);
+              WHERE ordinality(e1) < ordinality(e2) AND permutation_birkhoff_adjacent((e1).value,(e2).value)) >= 72)::text $q$),
+  ('signed_permutations','the type-B permutahedron is now registered in base_polytope, directly on signed_permutations (#232 chunk 3)','eq','true|Type-B permutahedron','a polytope row can live on a pre-existing collection, no new collection needed',$q$
+    SELECT EXISTS(SELECT 1 FROM base_polytope WHERE collection='signed_permutations')::text || '|' ||
+           (SELECT title FROM base_polytope WHERE collection='signed_permutations') $q$),
+  ('signed_permutations','type-B permutahedron vertex floors: |B_n| = 2^n·n! for n=1..4','eq','2,8,48,384','vertices = elements of signed_permutations(n), exact for small n',$q$
+    SELECT string_agg(cardinality(signed_permutations(n))::text, ',' ORDER BY n) FROM generate_series(1,4) n $q$),
+  ('signed_permutations','the type-B point_fn is the signed one-line vector itself: -2,1,-3 renders as (-2,1,-3)','eq','(-2,1,-3)','vertex coordinate, exact',$q$
+    SELECT '(' || array_to_string(signed_permutation_typeb_point(ROW(ARRAY[-2,1,-3])::signed_permutation), ',') || ')' $q$),
+  ('signed_permutations','type-B face containment collapses to identity at vertex level: -2,1,-3 contains itself, not 1,2,3','eq','true|false','contains_fn: vertex-only realization (chunk 3 scope)',$q$
+    SELECT signed_permutation_typeb_face_contains(ROW(ARRAY[-2,1,-3])::signed_permutation, ROW(ARRAY[-2,1,-3])::signed_permutation)::text || '|' ||
+           signed_permutation_typeb_face_contains(ROW(ARRAY[-2,1,-3])::signed_permutation, ROW(ARRAY[1,2,3])::signed_permutation)::text $q$),
+  ('signed_permutations','type-B adjacency: -2,1,-3 ~ -2,1,3 (one sign flip); -2,1,-3 ~ 1,-2,-3 (a transposition); -2,1,-3 ≁ 3,-2,1 (differs at all 3, not caught by this floor)','eq','true|true|false','signed_permutation_typeb_adjacent, exact on three chosen pairs',$q$
+    SELECT signed_permutation_typeb_adjacent(ROW(ARRAY[-2,1,-3])::signed_permutation, ROW(ARRAY[-2,1,3])::signed_permutation)::text || '|' ||
+           signed_permutation_typeb_adjacent(ROW(ARRAY[-2,1,-3])::signed_permutation, ROW(ARRAY[1,-2,-3])::signed_permutation)::text || '|' ||
+           signed_permutation_typeb_adjacent(ROW(ARRAY[-2,1,-3])::signed_permutation, ROW(ARRAY[3,-2,1])::signed_permutation)::text $q$),
+  ('signed_permutations','type-B permutahedron edge floor for n=3: at least 144 = 48·(3+C(3,2))/2 adjacent pairs (sign-flip + transposition generators), computed not guessed','eq','true','vertices+edges only (chunk 3); other zonotope generators would only add more edges',$q$
+    SELECT ((SELECT count(*) FROM elements(signed_permutations(3)) e1, elements(signed_permutations(3)) e2
+              WHERE ordinality(e1) < ordinality(e2) AND signed_permutation_typeb_adjacent((e1).value,(e2).value)) >= 144)::text $q$);
