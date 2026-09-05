@@ -1,13 +1,14 @@
-// Persistent pglite worker for render-corpus-check.mts. Boots the full sqlsrc catalog ONCE, then answers one JSON
-// request per stdin line with one JSON response per stdout line ({id, rows} or {id, error}). Split into its own
-// process so the driver can SIGKILL + respawn it on a slow/hung query (a bad plpgsql loop on some obscure carrier
-// must not sink the whole sweep) — see render-corpus-check.mts for why a bare in-process pg.query() isn't safe here.
+// Persistent pglite worker. Boots the full sqlsrc catalog ONCE, then answers one JSON request per stdin line with
+// one JSON response per stdout line ({id, rows} or {id, error}). Split into its own process so the driver can
+// SIGKILL + respawn it on a slow/hung query — pglite ignores statement_timeout, so killing the process is the only
+// real cancellation there is. Driven through pg-worker-channel.ts by render-corpus-check.mts and selfcert.mts.
 import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 import { createInterface } from 'node:readline'
 import { orderSqlsrc } from './sqlsrc-order'
+import { routeNotice } from './debug-env'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const req = createRequire(import.meta.url)
@@ -28,7 +29,7 @@ createInterface({ input: process.stdin }).on('line', async (line) => {
   let msg: any
   try { msg = JSON.parse(line) } catch { return }
   try {
-    const result = await pg.query(msg.sql, msg.params)
+    const result = await pg.query(msg.sql, msg.params, { onNotice: routeNotice })
     process.stdout.write(JSON.stringify({ id: msg.id, rows: result.rows }) + '\n')
   } catch (e: any) {
     process.stdout.write(JSON.stringify({ id: msg.id, error: String(e?.message ?? e) }) + '\n')

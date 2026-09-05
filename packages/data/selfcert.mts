@@ -12,45 +12,37 @@
 //
 //   node --import tsx selfcert.mts            # sweep all collections, report mismatches, exit nonzero on any
 //   node --import tsx selfcert.mts perm       # only collections whose id contains "perm"
-import { readdirSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { createRequire } from 'node:module'
 import debug from 'debug'
-import { orderSqlsrc } from './sqlsrc-order'
-import { debugGucSetSql, routeNotice } from './debug-env'
+import { debugGucSetSql } from './debug-env'
+import { openWorkerChannel, QTimeout } from './pg-worker-channel'
 
 const log = debug('enumeratio:data:selfcert')
-
-const here = dirname(fileURLToPath(import.meta.url))
-const req = createRequire(import.meta.url)
-const { PGlite } = req('@electric-sql/pglite') as typeof import('@electric-sql/pglite')
 
 const CAP_COUNT = 20_000   // largest fiber we enumerate-and-count (the closed-form is checked only up to here)
 const CAP_UNRANK = 300     // terms checked per fiber for element_at-vs-sequential — a recurrence unrank is O(ord), so
                            // this is O(N²) per fiber; 300 terms is plenty to catch a wrong formula
 const NMAX = 8             // sizes swept for a graded collection: 0..NMAX (oversized fibers are skipped, not failed)
-const STMT_TIMEOUT = '8s'  // a pathological fiber is skipped (recorded), not left to hang the sweep
+const STMT_TIMEOUT = '8s'  // belt: honoured by a real Postgres, IGNORED by pglite — see WATCHDOG_MS
+const WATCHDOG_MS = 20_000 // braces: the query runs in a worker process, and a query that outruns this is SIGKILLed.
+                           // pglite does not honour statement_timeout (confirmed by hand), so a combinatorial floor
+                           // scan or a tight plpgsql loop cannot be cancelled any other way — it just runs. Before
+                           // this, ONE such collection stalled the whole sweep silently and the full catalog run
+                           // could never finish: `cyclohedron`'s fiber_count enumerates every dissection of a
+                           // (2n+2)-gon over an unbounded axis. Now that is a printed SKIP, like selfcert-rows'.
 
 const filter = process.argv[2] ?? null
 
-const dir = join(here, 'sqlsrc')
-const files = orderSqlsrc(
-  readdirSync(dir).filter((f) => f.endsWith('.sql')).map((f) => ({ name: f.replace(/\.sql$/, ''), content: readFileSync(join(dir, f), 'utf8') })),
-).map((f) => `${f.name}.sql`)
-
-const pg = new PGlite()
-await pg.waitReady
-for (const f of files) {
-  try { await pg.exec(readFileSync(join(dir, f), 'utf8')) }
-  catch (e: any) { console.error(`\n✗ FAILED applying ${f}\n  ${e.message.split('\n')[0]}\n`); await pg.close(); process.exit(1) }
-}
-
-await pg.exec(`SET statement_timeout = '${STMT_TIMEOUT}'`)
+// Session GUCs do not survive a worker kill, so they are re-applied on every (re)spawn.
 const debugSetSql = debugGucSetSql()   // lift DEBUG (if it names an enumeratio: namespace) into the session GUC
-if (debugSetSql) await pg.exec(debugSetSql)
-log('booted pglite (DEBUG=%s)', process.env.DEBUG ?? '')
-const q = async <T = any,>(sql: string): Promise<T[]> => (await pg.query(sql, [], { onNotice: routeNotice })).rows as T[]
+const channel = await openWorkerChannel({
+  timeoutMs: WATCHDOG_MS,
+  onReady: async (q) => {
+    await q(`SET statement_timeout = '${STMT_TIMEOUT}'`)
+    if (debugSetSql) await q(debugSetSql)
+  },
+})
+log('booted pglite worker (DEBUG=%s)', process.env.DEBUG ?? '')
+const q = channel.q
 const regproc = async (sig: string): Promise<boolean> =>
   !!(await q<{ x: boolean }>(`SELECT to_regprocedure('${sig}') IS NOT NULL AS x`))[0]?.x
 const isFinite_ = (s: string | null) => s != null && s !== 'Infinity' && s !== 'NaN'
@@ -73,6 +65,7 @@ for (const c of cats) {
   process.stderr.write(`  · ${c.id}${hasCount ? ' [count]' : ''}${hasUnrank ? ' [unrank]' : ''}\n`)
   const sizes: (number | null)[] = gradeCount === 0 ? [null] : Array.from({ length: NMAX + 1 }, (_, i) => i)
   let anyChecked = false
+  let timedOut: string | null = null
   const collErrors = new Set<string>()
   for (const n of sizes) {
     const handle = n === null ? `${c.id}()` : `${c.id}(${n})`
@@ -108,16 +101,23 @@ for (const c of cats) {
         }
       }
     } catch (e: any) {
+      if (e instanceof QTimeout) {
+        // The worker was SIGKILLed and respawned. Abandon this collection's remaining sizes rather than paying a
+        // ~7s respawn per size to hit the same wall: one stall is enough to know the accel is unverifiable here.
+        timedOut = `timed out past ${WATCHDOG_MS / 1000}s at ${handle} — accel unverifiable by enumeration`
+        break
+      }
       collErrors.add(e.message.split('\n')[0])   // a degenerate size (e.g. coll(0)) shouldn't cost the larger sizes
     }
   }
-  if (!anyChecked) for (const reason of (collErrors.size ? collErrors : new Set(['no finite fiber within caps'])))
+  if (timedOut) skips.push({ coll: c.id, n: null, reason: timedOut })
+  else if (!anyChecked) for (const reason of (collErrors.size ? collErrors : new Set(['no finite fiber within caps'])))
     skips.push({ coll: c.id, n: null, reason })
 }
 
 console.log(`\nself-certification (accelerated == naive)\n`)
 console.log(`collections with an accel: ${collsWithAccel}   (no accel, skipped: ${collsNoAccel})`)
-console.log(`fiber checks: ${checkedCount} count + ${checkedUnrank} unrank`)
+console.log(`fiber checks: ${checkedCount} count + ${checkedUnrank} unrank   (worker spawns: ${channel.spawns} — one per killed query, plus the first)`)
 if (skips.length) {
   console.log(`\nskipped (${skips.length}):`)
   for (const s of skips) console.log(`  ${s.coll}${s.n != null ? `(${s.n})` : ''} — ${s.reason}`)
@@ -129,5 +129,5 @@ if (mismatches.length) {
   console.log(`\n✓ no mismatches — every accelerated answer agrees with enumeration.`)
 }
 
-await pg.close()
+channel.close()
 process.exit(mismatches.length ? 1 : 0)

@@ -41,63 +41,20 @@
 //
 //   node --import tsx render-corpus-check.mts             # sweep, regenerate sqlsrc/examples.render_corpus.sql
 //   node --import tsx render-corpus-check.mts --report    # sweep + regenerate, but print every mismatch in full
-import { spawn, type ChildProcessByStdio } from 'node:child_process'
-import type { Readable, Writable } from 'node:stream'
-import { createInterface } from 'node:readline'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { openWorkerChannel, QTimeout } from './pg-worker-channel'
 
 const here = dirname(fileURLToPath(import.meta.url))
-const WORKER = join(here, 'render-corpus-worker.mts')
 const OUT_FILE = join(here, 'sqlsrc', 'examples.render_corpus.sql')
 const REQ_TIMEOUT = 8000     // a query that outruns this is killed — see the module comment
 const SCAN_CAP = 500         // ungraded value-scan: how many candidates to walk looking for a match
 const reportFull = process.argv.includes('--report')
 
-// ── hang-proof query channel: a persistent worker, killed + respawned on timeout ──────────────────────────────────
-let child: ChildProcessByStdio<Writable, Readable, null>   // stdio ['pipe','pipe','inherit'] → stdin/stdout piped, stderr inherited (null)
-const pending = new Map<number, { resolve: (v: any) => void; reject: (e: any) => void }>()
-let nextId = 1
-let spawns = 0
-
-async function spawnWorker(): Promise<void> {
-  spawns++
-  child = spawn('node', ['--import', 'tsx', WORKER], { stdio: ['pipe', 'pipe', 'inherit'] })
-  createInterface({ input: child.stdout }).on('line', (line) => {
-    if (!line.trim()) return
-    let msg: any
-    try { msg = JSON.parse(line) } catch { return }
-    if (msg.ready) return
-    const p = pending.get(msg.id)
-    if (p) { pending.delete(msg.id); p.resolve(msg) }
-  })
-  child.on('exit', () => { for (const [, p] of pending) p.reject(new Error('worker exited')); pending.clear() })
-  await new Promise<void>((resolve) => {
-    const onData = (buf: Buffer) => { if (buf.toString().includes('"ready":true')) { child.stdout.off('data', onData); resolve() } }
-    child.stdout.on('data', onData)
-  })
-}
-function killWorker(): void { try { child.kill('SIGKILL') } catch { /* already dead */ } }
-
-class QTimeout extends Error {}
-async function q<T = any>(sql: string, params?: any[]): Promise<T[]> {
-  const id = nextId++
-  const timeout = new Promise<never>((_, reject) => setTimeout(() => reject(new QTimeout('query timeout')), REQ_TIMEOUT))
-  const request = new Promise<any>((resolve, reject) => { pending.set(id, { resolve, reject }) })
-  child.stdin.write(JSON.stringify({ id, sql, params }) + '\n')
-  try {
-    const msg = await Promise.race([request, timeout])
-    if (msg.error) throw new Error(msg.error)
-    return msg.rows as T[]
-  } catch (e) {
-    if (e instanceof QTimeout) { pending.delete(id); killWorker(); await spawnWorker() }
-    throw e
-  }
-}
-
 console.log('booting worker (applying full sqlsrc)...')
-await spawnWorker()
+const channel = await openWorkerChannel({ timeoutMs: REQ_TIMEOUT })
+const q = channel.q
 
 // ── family_path → ordered axis VALUES (names don't matter — collection functions take grades positionally, per
 // base_catalog's own contract: "size = grade 1, then the rest of the chain"). Grammar, reverse-engineered from the
@@ -195,9 +152,9 @@ for (const r of rows) {
   }
 }
 
-killWorker()
+channel.close()
 
-console.log(`\nwired ${wired.length} passing assertions + ${slowVerified} slow-path passes (verified, not wired); ${mismatches.length} mismatches; ${unresolved} unresolved (${timeouts} of those timed out); ${spawns} worker spawn(s)`)
+console.log(`\nwired ${wired.length} passing assertions + ${slowVerified} slow-path passes (verified, not wired); ${mismatches.length} mismatches; ${unresolved} unresolved (${timeouts} of those timed out); ${channel.spawns} worker spawn(s)`)
 if (mismatches.length) {
   console.log(reportFull ? '\n--- mismatches ---' : '\n--- mismatches (first 30; pass --report for all) ---')
   for (const m of mismatches.slice(0, reportFull ? undefined : 30)) {
