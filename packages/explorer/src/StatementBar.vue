@@ -78,9 +78,12 @@ const havingChips = computed<Pred[] | null>(() => parsePreds(q.value.having ?? '
 const chipsDisabled = (chips: Pred[] | null) => (o: { value: Face }) => o.value === 'chips' && chips === null
 function setWhereChips(ps: Pred[]) { q.value = { ...q.value, where: predsToSql(ps) || undefined } }
 function setHavingChips(ps: Pred[]) { q.value = { ...q.value, having: predsToSql(ps) || undefined } }
-// open in chips when the clause is chip-shaped (a linked URL with a plain conjunction reads as chips). Settled ONCE,
-// on the first table — the owner may already have one by the time this mounts, so `immediate` rather than a null→set edge.
+// open in chips when the clause is chip-shaped (a linked URL with a plain conjunction reads as chips). Settled ONCE
+// per collection, on its first table — the owner may already have one by the time this mounts, so `immediate` rather
+// than a null→set edge. `pin.coll` changing means the owner navigated to a different collection (#208): re-settle,
+// or a chip-shaped clause there stays stuck showing whatever face the PREVIOUS collection last settled on.
 let facesSettled = false
+watch(() => props.pin?.coll, () => { facesSettled = false })
 watch(() => props.table, (t) => {
   if (!t || facesSettled) return
   facesSettled = true
