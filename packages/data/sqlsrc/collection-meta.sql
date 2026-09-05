@@ -184,6 +184,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('k_lyndon_words',              'k-ary Lyndon Words',          'Aperiodic words over base letters, lex-least in their rotation class ((1/n)Σμ(d)baseⁿ/ᵈ).'),
   ('binary_words',                'Binary Words',                'Strings over {0,1}.'),
   ('hyperbinary_representations',  'Hyperbinary Representations', 'Base-2 numerals of n over the widened digit alphabet {0,1,2}; counted by fusc(n+1).'),
+  ('hypernumerary',                'Hypernumerary',               'Base-b numerals of n over a widened digit alphabet {0..b−1+k} — the general non-unique numeral family.'),
   ('binary_palindromes',          'Binary Palindromes',          'Binary words that read the same reversed — 2^⌈n/2⌉.'),
   ('primitive_binary_strings',    'Primitive Binary Strings',    'Aperiodic binary words (no proper period) — A027375; the Lyndon-word representatives.'),
   ('lyndon_words',                'Lyndon Words',                'Binary words strictly less than all their rotations — the primitive-necklace reps (A001037).'),
