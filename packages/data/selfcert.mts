@@ -55,14 +55,25 @@ let checkedCount = 0, checkedUnrank = 0, collsWithAccel = 0, collsNoAccel = 0
 
 const cats = await q<{ id: string; grades: string }>(`SELECT id, grades::text AS grades FROM base_catalog ORDER BY id`)
 
+// Progress chatter goes to stderr as the sweep runs, and it earns its keep: each line is written WITHOUT its
+// terminator until the collection finishes, so the tail of the log always names the collection currently being
+// worked and how far in we are. Before this a stall looked exactly like slow progress — the whole sweep printed
+// a bare name per collection — and one wall (cyclohedron) read as "the catalog is just slow" for an hour.
+const started = Date.now()
+const secs = (ms: number): string => `${(ms / 1000).toFixed(1)}s`
+let idx = 0
+
 for (const c of cats) {
+  idx++
   if (filter && !c.id.includes(filter)) continue
   const gradeCount = (c.grades.replace(/^\{|\}$/g, '').match(/[^,]+/g) ?? []).length
   const hasCount = await regproc(`fiber_count(${c.id}_fiber)`)
   const hasUnrank = await regproc(`fiber_unrank(${c.id}_fiber, rank_index)`)
   if (!hasCount && !hasUnrank) { collsNoAccel++; continue }
   collsWithAccel++
-  process.stderr.write(`  · ${c.id}${hasCount ? ' [count]' : ''}${hasUnrank ? ' [unrank]' : ''}\n`)
+  const tColl = Date.now()
+  const checks0 = checkedCount + checkedUnrank
+  process.stderr.write(`  · [${String(idx).padStart(3)}/${cats.length}] ${c.id.padEnd(34)}${(hasCount ? '[count]' : '').padEnd(8)}${(hasUnrank ? '[unrank]' : '').padEnd(9)}`)
   const sizes: (number | null)[] = gradeCount === 0 ? [null] : Array.from({ length: NMAX + 1 }, (_, i) => i)
   let anyChecked = false
   let timedOut: string | null = null
@@ -110,6 +121,10 @@ for (const c of cats) {
       collErrors.add(e.message.split('\n')[0])   // a degenerate size (e.g. coll(0)) shouldn't cost the larger sizes
     }
   }
+  const took = Date.now() - tColl
+  process.stderr.write(`${String(checkedCount + checkedUnrank - checks0).padStart(5)} checks  ${secs(took).padStart(7)}`
+    + `${took > 10_000 ? '   ← slow' : ''}${timedOut ? '   ← TIMED OUT, worker respawned' : ''}`
+    + `   [${secs(Date.now() - started)} elapsed]\n`)
   if (timedOut) skips.push({ coll: c.id, n: null, reason: timedOut })
   else if (!anyChecked) for (const reason of (collErrors.size ? collErrors : new Set(['no finite fiber within caps'])))
     skips.push({ coll: c.id, n: null, reason })
@@ -118,6 +133,7 @@ for (const c of cats) {
 console.log(`\nself-certification (accelerated == naive)\n`)
 console.log(`collections with an accel: ${collsWithAccel}   (no accel, skipped: ${collsNoAccel})`)
 console.log(`fiber checks: ${checkedCount} count + ${checkedUnrank} unrank   (worker spawns: ${channel.spawns} — one per killed query, plus the first)`)
+console.log(`swept in ${secs(Date.now() - started)}`)
 if (skips.length) {
   console.log(`\nskipped (${skips.length}):`)
   for (const s of skips) console.log(`  ${s.coll}${s.n != null ? `(${s.n})` : ''} — ${s.reason}`)
