@@ -44,6 +44,9 @@ CREATE FUNCTION fiber_symbol(f surjections_fiber) RETURNS text LANGUAGE sql IMMU
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('surjections', 'surjection');
 INSERT INTO base_grade VALUES ('surjections', 1, 'n', NULL, NULL);
+-- direct unrank: identical words/order to set_compositions — reuse its k-block search + surjective-word unrank.
+CREATE FUNCTION fiber_unrank(f surjections_fiber, rank rank_index) RETURNS surjection LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(set_composition_unrank_word((f).n::int, rank::bigint))::surjection $fu$;
 SELECT base_realize('surjections');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -81,3 +84,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            contains(surjections(3), ROW(ARRAY[1,3])::surjection)::text $q$),
   ('surjections','the <@ operator: {2,1,2} <@ surjections(3)','eq','true','operator wrapper over contains',$q$
     SELECT (ROW(ARRAY[2,1,2])::surjection <@ surjections(3))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('surjections','fiber_unrank(surjections(4), 0..74) are all members (accel floor)','eq','true','shared word unrank lands inside Fubini(4)=75 for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(surjections(4)) f), ord::rank_index) <@ surjections(4))::text
+      FROM generate_series(0, cardinality(surjections(4))::int - 1) ord $q$);

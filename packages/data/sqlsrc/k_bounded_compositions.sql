@@ -42,6 +42,27 @@ INSERT INTO base_grade VALUES
   ('k_bounded_compositions', 1, 'n', NULL, NULL),
   ('k_bounded_compositions', 2, 'max_parts', 'g1', 'g1');
 CREATE FUNCTION fiber_symbol(f k_bounded_compositions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'C' || to_unicode_subscript((f).max_parts) || '(' || (f).n::int || ')' $$;   -- corpus symbol
+
+-- direct unrank: the floor is masks 0..2^(n-1)-1 filtered to popcount(mask) <= max_parts-1, in mask (numeric)
+-- ascending order — a standard MSB-to-LSB digit DP. count_le(bits,budget) = #masks of `bits` bits with popcount
+-- <= budget = Σ_{j=0}^{min(bits,budget)} C(bits,j); at each bit (MSB first) try 0 before 1 (0 is numerically
+-- smaller), spending one unit of budget when a bit is set.
+CREATE FUNCTION k_bounded_composition_count_le(bits int, budget int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT CASE WHEN budget < 0 THEN 0::numeric
+    ELSE coalesce((SELECT sum(binomial(bits, j)) FROM generate_series(0, least(bits, budget)) j), 0) END $$;
+CREATE FUNCTION k_bounded_composition_unrank_mask(len int, budget int, ord bigint) RETURNS bigint LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE mask bigint := 0; x numeric := ord; i int; b int := budget; cnt0 numeric;
+  BEGIN
+    FOR i IN REVERSE (len-1)..0 LOOP
+      cnt0 := k_bounded_composition_count_le(i, b);            -- completions if bit i = 0 (budget unchanged)
+      IF x < cnt0 THEN NULL;                                    -- bit i = 0
+      ELSE x := x - cnt0; mask := mask | (1::bigint << i); b := b - 1; END IF;   -- bit i = 1
+    END LOOP;
+    RETURN mask;
+  END $$;
+CREATE FUNCTION fiber_unrank(f k_bounded_compositions_fiber, rank rank_index) RETURNS composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT composition_from_mask((f).n::int,
+    k_bounded_composition_unrank_mask(greatest((f).n::int - 1, 0), (f).max_parts::int - 1, rank::bigint)) $fu$;
 SELECT base_realize('k_bounded_compositions');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -67,3 +88,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[1,3])::composition <@ k_bounded_compositions(4,2))::text || '|' ||
            (ROW(ARRAY[1,1,2])::composition <@ k_bounded_compositions(4,2))::text || '|' ||
            (ROW(ARRAY[4])::composition <@ k_bounded_compositions(4,2))::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('k_bounded_compositions','fiber_unrank(k_bounded_compositions(6,3), 0..) are all members (accel floor)','eq','true','the popcount-bounded mask-unrank digit DP lands inside the fiber for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(k_bounded_compositions(6,3)) f), ord::rank_index) <@ k_bounded_compositions(6,3))::text
+      FROM generate_series(0, cardinality(k_bounded_compositions(6,3))::int - 1) ord $q$);

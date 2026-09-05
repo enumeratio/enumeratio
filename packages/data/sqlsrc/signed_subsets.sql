@@ -32,6 +32,37 @@ CREATE FUNCTION contains_in_fiber(f signed_subsets_fiber, v signed_subset) RETUR
 INSERT INTO base_collection VALUES ('signed_subsets', 'signed_subset');
 INSERT INTO base_grade VALUES ('signed_subsets', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f signed_subsets_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '3^[' || (f).n::int || ']' $$;   -- corpus symbol
+
+-- direct unrank — the floor's ORDER BY coords sorts variable-length int[] arrays by pg's array comparison (shorter
+-- is less when it's a genuine prefix; otherwise the first differing element decides). For axes m..n, let S(m) be
+-- the (recursively defined) sorted coordinate-array set built from axes m..n: S(n+1) = {[]}; S(m) = S(m+1) (axis m
+-- absent) ∪ {[-m]++s : s∈S(m+1)} ∪ {[+m]++s : s∈S(m+1)}. Since every element of S(m+1) either is [] or starts with
+-- some ±j, j>m (so |±j| > |±m| for the ± m branches), a short comparison argument shows S(m) sorts as 5 CONTIGUOUS
+-- blocks: [the empty array] < [elements of S(m+1) starting negative] < [-m branch, ALL of it] < [+m branch, ALL of
+-- it] < [elements of S(m+1) starting positive] — i.e. E(m) < Neg(m) < (-m)+S(m+1) < (+m)+S(m+1) < Pos(m), where
+-- Neg/Pos(m) are themselves the (recursively) first-entry-negative/positive halves of S(m), size (3^(n-m+1)-1)/2
+-- each by symmetry. Unranking descends this 5-way split axis by axis (verified by hand against n=2's 9-element order).
+CREATE FUNCTION signed_subset_unrank(n int, m int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE sizeS numeric; sizeNeg numeric; sizeNextNeg numeric; sizeNextS numeric; r numeric := ord;
+  BEGIN
+    IF m > n THEN RETURN ARRAY[]::int[]; END IF;
+    sizeS := trunc(3::numeric ^ (n - m + 1));
+    sizeNeg := (sizeS - 1) / 2;
+    IF r = 0 THEN RETURN ARRAY[]::int[]; END IF;                        -- E(m): the empty array
+    r := r - 1;
+    sizeNextS := trunc(3::numeric ^ (n - m));                           -- |S(m+1)|
+    sizeNextNeg := (sizeNextS - 1) / 2;                                 -- |Neg(m+1)|
+    IF r < sizeNeg THEN                                                -- Neg(m) = Neg(m+1) ++ ((-m)+S(m+1))
+      IF r < sizeNextNeg THEN RETURN signed_subset_unrank(n, m + 1, (r + 1)::bigint);            -- Neg(m+1)
+      ELSE RETURN ARRAY[-m] || signed_subset_unrank(n, m + 1, (r - sizeNextNeg)::bigint); END IF; -- (-m)+S(m+1)
+    ELSE                                                                -- Pos(m) = ((+m)+S(m+1)) ++ Pos(m+1)
+      r := r - sizeNeg;
+      IF r < sizeNextS THEN RETURN ARRAY[m] || signed_subset_unrank(n, m + 1, r::bigint);         -- (+m)+S(m+1)
+      ELSE RETURN signed_subset_unrank(n, m + 1, (1 + sizeNextNeg + (r - sizeNextS))::bigint); END IF; -- Pos(m+1)
+    END IF;
+  END $$;
+CREATE FUNCTION fiber_unrank(f signed_subsets_fiber, rank rank_index) RETURNS signed_subset LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(signed_subset_unrank((f).n::int, 1, rank::bigint), (f).n::int)::signed_subset $fu$;
 SELECT base_realize('signed_subsets');
 
 -- ── cross-polytope realization ───────────────────────────────────────────────────────────────────────
@@ -77,3 +108,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT contains(signed_subsets(3), ROW(ARRAY[1,-2], 3)::signed_subset)::text || '|' ||
            contains(signed_subsets(3), ROW(ARRAY[1,4], 3)::signed_subset)::text || '|' ||
            contains(signed_subsets(3), ROW(ARRAY[2,1], 3)::signed_subset)::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('signed_subsets','fiber_unrank(signed_subsets(3), 0..26) are all members (accel floor)','eq','true','the 5-way recursive split unrank lands inside 3^3=27 for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(signed_subsets(3)) f), ord::rank_index) <@ signed_subsets(3))::text
+      FROM generate_series(0, cardinality(signed_subsets(3))::int - 1) ord $q$);
