@@ -166,6 +166,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   -- ── trees ───────────────────────────────────────────────────────────────────────────────────────────────────
   ('binary_trees',                'Binary Trees',                'Rooted trees where each node has ≤ 2 ordered children.'),
   ('ordered_trees',               'Ordered Trees',               'Rooted plane trees.'),
+  ('rooted_unlabeled_trees',      'Rooted Unlabeled Trees',      'Rooted trees on n unlabeled nodes, up to isomorphism — children unordered (A000081).'),
   ('plane_trees',                 'Plane Trees',                 'Rooted plane trees on n nodes, carried by their pre-order child-count word — Catalan(n−1).'),
   ('labeled_trees',               'Labeled Trees',               'Trees on n labeled vertices (Cayley: nⁿ⁻²).'),
   ('labeled_forests',             'Labeled Forests',             'Rooted forests on n labeled vertices — (n+1)ⁿ⁻¹ via the super-root tree.'),

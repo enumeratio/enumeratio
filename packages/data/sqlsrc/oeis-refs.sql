@@ -96,6 +96,7 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta)
   ('collection','prufer_sequences','oeis','A000272','https://oeis.org/A000272',''),
   ('collection','restricted_growth_strings','oeis','A000110','https://oeis.org/A000110',''),
   ('collection','rook_placements','oeis','A002720','https://oeis.org/A002720',''),
+  ('collection','rooted_unlabeled_trees','oeis','A000081','https://oeis.org/A000081',''),
   ('collection','safe_primes','oeis','A005385','https://oeis.org/A005385',''),
   ('collection','schroeder_numbers','oeis','A006318','https://oeis.org/A006318',''),
   ('collection','schroeder_paths','oeis','A006318','https://oeis.org/A006318',''),
