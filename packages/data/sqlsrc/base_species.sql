@@ -325,9 +325,11 @@ CREATE TABLE base_species (
   graded     boolean NOT NULL DEFAULT false,  -- expr carries a secondary-grade parameter (E_k); checked per k over n
   unlabelled boolean NOT NULL DEFAULT false,  -- expr is an OGF fixed point/product (solved by ogf_solve, not species_eval)
   implicit   boolean NOT NULL DEFAULT false,  -- expr is a LABELLED fixed point Y = F(X,Y) (solved by species_solve)
-  solve_for  text                             -- if set (implicit only): Y solves THIS equation, then `expr` (in Y) is
+  solve_for  text,                            -- if set (implicit only): Y solves THIS equation, then `expr` (in Y) is
                                               -- evaluated — for families that COMPOSE over a fixed point, e.g. endofunctions
+  pack       text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_species_pack_guard BEFORE UPDATE OR DELETE ON base_species FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- ungraded: species_eval(expr) IS the cardinality sequence over the single size axis.
 CREATE FUNCTION base_species_check(coll text, expr text, upto int) RETURNS boolean LANGUAGE plpgsql STABLE AS $$

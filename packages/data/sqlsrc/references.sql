@@ -19,8 +19,10 @@ CREATE TABLE base_reference (
   --   aggregate  — a cardinality-only coincidence (identity's .cardinality() matches, not the same object)
   --   conceptual — a soft/grounding association (e.g. wikipedia), not a structural claim
   relation     text NOT NULL DEFAULT 'isomorphic' CHECK (relation IN ('isomorphic','partial','aggregate','conceptual')),
-  PRIMARY KEY (subject_kind, subject, system, identity)
+  PRIMARY KEY (subject_kind, subject, system, identity),
+  pack         text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_reference_pack_guard BEFORE UPDATE OR DELETE ON base_reference FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- constructions + carrier + the borrowed ops (with urls — the ones we lean on most)
 INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta) VALUES

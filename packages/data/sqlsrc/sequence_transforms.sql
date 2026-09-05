@@ -19,8 +19,10 @@ CREATE TABLE base_sequence_transform (
   family      text NOT NULL CHECK (family IN ('window', 'triangle', 'multiplicative')),
   indexing    int  NOT NULL CHECK (indexing IN (0, 1)),   -- the base index the transform reads/produces from
   inverse     text REFERENCES base_sequence_transform,    -- the inverse transform, when classical (set below)
-  description text NOT NULL
+  description text NOT NULL,
+  pack        text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_sequence_transform_pack_guard BEFORE UPDATE OR DELETE ON base_sequence_transform FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 INSERT INTO base_sequence_transform (id, title, family, indexing, description) VALUES
   ('partial_sums',      'Partial sums',       'window',         0, 'b_m = Σ_{i≤m} a_i — the prefix-sum (OEIS PARTIAL-SUMS / the INVERT-less accumulation)'),
   ('first_differences', 'First differences',  'window',         0, 'b_m = a_m − a_{m−1} (b_0 = a_0) — the inverse of partial sums'),

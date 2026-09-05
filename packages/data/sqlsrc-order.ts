@@ -6,8 +6,13 @@
 // depends on every collection with no list to maintain. The single bootstrap.sql (the irreducible seed) always loads
 // first; every other file implicitly follows it. Order is a stable topological sort (Kahn, ties broken lexically) over
 // the resolved edges. Used by run.mts (disk) and index.ts (the Vite bundle) — one ordering, one source of truth.
+//
+// `orderPacks` (core/packs split, #283) is the pack-scoped variant: a pack's own files are ordered by the same
+// Kahn pass, but `requires-tag` expands only over that pack's OWN files, and `requires: x` satisfied by a file in
+// the pack's dependency closure (already emitted) contributes no edge — see orderFiles below.
 
 export type SqlFile = { name: string; content: string }   // name = basename without .sql (e.g. 'subsets', 'bootstrap')
+export type Pack = { name: string; requiresPack: string[]; files: SqlFile[] }
 
 const BOOTSTRAP = 'bootstrap'
 
@@ -28,7 +33,15 @@ export function parseProvides(content: string): string[] {
   return explicit
 }
 
-export function orderSqlsrc(files: SqlFile[]): SqlFile[] {
+// Shared Kahn toposort over one file set. `externals` (default empty) are basenames already loaded elsewhere — a
+// `requires: x` on an external is satisfied with no edge; `requires-tag` still expands only over `files` (its own
+// set), never `externals`. `packName` + `ownerOf` are only used to shape the "owned by pack" error for orderPacks;
+// orderSqlsrc's plain-file call omits them and gets today's "requires unknown" wording unchanged.
+function orderFiles(
+  files: SqlFile[],
+  opts: { externals?: Set<string>; packName?: string; ownerOf?: Map<string, string> } = {},
+): SqlFile[] {
+  const externals = opts.externals ?? new Set<string>()
   const names = new Set(files.map(f => f.name))
   // tag → the file names that provide it (a file also implicitly provides its own name, handled by name-requires)
   const providers = new Map<string, Set<string>>()
@@ -45,9 +58,22 @@ export function orderSqlsrc(files: SqlFile[]): SqlFile[] {
       for (const p of provs) if (p !== f.name) req.push(p)
     }
     const reqSet = [...new Set(req)]
-    for (const d of reqSet) if (!names.has(d)) throw new Error(`sqlsrc "${f.name}" requires unknown "${d}"`)
-    if (f.name !== BOOTSTRAP && names.has(BOOTSTRAP) && !reqSet.includes(BOOTSTRAP)) reqSet.push(BOOTSTRAP)   // implicit seed
-    deps.set(f.name, reqSet)
+    const ownReq: string[] = []
+    for (const d of reqSet) {
+      if (externals.has(d)) continue                            // already loaded by a required pack — no edge
+      if (!names.has(d)) {
+        const owner = opts.ownerOf?.get(d)
+        if (owner) {
+          throw new Error(
+            `pack "${opts.packName}" requires "${d}" owned by pack "${owner}" — declare \`requires-pack: ${owner}\``,
+          )
+        }
+        throw new Error(`sqlsrc "${f.name}" requires unknown "${d}"`)
+      }
+      ownReq.push(d)
+    }
+    if (f.name !== BOOTSTRAP && names.has(BOOTSTRAP) && !ownReq.includes(BOOTSTRAP)) ownReq.push(BOOTSTRAP)   // implicit seed
+    deps.set(f.name, ownReq)
   }
   const indeg = new Map([...names].map(n => [n, 0] as [string, number]))
   const adj = new Map([...names].map(n => [n, [] as string[]]))
@@ -62,4 +88,67 @@ export function orderSqlsrc(files: SqlFile[]): SqlFile[] {
   if (out.length !== names.size) throw new Error(`sqlsrc dependency cycle among: ${[...names].filter(n => !out.includes(n)).join(', ')}`)
   const byName = new Map(files.map(f => [f.name, f]))
   return out.map(n => byName.get(n)!)
+}
+
+export function orderSqlsrc(files: SqlFile[]): SqlFile[] {
+  return orderFiles(files)
+}
+
+// Pack-scoped ordering (#283 phase 1.1). `core` is always first and the implicit dependency of every pack (its
+// files are always in every pack's externals). Packs are toposorted by `requiresPack`, stable + lexical tie-break
+// like the file sort within a pack. For each pack (in that order) its own files are ordered by `orderFiles` with
+// `externals` = every basename in the pack's transitive requiresPack closure (core included) — so `requires-tag`
+// on a pack file expands over the pack's own files only, never reaching into an external.
+export function orderPacks(core: Pack, packs: Pack[]): SqlFile[] {
+  const packMap = new Map<string, Pack>([[core.name, core], ...packs.map(p => [p.name, p] as const)])
+
+  // owner map for the "owned by pack" error — every file basename (core + all packs) → its owning pack name.
+  const ownerOf = new Map<string, string>()
+  for (const p of packMap.values()) for (const f of p.files) ownerOf.set(f.name, p.name)
+
+  // toposort the pack graph (core excluded — it's always first, not a node to schedule).
+  const packNames = packs.map(p => p.name)
+  const indeg = new Map(packNames.map(n => [n, 0] as [string, number]))
+  const adj = new Map(packNames.map(n => [n, [] as string[]]))
+  for (const p of packs) {
+    for (const r of new Set(p.requiresPack)) {
+      if (r === core.name) continue                              // core is implicit, not a graph edge to schedule
+      if (!packMap.has(r)) throw new Error(`pack "${p.name}" requires-pack unknown "${r}"`)
+      adj.get(r)!.push(p.name)
+      indeg.set(p.name, indeg.get(p.name)! + 1)
+    }
+  }
+  const ready = packNames.filter(n => indeg.get(n) === 0).sort()
+  const packOrder: string[] = []
+  while (ready.length) {
+    const n = ready.shift()!
+    packOrder.push(n)
+    for (const m of adj.get(n)!.sort()) { indeg.set(m, indeg.get(m)! - 1); if (indeg.get(m) === 0) { ready.push(m); ready.sort() } }
+  }
+  if (packOrder.length !== packNames.length) {
+    throw new Error(`pack dependency cycle among: ${packNames.filter(n => !packOrder.includes(n)).join(', ')}`)
+  }
+
+  // transitive closure of files reachable via requiresPack (core always included) — the pack's `externals`.
+  function closureFiles(packName: string): Set<string> {
+    const seenPacks = new Set<string>([core.name])
+    const stack = [...packMap.get(packName)!.requiresPack]
+    while (stack.length) {
+      const n = stack.pop()!
+      if (seenPacks.has(n)) continue
+      seenPacks.add(n)
+      const p = packMap.get(n)
+      if (p) stack.push(...p.requiresPack)
+    }
+    const files = new Set<string>()
+    for (const pn of seenPacks) for (const f of packMap.get(pn)!.files) files.add(f.name)
+    return files
+  }
+
+  const out: SqlFile[] = [...orderFiles(core.files, { packName: core.name, ownerOf })]
+  for (const packName of packOrder) {
+    const pack = packMap.get(packName)!
+    out.push(...orderFiles(pack.files, { externals: closureFiles(packName), packName, ownerOf }))
+  }
+  return out
 }

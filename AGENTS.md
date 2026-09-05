@@ -61,6 +61,33 @@ not under `docs/` (public docs site) and not committed to this repo.
   a runaway surfaces as exit 124, not a silent hang (a tight plpgsql loop ignores `statement_timeout`). The cli
   `worker.test.ts` (worker_threads) is fragile — heavy per-query work in the worker tips its teardown into a hang.
 
+## Codemods — how wide mechanical changes land
+
+Parallel sessions share this checkout, so a refactor that relocates or rewrites many files strands every live
+branch at once. The rule: **a wide mechanical change ships AS a codemod**, not as a one-shot pass. The same script
+performs the refactor and re-normalizes a branch that predates it, so catching up is one command instead of N
+hand-resolved conflicts.
+
+A codemod here has three modes — apply (default), `--dry-run`, and `--check` (exit 1 listing anything out of
+place) — is idempotent, reads its intent from a checked-in declarative map rather than hardcoding the change, and
+uses `git mv` so rename detection survives and peers get auto-resolvable rename-vs-modify conflicts. `--check`
+does triple duty: CI lint, "does my branch need re-normalizing?" probe, and the codemod's own acceptance test.
+A staged refactor advances by editing the map's "already migrated" list, so both codemod and lint stay correct at
+every intermediate commit.
+
+**If you are on a branch and `main` has moved:** rebase, run the codemod, run `--check`, re-run your gate. If
+`--check` flags a file you added, fix its classification in the map — don't hand-move the file.
+
+Retire a codemod once no branch that predates it is still alive:
+`comm -23 <(git branch --no-merged main --format='%(refname:short)'|sort) <(git branch --contains <sha> --format='%(refname:short)'|sort)`
+— empty output means every surviving branch already has it. Part of the periodic hygiene sweep, not a per-refactor call.
+
+**Live now — the core/packs split (#283):** the catalog is splitting into `sqlsrc/` (core) + `packs/<pack>/`
+(opt-in domain clusters), file→pack mapped by `packages/data/pack-map.ts`; `EXTRACTED_PACKS` there is the migrated
+list. Codemod: `node --import tsx packages/data/pack-migrate.mts` (moves files, tags `-- layer: glyph`, writes and
+reconciles each pack's `_pack.sql`). Companion lint `pack-lint.mts` reports cross-pack `requires:` edges;
+`pack-additivity.mts` proves a pack only ever adds rows.
+
 ## Common gotchas (read before starting — these come up every time)
 
 - **A fresh worktree has NO `node_modules`.** Run `pnpm install` once before any `run.mts` / build. (This is the

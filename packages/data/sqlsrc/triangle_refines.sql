@@ -11,8 +11,10 @@ CREATE TABLE base_triangle_refines (
   triangle text NOT NULL REFERENCES base_triangle,
   parent   text NOT NULL REFERENCES base_collection,
   stat_id  text NOT NULL,                                        -- a statistic of the parent (base_stat_resolved)
-  PRIMARY KEY (triangle, parent, stat_id)
+  PRIMARY KEY (triangle, parent, stat_id),
+  pack     text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_triangle_refines_pack_guard BEFORE UPDATE OR DELETE ON base_triangle_refines FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 INSERT INTO base_triangle_refines (triangle, parent, stat_id) VALUES
   ('k_subsets',              'subsets',         'cardinality'),          -- Pascal: subsets of [n] by size
   ('k_subsets',              'boolean_algebra', 'cardinality'),          -- the same powerset as a lattice

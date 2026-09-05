@@ -20,7 +20,9 @@
 -- generalize, but nothing today needs it to. Only meaningful for an INHERITED stat; suppressing a collection's
 -- own stat_id would just be deleting the base_stat row instead.
 CREATE TABLE base_stat_suppressed (collection text NOT NULL REFERENCES base_collection, stat_id text NOT NULL,
-                                    reason text NOT NULL, PRIMARY KEY (collection, stat_id));
+                                    reason text NOT NULL, PRIMARY KEY (collection, stat_id),
+                                    pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_stat_suppressed_pack_guard BEFORE UPDATE OR DELETE ON base_stat_suppressed FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 CREATE VIEW base_stat_resolved AS
   SELECT DISTINCT ON (c.id, s.stat_id)

@@ -19,8 +19,10 @@ CREATE TABLE base_engine_grant (
   scope        text NOT NULL,
   mode         text NOT NULL DEFAULT 'permissive' CHECK (mode IN ('permissive','restrictive')),
   note         text,
-  PRIMARY KEY (engine, column_group, scope_kind, scope, mode)
+  PRIMARY KEY (engine, column_group, scope_kind, scope, mode),
+  pack         text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_engine_grant_pack_guard BEFORE UPDATE OR DELETE ON base_engine_grant FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 INSERT INTO base_engine (id, description) VALUES
   ('pg',   'the pure-SQL core over pglite — the oracle engine every collection is defined against'),

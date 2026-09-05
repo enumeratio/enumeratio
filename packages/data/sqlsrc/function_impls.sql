@@ -32,8 +32,10 @@ CREATE TABLE base_function_impl (
   representation text NOT NULL CHECK (representation IN ('numeric','bigint','float64','i64','text')),
   cost           numeric,              -- NULL = unranked
   note           text,
-  PRIMARY KEY (function, engine, impl_ref, arg_types)
+  PRIMARY KEY (function, engine, impl_ref, arg_types),
+  pack           text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_function_impl_pack_guard BEFORE UPDATE OR DELETE ON base_function_impl FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- 59 impl rows over 28 functions: 29 pg rows (one per identity with a live SQL twin — factorial and binomial
 -- contribute a second row each at representation 'bigint') + 30 ts rows (every packages/math export curated

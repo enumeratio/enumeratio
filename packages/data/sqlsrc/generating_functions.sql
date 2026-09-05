@@ -158,9 +158,11 @@ CREATE TABLE base_generating_function (
   builder    text NOT NULL,        -- the gf_* function producing numeric[] coefficients from the grade(s)
   arity      int  NOT NULL DEFAULT 1,  -- how many grade axes the builder takes (1: n; 2: n,k — a doubly-graded family)
   note       text,
-  findstat   text                  -- the FindStat St-id of the statistic, where one exists (else NULL, never fabricated)
+  findstat   text,                 -- the FindStat St-id of the statistic, where one exists (else NULL, never fabricated)
+  pack       text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
 CREATE UNIQUE INDEX base_generating_function_pk ON base_generating_function (collection, coalesce(stat_id, ''));
+CREATE TRIGGER base_generating_function_pack_guard BEFORE UPDATE OR DELETE ON base_generating_function FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 INSERT INTO base_generating_function (collection, stat_id, kind, builder, arity, note, findstat) VALUES
   ('permutations',         'inversions',   'q_polynomial', 'gf_qfactorial',       1, '[n]_q! — the Mahonian distribution', 'St000018'),

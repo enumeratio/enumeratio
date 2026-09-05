@@ -27,8 +27,10 @@
 CREATE TABLE base_function (
   id          text PRIMARY KEY,        -- curated identity slug, e.g. 'catalan_number', 'stirling1', 'lcm'
   title       text,
-  description text NOT NULL
+  description text NOT NULL,
+  pack        text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
+CREATE TRIGGER base_function_pack_guard BEFORE UPDATE OR DELETE ON base_function FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- base_function_attribute: named FUNCTION-level capabilities, mirroring base_trait's shape (id/title/description/
 -- implies) rather than base_structure.axioms text[] (unstructured strings nothing reads — confirmed zero

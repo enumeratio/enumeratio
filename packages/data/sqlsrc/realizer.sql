@@ -10,7 +10,9 @@
 -- a deprecated rename left resolvable), not a distinct sibling that merely shares math with it. NULL for every
 -- ordinarily-realized collection. See base_alias below, right after base_realize.
 CREATE TABLE base_collection (id text PRIMARY KEY, carrier text NOT NULL, unbounded boolean NOT NULL DEFAULT false,
-                              alias_of text REFERENCES base_collection);
+                              alias_of text REFERENCES base_collection,
+                              pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_collection_pack_guard BEFORE UPDATE OR DELETE ON base_collection FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 CREATE TABLE base_grade (collection text NOT NULL REFERENCES base_collection, pos int NOT NULL, name text NOT NULL,
                          lo_expr text, hi_expr text, PRIMARY KEY (collection, pos));
 -- base_collection_parent: the SPECIALIZATION edge of the collection family tree — a base_restrict child records the
@@ -120,7 +122,9 @@ CREATE FUNCTION notation(o omega_ordinal) RETURNS text LANGUAGE plpgsql IMMUTABL
 -- FindStat sense). value_fn is a <fn>(<carrier>) RETURNS numeric/int the collection file defines; the client
 -- projects it as a column via value_fn((element).value). stat_id is the user-facing name (e.g. 'inversions').
 CREATE TABLE base_stat (collection text NOT NULL REFERENCES base_collection, stat_id text NOT NULL,
-                        value_fn text NOT NULL, title text, codomain text, PRIMARY KEY (collection, stat_id));
+                        value_fn text NOT NULL, title text, codomain text, PRIMARY KEY (collection, stat_id),
+                        pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_stat_pack_guard BEFORE UPDATE OR DELETE ON base_stat FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- base_repr: the representations registry — named alternate renderings of a collection's elements (permutation
 -- one-line vs cycle notation, set partition RGS vs blocks, Dyck word vs parens). render_fn is a <fn>(<carrier>)
@@ -168,7 +172,9 @@ CREATE TABLE base_map (collection text NOT NULL REFERENCES base_collection, map_
                        mapping_fn text NOT NULL, codomain text NOT NULL, title text, findstat text,
                        scope text NOT NULL DEFAULT 'carrier' CHECK (scope IN ('carrier','collection')),
                        inverse text, is_bijection boolean NOT NULL DEFAULT false, is_order_iso boolean NOT NULL DEFAULT false,
-                       PRIMARY KEY (collection, map_id));
+                       PRIMARY KEY (collection, map_id),
+                       pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_map_pack_guard BEFORE UPDATE OR DELETE ON base_map FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- base_catalog: the client-facing metadata surface — one row per collection with its carrier, whether it is
 -- unbounded (∞), and its grade chain (the ordered grade names). The client reads this to list collections,
@@ -193,7 +199,9 @@ CREATE TABLE base_polytope (collection text PRIMARY KEY REFERENCES base_collecti
 -- collection sharing that carrier inherits the glyph. This is the page-space sibling of base_polytope (scene space)
 -- and base_repr (line/text space): all three declare a cast of the same element DATA into a different space. `kind`
 -- names a renderer the client provides; SVG generation stays in the viewer for now (data here, drawing there).
-CREATE TABLE base_glyph (carrier text PRIMARY KEY, kind text NOT NULL, title text);
+CREATE TABLE base_glyph (carrier text PRIMARY KEY, kind text NOT NULL, title text,
+                         pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_glyph_pack_guard BEFORE UPDATE OR DELETE ON base_glyph FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- base_trait: named capabilities / categories a collection can carry — real objects with a description and, like
 -- Rust supertraits or Sage supercategories, `implies` edges (a trait entails others). Most assignments are DERIVED
@@ -260,7 +268,9 @@ END $w$;
 -- {axis: value} map, mirroring the next/prev odometer. One function for every collection; a builder_fn per carrier reads
 -- the axes and returns the math. Carriers with no registered builder (most) return NULL. See representations.sql for the
 -- finset builder + registration.
-CREATE TABLE base_set_builder (carrier text PRIMARY KEY, builder_fn text NOT NULL);   -- builder_fn: <fn>(jsonb axes) RETURNS text (KaTeX)
+CREATE TABLE base_set_builder (carrier text PRIMARY KEY, builder_fn text NOT NULL,   -- builder_fn: <fn>(jsonb axes) RETURNS text (KaTeX)
+                               pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_set_builder_pack_guard BEFORE UPDATE OR DELETE ON base_set_builder FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 CREATE FUNCTION set_builder(f anyelement) RETURNS text LANGUAGE plpgsql STABLE AS $$
 DECLARE coll text := substring(pg_typeof(f)::text FROM '^(.*)_fiber$'); v_carrier text; bfn text; out text;
 BEGIN
