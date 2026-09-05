@@ -23,10 +23,10 @@
 // SEEDING: a tiny deterministic PRNG (mulberry32) seeded from argv/env/Date.now(), printed up front. Any failure
 // prints the exact seed + (collection, fiber, rank, property) needed to replay it deterministically.
 //
-//   node --import tsx qcheck.mts                 # sample every collection with a fresh seed
-//   node --import tsx qcheck.mts perm            # only collections whose id contains "perm"
-//   node --import tsx qcheck.mts perm 123456      # reproduce a specific run (filter + seed)
-//   QCHECK_POINTS=5 node --import tsx qcheck.mts  # more sampled points per collection (default 2)
+//   node --import tsx quickcheck.mts                 # sample every collection with a fresh seed
+//   node --import tsx quickcheck.mts perm            # only collections whose id contains "perm"
+//   node --import tsx quickcheck.mts perm 123456      # reproduce a specific run (filter + seed)
+//   QUICKCHECK_POINTS=5 node --import tsx quickcheck.mts  # more sampled points per collection (default 2)
 import { readdirSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -35,28 +35,28 @@ import debug from 'debug'
 import { orderSqlsrc } from './sqlsrc-order'
 import { debugGucSetSql, routeNotice } from './debug-env'
 
-const log = debug('enumeratio:data:qcheck')
+const log = debug('enumeratio:data:quickcheck')
 
 const here = dirname(fileURLToPath(import.meta.url))
 const req = createRequire(import.meta.url)
 const { PGlite } = req('@electric-sql/pglite') as typeof import('@electric-sql/pglite')
 
 // Budget knobs — small by design (seconds, not minutes): this is a sampling smoke test, not the exhaustive oracle.
-const NMAX = Number(process.env.QCHECK_NMAX ?? 8)            // grade-1 size sampled from [0, NMAX] (mirrors selfcert)
-const RANK_CAP = Number(process.env.QCHECK_RANK_CAP ?? 300)  // largest rank sampled when a direct fiber_unrank accel exists (O(1)/O(rank) formula — cheap even at 300, matching selfcert's CAP_UNRANK)
+const NMAX = Number(process.env.QUICKCHECK_NMAX ?? 8)            // grade-1 size sampled from [0, NMAX] (mirrors selfcert)
+const RANK_CAP = Number(process.env.QUICKCHECK_RANK_CAP ?? 300)  // largest rank sampled when a direct fiber_unrank accel exists (O(1)/O(rank) formula — cheap even at 300, matching selfcert's CAP_UNRANK)
 // SCAN_RANK_CAP: largest rank sampled when there's NO accel and unrank(handle, r) falls back to scanning the floor.
 // isScanSafe (below) only guards against a floor that materializes its WHOLE fiber before slicing (unbounded cost
 // regardless of r) — it does nothing about a floor that's merely slow-per-candidate (a restriction's scan_factor
 // over-scan calling a nontrivial predicate once per candidate). Depth 300 there was measured to cost SECONDS per
 // point on plain arithmetic-sequence restrictions (abundant/achilles numbers); this is the actual "seconds not
 // minutes" budget knob for the common case (no accel, most of the catalog's number-theoretic sequences).
-const SCAN_RANK_CAP = Number(process.env.QCHECK_SCAN_RANK_CAP ?? 20)
-const CAP_COUNT = Number(process.env.QCHECK_CAP_COUNT ?? 20_000) // largest fiber enumerated for the count property
-const POINTS = Number(process.env.QCHECK_POINTS ?? 2)         // sampled (fiber, rank) points per collection
+const SCAN_RANK_CAP = Number(process.env.QUICKCHECK_SCAN_RANK_CAP ?? 20)
+const CAP_COUNT = Number(process.env.QUICKCHECK_CAP_COUNT ?? 20_000) // largest fiber enumerated for the count property
+const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 2)         // sampled (fiber, rank) points per collection
 const STMT_TIMEOUT = '8s'
 
 const filter = process.argv[2] || null
-const seed = ((process.argv[3] ? Number(process.argv[3]) : Number(process.env.QCHECK_SEED ?? Date.now())) >>> 0)
+const seed = ((process.argv[3] ? Number(process.argv[3]) : Number(process.env.QUICKCHECK_SEED ?? Date.now())) >>> 0)
 
 // mulberry32 — a tiny, deterministic, lib-free PRNG. Same seed ⇒ same stream ⇒ same sampled points, forever.
 function mulberry32(a: number) {
@@ -70,7 +70,7 @@ function mulberry32(a: number) {
 const rng = mulberry32(seed)
 const randInt = (n: number) => (n <= 0 ? 0 : Math.min(n - 1, Math.floor(rng() * n)))
 
-console.log(`qcheck seed=${seed}${filter ? ` filter=${filter}` : ''} (points/coll=${POINTS} nmax=${NMAX} rankcap=${RANK_CAP})`)
+console.log(`quickcheck seed=${seed}${filter ? ` filter=${filter}` : ''} (points/coll=${POINTS} nmax=${NMAX} rankcap=${RANK_CAP})`)
 
 const dir = join(here, 'sqlsrc')
 const files = orderSqlsrc(
@@ -325,7 +325,7 @@ if (skips.length) {
   for (const [reason, n] of [...byReason.entries()].sort((a, b) => b[1] - a[1])) console.log(`  ${n.toString().padStart(4)}  ${reason}`)
 }
 if (mismatches.length) {
-  console.log(`\n✗ MISMATCHES (${mismatches.length}) — seed=${seed}, replay with: node --import tsx qcheck.mts <coll> ${seed}\n`)
+  console.log(`\n✗ MISMATCHES (${mismatches.length}) — seed=${seed}, replay with: node --import tsx quickcheck.mts <coll> ${seed}\n`)
   for (const m of mismatches) {
     console.log(`  [${m.property}] ${m.coll}  n=${m.n ?? '(ungraded)'} addr=${m.addr} r=${m.r}`)
     console.log(`      ${m.detail}`)

@@ -36,7 +36,7 @@
     "test": "node --import tsx run.mts",
     "selfcert": "node --import tsx selfcert.mts",
     "selfcert:view": "node --import tsx selfcert-view.mts",
-    "qcheck": "node --import tsx qcheck.mts",
+    "quickcheck": "node --import tsx quickcheck.mts",
     "render-corpus-check": "node --import tsx render-corpus-check.mts",
     "pg-demo": "node --import tsx pg-demo.mts",
     "pg-watchdog-demo": "node --import tsx pg-watchdog-demo.mts"
