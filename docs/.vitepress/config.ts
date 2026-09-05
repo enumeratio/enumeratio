@@ -79,8 +79,8 @@ export default defineConfig({
           text: 'Develop', link: '/develop/',
           items: [
             { text: 'Packages', link: '/develop/packages/' },
+            { text: 'Data Reference', link: '/develop/data/' },
             { text: 'API Reference', link: '/develop/api' },
-            { text: 'Data', link: '/develop/data/' },
             { text: 'Sources', link: '/develop/sources' },
             { text: 'Contributing', link: '/develop/contributing/' },
             { text: 'Playground', link: '/develop/playground/' },
@@ -180,17 +180,17 @@ export default defineConfig({
             },
           ],
         },
-        { text: 'API Reference', link: '/develop/api' },
         {
-          text: 'Data', link: '/develop/data/',
+          text: 'Data Reference', link: '/develop/data/',
           items: [
-            { text: 'Collections (stub)', link: '/develop/data/collections' },
-            { text: 'Functions (stub)', link: '/develop/data/functions' },
-            { text: 'Maps (stub)', link: '/develop/data/maps' },
+            { text: 'Collections', link: '/develop/data/collections' },
             { text: 'Statistics', link: '/develop/data/statistics' },
+            { text: 'Maps', link: '/develop/data/maps' },
             { text: 'Relations', link: '/develop/data/relations' },
+            { text: 'Functions (stub)', link: '/develop/data/functions' },
           ],
         },
+        { text: 'API Reference', link: '/develop/api' },
         { text: 'Sources', link: '/develop/sources' },
         {
           text: 'Contributing', link: '/develop/contributing/',

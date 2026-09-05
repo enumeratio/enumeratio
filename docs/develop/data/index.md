@@ -1,14 +1,14 @@
-# Data
+# Data Reference
 
-The entity-metadata pages that let you look up one collection, function, stat, or map on its own — plus two
+The entity-metadata pages that let you look up one collection, function, stat, or map on its own — four
 generated, always-current tables over the same registry.
 
+- **[Collections](/develop/data/collections)** — a flat index of every collection: id, title, carrier, grade axes.
 - **[Statistics](/develop/data/statistics)** — every named per-element invariant (`inversions`, `descents`, …)
   registered against every collection, generated fresh from the registry with a live worked example each.
+- **[Maps](/develop/data/maps)** — every registered bijection/morphism: source, codomain, bijection/order-iso
+  flags, inverse, FindStat cross-reference.
 - **[Relations](/develop/data/relations)** — the full `base_reference` cross-reference table (OEIS, FindStat,
   Sage, mathlib4, …), one filterable, shareable-URL view.
-- **[Collections](/develop/data/collections)** *(stub)* — one page per collection, code-docs style.
-- **[Functions](/develop/data/functions)** *(stub)* — one page per shipped math identity.
-- **[Maps](/develop/data/maps)** *(stub)* — one page per registered bijection/map.
-
-The stub pages describe an intended design, not a build — see each for what's blocking it.
+- **[Functions](/develop/data/functions)** *(stub)* — one page per shipped math identity. Blocked on a real design
+  decision (what counts as "a shipped identity"), not just docs work — see the page for why.
