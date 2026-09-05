@@ -10,8 +10,11 @@ it('every expression example evaluates to its expected value', async () => {
   const examples = await expressionExamples()
   expect(examples.length).toBeGreaterThan(15)
   for (const ex of examples) {
-    const modulus = ex.carrier === 'modular_residue' ? 5 : undefined   // modular examples are pinned to m = 5
-    const { result, error } = await evaluateExpression(ex.carrier, ex.expr, modulus)
+    // ground-dependent carriers are pinned by the example file's header: ℤ/5ℤ, and ℂ2(ℤ/5) for multicomplex
+    const ground = ex.carrier === 'modular_residue' ? 5
+      : ex.carrier === 'multicomplex' ? { modulus: 5, level: 2 }
+      : undefined
+    const { result, error } = await evaluateExpression(ex.carrier, ex.expr, ground)
     expect(error ?? result, `${ex.carrier}: ${ex.expr}`).toBe(ex.expected)
   }
 })

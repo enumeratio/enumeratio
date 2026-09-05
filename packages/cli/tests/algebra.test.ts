@@ -5,7 +5,7 @@ import { provideDb, makeDb, evaluateExpression, algebraTypes, close } from '@enu
 provideDb(() => makeDb())
 afterAll(() => close())
 
-const ev = (t: string, e: string, m?: number) => evaluateExpression(t, e, m).then((r) => r.error ?? r.result)
+const ev = (t: string, e: string, g?: number | Record<string, number>) => evaluateExpression(t, e, g).then((r) => r.error ?? r.result)
 
 it('rational field: reduces, distributes, subtracts', async () => {
   expect(await ev('rational_number', '1/2 + 1/3')).toBe('5/6')

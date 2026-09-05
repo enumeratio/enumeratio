@@ -18,7 +18,8 @@ Needs a Db via `provideDb()` (the docs set it up globally).
 | `collection` | string | a collection id; its carrier is resolved from the catalog |
 | `carrier` | string | **or** a carrier directly (wins over `collection`) — e.g. `rational_number` |
 | `expr` | string | the initial expression (also editable in the box) |
-| `modulus` | number | the modulus `m` for `ℤ/mℤ` (`modular_residue`), or the ground `n` for a bounded `finset` |
+| `modulus` | number | the modulus `m` for `ℤ/mℤ` (`modular_residue`), the ground `n` for a bounded `finset`, or `M` for `multicomplex` |
+| `level` | number | `multicomplex` only: the tower order `n`, which fixes the 2ⁿ coefficient width |
 
 Emits a composed **`result`** event (`{ value, error }`) and exposes **`.value`** — so
 [`<enumeratio-assert>`](/develop/packages/components/assert) can check what it evaluated to.
@@ -102,6 +103,24 @@ the live value beside the `✓`.
 <p>
 <enumeratio-assert expect="2" reveal="always" label="3 * 4 (mod 5)">
   <enumeratio-expression carrier="modular_residue" expr="3 * 4" modulus="5"></enumeratio-expression>
+</enumeratio-assert>
+</p>
+
+**ℂ2(ℤ/5) — multicomplex.** Two grounds: `modulus` and `level`. Basis units spell either as `j<mask>` — exactly what
+the collection renders, so an element pastes straight back in — or as `i_<k>` generators, juxtaposed for a product.
+Postfix `~` conjugates (not `*`, which the grammar already reads as multiplication):
+
+<p>
+<enumeratio-assert expect="2j1" reveal="always" label="(1+j1)²">
+  <enumeratio-expression carrier="multicomplex" expr="(1 + j1) * (1 + j1)" modulus="5" level="2"></enumeratio-expression>
+</enumeratio-assert>
+&nbsp;
+<enumeratio-assert expect="j3" reveal="always" label="i₁i₂ = j3">
+  <enumeratio-expression carrier="multicomplex" expr="i_1 i_2" modulus="5" level="2"></enumeratio-expression>
+</enumeratio-assert>
+&nbsp;
+<enumeratio-assert expect="1 - j1 - j2 + j3" reveal="always" label="conjugate">
+  <enumeratio-expression carrier="multicomplex" expr="(1 + j1 + j2 + j3)~" modulus="5" level="2"></enumeratio-expression>
 </enumeratio-assert>
 </p>
 

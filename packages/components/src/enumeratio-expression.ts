@@ -6,8 +6,9 @@ import { num } from './num'
 // <enumeratio-expression collection="…"> — a client-backed web component that evaluates an expression in a
 // collection's carrier algebra, reusing @enumeratio/client's evaluateExpression (the same core the explorer's richer
 // AlgebraEvaluator input uses). Give it a `collection` (its carrier is resolved from the catalog) OR a `carrier`
-// directly, and an `expr` (attribute or the input box); some carriers take a `modulus` (n for ℤ/nℤ, or the ground n
-// for finset). Needs a Db provided once via the client's provideDb() — the docs set that up globally.
+// directly, and an `expr` (attribute or the input box); some carriers take a `modulus` (n for ℤ/nℤ, the ground n
+// for finset, M for multicomplex), and multicomplex additionally takes a `level` (its tower order). Needs a Db
+// provided once via the client's provideDb() — the docs set that up globally.
 // On each evaluation it emits a composed `result` CustomEvent ({ value, error }) and exposes a `.value` getter, so a
 // generic checker like <enumeratio-assert> can read what it evaluated to. For now single-collection; generalize later.
 @customElement('enumeratio-expression')
@@ -16,6 +17,7 @@ export class EnumeratioExpression extends LitElement {
   @property({ type: String }) carrier = ''
   @property({ type: String }) expr = ''
   @property({ type: Number }) modulus = 0
+  @property({ type: Number }) level = 0
 
   @state() private resolvedCarrier = ''
   @state() private result: string | null = null
@@ -51,7 +53,7 @@ export class EnumeratioExpression extends LitElement {
 
   updated(changed: Map<string, unknown>): void {
     if (changed.has('collection') || changed.has('carrier')) void this.resolve()
-    else if (changed.has('expr') || changed.has('modulus')) void this.evaluate()
+    else if (changed.has('expr') || changed.has('modulus') || changed.has('level')) void this.evaluate()
   }
 
   private async resolve(): Promise<void> {
@@ -75,7 +77,11 @@ export class EnumeratioExpression extends LitElement {
       this.emitResult()
       return
     }
-    const r = await evaluateExpression(this.resolvedCarrier, e, this.modulus ? num(this.modulus) : undefined)
+    // multicomplex needs both grounds; every other carrier here takes at most the single one
+    const ground = this.level
+      ? { modulus: num(this.modulus), level: num(this.level) }
+      : this.modulus ? num(this.modulus) : undefined
+    const r = await evaluateExpression(this.resolvedCarrier, e, ground)
     this.result = r.result
     this.error = r.error ?? null
     this.emitResult()

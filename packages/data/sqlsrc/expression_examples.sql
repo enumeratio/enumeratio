@@ -6,8 +6,9 @@
 -- it, and while it's unmodified the result is checked green/red against `expected`. `tags` classify each example so a
 -- host can filter which it surfaces: `identity` (an algebraic law), `edge-case` (an absorbing/annihilator boundary),
 -- `singleton` (a bare element literal — parse-and-render round-trip, no operator), `precedence`, `norm`, …
--- Coverage spans the eight carriers that have an evaluator emitter: ℕ, ℤ, ℚ, ℤ/mℤ, cardinals, ordinals < ω^ω, ℤ[i],
--- and the finite-subset lattice. Modular examples are pinned to m = 5 (see the CLI test / the grid's modulusFor).
+-- Coverage spans the nine carriers that have an evaluator emitter: ℕ, ℤ, ℚ, ℤ/mℤ, cardinals, ordinals < ω^ω, ℤ[i],
+-- the finite-subset lattice, and the multicomplex ring. Ground-dependent examples are pinned: modular to m = 5, and
+-- multicomplex to ℂ2(ℤ/5) (see the CLI test / the grid's modulusFor) — their expected values only hold there.
 -- Expected values here were generated through the real evaluator, so they match exactly what the engine renders.
 CREATE TABLE base_expression_example (carrier text NOT NULL, expr text NOT NULL, expected text NOT NULL,
                                       title text, tags text[] NOT NULL DEFAULT '{}', PRIMARY KEY (carrier, expr));
@@ -102,6 +103,29 @@ INSERT INTO base_expression_example (carrier, expr, expected, title, tags) VALUE
   ('gaussian_integer', '-i', '-i', 'negation of i', '{edge-case}'),
   ('gaussian_integer', 'i - i', '0', 'i minus itself', '{edge-case}'),
   ('gaussian_integer', '2 * i', '2i', 'a real scalar times i', '{identity}'),
+  -- multicomplex ℂ2(ℤ/5): 2ⁿ basis units j_m indexed by bitmask, j_m² = (−1)^popcount(m), so j1 and j2 square to −1
+  -- while j3 = i₁i₂ squares to +1. Units spell either way — `j<mask>` as notation() prints them (so a rendered
+  -- element pastes straight back in) or `i_<k>` generators — and postfix ~ conjugates. PINNED to M = 5, level = 2.
+  ('multicomplex', '1 + 2j1 - 2j3', '1 + 2j1 - 2j3', 'a rendered element pastes back in', '{singleton}'),
+  ('multicomplex', 'j1', 'j1', 'a bare basis unit', '{singleton}'),
+  ('multicomplex', '3', '-2', 'a scalar, shown in balanced form', '{singleton}'),
+  ('multicomplex', 'j1 * j1', '-1', 'j1² = −1 — the defining relation i₁²+1 = 0', '{identity}'),
+  ('multicomplex', 'j3 * j3', '1', 'j3² = +1 — the evil index squares the other way', '{identity}'),
+  ('multicomplex', 'j1 * j2', 'j3', 'unit product: indices XOR', '{identity}'),
+  ('multicomplex', 'i_1 i_2', 'j3', 'the same unit, spelled as a generator product', '{identity}'),
+  ('multicomplex', 'i * i', '-1', 'bare i is i_1, so ℂ1 reads like the Gaussians', '{identity}'),
+  ('multicomplex', '(1 + j1) * (1 + j1)', '2j1', '(1+j1)² = 2j1', '{identity}'),
+  ('multicomplex', '(1 + j1) * (1 - j1)', '2', 'a conjugate product', '{identity}'),
+  ('multicomplex', '(1 + j1 + j2 + j3)~', '1 - j1 - j2 + j3', 'conjugation flips every odious unit', '{identity}'),
+  ('multicomplex', 'j3~', 'j3', 'the evil unit is fixed by conjugation', '{edge-case}'),
+  ('multicomplex', 'j1 * j2 - j2 * j1', '0', 'commutative, unlike the quaternions', '{identity}'),
+  ('multicomplex', 'j1 * (j2 + j3)', '-j2 + j3', 'multiplication distributes', '{identity}'),
+  ('multicomplex', '2 + 3', '0', 'coefficients wrap in ℤ/5', '{edge-case}'),
+  ('multicomplex', 'j1 - j1', '0', 'a unit minus itself', '{edge-case}'),
+  ('multicomplex', '0 * j1', '0', '0 annihilates', '{edge-case}'),
+  ('multicomplex', '1 * j2', 'j2', '1 is the · identity', '{edge-case}'),
+  ('multicomplex', '-j1', '-j1', 'negation of a unit', '{edge-case}'),
+  ('multicomplex', '2 * j1 + 3 * j1', '0', '5j1 = 0 — the coefficient wraps, not the unit', '{edge-case}'),
   -- finset: the distributive lattice 𝒫([n]) — {..} literals, ∪ (join) / ∩ (meet); shown as the member set, so ∪/∩ read
   -- the same at any ground n (complement ᶜ is n-dependent, so it stays a typeable op, not a pinned example)
   ('finset', '{1,2,3}', '{1,2,3}', 'a set literal', '{singleton}'),

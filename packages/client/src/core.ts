@@ -340,9 +340,19 @@ type Emit = {
   mul: (a: string, b: string) => string; negate?: (a: string) => string; render: (e: string) => string
   // lattice/set carriers: a {..} literal atom and a postfix complement (∪/∩ ride on add/mul; see buildExprSql)
   setLit?: (elems: string[]) => string; complement?: (a: string) => string
+  // multi-unit carriers: a named basis unit, and a run of them juxtaposed is their product (see unitRun below)
+  unit?: (mask: number) => string; unitMask?: (spelling: 'mask' | 'generator', index: number) => number
+  // postfix conjugation (~ or a bar) — NOT `*`, which the grammar already owns as multiplication
+  conjugate?: (a: string) => string
 }
 const bin = (op: string) => (a: string, b: string) => `(${a} ${op} ${b})`
-function emitterFor(type: string, modulus?: number): Emit {
+/** The ground values an emitter needs beyond the expression text — the collection's grade binding. A bare number is
+ *  the single-axis case (`n`), kept because most carriers have exactly one ground: ℤ/mℤ's modulus, finset's [n]. */
+export type Grounds = Record<string, number>
+const groundsOf = (g?: number | Grounds): Grounds => (typeof g === 'number' ? { n: g } : (g ?? {}))
+function emitterFor(type: string, ground?: number | Grounds): Emit {
+  const g = groundsOf(ground)
+  const modulus = g.modulus ?? g.n
   switch (type) {
     case 'rational_number': return { atom: (n) => `rational_number(${n},1)`, frac: (n, d) => `rational_number(${n},${d})`,
       add: bin('+'), sub: bin('-'), mul: bin('*'), negate: (a) => `(- ${a})`, render: (e) => `notation(${e})` }
@@ -363,6 +373,36 @@ function emitterFor(type: string, modulus?: number): Emit {
     }
     case 'gaussian_integer': return { atom: (n) => `ROW(${n},0)::gaussian_integer`, imag: (n) => `ROW(0,${n})::gaussian_integer`,
       add: bin('+'), sub: bin('-'), mul: bin('*'), negate: (a) => `(- ${a})`, render: (e) => `notation(${e})` }
+    case 'multicomplex': {
+      // ℂn(ℤ/Mℤ): 2ⁿ basis units j_m indexed by bitmask, j_m² = (−1)^popcount(m). Two grounds, unlike every other
+      // carrier here — the modulus M and the tower order n, which fixes the coefficient width every literal pads to.
+      const m = Math.trunc(modulus ?? 0)
+      const level = Math.trunc(g.level ?? 1)
+      if (!(m > 1)) throw new Error('ℂn(ℤ/Mℤ) needs a modulus M > 1')
+      if (level < 0 || level > 8) throw new Error('the evaluator carries tower orders 0..8 (2⁸ = 256 coefficients)')
+      const width = 2 ** level
+      const vec = (at: number, c: number) =>
+        `ROW(ARRAY[${Array.from({ length: width }, (_, k) => (k === at ? (((c % m) + m) % m) : 0)).join(',')}], ${m})::multicomplex`
+      return {
+        atom: (n) => vec(0, Number(n)),
+        unit: (mask) => vec(mask, 1),
+        // `j<m>` is the mask index, exactly as notation() prints it, so a rendered element pastes back in. `i_<k>` is
+        // the k-th GENERATOR (i_k = j_(2^(k−1))) — the underscore is required, because bare `i3` would read as the
+        // third generator to one eye and mask 3 to the other, and those differ from k = 3 up. Bare `i` = i_1.
+        unitMask: (spelling, index) => {
+          const mask = spelling === 'mask' ? index : 1 << (index - 1)
+          if (spelling === 'generator' && (index < 1 || index > level)) {
+            throw new Error(level === 0 ? 'ℂ0 is ℤ/M — it has no generators, only scalars'
+                                        : `ℂ${level} has generators i_1..i_${level}`)
+          }
+          if (mask >= width) throw new Error(`ℂ${level} has units j0..j${width - 1}`)
+          return mask
+        },
+        add: bin('+'), sub: bin('-'), mul: bin('*'), negate: (a) => `(- ${a})`,
+        conjugate: (a) => `multicomplex_conj(${a})`,
+        render: (e) => `notation(${e})`,
+      }
+    }
     case 'finset': {   // the distributive lattice of subsets of [n]: {..} literals, ∪ (join) / ∩ (meet) / postfix ᶜ or ' (complement)
       const gn = Math.trunc(modulus ?? 0)   // the ground n (needed for complement / the bounded top ⊤); passed like a modulus
       return {
@@ -383,6 +423,42 @@ function buildExprSql(expr: string, emit: Emit): string {
   const s = expr; let i = 0
   const ws = () => { while (i < s.length && /\s/.test(s[i])) i++ }
   const peek = () => { ws(); return s[i] }
+  // A run of juxtaposed basis units, `i_1 i_2` / `i₁i₂` / `j3`, multiplied together — so i_1 i_1 lands on −1 through
+  // the ring's own multiplication rather than a special case. Returns null (input untouched) if no unit starts here.
+  const SUBS = '₀₁₂₃₄₅₆₇₈₉'
+  const isSub = (c: string | undefined): boolean => c !== undefined && SUBS.includes(c)   // NB '' is in every string
+  const digitsAt = (): number | null => {                     // ascii or unicode-subscript digits, whichever is here
+    let out = ''
+    while (i < s.length && /[0-9]/.test(s[i])) out += s[i++]
+    while (i < s.length && isSub(s[i])) out += String(SUBS.indexOf(s[i++]))
+    return out ? Number(out) : null
+  }
+  const unitRun = (): string | null => {
+    let acc: string | null = null
+    for (;;) {
+      const at = i
+      const letter = s[i]
+      if (letter !== 'i' && letter !== 'j') break
+      i++
+      let index: number
+      if (letter === 'j' || isSub(s[i])) {                     // j<mask>, or i₁-style unicode subscripts
+        const d = digitsAt()
+        if (d === null) { i = at; break }                      // a bare `j` isn't a unit — hand the input back
+        index = d
+      } else if (s[i] === '_') {
+        i++
+        const d = digitsAt()
+        if (d === null) throw new Error('expected a generator index after i_')
+        index = d
+      } else if (/[0-9]/.test(s[i] ?? '')) {
+        throw new Error(`write i_${s[i]} for the generator, or j${s[i]} for the unit of that mask`)
+      } else index = 1                                         // bare i = i_1, so ℂ1 reads like the gaussian box
+      acc = acc === null ? emit.unit!(emit.unitMask!(letter === 'j' ? 'mask' : 'generator', index))
+                         : emit.mul(acc, emit.unit!(emit.unitMask!(letter === 'j' ? 'mask' : 'generator', index)))
+      ws()
+    }
+    return acc
+  }
   const atom = (): string => {
     ws()
     if (emit.setLit && s[i] === '{') {                                // a set literal {1,2,3} or {} (empty)
@@ -399,9 +475,11 @@ function buildExprSql(expr: string, emit: Emit): string {
     if (emit.omega && (s[i] === 'w' || s[i] === 'ω')) { i++; return emit.omega }
     if (emit.inf && (s[i] === '∞' || s.startsWith('oo', i))) { i += s[i] === '∞' ? 1 : 2; return emit.inf }
     if (emit.imag && s[i] === 'i') { i++; return emit.imag('1') }                 // bare i = 0+1i
+    if (emit.unit) { const u = unitRun(); if (u) return u }                        // j1, i_2, i₁i₂ — no leading coefficient
     const start = i; while (i < s.length && /[0-9]/.test(s[i])) i++
     if (i === start) throw new Error(`unexpected '${s[i] ?? 'end of input'}'`)
     const num = s.slice(start, i)
+    if (emit.unit) { const u = unitRun(); if (u) return emit.mul(emit.atom(num), u) }   // 2j1, 3i_1i_2
     if (emit.imag && s[i] === 'i') { i++; return emit.imag(num) }                  // <n>i = 0+ni
     if (emit.frac && peek() === '/') { i++; ws(); const ds = i; while (i < s.length && /[0-9]/.test(s[i])) i++; if (i === ds) throw new Error('expected a denominator after /'); return emit.frac(num, s.slice(ds, i)) }
     return emit.atom(num)
@@ -413,6 +491,9 @@ function buildExprSql(expr: string, emit: Emit): string {
     else if (c === '(') { i++; v = expression(); if (peek() !== ')') throw new Error('expected )'); i++ }
     else v = atom()
     if (emit.complement) { ws(); while (s[i] === 'ᶜ' || s[i] === "'") { i++; v = emit.complement(v); ws() } }   // postfix complement
+    // postfix conjugation. NOT `*` — the grammar already reads that as multiplication, so `a* b` would have to mean
+    // two different things depending on what follows. `~` is the typeable spelling; the bars are the printed one.
+    if (emit.conjugate) { ws(); while (s[i] === '~' || s[i] === '¯' || s[i] === '‾') { i++; v = emit.conjugate(v); ws() } }
     return v
   }
   const term = (): string => { let a = factor(); for (;;) { const c = peek(); if (c === '*' || c === '·' || c === '×' || c === '∩') { i++; a = emit.mul(a, factor()) } else break } return a }
@@ -421,11 +502,13 @@ function buildExprSql(expr: string, emit: Emit): string {
   return out
 }
 /** Evaluate an arithmetic expression in a type's algebra (a per-ring calculator): integer literals, a/b (rationals),
- *  w/ω (ordinals), oo/∞ (cardinals), + − · and parentheses. `modulus` is required for ℤ/mℤ. */
-export async function evaluateExpression(type: string, expr: string, modulus?: number): Promise<{ result: string | null; error?: string }> {
+ *  w/ω (ordinals), oo/∞ (cardinals), j1 / i_1 i_2 basis units and postfix ~ (multicomplex), + − · and parentheses.
+ *  `ground` carries the collection's grade binding — a bare number for the single-axis carriers (ℤ/mℤ's modulus,
+ *  finset's [n]), a record for multicomplex, which needs both `modulus` and `level`. */
+export async function evaluateExpression(type: string, expr: string, ground?: number | Grounds): Promise<{ result: string | null; error?: string }> {
   try {
     if (!expr.trim()) return { result: null }
-    const emit = emitterFor(type, modulus)
+    const emit = emitterFor(type, ground)
     const [r] = await rows<{ v: string | null }>(`SELECT ${emit.render(buildExprSql(expr, emit))} AS v`)
     return { result: r?.v ?? null }
   } catch (e) {

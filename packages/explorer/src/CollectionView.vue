@@ -611,7 +611,7 @@ onMounted(async () => {
         <template #empty><p v-if="!loading && !error" class="empty">No rows.</p></template>
       </RowTable>
 
-      <AlgebraEvaluator v-if="coll" :collection="coll" :n="displayN" />
+      <AlgebraEvaluator v-if="coll" :collection="coll" :n="displayN" :grades="bindings" />
 
       <Panel v-if="inElementView" ref="selPanelRef" header="Selected element" toggleable class="belowpane">
         <ElementPane v-if="elementEnabled" :collection="coll" :n="displayN" :rank="selRank" :row="selRow" :card="card"

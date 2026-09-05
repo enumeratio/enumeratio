@@ -160,7 +160,7 @@ Beyond handles, the module exposes the catalog as data — `collections()`, `col
 `summary()`, `catalog()`, `gradeChain(id)`, `carriers()`, `svgCarriers()` — and the registries behind it: `traits()` /
 `collectionTraits()`, `tags()` / `collectionTags()`, `categories()` / `collectionCategories()`, `constructions()`,
 `species()`, `references()`, `mapGraph()`, the polytope readers (`polytopeCollections()`, `polytope()`,
-`permutationVectors()`, `associahedron()`), and the per-ring `evaluateExpression(type, expr, modulus?)` calculator with
+`permutationVectors()`, `associahedron()`), and the per-ring `evaluateExpression(type, expr, ground?)` calculator with
 its `algebraTypes()` / `expressionExamples()`.
 
 Two escape hatches over the live DB: `extendDb(sql)` applies SQL to the running connection (the "representations as
