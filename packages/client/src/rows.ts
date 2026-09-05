@@ -13,6 +13,7 @@
 // element predicate is a RESTRICTION (WHERE; drops rows inside fibers), a fiber-measure predicate is a LENS (HAVING;
 // hides fiber rows, the whole stays the whole — under ROLLUP the footer keeps the handle's cardinality).
 import { Handle, catalogMap, renderExprFor, runSql, type ParamValue, type Row, type Cell } from './core'
+import { parsePreds, predsToSql, type Pred } from './preds'
 import { parseSelect, resolveSelect, type Environment, type SelectColumn, type SelectKind, type SelectSpec } from './select'
 
 /** The row half. Each field is the TEXT of that SQL segment (as typed / as in the URL). */
@@ -338,6 +339,38 @@ export function parseGroupBy(text: string): Grouping {
 
 // ── the plan ──────────────────────────────────────────────────────────────────────────────────────────────────────
 const ident = (s: string) => (/^[a-z_][a-z0-9_]*$/.test(s) ? s : `"${s.replace(/"/g, '""')}"`)
+
+/** Replace kernel TOKENS (`orbit:rotation`, `map:inverse`) with the alias of the column R(C) projects for them,
+ *  in a clause that could not be parsed into terms and so must be spliced verbatim.
+ *
+ *  Scanning, not a regex, because a regex cannot tell a column reference from the inside of a string: a plain
+ *  global replace turned `element LIKE '%map:inverse%'` into `element LIKE '%"map:inverse"%'`, silently changing
+ *  what the user searched for. Quoted strings ('' escapes included) and quoted identifiers are copied through
+ *  untouched; only bare text is rewritten, and only on a whole-token boundary. */
+function rewriteTokens(text: string, kernels: Map<string, Kernel>): string {
+  if (!kernels.size) return text
+  const boundary = (ch: string | undefined) => ch === undefined || !/[A-Za-z0-9_:]/.test(ch)
+  let out = '', i = 0
+  while (i < text.length) {
+    const ch = text[i]
+    if (ch === "'" || ch === '"') {                       // a string literal or a quoted identifier: copy verbatim
+      const q = ch
+      out += ch; i++
+      while (i < text.length) {
+        out += text[i]
+        if (text[i] === q) { if (text[i + 1] === q) { out += text[++i]; i++; continue } i++; break }
+        i++
+      }
+      continue
+    }
+    const hit = boundary(text[i - 1])
+      ? [...kernels.values()].find((k) => text.startsWith(k.token, i) && boundary(text[i + k.token.length]))
+      : undefined
+    if (hit) { out += ident(hit.alias); i += hit.token.length; continue }
+    out += ch; i++
+  }
+  return out
+}
 /** a cardinality as the core spells it — numeric text, 'Infinity' for ∞ — never a JS number (171! already overflows) */
 const cardText = (v: Cell): string => (v == null ? 'Infinity' : String(v))
 const addCards = (a: string, b: string): string => (a === 'Infinity' || b === 'Infinity' ? 'Infinity' : (BigInt(a) + BigInt(b)).toString())
@@ -621,15 +654,30 @@ function rowSqlFor(s: Shape, q: RowQuery, w: RowWindow, arch: Archetype): string
   const elementLevel = arch === 'elements' || arch === 'rowgroup'
   // a fiber aggregate reads its statistic off the relation, so R(C) projects it even when no clause names it
   const wanted = wantedStats(s, ref.stats)
-  // a kernel token (`orbit:rotation`, `map:inverse`) a clause names is the alias of a projected column; splice it in
-  // quoted so the verbatim clause references the column R(C) computes for it
-  const rwK = (t: string): string => [...s.kernels.values()].reduce((acc, k) =>
-    acc.replace(new RegExp(`(?<![A-Za-z0-9_:])${k.token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?![A-Za-z0-9_:])`, 'g'), ident(k.alias)), t)
+  // A kernel token (`orbit:rotation`, `map:inverse`) a clause names is the alias of a projected column. Two ways
+  // to put it there, and the structured one is preferred wherever the clause parses:
+  //   * `clause()` composes the SQL from the clause's own PARSED TERMS, so a token is swapped at the column it
+  //     actually is, and a token that merely appears inside a string literal is untouched by construction;
+  //   * `rwK()` is the fallback for a clause too rich to parse (an OR, a subquery, arithmetic), which still has
+  //     to be spliced verbatim. It rewrites by scanning, skipping over quoted strings — see rewriteTokens.
+  const rwK = (t: string): string => rewriteTokens(t, s.kernels)
+  /** A clause as SQL: composed from its terms when it parses, spliced verbatim (token-rewritten) when it does not. */
+  const clause = (text: string | undefined): string => {
+    const t = text?.trim()
+    if (!t) return ''
+    const preds = parsePreds(t)
+    if (!preds) return rwK(t)
+    // only a COLUMN can be a kernel token: `fn(value)` names the carrier, and a facet names a membership field
+    const alias = (p: Pred): Pred =>
+      p.op === 'fn' || p.op === 'facet' || !s.kernels.has(p.col) ? p : { ...p, col: s.kernels.get(p.col)!.alias }
+    return predsToSql(preds.map(alias))
+  }
   const canonical = [...s.axes.map(ident), 'rank'].join(', ')
   // ORDER BY <graded cover relation>: join each element to its derived rank and order by it, native rank the tiebreak
   if (!q.groupBy?.trim() && q.orderBy?.trim() && s.orderRels.size) return relationOrderSql(s, q, wanted, canonical)
   const base = `WITH r AS (\n  SELECT ${relation(s, wanted, ref.value, elementLevel)}\n  FROM ${src} e)`
-  const where = q.where?.trim() ? `\nWHERE ${rwK(q.where.trim())}` : ''
+  const whereSql = clause(q.where)
+  const where = whereSql ? `\nWHERE ${whereSql}` : ''
   if (!q.groupBy?.trim()) {
     const order = q.orderBy?.trim() ? rwK(q.orderBy.trim()) : canonical
     const win = w.count != null ? `\nOFFSET ${w.first ?? 0} LIMIT ${w.count}` : ''
@@ -638,7 +686,8 @@ function rowSqlFor(s: Shape, q: RowQuery, w: RowWindow, arch: Archetype): string
   }
   const g = parseGroupBy(q.groupBy)
   const keys = [...new Set(g.sets.flat())]
-  const having = q.having?.trim() ? `\nHAVING ${rwK(q.having.trim())}` : ''
+  const havingSql = clause(q.having)
+  const having = havingSql ? `\nHAVING ${havingSql}` : ''
   const order = q.orderBy?.trim() ? rwK(q.orderBy.trim()) : keys.map((k) => `${ident(k)} NULLS LAST`).join(', ')
   const level = keys.length && (g.rollup || g.sets.length > 1) ? `, grouping(${keys.map(ident).join(', ')}) AS level` : ''
   // the fiber-level SELECT list, spelled literally: each aggregate over the group's own rows of R(C)

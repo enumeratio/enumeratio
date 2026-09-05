@@ -271,3 +271,59 @@ SELECT row_number() OVER (ORDER BY rank) AS ordinality, *
 FROM r
 WHERE carrier = 'permutation'
 ORDER BY rank
+
+── facet · tag membership ──────────────────────────────────────────────────────────────────────────
+WITH r AS (
+  SELECT rank(e) AS rank, array_to_string(address(e), '.') AS address, notation(omega_ordinality(e)) AS omega, render(e) AS element, meta_collection_title((e).value) AS title, meta_collection_carrier((e).value) AS carrier, meta_collection_tags((e).value) AS tags
+  FROM elements(collections(), 2147483647) e)
+SELECT row_number() OVER (ORDER BY rank) AS ordinality, *
+FROM r
+WHERE element IN (SELECT collection FROM base_collection_tag WHERE tag = 'classical')
+ORDER BY rank
+
+── restriction · fn predicate on the carrier ───────────────────────────────────────────────────────
+WITH r AS (
+  SELECT size(e) AS size, rank(e) AS rank, array_to_string(address(e), '.') AS address, notation(omega_ordinality(e)) AS omega, render(e) AS element, (e).value AS value, perm_descents((e).value) AS descents, perm_inversions((e).value) AS inversions, perm_cycle_count((e).value) AS cycles
+  FROM elements(permutations(4), 2147483647) e)
+SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
+FROM r
+WHERE is_derangement(value)
+ORDER BY size, rank
+
+── kernel · token inside a LIKE pattern ────────────────────────────────────────────────────────────
+WITH r AS (
+  SELECT size(e) AS size, rank(e) AS rank, array_to_string(address(e), '.') AS address, notation(omega_ordinality(e)) AS omega, render(e) AS element, render_value(perm_inverse((e).value)) AS "map:inverse"
+  FROM elements(permutations(4), 2147483647) e)
+SELECT "map:inverse", count(*) AS count
+FROM r
+GROUP BY "map:inverse"
+HAVING count(*) > 0
+ORDER BY "map:inverse" NULLS LAST
+
+── kernel · token inside a string literal, unparseable clause ──────────────────────────────────────
+WITH r AS (
+  SELECT size(e) AS size, base(e) AS base, rank(e) AS rank, array_to_string(address(e), '.') AS address, notation(omega_ordinality(e)) AS omega, render(e) AS element, render_value(word_canonical_rotation((e).value)) AS "orbit:rotation"
+  FROM elements(words(4, 2), 2147483647) e)
+SELECT "orbit:rotation", count(*) AS count
+FROM r
+GROUP BY "orbit:rotation"
+HAVING count(*) > 0 AND 'orbit:rotation' <> ''
+ORDER BY "orbit:rotation" NULLS LAST
+
+── clause · an OR falls back to verbatim splicing ──────────────────────────────────────────────────
+WITH r AS (
+  SELECT size(e) AS size, rank(e) AS rank, array_to_string(address(e), '.') AS address, notation(omega_ordinality(e)) AS omega, render(e) AS element, perm_descents((e).value) AS descents, perm_inversions((e).value) AS inversions, perm_cycle_count((e).value) AS cycles
+  FROM elements(permutations(4), 2147483647) e)
+SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
+FROM r
+WHERE descents >= 2 OR inversions < 3
+ORDER BY size, rank
+
+── clause · non-canonical spacing is canonicalized by composition ──────────────────────────────────
+WITH r AS (
+  SELECT size(e) AS size, rank(e) AS rank, array_to_string(address(e), '.') AS address, notation(omega_ordinality(e)) AS omega, render(e) AS element, perm_descents((e).value) AS descents, perm_inversions((e).value) AS inversions, perm_cycle_count((e).value) AS cycles
+  FROM elements(permutations(4), 2147483647) e)
+SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
+FROM r
+WHERE descents >= 2
+ORDER BY size, rank
