@@ -47,6 +47,9 @@ INSERT INTO base_oeis (a_number, collection, name, formula, blurb, provenance) V
   ('A000364',NULL,'Euler (secant) numbers',
    '|E_{2n}| = \sec^{(2n)}(0)',
    'Coefficients of sec(x) — count the alternating (up-down) permutations of even length.', NULL),
+  ('A000055','unlabeled_free_trees','Free (unrooted) trees',
+   'a(n) = r(n) - \tfrac12\sum_{i=1}^{n-1} r(i)r(n-i) + \tfrac12[n\text{ even}]\,r(n/2)',
+   'Trees on n unlabeled nodes up to isomorphism, via Otter''s formula over the rooted-tree count r=A000081.', NULL),
   -- ── figurate / simplex numbers (the columns and diagonals of Pascal's triangle) ───────────────────────────────
   ('A000027','natural_numbers','Natural',
    'a_n = n',
