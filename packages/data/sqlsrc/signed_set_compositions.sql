@@ -71,6 +71,29 @@ CREATE FUNCTION contains_in_fiber(f signed_set_compositions_fiber, v signed_set_
 INSERT INTO base_collection VALUES ('signed_set_compositions', 'signed_set_composition');
 INSERT INTO base_grade VALUES ('signed_set_compositions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f signed_set_compositions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '±OΠ([' || (f).n::int || '])' $$;   -- corpus symbol
+
+-- direct unrank: k-block search (block size surjection_count(n,k)·2^k, from set_compositions.sql), then within the
+-- block, labels are the MAJOR axis (surjection_unrank_word) and the sign word sgn the MINOR axis (0..2^k-1, bit
+-- b-1 ⇒ block b; matches fiber_elements' "ORDER BY k, labels, sgn").
+CREATE FUNCTION signed_set_composition_unrank(n int, ord bigint) RETURNS signed_set_composition LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE x numeric := ord; k int := 1; cnt numeric; sgncount int; label_idx bigint; sgn int; labels int[]; signs int[];
+  BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[]::int[], ARRAY[]::int[])::signed_set_composition; END IF;
+    LOOP
+      sgncount := pow_int(2, k)::int;
+      cnt := surjection_count(n, k) * sgncount;
+      EXIT WHEN x < cnt;
+      x := x - cnt; k := k + 1;
+    END LOOP;
+    sgncount := pow_int(2, k)::int;
+    label_idx := floor(x / sgncount)::bigint;
+    sgn := (x - label_idx * sgncount)::int;
+    labels := surjection_unrank_word(n, k, label_idx);
+    signs := ARRAY(SELECT CASE WHEN ((sgn >> (b - 1)) & 1) = 1 THEN -1 ELSE 1 END FROM generate_series(1, k) b);
+    RETURN ROW(labels, signs)::signed_set_composition;
+  END $$;
+CREATE FUNCTION fiber_unrank(f signed_set_compositions_fiber, rank rank_index) RETURNS signed_set_composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT signed_set_composition_unrank((f).n::int, rank::bigint) $fu$;
 SELECT base_realize('signed_set_compositions');
 
 INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
@@ -108,3 +131,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (ROW(ARRAY[1,2], ARRAY[-1,-1])::signed_set_composition <@ signed_set_compositions(2))::text $q$),
   ('signed_set_compositions','negative_blocks_count: {+1|-2|+3} has exactly one negative block','eq','1','stat over a 3-block composition, blocks 1 and 3 positive, block 2 negative',$q$
     SELECT negative_blocks_count(ROW(ARRAY[1,2,3], ARRAY[1,-1,1])::signed_set_composition)::text $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('signed_set_compositions','fiber_unrank(signed_set_compositions(3), 0..73) are all members (accel floor)','eq','true','k-block + label + sign unrank lands inside a(3)=74 for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(signed_set_compositions(3)) f), ord::rank_index) <@ signed_set_compositions(3))::text
+      FROM generate_series(0, cardinality(signed_set_compositions(3))::int - 1) ord $q$);

@@ -16,6 +16,10 @@ CREATE FUNCTION fiber_symbol(f surjections_onto_k_fiber) RETURNS text LANGUAGE s
 
 INSERT INTO base_collection VALUES ('surjections_onto_k', 'surjection');
 INSERT INTO base_grade VALUES ('surjections_onto_k', 1, 'n', NULL, NULL), ('surjections_onto_k', 2, 'k', '0', 'g1');   -- k = image size, 0..n
+-- direct unrank: exactly-k surjective-word unrank (set_compositions.sql's surjection_unrank_word, no block search
+-- needed since k is already fixed by the fiber).
+CREATE FUNCTION fiber_unrank(f surjections_onto_k_fiber, rank rank_index) RETURNS surjection LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(surjection_unrank_word((f).n::int, (f).k::int, rank::bigint))::surjection $fu$;
 SELECT base_realize('surjections_onto_k');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
@@ -33,3 +37,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (ROW(ARRAY[1,3,2])::surjection <@ surjections_onto_k(3,3))::text $q$),
   ('surjections_onto_k','set_notation: first word onto {1,2,3} ↦ 1,2,3 ∈ Surj(3,3)','eq','1,2,3 ∈ Surj(3,3)','matches numbers'' Surj(n,k) symbol',$q$
     SELECT set_notation(unrank(surjections_onto_k(3,3), 0)) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('surjections_onto_k','fiber_unrank(surjections_onto_k(5,3), 0..) are all members (accel floor)','eq','true','exactly-k surjective-word unrank lands inside surj(5,3)=150 for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(surjections_onto_k(5,3)) f), ord::rank_index) <@ surjections_onto_k(5,3))::text
+      FROM generate_series(0, cardinality(surjections_onto_k(5,3))::int - 1) ord $q$);

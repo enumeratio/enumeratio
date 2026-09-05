@@ -97,6 +97,56 @@ CREATE FUNCTION set_composition_face_contains(big set_composition, small set_com
 INSERT INTO base_collection VALUES ('set_compositions', 'set_composition');
 INSERT INTO base_grade VALUES ('set_compositions', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f set_compositions_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'OΠ([' || (f).n::int || '])' $$;   -- corpus symbol
+
+-- direct unrank of the surjective word (shared with `surjections`/`surjections_onto_k` — same words, same order).
+-- surj(n,k) = k!·S(n,k), via inclusion-exclusion — Σ_i (-1)^i C(k,i) (k−i)^n — no dependency on stirling_second
+-- (defined later, in set_partitions_into_k_blocks), so this stays usable from here on down.
+CREATE FUNCTION surjection_count(n int, k int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT CASE WHEN k = 0 THEN (n = 0)::int::numeric
+    ELSE (SELECT sum(((-1)::numeric) ^ i * binomial(k, i) * (k - i)::numeric ^ n) FROM generate_series(0, k) i) END $$;
+-- direct unrank of a length-n word over {1..k} using every letter, in the SAME v=1..k ascending-per-position lex
+-- order set_composition_surjections generates. T(m,j) = #completions of m remaining positions with j labels still
+-- unused (identity-agnostic — only the COUNT of missing labels matters by symmetry): T(0,0)=1, T(0,j>0)=0,
+-- T(m,j) = (k−j)·T(m−1,j) + j·T(m−1,j−1) (reuse an already-seen label, or retire one of the missing ones).
+CREATE FUNCTION surjection_unrank_word(n int, k int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE w int[] := '{}'; x numeric := ord; used boolean[] := array_fill(false, ARRAY[k]); missing int := k;
+          i int; v int; m int; j int; T numeric[]; cnt numeric; is_new boolean;
+  BEGIN
+    T := array_fill(0::numeric, ARRAY[n+1, k+1]);   -- T[m+1][j+1] = T(m,j)
+    T[1][1] := 1;
+    FOR m IN 1..n LOOP
+      FOR j IN 0..k LOOP
+        T[m+1][j+1] := (k-j)::numeric * T[m][j+1] + (CASE WHEN j = 0 THEN 0::numeric ELSE j::numeric * T[m][j] END);
+      END LOOP;
+    END LOOP;
+    FOR i IN 1..n LOOP
+      v := 1;
+      LOOP
+        is_new := NOT used[v];
+        cnt := T[(n-i)+1][(missing - (CASE WHEN is_new THEN 1 ELSE 0 END)) + 1];
+        EXIT WHEN x < cnt;
+        x := x - cnt; v := v + 1;
+      END LOOP;
+      w := w || v; used[v] := true;
+      IF is_new THEN missing := missing - 1; END IF;
+    END LOOP;
+    RETURN w;
+  END $$;
+-- k-block search (k ascending, block size surj(n,k)) then unrank within the block — the whole-fiber unrank
+-- (k=0..n summed = Fubini), shared with `surjections`.
+CREATE FUNCTION set_composition_unrank_word(n int, ord bigint) RETURNS int[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE x numeric := ord; k int := 1; cnt numeric;
+  BEGIN
+    IF n = 0 THEN RETURN ARRAY[]::int[]; END IF;
+    LOOP
+      cnt := surjection_count(n, k);
+      EXIT WHEN x < cnt;
+      x := x - cnt; k := k + 1;
+    END LOOP;
+    RETURN surjection_unrank_word(n, k, x::bigint);
+  END $$;
+CREATE FUNCTION fiber_unrank(f set_compositions_fiber, rank rank_index) RETURNS set_composition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(set_composition_unrank_word((f).n::int, rank::bigint))::set_composition $fu$;
 SELECT base_realize('set_compositions');
 
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
@@ -162,3 +212,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('set_compositions','permutahedron_vertex map: 231 embeds as the all-singletons face 3|1|2 at the vertex (2,3,1)','eq','3|1|2|(2,3,1)','the vertices ↔ permutations bijection',$q$
     SELECT notation(permutation_to_permutahedron_vertex(ROW(ARRAY[2,3,1])::permutation)) || '|' ||
            set_composition_permutahedron_coords(permutation_to_permutahedron_vertex(ROW(ARRAY[2,3,1])::permutation)) $q$);
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('set_compositions','fiber_unrank(set_compositions(4), 0..74) are all members (accel floor)','eq','true','k-block search + surjective-word unrank lands inside Fubini(4)=75 for every rank',$q$
+    SELECT bool_and(fiber_unrank((SELECT f FROM fibers(set_compositions(4)) f), ord::rank_index) <@ set_compositions(4))::text
+      FROM generate_series(0, cardinality(set_compositions(4))::int - 1) ord $q$);
