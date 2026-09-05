@@ -1,4 +1,4 @@
--- requires: set_compositions, signed_subsets, dissections, subsets, simplex, realizer, utilities
+-- requires: set_compositions, signed_subsets, dissections, subsets, simplex, k_subsets, permutations, realizer, utilities
 -- The polytopes as their OWN collections, in bijection with their combinatorial representatives. A set composition
 -- is the natural combinatorial object; the `permutahedron` face is the geometric one — same data, distinct role.
 -- Each polytope collection is an ORDER-ISOMORPHIC SIBLING of its representative (it borrows the representative's
@@ -96,6 +96,47 @@ CREATE FUNCTION simplex_face_contains(big finset, small finset) RETURNS boolean 
 INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
   ('simplex','simplex_face_dim','simplex_point','simplex_face_contains','Simplex');
 
+-- ── hypersimplex = the faces of Δ(k,n) — reuses k_subsets(n,k)'s finset carrier directly (#232 chunk 2) ──────
+-- No new collection: this row lives on `k_subsets`, whose elements ARE the hypersimplex's vertices (the 0/1
+-- indicator vectors of weight k). Vertices only for now — dim_fn is a flat 0 for every realized element, and
+-- contains_fn collapses to identity; the richer nested-subset face lattice (matroid-polytope faces above the
+-- vertex level) is deferred to a later chunk.
+CREATE FUNCTION k_subset_hypersimplex_face_dim(s finset) RETURNS int LANGUAGE sql IMMUTABLE AS $$ SELECT 0 $$;   -- only vertices are realized (chunk 2 scope)
+-- coordinate: the plain 0/1 membership indicator over the n axes — exactly a vertex of Δ(k,n).
+CREATE FUNCTION k_subset_hypersimplex_point(s finset) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$
+  SELECT ARRAY(SELECT (k = ANY((s).members))::int FROM generate_series(1, (s).n) k) $$;
+-- face-poset containment collapses to identity while only dim-0 vertices are realized.
+CREATE FUNCTION k_subset_hypersimplex_face_contains(big finset, small finset) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT big = small $$;
+INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
+  ('k_subsets','k_subset_hypersimplex_face_dim','k_subset_hypersimplex_point','k_subset_hypersimplex_face_contains','Hypersimplex');
+-- Johnson-graph adjacency: two k-subsets are adjacent vertices of Δ(k,n) iff they differ by a single swap (one
+-- element out, one in) — |A∩B| = k−1. Standard fact: Δ(k,n)'s graph IS the Johnson graph J(n,k).
+CREATE FUNCTION k_subset_hypersimplex_adjacent(a finset, b finset) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT (a).n = (b).n
+     AND coalesce(array_length((a).members,1),0) = coalesce(array_length((b).members,1),0)
+     AND (SELECT count(*) FROM unnest((a).members) m WHERE m = ANY((b).members))
+       = coalesce(array_length((a).members,1),0) - 1 $$;
+
+-- ── Birkhoff polytope B_n = the faces of the permutation-matrix polytope — reuses permutations(n)'s permutation
+-- carrier directly (#232 chunk 2). Vertices only (dim_fn flat 0, contains_fn identity): the full face lattice of
+-- B_n (doubly-stochastic-matrix support structure) is a richer condition, deferred to a later chunk.
+CREATE FUNCTION permutation_birkhoff_face_dim(p permutation) RETURNS int LANGUAGE sql IMMUTABLE AS $$ SELECT 0 $$;
+-- coordinate: the flattened n² permutation matrix (row-major); 1 where column = image[row], else 0.
+CREATE FUNCTION permutation_birkhoff_point(p permutation) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$
+  SELECT ARRAY(SELECT (col = (p).image[row])::int
+               FROM generate_series(1, coalesce(array_length((p).image,1),0)) row,
+                    generate_series(1, coalesce(array_length((p).image,1),0)) col
+               ORDER BY row, col) $$;
+CREATE FUNCTION permutation_birkhoff_face_contains(big permutation, small permutation) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$ SELECT big = small $$;
+INSERT INTO base_polytope (collection, dim_fn, point_fn, contains_fn, title) VALUES
+  ('permutations','permutation_birkhoff_face_dim','permutation_birkhoff_point','permutation_birkhoff_face_contains','Birkhoff polytope');
+-- transposition adjacency: permutations differing at EXACTLY two positions are adjacent vertices of B_n (their
+-- difference support is a single 2-cycle — one cycle — which is Balinski & Russakoff's edge criterion). This is
+-- a SAFE FLOOR on B_n's true edge set: longer-cycle differences are edges too (a richer condition, deferred) —
+-- per the ticket, we compute this floor rather than guess the full edge count.
+CREATE FUNCTION permutation_birkhoff_adjacent(a permutation, b permutation) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+  SELECT (SELECT count(*) FROM generate_subscripts((a).image,1) i WHERE (a).image[i] <> (b).image[i]) = 2 $$;
+
 -- ── examples ─────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutahedron','the permutahedron is a distinct collection, in bijection with set_compositions','eq','75|75','same cardinality (order-iso sibling); Fubini(4)',$q$
@@ -152,4 +193,36 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
                  array_to_string(simplex_point(ROW(ARRAY[1,2,3], 3)::finset), ',') || ')' $q$),
   ('simplex','simplex face containment: edge {1,2} contains vertex {1}, not vertex {3}','eq','true|false','contains_fn: small.members ⊆ big.members',$q$
     SELECT simplex_face_contains(ROW(ARRAY[1,2], 3)::finset, ROW(ARRAY[1], 3)::finset)::text || '|' ||
-           simplex_face_contains(ROW(ARRAY[1,2], 3)::finset, ROW(ARRAY[3], 3)::finset)::text $q$);
+           simplex_face_contains(ROW(ARRAY[1,2], 3)::finset, ROW(ARRAY[3], 3)::finset)::text $q$),
+  ('k_subsets','the hypersimplex is now registered in base_polytope, directly on k_subsets (#232 chunk 2)','eq','true|Hypersimplex','a polytope row can live on a pre-existing multi-graded collection, no new collection needed',$q$
+    SELECT EXISTS(SELECT 1 FROM base_polytope WHERE collection='k_subsets')::text || '|' ||
+           (SELECT title FROM base_polytope WHERE collection='k_subsets') $q$),
+  ('k_subsets','hypersimplex vertex floors: Δ(k,5) vertex count = C(5,k) for k=1..4','eq','5,10,10,5','vertices = elements of k_subsets(5,k), exact for small n',$q$
+    SELECT string_agg(cardinality(k_subsets(5,k))::text, ',' ORDER BY k) FROM generate_series(1,4) k $q$),
+  ('k_subsets','the hypersimplex point_fn is the 0/1 indicator: {1,3} of Δ(2,4) is (1,0,1,0)','eq','(1,0,1,0)','vertex coordinate, exact',$q$
+    SELECT '(' || array_to_string(k_subset_hypersimplex_point(ROW(ARRAY[1,3], 4)::finset), ',') || ')' $q$),
+  ('k_subsets','hypersimplex face containment collapses to identity at vertex level: {1,3} contains itself, not {1,4}','eq','true|false','contains_fn: vertex-only realization (chunk 2 scope)',$q$
+    SELECT k_subset_hypersimplex_face_contains(ROW(ARRAY[1,3],4)::finset, ROW(ARRAY[1,3],4)::finset)::text || '|' ||
+           k_subset_hypersimplex_face_contains(ROW(ARRAY[1,3],4)::finset, ROW(ARRAY[1,4],4)::finset)::text $q$),
+  ('k_subsets','Johnson-graph adjacency: {1,2} and {1,3} of Δ(2,4) differ by one swap (adjacent); {1,2} and {3,4} do not','eq','true|false','k_subset_hypersimplex_adjacent, exact on two chosen pairs',$q$
+    SELECT k_subset_hypersimplex_adjacent(ROW(ARRAY[1,2],4)::finset, ROW(ARRAY[1,3],4)::finset)::text || '|' ||
+           k_subset_hypersimplex_adjacent(ROW(ARRAY[1,2],4)::finset, ROW(ARRAY[3,4],4)::finset)::text $q$),
+  ('k_subsets','edge floor for Δ(2,5): J(5,2) has at least 30 edges (10 vertices × degree 2·3, halved) — computed via the adjacency predicate over all vertex pairs, not guessed','eq','true','vertices+edges only (chunk 2); nested-subset faces deferred',$q$
+    SELECT ((SELECT count(*) FROM elements(k_subsets(5,2)) e1, elements(k_subsets(5,2)) e2
+              WHERE ordinality(e1) < ordinality(e2) AND k_subset_hypersimplex_adjacent((e1).value, (e2).value)) >= 30)::text $q$),
+  ('permutations','the Birkhoff polytope is now registered in base_polytope, directly on permutations (#232 chunk 2)','eq','true|Birkhoff polytope','a polytope row can live on a pre-existing collection, no new collection needed',$q$
+    SELECT EXISTS(SELECT 1 FROM base_polytope WHERE collection='permutations')::text || '|' ||
+           (SELECT title FROM base_polytope WHERE collection='permutations') $q$),
+  ('permutations','Birkhoff vertex floors: B_n vertex count = n! for n=1..4','eq','1,2,6,24','vertices = elements of permutations(n), exact for small n',$q$
+    SELECT string_agg(cardinality(permutations(n))::text, ',' ORDER BY n) FROM generate_series(1,4) n $q$),
+  ('permutations','the Birkhoff point_fn is the flattened n² permutation matrix: 213 of S_3 is the row-major 0/1 matrix','eq','(0,1,0,1,0,0,0,0,1)','vertex coordinate, exact',$q$
+    SELECT '(' || array_to_string(permutation_birkhoff_point(ROW(ARRAY[2,1,3])::permutation), ',') || ')' $q$),
+  ('permutations','Birkhoff face containment collapses to identity at vertex level: 213 contains itself, not 123','eq','true|false','contains_fn: vertex-only realization (chunk 2 scope)',$q$
+    SELECT permutation_birkhoff_face_contains(ROW(ARRAY[2,1,3])::permutation, ROW(ARRAY[2,1,3])::permutation)::text || '|' ||
+           permutation_birkhoff_face_contains(ROW(ARRAY[2,1,3])::permutation, ROW(ARRAY[1,2,3])::permutation)::text $q$),
+  ('permutations','transposition adjacency: 213 differs from 123 at exactly 2 positions (adjacent); 231 differs at all 3 (not caught by this floor predicate)','eq','true|false','permutation_birkhoff_adjacent, exact on two chosen pairs',$q$
+    SELECT permutation_birkhoff_adjacent(ROW(ARRAY[2,1,3])::permutation, ROW(ARRAY[1,2,3])::permutation)::text || '|' ||
+           permutation_birkhoff_adjacent(ROW(ARRAY[2,3,1])::permutation, ROW(ARRAY[1,2,3])::permutation)::text $q$),
+  ('permutations','edge floor for B_4: transposition-adjacent pairs number at least 72 = 4!·C(4,2)/2 — a proven-correct floor on B_4''s true edge count (longer-cycle edges add more, deferred), computed not guessed','eq','true','vertices+edges only (chunk 2); full face lattice deferred',$q$
+    SELECT ((SELECT count(*) FROM elements(permutations(4)) e1, elements(permutations(4)) e2
+              WHERE ordinality(e1) < ordinality(e2) AND permutation_birkhoff_adjacent((e1).value,(e2).value)) >= 72)::text $q$);
