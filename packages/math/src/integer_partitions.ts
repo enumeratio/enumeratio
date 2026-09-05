@@ -12,7 +12,7 @@
 //   partitionCount            →  partition_number (integer_partitions.sql) — already ported as partition_number
 //                                 in combinat.ts; reused here, not re-exported
 //   integerPartitionRank/Unrank → generic unrank(integer_partitions(n), r) (integer_partitions.sql)
-//   integerPartitionKCount     →  k_part_partition_count(n,k) (k_part_partitions.sql)
+//   integerPartitionKCount     →  k_part_partition_count(n,k) (k_part_partitions.sql) — exported under the SQL name
 //   integerPartitionKRank/Unrank → generic unrank(k_part_partitions(n,k), r) (k_part_partitions.sql)
 
 import { partition_number } from "./combinat.js";
@@ -89,14 +89,14 @@ function partsExactlyK(m: number, j: number, cap: number): number {
 }
 
 /** SQL twin: k_part_partition_count(n int, k int) — k_part_partitions.sql. p(n,k), 2-D DP (same recurrence). */
-export function integerPartitionKCount(n: number, k: number): number {
+export function k_part_partition_count(n: number, k: number): number {
   if (n <= 0) return k === 0 ? 1 : 0;
   return k < 1 || k > n ? 0 : partsExactlyK(n, k, n);
 }
 
 /** No bare SQL fn (generic dispatch) — walks the same largest-part-first order, constrained to k parts. */
 export function integerPartitionKUnrank(n: number, k: number, rank: number): IntegerPartition {
-  const total = integerPartitionKCount(n, k);
+  const total = k_part_partition_count(n, k);
   if (total <= 0) return [];
   let r = ((rank % total) + total) % total;
   const out: IntegerPartition = [];

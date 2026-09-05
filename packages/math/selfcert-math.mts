@@ -86,8 +86,8 @@ for (let n = 0; n <= 12; n++) {
 for (let n = 0; n <= 10; n++) {
   for (let k = 1; k <= n; k++) {
     const [[cnt]] = await q(`SELECT k_part_partition_count(${n},${k})::text`);
-    record(`integerPartitionKCount(${n},${k})`, cnt, M.integerPartitionKCount(n, k));
-    const total = M.integerPartitionKCount(n, k);
+    record(`k_part_partition_count(${n},${k})`, cnt, M.k_part_partition_count(n, k));
+    const total = M.k_part_partition_count(n, k);
     for (let r = 0; r < total; r++) {
       const [[sql]] = await q(`SELECT notation((unrank(k_part_partitions(${n},${k}), ${r})).value)`);
       const p = M.integerPartitionKUnrank(n, k, r);

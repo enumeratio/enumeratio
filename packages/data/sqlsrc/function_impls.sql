@@ -140,7 +140,7 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   ('eulerianA', 'ts', 'eulerianA', '{int,int}', 'numeric', 'float64', NULL),
 
   ('integer_partition_k_count', 'pg', 'k_part_partition_count', '{int,int}', 'numeric', 'numeric', NULL),
-  ('integer_partition_k_count', 'ts', 'integerPartitionKCount', '{int,int}', 'numeric', 'float64', NULL);
+  ('integer_partition_k_count', 'ts', 'k_part_partition_count', '{int,int}', 'numeric', 'float64', NULL);
 
 -- floors, never exact counts (registry self-test convention): every base_function has AT LEAST one impl, and
 -- every pg impl_ref actually resolves in pg_proc — the replacement for the old inline-column integrity check.
