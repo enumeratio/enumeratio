@@ -1244,5 +1244,34 @@ export async function findStat(
   )
 }
 
+// ── the distribution finder (#125): "which known stats are equidistributed with this histogram" ────────────────────
+/** One distribution_match hit: a stat (identified by its collection + id) whose value_fn — optionally through a
+ *  chain of maps (`mapPath`) — produces the same histogram (up to overlap) over the target fiber. `qa` is the
+ *  overlap fraction (1.0 = identical histograms, i.e. genuine equidistribution); `qd` is the candidate's own
+ *  discriminating power (distinct values / fiber size), same ratio findStat reports. */
+export type DistributionMatchHit = { statCollection: string; statId: string; mapPath: string[]; qa: number; qd: number }
+/** Sweep the catalog for statistics equidistributed with a submitted value→multiplicity histogram, via the pure-SQL
+ *  distribution_match() (issue #125) — find_stat's distributional sibling: find_stat matches per-element VALUES,
+ *  this matches a FIBER's value DISTRIBUTION (an order-agnostic multiset/histogram), the equidistribution question
+ *  ("which stats are Mahonian/Eulerian/Narayana here?"). `targetDistribution` keys are stat values (as they'd
+ *  stringify) mapped to their multiplicity, e.g. the Mahonian distribution on permutations(4):
+ *  `{0:1,1:3,2:5,3:6,4:5,5:3,6:1}`. `n` pins the single fiber to compare against — required for a graded
+ *  collection (a distribution is one fiber's shape, not a range of them), ignored for an ungraded one.
+ *  `opts.depth` walks chains of maps before trying a stat (0 = stats registered directly on the collection only);
+ *  `perFiberCap` bounds the fiber enumeration (the SQL default of 2000 is fine for reasonable n). */
+export async function distributionMatch(
+  collection: string, targetDistribution: Record<string, number>, n?: number,
+  opts: { depth?: number; perFiberCap?: number } = {},
+): Promise<DistributionMatchHit[]> {
+  if (!isIdent(collection)) throw new Error(`invalid collection name: ${collection}`)
+  if (!Object.keys(targetDistribution).length) return []
+  return rows<DistributionMatchHit>(
+    `SELECT stat_collection AS "statCollection", stat_id AS "statId", coalesce(map_path, '{}') AS "mapPath",
+            q_a::float8 AS qa, q_d::float8 AS qd
+       FROM distribution_match($1, $2::jsonb, $3, $4, $5)`,
+    [collection, JSON.stringify(targetDistribution), n ?? null, opts.depth ?? 0, opts.perFiberCap ?? 2000],
+  )
+}
+
 // Low-level access for sibling modules (rows.ts): run SQL against the provided Db, and the memoized catalog.
 export { rows as runSql, catalogMap }
