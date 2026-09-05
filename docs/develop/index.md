@@ -12,11 +12,12 @@ functions scattered across modules, they are *entries*, and they reference each 
 public surface — constructors, enumeration, ranking, membership, notation, rendering — is **generated** from those
 entries by a single realizer. This page is the argument for why that pays off, told in four moves.
 
-If you're here to build rather than read the argument: **[API Reference](/develop/api)** is the generated SQL
-surface; **[Data](/develop/data/)** is the entity-metadata pages (collections, stats, maps, functions) plus the
-generated Statistics/Relations tables; **[Packages](/develop/packages/)** is the four packages themselves and how
-they stack; **[Contributing](/develop/contributing/)** is everything about adding to the library — repo shape, the
-model, the rules.
+If you're here to build rather than read the argument: **[Packages](/develop/packages/)** is the four packages
+themselves and how they stack; **[API Reference](/develop/api)** is the generated SQL surface; **[Data](/develop/data/)**
+is the entity-metadata pages (collections, stats, maps, functions) plus the generated Statistics/Relations tables;
+**[Sources](/develop/sources)** is the crosswalk against external systems (OEIS, FindStat, Sage, …);
+**[Contributing](/develop/contributing/)** is everything about adding to the library — repo shape, the model, the
+rules; **[Playground](/develop/playground/)** is the curated index of live toys.
 
 ## 1. The math *is* data
 
