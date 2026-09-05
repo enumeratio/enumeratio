@@ -1,4 +1,4 @@
--- requires: realizer, statistics, k_descent_permutations, utilities, restrictions
+-- requires: realizer, statistics, utilities, restrictions
 -- requires-tag: collection
 -- Generating functions as data (issue #234, catalog-audit friction 5) — the classical statement of a fiber-level
 -- DISTRIBUTION. A generating function takes a collection (+ optionally a statistic) and yields a coefficient

@@ -1,4 +1,7 @@
--- requires: permutations, set_partitions, cyclic_permutations, realizer
+-- requires: permutations, set_partitions, realizer
+-- (the cyclic_permutations examples moved to packs/permutations-plus/species.permutations-plus.sql — #283
+-- phase 3 — since cyclic_permutations INHERITS the permutation-carrier reprs registered here via base_repr_resolved,
+-- no explicit row is needed, but the examples that call cyclic_permutations() directly must load after it)
 -- SPECIES NOTATION — an element read as an algebraic expression in the ATOMIC species, with its actual labels
 -- (the element-level companion to the EGF species algebra: permutations = E∘C, set partitions = E∘E₊, …).
 --
@@ -89,10 +92,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            set_partition_species_notation(ROW(ARRAY[0,0,0])::set_partition) $q$),
   ('species','empty set partition (n=0) → E[{}]','eq','E[{}]','the set-structure on the empty set of blocks',$q$
     SELECT set_partition_species_notation(ROW(ARRAY[]::int[])::set_partition) $q$),
-  ('species','cyclic_permutations INHERITS at least the species reprs via the shared permutation carrier (a floor — more may be added)','eq','true','base_repr_resolved carries carrier reprs to the restriction',$q$
-    SELECT (array_agg(repr) @> ARRAY['cycle_species','species'])::text FROM base_repr_resolved WHERE collection = 'cyclic_permutations' AND repr LIKE '%species%' $q$),
-  ('species','on a cyclic permutation the E∘C reading collapses to the lone atom C: cyclic_permutations(3) rank 0 = 231 → C[{1,2,3}]','eq','C[{1,2,3}]','a single n-cycle is atomic',$q$
-    SELECT permutation_cycle_species_notation((unrank(cyclic_permutations(3), 0)).value) $q$),
   ('species','singleton_species X: cardinality is 1 at n=1, 0 elsewhere (n=0..3)','eq','0,1,0,0','the atomic species exists only on a 1-element label set',$q$
     SELECT string_agg(cardinality(singleton_species(n))::text, ',' ORDER BY n) FROM generate_series(0,3) n $q$),
   ('species','singleton_species(1) has one element rendering X[{1}]','eq','X[{1}]','the canonical species render of the atom',$q$

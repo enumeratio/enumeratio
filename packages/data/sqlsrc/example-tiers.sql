@@ -7,9 +7,9 @@
 -- EXAMPLES=all into base_run_examples(include_slow => true), and that is what a pre-merge / CI run should use.
 -- `find_stat` moved to packs/refs/example-tiers.refs.sql (#283 phase 2.2) — its pack owns the suite, so the tiering
 -- row that names it lives there too. `perfect_numbers`/`amicable_numbers` moved the same way to
--- packs/number-sets/example-tiers.number-sets.sql (#283 phase 3) — base_guard_pack forbids core UPDATEing a
--- number-sets-owned base_example row once that pack is loaded.
+-- packs/number-sets/example-tiers.number-sets.sql (#283 phase 3). `boolean_permutations` moved to
+-- packs/permutations-plus/example-tiers.permutations-plus.sql (#283 phase 3), same reason — base_guard_pack
+-- forbids core UPDATEing a pack-owned base_example row once that pack is loaded.
 UPDATE base_example SET slow = true WHERE
      suite IN ('search_sequence', 'thesis')            -- wholly integration-class suites
-  OR (suite = 'boolean_permutations' AND title LIKE 'count = F(n+1)%')   -- three stay in the default tier
   OR (suite = 'policies'             AND title LIKE 'case 7%');       -- the full restrict enumerate⇔predicate sweep

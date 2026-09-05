@@ -7,6 +7,7 @@
 -- empty (a spot nobody prefers outright). A 1-D bar strip indexed by position would show the preference sequence
 -- but hide exactly that structure. Note the grid depicts PREFERENCES (spots[i]), not the final parked assignment
 -- after displacement — there's no collision in the picture itself since each row (car) is distinct.
+-- layer: glyph
 CREATE FUNCTION parking_function_matrix_svg(spots int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT greatest(1, coalesce(array_length(spots, 1), 0)) AS n),
   pts AS (SELECT o AS row, val AS col FROM unnest(spots) WITH ORDINALITY AS t(val, o)),

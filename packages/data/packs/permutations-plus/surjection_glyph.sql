@@ -4,6 +4,7 @@
 -- (1..k = max(values), the block count), one connecting line per domain point i down to values[i]. Every
 -- codomain point is guaranteed hit (that's the surjectivity), which reads directly off the picture: no bottom dot
 -- is ever left without an incoming line.
+-- layer: glyph
 CREATE FUNCTION surjection_bipartite_svg(word int[], unit numeric DEFAULT 22, gap numeric DEFAULT 50, r numeric DEFAULT 3.5)
 RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dom AS (SELECT o AS i, (o - 1) * unit AS x, val AS k FROM unnest(word) WITH ORDINALITY AS t(val, o)),

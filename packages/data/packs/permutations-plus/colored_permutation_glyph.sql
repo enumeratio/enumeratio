@@ -12,6 +12,7 @@
 -- colour equal, e.g. all-0) collapses to one flat tint, the correct degenerate case. Unlike word_glyph's flat cells,
 -- each dot ALSO gets a thin border stroke (the grid's own border color) so it stays legible even at the faintest
 -- tint, where a borderless circle would nearly vanish against the page background.
+-- layer: glyph
 CREATE FUNCTION colored_permutation_matrix_svg(image int[], colors int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT greatest(1, coalesce(array_length(image, 1), 0)) AS n),
   pts AS (SELECT o AS row, val AS col, colors[o] AS color FROM unnest(image) WITH ORDINALITY AS t(val, o)),

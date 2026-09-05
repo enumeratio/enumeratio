@@ -119,6 +119,129 @@ CREATE FUNCTION glyph_svg(v numeric)         RETURNS text LANGUAGE sql IMMUTABLE
 CREATE FUNCTION glyph_svg(v natural_number)  RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT number_line_svg(v::numeric) $$;
 CREATE FUNCTION glyph_svg(v integer_number)  RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT number_line_svg(v::numeric) $$;
 
+-- sequence bar chart: one bar per term, height ∝ the term's value, growing up from a baseline, each labelled with
+-- its value below the baseline. Hoisted here (#283 phase 3 — was ascent_sequence_glyph.sql, a words-plus file)
+-- because it is shared by carriers spanning core (rgs_word) and multiple packs (words-plus's gray_code/
+-- ternary_gray_code, permutations-plus's subexcedant_seq) — the ascent_sequence/gray_code/rgs_word/ternary_gray_code
+-- /subexcedant_seq_glyph.sql files all still `-- requires: glyphs` and reuse it from here. terms int[] takes any
+-- non-negative-small-integer array (ascents-so-far / subexcedant values / rgs letters / bits / ternary digits).
+CREATE FUNCTION sequence_bar_svg(terms int[], unit numeric DEFAULT 18, unit_h numeric DEFAULT 10, label_h numeric DEFAULT 14)
+RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  WITH t AS (SELECT o - 1 AS i, term FROM unnest(terms) WITH ORDINALITY AS tt(term, o)),
+  dim AS (SELECT greatest(1, count(*)) * unit AS w, greatest(1, coalesce(max(term), 0)) * unit_h AS h FROM t)
+  -- args: 1=w+2 2=h+label_h+2 (viewBox) · 3=bars (rect grows up from baseline y=h, height=term*unit_h) + labels
+  -- (value printed below the baseline, always legible even for a 0-height bar)
+  SELECT format(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 %s %s" role="img" aria-label="sequence bar chart">%s</svg>',
+    trim_scale(round((SELECT w FROM dim) + 2, 2)), trim_scale(round((SELECT h FROM dim) + label_h + 2, 2)),
+    (SELECT string_agg(format(
+      '<rect x="%1$s" y="%2$s" width="%3$s" height="%4$s" fill="color-mix(in srgb, var(--enumeratio-accent,#d97706) 55%%, transparent)" stroke="var(--enumeratio-accent,#d97706)" stroke-width="1"/>'
+      '<text x="%5$s" y="%6$s" text-anchor="middle" dominant-baseline="hanging" font-size="%7$s" fill="var(--enumeratio-text,currentColor)">%8$s</text>',
+      trim_scale(round(i * unit, 2)), trim_scale(round((SELECT h FROM dim) - term * unit_h, 2)),
+      trim_scale(round(unit, 2)), trim_scale(round(term * unit_h, 2)),
+      trim_scale(round(i * unit + unit / 2, 2)), trim_scale(round((SELECT h FROM dim) + 2, 2)),
+      trim_scale(round(label_h * 0.7, 2)), term
+    ), '' ORDER BY i) FROM t, dim));
+$$;
+
+-- permutation arc diagram: n points on a baseline, an arc bowing below from i to image[i] (a small tangent loop
+-- for a fixed point instead of a degenerate zero-radius arc). Hoisted here (#283 phase 3 — was decorated_permutation_glyph
+-- .sql, a permutations-plus file) because core's glyph_kinds.sql reuses it for the plain `permutation` carrier's
+-- 'arc' kind, alongside packs/permutations-plus/decorated_permutation_glyph.sql, arrangement_glyph.sql and
+-- affine_permutation_glyph.sql, which all still `-- requires: glyphs` and reuse it from here.
+--   * image[i] = NULL ⇒ position i has no outgoing arc (arrangement's unused domain rows beyond its word length —
+--     the sparse convention rook_placement_grid_svg already established for "no mark here").
+--   * image[i] = i ⇒ a fixed point: drawn as a tangent loop, not a zero-radius arc.
+--   * decorated[i] (default all false) ⇒ dashed stroke on that position's arc/loop, hollow ring on its point.
+CREATE FUNCTION permutation_arc_svg(image int[], decorated boolean[] DEFAULT NULL, unit numeric DEFAULT 22)
+RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  WITH dim AS (SELECT greatest(1, coalesce(array_length(image, 1), 0)) AS n, unit * 0.16 AS pr, unit * 0.16 * 1.8 AS lr),
+  pts AS (SELECT o AS i, (o - 1) * unit AS x, coalesce(decorated[o], false) AS dec
+          FROM unnest(image) WITH ORDINALITY AS t(val, o)),
+  arcs AS (SELECT (o - 1) * unit AS xa, (val - 1) * unit AS xb, coalesce(decorated[o], false) AS dec
+           FROM unnest(image) WITH ORDINALITY AS t(val, o) WHERE val IS NOT NULL AND val <> o),
+  loops AS (SELECT (o - 1) * unit AS x, coalesce(decorated[o], false) AS dec
+            FROM unnest(image) WITH ORDINALITY AS t(val, o) WHERE val = o),
+  geo AS (SELECT pr, greatest(n - 1, 0) * unit AS w,
+          greatest(coalesce((SELECT max(abs(xb - xa)) / 2.0 FROM arcs), 0),
+                   CASE WHEN EXISTS (SELECT 1 FROM loops) THEN 2 * lr ELSE 0 END) AS maxr
+          FROM dim)
+  -- args: 1,2=x0,y0 · 3,4=vw,vh (viewBox, padded by the point radius) · 5=arcs (semicircle, i→image[i], bowing
+  -- below the baseline — dashed when decorated) · 6=loops (fixed points, tangent below the point — hollow+dashed
+  -- when decorated) · 7=points (one dot per position, hollow when decorated[i])
+  SELECT format(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="%1$s %2$s %3$s %4$s" role="img" aria-label="permutation arc diagram">%5$s%6$s%7$s</svg>',
+    trim_scale(round(-(pr + 1), 2)), trim_scale(round(-(pr + 1), 2)),
+    trim_scale(round(w + 2 * (pr + 1), 2)), trim_scale(round(maxr + 2 * (pr + 1), 2)),
+    coalesce((SELECT string_agg(format(
+      '<path d="M %s,0 A %s,%s 0 0,1 %s,0" fill="none" stroke="var(--enumeratio-accent,#d97706)" stroke-width="1.5"%s/>',
+      trim_scale(round(least(xa, xb), 2)), trim_scale(round(abs(xb - xa) / 2.0, 2)), trim_scale(round(abs(xb - xa) / 2.0, 2)),
+      trim_scale(round(greatest(xa, xb), 2)), CASE WHEN dec THEN ' stroke-dasharray="3,2"' ELSE '' END
+    ), '' ORDER BY least(xa, xb)) FROM arcs), ''),
+    coalesce((SELECT string_agg(format(
+      '<circle cx="%s" cy="%s" r="%s" fill="none" stroke="var(--enumeratio-accent,#d97706)" stroke-width="1.5"%s/>',
+      trim_scale(round(x, 2)), trim_scale(round((SELECT lr FROM dim), 2)), trim_scale(round((SELECT lr FROM dim), 2)),
+      CASE WHEN dec THEN ' stroke-dasharray="2,1.5"' ELSE '' END
+    ), '' ORDER BY x) FROM loops), ''),
+    coalesce((SELECT string_agg(
+      CASE WHEN dec THEN format('<circle cx="%s" cy="0" r="%s" fill="none" stroke="var(--enumeratio-text,currentColor)" stroke-width="2"/>',
+                                 trim_scale(round(x, 2)), trim_scale(round((SELECT pr FROM dim), 2)))
+           ELSE format('<circle cx="%s" cy="0" r="%s" fill="var(--enumeratio-text,currentColor)"/>',
+                        trim_scale(round(x, 2)), trim_scale(round((SELECT pr FROM dim), 2))) END
+    , '' ORDER BY i) FROM pts), '')
+  ) FROM geo;
+$$;
+
+-- endofunction functional graph: n points evenly spaced on a circle (point i at angle 2π(i−1)/n, starting at 12
+-- o'clock, clockwise), a straight chord with an arrowhead from i to images[i] for every non-fixed point, and a
+-- small loop tangent to the circle (bulging outward, radially) for a fixed point i=images[i]. Hoisted here (#283
+-- phase 3 — was endofunction_glyph.sql, a permutations-plus file) because core's glyph_kinds.sql reuses it for the
+-- plain `permutation` carrier's 'cycle_diagram' kind (a permutation IS an endofunction, viewed as its own cycles),
+-- alongside packs/permutations-plus/endofunction_glyph.sql, which still `-- requires: glyphs` and reuses it here.
+CREATE FUNCTION endofunction_graph_svg(images int[], unit numeric DEFAULT 18, r numeric DEFAULT 3.5, loop_r numeric DEFAULT 7)
+RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  WITH dim AS (SELECT greatest(1, coalesce(array_length(images, 1), 0)) AS n),
+  -- pg gotcha: cos/sin/pi/sqrt are double precision, and round(double precision, int) doesn't exist — do the
+  -- trig in float8, then cast to numeric once (ux/uy) so every downstream round()/^ sees numeric, not double.
+  geo AS (SELECT (greatest(24, unit::float8 * n / (2 * pi())))::numeric AS rad FROM dim),
+  pts AS (
+    SELECT o AS i, val,
+           (rad::float8 * cos(2 * pi() * (o - 1) / n - pi() / 2))::numeric AS ux,   -- unit direction from center, point i
+           (rad::float8 * sin(2 * pi() * (o - 1) / n - pi() / 2))::numeric AS uy
+    FROM unnest(images) WITH ORDINALITY AS t(val, o), dim, geo
+  ),
+  arrows AS (
+    SELECT p.i, p.ux AS xs, p.uy AS ys, q.ux AS xt, q.uy AS yt,
+           sqrt((q.ux - p.ux) * (q.ux - p.ux) + (q.uy - p.uy) * (q.uy - p.uy)) AS len
+    FROM pts p JOIN pts q ON q.i = p.val WHERE p.val <> p.i
+  ),
+  loops AS (SELECT i, ux, uy FROM pts WHERE val = i)
+  -- args: 1,2=x0,y0 · 3,4=vw,vh (viewBox, centered on the circle, padded for loops+arrowheads) · 5=chords+
+  -- arrowheads (i→images[i], straight lines through the circle interior) · 6=self-loops (fixed points, tangent
+  -- outward) · 7=points (one dot per element, on the circle)
+  SELECT format(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="%1$s %2$s %3$s %4$s" role="img" aria-label="functional graph">%5$s%6$s%7$s</svg>',
+    trim_scale(round(-((SELECT rad FROM geo) + loop_r + r + 1), 2)), trim_scale(round(-((SELECT rad FROM geo) + loop_r + r + 1), 2)),
+    trim_scale(round(2 * ((SELECT rad FROM geo) + loop_r + r + 1), 2)), trim_scale(round(2 * ((SELECT rad FROM geo) + loop_r + r + 1), 2)),
+    coalesce((SELECT string_agg(
+      format('<line x1="%s" y1="%s" x2="%s" y2="%s" stroke="var(--enumeratio-accent,#d97706)" stroke-width="1.5"/>',
+        trim_scale(round(xs, 2)), trim_scale(round(ys, 2)),
+        trim_scale(round(xt - (xt - xs) / len * r, 2)), trim_scale(round(yt - (yt - ys) / len * r, 2))) ||
+      format('<polygon points="%s,%s %s,%s %s,%s" fill="var(--enumeratio-accent,#d97706)"/>',
+        trim_scale(round(xt - (xt - xs) / len * r, 2)), trim_scale(round(yt - (yt - ys) / len * r, 2)),
+        trim_scale(round(xt - (xt - xs) / len * (r + 7) - (yt - ys) / len * 3, 2)), trim_scale(round(yt - (yt - ys) / len * (r + 7) + (xt - xs) / len * 3, 2)),
+        trim_scale(round(xt - (xt - xs) / len * (r + 7) + (yt - ys) / len * 3, 2)), trim_scale(round(yt - (yt - ys) / len * (r + 7) - (xt - xs) / len * 3, 2)))
+    , '' ORDER BY i) FROM arrows), ''),
+    coalesce((SELECT string_agg(format(
+      '<circle cx="%s" cy="%s" r="%s" fill="none" stroke="var(--enumeratio-accent,#d97706)" stroke-width="1.5"/>',
+      trim_scale(round(ux * (1 + loop_r / (SELECT rad FROM geo)), 2)), trim_scale(round(uy * (1 + loop_r / (SELECT rad FROM geo)), 2)), trim_scale(round(loop_r, 2))
+    ), '' ORDER BY i) FROM loops), ''),
+    (SELECT string_agg(format(
+      '<circle cx="%s" cy="%s" r="%s" fill="var(--enumeratio-text,currentColor)"/>',
+      trim_scale(round(ux, 2)), trim_scale(round(uy, 2)), trim_scale(round(r, 2))
+    ), '' ORDER BY i) FROM pts));
+$$;
+
 -- Which carriers have an SVG payload — DERIVED from the overloads, not a second registry to keep in sync: a new
 -- glyph_svg(<carrier>) lights the carrier up automatically. The client reads this to decide when to ask for an SVG.
 -- See https://github.com/enumeratio/enumeratio/wiki/Visual-Representations.

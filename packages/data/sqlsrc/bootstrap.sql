@@ -46,8 +46,11 @@ CREATE FUNCTION base_pack_guard_allows_same_pack_test() RETURNS boolean LANGUAGE
 DECLARE fired boolean := false;
 BEGIN
   BEGIN
+    -- pick a row EXPLICITLY owned by core (pack = 'core'), not "alphabetically first" — a pack whose own
+    -- collections sort before core's (e.g. permutations-plus's affine_permutations) would otherwise pick a
+    -- pack-owned row here while this runs under the core GUC, firing the guard for the wrong reason (#283 phase 3).
     UPDATE base_map SET is_bijection = is_bijection
-     WHERE (collection, map_id) = (SELECT collection, map_id FROM base_map ORDER BY collection, map_id LIMIT 1);
+     WHERE (collection, map_id) = (SELECT collection, map_id FROM base_map WHERE pack = 'core' ORDER BY collection, map_id LIMIT 1);
   EXCEPTION WHEN OTHERS THEN fired := true;
   END;
   RETURN NOT fired;

@@ -41,6 +41,29 @@ CREATE FUNCTION binomial(n int, k int) RETURNS numeric LANGUAGE plpgsql IMMUTABL
 CREATE FUNCTION double_factorial_odd(n int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
   DECLARE p numeric := 1; i int; BEGIN FOR i IN 1..n LOOP p := p * (2*i - 1); END LOOP; RETURN p; END $$;
 
+-- Eulerian number ⟨n,k⟩ = the descent triangle ([[OEIS:A008292]]): ⟨n,k⟩ = (k+1)·⟨n-1,k⟩ + (n-k)·⟨n-1,k-1⟩,
+-- ⟨0,0⟩=1, ⟨n,0⟩=1. Tabulated row-by-row, columns capped at k. Hoisted here (#283 phase 3 — was
+-- k_descent_permutations.sql, a permutations-plus file) because core's generating_functions.sql (gf_eulerian_row)
+-- reuses it, same shape as binomial/factorial above; packs/permutations-plus/k_descent_permutations.sql still
+-- `-- requires: utilities` and calls it from here for its own fiber_count.
+CREATE FUNCTION eulerian_number(n int, k int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE row numeric[] := ARRAY[1::numeric];   -- row[j+1] = ⟨i, j⟩; starts at ⟨0,0⟩=1
+          newrow numeric[]; i int; j int; maxk int;
+  BEGIN
+    IF n < 0 OR k < 0 OR k > n THEN RETURN 0; END IF;
+    IF n = 0 THEN RETURN CASE WHEN k = 0 THEN 1 ELSE 0 END; END IF;
+    IF k > n - 1 THEN RETURN 0; END IF;                                    -- a length-n word has at most n-1 descents
+    FOR i IN 1..n LOOP
+      maxk := least(i - 1, k);                                            -- ⟨i,j⟩ nonzero only for j in 0..i-1
+      newrow := ARRAY[]::numeric[];
+      FOR j IN 0..maxk LOOP
+        newrow := newrow || ((j + 1)::numeric * coalesce(row[j+1], 0) + (i - j)::numeric * coalesce(row[j], 0));
+      END LOOP;
+      row := newrow;
+    END LOOP;
+    RETURN coalesce(row[k+1], 0);
+  END $$;
+
 -- Low-precision variants: native bigint (int8) arithmetic instead of arbitrary-precision numeric. Same value on the
 -- int8-representable domain, but machine integers — a real win (≈1.5–2×) in tight enumeration loops (e.g. a
 -- combinatorial-number-system unrank) whose results are known bounded. Overflow RAISES ('bigint out of range'),

@@ -1,4 +1,7 @@
--- requires: realizer, catalog-resolution, glyphs, categories, constructions, prime_compositions, carlitz_compositions, zigzag_composition, ascent_sequences, simple_permutations, pattern_avoiding_permutations, non_crossing_permutations
+-- requires: realizer, catalog-resolution, glyphs, categories, constructions, prime_compositions, carlitz_compositions, zigzag_composition, ascent_sequences
+-- (pattern_avoiding_permutations was a stale requires header — nothing in this file calls it, #283 phase 3 grep;
+-- simple_permutations/non_crossing_permutations rows moved to packs/permutations-plus/traits.permutations-plus.sql,
+-- base_collection_trait_manual.collection REFERENCES base_collection)
 -- requires-tag: collection
 -- The trait vocabulary + the derived collection→trait assignment. Traits are real rows (id, description, implies);
 -- assignments are computed from the registries and closed transitively over `implies` (has_glyph/has_polytope ⇒
@@ -60,14 +63,11 @@ INSERT INTO base_collection_trait_manual (trait, collection) VALUES
 --   carlitz_compositions — A003242, generating-function only (Carlitz 1976); no closed form is known
 --   zigzag_composition   — no OEIS entry even cited; the file's own count was brute-force verified, not derived
 --   ascent_sequences     — A022493 (Fishburn numbers), only a continued-fraction generating function
---   simple_permutations  — A111111, atoms of the substitution decomposition; no closed form (only asymptotics)
---   vexillary_permutations — A005802, only a sum over standard-tableaux hook-length products
---   non_crossing_permutations — cycles forming a non-crossing set partition; no closed form found in the audit
+-- (simple_permutations/non_crossing_permutations rows, and vexillary_permutations — a base_restrict row INSIDE
+-- pattern_avoiding_permutations.sql — moved to the pack, same reason)
 INSERT INTO base_collection_trait_manual (trait, collection) VALUES
   ('no_closed_form_count', 'prime_compositions'), ('no_closed_form_count', 'carlitz_compositions'),
-  ('no_closed_form_count', 'zigzag_composition'), ('no_closed_form_count', 'ascent_sequences'),
-  ('no_closed_form_count', 'simple_permutations'), ('no_closed_form_count', 'vexillary_permutations'),
-  ('no_closed_form_count', 'non_crossing_permutations');
+  ('no_closed_form_count', 'zigzag_composition'), ('no_closed_form_count', 'ascent_sequences');
 
 -- The sorted family, assigned from each carrier's canonical order (see the carrier type comments). Verified against
 -- sampled element data by the base_example rows below, not asserted from memory.

@@ -1,12 +1,13 @@
--- requires: arrangements, decorated_permutation_glyph
+-- requires: arrangements, glyphs
 -- arrangement_glyph — the page-space glyph for the arrangement carrier (issue #222 glyph batch): reuses
--- permutation_arc_svg (decorated_permutation_glyph.sql). An arrangement's `word` holds only the injective word
+-- permutation_arc_svg (hoisted into core's glyphs.sql — #283 phase 3). An arrangement's `word` holds only the injective word
 -- itself — n (the ground it's drawn from) is NOT stored on the value (see arrangements.sql), so the picture sizes
 -- itself off the word's own content: draw a baseline of length n' = max(length(word), max(word)) positions, an
 -- arc from domain row i to word[i] for each i in the word, and leave rows beyond the word's length as bare points
 -- with no outgoing arc (permutation_arc_svg's NULL-image convention, the same "no mark here" idea
 -- rook_placement_grid_svg uses for a preference-free row). No decoration semantics apply here, so `decorated` is
 -- left NULL throughout.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(a arrangement) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH w AS (SELECT (a).word AS word),
   nn AS (SELECT greatest(coalesce(array_length(word,1),0), coalesce((SELECT max(x) FROM unnest(word) x), 0)) AS n FROM w)

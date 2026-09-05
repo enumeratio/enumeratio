@@ -1,4 +1,8 @@
--- requires: permutations.stats, permutation_maps, statistics
+-- requires: permutations.stats, statistics
+-- (the "reverse_complement compound is possibly_aliased" example, which needs permutation_maps.sql's hand-rolled
+-- reverse_complement row to exist, moved to packs/permutations-plus/map_compose.permutations-plus.sql — #283
+-- phase 3; note packs/refs/examples.map_compose.sql already owns that basename, so this uses the <anchor>.<pack>
+-- naming instead, per #308)
 -- map_compose — issue #128: a composition operator over base_map rows, g∘f: A→C from f: A→B and g: B→C, plus
 -- derived stat∘map compounds (a stat on the far end of a map chain, pulled back to a stat on the start).
 --
@@ -192,11 +196,6 @@ SELECT map_compose_stat_materialize('permutations', ARRAY['cycle_type'], 'larges
 
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-
-  ('map_compose', 'the reverse_complement compound is flagged possibly_aliased — a different hand-authored map already covers permutations→permutations',
-   'eq', 'true', 'discoverability catches the alias BEFORE a curator mints a duplicate',
-   $q$ SELECT possibly_aliased FROM base_map_compound
-       WHERE domain = 'permutations' AND codomain = 'permutations' AND map_path = ARRAY['reverse','complement'] $q$),
 
   ('map_compose', 'map_compose_resolve guards a mismatched chain: [cycle_type,reverse] fails — reverse is not a map on integer_partitions',
    'eq', 'true', 'the domain/codomain guard is "the next lookup finds nothing", not a bolted-on type check',

@@ -88,17 +88,17 @@ CREATE FUNCTION sequence_term(seq text, n int) RETURNS numeric LANGUAGE plpgsql 
 -- `sequence` is set where the row-sum is a realized number-sequence collection (Pascal → powers_of_two, Stirling-2 →
 -- Bell, Narayana → Catalan, k-part → partition, surjections → Fubini); NULL where that sequence isn't its own
 -- collection yet (compositions → 2^{n−1}, weak compositions, Gelfand–Tsetlin, …).
+-- (surjections_onto_k/k_cycle_permutations/k_descent_permutations rows moved to
+-- packs/permutations-plus/triangle_slices.permutations-plus.sql — #283 phase 3; base_triangle itself has no FK,
+-- but the row-specific examples below call these collections' constructors directly)
 INSERT INTO base_triangle (collection, row_axis, col_axis, title, sequence) VALUES
   ('k_subsets',                  'n', 'k', 'Pascal''s triangle — C(n,k)', 'powers_of_two'),
   ('set_partitions_into_k_blocks', 'n', 'k', 'Stirling numbers of the 2nd kind — S(n,k)', 'bell_numbers'),
   ('compositions_into_k_parts',    'n', 'k', 'Compositions of n into k parts — C(n−1,k−1)', NULL),
   ('weak_compositions_into_k_parts','n','k', 'Weak compositions of n into k parts — C(n+k−1,k−1)', NULL),
-  ('surjections_onto_k',           'n', 'k', 'Surjections [n] ↠ [k] — k!·S(n,k)', 'fubini_numbers'),
   ('narayana_numbers',             'n', 'k', 'Narayana numbers — N(n,k)', 'catalan_numbers'),
   ('gelfand_tsetlin',              'n', 'k', 'Gelfand–Tsetlin patterns by size and entry bound', NULL),
-  ('k_dyck_paths',                 'n', 'k', 'k-Dyck paths by semilength and order', NULL),
-  ('k_cycle_permutations',         'n', 'k', 'Unsigned Stirling numbers of the 1st kind — cycle triangle c(n,k)', 'factorial_numbers'),
-  ('k_descent_permutations',       'n', 'k', 'Eulerian numbers — descent triangle ⟨n,k⟩', 'factorial_numbers');
+  ('k_dyck_paths',                 'n', 'k', 'k-Dyck paths by semilength and order', NULL);
 
 -- living assertions: the slice machinery against known triangle rows / a column / a diagonal (suite is cross-cutting,
 -- so these stay collection = NULL like the maps / boundary suites).
@@ -128,22 +128,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(triangle_rowsum('narayana_numbers', n)::text, ',' ORDER BY n) FROM generate_series(1,6) n $q$),
   ('triangles','Pascal row-sum is powers of two (Σ_k C(n,k) = 2^n, n=0..6)','eq','1,2,4,8,16,32,64',
    'triangle_rowsum(k_subsets, n) = 2^n, the newly-registered powers_of_two sequence',$q$
-    SELECT string_agg(triangle_rowsum('k_subsets', n)::text, ',' ORDER BY n) FROM generate_series(0,6) n $q$),
-  ('triangles','surjection-triangle row-sum is the Fubini sequence (Σ_k k!·S(n,k), n=0..6)','eq','1,1,3,13,75,541,4683',
-   'triangle_rowsum(surjections_onto_k, n) = a(n), the newly-registered fubini_numbers sequence',$q$
-    SELECT string_agg(triangle_rowsum('surjections_onto_k', n)::text, ',' ORDER BY n) FROM generate_series(0,6) n $q$),
-  -- cycle triangle (unsigned Stirling-1, A132393) and Eulerian triangle (A008292): both refine permutations(n) = n!
-  -- by a per-permutation statistic (cycle count / descent count) — same triangle-of-a-realized-collection pattern
-  -- as Pascal/Stirling-2/Narayana/surjections above, just riding the existing k_cycle_permutations /
-  -- k_descent_permutations engines rather than a fresh carrier (issue #77).
-  ('triangles','cycle triangle (unsigned Stirling-1) row n=4 = 0,6,11,6,1 (k_cycle_permutations)','eq','0,6,11,6,1',
-   'c(4,k) for k=0..4; c(4,0)=0 is the trivial no-cycle column (k axis is declared 0..n)',$q$
-    SELECT string_agg(value::text, ',' ORDER BY col_index) FROM triangle_row('k_cycle_permutations', 4) $q$),
-  ('triangles','Eulerian triangle row n=4 = 1,11,11,1 (k_descent_permutations)','eq','1,11,11,1','⟨4,k⟩ for k=0..3 (A008292)',$q$
-    SELECT string_agg(value::text, ',' ORDER BY col_index) FROM triangle_row('k_descent_permutations', 4) $q$),
-  ('triangles','cycle-triangle row-sum is n! (Σ_k c(n,k), n=0..6)','eq','1,1,2,6,24,120,720',
-   'triangle_rowsum(k_cycle_permutations, n) = n! = factorial_numbers term n',$q$
-    SELECT string_agg(triangle_rowsum('k_cycle_permutations', n)::text, ',' ORDER BY n) FROM generate_series(0,6) n $q$),
-  ('triangles','Eulerian-triangle row-sum is n! (Σ_k ⟨n,k⟩, n=0..6)','eq','1,1,2,6,24,120,720',
-   'triangle_rowsum(k_descent_permutations, n) = n! = factorial_numbers term n',$q$
-    SELECT string_agg(triangle_rowsum('k_descent_permutations', n)::text, ',' ORDER BY n) FROM generate_series(0,6) n $q$);
+    SELECT string_agg(triangle_rowsum('k_subsets', n)::text, ',' ORDER BY n) FROM generate_series(0,6) n $q$);
+  -- (the surjection-triangle/cycle-triangle/Eulerian-triangle row + row-sum examples moved to
+  -- packs/permutations-plus/triangle_slices.permutations-plus.sql — #283 phase 3, same reason as their
+  -- base_triangle rows above)

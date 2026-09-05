@@ -28,6 +28,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('fubini_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
     SELECT cardinality(fubini_numbers())::text $q$),
   ('fubini_numbers','contains is rank-agnostic: 75 ∈, 100 ∉ (via <@)','eq','true|false','generated contains + operator',$q$
-    SELECT (75::numeric <@ fubini_numbers())::text || '|' || (100::numeric <@ fubini_numbers())::text $q$),
-  ('fubini_numbers','a(n) = |surjections_onto_k row-sum|: n=0..6 agree','eq','true','the floor value IS the surjection-triangle row-sum',$q$
-    SELECT bool_and((unrank(fubini_numbers(), n)).value = triangle_rowsum('surjections_onto_k', n)::numeric)::text FROM generate_series(0,6) n $q$);
+    SELECT (75::numeric <@ fubini_numbers())::text || '|' || (100::numeric <@ fubini_numbers())::text $q$);
+-- the surjections_onto_k row-sum cross-check (a(n) = Σ_k k!·S(n,k)) moved to
+-- packs/permutations-plus/triangle_slices.permutations-plus.sql — surjections_onto_k is a permutations-plus
+-- collection, #283 phase 3 (same pattern as motzkin_numbers dropping its motzkin_paths cross-check to `paths`).

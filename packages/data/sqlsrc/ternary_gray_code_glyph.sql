@@ -1,6 +1,6 @@
--- requires: ternary_gray_codes, ascent_sequence_glyph
+-- requires: ternary_gray_codes, glyphs
 -- ternary_gray_code_glyph — the page-space glyph for the ternary_gray_code carrier (issue #222 glyph batch):
--- reuses sequence_bar_svg (ascent_sequence_glyph.sql) — a bar per digit, height ∝ the digit (0,1,2), labelled
+-- reuses sequence_bar_svg (hoisted into core's glyphs.sql — #283 phase 3) — a bar per digit, height ∝ the digit (0,1,2), labelled
 -- underneath.
 CREATE FUNCTION glyph_svg(w ternary_gray_code) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((w).digits) $$;
 

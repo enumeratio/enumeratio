@@ -44,7 +44,9 @@ INSERT INTO base_tag (id, title, description, implies) VALUES
 -- The figurate/prime_family/factorization/divisor/digit_based rows for number-sets collections live in
 -- packs/number-sets/tags.number-sets.sql (#283 phase 3 extraction) — base_collection_tag does not filter to
 -- existing base_collection rows, so an orphaned row here would break the count-cache guard under core alone
--- (the same bug the polytopes extraction hit — see meta-collections.stats.sql).
+-- (the same bug the polytopes extraction hit — see meta-collections.stats.sql). Same reason the permutation/
+-- symmetric/function/clean-batch rows for permutations-plus collections live in
+-- packs/permutations-plus/tags.permutations-plus.sql.
 INSERT INTO base_collection_tag_manual (tag, collection)
 SELECT tag, collection FROM (VALUES
   -- figurate (core-owned members only)
@@ -74,12 +76,12 @@ SELECT tag, collection FROM (VALUES
   ('composition', 'step_compositions'), ('composition', 'dyadic_compositions'), ('composition', 'carlitz_compositions'),
   ('composition', 'fibonacci_compositions'), ('composition', 'prime_compositions'), ('composition', 'tri_compositions'),
   ('composition', 'tetra_compositions'), ('composition', 'palindromic_compositions'),
-  -- permutations
-  ('permutation', 'permutations'), ('permutation', 'alternating_permutations'), ('permutation', 'grassmannian_permutations'), ('permutation', 'cograssmannian_permutations'), ('permutation', 'connected_permutations'), ('permutation', 'cyclic_permutations'), ('permutation', 'derangements'), ('permutation', 'permutations_avoiding_123'), ('permutation', 'permutations_avoiding_132'), ('permutation', 'permutations_avoiding_213'), ('permutation', 'permutations_avoiding_231'), ('permutation', 'permutations_avoiding_312'), ('permutation', 'permutations_avoiding_321'), ('permutation', 'vexillary_permutations'), ('permutation', 'separable_permutations'),
-  ('permutation', 'involutions'), ('permutation', 'even_permutations'), ('permutation', 'affine_permutations'),
-  ('permutation', 'decorated_permutations'), ('permutation', 'lehmer_codes'), ('permutation', 'rook_placements'),
-  ('permutation', 'baxter_permutations'), ('permutation', 'simple_permutations'), ('permutation', 'non_crossing_permutations'),
-  ('permutation', 'k_colored_permutations'), ('permutation', 'k_cycle_permutations'), ('permutation', 'k_descent_permutations'),
+  -- permutations (core-owned members only — the rest are in packs/permutations-plus/tags.permutations-plus.sql;
+  -- permutations_avoiding_*/vexillary_permutations/separable_permutations are base_restrict rows INSIDE
+  -- pattern_avoiding_permutations.sql, which moved with that file, #283 phase 3)
+  ('permutation', 'permutations'), ('permutation', 'derangements'),
+  ('permutation', 'involutions'), ('permutation', 'even_permutations'),
+  ('permutation', 'rook_placements'),
   -- lattice paths
   ('path', 'dyck_paths'), ('path', 'k_dyck_paths'), ('path', 'motzkin_paths'), ('path', 'k_motzkin_paths'), ('path', 'colored_motzkin_paths'), ('path', 'schroeder_paths'), ('path', 'delannoy_paths'),
   ('path', 'riordan_paths'), ('path', 'ballot_sequences'), ('path', 'narayana_numbers'),
@@ -95,24 +97,24 @@ SELECT tag, collection FROM (VALUES
   -- set partitions
   ('set_partition', 'set_partitions'), ('set_partition', 'set_partitions_into_k_blocks'), ('set_partition', 'non_crossing_partitions'), ('set_partition', 'non_nesting_partitions'),
   ('set_partition', 'set_compositions'), ('set_partition', 'restricted_growth_strings'), ('set_partition', 'signed_set_compositions'),
-  -- selections
-  ('selection', 'subsets'), ('selection', 'k_subsets'), ('selection', 'multisets'), ('selection', 'finsets'), ('selection', 'sparse_subsets'), ('selection', 'signed_subsets'), ('selection', 'arrangements'),
+  -- selections (arrangements moved to packs/permutations-plus/tags.permutations-plus.sql)
+  ('selection', 'subsets'), ('selection', 'k_subsets'), ('selection', 'multisets'), ('selection', 'finsets'), ('selection', 'sparse_subsets'), ('selection', 'signed_subsets'),
   -- polytope faces (associahedron/cross_polytope/permutahedron moved to packs/polytopes/tags.polytopes.sql — #283
   -- phase 2.2, they're that pack's own collections; dissections stays here, it's core)
   ('polytope', 'dissections'),
-  -- signed / symmetric
-  ('symmetric', 'signed_permutations'), ('symmetric', 'signed_subsets'), ('symmetric', 'k_colored_permutations'), ('symmetric', 'signed_set_compositions'),
+  -- signed / symmetric (signed_permutations/k_colored_permutations moved to permutations-plus)
+  ('symmetric', 'signed_subsets'), ('symmetric', 'signed_set_compositions'),
   -- matrices
   ('matrix', 'alternating_sign_matrices'),
-  -- functions
-  ('function', 'endofunctions'), ('function', 'subexcedant_seqs'), ('function', 'surjections'), ('function', 'surjections_onto_k'), ('function', 'parking_functions'),
-  ('function', 'non_decreasing_parking_functions'),
+  -- functions: entirely permutations-plus (endofunctions/subexcedant_seqs/surjections*/parking_functions*) — see
+  -- packs/permutations-plus/tags.permutations-plus.sql
+  -- ordered_factorizations is partitions-plus — see packs/partitions-plus/tags.partitions-plus.sql
   -- internal machinery
   ('internal', 'glyphs'),
   -- the base object of the composition tower — the atoms of [n] (≅ the underlying set of ℤ/nℤ)
   ('combinatorial', 'finite_set_elements'),
   -- ── clean-batch port (numbers precursor) ──────────────────────────────────────────────────────────────
-  ('permutation', 'boolean_permutations'), ('permutation', 'smooth_permutations'),
+  -- (boolean_permutations/smooth_permutations moved to packs/permutations-plus/tags.permutations-plus.sql)
   ('word', 'fib_strings'), ('word', 'tri_strings'), ('word', 'lucas_strings'),
   ('tableau', 'syt_two_row'), ('tableau', 'syt_two_column'), ('tableau', 'syt_hook_shape'),
   ('composition', 'triangular_composition'),

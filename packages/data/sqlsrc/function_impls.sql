@@ -127,13 +127,15 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   -- #293: both sides now hold the same length-(n-1) array — the always-0 trailing entry is dropped from the
   -- stored permutation_inversion carrier, and packages/math's lehmer_code() drops it too (notation() appends it
   -- back on serialization). So the twin is honest and selfcert-engine differentials pg==ts.
-  ('lehmer_code', 'pg', 'to_inversion', '{permutation}', 'permutation_inversion', 'numeric', NULL),
+  -- (lehmer_code's 'pg' row moved to packs/permutations-plus/function_impls.permutations-plus.sql — to_inversion
+  -- and its permutation_inversion return type are defined in lehmer_codes.sql, a permutations-plus file, #283
+  -- phase 3; the identity itself and its 'ts' row — packages/math has no pack split — stay core.)
   ('lehmer_code', 'ts', 'lehmer_code', '{permutation}', 'permutation_inversion', 'float64', NULL),
 
   ('inversions', 'pg', 'perm_inversions', '{permutation}', 'int', 'numeric', NULL),
   ('inversions', 'ts', 'inversions', '{permutation}', 'int', 'float64', NULL),
 
-  ('stirling1', 'pg', 'stirling_first_unsigned', '{int,int}', 'numeric', 'numeric', NULL),
+  -- (stirling1's 'pg' row moved to the pack too — stirling_first_unsigned is defined in k_cycle_permutations.sql)
   ('stirling1', 'ts', 'stirling1', '{int,int}', 'numeric', 'float64', NULL),
 
   ('eulerianA', 'pg', 'eulerian_number', '{int,int}', 'numeric', 'numeric', NULL),

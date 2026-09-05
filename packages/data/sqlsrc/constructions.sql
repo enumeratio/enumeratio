@@ -154,27 +154,22 @@ CREATE TABLE base_alpha (
   FOREIGN KEY (construction, pos) REFERENCES base_construction_param (construction, pos),
   FOREIGN KEY (collection, alpha_axis) REFERENCES base_grade (collection, name)   -- MATCH SIMPLE: skipped when alpha_axis NULL
 );
+-- (lehmer_codes/endofunctions/k_colored_permutations/signed_permutations bindings moved to
+-- packs/permutations-plus/constructions.permutations-plus.sql — base_alpha.collection REFERENCES base_collection,
+-- so a permutations-plus row here would FK-fail when loading core alone, #283 phase 3)
 INSERT INTO base_alpha (collection, construction, pos, type_former, param, alpha_axis, generic, note) VALUES
   ('subsets',         'finset',          1, 'Fin', 'n',     'n',    false, 'α = Fin n (inhabitants enumerated by finite_set_elements); Nat param n = the size axis; 2ⁿ'),
   ('finsets',         'finset',          1, 'ℕ',   NULL,    NULL,   false, 'α = ℕ — the whole countable ground, no Nat param; ≅ ℕ'),
   ('k_subsets',       'finset',          1, 'Fin', 'n',     'n',    false, 'the size-k slice of subsets; α = Fin n, n at axis n; C(n,k)'),
   ('boolean_algebra', 'boolean_algebra', 1, 'Fin', 'n',     'n',    false, 'the 2^[n] lattice; α = Fin n (finite, as the lattice needs), n at axis n'),
   ('multisets',       'multiset',        1, 'Fin', 'n',     'n',    false, 'k-multisets over [n]; α = Fin n, n at the ground axis (size is the k axis); multichoose'),
-  ('lehmer_codes',    'dependent_words',       1, 'Fin', 'n - i', 'size', false, 'mixed radix: place i (1-based) draws from Fin (n − i), a DECLINING radix ⇒ ∏(n−i) = n!; the factorial base'),
-  -- the maps family α → β: a word of length m over n letters IS a map [m] → [n]; endofunctions are the diagonal β = α
+  -- the maps family α → β: a word of length m over n letters IS a map [m] → [n]
   ('words',           'maps',            1, 'Fin', 'size',  'size', false, 'domain Fin size — the word''s length, an ordinary grade binding'),
   ('words',           'maps',            2, 'Fin', 'b',     'base', true,  'codomain Fin b — the alphabet; its Nat b binds THIS collection''s `base` axis (a HOLE ⇒ generic); bⁿ'),
   ('binary_words',    'maps',            1, 'Fin', 'n',     'n',    false, 'domain Fin n — the length'),
   ('binary_words',    'maps',            2, 'Fin', '2',     NULL,   false, 'codomain Fin 2 (alphabet {0,1}); type-param FIXED, no ranging axis; 2ⁿ'),
-  ('endofunctions',   'maps',            2, 'Fin', 'n',     'n',    false, 'codomain Fin n = the DOMAIN — the diagonal β = α (parametric, not dependent); nⁿ'),
-  ('endofunctions',   'maps',            1, 'Fin', 'n',     'n',    false, 'domain Fin n'),
   ('signed_subsets',  'maps',            1, 'Fin', 'n',     'n',    false, 'domain Fin n — the axes'),
   ('signed_subsets',  'maps',            2, 'Fin', '3',     NULL,   false, 'codomain Fin 3 = {absent, +, −}: a signed subset IS this function; 3ⁿ (equally Σ over subsets S of maps(S, Fin 2))'),
-  -- products: a collection-former fills each hole; the param is the factor''s argument list in THIS collection''s axes
-  ('k_colored_permutations', 'product', 1, 'permutations', 'size',        'size',   false, 'a permutation of [size]'),
-  ('k_colored_permutations', 'product', 2, 'words',        'size, colors','colors', true,  'a colour word: maps(Fin size, Fin colors) = words(size, colors); colors is the hole ⇒ generic. ℤ_k ≀ Sₙ, kⁿ·n!'),
-  ('signed_permutations',    'product', 1, 'permutations', 'size',        'size',   false, 'a permutation of [size]'),
-  ('signed_permutations',    'product', 2, 'words',        'size, 2',     NULL,     false, 'the sign word: words(size, 2) — the colour count PINNED at 2 (Bₙ = ℤ₂ ≀ Sₙ, 2ⁿ·n!)'),
   -- a dependent sum: the colours live on the path''s OWN level steps, so the second type depends on the first''s value
   ('colored_motzkin_paths',  'sigma',   1, 'motzkin_paths','n',           'n',      false, 'a Motzkin path a of length n'),
   ('colored_motzkin_paths',  'sigma',   2, 'Fin',          'r',           'r',      true,  'β a = maps(Fin levels(a), Fin r): one of r colours on each of a''s level steps; |Σ| = Σₐ r^levels(a) — symbolic, no product formula');
@@ -182,11 +177,7 @@ INSERT INTO base_alpha (collection, construction, pos, type_former, param, alpha
 -- bespoke-carrier + inclusion-map case). Recorded on the binding so the construction graph is complete — a bare
 -- maps_of(fin(n), fin(k)) still resolves to the WHOLE application (words), never to a restricted instance, and the
 -- ADT cardinality formula does not apply (the oracle abstains); the containment is proven by the examples below.
-INSERT INTO base_alpha (collection, construction, pos, type_former, param, alpha_axis, generic, restricted, note) VALUES
-  ('surjections_onto_k', 'maps', 1, 'Fin', 'n', 'n', false, 'surjective', 'domain Fin n'),
-  ('surjections_onto_k', 'maps', 2, 'Fin', 'k', 'k', false, 'surjective', 'codomain Fin k, every letter used — the surjective maps [n] ↠ [k]; k!·S(n,k) ≤ kⁿ'),
-  ('arrangements',       'maps', 1, 'Fin', 'length', 'length', false, 'injective', 'domain Fin length — the word''s length'),
-  ('arrangements',       'maps', 2, 'Fin', 'size',   'size',   false, 'injective', 'codomain Fin size, no letter twice — the injective maps [k] ↪ [n]; n!/(n−k)! ≤ nᵏ');
+-- (surjections_onto_k/arrangements moved to the pack, same FK reason)
 -- a binding's kind must satisfy its position's requirement — the lattice as a constraint, checked by the example below
 
 -- base_collection_construction — the queryable join: reconstructs the fused α expression + the downstream enumeration
@@ -333,8 +324,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('constructions','the DEPENDENT constructions: dependent_words (Π — a per-position family ∀ i, π i) and sigma (Σ — a value-indexed second type); every uniform-hole construction is not','eq','true|false','value-indexed vs type-indexed holes, as data',$q$
     SELECT ((SELECT array_agg(id) FROM base_construction WHERE dependent) @> ARRAY['dependent_words','sigma'])::text || '|' ||
            EXISTS (SELECT 1 FROM base_construction WHERE dependent AND id IN ('finset','maps','product','sum'))::text $q$),
-  ('constructions','lehmer_codes instantiates dependent_words as a DECLINING radix: place i draws from Fin (n − i)','eq','dependent_words|Fin (n - i)','the mixed-radix / factorial base, reconstructed from former+param',$q$
-    SELECT construction || '|' || alpha FROM base_collection_construction WHERE collection='lehmer_codes' $q$),
+  -- (the lehmer_codes-instantiates-dependent_words example moved to the pack, same FK reason)
   ('constructions','the view reconstructs the fused α expression unchanged for uniform bindings (regression guard)','eq','Fin n|ℕ|Fin 2','former+param → the old alpha string',$q$
     SELECT (SELECT alpha FROM base_collection_construction WHERE collection='subsets') || '|' ||
            (SELECT alpha FROM base_collection_construction WHERE collection='finsets') || '|' ||
@@ -345,22 +335,18 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT count(*)::text FROM base_construction k
      WHERE k.params <> (SELECT array_agg(name ORDER BY pos) FROM base_construction_param p WHERE p.construction = k.id)
         OR k.requires_kind IS DISTINCT FROM (SELECT requires_kind FROM base_construction_param p WHERE p.construction = k.id AND p.pos = 1) $q$),
-  ('constructions','maps α → β is a TWO-hole construction; words, binary_words and endofunctions instantiate it (a floor)','eq','true','the maps family, as data',$q$
+  ('constructions','maps α → β is a TWO-hole construction; words and binary_words instantiate it (a floor)','eq','true','the maps family, as data (endofunctions'' instance moved to packs/permutations-plus/constructions.permutations-plus.sql)',$q$
     SELECT ((SELECT count(*) FROM base_construction_param WHERE construction='maps') = 2
-        AND (SELECT array_agg(DISTINCT collection) FROM base_alpha WHERE construction='maps') @> ARRAY['words','binary_words','endofunctions'])::text $q$),
-  ('constructions','the view is still ONE row per collection, with the multi-hole signature spelled out','eq','Fin size → Fin b|Fin n → Fin 2|Fin n → Fin n|Finset (Fin n)|∀ i, Fin (n - i)','signature = skeleton with every hole filled',$q$
-    SELECT string_agg(signature, '|' ORDER BY o) FROM (VALUES ('words',1),('binary_words',2),('endofunctions',3),('subsets',4),('lehmer_codes',5)) v(c,o)
+        AND (SELECT array_agg(DISTINCT collection) FROM base_alpha WHERE construction='maps') @> ARRAY['words','binary_words'])::text $q$),
+  ('constructions','the view is still ONE row per collection, with the multi-hole signature spelled out','eq','Fin size → Fin b|Fin n → Fin 2|Finset (Fin n)','signature = skeleton with every hole filled (endofunctions/lehmer_codes rows moved to the pack)',$q$
+    SELECT string_agg(signature, '|' ORDER BY o) FROM (VALUES ('words',1),('binary_words',2),('subsets',3)) v(c,o)
       JOIN base_collection_construction b ON b.collection = v.c $q$),
-  ('constructions','endofunctions is the DIAGONAL: both holes bound to the same axis (β = α), not a dependent family','eq','n|n|false','diagonalization is parametric',$q$
-    SELECT (SELECT param FROM base_alpha WHERE collection='endofunctions' AND pos=1) || '|' ||
-           (SELECT param FROM base_alpha WHERE collection='endofunctions' AND pos=2) || '|' ||
-           (SELECT dependent FROM base_construction_param WHERE construction='maps' AND pos=2)::text $q$),
   ('constructions','a construction''s FROM spelling is plural + _of (the query view''s surface); unique where present','eq','true','from_name as data — nothing hardcoded in the client',$q$
     SELECT ((SELECT from_name FROM base_construction WHERE id='finset') = 'finsets_of'
         AND (SELECT from_name FROM base_construction WHERE id='maps') = 'maps_of'
         AND (SELECT count(*) FROM base_construction WHERE from_name IS NOT NULL) = (SELECT count(DISTINCT from_name) FROM base_construction WHERE from_name IS NOT NULL))::text $q$),
-  ('constructions','PRIMARY instances (grade chain = the bound axes, or axes the cardinality expression reads) include subsets/finsets/words/binary_words/endofunctions/multisets; k_subsets is a refinement','eq','true|false|true','base_construction_primary',$q$
-    SELECT ((SELECT array_agg(collection) FROM base_construction_primary) @> ARRAY['subsets','finsets','words','binary_words','endofunctions','boolean_algebra'])::text || '|' ||
+  ('constructions','PRIMARY instances (grade chain = the bound axes, or axes the cardinality expression reads) include subsets/finsets/words/binary_words/multisets; k_subsets is a refinement','eq','true|false|true','base_construction_primary (endofunctions'' membership checked in the pack)',$q$
+    SELECT ((SELECT array_agg(collection) FROM base_construction_primary) @> ARRAY['subsets','finsets','words','binary_words','boolean_algebra'])::text || '|' ||
            EXISTS (SELECT 1 FROM base_construction_primary WHERE collection='k_subsets')::text || '|' ||
            EXISTS (SELECT 1 FROM base_construction_primary WHERE collection='multisets')::text $q$),
 
@@ -368,14 +354,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('constructions','a collection is a type-former: permutations / words / motzkin_paths enumerate themselves and can fill a hole','eq','true','arity = grade count; enumeration = itself',$q$
     SELECT (bool_and(e.enumeration = tf.id) AND count(*) >= 3)::text FROM base_type_former tf JOIN base_type_former_enumeration e ON e.type_former = tf.id
      WHERE tf.id IN (SELECT id FROM base_collection) $q$),
-  ('constructions','the wreath product as data: k_colored_permutations = permutations(size) × words(size, colors); signed_permutations pins colors at 2','eq','permutations(size) × words(size, colors)|permutations(size) × words(size, 2)|true|false','a product whose factors are collections; the alias is the pinned point',$q$
-    SELECT (SELECT signature FROM base_collection_construction WHERE collection = 'k_colored_permutations') || '|' ||
-           (SELECT signature FROM base_collection_construction WHERE collection = 'signed_permutations') || '|' ||
-           (SELECT generic FROM base_collection_construction WHERE collection = 'k_colored_permutations')::text || '|' ||
-           (SELECT generic FROM base_collection_construction WHERE collection = 'signed_permutations')::text $q$),
-  ('constructions','the product oracle: |permutations(n)| · |words(n, k)| = n!·kⁿ == fiber_count on k_colored and signed permutations','eq','true','c1 * c2 with each factor''s cardinality read off its own collection',$q$
-    SELECT ((SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(k_colored_permutations(4)) f)
-        AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(signed_permutations(0, 5)) f))::text $q$),
+  -- (the wreath-product/product-oracle examples for k_colored_permutations/signed_permutations moved to
+  -- packs/permutations-plus/constructions.permutations-plus.sql, same reason as their base_alpha bindings)
   ('constructions','a signed subset is the map [n] → {absent, +, −}: maps(Fin n, Fin 3), 3ⁿ — the oracle agrees','eq','true','the Σ over subsets of sign words collapses to one exponential',$q$
     SELECT bool_and(construction_cardinality(f) = cardinality(f) AND cardinality(f) = 3 ^ (f).n)::text FROM fibers(signed_subsets(0, 5)) f $q$),
   ('constructions','the dependent sum: colored_motzkin_paths is a Σ whose second type depends on the path; its cardinality is symbolic, the oracle abstains','eq','sigma|true|true','Σₐ r^levels(a) has no c1·c2 form',$q$
@@ -384,34 +364,18 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            (construction_cardinality(ROW(4, 2)::colored_motzkin_paths_fiber) IS NULL)::text $q$),
   ('constructions','sum (α ⊕ β) is registered with no instance: the catalog''s unions are grade-range unfolds','eq','0','a known gap, as data',$q$
     SELECT count(*)::text FROM base_alpha WHERE construction = 'sum' $q$),
-  -- restricted applications: surjections and arrangements are sub-families of maps, with their own carriers
-  ('constructions','surjections_onto_k ⊂ maps(Fin n, Fin k): every surjection''s value array is a word of words(n, k), and k!·S(n,k) ≤ kⁿ','eq','true','containment proven on the arrays (renders differ across carriers)',$q$
-    SELECT bool_and(ok)::text FROM (
-      SELECT n, k, (SELECT bool_and(((s).value).values IN (SELECT ((w).value).letters FROM elements(words(n, k)) w)) FROM elements(surjections_onto_k(n, k)) s)
-                   AND cardinality(surjections_onto_k(n, k)) <= cardinality(words(n, k)) AS ok
-        FROM (VALUES (3, 2), (4, 2), (4, 3), (3, 3)) v(n, k)) t $q$),
-  ('constructions','arrangements ⊂ maps(Fin k, Fin n): every arrangement''s word is a word of words(k, n), and n!/(n−k)! ≤ nᵏ','eq','true','the injective sub-family',$q$
-    SELECT bool_and(ok)::text FROM (
-      SELECT n, k, (SELECT bool_and(((a).value).word IN (SELECT ((w).value).letters FROM elements(words(k, n)) w)) FROM elements(arrangements(n, k)) a)
-                   AND cardinality(arrangements(n, k)) <= cardinality(words(k, n)) AS ok
-        FROM (VALUES (3, 2), (4, 2), (4, 3), (3, 3)) v(n, k)) t $q$),
-  ('constructions','a restricted application is outside the product formula and the primary set: the oracle abstains','eq','true|false|false','the ADT cardinality is the WHOLE application''s',$q$
-    SELECT (construction_cardinality(ROW(4, 2)::surjections_onto_k_fiber) IS NULL)::text || '|' ||
-           EXISTS (SELECT 1 FROM base_construction_primary WHERE collection IN ('surjections_onto_k', 'arrangements'))::text || '|' ||
-           (SELECT bool_or(restricted IS NULL) FROM base_alpha WHERE collection = 'arrangements')::text $q$),
+  -- (the surjections_onto_k/arrangements restricted-application examples moved to the pack, same FK reason)
   -- the ADT cardinality oracle: |β|^|α| / 2^|α| evaluated on a fiber == the hand-written fiber_count, on primary instances
-  ('constructions','construction_cardinality == cardinality on every primary instance''s small fibers: 2^n (subsets, boolean_algebra, binary_words), base^size (words), n^n (endofunctions), C(n+k-1,k) (multisets)','eq','true','the ADT cardinality as a self-cert differential over fiber_count',$q$
+  ('constructions','construction_cardinality == cardinality on every primary instance''s small fibers: 2^n (subsets, boolean_algebra, binary_words), base^size (words), C(n+k-1,k) (multisets)','eq','true','the ADT cardinality as a self-cert differential over fiber_count (endofunctions'' n^n check moved to the pack)',$q$
     SELECT ((SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(subsets(0, 5)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(boolean_algebra(0, 4)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(binary_words(0, 6)) f)
-        AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(endofunctions(0, 4)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(words(4)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(words(3)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(ROW(natural_range(3, 3, '[]'), natural_range(0, 4, '[]'))::multisets) f))::text   -- multisets: C(3+k-1, k) = 1 3 6 10 15
     $q$),   -- multisets: C(3+k-1, k) = 1 3 6 10 15
   ('constructions','the oracle reads ℕ as ∞: finsets'' construction cardinality is 2^ℵ₀ = Infinity, matching its cardinality','eq','Infinity|Infinity','an infinite type stays symbolic-infinite, off the enumeration path',$q$
     SELECT construction_cardinality(ROW(true)::finsets_fiber)::text || '|' || cardinality(finsets())::text $q$),
-  ('constructions','the oracle abstains where the expression is symbolic or the instance is refined: lehmer (∏ᵢ|πᵢ|), k_subsets (C(n,k) ≠ 2^n)','eq','true','NULL, not a wrong number',$q$
-    SELECT (construction_cardinality(ROW(4)::lehmer_codes_fiber) IS NULL
-        AND construction_cardinality(ROW(4,2)::k_subsets_fiber) = 16 AND cardinality(ROW(4,2)::k_subsets_fiber) = 6
+  ('constructions','the oracle abstains where the expression is symbolic or the instance is refined: k_subsets (C(n,k) ≠ 2^n)','eq','true','NULL, not a wrong number (lehmer_codes'' abstention check moved to the pack)',$q$
+    SELECT (construction_cardinality(ROW(4,2)::k_subsets_fiber) = 16 AND cardinality(ROW(4,2)::k_subsets_fiber) = 6
         AND NOT EXISTS (SELECT 1 FROM base_construction_primary WHERE collection = 'k_subsets'))::text $q$);

@@ -385,29 +385,24 @@ CREATE FUNCTION base_species_check_implicit(coll text, expr text, solve_for text
     RETURN want = got;
   END $$;
 
+-- (lehmer_codes/k_cycle_permutations/subexcedant_seqs/signed_permutations/surjections/arrangements/
+-- cyclic_permutations moved to packs/permutations-plus/base_species.permutations-plus.sql — #283 phase 3)
 INSERT INTO base_species (collection, expr, egf, note) VALUES
   ('permutations',              'E∘C',        'e^{-\ln(1-x)} = \frac{1}{1-x}', 'permutation = set of cycles; n!'),
-  ('lehmer_codes',              'E∘C',        '\frac{1}{1-x}',                 'order-iso sibling of permutations'),
-  ('k_cycle_permutations',      'E∘C',        '\frac{1}{1-x}',                 'permutations, grouped by cycle count'),
-  ('subexcedant_seqs',          'E∘C',        '\frac{1}{1-x}',                 'in bijection with permutations'),
-  ('signed_permutations',       'E∘C∘(X+X)',  '\frac{1}{1-2x}',                'hyperoctahedral B_n = 2ⁿ·n!'),
   ('set_partitions',            'E∘E+',       'e^{e^x-1}',                     'partition = set of nonempty blocks; Bell'),
   ('restricted_growth_strings', 'E∘E+',       'e^{e^x-1}',                     'RGS encode set partitions; Bell'),
   ('set_compositions',          'L∘E+',       '\frac{1}{2-e^x}',               'ordered set partitions; Fubini'),
-  ('surjections',               'L∘E+',       '\frac{1}{2-e^x}',               'onto a variable target = ordered set partitions'),
   ('subsets',                   'E·E',        'e^{2x}',                        'in-set · out-set; 2ⁿ'),
   ('boolean_algebra',           'E·E',        'e^{2x}',                        'the 2^[n] lattice; 2ⁿ'),
   ('binary_words',              'E·E',        'e^{2x}',                        'a 2-colouring of [n]; 2ⁿ'),
-  ('signed_subsets',            'E·E·E',      'e^{3x}',                        'each element −/0/+; 3ⁿ'),
-  ('arrangements',              'E·L',        '\frac{e^x}{1-x}',               'sequences of distinct elements; Σ n!/k! = A000522'),
-  ('cyclic_permutations',       'C',          '-\ln(1-x)',                     'a single cycle; (n−1)!');
+  ('signed_subsets',            'E·E·E',      'e^{3x}',                        'each element −/0/+; 3ⁿ');
   -- NB: perfect_matchings = E∘E_2 as a species over POINTS, but our collection is indexed by PAIRS (n ↦ 2n points),
   -- so it isn't a labelled species at our n — omitted until the engine indexes by an arbitrary size map.
 
 -- graded (a secondary-grade parameter k): E_k = sets of size exactly k, ^k = k-fold product. Checked per k over n.
+-- (surjections_onto_k moved to the pack, same reason)
 INSERT INTO base_species (collection, expr, egf, note, graded) VALUES
   ('k_subsets',                   'E_k·E',  '\frac{x^k}{k!}\,e^x', 'k-subsets of [n]; C(n,k)',       true),
-  ('surjections_onto_k',          '(E+)^k', '(e^x-1)^k',           'surjections [n]→[k]; k!·S(n,k)',  true),
   ('set_partitions_into_k_blocks','E_k∘E+', '\frac{(e^x-1)^k}{k!}','partitions of [n] into k blocks; S(n,k)', true),
   ('words',                       'E^k',    'e^{kx}',              'words of length n over k letters; kⁿ', true);
 
@@ -424,13 +419,12 @@ INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
   ('plane_trees',     'X+Y^2',        'P=x+P^2',          'plane trees by NODES; C_{n-1} (shifted Catalan)', true),
   ('ordered_trees',   '1+X·Y^2',      'C=1+xC^2',         'ordered trees by edges; Catalan',             true);
 
--- LABELLED implicit (EGF fixed points Y = F(X,Y), solved by species_solve): rooted forests / parking functions.
+-- LABELLED implicit (EGF fixed points Y = F(X,Y), solved by species_solve): rooted forests.
+-- (parking_functions moved to packs/permutations-plus/base_species.permutations-plus.sql)
 INSERT INTO base_species (collection, expr, egf, note, implicit) VALUES
-  ('labeled_forests',   'E∘(X·Y)', 'F=e^{xF}', 'rooted labelled forests; (n+1)ⁿ⁻¹ = 1,1,3,16,125,…', true),
-  ('parking_functions', 'E∘(X·Y)', 'F=e^{xF}', 'parking functions of length n; (n+1)ⁿ⁻¹',            true);
--- two-stage: Y = the rooted-tree function (solve_for), then endofunctions = E∘(C∘Y) — a set of cycles of rooted trees.
+  ('labeled_forests',   'E∘(X·Y)', 'F=e^{xF}', 'rooted labelled forests; (n+1)ⁿ⁻¹ = 1,1,3,16,125,…', true);
+-- two-stage: Y = the rooted-tree function (solve_for). (endofunctions moved to the pack, same reason)
 INSERT INTO base_species (collection, expr, egf, note, implicit, solve_for) VALUES
-  ('endofunctions', 'E∘(C∘Y)', 'e^{-\ln(1-T)}', 'functions [n]→[n]; nⁿ = set of cycles of rooted trees', true, 'X·(E∘Y)'),
   ('labeled_trees', '1+Y-Y·Y/2', '1+T-\tfrac{T^2}{2}', 'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2, +1 for the collection''s empty-tree convention (n≤2 ↦ 1)', true, 'X·(E∘Y)');
 
 -- rational OGFs (linear recurrences) as X-guarded fixed points Y = P(X) + (recurrence)·Y — need the scalar + subtraction.

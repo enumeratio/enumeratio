@@ -1,7 +1,9 @@
--- requires: subexcedant_seqs, ascent_sequence_glyph
+-- requires: subexcedant_seqs, glyphs
 -- subexcedant_seq_glyph — the page-space glyph for the subexcedant_seq carrier (issue #222 glyph batch): reuses
--- sequence_bar_svg (ascent_sequence_glyph.sql) — a bar per term, height ∝ value, labelled underneath. terms here
+-- sequence_bar_svg (hoisted into core's glyphs.sql — #283 phase 3, so this permutations-plus file doesn't need to
+-- require words-plus's ascent_sequence_glyph.sql). — a bar per term, height ∝ value, labelled underneath. terms here
 -- are 1-based (aᵢ ∈ [1,i]), so unlike the ascent_sequence's 0-based terms every bar has some positive height.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(s subexcedant_seq) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((s).terms) $$;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

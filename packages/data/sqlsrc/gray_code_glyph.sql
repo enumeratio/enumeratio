@@ -1,6 +1,6 @@
--- requires: gray_codes, ascent_sequence_glyph
+-- requires: gray_codes, glyphs
 -- gray_code_glyph — the page-space glyph for the gray_code carrier (issue #222 glyph batch): reuses
--- sequence_bar_svg (ascent_sequence_glyph.sql) — a bar per bit, height 0 or unit_h, labelled underneath. Grouped
+-- sequence_bar_svg (hoisted into core's glyphs.sql — #283 phase 3) — a bar per bit, height 0 or unit_h, labelled underneath. Grouped
 -- with the other "word as bars" carriers (ascent_sequence, subexcedant_seq, rgs_word, ternary_gray_code) rather
 -- than cells_svg's flat 0/1 strip so a scan of the gallery reads all five sequence carriers as one family.
 CREATE FUNCTION glyph_svg(w gray_code) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((w).bits) $$;

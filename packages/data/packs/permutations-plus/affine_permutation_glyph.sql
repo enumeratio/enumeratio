@@ -1,11 +1,12 @@
--- requires: affine_permutations, decorated_permutation_glyph
+-- requires: affine_permutations, glyphs
 -- affine_permutation_glyph — the page-space glyph for the affine_permutation carrier (issue #222 glyph batch):
--- reuses permutation_arc_svg (decorated_permutation_glyph.sql). affine_window is a bijection Z→Z with
+-- reuses permutation_arc_svg (hoisted into core's glyphs.sql — #283 phase 3). affine_window is a bijection Z→Z with
 -- a_{i+n}=a_i+n (affine_permutations.sql); its window notation a_1..a_n can carry values outside [1,n] — the
 -- WINDING that names which tile of the tessellation this element sits in. Reduce each a_i mod n to the finite part
 -- u_i = ((a_i−1) mod n + n) mod n + 1 (affine_permutations.sql's own contains_in_fiber formula) to get an arc
 -- target back in [1,n], and mark position i `decorated` exactly when a_i ≠ u_i — i.e. when it winds — so a wound
 -- arc/loop draws dashed and its point hollow, reading the translation part c straight off the picture.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(w affine_permutation) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH win AS (SELECT (w).affine_window AS a, greatest(1, coalesce(array_length((w).affine_window,1),0)) AS n)
   SELECT permutation_arc_svg(

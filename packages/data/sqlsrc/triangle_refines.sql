@@ -15,15 +15,12 @@ CREATE TABLE base_triangle_refines (
   pack     text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
 CREATE TRIGGER base_triangle_refines_pack_guard BEFORE UPDATE OR DELETE ON base_triangle_refines FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
+-- (the k_descent_permutations/k_cycle_permutations/surjections_onto_k/k_inversion_permutations rows moved to
+-- packs/permutations-plus/triangle_refines.permutations-plus.sql — both triangle and parent are permutations-plus
+-- collections, and base_triangle_refines FKs both columns, #283 phase 3)
 INSERT INTO base_triangle_refines (triangle, parent, stat_id) VALUES
   ('k_subsets',              'subsets',         'cardinality'),          -- Pascal: subsets of [n] by size
   ('k_subsets',              'boolean_algebra', 'cardinality'),          -- the same powerset as a lattice
-  ('k_descent_permutations', 'permutations',    'descents'),             -- Eulerian ⟨n,k⟩
-  ('k_descent_permutations', 'permutations',    'ascents'),              -- … equidistributed (reverse)
-  ('k_descent_permutations', 'permutations',    'excedances'),           -- … equidistributed (Foata's fundamental transform)
-  ('k_cycle_permutations',   'permutations',    'cycles'),               -- unsigned Stirling-1 c(n,k)
-  ('k_cycle_permutations',   'permutations',    'left_to_right_maxima'), -- … equidistributed (Foata's first transform)
-  ('surjections_onto_k',     'surjections',     'image_size'),           -- k!·S(n,k)
   -- issue #220 chunk 1 — the unrefined triangles that DO have a natural one-axis parent AND actually fit this
   -- table's model (T(n,k) = |{e : stat(e) = k}|, an EXACT level-set). Checked and skipped: weak_compositions_into_k_parts
   -- and little_schroder_triangle have no one-axis parent; gelfand_tsetlin and k_dyck_paths grade by a construction
@@ -35,9 +32,7 @@ INSERT INTO base_triangle_refines (triangle, parent, stat_id) VALUES
   ('set_partitions_into_k_blocks',  'set_partitions',       'blocks'),       -- Stirling-2 S(n,k), refining Bell(n)
   -- k_part_partitions' row (p(n,k), refining p(n)) moved to the partitions-plus pack (triangle_refines.partitions-plus.sql, #283).
   ('compositions_into_k_parts',     'integer_compositions', 'parts_count'),  -- C(n-1,k-1), refining 2^(n-1)
-  ('schroeder_triangle',            'schroeder_paths',      'flat_steps'),   -- T(n,k), refining the large Schröder numbers
-  -- issue #220 chunk 2 — the Mahonian triangle (permutations by inversions had no triangle: #216 piece 5):
-  ('k_inversion_permutations',      'permutations',         'inversions');   -- Mahonian T(n,k), the q-factorial coefficients
+  ('schroeder_triangle',            'schroeder_paths',      'flat_steps');   -- T(n,k), refining the large Schröder numbers
 
 -- the differential: the triangle's cells for rows 0..nmax vs the parent's GROUP BY stat counts, as one text.
 -- Built row-by-row (not via one triangle_cells(tri, nmax) sweep): some triangles' column axis starts at k=1
@@ -78,8 +73,8 @@ END $$;
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('triangle_refines','every registered refinement agrees: the triangle''s cells ARE the parent''s GROUP BY stat counts (n ≤ 4)','eq','true','the registry is data the differential keeps honest',$q$
     SELECT bool_and(triangle_refines_agrees(triangle, parent, stat_id, 4))::text FROM base_triangle_refines $q$),
-  ('triangle_refines','equidistribution as data: descents, ascents and excedances share the Eulerian triangle','eq','true','a floor — more equidistributed statistics may join',$q$
-    SELECT ((SELECT array_agg(stat_id) FROM base_triangle_refines WHERE triangle = 'k_descent_permutations') @> ARRAY['descents','ascents','excedances'])::text $q$),
+  -- (the k_descent_permutations equidistribution example moved to
+  -- packs/permutations-plus/triangle_refines.permutations-plus.sql, same reason as its rows)
   ('triangle_refines','a refinement names a statistic the parent really has','eq','0','no dangling stat ids',$q$
     SELECT count(*)::text FROM base_triangle_refines r WHERE NOT EXISTS (SELECT 1 FROM base_stat_resolved s WHERE s.collection = r.parent AND s.stat_id = r.stat_id) $q$),
   -- NB: carrier is NOT required to match — a triangle MAY grade on its own fresh carrier rather than reusing the

@@ -7,6 +7,7 @@
 --
 -- No base_glyph registry row on purpose (the composition/standard_tableau precedent in glyphs.sql): the overload
 -- alone is enough, carrier_renders_svg('signed_permutation') derives straight from pg_proc/pg_type.
+-- layer: glyph
 
 CREATE FUNCTION signed_permutation_matrix_svg(image int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT greatest(1, coalesce(array_length(image, 1), 0)) AS n),

@@ -1,4 +1,4 @@
--- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_permutations, signed_subsets, set_compositions, surjections, parking_functions, fractional_numbers, colored_motzkin_paths
+-- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_subsets, set_compositions, fractional_numbers, colored_motzkin_paths
 -- representations — Phase 3 of the catalog port: named alternate renderings, registered in base_repr so the
 -- client's -R flag can pick one (permutation cycle notation, set-partition blocks, Dyck parens). render_fn takes
 -- the CARRIER; the client calls render_fn((element).value). The `canonical` repr matches the default render()
@@ -240,14 +240,9 @@ CREATE FUNCTION finset_members_katex(s finset) RETURNS text LANGUAGE sql IMMUTAB
   SELECT '\{' || array_to_string((s).members, ',') || '\}' $$;
 
 -- ── #141 coverage expansion: five more collections, each getting a fresh canonical unicode row + katex sibling ──
-
--- katex spelling of the signed_permutation default one-line window: bar each negative entry (\overline{k}, the
--- standard hyperoctahedral-group convention — Björner–Brenti's bar notation for B_n) and wrap the whole window as
--- a parenthesized tuple, e.g. {-2,1,-3} → "(\overline{2},1,\overline{3})" — matches the render-corpus oracle.
--- asciimath coincides with the unicode default (bare "-2,1,-3") — no asciimath sibling needed.
-CREATE FUNCTION signed_permutation_katex(x signed_permutation) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT '(' || coalesce(string_agg(CASE WHEN v < 0 THEN '\overline{' || (-v) || '}' ELSE v::text END, ',' ORDER BY o), '') || ')'
-  FROM unnest((x).image) WITH ORDINALITY t(v, o) $$;
+-- (signed_permutation_katex/surjection_tuple_katex/parking_function_tuple_katex moved to
+-- packs/permutations-plus/examples.representations.permutations-plus.sql — each takes a permutations-plus carrier
+-- type as its parameter, so it can't even CREATE FUNCTION loading core alone, #283 phase 3)
 
 -- katex spelling of the signed_subset default `{…}` notation: escape the braces (same move as finset_members_katex)
 -- and bar each negative entry, e.g. {1,-2,3} → "\{1,\overline{2},3\}" — matches the render-corpus oracle
@@ -266,18 +261,6 @@ CREATE FUNCTION set_composition_blocks_katex(c set_composition) RETURNS text LAN
   SELECT '(' || coalesce(string_agg('\{' || blk || '\}', ',' ORDER BY lbl), '') || ')' FROM (
     SELECT (c).labels[i] AS lbl, string_agg(i::text, ',' ORDER BY i) AS blk
     FROM generate_subscripts((c).labels, 1) i GROUP BY (c).labels[i]) s $$;
-
--- katex spelling of the surjection default comma-word notation: the same parenthesized-tuple move as
--- perm_oneline_katex/composition_parts_katex above, e.g. "1,2,3" → "(1,2,3)" — matches the render-corpus oracle.
--- asciimath coincides with the unicode default (bare comma word) — no asciimath sibling needed.
-CREATE FUNCTION surjection_tuple_katex(w surjection) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT '(' || array_to_string((w).values, ',') || ')' $$;
-
--- katex spelling of the parking_function default comma-sequence notation: same parenthesized-tuple move as
--- surjection_tuple_katex above, e.g. "1,1,1" → "(1,1,1)" — matches the render-corpus oracle. asciimath coincides
--- with the unicode default (bare comma sequence) — no asciimath sibling needed.
-CREATE FUNCTION parking_function_tuple_katex(p parking_function) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT '(' || array_to_string((p).spots, ',') || ')' $$;
 
 -- ── #285 coverage expansion, round 2: three more, each verified against a corpus row our own notation() matches ──
 
@@ -324,19 +307,15 @@ INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VA
 -- #141: five collections with NO prior base_repr row at all — render_fn='notation' is their unconditional
 -- default (no ground/data-dependent branching the way finset's does), so `canonical=true` holds uniformly for
 -- every collection that inherits it (signed_subsets carrier-inherits to cross_polytope, set_compositions to
--- permutahedron, surjections to surjections_onto_k, parking_functions to non_decreasing_parking_functions).
+-- permutahedron; signed_permutations/surjections/parking_functions rows moved to
+-- packs/permutations-plus/examples.representations.permutations-plus.sql — base_repr.collection REFERENCES
+-- base_collection, so those rows would FK-fail loading core alone, #283 phase 3).
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
-  ('signed_permutations','oneline','notation','One-line notation (barred negatives)',true),
   ('signed_subsets','members','notation','Set notation ({…}, barred negatives)',true),
-  ('set_compositions','blocks','notation','Block notation',true),
-  ('surjections','tuple','notation','Surjection word',true),
-  ('parking_functions','tuple','notation','Preference sequence',true);
+  ('set_compositions','blocks','notation','Block notation',true);
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VALUES
-  ('signed_permutations','oneline','signed_permutation_katex','One-line notation (KaTeX, barred negatives)',false,'latex'),
   ('signed_subsets','members','signed_subset_members_katex','Set notation ({…}, KaTeX, barred negatives)',false,'latex'),
-  ('set_compositions','blocks','set_composition_blocks_katex','Block notation (KaTeX)',false,'latex'),
-  ('surjections','tuple','surjection_tuple_katex','Surjection word (KaTeX tuple)',false,'latex'),
-  ('parking_functions','tuple','parking_function_tuple_katex','Preference sequence (KaTeX tuple)',false,'latex');
+  ('set_compositions','blocks','set_composition_blocks_katex','Block notation (KaTeX)',false,'latex');
 -- #285: binary_words `digits` is a non-canonical alternate (binary_word's actual canonical repr varies — calkin_wilf_
 -- paths/stern_brocot_paths override it with their own rational/turns reading — same reason `members`/`dots` below
 -- stay non-canonical); fractional_numbers `fraction` and colored_motzkin_paths `steps` ARE each collection's
@@ -486,27 +465,15 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('representations','the default finite-ground notation() is unchanged by adding members: subsets(5) rank still renders the bit register, not braces','eq','true','notation(finset) keeps its ground-dispatched register/braces split',$q$
     SELECT (notation((unrank(subsets(5), 4)).value) !~ '[{}]')::text $q$),
   -- ── #141 coverage expansion: five more collections, each getting its first base_repr rows ──
-  ('representations','the default (unicode) signed_permutation notation is unchanged: {-3,-2,-1} → -3,-2,-1','eq','-3,-2,-1','plain minus signs, no bars',$q$
-    SELECT notation(ROW(ARRAY[-3,-2,-1])::signed_permutation) $q$),
-  ('representations','base_repr medium dispatch on signed_permutations: oneline resolves to notation at unicode, signed_permutation_katex at latex','eq','notation|signed_permutation_katex','same (collection,repr), two medium rows',$q$
-    SELECT (SELECT render_fn FROM base_repr_resolved WHERE collection = 'signed_permutations' AND repr = 'oneline' AND medium = 'unicode') || '|' ||
-           (SELECT render_fn FROM base_repr_resolved WHERE collection = 'signed_permutations' AND repr = 'oneline' AND medium = 'latex') $q$),
+  -- (the signed_permutation/surjection/parking_function examples moved to
+  -- packs/permutations-plus/examples.representations.permutations-plus.sql — #283 phase 3, same reason as their
+  -- base_repr rows and katex functions)
   ('representations','the default (unicode) signed_subset notation is unchanged: ({1,-2,3},4) → {1,-2,3}','eq','{1,-2,3}','bare braces + minus sign',$q$
     SELECT notation(ROW(ARRAY[1,-2,3],4)::signed_subset) $q$),
   ('representations','the default (unicode) set_composition notation is unchanged: labels 1,1,2,2 → 1,2|3,4','eq','1,2|3,4','comma within a block, pipe between blocks',$q$
     SELECT notation(ROW(ARRAY[1,1,2,2])::set_composition) $q$),
   -- the two CARRIER-inherited examples over permutahedron/cross_polytope moved to
   -- packs/polytopes/examples.representations.sql (#283 phase 2.2) — both target collections are that pack's rows.
-  ('representations','the default (unicode) surjection notation is unchanged: 1,2,3 → 1,2,3 (bare word)','eq','1,2,3','no parens at unicode',$q$
-    SELECT notation(ROW(ARRAY[1,2,3])::surjection) $q$),
-  ('representations','the surjection tuple repr is CARRIER-inherited: surjections_onto_k resolves it at unicode and latex','eq','true','base_repr_resolved carries the surjections-registered repr to its restriction sibling',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'surjections_onto_k' AND repr = 'tuple' AND medium = 'unicode')
-        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'surjections_onto_k' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
-  ('representations','the default (unicode) parking_function notation is unchanged: 1,1,1 → 1,1,1 (bare sequence)','eq','1,1,1','no parens at unicode',$q$
-    SELECT notation(ROW(ARRAY[1,1,1])::parking_function) $q$),
-  ('representations','the parking_function tuple repr is CARRIER-inherited: non_decreasing_parking_functions resolves it at unicode and latex','eq','true','base_repr_resolved carries the parking_functions-registered repr to its restriction sibling',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'unicode')
-        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
   -- ── #285 coverage expansion, round 2: binary_words `digits`, fractional_numbers `fraction`, colored_motzkin_paths `steps` ──
   ('representations','the default (unicode) binary_word notation is unchanged: fib_strings(3) rank4 → 101 (bare digits)','eq','101','notation(binary_word) still bare concatenation',$q$
     SELECT notation((unrank(fib_strings(3), 4)).value) $q$),
