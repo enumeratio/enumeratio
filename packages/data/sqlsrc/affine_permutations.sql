@@ -52,6 +52,58 @@ CREATE FUNCTION contains_in_fiber(f affine_permutations_fiber, v affine_permutat
      AND NOT EXISTS (SELECT 1 FROM unnest((v).affine_window) WITH ORDINALITY t(x, i)                          -- translation within the box
                      WHERE abs((x - (((x - 1) % (f).n::int + (f).n::int) % (f).n::int + 1)) / (f).n::int) > (f).radius::int) $$;
 
+-- direct unrank: the floor's ORDER BY sorts by the window array a_1..a_n itself (lexicographic on the composite,
+-- "dominated by c not u's rank" per the comment above) — NOT nested lex on u then c. But a_i = u(i) + n·c_i with
+-- u(i) ∈ {1..n} always the residue-in-range representative, so (u(i), c_i) is recoverable from a_i alone and the
+-- candidate set at each position is exactly {unused u-value} × {c ∈ [-r,r]}, sorted by the combined value
+-- u+n·c (ties impossible: u ranges only over 1..n, strictly inside one c-step of size n). The key simplification:
+-- completions from m remaining positions needing a given remaining Σc are INDEPENDENT of which u-values remain —
+-- only their count m matters (any bijection remaining-positions→remaining-values contributes the same lattice
+-- count) — so completions(m, need) = m! · L(m, need), L built once as the generalized convolution DP (a
+-- straightforward extension of affine_lattice_count to an arbitrary target sum, kept per-row so every m ≤ n is
+-- available during unrank).
+CREATE FUNCTION fiber_unrank(f affine_permutations_fiber, rank rank_index) RETURNS affine_permutation LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE
+    n int := (f).n::int; r int := (f).radius::int;
+    off int := n * r; width int := 2 * n * r + 1;
+    L numeric[]; m int; s int; v int; idx int; tot numeric;
+    used boolean[] := array_fill(false, ARRAY[n]);
+    win int[] := array_fill(0, ARRAY[n]);
+    need int := 0;    -- required Σc over all REMAINING positions (starts 0: the whole window sums to n(n+1)/2)
+    rnk numeric := rank; i int; mm1 int; needAfter int; cnt numeric; cand RECORD;
+  BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[]::int[])::affine_permutation; END IF;
+    L := array_fill(0::numeric, ARRAY[(n + 1) * width]);
+    L[off + 1] := 1;                                          -- row m=0: only sum=0 is reachable
+    FOR m IN 1..n LOOP
+      FOR s IN 0..width - 1 LOOP
+        tot := 0;
+        FOR v IN -r..r LOOP
+          idx := s - v;                                       -- previous-row sum index (new sum s came from old + v)
+          IF idx >= 0 AND idx < width THEN tot := tot + L[(m - 1) * width + idx + 1]; END IF;
+        END LOOP;
+        L[m * width + s + 1] := tot;
+      END LOOP;
+    END LOOP;
+    FOR i IN 1..n LOOP
+      m := n - i + 1;                                         -- positions remaining, INCLUDING this one
+      FOR cand IN
+        SELECT u_val, c FROM generate_series(1, n) u_val, generate_series(-r, r) c
+        WHERE NOT used[u_val] ORDER BY u_val + n * c
+      LOOP
+        mm1 := m - 1; needAfter := need - cand.c;
+        cnt := factorial(mm1) * (CASE WHEN off + needAfter BETWEEN 0 AND width - 1
+                                       THEN L[mm1 * width + off + needAfter + 1] ELSE 0 END);
+        IF rnk < cnt THEN
+          win[i] := cand.u_val + n * cand.c; used[cand.u_val] := true; need := needAfter; EXIT;
+        ELSE
+          rnk := rnk - cnt;
+        END IF;
+      END LOOP;
+    END LOOP;
+    RETURN ROW(win)::affine_permutation;
+  END $fu$;
+
 -- ── declare it as DATA + realize ─────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('affine_permutations', 'affine_permutation');
 INSERT INTO base_grade VALUES ('affine_permutations', 1, 'n', NULL, NULL), ('affine_permutations', 2, 'radius', NULL, NULL);
@@ -90,4 +142,14 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('affine_permutations','the finite part of every radius-1 element lands in permutations(3)','eq','true','to_permutation is a valid map into S_3',$q$
     SELECT bool_and(contains(permutations(3), affine_permutation_to_permutation((e).value)))::text FROM elements(affine_permutations(3,1)) e $q$),
   ('affine_permutations','past the elements() 5000-default: |affine_permutations(7,0)| = 7! = 5040, all reachable','eq','true','regression: the inner elements(permutations(n)) delegation must not truncate at the default cap (issue #165)',$q$
-    SELECT ((SELECT count(*) FROM elements(affine_permutations(7,0), 6000) e) = cardinality(affine_permutations(7,0)))::text $q$);
+    SELECT ((SELECT count(*) FROM elements(affine_permutations(7,0), 6000) e) = cardinality(affine_permutations(7,0)))::text $q$),
+  ('affine_permutations','fiber_unrank reproduces the floor element-for-element across 7 fibers (n,radius)','eq','true','multi-fiber element_at==sequential differential — selfcert cannot auto-drive the 2-axis fiber, so this is the accel oracle',$q$
+    SELECT bool_and(ok)::text FROM (
+      SELECT bool_and(
+               render_value(fiber_unrank((SELECT f FROM fibers(affine_permutations(nk.n, nk.r)) f), t.ord::rank_index)) = t.expect
+             ) AS ok
+      FROM (VALUES (2,0),(3,0),(4,0),(2,1),(3,1),(4,1),(3,2)) AS nk(n,r),
+      LATERAL (SELECT render(e) AS expect, (row_number() OVER (ORDER BY e) - 1) AS ord
+               FROM elements(affine_permutations(nk.n, nk.r)) e) t
+      GROUP BY nk.n, nk.r
+    ) s $q$);
