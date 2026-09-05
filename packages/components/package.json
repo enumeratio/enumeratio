@@ -1,0 +1,24 @@
+{
+  "name": "@enumeratio/components",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Every enumeratio Lit web component: pure data→visual figures (*-glyph / *-figure, incl. the three.js polytope views) plus client-backed enumeratio-* elements (expression, notation, …) that talk to @enumeratio/client.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./figures": "./src/figures/index.ts",
+    "./styles.css": "./styles.css"
+  },
+  "scripts": {
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@enumeratio/client": "workspace:*",
+    "lit": "^3.2.1",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.184.1",
+    "typescript": "^5.7.2"
+  }
+}

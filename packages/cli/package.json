@@ -1,0 +1,27 @@
+{
+  "name": "@enumeratio/cli",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Enumerate any enumeratio collection from the terminal and dump its elements to stdout — a thin driver over enumeratio-client (and the home of the sage oracle tests).",
+  "bin": { "enumeratio": "./src/cli.ts" },
+  "exports": {
+    "./dispatch": { "types": "./src/dispatch.ts", "default": "./src/dispatch.ts" }
+  },
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@enumeratio/client": "workspace:*",
+    "debug": "^4.4.0",
+    "yaml": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  }
+}

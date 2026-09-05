@@ -1,0 +1,47 @@
+name: Self-certification
+
+# selfcert.mts is the accelerated==naive differential oracle for the data package (see
+# packages/data/selfcert.mts) — it caught a real bug (standard_tableau_pairs silent truncation)
+# that the regular test suite missed, but it runs nowhere in CI today. This wires it in.
+#
+# Trigger/scope choice: the full sweep takes ~4-5 minutes locally (119 collections w/ an accel,
+# ~1300 fiber checks) — fast enough to run in full rather than inventing a partial-coverage cap.
+# So push/PR gets the FULL sweep too, just scoped via `paths` to when it can actually catch
+# anything (sqlsrc changes or the harness itself); the weekly schedule is an unconditional
+# full sweep as a backstop against drift with no matching source change (e.g. a pglite bump).
+on:
+  push:
+    branches: [main]
+    paths:
+      - packages/data/sqlsrc/**
+      - packages/data/selfcert.mts
+  pull_request:
+    paths:
+      - packages/data/sqlsrc/**
+      - packages/data/selfcert.mts
+  schedule:
+    - cron: '17 3 * * 0'   # weekly, Sunday 03:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: selfcert-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  selfcert:
+    name: selfcert (accelerated == naive)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @enumeratio/data selfcert

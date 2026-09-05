@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "allowImportingTsExtensions": true,
+    "lib": ["ES2022"],
+    "types": ["node"]
+  },
+  "//": "The node-runnable surface only. index.ts / vite.ts are Vite-bundler context (import.meta.glob, vite types) — they are type-checked by the explorer/docs build, not here.",
+  "include": ["*.ts", "*.mts"],
+  "exclude": ["index.ts", "vite.ts"]
+}

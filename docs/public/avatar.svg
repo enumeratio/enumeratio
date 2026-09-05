@@ -1,0 +1,28 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- GitHub avatar source: the mark on deep warm stone (the dark-theme ground), full-bleed — GitHub
+       applies its own corner rounding. Two-tone highlight: gold path (lines + node rings) with bronze
+       node fills, over translucent muted stone; edges trimmed to node rims. Rasterize to PNG for upload. -->
+  <rect width="128" height="128" fill="#1a1714"/>
+  <g transform="translate(64 64) scale(2.6) translate(-14 -12)" fill="none">
+    <g stroke="#78716c" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="butt">
+      <line x1="15.84" y1="5.11"  x2="19.16" y2="8.89"/>
+      <line x1="5.16"  y1="13.11" x2="1.84"  y2="16.89"/>
+      <line x1="19.16" y1="13.11" x2="15.84" y2="16.89"/>
+      <line x1="22.84" y1="13.11" x2="26.16" y2="16.89"/>
+    </g>
+    <g fill="#78716c" fill-opacity="0.7">
+      <circle cx="21" cy="11" r="2.8"/>
+      <circle cx="0"  cy="19" r="2.8"/>
+      <circle cx="28" cy="19" r="2.8"/>
+    </g>
+    <g stroke="#fbbf24" stroke-width="1.6" stroke-linecap="butt">
+      <line x1="12.16" y1="5.11"  x2="8.84"  y2="8.89"/>
+      <line x1="8.84"  y1="13.11" x2="12.16" y2="16.89"/>
+    </g>
+    <g fill="#b45309" stroke="#fbbf24" stroke-width="1.4">
+      <circle cx="14" cy="3"  r="2.1"/>
+      <circle cx="7"  cy="11" r="2.1"/>
+      <circle cx="14" cy="19" r="2.1"/>
+    </g>
+  </g>
+</svg>

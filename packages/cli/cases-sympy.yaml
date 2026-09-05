@@ -1,0 +1,57 @@
+# The SymPy side of the equivalency table — the same shape as cases.yaml (one canonical construction per row:
+# {collection, args} spelled for enumeratio, `sympy` a Python expression enumerable against sympy.combinatorics /
+# sympy.utilities.iterables). oracle_sympy.test.ts enumerates both and asserts the element SETS match, driven by
+# oracle_sympy.py. See that file's header for the survey of sympy.combinatorics against the catalog and what was
+# excluded. Grow this list when a genuinely new sympy-side generator matches an existing (or new) collection.
+
+- collection: permutations               # generate_bell: adjacent-transposition (Steinhaus-Johnson-Trotter) order;
+  args: { size: 5 }                      # same SET as sage's Permutations(5) — just a different generation order
+  sympy: shift1(generate_bell(5))        # 0-indexed tuples -> 1-based one-line words
+- collection: derangements
+  args: { size: 5 }
+  sympy: list(generate_derangements(range(1, 6)))
+- collection: involutions
+  args: { size: 5 }
+  sympy: shift1(generate_involutions(5))  # 0-indexed tuples -> 1-based one-line words
+- collection: subsets
+  args: { size: 6 }
+  sympy: list(subsets(range(1, 7)))
+- collection: k_subsets
+  args: { n: 6, k: 3 }
+  sympy: list(subsets(range(1, 7), 3))
+- collection: k_subsets                  # edge: the single empty subset
+  args: { n: 6, k: 0 }
+  sympy: list(subsets(range(1, 7), 0))
+- collection: integer_partitions
+  args: { size: 12 }
+  sympy: sympy_partitions(12)
+- collection: set_partitions
+  args: { size: 5 }
+  sympy: list(multiset_partitions(5))
+- collection: signed_permutations         # signed_permutations(t) does `type(t)(i)` internally — needs a tuple, not a range
+  args: { size: 3 }
+  sympy: list(signed_permutations((1, 2, 3)))
+- collection: arrangements                # k-arrangements = injective length-k words over [n]
+  args: { size: 5, length: 2 }
+  sympy: list(variations(range(1, 6), 2))
+- collection: arrangements                 # k=n fiber IS permutations(4)
+  args: { size: 4, length: 4 }
+  sympy: list(variations(range(1, 5), 4))
+- collection: words                        # words of length `size` over a `base`-letter alphabet
+  args: { size: 3, base: 3 }
+  sympy: list(variations(range(1, 4), 3, repetition=True))
+- collection: words
+  args: { size: 4, base: 2 }
+  sympy: list(variations(range(1, 3), 4, repetition=True))
+- collection: binary_necklaces             # words up to rotation, lex-least rep — A000031
+  args: { size: 6 }
+  sympy: list(necklaces(6, 2))
+- collection: k_necklaces                  # k-ary necklaces, lex-least under rotation (1-based letters — shift +1)
+  args: { size: 4, base: 3 }
+  sympy: shift1(necklaces(4, 3))
+- collection: binary_bracelets             # words up to rotation + reflection — A000029
+  args: { size: 6 }
+  sympy: list(bracelets(6, 2))
+- collection: k_bracelets
+  args: { size: 4, base: 3 }
+  sympy: shift1(bracelets(4, 3))

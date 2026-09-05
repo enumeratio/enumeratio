@@ -1,0 +1,60 @@
+{
+  "name": "@enumeratio/data",
+  "version": "0.1.0",
+  "description": "The enumeratio database as a package — the combinatorial catalog and its whole schema as pure SQL (zero C): ~150 collections realized by a data-driven generator into a uniform handle/fiber/element/notation/membership layer. Under the hood a pure-SQL Postgres extension; runs in any Postgres and in-browser via PGlite.",
+  "type": "module",
+  "license": "Unlicense",
+  "homepage": "https://enumeratio.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enumeratio/enumeratio.git",
+    "directory": "packages/data"
+  },
+  "sideEffects": false,
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./node": "./node.ts",
+    "./vite": "./vite.ts",
+    "./enumeratio-core.pgdata": "./enumeratio-core.pgdata",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "*.ts",
+    "sqlsrc",
+    "enumeratio-core.pgdata",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "prepack": "node --import tsx build-pgdata.mts",
+    "build": "node --import tsx build-pgdata.mts",
+    "typecheck": "tsgo --noEmit",
+    "test": "node --import tsx run.mts",
+    "selfcert": "node --import tsx selfcert.mts",
+    "selfcert:view": "node --import tsx selfcert-view.mts",
+    "render-corpus-check": "node --import tsx render-corpus-check.mts",
+    "pg-demo": "node --import tsx pg-demo.mts",
+    "pg-watchdog-demo": "node --import tsx pg-watchdog-demo.mts"
+  },
+  "peerDependencies": {
+    "@electric-sql/pglite": "^0.5.3"
+  },
+  "peerDependenciesMeta": {
+    "@electric-sql/pglite": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.3",
+    "@types/debug": "^4.1.12",
+    "@types/node": "^22.20.1",
+    "@types/pg": "^8.23.1",
+    "debug": "^4.4.0",
+    "pg": "^8.23.0",
+    "tsx": "^4.19.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

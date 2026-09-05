@@ -1,0 +1,37 @@
+{
+  "name": "@enumeratio/root",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A findstat.org-like, database-driven library of combinatorial collections, maps, statistics, and their implementations — where the math is data.",
+  "scripts": {
+    "test": "pnpm test:core && pnpm test:stack && pnpm test:build",
+    "test:core": "pnpm --filter @enumeratio/data run test",
+    "test:stack": "pnpm --filter @enumeratio/data run typecheck && pnpm --filter @enumeratio/client run build && pnpm --filter @enumeratio/cli run typecheck && pnpm --filter @enumeratio/cli run test",
+    "test:build": "pnpm --filter @enumeratio/explorer run build && pnpm docs:build",
+    "test:unit": "vitest run",
+    "test:watch": "vitest",
+    "dev": "pnpm docs:dev",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "devDependencies": {
+    "@enumeratio/client": "workspace:*",
+    "@enumeratio/components": "workspace:*",
+    "@enumeratio/data": "workspace:*",
+    "@enumeratio/explorer": "workspace:*",
+    "@primeuix/themes": "^2.0.3",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "@vscode/markdown-it-katex": "^1.1.1",
+    "katex": "^0.16.11",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.5.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitepress": "^1.6.4",
+    "vitest": "^3.0.0",
+    "vue": "^3.5.13"
+  }
+}

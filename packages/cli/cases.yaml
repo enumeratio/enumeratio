@@ -1,0 +1,413 @@
+# The equivalency table: one canonical construction per row, spelled for enumeratio (collection + args)
+# and for sage (an enumerable expression). The oracle enumerates BOTH and asserts the element SETS match,
+# so every row is verified across the whole stack. The cli and client spellings derive from {collection,
+# args}. This list is meant to GROW — add a row, get an oracle case (and, later, a usage example + doc).
+#
+# args: `size` is the primary dimension; any other key is a grade axis bound to a value. Only grade axes
+# with a realized unrank engine can be bound (currently the legacy extension's enum_meta.configs; the core's
+# catalog_grade_axis / catalog_collection_order once the client is repointed — see .scratch task H).
+
+# --- base constructions (whole collection at a size) ---
+- collection: permutations
+  args: { size: 5 }
+  sage: Permutations(5)
+- collection: signed_permutations
+  args: { size: 4 }
+  sage: SignedPermutations(4)
+- collection: subsets
+  args: { size: 6 }
+  sage: Subsets(6)
+- collection: integer_partitions
+  args: { size: 15 }
+  sage: Partitions(15)
+- collection: integer_compositions
+  args: { size: 10 }
+  sage: Compositions(10)
+- collection: set_partitions
+  args: { size: 6 }
+  sage: SetPartitions(6)
+- collection: restricted_growth_strings   # the WORD side of the same objects (sage has no RGS parent)
+  args: { size: 6 }
+  sage: SetPartitions(6)
+- collection: set_compositions
+  args: { size: 4 }
+  sage: OrderedSetPartitions(4)
+- collection: surjections                 # the WORD side: surjections of [4] onto an initial segment
+  args: { size: 4 }
+  sage: OrderedSetPartitions(4)
+- collection: surjections_onto_k           # (n,k): surjections [3]↠[2] = OrderedSetPartitions(3,2), word side
+  args: { size: 3, k: 2 }
+  sage: OrderedSetPartitions(3, 2)
+- collection: surjections_onto_k
+  args: { size: 4, k: 2 }
+  sage: OrderedSetPartitions(4, 2)
+- collection: surjections_onto_k
+  args: { size: 4, k: 3 }
+  sage: OrderedSetPartitions(4, 3)
+- collection: k_cycle_permutations         # (n,k): permutations of [n] with exactly k cycles (unsigned Stirling-1)
+  args: { size: 5, k: 3 }
+  sage: "[p for p in Permutations(5) if len(p.to_cycles()) == 3]"
+- collection: k_descent_permutations       # (n,k): permutations of [n] with exactly k descents (Eulerian)
+  args: { size: 5, k: 2 }
+  sage: "[p for p in Permutations(5) if p.number_of_descents() == 2]"
+- collection: subsets                      # the powerset as indicator bitstrings over [5]
+  args: { size: 5 }
+  sage: Subsets(5)
+- collection: distinct_partitions          # partitions into distinct parts = strictly decreasing (max_slope=-1)
+  args: { size: 8 }
+  sage: Partitions(8, max_slope=-1)
+- collection: odd_partitions               # partitions into odd parts
+  args: { size: 9 }
+  sage: Partitions(9, parts_in=[1,3,5,7,9])
+- collection: self_conjugate_partitions    # partitions equal to their conjugate
+  args: { size: 8 }
+  sage: "[p for p in Partitions(8) if p.conjugate() == p]"
+- collection: odd_compositions             # compositions into odd parts
+  args: { size: 6 }
+  sage: "[c for c in Compositions(6) if all(x % 2 == 1 for x in c)]"
+- collection: palindromic_compositions     # compositions that read the same reversed
+  args: { size: 6 }
+  sage: "[c for c in Compositions(6) if list(c) == list(c)[::-1]]"
+- collection: carlitz_compositions         # no two adjacent parts equal
+  args: { size: 6 }
+  sage: "[c for c in Compositions(6) if all(c[i] != c[i+1] for i in range(len(c)-1))]"
+- collection: proper_compositions          # every part ≥ 2 (avoids the part 1)
+  args: { size: 6 }
+  sage: "[c for c in Compositions(6) if all(x >= 2 for x in c)]"
+- collection: non_crossing_partitions      # non-crossing set partitions of [n] (Catalan)
+  args: { size: 5 }
+  sage: "[sp for sp in SetPartitions(5) if sp.is_noncrossing()]"
+- collection: non_nesting_partitions       # non-nesting set partitions of [n] (Catalan)
+  args: { size: 5 }
+  sage: "[sp for sp in SetPartitions(5) if sp.is_nonnesting()]"
+- collection: perfect_matchings            # perfect matchings of [2n] (n pairs); (2n-1)!!
+  args: { size: 3 }
+  sage: PerfectMatchings(6)
+- collection: non_nesting_matchings      # perfect matchings with no nested chords (Catalan)
+  args: { size: 3 }
+  sage: "[m for m in PerfectMatchings(6) if not any(a<c and d<b for (a,b) in m for (c,d) in m if (a,b)!=(c,d))]"
+- collection: subexcedant_seqs           # words a_i in [1,i]; n! (reference odometer product)
+  args: { size: 4 }
+  sage: subexcedant_seqs_over(4)
+- collection: k_necklaces                # k-ary necklaces (lex-least rotation)
+  args: { size: 4, base: 3 }
+  sage: "[w for w in words_over(4,3) if all(list(w) <= list(w)[d:]+list(w)[:d] for d in range(4))]"
+- collection: k_lyndon_words             # k-ary Lyndon words
+  args: { size: 4, base: 3 }
+  sage: "[w for w in words_over(4,3) if all(list(w) < list(w)[d:]+list(w)[:d] for d in range(1,4))]"
+- collection: k_dyck_paths               # k-ary Dyck paths (Fuss-Catalan)
+  args: { n: 2, k: 3 }
+  sage: k_dyck_words(2, 3)
+- collection: k_bracelets                # k-ary bracelets (rotation+reflection)
+  args: { size: 4, base: 3 }
+  sage: "[w for w in words_over(4,3) if all(list(w) <= list(w)[d:]+list(w)[:d] for d in range(4)) and all(list(w) <= list(w)[::-1][d:]+list(w)[::-1][:d] for d in range(4))]"
+- collection: derangements                 # permutations with no fixed point
+  args: { size: 5 }
+  sage: Derangements(5)
+- collection: alternating_permutations     # up-down: a1<a2>a3<a4>… (Euler zigzag)
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if all((p[i] < p[i+1]) == (i % 2 == 0) for i in range(len(p)-1))]"
+- collection: grassmannian_permutations    # at most one descent (2^n - n)
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if len(p.descents()) <= 1]"
+- collection: cograssmannian_permutations  # at most one ascent (dual; 2^n - n)
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if sum(1 for i in range(len(p)-1) if p[i] < p[i+1]) <= 1]"
+- collection: connected_permutations       # indecomposable permutations (A003319)
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if not any(set(p[:k]) == set(range(1, k+1)) for k in range(1, 6))]"
+- collection: permutations_avoiding_123     # Av(σ) for each length-3 σ — all Catalan (Knuth), Wilf-equivalent
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([1,2,3])]"
+- collection: permutations_avoiding_132
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([1,3,2])]"
+- collection: permutations_avoiding_213
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([2,1,3])]"
+- collection: permutations_avoiding_231
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([2,3,1])]"
+- collection: permutations_avoiding_312
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([3,1,2])]"
+- collection: permutations_avoiding_321
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p.avoids([3,2,1])]"
+- collection: vexillary_permutations       # Av(2143) — A005802
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if p.avoids([2,1,4,3])]"
+- collection: separable_permutations       # Av(2413,3142) — large Schröder A006318
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if p.avoids([2,4,1,3]) and p.avoids([3,1,4,2])]"
+- collection: baxter_permutations           # vincular 2-41-3, 3-14-2 — Baxter numbers A001181
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if is_baxter_perm(list(p))]"
+- collection: simple_permutations           # no non-trivial interval — A111111
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if is_simple_perm(list(p))]"
+- collection: non_crossing_permutations     # cycles form a non-crossing set partition
+  args: { size: 6 }
+  sage: "[p for p in Permutations(6) if SetPartition([list(c) for c in p.to_cycles()]).is_noncrossing()]"
+- collection: k_colored_permutations        # (n,k): Z_k wr S_n, k^n·n!; brute-force (perm, colours) reference
+  args: { size: 3, colors: 2 }
+  sage: colored_perms_over(3, 2)
+- collection: k_colored_permutations        # k=3 colours
+  args: { size: 3, colors: 3 }
+  sage: colored_perms_over(3, 3)
+- collection: binary_palindromes           # binary words equal to their reverse
+  args: { size: 5 }
+  sage: "[w for w in binary_words_over(5) if w == w[::-1]]"
+- collection: primitive_binary_strings     # aperiodic binary words (A027375)
+  args: { size: 6 }
+  sage: "[w for w in binary_words_over(6) if not any(all(w[i] == w[i-d] for i in range(d, 6)) for d in range(1, 6) if 6 % d == 0)]"
+- collection: lyndon_words                 # binary Lyndon words (A001037)
+  args: { size: 6 }
+  sage: "[w for w in binary_words_over(6) if all(list(w) < list(w[d:]+w[:d]) for d in range(1,6))]"
+- collection: independent_sets_cycle     # no two cyclically-adjacent 1s (Lucas numbers)
+  args: { size: 6 }
+  sage: "[w for w in binary_words_over(6) if not any(w[i]==1 and w[i+1]==1 for i in range(5)) and not (w[0]==1 and w[5]==1)]"
+- collection: binary_necklaces           # binary words up to rotation (A000031)
+  args: { size: 6 }
+  sage: "[w for w in binary_words_over(6) if all(list(w) <= list(w[d:]+w[:d]) for d in range(6))]"
+- collection: binary_bracelets           # up to rotation + reflection (A000029)
+  args: { size: 6 }
+  sage: "[w for w in binary_words_over(6) if all(list(w) <= list(w[d:]+w[:d]) for d in range(6)) and all(list(w) <= list(w[::-1][d:]+w[::-1][:d]) for d in range(6))]"
+- collection: involutions                   # permutations equal to their inverse
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if p == p.inverse()]"
+- collection: even_permutations             # sign +1 (the alternating group)
+  args: { size: 4 }
+  sage: "[p for p in Permutations(4) if p.sign() == 1]"
+- collection: cyclic_permutations           # a single n-cycle; (n-1)!
+  args: { size: 5 }
+  sage: "[p for p in Permutations(5) if len(p.to_cycles()) == 1]"
+- collection: compositions_into_k_parts      # (n,k): compositions of n into exactly k (positive) parts
+  args: { size: 8, k: 3 }
+  sage: Compositions(8, length=3)
+- collection: k_part_partitions              # (n,k): partitions of n into exactly k parts
+  args: { size: 10, k: 3 }
+  sage: Partitions(10, length=3)
+- collection: bounded_part_partitions        # (n,k): partitions of n with every part ≤ k
+  args: { size: 8, k: 3 }
+  sage: Partitions(8, max_part=3)
+- collection: box_confined_partitions     # partitions in a parts×max_part box (Gaussian binomial C(parts+max,parts))
+  args: { parts: 2, max_part: 3 }
+  sage: "[p for n in range(0, 7) for p in Partitions(n, max_part=3, max_length=2)]"
+- collection: weak_compositions_into_k_parts  # (n,k): nonneg length-k vectors summing to n
+  args: { size: 6, k: 3 }
+  sage: IntegerVectors(6, 3)
+- collection: binary_words                    # all 2^n words over {0,1}
+  args: { size: 4 }
+  sage: binary_words_over(4)
+- collection: gray_codes                      # the binary reflected gray code: same 2^n words, reordered
+  args: { size: 3 }
+  sage: binary_words_over(3)
+- collection: parking_functions               # parking functions of length n; (n+1)^(n-1)
+  args: { size: 3 }
+  sage: ParkingFunctions(3)
+- collection: sparse_subsets                   # length-n bit-strings with no two adjacent 1s (Fibonacci)
+  args: { size: 5 }
+  sage: "[w for w in binary_words_over(5) if all(not (w[i] and w[i+1]) for i in range(len(w)-1))]"
+- collection: ordered_trees                    # rooted plane trees, n edges = balanced parens = DyckWords(n)
+  args: { size: 4 }
+  sage: DyckWords(4)
+- collection: dyck_paths
+  args: { size: 5 }
+  sage: DyckWords(5)
+- collection: binary_trees           # trees with n internal nodes; sage BinaryTrees via its Dyck word
+  args: { size: 4 }
+  sage: binary_tree_parens(4)
+- collection: standard_tableaux      # SYT with n cells over all shapes; sage StandardTableaux(n)
+  args: { size: 4 }
+  sage: StandardTableaux(4)
+- collection: skew_partitions        # reduced skew partitions with n cells; sage SkewPartitions(n)
+  args: { size: 4 }
+  sage: SkewPartitions(4)
+- collection: decorated_permutations # permutations with signed fixed points; sage DecoratedPermutations(n)
+  args: { size: 3 }
+  sage: DecoratedPermutations(3)
+- collection: plane_partitions       # plane partitions of n (2D weakly-decreasing arrays); sage PlanePartitions(n)
+  args: { size: 4 }
+  sage: PlanePartitions(4)
+- collection: gelfand_tsetlin         # GT patterns: n rows, entries ≤ k; sage GelfandTsetlinPatterns(n, k)
+  args: { size: 3, k: 2 }
+  sage: GelfandTsetlinPatterns(3, 2)
+- collection: core_partitions          # k-core partitions of length n; sage Cores(k, n)
+  args: { k: 3, length: 4 }
+  sage: Cores(3, 4)
+- collection: semistandard_tableaux    # SSYT, n cells, entries ≤ k; sage SemistandardTableaux(n, max_entry=k)
+  args: { size: 3, max_entry: 3 }
+  sage: SemistandardTableaux(3, max_entry=3)
+- collection: alternating_sign_matrices # n×n ASMs; sage AlternatingSignMatrices(n)
+  args: { size: 3 }
+  sage: AlternatingSignMatrices(3)
+- collection: lehmer_codes           # the code side of permutations; sage encodes per permutation
+  args: { size: 5 }
+  sage: Permutations(5)
+- collection: labeled_trees           # Cayley trees carried as Prufer codes (length n-2 words over [n])
+  args: { size: 5 }
+  sage: all_labeled_trees(5)
+- collection: labeled_forests          # rooted forests on [n] = super-root trees on [n+1] (Prufer over [n+1])
+  args: { size: 4 }
+  sage: all_labeled_forests(4)
+- collection: plane_trees              # plane trees on n nodes as pre-order child-count words; sage has no such class
+  args: { size: 5 }
+  sage: plane_tree_words(5)
+- collection: plane_trees
+  args: { size: 6 }
+  sage: plane_tree_words(6)
+- collection: arrangements            # injective words of every length over [n]; sage has no all-lengths parent
+  args: { size: 5 }
+  sage: all_arrangements(5)
+- collection: arrangements            # k-arrangements = sage Permutations(n,k) = Arrangements([1..n], k)
+  args: { size: 5, length: 2 }
+  sage: Arrangements([1,2,3,4,5], 2)
+- collection: arrangements            # k=n fiber IS permutations(4)
+  args: { size: 4, length: 4 }
+  sage: Arrangements([1,2,3,4], 4)
+- collection: arrangements            # the one empty arrangement
+  args: { size: 5, length: 0 }
+  sage: Arrangements([1,2,3,4,5], 0)
+- collection: rook_placements         # partial permutations of [n] (non-attacking rooks); sage has no parent
+  args: { size: 4 }
+  sage: rook_placements_over(4)
+- collection: modular_residues        # Z/mZ realized as a handle; size = the modulus
+  args: { size: 7 }
+  sage: Integers(7)
+- collection: modular_residues
+  args: { size: 1 }
+  sage: Integers(1)
+- collection: lehmer_codes
+  args: { size: 0 }
+  sage: Permutations(0)
+- collection: lehmer_codes
+  args: { size: 1 }
+  sage: Permutations(1)
+- collection: words                  # words of length n over a k-letter alphabet; sage Words
+  args: { size: 3, base: 3 }
+  sage: words_over(3, 3)
+- collection: words                  # a two-letter alphabet
+  args: { size: 4, base: 2 }
+  sage: words_over(4, 2)
+- collection: words                  # words ARE the maps [size] → [base]: maps_of(fin(3), fin(2)) via sage's FiniteSetMaps
+  args: { size: 3, base: 2 }
+  sage: finite_set_maps_over(3, 2)
+- collection: words                  # maps_of(fin(2), fin(3)) — 3^2
+  args: { size: 2, base: 3 }
+  sage: finite_set_maps_over(2, 3)
+- collection: endofunctions          # the diagonal β = α: maps_of(fin(n), fin(n)) = FiniteSetMaps(n) — n^n
+  args: { n: 3 }
+  sage: finite_set_maps_over(3, 3)
+- collection: endofunctions          # 4^4 = 256
+  args: { n: 4 }
+  sage: finite_set_maps_over(4, 4)
+- collection: finite_set_elements    # the atoms of [n]; sage FiniteEnumeratedSet over 1..n (renamed from finsets)
+  args: { size: 6 }
+  sage: finset_atoms(6)
+- collection: motzkin_paths          # sage has no MotzkinPaths — brute-force reference (see oracle_sage.py)
+  args: { size: 5 }
+  sage: motzkin_words(5)
+- collection: motzkin_paths
+  args: { size: 4 }
+  sage: motzkin_words(4)
+- collection: k_motzkin_paths         # (n,k): length-n Motzkin paths with exactly k level steps; brute-force reference
+  args: { size: 5, k: 1 }
+  sage: k_motzkin_words(5, 1)
+- collection: k_motzkin_paths
+  args: { size: 4, k: 2 }
+  sage: k_motzkin_words(4, 2)
+- collection: colored_motzkin_paths   # (n,r): Motzkin paths with r-colored level steps; brute-force reference
+  args: { size: 3, r: 2 }
+  sage: colored_motzkin_words(3, 2)
+- collection: colored_motzkin_paths
+  args: { size: 4, r: 1 }
+  sage: colored_motzkin_words(4, 1)
+
+# --- grade-bound constructions (a fiber over a secondary axis) ---
+- collection: set_partitions          # into exactly k blocks (Stirling 2nd kind)
+  args: { size: 6, parts_count: 3 }
+  sage: SetPartitions(6, 3)
+- collection: restricted_growth_strings   # the same fiber, borrowed grade unrank, one letter per block
+  args: { size: 6, parts_count: 3 }
+  sage: SetPartitions(6, 3)
+- collection: set_partitions
+  args: { size: 5, parts_count: 2 }
+  sage: SetPartitions(5, 2)
+- collection: set_compositions        # ordered set partitions into k blocks
+  args: { size: 4, parts_count: 2 }
+  sage: OrderedSetPartitions(4, 2)
+- collection: integer_partitions      # into exactly k parts
+  args: { size: 10, parts_count: 3 }
+  sage: Partitions(10, length=3)
+- collection: integer_compositions    # into exactly k parts
+  args: { size: 8, parts_count: 3 }
+  sage: Compositions(8, length=3)
+- collection: k_subsets               # the (n,k) grading of the powerset
+  args: { n: 6, k: 3 }
+  sage: Subsets(6, 3)
+- collection: k_subsets               # edge: the single empty subset
+  args: { n: 6, k: 0 }
+  sage: Subsets(6, 0)
+- collection: permutations            # with exactly k inversions (no direct sage ctor — filter)
+  args: { size: 5, inversions_count: 4 }
+  sage: "[p for p in Permutations(5) if p.number_of_inversions() == 4]"
+- collection: permutations            # with exactly k cycles (unsigned Stirling1; fixed points count)
+  args: { size: 5, cycles_count: 3 }
+  sage: "[p for p in Permutations(5) if len(p.to_cycles()) == 3]"
+
+# --- boundaries: the empty structure (n=0) and the singleton (n=1) ---
+- collection: permutations
+  args: { size: 0 }
+  sage: Permutations(0)
+- collection: permutations
+  args: { size: 1 }
+  sage: Permutations(1)
+- collection: signed_permutations
+  args: { size: 0 }
+  sage: SignedPermutations(0)
+- collection: signed_permutations
+  args: { size: 1 }
+  sage: SignedPermutations(1)
+- collection: subsets
+  args: { size: 0 }
+  sage: Subsets(0)
+- collection: subsets
+  args: { size: 1 }
+  sage: Subsets(1)
+- collection: integer_partitions
+  args: { size: 0 }
+  sage: Partitions(0)
+- collection: integer_partitions
+  args: { size: 1 }
+  sage: Partitions(1)
+- collection: integer_compositions
+  args: { size: 0 }
+  sage: Compositions(0)
+- collection: integer_compositions
+  args: { size: 1 }
+  sage: Compositions(1)
+- collection: set_partitions
+  args: { size: 0 }
+  sage: SetPartitions(0)
+- collection: set_partitions
+  args: { size: 1 }
+  sage: SetPartitions(1)
+- collection: set_compositions
+  args: { size: 0 }
+  sage: OrderedSetPartitions(0)
+- collection: set_compositions
+  args: { size: 1 }
+  sage: OrderedSetPartitions(1)
+- collection: dyck_paths
+  args: { size: 0 }
+  sage: DyckWords(0)
+- collection: dyck_paths
+  args: { size: 1 }
+  sage: DyckWords(1)
+- collection: motzkin_paths
+  args: { size: 0 }
+  sage: motzkin_words(0)
+- collection: motzkin_paths
+  args: { size: 1 }
+  sage: motzkin_words(1)

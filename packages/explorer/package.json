@@ -1,0 +1,32 @@
+{
+  "name": "@enumeratio/explorer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./app": "./src/CollectionView.vue",
+    "./cli-terminal": "./src/CliTerminal.vue",
+    "./projective-view": "./src/ProjectiveView.vue",
+    "./query-view": "./src/QueryView.vue"
+  },
+  "description": "Browser explorer for the enumeratio pglite (WASM) database — Vue + PrimeVue. Built + mounted in the docs; no standalone dev server.",
+  "scripts": {
+    "postinstall": "node scripts/patch-primevue.mjs",
+    "build": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "@enumeratio/cli": "workspace:*",
+    "@enumeratio/client": "workspace:*",
+    "@enumeratio/components": "workspace:*",
+    "@primeuix/themes": "^2.0.3",
+    "katex": "^0.16.11",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.5.5",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@types/katex": "^0.16.7",
+    "typescript": "^5.7.2",
+    "vue-tsc": "^2.2.0"
+  }
+}

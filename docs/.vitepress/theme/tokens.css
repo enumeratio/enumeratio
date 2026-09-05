@@ -1,0 +1,218 @@
+/*
+ * enumeratio design tokens — the ONE source of truth for color, space, type, radii, shadow, z-index.
+ *
+ * Layers:
+ *   1. primitives  (--e-{hue}-{step})  — raw ramps; never referenced directly by components.
+ *   2. semantic     (--e-color-*, --e-space-*, …) — roles; THIS is what code should use.
+ *   3. bridges      — map VitePress (--vp-*) and PrimeVue (--p-*) vars onto the semantic roles so the
+ *                     docs chrome, the explorer app, and the web components all read as one system.
+ *
+ * Theme: dark tokens are keyed off `html.dark` only (VitePress's toggle class). VitePress's own runtime
+ * sets that class from the OS `prefers-color-scheme` on first load and from an explicit toggle after, so
+ * keying off the class both respects the system preference AND honours a manual switch — without the
+ * media-query/toggle conflict you get from re-declaring the same tokens under @media.
+ *
+ * Identity: bronze/gold on warm paper — a restrained classical-atlas palette. Amber is the single brand
+ * accent (interactive: links, buttons, primary chips); verdigris teal is the lone secondary accent
+ * (the "related" marker); green/red stay strictly functional. No other hues.
+ */
+
+:root {
+  /* ── 1. primitives ─────────────────────────────────────────────────────── */
+  /* amber / bronze (brand) */
+  --e-amber-50: #fffbeb;  --e-amber-100: #fef3c7; --e-amber-200: #fde68a; --e-amber-300: #fcd34d;
+  --e-amber-400: #fbbf24; --e-amber-500: #f59e0b; --e-amber-600: #d97706; --e-amber-700: #b45309;
+  --e-amber-800: #92400e; --e-amber-900: #78350f; --e-amber-950: #451a03;
+  /* stone (warm neutral) */
+  --e-stone-0: #ffffff;   --e-stone-50: #fafaf9;  --e-stone-100: #f5f5f4; --e-stone-200: #e7e5e4;
+  --e-stone-300: #d6d3d1; --e-stone-400: #a8a29e; --e-stone-500: #78716c; --e-stone-600: #57534e;
+  --e-stone-700: #44403c; --e-stone-800: #292524; --e-stone-900: #1c1917; --e-stone-950: #0c0a09;
+  /* verdigris teal (secondary accent) */
+  --e-teal-300: #5eead4; --e-teal-400: #2dd4bf; --e-teal-500: #14b8a6; --e-teal-600: #0d9488; --e-teal-700: #0f766e;
+  /* functional */
+  --e-green-400: #4ade80; --e-green-500: #22c55e; --e-green-600: #16a34a;
+  --e-red-400: #f87171;   --e-red-500: #ef4444;   --e-red-600: #dc2626;
+
+  /* ── 2. semantic — LIGHT (default) ─────────────────────────────────────── */
+  /* surfaces */
+  --e-color-bg: #fdfcfa;            /* page — warm white */
+  --e-color-bg-soft: #f6f4f0;       /* subtle raised fill */
+  --e-color-bg-elevated: #ffffff;   /* cards / popovers */
+  --e-color-surface: #ffffff;
+  /* borders */
+  --e-color-border: var(--e-stone-200);
+  --e-color-border-strong: var(--e-stone-300);
+  /* text */
+  --e-color-text: var(--e-stone-800);
+  --e-color-text-muted: var(--e-stone-600);
+  --e-color-text-subtle: var(--e-stone-500);
+  /* brand (amber) — role-separated so contrast holds: -text for type/links, -fill for solids */
+  --e-color-brand: var(--e-amber-700);        /* solid fill (white text passes AA) */
+  --e-color-brand-hover: var(--e-amber-800);
+  --e-color-brand-text: var(--e-amber-800);   /* link / accent text on light (AA on white) */
+  --e-color-brand-contrast: #ffffff;          /* text drawn on a brand fill */
+  --e-color-brand-soft: var(--e-amber-100);   /* brand-tinted background */
+  /* accent (verdigris) — the "related" secondary marker, distinct from brand */
+  --e-color-accent: var(--e-teal-700);
+  --e-color-accent-soft: color-mix(in srgb, var(--e-teal-700) 12%, transparent);
+  /* functional */
+  --e-color-success: var(--e-green-600);
+  --e-color-danger: var(--e-red-600);
+
+  /* ── spacing (4px base) ────────────────────────────────────────────────── */
+  --e-space-0: 0;      --e-space-1: 0.25rem; --e-space-2: 0.5rem; --e-space-3: 0.75rem;
+  --e-space-4: 1rem;   --e-space-5: 1.5rem;  --e-space-6: 2rem;   --e-space-7: 3rem; --e-space-8: 4rem;
+
+  /* ── radii ─────────────────────────────────────────────────────────────── */
+  --e-radius-sm: 4px; --e-radius-md: 8px; --e-radius-lg: 12px; --e-radius-pill: 999px;
+
+  /* ── typography ────────────────────────────────────────────────────────── */
+  --e-font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --e-font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --e-font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-mono: var(--e-font-mono);   /* legacy alias: explorer references var(--font-mono) directly */
+  --e-text-xs: 0.72rem; --e-text-sm: 0.82rem; --e-text-base: 1rem; --e-text-lg: 1.15rem;
+  --e-text-xl: 1.35rem; --e-text-2xl: 1.7rem; --e-text-3xl: 2.2rem;
+  --e-weight-normal: 400; --e-weight-medium: 500; --e-weight-semibold: 600; --e-weight-bold: 700;
+  --e-leading-tight: 1.2; --e-leading-normal: 1.5; --e-leading-relaxed: 1.7;
+
+  /* ── shadows (theme-aware — softened for light) ───────────────────────── */
+  --e-shadow-sm: 0 1px 2px rgba(28, 25, 23, 0.06), 0 1px 1px rgba(28, 25, 23, 0.04);
+  --e-shadow-md: 0 2px 6px rgba(28, 25, 23, 0.08), 0 1px 2px rgba(28, 25, 23, 0.06);
+  --e-shadow-lg: 0 8px 28px rgba(28, 25, 23, 0.14), 0 2px 6px rgba(28, 25, 23, 0.08);
+
+  /* ── z-index scale ─────────────────────────────────────────────────────── */
+  --e-z-base: 1; --e-z-dropdown: 1000; --e-z-sticky: 1100; --e-z-overlay: 1200;
+  --e-z-modal: 1300; --e-z-toast: 1400;
+}
+
+/* ── 2. semantic — DARK (VitePress toggle class) ─────────────────────────── */
+.dark {
+  --e-color-bg: #1a1714;
+  --e-color-bg-soft: #24211d;
+  --e-color-bg-elevated: #211e1a;
+  --e-color-surface: #201d19;
+  --e-color-border: #38332c;
+  --e-color-border-strong: #4a443c;
+  --e-color-text: #ece8e1;
+  --e-color-text-muted: var(--e-stone-400);
+  --e-color-text-subtle: var(--e-stone-500);
+  --e-color-brand: var(--e-amber-400);        /* gold fill — dark text passes AA */
+  --e-color-brand-hover: var(--e-amber-300);
+  --e-color-brand-text: var(--e-amber-400);   /* gold text on dark (AA) */
+  --e-color-brand-contrast: #1a1714;          /* dark ink on a gold fill */
+  --e-color-brand-soft: color-mix(in srgb, var(--e-amber-400) 16%, transparent);
+  --e-color-accent: var(--e-teal-400);
+  --e-color-accent-soft: color-mix(in srgb, var(--e-teal-400) 16%, transparent);
+  --e-color-success: var(--e-green-400);
+  --e-color-danger: var(--e-red-400);
+  /* deeper shadows read on dark surfaces */
+  --e-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --e-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.45);
+  --e-shadow-lg: 0 10px 34px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/*
+ * ── 3a. bridge → VitePress (--vp-*) ──────────────────────────────────────
+ * Override the default theme's brand + neutral surfaces so the docs chrome (nav, links, hero button,
+ * active sidebar) shares the enumeratio identity. VitePress declares these on :root and .dark already,
+ * so mapping them to our semantic roles carries through both themes automatically.
+ */
+:root {
+  --vp-c-brand-1: var(--e-color-brand-text);
+  --vp-c-brand-2: var(--e-color-brand);
+  --vp-c-brand-3: var(--e-color-brand);
+  --vp-c-brand-soft: var(--e-color-brand-soft);
+
+  --vp-c-bg: var(--e-color-bg);
+  --vp-c-bg-alt: var(--e-color-bg-soft);
+  --vp-c-bg-soft: var(--e-color-bg-soft);
+  --vp-c-bg-elv: var(--e-color-bg-elevated);
+  --vp-c-divider: var(--e-color-border);
+  --vp-c-border: var(--e-color-border-strong);
+  --vp-c-gutter: var(--e-color-border);
+
+  --vp-c-text-1: var(--e-color-text);
+  --vp-c-text-2: var(--e-color-text-muted);
+  --vp-c-text-3: var(--e-color-text-subtle);
+
+  /* Inline code: VitePress defaults --vp-code-color to the brand color, which is exactly the link
+   * color here — so `code` read as a link. Point it at the body text instead; the stone chip (bg)
+   * plus the mono face carry the "code" signal, clearly distinct from amber links. */
+  --vp-code-color: var(--e-color-text);
+
+  --vp-font-family-mono: var(--e-font-mono);
+  /* solid brand button: our brand fill wants light text in both themes' *button* context */
+  --vp-button-brand-text: var(--e-color-brand-contrast);
+  --vp-button-brand-bg: var(--e-color-brand);
+  --vp-button-brand-hover-bg: var(--e-color-brand-hover);
+  --vp-button-brand-active-bg: var(--e-color-brand-hover);
+}
+
+/*
+ * ── 3b. bridge → PrimeVue (--p-*) ────────────────────────────────────────
+ * The explorer (and the client-backed web components) read --p-* almost exclusively. The primary ramp is
+ * re-pointed to amber via definePreset in theme/index.ts (themes every PrimeVue widget consistently); here
+ * we only alias the functional accents the components fall back through, so figures/asserts match the
+ * system. Surface/content vars are left to Aura's warm-neutral-friendly grays.
+ */
+:root {
+  --p-red-500: var(--e-color-danger);
+  --p-green-500: var(--e-color-success);
+}
+
+/*
+ * ── 3c. bridge → component styling hooks (--enumeratio-*) ────────────────
+ * The PUBLIC styling surface of the web components and of every db-emitted SVG (glyph_svg): five hooks —
+ * accent / border / muted / text / bg. Components and emitted SVGs read the hook FIRST, then a PrimeVue var,
+ * then a standalone literal, so (a) here the whole surface follows the semantic roles in both themes, and
+ * (b) any host — or a standard style class from @enumeratio/components/styles.css — can retheme a subtree by
+ * redefining the hooks (custom properties inherit through shadow roots). Note the naming seam: the hooks
+ * predate the token layer, so --enumeratio-accent is the PRIMARY accent and maps to --e-color-brand (amber),
+ * not to --e-color-accent (the verdigris "related" marker).
+ */
+:root {
+  --enumeratio-accent: var(--e-color-brand);
+  --enumeratio-border: var(--e-color-border-strong);
+  --enumeratio-muted: var(--e-color-text-muted);
+  --enumeratio-text: var(--e-color-text);
+  --enumeratio-bg: var(--e-color-surface);
+}
+
+/*
+ * ── nav wordmark ─────────────────────────────────────────────────────────
+ * VitePress sets the site title at 16px, which reads small and low beside the 24px lattice logo (the
+ * all-lowercase wordmark has little above the x-height to fill the gap). Enlarge it to sit with the mark.
+ */
+.VPNavBarTitle .title {
+  font-size: 22px;
+  letter-spacing: 0.1px;
+}
+/* The mark is bottom-heavy with a high apex, so box-centered it floats above the all-lowercase word's
+ * x-height band. Nudge it down to sit optically on the wordmark (2px undershot it — still read low). */
+.VPNavBarTitle .title img {
+  transform: translateY(3px);
+}
+
+/*
+ * ── home hero text ───────────────────────────────────────────────────────
+ * VitePress's default hero.text size wraps "math as data, data as math" onto two lines at normal desktop
+ * widths. A clamp() keeps it proportional on narrow viewports while fitting on one line above that.
+ */
+.VPHero .text {
+  font-size: clamp(20px, 4vw, 32px);
+}
+
+/*
+ * ── wide-content pages ───────────────────────────────────────────────────
+ * A page that opts out of BOTH the sidebar and the ToC aside (frontmatter `sidebar: false` + `aside: false` —
+ * wide tables, demo grids, 3D views) should actually get the freed-up space back. VitePress's own `:not(.has-
+ * sidebar)` rule only widens .content to 752-784px — barely more than the 688px cap `.has-aside` alone already
+ * imposes — because that cap is keyed off .has-aside, not sidebar presence. Go wider when a page has neither.
+ */
+@media (min-width: 960px) {
+  .VPDoc:not(.has-sidebar):not(.has-aside) .container,
+  .VPDoc:not(.has-sidebar):not(.has-aside) .content {
+    max-width: 1280px;
+  }
+}

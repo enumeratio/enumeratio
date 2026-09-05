@@ -1,0 +1,29 @@
+<svg viewBox="-3 -3 34 30" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- Pascal-lattice mark (numbers-repo heritage), recolored to the enumeratio identity: one enumerated
+       rank-1 path (V) threaded through muted stone. Two-tone highlight — the path (lines + node rings) is
+       bronze and the node fills gold. Fixed to the light variant (no prefers-color-scheme swap) so it reads
+       the same wherever the favicon renders. Muted stone is translucent; the edge lines stop at each node's
+       rim so nothing overlaps under the circles. Highlight nodes match the muted nodes' overall radius. -->
+  <style>
+    .edge { stroke: #78716c; stroke-opacity: 0.7; }
+    .node { fill: #78716c; fill-opacity: 0.7; }
+    .path { stroke: #b45309; }
+    .path-node { fill: #fbbf24; stroke: #b45309; stroke-width: 1.4; }
+  </style>
+  <!-- Muted edges (trimmed to node rims) -->
+  <line class="edge" x1="15.84" y1="5.11"  x2="19.16" y2="8.89"  stroke-width="1.6" stroke-linecap="butt"/>
+  <line class="edge" x1="5.16"  y1="13.11" x2="1.84"  y2="16.89" stroke-width="1.6" stroke-linecap="butt"/>
+  <line class="edge" x1="19.16" y1="13.11" x2="15.84" y2="16.89" stroke-width="1.6" stroke-linecap="butt"/>
+  <line class="edge" x1="22.84" y1="13.11" x2="26.16" y2="16.89" stroke-width="1.6" stroke-linecap="butt"/>
+  <!-- Highlighted path (rank-1 V), trimmed to node rims -->
+  <line class="path" x1="12.16" y1="5.11"  x2="8.84"  y2="8.89"  stroke-width="1.6" stroke-linecap="butt"/>
+  <line class="path" x1="8.84"  y1="13.11" x2="12.16" y2="16.89" stroke-width="1.6" stroke-linecap="butt"/>
+  <!-- Muted nodes -->
+  <circle class="node" cx="21" cy="11" r="2.8"/>
+  <circle class="node" cx="0"  cy="19" r="2.8"/>
+  <circle class="node" cx="28" cy="19" r="2.8"/>
+  <!-- Highlighted nodes (gold fill, bronze ring; outer radius matches the muted nodes) -->
+  <circle class="path-node" cx="14" cy="3"  r="2.1"/>
+  <circle class="path-node" cx="7"  cy="11" r="2.1"/>
+  <circle class="path-node" cx="14" cy="19" r="2.1"/>
+</svg>

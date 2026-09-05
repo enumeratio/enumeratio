@@ -1,0 +1,73 @@
+/*
+ * Standard styles — named bundles of the --enumeratio-* styling hooks (accent / border / muted / text / bg).
+ *
+ * Mechanism: set `data-enumeratio-style="<name>"` on ANY ancestor and every enumeratio surface under it —
+ * web components and db-emitted SVGs alike — rethemes, because the hooks are plain custom properties that
+ * inherit through shadow roots. Nesting works; the nearest ancestor wins. With no attribute, the hooks come
+ * from the host theme (the docs define them from the design tokens in tokens.css) or fall back to each
+ * component's standalone literal.
+ *
+ * Dark variants key off an ancestor `.dark` (the VitePress toggle class); hosts without one get the light
+ * values. `debug` is deliberately garish and theme-invariant — its job is VALIDATION: under it, anything
+ * that fails to change color is a surface that missed a styling hook.
+ *
+ * Functional colors (assert pass/fail green/red) are NOT hooks by design: a restyle must never repaint
+ * success as failure. They ride the host theme (the --p-green / --p-red ramps) only.
+ */
+
+/* parchment — the enumeratio identity (bronze/gold on warm paper) as literals, for hosts without the token layer */
+[data-enumeratio-style='parchment'] {
+  --enumeratio-accent: #b45309;
+  --enumeratio-border: #d6d3d1;
+  --enumeratio-muted: #57534e;
+  --enumeratio-text: #292524;
+  --enumeratio-bg: #fdfcfa;
+}
+.dark [data-enumeratio-style='parchment'] {
+  --enumeratio-accent: #fbbf24;
+  --enumeratio-border: #4a443c;
+  --enumeratio-muted: #a8a29e;
+  --enumeratio-text: #ece8e1;
+  --enumeratio-bg: #201d19;
+}
+
+/* emerald — the numbers-repo heritage palette (emerald on slate) */
+[data-enumeratio-style='emerald'] {
+  --enumeratio-accent: #059669;
+  --enumeratio-border: #cbd5e1;
+  --enumeratio-muted: #64748b;
+  --enumeratio-text: #334155;
+  --enumeratio-bg: #f8fafc;
+}
+.dark [data-enumeratio-style='emerald'] {
+  --enumeratio-accent: #34d399;
+  --enumeratio-border: #475569;
+  --enumeratio-muted: #94a3b8;
+  --enumeratio-text: #e2e8f0;
+  --enumeratio-bg: #1e293b;
+}
+
+/* indigo — the original mark color (indigo on slate) */
+[data-enumeratio-style='indigo'] {
+  --enumeratio-accent: #4f46e5;
+  --enumeratio-border: #cbd5e1;
+  --enumeratio-muted: #64748b;
+  --enumeratio-text: #334155;
+  --enumeratio-bg: #f8fafc;
+}
+.dark [data-enumeratio-style='indigo'] {
+  --enumeratio-accent: #818cf8;
+  --enumeratio-border: #475569;
+  --enumeratio-muted: #94a3b8;
+  --enumeratio-text: #e2e8f0;
+  --enumeratio-bg: #1e293b;
+}
+
+/* debug — every hook a screaming, distinct color; theme-invariant. An unstyled surface is a bug. */
+[data-enumeratio-style='debug'] {
+  --enumeratio-accent: #e800e8; /* magenta: marks, fills, strokes  */
+  --enumeratio-border: #00b8e8; /* cyan:    borders, gridlines, axes */
+  --enumeratio-muted: #ff8c00;  /* orange:  secondary text */
+  --enumeratio-text: #00a000;   /* green:   body text */
+  --enumeratio-bg: #fff3b0;     /* yellow:  surfaces */
+}

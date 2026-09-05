@@ -1,0 +1,25 @@
+<svg viewBox="-3 -3 34 30" xmlns="http://www.w3.org/2000/svg" fill="none" aria-label="enumeratio">
+  <!-- Nav logo, light theme: two-tone highlight — bronze path (lines + node rings) with gold node fills —
+       threaded through translucent muted stone. Served as an <img>, so colors are literal; the dark
+       variant is a sibling file picked by themeConfig.logo. Edges trimmed to node rims. -->
+  <g stroke="#a8a29e" stroke-opacity="0.7" stroke-width="1.6" stroke-linecap="butt">
+    <line x1="15.84" y1="5.11"  x2="19.16" y2="8.89"/>
+    <line x1="5.16"  y1="13.11" x2="1.84"  y2="16.89"/>
+    <line x1="19.16" y1="13.11" x2="15.84" y2="16.89"/>
+    <line x1="22.84" y1="13.11" x2="26.16" y2="16.89"/>
+  </g>
+  <g fill="#a8a29e" fill-opacity="0.7">
+    <circle cx="21" cy="11" r="2.8"/>
+    <circle cx="0"  cy="19" r="2.8"/>
+    <circle cx="28" cy="19" r="2.8"/>
+  </g>
+  <g stroke="#b45309" stroke-width="1.6" stroke-linecap="butt">
+    <line x1="12.16" y1="5.11"  x2="8.84"  y2="8.89"/>
+    <line x1="8.84"  y1="13.11" x2="12.16" y2="16.89"/>
+  </g>
+  <g fill="#fbbf24" stroke="#b45309" stroke-width="1.4">
+    <circle cx="14" cy="3"  r="2.1"/>
+    <circle cx="7"  cy="11" r="2.1"/>
+    <circle cx="14" cy="19" r="2.1"/>
+  </g>
+</svg>
