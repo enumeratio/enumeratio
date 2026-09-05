@@ -78,9 +78,9 @@ CREATE FUNCTION contains_in_fiber(f increasing_binary_trees_fiber, v increasing_
     AND (v).root BETWEEN 1 AND (f).n::int
     AND NOT EXISTS (SELECT 1 FROM generate_subscripts((v).left_child, 1) i WHERE (v).left_child[i] != 0 AND ((v).left_child[i] <= i OR (v).left_child[i] > (f).n::int))
     AND NOT EXISTS (SELECT 1 FROM generate_subscripts((v).right_child, 1) i WHERE (v).right_child[i] != 0 AND ((v).right_child[i] <= i OR (v).right_child[i] > (f).n::int))
-    AND (SELECT array_agg(x ORDER BY x) FROM (
-           SELECT unnest((v).left_child) x UNION ALL SELECT unnest((v).right_child) x) t WHERE x != 0)
-        = ARRAY(SELECT g FROM generate_series(1, (f).n::int) g WHERE g != (v).root ORDER BY g)
+    AND coalesce((SELECT array_agg(x ORDER BY x) FROM (
+           SELECT unnest((v).left_child) x UNION ALL SELECT unnest((v).right_child) x) t WHERE x != 0), '{}'::int[])
+        = ARRAY(SELECT g FROM generate_series(1, (f).n::int) g WHERE g != (v).root ORDER BY g)   -- coalesce: a childless tree (n=1) has no non-zero labels, array_agg over it is NULL not '{}'
   END $$;
 
 CREATE FUNCTION fiber_symbol(f increasing_binary_trees_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'IBT(' || (f).n::int || ')' $$;   -- corpus symbol

@@ -32,7 +32,7 @@ CREATE FUNCTION fiber_elements(f lehmer_codes_fiber, element_limit int) RETURNS 
   SELECT to_inversion(permutation_unrank_lex((f).size::int, ord)) FROM generate_series(0, (factorial((f).size::int) - 1)::int) ord LIMIT element_limit $$;
 CREATE FUNCTION fiber_count(f lehmer_codes_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT factorial((f).size::int) $$;
 CREATE FUNCTION contains_in_fiber(f lehmer_codes_fiber, v permutation_inversion) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$   -- valid code: length n-1, code[i] ∈ [0, n-i]
-  SELECT coalesce(array_length((v).code,1),0) = (f).size::int - 1
+  SELECT coalesce(array_length((v).code,1),0) = greatest((f).size::int - 1, 0)   -- greatest: S₀'s code is empty (length 0), not length -1
      AND NOT EXISTS (SELECT 1 FROM generate_subscripts((v).code,1) i WHERE (v).code[i] < 0 OR (v).code[i] > (f).size::int - i) $$;
 
 -- direct unrank (capability layer 3): the ord-th element via a closed form / combinatorial unrank.

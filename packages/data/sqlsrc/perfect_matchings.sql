@@ -40,7 +40,7 @@ CREATE FUNCTION contains_in_fiber(f perfect_matchings_fiber, v perfect_matching)
       IF arr[2*i-1] >= arr[2*i] THEN RETURN false; END IF;
       IF i > 1 AND arr[2*i-3] >= arr[2*i-1] THEN RETURN false; END IF;
     END LOOP;
-    RETURN (SELECT array_agg(x ORDER BY x) FROM unnest(arr) x) = ARRAY(SELECT generate_series(1, 2*n));  -- covers {1..2n}
+    RETURN coalesce((SELECT array_agg(x ORDER BY x) FROM unnest(arr) x), '{}'::int[]) = ARRAY(SELECT generate_series(1, 2*n));  -- covers {1..2n}; coalesce: the empty matching (n=0) aggregates to NULL not '{}'
   END $$;
 
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
@@ -89,6 +89,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT cardinality(perfect_matchings(0,3))::text $q$),
   ('perfect_matchings','unrank crosses fibers (rank 2 = first n=2 matching)','eq','(1,2)(3,4)','ranks 0,1 are n=0,1 (sizes 1,1); rank 2 = first of n=2',$q$
     SELECT notation((unrank(perfect_matchings(0,3), 2)).value) $q$),
+  ('perfect_matchings','contains the empty matching of n=0 (#295: array_agg over the empty pair list is NULL, not the empty set)','eq','true',$q$the sole element of perfect_matchings(0)$q$,$q$
+    SELECT contains(perfect_matchings(0), (unrank(perfect_matchings(0), 0::rank_index)).value)::text $q$),
   ('perfect_matchings','contains (gap 2): (1,2)(3,4) ∈ perfect_matchings(2), (1,3)(2,4) ∈, but a wrong-shape value ∉','eq','true|true|false','generated from contains_in_fiber',$q$
     SELECT contains(perfect_matchings(2), ROW(ARRAY[1,2,3,4])::perfect_matching)::text || '|' ||
            contains(perfect_matchings(2), ROW(ARRAY[1,3,2,4])::perfect_matching)::text || '|' ||

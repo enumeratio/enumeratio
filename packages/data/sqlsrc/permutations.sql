@@ -29,8 +29,8 @@ CREATE FUNCTION fiber_elements(f permutations_fiber, element_limit int) RETURNS 
 CREATE FUNCTION fiber_count(f permutations_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$   -- (#97) size ≤ 20 fits int8 exactly
   SELECT CASE WHEN (f).size::int <= 20 THEN factorial_bigint((f).size::int)::numeric ELSE factorial((f).size::int) END $$;
 CREATE FUNCTION contains_in_fiber(f permutations_fiber, v permutation) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
-  SELECT array_length((v).image,1) = (f).size::int
-     AND (SELECT array_agg(x ORDER BY x) FROM unnest((v).image) x) = ARRAY(SELECT generate_series(1, (f).size::int)) $$;
+  SELECT coalesce(array_length((v).image,1),0) = (f).size::int
+     AND coalesce((SELECT array_agg(x ORDER BY x) FROM unnest((v).image) x), '{}'::int[]) = ARRAY(SELECT generate_series(1, (f).size::int)) $$;   -- coalesce: the empty permutation (S₀) has no image, array_agg/length over it is NULL not '{}'
 
 CREATE FUNCTION fiber_symbol(f permutations_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'S' || to_unicode_subscript((f).size) $$;   -- the symmetric group Sₙ
 
@@ -65,6 +65,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            contains(permutations(3), ROW(ARRAY[2,1])::permutation)::text $q$),
   ('permutations','the <@ operator works too: 231 <@ permutations(3)','eq','true','operator wrapper',$q$
     SELECT (ROW(ARRAY[2,3,1])::permutation <@ permutations(3))::text $q$),
+  ('permutations','contains the empty permutation of S₀ (#295: array_agg/length over the empty image is NULL, not the empty set)','eq','true',$q$the sole element of permutations(0)$q$,$q$
+    SELECT contains(permutations(0), (unrank(permutations(0), 0::rank_index)).value)::text $q$),
   ('permutations','accelerated unrank at a fiber BOUNDARY: rank 2 = last size-2 perm (21), not into size-3 (#152)','eq','21',
     'exercises the off-by-one at the cum-window edge: prior=1 (|S₁|), run=3 (|S₁|+|S₂|), r=2 ⇒ local ord 1',$q$
     SELECT one_line((unrank(permutations(1,3), 2)).value) $q$),

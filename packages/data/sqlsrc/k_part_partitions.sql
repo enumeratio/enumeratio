@@ -40,7 +40,7 @@ CREATE FUNCTION contains_in_fiber(f k_part_partitions_fiber, v integer_partition
   SELECT coalesce(array_length((v).parts, 1), 0) = (f).k::int
      AND coalesce((SELECT sum(x) FROM unnest((v).parts) x), 0) = (f).n::int
      AND NOT EXISTS (SELECT 1 FROM unnest((v).parts) x WHERE x < 1)
-     AND (v).parts IS NOT DISTINCT FROM (SELECT array_agg(x ORDER BY x DESC) FROM unnest((v).parts) x) $$;
+     AND (v).parts IS NOT DISTINCT FROM coalesce((SELECT array_agg(x ORDER BY x DESC) FROM unnest((v).parts) x), '{}'::int[]) $$;   -- coalesce: the empty partition (n=k=0) has no parts, array_agg over it is NULL not '{}'
 
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('k_part_partitions', 'integer_partition');

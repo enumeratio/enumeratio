@@ -11,7 +11,7 @@ CREATE FUNCTION fiber_count(f surjections_onto_k_fiber) RETURNS numeric LANGUAGE
   SELECT factorial((f).k::int) * stirling_second((f).n::int, (f).k::int) $$;   -- surj(n,k) = k!·S(n,k)
 CREATE FUNCTION contains_in_fiber(f surjections_onto_k_fiber, v surjection) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$   -- length n, image EXACTLY {1..k}
   SELECT coalesce(array_length((v).values, 1), 0) = (f).n
-     AND (SELECT array_agg(DISTINCT x ORDER BY x) FROM unnest((v).values) x) = ARRAY(SELECT generate_series(1, (f).k::int)) $$;
+     AND coalesce((SELECT array_agg(DISTINCT x ORDER BY x) FROM unnest((v).values) x), '{}'::int[]) = ARRAY(SELECT generate_series(1, (f).k::int)) $$;   -- coalesce: the empty surjection (n=k=0) has no values, array_agg over it is NULL not '{}'
 CREATE FUNCTION fiber_symbol(f surjections_onto_k_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'Surj(' || (f).n::int || ',' || (f).k::int || ')' $$;
 
 INSERT INTO base_collection VALUES ('surjections_onto_k', 'surjection');
@@ -31,6 +31,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(notation((e).value), '|' ORDER BY ordinality(e)) FROM elements(surjections_onto_k(3,2)) e $q$),
   ('surjections_onto_k','fiber = (n,k) typed axes; unrank(surjections_onto_k(3,2),0).fiber','eq','3|2','the two grades',$q$
     SELECT (unrank(surjections_onto_k(3,2),0)).fiber.n::text || '|' || (unrank(surjections_onto_k(3,2),0)).fiber.k::text $q$),
+  ('surjections_onto_k','contains the empty surjection of (0,0) (#295: array_agg over the empty word is NULL, not the empty set)','eq','true',$q$the sole element of surjections_onto_k(0,0)$q$,$q$
+    SELECT contains(surjections_onto_k(0,0), (unrank(surjections_onto_k(0,0), 0::rank_index)).value)::text $q$),
   ('surjections_onto_k','contains via <@: {1,2,1} ∈ surjections_onto_k(3,2), ∉ (3,3) (only 2 letters), {1,3,2}∈(3,3)','eq','true|false|true','image exactly [k]',$q$
     SELECT (ROW(ARRAY[1,2,1])::surjection <@ surjections_onto_k(3,2))::text || '|' ||
            (ROW(ARRAY[1,2,1])::surjection <@ surjections_onto_k(3,3))::text || '|' ||
