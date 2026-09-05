@@ -9,7 +9,9 @@ import { buildCatalogSnapshot } from './catalog-snapshot.ts'
 
 const out = join(dirname(fileURLToPath(import.meta.url)), 'catalog-snapshot.json')
 const pg = await bootCore()
-const snap = await buildCatalogSnapshot(async <T>(sql: string) => (await pg.query(sql)).rows as T[], coreBundleHash())
+// the trailing comma in `<T,>` is required in a .mts file — a bare `<T>` reads as JSX there
+const query = async <T,>(sql: string): Promise<T[]> => (await pg.query(sql)).rows as T[]
+const snap = await buildCatalogSnapshot(query, coreBundleHash())
 await pg.close()
 const json = JSON.stringify(snap)
 await writeFile(out, json)
