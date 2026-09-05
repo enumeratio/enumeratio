@@ -1,11 +1,11 @@
--- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, seed.render_corpus
+-- requires: permutations, integer_partitions, integer_compositions, dyck_paths, set_partitions, perfect_matchings, subsets, k_subsets, integer_factorizations, binary_words, finsets, signed_permutations, signed_subsets, set_compositions, surjections, parking_functions, seed.render_corpus
 -- representations — Phase 3 of the catalog port: named alternate renderings, registered in base_repr so the
 -- client's -R flag can pick one (permutation cycle notation, set-partition blocks, Dyck parens). render_fn takes
 -- the CARRIER; the client calls render_fn((element).value). The `canonical` repr matches the default render()
 -- codec. (This is the C-ext repr+format axis, flattened.) A repr can carry medium siblings (base_repr.medium,
 -- default 'unicode') — same (collection, repr), a render_fn spelled for a different line-space target; the
 -- `oneline` katex sibling below is the first one (#138), joined by `parts` (integer_compositions), `blocks`
--- (set_partitions), and the new `members` repr (finsets, carrier-inherited to subsets/k_subsets) (#141). The
+-- (set_partitions), and the `members` repr (finsets, carrier-inherited to subsets/k_subsets) (#141). The
 -- alphabet axis stays schema-only for now.
 -- NOT given a sibling: integer_partitions `parts` ("3+2+1"), dyck_paths `parens` ("(())()"), and permutations
 -- `cycle` ("(1 2 3)") — digits/+/parens need no escaping in KaTeX or asciimath, so their unicode spelling is
@@ -15,6 +15,22 @@
 -- "<element> ∈ <symbol>" membership rendering) is likewise NOT added: wire_set_notation generates it per
 -- <coll>_element via render_value ⊕ fiber_symbol, not as a render_fn(<carrier>) — outside base_repr's contract,
 -- same carve-out #138 already made for fiber_symbol_katex/_asciimath.
+-- #141 (coverage expansion) adds FIVE more collections, each getting a fresh canonical unicode `base_repr` row
+-- (none had one before — their default rendering ran through render()/notation() directly) plus its katex
+-- sibling: signed_permutations `oneline` (bars negatives \overline{k}, tuple-parenthesized — the standard
+-- hyperoctahedral-group bar notation), signed_subsets `members` (escapes braces + bars negatives, carrier-
+-- inherited to cross_polytope), set_compositions `blocks` (escapes braces, keeps block ORDER as a parenthesized
+-- tuple — unlike set_partitions' unordered outer braces — carrier-inherited to permutahedron), and the plain
+-- parenthesized-tuple move (same as `parts`/`oneline` above) for surjections `tuple` (carrier-inherited to
+-- surjections_onto_k) and parking_functions `tuple` (carrier-inherited to non_decreasing_parking_functions). All
+-- five asciimath spellings coincide with the existing unicode default (bare braces/commas/minus signs already
+-- render correctly there — confirmed against the render-corpus oracle), so none get an `ascii` sibling — same
+-- "nothing to translate" reasoning as `parts`/`blocks`/`members` above. Considered and SKIPPED as not confident/
+-- standard enough: k_colored_permutations (the corpus's color-exponent word notation is a different convention
+-- from our own image:colors separator notation, not a mechanical escape); dissection (the corpus has no real
+-- element-level katex oracle for it, just the ambient symbol repeated); prufer_sequences' `sequence` repr (⟨…⟩
+-- angle brackets already parse as plain unicode text in KaTeX — nothing to escape, so a macro sibling would be
+-- decorative, not corrective).
 
 -- ── new alternate renderings ────────────────────────────────────────────────────────────────────────────
 -- permutation cycle notation: decompose the one-line image into disjoint cycles, e.g. {2,3,1} → "(1 2 3)".
@@ -190,6 +206,46 @@ CREATE FUNCTION finset_members(s finset) RETURNS text LANGUAGE sql IMMUTABLE AS 
 CREATE FUNCTION finset_members_katex(s finset) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   SELECT '\{' || array_to_string((s).members, ',') || '\}' $$;
 
+-- ── #141 coverage expansion: five more collections, each getting a fresh canonical unicode row + katex sibling ──
+
+-- katex spelling of the signed_permutation default one-line window: bar each negative entry (\overline{k}, the
+-- standard hyperoctahedral-group convention — Björner–Brenti's bar notation for B_n) and wrap the whole window as
+-- a parenthesized tuple, e.g. {-2,1,-3} → "(\overline{2},1,\overline{3})" — matches the render-corpus oracle.
+-- asciimath coincides with the unicode default (bare "-2,1,-3") — no asciimath sibling needed.
+CREATE FUNCTION signed_permutation_katex(x signed_permutation) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT '(' || coalesce(string_agg(CASE WHEN v < 0 THEN '\overline{' || (-v) || '}' ELSE v::text END, ',' ORDER BY o), '') || ')'
+  FROM unnest((x).image) WITH ORDINALITY t(v, o) $$;
+
+-- katex spelling of the signed_subset default `{…}` notation: escape the braces (same move as finset_members_katex)
+-- and bar each negative entry, e.g. {1,-2,3} → "\{1,\overline{2},3\}" — matches the render-corpus oracle
+-- (signed_subsets and its cross_polytope carrier sibling). asciimath coincides with the unicode default (bare
+-- braces + minus sign) — no asciimath sibling needed.
+CREATE FUNCTION signed_subset_members_katex(s signed_subset) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT '\{' || coalesce(string_agg(CASE WHEN v < 0 THEN '\overline{' || (-v) || '}' ELSE v::text END, ',' ORDER BY o), '') || '\}'
+  FROM unnest((s).coords) WITH ORDINALITY t(v, o) $$;
+
+-- katex spelling of the set_composition default `blk|blk|…` notation: re-groups the same blocks, escaping braces
+-- (same move as set_partition_blocks_katex above) but keeping block ORDER as a parenthesized tuple rather than an
+-- unordered outer brace set — set compositions are ORDERED set partitions, so the sequence of blocks matters, e.g.
+-- labels {1,1,2,2} (block1={1,2}, block2={3,4}) → "(\{1,2\},\{3,4\})" — matches the render-corpus oracle. asciimath
+-- coincides with the unicode pipe-separated form (bare braces need no escaping there) — no asciimath sibling needed.
+CREATE FUNCTION set_composition_blocks_katex(c set_composition) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT '(' || coalesce(string_agg('\{' || blk || '\}', ',' ORDER BY lbl), '') || ')' FROM (
+    SELECT (c).labels[i] AS lbl, string_agg(i::text, ',' ORDER BY i) AS blk
+    FROM generate_subscripts((c).labels, 1) i GROUP BY (c).labels[i]) s $$;
+
+-- katex spelling of the surjection default comma-word notation: the same parenthesized-tuple move as
+-- perm_oneline_katex/composition_parts_katex above, e.g. "1,2,3" → "(1,2,3)" — matches the render-corpus oracle.
+-- asciimath coincides with the unicode default (bare comma word) — no asciimath sibling needed.
+CREATE FUNCTION surjection_tuple_katex(w surjection) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT '(' || array_to_string((w).values, ',') || ')' $$;
+
+-- katex spelling of the parking_function default comma-sequence notation: same parenthesized-tuple move as
+-- surjection_tuple_katex above, e.g. "1,1,1" → "(1,1,1)" — matches the render-corpus oracle. asciimath coincides
+-- with the unicode default (bare comma sequence) — no asciimath sibling needed.
+CREATE FUNCTION parking_function_tuple_katex(p parking_function) RETURNS text LANGUAGE sql IMMUTABLE AS $$
+  SELECT '(' || array_to_string((p).spots, ',') || ')' $$;
+
 -- ── register in base_repr (collection, repr, render_fn, title, canonical, parse_fn) ──────────────────────
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical, parse_fn) VALUES
   ('permutations','oneline','one_line','One-line notation',true,'perm_from_oneline'),
@@ -205,6 +261,22 @@ INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
   ('finsets','members','finset_members','Set notation ({…})',false);
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VALUES
   ('finsets','members','finset_members_katex','Set notation ({…}, KaTeX)',false,'latex');
+-- #141: five collections with NO prior base_repr row at all — render_fn='notation' is their unconditional
+-- default (no ground/data-dependent branching the way finset's does), so `canonical=true` holds uniformly for
+-- every collection that inherits it (signed_subsets carrier-inherits to cross_polytope, set_compositions to
+-- permutahedron, surjections to surjections_onto_k, parking_functions to non_decreasing_parking_functions).
+INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
+  ('signed_permutations','oneline','notation','One-line notation (barred negatives)',true),
+  ('signed_subsets','members','notation','Set notation ({…}, barred negatives)',true),
+  ('set_compositions','blocks','notation','Block notation',true),
+  ('surjections','tuple','notation','Surjection word',true),
+  ('parking_functions','tuple','notation','Preference sequence',true);
+INSERT INTO base_repr (collection, repr, render_fn, title, canonical, medium) VALUES
+  ('signed_permutations','oneline','signed_permutation_katex','One-line notation (KaTeX, barred negatives)',false,'latex'),
+  ('signed_subsets','members','signed_subset_members_katex','Set notation ({…}, KaTeX, barred negatives)',false,'latex'),
+  ('set_compositions','blocks','set_composition_blocks_katex','Block notation (KaTeX)',false,'latex'),
+  ('surjections','tuple','surjection_tuple_katex','Surjection word (KaTeX tuple)',false,'latex'),
+  ('parking_functions','tuple','parking_function_tuple_katex','Preference sequence (KaTeX tuple)',false,'latex');
 INSERT INTO base_repr (collection, repr, render_fn, title, canonical) VALUES
   ('set_partitions','rgs','notation','Restricted growth string',true),
   ('set_partitions','blocks','set_partition_blocks','Block notation',false),
@@ -361,6 +433,47 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
         AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'k_subsets' AND repr = 'members' AND medium = 'latex'))::text $q$),
   ('representations','the default finite-ground notation() is unchanged by adding members: subsets(5) rank still renders the bit register, not braces','eq','true','notation(finset) keeps its ground-dispatched register/braces split',$q$
     SELECT (notation((unrank(subsets(5), 4)).value) !~ '[{}]')::text $q$),
+  -- ── #141 coverage expansion: five more collections, each getting its first base_repr rows ──
+  ('representations','signed_permutation katex bars negatives and matches the render-corpus oracle: n=3 rank47 → (3̅,2̅,1̅)','eq','true','split_part(katex, '' ∈ '', 1) from signed_permutations~size/3@47',$q$
+    SELECT (signed_permutation_katex(ROW(ARRAY[-3,-2,-1])::signed_permutation)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'signed_permutations~size/3@47'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) signed_permutation notation is unchanged: {-3,-2,-1} → -3,-2,-1','eq','-3,-2,-1','plain minus signs, no bars',$q$
+    SELECT notation(ROW(ARRAY[-3,-2,-1])::signed_permutation) $q$),
+  ('representations','base_repr medium dispatch on signed_permutations: oneline resolves to notation at unicode, signed_permutation_katex at latex','eq','notation|signed_permutation_katex','same (collection,repr), two medium rows',$q$
+    SELECT (SELECT render_fn FROM base_repr_resolved WHERE collection = 'signed_permutations' AND repr = 'oneline' AND medium = 'unicode') || '|' ||
+           (SELECT render_fn FROM base_repr_resolved WHERE collection = 'signed_permutations' AND repr = 'oneline' AND medium = 'latex') $q$),
+  ('representations','signed_subset katex escapes braces + bars negatives, matches the render-corpus oracle: n=4 rank15 → {1,2̅,3}','eq','true','split_part(katex, '' ∈ '', 1) from signed_subsets~size/4@15',$q$
+    SELECT (signed_subset_members_katex(ROW(ARRAY[1,-2,3],4)::signed_subset)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'signed_subsets~size/4@15'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) signed_subset notation is unchanged: ({1,-2,3},4) → {1,-2,3}','eq','{1,-2,3}','bare braces + minus sign',$q$
+    SELECT notation(ROW(ARRAY[1,-2,3],4)::signed_subset) $q$),
+  ('representations','the signed_subset members repr is CARRIER-inherited: cross_polytope resolves it at unicode and latex','eq','true','base_repr_resolved carries the signed_subsets-registered repr to its polytope carrier sibling',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'cross_polytope' AND repr = 'members' AND medium = 'unicode')
+        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'cross_polytope' AND repr = 'members' AND medium = 'latex'))::text $q$),
+  ('representations','set_composition katex escapes braces but keeps block ORDER as a tuple, matches the render-corpus oracle: n=4 blocks {1,2}{3,4} → ({1,2},{3,4})','eq','true','split_part(katex, '' ∈ '', 1) from set_compositions~size/4@1,2!3,4',$q$
+    SELECT (set_composition_blocks_katex(ROW(ARRAY[1,1,2,2])::set_composition)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'set_compositions~size/4@1,2!3,4'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) set_composition notation is unchanged: labels 1,1,2,2 → 1,2|3,4','eq','1,2|3,4','comma within a block, pipe between blocks',$q$
+    SELECT notation(ROW(ARRAY[1,1,2,2])::set_composition) $q$),
+  ('representations','the set_composition blocks repr is CARRIER-inherited: permutahedron resolves it at unicode and latex','eq','true','base_repr_resolved carries the set_compositions-registered repr to its polytope carrier sibling',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'permutahedron' AND repr = 'blocks' AND medium = 'unicode')
+        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'permutahedron' AND repr = 'blocks' AND medium = 'latex'))::text $q$),
+  ('representations','surjection katex wraps the word as a tuple, matches the render-corpus oracle: k=3 n=3 rank0 → (1,2,3)','eq','true','split_part(katex, '' ∈ '', 1) from surjections~k=3~size/3@1,2,3',$q$
+    SELECT (surjection_tuple_katex(ROW(ARRAY[1,2,3])::surjection)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'surjections~k=3~size/3@1,2,3'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) surjection notation is unchanged: 1,2,3 → 1,2,3 (bare word)','eq','1,2,3','no parens at unicode',$q$
+    SELECT notation(ROW(ARRAY[1,2,3])::surjection) $q$),
+  ('representations','the surjection tuple repr is CARRIER-inherited: surjections_onto_k resolves it at unicode and latex','eq','true','base_repr_resolved carries the surjections-registered repr to its restriction sibling',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'surjections_onto_k' AND repr = 'tuple' AND medium = 'unicode')
+        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'surjections_onto_k' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
+  ('representations','parking_function katex wraps the sequence as a tuple, matches the render-corpus oracle: n=3 all-ones → (1,1,1)','eq','true','split_part(katex, '' ∈ '', 1) from parking_functions~size/3@1,1,1',$q$
+    SELECT (parking_function_tuple_katex(ROW(ARRAY[1,1,1])::parking_function)
+              = split_part((SELECT katex FROM base_render_corpus WHERE family_path = 'parking_functions~size/3@1,1,1'), ' ∈ ', 1))::text $q$),
+  ('representations','the default (unicode) parking_function notation is unchanged: 1,1,1 → 1,1,1 (bare sequence)','eq','1,1,1','no parens at unicode',$q$
+    SELECT notation(ROW(ARRAY[1,1,1])::parking_function) $q$),
+  ('representations','the parking_function tuple repr is CARRIER-inherited: non_decreasing_parking_functions resolves it at unicode and latex','eq','true','base_repr_resolved carries the parking_functions-registered repr to its restriction sibling',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'unicode')
+        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'non_decreasing_parking_functions' AND repr = 'tuple' AND medium = 'latex'))::text $q$),
   -- ── medium spellings of the ambient-set symbol (katex / asciimath), checked against the render corpus ──
   ('representations','fiber symbol S₄ across media: unicode Sₙ, katex S_{n}, asciimath S_n','eq','S₄|S_{4}|S_4','the three spellings of the symmetric-group symbol match the corpus',$q$
     SELECT fiber_symbol((unrank(permutations(4),0)).fiber) || '|' || fiber_symbol_katex((unrank(permutations(4),0)).fiber)
