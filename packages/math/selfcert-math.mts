@@ -185,6 +185,20 @@ for (let n = 0; n <= 6; n++) {
   }
 }
 
+// ---- permutation statistics (stirling1, eulerianA) ----
+for (let n = 0; n <= 15; n++) {
+  for (let k = -1; k <= n + 1; k++) {
+    const [[sql]] = await q(`SELECT stirling_first_unsigned(${n},${k})::text`);
+    record(`stirling1(${n},${k})`, sql, M.stirling1(n, k));
+  }
+}
+for (let n = 0; n <= 15; n++) {
+  for (let k = -1; k <= n + 1; k++) {
+    const [[sql]] = await q(`SELECT eulerian_number(${n},${k})::text`);
+    record(`eulerianA(${n},${k})`, sql, M.eulerianA(n, k));
+  }
+}
+
 await pg.close();
 
 console.log(`checked ${checked} cases across ${Object.keys(M).length} exports`);
