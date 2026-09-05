@@ -1,4 +1,4 @@
--- requires: realizer
+-- requires: triangular_numbers, realizer
 -- tetrahedral_numbers — Te(n)=n(n+1)(n+2)/6: 0,1,4,10,20,… Ungraded/∞ numeric (div for exact /6).
 CREATE TYPE tetrahedral_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f tetrahedral_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
@@ -12,4 +12,7 @@ INSERT INTO base_collection VALUES ('tetrahedral_numbers','numeric',true);
 SELECT base_realize('tetrahedral_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('tetrahedral_numbers','first terms','eq','0,1,4,10,20,35,56,84,120','n(n+1)(n+2)/6',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(tetrahedral_numbers(),9) e $q$),
-  ('tetrahedral_numbers','contains via <@: 20 ∈ (Te(4)), 21 ∉','eq','true|false','bounded-search membership',$q$ SELECT (20::numeric <@ tetrahedral_numbers())::text || '|' || (21::numeric <@ tetrahedral_numbers())::text $q$);
+  ('tetrahedral_numbers','contains via <@: 20 ∈ (Te(4)), 21 ∉','eq','true|false','bounded-search membership',$q$ SELECT (20::numeric <@ tetrahedral_numbers())::text || '|' || (21::numeric <@ tetrahedral_numbers())::text $q$),
+  ('tetrahedral_numbers','Te(n) - Te(n-1) = T(n) for n=1..8 (tetrahedral is the partial sums of triangular)','eq','true','cross-check against the triangular_numbers floor',$q$
+    SELECT bool_and((unrank(tetrahedral_numbers(), n)).value - (unrank(tetrahedral_numbers(), n-1)).value = (unrank(triangular_numbers(), n)).value)
+    FROM generate_series(1, 8) n $q$);

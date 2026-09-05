@@ -9,4 +9,7 @@ INSERT INTO base_monotonic_sequence VALUES ('cube_numbers');   -- non-decreasing
 SELECT base_realize('cube_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('cube_numbers','first terms','eq','0,1,8,27,64,125,216,343,512','n^3',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(cube_numbers(),9) e $q$),
-  ('cube_numbers','synthesized monotonic contains via <@: 27 ∈, 26 ∉','eq','true|false','scan the non-decreasing floor until the term meets/passes v',$q$ SELECT (27::numeric<@cube_numbers())::text||'|'||(26::numeric<@cube_numbers())::text $q$);
+  ('cube_numbers','synthesized monotonic contains via <@: 27 ∈, 26 ∉','eq','true|false','scan the non-decreasing floor until the term meets/passes v',$q$ SELECT (27::numeric<@cube_numbers())::text||'|'||(26::numeric<@cube_numbers())::text $q$),
+  ('cube_numbers','Nicomachus: sum of 1^3..n^3 = (n(n+1)/2)^2 for n=1..8','eq','true','partial sums of the unrank floor vs. the triangular-square closed form',$q$
+    SELECT bool_and((SELECT sum((unrank(cube_numbers(), k)).value) FROM generate_series(1, n) k) = div(n::numeric*(n+1), 2) * div(n::numeric*(n+1), 2))
+    FROM generate_series(1, 8) n $q$);

@@ -13,4 +13,7 @@ INSERT INTO base_monotonic_sequence VALUES ('tribonacci_numbers');   -- non-decr
 SELECT base_realize('tribonacci_numbers');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('tribonacci_numbers','first terms','eq','0,0,1,1,2,4,7,13,24','sum of previous 3',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(tribonacci_numbers(),9) e $q$),
-  ('tribonacci_numbers','indexable + synthesized contains: unrank(8)=24, 24 ∈, 25 ∉','eq','24|true|false','fiber_unrank + the non-decreasing scan',$q$ SELECT (unrank(tribonacci_numbers(),8)).value::text||'|'||(24::numeric<@tribonacci_numbers())::text||'|'||(25::numeric<@tribonacci_numbers())::text $q$);
+  ('tribonacci_numbers','indexable + synthesized contains: unrank(8)=24, 24 ∈, 25 ∉','eq','24|true|false','fiber_unrank + the non-decreasing scan',$q$ SELECT (unrank(tribonacci_numbers(),8)).value::text||'|'||(24::numeric<@tribonacci_numbers())::text||'|'||(25::numeric<@tribonacci_numbers())::text $q$),
+  ('tribonacci_numbers','recurrence holds off the floor: T(n) = T(n-1)+T(n-2)+T(n-3) for n=3..8','eq','true','accelerated unrank cross-checked against its own recurrence',$q$
+    SELECT bool_and((unrank(tribonacci_numbers(), n)).value = (unrank(tribonacci_numbers(), n-1)).value + (unrank(tribonacci_numbers(), n-2)).value + (unrank(tribonacci_numbers(), n-3)).value)
+    FROM generate_series(3, 8) n $q$);
