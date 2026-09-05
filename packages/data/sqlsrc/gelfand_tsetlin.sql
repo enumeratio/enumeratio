@@ -39,6 +39,49 @@ CREATE FUNCTION gt_interlacing_rows(above int[]) RETURNS SETOF int[] LANGUAGE sq
   )
   SELECT b FROM r WHERE coalesce(array_length(b,1),0) = coalesce(array_length(above,1),0) - 1 $$;
 
+-- ── fiber_unrank support (digit-DP over the flat row-major order the generator's ORDER BY flat emits) ────
+-- Weyl dimension formula: the number of GT-pattern completions BELOW a fully-specified row lam — every way to fill
+-- every row underneath it, already summing over every interlacing choice recursively. This is the SAME identity
+-- fiber_count leans on (its docstring's "hook-content SSYT count s_λ(1ⁿ)"), applied to one row instead of summed
+-- over the whole top-row box. Hand-verified: gt_weyl_dim([2,1,0]) = 8 (SU(3) adjoint dimension); gt_weyl_dim of a
+-- length-2 row is lam1-lam2+1, matching a single gt_interlacing_rows count directly (both checked by hand below).
+CREATE FUNCTION gt_weyl_dim(lam int[]) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE m int := coalesce(array_length(lam,1),0); p int; q int; num numeric := 1; den numeric := 1;
+  BEGIN
+    FOR p IN 1..m-1 LOOP
+      FOR q IN p+1..m LOOP
+        num := num * (lam[p] - lam[q] + q - p);
+        den := den * (q - p);
+      END LOOP;
+    END LOOP;
+    RETURN round(num / den);            -- num/den accumulated separately (utilities.sql `binomial` pattern)
+  END $$;
+-- completions of a PARTIAL row: `prefix` (leading entries already fixed) extended to length `target_len`, weakly
+-- decreasing, bounded above by `maxv` (used only while `above` is NULL — the top row) and, once `above` is given,
+-- interlacing it (above[j] ≥ row[j] ≥ above[j+1]). Same shape as gt_interlacing_rows/gt_top_rows above, generalized
+-- to start from a partial prefix instead of the empty row — a small, bounded lattice (correct-by-enumeration,
+-- deliberately not a closed form: the risky part of this ticket is the per-cell PRICE below, not this count).
+CREATE FUNCTION gt_row_completions(prefix int[], target_len int, above int[], maxv int) RETURNS SETOF int[] LANGUAGE sql IMMUTABLE AS $$
+  WITH RECURSIVE r AS (
+    SELECT prefix AS b
+    UNION ALL
+    SELECT r.b || v
+      FROM r,
+           LATERAL (SELECT coalesce(array_length(r.b,1),0) AS len) l,
+           LATERAL (SELECT CASE WHEN above IS NULL THEN maxv ELSE above[l.len+1] END AS abv) a,
+           LATERAL generate_series(
+             CASE WHEN above IS NULL THEN 0 ELSE above[l.len+2] END,
+             LEAST(coalesce(r.b[l.len], a.abv), a.abv)
+           ) v
+     WHERE l.len < target_len
+  )
+  SELECT b FROM r WHERE coalesce(array_length(b,1),0) = target_len $$;
+-- the per-cell PRICE a digit-DP unrank needs: sum of gt_weyl_dim over every completion of a partial row — "how many
+-- full patterns share this prefix" (degenerates to a single term at the row's last cell, where gt_row_completions
+-- already has nothing left to vary).
+CREATE FUNCTION gt_completions_price(prefix int[], target_len int, above int[], maxv int) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
+  SELECT coalesce(sum(gt_weyl_dim(c)), 0) FROM gt_row_completions(prefix, target_len, above, maxv) c $$;
+
 -- ── the engines a collection provides ──────────────────────────────────────────────────────────────────
 CREATE TYPE gelfand_tsetlin_fiber AS (n natural_number, k natural_number);   -- typed fiber; axes: n, k
 CREATE FUNCTION fiber_elements(f gelfand_tsetlin_fiber, element_limit int) RETURNS SETOF gelfand_tsetlin_pattern LANGUAGE sql STABLE AS $$
@@ -84,6 +127,40 @@ CREATE FUNCTION contains_in_fiber(f gelfand_tsetlin_fiber, v gelfand_tsetlin_pat
     END LOOP;
     RETURN true;
   END $$;
+-- direct unrank: fill the flat row-major array cell by cell, in the SAME order `ORDER BY flat` sorts it in
+-- (fiber_elements' own floor). At each cell, try candidate values ascending (lex-smallest first) and PRICE each one
+-- via gt_completions_price — "how many full patterns share this prefix" — subtracting priced-off buckets from
+-- `remaining` until the target rank falls inside one, then fixing that value and descending to the next cell. Once
+-- a row is fully fixed it becomes `above` for the row underneath, and `remaining` is already the correct rank WITHIN
+-- that sub-triangle (this is what makes the digit-DP telescope instead of needing a fresh closed form per row).
+CREATE FUNCTION fiber_unrank(f gelfand_tsetlin_fiber, rank rank_index) RETURNS gelfand_tsetlin_pattern LANGUAGE plpgsql IMMUTABLE AS $fu$
+  DECLARE
+    n int := (f).n::int; k int := (f).k::int;
+    above int[] := NULL; cur int[]; flat int[] := ARRAY[]::int[];
+    m int; i int; j int; len int; abv int; lo int; hi int; v int;
+    remaining numeric := rank::numeric; price numeric;
+  BEGIN
+    IF n = 0 THEN RETURN ROW(ARRAY[]::int[])::gelfand_tsetlin_pattern; END IF;
+    FOR i IN 0..n-1 LOOP
+      m := n - i; cur := ARRAY[]::int[];
+      FOR j IN 1..m LOOP
+        len := coalesce(array_length(cur,1),0);
+        abv := CASE WHEN above IS NULL THEN k ELSE above[len+1] END;
+        hi := LEAST(coalesce(cur[len], abv), abv);
+        lo := CASE WHEN above IS NULL THEN 0 ELSE above[len+2] END;
+        v := lo;
+        LOOP
+          price := gt_completions_price(cur || v, m, above, k);
+          EXIT WHEN remaining < price;   -- this bucket holds the target rank — fix v here
+          remaining := remaining - price;
+          v := v + 1;
+        END LOOP;
+        cur := cur || v;
+      END LOOP;
+      flat := flat || cur; above := cur;
+    END LOOP;
+    RETURN ROW(flat)::gelfand_tsetlin_pattern;
+  END $fu$;
 
 -- ── declare as DATA + realize ──────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('gelfand_tsetlin', 'gelfand_tsetlin_pattern');
