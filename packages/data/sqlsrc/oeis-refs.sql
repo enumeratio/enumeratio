@@ -234,7 +234,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
 -- little-Schröder pair (added centrally — collection-defining files can't insert base_reference: requires-tag cycle)
 INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta) VALUES
   ('collection','little_schroder_numbers','oeis','A001003','https://oeis.org/A001003',''),
-  ('collection','little_schroder_triangle','oeis','A114709','https://oeis.org/A114709','');
+  ('collection','little_schroder_triangle','oeis','A114709','https://oeis.org/A114709',''),
+  ('collection','total_partitions','oeis','A001003','https://oeis.org/A001003','shifted: n leaves ⇒ A001003(n-1)');
 
 -- ── sixth pass (2026-09-03, redo of #235): number-theoretic collections that had NO oeis pointer at all. Every
 -- A-number below was checked live at oeis.org (not from memory) — its first-terms list compared digit-for-digit

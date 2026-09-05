@@ -166,6 +166,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   -- ── trees ───────────────────────────────────────────────────────────────────────────────────────────────────
   ('binary_trees',                'Binary Trees',                'Rooted trees where each node has ≤ 2 ordered children.'),
   ('ordered_trees',               'Ordered Trees',               'Rooted plane trees.'),
+  ('total_partitions',            'Total Partitions',           'Schröder''s fourth problem: total bracketings of n items — series-reduced ordered trees with n leaves (A001003).'),
   ('rooted_unlabeled_trees',      'Rooted Unlabeled Trees',      'Rooted trees on n unlabeled nodes, up to isomorphism — children unordered (A000081).'),
   ('unlabeled_free_trees',        'Unlabeled Free Trees',        'Free (unrooted) trees on n unlabeled nodes, up to isomorphism, canonically rooted at their centroid (A000055).'),
   ('plane_trees',                 'Plane Trees',                 'Rooted plane trees on n nodes, carried by their pre-order child-count word — Catalan(n−1).'),
