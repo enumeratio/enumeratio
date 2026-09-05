@@ -10,4 +10,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('pernicious_numbers','first ten','eq','3,5,6,7,9,10,11,12,13,14','popcount is prime',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(pernicious_numbers(),10) e $q$),
   ('pernicious_numbers','contains: 7 ∈ (popcount 3), 8 ∉ (popcount 1)','eq','true|false','',$q$ SELECT (7::numeric <@ pernicious_numbers())::text||'|'||(8::numeric <@ pernicious_numbers())::text $q$),
   ('pernicious_numbers','overlap: 3 (binary 11, popcount 2) is both evil and pernicious, since 2 is prime and even','eq','true|true','popcount=2 is the only value both even and prime',$q$
-    SELECT is_evil(3::numeric)::text || '|' || is_pernicious(3::numeric)::text $q$);
+    SELECT is_evil(3::numeric)::text || '|' || is_pernicious(3::numeric)::text $q$),
+  ('pernicious_numbers','unrank(9) = 14 (the 10th pernicious number)','eq','14','rank 9 (0-based)',$q$
+    SELECT (unrank(pernicious_numbers(), 9)).value::text $q$),
+  ('pernicious_numbers','cardinality = infinity','eq','Infinity','unbounded',$q$
+    SELECT cardinality(pernicious_numbers())::text $q$);

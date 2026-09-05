@@ -18,4 +18,8 @@ INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('twin_primes','each member p has p+2 also prime','ok',NULL,'structural invariant over the first window',$q$
     SELECT bool_and(is_prime_number((e).value) AND is_prime_number((e).value + 2)) FROM elements(twin_primes(),8) e $q$),
   ('twin_primes','contains: 11 ∈ (11,13 twin), 23 ∉ (23,25 not)','eq','true|false','',$q$
-    SELECT (11::numeric <@ twin_primes())::text||'|'||(23::numeric <@ twin_primes())::text $q$);
+    SELECT (11::numeric <@ twin_primes())::text||'|'||(23::numeric <@ twin_primes())::text $q$),
+  ('twin_primes','unrank(7) = 71 (the 8th twin prime)','eq','71','rank 7 (0-based)',$q$
+    SELECT (unrank(twin_primes(), 7)).value::text $q$),
+  ('twin_primes','cardinality = infinity','eq','Infinity','unbounded',$q$
+    SELECT cardinality(twin_primes())::text $q$);
