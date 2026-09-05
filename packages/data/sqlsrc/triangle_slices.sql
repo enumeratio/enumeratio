@@ -92,12 +92,10 @@ INSERT INTO base_triangle (collection, row_axis, col_axis, title, sequence) VALU
   ('k_subsets',                  'n', 'k', 'Pascal''s triangle — C(n,k)', 'powers_of_two'),
   ('set_partitions_into_k_blocks', 'n', 'k', 'Stirling numbers of the 2nd kind — S(n,k)', 'bell_numbers'),
   ('compositions_into_k_parts',    'n', 'k', 'Compositions of n into k parts — C(n−1,k−1)', NULL),
-  ('k_part_partitions',            'n', 'k', 'Partitions of n into k parts — p(n,k)', 'partition_numbers'),
   ('weak_compositions_into_k_parts','n','k', 'Weak compositions of n into k parts — C(n+k−1,k−1)', NULL),
   ('surjections_onto_k',           'n', 'k', 'Surjections [n] ↠ [k] — k!·S(n,k)', 'fubini_numbers'),
   ('narayana_numbers',             'n', 'k', 'Narayana numbers — N(n,k)', 'catalan_numbers'),
   ('gelfand_tsetlin',              'n', 'k', 'Gelfand–Tsetlin patterns by size and entry bound', NULL),
-  ('bounded_part_partitions',      'n', 'k', 'Partitions of n into parts ≤ k', NULL),
   ('k_dyck_paths',                 'n', 'k', 'k-Dyck paths by semilength and order', NULL),
   ('k_cycle_permutations',         'n', 'k', 'Unsigned Stirling numbers of the 1st kind — cycle triangle c(n,k)', 'factorial_numbers'),
   ('k_descent_permutations',       'n', 'k', 'Eulerian numbers — descent triangle ⟨n,k⟩', 'factorial_numbers');

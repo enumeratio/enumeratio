@@ -67,9 +67,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('catalog','compositions_into_k_parts inherits its composition-carrier stats (registers none itself)','eq','0|true','own base_stat rows | any resolved stats (a floor — the carrier may gain more)',$q$
     SELECT (SELECT count(*) FROM base_stat WHERE collection = 'compositions_into_k_parts')::text || '|' ||
            (SELECT count(*) > 0 FROM base_stat_resolved WHERE collection = 'compositions_into_k_parts')::text $q$),
-  ('catalog','square_partitions inherits the integer_partition stats (all marked inherited)','eq','true|false','any resolved stats (a floor — the carrier may gain more) | any own?',$q$
-    SELECT (SELECT count(*) > 0 FROM base_stat_resolved WHERE collection = 'square_partitions')::text || '|' ||
-           (SELECT bool_or(own)::text FROM base_stat_resolved WHERE collection = 'square_partitions') $q$),
   ('catalog','non_crossing_partitions inherits set_partitions stats + maps via the shared carrier','eq','true','resolved stats include blocks; resolved maps include shape',$q$
     SELECT (EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'non_crossing_partitions' AND stat_id = 'blocks') AND
             EXISTS (SELECT 1 FROM base_map_resolved WHERE collection = 'non_crossing_partitions' AND map_id = 'shape'))::text $q$),

@@ -149,6 +149,13 @@ INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat)
   ('integer_partitions','conjugate','partition_conjugate','integer_partitions','Conjugate','Mp00202'),
   ('set_partitions','shape','setpart_shape','integer_partitions','Shape',NULL);
 
+-- conjugate is an INVOLUTION — its own inverse. Set here (same INSERT's own row, same pack) rather than via an
+-- UPDATE from packs/partitions-plus/integer_partitions.cores_quotients.sql (#283) — that file only USES conjugate
+-- as a building block for k-core; the involution fact belongs with the row core already owns, not a cross-pack
+-- UPDATE (base_guard_pack forbids a pack touching a row it didn't insert).
+UPDATE base_map SET inverse = 'conjugate', is_bijection = true
+  WHERE collection = 'integer_partitions' AND map_id = 'conjugate';
+
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('maps','cycle_type: 231 → 3 (one 3-cycle), 213 → 2+1','eq','3|2+1','permutation → cycle-length partition',$q$

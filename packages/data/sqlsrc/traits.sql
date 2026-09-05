@@ -78,13 +78,9 @@ INSERT INTO base_collection_trait_manual (trait, collection) VALUES
   -- weakly increasing: a multiset is sorted ascending with repetition
   ('weakly_increasing', 'multisets'),
   -- weakly decreasing: the integer_partition carrier (parts int[]) is a descending part sequence
-  ('weakly_decreasing', 'bounded_part_partitions'), ('weakly_decreasing', 'box_confined_partitions'),
-  ('weakly_decreasing', 'integer_partitions'),      ('weakly_decreasing', 'k_part_partitions'),
-  ('weakly_decreasing', 'largest_part_partitions'), ('weakly_decreasing', 'odd_partitions'),
-  ('weakly_decreasing', 'prime_partition'),         ('weakly_decreasing', 'self_conjugate_partitions'),
-  ('weakly_decreasing', 'square_partitions'),       ('weakly_decreasing', 'triangular_partitions'),
-  -- strictly decreasing: distinct partitions have no repeated parts
-  ('strictly_decreasing', 'distinct_partitions');
+  ('weakly_decreasing', 'integer_partitions');
+-- the rest of this family's rows (bounded_part/box_confined/k_part/largest_part/odd/prime/self_conjugate/
+-- square/triangular/distinct partitions, all pack-owned) move to traits.partitions-plus.sql (#283).
 
 -- collection → trait, derived from the registries then closed over base_trait.implies.
 CREATE VIEW base_collection_trait AS
@@ -153,10 +149,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg(c || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection = c AND trait = 'sorted')
                                        THEN 't' ELSE 'f' END, ' ' ORDER BY c)
     FROM unnest(ARRAY['k_subsets','multisets','integer_partitions','permutations']) c $q$),
-  ('traits','strict monotonicity borrows repetition_free via implies-closure (distinct_partitions newly gains it; multisets stays out)','eq','distinct_partitions:t multisets:f subsets:t','strictly_increasing/decreasing ⇒ repetition_free',$q$
-    SELECT string_agg(c || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection = c AND trait = 'repetition_free')
-                                       THEN 't' ELSE 'f' END, ' ' ORDER BY c)
-    FROM unnest(ARRAY['subsets','distinct_partitions','multisets']) c $q$),
   ('traits','strictly_increasing (finsets): every subsets(5) element lists members strictly ascending','eq','true','sampled over the whole handle, incl. the empty set + singletons (vacuously sorted)',$q$
     SELECT bool_and(seq_sorted(((e).value).members, '<'))::text FROM fibers(subsets(5)) f, LATERAL elements(f) e $q$),
   ('traits','strictly_increasing (k_subsets): every k_subsets(6,3) element is strictly ascending','eq','true','a bounded fiber sampled in full',$q$
@@ -165,8 +157,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(seq_sorted(((e).value).elements, '<='))::text FROM fibers(multisets(3,4)) f, LATERAL elements(f) e $q$),
   ('traits','weakly_decreasing (integer_partitions): every integer_partitions(9) element has non-increasing parts','eq','true','the partition shape, over a whole fiber',$q$
     SELECT bool_and(seq_sorted(((e).value).parts, '>='))::text FROM fibers(integer_partitions(9)) f, LATERAL elements(f) e $q$),
-  ('traits','strictly_decreasing (distinct_partitions): every distinct_partitions(9) element has strictly decreasing parts','eq','true','distinct parts ⇒ strict, and hence repetition_free',$q$
-    SELECT bool_and(seq_sorted(((e).value).parts, '>'))::text FROM fibers(distinct_partitions(9)) f, LATERAL elements(f) e $q$),
   ('traits','the predicate discriminates: permutations(4) are NOT all sorted (only the identity is strictly ascending)','eq','false','a real property, not vacuously true — an unsorted collection fails it',$q$
     SELECT bool_and(seq_sorted(((e).value).image, '<'))::text FROM fibers(permutations(4)) f, LATERAL elements(f) e $q$);
 
@@ -178,9 +168,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('capabilities','k_subsets carries the full ladder: count + membership + direct unrank + samplable','eq','countable,decidable,enumerable,indexable,samplable','fiber_count + contains_in_fiber + fiber_unrank + finite',$q$
     SELECT string_agg(trait, ',' ORDER BY trait) FROM base_collection_trait
     WHERE collection = 'k_subsets' AND trait IN ('enumerable','countable','decidable','indexable','samplable') $q$),
-  ('capabilities','distinct_partitions is countable + samplable but NOT indexable (no direct unrank hook)','eq','countable:t indexable:f samplable:t','a finite collection whose floor scans',$q$
-    SELECT string_agg(t || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection='distinct_partitions' AND trait=t) THEN 't' ELSE 'f' END, ' ' ORDER BY t)
-    FROM unnest(ARRAY['countable','indexable','samplable']) t $q$),
   ('capabilities','factorial_numbers is indexable (ord! is O(1)) + decidable, but NOT countable/samplable (unbounded)','eq','countable:f decidable:t indexable:t samplable:f','an infinite sequence with a direct term',$q$
     SELECT string_agg(t || ':' || CASE WHEN EXISTS (SELECT 1 FROM base_collection_trait WHERE collection='factorial_numbers' AND trait=t) THEN 't' ELSE 'f' END, ' ' ORDER BY t)
     FROM unnest(ARRAY['countable','decidable','indexable','samplable']) t $q$),

@@ -137,10 +137,9 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   ('stirling1', 'ts', 'stirling1', '{int,int}', 'numeric', 'float64', NULL),
 
   ('eulerianA', 'pg', 'eulerian_number', '{int,int}', 'numeric', 'numeric', NULL),
-  ('eulerianA', 'ts', 'eulerianA', '{int,int}', 'numeric', 'float64', NULL),
-
-  ('integer_partition_k_count', 'pg', 'k_part_partition_count', '{int,int}', 'numeric', 'numeric', NULL),
-  ('integer_partition_k_count', 'ts', 'k_part_partition_count', '{int,int}', 'numeric', 'float64', NULL);
+  ('eulerianA', 'ts', 'eulerianA', '{int,int}', 'numeric', 'float64', NULL);
+-- integer_partition_k_count's impl rows (pg k_part_partition_count / ts twin) moved to the partitions-plus pack
+-- (function_impls.partitions-plus.sql, #283) — the concrete function lives in that pack's k_part_partitions.sql.
 
 -- floors, never exact counts (registry self-test convention): every base_function has AT LEAST one impl, and
 -- every pg impl_ref actually resolves in pg_proc — the replacement for the old inline-column integrity check.

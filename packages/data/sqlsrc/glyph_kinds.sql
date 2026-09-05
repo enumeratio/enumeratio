@@ -1,4 +1,4 @@
--- requires: glyphs, permutation_glyph, decorated_permutation_glyph, endofunction_glyph, integer_partitions.frobenius_abacus
+-- requires: glyphs, permutation_glyph, decorated_permutation_glyph, endofunction_glyph, integer_partitions.stats
 -- glyph_kinds — multi-kind figures via glyph_svg(carrier, kind) (catalog audit friction 6). base_glyph already had
 -- a `kind` column the single-arg glyph_svg(<carrier>) overload never read: a partition wants Ferrers AND a Young
 -- diagram AND an abacus; a permutation wants a matrix AND an arc diagram AND a cycle diagram AND a Rothe diagram.

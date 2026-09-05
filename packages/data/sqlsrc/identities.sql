@@ -155,9 +155,10 @@ INSERT INTO base_function (id, title, description) VALUES
    'The number of pairs out of order in a permutation — the sum of its Lehmer code, and its Coxeter length.'),
   ('stirling1', 'Unsigned Stirling number of the first kind',
    'c(n,k) — the number of permutations of n elements having exactly k cycles.'),
-  ('eulerianA', 'Eulerian number', 'A(n,k) — the number of permutations of n elements having exactly k descents.'),
-  ('integer_partition_k_count', 'k-part partition count',
-   'p(n,k) — the number of integer partitions of n into exactly k parts.');
+  ('eulerianA', 'Eulerian number', 'A(n,k) — the number of permutations of n elements having exactly k descents.');
+-- integer_partition_k_count (p(n,k)) moved to the partitions-plus pack (identities.partitions-plus.sql, #283) —
+-- every base_function needs at least one impl row at load time (the floor check below), and its only impl
+-- (k_part_partition_count) lives in that pack's k_part_partitions.sql.
 
 -- Attribute assignments — every one below is independently demonstrated (not just asserted) by a base_example
 -- further down. gcd/lcm: associative + commutative, standard number theory. gaussian_add/gaussian_mul:

@@ -25,6 +25,17 @@ CREATE FUNCTION partition_parts_equal_one(x integer_partition) RETURNS int LANGU
 CREATE FUNCTION partition_durfee_square(x integer_partition) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce((SELECT max(i) FROM generate_subscripts((x).parts,1) i WHERE (x).parts[i] >= i), 0)::int $$;
 
+-- beta-set / Maya diagram: the first-column hook lengths as a set of ℓ(λ) distinct non-negative integers,
+-- B(λ) = { λᵢ + ℓ(λ) − i : i = 1..ℓ(λ) }. Injective (recoverable: sort B descending, λᵢ = Bᵢ − ℓ + i, trim zero
+-- parts) — the standard bijection behind abacus/core-quotient algorithms. Hoisted here (core, not the
+-- partitions-plus pack's frobenius_abacus file) because core's glyph_kinds dispatcher
+-- (glyph_svg(integer_partition, 'abacus')) needs it too — a helper called from both sides is core machinery.
+CREATE FUNCTION partition_beta_set(p integer_partition) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$
+  SELECT coalesce(array_agg(v ORDER BY v), '{}'::int[]) FROM (
+    SELECT (p).parts[i] + coalesce(array_length((p).parts,1),0) - i AS v
+    FROM generate_subscripts((p).parts,1) i
+  ) t $$;
+
 -- ── register in base_stat (collection, stat_id, value_fn, title, codomain) ──────────────────────────────
 INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
   ('integer_partitions','distinct_parts','partition_distinct_parts','Number of distinct parts','natural_numbers'),

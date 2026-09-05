@@ -416,8 +416,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            integer_partition_frequency(ROW(ARRAY[]::int[])::integer_partition) $q$),
   ('representations','arc notation: the matching [1,4,2,3] → (1,4)(2,3)','eq','(1,4)(2,3)','perfect matching pairs as arcs',$q$
     SELECT perfect_matching_arcs(ROW(ARRAY[1,4,2,3])::perfect_matching) $q$),
-  ('representations','the exponential repr is INHERITED by odd_partitions via the shared carrier','eq','true','base_repr_resolved carries carrier reprs to the variants',$q$
-    SELECT EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'odd_partitions' AND repr = 'exponential')::text $q$),
   ('representations','fiber_symbol (the ambient-set symbol, from the corpus): p(4), Π([3]), Dyck(3), Comp(4)','eq','p(4)|Π([3])|Dyck(3)|Comp(4)','the set_notation building block across collections',$q$
     SELECT fiber_symbol((unrank(integer_partitions(4),0)).fiber) || '|' || fiber_symbol((unrank(set_partitions(3),0)).fiber) || '|' ||
            fiber_symbol((unrank(dyck_paths(3),0)).fiber)         || '|' || fiber_symbol((unrank(integer_compositions(4),0)).fiber) $q$),

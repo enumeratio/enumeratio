@@ -320,10 +320,5 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT count(*) FROM base_catalog WHERE alias_of IS NULL AND (title IS NULL OR title = id OR title LIKE '%\_%') $q$);
 
 -- ── the collection family tree, as queryable data (carrier = organization root; base_collection_parent = specialization) ──
-INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('catalog','the family tree records specialization edges: odd_partitions restricts integer_partitions','eq','integer_partitions|is_odd_partition','base_restrict persists (parent, predicate) as data',$q$
-    SELECT parent || '|' || predicate FROM base_collection_parent WHERE collection = 'odd_partitions' $q$),
-  ('catalog','siblings share a carrier with NO restriction edge: plane_partitions / boxed_plane_partitions','eq','true','the shared carrier is their common ancestor, not a parent collection',$q$
-    SELECT ((SELECT carrier FROM base_collection WHERE id='boxed_plane_partitions')
-          = (SELECT carrier FROM base_collection WHERE id='plane_partitions')
-       AND NOT EXISTS (SELECT 1 FROM base_collection_parent WHERE collection IN ('plane_partitions','boxed_plane_partitions')))::text $q$);
+-- The partitions-plus worked examples (odd_partitions restricts integer_partitions; plane_partitions /
+-- boxed_plane_partitions share a carrier with no restriction edge) moved to collection-meta.partitions-plus.sql (#283).

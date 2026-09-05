@@ -14,14 +14,9 @@ CREATE FUNCTION partition_frobenius(p integer_partition) RETURNS text LANGUAGE s
      FROM generate_series(1, partition_durfee_square(p)) i)
   END $$;
 
--- beta-set / Maya diagram: the first-column hook lengths as a set of ℓ(λ) distinct non-negative integers,
--- B(λ) = { λᵢ + ℓ(λ) − i : i = 1..ℓ(λ) }. Injective (recoverable: sort B descending, λᵢ = Bᵢ − ℓ + i, trim zero
--- parts) — the standard bijection behind abacus/core-quotient algorithms (used by two_core/three_core below).
-CREATE FUNCTION partition_beta_set(p integer_partition) RETURNS int[] LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce(array_agg(v ORDER BY v), '{}'::int[]) FROM (
-    SELECT (p).parts[i] + coalesce(array_length((p).parts,1),0) - i AS v
-    FROM generate_subscripts((p).parts,1) i
-  ) t $$;
+-- beta-set / Maya diagram: partition_beta_set(p) lives in core's integer_partitions.stats.sql — core's glyph_kinds
+-- dispatcher (glyph_svg(integer_partition, 'abacus')) needs it too, so it was hoisted there rather than left a
+-- pack-only definition (core/packs §3.3: a helper called from both sides is core machinery, not collection code).
 
 -- the abacus/Maya-diagram bead string over positions 0..max(beta): ● where a beta-number sits, ○ otherwise.
 -- e.g. 3+1 (ℓ=2): beta = {3+2-1, 1+2-2} = {4,1} → "○●○○●". Empty partition (empty beta-set) → ∅.

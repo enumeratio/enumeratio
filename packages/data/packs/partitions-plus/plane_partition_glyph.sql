@@ -7,6 +7,7 @@
 -- legible — every entry is still readable as a number, and row/column weakly-decreasing is still visible as the
 -- labels shrinking left-to-right and top-to-bottom. Revisit with a true 3-view if the plain grid reads as
 -- ambiguous in practice.
+-- layer: glyph
 CREATE FUNCTION plane_partition_grid_svg(entries int[], shape int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH rows AS (
     SELECT i, shape[i] AS len,

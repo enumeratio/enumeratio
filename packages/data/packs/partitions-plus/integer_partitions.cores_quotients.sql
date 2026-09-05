@@ -50,9 +50,8 @@ INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat)
   ('integer_partitions','three_core','partition_three_core','core_partitions','3-core',NULL),
   ('integer_partitions','remove_largest_part','partition_remove_largest_part','integer_partitions','Remove the largest part',NULL);
 
--- conjugate (registered in maps.sql, Mp00202) is an INVOLUTION — its own inverse.
-UPDATE base_map SET inverse = 'conjugate', is_bijection = true
-  WHERE collection = 'integer_partitions' AND map_id = 'conjugate';
+-- conjugate (registered in maps.sql, Mp00202) is an INVOLUTION — its own inverse; that fact is now set directly
+-- on core's own INSERT row in maps.sql (#283) rather than here — a pack may not UPDATE a row it didn't insert.
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

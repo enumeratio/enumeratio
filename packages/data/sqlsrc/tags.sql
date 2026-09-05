@@ -66,13 +66,8 @@ SELECT tag, collection FROM (VALUES
   ('number', 'rational_numbers'), ('number', 'cardinal_numbers'), ('number', 'integer_numbers'),
   ('number', 'gaussian_integers'), ('number', 'omega_ordinals'), ('modular', 'modular_residues'), ('modular', 'multicomplex_numbers'),
   ('number', 'fractional_numbers'), ('number', 'gaussian_rationals'), ('number', 'gaussian_fractionals'),
-  -- partitions
-  ('partition', 'integer_partitions'), ('partition', 'distinct_partitions'), ('partition', 'odd_partitions'),
-  ('partition', 'self_conjugate_partitions'), ('partition', 'bounded_part_partitions'), ('partition', 'box_confined_partitions'), ('partition', 'k_part_partitions'),
-  ('partition', 'largest_part_partitions'), ('partition', 'core_partitions'), ('partition', 'plane_partitions'),
-  ('partition', 'boxed_plane_partitions'),
-  ('partition', 'skew_partitions'), ('partition', 'square_partitions'), ('partition', 'triangular_partitions'),
-  ('partition', 'multiplicative_partitions'),
+  -- partitions (the pack-owned partition families' tag rows moved to tags.partitions-plus.sql, #283)
+  ('partition', 'integer_partitions'),
   -- compositions
   ('composition', 'integer_compositions'), ('composition', 'compositions_into_k_parts'), ('composition', 'weak_compositions_into_k_parts'), ('composition', 'weak3_compositions'),
   ('composition', 'k_bounded_compositions'), ('composition', 'proper_compositions'), ('composition', 'odd_compositions'),
@@ -112,8 +107,6 @@ SELECT tag, collection FROM (VALUES
   -- functions
   ('function', 'endofunctions'), ('function', 'subexcedant_seqs'), ('function', 'surjections'), ('function', 'surjections_onto_k'), ('function', 'parking_functions'),
   ('function', 'non_decreasing_parking_functions'),
-  -- misc combinatorial without a finer family
-  ('combinatorial', 'ordered_factorizations'),
   -- internal machinery
   ('internal', 'glyphs'),
   -- the base object of the composition tower — the atoms of [n] (≅ the underlying set of ℤ/nℤ)
@@ -122,15 +115,15 @@ SELECT tag, collection FROM (VALUES
   ('permutation', 'boolean_permutations'), ('permutation', 'smooth_permutations'),
   ('word', 'fib_strings'), ('word', 'tri_strings'), ('word', 'lucas_strings'),
   ('tableau', 'syt_two_row'), ('tableau', 'syt_two_column'), ('tableau', 'syt_hook_shape'),
-  ('partition', 'prime_partition'), ('composition', 'triangular_composition'),
+  ('composition', 'triangular_composition'),
   -- species notation
   ('species', 'singleton_species'),
   -- base_restrict / borrow-carrier ports (backlog #1)
   ('composition', 'zigzag_composition'),
   ('tree', 'prufer_sequences'),
   -- simplex's tags moved to packs/polytopes/tags.polytopes.sql — #283 phase 2.2, it's that pack's own collection
-  ('selection', 'boolean_algebra'),
-  ('set_partition', 'partition_algebra')
+  -- partition_algebra's tag row moved to tags.partitions-plus.sql — #283 phase 3, it's that pack's own collection
+  ('selection', 'boolean_algebra')
 ) AS a(tag, collection);
 
 -- collection → tag: the editorial rows ∪ the derived (carrier/unbounded) tags, closed transitively over implies.

@@ -455,8 +455,9 @@ INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
 -- infinite-product families: a leading ∏ means ∏_{k≥1} of the per-k factor (X^k = the index power).
 INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
   ('integer_partitions', '∏1/(1-X^k)', '\prod_{k\ge1}\frac{1}{1-x^k}', 'partitions of n; p(n) = 1,1,2,3,5,7,11,…',      true),
-  ('partition_numbers',  '∏1/(1-X^k)', '\prod_{k\ge1}\frac{1}{1-x^k}', 'the p(n) sequence (integer_partitions'' counts)', true),
-  ('distinct_partitions','∏(1+X^k)',   '\prod_{k\ge1}(1+x^k)',         'partitions into DISTINCT parts; q(n) = 1,1,1,2,2,3,…', true);
+  ('partition_numbers',  '∏1/(1-X^k)', '\prod_{k\ge1}\frac{1}{1-x^k}', 'the p(n) sequence (integer_partitions'' counts)', true);
+-- distinct_partitions' species row moved to the partitions-plus pack (base_species.partitions-plus.sql, #283) —
+-- distinct_partitions itself is a pack-owned collection.
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('species','E∘C evaluates to the factorials 1,1,2,6,24,120','eq','1,1,2,6,24,120','the permutation species, off the engine',$q$

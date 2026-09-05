@@ -3,6 +3,7 @@
 -- core_partition is exactly a non-increasing `parts` array — the SAME shape as integer_partition, so this reuses
 -- ferrers_svg (glyphs.sql) directly rather than redefining a second Ferrers-diagram helper. No new geometry to
 -- test here beyond the dispatch: ferrers_svg's own examples (glyphs.sql) already cover the grid math.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(c core_partition) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT ferrers_svg((c).parts) $$;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

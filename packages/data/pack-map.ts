@@ -41,8 +41,16 @@ export const PACK_MAP: [PackName, RegExp][] = [
   ['number-sets', /^(.*_numbers|.*_primes|prime_gaps|collatz_trajectories|pythagorean_triples|sums_of_two_squares|goldbach_partitions|square_decompositions|egyptian_fractions|farey_sequences(\.maps)?|continued_fractions|calkin_wilf_paths|stern_brocot_paths|squarefree_semiprimes|k_almost_primes|zeckendorf_representations|hyperbinary_representations(\.stats)?|examples\.hypernumerary|number-gradings\.number-sets|base_species\.number-sets|fiber_unrank_verify\.number-sets|tags\.number-sets|examples\.representations\.number-sets|example-tiers\.number-sets|search_sequence\.number-sets)$/],
   ['paths', /^(motzkin_paths|schroeder_paths|schroeder_triangle|delannoy|fine_|lukasiewicz|riordan|k_dyck|k_motzkin|colored_motzkin|rational_dyck|grand_dyck|dyck_paths_by_height|little_schroder_triangle|ballot_sequences)/],
   ['permutations-plus', /^(pattern_avoiding|baxter|grassmannian|cograssmannian|simple_perm|smooth_perm|connected_perm|boolean_perm|alternating_perm|cyclic_perm|k_colored|k_cycle|k_descent|k_inversion|affine_perm|decorated_perm|signed_perm|arrangements|permutations\.(stats2|stats3|findstat|denert|rsk_shape|equivalences|relations)|permutation_maps|orbit_maps_permutations_subsets|symmetry_orbit_maps|lehmer_codes|subexcedant_seqs|endofunctions|surjections|surjections_onto_k|parking_functions|non_decreasing_parking|non_crossing_perm|tournaments)/],
-  ['partitions-plus', /^(distinct_partitions|odd_partitions|self_conjugate|core_partitions|bounded_part|box_confined|boxed_plane|k_part_partitions|largest_part|skew_partitions|plane_partitions|square_partitions|triangular_partitions|multiplicative_partitions|prime_partition|partitions_restrictions|integer_partitions\.(cores_quotients|dominance|frobenius_abacus|rank_crank|relations)|ordered_factorizations|partition_algebra|total_partitions)/],
-  ['tableaux', /^(semistandard|shifted_standard|skew_standard|syt_|gelfand_tsetlin|standard_tableau_pairs|standard_tableaux\.(demotion|evacuation|promotion|reading_word|findstat)|alternating_sign|rook_placements)/],
+  ['partitions-plus', /^(distinct_partitions|odd_partitions|self_conjugate|core_partitions|bounded_part|box_confined|boxed_plane|k_part_partitions|largest_part|skew_partitions|plane_partitions|square_partitions|triangular_partitions|multiplicative_partitions|prime_partition|partitions_restrictions|integer_partitions\.(cores_quotients|dominance|frobenius_abacus|rank_crank|relations)|ordered_factorizations|partition_algebra|total_partitions|maps-bijections\.partitions-plus|base_species\.partitions-plus|traits\.partitions-plus|relations\.partitions-plus|random_element\.partitions-plus|triangle_slices\.partitions-plus|triangle_refines\.partitions-plus|collection-meta\.partitions-plus|catalog-resolution\.partitions-plus|function_impls\.partitions-plus|tags\.partitions-plus|identities\.partitions-plus)/],
+  // skew_standard_tableaux is genuinely a `tableaux`-pack collection (§5), but tableaux hasn't been extracted yet —
+  // its base_collection sits directly on skew_partitions' floor/fiber engine (calls skew_partitions(n) at runtime,
+  // not just an example), so once skew_partitions leaves sqlsrc/, core can no longer order this file at all (core's
+  // own toposort pass never sees an external closure — a core file requiring pack content is a hard ordering error,
+  // not just a --packs-core-alone failure). Forced out early, into partitions-plus, ahead of its own pack: matched
+  // BEFORE the `tableaux` pattern below so this wins. Revisit when `tableaux` is extracted — move both files
+  // (skew_standard_tableaux + skew_standard_tableaux.jeu_de_taquin) into packs/tableaux/ and delete this entry.
+  ['partitions-plus', /^skew_standard/],
+  ['tableaux', /^(semistandard|shifted_standard|syt_|gelfand_tsetlin|standard_tableau_pairs|standard_tableaux\.(demotion|evacuation|promotion|reading_word|findstat)|alternating_sign|rook_placements)/],
   ['trees-graphs', /^(ordered_trees|plane_trees|labeled_trees|labeled_forests|k_ary_trees|increasing_binary|recursive_trees|phylogenetic|non_crossing_trees|rooted_unlabeled|unlabeled_free|prufer|labeled_graphs|connected_labeled|independent_sets|dissections|non_crossing_matchings|non_nesting_matchings|perfect_matchings|non_crossing_partitions|non_nesting_partitions)/],
   ['words-plus', /^(binary_necklaces|lyndon|gray_codes|ternary_gray|thue_morse|fib_strings|lucas_strings|binary_palindromes|primitive_binary|k_ary_word|ascent_sequences|tri_strings|binary_words_by_weight|restricted_growth_strings|words\.stats|binary_words\.stats)/],
   ['compositions-plus', /^(carlitz|dyadic_comp|fibonacci_comp|odd_comp|palindromic_comp|prime_comp|proper_comp|step_comp|tetra_comp|tri_comp|triangular_comp|zigzag_comp|k_bounded_comp|weak3|compositions_into_k|weak_compositions_into_k|composition_maps|signed_set_comp|set_compositions\.stats|integer_compositions\.stats)/],
@@ -108,7 +116,7 @@ export function packClosure(pack: PackName): Set<PackName> {
  * `placementOf`, not `packOf`, so both are correct mid-split. A lane lands by adding its name here and
  * re-running the codemod.
  */
-export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets']
+export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus']
 
 /**
  * The extracted set in effect. `ENUMERATIO_PACKS_OVERRIDE=a,b` substitutes for `EXTRACTED_PACKS` so a lane can be

@@ -33,7 +33,7 @@ INSERT INTO base_triangle_refines (triangle, parent, stat_id) VALUES
   -- refinement at all (it would need a "≤" variant this table doesn't model) — left unregistered, not forced.
   ('narayana_numbers',              'dyck_paths',           'peaks'),        -- Narayana N(n,k), refining Catalan(n)
   ('set_partitions_into_k_blocks',  'set_partitions',       'blocks'),       -- Stirling-2 S(n,k), refining Bell(n)
-  ('k_part_partitions',             'integer_partitions',   'length'),       -- p(n,k), refining p(n)
+  -- k_part_partitions' row (p(n,k), refining p(n)) moved to the partitions-plus pack (triangle_refines.partitions-plus.sql, #283).
   ('compositions_into_k_parts',     'integer_compositions', 'parts_count'),  -- C(n-1,k-1), refining 2^(n-1)
   ('schroeder_triangle',            'schroeder_paths',      'flat_steps'),   -- T(n,k), refining the large Schröder numbers
   -- issue #220 chunk 2 — the Mahonian triangle (permutations by inversions had no triangle: #216 piece 5):

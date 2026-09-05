@@ -4,6 +4,7 @@
 -- minus inner" read directly off the picture, rather than ferrers_svg's plain filled grid. Row i (1-based) spans
 -- columns 1..λ_i; columns 1..μ_i (μ padded with 0 past its own length — a shorter row) are the removed inner
 -- cells, columns μ_i+1..λ_i are the skew diagram itself.
+-- layer: glyph
 CREATE FUNCTION skew_ferrers_svg(lam int[], mu int[], unit numeric DEFAULT 18) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH rows AS (SELECT i, lam[i] AS l, coalesce(mu[i], 0) AS m FROM generate_subscripts(lam, 1) i),
   inner_cells AS (SELECT i, c FROM rows, LATERAL generate_series(1, m) c WHERE m > 0),
