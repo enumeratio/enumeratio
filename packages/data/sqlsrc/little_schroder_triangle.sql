@@ -1,12 +1,15 @@
--- requires: realizer, little_schroder_numbers, triangle_slices
+-- requires: schroeder_paths, realizer, little_schroder_numbers, triangle_slices
 -- little_schroder_triangle — the LITTLE Schröder (super-Catalan) paths refined by a second axis: k = the
 -- number of HILLS. A little Schröder path is a Schröder path (U/D/F steps, U=(1,1), D=(1,-1), F=(2,0),
 -- never below the x-axis) with no F step AT HEIGHT 0 — the standard bijective characterization of the little
 -- Schröder / super-Catalan numbers s(n) (A001003), distinct from schroeder_triangle's plain (unrestricted)
 -- Schröder paths. A "hill" is a peak (a U immediately followed by a D) whose up-step leaves height 0 — i.e.
 -- a peak AT height 1, narrower than schroeder_triangle's/narayana's "any peak". Multi-grade chain [n
--- (semilength), k (#hills, 0..n)]. A fresh `little_schroder_triangle_path` carrier (distinct from
--- `schroeder_triangle_path`, which grades by flat count on the unrestricted paths).
+-- (semilength), k (#hills, 0..n)]. #236: folded onto the `schroeder_path` carrier — little Schröder paths ARE
+-- a subset of large Schröder paths (the same {-1,0,1} steps int[], same U/D/F notation, same lex-DESC order),
+-- just restricted (no F at height 0), so the identity map into schroeder_path is order-preserving. Gains
+-- schroeder_paths' flat_steps/peaks/height stats and glyph for free; `hills` stays its own registration
+-- (schroeder_paths itself has no such stat, and any schroeder_path value can be asked for its hill count).
 --
 -- s(n,k) = # little Schröder paths of length 2n with k hills; this is OEIS A114709, verified against Fu &
 -- Wang, "Bijective recurrences concerning two Schröder triangles" (arXiv:1908.03912), Theorem 1.2:
@@ -21,12 +24,6 @@
 -- as a follow-up if a second little-Schröder triangle is ever wanted; this file builds the hills-graded one,
 -- since it has a clean, directly-generable combinatorial definition (same "no flats at height 0" carrier as
 -- the sequence's own defining bijection).
-
--- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
-CREATE TYPE little_schroder_triangle_path AS (steps int[]);            -- {1,-1,0} word; 1=U -1=D 0=F (F has x-width 2)
-CREATE FUNCTION notation(p little_schroder_triangle_path) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce(string_agg(CASE WHEN s = 1 THEN 'U' WHEN s = -1 THEN 'D' ELSE 'F' END, '' ORDER BY o), '')
-  FROM unnest((p).steps) WITH ORDINALITY AS t(s, o) $$;
 
 -- s(n,k) via the Fu–Wang DP recurrence above (row-by-row, O(n²) fill, no path enumeration).
 CREATE FUNCTION little_schroder_triangle_count(n int, k int) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
@@ -58,7 +55,7 @@ CREATE FUNCTION little_schroder_triangle_count(n int, k int) RETURNS numeric LAN
 -- below 0, AND never take an F step while h = 0 — the little-Schröder constraint), keep the height-0
 -- completions at x=2n, then filter to those with exactly address[2] hills (a U-D adjacency whose U leaves h=0).
 CREATE TYPE little_schroder_triangle_fiber AS (n natural_number, k natural_number);   -- typed fiber; axes: n, k
-CREATE FUNCTION fiber_elements(f little_schroder_triangle_fiber, element_limit int) RETURNS SETOF little_schroder_triangle_path LANGUAGE sql STABLE AS $$
+CREATE FUNCTION fiber_elements(f little_schroder_triangle_fiber, element_limit int) RETURNS SETOF schroeder_path LANGUAGE sql STABLE AS $$
   WITH RECURSIVE gen(steps, h, x) AS (
       SELECT ARRAY[]::int[], 0, 0
     UNION ALL
@@ -79,7 +76,7 @@ CREATE FUNCTION fiber_elements(f little_schroder_triangle_fiber, element_limit i
             ) q WHERE s = 1 AND s2 = -1 AND coalesce(h_before, 0) = 0) AS hill_count
     FROM paths p
   )
-  SELECT ROW(steps)::little_schroder_triangle_path FROM hills
+  SELECT ROW(steps)::schroeder_path FROM hills
   WHERE hill_count = (f).k::int
   ORDER BY steps DESC LIMIT element_limit $$;
 
@@ -88,7 +85,7 @@ CREATE FUNCTION fiber_count(f little_schroder_triangle_fiber) RETURNS numeric LA
 
 -- contains: a valid little-Schröder path of semilength n (steps in {1,-1,0}, net height 0, x-width 2n, every
 -- prefix height ≥ 0, no F step at h=0) with EXACTLY k hills (a U-D adjacency whose U leaves height 0).
-CREATE FUNCTION contains_in_fiber(f little_schroder_triangle_fiber, v little_schroder_triangle_path) RETURNS boolean LANGUAGE sql STABLE AS $$
+CREATE FUNCTION contains_in_fiber(f little_schroder_triangle_fiber, v schroeder_path) RETURNS boolean LANGUAGE sql STABLE AS $$
   WITH s AS (
     SELECT step, o,
            sum(step) OVER (ORDER BY o) AS h_after,
@@ -104,7 +101,7 @@ CREATE FUNCTION contains_in_fiber(f little_schroder_triangle_fiber, v little_sch
      AND (SELECT count(*) FROM s WHERE step = 1 AND nxt = -1 AND coalesce(h_before, 0) = 0) = (f).k::int $$;
 
 -- declare it as DATA + realize
-INSERT INTO base_collection VALUES ('little_schroder_triangle', 'little_schroder_triangle_path');
+INSERT INTO base_collection VALUES ('little_schroder_triangle', 'schroeder_path');
 INSERT INTO base_grade VALUES
   ('little_schroder_triangle', 1, 'n', NULL, NULL),
   ('little_schroder_triangle', 2, 'k', '0', 'g1');                    -- k ranges 0..n by default
@@ -148,5 +145,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
       )::text FROM elements(little_schroder_triangle(4,2)) e $q$),
   ('little_schroder_triangle','contains via <@: UUDD ∈ T(2,0); UDUD ∉ T(2,0) (it is T(2,2))','eq','true|false',
    'a valid little-Schröder path with exactly k hills',$q$
-    SELECT (ROW(ARRAY[1,1,-1,-1])::little_schroder_triangle_path <@ little_schroder_triangle(2,0))::text || '|' ||
-           (ROW(ARRAY[1,-1,1,-1])::little_schroder_triangle_path <@ little_schroder_triangle(2,0))::text $q$);
+    SELECT (ROW(ARRAY[1,1,-1,-1])::schroeder_path <@ little_schroder_triangle(2,0))::text || '|' ||
+           (ROW(ARRAY[1,-1,1,-1])::schroeder_path <@ little_schroder_triangle(2,0))::text $q$),
+  ('little_schroder_triangle','#236: every schroeder_paths stat resolves here too (flat_steps, peaks, height), plus this collection''s own hills stat','eq','true','base_stat_resolved inheritance via the shared carrier + the own registration',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'little_schroder_triangle' AND stat_id = 'flat_steps') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'little_schroder_triangle' AND stat_id = 'peaks') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'little_schroder_triangle' AND stat_id = 'height') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'little_schroder_triangle' AND stat_id = 'hills'))::text $q$);

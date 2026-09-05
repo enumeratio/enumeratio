@@ -80,11 +80,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT ((SELECT array_agg(stat_id) FROM base_triangle_refines WHERE triangle = 'k_descent_permutations') @> ARRAY['descents','ascents','excedances'])::text $q$),
   ('triangle_refines','a refinement names a statistic the parent really has','eq','0','no dangling stat ids',$q$
     SELECT count(*)::text FROM base_triangle_refines r WHERE NOT EXISTS (SELECT 1 FROM base_stat_resolved s WHERE s.collection = r.parent AND s.stat_id = r.stat_id) $q$),
-  -- NB: carrier is NOT required to match — a triangle is free to grade on its OWN fresh carrier (narayana_dyck,
-  -- schroeder_triangle_path, …) rather than reusing the parent's, exactly as their own file headers say ("a fresh
-  -- carrier, distinct from X"). The four original pairs (k_subsets/subsets, k_descent_permutations/permutations, …)
-  -- happened to reuse the parent's carrier, but that was never the load-bearing part of "refines" — the numeric
-  -- differential (triangle_refines_agrees, above) is. What DOES have to hold is the one-axis-parent shape.
+  -- NB: carrier is NOT required to match — a triangle MAY grade on its own fresh carrier rather than reusing the
+  -- parent's; narayana_numbers and schroeder_triangle used to (a pre-#236 instance of the audit's §3.2 friction),
+  -- but a bespoke carrier was never the load-bearing part of "refines" — the numeric differential
+  -- (triangle_refines_agrees, above) is. What DOES have to hold is the one-axis-parent shape.
   ('triangle_refines','the parent has exactly one grade axis — the triangle''s row axis','eq','0','a refinement adds ONE axis (the statistic) to a one-axis parent',$q$
     SELECT count(*)::text FROM base_triangle_refines r
      WHERE (SELECT count(*) FROM base_grade g WHERE g.collection = r.parent) <> 1 $q$);
