@@ -25,7 +25,10 @@ CREATE FUNCTION notation(w hypernumerary_word) RETURNS text LANGUAGE sql IMMUTAB
 CREATE TYPE hypernumerary_fiber AS (b natural_number, k natural_number, n natural_number);   -- axes: b, k, n
 CREATE FUNCTION fiber_elements(f hypernumerary_fiber, element_limit int) RETURNS SETOF hypernumerary_word LANGUAGE sql STABLE AS $$
   WITH RECURSIVE gen(lsb, rem) AS (
-      SELECT ARRAY[]::int[], (f).n::int
+      -- a base b < 2 is not a positional numeral system (b = 0 divides by zero below; b = 1's d = 0 step never
+      -- shrinks rem, so the recursion never terminates) — the DEGENERATE fiber is empty. An empty anchor keeps the
+      -- recursive term (which divides by (f).b) from ever evaluating. #254: same shape as multicomplex's M < 2 guard.
+      SELECT ARRAY[]::int[], (f).n::int WHERE (f).b >= 2
     UNION ALL
       SELECT g.lsb || d, (g.rem - d) / (f).b::int
         FROM gen g, generate_series(g.rem % (f).b::int, least((f).b::int - 1 + (f).k::int, g.rem), (f).b::int) AS d
@@ -52,6 +55,7 @@ CREATE FUNCTION fiber_count(f hypernumerary_fiber) RETURNS numeric LANGUAGE plpg
     cnts numeric[] := ARRAY[]::numeric[];
     frontier bigint[] := ARRAY[n];
   BEGIN
+    IF b < 2 THEN RETURN 0; END IF;                                       -- degenerate base: empty fiber (see fiber_elements, #254)
     WHILE array_length(frontier, 1) > 0 LOOP                              -- BFS: discover every reachable remainder
       rem := frontier[1];
       frontier := frontier[2:array_length(frontier, 1)];
@@ -90,7 +94,8 @@ CREATE FUNCTION fiber_count(f hypernumerary_fiber) RETURNS numeric LANGUAGE plpg
   END $fc$;
 
 CREATE FUNCTION contains_in_fiber(f hypernumerary_fiber, v hypernumerary_word) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce((SELECT bool_and(x BETWEEN 0 AND (f).b::int - 1 + (f).k::int) FROM unnest((v).digits) x), false)
+  SELECT (f).b >= 2                                                                   -- degenerate base holds nothing (#254)
+     AND coalesce((SELECT bool_and(x BETWEEN 0 AND (f).b::int - 1 + (f).k::int) FROM unnest((v).digits) x), false)
      AND array_length((v).digits, 1) =                                                       -- canonical width W_b(n)
          greatest(1, (SELECT count(*)::int FROM generate_series(0, 80) e WHERE ((f).b::numeric ^ e) <= (f).n::numeric))
      AND (SELECT coalesce(sum(x::numeric * ((f).b::numeric ^ (array_length((v).digits, 1) - i))), 0)   -- MSB value
@@ -132,4 +137,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('hypernumerary','contains via <@: 10 ∈ (3,1,3), 03 ∈ (3,1,3), digit 4 ∉ (3,1,12) even though its value matches','eq','true|true|false','generated from contains_in_fiber — the last case fails the digit-range check (4 > b−1+k = 3), not the value check',$q$
     SELECT (ROW(ARRAY[1,0])::hypernumerary_word <@ hypernumerary(3,1,3))::text || '|' ||
            (ROW(ARRAY[0,3])::hypernumerary_word <@ hypernumerary(3,1,3))::text || '|' ||
-           (ROW(ARRAY[4,0])::hypernumerary_word <@ hypernumerary(3,1,12))::text $q$);
+           (ROW(ARRAY[4,0])::hypernumerary_word <@ hypernumerary(3,1,12))::text $q$),
+  ('hypernumerary','a degenerate base (b < 2) is not a numeral system: the fiber is empty','eq','0|0|0|0','#254 — b = 0 used to divide by zero and b = 1 never terminated; both now count and enumerate as empty (cardinality | count of each)',$q$
+    SELECT cardinality(hypernumerary(0,1,3))::text || '|' || (SELECT count(*) FROM elements(hypernumerary(0,1,3)) e)::text || '|' ||
+           cardinality(hypernumerary(1,1,3))::text || '|' || (SELECT count(*) FROM elements(hypernumerary(1,1,3)) e)::text $q$);

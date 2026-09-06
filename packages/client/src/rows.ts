@@ -271,6 +271,15 @@ async function resolveFamilyPointFrom(name: string, argsInner: string | undefine
     const pointArgs = bindArgsToChain(parseBindingArgs(argsInner ?? ''), pointChain)
     const familyArgs: Record<string, ParamValue> = { ...point.bindings }
     pointChain.forEach((ax, i) => { if (pointArgs[ax] !== undefined && remaining[i]) familyArgs[remaining[i]] = pointArgs[ax] })
+    // A realized point (owns its own tower) folds forward only when the family handle is BUILDABLE — the bound axes
+    // must form a leading prefix (the pg ctor's trailing-unbound convention toHandle enforces). binary_words binds
+    // words' TRAILING axis `base`, so a BARE binary_words (its own `n` free) would fold to words(base=2) — `base`
+    // bound behind the unbound leading `size`, which can't be built positionally. Keep it as the point: binary_words
+    // streams fine over its own tower. A PURE POINTER has no tower of its own, so it must fold either way.
+    const bound = familyChain.map((g) => familyArgs[g] !== undefined)
+    const firstUnbound = bound.indexOf(false)
+    const buildable = firstUnbound < 0 || !bound.slice(firstUnbound).some(Boolean)
+    if (!buildable && !cat.get(name)?.aliasOf) return null
     return handleText(point.family, familyArgs, familyChain)
   }
   if (argsInner === undefined) return null   // direction B needs an explicit binding — a bare family name isn't one
