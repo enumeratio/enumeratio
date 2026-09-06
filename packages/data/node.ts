@@ -161,3 +161,20 @@ export async function bootCore(profile: 'core' | 'all' = 'all'): Promise<PGlite>
   }
   return buildCore(profile)
 }
+
+// Process-lifetime MEMOIZED bootCore for read-only, build-time consumers that each need the SAME catalog and would
+// otherwise each pay a full boot (the VitePress docs data loaders were 7 independent bootCore()s → 7 rebuilds when
+// the dump is stale). Keyed on the live profile hash so a dev edit — VitePress `watch` re-runs a loader — rotates to
+// a fresh boot and closes the superseded one; a build never changes the hash, so all callers share ONE boot.
+// Callers MUST NOT close the returned pg (it is shared, and closed only on rotation). Tests / the CLI that want
+// isolation keep calling bootCore() directly.
+const sharedByProfile = new Map<string, { key: string; pg: Promise<PGlite> }>()
+export function sharedCore(profile: 'core' | 'all' = 'all'): Promise<PGlite> {
+  const key = coreProfileHash(profile)
+  const cur = sharedByProfile.get(profile)
+  if (!cur || cur.key !== key) {
+    if (cur) cur.pg.then(pg => pg.close()).catch(() => {})   // rotate: reclaim the boot this edit superseded (dev)
+    sharedByProfile.set(profile, { key, pg: bootCore(profile) })
+  }
+  return sharedByProfile.get(profile)!.pg
+}

@@ -2,7 +2,7 @@
 // (one row per subject, one column per system), replacing both the old libraries.data.ts (fixed system list) and
 // external.data.ts (fixed system list, grouped by system instead of subject). Systems and subject kinds are read
 // live from the table, not hardcoded, so a new system/kind shows up here automatically.
-import { bootCore } from '@enumeratio/data/node'
+import { sharedCore } from '@enumeratio/data/node'
 
 export interface ReferenceCell {
   identity: string
@@ -27,7 +27,7 @@ export interface ReferencesData {
 export default {
   watch: ['../packages/data/sqlsrc/*.sql'],
   async load(): Promise<ReferencesData> {
-    const pg = await bootCore()
+    const pg = await sharedCore()
 
     const systemsRes = await pg.query(`SELECT DISTINCT system FROM base_reference ORDER BY system`)
     const systems = (systemsRes.rows as any[]).map((r) => r.system as string)
@@ -53,7 +53,7 @@ export default {
       counts[r.system] = (counts[r.system] ?? 0) + 1
     }
 
-    await pg.close()
+    // pg is shared across data loaders (sharedCore) — never closed here
     return {
       systems,
       kinds,

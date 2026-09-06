@@ -1,7 +1,7 @@
 // Build-time data loader for the maps reference — every registered `base_map` row (bijection/morphism), flat.
 // Boots the pure-SQL core in PGlite and reads the registry directly; a curated `findstat` code becomes a link the
 // same way the identity strip and the Relations table build one (see findstat-refs.maps.sql for the URL convention).
-import { bootCore } from '@enumeratio/data/node'
+import { sharedCore } from '@enumeratio/data/node'
 
 export interface MapRow {
   collection: string
@@ -26,7 +26,7 @@ export interface MapsData {
 export default {
   watch: ['../packages/data/sqlsrc/*.sql'],
   async load(): Promise<MapsData> {
-    const pg = await bootCore()
+    const pg = await sharedCore()
     const rows = (
       await pg.query(`
         SELECT m.collection, coalesce(c.title, m.collection) AS collection_title, m.map_id, m.mapping_fn,
@@ -36,7 +36,7 @@ export default {
          ORDER BY m.collection, m.map_id
       `)
     ).rows as any[]
-    await pg.close()
+    // pg is shared across data loaders (sharedCore) — never closed here
     return {
       count: rows.length,
       bijectionCount: rows.filter((r) => r.is_bijection).length,
