@@ -58,6 +58,31 @@ jobs:
             echo "has_packs=true" >> "$GITHUB_OUTPUT"
           fi
 
+  full-example-tier:
+    name: "examples: full tier (EXAMPLES=all)"
+    runs-on: ubuntu-latest
+    # The whole point of this job is that NOTHING else runs the slow tier. `pnpm test:core` runs the fast one by
+    # design — example-tiers.sql moves the integration-class sweeps (full-catalog policy/species sweeps, the
+    # deg-8 plethysm certificate, the divisor-sum searches) out of the per-edit gate — and its own comment says
+    # the full tier "is what a pre-merge / CI run should use". Nothing did. #334 is what that cost: `policies`
+    # case 7 was failing on main against a function signature that changed under it, and it sat unseen because
+    # the only gate that runs it was never wired up. A tier nobody runs is not a tier.
+    #
+    # Not in ci.yml: at ~13 minutes it is nightly-shaped, not push-shaped, and it is the same non-blocking deep
+    # sweep this workflow already exists for.
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: EXAMPLES=all pnpm test:core
+
   deep-pack-matrix:
     name: "deep:${{ matrix.pack }}"
     needs: packs-setup
