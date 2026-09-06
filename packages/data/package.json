@@ -36,6 +36,7 @@
     "test": "node --import tsx run.mts",
     "test:packs-core": "node --import tsx run.mts --packs core",
     "list-packs": "node --import tsx -e \"import('./pack-map.ts').then(m => console.log(JSON.stringify(m.extractedPacks())))\"",
+    "list-nightly-packs": "node --import tsx list-nightly-packs.mts",
     "pack-lint": "node --import tsx pack-lint.mts",
     "pack-migrate:check": "node --import tsx pack-migrate.mts --check",
     "selfcert": "node --import tsx selfcert.mts",

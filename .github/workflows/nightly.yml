@@ -1,0 +1,108 @@
+name: Nightly Deep Verification
+
+# Separate file from ci.yml (#323, wiki Core-And-Packs §6 / #295): this is a non-blocking, scheduled sweep, not a
+# push/PR gate — keeping it out of ci.yml means it can never appear as a required check, and a `workflow_dispatch`
+# here doesn't fight over ci.yml's `concurrency` group with an in-flight PR run. `packs-setup` below intentionally
+# duplicates ci.yml's job of the same name (jobs can't be shared across workflow files) but narrows further — see
+# its comment.
+on:
+  schedule:
+    # 08:11 UTC daily — after ci.yml's push/PR traffic (US/EU daytime) has quieted, off the top of the hour to
+    # dodge GitHub's scheduled-job pileup at :00.
+    - cron: "11 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # cancel-in-progress: false — a deep sweep is expensive to produce; a manual re-dispatch shouldn't throw away
+  # an in-flight nightly run's results. Overlap is a non-issue in practice (one run/day, sweep finishes in well
+  # under 24h per the timeout below).
+  group: nightly-deep
+  cancel-in-progress: false
+
+jobs:
+  packs-setup:
+    name: "nightly: discover deep-verifiable packs"
+    runs-on: ubuntu-latest
+    outputs:
+      packs: ${{ steps.list.outputs.packs }}
+      has_packs: ${{ steps.list.outputs.has_packs }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - id: list
+        # `list-nightly-packs` is `EXTRACTED_PACKS` narrowed to packs that own >=1 collection (queries
+        # `base_collection` directly) — NOT the same list ci.yml's `packs-setup` emits. `--pack P` on
+        # quickcheck.mts/selfcert.mts hard-fails ("this is NOT a pass") when P owns zero collections, by design
+        # (#283 phase 3.4) — a filter matching nothing must never read as a silent pass. `refs` owns reference
+        # rows, not collections, so a nightly `deep:refs` shard would fail this way EVERY single night: not a
+        # regression signal, just permanent noise. Rather than swallow that failure quietly inside the matrix
+        # job, it's excluded from the matrix itself, visibly, right here — `refs` still gets its (collection-free)
+        # push-gate coverage from ci.yml's `packs-pack-matrix` (`run.mts` + `pack-additivity.mts`, neither of
+        # which requires a collection to exist).
+        run: |
+          PACKS=$(pnpm --filter @enumeratio/data run --silent list-nightly-packs)
+          echo "packs=$PACKS" >> "$GITHUB_OUTPUT"
+          if [ "$PACKS" = "[]" ]; then
+            echo "has_packs=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_packs=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  deep-pack-matrix:
+    name: "deep:${{ matrix.pack }}"
+    needs: packs-setup
+    # Job-level guard, not a step-level one: a false `if` here skips the job before `strategy.matrix` is ever
+    # expanded, so `fromJSON('[]')` is never evaluated (same trick as ci.yml's `packs-pack-matrix` — expanding an
+    # empty matrix is what triggers GitHub's "matrix must define at least one vector" error, and gating expansion
+    # itself is what avoids it). An empty `packs-setup` output must not fail this workflow.
+    if: needs.packs-setup.outputs.has_packs == 'true'
+    runs-on: ubuntu-latest
+    # Per-job timeout so ONE stalling collection can't hang the whole matrix (or run up the nightly schedule's
+    # wall clock indefinitely). `selfcert.mts` has its own 20s-per-query watchdog (a worker process it SIGKILLs
+    # and respawns on timeout — see pg-worker-channel.ts) and turns a hung query into a printed "skip", so it
+    # self-bounds. `quickcheck.mts` and `selfcert-view.mts` do NOT have that watchdog — `cyclohedron` (polytopes)
+    # is the known case: its `fiber_count` enumerates every dissection of a (2n+2)-gon over an unbounded axis, and
+    # at a large enough sampled rank/grade it can run away. 20 minutes is not a "make it pass" workaround — it's
+    # the outer bound past which a shard is presumed hung and killed, leaving every other pack's shard to report.
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        pack: ${{ fromJSON(needs.packs-setup.outputs.packs) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # selfcert.mts's exhaustive-first-N budgets (CAP_COUNT/CAP_UNRANK/NMAX) are fixed constants, not exposed
+      # via CLI/env — there is no "push-gate selfcert" today to be deeper than (ci.yml never invokes selfcert.mts
+      # at all), so running its full fixed sweep per pack, nightly, is already strictly more than the push gate
+      # does. `--pack P` selects P's collections from the always-fully-loaded catalog (core + every pack;
+      # neither tool supports restricting what's loaded, only what's checked).
+      - run: pnpm --filter @enumeratio/data exec node --import tsx selfcert.mts --pack ${{ matrix.pack }}
+      # quickcheck.mts DOES expose its sampling budget via env (default POINTS=2, RANK_CAP=300, etc. — seconds-
+      # not-minutes by design for the push gate that doesn't exist yet either). Nightly widens every knob well
+      # past those push-gate defaults: 10x the sampled points per collection, and larger rank/grade/count caps so
+      # the deep tier actually exercises more of the domain, not just more repeats of the same small corner.
+      - run: pnpm --filter @enumeratio/data exec node --import tsx quickcheck.mts --pack ${{ matrix.pack }}
+        env:
+          QUICKCHECK_POINTS: "20"
+          QUICKCHECK_NMAX: "12"
+          QUICKCHECK_RANK_CAP: "2000"
+          QUICKCHECK_SCAN_RANK_CAP: "60"
+          QUICKCHECK_CAP_COUNT: "100000"
