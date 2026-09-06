@@ -152,9 +152,17 @@ function mkCheckMembership(caps: Caps): CheckFn {
     if (!caps.hasContains) return { status: 'skip', detail: 'no contains fn' }
     if (r == null) return { status: 'skip', detail: 'no rank sampled (empty fiber)' }
     try {
-      const row = (await q<{ ok: boolean | null }>(
-        `SELECT contains(${pointHandle}, (unrank(${pointHandle}, ${r}::rank_index)).value) AS ok`))[0]
-      if (row?.ok == null) return { status: 'skip', detail: 'contains unknown (semi-decidable ceiling)' }
+      // unrank(h, r) can legitimately resolve to NO element: r may exceed the realized floor of a sparse fiber
+      // whose cardinality accel reports ∞ (a small-k smooth/rough fiber — exponentially sparse, so scan_factor's
+      // linear over-scan reaches only modest ranks; the collection documents this as a realization limit, not a
+      // bug). There is then no sampled element to test membership OF, so skip — exactly as round-trip, accel==naive
+      // and order already do for the same "no element at r" case. Testing contains() on the resulting NULL would
+      // read as a membership failure (contains(h, NULL) = false), which is a different, false claim.
+      const row = (await q<{ present: boolean | null; ok: boolean | null }>(
+        `SELECT (u).value IS NOT NULL AS present, contains(${pointHandle}, (u).value) AS ok
+           FROM (SELECT unrank(${pointHandle}, ${r}::rank_index) AS u) s`))[0]
+      if (!row?.present) return { status: 'skip', detail: 'unrank returned no element at r' }
+      if (row.ok == null) return { status: 'skip', detail: 'contains unknown (semi-decidable ceiling)' }
       return row.ok ? { status: 'pass' } : { status: 'fail', detail: 'contains(h, its own sampled element) = false' }
     } catch (e: any) { return { status: 'skip', detail: errMsg(e) } }
   }
