@@ -13,14 +13,13 @@
 UPDATE base_example SET slow = true WHERE
      suite IN ('search_sequence', 'thesis')            -- wholly integration-class suites
   OR (suite = 'policies'             AND title LIKE 'case 7%')        -- the full restrict enumerate⇔predicate sweep
-  OR (suite = 'species'              AND title LIKE 'MARQUEE (full degree 8)%')   -- the deg-8 plethysm cert (~160s); the deg-6 twin stays in the default tier
-  -- #274's own catalog sweeps, measured after it landed: these five were 61 of the fast tier's 107 SECONDS —
-  -- the two species ones alone were 48% of the whole example run. Same criterion as everything above: each is a
-  -- sweep over EVERY collection (or every corpus entry), not a check of one identity, so they belong in the tier
-  -- a pre-merge/CI run turns on rather than the one a dev runs per edit. The per-identity species examples
-  -- (isotype(E∘E+), Euler transform, labelled(E∘C), …) deliberately STAY default-tier — they are what actually
-  -- certifies the feature, and they are ~1-3s each.
-  OR (suite = 'species'  AND title LIKE 'MARQUEE: the Z-walker%')                  -- 27s: the whole labelled corpus
+  -- The degree-8 corpus marquee ('MARQUEE: the Z-walker%') used to live here (~160s); the memoized partition index
+  -- (#274 follow-up, species_kernel.sql) + a DISTINCT over the exprs dropped it to gate speed, so it's default-tier
+  -- now and its slow-tier twin is retired.
+  -- #274's own catalog sweeps, measured after it landed: the per-collection reading sweep below is a full-catalog
+  -- sweep (every collection × n=0..6), not a check of one identity, so it belongs in the tier a pre-merge/CI run
+  -- turns on rather than the one a dev runs per edit. The per-identity species examples (isotype(E∘E+), Euler
+  -- transform, labelled(E∘C), …) and the corpus marquee deliberately STAY default-tier — they certify the feature.
   OR (suite = 'species'  AND title LIKE 'EVERY collection''s species reading%')    -- 26s: every collection × n=0..6
   OR (suite = 'policies' AND title LIKE 'the resolved sweep is total%')            --  3s: every collection × environment
   OR (suite = 'policies' AND title LIKE 'case 1b:%');                              --  3s: ditto

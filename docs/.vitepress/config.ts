@@ -121,6 +121,8 @@ export default defineConfig({
                 { text: 'Bijections', link: '/learn/explorations/bijections' },
                 { text: 'Connections to computer science', link: '/learn/explorations/computer-science' },
                 { text: 'Subset sum & q-binomials', link: '/learn/explorations/subset-sum-and-q-binomials' },
+                { text: 'Species as data', link: '/learn/explorations/species' },
+                { text: 'Generic species', link: '/learn/explorations/generic-species' },
               ],
             },
           ],

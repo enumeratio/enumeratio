@@ -1,4 +1,4 @@
--- requires: species_kernel, permutations, set_partitions
+-- requires: species_kernel, permutations, set_partitions, words
 -- species_structures — the GENERIC DEFINITIONAL enumerator (wiki Species-Data-Model.md §3d): every labelled
 -- F-structure on a given label set, walking the SAME recursive-descent precedence as species_eval/species_z_eval
 -- (strip parens → additive last +/- → multiplicative first · → composition first ∘ → power ^ → leaf). This is a
@@ -298,6 +298,42 @@ CREATE FUNCTION set_partition_from_holdform(h jsonb) RETURNS set_partition LANGU
     RETURN ROW(rgs)::set_partition;
   END $$;
 
+-- E^b holdform (#274 B7): a word of length n over a `base`-letter alphabet IS an E^b-structure — each of the n
+-- positions (labels 1..n) goes into one of b boxes, box ℓ = the positions whose letter is ℓ. species_structures('E^b',
+-- …) builds these as a LEFT-nested product of b set-leaves ({l:{…E^(b-1)…}, r: leaf_b}, from the ^k power path), so
+-- this codec matches that grouping exactly. `base` is explicit on the encode: a word {1,1} lives over any base ≥ its
+-- largest letter, so the leaf count can't be read off the letters alone (unused high letters are empty leaves).
+CREATE FUNCTION word_to_holdform(w word, base int) RETURNS jsonb LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE letters int[] := (w).letters; ell int; leaf jsonb; acc jsonb;
+  BEGIN
+    IF base < 1 THEN RETURN 'null'::jsonb; END IF;   -- E^0 = 1: only the empty structure (species_structures emits 'null')
+    -- leaf ℓ = the sorted labels (1-based positions) whose letter is ℓ; fold leaves 2..b in as {l: acc, r: leaf}
+    FOR ell IN 1 .. base LOOP
+      SELECT to_jsonb(coalesce(array_agg(i ORDER BY i), ARRAY[]::int[]))
+        INTO leaf FROM generate_subscripts(letters, 1) i WHERE letters[i] = ell;
+      IF ell = 1 THEN acc := leaf; ELSE acc := jsonb_build_object('l', acc, 'r', leaf); END IF;
+    END LOOP;
+    RETURN acc;
+  END $$;
+
+CREATE FUNCTION word_from_holdform(h jsonb) RETURNS word LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE leaves jsonb[] := '{}'; cur jsonb := h; n int; letters int[]; ell int; pos int;
+  BEGIN
+    IF h IS NULL OR h = 'null'::jsonb THEN RETURN ROW(ARRAY[]::int[])::word; END IF;   -- E^0 empty word
+    -- unwrap the left-nested {l,r}: each r is a leaf (letters b, b-1, …, 2), the innermost l is leaf 1
+    WHILE jsonb_typeof(cur) = 'object' LOOP
+      leaves := ARRAY[cur -> 'r'] || leaves;
+      cur := cur -> 'l';
+    END LOOP;
+    leaves := ARRAY[cur] || leaves;                                                    -- cur is now leaf 1 (an array)
+    SELECT coalesce(max(x::int), 0) INTO n FROM unnest(leaves) lf, jsonb_array_elements_text(lf) x;
+    letters := array_fill(0, ARRAY[n]);
+    FOR ell IN 1 .. array_length(leaves, 1) LOOP
+      FOR pos IN SELECT x::int FROM jsonb_array_elements_text(leaves[ell]) x LOOP letters[pos] := ell; END LOOP;
+    END LOOP;
+    RETURN ROW(letters)::word;
+  END $$;
+
 -- ── examples (tiny, n ≤ 3 — the enumerator is exponential; NOT a substitute for selfcert-species.mts) ────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('species_structures','E∘C on {1,2,3}: 6 permutation structures (= 3!)','eq','6','definitional enumerator vs the labelled-count formula',$q$
@@ -305,4 +341,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('species_structures','E∘E+ on {1,2,3}: 5 set-partition structures (= Bell(3))','eq','5','definitional enumerator vs Bell numbers',$q$
     SELECT count(*)::text FROM species_structures('E∘E+', ARRAY[1,2,3]) $q$),
   ('species_structures','E·E on {1,2}: 4 structures (= 2^2)','eq','4','every label-split, one E-structure per side',$q$
-    SELECT count(*)::text FROM species_structures('E·E', ARRAY[1,2]) $q$);
+    SELECT count(*)::text FROM species_structures('E·E', ARRAY[1,2]) $q$),
+  ('species_structures','E^3 on {1,2}: 9 structures (= 3^2)','eq','9','the word (E^b) enumerator: each of 2 positions in one of 3 boxes',$q$
+    SELECT count(*)::text FROM species_structures('E^3', ARRAY[1,2]) $q$),
+  ('species_structures','word codec: every word of words(3,2) round-trips through its E^2 holdform','eq','true','word_from_holdform ∘ word_to_holdform = id, and each holdform is an E^2 structure',$q$
+    SELECT bool_and(word_from_holdform(word_to_holdform((e).value, 2)) = (e).value
+                    AND word_to_holdform((e).value, 2) IN (SELECT * FROM species_structures('E^2', ARRAY[1,2,3])))::text
+      FROM elements(words(3, 2)) e $q$);

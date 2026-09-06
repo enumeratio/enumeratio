@@ -597,10 +597,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
 -- ── plethysm + Z-walker (#274 B4): species_z_compose/species_z_fixpoint/species_z_eval certified against the
 -- existing labelled engine (species_eval) over the whole plain labelled corpus, plus targeted isotype checks. ──
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
--- The plethysm kernel is expensive at high degree (per-coefficient partition-ordinality lookups; see the #274
--- follow-up note in species_kernel.sql), so these differentials run to degree 6 — the target sequences (partition
--- numbers, compositions, A000081, n!) are already distinctive there. The full-degree corpus cert is on demand
--- (EXAMPLES=all lifts the marquee's slow twin below).
+-- These per-identity isotype differentials run to degree 6 — the target sequences (partition numbers, compositions,
+-- A000081, n!) are already distinctive there, and one plethysm at degree 6 is cheap. The corpus-wide labelled
+-- marquee below runs to degree 8: the memoized partition index (species_kernel.sql, #274 follow-up) plus DISTINCT
+-- over the exprs (a shared expr re-proves nothing) brought it from ~160s+ to gate speed, so it's default-tier now.
   ('species','isotype(E∘E+) == integer_partitions: p(n) = 1,1,2,3,5,7,11','eq','true','plethysm E composed with the nonempty-set atom counts unlabelled set partitions = integer partitions',$q$
     SELECT (z_isotype(species_z_compose(species_z_atom('E',6),species_z_atom('E+',6)))
             = ARRAY(SELECT cardinality(integer_partitions(m))::numeric FROM generate_series(0,6) m))::text $q$),
@@ -613,12 +613,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (z_labelled(species_z_compose(species_z_atom('E',6),species_z_atom('C',6))) IS NOT DISTINCT FROM species_eval('E∘C', 6))::text $q$),
   ('species','Euler transform of all-ones == isotype(E∘E+): both are the partition numbers','eq','true','a sequence-transform differential vs the species-kernel differential, same target sequence',$q$
     SELECT (sequence_transform_terms('all_ones','euler',7) IS NOT DISTINCT FROM z_isotype(species_z_compose(species_z_atom('E',6),species_z_atom('E+',6))))::text $q$),
-  ('species','MARQUEE: the Z-walker + plethysm kernel agrees with species_eval over the plain labelled corpus','eq','true','z_labelled(species_z_eval(expr)) == species_eval(expr) for every ungraded, labelled, non-implicit expr (degree 6)',$q$
-    SELECT bool_and(z_labelled(species_z_eval(expr, 6)) IS NOT DISTINCT FROM species_eval(expr, 6))::text
-      FROM base_species WHERE NOT graded AND NOT unlabelled AND NOT implicit $q$),
-  ('species','MARQUEE (full degree 8): the Z-walker + plethysm kernel agrees with species_eval over the plain labelled corpus','eq','true','the on-demand deep tier (EXAMPLES=all) — same differential at degree 8',$q$
+  ('species','MARQUEE: the Z-walker + plethysm kernel agrees with species_eval over the plain labelled corpus (degree 8)','eq','true','z_labelled(species_z_eval(expr, 8)) == species_eval(expr, 8) for every DISTINCT ungraded, labelled, non-implicit expr — default-tier since the memoized partition index landed (#274 follow-up)',$q$
     SELECT bool_and(z_labelled(species_z_eval(expr, 8)) IS NOT DISTINCT FROM species_eval(expr, 8))::text
-      FROM base_species WHERE NOT graded AND NOT unlabelled AND NOT implicit $q$);
+      FROM (SELECT DISTINCT expr FROM base_species WHERE NOT graded AND NOT unlabelled AND NOT implicit) d $q$);
 
 -- ── relabel_invariant stat trait (#274 B6): a stat is relabel-invariant iff its value survives any relabelling of
 -- the underlying species' atoms — cycle/block/fixed-point counts don't care WHICH labels moved, only the shape.

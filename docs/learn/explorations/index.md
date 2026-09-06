@@ -18,6 +18,10 @@ the way:
 - **[Connections to computer science](/learn/explorations/computer-science)** and **[Subset sum &
   q-binomials](/learn/explorations/subset-sum-and-q-binomials)** — several collections turn out to be the solution
   spaces of classic (often NP-complete) algorithmic problems.
+- **[Species as data](/learn/explorations/species)** and **[Generic species](/learn/explorations/generic-species)** —
+  the object behind the collections: a permutation as a set of cycles, a set partition as a set of blocks; the atom
+  and operation registries, the labelled ⇄ isotype readings, and two recursively-defined species (binary trees,
+  Fibonacci words) read for their counts.
 - **[The shared projective space](/develop/playground/helmert-projection)** — several polytopes from the
   first essay above, live, overlaid in one coordinate system you can orbit and navigate.
 

@@ -32,14 +32,34 @@ CREATE FUNCTION frac_div(a fraction, b fraction) RETURNS fraction LANGUAGE sql I
   SELECT frac_reduce((a.num * b.den, a.den * b.num)::fraction) $$;
 
 -- ── Z representation: jsonb {"n": [[num,den], ...]}, one fraction per partition of n, floor order ──────
-CREATE FUNCTION z_parts(n int) RETURNS TABLE(ord int, parts int[]) LANGUAGE sql STABLE AS $$
-  SELECT ordinality(e)::int, ((e).value).parts FROM elements(integer_partitions(n)) e $$;
+-- memoized partition index (#274 follow-up, was the deg-8 ~160s bottleneck): z_parts/z_ord_of used to re-run
+-- elements(integer_partitions(n)) on EVERY call, and z_ord_of scanned that result per coefficient — so plethysm
+-- and the Z-walker were quadratic-ish in p(n). We now build the partition→ordinality map ONCE into a table (PK
+-- (n,ord) for the ordered scan; a UNIQUE (n,parts) index turns z_ord_of into a single index probe), preserving
+-- integer_partitions' own floor order (ordinality 0..p(n)-1). The build covers degrees 0..Z_INDEX_MAXDEG (16 —
+-- comfortably past the degree-8/9 corpus, and p(16)=231 so the whole table is ~1.5k tiny rows); a call at a degree
+-- beyond that falls back to the live generator, correct but un-memoized (no catalog use reaches it today).
+CREATE TABLE z_partition_index (n int NOT NULL, ord int NOT NULL, parts int[] NOT NULL, PRIMARY KEY (n, ord));
+CREATE UNIQUE INDEX z_partition_index_parts ON z_partition_index (n, parts);
+INSERT INTO z_partition_index (n, ord, parts)
+  SELECT g.n, ordinality(e)::int, ((e).value).parts
+    FROM generate_series(0, 16) g(n), elements(integer_partitions(g.n)) e;
 
--- PERF (#274 follow-up): z_parts re-runs elements(integer_partitions(n)) on every call, and z_ord_of scans it per
--- coefficient — so plethysm/fixpoint at high degree is quadratic-ish (deg 8 marquee ~160s). A memoized partition
--- index (a lookup table built once) would collapse this; until then the deg-8 differentials live in the slow tier.
+-- every partition of n as (ordinality, parts) in floor order — from the index, else (degree past the build) live.
+CREATE FUNCTION z_parts(n int) RETURNS TABLE(ord int, parts int[]) LANGUAGE sql STABLE AS $$
+  SELECT i.ord, i.parts FROM z_partition_index i WHERE i.n = z_parts.n
+  UNION ALL
+  SELECT ordinality(e)::int, ((e).value).parts
+    FROM elements(integer_partitions(z_parts.n)) e
+   WHERE NOT EXISTS (SELECT 1 FROM z_partition_index i2 WHERE i2.n = z_parts.n) $$;
+
+-- p's ordinality among the partitions of n — a single index probe; a NULL there (degree past the build) retries
+-- the live generator. An invalid p at a built degree probes NULL and the fallback's NOT EXISTS is false ⇒ NULL.
 CREATE FUNCTION z_ord_of(n int, p int[]) RETURNS int LANGUAGE sql STABLE AS $$
-  SELECT ord FROM z_parts(n) WHERE parts = p $$;
+  SELECT coalesce(
+    (SELECT i.ord FROM z_partition_index i WHERE i.n = z_ord_of.n AND i.parts = p),
+    (SELECT ordinality(e)::int FROM elements(integer_partitions(z_ord_of.n)) e
+      WHERE NOT EXISTS (SELECT 1 FROM z_partition_index i2 WHERE i2.n = z_ord_of.n) AND ((e).value).parts = p)) $$;
 
 -- z_λ = ∏_i i^{m_i} · m_i!  (m_i = multiplicity of part value i); z_λ(∅) = 1
 CREATE FUNCTION z_zlambda(parts int[]) RETURNS numeric LANGUAGE plpgsql IMMUTABLE AS $$
