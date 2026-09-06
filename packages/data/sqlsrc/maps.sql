@@ -156,6 +156,14 @@ INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat)
 UPDATE base_map SET inverse = 'conjugate', is_bijection = true
   WHERE collection = 'integer_partitions' AND map_id = 'conjugate';
 
+-- reverse and inverse are INVOLUTIONS too (reverse∘reverse = id, inverse∘inverse = id — asserted behaviorally in the
+-- examples below, and now recorded as DATA: a map that names itself as its own `inverse`). This is what lets the
+-- unified property mechanism (properties.sql / #306) derive `involutive` for them instead of leaving it in prose.
+-- Both are carrier-scoped, so setting is_bijection here cannot perturb base_relation (which promotes only
+-- scope='collection' bijections). cyclic_shift is order-n, not an involution, so it is deliberately left untouched.
+UPDATE base_map SET inverse = map_id, is_bijection = true
+  WHERE collection = 'permutations' AND map_id IN ('reverse', 'inverse');
+
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('maps','cycle_type: 231 → 3 (one 3-cycle), 213 → 2+1','eq','3|2+1','permutation → cycle-length partition',$q$
