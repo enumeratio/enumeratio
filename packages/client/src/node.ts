@@ -8,14 +8,30 @@
 import { Worker } from 'node:worker_threads'
 import debug from 'debug'
 import { bootCore, coreBundle, coreBundleHash, coreDumpPath, corePackHashes, loadCatalogSnapshot } from '@enumeratio/data/node'
-import type { Db, Row } from './core'
+import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
+import { runSql, type Db, type Row } from './core'
 import { debugGucSetSql, routeNotice } from './debug-env'
 import { provideCatalog } from './registry'
 
 // The node entry knows how to find the build-time catalog snapshot: read it off disk. (The browser entry can't —
 // it uses import.meta.glob instead. Neither can do the other's trick, which is why the registry takes a source
 // rather than importing one.)
-provideCatalog(async () => ({ snapshot: await loadCatalogSnapshot(), liveHash: coreBundleHash() }))
+//
+// When that artifact is absent or was built from a different core, BUILD IT from the live connection rather than
+// declining (#281). The snapshot is a generated release artifact, so its hash goes stale on every sqlsrc edit —
+// and a stale snapshot makes the registry unusable, which sends every expression to pg. That is the correct
+// answer for the browser, which has no database to ask; it is the wrong one here, where the core has already
+// been booted and the catalog is one pass away. Before this, `calc 'binomial(30, 15)'` reported engine=pg on any
+// working tree with an uncommitted sqlsrc change — i.e. the ts fast path was unreachable in development, which
+// is precisely where it is being developed.
+//
+// Same call the tests and selfcerts already use, so this path is the one they certify.
+provideCatalog(async () => {
+  const liveHash = coreBundleHash()
+  const built = await loadCatalogSnapshot()
+  if (built && built.hash === liveHash) return { snapshot: built, liveHash }
+  return { snapshot: await buildCatalogSnapshot(runSql, liveHash), liveHash }
+})
 
 const log = debug('enumeratio:client:db')
 
