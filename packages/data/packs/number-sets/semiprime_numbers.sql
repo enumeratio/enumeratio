@@ -1,8 +1,10 @@
--- requires: natural_numbers, number-predicates
+-- requires: natural_numbers, number-predicates, k_almost_primes
 -- semiprime_numbers — products of exactly two primes counted WITH multiplicity (Ω=2), A001358: 4,6,9,10,14,…
 -- A base_restrict specialization of natural_numbers: the floor filters the naturals ascending by
 -- is_semiprime_number (delegating to is_semiprime(factored) — the exponent-vector view). Ungraded / unbounded.
 SELECT base_restrict('semiprime_numbers', 'natural_numbers', 'is_semiprime_number');
+-- (#67) a realized point of k_almost_primes at k = 2 (Ω = 2). k is a true grade axis there (D1); this pins it.
+INSERT INTO base_family_point (collection, family, bindings) VALUES ('semiprime_numbers', 'k_almost_primes', '{"k": 2}');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('semiprime_numbers','first ten via the realized floor','eq','4,6,9,10,14,15,21,22,25,26','a restriction of the naturals',$q$

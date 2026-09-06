@@ -30,6 +30,9 @@ CREATE FUNCTION fiber_unrank(f binary_words_fiber, rank rank_index) RETURNS bina
 INSERT INTO base_collection VALUES ('binary_words', 'binary_word');
 INSERT INTO base_grade VALUES ('binary_words', 1, 'n', NULL, NULL);
 SELECT base_realize('binary_words');
+-- (#67) the informal "binary_words = words @ base 2" relation, now as data: a realized point (owns its own tower/carrier),
+-- binding only the `base` param (n stays free ⇒ a sub-family). See resolveFrom.
+INSERT INTO base_family_point (collection, family, bindings) VALUES ('binary_words', 'words', '{"base": 2}');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

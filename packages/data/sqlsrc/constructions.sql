@@ -120,9 +120,11 @@ CREATE TABLE base_construction_param (
   construction  text NOT NULL REFERENCES base_construction,
   pos           int  NOT NULL,
   name          text NOT NULL,                           -- α, β, π — the conventional letter, rarely typed (bindings are positional)
-  requires_kind text NOT NULL REFERENCES base_kind,
+  kind          text NOT NULL DEFAULT 'type' CHECK (kind IN ('type', 'nat', 'schedule')),  -- what fills the hole (#67): a type-former application, a natural, or a radix schedule (§2)
+  requires_kind text REFERENCES base_kind,               -- the base_kind lattice bound — kind='type' ONLY; nat/schedule carry `admissible` on the collection's base_grade param row instead
   dependent     boolean NOT NULL DEFAULT false,          -- this hole is a position-indexed family (∀ i, π i)
-  PRIMARY KEY (construction, pos), UNIQUE (construction, name)
+  PRIMARY KEY (construction, pos), UNIQUE (construction, name),
+  CHECK (kind <> 'type' OR requires_kind IS NOT NULL)    -- a type hole always names its required kind; a nat/schedule hole never does
 );
 INSERT INTO base_construction_param (construction, pos, name, requires_kind, dependent) VALUES
   ('finset',          1, 'α', 'decidable_eq', false),
@@ -377,8 +379,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT ((SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(subsets(0, 5)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(boolean_algebra(0, 4)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(binary_words(0, 6)) f)
-        AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(words(4)) f)
-        AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(words(3)) f)
+        AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(words(4, 3)) f)   -- base is a param now (#67 D7): bind it, no 1..size unfold
+        AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(words(3, 2)) f)
         AND (SELECT bool_and(construction_cardinality(f) = cardinality(f)) FROM fibers(ROW(natural_range(3, 3, '[]'), natural_range(0, 4, '[]'))::multisets) f))::text   -- multisets: C(3+k-1, k) = 1 3 6 10 15
     $q$),   -- multisets: C(3+k-1, k) = 1 3 6 10 15
   ('constructions','the oracle reads ℕ as ∞: finsets'' construction cardinality is 2^ℵ₀ = Infinity, matching its cardinality','eq','Infinity|Infinity','an infinite type stays symbolic-infinite, off the enumeration path',$q$
@@ -386,3 +388,25 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('constructions','the oracle abstains where the expression is symbolic or the instance is refined: k_subsets (C(n,k) ≠ 2^n)','eq','true','NULL, not a wrong number (lehmer_codes'' abstention check moved to the pack)',$q$
     SELECT (construction_cardinality(ROW(4,2)::k_subsets_fiber) = 16 AND cardinality(ROW(4,2)::k_subsets_fiber) = 6
         AND NOT EXISTS (SELECT 1 FROM base_construction_primary WHERE collection = 'k_subsets'))::text $q$);
+
+-- ── the family-parameter tier: role/kind classification + the point relation (#67 B1) ────────────────────────
+-- Global structural invariants (pack-agnostic — they scan the registry tables, not any pack collection's functions,
+-- so they hold under both the full profile and `--packs core`). The positive assertions name CORE collections only.
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('family_params','role=''param'' ⇒ no default range: a family parameter has nothing to range over (§1a invariant)','eq','0','zero param axes carry lo/hi',$q$
+    SELECT count(*)::text FROM base_grade WHERE role = 'param' AND (lo_expr IS NOT NULL OR hi_expr IS NOT NULL) $q$),
+  ('family_params','role=''param'' ⇒ not groupable: no base_triangle over a param axis (§1a invariant)','eq','0','a param range is a disjoint union, not a triangle',$q$
+    SELECT count(*)::text FROM base_triangle t JOIN base_grade g ON g.collection = t.collection AND g.name IN (t.row_axis, t.col_axis) WHERE g.role = 'param' $q$),
+  ('family_params','role=''param'' ⇒ no stat named for the axis: a param is not recoverable from an element (§1a invariant)','eq','0','no base_stat.stat_id matches a param axis name',$q$
+    SELECT count(*)::text FROM base_stat s JOIN base_grade g ON g.collection = s.collection AND g.name = s.stat_id WHERE g.role = 'param' $q$),
+  ('family_params','words.base is a param with no range; words.size is a true axis (D7)','eq','base:param:∅ size:axis','the port artifact retired — base selects the alphabet, size is the grade',$q$
+    SELECT string_agg(name || ':' || role || CASE WHEN role = 'param' THEN ':' || coalesce(lo_expr, '∅') ELSE '' END, ' ' ORDER BY pos DESC)
+      FROM base_grade WHERE collection = 'words' $q$),
+  ('family_params','hypernumerary: b, k are params (the numeral system); n is the grade (the integer)','eq','b:param k:param n:axis','#86 axis→param reclassification, id preserved',$q$
+    SELECT string_agg(name || ':' || role, ' ' ORDER BY pos) FROM base_grade WHERE collection = 'hypernumerary' $q$),
+  ('family_params','base_construction_param.kind exists, defaults ''type'' (nat/schedule join in B4)','eq','type','a type hole keeps its base_kind bound; nat/schedule carry admissible',$q$
+    SELECT DISTINCT kind FROM base_construction_param WHERE construction = 'words' $q$),
+  ('family_params','the point relation as data: binary_words is words at base 2 (a realized point, sub-family — n free)','eq','words|2','base_family_point makes the informal binary_words = words @ Fin 2 relation queryable',$q$
+    SELECT family || '|' || (bindings->>'base') FROM base_family_point WHERE collection = 'binary_words' $q$),
+  ('family_params','a point''s visible grade chain drops its bound params: binary_words keeps only its own grade (n)','ok',NULL,'the point exposes the unbound axes',$q$
+    SELECT EXISTS (SELECT 1 FROM base_grade WHERE collection = 'binary_words') $q$);

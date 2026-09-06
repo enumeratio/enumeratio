@@ -1,4 +1,4 @@
--- requires: fibonacci, realizer
+-- requires: fibonacci, polygonal_numbers, realizer
 -- pentagonal_numbers — UNGRADED / infinite (carrier numeric), like triangular/fibonacci: one empty-address
 -- fiber, unbounded ⇒ cardinality = ∞. Floor = P(r) = r·(3r-1)/2 (div for exact halving; r(3r-1) is always
 -- even). contains is rank-agnostic: x is pentagonal iff 24x+1 is a perfect square with sqrt ≡ 5 (mod 6) —
@@ -17,6 +17,7 @@ CREATE FUNCTION contains_in_fiber(f pentagonal_numbers_fiber, v numeric) RETURNS
 CREATE FUNCTION fiber_unrank(f pentagonal_numbers_fiber, rank rank_index) RETURNS numeric LANGUAGE sql IMMUTABLE AS $fu$ SELECT pentagonal_number(rank::term_index) $fu$;
 INSERT INTO base_collection VALUES ('pentagonal_numbers', 'numeric', true);   -- unbounded, ungraded
 SELECT base_realize('pentagonal_numbers');
+INSERT INTO base_family_point (collection, family, bindings) VALUES ('pentagonal_numbers','polygonal_numbers','{"k": 5}');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('pentagonal_numbers','first terms via the realized floor','eq','0,1,5,12,22,35,51,70,92','elements over the one infinite fiber (r=0..8)',$q$

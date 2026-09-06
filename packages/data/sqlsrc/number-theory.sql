@@ -31,6 +31,11 @@ CREATE FUNCTION factorize(n numeric) RETURNS factorization LANGUAGE plpgsql IMMU
   END $$;
 CREATE FUNCTION big_omega(n numeric)    RETURNS int LANGUAGE sql IMMUTABLE AS $$ SELECT coalesce(sum(e)::int, 0) FROM unnest((factorize(n)).powers) e $$;
 CREATE FUNCTION little_omega(n numeric)  RETURNS int LANGUAGE sql IMMUTABLE AS $$ SELECT coalesce(array_length((factorize(n)).primes, 1), 0) $$;
+-- greatest / least prime factor and the largest prime exponent — the recoverable stats the #67 threshold families
+-- (smooth/rough/k_free) threshold over. gpf/spf return NULL for n <= 1 (no prime factors — vacuously smooth AND rough).
+CREATE FUNCTION greatest_prime_factor(n numeric) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT max(p) FROM unnest((factorize(n)).primes) p $$;
+CREATE FUNCTION least_prime_factor(n numeric)    RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT min(p) FROM unnest((factorize(n)).primes) p $$;
+CREATE FUNCTION max_prime_exponent(n numeric)    RETURNS int     LANGUAGE sql IMMUTABLE AS $$ SELECT coalesce(max(e), 0)::int FROM unnest((factorize(n)).powers) e $$;
 
 -- exponent-vector shape helpers (on top of factorize/Ω/ω) for the power/sphenic number families — hoisted from
 -- power-shapes.sql (#283 §3.3: shared by achilles_numbers, perfect_power_numbers, powerful_numbers, sphenic_numbers).

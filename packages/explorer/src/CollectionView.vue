@@ -23,17 +23,18 @@ import { distributionOf } from './distribution'
 import type { Facet, FacetOption } from './PredChips.vue'
 import { type PropRow, type PropDef, buildPropDefs, nextPropRowUid, seedRows } from './propRows'
 import {
-  parseRoute, routeFor, resolveCollectionAlias, pushCrumb, reconcileCrumbs,
+  parseRoute, routeFor, resolveCollectionAlias, resolveFamilyPointRoute, pushCrumb, reconcileCrumbs,
   type ParsedRoute, type RouteCrumb,
 } from './route'
 import { useRowWindow, isFiberArchetype } from './rowWindow'
 import {
   provideDb, makeWorkerDb, setPerf, describe, Handle, planRows, planDeferred, parseHandle, handleText, parsePreds, predsToSql,
-  parseGroupBy, policyResolved,
+  parseGroupBy, policyResolved, gradeChain as loadGradeChain,
   collectionMeta as loadCollMeta, aliases as loadAliases, carriers as loadCarriers,
   svgCarriers as loadSvgCarriers, tags as loadTags, collectionTags as loadCollTags, traits as loadTraits,
   collectionTraits as loadCollTraits, categories as loadCategories, collectionCategories as loadCollCats,
-  type CollectionCategory, type DataResult, type MapInfo, type Pred, type RowQuery, type RowTable as RowTableData, type Stat, type CollectionMeta,
+  familyPoints as loadFamilyPoints, collectionParams as loadCollectionParams,
+  type CollectionCategory, type DataResult, type FamilyPoint, type MapInfo, type Pred, type RowQuery, type RowTable as RowTableData, type Stat, type CollectionMeta,
   type PolicyResolved,
 } from '@enumeratio/client'
 
@@ -54,6 +55,11 @@ const rowWindow = useRowWindow()   // element/fiber page sizes — reset per col
 
 const collMeta = ref<Record<string, CollectionMeta>>({})
 const aliasMap = ref<Record<string, string>>({})
+// #67 D4/B5: named family points (base_family_point) redirect to their family's route; collectionParams marks which
+// grade axes are role='param' (a family SELECTOR, not a fiber range) — used to gate the skeleton-vs-unfold decision
+// and to flag the FROM chip distinctly (StatementBar's `pin.params`).
+const familyPointMap = ref<Record<string, FamilyPoint>>({})
+const paramAxesMap = ref<Record<string, string[]>>({})
 const titleOf = (id: string | null) => (id && collMeta.value[id]?.title) || id || ''
 const descOf = (id: string | null) => (id && collMeta.value[id]?.description) || null
 const atRoot = computed(() => coll.value === 'collections')
@@ -74,6 +80,14 @@ const bindings = computed<Record<string, number>>(() => {
   return out
 })
 const boundN = computed<number | null>(() => bindings.value[axes.value[0]] ?? null)
+const paramAxesOf = computed(() => new Set(coll.value ? paramAxesMap.value[coll.value] ?? [] : []))
+/** an UNBOUND param axis ⇒ a family SKELETON — nothing to enumerate (unfolding it would raise at the data layer,
+ *  since role='param' axes carry no default range). run() skips the query entirely while any remain; the template
+ *  shows a message instead, and the existing per-axis chip (StatementBar) IS the picker — binding one here is no
+ *  different from binding an ordinary axis. TODO(#67 D4): a fuller "collapsed caption chip" for a BOUND param
+ *  (issue #195 case L) is left for a follow-up visual pass — today it's just a `.param` class + a distinct tooltip. */
+const unboundParams = computed(() => axes.value.filter((a) => paramAxesOf.value.has(a) && bindings.value[a] === undefined))
+const isFamilySkeleton = computed(() => unboundParams.value.length > 0)
 /** the opening binding (policy_resolve('binding'), #245): '<name> = <int>'; '<axis>' means the first grade axis —
  *  this never reaches the handle, only the side panels' displayN */
 function parseBindingN(text: string | null | undefined, ax: string[]): number | null {
@@ -265,7 +279,17 @@ async function loadDerived(c: string): Promise<Derived> {
 
 /** Open a collection: load its shape, seed the SELECT list, then apply whatever the URL carried. */
 async function openCollection(c: string, route: ParsedRoute | null) {
-  const canonical = resolveCollectionAlias(c, aliasMap.value)   // #101 — an alias has no realized surface
+  const aliased = resolveCollectionAlias(c, aliasMap.value)   // #101 — an alias has no realized surface
+  // #67 D4: a named family point (twin_primes, cube_free_numbers) redirects ALL THE WAY to its family's own route —
+  // its own bindings rendered as matrix params on the family — whether or not the point owns a realized tower of
+  // its own. Deep-link stability isn't a concern here (pre-publication); a bookmarked point URL just lands on the
+  // family's route instead.
+  const fp = familyPointMap.value[aliased]
+  const [pointChain, familyChain] = fp ? await Promise.all([loadGradeChain(aliased), loadGradeChain(fp.family)]) : [[], []]
+  const redirected = fp
+    ? resolveFamilyPointRoute(aliased, familyPointMap.value, pointChain, familyChain, route?.address.fiberBinding ?? { n: null, axes: {} })
+    : { collection: aliased, axes: {} }
+  const canonical = redirected.collection
   coll.value = canonical
   if (typeof document !== 'undefined') document.title = `${titleOf(canonical)} · enumeratio explorer`
   const d = await loadDerived(canonical)
@@ -286,8 +310,12 @@ async function openCollection(c: string, route: ParsedRoute | null) {
   defaultGroupBy.value = elementLevelUrl ? '' : (d.policy?.groupBy ?? '')   // suppressed ⇒ ungrouped IS this URL's default
   // q.value goes FIRST (F1/F2): propDefs/groupedQ/groupKeySet read q.value.groupBy, and seeding + the defaultSelect
   // snapshot below must see the statement we're actually opening, not the previous collection's leftover grouping
+  // a point redirect already resolved the URL's fiber-binding onto the FAMILY's own axes (redirected.axes) —
+  // fromFor's own `n` handling would double-apply it, so route past `n` there and pass everything as named axes.
+  const fiberN = fp ? null : (route?.address.fiberBinding.n ?? null)
+  const fiberAxes = fp ? redirected.axes : (route?.address.fiberBinding.axes ?? {})
   q.value = {
-    from: fromFor(canonical, d.axes, route?.address.fiberBinding.n ?? null, route?.address.fiberBinding.axes ?? {}),
+    from: fromFor(canonical, d.axes, fiberN, fiberAxes),
     where: vq?.where, groupBy, having: vq?.having, orderBy: vq?.orderBy,
   }
   properties.value = seedRows({ stats: d.stats, maps: d.maps, axes: d.axes, selectText: openingSelectText(d.policy, groupBy) })
@@ -353,6 +381,11 @@ watch(properties, savePrinters, { deep: true })
 let handle: Handle | null = null
 async function run() {
   if (!coll.value || !q.value.from.trim()) return
+  if (isFamilySkeleton.value) {   // #67 D3/D4: an unbound param is a family SKELETON — nothing to unfold or enumerate
+    table.value = null; card.value = null; error.value = null; loading.value = false
+    if (!pendingView) writeUrl()
+    return
+  }
   loading.value = true
   try {
     handle = new Handle(coll.value, boundN.value == null ? {} : boundN.value)
@@ -519,11 +552,15 @@ onMounted(async () => {
     // openCollection's glyph auto-seed reads hasPageGlyph, which needs carrierMap + svgCarrierSet already populated
     // for the FIRST collection too, not just ones navigated to after boot — both are cheap (carriers() reuses the
     // catalogMap the meta/aliases calls just warmed; svgCarriers() is one small pg_proc introspection query).
-    const [meta, am, carrierMapVal, svgSet] = await Promise.all([
+    // familyPoints/collectionParams (#67) ride along too — the very FIRST openCollection call (a deep-linked
+    // /explore/collection/twin_primes, say) must already see them to redirect / gate the skeleton correctly.
+    const [meta, am, carrierMapVal, svgSet, fps, params] = await Promise.all([
       loadCollMeta().catch(() => ({} as Record<string, CollectionMeta>)),
       loadAliases().catch(() => ({} as Record<string, string>)),
       loadCarriers().catch(() => ({} as Record<string, string>)),
       loadSvgCarriers().catch(() => new Set<string>()),
+      loadFamilyPoints().catch(() => ({} as Record<string, FamilyPoint>)),
+      loadCollectionParams().catch(() => ({} as Record<string, string[]>)),
     ])
     collMeta.value = meta
     aliasMap.value = am
@@ -531,6 +568,8 @@ onMounted(async () => {
     carrierMap.value = carrierMapVal
     allCarriers.value = carrierMapVal
     svgCarrierSet.value = svgSet
+    familyPointMap.value = fps
+    paramAxesMap.value = params
     const r = readUrl()
     await openCollection(r.address.collection ?? 'collections', r)
     if (!r.address.collection) writeUrl()   // canonicalize bare /explore/collection(/) → /explore/collection/collections
@@ -571,6 +610,7 @@ onMounted(async () => {
       <h2 class="ctitle">{{ titleOf(coll) }}</h2>
       <span v-if="descOf(coll)" class="cdesc">{{ descOf(coll) }}</span>
       <span v-if="loading" class="card"><i class="pi pi-spin pi-spinner" /> loading…</span>
+      <span v-else-if="isFamilySkeleton" class="card">family — bind {{ unboundParams.join(', ') }}</span>
       <span v-else-if="card !== null" class="card">{{ card.toLocaleString() }} elements</span>
       <span v-else class="card">∞ elements</span>
       <a v-if="coll" :href="`/explore/query?from=${encodeURIComponent(coll)}`" class="querylink"
@@ -586,7 +626,7 @@ onMounted(async () => {
 
     <template v-else>
       <StatementBar v-model="q" v-model:whereFace="whereFace" :table="table" :loading="loading" :error="error"
-                    :pin="coll ? { coll, label: coll, axes } : undefined" :facets="facets" @more="more">
+                    :pin="coll ? { coll, label: coll, axes, params: [...paramAxesOf] } : undefined" :facets="facets" @more="more">
         <template #bar-pre>
           <Button v-if="distribution" size="small" text :label="showChart ? 'hide chart' : 'show chart'" icon="pi pi-chart-bar" @click="showChart = !showChart" />
         </template>
@@ -598,18 +638,27 @@ onMounted(async () => {
         </template>
       </StatementBar>
 
-      <!-- the SELECT editor: the visible rows ARE the statement's columns, in order — `select=` (#205) -->
-      <Panel v-if="properties.length" header="Properties" toggleable :collapsed="true" class="abovepane">
-        <PropertiesPane v-model="properties" :defs="propDefs" :selRow="selRow as any" :selRank="selRank"
-                        :elementEnabled="elementEnabled" :isTex="false" />
-      </Panel>
+      <!-- #67 D3: an unbound family parameter is a SKELETON, not a collection — nothing to enumerate until every
+           param is bound. The chip above (marked `.param`) is the picker; this replaces the row table while any
+           remain, rather than letting the query raise at the data layer. -->
+      <Message v-if="isFamilySkeleton" severity="info" :closable="false">
+        {{ titleOf(coll) }} is a family — bind {{ unboundParams.join(', ') }} above (the highlighted chip) to view a collection.
+      </Message>
 
-      <RowTable :table="table" :loading="loading" :fromText="q.from" :distribution="showChart ? distribution : null"
-                :printers="printers" :defs="propDefs"
-                :sortable="sortable" :filterable="filterable" :drillElements="atRoot"
-                @rowClick="onRowClick" @sort="onSort" @filter="onFilter">
-        <template #empty><p v-if="!loading && !error" class="empty">No rows.</p></template>
-      </RowTable>
+      <template v-else>
+        <!-- the SELECT editor: the visible rows ARE the statement's columns, in order — `select=` (#205) -->
+        <Panel v-if="properties.length" header="Properties" toggleable :collapsed="true" class="abovepane">
+          <PropertiesPane v-model="properties" :defs="propDefs" :selRow="selRow as any" :selRank="selRank"
+                          :elementEnabled="elementEnabled" :isTex="false" />
+        </Panel>
+
+        <RowTable :table="table" :loading="loading" :fromText="q.from" :distribution="showChart ? distribution : null"
+                  :printers="printers" :defs="propDefs"
+                  :sortable="sortable" :filterable="filterable" :drillElements="atRoot"
+                  @rowClick="onRowClick" @sort="onSort" @filter="onFilter">
+          <template #empty><p v-if="!loading && !error" class="empty">No rows.</p></template>
+        </RowTable>
+      </template>
 
       <AlgebraEvaluator v-if="coll" :collection="coll" :n="displayN" :grades="bindings" />
 

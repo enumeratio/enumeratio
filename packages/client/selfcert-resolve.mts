@@ -65,6 +65,40 @@ for (const bad of ['maps_of(fin(n))', 'words_of(fin(2))', 'finsets_of(fin(n), fi
   catch (e) { console.log(`✓ ${bad.padEnd(28)} → rejected: ${(e as Error).message.split('\n')[0]}`); pass++ }
 }
 
+// ── family-point resolution (#67 B5, base_family_point): resolveFrom's POINT → FAMILY direction always applies
+// (`a` → `b`) — a pure pointer like cube_free_numbers has NO `cube_free_numbers()` SQL constructor of its own
+// (base_alias skips base_realize), so before this resolution existed, naming it in a FROM would throw at query
+// time; the differential proves `a` now builds real, working SQL by way of `b`.
+//
+// The reverse (FAMILY fully bound → point id) is asserted only for a point that OWNS its own realized tower
+// (twin_primes): resolveFrom runs exactly ONCE per toHandle call, so folding `b` forward onto a PURE POINTER's id
+// would just hand back text with no constructor — worse than not resolving at all. So for a pointer, `resolveFrom(b)`
+// is asserted to stay put (`b` unchanged) rather than fold onto `a` — see resolveFamilyPointFrom's own comment.
+type PointCase = { a: string; b: string; pointer?: boolean }
+const pointCases: PointCase[] = [
+  { a: 'twin_primes', b: 'prime_pairs(gap=2)' },                          // a realized point (owns its own tower) — both ways
+  { a: 'cube_free_numbers', b: 'k_free_integers(k=3)', pointer: true },   // a pure pointer — point → family only
+]
+for (const { a, b, pointer } of pointCases) {
+  try {
+    const gotB = await resolveFrom(a)
+    if (gotB !== b) { console.log(`✗ resolveFrom(${a.padEnd(24)}) → ${gotB} (expected ${b})`); fail++; continue }
+    const gotA = await resolveFrom(b)
+    const wantA = pointer ? b : a   // a pointer's reverse direction is deliberately a no-op (see the header comment)
+    if (gotA !== wantA) { console.log(`✗ resolveFrom(${b.padEnd(24)}) → ${gotA} (expected ${wantA})`); fail++; continue }
+    if (pointer) {
+      const built = await builtOf(a)   // `a` itself must build + card, by way of the family — that's the whole point
+      console.log(`✓ resolveFrom: ${a.padEnd(20)} → ${b.padEnd(22)} (pointer, one-way) |·|=${await card(built)}`)
+      pass++
+      continue
+    }
+    const [ca, cb] = [await card(await builtOf(a)), await card(await builtOf(b))]
+    if (ca !== cb) { console.log(`✗ ${a} ⇄ ${b}: cardinality ${ca} ≠ ${cb}`); fail++; continue }
+    console.log(`✓ resolveFrom: ${a.padEnd(20)} ⇄ ${b.padEnd(22)} both build, |·|=${ca}`)
+    pass++
+  } catch (e) { console.log(`✗ resolveFrom(${a} / ${b}) threw: ${(e as Error).message}`); fail++ }
+}
+
 console.log(`\n${fail ? '✗' : '✓'} ${pass} passed, ${fail} failed`)
 await close()
 process.exit(fail ? 1 : 0)

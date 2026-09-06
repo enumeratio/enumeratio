@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { rowQueryFromSearch, searchFromRowQuery } from '@enumeratio/client'
 import {
-  parseRoute, routeFor, resolveCollectionAlias, addressKey, pushCrumb, reconcileCrumbs,
+  parseRoute, routeFor, resolveCollectionAlias, resolveFamilyPointRoute, addressKey, pushCrumb, reconcileCrumbs,
   type ParsedRoute, type RouteAddress, type RouteCrumb,
 } from './route'
 
@@ -112,6 +112,28 @@ describe('resolveCollectionAlias (#101: the shared-tower alias mechanism)', () =
     const canonical = resolveCollectionAlias(route.address.collection!, { power_set: 'subsets' })
     const redirected: ParsedRoute = { ...route, address: { ...route.address, collection: canonical } }
     expect(routeFor(redirected)).toBe('/explore/collection/subsets;n=4/1%2C2?repr=oneline')
+  })
+})
+
+describe('resolveFamilyPointRoute (#67 D4: every named point redirects to its family route)', () => {
+  const points = { twin_primes: { family: 'prime_pairs', bindings: { gap: 2 } }, binary_words: { family: 'words', bindings: { base: 2 } } }
+
+  it('redirects an ungraded realized point (no axes of its own) to its family, bindings as matrix params', () => {
+    expect(resolveFamilyPointRoute('twin_primes', points, [], ['gap'], { n: null, axes: {} }))
+      .toEqual({ collection: 'prime_pairs', axes: { gap: 2 } })
+  })
+
+  it('maps a sub-family point\'s own axis positionally onto the family\'s remaining one (n → size, not by name)', () => {
+    expect(resolveFamilyPointRoute('binary_words', points, ['n'], ['size', 'base'], { n: 4, axes: {} }))
+      .toEqual({ collection: 'words', axes: { base: 2, size: 4 } })
+  })
+
+  it('passes a non-point id through unchanged, with no extra axes — a safe no-op', () => {
+    expect(resolveFamilyPointRoute('subsets', points, [], [], { n: 4, axes: {} })).toEqual({ collection: 'subsets', axes: {} })
+  })
+
+  it('passes any id through unchanged against an empty map (base_family_point not loaded yet)', () => {
+    expect(resolveFamilyPointRoute('twin_primes', {}, [], [], { n: null, axes: {} })).toEqual({ collection: 'twin_primes', axes: {} })
   })
 })
 

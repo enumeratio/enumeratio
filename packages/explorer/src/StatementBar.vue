@@ -20,8 +20,11 @@ const props = defineProps<{
   error?: string | null
   /** FROM datalist options — collections and the FROM-able constructions. */
   colls?: string[]
-  /** FROM pinned to a named collection: the axis chips ARE its bindings, blank = unbound. */
-  pin?: { coll: string; label: string; axes: string[] }
+  /** FROM pinned to a named collection: the axis chips ARE its bindings, blank = unbound. `params` (#67) names
+   *  which of `axes` are family PARAMETERS (base_grade.role='param') rather than an ordinary grade axis — a bound
+   *  value SELECTS which collection (not recoverable from an element), and blank is a family skeleton, not an open
+   *  range. Flagged with a `.param` class + a distinct tooltip; still the same editable chip. */
+  pin?: { coll: string; label: string; axes: string[]; params?: string[] }
   /** membership facets the WHERE chips can ask about (the `collections` meta-collection's tag/trait/category/carrier) */
   facets?: Facet[]
 }>()
@@ -108,11 +111,13 @@ const total = computed(() => {
       <span class="kw">FROM</span>
       <code class="pincoll" :title="pin.coll">{{ pin.label }}</code>
       <span v-if="pin.axes.length" class="axes">
-        <span v-for="a in pin.axes" :key="a" class="axis">
+        <span v-for="a in pin.axes" :key="a" class="axis" :class="{ param: pin.params?.includes(a) }">
           <label :for="`ax-${a}`">{{ a }}</label>
           <InputNumber :inputId="`ax-${a}`" :modelValue="bindings[a] ?? null" @update:modelValue="(v) => bind(a, v as number | null)"
                        :min="0" :max="40" placeholder="—" showClear size="small" class="axin"
-                       v-tooltip.bottom="`blank = unbound — every ${a}`" />
+                       v-tooltip.bottom="pin.params?.includes(a)
+                         ? `a family parameter — selects which ${pin.coll} you get, not a fiber range; blank = the family skeleton (nothing to enumerate yet)`
+                         : `blank = unbound — every ${a}`" />
         </span>
       </span>
     </div>
@@ -175,6 +180,11 @@ const total = computed(() => {
 .pincoll { font-family: var(--e-font-mono, ui-monospace, monospace); font-weight: 600; font-size: 0.86rem; background: none; padding: 0; }
 .axes { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .axis { display: flex; align-items: center; gap: 0.25rem; font-size: 0.78rem; color: var(--e-color-text-muted, #666); }
+/* #67 D4: a family-parameter axis reads distinctly from an ordinary grade-axis binding chip — same InputNumber,
+   just flagged (a bound value selects the FAMILY, not a fiber range). TODO: a fuller collapsed "caption chip"
+   (issue #195 case L) is a follow-up visual pass; this is the functional stand-in. */
+.axis.param { border-left: 2px solid var(--e-color-brand-text, #92400e); padding-left: 0.35rem; border-radius: 2px; }
+.axis.param label { font-weight: 600; color: var(--e-color-brand-text, #92400e); }
 .axin { width: 5.5rem; }
 .axin :deep(input) { font-family: var(--e-font-mono, ui-monospace, monospace); font-size: 0.82rem; }
 .seg.clause { display: flex; align-items: stretch; gap: 0.35rem; }

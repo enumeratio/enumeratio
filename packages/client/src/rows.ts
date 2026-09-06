@@ -12,7 +12,7 @@
 // axis predicate is a BINDING (selects fibers, ranks intact — it belongs in the handle: `permutations(size=4)`), an
 // element predicate is a RESTRICTION (WHERE; drops rows inside fibers), a fiber-measure predicate is a LENS (HAVING;
 // hides fiber rows, the whole stays the whole — under ROLLUP the footer keeps the handle's cardinality).
-import { Handle, catalogMap, renderExprFor, runSql, type ParamValue, type Row, type Cell } from './core'
+import { Handle, catalogMap, renderExprFor, runSql, familyPoints, type ParamValue, type Row, type Cell } from './core'
 import { parsePreds, predsToSql, type Pred } from './preds'
 import { parseSelect, resolveSelect, type Environment, type SelectColumn, type SelectKind, type SelectSpec } from './select'
 
@@ -133,15 +133,15 @@ export function searchFromRowQuery(q: RowStatement): string {
 // ── the FROM: the handle's own text form ──────────────────────────────────────────────────────────────────────────
 export type ParsedHandle = { coll: string; named: Record<string, ParamValue>; positional: ParamValue[] }
 
-/** `coll` · `coll(4)` · `coll(4, 2)` · `coll(size=4)` · `coll(n=2..4, k=2)`. An open range `size=0..` is the unbound
- *  axis (dropped); a lower-bounded open range past 0 is not representable and throws. */
-export function parseHandle(text: string): ParsedHandle {
-  const m = text.trim().match(/^([A-Za-z_][A-Za-z0-9_]*)\s*(?:\((.*)\))?$/s)
-  if (!m) throw new Error(`FROM: expected a collection, optionally with bindings — e.g. k_subsets(n=2..4, k=2); got "${text}"`)
-  const out: ParsedHandle = { coll: m[1], named: {}, positional: [] }
-  const inner = (m[2] ?? '').trim()
-  if (!inner) return out
-  for (const part of inner.split(',').map((s) => s.trim()).filter(Boolean)) {
+/** The grammar inside a handle's parens — `4` · `4, 2` · `size=4` · `n=2..4, k=2` — factored out of parseHandle so
+ *  resolveFrom's family-point matching (below) can parse a POINT's or a FAMILY's own arg list without a throwaway
+ *  collection name in front. An open range `axis=0..` is the unbound axis (dropped); a lower-bounded open range
+ *  past 0 is not representable and throws. */
+function parseBindingArgs(inner: string): { named: Record<string, ParamValue>; positional: ParamValue[] } {
+  const out = { named: {} as Record<string, ParamValue>, positional: [] as ParamValue[] }
+  const text = inner.trim()
+  if (!text) return out
+  for (const part of text.split(',').map((s) => s.trim()).filter(Boolean)) {
     const kv = part.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.+)$/)
     const [name, val] = kv ? [kv[1], kv[2].trim()] : [null, part]
     const r = val.match(/^(-?\d+)?\s*\.\.\s*(-?\d+)?$/)
@@ -156,6 +156,23 @@ export function parseHandle(text: string): ParsedHandle {
     if (name) out.named[name] = v
     else out.positional.push(v)
   }
+  return out
+}
+/** `coll` · `coll(4)` · `coll(4, 2)` · `coll(size=4)` · `coll(n=2..4, k=2)`. */
+export function parseHandle(text: string): ParsedHandle {
+  const m = text.trim().match(/^([A-Za-z_][A-Za-z0-9_]*)\s*(?:\((.*)\))?$/s)
+  if (!m) throw new Error(`FROM: expected a collection, optionally with bindings — e.g. k_subsets(n=2..4, k=2); got "${text}"`)
+  const { named, positional } = parseBindingArgs(m[2] ?? '')
+  return { coll: m[1], named, positional }
+}
+/** Bind a parsed arg list (positional + named) onto a grade CHAIN, by position / by name — the same mapping
+ *  toHandle itself uses, factored out for resolveFrom's family-point matching (which binds against a POINT's or a
+ *  FAMILY's own chain, not a live Handle). Unknown names / out-of-range positions are silently dropped: this is a
+ *  best-effort rewrite, never a hard parse — an ill-formed FROM still reaches toHandle's own, better error. */
+function bindArgsToChain(args: { named: Record<string, ParamValue>; positional: ParamValue[] }, chain: string[]): Record<string, ParamValue> {
+  const out: Record<string, ParamValue> = {}
+  args.positional.forEach((v, i) => { if (chain[i]) out[chain[i]] = v })
+  for (const [k, v] of Object.entries(args.named)) if (chain.includes(k)) out[k] = v
   return out
 }
 
@@ -226,11 +243,65 @@ export async function constructionNames(): Promise<string[]> {
 
 type Binding = { collection: string; pos: number; type_former: string; param: string | null; generic: boolean; alpha_axis: string | null; grades: number }
 
+/** `resolveFrom`'s family-point half (#67 B5, base_family_point): a POINT id (bare, or with args on its OWN
+ *  remaining axes) rewrites to `family(bindings ⊕ args)` — `twin_primes` → `prime_pairs(gap=2)`,
+ *  `binary_words(4)` → `words(size=4, base=2)` — this direction always applies, since a PURE POINTER (cube_free_numbers)
+ *  has no SQL constructor of its own (base_alias skips base_realize) and would otherwise fail to build at all.
+ *
+ *  The reverse — a family bound to EXACTLY a registered point's own `bindings`, no OTHER axis also given — folds
+ *  forward to that point's id: `prime_pairs(gap=2)` → `twin_primes`, `words(base=2)` → `binary_words`. Narrower than
+ *  "every family axis bound": `words(size=4, base=2)` ALSO binds `size` (an ordinary grade axis, real query intent —
+ *  its own registered stats/element-relations may differ from binary_words'), so it stays `words` rather than
+ *  silently detouring through a differently-registered collection. This direction ALSO skips a pure-pointer point
+ *  (cube_free_numbers) — resolveFrom runs exactly ONCE per toHandle call, so folding forward onto an id with no
+ *  constructor of its own would just build broken SQL; a pure pointer only ever reads the OTHER way. `words(base=2)`
+ *  → `binary_words` is safe because binary_words owns its own realized tower.
+ *
+ *  Either way, the two collections' own remaining axes line up POSITIONALLY, not by name (a realized point mints
+ *  its own axis names — binary_words' `n` vs words' `size`). Returns null when `name` is neither — a safe no-op,
+ *  same contract as resolveCollectionAlias, when base_family_point is empty or nothing matches. */
+async function resolveFamilyPointFrom(name: string, argsInner: string | undefined): Promise<string | null> {
+  const points = await familyPoints()
+  const cat = await catalogMap()
+  const point = points[name]
+  if (point) {
+    const pointChain = cat.get(name)?.grades ?? []
+    const familyChain = cat.get(point.family)?.grades ?? []
+    const remaining = familyChain.filter((g) => !(g in point.bindings))
+    const pointArgs = bindArgsToChain(parseBindingArgs(argsInner ?? ''), pointChain)
+    const familyArgs: Record<string, ParamValue> = { ...point.bindings }
+    pointChain.forEach((ax, i) => { if (pointArgs[ax] !== undefined && remaining[i]) familyArgs[remaining[i]] = pointArgs[ax] })
+    return handleText(point.family, familyArgs, familyChain)
+  }
+  if (argsInner === undefined) return null   // direction B needs an explicit binding — a bare family name isn't one
+  const familyChain = cat.get(name)?.grades ?? []
+  if (!familyChain.length) return null
+  const args = bindArgsToChain(parseBindingArgs(argsInner), familyChain)
+  const boundKeys = Object.keys(args)
+  for (const p of Object.values(points)) {
+    if (p.family !== name || cat.get(p.collection)?.aliasOf) continue   // a pure pointer has no constructor to fold onto
+    const paramKeys = Object.keys(p.bindings)
+    if (boundKeys.length !== paramKeys.length) continue                                              // an extra bound axis stays the family
+    if (!paramKeys.every((k) => typeof args[k] === 'number' && args[k] === p.bindings[k])) continue
+    return p.collection   // no remaining args to carry: boundKeys == paramKeys exactly, so the point's own axes stay unbound
+  }
+  return null
+}
+
 /** Rewrite a construction-FROM (`finsets_of(fin(4))`, `maps_of(fin(n), fin(n))`, `products_of(permutations(n), words(n, 2))`)
- *  to a realized collection handle text (`subsets(n=4)`, `endofunctions`, `signed_permutations`); returns the text
- *  unchanged when it is an ordinary collection handle. Async — it reads base_construction / base_alpha. */
+ *  to a realized collection handle text (`subsets(n=4)`, `endofunctions`, `signed_permutations`), OR a family-point
+ *  spelling (`twin_primes` ⇄ `prime_pairs(gap=2)`, #67 B5) to its other side; returns the text unchanged when it is
+ *  an ordinary collection handle. Async — it reads base_construction / base_alpha / base_family_point. */
 export async function resolveFrom(text: string): Promise<string> {
-  const m = text.trim().match(/^([A-Za-z_][A-Za-z0-9_]*)\s*\(\s*(.*?)\s*\)$/s)
+  const trimmed = text.trim()
+  const g = trimmed.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*(?:\(\s*(.*?)\s*\))?$/s)
+  if (g) {
+    try {
+      const fp = await resolveFamilyPointFrom(g[1], g[2])
+      if (fp) return fp
+    } catch { /* an ill-formed binding falls through — toHandle's own parseHandle raises the same error properly */ }
+  }
+  const m = trimmed.match(/^([A-Za-z_][A-Za-z0-9_]*)\s*\(\s*(.*?)\s*\)$/s)
   if (!m) return text
   const construction = (await constructionFromNames()).get(m[1])
   if (!construction) return text
@@ -1268,6 +1339,35 @@ INSERT INTO base_triangle VALUES ('${nm}', '${a}', 'k', '${s.coll} by ${stat.sta
 ${fn}SELECT base_restrict('${nm}', '${s.coll}', '${pred}');${bound ? `\n-- the binding ${q.from} stays a handle: ${nm} inherits ${s.coll}'s axes, so this slice is ${nm}(${Object.entries(s.h.args).map(([k, v]) => `${k}=${Array.isArray(v) ? `${v[0]}..${v[1]}` : v}`).join(', ')})` : ''}`
     return { kind: 'restriction', sql, note: `A WHERE that drops elements inside fibers is a restriction: the named collection re-ranks the survivors and gets its own count/unrank engine (add count_fn / unrank_fn to base_restrict when a closed form exists).`, related }
   }
-  if (bound) return { kind: 'binding', sql: `-- ${q.from} is a handle of ${s.coll}: every rank intact, cardinality = Σ of the bound fibers.\n-- A named point of a family (twin_primes = prime_pairs(gap=2)) is an alias row — the family tier (#67).`, note: `A binding selects fibers; it is the collection itself, addressed. Nothing to realize.`, related }
+  if (bound) {
+    // #67 B5: this binding may already BE a registered family point (twin_primes = prime_pairs(gap=2)) — resolveFrom
+    // has already folded any bare point-id FROM into its family form by the time shape() runs, so the only way to
+    // recognize it here is the reverse match: does s.h.args, restricted to a point's own bindings, equal it exactly?
+    const pt = await pointFor(s.coll, s.h.args)
+    if (pt) {
+      return { kind: 'binding', sql: '', note: `${pt.id} already names exactly this binding (base_family_point, #67) — ${pt.pointer ? `a pure alias, no tower of its own; it resolves through ${s.coll}` : `it owns its own realized tower, kept in step by a self-cert differential against ${s.coll}`}.`, related }
+    }
+    return { kind: 'binding', sql: `-- ${q.from} is a handle of ${s.coll}: every rank intact, cardinality = Σ of the bound fibers.\n-- A named point of a family (e.g. twin_primes = prime_pairs(gap=2)) is a base_family_point row (#67) — 'name this' says so when the binding matches one.`, note: `A binding selects fibers; it is the collection itself, addressed. Nothing to realize.`, related }
+  }
   return { kind: 'none', sql: '', note: `${s.coll} as it is — already named.`, related }
+}
+
+/** Does `coll` bound to `args` INCLUDE a registered family point's own `bindings` (base_family_point, #67) — e.g.
+ *  prime_pairs bound to {gap:2} (or {gap:2, size:4}) IS/CONTAINS twin_primes? Used by nameStatement to phrase a
+ *  binding as "point of <family>" rather than a generic fiber address — a SUBSET match, deliberately looser than
+ *  resolveFamilyPointFrom's direction B (which requires an EXACT match, since it actually swaps which collection
+ *  gets queried). Naming is only commentary — words(size=4, base=2) staying `words` for real query purposes
+ *  doesn't stop 'name this' from also mentioning binary_words. `pointer` = true for a pure-pointer point
+ *  (base_collection.alias_of set, no realized tower of its own — cube_free_numbers), false for one that owns its
+ *  own tower (twin_primes). */
+async function pointFor(coll: string, args: Record<string, ParamValue>): Promise<{ id: string; pointer: boolean } | null> {
+  const points = await familyPoints()
+  const cat = await catalogMap()
+  for (const p of Object.values(points)) {
+    if (p.family !== coll) continue
+    if (Object.entries(p.bindings).every(([k, v]) => args[k] === Number(v))) {
+      return { id: p.collection, pointer: !!cat.get(p.collection)?.aliasOf }
+    }
+  }
+  return null
 }

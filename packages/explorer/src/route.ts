@@ -142,6 +142,32 @@ export function resolveCollectionAlias(id: string, aliasMap: Record<string, stri
   return aliasMap[id] ?? id
 }
 
+/** Resolve a family-point collection id to its family + the fiber-binding it contributes (base_family_point, #67
+ *  D4): EVERY named point — realized (twin_primes, owning its own tower) or a pure pointer (cube_free_numbers, none)
+ *  — redirects to its family's own route, its bindings rendered as matrix params (twin_primes → prime_pairs;gap=2).
+ *  The point's OWN remaining axes (binary_words' `n`) line up POSITIONALLY with the family's remaining ones
+ *  (words' `size`) — a realized point mints its own axis names, so matching by name would miss; `pointChain` /
+ *  `familyChain` are the two collections' own grade chains (@enumeratio/client's `gradeChain()`), `incoming` the
+ *  fiber-binding the URL already carried for the point. A non-point id, or an unloaded/empty `points` map, is a
+ *  safe no-op — same contract as resolveCollectionAlias: `{ collection: id, axes: {} }`. Deep-link stability is not
+ *  a concern here (pre-publication, see AGENTS.md) — a bookmarked point URL simply lands on its family's route. */
+export function resolveFamilyPointRoute(
+  id: string,
+  points: Record<string, { family: string; bindings: Record<string, number> }>,
+  pointChain: string[],
+  familyChain: string[],
+  incoming: FiberBinding,
+): { collection: string; axes: Record<string, number> } {
+  const fp = points[id]
+  if (!fp) return { collection: id, axes: {} }
+  const remaining = familyChain.filter((g) => !(g in fp.bindings))
+  const bound: Record<string, number> = { ...incoming.axes }
+  if (incoming.n != null && pointChain[0]) bound[pointChain[0]] = incoming.n
+  const axes: Record<string, number> = { ...fp.bindings }
+  pointChain.forEach((ax, i) => { if (bound[ax] != null && remaining[i]) axes[remaining[i]] = bound[ax] })
+  return { collection: fp.family, axes }
+}
+
 // ── the breadcrumb trail (#181) ──────────────────────────────────────────────────────────────────────────────────
 // A cross-link — a map/through image, a drill-element, a sibling, the root back-link — hops the address (PATH) to
 // somewhere else entirely, not just deeper into the same collection's view-config. CollectionView owns navigating

@@ -5,9 +5,9 @@
 -- the general two-axis family has no single OEIS sequence). binary_words is the base=2 specialization: it keeps
 -- its own 0/1 `binary_word` carrier + bitstring notation, but RELABELS this engine at base 2 (bit = letter − 1).
 --
--- Multi-grade chain [size, base]: with the alphabet free the collection is infinite, so `base` has NO default
--- upper bound tied to infinity — instead (per the port) it defaults to the range 1..size, so words(n) unfolds
--- base = 1..n and words(n, base) binds the rankable fiber. Fiber [size,base] = all `size`-length tuples over
+-- Multi-grade chain [size, base]: `size` is a true grade axis; `base` is a family PARAMETER (#67 D7) — it selects
+-- which alphabet (which collection), is not recoverable from a single word, and has NO default range. words(n, base)
+-- binds the rankable fiber; words(n) alone leaves base unbound (the family skeleton). Fiber [size,base] = all `size`-length tuples over
 -- {1..base}, in lexicographic order (most-significant letter first) — rank 0 is the all-1s word, matching the
 -- old mixed-radix numeral ranking. count of a fiber = base^size (pow_int, exact).
 
@@ -44,9 +44,9 @@ CREATE FUNCTION fiber_unrank(f words_fiber, rank rank_index) RETURNS word LANGUA
 
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('words', 'word');
-INSERT INTO base_grade VALUES
-  ('words', 1, 'size', NULL, NULL),
-  ('words', 2, 'base', '1', 'g1');                                    -- base ranges 1..size by default
+INSERT INTO base_grade (collection, pos, name, lo_expr, hi_expr, role, admissible) VALUES
+  ('words', 1, 'size', NULL, NULL, 'axis',  NULL),                    -- the word length: a true grade (recoverable = array length)
+  ('words', 2, 'base', NULL, NULL, 'param', 'base >= 1');             -- the alphabet size: a family PARAMETER (#67, D7 — no default range; not recoverable from a word once base ≥ max letter)
 CREATE FUNCTION fiber_symbol(f words_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT '[' || (f).base::int || ']' || to_unicode_superscript((f).size) $$;   -- corpus symbol
 
 SELECT base_realize('words');
@@ -67,11 +67,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT notation((unrank(words(2,3), 5)).value) $q$),
   ('words','n = 0 => one empty word, whatever the base','eq','1|','base^0 = 1; the empty letter tuple',$q$
     SELECT cardinality(words(0,5))::text || '|' || notation((unrank(words(0,5), 0)).value) $q$),
-  ('words','base RANGE: cardinality(words(3)) sums base = 1..3','eq','36','1^3 + 2^3 + 3^3',$q$
-    SELECT cardinality(words(3))::text $q$),
-  ('words','fibers(words(3)) unfold to base = 1,2,3','eq','1,2,3','the second grade ranges 1..size by default',$q$
-    SELECT string_agg((f).base::text, ',' ORDER BY (f).base) FROM fibers(words(3)) f $q$),
-  ('words','fiber counts for size=4 over base=1..5: 1,16,81,256,625','eq','1,16,81,256,625','base = 1..5',$q$
+  -- (#67 D7) base is now role='param' — no 1..size default range, so words(3) with base UNBOUND is the family
+  -- skeleton, not a fiber unfold. The retired examples (cardinality(words(3)) = 36; fibers(words(3)) = base 1,2,3)
+  -- are gone; base must be bound. The counts differential below binds base explicitly and still holds:
+  ('words','fiber counts for size=4 over base=1..5: 1,16,81,256,625','eq','1,16,81,256,625','base bound per term',$q$
     SELECT string_agg(cardinality(words(4,base))::text, ',' ORDER BY base) FROM generate_series(1,5) base $q$),
   ('words','every element of fiber [4,3] has 4 letters, each in [1,3]','eq','true','the defining invariant across the fiber',$q$
     SELECT bool_and(array_length(((e).value).letters, 1) = 4

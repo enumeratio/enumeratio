@@ -1,4 +1,4 @@
--- requires: triangular_numbers, realizer
+-- requires: triangular_numbers, polygonal_numbers, realizer
 -- hexagonal_numbers — H(n)=n(2n-1): 0,1,6,15,28,… Ungraded/∞ numeric.
 CREATE TYPE hexagonal_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
 CREATE FUNCTION fiber_elements(f hexagonal_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
@@ -8,6 +8,7 @@ CREATE FUNCTION fiber_unrank(f hexagonal_numbers_fiber, rank rank_index) RETURNS
 INSERT INTO base_collection VALUES ('hexagonal_numbers','numeric',true);
 INSERT INTO base_monotonic_sequence VALUES ('hexagonal_numbers');   -- non-decreasing: synth a scanning contains
 SELECT base_realize('hexagonal_numbers');
+INSERT INTO base_family_point (collection, family, bindings) VALUES ('hexagonal_numbers','polygonal_numbers','{"k": 6}');
 INSERT INTO base_example (suite,title,kind,expected,description,sql) VALUES
   ('hexagonal_numbers','first terms','eq','0,1,6,15,28,45,66,91,120','n(2n-1)',$q$ SELECT string_agg((e).value::text,',' ORDER BY ordinality(e)) FROM elements(hexagonal_numbers(),9) e $q$),
   ('hexagonal_numbers','unrank(10)=190','eq','190','H(10)',$q$ SELECT (unrank(hexagonal_numbers(),10)).value::text $q$),

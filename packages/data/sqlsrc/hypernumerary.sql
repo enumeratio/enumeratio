@@ -1,4 +1,4 @@
--- requires: realizer
+-- requires: realizer, base_radix_schedule
 -- hypernumerary — the GENERAL widened-alphabet base-b numeral family: base-b digit words d (MSB-first) over the
 -- widened alphabet {0,1,…,b−1+k} with Σ dᵢ·bⁱ = n. Standard base-b numerals use only {0..b−1}; admitting k extra
 -- top digits lets an integer have several valid numerals (each a different way to "carry" against the same
@@ -98,13 +98,20 @@ CREATE FUNCTION contains_in_fiber(f hypernumerary_fiber, v hypernumerary_word) R
 
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
 INSERT INTO base_collection VALUES ('hypernumerary', 'hypernumerary_word');
-INSERT INTO base_grade VALUES
-  ('hypernumerary', 1, 'b', NULL, NULL),   -- the base
-  ('hypernumerary', 2, 'k', NULL, NULL),   -- the widening (extra top digits)
-  ('hypernumerary', 3, 'n', NULL, NULL);   -- the integer being represented
+-- (#67) b, k are family PARAMETERS — they select which numeral system (base b widened by k), not a fiber within
+-- one; not recoverable from a single numeral. n is the true grade (the integer represented). hyperbinary_representations
+-- is the point (b, k) = (2, 1); see its base_family_point row.
+INSERT INTO base_grade (collection, pos, name, lo_expr, hi_expr, role, admissible) VALUES
+  ('hypernumerary', 1, 'b', NULL, NULL, 'param', 'b >= 2'),   -- the base
+  ('hypernumerary', 2, 'k', NULL, NULL, 'param', 'k >= 0'),   -- the widening (extra top digits)
+  ('hypernumerary', 3, 'n', NULL, NULL, 'axis',  NULL);       -- the integer being represented (the grade)
 CREATE FUNCTION fiber_symbol(f hypernumerary_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   SELECT 'HN[' || (f).b::int || ',' || (f).k::int || '](' || (f).n::int || ')' $$;
 SELECT base_realize('hypernumerary');
+-- (#300 §2b) re-read as a numeral system: weights constant(b), alphabet constant(b+k). alphabet ≠ weights ⇒ WIDENED
+-- (several numerals per value), which is exactly why the value n is a grade here and the system is not bijective.
+INSERT INTO base_numeral_system (collection, weight_schedule, alphabet_schedule, note) VALUES
+  ('hypernumerary', 'constant', 'constant', 'widened: alphabet constant(b+k) ≠ weights constant(b) — value n is the grade');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
 -- the b=2,k=1 == hyperbinary_representations cross-check lives in packs/number-sets/examples.hypernumerary.sql

@@ -1,4 +1,4 @@
--- requires: fibonacci, realizer
+-- requires: fibonacci, polygonal_numbers, realizer
 -- square_numbers — UNGRADED / infinite (carrier numeric), like fibonacci/triangular: one empty-address fiber,
 -- unbounded ⇒ cardinality = ∞. Floor = S(r) = r². contains is rank-agnostic: n is a square iff trunc(√n)² = n.
 -- Reuses is_perfect_square from the fibonacci floor.
@@ -15,6 +15,7 @@ CREATE FUNCTION contains_in_fiber(f square_numbers_fiber, v numeric) RETURNS boo
 CREATE FUNCTION fiber_unrank(f square_numbers_fiber, rank rank_index) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT square_number(rank::term_index) $$;
 INSERT INTO base_collection VALUES ('square_numbers', 'numeric', true);   -- unbounded, ungraded
 SELECT base_realize('square_numbers');
+INSERT INTO base_family_point (collection, family, bindings) VALUES ('square_numbers','polygonal_numbers','{"k": 4}');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('square_numbers','first terms via the realized floor','eq','0,1,4,9,16,25,36,49,64','elements over the one infinite fiber (r=0..8)',$q$

@@ -1,4 +1,4 @@
--- requires: fibonacci, realizer
+-- requires: fibonacci, polygonal_numbers, realizer
 -- triangular_numbers — UNGRADED / infinite (carrier numeric), like fibonacci/primes: one empty-address fiber,
 -- unbounded ⇒ cardinality = ∞. Floor = T(r) = r·(r+1)/2 (div for exact halving). contains is rank-agnostic:
 -- n is triangular iff 8n+1 is a perfect square. Reuses is_perfect_square from the fibonacci floor.
@@ -15,6 +15,7 @@ CREATE FUNCTION contains_in_fiber(f triangular_numbers_fiber, v numeric) RETURNS
 CREATE FUNCTION fiber_unrank(f triangular_numbers_fiber, rank rank_index) RETURNS numeric LANGUAGE sql IMMUTABLE AS $fu$ SELECT triangular_number(rank::int) $fu$;
 INSERT INTO base_collection VALUES ('triangular_numbers', 'numeric', true);   -- unbounded, ungraded
 SELECT base_realize('triangular_numbers');
+INSERT INTO base_family_point (collection, family, bindings) VALUES ('triangular_numbers','polygonal_numbers','{"k": 3}');
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('triangular_numbers','first terms via the realized floor','eq','0,1,3,6,10,15,21,28,36','elements over the one infinite fiber (r=0..8)',$q$

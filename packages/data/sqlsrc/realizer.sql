@@ -48,8 +48,18 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'a "collection"-scope finalizer''s inner loop finds nothing to iterate; a "pack"-scope finalizer still fires '
    'once but must tolerate finding no rows for the pack — neither should raise', $q$ SELECT base_pack_finalize('__nonexistent_pack__') $q$);
 
+-- base_grade: the ordered param positions of a collection. Each position has a ROLE (#67): 'axis' selects a FIBER
+-- inside one collection (a grade — recoverable from an element, so it carries a base_stat, may be ranged into a
+-- triangle, and unfolds its default [lo,hi] range when unbound), 'param' selects WHICH collection (a family
+-- parameter — NOT recoverable from an element, so no stat/triangle, no default range; unbound ⇒ the family skeleton,
+-- never a fiber unfold). `admissible` is a text predicate on the bound value ('k >= 2', 'gap % 2 = 0'), param-only.
+-- Invariants (suite-asserted in constructions.sql, not triggers): role='param' ⇒ lo_expr IS NULL AND hi_expr IS NULL
+-- AND no base_stat over the axis AND no base_triangle; role='axis' with lo/hi NULL stays legal (an open axis).
 CREATE TABLE base_grade (collection text NOT NULL REFERENCES base_collection, pos int NOT NULL, name text NOT NULL,
-                         lo_expr text, hi_expr text, PRIMARY KEY (collection, pos));
+                         lo_expr text, hi_expr text,
+                         role text NOT NULL DEFAULT 'axis' CHECK (role IN ('axis', 'param')),
+                         admissible text,
+                         PRIMARY KEY (collection, pos));
 -- base_collection_parent: the SPECIALIZATION edge of the collection family tree — a base_restrict child records the
 -- parent it filters + the predicate it filters by (its carrier edge already lives in base_collection.carrier). A child
 -- has at most one parent; chains close transitively via base_collection_ancestry. Siblings over a shared carrier (same
@@ -207,10 +217,15 @@ CREATE TABLE base_repr (collection text NOT NULL REFERENCES base_collection, rep
 -- window where both sides are finite + enumerable (mirrors order_isomorphism-is-only-checkable-sometimes). is_order_iso
 -- ⊃ is_bijection: an order isomorphism is a bijection whose image reproduces the codomain's rank order (the k-th
 -- element of the domain fiber maps to the k-th element of the codomain fiber), e.g. binary_words_by_weight ↔ k_subsets.
+-- kind (#300 D6): the map's SHAPE — 'bijection' (invertible), 'embedding' (injective, not surjective — e.g. Lehmer ↪
+-- factoradic), 'surjection', or 'general'. is_bijection stays the derived boolean (kind='bijection' ⇔ is_bijection);
+-- kind refines the non-bijective cases the boolean can't name. Defaults 'general' (existing rows keep is_bijection as
+-- their source of truth); set kind explicitly for embeddings/surjections.
 CREATE TABLE base_map (collection text NOT NULL REFERENCES base_collection, map_id text NOT NULL,
                        mapping_fn text NOT NULL, codomain text NOT NULL, title text, findstat text,
                        scope text NOT NULL DEFAULT 'carrier' CHECK (scope IN ('carrier','collection')),
                        inverse text, is_bijection boolean NOT NULL DEFAULT false, is_order_iso boolean NOT NULL DEFAULT false,
+                       kind text NOT NULL DEFAULT 'general' CHECK (kind IN ('bijection','embedding','surjection','general')),
                        PRIMARY KEY (collection, map_id),
                        pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
 CREATE TRIGGER base_map_pack_guard BEFORE UPDATE OR DELETE ON base_map FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
@@ -900,6 +915,19 @@ END $realize$;
 -- resolves an alias route to its canonical BEFORE the client touches the (nonexistent) realized surface (App.vue's
 -- watch(coll)); a caller that somehow reaches the SQL layer directly with an alias id gets a plain "does not exist"
 -- error from pg, same as any other unrealized name — there is no silent forwarding constructor to fall back on.
+-- base_family_point (#67): the POINT relation — a collection is a point of a family, obtained by binding some of the
+-- family's params/axes to constants. `bindings` is {axis_name: value}; a PARTIAL binding (fewer than all params) is a
+-- sub-family. Distinct from base_collection.alias_of (a whole-collection synonym): a family point may own its own
+-- realized tower (twin_primes) OR be a pure pointer (cube_free_numbers, no tower). resolveFrom reads it both ways
+-- (prime_pairs(gap => 2) ⇄ twin_primes). Pack-attributed + guarded like base_map/base_stat so a pack may record a
+-- point onto a core family.
+CREATE TABLE base_family_point (
+  collection text PRIMARY KEY REFERENCES base_collection,      -- the point (twin_primes, cube_free_numbers, binary_words)
+  family     text NOT NULL REFERENCES base_collection,         -- the family handle (prime_pairs, k_free_integers, words)
+  bindings   jsonb NOT NULL,                                   -- {"gap": 2}; a partial binding is a sub-family
+  pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+CREATE TRIGGER base_family_point_pack_guard BEFORE UPDATE OR DELETE ON base_family_point FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
+
 CREATE FUNCTION base_alias(coll text, canonical text) RETURNS void LANGUAGE plpgsql AS $a$
 DECLARE c base_collection%ROWTYPE;
 BEGIN
@@ -907,7 +935,21 @@ BEGIN
   IF c.id IS NULL THEN RAISE EXCEPTION 'base_alias: canonical collection % not found', canonical; END IF;
   IF c.alias_of IS NOT NULL THEN RAISE EXCEPTION 'base_alias: % is itself an alias of % — alias to the canonical directly, no chains', canonical, c.alias_of; END IF;
   INSERT INTO base_collection (id, carrier, unbounded, alias_of) VALUES (coll, c.carrier, c.unbounded, canonical);
-  INSERT INTO base_grade SELECT coll, pos, name, lo_expr, hi_expr FROM base_grade WHERE collection = canonical;
+  INSERT INTO base_grade SELECT coll, pos, name, lo_expr, hi_expr, role, admissible FROM base_grade WHERE collection = canonical;
+END $a$;
+
+-- base_alias(coll, family, bindings): a POINTER point — a synonym for `family` with `bindings` pinned, realizing NO
+-- tower. The alias's grade chain = the family's chain MINUS the bound params. Records the base_family_point row too.
+CREATE FUNCTION base_alias(coll text, family text, bindings jsonb) RETURNS void LANGUAGE plpgsql AS $a$
+DECLARE c base_collection%ROWTYPE;
+BEGIN
+  SELECT * INTO c FROM base_collection WHERE id = family;
+  IF c.id IS NULL THEN RAISE EXCEPTION 'base_alias: family collection % not found', family; END IF;
+  IF c.alias_of IS NOT NULL THEN RAISE EXCEPTION 'base_alias: % is itself an alias of % — alias to the canonical directly, no chains', family, c.alias_of; END IF;
+  INSERT INTO base_collection (id, carrier, unbounded, alias_of) VALUES (coll, c.carrier, c.unbounded, family);
+  INSERT INTO base_grade SELECT coll, pos, name, lo_expr, hi_expr, role, admissible FROM base_grade
+   WHERE collection = family AND NOT (bindings ? name);        -- drop the bound params from the point's visible chain
+  INSERT INTO base_family_point (collection, family, bindings) VALUES (coll, family, bindings);
 END $a$;
 
 -- base_restrict(coll, parent, predicate[, scan_factor]): derive a new collection = the parent FILTERED by a
@@ -924,61 +966,117 @@ END $a$;
 -- fiber_count / fiber_unrank delegating to them, so base_realize wires the accelerated cardinality / element_at path
 -- instead of counting the filtered floor. Absent ⇒ current behavior (inherit + filter). sample_fn is reserved (recorded,
 -- unwired — uniform sampling already falls out of unrank_fn). Pass by name to skip scan_factor, e.g. count_fn => '…'.
+--
+-- params (#67, B2): a PARAMETER restriction — a whole FAMILY of restricts, one per binding of the params. The child's
+-- fiber = the parent's fiber ⊕ one natural_number field per param (each a new role='param' grade position, appended
+-- after the parent's chain). The predicate is PARAM-aware: <predicate>(<carrier>, <p1> natural_number[, <p2> …]) — one
+-- extra arg per param, in order (NOT the child fiber type, which base_restrict mints internally, so the predicate can
+-- be defined before the call). The floor scans the parent projection of the fiber (params dropped) and filters by
+-- predicate(v, (f).p1, …); the density (hence scan_factor) may vary with the params. `admissibles` (parallel to
+-- params) sets each param axis's base_grade.admissible. This is k_almost_primes' hand-authored big_omega(v) = (f).k
+-- made a one-liner. Param + accel hooks (count_fn/unrank_fn) is not yet supported (the #89 accel is param-agnostic).
 CREATE FUNCTION base_restrict(coll text, parent text, predicate text, scan_factor int DEFAULT 8,
-                              count_fn text DEFAULT NULL, unrank_fn text DEFAULT NULL, sample_fn text DEFAULT NULL) RETURNS void LANGUAGE plpgsql AS $r$
+                              count_fn text DEFAULT NULL, unrank_fn text DEFAULT NULL, sample_fn text DEFAULT NULL,
+                              params text[] DEFAULT '{}', admissibles text[] DEFAULT '{}') RETURNS void LANGUAGE plpgsql AS $r$
 DECLARE p base_collection%ROWTYPE; carrier text; window_expr text;
         child_fields text; parent_row text;
+        parent_attnames text[]; parent_field_defs text; parent_proj text; parent_is_unit boolean;
+        param_field_defs text; param_args text; i int; next_pos int;
 BEGIN
   SELECT * INTO p FROM base_collection WHERE id = parent; carrier := p.carrier;
   INSERT INTO base_collection VALUES (coll, carrier, p.unbounded);
   INSERT INTO base_collection_parent VALUES (coll, parent, predicate, count_fn, unrank_fn, sample_fn);   -- the specialization edge + accel hooks, as data
-  INSERT INTO base_grade SELECT coll, pos, name, lo_expr, hi_expr FROM base_grade WHERE collection = parent;
-  -- the child owns a typed fiber mirroring the parent's axes; its hooks dispatch on it and delegate to the parent's,
-  -- filtered by the predicate (every collection owns a typed fiber, so the parent's typed hooks always exist).
-  SELECT string_agg(format('%I %s', a.attname, format_type(a.atttypid, a.atttypmod)), ', ' ORDER BY a.attnum),
-         string_agg(format('(f).%I', a.attname), ', ' ORDER BY a.attnum)
-    INTO child_fields, parent_row
-    FROM pg_type t JOIN pg_attribute a ON a.attrelid = t.typrelid
-   WHERE t.typname = parent || '_fiber' AND a.attnum > 0 AND NOT a.attisdropped;
-  EXECUTE format('CREATE TYPE %I AS (%s)', coll || '_fiber', child_fields);
-  parent_row := format('ROW(%s)::%I', parent_row, parent || '_fiber');   -- rebuild the parent fiber from the child's
-  window_expr := CASE WHEN to_regprocedure(format('fiber_count(%I)', parent || '_fiber')) IS NOT NULL
-                      THEN format('coalesce((SELECT fiber_count(%s)), 2147483647)::int', parent_row)
-                      WHEN p.unbounded THEN format('(element_limit * %s)', scan_factor)   -- infinite floor: over-scan
-                      ELSE '2147483647' END;                                               -- bounded but uncounted: whole fiber
-  -- The floor: scan the parent's fiber and filter. When the child supplies BOTH accel hooks, build it from the
-  -- unrank instead (#299) — for a restriction the comparison is known and lopsided, because the alternative is
-  -- scanning a STRICTLY LARGER parent to find a sparse subset. boolean_permutations(10) filters 10! = 3,628,800
-  -- permutations down to F(11) = 89: 199s scanning, 14ms unranking.
-  --
-  -- This is deliberately NOT the general rule #299 asked for (prefer fiber_unrank wherever a collection has one).
-  -- Unranking per row is O(N · cost(unrank)) and a recurrence unrank is O(ord), so a full window costs O(N²)
-  -- where the sequential floor costs O(N); routing the whole catalog through unrank took the selfcert sweep from
-  -- 4 stalled collections to 10, and 331s to 499s. A restriction is the case where the scan being replaced is
-  -- known to be the expensive one.
-  IF count_fn IS NOT NULL AND unrank_fn IS NOT NULL THEN
-    EXECUTE format('CREATE FUNCTION fiber_elements(f %1$I, element_limit int) RETURNS SETOF %2$s LANGUAGE sql STABLE AS $b$ '
-                   'SELECT %3$I(%5$s, i::rank_index) '
-                   'FROM generate_series(0, least(%4$I(%5$s), element_limit::numeric)::bigint - 1) i $b$',
-                   coll || '_fiber', carrier, unrank_fn, count_fn, parent_row);
+  INSERT INTO base_grade SELECT coll, pos, name, lo_expr, hi_expr, role, admissible FROM base_grade WHERE collection = parent;
+
+  IF array_length(params, 1) IS NULL THEN
+    -- ── the unary case (unchanged): child fiber mirrors the parent's axes exactly ──────────────────────────────
+    -- the child owns a typed fiber mirroring the parent's axes; its hooks dispatch on it and delegate to the parent's,
+    -- filtered by the predicate (every collection owns a typed fiber, so the parent's typed hooks always exist).
+    SELECT string_agg(format('%I %s', a.attname, format_type(a.atttypid, a.atttypmod)), ', ' ORDER BY a.attnum),
+           string_agg(format('(f).%I', a.attname), ', ' ORDER BY a.attnum)
+      INTO child_fields, parent_row
+      FROM pg_type t JOIN pg_attribute a ON a.attrelid = t.typrelid
+     WHERE t.typname = parent || '_fiber' AND a.attnum > 0 AND NOT a.attisdropped;
+    EXECUTE format('CREATE TYPE %I AS (%s)', coll || '_fiber', child_fields);
+    parent_row := format('ROW(%s)::%I', parent_row, parent || '_fiber');   -- rebuild the parent fiber from the child's
+    window_expr := CASE WHEN to_regprocedure(format('fiber_count(%I)', parent || '_fiber')) IS NOT NULL
+                        THEN format('coalesce((SELECT fiber_count(%s)), 2147483647)::int', parent_row)
+                        WHEN p.unbounded THEN format('(element_limit * %s)', scan_factor)   -- infinite floor: over-scan
+                        ELSE '2147483647' END;                                               -- bounded but uncounted: whole fiber
+    -- The floor: scan the parent's fiber and filter. When the child supplies BOTH accel hooks, build it from the
+    -- unrank instead (#299) — for a restriction the comparison is known and lopsided, because the alternative is
+    -- scanning a STRICTLY LARGER parent to find a sparse subset. boolean_permutations(10) filters 10! = 3,628,800
+    -- permutations down to F(11) = 89: 199s scanning, 14ms unranking.
+    --
+    -- This is deliberately NOT the general rule #299 asked for (prefer fiber_unrank wherever a collection has one).
+    -- Unranking per row is O(N · cost(unrank)) and a recurrence unrank is O(ord), so a full window costs O(N²)
+    -- where the sequential floor costs O(N); routing the whole catalog through unrank took the selfcert sweep from
+    -- 4 stalled collections to 10, and 331s to 499s. A restriction is the case where the scan being replaced is
+    -- known to be the expensive one.
+    IF count_fn IS NOT NULL AND unrank_fn IS NOT NULL THEN
+      EXECUTE format('CREATE FUNCTION fiber_elements(f %1$I, element_limit int) RETURNS SETOF %2$s LANGUAGE sql STABLE AS $b$ '
+                     'SELECT %3$I(%5$s, i::rank_index) '
+                     'FROM generate_series(0, least(%4$I(%5$s), element_limit::numeric)::bigint - 1) i $b$',
+                     coll || '_fiber', carrier, unrank_fn, count_fn, parent_row);
+    ELSE
+      EXECUTE format('CREATE FUNCTION fiber_elements(f %I, element_limit int) RETURNS SETOF %s LANGUAGE sql STABLE AS $b$ '
+                     'SELECT v FROM fiber_elements(%s, %s) v WHERE %I(v) LIMIT element_limit $b$',
+                     coll || '_fiber', carrier, parent_row, window_expr, predicate);
+    END IF;
+    IF to_regprocedure(format('contains_in_fiber(%I, %s)', parent || '_fiber', carrier)) IS NOT NULL THEN
+      EXECUTE format('CREATE FUNCTION contains_in_fiber(f %I, v %s) RETURNS boolean LANGUAGE sql STABLE AS $b$ '
+                     'SELECT contains_in_fiber(%s, v) AND %I(v) $b$', coll || '_fiber', carrier, parent_row, predicate);
+    END IF;
+    -- optional accel hooks (#89): synthesize the child's fiber_count / fiber_unrank from the supplied PARENT-fiber funcs
+    -- BEFORE base_realize, so its accelerated cardinality / element_at path is wired instead of the filter-the-floor scan.
+    IF count_fn IS NOT NULL THEN
+      EXECUTE format('CREATE FUNCTION fiber_count(f %I) RETURNS numeric LANGUAGE sql STABLE AS $b$ SELECT %I(%s) $b$',
+                     coll || '_fiber', count_fn, parent_row);
+    END IF;
+    IF unrank_fn IS NOT NULL THEN
+      EXECUTE format('CREATE FUNCTION fiber_unrank(f %I, ord rank_index) RETURNS %s LANGUAGE sql STABLE AS $b$ SELECT %I(%s, ord) $b$',
+                     coll || '_fiber', carrier, unrank_fn, parent_row);
+    END IF;
   ELSE
+    -- ── the PARAMETER case (#67 B2): child fiber = parent fiber ⊕ the params; predicate is (carrier, child_fiber) ──
+    IF count_fn IS NOT NULL OR unrank_fn IS NOT NULL THEN
+      RAISE EXCEPTION 'base_restrict: params + accel hooks (count_fn/unrank_fn) not supported — a param-restrict uses the scan path';
+    END IF;
+    SELECT array_agg(a.attname ORDER BY a.attnum),
+           string_agg(format('%I %s', a.attname, format_type(a.atttypid, a.atttypmod)), ', ' ORDER BY a.attnum),
+           string_agg(format('(f).%I', a.attname), ', ' ORDER BY a.attnum)
+      INTO parent_attnames, parent_field_defs, parent_proj
+      FROM pg_type t JOIN pg_attribute a ON a.attrelid = t.typrelid
+     WHERE t.typname = parent || '_fiber' AND a.attnum > 0 AND NOT a.attisdropped;
+    parent_is_unit := (parent_attnames = ARRAY['unit']);   -- ungraded parent: (unit unit) — drop it from the child fiber
+    param_field_defs := (SELECT string_agg(format('%I natural_number', prm), ', ') FROM unnest(params) prm);
+    param_args := (SELECT string_agg(format('(f).%I', prm), ', ') FROM unnest(params) prm);   -- how the predicate reads each param
+    IF parent_is_unit THEN
+      child_fields := param_field_defs;                                     -- child fiber = params only
+      parent_row := format('ROW(true)::%I', parent || '_fiber');           -- the parent's singleton unit fiber
+    ELSE
+      child_fields := parent_field_defs || ', ' || param_field_defs;        -- parent axes ⊕ params
+      parent_row := format('ROW(%s)::%I', parent_proj, parent || '_fiber'); -- parent fiber projected out of the child's
+    END IF;
+    EXECUTE format('CREATE TYPE %I AS (%s)', coll || '_fiber', child_fields);
+    -- append the params as role='param' grade positions (base_realize builds the handle arg per position, by fiber name)
+    SELECT coalesce(max(pos), 0) INTO next_pos FROM base_grade WHERE collection = coll;
+    FOR i IN 1 .. array_length(params, 1) LOOP
+      INSERT INTO base_grade (collection, pos, name, lo_expr, hi_expr, role, admissible)
+      VALUES (coll, next_pos + i, params[i], NULL, NULL, 'param',
+              CASE WHEN array_length(admissibles, 1) >= i THEN admissibles[i] ELSE NULL END);
+    END LOOP;
+    window_expr := CASE WHEN to_regprocedure(format('fiber_count(%I)', parent || '_fiber')) IS NOT NULL
+                        THEN format('coalesce((SELECT fiber_count(%s)), 2147483647)::int', parent_row)
+                        WHEN p.unbounded THEN format('(element_limit * %s)', scan_factor)   -- infinite floor: over-scan
+                        ELSE '2147483647' END;
     EXECUTE format('CREATE FUNCTION fiber_elements(f %I, element_limit int) RETURNS SETOF %s LANGUAGE sql STABLE AS $b$ '
-                   'SELECT v FROM fiber_elements(%s, %s) v WHERE %I(v) LIMIT element_limit $b$',
-                   coll || '_fiber', carrier, parent_row, window_expr, predicate);
-  END IF;
-  IF to_regprocedure(format('contains_in_fiber(%I, %s)', parent || '_fiber', carrier)) IS NOT NULL THEN
-    EXECUTE format('CREATE FUNCTION contains_in_fiber(f %I, v %s) RETURNS boolean LANGUAGE sql STABLE AS $b$ '
-                   'SELECT contains_in_fiber(%s, v) AND %I(v) $b$', coll || '_fiber', carrier, parent_row, predicate);
-  END IF;
-  -- optional accel hooks (#89): synthesize the child's fiber_count / fiber_unrank from the supplied PARENT-fiber funcs
-  -- BEFORE base_realize, so its accelerated cardinality / element_at path is wired instead of the filter-the-floor scan.
-  IF count_fn IS NOT NULL THEN
-    EXECUTE format('CREATE FUNCTION fiber_count(f %I) RETURNS numeric LANGUAGE sql STABLE AS $b$ SELECT %I(%s) $b$',
-                   coll || '_fiber', count_fn, parent_row);
-  END IF;
-  IF unrank_fn IS NOT NULL THEN
-    EXECUTE format('CREATE FUNCTION fiber_unrank(f %I, ord rank_index) RETURNS %s LANGUAGE sql STABLE AS $b$ SELECT %I(%s, ord) $b$',
-                   coll || '_fiber', carrier, unrank_fn, parent_row);
+                   'SELECT v FROM fiber_elements(%s, %s) v WHERE %I(v, %s) LIMIT element_limit $b$',
+                   coll || '_fiber', carrier, parent_row, window_expr, predicate, param_args);
+    IF to_regprocedure(format('contains_in_fiber(%I, %s)', parent || '_fiber', carrier)) IS NOT NULL THEN
+      EXECUTE format('CREATE FUNCTION contains_in_fiber(f %I, v %s) RETURNS boolean LANGUAGE sql STABLE AS $b$ '
+                     'SELECT contains_in_fiber(%s, v) AND %I(v, %s) $b$', coll || '_fiber', carrier, parent_row, predicate, param_args);
+    END IF;
   END IF;
   PERFORM base_realize(coll);
 END $r$;

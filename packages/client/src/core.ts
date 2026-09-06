@@ -198,6 +198,42 @@ export async function collections(): Promise<string[]> {
   return [...(await catalogMap()).keys()]
 }
 
+/** A named POINT of a family (base_family_point, #67): `collection` is obtained from `family` by binding
+ *  `bindings` (twin_primes ⊂ prime_pairs at {gap:2}; cube_free_numbers ⊂ k_free_integers at {k:3}). A point may
+ *  own its own realized tower (twin_primes) or be a pure pointer with none (cube_free_numbers — base_collection.
+ *  alias_of is set for those, same as a #101 alias). */
+export type FamilyPoint = { collection: string; family: string; bindings: Record<string, number> }
+let _familyPoints: Map<string, FamilyPoint> | null = null
+async function familyPointMap(): Promise<Map<string, FamilyPoint>> {
+  if (!_familyPoints) {
+    const raw = await rows<{ collection: string; family: string; bindings: string }>(
+      `SELECT collection, family, bindings::text AS bindings FROM base_family_point ORDER BY collection`,
+    )
+    _familyPoints = new Map(raw.map((r) => [r.collection, { collection: r.collection, family: r.family, bindings: JSON.parse(r.bindings) as Record<string, number> }]))
+  }
+  return _familyPoints
+}
+/** Map of point collection id → its family + bindings (base_family_point, #67) — mirrors `aliases()`: entries only
+ *  for actual points. `resolveFrom` (rows.ts) reads this BOTH ways — a point id → `family(bindings)`, and a family
+ *  fully bound → its point's id when one is registered — and the explorer's routing redirects every point (owning
+ *  a tower or not) to its family's own route (issue #67, D4). A safe no-op (empty map) when the table is empty. */
+export async function familyPoints(): Promise<Record<string, FamilyPoint>> {
+  return Object.fromEntries(await familyPointMap())
+}
+
+/** Each collection's FAMILY-PARAMETER axis names (base_grade.role = 'param', #67) — a bound value of these
+ *  SELECTS which collection (not recoverable from an element; e.g. prime_pairs' `gap`, words' `base`); absent for
+ *  a collection with none. Distinct from an ordinary grade axis: binding a param never unfolds a fiber range, and
+ *  leaving one unbound is a family SKELETON (nothing to enumerate), not an open collection. */
+export async function collectionParams(): Promise<Record<string, string[]>> {
+  const rs = await rows<{ collection: string; name: string }>(
+    `SELECT collection, name FROM base_grade WHERE role = 'param' ORDER BY collection, pos`,
+  )
+  const out: Record<string, string[]> = {}
+  for (const r of rs) (out[r.collection] ??= []).push(r.name)
+  return out
+}
+
 /** A collection's display name + one-line description (base_collection_meta, surfaced through base_catalog). The
  *  title falls back to the id (de-slugged) so a pre-meta DB still yields a readable name. */
 export type CollectionMeta = { title: string; description: string | null }
