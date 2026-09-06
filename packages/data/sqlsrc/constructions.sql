@@ -96,10 +96,11 @@ CREATE TABLE base_construction (
   dependent boolean NOT NULL DEFAULT false,              -- true = the α-hole is a position-indexed family (∀ i, π i)
   from_name text UNIQUE,                                 -- the query view's FROM spelling: plural + _of (NULL = not FROM-able)
   cardinality_expr text,                                 -- |instance| in terms of c1, c2, … = the params' cardinalities
-  species text REFERENCES base_species_def(id)           -- #274 B6: the species identity this construction realizes, IF one exists as a
-                                                          -- stored expr (base_species_def is keyed by expr text, not by operator name —
-                                                          -- product/sum/etc are OPERATORS, not whole exprs, so no base_construction row
-                                                          -- currently has a matching id; left NULL rather than inventing a def row)
+  species text REFERENCES base_species_def(id)           -- #274 B6: the whole-expr species identity this construction realizes, where one
+                                                          -- exists in base_species_def (keyed by expr text). Populated by the UPDATE below:
+                                                          -- finset/boolean_algebra ARE the subset species E·E; maps(α,β) is E^{|β|} = the
+                                                          -- graded E^k. product/sum are OPERATORS (×, +) with no whole-expr id, and
+                                                          -- sigma/dependent_words/multiset/List-words aren't labelled species — those stay NULL.
 );
 INSERT INTO base_construction (id, title, params, skeleton, mathlib, description, requires_kind, dependent, from_name, cardinality_expr) VALUES
   ('finset',          'Finite set',      '{α}',   'Finset α',            'Finset',         'finite sets of DISTINCT elements drawn from α (repetition-free)', 'decidable_eq', false, 'finsets_of',          '2 ^ c1'),
@@ -112,6 +113,15 @@ INSERT INTO base_construction (id, title, params, skeleton, mathlib, description
   ('product',         'Product',         '{α,β}', 'α × β',               'Prod',           'pairs — a structure of α carrying a structure of β; the wreath product ℤ_k ≀ Sₙ is a permutation × a colouring word; |α|·|β|', 'fintype', false, 'products_of', 'c1 * c2'),
   ('sum',             'Sum',             '{α,β}', 'α ⊕ β',               'Sum',            'a tagged disjoint union — either an α or a β; |α|+|β|. No catalog instance yet: the unions here are grade-range unfolds (fibers), which the query view already reads as GROUP BY', 'fintype', false, 'sums_of', 'c1 + c2'),
   ('sigma',           'Dependent sum',   '{α,β}', 'Σ (a : α), β a',      'Sigma',          'dependent pairs — an a : α together with a structure whose TYPE depends on a (a Motzkin path with a colour on each of ITS level steps); |Σ| = Σₐ |β a|, not a product of the params'' sizes', 'fintype', true, NULL, 'Σₐ |β a|');
+
+-- #274 B6 (deferred remainder): link the constructions that realize a WHOLE-expr species identity already in
+-- base_species_def. finset (finite subsets of α) and boolean_algebra (that powerset ordered as a lattice) both ARE
+-- the subset species E·E (2ⁿ labelled); maps(α, β) is E^{|β|}, the graded E^k (words = E^base). The remaining
+-- constructions stay NULL by construction, not omission: product/sum are the OPERATORS × and + (no whole-expr id),
+-- and sigma/dependent_words/multiset/words-as-List aren't labelled species with a stored expr (see §4a of the wiki
+-- Species-Data-Model page). The construction_cardinality == z_labelled differential over the linked rows is below.
+UPDATE base_construction SET species = 'E·E' WHERE id IN ('finset', 'boolean_algebra');
+UPDATE base_construction SET species = 'E^k'  WHERE id = 'maps';
 
 -- ── per-position params: a construction is a list of typed holes, each with its own kind requirement ─────────────
 -- `params`/`requires_kind`/`dependent` above are the one-hole summary (kept for the readers that grew up on them);
@@ -388,6 +398,28 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('constructions','the oracle abstains where the expression is symbolic or the instance is refined: k_subsets (C(n,k) ≠ 2^n)','eq','true','NULL, not a wrong number (lehmer_codes'' abstention check moved to the pack)',$q$
     SELECT (construction_cardinality(ROW(4,2)::k_subsets_fiber) = 16 AND cardinality(ROW(4,2)::k_subsets_fiber) = 6
         AND NOT EXISTS (SELECT 1 FROM base_construction_primary WHERE collection = 'k_subsets'))::text $q$);
+
+-- ── #274 B6: the construction ↔ species differential ──────────────────────────────────────────────────────────
+-- Where base_construction.species links a construction to a whole-expr species identity, the ADT cardinality of a
+-- primary instance's fiber must equal the LABELLED cycle-index count of that species at the fiber's size — the
+-- construction and the species kernel counting the same objects two ways. Only the unambiguously-pinned instances
+-- are checked: E·E (subsets, boolean_algebra) is degree-free; maps' E^k is pinned to E^2/E^3 by binary_words'
+-- and signed_subsets' fixed alphabet. words(size, base) is skipped — its base ranges, so no single E^b to compare.
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('constructions','the linked constructions carry their species identity: finset/boolean_algebra = E·E, maps = E^k','eq','E·E|E·E|E^k','base_construction.species, populated in #274 B6',$q$
+    SELECT (SELECT species FROM base_construction WHERE id='finset') || '|' ||
+           (SELECT species FROM base_construction WHERE id='boolean_algebra') || '|' ||
+           (SELECT species FROM base_construction WHERE id='maps') $q$),
+  ('constructions','construction_cardinality == z_labelled(species): the ADT count equals the labelled cycle-index count on the species-linked primary instances (subsets/boolean_algebra = E·E, binary_words = E^2, signed_subsets = E^3)','eq','true','the #274 B6 construction↔species differential — two counts of the same objects',$q$
+    SELECT bool_and(ok)::text FROM (
+      SELECT bool_and(construction_cardinality(f) = (z_labelled(species_z_eval('E·E', 6)))[((f).n)::int + 1]) AS ok FROM fibers(subsets(0, 5)) f
+      UNION ALL
+      SELECT bool_and(construction_cardinality(f) = (z_labelled(species_z_eval('E·E', 6)))[((f).n)::int + 1])      FROM fibers(boolean_algebra(0, 4)) f
+      UNION ALL
+      SELECT bool_and(construction_cardinality(f) = (z_labelled(species_z_eval('E^2', 6)))[((f).n)::int + 1])      FROM fibers(binary_words(0, 6)) f
+      UNION ALL
+      SELECT bool_and(construction_cardinality(f) = (z_labelled(species_z_eval('E^3', 6)))[((f).n)::int + 1])      FROM fibers(signed_subsets(0, 5)) f
+    ) t $q$);
 
 -- ── the family-parameter tier: role/kind classification + the point relation (#67 B1) ────────────────────────
 -- Global structural invariants (pack-agnostic — they scan the registry tables, not any pack collection's functions,

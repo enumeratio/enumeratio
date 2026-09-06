@@ -20,14 +20,22 @@ let failures = 0
 const pass = (msg: string) => console.log(`  PASS  ${msg}`)
 const fail = (msg: string) => { failures++; console.log(`  FAIL  ${msg}`) }
 
-type Species = { name: string; expr: string; coll: string; toHoldform: string; fromHoldform: string }
+// `base`, when set, is a fixed alphabet size b: the collection is the doubly-graded words(n, b), the species is E^b,
+// and the codec functions take b as a second argument (a word's letters don't reveal an unused-high-letter base).
+type Species = { name: string; expr: string; coll: string; toHoldform: string; fromHoldform: string; base?: number }
 
 const species: Species[] = [
   { name: 'permutations',   expr: 'E∘C',  coll: 'permutations',   toHoldform: 'permutation_to_holdform',   fromHoldform: 'permutation_from_holdform' },
   { name: 'set_partitions', expr: 'E∘E+', coll: 'set_partitions', toHoldform: 'set_partition_to_holdform', fromHoldform: 'set_partition_from_holdform' },
+  { name: 'words (base 2)', expr: 'E^2',  coll: 'words',          toHoldform: 'word_to_holdform',          fromHoldform: 'word_from_holdform', base: 2 },
+  { name: 'words (base 3)', expr: 'E^3',  coll: 'words',          toHoldform: 'word_to_holdform',          fromHoldform: 'word_from_holdform', base: 3 },
 ]
 
 const labelsLiteral = (n: number): string => `ARRAY[${Array.from({ length: n }, (_, i) => i + 1).join(',')}]::int[]`
+// the collection's fiber at size n (adding the fixed base for a doubly-graded word family)
+const collFiber = (sp: Species, n: number): string => `${sp.coll}(${n}${sp.base === undefined ? '' : `, ${sp.base}`})`
+// an encode call on element `e` (word codecs take the base as their second argument)
+const toCall = (sp: Species): string => `${sp.toHoldform}(e${sp.base === undefined ? '' : `, ${sp.base}`})`
 
 for (const sp of species) {
   console.log(`\n== ${sp.name}  (species ${sp.expr}) ==`)
@@ -37,9 +45,9 @@ for (const sp of species) {
     try {
       const [row] = await q<{ enum_count: string; card: string }>(`
         SELECT (SELECT count(*)::text FROM species_structures('${sp.expr}', ${labelsLiteral(n)})) AS enum_count,
-               cardinality(${sp.coll}(${n}))::text AS card`)
-      if (row.enum_count === row.card) pass(`count n=${n}: species_structures=${row.enum_count} == cardinality(${sp.coll}(${n}))=${row.card}`)
-      else fail(`count n=${n}: species_structures=${row.enum_count} != cardinality(${sp.coll}(${n}))=${row.card}`)
+               cardinality(${collFiber(sp, n)})::text AS card`)
+      if (row.enum_count === row.card) pass(`count n=${n}: species_structures=${row.enum_count} == cardinality(${collFiber(sp, n)})=${row.card}`)
+      else fail(`count n=${n}: species_structures=${row.enum_count} != cardinality(${collFiber(sp, n)})=${row.card}`)
     } catch (e: any) {
       if (e instanceof QTimeout) fail(`count n=${n}: TIMED OUT past ${WATCHDOG_MS / 1000}s`)
       else fail(`count n=${n}: ERROR ${e.message.split('\n')[0]}`)
@@ -51,13 +59,13 @@ for (const sp of species) {
     try {
       const [row] = await q<{ total: string; bad_roundtrip: string; bad_membership: string }>(`
         WITH els AS (
-          SELECT (unrank(${sp.coll}(${n}), s)).value AS e
-          FROM generate_series(0, cardinality(${sp.coll}(${n}))::int - 1) s
+          SELECT (unrank(${collFiber(sp, n)}, s)).value AS e
+          FROM generate_series(0, cardinality(${collFiber(sp, n)})::int - 1) s
         ),
         checked AS (
           SELECT notation(e) AS orig,
-                 notation(${sp.fromHoldform}(${sp.toHoldform}(e))) AS back,
-                 (${sp.toHoldform}(e) IN (SELECT * FROM species_structures('${sp.expr}', ${labelsLiteral(n)}))) AS is_member
+                 notation(${sp.fromHoldform}(${toCall(sp)})) AS back,
+                 (${toCall(sp)} IN (SELECT * FROM species_structures('${sp.expr}', ${labelsLiteral(n)}))) AS is_member
           FROM els
         )
         SELECT count(*)::text AS total,
