@@ -5,6 +5,7 @@ WITH r AS (
 SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
 FROM r
 ORDER BY size, rank
+OFFSET 0 LIMIT 64
 
 ── elements · restriction ──────────────────────────────────────────────────────────────────────────
 WITH r AS (
@@ -67,6 +68,7 @@ WITH r AS (
 SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
 FROM r
 ORDER BY size, rank
+OFFSET 0 LIMIT 64
 
 ── elements · glyph deferred ───────────────────────────────────────────────────────────────────────
 WITH r AS (
@@ -75,6 +77,7 @@ WITH r AS (
 SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
 FROM r
 ORDER BY size, rank
+OFFSET 0 LIMIT 64
 
 ── elements · eager glyph ──────────────────────────────────────────────────────────────────────────
 WITH r AS (
@@ -83,6 +86,7 @@ WITH r AS (
 SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *
 FROM r
 ORDER BY size, rank
+OFFSET 0 LIMIT 64
 
 ── fibers · band ───────────────────────────────────────────────────────────────────────────────────
 WITH r AS (
@@ -231,6 +235,7 @@ WITH r AS (
 SELECT row_number() OVER (ORDER BY size, rank) AS ordinality, *, (count(*) OVER (PARTITION BY size))::text AS "over:count"
 FROM r
 ORDER BY size, rank
+OFFSET 0 LIMIT 64
 
 ── kernel · GROUP BY orbit ─────────────────────────────────────────────────────────────────────────
 WITH r AS (
