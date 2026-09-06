@@ -29,7 +29,8 @@ CREATE FUNCTION fiber_elements(f hypernumerary_fiber, element_limit int) RETURNS
     UNION ALL
       SELECT g.lsb || d, (g.rem - d) / (f).b::int
         FROM gen g, generate_series(g.rem % (f).b::int, least((f).b::int - 1 + (f).k::int, g.rem), (f).b::int) AS d
-       WHERE g.rem > 0
+       WHERE g.rem > 0 AND (f).b >= 2   -- base < 2 is not a valid numeral system (precondition b >= 2): don't recurse
+                                        -- (the mod/÷ by b would be a division by zero) — only the trivial n=0 numeral survives
   ),
   done AS (SELECT lsb FROM gen WHERE rem = 0),                            -- terminated numerals (LSB-first)
   w AS (SELECT greatest(1, coalesce(max(array_length(lsb, 1)), 0)) AS width FROM done)
@@ -52,6 +53,9 @@ CREATE FUNCTION fiber_count(f hypernumerary_fiber) RETURNS numeric LANGUAGE plpg
     cnts numeric[] := ARRAY[]::numeric[];
     frontier bigint[] := ARRAY[n];
   BEGIN
+    -- base < 2 is not a valid numeral system (precondition b >= 2); its mod/÷ by b would divide by zero. Only the
+    -- trivial empty numeral (n = 0) exists there — matching fiber_elements' b >= 2 guard, so the count/enum differential holds.
+    IF b < 2 THEN RETURN CASE WHEN n = 0 THEN 1 ELSE 0 END; END IF;
     WHILE array_length(frontier, 1) > 0 LOOP                              -- BFS: discover every reachable remainder
       rem := frontier[1];
       frontier := frontier[2:array_length(frontier, 1)];
