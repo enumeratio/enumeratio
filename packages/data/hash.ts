@@ -8,13 +8,25 @@ export function bundleHash(s: string): string {
 }
 
 /** A pack's ordered files, hashed the same way `coreBundle()` hashes the whole thing (per-file banner + content) —
- *  so a pack's hash is exactly what hashing that pack alone would give (#283 phase 1.4, wiki §7). Pure: takes the
+ *  so a pack's hash is exactly what hashing that pack alone would give (#283 phase 1.4, wiki §7). ONE ROW PER
+ *  PACK, always — `segmentByPack` yields one segment per CONTIGUOUS run, and a pack whose files a dependent pack
+ *  needs piecemeal (e.g. words-plus, pulled in by number-sets/permutations-plus/tableaux one file at a time) can
+ *  legitimately produce several non-contiguous segments for the same pack. Grouping by pack name before hashing
+ *  (rather than hashing each segment separately, which used to emit several `PackHash` rows for one pack — a
+ *  `_pack_version`/catalog-snapshot-fragment reader keyed by pack name would silently collapse those to
+ *  last-write-wins) restores the "one row per loaded pack" contract every caller already assumes. Pure: takes the
  *  segment shape `segmentByPack` produces rather than importing it, so this file stays dependency-free. */
 export type PackHash = { pack: string; hash: string }
 export function packHashes(segments: { pack: string; files: { name: string; content: string }[] }[]): PackHash[] {
-  return segments.map(seg => ({
-    pack: seg.pack,
-    hash: bundleHash(seg.files.map(f => `-- ═══ ${f.name}.sql ═══\n${f.content}`).join('\n')),
+  const order: string[] = []
+  const filesByPack = new Map<string, { name: string; content: string }[]>()
+  for (const seg of segments) {
+    if (!filesByPack.has(seg.pack)) { filesByPack.set(seg.pack, []); order.push(seg.pack) }
+    filesByPack.get(seg.pack)!.push(...seg.files)
+  }
+  return order.map(pack => ({
+    pack,
+    hash: bundleHash(filesByPack.get(pack)!.map(f => `-- ═══ ${f.name}.sql ═══\n${f.content}`).join('\n')),
   }))
 }
 

@@ -1,2 +1,3 @@
 enumeratio-core.pgdata
 catalog-snapshot.json
+catalog-snapshot.*.json

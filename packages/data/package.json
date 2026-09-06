@@ -18,20 +18,21 @@
     "./vite": "./vite.ts",
     "./enumeratio-core.pgdata": "./enumeratio-core.pgdata",
     "./package.json": "./package.json",
-    "./catalog-snapshot.json": "./catalog-snapshot.json",
+    "./catalog-snapshot.*.json": "./catalog-snapshot.*.json",
     "./catalog-snapshot": "./catalog-snapshot.ts"
   },
   "files": [
     "*.ts",
     "sqlsrc",
     "enumeratio-core.pgdata",
-    "catalog-snapshot.json",
+    "catalog-snapshot.*.json",
     "README.md",
     "LICENSE"
   ],
   "scripts": {
     "prepack": "node --import tsx build-pgdata.mts && node --import tsx build-catalog-snapshot.mts",
     "build": "node --import tsx build-pgdata.mts && node --import tsx build-catalog-snapshot.mts",
+    "build:control": "node --import tsx build-control.mts",
     "typecheck": "tsgo --noEmit",
     "test": "node --import tsx run.mts",
     "test:packs-core": "node --import tsx run.mts --packs core",

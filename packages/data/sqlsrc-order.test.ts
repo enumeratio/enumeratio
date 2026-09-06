@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { orderPacks, orderSqlsrc, type Pack, type SqlFile } from './sqlsrc-order'
+import { orderPacks, orderSqlsrc, segmentByPack, type Pack, type SqlFile } from './sqlsrc-order'
 
 const dir = join(import.meta.dirname, 'sqlsrc')
 const realFiles: SqlFile[] = readdirSync(dir).filter(f => f.endsWith('.sql'))
@@ -103,5 +103,30 @@ describe('orderPacks — synthetic packs', () => {
     // edge back to core_thing (which also provides 'widget' but sits outside the pack).
     expect(out.indexOf('p_anchor')).toBeGreaterThan(out.indexOf('p_thing'))
     expect(out).toEqual(['bootstrap', 'core_thing', 'p_thing', 'p_anchor'])
+  })
+})
+
+describe('segmentByPack', () => {
+  it('keeps each pack a single contiguous segment even though every pack manifest shares the basename "_pack"', () => {
+    // regression for #322: every real pack directory's manifest file is named `_pack.sql` (PACK_MANIFEST), so
+    // EVERY pack's `_pack` file collides on basename across packs — a name-keyed owner map (the original
+    // implementation) misattributes all but the last pack's manifest file to that last pack, splitting every
+    // other pack's segment in two. Two synthetic packs here reproduce that collision directly.
+    const core: Pack = { name: 'core', requiresPack: [], files: [file('bootstrap', '-- seed')] }
+    const a: Pack = {
+      name: 'a',
+      requiresPack: [],
+      files: [file('_pack', '-- pack: a'), file('a1', '-- requires: bootstrap')],
+    }
+    const b: Pack = {
+      name: 'b',
+      requiresPack: [],
+      files: [file('_pack', '-- pack: b'), file('b1', '-- requires: bootstrap')],
+    }
+    const ordered = orderPacks(core, [a, b])
+    const segs = segmentByPack(ordered, core, [a, b])
+    expect(segs.map(s => s.pack)).toEqual(['core', 'a', 'b'])
+    expect(segs.find(s => s.pack === 'a')!.files.map(f => f.name)).toEqual(['_pack', 'a1'])
+    expect(segs.find(s => s.pack === 'b')!.files.map(f => f.name)).toEqual(['_pack', 'b1'])
   })
 })

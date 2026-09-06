@@ -7,29 +7,43 @@
 //                      `terminate()`d any other way — so long-running / untrusted-size embedders want this one.
 import { Worker } from 'node:worker_threads'
 import debug from 'debug'
-import { bootCore, coreBundle, coreBundleHash, coreDumpPath, corePackHashes, loadCatalogSnapshot } from '@enumeratio/data/node'
-import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
+import { bootCore, coreBundle, coreDumpPath, corePackHashes, coreProfileHash, loadCatalogSnapshotFragments } from '@enumeratio/data/node'
+import { buildCatalogSnapshot, mergeCatalogSnapshots } from '@enumeratio/data/catalog-snapshot'
 import { runSql, type Db, type Row } from './core'
 import { debugGucSetSql, routeNotice } from './debug-env'
 import { provideCatalog } from './registry'
 
-// The node entry knows how to find the build-time catalog snapshot: read it off disk. (The browser entry can't —
-// it uses import.meta.glob instead. Neither can do the other's trick, which is why the registry takes a source
-// rather than importing one.)
+// The node entry knows how to find the build-time catalog snapshot FRAGMENTS (#283 phase 4): read each
+// `catalog-snapshot.<pack>.json` off disk and merge them in the SAME load order corePackHashes() already
+// establishes (core first, then packs in `requires-pack` order — see catalog-snapshot.ts's mergeCatalogSnapshots
+// for the shadowing/metadata-precedence rule that order implies). The browser entry can't do this fs read — it
+// uses import.meta.glob instead. Neither can do the other's trick, which is why the registry takes a source
+// rather than importing one.
 //
-// When that artifact is absent or was built from a different core, BUILD IT from the live connection rather than
-// declining (#281). The snapshot is a generated release artifact, so its hash goes stale on every sqlsrc edit —
-// and a stale snapshot makes the registry unusable, which sends every expression to pg. That is the correct
-// answer for the browser, which has no database to ask; it is the wrong one here, where the core has already
-// been booted and the catalog is one pass away. Before this, `calc 'binomial(30, 15)'` reported engine=pg on any
-// working tree with an uncommitted sqlsrc change — i.e. the ts fast path was unreachable in development, which
-// is precisely where it is being developed.
+// A fragment is "fresh" when its OWN hash (hash.ts packHashes — not a whole-profile hash) matches that pack's
+// live hash. When ANY pack this profile loads has no fragment, or a stale one, BUILD THE WHOLE SNAPSHOT LIVE
+// rather than decline (#281, preserved across the split): buildCatalogSnapshot has no pack-scoping to rebuild
+// just the stale pack, and a correct whole rebuild beats a per-pack one that silently gets pack boundaries wrong
+// — the same call bootCore() already makes for the pgdata dump. The snapshot is a generated release artifact, so
+// its hash goes stale on every sqlsrc edit — and a stale/incomplete fragment set makes the registry unusable,
+// which sends every expression to pg. That is the correct answer for the browser, which has no database to ask;
+// it is the wrong one here, where the core has already been booted and the catalog is one pass away. Before
+// #281, `calc 'binomial(30, 15)'` reported engine=pg on any working tree with an uncommitted sqlsrc change — i.e.
+// the ts fast path was unreachable in development, which is precisely where it is being developed.
 //
 // Same call the tests and selfcerts already use, so this path is the one they certify.
+const catalogLog = debug('enumeratio:client:catalog')
 provideCatalog(async () => {
-  const liveHash = coreBundleHash()
-  const built = await loadCatalogSnapshot()
-  if (built && built.hash === liveHash) return { snapshot: built, liveHash }
+  const liveHash = coreProfileHash()
+  const packHashes = corePackHashes()
+  const fragments = await loadCatalogSnapshotFragments()
+  const stale = packHashes.filter(({ pack, hash }) => fragments.get(pack)?.hash !== hash).map(({ pack }) => pack)
+  if (stale.length === 0) {
+    catalogLog('catalog snapshot: merged %d fresh pack fragment(s)', packHashes.length)
+    const merged = mergeCatalogSnapshots(packHashes.map(({ pack }) => fragments.get(pack)!))
+    return { snapshot: { ...merged, hash: liveHash }, liveHash }
+  }
+  catalogLog('catalog snapshot: rebuilding live — missing/stale fragment(s): %s', stale.join(', '))
   return { snapshot: await buildCatalogSnapshot(runSql, liveHash), liveHash }
 })
 

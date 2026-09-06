@@ -4,6 +4,7 @@
 // Files are ordered by their `-- requires:` dependency headers (bootstrap.sql first) — the same toposort run.mts uses.
 import { orderPacks, parsePackManifest, PACK_MANIFEST, segmentByPack, type Pack } from './sqlsrc-order'
 import { bundleHash, packHashes, profileHash, type PackHash } from './hash'
+import { mergeCatalogSnapshots, type CatalogSnapshot as CatalogSnapshotType } from './catalog-snapshot'
 export { stalePacks, type PackHash } from './hash'
 
 // @ts-ignore — import.meta.glob is a Vite compile-time transform (typed via vite/client in the docs app); this
@@ -55,10 +56,24 @@ export const corePackHashes: PackHash[] = packHashes(segmentByPack(ordered, core
 // The profile hash (§7): hash of the ordered per-pack hashes — distinct from coreBundleHash (see hash.ts).
 export const coreProfileHash: string = profileHash(corePackHashes)
 
-// The build-time catalog snapshot, when the artifact exists. import.meta.glob (not a static import) because the
-// file is a generated, gitignored release artifact: a glob that matches nothing is an empty record, while a static
-// import of a missing file is a build error. Absent ⇒ null ⇒ the engine that needs it declines.
+// The build-time catalog snapshot FRAGMENTS (#283 phase 4), when the artifacts exist. import.meta.glob (not a
+// static import) because these are generated, gitignored release artifacts: a glob that matches nothing is an
+// empty record, while a static import of a missing file is a build error.
 // @ts-ignore — import.meta.glob is a Vite compile-time transform (see the note above)
-const _snapshot = import.meta.glob('./catalog-snapshot.json', { import: 'default', eager: true }) as Record<string, unknown>
-export const catalogSnapshot = (Object.values(_snapshot)[0] ?? null) as import('./catalog-snapshot').CatalogSnapshot | null
+const _fragments = import.meta.glob('./catalog-snapshot.*.json', { import: 'default', eager: true }) as Record<string, CatalogSnapshotType>
+const fragmentByPack = new Map<string, CatalogSnapshotType>()
+for (const [path, snap] of Object.entries(_fragments)) {
+  const m = path.match(/^\.\/catalog-snapshot\.([^./]+)\.json$/)
+  if (m) fragmentByPack.set(m[1], snap)
+}
+
+// Merged in the SAME load order as everything else (core first, then packs in `requires-pack` order — the
+// `ordered`/corePackHashes order above): null when ANY pack this profile loads has no fragment on disk (never
+// built) — an incomplete set degrades to "the engine that needs it declines", same as a missing single blob did
+// before the split (registry.ts). No live-rebuild fallback here (unlike client/node.ts's #281 behaviour) — the
+// browser has no sqlsrc-reading connection to rebuild FROM before a pglite is booted from this very bundle.
+const completeFragments = corePackHashes.every(({ pack }) => fragmentByPack.has(pack))
+export const catalogSnapshot: CatalogSnapshotType | null = completeFragments
+  ? { ...mergeCatalogSnapshots(corePackHashes.map(({ pack }) => fragmentByPack.get(pack)!)), hash: coreProfileHash }
+  : null
 export type { CatalogSnapshot } from './catalog-snapshot'

@@ -20,19 +20,25 @@ export const packsDir = join(here, 'packs')
 /** The prebuilt gzipped-tar dump (built by build-pgdata.mts / the client build). Mounted by bootCore(). */
 export const coreDumpPath = join(here, 'enumeratio-core.pgdata')
 
-/** The build-time catalog snapshot (built by build-catalog-snapshot.mts). Sibling artifact of the dump, same
- *  lifecycle: generated, gitignored, shipped in the tarball. */
-export const catalogSnapshotPath = join(here, 'catalog-snapshot.json')
+/** The per-pack catalog-snapshot fragment (#283 phase 4): `catalog-snapshot.<pack>.json`, built by
+ *  build-catalog-snapshot.mts alongside the dump — same lifecycle, gitignored release artifact. */
+export function catalogSnapshotFragmentPath(pack: string): string {
+  return join(here, `catalog-snapshot.${pack}.json`)
+}
 
-/** The snapshot, or null when it was never built (a source checkout) or is unreadable. Never throws — an absent
- *  snapshot must degrade to "the engine that needs it declines", never to a crash. Staleness is the CALLER's
- *  check: compare `hash` against coreBundleHash(). */
-export async function loadCatalogSnapshot(): Promise<CatalogSnapshot | null> {
-  try {
-    return JSON.parse(await readFile(catalogSnapshotPath, 'utf8')) as CatalogSnapshot
-  } catch {
-    return null
+/** Every pack-fragment snapshot that exists on disk, keyed by pack id. A fragment missing entirely (never built,
+ *  or a pack extracted since) simply isn't in the map — never throws; an absent or incomplete set degrades to
+ *  "the caller rebuilds live" (client/node.ts), same as a missing single blob did before the split. */
+export async function loadCatalogSnapshotFragments(): Promise<Map<string, CatalogSnapshot>> {
+  const out = new Map<string, CatalogSnapshot>()
+  for (const { pack } of corePackHashes()) {
+    try {
+      out.set(pack, JSON.parse(await readFile(catalogSnapshotFragmentPath(pack), 'utf8')) as CatalogSnapshot)
+    } catch {
+      /* this pack's fragment is missing/unreadable — the caller decides whether that forces a rebuild */
+    }
   }
+  return out
 }
 
 /** Core, read from disk, as a `Pack` (name 'core', no requiresPack — it's always the implicit dependency). */

@@ -67,7 +67,12 @@ export type CarrierRow = { name: string; fields: { name: string; type: string; k
 export type FoldableRow = { collection: string; stat: string; engine: string }
 
 export type CatalogSnapshot = {
-  /** the sqlsrc bundle hash this was built from — compared against the live core's, and a mismatch disables it */
+  /** #283 phase 4: a PROFILE hash (hash.ts profileHash — the hash of ordered per-pack hashes), not the plain
+   *  concatenation hash `coreBundleHash()` gives. A single pack FRAGMENT stamps its own pack's hash here (from
+   *  hash.ts packHashes/corePackHashes); a full snapshot — built live, or merged from every fragment — stamps the
+   *  profile hash of the packs it covers. Compared against the matching live value (coreProfileHash() for a merge,
+   *  a pack's own live hash for one fragment) — a mismatch disables it (registry.ts), or for one fragment, marks
+   *  that pack stale and forces a live rebuild of the whole snapshot (see mergeCatalogSnapshots below). */
   hash: string
   builtAt: string
   functions: FunctionRow[]
@@ -247,4 +252,190 @@ export function grantsFor(snap: CatalogSnapshot, engine: string, coll: string | 
     else if (!acc.includes(g.columnGroup)) acc.push(g.columnGroup)
   }
   return acc.filter((x) => !revoked.includes(x))
+}
+
+// ── pack fragments (#283 phase 4, wiki §7/§2.3) ─────────────────────────────────────────────────────────────────
+// catalog-snapshot.json used to be one blob. Every OWNING registry a buildCatalogSnapshot query reads already
+// carries a `pack` column (bootstrap.sql's base_pack FK, defaulted from `enumeratio.pack` at load time), so a
+// pack's fragment is just the rows that column names — no new provenance to invent, only a query for it.
+
+/** Which pack owns each raw row a buildCatalogSnapshot query folds together. Queried separately (rather than
+ *  adding `pack` to every ROW TYPE above) because nothing downstream of the merged snapshot ever needs to know a
+ *  row's pack once the fragments are assembled — this is build-time-only bookkeeping for the split itself. */
+export type PackOwnership = {
+  functionPack: Map<string, string>
+  /** key: `${function}|${engine}|${implRef}|${argTypes.join(',')}` — base_function_impl's own PK, joinable
+   *  against an ImplRow without recomputing argKinds */
+  implPack: Map<string, string>
+  collectionPack: Map<string, string>
+  /** key: `${engine}|${columnGroup}|${scopeKind}|${scope}|${mode}` — base_engine_grant's own PK */
+  grantPack: Map<string, string>
+}
+
+/** Read the `pack` column off every registry buildCatalogSnapshot reads. Pure, like buildCatalogSnapshot itself —
+ *  callable against any live connection, not just the release-artifact build. */
+export async function loadPackOwnership(source: SnapshotSource): Promise<PackOwnership> {
+  const q: Q = source
+  const functionPack = new Map<string, string>()
+  for (const r of await q<{ id: string; pack: string }>(`SELECT id, pack FROM base_function`)) {
+    functionPack.set(String(r.id), String(r.pack))
+  }
+  const implPack = new Map<string, string>()
+  for (const r of await q<{ function: string; engine: string; impl_ref: string; arg_types: string; pack: string }>(`
+    SELECT function, engine, impl_ref, arg_types::text AS arg_types, pack FROM base_function_impl`)) {
+    const key = `${r.function}|${r.engine}|${r.impl_ref}|${pgArray(String(r.arg_types)).join(',')}`
+    implPack.set(key, String(r.pack))
+  }
+  const collectionPack = new Map<string, string>()
+  for (const r of await q<{ id: string; pack: string }>(`SELECT id, pack FROM base_collection`)) {
+    collectionPack.set(String(r.id), String(r.pack))
+  }
+  const grantPack = new Map<string, string>()
+  for (const r of await q<{ engine: string; column_group: string; scope_kind: string; scope: string; mode: string; pack: string }>(`
+    SELECT engine, column_group, scope_kind, scope, mode, pack FROM base_engine_grant`)) {
+    const key = `${r.engine}|${r.column_group}|${r.scope_kind}|${r.scope}|${r.mode}`
+    grantPack.set(key, String(r.pack))
+  }
+  return { functionPack, implPack, collectionPack, grantPack }
+}
+
+const emptyFragment = (hash: string, builtAt: string): CatalogSnapshot => ({
+  hash, builtAt, functions: [], collections: [], carriers: [], engines: [], columnGroups: [], grants: [], foldable: [],
+})
+
+/** Split a full snapshot into one fragment PER PACK, each carrying only the rows that pack owns (plus its OWN
+ *  pack hash — not the whole profile — as its `hash`). `packHashes` (hash.ts corePackHashes(), core first) both
+ *  names every pack a fragment must exist for and supplies the per-pack hash to stamp.
+ *
+ *  Three attribution rules, one per shape of ownership actually seen in the schema:
+ *   - A FUNCTION's metadata (title/description) goes wherever `base_function.pack` says; its IMPLS are split
+ *     PER IMPL by `base_function_impl.pack` (the same row can gain a later impl from a different pack — e.g. a
+ *     pack contributing a `ts` twin to a core identity — this is the one place a function's rows legitimately
+ *     span packs). A fragment that owns only impls (no metadata row) still needs a FunctionRow to hang them off;
+ *     it gets the SAME title/description text as every other fragment for that id — byte-identical, since it is
+ *     read from one shared base_function row, so which fragment "provides" it is never actually contested.
+ *   - A COLLECTION, GRANT, or FOLDABLE-collection's OWN row decides (collection: base_collection.pack directly;
+ *     foldable: through its collection, since base_stat_foldable itself has no pack column — it's a VIEW).
+ *   - A CARRIER has no pack column of its own (it's a composite TYPE, not an owning registry row) — it travels
+ *     in every fragment that has an impl mentioning it. Additivity means that is normally exactly one pack;
+ *     harmless duplication (not data loss) if it is ever more than one, since mergeCatalogSnapshots below dedupes
+ *     carriers by name.
+ *   - base_engine / base_column_group are core-only content (engine_grants.sql never left core) — always in the
+ *     'core' fragment. */
+export function splitCatalogSnapshotByPack(
+  full: CatalogSnapshot,
+  ownership: PackOwnership,
+  packHashes: { pack: string; hash: string }[],
+): Map<string, CatalogSnapshot> {
+  const byPack = new Map<string, CatalogSnapshot>()
+  for (const { pack, hash } of packHashes) byPack.set(pack, emptyFragment(hash, full.builtAt))
+  const fragmentFor = (pack: string): CatalogSnapshot => {
+    let s = byPack.get(pack)
+    if (!s) { s = emptyFragment('', full.builtAt); byPack.set(pack, s) }   // a row owned by a pack absent from
+    return s                                                                // packHashes — shouldn't happen; keep the row rather than drop it
+  }
+
+  // functions: impls split per-impl, metadata duplicated wherever impls (or the owning row) land
+  const implPackOf = (fnId: string, i: ImplRow): string =>
+    ownership.implPack.get(`${fnId}|${i.engine}|${i.implRef}|${i.argTypes.join(',')}`)
+      ?? ownership.functionPack.get(fnId) ?? 'core'
+  for (const f of full.functions) {
+    const byPackImpls = new Map<string, ImplRow[]>()
+    for (const impl of f.impls) {
+      const p = implPackOf(f.id, impl)
+      const list = byPackImpls.get(p); if (list) list.push(impl); else byPackImpls.set(p, [impl])
+    }
+    const metaPack = ownership.functionPack.get(f.id) ?? 'core'
+    if (!byPackImpls.has(metaPack)) byPackImpls.set(metaPack, [])   // a function with 0 impls still needs a home
+    for (const [p, impls] of byPackImpls) fragmentFor(p).functions.push({ id: f.id, title: f.title, description: f.description, impls })
+  }
+
+  for (const c of full.collections) fragmentFor(ownership.collectionPack.get(c.id) ?? 'core').collections.push(c)
+
+  // carriers: every pack whose impl mentions this composite type name
+  const carrierNames = new Set(full.carriers.map((c) => c.name))
+  const carrierPacks = new Map<string, Set<string>>()
+  for (const f of full.functions) {
+    for (const impl of f.impls) {
+      const p = implPackOf(f.id, impl)
+      for (const ty of [...impl.argTypes, impl.returnType]) {
+        if (!carrierNames.has(ty)) continue
+        const set = carrierPacks.get(ty); if (set) set.add(p); else carrierPacks.set(ty, new Set([p]))
+      }
+    }
+  }
+  for (const c of full.carriers) for (const p of carrierPacks.get(c.name) ?? new Set(['core'])) fragmentFor(p).carriers.push(c)
+
+  fragmentFor('core').engines.push(...full.engines)
+  fragmentFor('core').columnGroups.push(...full.columnGroups)
+
+  for (const g of full.grants) {
+    const key = `${g.engine}|${g.columnGroup}|${g.scopeKind}|${g.scope}|${g.mode}`
+    fragmentFor(ownership.grantPack.get(key) ?? 'core').grants.push(g)
+  }
+
+  for (const fo of full.foldable) fragmentFor(ownership.collectionPack.get(fo.collection) ?? 'core').foldable.push(fo)
+
+  return byPack
+}
+
+/** Merge fragments in LOAD ORDER (core first, then packs in the same dependency order corePackHashes() already
+ *  establishes — the one real ordering this whole split has) into a single CatalogSnapshot ready to hand a
+ *  Registry as its `base`. This is the answer to #320's "shadowing order / metadata precedence" question, and it
+ *  reuses Registry.fn()'s own rule rather than inventing a second one:
+ *   - a function's IMPLS are the UNION across every fragment that mentions it — first writer of a given
+ *     (engine, implRef, argTypes) key wins, exactly Registry.fn()'s per-impl shadowing rule. Packs never actually
+ *     collide here (pack-additivity.mts proves a pack only ever ADDS rows), so this never fires in anger; it is
+ *     the same safety net Registry.fn() keeps for the identical reason.
+ *   - a function's METADATA (title/description) comes from the LAST fragment in load order that carries it —
+ *     "the topmost layer wins", same phrase Registry.fn() uses for its own overlay stack. Since
+ *     splitCatalogSnapshotByPack duplicates identical metadata text into every fragment that needs a home for an
+ *     impl, this is undecidable in practice (every candidate is byte-identical) — the rule exists for
+ *     determinism, not because two packs ever actually disagree about a function's description.
+ *   - collections / carriers / engines / columnGroups / grants / foldable are a plain union keyed by natural id;
+ *     a later fragment's row REPLACES an earlier one on a duplicate key (same "last wins" rule) — again never
+ *     observed, since a pack only owns rows keyed to ITS OWN ids.
+ *  Leaves `hash`/`builtAt` for the caller to stamp (client/node.ts stamps `hash` with the live profile hash — see
+ *  hash.ts profileHash — once every fragment's own hash has been checked fresh). */
+export function mergeCatalogSnapshots(fragments: CatalogSnapshot[]): CatalogSnapshot {
+  const fnOrder: string[] = []
+  const fnMeta = new Map<string, { title: string | null; description: string }>()
+  const fnImpls = new Map<string, Map<string, ImplRow>>()
+  for (const frag of fragments) {
+    for (const f of frag.functions) {
+      if (!fnImpls.has(f.id)) { fnImpls.set(f.id, new Map()); fnOrder.push(f.id) }
+      fnMeta.set(f.id, { title: f.title, description: f.description })   // last fragment wins
+      const impls = fnImpls.get(f.id)!
+      for (const i of f.impls) {
+        const key = `${i.engine}|${i.implRef}|${i.argTypes.join(',')}`
+        if (!impls.has(key)) impls.set(key, i)   // first fragment wins (never contested — see doc comment above)
+      }
+    }
+  }
+  const functions: FunctionRow[] = fnOrder.map((id) => {
+    const meta = fnMeta.get(id)!
+    return { id, title: meta.title, description: meta.description, impls: [...fnImpls.get(id)!.values()] }
+  })
+
+  const collections = new Map<string, CollectionRow>()
+  const carriers = new Map<string, CarrierRow>()
+  const engines = new Map<string, EngineRow>()
+  const columnGroups = new Map<string, ColumnGroupRow>()
+  const grants = new Map<string, GrantRow>()
+  const foldable = new Map<string, FoldableRow>()
+  for (const frag of fragments) {
+    for (const c of frag.collections) collections.set(c.id, c)
+    for (const c of frag.carriers) carriers.set(c.name, c)
+    for (const e of frag.engines) engines.set(e.id, e)
+    for (const g of frag.columnGroups) columnGroups.set(g.id, g)
+    for (const g of frag.grants) grants.set(`${g.engine}|${g.columnGroup}|${g.scopeKind}|${g.scope}|${g.mode}`, g)
+    for (const f of frag.foldable) foldable.set(`${f.collection}|${f.stat}|${f.engine}`, f)
+  }
+
+  return {
+    hash: '', builtAt: fragments.find((f) => f.builtAt)?.builtAt ?? new Date().toISOString(),
+    functions, collections: [...collections.values()], carriers: [...carriers.values()],
+    engines: [...engines.values()], columnGroups: [...columnGroups.values()],
+    grants: [...grants.values()], foldable: [...foldable.values()],
+  }
 }

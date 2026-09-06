@@ -179,14 +179,20 @@ export type PackSegment = { pack: string; files: SqlFile[] }
 /** Group `orderPacks()`'s flat output into contiguous per-pack segments (core's segment first, then each pack in
  *  pack order — contiguous by construction, since orderPacks emits one pack's files at a time). A loader wraps
  *  each non-core segment with `set_config('enumeratio.pack', …)` / resets to 'core' after (see applyPackSegments,
- *  and node.ts/run.mts for the pglite-specific wiring). */
+ *  and node.ts/run.mts for the pglite-specific wiring).
+ *
+ *  Owner lookup is keyed by FILE OBJECT identity, not name — every pack's manifest file shares the same basename
+ *  (`PACK_MANIFEST` = `_pack`, see readPacksFromDisk), so a name-keyed map collides across packs and misattributes
+ *  every pack's manifest entry to whichever pack was inserted last. `orderPacks`/`orderFiles` only ever reorder the
+ *  input `SqlFile` objects (never clone them), so the objects in `ordered` are the exact same references found in
+ *  `core.files`/`p.files` — identity is safe to key on. */
 export function segmentByPack(ordered: SqlFile[], core: Pack, packs: Pack[]): PackSegment[] {
-  const owners = new Map<string, string>()
-  for (const f of core.files) owners.set(f.name, core.name)
-  for (const p of packs) for (const f of p.files) owners.set(f.name, p.name)
+  const owners = new Map<SqlFile, string>()
+  for (const f of core.files) owners.set(f, core.name)
+  for (const p of packs) for (const f of p.files) owners.set(f, p.name)
   const segments: PackSegment[] = []
   for (const f of ordered) {
-    const owner = owners.get(f.name) ?? core.name
+    const owner = owners.get(f) ?? core.name
     const last = segments[segments.length - 1]
     if (last && last.pack === owner) last.files.push(f)
     else segments.push({ pack: owner, files: [f] })
