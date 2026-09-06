@@ -70,12 +70,8 @@ SELECT tag, collection FROM (VALUES
   ('number', 'fractional_numbers'), ('number', 'gaussian_rationals'), ('number', 'gaussian_fractionals'),
   -- partitions (the pack-owned partition families' tag rows moved to tags.partitions-plus.sql, #283)
   ('partition', 'integer_partitions'),
-  -- compositions
-  ('composition', 'integer_compositions'), ('composition', 'compositions_into_k_parts'), ('composition', 'weak_compositions_into_k_parts'), ('composition', 'weak3_compositions'),
-  ('composition', 'k_bounded_compositions'), ('composition', 'proper_compositions'), ('composition', 'odd_compositions'),
-  ('composition', 'step_compositions'), ('composition', 'dyadic_compositions'), ('composition', 'carlitz_compositions'),
-  ('composition', 'fibonacci_compositions'), ('composition', 'prime_compositions'), ('composition', 'tri_compositions'),
-  ('composition', 'tetra_compositions'), ('composition', 'palindromic_compositions'),
+  -- compositions (core-owned member only — the rest are in packs/compositions-plus/tags.compositions-plus.sql, #283 phase 3)
+  ('composition', 'integer_compositions'),
   -- permutations (core-owned members only — the rest are in packs/permutations-plus/tags.permutations-plus.sql;
   -- permutations_avoiding_*/vexillary_permutations/separable_permutations are base_restrict rows INSIDE
   -- pattern_avoiding_permutations.sql, which moved with that file, #283 phase 3)
@@ -88,20 +84,26 @@ SELECT tag, collection FROM (VALUES
   ('tree', 'binary_trees'),
   -- tableaux (core-owned member only — the rest are in packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2)
   ('tableau', 'standard_tableaux'),
-  -- words / strings (independent_sets_cycle moved to packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3)
-  ('word', 'words'), ('word', 'k_necklaces'), ('word', 'k_bracelets'), ('word', 'k_lyndon_words'), ('word', 'binary_words'), ('word', 'binary_palindromes'), ('word', 'primitive_binary_strings'), ('word', 'lyndon_words'), ('word', 'binary_necklaces'), ('word', 'binary_bracelets'), ('word', 'gray_codes'), ('word', 'ascent_sequences'),
-  ('word', 'restricted_growth_strings'),
+  -- words / strings (independent_sets_cycle moved to packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3;
+  -- the rest of the 'word' family — k_necklaces/k_bracelets/k_lyndon_words/binary_palindromes/
+  -- primitive_binary_strings/lyndon_words/binary_necklaces/binary_bracelets/gray_codes/ascent_sequences/
+  -- restricted_growth_strings/fib_strings/tri_strings/lucas_strings — moved to
+  -- packs/words-plus/tags.words-plus.sql, #283 phase 3; words/binary_words are core carriers and stay)
+  ('word', 'words'), ('word', 'binary_words'),
   -- matchings moved to packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3
-  -- set partitions (non_crossing_partitions/non_nesting_partitions moved to packs/trees-graphs/tags.trees-graphs.sql)
+  -- set partitions (non_crossing_partitions/non_nesting_partitions moved to packs/trees-graphs/tags.trees-graphs.sql;
+  -- restricted_growth_strings' set_partition tag row moved to packs/words-plus/tags.words-plus.sql, #283 phase 3)
   ('set_partition', 'set_partitions'), ('set_partition', 'set_partitions_into_k_blocks'),
-  ('set_partition', 'set_compositions'), ('set_partition', 'restricted_growth_strings'), ('set_partition', 'signed_set_compositions'),
+  ('set_partition', 'set_compositions'),
+  -- signed_set_compositions' rows moved to packs/compositions-plus/tags.compositions-plus.sql and
+  -- restricted_growth_strings' to packs/words-plus/tags.words-plus.sql — #283 phase 3
   -- selections (arrangements moved to packs/permutations-plus/tags.permutations-plus.sql)
   ('selection', 'subsets'), ('selection', 'k_subsets'), ('selection', 'multisets'), ('selection', 'finsets'), ('selection', 'sparse_subsets'), ('selection', 'signed_subsets'),
   -- polytope faces (associahedron/cross_polytope/permutahedron moved to packs/polytopes/tags.polytopes.sql — #283
   -- phase 2.2; dissections moved to packs/trees-graphs/tags.trees-graphs.sql — #283 phase 3, it's that pack's own
   -- collection, despite the earlier note here claiming otherwise)
   -- signed / symmetric (signed_permutations/k_colored_permutations moved to permutations-plus)
-  ('symmetric', 'signed_subsets'), ('symmetric', 'signed_set_compositions'),
+  ('symmetric', 'signed_subsets'),
   -- matrices — alternating_sign_matrices moved to packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2
   -- functions: entirely permutations-plus (endofunctions/subexcedant_seqs/surjections*/parking_functions*) — see
   -- packs/permutations-plus/tags.permutations-plus.sql
@@ -111,14 +113,14 @@ SELECT tag, collection FROM (VALUES
   -- the base object of the composition tower — the atoms of [n] (≅ the underlying set of ℤ/nℤ)
   ('combinatorial', 'finite_set_elements'),
   -- ── clean-batch port (numbers precursor) ──────────────────────────────────────────────────────────────
-  -- (boolean_permutations/smooth_permutations moved to packs/permutations-plus/tags.permutations-plus.sql)
-  ('word', 'fib_strings'), ('word', 'tri_strings'), ('word', 'lucas_strings'),
+  -- (boolean_permutations/smooth_permutations moved to packs/permutations-plus/tags.permutations-plus.sql;
+  -- fib_strings/tri_strings/lucas_strings moved to packs/words-plus/tags.words-plus.sql, #283 phase 3)
   -- (syt_two_row/syt_two_column/syt_hook_shape moved to packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2)
-  ('composition', 'triangular_composition'),
+  -- (triangular_composition's tag row moved to packs/compositions-plus/tags.compositions-plus.sql, #283 phase 3)
   -- species notation
   ('species', 'singleton_species'),
   -- base_restrict / borrow-carrier ports (backlog #1)
-  ('composition', 'zigzag_composition'),
+  -- (zigzag_composition's tag row moved to packs/compositions-plus/tags.compositions-plus.sql, #283 phase 3)
   -- prufer_sequences' tag row moved to packs/trees-graphs/tags.trees-graphs.sql — #283 phase 3
   -- simplex's tags moved to packs/polytopes/tags.polytopes.sql — #283 phase 2.2, it's that pack's own collection
   -- partition_algebra's tag row moved to tags.partitions-plus.sql — #283 phase 3, it's that pack's own collection

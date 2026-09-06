@@ -449,7 +449,8 @@ INSERT INTO base_species_def (id, expr, egf, note) VALUES
 INSERT INTO base_collection_species (collection, species, reading, note) VALUES
   ('permutations',              'E∘C',       'labelled', NULL),
   ('set_partitions',            'E∘E+',      'labelled', NULL),
-  ('restricted_growth_strings', 'E∘E+',      'labelled', 'RGS encode set partitions'),
+  -- (restricted_growth_strings moved to packs/words-plus/base_species.words-plus.sql — #283 phase 3;
+  --  its species identity E∘E+ stays here in base_species_def, which the pack's reading references)
   ('set_compositions',          'L∘E+',      'labelled', NULL),
   ('subsets',                   'E·E',       'labelled', NULL),
   ('boolean_algebra',           'E·E',       'labelled', 'the 2^[n] lattice'),
@@ -610,16 +611,19 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
 
 -- ── relabel_invariant stat trait (#274 B6): a stat is relabel-invariant iff its value survives any relabelling of
 -- the underlying species' atoms — cycle/block/fixed-point counts don't care WHICH labels moved, only the shape.
--- Runs LATE (after every base_stat insert, including core files, has loaded) so the marked rows already exist; all
--- five are core-owned, so base_guard_pack's core-may-update-core rule lets this UPDATE through under any active pack.
+-- Runs LATE (after every base_stat insert in CORE has loaded) so the marked rows already exist. Only core-owned
+-- rows are listed, so base_guard_pack's core-may-update-core rule lets this through: binary_words.number_of_ones
+-- was here until words-plus took binary_words.stats.sql (#283 phase 3), and a pack's row is the PACK's to mark —
+-- packs/words-plus/base_species.words-plus.sql now sets it. A core UPDATE naming it would raise the guard, and at
+-- core-load time the row does not exist yet anyway.
 UPDATE base_stat SET relabel_invariant = true WHERE (collection, stat_id) IN
   (('permutations','cycles'),('set_partitions','blocks'),('permutations','fixed_points'),
-   ('binary_words','number_of_ones'),('set_partitions','singleton_blocks'));
+   ('set_partitions','singleton_blocks'));
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('species','relabel_invariant marks the shape-only stats (cycles/blocks/fixed_points/number_of_ones/singleton_blocks)','eq','true','floor/containment, not an exact count — other stats may earn the trait later',$q$
+  ('species','relabel_invariant marks core''s shape-only stats (cycles/blocks/fixed_points/singleton_blocks)','eq','true','floor/containment, not an exact count — other stats may earn the trait later',$q$
     SELECT bool_and(relabel_invariant)::text FROM base_stat WHERE (collection, stat_id) IN
       (('permutations','cycles'),('set_partitions','blocks'),('permutations','fixed_points'),
-       ('binary_words','number_of_ones'),('set_partitions','singleton_blocks')) $q$),
+       ('set_partitions','singleton_blocks')) $q$),
   ('species','the two #274 B6 species kinds (nonempty, x_guarded) are registered','eq','true','nonempty = G has no empty structure (∘''s requirement); x_guarded = fixpoint body guarded by X (Picard convergence)',$q$
     SELECT (EXISTS (SELECT 1 FROM base_kind WHERE id='nonempty') AND EXISTS (SELECT 1 FROM base_kind WHERE id='x_guarded'))::text $q$);

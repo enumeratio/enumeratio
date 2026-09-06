@@ -309,8 +309,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT gf_agrees('dyck_paths','area',6)::text $q$),
   ('generating_functions','the Touchard/Stirling-2 row IS the block distribution on set_partitions(n), n=0..6','eq','true','gf_stirling2_row == live GROUP BY blocks; row sums are the Bell numbers',$q$
     SELECT gf_agrees('set_partitions','blocks',6)::text $q$),
-  ('generating_functions','(1+q)^n IS the Hamming-weight distribution on binary_words(n), n=0..6','eq','true','gf_pascal_row == live GROUP BY number_of_ones',$q$
-    SELECT gf_agrees('binary_words','number_of_ones',6)::text $q$),
+  -- (the binary_words/number_of_ones example moved to packs/words-plus/generating-functions.words-plus.sql — the
+  -- registry ROW stays here (collection='binary_words' is core, FK-safe), but its base_stat row is words-plus's
+  -- own (binary_words.stats.sql), so gf_agrees can't resolve value_fn loading core alone, #283 phase 3)
   ('generating_functions','q·(1+q)^{n-1} IS the parts distribution on integer_compositions(n), n=0..6','eq','true','gf_composition_parts == live GROUP BY parts_count (n=0 special-cased to [1])',$q$
     SELECT gf_agrees('integer_compositions','parts_count',6)::text $q$),
   ('generating_functions','∏1/(1-q^k) IS the partition-counting ogf: coefficients == |integer_partitions(m)| for m=0..6','eq','true','the ogf differential against cardinality (not a stat distribution)',$q$
@@ -318,10 +319,12 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('generating_functions','q^{k(k+1)/2}[n,k]_q IS the element-sum distribution over k_subsets(n,k) — the Gaussian binomial, live (a doubly-graded family)','eq','true','the one arity-2 row: gf_coefficients(k_subsets,sum,n,k) == live GROUP BY subset_sum over k_subsets(n,k)',$q$
     SELECT bool_and(gf_coefficients('k_subsets','sum',n,k) IS NOT DISTINCT FROM gf_distribution('k_subsets','subset_sum',n,k))::text
     FROM (VALUES (3,1),(4,2),(5,2),(5,3),(6,3),(6,2)) v(n,k) $q$),
-  ('generating_functions','every additional single-graded generating function reproduces its live distribution, n=0..6 (Stirling-1, Eulerian excedances/weak-exc, rencontres, Narayana, binary-word descents/runs, partition length/largest-part)','eq','true','the differential over the expansion batch — one closed form per (collection, stat)',$q$
+  -- (binary_words' descents/number_of_runs pairs moved to packs/words-plus/generating-functions.words-plus.sql —
+  -- same reason as number_of_ones above, #283 phase 3)
+  ('generating_functions','every additional single-graded generating function reproduces its live distribution, n=0..6 (Stirling-1, Eulerian excedances/weak-exc, rencontres, Narayana, partition length/largest-part)','eq','true','the differential over the expansion batch — one closed form per (collection, stat)',$q$
     SELECT bool_and(gf_agrees(c, s, 6))::text FROM (VALUES
       ('permutations','cycles'),('permutations','excedances'),('permutations','weak_exceedances'),('permutations','fixed_points'),
-      ('dyck_paths','bounce'),('dyck_paths','peaks'),('binary_words','descents'),('binary_words','number_of_runs'),
+      ('dyck_paths','bounce'),('dyck_paths','peaks'),
       ('integer_partitions','length'),('integer_partitions','largest_part')) v(c, s) $q$),
   ('generating_functions','the bivariate/triangular-recurrence generating functions reproduce their live distributions, n=0..6 (Dyck height/returns, set-partition singletons, partition distinct/odd parts + Durfee, composition largest part)','eq','true','the heavier DP builders — each differential-gated against the GROUP BY histogram',$q$
     SELECT bool_and(gf_agrees(c, s, 6))::text FROM (VALUES

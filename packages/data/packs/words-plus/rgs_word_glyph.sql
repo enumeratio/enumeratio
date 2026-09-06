@@ -1,6 +1,7 @@
 -- requires: restricted_growth_strings, glyphs
 -- rgs_word_glyph — the page-space glyph for the rgs_word carrier (issue #222 glyph batch): reuses sequence_bar_svg
 -- (hoisted into core's glyphs.sql — #283 phase 3) — a bar per letter, height ∝ value, labelled underneath. w_1 is always 0.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(w rgs_word) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((w).word) $$;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

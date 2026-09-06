@@ -1,4 +1,6 @@
--- requires: meta-collections, tags, traits, words.stats, tri_strings, random_element, zigzag_composition
+-- requires: meta-collections, tags, traits, random_element
+-- (words.stats/tri_strings/zigzag_composition were a STALE requires header — nothing here calls those directly;
+--  it reads the registries GENERICALLY and only needed them for ordering, which is moot now they are pack-owned)
 -- Statistics for the meta-collections — each becomes a COLUMN in the explorer's DataTable (the existing stat-column
 -- machinery), so `collections` shows a collection's carrier / grade axes / tag + trait counts / restriction parent;
 -- `carriers` shows how many collections sit on each; `traits` shows how many collections hold each. Registering the

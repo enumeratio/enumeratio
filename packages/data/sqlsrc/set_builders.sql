@@ -48,8 +48,9 @@ INSERT INTO base_set_builder (carrier, builder_fn) VALUES ('binary_word', 'binar
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('set_builders','composition set-builder: integer_compositions(4)','eq','\{\, \text{compositions of } 4 \,\}','the composition carrier, unqualified',$q$
     SELECT set_builder((unrank(integer_compositions(4), 0)).fiber) $q$),
-  ('set_builders','composition set-builder, k-graded: compositions_into_k_parts(5,2)','eq','\{\, \text{compositions of } 5 \text{ into } 2 \text{ parts} \,\}','extra axis spelled out, not folded generic',$q$
-    SELECT set_builder((unrank(compositions_into_k_parts(5,2), 0)).fiber) $q$),
+  -- (the k-graded example, compositions_into_k_parts(5,2), moved to
+  -- packs/compositions-plus/set_builders.compositions-plus.sql — it calls a pack-owned collection's constructor
+  -- directly, #283 phase 3)
   ('set_builders','set_partition set-builder: set_partitions(3)','eq','\{\, \pi \in \Pi([3]) \,\}','the set_partition carrier over its n axis',$q$
     SELECT set_builder((unrank(set_partitions(3), 0)).fiber) $q$),
   ('set_builders','set_partition set-builder, k-graded: set_partitions_into_k_blocks(4,2)','eq','\{\, \pi \in \Pi([4]) : |\pi| = 2 \,\}','exactly k blocks (Stirling S(n,k))',$q$

@@ -25,7 +25,11 @@ export const PACK_DEPS: Record<PackName, PackName[]> = {
   'permutations-plus': ['core', 'trees-graphs', 'words-plus'],
   'partitions-plus': ['core'],
   'compositions-plus': ['core'],
-  'words-plus': ['core'],
+  // tri_strings borrows tri_compositions' tribonacci recurrence (a real call, not a stale header — grepped) —
+  // same leaf-pack-dependency shape as number-sets->words-plus / tableaux->partitions-plus. compositions-plus is
+  // being extracted concurrently (#283 phase 3); this declares the logical edge for pack-lint regardless of which
+  // lane lands first — words-plus loads after compositions-plus once both are extracted.
+  'words-plus': ['core', 'compositions-plus'],
   'trees-graphs': ['core', 'paths'],
   'tableaux': ['core', 'partitions-plus'],
   'polytopes': ['core', 'trees-graphs', 'permutations-plus'],
@@ -58,8 +62,8 @@ export const PACK_MAP: [PackName, RegExp][] = [
   // `words`/`k_necklaces`/`k_bracelets`/`k_lyndon_words` (all words-plus), not on any permutation collection,
   // despite the "orbit_maps" name overlap with permutations-plus's orbit_maps_permutations_subsets (which
   // genuinely calls into it for a subset-necklace map — a real requires-pack edge, not a misclassification).
-  ['words-plus', /^(binary_necklaces|lyndon|gray_codes|ternary_gray|thue_morse|fib_strings|lucas_strings|binary_palindromes|primitive_binary|k_ary_word|ascent_sequences|tri_strings|binary_words_by_weight|restricted_growth_strings|words\.stats|binary_words\.stats|symmetry_orbit_maps)/],
-  ['compositions-plus', /^(carlitz|dyadic_comp|fibonacci_comp|odd_comp|palindromic_comp|prime_comp|proper_comp|step_comp|tetra_comp|tri_comp|triangular_comp|zigzag_comp|k_bounded_comp|weak3|compositions_into_k|weak_compositions_into_k|composition_maps|signed_set_comp|set_compositions\.stats|integer_compositions\.stats)/],
+  ['words-plus', /^(binary_necklaces|lyndon|gray_codes|ternary_gray|thue_morse|fib_strings|lucas_strings|binary_palindromes|primitive_binary|k_ary_word|ascent_sequences|tri_strings|binary_words_by_weight|restricted_growth_strings|words\.stats|binary_words\.stats|symmetry_orbit_maps|base_species\.words-plus|element_relations\.words-plus|examples\.representations\.words-plus|fiber_unrank_verify\.words-plus|generating_functions\.words-plus|relations\.words-plus|tags\.words-plus|traits\.words-plus)/],
+  ['compositions-plus', /^(carlitz|dyadic_comp|fibonacci_comp|odd_comp|palindromic_comp|prime_comp|proper_comp|step_comp|tetra_comp|tri_comp|triangular_comp|zigzag_comp|k_bounded_comp|weak3|compositions_into_k|weak_compositions_into_k|composition_maps|signed_set_comp|set_compositions\.stats|integer_compositions\.(stats|findstat|maps\.findstat)|tags\.compositions-plus|traits\.compositions-plus|triangle_refines\.compositions-plus|triangle_slices\.compositions-plus|set_builders\.compositions-plus|catalog-resolution\.compositions-plus)/],
   ['polytopes', /^(polytope-collections|simplex|identities\.polytopes|traits\.polytopes|tags\.polytopes|examples\.representations\.polytopes)$/],
 ]
 
@@ -122,7 +126,7 @@ export function packClosure(pack: PackName): Set<PackName> {
  * `placementOf`, not `packOf`, so both are correct mid-split. A lane lands by adding its name here and
  * re-running the codemod.
  */
-export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus', 'permutations-plus', 'paths', 'trees-graphs', 'tableaux']
+export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus', 'permutations-plus', 'paths', 'trees-graphs', 'tableaux', 'words-plus', 'compositions-plus']
 
 /**
  * The extracted set in effect. `ENUMERATIO_PACKS_OVERRIDE=a,b` substitutes for `EXTRACTED_PACKS` so a lane can be

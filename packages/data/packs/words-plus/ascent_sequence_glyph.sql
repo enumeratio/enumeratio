@@ -9,6 +9,7 @@
 -- subexcedant_seq_glyph.sql, rgs_word_glyph.sql, gray_code_glyph.sql and ternary_gray_code_glyph.sql all
 -- `-- requires: glyphs` and reuse it from there). No base_glyph registry row on purpose (the composition/
 -- standard_tableau precedent in glyphs.sql): the overload alone lights up carrier_renders_svg.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(s ascent_sequence) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((s).terms) $$;
 
 -- Assert the GEOMETRY (bar heights track values, labels present), not the styling — mirrors composition_glyph.sql.

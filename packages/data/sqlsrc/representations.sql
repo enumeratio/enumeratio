@@ -469,11 +469,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   -- the two CARRIER-inherited examples over permutahedron/cross_polytope moved to
   -- packs/polytopes/examples.representations.sql (#283 phase 2.2) — both target collections are that pack's rows.
   -- ── #285 coverage expansion, round 2: binary_words `digits`, fractional_numbers `fraction`, colored_motzkin_paths `steps` ──
-  ('representations','the default (unicode) binary_word notation is unchanged: fib_strings(3) rank4 → 101 (bare digits)','eq','101','notation(binary_word) still bare concatenation',$q$
-    SELECT notation((unrank(fib_strings(3), 4)).value) $q$),
-  ('representations','the binary_words digits repr is CARRIER-inherited: primitive_binary_strings resolves it at unicode and latex','eq','true','base_repr_resolved carries the binary_words-registered repr to a carrier sibling',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'unicode')
-        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'primitive_binary_strings' AND repr = 'digits' AND medium = 'latex'))::text $q$),
+  -- (the fib_strings/primitive_binary_strings digits-repr examples moved to
+  -- packs/words-plus/examples.representations.words-plus.sql — both collections are that pack's rows, #283 phase 3)
   ('representations','the default (unicode) fractional_number notation is unchanged: 6/8 stays unreduced, 5/1 stays bare 5','eq','6/8|5','notation(fractional_number) keeps its denominator=1 branch',$q$
     SELECT notation(ROW(6,8)::fractional_number) || '|' || notation(ROW(5,1)::fractional_number) $q$),
   -- (the colored_motzkin_path notation example moved to packs/paths/examples.representations.paths.sql — the
@@ -504,9 +501,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT composition_bars(ROW(ARRAY[2,1,3])::composition) $q$),
   ('representations','integer_partition box Ferrers: {3,1} → two rows of ■, largest on top','eq',E'■■■\n■','one ■-row per part, descending',$q$
     SELECT integer_partition_ferrers(ROW(ARRAY[3,1])::integer_partition) $q$),
-  ('representations','the dots repr is CARRIER-scoped: it inherits to a binary_word sibling (lyndon_words) and a finset sibling (k_subsets)','eq','true','carrier reprs reach every collection over the carrier',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'lyndon_words' AND repr = 'dots')
-        AND EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'k_subsets'    AND repr = 'dots'))::text $q$),
+  -- (the lyndon_words half of the dots-repr carrier-inheritance check moved to
+  -- packs/words-plus/examples.representations.words-plus.sql — lyndon_words is that pack's collection, #283 phase 3)
+  ('representations','the dots repr is CARRIER-scoped: it inherits to a finset sibling (k_subsets)','eq','true','carrier reprs reach every collection over the carrier',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'k_subsets' AND repr = 'dots'))::text $q$),
   ('representations','scope fence (#140): the Stern–Brocot rational is collection-scoped, so binary_words does NOT inherit a rational repr','eq','false','a collection-scoped repr never leaks onto its carrier siblings',$q$
     SELECT EXISTS (SELECT 1 FROM base_repr_resolved WHERE collection = 'binary_words' AND repr = 'rational')::text $q$);
   -- the "own rows ignore scope" companion check (stern_brocot_paths keeps turns + rational) moved to

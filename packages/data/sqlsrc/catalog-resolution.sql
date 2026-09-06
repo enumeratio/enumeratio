@@ -64,9 +64,8 @@ CREATE VIEW base_repr_resolved AS
 
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('catalog','compositions_into_k_parts inherits its composition-carrier stats (registers none itself)','eq','0|true','own base_stat rows | any resolved stats (a floor — the carrier may gain more)',$q$
-    SELECT (SELECT count(*) FROM base_stat WHERE collection = 'compositions_into_k_parts')::text || '|' ||
-           (SELECT count(*) > 0 FROM base_stat_resolved WHERE collection = 'compositions_into_k_parts')::text $q$),
+  -- (the compositions_into_k_parts carrier-inheritance example moved to
+  -- packs/compositions-plus/catalog-resolution.compositions-plus.sql, #283 phase 3)
   -- (the non_crossing_partitions carrier-inheritance example moved to
   -- packs/trees-graphs/catalog-resolution.trees-graphs.sql, #283 phase 3)
   ('catalog','inheritance is carrier-gated: the numeric families do NOT cross-inherit (own stats OK; #169)','eq','0','natural_numbers may register its OWN numeric stats, but inherits NONE from sibling numeric collections (numeric is a scalar carrier)',$q$

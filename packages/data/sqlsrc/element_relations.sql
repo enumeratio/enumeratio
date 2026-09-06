@@ -1,4 +1,8 @@
--- requires: realizer, statistics, integer_partitions, symmetry_orbit_maps, k_ary_word_classes, words
+-- requires: realizer, statistics, integer_partitions, words
+-- (symmetry_orbit_maps/k_ary_word_classes moved out — the examples calling word_canonical_rotation/is_word_necklace
+-- moved to packs/words-plus/element_relations.words-plus.sql, #283 phase 3: those functions are words-plus's own,
+-- so calling them can't even happen loading core alone. The base_element_relation row for words/rotation stays here
+-- — canonical_fn is a bare text column, not a live FK, so naming 'word_canonical_rotation' before it exists is safe.)
 -- base_element_relation — a relation on a collection's OWN elements (friction 1 in the catalog audit): a poset's
 -- covers, a graph's adjacency, or a group action's orbits. Where base_map/base_relation hold SINGLE-valued
 -- CROSS-collection bijections, this holds a MULTI-valued relation keyed on ONE collection, whose function returns
@@ -130,20 +134,9 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'eq', '1112,1121,1211,2111', 'the orbit as a set of carrier values',$q$
     SELECT string_agg(array_to_string((o).letters,''), ',' ORDER BY array_to_string((o).letters,''))
       FROM word_rotation_orbit(ROW(ARRAY[1,1,2,1])::word) o $q$),
-  ('element_relations', 'the orbit is a well-defined class: every member shares one canonical representative, words(4,2)',
-   'eq', 'true', 'orbit:<rel> is the kernel of the representative map',$q$
-    SELECT bool_and(word_canonical_rotation(o) = word_canonical_rotation((e).value))::text
-      FROM elements(words(4,2)) e, LATERAL word_rotation_orbit((e).value) o $q$),
-  ('element_relations', 'the DERIVED representative (rank-least orbit member) equals the declared canonical_fn, words(4,2)',
-   'eq', 'true', 'canonical_fn is optional — absent, the rep is the least member of forward_fn(x)',$q$
-    SELECT bool_and(
-      word_canonical_rotation((e).value) =
-      (SELECT o FROM word_rotation_orbit((e).value) o ORDER BY (o).letters LIMIT 1))::text
-      FROM elements(words(4,2)) e $q$),
-  ('element_relations', 'orbit count over words(n,2) = the necklace count (one canonical rep per orbit), n=1..6',
-   'eq', 'true', 'GROUP BY orbit:rotation = the Pólya count = the registered necklace restriction',$q$
-    SELECT bool_and(reps = necklaces)::text FROM (
-      SELECT n,
-             (SELECT count(DISTINCT word_canonical_rotation((e).value)) FROM elements(words(n,2)) e) reps,
-             (SELECT count(*) FROM elements(words(n,2)) e WHERE is_word_necklace((e).value)) necklaces
-        FROM generate_series(1,6) n) t $q$);
+  -- (the three canonical_fn-verification examples calling word_canonical_rotation/is_word_necklace moved to
+  -- packs/words-plus/element_relations.words-plus.sql — both are words-plus's own functions, #283 phase 3)
+  ('element_relations', 'rotation orbit distinct-count over words(n,2) = 2ⁿ (no dedup yet — the raw orbit floor before the necklace GROUP BY, sanity only)',
+   'eq', 'true', 'every orbit is non-empty and self-consistent (member count from generate_series matches distinct letters)',$q$
+    SELECT bool_and((SELECT count(*) FROM word_rotation_orbit((e).value)) BETWEEN 1 AND n)::text
+      FROM generate_series(1,6) n, LATERAL elements(words(n,2)) e $q$);

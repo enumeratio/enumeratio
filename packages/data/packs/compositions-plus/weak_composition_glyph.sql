@@ -5,6 +5,7 @@
 -- here instead draws a small fixed-width DASHED, unfilled "gap" segment (still labelled 0), keeping every part
 -- visible and countable even when its value is empty. composition_bar_svg itself is untouched; this is its own
 -- helper since the zero-width special case doesn't apply there (composition's parts are always ≥ 1).
+-- layer: glyph
 CREATE FUNCTION weak_composition_bar_svg(parts int[], unit numeric DEFAULT 18, height numeric DEFAULT 22, gap_w numeric DEFAULT 10)
 RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH p AS (

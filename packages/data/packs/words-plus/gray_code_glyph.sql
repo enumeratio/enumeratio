@@ -3,6 +3,7 @@
 -- sequence_bar_svg (hoisted into core's glyphs.sql — #283 phase 3) — a bar per bit, height 0 or unit_h, labelled underneath. Grouped
 -- with the other "word as bars" carriers (ascent_sequence, subexcedant_seq, rgs_word, ternary_gray_code) rather
 -- than cells_svg's flat 0/1 strip so a scan of the gallery reads all five sequence carriers as one family.
+-- layer: glyph
 CREATE FUNCTION glyph_svg(w gray_code) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((w).bits) $$;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES

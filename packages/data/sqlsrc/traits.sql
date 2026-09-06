@@ -1,6 +1,7 @@
--- requires: realizer, catalog-resolution, glyphs, categories, constructions, prime_compositions, carlitz_compositions, zigzag_composition, ascent_sequences
+-- requires: realizer, catalog-resolution, glyphs, categories, constructions
 -- (pattern_avoiding_permutations was a stale requires header — nothing in this file calls it, #283 phase 3 grep;
 -- simple_permutations/non_crossing_permutations rows moved to packs/permutations-plus/traits.permutations-plus.sql,
+-- ascent_sequences' row moved to packs/words-plus/traits.words-plus.sql — #283 phase 3,
 -- base_collection_trait_manual.collection REFERENCES base_collection)
 -- requires-tag: collection
 -- The trait vocabulary + the derived collection→trait assignment. Traits are real rows (id, description, implies);
@@ -59,15 +60,10 @@ INSERT INTO base_collection_trait_manual (trait, collection) VALUES
 
 -- no_closed_form_count (issue #172's fiber_count accel audit): collections confirmed to have no known simple
 -- closed form, each checked against its own file's header comment / OEIS entry rather than asserted from memory —
---   prime_compositions   — A023360, direct-sum DP recurrence over the (irregular) primes, no closed form
---   carlitz_compositions — A003242, generating-function only (Carlitz 1976); no closed form is known
---   zigzag_composition   — no OEIS entry even cited; the file's own count was brute-force verified, not derived
---   ascent_sequences     — A022493 (Fishburn numbers), only a continued-fraction generating function
--- (simple_permutations/non_crossing_permutations rows, and vexillary_permutations — a base_restrict row INSIDE
--- pattern_avoiding_permutations.sql — moved to the pack, same reason)
-INSERT INTO base_collection_trait_manual (trait, collection) VALUES
-  ('no_closed_form_count', 'prime_compositions'), ('no_closed_form_count', 'carlitz_compositions'),
-  ('no_closed_form_count', 'zigzag_composition'), ('no_closed_form_count', 'ascent_sequences');
+--   (every no_closed_form_count row is now pack-owned: prime/carlitz/zigzag compositions ->
+--    packs/compositions-plus/traits.compositions-plus.sql, ascent_sequences ->
+--    packs/words-plus/traits.words-plus.sql, simple/non_crossing/vexillary permutations ->
+--    packs/permutations-plus/. Core registers the TRAIT; the packs claim their collections.)
 
 -- The sorted family, assigned from each carrier's canonical order (see the carrier type comments). Verified against
 -- sampled element data by the base_example rows below, not asserted from memory.

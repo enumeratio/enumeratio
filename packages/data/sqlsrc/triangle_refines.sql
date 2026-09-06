@@ -29,11 +29,13 @@ INSERT INTO base_triangle_refines (triangle, parent, stat_id) VALUES
   -- parts ≤ k (CUMULATIVE: partition_count_max_part), not parts = k exactly, so it isn't this table's kind of
   -- refinement at all (it would need a "≤" variant this table doesn't model) — left unregistered, not forced.
   ('narayana_numbers',              'dyck_paths',           'peaks'),        -- Narayana N(n,k), refining Catalan(n)
-  ('set_partitions_into_k_blocks',  'set_partitions',       'blocks'),       -- Stirling-2 S(n,k), refining Bell(n)
+  ('set_partitions_into_k_blocks',  'set_partitions',       'blocks');       -- Stirling-2 S(n,k), refining Bell(n)
   -- k_part_partitions' row (p(n,k), refining p(n)) moved to the partitions-plus pack (triangle_refines.partitions-plus.sql, #283).
   -- schroeder_triangle's row (T(n,k), refining schroeder_paths) moved to packs/paths/triangle_refines.paths.sql —
   -- both triangle and parent are paths collections, and base_triangle_refines FKs both columns, #283 phase 3.
-  ('compositions_into_k_parts',     'integer_compositions', 'parts_count');  -- C(n-1,k-1), refining 2^(n-1)
+  -- compositions_into_k_parts' row (C(n-1,k-1), refining 2^(n-1)) moved to
+  -- packs/compositions-plus/triangle_refines.compositions-plus.sql — the triangle is a pack-owned collection and
+  -- base_triangle_refines FKs it, #283 phase 3.
 
 -- the differential: the triangle's cells for rows 0..nmax vs the parent's GROUP BY stat counts, as one text.
 -- Built row-by-row (not via one triangle_cells(tri, nmax) sweep): some triangles' column axis starts at k=1
