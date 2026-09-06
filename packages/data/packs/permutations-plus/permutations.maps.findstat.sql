@@ -16,7 +16,10 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta)
   ('map','permutations.reverse',    'findstat','Mp00064','https://www.findstat.org/Mp00064',''),
   ('map','permutations.inverse',    'findstat','Mp00066','https://www.findstat.org/Mp00066',''),
   ('map','permutations.complement', 'findstat','Mp00069','https://www.findstat.org/Mp00069',''),
-  ('map','permutations.foata',      'findstat','Mp00067','https://www.findstat.org/Mp00067','');
+  ('map','permutations.foata',      'findstat','Mp00067','https://www.findstat.org/Mp00067',''),
+  ('map','permutations.rsk_recording','findstat','Mp00070','https://www.findstat.org/Mp00070','');
+-- rsk_recording (Mp00070, permutations → standard_tableaux, the RS recording/Q-tableau): 213 ↦ [[1,3],[2]].
+-- Image compared as the SYT row_word (row of each entry).
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutations','reverse (Mp00064): 123↦321, 231↦132','eq','321|132','findstat.org Mp00064 images',$q$
@@ -31,8 +34,12 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutations','foata (Mp00067): 132↦312, 312↦132','eq','312|132','findstat.org Mp00067 images',$q$
     SELECT one_line(perm_foata(ROW(ARRAY[1,3,2])::permutation)) || '|' ||
            one_line(perm_foata(ROW(ARRAY[3,1,2])::permutation)) $q$),
-  ('references','the four new permutation-map findstat refs resolve and back real base_map rows (floor)','eq','true','containment, not an exact count',$q$
-    SELECT (count(*) >= 4 AND array_agg(r.subject) @> ARRAY['permutations.reverse','permutations.inverse','permutations.complement','permutations.foata'])::text
+  ('permutations','rsk_recording (Mp00070): 213↦[[1,3],[2]], 132↦[[1,2],[3]], 21↦[[1],[2]]','eq','{0,1,0}|{0,0,1}|{0,1}','findstat.org Mp00070 images, as the image SYT row_word',$q$
+    SELECT (perm_rsk_recording(ROW(ARRAY[2,1,3])::permutation)).row_word::text || '|' ||
+           (perm_rsk_recording(ROW(ARRAY[1,3,2])::permutation)).row_word::text || '|' ||
+           (perm_rsk_recording(ROW(ARRAY[2,1])::permutation)).row_word::text $q$),
+  ('references','the five new permutation-map findstat refs resolve and back real base_map rows (floor)','eq','true','containment, not an exact count',$q$
+    SELECT (count(*) >= 5 AND array_agg(r.subject) @> ARRAY['permutations.reverse','permutations.inverse','permutations.complement','permutations.foata','permutations.rsk_recording'])::text
     FROM base_reference r WHERE r.system='findstat' AND r.subject_kind='map' AND r.subject IN
-      ('permutations.reverse','permutations.inverse','permutations.complement','permutations.foata')
+      ('permutations.reverse','permutations.inverse','permutations.complement','permutations.foata','permutations.rsk_recording')
       AND EXISTS (SELECT 1 FROM base_map m WHERE m.collection='permutations' AND m.map_id = split_part(r.subject,'.',2)) $q$);
