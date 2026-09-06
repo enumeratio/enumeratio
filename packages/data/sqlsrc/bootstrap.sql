@@ -65,8 +65,16 @@ END $$;
 -- ~90% of total example runtime. base_run_examples() skips them unless asked (run.mts lifts EXAMPLES=all). They are
 -- flagged after load by example-tiers.sql, so the source files stay untouched.
 -- `pack`: OWNING registry provenance (#283) — which pack contributed this example; every row is 'core' today.
+-- `specimen` (#304): does this example demonstrate a PROTOTYPICAL case (a representative, middle-of-the-road
+-- specimen — what an "example of this collection" should show) or guard an EDGE case (empty/degenerate/boundary/
+-- off-by-one — kept as a regression guard, NOT what you'd lead with)? NULL = unclassified (the default; most rows).
+-- Editorial, so — like `slow` — it is set AFTER load by example-specimens.sql, leaving the source files untouched.
+-- A consumer that wants "show me representative examples of collection X" filters specimen = 'prototypical'; the
+-- edge cases stay in the suite as guards. This classifies EXAMPLE ROWS, not element values (see #304 for the
+-- element-accessor side, an_element/some_elements).
 CREATE TABLE base_example (suite text, title text, kind text, expected text, description text, sql text, collection text,
                            slow boolean NOT NULL DEFAULT false,
+                           specimen text CHECK (specimen IS NULL OR specimen IN ('prototypical', 'edge')),
                            pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
 CREATE TRIGGER base_example_pack_guard BEFORE UPDATE OR DELETE ON base_example FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
