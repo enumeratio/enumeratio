@@ -103,6 +103,9 @@ const DOMAINS: Record<string, Arg[][]> = {
   permutation_unrank: [1, 2, 3, 4, 5].flatMap((n) => range(0, Math.min(23, [1, 1, 2, 6, 24, 120][n] - 1)).map((r) => [n, r])),
   composition_from_mask: range(0, 8).flatMap((n) => range(0, Math.max(0, 2 ** Math.max(0, n - 1) - 1)).map((m) => [n, m])),
   inversions: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
+  descents: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
+  fixed_points: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
+  cycle_count: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
   lehmer_code: [1, 2, 3, 4].flatMap((n) => perms(n).map((p) => [perm(p)])),
 }
 

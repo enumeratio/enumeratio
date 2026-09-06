@@ -151,6 +151,12 @@ INSERT INTO base_function (id, title, description) VALUES
    'already-built permutation_inversion to text — a naming collision with this identity, not a match). The SQL '
    'array is length n-1 (the always-0 trailing entry is dropped from the stored carrier); the TS array matches '
    '(#293). Lehmer codes embed into factoradics, which keep the trailing place — the drop is Lehmer-specific.'),
+  ('descents', 'Descents',
+   'Positions i with σ(i) > σ(i+1). The Eulerian statistic — its distribution over Sₙ is the Eulerian triangle.'),
+  ('fixed_points', 'Fixed points',
+   'Positions with σ(i) = i. Zero of them is a derangement; the distribution is the rencontres triangle.'),
+  ('cycle_count', 'Number of cycles',
+   'Orbits of σ acting on [n]. The distribution over Sₙ is the unsigned Stirling numbers of the first kind.'),
   ('inversions', 'Inversions (Coxeter length)',
    'The number of pairs out of order in a permutation — the sum of its Lehmer code, and its Coxeter length.'),
   ('stirling1', 'Unsigned Stirling number of the first kind',

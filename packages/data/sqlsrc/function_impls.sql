@@ -132,6 +132,12 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   -- phase 3; the identity itself and its 'ts' row — packages/math has no pack split — stay core.)
   ('lehmer_code', 'ts', 'lehmer_code', '{permutation}', 'permutation_inversion', 'float64', NULL),
 
+  ('descents', 'pg', 'perm_descents', '{permutation}', 'int', 'numeric', NULL),
+  ('descents', 'ts', 'perm_descents', '{permutation}', 'int', 'float64', NULL),
+  ('fixed_points', 'pg', 'perm_fixed_points', '{permutation}', 'int', 'numeric', NULL),
+  ('fixed_points', 'ts', 'perm_fixed_points', '{permutation}', 'int', 'float64', NULL),
+  ('cycle_count', 'pg', 'perm_cycle_count', '{permutation}', 'int', 'numeric', NULL),
+  ('cycle_count', 'ts', 'perm_cycle_count', '{permutation}', 'int', 'float64', NULL),
   ('inversions', 'pg', 'perm_inversions', '{permutation}', 'int', 'numeric', NULL),
   ('inversions', 'ts', 'inversions', '{permutation}', 'int', 'float64', NULL),
 

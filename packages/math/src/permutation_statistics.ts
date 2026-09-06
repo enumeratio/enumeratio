@@ -37,3 +37,31 @@ export function eulerianA(n: number, k: number): number {
   }
   return v;
 }
+
+/** SQL twin: perm_descents(p permutation) — statistics.sql. Positions i with image[i] > image[i+1]. */
+export function perm_descents(image: number[]): number {
+  let c = 0
+  for (let i = 0; i + 1 < image.length; i++) if (image[i] > image[i + 1]) c++
+  return c
+}
+
+/** SQL twin: perm_fixed_points(p permutation) — statistics.sql. Positions with image[i] = i (1-based). */
+export function perm_fixed_points(image: number[]): number {
+  let c = 0
+  for (let i = 0; i < image.length; i++) if (image[i] === i + 1) c++
+  return c
+}
+
+/** SQL twin: perm_cycle_count(p permutation) — statistics.sql. Orbits of the permutation, walked once each. */
+export function perm_cycle_count(image: number[]): number {
+  const n = image.length
+  const seen = new Array<boolean>(n).fill(false)
+  let c = 0
+  for (let i = 0; i < n; i++) {
+    if (seen[i]) continue
+    c++
+    let j = i
+    do { seen[j] = true; j = image[j] - 1 } while (j !== i)
+  }
+  return c
+}
