@@ -75,6 +75,14 @@ produce contiguous windows.
 | `range` | <code>{{ sig('range') }}</code> | `{{ surface.range?.ret }}` |
 | `unfold` | <code>{{ sig('unfold') }}</code> | `{{ surface.unfold?.ret }}` |
 | `random_element` | <code>{{ sig('random_element') }}</code> | `{{ surface.random_element?.ret }}` |
+| `random_elements` | <code>{{ sig('random_elements') }}</code> | `{{ surface.random_elements?.ret }}` |
+| `an_element` | <code>{{ sig('an_element') }}</code> | `{{ surface.an_element?.ret }}` |
+| `some_elements` | <code>{{ sig('some_elements') }}</code> | `{{ surface.some_elements?.ret }}` |
+
+`an_element` / `some_elements` are **deterministic** (Sage's accessors: a stable, cheap representative, and the
+first _n_) — `random_element` / `random_elements` **draw** (uniform, iid with replacement; `random_elements(h, n)`
+is the plural). The random draws refuse rather than fake uniformity: an infinite or unknown-count handle yields
+`NULL` / zero rows, never a biased sample.
 
 ## Fibers & grading
 

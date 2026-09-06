@@ -45,3 +45,24 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(samplable = (draw_cost <> 'none'))::text FROM base_collection_sampling $q$),
   ('sampling','draw_cost O(1) ⇒ indexable, and only indexable samplables are O(1) (the O(1) class = direct unrank)','eq','true','the heuristic tracks the direct-unrank capability exactly',$q$
     SELECT bool_and((draw_cost = 'O(1)') = indexable)::text FROM base_collection_sampling WHERE samplable $q$);
+
+-- The deterministic example accessors (an_element / some_elements, #304) and the plural random_elements (#303),
+-- generated per collection by base_realize. an_element is stable and cheap (unrank 0); some_elements the first n;
+-- random_elements draws n iid WITH replacement, inheriting random_element's refusal (undrawable ⇒ zero rows).
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('sampling','an_element(subsets(3)) is DETERMINISTIC (two calls agree) and a member','eq','true',
+   'the Sage an_element contract: a stable, cheap representative — unlike random_element',$q$
+    SELECT (an_element(subsets(3)) IS NOT DISTINCT FROM an_element(subsets(3))
+            AND (an_element(subsets(3))).value <@ subsets(3))::text $q$),
+  ('sampling','some_elements(subsets(3), 3) returns the first 3 in canonical order, all members','eq','3|true',
+   'the plural deterministic accessor is a prefix of the global order',$q$
+    SELECT count(*)::text || '|' || bool_and((e).value <@ subsets(3))::text
+    FROM some_elements(subsets(3), 3) e $q$),
+  ('sampling','random_elements(subsets(3), 20) yields exactly 20 draws (with replacement), all members','eq','20|true',
+   'the plural random accessor: iid with replacement, so a fixed count — every draw a member',$q$
+    SELECT count(*)::text || '|' || bool_and((e).value <@ subsets(3))::text
+    FROM random_elements(subsets(3), 20) e $q$),
+  ('sampling','an_element works where random_element refuses: an_element(natural_numbers()) is a member, but random_elements(…,5) of an infinite handle is empty','eq','true|0',
+   'determinism does not need finiteness (unrank 0 is always defined); a uniform draw does — so the plural refuses to 0 rows',$q$
+    SELECT ((an_element(natural_numbers())).value <@ natural_numbers())::text || '|' ||
+           (SELECT count(*) FROM random_elements(natural_numbers(), 5))::text $q$);

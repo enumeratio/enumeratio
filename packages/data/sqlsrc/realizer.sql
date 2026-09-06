@@ -756,6 +756,37 @@ BEGIN
                  'SELECT random_element(f) FROM cum, pick WHERE run > r ORDER BY run LIMIT 1 $b$',
                  coll, coll || '_element');
 
+  -- random_elements(handle|fiber, n): the PLURAL of random_element — n independent uniform draws WITH replacement
+  -- (the quickcheck sampling contract: iid, so repeats are expected and correct). Each draw delegates to the
+  -- singular, inheriting its refusal (a draw that would be non-uniform yields NULL); the NULLs are filtered, so an
+  -- undrawable handle/fiber (empty / ∞ / unknown-count) yields ZERO rows rather than n NULL rows — same "refuses,
+  -- never fakes" behavior as the singular, just vacuous instead of NULL. #303.
+  EXECUTE format('CREATE FUNCTION random_elements(h %1$I, n int) RETURNS SETOF %2$I LANGUAGE sql VOLATILE AS $b$ '
+                 'SELECT e FROM (SELECT random_element(h) e FROM generate_series(1, greatest(n, 0))) t WHERE e IS NOT NULL $b$',
+                 coll, coll || '_element');
+  EXECUTE format('CREATE FUNCTION random_elements(f %1$I, n int) RETURNS SETOF %2$I LANGUAGE sql VOLATILE AS $b$ '
+                 'SELECT e FROM (SELECT random_element(f) e FROM generate_series(1, greatest(n, 0))) t WHERE e IS NOT NULL $b$',
+                 coll || '_fiber', coll || '_element');
+
+  -- an_element(handle|fiber) / some_elements(handle, n): the DETERMINISTIC example accessors (Sage's an_element /
+  -- some_elements). Unlike random_element these are stable across calls and cheap — an_element is just the first
+  -- element in canonical order (unrank(h,0) / rank-0 of the fiber), some_elements the first n. NULL / empty when the
+  -- collection is empty. These return enumeration-order representatives; a PROTOTYPICAL-vs-edge-curated variant is a
+  -- separate metadata layer (#304, open). #304.
+  EXECUTE format('CREATE FUNCTION an_element(h %1$I) RETURNS %2$I LANGUAGE sql STABLE AS $b$ SELECT unrank(h, 0::rank_index) $b$',
+                 coll, coll || '_element');
+  IF has_fiber_unrank THEN
+    EXECUTE format('CREATE FUNCTION an_element(f %1$I) RETURNS %2$I LANGUAGE sql STABLE AS $b$ SELECT element_at(f, 0::rank_index) $b$',
+                   coll || '_fiber', coll || '_element');
+  ELSE
+    EXECUTE format('CREATE FUNCTION an_element(f %1$I) RETURNS %2$I LANGUAGE sql STABLE AS $b$ SELECT e FROM elements(f, 1) e ORDER BY e LIMIT 1 $b$',
+                   coll || '_fiber', coll || '_element');
+  END IF;
+  EXECUTE format('CREATE FUNCTION some_elements(h %1$I, n int DEFAULT 5) RETURNS SETOF %2$I LANGUAGE sql STABLE AS $b$ SELECT * FROM elements(h, greatest(n, 0)) $b$',
+                 coll, coll || '_element');
+  EXECUTE format('CREATE FUNCTION some_elements(f %1$I, n int DEFAULT 5) RETURNS SETOF %2$I LANGUAGE sql STABLE AS $b$ SELECT * FROM elements(f, greatest(n, 0)) $b$',
+                 coll || '_fiber', coll || '_element');
+
   -- carriers(handle) / unnest(handle): the bound handle's elements' CARRIER VALUES as a set (the raw math objects,
   -- globally ordered). Defined only for a FINITE, CLOSED handle — an open axis (unbounded upper) or an infinite/unknown
   -- cardinality RAISES (an infinite handle has no materializable carrier set). `unnest` is the idiomatic pg alias: a

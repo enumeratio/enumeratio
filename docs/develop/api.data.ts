@@ -39,7 +39,7 @@ const SURFACE = [
   'contains', 'member_of', 'render', 'notation', 'set_notation',
   'ordinality', 'omega_ordinality', 'next', 'prev', 'next_in_fiber', 'prev_in_fiber',
   'fibers', 'fiber_count', 'fiber_address', 'address', 'range', 'unfold',
-  'unnest', 'carriers', 'random_element', 'fiber_symbol', 'glyph_svg',
+  'unnest', 'carriers', 'random_element', 'random_elements', 'an_element', 'some_elements', 'fiber_symbol', 'glyph_svg',
 ]
 
 const TYPE_NOTES: Record<string, string> = {
