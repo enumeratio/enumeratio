@@ -1,4 +1,4 @@
--- requires: maps-bijections, binary_words_by_weight, standard_tableau_pairs.maps
+-- requires: maps-bijections, binary_words_by_weight
 -- base_relation — the UNDIRECTED promotion of the paired directed bijections in base_map. A collection-scoped
 -- bijection lives in base_map as TWO rows (forward on the domain, backward on the codomain, each naming the other as
 -- `inverse`); here that pair is folded into ONE describable record: (domain, codomain, forward_fn, backward_fn,
@@ -46,8 +46,8 @@ INSERT INTO base_finalizer (id, fn, description, scope) VALUES
 
 -- ── examples ────────────────────────────────────────────────────────────────────────────────────────────
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('relations','each collection-scoped bijection PAIR is ONE base_relation row (a floor of 3 core-only: integer_compositions↔subsets, binary_words↔k_subsets, RSK; Euler, crossing↔nesting and increasing_binary_trees↔permutations are pack-owned and only add rows once their pack loads too — later batches only add rows)','eq','true','a floor, not an exact count — new collection-scoped bijections add rows',$q$
-    SELECT (count(*) >= 3)::text FROM base_relation $q$),
+  ('relations','each collection-scoped bijection PAIR is ONE base_relation row (a floor of 2 core-only: integer_compositions↔subsets, binary_words↔k_subsets; Euler, crossing↔nesting, increasing_binary_trees↔permutations and RSK are pack-owned and only add rows once their pack loads too — later batches only add rows)','eq','true','a floor, not an exact count — new collection-scoped bijections add rows',$q$
+    SELECT (count(*) >= 2)::text FROM base_relation $q$),
   ('relations','the order-iso relation is flagged: binary_words_by_weight ↔ k_subsets is the only is_order_iso row','eq','binary_words_by_weight→k_subsets','is_order_iso holds exactly where declared',$q$
     SELECT string_agg(domain||'→'||codomain, ',' ORDER BY domain) FROM base_relation WHERE is_order_iso $q$),
   ('relations','every relation IS a declared bijection (is_order_iso ⊃ is_bijection: no non-bijective relations)','eq','true','the promotion pulls only is_bijection maps',$q$
@@ -61,11 +61,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     FROM base_relation r, LATERAL generate_series(0,6) n, LATERAL generate_series(0,n) k
    WHERE r.is_order_iso AND r.domain='binary_words_by_weight' $q$),
   -- the NON-order-iso relations are NOT order-preserving on their windows (the flag discriminates, not all-true) —
-  -- the Euler (distinct↔odd) example moved to the partitions-plus pack (relations.partitions-plus.sql, #283).
+  -- the Euler (distinct↔odd) example moved to the partitions-plus pack (relations.partitions-plus.sql, #283); the
+  -- RSK example moved to the tableaux pack (relations.tableaux.sql, #283 phase 3 lane 2) — its forward base_map row
+  -- now lives in packs/tableaux/maps-bijections.tableaux.sql (codomain standard_tableau_pairs is pack-owned).
   -- forward∘backward = id on samples: the relation round-trips through both stored fns.
   ('relations','forward∘backward = id on samples (binary_words↔k_subsets): backward(forward(w)) = w','eq','true','the order-iso relation round-trips too',$q$
     SELECT bool_and(binary_word_of_subset(subset_of_binary_word((e).value)) = (e).value)::text
-      FROM generate_series(0,5) k, LATERAL elements(binary_words_by_weight(5,k)) e $q$),
-  ('relations','RSK is promoted with both directions named (#153): forward perm_rsk, backward the tableau-pair inverse','eq','permutations|standard_tableau_pairs|perm_rsk|standard_tableau_pair_to_perm|t|f','the reverse map is registered — no more carrier blocker',$q$
-    SELECT domain||'|'||codomain||'|'||forward_fn||'|'||coalesce(backward_fn,'∅')||'|'||left(is_bijection::text,1)||'|'||left(is_order_iso::text,1)
-      FROM base_relation WHERE forward_fn='perm_rsk' $q$);
+      FROM generate_series(0,5) k, LATERAL elements(binary_words_by_weight(5,k)) e $q$);

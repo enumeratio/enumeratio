@@ -8,6 +8,7 @@
 -- No base_glyph registry row on purpose (the composition/standard_tableau precedent in glyphs.sql): that table
 -- feeds the `glyphs` meta-collection's floor (distinct `kind`s) and its own examples are pinned to a fixed count —
 -- the overload alone is enough, carrier_renders_svg('alternating_sign_matrix') derives straight from pg_proc/pg_type.
+-- layer: glyph
 
 CREATE FUNCTION alternating_sign_matrix_svg(matrix int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT floor(sqrt(coalesce(array_length(matrix, 1), 0)))::int AS n),

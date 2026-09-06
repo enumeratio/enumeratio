@@ -1,10 +1,10 @@
--- requires: realizer, utilities, permutations, standard_tableaux, maps-bijections
+-- requires: realizer, utilities, permutations, standard_tableaux, maps-bijections.tableaux
 -- standard_tableau_pairs — the RSK codomain: pairs (P,Q) of same-shape standard Young tableaux with n cells. RSK is a
 -- bijection permutations(n) ↔ {(P,Q) : P,Q SYT of a common shape λ ⊢ n}, so |standard_tableau_pairs(n)| = n!. This
 -- collection gives that codomain a home, closing the RSK map (perm ⇄ SYT-pair) — see issue #66 / #30.
 --
 -- The carrier `standard_tableau_pair` and the two maps (perm_rsk forward, standard_tableau_pair_to_perm = rsk_inverse
--- back) already live in maps-bijections.sql; this file reuses them. The floor is the perm↔pair bijection itself:
+-- back) already live in maps-bijections.tableaux.sql; this file reuses them. The floor is the perm↔pair bijection itself:
 -- enumerate permutations(n) in rank order and push each through perm_rsk, so pair rank = preimage permutation rank.
 
 -- ── the engines a collection provides ──────────────────────────────────────────────────────────────────

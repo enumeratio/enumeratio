@@ -81,13 +81,13 @@ SELECT tag, collection FROM (VALUES
   -- pattern_avoiding_permutations.sql, which moved with that file, #283 phase 3)
   ('permutation', 'permutations'), ('permutation', 'derangements'),
   ('permutation', 'involutions'), ('permutation', 'even_permutations'),
-  ('permutation', 'rook_placements'),
+  -- rook_placements moved to packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2
   -- lattice paths (core-owned members only — the rest are in packs/paths/tags.paths.sql, #283 phase 3)
   ('path', 'dyck_paths'), ('path', 'narayana_numbers'),
   -- trees (core-owned members only — the rest are in packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3)
   ('tree', 'binary_trees'),
-  -- tableaux
-  ('tableau', 'standard_tableaux'), ('tableau', 'semistandard_tableaux'), ('tableau', 'gelfand_tsetlin'),
+  -- tableaux (core-owned member only — the rest are in packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2)
+  ('tableau', 'standard_tableaux'),
   -- words / strings (independent_sets_cycle moved to packs/trees-graphs/tags.trees-graphs.sql, #283 phase 3)
   ('word', 'words'), ('word', 'k_necklaces'), ('word', 'k_bracelets'), ('word', 'k_lyndon_words'), ('word', 'binary_words'), ('word', 'binary_palindromes'), ('word', 'primitive_binary_strings'), ('word', 'lyndon_words'), ('word', 'binary_necklaces'), ('word', 'binary_bracelets'), ('word', 'gray_codes'), ('word', 'ascent_sequences'),
   ('word', 'restricted_growth_strings'),
@@ -102,8 +102,7 @@ SELECT tag, collection FROM (VALUES
   -- collection, despite the earlier note here claiming otherwise)
   -- signed / symmetric (signed_permutations/k_colored_permutations moved to permutations-plus)
   ('symmetric', 'signed_subsets'), ('symmetric', 'signed_set_compositions'),
-  -- matrices
-  ('matrix', 'alternating_sign_matrices'),
+  -- matrices — alternating_sign_matrices moved to packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2
   -- functions: entirely permutations-plus (endofunctions/subexcedant_seqs/surjections*/parking_functions*) — see
   -- packs/permutations-plus/tags.permutations-plus.sql
   -- ordered_factorizations is partitions-plus — see packs/partitions-plus/tags.partitions-plus.sql
@@ -114,7 +113,7 @@ SELECT tag, collection FROM (VALUES
   -- ── clean-batch port (numbers precursor) ──────────────────────────────────────────────────────────────
   -- (boolean_permutations/smooth_permutations moved to packs/permutations-plus/tags.permutations-plus.sql)
   ('word', 'fib_strings'), ('word', 'tri_strings'), ('word', 'lucas_strings'),
-  ('tableau', 'syt_two_row'), ('tableau', 'syt_two_column'), ('tableau', 'syt_hook_shape'),
+  -- (syt_two_row/syt_two_column/syt_hook_shape moved to packs/tableaux/tags.tableaux.sql, #283 phase 3 lane 2)
   ('composition', 'triangular_composition'),
   -- species notation
   ('species', 'singleton_species'),

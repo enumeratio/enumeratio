@@ -5,6 +5,7 @@
 -- can be sparser than a full permutation — and (2) columns are not required to be distinct, so (unlike the
 -- permutation matrix) two dots CAN legitimately share a column at different rows, same non-bijective spirit as
 -- parking_function_matrix_svg's contention picture. n = the board side = array_length(cols,1).
+-- layer: glyph
 CREATE FUNCTION rook_placement_grid_svg(cols int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH dim AS (SELECT greatest(1, coalesce(array_length(cols, 1), 0)) AS n),
   pts AS (SELECT o AS row, val AS col FROM unnest(cols) WITH ORDINALITY AS t(val, o) WHERE val <> 0),  -- skip empty rows

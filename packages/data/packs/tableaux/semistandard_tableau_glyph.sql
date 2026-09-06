@@ -3,6 +3,7 @@
 -- same left-justified grid convention, but cells come from (entries, shape) directly — entries is already row-major,
 -- shape is the row lengths (a partition) — rather than the row_word the standard-tableau carrier uses. REPEATED
 -- labels are expected (that's the semistandard-vs-standard distinction) so no dedup logic here, just row-major fill.
+-- layer: glyph
 
 -- ── grid: one cell per entry, positioned by (row, column-within-row) from shape's row lengths, entry centered ─────
 CREATE FUNCTION semistandard_tableau_grid_svg(entries int[], shape int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$

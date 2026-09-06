@@ -96,9 +96,9 @@ INSERT INTO base_triangle (collection, row_axis, col_axis, title, sequence) VALU
   ('set_partitions_into_k_blocks', 'n', 'k', 'Stirling numbers of the 2nd kind — S(n,k)', 'bell_numbers'),
   ('compositions_into_k_parts',    'n', 'k', 'Compositions of n into k parts — C(n−1,k−1)', NULL),
   ('weak_compositions_into_k_parts','n','k', 'Weak compositions of n into k parts — C(n+k−1,k−1)', NULL),
-  ('narayana_numbers',             'n', 'k', 'Narayana numbers — N(n,k)', 'catalan_numbers'),
-  ('gelfand_tsetlin',              'n', 'k', 'Gelfand–Tsetlin patterns by size and entry bound', NULL);
--- (k_dyck_paths' row moved to packs/paths/triangle_slices.paths.sql — it's that pack's own collection, #283 phase 3)
+  ('narayana_numbers',             'n', 'k', 'Narayana numbers — N(n,k)', 'catalan_numbers');
+-- (k_dyck_paths' row moved to packs/paths/triangle_slices.paths.sql — it's that pack's own collection, #283 phase 3;
+-- gelfand_tsetlin's row moved to packs/tableaux/triangle_slices.tableaux.sql, same reason, #283 phase 3 lane 2)
 
 -- living assertions: the slice machinery against known triangle rows / a column / a diagonal (suite is cross-cutting,
 -- so these stay collection = NULL like the maps / boundary suites).

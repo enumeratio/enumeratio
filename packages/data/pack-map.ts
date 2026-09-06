@@ -49,15 +49,10 @@ export const PACK_MAP: [PackName, RegExp][] = [
   ['paths', /^(motzkin_paths|schroeder_paths|schroeder_triangle|delannoy|fine_|lukasiewicz|riordan|k_dyck|k_motzkin|colored_motzkin|rational_dyck|grand_dyck|dyck_paths_by_height|little_schroder_triangle|ballot_sequences|base_species\.paths|constructions\.paths|fiber_unrank_verify\.paths|tags\.paths|triangle_refines\.paths|triangle_slices\.paths|dyck_paths\.stats2\.paths|examples\.representations\.paths)/],
   ['permutations-plus', /^(pattern_avoiding|baxter|grassmannian|cograssmannian|simple_perm|smooth_perm|connected_perm|boolean_perm|alternating_perm|cyclic_perm|k_colored|k_cycle|k_descent|k_inversion|affine_perm|decorated_perm|signed_perm|arrangements|permutations\.(stats2|stats3|findstat|denert|rsk_shape|equivalences|relations|maps\.findstat)|permutation_maps|orbit_maps_permutations_subsets|lehmer_codes|subexcedant_seqs|endofunctions|surjections|surjections_onto_k|parking_functions|non_decreasing_parking|non_crossing_perm|tournaments|base_species\.permutations-plus|constructions\.permutations-plus|cross-collection-maps\.permutations-plus|example-tiers\.permutations-plus|examples\.representations\.permutations-plus|fiber_unrank_verify\.permutations-plus|function_impls\.permutations-plus|map_compose\.permutations-plus|set_builders\.permutations-plus|species\.permutations-plus|tags\.permutations-plus|traits\.permutations-plus|triangle_refines\.permutations-plus|triangle_slices\.permutations-plus)/],
   ['partitions-plus', /^(distinct_partitions|odd_partitions|self_conjugate|core_partitions|bounded_part|box_confined|boxed_plane|k_part_partitions|largest_part|skew_partitions|plane_partitions|square_partitions|triangular_partitions|multiplicative_partitions|prime_partition|partitions_restrictions|integer_partitions\.(cores_quotients|dominance|frobenius_abacus|rank_crank|relations)|ordered_factorizations|partition_algebra|total_partitions|maps-bijections\.partitions-plus|base_species\.partitions-plus|traits\.partitions-plus|relations\.partitions-plus|random_element\.partitions-plus|triangle_slices\.partitions-plus|triangle_refines\.partitions-plus|collection-meta\.partitions-plus|catalog-resolution\.partitions-plus|function_impls\.partitions-plus|tags\.partitions-plus|identities\.partitions-plus)/],
-  // skew_standard_tableaux is genuinely a `tableaux`-pack collection (§5), but tableaux hasn't been extracted yet —
-  // its base_collection sits directly on skew_partitions' floor/fiber engine (calls skew_partitions(n) at runtime,
-  // not just an example), so once skew_partitions leaves sqlsrc/, core can no longer order this file at all (core's
-  // own toposort pass never sees an external closure — a core file requiring pack content is a hard ordering error,
-  // not just a --packs-core-alone failure). Forced out early, into partitions-plus, ahead of its own pack: matched
-  // BEFORE the `tableaux` pattern below so this wins. Revisit when `tableaux` is extracted — move both files
-  // (skew_standard_tableaux + skew_standard_tableaux.jeu_de_taquin) into packs/tableaux/ and delete this entry.
-  ['partitions-plus', /^skew_standard/],
-  ['tableaux', /^(semistandard|shifted_standard|syt_|gelfand_tsetlin|standard_tableau_pairs|standard_tableaux\.(demotion|evacuation|promotion|reading_word|findstat)|alternating_sign|rook_placements)/],
+  // skew_standard_tableaux WAS forced early into partitions-plus (its base_collection calls skew_partitions(n) at
+  // runtime, so core couldn't order it once skew_partitions left) — tableaux is extracted now and declares a dep on
+  // partitions-plus, so it's reclaimed below (folded into the main tableaux pattern, #283 phase 3 lane 2).
+  ['tableaux', /^(semistandard|shifted_standard|skew_standard|syt_|gelfand_tsetlin|standard_tableau_pairs|standard_tableaux\.(demotion|evacuation|promotion|reading_word|findstat|maps\.findstat)|alternating_sign|rook_placements|maps-bijections\.tableaux|relations\.tableaux|fiber_unrank_verify\.tableaux|tags\.tableaux|triangle_slices\.tableaux)/],
   ['trees-graphs', /^(ordered_trees|plane_trees|labeled_trees|labeled_forests|k_ary_trees|increasing_binary|recursive_trees|phylogenetic|non_crossing_trees|rooted_unlabeled|unlabeled_free|prufer|labeled_graphs|connected_labeled|independent_sets|dissections|non_crossing_matchings|non_nesting_matchings|perfect_matchings|non_crossing_partitions|non_nesting_partitions|base_species\.trees-graphs|tags\.trees-graphs|maps-bijections\.trees-graphs|cross-collection-maps\.trees-graphs|set_partitions\.relations\.trees-graphs|catalog-resolution\.trees-graphs|fiber_unrank_verify\.trees-graphs|examples\.representations\.trees-graphs)/],
   // symmetry_orbit_maps is misfiled OUT of permutations-plus deliberately (#313 grep): it operates on
   // `words`/`k_necklaces`/`k_bracelets`/`k_lyndon_words` (all words-plus), not on any permutation collection,
@@ -127,7 +122,7 @@ export function packClosure(pack: PackName): Set<PackName> {
  * `placementOf`, not `packOf`, so both are correct mid-split. A lane lands by adding its name here and
  * re-running the codemod.
  */
-export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus', 'permutations-plus', 'paths', 'trees-graphs']
+export const EXTRACTED_PACKS: PackName[] = ['polytopes', 'refs', 'number-sets', 'partitions-plus', 'permutations-plus', 'paths', 'trees-graphs', 'tableaux']
 
 /**
  * The extracted set in effect. `ENUMERATIO_PACKS_OVERRIDE=a,b` substitutes for `EXTRACTED_PACKS` so a lane can be

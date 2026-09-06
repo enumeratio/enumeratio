@@ -3,6 +3,7 @@
 -- each next row has one fewer entry and is indented by HALF a cell relative to the row above — the usual
 -- Gelfand-Tsetlin/Pascal-triangle picture, centered under the row above rather than left-justified like a Young
 -- diagram. n is recovered from the flat length (len = n(n+1)/2), same arithmetic as notation()'s row-length walk.
+-- layer: glyph
 
 -- ── triangle: row r (0-based) has n-r cells, x-shifted by r*unit/2, entry centered in each cell ───────────────────
 CREATE FUNCTION gelfand_tsetlin_triangle_svg(flat int[], unit numeric DEFAULT 22) RETURNS text LANGUAGE sql IMMUTABLE AS $$

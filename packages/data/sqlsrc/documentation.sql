@@ -145,6 +145,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     ) > 1000)::text $q$),
   ('documentation','the COMMENT pass is a registered "collection"-scope finalizer, not a load-time loop','eq','true','#283 phase 1.3 — base_finalizer carries the comment row',$q$
     SELECT EXISTS (SELECT 1 FROM base_finalizer WHERE id = 'comment' AND fn = 'base_comment_collection'::regproc AND scope = 'collection')::text $q$),
-  ('documentation','at least 100 realized collections carry a non-null handle-type comment (a floor, not a count)','eq','true','proves base_pack_finalize(''core'') actually ran the finalizer over core''s collections',$q$
+  ('documentation','at least 90 realized collections carry a non-null handle-type comment (a floor, not a count)','eq','true','proves base_pack_finalize(''core'') actually ran the finalizer over core''s collections — the floor was 100 before the tableaux pack extracted ~13 collections out of core (#283 phase 3 lane 2)',$q$
     SELECT ((SELECT count(*) FROM base_collection c
-              WHERE obj_description(to_regtype(c.id), 'pg_type') IS NOT NULL) > 100)::text $q$);
+              WHERE obj_description(to_regtype(c.id), 'pg_type') IS NOT NULL) > 90)::text $q$);

@@ -206,6 +206,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
            one_line(perm_cyclic_shift(ROW(ARRAY[1,2,3])::permutation)) $q$),
   ('maps','cyclic_shift is an order-n rotation: applied 3× over permutations(3) it is the identity','eq','true','the n-cycle on values has order n',$q$
     SELECT bool_and(perm_cyclic_shift(perm_cyclic_shift(perm_cyclic_shift((e).value))) = (e).value)::text FROM elements(permutations(3)) e $q$),
-  ('maps','permutations maps include at least the RSK pair rsk_insertion + rsk_recording (a floor — more may be added)','eq','true','base_map rows (to_lehmer_code moved to packs/permutations-plus/cross-collection-maps.permutations-plus.sql, #283 phase 3 — not part of core''s own floor)',$q$
-    SELECT (array_agg(map_id) @> ARRAY['binary_search_tree','complement','cycle_partition','cycle_type','cyclic_shift','descent_composition','descent_set','inverse','permutahedron_vertex','reverse','rsk','rsk_insertion','rsk_recording'])::text
+  ('maps','permutations maps include at least the RSK pair rsk_insertion + rsk_recording (a floor — more may be added)','eq','true','base_map rows (to_lehmer_code moved to packs/permutations-plus/cross-collection-maps.permutations-plus.sql, #283 phase 3; the collection-scoped ''rsk'' row moved to packs/tableaux/maps-bijections.tableaux.sql, #283 phase 3 lane 2, its codomain standard_tableau_pairs is pack-owned — not part of core''s own floor)',$q$
+    SELECT (array_agg(map_id) @> ARRAY['binary_search_tree','complement','cycle_partition','cycle_type','cyclic_shift','descent_composition','descent_set','inverse','permutahedron_vertex','reverse','rsk_insertion','rsk_recording'])::text
     FROM base_map WHERE collection = 'permutations' $q$);

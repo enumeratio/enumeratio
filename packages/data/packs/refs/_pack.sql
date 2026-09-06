@@ -1,5 +1,5 @@
 -- pack: refs
--- requires-pack: core, number-sets, paths, permutations-plus, partitions-plus, trees-graphs, polytopes
+-- requires-pack: core, number-sets, paths, permutations-plus, partitions-plus, trees-graphs, tableaux, polytopes
 -- refs pack.
 
-INSERT INTO base_pack (id, version, requires) VALUES ('refs', '0.1.0', '{core,number-sets,paths,permutations-plus,partitions-plus,trees-graphs,polytopes}');
+INSERT INTO base_pack (id, version, requires) VALUES ('refs', '0.1.0', '{core,number-sets,paths,permutations-plus,partitions-plus,trees-graphs,tableaux,polytopes}');
