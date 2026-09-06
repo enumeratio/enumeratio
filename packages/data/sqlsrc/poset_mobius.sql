@@ -202,17 +202,10 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
                            AND NOT EXISTS (SELECT 1 FROM base_poset_order po
                                             WHERE po.collection = er.collection AND po.rel_id = er.rel_id)))::text $q$),
 
-  ('poset_mobius','a relation with no forward_fn is skipped, not failed','eq','true',
-   'integer_partitions'' dominance order names only a pair predicate — no successors to walk',$q$
-    SELECT (EXISTS (SELECT 1 FROM base_element_relation
-                     WHERE collection = 'integer_partitions' AND rel_id = 'dominance' AND forward_fn IS NULL)
-        AND NOT EXISTS (SELECT 1 FROM base_poset_order
-                         WHERE collection = 'integer_partitions' AND rel_id = 'dominance'))::text $q$),
-
-  ('poset_mobius','strong Bruhat on S_3 is Eulerian: μ(u,w) = (−1)^(ℓ(w)−ℓ(u)), so μ(id,w₀) = −1 and μ(id,231) = +1','eq','-1|1',
-   'the order a pack hangs off a core collection — reachable only because the sweep is pack-scoped',$q$
-    SELECT permutations_strong_bruhat_mobius(ROW(ARRAY[1,2,3])::permutation, ROW(ARRAY[3,2,1])::permutation)::text
-      || '|' || permutations_strong_bruhat_mobius(ROW(ARRAY[1,2,3])::permutation, ROW(ARRAY[2,3,1])::permutation)::text $q$),
+  -- Two finalizer behaviors that can only be asserted where the relation they name is loaded live in that pack's
+  -- own files, not here: the related_fn-only skip (integer_partitions.dominance) in packs/partitions-plus, and the
+  -- strong-Bruhat μ (permutations.strong_bruhat) in packs/permutations-plus. A core file's examples must not lean
+  -- on a pack-only relation (#283, #340) — here the row is simply absent in a core-only or other-pack run.
 
   ('poset_mobius','Young''s lattice, across fibers: μ(∅,(1)) = −1, and μ(∅,(1,1)) = 0 because that interval is a chain','eq','-1|0',
    'covers here CROSS fibers, and the up-set of ∅ is INFINITE — μ stays total because it closes the interval''s own '

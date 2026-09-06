@@ -89,3 +89,13 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'eq', '1,3,5,6,5,3,1', 'GROUP BY rank(weak_order) = GROUP BY inversions — the #203 distribution kernel over the rank stat',$q$
     SELECT string_agg(c::text, ',' ORDER BY k) FROM (
       SELECT perm_inversions((e).value) k, count(*) c FROM elements(permutations(4)) e GROUP BY 1) t $q$);
+
+-- The poset_mobius (core finalizer) μ trio, exercised on strong Bruhat. Lives here, not in the core poset_mobius.sql
+-- file, because it calls permutations_strong_bruhat_mobius — only codegen'd once strong_bruhat (a permutations-plus
+-- relation hung off the CORE permutations collection) is loaded, so the function is absent from a core-only run or
+-- any pack run without permutations-plus (#340). The order a pack hangs off a core collection.
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('poset_mobius','strong Bruhat on S_3 is Eulerian: μ(u,w) = (−1)^(ℓ(w)−ℓ(u)), so μ(id,w₀) = −1 and μ(id,231) = +1','eq','-1|1',
+   'the order a pack hangs off a core collection — reachable only because the sweep is pack-scoped',$q$
+    SELECT permutations_strong_bruhat_mobius(ROW(ARRAY[1,2,3])::permutation, ROW(ARRAY[3,2,1])::permutation)::text
+      || '|' || permutations_strong_bruhat_mobius(ROW(ARRAY[1,2,3])::permutation, ROW(ARRAY[2,3,1])::permutation)::text $q$);

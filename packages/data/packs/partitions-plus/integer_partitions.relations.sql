@@ -22,3 +22,14 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
       AND NOT partition_dominates(ROW(ARRAY[3,3])::integer_partition, ROW(ARRAY[4,1,1])::integer_partition)
       AND NOT partition_dominates(ROW(ARRAY[4,1,1])::integer_partition, ROW(ARRAY[3,3])::integer_partition)
     )::text $q$);
+
+-- poset_mobius (core finalizer) skips a related_fn-only cover relation: dominance names only a pair predicate, so
+-- there are no successors to walk and the finalizer generates no ≤/interval/μ trio. Lives here, not in the core
+-- poset_mobius.sql file, because it names dominance — a partitions-plus relation absent from a core-only run (#340).
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('poset_mobius','a relation with no forward_fn is skipped, not failed','eq','true',
+   'integer_partitions'' dominance order names only a pair predicate — no successors to walk',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_element_relation
+                     WHERE collection = 'integer_partitions' AND rel_id = 'dominance' AND forward_fn IS NULL)
+        AND NOT EXISTS (SELECT 1 FROM base_poset_order
+                         WHERE collection = 'integer_partitions' AND rel_id = 'dominance'))::text $q$);
