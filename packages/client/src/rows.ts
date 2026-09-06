@@ -12,7 +12,7 @@
 // axis predicate is a BINDING (selects fibers, ranks intact — it belongs in the handle: `permutations(size=4)`), an
 // element predicate is a RESTRICTION (WHERE; drops rows inside fibers), a fiber-measure predicate is a LENS (HAVING;
 // hides fiber rows, the whole stays the whole — under ROLLUP the footer keeps the handle's cardinality).
-import { Handle, catalogMap, renderExprFor, runSql, familyPoints, type ParamValue, type Row, type Cell } from './core'
+import { Handle, catalogMap, collectionParams, renderExprFor, runSql, familyPoints, type ParamValue, type Row, type Cell } from './core'
 import { parsePreds, predsToSql, type Pred } from './preds'
 import { parseSelect, resolveSelect, type Environment, type SelectColumn, type SelectKind, type SelectSpec } from './select'
 
@@ -493,9 +493,14 @@ async function shape(from: string, select: RowSelect = {}, groupBy?: string, cla
   // rows in view (planDeferred) rather than for a hundred rows blindly
   if (!select.eager) for (const c of s.sel) if (c.kind === 'glyph') s.deferred.add(c.id)
   for (const c of s.sel) if (c.kind === 'pivot') c.values = await pivotValues(s, c)
-  // an open handle whose OUTERMOST axis is bound (k_subsets(n=0..4), k free) is finite: the fibers stream to an end,
-  // so sum their cardinalities — cardinality(h) alone reports ∞ for any open range
-  if (s.open && s.axes.length && h.args[s.axes[0]] !== undefined) {
+  // an open handle whose OUTERMOST UNFOLD axis is bound (k_subsets(n=0..4), k free) is finite: the fibers stream to an
+  // end, so sum their cardinalities — cardinality(h) alone reports ∞ for any open range. Family PARAMETERS (role=param,
+  // #67) never unfold a fiber range and are always pinned, so they don't gate this: hyperbinary_representations =
+  // hypernumerary(2,1) pins the params b,k, but its true axis n is unbounded — an open collection. Testing axes[0]=b
+  // (a param) would wrongly run the probe and enumerate 100000 fibers only to rediscover it's open (#254 tail).
+  const params = new Set((await collectionParams())[s.coll] ?? [])
+  const unfoldAxes = s.axes.filter((a) => !params.has(a))
+  if (s.open && unfoldAxes.length && h.args[unfoldAxes[0]] !== undefined) {
     const cap = 100000
     const fs = await runSql<{ count: string }>(`SELECT cardinality(f)::text AS count FROM fibers(${built}, ${cap}) f`)
     if (fs.length < cap && fs.every((r) => r.count !== 'Infinity')) {

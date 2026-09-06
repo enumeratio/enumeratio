@@ -7,11 +7,20 @@ CREATE FUNCTION is_amicable(n numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS
   SELECT n > 0 AND aliquot_sum(n) <> n AND aliquot_sum(aliquot_sum(n)) = n $$;
 
 CREATE TYPE amicable_numbers_fiber AS (unit unit);   -- singleton fiber (ungraded)
--- sparse: first member is 220, sixth is 2924 (~500/element); window SCALES with element_limit (#296) so a small
--- request doesn't re-pay a fixed 3200-wide scan — floor keeps the first six comfortably in range.
+-- sparse: first member is 220, sixth is 2924, and they thin out fast — no finite window holds the 100th, and there is
+-- no closed form. Enumerate by a DIVISOR-SUM SIEVE — one pass computes aliquot_sum for every candidate, O(W log W) —
+-- NOT by testing each n with the O(n) aliquot_sum: at the default 100-row window the per-n test scans ~60k integers
+-- and tips past the 20s watchdog (#254). The window still SCALES with element_limit (#296 — a small request stays a
+-- small sieve) but is CAPPED: past the cap the fiber is a frontier, not a truncation. The sieve reaches 2×W so a pair
+-- straddling the window edge (n ≤ W, partner aliquot_sum(n) just past W) is still detected.
 CREATE FUNCTION fiber_elements(f amicable_numbers_fiber, element_limit int) RETURNS SETOF numeric LANGUAGE sql STABLE AS $$
-  SELECT n::numeric FROM generate_series(1, element_limit * 600 + 200) n
-   WHERE is_amicable(n::numeric) ORDER BY n LIMIT element_limit $$;
+  WITH b AS (SELECT least(element_limit * 600 + 200, 100000)::bigint AS w),
+       sig AS (SELECT m AS v, sum(d) - m AS s                                 -- aliquot_sum (proper-divisor sum) of every m ≤ 2W
+                 FROM b, generate_series(1, b.w * 2) d, generate_series(d, b.w * 2, d) m
+                GROUP BY m)
+  SELECT a.v::numeric FROM sig a JOIN sig partner ON partner.v = a.s, b        -- n amicable ⇔ aliquot_sum(aliquot_sum(n)) = n, with n ≠ aliquot_sum(n)
+   WHERE a.v <= b.w AND a.s <> a.v AND partner.s = a.v
+   ORDER BY a.v LIMIT element_limit $$;
 CREATE FUNCTION contains_in_fiber(f amicable_numbers_fiber, v numeric) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT is_amicable(v) $$;
 
