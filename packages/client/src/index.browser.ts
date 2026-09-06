@@ -2,6 +2,7 @@
 // (browser.ts). Wire with `provideDb(() => makeWorkerDb())` for off-thread, non-blocking calculation
 // (the explorer), or `provideDb(() => makeDb())` for a small main-thread instance.
 export * from './core'
+export * from './window-sizer'
 export * from './rows'
 export * from './select'
 export * from './preds'

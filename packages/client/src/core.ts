@@ -3,6 +3,8 @@
 // against the core's surface — base_catalog (collection metadata), the generated cardinality/elements/unrank, and
 // render() (the canonical codec). One carrier per collection, a fixed grade CHAIN (size = grade 1, then the rest).
 
+import { priorFromAccel, WindowSizer, type WindowPrior } from './window-sizer'
+
 export type Cell = string | number | null
 export type Row = Record<string, Cell>
 export type Stat = { statId: string; valueFunc: string; findstatId: string | null; codomain: string | null; inherited?: boolean }
@@ -833,6 +835,8 @@ export class Handle {
   private _stats?: Stat[]
   private _maps?: MapInfo[]
   private _rendersSvg?: Promise<boolean>
+  private _accel?: Promise<{ count: boolean; unrank: boolean }>
+  private _prior?: Promise<WindowPrior>
 
   constructor(coll: string, args: number | Record<string, ParamValue> = {}) {
     if (!isIdent(coll)) throw new Error(`invalid collection name: ${coll}`)
@@ -908,6 +912,26 @@ export class Handle {
   async growthHint(offset = 0, sample = 4, opts: WindowOpts = {}): Promise<number> {
     const rowsOut = await this.window(offset, sample, opts)
     return rowsOut.length ? rowsOut.reduce((s, r) => s + rowBytes(r), 0) / rowsOut.length : 0
+  }
+
+  /** Which per-fiber accelerators this collection's carrier declares — `fiber_count` (cheap closed-form cardinality)
+   *  and `fiber_unrank` (cheap random access) — by pg_proc presence (to_regprocedure, like rendersSvg). The window
+   *  sizer's phase-1 growth-signal source (#273): the prior is DERIVED from these, not from an authored registry
+   *  column (that authority call is #273 open decision #1). Memoized. */
+  accel(): Promise<{ count: boolean; unrank: boolean }> {
+    return (this._accel ??= (async () => {
+      const [r] = await rows<{ count: boolean; unrank: boolean }>(
+        `SELECT to_regprocedure($1) IS NOT NULL AS count, to_regprocedure($2) IS NOT NULL AS unrank`,
+        [`fiber_count(${this.coll}_fiber)`, `fiber_unrank(${this.coll}_fiber, rank_index)`],
+      )
+      return { count: !!r?.count, unrank: !!r?.unrank }
+    })())
+  }
+
+  /** This collection's declared-growth window prior (#273 Piece 1) — the starting window + hard cap the adaptive
+   *  sizer opens with, derived from accelerator presence. Memoized. */
+  windowPrior(): Promise<WindowPrior> {
+    return (this._prior ??= this.accel().then(priorFromAccel))
   }
 
   /** The collection's statistics, from the base_stat registry (value_fn applied to each element's carrier). */
@@ -1256,14 +1280,28 @@ export class Handle {
     return r ? Number(r.n) : 0
   }
 
-  /** Lazily async-iterate the flattened elements in canonical (global-rank) order, paging the stream — a finite
-   *  handle ends on its own; an unbounded one runs until the consumer stops (break out of the for-await). */
+  /** Lazily async-iterate the flattened elements in canonical (global-rank) order, paging the stream — a finite handle
+   *  ends on its own; an unbounded one runs until the consumer stops (break out of the for-await). The page size is
+   *  ADAPTIVE (#273 Piece 1): each window is sized from the collection's declared-growth prior + an EWMA of the
+   *  per-item wall time the window path measures, so it opens small for an expensive collection and shrinks toward 1
+   *  under sustained slowdown — never the old fixed constant. An explicit `pageSize` overrides the sizer verbatim. */
   async *elements(opts: WindowOpts & { pageSize?: number } = {}): AsyncGenerator<Result> {
-    const page = Math.max(1, opts.pageSize ?? 1000)
-    for (let first = 0; ; first += page) {
+    // sparse early-exit (#254): when a cheap fiber_count says the collection is bounded and EMPTY, there is nothing to
+    // scan — open no window at all. Without fiber_count, card() would COUNT by enumerating, so don't probe it here (nor
+    // trust it as a cap below); the short-read/barren-fiber budget still terminates the walk.
+    const accel = await this.accel()
+    const total = accel.count ? await this.card() : null
+    if (total === 0) return
+    const fixed = opts.pageSize != null ? Math.max(1, opts.pageSize) : null
+    const sizer = fixed == null ? new WindowSizer(await this.windowPrior()) : null
+    for (let first = 0; ;) {
+      const page = fixed ?? sizer!.next(total == null ? undefined : total - first)
       const batch = await this.window(first, page, opts)
       yield* batch
-      if (batch.length < page) break
+      if (batch.length < page) break   // short read = end of the walk (bounded, or an open handle's barren-fiber budget)
+      const last = recentPerf().at(-1)   // window() just recorded this batch's perf — feed the EWMA, no parallel timer
+      if (sizer && last) sizer.observe(last)
+      first += batch.length
     }
   }
 

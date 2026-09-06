@@ -2,6 +2,7 @@
 // Wire it with `provideDb(() => makeDb())` (main-thread, one-shot) or `provideDb(() => makeWorkerDb())`
 // (off-thread + watchdog), then use collections/construct/describe/summary/Handle.
 export * from './core'
+export * from './window-sizer'
 export * from './rows'
 export * from './select'
 export * from './preds'
