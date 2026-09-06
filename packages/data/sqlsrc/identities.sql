@@ -152,6 +152,13 @@ INSERT INTO base_function (id, title, description) VALUES
    'XOR-convolution with a Thue–Morse overlap sign: out[i⊻j] += (−1)^popcount(i∧j)·a[i]·b[j] (mod M).'),
   ('multicomplex_neg', 'Multicomplex negation', 'Componentwise negation mod M.'),
   ('multicomplex_conj', 'Multicomplex conjugation', 'Flips every "odious" (odd-popcount-indexed) coefficient''s sign.'),
+  ('multicomplex_norm', 'Multicomplex norm',
+   'N(z) = det of the multiplication-by-z map on ℂₙ(ℤ/Mℤ) as a free rank-2ⁿ module — the algebra norm, '
+   'multiplicative, computed through the tower as N(z) = N_{ℂₙ₋₁}(u² + v²) for z = u + iₙ·v. Reduces to a²+b² at '
+   'n = 1. NOT z·conj(z), which keeps a j₃ part once n ≥ 2 (the unit signature is mixed).'),
+  ('multicomplex_inverse', 'Multicomplex inverse',
+   'z⁻¹ in ℂₙ(ℤ/Mℤ), or nothing: z is a unit exactly when its norm is invertible mod M (coprimality, not '
+   'non-vanishing). Built from z·(u − iₙ·v) = u² + v² recursively down the tower.'),
   ('multicomplex_popcount', 'Popcount', 'The Hamming weight of a non-negative bitmask (0..30 bits) — the sign exponent '
    'multicomplex multiplication is built from.'),
   ('composition_from_mask', 'Composition from gap-cut mask',

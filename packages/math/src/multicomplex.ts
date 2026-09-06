@@ -62,3 +62,58 @@ export function multicomplex_conj(a: Multicomplex): Multicomplex {
     modulus: a.modulus,
   };
 }
+
+/**
+ * SQL twin: multicomplex_norm(z multicomplex) — multicomplex_numbers.sql. The ALGEBRA norm: det of the
+ * multiplication-by-z map on ℂn(ℤ/M) as a free rank-2ⁿ module. Computed through the tower
+ * ℂn = ℂ(n−1)[i_n]/(i_n²+1): the coefficient array splits at the halfway mark into z = u + i_n·v, and
+ * N(z) = N_{ℂ(n−1)}(u² + v²), bottoming out at N(a) = a in ℂ0 = ℤ/M. Not z·conj(z) — the signature is mixed
+ * (j_m² = (−1)^popcount(m)), so that product keeps a j3 part for n ≥ 2. Returns null on a non-2ⁿ dimension.
+ */
+export function multicomplex_norm(z: Multicomplex): number | null {
+  const n = z.coeffs.length;
+  if (n < 1 || (n & (n - 1)) !== 0 || z.modulus < 1) return null;
+  if (n === 1) return mod(z.coeffs[0], z.modulus);
+  const h = n / 2;
+  const u: Multicomplex = { coeffs: z.coeffs.slice(0, h), modulus: z.modulus };
+  const v: Multicomplex = { coeffs: z.coeffs.slice(h), modulus: z.modulus };
+  return multicomplex_norm(multicomplex_add(multicomplex_mul(u, u), multicomplex_mul(v, v)));
+}
+
+/** SQL twin: multicomplex_invmod(a, m) — extended Euclid, null when gcd(a, m) ≠ 1. */
+export function multicomplex_invmod(a: number, m: number): number | null {
+  if (m < 1) return null;
+  let t = 0,
+    nt = 1,
+    r = m,
+    nr = mod(a, m);
+  while (nr !== 0) {
+    const q = Math.floor(r / nr);
+    [t, nt] = [nt, t - q * nt];
+    [r, nr] = [nr, r - q * nr];
+  }
+  return r === 1 ? mod(t, m) : null;
+}
+
+/**
+ * SQL twin: multicomplex_inverse(z multicomplex) — multicomplex_numbers.sql. null for every non-unit; z is a unit
+ * iff multicomplex_norm(z) is invertible mod M (coprimality, not non-vanishing — N(1 + j1) = 2 over ℤ/6 fails).
+ * Recursion: z·(u − i_n·v) = u² + v², so z⁻¹ = (u − i_n·v)·(u² + v²)⁻¹ with the inner inverse taken in ℂ(n−1).
+ */
+export function multicomplex_inverse(z: Multicomplex): Multicomplex | null {
+  const n = z.coeffs.length;
+  if (n < 1 || (n & (n - 1)) !== 0 || z.modulus < 1) return null;
+  if (n === 1) {
+    const a = multicomplex_invmod(z.coeffs[0], z.modulus);
+    return a === null ? null : { coeffs: [a], modulus: z.modulus };
+  }
+  const h = n / 2;
+  const u: Multicomplex = { coeffs: z.coeffs.slice(0, h), modulus: z.modulus };
+  const v: Multicomplex = { coeffs: z.coeffs.slice(h), modulus: z.modulus };
+  const sInv = multicomplex_inverse(multicomplex_add(multicomplex_mul(u, u), multicomplex_mul(v, v)));
+  if (sInv === null) return null;
+  return multicomplex_mul(
+    { coeffs: [...u.coeffs, ...multicomplex_neg(v).coeffs], modulus: z.modulus },
+    { coeffs: [...sInv.coeffs, ...new Array(h).fill(0)], modulus: z.modulus },
+  );
+}

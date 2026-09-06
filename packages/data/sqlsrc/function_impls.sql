@@ -115,6 +115,12 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   ('multicomplex_conj', 'pg', 'multicomplex_conj', '{multicomplex}', 'multicomplex', 'numeric', NULL),
   ('multicomplex_conj', 'ts', 'multicomplex_conj', '{multicomplex}', 'multicomplex', 'float64', NULL),
 
+  ('multicomplex_norm', 'pg', 'multicomplex_norm', '{multicomplex}', 'int', 'numeric', NULL),
+  ('multicomplex_norm', 'ts', 'multicomplex_norm', '{multicomplex}', 'int', 'float64', NULL),
+
+  ('multicomplex_inverse', 'pg', 'multicomplex_inverse', '{multicomplex}', 'multicomplex', 'numeric', NULL),
+  ('multicomplex_inverse', 'ts', 'multicomplex_inverse', '{multicomplex}', 'multicomplex', 'float64', NULL),
+
   ('multicomplex_popcount', 'pg', 'multicomplex_popcount', '{int}', 'int', 'numeric', NULL),
   ('multicomplex_popcount', 'ts', 'multicomplex_popcount', '{int}', 'int', 'float64', NULL),
 

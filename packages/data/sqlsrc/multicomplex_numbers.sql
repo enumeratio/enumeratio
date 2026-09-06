@@ -1,4 +1,4 @@
--- requires: realizer, algebra
+-- requires: realizer, algebra, utilities
 -- multicomplex_numbers — the multicomplex ring ℂn(ℤ/Mℤ) = (ℤ/Mℤ)[i₁,…,iₙ] / (i₁²+1, …, iₙ²+1): the commutative
 -- ring TOWER (ℂ0 = ℤ/M, ℂ1 ≅ ℂ over ℤ/M, ℂ2 = bicomplex, …), NOT the quaternions. Its 2ⁿ basis units j_m are
 -- indexed by bitmasks, so multiplication is XOR on indices with a Thue–Morse overlap sign:
@@ -17,8 +17,10 @@
 --   mirroring gaussian_integer and modular_residue, with SQL + − · operators on the carrier. The interactive
 --   client-side expression evaluator (core.ts emitterFor) is a FOLLOW-UP: it needs a multi-unit grammar (i₁,i₂,…),
 --   a real grammar extension vs. gaussian's single bare `i`. The SQL ring is complete and tested here regardless.
---   Also deferred (the deep number theory): the spectral transform / norm / inverse, which need a Hensel √−1 and the
---   split-ring machinery (only when every prime factor of M ≡ 1 mod 4).
+--   NORM + INVERSE: built below (#167 part 1) — the algebra norm (det of multiplication-by-z) via the tower, not a
+--   conjugate product, which the mixed signature rules out. Still deferred: the SPECTRAL half of #167 (Hensel-lifted
+--   √−1 per CRT channel, primitive idempotents, the î-twisted Walsh–Hadamard transform, the 2ⁿ × ω(M) spectral
+--   grid) — it turns on the signature-vector design in #327 and waits for it.
 
 -- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────────
 CREATE TYPE multicomplex AS (coeffs int[], modulus int);
@@ -169,3 +171,114 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT count(*)::text FROM elements(multicomplex_numbers(), 100) e $q$),
   ('multicomplex_numbers','the default extent bounds the unfold, not the collection','eq','155','ℂ9(ℤ/2) past the level-4 default still constructs and counts: 2^(2^9) = 2^512, a 155-digit integer',$q$
     SELECT length(cardinality(multicomplex_numbers(2,9))::text)::text $q$);
+
+-- ── norm and multiplicative inverse (#167 part 1) ─────────────────────────────────────────────────────────
+-- DEFINITION. N(z) = det of the multiplication-by-z map on ℂn(ℤ/M) as a free ℤ/M-module of rank 2ⁿ — the ALGEBRA
+-- norm. Not a conjugate product: the signature here is MIXED (j_m² = (−1)^popcount(m), so j1² = j2² = −1 but
+-- j3² = +1), and multicomplex_conj — which flips every odious unit — is a ring automorphism whose "norm" is not a
+-- scalar above n = 1. At n = 2, for z = a + b·j1 + c·j2 + d·j3,
+--     z · conj(z) = (a² + b² + c² + d²) + 2(ad − bc)·j3,
+-- with a live j3 part. So the Gaussian shortcut N(z) = z·conj(z) is simply unavailable here; the determinant is.
+--
+-- COMPUTED BY THE TOWER, not by eliminating a 2ⁿ×2ⁿ matrix. ℂn = ℂ(n−1)[i_n]/(i_n² + 1) with i_n = j_(2^(n−1)),
+-- and the coefficient array splits exactly at the halfway mark: the low half is u ∈ ℂ(n−1), the high half is
+-- v ∈ ℂ(n−1), and z = u + i_n·v (the overlap 2^(n−1) ∧ m' is empty, so no Thue–Morse sign creeps into the split).
+-- The determinant of a ℂ(n−1)-linear map read over the base is the base-norm of its ℂ(n−1)-determinant, and
+-- (u + i_n·v)(u − i_n·v) = u² + v², so
+--     N(z) = N_{ℂ(n−1)}(u² + v²),        N(a) = a  at n = 0.
+-- O(n) squarings, and exact mod M at every step (the norm form has integer coefficients, so reducing as you go is
+-- the same as reducing at the end). Checks: n = 1 gives a² + b², the Gaussian norm; a scalar a gives a^(2ⁿ) = det
+-- of a·I; and for z = 1 + 2·j1 + 3·j3 over ℤ/97 the multiplication matrix in the basis (1, j1, j2, j3) is
+--     [1 −2  0  3; 2  1 −3  0; 0 −3  1 −2; 3  0  2  1],   det = 160,
+-- which is what the recursion returns ((1−4+0−9)² + (2·1·2 + 2·0·3)² = 144 + 16), reduced to 160 mod 97 = 63.
+CREATE FUNCTION multicomplex_norm(z multicomplex) RETURNS int LANGUAGE plpgsql IMMUTABLE AS $$
+DECLARE n int := array_length((z).coeffs, 1); m int := (z).modulus; h int; u multicomplex; v multicomplex;
+BEGIN
+  IF n IS NULL OR m IS NULL OR m < 1 OR (n & (n - 1)) <> 0 THEN RETURN NULL; END IF;   -- 2ⁿ places or nothing
+  IF n = 1 THEN RETURN ((z).coeffs[1] % m + m) % m; END IF;                            -- ℂ0 = ℤ/M: N(a) = a
+  h := n / 2;
+  u := ROW((SELECT array_agg((z).coeffs[i]     ORDER BY i) FROM generate_series(1, h) i), m)::multicomplex;
+  v := ROW((SELECT array_agg((z).coeffs[h + i] ORDER BY i) FROM generate_series(1, h) i), m)::multicomplex;
+  RETURN multicomplex_norm(multicomplex_add(multicomplex_mul(u, u), multicomplex_mul(v, v)));
+END $$;
+
+-- extended Euclid, NULL (not an exception) when gcd(a, m) ≠ 1 — multicomplex_inverse needs non-invertibility as a
+-- value, since a non-unit is an ordinary inhabitant of ℂn(ℤ/M), not an error. (residue_invmod raises; it also isn't
+-- ordered before this file.)
+CREATE FUNCTION multicomplex_invmod(a int, m int) RETURNS int LANGUAGE plpgsql IMMUTABLE AS $$
+DECLARE t bigint := 0; nt bigint := 1; r bigint := m; nr bigint := (a % m + m) % m; q bigint; tmp bigint;
+BEGIN
+  IF m IS NULL OR m < 1 THEN RETURN NULL; END IF;
+  WHILE nr <> 0 LOOP
+    q := div(r, nr);
+    tmp := t - q * nt; t := nt; nt := tmp;
+    tmp := r - q * nr; r := nr; nr := tmp;
+  END LOOP;
+  IF r <> 1 THEN RETURN NULL; END IF;
+  RETURN ((t % m + m) % m)::int;
+END $$;
+
+-- z is a UNIT iff N(z) is invertible mod M — NULL for every non-unit. (⇒ N is multiplicative and N(1) = 1, so a
+-- unit has an invertible norm; ⇐ is the recursion below: z·(u − i_n·v) = u² + v², so z is a unit exactly when
+-- u² + v² is one in ℂ(n−1), and by induction that happens exactly when N(z) = N_{ℂ(n−1)}(u² + v²) is invertible.)
+-- Note this is coprimality, NOT non-vanishing: over a composite M a nonzero norm can still fail (N(1 + j1) = 2 over
+-- ℤ/6), and over any M ≥ 2 with n ≥ 2 the zero divisor 1 + j3 has N = 0 — indeed (1 + j3)(1 − j3) = 1 − j3² = 0.
+CREATE FUNCTION multicomplex_inverse(z multicomplex) RETURNS multicomplex LANGUAGE plpgsql IMMUTABLE AS $$
+DECLARE n int := array_length((z).coeffs, 1); m int := (z).modulus; h int;
+        u multicomplex; v multicomplex; s multicomplex; s_inv multicomplex; a int;
+BEGIN
+  IF n IS NULL OR m IS NULL OR m < 1 OR (n & (n - 1)) <> 0 THEN RETURN NULL; END IF;
+  IF n = 1 THEN
+    a := multicomplex_invmod((z).coeffs[1], m);
+    RETURN CASE WHEN a IS NULL THEN NULL ELSE ROW(ARRAY[a], m)::multicomplex END;
+  END IF;
+  h := n / 2;
+  u := ROW((SELECT array_agg((z).coeffs[i]     ORDER BY i) FROM generate_series(1, h) i), m)::multicomplex;
+  v := ROW((SELECT array_agg((z).coeffs[h + i] ORDER BY i) FROM generate_series(1, h) i), m)::multicomplex;
+  s := multicomplex_add(multicomplex_mul(u, u), multicomplex_mul(v, v));        -- N_{ℂn/ℂ(n−1)}(z) = u² + v²
+  s_inv := multicomplex_inverse(s);
+  IF s_inv IS NULL OR (s_inv).coeffs IS NULL THEN RETURN NULL; END IF;
+  -- z⁻¹ = (u − i_n·v) · s⁻¹, with s⁻¹ lifted back into ℂn by zero-padding the high half
+  RETURN multicomplex_mul(
+    ROW((u).coeffs || (multicomplex_neg(v)).coeffs, m)::multicomplex,
+    ROW((s_inv).coeffs || (SELECT array_agg(0) FROM generate_series(1, h)), m)::multicomplex);
+END $$;
+
+INSERT INTO base_stat (collection, stat_id, value_fn, title, codomain) VALUES
+  ('multicomplex_numbers','norm','multicomplex_norm','Algebra norm (det of multiplication-by-z)','natural_numbers');
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('multicomplex_numbers','norm at n=1 is the Gaussian norm: N(3 + 4j1) = 3²+4² = 25 ≡ 12 mod 13','eq','12|25','the tower recursion bottoms out at a²+b²',$q$
+    SELECT multicomplex_norm(ROW(ARRAY[3,4],13)::multicomplex)::text || '|' ||
+           multicomplex_norm(ROW(ARRAY[3,4],97)::multicomplex)::text $q$),
+  ('multicomplex_numbers','norm at n=0 is the residue itself, and a scalar in ℂ2 has N(a) = a^(2²) = 81','eq','3|81','det of a·I on a rank-2ⁿ module',$q$
+    SELECT multicomplex_norm(ROW(ARRAY[3],97)::multicomplex)::text || '|' ||
+           multicomplex_norm(ROW(ARRAY[3,0,0,0],97)::multicomplex)::text $q$),
+  ('multicomplex_numbers','norm = det of the multiplication matrix: N(1 + 2j1 + 3j3) over ℤ/97 is det[1 −2 0 3; 2 1 −3 0; 0 −3 1 −2; 3 0 2 1] = 160 ≡ 63','eq','63','the 4×4 determinant, expanded by hand in the header',$q$
+    SELECT multicomplex_norm(ROW(ARRAY[1,2,0,3],97)::multicomplex)::text $q$),
+  ('multicomplex_numbers','norm is multiplicative: N(z)=160, N(w)=32, N(zw) = 160·32 = 5120 ≡ 76 mod 97','eq','76|76','z = 1+2j1+3j3, w = 2+j1+j2 in ℂ2(ℤ/97)',$q$
+    SELECT multicomplex_norm(ROW(ARRAY[1,2,0,3],97)::multicomplex * ROW(ARRAY[2,1,1,0],97)::multicomplex)::text || '|' ||
+           ((multicomplex_norm(ROW(ARRAY[1,2,0,3],97)::multicomplex)::bigint
+           * multicomplex_norm(ROW(ARRAY[2,1,1,0],97)::multicomplex)) % 97)::text $q$),
+  ('multicomplex_numbers','the units of ℂ1(ℤ/5) and ℂ1(ℤ/3): 16 = 4·4 (ℤ/5[i] ≅ ℤ/5 × ℤ/5, since −1 ≡ 2² mod 5) and 8 (ℤ/3[i] ≅ 𝔽9, a field)','eq','16|8','closed-form unit counts, independent of the implementation',$q$
+    SELECT (SELECT count(*) FROM elements(multicomplex_numbers(5,1)) e WHERE multicomplex_inverse((e).value) IS NOT NULL)::text || '|' ||
+           (SELECT count(*) FROM elements(multicomplex_numbers(3,1)) e WHERE multicomplex_inverse((e).value) IS NOT NULL)::text $q$),
+  ('multicomplex_numbers','unit ⇔ invertible norm: over all of ℂ1(ℤ/6), inverse exists exactly where gcd(N(z),6) = 1','eq','true','the criterion, checked pointwise on 36 elements',$q$
+    SELECT bool_and((multicomplex_inverse((e).value) IS NOT NULL)
+                  = (gcd_int(multicomplex_norm((e).value), 6) = 1))::text
+      FROM elements(multicomplex_numbers(6,1)) e $q$),
+  ('multicomplex_numbers','inverse round-trip: z·z⁻¹ = 1 for the units of ℂ2(ℤ/97) and ℂ1(ℤ/6)','eq','1|1','1 + 2j1 + 3j3 (N=63) and 1 + 2j1 (N=5, coprime to 6)',$q$
+    SELECT notation(ROW(ARRAY[1,2,0,3],97)::multicomplex * multicomplex_inverse(ROW(ARRAY[1,2,0,3],97)::multicomplex)) || '|' ||
+           notation(ROW(ARRAY[1,2],6)::multicomplex * multicomplex_inverse(ROW(ARRAY[1,2],6)::multicomplex)) $q$),
+  ('multicomplex_numbers','(1 + 2j1)⁻¹ = 5 + 2j1 in ℂ1(ℤ/6) — hand-computed: conj/N = (1 − 2j1)·5⁻¹ = (1 + 4j1)·5','eq','-1 + 2j1','balanced notation folds 5 to −1',$q$
+    SELECT notation(multicomplex_inverse(ROW(ARRAY[1,2],6)::multicomplex)) $q$),
+  ('multicomplex_numbers','non-units return NULL: 1 + j3 is a zero divisor (N = 0, and (1+j3)(1−j3) = 1 − j3² = 0), and 1 + j1 over ℤ/6 has N = 2','eq','0|true|0|2|true','a nonzero norm can still be non-invertible over composite M',$q$
+    SELECT multicomplex_norm(ROW(ARRAY[1,0,0,1],97)::multicomplex)::text || '|' ||
+           (multicomplex_inverse(ROW(ARRAY[1,0,0,1],97)::multicomplex) IS NULL)::text || '|' ||
+           notation(ROW(ARRAY[1,0,0,1],97)::multicomplex * ROW(ARRAY[1,0,0,97-1],97)::multicomplex)::text || '|' ||
+           multicomplex_norm(ROW(ARRAY[1,1],6)::multicomplex)::text || '|' ||
+           (multicomplex_inverse(ROW(ARRAY[1,1],6)::multicomplex) IS NULL)::text $q$),
+  ('multicomplex_numbers','z·conj(z) is NOT a scalar for n ≥ 2: (a+b j1+c j2+d j3)·conj(…) = (a²+b²+c²+d²) + 2(ad−bc)·j3','eq','30 - 4j3','why the norm is a determinant, not a conjugate product: (a,b,c,d) = (1,2,3,4) gives 1+4+9+16 = 30 and 2(1·4 − 2·3) = −4',$q$
+    SELECT notation(ROW(ARRAY[1,2,3,4],97)::multicomplex * multicomplex_conj(ROW(ARRAY[1,2,3,4],97)::multicomplex)) $q$),
+  ('multicomplex_numbers','norm registered as a stat','eq','true',NULL,$q$
+    SELECT EXISTS(SELECT 1 FROM base_stat WHERE collection = 'multicomplex_numbers' AND stat_id = 'norm')::text $q$);
