@@ -17,8 +17,16 @@ const here = dirname(fileURLToPath(import.meta.url))
 export const sqlsrcDir = join(here, 'sqlsrc')
 export const packsDir = join(here, 'packs')
 
-/** The prebuilt gzipped-tar dump (built by build-pgdata.mts / the client build). Mounted by bootCore(). */
-export const coreDumpPath = join(here, 'enumeratio-core.pgdata')
+/** Path to the prebuilt gzipped-tar dump for one PROFILE (#283 phase 4, wiki §7) — 'core' (core only, no packs)
+ *  or 'all' (core + every extracted pack). Built by build-pgdata.mts / the client build; mounted by bootCore(). */
+export function dumpPath(profile: 'core' | 'all' = 'all'): string {
+  return join(here, profile === 'core' ? 'enumeratio-core.pgdata' : 'enumeratio-all.pgdata')
+}
+
+/** The 'all'-profile dump path — every caller before the profile split (#283 phase 4) always meant this one.
+ *  Kept as a plain value (not a function) so existing callers (client/src/node.ts's worker boot payload) don't
+ *  need an edit; equivalent to `dumpPath('all')`. */
+export const coreDumpPath = dumpPath('all')
 
 /** The per-pack catalog-snapshot fragment (#283 phase 4): `catalog-snapshot.<pack>.json`, built by
  *  build-catalog-snapshot.mts alongside the dump — same lifecycle, gitignored release artifact. */
@@ -29,9 +37,9 @@ export function catalogSnapshotFragmentPath(pack: string): string {
 /** Every pack-fragment snapshot that exists on disk, keyed by pack id. A fragment missing entirely (never built,
  *  or a pack extracted since) simply isn't in the map — never throws; an absent or incomplete set degrades to
  *  "the caller rebuilds live" (client/node.ts), same as a missing single blob did before the split. */
-export async function loadCatalogSnapshotFragments(): Promise<Map<string, CatalogSnapshot>> {
+export async function loadCatalogSnapshotFragments(profile: 'core' | 'all' = 'all'): Promise<Map<string, CatalogSnapshot>> {
   const out = new Map<string, CatalogSnapshot>()
-  for (const { pack } of corePackHashes()) {
+  for (const { pack } of corePackHashes(profile)) {
     try {
       out.set(pack, JSON.parse(await readFile(catalogSnapshotFragmentPath(pack), 'utf8')) as CatalogSnapshot)
     } catch {
@@ -57,71 +65,99 @@ export function loadCoreAndPacks(): { core: Pack; packs: Pack[] } {
   return { core: corePack(), packs: readPacksFromDisk(packsDir) }
 }
 
-/** The ordered files (bootstrap first, then any extracted packs in `requires-pack` order), read from disk. With
- *  zero packs under `packs/*` (today) this is byte-identical to `orderSqlsrc(sqlsrc/*)` — see sqlsrc-order.test.ts. */
-export function coreFiles(): SqlFile[] {
+/** The pack list for one PROFILE (#283 phase 4, wiki §7): 'all' is core + every extracted pack (every caller's
+ *  behaviour before the profile split); 'core' is core alone. A pure filter over an already-loaded pack list,
+ *  rather than a second disk-walk. */
+function profilePacks(profile: 'core' | 'all', packs: Pack[]): Pack[] {
+  return profile === 'all' ? packs : []
+}
+
+/** The ordered files (bootstrap first, then any extracted packs in `requires-pack` order — 'all' profile — or
+ *  just core's own files — 'core' profile), read from disk. Defaults to 'all': every caller before the profile
+ *  split (#283 phase 4) got core+packs, and this keeps that behaviour for a 0-arg call. With zero packs under
+ *  `packs/*` this is byte-identical to `orderSqlsrc(sqlsrc/*)` — see sqlsrc-order.test.ts. */
+export function coreFiles(profile: 'core' | 'all' = 'all'): SqlFile[] {
   const { core, packs } = loadCoreAndPacks()
-  return orderPacks(core, packs)
+  return orderPacks(core, profilePacks(profile, packs))
 }
 
-/** The whole core (+ packs) as one concatenated bundle, dependency-ordered. */
-export function coreBundle(): string {
-  return coreFiles().map(f => `-- ═══ ${f.name}.sql ═══\n${f.content}`).join('\n')
+/** The profile as one concatenated bundle, dependency-ordered. */
+export function coreBundle(profile: 'core' | 'all' = 'all'): string {
+  return coreFiles(profile).map(f => `-- ═══ ${f.name}.sql ═══\n${f.content}`).join('\n')
 }
 
-/** Content hash of the current sqlsrc bundle. Matches index.ts's coreBundleHash — the value stamped into a dump. */
-export function coreBundleHash(): string {
-  return bundleHash(coreBundle())
+/** Content hash of the current sqlsrc bundle for this profile. Matches index.ts's coreBundleHash — the value
+ *  stamped into a dump. */
+export function coreBundleHash(profile: 'core' | 'all' = 'all'): string {
+  return bundleHash(coreBundle(profile))
 }
 
-/** Per-pack hashes for the CURRENT core+packs on disk, in profile order (core first, §7). One row per loaded
- *  pack — with zero packs extracted (today) this is a single 'core' row whose hash equals coreBundleHash(). */
-export function corePackHashes(): PackHash[] {
+/** Per-pack hashes for the CURRENT profile on disk, in profile order (core first, §7). One row per loaded pack —
+ *  the 'core' profile is always a single 'core' row. */
+export function corePackHashes(profile: 'core' | 'all' = 'all'): PackHash[] {
   const { core, packs } = loadCoreAndPacks()
-  return packHashes(segmentByPack(orderPacks(core, packs), core, packs))
+  const p = profilePacks(profile, packs)
+  return packHashes(segmentByPack(orderPacks(core, p), core, p))
 }
 
-/** The profile hash (§7): hash of the ordered per-pack hashes for the current core+packs. Distinct from
+/** The profile hash (§7): hash of the ordered per-pack hashes for the current profile. Distinct from
  *  coreBundleHash() (the plain concatenated-bundle hash the catalog snapshot versions against). */
-export function coreProfileHash(): string {
-  return profileHash(corePackHashes())
+export function coreProfileHash(profile: 'core' | 'all' = 'all'): string {
+  return profileHash(corePackHashes(profile))
 }
 
-/** Apply core + packs into a fresh PGlite, per-file in dependency order (a single giant exec can choke pglite),
- *  bracketing each pack's files with `set_config('enumeratio.pack', …)` (see applyPackSegments). */
-export async function buildCore(): Promise<PGlite> {
+/** Apply one PROFILE into a fresh PGlite, per-file in dependency order (a single giant exec can choke pglite),
+ *  bracketing each pack's files with `set_config('enumeratio.pack', …)` (see applyPackSegments). Defaults to
+ *  'all' — every caller before the profile split (#283 phase 4) got core+packs. */
+export async function buildCore(profile: 'core' | 'all' = 'all'): Promise<PGlite> {
   const pg = new PGlite()
   await pg.waitReady
   const { core, packs } = loadCoreAndPacks()
-  const segments = segmentByPack(orderPacks(core, packs), core, packs)
+  const p = profilePacks(profile, packs)
+  const segments = segmentByPack(orderPacks(core, p), core, p)
   await applyPackSegments(segments, async (_label, sql) => { await pg.exec(sql) })
   return pg
 }
 
-// Boot the core in node, FAST — the node analogue of the client's browser boot.ts. MOUNT the prebuilt dump
-// (loadDataDir, ~1s) instead of re-exec'ing sqlsrc (~10s at the current catalog size), but only when EVERY pack's
-// stamped hash (in `_pack_version`, one row per loaded pack — #283 phase 1.4) matches its live hash — a stale or
-// missing dump self-heals by rebuilding from source. This is what makes "always mount" safe for the test/build
-// consumers, which must see the CURRENT schema.
+// Boot one PROFILE in node, FAST — the node analogue of the client's browser boot.ts. MOUNT that profile's
+// prebuilt dump (loadDataDir, ~1s) instead of re-exec'ing sqlsrc (~10s at the current catalog size), but only when
+// EVERY pack THIS PROFILE LOADS has a stamped hash (in `_pack_version`, one row per loaded pack — #283 phase 1.4)
+// matching its live hash — a stale or missing dump self-heals by rebuilding from source. This is what makes
+// "always mount" safe for the test/build consumers, which must see the CURRENT schema. Defaults to 'all': every
+// caller before the profile split (#283 phase 4) got core+packs, and this keeps that behaviour for a 0-arg call —
+// docs/CLI/tests all need the full catalog (O.2), so nothing here needed to opt into 'all' explicitly.
 //
-// The rebuild itself is still all-or-nothing (buildCore() re-execs core+packs from scratch): today's loader
-// applies each pack's files as one exec pass with no support for tearing down and re-applying a single pack in
-// isolation (a pack's DDL isn't written to be idempotent against an already-loaded pack). A correct whole rebuild
-// that REPORTS which pack forced it beats a per-pack rebuild that silently gets pack boundaries wrong.
-export async function bootCore(): Promise<PGlite> {
+// The rebuild itself is still all-or-nothing WITHIN a profile (buildCore(profile) re-execs that profile's files
+// from scratch) — and that is a DELIBERATE decision, not a gap left open by this ticket (#321):
+//   - Today's loader (applyPackSegments) applies each pack's files as one exec pass into a session that has
+//     nothing loaded yet for that pack. There is no "tear down pack P's tables/types/rows and re-apply just P"
+//     operation anywhere in the stack — a pack's DDL (CREATE TYPE/FUNCTION/TABLE) is written assuming those names
+//     don't already exist, so re-running it against an already-loaded pack fails on the first CREATE, and nothing
+//     DROPs a pack's objects in dependency order (the reverse of a toposort this codebase has never needed before).
+//   - stalePacks() already tells the caller EXACTLY which pack(s) forced the rebuild (see the console.warn below) —
+//     the diagnostic value phase 1.4 wanted is delivered without needing incremental re-application.
+//   - A pack-scoped rebuild's payoff is bounded by how many packs are OUTSIDE the mounted profile in the first
+//     place: the 'core' profile has none stale-by-definition once core itself hasn't changed (packs aren't even
+//     loaded), and the 'all' profile going stale from ONE pack's edit still means re-execing every pack anyway to
+//     get back to a self-consistent whole-profile dump — there's no smaller unit of work to do UNTIL a real
+//     "DROP pack P" primitive exists, which is its own project (reverse-toposort teardown SQL per pack, or
+//     `DROP EXTENSION enumeratio_<pack>` once #122's `.control` packaging — build-control.mts — is a real install
+//     path rather than a packaging-artifact proof). A correct whole rebuild that REPORTS which pack forced it
+//     beats a partial one that silently gets pack boundaries wrong.
+export async function bootCore(profile: 'core' | 'all' = 'all'): Promise<PGlite> {
   try {
-    const bytes = await readFile(coreDumpPath)
+    const bytes = await readFile(dumpPath(profile))
     const pg = new PGlite({ loadDataDir: new Blob([bytes]) })
     await pg.waitReady
     const r = await pg
       .query<{ pack: string; hash: string }>('SELECT pack, hash FROM _pack_version')
       .catch(() => ({ rows: [] as { pack: string; hash: string }[] }))
-    const stale = stalePacks(r.rows, corePackHashes())
+    const stale = stalePacks(r.rows, corePackHashes(profile))
     if (r.rows.length > 0 && stale.length === 0) return pg   // every pack's stamped hash matches live → fast path
-    if (stale.length) console.warn(`enumeratio: bootCore self-heal — rebuilding (stale pack(s): ${stale.join(', ')})`)
+    if (stale.length) console.warn(`enumeratio: bootCore self-heal (${profile}) — rebuilding (stale pack(s): ${stale.join(', ')})`)
     await pg.close()                                          // stale/missing dump → rebuild from source below
   } catch {
     /* dump absent / failed to mount → build from source */
   }
-  return buildCore()
+  return buildCore(profile)
 }

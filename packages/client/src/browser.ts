@@ -4,14 +4,16 @@
 //                      with its own line cap); a big enumeration would block the UI.
 //   • makeWorkerDb() — OFF-THREAD: the pglite lives in a Web Worker (browser-worker.ts), proxied by pglite's
 //                      PGliteWorker, so calculation never blocks the main thread. What the explorer uses.
-import { catalogSnapshot, coreProfileHash } from '@enumeratio/data'
+// #283 phase 4 (O.2): the browser client wants the WHOLE catalog (docs/explorer both browse every pack), so this
+// imports the full-profile entry (`@enumeratio/data/all`) rather than the root export, which is core-only.
+import { catalogSnapshot, coreProfileHash } from '@enumeratio/data/all'
 import { bootPglite } from './boot'
 import { provideCatalog } from './registry'
 import { setDebug, type Db, type Row } from './core'
 import { routeNotice } from './debug-env'
 
 // The browser's half of the catalog-snapshot split: Vite resolves each pack fragment through import.meta.glob at
-// build time (an empty record, not a build error, when none were ever generated) and `@enumeratio/data` merges
+// build time (an empty record, not a build error, when none were ever generated) and `@enumeratio/data/all` merges
 // them (#283 phase 4). `liveHash` is the PROFILE hash now (hash.ts profileHash), not the plain bundle hash — the
 // same quantity `catalogSnapshot.hash` is stamped with when every fragment is present. See client/src/node.ts for
 // the node half (which additionally rebuilds live on a stale/missing fragment, #281 — the browser has nothing to

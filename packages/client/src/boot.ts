@@ -1,11 +1,14 @@
-// Boot a browser PGlite over the pure-SQL core, FAST.
+// Boot a browser PGlite over the FULL catalog (core + every extracted pack), FAST.
 //
 // Rebuilding the core from sqlsrc on every load is the multi-second cost (and a single giant exec can hang pglite). So
 // when a prebuilt dump is available — served by @enumeratio/data's Vite plugin at the URL it `define`s as
 // __ENUMERATIO_CORE_TAR__ — we MOUNT it (loadDataDir, ~400ms) instead. A bundle-hash version check makes a stale or
 // absent dump safe: on any miss we fall back to building from sqlsrc, per-file (never one giant exec).
+//
+// #283 phase 4 (O.2): docs/explorer need the whole catalog, so this imports `@enumeratio/data/all` (not the
+// core-only root export) and the tar the Vite plugin serves is always the 'all' profile (see vite.ts).
 import { PGlite } from '@electric-sql/pglite'
-import { coreFiles, corePackHashes, stalePacks, type PackHash } from '@enumeratio/data'
+import { coreFiles, corePackHashes, stalePacks, type PackHash } from '@enumeratio/data/all'
 import { debugGucSetSql } from './debug-env'
 
 declare const __ENUMERATIO_CORE_TAR__: string | undefined

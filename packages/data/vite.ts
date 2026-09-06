@@ -3,16 +3,21 @@
 // path, and REBUILDS — debounced — when any sqlsrc or pack file changes (then triggers a reload). In prod it emits the tar as a
 // static asset. It also `define`s the fixed URL so the client (boot.ts) knows where to fetch it; without this plugin the
 // client just falls back to building from sqlsrc (the bundle-hash version check makes a stale/absent dump safe).
+//
+// Always the 'all' PROFILE (#283 phase 4, wiki §7 / O.2): docs and the explorer are the "show the whole catalog"
+// consumers, so the dev server (and the prod asset it emits) mount core + every extracted pack, never the
+// core-only profile — a consumer wanting core-only imports `@enumeratio/data`'s root export instead (Vite-bundled,
+// no dev server involved).
 import type { Plugin } from 'vite'
-import { buildCoreTarGz } from './dump.ts'
+import { buildProfileTarGz } from './dump.ts'
 
-const TAR_PATH = '/enumeratio-core.pgdata'
+const TAR_PATH = '/enumeratio-all.pgdata'
 
 export function enumeratioCore(): Plugin {
   let cache: Uint8Array | null = null
   let building: Promise<Uint8Array> | null = null
   const build = () =>
-    (building ??= buildCoreTarGz().then(
+    (building ??= buildProfileTarGz('all').then(
       (b) => { cache = b; building = null; return b },
       (e) => { building = null; throw e }, // don't cache a rejection: next request retries
     ))
@@ -40,8 +45,9 @@ export function enumeratioCore(): Plugin {
       // to avoid 2^N), so there's no partial dump to patch in place — rebuilding means re-exec'ing core+packs from
       // scratch regardless of which one file changed. Scoping the REBUILD TRIGGER to "only rebuild if a file in
       // pack P changed" would still buy nothing here since there's only one dump target (the dev server always
-      // serves the 'core' profile) — the node-side self-heal (bootCore/node-worker.ts) is where per-pack scoping
-      // actually pays off, by reporting which pack's mismatch forced the (still whole) rebuild.
+      // serves the 'all' profile — see the top-of-file note) — the node-side self-heal (bootCore/node-worker.ts)
+      // is where per-pack scoping actually pays off, by reporting which pack's mismatch forced the (still whole)
+      // rebuild.
       const onChange = (file: string) => {
         const posix = file.replace(/\\/g, '/')
         if (!/\/(sqlsrc|packs)\//.test(posix) || !posix.endsWith('.sql')) return   // packs/*/*.sql alongside sqlsrc/*.sql (#283 phase 1.2)
