@@ -12,7 +12,7 @@
 // axis predicate is a BINDING (selects fibers, ranks intact — it belongs in the handle: `permutations(size=4)`), an
 // element predicate is a RESTRICTION (WHERE; drops rows inside fibers), a fiber-measure predicate is a LENS (HAVING;
 // hides fiber rows, the whole stays the whole — under ROLLUP the footer keeps the handle's cardinality).
-import { Handle, catalogMap, renderExprFor, runSql, familyPoints, type ParamValue, type Row, type Cell } from './core'
+import { Handle, catalogMap, collectionParams, renderExprFor, runSql, familyPoints, type ParamValue, type Row, type Cell } from './core'
 import { parsePreds, predsToSql, type Pred } from './preds'
 import { parseSelect, resolveSelect, type Environment, type SelectColumn, type SelectKind, type SelectSpec } from './select'
 
@@ -243,10 +243,20 @@ export async function constructionNames(): Promise<string[]> {
 
 type Binding = { collection: string; pos: number; type_former: string; param: string | null; generic: boolean; alpha_axis: string | null; grades: number }
 
-/** `resolveFrom`'s family-point half (#67 B5, base_family_point): a POINT id (bare, or with args on its OWN
- *  remaining axes) rewrites to `family(bindings ⊕ args)` — `twin_primes` → `prime_pairs(gap=2)`,
- *  `binary_words(4)` → `words(size=4, base=2)` — this direction always applies, since a PURE POINTER (cube_free_numbers)
- *  has no SQL constructor of its own (base_alias skips base_realize) and would otherwise fail to build at all.
+/** `resolveFrom`'s family-point half (#67 B5, base_family_point). Two directions, and which one a point takes turns
+ *  on whether it owns a realized SQL tower:
+ *
+ *  A PURE POINTER (cube_free_numbers — base_alias skips base_realize, so `alias_of` is set and it has NO constructor
+ *  of its own) MUST rewrite forward to `family(bindings ⊕ args)` — `cube_free_numbers` → `k_free_integers(k=3)` —
+ *  or it would fail to build at all.
+ *
+ *  A REALIZED point (binary_words, twin_primes — owns its own tower: carrier, engines, its own axis names, `alias_of`
+ *  NULL) is left ALONE: it is its own canonical, directly-buildable collection (`binary_words` / `binary_words(4)`),
+ *  and the reverse fold below already turns `words(base=2)` back INTO `binary_words`, so rewriting it the other way
+ *  would be anti-canonical. It would also break the ones whose bound family PARAM sits behind an unbound family AXIS:
+ *  `binary_words` binds words' `base` (grade 2) but leaves `size` (grade 1) free, and `words(base=2)` cannot be built
+ *  positionally (the pg ctor's trailing-unbound convention) — whereas `binary_words()` builds fine as an open handle
+ *  over its own `n`. Building it directly also keeps the resolved-per-collection select_list aligned with the handle.
  *
  *  The reverse — a family bound to EXACTLY a registered point's own `bindings`, no OTHER axis also given — folds
  *  forward to that point's id: `prime_pairs(gap=2)` → `twin_primes`, `words(base=2)` → `binary_words`. Narrower than
@@ -264,7 +274,8 @@ async function resolveFamilyPointFrom(name: string, argsInner: string | undefine
   const points = await familyPoints()
   const cat = await catalogMap()
   const point = points[name]
-  if (point) {
+  // only a PURE POINTER (no tower of its own, so `alias_of` is set) forward-rewrites; a realized point builds directly
+  if (point && cat.get(name)?.aliasOf) {
     const pointChain = cat.get(name)?.grades ?? []
     const familyChain = cat.get(point.family)?.grades ?? []
     const remaining = familyChain.filter((g) => !(g in point.bindings))
@@ -783,10 +794,25 @@ function relationOrderSql(s: Shape, q: RowQuery, wanted: Set<string>, canonical:
     + `FROM r LEFT JOIN ${ident(rel.alias)} k ON k.v = r.value\nORDER BY ${ord}`
 }
 
+/** The family PARAMETERS a handle leaves unbound (base_grade.role='param', #67). A non-empty result means the handle
+ *  is a family SKELETON — nothing to enumerate; a value for these SELECTS which concrete collection (base b widened by
+ *  k, words over base b), it is not a fiber range to unfold. Mirrors the explorer's `isFamilySkeleton` guard so every
+ *  planning path refuses a skeleton the same way, and treats the position-0 `size` alias as binding (as `built` does). */
+export async function unboundFamilyParams(h: Handle): Promise<string[]> {
+  const params = (await collectionParams())[h.coll] ?? []
+  if (!params.length) return []
+  const axes = (await catalogMap()).get(h.coll)?.grades ?? []
+  return params.filter((p) => h.args[p] === undefined && !(axes.indexOf(p) === 0 && h.args.size !== undefined))
+}
+
 /** Evaluate a RowQuery by the fastest honest route per archetype, composing accelerated requests — the table the
  *  query view renders. `sql` on the result is the logical statement it should equal (the self-cert oracle). */
 export async function planRows(q: RowQuery, w: RowWindow = {}, select: RowSelect = {}): Promise<RowTable> {
   const s = await shape(q.from, select, q.groupBy, [q.where, q.having, q.orderBy].filter(Boolean).join(' '))
+  // a family SKELETON (an unbound family parameter, #67 D3/D4) has nothing to enumerate — refuse gracefully rather
+  // than walking degenerate parameter=0 fibers (which, e.g. for hypernumerary's base-b arithmetic, divides by zero)
+  const skeleton = await unboundFamilyParams(s.h)
+  if (skeleton.length) throw new Error(`FROM: ${s.coll} is a family — bind ${skeleton.join(', ')} to view a collection (an unbound family parameter is a skeleton, with nothing to enumerate)`)
   await resolveRelations(s, q)
   const g = q.groupBy?.trim() ? parseGroupBy(q.groupBy) : null
   const arch = archetypeOf(s, g)

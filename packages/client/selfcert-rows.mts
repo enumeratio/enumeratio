@@ -33,7 +33,7 @@
 // `<coll>_fiber` composite.) Neither #254 nor any future knownRed case is fixed by this change automatically —
 // that mechanism stays available for real, separate engine/algorithm work.
 // Opt-in, not a default gate:   node --import tsx selfcert-rows.mts [filter]   (a filter skips the policy walk too)
-import { provideDb, makeDb, makeWorkerDb, setQueryTimeout, planRows, planDeferred, rowSql, runSql, close, parseGroupBy, rowQueryFromSearch, searchFromRowQuery, type RowQuery, type RowSelect, type RowTable, type RowWindow, type RowStatement, type Archetype } from './src/index.ts'
+import { provideDb, makeDb, makeWorkerDb, setQueryTimeout, planRows, planDeferred, rowSql, runSql, close, parseGroupBy, collectionParams, rowQueryFromSearch, searchFromRowQuery, type RowQuery, type RowSelect, type RowTable, type RowWindow, type RowStatement, type Archetype } from './src/index.ts'
 
 provideDb(() => makeDb())
 const filter = process.argv[2] ?? null
@@ -277,9 +277,11 @@ async function walkPolicies(): Promise<{ checked: number; failed: number; skippe
   for (const r of rows) byColl.set(r.collection, [...(byColl.get(r.collection) ?? []), r])
 
   const STMT_FIELDS: (keyof RowStatement)[] = ['from', 'select', 'where', 'groupBy', 'having', 'orderBy']
+  const paramsByColl = await collectionParams()   // a collection with an unbound family param is a SKELETON (see below)
   let checked = 0, failed = 0, skipped = 0, done = 0
   const failures: string[] = []
   const skips: string[] = []
+  const skeletons: string[] = []
   for (const [coll, rs] of byColl) {
     // the distinct (select_list, group_by, window_size) statements THIS collection resolves, tagged by their environment(s)
     const distinct = new Map<string, { envs: string[]; row: PolicyRow }>()
@@ -298,6 +300,12 @@ async function walkPolicies(): Promise<{ checked: number; failed: number; skippe
         const back = rowQueryFromSearch(searchFromRowQuery(stmt))
         const mismatch = STMT_FIELDS.find((f) => (stmt[f] ?? undefined) !== (back[f] ?? undefined))
         if (mismatch) throw new Error(`round-trip: ${mismatch} "${stmt[mismatch] ?? ''}" -> "${back[mismatch] ?? ''}"`)
+        // the walk's FROM is the BARE collection, so a parametric family binds none of its params here: it is a family
+        // SKELETON (#67 D3/D4) — nothing to enumerate (the explorer opens it to a param picker, not a table, and
+        // planRows now refuses it by design). Its statement still round-trips (checked above); the plan step doesn't
+        // apply, so record it and move on. Distinct from the #254 watchdog SKIPs, which ARE plannable but time out.
+        const unbound = paramsByColl[coll] ?? []
+        if (unbound.length) { skeletons.push(`${tag} · bind ${unbound.join(', ')}`); continue }
         // elements/rowgroup window as a slice COUNT; fibers/distribution/rollup as a FIBER limit (rows.ts's own split)
         const w: RowWindow = row.archetype === 'elements' || row.archetype === 'rowgroup'
           ? { count: Number(row.window_size ?? 100) } : { fiberLimit: Number(row.window_size ?? 200) }
@@ -312,6 +320,10 @@ async function walkPolicies(): Promise<{ checked: number; failed: number; skippe
     }
     if (++done % 25 === 0) console.log(`  … base_policy_resolved: ${done}/${byColl.size} collections`)
   }
+  if (skeletons.length) {
+    console.log(`\nbase_policy_resolved walk — ${skeletons.length} FAMILY SKELETON(S) (unbound family param — round-trips, nothing to enumerate):`)
+    for (const s of skeletons) console.log(`  ○ family ${s}`)
+  }
   if (skips.length) {
     console.log(`\nbase_policy_resolved walk — ${skips.length} SKIPPED (#254, a registry gap — not a walk failure):`)
     for (const s of skips) console.log(`  ⊘ #254 ${s}`)
@@ -320,8 +332,10 @@ async function walkPolicies(): Promise<{ checked: number; failed: number; skippe
     console.log(`\nbase_policy_resolved walk — ${failed} of ${checked} FAILED:`)
     for (const f of failures) console.log(`  ✗ ${f}`)
   } else {
-    console.log(`\n✓ base_policy_resolved walk: ${checked - skipped} of ${checked} statements round-trip and plan cleanly`
-      + (skipped ? ` (${skipped} skipped, #254)` : '') + ` over ${byColl.size} collections (deduped from ${rows.length} rows)`)
+    console.log(`\n✓ base_policy_resolved walk: ${checked - skipped - skeletons.length} of ${checked} statements round-trip and plan cleanly`
+      + (skipped ? ` (${skipped} skipped, #254)` : '')
+      + (skeletons.length ? ` (${skeletons.length} family skeletons — round-trip only)` : '')
+      + ` over ${byColl.size} collections (deduped from ${rows.length} rows)`)
   }
   return { checked, failed, skipped }
 }
