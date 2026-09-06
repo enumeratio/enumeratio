@@ -1,0 +1,112 @@
+name: Nightly CI failure sweep
+
+# Runs right AFTER the nightly deep verification finishes (workflow_run), then sweeps recent CI on `main` for
+# failures and turns each DISTINCT failure into a tracked bug ticket — filing one if none exists, or commenting on
+# the existing one to point at the new occurrence. Non-blocking: this workflow files tickets, it never gates a PR.
+#
+# Scope of the sweep (a ~26h window, so consecutive nightly runs never leave a gap):
+#   - the nightly deep verification that just completed (its failed jobs — per-pack selfcert/quickcheck, full tier);
+#   - any other failed run on `main` in the window (a push-to-main CI regression, the nightly quickcheck cron, the
+#     weekly selfcert).
+# Push/PR quickcheck findings are handled separately and continuously by quickcheck.yml (advisory, non-blocking):
+# it rolls them into the single "quickcheck sampling regression" issue. This sweep is the NIGHTLY-and-main-CI half;
+# together they mean every failure — deterministic or sampled — lands as a ticket, deduped, nothing silently red.
+on:
+  workflow_run:
+    workflows: ["Nightly Deep Verification"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read   # list recent workflow runs + their jobs
+  issues: write   # file / reopen / comment on the per-failure tracking tickets
+
+concurrency:
+  group: nightly-sweep
+  cancel-in-progress: false
+
+jobs:
+  sweep:
+    name: sweep recent CI failures into tickets
+    runs-on: ubuntu-latest
+    steps:
+      - name: sweep
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const WINDOW_HOURS = 26                       // > 24 so daily sweeps overlap and never miss a run
+            const REAL_FAILURES = new Set(['failure', 'timed_out'])   // not: cancelled / skipped / neutral / startup_failure
+            const SELF = context.workflow                 // this workflow's own name — never ticket ourselves
+            const sinceIso = new Date(Date.now() - WINDOW_HOURS * 3600 * 1000).toISOString()
+            const runUrl = r => `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${r.id}`
+
+            // ── collect failed runs on main in the window ────────────────────────────────────────────────
+            let runs = []
+            try {
+              runs = await github.paginate(github.rest.actions.listWorkflowRunsForRepo, {
+                ...context.repo, branch: 'main', created: `>=${sinceIso}`, per_page: 100,
+              }, resp => resp.data)
+            } catch (e) { core.warning(`could not list workflow runs: ${e.message}`); return }
+
+            const failedRuns = runs.filter(r =>
+              r.name !== SELF && REAL_FAILURES.has(r.conclusion) && r.status === 'completed')
+            core.info(`scanned ${runs.length} run(s) since ${sinceIso}; ${failedRuns.length} failed`)
+            if (failedRuns.length === 0) { core.info('no failures in window — nothing to file'); return }
+
+            // ── reduce to DISTINCT failure signatures (workflow › job), keeping the most recent occurrence ──
+            const bySig = new Map()   // signature -> { run, jobName }
+            for (const run of failedRuns) {
+              let jobs = []
+              try {
+                jobs = await github.paginate(github.rest.actions.listJobsForWorkflowRun, {
+                  ...context.repo, run_id: run.id, per_page: 100,
+                }, resp => resp.data)
+              } catch (e) { core.warning(`could not list jobs for run ${run.id}: ${e.message}`) }
+              const failedJobs = jobs.filter(j => REAL_FAILURES.has(j.conclusion))
+              // if the job list is empty/unavailable, still record the run at workflow granularity
+              const entries = failedJobs.length ? failedJobs.map(j => j.name) : ['(run)']
+              for (const jobName of entries) {
+                const sig = `${run.name} › ${jobName}`
+                const prev = bySig.get(sig)
+                if (!prev || new Date(run.created_at) > new Date(prev.run.created_at)) bySig.set(sig, { run, jobName })
+              }
+            }
+
+            // ── file / reopen / comment, one ticket per signature ────────────────────────────────────────
+            for (const [sig, { run, jobName }] of bySig) {
+              const marker = `<!-- ci-failure-sweep: ${sig} -->`
+              const title = `CI failure: ${sig}`
+              const detail = [
+                `The nightly sweep found this failing on \`main\`.`,
+                ``,
+                `- Workflow: **${run.name}**`,
+                `- Job: **${jobName}**`,
+                `- Run: ${runUrl(run)} (${run.created_at})`,
+                `- Head: \`${(run.head_sha || '').slice(0, 12)}\``,
+                ``,
+                marker,
+              ].join('\n')
+
+              let existing = null
+              try {
+                const found = await github.rest.search.issuesAndPullRequests({
+                  q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${title}"`,
+                })
+                existing = found.data.items.find(i => i.title === title) || null
+              } catch (e) { core.warning(`search failed for "${title}": ${e.message}`) }
+
+              try {
+                if (existing) {
+                  if (existing.state === 'closed') {
+                    await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'open' })
+                  }
+                  await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number,
+                    body: `Failing again — ${run.name} job **${jobName}**. Run: ${runUrl(run)} (${run.created_at}).` })
+                  core.info(`commented on #${existing.number} for "${sig}"`)
+                } else {
+                  const created = await github.rest.issues.create({ ...context.repo, title, body: detail, labels: ['bug'] })
+                  core.info(`opened #${created.data.number} for "${sig}"`)
+                }
+              } catch (e) { core.warning(`could not file/update ticket for "${sig}": ${e.message}`) }
+            }
