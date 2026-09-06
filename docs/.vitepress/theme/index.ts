@@ -36,16 +36,22 @@ const EnumeratioPreset = definePreset(Aura, {
     },
   },
 })
-import LiveCollections from '../components/LiveCollections.vue'
-import Explorer from '../components/Explorer.vue'
-import QueryExplorer from '../components/QueryExplorer.vue'
-import SessionDemo from '../components/SessionDemo.vue'
-import ExpressionExamples from '../components/ExpressionExamples.vue'
-import SharedSpace from '../components/SharedSpace.vue'
-import StyleLab from '../components/StyleLab.vue'
-import HasseDiagram from '../components/HasseDiagram.vue'
-import AssociationTable from '../components/AssociationTable.vue'
-import NavDropdownLink from '../components/NavDropdownLink.vue'
+import { defineAsyncComponent } from 'vue'
+import NavDropdownLink from '../components/NavDropdownLink.vue'   // nav chrome, SSR-rendered — stays static
+
+// The live, pglite-backed (and three.js) components: registered ASYNC so each becomes a LAZY chunk instead of being
+// pulled into the eager theme bundle (which was ~5.8MB — the whole explorer + pglite + three, all transformed in the
+// client build → the docs:build long pole, #335). Every usage is <ClientOnly> (pglite/three are browser-only), so a
+// component that only ever mounts client-side loses nothing by loading its chunk on demand.
+const LiveCollections = defineAsyncComponent(() => import('../components/LiveCollections.vue'))
+const Explorer = defineAsyncComponent(() => import('../components/Explorer.vue'))
+const QueryExplorer = defineAsyncComponent(() => import('../components/QueryExplorer.vue'))
+const SessionDemo = defineAsyncComponent(() => import('../components/SessionDemo.vue'))
+const ExpressionExamples = defineAsyncComponent(() => import('../components/ExpressionExamples.vue'))
+const SharedSpace = defineAsyncComponent(() => import('../components/SharedSpace.vue'))
+const StyleLab = defineAsyncComponent(() => import('../components/StyleLab.vue'))
+const HasseDiagram = defineAsyncComponent(() => import('../components/HasseDiagram.vue'))
+const AssociationTable = defineAsyncComponent(() => import('../components/AssociationTable.vue'))
 
 // Custom Layout intercepts /explore/collection/* (mounted app) in the not-found slot. Live, pglite-backed components are
 // registered globally so any markdown page can embed them (wrapped in <ClientOnly> — pglite is browser-only).

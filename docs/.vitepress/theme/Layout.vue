@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import DefaultTheme from 'vitepress/theme'
-import { computed, watchEffect } from 'vue'
+import { computed, defineAsyncComponent, watchEffect } from 'vue'
 import { useData } from 'vitepress'
-import Explorer from '../components/Explorer.vue'
+// Async so the whole explorer app (@enumeratio/explorer/app + pglite) is a LAZY chunk, out of the eager theme
+// bundle — it only ever mounts client-side in the not-found slot (onExplorer gates on `window`), never in SSR.
+const Explorer = defineAsyncComponent(() => import('../components/Explorer.vue'))
 
 // The explorer is a self-contained app owning the /explore/collection/* route slice. Deep paths are folded to
 // /explore/collection/ in dev (config middleware) and 404 in the built site; either way this not-found slot
