@@ -13,6 +13,7 @@
 // element predicate is a RESTRICTION (WHERE; drops rows inside fibers), a fiber-measure predicate is a LENS (HAVING;
 // hides fiber rows, the whole stays the whole — under ROLLUP the footer keeps the handle's cardinality).
 import { Handle, catalogMap, collectionParams, renderExprFor, runSql, familyPoints, type ParamValue, type Row, type Cell } from './core'
+import { sizeWindow } from './window-sizer'
 import { parsePreds, predsToSql, type Pred } from './preds'
 import { parseSelect, resolveSelect, type Environment, type SelectColumn, type SelectKind, type SelectSpec } from './select'
 
@@ -725,13 +726,34 @@ function archetypeOf(s: Shape, g: Grouping | null): Archetype {
 }
 const measureLens = (having: string) => having.replace(/count\s*\(\s*\*\s*\)/gi, 'count')
 
+/** Fill in the element-page `count` a caller left unspecified with the #273 adaptive sizer's OPENING window —
+ *  `sizeWindow(prior, null)`, i.e. the declared-growth prior's w_0, derived from the collection's accelerator
+ *  presence (no random access ⇒ superexp ⇒ 1, count-only ⇒ exp ⇒ 8, cheap random access ⇒ poly ⇒ 64). This
+ *  replaces the blind fixed 100 the row half used to open with, so an EXPENSIVE collection opens SMALL (never a
+ *  100-element naive-enumeration hang on the first page) and a cheap one opens wide, per phase 1.5 of #273.
+ *
+ *  Scope + determinism, both load-bearing:
+ *   - Only the PLAIN CANONICAL element page is sized. A WHERE / ORDER BY / GROUP BY view keeps the unbounded
+ *     logical statement (it materializes or composes its whole relation; paging a filtered/grouped view is a
+ *     separate concern), so those clauses opt out and behave exactly as before.
+ *   - An explicit `count` (the explorer resolves one from base_policy_resolved; selfcert-rows' policy walk passes
+ *     window_size) is honored VERBATIM — the default only fills a genuinely absent count.
+ *   - PRIOR-ONLY (tbar = null): no EWMA / recentPerf() is consulted, so the row-half SQL generators stay a pure
+ *     function of their inputs. rowSql() and planRows() thread the SAME resolved window, so the accelerated slice
+ *     and the naive oracle page to the identical count and the plan==oracle differential holds byte-for-byte; the
+ *     golden corpus stays stable (a plain canonical case simply gains a deterministic `LIMIT w_0`). */
+async function windowWithDefault(s: Shape, q: RowQuery, w: RowWindow): Promise<RowWindow> {
+  if (w.count != null || q.where?.trim() || q.orderBy?.trim() || q.groupBy?.trim()) return w
+  return { ...w, count: sizeWindow(await s.h.windowPrior(), null) }
+}
+
 /** The LOGICAL statement — R(C) as a CTE, then the clauses verbatim. Evaluable as-is on a bounded handle; on an open
  *  one the relation is cut at `frontier` elements (the naive form can't enumerate ℵ₀ — the plan streams instead). */
 export async function rowSql(q: RowQuery, w: RowWindow = {}, select: RowSelect = {}): Promise<string> {
   const s = await shape(q.from, select, q.groupBy, [q.where, q.having, q.orderBy].filter(Boolean).join(' '))
   await resolveRelations(s, q)
   const g = q.groupBy?.trim() ? parseGroupBy(q.groupBy) : null
-  return rowSqlFor(s, q, w, archetypeOf(s, g))
+  return rowSqlFor(s, q, await windowWithDefault(s, q, w), archetypeOf(s, g))
 }
 /** `arch` decides whether the SELECT half's columns are in scope: only element and rowgroup rows have an element to
  *  project them from — a grouped level's rows are keys and a count. */
@@ -821,8 +843,12 @@ export async function planRows(q: RowQuery, w: RowWindow = {}, select: RowSelect
   await resolveRelations(s, q)
   const g = q.groupBy?.trim() ? parseGroupBy(q.groupBy) : null
   const arch = archetypeOf(s, g)
-  const sql = rowSqlFor(s, q, w, arch)
-  const first = Math.max(0, w.first ?? 0), count = Math.max(1, w.count ?? 100), fiberLimit = Math.max(1, w.fiberLimit ?? 200)
+  // Size the default element page ONCE (when the caller named no count) and thread the SAME resolved window into
+  // BOTH the accelerated slice below and the naive oracle `sql` — so the two page to the identical count and the
+  // self-cert differential stays byte-for-byte (see windowWithDefault). A grouped/filtered view opts out there.
+  const w2 = await windowWithDefault(s, q, w)
+  const sql = rowSqlFor(s, q, w2, arch)
+  const first = Math.max(0, w2.first ?? 0), count = Math.max(1, w2.count ?? 100), fiberLimit = Math.max(1, w2.fiberLimit ?? 200)
   // HAVING / ORDER BY over a composed level: the same clause text applied as SQL over VALUES of the level's rows
   const applyLensOver = async (rows: Row[], keys: string[], order: string[] = keys): Promise<Row[]> => {
     if (!q.having?.trim() && !q.orderBy?.trim()) return rows
