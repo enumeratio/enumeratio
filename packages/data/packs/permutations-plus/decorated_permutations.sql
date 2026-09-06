@@ -29,7 +29,7 @@ CREATE FUNCTION fiber_elements(f decorated_permutations_fiber, element_limit int
    LIMIT element_limit $$;
 CREATE FUNCTION contains_in_fiber(f decorated_permutations_fiber, v decorated_permutation) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).word,1),0) = (f).size::int
-     AND coalesce((SELECT array_agg(abs(x) ORDER BY abs(x)) FROM unnest((v).word) x), ARRAY[]::int[]) = ARRAY(SELECT generate_series(1, (f).size::int))  -- |word| is a permutation (coalesce: array_agg over the empty n=0 word is NULL, not '{}')
+     AND (SELECT array_agg(abs(x) ORDER BY abs(x)) FROM unnest((v).word) x) = ARRAY(SELECT generate_series(1, (f).size::int))  -- |word| is a permutation
      AND NOT EXISTS (SELECT 1 FROM generate_subscripts((v).word,1) i WHERE (v).word[i] < 0 AND abs((v).word[i]) <> i) $$;   -- signs only on fixed points
 
 -- ── declare as DATA + realize ──────────────────────────────────────────────────────────────────────────

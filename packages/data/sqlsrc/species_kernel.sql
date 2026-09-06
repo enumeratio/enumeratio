@@ -3,7 +3,8 @@
 -- Σ_λ c_λ · p_λ (power-sum basis); we store it truncated to degree maxdeg as jsonb: {"n": [[num,den], ...]} with one
 -- fraction per partition λ⊢n, ordered to match integer_partitions(n)'s own floor order (ordinality 0..p(n)-1).
 -- Z_F(labelled) projects to n!·c_{1^n}; Z_F(isotype) projects to Σ_λ c_λ. See wiki Species-As-Data (#274 B1).
--- Plethysm/composition + the Z-walker (#274 B4): species_z_compose, species_z_fixpoint, species_z_eval below.
+-- Plethysm/composition (#274 B4): species_z_compose below. The Z-walker itself — species_z_walk, species_z_fixpoint,
+-- species_z_eval (#274 F2, node-walking) — lives in species_registry.sql, which owns base_species_node.
 
 -- ── exact fractions ──────────────────────────────────────────────────────────────────────────────────
 CREATE TYPE fraction AS (num numeric, den numeric);
@@ -304,15 +305,6 @@ CREATE FUNCTION species_z_compose(f jsonb, g jsonb) RETURNS jsonb LANGUAGE plpgs
     RETURN result;
   END $$;
 
--- Picard iteration on the Z side: every Y is X-guarded (or ∘-guarded), so maxdeg+1 substitutions from Y = 0 fix
--- degrees 0..maxdeg exactly — the Z twin of species_solve.
-CREATE FUNCTION species_z_fixpoint(body text, maxdeg int DEFAULT 8) RETURNS jsonb LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE y jsonb := z_zero(maxdeg); i int;
-  BEGIN
-    FOR i IN 0..maxdeg LOOP y := species_z_eval(body, maxdeg, y); END LOOP;
-    RETURN y;
-  END $$;
-
 -- functorial composition (F on the list of all G-structures) — registered on base_species_op for completeness,
 -- but no honest cycle-index formula is implemented yet. Deferred — #274 follow-up.
 CREATE FUNCTION species_z_functor_compose(a jsonb, b jsonb) RETURNS jsonb LANGUAGE plpgsql IMMUTABLE AS $$
@@ -320,78 +312,10 @@ CREATE FUNCTION species_z_functor_compose(a jsonb, b jsonb) RETURNS jsonb LANGUA
     RAISE EXCEPTION 'species_z_functor_compose: not implemented (#274 follow-up)';
   END $$;
 
--- Z-walker: a jsonb twin of species_eval, MIRRORING its precedence exactly (strip parens → additive last →
--- multiplicative first → composition first → power → leaf) so the parse trees for the same expr text align.
-CREATE FUNCTION species_z_eval(expr text, maxdeg int DEFAULT 8, yval jsonb DEFAULT NULL) RETURNS jsonb LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE e text := btrim(expr); i int; depth int; ch text; enclosed boolean; apos int; base jsonb; k int;
-  BEGIN
-    LOOP
-      IF left(e, 1) <> '(' THEN EXIT; END IF;
-      depth := 0; enclosed := true;
-      FOR i IN 1..length(e) LOOP
-        ch := substring(e FROM i FOR 1);
-        IF ch = '(' THEN depth := depth + 1;
-        ELSIF ch = ')' THEN depth := depth - 1;
-          IF depth = 0 AND i < length(e) THEN enclosed := false; EXIT; END IF;
-        END IF;
-      END LOOP;
-      IF enclosed THEN e := btrim(substring(e FROM 2 FOR length(e) - 2)); ELSE EXIT; END IF;
-    END LOOP;
-    -- additive: last top-level + or - ('+' after 'E' is the E+ atom, not an operator)
-    depth := 0; apos := 0;
-    FOR i IN 1..length(e) LOOP
-      ch := substring(e FROM i FOR 1);
-      IF ch = '(' THEN depth := depth + 1;
-      ELSIF ch = ')' THEN depth := depth - 1;
-      ELSIF depth = 0 AND i > 1 AND (ch = '+' OR ch = '-')
-            AND NOT (ch = '+' AND substring(e FROM i - 1 FOR 1) = 'E') THEN apos := i * (CASE ch WHEN '+' THEN 1 ELSE -1 END);
-      END IF;
-    END LOOP;
-    IF apos <> 0 THEN
-      RETURN CASE WHEN apos > 0
-        THEN species_z_sum(species_z_eval(left(e, abs(apos) - 1), maxdeg, yval), species_z_eval(substring(e FROM abs(apos) + 1), maxdeg, yval))
-        ELSE species_z_sum(species_z_eval(left(e, abs(apos) - 1), maxdeg, yval), z_scalar_mul(frac(-1, 1), species_z_eval(substring(e FROM abs(apos) + 1), maxdeg, yval)))
-      END;
-    END IF;
-    -- multiplicative: first top-level ·
-    depth := 0;
-    FOR i IN 1..length(e) LOOP
-      ch := substring(e FROM i FOR 1);
-      IF ch = '(' THEN depth := depth + 1;
-      ELSIF ch = ')' THEN depth := depth - 1;
-      ELSIF depth = 0 AND ch = '·' THEN
-        RETURN species_z_product(species_z_eval(left(e, i - 1), maxdeg, yval), species_z_eval(substring(e FROM i + 1), maxdeg, yval));
-      ELSIF depth = 0 AND ch = '/' THEN   -- species_eval has scalar-divide; no Z analogue — refuse rather than misparse '/' as part of a leaf atom
-        RAISE EXCEPTION 'species_z_eval: / (scalar divide) not supported on the cycle index (expr %)', e;
-      END IF;
-    END LOOP;
-    -- composition: first top-level ∘
-    depth := 0;
-    FOR i IN 1..length(e) LOOP
-      ch := substring(e FROM i FOR 1);
-      IF ch = '(' THEN depth := depth + 1;
-      ELSIF ch = ')' THEN depth := depth - 1;
-      ELSIF depth = 0 AND ch = '∘' THEN
-        RETURN species_z_compose(species_z_eval(left(e, i - 1), maxdeg, yval), species_z_eval(substring(e FROM i + 1), maxdeg, yval));
-      END IF;
-    END LOOP;
-    -- power: top-level ^k (exponent an integer literal)
-    depth := 0;
-    FOR i IN 1..length(e) LOOP
-      ch := substring(e FROM i FOR 1);
-      IF ch = '(' THEN depth := depth + 1;
-      ELSIF ch = ')' THEN depth := depth - 1;
-      ELSIF ch = '^' AND depth = 0 THEN
-        base := species_z_eval(left(e, i - 1), maxdeg, yval);
-        k := btrim(substring(e FROM i + 1))::int;
-        RETURN species_z_power(base, k);
-      END IF;
-    END LOOP;
-    e := btrim(e);
-    IF e = 'Y' THEN RETURN yval; END IF;
-    IF e ~ '^\d+$' THEN RETURN z_scalar_mul(frac(e::numeric, 1), species_z_atom('1', maxdeg)); END IF;
-    RETURN species_z_atom(e, maxdeg);
-  END $$;
+-- species_z_walk / species_z_fixpoint / species_z_eval (#274 F2, the node-walking Z engine) live in
+-- species_registry.sql — they recurse over base_species_node, which doesn't exist until that file (PL/pgSQL
+-- validates INSERT/UPDATE/DELETE targets against the catalog AT CREATE TIME, so a genuine forward reference to a
+-- not-yet-existing table fails immediately, unlike a plain SELECT-based call which resolves lazily).
 
 -- ── projections → numeric[] (f[j] = a_{j-1}, matching species_eval's convention) ────────────────────────
 -- f_n = n! · c_{1^n}  (coeff at the all-ones partition)
@@ -446,3 +370,23 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT array_to_string(z_isotype(species_z_atom('C')), ',') $q$),
   ('species_kernel','isotype L = all ones','eq','1,1,1,1,1,1,1,1,1','one unlabelled linear-order-shape per size',$q$
     SELECT array_to_string(z_isotype(species_z_atom('L')), ',') $q$);
+
+-- ── the Z-walker over the node tree (#274 F2): postfix ′/•, × cartesian, and k through the walker ─────────────────
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('species_kernel','postfix C'' via the walker == L: n!','eq','1,1,2,6,24,120,720','the classic cycle/linear-order identity, reached through species_parse_node''s new postfix scan',$q$
+    SELECT array_to_string(z_labelled(species_z_eval('C′', 6)), ',') $q$),
+  ('species_kernel','postfix L'' == L·L','eq','true','derivative of the linear order == two linear orders (both n·n!-ish identities coincide here)',$q$
+    SELECT (z_labelled(species_z_eval('L′', 6)) IS NOT DISTINCT FROM z_labelled(species_z_eval('L·L', 6)))::text $q$),
+  ('species_kernel','× cartesian via the walker: (E∘C)×E^2 == E∘C∘(X+X), signed permutations 2ⁿ·n!','eq','true','cartesian product of permutations with the 2ⁿ atom == the composed signed-permutation species',$q$
+    SELECT (z_labelled(species_z_eval('(E∘C)×E^2', 6)) IS NOT DISTINCT FROM species_eval('E∘C∘(X+X)', 6))::text $q$),
+  ('species_kernel','postfix E• pointing: n·1 = 0,1,2,3,4,5,6','eq','0,1,2,3,4,5,6','pointing a set — one of n labels distinguished',$q$
+    SELECT array_to_string(z_labelled(species_z_eval('E•', 6)), ',') $q$),
+  ('species_kernel','k through the walker: isotype(E^k) at k=3 == multisets of 3: C(n+2,2)','eq','1,3,6,10,15,21,28','species_z_eval''s kparam threads through the power node''s param-k exponent',$q$
+    SELECT array_to_string(z_isotype(species_z_eval('E^k', 6, NULL, 3)), ',') $q$),
+  ('species_kernel','MARQUEE: species_z_eval (node walker) agrees with the old text-scan behaviour for E∘C, E·E·E, L∘E+, E∘C∘(X+X)','eq','true','regression pin for #274 F2 — the walker replaces the deleted duplicated text scanner',$q$
+    SELECT bool_and(v)::text FROM (VALUES
+      (z_labelled(species_z_eval('E∘C', 6))         IS NOT DISTINCT FROM species_eval('E∘C', 6)),
+      (z_labelled(species_z_eval('E·E·E', 6))       IS NOT DISTINCT FROM species_eval('E·E·E', 6)),
+      (z_labelled(species_z_eval('L∘E+', 6))        IS NOT DISTINCT FROM species_eval('L∘E+', 6)),
+      (z_labelled(species_z_eval('E∘C∘(X+X)', 6))   IS NOT DISTINCT FROM species_eval('E∘C∘(X+X)', 6))
+    ) t(v) $q$);

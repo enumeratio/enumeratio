@@ -385,19 +385,27 @@ CREATE FUNCTION base_species_check_unlabelled(coll text, expr text, upto int) RE
 -- L∘E+, rooted_unlabeled_trees = X·(E∘Y)) that base_species_check_unlabelled (ogf_solve) cannot evaluate.
 -- `solve_for` (two-stage, like the labelled implicit check): Y is the Z-fixpoint of solve_for, then expr is evaluated
 -- over it — the dissymmetry theorem in the isotype reading (Otter's formula falls out of E_2∘T on the cycle index).
-CREATE FUNCTION base_species_check_isotype_z(coll text, expr text, upto int, solve_for text DEFAULT NULL) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
+-- `kparam` (#274 F2): threads a k through to species_z_eval/the E_k atom — the isotype twin of base_species_check_
+-- graded's k-loop below, but per-call rather than looping internally; a k-graded isotype reading (bindings ? 'k')
+-- loops THIS function over k at the call site the same way base_species_check_graded loops n×k itself. No core
+-- collection binds isotype+k together yet, so this wires the path without new data (#274 F2 task 5).
+CREATE FUNCTION base_species_check_isotype_z(coll text, expr text, upto int, solve_for text DEFAULT NULL, kparam int DEFAULT NULL) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
   DECLARE want numeric[] := '{}'; i int; c numeric; is_unbounded boolean; got numeric[];
   BEGIN
     SELECT unbounded INTO is_unbounded FROM base_collection WHERE id = coll;
     FOR i IN 0..upto LOOP
-      IF is_unbounded THEN EXECUTE format('SELECT (unrank(%I(), %s)).value', coll, i) INTO c;
-      ELSE                 EXECUTE format('SELECT cardinality(%I(%s))', coll, i) INTO c;
+      IF kparam IS NOT NULL THEN
+        IF is_unbounded THEN EXECUTE format('SELECT (unrank(%I(%s), %s)).value', coll, kparam, i) INTO c;
+        ELSE                 EXECUTE format('SELECT cardinality(%I(%s,%s))', coll, i, kparam) INTO c;
+        END IF;
+      ELSIF is_unbounded THEN EXECUTE format('SELECT (unrank(%I(), %s)).value', coll, i) INTO c;
+      ELSE                    EXECUTE format('SELECT cardinality(%I(%s))', coll, i) INTO c;
       END IF;
       want := want || c;
     END LOOP;
-    got := CASE WHEN solve_for IS NOT NULL THEN z_isotype(species_z_eval(expr, upto, species_z_fixpoint(solve_for, upto)))
+    got := CASE WHEN solve_for IS NOT NULL THEN z_isotype(species_z_eval(expr, upto, species_z_fixpoint(solve_for, upto), kparam))
                 WHEN expr LIKE '%Y%'        THEN z_isotype(species_z_fixpoint(expr, upto))
-                ELSE                             z_isotype(species_z_eval(expr, upto)) END;
+                ELSE                             z_isotype(species_z_eval(expr, upto, NULL, kparam)) END;
     RETURN want = got;
   END $$;
 
@@ -579,6 +587,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
       FROM base_collection_species bcs JOIN base_species_def sd ON sd.id = bcs.species
      WHERE NOT (
        CASE
+         WHEN bcs.reading IN ('isotype', 'isotype_count_sequence') AND bcs.bindings ? 'k'   -- #274 F2: graded isotype — loop k like base_species_check_graded does (no core row exercises this yet)
+           THEN (SELECT bool_and(base_species_check_isotype_z(bcs.collection, sd.expr, 6, bcs.bindings ->> 'solve_for', k)) FROM generate_series(0, 6) k)
          WHEN bcs.reading IN ('isotype', 'isotype_count_sequence') AND (sd.expr LIKE '%∘%' OR bcs.bindings ? 'solve_for')
            THEN base_species_check_isotype_z(bcs.collection, sd.expr, 6, bcs.bindings ->> 'solve_for')
          WHEN bcs.reading IN ('isotype', 'isotype_count_sequence')
