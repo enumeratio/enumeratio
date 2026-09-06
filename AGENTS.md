@@ -72,6 +72,20 @@ not under `docs/` (public docs site) and not committed to this repo.
 - **Don't trust a delegated "green" — re-verify independently before merging.** Run `run.mts` under an OS `timeout` so
   a runaway surfaces as exit 124, not a silent hang (a tight plpgsql loop ignores `statement_timeout`). The cli
   `worker.test.ts` (worker_threads) is fragile — heavy per-query work in the worker tips its teardown into a hang.
+- **pglite has no query cancellation.** It's single-threaded WASM and genuinely ignores `SET statement_timeout`
+  (hard-verified: `pg_sleep(10)` under a 1s timeout runs the full 10s); a JS-side `Promise.race`/`setTimeout` can't
+  preempt the synchronous WASM call either. The ONLY real cancellation is killing the process — run each risky unit
+  (one collection's sweep, one query) in a `worker_threads` Worker (or child process) under a watchdog that
+  `terminate()`s/SIGKILLs on timeout. `packages/data/pg-worker-channel.ts` (`openWorkerChannel`) is the reusable
+  SIGKILL-respawn channel; reach for it in any new sweep-all-collections script rather than a bare `await pg.query`
+  loop, or one pathological `(collection, n)` hangs the whole script silently. Session GUCs do NOT survive a kill.
+- **Never pipe a long job through `tail -N` or a pager.** Output is buffered — nothing prints until the process
+  exits, so a job that already finished and one still hung look identical (this alone has cost multiple wasted
+  stalls). Redirect to a file and poll the file. And when a sweep stops progressing, check WHICH item it is stuck on,
+  not how many it finished — two runs agreeing on a stall point look exactly like two runs agreeing on throughput.
+- **Start a new sweep/harness scoped-small, then broaden.** Run it over one collection or a tiny cap first to confirm
+  it works and gauge per-unit cost before firing the full catalog — a full-catalog first run is how you eat a 600s
+  timeout learning nothing. Design sweeps with a scope/filter arg + tunable caps from the start.
 
 ## Codemods — how wide mechanical changes land
 
@@ -128,7 +142,10 @@ regex misses every one.
   examples should still pass; if one pins an exact count/list, that's a bug to soften (`>= N` / `@>`), not to match.
 - **selfcert (`node --import tsx selfcert.mts [coll]`) catches what `run.mts` misses** — the accelerated==naive
   differential (fiber_count vs enumeration; element_at vs sequential). Run it after adding a `fiber_count` accel or an
-  unrank/element engine; the example suite alone won't catch a truncation/off-by-one at large n.
+  unrank/element engine; the example suite alone won't catch a truncation/off-by-one at large n. A full sweep
+  (~330s, re-measure) reports a handful of **skips** for collections whose accel is unverifiable by enumeration
+  (unbounded-axis fibers — `cyclohedron` et al.); a skip is recorded-and-abandoned, NOT a mismatch — don't read it
+  as a failure.
 - **Explorer verification in a worktree:** `pnpm docs:dev` from a worktree serves the worktree's own tree — run it
   there (backgrounded) and drive that, not a preview pointed at the main checkout. Deep `/explore/collection/<slice>`
   hard-loads hit a dev MIME quirk (#158) — load the base and route in-app.
