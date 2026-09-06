@@ -96,6 +96,13 @@ jobs:
               tail,
               '```',
             ].join('\n')
+            // `nightly-fixup` is the label the nightly fixup Routine sweeps — stamp it here so quickcheck findings
+            // are picked up automatically. Ensure it exists first (createLabel 422s if it already does — ignore).
+            const LABELS = ['bug', 'nightly-fixup']
+            try {
+              await github.rest.issues.createLabel({ ...context.repo, name: 'nightly-fixup', color: 'fbca04',
+                description: 'swept nightly by the fixup routine' })
+            } catch (e) { /* already exists */ }
             const found = await github.rest.search.issuesAndPullRequests({
               q: `repo:${context.repo.owner}/${context.repo.repo} is:issue in:title "${TITLE}"`,
             })
@@ -104,9 +111,10 @@ jobs:
               if (existing.state === 'closed') {
                 await github.rest.issues.update({ ...context.repo, issue_number: existing.number, state: 'open' })
               }
+              await github.rest.issues.addLabels({ ...context.repo, issue_number: existing.number, labels: LABELS })
               await github.rest.issues.createComment({ ...context.repo, issue_number: existing.number, body })
             } else {
-              await github.rest.issues.create({ ...context.repo, title: TITLE, body, labels: ['bug'] })
+              await github.rest.issues.create({ ...context.repo, title: TITLE, body, labels: LABELS })
             }
 
       - name: nightly — close issue on green recovery
