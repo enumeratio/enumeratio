@@ -2,11 +2,17 @@ name: Quickcheck
 
 # Property-based (QuickCheck-style) SAMPLING verification (packages/data/quickcheck.mts) — the fast sibling of the
 # exhaustive selfcert. Most collections are infinite and element_at-vs-sequential is O(N²) for generic-unrank
-# collections, so the full selfcert sweep no longer finishes in reasonable time (see #294/#295). Two tiers:
-#   push / PR  — a FAST sampled gate (few points/collection, small enumeration cap), scoped to when it can catch
-#                something (sqlsrc or the harness itself). Its failure fails the job = the gate.
-#   nightly    — a DEEPER sample (more points), which does NOT block anything; on failure it opens (or reopens) a
-#                single tracking issue with the seed + summary + a link to the run, and closes it again on recovery.
+# collections, so the full selfcert sweep no longer finishes in reasonable time (see #294/#295).
+#
+# This is an OPTIONAL, ADVISORY check — a random-seed sampler is non-deterministic (a fresh seed surfaces a DIFFERENT
+# latent bug each run), so it must NOT gate a PR; the deterministic gates that block live in ci.yml. On every tier a
+# failure is RECORDED as a single rolling tracking issue rather than blocking, so findings are grouped and swept in
+# batches, not lost:
+#   push / PR  — a FAST sample (few points/collection, small enumeration cap), scoped to when it can catch something
+#                (sqlsrc or the harness itself). NON-BLOCKING: on failure it opens/reopens the tracking issue; the job
+#                stays green so the PR is never gated by a flaky sample.
+#   nightly    — a DEEPER sample (more points); on failure it opens/reopens the same tracking issue AND fails its own
+#                (already non-blocking) scheduled run, and closes the issue again on recovery.
 on:
   push:
     branches: [main]
@@ -23,7 +29,7 @@ on:
 
 permissions:
   contents: read
-  issues: write   # the nightly tier opens/reopens/closes its tracking issue
+  issues: write   # every tier opens/reopens the rolling tracking issue; nightly also closes it on recovery
 
 concurrency:
   group: quickcheck-${{ github.ref }}
@@ -48,9 +54,9 @@ jobs:
       - name: run quickcheck
         id: run
         # scheduled = deep sample; push/PR = fast sample (fewer points + a smaller enumeration cap). set -o pipefail
-        # so a harness failure survives the tee. On the nightly tier we capture the outcome instead of failing here,
-        # so the issue steps below can react; on push/PR a failure fails the job directly (the gate).
-        continue-on-error: ${{ github.event_name == 'schedule' }}
+        # so a harness failure survives the tee. continue-on-error on EVERY tier: this check is advisory, so a failure
+        # never fails the job here — the issue steps below react to steps.run.outcome, and only nightly re-fails (below).
+        continue-on-error: true
         run: |
           set -o pipefail
           if [ "${{ github.event_name }}" = "schedule" ]; then
@@ -64,23 +70,27 @@ jobs:
           fi
           pnpm --filter @enumeratio/data quickcheck 2>&1 | tee quickcheck.log
 
-      - name: nightly — open/reopen issue on failure
-        if: ${{ github.event_name == 'schedule' && steps.run.outcome == 'failure' }}
+      - name: open/reopen tracking issue on failure
+        if: ${{ steps.run.outcome == 'failure' }}
+        continue-on-error: true   # never let issue-filing (e.g. a read-only token on a fork PR) gate the run
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs')
-            const TITLE = 'quickcheck nightly regression'
+            const TITLE = 'quickcheck sampling regression'
             const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+            const trigger = context.eventName === 'schedule'
+              ? 'nightly (deep sample)'
+              : `${context.eventName} on \`${context.ref.replace('refs/heads/', '')}\` (fast sample)`
             let log = ''
             try { log = fs.readFileSync('quickcheck.log', 'utf8') } catch {}
             const tail = log.split('\n').slice(-60).join('\n')
             const body = [
-              `The nightly **quickcheck** sampling run FAILED — a sampled property does not hold.`,
+              `A **quickcheck** sampling run FAILED — a sampled property does not hold. Trigger: ${trigger}.`,
               ``,
               `Run: ${runUrl}`,
               ``,
-              `The harness prints the SEED needed to replay deterministically (\`pnpm --filter @enumeratio/data quickcheck <coll> <seed>\`). Tail of the output:`,
+              `quickcheck is a non-deterministic sampler, so each run may surface a DIFFERENT latent bug (typically a \`contains\`-at-n=0 / membership mismatch on some collection). Findings are collected here and swept in batches rather than gating PRs. The harness prints the SEED needed to replay deterministically (\`pnpm --filter @enumeratio/data quickcheck <coll> <seed>\`). Tail of the output:`,
               ``,
               '```',
               tail,
@@ -100,11 +110,12 @@ jobs:
             }
 
       - name: nightly — close issue on green recovery
+        # only the deep nightly sample may close it — a push/PR fast sample is too small to prove recovery
         if: ${{ github.event_name == 'schedule' && steps.run.outcome == 'success' }}
         uses: actions/github-script@v7
         with:
           script: |
-            const TITLE = 'quickcheck nightly regression'
+            const TITLE = 'quickcheck sampling regression'
             const found = await github.rest.search.issuesAndPullRequests({
               q: `repo:${context.repo.owner}/${context.repo.repo} is:issue is:open in:title "${TITLE}"`,
             })
