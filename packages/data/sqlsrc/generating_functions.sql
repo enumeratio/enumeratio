@@ -51,6 +51,12 @@ CREATE FUNCTION gf_partition_ogf(n int) RETURNS numeric[] LANGUAGE plpgsql IMMUT
       j := 0; WHILE j * k <= n LOOP geom[j * k + 1] := 1; j := j + 1; END LOOP;
       r := (gf_pmul(r, geom))[1:n + 1]; END LOOP;
     RETURN r[1:n + 1]; END $$;
+CREATE FUNCTION gf_distinct_partition_ogf(n int) RETURNS numeric[] LANGUAGE plpgsql IMMUTABLE AS $$   -- ∏_{k≥1} (1+q^k) to degree n — distinct_partitions is NOT a species (#274 B5), re-filed here like the rationals
+  DECLARE r numeric[] := ARRAY[1::numeric]; k int; factor numeric[]; BEGIN
+    FOR k IN 1 .. n LOOP factor := array_fill(0::numeric, ARRAY[n + 1]);
+      factor[1] := 1; IF k <= n THEN factor[k + 1] := 1; END IF;   -- (1+q^k): 1 at exponent 0, 1 at exponent k
+      r := (gf_pmul(r, factor))[1:n + 1]; END LOOP;
+    RETURN r[1:n + 1]; END $$;
 CREATE FUNCTION gf_stirling2_row(n int) RETURNS numeric[] LANGUAGE plpgsql IMMUTABLE AS $$   -- [S(n,0),…,S(n,n)] (Touchard)
   DECLARE prev numeric[] := ARRAY[1::numeric]; cur numeric[]; i int; k int; BEGIN
     IF n = 0 THEN RETURN ARRAY[1::numeric]; END IF;
@@ -150,6 +156,26 @@ CREATE FUNCTION gf_composition_largest_row(n int) RETURNS numeric[] LANGUAGE plp
     FOR k IN 1 .. n LOOP r[k + 1] := coalesce((t ->> (n || ',' || k))::numeric, 0) - coalesce((t ->> (n || ',' || (k - 1)))::numeric, 0); END LOOP;
     RETURN r; END $$;
 
+-- rational OGF: coefficients of num(x)/den(x) to degree `deg`, low-to-high, exact integer. den[1] (constant term) ≠ 0.
+-- Series-reciprocal den to `deg`, multiply by num, then slice/pad to length deg+1 (num can be shorter than den).
+CREATE FUNCTION gf_rational(num numeric[], den numeric[], deg int) RETURNS numeric[] LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE r numeric[]; m int; j int; s numeric; p numeric[]; n int;
+  BEGIN
+    -- unit constant term: keeps the reciprocal exact-integer (a non-1 den[1] introduces scale-dependent fractions)
+    IF den[1] IS DISTINCT FROM 1 THEN RAISE EXCEPTION 'gf_rational: den constant term must be 1 (got %)', den[1]; END IF;
+    r := array_fill(0::numeric, ARRAY[deg + 1]);
+    r[1] := 1 / den[1];
+    FOR m IN 1 .. deg LOOP
+      s := 0;
+      FOR j IN 1 .. m LOOP s := s + coalesce(den[j + 1], 0) * r[m - j + 1]; END LOOP;
+      r[m + 1] := -s / den[1];
+    END LOOP;
+    p := gf_pmul(num, r);
+    n := coalesce(array_length(p, 1), 0);
+    IF n > deg + 1 THEN p := p[1:deg + 1]; n := deg + 1; END IF;
+    RETURN p || array_fill(0::numeric, ARRAY[deg + 1 - n]);
+  END $$;
+
 -- ── registry ─────────────────────────────────────────────────────────────────────────────────────────────────
 CREATE TABLE base_generating_function (
   collection text NOT NULL REFERENCES base_collection,
@@ -159,6 +185,8 @@ CREATE TABLE base_generating_function (
   arity      int  NOT NULL DEFAULT 1,  -- how many grade axes the builder takes (1: n; 2: n,k — a doubly-graded family)
   note       text,
   findstat   text,                 -- the FindStat St-id of the statistic, where one exists (else NULL, never fabricated)
+  num        numeric[],            -- gf_rational only: numerator coefficients, low-to-high
+  den        numeric[],            -- gf_rational only: denominator coefficients, low-to-high
   pack       text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
 );
 CREATE UNIQUE INDEX base_generating_function_pk ON base_generating_function (collection, coalesce(stat_id, ''));
@@ -174,6 +202,8 @@ INSERT INTO base_generating_function (collection, stat_id, kind, builder, arity,
   ('integer_compositions', 'parts_count',  'q_polynomial', 'gf_composition_parts', 1, 'q·(1+q)^{n-1} — parts distribution', NULL),
   ('integer_partitions',   NULL,           'ogf',          'gf_partition_ogf',    1, '∏_{k≥1} 1/(1-q^k) — the partition-counting ogf', NULL),
   ('k_subsets',            'sum',          'q_polynomial', 'gf_subset_sum',       2, 'q^{k(k+1)/2}·[n choose k]_q — the Gaussian binomial (element-sum over k-subsets of [n])', NULL);
+-- (distinct_partitions' ogf row moved to packs/partitions-plus/generating_functions.partitions-plus.sql — #283
+--  phase 3 made distinct_partitions a pack-owned collection; the gf_distinct_partition_ogf builder stays core.)
 
 -- more (collection, statistic) distributions with a known closed form (each differential-gated below). Some REUSE a
 -- builder from an equidistribution (excedances/bounce), the rest add a one-builder recipe over the same kit.
@@ -199,13 +229,30 @@ INSERT INTO base_generating_function (collection, stat_id, kind, builder, arity,
   ('integer_partitions',   'durfee_square',    'q_polynomial', 'gf_durfee_row',               1, 'Durfee square size: p_d(n) = [x^{n−d²}] (1/(x;x)_d)²', NULL),
   ('integer_compositions', 'largest_part',     'q_polynomial', 'gf_composition_largest_row',  1, 'largest part — the k-bonacci T(n,k) recurrence (A092921)', NULL);
 
+-- rational-OGF rows (#274 B3, re-filed out of base_species — unbounded number sequences, NOT species). CORE-owned
+-- collections only: the 7 linear recurrences + triangular/square/cube. The 12 number-sets-pack figurates
+-- (pentagonal/hexagonal/… — pack-owned collections) are re-filed the same way in
+-- packs/number-sets/generating_functions.number-sets.sql, since a core file can't reference a pack collection (#283).
+INSERT INTO base_generating_function (collection, stat_id, kind, builder, arity, note, findstat, num, den) VALUES
+  ('fibonacci_numbers',  NULL, 'ogf', 'gf_rational', 1, 'x/(1-x-x^2); F_n = 0,1,1,2,3,5,8,…', NULL, ARRAY[0,1]::numeric[],   ARRAY[1,-1,-1]::numeric[]),
+  ('lucas_numbers',      NULL, 'ogf', 'gf_rational', 1, '(2-x)/(1-x-x^2); L_n = 2,1,3,4,7,11,…', NULL, ARRAY[2,-1]::numeric[], ARRAY[1,-1,-1]::numeric[]),
+  ('pell_numbers',       NULL, 'ogf', 'gf_rational', 1, 'x/(1-2x-x^2); P_n = 0,1,2,5,12,29,…', NULL, ARRAY[0,1]::numeric[],   ARRAY[1,-2,-1]::numeric[]),
+  ('jacobsthal_numbers', NULL, 'ogf', 'gf_rational', 1, 'x/(1-x-2x^2); J_n = 0,1,1,3,5,11,…', NULL, ARRAY[0,1]::numeric[],   ARRAY[1,-1,-2]::numeric[]),
+  ('tribonacci_numbers', NULL, 'ogf', 'gf_rational', 1, 'x^2/(1-x-x^2-x^3); T_n = 0,0,1,1,2,4,7,13,…', NULL, ARRAY[0,0,1]::numeric[], ARRAY[1,-1,-1,-1]::numeric[]),
+  ('padovan_sequence',   NULL, 'ogf', 'gf_rational', 1, '(1+x)/(1-x^2-x^3); P_n = 1,1,1,2,2,3,4,5,7,…', NULL, ARRAY[1,1]::numeric[], ARRAY[1,0,-1,-1]::numeric[]),
+  ('perrin_sequence',    NULL, 'ogf', 'gf_rational', 1, '(3-x^2)/(1-x^2-x^3); a_n = 3,0,2,3,2,5,5,7,10,…', NULL, ARRAY[3,0,-1]::numeric[], ARRAY[1,0,-1,-1]::numeric[]),
+  ('triangular_numbers', NULL, 'ogf', 'gf_rational', 1, 'x/(1-x)^3; C(n+1,2); 0,1,3,6,10,…', NULL, ARRAY[0,1]::numeric[],       ARRAY[1,-3,3,-1]::numeric[]),
+  ('square_numbers',     NULL, 'ogf', 'gf_rational', 1, 'x(1+x)/(1-x)^3; n²; 0,1,4,9,16,…', NULL, ARRAY[0,1,1]::numeric[],     ARRAY[1,-3,3,-1]::numeric[]),
+  ('cube_numbers',       NULL, 'ogf', 'gf_rational', 1, 'x(1+4x+x^2)/(1-x)^4; n³; 0,1,8,27,64,…', NULL, ARRAY[0,1,4,1]::numeric[], ARRAY[1,-4,6,-4,1]::numeric[]);
+
 -- the coefficients of a registered generating function on its grade(s): dispatch to the row's builder (arity 1 or 2).
 CREATE FUNCTION gf_coefficients(p_collection text, p_stat text, VARIADIC grade int[]) RETURNS numeric[] LANGUAGE plpgsql STABLE AS $$
-  DECLARE b text; r numeric[]; BEGIN
-    SELECT builder INTO b FROM base_generating_function
+  DECLARE g base_generating_function; r numeric[]; BEGIN
+    SELECT * INTO g FROM base_generating_function
      WHERE collection = p_collection AND coalesce(stat_id, '') = coalesce(p_stat, '');
-    IF b IS NULL THEN RAISE EXCEPTION 'no generating function %/%', p_collection, coalesce(p_stat, '(counting)'); END IF;
-    EXECUTE format('SELECT %I(%s)', b, array_to_string(grade, ', ')) INTO r; RETURN r; END $$;
+    IF g.builder IS NULL THEN RAISE EXCEPTION 'no generating function %/%', p_collection, coalesce(p_stat, '(counting)'); END IF;
+    IF g.builder = 'gf_rational' THEN RETURN gf_rational(g.num, g.den, grade[1]); END IF;
+    EXECUTE format('SELECT %I(%s)', g.builder, array_to_string(grade, ', ')) INTO r; RETURN r; END $$;
 
 -- ── the differential: the expander's coefficients ARE the live distribution ────────────────────────────────────
 -- q_polynomial: gf_coefficients(c,s,n) == the histogram of s over c(n) (index = stat value). ogf: gf_coefficients(c,
@@ -222,13 +269,26 @@ CREATE FUNCTION gf_counting_sequence(coll text, nmax int) RETURNS numeric[] LANG
   DECLARE r numeric[]; m int; c numeric; BEGIN r := ARRAY[]::numeric[];
     FOR m IN 0 .. nmax LOOP EXECUTE format('SELECT cardinality(%I(%s))', coll, m) INTO c; r := r || c; END LOOP;
     RETURN r; END $$;
+-- the ogf target sequence: for an UNBOUNDED number-sequence collection, the n-th ELEMENT VALUE (unrank); else the
+-- fiber cardinality — mirrors base_species_check_unlabelled's branch exactly (same "many roles" sequence).
+CREATE FUNCTION gf_ogf_target(coll text, nmax int) RETURNS numeric[] LANGUAGE plpgsql STABLE AS $$
+  DECLARE r numeric[] := ARRAY[]::numeric[]; m int; c numeric; is_unbounded boolean; BEGIN
+    SELECT unbounded INTO is_unbounded FROM base_collection WHERE id = coll;
+    IF is_unbounded IS NULL THEN RAISE EXCEPTION 'gf_ogf_target: unknown collection %', coll; END IF;  -- else a typo'd id silently reads as bounded
+    FOR m IN 0 .. nmax LOOP
+      IF is_unbounded THEN EXECUTE format('SELECT (unrank(%I(), %s)).value', coll, m) INTO c;
+      ELSE                 EXECUTE format('SELECT cardinality(%I(%s))', coll, m) INTO c;
+      END IF;
+      r := r || c;
+    END LOOP;
+    RETURN r; END $$;
 -- true iff the registered generating function reproduces the live distribution for every n = 0..nmax.
 CREATE FUNCTION gf_agrees(p_collection text, p_stat text, nmax int) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
   DECLARE g record; vfn text; n int; BEGIN
     SELECT * INTO g FROM base_generating_function
      WHERE collection = p_collection AND coalesce(stat_id, '') = coalesce(p_stat, '');
     IF g.kind = 'ogf' THEN
-      RETURN gf_coefficients(p_collection, p_stat, nmax) IS NOT DISTINCT FROM gf_counting_sequence(p_collection, nmax);
+      RETURN gf_coefficients(p_collection, p_stat, nmax) IS NOT DISTINCT FROM gf_ogf_target(p_collection, nmax);
     END IF;
     SELECT value_fn INTO vfn FROM base_stat WHERE collection = p_collection AND stat_id = p_stat;
     FOR n IN 0 .. nmax LOOP
@@ -267,4 +327,11 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(gf_agrees(c, s, 6))::text FROM (VALUES
       ('dyck_paths','height'),('dyck_paths','returns'),('set_partitions','singleton_blocks'),
       ('integer_partitions','distinct_parts'),('integer_partitions','odd_parts'),('integer_partitions','durfee_square'),
-      ('integer_compositions','largest_part')) v(c, s) $q$);
+      ('integer_compositions','largest_part')) v(c, s) $q$),
+  ('generating_functions','the core re-filed rational-OGF number sequences (#274 B3) reproduce their unrank''d element-value sequences, n=0..8 (7 recurrences + triangular/square/cube)','eq','true','gf_rational vs gf_ogf_target''s unbounded (unrank) branch — these are number sequences, not species; the 12 number-sets-pack figurates are checked in the pack (generating_functions.number-sets.sql)',$q$
+    SELECT bool_and(gf_agrees(c, NULL, 8))::text FROM (VALUES
+      ('fibonacci_numbers'),('lucas_numbers'),('pell_numbers'),('jacobsthal_numbers'),('tribonacci_numbers'),
+      ('padovan_sequence'),('perrin_sequence'),
+      ('triangular_numbers'),('square_numbers'),('cube_numbers')) v(c) $q$),
+  ('generating_functions','base_generating_function carries at least the 10 core re-filed rational-OGF rows (a floor)','eq','true','builder = gf_rational count (core; the pack adds its own)',$q$
+    SELECT (count(*) >= 10)::text FROM base_generating_function WHERE builder = 'gf_rational' $q$);

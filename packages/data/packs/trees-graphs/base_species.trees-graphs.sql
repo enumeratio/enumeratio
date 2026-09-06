@@ -1,17 +1,19 @@
 -- requires: base_species
 -- requires-tag: collection
--- trees-graphs half of sqlsrc/base_species.sql (#283 phase 3 extraction) — core keeps the table + rows for core
--- collections; this pack carries the rows for its own collections. plane_trees/ordered_trees are unlabelled OGF
--- fixed points (same Catalan shape as dyck_paths/binary_trees, which stay core); labeled_forests/labeled_trees are
--- labelled implicit species (rooted forests / unrooted Cayley trees via dissymmetry).
--- requires-tag: collection (scoped to this pack's own files by orderFiles) ensures these collections have loaded.
+-- trees-graphs half of the species registry (#283 phase 3 extraction, reconciled with #274): core base_species.sql
+-- defines base_species_def (the shared identities, incl. every expr used here) + base_collection_species; this pack
+-- binds its own tree collections' READINGS. plane_trees/ordered_trees are isotype readings of Catalan-shape OGF fixed
+-- points; labeled_forests/labeled_trees are labelled implicit species; rooted_unlabeled_trees is the isotype twin of
+-- the rooted-tree fixpoint X·(E∘Y) (A000081, certified by the #274 B4 kernel). requires-tag: collection ensures
+-- these collections have loaded first.
+INSERT INTO base_collection_species (collection, species, reading, note) VALUES
+  ('ordered_trees',          '1+X·Y^2', 'isotype', 'ordered trees by edges; Catalan'),
+  ('plane_trees',            'X+Y^2',   'isotype', 'plane trees by NODES; C_{n-1} (shifted Catalan)'),
+  ('rooted_unlabeled_trees', 'X·(E∘Y)', 'isotype', 'the isotype fixpoint for rooted unlabeled trees; A000081');
 
-INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
-  ('plane_trees',   'X+Y^2',        'P=x+P^2',      'plane trees by NODES; C_{n-1} (shifted Catalan)', true),
-  ('ordered_trees', '1+X·Y^2',      'C=1+xC^2',     'ordered trees by edges; Catalan',                 true);
-
-INSERT INTO base_species (collection, expr, egf, note, implicit) VALUES
-  ('labeled_forests', 'E∘(X·Y)', 'F=e^{xF}', 'rooted labelled forests; (n+1)ⁿ⁻¹ = 1,1,3,16,125,…', true);
-
-INSERT INTO base_species (collection, expr, egf, note, implicit, solve_for) VALUES
-  ('labeled_trees', '1+Y-Y·Y/2', '1+T-\tfrac{T^2}{2}', 'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2, +1 for the collection''s empty-tree convention (n≤2 ↦ 1)', true, 'X·(E∘Y)');
+-- labelled fixpoints: rooted forests (E∘(X·Y)); unrooted Cayley trees (two-stage — Y solves X·(E∘Y), then the
+-- dissymmetry 1+Y−Y·Y/2 is evaluated over it).
+INSERT INTO base_collection_species (collection, species, reading, note) VALUES
+  ('labeled_forests', 'E∘(X·Y)', 'labelled', 'rooted labelled forests; (n+1)ⁿ⁻¹ = 1,1,3,16,125,…');
+INSERT INTO base_collection_species (collection, species, reading, bindings, note) VALUES
+  ('labeled_trees', '1+Y-Y·Y/2', 'labelled', '{"solve_for":"X·(E∘Y)"}', 'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2, +1 for the collection''s empty-tree convention (n≤2 ↦ 1)');

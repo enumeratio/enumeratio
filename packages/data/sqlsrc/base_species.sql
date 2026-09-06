@@ -1,4 +1,4 @@
--- requires: realizer, utilities
+-- requires: realizer, utilities, species_kernel
 -- requires-tag: collection
 -- (base_species CHECKS every registered collection's cardinality, so it must load after all collections — the tag slurps
 --  them so a newly-added collection with a species row needs no edit here)
@@ -314,22 +314,34 @@ CREATE FUNCTION ogf_solve(equation text, upto int) RETURNS numeric[] LANGUAGE pl
     RETURN y;
   END $$;
 
--- ── the registry ────────────────────────────────────────────────────────────────────────────────────────────────
--- collection → its species expression (labelled) + the EGF (KaTeX). base_species_check confirms the expression's
--- sequence IS the collection's cardinality, so a wrong expression can't sneak in.
-CREATE TABLE base_species (
-  collection text PRIMARY KEY REFERENCES base_collection,
-  expr       text NOT NULL,          -- labelled: the X/E/E+/C/L · ∘ + algebra. unlabelled: an OGF fixed point Y = F(X,Y)
-  egf        text,                   -- generating function, KaTeX (no delimiters) — EGF for labelled, OGF for unlabelled
-  note       text,
-  graded     boolean NOT NULL DEFAULT false,  -- expr carries a secondary-grade parameter (E_k); checked per k over n
-  unlabelled boolean NOT NULL DEFAULT false,  -- expr is an OGF fixed point/product (solved by ogf_solve, not species_eval)
-  implicit   boolean NOT NULL DEFAULT false,  -- expr is a LABELLED fixed point Y = F(X,Y) (solved by species_solve)
-  solve_for  text,                            -- if set (implicit only): Y solves THIS equation, then `expr` (in Y) is
-                                              -- evaluated — for families that COMPOSE over a fixed point, e.g. endofunctions
-  pack       text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack
+-- ── the registry (#274 B5) ──────────────────────────────────────────────────────────────────────────────────────
+-- base_species_def: the SPECIES IDENTITY itself, one row per DISTINCT expr — many collections share one (e.g. 'E∘C'
+-- is both permutations and lehmer_codes). base_collection_species: a collection's READING of that species — labelled
+-- (EGF, species_eval/species_solve) or isotype (OGF-fixpoint via ogf_solve, or plethysm via the Z-kernel), ± a
+-- *_count_sequence variant when the collection is the unbounded number-sequence twin of a finite graded family
+-- (same species, same reading, different "role" — the one-identity-many-roles thesis). `base_species` below is a
+-- COMPAT VIEW reshaping these two tables back into the old collection-keyed shape the client and the existing
+-- differential examples already read.
+CREATE TABLE base_species_def (
+  id    text PRIMARY KEY,      -- = the expr text (a species IS its expr)
+  expr  text NOT NULL,
+  egf   text,                  -- KaTeX, no delimiters — EGF for a labelled reading, OGF for an isotype fixed point/product
+  title text,
+  note  text,
+  pack  text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack   -- #283 provenance
 );
-CREATE TRIGGER base_species_pack_guard BEFORE UPDATE OR DELETE ON base_species FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
+
+CREATE TABLE base_collection_species (
+  collection text PRIMARY KEY REFERENCES base_collection,
+  species    text NOT NULL REFERENCES base_species_def(id),
+  reading    text NOT NULL CHECK (reading IN ('labelled', 'isotype', 'labelled_count_sequence', 'isotype_count_sequence')),
+  bindings   jsonb NOT NULL DEFAULT '{}',   -- {"k":{"kind":"nat"}} graded; {"solve_for":"…"} two-stage implicit fixpoint
+  note       text,
+  pack       text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack   -- #283 provenance
+);
+-- #283 pack guard on the REAL tables (base_species is a compat view now, #274 B5 — a view can't carry a row trigger)
+CREATE TRIGGER base_collection_species_pack_guard BEFORE UPDATE OR DELETE ON base_collection_species FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
+CREATE TRIGGER base_species_def_pack_guard BEFORE UPDATE OR DELETE ON base_species_def FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- ungraded: species_eval(expr) IS the cardinality sequence over the single size axis.
 CREATE FUNCTION base_species_check(coll text, expr text, upto int) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
@@ -367,6 +379,25 @@ CREATE FUNCTION base_species_check_unlabelled(coll text, expr text, upto int) RE
     RETURN want = ogf_solve(expr, upto);
   END $$;
 
+-- isotype via the Z-kernel (plethysm, not an OGF fixpoint — expr carries ∘, which ogf_eval can't parse): the count
+-- sequence is z_isotype(species_z_eval(expr)), or z_isotype(species_z_fixpoint(expr)) when expr is self-referential
+-- (carries Y). Covers the isotype-TWIN bindings (integer_partitions/partition_numbers = E∘E+, integer_compositions =
+-- L∘E+, rooted_unlabeled_trees = X·(E∘Y)) that base_species_check_unlabelled (ogf_solve) cannot evaluate.
+CREATE FUNCTION base_species_check_isotype_z(coll text, expr text, upto int) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
+  DECLARE want numeric[] := '{}'; i int; c numeric; is_unbounded boolean; got numeric[];
+  BEGIN
+    SELECT unbounded INTO is_unbounded FROM base_collection WHERE id = coll;
+    FOR i IN 0..upto LOOP
+      IF is_unbounded THEN EXECUTE format('SELECT (unrank(%I(), %s)).value', coll, i) INTO c;
+      ELSE                 EXECUTE format('SELECT cardinality(%I(%s))', coll, i) INTO c;
+      END IF;
+      want := want || c;
+    END LOOP;
+    got := CASE WHEN expr LIKE '%Y%' THEN z_isotype(species_z_fixpoint(expr, upto))
+                ELSE z_isotype(species_z_eval(expr, upto)) END;
+    RETURN want = got;
+  END $$;
+
 -- implicit (labelled fixed point): the count sequence is species_solve(expr) when `solve_for` is NULL, else `expr`
 -- evaluated with Y bound to species_solve(solve_for) — the two-stage "compose over a fixed point" case (endofunctions).
 -- Compared against cardinality (graded finite collection) or n-th element value (unbounded).
@@ -385,70 +416,113 @@ CREATE FUNCTION base_species_check_implicit(coll text, expr text, solve_for text
     RETURN want = got;
   END $$;
 
--- (lehmer_codes/k_cycle_permutations/subexcedant_seqs/signed_permutations/surjections/arrangements/
--- cyclic_permutations moved to packs/permutations-plus/base_species.permutations-plus.sql — #283 phase 3)
-INSERT INTO base_species (collection, expr, egf, note) VALUES
-  ('permutations',              'E∘C',        'e^{-\ln(1-x)} = \frac{1}{1-x}', 'permutation = set of cycles; n!'),
-  ('set_partitions',            'E∘E+',       'e^{e^x-1}',                     'partition = set of nonempty blocks; Bell'),
-  ('restricted_growth_strings', 'E∘E+',       'e^{e^x-1}',                     'RGS encode set partitions; Bell'),
-  ('set_compositions',          'L∘E+',       '\frac{1}{2-e^x}',               'ordered set partitions; Fubini'),
-  ('subsets',                   'E·E',        'e^{2x}',                        'in-set · out-set; 2ⁿ'),
-  ('boolean_algebra',           'E·E',        'e^{2x}',                        'the 2^[n] lattice; 2ⁿ'),
-  ('binary_words',              'E·E',        'e^{2x}',                        'a 2-colouring of [n]; 2ⁿ'),
-  ('signed_subsets',            'E·E·E',      'e^{3x}',                        'each element −/0/+; 3ⁿ');
-  -- NB: perfect_matchings = E∘E_2 as a species over POINTS, but our collection is indexed by PAIRS (n ↦ 2n points),
-  -- so it isn't a labelled species at our n — omitted until the engine indexes by an arbitrary size map.
+-- ── species identities (base_species_def) — one row per DISTINCT expr; the FK target for BOTH core and pack
+-- readings, so it carries every expr used anywhere (a pack collection binds a core-defined identity). ──────────
+INSERT INTO base_species_def (id, expr, egf, note) VALUES
+  ('E∘C',           'E∘C',           '\frac{1}{1-x}',        'permutation = set of cycles; n!'),
+  ('E∘C∘(X+X)',     'E∘C∘(X+X)',     '\frac{1}{1-2x}',       'hyperoctahedral B_n = 2ⁿ·n!'),
+  ('E∘E+',          'E∘E+',          'e^{e^x-1}',            'partition = set of nonempty blocks; Bell'),
+  ('L∘E+',          'L∘E+',          '\frac{1}{2-e^x}',      'ordered set partition; Fubini'),
+  ('E·E',           'E·E',           'e^{2x}',               'in-set · out-set; 2ⁿ'),
+  ('E·E·E',         'E·E·E',         'e^{3x}',               'each element −/0/+; 3ⁿ'),
+  ('E·L',           'E·L',           '\frac{e^x}{1-x}',      'sequences of distinct elements; A000522'),
+  ('C',             'C',             '-\ln(1-x)',            'a single cycle; (n−1)!'),
+  ('E_k·E',         'E_k·E',        '\frac{x^k}{k!}\,e^x',  'k-subsets of [n]; C(n,k)'),
+  ('(E+)^k',        '(E+)^k',       '(e^x-1)^k',             'surjections [n]→[k]; k!·S(n,k)'),
+  ('E_k∘E+',        'E_k∘E+',       '\frac{(e^x-1)^k}{k!}', 'partitions of [n] into k blocks; S(n,k)'),
+  ('E^k',           'E^k',          'e^{kx}',                'words of length n over k letters; kⁿ'),
+  ('1+X·Y^2',       '1+X·Y^2',       'C=1+xC^2',             'Catalan OGF fixed point'),
+  ('1+X·Y+X^2·Y^2', '1+X·Y+X^2·Y^2', 'M=1+xM+x^2M^2',        'Motzkin OGF fixed point'),
+  ('1+X·Y+X·Y^2',   '1+X·Y+X·Y^2',   'S=1+xS+xS^2',          'large Schröder OGF fixed point'),
+  ('X+Y^2',         'X+Y^2',         'P=x+P^2',              'plane trees by nodes; C_{n-1} (shifted Catalan)'),
+  ('E∘(X·Y)',       'E∘(X·Y)',       'F=e^{xF}',             'rooted labelled forests; (n+1)ⁿ⁻¹'),
+  ('E∘(C∘Y)',       'E∘(C∘Y)',       'e^{-\ln(1-T)}',        'functions [n]→[n]; nⁿ = set of cycles of rooted trees'),
+  ('1+Y-Y·Y/2',     '1+Y-Y·Y/2',     '1+T-\tfrac{T^2}{2}',   'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2'),
+  ('X·(E∘Y)',       'X·(E∘Y)',       'T=xe^T',               'rooted labelled tree; nⁿ⁻¹ — also the isotype fixpoint for A000081');
+-- NB: perfect_matchings = E∘E_2 as a species over POINTS, but our collection is indexed by PAIRS (n ↦ 2n points),
+-- so it isn't a labelled species at our n — omitted until the engine indexes by an arbitrary size map.
+
+-- ── collection readings — CORE-owned collections only. The pack-owned ones (lehmer_codes, k_cycle_permutations,
+-- subexcedant_seqs, signed_permutations, surjections, arrangements, cyclic_permutations, surjections_onto_k,
+-- parking_functions, endofunctions → permutations-plus; motzkin_paths, schroeder_paths → paths) bind in their
+-- pack's base_species.<pack>.sql — a core file can't reference a pack collection (#283 phase 3). ──────────────────
+INSERT INTO base_collection_species (collection, species, reading, note) VALUES
+  ('permutations',              'E∘C',       'labelled', NULL),
+  ('set_partitions',            'E∘E+',      'labelled', NULL),
+  ('restricted_growth_strings', 'E∘E+',      'labelled', 'RGS encode set partitions'),
+  ('set_compositions',          'L∘E+',      'labelled', NULL),
+  ('subsets',                   'E·E',       'labelled', NULL),
+  ('boolean_algebra',           'E·E',       'labelled', 'the 2^[n] lattice'),
+  ('binary_words',              'E·E',       'labelled', 'a 2-colouring of [n]'),
+  ('signed_subsets',            'E·E·E',     'labelled', NULL);
 
 -- graded (a secondary-grade parameter k): E_k = sets of size exactly k, ^k = k-fold product. Checked per k over n.
--- (surjections_onto_k moved to the pack, same reason)
-INSERT INTO base_species (collection, expr, egf, note, graded) VALUES
-  ('k_subsets',                   'E_k·E',  '\frac{x^k}{k!}\,e^x', 'k-subsets of [n]; C(n,k)',       true),
-  ('set_partitions_into_k_blocks','E_k∘E+', '\frac{(e^x-1)^k}{k!}','partitions of [n] into k blocks; S(n,k)', true),
-  ('words',                       'E^k',    'e^{kx}',              'words of length n over k letters; kⁿ', true);
+INSERT INTO base_collection_species (collection, species, reading, bindings) VALUES
+  ('k_subsets',                    'E_k·E',  'labelled', '{"k":{"kind":"nat"}}'),
+  ('set_partitions_into_k_blocks', 'E_k∘E+', 'labelled', '{"k":{"kind":"nat"}}'),
+  ('words',                        'E^k',    'labelled', '{"k":{"kind":"nat"}}');
 
--- unlabelled: OGF fixed points Y = F(X, Y), solved by Picard iteration and checked against the sequence (fiber count for
--- the graded collections, element value for the unbounded number-sequences). Every Y is X-guarded ⇒ division-free.
--- (motzkin_paths/schroeder_paths rows moved to packs/paths/base_species.paths.sql; plane_trees/ordered_trees rows
--- moved to packs/trees-graphs/base_species.trees-graphs.sql — collection REFERENCES base_collection, so those
--- rows would FK-fail loading core alone, #283 phase 3)
-INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
-  ('catalan_numbers', '1+X·Y^2',      'C=1+xC^2',         'Catalan OGF; C_n = 1,1,2,5,14,…',              true),
-  ('dyck_paths',      '1+X·Y^2',      'C=1+xC^2',         'Dyck paths of semilength n; Catalan',          true),
-  ('binary_trees',    '1+X·Y^2',      'C=1+xC^2',         'binary trees by internal nodes; Catalan',      true),
-  ('motzkin_numbers', '1+X·Y+X^2·Y^2','M=1+xM+x^2M^2',    'Motzkin OGF; M_n = 1,1,2,4,9,21,…',            true),
-  ('schroeder_numbers','1+X·Y+X·Y^2', 'S=1+xS+xS^2',      'large Schröder OGF; S_n = 1,2,6,22,90,…',       true);
+-- unlabelled: OGF fixed points Y = F(X, Y), checked against the sequence — fiber count for the finite collections
+-- (isotype), element value for the unbounded number-sequence twins (isotype_count_sequence). CORE collections only;
+-- the tree collections (ordered_trees, plane_trees, labeled_forests, labeled_trees, rooted_unlabeled_trees) moved to
+-- packs/trees-graphs/base_species.trees-graphs.sql (#283 phase 3 — a core file can't reference a pack collection).
+INSERT INTO base_collection_species (collection, species, reading) VALUES
+  ('dyck_paths',      '1+X·Y^2',       'isotype'),
+  ('binary_trees',    '1+X·Y^2',       'isotype');
+INSERT INTO base_collection_species (collection, species, reading) VALUES
+  ('catalan_numbers',   '1+X·Y^2',       'isotype_count_sequence'),
+  ('motzkin_numbers',   '1+X·Y+X^2·Y^2', 'isotype_count_sequence'),
+  ('schroeder_numbers', '1+X·Y+X·Y^2',   'isotype_count_sequence');
 
--- LABELLED implicit (EGF fixed points Y = F(X,Y), solved by species_solve): rooted forests.
--- (parking_functions moved to packs/permutations-plus/base_species.permutations-plus.sql; labeled_forests row
--- moved to packs/trees-graphs/base_species.trees-graphs.sql, #283 phase 3)
--- two-stage: Y = the rooted-tree function (solve_for). (endofunctions moved to the pack; labeled_trees row moved
--- to packs/trees-graphs/base_species.trees-graphs.sql, #283 phase 3)
+-- (rational-OGF linear recurrences AND figurate/simplex closed forms — 22 collections total — re-filed to
+-- base_generating_function (builder gf_rational) in #274 B3; distinct_partitions re-filed there too in B5 below:
+-- none of these 23 are species.)
 
--- rational OGFs (linear recurrences) as X-guarded fixed points Y = P(X) + (recurrence)·Y — need the scalar + subtraction.
-INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
-  ('fibonacci_numbers',  'X+X·Y+X^2·Y',         '\frac{x}{1-x-x^2}',       'F_n = 0,1,1,2,3,5,8,…',          true),
-  ('lucas_numbers',      '2-X+X·Y+X^2·Y',       '\frac{2-x}{1-x-x^2}',     'L_n = 2,1,3,4,7,11,…',           true),
-  ('pell_numbers',       'X+2·X·Y+X^2·Y',       '\frac{x}{1-2x-x^2}',      'P_n = 0,1,2,5,12,29,…',          true),
-  ('jacobsthal_numbers', 'X+X·Y+2·X^2·Y',       '\frac{x}{1-x-2x^2}',      'J_n = 0,1,1,3,5,11,…',           true),
-  ('tribonacci_numbers', 'X^2+X·Y+X^2·Y+X^3·Y', '\frac{x^2}{1-x-x^2-x^3}', 'T_n = 0,0,1,1,2,4,7,13,…',       true),
-  ('padovan_sequence',   '1+X+X^2·Y+X^3·Y',     '\frac{1+x}{1-x^2-x^3}',   'P_n = 1,1,1,2,2,3,4,5,7,…',      true),
-  ('perrin_sequence',    '3-X^2+X^2·Y+X^3·Y',   '\frac{3-x^2}{1-x^2-x^3}', 'a_n = 3,0,2,3,2,5,5,7,10,…',     true);
+-- honest re-binding (#274 B5): integer_partitions/partition_numbers are NOT ∏1/(1-x^k) as a species — that's the
+-- OGF identity, not a combinatorial construction. The honest species is E∘E+ (a set of nonempty sets, unlabelled =
+-- an unordered partition into parts), certified against p(n) via the Z-kernel plethysm in #274 B4. Checked here via
+-- base_species_check_isotype_z (species_z_eval/z_isotype), not ogf_solve — expr carries ∘, which ogf_eval can't parse.
+-- (The figurate/rational OGF sequences main's #283 kept/moved here are NOT species — #274 B3 re-filed ALL of them to
+--  base_generating_function via gf_rational; see packs/number-sets for the pack-scoped ones, handled the same way.)
+INSERT INTO base_collection_species (collection, species, reading, note) VALUES
+  ('integer_partitions', 'E∘E+', 'isotype',                'the honest species (not the ∏ OGF) — see #274 B4/B5'),
+  ('partition_numbers',  'E∘E+', 'isotype_count_sequence',  'the p(n) sequence; same species as integer_partitions');
 
--- polynomial (figurate) sequences: closed rational OGFs poly/(1-X)^d — written directly with the / operator (no Y). The
--- polygonal family is x((s−3)x+1)/(1-x)^3; the pyramidal/simplex family raises the denominator power. The rest of the
--- figurate family (pentagonal/hexagonal/pronic/tetrahedral/… — number-sets collections) is registered in
--- packs/number-sets/base_species.number-sets.sql; only the three named counting sequences (§4) stay here.
-INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
-  ('triangular_numbers',      'X/(1-X)^3',            '\frac{x}{(1-x)^3}',        'C(n+1,2); 0,1,3,6,10,…',   true),
-  ('square_numbers',          'X·(1+X)/(1-X)^3',      '\frac{x(1+x)}{(1-x)^3}',   'n²; 0,1,4,9,16,…',         true),
-  ('cube_numbers',            'X·(1+4·X+X^2)/(1-X)^4','\frac{x(1+4x+x^2)}{(1-x)^4}','n³; 0,1,8,27,64,…',      true);
+-- isotype TWINS (#274 B5): collections that had no species row before — binding them to species already proved
+-- honest by the #274 B4 kernel differential (species_kernel.sql's marquee examples). Both still core collections
+-- (integer_compositions core; rooted_unlabeled_trees physically core until trees-graphs is extracted).
+INSERT INTO base_collection_species (collection, species, reading, note) VALUES
+  ('integer_compositions',   'L∘E+',    'isotype', 'unlabelled ordered set partitions = compositions; 2^(n-1)');
+-- (rooted_unlabeled_trees' isotype twin moved to packs/trees-graphs/base_species.trees-graphs.sql — #283 phase 3)
+-- multisets SKIPPED: multisets(n,k) is doubly-graded (n and k both vary) and doesn't bind cleanly to a single-axis
+-- E^b isotype reading the way k_subsets/E_k·E does for the labelled case — no row minted, per #274 B5 scope.
 
--- infinite-product families: a leading ∏ means ∏_{k≥1} of the per-k factor (X^k = the index power).
-INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
-  ('integer_partitions', '∏1/(1-X^k)', '\prod_{k\ge1}\frac{1}{1-x^k}', 'partitions of n; p(n) = 1,1,2,3,5,7,11,…',      true),
-  ('partition_numbers',  '∏1/(1-X^k)', '\prod_{k\ge1}\frac{1}{1-x^k}', 'the p(n) sequence (integer_partitions'' counts)', true);
--- distinct_partitions' species row moved to the partitions-plus pack (base_species.partitions-plus.sql, #283) —
--- distinct_partitions itself is a pack-owned collection.
+-- distinct_partitions is NOT a species (no honest species construction proven) — re-filed like the rationals (#274
+-- B3) to base_generating_function (builder gf_distinct_partition_ogf) in generating_functions.sql instead.
+
+-- ── compat view ──────────────────────────────────────────────────────────────────────────────────────────────────
+-- `base_species` — the OLD collection-keyed shape, reconstructed from the two tables above. The client (core.ts)
+-- selects exactly collection/expr/egf/note/graded/unlabelled/implicit; species_registry.sql needs `expr` too (its
+-- load-time species_parse(expr) call and the print∘parse differential both read FROM base_species).
+-- `implicit` is scoped to the LABELLED readings only — several isotype OGF-fixpoint exprs (1+X·Y^2, X+Y^2, …) also
+-- carry a self-referential Y, but they are NOT implicit-labelled-fixpoints (they're solved by ogf_solve, dispatched
+-- via `unlabelled`); the two-stage bindings (bindings ? 'solve_for') and the plain self-referential labelled exprs
+-- (labeled_forests/parking_functions, expr LIKE '%Y%') are the only honest 4.
+CREATE VIEW base_species AS
+  SELECT bcs.collection,
+         sd.expr,
+         sd.egf,
+         coalesce(bcs.note, sd.note) AS note,
+         (bcs.bindings ? 'k')                                    AS graded,
+         (bcs.reading IN ('isotype', 'isotype_count_sequence'))  AS unlabelled,
+         (bcs.reading IN ('labelled', 'labelled_count_sequence')
+          AND (bcs.bindings ? 'solve_for' OR sd.expr LIKE '%Y%')) AS implicit,
+         bcs.bindings ->> 'solve_for'                             AS solve_for,
+         bcs.reading,
+         bcs.bindings,
+         bcs.pack                                                 -- #283 provenance accounting reads base_species.pack (bootstrap.sql)
+    FROM base_collection_species bcs
+    JOIN base_species_def sd ON sd.id = bcs.species;
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('species','E∘C evaluates to the factorials 1,1,2,6,24,120','eq','1,1,2,6,24,120','the permutation species, off the engine',$q$
@@ -457,6 +531,12 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT array_to_string(species_eval('E∘E+', 5), ',') $q$),
   ('species','L∘E+ evaluates to the Fubini numbers 1,1,3,13,75,541','eq','1,1,3,13,75,541','ordered set partitions',$q$
     SELECT array_to_string(species_eval('L∘E+', 5), ',') $q$),
+  ('species','the Z-kernel path (product/labelled) agrees with species_eval for E·E, E·E·E, L·L','eq','true','cycle-index kernel vs. the binomial-convolution engine, cross-checked',$q$
+    SELECT bool_and(v)::text FROM (VALUES
+      (z_labelled(species_z_product(species_z_atom('E'),species_z_atom('E'))) IS NOT DISTINCT FROM species_eval('E·E', 8)),
+      (z_labelled(species_z_product(species_z_product(species_z_atom('E'),species_z_atom('E')),species_z_atom('E'))) IS NOT DISTINCT FROM species_eval('E·E·E', 8)),
+      (z_labelled(species_z_product(species_z_atom('L'),species_z_atom('L'))) IS NOT DISTINCT FROM species_eval('L·L', 8))
+    ) t(v) $q$),
   ('species','E·E = 2ⁿ and E·E·E = 3ⁿ','eq','1,2,4,8,16|1,3,9,27,81','labelled product = binomial convolution',$q$
     SELECT array_to_string(species_eval('E·E', 4), ',') || '|' || array_to_string(species_eval('E·E·E', 4), ',') $q$),
   ('species','composition is associative + parenthesised sums parse: E∘C∘(X+X) = 2ⁿ·n!','eq','1,2,8,48,384','signed permutations B_n',$q$
@@ -482,9 +562,64 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT array_to_string(species_eval('E∘(C∘Y)', 6, NULL, species_solve('X·(E∘Y)', 6)), ',') $q$),
   ('species','dissymmetry T−T²/2 = unrooted (Cayley) trees nⁿ⁻² (subtraction + scalar divide)','eq','0,1,1,3,16,125,1296','species_sub + species_div_scalar',$q$
     SELECT string_agg(x::bigint::text, ',' ORDER BY o) FROM unnest(species_eval('Y-Y·Y/2', 6, NULL, species_solve('X·(E∘Y)', 6))) WITH ORDINALITY t(x, o) $q$),
-  ('species','EVERY base_species expression matches its collection sequence (n=0..6)','eq','','a wrong species/equation can''t register (graded per k; unlabelled via ogf_solve)',$q$
-    SELECT coalesce(string_agg(collection, ',' ORDER BY collection), '') FROM base_species
-     WHERE NOT (CASE WHEN unlabelled THEN base_species_check_unlabelled(collection, expr, 6)
-                     WHEN implicit   THEN base_species_check_implicit(collection, expr, solve_for, 6)
-                     WHEN graded     THEN base_species_check_graded(collection, expr, 6)
-                     ELSE                 base_species_check(collection, expr, 6) END) $q$);
+  ('species','EVERY collection''s species reading matches its sequence (n=0..6)','eq','','a wrong species/reading can''t register — dispatches on reading, graded per k, isotype-∘ via the Z-kernel, isotype-OGF via ogf_solve, implicit via species_solve',$q$
+    SELECT coalesce(string_agg(bcs.collection, ',' ORDER BY bcs.collection), '')
+      FROM base_collection_species bcs JOIN base_species_def sd ON sd.id = bcs.species
+     WHERE NOT (
+       CASE
+         WHEN bcs.reading IN ('isotype', 'isotype_count_sequence') AND sd.expr LIKE '%∘%'
+           THEN base_species_check_isotype_z(bcs.collection, sd.expr, 6)
+         WHEN bcs.reading IN ('isotype', 'isotype_count_sequence')
+           THEN base_species_check_unlabelled(bcs.collection, sd.expr, 6)
+         WHEN bcs.bindings ? 'solve_for'
+           THEN base_species_check_implicit(bcs.collection, sd.expr, bcs.bindings ->> 'solve_for', 6)
+         WHEN sd.expr LIKE '%Y%'
+           THEN base_species_check_implicit(bcs.collection, sd.expr, NULL, 6)
+         WHEN bcs.bindings ? 'k'
+           THEN base_species_check_graded(bcs.collection, sd.expr, 6)
+         ELSE base_species_check(bcs.collection, sd.expr, 6)
+       END) $q$);
+-- (the isotype-twin bindings — integer_partitions/E∘E+, integer_compositions/L∘E+, rooted_unlabeled_trees/X·(E∘Y) —
+--  are already certified by the dispatch above via base_species_check_isotype_z; no separate deg-8 example needed.)
+
+-- ── plethysm + Z-walker (#274 B4): species_z_compose/species_z_fixpoint/species_z_eval certified against the
+-- existing labelled engine (species_eval) over the whole plain labelled corpus, plus targeted isotype checks. ──
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+-- The plethysm kernel is expensive at high degree (per-coefficient partition-ordinality lookups; see the #274
+-- follow-up note in species_kernel.sql), so these differentials run to degree 6 — the target sequences (partition
+-- numbers, compositions, A000081, n!) are already distinctive there. The full-degree corpus cert is on demand
+-- (EXAMPLES=all lifts the marquee's slow twin below).
+  ('species','isotype(E∘E+) == integer_partitions: p(n) = 1,1,2,3,5,7,11','eq','true','plethysm E composed with the nonempty-set atom counts unlabelled set partitions = integer partitions',$q$
+    SELECT (z_isotype(species_z_compose(species_z_atom('E',6),species_z_atom('E+',6)))
+            = ARRAY(SELECT cardinality(integer_partitions(m))::numeric FROM generate_series(0,6) m))::text $q$),
+  ('species','isotype(L∘E+) == integer_compositions: 2^(n-1) = 1,1,2,4,8,16,32','eq','true','plethysm L composed with the nonempty-set atom counts unlabelled ordered set partitions = integer compositions',$q$
+    SELECT (z_isotype(species_z_compose(species_z_atom('L',6),species_z_atom('E+',6)))
+            = ARRAY(SELECT cardinality(integer_compositions(m))::numeric FROM generate_series(0,6) m))::text $q$),
+  ('species','isotype(E^3) == multisets of 3: C(n+2,2) = 1,3,6,10,15,21,28,36,45','eq','1,3,6,10,15,21,28,36,45','the ^k power operator on the Z side, isotype-projected',$q$
+    SELECT array_to_string(z_isotype(species_z_power(species_z_atom('E'),3)), ',') $q$),
+  ('species','labelled(E∘C) == species_eval(E∘C): n!','eq','true','plethysm-composed kernel, labelled-projected, vs the existing labelled engine',$q$
+    SELECT (z_labelled(species_z_compose(species_z_atom('E',6),species_z_atom('C',6))) IS NOT DISTINCT FROM species_eval('E∘C', 6))::text $q$),
+  ('species','Euler transform of all-ones == isotype(E∘E+): both are the partition numbers','eq','true','a sequence-transform differential vs the species-kernel differential, same target sequence',$q$
+    SELECT (sequence_transform_terms('all_ones','euler',7) IS NOT DISTINCT FROM z_isotype(species_z_compose(species_z_atom('E',6),species_z_atom('E+',6))))::text $q$),
+  ('species','MARQUEE: the Z-walker + plethysm kernel agrees with species_eval over the plain labelled corpus','eq','true','z_labelled(species_z_eval(expr)) == species_eval(expr) for every ungraded, labelled, non-implicit expr (degree 6)',$q$
+    SELECT bool_and(z_labelled(species_z_eval(expr, 6)) IS NOT DISTINCT FROM species_eval(expr, 6))::text
+      FROM base_species WHERE NOT graded AND NOT unlabelled AND NOT implicit $q$),
+  ('species','MARQUEE (full degree 8): the Z-walker + plethysm kernel agrees with species_eval over the plain labelled corpus','eq','true','the on-demand deep tier (EXAMPLES=all) — same differential at degree 8',$q$
+    SELECT bool_and(z_labelled(species_z_eval(expr, 8)) IS NOT DISTINCT FROM species_eval(expr, 8))::text
+      FROM base_species WHERE NOT graded AND NOT unlabelled AND NOT implicit $q$);
+
+-- ── relabel_invariant stat trait (#274 B6): a stat is relabel-invariant iff its value survives any relabelling of
+-- the underlying species' atoms — cycle/block/fixed-point counts don't care WHICH labels moved, only the shape.
+-- Runs LATE (after every base_stat insert, including core files, has loaded) so the marked rows already exist; all
+-- five are core-owned, so base_guard_pack's core-may-update-core rule lets this UPDATE through under any active pack.
+UPDATE base_stat SET relabel_invariant = true WHERE (collection, stat_id) IN
+  (('permutations','cycles'),('set_partitions','blocks'),('permutations','fixed_points'),
+   ('binary_words','number_of_ones'),('set_partitions','singleton_blocks'));
+
+INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
+  ('species','relabel_invariant marks the shape-only stats (cycles/blocks/fixed_points/number_of_ones/singleton_blocks)','eq','true','floor/containment, not an exact count — other stats may earn the trait later',$q$
+    SELECT bool_and(relabel_invariant)::text FROM base_stat WHERE (collection, stat_id) IN
+      (('permutations','cycles'),('set_partitions','blocks'),('permutations','fixed_points'),
+       ('binary_words','number_of_ones'),('set_partitions','singleton_blocks')) $q$),
+  ('species','the two #274 B6 species kinds (nonempty, x_guarded) are registered','eq','true','nonempty = G has no empty structure (∘''s requirement); x_guarded = fixpoint body guarded by X (Picard convergence)',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_kind WHERE id='nonempty') AND EXISTS (SELECT 1 FROM base_kind WHERE id='x_guarded'))::text $q$);
