@@ -4,11 +4,9 @@
 // the node plumbing around it — stdout with backpressure, EPIPE, the main-thread db, and turning a CliError into
 // stderr + a non-zero exit. Everything routes through enumeratio-client (the pure-SQL core).
 import debug from 'debug'
-import {
-  close, provideDb, provideEngine, makeDb, standardEngine, evaluate, parseCalc, whyNot,
-  collections, construct, describe, summary, mapGraph, terminalSelect,
-} from '@enumeratio/client'
-import { runCli, CliError, type Client } from './dispatch.js'
+import { close, provideDb, provideEngine, makeDb, standardEngine } from '@enumeratio/client'
+import { runCli, CliError } from './dispatch.js'
+import { nodeClient } from './node-client.js'
 
 const log = debug('enumeratio:cli:run')
 
@@ -34,22 +32,7 @@ async function main() {
   // building it loads the catalog snapshot and a bare `enumeratio permutations 4` never needs one.
   provideDb(() => makeDb())
   provideEngine(() => standardEngine())
-  const client: Client = {
-    collections, construct, describe, summary, mapGraph, terminalSelect,
-    async calc(text) {
-      const expr = parseCalc(text)
-      const { plan, rows } = evaluate(expr)
-      const out: Record<string, unknown>[] = []
-      try {
-        for await (const r of rows) out.push(r as Record<string, unknown>)
-      } catch (e) {
-        const why = await whyNot(expr)
-        throw new CliError(`${(e as Error).message}${why ? `\n  ${why}` : ''}`)
-      }
-      const p = await plan
-      return { value: String(Object.values(out[0] ?? {})[0] ?? ''), engine: p.engine, impl: p.impl }
-    },
-  }
+  const client = nodeClient()
   log('dispatching argv=%o', process.argv.slice(2))
   const t0 = Date.now()
   await runCli(process.argv.slice(2), { client, write })
