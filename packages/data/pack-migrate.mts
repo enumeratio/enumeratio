@@ -5,7 +5,7 @@
 //
 //   node --import tsx pack-migrate.mts                 # apply moves + write manifests
 //   node --import tsx pack-migrate.mts --dry-run        # print what would happen, change nothing
-//   node --import tsx pack-migrate.mts --check          # exit 1 if anything is misplaced/stale, change nothing
+//   node --import tsx pack-migrate.mts --check          # exit 1 if anything is misplaced/stale/a map gap, change nothing
 //   node --import tsx pack-migrate.mts --packs a,b      # restrict to these packs (still honours EXTRACTED_PACKS)
 //
 // EXTRACTED_PACKS (pack-map.ts) is empty today, so a bare run is a legitimate no-op — that's the expected state
@@ -89,15 +89,25 @@ function withLayerHeader(content: string): string {
 
 // ---- plan: one entry per file that needs to move (dir mismatch) ----
 type Move = { name: string; fromDir: string; toDir: string; fromPath: string; toPath: string; addsLayerHeader: boolean }
+// A file already living in packs/<p>/ whose basename the map doesn't match falls through to 'core' — that's a
+// MAP GAP in pack-map.ts, not a misplaced file (#329: this happened 4x during the FindStat sweeps and once turned
+// main red, because the old logic proposed moving a correctly-placed file back to sqlsrc/). The containing
+// directory is authoritative for a file already inside packs/<p>/: report the gap, don't move the file.
+type MapGap = { name: string; pack: PackName; path: string }
 const moves: Move[] = []
+const mapGaps: MapGap[] = []
 for (const loc of allLocs) {
   const toDir = desiredDirOf(loc)
+  const fromPack = (loc.dir === 'sqlsrc' ? 'core' : loc.dir.replace(/^packs\//, '')) as PackName
+  const toPack = (toDir === 'sqlsrc' ? 'core' : toDir.replace(/^packs\//, '')) as PackName
   if (restrictPacks) {
-    const fromPack = loc.dir === 'sqlsrc' ? 'core' : loc.dir.replace(/^packs\//, '')
-    const toPack = toDir === 'sqlsrc' ? 'core' : toDir.replace(/^packs\//, '')
     if (!restrictPacks.includes(fromPack) && !restrictPacks.includes(toPack)) continue
   }
   if (toDir === loc.dir) continue   // already in place — header edits ride along with a move, not a standalone pass
+  if (fromPack !== 'core' && toPack === 'core') {
+    mapGaps.push({ name: loc.name, pack: fromPack, path: loc.path })
+    continue
+  }
   const addsLayerHeader = isGlyphLayer(loc.name) && !/^--\s*layer:\s*glyph\s*$/im.test(readContent(loc))
   moves.push({
     name: loc.name, fromDir: loc.dir, toDir,
@@ -106,6 +116,7 @@ for (const loc of allLocs) {
   })
 }
 moves.sort((a, b) => a.name.localeCompare(b.name))
+mapGaps.sort((a, b) => a.name.localeCompare(b.name))
 
 // ---- which packs need a _pack.sql (any extracted pack that owns >=1 file after the moves) ----
 const extractedInScope = restrictPacks ? EXTRACTED_PACKS.filter(p => restrictPacks.includes(p)) : EXTRACTED_PACKS
@@ -183,11 +194,19 @@ for (const m of staleManifests) {
   console.log(`  manifest: packs/${m.pack}/_pack.sql  ${m.exists ? 'reconcile requires-pack' : 'create'}  (requires-pack: ${m.requires})`)
 }
 
+if (mapGaps.length) {
+  console.log(`\n-- MAP GAP: file(s) correctly placed in packs/*/ that pack-map.ts's pack regex doesn't match --`)
+  for (const g of mapGaps) {
+    console.log(`  packs/${g.pack}/${g.name}.sql — not matched by ${g.pack}'s pattern; the file is right, the map is incomplete`)
+    console.log(`    fix: add '${g.name}' to ${g.pack}'s regex in packages/data/pack-map.ts (do not move it to sqlsrc/)`)
+  }
+}
+
 console.log(`\n-- summary --`)
-console.log(`  ${moves.length} file(s) to move/edit, ${staleManifests.length} manifest(s) to write`)
+console.log(`  ${moves.length} file(s) to move/edit, ${staleManifests.length} manifest(s) to write, ${mapGaps.length} map gap(s)`)
 
 if (check) {
-  const clean = moves.length === 0 && staleManifests.length === 0
+  const clean = moves.length === 0 && staleManifests.length === 0 && mapGaps.length === 0
   console.log(clean ? '  OK — no-op, everything already in place' : '  FAIL — see above')
   process.exit(clean ? 0 : 1)
 }

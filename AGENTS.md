@@ -88,6 +88,12 @@ list. Codemod: `node --import tsx packages/data/pack-migrate.mts` (moves files, 
 reconciles each pack's `_pack.sql`). Companion lint `pack-lint.mts` reports cross-pack `requires:` edges;
 `pack-additivity.mts` proves a pack only ever adds rows.
 
+**Adding a file to an existing pack (#329):** register its basename in `pack-map.ts` too — a file sitting in
+`packs/<p>/` that the map doesn't match is a MAP GAP, not a misplaced file, and `--check` reports it as one rather
+than proposing to move it back to `sqlsrc/`. Prefer anchoring a pack's pattern on the collection PREFIX over
+enumerating suffixes — peers keep inventing new ones (`.findstat`, `.maps.findstat`, …) and a suffix-enumerated
+regex misses every one.
+
 ## Common gotchas (read before starting — these come up every time)
 
 - **A fresh worktree has NO `node_modules`.** Run `pnpm install` once before any `run.mts` / build. (This is the
