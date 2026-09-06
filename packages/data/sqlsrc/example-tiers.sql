@@ -12,4 +12,5 @@
 -- forbids core UPDATEing a pack-owned base_example row once that pack is loaded.
 UPDATE base_example SET slow = true WHERE
      suite IN ('search_sequence', 'thesis')            -- wholly integration-class suites
-  OR (suite = 'policies'             AND title LIKE 'case 7%');       -- the full restrict enumerate⇔predicate sweep
+  OR (suite = 'policies'             AND title LIKE 'case 7%')        -- the full restrict enumerate⇔predicate sweep
+  OR (suite = 'species'              AND title LIKE 'MARQUEE (full degree 8)%');  -- the deg-8 plethysm cert (~160s); the deg-6 twin stays in the default tier

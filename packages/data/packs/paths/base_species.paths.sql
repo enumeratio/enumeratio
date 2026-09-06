@@ -1,11 +1,10 @@
 -- requires: base_species
 -- requires-tag: collection
--- paths half of sqlsrc/base_species.sql (#283 phase 3 extraction) — core keeps the table + rows for core
--- collections (motzkin_numbers/schroeder_numbers keep their own OGF rows, unlabelled unbounded number-sequence
--- siblings); this pack carries the rows for its own collections, same unlabelled OGF-fixed-point shape.
--- requires-tag: collection (scoped to this pack's own files by orderFiles) ensures motzkin_paths/schroeder_paths
--- have already loaded.
-
-INSERT INTO base_species (collection, expr, egf, note, unlabelled) VALUES
-  ('motzkin_paths',   '1+X·Y+X^2·Y^2','M=1+xM+x^2M^2',    'Motzkin paths of length n',      true),
-  ('schroeder_paths', '1+X·Y+X·Y^2',  'S=1+xS+xS^2',      'large Schröder paths of size n', true);
+-- paths half of the species registry (#283 phase 3 extraction, reconciled with #274): core base_species.sql defines
+-- base_species_def (the shared species identities, incl. these exprs) + base_collection_species; this pack binds its
+-- own path collections' READINGS. motzkin_paths/schroeder_paths are isotype readings of the Motzkin/Schröder OGF
+-- fixed points (finite fibers), checked by base_species_check_unlabelled/ogf_solve. requires-tag: collection (scoped
+-- to this pack per orderFiles) ensures motzkin_paths/schroeder_paths have loaded first.
+INSERT INTO base_collection_species (collection, species, reading) VALUES
+  ('motzkin_paths',   '1+X·Y+X^2·Y^2', 'isotype'),
+  ('schroeder_paths', '1+X·Y+X·Y^2',   'isotype');

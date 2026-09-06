@@ -141,7 +141,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
    'the 15 tables #283 phase 0.2 touches all got the column at CREATE TABLE time (never a trailing ALTER)',
    $q$ SELECT count(*)::text FROM unnest(ARRAY[
          'base_collection','base_stat','base_map','base_example','base_function','base_function_impl',
-         'base_engine_grant','base_reference','base_glyph','base_species','base_generating_function',
+         'base_engine_grant','base_reference','base_glyph','base_collection_species','base_generating_function',
          'base_sequence_transform','base_stat_suppressed','base_triangle_refines','base_set_builder'
        ]) t(table_name)
       WHERE NOT EXISTS (SELECT 1 FROM information_schema.columns c
@@ -159,7 +159,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
          UNION ALL SELECT pack FROM base_example UNION ALL SELECT pack FROM base_function
          UNION ALL SELECT pack FROM base_function_impl UNION ALL SELECT pack FROM base_engine_grant
          UNION ALL SELECT pack FROM base_reference UNION ALL SELECT pack FROM base_glyph
-         UNION ALL SELECT pack FROM base_species UNION ALL SELECT pack FROM base_generating_function
+         UNION ALL SELECT pack FROM base_collection_species UNION ALL SELECT pack FROM base_generating_function
          UNION ALL SELECT pack FROM base_sequence_transform UNION ALL SELECT pack FROM base_stat_suppressed
          UNION ALL SELECT pack FROM base_triangle_refines UNION ALL SELECT pack FROM base_set_builder
        ) x WHERE pack NOT IN (SELECT id FROM base_pack))
@@ -173,7 +173,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
          UNION ALL SELECT count(*) FROM base_engine_grant WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_reference WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_glyph WHERE pack = 'core'
-         UNION ALL SELECT count(*) FROM base_species WHERE pack = 'core'
+         UNION ALL SELECT count(*) FROM base_collection_species WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_generating_function WHERE pack = 'core'
          UNION ALL SELECT count(*) FROM base_sequence_transform WHERE pack = 'core'
          -- base_stat_suppressed excluded here (see the title's note above): its only row, ever, was

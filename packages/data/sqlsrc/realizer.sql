@@ -158,7 +158,11 @@ CREATE FUNCTION notation(o omega_ordinal) RETURNS text LANGUAGE plpgsql IMMUTABL
 -- projects it as a column via value_fn((element).value). stat_id is the user-facing name (e.g. 'inversions').
 CREATE TABLE base_stat (collection text NOT NULL REFERENCES base_collection, stat_id text NOT NULL,
                         value_fn text NOT NULL, title text, codomain text, PRIMARY KEY (collection, stat_id),
-                        pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack);
+                        pack text NOT NULL DEFAULT coalesce(current_setting('enumeratio.pack', true), 'core') REFERENCES base_pack,
+                        relabel_invariant boolean NOT NULL DEFAULT false); -- #274 B6: true iff the stat's value is unchanged by relabelling
+                                                                            -- the underlying species' atoms (a species-theoretic trait, not
+                                                                            -- just a per-collection curiosity — cycles/blocks/fixed-point counts
+                                                                            -- survive any permutation of the labels)
 CREATE TRIGGER base_stat_pack_guard BEFORE UPDATE OR DELETE ON base_stat FOR EACH ROW EXECUTE FUNCTION base_guard_pack();
 
 -- base_repr: the representations registry — named alternate renderings of a collection's elements (permutation

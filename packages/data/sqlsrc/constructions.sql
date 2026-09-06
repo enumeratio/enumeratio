@@ -1,4 +1,4 @@
--- requires: realizer
+-- requires: realizer, base_species
 -- requires-tag: collection
 -- The PARAMETERIZED-COLLECTIONS model as data (issue #22 / wiki "Parameterized-Collections"). A construction is a
 -- functor with type-parameter HOLES (finset α, words α, …); each concrete collection INSTANTIATES one and binds its α.
@@ -24,7 +24,9 @@ INSERT INTO base_kind (id, title, description) VALUES
   ('decidable_eq', 'DecidableEq', 'equality on inhabitants is decidable — the floor a set/word construction needs to compare & dedup letters'),
   ('fintype',      'Fintype',     'finitely many inhabitants, enumerable as a finset'),
   ('finite',       'Finite',      'Fintype ∧ DecidableEq — a finite ground with decidable equality (what a lattice/complement needs)'),
-  ('countable',    'Countable',   'inhabitants enumerable in an ω-sequence (ℕ): DecidableEq, but NOT Fintype');
+  ('countable',    'Countable',   'inhabitants enumerable in an ω-sequence (ℕ): DecidableEq, but NOT Fintype'),
+  ('nonempty',     'Nonempty',    'the species G has no empty structure (G[∅] = ∅, G_0 = 0) — what ∘ (composition) requires of its inner species'),
+  ('x_guarded',    'X-guarded',   'a fixpoint body is guarded by an X factor (each self-reference costs ≥1 atom) — what makes the recursive equation''s Picard iteration converge');
 -- kind ⇒ a capability it entails (a CONJUNCT it contains). `finite` is the meet of fintype & decidable_eq.
 CREATE TABLE base_kind_implies (kind text NOT NULL REFERENCES base_kind, implies text NOT NULL REFERENCES base_kind,
                                 PRIMARY KEY (kind, implies));
@@ -93,7 +95,11 @@ CREATE TABLE base_construction (
   requires_kind text REFERENCES base_kind,               -- the kind the (first / only) α must satisfy — per-position in base_construction_param
   dependent boolean NOT NULL DEFAULT false,              -- true = the α-hole is a position-indexed family (∀ i, π i)
   from_name text UNIQUE,                                 -- the query view's FROM spelling: plural + _of (NULL = not FROM-able)
-  cardinality_expr text                                  -- |instance| in terms of c1, c2, … = the params' cardinalities
+  cardinality_expr text,                                 -- |instance| in terms of c1, c2, … = the params' cardinalities
+  species text REFERENCES base_species_def(id)           -- #274 B6: the species identity this construction realizes, IF one exists as a
+                                                          -- stored expr (base_species_def is keyed by expr text, not by operator name —
+                                                          -- product/sum/etc are OPERATORS, not whole exprs, so no base_construction row
+                                                          -- currently has a matching id; left NULL rather than inventing a def row)
 );
 INSERT INTO base_construction (id, title, params, skeleton, mathlib, description, requires_kind, dependent, from_name, cardinality_expr) VALUES
   ('finset',          'Finite set',      '{α}',   'Finset α',            'Finset',         'finite sets of DISTINCT elements drawn from α (repetition-free)', 'decidable_eq', false, 'finsets_of',          '2 ^ c1'),
