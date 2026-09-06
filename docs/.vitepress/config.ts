@@ -24,6 +24,8 @@ import { enumeratioCore } from '@enumeratio/data/vite'
 //                                  base_reference cross-reference table)
 //     docs/develop/sources.md    — the crosswalk of external systems/inspirations (OEIS, FindStat, Sage, …) that
 //                                  used to be the standalone top-level Reference/Resources overview page
+//     docs/develop/glossary.md   — the working vocabulary (collection/carrier/fiber/axis/param/family point/fold/…),
+//                                  a direct child; links on to the reference pages and the design wiki
 //     docs/develop/packages/**, docs/develop/contributing/**, docs/develop/playground/** — package docs
 //                                  (including the component kitchen sinks), contributor docs, and the interactive
 //                                  toys (Helmert projection, session demo) — one Playground entry, not exploded
@@ -82,6 +84,7 @@ export default defineConfig({
             { text: 'Data Reference', link: '/develop/data/' },
             { text: 'API Reference', link: '/develop/api' },
             { text: 'Sources', link: '/develop/sources' },
+            { text: 'Glossary', link: '/develop/glossary' },
             { text: 'Contributing', link: '/develop/contributing/' },
             { text: 'Playground', link: '/develop/playground/' },
           ],
@@ -194,6 +197,7 @@ export default defineConfig({
         },
         { text: 'API Reference', link: '/develop/api' },
         { text: 'Sources', link: '/develop/sources' },
+        { text: 'Glossary', link: '/develop/glossary' },
         {
           text: 'Contributing', link: '/develop/contributing/',
           items: [
