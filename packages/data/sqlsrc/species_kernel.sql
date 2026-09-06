@@ -116,7 +116,12 @@ CREATE FUNCTION species_z_atom(name text, maxdeg int DEFAULT 8) RETURNS jsonb LA
             z := z_set(z, n, rec.ord, frac(1, 1));
           END LOOP;
         END LOOP;
-      ELSE RAISE EXCEPTION 'unknown species_z atom: %', name;
+      ELSE
+        -- E_<m>: sets of a FIXED size m = E restricted to degree m (the dissymmetry theorem needs E_2∘T)
+        IF left(name, 2) = 'E_' AND substring(name FROM 3) ~ '^\d+$' THEN
+          RETURN species_z_restrict_exact(species_z_atom('E', maxdeg), substring(name FROM 3)::int);
+        END IF;
+        RAISE EXCEPTION 'unknown species_z atom: %', name;
     END CASE;
     RETURN z;
   END $$;

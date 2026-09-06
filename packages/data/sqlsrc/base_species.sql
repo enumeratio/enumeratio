@@ -383,7 +383,9 @@ CREATE FUNCTION base_species_check_unlabelled(coll text, expr text, upto int) RE
 -- sequence is z_isotype(species_z_eval(expr)), or z_isotype(species_z_fixpoint(expr)) when expr is self-referential
 -- (carries Y). Covers the isotype-TWIN bindings (integer_partitions/partition_numbers = E∘E+, integer_compositions =
 -- L∘E+, rooted_unlabeled_trees = X·(E∘Y)) that base_species_check_unlabelled (ogf_solve) cannot evaluate.
-CREATE FUNCTION base_species_check_isotype_z(coll text, expr text, upto int) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
+-- `solve_for` (two-stage, like the labelled implicit check): Y is the Z-fixpoint of solve_for, then expr is evaluated
+-- over it — the dissymmetry theorem in the isotype reading (Otter's formula falls out of E_2∘T on the cycle index).
+CREATE FUNCTION base_species_check_isotype_z(coll text, expr text, upto int, solve_for text DEFAULT NULL) RETURNS boolean LANGUAGE plpgsql STABLE AS $$
   DECLARE want numeric[] := '{}'; i int; c numeric; is_unbounded boolean; got numeric[];
   BEGIN
     SELECT unbounded INTO is_unbounded FROM base_collection WHERE id = coll;
@@ -393,8 +395,9 @@ CREATE FUNCTION base_species_check_isotype_z(coll text, expr text, upto int) RET
       END IF;
       want := want || c;
     END LOOP;
-    got := CASE WHEN expr LIKE '%Y%' THEN z_isotype(species_z_fixpoint(expr, upto))
-                ELSE z_isotype(species_z_eval(expr, upto)) END;
+    got := CASE WHEN solve_for IS NOT NULL THEN z_isotype(species_z_eval(expr, upto, species_z_fixpoint(solve_for, upto)))
+                WHEN expr LIKE '%Y%'        THEN z_isotype(species_z_fixpoint(expr, upto))
+                ELSE                             z_isotype(species_z_eval(expr, upto)) END;
     RETURN want = got;
   END $$;
 
@@ -437,7 +440,12 @@ INSERT INTO base_species_def (id, expr, egf, note) VALUES
   ('X+Y^2',         'X+Y^2',         'P=x+P^2',              'plane trees by nodes; C_{n-1} (shifted Catalan)'),
   ('E∘(X·Y)',       'E∘(X·Y)',       'F=e^{xF}',             'rooted labelled forests; (n+1)ⁿ⁻¹'),
   ('E∘(C∘Y)',       'E∘(C∘Y)',       'e^{-\ln(1-T)}',        'functions [n]→[n]; nⁿ = set of cycles of rooted trees'),
-  ('1+Y-Y·Y/2',     '1+Y-Y·Y/2',     '1+T-\tfrac{T^2}{2}',   'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2'),
+  -- the dissymmetry theorem as a SPECIES identity: A + T·T = T + E_2∘T (BLL §4.1). Written with E_2 rather than the
+  -- scalar T²/2 so it reads BOTH ways — labelled 1+T−T²/2 (Cayley), isotype Otter's t̃ = T̃ − (T̃(x)² − T̃(x²))/2 (A000055).
+  -- The leading 1 is labeled_trees' empty-tree convention (n≤2 ↦ 1); unlabeled_free_trees has no n=0 tree, so it binds
+  -- the constant-free twin.
+  ('1+Y+E_2∘Y-Y·Y', '1+Y+E_2∘Y-Y·Y', '1+T+\tfrac{T^2+T(x^2)}{2}-T^2', 'unrooted (Cayley) trees; nⁿ⁻² by the dissymmetry theorem A + T² = T + E₂∘T, +1 for the empty tree'),
+  ('Y+E_2∘Y-Y·Y',   'Y+E_2∘Y-Y·Y',   'T+\tfrac{T^2+T(x^2)}{2}-T^2',   'free trees by dissymmetry — isotype reading is Otter''s formula (A000055)'),
   ('X·(E∘Y)',       'X·(E∘Y)',       'T=xe^T',               'rooted labelled tree; nⁿ⁻¹ — also the isotype fixpoint for A000081');
 -- NB: perfect_matchings = E∘E_2 as a species over POINTS, but our collection is indexed by PAIRS (n ↦ 2n points),
 -- so it isn't a labelled species at our n — omitted until the engine indexes by an arbitrary size map.
@@ -563,13 +571,16 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT array_to_string(species_eval('E∘(C∘Y)', 6, NULL, species_solve('X·(E∘Y)', 6)), ',') $q$),
   ('species','dissymmetry T−T²/2 = unrooted (Cayley) trees nⁿ⁻² (subtraction + scalar divide)','eq','0,1,1,3,16,125,1296','species_sub + species_div_scalar',$q$
     SELECT string_agg(x::bigint::text, ',' ORDER BY o) FROM unnest(species_eval('Y-Y·Y/2', 6, NULL, species_solve('X·(E∘Y)', 6))) WITH ORDINALITY t(x, o) $q$),
+  ('species','the dissymmetry theorem reads BOTH ways: labelled 1+Y+E_2∘Y-Y·Y = Cayley 1,1,1,3,16,125,1296; isotype Y+E_2∘Y-Y·Y = Otter A000055 0,1,1,1,2,3,6','eq','1,1,1,3,16,125,1296|0,1,1,1,2,3,6','E_2∘T on the cycle index is (T(x)²+T(x²))/2 — the scalar T²/2 spelling only ever read labelled',$q$
+    SELECT array_to_string(species_eval('1+Y+E_2∘Y-Y·Y', 6, NULL, species_solve('X·(E∘Y)', 6)), ',') || '|' ||
+           array_to_string(z_isotype(species_z_eval('Y+E_2∘Y-Y·Y', 6, species_z_fixpoint('X·(E∘Y)', 6))), ',') $q$),
   ('species','EVERY collection''s species reading matches its sequence (n=0..6)','eq','','a wrong species/reading can''t register — dispatches on reading, graded per k, isotype-∘ via the Z-kernel, isotype-OGF via ogf_solve, implicit via species_solve',$q$
     SELECT coalesce(string_agg(bcs.collection, ',' ORDER BY bcs.collection), '')
       FROM base_collection_species bcs JOIN base_species_def sd ON sd.id = bcs.species
      WHERE NOT (
        CASE
-         WHEN bcs.reading IN ('isotype', 'isotype_count_sequence') AND sd.expr LIKE '%∘%'
-           THEN base_species_check_isotype_z(bcs.collection, sd.expr, 6)
+         WHEN bcs.reading IN ('isotype', 'isotype_count_sequence') AND (sd.expr LIKE '%∘%' OR bcs.bindings ? 'solve_for')
+           THEN base_species_check_isotype_z(bcs.collection, sd.expr, 6, bcs.bindings ->> 'solve_for')
          WHEN bcs.reading IN ('isotype', 'isotype_count_sequence')
            THEN base_species_check_unlabelled(bcs.collection, sd.expr, 6)
          WHEN bcs.bindings ? 'solve_for'

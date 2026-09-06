@@ -11,9 +11,10 @@ INSERT INTO base_collection_species (collection, species, reading, note) VALUES
   ('plane_trees',            'X+Y^2',   'isotype', 'plane trees by NODES; C_{n-1} (shifted Catalan)'),
   ('rooted_unlabeled_trees', 'X·(E∘Y)', 'isotype', 'the isotype fixpoint for rooted unlabeled trees; A000081');
 
--- labelled fixpoints: rooted forests (E∘(X·Y)); unrooted Cayley trees (two-stage — Y solves X·(E∘Y), then the
--- dissymmetry 1+Y−Y·Y/2 is evaluated over it).
+-- labelled fixpoints: rooted forests (E∘(X·Y)); unrooted trees (two-stage — Y solves X·(E∘Y), then the dissymmetry
+-- identity A + T² = T + E₂∘T is evaluated over it — labelled = Cayley, isotype = Otter, one species two readings).
 INSERT INTO base_collection_species (collection, species, reading, note) VALUES
   ('labeled_forests', 'E∘(X·Y)', 'labelled', 'rooted labelled forests; (n+1)ⁿ⁻¹ = 1,1,3,16,125,…');
 INSERT INTO base_collection_species (collection, species, reading, bindings, note) VALUES
-  ('labeled_trees', '1+Y-Y·Y/2', 'labelled', '{"solve_for":"X·(E∘Y)"}', 'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry T−T²/2, +1 for the collection''s empty-tree convention (n≤2 ↦ 1)');
+  ('labeled_trees',        '1+Y+E_2∘Y-Y·Y', 'labelled', '{"solve_for":"X·(E∘Y)"}', 'unrooted (Cayley) trees; nⁿ⁻² by dissymmetry, +1 for the collection''s empty-tree convention (n≤2 ↦ 1)'),
+  ('unlabeled_free_trees', 'Y+E_2∘Y-Y·Y',   'isotype',  '{"solve_for":"X·(E∘Y)"}', 'the isotype twin of labeled_trees: Otter''s formula off the cycle index; A000055 (no n=0 tree, so no +1)');
