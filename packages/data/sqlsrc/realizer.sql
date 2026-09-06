@@ -426,6 +426,42 @@ BEGIN
   RETURN NULL;
 END $$;
 
+-- random_inhabitant_jsonb(type): a random jsonb value shaped to fit `type`, walking the type structure — arrays
+-- become a random-length jsonb array of inhabitants, composites an object over their fields, domains recurse to
+-- their base type, and base scalars draw a small random literal. It's the shape engine behind random_element(carrier)
+-- (#303): jsonb_populate_record(NULL::carrier, random_inhabitant_jsonb('carrier')) materializes a random INHABITANT
+-- of the carrier TYPE — well-formed for the type, but NOT necessarily a canonical/valid collection element (a random
+-- image int[] need not be a permutation). That is deliberate: it's the generator seam for quickcheck and negative
+-- tests. Ranges/lengths are arbitrary small constants (type inhabitants, not tuned distributions). VOLATILE.
+CREATE FUNCTION random_inhabitant_jsonb(t regtype) RETURNS jsonb LANGUAGE plpgsql VOLATILE AS $$
+DECLARE ty pg_type; n int; arr jsonb := '[]'::jsonb; obj jsonb := '{}'::jsonb; a record;
+BEGIN
+  SELECT * INTO ty FROM pg_type WHERE oid = t;
+  IF ty.typtype = 'd' THEN                                    -- domain: draw for the base type
+    RETURN random_inhabitant_jsonb(ty.typbasetype::regtype);
+  ELSIF ty.typcategory = 'A' AND ty.typelem <> 0 THEN         -- array: 0..4 random elements
+    n := floor(random() * 5)::int;
+    FOR i IN 1..n LOOP arr := arr || jsonb_build_array(random_inhabitant_jsonb(ty.typelem::regtype)); END LOOP;
+    RETURN arr;
+  ELSIF ty.typtype = 'c' THEN                                 -- composite: an object over its live fields
+    FOR a IN SELECT attname, atttypid FROM pg_attribute
+             WHERE attrelid = ty.typrelid AND attnum > 0 AND NOT attisdropped ORDER BY attnum LOOP
+      obj := obj || jsonb_build_object(a.attname, random_inhabitant_jsonb(a.atttypid::regtype));
+    END LOOP;
+    RETURN obj;
+  END IF;
+  RETURN CASE ty.typname                                      -- base scalars
+    WHEN 'int2' THEN to_jsonb(floor(random() * 20)::int)  WHEN 'int4' THEN to_jsonb(floor(random() * 20)::int)
+    WHEN 'int8' THEN to_jsonb(floor(random() * 20)::int)  WHEN 'bool' THEN to_jsonb(random() < 0.5)
+    WHEN 'numeric' THEN to_jsonb(round((random() * 100)::numeric, 2))
+    WHEN 'float4' THEN to_jsonb(round((random() * 100)::numeric, 2))
+    WHEN 'float8' THEN to_jsonb(round((random() * 100)::numeric, 2))
+    WHEN 'text' THEN to_jsonb(substr(md5(random()::text), 1, 1 + floor(random() * 6)::int))
+    WHEN 'varchar' THEN to_jsonb(substr(md5(random()::text), 1, 1 + floor(random() * 6)::int))
+    WHEN 'bpchar' THEN to_jsonb(substr(md5(random()::text), 1, 1))
+    ELSE 'null'::jsonb END;                                   -- unknown scalar ⇒ null field (partial, not a crash)
+END $$;
+
 CREATE FUNCTION base_realize(coll text) RETURNS void LANGUAGE plpgsql AS $realize$
 DECLARE
   c base_collection%ROWTYPE; g record; carrier text; grade_count int;
@@ -767,6 +803,20 @@ BEGIN
   EXECUTE format('CREATE FUNCTION random_elements(f %1$I, n int) RETURNS SETOF %2$I LANGUAGE sql VOLATILE AS $b$ '
                  'SELECT e FROM (SELECT random_element(f) e FROM generate_series(1, greatest(n, 0))) t WHERE e IS NOT NULL $b$',
                  coll || '_fiber', coll || '_element');
+
+  -- random_element(carrier): a uniform-ish random INHABITANT of the carrier TYPE — the arg is a type witness
+  -- (call as random_element(NULL::<carrier>)), not an operand. Synthesized from the carrier's field types via
+  -- random_inhabitant_jsonb, so the result is well-formed for the type but NOT necessarily a canonical/valid element
+  -- (a random image int[] need not be a permutation) — the generator seam for quickcheck and negative tests, distinct
+  -- from random_element(handle) which draws a genuine member. Generated ONCE per distinct carrier (the existence
+  -- guard also means a carrier's own SQL file can hand-author an override that wins). Composite carriers only — a
+  -- scalar/domain carrier is skipped here (no field structure to populate; hand-author if one is ever wanted). #303.
+  IF (SELECT typtype FROM pg_type WHERE typname = carrier) = 'c'
+     AND NOT EXISTS (SELECT 1 FROM pg_proc p JOIN pg_type pt ON pt.oid = p.proargtypes[0]
+                     WHERE p.proname = 'random_element' AND p.pronargs = 1 AND pt.typname = carrier) THEN
+    EXECUTE format('CREATE FUNCTION random_element(x %1$s) RETURNS %1$s LANGUAGE sql VOLATILE AS $b$ '
+                   'SELECT jsonb_populate_record(NULL::%1$s, random_inhabitant_jsonb(%2$L::regtype)) $b$', carrier, carrier);
+  END IF;
 
   -- an_element(handle|fiber) / some_elements(handle, n): the DETERMINISTIC example accessors (Sage's an_element /
   -- some_elements). Unlike random_element these are stable across calls and cheap — an_element is just the first

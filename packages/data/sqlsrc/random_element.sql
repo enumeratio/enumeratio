@@ -65,4 +65,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('sampling','an_element works where random_element refuses: an_element(natural_numbers()) is a member, but random_elements(…,5) of an infinite handle is empty','eq','true|0',
    'determinism does not need finiteness (unrank 0 is always defined); a uniform draw does — so the plural refuses to 0 rows',$q$
     SELECT ((an_element(natural_numbers())).value <@ natural_numbers())::text || '|' ||
-           (SELECT count(*) FROM random_elements(natural_numbers(), 5))::text $q$);
+           (SELECT count(*) FROM random_elements(natural_numbers(), 5))::text $q$),
+  ('sampling','random_element(carrier) synthesizes a well-formed inhabitant of the TYPE (a type witness arg), independent of any collection','eq','permutation|true',
+   'the #303 type-inhabitant draw: right type, always non-null, over many draws — well-formed for the type (membership in a collection is NOT promised)',$q$
+    SELECT pg_typeof(random_element(NULL::permutation))::text || '|' ||
+           bool_and(random_element(NULL::gaussian_integer) IS NOT NULL)::text FROM generate_series(1, 15) $q$);
