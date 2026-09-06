@@ -7,5 +7,6 @@
 -- this pack's row existed, so it needs its own slow tag here, self-owned.
 UPDATE base_example SET slow = true WHERE
      (suite = 'perfect_numbers'  AND title LIKE 'first four%')  -- the one expensive divisor-sum search
+  OR (suite = 'perfect_numbers'  AND title LIKE 'unrank(2)%')    -- 6.7s: same divisor-sum search, reached through unrank
   OR (suite = 'amicable_numbers' AND title LIKE 'first six%')   -- ditto — cheap membership/anchor examples stay default-tier
   OR (suite = 'search_sequence' AND title LIKE 'a mid-sequence paste%');  -- this pack's search_sequence.number-sets.sql row
