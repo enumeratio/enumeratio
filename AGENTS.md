@@ -52,8 +52,8 @@ not under `docs/` (public docs site) and not committed to this repo.
   RANDOM seed each run, so it is non-deterministic — a run surfaces a *different* latent bug each time (usually a
   `contains`-at-n=0 / membership mismatch on some collection). Its CI workflow (`.github/workflows/quickcheck.yml`)
   is therefore **non-blocking on push/PR**: a failure opens/reopens ONE rolling tracking issue ("quickcheck sampling
-  regression") instead of failing the check, and these are **swept and fixed in batches** (see #342 for the
-  `contains`-at-n=0 sweep). The blocking gates — the ones that must stay **deterministic** — are the `pnpm test`
+  regression"), labeled **`nightly-fixup`** so the nightly fixup routine sweeps it, instead of failing the check —
+  and these are **swept and fixed in batches** (see #342 for the `contains`-at-n=0 sweep). The blocking gates — the ones that must stay **deterministic** — are the `pnpm test`
   suites in `ci.yml`. When a real quickcheck finding needs its own fix, replay it deterministically with the printed
   seed: `pnpm --filter @enumeratio/data quickcheck <coll> <seed>` (note: the whole-catalog seed doesn't reproduce a
   single-collection run — the RNG stream differs; use it to confirm the class, then fix per-collection).
