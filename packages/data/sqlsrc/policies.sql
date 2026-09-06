@@ -265,16 +265,44 @@ INSERT INTO base_policy (scope_kind, scope, environment, clause, mode, text) VAL
 CREATE FUNCTION restrict_agrees(coll text, n int DEFAULT 24, scan int DEFAULT 3000)
 RETURNS boolean LANGUAGE plpgsql STABLE AS $$
 DECLARE par text; pred text; child text[]; filtered text[]; len int;
+        params text[]; pt record; vals text; bound int; checked boolean := false;
 BEGIN
   SELECT parent, predicate INTO par, pred FROM base_collection_parent WHERE collection = coll;
   IF par IS NULL THEN RETURN NULL; END IF;
-  EXECUTE format('SELECT array_agg(render(e)) FROM (SELECT e FROM elements(%I(), %s) e LIMIT %s) t',
-                 coll, n, n) INTO child;
-  EXECUTE format('SELECT array_agg(r) FROM (SELECT render(e) AS r FROM elements(%I(), %s) e WHERE %I((e).value) LIMIT %s) t',
-                 par, scan, pred, n) INTO filtered;
-  len := least(coalesce(array_length(child, 1), 0), coalesce(array_length(filtered, 1), 0));
-  IF len = 0 THEN RETURN false; END IF;   -- nothing comparable is a failure, not a pass
-  RETURN child[1:len] = filtered[1:len];
+  SELECT array_agg(name ORDER BY pos) INTO params FROM base_grade WHERE collection = coll AND role = 'param';
+
+  IF params IS NULL THEN                       -- the ordinary case: predicate is (carrier), handle takes no params
+    EXECUTE format('SELECT array_agg(render(e)) FROM (SELECT e FROM elements(%I(), %s) e LIMIT %s) t',
+                   coll, n, n) INTO child;
+    EXECUTE format('SELECT array_agg(r) FROM (SELECT render(e) AS r FROM elements(%I(), %s) e WHERE %I((e).value) LIMIT %s) t',
+                   par, scan, pred, n) INTO filtered;
+    len := least(coalesce(array_length(child, 1), 0), coalesce(array_length(filtered, 1), 0));
+    IF len = 0 THEN RETURN false; END IF;   -- nothing comparable is a failure, not a pass
+    RETURN child[1:len] = filtered[1:len];
+  END IF;
+
+  -- A PARAMETERIZED family (#67): base_restrict builds its floor as `predicate(v, params…)` and the handle needs
+  -- those params bound, so there is nothing to check "bare" — calling either one-argument-style is what made this
+  -- example fail with `is_k_free_number(numeric) does not exist` (#334). Check the family at each REGISTERED
+  -- POINT instead, where the binding is data (base_family_point: square_free_numbers = k_free_integers {"k": 2}).
+  -- A family with no point, or a point that binds only some params, is skipped rather than failed: there is no
+  -- concrete thing to compare, which is not the same as a disagreement.
+  FOR pt IN SELECT bindings FROM base_family_point WHERE family = coll ORDER BY collection LOOP
+    SELECT count(*) FILTER (WHERE pt.bindings ? prm) INTO bound FROM unnest(params) prm;
+    CONTINUE WHEN bound <> coalesce(array_length(params, 1), 0);
+    vals := (SELECT string_agg(pt.bindings ->> prm, ', ' ORDER BY ord)
+               FROM unnest(params) WITH ORDINALITY AS t(prm, ord));
+    EXECUTE format('SELECT array_agg(render(e)) FROM (SELECT e FROM elements(%I(%s), %s) e LIMIT %s) t',
+                   coll, vals, n, n) INTO child;
+    EXECUTE format('SELECT array_agg(r) FROM (SELECT render(e) AS r FROM elements(%I(), %s) e WHERE %I((e).value, %s) LIMIT %s) t',
+                   par, scan, pred, vals, n) INTO filtered;
+    len := least(coalesce(array_length(child, 1), 0), coalesce(array_length(filtered, 1), 0));
+    IF len = 0 THEN RETURN false; END IF;
+    IF child[1:len] IS DISTINCT FROM filtered[1:len] THEN RETURN false; END IF;
+    checked := true;
+  END LOOP;
+  IF NOT checked THEN RETURN NULL; END IF;   -- an unpointed family: nothing concrete to compare, so not a verdict
+  RETURN true;
 END $$;
 
 -- print hides the heavyweight element columns (§1's REVOKE): no default list carries them, but a URL might
