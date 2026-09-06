@@ -7,7 +7,7 @@
 //
 // The rest of collection-atlas.md (organizing ideas, dualities, connective-tissue theorems) stays hand-written —
 // that's mathematical narrative the registry doesn't encode, not something to generate.
-import { bootCore } from '@enumeratio/data/node'
+import { sharedCore } from '@enumeratio/data/node'
 
 export interface CollectionEntry {
   id: string
@@ -33,7 +33,7 @@ export interface AtlasData {
 export default {
   watch: ['../packages/data/sqlsrc/*.sql'],
   async load(): Promise<AtlasData> {
-    const pg = await bootCore()
+    const pg = await sharedCore()
     const q = async (sql: string) => (await pg.query(sql)).rows as any[]
 
     const entryRows = await q(`
@@ -77,7 +77,7 @@ export default {
       .filter((e) => !tagged.has(e.id))
       .sort((a, b) => a.title.localeCompare(b.title))
 
-    await pg.close()
+    // pg is shared across data loaders (sharedCore) — never closed here
     return {
       counts: { collections: entries.size, families: families.length },
       families,

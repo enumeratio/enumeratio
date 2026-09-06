@@ -6,7 +6,7 @@
 // The prose on the page is hand-authored: the generated functions carry no COMMENT ON yet, so there is nothing to
 // generate descriptions FROM. Once `COMMENT ON FUNCTION` is populated in sqlsrc, the per-entry descriptions here
 // could be sourced from pg_description too — see the "Generating this page" note on the page.
-import { bootCore } from '@enumeratio/data/node'
+import { sharedCore } from '@enumeratio/data/node'
 
 export interface Sig {
   name: string
@@ -54,7 +54,7 @@ const TYPE_NOTES: Record<string, string> = {
 export default {
   watch: ['../packages/data/sqlsrc/*.sql'],
   async load(): Promise<ApiData> {
-    const pg = await bootCore()
+    const pg = await sharedCore()
     const q = async (sql: string) => (await pg.query(sql)).rows as any[]
 
     const one = async (sql: string) => Number((await q(sql))[0].c)
@@ -113,7 +113,7 @@ export default {
 
     const types = Object.entries(TYPE_NOTES).map(([name, note]) => ({ name, note }))
 
-    await pg.close()
+    // pg is shared across data loaders (sharedCore) — never closed here
     return { counts, representative, surface, operators, types, gradeNames, stats, maps, media, ctorExamples }
   },
 }

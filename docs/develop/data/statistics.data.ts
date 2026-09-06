@@ -3,7 +3,7 @@
 // registry — plus a couple of live example values per stat, pulled straight off the collection's own elements.
 // The description text comes from `pg_description` (issue #147's `COMMENT ON FUNCTION` pass over value_fn,
 // sourced from base_stat.title), so a stat with no title still lists — it just has no description or examples.
-import { bootCore } from '@enumeratio/data/node'
+import { sharedCore } from '@enumeratio/data/node'
 
 export interface StatEntry {
   collection: string
@@ -25,7 +25,7 @@ export interface StatisticsData {
 export default {
   watch: ['../packages/data/sqlsrc/*.sql'],
   async load(): Promise<StatisticsData> {
-    const pg = await bootCore()
+    const pg = await sharedCore()
     const q = async (sql: string) => (await pg.query(sql)).rows as any[]
 
     const rows = await q(`
@@ -99,7 +99,7 @@ export default {
         .then((x) => Number((x.rows[0] as any).c)),
     }
 
-    await pg.close()
+    // pg is shared across data loaders (sharedCore) — never closed here
     return { counts, stats }
   },
 }

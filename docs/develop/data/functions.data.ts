@@ -3,7 +3,7 @@
 // pg_proc introspection per pg impl row, and a TypeScript-compiler-API walk of packages/math/src/*.ts per ts
 // impl row. Regex extraction was ruled out during design — the "SQL twin: ..." doc-comment convention there has
 // at least 4 inconsistent shapes.
-import { bootCore } from '@enumeratio/data/node'
+import { sharedCore } from '@enumeratio/data/node'
 import { readFileSync, readdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -87,7 +87,7 @@ function hasExportModifier(node: ts.Node): boolean {
 export default {
   watch: ['../packages/data/sqlsrc/identities.sql', '../packages/data/sqlsrc/function_impls.sql', '../packages/math/src/*.ts', '../packages/data/packs/polytopes/identities.polytopes.sql'],
   async load(): Promise<FunctionsData> {
-    const pg = await bootCore()
+    const pg = await sharedCore()
     const q = async (sql: string) => (await pg.query(sql)).rows as any[]
 
     const funcs = await q(`SELECT id, title, description FROM base_function ORDER BY id`)
@@ -128,8 +128,7 @@ export default {
       if (!rows.length) throw new Error(`functions.data.ts: base_function '${i.function}' names a pg impl_ref '${i.impl_ref}', but no such function exists in pg_proc`)
       sqlMeta.set(key, rows[0])
     }
-    await pg.close()
-
+    // pg is shared across data loaders (sharedCore) — never closed here
     const tsExports = extractTsExports()
     for (const i of implRows) {
       if (i.engine === 'ts' && !tsExports.has(i.impl_ref)) {

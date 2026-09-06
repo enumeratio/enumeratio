@@ -52,6 +52,7 @@
     "selfcert:view": "node --import tsx selfcert-view.mts",
     "selfcert:species": "node --import tsx selfcert-species.mts",
     "quickcheck": "node --import tsx quickcheck.mts",
+    "profile:examples": "node --import tsx profile-examples.mts",
     "render-corpus-check": "node --import tsx render-corpus-check.mts",
     "pg-demo": "node --import tsx pg-demo.mts",
     "pg-watchdog-demo": "node --import tsx pg-watchdog-demo.mts"
