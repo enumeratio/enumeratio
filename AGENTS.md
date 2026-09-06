@@ -52,8 +52,11 @@ not under `docs/` (public docs site) and not committed to this repo.
 ## Running long processes & verifying autonomously
 
 - **State an ETA up front for any command over ~20s, and run it in the BACKGROUND** so the user isn't blocked. Known
-  durations: `pnpm test` (full gate) ~5–6 min (test:core ~2–3m · test:stack ~1m · test:build ~2m); `run.mts` /
-  `test:core` ~2–3 min; `pnpm docs:build` ~2 min; `selfcert.mts <coll>` secs–30s; `pnpm install` (warm) ~1–3s.
+  durations (measured 2026-09-05, and they drift UP as the catalog grows — re-measure rather than trusting these
+  when a call is close): `pnpm test` (full gate) ~12–15 min (test:core ~2–3m · test:stack ~1m · test:build ~8–12m);
+  `run.mts` / `test:core` ~2–3 min; `pnpm docs:build` ~8 min; `selfcert.mts <coll>` secs–30s; `pnpm install`
+  (warm) ~1–3s. Parallel sessions share this machine, so a gate under load can run half again as long — budget a
+  timeout of ~2400s for the full gate, not 900s.
   **Overrunning the stated ETA — not elapsed time alone — is the "hung" signal**; then diagnose, don't just keep waiting.
 - **Don't shorten the gate by package unless the diff really is confined to it** — check which packages changed (a docs
   data-loader still needs `test:build`; a data-only change is fully covered by `test:core`).
