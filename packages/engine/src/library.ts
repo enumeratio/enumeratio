@@ -67,6 +67,8 @@ import { entries as packS } from "./pack-s.js";
 import { entries as packX } from "./pack-x.js";
 import { entries as packY } from "./pack-y.js";
 import { entries as packZ } from "./pack-z.js";
+import { entries as packV } from "./pack-v.js";
+import { entries as packW } from "./pack-w.js";
 import { entries as packM } from "./pack-m.js";
 import { entries as packC } from "./pack-c.js";
 import { entries as packD } from "./pack-d.js";
@@ -289,6 +291,8 @@ const PACKS: PackEntry[] = [
   ...(packX as unknown as PackEntry[]),
   ...(packY as unknown as PackEntry[]),
   ...(packZ as unknown as PackEntry[]),
+  ...(packV as unknown as PackEntry[]),
+  ...(packW as unknown as PackEntry[]),
 ];
 function adaptPack(e: PackEntry): FamilySpec {
   const sig = e.kind === "ints"
