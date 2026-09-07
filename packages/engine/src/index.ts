@@ -3,4 +3,5 @@
 
 export { enumeratioLibrary, installEnumeratio } from "./library.js";
 export * from "./kernels.js";
+export * from "./kernels-combinatorics.js";
 export { emitScalarSql, sqlPermutationAt, sqlInversions } from "./sql-target.js";

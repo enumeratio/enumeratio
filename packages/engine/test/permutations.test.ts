@@ -62,6 +62,13 @@ describe("SQL target owns snake_case emission", () => {
 describe("library shape", () => {
   it("is a real LibraryDefinition", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
-    expect(Object.keys(enumeratioLibrary.definitions as object)).toEqual(["SymmetricGroup", "Inversions"]);
+    const heads = Object.keys(enumeratioLibrary.definitions as object);
+    expect(heads).toContain("SymmetricGroup");
+    expect(heads).toContain("Inversions");
+    // the seven certified families + the Inversions stat
+    expect(heads).toEqual([
+      "SymmetricGroup", "Inversions", "IntegerCompositions", "IntegerPartitions",
+      "PartitionsIntoKParts", "SetPartitions", "SetPartitionsIntoKBlocks", "SetCompositions",
+    ]);
   });
 });
