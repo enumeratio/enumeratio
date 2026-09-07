@@ -241,6 +241,12 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "BinaryStringsAvoiding00(10)", coll: ["BinaryStringsAvoiding00", 10] },
     { name: "PartitionsIntoParts1And2(12)", coll: ["PartitionsIntoParts1And2", 12] },
     { name: "RevolvingDoorKSubsets(7,3)", coll: ["RevolvingDoorKSubsets", 7, 3] },
+    { name: "CarlitzCompositions(9)", coll: ["CarlitzCompositions", 9] },
+    { name: "SmirnovWords(5,3)", coll: ["SmirnovWords", 5, 3] },
+    { name: "KColoredCompositions(6,3)", coll: ["KColoredCompositions", 6, 3] },
+    { name: "CompositionsIntoParts12345(9)", coll: ["CompositionsIntoParts12345", 9] },
+    { name: "BinaryStringsAvoiding101(10)", coll: ["BinaryStringsAvoiding101", 10] },
+    { name: "BinaryStringsAvoiding0101(11)", coll: ["BinaryStringsAvoiding0101", 11] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {
