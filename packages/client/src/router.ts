@@ -7,6 +7,7 @@
 // declines this way must not have produced side effects, which is true of every pure evaluation.
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import type { Expr } from './ir'
+import { ceEngine } from './ce-engine'
 import { pgEngine } from './pg-engine'
 import { registry } from './registry'
 import { InexactResult, tsEngine } from './ts-engine'
@@ -33,13 +34,20 @@ export function routerEngine(engines: Engine[]): Engine {
       const run = (async (): Promise<{ plan: Plan; rows: Row[] }> => {
         let last: unknown
         for (const e of claimants) {
+          let r: EvaluateResult | undefined
           try {
-            const r = e.evaluate(expr, opts)
+            r = e.evaluate(expr, opts)
             const rows: Row[] = []
             for await (const row of r.rows) rows.push(row)
             return { plan: await r.plan, rows }
           } catch (err) {
             if (!(err instanceof InexactResult)) throw err
+            // An ASYNC engine (ce, unlike ts's fully-synchronous evalTree) derives `r.plan` from the same pending
+            // work as `r.rows` — so a soft decline caught above by draining `rows` leaves `r.plan` independently
+            // rejecting with the SAME error, on its own microtask, with nobody ever awaiting it. Attach a no-op
+            // catch so that rejection doesn't surface as an unhandled promise rejection (found by ce-engine's
+            // arrival — ts never hit this path, since its InexactResult throws before evaluate() even returns).
+            r?.plan.catch(() => {})
             last = err
           }
         }
@@ -55,8 +63,12 @@ export function routerEngine(engines: Engine[]): Engine {
   }
 }
 
-/** The standard wiring: ts first, pg last. Async because the ts engine reads the catalog snapshot, and a `can()`
- *  asked of a half-loaded registry would answer conservatively for the rest of the session.
+/** The standard wiring: ts, then ce, then pg last. ts first because its native-op path over small arguments is
+ *  synchronous and free of any import; ce sits between ts and the oracle because it is exact and still fast, but
+ *  is a sizable lazily-loaded chunk (@cortex-js/compute-engine) — nothing imports it until an expression actually
+ *  reaches past ts and gets claimed, so a session whose expressions ts already answers never pays for it. Async
+ *  because the ts engine reads the catalog snapshot, and a `can()` asked of a half-loaded registry would answer
+ *  conservatively for the rest of the session.
  *
  *  Wire the DATABASE eagerly and the ENGINE lazily, so the legacy exports work from the first call:
  *
@@ -64,6 +76,7 @@ export function routerEngine(engines: Engine[]): Engine {
  *      provideEngine(() => standardEngine())
  */
 export async function standardEngine(dbFactory?: () => Db | Promise<Db>): Promise<Engine> {
+  const reg = await registry()
   const pg = pgEngine(dbFactory)
-  return routerEngine([tsEngine(await registry()), pg])
+  return routerEngine([tsEngine(reg), ceEngine(reg), pg])
 }

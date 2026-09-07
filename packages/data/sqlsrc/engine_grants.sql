@@ -27,6 +27,7 @@ CREATE TRIGGER base_engine_grant_pack_guard BEFORE UPDATE OR DELETE ON base_engi
 INSERT INTO base_engine (id, description) VALUES
   ('pg',   'the pure-SQL core over pglite — the oracle engine every collection is defined against'),
   ('ts',   '@enumeratio/math — a pure-TS, zero-dep mirror of pg''s scalar math (packages/math)'),
+  ('ce',   'the @cortex-js/compute-engine kernel — exact symbolic/bignum scalar arithmetic; loaded lazily'),
   ('wasm', 'a future WebAssembly engine — no implementation yet, registered so the grant model doesn''t special-case it');
 
 -- the deferred FK: base_function_impl.engine names an engine role, but base_engine didn't exist yet when
@@ -60,7 +61,9 @@ INSERT INTO base_engine_grant (engine, column_group, scope_kind, scope, note) VA
   ('pg', 'aggregates',  'all', '*', NULL),
   ('pg', 'scalar_math', 'all', '*', NULL),
   ('ts', 'scalar_math', 'all', '*', 'the only basket packages/math backs today — keep it here until an '
-   'enumerator/render twin exists for something else');
+   'enumerator/render twin exists for something else'),
+  ('ce', 'scalar_math', 'all', '*', 'compute-engine''s kernel is a FROM-less scalar Apply/op surface too — '
+   'exact bignum/rational, same single basket as ts until it grows an enumerator/render twin');
 
 -- engine_grants(engine, coll): the granted basket ids for that engine at that collection's resolved scope.
 -- Same fold as policy_rows (policies.sql) — rows ordered general → specific by policy_tier(scope_kind);
