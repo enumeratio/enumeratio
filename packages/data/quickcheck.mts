@@ -51,7 +51,12 @@ const RANK_CAP = Number(process.env.QUICKCHECK_RANK_CAP ?? 300)  // largest rank
 // point on plain arithmetic-sequence restrictions (abundant/achilles numbers); this is the actual "seconds not
 // minutes" budget knob for the common case (no accel, most of the catalog's number-theoretic sequences).
 const SCAN_RANK_CAP = Number(process.env.QUICKCHECK_SCAN_RANK_CAP ?? 20)
-const CAP_COUNT = Number(process.env.QUICKCHECK_CAP_COUNT ?? 20_000) // largest fiber enumerated for the count property
+const CAP_COUNT = Number(process.env.QUICKCHECK_CAP_COUNT ?? 20_000) // largest fiber the count property will consider
+// The count property double-checks the fiber_count accel by ENUMERATING and comparing — but enumerating materializes
+// the whole SETOF in pglite (12–18 GB for a big fiber of heavy composites, #359). Hard-cap that cross-check at a small,
+// memory-safe bound regardless of CAP_COUNT: cardinality() (the accel) answers "how many"; we only enumerate to verify
+// it on SMALL fibers. Stays well under the elements() materialization guard's ceiling too.
+const COUNT_ENUM_CAP = Math.min(CAP_COUNT, 2_000)
 const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 2)         // sampled (fiber, rank) points per collection
 const STMT_TIMEOUT = '8s'
 
@@ -160,8 +165,8 @@ function mkCheckCount(caps: Caps): CheckFn {
     try {
       const row = (await q<{ closed: string | null; enumerated: string | null }>(
         `SELECT cardinality(${pointHandle})::text AS closed,
-                CASE WHEN cardinality(${pointHandle}) >= 0 AND cardinality(${pointHandle}) <= ${CAP_COUNT}
-                     THEN (SELECT count(*)::text FROM elements(${pointHandle}, ${CAP_COUNT + 1}) v) END AS enumerated`))[0]
+                CASE WHEN cardinality(${pointHandle}) >= 0 AND cardinality(${pointHandle}) <= ${COUNT_ENUM_CAP}
+                     THEN (SELECT count(*)::text FROM elements(${pointHandle}, ${COUNT_ENUM_CAP + 1}) v) END AS enumerated`))[0]
       if (!isFinite_(row.closed) || row.enumerated == null) return { status: 'skip', detail: '∞ / unknown / too-big to enumerate' }
       return row.closed === row.enumerated ? { status: 'pass' } : { status: 'fail', detail: `closed=${row.closed} enumerated=${row.enumerated}` }
     } catch (e: any) { return { status: 'skip', detail: errMsg(e) } }
