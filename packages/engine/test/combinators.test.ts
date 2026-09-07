@@ -62,6 +62,15 @@ describe("Power — k-fold Cartesian power", () => {
   });
 });
 
+describe("Zip — parallel pairing", () => {
+  it("count is the min; element is a pair; Rank inverts At", () => {
+    expect(num(["Length", ["Zip", ["SymmetricGroup", 3], ["Subsets", 3]]])).toBe(6); // min(6,8)
+    const coll: any = ["Zip", ["SymmetricGroup", 3], ["Subsets", 4]];
+    const N = num(["Length", coll]);
+    for (let i = 1; i <= N; i++) expect(num(["Rank", coll, ce.box(["At", coll, i]).evaluate()])).toBe(i);
+  });
+});
+
 describe("Rank composes through views", () => {
   it("Reversed / Rotated", () => {
     expect(num(["Rank", ["Reversed", ["SymmetricGroup", 4]], ["List", 4, 3, 2, 1]])).toBe(1); // last→first

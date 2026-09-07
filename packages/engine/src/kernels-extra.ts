@@ -863,7 +863,7 @@ export function IsOrderedTree(t: any, n: number): boolean {
   return wellFormed(t) && ordTreeEdges(t) === n;
 }
 
-// ─── KaryTrees(n,k): k-ary trees with n internal nodes (Fuss–Catalan). Element nested: leaf 0, node [c1..ck]. ─
+// ─── KAryTrees(n,k): k-ary trees with n internal nodes (Fuss–Catalan). Element nested: leaf 0, node [c1..ck]. ─
 const _fillMemo = new Map<string, number>();
 function karyTreeCount0(s: number, k: number): number { return s === 0 ? 1 : cntFill(s - 1, k, k); }
 function cntFill(m: number, slots: number, k: number): number {
@@ -878,7 +878,7 @@ function cntFill(m: number, slots: number, k: number): number {
   }
   return v;
 }
-export function KaryTreeCount(n: number, k: number): number {
+export function KAryTreeCount(n: number, k: number): number {
   if (n < 0 || k < 1) return 0;
   return karyTreeCount0(n, k);
 }
@@ -897,8 +897,8 @@ function unrankKTree(n: number, k: number, r: number): any {
   if (n === 0) return 0;
   return unrankForest(n - 1, k, k, r);
 }
-export function KaryTreeUnrank(n: number, k: number, rank: number): any {
-  const total = KaryTreeCount(n, k);
+export function KAryTreeUnrank(n: number, k: number, rank: number): any {
+  const total = KAryTreeCount(n, k);
   return unrankKTree(n, k, total ? ((rank % total) + total) % total : 0);
 }
 function rankForest(children: any[], k: number): number {
@@ -916,10 +916,66 @@ function rankForest(children: any[], k: number): number {
 function rankKTree(t: any, k: number): number {
   return t === 0 ? 0 : rankForest(t as any[], k);
 }
-export function KaryTreeRank(t: any, k: number): number {
+export function KAryTreeRank(t: any, k: number): number {
   return rankKTree(t, k);
 }
-export function IsKaryTree(t: any, n: number, k: number): boolean {
+export function IsKAryTree(t: any, n: number, k: number): boolean {
   const ok = (x: any): boolean => x === 0 || (Array.isArray(x) && x.length === k && x.every(ok));
   return ok(t) && kSize(t) === n;
+}
+
+// ─── Surjections(n,k): surjective functions [n] ↠ [k] (every value 1..k hit). Count k!·S(n,k). ──────────
+import { CountSurjections } from "./kernels-combinatorics.js";
+const _surjMemo = new Map<string, number>();
+// #ways to fill `remaining` positions over alphabet 1..k with `missing` still-unused values to place.
+function surjCompletions(remaining: number, missing: number, k: number): number {
+  if (remaining === 0) return missing === 0 ? 1 : 0;
+  if (missing > remaining) return 0;
+  const key = `${remaining},${missing},${k}`;
+  let v = _surjMemo.get(key);
+  if (v === undefined) {
+    v = missing * surjCompletions(remaining - 1, missing - 1, k) + (k - missing) * surjCompletions(remaining - 1, missing, k);
+    _surjMemo.set(key, v);
+  }
+  return v;
+}
+export function SurjectionCount(n: number, k: number): number {
+  return CountSurjections(n, k);
+}
+/** rank-th surjection [n] ↠ [k] as its image word (length n, over 1..k, all values used). */
+export function SurjectionUnrank(n: number, k: number, rank: number): number[] {
+  const total = SurjectionCount(n, k);
+  if (total <= 0) return [];
+  let r = ((rank % total) + total) % total;
+  const out: number[] = [];
+  const used = new Set<number>();
+  let missing = k;
+  for (let i = 0; i < n; i++) {
+    for (let c = 1; c <= k; c++) {
+      const m2 = missing - (used.has(c) ? 0 : 1);
+      const cnt = surjCompletions(n - i - 1, m2, k);
+      if (r < cnt) { out.push(c); if (!used.has(c)) { used.add(c); missing--; } break; }
+      r -= cnt;
+    }
+  }
+  return out;
+}
+export function SurjectionRank(word: number[], k: number): number {
+  const n = word.length;
+  let r = 0;
+  const used = new Set<number>();
+  let missing = k;
+  for (let i = 0; i < n; i++) {
+    const label = word[i];
+    for (let c = 1; c < label; c++) { const m2 = missing - (used.has(c) ? 0 : 1); r += surjCompletions(n - i - 1, m2, k); }
+    if (!used.has(label)) { used.add(label); missing--; }
+  }
+  return r;
+}
+export function IsSurjectionOf(word: number[], n: number, k: number): boolean {
+  if (!Array.isArray(word) || word.length !== n) return false;
+  const hit = new Array(k + 1).fill(false);
+  let cnt = 0;
+  for (const x of word) { if (!Number.isInteger(x) || x < 1 || x > k) return false; if (!hit[x]) { hit[x] = true; cnt++; } }
+  return cnt === k;
 }

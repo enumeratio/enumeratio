@@ -88,13 +88,20 @@ describe("closed-form Length across the six families (no walk)", () => {
   it("batch 4 — Schröder / ordered trees / k-ary trees", () => {
     expect(num(["Length", ["SchroderPaths", 3]])).toBe(22); // large Schröder r(3)
     expect(num(["Length", ["OrderedTrees", 4]])).toBe(14); // Catalan(4) plane trees
-    expect(num(["Length", ["KaryTrees", 3, 3]])).toBe(12); // Fuss–Catalan FC(3,3)
+    expect(num(["Length", ["KAryTrees", 3, 3]])).toBe(12); // Fuss–Catalan FC(3,3)
     expect(str(["At", ["SchroderPaths", 1], 1])).toBe("[1,-1]"); // U D
     expect(str(["At", ["SchroderPaths", 1], 2])).toBe("[2]"); // one level (double) step
     expect(str(["At", ["OrderedTrees", 1], 1])).toBe("[[]]"); // root with one leaf child
-    expect(str(["At", ["KaryTrees", 1, 3], 1])).toBe("[0,0,0]"); // one node, three leaves
+    expect(str(["At", ["KAryTrees", 1, 3], 1])).toBe("[0,0,0]"); // one node, three leaves
     expect(sym(["Element", ["List", 1, 2, -1], ["SchroderPaths", 2]])).toBe("True"); // U L? width 1+2+1=4=2·2, ends 0
     expect(sym(["Element", ["List", -1, 1], ["SchroderPaths", 1]])).toBe("False"); // starts below 0
+  });
+  it("Surjections", () => {
+    expect(num(["Length", ["Surjections", 4, 2]])).toBe(14); // 2!·S(4,2)
+    expect(num(["Length", ["Surjections", 4, 4]])).toBe(24); // = 4! (bijections)
+    expect(str(["At", ["Surjections", 2, 2], 1])).toBe("[1,2]");
+    expect(sym(["Element", ["List", 1, 2, 1], ["Surjections", 3, 2]])).toBe("True");
+    expect(sym(["Element", ["List", 1, 1, 1], ["Surjections", 3, 2]])).toBe("False"); // value 2 never hit
   });
 });
 
@@ -165,7 +172,8 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "BinaryTrees(5)", coll: ["BinaryTrees", 5] },
     { name: "SchroderPaths(5)", coll: ["SchroderPaths", 5] },
     { name: "OrderedTrees(6)", coll: ["OrderedTrees", 6] },
-    { name: "KaryTrees(4,3)", coll: ["KaryTrees", 4, 3] },
+    { name: "KAryTrees(4,3)", coll: ["KAryTrees", 4, 3] },
+    { name: "Surjections(5,3)", coll: ["Surjections", 5, 3] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {

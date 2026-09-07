@@ -46,7 +46,8 @@ import {
   BinaryTreeCount, BinaryTreeUnrank, BinaryTreeRank, IsBinaryTree,
   SchroderCount, SchroderUnrank, SchroderRank, IsSchroderPath,
   OrderedTreeCount, OrderedTreeUnrank, OrderedTreeRank, IsOrderedTree,
-  KaryTreeCount, KaryTreeUnrank, KaryTreeRank, IsKaryTree,
+  KAryTreeCount, KAryTreeUnrank, KAryTreeRank, IsKAryTree,
+  SurjectionCount, SurjectionUnrank, SurjectionRank, IsSurjectionOf,
 } from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -122,6 +123,8 @@ const FAMILIES: Record<string, FamilySpec> = {
     (a, [n, k]) => IsMultisetOf(a, n, k), (a) => MultisetRank(a)),
   Tuples: intListSpec(2, ([n, k]) => TupleCount(n, k), ([n, k], r) => TupleUnrank(n, k, r),
     (a, [n, k]) => IsTupleOf(a, n, k), (a, [n]) => TupleRank(a, n)),
+  Surjections: intListSpec(2, ([n, k]) => SurjectionCount(n, k), ([n, k], r) => SurjectionUnrank(n, k, r),
+    (a, [n, k]) => IsSurjectionOf(a, n, k), (a, [, k]) => SurjectionRank(a, k)),
   LatticePaths: intListSpec(2, ([a, b]) => LatticePathCount(a, b), ([a, b], r) => LatticePathUnrank(a, b, r),
     (x, [a, b]) => IsLatticePathOf(x, a, b), (x) => LatticePathRank(x)),
   DyckPaths: intListSpec(1, ([n]) => DyckPathCount(n), ([n], r) => DyckPathUnrank(n, r),
@@ -173,11 +176,11 @@ const FAMILIES: Record<string, FamilySpec> = {
     elt: ([n], r) => treeMJ(BinaryTreeUnrank(n, r)),
     rank: (t, [n]) => { const tree = decodeTree(t); return IsBinaryTree(tree, n) ? BinaryTreeRank(tree) : undefined; },
   },
-  KaryTrees: {
+  KAryTrees: {
     paramCount: 2, signature: "(integer, integer) -> collection",
-    count: ([n, k]) => KaryTreeCount(n, k),
-    elt: ([n, k], r) => kTreeMJ(KaryTreeUnrank(n, k, r)),
-    rank: (t, [n, k]) => { const tree = decodeKTree(t); return IsKaryTree(tree, n, k) ? KaryTreeRank(tree, k) : undefined; },
+    count: ([n, k]) => KAryTreeCount(n, k),
+    elt: ([n, k], r) => kTreeMJ(KAryTreeUnrank(n, k, r)),
+    rank: (t, [n, k]) => { const tree = decodeKTree(t); return IsKAryTree(tree, n, k) ? KAryTreeRank(tree, k) : undefined; },
   },
   OrderedTrees: {
     paramCount: 1, signature: "(integer) -> collection",
@@ -246,6 +249,13 @@ function rankOf(coll: any, elt: any): number | undefined {
     const ra = rankOf(a, pair[0]); const rb = rankOf(b, pair[1]);
     if (ra === undefined || rb === undefined) return undefined;
     return ra * (b.count as number) + rb;
+  }
+  if (head === "Zip") {
+    const a = coll.op1, b = coll.op2;
+    const pair = elt?.ops; if (!pair || pair.length !== 2) return undefined;
+    const ra = rankOf(a, pair[0]); const rb = rankOf(b, pair[1]);
+    if (ra === undefined || rb === undefined || ra !== rb) return undefined; // same index in both
+    return ra < Math.min(a.count as number, b.count as number) ? ra : undefined;
   }
   if (head === "Power") {
     const base = coll.op1; const k = intOf(coll.op2); const nb = base.count as number;
@@ -394,7 +404,30 @@ const viewDefs = {
       contains: sourceContains,
     } as CollectionHandlers,
   },
+  Zip: {
+    // parallel pairing: element i = [a.at(i), b.at(i)]. Count = min(|a|,|b|). O(1).
+    signature: "(collection, collection) -> collection",
+    collection: {
+      count: (c: any) => { const a = c.op1.count, b = c.op2.count; return a == null || b == null ? undefined : Math.min(a, b); },
+      isFinite: () => true, isLazy: () => true, isEnumerable: () => true,
+      isEmpty: (c: any) => Math.min(c.op1.count ?? 0, c.op2.count ?? 0) === 0,
+      iterator: (c: any) => { const N = Math.min(c.op1.count ?? 0, c.op2.count ?? 0); return walkIterator(N, (i) => zipAt(c, i)); },
+      at: (c: any, index: number | string) => {
+        if (typeof index !== "number") return undefined;
+        const na = c.op1.count, nb = c.op2.count; if (na == null || nb == null) return undefined;
+        const N = Math.min(na, nb); const i = index < 0 ? N + index + 1 : index;
+        if (i < 1 || i > N) return undefined;
+        return zipAt(c, i);
+      },
+      contains: sourceContains,
+    } as CollectionHandlers,
+  },
 };
+function zipAt(c: any, i: number): any {
+  const ea = c.op1.at(i), eb = c.op2.at(i);
+  if (ea == null || eb == null) return undefined;
+  return engineOf(c).box(["List", ea, eb]);
+}
 function productAt(c: any, i: number, nb: number): any {
   const i0 = i - 1;
   const ea = c.op1.at(Math.floor(i0 / nb) + 1);
