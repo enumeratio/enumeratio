@@ -33,6 +33,25 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(sym(["Element", ["List", 2, 2], ["KSubsets", 5, 2]])).toBe("False"); // not distinct
     expect(sym(["Element", ["List", 1, 1, 2], ["Tuples", 2, 3]])).toBe("True"); // repeats ok
   });
+  it("more branched-out collections — known counting sequences", () => {
+    expect(num(["Length", ["DyckPaths", 5]])).toBe(42); // Catalan(5)
+    expect(num(["Length", ["KPermutations", 5, 2]])).toBe(20); // 5·4
+    expect(num(["Length", ["SignedPermutations", 3]])).toBe(48); // 2^3·3!
+    expect(num(["Length", ["Multisets", 4, 2]])).toBe(10); // C(5,2)
+    expect(num(["Length", ["CompositionsIntoKParts", 6, 3]])).toBe(10); // C(5,2)
+    expect(num(["Length", ["WeakCompositions", 4, 3]])).toBe(15); // C(6,2)
+    expect(num(["Length", ["LatticePaths", 2, 2]])).toBe(6); // C(4,2)
+    expect(num(["Length", ["ColoredPermutations", 2, 2]])).toBe(8); // 2^2·2!
+  });
+  it("more branched-out — shape and membership", () => {
+    expect(str(["At", ["DyckPaths", 2], 1])).toBe("[1,1,0,0]"); // uup-ddown first
+    expect(str(["At", ["KPermutations", 3, 2], 1])).toBe("[1,2]");
+    expect(str(["At", ["Multisets", 3, 2], 1])).toBe("[1,1]"); // non-decreasing, repeats
+    expect(sym(["Element", ["List", 1, 1, 0, 0], ["DyckPaths", 2]])).toBe("True");
+    expect(sym(["Element", ["List", 0, 1, 1, 0], ["DyckPaths", 2]])).toBe("False"); // dips below 0
+    expect(sym(["Element", ["List", -2, 1, 3], ["SignedPermutations", 3]])).toBe("True"); // signed perm of [3]
+    expect(sym(["Element", ["List", 2, 1, 3], ["Multisets", 3, 3]])).toBe("False"); // not non-decreasing
+  });
 });
 
 describe("At endpoints (1-based) — the off-by-one contract holds per family", () => {
@@ -83,6 +102,14 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "Subsets(7)", coll: ["Subsets", 7] },
     { name: "KSubsets(8,3)", coll: ["KSubsets", 8, 3] },
     { name: "Tuples(3,4)", coll: ["Tuples", 3, 4] },
+    { name: "CompositionsIntoKParts(9,3)", coll: ["CompositionsIntoKParts", 9, 3] },
+    { name: "WeakCompositions(6,3)", coll: ["WeakCompositions", 6, 3] },
+    { name: "Multisets(5,3)", coll: ["Multisets", 5, 3] },
+    { name: "LatticePaths(4,3)", coll: ["LatticePaths", 4, 3] },
+    { name: "KPermutations(6,3)", coll: ["KPermutations", 6, 3] },
+    { name: "SignedPermutations(4)", coll: ["SignedPermutations", 4] },
+    { name: "ColoredPermutations(3,3)", coll: ["ColoredPermutations", 3, 3] },
+    { name: "DyckPaths(6)", coll: ["DyckPaths", 6] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {
