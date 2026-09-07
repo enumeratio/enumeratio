@@ -65,11 +65,11 @@ describe("library shape", () => {
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(heads).toContain("SymmetricGroup");
     expect(heads).toContain("Inversions");
-    // the seven certified family collections, then Rank / RandomElement / Inversions
+    // ten collection heads, then the views, then Rank / RandomElement / Inversions
     expect(heads).toEqual([
       "SymmetricGroup", "IntegerCompositions", "IntegerPartitions", "PartitionsIntoKParts",
-      "SetPartitions", "SetPartitionsIntoKBlocks", "SetCompositions",
-      "Rank", "RandomElement", "Inversions",
+      "SetPartitions", "SetPartitionsIntoKBlocks", "SetCompositions", "Subsets", "KSubsets", "Tuples",
+      "Reversed", "Rotated", "Rank", "RandomElement", "Inversions",
     ]);
   });
 });

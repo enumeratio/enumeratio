@@ -25,6 +25,11 @@ import {
   StirlingSecond, SetPartitionsIntoKBlocksUnrank, SetPartitionsIntoKBlocksRank,
   Fubini, SetCompositionUnrank, SetCompositionRank, LabelsToOrderedBlocks, BlocksToLabels,
 } from "./kernels-combinatorics.js";
+import {
+  SubsetCount, SubsetUnrank, SubsetRank, IsSubsetOf,
+  KSubsetCount, KSubsetUnrank, KSubsetRank, IsKSubsetOf,
+  TupleCount, TupleUnrank, TupleRank, IsTupleOf,
+} from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
 const engineOf = (e: any): ComputeEngine => e.engine;
@@ -97,6 +102,78 @@ const FAMILIES: Record<string, FamilySpec> = {
     elt: ([n], r) => blocksMJ(LabelsToOrderedBlocks(SetCompositionUnrank(n, r))),
     rank: (t, [n]) => { const b = asBlockList(t); return IsSetPartitionOf(b, n) ? SetCompositionRank(BlocksToLabels(b), n) : undefined; },
   },
+  // ── branching out beyond the SQL-certified seven: fresh collections, certified by the bijection test ──
+  Subsets: {
+    paramCount: 1,
+    signature: "(integer) -> list<list<integer>>",
+    count: ([n]) => SubsetCount(n),
+    elt: ([n], r) => listMJ(SubsetUnrank(n, r)),
+    rank: (t, [n]) => { const a = asIntList(t); return IsSubsetOf(a, n) ? SubsetRank(a) : undefined; },
+  },
+  KSubsets: {
+    paramCount: 2,
+    signature: "(integer, integer) -> list<list<integer>>",
+    count: ([n, k]) => KSubsetCount(n, k),
+    elt: ([n, k], r) => listMJ(KSubsetUnrank(n, k, r)),
+    rank: (t, [n, k]) => { const a = asIntList(t); return IsKSubsetOf(a, n, k) ? KSubsetRank(a) : undefined; },
+  },
+  Tuples: {
+    paramCount: 2,
+    signature: "(integer, integer) -> list<list<integer>>",
+    count: ([n, k]) => TupleCount(n, k),
+    elt: ([n, k], r) => listMJ(TupleUnrank(n, k, r)),
+    rank: (t, [n, k]) => { const a = asIntList(t); return IsTupleOf(a, n, k) ? TupleRank(a, n) : undefined; },
+  },
+};
+
+// ─── lazy view accelerators ──────────────────────────────────────────────────────────────────────────
+// Views over ANY collection with an O(1) `at`, staying O(1) — they reindex the source instead of
+// materializing it. CE's own Reverse/RotateLeft materialize and refuse past maxCollectionSize; Reversed /
+// Rotated lift those past the cap (At(Reversed(SymmetricGroup(20)), 1) is instant). Generic: they read the
+// source's `.count`/`.at`, so they compose over any of our families and over each other.
+const sourceOf = (c: any): any => c.op1;
+function reindexView(transform: (idx: number, N: number, c: any) => number): CollectionHandlers {
+  return {
+    count: (c: Expression) => sourceOf(c).count,
+    isFinite: () => true,
+    isLazy: () => true,
+    isEnumerable: () => true,
+    isEmpty: (c: Expression) => (sourceOf(c).count ?? 0) === 0,
+    iterator: (c: Expression) => {
+      const src = sourceOf(c);
+      const N = src.count ?? 0;
+      let i = 1;
+      return {
+        next() {
+          if (i > N) return { value: undefined as any, done: true as const };
+          const v = src.at(transform(i, N, c));
+          i++;
+          return { value: v, done: false as const };
+        },
+      };
+    },
+    at: (c: Expression, index: number | string) => {
+      if (typeof index !== "number") return undefined;
+      const src = sourceOf(c);
+      const N = src.count;
+      if (N == null) return undefined;
+      const idx = index < 0 ? N + index + 1 : index;
+      if (idx < 1 || idx > N) return undefined;
+      return src.at(transform(idx, N, c));
+    },
+    // same element set as the source — delegate membership to it.
+    contains: (c: Expression, target: Expression) => {
+      const s = (engineOf(c).box(["Element", target, sourceOf(c)]).evaluate() as any).symbol;
+      return s === "True" ? true : s === "False" ? false : undefined;
+    },
+  };
+}
+const viewDefs = {
+  Reversed: { signature: "(collection) -> collection", collection: reindexView((i, N) => N - i + 1) },
+  Rotated: {
+    signature: "(collection, integer) -> collection",
+    collection: reindexView((i, N, c) => (((i - 1 + intOf(c.op2)) % N) + N) % N + 1),
+  },
 };
 
 const readParams = (coll: any, pc: 1 | 2): number[] =>
@@ -151,6 +228,7 @@ export const enumeratioLibrary: LibraryDefinition = {
   name: "enumeratio",
   definitions: {
     ...collectionDefs,
+    ...viewDefs,
 
     // Rank — element → 1-based index, the inverse of At and the half CE lacks entirely. Dispatches on the
     // collection operand's head; returns undefined when the element is not a member of that family.

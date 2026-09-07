@@ -16,6 +16,9 @@ describe("Rank is the inverse of At", () => {
     { name: "SetPartitions(4)", coll: ["SetPartitions", 4] },
     { name: "SetPartitionsIntoKBlocks(5,2)", coll: ["SetPartitionsIntoKBlocks", 5, 2] },
     { name: "SetCompositions(3)", coll: ["SetCompositions", 3] },
+    { name: "Subsets(7)", coll: ["Subsets", 7] },
+    { name: "KSubsets(8,3)", coll: ["KSubsets", 8, 3] },
+    { name: "Tuples(3,4)", coll: ["Tuples", 3, 4] },
   ];
   for (const { name, coll } of families) {
     it(`Rank(c, At(c, i)) === i for all i — ${name}`, () => {

@@ -20,6 +20,19 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(num(["Length", ["SetPartitionsIntoKBlocks", 4, 5]])).toBe(0); // S(4,5)=0
     expect(num(["Length", ["PartitionsIntoKParts", 3, 5]])).toBe(0); // no partition of 3 into 5 parts
   });
+  it("branched-out collections", () => {
+    expect(num(["Length", ["Subsets", 10]])).toBe(1024); // 2^10
+    expect(num(["Length", ["KSubsets", 10, 3]])).toBe(120); // C(10,3)
+    expect(num(["Length", ["Tuples", 3, 4]])).toBe(81); // 3^4
+    expect(str(["At", ["Subsets", 3], 1])).toBe("[]"); // empty subset first
+    expect(str(["At", ["Subsets", 3], 8])).toBe("[1,2,3]"); // full subset last
+    expect(str(["At", ["KSubsets", 4, 2], 1])).toBe("[1,2]"); // colex first
+    expect(str(["At", ["Tuples", 2, 3], 1])).toBe("[1,1,1]");
+    expect(str(["At", ["Tuples", 2, 3], 8])).toBe("[2,2,2]");
+    expect(sym(["Element", ["List", 2, 4], ["KSubsets", 5, 2]])).toBe("True");
+    expect(sym(["Element", ["List", 2, 2], ["KSubsets", 5, 2]])).toBe("False"); // not distinct
+    expect(sym(["Element", ["List", 1, 1, 2], ["Tuples", 2, 3]])).toBe("True"); // repeats ok
+  });
 });
 
 describe("At endpoints (1-based) — the off-by-one contract holds per family", () => {
@@ -67,6 +80,9 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "SetPartitions(4)", coll: ["SetPartitions", 4] },
     { name: "SetPartitionsIntoKBlocks(5,2)", coll: ["SetPartitionsIntoKBlocks", 5, 2] },
     { name: "SetCompositions(3)", coll: ["SetCompositions", 3] },
+    { name: "Subsets(7)", coll: ["Subsets", 7] },
+    { name: "KSubsets(8,3)", coll: ["KSubsets", 8, 3] },
+    { name: "Tuples(3,4)", coll: ["Tuples", 3, 4] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {
