@@ -101,6 +101,27 @@ const parseAddr = (addrText: string): string[] => {
 type CheckResult = { status: 'pass' | 'fail' | 'skip'; detail?: string }
 type Caps = { hasCount: boolean; hasUnrank: boolean; hasContains: boolean }
 type CheckFn = (pointHandle: string, r: number | null) => Promise<CheckResult>
+type GradeRow = { pos: number; name: string; admissible: string | null }
+
+// admissibilityViolation (#354): base_grade.admissible is the VALID parameter domain for a family-parameter grade
+// (e.g. polygonal_numbers' k >= 3) — a text predicate on the bound value, keyed by the grade name. fibers() does
+// NOT enforce it (it happily unfolds k=0), so a naive sampler draws inadmissible params on which the generator
+// formula and `contains` legitimately disagree — a false membership/round-trip failure, not a real bug. Evaluate
+// the predicate in SQL with the grade name bound as an actual column (not string substitution into the expression)
+// so arbitrary arithmetic/mod predicates ('gap >= 2 AND gap % 2 = 0') resolve the identifier naturally. Returns the
+// violated grade's name, or null if every admissible predicate the fiber has values for holds (or none is declared).
+async function admissibilityViolation(admissibleGrades: GradeRow[], vals: string[]): Promise<string | null> {
+  for (const g of admissibleGrades) {
+    const val = vals[g.pos - 1]
+    if (val === undefined) continue
+    try {
+      const row = (await q<{ ok: boolean | null }>(
+        `SELECT (${g.admissible}) AS ok FROM (SELECT ${val}::numeric AS ${g.name}) t`))[0]
+      if (row?.ok === false) return g.name
+    } catch { /* an unevaluable predicate doesn't block sampling — treat as unknown, not inadmissible */ }
+  }
+  return null
+}
 
 // ---- the five properties — each self-contained: derives whatever it needs from `pointHandle` (a fully-bound
 // handle addressing exactly ONE fiber) and returns pass/fail/skip. r is null for the rank-independent count check. ----
@@ -212,7 +233,7 @@ async function isScanSafe(pointHandle: string, caps: Caps): Promise<boolean> {
   } catch { return false }
 }
 
-async function shrinkFiber(collId: string, gradeCount: number, fn: CheckFn, n: number | null, needsRank: boolean, caps: Caps): Promise<{ n: number; addr: string; r: number | null } | null> {
+async function shrinkFiber(collId: string, gradeCount: number, fn: CheckFn, n: number | null, needsRank: boolean, caps: Caps, admissibleGrades: GradeRow[]): Promise<{ n: number; addr: string; r: number | null } | null> {
   if (gradeCount === 0 || n == null) return null
   for (let n2 = 0; n2 < n; n2++) {
     let addrRows: { addr: string }[]
@@ -220,6 +241,7 @@ async function shrinkFiber(collId: string, gradeCount: number, fn: CheckFn, n: n
     catch { continue }
     for (const row of addrRows) {
       const vals = parseAddr(row.addr)
+      if (admissibleGrades.length && (await admissibilityViolation(admissibleGrades, vals))) continue   // don't shrink onto an inadmissible fiber — not a repro, a false one (#354)
       const ph = vals.length ? `${collId}(${vals.join(',')})` : `${collId}()`
       if (!(await isScanSafe(ph, caps))) continue   // same materialize-before-limit hazard as the main sweep — refuse, don't hang
       let res: CheckResult
@@ -230,11 +252,11 @@ async function shrinkFiber(collId: string, gradeCount: number, fn: CheckFn, n: n
   return null
 }
 
-async function shrink(collId: string, gradeCount: number, fn: CheckFn, pointHandle: string, r: number | null, n: number | null, caps: Caps): Promise<string> {
+async function shrink(collId: string, gradeCount: number, fn: CheckFn, pointHandle: string, r: number | null, n: number | null, caps: Caps, admissibleGrades: GradeRow[]): Promise<string> {
   const needsRank = r != null
   let bestR = r
   if (needsRank) bestR = await shrinkRankOnly(pointHandle, fn, r!)
-  const fiberShrunk = await shrinkFiber(collId, gradeCount, fn, n, needsRank, caps)
+  const fiberShrunk = await shrinkFiber(collId, gradeCount, fn, n, needsRank, caps, admissibleGrades)
   if (fiberShrunk) return `n=${fiberShrunk.n} addr=${fiberShrunk.addr}${fiberShrunk.r != null ? ` r=${fiberShrunk.r}` : ''}`
   return `n=${n ?? '(ungraded)'}${bestR != null ? ` r=${bestR}` : ''}`
 }
@@ -268,58 +290,99 @@ for (const c of selected) {
   }
   process.stderr.write(`  · ${c.id}${caps.hasCount ? ' [count]' : ''}${caps.hasUnrank ? ' [unrank]' : ''}${caps.hasContains ? ' [contains]' : ''}\n`)
 
+  // admissibleGrades (#354): the family-parameter grades (role='param') this collection declares a base_grade.admissible
+  // domain predicate for — fetched once per collection, checked per sampled fiber below (admissibilityViolation).
+  const gradeRows = gradeCount === 0 ? [] : await q<GradeRow>(
+    `SELECT pos, name, admissible FROM base_grade WHERE collection = '${c.id}' ORDER BY pos`)
+  const admissibleGrades = gradeRows.filter((g) => g.admissible != null)
+
   // usesGenericUnrank: properties that call the universal unrank(handle, r) — safe when the collection has a direct
-  // fiber_unrank accel, or gated by isScanSafe (see above) when it falls back to the naive floor scan. 'count' has
-  // its own CAP_COUNT guard inline; 'accel==naive' always touches the naive side (element_at IS the thing under
-  // test), so it needs isScanSafe regardless of hasUnrank.
-  const props: [string, CheckFn, boolean][] = [
+  // fiber_unrank accel, or gated by isScanSafe (see above) when it falls back to the naive floor scan. 'count' is
+  // rank-independent (tested once per fiber, not per sampled rank — see below) and has its own CAP_COUNT guard
+  // inline; 'accel==naive' always touches the naive side (element_at IS the thing under test), so it needs
+  // isScanSafe regardless of hasUnrank.
+  const rankProps: [string, CheckFn, boolean][] = [
     ['round-trip', mkCheckRoundTrip(), true],
     ['accel==naive', mkCheckAccelNaive(caps), true],
-    ['count', mkCheckCount(caps), false],
     ['membership', mkCheckMembership(caps), true],
     // NB: no `order` property — rank/enumeration order is NOT the carrier's `<` (they're independent); asserting
     // element_at(r) < element_at(r+1) is a non-invariant that false-fails ~41/109 collections (#298). round-trip
     // (rank∘unrank=id) + accel==naive already pin the enumeration contract. A monotonicity check would need a
     // per-collection order-isomorphism declaration, not a universal assumption.
   ]
+  const countCheck = mkCheckCount(caps)
+
+  // (a) guarantee n=0 is sampled for every graded collection, IN ADDITION to the POINTS random draws — n∈[0,NMAX]
+  // picked uniformly misses n=0 ~1/(NMAX+1) of the time, and that is exactly how a real bug (#354) stayed hidden.
+  // Ungraded collections have no n axis at all — nChoices is just the POINTS random (null) draws, as before.
+  const nChoices: (number | null)[] = gradeCount === 0 ? [] : [0]
+  for (let i = 0; i < POINTS; i++) nChoices.push(gradeCount === 0 ? null : randInt(NMAX + 1))
 
   const collT0 = Date.now()
-  for (let i = 0; i < POINTS; i++) {
+  for (const n of nChoices) {
     try {
-      const n = gradeCount === 0 ? null : randInt(NMAX + 1)
       const sizeHandle = gradeCount === 0 ? `${c.id}()` : `${c.id}(${n})`
       const addrRows = await q<{ addr: string }>(`SELECT fiber_address(f)::text AS addr FROM fibers(${sizeHandle}) f ORDER BY fiber_address(f)`)
       if (!addrRows.length) { skips.push({ coll: c.id, property: '*', reason: `no fibers at n=${n}` }); continue }
       const addrText = addrRows[randInt(addrRows.length)].addr
       const vals = parseAddr(addrText)
+
+      if (admissibleGrades.length) {
+        const violated = await admissibilityViolation(admissibleGrades, vals)
+        if (violated) { skips.push({ coll: c.id, property: '*', reason: `inadmissible fiber (base_grade.admissible): ${violated}` }); continue }
+      }
+
       const pointHandle = vals.length ? `${c.id}(${vals.join(',')})` : `${c.id}()`
 
       const cardRow = (await q<{ card: string | null }>(`SELECT cardinality(${pointHandle})::text AS card`))[0]
       const cardNum = cardRow?.card == null || cardRow.card === 'infinity' ? Infinity : Number(cardRow.card)
       const rankCap = caps.hasUnrank ? RANK_CAP : SCAN_RANK_CAP
       const effCap = Math.min(Number.isFinite(cardNum) ? cardNum : rankCap, rankCap)
-      const r = effCap > 0 ? randInt(effCap) : null
       pointsSampled++
       // reuse the cardinality we already fetched above — no extra query (see isScanSafe's doc comment for why)
       const scanSafe = caps.hasUnrank || !Number.isFinite(cardNum) || cardNum <= RANK_CAP
 
-      for (const [name, fn, needsScanGuard] of props) {
-        propChecks++
-        if (needsScanGuard) {
-          if (!scanSafe) {
+      // (b) boundary ranks: r=0 and (for a genuinely finite, in-cap fiber) its largest realized rank ALWAYS join the
+      // random r — cheap (a handful of extra unrank/render calls per fiber), and it's the r=0 edge that hid #354.
+      let ranks: (number | null)[]
+      if (effCap > 0) {
+        const rankSet = new Set<number>([0, randInt(effCap)])
+        if (Number.isFinite(cardNum) && cardNum > 0 && cardNum <= rankCap) rankSet.add(cardNum - 1)   // the fiber's true largest rank, only when finite and in range
+        ranks = [...rankSet].sort((a, b) => a - b)
+      } else {
+        ranks = [null]   // empty fiber — every check below already skips gracefully on "no element at r"
+      }
+
+      for (const r of ranks) {
+        for (const [name, fn, needsScanGuard] of rankProps) {
+          propChecks++
+          if (needsScanGuard && !scanSafe) {
             skips.push({ coll: c.id, property: name, reason: `no unrank accel and fiber too large to scan safely (cardinality≈${cardNum})` })
             continue
           }
+          const res = await fn(pointHandle, r)
+          if (res.status === 'fail') {
+            const shrunk = await shrink(c.id, gradeCount, fn, pointHandle, r, n, caps, admissibleGrades)
+            mismatches.push({ coll: c.id, property: name, n, addr: addrText, r: r == null ? '(none)' : String(r), detail: res.detail ?? '', shrunk })
+          } else if (res.status === 'skip') {
+            skips.push({ coll: c.id, property: name, reason: res.detail ?? 'skipped' })
+          } else {
+            propPass++
+          }
         }
-        const res = await fn(pointHandle, name === 'count' ? null : r)
-        if (res.status === 'fail') {
-          const shrunk = await shrink(c.id, gradeCount, fn, pointHandle, name === 'count' ? null : r, n, caps)
-          mismatches.push({ coll: c.id, property: name, n, addr: addrText, r: r == null ? '(none)' : String(r), detail: res.detail ?? '', shrunk })
-        } else if (res.status === 'skip') {
-          skips.push({ coll: c.id, property: name, reason: res.detail ?? 'skipped' })
-        } else {
-          propPass++
-        }
+      }
+
+      // count: rank-independent — checked once per sampled fiber, not once per sampled rank (rankCap knobs above
+      // don't apply; CAP_COUNT is its own budget guard, inline in mkCheckCount).
+      propChecks++
+      const countRes = await countCheck(pointHandle, null)
+      if (countRes.status === 'fail') {
+        const shrunk = await shrink(c.id, gradeCount, countCheck, pointHandle, null, n, caps, admissibleGrades)
+        mismatches.push({ coll: c.id, property: 'count', n, addr: addrText, r: '(none)', detail: countRes.detail ?? '', shrunk })
+      } else if (countRes.status === 'skip') {
+        skips.push({ coll: c.id, property: 'count', reason: countRes.detail ?? 'skipped' })
+      } else {
+        propPass++
       }
     } catch (e: any) {
       skips.push({ coll: c.id, property: '*', reason: errMsg(e) })
