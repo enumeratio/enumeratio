@@ -63,6 +63,8 @@ describe("Rank is the inverse of At", () => {
     { name: "SelfConjugatePartitions(12)", coll: ["SelfConjugatePartitions", 12] },
     { name: "FullBinaryTrees(6)", coll: ["FullBinaryTrees", 6] },
     { name: "PlaneForests(6)", coll: ["PlaneForests", 6] },
+    { name: "CompositionsIntoParts123(9)", coll: ["CompositionsIntoParts123", 9] },
+    { name: "BinaryStringsAvoiding111(10)", coll: ["BinaryStringsAvoiding111", 10] },
   ];
   for (const { name, coll } of families) {
     it(`Rank(c, At(c, i)) === i for all i — ${name}`, () => {

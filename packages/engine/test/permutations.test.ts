@@ -64,11 +64,11 @@ describe("library shape", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
-    // 54 collection heads (incl. externally-authored packs) + 7 view/combinators + Rank/RandomElement/Inversions
-    expect(heads.length).toBe(64);
+    // 56 collection heads (incl. externally-authored packs) + 7 view/combinators + Rank/RandomElement/Inversions
+    expect(heads.length).toBe(66);
     for (const h of ["Triangulations", "NonCrossingMatchings", "AlternatingPermutations",
       "SetPartitionsNoSingletons", "PartitionsIntoOddParts", "SelfConjugatePartitions",
-      "FullBinaryTrees", "PlaneForests"]) {
+      "FullBinaryTrees", "PlaneForests", "CompositionsIntoParts123", "BinaryStringsAvoiding111"]) {
       expect(heads).toContain(h);
     }
     for (const h of ["SymmetricGroup", "CyclicPermutations", "Involutions", "Derangements", "MotzkinPaths",

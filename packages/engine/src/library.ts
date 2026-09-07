@@ -61,6 +61,7 @@ import { entries as packE } from "./pack-e.js";
 import { entries as packF } from "./pack-f.js";
 import { entries as packG } from "./pack-g.js";
 import { entries as packI } from "./pack-i.js";
+import { entries as packK } from "./pack-k.js";
 import { entries as packJ } from "./pack-j.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -259,6 +260,7 @@ const PACKS: PackEntry[] = [
   ...(packG as unknown as PackEntry[]),
   ...(packI as unknown as PackEntry[]),
   ...(packJ as unknown as PackEntry[]),
+  ...(packK as unknown as PackEntry[]),
 ];
 function adaptPack(e: PackEntry): FamilySpec {
   const sig = e.kind === "ints"
