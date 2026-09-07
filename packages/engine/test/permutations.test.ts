@@ -65,10 +65,10 @@ describe("library shape", () => {
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
     // 56 collection heads (incl. externally-authored packs) + 7 view/combinators + Rank/RandomElement/Inversions
-    expect(heads.length).toBe(74);
+    expect(heads.length).toBe(76);
     for (const h of ["Triangulations", "NonCrossingMatchings", "AlternatingPermutations",
       "SetPartitionsNoSingletons", "PartitionsIntoOddParts", "SelfConjugatePartitions",
-      "FullBinaryTrees", "PlaneForests", "CompositionsIntoParts123", "BinaryStringsAvoiding111", "StandardYoungTableaux2xN", "LittleSchroderPaths", "NonCrossingPartitions", "NonNestingPartitions", "PalindromicCompositions", "CompositionsIntoDistinctParts", "Permutations321Avoiding", "Permutations132Avoiding"]) {
+      "FullBinaryTrees", "PlaneForests", "CompositionsIntoParts123", "BinaryStringsAvoiding111", "StandardYoungTableaux2xN", "LittleSchroderPaths", "NonCrossingPartitions", "NonNestingPartitions", "PalindromicCompositions", "CompositionsIntoDistinctParts", "Permutations321Avoiding", "Permutations132Avoiding", "BicoloredMotzkinPaths", "UnaryBinaryTrees"]) {
       expect(heads).toContain(h);
     }
     for (const h of ["SymmetricGroup", "CyclicPermutations", "Involutions", "Derangements", "MotzkinPaths",
