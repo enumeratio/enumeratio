@@ -76,9 +76,11 @@ export default {
     // pay nothing; being the single provider for the whole site, the DB boots exactly once per session (off-thread),
     // whether you land on a docs widget or the /explore/collection app — no competing main-thread boot (issue #40).
     if (!import.meta.env.SSR) {
-      void import('@enumeratio/components')
+      // Provider FIRST, then the elements: a client-backed element queries in connectedCallback, and registering
+      // it before provideDb() has run is a race it loses on a fast page (seen: "no Db provider" from the notebook).
       void import('@enumeratio/client').then((m) => {
         m.provideDb(() => m.makeWorkerDb())
+        void import('@enumeratio/components')
         // Dev convenience: reach the client from the console to dogfood the "extend the db live" path
         // (window.enumeratio.extendDb('CREATE FUNCTION glyph_svg(…) …')). Dev-only; not in the built site.
         if (import.meta.env.DEV) (window as unknown as { enumeratio: typeof m }).enumeratio = m
