@@ -48,6 +48,8 @@ import {
   OrderedTreeCount, OrderedTreeUnrank, OrderedTreeRank, IsOrderedTree,
   KAryTreeCount, KAryTreeUnrank, KAryTreeRank, IsKAryTree,
   SurjectionCount, SurjectionUnrank, SurjectionRank, IsSurjectionOf,
+  BinaryStringCount, BinaryStringUnrank, BinaryStringRank, IsBinaryString,
+  CyclicPermutationCount, CyclicPermutationUnrank, CyclicPermutationRank, IsCyclicPermutationOf,
 } from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -101,6 +103,8 @@ const FAMILIES: Record<string, FamilySpec> = {
     (a, [n, k]) => IsKPermutationOf(a, n, k), (a, [n]) => KPermutationRank(a, n)),
   SignedPermutations: intListSpec(1, ([n]) => SignedPermutationCount(n), ([n], r) => SignedPermutationUnrank(n, r),
     (a, [n]) => IsSignedPermutationOf(a, n), (a) => SignedPermutationRank(a)),
+  CyclicPermutations: intListSpec(1, ([n]) => CyclicPermutationCount(n), ([n], r) => CyclicPermutationUnrank(n, r),
+    (a, [n]) => IsCyclicPermutationOf(a, n), (a) => CyclicPermutationRank(a)),
 
   // ── compositions / partitions (element = parts) ──
   IntegerCompositions: intListSpec(1, ([n]) => CompositionCount(n), ([n], r) => CompositionFromMask(n, r),
@@ -125,6 +129,10 @@ const FAMILIES: Record<string, FamilySpec> = {
     (a, [n, k]) => IsTupleOf(a, n, k), (a, [n]) => TupleRank(a, n)),
   Surjections: intListSpec(2, ([n, k]) => SurjectionCount(n, k), ([n, k], r) => SurjectionUnrank(n, k, r),
     (a, [n, k]) => IsSurjectionOf(a, n, k), (a, [, k]) => SurjectionRank(a, k)),
+  Endofunctions: intListSpec(1, ([n]) => n ** n, ([n], r) => TupleUnrank(n, n, r),
+    (a, [n]) => IsTupleOf(a, n, n), (a, [n]) => TupleRank(a, n)),
+  BinaryStrings: intListSpec(1, ([n]) => BinaryStringCount(n), ([n], r) => BinaryStringUnrank(n, r),
+    (a, [n]) => IsBinaryString(a, n), (a) => BinaryStringRank(a)),
   LatticePaths: intListSpec(2, ([a, b]) => LatticePathCount(a, b), ([a, b], r) => LatticePathUnrank(a, b, r),
     (x, [a, b]) => IsLatticePathOf(x, a, b), (x) => LatticePathRank(x)),
   DyckPaths: intListSpec(1, ([n]) => DyckPathCount(n), ([n], r) => DyckPathUnrank(n, r),

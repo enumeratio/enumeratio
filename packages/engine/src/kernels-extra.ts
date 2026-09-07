@@ -979,3 +979,47 @@ export function IsSurjectionOf(word: number[], n: number, k: number): boolean {
   for (const x of word) { if (!Number.isInteger(x) || x < 1 || x > k) return false; if (!hit[x]) { hit[x] = true; cnt++; } }
   return cnt === k;
 }
+
+// ─── BinaryStrings(n): 0/1 strings of length n. Count 2^n. (Position 0 is most significant.) ─────────────
+export function BinaryStringCount(n: number): number { return 2 ** n; }
+export function BinaryStringUnrank(n: number, rank: number): number[] {
+  const N = 2 ** n; const R = N ? ((rank % N) + N) % N : 0;
+  const out: number[] = [];
+  for (let i = 0; i < n; i++) out.push((R >> (n - 1 - i)) & 1);
+  return out;
+}
+export function BinaryStringRank(w: number[]): number { let r = 0; for (const b of w) r = r * 2 + b; return r; }
+export function IsBinaryString(w: number[], n: number): boolean {
+  if (!Array.isArray(w) || w.length !== n) return false;
+  for (const b of w) if (b !== 0 && b !== 1) return false;
+  return true;
+}
+
+// ─── CyclicPermutations(n): permutations that are a single n-cycle. Count (n-1)!. ───────────────────────
+export function CyclicPermutationCount(n: number): number { return n < 1 ? 0 : Factorial(n - 1); }
+export function CyclicPermutationUnrank(n: number, rank: number): number[] {
+  if (n === 0) return [];
+  if (n === 1) return [1];
+  const p = PermutationUnrank(n - 1, rank); // arrangement of the other n-1 elements after 1
+  const cycle = [1, ...p.map((x) => x + 1)];
+  const image = new Array(n);
+  for (let i = 0; i < n; i++) image[cycle[i] - 1] = cycle[(i + 1) % n];
+  return image;
+}
+export function CyclicPermutationRank(image: number[]): number {
+  const n = image.length;
+  if (n <= 1) return 0;
+  const cycle = [1];
+  let cur = image[0];
+  while (cur !== 1) { cycle.push(cur); cur = image[cur - 1]; }
+  return PermutationRank(cycle.slice(1).map((x) => x - 1));
+}
+export function IsCyclicPermutationOf(image: number[], n: number): boolean {
+  if (!Array.isArray(image) || image.length !== n) return false;
+  const seen = new Array(n + 1).fill(false);
+  for (const x of image) { if (!Number.isInteger(x) || x < 1 || x > n || seen[x]) return false; seen[x] = true; }
+  if (n === 0) return true;
+  let cur = 1, steps = 0;
+  do { cur = image[cur - 1]; steps++; } while (cur !== 1 && steps <= n);
+  return steps === n; // one full n-cycle
+}

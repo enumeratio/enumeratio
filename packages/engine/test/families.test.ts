@@ -103,6 +103,16 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(sym(["Element", ["List", 1, 2, 1], ["Surjections", 3, 2]])).toBe("True");
     expect(sym(["Element", ["List", 1, 1, 1], ["Surjections", 3, 2]])).toBe("False"); // value 2 never hit
   });
+  it("cyclic perms / endofunctions / binary strings", () => {
+    expect(num(["Length", ["CyclicPermutations", 4]])).toBe(6); // (4-1)!
+    expect(num(["Length", ["Endofunctions", 3]])).toBe(27); // 3^3
+    expect(num(["Length", ["BinaryStrings", 4]])).toBe(16); // 2^4
+    expect(str(["At", ["BinaryStrings", 3], 1])).toBe("[0,0,0]");
+    expect(str(["At", ["BinaryStrings", 3], 8])).toBe("[1,1,1]");
+    expect(sym(["Element", ["List", 2, 3, 1], ["CyclicPermutations", 3]])).toBe("True"); // the 3-cycle (1 2 3)
+    expect(sym(["Element", ["List", 2, 1, 3], ["CyclicPermutations", 3]])).toBe("False"); // (1 2)(3), not one cycle
+    expect(sym(["Element", ["List", 1, 1, 3], ["Endofunctions", 3]])).toBe("True"); // repeats allowed
+  });
 });
 
 describe("At endpoints (1-based) — the off-by-one contract holds per family", () => {
@@ -174,6 +184,9 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "OrderedTrees(6)", coll: ["OrderedTrees", 6] },
     { name: "KAryTrees(4,3)", coll: ["KAryTrees", 4, 3] },
     { name: "Surjections(5,3)", coll: ["Surjections", 5, 3] },
+    { name: "CyclicPermutations(6)", coll: ["CyclicPermutations", 6] },
+    { name: "Endofunctions(4)", coll: ["Endofunctions", 4] },
+    { name: "BinaryStrings(7)", coll: ["BinaryStrings", 7] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {
