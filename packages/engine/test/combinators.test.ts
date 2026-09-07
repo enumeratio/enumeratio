@@ -17,12 +17,12 @@ describe("Product — Cartesian product with O(1) mixed-radix indexing", () => {
     expect(num(["Length", ["Product", ["SymmetricGroup", 10], ["Subsets", 20]]])).toBe(3628800 * 1048576);
   });
   it("Rank inverts At through the product", () => {
-    const coll = ["Product", ["SymmetricGroup", 3], ["KSubsets", 4, 2]];
+    const coll: any = ["Product", ["SymmetricGroup", 3], ["KSubsets", 4, 2]];
     const N = num(["Length", coll]);
     for (let i = 1; i <= N; i++) expect(num(["Rank", coll, ce.box(["At", coll, i]).evaluate()])).toBe(i);
   });
   it("membership requires both components", () => {
-    const coll = ["Product", ["SymmetricGroup", 3], ["Subsets", 2]];
+    const coll: any = ["Product", ["SymmetricGroup", 3], ["Subsets", 2]];
     expect(sym(["Element", ["List", ["List", 1, 2, 3], ["List", 1]], coll])).toBe("True");
     expect(sym(["Element", ["List", ["List", 3, 2, 1], ["List", 3]], coll])).toBe("False"); // 3 ∉ Subsets(2)
   });
@@ -30,7 +30,7 @@ describe("Product — Cartesian product with O(1) mixed-radix indexing", () => {
 
 describe("Concat — two collections end to end", () => {
   it("count adds; at routes across the seam", () => {
-    const coll = ["Concat", ["Subsets", 2], ["SymmetricGroup", 3]];
+    const coll: any = ["Concat", ["Subsets", 2], ["SymmetricGroup", 3]];
     expect(num(["Length", coll])).toBe(4 + 6);
     expect(str(["At", coll, 4])).toBe("[1,2]"); // last of Subsets(2)
     expect(str(["At", coll, 5])).toBe("[1,2,3]"); // first of SymmetricGroup(3)
@@ -52,12 +52,12 @@ describe("Rank composes through views", () => {
   it("Reversed / Rotated", () => {
     expect(num(["Rank", ["Reversed", ["SymmetricGroup", 4]], ["List", 4, 3, 2, 1]])).toBe(1); // last→first
     expect(num(["Rank", ["Reversed", ["SymmetricGroup", 4]], ["List", 1, 2, 3, 4]])).toBe(24);
-    const rot = ["Rotated", ["SymmetricGroup", 4], 1];
+    const rot: any = ["Rotated", ["SymmetricGroup", 4], 1];
     const N = num(["Length", rot]);
     for (let i = 1; i <= N; i++) expect(num(["Rank", rot, ce.box(["At", rot, i]).evaluate()])).toBe(i);
   });
   it("nested: Rank through Reversed(Product(...))", () => {
-    const coll = ["Reversed", ["Product", ["SymmetricGroup", 3], ["Subsets", 2]]];
+    const coll: any = ["Reversed", ["Product", ["SymmetricGroup", 3], ["Subsets", 2]]];
     const N = num(["Length", coll]);
     for (let i = 1; i <= N; i++) expect(num(["Rank", coll, ce.box(["At", coll, i]).evaluate()])).toBe(i);
   });

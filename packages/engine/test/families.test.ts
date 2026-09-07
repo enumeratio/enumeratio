@@ -42,6 +42,11 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(num(["Length", ["WeakCompositions", 4, 3]])).toBe(15); // C(6,2)
     expect(num(["Length", ["LatticePaths", 2, 2]])).toBe(6); // C(4,2)
     expect(num(["Length", ["ColoredPermutations", 2, 2]])).toBe(8); // 2^2·2!
+    expect(num(["Length", ["LabeledTrees", 5]])).toBe(125); // 5^3 (Cayley)
+    expect(num(["Length", ["LabeledTrees", 2]])).toBe(1);
+    expect(str(["At", ["LabeledTrees", 2], 1])).toBe("[[1,2]]");
+    expect(sym(["Element", ["List", ["List", 1, 2], ["List", 1, 3]], ["LabeledTrees", 3]])).toBe("True"); // path 2-1-3
+    expect(sym(["Element", ["List", ["List", 1, 2], ["List", 1, 2]], ["LabeledTrees", 3]])).toBe("False"); // vertex 3 missing / repeated edge
   });
   it("more branched-out — shape and membership", () => {
     expect(str(["At", ["DyckPaths", 2], 1])).toBe("[1,1,0,0]"); // uup-ddown first
@@ -110,6 +115,7 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "SignedPermutations(4)", coll: ["SignedPermutations", 4] },
     { name: "ColoredPermutations(3,3)", coll: ["ColoredPermutations", 3, 3] },
     { name: "DyckPaths(6)", coll: ["DyckPaths", 6] },
+    { name: "LabeledTrees(6)", coll: ["LabeledTrees", 6] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {

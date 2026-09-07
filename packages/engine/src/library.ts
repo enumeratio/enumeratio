@@ -35,6 +35,7 @@ import {
   SignedPermutationCount, SignedPermutationUnrank, SignedPermutationRank, IsSignedPermutationOf,
   ColoredPermutationCount, ColoredPermutationUnrank, ColoredPermutationRank, IsColoredPermutationOf,
   DyckPathCount, DyckPathUnrank, DyckPathRank, IsDyckPath,
+  LabeledTreeCount, LabeledTreeUnrank, LabeledTreeRank, IsLabeledTreeOf,
 } from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -121,6 +122,14 @@ const FAMILIES: Record<string, FamilySpec> = {
     paramCount: 1, signature: "(integer) -> list<list<list<integer>>>",
     count: ([n]) => Fubini(n), elt: ([n], r) => blocksMJ(LabelsToOrderedBlocks(SetCompositionUnrank(n, r))),
     rank: (t, [n]) => { const b = asBlockList(t); return IsSetPartitionOf(b, n) ? SetCompositionRank(BlocksToLabels(b), n) : undefined; },
+  },
+
+  // ── labeled trees (element = edge list) ──
+  LabeledTrees: {
+    paramCount: 1, signature: "(integer) -> list<list<list<integer>>>",
+    count: ([n]) => LabeledTreeCount(n),
+    elt: ([n], r) => blocksMJ(LabeledTreeUnrank(n, r)),
+    rank: (t, [n]) => { const e = asBlockList(t); return IsLabeledTreeOf(e, n) ? LabeledTreeRank(e, n) : undefined; },
   },
 
   // ── colored permutations (element = [image, colors]) ──

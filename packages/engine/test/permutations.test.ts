@@ -68,7 +68,7 @@ describe("library shape", () => {
     // 18 collection heads + 5 view/combinators + Rank / RandomElement / Inversions
     expect([...heads].sort()).toEqual([
       "ColoredPermutations", "CompositionsIntoKParts", "Concat", "DyckPaths", "IntegerCompositions",
-      "IntegerPartitions", "Inversions", "KPermutations", "KSubsets", "LatticePaths", "Multisets",
+      "IntegerPartitions", "Inversions", "KPermutations", "KSubsets", "LabeledTrees", "LatticePaths", "Multisets",
       "PartitionsIntoKParts", "Product", "RandomElement", "Rank", "Reversed", "Rotated",
       "SetCompositions", "SetPartitions", "SetPartitionsIntoKBlocks", "SignedPermutations",
       "Subsets", "SymmetricGroup", "Tuples", "WeakCompositions", "Window",

@@ -345,3 +345,69 @@ export function IsDyckPath(path: number[], n: number): boolean {
   }
   return h === 0;
 }
+
+// ─── LabeledTrees(n): labeled trees on [n] via the Prüfer bijection. Count n^(n-2). Element = edge list. ──
+export function LabeledTreeCount(n: number): number {
+  if (n <= 0) return 0;
+  if (n <= 2) return 1;
+  return n ** (n - 2);
+}
+/** Prüfer sequence (length n-2 over [n]) → the tree's edge list, edges as [min,max], caller order. */
+function pruferDecode(seq: number[], n: number): number[][] {
+  if (n === 1) return [];
+  const deg = new Array(n + 1).fill(1);
+  for (const x of seq) deg[x]++;
+  const edges: number[][] = [];
+  for (const x of seq) {
+    let leaf = -1;
+    for (let v = 1; v <= n; v++) if (deg[v] === 1) { leaf = v; break; }
+    edges.push([Math.min(leaf, x), Math.max(leaf, x)]);
+    deg[leaf]--; deg[x]--;
+  }
+  const rem: number[] = [];
+  for (let v = 1; v <= n; v++) if (deg[v] === 1) rem.push(v);
+  edges.push([Math.min(rem[0], rem[1]), Math.max(rem[0], rem[1])]);
+  return edges;
+}
+/** Edge list → its Prüfer sequence (the inverse of pruferDecode). */
+function pruferEncode(edges: number[][], n: number): number[] {
+  if (n <= 2) return [];
+  const adj = Array.from({ length: n + 1 }, () => [] as number[]);
+  const deg = new Array(n + 1).fill(0);
+  for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); deg[u]++; deg[v]++; }
+  const removed = new Array(n + 1).fill(false);
+  const seq: number[] = [];
+  for (let i = 0; i < n - 2; i++) {
+    let leaf = -1;
+    for (let v = 1; v <= n; v++) if (!removed[v] && deg[v] === 1) { leaf = v; break; }
+    let nb = -1;
+    for (const w of adj[leaf]) if (!removed[w]) { nb = w; break; }
+    seq.push(nb);
+    removed[leaf] = true; deg[leaf]--; deg[nb]--;
+  }
+  return seq;
+}
+export function LabeledTreeUnrank(n: number, rank: number): number[][] {
+  if (n <= 1) return [];
+  if (n === 2) return [[1, 2]];
+  return pruferDecode(TupleUnrank(n, n - 2, rank), n);
+}
+export function LabeledTreeRank(edges: number[][], n: number): number {
+  if (n <= 2) return 0;
+  return TupleRank(pruferEncode(edges, n), n);
+}
+export function IsLabeledTreeOf(edges: number[][], n: number): boolean {
+  if (!Array.isArray(edges) || edges.length !== Math.max(0, n - 1)) return false;
+  const parent = Array.from({ length: n + 1 }, (_, i) => i);
+  const find = (x: number): number => (parent[x] === x ? x : (parent[x] = find(parent[x])));
+  for (const e of edges) {
+    if (!Array.isArray(e) || e.length !== 2) return false;
+    const [u, v] = e;
+    if (!Number.isInteger(u) || !Number.isInteger(v) || u < 1 || v < 1 || u > n || v > n || u === v) return false;
+    const ru = find(u), rv = find(v);
+    if (ru === rv) return false; // a cycle — not a tree
+    parent[ru] = rv;
+  }
+  // n-1 acyclic edges on n vertices ⇒ connected ⇒ a tree
+  return true;
+}
