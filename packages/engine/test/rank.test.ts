@@ -46,6 +46,23 @@ describe("Rank is the inverse of At", () => {
     { name: "PerfectMatchings(4)", coll: ["PerfectMatchings", 4] },
     { name: "PartitionsMaxPart(8,3)", coll: ["PartitionsMaxPart", 8, 3] },
     { name: "RootedForests(4)", coll: ["RootedForests", 4] },
+    { name: "ParkingFunctions(4)", coll: ["ParkingFunctions", 4] },
+    { name: "IncreasingTrees(5)", coll: ["IncreasingTrees", 5] },
+    { name: "CompositionsIntoParts1And2(8)", coll: ["CompositionsIntoParts1And2", 8] },
+    { name: "CompositionsIntoOddParts(9)", coll: ["CompositionsIntoOddParts", 9] },
+    { name: "PartitionsIntoAtMostKParts(9,3)", coll: ["PartitionsIntoAtMostKParts", 9, 3] },
+    { name: "GrandDyckPaths(4)", coll: ["GrandDyckPaths", 4] },
+    { name: "BalancedBinaryStrings(4)", coll: ["BalancedBinaryStrings", 4] },
+    { name: "CompositionsBoundedParts(8,3)", coll: ["CompositionsBoundedParts", 8, 3] },
+    { name: "PalindromicBinaryStrings(9)", coll: ["PalindromicBinaryStrings", 9] },
+    { name: "Triangulations(6)", coll: ["Triangulations", 6] },
+    { name: "NonCrossingMatchings(5)", coll: ["NonCrossingMatchings", 5] },
+    { name: "AlternatingPermutations(6)", coll: ["AlternatingPermutations", 6] },
+    { name: "SetPartitionsNoSingletons(6)", coll: ["SetPartitionsNoSingletons", 6] },
+    { name: "PartitionsIntoOddParts(12)", coll: ["PartitionsIntoOddParts", 12] },
+    { name: "SelfConjugatePartitions(12)", coll: ["SelfConjugatePartitions", 12] },
+    { name: "FullBinaryTrees(6)", coll: ["FullBinaryTrees", 6] },
+    { name: "PlaneForests(6)", coll: ["PlaneForests", 6] },
   ];
   for (const { name, coll } of families) {
     it(`Rank(c, At(c, i)) === i for all i — ${name}`, () => {

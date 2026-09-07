@@ -64,13 +64,21 @@ describe("library shape", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
-    // 37 collection heads + 7 view/combinators (Reversed/Rotated/Window/Concat/Product/Power/Zip) + Rank/RandomElement/Inversions
-    expect(heads.length).toBe(47);
+    // 54 collection heads (incl. externally-authored packs) + 7 view/combinators + Rank/RandomElement/Inversions
+    expect(heads.length).toBe(64);
+    for (const h of ["Triangulations", "NonCrossingMatchings", "AlternatingPermutations",
+      "SetPartitionsNoSingletons", "PartitionsIntoOddParts", "SelfConjugatePartitions",
+      "FullBinaryTrees", "PlaneForests"]) {
+      expect(heads).toContain(h);
+    }
     for (const h of ["SymmetricGroup", "CyclicPermutations", "Involutions", "Derangements", "MotzkinPaths",
       "SchroderPaths", "FibonacciWords", "DistinctPartitions", "PartitionsInBox", "PartitionsMaxPart",
       "GrayCodeSubsets", "BinaryTrees", "KAryTrees", "OrderedTrees", "LabeledTrees", "RootedForests",
-      "PerfectMatchings", "Surjections", "Endofunctions", "BinaryStrings", "Power", "Product", "Concat",
-      "Window", "Reversed", "Rotated", "Zip", "Rank", "RandomElement", "Inversions"]) {
+      "PerfectMatchings", "Surjections", "Endofunctions", "BinaryStrings",
+      "ParkingFunctions", "IncreasingTrees", "CompositionsIntoParts1And2", "CompositionsIntoOddParts",
+      "PartitionsIntoAtMostKParts", "GrandDyckPaths", "BalancedBinaryStrings", "CompositionsBoundedParts",
+      "PalindromicBinaryStrings", "Power", "Product", "Concat", "Window", "Reversed", "Rotated", "Zip",
+      "Rank", "RandomElement", "Inversions"]) {
       expect(heads).toContain(h);
     }
   });

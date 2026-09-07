@@ -54,6 +54,14 @@ import {
   PartitionsMaxPartCount, PartitionsMaxPartUnrank, PartitionsMaxPartRank, IsPartitionMaxPart,
   RootedForestCount, RootedForestUnrank, RootedForestRank, IsRootedForest,
 } from "./kernels-extra.js";
+import { entries as packA } from "./pack-a.js";
+import { entries as packC } from "./pack-c.js";
+import { entries as packD } from "./pack-d.js";
+import { entries as packE } from "./pack-e.js";
+import { entries as packF } from "./pack-f.js";
+import { entries as packG } from "./pack-g.js";
+import { entries as packI } from "./pack-i.js";
+import { entries as packJ } from "./pack-j.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
 const engineOf = (e: any): ComputeEngine => e.engine;
@@ -231,6 +239,40 @@ const FAMILIES: Record<string, FamilySpec> = {
     },
   },
 };
+
+// ─── externally-authored packs: pure kernels (count/unrank/rank/valid over JS arrays) adapted to FamilySpecs.
+// Each pack file exports `entries: PackEntry[]`; add its import to PACKS below to register its heads. Kept
+// separate so parallel authoring never collides on this file's FAMILIES literal.
+type PackEntry = {
+  head: string; paramCount: 1 | 2; kind: "ints" | "blocks";
+  count: (p: number[]) => number;
+  unrank: (p: number[], r: number) => number[] | number[][];
+  rank: (e: any, p: number[]) => number;
+  valid: (e: any, p: number[]) => boolean;
+};
+const PACKS: PackEntry[] = [
+  ...(packA as unknown as PackEntry[]),
+  ...(packC as unknown as PackEntry[]),
+  ...(packD as unknown as PackEntry[]),
+  ...(packE as unknown as PackEntry[]),
+  ...(packF as unknown as PackEntry[]),
+  ...(packG as unknown as PackEntry[]),
+  ...(packI as unknown as PackEntry[]),
+  ...(packJ as unknown as PackEntry[]),
+];
+function adaptPack(e: PackEntry): FamilySpec {
+  const sig = e.kind === "ints"
+    ? (e.paramCount === 1 ? "(integer) -> list<list<integer>>" : "(integer, integer) -> list<list<integer>>")
+    : (e.paramCount === 1 ? "(integer) -> list<list<list<integer>>>" : "(integer, integer) -> list<list<list<integer>>>");
+  return {
+    paramCount: e.paramCount,
+    signature: sig,
+    count: e.count,
+    elt: (p, r) => (e.kind === "ints" ? listMJ(e.unrank(p, r) as number[]) : blocksMJ(e.unrank(p, r) as number[][])),
+    rank: (t, p) => { const el = e.kind === "ints" ? asIntList(t) : asBlockList(t); return e.valid(el, p) ? e.rank(el, p) : undefined; },
+  };
+}
+for (const e of PACKS) FAMILIES[e.head] = adaptPack(e);
 
 const readParams = (coll: any, pc: 1 | 2): number[] =>
   pc === 1 ? [intOf(coll.op1)] : [intOf(coll.op1), intOf(coll.op2)];
