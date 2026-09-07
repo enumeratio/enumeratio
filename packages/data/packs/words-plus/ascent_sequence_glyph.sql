@@ -5,9 +5,11 @@
 -- even though its bar collapses to nothing.
 --
 -- Shared design (ascent_sequence hosts the concept; sequence_bar_svg itself is hoisted into core's glyphs.sql —
--- #283 phase 3 — because it's shared across core (rgs_word) and multiple packs (words-plus, permutations-plus):
--- subexcedant_seq_glyph.sql, rgs_word_glyph.sql, gray_code_glyph.sql and ternary_gray_code_glyph.sql all
--- `-- requires: glyphs` and reuse it from there). No base_glyph registry row on purpose (the composition/
+-- #283 phase 3 — because it's shared across multiple packs (words-plus, permutations-plus):
+-- subexcedant_seq_glyph.sql and ternary_gray_code_glyph.sql all
+-- `-- requires: glyphs` and reuse it from there; #236 folded restricted_growth_strings onto set_partition and
+-- gray_codes onto binary_word — both now inherit their parent's glyph instead). No base_glyph registry row on
+-- purpose (the composition/
 -- standard_tableau precedent in glyphs.sql): the overload alone lights up carrier_renders_svg.
 -- layer: glyph
 CREATE FUNCTION glyph_svg(s ascent_sequence) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT sequence_bar_svg((s).terms) $$;

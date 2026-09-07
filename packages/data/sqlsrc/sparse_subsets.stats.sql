@@ -1,14 +1,17 @@
--- requires: sparse_subsets, realizer, utilities
+-- requires: sparse_subsets, binary_words, realizer, utilities
 -- sparse_subsets statistics — cardinality is the size of the chosen (no-two-adjacent) subset; min_gap is the
 -- smallest distance between consecutive chosen positions (always ≥ 2 by the no-adjacency invariant, when defined —
--- 0 for the vacuous case of fewer than two chosen positions, so the stat stays a plain int, never NULL).
+-- 0 for the vacuous case of fewer than two chosen positions, so the stat stays a plain int, never NULL). #236:
+-- sparse_subsets now shares the binary_word carrier (core), but binary_words' OWN stats (number_of_ones, …) live
+-- in the words-plus PACK — this file stays core-self-contained, so `cardinality` is kept as its own registration
+-- (it happens to duplicate the pack's `number_of_ones` under a different name whenever that pack is loaded too).
 
--- ── statistics (carrier: sparse_subset(bits int[])) ─────────────────────────────────────────────────────
+-- ── statistics (carrier: binary_word(bits int[])) ─────────────────────────────────────────────────────
 -- cardinality: the number of chosen (1) positions.
-CREATE FUNCTION sparse_subset_cardinality(x sparse_subset) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION sparse_subset_cardinality(x binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(*)::int FROM unnest((x).bits) b WHERE b = 1 $$;
 -- min_gap: the smallest distance between consecutive chosen positions (0 if fewer than two are chosen).
-CREATE FUNCTION sparse_subset_min_gap(x sparse_subset) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION sparse_subset_min_gap(x binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(min(o - prev_o), 0)::int FROM (
     SELECT o, lag(o) OVER (ORDER BY o) AS prev_o
     FROM unnest((x).bits) WITH ORDINALITY AS t(b, o) WHERE b = 1
@@ -30,8 +33,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT bool_and(sparse_subset_min_gap((e).value) >= 2)::text
       FROM elements(sparse_subsets(6)) e WHERE sparse_subset_cardinality((e).value) >= 2 $q$),
   ('sparse_subsets','cardinality(1010) = 2, min_gap(1010) = 2','eq','2|2','positions 1 and 3',$q$
-    SELECT sparse_subset_cardinality(ROW(ARRAY[1,0,1,0])::sparse_subset)::text || '|' ||
-           sparse_subset_min_gap(ROW(ARRAY[1,0,1,0])::sparse_subset)::text $q$),
+    SELECT sparse_subset_cardinality(ROW(ARRAY[1,0,1,0])::binary_word)::text || '|' ||
+           sparse_subset_min_gap(ROW(ARRAY[1,0,1,0])::binary_word)::text $q$),
   ('sparse_subsets','empty word (n=0): cardinality=0, min_gap=0','eq','0|0','edge case, no bits',$q$
     SELECT sparse_subset_cardinality((unrank(sparse_subsets(0),0)).value)::text || '|' ||
            sparse_subset_min_gap((unrank(sparse_subsets(0),0)).value)::text $q$);
