@@ -64,11 +64,12 @@ describe("library shape", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
-    // 27 collection heads + 6 view/combinators (Reversed/Rotated/Window/Concat/Product/Power) + Rank/RandomElement/Inversions
-    expect(heads.length).toBe(36);
-    for (const h of ["SymmetricGroup", "Involutions", "Derangements", "MotzkinPaths", "FibonacciWords",
-      "DistinctPartitions", "PartitionsInBox", "GrayCodeSubsets", "BinaryTrees", "LabeledTrees",
-      "Power", "Product", "Concat", "Window", "Reversed", "Rotated", "Rank", "RandomElement", "Inversions"]) {
+    // 30 collection heads + 6 view/combinators (Reversed/Rotated/Window/Concat/Product/Power) + Rank/RandomElement/Inversions
+    expect(heads.length).toBe(39);
+    for (const h of ["SymmetricGroup", "Involutions", "Derangements", "MotzkinPaths", "SchroderPaths",
+      "FibonacciWords", "DistinctPartitions", "PartitionsInBox", "GrayCodeSubsets", "BinaryTrees",
+      "KaryTrees", "OrderedTrees", "LabeledTrees", "Power", "Product", "Concat", "Window", "Reversed",
+      "Rotated", "Rank", "RandomElement", "Inversions"]) {
       expect(heads).toContain(h);
     }
   });

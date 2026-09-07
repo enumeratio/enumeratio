@@ -44,6 +44,9 @@ import {
   DistinctPartitionCount, DistinctPartitionUnrank, DistinctPartitionRank, IsDistinctPartitionOf,
   PartitionsInBoxCount, PartitionsInBoxUnrank, PartitionsInBoxRank, IsPartitionInBox,
   BinaryTreeCount, BinaryTreeUnrank, BinaryTreeRank, IsBinaryTree,
+  SchroderCount, SchroderUnrank, SchroderRank, IsSchroderPath,
+  OrderedTreeCount, OrderedTreeUnrank, OrderedTreeRank, IsOrderedTree,
+  KaryTreeCount, KaryTreeUnrank, KaryTreeRank, IsKaryTree,
 } from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -57,6 +60,12 @@ const blocksMJ = (bs: number[][]): MathJson => ["List", ...bs.map((b) => ["List"
 // nested binary tree ⇄ MathJSON: leaf = 0, node = [left, right].
 const treeMJ = (t: any): MathJson => (t === 0 ? 0 : ["List", treeMJ(t[0]), treeMJ(t[1])]);
 const decodeTree = (x: any): any => (x?.ops && x.ops.length === 2 ? [decodeTree(x.ops[0]), decodeTree(x.ops[1])] : 0);
+// k-ary tree ⇄ MathJSON: leaf 0, node = list of k children.
+const kTreeMJ = (t: any): MathJson => (t === 0 ? 0 : ["List", ...t.map(kTreeMJ)]);
+const decodeKTree = (x: any): any => (x?.ops ? x.ops.map(decodeKTree) : 0);
+// ordered/plane tree ⇄ MathJSON: a node = the list of its child subtrees (a leaf = the empty list).
+const ordTreeMJ = (t: any): MathJson => ["List", ...t.map(ordTreeMJ)];
+const decodeOrdTree = (x: any): any => (x?.ops ?? []).map(decodeOrdTree);
 
 // ─── one spec per family: the single source of truth handlers, Rank and RandomElement share. count/elt/rank
 // agree on the SAME order; `rank` returns a 0-based index or undefined when the target is not a member.
@@ -144,6 +153,8 @@ const FAMILIES: Record<string, FamilySpec> = {
   // ── lattice-path words (element = a step sequence) ──
   MotzkinPaths: intListSpec(1, ([n]) => MotzkinCount(n), ([n], r) => MotzkinUnrank(n, r),
     (a, [n]) => IsMotzkinPath(a, n), (a) => MotzkinRank(a)),
+  SchroderPaths: intListSpec(1, ([n]) => SchroderCount(n), ([n], r) => SchroderUnrank(n, r),
+    (a, [n]) => IsSchroderPath(a, n), (a) => SchroderRank(a)),
   FibonacciWords: intListSpec(1, ([n]) => FibonacciWordCount(n), ([n], r) => FibonacciWordUnrank(n, r),
     (a, [n]) => IsFibonacciWord(a, n), (a) => FibonacciWordRank(a)),
 
@@ -155,12 +166,24 @@ const FAMILIES: Record<string, FamilySpec> = {
   GrayCodeSubsets: intListSpec(1, ([n]) => SubsetCount(n), ([n], r) => GrayCodeSubsetUnrank(n, r),
     (a, [n]) => IsSubsetOf(a, n), (a) => GrayCodeSubsetRank(a)),
 
-  // ── binary trees (nested element: leaf 0, node [L,R]) ──
+  // ── trees (nested elements) ──
   BinaryTrees: {
     paramCount: 1, signature: "(integer) -> collection",
     count: ([n]) => BinaryTreeCount(n),
     elt: ([n], r) => treeMJ(BinaryTreeUnrank(n, r)),
     rank: (t, [n]) => { const tree = decodeTree(t); return IsBinaryTree(tree, n) ? BinaryTreeRank(tree) : undefined; },
+  },
+  KaryTrees: {
+    paramCount: 2, signature: "(integer, integer) -> collection",
+    count: ([n, k]) => KaryTreeCount(n, k),
+    elt: ([n, k], r) => kTreeMJ(KaryTreeUnrank(n, k, r)),
+    rank: (t, [n, k]) => { const tree = decodeKTree(t); return IsKaryTree(tree, n, k) ? KaryTreeRank(tree, k) : undefined; },
+  },
+  OrderedTrees: {
+    paramCount: 1, signature: "(integer) -> collection",
+    count: ([n]) => OrderedTreeCount(n),
+    elt: ([n], r) => ordTreeMJ(OrderedTreeUnrank(n, r)),
+    rank: (t, [n]) => { const tree = decodeOrdTree(t); return IsOrderedTree(tree, n) ? OrderedTreeRank(tree) : undefined; },
   },
 
   // ── labeled trees (element = edge list) ──

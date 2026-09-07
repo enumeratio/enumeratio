@@ -763,3 +763,163 @@ export function IsPartitionInBox(p: number[], a: number, b: number): boolean {
   for (const x of p) { if (!Number.isInteger(x) || x < 1 || x > b || x > prev) return false; prev = x; }
   return true;
 }
+
+// ─── SchröderPaths(n): large Schröder paths — steps U(+1,w1), D(-1,w1), L(level,w2), width 2n, ≥0, end 0. ─
+// Tokens: U = 1, L = 2, D = -1. Count = large Schröder number r(n) (2, 6, 22, 90, …).
+const _schrMemo = new Map<string, number>();
+function schroderCompletions(w: number, h: number): number {
+  if (h < 0 || h > w) return 0;
+  if (w === 0) return h === 0 ? 1 : 0;
+  const key = `${w},${h}`;
+  let v = _schrMemo.get(key);
+  if (v === undefined) {
+    v = schroderCompletions(w - 1, h + 1) + (h > 0 ? schroderCompletions(w - 1, h - 1) : 0) + (w >= 2 ? schroderCompletions(w - 2, h) : 0);
+    _schrMemo.set(key, v);
+  }
+  return v;
+}
+export function SchroderCount(n: number): number {
+  return n < 0 ? 0 : schroderCompletions(2 * n, 0);
+}
+/** rank-th large Schröder path, steps tried U(1) then L(2) then D(-1). */
+export function SchroderUnrank(n: number, rank: number): number[] {
+  const total = SchroderCount(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  const out: number[] = [];
+  let w = 2 * n, h = 0;
+  while (w > 0) {
+    const up = schroderCompletions(w - 1, h + 1);
+    if (r < up) { out.push(1); h++; w -= 1; continue; }
+    r -= up;
+    const lvl = w >= 2 ? schroderCompletions(w - 2, h) : 0;
+    if (r < lvl) { out.push(2); w -= 2; continue; }
+    r -= lvl;
+    out.push(-1); h--; w -= 1;
+  }
+  return out;
+}
+export function SchroderRank(tokens: number[]): number {
+  let r = 0, w = 0, h = 0;
+  for (const t of tokens) w += t === 2 ? 2 : 1;
+  for (const t of tokens) {
+    const up = schroderCompletions(w - 1, h + 1);
+    const lvl = w >= 2 ? schroderCompletions(w - 2, h) : 0;
+    if (t === 1) { h++; w -= 1; }
+    else if (t === 2) { r += up; w -= 2; }
+    else { r += up + lvl; h--; w -= 1; }
+  }
+  return r;
+}
+export function IsSchroderPath(tokens: number[], n: number): boolean {
+  if (!Array.isArray(tokens)) return false;
+  let w = 0, h = 0;
+  for (const t of tokens) {
+    if (t !== 1 && t !== 2 && t !== -1) return false;
+    w += t === 2 ? 2 : 1;
+    h += t === 1 ? 1 : t === -1 ? -1 : 0;
+    if (h < 0) return false;
+  }
+  return w === 2 * n && h === 0;
+}
+
+// ─── OrderedTrees(n): plane (ordered) trees with n edges (Catalan(n)) via the Dyck bijection. ────────────
+// Element is nested: a node = the list of its child subtrees; a leaf = the empty list.
+export type OrdTree = OrdTree[];
+export function OrderedTreeCount(n: number): number {
+  return Catalan(n);
+}
+function dyckToForest(path: number[]): { forest: OrdTree[]; pos: number } {
+  const forest: OrdTree[] = [];
+  let pos = 0;
+  const build = (): OrdTree => {
+    const children: OrdTree[] = [];
+    while (pos < path.length && path[pos] === 1) { pos++; children.push(build()); pos++; /* matching 0 */ }
+    return children;
+  };
+  while (pos < path.length && path[pos] === 1) { pos++; forest.push(build()); pos++; }
+  return { forest, pos };
+}
+/** rank-th plane tree with n edges: unrank a Dyck path of semilength n, read it as a single rooted tree. */
+export function OrderedTreeUnrank(n: number, rank: number): OrdTree {
+  const path = DyckPathUnrank(n, rank);
+  return dyckToForest(path).forest; // the root's children (root itself carries no edge)
+}
+function forestToDyck(children: OrdTree[], out: number[]): void {
+  for (const child of children) { out.push(1); forestToDyck(child, out); out.push(0); }
+}
+export function OrderedTreeRank(tree: OrdTree): number {
+  const path: number[] = [];
+  forestToDyck(tree, path);
+  return DyckPathRank(path);
+}
+function ordTreeEdges(t: any): number {
+  if (!Array.isArray(t)) return NaN;
+  let e = 0;
+  for (const c of t) { e += 1 + ordTreeEdges(c); }
+  return e;
+}
+export function IsOrderedTree(t: any, n: number): boolean {
+  const wellFormed = (x: any): boolean => Array.isArray(x) && x.every(wellFormed);
+  return wellFormed(t) && ordTreeEdges(t) === n;
+}
+
+// ─── KaryTrees(n,k): k-ary trees with n internal nodes (Fuss–Catalan). Element nested: leaf 0, node [c1..ck]. ─
+const _fillMemo = new Map<string, number>();
+function karyTreeCount0(s: number, k: number): number { return s === 0 ? 1 : cntFill(s - 1, k, k); }
+function cntFill(m: number, slots: number, k: number): number {
+  if (slots === 0) return m === 0 ? 1 : 0;
+  if (m < 0) return 0;
+  const key = `${m},${slots},${k}`;
+  let v = _fillMemo.get(key);
+  if (v === undefined) {
+    v = 0;
+    for (let s = 0; s <= m; s++) v += karyTreeCount0(s, k) * cntFill(m - s, slots - 1, k);
+    _fillMemo.set(key, v);
+  }
+  return v;
+}
+export function KaryTreeCount(n: number, k: number): number {
+  if (n < 0 || k < 1) return 0;
+  return karyTreeCount0(n, k);
+}
+function kSize(t: any): number { return t === 0 ? 0 : 1 + (t as any[]).reduce((a, c) => a + kSize(c), 0); }
+function unrankForest(m: number, slots: number, k: number, r: number): any[] {
+  if (slots === 0) return [];
+  for (let s = 0; s <= m; s++) {
+    const cc = karyTreeCount0(s, k), rc = cntFill(m - s, slots - 1, k);
+    const block = cc * rc;
+    if (r < block) return [unrankKTree(s, k, Math.floor(r / rc)), ...unrankForest(m - s, slots - 1, k, r % rc)];
+    r -= block;
+  }
+  return [];
+}
+function unrankKTree(n: number, k: number, r: number): any {
+  if (n === 0) return 0;
+  return unrankForest(n - 1, k, k, r);
+}
+export function KaryTreeUnrank(n: number, k: number, rank: number): any {
+  const total = KaryTreeCount(n, k);
+  return unrankKTree(n, k, total ? ((rank % total) + total) % total : 0);
+}
+function rankForest(children: any[], k: number): number {
+  let r = 0, m = children.reduce((a, c) => a + kSize(c), 0);
+  const slots = children.length;
+  for (let idx = 0; idx < children.length; idx++) {
+    const s = kSize(children[idx]);
+    const restSlots = slots - 1 - idx;
+    for (let sp = 0; sp < s; sp++) r += karyTreeCount0(sp, k) * cntFill(m - sp, restSlots, k);
+    r += rankKTree(children[idx], k) * cntFill(m - s, restSlots, k);
+    m -= s;
+  }
+  return r;
+}
+function rankKTree(t: any, k: number): number {
+  return t === 0 ? 0 : rankForest(t as any[], k);
+}
+export function KaryTreeRank(t: any, k: number): number {
+  return rankKTree(t, k);
+}
+export function IsKaryTree(t: any, n: number, k: number): boolean {
+  const ok = (x: any): boolean => x === 0 || (Array.isArray(x) && x.length === k && x.every(ok));
+  return ok(t) && kSize(t) === n;
+}
