@@ -636,9 +636,26 @@ BEGIN
   -- elements(fiber): wrap the floor engine; ordinality by emission order. `s` = bare whole-row carrier alias (keeps the
   -- SRF from expanding a composite carrier into columns). element_limit = paging emit-limit, NOT the fiber's size.
   elem_srf := 'fiber_elements(f, element_limit)';
-  EXECUTE format('CREATE FUNCTION elements(f %I, element_limit int DEFAULT 5000) RETURNS SETOF %I LANGUAGE sql STABLE AS $b$ '
-                 'SELECT ROW(f, rank_point((row_number() OVER () - 1)::rank_index), s)::%I FROM %s s $b$',
-                 coll || '_fiber', coll || '_element', coll || '_element', elem_srf);
+  -- MATERIALIZATION GUARD (#359): elements() builds the WHOLE requested set in memory (pglite materializes a plpgsql
+  -- SETOF; there is no streaming), so a huge element_limit — a count-by-enumeration, a cranked test cap, a `2^31`
+  -- "give me everything" — silently OOMs to many GB. Refuse it LOUDLY instead: only when the caller asks for more
+  -- than the ceiling AND the fiber actually HAS more than the ceiling (so `2^31 = all of a small fiber` still works,
+  -- and normal element_limit ≤ ceiling calls pay nothing — the cardinality() probe runs only past the ceiling, and is
+  -- O(1) for exactly the collections whose huge fibers OOM, since they carry a fiber_count accel). Ceiling is the
+  -- `enumeratio.max_elements` GUC (default 50000, overridable via `SET`). Counting → cardinality()/fiber_count();
+  -- random access → unrank()/element_at(); a deliberate large dump → raise the GUC.
+  EXECUTE format(
+    'CREATE FUNCTION elements(f %1$I, element_limit int DEFAULT 5000) RETURNS SETOF %2$I LANGUAGE plpgsql STABLE AS $b$ '
+    'DECLARE lim int := coalesce(nullif(current_setting(''enumeratio.max_elements'', true), '''')::int, 50000); card cardinal; '
+    'BEGIN '
+    'IF element_limit > lim THEN card := cardinality(f); '
+    'IF card > lim::numeric THEN RAISE EXCEPTION '
+    '''elements: refusing to materialize more than %% elements of a fiber whose cardinality is %% — count with '
+    'cardinality()/fiber_count(), index with unrank()/element_at(), or SET enumeratio.max_elements higher'', lim, card '
+    'USING ERRCODE = ''program_limit_exceeded''; END IF; END IF; '
+    'RETURN QUERY SELECT (e).* FROM (SELECT ROW(f, rank_point((row_number() OVER () - 1)::rank_index), s)::%2$I AS e FROM %3$s s) q; '
+    'END $b$',
+    coll || '_fiber', coll || '_element', elem_srf);
   -- elements(handle): flat-map over fibers, globally ordered. The combined order is DATA-DRIVEN from the grade chain:
   -- fiber_address (the axis values in base_grade.pos order, as an omega_ordinal) picks the fiber, then the within-fiber
   -- rank (emission order). This is the grade axes ⊕ the sort — not the element composite's accidental field order.
