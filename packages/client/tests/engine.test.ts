@@ -424,3 +424,19 @@ describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () =
     expect(await value(ce, b)).toBe(await value(pg, b))
   })
 })
+
+describe('generated element functions type their result for a cast above them', () => {
+  let pg: ReturnType<typeof pgEngine>
+  beforeAll(async () => { resetRegistry(); pg = pgEngine(() => makeDb()); useLiveCatalog(); await registry() })
+  afterAll(async () => { await close(); resetRegistry() })
+
+  it('cast(locate(handle, 10), numeric) prints (…).value, not ::numeric — and next() keeps the element type', async () => {
+    const h: SelectExpr = { kind: 'handle', handle: { coll: 'triangular_numbers', named: {}, positional: [] } }
+    const loc: SelectExpr = { kind: 'apply', fn: fnRef('locate'), args: [h, { kind: 'lit', value: 10 }] }
+    expect(lowerScalar({ kind: 'cast', expr: loc, to: 'numeric' })).toBe('(locate(triangular_numbers(), 10)).value')
+    const nxt: SelectExpr = { kind: 'apply', fn: fnRef('next'), args: [loc] }
+    expect(lowerScalar({ kind: 'cast', expr: nxt, to: 'numeric' })).toBe('(next(locate(triangular_numbers(), 10))).value')
+    const rows = await collect(pg.evaluate({ select: [{ kind: 'cast', expr: nxt, to: 'numeric' }] }).rows)
+    expect(Object.values(rows[0])[0]).toBe('15')
+  })
+})

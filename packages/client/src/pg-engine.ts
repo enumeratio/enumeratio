@@ -133,6 +133,10 @@ function reject(expr: Expr, opts?: CanOpts): string | undefined {
 
 type Resolved = { kind: TypeKind; impl?: ImplRow; ref: string; type?: string }
 
+/** base_realize's element-yielding functions (realizer.sql): handle → element, and element → element. */
+const ELEMENT_OF_HANDLE = new Set(['unrank', 'locate', 'random_element', 'an_element'])
+const ELEMENT_TO_ELEMENT = new Set(['next', 'prev', 'next_in_fiber', 'prev_in_fiber'])
+
 /** Resolve a scalar tree bottom-up against the pg impl rows, returning the proname each apply lowers to. */
 function resolve(reg: Registry, e: SelectExpr, representation?: CanOpts['representation']): Resolved | string {
   if (e.kind === 'lit') return e.type ? { kind: reg.kindOfType(e.type), type: e.type, ref: '' } : { kind: kindOfValue(e.value), ref: '' }
@@ -155,16 +159,27 @@ function resolve(reg: Registry, e: SelectExpr, representation?: CanOpts['represe
     for (const a of e.args) { const r = resolve(reg, a, representation); if (typeof r === 'string') return r }
     const native = nativeOp(reg.kindOfType(e.type), e.op)
     if (!native) return `no operation "${e.op}" on ${e.type}`
+    // A native op is UNARY or BINARY, never n-ary: an `op(mul, [2,2,2,2])` must be folded by the front end, not
+    // silently printed as `(2 * 2)` (found by the compute-engine oracle differential).
+    const arity = native.unary ? 1 : 2
+    if (e.args.length !== arity) return `${e.op} on ${e.type} takes ${arity} argument${arity === 1 ? '' : 's'}; got ${e.args.length}`
     return { kind: reg.kindOfType(e.type), type: e.type, ref: e.op }
   }
   if (e.kind !== 'apply') return `pg cannot evaluate a ${e.kind} node outside a FROM`
   const kinds: TypeKind[] = []
+  const types: (string | undefined)[] = []
   for (const a of e.args) {
     const r = resolve(reg, a, representation)
     if (typeof r === 'string') return r
     kinds.push(r.kind)
+    types.push(r.type)
   }
   const id = String(e.fn)
+  // The realizer's GENERATED element functions are uncurated, but their result type follows from their first
+  // argument — a handle in, its `<coll>_element` out; an element in, the same element type out. Knowing this is
+  // what lets a `cast` above them print `(e).value` rather than an impossible `::carrier` on the row.
+  if (ELEMENT_OF_HANDLE.has(id) && types[0] && reg.collection(types[0])) return { kind: 'composite', ref: id, type: `${types[0]}_element` }
+  if (ELEMENT_TO_ELEMENT.has(id) && types[0]?.endsWith('_element')) return { kind: 'composite', ref: id, type: types[0] }
   // a carrier CONSTRUCTION lowers to pg's own composite constructor, not to a function call
   if (reg.carrier(id)) {
     const c = reg.carrier(id)!

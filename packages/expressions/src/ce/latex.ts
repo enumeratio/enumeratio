@@ -51,10 +51,10 @@ export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryE
     // `kind: 'symbol'` back (which the catalog function/collection entries above use, harmlessly, since their
     // triggers are new) silently loses the override again. Unclear why kind:'symbol' + parse doesn't win where
     // kind-less + parse does; flagged for the binder rather than guessed at further.
-    entries.push({
-      latexTrigger: macro, name: id, parse: id,
-      serialize: `\\operatorname{${escapeId(id)}}`, standaloneSymbol: true,
-    })
+    // No `name`: the collection entry above already owns the MathJSON symbol (a second definition of the same
+    // name is a dictionary warning). This entry only maps the macro's trigger onto it; serialization stays with
+    // the collection entry's `\operatorname{}` spelling.
+    entries.push({ latexTrigger: macro, parse: id })
   }
   return entries
 }

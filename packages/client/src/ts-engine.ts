@@ -175,7 +175,10 @@ export function tsEngine(reg: Registry): Engine {
         if (typeof NS[row.implFn] !== 'function') return `ts has no implementation of "${row.implFn}" for ${e.type}.${e.op}`
         return { kind }
       }
-      if (!nativeOp(kind, e.op)) return `no ts operation "${e.op}" on ${e.type}`
+      const native = nativeOp(kind, e.op)
+      if (!native) return `no ts operation "${e.op}" on ${e.type}`
+      const arity = native.unary ? 1 : 2   // native ops are unary/binary only — n-ary is the front end's to fold
+      if (e.args.length !== arity) return `${e.op} on ${e.type} takes ${arity} argument${arity === 1 ? '' : 's'}; got ${e.args.length}`
       return { kind }
     }
     if (e.kind !== 'apply') return `ts cannot evaluate a ${e.kind} node`

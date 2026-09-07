@@ -18,6 +18,7 @@ import {
   isNumericKind, numericResultPg, rootPrefix, scalarType,
   type Binding, type Catalog, type Scope, type Type, type TypeError_,
 } from './types.js'
+import type { HandleExpr, ParamValue } from '@enumeratio/client'
 
 export type TypedExpr = { expr: Expression; types: Map<NodePath, Type> }
 
@@ -80,7 +81,7 @@ export function bind(parsed: Parsed, scope: Scope, catalog: Catalog): Bound {
     let elemT: Type = UNKNOWN
     if (domainType.k === 'handle') {
       const coll = catalog.collection(domainType.coll)
-      if (coll) elemT = elemType(domainType.coll, coll.carrier)
+      if (coll) elemT = elemType(domainType.coll, coll.carrier, domainType.handle)
       else pushErr('2', `unknown collection "${domainType.coll}"`)
     } else if (domainType.k !== 'unknown') {
       pushErr('2', `a declare domain must be a collection, not ${domainType.k}`)
@@ -153,15 +154,28 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
 
   if (h === 'InvisibleOperator' && a.length === 2 && isSymbol(a[0]) && head(a[1]) === 'Delimiter') {
     const fname = symbolName(a[0])
-    if (isUserFnHead(fname, ctx.scope)) {
-      const delim = a[1]
-      const inner = args(delim)[0]
-      const argExprs = head(inner) === 'Sequence' ? args(inner) : [inner]
-      return typeUserCall(fname, argExprs, path, ctx)
+    const delim = a[1]
+    const inner = args(delim)[0]
+    const argExprs = head(inner) === 'Sequence' ? args(inner) : [inner]
+    if (isUserFnHead(fname, ctx.scope)) return typeUserCall(fname, argExprs, path, ctx)
+    // `\operatorname{permutations}(4)` — a collection registered as a bare `kind:'symbol'` dictionary entry (see
+    // ce/latex.ts's catalogDictionary) parses the SAME shape a user-fn call does (InvisibleOperator + Delimiter,
+    // never a direct `[coll, ...args]` node), so a parameterized-collection CONSTRUCTION has to be recognized
+    // here too, not only in typeGenericApply's direct-call branch. Scope always wins first (a shadowing var
+    // named the same as a collection stays multiplication, matching typeSymbol's own scope-before-catalog order).
+    if (!ctx.scope.has(fname) && ctx.catalog.collection(fname)) {
+      return handleType(fname, buildConstructionHandle(fname, argExprs, path, ctx))
     }
     return typeOp('mul', a, path, ctx)
   }
   if (h === 'InvisibleOperator') return typeOp('mul', a, path, ctx)   // "2x", "xy", "2(x+1)"
+
+  // A bare parenthesized operand — `(3+4)\times2`, `-(x+1)`, `(n)!` — is a Delimiter the parser never flattens.
+  // It is transparent: the group's type is its content's type (a Sequence inside is a tuple, not an expression).
+  if (h === 'Delimiter') {
+    if (a.length < 1 || head(a[0]) === 'Sequence') { ctx.errors(path, 'a parenthesized group must hold one expression'); return UNKNOWN }
+    return typeNode(a[0], argPath(path, 0), ctx)
+  }
 
   if (NEXT_PREV_RANK.has(h) && a.length === 1) {
     const t0 = argT(0)
@@ -264,7 +278,7 @@ function typeContains(a: Expression[], path: NodePath, ctx: Ctx): Type {
 function typeElementAt(a: Expression[], path: NodePath, ctx: Ctx): Type {
   const base = typeNode(a[0], argPath(path, 0), ctx)
   if (a[1] !== undefined) typeNode(a[1], argPath(path, 1), ctx)
-  return base.k === 'handle' ? elemTypeFor(base.coll, ctx) : scalarType('numeric')
+  return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : scalarType('numeric')
 }
 
 function typeCardinality(a: Expression[], path: NodePath, ctx: Ctx): Type {
@@ -272,9 +286,9 @@ function typeCardinality(a: Expression[], path: NodePath, ctx: Ctx): Type {
   return scalarType('natural_number')
 }
 
-function elemTypeFor(coll: string, ctx: Ctx): Type {
+function elemTypeFor(coll: string, handle: HandleExpr, ctx: Ctx): Type {
   const info = ctx.catalog.collection(coll)
-  return info ? elemType(coll, info.carrier) : UNKNOWN
+  return info ? elemType(coll, info.carrier, handle) : UNKNOWN
 }
 
 /** A call whose head is a curated `base_function` id (via OPERATORS' `{fn}` entries, e.g. `Factorial` → `factorial`,
@@ -330,7 +344,28 @@ function typeGenericApply(h: string, a: Expression[], path: NodePath, ctx: Ctx):
     return scalarType('numeric')
   }
   const collInfo = ctx.catalog.collection(h)
-  if (collInfo) return handleType(h)
+  if (collInfo) return handleType(h, buildConstructionHandle(h, a, path, ctx))
   ctx.errors(path, `unknown operator or function "${h}"`)
   return UNKNOWN
+}
+
+/** `permutations(4)`, `prime_pairs(2)` — a parameterized-collection CONSTRUCTION used as a value: capture its
+ *  literal-number args into the `HandleExpr` this node's `handle` type carries, so it lowers to the SAME handle
+ *  everywhere it's re-embedded (a contains check, a re-embedded elem's re-typing, …) rather than lower.ts silently
+ *  rebuilding the bare unparameterized collection. Positional args are `["permutations", 4]`-style; named args
+ *  would be `["Equal", sym, 4]`-style if the parser ever emits them for a call argument (none do today, so `named`
+ *  is always `{}` in practice) — anything neither shape reports a bind-time error, same check lower.ts used to
+ *  make at lower time (moved here since bind.ts is where every OTHER type error is already raised). */
+function buildConstructionHandle(coll: string, argExprs: Expression[], path: NodePath, ctx: Ctx): HandleExpr {
+  const positional: ParamValue[] = []
+  const named: Record<string, ParamValue> = {}
+  for (const ae of argExprs) {
+    if (isNumber(ae)) { positional.push(numberValue(ae)); continue }
+    if (Array.isArray(ae) && head(ae) === 'Equal' && isSymbol(args(ae)[0]) && isNumber(args(ae)[1])) {
+      named[symbolName(args(ae)[0])] = numberValue(args(ae)[1])
+      continue
+    }
+    ctx.errors(path, `"${coll}"'s construction argument must be a literal number`)
+  }
+  return { coll, named, positional }
 }

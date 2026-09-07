@@ -43,7 +43,10 @@ describe('bind: a notebook session', () => {
 
     const declare = bind(parser.parse('x \\in \\operatorname{triangular\\_numbers}'), scope, catalog)
     expect(declare.stmt.k).toBe('declare')
-    expect(declare.type).toEqual({ k: 'elem', coll: 'triangular_numbers', carrier: 'numeric' })
+    expect(declare.type).toEqual({
+      k: 'elem', coll: 'triangular_numbers', carrier: 'numeric',
+      handle: { coll: 'triangular_numbers', named: {}, positional: [] },
+    })
     expect(declare.errors).toEqual([])
 
     const add = bind(parser.parse('x + 1'), scope, catalog)
@@ -53,7 +56,10 @@ describe('bind: a notebook session', () => {
     expect(add.errors).toEqual([])
 
     const next = bind(parser.parse('\\operatorname{next}(x)'), scope, catalog)
-    expect(next.type).toEqual({ k: 'elem', coll: 'triangular_numbers', carrier: 'numeric' })
+    expect(next.type).toEqual({
+      k: 'elem', coll: 'triangular_numbers', carrier: 'numeric',
+      handle: { coll: 'triangular_numbers', named: {}, positional: [] },
+    })
 
     const rank = bind(parser.parse('\\operatorname{rank}(x)'), scope, catalog)
     expect(rank.type).toEqual({ k: 'scalar', pg: 'natural_number' })
@@ -69,12 +75,37 @@ describe('bind: a notebook session', () => {
 
   it('a stat of a pre-bound permutation element types numeric', () => {
     const scope: Scope = new Map([
-      ['p', { k: 'var', type: { k: 'elem', coll: 'permutations', carrier: 'permutation' } }],
+      ['p', { k: 'var', type: { k: 'elem', coll: 'permutations', carrier: 'permutation', handle: { coll: 'permutations', named: {}, positional: [] } } }],
     ])
     const bound = bind(parser.parse('\\operatorname{inversions}(p)'), scope, catalog)
     expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bound.errors).toEqual([])
     expect(bound.deps).toEqual(new Set(['p']))
+  })
+
+  it('a parameterized collection construction carries its literal args in the handle', () => {
+    const declare = bind(parser.parse('p \\in \\operatorname{permutations}(4)'), new Map(), catalog)
+    expect(declare.stmt.k).toBe('declare')
+    expect(declare.type).toEqual({
+      k: 'elem', coll: 'permutations', carrier: 'permutation',
+      handle: { coll: 'permutations', named: {}, positional: [4] },
+    })
+    expect(declare.errors).toEqual([])
+  })
+
+  it('a stat of an element re-embedded from a parameterized construction keeps the handle in deps', () => {
+    const scope: Scope = new Map()
+    bind(parser.parse('p \\in \\operatorname{permutations}(4)'), scope, catalog)
+    const bound = bind(parser.parse('\\operatorname{inversions}(p)'), scope, catalog)
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
+    expect(bound.errors).toEqual([])
+  })
+
+  it('membership against a parameterized construction keeps the handle typed, not just the bare coll', () => {
+    const bound = bind(parser.parse('3 \\in \\operatorname{permutations}(4)'), new Map(), catalog)
+    expect(bound.stmt.k).toBe('expr')
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'boolean' })
+    expect(bound.errors).toEqual([])
   })
 
   it('an unbound symbol errors with a path resolvable to its source span', () => {

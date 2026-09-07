@@ -55,3 +55,20 @@ describe('LineGraph', () => {
     expect(g.lines()[0].errors).toEqual([])
   })
 })
+
+describe('LineGraph: a declare and a define of one symbol are a pair, not duplicates', () => {
+  it('x ∈ C then x = 10: no error, the define orders after the declare, readers wait for both', () => {
+    const parser = makeParser({ collections: ['triangular_numbers'], functions: ['next'] })
+    const g = new LineGraph()
+    g.set('r', '\\operatorname{next}(x)', parser)
+    g.set('d', 'x = 10', parser)
+    g.set('c', 'x \\in \\operatorname{triangular\\_numbers}', parser)
+    for (const m of g.lines()) expect(m.errors).toEqual([])
+    const order = g.order()
+    expect(order.indexOf('c')).toBeLessThan(order.indexOf('d'))
+    expect(order.indexOf('d')).toBeLessThan(order.indexOf('r'))
+    expect(g.definers().get('x')).toBe('d')
+    expect(g.declarers().get('x')).toBe('c')
+    expect([...g.dirtyAfter('c')]).toEqual(['c', 'd', 'r'])
+  })
+})

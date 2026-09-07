@@ -2,18 +2,29 @@
 // tower and same-type algebra checks are PURE functions of `Type` values alone, so lower.ts can recompute the same
 // answer bind.ts already validated without needing a Catalog of its own (see opResultPg below).
 import type { Expression, NodePath, Span, Stmt } from './ast.js'
+import type { HandleExpr } from '@enumeratio/client'
 
 // ── the type lattice ─────────────────────────────────────────────────────────────────────────────────────────
+// `elem`/`handle` carry the FULL client-IR HandleExpr, not just the collection id — `p ∈ permutations(4)` must
+// keep the `(4)` construction args riding along on `p`'s type, or every lowered handle rebuilt from it collapses
+// to the bare unparameterized collection (the bug this shape fixes: lower.ts used to rebuild `{coll, named:{},
+// positional:[]}` from `coll` alone, silently dropping any construction args typed here).
 export type Type =
-  | { k: 'scalar'; pg: string }                              // a pg scalar/algebra type by name: numeric, natural_number, …
-  | { k: 'elem'; coll: string; carrier: string }              // a located element of collection `coll`, carrier `carrier`
-  | { k: 'handle'; coll: string }                             // a collection named as a VALUE, not (yet) a located element
-  | { k: 'fn'; params: string[]; body: Expression }           // a user-defined function, unapplied
-  | { k: 'unknown' }                                          // couldn't be typed — an error was already recorded
+  | { k: 'scalar'; pg: string }                                          // a pg scalar/algebra type by name: numeric, natural_number, …
+  | { k: 'elem'; coll: string; carrier: string; handle: HandleExpr }     // a located element of collection `coll`, carrier `carrier`
+  | { k: 'handle'; coll: string; handle: HandleExpr }                    // a collection named as a VALUE, not (yet) a located element
+  | { k: 'fn'; params: string[]; body: Expression }                      // a user-defined function, unapplied
+  | { k: 'unknown' }                                                     // couldn't be typed — an error was already recorded
+
+const defaultHandle = (coll: string): HandleExpr => ({ coll, named: {}, positional: [] })
 
 export const scalarType = (pg: string): Type => ({ k: 'scalar', pg })
-export const elemType = (coll: string, carrier: string): Type => ({ k: 'elem', coll, carrier })
-export const handleType = (coll: string): Type => ({ k: 'handle', coll })
+/** `handle` defaults to the unparameterized handle for `coll` — every existing caller that only knows the
+ *  collection id (no construction args) keeps compiling unchanged. */
+export const elemType = (coll: string, carrier: string, handle?: HandleExpr): Type =>
+  ({ k: 'elem', coll, carrier, handle: handle ?? defaultHandle(coll) })
+export const handleType = (coll: string, handle?: HandleExpr): Type =>
+  ({ k: 'handle', coll, handle: handle ?? defaultHandle(coll) })
 export const fnType = (params: string[], body: Expression): Type => ({ k: 'fn', params, body })
 export const UNKNOWN: Type = { k: 'unknown' }
 
@@ -77,7 +88,7 @@ export interface Catalog {
  *  as a bare numeric literal (an integer-kind pg) or carries it through as a typed `lit`. */
 export type ValueRef =
   | { k: 'scalar'; text: string; pg: string }
-  | { k: 'elem'; coll: string; rank: number }
+  | { k: 'elem'; coll: string; handle: HandleExpr; rank: number }
   | { k: 'composite'; text: string; pg: string }
 
 export type Binding =

@@ -14,6 +14,9 @@ export type LineModel = {
   parsed?: Parsed
   /** The symbol this line's `declare`/`define` binds — `undefined` for a plain `expr` line. */
   defines?: string
+  /** Which half of a binding this line is. A symbol may have ONE declare (`x \in C`, its type) and ONE define
+   *  (`x = 10`, its value); the define depends on the declare. */
+  bindKind?: 'declare' | 'define'
   /** Free symbols this line reads. */
   deps: Set<string>
   /** Human-readable diagnostics from graph analysis: 'x defined twice', 'cyclic dependency: x → y → x'.
@@ -21,13 +24,14 @@ export type LineModel = {
   errors: string[]
 }
 
-type RawLine = { id: LineId; latex: string; parsed?: Parsed; defines?: string; deps: Set<string> }
+type RawLine = { id: LineId; latex: string; parsed?: Parsed; defines?: string; bindKind?: 'declare' | 'define'; deps: Set<string> }
 
 export class LineGraph {
   #raw = new Map<LineId, RawLine>()
   #computed = new Map<LineId, LineModel>()
   #order: LineId[] = []
   #definers = new Map<string, LineId>()
+  #declarers = new Map<string, LineId>()
   #edgesIn = new Map<LineId, Set<LineId>>()
 
   /** (Re)parse `latex` for `id` and recompute the whole graph — `defines`/`deps` for a `define` exclude its own
@@ -36,18 +40,21 @@ export class LineGraph {
     const parsed = parser.parse(latex)
     const { stmt } = parsed
     let defines: string | undefined
+    let bindKind: RawLine['bindKind']
     let deps: Set<string>
     if (stmt.k === 'declare') {
       defines = stmt.name
+      bindKind = 'declare'
       deps = freeSymbols(stmt.domain)
     } else if (stmt.k === 'define') {
       defines = stmt.name
+      bindKind = 'define'
       const params = new Set(stmt.params ?? [])
       deps = new Set([...freeSymbols(stmt.body)].filter((s) => !params.has(s)))
     } else {
       deps = freeSymbols(stmt.body)
     }
-    this.#raw.set(id, { id, latex, parsed, defines, deps })
+    this.#raw.set(id, { id, latex, parsed, defines, bindKind, deps })
     this.#recompute()
   }
 
@@ -76,9 +83,13 @@ export class LineGraph {
     return new Set(this.#order.filter((x) => reached.has(x)))
   }
 
-  /** Symbol name -> the single line that defines it (duplicate-defined names are omitted). */
+  /** Symbol name -> the line that supplies its VALUE (the define, else the declare); duplicates omitted. */
   definers(): Map<string, LineId> {
     return new Map(this.#definers)
+  }
+  /** Symbol name -> the line that DECLARES its type (`x \in C`), when there is one. */
+  declarers(): Map<string, LineId> {
+    return new Map(this.#declarers)
   }
 
   lines(): LineModel[] {
@@ -88,13 +99,14 @@ export class LineGraph {
   #recompute(): void {
     const insertionOrder = [...this.#raw.keys()]
 
-    // 1. defines -> [lineIds] and duplicate detection.
-    const byName = new Map<string, LineId[]>()
+    // 1. per symbol: its declare line and its define line. Two of the SAME kind is the duplicate error; a
+    // declare + a define is the normal pair (`x \in C` then `x = 10`).
+    const byName = new Map<string, { declares: LineId[]; defines: LineId[] }>()
     for (const raw of this.#raw.values()) {
       if (raw.defines === undefined) continue
-      const ids = byName.get(raw.defines) ?? []
-      ids.push(raw.id)
-      byName.set(raw.defines, ids)
+      const slot = byName.get(raw.defines) ?? { declares: [], defines: [] }
+      ;(raw.bindKind === 'declare' ? slot.declares : slot.defines).push(raw.id)
+      byName.set(raw.defines, slot)
     }
     const errorsById = new Map<LineId, string[]>()
     const addError = (id: LineId, msg: string) => {
@@ -102,29 +114,30 @@ export class LineGraph {
       arr.push(msg)
       errorsById.set(id, arr)
     }
-    const resolvedDefiner = new Map<string, LineId>()
-    for (const [name, ids] of byName) {
-      if (ids.length > 1) {
-        for (const id of ids) addError(id, `${name} defined twice`)
-      } else {
-        resolvedDefiner.set(name, ids[0])
-      }
+    const declarer = new Map<string, LineId>()
+    const definer = new Map<string, LineId>()
+    for (const [name, { declares, defines }] of byName) {
+      if (declares.length > 1) for (const id of declares) addError(id, `${name} declared twice`)
+      else if (declares.length === 1) declarer.set(name, declares[0])
+      if (defines.length > 1) for (const id of defines) addError(id, `${name} defined twice`)
+      else if (defines.length === 1) definer.set(name, defines[0])
     }
+    /** the line(s) a reader of `name` must wait for: its declare AND its define */
+    const suppliers = (name: string): LineId[] => [declarer.get(name), definer.get(name)].filter((x): x is LineId => x !== undefined)
 
-    // 2. edges: dependent -> definer, only through single (non-duplicate) definers.
+    // 2. edges: dependent -> supplier, plus define -> declare of the same symbol.
     const edgesOut = new Map<LineId, Set<LineId>>()
     const edgesIn = new Map<LineId, Set<LineId>>()
     for (const id of insertionOrder) {
       edgesOut.set(id, new Set())
       edgesIn.set(id, new Set())
     }
+    const link = (from: LineId, to: LineId) => { if (from !== to) { edgesOut.get(from)!.add(to); edgesIn.get(to)!.add(from) } }
     for (const raw of this.#raw.values()) {
-      for (const dep of raw.deps) {
-        const definerLine = resolvedDefiner.get(dep)
-        if (definerLine !== undefined && definerLine !== raw.id) {
-          edgesOut.get(raw.id)!.add(definerLine)
-          edgesIn.get(definerLine)!.add(raw.id)
-        }
+      for (const dep of raw.deps) for (const sup of suppliers(dep)) link(raw.id, sup)
+      if (raw.bindKind === 'define' && raw.defines !== undefined) {
+        const decl = declarer.get(raw.defines)
+        if (decl !== undefined) link(raw.id, decl)
       }
     }
 
@@ -222,12 +235,14 @@ export class LineGraph {
         latex: raw.latex,
         parsed: raw.parsed,
         defines: raw.defines,
+        bindKind: raw.bindKind,
         deps: raw.deps,
         errors: errorsById.get(id) ?? [],
       })
     }
     this.#order = resultOrder
-    this.#definers = resolvedDefiner
+    this.#definers = new Map([...declarer, ...definer])   // a define wins over its declare as the value supplier
+    this.#declarers = declarer
     this.#edgesIn = edgesIn
   }
 }

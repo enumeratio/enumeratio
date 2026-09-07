@@ -9,11 +9,9 @@ import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
   type Scope, type Type, type ValueRef,
 } from './types.js'
-import { fnRef, type Expr, type HandleExpr, type ParamValue, type SelectExpr } from '@enumeratio/client'
+import { fnRef, type Expr, type SelectExpr } from '@enumeratio/client'
 
 export type LowerResult = { expr?: Expr; wants: 'value' | 'locate' | 'none' }
-
-const handleFor = (coll: string): HandleExpr => ({ coll, named: {}, positional: [] })
 
 export function lower(bound: Bound, scope: Scope): LowerResult {
   const { stmt, typed, type } = bound
@@ -26,7 +24,7 @@ export function lower(bound: Bound, scope: Scope): LowerResult {
   // that case (see its comment) — needs LOCATING, not just evaluating: two columns, the rank and the carrier
   // value, so the caller can build the ValueRef{k:'elem', rank} this var's later re-embeddings need.
   if (stmt.k === 'define' && type.k === 'elem') {
-    const handle: SelectExpr = { kind: 'handle', handle: handleFor(type.coll) }
+    const handle: SelectExpr = { kind: 'handle', handle: type.handle }
     const value = lowerArg(typed.expr, prefix, scope, typed.types)
     const locateCall: SelectExpr = { kind: 'apply', fn: fnRef('locate'), args: [handle, value] }
     return {
@@ -78,9 +76,14 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
       const argExprs = head(inner) === 'Sequence' ? args(inner) : [inner]
       return lowerUserCall(fname, argExprs, path, scope, types)
     }
+    // Mirrors bind.ts's construction-vs-multiply call: no Catalog here, so trust the Type bind.ts already
+    // recorded at this node rather than re-deriving the decision (same trick lowerGenericApply/lowerSymbol use).
+    const nodeType = types.get(path)
+    if (nodeType?.k === 'handle') return { kind: 'handle', handle: nodeType.handle }
     return lowerOp('mul', a, path, scope, types)
   }
   if (h === 'InvisibleOperator') return lowerOp('mul', a, path, scope, types)
+  if (h === 'Delimiter') return lowerExpr(a[0], argPath(path, 0), scope, types)   // transparent, as in bind.ts
 
   if (NEXT_PREV_RANK.has(h) && a.length === 1) return { kind: 'apply', fn: fnRef(h), args: [lowerExpr(a[0], argPath(path, 0), scope, types)] }
 
@@ -93,17 +96,17 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
 function lowerSymbol(name: string, path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const t = types.get(path)
   if (!t) throw new Error(`lower: no type recorded for symbol "${name}"`)
-  if (t.k === 'handle') return { kind: 'handle', handle: handleFor(t.coll) }
+  if (t.k === 'handle') return { kind: 'handle', handle: t.handle }
   if (t.k === 'fn') throw new Error(`lower: "${name}" is a function, not a value`)
   if (t.k === 'unknown') throw new Error(`lower: "${name}" could not be typed`)
   const b = scope.get(name)
-  if (!b || b.k !== 'var' || b.value === undefined) throw new Error(`lower: "${name}" has no value yet — its defining line must be evaluated first`)
+  if (!b || b.k !== 'var' || b.value === undefined) throw new Error(`lower: "${name}" has no value — its definition did not evaluate`)
   return valueRefToSelect(b.value)
 }
 
 function valueRefToSelect(v: ValueRef): SelectExpr {
   if (v.k === 'elem') {
-    return { kind: 'apply', fn: fnRef('unrank'), args: [{ kind: 'handle', handle: handleFor(v.coll) }, { kind: 'lit', value: v.rank }] }
+    return { kind: 'apply', fn: fnRef('unrank'), args: [{ kind: 'handle', handle: v.handle }, { kind: 'lit', value: v.rank }] }
   }
   // scalar: an integer-kind pg whose text is a bare integer prints as a plain (untyped) number literal, same as
   // any other numeric literal in the tree — otherwise it carries its pg forward explicitly (`type`) so the printer
@@ -127,7 +130,11 @@ function opTypeForLower(op: string, argTypes: Type[]): string {
 function lowerOp(op: string, argExprs: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const lowered = argExprs.map((ae, i) => lowerArg(ae, argPath(path, i), scope, types))
   const argTypes = argExprs.map((_, i) => types.get(argPath(path, i))!)
-  return { kind: 'op', op, type: opTypeForLower(op, argTypes), args: lowered }
+  const type = opTypeForLower(op, argTypes)
+  // MathJSON's Add/Multiply are n-ary; an IR `op` is unary or binary (the engines refuse anything else), so an
+  // n-ary node folds left: ((a op b) op c). The join type is the same at every level.
+  if (lowered.length > 2) return lowered.slice(1).reduce<SelectExpr>((acc, r) => ({ kind: 'op', op, type, args: [acc, r] }), lowered[0])
+  return { kind: 'op', op, type, args: lowered }
 }
 
 /** A curated `base_function` id reached via an OPERATORS `{fn}` entry (`Factorial` → `factorial`, …). */
@@ -140,7 +147,7 @@ function lowerCall(fnId: string, argExprs: Expression[], path: NodePath, scope: 
 function lowerContains(a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const domainType = types.get(argPath(path, 1))
   if (domainType?.k !== 'handle') throw new Error("lower: Element's right-hand side did not type as a collection")
-  const handle: SelectExpr = { kind: 'handle', handle: handleFor(domainType.coll) }
+  const handle: SelectExpr = { kind: 'handle', handle: domainType.handle }
   const value = lowerArg(a[0], argPath(path, 0), scope, types)
   return { kind: 'apply', fn: fnRef('contains'), args: [handle, value] }
 }
@@ -149,7 +156,7 @@ function lowerContains(a: Expression[], path: NodePath, scope: Scope, types: Map
  *  `cardinality`/`element_at` take the HANDLE itself, not a scalar), otherwise lowers plainly. */
 function lowerBaseIndexed(fnId: string, a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const baseType = types.get(argPath(path, 0))
-  const base = baseType?.k === 'handle' ? { kind: 'handle' as const, handle: handleFor(baseType.coll) } : lowerExpr(a[0], argPath(path, 0), scope, types)
+  const base = baseType?.k === 'handle' ? { kind: 'handle' as const, handle: baseType.handle } : lowerExpr(a[0], argPath(path, 0), scope, types)
   const rest = a.slice(1).map((ae, i) => lowerArg(ae, argPath(path, i + 1), scope, types))
   return { kind: 'apply', fn: fnRef(fnId), args: [base, ...rest] }
 }
@@ -170,12 +177,9 @@ function lowerUserCall(name: string, argExprs: Expression[], path: NodePath, sco
  *  this file doesn't have) is exactly why `types` carries an entry for every node bind() visited, not just leaves. */
 function lowerGenericApply(h: string, a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const nodeType = types.get(path)
-  if (nodeType?.k === 'handle') {
-    const positional: ParamValue[] = a.map((ae) => {
-      if (isNumber(ae)) return numberValue(ae)
-      throw new Error(`lower: "${h}"'s construction argument must be a literal number`)
-    })
-    return { kind: 'handle', handle: { coll: h, named: {}, positional } }
-  }
+  // bind.ts's typeGenericApply already built (and validated) this construction's HandleExpr — reuse it rather
+  // than re-deriving positional/named args from `a` here, so the two files can never disagree on the handle a
+  // construction like `permutations(4)` carries.
+  if (nodeType?.k === 'handle') return { kind: 'handle', handle: nodeType.handle }
   return { kind: 'apply', fn: fnRef(h), args: a.map((ae, i) => lowerArg(ae, argPath(path, i), scope, types)) }
 }
