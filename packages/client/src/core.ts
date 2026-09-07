@@ -827,6 +827,43 @@ function recordPerf(coll: string, first: number, count: number, out: readonly un
   if (perfEnabled) console.debug(`[enumeratio perf] ${coll} [${first},${first + count}) ${p.rows}r ${(p.bytes / 1024).toFixed(1)}KB ${p.ms.toFixed(1)}ms ${p.cols}col`)
 }
 
+/** The pure, SYNCHRONOUS core of `Handle.built()` — given the collection's grade chain (which `built()` gets from
+ *  `catalogMap()`, an async lookup), the same constructor-expression logic without touching a database. Exported
+ *  so anything that already HAS the grade chain in hand (pg-engine's handle-as-value lowering reads it straight
+ *  off the catalog snapshot's CollectionRow) can print the identical SQL without a second, hand-written spelling
+ *  that could drift from this one. */
+export function handleCtorSql(grades: string[], coll: string, args: Record<string, ParamValue>): string {
+  const val = (i: number): ParamValue | undefined =>
+    i === 0 && args[grades[i]] === undefined ? args.size : args[grades[i]]
+  const ints = (v: ParamValue): [number, number] => {
+    const [lo, hi] = Array.isArray(v) ? v : [v as number, v as number]
+    if (!Number.isInteger(lo) || !Number.isInteger(hi)) throw new Error(`${coll}: family parameter must be integer(s)`)
+    return [lo, hi]
+  }
+  if (!grades.some((_, i) => Array.isArray(val(i)))) {
+    const vals: number[] = []
+    for (let i = 0; i < grades.length; i++) {
+      const v = val(i)
+      if (v === undefined) break // trailing unbound → omit; pg defaults it to the full range
+      vals.push(ints(v)[0])
+    }
+    return `${coll}(${vals.join(', ')})`
+  }
+  // A range on one axis with UNBOUND axes behind it (k_subsets(n=0..4), k free) builds each unbound axis as an
+  // OPEN range [0, ∞) — the core's odometer walks (fibers(h, n) / elements(h, slice)) start from the clamped lower
+  // corner and carry the inner axes by their own bounds, so the handle unfolds exactly the fibers the constructor
+  // would; cardinality(h) reads it as open (∞), which the row-half client refines by summing the fibers.
+  let open = false
+  const ranges = grades.map((g, i) => {
+    const v = val(i)
+    if (v === undefined) { open = true; return `natural_range(0, NULL, '[]')` }
+    if (open) throw new Error(`${coll}: '${g}' is bound behind an unbound axis — bind ${grades.slice(0, i).filter((_, j) => val(j) === undefined).join(', ')} first`)
+    const [lo, hi] = ints(v)
+    return `natural_range(${lo}, ${hi}, '[]')`
+  })
+  return `ROW(${ranges.join(', ')})::${coll}`
+}
+
 export class Handle {
   readonly coll: string
   readonly args: Record<string, ParamValue>
@@ -864,35 +901,7 @@ export class Handle {
     return (this._built ??= (async () => {
       const c = (await catalogMap()).get(this.coll)
       if (!c) throw new Error(`unknown collection: ${this.coll}`)
-      const val = (i: number): ParamValue | undefined =>
-        i === 0 && this.args[c.grades[i]] === undefined ? this.args.size : this.args[c.grades[i]]
-      const ints = (v: ParamValue): [number, number] => {
-        const [lo, hi] = Array.isArray(v) ? v : [v as number, v as number]
-        if (!Number.isInteger(lo) || !Number.isInteger(hi)) throw new Error(`${this.coll}: family parameter must be integer(s)`)
-        return [lo, hi]
-      }
-      if (!c.grades.some((_, i) => Array.isArray(val(i)))) {
-        const vals: number[] = []
-        for (let i = 0; i < c.grades.length; i++) {
-          const v = val(i)
-          if (v === undefined) break // trailing unbound → omit; pg defaults it to the full range
-          vals.push(ints(v)[0])
-        }
-        return `${this.coll}(${vals.join(', ')})`
-      }
-      // A range on one axis with UNBOUND axes behind it (k_subsets(n=0..4), k free) builds each unbound axis as an
-      // OPEN range [0, ∞) — the core's odometer walks (fibers(h, n) / elements(h, slice)) start from the clamped lower
-      // corner and carry the inner axes by their own bounds, so the handle unfolds exactly the fibers the constructor
-      // would; cardinality(h) reads it as open (∞), which the row-half client refines by summing the fibers.
-      let open = false
-      const ranges = c.grades.map((g, i) => {
-        const v = val(i)
-        if (v === undefined) { open = true; return `natural_range(0, NULL, '[]')` }
-        if (open) throw new Error(`${this.coll}: '${g}' is bound behind an unbound axis — bind ${c.grades.slice(0, i).filter((_, j) => val(j) === undefined).join(', ')} first`)
-        const [lo, hi] = ints(v)
-        return `natural_range(${lo}, ${hi}, '[]')`
-      })
-      return `ROW(${ranges.join(', ')})::${this.coll}`
+      return handleCtorSql(c.grades, this.coll, this.args)
     })())
   }
 

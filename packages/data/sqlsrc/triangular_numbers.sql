@@ -27,4 +27,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('triangular_numbers','cardinality = infinity (unbounded)','eq','Infinity','one endless fiber',$q$
     SELECT cardinality(triangular_numbers())::text $q$),
   ('triangular_numbers','contains is rank-agnostic: 21 ∈, 22 ∉ (via <@)','eq','true|false','generated contains + operator (8n+1 square)',$q$
-    SELECT (21::numeric <@ triangular_numbers())::text || '|' || (22::numeric <@ triangular_numbers())::text $q$);
+    SELECT (21::numeric <@ triangular_numbers())::text || '|' || (22::numeric <@ triangular_numbers())::text $q$),
+  ('triangular_numbers','locate: value→element inverse, 10 = T(4)','eq','4','rank(locate(h, v))',$q$
+    SELECT rank(locate(triangular_numbers(), 10))::text $q$),
+  ('triangular_numbers','locate then next steps to the following term (T(5) = 15)','eq','15','locate composes with next',$q$
+    SELECT ((next(locate(triangular_numbers(), 10))).value)::text $q$);

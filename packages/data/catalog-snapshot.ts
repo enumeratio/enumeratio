@@ -66,6 +66,13 @@ export type CarrierRow = { name: string; fields: { name: string; type: string; k
  *  stored (see buildCatalogSnapshot) — pg is foldable for everything by construction. */
 export type FoldableRow = { collection: string; stat: string; engine: string }
 
+/** One row of `base_type_operation`: a TYPE bound to an algebra OP (`base_operation.id`), the impl function that
+ *  carries it (NULL ⇒ the op is a pg built-in on the base type — use `nativeOp`), and `kind`, resolved at build
+ *  time exactly like a carrier field's — what the pure `kindOfType`/`nativeOp` helpers below match on without ever
+ *  touching pg_type. `symbol` is a DISPLAY glyph (`·`, `⁻¹`) — never SQL; only `impl_fn` or `nativeOp`'s own table
+ *  says how to compute the op. */
+export type TypeOperationRow = { type: string; op: string; symbol: string; implFn: string | null; kind: TypeKind }
+
 export type CatalogSnapshot = {
   /** #283 phase 4: a PROFILE hash (hash.ts profileHash — the hash of ordered per-pack hashes), not the plain
    *  concatenation hash `coreBundleHash()` gives. A single pack FRAGMENT stamps its own pack's hash here (from
@@ -82,6 +89,7 @@ export type CatalogSnapshot = {
   columnGroups: ColumnGroupRow[]
   grants: GrantRow[]
   foldable: FoldableRow[]
+  typeOperations: TypeOperationRow[]
 }
 
 type Q = SnapshotSource
@@ -190,7 +198,14 @@ export async function buildCatalogSnapshot(source: SnapshotSource, hash: string)
     `SELECT collection, stat_id, engine FROM base_stat_foldable WHERE engine <> 'pg' ORDER BY collection, stat_id, engine`))
     .map((r): FoldableRow => ({ collection: String(r.collection), stat: String(r.stat_id), engine: String(r.engine) }))
 
-  return { hash, builtAt: new Date().toISOString(), functions, collections, carriers, engines, columnGroups, grants, foldable }
+  const typeOperations = (await q<{ type: string; op: string; symbol: string; impl_fn: string | null }>(
+    `SELECT type, op, symbol, impl_fn FROM base_type_operation ORDER BY type, op`))
+    .map((r): TypeOperationRow => ({
+      type: String(r.type), op: String(r.op), symbol: String(r.symbol),
+      implFn: r.impl_fn == null ? null : String(r.impl_fn), kind: kindOf(String(r.type)),
+    }))
+
+  return { hash, builtAt: new Date().toISOString(), functions, collections, carriers, engines, columnGroups, grants, foldable, typeOperations }
 }
 
 /** Postgres array literal → string[]. The snapshot casts arrays to ::text so the driver hands back one shape on
@@ -230,6 +245,43 @@ const TIER: Record<string, number> = { collection: 0, carrier: 1, category: 2, t
  *  pg's element stream after the fact)? pg always can — the statistic IS a pg function. */
 export const isFoldable = (snap: CatalogSnapshot, engine: string, coll: string, stat: string): boolean =>
   engine === 'pg' || snap.foldable.some((f) => f.engine === engine && f.collection === coll && f.stat === stat)
+
+// ── operation resolution (the expression-parser's op vocabulary, #278-adjacent) ────────────────────────────────
+// A pg builtin (`numeric`, `int4`, …) has no base_type_operation row at all — it is a kind by NAME alone. A
+// catalog type does, and that row's own `kind` (computed once at build time, see buildCatalogSnapshot) is
+// authoritative over it. Order matters: the alias table wins first so a builtin never has to be "discovered"
+// through a typeOperations row that happens to mention it.
+const TYPE_ALIASES: Record<string, TypeKind> = {
+  numeric: 'numeric', int4: 'int', integer: 'int', bigint: 'int', text: 'text', boolean: 'bool',
+  'double precision': 'float',
+}
+
+/** The TypeKind of a NAMED pg type, read off an already-built snapshot — no pg_type access, just the rows a
+ *  buildCatalogSnapshot query already resolved kinds for. Order: builtin alias, then a type any
+ *  `base_type_operation` row names (its own precomputed `kind`), then a carrier (composite, by construction), then
+ *  a bare collection id (unknown to the algebra layer — 'other'), else 'other'. */
+export function kindOfType(snap: CatalogSnapshot, name: string): TypeKind {
+  const alias = TYPE_ALIASES[name]
+  if (alias) return alias
+  const op = snap.typeOperations.find((t) => t.type === name)
+  if (op) return op.kind
+  if (snap.carriers.some((c) => c.name === name)) return 'composite'
+  if (snap.collections.some((c) => c.id === name)) return 'other'
+  return 'other'
+}
+
+/** pg's own native infix/prefix spelling for an op, over the three numeric-tower kinds only — everywhere else an
+ *  operation is either curated (`base_type_operation.impl_fn`) or unsupported. `base_type_operation.symbol` is a
+ *  DISPLAY glyph (`·`, `⁻¹`, …), never SQL; this table is the actual SQL a native op lowers to. */
+const NATIVE_OPS: Record<string, { sql: string; unary?: boolean }> = {
+  add: { sql: '+' }, sub: { sql: '-' }, mul: { sql: '*' }, div: { sql: '/' }, pow: { sql: '^' },
+  neg: { sql: '-', unary: true },
+  le: { sql: '<=' }, lt: { sql: '<' }, ge: { sql: '>=' }, gt: { sql: '>' }, eq: { sql: '=' }, ne: { sql: '<>' },
+}
+export function nativeOp(kind: TypeKind, op: string): { sql: string; unary?: boolean } | undefined {
+  if (kind !== 'int' && kind !== 'numeric' && kind !== 'float') return undefined
+  return NATIVE_OPS[op]
+}
 
 export function grantsFor(snap: CatalogSnapshot, engine: string, coll: string | null): string[] {
   const c = coll == null ? null : snap.collections.find((x) => x.id === coll)
@@ -301,6 +353,7 @@ export async function loadPackOwnership(source: SnapshotSource): Promise<PackOwn
 
 const emptyFragment = (hash: string, builtAt: string): CatalogSnapshot => ({
   hash, builtAt, functions: [], collections: [], carriers: [], engines: [], columnGroups: [], grants: [], foldable: [],
+  typeOperations: [],
 })
 
 /** Split a full snapshot into one fragment PER PACK, each carrying only the rows that pack owns (plus its OWN
@@ -368,6 +421,7 @@ export function splitCatalogSnapshotByPack(
 
   fragmentFor('core').engines.push(...full.engines)
   fragmentFor('core').columnGroups.push(...full.columnGroups)
+  fragmentFor('core').typeOperations.push(...full.typeOperations)
 
   for (const g of full.grants) {
     const key = `${g.engine}|${g.columnGroup}|${g.scopeKind}|${g.scope}|${g.mode}`
@@ -423,6 +477,7 @@ export function mergeCatalogSnapshots(fragments: CatalogSnapshot[]): CatalogSnap
   const columnGroups = new Map<string, ColumnGroupRow>()
   const grants = new Map<string, GrantRow>()
   const foldable = new Map<string, FoldableRow>()
+  const typeOperations = new Map<string, TypeOperationRow>()
   for (const frag of fragments) {
     for (const c of frag.collections) collections.set(c.id, c)
     for (const c of frag.carriers) carriers.set(c.name, c)
@@ -430,6 +485,7 @@ export function mergeCatalogSnapshots(fragments: CatalogSnapshot[]): CatalogSnap
     for (const g of frag.columnGroups) columnGroups.set(g.id, g)
     for (const g of frag.grants) grants.set(`${g.engine}|${g.columnGroup}|${g.scopeKind}|${g.scope}|${g.mode}`, g)
     for (const f of frag.foldable) foldable.set(`${f.collection}|${f.stat}|${f.engine}`, f)
+    for (const t of frag.typeOperations) typeOperations.set(`${t.type}|${t.op}`, t)
   }
 
   return {
@@ -437,5 +493,6 @@ export function mergeCatalogSnapshots(fragments: CatalogSnapshot[]): CatalogSnap
     functions, collections: [...collections.values()], carriers: [...carriers.values()],
     engines: [...engines.values()], columnGroups: [...columnGroups.values()],
     grants: [...grants.values()], foldable: [...foldable.values()],
+    typeOperations: [...typeOperations.values()],
   }
 }

@@ -117,4 +117,8 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT (97::numeric <@ prime_numbers())::text || '|' || (91::numeric <@ prime_numbers())::text $q$),
   ('prime_numbers','2 is the only even prime: rank 0 is even, ranks 1..9 are odd','eq','true','a fact about the sequence, not one value',$q$
     SELECT (mod((unrank(prime_numbers(),0)).value::int, 2) = 0
-        AND bool_and(mod((unrank(prime_numbers(),r)).value::int, 2) = 1))::text FROM generate_series(1,9) r $q$);
+        AND bool_and(mod((unrank(prime_numbers(),r)).value::int, 2) = 1))::text FROM generate_series(1,9) r $q$),
+  ('prime_numbers','locate: 8 is not prime, so it has no located element','eq','true','contains(h, v) short-circuits to NULL before any scan',$q$
+    SELECT (locate(prime_numbers(), 8) IS NULL)::text $q$),
+  ('prime_numbers','locate: 13 is prime, locate finds it and returns it as its own value','eq','13','value→element inverse',$q$
+    SELECT (locate(prime_numbers(), 13)).value::text $q$);

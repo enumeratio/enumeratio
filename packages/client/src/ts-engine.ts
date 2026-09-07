@@ -15,6 +15,7 @@
 // for bell(30) computes 8.467490145118093e23, which is not what pg says; the engine throws InexactResult and the
 // router falls through to the oracle. Refusing to print a near-miss is the whole reason a router is safe.
 import * as math from '@enumeratio/math'
+import { nativeOp } from '@enumeratio/data/catalog-snapshot'
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan, Representation } from './engine'
 import { functionsIn, handleColl, handleExprText, irToSpec, type Expr, type SelectExpr } from './ir'
 import { carriesExactly, kindOfValue, type ImplRow, type Registry, type TypeKind } from './registry'
@@ -52,6 +53,74 @@ function print(v: unknown, returnType?: string): string {
   return String(v)
 }
 
+/** A synthetic ImplRow for a NATIVE op — one with no catalog impl row of its own (`+`, `<=`, …) — purely so an
+ *  inexact native division can go through the SAME InexactResult the file already uses for a float64 near-miss.
+ *  The router's generic `instanceof InexactResult` catch (see router.ts) does not care that the "impl" here names
+ *  an op rather than a base_function_impl row. */
+const nativeImplRow = (type: string, op: string, kind: TypeKind): ImplRow => ({
+  engine: 'ts', implRef: `${type}.${op}`, argTypes: [], argKinds: [], returnType: type, returnKind: kind,
+  representation: 'float64', cost: null, note: null,
+})
+
+/** Evaluate a native op over plain JS bigint/number — the same value shapes `kindOfValue` already distinguishes.
+ *  `div` is the one op that is not simply "compute it": an integer division that does not come out even is not
+ *  what pg's own `/` would print for an INT kind (pg truncates; this file declines rather than print a rounded
+ *  near-miss — the same "let the oracle answer" rule InexactResult already enforces elsewhere). */
+function evalNative(op: string, kind: TypeKind, type: string, rawArgs: unknown[]): unknown {
+  // One arithmetic per call: if ANY argument is a bigint the whole call is bigint (a safe-integer number widens
+  // losslessly), otherwise all number. Mixing the two would throw in JS, or worse, coerce silently.
+  const anyBig = rawArgs.some((a) => typeof a === 'bigint')
+  const args = anyBig
+    ? rawArgs.map((a) => {
+        if (typeof a === 'bigint') return a
+        if (typeof a === 'number' && Number.isSafeInteger(a)) return BigInt(a)
+        throw new Error(`ts-engine: ${type}.${op} mixes a bigint with a non-integer argument`)
+      })
+    : rawArgs
+  const big = anyBig
+  if (big) {
+    const a = args[0] as bigint, b = args[1] as bigint | undefined
+    switch (op) {
+      case 'add': return a + b!
+      case 'sub': return a - b!
+      case 'mul': return a * b!
+      case 'neg': return -a
+      case 'pow': return a ** b!
+      case 'le': return a <= b!
+      case 'lt': return a < b!
+      case 'ge': return a >= b!
+      case 'gt': return a > b!
+      case 'eq': return a === b!
+      case 'ne': return a !== b!
+      case 'div':
+        if (b === 0n) throw new Error('ts-engine: division by zero')
+        if (a % b! !== 0n) throw new InexactResult(`${type}.div`, nativeImplRow(type, op, kind), Number(a) / Number(b))
+        return a / b!
+    }
+  } else {
+    const a = Number(args[0]), b = args[1] === undefined ? undefined : Number(args[1])
+    switch (op) {
+      case 'add': return a + b!
+      case 'sub': return a - b!
+      case 'mul': return a * b!
+      case 'neg': return -a
+      case 'pow': return Math.pow(a, b!)
+      case 'le': return a <= b!
+      case 'lt': return a < b!
+      case 'ge': return a >= b!
+      case 'gt': return a > b!
+      case 'eq': return a === b!
+      case 'ne': return a !== b!
+      case 'div': {
+        const q = a / b!
+        if (kind === 'int' && !Number.isInteger(q)) throw new InexactResult(`${type}.div`, nativeImplRow(type, op, kind), q)
+        return q
+      }
+    }
+  }
+  throw new Error(`ts-engine: native op "${op}" has no evaluator`)
+}
+
 export function tsEngine(reg: Registry): Engine {
   /** the first reason this engine declines `expr`, or undefined */
   function reject(expr: Expr, opts: CanOpts = {}): string | undefined {
@@ -82,7 +151,33 @@ export function tsEngine(reg: Registry): Engine {
 
   /** resolve every apply bottom-up, so a nested call's RETURN kind types the outer call's argument */
   function resolveTree(e: SelectExpr, representation?: Representation): { kind: TypeKind; impl?: ImplRow; carrier?: string } | string {
-    if (e.kind === 'lit') return { kind: kindOfValue(e.value) }
+    if (e.kind === 'lit') {
+      if (e.type === undefined) return { kind: kindOfValue(e.value) }
+      const kind = reg.kindOfType(e.type)
+      // ts has a printer for these three kinds only (see `printable` below) — a typed literal of any other kind
+      // (composite, array, …) is a value ts has no way to hold, so it declines rather than pass it through raw.
+      if (kind !== 'int' && kind !== 'numeric' && kind !== 'text') return `ts cannot parse a typed literal of ${e.type}`
+      return { kind }
+    }
+    if (e.kind === 'op') {
+      const kinds: TypeKind[] = []
+      for (const a of e.args) { const r = resolveTree(a, representation); if (typeof r === 'string') return r; kinds.push(r.kind) }
+      const kind = reg.kindOfType(e.type)
+      const row = reg.typeOperation(e.type, e.op)
+      if (row?.implFn) {
+        // curated impls resolve/print exactly like any apply's; an uncurated one is just a NS export by name —
+        // the SAME "does the math package have it" check the apply branch below makes for an uncurated function.
+        if (reg.curated(row.implFn)) {
+          const impl = reg.resolveImpl(row.implFn, 'ts', kinds, representation)
+          if (!impl) return `no ts implementation of ${row.implFn}(${kinds.join(', ')})`
+          return { kind, impl }
+        }
+        if (typeof NS[row.implFn] !== 'function') return `ts has no implementation of "${row.implFn}" for ${e.type}.${e.op}`
+        return { kind }
+      }
+      if (!nativeOp(kind, e.op)) return `no ts operation "${e.op}" on ${e.type}`
+      return { kind }
+    }
     if (e.kind !== 'apply') return `ts cannot evaluate a ${e.kind} node`
     const kinds: TypeKind[] = []
     for (const a of e.args) {
@@ -114,6 +209,22 @@ export function tsEngine(reg: Registry): Engine {
 
   function evalTree(e: SelectExpr, representation?: Representation): unknown {
     if (e.kind === 'lit') return e.value
+    if (e.kind === 'op') {
+      const args = e.args.map((a) => evalTree(a, representation))
+      const kind = reg.kindOfType(e.type)
+      const row = reg.typeOperation(e.type, e.op)
+      if (row?.implFn) {
+        const body = reg.body(row.implFn) ?? NS[row.implFn]
+        if (typeof body !== 'function') throw new Error(`ts-engine: impl "${row.implFn}" of ${e.type}.${e.op} is not an exported function`)
+        const v = (body as (...a: unknown[]) => unknown)(...args)
+        if (reg.curated(row.implFn)) {
+          const impl = reg.resolveImpl(row.implFn, 'ts', args.map(kindOfValue), representation)
+          if (impl && !carriesExactly(impl.representation, v)) throw new InexactResult(row.implFn, impl, v)
+        }
+        return v
+      }
+      return evalNative(e.op, kind, e.type, args)
+    }
     if (e.kind !== 'apply') throw new Error(`ts-engine: cannot evaluate a ${e.kind} node`)
     const args = e.args.map((a) => evalTree(a, representation))
     const id = String(e.fn)
@@ -201,4 +312,5 @@ function specKind(e: SelectExpr): string {
   return spec.kind === 'position' ? spec.position : spec.kind === 'element' ? 'element' : spec.kind
 }
 const describe = (e: SelectExpr): string => (e.kind === 'apply' ? `${e.fn}(…)` : e.kind)
-const labelOf = (e: SelectExpr, i: number): string => (e.kind === 'apply' ? String(e.fn) : `column${i + 1}`)
+const labelOf = (e: SelectExpr, i: number): string =>
+  e.kind === 'apply' ? String(e.fn) : e.kind === 'op' ? e.op : `column${i + 1}`

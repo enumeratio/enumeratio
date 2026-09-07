@@ -9,10 +9,11 @@
 // function a curated identity actually NAMES: `lehmer_code` is computed by `to_inversion`, `gcd` by `gcd_int`.
 // Printing the catalog id as if it were a proname would silently call the wrong function, or none — which is the
 // whole reason base_function keeps the curated slug and the impl pointer apart.
-import { asDescribedExtension, cancelDb, extendDb, provideDb, runSql, type Db, type Row } from './core'
-import { rowQueryFromRel, textFromSelect, type Expr, type SelectExpr } from './ir'
+import { nativeOp } from '@enumeratio/data/catalog-snapshot'
+import { asDescribedExtension, cancelDb, extendDb, handleCtorSql, provideDb, runSql, type Db, type Row } from './core'
+import { fnRef, handleColl, rowQueryFromRel, textFromSelect, type Expr, type HandleExpr, type SelectExpr } from './ir'
 import { registry, registrySync, kindOfValue, type FunctionRow, type ImplRow, type Registry, type TypeKind } from './registry'
-import { planRows, type RowSelect } from './rows'
+import { bindArgsToChain, planRows, type RowSelect } from './rows'
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 
 /** A pg engine over a Db. Passing a factory wires it through core's own `provideDb`, so every legacy export keeps
@@ -130,12 +131,32 @@ function reject(expr: Expr, opts?: CanOpts): string | undefined {
   return undefined
 }
 
-type Resolved = { kind: TypeKind; impl?: ImplRow; ref: string }
+type Resolved = { kind: TypeKind; impl?: ImplRow; ref: string; type?: string }
 
 /** Resolve a scalar tree bottom-up against the pg impl rows, returning the proname each apply lowers to. */
 function resolve(reg: Registry, e: SelectExpr, representation?: CanOpts['representation']): Resolved | string {
-  if (e.kind === 'lit') return { kind: kindOfValue(e.value), ref: '' }
+  if (e.kind === 'lit') return e.type ? { kind: reg.kindOfType(e.type), type: e.type, ref: '' } : { kind: kindOfValue(e.value), ref: '' }
   if (e.kind === 'raw') return { kind: 'other', ref: e.sql }
+  if (e.kind === 'handle') return { kind: 'other', type: handleColl(e.handle) ?? undefined, ref: '' }
+  if (e.kind === 'cast') {
+    const inner = resolve(reg, e.expr, representation)
+    if (typeof inner === 'string') return inner
+    return { kind: reg.kindOfType(e.to), type: e.to, ref: '' }
+  }
+  if (e.kind === 'op') {
+    // if the type has a curated/uncurated impl for this op, delegate to the SAME apply-resolution `add`/`neg`/…
+    // would go through — a type operation's impl_fn is just a function name, and this is how one gets called.
+    const row = reg.typeOperation(e.type, e.op)
+    if (row?.implFn) {
+      const r = resolve(reg, { kind: 'apply', fn: fnRef(row.implFn), args: e.args }, representation)
+      if (typeof r === 'string') return r
+      return { ...r, type: e.type }
+    }
+    for (const a of e.args) { const r = resolve(reg, a, representation); if (typeof r === 'string') return r }
+    const native = nativeOp(reg.kindOfType(e.type), e.op)
+    if (!native) return `no operation "${e.op}" on ${e.type}`
+    return { kind: reg.kindOfType(e.type), type: e.type, ref: e.op }
+  }
   if (e.kind !== 'apply') return `pg cannot evaluate a ${e.kind} node outside a FROM`
   const kinds: TypeKind[] = []
   for (const a of e.args) {
@@ -161,16 +182,60 @@ const lit = (v: string): string => `'${v.replace(/'/g, "''")}'`
 const constSql = (v: unknown): string =>
   Array.isArray(v) ? `ARRAY[${v.map(constSql).join(', ')}]` : typeof v === 'string' ? lit(v) : String(v)
 
+/** The pg constructor SQL for a handle used as a VALUE — the same `<coll>(v1, …)` / `ROW(natural_range(…), …)::coll`
+ *  text `Handle.built()` produces, reusing its extracted pure core (`handleCtorSql`) over the catalog snapshot's
+ *  own grade chain instead of an async `catalogMap()` lookup — this file never touches the database to print SQL. */
+function handleSql(reg: Registry, h: HandleExpr): string {
+  if ('raw' in h) return h.raw
+  const coll = reg.collection(h.coll)
+  if (!coll) throw new Error(`pg-engine: unknown collection: ${h.coll}`)
+  return handleCtorSql(coll.grades, h.coll, bindArgsToChain({ named: h.named, positional: h.positional }, coll.grades))
+}
+
+/** A type name the tree may print after `::`. Plain identifiers, `[]` arrays and pg's two-word builtins only — a
+ *  typed literal or a cast carries the name verbatim into SQL, so anything richer is refused up front. */
+const TYPE_NAME = /^[A-Za-z_][A-Za-z0-9_]*(\[\])?$|^double precision$|^character varying$/
+function typeName(t: string): string {
+  if (!TYPE_NAME.test(t)) throw new Error(`pg-engine: "${t}" is not a type name`)
+  return t
+}
+
 /** The tree as SQL. Only the impl pointer is substituted; nothing else about the expression is rewritten. */
 function toSqlScalar(reg: Registry, e: SelectExpr, representation?: CanOpts['representation']): string {
-  if (e.kind === 'lit') return constSql(e.value)
+  if (e.kind === 'lit') return e.type ? `${constSql(e.value)}::${typeName(e.type)}` : constSql(e.value)
   if (e.kind === 'raw') return e.sql
+  if (e.kind === 'handle') return handleSql(reg, e.handle)
+  if (e.kind === 'cast') {
+    const inner = resolve(reg, e.expr, representation)
+    if (typeof inner === 'string') throw new Error(`pg-engine: ${inner}`)
+    const src = toSqlScalar(reg, e.expr, representation)
+    return inner.type?.endsWith('_element') ? `(${src}).value` : `(${src})::${typeName(e.to)}`
+  }
+  if (e.kind === 'op') {
+    const r = resolve(reg, e, representation)
+    if (typeof r === 'string') throw new Error(`pg-engine: ${r}`)
+    const row = reg.typeOperation(e.type, e.op)
+    const args = e.args.map((a) => toSqlScalar(reg, a, representation))
+    if (row?.implFn) return args.length ? `${row.implFn}(${args.join(', ')})` : row.implFn
+    const native = nativeOp(reg.kindOfType(e.type), e.op)!   // resolve() above already proved this exists
+    return native.unary ? `(${native.sql}${args[0]})` : `(${args[0]} ${native.sql} ${args[1]})`
+  }
   if (e.kind !== 'apply') throw new Error(`pg-engine: cannot lower a ${e.kind} node outside a FROM`)
   const r = resolve(reg, e, representation)
   if (typeof r === 'string') throw new Error(`pg-engine: ${r}`)
   const args = e.args.map((a) => toSqlScalar(reg, a, representation))
   if (reg.carrier(String(e.fn))) return `ROW(${args.join(', ')})::${String(e.fn)}`
   return args.length ? `${r.ref}(${args.join(', ')})` : r.ref
+}
+
+/** The provenance label for a scalar column — an `apply`'s function id, an `op`'s op id, a `handle`'s collection,
+ *  or (a `cast`) whatever its inner tree would print, recursively. */
+function labelOf(e: SelectExpr, i: number): string {
+  if (e.kind === 'apply') return String(e.fn)
+  if (e.kind === 'op') return e.op
+  if (e.kind === 'handle') return ('raw' in e.handle ? undefined : e.handle.coll) ?? `column${i + 1}`
+  if (e.kind === 'cast') return labelOf(e.expr, i)
+  return `column${i + 1}`
 }
 
 /** The SQL pg-engine would run for one scalar column. Exported so a differential can certify THE ENGINE'S OWN
@@ -185,7 +250,7 @@ export function lowerScalar(e: SelectExpr, representation?: CanOpts['representat
 function scalar(expr: Expr, opts: EngineOpts): EvaluateResult {
   const reg = registrySync()
   if (!reg) throw new Error('pg-engine: the catalog registry has not loaded — await engine.ready() first')
-  const cols = expr.select.map((c, i) => ({ id: c.kind === 'apply' ? String(c.fn) : `column${i + 1}`, kind: 'stat' as const }))
+  const cols = expr.select.map((c, i) => ({ id: labelOf(c, i), kind: 'stat' as const }))
   const parts = expr.select.map((c, i) => `(${toSqlScalar(reg, c)})::text AS ${JSON.stringify(cols[i].id)}`)
   const sql = `SELECT ${parts.join(', ')}`
   const impl = expr.select.map((c) => { const r = resolve(reg, c); return typeof r === 'string' ? undefined : r.impl?.implRef }).find(Boolean)

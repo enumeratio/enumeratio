@@ -183,6 +183,42 @@ describe('the whole statement', () => {
   })
 })
 
+describe('op / handle / cast — the four scalar-surface-only kinds', () => {
+  const lit5 = { kind: 'lit', value: 5 } as const
+  const lit3 = { kind: 'lit', value: 3 } as const
+  const opAdd: SelectExpr = { kind: 'op', op: 'add', type: 'rational_number', args: [lit5, lit3] }
+  const opNeg: SelectExpr = { kind: 'op', op: 'neg', type: 'integer_number', args: [lit5] }
+  const handlePerms: SelectExpr = { kind: 'handle', handle: { coll: 'permutations', named: {}, positional: [4] } }
+  const cast: SelectExpr = { kind: 'cast', expr: handlePerms, to: 'permutation' }
+
+  it('isClosed: op/cast defer to their operands, a handle is always closed', () => {
+    expect(isClosed(opAdd)).toBe(true)
+    expect(isClosed({ kind: 'op', op: 'add', type: 'integer_number', args: [lit5, { kind: 'subject' }] })).toBe(false)
+    expect(isClosed(handlePerms)).toBe(true)
+    expect(isClosed(cast)).toBe(true)
+    expect(isClosed({ kind: 'cast', expr: { kind: 'subject' }, to: 'permutation' })).toBe(false)
+  })
+
+  it('functionsIn: op contributes no FnRef of its own, but still walks its args; cast walks its inner tree', () => {
+    expect(functionsIn(opAdd)).toEqual([])
+    const nested: SelectExpr = { kind: 'op', op: 'add', type: 'integer_number', args: [{ kind: 'apply', fn: fnRef('gcd'), args: [lit5, lit3] }, lit3] }
+    expect(functionsIn(nested).map(String)).toEqual(['gcd'])
+    expect(functionsIn(cast)).toEqual([])
+    const castOverApply: SelectExpr = { kind: 'cast', expr: { kind: 'apply', fn: fnRef('gcd'), args: [lit5, lit3] }, to: 'integer_number' }
+    expect(functionsIn(castOverApply).map(String)).toEqual(['gcd'])
+  })
+
+  it('calcText: op prints infix/prefix, a typed literal gains its ::type, handle/cast print their own text', () => {
+    expect(calcText(opAdd)).toBe('(5 + 3)')
+    expect(calcText(opNeg)).toBe('(-5)')
+    expect(calcText({ kind: 'op', op: 'frobnicate', type: 'widget', args: [lit5] })).toBe('frobnicate[widget](5)')
+    expect(calcText({ kind: 'lit', value: 5, type: 'numeric' })).toBe('5::numeric')
+    expect(calcText({ kind: 'lit', value: 5 })).toBe('5')
+    expect(calcText(handlePerms)).toBe('permutations(4)')
+    expect(calcText(cast)).toBe('(permutations(4))::permutation')
+  })
+})
+
 describe('the scalar surface: calc text ⇄ a FROM-less Expr', () => {
   const OK: [string, string][] = [
     ['binomial(5, 2)', 'binomial(5, 2)'],
