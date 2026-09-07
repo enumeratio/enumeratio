@@ -63,15 +63,13 @@ describe("library shape", () => {
   it("is a real LibraryDefinition", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
-    expect(heads).toContain("SymmetricGroup");
-    expect(heads).toContain("Inversions");
-    // 18 collection heads + 5 view/combinators + Rank / RandomElement / Inversions
-    expect([...heads].sort()).toEqual([
-      "ColoredPermutations", "CompositionsIntoKParts", "Concat", "DyckPaths", "IntegerCompositions",
-      "IntegerPartitions", "Inversions", "KPermutations", "KSubsets", "LabeledTrees", "LatticePaths", "Multisets",
-      "PartitionsIntoKParts", "Product", "RandomElement", "Rank", "Reversed", "Rotated",
-      "SetCompositions", "SetPartitions", "SetPartitionsIntoKBlocks", "SignedPermutations",
-      "Subsets", "SymmetricGroup", "Tuples", "WeakCompositions", "Window",
-    ]);
+    expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
+    // 27 collection heads + 6 view/combinators (Reversed/Rotated/Window/Concat/Product/Power) + Rank/RandomElement/Inversions
+    expect(heads.length).toBe(36);
+    for (const h of ["SymmetricGroup", "Involutions", "Derangements", "MotzkinPaths", "FibonacciWords",
+      "DistinctPartitions", "PartitionsInBox", "GrayCodeSubsets", "BinaryTrees", "LabeledTrees",
+      "Power", "Product", "Concat", "Window", "Reversed", "Rotated", "Rank", "RandomElement", "Inversions"]) {
+      expect(heads).toContain(h);
+    }
   });
 });

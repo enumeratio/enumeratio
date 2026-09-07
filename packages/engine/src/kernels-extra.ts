@@ -411,3 +411,355 @@ export function IsLabeledTreeOf(edges: number[][], n: number): boolean {
   // n-1 acyclic edges on n vertices ⇒ connected ⇒ a tree
   return true;
 }
+
+// ─── Involutions(n): self-inverse permutations (σ²=id). Count = telephone numbers T(n). ───────────────────
+const _telephone: number[] = [1, 1];
+function telephone(n: number): number {
+  for (let i = _telephone.length; i <= n; i++) _telephone[i] = _telephone[i - 1] + (i - 1) * _telephone[i - 2];
+  return _telephone[n];
+}
+export function InvolutionCount(n: number): number {
+  return n < 0 ? 0 : telephone(n);
+}
+export function InvolutionUnrank(n: number, rank: number): number[] {
+  const result = new Array(n + 1).fill(0);
+  const rec = (labels: number[], r: number): void => {
+    const m = labels.length;
+    if (m === 0) return;
+    if (m === 1) { result[labels[0]] = labels[0]; return; }
+    const last = labels[m - 1];
+    const fixed = telephone(m - 1);
+    if (r < fixed) { result[last] = last; rec(labels.slice(0, m - 1), r); return; }
+    r -= fixed;
+    const block = telephone(m - 2);
+    const j = Math.floor(r / block);
+    const partner = labels[j];
+    result[last] = partner; result[partner] = last;
+    rec(labels.filter((x) => x !== last && x !== partner), r % block);
+  };
+  const total = InvolutionCount(n);
+  rec(Array.from({ length: n }, (_, i) => i + 1), total ? ((rank % total) + total) % total : 0);
+  return result.slice(1);
+}
+export function InvolutionRank(image: number[]): number {
+  const n = image.length;
+  const rec = (labels: number[]): number => {
+    const m = labels.length;
+    if (m <= 1) return 0;
+    const last = labels[m - 1];
+    if (image[last - 1] === last) return rec(labels.slice(0, m - 1));
+    const partner = image[last - 1];
+    const j = labels.indexOf(partner);
+    return telephone(m - 1) + j * telephone(m - 2) + rec(labels.filter((x) => x !== last && x !== partner));
+  };
+  return rec(Array.from({ length: n }, (_, i) => i + 1));
+}
+export function IsInvolutionOf(image: number[], n: number): boolean {
+  if (!Array.isArray(image) || image.length !== n) return false;
+  const seen = new Array(n + 1).fill(false);
+  for (const x of image) { if (!Number.isInteger(x) || x < 1 || x > n || seen[x]) return false; seen[x] = true; }
+  for (let i = 1; i <= n; i++) if (image[image[i - 1] - 1] !== i) return false; // σ(σ(i)) = i
+  return true;
+}
+
+// ─── MotzkinPaths(n): length-n paths, steps U(+1)/L(0)/D(-1), stay ≥0, end at 0. Count Motzkin M(n). ─────
+const _motzMemo = new Map<string, number>();
+function motzkinCompletions(s: number, h: number): number {
+  if (h < 0 || h > s) return 0;
+  if (s === 0) return h === 0 ? 1 : 0;
+  const key = `${s},${h}`;
+  let v = _motzMemo.get(key);
+  if (v === undefined) {
+    v = motzkinCompletions(s - 1, h + 1) + motzkinCompletions(s - 1, h) + (h > 0 ? motzkinCompletions(s - 1, h - 1) : 0);
+    _motzMemo.set(key, v);
+  }
+  return v;
+}
+export function MotzkinCount(n: number): number {
+  return n < 0 ? 0 : motzkinCompletions(n, 0);
+}
+/** rank-th Motzkin path, steps tried U(1) then L(0) then D(-1). */
+export function MotzkinUnrank(n: number, rank: number): number[] {
+  const total = MotzkinCount(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  const out: number[] = [];
+  let h = 0;
+  for (let s = n; s > 0; s--) {
+    const up = motzkinCompletions(s - 1, h + 1);
+    if (r < up) { out.push(1); h++; continue; }
+    r -= up;
+    const lvl = motzkinCompletions(s - 1, h);
+    if (r < lvl) { out.push(0); continue; }
+    r -= lvl;
+    out.push(-1); h--;
+  }
+  return out;
+}
+export function MotzkinRank(path: number[]): number {
+  let r = 0, h = 0;
+  for (let i = 0; i < path.length; i++) {
+    const s = path.length - i;
+    const step = path[i];
+    if (step === 1) { h++; }
+    else if (step === 0) { r += motzkinCompletions(s - 1, h + 1); }
+    else { r += motzkinCompletions(s - 1, h + 1) + motzkinCompletions(s - 1, h); h--; }
+  }
+  return r;
+}
+export function IsMotzkinPath(path: number[], n: number): boolean {
+  if (!Array.isArray(path) || path.length !== n) return false;
+  let h = 0;
+  for (const s of path) { if (s !== -1 && s !== 0 && s !== 1) return false; h += s; if (h < 0) return false; }
+  return h === 0;
+}
+
+// ─── FibonacciWords(n): 0/1 strings of length n with no two consecutive 1s. Count Fibonacci(n+2). ────────
+// h(m,last) = #valid suffixes of length m given previous bit `last`.
+function fibComp(m: number, last: number): number {
+  if (m === 0) return 1;
+  return last === 1 ? fibComp(m - 1, 0) : fibComp(m - 1, 0) + fibComp(m - 1, 1);
+}
+export function FibonacciWordCount(n: number): number {
+  return fibComp(n, 0);
+}
+export function FibonacciWordUnrank(n: number, rank: number): number[] {
+  const total = FibonacciWordCount(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  const out: number[] = [];
+  let last = 0;
+  for (let i = 0; i < n; i++) {
+    const zero = fibComp(n - i - 1, 0); // place a 0
+    if (r < zero) { out.push(0); last = 0; continue; }
+    r -= zero;
+    out.push(1); last = 1; // place a 1 (only allowed if last !== 1, guaranteed by the count split)
+    void last;
+  }
+  return out;
+}
+export function FibonacciWordRank(word: number[]): number {
+  let r = 0;
+  for (let i = 0; i < word.length; i++) if (word[i] === 1) r += fibComp(word.length - i - 1, 0);
+  return r;
+}
+export function IsFibonacciWord(word: number[], n: number): boolean {
+  if (!Array.isArray(word) || word.length !== n) return false;
+  for (let i = 0; i < n; i++) {
+    if (word[i] !== 0 && word[i] !== 1) return false;
+    if (i > 0 && word[i] === 1 && word[i - 1] === 1) return false;
+  }
+  return true;
+}
+
+// ─── GrayCodeSubsets(n): the subsets of [n] in binary-reflected Gray-code order (consecutive differ by one). ─
+export function GrayCodeSubsetUnrank(n: number, rank: number): number[] {
+  const N = 2 ** n;
+  const r = N ? ((rank % N) + N) % N : 0;
+  const g = r ^ (r >> 1);
+  const out: number[] = [];
+  for (let i = 0; i < n; i++) if ((g >> i) & 1) out.push(i + 1);
+  return out;
+}
+export function GrayCodeSubsetRank(s: number[]): number {
+  let g = 0;
+  for (const x of s) g |= 1 << (x - 1);
+  let r = g;
+  for (let shift = 1; shift < 31; shift <<= 1) r ^= r >> shift; // inverse Gray
+  return r;
+}
+
+// ─── BinaryTrees(n): binary trees with n internal nodes (Catalan). Element nested: leaf 0, node [L,R]. ─────
+export type BinTree = 0 | [BinTree, BinTree];
+export function BinaryTreeCount(n: number): number {
+  return Catalan(n);
+}
+export function BinaryTreeUnrank(n: number, rank: number): BinTree {
+  if (n === 0) return 0;
+  const total = Catalan(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  for (let i = 0; i < n; i++) {
+    const cl = Catalan(i), cr = Catalan(n - 1 - i);
+    const block = cl * cr;
+    if (r < block) return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
+    r -= block;
+  }
+  return 0; // unreachable
+}
+function binTreeSize(t: BinTree): number {
+  return t === 0 ? 0 : 1 + binTreeSize(t[0]) + binTreeSize(t[1]);
+}
+export function BinaryTreeRank(t: BinTree): number {
+  if (t === 0) return 0;
+  const n = binTreeSize(t);
+  const li = binTreeSize(t[0]);
+  let base = 0;
+  for (let i = 0; i < li; i++) base += Catalan(i) * Catalan(n - 1 - i);
+  const cr = Catalan(n - 1 - li);
+  return base + BinaryTreeRank(t[0]) * cr + BinaryTreeRank(t[1]);
+}
+export function IsBinaryTree(t: any, n: number): boolean {
+  const ok = (x: any): boolean => x === 0 || (Array.isArray(x) && x.length === 2 && ok(x[0]) && ok(x[1]));
+  return ok(t) && binTreeSize(t) === n;
+}
+
+// ─── Derangements(n): permutations with no fixed point. Count = subfactorial D(n). ──────────────────────
+const _subfac: number[] = [1, 0];
+function subfactorial(n: number): number {
+  for (let i = _subfac.length; i <= n; i++) _subfac[i] = (i - 1) * (_subfac[i - 1] + _subfac[i - 2]);
+  return _subfac[n];
+}
+export function DerangementCount(n: number): number {
+  return n < 0 ? 0 : subfactorial(n);
+}
+// build a derangement on the sorted label set S (as a Map label→image)
+function derangeRec(S: number[], r: number, sigma: Map<number, number>): void {
+  const s = S.length;
+  if (s === 0) return;
+  const m = S[s - 1]; // largest label
+  const others = S.slice(0, s - 1);
+  const dA = subfactorial(s - 2); // 2-cycle case
+  const dB = subfactorial(s - 1); // p not paired back
+  const per = dA + dB;
+  const pIdx = Math.floor(r / per);
+  let rem = r % per;
+  const p = others[pIdx];
+  if (rem < dA) {
+    sigma.set(m, p); sigma.set(p, m);
+    derangeRec(S.filter((x) => x !== m && x !== p), rem, sigma);
+  } else {
+    rem -= dA;
+    const sub = S.slice(0, s - 1); // S \ {m}
+    derangeRec(sub, rem, sigma); // τ on S\{m}
+    // redirect: y with τ(y)=p now maps to m; and m maps to p
+    let y = -1;
+    for (const x of sub) if (sigma.get(x) === p) { y = x; break; }
+    sigma.set(m, p);
+    sigma.set(y, m);
+  }
+}
+export function DerangementUnrank(n: number, rank: number): number[] {
+  const total = DerangementCount(n);
+  if (total <= 0) return n === 0 ? [] : [];
+  const sigma = new Map<number, number>();
+  derangeRec(Array.from({ length: n }, (_, i) => i + 1), ((rank % total) + total) % total, sigma);
+  return Array.from({ length: n }, (_, i) => sigma.get(i + 1)!);
+}
+export function DerangementRank(image: number[]): number {
+  const n = image.length;
+  const rankRec = (S: number[], sig: Map<number, number>): number => {
+    const s = S.length;
+    if (s === 0) return 0;
+    const m = S[s - 1];
+    const others = S.slice(0, s - 1);
+    const dA = subfactorial(s - 2), dB = subfactorial(s - 1);
+    const p = sig.get(m)!;
+    const pIdx = others.indexOf(p);
+    let base = pIdx * (dA + dB);
+    if (sig.get(p) === m) {
+      // 2-cycle case A
+      return base + rankRec(S.filter((x) => x !== m && x !== p), sig);
+    }
+    // case B: reconstruct τ on S\{m}: y (=sig^{-1}(m)) maps to p in τ
+    base += dA;
+    let y = -1;
+    for (const x of others) if (sig.get(x) === m) { y = x; break; }
+    const tau = new Map(sig);
+    tau.delete(m);
+    tau.set(y, p);
+    return base + rankRec(S.slice(0, s - 1), tau);
+  };
+  const sig = new Map<number, number>();
+  image.forEach((v, i) => sig.set(i + 1, v));
+  return rankRec(Array.from({ length: n }, (_, i) => i + 1), sig);
+}
+export function IsDerangementOf(image: number[], n: number): boolean {
+  if (!Array.isArray(image) || image.length !== n) return false;
+  const seen = new Array(n + 1).fill(false);
+  for (let i = 0; i < n; i++) {
+    const x = image[i];
+    if (!Number.isInteger(x) || x < 1 || x > n || seen[x] || x === i + 1) return false;
+    seen[x] = true;
+  }
+  return true;
+}
+
+// ─── DistinctPartitions(n): integer partitions into DISTINCT parts. Count q(n). ─────────────────────────
+const _distMemo = new Map<string, number>();
+function distinctParts(m: number, maxp: number): number {
+  if (m === 0) return 1;
+  if (m < 0 || maxp <= 0) return 0;
+  const key = `${m},${maxp}`;
+  let v = _distMemo.get(key);
+  if (v === undefined) {
+    v = distinctParts(m, maxp - 1) + distinctParts(m - maxp, maxp - 1);
+    _distMemo.set(key, v);
+  }
+  return v;
+}
+export function DistinctPartitionCount(n: number): number {
+  return n < 0 ? 0 : distinctParts(n, n);
+}
+export function DistinctPartitionUnrank(n: number, rank: number): number[] {
+  const total = DistinctPartitionCount(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  const out: number[] = [];
+  let m = n, upper = n;
+  while (m > 0) {
+    for (let part = Math.min(m, upper); part >= 1; part--) {
+      const c = distinctParts(m - part, part - 1);
+      if (r < c) { out.push(part); m -= part; upper = part - 1; break; }
+      r -= c;
+    }
+  }
+  return out;
+}
+export function DistinctPartitionRank(p: number[], n: number): number {
+  const parts = [...p].sort((a, b) => b - a);
+  let r = 0, m = n, upper = n;
+  for (const part of parts) {
+    for (let v = Math.min(m, upper); v > part; v--) r += distinctParts(m - v, v - 1);
+    m -= part; upper = part - 1;
+  }
+  return r;
+}
+export function IsDistinctPartitionOf(p: number[], n: number): boolean {
+  if (!Array.isArray(p)) return false;
+  const seen = new Set<number>();
+  let s = 0;
+  for (const x of p) { if (!Number.isInteger(x) || x < 1 || seen.has(x)) return false; seen.add(x); s += x; }
+  return s === n;
+}
+
+// ─── PartitionsInBox(a,b): partitions with ≤ a parts, each ≤ b. Count C(a+b,a) (lattice-path bijection). ─
+export function PartitionsInBoxCount(a: number, b: number): number {
+  return Binomial(a + b, a);
+}
+export function PartitionsInBoxUnrank(a: number, b: number, rank: number): number[] {
+  const path = LatticePathUnrank(a, b, rank); // 0/1 steps, a ones (N)
+  const parts: number[] = [];
+  let eBefore = 0;
+  for (const step of path) {
+    if (step === 1) parts.push(b - eBefore); // an N-step: part = E's remaining after it
+    else eBefore++;
+  }
+  return parts.filter((x) => x > 0); // drop zero parts
+}
+export function PartitionsInBoxRank(p: number[], a: number, b: number): number {
+  const parts = [...p].sort((x, y) => y - x);
+  while (parts.length < a) parts.push(0); // pad to a parts
+  // reconstruct the 0/1 path: eBefore_i = b - part_i (non-decreasing since parts non-increasing)
+  const path: number[] = [];
+  let placedE = 0;
+  for (const part of parts) {
+    const eBefore = b - part;
+    while (placedE < eBefore) { path.push(0); placedE++; }
+    path.push(1);
+  }
+  while (placedE < b) { path.push(0); placedE++; }
+  return LatticePathRank(path);
+}
+export function IsPartitionInBox(p: number[], a: number, b: number): boolean {
+  if (!Array.isArray(p) || p.length > a) return false;
+  let prev = Infinity;
+  for (const x of p) { if (!Number.isInteger(x) || x < 1 || x > b || x > prev) return false; prev = x; }
+  return true;
+}

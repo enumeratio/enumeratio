@@ -48,6 +48,20 @@ describe("Window — O(1) slice (Take/Drop/Slice without materializing)", () => 
   });
 });
 
+describe("Power — k-fold Cartesian power", () => {
+  it("count is base^k; element is a k-tuple; Rank inverts At", () => {
+    expect(num(["Length", ["Power", ["Subsets", 2], 3]])).toBe(64); // 4^3
+    expect(str(["At", ["Power", ["Subsets", 2], 3], 1])).toBe("[[],[],[]]");
+    const coll: any = ["Power", ["SymmetricGroup", 3], 2];
+    const N = num(["Length", coll]); // 36
+    expect(N).toBe(36);
+    for (let i = 1; i <= N; i++) expect(num(["Rank", coll, ce.box(["At", coll, i]).evaluate()])).toBe(i);
+  });
+  it("big power stays instant", () => {
+    expect(num(["Length", ["Power", ["SymmetricGroup", 5], 6]])).toBe(120 ** 6);
+  });
+});
+
 describe("Rank composes through views", () => {
   it("Reversed / Rotated", () => {
     expect(num(["Rank", ["Reversed", ["SymmetricGroup", 4]], ["List", 4, 3, 2, 1]])).toBe(1); // last→first

@@ -48,6 +48,34 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(sym(["Element", ["List", ["List", 1, 2], ["List", 1, 3]], ["LabeledTrees", 3]])).toBe("True"); // path 2-1-3
     expect(sym(["Element", ["List", ["List", 1, 2], ["List", 1, 2]], ["LabeledTrees", 3]])).toBe("False"); // vertex 3 missing / repeated edge
   });
+  it("batch 3 collections — counts, shape, membership", () => {
+    expect(num(["Length", ["Involutions", 4]])).toBe(10); // telephone T(4)
+    expect(num(["Length", ["Derangements", 4]])).toBe(9); // subfactorial !4
+    expect(num(["Length", ["MotzkinPaths", 4]])).toBe(9); // Motzkin M(4)
+    expect(num(["Length", ["FibonacciWords", 5]])).toBe(13); // Fibonacci
+    expect(num(["Length", ["DistinctPartitions", 8]])).toBe(6); // q(8)
+    expect(num(["Length", ["PartitionsInBox", 3, 3]])).toBe(20); // C(6,3)
+    expect(num(["Length", ["GrayCodeSubsets", 4]])).toBe(16); // 2^4
+    expect(num(["Length", ["BinaryTrees", 4]])).toBe(14); // Catalan(4)
+    // shape
+    expect(str(["At", ["Involutions", 3], 1])).toBe("[1,2,3]"); // identity first
+    expect(str(["At", ["FibonacciWords", 3], 1])).toBe("[0,0,0]"); // all-zero first
+    expect(str(["At", ["GrayCodeSubsets", 2], 2])).toBe("[1]"); // Gray order [], [1], [1,2], [2]
+    expect(str(["At", ["GrayCodeSubsets", 2], 3])).toBe("[1,2]");
+    expect(str(["At", ["GrayCodeSubsets", 2], 4])).toBe("[2]");
+    expect(str(["At", ["BinaryTrees", 1], 1])).toBe("[0,0]"); // one node, two leaves
+    expect(str(["At", ["BinaryTrees", 0], 1])).toBe("0"); // a single leaf
+    // membership
+    expect(sym(["Element", ["List", 2, 1, 3], ["Involutions", 3]])).toBe("True"); // (1 2)
+    expect(sym(["Element", ["List", 2, 3, 1], ["Involutions", 3]])).toBe("False"); // a 3-cycle
+    expect(sym(["Element", ["List", 2, 3, 1], ["Derangements", 3]])).toBe("True");
+    expect(sym(["Element", ["List", 1, 3, 2], ["Derangements", 3]])).toBe("False"); // 1 is fixed
+    expect(sym(["Element", ["List", 1, 0, 1], ["FibonacciWords", 3]])).toBe("True");
+    expect(sym(["Element", ["List", 1, 1, 0], ["FibonacciWords", 3]])).toBe("False"); // consecutive 1s
+    expect(sym(["Element", ["List", 3, 2], ["PartitionsInBox", 2, 3]])).toBe("True");
+    expect(sym(["Element", ["List", 1, 1, 1], ["PartitionsInBox", 2, 3]])).toBe("False"); // >2 parts
+    expect(sym(["Element", ["List", ["List", 0, 0]], ["BinaryTrees", 1]])).toBe("False"); // wrong node arity
+  });
   it("more branched-out — shape and membership", () => {
     expect(str(["At", ["DyckPaths", 2], 1])).toBe("[1,1,0,0]"); // uup-ddown first
     expect(str(["At", ["KPermutations", 3, 2], 1])).toBe("[1,2]");
@@ -116,6 +144,14 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "ColoredPermutations(3,3)", coll: ["ColoredPermutations", 3, 3] },
     { name: "DyckPaths(6)", coll: ["DyckPaths", 6] },
     { name: "LabeledTrees(6)", coll: ["LabeledTrees", 6] },
+    { name: "Involutions(6)", coll: ["Involutions", 6] },
+    { name: "Derangements(6)", coll: ["Derangements", 6] },
+    { name: "MotzkinPaths(7)", coll: ["MotzkinPaths", 7] },
+    { name: "FibonacciWords(8)", coll: ["FibonacciWords", 8] },
+    { name: "DistinctPartitions(9)", coll: ["DistinctPartitions", 9] },
+    { name: "PartitionsInBox(4,4)", coll: ["PartitionsInBox", 4, 4] },
+    { name: "GrayCodeSubsets(6)", coll: ["GrayCodeSubsets", 6] },
+    { name: "BinaryTrees(5)", coll: ["BinaryTrees", 5] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {

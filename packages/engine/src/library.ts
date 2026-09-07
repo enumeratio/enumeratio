@@ -36,6 +36,14 @@ import {
   ColoredPermutationCount, ColoredPermutationUnrank, ColoredPermutationRank, IsColoredPermutationOf,
   DyckPathCount, DyckPathUnrank, DyckPathRank, IsDyckPath,
   LabeledTreeCount, LabeledTreeUnrank, LabeledTreeRank, IsLabeledTreeOf,
+  InvolutionCount, InvolutionUnrank, InvolutionRank, IsInvolutionOf,
+  DerangementCount, DerangementUnrank, DerangementRank, IsDerangementOf,
+  MotzkinCount, MotzkinUnrank, MotzkinRank, IsMotzkinPath,
+  FibonacciWordCount, FibonacciWordUnrank, FibonacciWordRank, IsFibonacciWord,
+  GrayCodeSubsetUnrank, GrayCodeSubsetRank,
+  DistinctPartitionCount, DistinctPartitionUnrank, DistinctPartitionRank, IsDistinctPartitionOf,
+  PartitionsInBoxCount, PartitionsInBoxUnrank, PartitionsInBoxRank, IsPartitionInBox,
+  BinaryTreeCount, BinaryTreeUnrank, BinaryTreeRank, IsBinaryTree,
 } from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -46,6 +54,9 @@ const asIntList = (t: any): number[] => (t?.ops ?? []).map(intOf);
 const asBlockList = (t: any): number[][] => (t?.ops ?? []).map((b: any) => (b?.ops ?? []).map(intOf));
 const listMJ = (xs: number[]): MathJson => ["List", ...xs];
 const blocksMJ = (bs: number[][]): MathJson => ["List", ...bs.map((b) => ["List", ...b])];
+// nested binary tree ⇄ MathJSON: leaf = 0, node = [left, right].
+const treeMJ = (t: any): MathJson => (t === 0 ? 0 : ["List", treeMJ(t[0]), treeMJ(t[1])]);
+const decodeTree = (x: any): any => (x?.ops && x.ops.length === 2 ? [decodeTree(x.ops[0]), decodeTree(x.ops[1])] : 0);
 
 // ─── one spec per family: the single source of truth handlers, Rank and RandomElement share. count/elt/rank
 // agree on the SAME order; `rank` returns a 0-based index or undefined when the target is not a member.
@@ -124,6 +135,34 @@ const FAMILIES: Record<string, FamilySpec> = {
     rank: (t, [n]) => { const b = asBlockList(t); return IsSetPartitionOf(b, n) ? SetCompositionRank(BlocksToLabels(b), n) : undefined; },
   },
 
+  // ── constrained permutations (element = one-line word) ──
+  Involutions: intListSpec(1, ([n]) => InvolutionCount(n), ([n], r) => InvolutionUnrank(n, r),
+    (a, [n]) => IsInvolutionOf(a, n), (a) => InvolutionRank(a)),
+  Derangements: intListSpec(1, ([n]) => DerangementCount(n), ([n], r) => DerangementUnrank(n, r),
+    (a, [n]) => IsDerangementOf(a, n), (a) => DerangementRank(a)),
+
+  // ── lattice-path words (element = a step sequence) ──
+  MotzkinPaths: intListSpec(1, ([n]) => MotzkinCount(n), ([n], r) => MotzkinUnrank(n, r),
+    (a, [n]) => IsMotzkinPath(a, n), (a) => MotzkinRank(a)),
+  FibonacciWords: intListSpec(1, ([n]) => FibonacciWordCount(n), ([n], r) => FibonacciWordUnrank(n, r),
+    (a, [n]) => IsFibonacciWord(a, n), (a) => FibonacciWordRank(a)),
+
+  // ── more partitions / subset orderings ──
+  DistinctPartitions: intListSpec(1, ([n]) => DistinctPartitionCount(n), ([n], r) => DistinctPartitionUnrank(n, r),
+    (a, [n]) => IsDistinctPartitionOf(a, n), (a, [n]) => DistinctPartitionRank(a, n)),
+  PartitionsInBox: intListSpec(2, ([a, b]) => PartitionsInBoxCount(a, b), ([a, b], r) => PartitionsInBoxUnrank(a, b, r),
+    (x, [a, b]) => IsPartitionInBox(x, a, b), (x, [a, b]) => PartitionsInBoxRank(x, a, b)),
+  GrayCodeSubsets: intListSpec(1, ([n]) => SubsetCount(n), ([n], r) => GrayCodeSubsetUnrank(n, r),
+    (a, [n]) => IsSubsetOf(a, n), (a) => GrayCodeSubsetRank(a)),
+
+  // ── binary trees (nested element: leaf 0, node [L,R]) ──
+  BinaryTrees: {
+    paramCount: 1, signature: "(integer) -> collection",
+    count: ([n]) => BinaryTreeCount(n),
+    elt: ([n], r) => treeMJ(BinaryTreeUnrank(n, r)),
+    rank: (t, [n]) => { const tree = decodeTree(t); return IsBinaryTree(tree, n) ? BinaryTreeRank(tree) : undefined; },
+  },
+
   // ── labeled trees (element = edge list) ──
   LabeledTrees: {
     paramCount: 1, signature: "(integer) -> list<list<list<integer>>>",
@@ -184,6 +223,13 @@ function rankOf(coll: any, elt: any): number | undefined {
     const ra = rankOf(a, pair[0]); const rb = rankOf(b, pair[1]);
     if (ra === undefined || rb === undefined) return undefined;
     return ra * (b.count as number) + rb;
+  }
+  if (head === "Power") {
+    const base = coll.op1; const k = intOf(coll.op2); const nb = base.count as number;
+    const tuple = elt?.ops; if (!tuple || tuple.length !== k) return undefined;
+    let r = 0;
+    for (let j = 0; j < k; j++) { const rj = rankOf(base, tuple[j]); if (rj === undefined) return undefined; r = r * nb + rj; }
+    return r;
   }
   return undefined;
 }
@@ -307,6 +353,24 @@ const viewDefs = {
       contains: sourceContains,
     } as CollectionHandlers,
   },
+  Power: {
+    // k-fold Cartesian power of one collection: element = a k-tuple of its elements. O(1) mixed-radix.
+    signature: "(collection, integer) -> collection",
+    collection: {
+      count: (c: any) => { const nb = c.op1.count; return nb == null ? undefined : nb ** intOf(c.op2); },
+      isFinite: () => true, isLazy: () => true, isEnumerable: () => true,
+      isEmpty: (c: any) => (c.op1.count ?? 0) ** intOf(c.op2) === 0,
+      iterator: (c: any) => { const nb = c.op1.count ?? 0, k = intOf(c.op2); return walkIterator(nb ** k, (i) => powerAt(c, i, nb, k)); },
+      at: (c: any, index: number | string) => {
+        if (typeof index !== "number") return undefined;
+        const nb = c.op1.count; if (nb == null) return undefined;
+        const k = intOf(c.op2); const N = nb ** k; const i = index < 0 ? N + index + 1 : index;
+        if (i < 1 || i > N) return undefined;
+        return powerAt(c, i, nb, k);
+      },
+      contains: sourceContains,
+    } as CollectionHandlers,
+  },
 };
 function productAt(c: any, i: number, nb: number): any {
   const i0 = i - 1;
@@ -314,6 +378,12 @@ function productAt(c: any, i: number, nb: number): any {
   const eb = c.op2.at((i0 % nb) + 1);
   if (ea == null || eb == null) return undefined;
   return engineOf(c).box(["List", ea, eb]);
+}
+function powerAt(c: any, i: number, nb: number, k: number): any {
+  let i0 = i - 1;
+  const els: any[] = new Array(k);
+  for (let pos = k - 1; pos >= 0; pos--) { const e = c.op1.at((i0 % nb) + 1); if (e == null) return undefined; els[pos] = e; i0 = Math.floor(i0 / nb); }
+  return engineOf(c).box(["List", ...els]);
 }
 
 /**
