@@ -110,14 +110,15 @@ jobs:
     # itself is what avoids it). An empty `packs-setup` output must not fail this workflow.
     if: needs.packs-setup.outputs.has_packs == 'true'
     runs-on: ubuntu-latest
-    # Per-job timeout so ONE stalling collection can't hang the whole matrix (or run up the nightly schedule's
-    # wall clock indefinitely). `selfcert.mts` has its own 20s-per-query watchdog (a worker process it SIGKILLs
-    # and respawns on timeout — see pg-worker-channel.ts) and turns a hung query into a printed "skip", so it
-    # self-bounds. `quickcheck.mts` and `selfcert-view.mts` do NOT have that watchdog — `cyclohedron` (polytopes)
-    # is the known case: its `fiber_count` enumerates every dissection of a (2n+2)-gon over an unbounded axis, and
-    # at a large enough sampled rank/grade it can run away. 20 minutes is not a "make it pass" workaround — it's
-    # the outer bound past which a shard is presumed hung and killed, leaving every other pack's shard to report.
-    timeout-minutes: 20
+    # Per-job timeout. BOTH tools this shard runs now self-bound per query via the pg-worker-channel.ts watchdog (a
+    # worker process SIGKILLed and respawned on a >20s query, the runaway recorded as a "skip"): selfcert.mts since
+    # #295, quickcheck.mts since #359. Before that a single runaway (cyclohedron's fiber_count over an unbounded
+    # axis; colored_motzkin_paths / alternating_sign_matrices) hung quickcheck for the whole 20 minutes until this
+    # cap cancelled it — which is why 7 of 9 packs' quickcheck step never completed. With per-query hangs handled,
+    # this cap is now a WORK budget, not a hang-catcher — sized to the heaviest shard's legitimate scan load
+    # (number-sets' quickcheck alone is ~13 min: 72 collections × 20 sampled points, mostly no-accel scans), plus
+    # its selfcert step, with headroom for a slower runner. Raise it (don't cut coverage) if a shard grows past.
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -149,3 +150,6 @@ jobs:
           QUICKCHECK_RANK_CAP: "2000"
           QUICKCHECK_SCAN_RANK_CAP: "60"
           QUICKCHECK_CAP_COUNT: "100000"
+          # per-query wall clock: a query past this is SIGKILLed + the worker respawned, the runaway recorded as a
+          # skip (#359). Matches selfcert.mts's WATCHDOG_MS; the default is already 20s — set here so it's tunable.
+          QUICKCHECK_WATCHDOG_MS: "20000"

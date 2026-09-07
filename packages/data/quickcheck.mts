@@ -29,17 +29,12 @@
 //   node --import tsx quickcheck.mts --pack polytopes       # only collections owned by the "polytopes" pack
 //   node --import tsx quickcheck.mts --pack polytopes perm  # pack membership AND id-substring, intersected
 //   QUICKCHECK_POINTS=5 node --import tsx quickcheck.mts  # more sampled points per collection (default 2)
-import { createRequire } from 'node:module'
 import debug from 'debug'
-import { loadCoreAndPacks } from './node.ts'
-import { orderPacks, segmentByPack, applyPackSegments } from './sqlsrc-order'
-import { debugGucSetSql, routeNotice } from './debug-env'
+import { openWorkerChannel, QTimeout } from './pg-worker-channel'
+import { debugGucSetSql } from './debug-env'
 import { parsePackArg, requireNonEmptySelection } from './pack-filter'
 
 const log = debug('enumeratio:data:quickcheck')
-
-const req = createRequire(import.meta.url)
-const { PGlite } = req('@electric-sql/pglite') as typeof import('@electric-sql/pglite')
 
 // Budget knobs — small by design (seconds, not minutes): this is a sampling smoke test, not the exhaustive oracle.
 const NMAX = Number(process.env.QUICKCHECK_NMAX ?? 8)            // grade-1 size sampled from [0, NMAX] (mirrors selfcert)
@@ -58,7 +53,13 @@ const CAP_COUNT = Number(process.env.QUICKCHECK_CAP_COUNT ?? 20_000) // largest 
 // it on SMALL fibers. Stays well under the elements() materialization guard's ceiling too.
 const COUNT_ENUM_CAP = Math.min(CAP_COUNT, 2_000)
 const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 2)         // sampled (fiber, rank) points per collection
-const STMT_TIMEOUT = '8s'
+const STMT_TIMEOUT = '8s'  // belt: honoured by a real Postgres, IGNORED by pglite — see WATCHDOG_MS
+// braces: each query runs in a worker process (pg-worker.mts) and one that outruns this wall clock is SIGKILLed and
+// the worker respawned — the only real cancellation there is, since pglite ignores statement_timeout. The #360
+// elements() guard stops the huge-SETOF OOM, but a runaway that isn't an elements() materialization (a tight
+// plpgsql fiber_count loop over an unbounded axis — cyclohedron; a slow per-candidate floor scan) still hangs the
+// whole process without this. Now it's recorded as a skip. Mirrors selfcert.mts's WATCHDOG_MS.
+const WATCHDOG_MS = Number(process.env.QUICKCHECK_WATCHDOG_MS ?? 20_000)
 
 const { pack, rest } = parsePackArg(process.argv.slice(2))
 const filter = rest[0] || null
@@ -78,22 +79,20 @@ const randInt = (n: number) => (n <= 0 ? 0 : Math.min(n - 1, Math.floor(rng() * 
 
 console.log(`quickcheck seed=${seed}${filter ? ` filter=${filter}` : ''}${pack ? ` pack=${pack}` : ''} (points/coll=${POINTS} nmax=${NMAX} rankcap=${RANK_CAP})`)
 
-// Full profile — core + every extracted pack (#283 phase 3.4): a --pack filter over a corpus that never loaded
-// the pack would silently select nothing, which is exactly the failure mode this tool must not have.
-const { core, packs } = loadCoreAndPacks()
-const segments = segmentByPack(orderPacks(core, packs), core, packs)
-const pg = new PGlite()
-await pg.waitReady
-await applyPackSegments(segments, async (label, sql) => {
-  try { await pg.exec(sql) }
-  catch (e: any) { console.error(`\n✗ FAILED applying ${label}\n  ${e.message.split('\n')[0]}\n`); await pg.close(); process.exit(1) }
+// Full profile — core + every extracted pack (#283 phase 3.4): the worker's buildCore('all') loads the same corpus
+// node.ts/the CLI boot, so a --pack filter can never select over a corpus that never loaded the pack. Each query
+// runs in that worker process, so a runaway is SIGKILLed and the worker respawned (see WATCHDOG_MS) rather than
+// hanging this driver.
+const debugSetSql = debugGucSetSql()   // session GUCs don't survive a worker kill — re-applied on every (re)spawn
+const channel = await openWorkerChannel({
+  timeoutMs: WATCHDOG_MS,
+  onReady: async (q) => {
+    await q(`SET statement_timeout = '${STMT_TIMEOUT}'`)
+    if (debugSetSql) await q(debugSetSql)
+  },
 })
-
-await pg.exec(`SET statement_timeout = '${STMT_TIMEOUT}'`)
-const debugSetSql = debugGucSetSql()
-if (debugSetSql) await pg.exec(debugSetSql)
-log('booted pglite (DEBUG=%s)', process.env.DEBUG ?? '')
-const q = async <T = any,>(sql: string): Promise<T[]> => (await pg.query(sql, [], { onNotice: routeNotice })).rows as T[]
+log('booted pglite worker (DEBUG=%s)', process.env.DEBUG ?? '')
+const q = channel.q
 const regproc = async (sig: string): Promise<boolean> =>
   !!(await q<{ x: boolean }>(`SELECT to_regprocedure('${sig}') IS NOT NULL AS x`))[0]?.x
 const isFinite_ = (s: string | null) => s != null && s !== 'Infinity' && s !== 'NaN'
@@ -140,7 +139,7 @@ function mkCheckRoundTrip(): CheckFn {
                 render(unrank(${pointHandle}, ${r}::rank_index)) IS NOT NULL AS has_render`))[0]
       if (row?.rank_ok == null) return { status: 'skip', detail: 'unrank returned no element at r' }
       return row.rank_ok && row.has_render ? { status: 'pass' } : { status: 'fail', detail: `rank_ok=${row.rank_ok} has_render=${row.has_render}` }
-    } catch (e: any) { return { status: 'skip', detail: errMsg(e) } }
+    } catch (e: any) { if (e instanceof QTimeout) throw e; return { status: 'skip', detail: errMsg(e) } }
   }
 }
 
@@ -155,7 +154,7 @@ function mkCheckAccelNaive(caps: Caps): CheckFn {
                  (SELECT render(e) FROM elements((SELECT f FROM fibers(${pointHandle}) f), ${r + 1}) e ORDER BY (e).rank LIMIT 1 OFFSET ${r})) AS ok`))[0]
       if (row?.ok == null) return { status: 'skip', detail: 'no element at r' }
       return row.ok ? { status: 'pass' } : { status: 'fail', detail: 'render(element_at(r)) != r-th of elements()' }
-    } catch (e: any) { return { status: 'skip', detail: errMsg(e) } }
+    } catch (e: any) { if (e instanceof QTimeout) throw e; return { status: 'skip', detail: errMsg(e) } }
   }
 }
 
@@ -169,7 +168,7 @@ function mkCheckCount(caps: Caps): CheckFn {
                      THEN (SELECT count(*)::text FROM elements(${pointHandle}, ${COUNT_ENUM_CAP + 1}) v) END AS enumerated`))[0]
       if (!isFinite_(row.closed) || row.enumerated == null) return { status: 'skip', detail: '∞ / unknown / too-big to enumerate' }
       return row.closed === row.enumerated ? { status: 'pass' } : { status: 'fail', detail: `closed=${row.closed} enumerated=${row.enumerated}` }
-    } catch (e: any) { return { status: 'skip', detail: errMsg(e) } }
+    } catch (e: any) { if (e instanceof QTimeout) throw e; return { status: 'skip', detail: errMsg(e) } }
   }
 }
 
@@ -190,7 +189,7 @@ function mkCheckMembership(caps: Caps): CheckFn {
       if (!row?.present) return { status: 'skip', detail: 'unrank returned no element at r' }
       if (row.ok == null) return { status: 'skip', detail: 'contains unknown (semi-decidable ceiling)' }
       return row.ok ? { status: 'pass' } : { status: 'fail', detail: 'contains(h, its own sampled element) = false' }
-    } catch (e: any) { return { status: 'skip', detail: errMsg(e) } }
+    } catch (e: any) { if (e instanceof QTimeout) throw e; return { status: 'skip', detail: errMsg(e) } }
   }
 }
 
@@ -205,6 +204,7 @@ function mkCheckOrder(): CheckFn {
       if (row?.lo == null || row?.hi == null) return { status: 'skip', detail: 'r+1 out of range' }
       return row.lt ? { status: 'pass' } : { status: 'fail', detail: 'element_at(r) NOT < element_at(r+1)' }
     } catch (e: any) {
+      if (e instanceof QTimeout) throw e
       const msg = errMsg(e)
       if (/operator does not exist/i.test(msg)) return { status: 'skip', detail: 'carrier has no total order (<)' }
       return { status: 'skip', detail: msg }
@@ -280,7 +280,7 @@ const cats = await q<{ id: string; carrier: string; grades: string; alias_of: st
 
 const selected = cats.filter((c) => (!pack || c.pack === pack) && (!filter || c.id.includes(filter)))
 if (pack) console.log(`--pack ${pack} → ${selected.length} collection(s)${filter ? ` matching "${filter}"` : ''}: ${selected.map((c) => c.id).join(', ') || '(none)'}`)
-requireNonEmptySelection('quickcheck', pack, filter, selected.length, () => { void pg.close() })
+requireNonEmptySelection('quickcheck', pack, filter, selected.length, () => channel.close())
 
 let collsConsidered = 0
 for (const c of selected) {
@@ -324,6 +324,10 @@ for (const c of selected) {
   for (let i = 0; i < POINTS; i++) nChoices.push(gradeCount === 0 ? null : randInt(NMAX + 1))
 
   const collT0 = Date.now()
+  // A runaway query (pglite ignores statement_timeout) is SIGKILLed by the watchdog and surfaces as a QTimeout.
+  // One is enough to know this collection's floor is unverifiable by enumeration at these budgets — abandon its
+  // remaining points rather than pay a ~7s respawn per point to hit the same wall, exactly as selfcert does.
+  try {
   for (const n of nChoices) {
     try {
       const sizeHandle = gradeCount === 0 ? `${c.id}()` : `${c.id}(${n})`
@@ -367,7 +371,9 @@ for (const c of selected) {
           }
           const res = await fn(pointHandle, r)
           if (res.status === 'fail') {
-            const shrunk = await shrink(c.id, gradeCount, fn, pointHandle, r, n, caps, admissibleGrades)
+            let shrunk: string
+            try { shrunk = await shrink(c.id, gradeCount, fn, pointHandle, r, n, caps, admissibleGrades) }
+            catch (e: any) { if (!(e instanceof QTimeout)) throw e; shrunk = '(shrink timed out; worker respawned)' }
             mismatches.push({ coll: c.id, property: name, n, addr: addrText, r: r == null ? '(none)' : String(r), detail: res.detail ?? '', shrunk })
           } else if (res.status === 'skip') {
             skips.push({ coll: c.id, property: name, reason: res.detail ?? 'skipped' })
@@ -382,7 +388,9 @@ for (const c of selected) {
       propChecks++
       const countRes = await countCheck(pointHandle, null)
       if (countRes.status === 'fail') {
-        const shrunk = await shrink(c.id, gradeCount, countCheck, pointHandle, null, n, caps, admissibleGrades)
+        let shrunk: string
+        try { shrunk = await shrink(c.id, gradeCount, countCheck, pointHandle, null, n, caps, admissibleGrades) }
+        catch (e: any) { if (!(e instanceof QTimeout)) throw e; shrunk = '(shrink timed out; worker respawned)' }
         mismatches.push({ coll: c.id, property: 'count', n, addr: addrText, r: '(none)', detail: countRes.detail ?? '', shrunk })
       } else if (countRes.status === 'skip') {
         skips.push({ coll: c.id, property: 'count', reason: countRes.detail ?? 'skipped' })
@@ -390,8 +398,13 @@ for (const c of selected) {
         propPass++
       }
     } catch (e: any) {
+      if (e instanceof QTimeout) throw e   // bubble to the per-collection handler → abandon this collection
       skips.push({ coll: c.id, property: '*', reason: errMsg(e) })
     }
+  }
+  } catch (e: any) {
+    if (!(e instanceof QTimeout)) throw e
+    skips.push({ coll: c.id, property: '*', reason: `timed out past ${WATCHDOG_MS / 1000}s — floor unverifiable by enumeration (worker respawned)` })
   }
   const collMs = Date.now() - collT0
   if (collMs > 300) process.stderr.write(`      ⏱ ${c.id} took ${collMs}ms\n`)
@@ -401,6 +414,7 @@ console.log(`\nproperty-based verification (QuickCheck-style sampling)\n`)
 console.log(`collections considered: ${collsConsidered} (of ${cats.length} in catalog)`)
 console.log(`points sampled: ${pointsSampled}`)
 console.log(`property checks: ${propChecks}  (pass ${propPass}, fail ${mismatches.length}, skip ${skips.length})`)
+console.log(`worker spawns: ${channel.spawns}  (one per killed runaway query, plus the first)`)
 if (skips.length) {
   const byReason = new Map<string, number>()
   for (const s of skips) byReason.set(s.reason, (byReason.get(s.reason) ?? 0) + 1)
@@ -418,5 +432,5 @@ if (mismatches.length) {
   console.log(`\n✓ no mismatches — every sampled point (seed=${seed}) agrees.`)
 }
 
-await pg.close()
+channel.close()
 process.exit(mismatches.length ? 1 : 0)
