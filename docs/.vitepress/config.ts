@@ -162,6 +162,7 @@ export default defineConfig({
                     { text: 'enumeratio-notation', link: '/develop/packages/components/notation' },
                     { text: 'enumeratio-figure', link: '/develop/packages/components/figure' },
                     { text: 'enumeratio-expression', link: '/develop/packages/components/expression' },
+                    { text: 'enumeratio-math-input', link: '/develop/packages/components/math-input' },
                   ],
                 },
                 {
