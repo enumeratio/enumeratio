@@ -50,6 +50,9 @@ import {
   SurjectionCount, SurjectionUnrank, SurjectionRank, IsSurjectionOf,
   BinaryStringCount, BinaryStringUnrank, BinaryStringRank, IsBinaryString,
   CyclicPermutationCount, CyclicPermutationUnrank, CyclicPermutationRank, IsCyclicPermutationOf,
+  PerfectMatchingCount, PerfectMatchingUnrank, PerfectMatchingRank, IsPerfectMatchingOf,
+  PartitionsMaxPartCount, PartitionsMaxPartUnrank, PartitionsMaxPartRank, IsPartitionMaxPart,
+  RootedForestCount, RootedForestUnrank, RootedForestRank, IsRootedForest,
 } from "./kernels-extra.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -154,6 +157,13 @@ const FAMILIES: Record<string, FamilySpec> = {
     count: ([n]) => Fubini(n), elt: ([n], r) => blocksMJ(LabelsToOrderedBlocks(SetCompositionUnrank(n, r))),
     rank: (t, [n]) => { const b = asBlockList(t); return IsSetPartitionOf(b, n) ? SetCompositionRank(BlocksToLabels(b), n) : undefined; },
   },
+  // perfect matchings (element = list of [a,b] pairs)
+  PerfectMatchings: {
+    paramCount: 1, signature: "(integer) -> list<list<list<integer>>>",
+    count: ([n]) => PerfectMatchingCount(n),
+    elt: ([n], r) => blocksMJ(PerfectMatchingUnrank(n, r)),
+    rank: (t, [n]) => { const p = asBlockList(t); return IsPerfectMatchingOf(p, n) ? PerfectMatchingRank(p, n) : undefined; },
+  },
 
   // ── constrained permutations (element = one-line word) ──
   Involutions: intListSpec(1, ([n]) => InvolutionCount(n), ([n], r) => InvolutionUnrank(n, r),
@@ -172,6 +182,10 @@ const FAMILIES: Record<string, FamilySpec> = {
   // ── more partitions / subset orderings ──
   DistinctPartitions: intListSpec(1, ([n]) => DistinctPartitionCount(n), ([n], r) => DistinctPartitionUnrank(n, r),
     (a, [n]) => IsDistinctPartitionOf(a, n), (a, [n]) => DistinctPartitionRank(a, n)),
+  PartitionsMaxPart: intListSpec(2, ([n, m]) => PartitionsMaxPartCount(n, m), ([n, m], r) => PartitionsMaxPartUnrank(n, m, r),
+    (a, [n, m]) => IsPartitionMaxPart(a, n, m), (a, [, m]) => PartitionsMaxPartRank(a, m)),
+  RootedForests: intListSpec(1, ([n]) => RootedForestCount(n), ([n], r) => RootedForestUnrank(n, r),
+    (a, [n]) => IsRootedForest(a, n), (a, [n]) => RootedForestRank(a, n)),
   PartitionsInBox: intListSpec(2, ([a, b]) => PartitionsInBoxCount(a, b), ([a, b], r) => PartitionsInBoxUnrank(a, b, r),
     (x, [a, b]) => IsPartitionInBox(x, a, b), (x, [a, b]) => PartitionsInBoxRank(x, a, b)),
   GrayCodeSubsets: intListSpec(1, ([n]) => SubsetCount(n), ([n], r) => GrayCodeSubsetUnrank(n, r),

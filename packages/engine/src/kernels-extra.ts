@@ -1023,3 +1023,130 @@ export function IsCyclicPermutationOf(image: number[], n: number): boolean {
   do { cur = image[cur - 1]; steps++; } while (cur !== 1 && steps <= n);
   return steps === n; // one full n-cycle
 }
+
+// ─── PerfectMatchings(n): perfect matchings of [2n] (pairings). Count (2n-1)!! (double factorial). ───────
+function doubleFactOdd(k: number): number { let f = 1; for (let i = k; i >= 1; i -= 2) f *= i; return f; }
+export function PerfectMatchingCount(n: number): number { return n < 0 ? 0 : doubleFactOdd(2 * n - 1); }
+/** rank-th perfect matching of [2n], as a list of [min,max] pairs ordered by least element. */
+export function PerfectMatchingUnrank(n: number, rank: number): number[][] {
+  const total = PerfectMatchingCount(n);
+  let r = total ? ((rank % total) + total) % total : 0;
+  const points: number[] = Array.from({ length: 2 * n }, (_, i) => i + 1);
+  const pairs: number[][] = [];
+  while (points.length) {
+    const p = points.shift()!;
+    const L = points.length; // odd
+    const block = doubleFactOdd(L - 2); // (L-2)!! completions after this pair (L-2 is odd)
+    const j = Math.floor(r / block);
+    r %= block;
+    const q = points[j];
+    points.splice(j, 1);
+    pairs.push([p, q]);
+  }
+  return pairs;
+}
+export function PerfectMatchingRank(pairs: number[][], n: number): number {
+  // partner lookup
+  const partner = new Array(2 * n + 1).fill(0);
+  for (const [a, b] of pairs) { partner[a] = b; partner[b] = a; }
+  const points: number[] = Array.from({ length: 2 * n }, (_, i) => i + 1);
+  let r = 0;
+  while (points.length) {
+    const p = points.shift()!;
+    const q = partner[p];
+    const j = points.indexOf(q);
+    const block = doubleFactOdd(points.length - 2);
+    r += j * block;
+    points.splice(j, 1);
+  }
+  return r;
+}
+export function IsPerfectMatchingOf(pairs: any, n: number): boolean {
+  if (!Array.isArray(pairs) || pairs.length !== n) return false;
+  const seen = new Array(2 * n + 1).fill(false);
+  for (const e of pairs) {
+    if (!Array.isArray(e) || e.length !== 2) return false;
+    for (const x of e) { if (!Number.isInteger(x) || x < 1 || x > 2 * n || seen[x]) return false; seen[x] = true; }
+  }
+  return true;
+}
+
+// ─── PartitionsMaxPart(n,m): integer partitions of n with every part ≤ m. Count = partsAtMost(n,m). ──────
+const _pamX = new Map<string, number>();
+function partsLeq(m: number, j: number): number {
+  if (m === 0) return 1;
+  if (m < 0 || j <= 0) return 0;
+  const key = `${m},${j}`;
+  let v = _pamX.get(key);
+  if (v === undefined) { v = partsLeq(m, j - 1) + partsLeq(m - j, j); _pamX.set(key, v); }
+  return v;
+}
+export function PartitionsMaxPartCount(n: number, m: number): number { return n < 0 ? 0 : partsLeq(n, m); }
+export function PartitionsMaxPartUnrank(n: number, m: number, rank: number): number[] {
+  const total = PartitionsMaxPartCount(n, m);
+  let r = total ? ((rank % total) + total) % total : 0;
+  const out: number[] = [];
+  let rem = n, cap = m;
+  while (rem > 0) {
+    for (let part = Math.min(rem, cap); part >= 1; part--) {
+      const c = partsLeq(rem - part, part);
+      if (r < c) { out.push(part); rem -= part; cap = part; break; }
+      r -= c;
+    }
+  }
+  return out;
+}
+export function PartitionsMaxPartRank(p: number[], m: number): number {
+  const parts = [...p].sort((a, b) => b - a);
+  const n = parts.reduce((a, b) => a + b, 0);
+  let r = 0, rem = n, cap = m;
+  for (const part of parts) {
+    for (let v = Math.min(rem, cap); v > part; v--) r += partsLeq(rem - v, v);
+    rem -= part; cap = part;
+  }
+  return r;
+}
+export function IsPartitionMaxPart(p: number[], n: number, m: number): boolean {
+  if (!Array.isArray(p)) return false;
+  let s = 0, prev = Infinity;
+  for (const x of p) { if (!Number.isInteger(x) || x < 1 || x > m || x > prev) return false; s += x; prev = x; }
+  return s === n;
+}
+
+// ─── RootedForests(n): rooted forests on [n] via labeled trees on [n+1]. Count (n+1)^(n-1). ─────────────
+// Element = a parent array of length n: parent[i-1] is i's parent, or 0 if i is a tree root.
+export function RootedForestCount(n: number): number { return n <= 0 ? 1 : (n + 1) ** (n - 1); }
+export function RootedForestUnrank(n: number, rank: number): number[] {
+  if (n === 0) return [];
+  const edges = LabeledTreeUnrank(n + 1, rank); // tree on {1..n+1}, root at n+1
+  const root = n + 1;
+  const adj: number[][] = Array.from({ length: n + 2 }, () => []);
+  for (const [u, v] of edges) { adj[u].push(v); adj[v].push(u); }
+  const parent = new Array(n).fill(0);
+  const seen = new Array(n + 2).fill(false);
+  const queue = [root]; seen[root] = true;
+  while (queue.length) {
+    const cur = queue.shift()!;
+    for (const nb of adj[cur]) if (!seen[nb]) { seen[nb] = true; parent[nb - 1] = cur === root ? 0 : cur; queue.push(nb); }
+  }
+  return parent;
+}
+export function RootedForestRank(parent: number[], n: number): number {
+  const edges: number[][] = [];
+  for (let i = 1; i <= n; i++) { const p = parent[i - 1]; edges.push([i, p === 0 ? n + 1 : p]); }
+  return LabeledTreeRank(edges, n + 1);
+}
+export function IsRootedForest(parent: any, n: number): boolean {
+  if (!Array.isArray(parent) || parent.length !== n) return false;
+  const uf = Array.from({ length: n + 2 }, (_, i) => i);
+  const find = (x: number): number => (uf[x] === x ? x : (uf[x] = find(uf[x])));
+  for (let i = 1; i <= n; i++) {
+    const p = parent[i - 1];
+    if (!Number.isInteger(p) || p < 0 || p > n) return false;
+    const a = i, b = p === 0 ? n + 1 : p;
+    const ra = find(a), rb = find(b);
+    if (ra === rb) return false;
+    uf[ra] = rb;
+  }
+  return true; // n edges on n+1 vertices, acyclic ⇒ a tree ⇒ a valid rooted forest on [n]
+}

@@ -113,6 +113,16 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(sym(["Element", ["List", 2, 1, 3], ["CyclicPermutations", 3]])).toBe("False"); // (1 2)(3), not one cycle
     expect(sym(["Element", ["List", 1, 1, 3], ["Endofunctions", 3]])).toBe("True"); // repeats allowed
   });
+  it("perfect matchings / bounded partitions / rooted forests", () => {
+    expect(num(["Length", ["PerfectMatchings", 3]])).toBe(15); // (2·3-1)!! = 5!!
+    expect(num(["Length", ["PartitionsMaxPart", 6, 2]])).toBe(4); // partitions of 6, parts ≤ 2
+    expect(num(["Length", ["RootedForests", 3]])).toBe(16); // (3+1)^2
+    expect(str(["At", ["PerfectMatchings", 2], 1])).toBe("[[1,2],[3,4]]"); // first matching of [4]
+    expect(sym(["Element", ["List", ["List", 1, 3], ["List", 2, 4]], ["PerfectMatchings", 2]])).toBe("True");
+    expect(sym(["Element", ["List", ["List", 1, 2], ["List", 2, 4]], ["PerfectMatchings", 2]])).toBe("False"); // 2 used twice
+    expect(sym(["Element", ["List", 4, 2, 1], ["PartitionsMaxPart", 7, 4]])).toBe("True"); // parts ≤ 4, sum 7
+    expect(sym(["Element", ["List", 5, 2], ["PartitionsMaxPart", 7, 4]])).toBe("False"); // part 5 > 4
+  });
 });
 
 describe("At endpoints (1-based) — the off-by-one contract holds per family", () => {
@@ -187,6 +197,9 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "CyclicPermutations(6)", coll: ["CyclicPermutations", 6] },
     { name: "Endofunctions(4)", coll: ["Endofunctions", 4] },
     { name: "BinaryStrings(7)", coll: ["BinaryStrings", 7] },
+    { name: "PerfectMatchings(4)", coll: ["PerfectMatchings", 4] },
+    { name: "PartitionsMaxPart(8,3)", coll: ["PartitionsMaxPart", 8, 3] },
+    { name: "RootedForests(4)", coll: ["RootedForests", 4] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {
