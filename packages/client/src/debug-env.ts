@@ -11,7 +11,9 @@ const sqlLog = debug('enumeratio:sql')
  *  this reads the same value to decide whether to lift it into the SQL-side GUC too). */
 function rawDebugEnv(): string | undefined {
   try {
-    if (typeof process !== 'undefined' && process.env?.DEBUG) return process.env.DEBUG
+    // read through globalThis so a DOM-only consumer (the components package) typechecks without node types
+    const proc = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process
+    if (proc?.env?.DEBUG) return proc.env.DEBUG
   } catch { /* no process (a bundled browser build may strip it entirely) */ }
   try {
     const ls = (globalThis as { localStorage?: Storage }).localStorage

@@ -8,18 +8,19 @@
 // dirty and every non-pg engine's `can()` collapses to false: whatever else happens, an engine must never answer
 // from a picture of a world that has moved. Same for a snapshot whose hash does not match the live core, and for
 // no snapshot at all (a source checkout, where the artifact was never generated).
-import type { CarrierRow, CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind } from '@enumeratio/data/catalog-snapshot'
-import { grantsFor, isFoldable } from '@enumeratio/data/catalog-snapshot'
+import type { CarrierRow, CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind, TypeOperationRow } from '@enumeratio/data/catalog-snapshot'
+import { grantsFor, isFoldable, kindOfType } from '@enumeratio/data/catalog-snapshot'
 import { onDbExtended } from './core'
 import type { Representation } from './engine'
 
-export type { CarrierRow, CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind }
+export type { CarrierRow, CatalogSnapshot, CollectionRow, FunctionRow, ImplRow, TypeKind, TypeOperationRow }
 
 /** What an entry knows: the artifact (or null), and the hash of the core actually running. */
 export type CatalogSource = () => Promise<{ snapshot: CatalogSnapshot | null; liveHash: string }>
 
 const EMPTY: CatalogSnapshot = {
   hash: '', builtAt: '', functions: [], collections: [], carriers: [], engines: [], columnGroups: [], grants: [], foldable: [],
+  typeOperations: [],
 }
 
 let source: CatalogSource | null = null
@@ -95,6 +96,13 @@ export class Registry {
   carrier(name: string): CarrierRow | undefined { return this.base.carriers.find((c) => c.name === name) }
   grants(engine: string, coll: string | null): string[] { return grantsFor(this.base, engine, coll) }
   foldable(engine: string, coll: string, stat: string): boolean { return isFoldable(this.base, engine, coll, stat) }
+  /** The `base_type_operation` row binding `type` to algebra op `op`, if the catalog has one. */
+  typeOperation(type: string, op: string): TypeOperationRow | undefined {
+    return this.base.typeOperations.find((t) => t.type === type && t.op === op)
+  }
+  /** The TypeKind of a NAMED pg type — a builtin, a curated algebra type, or a carrier. See catalog-snapshot's
+   *  kindOfType for the resolution order. */
+  kindOfType(name: string): TypeKind { return kindOfType(this.base, name) }
 
   /** Resolve an OVERLOAD the way Postgres does: an exact match on argument kinds first, then the candidates each
    *  argument can widen into (int → numeric → float, pg's own numeric-tower direction). Among survivors, an

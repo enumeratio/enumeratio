@@ -97,6 +97,7 @@ export default defineConfig({
           text: 'Explore', link: '/explore/',
           items: [
             { text: 'Collections', link: '/explore/collection/' },
+            { text: 'Notebook', link: '/explore/notebook/' },
           ],
         },
       ],
@@ -162,6 +163,9 @@ export default defineConfig({
                     { text: 'enumeratio-notation', link: '/develop/packages/components/notation' },
                     { text: 'enumeratio-figure', link: '/develop/packages/components/figure' },
                     { text: 'enumeratio-expression', link: '/develop/packages/components/expression' },
+                    { text: 'enumeratio-math-input', link: '/develop/packages/components/math-input' },
+                    { text: 'enumeratio-expression-line', link: '/develop/packages/components/expression-line' },
+                    { text: 'enumeratio-expression-set', link: '/develop/packages/components/expression-set' },
                   ],
                 },
                 {

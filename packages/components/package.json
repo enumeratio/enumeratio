@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@enumeratio/client": "workspace:*",
+    "@enumeratio/expressions": "workspace:*",
     "lit": "^3.2.1",
+    "mathlive": "^0.110.0",
     "three": "^0.184.0"
   },
   "devDependencies": {

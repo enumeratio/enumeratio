@@ -78,4 +78,6 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
          ORDER BY fiber_address((e).fiber), (e).rank OFFSET r LIMIT 1
       )
     )::text
-    FROM generate_series(0, cardinality(permutations(1,4))::int - 1) r $q$);
+    FROM generate_series(0, cardinality(permutations(1,4))::int - 1) r $q$),
+  ('permutations','locate: the value→element inverse recovers the rank (312 is rank 4 of S₃)','eq','4','locate(h, v) then rank()',$q$
+    SELECT rank(locate(permutations(3), (SELECT (e).value FROM elements(permutations(3), 10) e OFFSET 4 LIMIT 1)))::text $q$);

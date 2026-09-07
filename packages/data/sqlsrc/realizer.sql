@@ -993,6 +993,22 @@ BEGIN
       EXECUTE format('CREATE FUNCTION contains(h %I, v %s) RETURNS boolean LANGUAGE sql STABLE AS $b$ '
                      'SELECT EXISTS (SELECT 1 FROM fibers(h) f WHERE contains_in_fiber(f, v)) $b$', coll, carrier);
     END IF;
+
+    -- locate(handle, value): the value→element INVERSE — the member of `h` whose value is `v`, else NULL. contains(h, v)
+    -- gates it (a NULL is a real non-member), then the candidate fiber is scanned with a per-row plpgsql FOR loop over
+    -- fiber_elements(f, cap): elements(f) (row_number() OVER) and WITH ORDINALITY both materialize the whole cap before a
+    -- LIMIT can bite, a FOR loop stops pulling at RETURN — so the cap only costs on a genuine miss. The fiber is fetched
+    -- by scalar-subquery ASSIGNMENT: a single-field fiber composite makes `SELECT … INTO cf` mis-assign (plpgsql matches
+    -- the one column to the one field). O(scan) until a fiber_rank accel (the mirror of fiber_unrank) exists — follow-up.
+    EXECUTE format('CREATE FUNCTION locate(h %I, v %s) RETURNS %I LANGUAGE plpgsql STABLE AS $b$ '
+                   'DECLARE cf %I; s %s; r bigint := 0; BEGIN '
+                   'IF NOT coalesce(contains(h, v), false) THEN RETURN NULL; END IF; '
+                   'cf := (SELECT f2 FROM fibers(h) f2 WHERE contains_in_fiber(f2, v) LIMIT 1); '
+                   'FOR s IN SELECT * FROM fiber_elements(cf, 1000000) x LOOP '
+                   'IF s = v THEN RETURN ROW(cf, rank_point(r::rank_index), s)::%I; END IF; '
+                   'r := r + 1; END LOOP; '
+                   'RETURN NULL; END $b$',
+                   coll, carrier, coll || '_element', coll || '_fiber', carrier, coll || '_element');
   END IF;
   IF to_regprocedure(format('contains(%I, %s)', coll, carrier)) IS NOT NULL THEN
     EXECUTE format('CREATE FUNCTION member_of(v %s, h %I) RETURNS boolean LANGUAGE sql STABLE AS $b$ SELECT contains(h, v) $b$', carrier, coll);

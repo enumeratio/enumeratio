@@ -7,7 +7,7 @@
   "scripts": {
     "test": "pnpm test:core && pnpm test:stack && pnpm test:build",
     "test:core": "pnpm --filter @enumeratio/data run test",
-    "test:stack": "pnpm --filter @enumeratio/data run typecheck && pnpm --filter @enumeratio/client run build && pnpm --filter @enumeratio/client run test && pnpm --filter @enumeratio/cli run typecheck && pnpm --filter @enumeratio/cli run test",
+    "test:stack": "pnpm --filter @enumeratio/data run typecheck && pnpm --filter @enumeratio/client run build && pnpm --filter @enumeratio/client run test && pnpm --filter @enumeratio/expressions run typecheck && pnpm --filter @enumeratio/expressions run test && pnpm --filter @enumeratio/cli run typecheck && pnpm --filter @enumeratio/cli run test",
     "test:build": "pnpm --filter @enumeratio/explorer run build && pnpm docs:build",
     "test:unit": "vitest run",
     "test:watch": "vitest",

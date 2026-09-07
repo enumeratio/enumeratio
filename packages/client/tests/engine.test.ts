@@ -7,9 +7,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
 import { coreBundleHash } from '@enumeratio/data/node'
 import {
-  cancelDb, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, provideCatalog, makeDb, makeWorkerDb, parseCalc,
-  lowerScalar, pgEngine, planRows, provideDb, provideEngine, registry, Registry, resetRegistry, routerEngine, runSql,
-  setQueryTimeout, tsEngine, type Expr, type RowQuery,
+  cancelDb, ceEngine, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, provideCatalog, makeDb, makeWorkerDb,
+  parseCalc, lowerScalar, pgEngine, planRows, provideDb, provideEngine, registry, Registry, resetRegistry, routerEngine, runSql,
+  setQueryTimeout, standardEngine, textFromSelect, tsEngine, type Expr, type RowQuery, type SelectExpr,
 } from '../src/index.ts'
 
 const collect = async <T>(it: AsyncIterable<T>): Promise<T[]> => { const o: T[] = []; for await (const x of it) o.push(x); return o }
@@ -273,5 +273,170 @@ describe('composite carriers · ts answers what it can print, and declines what 
     expect(reg.impls('lehmer_code', 'ts')).toHaveLength(1)
     expect(reg.impls('lehmer_code', 'pg')).toHaveLength(1)
     expect(ts.why(parseCalc('lehmer_code(permutation([2, 4, 1, 3]))'))).toBeUndefined()
+  })
+})
+
+describe('op / handle / cast — the four scalar-surface-only IR kinds, end to end', () => {
+  let reg: Awaited<ReturnType<typeof registry>>
+  let ts: ReturnType<typeof tsEngine>
+  let pg: ReturnType<typeof pgEngine>
+
+  beforeAll(async () => {
+    resetRegistry()
+    pg = pgEngine(() => makeDb())
+    useLiveCatalog()
+    reg = await registry()
+    ts = tsEngine(reg)
+  })
+  afterAll(async () => { await close(); resetRegistry() })
+
+  const lit = (value: number | string): SelectExpr => ({ kind: 'lit', value })
+  const call = (fn: string, ...args: SelectExpr[]): SelectExpr => ({ kind: 'apply', fn: fnRef(fn), args })
+  const rat = (num: number, den: number): SelectExpr => call('rational_number', lit(num), lit(den))
+
+  it('lowerScalar goldens: typed lit, op with a curated implFn, native op, unary neg, an element-typed cast, a handle', () => {
+    expect(lowerScalar({ kind: 'lit', value: 5, type: 'numeric' })).toBe('5::numeric')
+    expect(lowerScalar({ kind: 'op', op: 'add', type: 'rational_number', args: [rat(1, 2), rat(1, 3)] }))
+      .toBe('rational_add(rational_number(1, 2), rational_number(1, 3))')
+    expect(lowerScalar({ kind: 'op', op: 'add', type: 'numeric', args: [lit(3), lit(4)] })).toBe('(3 + 4)')
+    expect(lowerScalar({ kind: 'op', op: 'neg', type: 'integer_number', args: [lit(5)] })).toBe('(-5)')
+    expect(lowerScalar({ kind: 'cast', expr: { kind: 'lit', value: 'x', type: 'permutations_element' }, to: 'permutation' }))
+      .toBe("('x'::permutations_element).value")
+    expect(lowerScalar({ kind: 'handle', handle: { coll: 'permutations', named: {}, positional: [4] } })).toBe('permutations(4)')
+    expect(lowerScalar({ kind: 'handle', handle: { coll: 'k_subsets', named: { n: 4, k: 2 }, positional: [] } })).toBe('k_subsets(4, 2)')
+  })
+
+  const value = async (engine: { evaluate: typeof ts.evaluate }, e: Expr): Promise<string> => {
+    const r = engine.evaluate(e)
+    for await (const row of r.rows) return String(Object.values(row)[0])
+    throw new Error('no rows')
+  }
+
+  it('op(add, numeric, …) = 7 through BOTH engines, not just the oracle', async () => {
+    const e: Expr = { select: [{ kind: 'op', op: 'add', type: 'numeric', args: [lit(3), lit(4)] }] }
+    expect(ts.can(e)).toBe(true)
+    expect(pg.can(e)).toBe(true)
+    expect(await value(ts, e)).toBe('7')
+    expect(await value(pg, e)).toBe('7')
+  })
+
+  it('op(add, rational_number, …) evaluates through pg to a reduced fraction, via the registered ::text cast', async () => {
+    const e: Expr = { select: [{ kind: 'op', op: 'add', type: 'rational_number', args: [rat(1, 2), rat(1, 3)] }] }
+    expect(await value(pg, e)).toBe('5/6')
+  })
+
+  it('a handle used as a VALUE evaluates through the seam: cardinality(handle(permutations(4))) = 24', async () => {
+    const std = await standardEngine()
+    const e: Expr = { select: [call('cardinality', { kind: 'handle', handle: { coll: 'permutations', named: {}, positional: [4] } })] }
+    expect(await value(std, e)).toBe('24')
+    expect((await std.evaluate(e).plan).engine).toBe('pg')
+  })
+
+  it('ts declines handle and cast outright — its why() names the kind, not a printer or grant failure', () => {
+    const h: Expr = { select: [{ kind: 'handle', handle: { coll: 'permutations', named: {}, positional: [4] } }] }
+    expect(ts.can(h)).toBe(false)
+    expect(ts.why(h)).toMatch(/handle/)
+    const c: Expr = { select: [{ kind: 'cast', expr: lit(1), to: 'rational_number' }] }
+    expect(ts.can(c)).toBe(false)
+    expect(ts.why(c)).toMatch(/cast/)
+  })
+
+  it('a FROM-present select column cannot be an op — irToSpec/textFromSelect reject it, naming the kind', () => {
+    expect(() => textFromSelect([{ kind: 'op', op: 'add', type: 'numeric', args: [lit(1), lit(2)] }])).toThrow(/op/)
+  })
+})
+
+describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () => {
+  let reg: Awaited<ReturnType<typeof registry>>
+  let ce: ReturnType<typeof ceEngine>
+  let pg: ReturnType<typeof pgEngine>
+
+  beforeAll(async () => {
+    resetRegistry()
+    pg = pgEngine(() => makeDb())
+    useLiveCatalog()
+    reg = await registry()
+    ce = ceEngine(reg)
+  })
+  afterAll(async () => { await ce.close(); await close(); resetRegistry() })
+
+  const lit = (value: number): SelectExpr => ({ kind: 'lit', value })
+  const call = (fn: string, ...args: SelectExpr[]): SelectExpr => ({ kind: 'apply', fn: fnRef(fn), args })
+  const op = (o: string, type: string, ...args: SelectExpr[]): SelectExpr => ({ kind: 'op', op: o, type, args })
+
+  const value = async (e: { evaluate: (expr: Expr) => ReturnType<typeof ce.evaluate> }, expr: Expr): Promise<string> => {
+    const r = e.evaluate(expr)
+    for await (const row of r.rows) return String(Object.values(row)[0])
+    throw new Error('no rows')
+  }
+
+  it('claims a curated function CE_OPERATORS maps and an int/numeric op — declines a handle and a FROM', () => {
+    expect(ce.can({ select: [call('factorial', lit(25))] })).toBe(true)
+    expect(ce.can({ select: [op('add', 'numeric', lit(3), lit(4))] })).toBe(true)
+
+    const h: Expr = { select: [{ kind: 'handle', handle: { coll: 'permutations', named: {}, positional: [4] } }] }
+    expect(ce.can(h)).toBe(false)
+    expect(ce.why(h)).toMatch(/handle/)
+
+    const rows = exprFromStatement({ from: 'permutations(4)', select: 'element' })
+    expect(ce.can(rows)).toBe(false)
+    expect(ce.why(rows)).toMatch(/no enumerator for permutations/)
+  })
+
+  it('factorial(25) is exact — 25! to the last digit — and ts or ce answers it, never pg', async () => {
+    const std = await standardEngine()
+    const { plan, rows } = std.evaluate({ select: [call('factorial', lit(25))] })
+    const out: Record<string, unknown>[] = []
+    for await (const row of rows) out.push(row as Record<string, unknown>)
+    const p = await plan
+    expect(String(Object.values(out[0])[0])).toBe('15511210043330985984000000')
+    expect(p.engine).not.toBe('pg')
+  })
+
+  it('forced ahead of pg: ce claims an exact division, and declines a non-exact one to the oracle', async () => {
+    const router = routerEngine([ce, pg])
+
+    const exact = op('div', 'numeric', lit(6), lit(3))
+    const { plan: p1, rows: r1 } = router.evaluate({ select: [exact] })
+    const out1: Record<string, unknown>[] = []
+    for await (const row of r1) out1.push(row as Record<string, unknown>)
+    expect(String(Object.values(out1[0])[0])).toBe('2')
+    expect((await p1).engine).toBe('ce')
+
+    // 1/3 on a NUMERIC kind is pg's truncated decimal division, not the exact rational CE's own kernel would
+    // happily hand back — printing "1/3" here would be exact by CE's lights and still wrong by pg's, so ce
+    // declines rather than invent a spelling pg never produces (see ce-engine.ts's file header).
+    const inexact = op('div', 'numeric', lit(1), lit(3))
+    expect(ce.can({ select: [inexact] })).toBe(true)   // structural — the exactness only fails at evaluate()
+    await expect(value(ce, { select: [inexact] })).rejects.toBeInstanceOf(InexactResult)
+
+    const { plan: p2, rows: r2 } = router.evaluate({ select: [inexact] })
+    const out2: Record<string, unknown>[] = []
+    for await (const row of r2) out2.push(row as Record<string, unknown>)
+    expect((await p2).engine).toBe('pg')
+    expect(String(Object.values(out2[0])[0])).toBe(await value(pg, { select: [inexact] }))
+  })
+
+  it('gcd and binomial agree with pg', async () => {
+    const g: Expr = { select: [call('gcd', lit(48), lit(18))] }
+    expect(await value(ce, g)).toBe(await value(pg, g))
+    const b: Expr = { select: [call('binomial', lit(30), lit(15))] }
+    expect(await value(ce, b)).toBe(await value(pg, b))
+  })
+})
+
+describe('generated element functions type their result for a cast above them', () => {
+  let pg: ReturnType<typeof pgEngine>
+  beforeAll(async () => { resetRegistry(); pg = pgEngine(() => makeDb()); useLiveCatalog(); await registry() })
+  afterAll(async () => { await close(); resetRegistry() })
+
+  it('cast(locate(handle, 10), numeric) prints (…).value, not ::numeric — and next() keeps the element type', async () => {
+    const h: SelectExpr = { kind: 'handle', handle: { coll: 'triangular_numbers', named: {}, positional: [] } }
+    const loc: SelectExpr = { kind: 'apply', fn: fnRef('locate'), args: [h, { kind: 'lit', value: 10 }] }
+    expect(lowerScalar({ kind: 'cast', expr: loc, to: 'numeric' })).toBe('(locate(triangular_numbers(), 10)).value')
+    const nxt: SelectExpr = { kind: 'apply', fn: fnRef('next'), args: [loc] }
+    expect(lowerScalar({ kind: 'cast', expr: nxt, to: 'numeric' })).toBe('(next(locate(triangular_numbers(), 10))).value')
+    const rows = await collect(pg.evaluate({ select: [{ kind: 'cast', expr: nxt, to: 'numeric' }] }).rows)
+    expect(Object.values(rows[0])[0]).toBe('15')
   })
 })

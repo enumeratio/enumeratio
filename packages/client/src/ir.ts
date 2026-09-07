@@ -41,14 +41,27 @@ export function fnRef(id: string): FnRef {
 export type SelectExpr =
   /** a constant — an argument to an apply, or a whole FROM-less scalar. An ARRAY constant is a literal too: a
    *  composite carrier's field is often `int[]` (a permutation's image, a multicomplex's coefficients), and
-   *  building one needs the array to be expressible without a node kind of its own. */
-  | { kind: 'lit'; value: LitValue }
+   *  building one needs the array to be expressible without a node kind of its own. `type` is present when this
+   *  literal carries a NAMED pg type — a typed constant (`5::numeric`) or a value re-embedded from another
+   *  evaluation (a `<coll>_element` row handed back in) — and absent for a bare untyped constant. */
+  | { kind: 'lit'; value: LitValue; type?: string }
   /** the element under FROM; a select closed of `subject` is FROM-less-legal */
   | { kind: 'subject' }
   /** a value_fn / mapping_fn / render_fn, or one of the printer-only pseudo-functions below */
   | { kind: 'apply'; fn: FnRef; args: SelectExpr[] }
   /** a fiber-level fold over the group's rows */
   | { kind: 'aggregate'; fn: FnRef; over: SelectExpr }
+  /** an ALGEBRA operator (`base_operation.id` — `add`, `neg`, `le`, …) over a NAMED pg type, the front end's own
+   *  choice: `op('add', 'rational_number', [a, b])` is `a + b` in the field the front end decided `a`/`b` live in.
+   *  `type` is never inferred from the args — an engine looks it up via `base_type_operation` (curated impl, or a
+   *  pg-builtin native op) and rejects if that type has no such operation, rather than guessing one. */
+  | { kind: 'op'; op: string; type: string; args: SelectExpr[] }
+  /** a collection HANDLE used as a VALUE, not a FROM — e.g. `cardinality(handle(permutations(4)))`, where the
+   *  handle itself is an argument rather than the thing being enumerated. */
+  | { kind: 'handle'; handle: HandleExpr }
+  /** a coercion: an element row down to its carrier VALUE (`(e).value`, when the source resolves to a
+   *  `<coll>_element`), or a plain numeric-to-domain cast (`::rational_number`) otherwise. */
+  | { kind: 'cast'; expr: SelectExpr; to: string }
   /** the escape hatch: SQL the tree could not capture. pg-only by construction. */
   | { kind: 'raw'; sql: string }
 
@@ -71,6 +84,11 @@ const SUBJECT: SelectExpr = { kind: 'subject' }
 const lit = (value: LitValue): SelectExpr => ({ kind: 'lit', value })
 const apply = (fn: string, ...args: SelectExpr[]): SelectExpr => ({ kind: 'apply', fn: fnRef(fn), args })
 const aggregate = (fn: string, over: SelectExpr): SelectExpr => ({ kind: 'aggregate', fn: fnRef(fn), over })
+
+// `op`/`handle`/`cast` never appear below: the column half (specToIr/irToSpec) and the calc grammar (parseCalc)
+// predate them and denote only what select.ts's SelectSpec / the FROM-less calculator can already say — they are
+// SCALAR-SURFACE-ONLY kinds, built directly by an engine's own front end, never by parsing `select=` or `--calc`
+// text. A tree containing one that reaches irToSpec throws the same as any other node outside its vocabulary.
 
 /** One parsed column spec → its tree. Pure: a bare id stays the ambiguous `column(subject, 'id')` until a registry
  *  resolves it to an axis or a statistic (select.ts's resolveSelect does that against a live collection). */
@@ -302,14 +320,21 @@ export function isClosed(e: SelectExpr): boolean {
     case 'subject': return false
     case 'apply': return e.args.every(isClosed)
     case 'aggregate': return isClosed(e.over)
+    case 'op': return e.args.every(isClosed)
+    case 'cast': return isClosed(e.expr)
+    case 'handle': return true   // a handle names a collection by its own bindings, never the element under FROM
     default: return true
   }
 }
 
-/** Every `apply`/`aggregate` function id in a tree, leaves first — what `can()` walks to decide capability. */
+/** Every `apply`/`aggregate` function id in a tree, leaves first — what `can()` walks to decide capability. An
+ *  `op` node contributes no FnRef of its own (it names a `base_operation` id, not a `base_function` one — a
+ *  different registry, resolved through `Registry.typeOperation`), but its args still need walking. */
 export function functionsIn(e: SelectExpr, out: FnRef[] = []): FnRef[] {
   if (e.kind === 'apply') { for (const a of e.args) functionsIn(a, out); out.push(e.fn) }
   else if (e.kind === 'aggregate') { functionsIn(e.over, out); out.push(e.fn) }
+  else if (e.kind === 'op') { for (const a of e.args) functionsIn(a, out) }
+  else if (e.kind === 'cast') { functionsIn(e.expr, out) }
   return out
 }
 
@@ -385,13 +410,32 @@ export function parseCalc(text: string): Expr {
 const constText = (v: LitValue): string =>
   Array.isArray(v) ? `[${v.map(constText).join(', ')}]` : typeof v === 'string' ? `'${String(v).replace(/'/g, "''")}'` : String(v)
 
+/** `base_operation` ids that print infix/prefix, for `calcText`'s `op` case — a display convenience only (the
+ *  engines resolve the SAME op id through the catalog, never through this table). Absent from here, an op still
+ *  prints — just as `id[type](args)`, the `[type]` suffix carrying what would otherwise be lost. */
+const OP_GLYPHS: Record<string, string> = {
+  add: '+', sub: '-', mul: '*', div: '/', pow: '^',
+  le: '<=', lt: '<', ge: '>=', gt: '>', eq: '=', ne: '<>',
+  neg: '-', recip: '⁻¹', inverse: '⁻¹', join: '∪', meet: '∩', complement: 'ᶜ',
+}
+const UNARY_OPS = new Set(['neg', 'recip', 'inverse', 'complement'])
+
 /** The canonical text of a scalar tree — the inverse of parseCalc, and what `--explain` echoes back. */
 export function calcText(e: SelectExpr): string {
   switch (e.kind) {
-    case 'lit': return constText(e.value)
+    case 'lit': return e.type ? `${constText(e.value)}::${e.type}` : constText(e.value)
     case 'apply': return e.args.length ? `${e.fn}(${e.args.map(calcText).join(', ')})` : String(e.fn)
     case 'aggregate': return `${e.fn}(${calcText(e.over)})`
     case 'subject': return 'element'
     case 'raw': return e.sql
+    case 'op': {
+      const g = OP_GLYPHS[e.op]
+      const args = e.args.map(calcText)
+      if (g && UNARY_OPS.has(e.op) && args.length === 1) return `(${g}${args[0]})`
+      if (g && args.length === 2) return `(${args[0]} ${g} ${args[1]})`
+      return `${e.op}[${e.type}](${args.join(', ')})`
+    }
+    case 'handle': return handleExprText(e.handle)
+    case 'cast': return `(${calcText(e.expr)})::${e.to}`
   }
 }

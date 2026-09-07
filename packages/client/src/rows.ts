@@ -169,8 +169,10 @@ export function parseHandle(text: string): ParsedHandle {
 /** Bind a parsed arg list (positional + named) onto a grade CHAIN, by position / by name — the same mapping
  *  toHandle itself uses, factored out for resolveFrom's family-point matching (which binds against a POINT's or a
  *  FAMILY's own chain, not a live Handle). Unknown names / out-of-range positions are silently dropped: this is a
- *  best-effort rewrite, never a hard parse — an ill-formed FROM still reaches toHandle's own, better error. */
-function bindArgsToChain(args: { named: Record<string, ParamValue>; positional: ParamValue[] }, chain: string[]): Record<string, ParamValue> {
+ *  best-effort rewrite, never a hard parse — an ill-formed FROM still reaches toHandle's own, better error.
+ *  Exported so pg-engine's `handle`-as-value lowering can bind a parsed HandleExpr's positional/named args onto a
+ *  grade chain the SAME way, rather than re-implementing this. */
+export function bindArgsToChain(args: { named: Record<string, ParamValue>; positional: ParamValue[] }, chain: string[]): Record<string, ParamValue> {
   const out: Record<string, ParamValue> = {}
   args.positional.forEach((v, i) => { if (chain[i]) out[chain[i]] = v })
   for (const [k, v] of Object.entries(args.named)) if (chain.includes(k)) out[k] = v

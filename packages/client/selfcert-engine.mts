@@ -1,7 +1,8 @@
-// Self-certification — the ENGINE differential (#278 increment 6). The fourth selfcert layer, over selfcert.mts
-// (accelerated == naive per fiber), selfcert-view.mts (view configs) and selfcert-rows.mts (planRows == rowSql):
-// here the two sides are TWO ENGINES evaluating the SAME Expr. pg is the oracle; every other engine must agree
-// with it or decline.
+// Self-certification — the ENGINE differential (#278 increment 6, widened to THREE engines in Stage B). The
+// fourth selfcert layer, over selfcert.mts (accelerated == naive per fiber), selfcert-view.mts (view configs) and
+// selfcert-rows.mts (planRows == rowSql): here the sides are every non-oracle engine (ts, ce) evaluating the SAME
+// Expr. pg is the oracle; every other engine must agree with it or decline — ce's own decline count is reported
+// separately from ts's, since ce's CE_OPERATORS vocabulary only ever claims a fraction of what ts does today.
 //
 // This generalizes selfcert-math.mts, which hand-inlined one loop per function. Nothing here is per-function: the
 // sweep is driven by base_function_impl, so a new impl row is swept the moment it lands.
@@ -13,9 +14,9 @@
 //
 //   node --import tsx selfcert-engine.mts [filter]
 import {
-  close, evaluate, exprFromStatement, extendDb, InexactResult, lowerScalar, makeDb, parseCalc, pgEngine,
+  calcText, ceEngine, close, evaluate, exprFromStatement, extendDb, InexactResult, lowerScalar, makeDb, parseCalc, pgEngine,
   provideCatalog, provideDb, provideEngine, registry, resetRegistry, routerEngine, rowSql, runSql, tsEngine,
-  type Expr,
+  type Expr, type SelectExpr,
 } from './src/index.ts'
 import { buildCatalogSnapshot, grantsFor } from '@enumeratio/data/catalog-snapshot'
 import { coreBundleHash } from '@enumeratio/data/node'
@@ -31,10 +32,13 @@ const reg = await registry()
 if (reg.dirty) { console.error(`cannot self-certify: ${reg.dirty}`); process.exit(1) }
 const pg = pgEngine()
 const ts = tsEngine(reg)
+const ce = ceEngine(reg)
 await pg.ready?.()
-provideEngine(() => routerEngine([ts, pg]))
+provideEngine(() => routerEngine([ts, ce, pg]))
 
 let checked = 0
+let ceChecked = 0
+let ceDeclined = 0
 const mismatches: string[] = []
 const notes: string[] = []
 
@@ -137,6 +141,19 @@ const tsValue = async (text: string): Promise<{ value?: string; declined?: strin
     return { declined: (e as Error).message }
   }
 }
+/** the SAME differential, over ce — CE_OPERATORS only maps a handful of curated function ids (factorial, binomial,
+ *  gcd, lcm today), so most calls simply never reach ce.can(); those are not counted at all, not counted as a
+ *  decline — this file cares whether ce EVER disagrees with pg, not whether it covers everything ts does. */
+const ceValue = async (text: string): Promise<{ value?: string; declined?: string }> => {
+  try {
+    const r = ce.evaluate(parseCalc(text))
+    for await (const row of r.rows) return { value: String(Object.values(row)[0]) }
+    return { declined: 'no rows' }
+  } catch (e) {
+    if (e instanceof InexactResult) return { declined: 'inexact' }
+    return { declined: (e as Error).message }
+  }
+}
 
 console.log('── engine differential: ts == pg, or ts declines ────────────────────────────────────────────────')
 for (const f of reg.base.functions) {
@@ -161,16 +178,139 @@ for (const f of reg.base.functions) {
     if (got.declined === 'inexact') {
       declined++
       if (!frontier) frontier = args
-      continue
-    }
-    if (got.declined) { mismatches.push(`${text}: ts errored — ${got.declined}`); continue }
-    if (got.value !== expected[i]) mismatches.push(`${text}: pg=${expected[i]} ts=${got.value} (SILENT disagreement — the exactness guard let it through)`)
+    } else if (got.declined) { mismatches.push(`${text}: ts errored — ${got.declined}`) }
+    else if (got.value !== expected[i]) mismatches.push(`${text}: pg=${expected[i]} ts=${got.value} (SILENT disagreement — the exactness guard let it through)`)
     else agreed++
+
+    // ce sits between ts and pg in the standard router too — hold it to the SAME bar, independent of what ts just
+    // did (ts declining a case is not a reason to skip ce; the two engines' exactness frontiers need not coincide).
+    if (ce.can(parseCalc(text))) {
+      ceChecked++
+      const gotCe = await ceValue(text)
+      if (gotCe.declined === 'inexact') ceDeclined++
+      else if (gotCe.declined) mismatches.push(`${text}: ce errored — ${gotCe.declined}`)
+      else if (gotCe.value !== expected[i]) mismatches.push(`${text}: pg=${expected[i]} ce=${gotCe.value} (ce DISAGREES with the oracle)`)
+    }
   }
   const exact = reg.impls(f.id, 'ts').some((i) => i.representation === 'bigint' || i.representation === 'numeric')
   const bad = mismatches.length - before
   const mark = declined ? `${agreed} agree, ${declined} declined past ${call(f.id, frontier!)}` : `${agreed} agree`
   console.log(`  ${bad ? '✗' : '✓'} ${f.id.padEnd(28)} ${mark}${bad ? `, ${bad} MISMATCHED` : ''}${exact ? ' · exact twin available' : ''}`)
+}
+
+// ── op sweep: ts == pg over every base_type_operation row, or ts declines ───────────────────────────────────────────
+// The SAME differential as the function sweep above, generalized to the `op` IR kind: driven by
+// `reg.base.typeOperations` (base_type_operation), so a new row is swept the moment it lands, curated impl,
+// uncurated impl, or native pg op alike. ARGS_FOR is the one hand-authored bit — a representative pair (or
+// singleton, for a unary op) per TYPE, since a type's own carrier construction has no uniform literal syntax.
+const lit = (value: number): SelectExpr => ({ kind: 'lit', value })
+const rat = (n: number, d: number): SelectExpr => parseCalc(`rational_number(${n}, ${d})`).select[0]
+const UNARY_OPS = new Set(['neg', 'recip', 'inverse', 'complement'])
+// omega_ordinal (a domain over numeric[], not a scalar), modular_residue (needs a modulus alongside each value) and
+// finset (join/meet, not the numeric-tower vocabulary) have no equally-trivial literal here — noted below, not
+// guessed at.
+const ARGS_FOR: Record<string, () => SelectExpr[]> = {
+  natural_number: () => [lit(3), lit(4)],
+  integer_number: () => [lit(3), lit(-4)],
+  cardinal: () => [lit(3), lit(4)],
+  rational_number: () => [rat(1, 2), rat(1, 3)],
+  gaussian_integer: () => [parseCalc(gauss(2, 3)).select[0], parseCalc(gauss(1, -4)).select[0]],
+  multicomplex: () => [parseCalc(mc([2, 3], 97)).select[0], parseCalc(mc([5, 7], 97)).select[0]],
+}
+
+async function tsValueOf(e: SelectExpr): Promise<{ value?: string; declined?: string }> {
+  try {
+    const r = ts.evaluate({ select: [e] })
+    for await (const row of r.rows) return { value: String(Object.values(row)[0]) }
+    return { declined: 'no rows' }
+  } catch (err) {
+    if (err instanceof InexactResult) return { declined: 'inexact' }
+    return { declined: (err as Error).message }
+  }
+}
+async function pgValueOf(e: SelectExpr): Promise<string> {
+  const [row] = await runSql<{ c: string }>(`SELECT (${lowerScalar(e)})::text AS c`)
+  return String(row.c)
+}
+async function ceValueOf(e: SelectExpr): Promise<{ value?: string; declined?: string }> {
+  try {
+    const r = ce.evaluate({ select: [e] })
+    for await (const row of r.rows) return { value: String(Object.values(row)[0]) }
+    return { declined: 'no rows' }
+  } catch (err) {
+    if (err instanceof InexactResult) return { declined: 'inexact' }
+    return { declined: (err as Error).message }
+  }
+}
+
+console.log('── op sweep: ts == pg for every base_type_operation row, or ts declines ────────────────────────────')
+{
+  const opNoted = new Set<string>()
+  const before = mismatches.length
+  let opChecked = 0, declinedOutright = 0
+  for (const row of reg.base.typeOperations) {
+    if (filter && !row.type.includes(filter) && !row.op.includes(filter)) continue
+    const builder = ARGS_FOR[row.type]
+    if (!builder) {
+      if (!opNoted.has(row.type)) { opNoted.add(row.type); notes.push(`${row.type}: no representative arguments wired for the op sweep — recorded, not skipped silently`) }
+      continue
+    }
+    const args = (UNARY_OPS.has(row.op) ? builder().slice(0, 1) : builder().slice(0, 2))
+    const e: SelectExpr = { kind: 'op', op: row.op, type: row.type, args }
+    const label = `${row.type}.${row.op}(${args.map(calcText).join(', ')})`
+    opChecked++
+    const pgVal = await pgValueOf(e)
+    // ts declining OUTRIGHT (no ts twin for this op — cardinal/rational arithmetic has none) is not a mismatch;
+    // it is exactly the "ts has no ts implementation yet" case can() exists to report. A mismatch is either a
+    // SILENT wrong value, or ts.can() saying yes and then failing/disagreeing anyway.
+    if (!ts.can({ select: [e] })) declinedOutright++
+    else {
+      const got = await tsValueOf(e)
+      if (got.declined === 'inexact') { /* ts's own exactness guard — not a mismatch */ }
+      else if (got.declined) mismatches.push(`${label}: ts.can() said yes but evaluate threw — ${got.declined}`)
+      else if (got.value !== pgVal) mismatches.push(`${label}: pg=${pgVal} ts=${got.value} (SILENT disagreement — the exactness guard let it through)`)
+    }
+
+    // ce over the SAME (type, op) rows — natural_number/integer_number/cardinal are pg DOMAINs over numeric, so
+    // kindOfType resolves them to 'numeric' and ce claims their add/mul/le/etc. exactly as it would plain numeric;
+    // rational_number/gaussian_integer/multicomplex are composite carriers, which ce structurally declines.
+    if (ce.can({ select: [e] })) {
+      ceChecked++
+      const gotCe = await ceValueOf(e)
+      if (gotCe.declined === 'inexact') ceDeclined++
+      else if (gotCe.declined) mismatches.push(`${label}: ce.can() said yes but evaluate threw — ${gotCe.declined}`)
+      else if (gotCe.value !== pgVal) mismatches.push(`${label}: pg=${pgVal} ce=${gotCe.value} (ce DISAGREES with the oracle)`)
+    }
+  }
+  checked += opChecked
+  const bad = mismatches.length - before
+  console.log(`  ${bad ? '✗' : '✓'} ${opChecked} (type, op) case(s) checked, ${declinedOutright} declined by ts (no twin)${bad ? `, ${bad} MISMATCHED` : ''}`)
+}
+
+// ── ce's own design point: op(div, numeric, …) — exact when divisible, a soft decline otherwise ──────────────────
+// Not reachable through the base_type_operation sweep above (no catalog row uses the bare 'numeric'/'int' builtin
+// as its `type` — those only ever appear as ad-hoc op trees, same as engine.test.ts's unit tests build). This is
+// the one place selfcert exercises ce's div-exactness rule directly against pg's own numeric division.
+if (!filter) {
+  console.log('── ce div-exactness: op(div, numeric, …) agrees with pg when divisible, declines otherwise ────────')
+  const divCases: [number, number][] = [[6, 3], [12, 4], [-9, 3], [1, 3], [7, 2], [0, 5]]
+  let divAgree = 0, divDeclined = 0
+  const before = mismatches.length
+  for (const [a, b] of divCases) {
+    const e: SelectExpr = { kind: 'op', op: 'div', type: 'numeric', args: [lit(a), lit(b)] }
+    const label = `numeric.div(${a}, ${b})`
+    const pgVal = await pgValueOf(e)
+    const got = await ceValueOf(e)
+    checked++
+    if (got.declined === 'inexact') { divDeclined++; continue }
+    if (got.declined) { mismatches.push(`${label}: ce.can() said yes but evaluate threw — ${got.declined}`); continue }
+    // a divisible pair must match pg's own integer-division-of-numerics text EXACTLY, not merely numerically —
+    // pg prints an exact quotient as a bare integer with no decimal point, same as ce's bigint quotient does.
+    if (got.value !== pgVal) mismatches.push(`${label}: pg=${pgVal} ce=${got.value} (ce DISAGREES with the oracle on a divisible case)`)
+    else divAgree++
+  }
+  const bad = mismatches.length - before
+  console.log(`  ${bad ? '✗' : '✓'} ${divAgree} exact-divide agree, ${divDeclined} non-divisible declined${bad ? `, ${bad} MISMATCHED` : ''}`)
 }
 
 // ── the two grant folds ───────────────────────────────────────────────────────────────────────────────────────────
@@ -254,13 +394,15 @@ if (!filter) {
   await extendDb('CREATE OR REPLACE FUNCTION __selfcert_dirty() RETURNS int LANGUAGE sql AS $$ SELECT 1 $$')
   checked++
   if (ts.can(parseCalc('gcd(4, 6)'))) mismatches.push('a raw extendDb did not make the registry dirty')
-  console.log(`  ${ts.can(parseCalc('gcd(4, 6)')) ? '✗' : '✓'} a raw extendDb collapses every non-pg engine to pg`)
+  if (ce.can(parseCalc('factorial(5)'))) mismatches.push('a raw extendDb did not make ce decline too')
+  console.log(`  ${ts.can(parseCalc('gcd(4, 6)')) || ce.can(parseCalc('factorial(5)')) ? '✗' : '✓'} a raw extendDb collapses every non-pg engine to pg`)
 }
 
 if (notes.length) {
   console.log('\nnot swept (stated, not skipped silently):')
   for (const n of notes) console.log(`  · ${n}`)
 }
+console.log(`\nce: ${ceChecked} cases claimed, ${ceDeclined} declined (inexact), ${ceChecked - ceDeclined} agreed with pg`)
 console.log(`\nengine self-certification: ${checked} cases, ${mismatches.length} mismatches`)
 for (const m of mismatches.slice(0, 40)) console.log(`  ✗ ${m}`)
 if (mismatches.length > 40) console.log(`  … and ${mismatches.length - 40} more`)
