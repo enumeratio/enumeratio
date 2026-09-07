@@ -60,6 +60,8 @@ import { entries as packH } from "./pack-h.js";
 import { entries as packO } from "./pack-o.js";
 import { entries as packQ } from "./pack-q.js";
 import { entries as packR } from "./pack-r.js";
+import { entries as packP } from "./pack-p.js";
+import { entries as packT } from "./pack-t.js";
 import { entries as packM } from "./pack-m.js";
 import { entries as packC } from "./pack-c.js";
 import { entries as packD } from "./pack-d.js";
@@ -275,6 +277,8 @@ const PACKS: PackEntry[] = [
   ...(packO as unknown as PackEntry[]),
   ...(packQ as unknown as PackEntry[]),
   ...(packR as unknown as PackEntry[]),
+  ...(packP as unknown as PackEntry[]),
+  ...(packT as unknown as PackEntry[]),
 ];
 function adaptPack(e: PackEntry): FamilySpec {
   const sig = e.kind === "ints"

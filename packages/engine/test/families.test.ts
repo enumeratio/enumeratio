@@ -233,6 +233,10 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "PermutationsAvoiding312(6)", coll: ["PermutationsAvoiding312", 6] },
     { name: "SubsetsWithoutConsecutive(8)", coll: ["SubsetsWithoutConsecutive", 8] },
     { name: "CompositionsIntoPartsAtLeast2(11)", coll: ["CompositionsIntoPartsAtLeast2", 11] },
+    { name: "PermutationsAvoiding123(6)", coll: ["PermutationsAvoiding123", 6] },
+    { name: "PermutationsAvoiding213(6)", coll: ["PermutationsAvoiding213", 6] },
+    { name: "StirlingPermutations(5)", coll: ["StirlingPermutations", 5] },
+    { name: "CompositionsIntoParts1234(9)", coll: ["CompositionsIntoParts1234", 9] },
   ];
   for (const { name, coll } of families) {
     it(name, () => {
