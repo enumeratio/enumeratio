@@ -5,46 +5,34 @@
 -- w_i names the block containing element i, with blocks numbered by order of first appearance — the
 -- canonical WORD encoding of a set partition of [n]. There are Bell(n) of them (OEIS A000110).
 --
--- The old architecture made restricted_growth_strings the engine OWNER (the suffix-count DP for
--- rgs-lex order + the grade-restricted unrank) and had set_partitions (its STRUCTURE-reading sibling)
--- borrow the engine via an order-isomorphic bijection, because rgs-lex order is fundamentally an order
--- on WORDS. In the new architecture that floor is already realized verbatim on the `set_partition`
--- carrier (see set-partitions.sql) — the RGS *is* that carrier's floor. This file re-realizes the SAME
--- mathematical floor as its own FIRST-CLASS collection, on a fresh `rgs_word` carrier with its own
--- rgs-string notation, so restricted_growth_strings is addressable and countable in its own right
--- rather than only as set_partitions' internal representation. Single grade [n] (size); reuses bell()
--- (from set-partitions.sql) for the closed-form fiber count.
-
--- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
-CREATE TYPE rgs_word AS (word int[]);                                 -- w_1=0, w_i <= 1+max(w_1..w_{i-1}); {0,1,0}
-CREATE FUNCTION notation(w rgs_word) RETURNS text LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce(array_to_string((w).word, ''), '') $$;
-
--- number of distinct letters used = 1 + max(w) (0 for the empty word) — the block count of the
--- partition this word encodes; an instance-method stat on the carrier (St000105 in the old catalog).
-CREATE FUNCTION parts_count(w rgs_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
-  SELECT coalesce((SELECT max(x) FROM unnest((w).word) x), -1) + 1 $$;
+-- #236: folded onto the `set_partition` carrier — set_partitions.sql already realizes this EXACT floor
+-- (same recursive build, same lex order, same rgs_unrank_word) on its `set_partition(rgs int[])` carrier, whose
+-- notation (array_to_string, no separator) is byte-identical to this collection's own `rgs_word` notation. The
+-- bijection is the identity on the same (int[]) representation — restricted_growth_strings now inherits
+-- set_partitions' full stat surface (blocks, singleton_blocks, crossings, nestings, …) and glyph for free, so the
+-- bespoke `rgs_word` carrier + restricted_growth_strings.stats.sql (its own `blocks`/`singletons` duplicates) are
+-- retired.
 
 -- ── the engines a collection provides ────────────────────────────────────────────────────────────────
 -- FLOOR: every valid RGS of length n in lex order. Grow prefixes: extend an RGS of max m by any value
 -- 0..m+1. The empty seed (len 0, max -1) forces w_1=0 (only value 0..0), and yields the single empty
 -- word when n=0.
 CREATE TYPE restricted_growth_strings_fiber AS (n natural_number);   -- typed fiber; axis: n
-CREATE FUNCTION fiber_elements(f restricted_growth_strings_fiber, element_limit int) RETURNS SETOF rgs_word LANGUAGE sql STABLE AS $$
+CREATE FUNCTION fiber_elements(f restricted_growth_strings_fiber, element_limit int) RETURNS SETOF set_partition LANGUAGE sql STABLE AS $$
   WITH RECURSIVE build AS (
-    SELECT ARRAY[]::int[] AS word, -1 AS mx, 0 AS len
+    SELECT ARRAY[]::int[] AS rgs, -1 AS mx, 0 AS len
     UNION ALL
-    SELECT b.word || v, greatest(b.mx, v), b.len + 1
+    SELECT b.rgs || v, greatest(b.mx, v), b.len + 1
     FROM build b, generate_series(0, b.mx + 1) v
     WHERE b.len < (f).n::int)
-  SELECT ROW(word)::rgs_word FROM build WHERE len = (f).n::int ORDER BY word LIMIT element_limit $$;
+  SELECT ROW(rgs)::set_partition FROM build WHERE len = (f).n::int ORDER BY rgs LIMIT element_limit $$;
 
 CREATE FUNCTION fiber_count(f restricted_growth_strings_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$
   SELECT bell((f).n::int) $$;
 
 -- contains: v is a valid RGS of length n iff every letter is in 0 .. 1+max(prefix so far).
-CREATE FUNCTION contains_in_fiber(f restricted_growth_strings_fiber, v rgs_word) RETURNS boolean LANGUAGE plpgsql IMMUTABLE AS $$
-  DECLARE a int[] := (v).word; mx int := -1; i int; len int := coalesce(array_length((v).word, 1), 0);
+CREATE FUNCTION contains_in_fiber(f restricted_growth_strings_fiber, v set_partition) RETURNS boolean LANGUAGE plpgsql IMMUTABLE AS $$
+  DECLARE a int[] := (v).rgs; mx int := -1; i int; len int := coalesce(array_length((v).rgs, 1), 0);
   BEGIN
     IF len <> (f).n::int THEN RETURN false; END IF;                     -- wrong length ⇒ not in this fiber
     FOR i IN 1..len LOOP
@@ -55,12 +43,12 @@ CREATE FUNCTION contains_in_fiber(f restricted_growth_strings_fiber, v rgs_word)
   END $$;
 
 -- ── declare as DATA + realize ────────────────────────────────────────────────────────────────────────
-INSERT INTO base_collection VALUES ('restricted_growth_strings', 'rgs_word');
+INSERT INTO base_collection VALUES ('restricted_growth_strings', 'set_partition');
 INSERT INTO base_grade VALUES ('restricted_growth_strings', 1, 'n', NULL, NULL);
 CREATE FUNCTION fiber_symbol(f restricted_growth_strings_fiber) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT 'RGS(' || (f).n::int || ')' $$;   -- corpus symbol
--- direct unrank: the RGS lex-order unrank (shared with set_partitions, same carrier data).
-CREATE FUNCTION fiber_unrank(f restricted_growth_strings_fiber, rank rank_index) RETURNS rgs_word LANGUAGE sql IMMUTABLE AS $fu$
-  SELECT ROW(rgs_unrank_word((f).n::int, rank::bigint))::rgs_word $fu$;
+-- direct unrank: the RGS lex-order unrank (shared with set_partitions, same carrier data + function).
+CREATE FUNCTION fiber_unrank(f restricted_growth_strings_fiber, rank rank_index) RETURNS set_partition LANGUAGE sql IMMUTABLE AS $fu$
+  SELECT ROW(rgs_unrank_word((f).n::int, rank::bigint))::set_partition $fu$;
 SELECT base_realize('restricted_growth_strings');
 
 -- ── examples ──────────────────────────────────────────────────────────────────────────────────────────
@@ -81,20 +69,26 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
     SELECT string_agg((f).n::text, ',' ORDER BY (f).n) FROM fibers(restricted_growth_strings(2,4)) f $q$),
   ('restricted_growth_strings','range handle cardinality = Bell(2)+Bell(3)+Bell(4) = 22','eq','22','summed over fibers',$q$
     SELECT cardinality(restricted_growth_strings(2,4))::text $q$),
-  ('restricted_growth_strings','every word of fiber n=4 is a valid RGS (w_1=0, w_i <= 1+max prefix)','eq','true','the defining invariant across the fiber',$q$
+  ('restricted_growth_strings','every word of fiber n=4 is a valid RGS (w_1=0, w_i <= 1+max prefix), via the inherited `blocks` stat','eq','true','restricted_growth_strings now shares set_partition''s carrier, so setpart_blocks resolves on it directly',$q$
     SELECT bool_and(
-        ((e).value).word[1] = 0
-        AND (SELECT bool_and(((e).value).word[i] <= 1 + coalesce((SELECT max(x) FROM unnest(((e).value).word[1:i-1]) x), -1))
-             FROM generate_series(1, array_length(((e).value).word, 1)) i)
+        ((e).value).rgs[1] = 0
+        AND (SELECT bool_and(((e).value).rgs[i] <= 1 + coalesce((SELECT max(x) FROM unnest(((e).value).rgs[1:i-1]) x), -1))
+             FROM generate_series(1, array_length(((e).value).rgs, 1)) i)
       )::text FROM elements(restricted_growth_strings(4)) e $q$),
-  ('restricted_growth_strings','parts_count: rank 2 of length 3 (010) uses 2 distinct letters','eq','010|2','parts_count = 1+max(word)',$q$
+  ('restricted_growth_strings','blocks (inherited): rank 2 of length 3 (010) uses 2 distinct letters','eq','010|2','setpart_blocks = 1+max(rgs), resolved via the shared carrier',$q$
     SELECT notation((unrank(restricted_growth_strings(3), 2)).value) || '|' ||
-           parts_count((unrank(restricted_growth_strings(3), 2)).value)::text $q$),
+           setpart_blocks((unrank(restricted_growth_strings(3), 2)).value)::text $q$),
   ('restricted_growth_strings','contains: valid {0,1,0} ∈, malformed {0,2,1} ∉ restricted_growth_strings(3)','eq','true|false','w_2=2 > 1+max prefix is not an RGS',$q$
-    SELECT contains(restricted_growth_strings(3), ROW(ARRAY[0,1,0])::rgs_word)::text || '|' ||
-           contains(restricted_growth_strings(3), ROW(ARRAY[0,2,1])::rgs_word)::text $q$),
+    SELECT contains(restricted_growth_strings(3), ROW(ARRAY[0,1,0])::set_partition)::text || '|' ||
+           contains(restricted_growth_strings(3), ROW(ARRAY[0,2,1])::set_partition)::text $q$),
   ('restricted_growth_strings','the <@ operator: {0,1,2} <@ restricted_growth_strings(3)','eq','true','operator wrapper over contains',$q$
-    SELECT (ROW(ARRAY[0,1,2])::rgs_word <@ restricted_growth_strings(3))::text $q$);
+    SELECT (ROW(ARRAY[0,1,2])::set_partition <@ restricted_growth_strings(3))::text $q$),
+  ('restricted_growth_strings','#236: restricted_growth_strings shares the set_partition carrier — its full stat surface resolves, not just blocks','eq','true','base_stat_resolved inheritance, not a bespoke registration',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'restricted_growth_strings' AND stat_id = 'blocks') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'restricted_growth_strings' AND stat_id = 'singleton_blocks') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'restricted_growth_strings' AND stat_id = 'crossings'))::text $q$),
+  ('restricted_growth_strings','#236: restricted_growth_strings renders a glyph too (inherited from set_partition, no bespoke glyph file)','eq','true','carrier_renders_svg resolves via set_partition''s glyph_svg overload',$q$
+    SELECT carrier_renders_svg('set_partition')::text $q$);
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('restricted_growth_strings','fiber_unrank(restricted_growth_strings(4), 0..14) are all members (accel floor)','eq','true','RGS lex unrank lands inside RGS(4) for every rank',$q$

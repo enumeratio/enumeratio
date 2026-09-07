@@ -1,37 +1,43 @@
--- requires: realizer, utilities
+-- requires: binary_words, realizer, utilities
 -- gray_codes — for each n, the reflected binary Gray code: all 2^n n-bit binary words ordered so that
 -- consecutive words differ in exactly one bit. Element r (r = 0..2^n-1) has integer value g = r XOR (r >> 1);
 -- its bits are the n-bit big-endian expansion of g. Single grade [n]. Provides the floor (emitted in Gray
 -- order, i.e. ordinality = r) + a 2^n count accel + a contains engine (same membership as binary_words: the
 -- Gray sequence is a permutation of the same 2^n words); base_realize generates handle/fiber/element +
 -- constructor (incl. the (lo,hi) range form) + the full surface.
-
--- ── carrier ──────────────────────────────────────────────────────────────────────────────────────────
-CREATE TYPE gray_code AS (bits int[]);                                  -- MSB first; {1,0,1} = 101
-CREATE FUNCTION notation(w gray_code) RETURNS text LANGUAGE sql IMMUTABLE AS $$ SELECT array_to_string((w).bits, '') $$;
+--
+-- #236: folded onto the `binary_word` carrier — gray_code's own carrier was byte-identical (same MSB-first
+-- {0,1}^n `bits int[]` representation, same notation), so this is the identity map on the same representation.
+-- Only the carrier TYPE is shared; the collection keeps its own fiber_elements/fiber_unrank (Gray order is a
+-- property of THIS collection's fibration, not of the carrier — retyping doesn't touch it, so ordinality still
+-- equals r exactly as before). gray_codes now inherits binary_words' stats (number_of_ones, descents, …) and
+-- glyph for free; its OWN Gray-specific stats (gray_codes.stats.sql: weight/runs/…/flip_position) stay registered
+-- — some duplicate an inherited stat under a different name (harmless, both resolve), flip_position doesn't
+-- exist on binary_words at all. The bespoke gray_code_glyph.sql (a bar chart) is retired in favor of the
+-- inherited binary_word glyph (cells_svg, a flat 0/1 strip) — a rendering-style change only, not an order change.
 
 -- rank r (0..2^n-1) ↦ its Gray codeword: g = r XOR (r >> 1), then g's n-bit big-endian expansion
-CREATE FUNCTION gray_code_unrank(n int, r bigint) RETURNS gray_code LANGUAGE sql IMMUTABLE AS $$
-  SELECT ROW(ARRAY(SELECT (((r # (r >> 1)) >> i) & 1)::int FROM generate_series(n - 1, 0, -1) i))::gray_code $$;
+CREATE FUNCTION gray_code_unrank(n int, r bigint) RETURNS binary_word LANGUAGE sql IMMUTABLE AS $$
+  SELECT ROW(ARRAY(SELECT (((r # (r >> 1)) >> i) & 1)::int FROM generate_series(n - 1, 0, -1) i))::binary_word $$;
 
 -- ── the engines a collection provides ────────────────────────────────────────────────────────────────
 CREATE TYPE gray_codes_fiber AS (n natural_number);   -- typed fiber; axis: n
 -- FLOOR: emit in order of r — that IS Gray order (consecutive r's differ by one bit in g), so ordinality = r.
-CREATE FUNCTION fiber_elements(f gray_codes_fiber, element_limit int) RETURNS SETOF gray_code LANGUAGE sql STABLE AS $$
+CREATE FUNCTION fiber_elements(f gray_codes_fiber, element_limit int) RETURNS SETOF binary_word LANGUAGE sql STABLE AS $$
   SELECT gray_code_unrank((f).n::int, r) FROM generate_series(0, (1 << (f).n::int) - 1) r ORDER BY r LIMIT element_limit $$;
 
 CREATE FUNCTION fiber_count(f gray_codes_fiber) RETURNS numeric LANGUAGE sql IMMUTABLE AS $$ SELECT pow_int(2, (f).n::int) $$;
 
 -- the reflected Gray code of length n is a permutation of ALL n-bit binary words, so membership is exactly
 -- the shape check: length n, every bit in {0,1} — no relation to any specific r needs checking.
-CREATE FUNCTION contains_in_fiber(f gray_codes_fiber, v gray_code) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION contains_in_fiber(f gray_codes_fiber, v binary_word) RETURNS boolean LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(array_length((v).bits, 1), 0) = (f).n::int
      AND coalesce((SELECT bool_and(b IN (0, 1)) FROM unnest((v).bits) b), true) $$;
 
 -- declare it as DATA + realize
 -- direct unrank (capability layer 3): the ord-th element via a closed form / combinatorial unrank.
-CREATE FUNCTION fiber_unrank(f gray_codes_fiber, rank rank_index) RETURNS gray_code LANGUAGE sql IMMUTABLE AS $fu$ SELECT gray_code_unrank((f).n::int, rank) $fu$;
-INSERT INTO base_collection VALUES ('gray_codes', 'gray_code');
+CREATE FUNCTION fiber_unrank(f gray_codes_fiber, rank rank_index) RETURNS binary_word LANGUAGE sql IMMUTABLE AS $fu$ SELECT gray_code_unrank((f).n::int, rank) $fu$;
+INSERT INTO base_collection VALUES ('gray_codes', 'binary_word');
 INSERT INTO base_grade VALUES ('gray_codes', 1, 'n', NULL, NULL);
 SELECT base_realize('gray_codes');
 
@@ -61,6 +67,11 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('gray_codes','fibers(gray_codes(0,3)) unfold to n = 0,1,2,3','eq','0,1,2,3','the grade ranges',$q$
     SELECT string_agg((f).n::text, ',' ORDER BY (f).n) FROM fibers(gray_codes(0,3)) f $q$),
   ('gray_codes','contains: any 3-bit word is in gray_codes(3) (it''s a permutation of all of them)','eq','true|false|false','via <@',$q$
-    SELECT (ROW(ARRAY[1,1,0])::gray_code <@ gray_codes(3))::text || '|' ||
-           (ROW(ARRAY[1,1])::gray_code <@ gray_codes(3))::text || '|' ||
-           (ROW(ARRAY[1,2,0])::gray_code <@ gray_codes(3))::text $q$);
+    SELECT (ROW(ARRAY[1,1,0])::binary_word <@ gray_codes(3))::text || '|' ||
+           (ROW(ARRAY[1,1])::binary_word <@ gray_codes(3))::text || '|' ||
+           (ROW(ARRAY[1,2,0])::binary_word <@ gray_codes(3))::text $q$),
+  ('gray_codes','#236: gray_codes shares the binary_word carrier — number_of_ones (inherited) resolves too','eq','true','base_stat_resolved inheritance alongside gray_codes'' own weight/flip_position',$q$
+    SELECT (EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'gray_codes' AND stat_id = 'number_of_ones') AND
+            EXISTS (SELECT 1 FROM base_stat_resolved WHERE collection = 'gray_codes' AND stat_id = 'flip_position'))::text $q$),
+  ('gray_codes','#236: gray_codes renders a glyph too (inherited from binary_word, no bespoke glyph file)','eq','true','carrier_renders_svg resolves via binary_word''s glyph_svg overload',$q$
+    SELECT carrier_renders_svg('binary_word')::text $q$);

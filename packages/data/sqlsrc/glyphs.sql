@@ -122,10 +122,11 @@ CREATE FUNCTION glyph_svg(v integer_number)  RETURNS text LANGUAGE sql IMMUTABLE
 
 -- sequence bar chart: one bar per term, height ∝ the term's value, growing up from a baseline, each labelled with
 -- its value below the baseline. Hoisted here (#283 phase 3 — was ascent_sequence_glyph.sql, a words-plus file)
--- because it is shared by carriers spanning core (rgs_word) and multiple packs (words-plus's gray_code/
--- ternary_gray_code, permutations-plus's subexcedant_seq) — the ascent_sequence/gray_code/rgs_word/ternary_gray_code
--- /subexcedant_seq_glyph.sql files all still `-- requires: glyphs` and reuse it from here. terms int[] takes any
--- non-negative-small-integer array (ascents-so-far / subexcedant values / rgs letters / bits / ternary digits).
+-- because it is shared by carriers across multiple packs (words-plus's ternary_gray_code, permutations-plus's
+-- subexcedant_seq) — the ascent_sequence/ternary_gray_code/subexcedant_seq_glyph.sql files all still
+-- `-- requires: glyphs` and reuse it from here (#236: restricted_growth_strings folded onto set_partition, and
+-- gray_codes onto binary_word — both now inherit their parent's glyph instead of a bespoke bar chart). terms
+-- int[] takes any non-negative-small-integer array (ascents-so-far / subexcedant values / ternary digits).
 CREATE FUNCTION sequence_bar_svg(terms int[], unit numeric DEFAULT 18, unit_h numeric DEFAULT 10, label_h numeric DEFAULT 14)
 RETURNS text LANGUAGE sql IMMUTABLE AS $$
   WITH t AS (SELECT o - 1 AS i, term FROM unnest(terms) WITH ORDINALITY AS tt(term, o)),

@@ -1,7 +1,8 @@
 -- requires: gray_codes, realizer, utilities
 -- gray_codes statistics — the first stats on this collection. weight/runs/transitions/leading_zeros/
--- trailing_zeros are plain bit-vector invariants (same shape as binary_words' stats — noted, not a bug: gray_code
--- is a distinct carrier, and the Gray sequence is a permutation of the same words, so e.g. weight's distribution
+-- trailing_zeros are plain bit-vector invariants (same shape as binary_words' stats — noted, not a bug: #236
+-- folded gray_codes onto the shared binary_word carrier, so both sets of stats resolve on the same collection,
+-- and the Gray sequence is a permutation of the same words, so e.g. weight's distribution
 -- matches binary_words' number_of_ones exactly). flip_position is the one Gray-specific stat: which bit flips
 -- from the PREVIOUS codeword in Gray order — the ruler sequence (OEIS A007814 shifted to a 1-indexed bit
 -- position), 0 for the first codeword (rank 0, no predecessor).
@@ -12,28 +13,28 @@
 -- r's lowest set bit, i.e. the LAST array position (closest to the LSB) where that prefix parity is 1 — which is
 -- 0 (no position) exactly when g is all-zero, i.e. r = 0.
 
--- ── statistics (carrier: gray_code(bits int[]) of 0/1, MSB first) ──────────────────────────────────────
+-- ── statistics (carrier: binary_word(bits int[]) of 0/1, MSB first) ──────────────────────────────────────
 -- weight: the Hamming weight / popcount (number of 1 bits).
-CREATE FUNCTION gray_code_weight(w gray_code) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION gray_code_weight(w binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(sum(b), 0)::int FROM unnest((w).bits) b $$;
 -- transitions: the number of 0<->1 adjacencies (bits[i] <> bits[i+1]). 0 for the empty word.
-CREATE FUNCTION gray_code_transitions(w gray_code) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION gray_code_transitions(w binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT count(*)::int FROM generate_subscripts((w).bits, 1) i
    WHERE i < array_length((w).bits, 1) AND (w).bits[i] <> (w).bits[i+1] $$;
 -- runs: the count of maximal blocks of equal consecutive bits — transitions + 1 (0 for the empty word).
-CREATE FUNCTION gray_code_runs(w gray_code) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION gray_code_runs(w binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT CASE WHEN array_length((w).bits, 1) IS NULL THEN 0 ELSE gray_code_transitions(w) + 1 END $$;
 -- leading zeros: the length of the run of 0s before the first 1 (= n if the word is all-zero, including n=0).
-CREATE FUNCTION gray_code_leading_zeros(w gray_code) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION gray_code_leading_zeros(w binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(min(i) - 1, coalesce(array_length((w).bits, 1), 0))::int
   FROM generate_subscripts((w).bits, 1) i WHERE (w).bits[i] = 1 $$;
 -- trailing zeros: the length of the run of 0s after the last 1 (= n if the word is all-zero, including n=0).
-CREATE FUNCTION gray_code_trailing_zeros(w gray_code) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION gray_code_trailing_zeros(w binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(coalesce(array_length((w).bits, 1), 0) - max(i), coalesce(array_length((w).bits, 1), 0))::int
   FROM generate_subscripts((w).bits, 1) i WHERE (w).bits[i] = 1 $$;
 -- flip position: the (1-indexed, MSB-first) array position of the bit that flipped from the previous codeword in
 -- Gray order — see the derivation above. 0 for the first codeword of the fiber (rank 0: no predecessor).
-CREATE FUNCTION gray_code_flip_position(w gray_code) RETURNS int LANGUAGE sql IMMUTABLE AS $$
+CREATE FUNCTION gray_code_flip_position(w binary_word) RETURNS int LANGUAGE sql IMMUTABLE AS $$
   SELECT coalesce(max(o), 0)::int FROM (
     SELECT o, sum(b) OVER (ORDER BY o) % 2 AS parity
     FROM unnest((w).bits) WITH ORDINALITY AS t(b, o)) q
@@ -59,7 +60,7 @@ INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('gray_codes','weight: 111=3, 110=2, 101=2','eq','3|2|2','via unrank(gray_codes(3),5)=111 and unrank(gray_codes(3),4)=110',$q$
     SELECT gray_code_weight((unrank(gray_codes(3),5)).value)::text || '|' ||
            gray_code_weight((unrank(gray_codes(3),4)).value)::text || '|' ||
-           gray_code_weight(ROW(ARRAY[1,0,1])::gray_code)::text $q$),
+           gray_code_weight(ROW(ARRAY[1,0,1])::binary_word)::text $q$),
   ('gray_codes','runs over gray_codes(3) in rank order is 1,2,2,3,2,1,3,2','eq','1,2,2,3,2,1,3,2','maximal constant-bit blocks',$q$
     SELECT string_agg(gray_code_runs((e).value)::text, ',' ORDER BY ordinality(e)) FROM elements(gray_codes(3)) e $q$),
   ('gray_codes','transitions over gray_codes(3) in rank order is 0,1,1,2,1,0,2,1','eq','0,1,1,2,1,0,2,1','= runs - 1',$q$
