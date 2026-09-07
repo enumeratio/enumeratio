@@ -322,3 +322,97 @@ export function IsSetPartitionOf(blocks: number[][], n: number, k?: number): boo
   }
   return total === n;
 }
+
+// ─── ranks (element → 0-based index; exact inverses of the unranks above) ───────────────────────────────
+
+/** Composition → gap-cut mask (its rank). */
+export function CompositionRank(parts: number[]): number {
+  let mask = 0, cum = 0;
+  for (let i = 0; i < parts.length - 1; i++) { cum += parts[i]; mask |= 1 << (cum - 1); }
+  return mask;
+}
+
+/** Integer partition of n → its largest-part-first rank. */
+export function IntegerPartitionRank(p: number[], n: number): number {
+  const parts = [...p].sort((a, z) => z - a);
+  let r = 0, m = n, max = n;
+  for (const part of parts) {
+    for (let k = Math.min(m, max); k > part; k--) r += partsAtMost(m - k, k);
+    m -= part; max = part;
+  }
+  return r;
+}
+
+/** Integer partition of n into k parts → its rank within that k-slice. */
+export function IntegerPartitionKRank(p: number[], n: number): number {
+  const parts = [...p].sort((a, z) => z - a);
+  const k = parts.length;
+  let r = 0, m = n, j = k, cap = n;
+  for (const part of parts) {
+    const hi = Math.min(cap, m - (j - 1));
+    for (let v = hi; v > part; v--) r += partsExactlyK(m - v, j - 1, v);
+    m -= part; cap = part; j--;
+  }
+  return r;
+}
+
+/** RGS → its lex rank. */
+export function RgsRank(w: number[]): number {
+  const n = w.length;
+  if (n === 0) return 0;
+  const b = getBTable(n);
+  let rank = 0, m = 0;
+  for (let i = 1; i < n; i++) { rank += w[i] * b[n - 1 - i][m]; if (w[i] > m) m = w[i]; }
+  return rank;
+}
+
+/** RGS with exactly k blocks → its rank within that k-slice. */
+export function SetPartitionsIntoKBlocksRank(w: number[], k: number): number {
+  const n = w.length;
+  let rank = 0, m = -1;
+  for (let i = 0; i < n; i++) {
+    const v = w[i];
+    const remainingAfter = n - i - 1;
+    for (let c = 0; c < v; c++) rank += countKBlockCompletions(remainingAfter, Math.max(m, c), k);
+    m = Math.max(m, v);
+  }
+  return rank;
+}
+
+/** Set-composition labels (labels[i] = 1-based block index of element i) → its global rank. */
+export function SetCompositionRank(labels: number[], n: number): number {
+  const k = labels.length === 0 ? 0 : Math.max(...labels);
+  let base = 0;
+  for (let kp = 1; kp < k; kp++) base += CountSurjections(n, kp);
+  let local = 0;
+  const used = new Set<number>();
+  let missing = k;
+  for (let i = 0; i < n; i++) {
+    const label = labels[i];
+    const remainingAfter = n - i - 1;
+    for (let c = 1; c < label; c++) {
+      const m2 = missing - (used.has(c) ? 0 : 1);
+      local += countCompletions(remainingAfter, m2, k);
+    }
+    if (!used.has(label)) { used.add(label); missing--; }
+  }
+  return base + local;
+}
+
+// ─── block-shape → carrier (for ranking a set partition / composition given as blocks) ──────────────────
+
+/** Blocks → canonical RGS: blocks ordered by least element, w[x-1] = that block's 0-based position. */
+export function BlocksToRgs(blocks: number[][], n: number): number[] {
+  const ordered = blocks.filter((b) => b.length).sort((a, b) => Math.min(...a) - Math.min(...b));
+  const w = new Array(n).fill(0);
+  ordered.forEach((blk, bi) => blk.forEach((x) => (w[x - 1] = bi)));
+  return w;
+}
+
+/** Ordered blocks → labels[x-1] = 1-based block index in the GIVEN order (order significant). */
+export function BlocksToLabels(blocks: number[][]): number[] {
+  const n = blocks.reduce((s, b) => s + b.length, 0);
+  const labels = new Array(n).fill(0);
+  blocks.forEach((blk, bi) => blk.forEach((x) => (labels[x - 1] = bi + 1)));
+  return labels;
+}
