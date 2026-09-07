@@ -1,12 +1,21 @@
 // The compute-engine LibraryDefinition for enumeratio. Wave 1 is one vertical slice: the
 // permutations family, exposed as SymmetricGroup(n) — an O(1) rank/unrank-backed indexed collection —
-// plus one scalar stat, Inversions. This is the "extend" posture: load it into any ComputeEngine and
-// its own operators (Length, At, Element, Take, Map) compose over our handlers.
+// plus one scalar stat, Inversions. This is the "extend" posture: install it into any ComputeEngine
+// and CE's WHOLE standard library stays live (Add, Factorial, Fibonacci, Totient, Sum, Map, …) — we
+// declare our heads ON TOP, reimplementing nothing, and CE's operators compose over our handlers.
+// (See interop.test.ts for the proof: CE ops fold over our collection; our count equals CE Factorial.)
 //
-// Naming (D2, provisional): CE ships its own `Permutations(list)` — arrangements of a given list.
-// Ours is the graded family of all n! permutations of [n] in lex order, indexed by n. Related, not
-// equal, so we do NOT shadow `Permutations`; the head is `SymmetricGroup(n)` (its elements ARE S_n's,
-// as one-line words). Rename-later — flagged for review.
+// Heads as a family of siblings (D2): CE ships `Permutations(list)` — arrangements of a *given*
+// collection. Ours is the graded family of all n! permutations of [n] in lex order, indexed by the
+// *size* n. These are SIBLINGS keyed by domain (a concrete list vs a size), the way enumeratio hangs
+// carrier/domain variants and grading-axis/family configs off distinct heads — not rivals, and not a
+// name chosen to dodge a collision. `SymmetricGroup(n)` is the size-indexed sibling (its elements ARE
+// S_n's, as one-line words) and the natural hook for later grading/carrier configs.
+//
+// (Absorbing the two onto ONE `Permutations` head is not viable: CE's `Permutations` signature is a
+// locked overload `((S,integer?)->list<string>) & ((collection,integer?)->list<list>)` — its first
+// arg is pinned to a collection, so `Permutations(12)` fails type-check before any handler runs, and
+// mutating the signature in place crashes CE. Verified. Head name still provisional — rename-later.)
 
 import type { LibraryDefinition, Expression, ComputeEngine } from "@cortex-js/compute-engine";
 import { Factorial, PermutationUnrank, IsPermutationOf, Inversions } from "./kernels.js";
