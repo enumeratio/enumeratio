@@ -10,12 +10,17 @@ subagent/model choices, browser-preview tooling, local session conventions) live
 
 - **Commit freely inside your own worktree.** When working in a session-owned worktree/branch (not `main`), commit as
   you go without asking — small, frequent commits are fine during active development.
-- **Flatten before merging to `main`.** When folding a worktree branch back, squash the branch's commits down to a
-  single clean commit (occasionally a few, if they're genuinely separable) with a good message. Don't carry the
-  work-in-progress history onto `main`.
-- **Merges are local for now.** No GitHub/GitLab MR flow yet — merge back to `main` directly in the local checkout.
-  Once the project is published *and* we start taking outside contributors, we'll switch to GitHub MRs; until then,
-  keep it local.
+- **Integrate via pull requests** (GitHub → `gh pr`). Push your branch (`git push -u origin <branch>`),
+  `gh pr create`, let CI run (the `ci.yml` core / stack / build jobs; quickcheck is advisory), then **squash-merge**
+  (`gh pr merge --squash --delete-branch`) — one clean commit per PR onto `main`, so the work-in-progress history
+  never lands. Do NOT `git push origin main` or merge a branch into a local `main` — main only advances through a
+  merged PR.
+- **Self-merge high-confidence PRs; ask on judgment calls.** Self-merge when CI is green AND there is one clearly
+  correct answer AND the change is in your lane AND it is reversible (a bug fix proven by `run.mts`/`selfcert`, added
+  tests/examples, an identity-order-iso carrier fold, a doc fix). Otherwise open the PR, DON'T merge, and surface the
+  decision (link + summary + the tradeoffs of the options): a real design fork, a shared-mechanism change (core
+  `fibers()`, the engine seam / `packages/client`), another session's active zone, ambiguous requirements, or a
+  large/hard-to-reverse change.
 - No `Co-Authored-By` lines in commit messages.
 - **Worktrees live in `.claude/worktrees/<name>` — never a repo-root `worktrees/` dir.** This repo overrides the
   common `worktrees/` convention: keeping them under `.claude/` keeps editor search, `.claude/` settings, and IDE
