@@ -7,9 +7,11 @@ name: Nightly Deep Verification
 # its comment.
 on:
   schedule:
-    # 08:11 UTC daily — after ci.yml's push/PR traffic (US/EU daytime) has quieted, off the top of the hour to
-    # dodge GitHub's scheduled-job pileup at :00.
-    - cron: "11 8 * * *"
+    # 04:05 UTC daily — early enough that this deep sweep (matrix jobs ~13min, 30min cap each, done well under an
+    # hour) finishes before the nightly-fixup routine's 06:15 UTC sweep, so that run acts on THIS night's fresh
+    # results. Off the top of the hour to dodge GitHub's scheduled-job pileup at :00; sits just ahead of the
+    # 04:41 UTC quickcheck cron.
+    - cron: "5 4 * * *"
   workflow_dispatch:
 
 permissions:
