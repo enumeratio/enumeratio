@@ -1,0 +1,44 @@
+{
+  "name": "@enumeratio/expressions",
+  "version": "0.1.0",
+  "description": "LaTeX → MathJSON → typed, catalog-bound expressions → @enumeratio/client IR. The expression layer behind the math-input notebook: compute-engine's LaTeX parser and MathJSON AST, our binder/typer over the catalog (collections as domains, elements as a type), lowering to the engine seam.",
+  "type": "module",
+  "license": "Unlicense",
+  "homepage": "https://enumeratio.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enumeratio/enumeratio.git",
+    "directory": "packages/expressions"
+  },
+  "sideEffects": false,
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "test": "vitest run",
+    "selfcert": "node --import tsx selfcert-expressions.mts"
+  },
+  "dependencies": {
+    "@cortex-js/compute-engine": "0.125.0",
+    "@enumeratio/client": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
