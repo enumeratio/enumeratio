@@ -56,6 +56,7 @@ import {
 } from "./kernels-extra.js";
 import { entries as packA } from "./pack-a.js";
 import { entries as packB } from "./pack-b.js";
+import { entries as packH } from "./pack-h.js";
 import { entries as packM } from "./pack-m.js";
 import { entries as packC } from "./pack-c.js";
 import { entries as packD } from "./pack-d.js";
@@ -267,6 +268,7 @@ const PACKS: PackEntry[] = [
   ...(packL as unknown as PackEntry[]),
   ...(packB as unknown as PackEntry[]),
   ...(packM as unknown as PackEntry[]),
+  ...(packH as unknown as PackEntry[]),
 ];
 function adaptPack(e: PackEntry): FamilySpec {
   const sig = e.kind === "ints"
