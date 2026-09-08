@@ -46,6 +46,11 @@ const HANDLE_ELEM = new Set(['random_element', 'unrank'])
  *  canonicalizes to its Pascal heads (Join/Sort/Unique) at parse time. */
 const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'Join', 'Sort', 'Unique'])
 
+/** List reductions evaluating to a SCALAR — Sum/Min/Max/Product over a list, First/Last of one. Unlike
+ *  join/sort/unique, CE does NOT canonicalize these operator names, so the head stays our lowercase id. Typed
+ *  `numeric` (the value-refined badge then reads ∈ ℕ/ℤ/ℝ). */
+const LIST_SCALAR_OPS = new Set(['sum', 'min', 'max', 'first', 'last'])
+
 /** Deep-substitute a user function's params with the caller's ARGUMENT EXPRESSIONS (not their values — this is
  *  syntactic beta-reduction, substitute-then-type, matching bind.test.ts's `f(3)` case). `prefix` is a synthetic
  *  NodePath namespace for the freshly-built tree: it can't reuse the call site's own paths (those belong to the
@@ -211,6 +216,10 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
   if (LIST_RESULT_OPS.has(h) && a.length >= 1) {
     for (let i = 0; i < a.length; i++) argT(i)
     return scalarType('integer[]')
+  }
+  if (LIST_SCALAR_OPS.has(h) && a.length >= 1) {
+    for (let i = 0; i < a.length; i++) argT(i)
+    return scalarType('numeric')
   }
 
   // A list literal `[3, 4, 2]` → the parser's `["List", …]`. Typed as an int array (`integer[]`); when it is the

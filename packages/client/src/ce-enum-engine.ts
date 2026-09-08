@@ -66,8 +66,9 @@ const SCALAR_FN: Record<string, string> = {
 
 const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count', 'scramble', 'random_sample'])
 // List operations CE canonicalizes to its own Pascal heads at parse time — we claim them and pass straight through
-// to CE, which evaluates them (Join = concat, Sort, Unique = order-preserving dedup).
-const CE_LIST_OPS = new Set(['Join', 'Sort', 'Unique'])
+// to CE, which evaluates them: Join = concat, Sort, Unique = order-preserving dedup (list results); Sum / Min /
+// Max / Product / First / Last (scalar reductions of a list).
+const CE_LIST_OPS = new Set(['Join', 'Sort', 'Unique', 'sum', 'min', 'max', 'first', 'last'])
 
 /** A translated node: the CE expression, plus — when it denotes a located ELEMENT — the collection it lives in and
  *  its 0-based rank, so an enclosing `rank`/`next`/`prev` reads them off instead of re-deriving. */
@@ -135,7 +136,9 @@ function translate(ce: CE, e: SelectExpr): Trans {
         const h = translate(ce, e.args[0])
         return { ce: fn('RandomSample', [h.coll, translate(ce, e.args[1]).ce]) }
       }
-      if (CE_LIST_OPS.has(id)) return { ce: fn(id, e.args.map((a) => translate(ce, a).ce)) } // Join / Sort / Unique
+      // Join/Sort/Unique come in already-Pascal (CE canonicalized them); sum/min/max/… stay lowercase — capitalize
+      // to the CE operator either way, then pass through for CE to evaluate.
+      if (CE_LIST_OPS.has(id)) return { ce: fn(id[0].toUpperCase() + id.slice(1), e.args.map((a) => translate(ce, a).ce)) }
       // a scalar identity (bell, binomial, gcd, …)
       return { ce: fn(SCALAR_FN[id], e.args.map((a) => translate(ce, a).ce)) }
     }
