@@ -297,18 +297,23 @@ export class EnumeratioMathInput extends LitElement {
 
   static styles = css`
     :host {
-      display: inline-block;
+      display: block;
       position: relative;
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
     .wrap {
+      /* Fill the host (the line stretches every field to the same width), and reserve enough height for a
+         two-row render like \binom{6}{2} so single- and multi-row fields are the same size. */
       position: relative;
-      display: inline-flex;
-      min-width: 8rem;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: var(--enumeratio-math-input-height, 2.75rem);
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 4px;
       background: var(--p-content-hover-background, transparent);
-      padding: 0.2rem 0.4rem;
+      padding: 0.2rem 0.5rem;
     }
     .wrap:focus-within {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));

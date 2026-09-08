@@ -1,5 +1,5 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
-import { customElement, property, state } from 'lit/decorators.js'
+import { customElement, property } from 'lit/decorators.js'
 import type { Completer } from './enumeratio-math-input'
 import './enumeratio-math-input'
 
@@ -25,8 +25,6 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String }) latex = ''
   @property({ attribute: false }) completer: Completer | null = null
   @property({ attribute: false }) state: LineState = {}
-
-  @state() private detailsOpen = false
 
   focus(): void {
     this.mathInput?.focus()
@@ -64,38 +62,12 @@ export class EnumeratioExpressionLine extends LitElement {
     }
   }
 
-  private onDragStart = (ev: DragEvent): void => {
-    ev.dataTransfer?.setData('text/plain', this.lineId)
-    if (ev.dataTransfer) ev.dataTransfer.effectAllowed = 'move'
-  }
-
-  private onDragOver = (ev: DragEvent): void => {
-    ev.preventDefault()
-  }
-
-  private onDrop = (ev: DragEvent): void => {
-    ev.preventDefault()
-    const sourceId = ev.dataTransfer?.getData('text/plain')
-    if (sourceId && sourceId !== this.lineId) this.emit('line-reorder', { sourceId, targetId: this.lineId })
-  }
-
-  private toggleDetails = (): void => {
-    this.detailsOpen = !this.detailsOpen
-  }
-
   render(): TemplateResult {
     const s = this.state
+    // Stripped to the essentials for now — just the input and its result. The gutter (drag handle + type badge),
+    // the details gear, and the remove button are omitted; a notebook-level affordance can reintroduce them later.
     return html`
-      <div
-        class="line"
-        @dragover=${this.onDragOver}
-        @drop=${this.onDrop}
-        @keydown=${this.onKeydownCapture}
-      >
-        <div class="gutter">
-          <span class="handle" draggable="true" @dragstart=${this.onDragStart} title="drag to reorder">⋮⋮</span>
-          <span class="badge" title=${s.type ?? ''}>${s.type ?? ''}</span>
-        </div>
+      <div class="line" @keydown=${this.onKeydownCapture}>
         <enumeratio-math-input
           .latex=${this.latex}
           .completer=${this.completer}
@@ -109,19 +81,9 @@ export class EnumeratioExpressionLine extends LitElement {
             : s.error
               ? html`<span class="err" title=${s.error}>⚠ ${s.error}</span>`
               : s.value != null
-                ? html`<span class="val">= ${s.value}</span>`
+                ? html`<span class="eq">=</span><span class="val">${s.value}</span>`
                 : html`<span class="hint">—</span>`}
         </div>
-        <button class="gear" title="details" aria-label="details" @click=${this.toggleDetails}>⚙</button>
-        ${this.detailsOpen
-          ? html`
-              <div class="panel">
-                <div class="row"><span class="k">engine</span><span class="v">${s.engine ?? '—'}</span></div>
-                <div class="row"><span class="k">sql</span><code class="sql">${s.sql ?? '—'}</code></div>
-              </div>
-            `
-          : ''}
-        <button class="remove" title="remove line" aria-label="remove line" @click=${() => this.emit('line-remove', { lineId: this.lineId })}>×</button>
       </div>
     `
   }
@@ -132,40 +94,44 @@ export class EnumeratioExpressionLine extends LitElement {
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
     .line {
+      /* A reserved right gutter (padding-right) holds the floating result; the field fills the rest, so its width
+         is constant regardless of how wide the result text is. */
       position: relative;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
       padding: 0.3rem 0.4rem;
+      padding-right: 9rem;
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
     }
-    .gutter {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      min-width: 6.5rem;
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-    }
-    .handle {
-      cursor: grab;
-      opacity: 0.5;
-      user-select: none;
-    }
-    .handle:active {
-      cursor: grabbing;
-    }
-    .badge {
-      font-size: 0.8em;
-      opacity: 0.8;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    /* The field fills the row (minus the result gutter), so every input box is the same width. */
+    enumeratio-math-input {
+      flex: 1 1 auto;
+      min-width: 0;
     }
     .result {
+      /* Floats in the reserved right gutter, OUTSIDE the field's border — out of the flex flow, so it never
+         affects the field width. A fixed-width column: the equals sign pinned left, the value right-aligned. */
+      position: absolute;
+      right: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .eq {
       flex: 0 0 auto;
-      min-width: 5rem;
+      opacity: 0.5;
     }
     .val {
+      flex: 1 1 auto;
+      text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       font-weight: 600;
     }
@@ -175,46 +141,6 @@ export class EnumeratioExpressionLine extends LitElement {
     .hint {
       color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
       opacity: 0.5;
-    }
-    .gear,
-    .remove {
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      font: inherit;
-      line-height: 1;
-      padding: 0.15rem 0.3rem;
-    }
-    .gear:hover,
-    .remove:hover {
-      color: var(--enumeratio-text, var(--p-text-color, currentColor));
-    }
-    .panel {
-      position: absolute;
-      right: 0.5rem;
-      top: 100%;
-      z-index: 10;
-      background: var(--enumeratio-surface, var(--p-content-background, canvas));
-      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
-      border-radius: 6px;
-      padding: 0.4rem 0.6rem;
-      font-size: 0.8em;
-      min-width: 16rem;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    }
-    .row {
-      display: flex;
-      gap: 0.5rem;
-      align-items: baseline;
-    }
-    .k {
-      opacity: 0.6;
-      min-width: 3.5rem;
-    }
-    .sql {
-      white-space: pre-wrap;
-      word-break: break-word;
     }
   `
 }
