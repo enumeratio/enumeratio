@@ -12,6 +12,10 @@ export type CatalogNames = {
   collections: string[]
   functions: string[]
   symbols?: Record<string, string>
+  /** Optional per-id math NOTATION as display LaTeX (`permutations` -> `\mathfrak{S}`). Where present it becomes
+   *  the spelling shown/inserted/serialized AND a parse trigger, so it round-trips; where absent the fallback is
+   *  `\operatorname{<PascalCase>}` — never the raw snake id, which is immaterial once you're in the notebook. */
+  notation?: Record<string, string>
 }
 
 export type ExpressionParser = {
@@ -25,29 +29,53 @@ const escapeId = (id: string): string => id.replace(/_/g, '\\_')
 /** snake_case catalog id -> its PascalCase alias: `random_element` -> `RandomElement`, `catalan_number` ->
  *  `CatalanNumber`, `bell` -> `Bell`. Lets a user TYPE the clean word-run (no underscores, which MathLive turns
  *  into subscripts) and have it resolve to the same catalog id. */
-const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
+export const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
 
-/** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id, so `\operatorname{<id>}(...)` parses
- *  to `[id, ...args]` (functions) or `\operatorname{<id>}` parses to the bare symbol `id` (collections) — and
- *  both serialize back to the `\operatorname{}` spelling (the default fallback is `\mathrm{}` with an
- *  un-escaped `_`, see spike item 4). `symbols` adds direct macro -> id bindings (`\mathbb{N} -> natural_numbers`). */
+/** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\operatorname{}` for a
+ *  function / `\mathrm{}` for a collection, both over the PascalCase spelling. The internal MathJSON symbol stays
+ *  the snake id regardless — this is purely the display/parse spelling. `kind` tells the field's reformat which
+ *  arm produced the string so it can leave it alone on the next pass. */
+export type IdentifierDisplay = { kind: 'operator' | 'entity' | 'notation'; latex: string }
+export function identifierDisplay(
+  id: string,
+  role: 'function' | 'collection',
+  notation?: Record<string, string>,
+): IdentifierDisplay {
+  const n = notation?.[id]
+  if (n) return { kind: 'notation', latex: n }
+  const p = pascalCase(id)
+  return role === 'function'
+    ? { kind: 'operator', latex: `\\operatorname{${p}}` }
+    : { kind: 'entity', latex: `\\mathrm{${p}}` }
+}
+
+/** The single spelling an id serializes to / the completer inserts / the parser round-trips: notation if present,
+ *  else `\operatorname{<PascalCase>}` (used for BOTH roles — the operator/entity split is only a reformat nicety). */
+export const serializeLatex = (id: string, notation?: Record<string, string>): string =>
+  notation?.[id] ?? `\\operatorname{${pascalCase(id)}}`
+
+/** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id. The TRIGGER is the PascalCase spelling
+ *  (what you type — `\operatorname{Permutations}(...)` parses to `[permutations, ...]`, `\operatorname{Bell}` to
+ *  the symbol `bell`) while the MathJSON `name` stays the snake id everything downstream routes on; the snake
+ *  spelling is immaterial once you're in the notebook. An id with registered `notation` gets an extra parse
+ *  trigger for its glyph and serializes to it. `symbols` adds direct macro -> id bindings (`\mathbb{N}`). */
 export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryEntry>[] {
   const entries: Partial<LatexDictionaryEntry>[] = []
-  // standaloneSymbol: true is what makes an unapplied name serialize via our `\operatorname{}` spelling instead
-  // of the default `\mathrm{Name}` fallback (types.d.ts BaseEntry.standaloneSymbol) — confirmed empirically,
-  // the field is easy to miss since serialize alone silently has no effect without it.
-  for (const id of names.functions) {
-    entries.push({
-      kind: 'function', symbolTrigger: id, name: id,
-      serialize: `\\operatorname{${escapeId(id)}}`, standaloneSymbol: true,
-    })
+  const notation = names.notation
+  // standaloneSymbol: true is what makes an unapplied name serialize via our chosen spelling instead of the
+  // default `\mathrm{Name}` fallback (types.d.ts BaseEntry.standaloneSymbol) — confirmed empirically, the field
+  // is easy to miss since serialize alone silently has no effect without it.
+  const push = (kind: 'function' | 'symbol', id: string): void => {
+    entries.push({ kind, symbolTrigger: pascalCase(id), name: id, serialize: serializeLatex(id, notation), standaloneSymbol: true })
+    // A registered glyph is a second, name-less parse trigger onto the same symbol (mirrors the `symbols` macros
+    // below — a second entry carrying `name` would be a duplicate-definition warning). No snake compat trigger: a
+    // kind-less parse entry degrades a function from application to a bare symbol, and nothing emits snake
+    // `\operatorname{}` any more (the normalizer/completer/reformat all produce the Pascal spelling).
+    const glyph = notation?.[id]
+    if (glyph) entries.push({ latexTrigger: glyph, parse: id })
   }
-  for (const id of names.collections) {
-    entries.push({
-      kind: 'symbol', symbolTrigger: id, name: id,
-      serialize: `\\operatorname{${escapeId(id)}}`, standaloneSymbol: true,
-    })
-  }
+  for (const id of names.functions) push('function', id)
+  for (const id of names.collections) push('symbol', id)
   for (const [macro, id] of Object.entries(names.symbols ?? {})) {
     // `\mathbb{N}` etc. already have a built-in latexTrigger (default-dictionary SETS_DICTIONARY -> NonNegative-
     // Integers) — a plain latexTrigger-only entry appended after LATEX_DICTIONARY does NOT win against it
@@ -140,7 +168,10 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
       }
       const canonical = catalogIds.has(ident) ? ident : aliases.get(ident)
       if (canonical) {
-        appendRaw(`\\operatorname{${escapeId(canonical)}}`, i)
+        // A real catalog id is spelled Pascal (the dictionary triggers on that); a non-id keyword such as `for`
+        // has no Pascal form and must reach the parser verbatim.
+        const spelling = catalogIds.has(canonical) ? pascalCase(canonical) : canonical
+        appendRaw(`\\operatorname{${escapeId(spelling)}}`, i)
       } else if (/^[A-Za-z]{2,}$/.test(ident)) {
         // An unmatched pure-letter WORD is ONE identifier (a multi-letter variable), not a product of its letters
         // — `\mathrm{}` parses to a single symbol. Single letters (x, n) stay bare/italic; runs with digits or `_`
@@ -159,13 +190,15 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
 }
 
 /** DISPLAY reformat (for the math field, run on a typing pause / blur): rewrite each BARE pure-letter run to the
- *  spelling that shows what it IS — `classify` returns `'operator'` (→ `\operatorname{}`, upright), `'entity'`
- *  (→ `\mathrm{}`, a matched collection/thing) or `null` (leave it bare/italic — a plain variable). Idempotent:
- *  runs already inside `\operatorname{}`/`\mathrm{}`/`\text{}` are protected and left alone, so re-running never
- *  double-wraps. Single letters and runs with digits/underscores are left untouched. */
+ *  spelling that shows what it IS — `classify` returns an {@link IdentifierDisplay} (a function's `\operatorname{}`,
+ *  a collection's `\mathrm{}`, or a registered `notation` glyph spliced verbatim) or `null` to leave it bare/italic
+ *  (a plain variable). The `latex` it returns must be a spelling the parser round-trips to the same id — the
+ *  builder guarantees that. Idempotent: runs already inside `\operatorname{}`/`\mathrm{}`/`\text{}` are protected
+ *  and left alone, and a notation glyph is a command (not a bare run), so re-running never double-wraps. Single
+ *  letters and runs with digits/underscores are left untouched. */
 export function reformatIdentifiers(
   latex: string,
-  classify: (run: string) => { kind: 'operator' | 'entity'; name: string } | null,
+  classify: (run: string) => IdentifierDisplay | null,
 ): string {
   let out = ''
   let i = 0
@@ -194,11 +227,9 @@ export function reformatIdentifiers(
       while (j < latex.length && /[A-Za-z]/.test(latex[j])) j++
       const run = latex.slice(i, j)
       const m = run.length >= 2 ? classify(run) : null
-      // Wrap the CANONICAL id (not the typed spelling) so the re-parse resolves it — `\operatorname{}` is a
-      // protected group the normalizer won't re-alias, so `Bell` must become `\operatorname{bell}`, not `{Bell}`.
-      out += m?.kind === 'operator' ? `\\operatorname{${escapeId(m.name)}}`
-        : m?.kind === 'entity' ? `\\mathrm{${escapeId(m.name)}}`
-        : run
+      // The classify result already carries the exact display LaTeX (Pascal-spelled operator/entity, or a glyph),
+      // which the builder guarantees re-parses to the id — so splice it straight in.
+      out += m ? m.latex : run
       i = j
       continue
     }

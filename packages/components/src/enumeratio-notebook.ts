@@ -2,8 +2,8 @@ import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import { evaluate, reseedRandom, type Row } from '@enumeratio/client'
 import {
-  bind, complete, lower, makeParser, LineGraph,
-  type Bound, type Completion, type ExpressionParser, type LineId, type LineModel, type LowerResult, type Scope, type Type,
+  bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase,
+  type Bound, type Completion, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Scope, type Type,
 } from '@enumeratio/expressions'
 import { loadNotebookCatalog, type NotebookCatalog } from './notebook-catalog'
 import type { Completer, CompletionCandidate } from './enumeratio-math-input'
@@ -74,7 +74,7 @@ export class EnumeratioNotebook extends LitElement {
   /** Whether any line uses a random op — the reshuffle button is disabled otherwise (nothing to reroll). */
   @state() private usesRandom = false
   /** Classifies a typed word for the field's display reformat (operator / entity / plain variable). Set on boot. */
-  private classify: (run: string) => { kind: 'operator' | 'entity'; name: string } | null = () => null
+  private classify: (run: string) => IdentifierDisplay | null = () => null
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -151,13 +151,14 @@ export class EnumeratioNotebook extends LitElement {
     this.bootError = null
     this.notebook = nb
     this.parser = makeParser(nb.names)
-    // Classify a typed word for the field's display reformat: a catalog FUNCTION (incl. generic primitives) reads
-    // as an operator, a COLLECTION as an entity, anything else as a plain variable. Both snake_case and PascalCase
-    // spellings are recognized (the parser accepts either).
-    const pascal = (id: string) => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
-    const entityMap = new Map<string, { kind: 'operator' | 'entity'; name: string }>()
-    for (const id of nb.names.functions) for (const s of [id, pascal(id)]) entityMap.set(s, { kind: 'operator', name: id })
-    for (const id of nb.names.collections) for (const s of [id, pascal(id)]) if (!entityMap.has(s)) entityMap.set(s, { kind: 'entity', name: id })
+    // Classify a typed word for the field's display reformat: a catalog FUNCTION reads as an operator, a COLLECTION
+    // as an entity, else a plain variable — and `identifierDisplay` turns that into the exact display LaTeX (Pascal
+    // `\operatorname{}`/`\mathrm{}`, or a registered notation glyph) the reformat splices. Both snake_case and
+    // PascalCase typed spellings map to the same id.
+    const notation = nb.names.notation
+    const entityMap = new Map<string, IdentifierDisplay>()
+    for (const id of nb.names.functions) for (const s of [id, pascalCase(id)]) entityMap.set(s, identifierDisplay(id, 'function', notation))
+    for (const id of nb.names.collections) for (const s of [id, pascalCase(id)]) if (!entityMap.has(s)) entityMap.set(s, identifierDisplay(id, 'collection', notation))
     this.classify = (run) => entityMap.get(run) ?? null
     await reseedRandom(this.seed) // reproducible randomness from the first evaluation
     for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)

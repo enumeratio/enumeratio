@@ -67,7 +67,7 @@ describe('lower: x re-embedded as ValueRef{elem, rank 4}', () => {
 describe('lower: define-of-declared-elem wants a locate, not a value', () => {
   it('x = 10 (after x ∈ triangular_numbers) → two columns: rank(locate(...)), cast(locate(...), numeric)', () => {
     const scope: Scope = new Map()
-    bind(parser.parse('x \\in \\operatorname{triangular\\_numbers}'), scope, catalog)
+    bind(parser.parse('x \\in \\operatorname{TriangularNumbers}'), scope, catalog)
     const bound = bind(parser.parse('x = 10'), scope, catalog)
     const result = lower(bound, scope)
     const locateCall = { kind: 'apply', fn: 'locate', args: [{ kind: 'handle', handle }, { kind: 'lit', value: 10 }] }
@@ -110,8 +110,8 @@ describe('lower: p re-embedded as ValueRef{elem, rank 5} carries the constructio
   ])
   const pElem = { kind: 'apply', fn: 'unrank', args: [{ kind: 'handle', handle: permsHandle }, { kind: 'lit', value: 5 }] }
 
-  it('\\operatorname{inversions}(p) → apply(inversions, [cast(unrank(handle{positional:[4]}, 5), permutation)])', () => {
-    const bound = bind(parser.parse('\\operatorname{inversions}(p)'), scope, catalog)
+  it('\\operatorname{Inversions}(p) → apply(inversions, [cast(unrank(handle{positional:[4]}, 5), permutation)])', () => {
+    const bound = bind(parser.parse('\\operatorname{Inversions}(p)'), scope, catalog)
     const result = lower(bound, scope)
     expect(result).toEqual({
       wants: 'value',
@@ -119,8 +119,8 @@ describe('lower: p re-embedded as ValueRef{elem, rank 5} carries the constructio
     })
   })
 
-  it('3 \\in \\operatorname{permutations}(4) keeps the handle (positional [4]) in the contains call', () => {
-    const bound = bind(parser.parse('3 \\in \\operatorname{permutations}(4)'), new Map(), catalog)
+  it('3 \\in \\operatorname{Permutations}(4) keeps the handle (positional [4]) in the contains call', () => {
+    const bound = bind(parser.parse('3 \\in \\operatorname{Permutations}(4)'), new Map(), catalog)
     const result = lower(bound, new Map())
     expect(result).toEqual({
       wants: 'value',
@@ -135,7 +135,7 @@ describe('lower: p re-embedded as ValueRef{elem, rank 5} carries the constructio
 describe('lower: a bare declare or fn define needs no evaluation', () => {
   it('a declare wants none', () => {
     const scope: Scope = new Map()
-    const bound = bind(parser.parse('y \\in \\operatorname{triangular\\_numbers}'), scope, catalog)
+    const bound = bind(parser.parse('y \\in \\operatorname{TriangularNumbers}'), scope, catalog)
     expect(lower(bound, scope)).toEqual({ wants: 'none' })
   })
 

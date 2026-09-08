@@ -41,7 +41,7 @@ describe('bind: a notebook session', () => {
   it('declares, uses, and re-uses x across lines', () => {
     const scope: Scope = new Map()
 
-    const declare = bind(parser.parse('x \\in \\operatorname{triangular\\_numbers}'), scope, catalog)
+    const declare = bind(parser.parse('x \\in \\operatorname{TriangularNumbers}'), scope, catalog)
     expect(declare.stmt.k).toBe('declare')
     expect(declare.type).toEqual({
       k: 'elem', coll: 'triangular_numbers', carrier: 'numeric',
@@ -55,13 +55,13 @@ describe('bind: a notebook session', () => {
     expect(add.deps).toEqual(new Set(['x']))
     expect(add.errors).toEqual([])
 
-    const next = bind(parser.parse('\\operatorname{next}(x)'), scope, catalog)
+    const next = bind(parser.parse('\\operatorname{Next}(x)'), scope, catalog)
     expect(next.type).toEqual({
       k: 'elem', coll: 'triangular_numbers', carrier: 'numeric',
       handle: { coll: 'triangular_numbers', named: {}, positional: [] },
     })
 
-    const rank = bind(parser.parse('\\operatorname{rank}(x)'), scope, catalog)
+    const rank = bind(parser.parse('\\operatorname{Rank}(x)'), scope, catalog)
     expect(rank.type).toEqual({ k: 'scalar', pg: 'natural_number' })
 
     const binom = bind(parser.parse('\\binom{6}{2} - x'), scope, catalog)
@@ -77,14 +77,14 @@ describe('bind: a notebook session', () => {
     const scope: Scope = new Map([
       ['p', { k: 'var', type: { k: 'elem', coll: 'permutations', carrier: 'permutation', handle: { coll: 'permutations', named: {}, positional: [] } } }],
     ])
-    const bound = bind(parser.parse('\\operatorname{inversions}(p)'), scope, catalog)
+    const bound = bind(parser.parse('\\operatorname{Inversions}(p)'), scope, catalog)
     expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bound.errors).toEqual([])
     expect(bound.deps).toEqual(new Set(['p']))
   })
 
   it('a parameterized collection construction carries its literal args in the handle', () => {
-    const declare = bind(parser.parse('p \\in \\operatorname{permutations}(4)'), new Map(), catalog)
+    const declare = bind(parser.parse('p \\in \\operatorname{Permutations}(4)'), new Map(), catalog)
     expect(declare.stmt.k).toBe('declare')
     expect(declare.type).toEqual({
       k: 'elem', coll: 'permutations', carrier: 'permutation',
@@ -95,14 +95,14 @@ describe('bind: a notebook session', () => {
 
   it('a stat of an element re-embedded from a parameterized construction keeps the handle in deps', () => {
     const scope: Scope = new Map()
-    bind(parser.parse('p \\in \\operatorname{permutations}(4)'), scope, catalog)
-    const bound = bind(parser.parse('\\operatorname{inversions}(p)'), scope, catalog)
+    bind(parser.parse('p \\in \\operatorname{Permutations}(4)'), scope, catalog)
+    const bound = bind(parser.parse('\\operatorname{Inversions}(p)'), scope, catalog)
     expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bound.errors).toEqual([])
   })
 
   it('membership against a parameterized construction keeps the handle typed, not just the bare coll', () => {
-    const bound = bind(parser.parse('3 \\in \\operatorname{permutations}(4)'), new Map(), catalog)
+    const bound = bind(parser.parse('3 \\in \\operatorname{Permutations}(4)'), new Map(), catalog)
     expect(bound.stmt.k).toBe('expr')
     expect(bound.type).toEqual({ k: 'scalar', pg: 'boolean' })
     expect(bound.errors).toEqual([])
@@ -133,7 +133,7 @@ describe('bind: a notebook session', () => {
   })
 
   it('a non-symbol Element (buried in an expr, not a declare) types as boolean membership', () => {
-    const bound = bind(parser.parse('3 \\in \\operatorname{triangular\\_numbers}'), new Map(), catalog)
+    const bound = bind(parser.parse('3 \\in \\operatorname{TriangularNumbers}'), new Map(), catalog)
     expect(bound.stmt.k).toBe('expr')
     expect(bound.type).toEqual({ k: 'scalar', pg: 'boolean' })
     expect(bound.errors).toEqual([])
@@ -148,7 +148,7 @@ describe('bind: errors', () => {
   })
 
   it('mismatched arity against a curated function reports the expected count', () => {
-    const bound = bind(parser.parse('\\operatorname{binomial}(6,2,1)'), new Map(), catalog)
+    const bound = bind(parser.parse('\\operatorname{Binomial}(6,2,1)'), new Map(), catalog)
     expect(bound.errors.some((e) => /binomial expects 2/.test(e.message))).toBe(true)
   })
 })

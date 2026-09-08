@@ -1,6 +1,6 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state, query } from 'lit/decorators.js'
-import { reformatIdentifiers } from '@enumeratio/expressions'
+import { reformatIdentifiers, type IdentifierDisplay } from '@enumeratio/expressions'
 import type { AdapterFactory, MathInputAdapter } from './math-input-adapter'
 import { mathliveAdapter } from './mathlive-adapter'
 
@@ -39,7 +39,7 @@ export class EnumeratioMathInput extends LitElement {
   @property({ attribute: false }) completer: Completer | null = null
   /** Host-injected display classifier: a typed word → 'operator' (\operatorname), 'entity' (\mathrm) or null
    *  (plain italic variable). Drives the debounced field reformat (see below); null disables it. */
-  @property({ attribute: false }) classify: ((run: string) => { kind: 'operator' | 'entity'; name: string } | null) | null = null
+  @property({ attribute: false }) classify: ((run: string) => IdentifierDisplay | null) | null = null
 
   @state() private candidates: CompletionCandidate[] = []
   @state() private activeIndex = -1

@@ -1,6 +1,7 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import type { Completer } from './enumeratio-math-input'
+import type { IdentifierDisplay } from '@enumeratio/expressions'
 import './enumeratio-math-input'
 
 // <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>. The math-input field spans the full
@@ -35,7 +36,7 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String }) latex = ''
   @property({ type: Number }) index = 0
   @property({ attribute: false }) completer: Completer | null = null
-  @property({ attribute: false }) classify: ((run: string) => { kind: 'operator' | 'entity'; name: string } | null) | null = null
+  @property({ attribute: false }) classify: ((run: string) => IdentifierDisplay | null) | null = null
   @property({ attribute: false }) state: LineState = {}
 
   /** Gated display of `state.error` — see the debounce note above. */

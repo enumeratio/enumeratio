@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser, reformatIdentifiers } from '../src/ce/latex.js'
+import { makeParser, reformatIdentifiers, identifierDisplay, type IdentifierDisplay } from '../src/ce/latex.js'
 import { toCalcText, toLatex, toMathJsonString } from '../src/format.js'
 import { freeSymbols, spanAt } from '../src/ast.js'
 import type { Expression } from '../src/ast.js'
@@ -26,7 +26,7 @@ function shape(latex: string): { kind: string; json: string } {
 describe('parse: MathJSON shape + statement kind', () => {
   it.each([
     ['\\binom{6}{2} - x', 'expr', '["Subtract",["Binomial",6,2],"x"]'],
-    ['\\operatorname{next}(x)', 'expr', '["next","x"]'],
+    ['\\operatorname{Next}(x)', 'expr', '["next","x"]'], // Pascal is the parse spelling; the symbol stays snake
     ['\\gcd(4,6)', 'expr', '["GCD",4,6]'],
     ['x!', 'expr', '["Factorial","x"]'],
     ['\\frac{1}{2}', 'expr', '["Divide",1,2]'],
@@ -46,7 +46,7 @@ describe('parse: MathJSON shape + statement kind', () => {
     ['x', 'expr', '"x"'], // a single letter stays a bare variable
     ['x = 10', 'define', '["x",10]'],
     ['f(n) = n^2 + 1', 'define', '["f",["n"],["Add",["Power","n",2],1]]'],
-    ['x \\in \\operatorname{triangular\\_numbers}', 'declare', '["Element","x","triangular_numbers"]'],
+    ['x \\in \\operatorname{TriangularNumbers}', 'declare', '["Element","x","triangular_numbers"]'],
   ])('%s', (latex, kind, json) => {
     expect(shape(latex)).toEqual({ kind, json })
   })
@@ -94,47 +94,62 @@ describe('errors', () => {
 })
 
 describe('round-trip', () => {
-  it('serialize(parse(declare)) matches the input up to whitespace', () => {
-    const input = 'x \\in \\operatorname{triangular\\_numbers}'
+  it('serialize(parse(declare)) matches the input up to whitespace, in the Pascal spelling', () => {
+    const input = 'x \\in \\operatorname{TriangularNumbers}'
     const parsed = parser.parse(input)
     if (parsed.stmt.k !== 'declare') throw new Error('expected declare')
     const out = toLatex(['Element', parsed.stmt.name, parsed.stmt.domain] as Expression, parser)
     expect(out.replace(/\s+/g, '')).toBe(input.replace(/\s+/g, ''))
   })
 
-  it('serialize(["next","x"]) round-trips through the \\operatorname{} spelling', () => {
-    expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\operatorname{next}')
+  it('serialize(["next","x"]) round-trips through the Pascal \\operatorname{} spelling', () => {
+    expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\operatorname{Next}')
   })
 })
 
 describe('reformatIdentifiers (display reformat)', () => {
-  // Mirrors the notebook's classify — keyed by the pure-letter spellings MathLive actually produces (snake_case
-  // with an underscore never arrives as one run, so a collection is recognized by its PascalCase spelling). It
-  // returns the CANONICAL snake id so the reformatted wrapper re-parses to the same symbol.
-  const classify = (run: string): { kind: 'operator' | 'entity'; name: string } | null =>
-    run === 'next' ? { kind: 'operator', name: 'next' }
-      : run === 'TriangularNumbers' ? { kind: 'entity', name: 'triangular_numbers' }
-        : null
+  // Mirrors the notebook's classify: `identifierDisplay` turns an id into its display LaTeX — Pascal
+  // `\operatorname{}` for a function, `\mathrm{}` for a collection, or a registered notation glyph. Keyed by the
+  // pure-letter spellings MathLive produces (snake_case with `_` never arrives as one run). A parser that KNOWS
+  // the notation is built alongside, so the round-trip covers the glyph too.
+  const notation = { permutations: '\\mathfrak{S}' }
+  const npParser = makeParser({ collections: ['triangular_numbers', 'permutations'], functions: ['next'], notation })
+  const npShape = (latex: string) => {
+    const p = npParser.parse(latex)
+    return p.stmt.k === 'declare'
+      ? toMathJsonString(['Element', p.stmt.name, p.stmt.domain] as Expression)
+      : p.stmt.k === 'expr' ? toMathJsonString(p.stmt.body) : p.stmt.k
+  }
+  const classify = (run: string): IdentifierDisplay | null =>
+    run === 'next' ? identifierDisplay('next', 'function', notation)
+      : run === 'TriangularNumbers' ? identifierDisplay('triangular_numbers', 'collection', notation)
+        : run === 'Permutations' ? identifierDisplay('permutations', 'collection', notation)
+          : null
 
   it.each([
-    ['next', '\\operatorname{next}'], // known function → upright operator
-    ['TriangularNumbers', '\\mathrm{triangular\\_numbers}'], // known collection → \mathrm on the canonical id
+    ['next', '\\operatorname{Next}'], // known function → upright operator, Pascal spelling
+    ['TriangularNumbers', '\\mathrm{TriangularNumbers}'], // known collection → \mathrm, Pascal spelling
+    ['Permutations', '\\mathfrak{S}'], // a registered notation glyph is spliced verbatim
     ['xy', 'xy'], // unknown multi-letter run → left bare (a variable)
     ['x', 'x'], // single letter → untouched
   ])('%s → %s', (input, expected) => {
     expect(reformatIdentifiers(input, classify)).toBe(expected)
   })
 
-  it('is idempotent — already-wrapped runs are protected, so re-running never double-wraps', () => {
-    const once = reformatIdentifiers('TriangularNumbers', classify)
-    expect(reformatIdentifiers(once, classify)).toBe(once)
+  it('is idempotent — protected groups and glyphs are left alone, so re-running never double-wraps', () => {
+    for (const run of ['TriangularNumbers', 'Permutations', 'next']) {
+      const once = reformatIdentifiers(run, classify)
+      expect(reformatIdentifiers(once, classify)).toBe(once)
+    }
   })
 
-  it('the reformatted spelling re-parses to the SAME symbol (the load-bearing correctness claim)', () => {
-    // A word and its reformatted spelling must bind to the identical MathJSON symbol.
-    expect(shape('next(x)')).toEqual(shape(reformatIdentifiers('next', classify) + '(x)'))
-    expect(shape('x \\in triangular_numbers'))
-      .toEqual(shape('x \\in ' + reformatIdentifiers('TriangularNumbers', classify)))
+  it('every reformatted spelling re-parses to the SAME symbol (the load-bearing correctness claim)', () => {
+    expect(npShape('Next(x)')).toEqual(npShape(reformatIdentifiers('next', classify) + '(x)'))
+    expect(npShape('x \\in triangular_numbers'))
+      .toEqual(npShape('x \\in ' + reformatIdentifiers('TriangularNumbers', classify)))
+    // the notation glyph binds to the same collection symbol as the typed word
+    expect(npShape('x \\in permutations'))
+      .toEqual(npShape('x \\in ' + reformatIdentifiers('Permutations', classify)))
   })
 })
 
