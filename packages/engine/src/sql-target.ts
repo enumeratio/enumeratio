@@ -23,9 +23,31 @@ export function sqlInversions(permSql: string): string {
   return `perm_inversions(${permSql})`;
 }
 
+// The heads with a certified SQL twin, mapped to their SQL collection name (the realizer's generic
+// `unrank(<collection>(params), ord)` dispatch). SymmetricGroup has its own bare fn and is handled apart.
+const SQL_COLLECTION: Record<string, string> = {
+  IntegerCompositions: "integer_compositions",
+  IntegerPartitions: "integer_partitions",
+  PartitionsIntoKParts: "k_part_partitions",
+  SetPartitions: "set_partitions",
+  SetPartitionsIntoKBlocks: "set_partitions_into_k_blocks",
+  SetCompositions: "set_compositions",
+};
+
+/** SQL for the r-th (1-based) element of a SQL-twinned family; undefined if the head has no twin.
+ *  SymmetricGroup → the permutation composite (permutation_unrank_lex); the rest → the generic
+ *  `(unrank(<collection>(params), ord)).value` the SQL realizer dispatches (ord is 0-based = r-1). */
+export function sqlCollectionAt(head: string, params: number[], r1based: number): string | undefined {
+  if (head === "SymmetricGroup") return sqlPermutationAt(params[0], r1based);
+  const coll = SQL_COLLECTION[head];
+  if (!coll) return undefined;
+  const args = params.map((p) => `${p}::int`).join(", ");
+  return `(unrank(${coll}(${args}), ${r1based - 1}::bigint)).value`;
+}
+
 /**
- * Emit a single SQL scalar expression for a supported boxed head. Recognizes
- * Inversions(At(SymmetricGroup(n), r)) and its inner forms; returns undefined for anything else
+ * Emit a single SQL scalar expression for a supported boxed head. Recognizes `At(<family>(params), r)` for
+ * every SQL-twinned family, and the Inversions stat over a permutation. Returns undefined for anything else
  * (the target declines cleanly rather than emitting wrong SQL).
  */
 export function emitScalarSql(expr: Expression): string | undefined {
@@ -35,15 +57,12 @@ export function emitScalarSql(expr: Expression): string | undefined {
 
   if (head === "At") {
     const inner = ops[0] as any;
-    if (inner?.operator === "SymmetricGroup") {
-      return sqlPermutationAt(intOf(inner.ops[0]), intOf(ops[1]));
-    }
-    return undefined;
+    if (!inner?.operator || !inner.ops) return undefined;
+    return sqlCollectionAt(inner.operator, inner.ops.map(intOf), intOf(ops[1]));
   }
   if (head === "Inversions") {
     const permSql = emitScalarSql(ops[0]);
-    if (permSql) return sqlInversions(permSql);
-    return undefined;
+    return permSql ? sqlInversions(permSql) : undefined;
   }
   return undefined;
 }

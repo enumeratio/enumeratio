@@ -54,8 +54,19 @@ describe("SQL target owns snake_case emission", () => {
     const sql = emitScalarSql(ce.box(["Inversions", ["At", ["SymmetricGroup", 12], 300000000]]));
     expect(sql).toBe("perm_inversions(permutation_unrank_lex(12::int, 299999999::bigint))");
   });
-  it("declines cleanly for unsupported heads", () => {
+  it("emits At(...) for every SQL-twinned family (generic unrank dispatch)", () => {
+    const at = (mj: any) => emitScalarSql(ce.box(mj));
+    expect(at(["At", ["SymmetricGroup", 12], 300000000])).toBe("permutation_unrank_lex(12::int, 299999999::bigint)");
+    expect(at(["At", ["IntegerCompositions", 6], 3])).toBe("(unrank(integer_compositions(6::int), 2::bigint)).value");
+    expect(at(["At", ["IntegerPartitions", 7], 5])).toBe("(unrank(integer_partitions(7::int), 4::bigint)).value");
+    expect(at(["At", ["PartitionsIntoKParts", 9, 3], 2])).toBe("(unrank(k_part_partitions(9::int, 3::int), 1::bigint)).value");
+    expect(at(["At", ["SetPartitions", 5], 10])).toBe("(unrank(set_partitions(5::int), 9::bigint)).value");
+    expect(at(["At", ["SetPartitionsIntoKBlocks", 5, 2], 4])).toBe("(unrank(set_partitions_into_k_blocks(5::int, 2::int), 3::bigint)).value");
+    expect(at(["At", ["SetCompositions", 4], 8])).toBe("(unrank(set_compositions(4::int), 7::bigint)).value");
+  });
+  it("declines cleanly for heads with no SQL twin", () => {
     expect(emitScalarSql(ce.box(["Length", ["SymmetricGroup", 4]]))).toBeUndefined();
+    expect(emitScalarSql(ce.box(["At", ["DyckPaths", 5], 1]))).toBeUndefined(); // authored, no SQL twin
   });
 });
 
