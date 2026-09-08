@@ -4,15 +4,7 @@
 // the exhaustive rank(unrank(p,r),p)===r certification plus an independent
 // brute-force (generate-all-compositions-and-filter) cross-check of count()/valid().
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "PalindromicCompositions"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n]; closed recurrence
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
 const normRank = (r: number, total: number): number =>
   total > 0 ? (((Math.trunc(r) % total) + total) % total) : 0;
@@ -149,11 +141,7 @@ function distinctPartitionRank(partsDesc: number[], n: number): number {
   return r;
 }
 
-function factorial(k: number): number {
-  let f = 1;
-  for (let i = 2; i <= k; i++) f *= i;
-  return f;
-}
+import { factorial } from "./_shared.js";
 
 // Standard factorial-number-system (Lehmer code) permutation of a fixed, ascending-sorted base list.
 function permUnrank(sortedAsc: number[], idx: number): number[] {

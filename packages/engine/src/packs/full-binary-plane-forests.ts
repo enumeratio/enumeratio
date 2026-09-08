@@ -3,31 +3,9 @@
 // imports, no I/O, plain JS numbers/arrays. See .scratch/pack-g-selfcert.mts
 // for the exhaustive rank(unrank(p,r),p)===r certification over n=0..9.
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "FullBinaryTrees"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n] or [n,k]; closed-form or DP count
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
-// ---- shared helper ---------------------------------------------------------
-
-// Catalan(n) via plain DP, recomputed per call — n stays small (<=9 in
-// selfcert, and both counts blow past the 60000 cert cap by n~13) so this
-// stays cheap without any module-level mutable cache.
-function catalan(n: number): number {
-  if (n <= 0) return 1;
-  const c: number[] = [1];
-  for (let i = 1; i <= n; i++) {
-    let s = 0;
-    for (let k = 0; k < i; k++) s += c[k] * c[i - 1 - k];
-    c.push(s);
-  }
-  return c[n];
-}
+import { catalan } from "./_shared.js";
 
 // ---- FullBinaryTrees(n) -----------------------------------------------------
 // Full binary trees (every node has 0 or 2 children) with n internal nodes,

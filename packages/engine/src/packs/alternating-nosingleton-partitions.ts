@@ -3,15 +3,7 @@
 // package's existing kernel style (kernels.ts / kernels-combinatorics.ts): 0-based rank, DP-based
 // unranking via suffix-completion counts, exact digit-by-digit rank as the inverse walk.
 
-export type PackEntry = {
-  head: string;                 // PascalCase MathJSON head
-  paramCount: 1 | 2;
-  kind: "ints" | "blocks";      // element shape: flat int list OR a list of int lists (blocks)
-  count: (p: number[]) => number;
-  unrank: (p: number[], r: number) => number[] | number[][];  // 0-based; "ints"=>number[], "blocks"=>number[][]
-  rank: (e: any, p: number[]) => number;          // exact 0-based inverse
-  valid: (e: any, p: number[]) => boolean;
-};
+import type { PackEntry } from "./types.js";
 
 const normRank = (r: number, total: number): number =>
   total > 0 ? (((Math.trunc(r) % total) + total) % total) : 0;

@@ -5,15 +5,7 @@
 // brute-force (generate-all-and-filter) cross-check of count()/valid(), and a
 // direct check against the Fibonacci reference values named in the task.
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "SubsetsWithoutConsecutive"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n]; closed recurrence
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
 const normRank = (r: number, total: number): number =>
   total > 0 ? (((Math.trunc(r) % total) + total) % total) : 0;

@@ -5,30 +5,9 @@
 // kSubsetUnrank/kSubsetRank helpers below. See .scratch/pack-i-selfcert.mts
 // for the exhaustive rank(unrank(p,r),p)===r certification over n=0..7.
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "GrandDyckPaths"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n] or [n,k]; closed-form or DP count
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
-// ---- shared helpers ---------------------------------------------------------
-
-// Exact binomial coefficient. The multiply-before-divide order keeps every
-// intermediate `result` an integer (result after i steps === C(n, i+1)), so
-// this is exact for the small n we deal with here; Math.round is just a
-// float-noise safety net.
-function binomial(n: number, k: number): number {
-  if (k < 0 || k > n) return 0;
-  if (k === 0) return 1;
-  k = Math.min(k, n - k);
-  let result = 1;
-  for (let i = 0; i < k; i++) result = (result * (n - i)) / (i + 1);
-  return Math.round(result);
-}
+import { binomial } from "./_shared.js";
 
 // Colex (combinatorial number system) unrank of a k-subset of {0,...,N-1}.
 // Standard combinadic decomposition: find the subset {c_k>...>c_1} such that

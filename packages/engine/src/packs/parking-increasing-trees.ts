@@ -3,23 +3,9 @@
 // I/O, plain JS numbers/arrays. See .scratch/pack-a-selfcert.mts for the
 // exhaustive rank(unrank(p,r),p)===r certification over n=0..8.
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "ParkingFunctions"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n] or [n,k]; closed-form or DP count
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
-// ---- shared helper ---------------------------------------------------------
-
-function factorial(n: number): number {
-  let f = 1;
-  for (let i = 2; i <= n; i++) f *= i;
-  return f;
-}
+import { factorial } from "./_shared.js";
 
 // ---- IncreasingTrees(n) -----------------------------------------------------
 // Rooted labeled trees on nodes [1..n] where every root-to-leaf path has

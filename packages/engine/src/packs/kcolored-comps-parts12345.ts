@@ -5,15 +5,7 @@
 // a from-scratch composition generator crossed with an independent cartesian-product color assignment —
 // deliberately not reusing this file's DP table).
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "KColoredCompositions"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n] or [n,k]; closed recurrence
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
 const normRank = (r: number, total: number): number =>
   total > 0 ? (((Math.trunc(r) % total) + total) % total) : 0;

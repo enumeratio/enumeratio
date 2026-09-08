@@ -27,15 +27,7 @@
 // Catalan-counted past n=4, so it is deliberately not used here). For crossing, the two readings
 // coincide (also confirmed by the same brute-force check), so hasCrossing checks all pairs directly.
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "NonCrossingPartitions"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n] or [n,k]; closed-form or DP count
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
 // ---- Catalan numbers ---------------------------------------------------------------------
 

@@ -5,15 +5,7 @@
 // revolving-door Gray-code adjacency check (consecutive ranks differ by
 // exactly one removed + one added element).
 
-export type PackEntry = {
-  head: string; // PascalCase MathJSON head, e.g. "PartitionsIntoParts1And2"
-  paramCount: 1 | 2; // number of integer parameters
-  kind: "ints" | "blocks"; // element shape: flat int list, OR a list of int lists
-  count: (p: number[]) => number; // p = [n] or [n,k]; closed-form count
-  unrank: (p: number[], r: number) => number[] | number[][]; // 0-based
-  rank: (e: any, p: number[]) => number; // exact 0-based inverse of unrank
-  valid: (e: any, p: number[]) => boolean; // is e a member of this collection at params p
-};
+import type { PackEntry } from "./types.js";
 
 function binom(n: number, k: number): number {
   if (n < 0 || k < 0 || k > n) return 0;
