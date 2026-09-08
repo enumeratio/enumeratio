@@ -55,10 +55,13 @@ Production (`enumeratio.dev`) ships from **GitHub Pages** on merge to `main` (`.
 `build` job already produced (`docs:build` runs ONCE per PR, not again for the preview). It's a *direct-upload*
 deploy, so it costs zero CF build minutes; CF's free-tier build cap never comes into play. Fires on every push to a
 PR branch (same-repo only — fork PRs lack the secrets), deploying with `--branch=<head>` so the per-branch alias
-(`<branch>.enumeratio.pages.dev`) always tracks the latest build. Posts/updates a sticky preview-URL comment on the
-PR. VitePress `base` is unset (`/`), so the same build serves at both `enumeratio.dev` and the `*.pages.dev` hosts.
-Needs repo secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio`).
-CF preview deployments are not auto-expired — they accumulate (harmless; the alias just tracks latest).
+(`<branch>.enumeratio.pages.dev`) always tracks the latest build. It keeps ONE sticky PR comment (marker
+`<!-- cf-preview -->`, edited in place) leading with that stable alias plus the latest commit + timestamp. The
+`preview` job only `needs: build`, so it fires as soon as the build artifact exists — tests run in parallel, not
+before it; the build is the long pole. VitePress `base` is unset (`/`), so the same build serves at both
+`enumeratio.dev` and the `*.pages.dev` hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`
+and a direct-upload Pages project (`enumeratio`). CF never auto-expires deployments, so `preview-cleanup.yml`
+(on `pull_request: closed`, merge or plain close) deletes ALL of the branch's preview deployments via the CF API.
 
 Per-pack isolation + additivity is a release gate (`release.yml`, on `v*` tags + dispatch) plus the nightly deep
 sweep — NOT per-PR. Every PR still runs the full complete-catalog example suite (`ci.yml` `core`) and pack-lint.
