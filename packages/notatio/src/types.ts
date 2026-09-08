@@ -1,7 +1,8 @@
 // The type model bind.ts checks against and lower.ts consumes. Kept catalog-free where possible: the numeric
 // tower and same-type algebra checks are PURE functions of `Type` values alone, so lower.ts can recompute the same
 // answer bind.ts already validated without needing a Catalog of its own (see opResultPg below).
-import type { Expression, NodePath, Span, Stmt } from './ast.js'
+import type { NodePath, Span, Stmt } from './ast.js'
+ import type { Node } from './node.js'
 import type { HandleExpr } from '@enumeratio/client'
 
 // ── the type lattice ─────────────────────────────────────────────────────────────────────────────────────────
@@ -13,7 +14,7 @@ export type Type =
   | { k: 'scalar'; pg: string }                                          // a pg scalar/algebra type by name: numeric, natural_number, …
   | { k: 'elem'; coll: string; carrier: string; handle: HandleExpr }     // a located element of collection `coll`, carrier `carrier`
   | { k: 'handle'; coll: string; handle: HandleExpr }                    // a collection named as a VALUE, not (yet) a located element
-  | { k: 'fn'; params: string[]; body: Expression }                      // a user-defined function, unapplied
+  | { k: 'fn'; params: string[]; body: Node }                      // a user-defined function, unapplied
   | { k: 'unknown' }                                                     // couldn't be typed — an error was already recorded
 
 const defaultHandle = (coll: string): HandleExpr => ({ coll, named: {}, positional: [] })
@@ -25,7 +26,7 @@ export const elemType = (coll: string, carrier: string, handle?: HandleExpr): Ty
   ({ k: 'elem', coll, carrier, handle: handle ?? defaultHandle(coll) })
 export const handleType = (coll: string, handle?: HandleExpr): Type =>
   ({ k: 'handle', coll, handle: handle ?? defaultHandle(coll) })
-export const fnType = (params: string[], body: Expression): Type => ({ k: 'fn', params, body })
+export const fnType = (params: string[], body: Node): Type => ({ k: 'fn', params, body })
 export const UNKNOWN: Type = { k: 'unknown' }
 
 /** The pg type name a `Type` presents as a VALUE — `elem(C)` counts as its carrier (the `elem ⊑ scalar(carrier)`
@@ -93,7 +94,7 @@ export type ValueRef =
 
 export type Binding =
   | { k: 'var'; type: Type; value?: ValueRef }
-  | { k: 'fn'; params: string[]; body: Expression }
+  | { k: 'fn'; params: string[]; body: Node }
   | { k: 'collection'; coll: string }
   | { k: 'function'; id: string }
 

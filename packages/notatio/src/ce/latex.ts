@@ -5,6 +5,7 @@ import { LatexSyntax, LATEX_DICTIONARY } from '@cortex-js/compute-engine/latex-s
 import type { LatexDictionaryEntry } from '@cortex-js/compute-engine/latex-syntax'
 import type { Expression, MathJsonSymbol, NodePath, Parsed, ParseError, SpanMap, Span, Stmt } from '../ast.js'
 import { args, head, isSymbol, mapExpr, symbolName } from '../ast.js'
+import { normalize, head as nHead, args as nArgs, isSymbol as nIsSymbol, symbolName as nSymbolName, type Node } from '../node.js'
 
 /** The catalog surface a parser is bound to: collection ids (bare symbols), function ids (call heads), and any
  *  extra LaTeX macro -> catalog-id bindings (e.g. `'\\mathbb{N}': 'natural_numbers'`). */
@@ -461,30 +462,30 @@ function convert(
 // ── Stmt split ───────────────────────────────────────────────────────────────────────────────────────────────
 // Only a top-level `Element`/`Equal` in the shapes below becomes declare/define; anything else — including a
 // buried `x = 10` inside parens, or an `Equal`/`Element` whose LHS doesn't match — is `expr`.
-function splitStmt(body: Expression): Stmt {
-  const h = head(body)
+function splitStmt(body: Node): Stmt {
+  const h = nHead(body)
   if (h === 'Element') {
-    const a = args(body)
-    if (a.length === 2 && isSymbol(a[0])) return { k: 'declare', name: symbolName(a[0]), domain: a[1] }
+    const a = nArgs(body)
+    if (a.length === 2 && nIsSymbol(a[0])) return { k: 'declare', name: nSymbolName(a[0]), domain: a[1] }
     return { k: 'expr', body }
   }
   if (h === 'Equal') {
-    const a = args(body)
+    const a = nArgs(body)
     if (a.length === 2) {
       const [lhs, rhs] = a
-      if (isSymbol(lhs)) return { k: 'define', name: symbolName(lhs), body: rhs }
+      if (nIsSymbol(lhs)) return { k: 'define', name: nSymbolName(lhs), body: rhs }
 
       // Undeclared function-call LHS: compute-engine has no dictionary entry for the name being defined, so it
       // parses `f(n)` as `InvisibleOperator(f, Delimiter(n))` (implicit-multiply of a symbol and a parenthesized
       // group) rather than a function call (spike item 1's `f(n) = n^2+1` probe). Recognize that shape here and
       // pull the params back out, rather than requiring the parser to already know every user-defined name.
-      if (head(lhs) === 'InvisibleOperator' && args(lhs).length === 2 && isSymbol(args(lhs)[0])) {
-        const [fnSym, delim] = args(lhs)
-        if (head(delim) === 'Delimiter' && args(delim).length >= 1) {
-          const body1 = args(delim)[0]
-          const paramExprs = head(body1) === 'Sequence' ? args(body1) : [body1]
-          if (paramExprs.every(isSymbol)) {
-            return { k: 'define', name: symbolName(fnSym), params: paramExprs.map(symbolName), body: rhs }
+      if (nHead(lhs) === 'InvisibleOperator' && nArgs(lhs).length === 2 && nIsSymbol(nArgs(lhs)[0])) {
+        const [fnSym, delim] = nArgs(lhs)
+        if (nHead(delim) === 'Delimiter' && nArgs(delim).length >= 1) {
+          const body1 = nArgs(delim)[0]
+          const paramExprs = nHead(body1) === 'Sequence' ? nArgs(body1) : [body1]
+          if (paramExprs.every(nIsSymbol)) {
+            return { k: 'define', name: nSymbolName(fnSym), params: paramExprs.map(nSymbolName), body: rhs }
           }
         }
       }
@@ -559,7 +560,7 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
       // the inner `(args)` group, not the call. Lift it to `At(Coll(args), i)`, the element-at call the binder
       // already handles. (Spans for a lifted subtree shift, so error highlighting there is approximate — a valid
       // indexing expression produces no error, so this is cosmetic-only.)
-      return { stmt: splitStmt(liftCallIndex(body)), spans, errors, latex }
+      return { stmt: splitStmt(normalize(liftCallIndex(body))), spans, errors, latex }
     },
     serialize(expr: Expression): string {
       return syntax.serialize(expr as never)

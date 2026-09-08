@@ -4,7 +4,7 @@ import { evaluate, fnRef, reseedRandom, type Expr, type HandleExpr, type Row, ty
 import {
   bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase,
   head, args, isSymbol, symbolName,
-  type Bound, type Completion, type Expression, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Parsed, type Scope, type Type,
+  type Bound, type Completion, type Node, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Parsed, type Scope, type Type,
 } from '@enumeratio/notatio'
 import { loadNotebookCatalog, type NotebookCatalog } from './notebook-catalog'
 import type { Completer, CompletionCandidate } from './enumeratio-math-input'
@@ -134,7 +134,7 @@ export class EnumeratioNotebook extends LitElement {
 
   /** Actions: a line whose body is `p → expr` (or a tuple of them) is an ACTION, not a value — it reassigns its
    *  targets when triggered. Assignments are cached per line so the play button / ticker can fire them. */
-  private actions = new Map<LineId, { target: string; rhs: Expression }[]>()
+  private actions = new Map<LineId, { target: string; rhs: Node }[]>()
   /** While a ticker is running we suppress per-tick `record()`; the whole run collapses to ONE undo step at stop. */
   private coalescing = false
   private tickerTimer: ReturnType<typeof setInterval> | null = null
@@ -348,17 +348,17 @@ export class EnumeratioNotebook extends LitElement {
   // ── actions ──────────────────────────────────────────────────────────────────────────────────────────────────
   /** The `p → expr` assignments in a line's AST, or null if it isn't an action. A single `To`, or a tuple of them
    *  inside a Delimiter/Sequence; each target must be a bare symbol. */
-  private actionOf(parsed: Parsed): { target: string; rhs: Expression }[] | null {
+  private actionOf(parsed: Parsed): { target: string; rhs: Node }[] | null {
     if (parsed.stmt.k !== 'expr') return null
-    const tos: Expression[] = []
-    const collect = (e: Expression): void => {
+    const tos: Node[] = []
+    const collect = (e: Node): void => {
       const h = head(e)
       if (h === 'To') { tos.push(e); return }
       if (h === 'Delimiter' || h === 'Sequence') for (const a of args(e)) collect(a)
     }
     collect(parsed.stmt.body)
     if (tos.length === 0) return null
-    const out: { target: string; rhs: Expression }[] = []
+    const out: { target: string; rhs: Node }[] = []
     for (const t of tos) {
       const [target, rhs] = args(t)
       if (!isSymbol(target)) return null // only bare-symbol targets in this slice
@@ -393,7 +393,7 @@ export class EnumeratioNotebook extends LitElement {
 
   /** Evaluate a bare expression against the current scope and return its scalar text, or null if it doesn't reduce
    *  to a single scalar (or errors). Reuses the normal bind→lower→evaluate pipeline via a synthetic Parsed. */
-  private async evalScalar(body: Expression): Promise<string | null> {
+  private async evalScalar(body: Node): Promise<string | null> {
     if (!this.notebook) return null
     const parsed: Parsed = { stmt: { k: 'expr', body }, spans: new Map(), errors: [], latex: '' }
     try {

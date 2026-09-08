@@ -1,15 +1,12 @@
 import { describe, expect, it } from 'vitest'
 import { makeParser } from '../src/ce/latex.js'
 import { normalize, toExpression, symbolsIn, type Node } from '../src/node.js'
-import type { Expression } from '../src/ast.js'
 
 const parser = makeParser({ collections: ['permutations'], functions: ['Fibonacci', 'CatalanNumber'] })
-// the AST of a whole line, from its parsed statement body
+// the AST of a whole line — the parser already yields the Node tree (`Parsed.stmt` carries Node)
 const ast = (latex: string): Node => {
   const p = parser.parse(latex)
-  const body: Expression =
-    p.stmt.k === 'expr' ? p.stmt.body : p.stmt.k === 'define' ? p.stmt.body : p.stmt.domain
-  return normalize(body)
+  return p.stmt.k === 'declare' ? p.stmt.domain : p.stmt.body
 }
 
 describe('normalize: CE MathJSON → the closed Notatio node tree', () => {
@@ -29,11 +26,9 @@ describe('normalize: CE MathJSON → the closed Notatio node tree', () => {
 
 describe('normalize/toExpression round-trip', () => {
   it.each(['5', 'x', '\\pi', 'x + 1', 'Fibonacci(10)', '\\gcd(12,18)', '\\sqrt{9}', '[1, 2, 3]', '2\\pi + 1'])(
-    '%s survives normalize → toExpression → normalize',
+    '%s survives toExpression → normalize',
     (latex) => {
-      const body = parser.parse(latex).stmt
-      const expr: Expression = body.k === 'expr' ? body.body : body.k === 'define' ? body.body : (body as { domain: Expression }).domain
-      const n = normalize(expr)
+      const n = ast(latex)
       expect(normalize(toExpression(n))).toEqual(n)
     },
   )

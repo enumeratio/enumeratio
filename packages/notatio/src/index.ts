@@ -14,10 +14,14 @@ export type {
   NodePath,
   Parsed,
 } from './ast.js'
-export { isSymbol, isNumber, symbolName, numberValue, head, args, mapExpr, freeSymbols, spanAt, pathOf, walk } from './ast.js'
+export { mapExpr, spanAt, pathOf, walk } from './ast.js'
 
+// The public AST accessors operate on the closed `Node` tree (what `Parsed.stmt` now carries).
 export type { Node } from './node.js'
-export { normalize, toExpression, symbolsIn } from './node.js'
+export {
+  normalize, toExpression, symbolsIn,
+  head, args, isSymbol, isConst, isNumber, symbolName, numberValue, mapNode, freeSymbols,
+} from './node.js'
 
 export type { CatalogNames, ExpressionParser, IdentifierDisplay } from './ce/latex.js'
 export { makeParser, catalogDictionary, reformatIdentifiers, identifierDisplay, pascalCase, serializeLatex } from './ce/latex.js'

@@ -29,6 +29,7 @@ export type Node =
   | { kind: 'num'; value: number }
   | { kind: 'sym'; name: string }
   | { kind: 'const'; name: string }
+  | { kind: 'str'; value: string }              // a MathJSON string — chiefly an `["Error", {str}]` code
   | { kind: 'apply'; head: string; args: Node[] }
 
 /** MathJSON's object-boxed number form (`{ num: "3.14" }`) — the parser only emits it for a value that does not
@@ -51,6 +52,9 @@ export function normalize(e: Expression): Node {
   }
   const numObj = numObjectValue(e)
   if (numObj !== null) return { kind: 'num', value: numObj }
+  if (typeof e === 'object' && e !== null && !Array.isArray(e) && 'str' in e) {
+    return { kind: 'str', value: String((e as { str: unknown }).str) }
+  }
   if (Array.isArray(e)) {
     const h = mjHead(e)
     if (h === null) throw new Error('normalize: array node with no head')
@@ -66,6 +70,7 @@ export function toExpression(n: Node): Expression {
     case 'num': return n.value
     case 'sym': return n.name
     case 'const': return n.name
+    case 'str': return { str: n.value } as unknown as Expression
     case 'apply': return [n.head, ...n.args.map(toExpression)] as Expression
   }
 }
