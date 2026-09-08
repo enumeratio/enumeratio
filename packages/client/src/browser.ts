@@ -7,18 +7,25 @@
 // #283 phase 4 (O.2): the browser client wants the WHOLE catalog (docs/explorer both browse every pack), so this
 // imports the full-profile entry (`@enumeratio/data/all`) rather than the root export, which is core-only.
 import { catalogSnapshot, coreProfileHash } from '@enumeratio/data/all'
+import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
 import { bootPglite } from './boot'
 import { provideCatalog } from './registry'
-import { setDebug, type Db, type Row } from './core'
+import { runSql, setDebug, type Db, type Row } from './core'
 import { routeNotice } from './debug-env'
 
 // The browser's half of the catalog-snapshot split: Vite resolves each pack fragment through import.meta.glob at
-// build time (an empty record, not a build error, when none were ever generated) and `@enumeratio/data/all` merges
-// them (#283 phase 4). `liveHash` is the PROFILE hash now (hash.ts profileHash), not the plain bundle hash — the
-// same quantity `catalogSnapshot.hash` is stamped with when every fragment is present. See client/src/node.ts for
-// the node half (which additionally rebuilds live on a stale/missing fragment, #281 — the browser has nothing to
-// rebuild FROM before a pglite exists, so an incomplete fragment set just declines here).
-provideCatalog(async () => ({ snapshot: catalogSnapshot, liveHash: coreProfileHash }))
+// build time (`@enumeratio/data/all` merges them, #283 phase 4) — but `catalogSnapshot` is null when any fragment
+// was never generated, which is every source checkout (docs:dev). In that case rebuild the snapshot LIVE by
+// querying the provided pglite Db, the same #281 fallback client/src/node.ts uses. The earlier "the browser has
+// nothing to rebuild FROM" note is stale: docs wire `provideDb(() => makeWorkerDb())`, and buildCatalogSnapshot
+// reads the catalog through `runSql` (the live Db), not sqlsrc — so once the Db is booted the browser CAN rebuild.
+// provideCatalog runs lazily (first `registry()` await), by which point provideDb has been called. `liveHash` is
+// the PROFILE hash (the same quantity `catalogSnapshot.hash` carries when every fragment is present).
+provideCatalog(async () =>
+  catalogSnapshot
+    ? { snapshot: catalogSnapshot, liveHash: coreProfileHash }
+    : { snapshot: await buildCatalogSnapshot(runSql, coreProfileHash), liveHash: coreProfileHash },
+)
 
 // Log query failures with their Postgres context whenever running a local dev build (Vite import.meta.env.DEV) — the
 // "always debug locally" default. Prod builds stay quiet; setDebug()/?debug/localStorage still override either way.
