@@ -1,14 +1,14 @@
 {
-  "name": "@enumeratio/engine",
+  "name": "@enumeratio/compute-engine",
   "version": "0.1.0",
-  "description": "enumeratio as a loadable compute-engine library: combinatorial collections with O(1) rank/unrank random access, backing CE's own CollectionHandlers. Wave 1 = the permutations vertical (SymmetricGroup + Inversions). Name provisional.",
+  "description": "enumeratio as a loadable compute-engine library: ~90 combinatorial collections with O(1) rank/unrank random access backing CE's own CollectionHandlers, plus Wolfram-aligned counting/digit operators. Loads into any ComputeEngine via installEnumeratio.",
   "type": "module",
   "license": "Unlicense",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enumeratio/enumeratio.git",
-    "directory": "packages/engine"
+    "directory": "packages/compute-engine"
   },
   "sideEffects": false,
   "types": "./src/index.ts",

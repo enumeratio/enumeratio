@@ -47,7 +47,7 @@
     "@cortex-js/compute-engine": "0.125.0",
     "@electric-sql/pglite": "^0.5.3",
     "@enumeratio/data": "workspace:^",
-    "@enumeratio/engine": "workspace:^",
+    "@enumeratio/compute-engine": "workspace:^",
     "@enumeratio/math": "workspace:^",
     "debug": "^4.4.0",
     "pg": "^8.23.0"

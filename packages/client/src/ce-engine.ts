@@ -62,7 +62,7 @@ let ceP: Promise<CEInstance> | null = null
 async function ceInstance(): Promise<CEInstance> {
   if (!ceP) ceP = Promise.all([
     import('@cortex-js/compute-engine'),
-    import('@enumeratio/engine'),
+    import('@enumeratio/compute-engine'),
   ]).then(([{ ComputeEngine }, { installEnumeratio }]) => {
     const ce = new ComputeEngine()
     ce.precision = 200
