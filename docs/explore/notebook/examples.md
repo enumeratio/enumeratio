@@ -2,7 +2,8 @@
 
 A spread of [`<enumeratio-notebook>`](/develop/packages/components/expression-set)s exercising different cases —
 all computed through [`@enumeratio/compute-engine`](/develop/packages/components/) (the pure `ts + ce + ce-enum`
-stack, no pglite). Each is live: edit any line and everything downstream recomputes.
+stack, no pglite). Names are written in **PascalCase** (`Bell`, `RandomElement`, `Permutations`) — no underscores,
+no `\operatorname{}`. Each is live: edit any line and everything downstream recomputes.
 
 ## Counting sequences
 
@@ -11,18 +12,17 @@ Closed-form counts, evaluated exactly on the compute-engine.
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
   {"id":"a1","latex":"\\binom{10}{3}"},
-  {"id":"a2","latex":"\\operatorname{bell}(6)"},
-  {"id":"a3","latex":"\\operatorname{catalan\\_number}(7)"},
-  {"id":"a4","latex":"\\operatorname{fubini}(5)"},
-  {"id":"a5","latex":"\\operatorname{partition\\_number}(12)"},
+  {"id":"a2","latex":"Bell(6)"},
+  {"id":"a3","latex":"CatalanNumber(7)"},
+  {"id":"a4","latex":"Fubini(5)"},
+  {"id":"a5","latex":"PartitionNumber(12)"},
   {"id":"a6","latex":"7!"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
 ## Arithmetic & fractions
 
-Exact integer arithmetic; a genuine fraction currently renders as its decimal (a place we want to let you cycle
-the presentation later).
+Exact integer arithmetic; a genuine fraction currently renders as its decimal.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
@@ -35,8 +35,7 @@ the presentation later).
 
 ## Define & apply functions
 
-A function defines with no value of its own (`f: (n) ↦` in the meta line); calling it, or referencing a
-previously-defined symbol, recomputes down the dependency graph.
+A function defines with no value of its own (`f: (n) ↦` in the meta line); calling it recomputes down the graph.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
@@ -47,28 +46,42 @@ previously-defined symbol, recomputes down the dependency graph.
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
-## Random enumeration
+## Random draws & shuffles
 
-`random_element` draws a uniform element of a collection through the library's O(1) `at` — a fresh one whenever a
-line above it changes.
+`RandomElement`/`RandomSample` draw through the library's O(1) `at`; `Shuffle` permutes a list. The **reshuffle**
+button (bottom-right) rerolls them all; it is disabled when a notebook has no randomness.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
-  {"id":"d1","latex":"\\operatorname{random\\_element}(\\operatorname{permutations}(5))"},
-  {"id":"d2","latex":"\\operatorname{random\\_element}(\\operatorname{subsets}(4))"},
-  {"id":"d3","latex":"\\operatorname{random\\_element}(\\operatorname{dyck\\_paths}(4))"}
+  {"id":"d1","latex":"RandomElement(Permutations(5))"},
+  {"id":"d2","latex":"RandomSample(Subsets(4), 3)"},
+  {"id":"d3","latex":"Shuffle(\\left\\lbrack1,2,3,4,5\\right\\rbrack)"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Lists & locating
+
+Enter a list with `[…]`; declare an element of a sized collection and locate it by value, then chain `Rank`/`Next`.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"e1","latex":"\\left\\lbrack3,1,4,2\\right\\rbrack"},
+  {"id":"e2","latex":"p \\in Permutations(3)"},
+  {"id":"e3","latex":"p = \\left\\lbrack3,1,2\\right\\rbrack"},
+  {"id":"e4","latex":"Rank(p)"},
+  {"id":"e5","latex":"Next(p)"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
 ## Errors, gracefully
 
-An unknown function errors *below* the field, in full, once the line settles — a blank or half-typed line never
+An unknown name errors *below* the field, in full, once the line settles — a blank or half-typed line never
 flashes one.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
-  {"id":"e1","latex":"\\operatorname{not\\_a\\_function}(3)"},
-  {"id":"e2","latex":"\\binom{6}{2}"},
-  {"id":"e3","latex":""}
+  {"id":"f1","latex":"Nope(3)"},
+  {"id":"f2","latex":"\\binom{6}{2}"},
+  {"id":"f3","latex":""}
 ]}'></enumeratio-notebook>
 </ClientOnly>

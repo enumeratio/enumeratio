@@ -71,6 +71,8 @@ export class EnumeratioNotebook extends LitElement {
    *  reproducible; the reshuffle button rolls a new one. (Global to the compute-engine library, so it is the whole
    *  page's randomness — one notebook's reshuffle reseeds all.) */
   @state() private seed = (Math.random() * 2 ** 32) >>> 0
+  /** Whether any line uses a random op — the reshuffle button is disabled otherwise (nothing to reroll). */
+  @state() private usesRandom = false
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -219,6 +221,9 @@ export class EnumeratioNotebook extends LitElement {
       if (!dirty.has(id)) continue
       await this.evalLine(id, models)
     }
+    // A line uses randomness if its parsed AST names a random op (random_element / random_sample / scramble). This
+    // gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
+    this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|scramble/i.test(a))
     this.results = new Map(this.results)
     this.requestUpdate()
     this.emitResult()
@@ -413,9 +418,13 @@ export class EnumeratioNotebook extends LitElement {
         )}
       </div>
       <div class="toolbar">
-        <button class="reshuffle" @click=${() => void this.reshuffle()} title="reshuffle — new random seed for every RandomElement / Shuffle / RandomSample">
-          ⤮ reshuffle
-        </button>
+        <button
+          class="reshuffle"
+          ?disabled=${!this.usesRandom}
+          @click=${() => void this.reshuffle()}
+          title="Reshuffle"
+          aria-label="Reshuffle"
+        >⤮</button>
       </div>
     `
   }
@@ -444,17 +453,25 @@ export class EnumeratioNotebook extends LitElement {
     }
     .reshuffle {
       font: inherit;
-      font-size: 0.82em;
+      font-size: 1.1rem;
+      line-height: 1;
       cursor: pointer;
+      width: 1.9rem;
+      height: 1.9rem;
+      display: grid;
+      place-items: center;
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 6px;
       background: transparent;
       color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      padding: 0.2rem 0.6rem;
     }
-    .reshuffle:hover {
+    .reshuffle:hover:not(:disabled) {
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .reshuffle:disabled {
+      opacity: 0.35;
+      cursor: default;
     }
     .set {
       display: flex;

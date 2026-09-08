@@ -42,6 +42,10 @@ export const NEXT_PREV_RANK = new Set(['next', 'prev', 'rank'])
  *  `random_element(permutations(10))` reads `∈ permutations`, and so `next`/`prev`/`rank` can chain onto it. */
 const HANDLE_ELEM = new Set(['random_element', 'unrank'])
 
+/** Ops whose result is a list (typed `integer[]`): our own scramble/random_sample, plus the list operations CE
+ *  canonicalizes to its Pascal heads (Join/Sort/Unique) at parse time. */
+const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'Join', 'Sort', 'Unique'])
+
 /** Deep-substitute a user function's params with the caller's ARGUMENT EXPRESSIONS (not their values — this is
  *  syntactic beta-reduction, substitute-then-type, matching bind.test.ts's `f(3)` case). `prefix` is a synthetic
  *  NodePath namespace for the freshly-built tree: it can't reuse the call site's own paths (those belong to the
@@ -202,8 +206,9 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
-  // `scramble(list)` / `random_sample(C, n)` → a list value (int array). Arguments typed for error-checking.
-  if ((h === 'scramble' || h === 'random_sample') && a.length >= 1) {
+  // List-valued ops → an int array: scramble/random_sample plus the list operations CE canonicalizes to its own
+  // Pascal heads at parse time (join→Join, sort→Sort, unique→Unique). Arguments typed for error-checking.
+  if (LIST_RESULT_OPS.has(h) && a.length >= 1) {
     for (let i = 0; i < a.length; i++) argT(i)
     return scalarType('integer[]')
   }

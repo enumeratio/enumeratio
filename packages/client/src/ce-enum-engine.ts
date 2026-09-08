@@ -65,6 +65,9 @@ const SCALAR_FN: Record<string, string> = {
 }
 
 const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count', 'scramble', 'random_sample'])
+// List operations CE canonicalizes to its own Pascal heads at parse time — we claim them and pass straight through
+// to CE, which evaluates them (Join = concat, Sort, Unique = order-preserving dedup).
+const CE_LIST_OPS = new Set(['Join', 'Sort', 'Unique'])
 
 /** A translated node: the CE expression, plus — when it denotes a located ELEMENT — the collection it lives in and
  *  its 0-based rank, so an enclosing `rank`/`next`/`prev` reads them off instead of re-deriving. */
@@ -132,6 +135,7 @@ function translate(ce: CE, e: SelectExpr): Trans {
         const h = translate(ce, e.args[0])
         return { ce: fn('RandomSample', [h.coll, translate(ce, e.args[1]).ce]) }
       }
+      if (CE_LIST_OPS.has(id)) return { ce: fn(id, e.args.map((a) => translate(ce, a).ce)) } // Join / Sort / Unique
       // a scalar identity (bell, binomial, gcd, …)
       return { ce: fn(SCALAR_FN[id], e.args.map((a) => translate(ce, a).ce)) }
     }
@@ -166,7 +170,7 @@ function rejectTree(e: SelectExpr, seen: { coll: boolean }): string | undefined 
     }
     case 'apply': {
       const id = String(e.fn)
-      if (ENUM_PRIMS.has(id)) seen.coll = true
+      if (ENUM_PRIMS.has(id) || CE_LIST_OPS.has(id)) seen.coll = true
       else if (!SCALAR_FN[id]) return `ce-enum has no operator for "${id}"`
       for (const a of e.args) { const bad = rejectTree(a, seen); if (bad) return bad }
       return undefined
