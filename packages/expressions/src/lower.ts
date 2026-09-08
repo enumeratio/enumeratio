@@ -87,6 +87,16 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
 
   if (NEXT_PREV_RANK.has(h) && a.length === 1) return { kind: 'apply', fn: fnRef(h), args: [lowerExpr(a[0], argPath(path, 0), scope, types)] }
 
+  // A numeric list literal `[3, 4, 2]` → an array constant. (Only all-number lists for now — a list of general
+  // expressions has no array-constant lowering.)
+  if (h === 'List') {
+    const vals = a.map((el) => {
+      if (!isNumber(el)) throw new Error('a list literal must be numbers for now, e.g. [3, 4, 2]')
+      return numberValue(el)
+    })
+    return { kind: 'lit', value: vals }
+  }
+
   return lowerGenericApply(h, a, path, scope, types)
 }
 

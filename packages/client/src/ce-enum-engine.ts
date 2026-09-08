@@ -141,6 +141,9 @@ function translate(ce: CE, e: SelectExpr): Trans {
 function rejectTree(e: SelectExpr, seen: { coll: boolean }): string | undefined {
   switch (e.kind) {
     case 'lit':
+      // A LIST literal (`[3,4,2]`) is ours to evaluate too — translate builds a CE List. A scalar literal alone is
+      // not claimed (that is ce/ts territory); it only rides along as an argument.
+      if (Array.isArray(e.value)) seen.coll = true
       return undefined
     case 'handle': {
       seen.coll = true

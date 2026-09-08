@@ -202,6 +202,14 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
+  // A list literal `[3, 4, 2]` → the parser's `["List", …]`. Typed as an int array (`integer[]`); when it is the
+  // value of a `p = […]` define where `p ∈ C`, bind.ts keeps `p`'s elem(C) type and the list is located as C's
+  // carrier value. Its elements are typed for error-checking.
+  if (h === 'List') {
+    for (let i = 0; i < a.length; i++) typeNode(a[i], argPath(path, i), ctx)
+    return scalarType('integer[]')
+  }
+
   return typeGenericApply(h, a, path, ctx)
 }
 
