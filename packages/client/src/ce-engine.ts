@@ -185,7 +185,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
   /** The evaluated CE result → the string pg would print for the same value, or an InexactResult. See the file
    *  header: "exact" here means integer or boolean — a genuine non-integer rational is declined, not spelled as
    *  `p/q`, because pg's own `numeric`/`int` division never produces one to compare against. */
-  function print(label: string, boxed: CEExpr): string {
+  function print(label: string, boxed: CEExpr, forceNumeric = false): string {
     // `numericValue`/`symbol` live on CE's NARROWED per-kind interfaces (BoxedNumber, BoxedSymbol, …), not on the
     // general `Expression` a bare `evaluateAsync()` call returns — there is no static type guard that widens one
     // to the other here, only the dynamic checks below, so this is the one deliberate escape to `unknown`.
@@ -195,7 +195,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
     // numericFallback: a real floating-point approximation of the result (trimmed of fp noise), or null. Used by
     // the notebook so an irrational/symbolic CE value renders as a decimal instead of being declined.
     const approx = (): string | null => {
-      if (!numericFallback) return null
+      if (!numericFallback && !forceNumeric) return null
       try {
         const n = (boxed as unknown as { N(): { re?: number; im?: number } }).N()
         if (typeof n.re === 'number' && Number.isFinite(n.re) && (n.im === undefined || n.im === 0)) {
@@ -205,6 +205,9 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
       return null
     }
     const bad = (): string => { const a = approx(); if (a !== null) return a; throw new InexactResult(label, ceImplRow(label), result.json) }
+    // Per-cell N: a forced numeric approximation of everything (an integer stays itself; a rational/irrational/
+    // symbolic becomes a decimal), taking precedence over exact/symbolic rendering.
+    if (forceNumeric) { const a = approx(); if (a !== null) return a }
     // An EXACT symbolic result — CE keeps it as an expression tree (√2 → ["Sqrt",2], ζ(2) → a Divide/Power), even
     // though it also carries a decimal numericValue. Its `.json` is an ARRAY head (not a plain number), which is
     // how we tell it apart from a genuine float. `Rational` is excluded so a rational still takes the `p/q` text
@@ -259,7 +262,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
         for (const [i, c] of expr.select.entries()) {
           const boxed = toCE(ce, c)
           const result = await boxed.evaluateAsync({ signal: opts.signal })
-          row[cols[i].id] = print(describeExpr(c), result)
+          row[cols[i].id] = print(describeExpr(c), result, opts.numeric ?? false)
         }
         return row
       })()

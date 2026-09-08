@@ -48,6 +48,8 @@ export type LineState = {
   more?: boolean
   /** This line is prose (a string body) — render it as a comment, not a math value. Interim: plain text. */
   comment?: string
+  /** The cell is HELD (unevaluated by choice) — show a quiet marker instead of a value. */
+  held?: boolean
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -206,6 +208,7 @@ export class EnumeratioExpressionLine extends LitElement {
           </div>
           <div class="value">
             ${s.comment != null ? html`<span class="comment">${s.comment}</span>`
+              : s.held ? html`<span class="held">held</span>`
               : s.busy ? html`<span class="hint">…</span>`
               : hasValue ? html`<span class="eq">=</span> ${s.valueTex != null
                   ? html`<span class="tex">${unsafeHTML(renderTex(s.valueTex))}</span>`
@@ -397,6 +400,15 @@ export class EnumeratioExpressionLine extends LitElement {
     }
     .hint {
       opacity: 0.35;
+    }
+    /* A HELD cell (unevaluated by choice) — a quiet pill in the value slot. */
+    .held {
+      font-weight: 400;
+      font-size: 0.85em;
+      opacity: 0.6;
+      padding: 0 0.4rem;
+      border: 1px dashed var(--enumeratio-muted, currentColor);
+      border-radius: 999px;
     }
     .ast {
       position: absolute;

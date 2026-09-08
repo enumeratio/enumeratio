@@ -27,7 +27,8 @@ import './enumeratio-expression-line'
 //   .addLine(latex?, afterId?)  — append (or insert after `afterId`) a line; returns its id. DOM test hook.
 //   events: composed `change` ({value}) on any edit, composed `result` ({value: JSON of `.values`}) after each
 //   evaluation pass — <enumeratio-assert> can wrap the whole set and check that JSON blob.
-export type NotebookSeed = { lines: { id?: string; latex: string }[] }
+export type LineMode = 'N' | 'hold'
+export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode }[] }
 
 type LineResult = LineState
 
@@ -66,7 +67,10 @@ export class EnumeratioNotebook extends LitElement {
   @property({ type: String, attribute: 'value', noAccessor: true })
   get value(): string {
     return JSON.stringify({
-      lines: this.displayOrder.map((id) => ({ id, latex: this.latexById.get(id) ?? '' })),
+      lines: this.displayOrder.map((id) => {
+        const mode = this.lineModes.get(id)
+        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}) }
+      }),
     } satisfies NotebookSeed)
   }
   set value(v: string) {
@@ -80,6 +84,9 @@ export class EnumeratioNotebook extends LitElement {
   @state() private results = new Map<LineId, LineResult>()
 
   private latexById = new Map<LineId, string>()
+  /** Per-line evaluation MODE: 'N' forces a numeric approximation, 'hold' leaves the cell unevaluated; absent = the
+   *  default (exact where possible). Set from the hamburger menu, persisted in `value`. */
+  private lineModes = new Map<LineId, LineMode>()
   /** Per-line collection-preview element count (grows on "pull more"). */
   private previewCounts = new Map<LineId, number>()
   private readonly graph = new LineGraph()
@@ -485,6 +492,7 @@ export class EnumeratioNotebook extends LitElement {
     for (const l of lines) {
       const id = l.id ?? `line-${++nextIdNum}`
       this.latexById.set(id, l.latex)
+      if (l.mode) this.lineModes.set(id, l.mode)
       this.displayOrder.push(id)
     }
   }
@@ -555,6 +563,14 @@ export class EnumeratioNotebook extends LitElement {
     // An empty / whitespace-only line is a blank, not an expression — never bind it (CE parses "" to the `Nothing`
     // symbol, which would otherwise surface as a spurious "unknown symbol Nothing").
     if ((this.latexById.get(id) ?? '').trim() === '') { this.setResult(id, {}); return }
+    // Hold mode: the cell is intentionally left unevaluated (a Wolfram-style HoldForm) — parse it (so the AST
+    // inspector still works) but stop before binding/evaluating.
+    if (this.lineModes.get(id) === 'hold') {
+      const held = models.get(id)?.parsed
+      if (held) this.lineAst.set(id, astFullForm(held, this.spellHead))
+      this.setResult(id, { held: true })
+      return
+    }
     const model = models.get(id)
     if (!model) return
     if (model.errors.length > 0) { this.setResult(id, { error: model.errors[0] }); return }
@@ -626,7 +642,7 @@ export class EnumeratioNotebook extends LitElement {
     const stale = () => this.controllers.get(id) !== controller
 
     try {
-      const { plan, rows } = evaluate(lowered.expr!, { signal: controller.signal })
+      const { plan, rows } = evaluate(lowered.expr!, { signal: controller.signal, numeric: this.lineModes.get(id) === 'N' })
       const collected: Row[] = []
       for await (const r of rows) collected.push(r)
       if (stale()) return
@@ -742,6 +758,20 @@ export class EnumeratioNotebook extends LitElement {
     }
   }
 
+  /** Toggle the active cell's evaluation mode (numeric `N` / `hold`) — off if it was already that mode — then
+   *  recompute it. */
+  private setLineMode(mode: LineMode): void {
+    const id = this.activeLineId
+    this.menuOpen = false
+    if (!id) return
+    if (this.lineModes.get(id) === mode) this.lineModes.delete(id)
+    else this.lineModes.set(id, mode)
+    this.pendingChanged.add(id)
+    void this.flushRecompute()
+    this.persist(); this.emitChange()
+    this.requestUpdate()
+  }
+
   private onLineReorder = (ev: CustomEvent<{ sourceId: LineId; targetId: LineId; position?: 'above' | 'below' }>): void => {
     const { sourceId, targetId, position = 'above' } = ev.detail
     const from = this.displayOrder.indexOf(sourceId)
@@ -835,6 +865,9 @@ export class EnumeratioNotebook extends LitElement {
                     title="Cell menu" aria-label="Cell menu">☰</button>
             ${this.menuOpen && this.activeLineId
               ? html`<div class="menu right" @mousedown=${(e: MouseEvent) => e.preventDefault()}>
+                  <button @click=${() => this.setLineMode('N')}>${this.lineModes.get(this.activeLineId) === 'N' ? '✓ ' : ''}Numeric (N)</button>
+                  <button @click=${() => this.setLineMode('hold')}>${this.lineModes.get(this.activeLineId) === 'hold' ? '✓ ' : ''}Hold (don't evaluate)</button>
+                  <hr>
                   <button @click=${() => this.menuAction('duplicate')}>Duplicate</button>
                   <button @click=${() => this.menuAction('clear')}>Clear</button>
                   <button @click=${() => this.menuAction('delete')} ?disabled=${this.displayOrder.length <= 1}>Delete</button>
@@ -923,6 +956,11 @@ export class EnumeratioNotebook extends LitElement {
       border-radius: 6px;
       background: var(--enumeratio-surface, var(--p-content-background, canvas));
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    }
+    .menu hr {
+      margin: 0.25rem 0.3rem;
+      border: none;
+      border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 12%);
     }
     .menu button {
       font: inherit;
