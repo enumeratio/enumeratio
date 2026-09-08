@@ -90,6 +90,81 @@ export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryE
   return entries
 }
 
+// ── pre-parse: `.`-method sugar ────────────────────────────────────────────────────────────────────────────────
+// `p.inverse` -> `inverse(p)`, `p.foo(x)` -> `foo(p, x)` — a receiver written before the function, the way a method
+// reads. CE itself rejects `.` as an operator, so this rewrites the raw latex BEFORE anything else, and carries an
+// offset map back to the ORIGINAL so spans still point at what the caller typed. Deliberately narrow (a later slice
+// widens it): the receiver is a single letter-start identifier (so `3.5` and `\frac{}{}.x` are untouched), no
+// chaining, rewrite is skipped inside \text{}/\operatorname{}/\mathrm{}.
+type DotResult = { text: string; map: number[] }
+const isIdentChar = (c: string): boolean => /[A-Za-z0-9]/.test(c)
+
+function rewriteDotMethods(src: string): DotResult {
+  let out = ''
+  const map: number[] = []
+  const copy = (from: number, to: number): void => { for (let k = from; k < to; k++) { out += src[k]; map.push(k) } }
+  const emit = (s: string, at: number): void => { for (const ch of s) { out += ch; map.push(at) } }
+  const skipSpace = (k: number): number => { while (k < src.length && /\s/.test(src[k])) k++; return k }
+
+  let i = 0
+  let braceDepth = 0
+  const protect: number[] = []
+  while (i < src.length) {
+    const c = src[i]
+    if (c === '\\') {
+      let j = i + 1
+      while (j < src.length && /[A-Za-z]/.test(src[j])) j++
+      copy(i, j)
+      const name = src.slice(i + 1, j)
+      if (name === 'operatorname' || name === 'mathrm' || name === 'text') {
+        const k = skipSpace(j)
+        if (src[k] === '{') { copy(j, k + 1); braceDepth++; protect.push(braceDepth); i = k + 1; continue }
+      }
+      i = j
+      continue
+    }
+    if (c === '{') { braceDepth++; copy(i, i + 1); i++; continue }
+    if (c === '}') { copy(i, i + 1); if (protect.length && protect[protect.length - 1] === braceDepth) protect.pop(); braceDepth--; i++; continue }
+    if (protect.length === 0 && /[A-Za-z]/.test(c)) {
+      const recStart = i
+      i++
+      while (i < src.length && isIdentChar(src[i])) i++
+      const recEnd = i
+      const dot = skipSpace(i)
+      if (src[dot] === '.') {
+        const mStart = skipSpace(dot + 1)
+        if (mStart < src.length && /[A-Za-z]/.test(src[mStart])) {
+          let mEnd = mStart + 1
+          while (mEnd < src.length && isIdentChar(src[mEnd])) mEnd++
+          const argAt = skipSpace(mEnd)
+          const leftParen = src.startsWith('\\left(', argAt)
+          const hasParen = leftParen || src[argAt] === '('
+          const open = leftParen ? '\\left(' : '('
+          emit(src.slice(mStart, mEnd), mStart) // method name
+          emit(open, dot)                        // open paren (matches an existing \right) if any)
+          copy(recStart, recEnd)                 // receiver becomes the first argument
+          if (hasParen) {
+            const afterOpen = argAt + open.length
+            const b = skipSpace(afterOpen)
+            const empty = src[b] === ')' || src.startsWith('\\right)', b)
+            if (!empty) emit(', ', dot)
+            i = afterOpen // the main loop copies the remaining args + their closing delimiter verbatim
+            continue
+          }
+          emit(')', mEnd)
+          i = mEnd
+          continue
+        }
+      }
+      copy(recStart, recEnd) // a plain identifier, no method — emit as-is
+      continue
+    }
+    copy(i, i + 1)
+    i++
+  }
+  return { text: out, map }
+}
+
 // ── pre-parse normalization: bare catalog-id runs -> \operatorname{} ───────────────────────────────────────────
 // compute-engine has no unknown-identifier hook (spike item 2): a bare multi-letter run always splits into
 // single-char symbols under implicit multiplication, dictionary entries notwithstanding. So a pasted/typed
@@ -439,7 +514,14 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
   return {
     dictionary,
     parse(latex: string): Parsed {
-      const { text, toOriginal } = normalizeLatex(latex, catalogIds, aliases)
+      // `.`-method sugar first (its own offset map back to `latex`), then the bare-run normalization on its output;
+      // compose the two maps so a span still points into the ORIGINAL input the caller gave us.
+      const { text: dotText, map: dotMap } = rewriteDotMethods(latex)
+      const { text, toOriginal: toDot } = normalizeLatex(dotText, catalogIds, aliases)
+      const toOriginal = (pos: number): number => {
+        const d = toDot(pos)
+        return d < dotMap.length ? dotMap[d] : latex.length
+      }
       const spans: SpanMap = new Map()
       const errors: ParseError[] = []
       const raw = syntax.parse(text) as PreservedNode | null

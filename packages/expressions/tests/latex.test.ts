@@ -44,6 +44,9 @@ describe('parse: MathJSON shape + statement kind', () => {
     ['triangular_numbers', 'expr', '"triangular_numbers"'], // bare run, rewritten by pre-parse normalization
     ['xy', 'expr', '"xy"'], // a multi-letter run is ONE identifier now (not x·y) — normalizer wraps it \mathrm
     ['x', 'expr', '"x"'], // a single letter stays a bare variable
+    ['p.next(x)', 'expr', '["next","p","x"]'], // `.`-method sugar: receiver becomes the first argument
+    ['p.next', 'expr', '["next","p"]'], // no-arg method
+    ['3.5', 'expr', '3.5'], // a decimal is NOT a method call (receiver must be a letter-start identifier)
     ['x = 10', 'define', '["x",10]'],
     ['f(n) = n^2 + 1', 'define', '["f",["n"],["Add",["Power","n",2],1]]'],
     ['x \\in \\operatorname{TriangularNumbers}', 'declare', '["Element","x","triangular_numbers"]'],
