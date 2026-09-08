@@ -1,0 +1,64 @@
+name: Preview cleanup (Cloudflare Pages)
+
+# When a PR closes (merged OR just closed), tear down every Cloudflare Pages preview deployment made for its
+# branch. CF never auto-expires deployments and a PR accrues one per push, so this deletes them ALL, not just the
+# last. Best-effort: a failing delete never fails the workflow.
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write   # update the sticky preview comment to note teardown
+
+concurrency:
+  group: preview-cleanup-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    # Same-repo only — fork PRs never had the secrets to deploy in the first place.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete this branch's preview deployments
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          set -euo pipefail
+          api="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/enumeratio/deployments"
+          auth="Authorization: Bearer $CF_API_TOKEN"
+          deleted=0; page=1
+          while :; do
+            resp=$(curl -sf -H "$auth" "$api?env=preview&per_page=25&page=$page") || break
+            # ids of deployments whose triggering branch matches this PR's head branch
+            ids=$(printf '%s' "$resp" | jq -r --arg b "$BRANCH" \
+              '.result[] | select(.deployment_trigger.metadata.branch == $b) | .id')
+            count=$(printf '%s' "$resp" | jq '.result | length')
+            for id in $ids; do
+              # ?force=true also removes the alias mapping; a preview deployment deletes cleanly this way.
+              if curl -sf -X DELETE -H "$auth" "$api/$id?force=true" >/dev/null; then
+                deleted=$((deleted+1))
+              else
+                echo "warn: could not delete deployment $id" >&2
+              fi
+            done
+            # last page when fewer than a full page came back
+            [ "$count" -lt 25 ] && break
+            page=$((page+1))
+          done
+          echo "deleted=$deleted" >> "$GITHUB_OUTPUT"
+          echo "Deleted $deleted preview deployment(s) for branch '$BRANCH'." >> "$GITHUB_STEP_SUMMARY"
+        id: purge
+        continue-on-error: true
+
+      - name: Note teardown on the PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          body=$(printf '<!-- cf-preview -->\n### 📦 Cloudflare Pages preview\n_Preview deployments for this PR were removed on close._')
+          gh pr comment "$PR" --repo "${{ github.repository }}" --edit-last --body "$body" || true
+        continue-on-error: true
