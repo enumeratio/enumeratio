@@ -1,6 +1,6 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import { evaluate, reseedRandom, type Row } from '@enumeratio/client'
+import { evaluate, fnRef, reseedRandom, type Expr, type HandleExpr, type Row, type SelectExpr } from '@enumeratio/client'
 import {
   bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase,
   head, args, isSymbol, symbolName,
@@ -343,6 +343,50 @@ export class EnumeratioNotebook extends LitElement {
     }
   }
 
+  /** Evaluate one lowered `Expr` to its first column's text (or null). The low-level twin of `evalScalar`, for the
+   *  synthetic cardinality/unrank calls the collection preview builds directly from a handle. */
+  private async evalCell(expr: Expr, signal?: AbortSignal): Promise<string | null> {
+    try {
+      const { rows } = evaluate(expr, { signal })
+      let first: Row | undefined
+      for await (const r of rows) { first = r; break }
+      const cols = first ? Object.values(first) : []
+      return cols[0] !== null && cols[0] !== undefined ? String(cols[0]) : null
+    } catch {
+      return null
+    }
+  }
+
+  /** Preview a bare collection as `{e₀, e₁, …, e_{k-1}, …}` — the first PREVIEW_COUNT elements by rank, with a
+   *  trailing `…` when the cardinality (or the fact we stopped early) says there are more. Uses the handle's own
+   *  cardinality + unrank primitives (ce-enum answers both), so it never materializes the collection. */
+  private async previewCollection(id: LineId, handle: HandleExpr, typeBadgeText: string): Promise<void> {
+    const PREVIEW_COUNT = 5
+    this.controllers.get(id)?.abort()
+    const controller = new AbortController()
+    this.controllers.set(id, controller)
+    this.setResult(id, { type: typeBadgeText, busy: true })
+    const stale = () => this.controllers.get(id) !== controller
+    const handleSel: SelectExpr = { kind: 'handle', handle }
+    const cell = (e: SelectExpr): Expr => ({ select: [e] })
+
+    const cardText = await this.evalCell(cell({ kind: 'apply', fn: fnRef('cardinality'), args: [handleSel] }), controller.signal)
+    if (stale()) return
+    const card = cardText !== null && /^\d+$/.test(cardText) ? Number(cardText) : null
+    const take = card === null ? PREVIEW_COUNT : Math.min(PREVIEW_COUNT, card)
+
+    const elems: string[] = []
+    for (let i = 0; i < take; i++) {
+      const e = await this.evalCell(cell({ kind: 'apply', fn: fnRef('unrank'), args: [handleSel, { kind: 'lit', value: i }] }), controller.signal)
+      if (stale()) return
+      if (e === null) break
+      elems.push(e)
+    }
+    const more = card === null ? elems.length >= PREVIEW_COUNT : card > take
+    const body = elems.length ? `${elems.join(', ')}${more ? ', …' : ''}` : (more ? '…' : '∅')
+    this.setResult(id, { type: typeBadgeText, value: `{${body}}` })
+  }
+
   // ── ticker: run every action line each tick; the whole run is ONE undo step ──────────────────────────────────
   toggleTicker(): void {
     if (this.tickerOn) this.stopTicker()
@@ -485,6 +529,13 @@ export class EnumeratioNotebook extends LitElement {
     // A symbol just became elem(coll) — kick off that collection's stats/maps fetch so a later line that reads
     // them (once this resolves) has something to type against. See notebook-catalog.ts's NotebookCatalog.prefetch.
     if (bound.stmt.k === 'declare' && bound.type.k === 'elem') void notebook.prefetch(bound.type.coll)
+
+    // A bare COLLECTION expression (`Permutations(5)`) has no scalar value — instead PREVIEW it: the first few
+    // elements + a `…` when there are more, so the collection reads as itself.
+    if (bound.stmt.k === 'expr' && bound.type.k === 'handle') {
+      await this.previewCollection(id, bound.type.handle, typeBadge(bound.type))
+      return
+    }
 
     let lowered: LowerResult
     try {
