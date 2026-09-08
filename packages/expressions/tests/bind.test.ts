@@ -34,7 +34,7 @@ const catalog: Catalog = {
 
 const parser = makeParser({
   collections: ['triangular_numbers', 'permutations'],
-  functions: ['next', 'prev', 'rank', 'inversions', 'binomial', 'factorial', 'gcd'],
+  functions: ['next', 'prev', 'rank', 'inversions', 'binomial', 'factorial', 'gcd', 'CatalanNumber'],
 })
 
 describe('bind: a notebook session', () => {
@@ -164,6 +164,14 @@ describe('bind: errors', () => {
     const bound = bind(parser.parse('\\sqrt{9}'), new Map(), catalog)
     expect(bound.errors).toEqual([])
     expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
+  })
+
+  it('a widened CE head binds numeric — native-parse trig (\\arcsin) and a registered word (CatalanNumber)', () => {
+    for (const latex of ['\\arcsin(1)', 'CatalanNumber(5)']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'numeric' })
+    }
   })
 
   it('an unmapped head with no CE binding still reports "unknown operator" naming the head', () => {

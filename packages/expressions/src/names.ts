@@ -42,16 +42,28 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   // follow-up. All heads confirmed against CE 0.125's evaluator. `Abs` is intentionally omitted — `|x|` is
   // handled separately so `|C|` can mean cardinality. `Mod` here is `\bmod`/`\operatorname{mod}` → head "Mod". ──
   Max: { ce: 'Max' }, Min: { ce: 'Min' },
-  Floor: { ce: 'Floor' }, Ceil: { ce: 'Ceil' }, Round: { ce: 'Round' },
+  Supremum: { ce: 'Supremum' }, Infimum: { ce: 'Infimum' },   // \sup / \inf over a bounded set
+  Floor: { ce: 'Floor' }, Ceil: { ce: 'Ceil' }, Round: { ce: 'Round' }, Clamp: { ce: 'Clamp' },
   Mod: { ce: 'Mod' },
+  // (Sign/Heaviside deferred — their CE names collide with existing LatexSyntax dictionary entries, so a plain
+  // function registration dup-warns; they need a trigger-only entry — a later pass.)
   Sqrt: { ce: 'Sqrt' }, Root: { ce: 'Root' },
   Exp: { ce: 'Exp' }, Ln: { ce: 'Ln' }, Log: { ce: 'Log' },
   Sin: { ce: 'Sin' }, Cos: { ce: 'Cos' }, Tan: { ce: 'Tan' },
+  // the rest of the trig/hyperbolic/inverse family (each has its own `\`-command; all numeric via CE).
+  Arcsin: { ce: 'Arcsin' }, Arccos: { ce: 'Arccos' }, Arctan: { ce: 'Arctan' },
+  Sec: { ce: 'Sec' }, Csc: { ce: 'Csc' }, Cot: { ce: 'Cot' },
+  Sinh: { ce: 'Sinh' }, Cosh: { ce: 'Cosh' }, Tanh: { ce: 'Tanh' }, Coth: { ce: 'Coth' },
   Gamma: { ce: 'Gamma' }, Zeta: { ce: 'Zeta' },
-  // number-theory heads CE implements natively (integer-valued — confirmed on 0.125). Fibonacci/Lucas/Totient/
-  // NextPrime take one arg; Multinomial is variadic. (Divisors→list, IsPrime→bool need non-numeric typing — later.)
+  Factorial2: { ce: 'Factorial2' },   // `n!!` double factorial (postfix `!!`, parses without a word)
+  // number-theory / combinatorial heads CE implements natively (integer-valued — confirmed on 0.125). One-arg
+  // (Fibonacci/Lucas/Totient/NextPrime/CatalanNumber/BellNumber/NPartition/PrimePi), two-arg (Stirling/StirlingS1/
+  // Eulerian/Choose), Multinomial variadic. (Divisors/PrimeFactors→list, IsPrime→bool need non-numeric typing — later.)
   Fibonacci: { ce: 'Fibonacci' }, Lucas: { ce: 'Lucas' }, Totient: { ce: 'Totient' },
   NextPrime: { ce: 'NextPrime' }, Multinomial: { ce: 'Multinomial' },
+  CatalanNumber: { ce: 'CatalanNumber' }, BellNumber: { ce: 'BellNumber' }, NPartition: { ce: 'NPartition' },
+  PrimePi: { ce: 'PrimePi' }, Stirling: { ce: 'Stirling' }, StirlingS1: { ce: 'StirlingS1' },
+  Eulerian: { ce: 'Eulerian' }, Choose: { ce: 'Choose' },
 
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership
