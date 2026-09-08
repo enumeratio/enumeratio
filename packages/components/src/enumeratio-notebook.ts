@@ -36,10 +36,6 @@ let nextIdNum = 0
 /** How many collection-preview elements to show, and to add per "pull more" click. */
 const PREVIEW_STEP = 5
 
-/** Deep link to a collection's entry in the atlas (the explorer route on enumeratio.dev / the docs site). */
-const collHref = (coll: string): string => `/explore/collection/${encodeURIComponent(coll)}`
-/** The atlas link for a type that refers to a collection — a collection handle or an element of one. */
-const hrefOfType = (t: Type): string | undefined => (t.k === 'elem' || t.k === 'handle' ? collHref(t.coll) : undefined)
 
 @customElement('enumeratio-notebook')
 export class EnumeratioNotebook extends LitElement {
@@ -396,6 +392,21 @@ export class EnumeratioNotebook extends LitElement {
     this.setResult(id, { type: typeBadgeText, typeHref: href, value: `{${elems.join(', ')}}`, more })
   }
 
+  /** Atlas link for a collection/element type — carries the handle's parameter bindings as matrix params
+   *  (`/explore/collection/permutations;n=3`) so it lands on the exact parameterized collection, not the bare one. */
+  private hrefOfType(t: Type): string | undefined {
+    if (t.k !== 'elem' && t.k !== 'handle') return undefined
+    const base = `/explore/collection/${encodeURIComponent(t.coll)}`
+    const h = t.handle
+    if (!h || 'raw' in h) return base // an unresolved/raw handle — link to the bare collection
+    const params = this.notebook?.catalog.collection(t.coll)?.params ?? []
+    const parts: string[] = []
+    const scalar = (v: unknown): v is number | string => typeof v === 'number' || typeof v === 'string'
+    h.positional.forEach((v, i) => { if (params[i] != null && scalar(v)) parts.push(`${params[i]}=${v}`) })
+    for (const [k, v] of Object.entries(h.named)) if (scalar(v)) parts.push(`${k}=${v}`)
+    return parts.length ? `${base};${parts.join(';')}` : base
+  }
+
   /** Pull the next batch of a collection preview: bump this line's element count and re-preview it. */
   private onLineExpand = (ev: CustomEvent<{ lineId: LineId }>): void => {
     const id = ev.detail.lineId
@@ -550,7 +561,7 @@ export class EnumeratioNotebook extends LitElement {
     // A bare COLLECTION expression (`Permutations(5)`) has no scalar value — instead PREVIEW it: the first few
     // elements + a `…` when there are more, so the collection reads as itself.
     if (bound.stmt.k === 'expr' && bound.type.k === 'handle') {
-      await this.previewCollection(id, bound.type.handle, typeBadge(bound.type), collHref(bound.type.coll))
+      await this.previewCollection(id, bound.type.handle, typeBadge(bound.type), this.hrefOfType(bound.type))
       return
     }
 
@@ -567,7 +578,7 @@ export class EnumeratioNotebook extends LitElement {
         this.declared.set(bound.stmt.name, bound.type)
         this.scope.set(bound.stmt.name, { k: 'var', type: bound.type })
       }
-      this.setResult(id, { type: typeBadge(bound.type), typeHref: hrefOfType(bound.type) })
+      this.setResult(id, { type: typeBadge(bound.type), typeHref: this.hrefOfType(bound.type) })
       return
     }
 
@@ -598,7 +609,7 @@ export class EnumeratioNotebook extends LitElement {
         if (name && elemType) {
           this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'elem', coll: elemType.coll, handle: elemType.handle, rank: Number(rankText) } })
         }
-        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), typeHref: hrefOfType(bound.type), value: String(valueText), engine: p.engine, sql: p.sql })
+        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), typeHref: this.hrefOfType(bound.type), value: String(valueText), engine: p.engine, sql: p.sql })
         return
       }
 
