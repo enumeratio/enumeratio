@@ -65,8 +65,12 @@ export class EnumeratioMathInput extends LitElement {
     return this.latex
   }
 
+  private focusWhenReady = false
   focus(): void {
-    this.adapterInstance?.focus()
+    // A freshly-added line's adapter mounts asynchronously; if focus() lands before it exists, remember and focus
+    // once mountAdapter finishes — otherwise pressing Enter to add a row wouldn't move the caret into it.
+    if (this.adapterInstance) this.adapterInstance.focus()
+    else this.focusWhenReady = true
   }
 
   /** Insert LaTeX at the caret (no replacement) and re-evaluate/re-emit. */
@@ -125,6 +129,7 @@ export class EnumeratioMathInput extends LitElement {
       this.unsubs.push(instance.on('blur', () => this.onAdapterBlur()))
       this.ready = true
       this.emitResult()
+      if (this.focusWhenReady) { this.focusWhenReady = false; instance.focus() } // a focus() that arrived pre-mount
     } finally {
       this.mounting = false
     }
