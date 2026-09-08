@@ -133,6 +133,9 @@ importers:
       '@enumeratio/expressions':
         specifier: workspace:*
         version: link:../expressions
+      katex:
+        specifier: ^0.16.11
+        version: 0.16.47
       lit:
         specifier: ^3.2.1
         version: 3.3.3
@@ -143,6 +146,9 @@ importers:
         specifier: ^0.184.0
         version: 0.184.0
     devDependencies:
+      '@types/katex':
+        specifier: ^0.16.7
+        version: 0.16.8
       '@types/three':
         specifier: ^0.184.1
         version: 0.184.1

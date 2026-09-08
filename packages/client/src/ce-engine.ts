@@ -98,13 +98,17 @@ const ceImplRow = (label: string): ImplRow => ({
   representation: 'text', cost: null, note: null,
 })
 
-export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean } = {}): Engine {
+export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean; symbolicLatex?: boolean } = {}): Engine {
   const exactRationals = factoryOpts.exactRationals ?? false
   // numericFallback: instead of declining a result that isn't an exact integer/rational (an irrational or symbolic
   // CE value like √2 or ⅙π²), render its floating-point approximation (`N`). The notebook sets this so CE-native
   // math (Sqrt/Zeta/Gamma/trig/…) shows SOMETHING; exact-symbolic display is the follow-up. Off elsewhere, so the
   // pg-differential path is unchanged.
   const numericFallback = factoryOpts.numericFallback ?? false
+  // symbolicLatex: render an EXACT symbolic result (√2, ⅙π², …) as CE's LaTeX instead of a decimal, so the value
+  // area can KaTeX it. Takes precedence over numericFallback for genuinely-symbolic results; a plain float still
+  // uses the numeric decimal. Notebook-only.
+  const symbolicLatex = factoryOpts.symbolicLatex ?? false
   /** the first reason this engine declines `expr`, or undefined — the same three-question shape as ts-engine's
    *  `reject`, minus the per-node RETURN-kind bookkeeping ts-engine needs (ce's whole vocabulary only ever
    *  produces an int/numeric or a boolean, decided once at print time, never threaded back through can()). */
@@ -201,11 +205,20 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
       return null
     }
     const bad = (): string => { const a = approx(); if (a !== null) return a; throw new InexactResult(label, ceImplRow(label), result.json) }
+    // An EXACT symbolic result — CE keeps it as an expression tree (√2 → ["Sqrt",2], ζ(2) → a Divide/Power), even
+    // though it also carries a decimal numericValue. Its `.json` is an ARRAY head (not a plain number), which is
+    // how we tell it apart from a genuine float. `Rational` is excluded so a rational still takes the `p/q` text
+    // path below (and keeps its ∈ ℚ badge). Rendered as CE's LaTeX under `symbolicLatex` (notebook).
+    const symbolicTex = (): string | null => {
+      if (!symbolicLatex || !Array.isArray(result.json) || result.json[0] === 'Rational') return null
+      const t = (boxed as unknown as { latex?: string }).latex
+      return typeof t === 'string' && t.length > 0 ? t : null
+    }
     try {
       const nv = result.numericValue as unknown
       if (typeof nv === 'number') {
-        if (!Number.isInteger(nv)) return bad()
-        return BigInt(nv).toString()
+        if (Number.isInteger(nv)) return BigInt(nv).toString()
+        return symbolicTex() ?? bad() // a non-integer number: exact-symbolic → LaTeX, else a genuine float → numeric
       }
       if (nv && typeof nv === 'object') {
         // CE's own ExactNumericValue mixes representations: `rational` (and imRational) come back as plain JS
@@ -225,7 +238,9 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
     } catch (err) {
       if (err instanceof InexactResult) throw err
     }
-    return bad()
+    // Reached here = no plain numeric value at all: a fully symbolic result (⅙π², sin(1)). LaTeX under the flag,
+    // else fall back (numericFallback / decline).
+    return symbolicTex() ?? bad()
   }
 
   return {

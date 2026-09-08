@@ -15,11 +15,13 @@
   "dependencies": {
     "@enumeratio/client": "workspace:*",
     "@enumeratio/expressions": "workspace:*",
+    "katex": "^0.16.11",
     "lit": "^3.2.1",
     "mathlive": "^0.110.0",
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@types/katex": "^0.16.7",
     "@types/three": "^0.184.1",
     "typescript": "^5.7.2"
   }

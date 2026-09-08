@@ -659,7 +659,12 @@ export class EnumeratioNotebook extends LitElement {
       const name = bound.stmt.k !== 'expr' ? bound.stmt.name : undefined
       if (name) this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'scalar', text, pg: effectivePg(bound.type) ?? 'numeric' } })
 
-      this.setResult(id, { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql })
+      // A value carrying a LaTeX control sequence is an EXACT symbolic result (√2, ⅙π²) — render it via KaTeX in
+      // its own slot; a plain number/rational stays text (and drives the type-badge set refinement as before).
+      const isTex = text.includes('\\')
+      this.setResult(id, isTex
+        ? { type: typeBadge(bound.type), valueTex: text, engine: p.engine, sql: p.sql }
+        : { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql })
     } catch (e) {
       if (stale()) return
       this.setResult(id, { type: typeBadge(bound.type), error: message(e) })
