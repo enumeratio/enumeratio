@@ -60,9 +60,14 @@ let ceP: Promise<CEInstance> | null = null
  *  itself comes from the bignum/exact-rational kernel underneath and holds regardless of this setting — set high
  *  enough that it is never the thing limiting how large an exact integer this engine can carry. */
 async function ceInstance(): Promise<CEInstance> {
-  if (!ceP) ceP = import('@cortex-js/compute-engine').then(({ ComputeEngine }) => {
+  if (!ceP) ceP = Promise.all([
+    import('@cortex-js/compute-engine'),
+    import('@enumeratio/engine'),
+  ]).then(([{ ComputeEngine }, { installEnumeratio }]) => {
     const ce = new ComputeEngine()
     ce.precision = 200
+    // enumeratio's collections + counting/digit operators, reachable from ce.parse(latex).evaluate()
+    installEnumeratio(ce as any)
     return ce as CEInstance
   })
   return ceP
