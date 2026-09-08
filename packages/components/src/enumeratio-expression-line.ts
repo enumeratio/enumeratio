@@ -36,6 +36,8 @@ export type LineState = {
   action?: boolean
   /** A collection preview has MORE elements than shown — render a clickable `…` to pull the next batch. */
   more?: boolean
+  /** This line is prose (a string body) — render it as a comment, not a math value. Interim: plain text. */
+  comment?: string
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -47,6 +49,7 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ type: Number }) index = 0
   @property({ attribute: false }) completer: Completer | null = null
   @property({ attribute: false }) classify: ((run: string) => IdentifierDisplay | null) | null = null
+  @property({ type: Boolean }) active = false
   @property({ attribute: false }) state: LineState = {}
 
   /** Gated display of `state.error` — see the debounce note above. */
@@ -160,7 +163,7 @@ export class EnumeratioExpressionLine extends LitElement {
     const hasValue = !errVisible && !s.busy && s.value != null
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
-    const lineClass = `line${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
+    const lineClass = `line${this.active ? ' active' : ''}${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
     return html`
       <div class=${lineClass} @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
            @focusin=${() => this.emit('line-focus', { lineId: this.lineId })}
@@ -184,7 +187,7 @@ export class EnumeratioExpressionLine extends LitElement {
               @enumeratio-commit=${this.onCommit}
               @enumeratio-move=${this.onMove}
             ></enumeratio-math-input>
-            ${!errVisible && s.type
+            ${!errVisible && s.type && s.comment == null
               ? s.typeHref
                 ? html`<a class="type link" href=${s.typeHref} target="_blank" rel="noopener"
                         title="open in the atlas">${s.type}</a>`
@@ -192,7 +195,8 @@ export class EnumeratioExpressionLine extends LitElement {
               : ''}
           </div>
           <div class="value">
-            ${s.busy ? html`<span class="hint">…</span>`
+            ${s.comment != null ? html`<span class="comment">${s.comment}</span>`
+              : s.busy ? html`<span class="hint">…</span>`
               : hasValue ? html`<span class="eq">=</span> ${s.valueHref
                   ? html`<a class="vlink" href=${s.valueHref} target="_blank" rel="noopener" title="open in the query view">${s.value}</a>`
                   : s.value}${s.more
@@ -245,6 +249,8 @@ export class EnumeratioExpressionLine extends LitElement {
     .gutter {
       flex: 0 0 auto;
       align-self: stretch;
+      /* Cancel the line's vertical padding so the gutter background runs the FULL height of the row, edge to edge. */
+      margin-block: -0.4rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -253,10 +259,15 @@ export class EnumeratioExpressionLine extends LitElement {
       padding: 0.5rem 0.35rem 0.3rem;
       background: color-mix(in srgb, var(--enumeratio-muted, currentColor) 6%, transparent);
       border-right: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
-      transition: background 0.12s;
+      transition: background 0.12s, box-shadow 0.12s;
     }
     .line:hover .gutter {
       background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 12%, transparent);
+    }
+    /* The SELECTED (last-focused) cell: color its gutter + a solid accent bar down its left edge. */
+    .line.active .gutter {
+      background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 18%, transparent);
+      box-shadow: inset 3px 0 0 0 var(--enumeratio-accent, var(--p-primary-color, #d97706));
     }
     .rownum {
       align-self: flex-end;
@@ -332,6 +343,14 @@ export class EnumeratioExpressionLine extends LitElement {
     .eq {
       opacity: 0.4;
       font-weight: 400;
+    }
+    /* A comment line's prose — muted, left-aligned, not a math value. */
+    .comment {
+      display: block;
+      text-align: left;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
     }
     /* A located element's value links to the query view that reproduces it. */
     .vlink {

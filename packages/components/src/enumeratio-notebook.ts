@@ -41,6 +41,19 @@ const PREVIEW_STEP = 5
  *  binding VALUES on the handle, not the names). Real names, when present, win over this. */
 const POSITIONAL_PARAM_NAMES = ['n', 'k', 'm', 'r', 's']
 
+/** The text of a bare MathJSON string body (a `{str}` leaf, or `["String", {str}]`), else null. Used to treat a
+ *  string-only line as a comment rather than lowering it (which throws on a raw string leaf). */
+function stringComment(e: unknown): string | null {
+  if (e && typeof e === 'object' && !Array.isArray(e) && 'str' in (e as Record<string, unknown>)) {
+    return String((e as { str: unknown }).str)
+  }
+  if (Array.isArray(e) && e[0] === 'String') {
+    const inner = e[1] as Record<string, unknown> | undefined
+    return inner && typeof inner === 'object' && 'str' in inner ? String((inner as { str: unknown }).str) : ''
+  }
+  return null
+}
+
 
 @customElement('enumeratio-notebook')
 export class EnumeratioNotebook extends LitElement {
@@ -546,6 +559,13 @@ export class EnumeratioNotebook extends LitElement {
     if (model.parsed.errors.length > 0) { this.setResult(id, { error: model.parsed.errors[0].message }); return }
     this.lineAst.set(id, astFullForm(model.parsed, this.spellHead))
 
+    // A bare STRING body is prose, not math — render it as a comment and NEVER lower it (a raw string leaf reaching
+    // lower throws "unsupported literal node"). An interim comment: plain text now; full markdown+KaTeX to come.
+    if (model.parsed.stmt.k === 'expr') {
+      const c = stringComment(model.parsed.stmt.body)
+      if (c !== null) { this.setResult(id, { comment: c }); return }
+    }
+
     // An action line (`p → expr`, or a tuple) isn't a value — cache its assignments and show a trigger, don't eval.
     const assigns = this.actionOf(model.parsed)
     if (assigns) {
@@ -767,6 +787,7 @@ export class EnumeratioNotebook extends LitElement {
               .latex=${this.latexById.get(id) ?? ''}
               .completer=${completer}
               .classify=${this.classify}
+              .active=${this.activeLineId === id}
               .state=${this.results.get(id) ?? {}}
               @line-input=${this.onLineInput}
               @line-commit=${this.onLineCommit}

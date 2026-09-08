@@ -53,11 +53,12 @@ export const mathliveAdapter: AdapterFactory = async (container, opts) => {
   mf.menuItems = [] // no per-field hamburger menu — an empty item list disables it (see the ::part hide in the host)
   if (opts.placeholder) mf.placeholder = opts.placeholder
   if (opts.readonly) mf.readOnly = true
-  // DISABLE MathLive's inline shortcuts entirely. Its defaults fire on typed letter runs — `and`→∧, `or`→∨,
-  // `pi`→π, `in`→∈ — which hijack ordinary words (you can't type "Random" without "an…d" becoming ∧, nor "sin"
-  // without "in"→∈). We want to type function/collection names as plain words, so nothing is auto-substituted;
-  // real notation still comes from `\operatorname{}`, LaTeX commands, and the catalog completion popover.
-  mf.inlineShortcuts = {}
+  // Drop MathLive's LETTER-run inline shortcuts — its defaults fire on typed words (`and`→∧, `or`→∨, `pi`→π,
+  // `in`→∈), hijacking ordinary names (you couldn't type "Random" without "an…d"→∧, nor "sin" without "in"→∈).
+  // Function/collection names must type as plain words; real notation comes from `\operatorname{}`, LaTeX
+  // commands, and the completion popover. The ONE kept shortcut is the punctuation arrow `->`→`\to` (the action
+  // operator `p → p+14`) — it's not a letter run, so it can't hijack a word.
+  mf.inlineShortcuts = { '->': '\\to' }
 
   type Ev = 'input' | 'enter' | 'move-out' | 'blur' | 'focus'
   const enterHandlers = new Set<(detail?: { direction?: 'up' | 'down' }) => void>()
