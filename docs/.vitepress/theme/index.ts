@@ -80,6 +80,10 @@ export default {
       // it before provideDb() has run is a race it loses on a fast page (seen: "no Db provider" from the notebook).
       void import('@enumeratio/client').then((m) => {
         m.provideDb(() => m.makeWorkerDb())
+        // The notebook (<enumeratio-notebook>) computes PURE CE: provide the pg-less ts+ce+ce-enum stack as the
+        // engine, so every result comes from @enumeratio/compute-engine (scalar + O(1) enumeration), never SQL.
+        // The Db above still backs the catalog/grammar the binder reads; it just isn't the evaluator anymore.
+        m.provideEngine(() => m.notebookEngine())
         void import('@enumeratio/components')
         // Dev convenience: reach the client from the console to dogfood the "extend the db live" path
         // (window.enumeratio.extendDb('CREATE FUNCTION glyph_svg(…) …')). Dev-only; not in the built site.
