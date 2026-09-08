@@ -6,26 +6,31 @@ name: Preview cleanup (Cloudflare Pages)
 on:
   pull_request:
     types: [closed]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Branch whose leftover preview deployments to purge
+        required: true
 
 permissions:
   contents: read
   pull-requests: write   # update the sticky preview comment to note teardown
 
 concurrency:
-  group: preview-cleanup-${{ github.event.pull_request.number }}
+  group: preview-cleanup-${{ github.event.pull_request.number || github.event.inputs.branch }}
   cancel-in-progress: false
 
 jobs:
   cleanup:
-    # Same-repo only — fork PRs never had the secrets to deploy in the first place.
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    # PR-close (same-repo only — fork PRs never had the secrets to deploy) OR a manual dispatch for a named branch.
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - name: Delete this branch's preview deployments
         env:
           CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          BRANCH: ${{ github.event.pull_request.head.ref }}
+          BRANCH: ${{ github.event.pull_request.head.ref || github.event.inputs.branch }}
         run: |
           set -euo pipefail
           api="https://api.cloudflare.com/client/v4/accounts/$CF_ACCOUNT_ID/pages/projects/enumeratio/deployments"
@@ -55,6 +60,7 @@ jobs:
         continue-on-error: true
 
       - name: Note teardown on the PR
+        if: github.event_name == 'pull_request'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR: ${{ github.event.pull_request.number }}

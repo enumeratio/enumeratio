@@ -136,10 +136,8 @@ jobs:
       - name: Sticky preview-URL comment
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BUILD_URL: ${{ steps.deploy.outputs.deployment-url }}
           ALIAS_URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}
           BRANCH: ${{ github.head_ref }}
-          SHA: ${{ github.event.pull_request.head.sha }}
           PR: ${{ github.event.pull_request.number }}
         run: |
           # Lead with the STABLE per-branch alias (always the latest push); fall back to computing it from the
@@ -149,13 +147,8 @@ jobs:
             host=$(printf '%s' "$BRANCH" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//' | cut -c1-63)
             alias="https://$host.enumeratio.pages.dev"
           fi
-          ts=$(date -u '+%Y-%m-%d %H:%M UTC')
-          body=$(printf '<!-- cf-preview -->\n### 📦 Cloudflare Pages preview\n**[%s](%s)** — always the latest push on this branch.\n\nUpdated %s for commit `%s` · [this exact build](%s)' \
-            "$alias" "$alias" "$ts" "${SHA:0:7}" "$BUILD_URL")
-          {
-            echo "### Cloudflare Pages preview"
-            echo "[$alias]($alias) — commit \`${SHA:0:7}\`"
-          } >> "$GITHUB_STEP_SUMMARY"
+          body=$(printf '<!-- cf-preview -->\nPreview: %s' "$alias")
+          echo "Preview: $alias" >> "$GITHUB_STEP_SUMMARY"
           # Edit our previous preview comment in place if there is one; otherwise post a fresh one.
           gh pr comment "$PR" --repo "${{ github.repository }}" --edit-last --body "$body" \
             || gh pr comment "$PR" --repo "${{ github.repository }}" --body "$body"
