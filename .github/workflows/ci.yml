@@ -8,12 +8,36 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write   # the `preview` job posts/updates a sticky preview-URL comment
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  # Build the explorer + docs ONCE and publish the result as an artifact. This is both the build gate and the
+  # single source for the preview deploy (and could feed prod later) — docs:build no longer runs a second time
+  # per PR just to produce a preview.
+  build:
+    name: test:build (explorer + docs)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: docs-dist
+          path: docs/.vitepress/dist
+          retention-days: 3
+
   core:
     name: test:core (data suites)
     runs-on: ubuntu-latest
@@ -27,6 +51,7 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      # Full profile (core + every pack together) — the complete-catalog example gate every PR gets.
       - run: pnpm test:core
 
   stack:
@@ -44,54 +69,6 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:stack
 
-  build:
-    name: test:build (explorer + docs)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.33.0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm test:build
-
-  # --- Per-pack gating (#283 §6) -------------------------------------------------------------------------------
-  # `pack-map.ts`'s `EXTRACTED_PACKS` is the single source of truth for which packs actually exist as
-  # `packs/<name>/` directories. Today it's `[]` (pre-phase-3: everything still loads as core) so `packs-setup`
-  # emits `packs: '[]'` and `packs-pack-matrix` below is skipped entirely — a new lane needs no CI edit, it just
-  # appears in the matrix once its name lands in EXTRACTED_PACKS.
-  packs-setup:
-    name: "packs: discover extracted"
-    runs-on: ubuntu-latest
-    outputs:
-      packs: ${{ steps.list.outputs.packs }}
-      has_packs: ${{ steps.list.outputs.has_packs }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.33.0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - id: list
-        # `list-packs` prints EXTRACTED_PACKS (or ENUMERATIO_PACKS_OVERRIDE) as a JSON array, e.g. `[]` or
-        # `["refs","polytopes"]`. `--silent` strips pnpm's own "> script ..." banner so stdout is bare JSON.
-        run: |
-          PACKS=$(pnpm --filter @enumeratio/data run --silent list-packs)
-          echo "packs=$PACKS" >> "$GITHUB_OUTPUT"
-          if [ "$PACKS" = "[]" ]; then
-            echo "has_packs=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_packs=true" >> "$GITHUB_OUTPUT"
-          fi
-
   packs-core:
     name: "packs: core (self-containment)"
     runs-on: ubuntu-latest
@@ -108,34 +85,6 @@ jobs:
       # core alone, closed-world toposort + core's own examples — asserts core never leans on a pack file.
       - run: pnpm --filter @enumeratio/data run test:packs-core
 
-  packs-pack-matrix:
-    name: "packs: pack:${{ matrix.pack }}"
-    needs: packs-setup
-    # Guard the matrix job itself, not a step inside it: a false job-level `if` skips the job before its
-    # `strategy.matrix` is ever expanded, so `fromJSON('[]')` is never evaluated — that's what keeps this
-    # empty-safe. (Letting the matrix expand unconditionally is what triggers GitHub's "matrix must define at
-    # least one vector" error on an empty array; gating expansion itself, not just the steps, avoids it.)
-    if: needs.packs-setup.outputs.has_packs == 'true'
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        pack: ${{ fromJSON(needs.packs-setup.outputs.packs) }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.33.0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      # core + closure(pack) + pack; asserts the pack's own examples AND core's examples again (regression).
-      - run: pnpm --filter @enumeratio/data exec node --import tsx run.mts --packs core,${{ matrix.pack }}
-      # additivity differential (#283 §6): the pack may only ADD rows/signatures to core, never patch it.
-      - run: pnpm --filter @enumeratio/data exec node --import tsx pack-additivity.mts --pack ${{ matrix.pack }}
-
   packs-lint:
     name: "packs: lint + migrate --check"
     runs-on: ubuntu-latest
@@ -149,12 +98,50 @@ jobs:
           node-version: 24
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      # Report-only for now: pack-lint checks the FULL trial partition (pack-map.ts) against the monolithic
-      # sqlsrc/, which today still has ~50 real cross-pack `requires:` edges the split hasn't undone yet — a
-      # hard-failing gate here would break every build until phase 3 (#283 §10) lands every domain pack. Flip
-      # this step's `continue-on-error` to false once phase 3 completes and the edge count is genuinely zero.
+      # Report-only: pack-lint checks the full trial partition against monolithic sqlsrc/, which still has real
+      # cross-pack `requires:` edges the split hasn't undone. Flip continue-on-error to false once that's zero.
       - run: pnpm --filter @enumeratio/data run pack-lint
         continue-on-error: true
-      # Blocking: pack-migrate --check only asserts today's ACTUAL placement (EXTRACTED_PACKS) is self-consistent
-      # (no misplaced file, no stale manifest) — that's true today (nothing extracted yet) and must stay true.
+      # Blocking: asserts today's ACTUAL placement (EXTRACTED_PACKS) is self-consistent (no misplaced file, no
+      # stale manifest).
       - run: pnpm --filter @enumeratio/data run pack-migrate:check
+
+  # Per-pack isolation + additivity (core+single-pack loads clean; a pack only ADDS rows) is release/nightly-
+  # shaped, not per-edit — the `core` job already runs the full catalog together every PR, and nightly runs the
+  # deep per-pack sweep. It lives in release.yml (tag push) now, off the per-PR path.
+
+  # Deploy a Cloudflare Pages preview from the artifact the `build` job already produced — no second docs:build.
+  # PRs only (main pushes are prod, via pages.yml), and same-repo only (fork PRs have no CF secrets). Runs on
+  # every push to the PR branch (pull_request `synchronize`); the per-branch alias always tracks the latest.
+  preview:
+    name: "preview: Cloudflare Pages"
+    needs: build
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: docs-dist
+          path: dist
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >
+            pages deploy dist
+            --project-name=enumeratio
+            --branch=${{ github.head_ref }}
+      - name: Sticky preview-URL comment
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ steps.deploy.outputs.deployment-url }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          echo "### Cloudflare Pages preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "[$URL]($URL)" >> "$GITHUB_STEP_SUMMARY"
+          body=$(printf '<!-- cf-preview -->\n📦 Cloudflare Pages preview (updates on each push): %s' "$URL")
+          # Edit our previous preview comment in place if there is one; otherwise post a fresh one.
+          gh pr comment "$PR" --repo "${{ github.repository }}" --edit-last --body "$body" \
+            || gh pr comment "$PR" --repo "${{ github.repository }}" --body "$body"

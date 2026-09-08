@@ -51,13 +51,17 @@ not under `docs/` (public docs site) and not committed to this repo.
 
 Production (`enumeratio.dev`) ships from **GitHub Pages** on merge to `main` (`.github/workflows/pages.yml`).
 
-**On-demand previews** go to **Cloudflare Pages** via `preview.yml` — NOT auto-built per push (that would burn the
-free-tier build cap fast at this PR volume). It's a *direct-upload* deploy: the workflow builds the site on GitHub's
-runners and uploads `docs/.vitepress/dist` to CF, so it costs zero CF build minutes. Trigger it two ways: comment
-`/preview` on a PR (owner/member/collaborator only), or run the `Preview (Cloudflare Pages)` workflow manually with a
-ref. It posts the preview URL back as a PR comment / job summary. VitePress `base` is unset (`/`), so the same build
-serves at both `enumeratio.dev` and the `*.pages.dev` preview hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` +
-`CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio`).
+**PR previews** go to **Cloudflare Pages**, deployed by `ci.yml`'s `preview` job — which reuses the artifact the
+`build` job already produced (`docs:build` runs ONCE per PR, not again for the preview). It's a *direct-upload*
+deploy, so it costs zero CF build minutes; CF's free-tier build cap never comes into play. Fires on every push to a
+PR branch (same-repo only — fork PRs lack the secrets), deploying with `--branch=<head>` so the per-branch alias
+(`<branch>.enumeratio.pages.dev`) always tracks the latest build. Posts/updates a sticky preview-URL comment on the
+PR. VitePress `base` is unset (`/`), so the same build serves at both `enumeratio.dev` and the `*.pages.dev` hosts.
+Needs repo secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio`).
+CF preview deployments are not auto-expired — they accumulate (harmless; the alias just tracks latest).
+
+Per-pack isolation + additivity is a release gate (`release.yml`, on `v*` tags + dispatch) plus the nightly deep
+sweep — NOT per-PR. Every PR still runs the full complete-catalog example suite (`ci.yml` `core`) and pack-lint.
 
 ## Verifying changes
 
