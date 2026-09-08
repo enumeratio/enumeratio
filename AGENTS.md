@@ -54,14 +54,17 @@ Production (`enumeratio.dev`) ships from **GitHub Pages** on merge to `main` (`.
 **PR previews** go to **Cloudflare Pages**, deployed by `ci.yml`'s `preview` job — which reuses the artifact the
 `build` job already produced (`docs:build` runs ONCE per PR, not again for the preview). It's a *direct-upload*
 deploy, so it costs zero CF build minutes; CF's free-tier build cap never comes into play. Fires on every push to a
-PR branch (same-repo only — fork PRs lack the secrets), deploying with `--branch=<head>` so the per-branch alias
-(`<branch>.enumeratio.pages.dev`) always tracks the latest build. It keeps ONE sticky PR comment (marker
-`<!-- cf-preview -->`, edited in place) — a one-line `Preview: <alias>`. The
+PR branch (same-repo only — fork PRs lack the secrets), deploying with `--branch=<sha7>` so the preview URL is
+`<sha7>.enumeratio.pages.dev` — one predictable, immutable URL per commit (old commits stay reachable until the PR
+closes). `--branch` is CF's only alias slot, so this deliberately forgoes a per-branch "latest" alias; the deploy's
+commit-message is stamped `preview-PR-<n>` so cleanup can group a PR's deploys (branch metadata is now the sha).
+Keeps ONE sticky PR comment (marker `<!-- cf-preview -->`, edited in place) — `Preview (<sha7>): <url>`. The
 `preview` job only `needs: build`, so it fires as soon as the build artifact exists — tests run in parallel, not
 before it; the build is the long pole. VitePress `base` is unset (`/`), so the same build serves at both
 `enumeratio.dev` and the `*.pages.dev` hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`
 and a direct-upload Pages project (`enumeratio`). CF never auto-expires deployments, so `preview-cleanup.yml`
-(on `pull_request: closed`, merge or plain close) deletes ALL of the branch's preview deployments via the CF API.
+deletes them: on `pull_request: closed` (merge or plain close) it removes every deploy stamped with the PR number;
+a manual `workflow_dispatch` (branch input) instead purges by branch metadata, across all envs.
 
 Per-pack isolation + additivity is a release gate (`release.yml`, on `v*` tags + dispatch) plus the nightly deep
 sweep — NOT per-PR. Every PR still runs the full complete-catalog example suite (`ci.yml` `core`) and pack-lint.
