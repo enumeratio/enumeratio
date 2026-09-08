@@ -20,9 +20,24 @@ Closed-form counts, evaluated exactly on the compute-engine.
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
+## Number theory
+
+Curated identities compute-engine shares with us — `\gcd`, `\mathrm{lcm}`, binomial, factorial — alongside a
+collection's cardinality and a running sum. (Broader CE math — `\max`, `\sqrt`, `\zeta`, … — is being wired in.)
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"n1","latex":"\\gcd(48,36)"},
+  {"id":"n2","latex":"lcm(8,12)"},
+  {"id":"n3","latex":"\\binom{20}{10}"},
+  {"id":"n4","latex":"\\left|Permutations(6)\\right|"},
+  {"id":"n5","latex":"\\sum_{k=1}^{10}k"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
 ## Arithmetic & fractions
 
-Exact integer arithmetic; a genuine fraction currently renders as its decimal.
+Exact integer arithmetic; a genuine fraction reduces to a rational (`6/4` → `3/2 ∈ ℚ`).
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
