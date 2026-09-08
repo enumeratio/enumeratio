@@ -28,7 +28,7 @@ collection's cardinality and a running sum. (Broader CE math — `\max`, `\sqrt`
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
   {"id":"n1","latex":"\\gcd(48,36)"},
-  {"id":"n2","latex":"lcm(8,12)"},
+  {"id":"n2","latex":"lcm(4,6,8)"},
   {"id":"n3","latex":"\\binom{20}{10}"},
   {"id":"n4","latex":"\\left|Permutations(6)\\right|"},
   {"id":"n5","latex":"\\sum_{k=1}^{10}k"},

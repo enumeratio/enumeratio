@@ -30,6 +30,9 @@ export type EngineOpts = {
   window?: RowWindow
   /** cancellation. node worker → terminate(); pg pool → pg_cancel_backend; SharedWorker → a documented no-op (#279) */
   signal?: AbortSignal
+  /** force a NUMERIC approximation of a scalar result (Wolfram-style `N`), overriding exact/symbolic rendering —
+   *  the notebook sets this per cell. Engines that only ever produce exact values may ignore it. */
+  numeric?: boolean
 }
 export type CanOpts = { representation?: Representation }
 

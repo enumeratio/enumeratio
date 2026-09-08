@@ -91,5 +91,5 @@ export async function notebookEngine(): Promise<Engine> {
   const reg = await registry()
   // exactRationals: the notebook has no pg to be bit-identical to, so int/int division yields an exact reduced
   // rational ∈ ℚ (ts declines the non-integral quotient → ce prints the `p/q`) rather than a float. See #365.
-  return routerEngine([tsEngine(reg, { exactRationals: true }), ceEngine(reg, { exactRationals: true }), ceEnumEngine()])
+  return routerEngine([tsEngine(reg, { exactRationals: true }), ceEngine(reg, { exactRationals: true, numericFallback: true, symbolicLatex: true }), ceEnumEngine()])
 }

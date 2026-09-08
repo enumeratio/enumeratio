@@ -53,6 +53,15 @@ const LIST_RESULT_OPS = new Set(['random_shuffle', 'random_sample', 'join', 'sor
  *  `numeric` (the value-refined badge then reads ∈ ℕ/ℤ/ℝ). */
 const LIST_SCALAR_OPS = new Set(['sum', 'total', 'min', 'max', 'first', 'last'])
 
+/** gcd/lcm read as variadic (Desmos-style) but are curated BINARY functions — lower.ts left-folds n args into
+ *  nested binary calls so pg/ce (which only know the 2-arg form) still evaluate them. The head arrives either as
+ *  the CE canonicalization of `\gcd`/`\lcm` (`GCD`/`LCM`) or as the bare catalog-function id (`gcd`/`lcm`); this
+ *  maps any of those to the canonical fn id. */
+export function gcdLcmFn(head: string): 'gcd' | 'lcm' | null {
+  const h = head.toLowerCase()
+  return h === 'gcd' ? 'gcd' : h === 'lcm' ? 'lcm' : null
+}
+
 /** The integer range a big-∑'s `Tuple(var, lo, hi)` iterates, as `{varName, values}` (lo..hi inclusive, each a
  *  number Expression), or null if it isn't a literal integer range. Shared by bind + lower so the two unroll the
  *  SAME way (mirrors `comprehensionDomain`). */
@@ -190,10 +199,16 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
   const a = args(e)
   const argT = (i: number): Type => typeNode(a[i], argPath(path, i), ctx)
 
+  // gcd/lcm accept ≥2 args (variadic, Desmos-style) whether they arrive as `\gcd`→GCD or as the bare `gcd`/`lcm`
+  // catalog function — type every arg, result is a natural number; lower.ts folds them to nested binary calls.
+  if (gcdLcmFn(h) && a.length > 2) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('natural_number') }
+
   const opBinding = OPERATORS[h]
   if (opBinding) {
     if ('op' in opBinding) return typeOp(opBinding.op, a, path, ctx)
     if ('fn' in opBinding) return typeApply(opBinding.fn, a, path, ctx)
+    // a CE-native numeric op (Max/Sqrt/Zeta/…) — type its args, result is numeric; ce-engine evaluates it.
+    if ('ce' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('numeric') }
     // special
     if (opBinding.special === 'contains') return typeContains(a, path, ctx)
     if (opBinding.special === 'element_at') return typeElementAt(a, path, ctx)

@@ -160,10 +160,15 @@ describe('bind: a notebook session', () => {
 })
 
 describe('bind: errors', () => {
-  it('a heads with no curated base_function id (Sqrt, Floor, …) reports "unknown operator" naming the head', () => {
+  it('a CE-native head (Sqrt, Floor, Max, …) binds as a numeric op — ce-engine evaluates it', () => {
     const bound = bind(parser.parse('\\sqrt{9}'), new Map(), catalog)
-    expect(bound.errors).toHaveLength(1)
-    expect(bound.errors[0].message).toMatch(/Sqrt/)
+    expect(bound.errors).toEqual([])
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
+  })
+
+  it('an unmapped head with no CE binding still reports "unknown operator" naming the head', () => {
+    const bound = bind(parser.parse('|x|'), new Map(), catalog) // Abs on a scalar stays unmapped
+    expect(bound.errors.length).toBeGreaterThanOrEqual(1)
   })
 
   it('mismatched arity against a curated function reports the expected count', () => {

@@ -1,8 +1,16 @@
-import { LitElement, html, css, type TemplateResult } from 'lit'
+import { LitElement, html, css, unsafeCSS, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
+import { unsafeHTML } from 'lit/directives/unsafe-html.js'
+import katex from 'katex'
+import katexCss from 'katex/dist/katex.min.css?inline'
 import type { Completer } from './enumeratio-math-input'
 import type { IdentifierDisplay } from '@enumeratio/expressions'
 import './enumeratio-math-input'
+
+/** Render a LaTeX value to KaTeX HTML (never throws — a malformed string shows in KaTeX's error color instead of
+ *  breaking the line). Fonts come from the globally-loaded katex.min.css; the layout CSS is folded into the shadow
+ *  root's styles below. */
+const renderTex = (tex: string): string => katex.renderToString(tex, { throwOnError: false, output: 'html' })
 
 // <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>. The math-input field spans the full
 // row (so every field in a notebook is the same width, Desmos-style); the value sits on its own row below it,
@@ -23,6 +31,8 @@ export type LineState = {
    *  becomes a deep link. */
   typeHref?: string
   value?: string
+  /** An EXACT symbolic value as LaTeX (√2, ⅙π², …) — rendered via KaTeX in place of the plain `value`. */
+  valueTex?: string
   /** When the value is a located element, a link to the SQL query view that reproduces it (the collection filtered
    *  to its rank) — click the value to verify it in the atlas. */
   valueHref?: string
@@ -38,6 +48,8 @@ export type LineState = {
   more?: boolean
   /** This line is prose (a string body) — render it as a comment, not a math value. Interim: plain text. */
   comment?: string
+  /** The cell is HELD (unevaluated by choice) — show a quiet marker instead of a value. */
+  held?: boolean
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -160,7 +172,7 @@ export class EnumeratioExpressionLine extends LitElement {
   render(): TemplateResult {
     const s = this.state
     const errVisible = this.showError && !!s.error && this.latex.trim() !== ''
-    const hasValue = !errVisible && !s.busy && s.value != null
+    const hasValue = !errVisible && !s.busy && (s.value != null || s.valueTex != null)
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
     const lineClass = `line${this.active ? ' active' : ''}${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
@@ -196,8 +208,11 @@ export class EnumeratioExpressionLine extends LitElement {
           </div>
           <div class="value">
             ${s.comment != null ? html`<span class="comment">${s.comment}</span>`
+              : s.held ? html`<span class="held">held</span>`
               : s.busy ? html`<span class="hint">…</span>`
-              : hasValue ? html`<span class="eq">=</span> ${s.valueHref
+              : hasValue ? html`<span class="eq">=</span> ${s.valueTex != null
+                  ? html`<span class="tex">${unsafeHTML(renderTex(s.valueTex))}</span>`
+                  : s.valueHref
                   ? html`<a class="vlink" href=${s.valueHref} target="_blank" rel="noopener" title="open in the query view">${s.value}</a>`
                   : s.value}${s.more
                   ? html` <button class="more" @click=${() => this.emit('line-expand', { lineId: this.lineId })}
@@ -214,11 +229,14 @@ export class EnumeratioExpressionLine extends LitElement {
     `
   }
 
-  static styles = css`
+  // KaTeX's layout CSS is folded into the shadow root (global CSS can't reach it); its fonts come from the
+  // document-level katex.min.css the docs already load. Our own rules follow, so they win on any overlap.
+  static styles = [unsafeCSS(katexCss), css`
     :host {
       display: block;
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
+    .value .tex { font-weight: 400; }
     .line {
       position: relative;
       display: flex;
@@ -383,6 +401,15 @@ export class EnumeratioExpressionLine extends LitElement {
     .hint {
       opacity: 0.35;
     }
+    /* A HELD cell (unevaluated by choice) — a quiet pill in the value slot. */
+    .held {
+      font-weight: 400;
+      font-size: 0.85em;
+      opacity: 0.6;
+      padding: 0 0.4rem;
+      border: 1px dashed var(--enumeratio-muted, currentColor);
+      border-radius: 999px;
+    }
     .ast {
       position: absolute;
       right: 0.5rem;
@@ -405,7 +432,7 @@ export class EnumeratioExpressionLine extends LitElement {
       white-space: pre-wrap;
       word-break: break-word;
     }
-  `
+  `]
 }
 
 declare global {

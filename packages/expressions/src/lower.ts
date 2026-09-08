@@ -3,7 +3,7 @@
 // judgements of its own, only PURE recomputations of what bind.ts already proved valid (see opTypeForLower) so it
 // never needs a Catalog — same reasoning as the header note in types.ts.
 import { args, head, isNumber, isSymbol, numberValue, symbolName, type Expression, type NodePath } from './ast.js'
-import { betaReduce, comprehensionDomain, isUserFnHead, NEXT_PREV_RANK, summationRange, type Bound } from './bind.js'
+import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, summationRange, type Bound } from './bind.js'
 import { OPERATORS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
@@ -60,10 +60,22 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
 
   const h = head(e)!
   const a = args(e)
+
+  // gcd/lcm variadic → left-fold into nested binary calls: gcd(a,b,c) → gcd(gcd(a,b),c). Matches either the
+  // `\gcd`→GCD spelling or the bare `gcd`/`lcm` catalog function; the binary form is what pg/ce implement.
+  const glf = gcdLcmFn(h)
+  if (glf && a.length > 2) {
+    const fn = fnRef(glf)
+    return a.map((arg, i) => lowerArg(arg, argPath(path, i), scope, types))
+      .reduce((acc, next) => ({ kind: 'apply', fn, args: [acc, next] }))
+  }
+
   const opBinding = OPERATORS[h]
   if (opBinding) {
     if ('op' in opBinding) return lowerOp(opBinding.op, a, path, scope, types)
     if ('fn' in opBinding) return lowerCall(opBinding.fn, a, path, scope, types)
+    // a CE-native op → an apply on its CE head; ce-engine evaluates it (numeric approximation for now).
+    if ('ce' in opBinding) return { kind: 'apply', fn: fnRef(opBinding.ce), args: a.map((arg, i) => lowerArg(arg, argPath(path, i), scope, types)) }
     if (opBinding.special === 'contains') return lowerContains(a, path, scope, types)
     if (opBinding.special === 'element_at') return lowerBaseIndexed('element_at', a, path, scope, types)
     return lowerBaseIndexed('cardinality', a.slice(0, 1), path, scope, types)   // 'cardinality' — Count takes one arg

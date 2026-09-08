@@ -48,7 +48,16 @@ export const CE_OPERATORS: Record<string, string> = {
   // base_operation ids — the same arithmetic/comparison vocabulary ts-engine's nativeOp covers, over int/numeric
   add: 'Add', sub: 'Subtract', mul: 'Multiply', div: 'Divide', neg: 'Negate', pow: 'Power',
   le: 'LessEqual', lt: 'Less', ge: 'GreaterEqual', gt: 'Greater', eq: 'Equal', ne: 'NotEqual',
+  // CE-native math (names.ts `{ce}` bindings) — the head IS the CE operator, so these map to themselves. The
+  // notebook renders them as a numeric approximation for now (see `numericFallback`).
+  Max: 'Max', Min: 'Min', Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Mod: 'Mod',
+  Sqrt: 'Sqrt', Root: 'Root', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
+  Sin: 'Sin', Cos: 'Cos', Tan: 'Tan', Gamma: 'Gamma', Zeta: 'Zeta',
 }
+
+/** CE-native op heads (names.ts `{ce}` bindings): claimed by ce with no curated base_function row — CE evaluates
+ *  them. Kept in sync with the `{ce}` entries in OPERATORS. */
+const CE_NATIVE = new Set(['Max', 'Min', 'Floor', 'Ceil', 'Round', 'Mod', 'Sqrt', 'Root', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Gamma', 'Zeta'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>
@@ -89,8 +98,17 @@ const ceImplRow = (label: string): ImplRow => ({
   representation: 'text', cost: null, note: null,
 })
 
-export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean } = {}): Engine {
+export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean; symbolicLatex?: boolean } = {}): Engine {
   const exactRationals = factoryOpts.exactRationals ?? false
+  // numericFallback: instead of declining a result that isn't an exact integer/rational (an irrational or symbolic
+  // CE value like √2 or ⅙π²), render its floating-point approximation (`N`). The notebook sets this so CE-native
+  // math (Sqrt/Zeta/Gamma/trig/…) shows SOMETHING; exact-symbolic display is the follow-up. Off elsewhere, so the
+  // pg-differential path is unchanged.
+  const numericFallback = factoryOpts.numericFallback ?? false
+  // symbolicLatex: render an EXACT symbolic result (√2, ⅙π², …) as CE's LaTeX instead of a decimal, so the value
+  // area can KaTeX it. Takes precedence over numericFallback for genuinely-symbolic results; a plain float still
+  // uses the numeric decimal. Notebook-only.
+  const symbolicLatex = factoryOpts.symbolicLatex ?? false
   /** the first reason this engine declines `expr`, or undefined — the same three-question shape as ts-engine's
    *  `reject`, minus the per-node RETURN-kind bookkeeping ts-engine needs (ce's whole vocabulary only ever
    *  produces an int/numeric or a boolean, decided once at print time, never threaded back through can()). */
@@ -129,6 +147,9 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean 
         const fn = String(e.fn)
         const name = CE_OPERATORS[fn]
         if (!name) return `ce has no operator mapped for "${fn}"`
+        // A CE-NATIVE op (Sqrt/Zeta/Max/…, names.ts `{ce}` bindings) has no curated base_function row — CE itself
+        // is the implementation — so accept it directly, only recursing into its arguments.
+        if (CE_NATIVE.has(fn)) { for (const a of e.args) { const bad = rejectTree(a); if (bad) return bad } return undefined }
         if (!reg.curated(fn)) return `"${fn}" is not a registered function`
         const arity = reg.impls(fn).some((i) => i.argTypes.length === e.args.length)
         if (!arity) return `no implementation of ${fn} takes ${e.args.length} argument${e.args.length === 1 ? '' : 's'}`
@@ -164,19 +185,43 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean 
   /** The evaluated CE result → the string pg would print for the same value, or an InexactResult. See the file
    *  header: "exact" here means integer or boolean — a genuine non-integer rational is declined, not spelled as
    *  `p/q`, because pg's own `numeric`/`int` division never produces one to compare against. */
-  function print(label: string, boxed: CEExpr): string {
+  function print(label: string, boxed: CEExpr, forceNumeric = false): string {
     // `numericValue`/`symbol` live on CE's NARROWED per-kind interfaces (BoxedNumber, BoxedSymbol, …), not on the
     // general `Expression` a bare `evaluateAsync()` call returns — there is no static type guard that widens one
     // to the other here, only the dynamic checks below, so this is the one deliberate escape to `unknown`.
     const result = boxed as unknown as { symbol?: string; numericValue: unknown; json: unknown }
     if (result.symbol === 'True') return 'true'
     if (result.symbol === 'False') return 'false'
-    const bad = (): never => { throw new InexactResult(label, ceImplRow(label), result.json) }
+    // numericFallback: a real floating-point approximation of the result (trimmed of fp noise), or null. Used by
+    // the notebook so an irrational/symbolic CE value renders as a decimal instead of being declined.
+    const approx = (): string | null => {
+      if (!numericFallback && !forceNumeric) return null
+      try {
+        const n = (boxed as unknown as { N(): { re?: number; im?: number } }).N()
+        if (typeof n.re === 'number' && Number.isFinite(n.re) && (n.im === undefined || n.im === 0)) {
+          return String(Number(n.re.toPrecision(12))) // 12 sig figs drops binary-float noise
+        }
+      } catch { /* not numerically evaluable — fall through to decline */ }
+      return null
+    }
+    const bad = (): string => { const a = approx(); if (a !== null) return a; throw new InexactResult(label, ceImplRow(label), result.json) }
+    // Per-cell N: a forced numeric approximation of everything (an integer stays itself; a rational/irrational/
+    // symbolic becomes a decimal), taking precedence over exact/symbolic rendering.
+    if (forceNumeric) { const a = approx(); if (a !== null) return a }
+    // An EXACT symbolic result — CE keeps it as an expression tree (√2 → ["Sqrt",2], ζ(2) → a Divide/Power), even
+    // though it also carries a decimal numericValue. Its `.json` is an ARRAY head (not a plain number), which is
+    // how we tell it apart from a genuine float. `Rational` is excluded so a rational still takes the `p/q` text
+    // path below (and keeps its ∈ ℚ badge). Rendered as CE's LaTeX under `symbolicLatex` (notebook).
+    const symbolicTex = (): string | null => {
+      if (!symbolicLatex || !Array.isArray(result.json) || result.json[0] === 'Rational') return null
+      const t = (boxed as unknown as { latex?: string }).latex
+      return typeof t === 'string' && t.length > 0 ? t : null
+    }
     try {
       const nv = result.numericValue as unknown
       if (typeof nv === 'number') {
-        if (!Number.isInteger(nv)) return bad()
-        return BigInt(nv).toString()
+        if (Number.isInteger(nv)) return BigInt(nv).toString()
+        return symbolicTex() ?? bad() // a non-integer number: exact-symbolic → LaTeX, else a genuine float → numeric
       }
       if (nv && typeof nv === 'object') {
         // CE's own ExactNumericValue mixes representations: `rational` (and imRational) come back as plain JS
@@ -196,7 +241,9 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean 
     } catch (err) {
       if (err instanceof InexactResult) throw err
     }
-    return bad()
+    // Reached here = no plain numeric value at all: a fully symbolic result (⅙π², sin(1)). LaTeX under the flag,
+    // else fall back (numericFallback / decline).
+    return symbolicTex() ?? bad()
   }
 
   return {
@@ -215,7 +262,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean 
         for (const [i, c] of expr.select.entries()) {
           const boxed = toCE(ce, c)
           const result = await boxed.evaluateAsync({ signal: opts.signal })
-          row[cols[i].id] = print(describeExpr(c), result)
+          row[cols[i].id] = print(describeExpr(c), result, opts.numeric ?? false)
         }
         return row
       })()
