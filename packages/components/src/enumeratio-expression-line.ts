@@ -42,6 +42,9 @@ export class EnumeratioExpressionLine extends LitElement {
   /** Gated display of `state.error` — see the debounce note above. */
   @state() private showError = false
   @state() private astOpen = false
+  /** Drag state: `dragging` = this row is the one being moved (dim it); `dropEdge` = which edge a drop bar shows on. */
+  @state() private dragging = false
+  @state() private dropEdge: 'above' | 'below' | null = null
   private errorTimer: ReturnType<typeof setTimeout> | null = null
   private lastError: string | undefined = undefined
 
@@ -84,16 +87,38 @@ export class EnumeratioExpressionLine extends LitElement {
     this.astOpen = !this.astOpen
   }
 
-  // Reorder by dragging the row number. The set owns the actual reordering (line-reorder → onLineReorder).
+  // Reorder by dragging the handle. The dragged GHOST is the whole row (setDragImage); the source dims while it
+  // moves; the target shows a drop bar on the edge the pointer is nearest. The set owns the actual reordering
+  // (line-reorder → onLineReorder), told which side to drop on.
+  private get lineEl(): HTMLElement | null {
+    return this.renderRoot.querySelector('.line')
+  }
   private onDragStart = (ev: DragEvent): void => {
     ev.dataTransfer?.setData('text/plain', this.lineId)
-    if (ev.dataTransfer) ev.dataTransfer.effectAllowed = 'move'
+    if (ev.dataTransfer) {
+      ev.dataTransfer.effectAllowed = 'move'
+      const row = this.lineEl
+      if (row) ev.dataTransfer.setDragImage(row, 16, row.offsetHeight / 2) // ghost = the whole row, not just the number
+    }
+    this.dragging = true
   }
-  private onDragOver = (ev: DragEvent): void => { ev.preventDefault() }
+  private onDragEnd = (): void => { this.dragging = false; this.dropEdge = null }
+  private onDragOver = (ev: DragEvent): void => {
+    ev.preventDefault()
+    if (this.dragging) return // don't show a drop bar on the row being dragged
+    const rect = this.lineEl?.getBoundingClientRect()
+    this.dropEdge = rect ? (ev.clientY < rect.top + rect.height / 2 ? 'above' : 'below') : null
+  }
+  private onDragLeave = (ev: DragEvent): void => {
+    // ignore leaves into a child; only clear when the pointer actually exits the row
+    if (!this.lineEl?.contains(ev.relatedTarget as Node)) this.dropEdge = null
+  }
   private onDrop = (ev: DragEvent): void => {
     ev.preventDefault()
     const sourceId = ev.dataTransfer?.getData('text/plain')
-    if (sourceId && sourceId !== this.lineId) this.emit('line-reorder', { sourceId, targetId: this.lineId })
+    const position = this.dropEdge ?? 'above'
+    this.dropEdge = null
+    if (sourceId && sourceId !== this.lineId) this.emit('line-reorder', { sourceId, targetId: this.lineId, position })
   }
 
   private hideError(): void {
@@ -125,10 +150,12 @@ export class EnumeratioExpressionLine extends LitElement {
     const hasValue = !errVisible && !s.busy && s.value != null
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
+    const lineClass = `line${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
     return html`
-      <div class="line" @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
-           @dragover=${this.onDragOver} @drop=${this.onDrop}>
-        <span class="rownum" draggable="true" @dragstart=${this.onDragStart} title="drag to reorder">${this.index}</span>
+      <div class=${lineClass} @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
+           @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
+        <span class="handle" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
+              title="drag to reorder">${this.index}</span>
         <div class="body">
           <div class="field">
             <enumeratio-math-input
@@ -161,26 +188,51 @@ export class EnumeratioExpressionLine extends LitElement {
     .line {
       position: relative;
       display: flex;
-      align-items: flex-start;
+      align-items: stretch;
       gap: 0.5rem;
-      padding: 0.4rem 0.5rem;
+      padding: 0.4rem 0.5rem 0.4rem 0;
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
     }
-    /* The row number doubles as the drag handle (Desmos-style) — no ⋮⋮, just the index. */
-    .rownum {
+    /* The row being dragged dims so the moving ghost reads as the "real" one. */
+    .line.dragging { opacity: 0.4; }
+    /* Drop indicator: a fat accent bar on the edge the pointer is nearest. */
+    .line.drop-above::before,
+    .line.drop-below::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--enumeratio-accent, #d97706) 40%, transparent);
+      pointer-events: none;
+    }
+    .line.drop-above::before { top: -1px; }
+    .line.drop-below::after { bottom: -1px; }
+    /* The left-margin drag handle (Desmos-style): a fat gutter with its own faint background, brighter on hover;
+       the row number lives inside it. Doubles as the whole row's grab target. */
+    .handle {
       flex: 0 0 auto;
-      min-width: 1.4rem;
-      text-align: right;
-      padding-top: 0.55rem;
+      align-self: stretch;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      min-width: 1.9rem;
+      padding: 0.55rem 0.45rem 0 0.35rem;
       font-size: 0.85em;
       color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      opacity: 0.5;
+      background: color-mix(in srgb, var(--enumeratio-muted, currentColor) 6%, transparent);
+      border-right: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+      opacity: 0.6;
       cursor: grab;
       user-select: none;
+      transition: background 0.12s, opacity 0.12s;
     }
-    .rownum:active {
-      cursor: grabbing;
+    .handle:hover {
+      opacity: 1;
+      background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 14%, transparent);
     }
+    .handle:active { cursor: grabbing; }
     .body {
       flex: 1 1 auto;
       min-width: 0;

@@ -105,7 +105,9 @@ export class EnumeratioMathInput extends LitElement {
     }
     if (changed.has('latex') && this.adapterInstance) {
       const current = this.adapterInstance.getLatex()
-      if (current !== this.latex) this.adapterInstance.setLatex(this.latex)
+      // Only when the value arrived from OUTSIDE (a model refresh / reorder / upstream recompute), not our own
+      // typing — then tidy it to the display spelling right away, same as the pause/blur pass.
+      if (current !== this.latex) { this.adapterInstance.setLatex(this.latex); this.reformatNow() }
     }
   }
 
@@ -116,7 +118,7 @@ export class EnumeratioMathInput extends LitElement {
       this.mountEl.innerHTML = ''
       const instance = await this.adapter(this.mountEl, { placeholder: this.placeholder, readonly: this.readonly })
       this.adapterInstance = instance
-      if (this.latex) instance.setLatex(this.latex)
+      if (this.latex) { instance.setLatex(this.latex); this.reformatNow() } // initial pass to the display spelling
       this.unsubs.push(instance.on('input', () => this.onAdapterInput()))
       this.unsubs.push(instance.on('enter', () => this.onAdapterEnter()))
       this.unsubs.push(instance.on('move-out', (d) => this.onAdapterMoveOut(d)))

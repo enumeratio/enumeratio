@@ -369,13 +369,14 @@ export class EnumeratioNotebook extends LitElement {
     this.removeLine(ev.detail.lineId)
   }
 
-  private onLineReorder = (ev: CustomEvent<{ sourceId: LineId; targetId: LineId }>): void => {
-    const { sourceId, targetId } = ev.detail
+  private onLineReorder = (ev: CustomEvent<{ sourceId: LineId; targetId: LineId; position?: 'above' | 'below' }>): void => {
+    const { sourceId, targetId, position = 'above' } = ev.detail
     const from = this.displayOrder.indexOf(sourceId)
     if (from === -1 || sourceId === targetId) return
     const order = this.displayOrder.filter((x) => x !== sourceId)
     const to = order.indexOf(targetId)
-    order.splice(to === -1 ? order.length : to, 0, sourceId)
+    const at = to === -1 ? order.length : position === 'below' ? to + 1 : to
+    order.splice(at, 0, sourceId)
     this.displayOrder = order
     this.persist()
     this.emitChange()
