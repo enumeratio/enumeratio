@@ -28,7 +28,11 @@ import './enumeratio-expression-line'
 //   events: composed `change` ({value}) on any edit, composed `result` ({value: JSON of `.values`}) after each
 //   evaluation pass — <enumeratio-assert> can wrap the whole set and check that JSON blob.
 export type LineMode = 'N' | 'hold'
-export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode }[] }
+/** A cell's TYPE. `math` (the default, and absent in the seed) routes through the parser/evaluator; `comment` is
+ *  prose (markdown + inline `$…$`) that never touches the math pipeline. */
+export type LineKind = 'comment'
+export type ScrubBounds = { min: number; max: number; step: number }
+export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode; kind?: LineKind; scrub?: ScrubBounds }[] }
 
 type LineResult = LineState
 
@@ -69,7 +73,9 @@ export class EnumeratioNotebook extends LitElement {
     return JSON.stringify({
       lines: this.displayOrder.map((id) => {
         const mode = this.lineModes.get(id)
-        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}) }
+        const kind = this.lineKinds.get(id)
+        const scrub = this.scrubBounds.get(id)
+        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}), ...(kind ? { kind } : {}), ...(scrub ? { scrub } : {}) }
       }),
     } satisfies NotebookSeed)
   }
@@ -87,6 +93,11 @@ export class EnumeratioNotebook extends LitElement {
   /** Per-line evaluation MODE: 'N' forces a numeric approximation, 'hold' leaves the cell unevaluated; absent = the
    *  default (exact where possible). Set from the hamburger menu, persisted in `value`. */
   private lineModes = new Map<LineId, LineMode>()
+  /** Per-line cell KIND — only `comment` is stored (math is the default/absent). Comment cells stay out of the
+   *  LineGraph and never recompute; the line renders their prose itself. */
+  private lineKinds = new Map<LineId, LineKind>()
+  /** Per-line scrubber bounds override (`n = 3` slider min/max/step). Absent = derive defaults from the value. */
+  private scrubBounds = new Map<LineId, { min: number; max: number; step: number }>()
   /** Per-line collection-preview element count (grows on "pull more"). */
   private previewCounts = new Map<LineId, number>()
   private readonly graph = new LineGraph()
@@ -136,7 +147,8 @@ export class EnumeratioNotebook extends LitElement {
    *  act on / inject into whichever cell the caret was last in. */
   @state() private activeLineId: LineId | null = null
   @state() private vkOn = false
-  @state() private menuOpen = false
+  /** The footer `+` cell-type dropdown (math / comment). */
+  @state() private addMenuOpen = false
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -150,15 +162,23 @@ export class EnumeratioNotebook extends LitElement {
 
   /** Append (default) or insert-after-`afterId` a new line; returns its id. Public — the DOM test hook, and what
    *  a `line-commit` (Enter) uses internally. */
-  addLine(latex = '', afterId?: LineId): LineId {
+  addLine(latex = '', afterId?: LineId, kind?: LineKind): LineId {
     const id = `line-${++nextIdNum}`
     this.latexById.set(id, latex)
+    if (kind) this.lineKinds.set(id, kind)
     if (afterId && this.displayOrder.includes(afterId)) {
       this.displayOrder.splice(this.displayOrder.indexOf(afterId) + 1, 0, id)
     } else {
       this.displayOrder.push(id)
     }
     this.displayOrder = [...this.displayOrder]
+    if (kind === 'comment') {
+      // Comment cells are prose, not expressions: keep them out of the graph and never recompute them.
+      this.persist()
+      this.emitChange()
+      this.record()
+      return id
+    }
     if (this.parser) this.graph.set(id, latex, this.parser)
     this.pendingChanged.add(id)
     void this.flushRecompute()
@@ -173,6 +193,9 @@ export class EnumeratioNotebook extends LitElement {
     if (idx === -1) return
     this.displayOrder = this.displayOrder.filter((x) => x !== id)
     this.latexById.delete(id)
+    this.lineModes.delete(id)
+    this.lineKinds.delete(id)
+    this.scrubBounds.delete(id)
     const removed = this.graph.lines().find((m) => m.id === id)
     if (removed?.defines) {
       if (removed.bindKind === 'declare') { this.declared.delete(removed.defines); this.scope.delete(removed.defines) }
@@ -203,6 +226,7 @@ export class EnumeratioNotebook extends LitElement {
     super.disconnectedCallback()
     if (this.tickerTimer) { clearInterval(this.tickerTimer); this.tickerTimer = null }
     if (this.debounceTimer) { clearTimeout(this.debounceTimer); this.debounceTimer = null }
+    if (this.commentRecordTimer) { clearTimeout(this.commentRecordTimer); this.commentRecordTimer = null }
     this.controllers.forEach((c) => c.abort())
   }
 
@@ -235,8 +259,11 @@ export class EnumeratioNotebook extends LitElement {
     const idSet = new Set<string>([...nb.names.functions, ...nb.names.collections])
     this.spellHead = (s) => (idSet.has(s) ? pascalCase(s) : s)
     await reseedRandom(this.seed) // reproducible randomness from the first evaluation
-    for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)
-    for (const id of this.displayOrder) this.pendingChanged.add(id)
+    for (const [id, latex] of this.latexById) {
+      if (this.lineKinds.get(id) === 'comment') continue // prose, not an expression
+      this.graph.set(id, latex, this.parser)
+      this.pendingChanged.add(id)
+    }
     await this.flushRecompute(true)
   }
 
@@ -287,20 +314,27 @@ export class EnumeratioNotebook extends LitElement {
       this.controllers.forEach((c) => c.abort())
       this.controllers.clear()
       this.latexById.clear()
+      this.lineModes.clear()
+      this.lineKinds.clear()
+      this.scrubBounds.clear()
       this.scope = new Map()
       this.declared.clear()
       this.results = new Map()
       const order: LineId[] = []
+      const dirty = new Set<LineId>()
       for (const l of parsed.lines ?? []) {
         const id = l.id ?? `line-${++nextIdNum}`
         this.latexById.set(id, l.latex)
+        if (l.mode) this.lineModes.set(id, l.mode)
+        if (l.kind) this.lineKinds.set(id, l.kind)
+        if (l.scrub) this.scrubBounds.set(id, l.scrub)
         order.push(id)
-        this.graph.set(id, l.latex, this.parser)
+        if (l.kind !== 'comment') { this.graph.set(id, l.latex, this.parser); dirty.add(id) }
       }
       this.displayOrder = order
       this.seed = seed
       await reseedRandom(seed)
-      this.pendingChanged = new Set(order)
+      this.pendingChanged = dirty
       await this.flushRecompute(true)
     } finally {
       this.restoring = false
@@ -493,6 +527,8 @@ export class EnumeratioNotebook extends LitElement {
       const id = l.id ?? `line-${++nextIdNum}`
       this.latexById.set(id, l.latex)
       if (l.mode) this.lineModes.set(id, l.mode)
+      if (l.kind) this.lineKinds.set(id, l.kind)
+      if (l.scrub) this.scrubBounds.set(id, l.scrub)
       this.displayOrder.push(id)
     }
   }
@@ -536,6 +572,18 @@ export class EnumeratioNotebook extends LitElement {
       if (!dirty.has(id)) continue
       await this.evalLine(id, models)
     }
+    // Promote any math cell whose whole body is a bare string into a real comment cell — the Desmos leading-`"`
+    // gesture, and any string-only line. Done AFTER the eval pass so the graph is never mutated mid-iteration.
+    let promoted = false
+    for (const id of [...this.graph.order()]) {
+      if (this.lineKinds.get(id)) continue
+      const stmt = models.get(id)?.parsed?.stmt
+      const text = stmt && stmt.k === 'expr' ? stringComment(stmt.body) : null
+      if (text === null) continue
+      this.promoteToComment(id, text)
+      promoted = true
+    }
+    if (promoted) { this.persist(); this.emitChange() }
     // A line uses randomness if its parsed AST names a random op (random_element / random_sample / random_shuffle).
     // This gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
     this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|random_shuffle/i.test(a))
@@ -545,6 +593,18 @@ export class EnumeratioNotebook extends LitElement {
     this.requestUpdate()
     this.emitResult()
     this.record() // one history entry per settled change (no-op if nothing actually changed, or mid-restore)
+  }
+
+  /** Promote a math cell whose body is a bare string into a real comment cell (Desmos's leading-`"`): move it out
+   *  of the graph, drop its math result, re-home its text as the comment body. If it was the active cell, keep the
+   *  caret by landing focus in the new comment editor so typing continues without a beat. */
+  private promoteToComment(id: LineId, text: string): void {
+    this.lineKinds.set(id, 'comment')
+    this.latexById.set(id, text)
+    this.graph.remove(id)
+    this.results.delete(id)
+    this.lineAst.delete(id)
+    if (this.activeLineId === id) this.focusAfterUpdate = id
   }
 
   /** The parsed AST (MathJSON, pretty JSON) per line, for the line's opt-in right-click inspector. Merged into
@@ -567,7 +627,8 @@ export class EnumeratioNotebook extends LitElement {
     // inspector still works) but stop before binding/evaluating.
     if (this.lineModes.get(id) === 'hold') {
       const held = models.get(id)?.parsed
-      if (held) this.lineAst.set(id, astFullForm(held, this.spellHead))
+      // Show the AST inside a Hold wrapper — Wolfram's HoldForm/Hold — so the inspector reads as what the mode does.
+      if (held) this.lineAst.set(id, `Hold[${astFullForm(held, this.spellHead)}]`)
       this.setResult(id, { held: true })
       return
     }
@@ -675,12 +736,18 @@ export class EnumeratioNotebook extends LitElement {
       const name = bound.stmt.k !== 'expr' ? bound.stmt.name : undefined
       if (name) this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'scalar', text, pg: effectivePg(bound.type) ?? 'numeric' } })
 
+      // A free numeric parameter (`n = 3` — a define whose RHS is a literal number) gets a Desmos-style scrubber.
+      const defBody = model.parsed.stmt.k === 'define' ? model.parsed.stmt.body : undefined
+      const lit = numericLiteral(defBody)
+      const scrub = lit !== null ? this.scrubFor(id, lit) : undefined
+
       // A value carrying a LaTeX control sequence is an EXACT symbolic result (√2, ⅙π²) — render it via KaTeX in
       // its own slot; a plain number/rational stays text (and drives the type-badge set refinement as before).
       const isTex = text.includes('\\')
-      this.setResult(id, isTex
+      const base = isTex
         ? { type: typeBadge(bound.type), valueTex: text, engine: p.engine, sql: p.sql }
-        : { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql })
+        : { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql }
+      this.setResult(id, scrub ? { ...base, scrub } : base)
     } catch (e) {
       if (stale()) return
       this.setResult(id, { type: typeBadge(bound.type), error: message(e) })
@@ -692,10 +759,33 @@ export class EnumeratioNotebook extends LitElement {
   private onLineInput = (ev: CustomEvent<{ lineId: LineId; latex: string }>): void => {
     const { lineId, latex } = ev.detail
     this.latexById.set(lineId, latex)
+    if (this.lineKinds.get(lineId) === 'comment') {
+      // Prose edit — no parse/recompute. Debounce a history entry so a typing burst is one undo step.
+      this.persist()
+      this.emitChange()
+      this.scheduleCommentRecord()
+      return
+    }
+    // Desmos leading-quote: the moment a math cell's text starts with a `"`, it becomes a comment — immediately, so
+    // the shape change tracks the keystroke rather than waiting for a completed string to parse. Strip the quote(s).
+    if (latex.trimStart().startsWith('"')) {
+      this.promoteToComment(lineId, latex.trim().replace(/^"+/, '').replace(/"+$/, ''))
+      this.focusAfterUpdate = lineId
+      this.persist(); this.emitChange(); this.requestUpdate()
+      return
+    }
     if (this.parser) this.graph.set(lineId, latex, this.parser)
     this.scheduleRecompute(lineId)
     this.persist()
     this.emitChange()
+  }
+
+  /** Comment edits don't flow through the recompute (which is what normally calls `record()`), so debounce their
+   *  own history capture — a typing burst collapses to one undo step. */
+  private commentRecordTimer: ReturnType<typeof setTimeout> | null = null
+  private scheduleCommentRecord(): void {
+    if (this.commentRecordTimer) clearTimeout(this.commentRecordTimer)
+    this.commentRecordTimer = setTimeout(() => { this.commentRecordTimer = null; this.record() }, 500)
   }
 
   private onLineCommit = (ev: CustomEvent<{ lineId: LineId }>): void => {
@@ -720,9 +810,44 @@ export class EnumeratioNotebook extends LitElement {
     void this.runAction(ev.detail.lineId)
   }
 
+  // ── value scrubber ───────────────────────────────────────────────────────────────────────────────────────────
+  /** Slider bounds for a free numeric define: a stored override, else sensible defaults from the current value —
+   *  integers step by 1 from 0 (or −max..max when negative) up to a round headroom; reals get a fine step. */
+  private scrubFor(id: LineId, value: number): { value: number; min: number; max: number; step: number } {
+    const stored = this.scrubBounds.get(id)
+    if (stored) return { value, ...stored }
+    const int = Number.isInteger(value)
+    const max = Math.max(10, Math.ceil(Math.abs(value) * 2))
+    const min = value < 0 ? -max : 0
+    const step = int ? 1 : Math.max(0.01, Number((Math.max(Math.abs(value), 1) / 100).toPrecision(1)))
+    return { value, min, max, step }
+  }
+
+  /** Drag: rewrite the define's source to the scrubbed value and recompute (debounced) so downstream cells follow
+   *  live. Rewriting the line keeps the scrubber inside the pure recompute+undo model, like actions do. */
+  private onLineScrub = (ev: CustomEvent<{ lineId: LineId; value: number }>): void => {
+    const { lineId, value } = ev.detail
+    const name = this.graph.lines().find((m) => m.id === lineId)?.defines
+    if (!name || !this.parser) return
+    const latex = `${name} = ${value}`
+    this.latexById.set(lineId, latex)
+    this.graph.set(lineId, latex, this.parser)
+    this.scheduleRecompute(lineId)
+    this.persist(); this.emitChange()
+    this.requestUpdate()
+  }
+
+  private onLineScrubBounds = (ev: CustomEvent<{ lineId: LineId; min: number; max: number }>): void => {
+    const { lineId, min, max } = ev.detail
+    const step = this.scrubBounds.get(lineId)?.step ?? (Number.isInteger(min) && Number.isInteger(max) ? 1 : 0.1)
+    this.scrubBounds.set(lineId, { min, max, step })
+    this.pendingChanged.add(lineId)
+    void this.flushRecompute(true) // re-eval so the scrubber re-emits with the new bounds
+    this.persist(); this.emitChange()
+  }
+
   private onLineFocus = (ev: CustomEvent<{ lineId: LineId }>): void => {
     this.activeLineId = ev.detail.lineId
-    this.menuOpen = false // a click into a different cell closes an open hamburger
   }
 
   // ── active-cell controls (virtual keyboard + hamburger) — never steal the field's focus ──────────────────────
@@ -742,14 +867,21 @@ export class EnumeratioNotebook extends LitElement {
     if (target) { this.focusAfterUpdate = target; this.requestUpdate() }
   }
 
-  private menuAction(kind: 'duplicate' | 'clear' | 'delete'): void {
-    const id = this.activeLineId
-    this.menuOpen = false
+  /** A per-cell menu action from a line (its right-click menu or gutter config icon), routed to the matching op —
+   *  the line names the target, so it acts on the clicked cell whether or not it's the active one. */
+  private onLineAction = (ev: CustomEvent<{ lineId: LineId; action: 'N' | 'hold' | 'duplicate' | 'clear' }>): void => {
+    const { lineId, action } = ev.detail
+    if (action === 'N' || action === 'hold') this.setLineMode(lineId, action)
+    else this.menuAction(lineId, action)
+  }
+
+  private menuAction(id: LineId, kind: 'duplicate' | 'clear' | 'delete'): void {
     if (!id) return
     if (kind === 'delete') { this.removeLine(id); return }
-    if (kind === 'duplicate') { const n = this.addLine(this.latexById.get(id) ?? '', id); this.focusLine(n); return }
+    if (kind === 'duplicate') { const n = this.addLine(this.latexById.get(id) ?? '', id, this.lineKinds.get(id)); this.focusLine(n); return }
     if (kind === 'clear') {
       this.latexById.set(id, '')
+      if (this.lineKinds.get(id) === 'comment') { this.persist(); this.emitChange(); this.record(); this.requestUpdate(); this.focusLine(id); return }
       if (this.parser) this.graph.set(id, '', this.parser)
       this.scheduleRecompute(id)
       this.persist(); this.emitChange()
@@ -758,11 +890,8 @@ export class EnumeratioNotebook extends LitElement {
     }
   }
 
-  /** Toggle the active cell's evaluation mode (numeric `N` / `hold`) — off if it was already that mode — then
-   *  recompute it. */
-  private setLineMode(mode: LineMode): void {
-    const id = this.activeLineId
-    this.menuOpen = false
+  /** Toggle a cell's evaluation mode (numeric `N` / `hold`) — off if it was already that mode — then recompute it. */
+  private setLineMode(id: LineId, mode: LineMode): void {
     if (!id) return
     if (this.lineModes.get(id) === mode) this.lineModes.delete(id)
     else this.lineModes.set(id, mode)
@@ -815,17 +944,23 @@ export class EnumeratioNotebook extends LitElement {
         : html`<div class="loading">loading catalog…</div>`
     }
     const completer = this.completerFor()
+    // Row numbers count math cells only — a comment cell is "not there" for numbering, so the sequence reads 1, 2,
+    // 3 straight through however many comments sit between them.
+    let mathNum = 0
     return html`
       <div class="set">
         ${this.displayOrder.map(
-          (id, i) => html`
+          (id) => html`
             <enumeratio-expression-line
               line-id=${id}
-              .index=${i + 1}
+              .index=${this.lineKinds.get(id) === 'comment' ? 0 : ++mathNum}
               .latex=${this.latexById.get(id) ?? ''}
               .completer=${completer}
               .classify=${this.classify}
               .active=${this.activeLineId === id}
+              .mode=${this.lineModes.get(id) ?? ''}
+              .kind=${this.lineKinds.get(id) ?? 'math'}
+              .canDelete=${this.displayOrder.length > 1}
               .state=${this.results.get(id) ?? {}}
               @line-input=${this.onLineInput}
               @line-commit=${this.onLineCommit}
@@ -833,6 +968,9 @@ export class EnumeratioNotebook extends LitElement {
               @line-remove=${this.onLineRemove}
               @line-reorder=${this.onLineReorder}
               @line-run=${this.onLineRun}
+              @line-action=${this.onLineAction}
+              @line-scrub=${this.onLineScrub}
+              @line-scrub-bounds=${this.onLineScrubBounds}
               @line-focus=${this.onLineFocus}
               @line-expand=${this.onLineExpand}
             ></enumeratio-expression-line>
@@ -841,8 +979,18 @@ export class EnumeratioNotebook extends LitElement {
       </div>
       <div class="toolbar">
         <div class="tools-left">
-          <button class="tool" @click=${() => this.appendBlankLine()}
-                  title="Add line" aria-label="Add line">+</button>
+          <div class="addwrap">
+            <button class="tool ${this.addMenuOpen ? 'on' : ''}" @click=${() => (this.addMenuOpen = !this.addMenuOpen)}
+                    title="Add cell" aria-label="Add cell">+</button>
+            ${this.addMenuOpen
+              ? html`
+                  <div class="add-backdrop" @click=${() => (this.addMenuOpen = false)}></div>
+                  <div class="addmenu">
+                    <button @click=${() => this.addCell('math')}>Math</button>
+                    <button @click=${() => this.addCell('comment')}>Comment</button>
+                  </div>`
+              : ''}
+          </div>
           <button class="tool" ?disabled=${!this.canUndo} @click=${() => void this.undo()}
                   title="Undo" aria-label="Undo">↺</button>
           <button class="tool" ?disabled=${!this.canRedo} @click=${() => void this.redo()}
@@ -859,29 +1007,15 @@ export class EnumeratioNotebook extends LitElement {
           <button class="tool ${this.vkOn ? 'on' : ''}"
                   @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => this.toggleVirtualKeyboard()}
                   title="Virtual keyboard" aria-label="Virtual keyboard">⌨</button>
-          <div class="menuwrap">
-            <button class="tool ${this.menuOpen ? 'on' : ''}" ?disabled=${!this.activeLineId}
-                    @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => (this.menuOpen = !this.menuOpen)}
-                    title="Cell menu" aria-label="Cell menu">☰</button>
-            ${this.menuOpen && this.activeLineId
-              ? html`<div class="menu right" @mousedown=${(e: MouseEvent) => e.preventDefault()}>
-                  <button @click=${() => this.setLineMode('N')}>${this.lineModes.get(this.activeLineId) === 'N' ? '✓ ' : ''}Numeric (N)</button>
-                  <button @click=${() => this.setLineMode('hold')}>${this.lineModes.get(this.activeLineId) === 'hold' ? '✓ ' : ''}Hold (don't evaluate)</button>
-                  <hr>
-                  <button @click=${() => this.menuAction('duplicate')}>Duplicate</button>
-                  <button @click=${() => this.menuAction('clear')}>Clear</button>
-                  <button @click=${() => this.menuAction('delete')} ?disabled=${this.displayOrder.length <= 1}>Delete</button>
-                </div>`
-              : ''}
-          </div>
         </div>
       </div>
     `
   }
 
-  /** Footer `+`: append a blank line and focus it. */
-  private appendBlankLine(): void {
-    const id = this.addLine('')
+  /** Footer `+` dropdown: append a blank cell of the chosen kind and focus it. */
+  private addCell(kind: 'math' | 'comment'): void {
+    this.addMenuOpen = false
+    const id = this.addLine('', undefined, kind === 'comment' ? 'comment' : undefined)
     this.focusAfterUpdate = id
     this.requestUpdate()
   }
@@ -941,28 +1075,24 @@ export class EnumeratioNotebook extends LitElement {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
-    .menuwrap { position: relative; }
-    /* The hamburger's per-cell menu opens UPWARD (the toolbar sits at the notebook's bottom). */
-    .menu {
+    /* The + cell-type dropdown, opening UPWARD from the footer over a transparent close-on-click backdrop. */
+    .addwrap { position: relative; }
+    .add-backdrop { position: fixed; inset: 0; z-index: 39; }
+    .addmenu {
       position: absolute;
       bottom: calc(100% + 0.3rem);
       left: 0;
       z-index: 40;
       display: flex;
       flex-direction: column;
-      min-width: 8rem;
+      min-width: 7rem;
       padding: 0.25rem;
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 6px;
       background: var(--enumeratio-surface, var(--p-content-background, canvas));
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
     }
-    .menu hr {
-      margin: 0.25rem 0.3rem;
-      border: none;
-      border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 12%);
-    }
-    .menu button {
+    .addmenu button {
       font: inherit;
       text-align: left;
       padding: 0.35rem 0.6rem;
@@ -972,10 +1102,9 @@ export class EnumeratioNotebook extends LitElement {
       color: inherit;
       cursor: pointer;
     }
-    .menu button:hover:not(:disabled) {
+    .addmenu button:hover {
       background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
-    .menu button:disabled { opacity: 0.35; cursor: default; }
     .set {
       display: flex;
       flex-direction: column;
@@ -1022,6 +1151,23 @@ function scalarSet(pg: string, value?: string): string {
 
 function message(e: unknown): string {
   return e instanceof Error ? e.message : String(e)
+}
+
+/** A MathJSON body that is a bare (optionally negated) numeric literal → its number, else null. Used to spot a
+ *  free numeric parameter (`n = 3`) that should get a scrubber — a computed RHS (`n = 3+2`) returns null. */
+function numericLiteral(e: unknown): number | null {
+  if (e == null) return null
+  if (typeof e === 'number') return Number.isFinite(e) ? e : null
+  if (Array.isArray(e)) {
+    if (e[0] === 'Negate') { const n = numericLiteral(e[1]); return n === null ? null : -n }
+    if (e[0] === 'Rational') { const a = numericLiteral(e[1]); const b = numericLiteral(e[2]); return a !== null && b ? a / b : null }
+    return null
+  }
+  if (typeof e === 'object') {
+    const o = e as Record<string, unknown>
+    if ('num' in o) { const n = Number(o.num); return Number.isFinite(n) ? n : null }
+  }
+  return null
 }
 
 /** MathJSON → a Wolfram-FullForm-style string: `["Binomial",6,2]` → `Binomial[6, 2]`, `n^2+1` →
