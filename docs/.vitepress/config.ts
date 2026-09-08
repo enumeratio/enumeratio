@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vitepress'
 import katex from '@vscode/markdown-it-katex'
 import { enumeratioCore } from '@enumeratio/data/vite'
+import { referenceSidebarItems } from './reference/sidebar.js'
 
 // One docs site for the whole monorepo. The file tree mirrors the nav, in nav order. Top-level nav items are
 // verbs (what you're doing here); their items are nouns (what you'll find). Four top-level items now — Explore,
@@ -99,44 +100,10 @@ export default defineConfig({
     sidebar: {
       '/reference/': [
         {
+          // The reference sidebar is DERIVED from docs/.vitepress/reference/nodes.ts (the same dataset the pages
+          // are generated from) — see reference/sidebar.ts. Add a head there and its nav entry appears here.
           text: 'Language Reference', link: '/reference/',
-          items: [
-            {
-              text: 'Generic primitives',
-              items: [
-                { text: 'unrank', link: '/reference/unrank' },
-                { text: 'rank', link: '/reference/rank' },
-                { text: 'random_element', link: '/reference/random-element' },
-                { text: 'cardinality', link: '/reference/cardinality' },
-              ],
-            },
-            {
-              text: 'List operations',
-              items: [
-                { text: 'join', link: '/reference/join' },
-                { text: 'sort', link: '/reference/sort' },
-                { text: 'unique', link: '/reference/unique' },
-              ],
-            },
-            {
-              text: 'Counting sequences',
-              items: [
-                { text: 'BellB', link: '/reference/bell-b' },
-                { text: 'CatalanNumber', link: '/reference/catalan-number' },
-                { text: 'Fubini', link: '/reference/fubini' },
-                { text: 'PartitionsP', link: '/reference/partitions-p' },
-              ],
-            },
-            {
-              text: 'Collections',
-              items: [
-                { text: 'SymmetricGroup', link: '/reference/symmetric-group' },
-                { text: 'IntegerPartitions', link: '/reference/integer-partitions' },
-                { text: 'Subsets', link: '/reference/subsets' },
-                { text: 'DyckPaths', link: '/reference/dyck-paths' },
-              ],
-            },
-          ],
+          items: referenceSidebarItems,
         },
       ],
       '/explore/': [

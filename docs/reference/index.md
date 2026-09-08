@@ -20,6 +20,18 @@ Every node page follows the same shape:
   the same thing themselves.
 - **See also** — sibling nodes; `code span` (no link) means the sibling doesn't have its own page yet.
 
+## How these pages are built
+
+The collection pages are **generated, not hand-written**. The source of truth is a dataset —
+`docs/.vitepress/reference/nodes.ts`, one record per head — plus `generate.mts`, which computes every example
+number (count, the first few elements, a rank) directly from the live pack kernels
+(`@enumeratio/compute-engine`'s `allEntries`). So a page can never disagree with the implementation on a count
+or an element; only the prose (definition, order convention, complexity) is authored, and it lives in the
+dataset as structured fields. Regenerate with `node --import tsx docs/.vitepress/reference/generate.mts`; the
+`--check` mode fails if any committed page is stale (a CI lint and a "does my branch need regenerating?" probe
+in one). The sidebar is derived from the same dataset (`reference/sidebar.ts`). A handful of primitive/list-op/
+counting-sequence pages are still hand-authored and will migrate into the dataset as their batches land.
+
 ## Where these heads come from
 
 - `packages/expressions/src/names.ts` — the arithmetic/comparison/lattice operators, curated named identities,
@@ -102,10 +114,18 @@ CE's own `Reverse`/`RotateLeft`/`CartesianProduct`/`Take` would materialize and 
 index.ts`'s own grouping comments). Each is a MathJSON head taking 1–2 integer parameters and producing a
 collection with a closed-form count and an $O(1)$–$O(n)$ unrank/rank pair.
 
-**Permutations & permutation classes** (15) — [`SymmetricGroup`](/reference/symmetric-group) · `KPermutations` ·
-`SignedPermutations` · `CyclicPermutations` · `Involutions` · `Derangements` · `ColoredPermutations` ·
-`AlternatingPermutations` · `Permutations132Avoiding` · `Permutations321Avoiding` · `PermutationsAvoiding123` ·
-`PermutationsAvoiding213` · `PermutationsAvoiding231` · `PermutationsAvoiding312` · `StirlingPermutations`
+**Permutations & permutation classes** (15) ✓ — [`SymmetricGroup`](/reference/symmetric-group) ·
+[`KPermutations`](/reference/k-permutations) · [`SignedPermutations`](/reference/signed-permutations) ·
+[`CyclicPermutations`](/reference/cyclic-permutations) · [`Involutions`](/reference/involutions) ·
+[`Derangements`](/reference/derangements) · [`ColoredPermutations`](/reference/colored-permutations) ·
+[`AlternatingPermutations`](/reference/alternating-permutations) ·
+[`Permutations132Avoiding`](/reference/permutations-132-avoiding) ·
+[`Permutations321Avoiding`](/reference/permutations-321-avoiding) ·
+[`PermutationsAvoiding123`](/reference/permutations-avoiding-123) ·
+[`PermutationsAvoiding213`](/reference/permutations-avoiding-213) ·
+[`PermutationsAvoiding231`](/reference/permutations-avoiding-231) ·
+[`PermutationsAvoiding312`](/reference/permutations-avoiding-312) ·
+[`StirlingPermutations`](/reference/stirling-permutations)
 
 **Compositions** (14) — `IntegerCompositions` · `CompositionsIntoKParts` · `WeakCompositions` ·
 `CarlitzCompositions` · `CompositionsBoundedParts` · `CompositionsIntoDistinctParts` · `CompositionsIntoOddParts` ·
@@ -153,7 +173,8 @@ This first tranche covers the primitives, list operations, and four representati
 sequences the notebook surfaces most. The remaining 90 collection heads are mechanically similar within a
 family — each batch below is one family, doable by a lesser model against the same template once it exists:
 
-1. **Permutations family** (14 remaining) — `KPermutations` through `StirlingPermutations`.
+1. ~~**Permutations family** (14 remaining) — `KPermutations` through `StirlingPermutations`.~~ **✓ done** —
+   migrated into the generated dataset (`nodes.ts`), examples computed from the kernels.
 2. **Compositions family** (14) — plain + Carlitz/colored/pattern-restricted compositions.
 3. **Partitions & set partitions family** (16) — integer, set, non-crossing/nesting variants.
 4. **Subsets/multisets/tuples/functions family** (9).
