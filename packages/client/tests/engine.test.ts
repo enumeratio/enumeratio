@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
 import { coreBundleHash } from '@enumeratio/data/node'
 import {
-  cancelDb, ceEngine, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, provideCatalog, makeDb, makeWorkerDb,
+  cancelDb, ceEngine, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, notatioEngine, provideCatalog, makeDb, makeWorkerDb,
   parseCalc, lowerScalar, pgEngine, planRows, provideDb, provideEngine, registry, Registry, resetRegistry, routerEngine, runSql,
   setQueryTimeout, standardEngine, textFromSelect, tsEngine, type Expr, type RowQuery, type SelectExpr,
 } from '../src/index.ts'
@@ -370,7 +370,15 @@ describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () =
     throw new Error('no rows')
   }
 
-  it('claims a curated function CE_OPERATORS maps and an int/numeric op — declines a handle and a FROM', () => {
+  it('notatioEngine: one engine dispatches scalar (factorial → ts) and enumeration (|permutations(4)| → ce-enum)', async () => {
+    const ne = notatioEngine(reg)
+    expect(await value(ne, { select: [call('factorial', lit(5))] })).toBe('120')
+    const card: Expr = { select: [{ kind: 'apply', fn: fnRef('cardinality'), args: [{ kind: 'handle', handle: { coll: 'permutations', named: {}, positional: [4] } }] }] }
+    expect(await value(ne, card)).toBe('24')
+    await ne.close()
+  })
+
+  it('claims a curated function KERNEL_OPS maps and an int/numeric op — declines a handle and a FROM', () => {
     expect(ce.can({ select: [call('factorial', lit(25))] })).toBe(true)
     expect(ce.can({ select: [op('add', 'numeric', lit(3), lit(4))] })).toBe(true)
 

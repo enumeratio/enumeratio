@@ -2,19 +2,19 @@
 // packages/math/selfcert-math.mts (sections, ✓/✗ lines, counts, exit 1 on mismatch), applied one layer up: not
 // "does an engine agree with pg", but "does OUR WHOLE PIPELINE (latex -> makeParser -> bind -> lower -> the
 // client's standard router) agree with an independent oracle" — the full @cortex-js/compute-engine kernel
-// (src/ce/oracle.ts), over a corpus of pure scalar LaTeX (oracle-corpus.ts).
+// (src/oracle.ts), over a corpus of pure scalar LaTeX (oracle-corpus.ts).
 //
 // pg is still the ultimate oracle for the ENGINE layer (selfcert-engine.mts already owns that differential); this
 // file's oracle is compute-engine itself, checking the layer selfcert-engine.mts cannot reach: parsing (does our
 // LaTeX grammar mean what CE's does), binding/typing (did we route the parsed tree through the right op/function),
 // and lowering (did that typed tree reach the engine seam as the IR that actually computes it).
 //
-//   node --import tsx selfcert-expressions.mts
+//   node --import tsx selfcert-notatio.mts
 import {
   bind, lower, makeParser,
   type Bound, type Catalog, type CollectionInfo, type FunctionInfo, type MapInfo, type Scope, type StatInfo, type TypeOpInfo,
 } from './src/index.ts'
-import { makeOracle, type OracleValue } from './src/ce/oracle.ts'
+import { makeOracle, type OracleValue } from './src/oracle.ts'
 import { CORPUS } from './oracle-corpus.ts'
 import {
   close, evaluate, makeDb, provideCatalog, provideDb, provideEngine, registry, resetRegistry, runSql, standardEngine, type Registry,

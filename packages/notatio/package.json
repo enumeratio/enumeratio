@@ -1,14 +1,14 @@
 {
-  "name": "@enumeratio/expressions",
+  "name": "@enumeratio/notatio",
   "version": "0.1.0",
-  "description": "LaTeX → MathJSON → typed, catalog-bound expressions → @enumeratio/client IR. The expression layer behind the math-input notebook: compute-engine's LaTeX parser and MathJSON AST, our binder/typer over the catalog (collections as domains, elements as a type), lowering to the engine seam.",
+  "description": "Notatio — the notebook's expression language. LaTeX → MathJSON → typed, catalog-bound AST → @enumeratio/client IR: compute-engine's LaTeX parser and MathJSON, our own binder/typer over the catalog (collections as domains, elements as a type), lowering to the engine seam. Derived from compute-engine but its own language.",
   "type": "module",
   "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/enumeratio/enumeratio.git",
-    "directory": "packages/expressions"
+    "directory": "packages/notatio"
   },
   "sideEffects": false,
   "types": "./src/index.ts",
@@ -26,7 +26,7 @@
   "scripts": {
     "typecheck": "tsgo --noEmit",
     "test": "vitest run",
-    "selfcert": "node --import tsx selfcert-expressions.mts"
+    "selfcert": "node --import tsx selfcert-notatio.mts"
   },
   "dependencies": {
     "@cortex-js/compute-engine": "0.125.0",

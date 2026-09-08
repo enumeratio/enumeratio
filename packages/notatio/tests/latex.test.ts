@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser, reformatIdentifiers, identifierDisplay, type IdentifierDisplay } from '../src/ce/latex.js'
+import { makeParser, reformatIdentifiers, identifierDisplay, type IdentifierDisplay } from '../src/latex.js'
 import { toCalcText, toLatex, toMathJsonString } from '../src/format.js'
-import { freeSymbols, spanAt } from '../src/ast.js'
+import { spanAt } from '../src/ast.js'
 import type { Expression } from '../src/ast.js'
+import { freeSymbols, toExpression } from '../src/node.js'
 
 const parser = makeParser({
   collections: ['triangular_numbers'],
@@ -11,16 +12,17 @@ const parser = makeParser({
 })
 
 /** The MathJSON of the top-level payload — `body` for `expr`/`define`, `["Element", name, domain]` for
- *  `declare` — as stable JSON, sidestepping the boxed-leaf span carriers entirely (see ce/latex.ts). */
+ *  `declare` — as stable JSON, sidestepping the boxed-leaf span carriers entirely (see latex.ts). */
 function shape(latex: string): { kind: string; json: string } {
   const parsed = parser.parse(latex)
   const { stmt } = parsed
-  if (stmt.k === 'declare') return { kind: stmt.k, json: toMathJsonString(['Element', stmt.name, stmt.domain] as Expression) }
+  if (stmt.k === 'declare') return { kind: stmt.k, json: toMathJsonString(['Element', stmt.name, toExpression(stmt.domain)] as Expression) }
   if (stmt.k === 'define') {
-    const withParams: Expression = stmt.params ? [stmt.name, stmt.params as unknown as Expression, stmt.body] : [stmt.name, stmt.body]
+    const body = toExpression(stmt.body)
+    const withParams: Expression = stmt.params ? [stmt.name, stmt.params as unknown as Expression, body] : [stmt.name, body]
     return { kind: stmt.k, json: toMathJsonString(withParams) }
   }
-  return { kind: stmt.k, json: toMathJsonString(stmt.body) }
+  return { kind: stmt.k, json: toMathJsonString(toExpression(stmt.body)) }
 }
 
 describe('parse: MathJSON shape + statement kind', () => {
@@ -72,7 +74,7 @@ describe('plain MathJSON (no boxing)', () => {
   it('leaves are ordinary primitives — JSON.stringify has no {} leaf wrappers, typeof a symbol is string', () => {
     const parsed = parser.parse('x + \\binom{6}{2}')
     if (parsed.stmt.k !== 'expr') throw new Error('expected expr')
-    const body = parsed.stmt.body as unknown as [string, Expression, Expression]
+    const body = toExpression(parsed.stmt.body) as unknown as [string, Expression, Expression]
     const [, x, binom] = body
     expect(typeof x).toBe('string')
     expect(typeof (binom as unknown as [string, number, number])[1]).toBe('number')
@@ -103,7 +105,7 @@ describe('round-trip', () => {
     const input = 'x \\in \\operatorname{TriangularNumbers}'
     const parsed = parser.parse(input)
     if (parsed.stmt.k !== 'declare') throw new Error('expected declare')
-    const out = toLatex(['Element', parsed.stmt.name, parsed.stmt.domain] as Expression, parser)
+    const out = toLatex(['Element', parsed.stmt.name, toExpression(parsed.stmt.domain)] as Expression, parser)
     expect(out.replace(/\s+/g, '')).toBe(input.replace(/\s+/g, ''))
   })
 
@@ -122,8 +124,8 @@ describe('reformatIdentifiers (display reformat)', () => {
   const npShape = (latex: string) => {
     const p = npParser.parse(latex)
     return p.stmt.k === 'declare'
-      ? toMathJsonString(['Element', p.stmt.name, p.stmt.domain] as Expression)
-      : p.stmt.k === 'expr' ? toMathJsonString(p.stmt.body) : p.stmt.k
+      ? toMathJsonString(['Element', p.stmt.name, toExpression(p.stmt.domain)] as Expression)
+      : p.stmt.k === 'expr' ? toMathJsonString(toExpression(p.stmt.body)) : p.stmt.k
   }
   const classify = (run: string): IdentifierDisplay | null =>
     run === 'next' ? identifierDisplay('next', 'function', notation)

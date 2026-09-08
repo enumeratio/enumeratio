@@ -1,6 +1,6 @@
 // engine-util — the sliver of ts-engine's can()/basket logic every OTHER registry-driven engine needs too
 // (ce-engine today; a future wasm engine tomorrow). Extracted here rather than re-derived per engine, so widening
-// the roster of non-pg engines is additive data (a grant row, a CE_OPERATORS entry) plus one new file, never a
+// the roster of non-pg engines is additive data (a grant row, a KERNEL_OPS entry) plus one new file, never a
 // second hand-copy of "which column-group basket does this tree fall in".
 import { irToSpec, type SelectExpr } from './ir'
 import type { Registry } from './registry'

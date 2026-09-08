@@ -2,9 +2,10 @@
 // `SelectExpr` tree. Every type decision was already made and validated by bind.ts; this file makes no new type
 // judgements of its own, only PURE recomputations of what bind.ts already proved valid (see opTypeForLower) so it
 // never needs a Catalog — same reasoning as the header note in types.ts.
-import { args, head, isNumber, isSymbol, numberValue, symbolName, type Expression, type NodePath } from './ast.js'
+import { type NodePath } from './ast.js'
+import { args, head, isNumber, isSymbol, isConst, numberValue, symbolName, type Node } from './node.js'
 import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, rangeValues, summationRange, type Bound } from './bind.js'
-import { CE_CONSTANTS, OPERATORS } from './names.js'
+import { OPERATORS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
   type Scope, type Type, type ValueRef,
@@ -46,17 +47,18 @@ export function lower(bound: Bound, scope: Scope): LowerResult {
  *  arguments, `locate`'s search value, a bare value-producing statement. The two positions that need the RAW
  *  located element instead (`next`/`prev`/`rank`'s argument, and a handle used as itself) call `lowerExpr`
  *  directly — see below. */
-function lowerArg(e: Expression, path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerArg(e: Node, path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const t = types.get(path)
   if (!t) throw new Error(`lower: no type recorded at ${path}`)
   const v = lowerExpr(e, path, scope, types)
   return t.k === 'elem' ? { kind: 'cast', expr: v, to: t.carrier } : v
 }
 
-function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerExpr(e: Node, path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   if (isSymbol(e)) return lowerSymbol(symbolName(e), path, scope, types)
+  if (isConst(e)) return { kind: 'const', name: e.name }   // Pi/GoldenRatio/CatalanConstant — a symbolic constant
   if (isNumber(e)) { const n = numberValue(e); return Number.isInteger(n) ? { kind: 'lit', value: n } : { kind: 'lit', value: n, type: 'numeric' } }
-  if (!Array.isArray(e)) throw new Error('lower: unsupported literal node (a raw num/str wrapper reached lowering)')
+  if (e.kind !== 'apply') throw new Error('lower: unsupported leaf node')
 
   const h = head(e)!
   const a = args(e)
@@ -75,7 +77,7 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
     if ('op' in opBinding) return lowerOp(opBinding.op, a, path, scope, types)
     if ('fn' in opBinding) return lowerCall(opBinding.fn, a, path, scope, types)
     // a CE-native op → an apply on its CE head; ce-engine evaluates it (numeric approximation for now).
-    if ('ce' in opBinding) return { kind: 'apply', fn: fnRef(opBinding.ce), args: a.map((arg, i) => lowerArg(arg, argPath(path, i), scope, types)) }
+    if ('kernel' in opBinding) return { kind: 'apply', fn: fnRef(opBinding.kernel), args: a.map((arg, i) => lowerArg(arg, argPath(path, i), scope, types)) }
     if (opBinding.special === 'contains') return lowerContains(a, path, scope, types)
     if (opBinding.special === 'element_at') return lowerBaseIndexed('element_at', a, path, scope, types)
     return lowerBaseIndexed('cardinality', a.slice(0, 1), path, scope, types)   // 'cardinality' — Count takes one arg
@@ -188,7 +190,6 @@ function lowerSymbol(name: string, path: NodePath, scope: Scope, types: Map<Node
   if (t.k === 'unknown') throw new Error(`lower: "${name}" could not be typed`)
   const b = scope.get(name)
   if (b && b.k === 'var' && b.value !== undefined) return valueRefToSelect(b.value)
-  if (CE_CONSTANTS.has(name)) return { kind: 'const', name }   // Pi/GoldenRatio/CatalanConstant — a symbolic constant
   throw new Error(`lower: "${name}" has no value — its definition did not evaluate`)
 }
 
@@ -215,7 +216,7 @@ function opTypeForLower(op: string, argTypes: Type[]): string {
   return strs.every(isNumericKind) ? numericResultPg(op, strs)! : strs[0]
 }
 
-function lowerOp(op: string, argExprs: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerOp(op: string, argExprs: Node[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const lowered = argExprs.map((ae, i) => lowerArg(ae, argPath(path, i), scope, types))
   const argTypes = argExprs.map((_, i) => types.get(argPath(path, i))!)
   const type = opTypeForLower(op, argTypes)
@@ -226,13 +227,13 @@ function lowerOp(op: string, argExprs: Expression[], path: NodePath, scope: Scop
 }
 
 /** A curated `base_function` id reached via an OPERATORS `{fn}` entry (`Factorial` → `factorial`, …). */
-function lowerCall(fnId: string, argExprs: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerCall(fnId: string, argExprs: Node[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   return { kind: 'apply', fn: fnRef(fnId), args: argExprs.map((ae, i) => lowerArg(ae, argPath(path, i), scope, types)) }
 }
 
 /** `x \in C` → `contains(handle(C), value)` — the domain must have typed to `handle` (bind.ts already checked
  *  this; a mismatch here means bind() reported an error and this tree should never have reached lowering). */
-function lowerContains(a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerContains(a: Node[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const domainType = types.get(argPath(path, 1))
   if (domainType?.k !== 'handle') throw new Error("lower: Element's right-hand side did not type as a collection")
   const handle: SelectExpr = { kind: 'handle', handle: domainType.handle }
@@ -245,7 +246,7 @@ function lowerContains(a: Expression[], path: NodePath, scope: Scope, types: Map
  *  `At` over a COLLECTION handle (`Coll(n)[i]`) is element-at-rank, which the engine exposes as `unrank`, not the
  *  fiber-level `element_at`. `At`/`[i]` is 1-based (the human-facing convention, matching `Rank`), so the rank
  *  passed to the 0-based `unrank` is `i - 1`. */
-function lowerBaseIndexed(fnId: string, a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerBaseIndexed(fnId: string, a: Node[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const baseType = types.get(argPath(path, 0))
   const base = baseType?.k === 'handle' ? { kind: 'handle' as const, handle: baseType.handle } : lowerExpr(a[0], argPath(path, 0), scope, types)
   const rest = a.slice(1).map((ae, i) => lowerArg(ae, argPath(path, i + 1), scope, types))
@@ -261,7 +262,7 @@ function lowerBaseIndexed(fnId: string, a: Expression[], path: NodePath, scope: 
 /** `f(3)` where `f` is a user-defined function: rebuild the IDENTICAL substituted tree + synthetic path prefix
  *  bind.ts's typeUserCall built (betaReduce is pure — same inputs, same output), so `types` already has every
  *  entry this needs. */
-function lowerUserCall(name: string, argExprs: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerUserCall(name: string, argExprs: Node[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const binding = scope.get(name)
   if (binding?.k !== 'fn') throw new Error(`lower: "${name}" is not a function`)
   const { expr: substituted, prefix } = betaReduce(binding.params, binding.body, argExprs, path)
@@ -272,7 +273,7 @@ function lowerUserCall(name: string, argExprs: Expression[], path: NodePath, sco
  *  particular node is a parameterized COLLECTION CONSTRUCTION (`type.k === 'handle'`) or an ordinary function/
  *  stat/map application — reusing that recorded Type instead of re-deriving it (which would need the Catalog
  *  this file doesn't have) is exactly why `types` carries an entry for every node bind() visited, not just leaves. */
-function lowerGenericApply(h: string, a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
+function lowerGenericApply(h: string, a: Node[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const nodeType = types.get(path)
   // bind.ts's typeGenericApply already built (and validated) this construction's HandleExpr — reuse it rather
   // than re-deriving positional/named args from `a` here, so the two files can never disagree on the handle a

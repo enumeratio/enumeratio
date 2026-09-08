@@ -3,16 +3,16 @@
 // hover/autocomplete pass reads to answer "what type is this subexpression".
 //
 // NodePath alignment: every path this file mints (via `argPath`/`rootPrefix` from types.ts) is a path into the
-// ORIGINAL tree the parser produced — the same one `parsed.spans` is keyed by (see ast.ts, ce/latex.ts) — so a
+// ORIGINAL tree the parser produced — the same one `parsed.spans` is keyed by (see ast.ts, latex.ts) — so a
 // TypeError_'s `path` can always be resolved back to a source span with `spanAt(parsed.spans, path)`. The one
 // exception is a beta-reduced function body (see `betaReduce` below): that's a FRESH substituted tree with no
 // counterpart in the original source, so its paths use a synthetic, non-colliding prefix and are not span-
 // resolvable — an error inside one is reported without a span, which is the best this shape can do.
+import { spanAt, type NodePath, type Parsed, type Stmt } from './ast.js'
 import {
-  args, head, isSymbol, numberValue, isNumber, symbolName,
-  spanAt, type Expression, type NodePath, type Parsed, type Stmt,
-} from './ast.js'
-import { OPERATORS, BUILTIN_SYMBOLS, CE_CONSTANTS } from './names.js'
+  args, head, isSymbol, isConst, numberValue, isNumber, symbolName, mapNode, type Node,
+} from './node.js'
+import { OPERATORS, BUILTIN_SYMBOLS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, UNKNOWN, argPath, effectivePg, elemType, fnType, handleType,
   isNumericKind, numericResultPg, rootPrefix, scalarType,
@@ -20,7 +20,7 @@ import {
 } from './types.js'
 import type { HandleExpr, ParamValue } from '@enumeratio/client'
 
-export type TypedExpr = { expr: Expression; types: Map<NodePath, Type> }
+export type TypedExpr = { expr: Node; types: Map<NodePath, Type> }
 
 export type Bound = {
   stmt: Stmt
@@ -34,7 +34,7 @@ export type Bound = {
  *  `prev` need an `elem(C)` to return another `elem(C)`; `rank` needs one to return its position. Not in
  *  names.ts's OPERATORS because that table is head-name-only; these three are recognized by literal id whenever
  *  they appear as an ordinary call head (the parser always emits them as `[id, arg]`, never `InvisibleOperator`,
- *  once `id` is registered in the parser's `functions` catalog — see ce/latex.ts's `catalogDictionary`). */
+ *  once `id` is registered in the parser's `functions` catalog — see latex.ts's `catalogDictionary`). */
 export const NEXT_PREV_RANK = new Set(['next', 'prev', 'rank'])
 
 /** Handle-primitives that yield an ELEMENT of the collection their first argument denotes — `random_element(C)`
@@ -63,23 +63,23 @@ export function gcdLcmFn(head: string): 'gcd' | 'lcm' | null {
 }
 
 /** The integer range a big-∑'s `Tuple(var, lo, hi)` iterates, as `{varName, values}` (lo..hi inclusive, each a
- *  number Expression), or null if it isn't a literal integer range. Shared by bind + lower so the two unroll the
+ *  number Node), or null if it isn't a literal integer range. Shared by bind + lower so the two unroll the
  *  SAME way (mirrors `comprehensionDomain`). */
-export function summationRange(tuple: Expression): { varName: string; values: Expression[] } | null {
+export function summationRange(tuple: Node): { varName: string; values: Node[] } | null {
   if (head(tuple) !== 'Tuple') return null
   const [v, lo, hi] = args(tuple)
   if (!isSymbol(v) || !isNumber(lo) || !isNumber(hi)) return null
   const a = numberValue(lo), b = numberValue(hi)
   if (!Number.isInteger(a) || !Number.isInteger(b) || b - a > 100000) return null // guard a runaway range
-  const values: Expression[] = []
-  for (let i = a; i <= b; i++) values.push(i as unknown as Expression)
+  const values: Node[] = []
+  for (let i = a; i <= b; i++) values.push({ kind: 'num', value: i })
   return { varName: symbolName(v), values }
 }
 
 /** Expand a CE `["Range", lo, hi, step?]`'s argument list to the integers it denotes (inclusive), or null if the
  *  bounds aren't literal numbers. Shared by lower's Range case (and the same shape `comprehensionDomain` uses for a
  *  Range domain). */
-export function rangeValues(rangeArgs: Expression[]): number[] | null {
+export function rangeValues(rangeArgs: Node[]): number[] | null {
   const [lo, hi, step] = rangeArgs.map((x) => (isNumber(x) ? numberValue(x) : NaN))
   const s = Number.isFinite(step) ? step : 1
   if (!Number.isFinite(lo) || !Number.isFinite(hi) || s === 0) return null
@@ -91,7 +91,7 @@ export function rangeValues(rangeArgs: Expression[]): number[] | null {
 /** The values a `for` comprehension iterates, when they can be enumerated at bind/lower time: a literal `List`'s
  *  items, or a `Range[lo, hi, step?]` expanded to numbers. Otherwise null (a non-literal domain isn't unrollable
  *  in this pass). Shared by bind + lower so both unroll to the identical element set. */
-export function comprehensionDomain(elem: Expression): Expression[] | null {
+export function comprehensionDomain(elem: Node): Node[] | null {
   const domain = args(elem)[1]
   if (!domain) return null
   if (head(domain) === 'List') return args(domain)
@@ -99,8 +99,8 @@ export function comprehensionDomain(elem: Expression): Expression[] | null {
     const [lo, hi, step] = args(domain).map((x) => (isNumber(x) ? numberValue(x) : NaN))
     const s = Number.isFinite(step) ? step : 1
     if (!Number.isFinite(lo) || !Number.isFinite(hi) || s === 0) return null
-    const out: Expression[] = []
-    for (let v = lo; s > 0 ? v <= hi : v >= hi; v += s) out.push(v)
+    const out: Node[] = []
+    for (let v = lo; s > 0 ? v <= hi : v >= hi; v += s) out.push({ kind: 'num', value: v })
     return out
   }
   return null
@@ -114,13 +114,12 @@ export function comprehensionDomain(elem: Expression): Expression[] | null {
  *  Exported so lower.ts can reproduce the IDENTICAL substituted tree + prefix and hit the same `types` map
  *  entries bind() already computed for it — the two must never diverge on this. */
 export function betaReduce(
-  params: string[], body: Expression, argExprs: Expression[], callPath: NodePath,
-): { expr: Expression; prefix: NodePath } {
+  params: string[], body: Node, argExprs: Node[], callPath: NodePath,
+): { expr: Node; prefix: NodePath } {
   const paramMap = new Map(params.map((p, i) => [p, argExprs[i]]))
-  const substitute = (e: Expression): Expression => {
+  const substitute = (e: Node): Node => {
     if (isSymbol(e)) { const r = paramMap.get(symbolName(e)); return r !== undefined ? r : e }
-    if (!Array.isArray(e)) return e
-    return [e[0], ...(e.slice(1) as Expression[]).map(substitute)] as Expression
+    return mapNode(e, substitute)   // apply → rebuilt with substituted args; num/const pass through
   }
   return { expr: substitute(body), prefix: `${callPath}::body` }
 }
@@ -196,16 +195,17 @@ type Ctx = {
   deps: Set<string>
 }
 
-function typeNode(e: Expression, path: NodePath, ctx: Ctx): Type {
+function typeNode(e: Node, path: NodePath, ctx: Ctx): Type {
   const t = compute(e, path, ctx)
   ctx.types.set(path, t)
   return t
 }
 
-function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
+function compute(e: Node, path: NodePath, ctx: Ctx): Type {
   if (isSymbol(e)) return typeSymbol(symbolName(e), path, ctx)
+  if (isConst(e)) return scalarType('numeric')   // Pi/GoldenRatio/CatalanConstant — CE boxes + evaluates it
   if (isNumber(e)) return litType(numberValue(e))
-  if (!Array.isArray(e)) return UNKNOWN   // an opaque {num:...}/{str:...} leaf the converter passed through raw
+  if (e.kind !== 'apply') return UNKNOWN
 
   const h = head(e)!
   const a = args(e)
@@ -220,7 +220,7 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     if ('op' in opBinding) return typeOp(opBinding.op, a, path, ctx)
     if ('fn' in opBinding) return typeApply(opBinding.fn, a, path, ctx)
     // a CE-native numeric op (Max/Sqrt/Zeta/…) — type its args, result is numeric; ce-engine evaluates it.
-    if ('ce' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('numeric') }
+    if ('kernel' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('numeric') }
     // special
     if (opBinding.special === 'contains') return typeContains(a, path, ctx)
     if (opBinding.special === 'element_at') return typeElementAt(a, path, ctx)
@@ -234,7 +234,7 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     const argExprs = head(inner) === 'Sequence' ? args(inner) : [inner]
     if (isUserFnHead(fname, ctx.scope)) return typeUserCall(fname, argExprs, path, ctx)
     // `\operatorname{permutations}(4)` — a collection registered as a bare `kind:'symbol'` dictionary entry (see
-    // ce/latex.ts's catalogDictionary) parses the SAME shape a user-fn call does (InvisibleOperator + Delimiter,
+    // latex.ts's catalogDictionary) parses the SAME shape a user-fn call does (InvisibleOperator + Delimiter,
     // never a direct `[coll, ...args]` node), so a parameterized-collection CONSTRUCTION has to be recognized
     // here too, not only in typeGenericApply's direct-call branch. Scope always wins first (a shadowing var
     // named the same as a collection stays multiplication, matching typeSymbol's own scope-before-catalog order).
@@ -357,7 +357,6 @@ function typeSymbol(name: string, path: NodePath, ctx: Ctx): Type {
   }
   const coll = ctx.catalog.collection(name)
   if (coll) return handleType(name)
-  if (CE_CONSTANTS.has(name)) return scalarType('numeric')   // Pi/GoldenRatio/CatalanConstant → numeric (ce-engine boxes it)
   const builtin = BUILTIN_SYMBOLS[name]
   if (builtin) {
     if (builtin.k === 'unsupported') { ctx.errors(path, builtin.reason); return UNKNOWN }
@@ -381,7 +380,7 @@ function bindingType(b: Binding): Type {
 /** Resolve one `base_operation`/comparison/lattice op's operand types → its result. Numeric-kind operands always
  *  use the tower (never need the catalog); anything else must be the SAME registered type on both/all operands,
  *  present in `catalog.typeOps` for this op — an algebra op never coerces between two different named types. */
-function typeOp(op: string, argExprs: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeOp(op: string, argExprs: Node[], path: NodePath, ctx: Ctx): Type {
   const argTypes = argExprs.map((_, i) => typeNode(argExprs[i], argPath(path, i), ctx))
   const pgs = argTypes.map(effectivePg)
   if (pgs.some((p) => p === undefined)) {
@@ -422,20 +421,20 @@ function typeOp(op: string, argExprs: Expression[], path: NodePath, ctx: Ctx): T
 
 /** `Element` reached as an EXPRESSION (not a top-level declare — see ast.ts's Stmt doc): `3 \in triangular_numbers`
  *  is boolean membership, not a binding. */
-function typeContains(a: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeContains(a: Node[], path: NodePath, ctx: Ctx): Type {
   typeNode(a[0], argPath(path, 0), ctx)
   const domain = a[1] !== undefined ? typeNode(a[1], argPath(path, 1), ctx) : UNKNOWN
   if (domain.k !== 'handle' && domain.k !== 'unknown') ctx.errors(path, `Element's right-hand side must be a collection, not ${domain.k}`)
   return scalarType('boolean')
 }
 
-function typeElementAt(a: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeElementAt(a: Node[], path: NodePath, ctx: Ctx): Type {
   const base = typeNode(a[0], argPath(path, 0), ctx)
   if (a[1] !== undefined) typeNode(a[1], argPath(path, 1), ctx)
   return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : scalarType('numeric')
 }
 
-function typeCardinality(a: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeCardinality(a: Node[], path: NodePath, ctx: Ctx): Type {
   if (a[0] !== undefined) typeNode(a[0], argPath(path, 0), ctx)
   return scalarType('natural_number')
 }
@@ -449,7 +448,7 @@ function elemTypeFor(coll: string, handle: HandleExpr, ctx: Ctx): Type {
  *  or reached directly with the id already — see typeGenericApply). Arity-checked when the catalog knows it;
  *  result is always `scalar('numeric')` — the Catalog interface carries no return-type metadata for a function
  *  (`FunctionInfo` is just `{id, arity?}`), so this is deliberately conservative rather than guessed per-id. */
-function typeApply(fnId: string, argExprs: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeApply(fnId: string, argExprs: Node[], path: NodePath, ctx: Ctx): Type {
   const argTypes = argExprs.map((_, i) => typeNode(argExprs[i], argPath(path, i), ctx))
   const info = ctx.catalog.fn(fnId)
   if (info?.arity !== undefined && info.arity !== argTypes.length) {
@@ -459,7 +458,7 @@ function typeApply(fnId: string, argExprs: Expression[], path: NodePath, ctx: Ct
 }
 
 /** `f(3)` where `f` is a user-defined function in scope: substitute-then-type (see betaReduce doc). */
-function typeUserCall(name: string, argExprs: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeUserCall(name: string, argExprs: Node[], path: NodePath, ctx: Ctx): Type {
   // args are typed at their OWN (real, span-resolvable) positions first, so a bad argument expression still gets
   // a precise error location even though the substituted body's errors below cannot.
   argExprs.forEach((ae, i) => typeNode(ae, argPath(path, i), ctx))
@@ -477,7 +476,7 @@ function typeUserCall(name: string, argExprs: Expression[], path: NodePath, ctx:
  *  as `InvisibleOperator` — see isUserFnHead's doc). In priority order: a stat/map of the single argument's
  *  collection (coerced to its carrier at lower time — see lower.ts), a curated function id, or a parameterized
  *  collection CONSTRUCTION used as a value (`prime_pairs(2)` inside a declare's domain, or anywhere else). */
-function typeGenericApply(h: string, a: Expression[], path: NodePath, ctx: Ctx): Type {
+function typeGenericApply(h: string, a: Node[], path: NodePath, ctx: Ctx): Type {
   const argTypes = a.map((_, i) => typeNode(a[i], argPath(path, i), ctx))
   if (argTypes.length === 1 && argTypes[0].k === 'elem') {
     const coll = argTypes[0].coll
@@ -510,12 +509,12 @@ function typeGenericApply(h: string, a: Expression[], path: NodePath, ctx: Ctx):
  *  would be `["Equal", sym, 4]`-style if the parser ever emits them for a call argument (none do today, so `named`
  *  is always `{}` in practice) — anything neither shape reports a bind-time error, same check lower.ts used to
  *  make at lower time (moved here since bind.ts is where every OTHER type error is already raised). */
-function buildConstructionHandle(coll: string, argExprs: Expression[], path: NodePath, ctx: Ctx): HandleExpr {
+function buildConstructionHandle(coll: string, argExprs: Node[], path: NodePath, ctx: Ctx): HandleExpr {
   const positional: ParamValue[] = []
   const named: Record<string, ParamValue> = {}
   for (const ae of argExprs) {
     if (isNumber(ae)) { positional.push(numberValue(ae)); continue }
-    if (Array.isArray(ae) && head(ae) === 'Equal' && isSymbol(args(ae)[0]) && isNumber(args(ae)[1])) {
+    if (head(ae) === 'Equal' && isSymbol(args(ae)[0]) && isNumber(args(ae)[1])) {
       named[symbolName(args(ae)[0])] = numberValue(args(ae)[1])
       continue
     }

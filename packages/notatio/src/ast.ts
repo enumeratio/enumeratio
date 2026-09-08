@@ -1,4 +1,4 @@
-// MathJSON is the wire format compute-engine's LaTeX parser produces (see `ce/latex.ts`, the only module that
+// MathJSON is the wire format compute-engine's LaTeX parser produces (see `latex.ts`, the only module that
 // touches compute-engine directly). Everything else in this package works over these plain types plus the small
 // `Stmt`/`Parsed` envelope below.
 export type {
@@ -11,6 +11,7 @@ export type {
   MathJsonDictionaryObject,
 } from '@cortex-js/compute-engine/math-json'
 import type { MathJsonExpression, MathJsonSymbol } from '@cortex-js/compute-engine/math-json'
+import type { Node } from './node.js'
 
 /** Alias for the MathJSON expression type — the name used throughout this package. */
 export type Expression = MathJsonExpression
@@ -29,9 +30,9 @@ export type ParseError = { span: Span; code: string; message: string }
  *    (e.g. buried inside a larger expression) — evaluated as a plain value.
  */
 export type Stmt =
-  | { k: 'declare'; name: MathJsonSymbol; domain: Expression }
-  | { k: 'define'; name: MathJsonSymbol; params?: string[]; body: Expression }
-  | { k: 'expr'; body: Expression }
+  | { k: 'declare'; name: MathJsonSymbol; domain: Node }
+  | { k: 'define'; name: MathJsonSymbol; params?: string[]; body: Node }
+  | { k: 'expr'; body: Node }
 
 /** A node's position in the tree, as a '.'-joined chain of child indices from the root (root itself is `''`).
  *  Each array element — including index 0, the head — gets the next segment: for `["Add", "x", 1]` the head

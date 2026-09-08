@@ -2,11 +2,11 @@
 
 Client-side only. A small **notebook**: a stack of
 [`<enumeratio-expression-line>`](/develop/packages/components/expression-line) rows sharing one symbol `Scope` and
-one `LineGraph` ([`@enumeratio/expressions`](https://github.com/enumeratio/enumeratio/tree/main/packages/expressions))
+one `LineGraph` ([`@enumeratio/notatio`](https://github.com/enumeratio/enumeratio/tree/main/packages/notatio))
 — declare a symbol into a collection, define it, reference it from a later line, drag lines around (evaluation order
 follows the dependency graph, not display order). Needs a Db via `provideDb()` (the docs set this up globally).
 
-Grammar-wise this is the same MathJSON pipeline `@enumeratio/expressions` builds: `parse → bind → lower → evaluate`
+Grammar-wise this is the same MathJSON pipeline `@enumeratio/notatio` builds: `parse → bind → lower → evaluate`
 per line, with `bind`/`lower` type-checking and IR-lowering a line against the Scope every OTHER line's
 already-evaluated result populates.
 
@@ -49,7 +49,7 @@ and `f: (n) ↦` for a user-defined function (unapplied — a `define` with para
 
 ## Line syntax
 
-A line is one of three shapes (see `@enumeratio/expressions`'s `ast.ts`/`bind.ts`):
+A line is one of three shapes (see `@enumeratio/notatio`'s `ast.ts`/`bind.ts`):
 
 - **declare** — `x \in \operatorname{triangular\_numbers}` — binds `x` as a located element of that collection; no
   value of its own.

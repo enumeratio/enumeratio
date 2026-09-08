@@ -13,14 +13,14 @@
 //   next(elem) / prev(elem)   → At(coll, rank±1 +1)
 //   random_element(handle)    → RandomElement(coll)
 //   cardinality(handle)       → Length(coll)
-//   bell(n) / binomial(n,k) / … + arithmetic ops → the scalar heads (CE_OPERATORS ∪ the counting sequences)
+//   bell(n) / binomial(n,k) / … + arithmetic ops → the scalar heads (KERNEL_OPS ∪ the counting sequences)
 //
 // COLL_HEADS is the one place the notebook's collection ids meet the library's Pascal heads. It maps BOTH
 // directions of the impedance: a CE head to itself (so a notebook already sourced from the library binds with no
 // alias), and the snake_case catalog ids that have a certified CE twin. A handle whose coll is NOT in the map is
 // declined (can() is false) — the router then falls through, and a pg-less notebook simply can't enumerate that
 // collection, which is the honest state of a partial port.
-import { ceInstance, CE_OPERATORS } from './ce-engine'
+import { ceInstance, KERNEL_OPS } from './ce-engine'
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import { handleColl, type Expr, type HandleExpr, type SelectExpr } from './ir'
 import { labelOfExpr } from './engine-util'
@@ -57,7 +57,7 @@ export const COLL_HEADS: Record<string, { head: string; arity: number }> = {
  *  sequences the library exposes as operators — so a PURE-CE notebook (pg gone) still computes `bell`/`catalan`
  *  exactly, off the library rather than pg. */
 const SCALAR_FN: Record<string, string> = {
-  ...CE_OPERATORS,
+  ...KERNEL_OPS,
   bell: 'BellB',
   catalan_number: 'CatalanNumber',
   fubini: 'Fubini',
@@ -108,7 +108,7 @@ function translate(ce: CE, e: SelectExpr): Trans {
     case 'cast':
       return translate(ce, e.expr) // the element already carries its value; the carrier cast is a no-op here
     case 'op':
-      return { ce: fn(CE_OPERATORS[e.op], e.args.map((a) => translate(ce, a).ce)) }
+      return { ce: fn(KERNEL_OPS[e.op], e.args.map((a) => translate(ce, a).ce)) }
     case 'apply': {
       const id = String(e.fn)
       if (id === 'unrank') {
@@ -175,7 +175,7 @@ function rejectTree(e: SelectExpr, seen: { coll: boolean }): string | undefined 
     case 'cast':
       return rejectTree(e.expr, seen)
     case 'op': {
-      if (!CE_OPERATORS[e.op]) return `ce-enum has no operator for "${e.op}"`
+      if (!KERNEL_OPS[e.op]) return `ce-enum has no operator for "${e.op}"`
       for (const a of e.args) { const bad = rejectTree(a, seen); if (bad) return bad }
       return undefined
     }

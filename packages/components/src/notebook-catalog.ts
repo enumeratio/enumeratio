@@ -1,4 +1,4 @@
-// Builds the @enumeratio/expressions `Catalog` (bind.ts's type-checking seam) + `CatalogNames` (the LaTeX parser's
+// Builds the @enumeratio/notatio `Catalog` (bind.ts's type-checking seam) + `CatalogNames` (the LaTeX parser's
 // dictionary) + a completion catalog, all from live @enumeratio/client reads — no raw SQL, no provideDb() call of
 // its own (the docs wire the Db globally; this module only ever reads through the client's async API surface).
 //
@@ -12,9 +12,9 @@ import { registry } from '@enumeratio/client'
 import {
   BUILTIN_SYMBOLS,
   type Binding, type Catalog, type CollectionInfo, type FunctionInfo, type MapInfo, type StatInfo, type TypeOpInfo,
-} from '@enumeratio/expressions'
-import type { CatalogNames } from '@enumeratio/expressions'
-import type { CompletionContext } from '@enumeratio/expressions'
+} from '@enumeratio/notatio'
+import type { CatalogNames } from '@enumeratio/notatio'
+import type { CompletionContext } from '@enumeratio/notatio'
 
 /** Generic engine primitives dispatched by head name (bind.ts's NEXT_PREV_RANK plus the handle-level ones) — not
  *  per-collection, so these are known up front rather than discovered lazily like stats/maps. */
@@ -146,12 +146,12 @@ async function build(): Promise<NotebookCatalog> {
   // completion. All confirmed to evaluate on CE 0.125 and to register without a duplicate-name warning. NOT here:
   // the trig/hyperbolic/inverse heads (LatexSyntax already parses `\operatorname{arcsin}(x)` as an application),
   // and Sign/Heaviside (their CE names collide with existing dictionary entries — registering dup-warns).
-  const CE_WORD_OPS = [
+  const KERNEL_WORD_OPS = [
     'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'Clamp',
     'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose',
   ] as const
   const functionIds = [
-    ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES, ...CE_WORD_OPS]),
+    ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES, ...KERNEL_WORD_OPS]),
   ]
 
   // Seeded math NOTATION (id -> display LaTeX). Where present it replaces the `\operatorname{<Pascal>}` spelling

@@ -1,9 +1,9 @@
 import type { Expression } from './ast.js'
 import { args, head, isNumber, isSymbol, numberValue, symbolName } from './ast.js'
-import type { ExpressionParser } from './ce/latex.js'
+import type { ExpressionParser } from './latex.js'
 
 /** Serialize `expr` back to LaTeX through the same dictionary it was parsed with, so catalog ids round-trip as
- *  `\operatorname{}` (see ce/latex.ts's `catalogDictionary`). */
+ *  `\operatorname{}` (see latex.ts's `catalogDictionary`). */
 export function toLatex(expr: Expression, parser: ExpressionParser): string {
   return parser.serialize(expr)
 }

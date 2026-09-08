@@ -1,10 +1,10 @@
 // Line dependency graph for a notebook where line ORDER (insertion/display order) does not matter — only the
 // symbol dependencies between lines do. Built over `ast.ts` (`Parsed`, `Stmt`, `freeSymbols`) and the
-// `ExpressionParser` from `ce/latex.ts`; does not touch compute-engine directly. Recomputes the whole graph on
+// `ExpressionParser` from `latex.ts`; does not touch compute-engine directly. Recomputes the whole graph on
 // every `set`/`remove` rather than incrementally — N (lines in a notebook) is tiny, so this stays simple and pure.
 import type { Parsed } from './ast.js'
-import { freeSymbols } from './ast.js'
-import type { ExpressionParser } from './ce/latex.js'
+import { freeSymbols } from './node.js'
+import type { ExpressionParser } from './latex.js'
 
 export type LineId = string
 

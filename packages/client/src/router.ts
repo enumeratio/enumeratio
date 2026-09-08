@@ -8,7 +8,7 @@
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import type { Expr } from './ir'
 import { ceEngine } from './ce-engine'
-import { ceEnumEngine } from './ce-enum-engine'
+import { notatioEngine } from './notatio-engine'
 import { pgEngine } from './pg-engine'
 import { registry } from './registry'
 import { InexactResult, tsEngine } from './ts-engine'
@@ -88,8 +88,5 @@ export async function standardEngine(dbFactory?: () => Db | Promise<Db>): Promis
  *  grammar/type seam the binder needs), so a Db provider must exist — but it is never the evaluator. A collection
  *  without a CE twin (see COLL_HEADS) simply can't be enumerated here: the honest edge of a partial port. */
 export async function notebookEngine(): Promise<Engine> {
-  const reg = await registry()
-  // exactRationals: the notebook has no pg to be bit-identical to, so int/int division yields an exact reduced
-  // rational ∈ ℚ (ts declines the non-integral quotient → ce prints the `p/q`) rather than a float. See #365.
-  return routerEngine([tsEngine(reg, { exactRationals: true }), ceEngine(reg, { exactRationals: true, numericFallback: true, symbolicLatex: true }), ceEnumEngine()])
+  return notatioEngine(await registry())   // the single, explicit-dispatch, SQL-free engine — see notatio-engine.ts
 }

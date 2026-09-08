@@ -1,9 +1,9 @@
 // ce-engine — @cortex-js/compute-engine's kernel behind the engine seam (#278 Stage B). The same capability-is-
 // DATA discipline as ts-engine (see its header): `can()` asks the registry three questions — grants, then a
-// structural walk that only checks CE_OPERATORS membership and argument kind — and EXACTNESS is verified at
+// structural walk that only checks KERNEL_OPS membership and argument kind — and EXACTNESS is verified at
 // evaluate() time, never at can() time. ce claims a FROM-less scalar tree whose every node is either a typed int/
-// numeric literal, a curated catalog function CE_OPERATORS maps to a CE library operator (factorial, binomial,
-// gcd, lcm), or an `op` node over an int/numeric type whose op id CE_OPERATORS also maps (the arithmetic/
+// numeric literal, a curated catalog function KERNEL_OPS maps to a CE library operator (factorial, binomial,
+// gcd, lcm), or an `op` node over an int/numeric type whose op id KERNEL_OPS also maps (the arithmetic/
 // comparison vocabulary ts-engine's native ops already cover — see below for why ce still earns its place next to
 // them).
 //
@@ -39,7 +39,7 @@ import { InexactResult } from './ts-engine'
  *  `fibonacci` is deliberately absent: the catalog curates no such base_function today, so there is nothing for
  *  this table to widen toward yet (CE itself does define `Fibonacci` — confirmed via the same probe — so this is
  *  a one-line addition whenever the catalog grows one). */
-export const CE_OPERATORS: Record<string, string> = {
+export const KERNEL_OPS: Record<string, string> = {
   // curated base_function ids — each verified to have a printable, arity-matching ce.function() built-in
   factorial: 'Factorial',
   binomial: 'Binomial',
@@ -68,7 +68,7 @@ export const CE_OPERATORS: Record<string, string> = {
  *  as a symbol (`ce.box`), never a call. */
 const CE_CONSTANTS = new Set(['Pi', 'GoldenRatio', 'CatalanConstant'])
 
-const CE_NATIVE = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
+const KERNEL_HEADS = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>
@@ -156,11 +156,11 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
       }
       case 'apply': {
         const fn = String(e.fn)
-        const name = CE_OPERATORS[fn]
+        const name = KERNEL_OPS[fn]
         if (!name) return `ce has no operator mapped for "${fn}"`
         // A CE-NATIVE op (Sqrt/Zeta/Max/…, names.ts `{ce}` bindings) has no curated base_function row — CE itself
         // is the implementation — so accept it directly, only recursing into its arguments.
-        if (CE_NATIVE.has(fn)) { for (const a of e.args) { const bad = rejectTree(a); if (bad) return bad } return undefined }
+        if (KERNEL_HEADS.has(fn)) { for (const a of e.args) { const bad = rejectTree(a); if (bad) return bad } return undefined }
         if (!reg.curated(fn)) return `"${fn}" is not a registered function`
         const arity = reg.impls(fn).some((i) => i.argTypes.length === e.args.length)
         if (!arity) return `no implementation of ${fn} takes ${e.args.length} argument${e.args.length === 1 ? '' : 's'}`
@@ -168,12 +168,12 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
         return undefined
       }
       case 'op': {
-        const name = CE_OPERATORS[e.op]
+        const name = KERNEL_OPS[e.op]
         if (!name) return `ce has no operator mapped for "${e.op}"`
         // A type that REGISTERS this op names its own implementation (cardinal_add, rational_add …) — that
         // impl is the semantics, not CE's native operator, so ce claims it only through a mapped function id.
         const row = reg.typeOperation(e.type, e.op)
-        if (row?.implFn && !CE_OPERATORS[row.implFn]) return `${e.type}.${e.op} is ${row.implFn}, which ce has no operator for`
+        if (row?.implFn && !KERNEL_OPS[row.implFn]) return `${e.type}.${e.op} is ${row.implFn}, which ce has no operator for`
         const k = reg.kindOfType(e.type)
         if (k !== 'int' && k !== 'numeric') return `ce only computes int/numeric ops, not ${e.type} (${k})`
         for (const a of e.args) { const bad = rejectTree(a); if (bad) return bad }
@@ -187,11 +187,11 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
   }
 
   /** SelectExpr → a CE boxed expression, recursively. Never called on a tree rejectTree has not already cleared —
-   *  every branch it can reach here has a CE_OPERATORS entry and canonical arguments. */
+   *  every branch it can reach here has a KERNEL_OPS entry and canonical arguments. */
   function toCE(ce: CEInstance, e: SelectExpr): CEExpr {
     if (e.kind === 'lit') return ce.number(e.value as number | bigint) as CEExpr
-    if (e.kind === 'apply') return ce.function(CE_OPERATORS[String(e.fn)], e.args.map((a) => toCE(ce, a))) as CEExpr
-    if (e.kind === 'op') return ce.function(CE_OPERATORS[e.op], e.args.map((a) => toCE(ce, a))) as CEExpr
+    if (e.kind === 'apply') return ce.function(KERNEL_OPS[String(e.fn)], e.args.map((a) => toCE(ce, a))) as CEExpr
+    if (e.kind === 'op') return ce.function(KERNEL_OPS[e.op], e.args.map((a) => toCE(ce, a))) as CEExpr
     if (e.kind === 'const') return ce.box(e.name) as CEExpr
     throw new Error(`ce-engine: cannot build a ${e.kind} node`)
   }

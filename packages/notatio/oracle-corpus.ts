@@ -1,4 +1,4 @@
-// The corpus for selfcert-expressions.mts's differential: pure SCALAR LaTeX only (integer/rational arithmetic,
+// The corpus for selfcert-notatio.mts's differential: pure SCALAR LaTeX only (integer/rational arithmetic,
 // comparisons, the curated identities compute-engine ships a builtin spelling for — !, \binom, \gcd, \lcm). No
 // symbols, no floats, no trig/sums/collections — those either have no oracle-side meaning here or aren't part of
 // our pipeline's scalar vocabulary yet (see names.ts's UNMAPPED_HEADS_NO_CURATED_ID for what's deliberately absent

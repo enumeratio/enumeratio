@@ -1,5 +1,5 @@
 // THE ONLY module in this package that imports the FULL @cortex-js/compute-engine kernel (as opposed to
-// ./latex.ts's latex-syntax-only import) — used exclusively as the ORACLE for selfcert-expressions.mts's
+// ./latex.ts's latex-syntax-only import) — used exclusively as the ORACLE for selfcert-notatio.mts's
 // differential, never on our own evaluation path. Findings this is built from: .scratch/ce-spike.md item 9
 // (exact bigint/rational arithmetic at a raised `ce.precision`) plus a follow-up probe (not written up in the
 // spike) into exactly what `BoxedExpression#toString()`/`numeratorDenominator` print for a big exact value —
