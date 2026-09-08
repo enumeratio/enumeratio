@@ -211,14 +211,53 @@ The LaTeX spelling you type is frequently *not* the MathJSON head produced. Conf
 | `>` (and `\gt`) | `Less` | **operands swapped**: `3>2` → `Less(2,3)` |
 | `\ge`/`\geq` | `LessEqual` | same swap |
 | `\exp(x)` | `Power(ExponentialE, x)` | no literal `Exp` head ever appears |
-| `\operatorname{shuffle}` (lowercase) | `RandomShuffle` | fuzzy/substring resolution — **not** the same target as `\operatorname{Shuffle}` (capitalized), which resolves to a distinct, separately-inert placeholder. Version/heuristic-dependent; not fully reverse-engineered here, just observed. |
+| `\operatorname{shuffle}` (lowercase) | `RandomShuffle` | an **explicit dictionary entry** (`{latexTrigger:"\operatorname{shuffle}", parse:"RandomShuffle"}` in CE's own bundle — *not* runtime fuzzy resolution, correcting an earlier guess). `\operatorname{Shuffle}` (capitalized) has **no** such entry, so it auto-declares a distinct inert placeholder — the two are unrelated, not a redirect pair. See [Word-name redirects](#word-name-redirects) for the full set. |
 
 Also present as pure syntax sugar (own dedicated LaTeX trigger, not reached via `\operatorname{}`): `\lfloor…\rfloor`
 → `Floor`, `\lceil…\rceil` → `Ceil`, `!`/`!!` → `Factorial`/`Factorial2`, `\binom{}{}`→ `Binomial`, `|x|` → `Abs`,
-`\frac{}{}` → `Divide`/`Rational`. The full 365-entry named-trigger dictionary also covers Greek letters and
-variant symbols, geometry (`Triangle`, `Polygon`, `Angle`, …), colors (`rgb`/`hsv`/`oklab`/…), physics constants,
-and calculus/linear-algebra notation (`\int`, `\det`, `\dim`, `\ker`, …) — out of scope for this reference beyond
-noting they exist.
+`\frac{}{}` → `Divide`/`Rational`. The full named-trigger dictionary (≈739 raw trigger rows in 0.125.0) also covers
+Greek letters and variant symbols, geometry (`Triangle`, `Polygon`, `Angle`, …), colors (`rgb`/`hsv`/`oklab`/…),
+physics constants, and calculus/linear-algebra notation (`\int`, `\det`, `\dim`, `\ker`, …) — out of scope for this
+reference beyond noting they exist.
+
+## Word-name redirects
+
+`\operatorname{Shuffle}`→`RandomShuffle` is not a one-off. Extracting every `\operatorname{word}` trigger whose
+target head differs from the word itself (CE's own bundle, 0.125.0) yields **25 lowercase word-name aliases** — a
+short verb/noun points at a differently-named canonical head. These are explicit dictionary entries, so they are
+stable within a version (unlike case-insensitive fuzz). The ones that intersect enumeratio's vocabulary:
+
+| You type | Canonical head | Note |
+|---|---|---|
+| `\operatorname{shuffle}` | `RandomShuffle` | the case study above |
+| `\operatorname{random}` | `Random` | |
+| `\operatorname{total}` | `Sum` | matches our own `total`→`Sum` binder alias; distinct from the dead capital-`Total` operator (footgun #5) |
+| `\operatorname{count}` | `Length` | |
+| `\operatorname{length}` | `Length` | |
+| `\operatorname{sort}` | `Sort` | |
+| `\operatorname{reverse}` | `Reverse` | |
+| `\operatorname{unique}` | `Unique` | |
+| `\operatorname{join}` | `Join` | |
+| `\operatorname{repeat}` | `Repeat` | |
+| `\operatorname{range}` | `Range` | |
+| `\operatorname{mod}` | `Mod` | |
+| `\operatorname{nCr}` | `Choose` | binomial coefficient |
+| `\operatorname{and}` / `\operatorname{or}` | `And` / `Or` | |
+
+Remaining entries are statistics heads (`cdf`→`CDF`, `pdf`→`PDF`, `corr`→`Correlation`, `cov`→`Covariance`,
+`var`→`Variance`, `histogram`→`Histogram`), plus symbol shorthands (`e`→`ExponentialE`, `i`→`ImaginaryUnit`,
+`True`/`False`).
+
+### Notating the random family
+
+The random operators have no bespoke LaTeX glyph — each is written `\operatorname{Name}(...)`, PascalCase, and
+parses straight to that head:
+
+| Written | Head | Notes |
+|---|---|---|
+| `\operatorname{RandomShuffle}([1,2,3])` | `RandomShuffle` | permutes a List/Tuple/String, **and any indexed collection view** (e.g. `RandomShuffle(SymmetricGroup(4))` shuffles all 24 elements through our CollectionHandlers). Throws `incompatible-type` on a `Set` (unordered). |
+| `\operatorname{WithRandomSeed}(42, expr)` | `WithRandomSeed` | CE's determinism wrapper — pins the RNG for `expr`. `WithRandomSeed(42, RandomShuffle([1,2,3,4,5]))` is reproducible. This is CE's native seeding seam (see RandomShuffle's own doc string). |
+| `\operatorname{Random}()` / `\operatorname{Random}(n)` | `Random` | uniform real in [0,1) / integer draw. |
 
 ## Footguns (parse-time surprises)
 
@@ -234,9 +273,11 @@ noting they exist.
 3. **`\operatorname{Name}(...)` for an entirely unknown `Name` auto-declares a permanently inert placeholder** —
    no error, ever; it echoes back symbolically forever. Confirmed for `Tuples` and `Subsets`. "It parsed without
    error" is not evidence a CE feature exists.
-4. **Mis-cased `\operatorname{}` names can be silently substituted for a different, unrelated operator** via
-   fuzzy/substring resolution: `\operatorname{shuffle}` → `RandomShuffle`. Don't rely on exact behavior here
-   across CE versions.
+4. **A lowercase `\operatorname{}` word can resolve to a differently-named canonical head** via an explicit
+   dictionary alias — e.g. `\operatorname{shuffle}` → `RandomShuffle`, `\operatorname{count}` → `Length`. These
+   are real bundle entries (stable within a version), *not* case-insensitive fuzz — but the aliased word and the
+   capitalized head are unrelated symbols, so `\operatorname{Shuffle}` (capital) does **not** reach `RandomShuffle`;
+   it auto-declares an inert placeholder. See [Word-name redirects](#word-name-redirects) for the full set.
 5. **`Total` is pre-registered (`lookupDefinition` true before any use) yet never reduces**, through either
    `evaluate()` or `N()`, in 0.125.0 — a dead operator. `Sum` covers both call shapes (indexed `\sum_{}^{}` and
    bare `Sum(list)`) and works; use it instead of `Total`.
