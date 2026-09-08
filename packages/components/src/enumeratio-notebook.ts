@@ -76,6 +76,16 @@ export class EnumeratioNotebook extends LitElement {
   /** Classifies a typed word for the field's display reformat (operator / entity / plain variable). Set on boot. */
   private classify: (run: string) => IdentifierDisplay | null = () => null
 
+  /** Notebook-level undo/redo: a linear history of serialized {value, seed} snapshots, one per settled change
+   *  (text-edit burst, add/remove/reorder, reshuffle, and — to come — a triggered action). MathLive keeps its own
+   *  per-field text undo; this is the STRUCTURAL history. `restoring` guards the recompute an undo triggers from
+   *  recording itself. */
+  private history: string[] = []
+  private histPos = -1
+  private restoring = false
+  @state() private canUndo = false
+  @state() private canRedo = false
+
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
     const out: Record<string, string> = {}
@@ -174,6 +184,69 @@ export class EnumeratioNotebook extends LitElement {
     await this.flushRecompute(true)
   }
 
+  // ── undo / redo ──────────────────────────────────────────────────────────────────────────────────────────────
+  /** Capture the current {value, seed} as a history entry, unless it duplicates the current top (so a no-op flush
+   *  or a redundant call adds nothing) or we're mid-restore. Truncates any redo tail. */
+  private record(): void {
+    if (this.restoring) return
+    const snap = JSON.stringify({ value: this.value, seed: this.seed })
+    if (this.histPos >= 0 && this.history[this.histPos] === snap) return
+    this.history = this.history.slice(0, this.histPos + 1)
+    this.history.push(snap)
+    if (this.history.length > 200) this.history.shift()
+    this.histPos = this.history.length - 1
+    this.canUndo = this.histPos > 0
+    this.canRedo = false
+  }
+
+  async undo(): Promise<void> {
+    if (this.histPos <= 0) return
+    this.histPos--
+    await this.applyState(this.history[this.histPos])
+  }
+
+  async redo(): Promise<void> {
+    if (this.histPos >= this.history.length - 1) return
+    this.histPos++
+    await this.applyState(this.history[this.histPos])
+  }
+
+  /** Rebuild the whole notebook from a serialized snapshot: lines, order, seed. Recompute from scratch (scope and
+   *  bindings are derived, not stored), guarded so the recompute doesn't record a new history entry. */
+  private async applyState(snap: string): Promise<void> {
+    if (!this.parser) return
+    const { value, seed } = JSON.parse(snap) as { value: string; seed: number }
+    const parsed = JSON.parse(value) as NotebookSeed
+    this.restoring = true
+    try {
+      for (const id of [...this.latexById.keys()]) this.graph.remove(id)
+      this.controllers.forEach((c) => c.abort())
+      this.controllers.clear()
+      this.latexById.clear()
+      this.scope = new Map()
+      this.declared.clear()
+      this.results = new Map()
+      const order: LineId[] = []
+      for (const l of parsed.lines ?? []) {
+        const id = l.id ?? `line-${++nextIdNum}`
+        this.latexById.set(id, l.latex)
+        order.push(id)
+        this.graph.set(id, l.latex, this.parser)
+      }
+      this.displayOrder = order
+      this.seed = seed
+      await reseedRandom(seed)
+      this.pendingChanged = new Set(order)
+      await this.flushRecompute(true)
+    } finally {
+      this.restoring = false
+    }
+    this.canUndo = this.histPos > 0
+    this.canRedo = this.histPos < this.history.length - 1
+    this.persist()
+    this.emitChange()
+  }
+
   private seedInitialLines(): void {
     let seed: NotebookSeed | null = null
     if (this.storageKey) {
@@ -238,6 +311,7 @@ export class EnumeratioNotebook extends LitElement {
     this.results = new Map(this.results)
     this.requestUpdate()
     this.emitResult()
+    this.record() // one history entry per settled change (no-op if nothing actually changed, or mid-restore)
   }
 
   /** The parsed AST (MathJSON, pretty JSON) per line, for the line's opt-in right-click inspector. Merged into
@@ -380,6 +454,7 @@ export class EnumeratioNotebook extends LitElement {
     this.displayOrder = order
     this.persist()
     this.emitChange()
+    this.record() // a pure reorder doesn't recompute, so record it here
   }
 
   updated(): void {
@@ -432,15 +507,27 @@ export class EnumeratioNotebook extends LitElement {
         )}
       </div>
       <div class="toolbar">
-        <button
-          class="reshuffle"
-          ?disabled=${!this.usesRandom}
-          @click=${() => void this.reshuffle()}
-          title="Reshuffle"
-          aria-label="Reshuffle"
-        >⤮</button>
+        <div class="tools-left">
+          <button class="tool" ?disabled=${!this.canUndo} @click=${() => void this.undo()}
+                  title="Undo" aria-label="Undo">↺</button>
+          <button class="tool" ?disabled=${!this.canRedo} @click=${() => void this.redo()}
+                  title="Redo" aria-label="Redo">↻</button>
+        </div>
+        <div class="tools-right">
+          <button class="tool" @click=${() => this.appendBlankLine()}
+                  title="Add line" aria-label="Add line">+</button>
+          <button class="tool" ?disabled=${!this.usesRandom} @click=${() => void this.reshuffle()}
+                  title="Reshuffle" aria-label="Reshuffle">⤮</button>
+        </div>
       </div>
     `
+  }
+
+  /** Footer `+`: append a blank line and focus it. */
+  private appendBlankLine(): void {
+    const id = this.addLine('')
+    this.focusAfterUpdate = id
+    this.requestUpdate()
   }
 
   static styles = css`
@@ -461,11 +548,17 @@ export class EnumeratioNotebook extends LitElement {
     }
     .toolbar {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
       padding: 0.3rem 0.5rem;
       border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
     }
-    .reshuffle {
+    .tools-left,
+    .tools-right {
+      display: flex;
+      gap: 0.3rem;
+    }
+    .tool {
       font: inherit;
       font-size: 1.1rem;
       line-height: 1;
@@ -479,11 +572,11 @@ export class EnumeratioNotebook extends LitElement {
       background: transparent;
       color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
     }
-    .reshuffle:hover:not(:disabled) {
+    .tool:hover:not(:disabled) {
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
     }
-    .reshuffle:disabled {
+    .tool:disabled {
       opacity: 0.35;
       cursor: default;
     }
