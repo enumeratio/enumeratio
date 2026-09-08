@@ -85,6 +85,11 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
   if (h === 'InvisibleOperator') return lowerOp('mul', a, path, scope, types)
   if (h === 'Delimiter') return lowerExpr(a[0], argPath(path, 0), scope, types)   // transparent, as in bind.ts
 
+  // `|C|` over a handle = cardinality (bind typed it natural_number); scalar `|x|` falls through to the usual path.
+  if (h === 'Abs' && a.length === 1 && types.get(argPath(path, 0))?.k === 'handle') {
+    return lowerBaseIndexed('cardinality', a, path, scope, types)
+  }
+
   if (NEXT_PREV_RANK.has(h) && a.length === 1) return { kind: 'apply', fn: fnRef(h), args: [lowerExpr(a[0], argPath(path, 0), scope, types)] }
 
   // A `for` comprehension → a List of the per-element lowered bodies (unrolled over the literal domain, the same

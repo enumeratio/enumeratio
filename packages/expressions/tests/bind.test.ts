@@ -108,6 +108,13 @@ describe('bind: a notebook session', () => {
     expect(bound.errors).toEqual([])
   })
 
+  it('|C| over a collection handle is its cardinality (a natural number)', () => {
+    const bound = bind(parser.parse('|\\operatorname{Permutations}(4)|'), new Map(), catalog)
+    expect(bound.stmt.k).toBe('expr')
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'natural_number' })
+    expect(bound.errors).toEqual([])
+  })
+
   it('an unbound symbol errors with a path resolvable to its source span', () => {
     const parsed = parser.parse('y')
     const bound = bind(parsed, new Map(), catalog)

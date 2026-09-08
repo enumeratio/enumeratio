@@ -229,6 +229,10 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
+  // `|C|` over a collection/fiber handle is its CARDINALITY (a natural number) — `|` parses to `Abs`, which is
+  // otherwise a scalar absolute value (left to the existing path for a non-handle argument).
+  if (h === 'Abs' && a.length === 1 && argT(0).k === 'handle') return scalarType('natural_number')
+
   // List-valued ops → an int array: scramble/random_sample plus the list operations CE canonicalizes to its own
   // Pascal heads at parse time (join→Join, sort→Sort, unique→Unique). Arguments typed for error-checking.
   if (LIST_RESULT_OPS.has(h) && a.length >= 1) {
