@@ -8,6 +8,7 @@ export const NODES: NodeDoc[] = [
   // ═══════════════ Permutations & permutation classes ═══════════════
   {
     head: "SymmetricGroup",
+    catalogId: "permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The collection of permutations of $\\{1, \\dots, n\\}$, in one-line notation.",
@@ -43,6 +44,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "KPermutations",
+    catalogId: "arrangements",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The ordered arrangements of $k$ distinct symbols drawn from $\\{1, \\dots, n\\}$ — injections $[k] \\hookrightarrow [n]$.",
@@ -74,6 +76,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "SignedPermutations",
+    catalogId: "signed_permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The hyperoctahedral group $B_n$ — permutations of $[n]$ with an independent $\\pm$ sign on each entry.",
@@ -105,6 +108,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "ColoredPermutations",
+    catalogId: "k_colored_permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The wreath product $\\mathbb{Z}_k \\wr S_n$ — a permutation of $[n]$ with an independent color in $\\{0, \\dots, k-1\\}$ on each position.",
@@ -135,6 +139,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "CyclicPermutations",
+    catalogId: "cyclic_permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ that are a single $n$-cycle, in one-line notation.",
@@ -164,6 +169,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Involutions",
+    catalogId: "involutions",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The self-inverse permutations of $[n]$ — those equal to their own inverse ($\\sigma = \\sigma^{-1}$).",
@@ -193,6 +199,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Derangements",
+    catalogId: "derangements",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no fixed point — $\\sigma(i) \\neq i$ for every $i$.",
@@ -223,6 +230,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "AlternatingPermutations",
+    catalogId: "alternating_permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The up-down permutations of $[n]$: $a_1 < a_2 > a_3 < a_4 > \\cdots$.",
@@ -252,6 +260,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Permutations321Avoiding",
+    catalogId: "permutations_avoiding_321",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).",
@@ -282,6 +291,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Permutations132Avoiding",
+    catalogId: "permutations_avoiding_132",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\\sigma_i < \\sigma_k < \\sigma_j$).",
@@ -312,6 +322,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding123",
+    catalogId: "permutations_avoiding_123",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no increasing subsequence of length 3 (pattern $123$).",
@@ -342,6 +353,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding213",
+    catalogId: "permutations_avoiding_213",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $213$ (no $i<j<k$ with $\\sigma_j < \\sigma_i < \\sigma_k$).",
@@ -371,6 +383,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding231",
+    catalogId: "permutations_avoiding_231",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $231$ — equivalently the stack-sortable permutations.",
@@ -400,6 +413,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding312",
+    catalogId: "permutations_avoiding_312",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $312$ (no $i<j<k$ with $\\sigma_j < \\sigma_k < \\sigma_i$).",
@@ -429,6 +443,7 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "StirlingPermutations",
+    catalogId: "stirling_permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of the multiset $\\{1,1,2,2,\\dots,n,n\\}$ in which everything between the two copies of $i$ exceeds $i$.",

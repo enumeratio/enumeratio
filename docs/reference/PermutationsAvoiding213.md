@@ -28,3 +28,8 @@ The 14 avoiders of $[4]$ in lex order are $[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 4,
 ## See also
 
 [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **OEIS** — [A000108](https://oeis.org/A000108)
+- **SageMath** — [Permutations(n, avoiding=[2,1,3])](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html)

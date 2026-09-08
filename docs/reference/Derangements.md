@@ -29,3 +29,12 @@ The 9 derangements of $[4]$ in rank order are $[4, 3, 2, 1], [2, 3, 4, 1], [3, 4
 ## See also
 
 [`SymmetricGroup`](/reference/SymmetricGroup) · [`Involutions`](/reference/Involutions) · [`CyclicPermutations`](/reference/CyclicPermutations) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **Wikipedia** — [Derangement](https://en.wikipedia.org/wiki/Derangement)
+- **OEIS** — [A000166](https://oeis.org/A000166)
+- **Wolfram Language** — [Subfactorial](https://reference.wolfram.com/language/ref/Subfactorial.html)
+- **SageMath** — [Derangements(n)](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/derangements.html)
+- **Mathlib4** — [derangements (Fin n)](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Combinatorics/Derangements/Basic.html) — exact: derangements α : Set (Equiv.Perm α), the permutations with no fixed point
+- **SymPy** — [generate_derangements](https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.generate_derangements)

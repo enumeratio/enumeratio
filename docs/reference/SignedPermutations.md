@@ -31,3 +31,9 @@ $\operatorname{Rank}(\operatorname{SignedPermutations}(2),\ [-1, 2]) = 3$ (0-bas
 ## See also
 
 [`SymmetricGroup`](/reference/SymmetricGroup) (the unsigned $A_{n-1}$ case) · [`ColoredPermutations`](/reference/ColoredPermutations) ($B_n = \mathbb{Z}_2 \wr S_n$, the $k=2$ colored case) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **OEIS** — [A000165](https://oeis.org/A000165)
+- **SageMath** — [SignedPermutations(n)](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/colored_permutations.html)
+- **SymPy** — [signed_permutations](https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.signed_permutations) — must be called with a tuple, not a range — signed_permutations(t) does type(t)(i) internally and range(tuple) raises

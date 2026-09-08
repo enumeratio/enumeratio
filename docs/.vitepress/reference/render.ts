@@ -37,11 +37,24 @@ export interface CollectionExamples {
   notebook?: string[];
 }
 
+/** One external cross-reference, pulled from the catalog's `base_reference` table at generate time
+ *  (single source of truth) — mathlib4 / sage / sympy / wikipedia / wolfram / matlab / oeis / … */
+export interface XRef {
+  system: string;
+  identity: string;
+  url: string | null;
+  delta: string;
+  relation: string;
+}
+
 export interface NodeDoc {
   head: string;
   /** Route/filename. Optional — defaults to the head itself (the canonical PascalCase identifier), so
    *  `SymmetricGroup` → /reference/SymmetricGroup. Set only to override. */
   slug?: string;
+  /** The pg-catalog collection id (snake) this head corresponds to, when there is a twin. Join key for
+   *  external cross-references (base_reference) and OEIS, and the basis of the "Catalog alias" note. */
+  catalogId?: string;
   /** sidebar/grouping family label, e.g. "Permutations & permutation classes". */
   family: string;
   kind: NodeKind;
@@ -55,9 +68,11 @@ export interface NodeDoc {
   seeAlso: SeeAlso[];
 }
 
-/** A resolved node is a NodeDoc whose placeholder strings are already substituted, plus per-see-also link info. */
+/** A resolved node is a NodeDoc whose placeholder strings are already substituted, plus per-see-also link info
+ *  and the external cross-references pulled from the catalog (ordered, display-labelled). */
 export interface ResolvedNode extends NodeDoc {
   seeAlsoResolved: { text: string; link?: string; note?: string }[];
+  xrefsResolved?: { label: string; identity: string; url: string | null; delta: string; relation: string }[];
 }
 
 export function renderPage(n: ResolvedNode): string {
@@ -101,5 +116,18 @@ export function renderPage(n: ResolvedNode): string {
       .join(" · "),
   );
   out.push("");
+
+  // External references — the same object in other systems, pulled from the catalog's base_reference table
+  // (verified URLs + deltas). A `relation` other than isomorphic is flagged; a non-empty delta is shown verbatim.
+  if (n.xrefsResolved && n.xrefsResolved.length) {
+    out.push("## External references", "");
+    for (const x of n.xrefsResolved) {
+      const target = x.url ? `[${x.identity}](${x.url})` : `\`${x.identity}\``;
+      const qual = x.relation !== "isomorphic" && x.relation !== "conceptual" ? ` _(${x.relation})_` : "";
+      const delta = x.delta ? ` — ${x.delta}` : "";
+      out.push(`- **${x.label}** — ${target}${qual}${delta}`);
+    }
+    out.push("");
+  }
   return out.join("\n");
 }

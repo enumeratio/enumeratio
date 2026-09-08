@@ -28,3 +28,8 @@ The 6 four-cycles in rank order (one-line) are $[2, 3, 4, 1], [2, 4, 1, 3], [3, 
 ## See also
 
 [`SymmetricGroup`](/reference/SymmetricGroup) · [`Involutions`](/reference/Involutions) · [`Derangements`](/reference/Derangements) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **SageMath** — [sage.combinat.permutation.CyclicPermutations(mset)](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html) — sage returns linear arrangements of mset up to rotation ("the same as necklaces"), one representative per class; ours is the single-n-cycle PERMUTATION itself (a bijection [n]→[n] whose functional graph is one n-cycle) — same count (n−1)!, different representation
+- **Mathlib4** — [Equiv.Perm (Fin n)](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Logic/Equiv/Defs.html#Equiv.Perm)

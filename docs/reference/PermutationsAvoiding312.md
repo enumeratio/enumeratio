@@ -28,3 +28,8 @@ In this order the 14 avoiders of $[4]$ are $[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2
 ## See also
 
 [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) (the mirror class, split on the maximum) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding213`](/reference/PermutationsAvoiding213) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **OEIS** — [A000108](https://oeis.org/A000108)
+- **SageMath** — [Permutations(n, avoiding=[3,1,2])](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html)

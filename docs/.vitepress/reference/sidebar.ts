@@ -9,7 +9,7 @@ type Item = { text: string; link?: string; items?: Item[]; collapsed?: boolean }
 // hand-authored pages that predate the dataset — keep their nav until each is migrated into nodes.ts.
 const LEGACY_GROUPS: Item[] = [
   {
-    text: "Generic primitives",
+    text: "Collection primitives",
     items: [
       { text: "unrank", link: "/reference/unrank" },
       { text: "rank", link: "/reference/rank" },

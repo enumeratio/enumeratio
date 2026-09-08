@@ -30,3 +30,12 @@ The first six $2$-arrangements of $[4]$ in lex order are $[1, 2], [1, 3], [1, 4]
 ## See also
 
 [`SymmetricGroup`](/reference/SymmetricGroup) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **OEIS** — [A000522](https://oeis.org/A000522) — row sums Σ_k n!/(n-k)! = |arrangements(n)| over all k
+- **OEIS** — [A008279](https://oeis.org/A008279)
+- **Wolfram Language** — [FactorialPower](https://reference.wolfram.com/language/ref/FactorialPower.html) — fiber_count(n,k) = P(n,k) = n!/(n-k)! = FactorialPower[n,k], the 2-argument falling-factorial form
+- **SageMath** — `Permutations(n,k) [= Arrangements([1..n], k)]`
+- **Mathlib4** — [Nat.descFactorial](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorial/BigOperators.html) — counting formula only — |arrangements(n,k)| = n.descFactorial k; the structural analog (injective length-k word) would be Function.Embedding (Fin k) (Fin n), which mathlib does not itself name as 'arrangements'
+- **SymPy** — [variations](https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.variations) — variations(seq, k) — the length-k injective words (arrangements' [n,k] fiber); repetition=False (the default)

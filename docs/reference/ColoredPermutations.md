@@ -30,3 +30,8 @@ $\operatorname{Rank}(\operatorname{ColoredPermutations}(2,\ 2),\ [[1,2],[1,0]]) 
 ## See also
 
 [`SymmetricGroup`](/reference/SymmetricGroup) ($k = 1$) · [`SignedPermutations`](/reference/SignedPermutations) ($k = 2$) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **OEIS** — [A319027](https://oeis.org/A319027)
+- **SageMath** — [ColoredPermutations(k, n)](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/colored_permutations.html) — sage parameter order is (colors, size); ours is (size, colors)

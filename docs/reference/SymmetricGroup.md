@@ -32,3 +32,13 @@ The 6 words of $[3]$ in lex order are $[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1
 ## See also
 
 [`KPermutations`](/reference/KPermutations) · [`SignedPermutations`](/reference/SignedPermutations) · [`ColoredPermutations`](/reference/ColoredPermutations) · [`Derangements`](/reference/Derangements) · [`Involutions`](/reference/Involutions) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`random_element`](/reference/random-element) · [`cardinality`](/reference/cardinality)
+
+## External references
+
+- **Wikipedia** — [Permutation](https://en.wikipedia.org/wiki/Permutation)
+- **OEIS** — [A000142](https://oeis.org/A000142) — cardinality only
+- **Wolfram Language** — [QFactorial](https://reference.wolfram.com/language/ref/QFactorial.html) — grouping permutations(n) by inversions (or major_index) gives QFactorial[n,q] coefficients — the Mahonian distribution [n]_q! (generating_functions.sql: gf_qfactorial); cardinality = QFactorial[n,1] = n!
+- **SageMath** — [Permutations(n)](https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/permutation.html)
+- **Mathlib4** — [Equiv.Perm (Fin n)](https://leanprover-community.github.io/mathlib4_docs/Mathlib/Logic/Equiv/Defs.html#Equiv.Perm)
+- **SymPy** — [generate_bell](https://docs.sympy.org/latest/modules/utilities/iterables.html#sympy.utilities.iterables.generate_bell) — generate_bell yields the same SET in Steinhaus-Johnson-Trotter (adjacent-transposition) order, not lex order; 0-indexed tuples, shift +1
+- **MATLAB** — [perms](https://www.mathworks.com/help/matlab/ref/perms.html) — perms(v) returns all n! permutations of v, but in reverse-lexicographic order of the element indices — our permutations() fiber_unrank/elements() order is plain lexicographic ascending, so the SET matches but the ORDER does not
