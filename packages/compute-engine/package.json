@@ -27,7 +27,8 @@
   "scripts": {
     "typecheck": "tsgo --noEmit",
     "test": "vitest run",
-    "selfcert": "node --import tsx selfcert.mts"
+    "selfcert": "node --import tsx selfcert.mts",
+    "smoke": "node smoke.mjs"
   },
   "peerDependencies": {
     "@cortex-js/compute-engine": "0.125.0"

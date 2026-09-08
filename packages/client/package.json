@@ -41,6 +41,7 @@
     "selfcert:resolve": "node --import tsx selfcert-resolve.mts",
     "test": "vitest run",
     "selfcert:engine": "node --import tsx selfcert-engine.mts",
+    "selfcert:ce-diff": "node --import tsx selfcert-ce-differential.mts",
     "bench:engine": "node --import tsx bench-engine.mts"
   },
   "dependencies": {
