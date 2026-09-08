@@ -64,7 +64,7 @@ const SCALAR_FN: Record<string, string> = {
   partition_number: 'PartitionsP',
 }
 
-const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count', 'scramble', 'random_sample'])
+const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count', 'random_shuffle', 'random_sample'])
 // List operations CE canonicalizes to its own Pascal heads at parse time — we claim them and pass straight through
 // to CE, which evaluates them: Join = concat, Sort, Unique = order-preserving dedup (list results); Sum / Min /
 // Max / Product / First / Last (scalar reductions of a list).
@@ -133,7 +133,9 @@ function translate(ce: CE, e: SelectExpr): Trans {
       }
       if (id === 'random_element') return { ce: fn('RandomElement', [translate(ce, e.args[0]).coll]) }
       if (id === 'cardinality' || id === 'count') return { ce: fn('Length', [translate(ce, e.args[0]).coll]) }
-      if (id === 'scramble') return { ce: fn('Scramble', [translate(ce, e.args[0]).ce]) }
+      // CE's own RandomShuffle — over a collection view (pass its handle so CE iterates our CollectionHandlers) or
+      // a plain list. Our library adds the Set-noop + seeded-RNG wiring; the head is CE's, not a bespoke one.
+      if (id === 'random_shuffle') { const h = translate(ce, e.args[0]); return { ce: fn('RandomShuffle', [h.coll ?? h.ce]) } }
       if (id === 'random_sample') {
         const h = translate(ce, e.args[0])
         return { ce: fn('RandomSample', [h.coll, translate(ce, e.args[1]).ce]) }

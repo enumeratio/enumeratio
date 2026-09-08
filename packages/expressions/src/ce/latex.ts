@@ -500,10 +500,10 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
     const p = pascalCase(id)
     if (p !== id && !catalogIds.has(p) && !aliases.has(p)) aliases.set(p, id)
   }
-  // NOTE: our shuffle op is `scramble` everywhere (name chosen so it doesn't collide with CE's reserved, and
-  // unimplemented, `Shuffle`/`RandomShuffle`). `Shuffle` is deliberately NOT aliased — it would only half-work
-  // (a bare run resolved but a `\mathrm{Shuffle}` did not, since the alias is normalizer-only), which read as
-  // "Shuffle unrecognized". Scramble is the one spelling.
+  // NOTE: our shuffle op is `random_shuffle`, PascalCased here to `RandomShuffle` — CE's own head. It binds to
+  // CE's native RandomShuffle (which our library wraps only with a Set-noop + seeded RNG), so notebook and CE
+  // agree on one spelling and one node. (CE's own `\operatorname{shuffle}`→RandomShuffle alias applies to CE's
+  // parser, not this one; capital `\operatorname{Shuffle}` is an unrelated inert placeholder — never route to it.)
   // Bare keywords that must reach the parser as `\operatorname{}` to be recognized — `for` is CE's list-
   // comprehension keyword (`[i^2 for i=[1,2,3]]`). The normalizer only ever matches a WHOLE letter-run, so this
   // rewrites a standalone `for`, never the `for` inside a word like `before`.

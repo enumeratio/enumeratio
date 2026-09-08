@@ -92,7 +92,7 @@ export class EnumeratioNotebook extends LitElement {
   private pendingChanged = new Set<LineId>()
   private debounceTimer: ReturnType<typeof setTimeout> | null = null
   private focusAfterUpdate: LineId | null = null
-  /** The seed behind every random op (RandomElement/Shuffle/RandomSample). Fixed per notebook so results are
+  /** The seed behind every random op (RandomElement/RandomShuffle/RandomSample). Fixed per notebook so results are
    *  reproducible; the reshuffle button rolls a new one. (Global to the compute-engine library, so it is the whole
    *  page's randomness — one notebook's reshuffle reseeds all.) */
   @state() private seed = (Math.random() * 2 ** 32) >>> 0
@@ -528,9 +528,9 @@ export class EnumeratioNotebook extends LitElement {
       if (!dirty.has(id)) continue
       await this.evalLine(id, models)
     }
-    // A line uses randomness if its parsed AST names a random op (random_element / random_sample / scramble). This
-    // gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
-    this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|scramble/i.test(a))
+    // A line uses randomness if its parsed AST names a random op (random_element / random_sample / random_shuffle).
+    // This gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
+    this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|random_shuffle/i.test(a))
     this.hasActions = this.actions.size > 0
     if (this.hasActions === false && this.tickerOn) this.stopTicker() // last action removed while ticking
     this.results = new Map(this.results)

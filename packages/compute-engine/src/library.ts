@@ -21,8 +21,9 @@ const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json
 const engineOf = (e: any): ComputeEngine => e.engine;
 
 // ── seeded randomness ─────────────────────────────────────────────────────────────────────────────────────────
-// A module-level RNG behind every random operator (RandomElement, Shuffle, RandomSample), so randomness is
-// reproducible and controllable from OUTSIDE the library — a host (the notebook's reshuffle button) calls
+// A module-level RNG behind every random operator — our own (RandomElement, RandomSample) and, via `seedCeRandom`,
+// CE's native ones (RandomShuffle, Random) too — so randomness is reproducible and controllable from OUTSIDE the
+// library — a host (the notebook's reshuffle button) calls
 // `seedRandom(n)` to pin a deterministic stream, or `seedRandom()` to go back to Math.random. One module, one
 // stream: reseeding affects every random op on every engine that loaded this library.
 let rng: () => number = Math.random;
@@ -339,17 +340,10 @@ export const enumeratioLibrary: LibraryDefinition = {
       },
     },
 
-    // Scramble(list) — a uniform random permutation of a List's items (Fisher–Yates on the seeded rng). NOT named
-    // `Shuffle`: CE reserves that head (it canonicalizes to an unimplemented `RandomShuffle`), so we bind our own.
-    Scramble: {
-      signature: "(collection) -> collection",
-      evaluate: (ops: ReadonlyArray<Expression>) => {
-        const src: any = ops[0];
-        const items = [...((src.ops as Expression[]) ?? [])];
-        for (let i = items.length - 1; i > 0; i--) { const j = randInt(i + 1); [items[i], items[j]] = [items[j], items[i]]; }
-        return engineOf(ops[0]).box(["List", ...items]);
-      },
-    },
+    // No bespoke shuffle head: CE's own `RandomShuffle` already permutes a List/Tuple/String AND any of our
+    // collection views (it iterates through the CollectionHandlers we install), so we reuse it rather than
+    // reimplement it. `installEnumeratio` only (a) routes CE's RNG through our seeded stream so `seedRandom`
+    // governs it, and (b) adds a Set short-circuit — see `overrideRandomShuffle`.
 
     // RandomSample(collection, n) — n random elements: DISTINCT while n ≤ |collection| (a random n-subset by
     // rank), with replacement once n exceeds the size. O(n) at any collection size (never materializes it).
@@ -440,5 +434,32 @@ export const enumeratioLibrary: LibraryDefinition = {
 export function installEnumeratio(ce: ComputeEngine): ComputeEngine {
   const defs = enumeratioLibrary.definitions as Record<string, unknown>;
   for (const [name, def] of Object.entries(defs)) ce.declare(name, def as any);
+  seedCeRandom(ce);
+  overrideRandomShuffle(ce);
   return ce;
+}
+
+/** Route CE's own RNG through our seeded stream, so `seedRandom()` governs CE-native random ops (RandomShuffle,
+ *  Random, …) and our O(1) ones (RandomElement/RandomSample) from one seed — the notebook's reshuffle reseeds all.
+ *  `ce._random` is an internal in 0.125.0 (no public seed hook); the arrow reads the live `rng` binding, so a later
+ *  `seedRandom()` still takes. `WithRandomSeed(seed, …)` remains CE's own per-expression override on top of this. */
+function seedCeRandom(ce: any): void {
+  try { ce._random = () => rng(); } catch { /* CE build without a settable _random — native RNG stays */ }
+}
+
+/** Wrap CE's native `RandomShuffle` with a Set short-circuit: a Set is unordered, so shuffling it is a no-op —
+ *  return it unchanged instead of CE's `incompatible-type` (it demands an indexed_collection). Everything else
+ *  delegates to the captured native handler, reimplementing nothing. */
+function overrideRandomShuffle(ce: any): void {
+  const native = ce.lookupDefinition?.("RandomShuffle")?.operator;
+  const evaluate = native?.evaluate, evaluateAsync = native?.evaluateAsync;
+  if (!evaluate) return; // CE build without RandomShuffle — leave it alone
+  const isSet = (x: any) => x?.operator === "Set";
+  ce.declare("RandomShuffle", {
+    signature: "(collection) -> collection",
+    evaluate: (ops: any, opts: any) => (isSet(ops[0]) ? ops[0] : evaluate.call(native, ops, opts)),
+    evaluateAsync: evaluateAsync
+      ? (ops: any, opts: any) => (isSet(ops[0]) ? ops[0] : evaluateAsync.call(native, ops, opts))
+      : undefined,
+  });
 }

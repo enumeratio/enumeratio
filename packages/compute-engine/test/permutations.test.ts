@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { installEnumeratio, enumeratioLibrary, emitScalarSql } from "../src/index.js";
+import { installEnumeratio, enumeratioLibrary, emitScalarSql, seedRandom } from "../src/index.js";
 
 const ce = installEnumeratio(new ComputeEngine());
 const num = (mj: any): number => Number((ce.box(mj).evaluate() as any).re);
@@ -75,8 +75,10 @@ describe("library shape", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
-    // 94 collections + 7 combinators + Rank/RandomElement/Shuffle/RandomSample/Inversions + number/digit/integer/bit ops
-    expect(heads.length).toBe(123);
+    // 94 collections + 7 combinators + Rank/RandomElement/RandomSample/Inversions + number/digit/integer/bit ops.
+    // No shuffle head here: we reuse CE's own RandomShuffle, wrapped at install (see overrideRandomShuffle), not
+    // declared statically.
+    expect(heads.length).toBe(122);
     for (const h of ["SubsetsOfSizeAtMost", "EvenSubsets", "OddSubsets", "Necklaces", "LyndonWords"]) {
       expect(heads).toContain(h);
     }
@@ -101,8 +103,42 @@ describe("library shape", () => {
       "ParkingFunctions", "IncreasingTrees", "CompositionsIntoParts1And2", "CompositionsIntoOddParts",
       "PartitionsIntoAtMostKParts", "GrandDyckPaths", "BalancedBinaryStrings", "CompositionsBoundedParts",
       "PalindromicBinaryStrings", "Power", "Product", "Concat", "Window", "Reversed", "Rotated", "Zip",
-      "Rank", "RandomElement", "Scramble", "RandomSample", "Inversions"]) {
+      "Rank", "RandomElement", "RandomSample", "Inversions"]) {
       expect(heads).toContain(h);
     }
+  });
+});
+
+describe("RandomShuffle — CE's own head, wrapped at install", () => {
+  const evalMj = (mj: any) => ce.box(mj).evaluate() as any;
+  const ints = (x: any): number[] => (x.ops ?? []).map((o: any) => Number(o.re));
+
+  it("permutes a List — same multiset, native behavior", () => {
+    seedRandom(1);
+    const r = evalMj(["RandomShuffle", ["List", 1, 2, 3, 4, 5]]);
+    expect(r.operator).toBe("List");
+    expect(ints(r).sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it("shuffles a collection view through our handlers (all n! elements, none lost)", () => {
+    seedRandom(1);
+    const r = evalMj(["RandomShuffle", ["SymmetricGroup", 3]]);
+    expect(r.operator).toBe("List");
+    expect((r.ops ?? []).length).toBe(6); // 3! — a full permutation of the group, not a truncation
+  });
+
+  it("a Set is unordered — shuffling is a no-op (not CE's incompatible-type error)", () => {
+    const r = evalMj(["RandomShuffle", ["Set", 1, 2, 3, 4, 5]]);
+    expect(r.operator).toBe("Set");
+    expect(ints(r).sort((a, b) => a - b)).toEqual([1, 2, 3, 4, 5]);
+  });
+
+  it("seedRandom drives CE's native RNG — same seed, same shuffle", () => {
+    seedRandom(42);
+    const a = ints(evalMj(["RandomShuffle", ["List", 1, 2, 3, 4, 5, 6, 7]]));
+    seedRandom(42);
+    const b = ints(evalMj(["RandomShuffle", ["List", 1, 2, 3, 4, 5, 6, 7]]));
+    expect(a).toEqual(b);
+    seedRandom(); // restore Math.random for any later test
   });
 });
