@@ -216,11 +216,20 @@ function lowerContains(a: Expression[], path: NodePath, scope: Scope, types: Map
 }
 
 /** `At`/`Count` (`element_at`/`cardinality`): the base stays a raw handle when it typed as one (never coerced —
- *  `cardinality`/`element_at` take the HANDLE itself, not a scalar), otherwise lowers plainly. */
+ *  `cardinality`/`element_at` take the HANDLE itself, not a scalar), otherwise lowers plainly.
+ *  `At` over a COLLECTION handle (`Coll(n)[i]`) is element-at-rank, which the engine exposes as `unrank`, not the
+ *  fiber-level `element_at`. `At`/`[i]` is 1-based (the human-facing convention, matching `Rank`), so the rank
+ *  passed to the 0-based `unrank` is `i - 1`. */
 function lowerBaseIndexed(fnId: string, a: Expression[], path: NodePath, scope: Scope, types: Map<NodePath, Type>): SelectExpr {
   const baseType = types.get(argPath(path, 0))
   const base = baseType?.k === 'handle' ? { kind: 'handle' as const, handle: baseType.handle } : lowerExpr(a[0], argPath(path, 0), scope, types)
   const rest = a.slice(1).map((ae, i) => lowerArg(ae, argPath(path, i + 1), scope, types))
+  if (fnId === 'element_at' && baseType?.k === 'handle') {
+    const idx = rest[0]
+    const zeroBased: SelectExpr =
+      idx.kind === 'lit' && typeof idx.value === 'number' ? { kind: 'lit', value: idx.value - 1 } : { kind: 'apply', fn: fnRef('sub'), args: [idx, { kind: 'lit', value: 1 }] }
+    return { kind: 'apply', fn: fnRef('unrank'), args: [base, zeroBased] }
+  }
   return { kind: 'apply', fn: fnRef(fnId), args: [base, ...rest] }
 }
 
