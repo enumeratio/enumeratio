@@ -4,12 +4,16 @@ import katex from '@vscode/markdown-it-katex'
 import { enumeratioCore } from '@enumeratio/data/vite'
 
 // One docs site for the whole monorepo. The file tree mirrors the nav, in nav order. Top-level nav items are
-// verbs (what you're doing here); their items are nouns (what you'll find). Three top-level items now — Explore,
-// Learn, Develop — each either a plain link or a short, genuinely useful dropdown:
+// verbs (what you're doing here); their items are nouns (what you'll find). Four top-level items now — Explore,
+// Reference, Learn, Develop — each either a plain link or a short, genuinely useful dropdown:
 //   docs/*.md                    — site-level pages (home)
 //   docs/explore/**              — index.md IS the collection atlas (the map, the families, the counting-sequence
 //                                  bridges) — the section's own landing page, not a separate sub-item; plus the
 //                                  mounted collection/query apps. No Playground here anymore (moved to Develop)
+//   docs/reference/**            — Wolfram-style pages, one per expression-language HEAD (operator/function/
+//                                  collection constructor the notebook recognizes) — index.md is the categorized
+//                                  inventory + template legend. Distinct from develop/data/ (the pg-catalog's own
+//                                  generated tables): this is the AST/MathJSON vocabulary, hand-written prose.
 //   docs/learn/**                — index.md is a brief pointer to its two tiers:
 //     docs/learn/guides/**       — the beginner guided tour (the former docs/learn/index.md content is now
 //                                  guides/index.md, the real "Start here" walkthrough)
@@ -65,6 +69,7 @@ export default defineConfig({
     socialLinks: [{ icon: 'github', link: 'https://github.com/enumeratio/enumeratio' }],
     nav: [
       { text: 'Explore', link: '/explore/' },
+      { text: 'Reference', link: '/reference/' },
       {
         component: 'NavDropdownLink',
         props: {
@@ -92,6 +97,48 @@ export default defineConfig({
       },
     ],
     sidebar: {
+      '/reference/': [
+        {
+          text: 'Language Reference', link: '/reference/',
+          items: [
+            {
+              text: 'Generic primitives',
+              items: [
+                { text: 'unrank', link: '/reference/unrank' },
+                { text: 'rank', link: '/reference/rank' },
+                { text: 'random_element', link: '/reference/random-element' },
+                { text: 'cardinality', link: '/reference/cardinality' },
+              ],
+            },
+            {
+              text: 'List operations',
+              items: [
+                { text: 'join', link: '/reference/join' },
+                { text: 'sort', link: '/reference/sort' },
+                { text: 'unique', link: '/reference/unique' },
+              ],
+            },
+            {
+              text: 'Counting sequences',
+              items: [
+                { text: 'BellB', link: '/reference/bell-b' },
+                { text: 'CatalanNumber', link: '/reference/catalan-number' },
+                { text: 'Fubini', link: '/reference/fubini' },
+                { text: 'PartitionsP', link: '/reference/partitions-p' },
+              ],
+            },
+            {
+              text: 'Collections',
+              items: [
+                { text: 'SymmetricGroup', link: '/reference/symmetric-group' },
+                { text: 'IntegerPartitions', link: '/reference/integer-partitions' },
+                { text: 'Subsets', link: '/reference/subsets' },
+                { text: 'DyckPaths', link: '/reference/dyck-paths' },
+              ],
+            },
+          ],
+        },
+      ],
       '/explore/': [
         {
           text: 'Explore', link: '/explore/',

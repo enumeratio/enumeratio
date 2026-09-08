@@ -88,4 +88,6 @@ That covers arithmetic, the counting sequences (`bell`, `catalan_number`, `parti
 for; until more collections earn one, prefer the value-producing forms shown above.
 :::
 
-See [the notebook explorer page](/explore/notebook/) for a fuller worked example with a user-defined function.
+See [the notebook explorer page](/explore/notebook/) for a fuller worked example with a user-defined function, or
+the [Language Reference](/reference/) for what each head in a line (`unrank`, `BellB`, `SymmetricGroup`, …)
+actually means.
