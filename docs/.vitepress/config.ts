@@ -200,6 +200,7 @@ export default defineConfig({
           ],
         },
         { text: 'API Reference', link: '/develop/api' },
+        { text: 'CE dictionary', link: '/develop/reference/ce-dictionary' },
         { text: 'Sources', link: '/develop/sources' },
         { text: 'Glossary', link: '/develop/glossary' },
         {
