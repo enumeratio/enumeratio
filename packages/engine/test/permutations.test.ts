@@ -64,9 +64,10 @@ describe("library shape", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
-    // 89 collections + 7 view/combinators + Rank/RandomElement/Inversions + 6 number-sequence operators
-    expect(heads.length).toBe(105);
-    for (const h of ["Groupings", "BellB", "CatalanNumber", "Fubini", "PartitionsP", "PartitionsQ", "PolygonalNumber"]) {
+    // 89 collections + 7 view/combinators + Rank/RandomElement/Inversions + 6 number ops + 3 digit ops
+    expect(heads.length).toBe(108);
+    for (const h of ["Groupings", "BellB", "CatalanNumber", "Fubini", "PartitionsP", "PartitionsQ",
+      "PolygonalNumber", "IntegerDigits", "FromDigits", "RealDigits"]) {
       expect(heads).toContain(h);
     }
     for (const h of ["Triangulations", "NonCrossingMatchings", "AlternatingPermutations",

@@ -1156,3 +1156,31 @@ export function IsRootedForest(parent: any, n: number): boolean {
 export function PolygonalNumber(r: number, n: number): number {
   return ((r - 2) * n * n - (r - 4) * n) / 2;
 }
+
+// ─── digit functions (Wolfram IntegerDigits / FromDigits / RealDigits, exact-integer core) ──────────────
+/** Base-`base` digits of a non-negative integer, most-significant first. `len`: left-pad with 0s, or keep
+ *  the last `len` digits (Wolfram IntegerDigits[n, b, len]). */
+export function IntegerDigitsKernel(n: number, base = 10, len?: number): number[] {
+  let m = Math.abs(Math.trunc(n));
+  const b = base >= 2 ? Math.trunc(base) : 10;
+  const out: number[] = [];
+  if (m === 0) out.push(0);
+  while (m > 0) { out.unshift(m % b); m = Math.floor(m / b); }
+  if (len !== undefined) {
+    if (out.length < len) while (out.length < len) out.unshift(0);
+    else if (out.length > len) return out.slice(out.length - len);
+  }
+  return out;
+}
+/** Integer from its base-`base` digit list (most-significant first). Inverse of IntegerDigitsKernel. */
+export function FromDigitsKernel(digits: number[], base = 10): number {
+  const b = base >= 2 ? Math.trunc(base) : 10;
+  let r = 0;
+  for (const d of digits) r = r * b + d;
+  return r;
+}
+/** Wolfram RealDigits for a non-negative integer: [digits, exponent], exponent = number of integer digits. */
+export function RealDigitsKernel(n: number, base = 10): [number[], number] {
+  const digits = IntegerDigitsKernel(n, base);
+  return [digits, digits.length];
+}

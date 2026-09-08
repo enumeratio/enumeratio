@@ -11,7 +11,7 @@
 import type { LibraryDefinition, Expression, ComputeEngine, CollectionHandlers } from "@cortex-js/compute-engine";
 import { Inversions } from "./kernels.js";
 import { BellB, Fubini, PartitionsP } from "./kernels-combinatorics.js";
-import { CatalanNumber, PartitionsQ, PolygonalNumber } from "./kernels-extra.js";
+import { CatalanNumber, PartitionsQ, PolygonalNumber, IntegerDigitsKernel, FromDigitsKernel, RealDigitsKernel } from "./kernels-extra.js";
 import { allEntries, adaptEntry, asIntList, type FamilySpec } from "./packs/index.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -315,6 +315,35 @@ export const enumeratioLibrary: LibraryDefinition = {
         const r = ops.length === 2 ? intOf(ops[0]) : 3;
         const n = ops.length === 2 ? intOf(ops[1]) : intOf(ops[0]);
         return engineOf(ops[0]).number(PolygonalNumber(r, n));
+      },
+    },
+
+    // ── digit functions (Wolfram) ──
+    // IntegerDigits(n, base?, len?) → base-b digit list (default 10), most-significant first. Listable over n.
+    IntegerDigits: {
+      signature: "(integer, integer?, integer?) -> list<integer>",
+      broadcastable: true,
+      evaluate: (ops: ReadonlyArray<Expression>) => {
+        const base = ops.length >= 2 ? intOf(ops[1]) : 10;
+        const len = ops.length >= 3 ? intOf(ops[2]) : undefined;
+        return engineOf(ops[0]).box(["List", ...IntegerDigitsKernel(intOf(ops[0]), base, len)]);
+      },
+    },
+    // FromDigits(digits, base?) → the integer with those base-b digits. Inverse of IntegerDigits.
+    FromDigits: {
+      signature: "(list<integer>, integer?) -> integer",
+      evaluate: (ops: ReadonlyArray<Expression>) => {
+        const base = ops.length >= 2 ? intOf(ops[1]) : 10;
+        return engineOf(ops[0]).number(FromDigitsKernel(asIntList(ops[0]), base));
+      },
+    },
+    // RealDigits(n, base?) → [digits, exponent] (Wolfram; exponent = number of integer digits).
+    RealDigits: {
+      signature: "(integer, integer?) -> tuple<list<integer>, integer>",
+      evaluate: (ops: ReadonlyArray<Expression>) => {
+        const base = ops.length >= 2 ? intOf(ops[1]) : 10;
+        const [digits, exp] = RealDigitsKernel(intOf(ops[0]), base);
+        return engineOf(ops[0]).box(["List", ["List", ...digits], exp]);
       },
     },
   },

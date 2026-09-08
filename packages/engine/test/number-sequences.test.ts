@@ -37,6 +37,27 @@ describe("counting-sequence operators", () => {
   });
 });
 
+describe("digit functions", () => {
+  it("IntegerDigits: base, padding, and inverse via FromDigits", () => {
+    expect(str(["IntegerDigits", 12345])).toBe("[1,2,3,4,5]");
+    expect(str(["IntegerDigits", 255, 16])).toBe("[15,15]"); // 0xFF
+    expect(str(["IntegerDigits", 5, 2])).toBe("[1,0,1]");
+    expect(str(["IntegerDigits", 5, 2, 5])).toBe("[0,0,1,0,1]"); // left-pad to length 5
+    expect(str(["IntegerDigits", 0])).toBe("[0]");
+    expect(num(["FromDigits", ["List", 1, 2, 3, 4, 5]])).toBe(12345);
+    expect(num(["FromDigits", ["List", 15, 15], 16])).toBe(255);
+    expect(num(["FromDigits", ["IntegerDigits", 9999, 7], 7])).toBe(9999); // round-trip in base 7
+  });
+  it("IntegerDigits is Listable over n", () => {
+    expect(str(["IntegerDigits", ["List", 10, 20, 30]])).toBe("[[1,0],[2,0],[3,0]]");
+  });
+  it("RealDigits returns [digits, exponent]", () => {
+    expect(str(["RealDigits", 12345])).toBe("[[1,2,3,4,5],5]");
+    expect(str(["RealDigits", 0])).toBe("[[0],1]");
+    expect(str(["RealDigits", 255, 16])).toBe("[[15,15],2]");
+  });
+});
+
 describe("Groupings collection (binary parenthesizations, Wolfram Groupings[n,2])", () => {
   it("count = Catalan(n-1); nested element", () => {
     expect(num(["Length", ["Groupings", 4]])).toBe(5); // Catalan(3)
