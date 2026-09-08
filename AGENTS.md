@@ -47,6 +47,14 @@ not under `docs/` (public docs site) and not committed to this repo.
   the public wiki — spike scripts, dumps, anything not meant to go public yet. Fold pieces of it into `master` once
   they're ready; don't push the branch itself.
 
+## Deployment
+
+The docs site (`enumeratio.dev`) is hosted on **Cloudflare Pages** via its GitHub Git integration — no deploy
+workflow in this repo. Cloudflare builds `main` for production and every pull request for a preview (URL posted on
+the PR as a deployment status), running `pnpm docs:build` → `docs/.vitepress/dist` (Node 24, pnpm from
+`packageManager`). VitePress `base` is unset (`/`), which serves correctly at both the custom domain and the
+`*.pages.dev` preview hosts. Build/branch/domain settings live in the Cloudflare dashboard, not here.
+
 ## Verifying changes
 
 - Docs / components / explorer: `pnpm docs:dev` (VitePress). From a worktree, run it in the worktree itself (a
