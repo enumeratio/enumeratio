@@ -3,7 +3,7 @@
 // judgements of its own, only PURE recomputations of what bind.ts already proved valid (see opTypeForLower) so it
 // never needs a Catalog — same reasoning as the header note in types.ts.
 import { args, head, isNumber, isSymbol, numberValue, symbolName, type Expression, type NodePath } from './ast.js'
-import { betaReduce, comprehensionDomain, isUserFnHead, NEXT_PREV_RANK, type Bound } from './bind.js'
+import { betaReduce, comprehensionDomain, isUserFnHead, NEXT_PREV_RANK, summationRange, type Bound } from './bind.js'
 import { OPERATORS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
@@ -112,6 +112,30 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
       return numberValue(el)
     })
     return { kind: 'lit', value: vals }
+  }
+
+  // A set literal `{1, 2, 2, 4}` → a distinct-valued array constant (order-preserving dedup). Numbers only for now.
+  if (h === 'Set') {
+    const seen = new Set<number>()
+    const vals: number[] = []
+    for (const el of a) {
+      if (!isNumber(el)) throw new Error('a set literal must be numbers for now, e.g. {1, 2, 4}')
+      const n = numberValue(el)
+      if (!seen.has(n)) { seen.add(n); vals.push(n) }
+    }
+    return { kind: 'lit', value: vals }
+  }
+
+  // A big-∑ → the sum of its body unrolled over the literal range: `sum(List(body|i=lo … body|i=hi))`. Reuses the
+  // list-sum primitive + the same beta-reduction bind.ts typed.
+  if (h === 'Sum' && a.length === 2) {
+    const range = summationRange(a[1])
+    if (!range) throw new Error('a ∑ needs a literal integer range')
+    const items = range.values.map((v, i) => {
+      const { expr: sub, prefix } = betaReduce([range.varName], a[0], [v], argPath(path, i))
+      return lowerExpr(sub, prefix, scope, types)
+    })
+    return { kind: 'apply', fn: fnRef('sum'), args: [{ kind: 'apply', fn: fnRef('List'), args: items }] }
   }
 
   return lowerGenericApply(h, a, path, scope, types)

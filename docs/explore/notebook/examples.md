@@ -76,16 +76,45 @@ Enter a list with `[…]`; declare an element of a sized collection and locate i
 ## Lists, comprehensions & reductions
 
 Build a list with a `for` comprehension over a literal domain, transform it, and reduce it —
-the list ops (`join`, `sort`, `unique`) and reductions (`sum`, `min`, `max`, `first`, `last`)
+the list ops (`join`, `sort`, `unique`) and reductions (`total`, `min`, `max`, `first`, `last`)
 map onto compute-engine's own operators.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
-  {"id":"g1","latex":"[i^2 \\operatorname{for} i=[1,2,3,4,5]]"},
-  {"id":"g2","latex":"\\operatorname{sort}(\\left\\lbrack5,2,9,1\\right\\rbrack)"},
-  {"id":"g3","latex":"\\operatorname{unique}(\\left\\lbrack3,1,1,2,3\\right\\rbrack)"},
-  {"id":"g4","latex":"\\operatorname{sum}([2i \\operatorname{for} i=[1,2,3,4]])"},
-  {"id":"g5","latex":"\\operatorname{max}(\\operatorname{join}(\\left\\lbrack1,2\\right\\rbrack,\\left\\lbrack9,3\\right\\rbrack))"}
+  {"id":"g1","latex":"[i^2 for i=[1,2,3,4,5]]"},
+  {"id":"g2","latex":"sort([5,2,9,1])"},
+  {"id":"g3","latex":"unique([3,1,1,2,3])"},
+  {"id":"g4","latex":"total([2i for i=[1,2,3,4]])"},
+  {"id":"g5","latex":"max(join([1,2],[9,3]))"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Sums & sets
+
+A big **∑** sums its body over a literal range; **`total`** sums a list (Desmos's name for it). A
+**set** `{…}` canonicalizes to its distinct elements.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"s1","latex":"\\sum_{i=1}^{4}2i"},
+  {"id":"s2","latex":"\\sum_{i=1}^{5}i^2"},
+  {"id":"s3","latex":"total([1,2,3,4])"},
+  {"id":"s4","latex":"\\left\\lbrace1,2,2,4\\right\\rbrace"},
+  {"id":"s5","latex":"total(\\left\\lbrace1,2,2,4\\right\\rbrace)"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Actions & the ticker
+
+An **action** `p → …` reassigns its target when triggered — click the **→** in its gutter to run it
+once, or start the **ticker** (bottom toolbar) to fire it repeatedly. The whole ticker run is one undo
+step; the seed button rerolls any randomness.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"a1","latex":"p=0"},
+  {"id":"a2","latex":"p \\to p+2"},
+  {"id":"a3","latex":"2p+1"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 

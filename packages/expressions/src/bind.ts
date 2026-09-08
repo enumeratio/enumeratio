@@ -49,7 +49,21 @@ const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'Join', 'Sort', 'U
 /** List reductions evaluating to a SCALAR — Sum/Min/Max/Product over a list, First/Last of one. Unlike
  *  join/sort/unique, CE does NOT canonicalize these operator names, so the head stays our lowercase id. Typed
  *  `numeric` (the value-refined badge then reads ∈ ℕ/ℤ/ℝ). */
-const LIST_SCALAR_OPS = new Set(['sum', 'min', 'max', 'first', 'last'])
+const LIST_SCALAR_OPS = new Set(['sum', 'total', 'min', 'max', 'first', 'last'])
+
+/** The integer range a big-∑'s `Tuple(var, lo, hi)` iterates, as `{varName, values}` (lo..hi inclusive, each a
+ *  number Expression), or null if it isn't a literal integer range. Shared by bind + lower so the two unroll the
+ *  SAME way (mirrors `comprehensionDomain`). */
+export function summationRange(tuple: Expression): { varName: string; values: Expression[] } | null {
+  if (head(tuple) !== 'Tuple') return null
+  const [v, lo, hi] = args(tuple)
+  if (!isSymbol(v) || !isNumber(lo) || !isNumber(hi)) return null
+  const a = numberValue(lo), b = numberValue(hi)
+  if (!Number.isInteger(a) || !Number.isInteger(b) || b - a > 100000) return null // guard a runaway range
+  const values: Expression[] = []
+  for (let i = a; i <= b; i++) values.push(i as unknown as Expression)
+  return { varName: symbolName(v), values }
+}
 
 /** The values a `for` comprehension iterates, when they can be enumerated at bind/lower time: a literal `List`'s
  *  items, or a `Range[lo, hi, step?]` expanded to numbers. Otherwise null (a non-literal domain isn't unrollable
@@ -265,6 +279,26 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
       typeNode(sub, prefix, ctx)
     })
     return scalarType('integer[]')
+  }
+
+  // A set literal `{1, 2, 2, 4}` → CE `["Set", …]`. Treated as a distinct-valued int list (dedup happens at
+  // lowering); typed like a list literal. Non-numeric members ({a,b,c}) type-check but only lower once we support
+  // symbol/word sets (see Permutations-over-a-word — piled).
+  if (h === 'Set') {
+    for (let i = 0; i < a.length; i++) typeNode(a[i], argPath(path, i), ctx)
+    return scalarType('integer[]')
+  }
+
+  // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`. Evaluated by UNROLLING the literal range
+  // and summing (same beta-reduction as a `for` comprehension), so `i` is bound, not a free symbol.
+  if (h === 'Sum' && a.length === 2) {
+    const range = summationRange(a[1])
+    if (!range) { ctx.errors(path, 'a ∑ needs a literal integer range, e.g. \\sum_{i=1}^{n} with numeric bounds'); return UNKNOWN }
+    range.values.forEach((v, i) => {
+      const { expr: sub, prefix } = betaReduce([range.varName], a[0], [v], argPath(path, i))
+      typeNode(sub, prefix, ctx)
+    })
+    return scalarType('numeric')
   }
 
   return typeGenericApply(h, a, path, ctx)

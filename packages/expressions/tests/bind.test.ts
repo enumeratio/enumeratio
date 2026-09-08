@@ -108,6 +108,18 @@ describe('bind: a notebook session', () => {
     expect(bound.errors).toEqual([])
   })
 
+  it('a big ∑ over a literal range types as a numeric scalar (i is bound, not free)', () => {
+    const bound = bind(parser.parse('\\sum_{i=1}^{4} 2i'), new Map(), catalog)
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
+    expect(bound.errors).toEqual([])
+  })
+
+  it('a set literal types as an int array', () => {
+    const bound = bind(parser.parse('\\{1,2,2,4\\}'), new Map(), catalog)
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'integer[]' })
+    expect(bound.errors).toEqual([])
+  })
+
   it('|C| over a collection handle is its cardinality (a natural number)', () => {
     const bound = bind(parser.parse('|\\operatorname{Permutations}(4)|'), new Map(), catalog)
     expect(bound.stmt.k).toBe('expr')
