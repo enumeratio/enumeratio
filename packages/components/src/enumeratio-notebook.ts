@@ -36,6 +36,11 @@ let nextIdNum = 0
 /** How many collection-preview elements to show, and to add per "pull more" click. */
 const PREVIEW_STEP = 5
 
+/** Conventional parameter names by position (n = size, then k, …) — used to spell a handle's bindings into a
+ *  deep link when the catalog doesn't hand us real param names (the notebook's in-memory catalog carries the
+ *  binding VALUES on the handle, not the names). Real names, when present, win over this. */
+const POSITIONAL_PARAM_NAMES = ['n', 'k', 'm', 'r', 's']
+
 
 @customElement('enumeratio-notebook')
 export class EnumeratioNotebook extends LitElement {
@@ -402,7 +407,9 @@ export class EnumeratioNotebook extends LitElement {
     const params = this.notebook?.catalog.collection(t.coll)?.params ?? []
     const parts: string[] = []
     const scalar = (v: unknown): v is number | string => typeof v === 'number' || typeof v === 'string'
-    h.positional.forEach((v, i) => { if (params[i] != null && scalar(v)) parts.push(`${params[i]}=${v}`) })
+    // Prefer a real catalog param name; fall back to the positional convention (n, k, …) so the bindings still
+    // reach the URL — the notebook holds the VALUES in memory even when it has no names.
+    h.positional.forEach((v, i) => { const name = params[i] ?? POSITIONAL_PARAM_NAMES[i]; if (name != null && scalar(v)) parts.push(`${name}=${v}`) })
     for (const [k, v] of Object.entries(h.named)) if (scalar(v)) parts.push(`${k}=${v}`)
     return parts.length ? `${base};${parts.join(';')}` : base
   }
