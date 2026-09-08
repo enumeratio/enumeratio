@@ -18,18 +18,15 @@ const run = (cmd, cwd) => execSync(cmd, { cwd, stdio: ['ignore', 'pipe', 'pipe']
 const fail = (m) => { console.error('✗ smoke:', m); rmSync(work, { recursive: true, force: true }); process.exit(1) }
 
 try {
-  console.log('smoke: packing tarball…')
-  const packed = JSON.parse(run(`npm pack --json --pack-destination "${work}"`, pkgDir))
-  const tarball = join(work, packed[0].filename)
+  console.log('smoke: packing tarball (pnpm pack → runs prepack build, applies publishConfig → dist exports)…')
+  run(`pnpm pack --pack-destination "${work}"`, pkgDir)
+  const tgz = readdirSync(work).find((f) => f.endsWith('.tgz'))
+  if (!tgz) fail('pnpm pack produced no tarball')
+  const tarball = join(work, tgz)
 
   writeFileSync(join(work, 'package.json'), JSON.stringify({ name: 'smoke', private: true, type: 'module' }))
   console.log('smoke: installing the tarball + compute-engine into a clean dir outside the workspace…')
-  // The package ships TypeScript source (exports → ./src/index.ts, like the rest of the monorepo), so a consumer
-  // loads it through a TS-aware runtime or bundler — the realistic path for a compute-engine library. We install
-  // tsx to stand in for that; bare `node` (no loader) would need a JS build step, tracked as a publishability
-  // follow-up. tsx is the CONSUMER's runtime choice — it must not drag any @enumeratio internal or pglite in,
-  // which the checks below still enforce.
-  run(`npm install --no-audit --no-fund --no-package-lock "${tarball}" @cortex-js/compute-engine@${CE_VERSION} tsx`, work)
+  run(`npm install --no-audit --no-fund --no-package-lock "${tarball}" @cortex-js/compute-engine@${CE_VERSION}`, work)
 
   // No @enumeratio/* internals, no pglite, should have been dragged in.
   const scoped = existsSync(join(work, 'node_modules/@enumeratio')) ? readdirSync(join(work, 'node_modules/@enumeratio')) : []
@@ -52,8 +49,8 @@ try {
       ceFact:   s(['Factorial', 6]),
     }))
   `)
-  console.log('smoke: evaluating on a bare engine…')
-  const out = JSON.parse(run('node --import tsx app.mjs', work))
+  console.log('smoke: evaluating on a bare engine (plain node — the tarball ships built dist/*.js)…')
+  const out = JSON.parse(run('node app.mjs', work))
 
   const expect = {
     lastPerm: '[4,3,2,1]', dyck5: '42', rank: '3', bell5: '52', hex255: '[15,15]', ceFact: '720',
