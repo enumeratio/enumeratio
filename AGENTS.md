@@ -49,11 +49,15 @@ not under `docs/` (public docs site) and not committed to this repo.
 
 ## Deployment
 
-The docs site (`enumeratio.dev`) is hosted on **Cloudflare Pages** via its GitHub Git integration — no deploy
-workflow in this repo. Cloudflare builds `main` for production and every pull request for a preview (URL posted on
-the PR as a deployment status), running `pnpm docs:build` → `docs/.vitepress/dist` (Node 24, pnpm from
-`packageManager`). VitePress `base` is unset (`/`), which serves correctly at both the custom domain and the
-`*.pages.dev` preview hosts. Build/branch/domain settings live in the Cloudflare dashboard, not here.
+Production (`enumeratio.dev`) ships from **GitHub Pages** on merge to `main` (`.github/workflows/pages.yml`).
+
+**On-demand previews** go to **Cloudflare Pages** via `preview.yml` — NOT auto-built per push (that would burn the
+free-tier build cap fast at this PR volume). It's a *direct-upload* deploy: the workflow builds the site on GitHub's
+runners and uploads `docs/.vitepress/dist` to CF, so it costs zero CF build minutes. Trigger it two ways: comment
+`/preview` on a PR (owner/member/collaborator only), or run the `Preview (Cloudflare Pages)` workflow manually with a
+ref. It posts the preview URL back as a PR comment / job summary. VitePress `base` is unset (`/`), so the same build
+serves at both `enumeratio.dev` and the `*.pages.dev` preview hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` +
+`CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio-docs`).
 
 ## Verifying changes
 

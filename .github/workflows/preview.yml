@@ -1,0 +1,85 @@
+name: Preview (Cloudflare Pages)
+
+# On-demand docs previews via Cloudflare Pages direct-upload. NOT triggered per push — GitHub Pages
+# owns production (pages.yml); this only runs when a preview is explicitly requested, to stay well
+# under CF's free-tier build cap. Build runs on GitHub's runners (free on a public repo); CF only
+# receives the finished dist/, so it consumes no CF build minutes.
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Branch or ref to build and deploy
+        required: true
+        default: main
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: preview-${{ github.event.issue.number || github.event.inputs.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    # Manual dispatch, or a `/preview` comment on a PR from a trusted author (fork commenters can't
+    # trigger a secret-bearing build of their own code this way).
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.issue.pull_request &&
+       startsWith(github.event.comment.body, '/preview') &&
+       contains(fromJson('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve ref
+        id: ref
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "ref=${{ github.event.inputs.ref }}" >> "$GITHUB_OUTPUT"
+          else
+            branch=$(gh pr view "${{ github.event.issue.number }}" \
+              --repo "${{ github.repository }}" --json headRefName -q .headRefName)
+            echo "ref=$branch" >> "$GITHUB_OUTPUT"
+            echo "pr=${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.ref.outputs.ref }}
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.33.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm docs:build
+
+      - name: Deploy to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >
+            pages deploy docs/.vitepress/dist
+            --project-name=enumeratio-docs
+            --branch=${{ steps.ref.outputs.ref }}
+
+      - name: Report preview URL
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ steps.deploy.outputs.deployment-url }}
+          PR: ${{ steps.ref.outputs.pr }}
+        run: |
+          echo "### Cloudflare Pages preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "[$URL]($URL)" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "$PR" ]; then
+            gh pr comment "$PR" --repo "${{ github.repository }}" \
+              --body "📦 Cloudflare Pages preview: $URL"
+          fi
