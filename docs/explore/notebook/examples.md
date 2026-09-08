@@ -73,6 +73,22 @@ Enter a list with `[…]`; declare an element of a sized collection and locate i
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
+## Lists, comprehensions & reductions
+
+Build a list with a `for` comprehension over a literal domain, transform it, and reduce it —
+the list ops (`join`, `sort`, `unique`) and reductions (`sum`, `min`, `max`, `first`, `last`)
+map onto compute-engine's own operators.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"g1","latex":"[i^2 \\operatorname{for} i=[1,2,3,4,5]]"},
+  {"id":"g2","latex":"\\operatorname{sort}(\\left\\lbrack5,2,9,1\\right\\rbrack)"},
+  {"id":"g3","latex":"\\operatorname{unique}(\\left\\lbrack3,1,1,2,3\\right\\rbrack)"},
+  {"id":"g4","latex":"\\operatorname{sum}([2i \\operatorname{for} i=[1,2,3,4]])"},
+  {"id":"g5","latex":"\\operatorname{max}(\\operatorname{join}(\\left\\lbrack1,2\\right\\rbrack,\\left\\lbrack9,3\\right\\rbrack))"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
 ## Errors, gracefully
 
 An unknown name errors *below* the field, in full, once the line settles — a blank or half-typed line never
