@@ -228,7 +228,7 @@ export class EnumeratioNotebook extends LitElement {
     if (model.errors.length > 0) { this.setResult(id, { error: model.errors[0] }); return }
     if (!model.parsed) { this.setResult(id, {}); return }
     if (model.parsed.errors.length > 0) { this.setResult(id, { error: model.parsed.errors[0].message }); return }
-    this.lineAst.set(id, astJson(model.parsed))
+    this.lineAst.set(id, astFullForm(model.parsed))
 
     // A define re-binds its symbol from scratch: back to the declared type (no value) or gone — never a stale value.
     if (model.bindKind === 'define' && model.defines) this.resetBinding(model.defines)
@@ -462,18 +462,40 @@ function message(e: unknown): string {
   return e instanceof Error ? e.message : String(e)
 }
 
-/** The parsed statement (the MathJSON-derived AST the notebook binds) as pretty JSON, for the line inspector.
- *  Circular-safe and length-capped so a pathological tree can't wedge the panel. */
-function astJson(parsed: unknown): string {
-  const seen = new WeakSet<object>()
+/** MathJSON → a Wolfram-FullForm-style string: `["Binomial",6,2]` → `Binomial[6, 2]`, `n^2+1` →
+ *  `Add[Power[n, 2], 1]`. Handles the boxed MathJSON number/symbol/string/function wrappers. */
+function fullForm(x: unknown): string {
+  if (Array.isArray(x)) {
+    const [h, ...rest] = x
+    return `${fullForm(h)}[${rest.map(fullForm).join(', ')}]`
+  }
+  if (typeof x === 'string') return x
+  if (x && typeof x === 'object') {
+    const o = x as Record<string, unknown>
+    if ('sym' in o) return String(o.sym)
+    if ('num' in o) return String(o.num)
+    if ('str' in o) return JSON.stringify(o.str)
+    if ('fn' in o) return fullForm(o.fn)
+    return JSON.stringify(x)
+  }
+  return String(x)
+}
+
+/** The parsed statement rendered in FullForm, for the opt-in line inspector. Pulls the statement's MathJSON
+ *  (`body`/`domain`) and prefixes a define/declare so the shape is legible; length-capped. */
+function astFullForm(parsed: unknown): string {
   try {
-    const s = JSON.stringify(parsed, (_k, v) => {
-      if (typeof v === 'object' && v !== null) { if (seen.has(v)) return '[circular]'; seen.add(v) }
-      return v
-    }, 2)
-    return s.length > 8000 ? s.slice(0, 8000) + '\n… (truncated)' : s
-  } catch {
-    return String(parsed)
+    const stmt = (parsed as any)?.stmt ?? parsed
+    const mj = stmt?.body ?? stmt?.domain ?? stmt
+    let out = fullForm(mj)
+    if (stmt?.k === 'declare' && stmt?.name) out = `${stmt.name} ∈ ${out}`
+    else if (stmt?.k === 'define' && stmt?.name) {
+      const params = Array.isArray(stmt.params) && stmt.params.length ? `(${stmt.params.join(', ')})` : ''
+      out = `${stmt.name}${params} := ${out}`
+    }
+    return out.length > 8000 ? out.slice(0, 8000) + ' … (truncated)' : out
+  } catch (e) {
+    return message(e)
   }
 }
 

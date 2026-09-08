@@ -37,6 +37,11 @@ export type Bound = {
  *  once `id` is registered in the parser's `functions` catalog — see ce/latex.ts's `catalogDictionary`). */
 export const NEXT_PREV_RANK = new Set(['next', 'prev', 'rank'])
 
+/** Handle-primitives that yield an ELEMENT of the collection their first argument denotes — `random_element(C)`
+ *  and `unrank(C, i)`. Typed `elem(C)` (not the scalar the generic fallback would guess) so a line like
+ *  `random_element(permutations(10))` reads `∈ permutations`, and so `next`/`prev`/`rank` can chain onto it. */
+const HANDLE_ELEM = new Set(['random_element', 'unrank'])
+
 /** Deep-substitute a user function's params with the caller's ARGUMENT EXPRESSIONS (not their values — this is
  *  syntactic beta-reduction, substitute-then-type, matching bind.test.ts's `f(3)` case). `prefix` is a synthetic
  *  NodePath namespace for the freshly-built tree: it can't reuse the call site's own paths (those belong to the
@@ -166,6 +171,12 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     if (!ctx.scope.has(fname) && ctx.catalog.collection(fname)) {
       return handleType(fname, buildConstructionHandle(fname, argExprs, path, ctx))
     }
+    // `random_element(C)` / `unrank(C, i)` — an element of the collection C its handle argument denotes.
+    if (HANDLE_ELEM.has(fname) && !ctx.scope.has(fname)) {
+      const base = typeNode(argExprs[0], argPath(path, 0), ctx)
+      for (let i = 1; i < argExprs.length; i++) typeNode(argExprs[i], argPath(path, i), ctx)
+      return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
+    }
     return typeOp('mul', a, path, ctx)
   }
   if (h === 'InvisibleOperator') return typeOp('mul', a, path, ctx)   // "2x", "xy", "2(x+1)"
@@ -181,6 +192,14 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     const t0 = argT(0)
     if (t0.k !== 'elem') { ctx.errors(path, `"${h}" expects a collection element, not ${t0.k}`); return UNKNOWN }
     return h === 'rank' ? scalarType('natural_number') : t0
+  }
+
+  // `random_element(C)` / `unrank(C, i)` as a direct call (the head is registered in the parser's functions, so
+  // CE emits `[id, …]` not InvisibleOperator) — an ELEMENT of the collection C its handle argument denotes.
+  if (HANDLE_ELEM.has(h) && a.length >= 1) {
+    const base = argT(0)
+    for (let i = 1; i < a.length; i++) argT(i)
+    return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
   return typeGenericApply(h, a, path, ctx)

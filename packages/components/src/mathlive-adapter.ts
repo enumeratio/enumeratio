@@ -53,17 +53,11 @@ export const mathliveAdapter: AdapterFactory = async (container, opts) => {
   mf.menuItems = [] // no per-field hamburger menu — an empty item list disables it (see the ::part hide in the host)
   if (opts.placeholder) mf.placeholder = opts.placeholder
   if (opts.readonly) mf.readOnly = true
-  // Extend (not replace) MathLive's built-in inline shortcuts with a few catalog-flavored ones.
-  mf.inlineShortcuts = {
-    ...mf.inlineShortcuts,
-    in: '\\in',
-    NN: '\\mathbb{N}',
-    ZZ: '\\mathbb{Z}',
-    QQ: '\\mathbb{Q}',
-    le: '\\le',
-    ge: '\\ge',
-    ne: '\\ne',
-  }
+  // DISABLE MathLive's inline shortcuts entirely. Its defaults fire on typed letter runs — `and`→∧, `or`→∨,
+  // `pi`→π, `in`→∈ — which hijack ordinary words (you can't type "Random" without "an…d" becoming ∧, nor "sin"
+  // without "in"→∈). We want to type function/collection names as plain words, so nothing is auto-substituted;
+  // real notation still comes from `\operatorname{}`, LaTeX commands, and the catalog completion popover.
+  mf.inlineShortcuts = {}
 
   type Ev = 'input' | 'enter' | 'move-out' | 'blur' | 'focus'
   const enterHandlers = new Set<(detail?: { direction?: 'up' | 'down' }) => void>()

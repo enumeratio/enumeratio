@@ -110,26 +110,24 @@ export class EnumeratioExpressionLine extends LitElement {
     const hasValue = !errVisible && !s.busy && s.value != null
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
-    const meta = errVisible
-      ? html`<span class="error">${s.error}</span>`
-      : s.type
-        ? html`<span class="type">${s.type}</span>`
-        : ''
     return html`
       <div class="line" @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}>
-        <enumeratio-math-input
-          .latex=${this.latex}
-          .completer=${this.completer}
-          @enumeratio-input=${this.onInput}
-          @enumeratio-commit=${this.onCommit}
-          @enumeratio-move=${this.onMove}
-        ></enumeratio-math-input>
+        <div class="field">
+          <enumeratio-math-input
+            .latex=${this.latex}
+            .completer=${this.completer}
+            @enumeratio-input=${this.onInput}
+            @enumeratio-commit=${this.onCommit}
+            @enumeratio-move=${this.onMove}
+          ></enumeratio-math-input>
+          ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
+        </div>
         <div class="value">
           ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
         </div>
-        ${meta ? html`<div class="meta">${meta}</div>` : ''}
+        ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         ${this.astOpen && s.ast
-          ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close"><pre>${s.ast}</pre></div>`
+          ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
           : ''}
       </div>
     `
@@ -146,9 +144,27 @@ export class EnumeratioExpressionLine extends LitElement {
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
     }
     /* The field is the full row, so every field in a notebook is exactly the same width. */
+    .field {
+      position: relative;
+    }
     enumeratio-math-input {
       display: block;
       width: 100%;
+    }
+    /* The bound type, in notation, floating at the right INSIDE the field — a faint chip so it reads over the
+       field's content; hidden on error. */
+    .type {
+      position: absolute;
+      right: 0.55rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      font-size: 0.8em;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      opacity: 0.8;
+      padding: 0 0.25rem;
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--enumeratio-surface, var(--p-content-background, canvas)) 78%, transparent);
     }
     /* Value on its own row below the field, right-aligned and free to use the full width. */
     .value {
@@ -163,18 +179,12 @@ export class EnumeratioExpressionLine extends LitElement {
       opacity: 0.4;
       font-weight: 400;
     }
-    /* Type (in notation) or, on failure, the error — quiet and gray, right under the value. */
-    .meta {
-      text-align: right;
-      margin-top: 0.05rem;
-      font-size: 0.82em;
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      overflow-wrap: anywhere;
-    }
-    .type {
-      opacity: 0.75;
-    }
+    /* A parse/bind error takes the value's place, below the field — full width for the whole message, muted. */
     .error {
+      margin-top: 0.15rem;
+      text-align: right;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
       color: color-mix(in srgb, var(--p-red-500, #dc2626) 80%, var(--enumeratio-muted, currentColor));
     }
     .hint {

@@ -222,7 +222,16 @@ export class EnumeratioMathInput extends LitElement {
   // own internal keydown handling, so it can fully preempt arrow/enter/escape while the completion popover is open.
   // When the popover is closed these keys pass straight through untouched.
   private onMountKeydownCapture = (ev: KeyboardEvent): void => {
-    if (!this.popoverOpen) return
+    if (!this.popoverOpen) {
+      // Tab / Shift+Tab hops to the next / previous line's field rather than leaving the notebook or inserting a
+      // tab. (With the popover open, Tab accepts the active completion — handled in the switch below.)
+      if (ev.key === 'Tab') {
+        ev.preventDefault()
+        ev.stopPropagation()
+        this.dispatchEvent(new CustomEvent('enumeratio-move', { detail: { direction: ev.shiftKey ? 'up' : 'down' }, bubbles: true, composed: true }))
+      }
+      return
+    }
     switch (ev.key) {
       case 'ArrowDown':
         ev.preventDefault()
@@ -316,8 +325,14 @@ export class EnumeratioMathInput extends LitElement {
       background: transparent;
       padding: 0.2rem 0.6rem;
     }
+    /* The focus ring lives on the FIELD's own rounded border, not MathLive's inner (otherwise invisible) box. */
     .wrap:focus-within {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 25%, transparent);
+    }
+    .mount math-field:focus,
+    .mount math-field:focus-within {
+      outline: none;
     }
     .wrap.readonly {
       opacity: 0.7;
