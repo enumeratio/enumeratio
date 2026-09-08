@@ -23,7 +23,8 @@ Closed-form counts, evaluated exactly on the compute-engine.
 ## Number theory
 
 Curated identities compute-engine shares with us — `\gcd`, `\mathrm{lcm}`, binomial, factorial — alongside a
-collection's cardinality and a running sum. (Broader CE math — `\max`, `\sqrt`, `\zeta`, … — is being wired in.)
+collection's cardinality and a running sum. Broader CE math (`\max`, `\sqrt`, `\zeta`, the trig family, the
+number-theory heads) is wired in too — see the sections below.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
@@ -36,6 +37,39 @@ collection's cardinality and a running sum. (Broader CE math — `\max`, `\sqrt`
   {"id":"n7","latex":"total([k^2 for k=[1,2,3,4,5]])"},
   {"id":"n8","latex":"Bell(5)+CatalanNumber(5)"},
   {"id":"n9","latex":"\\frac{20!}{10! \\cdot 10!}"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Trigonometry
+
+The full trig / hyperbolic / inverse family, evaluated by compute-engine — exact at nice angles
+(`\sin\pi = 0`, `\arcsin 1 = \tfrac{\pi}{2}`), a trimmed decimal otherwise.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"t1","latex":"\\sin(\\pi)"},
+  {"id":"t2","latex":"\\cos(0)"},
+  {"id":"t3","latex":"\\arcsin(1)"},
+  {"id":"t4","latex":"\\tan\\left(\\frac{\\pi}{4}\\right)"},
+  {"id":"t5","latex":"\\sinh(0)"},
+  {"id":"t6","latex":"\\sin(1)"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Constants
+
+`\pi` and `\varphi` (the golden ratio) are symbolic — they render exactly and fold to a decimal only when the rest
+of the expression forces it. A constant is shadowable: define `\tau = 2\pi` (or bind your own `\pi`) and the
+definition wins.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"k1","latex":"\\pi"},
+  {"id":"k2","latex":"2\\pi"},
+  {"id":"k3","latex":"\\varphi"},
+  {"id":"k4","latex":"\\pi + 1"},
+  {"id":"k5","latex":"\\tau = 2\\pi"},
+  {"id":"k6","latex":"\\tau"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 

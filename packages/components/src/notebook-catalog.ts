@@ -141,8 +141,17 @@ async function build(): Promise<NotebookCatalog> {
   if (collSet.has('integer_numbers')) symbols['\\mathbb{Z}'] = 'integer_numbers'
   if (collSet.has('rational_numbers')) symbols['\\mathbb{Q}'] = 'rational_numbers'
 
+  // CE-native ops with NO application-parse in the LatexSyntax dictionary — registered as parser functions so a
+  // typed word `Fibonacci(10)` parses to the `Fibonacci` head (names.ts binds each via `{ce}`) AND shows in
+  // completion. All confirmed to evaluate on CE 0.125 and to register without a duplicate-name warning. NOT here:
+  // the trig/hyperbolic/inverse heads (LatexSyntax already parses `\operatorname{arcsin}(x)` as an application),
+  // and Sign/Heaviside (their CE names collide with existing dictionary entries — registering dup-warns).
+  const CE_WORD_OPS = [
+    'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'Clamp',
+    'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose',
+  ] as const
   const functionIds = [
-    ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES]),
+    ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES, ...CE_WORD_OPS]),
   ]
 
   // Seeded math NOTATION (id -> display LaTeX). Where present it replaces the `\operatorname{<Pascal>}` spelling

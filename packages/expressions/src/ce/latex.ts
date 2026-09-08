@@ -31,11 +31,13 @@ const escapeId = (id: string): string => id.replace(/_/g, '\\_')
  *  into subscripts) and have it resolve to the same catalog id. */
 export const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
 
-/** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\mathrm{}` over the
- *  PascalCase spelling. Our catalog ids are AST-node bindings, so they read `\mathrm{}` (upright, no MathLive
- *  double-wrap); `\operatorname{}` is reserved for syntax KEYWORDS (`for`, `with`). The internal MathJSON symbol
- *  stays the snake id regardless — this is purely the display/parse spelling. `role` is kept for callers that
- *  still care to distinguish; both currently render the same `\mathrm{}` wrapper. */
+/** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\operatorname{}` over
+ *  the PascalCase spelling. Both render upright with no MathLive double-wrap — same look as `\mathrm{}` — but
+ *  `\operatorname{}` never triggers CE's UNIT lookup, whereas `\mathrm{cd}`/`\mathrm{bar}`/`\mathrm{deg}` parse to
+ *  `["__unit__", …]` (candela/pressure/degree are SI unit names). So every identifier — plain variable AND catalog
+ *  id — reads `\operatorname{}`. Genuine operator words (`det`→Determinant, `sin`→Sin, `gcd`→GCD) resolve the same
+ *  under both wrappers. The internal MathJSON symbol stays the snake id regardless — this is purely the
+ *  display/parse spelling. `role` is kept for callers that still care to distinguish. */
 export type IdentifierDisplay = { kind: 'operator' | 'entity' | 'notation'; latex: string }
 export function identifierDisplay(
   id: string,
@@ -44,13 +46,13 @@ export function identifierDisplay(
 ): IdentifierDisplay {
   void role
   const n = notation?.[id]
-  return n ? { kind: 'notation', latex: n } : { kind: 'entity', latex: `\\mathrm{${pascalCase(id)}}` }
+  return n ? { kind: 'notation', latex: n } : { kind: 'entity', latex: `\\operatorname{${pascalCase(id)}}` }
 }
 
 /** The single spelling an id serializes to / the completer inserts / the parser round-trips: notation if present,
- *  else `\mathrm{<PascalCase>}` (our AST-node-binding spelling — `\operatorname{}` is for keywords, not ids). */
+ *  else `\operatorname{<PascalCase>}` (see identifierDisplay for why `\operatorname{}`, not `\mathrm{}`). */
 export const serializeLatex = (id: string, notation?: Record<string, string>): string =>
-  notation?.[id] ?? `\\mathrm{${pascalCase(id)}}`
+  notation?.[id] ?? `\\operatorname{${pascalCase(id)}}`
 
 /** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id. The TRIGGER is the PascalCase spelling
  *  (what you type — `\operatorname{Permutations}(...)` parses to `[permutations, ...]`, `\operatorname{Bell}` to
@@ -241,14 +243,15 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
       }
       const canonical = catalogIds.has(ident) ? ident : aliases.get(ident)
       if (canonical) {
-        // A real catalog id is an AST-node binding: Pascal spelling in `\mathrm{}` (the dictionary triggers on the
-        // Pascal symbol either way). A non-id keyword such as `for` reaches the parser as `\operatorname{}` verbatim.
-        appendRaw(catalogIds.has(canonical) ? `\\mathrm{${pascalCase(canonical)}}` : `\\operatorname{${escapeId(canonical)}}`, i)
+        // A real catalog id is an AST-node binding: Pascal spelling in `\operatorname{}` (the dictionary triggers
+        // on the Pascal symbol either way). A non-id keyword such as `for` also reaches the parser as
+        // `\operatorname{}` verbatim.
+        appendRaw(catalogIds.has(canonical) ? `\\operatorname{${pascalCase(canonical)}}` : `\\operatorname{${escapeId(canonical)}}`, i)
       } else if (/^[A-Za-z]{2,}$/.test(ident)) {
         // An unmatched pure-letter WORD is ONE identifier (a multi-letter variable), not a product of its letters
-        // — `\mathrm{}` parses to a single symbol. Single letters (x, n) stay bare/italic; runs with digits or `_`
-        // (x2, a_1) keep their existing meaning.
-        appendRaw(`\\mathrm{${ident}}`, i)
+        // — `\operatorname{}` parses to a single symbol (NOT `\mathrm{}`, which unit-parses `cd`/`bar`/`deg`; see
+        // serializeLatex). Single letters (x, n) stay bare/italic; runs with digits or `_` (x2, a_1) keep meaning.
+        appendRaw(`\\operatorname{${ident}}`, i)
       } else {
         appendRaw(latex.slice(i, j), i)
       }
@@ -263,7 +266,7 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
 
 /** DISPLAY reformat (for the math field, run on a typing pause / blur): rewrite each BARE pure-letter run to the
  *  spelling that shows what it IS — `classify` returns an {@link IdentifierDisplay} (a function's `\operatorname{}`,
- *  a collection's `\mathrm{}`, or a registered `notation` glyph spliced verbatim) or `null` to leave it bare/italic
+ *  a collection's `\operatorname{}`, or a registered `notation` glyph spliced verbatim) or `null` to leave it bare/italic
  *  (a plain variable). The `latex` it returns must be a spelling the parser round-trips to the same id — the
  *  builder guarantees that. Idempotent: runs already inside `\operatorname{}`/`\mathrm{}`/`\text{}` are protected
  *  and left alone, and a notation glyph is a command (not a bare run), so re-running never double-wraps. Single

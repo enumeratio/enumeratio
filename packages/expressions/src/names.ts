@@ -42,12 +42,28 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   // follow-up. All heads confirmed against CE 0.125's evaluator. `Abs` is intentionally omitted — `|x|` is
   // handled separately so `|C|` can mean cardinality. `Mod` here is `\bmod`/`\operatorname{mod}` → head "Mod". ──
   Max: { ce: 'Max' }, Min: { ce: 'Min' },
-  Floor: { ce: 'Floor' }, Ceil: { ce: 'Ceil' }, Round: { ce: 'Round' },
+  Supremum: { ce: 'Supremum' }, Infimum: { ce: 'Infimum' },   // \sup / \inf over a bounded set
+  Floor: { ce: 'Floor' }, Ceil: { ce: 'Ceil' }, Round: { ce: 'Round' }, Clamp: { ce: 'Clamp' },
   Mod: { ce: 'Mod' },
+  // (Sign/Heaviside deferred — their CE names collide with existing LatexSyntax dictionary entries, so a plain
+  // function registration dup-warns; they need a trigger-only entry — a later pass.)
   Sqrt: { ce: 'Sqrt' }, Root: { ce: 'Root' },
   Exp: { ce: 'Exp' }, Ln: { ce: 'Ln' }, Log: { ce: 'Log' },
   Sin: { ce: 'Sin' }, Cos: { ce: 'Cos' }, Tan: { ce: 'Tan' },
+  // the rest of the trig/hyperbolic/inverse family (each has its own `\`-command; all numeric via CE).
+  Arcsin: { ce: 'Arcsin' }, Arccos: { ce: 'Arccos' }, Arctan: { ce: 'Arctan' },
+  Sec: { ce: 'Sec' }, Csc: { ce: 'Csc' }, Cot: { ce: 'Cot' },
+  Sinh: { ce: 'Sinh' }, Cosh: { ce: 'Cosh' }, Tanh: { ce: 'Tanh' }, Coth: { ce: 'Coth' },
   Gamma: { ce: 'Gamma' }, Zeta: { ce: 'Zeta' },
+  Factorial2: { ce: 'Factorial2' },   // `n!!` double factorial (postfix `!!`, parses without a word)
+  // number-theory / combinatorial heads CE implements natively (integer-valued — confirmed on 0.125). One-arg
+  // (Fibonacci/Lucas/Totient/NextPrime/CatalanNumber/BellNumber/NPartition/PrimePi), two-arg (Stirling/StirlingS1/
+  // Eulerian/Choose), Multinomial variadic. (Divisors/PrimeFactors→list, IsPrime→bool need non-numeric typing — later.)
+  Fibonacci: { ce: 'Fibonacci' }, Lucas: { ce: 'Lucas' }, Totient: { ce: 'Totient' },
+  NextPrime: { ce: 'NextPrime' }, Multinomial: { ce: 'Multinomial' },
+  CatalanNumber: { ce: 'CatalanNumber' }, BellNumber: { ce: 'BellNumber' }, NPartition: { ce: 'NPartition' },
+  PrimePi: { ce: 'PrimePi' }, Stirling: { ce: 'Stirling' }, StirlingS1: { ce: 'StirlingS1' },
+  Eulerian: { ce: 'Eulerian' }, Choose: { ce: 'Choose' },
 
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership
@@ -55,16 +71,11 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Count: { special: 'cardinality' },    // `|S|`/`\#S` — collection size
 }
 
-/** CE heads probed and found to have NO curated `base_function` id — `identities.sql`/`function_impls.sql` only
- *  ever register `factorial`/`binomial`/`gcd`/`lcm` among the "named identity" functions this table draws from.
- *  Deliberately OMITTED from OPERATORS rather than guessed at: binding e.g. `Sqrt` to a made-up id would silently
- *  print a function pg-engine can never resolve. A bind() encountering one of these heads reports "unknown
- *  operator" naming the head, same as any other unmapped one — flagged here so the omission reads as deliberate,
- *  not missed. (main thread: if any of these should route to a pg builtin directly rather than a curated
- *  identity, that's a distinct engine-level decision, not a naming-table one.)
- *  Sqrt, Root, Floor, Ceil, Abs, Mod, Min, Max
- */
-export const UNMAPPED_HEADS_NO_CURATED_ID = ['Abs'] as const // the rest now route to CE via `{ce}` (see OPERATORS)
+/** CE heads with no curated `base_function` id AND no `{ce}` binding — a bind() encountering one reports "unknown
+ *  operator" naming the head. Now EMPTY: the scalar math heads route to CE via `{ce}` (see OPERATORS), and `Abs`
+ *  is the one head handled OUTSIDE OPERATORS — `|C|` over a handle is cardinality, scalar `|x|` is CE's Abs (both
+ *  special-cased in bind.ts/lower.ts so the `|` overload can mean either). Kept as a deliberate-omission marker. */
+export const UNMAPPED_HEADS_NO_CURATED_ID = [] as const
 
 // ── builtin symbols: bare CE symbols that denote a catalog SET rather than a scope variable ─────────────────────
 export type BuiltinSymbolBinding =
@@ -75,7 +86,13 @@ export const BUILTIN_SYMBOLS: Record<string, BuiltinSymbolBinding> = {
   natural_numbers: { k: 'collection', coll: 'natural_numbers' },
   integer_numbers: { k: 'collection', coll: 'integer_numbers' },
   rational_numbers: { k: 'collection', coll: 'rational_numbers' },
-  Pi: { k: 'unsupported', reason: '"Pi" has no catalog binding yet — no collection or scalar type denotes it' },
-  ExponentialE: { k: 'unsupported', reason: '"ExponentialE" has no catalog binding yet' },
   ImaginaryUnit: { k: 'unsupported', reason: '"ImaginaryUnit" has no catalog binding yet — gaussian_integer has no unit constant registered' },
 }
+
+/** Bare CE symbols that denote a numeric mathematical CONSTANT (not a scope variable, not a collection). Reachable
+ *  by an UNAMBIGUOUS trigger only: `\pi`→Pi, `\varphi`→GoldenRatio, and the word `CatalanConstant`. bind types
+ *  these numeric; lower emits an IR `const` node; ce-engine boxes the symbol so it renders exactly (π, φ) and folds
+ *  under `.N()`. Scope wins first, so a user's `\pi = 3` (or a var named after one) still shadows the constant.
+ *  `ExponentialE` is intentionally ABSENT — bare `e` parses to the plain symbol `"e"`, so binding it would hijack
+ *  every variable `e`; it needs its own unambiguous trigger first. */
+export const CE_CONSTANTS = new Set(['Pi', 'GoldenRatio', 'CatalanConstant'])

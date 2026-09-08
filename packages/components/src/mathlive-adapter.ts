@@ -53,6 +53,10 @@ export const mathliveAdapter: AdapterFactory = async (container, opts) => {
   mf.menuItems = [] // no per-field hamburger menu — an empty item list disables it (see the ::part hide in the host)
   if (opts.placeholder) mf.placeholder = opts.placeholder
   if (opts.readonly) mf.readOnly = true
+  // A typed space inserts a `\ ` (MathLive drops it by default). Now that a bare letter-run is ONE identifier,
+  // pressing space is how you separate two — `a b` → `a\ b`, which the parser reads as juxtaposition (a·b), while
+  // `ab` stays the single identifier "ab".
+  mf.mathModeSpace = '\\ '
   // Drop MathLive's LETTER-run inline shortcuts — its defaults fire on typed words (`and`→∧, `or`→∨, `pi`→π,
   // `in`→∈), hijacking ordinary names (you couldn't type "Random" without "an…d"→∧, nor "sin" without "in"→∈).
   // Function/collection names must type as plain words; real notation comes from `\operatorname{}`, LaTeX

@@ -3,8 +3,8 @@
 // judgements of its own, only PURE recomputations of what bind.ts already proved valid (see opTypeForLower) so it
 // never needs a Catalog — same reasoning as the header note in types.ts.
 import { args, head, isNumber, isSymbol, numberValue, symbolName, type Expression, type NodePath } from './ast.js'
-import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, summationRange, type Bound } from './bind.js'
-import { OPERATORS } from './names.js'
+import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, rangeValues, summationRange, type Bound } from './bind.js'
+import { CE_CONSTANTS, OPERATORS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
   type Scope, type Type, type ValueRef,
@@ -97,9 +97,12 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
   if (h === 'InvisibleOperator') return lowerOp('mul', a, path, scope, types)
   if (h === 'Delimiter') return lowerExpr(a[0], argPath(path, 0), scope, types)   // transparent, as in bind.ts
 
-  // `|C|` over a handle = cardinality (bind typed it natural_number); scalar `|x|` falls through to the usual path.
+  // `|C|` over a handle = cardinality (bind typed it natural_number); scalar `|x|` = CE's Abs.
   if (h === 'Abs' && a.length === 1 && types.get(argPath(path, 0))?.k === 'handle') {
     return lowerBaseIndexed('cardinality', a, path, scope, types)
+  }
+  if (h === 'Abs' && a.length === 1) {
+    return { kind: 'apply', fn: fnRef('Abs'), args: [lowerArg(a[0], argPath(path, 0), scope, types)] }
   }
 
   if (NEXT_PREV_RANK.has(h) && a.length === 1) return { kind: 'apply', fn: fnRef(h), args: [lowerExpr(a[0], argPath(path, 0), scope, types)] }
@@ -138,16 +141,37 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
     return { kind: 'lit', value: vals }
   }
 
-  // A big-∑ → the sum of its body unrolled over the literal range: `sum(List(body|i=lo … body|i=hi))`. Reuses the
-  // list-sum primitive + the same beta-reduction bind.ts typed.
-  if (h === 'Sum' && a.length === 2) {
+  // A list range `[1..4]` → CE `["Range", lo, hi, step?]` → the int array it denotes.
+  if (h === 'Range') {
+    const vals = rangeValues(a)
+    if (!vals) throw new Error('a range needs literal numeric bounds, e.g. [1..4]')
+    return { kind: 'lit', value: vals }
+  }
+
+  // A big-∑ → the sum of its body unrolled over the literal range: `sum(List(body|i=lo … body|i=hi))` (reuses the
+  // list-sum primitive). A big-∏ → the same unrolled bodies folded with `mul` (no list-product primitive exists,
+  // and a left-fold of `mul` is exact + engine-agnostic). Same beta-reduction bind.ts typed.
+  if ((h === 'Sum' || h === 'Product') && a.length === 2) {
     const range = summationRange(a[1])
-    if (!range) throw new Error('a ∑ needs a literal integer range')
+    if (!range) throw new Error(`a ${h === 'Sum' ? '∑' : '∏'} needs a literal integer range`)
     const items = range.values.map((v, i) => {
       const { expr: sub, prefix } = betaReduce([range.varName], a[0], [v], argPath(path, i))
-      return lowerExpr(sub, prefix, scope, types)
+      return { expr: lowerExpr(sub, prefix, scope, types), type: types.get(prefix)! }
     })
-    return { kind: 'apply', fn: fnRef('sum'), args: [{ kind: 'apply', fn: fnRef('List'), args: items }] }
+    if (h === 'Sum') {
+      return { kind: 'apply', fn: fnRef('sum'), args: [{ kind: 'apply', fn: fnRef('List'), args: items.map((it) => it.expr) }] }
+    }
+    // ∏: left-fold `mul` over the unrolled bodies. Thread a running scalar Type so each node's pg `type` is the
+    // recomputed mul-result (same recomputation lowerOp does), not the bind Type.
+    if (items.length === 0) return { kind: 'lit', value: 1 }   // empty ∏ = 1
+    let acc = items[0].expr
+    let accType = items[0].type
+    for (let k = 1; k < items.length; k++) {
+      const pg = opTypeForLower('mul', [accType, items[k].type])
+      acc = { kind: 'op', op: 'mul', type: pg, args: [acc, items[k].expr] }
+      accType = { k: 'scalar', pg }
+    }
+    return acc
   }
 
   return lowerGenericApply(h, a, path, scope, types)
@@ -163,8 +187,9 @@ function lowerSymbol(name: string, path: NodePath, scope: Scope, types: Map<Node
   if (t.k === 'fn') throw new Error(`lower: "${name}" is a function, not a value`)
   if (t.k === 'unknown') throw new Error(`lower: "${name}" could not be typed`)
   const b = scope.get(name)
-  if (!b || b.k !== 'var' || b.value === undefined) throw new Error(`lower: "${name}" has no value — its definition did not evaluate`)
-  return valueRefToSelect(b.value)
+  if (b && b.k === 'var' && b.value !== undefined) return valueRefToSelect(b.value)
+  if (CE_CONSTANTS.has(name)) return { kind: 'const', name }   // Pi/GoldenRatio/CatalanConstant — a symbolic constant
+  throw new Error(`lower: "${name}" has no value — its definition did not evaluate`)
 }
 
 function valueRefToSelect(v: ValueRef): SelectExpr {

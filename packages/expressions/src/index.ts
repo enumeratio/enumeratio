@@ -22,7 +22,7 @@ export { makeParser, catalogDictionary, reformatIdentifiers, identifierDisplay, 
 export { toLatex, toCalcText, toMathJsonString } from './format.js'
 
 export type { OperatorBinding, BuiltinSymbolBinding } from './names.js'
-export { OPERATORS, BUILTIN_SYMBOLS, UNMAPPED_HEADS_NO_CURATED_ID } from './names.js'
+export { OPERATORS, BUILTIN_SYMBOLS, CE_CONSTANTS, UNMAPPED_HEADS_NO_CURATED_ID } from './names.js'
 
 export type {
   Type, CollectionInfo, FunctionInfo, StatInfo, MapInfo, TypeOpInfo, Catalog, ValueRef, Binding, Scope, TypeError_,

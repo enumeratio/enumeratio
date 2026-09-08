@@ -104,7 +104,7 @@ const functionCandidate = (notation?: Record<string, string>) => (id: string): C
 })
 const symbolCandidate = (id: string): Candidate => ({ label: id, insert: id, kind: 'symbol' })
 const statOrMapCandidate = (name: string, sym: string, kind: 'stat' | 'map'): Candidate => ({
-  label: `${name}(${sym})`, insert: `\\mathrm{${escapeId(name)}}(${sym})`, kind,
+  label: `${name}(${sym})`, insert: `\\operatorname{${escapeId(name)}}(${sym})`, kind,
 })
 
 function builtinSetMatches(ctx: CompletionContext, prefix: string): Scored[] {

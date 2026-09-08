@@ -12,7 +12,7 @@ import {
   args, head, isSymbol, numberValue, isNumber, symbolName,
   spanAt, type Expression, type NodePath, type Parsed, type Stmt,
 } from './ast.js'
-import { OPERATORS, BUILTIN_SYMBOLS } from './names.js'
+import { OPERATORS, BUILTIN_SYMBOLS, CE_CONSTANTS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, UNKNOWN, argPath, effectivePg, elemType, fnType, handleType,
   isNumericKind, numericResultPg, rootPrefix, scalarType,
@@ -74,6 +74,18 @@ export function summationRange(tuple: Expression): { varName: string; values: Ex
   const values: Expression[] = []
   for (let i = a; i <= b; i++) values.push(i as unknown as Expression)
   return { varName: symbolName(v), values }
+}
+
+/** Expand a CE `["Range", lo, hi, step?]`'s argument list to the integers it denotes (inclusive), or null if the
+ *  bounds aren't literal numbers. Shared by lower's Range case (and the same shape `comprehensionDomain` uses for a
+ *  Range domain). */
+export function rangeValues(rangeArgs: Expression[]): number[] | null {
+  const [lo, hi, step] = rangeArgs.map((x) => (isNumber(x) ? numberValue(x) : NaN))
+  const s = Number.isFinite(step) ? step : 1
+  if (!Number.isFinite(lo) || !Number.isFinite(hi) || s === 0) return null
+  const out: number[] = []
+  for (let v = lo; s > 0 ? v <= hi : v >= hi; v += s) { out.push(v); if (out.length > 100000) break }
+  return out
 }
 
 /** The values a `for` comprehension iterates, when they can be enumerated at bind/lower time: a literal `List`'s
@@ -260,9 +272,10 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
-  // `|C|` over a collection/fiber handle is its CARDINALITY (a natural number) — `|` parses to `Abs`, which is
-  // otherwise a scalar absolute value (left to the existing path for a non-handle argument).
+  // `|C|` over a collection/fiber handle is its CARDINALITY (a natural number) — `|` parses to `Abs`. Over a
+  // scalar, `|x|` is the absolute value, evaluated by CE (see the `Abs` entries in ce-engine).
   if (h === 'Abs' && a.length === 1 && argT(0).k === 'handle') return scalarType('natural_number')
+  if (h === 'Abs' && a.length === 1) return scalarType('numeric')
 
   // List-valued ops → an int array: random_shuffle/random_sample plus the list operations CE canonicalizes to its own
   // Pascal heads at parse time (join→Join, sort→Sort, unique→Unique). Arguments typed for error-checking.
@@ -306,11 +319,16 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return scalarType('integer[]')
   }
 
-  // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`. Evaluated by UNROLLING the literal range
-  // and summing (same beta-reduction as a `for` comprehension), so `i` is bound, not a free symbol.
-  if (h === 'Sum' && a.length === 2) {
+  // A list range `[1..4]` / `[1,3..9]` → CE `["Range", lo, hi, step?]` (CE parses the `..` syntax for us). We
+  // expand it to an int array at lowering; typed like a list.
+  if (h === 'Range') return scalarType('integer[]')
+
+  // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`, and the big-∏ `\prod_…` → `Product[…]`
+  // (same shape). Evaluated by UNROLLING the literal range (same beta-reduction as a `for` comprehension), so `i`
+  // is bound, not a free symbol.
+  if ((h === 'Sum' || h === 'Product') && a.length === 2) {
     const range = summationRange(a[1])
-    if (!range) { ctx.errors(path, 'a ∑ needs a literal integer range, e.g. \\sum_{i=1}^{n} with numeric bounds'); return UNKNOWN }
+    if (!range) { ctx.errors(path, `a ${h === 'Sum' ? '∑' : '∏'} needs a literal integer range, e.g. \\sum_{i=1}^{n} with numeric bounds`); return UNKNOWN }
     range.values.forEach((v, i) => {
       const { expr: sub, prefix } = betaReduce([range.varName], a[0], [v], argPath(path, i))
       typeNode(sub, prefix, ctx)
@@ -339,6 +357,7 @@ function typeSymbol(name: string, path: NodePath, ctx: Ctx): Type {
   }
   const coll = ctx.catalog.collection(name)
   if (coll) return handleType(name)
+  if (CE_CONSTANTS.has(name)) return scalarType('numeric')   // Pi/GoldenRatio/CatalanConstant → numeric (ce-engine boxes it)
   const builtin = BUILTIN_SYMBOLS[name]
   if (builtin) {
     if (builtin.k === 'unsupported') { ctx.errors(path, builtin.reason); return UNKNOWN }

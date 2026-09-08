@@ -50,14 +50,25 @@ export const CE_OPERATORS: Record<string, string> = {
   le: 'LessEqual', lt: 'Less', ge: 'GreaterEqual', gt: 'Greater', eq: 'Equal', ne: 'NotEqual',
   // CE-native math (names.ts `{ce}` bindings) — the head IS the CE operator, so these map to themselves. The
   // notebook renders them as a numeric approximation for now (see `numericFallback`).
-  Max: 'Max', Min: 'Min', Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Mod: 'Mod',
-  Sqrt: 'Sqrt', Root: 'Root', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
-  Sin: 'Sin', Cos: 'Cos', Tan: 'Tan', Gamma: 'Gamma', Zeta: 'Zeta',
+  Max: 'Max', Min: 'Min', Supremum: 'Supremum', Infimum: 'Infimum',
+  Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Clamp: 'Clamp', Mod: 'Mod',
+  Sqrt: 'Sqrt', Root: 'Root', Abs: 'Abs', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
+  Sin: 'Sin', Cos: 'Cos', Tan: 'Tan',
+  Arcsin: 'Arcsin', Arccos: 'Arccos', Arctan: 'Arctan', Sec: 'Sec', Csc: 'Csc', Cot: 'Cot',
+  Sinh: 'Sinh', Cosh: 'Cosh', Tanh: 'Tanh', Coth: 'Coth',
+  Gamma: 'Gamma', Zeta: 'Zeta', Factorial2: 'Factorial2',
+  Fibonacci: 'Fibonacci', Lucas: 'Lucas', Totient: 'Totient', NextPrime: 'NextPrime', Multinomial: 'Multinomial',
+  CatalanNumber: 'CatalanNumber', BellNumber: 'BellNumber', NPartition: 'NPartition', PrimePi: 'PrimePi',
+  Stirling: 'Stirling', StirlingS1: 'StirlingS1', Eulerian: 'Eulerian', Choose: 'Choose',
 }
 
 /** CE-native op heads (names.ts `{ce}` bindings): claimed by ce with no curated base_function row — CE evaluates
  *  them. Kept in sync with the `{ce}` entries in OPERATORS. */
-const CE_NATIVE = new Set(['Max', 'Min', 'Floor', 'Ceil', 'Round', 'Mod', 'Sqrt', 'Root', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Gamma', 'Zeta'])
+/** Named CE CONSTANT symbols an IR `const` node may carry — kept in sync with expressions' `CE_CONSTANTS`. Boxed
+ *  as a symbol (`ce.box`), never a call. */
+const CE_CONSTANTS = new Set(['Pi', 'GoldenRatio', 'CatalanConstant'])
+
+const CE_NATIVE = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>
@@ -168,6 +179,8 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
         for (const a of e.args) { const bad = rejectTree(a); if (bad) return bad }
         return undefined
       }
+      case 'const':
+        return CE_CONSTANTS.has(e.name) ? undefined : `ce has no constant "${e.name}"`
       default:
         return `ce cannot evaluate a ${e.kind} node`
     }
@@ -179,6 +192,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
     if (e.kind === 'lit') return ce.number(e.value as number | bigint) as CEExpr
     if (e.kind === 'apply') return ce.function(CE_OPERATORS[String(e.fn)], e.args.map((a) => toCE(ce, a))) as CEExpr
     if (e.kind === 'op') return ce.function(CE_OPERATORS[e.op], e.args.map((a) => toCE(ce, a))) as CEExpr
+    if (e.kind === 'const') return ce.box(e.name) as CEExpr
     throw new Error(`ce-engine: cannot build a ${e.kind} node`)
   }
 

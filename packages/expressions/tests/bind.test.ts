@@ -34,7 +34,7 @@ const catalog: Catalog = {
 
 const parser = makeParser({
   collections: ['triangular_numbers', 'permutations'],
-  functions: ['next', 'prev', 'rank', 'inversions', 'binomial', 'factorial', 'gcd'],
+  functions: ['next', 'prev', 'rank', 'inversions', 'binomial', 'factorial', 'gcd', 'CatalanNumber'],
 })
 
 describe('bind: a notebook session', () => {
@@ -166,9 +166,36 @@ describe('bind: errors', () => {
     expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
   })
 
-  it('an unmapped head with no CE binding still reports "unknown operator" naming the head', () => {
-    const bound = bind(parser.parse('|x|'), new Map(), catalog) // Abs on a scalar stays unmapped
+  it('a widened CE head binds numeric — native-parse trig (\\arcsin) and a registered word (CatalanNumber)', () => {
+    for (const latex of ['\\arcsin(1)', 'CatalanNumber(5)']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'numeric' })
+    }
+  })
+
+  it('scalar |x| is absolute value (numeric)', () => {
+    expect(bind(parser.parse('|-5|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
+    expect(bind(parser.parse('|3-10|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
+  })
+
+  it('an unknown head with no binding reports "unknown operator"', () => {
+    const bound = bind(parser.parse('\\operatorname{NoSuchOp}(1)'), new Map(), catalog)
     expect(bound.errors.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('a big-∏ \\prod binds numeric (mirrors ∑)', () => {
+    const bound = bind(parser.parse('\\prod_{i=1}^{5} i'), new Map(), catalog)
+    expect(bound.errors).toEqual([])
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
+  })
+
+  it('symbolic constants (\\pi, \\varphi, CatalanConstant) bind numeric; a scope var shadows', () => {
+    for (const latex of ['\\pi', '\\varphi', '\\operatorname{CatalanConstant}', '2\\pi', '\\pi + 1']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'numeric' })
+    }
   })
 
   it('mismatched arity against a curated function reports the expected count', () => {

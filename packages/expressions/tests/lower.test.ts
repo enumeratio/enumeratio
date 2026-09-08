@@ -189,3 +189,32 @@ describe('lower: Coll(n)[i] element-at sugar → unrank (1-based → 0-based)', 
     expect(unrankOf('Permutations(4)[3]').args[1]).toEqual({ kind: 'lit', value: 2 })
   })
 })
+
+describe('lower: ∏ folds to mul, scalar |x| → Abs', () => {
+  const scope: Scope = new Map()
+  const sel = (latex: string) => {
+    const bound = bind(parser.parse(latex), scope, catalog)
+    expect(bound.errors, latex).toEqual([])
+    return (lower(bound, scope).expr as { select: any[] }).select[0]
+  }
+  it('\\prod_{i=1}^{3} i → mul(mul(1,2),3)', () => {
+    const e = sel('\\prod_{i=1}^{3} i')
+    // collect the leaf literals of the left-folded mul tree, in order
+    const leaves: number[] = []
+    const walk = (n: any): void => { if (n.kind === 'op' && n.op === 'mul') { walk(n.args[0]); walk(n.args[1]) } else leaves.push(n.value) }
+    walk(e)
+    expect(leaves).toEqual([1, 2, 3])
+  })
+  it('scalar |{-5}| → apply(Abs, …)', () => {
+    const e = sel('|-5|')
+    expect(e.kind).toBe('apply')
+    expect(e.fn).toBe('Abs')
+  })
+  it('\\pi → const node; 2\\pi → mul(2, const Pi)', () => {
+    expect(sel('\\pi')).toEqual({ kind: 'const', name: 'Pi' })
+    const e = sel('2\\pi')
+    expect(e.kind).toBe('op')
+    expect(e.op).toBe('mul')
+    expect(e.args).toContainEqual({ kind: 'const', name: 'Pi' })
+  })
+})

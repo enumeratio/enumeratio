@@ -42,7 +42,9 @@ describe('parse: MathJSON shape + statement kind', () => {
     ['x_{1}', 'expr', '"x_1"'],
     ['2x', 'expr', '["InvisibleOperator",2,"x"]'],
     ['triangular_numbers', 'expr', '"triangular_numbers"'], // bare run, rewritten by pre-parse normalization
-    ['xy', 'expr', '"xy"'], // a multi-letter run is ONE identifier now (not x·y) — normalizer wraps it \mathrm
+    ['xy', 'expr', '"xy"'], // a multi-letter run is ONE identifier now (not x·y) — normalizer wraps it \operatorname
+    ['ab\\ cd', 'expr', '["InvisibleOperator","ab","cd"]'], // a typed space separates two compound identifiers
+    ['x\\ cd', 'expr', '["InvisibleOperator","x","cd"]'], // `cd` is candela; \operatorname avoids CE's unit lookup
     ['x', 'expr', '"x"'], // a single letter stays a bare variable
     ['p.next(x)', 'expr', '["next","p","x"]'], // `.`-method sugar: receiver becomes the first argument
     ['p.next', 'expr', '["next","p"]'], // no-arg method
@@ -97,22 +99,22 @@ describe('errors', () => {
 })
 
 describe('round-trip', () => {
-  it('serialize(parse(declare)) matches the input up to whitespace, in the Pascal \\mathrm spelling', () => {
-    const input = 'x \\in \\mathrm{TriangularNumbers}'
+  it('serialize(parse(declare)) matches the input up to whitespace, in the Pascal \\operatorname spelling', () => {
+    const input = 'x \\in \\operatorname{TriangularNumbers}'
     const parsed = parser.parse(input)
     if (parsed.stmt.k !== 'declare') throw new Error('expected declare')
     const out = toLatex(['Element', parsed.stmt.name, parsed.stmt.domain] as Expression, parser)
     expect(out.replace(/\s+/g, '')).toBe(input.replace(/\s+/g, ''))
   })
 
-  it('serialize(["next","x"]) round-trips through the Pascal \\mathrm{} spelling', () => {
-    expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\mathrm{Next}')
+  it('serialize(["next","x"]) round-trips through the Pascal \\operatorname{} spelling', () => {
+    expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\operatorname{Next}')
   })
 })
 
 describe('reformatIdentifiers (display reformat)', () => {
   // Mirrors the notebook's classify: `identifierDisplay` turns an id into its display LaTeX — Pascal
-  // `\operatorname{}` for a function, `\mathrm{}` for a collection, or a registered notation glyph. Keyed by the
+  // `\operatorname{}` for a function OR collection (never `\mathrm{}`, which unit-parses), or a notation glyph. Keyed by the
   // pure-letter spellings MathLive produces (snake_case with `_` never arrives as one run). A parser that KNOWS
   // the notation is built alongside, so the round-trip covers the glyph too.
   const notation = { permutations: '\\mathfrak{S}' }
@@ -130,8 +132,8 @@ describe('reformatIdentifiers (display reformat)', () => {
           : null
 
   it.each([
-    ['next', '\\mathrm{Next}'], // known function → \mathrm node binding, Pascal spelling
-    ['TriangularNumbers', '\\mathrm{TriangularNumbers}'], // known collection → \mathrm, Pascal spelling
+    ['next', '\\operatorname{Next}'], // known function → \operatorname node binding, Pascal spelling
+    ['TriangularNumbers', '\\operatorname{TriangularNumbers}'], // known collection → \operatorname, Pascal spelling
     ['Permutations', '\\mathfrak{S}'], // a registered notation glyph is spliced verbatim
     ['xy', 'xy'], // unknown multi-letter run → left bare (a variable)
     ['x', 'x'], // single letter → untouched
