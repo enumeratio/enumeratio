@@ -42,11 +42,11 @@ export const NEXT_PREV_RANK = new Set(['next', 'prev', 'rank'])
  *  `random_element(permutations(10))` reads `∈ permutations`, and so `next`/`prev`/`rank` can chain onto it. */
 const HANDLE_ELEM = new Set(['random_element', 'unrank'])
 
-/** Ops whose result is a list (typed `integer[]`): our own scramble/random_sample, plus the list operations CE
- *  canonicalizes to its Pascal heads (Join/Sort/Unique) at parse time. */
+/** Ops whose result is a list (typed `integer[]`): our own random_shuffle/random_sample, plus the list operations
+ *  CE canonicalizes to its Pascal heads (Join/Sort/Unique) at parse time. */
 // Heads arrive as their LOWERCASE catalog id now (the dictionary names catalog ids in snake_case even though they
 // DISPLAY PascalCase) — so join/sort/unique here are lowercase, not the CE-canonicalized Pascal they once were.
-const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'join', 'sort', 'unique'])
+const LIST_RESULT_OPS = new Set(['random_shuffle', 'random_sample', 'join', 'sort', 'unique'])
 
 /** List reductions evaluating to a SCALAR — Sum/Min/Max/Product over a list, First/Last of one. Unlike
  *  join/sort/unique, CE does NOT canonicalize these operator names, so the head stays our lowercase id. Typed
@@ -249,7 +249,7 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
   // otherwise a scalar absolute value (left to the existing path for a non-handle argument).
   if (h === 'Abs' && a.length === 1 && argT(0).k === 'handle') return scalarType('natural_number')
 
-  // List-valued ops → an int array: scramble/random_sample plus the list operations CE canonicalizes to its own
+  // List-valued ops → an int array: random_shuffle/random_sample plus the list operations CE canonicalizes to its own
   // Pascal heads at parse time (join→Join, sort→Sort, unique→Unique). Arguments typed for error-checking.
   if (LIST_RESULT_OPS.has(h) && a.length >= 1) {
     for (let i = 0; i < a.length; i++) argT(i)
