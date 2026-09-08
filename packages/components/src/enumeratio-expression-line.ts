@@ -156,8 +156,15 @@ export class EnumeratioExpressionLine extends LitElement {
     return html`
       <div class=${lineClass} @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
            @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
-        <span class="handle" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
-              title="drag to reorder">${this.index}</span>
+        <div class="gutter">
+          <span class="rownum" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
+                title="drag to reorder">${this.index}</span>
+          ${s.action
+            ? html`<button class="rowbtn" @mousedown=${(e: MouseEvent) => e.preventDefault()}
+                      @click=${() => this.emit('line-run', { lineId: this.lineId })}
+                      title="run this action" aria-label="run this action">→</button>`
+            : ''}
+        </div>
         <div class="body">
           <div class="field">
             <enumeratio-math-input
@@ -171,12 +178,7 @@ export class EnumeratioExpressionLine extends LitElement {
             ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
           </div>
           <div class="value">
-            ${s.action
-              ? html`<button class="run" @mousedown=${(e: MouseEvent) => e.preventDefault()}
-                        @click=${() => this.emit('line-run', { lineId: this.lineId })}
-                        title="run this action">▶ run</button>`
-              : s.busy ? html`<span class="hint">…</span>`
-              : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
+            ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
           </div>
           ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         </div>
@@ -216,30 +218,52 @@ export class EnumeratioExpressionLine extends LitElement {
     }
     .line.drop-above::before { top: -1px; }
     .line.drop-below::after { bottom: -1px; }
-    /* The left-margin drag handle (Desmos-style): a fat gutter with its own faint background, brighter on hover;
-       the row number lives inside it. Doubles as the whole row's grab target. */
-    .handle {
+    /* The left-margin gutter (Desmos-style): a fat column with its own faint background, holding the row number
+       (which is the drag handle) and an optional per-row icon button below it — the action ▶/→ today; a
+       visibility toggle or an assignment scrubber to come. */
+    .gutter {
       flex: 0 0 auto;
       align-self: stretch;
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-end;
-      min-width: 1.9rem;
-      padding: 0.55rem 0.45rem 0 0.35rem;
-      font-size: 0.85em;
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      min-width: 2rem;
+      padding: 0.5rem 0.35rem 0.3rem;
       background: color-mix(in srgb, var(--enumeratio-muted, currentColor) 6%, transparent);
       border-right: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+      transition: background 0.12s;
+    }
+    .line:hover .gutter {
+      background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 12%, transparent);
+    }
+    .rownum {
+      align-self: flex-end;
+      font-size: 0.85em;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
       opacity: 0.6;
       cursor: grab;
       user-select: none;
-      transition: background 0.12s, opacity 0.12s;
     }
-    .handle:hover {
-      opacity: 1;
-      background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 14%, transparent);
+    .rownum:active { cursor: grabbing; }
+    /* Per-row icon button in the gutter (mousedown prevented so it never steals the field's caret). */
+    .rowbtn {
+      font: inherit;
+      font-size: 0.95rem;
+      line-height: 1;
+      cursor: pointer;
+      width: 1.5rem;
+      height: 1.5rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-radius: 6px;
+      background: transparent;
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
     }
-    .handle:active { cursor: grabbing; }
+    .rowbtn:hover {
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 14%, transparent);
+    }
     .body {
       flex: 1 1 auto;
       min-width: 0;
@@ -279,22 +303,6 @@ export class EnumeratioExpressionLine extends LitElement {
     .eq {
       opacity: 0.4;
       font-weight: 400;
-    }
-    /* An action's ▶ trigger sits on the LEFT of the value row (mousedown is prevented so it never steals the
-       field's caret). */
-    .value:has(.run) { text-align: left; }
-    .run {
-      font: inherit;
-      font-size: 0.85em;
-      cursor: pointer;
-      padding: 0.1rem 0.5rem;
-      border: 1px solid var(--enumeratio-accent, var(--p-primary-color, #d97706));
-      border-radius: 999px;
-      background: transparent;
-      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
-    }
-    .run:hover {
-      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
     /* A parse/bind error takes the value's place, below the field — full width for the whole message, muted. */
     .error {
