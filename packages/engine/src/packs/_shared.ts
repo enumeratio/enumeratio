@@ -19,7 +19,7 @@ export function factorial(n: number): number {
 }
 
 /** Catalan(n) = C(2n,n)/(n+1). */
-export function catalan(n: number): number {
+export function catalanNumber(n: number): number {
   if (n < 0) return 0;
   return Math.round(binomial(2 * n, n) / (n + 1));
 }

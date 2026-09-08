@@ -5,7 +5,7 @@
 
 import type { PackEntry } from "./types.js";
 
-import { catalan } from "./_shared.js";
+import { catalanNumber } from "./_shared.js";
 
 // ---- FullBinaryTrees(n) -----------------------------------------------------
 // Full binary trees (every node has 0 or 2 children) with n internal nodes,
@@ -40,10 +40,10 @@ function fbtRank(bits: number[], lo: number, hi: number): number {
   const rightStart = leftStart + leftLen;
   const j = m - 1 - i;
   let rank = 0;
-  for (let k = 0; k < i; k++) rank += catalan(k) * catalan(m - 1 - k);
+  for (let k = 0; k < i; k++) rank += catalanNumber(k) * catalanNumber(m - 1 - k);
   const leftRank = fbtRank(bits, leftStart, rightStart);
   const rightRank = fbtRank(bits, rightStart, hi);
-  rank += leftRank * catalan(j) + rightRank;
+  rank += leftRank * catalanNumber(j) + rightRank;
   return rank;
 }
 
@@ -52,10 +52,10 @@ function fbtUnrankHelper(m: number, r: number): number[] {
   let rem = r;
   for (let i = 0; i < m; i++) {
     const j = m - 1 - i;
-    const blockSize = catalan(i) * catalan(j);
+    const blockSize = catalanNumber(i) * catalanNumber(j);
     if (rem < blockSize) {
-      const leftRank = Math.floor(rem / catalan(j));
-      const rightRank = rem % catalan(j);
+      const leftRank = Math.floor(rem / catalanNumber(j));
+      const rightRank = rem % catalanNumber(j);
       const left = fbtUnrankHelper(i, leftRank);
       const right = fbtUnrankHelper(j, rightRank);
       return [1, ...left, ...right];
@@ -66,7 +66,7 @@ function fbtUnrankHelper(m: number, r: number): number[] {
 }
 
 function fullBinaryTreesCount(p: number[]): number {
-  return catalan(p[0]);
+  return catalanNumber(p[0]);
 }
 
 function fullBinaryTreesUnrank(p: number[], r: number): number[] {
@@ -123,10 +123,10 @@ function forestRank(bits: number[], lo: number, hi: number): number {
   const restStart = closeIdx + 1;
   const j = m - 1 - i;
   let rank = 0;
-  for (let k = 0; k < i; k++) rank += catalan(k) * catalan(m - 1 - k);
+  for (let k = 0; k < i; k++) rank += catalanNumber(k) * catalanNumber(m - 1 - k);
   const leftRank = forestRank(bits, childStart, closeIdx);
   const rightRank = forestRank(bits, restStart, hi);
-  rank += leftRank * catalan(j) + rightRank;
+  rank += leftRank * catalanNumber(j) + rightRank;
   return rank;
 }
 
@@ -135,10 +135,10 @@ function pfUnrankHelper(m: number, r: number): number[] {
   let rem = r;
   for (let i = 0; i < m; i++) {
     const j = m - 1 - i;
-    const blockSize = catalan(i) * catalan(j);
+    const blockSize = catalanNumber(i) * catalanNumber(j);
     if (rem < blockSize) {
-      const leftRank = Math.floor(rem / catalan(j));
-      const rightRank = rem % catalan(j);
+      const leftRank = Math.floor(rem / catalanNumber(j));
+      const rightRank = rem % catalanNumber(j);
       const children = pfUnrankHelper(i, leftRank);
       const rest = pfUnrankHelper(j, rightRank);
       return [1, ...children, 0, ...rest];
@@ -149,7 +149,7 @@ function pfUnrankHelper(m: number, r: number): number[] {
 }
 
 function planeForestsCount(p: number[]): number {
-  return catalan(p[0]);
+  return catalanNumber(p[0]);
 }
 
 function planeForestsUnrank(p: number[], r: number): number[] {

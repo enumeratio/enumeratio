@@ -99,8 +99,8 @@ export function FallingFactorial(n: number, k: number): number {
   return f;
 }
 
-/** Catalan(n) = C(2n,n)/(n+1). */
-export function Catalan(n: number): number {
+/** CatalanNumber(n) = C(2n,n)/(n+1). */
+export function CatalanNumber(n: number): number {
   if (n < 0) return 0;
   return Math.round(Binomial(2 * n, n) / (n + 1));
 }
@@ -296,7 +296,7 @@ export function IsColoredPermutationOf(image: number[], colors: number[], n: num
   return true;
 }
 
-// ─── DyckPaths(n): balanced up/down paths of semilength n (1 = up, 0 = down). Count Catalan(n). ─────────
+// ─── DyckPaths(n): balanced up/down paths of semilength n (1 = up, 0 = down). Count CatalanNumber(n). ─────────
 const _dyckMemo = new Map<string, number>();
 // #ways to complete a path with `s` steps remaining from height `h`, staying ≥ 0 and ending at 0.
 function dyckCompletions(s: number, h: number): number {
@@ -311,11 +311,11 @@ function dyckCompletions(s: number, h: number): number {
   return v;
 }
 export function DyckPathCount(n: number): number {
-  return Catalan(n);
+  return CatalanNumber(n);
 }
 /** rank-th Dyck path of semilength n, up-before-down order. */
 export function DyckPathUnrank(n: number, rank: number): number[] {
-  const total = Catalan(n);
+  const total = CatalanNumber(n);
   let r = total ? ((rank % total) + total) % total : 0;
   const out: number[] = [];
   let h = 0;
@@ -567,17 +567,17 @@ export function GrayCodeSubsetRank(s: number[]): number {
   return r;
 }
 
-// ─── BinaryTrees(n): binary trees with n internal nodes (Catalan). Element nested: leaf 0, node [L,R]. ─────
+// ─── BinaryTrees(n): binary trees with n internal nodes (CatalanNumber). Element nested: leaf 0, node [L,R]. ─────
 export type BinTree = 0 | [BinTree, BinTree];
 export function BinaryTreeCount(n: number): number {
-  return Catalan(n);
+  return CatalanNumber(n);
 }
 export function BinaryTreeUnrank(n: number, rank: number): BinTree {
   if (n === 0) return 0;
-  const total = Catalan(n);
+  const total = CatalanNumber(n);
   let r = total ? ((rank % total) + total) % total : 0;
   for (let i = 0; i < n; i++) {
-    const cl = Catalan(i), cr = Catalan(n - 1 - i);
+    const cl = CatalanNumber(i), cr = CatalanNumber(n - 1 - i);
     const block = cl * cr;
     if (r < block) return [BinaryTreeUnrank(i, Math.floor(r / cr)), BinaryTreeUnrank(n - 1 - i, r % cr)];
     r -= block;
@@ -592,8 +592,8 @@ export function BinaryTreeRank(t: BinTree): number {
   const n = binTreeSize(t);
   const li = binTreeSize(t[0]);
   let base = 0;
-  for (let i = 0; i < li; i++) base += Catalan(i) * Catalan(n - 1 - i);
-  const cr = Catalan(n - 1 - li);
+  for (let i = 0; i < li; i++) base += CatalanNumber(i) * CatalanNumber(n - 1 - i);
+  const cr = CatalanNumber(n - 1 - li);
   return base + BinaryTreeRank(t[0]) * cr + BinaryTreeRank(t[1]);
 }
 export function IsBinaryTree(t: any, n: number): boolean {
@@ -822,11 +822,11 @@ export function IsSchroderPath(tokens: number[], n: number): boolean {
   return w === 2 * n && h === 0;
 }
 
-// ─── OrderedTrees(n): plane (ordered) trees with n edges (Catalan(n)) via the Dyck bijection. ────────────
+// ─── OrderedTrees(n): plane (ordered) trees with n edges (CatalanNumber(n)) via the Dyck bijection. ────────────
 // Element is nested: a node = the list of its child subtrees; a leaf = the empty list.
 export type OrdTree = OrdTree[];
 export function OrderedTreeCount(n: number): number {
-  return Catalan(n);
+  return CatalanNumber(n);
 }
 function dyckToForest(path: number[]): { forest: OrdTree[]; pos: number } {
   const forest: OrdTree[] = [];
@@ -863,7 +863,7 @@ export function IsOrderedTree(t: any, n: number): boolean {
   return wellFormed(t) && ordTreeEdges(t) === n;
 }
 
-// ─── KAryTrees(n,k): k-ary trees with n internal nodes (Fuss–Catalan). Element nested: leaf 0, node [c1..ck]. ─
+// ─── KAryTrees(n,k): k-ary trees with n internal nodes (Fuss–CatalanNumber). Element nested: leaf 0, node [c1..ck]. ─
 const _fillMemo = new Map<string, number>();
 function karyTreeCount0(s: number, k: number): number { return s === 0 ? 1 : cntFill(s - 1, k, k); }
 function cntFill(m: number, slots: number, k: number): number {

@@ -6,8 +6,8 @@ import {
   CompositionCount, CompositionFromMask, CompositionRank, IsCompositionOf,
   PartitionNumber, IntegerPartitionUnrank, IntegerPartitionRank, IsPartitionOf,
   KPartPartitionCount, IntegerPartitionKUnrank, IntegerPartitionKRank,
-  Bell, RgsUnrank, RgsRank, RgsToBlocks, BlocksToRgs, IsSetPartitionOf,
-  StirlingSecond, SetPartitionsIntoKBlocksUnrank, SetPartitionsIntoKBlocksRank,
+  BellB, RgsUnrank, RgsRank, RgsToBlocks, BlocksToRgs, IsSetPartitionOf,
+  StirlingS2, SetPartitionsIntoKBlocksUnrank, SetPartitionsIntoKBlocksRank,
   Fubini, SetCompositionUnrank, SetCompositionRank, LabelsToOrderedBlocks, BlocksToLabels,
 } from "../kernels-combinatorics.js";
 import {
@@ -91,9 +91,9 @@ export const entries: PackEntry[] = [
   ints("FibonacciWords", 1, ([n]) => FibonacciWordCount(n), ([n], r) => FibonacciWordUnrank(n, r), (a, [n]) => IsFibonacciWord(a, n), (a) => FibonacciWordRank(a)),
 
   // ── set partitions / matchings (blocks) ──
-  { head: "SetPartitions", paramCount: 1, kind: "blocks", count: ([n]) => Bell(n),
+  { head: "SetPartitions", paramCount: 1, kind: "blocks", count: ([n]) => BellB(n),
     unrank: ([n], r) => RgsToBlocks(RgsUnrank(n, r)), valid: (b, [n]) => IsSetPartitionOf(b, n), rank: (b, [n]) => RgsRank(BlocksToRgs(b, n)) },
-  { head: "SetPartitionsIntoKBlocks", paramCount: 2, kind: "blocks", count: ([n, k]) => StirlingSecond(n, k),
+  { head: "SetPartitionsIntoKBlocks", paramCount: 2, kind: "blocks", count: ([n, k]) => StirlingS2(n, k),
     unrank: ([n, k], r) => RgsToBlocks(SetPartitionsIntoKBlocksUnrank(n, k, r)), valid: (b, [n, k]) => IsSetPartitionOf(b, n, k), rank: (b, [n, k]) => SetPartitionsIntoKBlocksRank(BlocksToRgs(b, n), k) },
   { head: "SetCompositions", paramCount: 1, kind: "blocks", count: ([n]) => Fubini(n),
     unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)), valid: (b, [n]) => IsSetPartitionOf(b, n), rank: (b, [n]) => SetCompositionRank(BlocksToLabels(b), n) },

@@ -21,8 +21,8 @@ export function CompositionCount(n: number): number {
   return n <= 0 ? 1 : 2 ** (n - 1);
 }
 
-/** Bell(n) = #set partitions of [n], via the Bell triangle. */
-export function Bell(n: number): number {
+/** BellB(n) = #set partitions of [n], via the BellB triangle. */
+export function BellB(n: number): number {
   if (n <= 0) return 1;
   let row = [1];
   for (let i = 1; i <= n; i++) {
@@ -46,13 +46,13 @@ export function Fubini(n: number): number {
 
 const _stirling2 = new Map<string, number>();
 /** Stirling second kind S(n,k) = #set partitions of [n] into exactly k blocks. */
-export function StirlingSecond(n: number, k: number): number {
+export function StirlingS2(n: number, k: number): number {
   if (n === 0) return k === 0 ? 1 : 0;
   if (k <= 0 || k > n) return 0;
   const key = `${n},${k}`;
   let v = _stirling2.get(key);
   if (v === undefined) {
-    v = k * StirlingSecond(n - 1, k) + StirlingSecond(n - 1, k - 1);
+    v = k * StirlingS2(n - 1, k) + StirlingS2(n - 1, k - 1);
     _stirling2.set(key, v);
   }
   return v;
@@ -104,7 +104,7 @@ export function KPartPartitionCount(n: number, k: number): number {
 export function CountSurjections(n: number, k: number): number {
   if (k < 0 || k > n) return 0;
   if (k === 0) return n === 0 ? 1 : 0;
-  return Factorial(k) * StirlingSecond(n, k);
+  return Factorial(k) * StirlingS2(n, k);
 }
 
 // #partitions of m with every part ≤ j.
@@ -182,10 +182,10 @@ function getBTable(n: number): number[][] {
   return b;
 }
 
-/** rank-th restricted growth string of length n, lex order. Count = Bell(n). */
+/** rank-th restricted growth string of length n, lex order. Count = BellB(n). */
 export function RgsUnrank(n: number, rank: number): number[] {
   if (n === 0) return [];
-  const total = Bell(n);
+  const total = BellB(n);
   const r = ((rank % total) + total) % total;
   const b = getBTable(n);
   const result: number[] = [0];
@@ -215,7 +215,7 @@ function countKBlockCompletions(remaining: number, m: number, k: number): number
   return v;
 }
 
-/** rank-th RGS of length n with max exactly k−1 (exactly k blocks), lex order. Count = StirlingSecond(n,k). */
+/** rank-th RGS of length n with max exactly k−1 (exactly k blocks), lex order. Count = StirlingS2(n,k). */
 export function SetPartitionsIntoKBlocksUnrank(n: number, k: number, rank: number): number[] {
   const total = countKBlockCompletions(n, -1, k);
   let r = total ? ((rank % total) + total) % total : 0;
