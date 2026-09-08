@@ -68,7 +68,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: >
             pages deploy docs/.vitepress/dist
-            --project-name=enumeratio-web
+            --project-name=enumeratio
             --branch=${{ steps.ref.outputs.ref }}
 
       - name: Report preview URL

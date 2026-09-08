@@ -57,7 +57,7 @@ runners and uploads `docs/.vitepress/dist` to CF, so it costs zero CF build minu
 `/preview` on a PR (owner/member/collaborator only), or run the `Preview (Cloudflare Pages)` workflow manually with a
 ref. It posts the preview URL back as a PR comment / job summary. VitePress `base` is unset (`/`), so the same build
 serves at both `enumeratio.dev` and the `*.pages.dev` preview hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` +
-`CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio-web`).
+`CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio`).
 
 ## Verifying changes
 
