@@ -59,7 +59,7 @@ let ceP: Promise<CEInstance> | null = null
  *  pays for the (sizable) compute-engine bundle. `precision` only governs FLOAT fallback rendering; exactness
  *  itself comes from the bignum/exact-rational kernel underneath and holds regardless of this setting — set high
  *  enough that it is never the thing limiting how large an exact integer this engine can carry. */
-async function ceInstance(): Promise<CEInstance> {
+export async function ceInstance(): Promise<CEInstance> {
   if (!ceP) ceP = Promise.all([
     import('@cortex-js/compute-engine'),
     import('@enumeratio/compute-engine'),
