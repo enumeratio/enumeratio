@@ -155,6 +155,7 @@ export class EnumeratioExpressionLine extends LitElement {
     const lineClass = `line${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
     return html`
       <div class=${lineClass} @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
+           @focusin=${() => this.emit('line-focus', { lineId: this.lineId })}
            @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
         <div class="gutter">
           <span class="rownum" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}

@@ -100,6 +100,13 @@ export class EnumeratioNotebook extends LitElement {
   /** Whether any line is an action — gates the ticker button. */
   @state() private hasActions = false
 
+  /** The ACTIVE cell — the last line to hold focus. Separate from control focus: clicking the virtual-keyboard
+   *  toggle or the hamburger (both mousedown-prevented) does NOT change it or blur the field, so those controls
+   *  act on / inject into whichever cell the caret was last in. */
+  @state() private activeLineId: LineId | null = null
+  @state() private vkOn = false
+  @state() private menuOpen = false
+
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
     const out: Record<string, string> = {}
@@ -572,6 +579,44 @@ export class EnumeratioNotebook extends LitElement {
     void this.runAction(ev.detail.lineId)
   }
 
+  private onLineFocus = (ev: CustomEvent<{ lineId: LineId }>): void => {
+    this.activeLineId = ev.detail.lineId
+    this.menuOpen = false // a click into a different cell closes an open hamburger
+  }
+
+  // ── active-cell controls (virtual keyboard + hamburger) — never steal the field's focus ──────────────────────
+  /** MathLive's on-screen keyboard is a global singleton; with policy 'manual' we drive it. It types into the
+   *  focused mathfield, and the toggle's mousedown is prevented, so focus stays on the active cell. */
+  private toggleVirtualKeyboard(): void {
+    const vk = (globalThis as { mathVirtualKeyboard?: { visible: boolean; show(): void; hide(): void } }).mathVirtualKeyboard
+    if (!vk) return
+    if (vk.visible) vk.hide()
+    else vk.show()
+    this.vkOn = vk.visible
+  }
+
+  /** Focus the active cell (or the first line) — used after a menu action so the caret returns to the field. */
+  private focusLine(id: LineId | null): void {
+    const target = id ?? this.displayOrder[0]
+    if (target) { this.focusAfterUpdate = target; this.requestUpdate() }
+  }
+
+  private menuAction(kind: 'duplicate' | 'clear' | 'delete'): void {
+    const id = this.activeLineId
+    this.menuOpen = false
+    if (!id) return
+    if (kind === 'delete') { this.removeLine(id); return }
+    if (kind === 'duplicate') { const n = this.addLine(this.latexById.get(id) ?? '', id); this.focusLine(n); return }
+    if (kind === 'clear') {
+      this.latexById.set(id, '')
+      if (this.parser) this.graph.set(id, '', this.parser)
+      this.scheduleRecompute(id)
+      this.persist(); this.emitChange()
+      this.requestUpdate()
+      this.focusLine(id)
+    }
+  }
+
   private onLineReorder = (ev: CustomEvent<{ sourceId: LineId; targetId: LineId; position?: 'above' | 'below' }>): void => {
     const { sourceId, targetId, position = 'above' } = ev.detail
     const from = this.displayOrder.indexOf(sourceId)
@@ -632,6 +677,7 @@ export class EnumeratioNotebook extends LitElement {
               @line-remove=${this.onLineRemove}
               @line-reorder=${this.onLineReorder}
               @line-run=${this.onLineRun}
+              @line-focus=${this.onLineFocus}
             ></enumeratio-expression-line>
           `,
         )}
@@ -642,6 +688,21 @@ export class EnumeratioNotebook extends LitElement {
                   title="Undo" aria-label="Undo">↺</button>
           <button class="tool" ?disabled=${!this.canRedo} @click=${() => void this.redo()}
                   title="Redo" aria-label="Redo">↻</button>
+          <button class="tool ${this.vkOn ? 'on' : ''}"
+                  @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => this.toggleVirtualKeyboard()}
+                  title="Virtual keyboard" aria-label="Virtual keyboard">⌨</button>
+          <div class="menuwrap">
+            <button class="tool ${this.menuOpen ? 'on' : ''}" ?disabled=${!this.activeLineId}
+                    @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => (this.menuOpen = !this.menuOpen)}
+                    title="Cell menu" aria-label="Cell menu">☰</button>
+            ${this.menuOpen && this.activeLineId
+              ? html`<div class="menu" @mousedown=${(e: MouseEvent) => e.preventDefault()}>
+                  <button @click=${() => this.menuAction('duplicate')}>Duplicate</button>
+                  <button @click=${() => this.menuAction('clear')}>Clear</button>
+                  <button @click=${() => this.menuAction('delete')} ?disabled=${this.displayOrder.length <= 1}>Delete</button>
+                </div>`
+              : ''}
+          </div>
         </div>
         <div class="tools-right">
           ${this.hasActions
@@ -720,6 +781,36 @@ export class EnumeratioNotebook extends LitElement {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
+    .menuwrap { position: relative; }
+    /* The hamburger's per-cell menu opens UPWARD (the toolbar sits at the notebook's bottom). */
+    .menu {
+      position: absolute;
+      bottom: calc(100% + 0.3rem);
+      left: 0;
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      min-width: 8rem;
+      padding: 0.25rem;
+      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
+      border-radius: 6px;
+      background: var(--enumeratio-surface, var(--p-content-background, canvas));
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    }
+    .menu button {
+      font: inherit;
+      text-align: left;
+      padding: 0.35rem 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    .menu button:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
+    }
+    .menu button:disabled { opacity: 0.35; cursor: default; }
     .set {
       display: flex;
       flex-direction: column;
