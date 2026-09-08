@@ -31,6 +31,10 @@ export interface CollectionExamples {
   params: number[];
   /** authored example paragraphs; {placeholders} resolve against `params` (or explicit args). */
   narrative: string[];
+  /** LaTeX lines seeding a live, editable notebook embedded under the worked examples — each one
+   *  evaluates in-browser (pure-CE, no pg). {placeholders} resolve here too. Same forms readers see in
+   *  the narrative, now runnable. Omit for no live block. */
+  notebook?: string[];
 }
 
 export interface NodeDoc {
@@ -72,6 +76,17 @@ export function renderPage(n: ResolvedNode): string {
   if (exampleLines && exampleLines.length) {
     out.push("## Examples", "");
     for (const p of exampleLines) out.push(p, "");
+  }
+
+  // Live, editable notebook seeded with the same forms — evaluates in-browser (pure-CE). ClientOnly because
+  // the custom element + engine are browser-only (Node prerender skips it). The value attribute is a JSON
+  // NotebookSeed; single-quoted so the JSON's own double quotes need no escaping (only `'` and `&` do).
+  if (n.examples?.notebook && n.examples.notebook.length) {
+    const seed = JSON.stringify({ lines: n.examples.notebook.map((latex) => ({ latex })) })
+      .replace(/&/g, "&amp;")
+      .replace(/'/g, "&#39;");
+    out.push("Try it live — edit any line and it re-evaluates (nothing here is a screenshot):", "");
+    out.push("<ClientOnly>", `  <enumeratio-notebook value='${seed}'></enumeratio-notebook>`, "</ClientOnly>", "");
   }
 
   out.push("## See also", "");

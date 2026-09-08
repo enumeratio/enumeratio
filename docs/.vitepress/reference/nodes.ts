@@ -33,6 +33,8 @@ export const NODES: NodeDoc[] = [
         "The lexicographically-first permutation of $[4]$ (1-based position 1) is ${at(0)}$; the last (position 24) is ${at(23)}$.",
         "The 6 words of $[3]$ in lex order are ${first(6; 3)}$, so $[2,3,1]$ sits at the 4th position: $\\operatorname{Rank}(\\operatorname{SymmetricGroup}(3),\\ [2,3,1]) = {rank([2,3,1]; 3)}$ — `Rank` is 1-based; the generic [`rank`](/reference/rank) reports the same position 0-based (`{rank0([2,3,1]; 3)}`).",
       ],
+      // NOTE: live-notebook seeds are held until the notebook parser speaks the library vocabulary
+      // (SymmetricGroup/Count/At + fixed rank/unrank lowering). render.ts emits the block when `notebook` is set.
     },
     seeAlso: [
       { head: "KPermutations" }, { head: "SignedPermutations" }, { head: "ColoredPermutations" },
