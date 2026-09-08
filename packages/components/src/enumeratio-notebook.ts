@@ -1,6 +1,6 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import { evaluate, type Row } from '@enumeratio/client'
+import { evaluate, reseedRandom, type Row } from '@enumeratio/client'
 import {
   bind, complete, lower, makeParser, LineGraph,
   type Bound, type Completion, type ExpressionParser, type LineId, type LineModel, type LowerResult, type Scope, type Type,
@@ -10,7 +10,7 @@ import type { Completer, CompletionCandidate } from './enumeratio-math-input'
 import { type LineState } from './enumeratio-expression-line'
 import './enumeratio-expression-line'
 
-// <enumeratio-expression-set> — a small notebook: a stack of <enumeratio-expression-line>s sharing ONE symbol
+// <enumeratio-notebook> — a small notebook: a stack of <enumeratio-expression-line>s sharing ONE symbol
 // Scope and ONE LineGraph (@enumeratio/expressions' dependency-order + cycle/dup-define detector). The set owns
 // every stateful thing a line does not: parsing (one ExpressionParser, built once the catalog loads), binding,
 // lowering, evaluation (one AbortController per line), and persistence.
@@ -32,8 +32,8 @@ type LineResult = LineState
 
 let nextIdNum = 0
 
-@customElement('enumeratio-expression-set')
-export class EnumeratioExpressionSet extends LitElement {
+@customElement('enumeratio-notebook')
+export class EnumeratioNotebook extends LitElement {
   @property({ type: String, attribute: 'storage-key' }) storageKey = ''
 
   // `value` is a manual (noAccessor) property: the SETTER only records the raw seed text (consumed once at
@@ -67,6 +67,12 @@ export class EnumeratioExpressionSet extends LitElement {
   private pendingChanged = new Set<LineId>()
   private debounceTimer: ReturnType<typeof setTimeout> | null = null
   private focusAfterUpdate: LineId | null = null
+  /** The seed behind every random op (RandomElement/Shuffle/RandomSample). Fixed per notebook so results are
+   *  reproducible; the reshuffle button rolls a new one. (Global to the compute-engine library, so it is the whole
+   *  page's randomness — one notebook's reshuffle reseeds all.) */
+  @state() private seed = (Math.random() * 2 ** 32) >>> 0
+  /** Whether any line uses a random op — the reshuffle button is disabled otherwise (nothing to reroll). */
+  @state() private usesRandom = false
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -143,7 +149,16 @@ export class EnumeratioExpressionSet extends LitElement {
     this.bootError = null
     this.notebook = nb
     this.parser = makeParser(nb.names)
+    await reseedRandom(this.seed) // reproducible randomness from the first evaluation
     for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)
+    for (const id of this.displayOrder) this.pendingChanged.add(id)
+    await this.flushRecompute(true)
+  }
+
+  /** Roll a new random seed and recompute — every `RandomElement`/`Shuffle`/`RandomSample` line redraws. */
+  async reshuffle(): Promise<void> {
+    this.seed = (Math.random() * 2 ** 32) >>> 0
+    await reseedRandom(this.seed)
     for (const id of this.displayOrder) this.pendingChanged.add(id)
     await this.flushRecompute(true)
   }
@@ -199,26 +214,42 @@ export class EnumeratioExpressionSet extends LitElement {
     const dirty = new Set<LineId>()
     for (const id of changed) for (const d of this.graph.dirtyAfter(id)) dirty.add(d)
     const models = new Map(this.graph.lines().map((m) => [m.id, m]))
+    // Reset the shared RNG to the notebook's seed before each pass, so random cells are STABLE across recomputes
+    // (editing an unrelated line doesn't reroll them) and reproducible for a given seed — Desmos's model.
+    await reseedRandom(this.seed)
     for (const id of this.graph.order()) {
       if (!dirty.has(id)) continue
       await this.evalLine(id, models)
     }
+    // A line uses randomness if its parsed AST names a random op (random_element / random_sample / scramble). This
+    // gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
+    this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|scramble/i.test(a))
     this.results = new Map(this.results)
     this.requestUpdate()
     this.emitResult()
   }
 
+  /** The parsed AST (MathJSON, pretty JSON) per line, for the line's opt-in right-click inspector. Merged into
+   *  every result so the line always has it without threading it through each setResult call. */
+  private lineAst = new Map<LineId, string>()
+
   private setResult(id: LineId, patch: LineResult): void {
-    this.results.set(id, patch)
+    const ast = this.lineAst.get(id)
+    this.results.set(id, ast ? { ...patch, ast } : patch)
   }
 
   private async evalLine(id: LineId, models: Map<LineId, LineModel>): Promise<void> {
     const notebook = this.notebook!
+    this.lineAst.delete(id) // fresh each pass; set once the line parses (below)
+    // An empty / whitespace-only line is a blank, not an expression — never bind it (CE parses "" to the `Nothing`
+    // symbol, which would otherwise surface as a spurious "unknown symbol Nothing").
+    if ((this.latexById.get(id) ?? '').trim() === '') { this.setResult(id, {}); return }
     const model = models.get(id)
     if (!model) return
     if (model.errors.length > 0) { this.setResult(id, { error: model.errors[0] }); return }
     if (!model.parsed) { this.setResult(id, {}); return }
     if (model.parsed.errors.length > 0) { this.setResult(id, { error: model.parsed.errors[0].message }); return }
+    this.lineAst.set(id, astFullForm(model.parsed))
 
     // A define re-binds its symbol from scratch: back to the declared type (no value) or gone — never a stale value.
     if (model.bindKind === 'define' && model.defines) this.resetBinding(model.defines)
@@ -282,7 +313,7 @@ export class EnumeratioExpressionSet extends LitElement {
         if (name && elemType) {
           this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'elem', coll: elemType.coll, handle: elemType.handle, rank: Number(rankText) } })
         }
-        this.setResult(id, { type: typeBadge(bound.type), value: String(valueText), engine: p.engine, sql: p.sql })
+        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), value: String(valueText), engine: p.engine, sql: p.sql })
         return
       }
 
@@ -291,7 +322,7 @@ export class EnumeratioExpressionSet extends LitElement {
       const name = bound.stmt.k !== 'expr' ? bound.stmt.name : undefined
       if (name) this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'scalar', text, pg: effectivePg(bound.type) ?? 'numeric' } })
 
-      this.setResult(id, { type: typeBadge(bound.type), value: text, engine: p.engine, sql: p.sql })
+      this.setResult(id, { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql })
     } catch (e) {
       if (stale()) return
       this.setResult(id, { type: typeBadge(bound.type), error: message(e) })
@@ -386,16 +417,61 @@ export class EnumeratioExpressionSet extends LitElement {
           `,
         )}
       </div>
+      <div class="toolbar">
+        <button
+          class="reshuffle"
+          ?disabled=${!this.usesRandom}
+          @click=${() => void this.reshuffle()}
+          title="Reshuffle"
+          aria-label="Reshuffle"
+        >⤮</button>
+      </div>
     `
   }
 
   static styles = css`
     :host {
+      /* Standard notebook width: fill the container up to a fixed max, centered — so every notebook on a
+         page presents at the same width regardless of where it's embedded. --enumeratio-notebook-width
+         overrides the cap. */
       display: block;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: var(--enumeratio-notebook-width, 46rem);
+      margin-inline: auto;
       font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 1.05rem;
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 8px;
       overflow: hidden;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0.3rem 0.5rem;
+      border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+    }
+    .reshuffle {
+      font: inherit;
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      width: 1.9rem;
+      height: 1.9rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
+      border-radius: 6px;
+      background: transparent;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+    }
+    .reshuffle:hover:not(:disabled) {
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .reshuffle:disabled {
+      opacity: 0.35;
+      cursor: default;
     }
     .set {
       display: flex;
@@ -409,21 +485,76 @@ export class EnumeratioExpressionSet extends LitElement {
   `
 }
 
-function typeBadge(t: Type): string {
+/** The type shown under a line's value, in notation. Scalars read as `∈ ℕ`/`∈ ℤ`/`∈ ℚ`/`∈ ℝ`/`∈ 𝔹`; an element of
+ *  a collection as `∈ <coll>`; a function as `f: (…) ↦`. When the bound scalar type is only the generic pg
+ *  `numeric` (as counting functions come back), the concrete set is REFINED from the value itself — a plain
+ *  integer is ℕ (or ℤ if negative), a `p/q` is ℚ, anything else with a fractional part is ℝ — so a Bell number no
+ *  longer mislabels itself "numeric". */
+function typeBadge(t: Type, value?: string): string {
   if (t.k === 'elem') return `∈ ${t.coll}`
   if (t.k === 'fn') return `f: (${t.params.join(', ')}) ↦`
   if (t.k === 'handle') return t.coll
   if (t.k === 'scalar') {
-    if (t.pg === 'natural_number') return 'ℕ'
-    if (t.pg === 'integer_number') return 'ℤ'
-    if (t.pg === 'boolean') return '𝔹'
-    return t.pg
+    if (t.pg === 'boolean') return '∈ 𝔹'
+    if (t.pg === 'natural_number') return '∈ ℕ'
+    if (t.pg === 'integer_number') return '∈ ℤ'
+    return `∈ ${scalarSet(t.pg, value)}`
   }
   return ''
 }
 
+/** Notation for a scalar carrier, refined by the evaluated value when the pg type is the generic `numeric`. */
+function scalarSet(pg: string, value?: string): string {
+  if (pg === 'rational_number') return 'ℚ'
+  const v = value?.trim()
+  if (v) {
+    if (v.startsWith('[')) return 'list' // a list/tuple element (e.g. a random permutation) — not a scalar set
+    if (/^-?\d+$/.test(v)) return v.startsWith('-') ? 'ℤ' : 'ℕ'
+    if (/^-?\d+\s*\/\s*\d+$/.test(v)) return 'ℚ'
+    if (/^-?\d*\.\d+$/.test(v)) return 'ℝ'
+  }
+  return pg === 'numeric' ? 'ℝ' : pg
+}
+
 function message(e: unknown): string {
   return e instanceof Error ? e.message : String(e)
+}
+
+/** MathJSON → a Wolfram-FullForm-style string: `["Binomial",6,2]` → `Binomial[6, 2]`, `n^2+1` →
+ *  `Add[Power[n, 2], 1]`. Handles the boxed MathJSON number/symbol/string/function wrappers. */
+function fullForm(x: unknown): string {
+  if (Array.isArray(x)) {
+    const [h, ...rest] = x
+    return `${fullForm(h)}[${rest.map(fullForm).join(', ')}]`
+  }
+  if (typeof x === 'string') return x
+  if (x && typeof x === 'object') {
+    const o = x as Record<string, unknown>
+    if ('sym' in o) return String(o.sym)
+    if ('num' in o) return String(o.num)
+    if ('str' in o) return JSON.stringify(o.str)
+    if ('fn' in o) return fullForm(o.fn)
+    return JSON.stringify(x)
+  }
+  return String(x)
+}
+
+/** The parsed statement rendered in FullForm, for the opt-in line inspector. Pulls the statement's MathJSON
+ *  (`body`/`domain`) and prefixes a define/declare so the shape is legible; length-capped. */
+function astFullForm(parsed: unknown): string {
+  try {
+    const stmt = (parsed as any)?.stmt ?? parsed
+    const mj = stmt?.body ?? stmt?.domain ?? stmt
+    let out = fullForm(mj)
+    if (stmt?.k === 'declare' && stmt?.name) out = `${stmt.name} ∈ ${out}`
+    else if (stmt?.k === 'define' && stmt?.name) {
+      const params = Array.isArray(stmt.params) && stmt.params.length ? `(${stmt.params.join(', ')})` : ''
+      out = `${stmt.name}${params} := ${out}`
+    }
+    return out.length > 8000 ? out.slice(0, 8000) + ' … (truncated)' : out
+  } catch (e) {
+    return message(e)
+  }
 }
 
 /** @enumeratio/expressions' types.ts defines this (and bind.ts/lower.ts both use it internally) but does not
@@ -435,8 +566,25 @@ function effectivePg(t: Type): string | undefined {
   return undefined
 }
 
+/** @deprecated Back-compat alias for the previous tag name `<enumeratio-expression-set>`. The element was renamed
+ *  to `<enumeratio-notebook>`; this keeps any existing embed working (custom-element names are public API, and the
+ *  repo convention is augment-or-tombstone, never a silent rename). A distinct subclass because customElements
+ *  requires one constructor per tag. Emits a one-time console warning; remove once no embed uses the old name. */
+@customElement('enumeratio-expression-set')
+export class EnumeratioExpressionSet extends EnumeratioNotebook {
+  connectedCallback(): void {
+    super.connectedCallback()
+    if (!EnumeratioExpressionSet.warned) {
+      EnumeratioExpressionSet.warned = true
+      console.warn('<enumeratio-expression-set> is deprecated — use <enumeratio-notebook>.')
+    }
+  }
+  private static warned = false
+}
+
 declare global {
   interface HTMLElementTagNameMap {
+    'enumeratio-notebook': EnumeratioNotebook
     'enumeratio-expression-set': EnumeratioExpressionSet
   }
 }

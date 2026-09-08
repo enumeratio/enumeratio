@@ -8,6 +8,7 @@
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import type { Expr } from './ir'
 import { ceEngine } from './ce-engine'
+import { ceEnumEngine } from './ce-enum-engine'
 import { pgEngine } from './pg-engine'
 import { registry } from './registry'
 import { InexactResult, tsEngine } from './ts-engine'
@@ -79,4 +80,14 @@ export async function standardEngine(dbFactory?: () => Db | Promise<Db>): Promis
   const reg = await registry()
   const pg = pgEngine(dbFactory)
   return routerEngine([tsEngine(reg), ceEngine(reg), pg])
+}
+
+/** The PURE-CE stack — ts + ce + ce-enum, NO pg. Every computation the notebook runs is answered by
+ *  `@enumeratio/compute-engine` (scalar counting/arithmetic via ce-engine, enumeration via ce-enum-engine) or by
+ *  ts-engine's native ops; nothing round-trips to SQL. `registry()` still reads the catalog snapshot (for the
+ *  grammar/type seam the binder needs), so a Db provider must exist — but it is never the evaluator. A collection
+ *  without a CE twin (see COLL_HEADS) simply can't be enumerated here: the honest edge of a partial port. */
+export async function notebookEngine(): Promise<Engine> {
+  const reg = await registry()
+  return routerEngine([tsEngine(reg), ceEngine(reg), ceEnumEngine()])
 }

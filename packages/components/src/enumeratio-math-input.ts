@@ -222,7 +222,16 @@ export class EnumeratioMathInput extends LitElement {
   // own internal keydown handling, so it can fully preempt arrow/enter/escape while the completion popover is open.
   // When the popover is closed these keys pass straight through untouched.
   private onMountKeydownCapture = (ev: KeyboardEvent): void => {
-    if (!this.popoverOpen) return
+    if (!this.popoverOpen) {
+      // Tab / Shift+Tab hops to the next / previous line's field rather than leaving the notebook or inserting a
+      // tab. (With the popover open, Tab accepts the active completion — handled in the switch below.)
+      if (ev.key === 'Tab') {
+        ev.preventDefault()
+        ev.stopPropagation()
+        this.dispatchEvent(new CustomEvent('enumeratio-move', { detail: { direction: ev.shiftKey ? 'up' : 'down' }, bubbles: true, composed: true }))
+      }
+      return
+    }
     switch (ev.key) {
       case 'ArrowDown':
         ev.preventDefault()
@@ -297,21 +306,33 @@ export class EnumeratioMathInput extends LitElement {
 
   static styles = css`
     :host {
-      display: inline-block;
+      display: block;
       position: relative;
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
     .wrap {
+      /* Fill the host (the line stretches every field to the same width), and reserve enough height for a
+         two-row render like \binom{6}{2} so single- and multi-row fields are the same size. Desmos-clean: no
+         filled background; a soft border that only warms on focus. */
       position: relative;
-      display: inline-flex;
-      min-width: 8rem;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: var(--enumeratio-math-input-height, 2.75rem);
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
-      border-radius: 4px;
-      background: var(--p-content-hover-background, transparent);
-      padding: 0.2rem 0.4rem;
+      border-radius: 6px;
+      background: transparent;
+      padding: 0.2rem 0.6rem;
     }
+    /* The focus ring lives on the FIELD's own rounded border, not MathLive's inner (otherwise invisible) box. */
     .wrap:focus-within {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 25%, transparent);
+    }
+    .mount math-field:focus,
+    .mount math-field:focus-within {
+      outline: none;
     }
     .wrap.readonly {
       opacity: 0.7;
@@ -329,6 +350,12 @@ export class EnumeratioMathInput extends LitElement {
       border: none;
       --caret-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       color: var(--enumeratio-text, var(--p-text-color, currentColor));
+    }
+    /* Strip MathLive's per-field chrome: the menu hamburger and the virtual-keyboard toggle. Omitted for now;
+       a single notebook-level affordance can replace them later. */
+    .mount math-field::part(menu-toggle),
+    .mount math-field::part(virtual-keyboard-toggle) {
+      display: none;
     }
     .popover {
       position: absolute;

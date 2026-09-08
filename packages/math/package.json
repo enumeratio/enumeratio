@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Pure-TypeScript, zero-dependency twins of enumeratio's SQL math primitives (factorial, binomial, bell, fubini, catalan, gaussian/multicomplex arithmetic, …) — same names, same numbers, verified against the SQL core by a differential oracle.",
   "type": "module",
-  "license": "Unlicense",
+  "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",

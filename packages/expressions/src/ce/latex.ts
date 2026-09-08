@@ -22,6 +22,11 @@ export type ExpressionParser = {
 
 const escapeId = (id: string): string => id.replace(/_/g, '\\_')
 
+/** snake_case catalog id -> its PascalCase alias: `random_element` -> `RandomElement`, `catalan_number` ->
+ *  `CatalanNumber`, `bell` -> `Bell`. Lets a user TYPE the clean word-run (no underscores, which MathLive turns
+ *  into subscripts) and have it resolve to the same catalog id. */
+const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
+
 /** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id, so `\operatorname{<id>}(...)` parses
  *  to `[id, ...args]` (functions) or `\operatorname{<id>}` parses to the bare symbol `id` (collections) — and
  *  both serialize back to the `\operatorname{}` spelling (the default fallback is `\mathrm{}` with an
@@ -67,7 +72,7 @@ export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryE
 // caller gave us, not the rewritten string.
 type NormalizeResult = { text: string; toOriginal: (pos: number) => number }
 
-function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>): NormalizeResult {
+function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases: ReadonlyMap<string, string>): NormalizeResult {
   let out = ''
   const mapping: number[] = []
   const appendRaw = (s: string, fromOrig: number) => {
@@ -133,8 +138,9 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>): Normali
         }
         break
       }
-      if (catalogIds.has(ident)) {
-        appendRaw(`\\operatorname{${escapeId(ident)}}`, i)
+      const canonical = catalogIds.has(ident) ? ident : aliases.get(ident)
+      if (canonical) {
+        appendRaw(`\\operatorname{${escapeId(canonical)}}`, i)
       } else {
         appendRaw(latex.slice(i, j), i)
       }
@@ -329,13 +335,25 @@ function splitStmt(body: Expression): Stmt {
 
 export function makeParser(catalog: CatalogNames): ExpressionParser {
   const catalogIds = new Set<string>([...catalog.collections, ...catalog.functions])
+  // PascalCase aliases for every catalog id whose Pascal form isn't already an id — so `Permutations`,
+  // `RandomElement`, `CatalanNumber` typed as bare word-runs resolve to `permutations` / `random_element` / … .
+  const aliases = new Map<string, string>()
+  for (const id of catalogIds) {
+    const p = pascalCase(id)
+    if (p !== id && !catalogIds.has(p) && !aliases.has(p)) aliases.set(p, id)
+  }
+  // Friendly spellings for ids CE's parser would otherwise canonicalize to a reserved builtin: `shuffle` /
+  // `Shuffle` -> our `scramble` (CE reserves `Shuffle`, mapping it to an unimplemented `RandomShuffle`).
+  for (const [word, id] of [['shuffle', 'scramble'], ['Shuffle', 'scramble']] as const) {
+    if (catalogIds.has(id) && !catalogIds.has(word)) aliases.set(word, id)
+  }
   const dictionary: Partial<LatexDictionaryEntry>[] = [...LATEX_DICTIONARY, ...catalogDictionary(catalog)]
   const syntax = new LatexSyntax({ dictionary: dictionary as never, preserveLatex: true })
 
   return {
     dictionary,
     parse(latex: string): Parsed {
-      const { text, toOriginal } = normalizeLatex(latex, catalogIds)
+      const { text, toOriginal } = normalizeLatex(latex, catalogIds, aliases)
       const spans: SpanMap = new Map()
       const errors: ParseError[] = []
       const raw = syntax.parse(text) as PreservedNode | null

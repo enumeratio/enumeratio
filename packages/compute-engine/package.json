@@ -1,0 +1,58 @@
+{
+  "name": "@enumeratio/compute-engine",
+  "version": "0.1.0",
+  "description": "enumeratio as a loadable compute-engine library: ~90 combinatorial collections with O(1) rank/unrank random access backing CE's own CollectionHandlers, plus Wolfram-aligned counting/digit operators. Loads into any ComputeEngine via installEnumeratio.",
+  "type": "module",
+  "license": "WTFPL",
+  "homepage": "https://enumeratio.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/enumeratio/enumeratio.git",
+    "directory": "packages/compute-engine"
+  },
+  "sideEffects": false,
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "typecheck": "tsgo --noEmit",
+    "build": "tsc -p tsconfig.build.json",
+    "prepack": "pnpm build",
+    "test": "vitest run",
+    "selfcert": "node --import tsx selfcert.mts",
+    "smoke": "node smoke.mjs"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "0.125.0"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@cortex-js/compute-engine": "0.125.0",
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./package.json": "./package.json"
+    }
+  }
+}

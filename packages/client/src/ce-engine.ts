@@ -59,13 +59,26 @@ let ceP: Promise<CEInstance> | null = null
  *  pays for the (sizable) compute-engine bundle. `precision` only governs FLOAT fallback rendering; exactness
  *  itself comes from the bignum/exact-rational kernel underneath and holds regardless of this setting — set high
  *  enough that it is never the thing limiting how large an exact integer this engine can carry. */
-async function ceInstance(): Promise<CEInstance> {
-  if (!ceP) ceP = import('@cortex-js/compute-engine').then(({ ComputeEngine }) => {
+export async function ceInstance(): Promise<CEInstance> {
+  if (!ceP) ceP = Promise.all([
+    import('@cortex-js/compute-engine'),
+    import('@enumeratio/compute-engine'),
+  ]).then(([{ ComputeEngine }, { installEnumeratio }]) => {
     const ce = new ComputeEngine()
     ce.precision = 200
+    // enumeratio's collections + counting/digit operators, reachable from ce.parse(latex).evaluate()
+    installEnumeratio(ce as any)
     return ce as CEInstance
   })
   return ceP
+}
+
+/** Seed (or reset) the compute-engine library's shared RNG behind RandomElement/Shuffle/RandomSample, so a
+ *  notebook can make its randomness reproducible and reshuffle it on demand. `undefined` restores Math.random.
+ *  Lazily imports the same library module the ce instance uses, so the seed takes effect on every random op. */
+export async function reseedRandom(seed?: number): Promise<void> {
+  const { seedRandom } = await import('@enumeratio/compute-engine')
+  seedRandom(seed)
 }
 
 /** A synthetic ImplRow for the InexactResult constructor — ce has no base_function_impl rows of its own (see

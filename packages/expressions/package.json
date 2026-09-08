@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "LaTeX → MathJSON → typed, catalog-bound expressions → @enumeratio/client IR. The expression layer behind the math-input notebook: compute-engine's LaTeX parser and MathJSON AST, our binder/typer over the catalog (collections as domains, elements as a type), lowering to the engine seam.",
   "type": "module",
-  "license": "Unlicense",
+  "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",

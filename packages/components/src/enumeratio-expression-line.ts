@@ -3,21 +3,31 @@ import { customElement, property, state } from 'lit/decorators.js'
 import type { Completer } from './enumeratio-math-input'
 import './enumeratio-math-input'
 
-// <enumeratio-expression-line> — one row of a notebook <enumeratio-expression-set>: a gutter (drag handle + type
-// badge), a math-input box, a result column (value or error), and a gear-toggled details panel (engine + SQL). It
-// is purely PRESENTATIONAL — it holds no LineGraph/Scope/evaluation state of its own; the owning set feeds it
-// `state` and reacts to the events it re-emits (`line-input`/`line-commit`/`line-move`/`line-remove`) plus drag
-// reordering (`line-reorder`, {sourceId, targetId: this.lineId}).
+// <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>. The math-input field spans the full
+// row (so every field in a notebook is the same width, Desmos-style); the value sits on its own row below it,
+// right-aligned, free to spread across the full width; and a quiet meta line below THAT carries the value's TYPE
+// in notation (∈ ℕ / ∈ ℚ / ∈ 𝔖₅ …), right-aligned and gray — or, when the line can't be parsed/bound, the error
+// message in its place. Purely PRESENTATIONAL: the owning set feeds it `state` and reacts to the events it
+// re-emits (`line-input`/`line-commit`/`line-move`/`line-remove`).
+//
+// Errors are DEBOUNCED for display: not shown until the input has settled (~350 ms), never while a line is empty,
+// so a half-typed symbol doesn't flash "unknown symbol …".
+//
+// Right-clicking a line opens an opt-in AST inspector showing the MathJSON the field parsed to.
 export type LineState = {
-  /** Rendered type badge text, e.g. "∈ triangular_numbers", "ℕ", "𝔹", "f: (n) ↦" — the set derives this from the
-   *  bound statement's Type; empty/undefined while the line hasn't bound to anything yet (blank/declare-only). */
+  /** Rendered type, in notation, e.g. "∈ ℕ", "∈ ℚ", "∈ 𝔖₅", "f: (n) ↦" — the set derives this from the bound
+   *  Type and the evaluated value; empty/undefined while the line hasn't bound to anything. */
   type?: string
   value?: string
   error?: string
+  /** The parsed AST (MathJSON, pretty JSON) for the opt-in right-click inspector. */
+  ast?: string
   engine?: string
   sql?: string
   busy?: boolean
 }
+
+const ERROR_SHOW_DELAY_MS = 350
 
 @customElement('enumeratio-expression-line')
 export class EnumeratioExpressionLine extends LitElement {
@@ -26,7 +36,11 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ attribute: false }) completer: Completer | null = null
   @property({ attribute: false }) state: LineState = {}
 
-  @state() private detailsOpen = false
+  /** Gated display of `state.error` — see the debounce note above. */
+  @state() private showError = false
+  @state() private astOpen = false
+  private errorTimer: ReturnType<typeof setTimeout> | null = null
+  private lastError: string | undefined = undefined
 
   focus(): void {
     this.mathInput?.focus()
@@ -42,13 +56,12 @@ export class EnumeratioExpressionLine extends LitElement {
 
   private onInput = (ev: CustomEvent<{ latex: string }>): void => {
     this.latex = ev.detail.latex
+    this.hideError()
     this.emit('line-input', { lineId: this.lineId, latex: this.latex })
   }
 
   private onCommit = (): void => {
     this.emit('line-commit', { lineId: this.lineId })
-    // Fallback empty-line removal: if the capture-phase Backspace detection below never fires (e.g. an adapter
-    // that swallows the keydown before it bubbles), an Enter on an already-empty line at least offers a way out.
     if (this.latex.trim() === '') this.emit('line-remove', { lineId: this.lineId })
   }
 
@@ -56,72 +69,66 @@ export class EnumeratioExpressionLine extends LitElement {
     this.emit('line-move', { lineId: this.lineId, direction: ev.detail.direction })
   }
 
-  // Native keyboard events are composed — they bubble out through <enumeratio-math-input>'s shadow root to here
-  // even though this line never reaches into that shadow DOM itself. Backspace on an empty line removes it.
   private onKeydownCapture = (ev: KeyboardEvent): void => {
     if (ev.key === 'Backspace' && this.latex === '') {
       this.emit('line-remove', { lineId: this.lineId })
     }
   }
 
-  private onDragStart = (ev: DragEvent): void => {
-    ev.dataTransfer?.setData('text/plain', this.lineId)
-    if (ev.dataTransfer) ev.dataTransfer.effectAllowed = 'move'
-  }
-
-  private onDragOver = (ev: DragEvent): void => {
+  private onContextMenu = (ev: MouseEvent): void => {
+    if (!this.state.ast) return // nothing parsed to show — fall through to the native menu
     ev.preventDefault()
+    this.astOpen = !this.astOpen
   }
 
-  private onDrop = (ev: DragEvent): void => {
-    ev.preventDefault()
-    const sourceId = ev.dataTransfer?.getData('text/plain')
-    if (sourceId && sourceId !== this.lineId) this.emit('line-reorder', { sourceId, targetId: this.lineId })
+  private hideError(): void {
+    if (this.errorTimer) { clearTimeout(this.errorTimer); this.errorTimer = null }
+    this.showError = false
   }
 
-  private toggleDetails = (): void => {
-    this.detailsOpen = !this.detailsOpen
+  updated(changed: Map<string, unknown>): void {
+    if (!changed.has('state')) return
+    const err = this.state.error
+    if (err === this.lastError) return
+    this.lastError = err
+    if (this.errorTimer) { clearTimeout(this.errorTimer); this.errorTimer = null }
+    if (err && this.latex.trim() !== '') {
+      this.errorTimer = setTimeout(() => { this.showError = true; this.errorTimer = null }, ERROR_SHOW_DELAY_MS)
+    } else {
+      this.showError = false
+    }
+  }
+
+  disconnectedCallback(): void {
+    if (this.errorTimer) clearTimeout(this.errorTimer)
+    super.disconnectedCallback()
   }
 
   render(): TemplateResult {
     const s = this.state
+    const errVisible = this.showError && !!s.error && this.latex.trim() !== ''
+    const hasValue = !errVisible && !s.busy && s.value != null
+    // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
+    // failure, right where the type would otherwise sit.
     return html`
-      <div
-        class="line"
-        @dragover=${this.onDragOver}
-        @drop=${this.onDrop}
-        @keydown=${this.onKeydownCapture}
-      >
-        <div class="gutter">
-          <span class="handle" draggable="true" @dragstart=${this.onDragStart} title="drag to reorder">⋮⋮</span>
-          <span class="badge" title=${s.type ?? ''}>${s.type ?? ''}</span>
+      <div class="line" @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}>
+        <div class="field">
+          <enumeratio-math-input
+            .latex=${this.latex}
+            .completer=${this.completer}
+            @enumeratio-input=${this.onInput}
+            @enumeratio-commit=${this.onCommit}
+            @enumeratio-move=${this.onMove}
+          ></enumeratio-math-input>
+          ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
         </div>
-        <enumeratio-math-input
-          .latex=${this.latex}
-          .completer=${this.completer}
-          @enumeratio-input=${this.onInput}
-          @enumeratio-commit=${this.onCommit}
-          @enumeratio-move=${this.onMove}
-        ></enumeratio-math-input>
-        <div class="result">
-          ${s.busy
-            ? html`<span class="hint">…</span>`
-            : s.error
-              ? html`<span class="err" title=${s.error}>⚠ ${s.error}</span>`
-              : s.value != null
-                ? html`<span class="val">= ${s.value}</span>`
-                : html`<span class="hint">—</span>`}
+        <div class="value">
+          ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
         </div>
-        <button class="gear" title="details" aria-label="details" @click=${this.toggleDetails}>⚙</button>
-        ${this.detailsOpen
-          ? html`
-              <div class="panel">
-                <div class="row"><span class="k">engine</span><span class="v">${s.engine ?? '—'}</span></div>
-                <div class="row"><span class="k">sql</span><code class="sql">${s.sql ?? '—'}</code></div>
-              </div>
-            `
+        ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
+        ${this.astOpen && s.ast
+          ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
           : ''}
-        <button class="remove" title="remove line" aria-label="remove line" @click=${() => this.emit('line-remove', { lineId: this.lineId })}>×</button>
       </div>
     `
   }
@@ -133,86 +140,75 @@ export class EnumeratioExpressionLine extends LitElement {
     }
     .line {
       position: relative;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.3rem 0.4rem;
+      padding: 0.4rem 0.5rem;
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
     }
-    .gutter {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      min-width: 6.5rem;
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+    /* The field is the full row, so every field in a notebook is exactly the same width. */
+    .field {
+      position: relative;
     }
-    .handle {
-      cursor: grab;
-      opacity: 0.5;
-      user-select: none;
+    enumeratio-math-input {
+      display: block;
+      width: 100%;
     }
-    .handle:active {
-      cursor: grabbing;
-    }
-    .badge {
+    /* The bound type, in notation, floating at the right INSIDE the field — a faint chip so it reads over the
+       field's content; hidden on error. */
+    .type {
+      position: absolute;
+      right: 0.55rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
       font-size: 0.8em;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
       opacity: 0.8;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 0 0.25rem;
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--enumeratio-surface, var(--p-content-background, canvas)) 78%, transparent);
     }
-    .result {
-      flex: 0 0 auto;
-      min-width: 5rem;
-    }
-    .val {
+    /* Value on its own row below the field, right-aligned and free to use the full width. */
+    .value {
+      margin-top: 0.25rem;
+      text-align: right;
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       font-weight: 600;
+      overflow-wrap: anywhere;
+      min-height: 1.2em;
     }
-    .err {
-      color: var(--p-red-500, #dc2626);
+    .eq {
+      opacity: 0.4;
+      font-weight: 400;
+    }
+    /* A parse/bind error takes the value's place, below the field — full width for the whole message, muted. */
+    .error {
+      margin-top: 0.15rem;
+      text-align: right;
+      font-size: 0.9em;
+      overflow-wrap: anywhere;
+      color: color-mix(in srgb, var(--p-red-500, #dc2626) 80%, var(--enumeratio-muted, currentColor));
     }
     .hint {
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      opacity: 0.5;
+      opacity: 0.35;
     }
-    .gear,
-    .remove {
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      font: inherit;
-      line-height: 1;
-      padding: 0.15rem 0.3rem;
-    }
-    .gear:hover,
-    .remove:hover {
-      color: var(--enumeratio-text, var(--p-text-color, currentColor));
-    }
-    .panel {
+    .ast {
       position: absolute;
       right: 0.5rem;
       top: 100%;
-      z-index: 10;
-      background: var(--enumeratio-surface, var(--p-content-background, canvas));
+      z-index: 30;
+      max-width: min(90vw, 32rem);
+      max-height: 18rem;
+      overflow: auto;
+      margin-top: 0.15rem;
+      padding: 0.4rem 0.6rem;
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 6px;
-      padding: 0.4rem 0.6rem;
-      font-size: 0.8em;
-      min-width: 16rem;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+      background: var(--enumeratio-surface, var(--p-content-background, canvas));
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
     }
-    .row {
-      display: flex;
-      gap: 0.5rem;
-      align-items: baseline;
-    }
-    .k {
-      opacity: 0.6;
-      min-width: 3.5rem;
-    }
-    .sql {
+    .ast pre {
+      margin: 0;
+      font-size: 0.78em;
       white-space: pre-wrap;
       word-break: break-word;
     }

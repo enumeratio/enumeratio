@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "TypeScript read-through client for the pure-SQL enumeratio core (pg-enumeratio) running in PGlite — the math API everything else consumes.",
   "type": "module",
-  "license": "Unlicense",
+  "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",
@@ -41,12 +41,14 @@
     "selfcert:resolve": "node --import tsx selfcert-resolve.mts",
     "test": "vitest run",
     "selfcert:engine": "node --import tsx selfcert-engine.mts",
+    "selfcert:ce-diff": "node --import tsx selfcert-ce-differential.mts",
     "bench:engine": "node --import tsx bench-engine.mts"
   },
   "dependencies": {
     "@cortex-js/compute-engine": "0.125.0",
     "@electric-sql/pglite": "^0.5.3",
     "@enumeratio/data": "workspace:^",
+    "@enumeratio/compute-engine": "workspace:^",
     "@enumeratio/math": "workspace:^",
     "debug": "^4.4.0",
     "pg": "^8.23.0"
