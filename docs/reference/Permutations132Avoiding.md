@@ -18,14 +18,14 @@
 - **Count:** the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)).
 - **Order:** the Catalan convolution recursion on the position $m$ of the maximum value $n$ — every value left of $m$ exceeds every value right of $m$, and each side recursively avoids $132$ (`packages/compute-engine/src/packs/permutations.ts`). This is *not* lexicographic.
 - **Random access:** $O(n^2)$ arithmetic — a Catalan table plus the recursive split/merge.
-- **Naming:** pattern-suffix spelling, matching [`Permutations321Avoiding`](/reference/permutations-321-avoiding).
+- **Naming:** pattern-suffix spelling, matching [`Permutations321Avoiding`](/reference/Permutations321Avoiding).
 
 ## Examples
 
 $\operatorname{Count}(\operatorname{Permutations132Avoiding}(4)) = 14$ ($C_4$).
 
-In this order the 14 avoiders of $[4]$ are $[4, 3, 2, 1], [4, 3, 1, 2], [4, 2, 3, 1], [4, 2, 1, 3], [4, 1, 2, 3], [3, 4, 2, 1], [3, 4, 1, 2], [3, 2, 4, 1], [2, 3, 4, 1], [3, 2, 1, 4], [3, 1, 2, 4], [2, 3, 1, 4], [2, 1, 3, 4], [1, 2, 3, 4]$ — rank $0$ is $[4, 3, 2, 1]$ (the max-position recursion puts the reversed identity first, so the order differs from the lex order of [`Permutations321Avoiding`](/reference/permutations-321-avoiding)).
+In this order the 14 avoiders of $[4]$ are $[4, 3, 2, 1], [4, 3, 1, 2], [4, 2, 3, 1], [4, 2, 1, 3], [4, 1, 2, 3], [3, 4, 2, 1], [3, 4, 1, 2], [3, 2, 4, 1], [2, 3, 4, 1], [3, 2, 1, 4], [3, 1, 2, 4], [2, 3, 1, 4], [2, 1, 3, 4], [1, 2, 3, 4]$ — rank $0$ is $[4, 3, 2, 1]$ (the max-position recursion puts the reversed identity first, so the order differs from the lex order of [`Permutations321Avoiding`](/reference/Permutations321Avoiding)).
 
 ## See also
 
-[`Permutations321Avoiding`](/reference/permutations-321-avoiding) · [`PermutationsAvoiding123`](/reference/permutations-avoiding-123) · [`PermutationsAvoiding312`](/reference/permutations-avoiding-312) · [`SymmetricGroup`](/reference/symmetric-group) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`Permutations321Avoiding`](/reference/Permutations321Avoiding) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) · [`SymmetricGroup`](/reference/SymmetricGroup) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

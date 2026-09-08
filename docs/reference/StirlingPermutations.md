@@ -27,4 +27,4 @@ The 3 order-2 words are $[2, 2, 1, 1], [1, 2, 2, 1], [1, 1, 2, 2]$. Rank $0$ at 
 
 ## See also
 
-[`SymmetricGroup`](/reference/symmetric-group) · `Groupings` · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`SymmetricGroup`](/reference/SymmetricGroup) · `Groupings` · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

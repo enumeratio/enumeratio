@@ -16,7 +16,7 @@
 - **Element:** a permutation (one-line) with no $i<j<k$ where $\sigma_j < \sigma_k < \sigma_i$.
 - **Result type:** `collection` of `list<integer>`, each of length $n$.
 - **Count:** the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)).
-- **Order:** the mirror of [`PermutationsAvoiding231`](/reference/permutations-avoiding-231): the same Catalan convolution split on the position of the minimum $1$, left block $\{2, \dots, m_0+1\}$ and right block $\{m_0+2, \dots, n\}$ (`packages/compute-engine/src/packs/permutations.ts`).
+- **Order:** the mirror of [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231): the same Catalan convolution split on the position of the minimum $1$, left block $\{2, \dots, m_0+1\}$ and right block $\{m_0+2, \dots, n\}$ (`packages/compute-engine/src/packs/permutations.ts`).
 - **Random access:** $O(n^2)$ arithmetic.
 
 ## Examples
@@ -27,4 +27,4 @@ In this order the 14 avoiders of $[4]$ are $[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2
 
 ## See also
 
-[`PermutationsAvoiding231`](/reference/permutations-avoiding-231) (the mirror class, split on the maximum) · [`PermutationsAvoiding123`](/reference/permutations-avoiding-123) · [`PermutationsAvoiding213`](/reference/permutations-avoiding-213) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) (the mirror class, split on the maximum) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding213`](/reference/PermutationsAvoiding213) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

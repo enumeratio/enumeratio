@@ -16,7 +16,7 @@
 - **Element:** a permutation (one-line) with no $i<j<k$ where $\sigma_j < \sigma_i < \sigma_k$.
 - **Result type:** `collection` of `list<integer>`, each of length $n$.
 - **Count:** the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)).
-- **Order:** lexicographic among the avoiders, via the same prefix-counting engine as [`PermutationsAvoiding123`](/reference/permutations-avoiding-123) with the $213$ predicate (`packages/compute-engine/src/packs/permutations.ts`).
+- **Order:** lexicographic among the avoiders, via the same prefix-counting engine as [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) with the $213$ predicate (`packages/compute-engine/src/packs/permutations.ts`).
 - **Random access:** prefix-counting recomputed per descent; $n$ stays small in practice.
 
 ## Examples
@@ -27,4 +27,4 @@ The 14 avoiders of $[4]$ in lex order are $[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 4,
 
 ## See also
 
-[`PermutationsAvoiding123`](/reference/permutations-avoiding-123) · [`PermutationsAvoiding231`](/reference/permutations-avoiding-231) · [`PermutationsAvoiding312`](/reference/permutations-avoiding-312) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

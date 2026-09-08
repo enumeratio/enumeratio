@@ -48,7 +48,7 @@ function familyGroups(): Item[] {
   const groups = new Map<string, Item[]>();
   for (const n of NODES) {
     if (!groups.has(n.family)) groups.set(n.family, []);
-    groups.get(n.family)!.push({ text: n.head, link: `/reference/${n.slug}` });
+    groups.get(n.family)!.push({ text: n.head, link: `/reference/${n.slug ?? n.head}` });
   }
   return [...groups].map(([text, items]) => ({ text, collapsed: true, items }));
 }

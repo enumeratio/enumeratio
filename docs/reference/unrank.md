@@ -26,7 +26,7 @@
 - **Complexity:** $O(1)$ to $O(n)$ depending on the family — this is the entire point of the library
   (`packages/compute-engine/src/library.ts`'s header comment: "CE's combinatorial collections have closed-form
   counts but SCAN-based random access and NO rank. Every collection here supplies an O(1) `at` (via unrank)").
-  A family like [`SymmetricGroup`](/reference/symmetric-group) or [`Subsets`](/reference/subsets) decodes its
+  A family like [`SymmetricGroup`](/reference/SymmetricGroup) or [`Subsets`](/reference/subsets) decodes its
   index in $O(n)$ (one pass over the $n$ positions), never by enumerating and counting off elements — the
   distinction that matters at collection sizes where naive enumeration is infeasible (e.g. $n!$ or $2^n$ for
   $n$ in the dozens).

@@ -18,7 +18,7 @@
 - **Count:** the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)) — as for every single-pattern class of length 3.
 - **Order:** lexicographic: built left to right, smallest legal value first, where a value is legal iff it exceeds the running maximum inversion-bottom (the walk that keeps every prefix $321$-avoiding), memoized per state (`packages/compute-engine/src/packs/permutations.ts`).
 - **Random access:** each of the $n$ positions sums a memoized state count; polynomial in $n$, not a closed convolution.
-- **Naming:** spelled `Permutations321Avoiding` (pattern-suffix), like its sibling [`Permutations132Avoiding`](/reference/permutations-132-avoiding); the four other length-3 classes use the `PermutationsAvoiding<pat>` spelling instead.
+- **Naming:** spelled `Permutations321Avoiding` (pattern-suffix), like its sibling [`Permutations132Avoiding`](/reference/Permutations132Avoiding); the four other length-3 classes use the `PermutationsAvoiding<pat>` spelling instead.
 
 ## Examples
 
@@ -28,4 +28,4 @@ The 14 avoiders of $[4]$ in this order are $[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2
 
 ## See also
 
-[`Permutations132Avoiding`](/reference/permutations-132-avoiding) · [`PermutationsAvoiding123`](/reference/permutations-avoiding-123) · [`PermutationsAvoiding231`](/reference/permutations-avoiding-231) · [`SymmetricGroup`](/reference/symmetric-group) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`Permutations132Avoiding`](/reference/Permutations132Avoiding) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`SymmetricGroup`](/reference/SymmetricGroup) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

@@ -14,7 +14,7 @@
 ## Details
 
 - **Arity:** 2 — the ground size $n$ and the arrangement length $k$.
-- **Element:** a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`SymmetricGroup`](/reference/symmetric-group).
+- **Element:** a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`SymmetricGroup`](/reference/SymmetricGroup).
 - **Result type:** `collection` of `list<integer>`, each of length $k$.
 - **Count:** $n^{\underline{k}} = n!/(n-k)!$, the falling factorial (`FallingFactorial`, via `KPermutationCount` in `packages/compute-engine/src/kernels-extra.ts`).
 - **Order:** lexicographic, decoded as a mixed-radix falling-factorial numeral — position $p$ takes the $\lfloor r / (n-1-p)^{\underline{k-1-p}} \rfloor$-th still-available symbol, then recurses (`KPermutationUnrank`/`KPermutationRank`).
@@ -29,4 +29,4 @@ The first six $2$-arrangements of $[4]$ in lex order are $[1, 2], [1, 3], [1, 4]
 
 ## See also
 
-[`SymmetricGroup`](/reference/symmetric-group) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`SymmetricGroup`](/reference/SymmetricGroup) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

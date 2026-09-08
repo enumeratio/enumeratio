@@ -28,4 +28,4 @@ The 9 derangements of $[4]$ in rank order are $[4, 3, 2, 1], [2, 3, 4, 1], [3, 4
 
 ## See also
 
-[`SymmetricGroup`](/reference/symmetric-group) · [`Involutions`](/reference/involutions) · [`CyclicPermutations`](/reference/cyclic-permutations) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`SymmetricGroup`](/reference/SymmetricGroup) · [`Involutions`](/reference/Involutions) · [`CyclicPermutations`](/reference/CyclicPermutations) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

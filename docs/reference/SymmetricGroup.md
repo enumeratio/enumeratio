@@ -31,4 +31,4 @@ The 6 words of $[3]$ in lex order are $[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1
 
 ## See also
 
-[`KPermutations`](/reference/k-permutations) · [`SignedPermutations`](/reference/signed-permutations) · [`ColoredPermutations`](/reference/colored-permutations) · [`Derangements`](/reference/derangements) · [`Involutions`](/reference/involutions) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`random_element`](/reference/random-element) · [`cardinality`](/reference/cardinality)
+[`KPermutations`](/reference/KPermutations) · [`SignedPermutations`](/reference/SignedPermutations) · [`ColoredPermutations`](/reference/ColoredPermutations) · [`Derangements`](/reference/Derangements) · [`Involutions`](/reference/Involutions) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`random_element`](/reference/random-element) · [`cardinality`](/reference/cardinality)

@@ -122,21 +122,21 @@ as families migrate.
 
 ### Permutations & permutation classes
 
-- [**SymmetricGroup**](/reference/symmetric-group) — The collection of permutations of $\{1, \dots, n\}$, in one-line notation.
-- [**KPermutations**](/reference/k-permutations) — The ordered arrangements of $k$ distinct symbols drawn from $\{1, \dots, n\}$ — injections $[k] \hookrightarrow [n]$.
-- [**SignedPermutations**](/reference/signed-permutations) — The hyperoctahedral group $B_n$ — permutations of $[n]$ with an independent $\pm$ sign on each entry.
-- [**ColoredPermutations**](/reference/colored-permutations) — The wreath product $\mathbb{Z}_k \wr S_n$ — a permutation of $[n]$ with an independent color in $\{0, \dots, k-1\}$ on each position.
-- [**CyclicPermutations**](/reference/cyclic-permutations) — The permutations of $[n]$ that are a single $n$-cycle, in one-line notation.
-- [**Involutions**](/reference/involutions) — The self-inverse permutations of $[n]$ — those equal to their own inverse ($\sigma = \sigma^{-1}$).
-- [**Derangements**](/reference/derangements) — The permutations of $[n]$ with no fixed point — $\sigma(i) \neq i$ for every $i$.
-- [**AlternatingPermutations**](/reference/alternating-permutations) — The up-down permutations of $[n]$: $a_1 < a_2 > a_3 < a_4 > \cdots$.
-- [**Permutations321Avoiding**](/reference/permutations-321-avoiding) — The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).
-- [**Permutations132Avoiding**](/reference/permutations-132-avoiding) — The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\sigma_i < \sigma_k < \sigma_j$).
-- [**PermutationsAvoiding123**](/reference/permutations-avoiding-123) — The permutations of $[n]$ with no increasing subsequence of length 3 (pattern $123$).
-- [**PermutationsAvoiding213**](/reference/permutations-avoiding-213) — The permutations of $[n]$ avoiding the pattern $213$ (no $i<j<k$ with $\sigma_j < \sigma_i < \sigma_k$).
-- [**PermutationsAvoiding231**](/reference/permutations-avoiding-231) — The permutations of $[n]$ avoiding the pattern $231$ — equivalently the stack-sortable permutations.
-- [**PermutationsAvoiding312**](/reference/permutations-avoiding-312) — The permutations of $[n]$ avoiding the pattern $312$ (no $i<j<k$ with $\sigma_j < \sigma_k < \sigma_i$).
-- [**StirlingPermutations**](/reference/stirling-permutations) — The permutations of the multiset $\{1,1,2,2,\dots,n,n\}$ in which everything between the two copies of $i$ exceeds $i$.
+- [**SymmetricGroup**](/reference/SymmetricGroup) — The collection of permutations of $\{1, \dots, n\}$, in one-line notation.
+- [**KPermutations**](/reference/KPermutations) — The ordered arrangements of $k$ distinct symbols drawn from $\{1, \dots, n\}$ — injections $[k] \hookrightarrow [n]$.
+- [**SignedPermutations**](/reference/SignedPermutations) — The hyperoctahedral group $B_n$ — permutations of $[n]$ with an independent $\pm$ sign on each entry.
+- [**ColoredPermutations**](/reference/ColoredPermutations) — The wreath product $\mathbb{Z}_k \wr S_n$ — a permutation of $[n]$ with an independent color in $\{0, \dots, k-1\}$ on each position.
+- [**CyclicPermutations**](/reference/CyclicPermutations) — The permutations of $[n]$ that are a single $n$-cycle, in one-line notation.
+- [**Involutions**](/reference/Involutions) — The self-inverse permutations of $[n]$ — those equal to their own inverse ($\sigma = \sigma^{-1}$).
+- [**Derangements**](/reference/Derangements) — The permutations of $[n]$ with no fixed point — $\sigma(i) \neq i$ for every $i$.
+- [**AlternatingPermutations**](/reference/AlternatingPermutations) — The up-down permutations of $[n]$: $a_1 < a_2 > a_3 < a_4 > \cdots$.
+- [**Permutations321Avoiding**](/reference/Permutations321Avoiding) — The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).
+- [**Permutations132Avoiding**](/reference/Permutations132Avoiding) — The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\sigma_i < \sigma_k < \sigma_j$).
+- [**PermutationsAvoiding123**](/reference/PermutationsAvoiding123) — The permutations of $[n]$ with no increasing subsequence of length 3 (pattern $123$).
+- [**PermutationsAvoiding213**](/reference/PermutationsAvoiding213) — The permutations of $[n]$ avoiding the pattern $213$ (no $i<j<k$ with $\sigma_j < \sigma_i < \sigma_k$).
+- [**PermutationsAvoiding231**](/reference/PermutationsAvoiding231) — The permutations of $[n]$ avoiding the pattern $231$ — equivalently the stack-sortable permutations.
+- [**PermutationsAvoiding312**](/reference/PermutationsAvoiding312) — The permutations of $[n]$ avoiding the pattern $312$ (no $i<j<k$ with $\sigma_j < \sigma_k < \sigma_i$).
+- [**StirlingPermutations**](/reference/StirlingPermutations) — The permutations of the multiset $\{1,1,2,2,\dots,n,n\}$ in which everything between the two copies of $i$ exceeds $i$.
 
 <!-- CATALOG:END -->
 

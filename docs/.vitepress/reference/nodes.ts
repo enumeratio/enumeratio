@@ -8,7 +8,6 @@ export const NODES: NodeDoc[] = [
   // ═══════════════ Permutations & permutation classes ═══════════════
   {
     head: "SymmetricGroup",
-    slug: "symmetric-group",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The collection of permutations of $\\{1, \\dots, n\\}$, in one-line notation.",
@@ -44,7 +43,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "KPermutations",
-    slug: "k-permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The ordered arrangements of $k$ distinct symbols drawn from $\\{1, \\dots, n\\}$ — injections $[k] \\hookrightarrow [n]$.",
@@ -55,7 +53,7 @@ export const NODES: NodeDoc[] = [
     ],
     details: [
       { label: "Arity", body: "2 — the ground size $n$ and the arrangement length $k$." },
-      { label: "Element", body: "a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`SymmetricGroup`](/reference/symmetric-group)." },
+      { label: "Element", body: "a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`SymmetricGroup`](/reference/SymmetricGroup)." },
       { label: "Result type", body: "`collection` of `list<integer>`, each of length $k$." },
       { label: "Count", body: "$n^{\\underline{k}} = n!/(n-k)!$, the falling factorial (`FallingFactorial`, via `KPermutationCount` in `packages/compute-engine/src/kernels-extra.ts`)." },
       { label: "Order", body: "lexicographic, decoded as a mixed-radix falling-factorial numeral — position $p$ takes the $\\lfloor r / (n-1-p)^{\\underline{k-1-p}} \\rfloor$-th still-available symbol, then recurses (`KPermutationUnrank`/`KPermutationRank`)." },
@@ -76,7 +74,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "SignedPermutations",
-    slug: "signed-permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The hyperoctahedral group $B_n$ — permutations of $[n]$ with an independent $\\pm$ sign on each entry.",
@@ -108,7 +105,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "ColoredPermutations",
-    slug: "colored-permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The wreath product $\\mathbb{Z}_k \\wr S_n$ — a permutation of $[n]$ with an independent color in $\\{0, \\dots, k-1\\}$ on each position.",
@@ -120,7 +116,7 @@ export const NODES: NodeDoc[] = [
       { label: "Arity", body: "2 — the ground size $n$ and the number of colors $k$." },
       { label: "Element", body: "a pair `[image, colors]`: `image` a permutation of $[n]$ (one-line), `colors` a length-$n$ word over $\\{0, \\dots, k-1\\}$. E.g. `[[1, 2], [1, 0]]` colors position 1 with $1$ and position 2 with $0$." },
       { label: "Result type", body: "`collection` of `list<list<integer>>` (the two length-$n$ lists)." },
-      { label: "Count", body: "$k^n\\,n!$ (`ColoredPermutationCount`). At $k=1$ this is [`SymmetricGroup`](/reference/symmetric-group); at $k=2$, [`SignedPermutations`](/reference/signed-permutations)." },
+      { label: "Count", body: "$k^n\\,n!$ (`ColoredPermutationCount`). At $k=1$ this is [`SymmetricGroup`](/reference/SymmetricGroup); at $k=2$, [`SignedPermutations`](/reference/SignedPermutations)." },
       { label: "Order", body: "mixed-radix: $\\text{colorNum} = \\lfloor r/n! \\rfloor$ read big-endian base-$k$ into the color word, over the lex permutation $r \\bmod n!$ (`ColoredPermutationUnrank`/`Rank`)." },
       { label: "Random access", body: "$O(n)$ — a Lehmer decode plus an $n$-digit base-$k$ expansion." },
     ],
@@ -139,7 +135,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "CyclicPermutations",
-    slug: "cyclic-permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ that are a single $n$-cycle, in one-line notation.",
@@ -169,7 +164,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Involutions",
-    slug: "involutions",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The self-inverse permutations of $[n]$ — those equal to their own inverse ($\\sigma = \\sigma^{-1}$).",
@@ -199,7 +193,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Derangements",
-    slug: "derangements",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no fixed point — $\\sigma(i) \\neq i$ for every $i$.",
@@ -230,7 +223,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "AlternatingPermutations",
-    slug: "alternating-permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The up-down permutations of $[n]$: $a_1 < a_2 > a_3 < a_4 > \\cdots$.",
@@ -260,7 +252,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Permutations321Avoiding",
-    slug: "permutations-321-avoiding",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).",
@@ -275,7 +266,7 @@ export const NODES: NodeDoc[] = [
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)) — as for every single-pattern class of length 3." },
       { label: "Order", body: "lexicographic: built left to right, smallest legal value first, where a value is legal iff it exceeds the running maximum inversion-bottom (the walk that keeps every prefix $321$-avoiding), memoized per state (`packages/compute-engine/src/packs/permutations.ts`)." },
       { label: "Random access", body: "each of the $n$ positions sums a memoized state count; polynomial in $n$, not a closed convolution." },
-      { label: "Naming", body: "spelled `Permutations321Avoiding` (pattern-suffix), like its sibling [`Permutations132Avoiding`](/reference/permutations-132-avoiding); the four other length-3 classes use the `PermutationsAvoiding<pat>` spelling instead." },
+      { label: "Naming", body: "spelled `Permutations321Avoiding` (pattern-suffix), like its sibling [`Permutations132Avoiding`](/reference/Permutations132Avoiding); the four other length-3 classes use the `PermutationsAvoiding<pat>` spelling instead." },
     ],
     examples: {
       params: [4],
@@ -291,7 +282,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "Permutations132Avoiding",
-    slug: "permutations-132-avoiding",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\\sigma_i < \\sigma_k < \\sigma_j$).",
@@ -306,13 +296,13 @@ export const NODES: NodeDoc[] = [
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108))." },
       { label: "Order", body: "the Catalan convolution recursion on the position $m$ of the maximum value $n$ — every value left of $m$ exceeds every value right of $m$, and each side recursively avoids $132$ (`packages/compute-engine/src/packs/permutations.ts`). This is *not* lexicographic." },
       { label: "Random access", body: "$O(n^2)$ arithmetic — a Catalan table plus the recursive split/merge." },
-      { label: "Naming", body: "pattern-suffix spelling, matching [`Permutations321Avoiding`](/reference/permutations-321-avoiding)." },
+      { label: "Naming", body: "pattern-suffix spelling, matching [`Permutations321Avoiding`](/reference/Permutations321Avoiding)." },
     ],
     examples: {
       params: [4],
       narrative: [
         "$\\operatorname{Count}(\\operatorname{Permutations132Avoiding}(4)) = {count}$ ($C_4$).",
-        "In this order the 14 avoiders of $[4]$ are ${first(14)}$ — rank $0$ is ${at(0)}$ (the max-position recursion puts the reversed identity first, so the order differs from the lex order of [`Permutations321Avoiding`](/reference/permutations-321-avoiding)).",
+        "In this order the 14 avoiders of $[4]$ are ${first(14)}$ — rank $0$ is ${at(0)}$ (the max-position recursion puts the reversed identity first, so the order differs from the lex order of [`Permutations321Avoiding`](/reference/Permutations321Avoiding)).",
       ],
     },
     seeAlso: [
@@ -322,7 +312,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding123",
-    slug: "permutations-avoiding-123",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no increasing subsequence of length 3 (pattern $123$).",
@@ -353,7 +342,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding213",
-    slug: "permutations-avoiding-213",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $213$ (no $i<j<k$ with $\\sigma_j < \\sigma_i < \\sigma_k$).",
@@ -366,7 +354,7 @@ export const NODES: NodeDoc[] = [
       { label: "Element", body: "a permutation (one-line) with no $i<j<k$ where $\\sigma_j < \\sigma_i < \\sigma_k$." },
       { label: "Result type", body: "`collection` of `list<integer>`, each of length $n$." },
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108))." },
-      { label: "Order", body: "lexicographic among the avoiders, via the same prefix-counting engine as [`PermutationsAvoiding123`](/reference/permutations-avoiding-123) with the $213$ predicate (`packages/compute-engine/src/packs/permutations.ts`)." },
+      { label: "Order", body: "lexicographic among the avoiders, via the same prefix-counting engine as [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) with the $213$ predicate (`packages/compute-engine/src/packs/permutations.ts`)." },
       { label: "Random access", body: "prefix-counting recomputed per descent; $n$ stays small in practice." },
     ],
     examples: {
@@ -383,7 +371,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding231",
-    slug: "permutations-avoiding-231",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $231$ — equivalently the stack-sortable permutations.",
@@ -413,7 +400,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "PermutationsAvoiding312",
-    slug: "permutations-avoiding-312",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $312$ (no $i<j<k$ with $\\sigma_j < \\sigma_k < \\sigma_i$).",
@@ -426,7 +412,7 @@ export const NODES: NodeDoc[] = [
       { label: "Element", body: "a permutation (one-line) with no $i<j<k$ where $\\sigma_j < \\sigma_k < \\sigma_i$." },
       { label: "Result type", body: "`collection` of `list<integer>`, each of length $n$." },
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108))." },
-      { label: "Order", body: "the mirror of [`PermutationsAvoiding231`](/reference/permutations-avoiding-231): the same Catalan convolution split on the position of the minimum $1$, left block $\\{2, \\dots, m_0+1\\}$ and right block $\\{m_0+2, \\dots, n\\}$ (`packages/compute-engine/src/packs/permutations.ts`)." },
+      { label: "Order", body: "the mirror of [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231): the same Catalan convolution split on the position of the minimum $1$, left block $\\{2, \\dots, m_0+1\\}$ and right block $\\{m_0+2, \\dots, n\\}$ (`packages/compute-engine/src/packs/permutations.ts`)." },
       { label: "Random access", body: "$O(n^2)$ arithmetic." },
     ],
     examples: {
@@ -443,7 +429,6 @@ export const NODES: NodeDoc[] = [
   },
   {
     head: "StirlingPermutations",
-    slug: "stirling-permutations",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of the multiset $\\{1,1,2,2,\\dots,n,n\\}$ in which everything between the two copies of $i$ exceeds $i$.",

@@ -17,7 +17,10 @@ import { renderPage, type NodeDoc, type ResolvedNode } from "./render.ts";
 const here = dirname(fileURLToPath(import.meta.url));
 const refDir = join(here, "../../reference"); // docs/reference
 const entryByHead = new Map(allEntries.map((e) => [e.head, e]));
-const slugByHead = new Map(NODES.map((n) => [n.head, n.slug]));
+// The canonical route/filename IS the PascalCase head (a node may override via `slug`); the SQL snake id is
+// never used in a route — PascalCase is canonical (see AGENTS/notes on the identifier direction).
+const slugOf = (n: NodeDoc): string => n.slug ?? n.head;
+const slugByHead = new Map(NODES.map((n) => [n.head, slugOf(n)]));
 
 // ── element formatting: ints [1, 2, 3]; blocks [[1, 2], [3]]; nested trees recurse; leaf = number ──
 function fmt(el: number[] | number[][] | NestedTree): string {
@@ -114,7 +117,7 @@ function catalogBlock(): string {
   const lines: string[] = [CATALOG_START, ""];
   for (const [family, nodes] of byFamily) {
     lines.push(`### ${family}`, "");
-    for (const n of nodes) lines.push(`- [**${n.head}**](/reference/${n.slug}) — ${n.tagline}`);
+    for (const n of nodes) lines.push(`- [**${n.head}**](/reference/${slugOf(n)}) — ${n.tagline}`);
     lines.push("");
   }
   lines.push(CATALOG_END);
@@ -141,12 +144,12 @@ function main() {
 
   for (const n of NODES) {
     const md = GEN_HEADER + renderPage(resolveNode(n));
-    const file = join(refDir, `${n.slug}.md`);
-    managed.add(`${n.slug}.md`);
+    const file = join(refDir, `${slugOf(n)}.md`);
+    managed.add(`${slugOf(n)}.md`);
     const current = existsSync(file) ? readFileSync(file, "utf8") : null;
     if (current === md) continue;
-    stale.push(n.slug);
-    if (mode === "write") writeFileSync(file, md), written.push(n.slug);
+    stale.push(slugOf(n));
+    if (mode === "write") writeFileSync(file, md), written.push(slugOf(n));
   }
 
   // a managed slug that lost its dataset entry leaves an orphan .md — flag it (don't auto-delete)

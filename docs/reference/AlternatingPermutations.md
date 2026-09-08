@@ -28,4 +28,4 @@ The 5 up-down permutations of $[4]$ in rank order are $[1, 4, 2, 3], [1, 3, 2, 4
 
 ## See also
 
-[`SymmetricGroup`](/reference/symmetric-group) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`SymmetricGroup`](/reference/SymmetricGroup) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)

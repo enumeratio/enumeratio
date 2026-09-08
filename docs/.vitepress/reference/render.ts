@@ -39,7 +39,9 @@ export interface CollectionExamples {
 
 export interface NodeDoc {
   head: string;
-  slug: string;
+  /** Route/filename. Optional — defaults to the head itself (the canonical PascalCase identifier), so
+   *  `SymmetricGroup` → /reference/SymmetricGroup. Set only to override. */
+  slug?: string;
   /** sidebar/grouping family label, e.g. "Permutations & permutation classes". */
   family: string;
   kind: NodeKind;
