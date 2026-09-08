@@ -417,6 +417,15 @@ describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () =
     expect(String(Object.values(out2[0])[0])).toBe(await value(pg, { select: [inexact] }))
   })
 
+  it('a symbolic constant (Pi) is boxed as a symbol and folds to a decimal under numericFallback', async () => {
+    const ceN = ceEngine(reg, { numericFallback: true })
+    const pi: SelectExpr = { kind: 'const', name: 'Pi' }
+    expect(ceN.can({ select: [pi] })).toBe(true)
+    expect((await value(ceN, { select: [pi] })).startsWith('3.14159')).toBe(true)
+    expect((await value(ceN, { select: [op('mul', 'numeric', lit(2), pi)] })).startsWith('6.28318')).toBe(true)
+    await ceN.close()
+  })
+
   it('gcd and binomial agree with pg', async () => {
     const g: Expr = { select: [call('gcd', lit(48), lit(18))] }
     expect(await value(ce, g)).toBe(await value(pg, g))

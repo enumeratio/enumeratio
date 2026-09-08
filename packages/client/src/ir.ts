@@ -62,6 +62,11 @@ export type SelectExpr =
   /** a coercion: an element row down to its carrier VALUE (`(e).value`, when the source resolves to a
    *  `<coll>_element`), or a plain numeric-to-domain cast (`::rational_number`) otherwise. */
   | { kind: 'cast'; expr: SelectExpr; to: string }
+  /** a named mathematical CONSTANT (a symbol, not a call) — `Pi`, `GoldenRatio`, `CatalanConstant`. It has no
+   *  numeric `lit` value of its own: it stays symbolic so an engine can render it exactly (π, φ) and only fold to a
+   *  decimal under `.N()`. `name` is the compute-engine symbol; ce-engine boxes it (`ce.box(name)`), ts/pg map the
+   *  ones they know to a builtin (`pi()`, `Math.PI`) and DECLINE the rest so the router falls to ce. */
+  | { kind: 'const'; name: string }
   /** the escape hatch: SQL the tree could not capture. pg-only by construction. */
   | { kind: 'raw'; sql: string }
 
@@ -437,5 +442,6 @@ export function calcText(e: SelectExpr): string {
     }
     case 'handle': return handleExprText(e.handle)
     case 'cast': return `(${calcText(e.expr)})::${e.to}`
+    case 'const': return e.name
   }
 }

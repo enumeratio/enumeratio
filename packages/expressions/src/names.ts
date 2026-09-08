@@ -86,7 +86,13 @@ export const BUILTIN_SYMBOLS: Record<string, BuiltinSymbolBinding> = {
   natural_numbers: { k: 'collection', coll: 'natural_numbers' },
   integer_numbers: { k: 'collection', coll: 'integer_numbers' },
   rational_numbers: { k: 'collection', coll: 'rational_numbers' },
-  Pi: { k: 'unsupported', reason: '"Pi" has no catalog binding yet — no collection or scalar type denotes it' },
-  ExponentialE: { k: 'unsupported', reason: '"ExponentialE" has no catalog binding yet' },
   ImaginaryUnit: { k: 'unsupported', reason: '"ImaginaryUnit" has no catalog binding yet — gaussian_integer has no unit constant registered' },
 }
+
+/** Bare CE symbols that denote a numeric mathematical CONSTANT (not a scope variable, not a collection). Reachable
+ *  by an UNAMBIGUOUS trigger only: `\pi`→Pi, `\varphi`→GoldenRatio, and the word `CatalanConstant`. bind types
+ *  these numeric; lower emits an IR `const` node; ce-engine boxes the symbol so it renders exactly (π, φ) and folds
+ *  under `.N()`. Scope wins first, so a user's `\pi = 3` (or a var named after one) still shadows the constant.
+ *  `ExponentialE` is intentionally ABSENT — bare `e` parses to the plain symbol `"e"`, so binding it would hijack
+ *  every variable `e`; it needs its own unambiguous trigger first. */
+export const CE_CONSTANTS = new Set(['Pi', 'GoldenRatio', 'CatalanConstant'])

@@ -210,4 +210,11 @@ describe('lower: ∏ folds to mul, scalar |x| → Abs', () => {
     expect(e.kind).toBe('apply')
     expect(e.fn).toBe('Abs')
   })
+  it('\\pi → const node; 2\\pi → mul(2, const Pi)', () => {
+    expect(sel('\\pi')).toEqual({ kind: 'const', name: 'Pi' })
+    const e = sel('2\\pi')
+    expect(e.kind).toBe('op')
+    expect(e.op).toBe('mul')
+    expect(e.args).toContainEqual({ kind: 'const', name: 'Pi' })
+  })
 })

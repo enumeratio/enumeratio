@@ -4,7 +4,7 @@
 // never needs a Catalog — same reasoning as the header note in types.ts.
 import { args, head, isNumber, isSymbol, numberValue, symbolName, type Expression, type NodePath } from './ast.js'
 import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, rangeValues, summationRange, type Bound } from './bind.js'
-import { OPERATORS } from './names.js'
+import { CE_CONSTANTS, OPERATORS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
   type Scope, type Type, type ValueRef,
@@ -187,8 +187,9 @@ function lowerSymbol(name: string, path: NodePath, scope: Scope, types: Map<Node
   if (t.k === 'fn') throw new Error(`lower: "${name}" is a function, not a value`)
   if (t.k === 'unknown') throw new Error(`lower: "${name}" could not be typed`)
   const b = scope.get(name)
-  if (!b || b.k !== 'var' || b.value === undefined) throw new Error(`lower: "${name}" has no value — its definition did not evaluate`)
-  return valueRefToSelect(b.value)
+  if (b && b.k === 'var' && b.value !== undefined) return valueRefToSelect(b.value)
+  if (CE_CONSTANTS.has(name)) return { kind: 'const', name }   // Pi/GoldenRatio/CatalanConstant — a symbolic constant
+  throw new Error(`lower: "${name}" has no value — its definition did not evaluate`)
 }
 
 function valueRefToSelect(v: ValueRef): SelectExpr {

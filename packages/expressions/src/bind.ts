@@ -12,7 +12,7 @@ import {
   args, head, isSymbol, numberValue, isNumber, symbolName,
   spanAt, type Expression, type NodePath, type Parsed, type Stmt,
 } from './ast.js'
-import { OPERATORS, BUILTIN_SYMBOLS } from './names.js'
+import { OPERATORS, BUILTIN_SYMBOLS, CE_CONSTANTS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, UNKNOWN, argPath, effectivePg, elemType, fnType, handleType,
   isNumericKind, numericResultPg, rootPrefix, scalarType,
@@ -357,6 +357,7 @@ function typeSymbol(name: string, path: NodePath, ctx: Ctx): Type {
   }
   const coll = ctx.catalog.collection(name)
   if (coll) return handleType(name)
+  if (CE_CONSTANTS.has(name)) return scalarType('numeric')   // Pi/GoldenRatio/CatalanConstant → numeric (ce-engine boxes it)
   const builtin = BUILTIN_SYMBOLS[name]
   if (builtin) {
     if (builtin.k === 'unsupported') { ctx.errors(path, builtin.reason); return UNKNOWN }

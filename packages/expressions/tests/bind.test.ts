@@ -190,6 +190,14 @@ describe('bind: errors', () => {
     expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
   })
 
+  it('symbolic constants (\\pi, \\varphi, CatalanConstant) bind numeric; a scope var shadows', () => {
+    for (const latex of ['\\pi', '\\varphi', '\\operatorname{CatalanConstant}', '2\\pi', '\\pi + 1']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'numeric' })
+    }
+  })
+
   it('mismatched arity against a curated function reports the expected count', () => {
     const bound = bind(parser.parse('\\operatorname{Binomial}(6,2,1)'), new Map(), catalog)
     expect(bound.errors.some((e) => /binomial expects 2/.test(e.message))).toBe(true)
