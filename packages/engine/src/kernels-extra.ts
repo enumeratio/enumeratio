@@ -1184,3 +1184,33 @@ export function RealDigitsKernel(n: number, base = 10): [number[], number] {
   const digits = IntegerDigitsKernel(n, base);
   return [digits, digits.length];
 }
+
+// ─── more integer ops CE lacks (Wolfram-named; the ones CE HAS — Abs/Floor/Mod/GCD/Divisors/Totient/… — we
+//     bind to rather than reimplement). ────────────────────────────────────────────────────────────────────
+/** Number of base-b digits (Wolfram IntegerLength; IntegerLength[0] = 0). */
+export function IntegerLengthKernel(n: number, base = 10): number {
+  const m = Math.abs(Math.trunc(n));
+  return m === 0 ? 0 : IntegerDigitsKernel(m, base).length;
+}
+/** The integer with the base-b digits reversed (Wolfram IntegerReverse). */
+export function IntegerReverseKernel(n: number, base = 10): number {
+  return FromDigitsKernel(IntegerDigitsKernel(Math.abs(Math.trunc(n)), base).reverse(), base);
+}
+/** Sum of the base-b digits (Total @ IntegerDigits). */
+export function DigitSumKernel(n: number, base = 10): number {
+  return IntegerDigitsKernel(n, base).reduce((a, b) => a + b, 0);
+}
+/** Wolfram DigitCount[n, b]: occurrence counts of digits 1, 2, …, b-1, then 0. */
+export function DigitCountKernel(n: number, base = 10): number[] {
+  const b = base >= 2 ? Math.trunc(base) : 10;
+  const cnt = new Array(b).fill(0);
+  for (const d of IntegerDigitsKernel(n, b)) cnt[d]++;
+  const out: number[] = [];
+  for (let d = 1; d < b; d++) out.push(cnt[d]);
+  out.push(cnt[0]);
+  return out;
+}
+/** Wolfram DigitCount[n, b, d]: occurrences of digit d. */
+export function DigitCountOfKernel(n: number, base: number, d: number): number {
+  return IntegerDigitsKernel(n, base).filter((x) => x === d).length;
+}

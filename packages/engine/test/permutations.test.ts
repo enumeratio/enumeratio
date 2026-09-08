@@ -64,11 +64,16 @@ describe("library shape", () => {
     expect(enumeratioLibrary.name).toBe("enumeratio");
     const heads = Object.keys(enumeratioLibrary.definitions as object);
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
-    // 89 collections + 7 view/combinators + Rank/RandomElement/Inversions + 6 number ops + 3 digit ops
-    expect(heads.length).toBe(108);
+    // 89 collections + 7 combinators + Rank/RandomElement/Inversions + 6 number + 3 digit + 7 integer/bit ops
+    expect(heads.length).toBe(115);
     for (const h of ["Groupings", "BellB", "CatalanNumber", "Fubini", "PartitionsP", "PartitionsQ",
-      "PolygonalNumber", "IntegerDigits", "FromDigits", "RealDigits"]) {
+      "PolygonalNumber", "IntegerDigits", "FromDigits", "RealDigits",
+      "IntegerLength", "IntegerReverse", "DigitSum", "DigitCount", "BitAnd", "BitOr", "BitXor"]) {
       expect(heads).toContain(h);
+    }
+    // we bind to CE's own number theory, never redeclare it
+    for (const h of ["Mod", "Quotient", "GCD", "LCM", "Divisors", "Totient", "IsPrime", "Factorial", "Binomial", "Fibonacci"]) {
+      expect(heads).not.toContain(h);
     }
     for (const h of ["Triangulations", "NonCrossingMatchings", "AlternatingPermutations",
       "SetPartitionsNoSingletons", "PartitionsIntoOddParts", "SelfConjugatePartitions",

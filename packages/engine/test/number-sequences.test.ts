@@ -58,6 +58,36 @@ describe("digit functions", () => {
   });
 });
 
+describe("integer / bit ops (CE-lacking; CE's own number theory stays bound)", () => {
+  it("IntegerLength / IntegerReverse / DigitSum", () => {
+    expect(num(["IntegerLength", 12345])).toBe(5);
+    expect(num(["IntegerLength", 255, 16])).toBe(2);
+    expect(num(["IntegerLength", 0])).toBe(0);
+    expect(num(["IntegerReverse", 1230])).toBe(321);
+    expect(num(["DigitSum", 12345])).toBe(15);
+    expect(num(["DigitSum", 255, 16])).toBe(30);
+  });
+  it("DigitCount: per-digit (Wolfram order 1..b-1,0) and single-digit", () => {
+    expect(str(["DigitCount", 1223334444, 10])).toBe("[1,2,3,4,0,0,0,0,0,0]"); // counts of 1,2,...,9,0
+    expect(num(["DigitCount", 1223334444, 10, 3])).toBe(3); // count of digit 3
+  });
+  it("bit ops CE lacks", () => {
+    expect(num(["BitAnd", 12, 10])).toBe(8);
+    expect(num(["BitOr", 12, 10])).toBe(14);
+    expect(num(["BitXor", 12, 10])).toBe(6);
+  });
+  it("Listable", () => {
+    expect(str(["IntegerLength", ["List", 1, 22, 333]])).toBe("[1,2,3]");
+    expect(str(["DigitSum", ["List", 9, 99, 999]])).toBe("[9,18,27]");
+  });
+  it("CE's own number theory still works after install (bound, not shadowed)", () => {
+    expect(num(["Mod", 17, 5])).toBe(2);
+    expect(num(["GCD", 12, 18])).toBe(6);
+    expect(str(["Divisors", 12])).toBe("[1,2,3,4,6,12]");
+    expect(num(["Totient", 12])).toBe(4);
+  });
+});
+
 describe("Groupings collection (binary parenthesizations, Wolfram Groupings[n,2])", () => {
   it("count = Catalan(n-1); nested element", () => {
     expect(num(["Length", ["Groupings", 4]])).toBe(5); // Catalan(3)

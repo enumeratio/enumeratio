@@ -11,7 +11,10 @@
 import type { LibraryDefinition, Expression, ComputeEngine, CollectionHandlers } from "@cortex-js/compute-engine";
 import { Inversions } from "./kernels.js";
 import { BellB, Fubini, PartitionsP } from "./kernels-combinatorics.js";
-import { CatalanNumber, PartitionsQ, PolygonalNumber, IntegerDigitsKernel, FromDigitsKernel, RealDigitsKernel } from "./kernels-extra.js";
+import {
+  CatalanNumber, PartitionsQ, PolygonalNumber, IntegerDigitsKernel, FromDigitsKernel, RealDigitsKernel,
+  IntegerLengthKernel, IntegerReverseKernel, DigitSumKernel, DigitCountKernel, DigitCountOfKernel,
+} from "./kernels-extra.js";
 import { allEntries, adaptEntry, asIntList, type FamilySpec } from "./packs/index.js";
 
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
@@ -24,6 +27,18 @@ const numberOp = (fn: (n: number) => number) => ({
   signature: "(integer) -> integer",
   broadcastable: true,
   evaluate: (ops: ReadonlyArray<Expression>) => engineOf(ops[0]).number(fn(intOf(ops[0]))),
+});
+// an (integer, base?) → integer op, Listable, base defaulting to 10
+const intBaseOp = (fn: (n: number, base: number) => number) => ({
+  signature: "(integer, integer?) -> integer",
+  broadcastable: true,
+  evaluate: (ops: ReadonlyArray<Expression>) => engineOf(ops[0]).number(fn(intOf(ops[0]), ops.length >= 2 ? intOf(ops[1]) : 10)),
+});
+// a bitwise (integer, integer) → integer op, Listable
+const bitOp = (fn: (a: number, b: number) => number) => ({
+  signature: "(integer, integer) -> integer",
+  broadcastable: true,
+  evaluate: (ops: ReadonlyArray<Expression>) => engineOf(ops[0]).number(fn(intOf(ops[0]), intOf(ops[1]))),
 });
 
 // Every collection, adapted from its pure PackEntry to a CE-facing FamilySpec.
@@ -346,6 +361,23 @@ export const enumeratioLibrary: LibraryDefinition = {
         return engineOf(ops[0]).box(["List", ["List", ...digits], exp]);
       },
     },
+    IntegerLength: intBaseOp(IntegerLengthKernel),
+    IntegerReverse: intBaseOp(IntegerReverseKernel),
+    DigitSum: intBaseOp(DigitSumKernel),
+    // DigitCount(n, base?) → per-digit counts (Wolfram order 1..b-1,0); DigitCount(n, base, d) → count of digit d.
+    DigitCount: {
+      signature: "(integer, integer?, integer?) -> collection",
+      evaluate: (ops: ReadonlyArray<Expression>) => {
+        const base = ops.length >= 2 ? intOf(ops[1]) : 10;
+        return ops.length >= 3
+          ? engineOf(ops[0]).number(DigitCountOfKernel(intOf(ops[0]), base, intOf(ops[2])))
+          : engineOf(ops[0]).box(["List", ...DigitCountKernel(intOf(ops[0]), base)]);
+      },
+    },
+    // Bitwise ops CE lacks (Wolfram BitAnd/BitOr/BitXor).
+    BitAnd: bitOp((a, b) => a & b),
+    BitOr: bitOp((a, b) => a | b),
+    BitXor: bitOp((a, b) => a ^ b),
   },
 };
 
