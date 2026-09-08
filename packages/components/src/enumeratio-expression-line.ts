@@ -23,6 +23,9 @@ export type LineState = {
    *  becomes a deep link. */
   typeHref?: string
   value?: string
+  /** When the value is a located element, a link to the SQL query view that reproduces it (the collection filtered
+   *  to its rank) — click the value to verify it in the atlas. */
+  valueHref?: string
   error?: string
   /** The parsed AST (MathJSON, pretty JSON) for the opt-in right-click inspector. */
   ast?: string
@@ -190,7 +193,9 @@ export class EnumeratioExpressionLine extends LitElement {
           </div>
           <div class="value">
             ${s.busy ? html`<span class="hint">…</span>`
-              : hasValue ? html`<span class="eq">=</span> ${s.value}${s.more
+              : hasValue ? html`<span class="eq">=</span> ${s.valueHref
+                  ? html`<a class="vlink" href=${s.valueHref} target="_blank" rel="noopener" title="open in the query view">${s.value}</a>`
+                  : s.value}${s.more
                   ? html` <button class="more" @click=${() => this.emit('line-expand', { lineId: this.lineId })}
                             title="pull more elements">…</button>`
                   : ''}`
@@ -328,6 +333,15 @@ export class EnumeratioExpressionLine extends LitElement {
       opacity: 0.4;
       font-weight: 400;
     }
+    /* A located element's value links to the query view that reproduces it. */
+    .vlink {
+      color: inherit;
+      text-decoration: none;
+      text-decoration: underline dotted color-mix(in srgb, currentColor 40%, transparent);
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+    .vlink:hover { text-decoration: underline; }
     /* Clickable "pull more" for a collection preview — a quiet inline affordance. */
     .more {
       font: inherit;

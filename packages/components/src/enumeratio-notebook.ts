@@ -407,6 +407,13 @@ export class EnumeratioNotebook extends LitElement {
     return parts.length ? `${base};${parts.join(';')}` : base
   }
 
+  /** Link a located element to the SQL query view that reproduces it: the collection filtered to its rank. A
+   *  best-effort "verify we're talking about the same thing" link until a first-class element route exists. */
+  private elementQueryHref(t: Type, rank: number): string | undefined {
+    const base = this.hrefOfType(t)
+    return base ? `${base}?where=${encodeURIComponent(`rank = ${rank}`)}` : undefined
+  }
+
   /** Pull the next batch of a collection preview: bump this line's element count and re-preview it. */
   private onLineExpand = (ev: CustomEvent<{ lineId: LineId }>): void => {
     const id = ev.detail.lineId
@@ -609,7 +616,11 @@ export class EnumeratioNotebook extends LitElement {
         if (name && elemType) {
           this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'elem', coll: elemType.coll, handle: elemType.handle, rank: Number(rankText) } })
         }
-        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), typeHref: this.hrefOfType(bound.type), value: String(valueText), engine: p.engine, sql: p.sql })
+        this.setResult(id, {
+          type: typeBadge(bound.type, String(valueText)), typeHref: this.hrefOfType(bound.type),
+          value: String(valueText), valueHref: this.elementQueryHref(bound.type, Number(rankText)),
+          engine: p.engine, sql: p.sql,
+        })
         return
       }
 
