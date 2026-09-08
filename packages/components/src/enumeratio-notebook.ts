@@ -214,6 +214,9 @@ export class EnumeratioNotebook extends LitElement {
 
   private async evalLine(id: LineId, models: Map<LineId, LineModel>): Promise<void> {
     const notebook = this.notebook!
+    // An empty / whitespace-only line is a blank, not an expression — never bind it (CE parses "" to the `Nothing`
+    // symbol, which would otherwise surface as a spurious "unknown symbol Nothing").
+    if ((this.latexById.get(id) ?? '').trim() === '') { this.setResult(id, {}); return }
     const model = models.get(id)
     if (!model) return
     if (model.errors.length > 0) { this.setResult(id, { error: model.errors[0] }); return }
