@@ -94,16 +94,16 @@ describe('errors', () => {
 })
 
 describe('round-trip', () => {
-  it('serialize(parse(declare)) matches the input up to whitespace, in the Pascal spelling', () => {
-    const input = 'x \\in \\operatorname{TriangularNumbers}'
+  it('serialize(parse(declare)) matches the input up to whitespace, in the Pascal \\mathrm spelling', () => {
+    const input = 'x \\in \\mathrm{TriangularNumbers}'
     const parsed = parser.parse(input)
     if (parsed.stmt.k !== 'declare') throw new Error('expected declare')
     const out = toLatex(['Element', parsed.stmt.name, parsed.stmt.domain] as Expression, parser)
     expect(out.replace(/\s+/g, '')).toBe(input.replace(/\s+/g, ''))
   })
 
-  it('serialize(["next","x"]) round-trips through the Pascal \\operatorname{} spelling', () => {
-    expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\operatorname{Next}')
+  it('serialize(["next","x"]) round-trips through the Pascal \\mathrm{} spelling', () => {
+    expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\mathrm{Next}')
   })
 })
 
@@ -127,7 +127,7 @@ describe('reformatIdentifiers (display reformat)', () => {
           : null
 
   it.each([
-    ['next', '\\operatorname{Next}'], // known function → upright operator, Pascal spelling
+    ['next', '\\mathrm{Next}'], // known function → \mathrm node binding, Pascal spelling
     ['TriangularNumbers', '\\mathrm{TriangularNumbers}'], // known collection → \mathrm, Pascal spelling
     ['Permutations', '\\mathfrak{S}'], // a registered notation glyph is spliced verbatim
     ['xy', 'xy'], // unknown multi-letter run → left bare (a variable)

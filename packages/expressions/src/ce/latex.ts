@@ -31,28 +31,26 @@ const escapeId = (id: string): string => id.replace(/_/g, '\\_')
  *  into subscripts) and have it resolve to the same catalog id. */
 export const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
 
-/** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\operatorname{}` for a
- *  function / `\mathrm{}` for a collection, both over the PascalCase spelling. The internal MathJSON symbol stays
- *  the snake id regardless — this is purely the display/parse spelling. `kind` tells the field's reformat which
- *  arm produced the string so it can leave it alone on the next pass. */
+/** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\mathrm{}` over the
+ *  PascalCase spelling. Our catalog ids are AST-node bindings, so they read `\mathrm{}` (upright, no MathLive
+ *  double-wrap); `\operatorname{}` is reserved for syntax KEYWORDS (`for`, `with`). The internal MathJSON symbol
+ *  stays the snake id regardless — this is purely the display/parse spelling. `role` is kept for callers that
+ *  still care to distinguish; both currently render the same `\mathrm{}` wrapper. */
 export type IdentifierDisplay = { kind: 'operator' | 'entity' | 'notation'; latex: string }
 export function identifierDisplay(
   id: string,
   role: 'function' | 'collection',
   notation?: Record<string, string>,
 ): IdentifierDisplay {
+  void role
   const n = notation?.[id]
-  if (n) return { kind: 'notation', latex: n }
-  const p = pascalCase(id)
-  return role === 'function'
-    ? { kind: 'operator', latex: `\\operatorname{${p}}` }
-    : { kind: 'entity', latex: `\\mathrm{${p}}` }
+  return n ? { kind: 'notation', latex: n } : { kind: 'entity', latex: `\\mathrm{${pascalCase(id)}}` }
 }
 
 /** The single spelling an id serializes to / the completer inserts / the parser round-trips: notation if present,
- *  else `\operatorname{<PascalCase>}` (used for BOTH roles — the operator/entity split is only a reformat nicety). */
+ *  else `\mathrm{<PascalCase>}` (our AST-node-binding spelling — `\operatorname{}` is for keywords, not ids). */
 export const serializeLatex = (id: string, notation?: Record<string, string>): string =>
-  notation?.[id] ?? `\\operatorname{${pascalCase(id)}}`
+  notation?.[id] ?? `\\mathrm{${pascalCase(id)}}`
 
 /** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id. The TRIGGER is the PascalCase spelling
  *  (what you type — `\operatorname{Permutations}(...)` parses to `[permutations, ...]`, `\operatorname{Bell}` to
@@ -168,10 +166,9 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
       }
       const canonical = catalogIds.has(ident) ? ident : aliases.get(ident)
       if (canonical) {
-        // A real catalog id is spelled Pascal (the dictionary triggers on that); a non-id keyword such as `for`
-        // has no Pascal form and must reach the parser verbatim.
-        const spelling = catalogIds.has(canonical) ? pascalCase(canonical) : canonical
-        appendRaw(`\\operatorname{${escapeId(spelling)}}`, i)
+        // A real catalog id is an AST-node binding: Pascal spelling in `\mathrm{}` (the dictionary triggers on the
+        // Pascal symbol either way). A non-id keyword such as `for` reaches the parser as `\operatorname{}` verbatim.
+        appendRaw(catalogIds.has(canonical) ? `\\mathrm{${pascalCase(canonical)}}` : `\\operatorname{${escapeId(canonical)}}`, i)
       } else if (/^[A-Za-z]{2,}$/.test(ident)) {
         // An unmatched pure-letter WORD is ONE identifier (a multi-letter variable), not a product of its letters
         // — `\mathrm{}` parses to a single symbol. Single letters (x, n) stay bare/italic; runs with digits or `_`

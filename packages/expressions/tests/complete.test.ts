@@ -19,7 +19,7 @@ describe('complete', () => {
     expect(res.replaceLen).toBe(3)
     expect(res.candidates[0]).toMatchObject({
       label: 'TriangularNumbers', // shown/inserted in the Pascal spelling; matched against the snake id
-      insert: '\\operatorname{TriangularNumbers}',
+      insert: '\\mathrm{TriangularNumbers}',
       kind: 'collection',
       detail: 'triangular_numbers',
     })
@@ -35,13 +35,13 @@ describe('complete', () => {
   it('inv with x an element of permutations -> stat candidate inversions(x)', () => {
     const res = complete('inv', ctx(['x'], (s) => (s === 'x' ? 'permutations' : undefined)))
     const cand = res.candidates.find((c) => c.kind === 'stat')
-    expect(cand).toMatchObject({ label: 'inversions(x)', insert: '\\operatorname{inversions}(x)', kind: 'stat' })
+    expect(cand).toMatchObject({ label: 'inversions(x)', insert: '\\mathrm{inversions}(x)', kind: 'stat' })
   })
 
   it('bin -> binomial function candidate with a trailing open paren', () => {
     const res = complete('bin', ctx([]))
     expect(res.candidates[0]).toMatchObject({ label: 'Binomial', kind: 'function' })
-    expect(res.candidates[0].insert).toBe('\\operatorname{Binomial}(')
+    expect(res.candidates[0].insert).toBe('\\mathrm{Binomial}(')
   })
 
   it('\\bi -> \\binom command candidate', () => {
