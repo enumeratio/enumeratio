@@ -31,7 +31,8 @@ export type LineMode = 'N' | 'hold'
 /** A cell's TYPE. `math` (the default, and absent in the seed) routes through the parser/evaluator; `comment` is
  *  prose (markdown + inline `$…$`) that never touches the math pipeline. */
 export type LineKind = 'comment'
-export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode; kind?: LineKind }[] }
+export type ScrubBounds = { min: number; max: number; step: number }
+export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode; kind?: LineKind; scrub?: ScrubBounds }[] }
 
 type LineResult = LineState
 
@@ -73,7 +74,8 @@ export class EnumeratioNotebook extends LitElement {
       lines: this.displayOrder.map((id) => {
         const mode = this.lineModes.get(id)
         const kind = this.lineKinds.get(id)
-        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}), ...(kind ? { kind } : {}) }
+        const scrub = this.scrubBounds.get(id)
+        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}), ...(kind ? { kind } : {}), ...(scrub ? { scrub } : {}) }
       }),
     } satisfies NotebookSeed)
   }
@@ -94,6 +96,8 @@ export class EnumeratioNotebook extends LitElement {
   /** Per-line cell KIND — only `comment` is stored (math is the default/absent). Comment cells stay out of the
    *  LineGraph and never recompute; the line renders their prose itself. */
   private lineKinds = new Map<LineId, LineKind>()
+  /** Per-line scrubber bounds override (`n = 3` slider min/max/step). Absent = derive defaults from the value. */
+  private scrubBounds = new Map<LineId, { min: number; max: number; step: number }>()
   /** Per-line collection-preview element count (grows on "pull more"). */
   private previewCounts = new Map<LineId, number>()
   private readonly graph = new LineGraph()
@@ -191,6 +195,7 @@ export class EnumeratioNotebook extends LitElement {
     this.latexById.delete(id)
     this.lineModes.delete(id)
     this.lineKinds.delete(id)
+    this.scrubBounds.delete(id)
     const removed = this.graph.lines().find((m) => m.id === id)
     if (removed?.defines) {
       if (removed.bindKind === 'declare') { this.declared.delete(removed.defines); this.scope.delete(removed.defines) }
@@ -311,6 +316,7 @@ export class EnumeratioNotebook extends LitElement {
       this.latexById.clear()
       this.lineModes.clear()
       this.lineKinds.clear()
+      this.scrubBounds.clear()
       this.scope = new Map()
       this.declared.clear()
       this.results = new Map()
@@ -321,6 +327,7 @@ export class EnumeratioNotebook extends LitElement {
         this.latexById.set(id, l.latex)
         if (l.mode) this.lineModes.set(id, l.mode)
         if (l.kind) this.lineKinds.set(id, l.kind)
+        if (l.scrub) this.scrubBounds.set(id, l.scrub)
         order.push(id)
         if (l.kind !== 'comment') { this.graph.set(id, l.latex, this.parser); dirty.add(id) }
       }
@@ -521,6 +528,7 @@ export class EnumeratioNotebook extends LitElement {
       this.latexById.set(id, l.latex)
       if (l.mode) this.lineModes.set(id, l.mode)
       if (l.kind) this.lineKinds.set(id, l.kind)
+      if (l.scrub) this.scrubBounds.set(id, l.scrub)
       this.displayOrder.push(id)
     }
   }
@@ -564,6 +572,18 @@ export class EnumeratioNotebook extends LitElement {
       if (!dirty.has(id)) continue
       await this.evalLine(id, models)
     }
+    // Promote any math cell whose whole body is a bare string into a real comment cell — the Desmos leading-`"`
+    // gesture, and any string-only line. Done AFTER the eval pass so the graph is never mutated mid-iteration.
+    let promoted = false
+    for (const id of [...this.graph.order()]) {
+      if (this.lineKinds.get(id)) continue
+      const stmt = models.get(id)?.parsed?.stmt
+      const text = stmt && stmt.k === 'expr' ? stringComment(stmt.body) : null
+      if (text === null) continue
+      this.promoteToComment(id, text)
+      promoted = true
+    }
+    if (promoted) { this.persist(); this.emitChange() }
     // A line uses randomness if its parsed AST names a random op (random_element / random_sample / random_shuffle).
     // This gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
     this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|random_shuffle/i.test(a))
@@ -573,6 +593,18 @@ export class EnumeratioNotebook extends LitElement {
     this.requestUpdate()
     this.emitResult()
     this.record() // one history entry per settled change (no-op if nothing actually changed, or mid-restore)
+  }
+
+  /** Promote a math cell whose body is a bare string into a real comment cell (Desmos's leading-`"`): move it out
+   *  of the graph, drop its math result, re-home its text as the comment body. If it was the active cell, keep the
+   *  caret by landing focus in the new comment editor so typing continues without a beat. */
+  private promoteToComment(id: LineId, text: string): void {
+    this.lineKinds.set(id, 'comment')
+    this.latexById.set(id, text)
+    this.graph.remove(id)
+    this.results.delete(id)
+    this.lineAst.delete(id)
+    if (this.activeLineId === id) this.focusAfterUpdate = id
   }
 
   /** The parsed AST (MathJSON, pretty JSON) per line, for the line's opt-in right-click inspector. Merged into
@@ -595,7 +627,8 @@ export class EnumeratioNotebook extends LitElement {
     // inspector still works) but stop before binding/evaluating.
     if (this.lineModes.get(id) === 'hold') {
       const held = models.get(id)?.parsed
-      if (held) this.lineAst.set(id, astFullForm(held, this.spellHead))
+      // Show the AST inside a Hold wrapper — Wolfram's HoldForm/Hold — so the inspector reads as what the mode does.
+      if (held) this.lineAst.set(id, `Hold[${astFullForm(held, this.spellHead)}]`)
       this.setResult(id, { held: true })
       return
     }
@@ -703,12 +736,18 @@ export class EnumeratioNotebook extends LitElement {
       const name = bound.stmt.k !== 'expr' ? bound.stmt.name : undefined
       if (name) this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'scalar', text, pg: effectivePg(bound.type) ?? 'numeric' } })
 
+      // A free numeric parameter (`n = 3` — a define whose RHS is a literal number) gets a Desmos-style scrubber.
+      const defBody = model.parsed.stmt.k === 'define' ? model.parsed.stmt.body : undefined
+      const lit = numericLiteral(defBody)
+      const scrub = lit !== null ? this.scrubFor(id, lit) : undefined
+
       // A value carrying a LaTeX control sequence is an EXACT symbolic result (√2, ⅙π²) — render it via KaTeX in
       // its own slot; a plain number/rational stays text (and drives the type-badge set refinement as before).
       const isTex = text.includes('\\')
-      this.setResult(id, isTex
+      const base = isTex
         ? { type: typeBadge(bound.type), valueTex: text, engine: p.engine, sql: p.sql }
-        : { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql })
+        : { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql }
+      this.setResult(id, scrub ? { ...base, scrub } : base)
     } catch (e) {
       if (stale()) return
       this.setResult(id, { type: typeBadge(bound.type), error: message(e) })
@@ -725,6 +764,14 @@ export class EnumeratioNotebook extends LitElement {
       this.persist()
       this.emitChange()
       this.scheduleCommentRecord()
+      return
+    }
+    // Desmos leading-quote: the moment a math cell's text starts with a `"`, it becomes a comment — immediately, so
+    // the shape change tracks the keystroke rather than waiting for a completed string to parse. Strip the quote(s).
+    if (latex.trimStart().startsWith('"')) {
+      this.promoteToComment(lineId, latex.trim().replace(/^"+/, '').replace(/"+$/, ''))
+      this.focusAfterUpdate = lineId
+      this.persist(); this.emitChange(); this.requestUpdate()
       return
     }
     if (this.parser) this.graph.set(lineId, latex, this.parser)
@@ -761,6 +808,42 @@ export class EnumeratioNotebook extends LitElement {
 
   private onLineRun = (ev: CustomEvent<{ lineId: LineId }>): void => {
     void this.runAction(ev.detail.lineId)
+  }
+
+  // ── value scrubber ───────────────────────────────────────────────────────────────────────────────────────────
+  /** Slider bounds for a free numeric define: a stored override, else sensible defaults from the current value —
+   *  integers step by 1 from 0 (or −max..max when negative) up to a round headroom; reals get a fine step. */
+  private scrubFor(id: LineId, value: number): { value: number; min: number; max: number; step: number } {
+    const stored = this.scrubBounds.get(id)
+    if (stored) return { value, ...stored }
+    const int = Number.isInteger(value)
+    const max = Math.max(10, Math.ceil(Math.abs(value) * 2))
+    const min = value < 0 ? -max : 0
+    const step = int ? 1 : Math.max(0.01, Number((Math.max(Math.abs(value), 1) / 100).toPrecision(1)))
+    return { value, min, max, step }
+  }
+
+  /** Drag: rewrite the define's source to the scrubbed value and recompute (debounced) so downstream cells follow
+   *  live. Rewriting the line keeps the scrubber inside the pure recompute+undo model, like actions do. */
+  private onLineScrub = (ev: CustomEvent<{ lineId: LineId; value: number }>): void => {
+    const { lineId, value } = ev.detail
+    const name = this.graph.lines().find((m) => m.id === lineId)?.defines
+    if (!name || !this.parser) return
+    const latex = `${name} = ${value}`
+    this.latexById.set(lineId, latex)
+    this.graph.set(lineId, latex, this.parser)
+    this.scheduleRecompute(lineId)
+    this.persist(); this.emitChange()
+    this.requestUpdate()
+  }
+
+  private onLineScrubBounds = (ev: CustomEvent<{ lineId: LineId; min: number; max: number }>): void => {
+    const { lineId, min, max } = ev.detail
+    const step = this.scrubBounds.get(lineId)?.step ?? (Number.isInteger(min) && Number.isInteger(max) ? 1 : 0.1)
+    this.scrubBounds.set(lineId, { min, max, step })
+    this.pendingChanged.add(lineId)
+    void this.flushRecompute(true) // re-eval so the scrubber re-emits with the new bounds
+    this.persist(); this.emitChange()
   }
 
   private onLineFocus = (ev: CustomEvent<{ lineId: LineId }>): void => {
@@ -861,13 +944,16 @@ export class EnumeratioNotebook extends LitElement {
         : html`<div class="loading">loading catalog…</div>`
     }
     const completer = this.completerFor()
+    // Row numbers count math cells only — a comment cell is "not there" for numbering, so the sequence reads 1, 2,
+    // 3 straight through however many comments sit between them.
+    let mathNum = 0
     return html`
       <div class="set">
         ${this.displayOrder.map(
-          (id, i) => html`
+          (id) => html`
             <enumeratio-expression-line
               line-id=${id}
-              .index=${i + 1}
+              .index=${this.lineKinds.get(id) === 'comment' ? 0 : ++mathNum}
               .latex=${this.latexById.get(id) ?? ''}
               .completer=${completer}
               .classify=${this.classify}
@@ -883,6 +969,8 @@ export class EnumeratioNotebook extends LitElement {
               @line-reorder=${this.onLineReorder}
               @line-run=${this.onLineRun}
               @line-action=${this.onLineAction}
+              @line-scrub=${this.onLineScrub}
+              @line-scrub-bounds=${this.onLineScrubBounds}
               @line-focus=${this.onLineFocus}
               @line-expand=${this.onLineExpand}
             ></enumeratio-expression-line>
@@ -1063,6 +1151,23 @@ function scalarSet(pg: string, value?: string): string {
 
 function message(e: unknown): string {
   return e instanceof Error ? e.message : String(e)
+}
+
+/** A MathJSON body that is a bare (optionally negated) numeric literal → its number, else null. Used to spot a
+ *  free numeric parameter (`n = 3`) that should get a scrubber — a computed RHS (`n = 3+2`) returns null. */
+function numericLiteral(e: unknown): number | null {
+  if (e == null) return null
+  if (typeof e === 'number') return Number.isFinite(e) ? e : null
+  if (Array.isArray(e)) {
+    if (e[0] === 'Negate') { const n = numericLiteral(e[1]); return n === null ? null : -n }
+    if (e[0] === 'Rational') { const a = numericLiteral(e[1]); const b = numericLiteral(e[2]); return a !== null && b ? a / b : null }
+    return null
+  }
+  if (typeof e === 'object') {
+    const o = e as Record<string, unknown>
+    if ('num' in o) { const n = Number(o.num); return Number.isFinite(n) ? n : null }
+  }
+  return null
 }
 
 /** MathJSON → a Wolfram-FullForm-style string: `["Binomial",6,2]` → `Binomial[6, 2]`, `n^2+1` →

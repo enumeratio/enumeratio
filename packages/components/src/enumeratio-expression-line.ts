@@ -59,6 +59,9 @@ export type LineState = {
   comment?: string
   /** The cell is HELD (unevaluated by choice) — show a quiet marker instead of a value. */
   held?: boolean
+  /** This cell defines a free numeric parameter (`n = 3`) — show a Desmos-style scrubber below it. `value` is the
+   *  current setting; `min`/`max`/`step` bound the slider. Dragging live-rewrites the define. */
+  scrub?: { value: number; min: number; max: number; step: number }
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -222,6 +225,20 @@ export class EnumeratioExpressionLine extends LitElement {
     this.showError = false
   }
 
+  // ── value scrubber ───────────────────────────────────────────────────────────────────────────────────────────
+  private onScrubInput = (ev: Event): void => {
+    const v = Number((ev.target as HTMLInputElement).value)
+    this.emit('line-scrub', { lineId: this.lineId, value: v })
+  }
+  private onScrubBound = (): void => {
+    const root = this.renderRoot
+    const min = Number((root.querySelector('.scrubber .bound.min') as HTMLInputElement)?.value)
+    const max = Number((root.querySelector('.scrubber .bound.max') as HTMLInputElement)?.value)
+    if (Number.isFinite(min) && Number.isFinite(max) && max > min) {
+      this.emit('line-scrub-bounds', { lineId: this.lineId, min, max })
+    }
+  }
+
   updated(changed: Map<string, unknown>): void {
     if (this.kind === 'comment' && this.editing) { const ta = this.commentEditor; if (ta) this.autosize(ta) }
     if (!changed.has('state')) return
@@ -256,8 +273,9 @@ export class EnumeratioExpressionLine extends LitElement {
            @focusin=${() => this.emit('line-focus', { lineId: this.lineId })}
            @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
         <div class="gutter">
-          <span class="rownum" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
-                title="drag to reorder">${isComment ? '¶' : this.index}</span>
+          <span class="rownum ${isComment ? 'dragonly' : ''}" draggable="true"
+                @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
+                title="drag to reorder">${isComment ? '' : this.index}</span>
           ${!isComment && s.action
             ? html`<button class="rowbtn" @mousedown=${(e: MouseEvent) => e.preventDefault()}
                       @click=${() => this.emit('line-run', { lineId: this.lineId })}
@@ -313,7 +331,18 @@ export class EnumeratioExpressionLine extends LitElement {
                       : ''}`
                   : ''}
               </div>
-              ${errVisible ? html`<div class="error">${s.error}</div>` : ''}`}
+              ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
+              ${s.scrub
+                ? html`<div class="scrubber" @mousedown=${(e: MouseEvent) => e.stopPropagation()}>
+                    <input class="bound min" type="number" .value=${String(s.scrub.min)}
+                           @change=${this.onScrubBound} title="lower bound" aria-label="lower bound">
+                    <input class="range" type="range"
+                           min=${s.scrub.min} max=${s.scrub.max} step=${s.scrub.step} .value=${String(s.scrub.value)}
+                           @input=${this.onScrubInput} aria-label="scrub value">
+                    <input class="bound max" type="number" .value=${String(s.scrub.max)}
+                           @change=${this.onScrubBound} title="upper bound" aria-label="upper bound">
+                  </div>`
+                : ''}`}
         </div>
         ${this.astOpen && s.ast
           ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
@@ -410,6 +439,10 @@ export class EnumeratioExpressionLine extends LitElement {
       user-select: none;
     }
     .rownum:active { cursor: grabbing; }
+    /* A comment cell shows NO number, but the handle stays (draggable, sized) — a faint grab hint on hover only. */
+    .rownum.dragonly { min-width: 0.7em; min-height: 1em; }
+    .rownum.dragonly::before { content: '⠿'; opacity: 0; transition: opacity 0.12s; }
+    .line:hover .rownum.dragonly::before { opacity: 0.4; }
     /* Per-row icon button in the gutter (mousedown prevented so it never steals the field's caret). */
     .rowbtn {
       font: inherit;
@@ -649,6 +682,32 @@ export class EnumeratioExpressionLine extends LitElement {
     .hint {
       opacity: 0.35;
     }
+    /* Desmos-style value scrubber: editable min · slider · editable max, below a free numeric define. */
+    .scrubber {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.35rem;
+    }
+    .scrubber .range {
+      flex: 1 1 auto;
+      min-width: 0;
+      accent-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      cursor: ew-resize;
+    }
+    .scrubber .bound {
+      flex: 0 0 auto;
+      width: 3.4rem;
+      font: inherit;
+      font-size: 0.8em;
+      text-align: center;
+      padding: 0.1rem 0.2rem;
+      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
+      border-radius: 4px;
+      background: transparent;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+    }
+    .scrubber .bound::-webkit-inner-spin-button { opacity: 0.4; }
     /* A HELD cell (unevaluated by choice) — a quiet pill in the value slot. */
     .held {
       font-weight: 400;
