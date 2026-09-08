@@ -63,10 +63,17 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ attribute: false }) classify: ((run: string) => IdentifierDisplay | null) | null = null
   @property({ type: Boolean }) active = false
   @property({ attribute: false }) state: LineState = {}
+  /** This cell's evaluation mode (from the owning notebook), so the cell menu can check the active mode. */
+  @property({ type: String }) mode: '' | 'N' | 'hold' = ''
+  /** Whether Delete is allowed — false for the notebook's last remaining line (nothing to fall back to). */
+  @property({ type: Boolean }) canDelete = true
 
   /** Gated display of `state.error` — see the debounce note above. */
   @state() private showError = false
   @state() private astOpen = false
+  /** The cell context/config menu — its viewport-fixed position when open, null when closed. Opened by right-click
+   *  (at the pointer) or the gutter config icon (the touch affordance; anchored beside the button). */
+  @state() private menuPos: { x: number; y: number } | null = null
   /** Drag state: `dragging` = this row is the one being moved (dim it); `dropEdge` = which edge a drop bar shows on. */
   @state() private dragging = false
   @state() private dropEdge: 'above' | 'below' | null = null
@@ -106,9 +113,35 @@ export class EnumeratioExpressionLine extends LitElement {
     }
   }
 
+  // The cell menu — the full set of per-cell actions (modes, AST, duplicate/clear/delete). Reached two ways: a
+  // right-click anywhere on the row (desktop), or the gutter config icon (the touch affordance). The owning
+  // notebook performs the actions it emits (`line-action`); AST/delete stay local (`astOpen` / `line-remove`).
+  private openMenuAt(px: number, py: number): void {
+    this.emit('line-focus', { lineId: this.lineId }) // right-clicking a non-active cell selects it first
+    const MW = 190, MH = 260 // approx menu box — clamp so it never opens off-screen
+    const x = Math.max(8, Math.min(px, window.innerWidth - MW - 8))
+    const y = Math.max(8, Math.min(py, window.innerHeight - MH - 8))
+    this.menuPos = { x, y }
+  }
+  private closeMenu = (): void => { this.menuPos = null }
   private onContextMenu = (ev: MouseEvent): void => {
-    if (!this.state.ast) return // nothing parsed to show — fall through to the native menu
     ev.preventDefault()
+    this.openMenuAt(ev.clientX, ev.clientY)
+  }
+  private onConfigClick = (ev: MouseEvent): void => {
+    const r = (ev.currentTarget as HTMLElement).getBoundingClientRect()
+    this.openMenuAt(r.right + 4, r.top)
+  }
+  private menuAct(action: 'N' | 'hold' | 'duplicate' | 'clear'): void {
+    this.closeMenu()
+    this.emit('line-action', { lineId: this.lineId, action })
+  }
+  private onDelete = (): void => {
+    this.closeMenu()
+    if (this.canDelete) this.emit('line-remove', { lineId: this.lineId })
+  }
+  private toggleAst(): void {
+    this.closeMenu()
     this.astOpen = !this.astOpen
   }
 
@@ -188,6 +221,13 @@ export class EnumeratioExpressionLine extends LitElement {
                       @click=${() => this.emit('line-run', { lineId: this.lineId })}
                       title="run this action" aria-label="run this action">→</button>`
             : ''}
+          <div class="chrome">
+            <button class="rowbtn cfg" @mousedown=${(e: MouseEvent) => e.preventDefault()}
+                    @click=${this.onConfigClick} title="cell options" aria-label="cell options">⋯</button>
+            <button class="rowbtn del" @mousedown=${(e: MouseEvent) => e.preventDefault()}
+                    @click=${this.onDelete} ?disabled=${!this.canDelete}
+                    title="delete cell" aria-label="delete cell">✕</button>
+          </div>
         </div>
         <div class="body">
           <div class="field">
@@ -224,6 +264,24 @@ export class EnumeratioExpressionLine extends LitElement {
         </div>
         ${this.astOpen && s.ast
           ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
+          : ''}
+        ${this.menuPos
+          ? html`
+              <div class="menu-backdrop" @mousedown=${(e: MouseEvent) => e.preventDefault()}
+                   @click=${this.closeMenu}
+                   @contextmenu=${(e: MouseEvent) => { e.preventDefault(); this.closeMenu() }}></div>
+              <div class="cellmenu" style="left:${this.menuPos.x}px;top:${this.menuPos.y}px"
+                   @mousedown=${(e: MouseEvent) => e.preventDefault()}>
+                <button @click=${() => this.menuAct('N')}>${this.mode === 'N' ? '✓ ' : ''}Numeric (N)</button>
+                <button @click=${() => this.menuAct('hold')}>${this.mode === 'hold' ? '✓ ' : ''}Hold (don't evaluate)</button>
+                ${s.ast
+                  ? html`<hr><button @click=${() => this.toggleAst()}>${this.astOpen ? 'Hide AST' : 'Show AST'}</button>`
+                  : ''}
+                <hr>
+                <button @click=${() => this.menuAct('duplicate')}>Duplicate</button>
+                <button @click=${() => this.menuAct('clear')}>Clear</button>
+                <button @click=${this.onDelete} ?disabled=${!this.canDelete}>Delete</button>
+              </div>`
           : ''}
       </div>
     `
@@ -311,9 +369,77 @@ export class EnumeratioExpressionLine extends LitElement {
       background: transparent;
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
     }
-    .rowbtn:hover {
+    .rowbtn:hover:not(:disabled) {
       background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 14%, transparent);
     }
+    .rowbtn:disabled { opacity: 0.3; cursor: default; }
+    /* Per-cell config (⋯) + delete (✕) icons, pinned to the bottom of the gutter. Muted and quiet by default so
+       the gutter stays calm; they light up on hover/active. Always in the DOM (never hover-gated away) so they
+       stay reachable on touch — the config icon IS the touch route to the cell menu (no right-click there). */
+    .chrome {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .rowbtn.cfg,
+    .rowbtn.del {
+      width: 1.4rem;
+      height: 1.4rem;
+      font-size: 0.85rem;
+      border-color: color-mix(in srgb, var(--enumeratio-muted, currentColor) 45%, transparent);
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      opacity: 0.4;
+      transition: opacity 0.12s;
+    }
+    .line:hover .rowbtn.cfg,
+    .line:hover .rowbtn.del,
+    .line.active .rowbtn.cfg,
+    .line.active .rowbtn.del { opacity: 0.85; }
+    .rowbtn.cfg:hover:not(:disabled),
+    .rowbtn.del:hover:not(:disabled) {
+      opacity: 1;
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 14%, transparent);
+    }
+    /* The cell menu (right-click / config icon). A viewport-fixed popup over a transparent full-screen backdrop
+       that closes it on any outside click. */
+    .menu-backdrop { position: fixed; inset: 0; z-index: 49; }
+    .cellmenu {
+      position: fixed;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      min-width: 10rem;
+      padding: 0.25rem;
+      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
+      border-radius: 6px;
+      background: var(--enumeratio-surface, var(--p-content-background, canvas));
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+      font-size: 0.9rem;
+    }
+    .cellmenu hr {
+      margin: 0.25rem 0.3rem;
+      border: none;
+      border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 12%);
+    }
+    .cellmenu button {
+      font: inherit;
+      text-align: left;
+      padding: 0.35rem 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .cellmenu button:hover:not(:disabled) {
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
+    }
+    .cellmenu button:disabled { opacity: 0.35; cursor: default; }
     .body {
       flex: 1 1 auto;
       min-width: 0;

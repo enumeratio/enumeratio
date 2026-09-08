@@ -136,7 +136,6 @@ export class EnumeratioNotebook extends LitElement {
    *  act on / inject into whichever cell the caret was last in. */
   @state() private activeLineId: LineId | null = null
   @state() private vkOn = false
-  @state() private menuOpen = false
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -722,7 +721,6 @@ export class EnumeratioNotebook extends LitElement {
 
   private onLineFocus = (ev: CustomEvent<{ lineId: LineId }>): void => {
     this.activeLineId = ev.detail.lineId
-    this.menuOpen = false // a click into a different cell closes an open hamburger
   }
 
   // ── active-cell controls (virtual keyboard + hamburger) — never steal the field's focus ──────────────────────
@@ -742,9 +740,15 @@ export class EnumeratioNotebook extends LitElement {
     if (target) { this.focusAfterUpdate = target; this.requestUpdate() }
   }
 
-  private menuAction(kind: 'duplicate' | 'clear' | 'delete'): void {
-    const id = this.activeLineId
-    this.menuOpen = false
+  /** A per-cell menu action from a line (its right-click menu or gutter config icon), routed to the matching op —
+   *  the line names the target, so it acts on the clicked cell whether or not it's the active one. */
+  private onLineAction = (ev: CustomEvent<{ lineId: LineId; action: 'N' | 'hold' | 'duplicate' | 'clear' }>): void => {
+    const { lineId, action } = ev.detail
+    if (action === 'N' || action === 'hold') this.setLineMode(lineId, action)
+    else this.menuAction(lineId, action)
+  }
+
+  private menuAction(id: LineId, kind: 'duplicate' | 'clear' | 'delete'): void {
     if (!id) return
     if (kind === 'delete') { this.removeLine(id); return }
     if (kind === 'duplicate') { const n = this.addLine(this.latexById.get(id) ?? '', id); this.focusLine(n); return }
@@ -758,11 +762,8 @@ export class EnumeratioNotebook extends LitElement {
     }
   }
 
-  /** Toggle the active cell's evaluation mode (numeric `N` / `hold`) — off if it was already that mode — then
-   *  recompute it. */
-  private setLineMode(mode: LineMode): void {
-    const id = this.activeLineId
-    this.menuOpen = false
+  /** Toggle a cell's evaluation mode (numeric `N` / `hold`) — off if it was already that mode — then recompute it. */
+  private setLineMode(id: LineId, mode: LineMode): void {
     if (!id) return
     if (this.lineModes.get(id) === mode) this.lineModes.delete(id)
     else this.lineModes.set(id, mode)
@@ -826,6 +827,8 @@ export class EnumeratioNotebook extends LitElement {
               .completer=${completer}
               .classify=${this.classify}
               .active=${this.activeLineId === id}
+              .mode=${this.lineModes.get(id) ?? ''}
+              .canDelete=${this.displayOrder.length > 1}
               .state=${this.results.get(id) ?? {}}
               @line-input=${this.onLineInput}
               @line-commit=${this.onLineCommit}
@@ -833,6 +836,7 @@ export class EnumeratioNotebook extends LitElement {
               @line-remove=${this.onLineRemove}
               @line-reorder=${this.onLineReorder}
               @line-run=${this.onLineRun}
+              @line-action=${this.onLineAction}
               @line-focus=${this.onLineFocus}
               @line-expand=${this.onLineExpand}
             ></enumeratio-expression-line>
@@ -859,21 +863,6 @@ export class EnumeratioNotebook extends LitElement {
           <button class="tool ${this.vkOn ? 'on' : ''}"
                   @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => this.toggleVirtualKeyboard()}
                   title="Virtual keyboard" aria-label="Virtual keyboard">⌨</button>
-          <div class="menuwrap">
-            <button class="tool ${this.menuOpen ? 'on' : ''}" ?disabled=${!this.activeLineId}
-                    @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => (this.menuOpen = !this.menuOpen)}
-                    title="Cell menu" aria-label="Cell menu">☰</button>
-            ${this.menuOpen && this.activeLineId
-              ? html`<div class="menu right" @mousedown=${(e: MouseEvent) => e.preventDefault()}>
-                  <button @click=${() => this.setLineMode('N')}>${this.lineModes.get(this.activeLineId) === 'N' ? '✓ ' : ''}Numeric (N)</button>
-                  <button @click=${() => this.setLineMode('hold')}>${this.lineModes.get(this.activeLineId) === 'hold' ? '✓ ' : ''}Hold (don't evaluate)</button>
-                  <hr>
-                  <button @click=${() => this.menuAction('duplicate')}>Duplicate</button>
-                  <button @click=${() => this.menuAction('clear')}>Clear</button>
-                  <button @click=${() => this.menuAction('delete')} ?disabled=${this.displayOrder.length <= 1}>Delete</button>
-                </div>`
-              : ''}
-          </div>
         </div>
       </div>
     `
@@ -941,41 +930,6 @@ export class EnumeratioNotebook extends LitElement {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
-    .menuwrap { position: relative; }
-    /* The hamburger's per-cell menu opens UPWARD (the toolbar sits at the notebook's bottom). */
-    .menu {
-      position: absolute;
-      bottom: calc(100% + 0.3rem);
-      left: 0;
-      z-index: 40;
-      display: flex;
-      flex-direction: column;
-      min-width: 8rem;
-      padding: 0.25rem;
-      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
-      border-radius: 6px;
-      background: var(--enumeratio-surface, var(--p-content-background, canvas));
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-    }
-    .menu hr {
-      margin: 0.25rem 0.3rem;
-      border: none;
-      border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 12%);
-    }
-    .menu button {
-      font: inherit;
-      text-align: left;
-      padding: 0.35rem 0.6rem;
-      border: none;
-      border-radius: 4px;
-      background: transparent;
-      color: inherit;
-      cursor: pointer;
-    }
-    .menu button:hover:not(:disabled) {
-      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
-    }
-    .menu button:disabled { opacity: 0.35; cursor: default; }
     .set {
       display: flex;
       flex-direction: column;
