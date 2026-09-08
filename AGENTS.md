@@ -47,6 +47,18 @@ not under `docs/` (public docs site) and not committed to this repo.
   the public wiki — spike scripts, dumps, anything not meant to go public yet. Fold pieces of it into `master` once
   they're ready; don't push the branch itself.
 
+## Deployment
+
+Production (`enumeratio.dev`) ships from **GitHub Pages** on merge to `main` (`.github/workflows/pages.yml`).
+
+**On-demand previews** go to **Cloudflare Pages** via `preview.yml` — NOT auto-built per push (that would burn the
+free-tier build cap fast at this PR volume). It's a *direct-upload* deploy: the workflow builds the site on GitHub's
+runners and uploads `docs/.vitepress/dist` to CF, so it costs zero CF build minutes. Trigger it two ways: comment
+`/preview` on a PR (owner/member/collaborator only), or run the `Preview (Cloudflare Pages)` workflow manually with a
+ref. It posts the preview URL back as a PR comment / job summary. VitePress `base` is unset (`/`), so the same build
+serves at both `enumeratio.dev` and the `*.pages.dev` preview hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` +
+`CLOUDFLARE_ACCOUNT_ID` and a direct-upload Pages project (`enumeratio-web`).
+
 ## Verifying changes
 
 - Docs / components / explorer: `pnpm docs:dev` (VitePress). From a worktree, run it in the worktree itself (a
