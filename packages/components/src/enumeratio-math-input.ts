@@ -1,5 +1,6 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state, query } from 'lit/decorators.js'
+import { reformatIdentifiers, type IdentifierDisplay } from '@enumeratio/expressions'
 import type { AdapterFactory, MathInputAdapter } from './math-input-adapter'
 import { mathliveAdapter } from './mathlive-adapter'
 
@@ -36,6 +37,9 @@ export class EnumeratioMathInput extends LitElement {
   @property({ attribute: false }) adapter: AdapterFactory = mathliveAdapter
   /** Host-injected completion source. Null/undefined disables the popover entirely. */
   @property({ attribute: false }) completer: Completer | null = null
+  /** Host-injected display classifier: a typed word → 'operator' (\operatorname), 'entity' (\mathrm) or null
+   *  (plain italic variable). Drives the debounced field reformat (see below); null disables it. */
+  @property({ attribute: false }) classify: ((run: string) => IdentifierDisplay | null) | null = null
 
   @state() private candidates: CompletionCandidate[] = []
   @state() private activeIndex = -1
@@ -51,6 +55,8 @@ export class EnumeratioMathInput extends LitElement {
   private adapterInstance: MathInputAdapter | null = null
   private unsubs: Array<() => void> = []
   private completionTimer: ReturnType<typeof setTimeout> | null = null
+  private reformatTimer: ReturnType<typeof setTimeout> | null = null
+  private reformatting = false // guards the setLatex → input → reformat loop
   private lastReplaceLen = 0
   private mounting = false
 
@@ -59,8 +65,12 @@ export class EnumeratioMathInput extends LitElement {
     return this.latex
   }
 
+  private focusWhenReady = false
   focus(): void {
-    this.adapterInstance?.focus()
+    // A freshly-added line's adapter mounts asynchronously; if focus() lands before it exists, remember and focus
+    // once mountAdapter finishes — otherwise pressing Enter to add a row wouldn't move the caret into it.
+    if (this.adapterInstance) this.adapterInstance.focus()
+    else this.focusWhenReady = true
   }
 
   /** Insert LaTeX at the caret (no replacement) and re-evaluate/re-emit. */
@@ -80,7 +90,12 @@ export class EnumeratioMathInput extends LitElement {
     void this.updateComplete.then(() => this.mountAdapter())
   }
 
+  private cleanupReformat(): void {
+    if (this.reformatTimer) clearTimeout(this.reformatTimer)
+  }
+
   disconnectedCallback(): void {
+    this.cleanupReformat()
     this.teardownAdapter()
     if (this.completionTimer) clearTimeout(this.completionTimer)
     super.disconnectedCallback()
@@ -94,7 +109,9 @@ export class EnumeratioMathInput extends LitElement {
     }
     if (changed.has('latex') && this.adapterInstance) {
       const current = this.adapterInstance.getLatex()
-      if (current !== this.latex) this.adapterInstance.setLatex(this.latex)
+      // Only when the value arrived from OUTSIDE (a model refresh / reorder / upstream recompute), not our own
+      // typing — then tidy it to the display spelling right away, same as the pause/blur pass.
+      if (current !== this.latex) { this.adapterInstance.setLatex(this.latex); this.reformatNow() }
     }
   }
 
@@ -105,13 +122,14 @@ export class EnumeratioMathInput extends LitElement {
       this.mountEl.innerHTML = ''
       const instance = await this.adapter(this.mountEl, { placeholder: this.placeholder, readonly: this.readonly })
       this.adapterInstance = instance
-      if (this.latex) instance.setLatex(this.latex)
+      if (this.latex) { instance.setLatex(this.latex); this.reformatNow() } // initial pass to the display spelling
       this.unsubs.push(instance.on('input', () => this.onAdapterInput()))
       this.unsubs.push(instance.on('enter', () => this.onAdapterEnter()))
       this.unsubs.push(instance.on('move-out', (d) => this.onAdapterMoveOut(d)))
       this.unsubs.push(instance.on('blur', () => this.onAdapterBlur()))
       this.ready = true
       this.emitResult()
+      if (this.focusWhenReady) { this.focusWhenReady = false; instance.focus() } // a focus() that arrived pre-mount
     } finally {
       this.mounting = false
     }
@@ -133,6 +151,31 @@ export class EnumeratioMathInput extends LitElement {
   private onAdapterInput(): void {
     this.syncFromAdapter(false)
     this.scheduleCompletion()
+    if (!this.reformatting) this.scheduleReformat()
+  }
+
+  private scheduleReformat(): void {
+    if (this.reformatTimer) clearTimeout(this.reformatTimer)
+    if (!this.classify) return
+    this.reformatTimer = setTimeout(() => this.reformatNow(), 700) // a beat after typing stops
+  }
+
+  /** Rewrite recognized words to their display form (operator/entity/variable). Guarded so the setLatex it does
+   *  doesn't re-trigger itself; caret goes to the end (acceptable for a pause/blur reformat). */
+  private reformatNow(): void {
+    if (this.reformatTimer) { clearTimeout(this.reformatTimer); this.reformatTimer = null }
+    if (!this.classify || !this.adapterInstance) return
+    const cur = this.adapterInstance.getLatex()
+    const next = reformatIdentifiers(cur, this.classify)
+    if (next === cur) return
+    this.reformatting = true
+    try {
+      this.adapterInstance.setLatex(next)
+      this.latex = next
+      this.dispatchEvent(new CustomEvent('enumeratio-input', { detail: { latex: next }, bubbles: true, composed: true }))
+    } finally {
+      this.reformatting = false
+    }
   }
 
   private syncFromAdapter(reopenCompletion: boolean): void {
@@ -209,6 +252,7 @@ export class EnumeratioMathInput extends LitElement {
 
   private onAdapterBlur(): void {
     this.closePopover()
+    this.reformatNow() // tidy the display on the way out, whatever the pause timer's state
   }
 
   /** Announce the current value, matching enumeratio-expression's `result` shape so <enumeratio-assert> works unmodified. */

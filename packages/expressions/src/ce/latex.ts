@@ -12,6 +12,10 @@ export type CatalogNames = {
   collections: string[]
   functions: string[]
   symbols?: Record<string, string>
+  /** Optional per-id math NOTATION as display LaTeX (`permutations` -> `\mathfrak{S}`). Where present it becomes
+   *  the spelling shown/inserted/serialized AND a parse trigger, so it round-trips; where absent the fallback is
+   *  `\operatorname{<PascalCase>}` — never the raw snake id, which is immaterial once you're in the notebook. */
+  notation?: Record<string, string>
 }
 
 export type ExpressionParser = {
@@ -25,29 +29,51 @@ const escapeId = (id: string): string => id.replace(/_/g, '\\_')
 /** snake_case catalog id -> its PascalCase alias: `random_element` -> `RandomElement`, `catalan_number` ->
  *  `CatalanNumber`, `bell` -> `Bell`. Lets a user TYPE the clean word-run (no underscores, which MathLive turns
  *  into subscripts) and have it resolve to the same catalog id. */
-const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
+export const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
 
-/** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id, so `\operatorname{<id>}(...)` parses
- *  to `[id, ...args]` (functions) or `\operatorname{<id>}` parses to the bare symbol `id` (collections) — and
- *  both serialize back to the `\operatorname{}` spelling (the default fallback is `\mathrm{}` with an
- *  un-escaped `_`, see spike item 4). `symbols` adds direct macro -> id bindings (`\mathbb{N} -> natural_numbers`). */
+/** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\mathrm{}` over the
+ *  PascalCase spelling. Our catalog ids are AST-node bindings, so they read `\mathrm{}` (upright, no MathLive
+ *  double-wrap); `\operatorname{}` is reserved for syntax KEYWORDS (`for`, `with`). The internal MathJSON symbol
+ *  stays the snake id regardless — this is purely the display/parse spelling. `role` is kept for callers that
+ *  still care to distinguish; both currently render the same `\mathrm{}` wrapper. */
+export type IdentifierDisplay = { kind: 'operator' | 'entity' | 'notation'; latex: string }
+export function identifierDisplay(
+  id: string,
+  role: 'function' | 'collection',
+  notation?: Record<string, string>,
+): IdentifierDisplay {
+  void role
+  const n = notation?.[id]
+  return n ? { kind: 'notation', latex: n } : { kind: 'entity', latex: `\\mathrm{${pascalCase(id)}}` }
+}
+
+/** The single spelling an id serializes to / the completer inserts / the parser round-trips: notation if present,
+ *  else `\mathrm{<PascalCase>}` (our AST-node-binding spelling — `\operatorname{}` is for keywords, not ids). */
+export const serializeLatex = (id: string, notation?: Record<string, string>): string =>
+  notation?.[id] ?? `\\mathrm{${pascalCase(id)}}`
+
+/** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id. The TRIGGER is the PascalCase spelling
+ *  (what you type — `\operatorname{Permutations}(...)` parses to `[permutations, ...]`, `\operatorname{Bell}` to
+ *  the symbol `bell`) while the MathJSON `name` stays the snake id everything downstream routes on; the snake
+ *  spelling is immaterial once you're in the notebook. An id with registered `notation` gets an extra parse
+ *  trigger for its glyph and serializes to it. `symbols` adds direct macro -> id bindings (`\mathbb{N}`). */
 export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryEntry>[] {
   const entries: Partial<LatexDictionaryEntry>[] = []
-  // standaloneSymbol: true is what makes an unapplied name serialize via our `\operatorname{}` spelling instead
-  // of the default `\mathrm{Name}` fallback (types.d.ts BaseEntry.standaloneSymbol) — confirmed empirically,
-  // the field is easy to miss since serialize alone silently has no effect without it.
-  for (const id of names.functions) {
-    entries.push({
-      kind: 'function', symbolTrigger: id, name: id,
-      serialize: `\\operatorname{${escapeId(id)}}`, standaloneSymbol: true,
-    })
+  const notation = names.notation
+  // standaloneSymbol: true is what makes an unapplied name serialize via our chosen spelling instead of the
+  // default `\mathrm{Name}` fallback (types.d.ts BaseEntry.standaloneSymbol) — confirmed empirically, the field
+  // is easy to miss since serialize alone silently has no effect without it.
+  const push = (kind: 'function' | 'symbol', id: string): void => {
+    entries.push({ kind, symbolTrigger: pascalCase(id), name: id, serialize: serializeLatex(id, notation), standaloneSymbol: true })
+    // A registered glyph is a second, name-less parse trigger onto the same symbol (mirrors the `symbols` macros
+    // below — a second entry carrying `name` would be a duplicate-definition warning). No snake compat trigger: a
+    // kind-less parse entry degrades a function from application to a bare symbol, and nothing emits snake
+    // `\operatorname{}` any more (the normalizer/completer/reformat all produce the Pascal spelling).
+    const glyph = notation?.[id]
+    if (glyph) entries.push({ latexTrigger: glyph, parse: id })
   }
-  for (const id of names.collections) {
-    entries.push({
-      kind: 'symbol', symbolTrigger: id, name: id,
-      serialize: `\\operatorname{${escapeId(id)}}`, standaloneSymbol: true,
-    })
-  }
+  for (const id of names.functions) push('function', id)
+  for (const id of names.collections) push('symbol', id)
   for (const [macro, id] of Object.entries(names.symbols ?? {})) {
     // `\mathbb{N}` etc. already have a built-in latexTrigger (default-dictionary SETS_DICTIONARY -> NonNegative-
     // Integers) — a plain latexTrigger-only entry appended after LATEX_DICTIONARY does NOT win against it
@@ -62,6 +88,81 @@ export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryE
     entries.push({ latexTrigger: macro, parse: id })
   }
   return entries
+}
+
+// ── pre-parse: `.`-method sugar ────────────────────────────────────────────────────────────────────────────────
+// `p.inverse` -> `inverse(p)`, `p.foo(x)` -> `foo(p, x)` — a receiver written before the function, the way a method
+// reads. CE itself rejects `.` as an operator, so this rewrites the raw latex BEFORE anything else, and carries an
+// offset map back to the ORIGINAL so spans still point at what the caller typed. Deliberately narrow (a later slice
+// widens it): the receiver is a single letter-start identifier (so `3.5` and `\frac{}{}.x` are untouched), no
+// chaining, rewrite is skipped inside \text{}/\operatorname{}/\mathrm{}.
+type DotResult = { text: string; map: number[] }
+const isIdentChar = (c: string): boolean => /[A-Za-z0-9]/.test(c)
+
+function rewriteDotMethods(src: string): DotResult {
+  let out = ''
+  const map: number[] = []
+  const copy = (from: number, to: number): void => { for (let k = from; k < to; k++) { out += src[k]; map.push(k) } }
+  const emit = (s: string, at: number): void => { for (const ch of s) { out += ch; map.push(at) } }
+  const skipSpace = (k: number): number => { while (k < src.length && /\s/.test(src[k])) k++; return k }
+
+  let i = 0
+  let braceDepth = 0
+  const protect: number[] = []
+  while (i < src.length) {
+    const c = src[i]
+    if (c === '\\') {
+      let j = i + 1
+      while (j < src.length && /[A-Za-z]/.test(src[j])) j++
+      copy(i, j)
+      const name = src.slice(i + 1, j)
+      if (name === 'operatorname' || name === 'mathrm' || name === 'text') {
+        const k = skipSpace(j)
+        if (src[k] === '{') { copy(j, k + 1); braceDepth++; protect.push(braceDepth); i = k + 1; continue }
+      }
+      i = j
+      continue
+    }
+    if (c === '{') { braceDepth++; copy(i, i + 1); i++; continue }
+    if (c === '}') { copy(i, i + 1); if (protect.length && protect[protect.length - 1] === braceDepth) protect.pop(); braceDepth--; i++; continue }
+    if (protect.length === 0 && /[A-Za-z]/.test(c)) {
+      const recStart = i
+      i++
+      while (i < src.length && isIdentChar(src[i])) i++
+      const recEnd = i
+      const dot = skipSpace(i)
+      if (src[dot] === '.') {
+        const mStart = skipSpace(dot + 1)
+        if (mStart < src.length && /[A-Za-z]/.test(src[mStart])) {
+          let mEnd = mStart + 1
+          while (mEnd < src.length && isIdentChar(src[mEnd])) mEnd++
+          const argAt = skipSpace(mEnd)
+          const leftParen = src.startsWith('\\left(', argAt)
+          const hasParen = leftParen || src[argAt] === '('
+          const open = leftParen ? '\\left(' : '('
+          emit(src.slice(mStart, mEnd), mStart) // method name
+          emit(open, dot)                        // open paren (matches an existing \right) if any)
+          copy(recStart, recEnd)                 // receiver becomes the first argument
+          if (hasParen) {
+            const afterOpen = argAt + open.length
+            const b = skipSpace(afterOpen)
+            const empty = src[b] === ')' || src.startsWith('\\right)', b)
+            if (!empty) emit(', ', dot)
+            i = afterOpen // the main loop copies the remaining args + their closing delimiter verbatim
+            continue
+          }
+          emit(')', mEnd)
+          i = mEnd
+          continue
+        }
+      }
+      copy(recStart, recEnd) // a plain identifier, no method — emit as-is
+      continue
+    }
+    copy(i, i + 1)
+    i++
+  }
+  return { text: out, map }
 }
 
 // ── pre-parse normalization: bare catalog-id runs -> \operatorname{} ───────────────────────────────────────────
@@ -140,7 +241,14 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
       }
       const canonical = catalogIds.has(ident) ? ident : aliases.get(ident)
       if (canonical) {
-        appendRaw(`\\operatorname{${escapeId(canonical)}}`, i)
+        // A real catalog id is an AST-node binding: Pascal spelling in `\mathrm{}` (the dictionary triggers on the
+        // Pascal symbol either way). A non-id keyword such as `for` reaches the parser as `\operatorname{}` verbatim.
+        appendRaw(catalogIds.has(canonical) ? `\\mathrm{${pascalCase(canonical)}}` : `\\operatorname{${escapeId(canonical)}}`, i)
+      } else if (/^[A-Za-z]{2,}$/.test(ident)) {
+        // An unmatched pure-letter WORD is ONE identifier (a multi-letter variable), not a product of its letters
+        // — `\mathrm{}` parses to a single symbol. Single letters (x, n) stay bare/italic; runs with digits or `_`
+        // (x2, a_1) keep their existing meaning.
+        appendRaw(`\\mathrm{${ident}}`, i)
       } else {
         appendRaw(latex.slice(i, j), i)
       }
@@ -151,6 +259,56 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
     i++
   }
   return { text: out, toOriginal: (pos: number) => (pos < mapping.length ? mapping[pos] : (latex.length as number)) }
+}
+
+/** DISPLAY reformat (for the math field, run on a typing pause / blur): rewrite each BARE pure-letter run to the
+ *  spelling that shows what it IS — `classify` returns an {@link IdentifierDisplay} (a function's `\operatorname{}`,
+ *  a collection's `\mathrm{}`, or a registered `notation` glyph spliced verbatim) or `null` to leave it bare/italic
+ *  (a plain variable). The `latex` it returns must be a spelling the parser round-trips to the same id — the
+ *  builder guarantees that. Idempotent: runs already inside `\operatorname{}`/`\mathrm{}`/`\text{}` are protected
+ *  and left alone, and a notation glyph is a command (not a bare run), so re-running never double-wraps. Single
+ *  letters and runs with digits/underscores are left untouched. */
+export function reformatIdentifiers(
+  latex: string,
+  classify: (run: string) => IdentifierDisplay | null,
+): string {
+  let out = ''
+  let i = 0
+  let braceDepth = 0
+  const protect: number[] = []
+  while (i < latex.length) {
+    const c = latex[i]
+    if (c === '\\') {
+      let j = i + 1
+      while (j < latex.length && /[A-Za-z]/.test(latex[j])) j++
+      const cmd = latex.slice(i, j)
+      out += cmd
+      const name = cmd.slice(1)
+      if (name === 'operatorname' || name === 'mathrm' || name === 'text') {
+        let k = j
+        while (k < latex.length && /\s/.test(latex[k])) k++
+        if (latex[k] === '{') { out += latex.slice(j, k + 1); braceDepth++; protect.push(braceDepth); i = k + 1; continue }
+      }
+      i = j
+      continue
+    }
+    if (c === '{') { braceDepth++; out += c; i++; continue }
+    if (c === '}') { out += c; if (protect.length && protect[protect.length - 1] === braceDepth) protect.pop(); braceDepth--; i++; continue }
+    if (protect.length === 0 && /[A-Za-z]/.test(c)) {
+      let j = i
+      while (j < latex.length && /[A-Za-z]/.test(latex[j])) j++
+      const run = latex.slice(i, j)
+      const m = run.length >= 2 ? classify(run) : null
+      // The classify result already carries the exact display LaTeX (Pascal-spelled operator/entity, or a glyph),
+      // which the builder guarantees re-parses to the id — so splice it straight in.
+      out += m ? m.latex : run
+      i = j
+      continue
+    }
+    out += c
+    i++
+  }
+  return out
 }
 
 // ── preserveLatex tree -> plain MathJSON + spans + errors ──────────────────────────────────────────────────────
@@ -342,18 +500,28 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
     const p = pascalCase(id)
     if (p !== id && !catalogIds.has(p) && !aliases.has(p)) aliases.set(p, id)
   }
-  // Friendly spellings for ids CE's parser would otherwise canonicalize to a reserved builtin: `shuffle` /
-  // `Shuffle` -> our `scramble` (CE reserves `Shuffle`, mapping it to an unimplemented `RandomShuffle`).
-  for (const [word, id] of [['shuffle', 'scramble'], ['Shuffle', 'scramble']] as const) {
-    if (catalogIds.has(id) && !catalogIds.has(word)) aliases.set(word, id)
-  }
+  // NOTE: our shuffle op is `scramble` everywhere (name chosen so it doesn't collide with CE's reserved, and
+  // unimplemented, `Shuffle`/`RandomShuffle`). `Shuffle` is deliberately NOT aliased — it would only half-work
+  // (a bare run resolved but a `\mathrm{Shuffle}` did not, since the alias is normalizer-only), which read as
+  // "Shuffle unrecognized". Scramble is the one spelling.
+  // Bare keywords that must reach the parser as `\operatorname{}` to be recognized — `for` is CE's list-
+  // comprehension keyword (`[i^2 for i=[1,2,3]]`). The normalizer only ever matches a WHOLE letter-run, so this
+  // rewrites a standalone `for`, never the `for` inside a word like `before`.
+  aliases.set('for', 'for')
   const dictionary: Partial<LatexDictionaryEntry>[] = [...LATEX_DICTIONARY, ...catalogDictionary(catalog)]
   const syntax = new LatexSyntax({ dictionary: dictionary as never, preserveLatex: true })
 
   return {
     dictionary,
     parse(latex: string): Parsed {
-      const { text, toOriginal } = normalizeLatex(latex, catalogIds, aliases)
+      // `.`-method sugar first (its own offset map back to `latex`), then the bare-run normalization on its output;
+      // compose the two maps so a span still points into the ORIGINAL input the caller gave us.
+      const { text: dotText, map: dotMap } = rewriteDotMethods(latex)
+      const { text, toOriginal: toDot } = normalizeLatex(dotText, catalogIds, aliases)
+      const toOriginal = (pos: number): number => {
+        const d = toDot(pos)
+        return d < dotMap.length ? dotMap[d] : latex.length
+      }
       const spans: SpanMap = new Map()
       const errors: ParseError[] = []
       const raw = syntax.parse(text) as PreservedNode | null

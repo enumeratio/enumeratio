@@ -1,6 +1,7 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import type { Completer } from './enumeratio-math-input'
+import type { IdentifierDisplay } from '@enumeratio/expressions'
 import './enumeratio-math-input'
 
 // <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>. The math-input field spans the full
@@ -18,13 +19,25 @@ export type LineState = {
   /** Rendered type, in notation, e.g. "∈ ℕ", "∈ ℚ", "∈ 𝔖₅", "f: (n) ↦" — the set derives this from the bound
    *  Type and the evaluated value; empty/undefined while the line hasn't bound to anything. */
   type?: string
+  /** When the type refers to a catalog entity (a collection), a link to its enumeratio.dev entry — the type badge
+   *  becomes a deep link. */
+  typeHref?: string
   value?: string
+  /** When the value is a located element, a link to the SQL query view that reproduces it (the collection filtered
+   *  to its rank) — click the value to verify it in the atlas. */
+  valueHref?: string
   error?: string
   /** The parsed AST (MathJSON, pretty JSON) for the opt-in right-click inspector. */
   ast?: string
   engine?: string
   sql?: string
   busy?: boolean
+  /** This line is an ACTION (`p → …`): show a ▶ trigger instead of a value. */
+  action?: boolean
+  /** A collection preview has MORE elements than shown — render a clickable `…` to pull the next batch. */
+  more?: boolean
+  /** This line is prose (a string body) — render it as a comment, not a math value. Interim: plain text. */
+  comment?: string
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -33,12 +46,18 @@ const ERROR_SHOW_DELAY_MS = 350
 export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String, attribute: 'line-id' }) lineId = ''
   @property({ type: String }) latex = ''
+  @property({ type: Number }) index = 0
   @property({ attribute: false }) completer: Completer | null = null
+  @property({ attribute: false }) classify: ((run: string) => IdentifierDisplay | null) | null = null
+  @property({ type: Boolean }) active = false
   @property({ attribute: false }) state: LineState = {}
 
   /** Gated display of `state.error` — see the debounce note above. */
   @state() private showError = false
   @state() private astOpen = false
+  /** Drag state: `dragging` = this row is the one being moved (dim it); `dropEdge` = which edge a drop bar shows on. */
+  @state() private dragging = false
+  @state() private dropEdge: 'above' | 'below' | null = null
   private errorTimer: ReturnType<typeof setTimeout> | null = null
   private lastError: string | undefined = undefined
 
@@ -81,6 +100,40 @@ export class EnumeratioExpressionLine extends LitElement {
     this.astOpen = !this.astOpen
   }
 
+  // Reorder by dragging the handle. The dragged GHOST is the whole row (setDragImage); the source dims while it
+  // moves; the target shows a drop bar on the edge the pointer is nearest. The set owns the actual reordering
+  // (line-reorder → onLineReorder), told which side to drop on.
+  private get lineEl(): HTMLElement | null {
+    return this.renderRoot.querySelector('.line')
+  }
+  private onDragStart = (ev: DragEvent): void => {
+    ev.dataTransfer?.setData('text/plain', this.lineId)
+    if (ev.dataTransfer) {
+      ev.dataTransfer.effectAllowed = 'move'
+      const row = this.lineEl
+      if (row) ev.dataTransfer.setDragImage(row, 16, row.offsetHeight / 2) // ghost = the whole row, not just the number
+    }
+    this.dragging = true
+  }
+  private onDragEnd = (): void => { this.dragging = false; this.dropEdge = null }
+  private onDragOver = (ev: DragEvent): void => {
+    ev.preventDefault()
+    if (this.dragging) return // don't show a drop bar on the row being dragged
+    const rect = this.lineEl?.getBoundingClientRect()
+    this.dropEdge = rect ? (ev.clientY < rect.top + rect.height / 2 ? 'above' : 'below') : null
+  }
+  private onDragLeave = (ev: DragEvent): void => {
+    // ignore leaves into a child; only clear when the pointer actually exits the row
+    if (!this.lineEl?.contains(ev.relatedTarget as Node)) this.dropEdge = null
+  }
+  private onDrop = (ev: DragEvent): void => {
+    ev.preventDefault()
+    const sourceId = ev.dataTransfer?.getData('text/plain')
+    const position = this.dropEdge ?? 'above'
+    this.dropEdge = null
+    if (sourceId && sourceId !== this.lineId) this.emit('line-reorder', { sourceId, targetId: this.lineId, position })
+  }
+
   private hideError(): void {
     if (this.errorTimer) { clearTimeout(this.errorTimer); this.errorTimer = null }
     this.showError = false
@@ -110,22 +163,50 @@ export class EnumeratioExpressionLine extends LitElement {
     const hasValue = !errVisible && !s.busy && s.value != null
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
+    const lineClass = `line${this.active ? ' active' : ''}${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
     return html`
-      <div class="line" @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}>
-        <div class="field">
-          <enumeratio-math-input
-            .latex=${this.latex}
-            .completer=${this.completer}
-            @enumeratio-input=${this.onInput}
-            @enumeratio-commit=${this.onCommit}
-            @enumeratio-move=${this.onMove}
-          ></enumeratio-math-input>
-          ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
+      <div class=${lineClass} @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
+           @focusin=${() => this.emit('line-focus', { lineId: this.lineId })}
+           @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
+        <div class="gutter">
+          <span class="rownum" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
+                title="drag to reorder">${this.index}</span>
+          ${s.action
+            ? html`<button class="rowbtn" @mousedown=${(e: MouseEvent) => e.preventDefault()}
+                      @click=${() => this.emit('line-run', { lineId: this.lineId })}
+                      title="run this action" aria-label="run this action">→</button>`
+            : ''}
         </div>
-        <div class="value">
-          ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
+        <div class="body">
+          <div class="field">
+            <enumeratio-math-input
+              .latex=${this.latex}
+              .completer=${this.completer}
+              .classify=${this.classify}
+              @enumeratio-input=${this.onInput}
+              @enumeratio-commit=${this.onCommit}
+              @enumeratio-move=${this.onMove}
+            ></enumeratio-math-input>
+            ${!errVisible && s.type && s.comment == null
+              ? s.typeHref
+                ? html`<a class="type link" href=${s.typeHref} target="_blank" rel="noopener"
+                        title="open in the atlas">${s.type}</a>`
+                : html`<span class="type">${s.type}</span>`
+              : ''}
+          </div>
+          <div class="value">
+            ${s.comment != null ? html`<span class="comment">${s.comment}</span>`
+              : s.busy ? html`<span class="hint">…</span>`
+              : hasValue ? html`<span class="eq">=</span> ${s.valueHref
+                  ? html`<a class="vlink" href=${s.valueHref} target="_blank" rel="noopener" title="open in the query view">${s.value}</a>`
+                  : s.value}${s.more
+                  ? html` <button class="more" @click=${() => this.emit('line-expand', { lineId: this.lineId })}
+                            title="pull more elements">…</button>`
+                  : ''}`
+              : ''}
+          </div>
+          ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         </div>
-        ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         ${this.astOpen && s.ast
           ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
           : ''}
@@ -140,8 +221,84 @@ export class EnumeratioExpressionLine extends LitElement {
     }
     .line {
       position: relative;
-      padding: 0.4rem 0.5rem;
+      display: flex;
+      align-items: stretch;
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem 0.4rem 0;
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+    }
+    /* The row being dragged dims so the moving ghost reads as the "real" one. */
+    .line.dragging { opacity: 0.4; }
+    /* Drop indicator: a fat accent bar on the edge the pointer is nearest. */
+    .line.drop-above::before,
+    .line.drop-below::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      box-shadow: 0 0 0 1px color-mix(in srgb, var(--enumeratio-accent, #d97706) 40%, transparent);
+      pointer-events: none;
+    }
+    .line.drop-above::before { top: -1px; }
+    .line.drop-below::after { bottom: -1px; }
+    /* The left-margin gutter (Desmos-style): a fat column with its own faint background, holding the row number
+       (which is the drag handle) and an optional per-row icon button below it — the action ▶/→ today; a
+       visibility toggle or an assignment scrubber to come. */
+    .gutter {
+      flex: 0 0 auto;
+      align-self: stretch;
+      /* Cancel the line's vertical padding so the gutter background runs the FULL height of the row, edge to edge. */
+      margin-block: -0.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      min-width: 2rem;
+      padding: 0.5rem 0.35rem 0.3rem;
+      background: color-mix(in srgb, var(--enumeratio-muted, currentColor) 6%, transparent);
+      border-right: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+      transition: background 0.12s, box-shadow 0.12s;
+    }
+    .line:hover .gutter {
+      background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 12%, transparent);
+    }
+    /* The SELECTED (last-focused) cell: color its gutter + a solid accent bar down its left edge. */
+    .line.active .gutter {
+      background: color-mix(in srgb, var(--enumeratio-accent, var(--p-primary-color, #d97706)) 18%, transparent);
+      box-shadow: inset 3px 0 0 0 var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .rownum {
+      align-self: flex-end;
+      font-size: 0.85em;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      opacity: 0.6;
+      cursor: grab;
+      user-select: none;
+    }
+    .rownum:active { cursor: grabbing; }
+    /* Per-row icon button in the gutter (mousedown prevented so it never steals the field's caret). */
+    .rowbtn {
+      font: inherit;
+      font-size: 0.95rem;
+      line-height: 1;
+      cursor: pointer;
+      width: 1.5rem;
+      height: 1.5rem;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-radius: 6px;
+      background: transparent;
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .rowbtn:hover {
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 14%, transparent);
+    }
+    .body {
+      flex: 1 1 auto;
+      min-width: 0;
     }
     /* The field is the full row, so every field in a notebook is exactly the same width. */
     .field {
@@ -166,6 +323,14 @@ export class EnumeratioExpressionLine extends LitElement {
       border-radius: 4px;
       background: color-mix(in srgb, var(--enumeratio-surface, var(--p-content-background, canvas)) 78%, transparent);
     }
+    /* A type that links to its atlas entry is clickable (the plain chip is pointer-transparent). */
+    .type.link {
+      pointer-events: auto;
+      cursor: pointer;
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      text-decoration: none;
+    }
+    .type.link:hover { text-decoration: underline; }
     /* Value on its own row below the field, right-aligned and free to use the full width. */
     .value {
       margin-top: 0.25rem;
@@ -179,6 +344,34 @@ export class EnumeratioExpressionLine extends LitElement {
       opacity: 0.4;
       font-weight: 400;
     }
+    /* A comment line's prose — muted, left-aligned, not a math value. */
+    .comment {
+      display: block;
+      text-align: left;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+    }
+    /* A located element's value links to the query view that reproduces it. */
+    .vlink {
+      color: inherit;
+      text-decoration: none;
+      text-decoration: underline dotted color-mix(in srgb, currentColor 40%, transparent);
+      text-underline-offset: 3px;
+      cursor: pointer;
+    }
+    .vlink:hover { text-decoration: underline; }
+    /* Clickable "pull more" for a collection preview — a quiet inline affordance. */
+    .more {
+      font: inherit;
+      cursor: pointer;
+      padding: 0 0.35rem;
+      border: none;
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .more:hover { background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 24%, transparent); }
     /* A parse/bind error takes the value's place, below the field — full width for the whole message, muted. */
     .error {
       margin-top: 0.15rem;

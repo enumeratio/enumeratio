@@ -89,7 +89,8 @@ const ceImplRow = (label: string): ImplRow => ({
   representation: 'text', cost: null, note: null,
 })
 
-export function ceEngine(reg: Registry): Engine {
+export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean } = {}): Engine {
+  const exactRationals = factoryOpts.exactRationals ?? false
   /** the first reason this engine declines `expr`, or undefined — the same three-question shape as ts-engine's
    *  `reject`, minus the per-node RETURN-kind bookkeeping ts-engine needs (ce's whole vocabulary only ever
    *  produces an int/numeric or a boolean, decided once at print time, never threaded back through can()). */
@@ -187,7 +188,9 @@ export function ceEngine(reg: Registry): Engine {
         const big = (x: number | bigint): bigint => (typeof x === 'bigint' ? x : BigInt(x))
         if (v.im !== 0 || v.imRadical !== 1 || big(v.imRational?.[0] ?? 0) !== 0n || big(v.imRational?.[1] ?? 1) !== 1n || v.radical !== 1) return bad()
         const [num, den] = [big(v.rational[0]), big(v.rational[1])]
-        if (den !== 1n) return bad()   // the "decline non-integer div" rule, and the general non-integer case
+        // Notebook mode wants the exact reduced rational ∈ ℚ (CE has already reduced it); pg-differential mode
+        // declines it, to stay bit-identical to pg's int/numeric division (see #365 — pg is the one to fix).
+        if (den !== 1n) return exactRationals ? `${num}/${den}` : bad()
         return num.toString()
       }
     } catch (err) {

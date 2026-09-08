@@ -3,6 +3,7 @@
 // binder-resolved scope. MathLive spells a typed identifier as adjacent plain-letter chars, so most of the work
 // here is finding the right trailing "word" to treat as a prefix.
 import type { CatalogNames } from './ce/latex.js'
+import { pascalCase, serializeLatex } from './ce/latex.js'
 
 export type CompletionContext = {
   catalog: CatalogNames & { stats?: (coll: string) => string[]; maps?: (coll: string) => string[] }
@@ -93,15 +94,17 @@ function rankAndCap(matches: Scored[]): Candidate[] {
 
 // ── candidate builders ───────────────────────────────────────────────────────────────────────────────────────────
 
-const collectionCandidate = (id: string): Candidate => ({
-  label: id, insert: `\\operatorname{${escapeId(id)}}`, kind: 'collection',
+// Labelled and inserted in the PascalCase spelling (or a registered notation glyph) — the snake id is only what
+// we match the typed prefix against, never what we show or splice.
+const collectionCandidate = (notation?: Record<string, string>) => (id: string): Candidate => ({
+  label: pascalCase(id), insert: serializeLatex(id, notation), kind: 'collection', detail: id,
 })
-const functionCandidate = (id: string): Candidate => ({
-  label: id, insert: `\\operatorname{${escapeId(id)}}(`, kind: 'function',
+const functionCandidate = (notation?: Record<string, string>) => (id: string): Candidate => ({
+  label: pascalCase(id), insert: `${serializeLatex(id, notation)}(`, kind: 'function', detail: id,
 })
 const symbolCandidate = (id: string): Candidate => ({ label: id, insert: id, kind: 'symbol' })
 const statOrMapCandidate = (name: string, sym: string, kind: 'stat' | 'map'): Candidate => ({
-  label: `${name}(${sym})`, insert: `\\operatorname{${escapeId(name)}}(${sym})`, kind,
+  label: `${name}(${sym})`, insert: `\\mathrm{${escapeId(name)}}(${sym})`, kind,
 })
 
 function builtinSetMatches(ctx: CompletionContext, prefix: string): Scored[] {
@@ -162,10 +165,11 @@ export function complete(before: string, ctx: CompletionContext): Completion {
 
   if (prefix === '' && !inContext) return { replaceLen: 0, candidates: [] }
 
+  const notation = ctx.catalog.notation
   const matches = inContext
-    ? [...collectMatches(ctx.catalog.collections, prefix, collectionCandidate), ...builtinSetMatches(ctx, prefix)]
+    ? [...collectMatches(ctx.catalog.collections, prefix, collectionCandidate(notation)), ...builtinSetMatches(ctx, prefix)]
     : [
-        ...collectMatches(ctx.catalog.functions, prefix, functionCandidate),
+        ...collectMatches(ctx.catalog.functions, prefix, functionCandidate(notation)),
         ...statMapMatches(ctx, prefix),
         ...collectMatches(ctx.scope.symbols, prefix, symbolCandidate),
       ]

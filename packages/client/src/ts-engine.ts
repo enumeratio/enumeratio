@@ -66,7 +66,7 @@ const nativeImplRow = (type: string, op: string, kind: TypeKind): ImplRow => ({
  *  `div` is the one op that is not simply "compute it": an integer division that does not come out even is not
  *  what pg's own `/` would print for an INT kind (pg truncates; this file declines rather than print a rounded
  *  near-miss — the same "let the oracle answer" rule InexactResult already enforces elsewhere). */
-function evalNative(op: string, kind: TypeKind, type: string, rawArgs: unknown[]): unknown {
+function evalNative(op: string, kind: TypeKind, type: string, rawArgs: unknown[], exactRationals = false): unknown {
   // One arithmetic per call: if ANY argument is a bigint the whole call is bigint (a safe-integer number widens
   // losslessly), otherwise all number. Mixing the two would throw in JS, or worse, coerce silently.
   const anyBig = rawArgs.some((a) => typeof a === 'bigint')
@@ -113,7 +113,13 @@ function evalNative(op: string, kind: TypeKind, type: string, rawArgs: unknown[]
       case 'ne': return a !== b!
       case 'div': {
         const q = a / b!
-        if (kind === 'int' && !Number.isInteger(q)) throw new InexactResult(`${type}.div`, nativeImplRow(type, op, kind), q)
+        // Decline a non-integral division so a rational-capable oracle answers: always for an INT kind (pg
+        // truncates; the oracle prints the exact int quotient or declines), and under `exactRationals` (notebook)
+        // for any integer operands, so ce-engine can return the reduced `p/q` ∈ ℚ instead of this float.
+        const declineExact = exactRationals && Number.isInteger(a) && Number.isInteger(b!)
+        if (!Number.isInteger(q) && (kind === 'int' || declineExact)) {
+          throw new InexactResult(`${type}.div`, nativeImplRow(type, op, kind), q)
+        }
         return q
       }
     }
@@ -121,7 +127,8 @@ function evalNative(op: string, kind: TypeKind, type: string, rawArgs: unknown[]
   throw new Error(`ts-engine: native op "${op}" has no evaluator`)
 }
 
-export function tsEngine(reg: Registry): Engine {
+export function tsEngine(reg: Registry, factoryOpts: { exactRationals?: boolean } = {}): Engine {
+  const exactRationals = factoryOpts.exactRationals ?? false
   /** the first reason this engine declines `expr`, or undefined */
   function reject(expr: Expr, opts: CanOpts = {}): string | undefined {
     if (reg.dirty) return reg.dirty
@@ -226,7 +233,7 @@ export function tsEngine(reg: Registry): Engine {
         }
         return v
       }
-      return evalNative(e.op, kind, e.type, args)
+      return evalNative(e.op, kind, e.type, args, exactRationals)
     }
     if (e.kind !== 'apply') throw new Error(`ts-engine: cannot evaluate a ${e.kind} node`)
     const args = e.args.map((a) => evalTree(a, representation))

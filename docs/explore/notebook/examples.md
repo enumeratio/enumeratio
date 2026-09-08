@@ -20,9 +20,28 @@ Closed-form counts, evaluated exactly on the compute-engine.
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
+## Number theory
+
+Curated identities compute-engine shares with us — `\gcd`, `\mathrm{lcm}`, binomial, factorial — alongside a
+collection's cardinality and a running sum. (Broader CE math — `\max`, `\sqrt`, `\zeta`, … — is being wired in.)
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"n1","latex":"\\gcd(48,36)"},
+  {"id":"n2","latex":"lcm(8,12)"},
+  {"id":"n3","latex":"\\binom{20}{10}"},
+  {"id":"n4","latex":"\\left|Permutations(6)\\right|"},
+  {"id":"n5","latex":"\\sum_{k=1}^{10}k"},
+  {"id":"n6","latex":"\\sum_{k=0}^{5}\\binom{5}{k}"},
+  {"id":"n7","latex":"total([k^2 for k=[1,2,3,4,5]])"},
+  {"id":"n8","latex":"Bell(5)+CatalanNumber(5)"},
+  {"id":"n9","latex":"\\frac{20!}{10! \\cdot 10!}"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
 ## Arithmetic & fractions
 
-Exact integer arithmetic; a genuine fraction currently renders as its decimal.
+Exact integer arithmetic; a genuine fraction reduces to a rational (`6/4` → `3/2 ∈ ℚ`).
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
@@ -48,14 +67,14 @@ A function defines with no value of its own (`f: (n) ↦` in the meta line); cal
 
 ## Random draws & shuffles
 
-`RandomElement`/`RandomSample` draw through the library's O(1) `at`; `Shuffle` permutes a list. The **reshuffle**
+`RandomElement`/`RandomSample` draw through the library's O(1) `at`; `Scramble` permutes a list. The **reshuffle**
 button (bottom-right) rerolls them all; it is disabled when a notebook has no randomness.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
   {"id":"d1","latex":"RandomElement(Permutations(5))"},
   {"id":"d2","latex":"RandomSample(Subsets(4), 3)"},
-  {"id":"d3","latex":"Shuffle(\\left\\lbrack1,2,3,4,5\\right\\rbrack)"}
+  {"id":"d3","latex":"Scramble(\\left\\lbrack1,2,3,4,5\\right\\rbrack)"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
@@ -70,6 +89,51 @@ Enter a list with `[…]`; declare an element of a sized collection and locate i
   {"id":"e3","latex":"p = \\left\\lbrack3,1,2\\right\\rbrack"},
   {"id":"e4","latex":"Rank(p)"},
   {"id":"e5","latex":"Next(p)"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Lists, comprehensions & reductions
+
+Build a list with a `for` comprehension over a literal domain, transform it, and reduce it —
+the list ops (`join`, `sort`, `unique`) and reductions (`total`, `min`, `max`, `first`, `last`)
+map onto compute-engine's own operators.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"g1","latex":"[i^2 for i=[1,2,3,4,5]]"},
+  {"id":"g2","latex":"sort([5,2,9,1])"},
+  {"id":"g3","latex":"unique([3,1,1,2,3])"},
+  {"id":"g4","latex":"total([2i for i=[1,2,3,4]])"},
+  {"id":"g5","latex":"max(join([1,2],[9,3]))"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Sums & sets
+
+A big **∑** sums its body over a literal range; **`total`** sums a list (Desmos's name for it). A
+**set** `{…}` canonicalizes to its distinct elements.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"s1","latex":"\\sum_{i=1}^{4}2i"},
+  {"id":"s2","latex":"\\sum_{i=1}^{5}i^2"},
+  {"id":"s3","latex":"total([1,2,3,4])"},
+  {"id":"s4","latex":"\\left\\lbrace1,2,2,4\\right\\rbrace"},
+  {"id":"s5","latex":"total(\\left\\lbrace1,2,2,4\\right\\rbrace)"}
+]}'></enumeratio-notebook>
+</ClientOnly>
+
+## Actions & the ticker
+
+An **action** `p → …` reassigns its target when triggered — click the **→** in its gutter to run it
+once, or start the **ticker** (bottom toolbar) to fire it repeatedly. The whole ticker run is one undo
+step; the seed button rerolls any randomness.
+
+<ClientOnly>
+<enumeratio-notebook value='{"lines":[
+  {"id":"a1","latex":"p=0"},
+  {"id":"a2","latex":"p \\to p+2"},
+  {"id":"a3","latex":"2p+1"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 

@@ -44,7 +44,46 @@ const HANDLE_ELEM = new Set(['random_element', 'unrank'])
 
 /** Ops whose result is a list (typed `integer[]`): our own scramble/random_sample, plus the list operations CE
  *  canonicalizes to its Pascal heads (Join/Sort/Unique) at parse time. */
-const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'Join', 'Sort', 'Unique'])
+// Heads arrive as their LOWERCASE catalog id now (the dictionary names catalog ids in snake_case even though they
+// DISPLAY PascalCase) — so join/sort/unique here are lowercase, not the CE-canonicalized Pascal they once were.
+const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'join', 'sort', 'unique'])
+
+/** List reductions evaluating to a SCALAR — Sum/Min/Max/Product over a list, First/Last of one. Unlike
+ *  join/sort/unique, CE does NOT canonicalize these operator names, so the head stays our lowercase id. Typed
+ *  `numeric` (the value-refined badge then reads ∈ ℕ/ℤ/ℝ). */
+const LIST_SCALAR_OPS = new Set(['sum', 'total', 'min', 'max', 'first', 'last'])
+
+/** The integer range a big-∑'s `Tuple(var, lo, hi)` iterates, as `{varName, values}` (lo..hi inclusive, each a
+ *  number Expression), or null if it isn't a literal integer range. Shared by bind + lower so the two unroll the
+ *  SAME way (mirrors `comprehensionDomain`). */
+export function summationRange(tuple: Expression): { varName: string; values: Expression[] } | null {
+  if (head(tuple) !== 'Tuple') return null
+  const [v, lo, hi] = args(tuple)
+  if (!isSymbol(v) || !isNumber(lo) || !isNumber(hi)) return null
+  const a = numberValue(lo), b = numberValue(hi)
+  if (!Number.isInteger(a) || !Number.isInteger(b) || b - a > 100000) return null // guard a runaway range
+  const values: Expression[] = []
+  for (let i = a; i <= b; i++) values.push(i as unknown as Expression)
+  return { varName: symbolName(v), values }
+}
+
+/** The values a `for` comprehension iterates, when they can be enumerated at bind/lower time: a literal `List`'s
+ *  items, or a `Range[lo, hi, step?]` expanded to numbers. Otherwise null (a non-literal domain isn't unrollable
+ *  in this pass). Shared by bind + lower so both unroll to the identical element set. */
+export function comprehensionDomain(elem: Expression): Expression[] | null {
+  const domain = args(elem)[1]
+  if (!domain) return null
+  if (head(domain) === 'List') return args(domain)
+  if (head(domain) === 'Range') {
+    const [lo, hi, step] = args(domain).map((x) => (isNumber(x) ? numberValue(x) : NaN))
+    const s = Number.isFinite(step) ? step : 1
+    if (!Number.isFinite(lo) || !Number.isFinite(hi) || s === 0) return null
+    const out: Expression[] = []
+    for (let v = lo; s > 0 ? v <= hi : v >= hi; v += s) out.push(v)
+    return out
+  }
+  return null
+}
 
 /** Deep-substitute a user function's params with the caller's ARGUMENT EXPRESSIONS (not their values — this is
  *  syntactic beta-reduction, substitute-then-type, matching bind.test.ts's `f(3)` case). `prefix` is a synthetic
@@ -206,11 +245,19 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
+  // `|C|` over a collection/fiber handle is its CARDINALITY (a natural number) — `|` parses to `Abs`, which is
+  // otherwise a scalar absolute value (left to the existing path for a non-handle argument).
+  if (h === 'Abs' && a.length === 1 && argT(0).k === 'handle') return scalarType('natural_number')
+
   // List-valued ops → an int array: scramble/random_sample plus the list operations CE canonicalizes to its own
   // Pascal heads at parse time (join→Join, sort→Sort, unique→Unique). Arguments typed for error-checking.
   if (LIST_RESULT_OPS.has(h) && a.length >= 1) {
     for (let i = 0; i < a.length; i++) argT(i)
     return scalarType('integer[]')
+  }
+  if (LIST_SCALAR_OPS.has(h) && a.length >= 1) {
+    for (let i = 0; i < a.length; i++) argT(i)
+    return scalarType('numeric')
   }
 
   // A list literal `[3, 4, 2]` → the parser's `["List", …]`. Typed as an int array (`integer[]`); when it is the
@@ -219,6 +266,41 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
   if (h === 'List') {
     for (let i = 0; i < a.length; i++) typeNode(a[i], argPath(path, i), ctx)
     return scalarType('integer[]')
+  }
+
+  // A `for` list comprehension: `[expr for i=[…]]` → CE `Comprehension[expr, Element[i, domain]]`. Evaluated by
+  // UNROLLING over a LITERAL domain — beta-reduce `expr` with the bound var set to each domain value (reusing the
+  // exact user-function substitution machinery), so each element becomes an ordinary typed/lowered expression. A
+  // non-literal domain is declined for now (needs a runtime-length unroll, out of this pass).
+  if (h === 'Comprehension' && a.length === 2 && head(a[1]) === 'Element') {
+    const domVals = comprehensionDomain(a[1])
+    if (!domVals) { ctx.errors(path, 'a `for` domain must be a literal list, e.g. [1, 2, 3]'); return UNKNOWN }
+    const varName = symbolName(args(a[1])[0])
+    domVals.forEach((v, i) => {
+      const { expr: sub, prefix } = betaReduce([varName], a[0], [v], argPath(path, i))
+      typeNode(sub, prefix, ctx)
+    })
+    return scalarType('integer[]')
+  }
+
+  // A set literal `{1, 2, 2, 4}` → CE `["Set", …]`. Treated as a distinct-valued int list (dedup happens at
+  // lowering); typed like a list literal. Non-numeric members ({a,b,c}) type-check but only lower once we support
+  // symbol/word sets (see Permutations-over-a-word — piled).
+  if (h === 'Set') {
+    for (let i = 0; i < a.length; i++) typeNode(a[i], argPath(path, i), ctx)
+    return scalarType('integer[]')
+  }
+
+  // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`. Evaluated by UNROLLING the literal range
+  // and summing (same beta-reduction as a `for` comprehension), so `i` is bound, not a free symbol.
+  if (h === 'Sum' && a.length === 2) {
+    const range = summationRange(a[1])
+    if (!range) { ctx.errors(path, 'a ∑ needs a literal integer range, e.g. \\sum_{i=1}^{n} with numeric bounds'); return UNKNOWN }
+    range.values.forEach((v, i) => {
+      const { expr: sub, prefix } = betaReduce([range.varName], a[0], [v], argPath(path, i))
+      typeNode(sub, prefix, ctx)
+    })
+    return scalarType('numeric')
   }
 
   return typeGenericApply(h, a, path, ctx)

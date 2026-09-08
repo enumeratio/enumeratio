@@ -18,7 +18,7 @@ import type { CompletionContext } from '@enumeratio/expressions'
 
 /** Generic engine primitives dispatched by head name (bind.ts's NEXT_PREV_RANK plus the handle-level ones) — not
  *  per-collection, so these are known up front rather than discovered lazily like stats/maps. */
-const GENERIC_PRIMITIVES = ['next', 'prev', 'rank', 'locate', 'unrank', 'random_element', 'scramble', 'random_sample', 'join', 'sort', 'unique'] as const
+const GENERIC_PRIMITIVES = ['next', 'prev', 'rank', 'locate', 'unrank', 'random_element', 'scramble', 'random_sample', 'join', 'sort', 'unique', 'sum', 'total', 'min', 'max', 'first', 'last'] as const
 
 export type NotebookCatalog = {
   catalog: Catalog
@@ -145,12 +145,23 @@ async function build(): Promise<NotebookCatalog> {
     ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES]),
   ]
 
-  const names: CatalogNames = { collections: collIds, functions: functionIds, symbols }
+  // Seeded math NOTATION (id -> display LaTeX). Where present it replaces the `\operatorname{<Pascal>}` spelling
+  // everywhere the id shows AND parses back to the same id. Kept deliberately to glyphs that CANNOT be typed as a
+  // bare variable — a single-letter notation (Bell -> `B`) would register `B` as a parse trigger and hijack every
+  // `B` a user typed as a variable, so applied-function letter notations (Bₙ, Cₙ) wait for the catalog-meta pass
+  // that can scope a trigger to application. This map is the bootstrap; it should migrate to catalog meta.
+  const NOTATION_SEED: Record<string, string> = { permutations: '\\mathfrak{S}' }
+  const known = new Set([...collIds, ...functionIds])
+  const notation: Record<string, string> = {}
+  for (const [id, tex] of Object.entries(NOTATION_SEED)) if (known.has(id)) notation[id] = tex
+
+  const names: CatalogNames = { collections: collIds, functions: functionIds, symbols, notation }
 
   const completion: CompletionContext['catalog'] = {
     collections: names.collections,
     functions: names.functions,
     symbols: names.symbols,
+    notation: names.notation,
     stats: (coll: string) => statsOf(coll).map((s) => s.id),
     maps: (coll: string) => mapsOf(coll).map((m) => m.id),
   }
