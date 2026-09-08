@@ -42,7 +42,8 @@ describe('parse: MathJSON shape + statement kind', () => {
     ['x_{1}', 'expr', '"x_1"'],
     ['2x', 'expr', '["InvisibleOperator",2,"x"]'],
     ['triangular_numbers', 'expr', '"triangular_numbers"'], // bare run, rewritten by pre-parse normalization
-    ['xy', 'expr', '["InvisibleOperator","x","y"]'], // two symbols — not a catalog id
+    ['xy', 'expr', '"xy"'], // a multi-letter run is ONE identifier now (not x·y) — normalizer wraps it \mathrm
+    ['x', 'expr', '"x"'], // a single letter stays a bare variable
     ['x = 10', 'define', '["x",10]'],
     ['f(n) = n^2 + 1', 'define', '["f",["n"],["Add",["Power","n",2],1]]'],
     ['x \\in \\operatorname{triangular\\_numbers}', 'declare', '["Element","x","triangular_numbers"]'],

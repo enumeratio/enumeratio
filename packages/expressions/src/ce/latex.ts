@@ -141,6 +141,11 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
       const canonical = catalogIds.has(ident) ? ident : aliases.get(ident)
       if (canonical) {
         appendRaw(`\\operatorname{${escapeId(canonical)}}`, i)
+      } else if (/^[A-Za-z]{2,}$/.test(ident)) {
+        // An unmatched pure-letter WORD is ONE identifier (a multi-letter variable), not a product of its letters
+        // — `\mathrm{}` parses to a single symbol. Single letters (x, n) stay bare/italic; runs with digits or `_`
+        // (x2, a_1) keep their existing meaning.
+        appendRaw(`\\mathrm{${ident}}`, i)
       } else {
         appendRaw(latex.slice(i, j), i)
       }
@@ -347,6 +352,10 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
   for (const [word, id] of [['shuffle', 'scramble'], ['Shuffle', 'scramble']] as const) {
     if (catalogIds.has(id) && !catalogIds.has(word)) aliases.set(word, id)
   }
+  // Bare keywords that must reach the parser as `\operatorname{}` to be recognized — `for` is CE's list-
+  // comprehension keyword (`[i^2 for i=[1,2,3]]`). The normalizer only ever matches a WHOLE letter-run, so this
+  // rewrites a standalone `for`, never the `for` inside a word like `before`.
+  aliases.set('for', 'for')
   const dictionary: Partial<LatexDictionaryEntry>[] = [...LATEX_DICTIONARY, ...catalogDictionary(catalog)]
   const syntax = new LatexSyntax({ dictionary: dictionary as never, preserveLatex: true })
 
