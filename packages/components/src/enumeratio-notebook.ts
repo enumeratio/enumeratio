@@ -76,6 +76,9 @@ export class EnumeratioNotebook extends LitElement {
   @state() private usesRandom = false
   /** Classifies a typed word for the field's display reformat (operator / entity / plain variable). Set on boot. */
   private classify: (run: string) => IdentifierDisplay | null = () => null
+  /** Display spelling for a MathJSON head/symbol in the FullForm inspector: a catalog id shows PascalCase, else
+   *  as-is (CE builtins are already Pascal; user variables stay bare). Set on boot. */
+  private spellHead: (s: string) => string = (s) => s
 
   /** Notebook-level undo/redo: a linear history of serialized {value, seed} snapshots, one per settled change
    *  (text-edit burst, add/remove/reorder, reshuffle, and — to come — a triggered action). MathLive keeps its own
@@ -188,6 +191,8 @@ export class EnumeratioNotebook extends LitElement {
     for (const id of nb.names.functions) for (const s of [id, pascalCase(id)]) entityMap.set(s, identifierDisplay(id, 'function', notation))
     for (const id of nb.names.collections) for (const s of [id, pascalCase(id)]) if (!entityMap.has(s)) entityMap.set(s, identifierDisplay(id, 'collection', notation))
     this.classify = (run) => entityMap.get(run) ?? null
+    const idSet = new Set<string>([...nb.names.functions, ...nb.names.collections])
+    this.spellHead = (s) => (idSet.has(s) ? pascalCase(s) : s)
     await reseedRandom(this.seed) // reproducible randomness from the first evaluation
     for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)
     for (const id of this.displayOrder) this.pendingChanged.add(id)
@@ -446,7 +451,7 @@ export class EnumeratioNotebook extends LitElement {
     if (model.errors.length > 0) { this.setResult(id, { error: model.errors[0] }); return }
     if (!model.parsed) { this.setResult(id, {}); return }
     if (model.parsed.errors.length > 0) { this.setResult(id, { error: model.parsed.errors[0].message }); return }
-    this.lineAst.set(id, astFullForm(model.parsed))
+    this.lineAst.set(id, astFullForm(model.parsed, this.spellHead))
 
     // An action line (`p → expr`, or a tuple) isn't a value — cache its assignments and show a trigger, don't eval.
     const assigns = this.actionOf(model.parsed)
@@ -764,19 +769,21 @@ function message(e: unknown): string {
 }
 
 /** MathJSON → a Wolfram-FullForm-style string: `["Binomial",6,2]` → `Binomial[6, 2]`, `n^2+1` →
- *  `Add[Power[n, 2], 1]`. Handles the boxed MathJSON number/symbol/string/function wrappers. */
-function fullForm(x: unknown): string {
+ *  `Add[Power[n, 2], 1]`. Handles the boxed MathJSON number/symbol/string/function wrappers. `spell` maps a raw
+ *  symbol/head to its DISPLAY spelling — used to show a catalog id in PascalCase (`random_element` →
+ *  `RandomElement`), matching what you type; CE builtins and user variables pass through unchanged. */
+function fullForm(x: unknown, spell: (s: string) => string = (s) => s): string {
   if (Array.isArray(x)) {
     const [h, ...rest] = x
-    return `${fullForm(h)}[${rest.map(fullForm).join(', ')}]`
+    return `${fullForm(h, spell)}[${rest.map((r) => fullForm(r, spell)).join(', ')}]`
   }
-  if (typeof x === 'string') return x
+  if (typeof x === 'string') return spell(x)
   if (x && typeof x === 'object') {
     const o = x as Record<string, unknown>
-    if ('sym' in o) return String(o.sym)
+    if ('sym' in o) return spell(String(o.sym))
     if ('num' in o) return String(o.num)
     if ('str' in o) return JSON.stringify(o.str)
-    if ('fn' in o) return fullForm(o.fn)
+    if ('fn' in o) return fullForm(o.fn, spell)
     return JSON.stringify(x)
   }
   return String(x)
@@ -784,11 +791,11 @@ function fullForm(x: unknown): string {
 
 /** The parsed statement rendered in FullForm, for the opt-in line inspector. Pulls the statement's MathJSON
  *  (`body`/`domain`) and prefixes a define/declare so the shape is legible; length-capped. */
-function astFullForm(parsed: unknown): string {
+function astFullForm(parsed: unknown, spell: (s: string) => string = (s) => s): string {
   try {
     const stmt = (parsed as any)?.stmt ?? parsed
     const mj = stmt?.body ?? stmt?.domain ?? stmt
-    let out = fullForm(mj)
+    let out = fullForm(mj, spell)
     if (stmt?.k === 'declare' && stmt?.name) out = `${stmt.name} ∈ ${out}`
     else if (stmt?.k === 'define' && stmt?.name) {
       const params = Array.isArray(stmt.params) && stmt.params.length ? `(${stmt.params.join(', ')})` : ''
