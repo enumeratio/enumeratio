@@ -26,6 +26,8 @@ export type LineState = {
   engine?: string
   sql?: string
   busy?: boolean
+  /** This line is an ACTION (`p → …`): show a ▶ trigger instead of a value. */
+  action?: boolean
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -169,7 +171,12 @@ export class EnumeratioExpressionLine extends LitElement {
             ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
           </div>
           <div class="value">
-            ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
+            ${s.action
+              ? html`<button class="run" @mousedown=${(e: MouseEvent) => e.preventDefault()}
+                        @click=${() => this.emit('line-run', { lineId: this.lineId })}
+                        title="run this action">▶ run</button>`
+              : s.busy ? html`<span class="hint">…</span>`
+              : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
           </div>
           ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         </div>
@@ -272,6 +279,22 @@ export class EnumeratioExpressionLine extends LitElement {
     .eq {
       opacity: 0.4;
       font-weight: 400;
+    }
+    /* An action's ▶ trigger sits on the LEFT of the value row (mousedown is prevented so it never steals the
+       field's caret). */
+    .value:has(.run) { text-align: left; }
+    .run {
+      font: inherit;
+      font-size: 0.85em;
+      cursor: pointer;
+      padding: 0.1rem 0.5rem;
+      border: 1px solid var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-radius: 999px;
+      background: transparent;
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .run:hover {
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
     /* A parse/bind error takes the value's place, below the field — full width for the whole message, muted. */
     .error {

@@ -3,7 +3,8 @@ import { customElement, property, state } from 'lit/decorators.js'
 import { evaluate, reseedRandom, type Row } from '@enumeratio/client'
 import {
   bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase,
-  type Bound, type Completion, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Scope, type Type,
+  head, args, isSymbol, symbolName,
+  type Bound, type Completion, type Expression, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Parsed, type Scope, type Type,
 } from '@enumeratio/expressions'
 import { loadNotebookCatalog, type NotebookCatalog } from './notebook-catalog'
 import type { Completer, CompletionCandidate } from './enumeratio-math-input'
@@ -86,6 +87,16 @@ export class EnumeratioNotebook extends LitElement {
   @state() private canUndo = false
   @state() private canRedo = false
 
+  /** Actions: a line whose body is `p → expr` (or a tuple of them) is an ACTION, not a value — it reassigns its
+   *  targets when triggered. Assignments are cached per line so the play button / ticker can fire them. */
+  private actions = new Map<LineId, { target: string; rhs: Expression }[]>()
+  /** While a ticker is running we suppress per-tick `record()`; the whole run collapses to ONE undo step at stop. */
+  private coalescing = false
+  private tickerTimer: ReturnType<typeof setInterval> | null = null
+  @state() private tickerOn = false
+  /** Whether any line is an action — gates the ticker button. */
+  @state() private hasActions = false
+
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
     const out: Record<string, string> = {}
@@ -147,6 +158,13 @@ export class EnumeratioNotebook extends LitElement {
     void this.boot()
   }
 
+  disconnectedCallback(): void {
+    super.disconnectedCallback()
+    if (this.tickerTimer) { clearInterval(this.tickerTimer); this.tickerTimer = null }
+    if (this.debounceTimer) { clearTimeout(this.debounceTimer); this.debounceTimer = null }
+    this.controllers.forEach((c) => c.abort())
+  }
+
   /** Drop a symbol's VALUE: back to its declared type-only binding, or out of scope entirely. */
   private resetBinding(name: string): void {
     const t = this.declared.get(name)
@@ -188,7 +206,7 @@ export class EnumeratioNotebook extends LitElement {
   /** Capture the current {value, seed} as a history entry, unless it duplicates the current top (so a no-op flush
    *  or a redundant call adds nothing) or we're mid-restore. Truncates any redo tail. */
   private record(): void {
-    if (this.restoring) return
+    if (this.restoring || this.coalescing) return
     const snap = JSON.stringify({ value: this.value, seed: this.seed })
     if (this.histPos >= 0 && this.history[this.histPos] === snap) return
     this.history = this.history.slice(0, this.histPos + 1)
@@ -245,6 +263,97 @@ export class EnumeratioNotebook extends LitElement {
     this.canRedo = this.histPos < this.history.length - 1
     this.persist()
     this.emitChange()
+  }
+
+  // ── actions ──────────────────────────────────────────────────────────────────────────────────────────────────
+  /** The `p → expr` assignments in a line's AST, or null if it isn't an action. A single `To`, or a tuple of them
+   *  inside a Delimiter/Sequence; each target must be a bare symbol. */
+  private actionOf(parsed: Parsed): { target: string; rhs: Expression }[] | null {
+    if (parsed.stmt.k !== 'expr') return null
+    const tos: Expression[] = []
+    const collect = (e: Expression): void => {
+      const h = head(e)
+      if (h === 'To') { tos.push(e); return }
+      if (h === 'Delimiter' || h === 'Sequence') for (const a of args(e)) collect(a)
+    }
+    collect(parsed.stmt.body)
+    if (tos.length === 0) return null
+    const out: { target: string; rhs: Expression }[] = []
+    for (const t of tos) {
+      const [target, rhs] = args(t)
+      if (!isSymbol(target)) return null // only bare-symbol targets in this slice
+      out.push({ target: symbolName(target), rhs })
+    }
+    return out
+  }
+
+  /** Trigger one action line: read every RHS against the CURRENT scope (simultaneous semantics), then rewrite each
+   *  target's define-line latex to the new value and recompute once. Reassigning by rewriting the source line keeps
+   *  actions inside the pure recompute+undo model — downstream cells update and the change is one undo step. */
+  async runAction(id: LineId): Promise<void> {
+    const assigns = this.actions.get(id)
+    if (!assigns || !this.parser || !this.notebook) return
+    const definers = this.graph.definers()
+    const edits: { defLine: LineId; latex: string }[] = []
+    for (const { target, rhs } of assigns) {
+      const defLine = definers.get(target)
+      if (!defLine) continue // no `target = …` line to reassign — skip (declared-only / unknown target)
+      const value = await this.evalScalar(rhs)
+      if (value === null) continue // non-scalar / errored RHS — skip in this slice
+      edits.push({ defLine, latex: `${target} = ${value}` })
+    }
+    if (edits.length === 0) return
+    for (const { defLine, latex } of edits) {
+      this.latexById.set(defLine, latex)
+      this.graph.set(defLine, latex, this.parser)
+      this.pendingChanged.add(defLine)
+    }
+    await this.flushRecompute(true) // one pass → one undo entry (unless coalescing under a ticker)
+  }
+
+  /** Evaluate a bare expression against the current scope and return its scalar text, or null if it doesn't reduce
+   *  to a single scalar (or errors). Reuses the normal bind→lower→evaluate pipeline via a synthetic Parsed. */
+  private async evalScalar(body: Expression): Promise<string | null> {
+    if (!this.notebook) return null
+    const parsed: Parsed = { stmt: { k: 'expr', body }, spans: new Map(), errors: [], latex: '' }
+    try {
+      const bound = bind(parsed, this.scope, this.notebook.catalog)
+      if (bound.errors.length > 0) return null
+      const lowered = lower(bound, this.scope)
+      if (lowered.wants !== 'value' || !lowered.expr) return null
+      const { rows } = evaluate(lowered.expr)
+      let first: Row | undefined
+      for await (const r of rows) { first = r; break }
+      const cols = first ? Object.values(first) : []
+      return cols[0] !== null && cols[0] !== undefined ? String(cols[0]) : null
+    } catch {
+      return null
+    }
+  }
+
+  // ── ticker: run every action line each tick; the whole run is ONE undo step ──────────────────────────────────
+  toggleTicker(): void {
+    if (this.tickerOn) this.stopTicker()
+    else this.startTicker()
+  }
+  private startTicker(): void {
+    if (this.tickerOn) return
+    this.tickerOn = true
+    this.coalescing = true // suppress per-tick record(); the pre-ticker state is already the history top
+    this.tickerTimer = setInterval(() => void this.tick(), 400)
+  }
+  private stopTicker(): void {
+    if (this.tickerTimer) { clearInterval(this.tickerTimer); this.tickerTimer = null }
+    this.tickerOn = false
+    this.coalescing = false
+    this.record() // collapse the whole run into a single undo step
+  }
+  private ticking = false
+  private async tick(): Promise<void> {
+    if (this.ticking) return // a slow evaluate must not overlap the next interval
+    this.ticking = true
+    try { for (const id of this.displayOrder) if (this.actions.has(id)) await this.runAction(id) }
+    finally { this.ticking = false }
   }
 
   private seedInitialLines(): void {
@@ -308,6 +417,8 @@ export class EnumeratioNotebook extends LitElement {
     // A line uses randomness if its parsed AST names a random op (random_element / random_sample / scramble). This
     // gates the reshuffle button; a CE-purity check would be the principled source once threaded through.
     this.usesRandom = [...this.lineAst.values()].some((a) => /random_element|random_sample|scramble/i.test(a))
+    this.hasActions = this.actions.size > 0
+    if (this.hasActions === false && this.tickerOn) this.stopTicker() // last action removed while ticking
     this.results = new Map(this.results)
     this.requestUpdate()
     this.emitResult()
@@ -326,6 +437,7 @@ export class EnumeratioNotebook extends LitElement {
   private async evalLine(id: LineId, models: Map<LineId, LineModel>): Promise<void> {
     const notebook = this.notebook!
     this.lineAst.delete(id) // fresh each pass; set once the line parses (below)
+    this.actions.delete(id) // ditto — re-detected below if this line is (still) an action
     // An empty / whitespace-only line is a blank, not an expression — never bind it (CE parses "" to the `Nothing`
     // symbol, which would otherwise surface as a spurious "unknown symbol Nothing").
     if ((this.latexById.get(id) ?? '').trim() === '') { this.setResult(id, {}); return }
@@ -335,6 +447,14 @@ export class EnumeratioNotebook extends LitElement {
     if (!model.parsed) { this.setResult(id, {}); return }
     if (model.parsed.errors.length > 0) { this.setResult(id, { error: model.parsed.errors[0].message }); return }
     this.lineAst.set(id, astFullForm(model.parsed))
+
+    // An action line (`p → expr`, or a tuple) isn't a value — cache its assignments and show a trigger, don't eval.
+    const assigns = this.actionOf(model.parsed)
+    if (assigns) {
+      this.actions.set(id, assigns)
+      this.setResult(id, { type: '↻ action', action: true })
+      return
+    }
 
     // A define re-binds its symbol from scratch: back to the declared type (no value) or gone — never a stale value.
     if (model.bindKind === 'define' && model.defines) this.resetBinding(model.defines)
@@ -443,6 +563,10 @@ export class EnumeratioNotebook extends LitElement {
     this.removeLine(ev.detail.lineId)
   }
 
+  private onLineRun = (ev: CustomEvent<{ lineId: LineId }>): void => {
+    void this.runAction(ev.detail.lineId)
+  }
+
   private onLineReorder = (ev: CustomEvent<{ sourceId: LineId; targetId: LineId; position?: 'above' | 'below' }>): void => {
     const { sourceId, targetId, position = 'above' } = ev.detail
     const from = this.displayOrder.indexOf(sourceId)
@@ -502,6 +626,7 @@ export class EnumeratioNotebook extends LitElement {
               @line-move=${this.onLineMove}
               @line-remove=${this.onLineRemove}
               @line-reorder=${this.onLineReorder}
+              @line-run=${this.onLineRun}
             ></enumeratio-expression-line>
           `,
         )}
@@ -514,6 +639,11 @@ export class EnumeratioNotebook extends LitElement {
                   title="Redo" aria-label="Redo">↻</button>
         </div>
         <div class="tools-right">
+          ${this.hasActions
+            ? html`<button class="tool ${this.tickerOn ? 'on' : ''}" @click=${() => this.toggleTicker()}
+                     title=${this.tickerOn ? 'Stop ticker' : 'Start ticker (run actions repeatedly)'}
+                     aria-label="Ticker">${this.tickerOn ? '⏸' : '▶'}</button>`
+            : ''}
           <button class="tool" @click=${() => this.appendBlankLine()}
                   title="Add line" aria-label="Add line">+</button>
           <button class="tool" ?disabled=${!this.usesRandom} @click=${() => void this.reshuffle()}
@@ -579,6 +709,11 @@ export class EnumeratioNotebook extends LitElement {
     .tool:disabled {
       opacity: 0.35;
       cursor: default;
+    }
+    .tool.on {
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
     .set {
       display: flex;
