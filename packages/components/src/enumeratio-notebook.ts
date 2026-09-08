@@ -73,6 +73,8 @@ export class EnumeratioNotebook extends LitElement {
   @state() private seed = (Math.random() * 2 ** 32) >>> 0
   /** Whether any line uses a random op — the reshuffle button is disabled otherwise (nothing to reroll). */
   @state() private usesRandom = false
+  /** Classifies a typed word for the field's display reformat (operator / entity / plain variable). Set on boot. */
+  private classify: (run: string) => { kind: 'operator' | 'entity'; name: string } | null = () => null
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -149,6 +151,14 @@ export class EnumeratioNotebook extends LitElement {
     this.bootError = null
     this.notebook = nb
     this.parser = makeParser(nb.names)
+    // Classify a typed word for the field's display reformat: a catalog FUNCTION (incl. generic primitives) reads
+    // as an operator, a COLLECTION as an entity, anything else as a plain variable. Both snake_case and PascalCase
+    // spellings are recognized (the parser accepts either).
+    const pascal = (id: string) => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
+    const entityMap = new Map<string, { kind: 'operator' | 'entity'; name: string }>()
+    for (const id of nb.names.functions) for (const s of [id, pascal(id)]) entityMap.set(s, { kind: 'operator', name: id })
+    for (const id of nb.names.collections) for (const s of [id, pascal(id)]) if (!entityMap.has(s)) entityMap.set(s, { kind: 'entity', name: id })
+    this.classify = (run) => entityMap.get(run) ?? null
     await reseedRandom(this.seed) // reproducible randomness from the first evaluation
     for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)
     for (const id of this.displayOrder) this.pendingChanged.add(id)
@@ -408,6 +418,7 @@ export class EnumeratioNotebook extends LitElement {
               .index=${i + 1}
               .latex=${this.latexById.get(id) ?? ''}
               .completer=${completer}
+              .classify=${this.classify}
               .state=${this.results.get(id) ?? {}}
               @line-input=${this.onLineInput}
               @line-commit=${this.onLineCommit}

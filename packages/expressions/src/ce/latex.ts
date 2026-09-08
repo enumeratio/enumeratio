@@ -158,6 +158,56 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
   return { text: out, toOriginal: (pos: number) => (pos < mapping.length ? mapping[pos] : (latex.length as number)) }
 }
 
+/** DISPLAY reformat (for the math field, run on a typing pause / blur): rewrite each BARE pure-letter run to the
+ *  spelling that shows what it IS — `classify` returns `'operator'` (→ `\operatorname{}`, upright), `'entity'`
+ *  (→ `\mathrm{}`, a matched collection/thing) or `null` (leave it bare/italic — a plain variable). Idempotent:
+ *  runs already inside `\operatorname{}`/`\mathrm{}`/`\text{}` are protected and left alone, so re-running never
+ *  double-wraps. Single letters and runs with digits/underscores are left untouched. */
+export function reformatIdentifiers(
+  latex: string,
+  classify: (run: string) => { kind: 'operator' | 'entity'; name: string } | null,
+): string {
+  let out = ''
+  let i = 0
+  let braceDepth = 0
+  const protect: number[] = []
+  while (i < latex.length) {
+    const c = latex[i]
+    if (c === '\\') {
+      let j = i + 1
+      while (j < latex.length && /[A-Za-z]/.test(latex[j])) j++
+      const cmd = latex.slice(i, j)
+      out += cmd
+      const name = cmd.slice(1)
+      if (name === 'operatorname' || name === 'mathrm' || name === 'text') {
+        let k = j
+        while (k < latex.length && /\s/.test(latex[k])) k++
+        if (latex[k] === '{') { out += latex.slice(j, k + 1); braceDepth++; protect.push(braceDepth); i = k + 1; continue }
+      }
+      i = j
+      continue
+    }
+    if (c === '{') { braceDepth++; out += c; i++; continue }
+    if (c === '}') { out += c; if (protect.length && protect[protect.length - 1] === braceDepth) protect.pop(); braceDepth--; i++; continue }
+    if (protect.length === 0 && /[A-Za-z]/.test(c)) {
+      let j = i
+      while (j < latex.length && /[A-Za-z]/.test(latex[j])) j++
+      const run = latex.slice(i, j)
+      const m = run.length >= 2 ? classify(run) : null
+      // Wrap the CANONICAL id (not the typed spelling) so the re-parse resolves it — `\operatorname{}` is a
+      // protected group the normalizer won't re-alias, so `Bell` must become `\operatorname{bell}`, not `{Bell}`.
+      out += m?.kind === 'operator' ? `\\operatorname{${escapeId(m.name)}}`
+        : m?.kind === 'entity' ? `\\mathrm{${escapeId(m.name)}}`
+        : run
+      i = j
+      continue
+    }
+    out += c
+    i++
+  }
+  return out
+}
+
 // ── preserveLatex tree -> plain MathJSON + spans + errors ──────────────────────────────────────────────────────
 // `preserveLatex: true` wraps every node (including leaves) as `{ latex, fn|sym|num|str|dict }` instead of a bare
 // array/string (spike item 3) — a different shape from plain MathJSON that has to be walked and stripped. The

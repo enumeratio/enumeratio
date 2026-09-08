@@ -17,7 +17,7 @@ export type {
 export { isSymbol, isNumber, symbolName, numberValue, head, args, mapExpr, freeSymbols, spanAt, pathOf, walk } from './ast.js'
 
 export type { CatalogNames, ExpressionParser } from './ce/latex.js'
-export { makeParser, catalogDictionary } from './ce/latex.js'
+export { makeParser, catalogDictionary, reformatIdentifiers } from './ce/latex.js'
 
 export { toLatex, toCalcText, toMathJsonString } from './format.js'
 

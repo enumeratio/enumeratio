@@ -35,6 +35,7 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String }) latex = ''
   @property({ type: Number }) index = 0
   @property({ attribute: false }) completer: Completer | null = null
+  @property({ attribute: false }) classify: ((run: string) => { kind: 'operator' | 'entity'; name: string } | null) | null = null
   @property({ attribute: false }) state: LineState = {}
 
   /** Gated display of `state.error` — see the debounce note above. */
@@ -132,6 +133,7 @@ export class EnumeratioExpressionLine extends LitElement {
             <enumeratio-math-input
               .latex=${this.latex}
               .completer=${this.completer}
+              .classify=${this.classify}
               @enumeratio-input=${this.onInput}
               @enumeratio-commit=${this.onCommit}
               @enumeratio-move=${this.onMove}

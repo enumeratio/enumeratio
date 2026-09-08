@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser } from '../src/ce/latex.js'
+import { makeParser, reformatIdentifiers } from '../src/ce/latex.js'
 import { toCalcText, toLatex, toMathJsonString } from '../src/format.js'
 import { freeSymbols, spanAt } from '../src/ast.js'
 import type { Expression } from '../src/ast.js'
@@ -104,6 +104,37 @@ describe('round-trip', () => {
 
   it('serialize(["next","x"]) round-trips through the \\operatorname{} spelling', () => {
     expect(toLatex(['next', 'x'] as Expression, parser)).toContain('\\operatorname{next}')
+  })
+})
+
+describe('reformatIdentifiers (display reformat)', () => {
+  // Mirrors the notebook's classify — keyed by the pure-letter spellings MathLive actually produces (snake_case
+  // with an underscore never arrives as one run, so a collection is recognized by its PascalCase spelling). It
+  // returns the CANONICAL snake id so the reformatted wrapper re-parses to the same symbol.
+  const classify = (run: string): { kind: 'operator' | 'entity'; name: string } | null =>
+    run === 'next' ? { kind: 'operator', name: 'next' }
+      : run === 'TriangularNumbers' ? { kind: 'entity', name: 'triangular_numbers' }
+        : null
+
+  it.each([
+    ['next', '\\operatorname{next}'], // known function → upright operator
+    ['TriangularNumbers', '\\mathrm{triangular\\_numbers}'], // known collection → \mathrm on the canonical id
+    ['xy', 'xy'], // unknown multi-letter run → left bare (a variable)
+    ['x', 'x'], // single letter → untouched
+  ])('%s → %s', (input, expected) => {
+    expect(reformatIdentifiers(input, classify)).toBe(expected)
+  })
+
+  it('is idempotent — already-wrapped runs are protected, so re-running never double-wraps', () => {
+    const once = reformatIdentifiers('TriangularNumbers', classify)
+    expect(reformatIdentifiers(once, classify)).toBe(once)
+  })
+
+  it('the reformatted spelling re-parses to the SAME symbol (the load-bearing correctness claim)', () => {
+    // A word and its reformatted spelling must bind to the identical MathJSON symbol.
+    expect(shape('next(x)')).toEqual(shape(reformatIdentifiers('next', classify) + '(x)'))
+    expect(shape('x \\in triangular_numbers'))
+      .toEqual(shape('x \\in ' + reformatIdentifiers('TriangularNumbers', classify)))
   })
 })
 
