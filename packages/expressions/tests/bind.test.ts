@@ -7,6 +7,7 @@ const COLLECTIONS: Record<string, CollectionInfo> = {
   triangular_numbers: { id: 'triangular_numbers', carrier: 'numeric', unbounded: true, params: [] },
   permutations: { id: 'permutations', carrier: 'permutation', unbounded: false, params: ['size'] },
   natural_numbers: { id: 'natural_numbers', carrier: 'natural_number', unbounded: true, params: [] },
+  integer_numbers: { id: 'integer_numbers', carrier: 'integer_number', unbounded: true, params: [] },
 }
 const FUNCTIONS: Record<string, FunctionInfo> = {
   binomial: { id: 'binomial', arity: 2 },
@@ -177,6 +178,14 @@ describe('bind: errors', () => {
   it('scalar |x| is absolute value (numeric)', () => {
     expect(bind(parser.parse('|-5|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bind(parser.parse('|3-10|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
+  })
+
+  it('a CE domain symbol declares over the mapped collection (x ∈ Integers → integer_numbers)', () => {
+    const scope: Scope = new Map()
+    const d = bind(parser.parse('x \\in \\operatorname{Integers}'), scope, catalog)
+    expect(d.stmt.k).toBe('declare')
+    expect(d.errors).toEqual([])
+    expect(d.type).toMatchObject({ k: 'elem', coll: 'integer_numbers' })
   })
 
   it('an unknown head with no binding reports "unknown operator"', () => {

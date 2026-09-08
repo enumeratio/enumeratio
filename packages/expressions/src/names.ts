@@ -86,6 +86,14 @@ export const BUILTIN_SYMBOLS: Record<string, BuiltinSymbolBinding> = {
   natural_numbers: { k: 'collection', coll: 'natural_numbers' },
   integer_numbers: { k: 'collection', coll: 'integer_numbers' },
   rational_numbers: { k: 'collection', coll: 'rational_numbers' },
+  // CE's own DOMAIN symbols (what `\mathbb{…}` canonicalizes to, and their word forms) mapped onto our number
+  // collections, so `x \in \mathbb{Z}` and `x \in Integers` both resolve. `k:'collection'` still passes through
+  // `catalog.collection(coll)`, so an absent collection degrades to a typed error rather than a bad binding.
+  Integers: { k: 'collection', coll: 'integer_numbers' },
+  NonNegativeIntegers: { k: 'collection', coll: 'natural_numbers' },
+  RationalNumbers: { k: 'collection', coll: 'rational_numbers' },
+  RealNumbers: { k: 'unsupported', reason: '"RealNumbers" (ℝ) has no catalog collection yet' },
+  ComplexNumbers: { k: 'unsupported', reason: '"ComplexNumbers" (ℂ) has no catalog collection yet' },
   ImaginaryUnit: { k: 'unsupported', reason: '"ImaginaryUnit" has no catalog binding yet — gaussian_integer has no unit constant registered' },
 }
 
