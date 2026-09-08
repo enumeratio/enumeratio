@@ -48,14 +48,14 @@ A function defines with no value of its own (`f: (n) ↦` in the meta line); cal
 
 ## Random draws & shuffles
 
-`RandomElement`/`RandomSample` draw through the library's O(1) `at`; `Shuffle` permutes a list. The **reshuffle**
+`RandomElement`/`RandomSample` draw through the library's O(1) `at`; `Scramble` permutes a list. The **reshuffle**
 button (bottom-right) rerolls them all; it is disabled when a notebook has no randomness.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
   {"id":"d1","latex":"RandomElement(Permutations(5))"},
   {"id":"d2","latex":"RandomSample(Subsets(4), 3)"},
-  {"id":"d3","latex":"Shuffle(\\left\\lbrack1,2,3,4,5\\right\\rbrack)"}
+  {"id":"d3","latex":"Scramble(\\left\\lbrack1,2,3,4,5\\right\\rbrack)"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 

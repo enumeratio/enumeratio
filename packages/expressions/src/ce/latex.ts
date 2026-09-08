@@ -425,11 +425,10 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
     const p = pascalCase(id)
     if (p !== id && !catalogIds.has(p) && !aliases.has(p)) aliases.set(p, id)
   }
-  // Friendly spellings for ids CE's parser would otherwise canonicalize to a reserved builtin: `shuffle` /
-  // `Shuffle` -> our `scramble` (CE reserves `Shuffle`, mapping it to an unimplemented `RandomShuffle`).
-  for (const [word, id] of [['shuffle', 'scramble'], ['Shuffle', 'scramble']] as const) {
-    if (catalogIds.has(id) && !catalogIds.has(word)) aliases.set(word, id)
-  }
+  // NOTE: our shuffle op is `scramble` everywhere (name chosen so it doesn't collide with CE's reserved, and
+  // unimplemented, `Shuffle`/`RandomShuffle`). `Shuffle` is deliberately NOT aliased — it would only half-work
+  // (a bare run resolved but a `\mathrm{Shuffle}` did not, since the alias is normalizer-only), which read as
+  // "Shuffle unrecognized". Scramble is the one spelling.
   // Bare keywords that must reach the parser as `\operatorname{}` to be recognized — `for` is CE's list-
   // comprehension keyword (`[i^2 for i=[1,2,3]]`). The normalizer only ever matches a WHOLE letter-run, so this
   // rewrites a standalone `for`, never the `for` inside a word like `before`.
