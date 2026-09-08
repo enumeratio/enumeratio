@@ -231,7 +231,9 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
         // every one of which is "small enough" to come back this way).
         const v = nv as { im: number; imRational: [number | bigint, number | bigint]; imRadical: number; radical: number; rational: [number | bigint, number | bigint] }
         const big = (x: number | bigint): bigint => (typeof x === 'bigint' ? x : BigInt(x))
-        if (v.im !== 0 || v.imRadical !== 1 || big(v.imRational?.[0] ?? 0) !== 0n || big(v.imRational?.[1] ?? 1) !== 1n || v.radical !== 1) return bad()
+        // A non-trivial RADICAL (√2 is rational 1 × radical 2) or imaginary part isn't a plain rational — it's an
+        // exact algebraic irrational. Prefer its symbolic LaTeX (√2) before any numeric fallback.
+        if (v.im !== 0 || v.imRadical !== 1 || big(v.imRational?.[0] ?? 0) !== 0n || big(v.imRational?.[1] ?? 1) !== 1n || v.radical !== 1) return symbolicTex() ?? bad()
         const [num, den] = [big(v.rational[0]), big(v.rational[1])]
         // Notebook mode wants the exact reduced rational ∈ ℚ (CE has already reduced it); pg-differential mode
         // declines it, to stay bit-identical to pg's int/numeric division (see #365 — pg is the one to fix).
