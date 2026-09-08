@@ -1,6 +1,6 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
-import { evaluate, type Row } from '@enumeratio/client'
+import { evaluate, reseedRandom, type Row } from '@enumeratio/client'
 import {
   bind, complete, lower, makeParser, LineGraph,
   type Bound, type Completion, type ExpressionParser, type LineId, type LineModel, type LowerResult, type Scope, type Type,
@@ -67,6 +67,10 @@ export class EnumeratioNotebook extends LitElement {
   private pendingChanged = new Set<LineId>()
   private debounceTimer: ReturnType<typeof setTimeout> | null = null
   private focusAfterUpdate: LineId | null = null
+  /** The seed behind every random op (RandomElement/Shuffle/RandomSample). Fixed per notebook so results are
+   *  reproducible; the reshuffle button rolls a new one. (Global to the compute-engine library, so it is the whole
+   *  page's randomness — one notebook's reshuffle reseeds all.) */
+  @state() private seed = (Math.random() * 2 ** 32) >>> 0
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -143,7 +147,16 @@ export class EnumeratioNotebook extends LitElement {
     this.bootError = null
     this.notebook = nb
     this.parser = makeParser(nb.names)
+    await reseedRandom(this.seed) // reproducible randomness from the first evaluation
     for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)
+    for (const id of this.displayOrder) this.pendingChanged.add(id)
+    await this.flushRecompute(true)
+  }
+
+  /** Roll a new random seed and recompute — every `RandomElement`/`Shuffle`/`RandomSample` line redraws. */
+  async reshuffle(): Promise<void> {
+    this.seed = (Math.random() * 2 ** 32) >>> 0
+    await reseedRandom(this.seed)
     for (const id of this.displayOrder) this.pendingChanged.add(id)
     await this.flushRecompute(true)
   }
@@ -199,6 +212,9 @@ export class EnumeratioNotebook extends LitElement {
     const dirty = new Set<LineId>()
     for (const id of changed) for (const d of this.graph.dirtyAfter(id)) dirty.add(d)
     const models = new Map(this.graph.lines().map((m) => [m.id, m]))
+    // Reset the shared RNG to the notebook's seed before each pass, so random cells are STABLE across recomputes
+    // (editing an unrelated line doesn't reroll them) and reproducible for a given seed — Desmos's model.
+    await reseedRandom(this.seed)
     for (const id of this.graph.order()) {
       if (!dirty.has(id)) continue
       await this.evalLine(id, models)
@@ -396,6 +412,11 @@ export class EnumeratioNotebook extends LitElement {
           `,
         )}
       </div>
+      <div class="toolbar">
+        <button class="reshuffle" @click=${() => void this.reshuffle()} title="reshuffle — new random seed for every RandomElement / Shuffle / RandomSample">
+          ⤮ reshuffle
+        </button>
+      </div>
     `
   }
 
@@ -414,6 +435,26 @@ export class EnumeratioNotebook extends LitElement {
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 8px;
       overflow: hidden;
+    }
+    .toolbar {
+      display: flex;
+      justify-content: flex-end;
+      padding: 0.3rem 0.5rem;
+      border-top: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+    }
+    .reshuffle {
+      font: inherit;
+      font-size: 0.82em;
+      cursor: pointer;
+      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
+      border-radius: 6px;
+      background: transparent;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      padding: 0.2rem 0.6rem;
+    }
+    .reshuffle:hover {
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
     }
     .set {
       display: flex;

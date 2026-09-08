@@ -20,6 +20,35 @@ import { allEntries, adaptEntry, asIntList, type FamilySpec } from "./packs/inde
 const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json));
 const engineOf = (e: any): ComputeEngine => e.engine;
 
+// ── seeded randomness ─────────────────────────────────────────────────────────────────────────────────────────
+// A module-level RNG behind every random operator (RandomElement, Shuffle, RandomSample), so randomness is
+// reproducible and controllable from OUTSIDE the library — a host (the notebook's reshuffle button) calls
+// `seedRandom(n)` to pin a deterministic stream, or `seedRandom()` to go back to Math.random. One module, one
+// stream: reseeding affects every random op on every engine that loaded this library.
+let rng: () => number = Math.random;
+export function seedRandom(seed?: number): void {
+  if (seed === undefined) { rng = Math.random; return; }
+  let s = seed >>> 0;
+  rng = () => { // mulberry32
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+/** A uniform integer in [0, n). */
+const randInt = (n: number): number => Math.floor(rng() * n);
+
+/** `n` ranks drawn from [0, N): distinct (a random n-subset) while n ≤ N, else with replacement. Rejection-samples
+ *  a Set so it never materializes N — fine for the common n ≪ N. */
+function pickRanks(N: number, n: number): number[] {
+  if (n <= 0 || N <= 0) return [];
+  if (n >= N) return Array.from({ length: n }, () => randInt(N));
+  const set = new Set<number>();
+  while (set.size < n) set.add(randInt(N));
+  return [...set];
+}
+
 // A scalar integer-sequence operator, Listable by default: `broadcastable: true` is CE's mechanism for
 // "threads element-wise over a List" (Wolfram's Listable — a function threads unless declared NonThreadable),
 // so the evaluate handler only ever sees scalars and CE lifts it over collection args.
@@ -306,7 +335,30 @@ export const enumeratioLibrary: LibraryDefinition = {
         const c: any = ops[0];
         const N = c.count;
         if (N == null || N <= 0) return undefined;
-        return c.at(Math.floor(Math.random() * N) + 1) ?? undefined;
+        return c.at(randInt(N) + 1) ?? undefined;
+      },
+    },
+
+    // Shuffle(list) — a uniform random permutation of a List's items (Fisher–Yates on the seeded rng).
+    Shuffle: {
+      signature: "(collection) -> collection",
+      evaluate: (ops: ReadonlyArray<Expression>) => {
+        const src: any = ops[0];
+        const items = [...((src.ops as Expression[]) ?? [])];
+        for (let i = items.length - 1; i > 0; i--) { const j = randInt(i + 1); [items[i], items[j]] = [items[j], items[i]]; }
+        return engineOf(ops[0]).box(["List", ...items]);
+      },
+    },
+
+    // RandomSample(collection, n) — n random elements: DISTINCT while n ≤ |collection| (a random n-subset by
+    // rank), with replacement once n exceeds the size. O(n) at any collection size (never materializes it).
+    RandomSample: {
+      signature: "(collection, integer) -> collection",
+      evaluate: (ops: ReadonlyArray<Expression>) => {
+        const c: any = ops[0];
+        const N = c.count;
+        if (N == null || N < 0) return undefined;
+        return engineOf(ops[0]).box(["List", ...pickRanks(N, intOf(ops[1])).map((r) => c.at(r + 1))]);
       },
     },
 

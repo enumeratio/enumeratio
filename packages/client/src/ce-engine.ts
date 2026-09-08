@@ -73,6 +73,14 @@ export async function ceInstance(): Promise<CEInstance> {
   return ceP
 }
 
+/** Seed (or reset) the compute-engine library's shared RNG behind RandomElement/Shuffle/RandomSample, so a
+ *  notebook can make its randomness reproducible and reshuffle it on demand. `undefined` restores Math.random.
+ *  Lazily imports the same library module the ce instance uses, so the seed takes effect on every random op. */
+export async function reseedRandom(seed?: number): Promise<void> {
+  const { seedRandom } = await import('@enumeratio/compute-engine')
+  seedRandom(seed)
+}
+
 /** A synthetic ImplRow for the InexactResult constructor — ce has no base_function_impl rows of its own (see
  *  `extend()` below), so there is nothing real to cite; this exists purely to carry a label through the same
  *  soft-decline type ts-engine's router already knows to catch. */
