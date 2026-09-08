@@ -12,6 +12,8 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { allEntries, adaptEntry, type NestedTree } from "../../../packages/compute-engine/src/packs/index.ts";
 import { sharedCore } from "@enumeratio/data/node";
+import { COLL_HEADS } from "../../../packages/client/src/ce-enum-engine.ts";
+import { pascalCase } from "../../../packages/notatio/src/latex.ts";
 import { NODES } from "./nodes.ts";
 import { renderPage, type NodeDoc, type ResolvedNode, type XRef } from "./render.ts";
 
@@ -84,6 +86,19 @@ const kebab = (head: string): string =>
     .replace(/_/g, "-")
     .toLowerCase();
 
+/** A live-notebook seed synthesized from the catalog for a collection the pure-CE notebook can ENUMERATE — i.e.
+ *  one with a compute-engine library twin (`COLL_HEADS`, the single source of that fact). Uses the collection's
+ *  PascalCase entity name (what the notebook resolves — `permutations` → `Permutations`, the primary entity; a
+ *  distinct `SymmetricGroup` alt-sort would be its own node) applied to the page's example params:
+ *  `[ Name(params), |Name(params)|, Name(params)[1] ]` — the entity, its cardinality, and its first element.
+ *  Only when the node didn't hand-author its own seed. Not enumerable / not a collection → no live notebook. */
+function defaultNotebookSeed(n: NodeDoc): string[] | undefined {
+  if (n.kind !== "collection" || !n.catalogId || !n.examples) return undefined;
+  if (!(n.catalogId in COLL_HEADS)) return undefined;
+  const call = `${pascalCase(n.catalogId)}(${n.examples.params.join(", ")})`;
+  return [call, `\\left|${call}\\right|`, `${call}[1]`];
+}
+
 function resolveNode(n: NodeDoc, xrefsBySubject: Map<string, XRef[]>): ResolvedNode {
   const resolve =
     n.kind === "collection" && n.examples ? makeResolver(n.head, n.examples.params) : identity;
@@ -108,7 +123,7 @@ function resolveNode(n: NodeDoc, xrefsBySubject: Map<string, XRef[]>): ResolvedN
     // notebook seeds pass through VERBATIM — they're live-eval inputs, and the {…} placeholder delimiter
     // would collide with LaTeX braces (\operatorname{rank} etc.). The notebook computes their values live.
     examples: n.examples
-      ? { ...n.examples, narrative: n.examples.narrative.map(R), notebook: n.examples.notebook }
+      ? { ...n.examples, narrative: n.examples.narrative.map(R), notebook: n.examples.notebook ?? defaultNotebookSeed(n) }
       : undefined,
     examplesRaw: n.examplesRaw?.map(R),
     seeAlsoResolved,

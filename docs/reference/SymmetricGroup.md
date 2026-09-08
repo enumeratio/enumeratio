@@ -29,6 +29,12 @@ The lexicographically-first permutation of $[4]$ (1-based position 1) is $[1, 2,
 
 The 6 words of $[3]$ in lex order are $[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]$, so $[2,3,1]$ sits at the 4th position: $\operatorname{Rank}(\operatorname{SymmetricGroup}(3),\ [2,3,1]) = 4$ — `Rank` is 1-based; the generic [`rank`](/reference/rank) reports the same position 0-based (`3`).
 
+Try it live — edit any line and it re-evaluates (nothing here is a screenshot):
+
+<ClientOnly>
+  <enumeratio-notebook value='{"lines":[{"latex":"Permutations(4)"},{"latex":"\\left|Permutations(4)\\right|"},{"latex":"Permutations(4)[1]"}]}'></enumeratio-notebook>
+</ClientOnly>
+
 ## See also
 
 [`KPermutations`](/reference/KPermutations) · [`SignedPermutations`](/reference/SignedPermutations) · [`ColoredPermutations`](/reference/ColoredPermutations) · [`Derangements`](/reference/Derangements) · [`Involutions`](/reference/Involutions) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`random_element`](/reference/random-element) · [`cardinality`](/reference/cardinality)
