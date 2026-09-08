@@ -208,12 +208,18 @@ export class EnumeratioNotebook extends LitElement {
     this.emitResult()
   }
 
+  /** The parsed AST (MathJSON, pretty JSON) per line, for the line's opt-in right-click inspector. Merged into
+   *  every result so the line always has it without threading it through each setResult call. */
+  private lineAst = new Map<LineId, string>()
+
   private setResult(id: LineId, patch: LineResult): void {
-    this.results.set(id, patch)
+    const ast = this.lineAst.get(id)
+    this.results.set(id, ast ? { ...patch, ast } : patch)
   }
 
   private async evalLine(id: LineId, models: Map<LineId, LineModel>): Promise<void> {
     const notebook = this.notebook!
+    this.lineAst.delete(id) // fresh each pass; set once the line parses (below)
     // An empty / whitespace-only line is a blank, not an expression — never bind it (CE parses "" to the `Nothing`
     // symbol, which would otherwise surface as a spurious "unknown symbol Nothing").
     if ((this.latexById.get(id) ?? '').trim() === '') { this.setResult(id, {}); return }
@@ -222,6 +228,7 @@ export class EnumeratioNotebook extends LitElement {
     if (model.errors.length > 0) { this.setResult(id, { error: model.errors[0] }); return }
     if (!model.parsed) { this.setResult(id, {}); return }
     if (model.parsed.errors.length > 0) { this.setResult(id, { error: model.parsed.errors[0].message }); return }
+    this.lineAst.set(id, astJson(model.parsed))
 
     // A define re-binds its symbol from scratch: back to the declared type (no value) or gone — never a stale value.
     if (model.bindKind === 'define' && model.defines) this.resetBinding(model.defines)
@@ -285,7 +292,7 @@ export class EnumeratioNotebook extends LitElement {
         if (name && elemType) {
           this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'elem', coll: elemType.coll, handle: elemType.handle, rank: Number(rankText) } })
         }
-        this.setResult(id, { type: typeBadge(bound.type), value: String(valueText), engine: p.engine, sql: p.sql })
+        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), value: String(valueText), engine: p.engine, sql: p.sql })
         return
       }
 
@@ -294,7 +301,7 @@ export class EnumeratioNotebook extends LitElement {
       const name = bound.stmt.k !== 'expr' ? bound.stmt.name : undefined
       if (name) this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'scalar', text, pg: effectivePg(bound.type) ?? 'numeric' } })
 
-      this.setResult(id, { type: typeBadge(bound.type), value: text, engine: p.engine, sql: p.sql })
+      this.setResult(id, { type: typeBadge(bound.type, text), value: text, engine: p.engine, sql: p.sql })
     } catch (e) {
       if (stale()) return
       this.setResult(id, { type: typeBadge(bound.type), error: message(e) })
@@ -420,21 +427,54 @@ export class EnumeratioNotebook extends LitElement {
   `
 }
 
-function typeBadge(t: Type): string {
+/** The type shown under a line's value, in notation. Scalars read as `∈ ℕ`/`∈ ℤ`/`∈ ℚ`/`∈ ℝ`/`∈ 𝔹`; an element of
+ *  a collection as `∈ <coll>`; a function as `f: (…) ↦`. When the bound scalar type is only the generic pg
+ *  `numeric` (as counting functions come back), the concrete set is REFINED from the value itself — a plain
+ *  integer is ℕ (or ℤ if negative), a `p/q` is ℚ, anything else with a fractional part is ℝ — so a Bell number no
+ *  longer mislabels itself "numeric". */
+function typeBadge(t: Type, value?: string): string {
   if (t.k === 'elem') return `∈ ${t.coll}`
   if (t.k === 'fn') return `f: (${t.params.join(', ')}) ↦`
   if (t.k === 'handle') return t.coll
   if (t.k === 'scalar') {
-    if (t.pg === 'natural_number') return 'ℕ'
-    if (t.pg === 'integer_number') return 'ℤ'
-    if (t.pg === 'boolean') return '𝔹'
-    return t.pg
+    if (t.pg === 'boolean') return '∈ 𝔹'
+    if (t.pg === 'natural_number') return '∈ ℕ'
+    if (t.pg === 'integer_number') return '∈ ℤ'
+    return `∈ ${scalarSet(t.pg, value)}`
   }
   return ''
 }
 
+/** Notation for a scalar carrier, refined by the evaluated value when the pg type is the generic `numeric`. */
+function scalarSet(pg: string, value?: string): string {
+  if (pg === 'rational_number') return 'ℚ'
+  const v = value?.trim()
+  if (v) {
+    if (v.startsWith('[')) return 'list' // a list/tuple element (e.g. a random permutation) — not a scalar set
+    if (/^-?\d+$/.test(v)) return v.startsWith('-') ? 'ℤ' : 'ℕ'
+    if (/^-?\d+\s*\/\s*\d+$/.test(v)) return 'ℚ'
+    if (/^-?\d*\.\d+$/.test(v)) return 'ℝ'
+  }
+  return pg === 'numeric' ? 'ℝ' : pg
+}
+
 function message(e: unknown): string {
   return e instanceof Error ? e.message : String(e)
+}
+
+/** The parsed statement (the MathJSON-derived AST the notebook binds) as pretty JSON, for the line inspector.
+ *  Circular-safe and length-capped so a pathological tree can't wedge the panel. */
+function astJson(parsed: unknown): string {
+  const seen = new WeakSet<object>()
+  try {
+    const s = JSON.stringify(parsed, (_k, v) => {
+      if (typeof v === 'object' && v !== null) { if (seen.has(v)) return '[circular]'; seen.add(v) }
+      return v
+    }, 2)
+    return s.length > 8000 ? s.slice(0, 8000) + '\n… (truncated)' : s
+  } catch {
+    return String(parsed)
+  }
 }
 
 /** @enumeratio/expressions' types.ts defines this (and bind.ts/lower.ts both use it internally) but does not
