@@ -19,6 +19,9 @@ export type LineState = {
   /** Rendered type, in notation, e.g. "∈ ℕ", "∈ ℚ", "∈ 𝔖₅", "f: (n) ↦" — the set derives this from the bound
    *  Type and the evaluated value; empty/undefined while the line hasn't bound to anything. */
   type?: string
+  /** When the type refers to a catalog entity (a collection), a link to its enumeratio.dev entry — the type badge
+   *  becomes a deep link. */
+  typeHref?: string
   value?: string
   error?: string
   /** The parsed AST (MathJSON, pretty JSON) for the opt-in right-click inspector. */
@@ -178,7 +181,12 @@ export class EnumeratioExpressionLine extends LitElement {
               @enumeratio-commit=${this.onCommit}
               @enumeratio-move=${this.onMove}
             ></enumeratio-math-input>
-            ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
+            ${!errVisible && s.type
+              ? s.typeHref
+                ? html`<a class="type link" href=${s.typeHref} target="_blank" rel="noopener"
+                        title="open in the atlas">${s.type}</a>`
+                : html`<span class="type">${s.type}</span>`
+              : ''}
           </div>
           <div class="value">
             ${s.busy ? html`<span class="hint">…</span>`
@@ -299,6 +307,14 @@ export class EnumeratioExpressionLine extends LitElement {
       border-radius: 4px;
       background: color-mix(in srgb, var(--enumeratio-surface, var(--p-content-background, canvas)) 78%, transparent);
     }
+    /* A type that links to its atlas entry is clickable (the plain chip is pointer-transparent). */
+    .type.link {
+      pointer-events: auto;
+      cursor: pointer;
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      text-decoration: none;
+    }
+    .type.link:hover { text-decoration: underline; }
     /* Value on its own row below the field, right-aligned and free to use the full width. */
     .value {
       margin-top: 0.25rem;

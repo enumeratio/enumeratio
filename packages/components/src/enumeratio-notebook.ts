@@ -36,6 +36,11 @@ let nextIdNum = 0
 /** How many collection-preview elements to show, and to add per "pull more" click. */
 const PREVIEW_STEP = 5
 
+/** Deep link to a collection's entry in the atlas (the explorer route on enumeratio.dev / the docs site). */
+const collHref = (coll: string): string => `/explore/collection/${encodeURIComponent(coll)}`
+/** The atlas link for a type that refers to a collection — a collection handle or an element of one. */
+const hrefOfType = (t: Type): string | undefined => (t.k === 'elem' || t.k === 'handle' ? collHref(t.coll) : undefined)
+
 @customElement('enumeratio-notebook')
 export class EnumeratioNotebook extends LitElement {
   @property({ type: String, attribute: 'storage-key' }) storageKey = ''
@@ -365,12 +370,12 @@ export class EnumeratioNotebook extends LitElement {
   /** Preview a bare collection as `{e₀, e₁, …, e_{k-1}, …}` — the first PREVIEW_COUNT elements by rank, with a
    *  trailing `…` when the cardinality (or the fact we stopped early) says there are more. Uses the handle's own
    *  cardinality + unrank primitives (ce-enum answers both), so it never materializes the collection. */
-  private async previewCollection(id: LineId, handle: HandleExpr, typeBadgeText: string): Promise<void> {
+  private async previewCollection(id: LineId, handle: HandleExpr, typeBadgeText: string, href?: string): Promise<void> {
     const count = this.previewCounts.get(id) ?? PREVIEW_STEP
     this.controllers.get(id)?.abort()
     const controller = new AbortController()
     this.controllers.set(id, controller)
-    this.setResult(id, { type: typeBadgeText, busy: true })
+    this.setResult(id, { type: typeBadgeText, typeHref: href, busy: true })
     const stale = () => this.controllers.get(id) !== controller
     const handleSel: SelectExpr = { kind: 'handle', handle }
     const cell = (e: SelectExpr): Expr => ({ select: [e] })
@@ -388,7 +393,7 @@ export class EnumeratioNotebook extends LitElement {
       elems.push(e)
     }
     const more = card === null ? elems.length >= count : card > elems.length
-    this.setResult(id, { type: typeBadgeText, value: `{${elems.join(', ')}}`, more })
+    this.setResult(id, { type: typeBadgeText, typeHref: href, value: `{${elems.join(', ')}}`, more })
   }
 
   /** Pull the next batch of a collection preview: bump this line's element count and re-preview it. */
@@ -545,7 +550,7 @@ export class EnumeratioNotebook extends LitElement {
     // A bare COLLECTION expression (`Permutations(5)`) has no scalar value — instead PREVIEW it: the first few
     // elements + a `…` when there are more, so the collection reads as itself.
     if (bound.stmt.k === 'expr' && bound.type.k === 'handle') {
-      await this.previewCollection(id, bound.type.handle, typeBadge(bound.type))
+      await this.previewCollection(id, bound.type.handle, typeBadge(bound.type), collHref(bound.type.coll))
       return
     }
 
@@ -562,7 +567,7 @@ export class EnumeratioNotebook extends LitElement {
         this.declared.set(bound.stmt.name, bound.type)
         this.scope.set(bound.stmt.name, { k: 'var', type: bound.type })
       }
-      this.setResult(id, { type: typeBadge(bound.type) })
+      this.setResult(id, { type: typeBadge(bound.type), typeHref: hrefOfType(bound.type) })
       return
     }
 
@@ -593,7 +598,7 @@ export class EnumeratioNotebook extends LitElement {
         if (name && elemType) {
           this.scope.set(name, { k: 'var', type: bound.type, value: { k: 'elem', coll: elemType.coll, handle: elemType.handle, rank: Number(rankText) } })
         }
-        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), value: String(valueText), engine: p.engine, sql: p.sql })
+        this.setResult(id, { type: typeBadge(bound.type, String(valueText)), typeHref: hrefOfType(bound.type), value: String(valueText), engine: p.engine, sql: p.sql })
         return
       }
 
