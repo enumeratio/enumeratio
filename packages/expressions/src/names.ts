@@ -11,7 +11,7 @@
 // Heads verified empirically against the installed compute-engine (0.125.0) — see the probing note by each
 // non-obvious one; a CE canonical name is not always what you'd guess (`\gcd` → head `"GCD"`, not `"Gcd"`).
 
-export type OperatorBinding = { op: string } | { fn: string } | { special: string }
+export type OperatorBinding = { op: string } | { fn: string } | { special: string } | { ce: string }
 
 export const OPERATORS: Record<string, OperatorBinding> = {
   // ── base_operation (algebra.sql) — arithmetic, order, lattice ────────────────────────────────────────────────
@@ -37,6 +37,18 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   GCD: { fn: 'gcd' },   // \gcd(4,6) parses to head "GCD" (both letters caps), NOT "Gcd" — checked live
   LCM: { fn: 'lcm' },   // same shape as GCD — checked live, head is "LCM"
 
+  // ── CE-native math (evaluated by compute-engine, no curated pg twin). `{ce}` = type numeric, evaluate via CE,
+  // ts/pg decline. Rendered as a NUMERIC approximation for now (forced `N`); exact-symbolic display is the
+  // follow-up. All heads confirmed against CE 0.125's evaluator. `Abs` is intentionally omitted — `|x|` is
+  // handled separately so `|C|` can mean cardinality. `Mod` here is `\bmod`/`\operatorname{mod}` → head "Mod". ──
+  Max: { ce: 'Max' }, Min: { ce: 'Min' },
+  Floor: { ce: 'Floor' }, Ceil: { ce: 'Ceil' }, Round: { ce: 'Round' },
+  Mod: { ce: 'Mod' },
+  Sqrt: { ce: 'Sqrt' }, Root: { ce: 'Root' },
+  Exp: { ce: 'Exp' }, Ln: { ce: 'Ln' }, Log: { ce: 'Log' },
+  Sin: { ce: 'Sin' }, Cos: { ce: 'Cos' }, Tan: { ce: 'Tan' },
+  Gamma: { ce: 'Gamma' }, Zeta: { ce: 'Zeta' },
+
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership
   At: { special: 'element_at' },        // `L[i]` — index into a handle or array
@@ -52,7 +64,7 @@ export const OPERATORS: Record<string, OperatorBinding> = {
  *  identity, that's a distinct engine-level decision, not a naming-table one.)
  *  Sqrt, Root, Floor, Ceil, Abs, Mod, Min, Max
  */
-export const UNMAPPED_HEADS_NO_CURATED_ID = ['Sqrt', 'Root', 'Floor', 'Ceil', 'Abs', 'Mod', 'Min', 'Max'] as const
+export const UNMAPPED_HEADS_NO_CURATED_ID = ['Abs'] as const // the rest now route to CE via `{ce}` (see OPERATORS)
 
 // ── builtin symbols: bare CE symbols that denote a catalog SET rather than a scope variable ─────────────────────
 export type BuiltinSymbolBinding =

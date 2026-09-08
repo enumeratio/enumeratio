@@ -806,6 +806,8 @@ export class EnumeratioNotebook extends LitElement {
       </div>
       <div class="toolbar">
         <div class="tools-left">
+          <button class="tool" @click=${() => this.appendBlankLine()}
+                  title="Add line" aria-label="Add line">+</button>
           <button class="tool" ?disabled=${!this.canUndo} @click=${() => void this.undo()}
                   title="Undo" aria-label="Undo">↺</button>
           <button class="tool" ?disabled=${!this.canRedo} @click=${() => void this.redo()}
@@ -815,8 +817,6 @@ export class EnumeratioNotebook extends LitElement {
                      title=${this.tickerOn ? 'Stop ticker' : 'Start ticker (run actions repeatedly)'}
                      aria-label="Ticker">${this.tickerOn ? '⏸' : '▶'}</button>`
             : ''}
-          <button class="tool" @click=${() => this.appendBlankLine()}
-                  title="Add line" aria-label="Add line">+</button>
           <button class="tool" ?disabled=${!this.usesRandom} @click=${() => void this.reshuffle()}
                   title="Reshuffle" aria-label="Reshuffle">⤮</button>
         </div>

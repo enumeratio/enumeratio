@@ -48,7 +48,16 @@ export const CE_OPERATORS: Record<string, string> = {
   // base_operation ids — the same arithmetic/comparison vocabulary ts-engine's nativeOp covers, over int/numeric
   add: 'Add', sub: 'Subtract', mul: 'Multiply', div: 'Divide', neg: 'Negate', pow: 'Power',
   le: 'LessEqual', lt: 'Less', ge: 'GreaterEqual', gt: 'Greater', eq: 'Equal', ne: 'NotEqual',
+  // CE-native math (names.ts `{ce}` bindings) — the head IS the CE operator, so these map to themselves. The
+  // notebook renders them as a numeric approximation for now (see `numericFallback`).
+  Max: 'Max', Min: 'Min', Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Mod: 'Mod',
+  Sqrt: 'Sqrt', Root: 'Root', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
+  Sin: 'Sin', Cos: 'Cos', Tan: 'Tan', Gamma: 'Gamma', Zeta: 'Zeta',
 }
+
+/** CE-native op heads (names.ts `{ce}` bindings): claimed by ce with no curated base_function row — CE evaluates
+ *  them. Kept in sync with the `{ce}` entries in OPERATORS. */
+const CE_NATIVE = new Set(['Max', 'Min', 'Floor', 'Ceil', 'Round', 'Mod', 'Sqrt', 'Root', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Gamma', 'Zeta'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>
@@ -89,8 +98,13 @@ const ceImplRow = (label: string): ImplRow => ({
   representation: 'text', cost: null, note: null,
 })
 
-export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean } = {}): Engine {
+export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean } = {}): Engine {
   const exactRationals = factoryOpts.exactRationals ?? false
+  // numericFallback: instead of declining a result that isn't an exact integer/rational (an irrational or symbolic
+  // CE value like √2 or ⅙π²), render its floating-point approximation (`N`). The notebook sets this so CE-native
+  // math (Sqrt/Zeta/Gamma/trig/…) shows SOMETHING; exact-symbolic display is the follow-up. Off elsewhere, so the
+  // pg-differential path is unchanged.
+  const numericFallback = factoryOpts.numericFallback ?? false
   /** the first reason this engine declines `expr`, or undefined — the same three-question shape as ts-engine's
    *  `reject`, minus the per-node RETURN-kind bookkeeping ts-engine needs (ce's whole vocabulary only ever
    *  produces an int/numeric or a boolean, decided once at print time, never threaded back through can()). */
@@ -129,6 +143,9 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean 
         const fn = String(e.fn)
         const name = CE_OPERATORS[fn]
         if (!name) return `ce has no operator mapped for "${fn}"`
+        // A CE-NATIVE op (Sqrt/Zeta/Max/…, names.ts `{ce}` bindings) has no curated base_function row — CE itself
+        // is the implementation — so accept it directly, only recursing into its arguments.
+        if (CE_NATIVE.has(fn)) { for (const a of e.args) { const bad = rejectTree(a); if (bad) return bad } return undefined }
         if (!reg.curated(fn)) return `"${fn}" is not a registered function`
         const arity = reg.impls(fn).some((i) => i.argTypes.length === e.args.length)
         if (!arity) return `no implementation of ${fn} takes ${e.args.length} argument${e.args.length === 1 ? '' : 's'}`
@@ -171,7 +188,19 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean 
     const result = boxed as unknown as { symbol?: string; numericValue: unknown; json: unknown }
     if (result.symbol === 'True') return 'true'
     if (result.symbol === 'False') return 'false'
-    const bad = (): never => { throw new InexactResult(label, ceImplRow(label), result.json) }
+    // numericFallback: a real floating-point approximation of the result (trimmed of fp noise), or null. Used by
+    // the notebook so an irrational/symbolic CE value renders as a decimal instead of being declined.
+    const approx = (): string | null => {
+      if (!numericFallback) return null
+      try {
+        const n = (boxed as unknown as { N(): { re?: number; im?: number } }).N()
+        if (typeof n.re === 'number' && Number.isFinite(n.re) && (n.im === undefined || n.im === 0)) {
+          return String(Number(n.re.toPrecision(12))) // 12 sig figs drops binary-float noise
+        }
+      } catch { /* not numerically evaluable — fall through to decline */ }
+      return null
+    }
+    const bad = (): string => { const a = approx(); if (a !== null) return a; throw new InexactResult(label, ceImplRow(label), result.json) }
     try {
       const nv = result.numericValue as unknown
       if (typeof nv === 'number') {
