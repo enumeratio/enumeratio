@@ -251,6 +251,11 @@ describe("enumerate-all bijection check (at is a bijection onto valid elements)"
     { name: "BinaryStringsAvoiding010(10)", coll: ["BinaryStringsAvoiding010", 10] },
     { name: "GrandMotzkinPaths(8)", coll: ["GrandMotzkinPaths", 8] },
     { name: "Groupings(6)", coll: ["Groupings", 6] },
+    { name: "SubsetsOfSizeAtMost(8,3)", coll: ["SubsetsOfSizeAtMost", 8, 3] },
+    { name: "EvenSubsets(8)", coll: ["EvenSubsets", 8] },
+    { name: "OddSubsets(8)", coll: ["OddSubsets", 8] },
+    { name: "Necklaces(6,3)", coll: ["Necklaces", 6, 3] },
+    { name: "LyndonWords(6,3)", coll: ["LyndonWords", 6, 3] },
     { name: "DelannoyPaths(4)", coll: ["DelannoyPaths", 4] },
   ];
   for (const { name, coll } of families) {

@@ -40,6 +40,8 @@ import { entries as fullBinaryPlaneForests } from "./full-binary-plane-forests.j
 // binary/string words
 import { entries as avoid1010101 } from "./avoid-101-0101-strings.js";
 import { entries as groupings } from "./groupings.js";
+import { entries as subsetSizeVariants } from "./subset-size-variants.js";
+import { entries as necklacesLyndon } from "./necklaces-lyndon.js";
 
 export * from "./types.js";
 
@@ -71,4 +73,6 @@ export const allEntries: PackEntry[] = [
   ...(fullBinaryPlaneForests as PackEntry[]),
   ...(avoid1010101 as PackEntry[]),
   ...(groupings as PackEntry[]),
+  ...(subsetSizeVariants as PackEntry[]),
+  ...(necklacesLyndon as PackEntry[]),
 ];
