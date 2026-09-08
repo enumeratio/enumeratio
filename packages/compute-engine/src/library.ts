@@ -12,7 +12,7 @@ import type { LibraryDefinition, Expression, ComputeEngine, CollectionHandlers }
 import { Inversions } from "./kernels.js";
 import { BellB, Fubini, PartitionsP } from "./kernels-combinatorics.js";
 import {
-  CatalanNumber, PartitionsQ, PolygonalNumber, IntegerDigitsKernel, FromDigitsKernel, RealDigitsKernel,
+  CatalanNumber, PartitionsQ, PolygonalNumber, Factorial2, IntegerDigitsKernel, FromDigitsKernel, RealDigitsKernel,
   IntegerLengthKernel, IntegerReverseKernel, DigitSumKernel, DigitCountKernel, DigitCountOfKernel,
 } from "./kernels-extra.js";
 import { allEntries, adaptEntry, asIntList, type FamilySpec } from "./packs/index.js";
@@ -322,6 +322,8 @@ export const enumeratioLibrary: LibraryDefinition = {
     Fubini: numberOp(Fubini),
     PartitionsP: numberOp((n) => PartitionsP(n)),
     PartitionsQ: numberOp((n) => PartitionsQ(n)),
+    // Double factorial n!! (Wolfram Factorial2) — CE has Factorial but not this one.
+    Factorial2: numberOp(Factorial2),
     // PolygonalNumber(n) = triangular (r=3); PolygonalNumber(r, n) = r-gonal. Listable — threads over a List arg.
     PolygonalNumber: {
       signature: "(integer, integer?) -> integer",

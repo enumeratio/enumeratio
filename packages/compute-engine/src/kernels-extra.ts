@@ -1214,3 +1214,10 @@ export function DigitCountKernel(n: number, base = 10): number[] {
 export function DigitCountOfKernel(n: number, base: number, d: number): number {
   return IntegerDigitsKernel(n, base).filter((x) => x === d).length;
 }
+
+// Double factorial (Wolfram Factorial2): n!! = n·(n−2)·(n−4)·…, down to 1 (odd n) or 2 (even n); (−1)!! = 0!! = 1.
+export function Factorial2(n: number): number {
+  let r = 1;
+  for (let k = n; k > 1; k -= 2) r *= k;
+  return r;
+}
