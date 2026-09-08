@@ -28,7 +28,10 @@ import './enumeratio-expression-line'
 //   events: composed `change` ({value}) on any edit, composed `result` ({value: JSON of `.values`}) after each
 //   evaluation pass — <enumeratio-assert> can wrap the whole set and check that JSON blob.
 export type LineMode = 'N' | 'hold'
-export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode }[] }
+/** A cell's TYPE. `math` (the default, and absent in the seed) routes through the parser/evaluator; `comment` is
+ *  prose (markdown + inline `$…$`) that never touches the math pipeline. */
+export type LineKind = 'comment'
+export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode; kind?: LineKind }[] }
 
 type LineResult = LineState
 
@@ -69,7 +72,8 @@ export class EnumeratioNotebook extends LitElement {
     return JSON.stringify({
       lines: this.displayOrder.map((id) => {
         const mode = this.lineModes.get(id)
-        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}) }
+        const kind = this.lineKinds.get(id)
+        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}), ...(kind ? { kind } : {}) }
       }),
     } satisfies NotebookSeed)
   }
@@ -87,6 +91,9 @@ export class EnumeratioNotebook extends LitElement {
   /** Per-line evaluation MODE: 'N' forces a numeric approximation, 'hold' leaves the cell unevaluated; absent = the
    *  default (exact where possible). Set from the hamburger menu, persisted in `value`. */
   private lineModes = new Map<LineId, LineMode>()
+  /** Per-line cell KIND — only `comment` is stored (math is the default/absent). Comment cells stay out of the
+   *  LineGraph and never recompute; the line renders their prose itself. */
+  private lineKinds = new Map<LineId, LineKind>()
   /** Per-line collection-preview element count (grows on "pull more"). */
   private previewCounts = new Map<LineId, number>()
   private readonly graph = new LineGraph()
@@ -136,6 +143,8 @@ export class EnumeratioNotebook extends LitElement {
    *  act on / inject into whichever cell the caret was last in. */
   @state() private activeLineId: LineId | null = null
   @state() private vkOn = false
+  /** The footer `+` cell-type dropdown (math / comment). */
+  @state() private addMenuOpen = false
 
   /** Each line's rendered value, or its error text if it errored. */
   get values(): Record<string, string> {
@@ -149,15 +158,23 @@ export class EnumeratioNotebook extends LitElement {
 
   /** Append (default) or insert-after-`afterId` a new line; returns its id. Public — the DOM test hook, and what
    *  a `line-commit` (Enter) uses internally. */
-  addLine(latex = '', afterId?: LineId): LineId {
+  addLine(latex = '', afterId?: LineId, kind?: LineKind): LineId {
     const id = `line-${++nextIdNum}`
     this.latexById.set(id, latex)
+    if (kind) this.lineKinds.set(id, kind)
     if (afterId && this.displayOrder.includes(afterId)) {
       this.displayOrder.splice(this.displayOrder.indexOf(afterId) + 1, 0, id)
     } else {
       this.displayOrder.push(id)
     }
     this.displayOrder = [...this.displayOrder]
+    if (kind === 'comment') {
+      // Comment cells are prose, not expressions: keep them out of the graph and never recompute them.
+      this.persist()
+      this.emitChange()
+      this.record()
+      return id
+    }
     if (this.parser) this.graph.set(id, latex, this.parser)
     this.pendingChanged.add(id)
     void this.flushRecompute()
@@ -172,6 +189,8 @@ export class EnumeratioNotebook extends LitElement {
     if (idx === -1) return
     this.displayOrder = this.displayOrder.filter((x) => x !== id)
     this.latexById.delete(id)
+    this.lineModes.delete(id)
+    this.lineKinds.delete(id)
     const removed = this.graph.lines().find((m) => m.id === id)
     if (removed?.defines) {
       if (removed.bindKind === 'declare') { this.declared.delete(removed.defines); this.scope.delete(removed.defines) }
@@ -202,6 +221,7 @@ export class EnumeratioNotebook extends LitElement {
     super.disconnectedCallback()
     if (this.tickerTimer) { clearInterval(this.tickerTimer); this.tickerTimer = null }
     if (this.debounceTimer) { clearTimeout(this.debounceTimer); this.debounceTimer = null }
+    if (this.commentRecordTimer) { clearTimeout(this.commentRecordTimer); this.commentRecordTimer = null }
     this.controllers.forEach((c) => c.abort())
   }
 
@@ -234,8 +254,11 @@ export class EnumeratioNotebook extends LitElement {
     const idSet = new Set<string>([...nb.names.functions, ...nb.names.collections])
     this.spellHead = (s) => (idSet.has(s) ? pascalCase(s) : s)
     await reseedRandom(this.seed) // reproducible randomness from the first evaluation
-    for (const [id, latex] of this.latexById) this.graph.set(id, latex, this.parser)
-    for (const id of this.displayOrder) this.pendingChanged.add(id)
+    for (const [id, latex] of this.latexById) {
+      if (this.lineKinds.get(id) === 'comment') continue // prose, not an expression
+      this.graph.set(id, latex, this.parser)
+      this.pendingChanged.add(id)
+    }
     await this.flushRecompute(true)
   }
 
@@ -286,20 +309,25 @@ export class EnumeratioNotebook extends LitElement {
       this.controllers.forEach((c) => c.abort())
       this.controllers.clear()
       this.latexById.clear()
+      this.lineModes.clear()
+      this.lineKinds.clear()
       this.scope = new Map()
       this.declared.clear()
       this.results = new Map()
       const order: LineId[] = []
+      const dirty = new Set<LineId>()
       for (const l of parsed.lines ?? []) {
         const id = l.id ?? `line-${++nextIdNum}`
         this.latexById.set(id, l.latex)
+        if (l.mode) this.lineModes.set(id, l.mode)
+        if (l.kind) this.lineKinds.set(id, l.kind)
         order.push(id)
-        this.graph.set(id, l.latex, this.parser)
+        if (l.kind !== 'comment') { this.graph.set(id, l.latex, this.parser); dirty.add(id) }
       }
       this.displayOrder = order
       this.seed = seed
       await reseedRandom(seed)
-      this.pendingChanged = new Set(order)
+      this.pendingChanged = dirty
       await this.flushRecompute(true)
     } finally {
       this.restoring = false
@@ -492,6 +520,7 @@ export class EnumeratioNotebook extends LitElement {
       const id = l.id ?? `line-${++nextIdNum}`
       this.latexById.set(id, l.latex)
       if (l.mode) this.lineModes.set(id, l.mode)
+      if (l.kind) this.lineKinds.set(id, l.kind)
       this.displayOrder.push(id)
     }
   }
@@ -691,10 +720,25 @@ export class EnumeratioNotebook extends LitElement {
   private onLineInput = (ev: CustomEvent<{ lineId: LineId; latex: string }>): void => {
     const { lineId, latex } = ev.detail
     this.latexById.set(lineId, latex)
+    if (this.lineKinds.get(lineId) === 'comment') {
+      // Prose edit — no parse/recompute. Debounce a history entry so a typing burst is one undo step.
+      this.persist()
+      this.emitChange()
+      this.scheduleCommentRecord()
+      return
+    }
     if (this.parser) this.graph.set(lineId, latex, this.parser)
     this.scheduleRecompute(lineId)
     this.persist()
     this.emitChange()
+  }
+
+  /** Comment edits don't flow through the recompute (which is what normally calls `record()`), so debounce their
+   *  own history capture — a typing burst collapses to one undo step. */
+  private commentRecordTimer: ReturnType<typeof setTimeout> | null = null
+  private scheduleCommentRecord(): void {
+    if (this.commentRecordTimer) clearTimeout(this.commentRecordTimer)
+    this.commentRecordTimer = setTimeout(() => { this.commentRecordTimer = null; this.record() }, 500)
   }
 
   private onLineCommit = (ev: CustomEvent<{ lineId: LineId }>): void => {
@@ -751,9 +795,10 @@ export class EnumeratioNotebook extends LitElement {
   private menuAction(id: LineId, kind: 'duplicate' | 'clear' | 'delete'): void {
     if (!id) return
     if (kind === 'delete') { this.removeLine(id); return }
-    if (kind === 'duplicate') { const n = this.addLine(this.latexById.get(id) ?? '', id); this.focusLine(n); return }
+    if (kind === 'duplicate') { const n = this.addLine(this.latexById.get(id) ?? '', id, this.lineKinds.get(id)); this.focusLine(n); return }
     if (kind === 'clear') {
       this.latexById.set(id, '')
+      if (this.lineKinds.get(id) === 'comment') { this.persist(); this.emitChange(); this.record(); this.requestUpdate(); this.focusLine(id); return }
       if (this.parser) this.graph.set(id, '', this.parser)
       this.scheduleRecompute(id)
       this.persist(); this.emitChange()
@@ -828,6 +873,7 @@ export class EnumeratioNotebook extends LitElement {
               .classify=${this.classify}
               .active=${this.activeLineId === id}
               .mode=${this.lineModes.get(id) ?? ''}
+              .kind=${this.lineKinds.get(id) ?? 'math'}
               .canDelete=${this.displayOrder.length > 1}
               .state=${this.results.get(id) ?? {}}
               @line-input=${this.onLineInput}
@@ -845,8 +891,18 @@ export class EnumeratioNotebook extends LitElement {
       </div>
       <div class="toolbar">
         <div class="tools-left">
-          <button class="tool" @click=${() => this.appendBlankLine()}
-                  title="Add line" aria-label="Add line">+</button>
+          <div class="addwrap">
+            <button class="tool ${this.addMenuOpen ? 'on' : ''}" @click=${() => (this.addMenuOpen = !this.addMenuOpen)}
+                    title="Add cell" aria-label="Add cell">+</button>
+            ${this.addMenuOpen
+              ? html`
+                  <div class="add-backdrop" @click=${() => (this.addMenuOpen = false)}></div>
+                  <div class="addmenu">
+                    <button @click=${() => this.addCell('math')}>Math</button>
+                    <button @click=${() => this.addCell('comment')}>Comment</button>
+                  </div>`
+              : ''}
+          </div>
           <button class="tool" ?disabled=${!this.canUndo} @click=${() => void this.undo()}
                   title="Undo" aria-label="Undo">↺</button>
           <button class="tool" ?disabled=${!this.canRedo} @click=${() => void this.redo()}
@@ -868,9 +924,10 @@ export class EnumeratioNotebook extends LitElement {
     `
   }
 
-  /** Footer `+`: append a blank line and focus it. */
-  private appendBlankLine(): void {
-    const id = this.addLine('')
+  /** Footer `+` dropdown: append a blank cell of the chosen kind and focus it. */
+  private addCell(kind: 'math' | 'comment'): void {
+    this.addMenuOpen = false
+    const id = this.addLine('', undefined, kind === 'comment' ? 'comment' : undefined)
     this.focusAfterUpdate = id
     this.requestUpdate()
   }
@@ -928,6 +985,36 @@ export class EnumeratioNotebook extends LitElement {
     .tool.on {
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
+    }
+    /* The + cell-type dropdown, opening UPWARD from the footer over a transparent close-on-click backdrop. */
+    .addwrap { position: relative; }
+    .add-backdrop { position: fixed; inset: 0; z-index: 39; }
+    .addmenu {
+      position: absolute;
+      bottom: calc(100% + 0.3rem);
+      left: 0;
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      min-width: 7rem;
+      padding: 0.25rem;
+      border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
+      border-radius: 6px;
+      background: var(--enumeratio-surface, var(--p-content-background, canvas));
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+    }
+    .addmenu button {
+      font: inherit;
+      text-align: left;
+      padding: 0.35rem 0.6rem;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+    }
+    .addmenu button:hover {
       background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
     }
     .set {

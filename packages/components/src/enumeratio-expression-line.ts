@@ -3,6 +3,8 @@ import { customElement, property, state } from 'lit/decorators.js'
 import { unsafeHTML } from 'lit/directives/unsafe-html.js'
 import katex from 'katex'
 import katexCss from 'katex/dist/katex.min.css?inline'
+import MarkdownIt from 'markdown-it'
+import katexPlugin from '@vscode/markdown-it-katex'
 import type { Completer } from './enumeratio-math-input'
 import type { IdentifierDisplay } from '@enumeratio/expressions'
 import './enumeratio-math-input'
@@ -11,6 +13,13 @@ import './enumeratio-math-input'
  *  breaking the line). Fonts come from the globally-loaded katex.min.css; the layout CSS is folded into the shadow
  *  root's styles below. */
 const renderTex = (tex: string): string => katex.renderToString(tex, { throwOnError: false, output: 'html' })
+
+/** Markdown renderer for COMMENT cells: prose + inline/blocked `$…$` LaTeX via KaTeX. `html: false` keeps raw HTML
+ *  out (the source is user prose, rendered into the shadow root — no need to let it inject markup). The KaTeX CSS is
+ *  the same sheet folded into this element's styles, so the math is styled without any extra load. */
+const katexMdPlugin = ((katexPlugin as { default?: unknown }).default ?? katexPlugin) as Parameters<MarkdownIt['use']>[0]
+const md = new MarkdownIt({ html: false, linkify: true, breaks: true }).use(katexMdPlugin, { throwOnError: false })
+const renderMarkdown = (src: string): string => md.render(src ?? '')
 
 // <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>. The math-input field spans the full
 // row (so every field in a notebook is the same width, Desmos-style); the value sits on its own row below it,
@@ -65,8 +74,14 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ attribute: false }) state: LineState = {}
   /** This cell's evaluation mode (from the owning notebook), so the cell menu can check the active mode. */
   @property({ type: String }) mode: '' | 'N' | 'hold' = ''
+  /** Cell TYPE. `math` (default) uses the math-input + value; `comment` is prose (markdown + inline `$…$`). */
+  @property({ type: String }) kind: 'math' | 'comment' = 'math'
   /** Whether Delete is allowed — false for the notebook's last remaining line (nothing to fall back to). */
   @property({ type: Boolean }) canDelete = true
+
+  /** A comment cell is either being edited (raw markdown in a textarea) or rendered (KaTeX/markdown HTML). Empty
+   *  comments always show the editor so there's somewhere to type. */
+  @state() private editing = false
 
   /** Gated display of `state.error` — see the debounce note above. */
   @state() private showError = false
@@ -81,11 +96,34 @@ export class EnumeratioExpressionLine extends LitElement {
   private lastError: string | undefined = undefined
 
   focus(): void {
+    if (this.kind === 'comment') { this.beginEdit(); return }
     this.mathInput?.focus()
   }
 
   private get mathInput() {
     return this.renderRoot.querySelector('enumeratio-math-input') as (HTMLElement & { focus(): void }) | null
+  }
+  private get commentEditor() {
+    return this.renderRoot.querySelector('textarea.comment-edit') as HTMLTextAreaElement | null
+  }
+
+  // ── comment (prose) cell ─────────────────────────────────────────────────────────────────────────────────────
+  private autosize(ta: HTMLTextAreaElement): void {
+    ta.style.height = 'auto'
+    ta.style.height = `${ta.scrollHeight}px`
+  }
+  private onCommentInput = (ev: Event): void => {
+    const ta = ev.target as HTMLTextAreaElement
+    this.latex = ta.value
+    this.autosize(ta)
+    this.emit('line-input', { lineId: this.lineId, latex: this.latex })
+  }
+  private onCommentBlur = (): void => { this.editing = false }
+  /** Enter the editor: show the textarea, select the cell, then focus + size it once it's in the DOM. */
+  private beginEdit = (): void => {
+    this.editing = true
+    this.emit('line-focus', { lineId: this.lineId })
+    void this.updateComplete.then(() => { const ta = this.commentEditor; if (ta) { ta.focus(); this.autosize(ta) } })
   }
 
   private emit(name: string, detail: Record<string, unknown>): void {
@@ -185,6 +223,7 @@ export class EnumeratioExpressionLine extends LitElement {
   }
 
   updated(changed: Map<string, unknown>): void {
+    if (this.kind === 'comment' && this.editing) { const ta = this.commentEditor; if (ta) this.autosize(ta) }
     if (!changed.has('state')) return
     const err = this.state.error
     if (err === this.lastError) return
@@ -204,19 +243,22 @@ export class EnumeratioExpressionLine extends LitElement {
 
   render(): TemplateResult {
     const s = this.state
+    const isComment = this.kind === 'comment'
     const errVisible = this.showError && !!s.error && this.latex.trim() !== ''
     const hasValue = !errVisible && !s.busy && (s.value != null || s.valueTex != null)
+    // A comment shows its editor while it's being edited, or whenever it's empty (so there's somewhere to type).
+    const showEditor = this.editing || this.latex.trim() === ''
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
-    const lineClass = `line${this.active ? ' active' : ''}${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}`
+    const lineClass = `line${this.active ? ' active' : ''}${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}${isComment ? ' comment-cell' : ''}`
     return html`
       <div class=${lineClass} @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
            @focusin=${() => this.emit('line-focus', { lineId: this.lineId })}
            @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
         <div class="gutter">
           <span class="rownum" draggable="true" @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
-                title="drag to reorder">${this.index}</span>
-          ${s.action
+                title="drag to reorder">${isComment ? '¶' : this.index}</span>
+          ${!isComment && s.action
             ? html`<button class="rowbtn" @mousedown=${(e: MouseEvent) => e.preventDefault()}
                       @click=${() => this.emit('line-run', { lineId: this.lineId })}
                       title="run this action" aria-label="run this action">→</button>`
@@ -230,37 +272,48 @@ export class EnumeratioExpressionLine extends LitElement {
           </div>
         </div>
         <div class="body">
-          <div class="field">
-            <enumeratio-math-input
-              .latex=${this.latex}
-              .completer=${this.completer}
-              .classify=${this.classify}
-              @enumeratio-input=${this.onInput}
-              @enumeratio-commit=${this.onCommit}
-              @enumeratio-move=${this.onMove}
-            ></enumeratio-math-input>
-            ${!errVisible && s.type && s.comment == null
-              ? s.typeHref
-                ? html`<a class="type link" href=${s.typeHref} target="_blank" rel="noopener"
-                        title="open in the atlas">${s.type}</a>`
-                : html`<span class="type">${s.type}</span>`
-              : ''}
-          </div>
-          <div class="value">
-            ${s.comment != null ? html`<span class="comment">${s.comment}</span>`
-              : s.held ? html`<span class="held">held</span>`
-              : s.busy ? html`<span class="hint">…</span>`
-              : hasValue ? html`<span class="eq">=</span> ${s.valueTex != null
-                  ? html`<span class="tex">${unsafeHTML(renderTex(s.valueTex))}</span>`
-                  : s.valueHref
-                  ? html`<a class="vlink" href=${s.valueHref} target="_blank" rel="noopener" title="open in the query view">${s.value}</a>`
-                  : s.value}${s.more
-                  ? html` <button class="more" @click=${() => this.emit('line-expand', { lineId: this.lineId })}
-                            title="pull more elements">…</button>`
-                  : ''}`
-              : ''}
-          </div>
-          ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
+          ${isComment
+            ? html`<div class="comment-body">
+                ${showEditor
+                  ? html`<textarea class="comment-edit" .value=${this.latex}
+                            placeholder="comment — markdown & $LaTeX$"
+                            @input=${this.onCommentInput} @blur=${this.onCommentBlur}
+                            @focus=${() => this.emit('line-focus', { lineId: this.lineId })}></textarea>`
+                  : html`<div class="comment-rendered" @click=${this.beginEdit}
+                            title="click to edit">${unsafeHTML(renderMarkdown(this.latex))}</div>`}
+              </div>`
+            : html`
+              <div class="field">
+                <enumeratio-math-input
+                  .latex=${this.latex}
+                  .completer=${this.completer}
+                  .classify=${this.classify}
+                  @enumeratio-input=${this.onInput}
+                  @enumeratio-commit=${this.onCommit}
+                  @enumeratio-move=${this.onMove}
+                ></enumeratio-math-input>
+                ${!errVisible && s.type && s.comment == null
+                  ? s.typeHref
+                    ? html`<a class="type link" href=${s.typeHref} target="_blank" rel="noopener"
+                            title="open in the atlas">${s.type}</a>`
+                    : html`<span class="type">${s.type}</span>`
+                  : ''}
+              </div>
+              <div class="value">
+                ${s.comment != null ? html`<span class="comment">${s.comment}</span>`
+                  : s.held ? html`<span class="held">held</span>`
+                  : s.busy ? html`<span class="hint">…</span>`
+                  : hasValue ? html`<span class="eq">=</span> ${s.valueTex != null
+                      ? html`<span class="tex">${unsafeHTML(renderTex(s.valueTex))}</span>`
+                      : s.valueHref
+                      ? html`<a class="vlink" href=${s.valueHref} target="_blank" rel="noopener" title="open in the query view">${s.value}</a>`
+                      : s.value}${s.more
+                      ? html` <button class="more" @click=${() => this.emit('line-expand', { lineId: this.lineId })}
+                                title="pull more elements">…</button>`
+                      : ''}`
+                  : ''}
+              </div>
+              ${errVisible ? html`<div class="error">${s.error}</div>` : ''}`}
         </div>
         ${this.astOpen && s.ast
           ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
@@ -272,12 +325,15 @@ export class EnumeratioExpressionLine extends LitElement {
                    @contextmenu=${(e: MouseEvent) => { e.preventDefault(); this.closeMenu() }}></div>
               <div class="cellmenu" style="left:${this.menuPos.x}px;top:${this.menuPos.y}px"
                    @mousedown=${(e: MouseEvent) => e.preventDefault()}>
-                <button @click=${() => this.menuAct('N')}>${this.mode === 'N' ? '✓ ' : ''}Numeric (N)</button>
-                <button @click=${() => this.menuAct('hold')}>${this.mode === 'hold' ? '✓ ' : ''}Hold (don't evaluate)</button>
-                ${s.ast
-                  ? html`<hr><button @click=${() => this.toggleAst()}>${this.astOpen ? 'Hide AST' : 'Show AST'}</button>`
-                  : ''}
-                <hr>
+                ${isComment
+                  ? ''
+                  : html`
+                    <button @click=${() => this.menuAct('N')}>${this.mode === 'N' ? '✓ ' : ''}Numeric (N)</button>
+                    <button @click=${() => this.menuAct('hold')}>${this.mode === 'hold' ? '✓ ' : ''}Hold (don't evaluate)</button>
+                    ${s.ast
+                      ? html`<hr><button @click=${() => this.toggleAst()}>${this.astOpen ? 'Hide AST' : 'Show AST'}</button>`
+                      : ''}
+                    <hr>`}
                 <button @click=${() => this.menuAct('duplicate')}>Duplicate</button>
                 <button @click=${() => this.menuAct('clear')}>Clear</button>
                 <button @click=${this.onDelete} ?disabled=${!this.canDelete}>Delete</button>
@@ -496,6 +552,72 @@ export class EnumeratioExpressionLine extends LitElement {
       font-weight: 400;
       color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
     }
+    /* ── first-class COMMENT cell (kind='comment') — prose, edited as markdown, rendered with KaTeX ── */
+    .comment-body { width: 100%; }
+    .comment-edit {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 1.6rem;
+      resize: none;
+      overflow: hidden;
+      padding: 0.15rem 0.25rem;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      line-height: 1.5;
+    }
+    .comment-edit::placeholder {
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      opacity: 0.5;
+    }
+    /* Rendered prose reads like body text, not code — a proportional face, normal weight, left-aligned. */
+    .comment-rendered {
+      font-family: var(--enumeratio-prose-font, system-ui, -apple-system, "Segoe UI", sans-serif);
+      line-height: 1.55;
+      cursor: text;
+      padding: 0.15rem 0.25rem;
+      overflow-wrap: anywhere;
+    }
+    .comment-rendered > :first-child { margin-top: 0; }
+    .comment-rendered > :last-child { margin-bottom: 0; }
+    .comment-rendered p { margin: 0.4em 0; }
+    .comment-rendered h1, .comment-rendered h2, .comment-rendered h3,
+    .comment-rendered h4, .comment-rendered h5, .comment-rendered h6 {
+      margin: 0.6em 0 0.3em;
+      line-height: 1.25;
+    }
+    .comment-rendered ul, .comment-rendered ol { margin: 0.4em 0; padding-inline-start: 1.4em; }
+    .comment-rendered code {
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.9em;
+      padding: 0.05em 0.3em;
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--enumeratio-muted, currentColor) 12%, transparent);
+    }
+    .comment-rendered pre {
+      overflow-x: auto;
+      padding: 0.5em 0.7em;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--enumeratio-muted, currentColor) 10%, transparent);
+    }
+    .comment-rendered pre code { background: none; padding: 0; }
+    .comment-rendered a {
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+      text-decoration: none;
+    }
+    .comment-rendered a:hover { text-decoration: underline; }
+    .comment-rendered blockquote {
+      margin: 0.4em 0;
+      padding-inline-start: 0.8em;
+      border-inline-start: 3px solid color-mix(in srgb, var(--enumeratio-muted, currentColor) 30%, transparent);
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+    }
+    /* An empty rendered comment still needs a click target to re-enter — but empty comments show the editor, so
+       this only guards a whitespace-only render. */
+    .comment-rendered:empty::before { content: 'comment'; opacity: 0.4; }
     /* A located element's value links to the query view that reproduces it. */
     .vlink {
       color: inherit;
