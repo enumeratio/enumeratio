@@ -2,7 +2,7 @@
 
 An inventory of `@cortex-js/compute-engine`'s node dictionary — what it parses, what it actually *computes*, and
 where its canonicalization silently rewrites what you typed into something else. Written so the notebook
-(`packages/expressions/src/ce/latex.ts`, `packages/client/src/ce-engine.ts`) can work *with* CE's own vocabulary
+(`packages/notatio/src/ce/latex.ts`, `packages/client/src/ce-engine.ts`) can work *with* CE's own vocabulary
 instead of around it, and so gaps here become a concrete to-do list rather than a recurring surprise.
 
 **Pinned version: `@cortex-js/compute-engine@0.125.0`.** Everything below was produced by instantiating a live
@@ -270,7 +270,7 @@ Matrices parse from `\begin{pmatrix}…\end{pmatrix}` to a `Matrix` node; these 
 
 CE has a `dotNotation` serialize option that renders certain arity-1 calls in receiver-dot-method form
 (`p.count`) instead of the default function-call form. Probing 0.125 pins down its exact, **narrower-than-the-docs**
-behavior — this bears directly on our own `rewriteDotMethods` pre-pass in `packages/expressions/src/ce/latex.ts`.
+behavior — this bears directly on our own `rewriteDotMethods` pre-pass in `packages/notatio/src/ce/latex.ts`.
 
 **It is a serialize-only option.** Pass it to the serializer:
 
@@ -404,7 +404,7 @@ parses straight to that head:
 
 ## Gaps worth implementing in our library / proposing upstream
 
-*Status reflects `packages/expressions/src/names.ts` on `main`. Most Tier-1 heads the earlier draft flagged are
+*Status reflects `packages/notatio/src/names.ts` on `main`. Most Tier-1 heads the earlier draft flagged are
 now curated via `{ce}` bindings; this section is the refreshed to-do.*
 
 **Now curated (`{ce}` in `OPERATORS`) — no longer gaps.** `Max`, `Min`, `Floor`, `Ceil`, `Round`, `Mod`, `Sqrt`,

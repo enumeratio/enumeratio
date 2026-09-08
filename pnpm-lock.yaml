@@ -130,9 +130,9 @@ importers:
       '@enumeratio/client':
         specifier: workspace:*
         version: link:../client
-      '@enumeratio/expressions':
+      '@enumeratio/notatio':
         specifier: workspace:*
-        version: link:../expressions
+        version: link:../notatio
       '@vscode/markdown-it-katex':
         specifier: ^1.1.1
         version: 1.1.2
@@ -244,7 +244,25 @@ importers:
         specifier: ^2.2.0
         version: 2.2.12(typescript@5.9.3)
 
-  packages/expressions:
+  packages/math:
+    devDependencies:
+      '@electric-sql/pglite':
+        specifier: ^0.5.3
+        version: 0.5.4
+      '@enumeratio/data':
+        specifier: workspace:^
+        version: link:../data
+      '@types/node':
+        specifier: ^22.10.0
+        version: 22.20.1
+      tsx:
+        specifier: ^4.19.0
+        version: 4.23.0
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/notatio:
     dependencies:
       '@cortex-js/compute-engine':
         specifier: 0.125.0
@@ -265,24 +283,6 @@ importers:
       vitest:
         specifier: ^3.0.0
         version: 3.2.7(@types/debug@4.1.13)(@types/node@22.20.1)(tsx@4.23.0)(yaml@2.9.0)
-
-  packages/math:
-    devDependencies:
-      '@electric-sql/pglite':
-        specifier: ^0.5.3
-        version: 0.5.4
-      '@enumeratio/data':
-        specifier: workspace:^
-        version: link:../data
-      '@types/node':
-        specifier: ^22.10.0
-        version: 22.20.1
-      tsx:
-        specifier: ^4.19.0
-        version: 4.23.0
-      typescript:
-        specifier: ^5.7.2
-        version: 5.9.3
 
 packages:
 

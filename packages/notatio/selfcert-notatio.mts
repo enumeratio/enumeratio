@@ -9,7 +9,7 @@
 // LaTeX grammar mean what CE's does), binding/typing (did we route the parsed tree through the right op/function),
 // and lowering (did that typed tree reach the engine seam as the IR that actually computes it).
 //
-//   node --import tsx selfcert-expressions.mts
+//   node --import tsx selfcert-notatio.mts
 import {
   bind, lower, makeParser,
   type Bound, type Catalog, type CollectionInfo, type FunctionInfo, type MapInfo, type Scope, type StatInfo, type TypeOpInfo,

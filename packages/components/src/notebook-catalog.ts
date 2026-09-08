@@ -1,4 +1,4 @@
-// Builds the @enumeratio/expressions `Catalog` (bind.ts's type-checking seam) + `CatalogNames` (the LaTeX parser's
+// Builds the @enumeratio/notatio `Catalog` (bind.ts's type-checking seam) + `CatalogNames` (the LaTeX parser's
 // dictionary) + a completion catalog, all from live @enumeratio/client reads — no raw SQL, no provideDb() call of
 // its own (the docs wire the Db globally; this module only ever reads through the client's async API surface).
 //
@@ -12,9 +12,9 @@ import { registry } from '@enumeratio/client'
 import {
   BUILTIN_SYMBOLS,
   type Binding, type Catalog, type CollectionInfo, type FunctionInfo, type MapInfo, type StatInfo, type TypeOpInfo,
-} from '@enumeratio/expressions'
-import type { CatalogNames } from '@enumeratio/expressions'
-import type { CompletionContext } from '@enumeratio/expressions'
+} from '@enumeratio/notatio'
+import type { CatalogNames } from '@enumeratio/notatio'
+import type { CompletionContext } from '@enumeratio/notatio'
 
 /** Generic engine primitives dispatched by head name (bind.ts's NEXT_PREV_RANK plus the handle-level ones) — not
  *  per-collection, so these are known up front rather than discovered lazily like stats/maps. */

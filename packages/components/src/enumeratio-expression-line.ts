@@ -6,7 +6,7 @@ import katexCss from 'katex/dist/katex.min.css?inline'
 import MarkdownIt from 'markdown-it'
 import katexPlugin from '@vscode/markdown-it-katex'
 import type { Completer } from './enumeratio-math-input'
-import type { IdentifierDisplay } from '@enumeratio/expressions'
+import type { IdentifierDisplay } from '@enumeratio/notatio'
 import './enumeratio-math-input'
 
 /** Render a LaTeX value to KaTeX HTML (never throws — a malformed string shows in KaTeX's error color instead of

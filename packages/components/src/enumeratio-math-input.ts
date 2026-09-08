@@ -1,6 +1,6 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
 import { customElement, property, state, query } from 'lit/decorators.js'
-import { reformatIdentifiers, type IdentifierDisplay } from '@enumeratio/expressions'
+import { reformatIdentifiers, type IdentifierDisplay } from '@enumeratio/notatio'
 import type { AdapterFactory, MathInputAdapter } from './math-input-adapter'
 import { mathliveAdapter } from './mathlive-adapter'
 

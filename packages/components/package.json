@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@enumeratio/client": "workspace:*",
-    "@enumeratio/expressions": "workspace:*",
+    "@enumeratio/notatio": "workspace:*",
     "@vscode/markdown-it-katex": "^1.1.1",
     "katex": "^0.16.11",
     "lit": "^3.2.1",

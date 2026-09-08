@@ -5,14 +5,14 @@ import {
   bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase,
   head, args, isSymbol, symbolName,
   type Bound, type Completion, type Expression, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Parsed, type Scope, type Type,
-} from '@enumeratio/expressions'
+} from '@enumeratio/notatio'
 import { loadNotebookCatalog, type NotebookCatalog } from './notebook-catalog'
 import type { Completer, CompletionCandidate } from './enumeratio-math-input'
 import { type LineState } from './enumeratio-expression-line'
 import './enumeratio-expression-line'
 
 // <enumeratio-notebook> — a small notebook: a stack of <enumeratio-expression-line>s sharing ONE symbol
-// Scope and ONE LineGraph (@enumeratio/expressions' dependency-order + cycle/dup-define detector). The set owns
+// Scope and ONE LineGraph (@enumeratio/notatio' dependency-order + cycle/dup-define detector). The set owns
 // every stateful thing a line does not: parsing (one ExpressionParser, built once the catalog loads), binding,
 // lowering, evaluation (one AbortController per line), and persistence.
 //
@@ -1209,7 +1209,7 @@ function astFullForm(parsed: unknown, spell: (s: string) => string = (s) => s): 
   }
 }
 
-/** @enumeratio/expressions' types.ts defines this (and bind.ts/lower.ts both use it internally) but does not
+/** @enumeratio/notatio' types.ts defines this (and bind.ts/lower.ts both use it internally) but does not
  *  re-export it through the package's index — reimplemented locally rather than editing that package (out of
  *  this component package's scope; see the build receipt). Must stay identical to types.ts's `effectivePg`. */
 function effectivePg(t: Type): string | undefined {
