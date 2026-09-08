@@ -33,6 +33,9 @@ type LineResult = LineState
 
 let nextIdNum = 0
 
+/** How many collection-preview elements to show, and to add per "pull more" click. */
+const PREVIEW_STEP = 5
+
 @customElement('enumeratio-notebook')
 export class EnumeratioNotebook extends LitElement {
   @property({ type: String, attribute: 'storage-key' }) storageKey = ''
@@ -58,6 +61,8 @@ export class EnumeratioNotebook extends LitElement {
   @state() private results = new Map<LineId, LineResult>()
 
   private latexById = new Map<LineId, string>()
+  /** Per-line collection-preview element count (grows on "pull more"). */
+  private previewCounts = new Map<LineId, number>()
   private readonly graph = new LineGraph()
   private parser: ExpressionParser | null = null
   private scope: Scope = new Map()
@@ -361,7 +366,7 @@ export class EnumeratioNotebook extends LitElement {
    *  trailing `…` when the cardinality (or the fact we stopped early) says there are more. Uses the handle's own
    *  cardinality + unrank primitives (ce-enum answers both), so it never materializes the collection. */
   private async previewCollection(id: LineId, handle: HandleExpr, typeBadgeText: string): Promise<void> {
-    const PREVIEW_COUNT = 5
+    const count = this.previewCounts.get(id) ?? PREVIEW_STEP
     this.controllers.get(id)?.abort()
     const controller = new AbortController()
     this.controllers.set(id, controller)
@@ -373,7 +378,7 @@ export class EnumeratioNotebook extends LitElement {
     const cardText = await this.evalCell(cell({ kind: 'apply', fn: fnRef('cardinality'), args: [handleSel] }), controller.signal)
     if (stale()) return
     const card = cardText !== null && /^\d+$/.test(cardText) ? Number(cardText) : null
-    const take = card === null ? PREVIEW_COUNT : Math.min(PREVIEW_COUNT, card)
+    const take = card === null ? count : Math.min(count, card)
 
     const elems: string[] = []
     for (let i = 0; i < take; i++) {
@@ -382,9 +387,16 @@ export class EnumeratioNotebook extends LitElement {
       if (e === null) break
       elems.push(e)
     }
-    const more = card === null ? elems.length >= PREVIEW_COUNT : card > take
-    const body = elems.length ? `${elems.join(', ')}${more ? ', …' : ''}` : (more ? '…' : '∅')
-    this.setResult(id, { type: typeBadgeText, value: `{${body}}` })
+    const more = card === null ? elems.length >= count : card > elems.length
+    this.setResult(id, { type: typeBadgeText, value: `{${elems.join(', ')}}`, more })
+  }
+
+  /** Pull the next batch of a collection preview: bump this line's element count and re-preview it. */
+  private onLineExpand = (ev: CustomEvent<{ lineId: LineId }>): void => {
+    const id = ev.detail.lineId
+    this.previewCounts.set(id, (this.previewCounts.get(id) ?? PREVIEW_STEP) + PREVIEW_STEP)
+    this.pendingChanged.add(id)
+    void this.flushRecompute()
   }
 
   // ── ticker: run every action line each tick; the whole run is ONE undo step ──────────────────────────────────
@@ -729,6 +741,7 @@ export class EnumeratioNotebook extends LitElement {
               @line-reorder=${this.onLineReorder}
               @line-run=${this.onLineRun}
               @line-focus=${this.onLineFocus}
+              @line-expand=${this.onLineExpand}
             ></enumeratio-expression-line>
           `,
         )}

@@ -28,6 +28,8 @@ export type LineState = {
   busy?: boolean
   /** This line is an ACTION (`p → …`): show a ▶ trigger instead of a value. */
   action?: boolean
+  /** A collection preview has MORE elements than shown — render a clickable `…` to pull the next batch. */
+  more?: boolean
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -179,7 +181,12 @@ export class EnumeratioExpressionLine extends LitElement {
             ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
           </div>
           <div class="value">
-            ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
+            ${s.busy ? html`<span class="hint">…</span>`
+              : hasValue ? html`<span class="eq">=</span> ${s.value}${s.more
+                  ? html` <button class="more" @click=${() => this.emit('line-expand', { lineId: this.lineId })}
+                            title="pull more elements">…</button>`
+                  : ''}`
+              : ''}
           </div>
           ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         </div>
@@ -305,6 +312,17 @@ export class EnumeratioExpressionLine extends LitElement {
       opacity: 0.4;
       font-weight: 400;
     }
+    /* Clickable "pull more" for a collection preview — a quiet inline affordance. */
+    .more {
+      font: inherit;
+      cursor: pointer;
+      padding: 0 0.35rem;
+      border: none;
+      border-radius: 4px;
+      background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 12%, transparent);
+      color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
+    }
+    .more:hover { background: color-mix(in srgb, var(--enumeratio-accent, #d97706) 24%, transparent); }
     /* A parse/bind error takes the value's place, below the field — full width for the whole message, muted. */
     .error {
       margin-top: 0.15rem;
