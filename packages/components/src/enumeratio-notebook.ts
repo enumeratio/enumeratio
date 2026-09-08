@@ -443,8 +443,25 @@ function effectivePg(t: Type): string | undefined {
   return undefined
 }
 
+/** @deprecated Back-compat alias for the previous tag name `<enumeratio-expression-set>`. The element was renamed
+ *  to `<enumeratio-notebook>`; this keeps any existing embed working (custom-element names are public API, and the
+ *  repo convention is augment-or-tombstone, never a silent rename). A distinct subclass because customElements
+ *  requires one constructor per tag. Emits a one-time console warning; remove once no embed uses the old name. */
+@customElement('enumeratio-expression-set')
+export class EnumeratioExpressionSet extends EnumeratioNotebook {
+  connectedCallback(): void {
+    super.connectedCallback()
+    if (!EnumeratioExpressionSet.warned) {
+      EnumeratioExpressionSet.warned = true
+      console.warn('<enumeratio-expression-set> is deprecated — use <enumeratio-notebook>.')
+    }
+  }
+  private static warned = false
+}
+
 declare global {
   interface HTMLElementTagNameMap {
     'enumeratio-notebook': EnumeratioNotebook
+    'enumeratio-expression-set': EnumeratioExpressionSet
   }
 }

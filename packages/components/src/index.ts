@@ -24,5 +24,5 @@ export { EnumeratioMathInput, type CompletionCandidate, type Completer } from '.
 export type { MathInputAdapter, AdapterFactory } from './math-input-adapter'
 export { mathliveAdapter, configureMathlive } from './mathlive-adapter'
 export { EnumeratioExpressionLine, type LineState } from './enumeratio-expression-line'
-export { EnumeratioNotebook, type NotebookSeed } from './enumeratio-notebook'
+export { EnumeratioNotebook, EnumeratioExpressionSet, type NotebookSeed } from './enumeratio-notebook'
 export { loadNotebookCatalog, resetNotebookCatalog, type NotebookCatalog } from './notebook-catalog'
