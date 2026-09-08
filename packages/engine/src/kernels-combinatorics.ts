@@ -59,7 +59,7 @@ export function StirlingS2(n: number, k: number): number {
 }
 
 /** p(n) = #integer partitions of n, Euler's pentagonal-number recurrence. */
-export function PartitionNumber(n: number): number {
+export function PartitionsP(n: number): number {
   if (n < 0) return 0;
   const p = [1];
   for (let m = 1; m <= n; m++) {
@@ -138,7 +138,7 @@ export function CompositionFromMask(n: number, mask: number): number[] {
 
 /** rank-th integer partition of n, largest-part-first order. */
 export function IntegerPartitionUnrank(n: number, rank: number): number[] {
-  const total = PartitionNumber(n);
+  const total = PartitionsP(n);
   let r = total ? ((rank % total) + total) % total : 0;
   const out: number[] = [];
   let m = n, max = n;

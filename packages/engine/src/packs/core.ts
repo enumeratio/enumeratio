@@ -4,7 +4,7 @@ import type { PackEntry } from "./types.js";
 import { Factorial, PermutationUnrank, PermutationRank, IsPermutationOf } from "../kernels.js";
 import {
   CompositionCount, CompositionFromMask, CompositionRank, IsCompositionOf,
-  PartitionNumber, IntegerPartitionUnrank, IntegerPartitionRank, IsPartitionOf,
+  PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank, IsPartitionOf,
   KPartPartitionCount, IntegerPartitionKUnrank, IntegerPartitionKRank,
   BellB, RgsUnrank, RgsRank, RgsToBlocks, BlocksToRgs, IsSetPartitionOf,
   StirlingS2, SetPartitionsIntoKBlocksUnrank, SetPartitionsIntoKBlocksRank,
@@ -28,7 +28,7 @@ import {
   MotzkinCount, MotzkinUnrank, MotzkinRank, IsMotzkinPath,
   FibonacciWordCount, FibonacciWordUnrank, FibonacciWordRank, IsFibonacciWord,
   GrayCodeSubsetUnrank, GrayCodeSubsetRank,
-  DistinctPartitionCount, DistinctPartitionUnrank, DistinctPartitionRank, IsDistinctPartitionOf,
+  PartitionsQ, DistinctPartitionUnrank, DistinctPartitionRank, IsDistinctPartitionOf,
   PartitionsInBoxCount, PartitionsInBoxUnrank, PartitionsInBoxRank, IsPartitionInBox,
   BinaryTreeCount, BinaryTreeUnrank, BinaryTreeRank, IsBinaryTree,
   SchroderCount, SchroderUnrank, SchroderRank, IsSchroderPath,
@@ -67,9 +67,9 @@ export const entries: PackEntry[] = [
   ints("WeakCompositions", 2, ([n, k]) => WeakCompositionCount(n, k), ([n, k], r) => WeakCompositionUnrank(n, k, r), (a, [n, k]) => IsWeakCompositionOf(a, n, k), (a) => WeakCompositionRank(a)),
 
   // ── partitions ──
-  ints("IntegerPartitions", 1, ([n]) => PartitionNumber(n), ([n], r) => IntegerPartitionUnrank(n, r), (a, [n]) => IsPartitionOf(a, n), (a, [n]) => IntegerPartitionRank(a, n)),
+  ints("IntegerPartitions", 1, ([n]) => PartitionsP(n), ([n], r) => IntegerPartitionUnrank(n, r), (a, [n]) => IsPartitionOf(a, n), (a, [n]) => IntegerPartitionRank(a, n)),
   ints("PartitionsIntoKParts", 2, ([n, k]) => KPartPartitionCount(n, k), ([n, k], r) => IntegerPartitionKUnrank(n, k, r), (a, [n, k]) => IsPartitionOf(a, n, k), (a, [n]) => IntegerPartitionKRank(a, n)),
-  ints("DistinctPartitions", 1, ([n]) => DistinctPartitionCount(n), ([n], r) => DistinctPartitionUnrank(n, r), (a, [n]) => IsDistinctPartitionOf(a, n), (a, [n]) => DistinctPartitionRank(a, n)),
+  ints("DistinctPartitions", 1, ([n]) => PartitionsQ(n), ([n], r) => DistinctPartitionUnrank(n, r), (a, [n]) => IsDistinctPartitionOf(a, n), (a, [n]) => DistinctPartitionRank(a, n)),
   ints("PartitionsMaxPart", 2, ([n, m]) => PartitionsMaxPartCount(n, m), ([n, m], r) => PartitionsMaxPartUnrank(n, m, r), (a, [n, m]) => IsPartitionMaxPart(a, n, m), (a, [, m]) => PartitionsMaxPartRank(a, m)),
   ints("PartitionsInBox", 2, ([a, b]) => PartitionsInBoxCount(a, b), ([a, b], r) => PartitionsInBoxUnrank(a, b, r), (x, [a, b]) => IsPartitionInBox(x, a, b), (x, [a, b]) => PartitionsInBoxRank(x, a, b)),
 

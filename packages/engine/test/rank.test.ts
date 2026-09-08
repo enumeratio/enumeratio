@@ -96,6 +96,7 @@ describe("Rank is the inverse of At", () => {
     { name: "SetPartitionsIntoAtMostKBlocks(6,3)", coll: ["SetPartitionsIntoAtMostKBlocks", 6, 3] },
     { name: "BinaryStringsAvoiding010(10)", coll: ["BinaryStringsAvoiding010", 10] },
     { name: "GrandMotzkinPaths(8)", coll: ["GrandMotzkinPaths", 8] },
+    { name: "Groupings(6)", coll: ["Groupings", 6] },
     { name: "DelannoyPaths(4)", coll: ["DelannoyPaths", 4] },
   ];
   for (const { name, coll } of families) {

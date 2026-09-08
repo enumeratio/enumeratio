@@ -39,6 +39,7 @@ import { entries as fullBinaryPlaneForests } from "./full-binary-plane-forests.j
 
 // binary/string words
 import { entries as avoid1010101 } from "./avoid-101-0101-strings.js";
+import { entries as groupings } from "./groupings.js";
 
 export * from "./types.js";
 
@@ -69,4 +70,5 @@ export const allEntries: PackEntry[] = [
   ...(sytLittleSchroder as PackEntry[]),
   ...(fullBinaryPlaneForests as PackEntry[]),
   ...(avoid1010101 as PackEntry[]),
+  ...(groupings as PackEntry[]),
 ];

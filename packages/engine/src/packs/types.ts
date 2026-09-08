@@ -8,7 +8,7 @@
 //   "nested" → 0 | NestedTree   (recursively nested: binary / k-ary / ordered trees; leaf = 0 or [])
 import type { Expression } from "@cortex-js/compute-engine";
 
-export type NestedTree = 0 | NestedTree[];
+export type NestedTree = number | NestedTree[]; // a leaf is a number (0 for the trees, a label for Groupings)
 
 export interface PackEntry {
   head: string;
@@ -35,12 +35,12 @@ const intOf = (x: any): number => Math.trunc(Number(x?.re ?? x?.value ?? x?.json
 // MathJSON encoders (element → boxed MathJSON expression)
 export const listMJ = (xs: number[]): any => ["List", ...xs];
 export const blocksMJ = (bs: number[][]): any => ["List", ...bs.map((b) => ["List", ...b])];
-export const nestMJ = (t: NestedTree): any => (t === 0 ? 0 : ["List", ...(t as NestedTree[]).map(nestMJ)]);
+export const nestMJ = (t: NestedTree): any => (Array.isArray(t) ? ["List", ...t.map(nestMJ)] : t);
 
 // boxed MathJSON → JS element (the inverse, for membership/rank)
 export const asIntList = (t: any): number[] => (t?.ops ?? []).map(intOf);
 export const asBlockList = (t: any): number[][] => (t?.ops ?? []).map((b: any) => (b?.ops ?? []).map(intOf));
-export const denest = (x: any): NestedTree => (x?.ops ? (x.ops.map(denest) as NestedTree[]) : 0);
+export const denest = (x: any): NestedTree => (x?.ops ? (x.ops.map(denest) as NestedTree[]) : intOf(x));
 
 const signatureFor = (kind: PackEntry["kind"], pc: 1 | 2): string => {
   if (kind === "nested") return pc === 1 ? "(integer) -> collection" : "(integer, integer) -> collection";

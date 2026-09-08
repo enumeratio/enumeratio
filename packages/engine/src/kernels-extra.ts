@@ -695,11 +695,11 @@ function distinctParts(m: number, maxp: number): number {
   }
   return v;
 }
-export function DistinctPartitionCount(n: number): number {
+export function PartitionsQ(n: number): number {
   return n < 0 ? 0 : distinctParts(n, n);
 }
 export function DistinctPartitionUnrank(n: number, rank: number): number[] {
-  const total = DistinctPartitionCount(n);
+  const total = PartitionsQ(n);
   let r = total ? ((rank % total) + total) % total : 0;
   const out: number[] = [];
   let m = n, upper = n;
@@ -1149,4 +1149,10 @@ export function IsRootedForest(parent: any, n: number): boolean {
     uf[ra] = rb;
   }
   return true; // n edges on n+1 vertices, acyclic ⇒ a tree ⇒ a valid rooted forest on [n]
+}
+
+// ─── PolygonalNumber(r, n): the n-th r-gonal number. Wolfram: PolygonalNumber[n] = triangular (r=3),
+//     PolygonalNumber[r, n] = ((r-2)n² − (r-4)n)/2. ────────────────────────────────────────────────────────
+export function PolygonalNumber(r: number, n: number): number {
+  return ((r - 2) * n * n - (r - 4) * n) / 2;
 }
