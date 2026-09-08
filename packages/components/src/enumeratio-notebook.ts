@@ -498,13 +498,14 @@ export class EnumeratioNotebook extends LitElement {
 }
 
 /** The type shown under a line's value, in notation. Scalars read as `∈ ℕ`/`∈ ℤ`/`∈ ℚ`/`∈ ℝ`/`∈ 𝔹`; an element of
- *  a collection as `∈ <coll>`; a function as `f: (…) ↦`. When the bound scalar type is only the generic pg
+ *  a collection as `∈ <coll>`; a function as `n ↦` / `(m, n) ↦`. When the bound scalar type is only the generic pg
  *  `numeric` (as counting functions come back), the concrete set is REFINED from the value itself — a plain
  *  integer is ℕ (or ℤ if negative), a `p/q` is ℚ, anything else with a fractional part is ℝ — so a Bell number no
  *  longer mislabels itself "numeric". */
 function typeBadge(t: Type, value?: string): string {
   if (t.k === 'elem') return `∈ ${t.coll}`
-  if (t.k === 'fn') return `f: (${t.params.join(', ')}) ↦`
+  // Standard maps-to: bare `n ↦` for one argument, `(m, n) ↦` only when a tuple actually needs the parens.
+  if (t.k === 'fn') return `${t.params.length === 1 ? t.params[0] : `(${t.params.join(', ')})`} ↦`
   if (t.k === 'handle') return t.coll
   if (t.k === 'scalar') {
     if (t.pg === 'boolean') return '∈ 𝔹'
