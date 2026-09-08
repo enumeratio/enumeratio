@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "TypeScript read-through client for the pure-SQL enumeratio core (pg-enumeratio) running in PGlite — the math API everything else consumes.",
   "type": "module",
-  "license": "Unlicense",
+  "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",

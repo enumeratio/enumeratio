@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "enumeratio as a loadable compute-engine library: ~90 combinatorial collections with O(1) rank/unrank random access backing CE's own CollectionHandlers, plus Wolfram-aligned counting/digit operators. Loads into any ComputeEngine via installEnumeratio.",
   "type": "module",
-  "license": "Unlicense",
+  "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",

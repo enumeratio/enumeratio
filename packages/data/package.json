@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "The enumeratio database as a package \u2014 the combinatorial catalog and its whole schema as pure SQL (zero C): ~150 collections realized by a data-driven generator into a uniform handle/fiber/element/notation/membership layer. Under the hood a pure-SQL Postgres extension; runs in any Postgres and in-browser via PGlite.",
   "type": "module",
-  "license": "Unlicense",
+  "license": "WTFPL",
   "homepage": "https://enumeratio.dev",
   "repository": {
     "type": "git",
