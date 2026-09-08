@@ -23,8 +23,8 @@ export {
   head, args, isSymbol, isConst, isNumber, symbolName, numberValue, mapNode, freeSymbols,
 } from './node.js'
 
-export type { CatalogNames, ExpressionParser, IdentifierDisplay } from './ce/latex.js'
-export { makeParser, catalogDictionary, reformatIdentifiers, identifierDisplay, pascalCase, serializeLatex } from './ce/latex.js'
+export type { CatalogNames, ExpressionParser, IdentifierDisplay } from './latex.js'
+export { makeParser, catalogDictionary, reformatIdentifiers, identifierDisplay, pascalCase, serializeLatex } from './latex.js'
 
 export { toLatex, toCalcText, toMathJsonString } from './format.js'
 

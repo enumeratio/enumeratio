@@ -1,6 +1,6 @@
 // The Notatio AST — a CLOSED, typed node model.
 //
-// The parser (`ce/latex.ts`) produces compute-engine MathJSON: an OPEN union (`Expression`) of bare
+// The parser (`latex.ts`) produces compute-engine MathJSON: an OPEN union (`Expression`) of bare
 // strings/numbers/arrays plus CE's object-boxed leaf forms. That is fine as a wire format but it is CE's shape, not
 // ours, and it can't be matched exhaustively. `normalize()` re-encodes it into the four-kind tree below — the
 // authoritative representation of the Notatio language:
@@ -33,7 +33,7 @@ export type Node =
   | { kind: 'apply'; head: string; args: Node[] }
 
 /** MathJSON's object-boxed number form (`{ num: "3.14" }`) — the parser only emits it for a value that does not
- *  round-trip through a plain JS number (see `ce/latex.ts`'s `convert`); everything else is already a bare number. */
+ *  round-trip through a plain JS number (see `latex.ts`'s `convert`); everything else is already a bare number. */
 function numObjectValue(e: Expression): number | null {
   if (typeof e === 'object' && e !== null && !Array.isArray(e) && 'num' in e) {
     const n = Number((e as { num: unknown }).num)

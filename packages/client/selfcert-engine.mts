@@ -2,7 +2,7 @@
 // fourth selfcert layer, over selfcert.mts (accelerated == naive per fiber), selfcert-view.mts (view configs) and
 // selfcert-rows.mts (planRows == rowSql): here the sides are every non-oracle engine (ts, ce) evaluating the SAME
 // Expr. pg is the oracle; every other engine must agree with it or decline — ce's own decline count is reported
-// separately from ts's, since ce's CE_OPERATORS vocabulary only ever claims a fraction of what ts does today.
+// separately from ts's, since ce's KERNEL_OPS vocabulary only ever claims a fraction of what ts does today.
 //
 // This generalizes selfcert-math.mts, which hand-inlined one loop per function. Nothing here is per-function: the
 // sweep is driven by base_function_impl, so a new impl row is swept the moment it lands.
@@ -141,7 +141,7 @@ const tsValue = async (text: string): Promise<{ value?: string; declined?: strin
     return { declined: (e as Error).message }
   }
 }
-/** the SAME differential, over ce — CE_OPERATORS only maps a handful of curated function ids (factorial, binomial,
+/** the SAME differential, over ce — KERNEL_OPS only maps a handful of curated function ids (factorial, binomial,
  *  gcd, lcm today), so most calls simply never reach ce.can(); those are not counted at all, not counted as a
  *  decline — this file cares whether ce EVER disagrees with pg, not whether it covers everything ts does. */
 const ceValue = async (text: string): Promise<{ value?: string; declined?: string }> => {

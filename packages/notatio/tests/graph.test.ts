@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser } from '../src/ce/latex.js'
+import { makeParser } from '../src/latex.js'
 import { LineGraph } from '../src/graph.js'
 
 const parser = makeParser({ collections: ['triangular_numbers'], functions: [] })

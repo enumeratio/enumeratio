@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser } from '../src/ce/latex.js'
+import { makeParser } from '../src/latex.js'
 import { bind } from '../src/bind.js'
 import type { Catalog, CollectionInfo, FunctionInfo, MapInfo, Scope, StatInfo, TypeOpInfo } from '../src/types.js'
 

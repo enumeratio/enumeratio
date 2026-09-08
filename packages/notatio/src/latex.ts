@@ -3,9 +3,9 @@
 // direction (MathJSON -> our own display/calc text). Findings this is built from: .scratch/ce-spike.md.
 import { LatexSyntax, LATEX_DICTIONARY } from '@cortex-js/compute-engine/latex-syntax'
 import type { LatexDictionaryEntry } from '@cortex-js/compute-engine/latex-syntax'
-import type { Expression, MathJsonSymbol, NodePath, Parsed, ParseError, SpanMap, Span, Stmt } from '../ast.js'
-import { args, head, isSymbol, mapExpr, symbolName } from '../ast.js'
-import { normalize, head as nHead, args as nArgs, isSymbol as nIsSymbol, symbolName as nSymbolName, type Node } from '../node.js'
+import type { Expression, MathJsonSymbol, NodePath, Parsed, ParseError, SpanMap, Span, Stmt } from './ast.js'
+import { args, head, isSymbol, mapExpr, symbolName } from './ast.js'
+import { normalize, head as nHead, args as nArgs, isSymbol as nIsSymbol, symbolName as nSymbolName, type Node } from './node.js'
 
 /** The catalog surface a parser is bound to: collection ids (bare symbols), function ids (call heads), and any
  *  extra LaTeX macro -> catalog-id bindings (e.g. `'\\mathbb{N}': 'natural_numbers'`). */

@@ -3,7 +3,7 @@
 // hover/autocomplete pass reads to answer "what type is this subexpression".
 //
 // NodePath alignment: every path this file mints (via `argPath`/`rootPrefix` from types.ts) is a path into the
-// ORIGINAL tree the parser produced — the same one `parsed.spans` is keyed by (see ast.ts, ce/latex.ts) — so a
+// ORIGINAL tree the parser produced — the same one `parsed.spans` is keyed by (see ast.ts, latex.ts) — so a
 // TypeError_'s `path` can always be resolved back to a source span with `spanAt(parsed.spans, path)`. The one
 // exception is a beta-reduced function body (see `betaReduce` below): that's a FRESH substituted tree with no
 // counterpart in the original source, so its paths use a synthetic, non-colliding prefix and are not span-
@@ -34,7 +34,7 @@ export type Bound = {
  *  `prev` need an `elem(C)` to return another `elem(C)`; `rank` needs one to return its position. Not in
  *  names.ts's OPERATORS because that table is head-name-only; these three are recognized by literal id whenever
  *  they appear as an ordinary call head (the parser always emits them as `[id, arg]`, never `InvisibleOperator`,
- *  once `id` is registered in the parser's `functions` catalog — see ce/latex.ts's `catalogDictionary`). */
+ *  once `id` is registered in the parser's `functions` catalog — see latex.ts's `catalogDictionary`). */
 export const NEXT_PREV_RANK = new Set(['next', 'prev', 'rank'])
 
 /** Handle-primitives that yield an ELEMENT of the collection their first argument denotes — `random_element(C)`
@@ -220,7 +220,7 @@ function compute(e: Node, path: NodePath, ctx: Ctx): Type {
     if ('op' in opBinding) return typeOp(opBinding.op, a, path, ctx)
     if ('fn' in opBinding) return typeApply(opBinding.fn, a, path, ctx)
     // a CE-native numeric op (Max/Sqrt/Zeta/…) — type its args, result is numeric; ce-engine evaluates it.
-    if ('ce' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('numeric') }
+    if ('kernel' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('numeric') }
     // special
     if (opBinding.special === 'contains') return typeContains(a, path, ctx)
     if (opBinding.special === 'element_at') return typeElementAt(a, path, ctx)
@@ -234,7 +234,7 @@ function compute(e: Node, path: NodePath, ctx: Ctx): Type {
     const argExprs = head(inner) === 'Sequence' ? args(inner) : [inner]
     if (isUserFnHead(fname, ctx.scope)) return typeUserCall(fname, argExprs, path, ctx)
     // `\operatorname{permutations}(4)` — a collection registered as a bare `kind:'symbol'` dictionary entry (see
-    // ce/latex.ts's catalogDictionary) parses the SAME shape a user-fn call does (InvisibleOperator + Delimiter,
+    // latex.ts's catalogDictionary) parses the SAME shape a user-fn call does (InvisibleOperator + Delimiter,
     // never a direct `[coll, ...args]` node), so a parameterized-collection CONSTRUCTION has to be recognized
     // here too, not only in typeGenericApply's direct-call branch. Scope always wins first (a shadowing var
     // named the same as a collection stays multiplication, matching typeSymbol's own scope-before-catalog order).

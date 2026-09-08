@@ -378,7 +378,7 @@ describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () =
     await ne.close()
   })
 
-  it('claims a curated function CE_OPERATORS maps and an int/numeric op — declines a handle and a FROM', () => {
+  it('claims a curated function KERNEL_OPS maps and an int/numeric op — declines a handle and a FROM', () => {
     expect(ce.can({ select: [call('factorial', lit(25))] })).toBe(true)
     expect(ce.can({ select: [op('add', 'numeric', lit(3), lit(4))] })).toBe(true)
 

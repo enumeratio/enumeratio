@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser } from '../src/ce/latex.js'
+import { makeParser } from '../src/latex.js'
 import { normalize, toExpression, symbolsIn, type Node } from '../src/node.js'
 
 const parser = makeParser({ collections: ['permutations'], functions: ['Fibonacci', 'CatalanNumber'] })

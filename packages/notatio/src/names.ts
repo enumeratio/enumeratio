@@ -11,7 +11,7 @@
 // Heads verified empirically against the installed compute-engine (0.125.0) — see the probing note by each
 // non-obvious one; a CE canonical name is not always what you'd guess (`\gcd` → head `"GCD"`, not `"Gcd"`).
 
-export type OperatorBinding = { op: string } | { fn: string } | { special: string } | { ce: string }
+export type OperatorBinding = { op: string } | { fn: string } | { special: string } | { kernel: string }
 
 export const OPERATORS: Record<string, OperatorBinding> = {
   // ── base_operation (algebra.sql) — arithmetic, order, lattice ────────────────────────────────────────────────
@@ -37,33 +37,33 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   GCD: { fn: 'gcd' },   // \gcd(4,6) parses to head "GCD" (both letters caps), NOT "Gcd" — checked live
   LCM: { fn: 'lcm' },   // same shape as GCD — checked live, head is "LCM"
 
-  // ── CE-native math (evaluated by compute-engine, no curated pg twin). `{ce}` = type numeric, evaluate via CE,
+  // ── CE-native math (evaluated by compute-engine, no curated pg twin). `{kernel}` = type numeric, evaluate via CE,
   // ts/pg decline. Rendered as a NUMERIC approximation for now (forced `N`); exact-symbolic display is the
   // follow-up. All heads confirmed against CE 0.125's evaluator. `Abs` is intentionally omitted — `|x|` is
   // handled separately so `|C|` can mean cardinality. `Mod` here is `\bmod`/`\operatorname{mod}` → head "Mod". ──
-  Max: { ce: 'Max' }, Min: { ce: 'Min' },
-  Supremum: { ce: 'Supremum' }, Infimum: { ce: 'Infimum' },   // \sup / \inf over a bounded set
-  Floor: { ce: 'Floor' }, Ceil: { ce: 'Ceil' }, Round: { ce: 'Round' }, Clamp: { ce: 'Clamp' },
-  Mod: { ce: 'Mod' },
+  Max: { kernel: 'Max' }, Min: { kernel: 'Min' },
+  Supremum: { kernel: 'Supremum' }, Infimum: { kernel: 'Infimum' },   // \sup / \inf over a bounded set
+  Floor: { kernel: 'Floor' }, Ceil: { kernel: 'Ceil' }, Round: { kernel: 'Round' }, Clamp: { kernel: 'Clamp' },
+  Mod: { kernel: 'Mod' },
   // (Sign/Heaviside deferred — their CE names collide with existing LatexSyntax dictionary entries, so a plain
   // function registration dup-warns; they need a trigger-only entry — a later pass.)
-  Sqrt: { ce: 'Sqrt' }, Root: { ce: 'Root' },
-  Exp: { ce: 'Exp' }, Ln: { ce: 'Ln' }, Log: { ce: 'Log' },
-  Sin: { ce: 'Sin' }, Cos: { ce: 'Cos' }, Tan: { ce: 'Tan' },
+  Sqrt: { kernel: 'Sqrt' }, Root: { kernel: 'Root' },
+  Exp: { kernel: 'Exp' }, Ln: { kernel: 'Ln' }, Log: { kernel: 'Log' },
+  Sin: { kernel: 'Sin' }, Cos: { kernel: 'Cos' }, Tan: { kernel: 'Tan' },
   // the rest of the trig/hyperbolic/inverse family (each has its own `\`-command; all numeric via CE).
-  Arcsin: { ce: 'Arcsin' }, Arccos: { ce: 'Arccos' }, Arctan: { ce: 'Arctan' },
-  Sec: { ce: 'Sec' }, Csc: { ce: 'Csc' }, Cot: { ce: 'Cot' },
-  Sinh: { ce: 'Sinh' }, Cosh: { ce: 'Cosh' }, Tanh: { ce: 'Tanh' }, Coth: { ce: 'Coth' },
-  Gamma: { ce: 'Gamma' }, Zeta: { ce: 'Zeta' },
-  Factorial2: { ce: 'Factorial2' },   // `n!!` double factorial (postfix `!!`, parses without a word)
+  Arcsin: { kernel: 'Arcsin' }, Arccos: { kernel: 'Arccos' }, Arctan: { kernel: 'Arctan' },
+  Sec: { kernel: 'Sec' }, Csc: { kernel: 'Csc' }, Cot: { kernel: 'Cot' },
+  Sinh: { kernel: 'Sinh' }, Cosh: { kernel: 'Cosh' }, Tanh: { kernel: 'Tanh' }, Coth: { kernel: 'Coth' },
+  Gamma: { kernel: 'Gamma' }, Zeta: { kernel: 'Zeta' },
+  Factorial2: { kernel: 'Factorial2' },   // `n!!` double factorial (postfix `!!`, parses without a word)
   // number-theory / combinatorial heads CE implements natively (integer-valued — confirmed on 0.125). One-arg
   // (Fibonacci/Lucas/Totient/NextPrime/CatalanNumber/BellNumber/NPartition/PrimePi), two-arg (Stirling/StirlingS1/
   // Eulerian/Choose), Multinomial variadic. (Divisors/PrimeFactors→list, IsPrime→bool need non-numeric typing — later.)
-  Fibonacci: { ce: 'Fibonacci' }, Lucas: { ce: 'Lucas' }, Totient: { ce: 'Totient' },
-  NextPrime: { ce: 'NextPrime' }, Multinomial: { ce: 'Multinomial' },
-  CatalanNumber: { ce: 'CatalanNumber' }, BellNumber: { ce: 'BellNumber' }, NPartition: { ce: 'NPartition' },
-  PrimePi: { ce: 'PrimePi' }, Stirling: { ce: 'Stirling' }, StirlingS1: { ce: 'StirlingS1' },
-  Eulerian: { ce: 'Eulerian' }, Choose: { ce: 'Choose' },
+  Fibonacci: { kernel: 'Fibonacci' }, Lucas: { kernel: 'Lucas' }, Totient: { kernel: 'Totient' },
+  NextPrime: { kernel: 'NextPrime' }, Multinomial: { kernel: 'Multinomial' },
+  CatalanNumber: { kernel: 'CatalanNumber' }, BellNumber: { kernel: 'BellNumber' }, NPartition: { kernel: 'NPartition' },
+  PrimePi: { kernel: 'PrimePi' }, Stirling: { kernel: 'Stirling' }, StirlingS1: { kernel: 'StirlingS1' },
+  Eulerian: { kernel: 'Eulerian' }, Choose: { kernel: 'Choose' },
 
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership
@@ -71,8 +71,8 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Count: { special: 'cardinality' },    // `|S|`/`\#S` — collection size
 }
 
-/** CE heads with no curated `base_function` id AND no `{ce}` binding — a bind() encountering one reports "unknown
- *  operator" naming the head. Now EMPTY: the scalar math heads route to CE via `{ce}` (see OPERATORS), and `Abs`
+/** CE heads with no curated `base_function` id AND no `{kernel}` binding — a bind() encountering one reports "unknown
+ *  operator" naming the head. Now EMPTY: the scalar math heads route to CE via `{kernel}` (see OPERATORS), and `Abs`
  *  is the one head handled OUTSIDE OPERATORS — `|C|` over a handle is cardinality, scalar `|x|` is CE's Abs (both
  *  special-cased in bind.ts/lower.ts so the `|` overload can mean either). Kept as a deliberate-omission marker. */
 export const UNMAPPED_HEADS_NO_CURATED_ID = [] as const

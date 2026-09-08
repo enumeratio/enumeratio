@@ -1,4 +1,4 @@
-// MathJSON is the wire format compute-engine's LaTeX parser produces (see `ce/latex.ts`, the only module that
+// MathJSON is the wire format compute-engine's LaTeX parser produces (see `latex.ts`, the only module that
 // touches compute-engine directly). Everything else in this package works over these plain types plus the small
 // `Stmt`/`Parsed` envelope below.
 export type {

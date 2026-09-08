@@ -106,7 +106,7 @@ export type Scope = Map<string, Binding>
 export type TypeError_ = { span?: Span; path?: NodePath; message: string }
 
 /** A statement's own expression sits at a fixed child position of the tree the PARSER actually produced (before
- *  `splitStmt` pulled it apart — see ce/latex.ts): `declare`'s domain and `define`'s body are both the SECOND
+ *  `splitStmt` pulled it apart — see latex.ts): `declare`'s domain and `define`'s body are both the SECOND
  *  argument of a 2-arg `Element`/`Equal` node (child index 2, since index 0 is the head); a plain `expr`'s body
  *  IS the whole parsed tree (root, `''`). Using this prefix (instead of resetting to `''`) is what keeps bind.ts's
  *  and lower.ts's `NodePath`s aligned with `Parsed.spans`, computed against the untouched original tree. */

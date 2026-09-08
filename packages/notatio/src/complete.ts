@@ -1,9 +1,9 @@
 // Autocomplete over LaTeX text before the caret. Pure text-in/candidates-out — no compute-engine dependency (see
-// ce/latex.ts for the only module that touches it); this only needs the catalog's id lists and the caller's
+// latex.ts for the only module that touches it); this only needs the catalog's id lists and the caller's
 // binder-resolved scope. MathLive spells a typed identifier as adjacent plain-letter chars, so most of the work
 // here is finding the right trailing "word" to treat as a prefix.
-import type { CatalogNames } from './ce/latex.js'
-import { pascalCase, serializeLatex } from './ce/latex.js'
+import type { CatalogNames } from './latex.js'
+import { pascalCase, serializeLatex } from './latex.js'
 
 export type CompletionContext = {
   catalog: CatalogNames & { stats?: (coll: string) => string[]; maps?: (coll: string) => string[] }

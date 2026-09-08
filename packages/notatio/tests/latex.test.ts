@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { makeParser, reformatIdentifiers, identifierDisplay, type IdentifierDisplay } from '../src/ce/latex.js'
+import { makeParser, reformatIdentifiers, identifierDisplay, type IdentifierDisplay } from '../src/latex.js'
 import { toCalcText, toLatex, toMathJsonString } from '../src/format.js'
 import { spanAt } from '../src/ast.js'
 import type { Expression } from '../src/ast.js'
@@ -12,7 +12,7 @@ const parser = makeParser({
 })
 
 /** The MathJSON of the top-level payload — `body` for `expr`/`define`, `["Element", name, domain]` for
- *  `declare` — as stable JSON, sidestepping the boxed-leaf span carriers entirely (see ce/latex.ts). */
+ *  `declare` — as stable JSON, sidestepping the boxed-leaf span carriers entirely (see latex.ts). */
 function shape(latex: string): { kind: string; json: string } {
   const parsed = parser.parse(latex)
   const { stmt } = parsed
