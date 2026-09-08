@@ -44,7 +44,9 @@ const HANDLE_ELEM = new Set(['random_element', 'unrank'])
 
 /** Ops whose result is a list (typed `integer[]`): our own scramble/random_sample, plus the list operations CE
  *  canonicalizes to its Pascal heads (Join/Sort/Unique) at parse time. */
-const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'Join', 'Sort', 'Unique'])
+// Heads arrive as their LOWERCASE catalog id now (the dictionary names catalog ids in snake_case even though they
+// DISPLAY PascalCase) — so join/sort/unique here are lowercase, not the CE-canonicalized Pascal they once were.
+const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'join', 'sort', 'unique'])
 
 /** List reductions evaluating to a SCALAR — Sum/Min/Max/Product over a list, First/Last of one. Unlike
  *  join/sort/unique, CE does NOT canonicalize these operator names, so the head stays our lowercase id. Typed

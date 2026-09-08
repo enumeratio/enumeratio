@@ -68,7 +68,9 @@ const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_
 // List operations CE canonicalizes to its own Pascal heads at parse time — we claim them and pass straight through
 // to CE, which evaluates them: Join = concat, Sort, Unique = order-preserving dedup (list results); Sum / Min /
 // Max / Product / First / Last (scalar reductions of a list).
-const CE_LIST_OPS = new Set(['Join', 'Sort', 'Unique', 'sum', 'total', 'min', 'max', 'first', 'last'])
+// Lowercase catalog ids (the dictionary names ids snake_case even where they DISPLAY Pascal); ce-enum capitalizes
+// each to its CE operator (join→Join, sort→Sort, …) below.
+const CE_LIST_OPS = new Set(['join', 'sort', 'unique', 'sum', 'total', 'min', 'max', 'first', 'last'])
 
 /** A translated node: the CE expression, plus — when it denotes a located ELEMENT — the collection it lives in and
  *  its 0-based rank, so an enclosing `rank`/`next`/`prev` reads them off instead of re-deriving. */

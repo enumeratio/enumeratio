@@ -221,6 +221,9 @@ export class EnumeratioNotebook extends LitElement {
     const entityMap = new Map<string, IdentifierDisplay>()
     for (const id of nb.names.functions) for (const s of [id, pascalCase(id)]) entityMap.set(s, identifierDisplay(id, 'function', notation))
     for (const id of nb.names.collections) for (const s of [id, pascalCase(id)]) if (!entityMap.has(s)) entityMap.set(s, identifierDisplay(id, 'collection', notation))
+    // Syntax keywords render upright via `\operatorname{}` (they're not catalog ids, so identifierDisplay wouldn't
+    // reach them) — so `for`/`with` in a comprehension/substitution read as keywords, not italic variables.
+    for (const kw of ['for', 'with']) entityMap.set(kw, { kind: 'operator', latex: `\\operatorname{${kw}}` })
     this.classify = (run) => entityMap.get(run) ?? null
     const idSet = new Set<string>([...nb.names.functions, ...nb.names.collections])
     this.spellHead = (s) => (idSet.has(s) ? pascalCase(s) : s)
