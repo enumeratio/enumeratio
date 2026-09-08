@@ -141,8 +141,12 @@ async function build(): Promise<NotebookCatalog> {
   if (collSet.has('integer_numbers')) symbols['\\mathbb{Z}'] = 'integer_numbers'
   if (collSet.has('rational_numbers')) symbols['\\mathbb{Q}'] = 'rational_numbers'
 
+  // CE-native ops with NO short LaTeX command (unlike \max/\sqrt/\zeta) — registered as parser functions so a
+  // typed word `Fibonacci(10)` parses to the `Fibonacci` head (which names.ts's OPERATORS binds via `{ce}`); the
+  // ops that DO have a latex command / canonicalization already parse without this.
+  const CE_WORD_OPS = ['Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial'] as const
   const functionIds = [
-    ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES]),
+    ...new Set([...reg.base.functions.map((f) => f.id), ...GENERIC_PRIMITIVES, ...CE_WORD_OPS]),
   ]
 
   // Seeded math NOTATION (id -> display LaTeX). Where present it replaces the `\operatorname{<Pascal>}` spelling

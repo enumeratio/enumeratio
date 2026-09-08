@@ -48,6 +48,10 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Exp: { ce: 'Exp' }, Ln: { ce: 'Ln' }, Log: { ce: 'Log' },
   Sin: { ce: 'Sin' }, Cos: { ce: 'Cos' }, Tan: { ce: 'Tan' },
   Gamma: { ce: 'Gamma' }, Zeta: { ce: 'Zeta' },
+  // number-theory heads CE implements natively (integer-valued — confirmed on 0.125). Fibonacci/Lucas/Totient/
+  // NextPrime take one arg; Multinomial is variadic. (Divisors→list, IsPrime→bool need non-numeric typing — later.)
+  Fibonacci: { ce: 'Fibonacci' }, Lucas: { ce: 'Lucas' }, Totient: { ce: 'Totient' },
+  NextPrime: { ce: 'NextPrime' }, Multinomial: { ce: 'Multinomial' },
 
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership

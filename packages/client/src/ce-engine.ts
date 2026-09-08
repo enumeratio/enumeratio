@@ -53,11 +53,12 @@ export const CE_OPERATORS: Record<string, string> = {
   Max: 'Max', Min: 'Min', Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Mod: 'Mod',
   Sqrt: 'Sqrt', Root: 'Root', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
   Sin: 'Sin', Cos: 'Cos', Tan: 'Tan', Gamma: 'Gamma', Zeta: 'Zeta',
+  Fibonacci: 'Fibonacci', Lucas: 'Lucas', Totient: 'Totient', NextPrime: 'NextPrime', Multinomial: 'Multinomial',
 }
 
 /** CE-native op heads (names.ts `{ce}` bindings): claimed by ce with no curated base_function row — CE evaluates
  *  them. Kept in sync with the `{ce}` entries in OPERATORS. */
-const CE_NATIVE = new Set(['Max', 'Min', 'Floor', 'Ceil', 'Round', 'Mod', 'Sqrt', 'Root', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Gamma', 'Zeta'])
+const CE_NATIVE = new Set(['Max', 'Min', 'Floor', 'Ceil', 'Round', 'Mod', 'Sqrt', 'Root', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Gamma', 'Zeta', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>

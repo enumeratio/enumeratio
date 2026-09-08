@@ -3,7 +3,7 @@
 // judgements of its own, only PURE recomputations of what bind.ts already proved valid (see opTypeForLower) so it
 // never needs a Catalog — same reasoning as the header note in types.ts.
 import { args, head, isNumber, isSymbol, numberValue, symbolName, type Expression, type NodePath } from './ast.js'
-import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, summationRange, type Bound } from './bind.js'
+import { betaReduce, comprehensionDomain, gcdLcmFn, isUserFnHead, NEXT_PREV_RANK, rangeValues, summationRange, type Bound } from './bind.js'
 import { OPERATORS } from './names.js'
 import {
   ALGEBRA_ONLY_OPS, COMPARE_OPS, argPath, effectivePg, isNumericKind, numericResultPg, rootPrefix,
@@ -135,6 +135,13 @@ function lowerExpr(e: Expression, path: NodePath, scope: Scope, types: Map<NodeP
       const n = numberValue(el)
       if (!seen.has(n)) { seen.add(n); vals.push(n) }
     }
+    return { kind: 'lit', value: vals }
+  }
+
+  // A list range `[1..4]` → CE `["Range", lo, hi, step?]` → the int array it denotes.
+  if (h === 'Range') {
+    const vals = rangeValues(a)
+    if (!vals) throw new Error('a range needs literal numeric bounds, e.g. [1..4]')
     return { kind: 'lit', value: vals }
   }
 

@@ -76,6 +76,18 @@ export function summationRange(tuple: Expression): { varName: string; values: Ex
   return { varName: symbolName(v), values }
 }
 
+/** Expand a CE `["Range", lo, hi, step?]`'s argument list to the integers it denotes (inclusive), or null if the
+ *  bounds aren't literal numbers. Shared by lower's Range case (and the same shape `comprehensionDomain` uses for a
+ *  Range domain). */
+export function rangeValues(rangeArgs: Expression[]): number[] | null {
+  const [lo, hi, step] = rangeArgs.map((x) => (isNumber(x) ? numberValue(x) : NaN))
+  const s = Number.isFinite(step) ? step : 1
+  if (!Number.isFinite(lo) || !Number.isFinite(hi) || s === 0) return null
+  const out: number[] = []
+  for (let v = lo; s > 0 ? v <= hi : v >= hi; v += s) { out.push(v); if (out.length > 100000) break }
+  return out
+}
+
 /** The values a `for` comprehension iterates, when they can be enumerated at bind/lower time: a literal `List`'s
  *  items, or a `Range[lo, hi, step?]` expanded to numbers. Otherwise null (a non-literal domain isn't unrollable
  *  in this pass). Shared by bind + lower so both unroll to the identical element set. */
@@ -305,6 +317,10 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     for (let i = 0; i < a.length; i++) typeNode(a[i], argPath(path, i), ctx)
     return scalarType('integer[]')
   }
+
+  // A list range `[1..4]` / `[1,3..9]` → CE `["Range", lo, hi, step?]` (CE parses the `..` syntax for us). We
+  // expand it to an int array at lowering; typed like a list.
+  if (h === 'Range') return scalarType('integer[]')
 
   // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`. Evaluated by UNROLLING the literal range
   // and summing (same beta-reduction as a `for` comprehension), so `i` is bound, not a free symbol.
