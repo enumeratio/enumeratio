@@ -7,7 +7,7 @@ library's own O(1) handlers. Names are **PascalCase** (`Bell`, `RandomElement`, 
 Nothing round-trips to SQL. Edit any line — everything downstream of it recomputes.
 
 <ClientOnly>
-<enumeratio-notebook storage-key="docs-notebook-demo" value='{"lines":[
+<enumeratio-notebook value='{"lines":[
   {"id":"l1","latex":"\\binom{6}{2}"},
   {"id":"l2","latex":"Bell(4)"},
   {"id":"l3","latex":"CatalanNumber(5)"},

@@ -67,7 +67,7 @@ suggests collection names, function names, and the current scope's own symbols.
 ## Usage
 
 <ClientOnly>
-<enumeratio-notebook storage-key="docs-expression-set-demo" value='{"lines":[
+<enumeratio-notebook value='{"lines":[
   {"id":"d1","latex":"\\operatorname{bell}(4)"},
   {"id":"d2","latex":"\\binom{6}{2}"},
   {"id":"d3","latex":"f(n) = n^2 + 1"},
