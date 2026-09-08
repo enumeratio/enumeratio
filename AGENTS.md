@@ -64,7 +64,8 @@ before it; the build is the long pole. VitePress `base` is unset (`/`), so the s
 `enumeratio.dev` and the `*.pages.dev` hosts. Needs repo secrets `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`
 and a direct-upload Pages project (`enumeratio`). CF never auto-expires deployments, so `preview-cleanup.yml`
 deletes them: on `pull_request: closed` (merge or plain close) it removes every deploy stamped with the PR number;
-a manual `workflow_dispatch` (branch input) instead purges by branch metadata, across all envs.
+a manual `workflow_dispatch` instead purges by branch metadata or by deployment-id prefix (the `<hash>` in
+`<hash>.enumeratio.pages.dev`), across all envs.
 
 Per-pack isolation + additivity is a release gate (`release.yml`, on `v*` tags + dispatch) plus the nightly deep
 sweep — NOT per-PR. Every PR still runs the full complete-catalog example suite (`ci.yml` `core`) and pack-lint.
