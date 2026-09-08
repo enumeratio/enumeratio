@@ -33,6 +33,7 @@ const ERROR_SHOW_DELAY_MS = 350
 export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String, attribute: 'line-id' }) lineId = ''
   @property({ type: String }) latex = ''
+  @property({ type: Number }) index = 0
   @property({ attribute: false }) completer: Completer | null = null
   @property({ attribute: false }) state: LineState = {}
 
@@ -81,6 +82,18 @@ export class EnumeratioExpressionLine extends LitElement {
     this.astOpen = !this.astOpen
   }
 
+  // Reorder by dragging the row number. The set owns the actual reordering (line-reorder → onLineReorder).
+  private onDragStart = (ev: DragEvent): void => {
+    ev.dataTransfer?.setData('text/plain', this.lineId)
+    if (ev.dataTransfer) ev.dataTransfer.effectAllowed = 'move'
+  }
+  private onDragOver = (ev: DragEvent): void => { ev.preventDefault() }
+  private onDrop = (ev: DragEvent): void => {
+    ev.preventDefault()
+    const sourceId = ev.dataTransfer?.getData('text/plain')
+    if (sourceId && sourceId !== this.lineId) this.emit('line-reorder', { sourceId, targetId: this.lineId })
+  }
+
   private hideError(): void {
     if (this.errorTimer) { clearTimeout(this.errorTimer); this.errorTimer = null }
     this.showError = false
@@ -111,21 +124,25 @@ export class EnumeratioExpressionLine extends LitElement {
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
     return html`
-      <div class="line" @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}>
-        <div class="field">
-          <enumeratio-math-input
-            .latex=${this.latex}
-            .completer=${this.completer}
-            @enumeratio-input=${this.onInput}
-            @enumeratio-commit=${this.onCommit}
-            @enumeratio-move=${this.onMove}
-          ></enumeratio-math-input>
-          ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
+      <div class="line" @keydown=${this.onKeydownCapture} @contextmenu=${this.onContextMenu}
+           @dragover=${this.onDragOver} @drop=${this.onDrop}>
+        <span class="rownum" draggable="true" @dragstart=${this.onDragStart} title="drag to reorder">${this.index}</span>
+        <div class="body">
+          <div class="field">
+            <enumeratio-math-input
+              .latex=${this.latex}
+              .completer=${this.completer}
+              @enumeratio-input=${this.onInput}
+              @enumeratio-commit=${this.onCommit}
+              @enumeratio-move=${this.onMove}
+            ></enumeratio-math-input>
+            ${!errVisible && s.type ? html`<span class="type">${s.type}</span>` : ''}
+          </div>
+          <div class="value">
+            ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
+          </div>
+          ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         </div>
-        <div class="value">
-          ${s.busy ? html`<span class="hint">…</span>` : hasValue ? html`<span class="eq">=</span> ${s.value}` : ''}
-        </div>
-        ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
         ${this.astOpen && s.ast
           ? html`<div class="ast" @click=${() => (this.astOpen = false)} title="click to close — this is the parsed FullForm"><pre>${s.ast}</pre></div>`
           : ''}
@@ -140,8 +157,30 @@ export class EnumeratioExpressionLine extends LitElement {
     }
     .line {
       position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
       padding: 0.4rem 0.5rem;
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
+    }
+    /* The row number doubles as the drag handle (Desmos-style) — no ⋮⋮, just the index. */
+    .rownum {
+      flex: 0 0 auto;
+      min-width: 1.4rem;
+      text-align: right;
+      padding-top: 0.55rem;
+      font-size: 0.85em;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+      opacity: 0.5;
+      cursor: grab;
+      user-select: none;
+    }
+    .rownum:active {
+      cursor: grabbing;
+    }
+    .body {
+      flex: 1 1 auto;
+      min-width: 0;
     }
     /* The field is the full row, so every field in a notebook is exactly the same width. */
     .field {

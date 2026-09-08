@@ -402,9 +402,10 @@ export class EnumeratioNotebook extends LitElement {
     return html`
       <div class="set">
         ${this.displayOrder.map(
-          (id) => html`
+          (id, i) => html`
             <enumeratio-expression-line
               line-id=${id}
+              .index=${i + 1}
               .latex=${this.latexById.get(id) ?? ''}
               .completer=${completer}
               .state=${this.results.get(id) ?? {}}
