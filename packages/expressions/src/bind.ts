@@ -51,6 +51,24 @@ const LIST_RESULT_OPS = new Set(['scramble', 'random_sample', 'Join', 'Sort', 'U
  *  `numeric` (the value-refined badge then reads ∈ ℕ/ℤ/ℝ). */
 const LIST_SCALAR_OPS = new Set(['sum', 'min', 'max', 'first', 'last'])
 
+/** The values a `for` comprehension iterates, when they can be enumerated at bind/lower time: a literal `List`'s
+ *  items, or a `Range[lo, hi, step?]` expanded to numbers. Otherwise null (a non-literal domain isn't unrollable
+ *  in this pass). Shared by bind + lower so both unroll to the identical element set. */
+export function comprehensionDomain(elem: Expression): Expression[] | null {
+  const domain = args(elem)[1]
+  if (!domain) return null
+  if (head(domain) === 'List') return args(domain)
+  if (head(domain) === 'Range') {
+    const [lo, hi, step] = args(domain).map((x) => (isNumber(x) ? numberValue(x) : NaN))
+    const s = Number.isFinite(step) ? step : 1
+    if (!Number.isFinite(lo) || !Number.isFinite(hi) || s === 0) return null
+    const out: Expression[] = []
+    for (let v = lo; s > 0 ? v <= hi : v >= hi; v += s) out.push(v)
+    return out
+  }
+  return null
+}
+
 /** Deep-substitute a user function's params with the caller's ARGUMENT EXPRESSIONS (not their values — this is
  *  syntactic beta-reduction, substitute-then-type, matching bind.test.ts's `f(3)` case). `prefix` is a synthetic
  *  NodePath namespace for the freshly-built tree: it can't reuse the call site's own paths (those belong to the
@@ -227,6 +245,21 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
   // carrier value. Its elements are typed for error-checking.
   if (h === 'List') {
     for (let i = 0; i < a.length; i++) typeNode(a[i], argPath(path, i), ctx)
+    return scalarType('integer[]')
+  }
+
+  // A `for` list comprehension: `[expr for i=[…]]` → CE `Comprehension[expr, Element[i, domain]]`. Evaluated by
+  // UNROLLING over a LITERAL domain — beta-reduce `expr` with the bound var set to each domain value (reusing the
+  // exact user-function substitution machinery), so each element becomes an ordinary typed/lowered expression. A
+  // non-literal domain is declined for now (needs a runtime-length unroll, out of this pass).
+  if (h === 'Comprehension' && a.length === 2 && head(a[1]) === 'Element') {
+    const domVals = comprehensionDomain(a[1])
+    if (!domVals) { ctx.errors(path, 'a `for` domain must be a literal list, e.g. [1, 2, 3]'); return UNKNOWN }
+    const varName = symbolName(args(a[1])[0])
+    domVals.forEach((v, i) => {
+      const { expr: sub, prefix } = betaReduce([varName], a[0], [v], argPath(path, i))
+      typeNode(sub, prefix, ctx)
+    })
     return scalarType('integer[]')
   }
 

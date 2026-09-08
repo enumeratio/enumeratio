@@ -139,6 +139,8 @@ function translate(ce: CE, e: SelectExpr): Trans {
       // Join/Sort/Unique come in already-Pascal (CE canonicalized them); sum/min/max/… stay lowercase — capitalize
       // to the CE operator either way, then pass through for CE to evaluate.
       if (CE_LIST_OPS.has(id)) return { ce: fn(id[0].toUpperCase() + id.slice(1), e.args.map((a) => translate(ce, a).ce)) }
+      // A `List` apply (from a `for` comprehension's unroll) → a CE List of the translated element expressions.
+      if (id === 'List') return { ce: fn('List', e.args.map((a) => translate(ce, a).ce)) }
       // a scalar identity (bell, binomial, gcd, …)
       return { ce: fn(SCALAR_FN[id], e.args.map((a) => translate(ce, a).ce)) }
     }
@@ -173,7 +175,7 @@ function rejectTree(e: SelectExpr, seen: { coll: boolean }): string | undefined 
     }
     case 'apply': {
       const id = String(e.fn)
-      if (ENUM_PRIMS.has(id) || CE_LIST_OPS.has(id)) seen.coll = true
+      if (id === 'List' || ENUM_PRIMS.has(id) || CE_LIST_OPS.has(id)) seen.coll = true
       else if (!SCALAR_FN[id]) return `ce-enum has no operator for "${id}"`
       for (const a of e.args) { const bad = rejectTree(a, seen); if (bad) return bad }
       return undefined
