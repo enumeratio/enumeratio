@@ -71,16 +71,11 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Count: { special: 'cardinality' },    // `|S|`/`\#S` — collection size
 }
 
-/** CE heads probed and found to have NO curated `base_function` id — `identities.sql`/`function_impls.sql` only
- *  ever register `factorial`/`binomial`/`gcd`/`lcm` among the "named identity" functions this table draws from.
- *  Deliberately OMITTED from OPERATORS rather than guessed at: binding e.g. `Sqrt` to a made-up id would silently
- *  print a function pg-engine can never resolve. A bind() encountering one of these heads reports "unknown
- *  operator" naming the head, same as any other unmapped one — flagged here so the omission reads as deliberate,
- *  not missed. (main thread: if any of these should route to a pg builtin directly rather than a curated
- *  identity, that's a distinct engine-level decision, not a naming-table one.)
- *  Sqrt, Root, Floor, Ceil, Abs, Mod, Min, Max
- */
-export const UNMAPPED_HEADS_NO_CURATED_ID = ['Abs'] as const // the rest now route to CE via `{ce}` (see OPERATORS)
+/** CE heads with no curated `base_function` id AND no `{ce}` binding — a bind() encountering one reports "unknown
+ *  operator" naming the head. Now EMPTY: the scalar math heads route to CE via `{ce}` (see OPERATORS), and `Abs`
+ *  is the one head handled OUTSIDE OPERATORS — `|C|` over a handle is cardinality, scalar `|x|` is CE's Abs (both
+ *  special-cased in bind.ts/lower.ts so the `|` overload can mean either). Kept as a deliberate-omission marker. */
+export const UNMAPPED_HEADS_NO_CURATED_ID = [] as const
 
 // ── builtin symbols: bare CE symbols that denote a catalog SET rather than a scope variable ─────────────────────
 export type BuiltinSymbolBinding =

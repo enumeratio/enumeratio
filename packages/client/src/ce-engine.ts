@@ -52,7 +52,7 @@ export const CE_OPERATORS: Record<string, string> = {
   // notebook renders them as a numeric approximation for now (see `numericFallback`).
   Max: 'Max', Min: 'Min', Supremum: 'Supremum', Infimum: 'Infimum',
   Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Clamp: 'Clamp', Mod: 'Mod',
-  Sqrt: 'Sqrt', Root: 'Root', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
+  Sqrt: 'Sqrt', Root: 'Root', Abs: 'Abs', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
   Sin: 'Sin', Cos: 'Cos', Tan: 'Tan',
   Arcsin: 'Arcsin', Arccos: 'Arccos', Arctan: 'Arctan', Sec: 'Sec', Csc: 'Csc', Cot: 'Cot',
   Sinh: 'Sinh', Cosh: 'Cosh', Tanh: 'Tanh', Coth: 'Coth',
@@ -64,7 +64,7 @@ export const CE_OPERATORS: Record<string, string> = {
 
 /** CE-native op heads (names.ts `{ce}` bindings): claimed by ce with no curated base_function row — CE evaluates
  *  them. Kept in sync with the `{ce}` entries in OPERATORS. */
-const CE_NATIVE = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sqrt', 'Root', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
+const CE_NATIVE = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>

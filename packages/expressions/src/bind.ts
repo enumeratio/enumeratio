@@ -272,9 +272,10 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
     return base.k === 'handle' ? elemTypeFor(base.coll, base.handle, ctx) : UNKNOWN
   }
 
-  // `|C|` over a collection/fiber handle is its CARDINALITY (a natural number) — `|` parses to `Abs`, which is
-  // otherwise a scalar absolute value (left to the existing path for a non-handle argument).
+  // `|C|` over a collection/fiber handle is its CARDINALITY (a natural number) — `|` parses to `Abs`. Over a
+  // scalar, `|x|` is the absolute value, evaluated by CE (see the `Abs` entries in ce-engine).
   if (h === 'Abs' && a.length === 1 && argT(0).k === 'handle') return scalarType('natural_number')
+  if (h === 'Abs' && a.length === 1) return scalarType('numeric')
 
   // List-valued ops → an int array: random_shuffle/random_sample plus the list operations CE canonicalizes to its own
   // Pascal heads at parse time (join→Join, sort→Sort, unique→Unique). Arguments typed for error-checking.
@@ -322,11 +323,12 @@ function compute(e: Expression, path: NodePath, ctx: Ctx): Type {
   // expand it to an int array at lowering; typed like a list.
   if (h === 'Range') return scalarType('integer[]')
 
-  // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`. Evaluated by UNROLLING the literal range
-  // and summing (same beta-reduction as a `for` comprehension), so `i` is bound, not a free symbol.
-  if (h === 'Sum' && a.length === 2) {
+  // A big-∑ `\sum_{i=lo}^{hi} body` → CE `Sum[body, Tuple(i, lo, hi)]`, and the big-∏ `\prod_…` → `Product[…]`
+  // (same shape). Evaluated by UNROLLING the literal range (same beta-reduction as a `for` comprehension), so `i`
+  // is bound, not a free symbol.
+  if ((h === 'Sum' || h === 'Product') && a.length === 2) {
     const range = summationRange(a[1])
-    if (!range) { ctx.errors(path, 'a ∑ needs a literal integer range, e.g. \\sum_{i=1}^{n} with numeric bounds'); return UNKNOWN }
+    if (!range) { ctx.errors(path, `a ${h === 'Sum' ? '∑' : '∏'} needs a literal integer range, e.g. \\sum_{i=1}^{n} with numeric bounds`); return UNKNOWN }
     range.values.forEach((v, i) => {
       const { expr: sub, prefix } = betaReduce([range.varName], a[0], [v], argPath(path, i))
       typeNode(sub, prefix, ctx)

@@ -174,9 +174,20 @@ describe('bind: errors', () => {
     }
   })
 
-  it('an unmapped head with no CE binding still reports "unknown operator" naming the head', () => {
-    const bound = bind(parser.parse('|x|'), new Map(), catalog) // Abs on a scalar stays unmapped
+  it('scalar |x| is absolute value (numeric)', () => {
+    expect(bind(parser.parse('|-5|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
+    expect(bind(parser.parse('|3-10|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
+  })
+
+  it('an unknown head with no binding reports "unknown operator"', () => {
+    const bound = bind(parser.parse('\\operatorname{NoSuchOp}(1)'), new Map(), catalog)
     expect(bound.errors.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('a big-∏ \\prod binds numeric (mirrors ∑)', () => {
+    const bound = bind(parser.parse('\\prod_{i=1}^{5} i'), new Map(), catalog)
+    expect(bound.errors).toEqual([])
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'numeric' })
   })
 
   it('mismatched arity against a curated function reports the expected count', () => {
