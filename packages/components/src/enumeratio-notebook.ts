@@ -810,23 +810,6 @@ export class EnumeratioNotebook extends LitElement {
                   title="Undo" aria-label="Undo">↺</button>
           <button class="tool" ?disabled=${!this.canRedo} @click=${() => void this.redo()}
                   title="Redo" aria-label="Redo">↻</button>
-          <button class="tool ${this.vkOn ? 'on' : ''}"
-                  @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => this.toggleVirtualKeyboard()}
-                  title="Virtual keyboard" aria-label="Virtual keyboard">⌨</button>
-          <div class="menuwrap">
-            <button class="tool ${this.menuOpen ? 'on' : ''}" ?disabled=${!this.activeLineId}
-                    @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => (this.menuOpen = !this.menuOpen)}
-                    title="Cell menu" aria-label="Cell menu">☰</button>
-            ${this.menuOpen && this.activeLineId
-              ? html`<div class="menu" @mousedown=${(e: MouseEvent) => e.preventDefault()}>
-                  <button @click=${() => this.menuAction('duplicate')}>Duplicate</button>
-                  <button @click=${() => this.menuAction('clear')}>Clear</button>
-                  <button @click=${() => this.menuAction('delete')} ?disabled=${this.displayOrder.length <= 1}>Delete</button>
-                </div>`
-              : ''}
-          </div>
-        </div>
-        <div class="tools-right">
           ${this.hasActions
             ? html`<button class="tool ${this.tickerOn ? 'on' : ''}" @click=${() => this.toggleTicker()}
                      title=${this.tickerOn ? 'Stop ticker' : 'Start ticker (run actions repeatedly)'}
@@ -836,6 +819,23 @@ export class EnumeratioNotebook extends LitElement {
                   title="Add line" aria-label="Add line">+</button>
           <button class="tool" ?disabled=${!this.usesRandom} @click=${() => void this.reshuffle()}
                   title="Reshuffle" aria-label="Reshuffle">⤮</button>
+        </div>
+        <div class="tools-right">
+          <button class="tool ${this.vkOn ? 'on' : ''}"
+                  @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => this.toggleVirtualKeyboard()}
+                  title="Virtual keyboard" aria-label="Virtual keyboard">⌨</button>
+          <div class="menuwrap">
+            <button class="tool ${this.menuOpen ? 'on' : ''}" ?disabled=${!this.activeLineId}
+                    @mousedown=${(e: MouseEvent) => e.preventDefault()} @click=${() => (this.menuOpen = !this.menuOpen)}
+                    title="Cell menu" aria-label="Cell menu">☰</button>
+            ${this.menuOpen && this.activeLineId
+              ? html`<div class="menu right" @mousedown=${(e: MouseEvent) => e.preventDefault()}>
+                  <button @click=${() => this.menuAction('duplicate')}>Duplicate</button>
+                  <button @click=${() => this.menuAction('clear')}>Clear</button>
+                  <button @click=${() => this.menuAction('delete')} ?disabled=${this.displayOrder.length <= 1}>Delete</button>
+                </div>`
+              : ''}
+          </div>
         </div>
       </div>
     `

@@ -31,7 +31,11 @@ collection's cardinality and a running sum. (Broader CE math — `\max`, `\sqrt`
   {"id":"n2","latex":"lcm(8,12)"},
   {"id":"n3","latex":"\\binom{20}{10}"},
   {"id":"n4","latex":"\\left|Permutations(6)\\right|"},
-  {"id":"n5","latex":"\\sum_{k=1}^{10}k"}
+  {"id":"n5","latex":"\\sum_{k=1}^{10}k"},
+  {"id":"n6","latex":"\\sum_{k=0}^{5}\\binom{5}{k}"},
+  {"id":"n7","latex":"total([k^2 for k=[1,2,3,4,5]])"},
+  {"id":"n8","latex":"Bell(5)+CatalanNumber(5)"},
+  {"id":"n9","latex":"\\frac{20!}{10! \\cdot 10!}"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
