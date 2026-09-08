@@ -339,8 +339,9 @@ export const enumeratioLibrary: LibraryDefinition = {
       },
     },
 
-    // Shuffle(list) — a uniform random permutation of a List's items (Fisher–Yates on the seeded rng).
-    Shuffle: {
+    // Scramble(list) — a uniform random permutation of a List's items (Fisher–Yates on the seeded rng). NOT named
+    // `Shuffle`: CE reserves that head (it canonicalizes to an unimplemented `RandomShuffle`), so we bind our own.
+    Scramble: {
       signature: "(collection) -> collection",
       evaluate: (ops: ReadonlyArray<Expression>) => {
         const src: any = ops[0];

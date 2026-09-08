@@ -64,7 +64,7 @@ const SCALAR_FN: Record<string, string> = {
   partition_number: 'PartitionsP',
 }
 
-const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count'])
+const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count', 'scramble', 'random_sample'])
 
 /** A translated node: the CE expression, plus — when it denotes a located ELEMENT — the collection it lives in and
  *  its 0-based rank, so an enclosing `rank`/`next`/`prev` reads them off instead of re-deriving. */
@@ -127,6 +127,11 @@ function translate(ce: CE, e: SelectExpr): Trans {
       }
       if (id === 'random_element') return { ce: fn('RandomElement', [translate(ce, e.args[0]).coll]) }
       if (id === 'cardinality' || id === 'count') return { ce: fn('Length', [translate(ce, e.args[0]).coll]) }
+      if (id === 'scramble') return { ce: fn('Scramble', [translate(ce, e.args[0]).ce]) }
+      if (id === 'random_sample') {
+        const h = translate(ce, e.args[0])
+        return { ce: fn('RandomSample', [h.coll, translate(ce, e.args[1]).ce]) }
+      }
       // a scalar identity (bell, binomial, gcd, …)
       return { ce: fn(SCALAR_FN[id], e.args.map((a) => translate(ce, a).ce)) }
     }

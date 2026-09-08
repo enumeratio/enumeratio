@@ -18,7 +18,7 @@ import type { CompletionContext } from '@enumeratio/expressions'
 
 /** Generic engine primitives dispatched by head name (bind.ts's NEXT_PREV_RANK plus the handle-level ones) — not
  *  per-collection, so these are known up front rather than discovered lazily like stats/maps. */
-const GENERIC_PRIMITIVES = ['next', 'prev', 'rank', 'locate', 'unrank', 'random_element'] as const
+const GENERIC_PRIMITIVES = ['next', 'prev', 'rank', 'locate', 'unrank', 'random_element', 'scramble', 'random_sample'] as const
 
 export type NotebookCatalog = {
   catalog: Catalog

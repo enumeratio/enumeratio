@@ -101,7 +101,7 @@ describe("library shape", () => {
       "ParkingFunctions", "IncreasingTrees", "CompositionsIntoParts1And2", "CompositionsIntoOddParts",
       "PartitionsIntoAtMostKParts", "GrandDyckPaths", "BalancedBinaryStrings", "CompositionsBoundedParts",
       "PalindromicBinaryStrings", "Power", "Product", "Concat", "Window", "Reversed", "Rotated", "Zip",
-      "Rank", "RandomElement", "Shuffle", "RandomSample", "Inversions"]) {
+      "Rank", "RandomElement", "Scramble", "RandomSample", "Inversions"]) {
       expect(heads).toContain(h);
     }
   });

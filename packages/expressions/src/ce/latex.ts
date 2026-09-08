@@ -342,6 +342,11 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
     const p = pascalCase(id)
     if (p !== id && !catalogIds.has(p) && !aliases.has(p)) aliases.set(p, id)
   }
+  // Friendly spellings for ids CE's parser would otherwise canonicalize to a reserved builtin: `shuffle` /
+  // `Shuffle` -> our `scramble` (CE reserves `Shuffle`, mapping it to an unimplemented `RandomShuffle`).
+  for (const [word, id] of [['shuffle', 'scramble'], ['Shuffle', 'scramble']] as const) {
+    if (catalogIds.has(id) && !catalogIds.has(word)) aliases.set(word, id)
+  }
   const dictionary: Partial<LatexDictionaryEntry>[] = [...LATEX_DICTIONARY, ...catalogDictionary(catalog)]
   const syntax = new LatexSyntax({ dictionary: dictionary as never, preserveLatex: true })
 
