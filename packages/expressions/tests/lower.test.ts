@@ -166,3 +166,26 @@ describe('lower: shapes the compute-engine oracle differential first caught', ()
     expect(lower(bound, scope).expr).toEqual({ select: [mul(mul(mul(two, two), two), two)] })
   })
 })
+
+describe('lower: Coll(n)[i] element-at sugar → unrank (1-based → 0-based)', () => {
+  const scope: Scope = new Map()
+  // `permutations(4)[1]` parses (bottom-up) as InvisibleOperator(permutations, At(Delimiter(4), 1)); the parser
+  // lifts it to At(permutations(4), 1), and lower routes At-over-a-collection-handle to unrank(handle, i-1).
+  // the element is cast to its carrier for display; unwrap that to the unrank call underneath.
+  const unrankOf = (latex: string) => {
+    const bound = bind(parser.parse(latex), scope, catalog)
+    expect(bound.errors).toEqual([])
+    const sel = (lower(bound, scope).expr as { select: any[] }).select[0]
+    return sel.kind === 'cast' ? sel.expr : sel
+  }
+  it('1-based [1] → unrank(handle, 0)', () => {
+    const call = unrankOf('Permutations(4)[1]')
+    expect(call.fn).toBe('unrank')
+    expect(call.args[0].kind).toBe('handle')
+    expect(call.args[0].handle.coll).toBe('permutations')
+    expect(call.args[1]).toEqual({ kind: 'lit', value: 0 })
+  })
+  it('[3] → unrank(handle, 2)', () => {
+    expect(unrankOf('Permutations(4)[3]').args[1]).toEqual({ kind: 'lit', value: 2 })
+  })
+})

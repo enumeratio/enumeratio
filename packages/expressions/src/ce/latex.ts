@@ -4,7 +4,7 @@
 import { LatexSyntax, LATEX_DICTIONARY } from '@cortex-js/compute-engine/latex-syntax'
 import type { LatexDictionaryEntry } from '@cortex-js/compute-engine/latex-syntax'
 import type { Expression, MathJsonSymbol, NodePath, Parsed, ParseError, SpanMap, Span, Stmt } from '../ast.js'
-import { args, head, isSymbol, symbolName } from '../ast.js'
+import { args, head, isSymbol, mapExpr, symbolName } from '../ast.js'
 
 /** The catalog surface a parser is bound to: collection ids (bare symbols), function ids (call heads), and any
  *  extra LaTeX macro -> catalog-id bindings (e.g. `'\\mathbb{N}': 'natural_numbers'`). */
@@ -491,6 +491,26 @@ function splitStmt(body: Expression): Stmt {
   return { k: 'expr', body }
 }
 
+/** Lift a postfix `[i]` index off a call's argument group. `f(args)[i]` parses (bottom-up) as
+ *  `InvisibleOperator(f, At(Delimiter(args), i))` — the `[i]` attaches to the `(args)` delimiter rather than to
+ *  the whole call `f(args)`. Rewrite to `At(InvisibleOperator(f, Delimiter(args)), i)` = `At(f(args), i)`. A
+ *  general call-then-index precedence fix; the binder resolves `At` over a collection handle as element-at. */
+function liftCallIndex(expr: Expression): Expression {
+  if (!Array.isArray(expr)) return expr
+  const lifted = mapExpr(expr, liftCallIndex) // children first, so nested calls lift too
+  if (head(lifted) === 'InvisibleOperator') {
+    const a = args(lifted)
+    if (a.length === 2 && isSymbol(a[0]) && head(a[1]) === 'At') {
+      const atArgs = args(a[1])
+      if (atArgs.length >= 2 && head(atArgs[0]) === 'Delimiter') {
+        const call: Expression = ['InvisibleOperator', a[0], atArgs[0]] as Expression
+        return ['At', call, ...atArgs.slice(1)] as Expression
+      }
+    }
+  }
+  return lifted
+}
+
 export function makeParser(catalog: CatalogNames): ExpressionParser {
   const catalogIds = new Set<string>([...catalog.collections, ...catalog.functions])
   // PascalCase aliases for every catalog id whose Pascal form isn't already an id — so `Permutations`,
@@ -532,7 +552,11 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
               return ['Error', { str: 'empty-input' }] as unknown as Expression
             })()
           : convert(raw, 0, text, toOriginal, spans, errors, '').expr
-      return { stmt: splitStmt(body), spans, errors, latex }
+      // `Coll(args)[i]` parses as `InvisibleOperator(Coll, At(Delimiter(args), i))` — the postfix `[i]` binds to
+      // the inner `(args)` group, not the call. Lift it to `At(Coll(args), i)`, the element-at call the binder
+      // already handles. (Spans for a lifted subtree shift, so error highlighting there is approximate — a valid
+      // indexing expression produces no error, so this is cosmetic-only.)
+      return { stmt: splitStmt(liftCallIndex(body)), spans, errors, latex }
     },
     serialize(expr: Expression): string {
       return syntax.serialize(expr as never)
