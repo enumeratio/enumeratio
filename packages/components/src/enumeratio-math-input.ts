@@ -303,7 +303,8 @@ export class EnumeratioMathInput extends LitElement {
     }
     .wrap {
       /* Fill the host (the line stretches every field to the same width), and reserve enough height for a
-         two-row render like \binom{6}{2} so single- and multi-row fields are the same size. */
+         two-row render like \binom{6}{2} so single- and multi-row fields are the same size. Desmos-clean: no
+         filled background; a soft border that only warms on focus. */
       position: relative;
       display: flex;
       align-items: center;
@@ -311,9 +312,9 @@ export class EnumeratioMathInput extends LitElement {
       width: 100%;
       min-height: var(--enumeratio-math-input-height, 2.75rem);
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
-      border-radius: 4px;
-      background: var(--p-content-hover-background, transparent);
-      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      background: transparent;
+      padding: 0.2rem 0.6rem;
     }
     .wrap:focus-within {
       border-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));

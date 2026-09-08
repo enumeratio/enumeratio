@@ -1,13 +1,16 @@
 import { LitElement, html, css, type TemplateResult } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import type { Completer } from './enumeratio-math-input'
 import './enumeratio-math-input'
 
-// <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>: a gutter (drag handle + type
-// badge), a math-input box, a result column (value or error), and a gear-toggled details panel (engine + SQL). It
-// is purely PRESENTATIONAL — it holds no LineGraph/Scope/evaluation state of its own; the owning set feeds it
-// `state` and reacts to the events it re-emits (`line-input`/`line-commit`/`line-move`/`line-remove`) plus drag
-// reordering (`line-reorder`, {sourceId, targetId: this.lineId}).
+// <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>: the math-input field with its value
+// shown to the right, and a subtle meta line below carrying the bound TYPE (e.g. `∈ dyck_paths`, `ℕ`) and, when
+// present, the full error text. Purely PRESENTATIONAL — the owning set feeds it `state` and reacts to the events
+// it re-emits (`line-input`/`line-commit`/`line-move`/`line-remove`).
+//
+// Errors are DEBOUNCED for display: an error is not shown until the input has settled (~350 ms) and never while a
+// line is empty, so a half-typed symbol doesn't flash "unknown symbol …" — but once shown it is shown in FULL,
+// below the field, unobtrusively.
 export type LineState = {
   /** Rendered type badge text, e.g. "∈ triangular_numbers", "ℕ", "𝔹", "f: (n) ↦" — the set derives this from the
    *  bound statement's Type; empty/undefined while the line hasn't bound to anything yet (blank/declare-only). */
@@ -19,12 +22,19 @@ export type LineState = {
   busy?: boolean
 }
 
+const ERROR_SHOW_DELAY_MS = 350
+
 @customElement('enumeratio-expression-line')
 export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String, attribute: 'line-id' }) lineId = ''
   @property({ type: String }) latex = ''
   @property({ attribute: false }) completer: Completer | null = null
   @property({ attribute: false }) state: LineState = {}
+
+  /** Gated display of `state.error` — see the debounce note above. */
+  @state() private showError = false
+  private errorTimer: ReturnType<typeof setTimeout> | null = null
+  private lastError: string | undefined = undefined
 
   focus(): void {
     this.mathInput?.focus()
@@ -40,6 +50,8 @@ export class EnumeratioExpressionLine extends LitElement {
 
   private onInput = (ev: CustomEvent<{ latex: string }>): void => {
     this.latex = ev.detail.latex
+    // Optimistically hide any standing error the moment the user types — it re-debounces once the set recomputes.
+    this.hideError()
     this.emit('line-input', { lineId: this.lineId, latex: this.latex })
   }
 
@@ -62,28 +74,59 @@ export class EnumeratioExpressionLine extends LitElement {
     }
   }
 
+  private hideError(): void {
+    if (this.errorTimer) { clearTimeout(this.errorTimer); this.errorTimer = null }
+    this.showError = false
+  }
+
+  updated(changed: Map<string, unknown>): void {
+    if (!changed.has('state')) return
+    const err = this.state.error
+    if (err === this.lastError) return
+    this.lastError = err
+    if (this.errorTimer) { clearTimeout(this.errorTimer); this.errorTimer = null }
+    if (err && this.latex.trim() !== '') {
+      this.errorTimer = setTimeout(() => { this.showError = true; this.errorTimer = null }, ERROR_SHOW_DELAY_MS)
+    } else {
+      this.showError = false
+    }
+  }
+
+  disconnectedCallback(): void {
+    if (this.errorTimer) clearTimeout(this.errorTimer)
+    super.disconnectedCallback()
+  }
+
   render(): TemplateResult {
     const s = this.state
-    // Stripped to the essentials for now — just the input and its result. The gutter (drag handle + type badge),
-    // the details gear, and the remove button are omitted; a notebook-level affordance can reintroduce them later.
+    const errVisible = this.showError && !!s.error && this.latex.trim() !== ''
+    const hasValue = !errVisible && !s.busy && s.value != null
     return html`
       <div class="line" @keydown=${this.onKeydownCapture}>
-        <enumeratio-math-input
-          .latex=${this.latex}
-          .completer=${this.completer}
-          @enumeratio-input=${this.onInput}
-          @enumeratio-commit=${this.onCommit}
-          @enumeratio-move=${this.onMove}
-        ></enumeratio-math-input>
-        <div class="result">
-          ${s.busy
-            ? html`<span class="hint">…</span>`
-            : s.error
-              ? html`<span class="err" title=${s.error}>⚠ ${s.error}</span>`
-              : s.value != null
-                ? html`<span class="eq">=</span><span class="val">${s.value}</span>`
-                : html`<span class="hint">—</span>`}
+        <div class="main">
+          <enumeratio-math-input
+            .latex=${this.latex}
+            .completer=${this.completer}
+            @enumeratio-input=${this.onInput}
+            @enumeratio-commit=${this.onCommit}
+            @enumeratio-move=${this.onMove}
+          ></enumeratio-math-input>
+          <div class="value">
+            ${s.busy
+              ? html`<span class="hint">…</span>`
+              : hasValue
+                ? html`<span class="eq">=</span><span class="val" title=${s.value ?? ''}>${s.value}</span>`
+                : ''}
+          </div>
         </div>
+        ${s.type || errVisible
+          ? html`
+              <div class="meta">
+                ${s.type ? html`<span class="type">${s.type}</span>` : html`<span></span>`}
+                ${errVisible ? html`<span class="error">${s.error}</span>` : ''}
+              </div>
+            `
+          : ''}
       </div>
     `
   }
@@ -94,53 +137,60 @@ export class EnumeratioExpressionLine extends LitElement {
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
     .line {
-      /* A reserved right gutter (padding-right) holds the floating result; the field fills the rest, so its width
-         is constant regardless of how wide the result text is. */
-      position: relative;
-      display: flex;
-      align-items: center;
-      padding: 0.3rem 0.4rem;
-      padding-right: 9rem;
+      padding: 0.35rem 0.5rem;
       border-bottom: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor) / 8%);
     }
-    /* The field fills the row (minus the result gutter), so every input box is the same width. */
-    enumeratio-math-input {
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-    .result {
-      /* Floats in the reserved right gutter, OUTSIDE the field's border — out of the flex flow, so it never
-         affects the field width. A fixed-width column: the equals sign pinned left, the value right-aligned. */
-      position: absolute;
-      right: 0.5rem;
-      top: 0;
-      bottom: 0;
-      width: 8rem;
+    .main {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.4rem;
-      overflow: hidden;
-      white-space: nowrap;
+      gap: 0.75rem;
+    }
+    /* The field fills the row; the value sits to its right and may grow (and wrap) so it is fully visible, without
+       collapsing the field below a usable width. */
+    enumeratio-math-input {
+      flex: 1 1 auto;
+      min-width: 8rem;
+    }
+    .value {
+      flex: 0 1 auto;
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      max-width: 45%;
+      justify-content: flex-end;
+      text-align: right;
     }
     .eq {
-      flex: 0 0 auto;
-      opacity: 0.5;
+      opacity: 0.4;
     }
     .val {
-      flex: 1 1 auto;
-      text-align: right;
-      overflow: hidden;
-      text-overflow: ellipsis;
       color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       font-weight: 600;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
-    .err {
-      color: var(--p-red-500, #dc2626);
+    /* Meta line: bound type (left) and, once settled, the full error (right) — both quiet and gray. */
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin: 0.1rem 0 0 0.1rem;
+      font-size: 0.82em;
+      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
+    }
+    .type {
+      opacity: 0.7;
+      white-space: nowrap;
+    }
+    .error {
+      flex: 1 1 auto;
+      text-align: right;
+      color: color-mix(in srgb, var(--p-red-500, #dc2626) 80%, var(--enumeratio-muted, currentColor));
+      opacity: 0.85;
+      overflow-wrap: anywhere;
     }
     .hint {
-      color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor));
-      opacity: 0.5;
+      opacity: 0.35;
     }
   `
 }
