@@ -49,7 +49,8 @@ export const mathliveAdapter: AdapterFactory = async (container, opts) => {
   // MathLive's instance getters/setters (inlineShortcuts included) throw "Mathfield not mounted" until the element
   // is actually connected to the document — append FIRST, configure after.
   container.appendChild(mf)
-  mf.mathVirtualKeyboardPolicy = 'manual' // this component has no on-screen keyboard affordance (yet)
+  mf.mathVirtualKeyboardPolicy = 'manual' // no on-screen keyboard affordance (the toggle is also CSS-hidden below)
+  mf.menuItems = [] // no per-field hamburger menu — an empty item list disables it (see the ::part hide in the host)
   if (opts.placeholder) mf.placeholder = opts.placeholder
   if (opts.readonly) mf.readOnly = true
   // Extend (not replace) MathLive's built-in inline shortcuts with a few catalog-flavored ones.

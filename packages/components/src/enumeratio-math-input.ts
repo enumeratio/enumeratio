@@ -330,6 +330,12 @@ export class EnumeratioMathInput extends LitElement {
       --caret-color: var(--enumeratio-accent, var(--p-primary-color, #d97706));
       color: var(--enumeratio-text, var(--p-text-color, currentColor));
     }
+    /* Strip MathLive's per-field chrome: the menu hamburger and the virtual-keyboard toggle. Omitted for now;
+       a single notebook-level affordance can replace them later. */
+    .mount math-field::part(menu-toggle),
+    .mount math-field::part(virtual-keyboard-toggle) {
+      display: none;
+    }
     .popover {
       position: absolute;
       z-index: 20;

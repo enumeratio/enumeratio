@@ -68,16 +68,24 @@ suggests collection names, function names, and the current scope's own symbols.
 
 <ClientOnly>
 <enumeratio-notebook storage-key="docs-expression-set-demo" value='{"lines":[
-  {"id":"d1","latex":"x \\in \\operatorname{triangular_numbers}"},
-  {"id":"d2","latex":"x = 10"},
-  {"id":"d3","latex":"\\operatorname{next}(x)"},
-  {"id":"d4","latex":"x + 1"}
+  {"id":"d1","latex":"\\operatorname{bell}(4)"},
+  {"id":"d2","latex":"\\binom{6}{2}"},
+  {"id":"d3","latex":"f(n) = n^2 + 1"},
+  {"id":"d4","latex":"f(3)"}
 ]}'></enumeratio-notebook>
 </ClientOnly>
 
-Edit any line — `x`'s later re-embeddings (`next(x)`, `x + 1`) recompute automatically. Press Enter to open a new
-line below the current one; Backspace on an empty line removes it; drag the `⋮⋮` handle to reorder rows (cosmetic —
-evaluation still follows the dependency graph).
+Edit any line — later re-embeddings (`f(3)`) recompute automatically. Press Enter to open a new line below the
+current one; Backspace on an empty line removes it; drag the `⋮⋮` handle to reorder rows (cosmetic — evaluation
+still follows the dependency graph).
 
-See [the notebook explorer page](/explore/notebook/) for a fuller worked example with a user-defined function and
-self-checking asserts.
+::: info Engine coverage
+The docs wire the notebook to the **pure compute-engine stack** (`ts + ce + ce-enum`, no pglite — see
+`notebookEngine()`): every result is answered by [`@enumeratio/compute-engine`](/develop/packages/components/).
+That covers arithmetic, the counting sequences (`bell`, `catalan_number`, `partition_number`, …) and
+`random_element`/enumeration over any collection with a certified CE twin. The located-element primitives
+(`\in` + locate, `next`/`prev`/`rank`) need a scalar-valued collection the compute-engine library carries a twin
+for; until more collections earn one, prefer the value-producing forms shown above.
+:::
+
+See [the notebook explorer page](/explore/notebook/) for a fuller worked example with a user-defined function.

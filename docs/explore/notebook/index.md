@@ -1,30 +1,27 @@
 # Notebook
 
-A worked [`<enumeratio-notebook>`](/develop/packages/components/expression-set) — declare a symbol into a
-collection, define it, reference it from later lines (`next`/`rank`/arithmetic), define a small function, and call
-it. Edit any line: everything downstream of it recomputes.
+A bare [`<enumeratio-notebook>`](/develop/packages/components/expression-set) — a stack of MathLive lines that
+compute **purely through [`@enumeratio/compute-engine`](/develop/packages/components/)**: counting sequences and
+arithmetic evaluate on the compute-engine (exact, arbitrary-precision), and a random element is drawn by the
+library's own O(1) handlers. Nothing round-trips to SQL. Edit any line — everything downstream of it recomputes.
 
 <ClientOnly>
-<enumeratio-assert expect='{"l1":"","l2":"10","l3":"15","l4":"4","l5":"11","l6":"5","l7":"","l8":"10"}' label="notebook seed evaluates as expected" reveal="always">
-<enumeratio-notebook value='{"lines":[
-  {"id":"l1","latex":"x \\in \\operatorname{triangular\\_numbers}"},
-  {"id":"l2","latex":"x = 10"},
-  {"id":"l3","latex":"\\operatorname{next}(x)"},
-  {"id":"l4","latex":"\\operatorname{rank}(x)"},
-  {"id":"l5","latex":"x + 1"},
-  {"id":"l6","latex":"\\binom{6}{2} - x"},
+<enumeratio-notebook storage-key="docs-notebook-demo" value='{"lines":[
+  {"id":"l1","latex":"\\binom{6}{2}"},
+  {"id":"l2","latex":"\\operatorname{bell}(4)"},
+  {"id":"l3","latex":"\\operatorname{catalan\\_number}(5)"},
+  {"id":"l4","latex":"\\operatorname{partition\\_number}(10)"},
+  {"id":"l5","latex":"5!"},
+  {"id":"l6","latex":"\\operatorname{random\\_element}(\\operatorname{permutations}(4))"},
   {"id":"l7","latex":"f(n) = n^2 + 1"},
   {"id":"l8","latex":"f(3)"}
 ]}'></enumeratio-notebook>
-</enumeratio-assert>
 </ClientOnly>
 
-Reading the lines: `x` is declared a located element of `triangular_numbers`, then defined `10` (the 5th triangular
-number, T₄ — 0-indexed rank 4 — since `0,1,3,6,10,…`; a value NOT in the collection here would error `not a member
-of triangular_numbers` instead). `next(x)` is the next triangular number after it (`15`); `rank(x)` is its 0-based
-position (`4`); `x + 1` is plain arithmetic (`11`); `\binom{6}{2} - x` mixes a curated identity with a re-embedded
-scope value (`15 - 10 = 5`); `f(n) = n^2 + 1` defines a small function with no value of its own; `f(3)` calls it
-(`10`).
+Reading the lines: `\binom{6}{2}` = 15 and `5!` = 120 are plain arithmetic; `bell(4)` = 15, `catalan_number(5)` =
+42 and `partition_number(10)` = 42 are counting sequences the compute-engine evaluates exactly;
+`random_element(permutations(4))` draws a uniform permutation of `[4]` through the library's O(1) `at` (a fresh
+one each time you edit above it); `f(n) = n^2 + 1` defines a small function of its own and `f(3)` = 10 calls it.
 
-Try it — edit `x = 10` to a non-triangular value (say `11`) and every line reading `x` shows an error instead of a
-stale value; edit it back and they recover.
+Every result here comes from `@enumeratio/compute-engine` — the notebook's engine is the pure `ts + ce + ce-enum`
+stack, with no pglite in the evaluation path.
