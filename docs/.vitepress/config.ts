@@ -165,7 +165,7 @@ export default defineConfig({
                     { text: 'enumeratio-expression', link: '/develop/packages/components/expression' },
                     { text: 'enumeratio-math-input', link: '/develop/packages/components/math-input' },
                     { text: 'enumeratio-expression-line', link: '/develop/packages/components/expression-line' },
-                    { text: 'enumeratio-expression-set', link: '/develop/packages/components/expression-set' },
+                    { text: 'enumeratio-notebook', link: '/develop/packages/components/expression-set' },
                   ],
                 },
                 {

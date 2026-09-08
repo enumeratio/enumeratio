@@ -1,12 +1,12 @@
 # Notebook
 
-A worked [`<enumeratio-expression-set>`](/develop/packages/components/expression-set) — declare a symbol into a
+A worked [`<enumeratio-notebook>`](/develop/packages/components/expression-set) — declare a symbol into a
 collection, define it, reference it from later lines (`next`/`rank`/arithmetic), define a small function, and call
 it. Edit any line: everything downstream of it recomputes.
 
 <ClientOnly>
 <enumeratio-assert expect='{"l1":"","l2":"10","l3":"15","l4":"4","l5":"11","l6":"5","l7":"","l8":"10"}' label="notebook seed evaluates as expected" reveal="always">
-<enumeratio-expression-set value='{"lines":[
+<enumeratio-notebook value='{"lines":[
   {"id":"l1","latex":"x \\in \\operatorname{triangular\\_numbers}"},
   {"id":"l2","latex":"x = 10"},
   {"id":"l3","latex":"\\operatorname{next}(x)"},
@@ -15,7 +15,7 @@ it. Edit any line: everything downstream of it recomputes.
   {"id":"l6","latex":"\\binom{6}{2} - x"},
   {"id":"l7","latex":"f(n) = n^2 + 1"},
   {"id":"l8","latex":"f(3)"}
-]}'></enumeratio-expression-set>
+]}'></enumeratio-notebook>
 </enumeratio-assert>
 </ClientOnly>
 

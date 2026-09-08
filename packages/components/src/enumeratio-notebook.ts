@@ -10,7 +10,7 @@ import type { Completer, CompletionCandidate } from './enumeratio-math-input'
 import { type LineState } from './enumeratio-expression-line'
 import './enumeratio-expression-line'
 
-// <enumeratio-expression-set> — a small notebook: a stack of <enumeratio-expression-line>s sharing ONE symbol
+// <enumeratio-notebook> — a small notebook: a stack of <enumeratio-expression-line>s sharing ONE symbol
 // Scope and ONE LineGraph (@enumeratio/expressions' dependency-order + cycle/dup-define detector). The set owns
 // every stateful thing a line does not: parsing (one ExpressionParser, built once the catalog loads), binding,
 // lowering, evaluation (one AbortController per line), and persistence.
@@ -32,8 +32,8 @@ type LineResult = LineState
 
 let nextIdNum = 0
 
-@customElement('enumeratio-expression-set')
-export class EnumeratioExpressionSet extends LitElement {
+@customElement('enumeratio-notebook')
+export class EnumeratioNotebook extends LitElement {
   @property({ type: String, attribute: 'storage-key' }) storageKey = ''
 
   // `value` is a manual (noAccessor) property: the SETTER only records the raw seed text (consumed once at
@@ -391,8 +391,16 @@ export class EnumeratioExpressionSet extends LitElement {
 
   static styles = css`
     :host {
+      /* Standard notebook width: fill the container up to a fixed max, centered — so every notebook on a
+         page presents at the same width regardless of where it's embedded. --enumeratio-notebook-width
+         overrides the cap. */
       display: block;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: var(--enumeratio-notebook-width, 46rem);
+      margin-inline: auto;
       font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 1.05rem;
       border: 1px solid var(--enumeratio-border, var(--p-content-border-color, currentColor));
       border-radius: 8px;
       overflow: hidden;
@@ -437,6 +445,6 @@ function effectivePg(t: Type): string | undefined {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'enumeratio-expression-set': EnumeratioExpressionSet
+    'enumeratio-notebook': EnumeratioNotebook
   }
 }

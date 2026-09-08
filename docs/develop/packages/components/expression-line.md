@@ -1,7 +1,7 @@
 # `<enumeratio-expression-line>`
 
 Client-side only, and purely **presentational** — one row of an
-[`<enumeratio-expression-set>`](/develop/packages/components/expression-set): a drag-handle + type-badge gutter, an
+[`<enumeratio-notebook>`](/develop/packages/components/expression-set): a drag-handle + type-badge gutter, an
 [`<enumeratio-math-input>`](/develop/packages/components/math-input) box, a result column (value or error), and a
 gear-toggled details panel (engine + SQL). It holds no `LineGraph`/`Scope`/evaluation state of its own — the owning
 set feeds it `state` and reacts to the events it re-emits. You will not normally use this element on its own; it's
@@ -44,7 +44,7 @@ Enter on an already-empty line still removes it (the fallback in `onCommit`).
 ## Usage
 
 You will not normally instantiate this directly; see
-[`<enumeratio-expression-set>`](/develop/packages/components/expression-set) for a working notebook. In isolation:
+[`<enumeratio-notebook>`](/develop/packages/components/expression-set) for a working notebook. In isolation:
 
 ```html
 <enumeratio-expression-line line-id="l1" latex="x + 1"></enumeratio-expression-line>

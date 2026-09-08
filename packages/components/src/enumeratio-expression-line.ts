@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js'
 import type { Completer } from './enumeratio-math-input'
 import './enumeratio-math-input'
 
-// <enumeratio-expression-line> — one row of a notebook <enumeratio-expression-set>: a gutter (drag handle + type
+// <enumeratio-expression-line> — one row of a notebook <enumeratio-notebook>: a gutter (drag handle + type
 // badge), a math-input box, a result column (value or error), and a gear-toggled details panel (engine + SQL). It
 // is purely PRESENTATIONAL — it holds no LineGraph/Scope/evaluation state of its own; the owning set feeds it
 // `state` and reacts to the events it re-emits (`line-input`/`line-commit`/`line-move`/`line-remove`) plus drag

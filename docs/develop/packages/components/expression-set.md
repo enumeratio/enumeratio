@@ -1,4 +1,4 @@
-# `<enumeratio-expression-set>`
+# `<enumeratio-notebook>`
 
 Client-side only. A small **notebook**: a stack of
 [`<enumeratio-expression-line>`](/develop/packages/components/expression-line) rows sharing one symbol `Scope` and
@@ -67,12 +67,12 @@ suggests collection names, function names, and the current scope's own symbols.
 ## Usage
 
 <ClientOnly>
-<enumeratio-expression-set storage-key="docs-expression-set-demo" value='{"lines":[
+<enumeratio-notebook storage-key="docs-expression-set-demo" value='{"lines":[
   {"id":"d1","latex":"x \\in \\operatorname{triangular_numbers}"},
   {"id":"d2","latex":"x = 10"},
   {"id":"d3","latex":"\\operatorname{next}(x)"},
   {"id":"d4","latex":"x + 1"}
-]}'></enumeratio-expression-set>
+]}'></enumeratio-notebook>
 </ClientOnly>
 
 Edit any line — `x`'s later re-embeddings (`next(x)`, `x + 1`) recompute automatically. Press Enter to open a new
