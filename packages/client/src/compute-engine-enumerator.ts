@@ -31,7 +31,8 @@ import type { Registry } from './registry'
 /** Identity rows for a notebook sourced straight from @enumeratio/compute-engine — library vocabulary, legitimately
  *  client-side (the catalog only owns the snake catalog-id→twin fact, via `base_compute_engine_twin`). */
 const LIBRARY_TWIN: Record<string, { head: string; arity: number }> = {
-  SymmetricGroup: { head: 'SymmetricGroup', arity: 1 }, IntegerCompositions: { head: 'IntegerCompositions', arity: 1 },
+  Permutations: { head: 'Permutations', arity: 1 }, SymmetricGroup: { head: 'SymmetricGroup', arity: 1 },
+  IntegerCompositions: { head: 'IntegerCompositions', arity: 1 },
   IntegerPartitions: { head: 'IntegerPartitions', arity: 1 }, PartitionsIntoKParts: { head: 'PartitionsIntoKParts', arity: 2 },
   SetPartitions: { head: 'SetPartitions', arity: 1 }, SetPartitionsIntoKBlocks: { head: 'SetPartitionsIntoKBlocks', arity: 2 },
   SetCompositions: { head: 'SetCompositions', arity: 1 }, Subsets: { head: 'Subsets', arity: 1 },

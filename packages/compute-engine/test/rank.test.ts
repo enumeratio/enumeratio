@@ -9,7 +9,7 @@ const num = (mj: any): number => Number((ce.box(mj).evaluate() as any).re);
 
 describe("Rank is the inverse of At", () => {
   const families: Array<{ name: string; coll: any }> = [
-    { name: "SymmetricGroup(4)", coll: ["SymmetricGroup", 4] },
+    { name: "Permutations(4)", coll: ["Permutations", 4] },
     { name: "IntegerCompositions(6)", coll: ["IntegerCompositions", 6] },
     { name: "IntegerPartitions(7)", coll: ["IntegerPartitions", 7] },
     { name: "PartitionsIntoKParts(9,3)", coll: ["PartitionsIntoKParts", 9, 3] },
@@ -115,8 +115,8 @@ describe("Rank is the inverse of At", () => {
   }
 
   it("named endpoints", () => {
-    expect(num(["Rank", ["SymmetricGroup", 4], ["List", 1, 2, 3, 4]])).toBe(1);
-    expect(num(["Rank", ["SymmetricGroup", 4], ["List", 4, 3, 2, 1]])).toBe(24);
+    expect(num(["Rank", ["Permutations", 4], ["List", 1, 2, 3, 4]])).toBe(1);
+    expect(num(["Rank", ["Permutations", 4], ["List", 4, 3, 2, 1]])).toBe(24);
     expect(num(["Rank", ["IntegerCompositions", 4], ["List", 4]])).toBe(1);
     expect(num(["Rank", ["IntegerCompositions", 4], ["List", 1, 1, 1, 1]])).toBe(8);
     // set partition given in non-canonical block order still ranks correctly (canonicalized internally)
@@ -126,7 +126,7 @@ describe("Rank is the inverse of At", () => {
   });
 
   it("declines (stays symbolic) for a non-member", () => {
-    const e: any = ce.box(["Rank", ["SymmetricGroup", 4], ["List", 1, 1, 2, 4]]).evaluate();
+    const e: any = ce.box(["Rank", ["Permutations", 4], ["List", 1, 1, 2, 4]]).evaluate();
     expect(e.operator).toBe("Rank"); // not a number — [1,1,2,4] is not a permutation of [4]
   });
 });
@@ -134,10 +134,10 @@ describe("Rank is the inverse of At", () => {
 describe("RandomElement lands inside the collection", () => {
   const samples = (coll: any, n: number) =>
     Array.from({ length: n }, () => ce.box(["RandomElement", coll]).evaluate());
-  it("SymmetricGroup", () => {
-    for (const el of samples(["SymmetricGroup", 5], 20)) {
+  it("Permutations", () => {
+    for (const el of samples(["Permutations", 5], 20)) {
       expect((el as any).ops.length).toBe(5);
-      expect((ce.box(["Element", el, ["SymmetricGroup", 5]]).evaluate() as any).symbol).toBe("True");
+      expect((ce.box(["Element", el, ["Permutations", 5]]).evaluate() as any).symbol).toBe("True");
     }
   });
   it("SetPartitions", () => {

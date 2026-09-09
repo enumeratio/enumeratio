@@ -357,7 +357,7 @@ export const enumeratioLibrary: LibraryDefinition = {
       },
     },
 
-    // Scalar stat over a permutation word. Composes with At: Inversions(At(SymmetricGroup(9), 5)).
+    // Scalar stat over a permutation word. Composes with At: Inversions(At(Permutations(9), 5)).
     Inversions: {
       signature: "(list<integer>) -> integer",
       evaluate: (ops: ReadonlyArray<Expression>) => engineOf(ops[0]).number(Inversions(asIntList(ops[0]))),
