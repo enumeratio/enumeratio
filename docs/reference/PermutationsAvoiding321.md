@@ -28,7 +28,7 @@ The 14 avoiders of $[4]$ in this order are $[1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2
 
 ## See also
 
-[`PermutationsAvoiding132`](/reference/PermutationsAvoiding132) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`Permutations`](/reference/Permutations) · [`CatalanNumber`](/reference/CatalanNumber) · `unrank` · `cardinality`
+[`PermutationsAvoiding132`](/reference/PermutationsAvoiding132) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`Permutations`](/reference/Permutations) · [`CatalanNumber`](/reference/CatalanNumber) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

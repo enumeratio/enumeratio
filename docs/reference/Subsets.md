@@ -44,7 +44,7 @@ $\{2, 4\} \subseteq [4]$ has mask $2^1 + 2^3 = 10_{10} = 1010_2$, a 0-based rank
 
 ## See also
 
-`KSubsets` · `GrayCodeSubsets` · `EvenSubsets` · `OddSubsets` · `unrank` · `rank` · `cardinality`
+`KSubsets` · `GrayCodeSubsets` · `EvenSubsets` · `OddSubsets` · [`unrank`](/reference/unrank) · [`rank`](/reference/rank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

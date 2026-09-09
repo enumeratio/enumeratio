@@ -27,7 +27,7 @@ In this order the 14 avoiders of $[4]$ are $[4, 3, 2, 1], [4, 3, 1, 2], [4, 1, 3
 
 ## See also
 
-[`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) (the mirror class, split on the minimum) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding213`](/reference/PermutationsAvoiding213) · [`CatalanNumber`](/reference/CatalanNumber) · `unrank` · `cardinality`
+[`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) (the mirror class, split on the minimum) · [`PermutationsAvoiding123`](/reference/PermutationsAvoiding123) · [`PermutationsAvoiding213`](/reference/PermutationsAvoiding213) · [`CatalanNumber`](/reference/CatalanNumber) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

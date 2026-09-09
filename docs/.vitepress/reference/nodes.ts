@@ -769,4 +769,199 @@ export const NODES: NodeDoc[] = [
       { head: "PartitionNumber" }, { head: "unrank" }, { head: "rank" }, { head: "cardinality" },
     ],
   },
+  // ═══════════════ Notebook primitives ═══════════════
+  {
+    head: "rank",
+    family: "Notebook primitives",
+    kind: "primitive",
+    tagline: "The index of an already-located element within its collection — the inverse of `unrank`.",
+    usage: [
+      { form: "\\operatorname{Rank}(x)", meaning: "the 0-based index of $x$ within the collection it was located in" },
+    ],
+    details: [
+      { label: "Kind", body: "a generic engine primitive, dispatched on the argument's type (the `NEXT_PREV_RANK` set in `packages/notatio/src/bind.ts`, shared with `next`/`prev`)." },
+      { label: "Argument type", body: "`elem(C)` for some collection $C$ — $x$ must already be a *located* element (the result of `unrank`, `random_element`, `next`, or `prev`), not a bare value. Passing a plain scalar is a type error: `\"rank\" expects a collection element, not <kind>`." },
+      { label: "Result type", body: "`natural_number`." },
+      { label: "Indexing", body: "**0-based**, matching `unrank`'s own convention — `rank` and `unrank` are exact inverses at this layer. When the located element carries its rank already (came straight out of an `unrank` call), evaluation reads that rank back directly rather than recomputing it; otherwise it lowers to compute-engine's own `Rank(C, x) − 1` (`packages/client/src/compute-engine-enumerator.ts`) — CE's `Rank` is 1-based, so the primitive subtracts 1." },
+      { label: "Non-membership", body: "if $x$ is not actually a member of the collection the type system believes it belongs to, the result is undefined (stays symbolic) rather than an error — `rankOf` in `packages/compute-engine/src/library.ts` returns `undefined` for a non-member." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "`rank` and `unrank` round-trip: locate the element at 0-based rank $5$ of [`Subsets`](/reference/Subsets)$(4)$, then recover that rank:",
+          lines: [
+            { latex: "\\operatorname{Unrank}(\\operatorname{Subsets}(4),\\ 5)", expect: "[1, 3]" },
+            { latex: "\\operatorname{Rank}(\\operatorname{Unrank}(\\operatorname{Subsets}(4),\\ 5))", expect: "5" },
+          ],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "unrank", note: "the inverse" }, { head: "random_element" }, { head: "cardinality" },
+    ],
+  },
+  {
+    head: "unrank",
+    family: "Notebook primitives",
+    kind: "primitive",
+    tagline: "The element at a given index — $O(1)$ to $O(n)$ random access into any collection, no scan.",
+    usage: [
+      { form: "\\operatorname{Unrank}(C,\\ i)", meaning: "the element of collection handle $C$ at 0-based index $i$" },
+    ],
+    details: [
+      { label: "Kind", body: "a generic engine primitive — one mechanism shared by every collection in the catalog, recognized by its literal name once registered as a parser function (`GENERIC_PRIMITIVES` in `packages/components/src/notebook-catalog.ts`), not by matching a per-collection stat or map." },
+      { label: "Dispatch", body: "on the argument's type, not the head name alone — `unrank`/`random_element` are the `HANDLE_ELEM` set in `packages/notatio/src/bind.ts`, distinguishing them from ordinary catalog functions." },
+      { label: "Result type", body: "`elem(C)` — a *located* element of $C$, not a bare list; typing it this way is what lets a later `next`/`prev`/`rank` chain onto the result without re-declaring it." },
+      { label: "Indexing", body: "the primitive's own index $i$ is **0-based**. At evaluation it lowers to compute-engine's own `At(C, i+1)` (`packages/client/src/compute-engine-enumerator.ts`) — CE's collection index is 1-based, so the off-by-one is absorbed at the engine boundary." },
+      { label: "Complexity", body: "$O(1)$ to $O(n)$ depending on the family — every collection in this library supplies fast random access (via its own unrank), never a scan-and-count." },
+      { label: "Out of range", body: "an index outside $[0, \\operatorname{Count}(C))$ has no value rather than throwing." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "$0$-based rank $0$ of [`Subsets`](/reference/Subsets)$(4)$ is $\\varnothing$; rank $5 = 101_2$ is $\\{1, 3\\}$ — see `Subsets` for the bitmask convention:",
+          lines: [
+            { latex: "\\operatorname{Unrank}(\\operatorname{Subsets}(4),\\ 0)", expect: "[]" },
+            { latex: "\\operatorname{Unrank}(\\operatorname{Subsets}(4),\\ 5)", expect: "[1, 3]" },
+          ],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "rank", note: "the inverse" }, { head: "random_element", note: "a uniform random unrank" }, { head: "cardinality", note: "the bound its index ranges over" },
+    ],
+  },
+  {
+    head: "random_element",
+    family: "Notebook primitives",
+    kind: "primitive",
+    tagline: "A uniformly random element of a collection — $O(1)$–$O(n)$ at any size, never enumerates.",
+    usage: [
+      { form: "\\operatorname{RandomElement}(C)", meaning: "one uniform draw from collection handle $C$" },
+    ],
+    details: [
+      { label: "Kind", body: "a generic engine primitive, in the same `HANDLE_ELEM` dispatch set as `unrank` (`packages/notatio/src/bind.ts`) — typed `elem(C)`, so its result can chain into `next`/`prev`/`rank` just like an `unrank`ed element." },
+      { label: "Result type", body: "`elem(C)`." },
+      { label: "Implementation", body: "draws one uniform integer in $[0, \\operatorname{Count}(C))$ and calls the collection's own unrank — `RandomElement` in `packages/compute-engine/src/library.ts`. Because every collection's unrank is $O(1)$–$O(n)$, this stays cheap even for astronomically large collections." },
+      { label: "Randomness source", body: "a single module-level, seedable PRNG (mulberry32) shared by `random_element`, `random_shuffle`, and `random_sample` (`packages/compute-engine/src/library.ts`) — reseeding is global, affecting every random primitive on the engine, not just the caller's own collection." },
+      { label: "Empty collection", body: "`random_element` of a collection with `Count = 0` has no value rather than drawing from an empty range." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "One uniform draw from [`Subsets`](/reference/Subsets)$(4)$'s $16$ subsets — re-evaluate the cell and it changes, so this line is shown unasserted rather than pinned to one value:",
+          lines: [
+            { latex: "\\left|\\operatorname{Subsets}(4)\\right|", expect: "16" },
+            { latex: "\\operatorname{RandomElement}(\\operatorname{Subsets}(4))" },
+          ],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "unrank" }, { head: "rank" }, { head: "cardinality", note: "the range random_element draws over" },
+    ],
+  },
+  {
+    head: "cardinality",
+    family: "Notebook primitives",
+    kind: "primitive",
+    tagline: "The size of a collection — $|C|$.",
+    usage: [
+      { form: "\\left|C\\right|", meaning: "the LaTeX spelling — parses to the `Count` MathJSON head" },
+    ],
+    details: [
+      { label: "Kind", body: "one of the generic engine primitives bound directly by head name (`Count` → `cardinality` in `packages/notatio/src/names.ts`'s `OPERATORS` table) — unlike `unrank`/`rank`/`random_element`, it's recognized purely by its MathJSON head, no argument-type dispatch needed." },
+      { label: "Result type", body: "`natural_number`, unconditionally." },
+      { label: "Evaluation", body: "lowers to compute-engine's own `Length(C)` (`packages/client/src/compute-engine-enumerator.ts`), which reads the collection's own count handler directly — a closed-form lookup (e.g. $n!$, $2^n$, $p(n)$), never an enumeration. $O(1)$ regardless of $C$'s size." },
+      { label: "Not (yet) wired to bare `Abs`", body: "compute-engine's own `Abs`/`|x|` head over a plain scalar is the ordinary absolute value; `|C|` reaches `cardinality` only when the operand types as a collection/fiber handle — see `bind.ts`'s special-case on `Abs`." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "$\\lvert \\operatorname{Permutations}(5) \\rvert = 5! = 120$, and $\\lvert \\operatorname{Subsets}(10) \\rvert = 2^{10} = 1024$:",
+          lines: [
+            { latex: "\\left|\\operatorname{Permutations}(5)\\right|", expect: "120" },
+            { latex: "\\left|\\operatorname{Subsets}(10)\\right|", expect: "1024" },
+          ],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "unrank", note: "the bound its index ranges over" }, { head: "rank" }, { head: "random_element" },
+    ],
+  },
+  // ═══════════════ List operations ═══════════════
+  {
+    head: "join",
+    family: "List operations",
+    kind: "listop",
+    tagline: "Concatenate lists into one.",
+    usage: [
+      { form: "\\operatorname{Join}(L_1,\\ L_2,\\ \\dots)", meaning: "the lists concatenated in argument order" },
+    ],
+    details: [
+      { label: "Kind", body: "a generic list primitive (`GENERIC_PRIMITIVES` in `packages/components/src/notebook-catalog.ts`) — one of three (with `sort` and `unique`) that compute-engine already implements natively, so enumeratio binds to it rather than reimplementing it: at evaluation the identifier canonicalizes to compute-engine's own Pascal head, `Join` (`CE_LIST_OPS` in `packages/client/src/compute-engine-enumerator.ts`)." },
+      { label: "Result type", body: "`integer[]` (typed by `LIST_RESULT_OPS` in `packages/notatio/src/bind.ts`; arguments are still individually typed for error-checking even though the result type doesn't depend on them)." },
+      { label: "Semantics", body: "list concatenation — `Join([1,2], [3], [4,5])` is `[1,2,3,4,5]`. This is compute-engine's own operator; enumeratio does not alter or extend its behavior." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          lines: [{ latex: "\\operatorname{Join}([1, 2], [3, 4])", expect: "[1, 2, 3, 4]" }],
+        },
+      ],
+    },
+    seeAlso: [{ head: "sort" }, { head: "unique" }],
+  },
+  {
+    head: "sort",
+    family: "List operations",
+    kind: "listop",
+    tagline: "Sort a list into ascending order.",
+    usage: [
+      { form: "\\operatorname{Sort}(L)", meaning: "$L$'s elements in ascending order" },
+    ],
+    details: [
+      { label: "Kind", body: "a generic list primitive canonicalized at evaluation to compute-engine's own `Sort` head — see `join` for the shared \"bind, don't reimplement\" mechanism (`LIST_RESULT_OPS` in `packages/notatio/src/bind.ts`; `CE_LIST_OPS` in `packages/client/src/compute-engine-enumerator.ts`)." },
+      { label: "Result type", body: "`integer[]`." },
+      { label: "Semantics", body: "compute-engine's own `Sort` — ascending numeric order. Enumeratio does not alter or extend its behavior (no custom comparator support beyond what CE itself exposes)." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          lines: [{ latex: "\\operatorname{Sort}([3, 1, 4, 1, 5])", expect: "[1, 1, 3, 4, 5]" }],
+        },
+      ],
+    },
+    seeAlso: [{ head: "join" }, { head: "unique" }],
+  },
+  {
+    head: "unique",
+    family: "List operations",
+    kind: "listop",
+    tagline: "Remove duplicate elements from a list, preserving first-occurrence order.",
+    usage: [
+      { form: "\\operatorname{Unique}(L)", meaning: "$L$ with duplicates removed" },
+    ],
+    details: [
+      { label: "Kind", body: "a generic list primitive canonicalized at evaluation to compute-engine's own `Unique` head — see `join` for the shared \"bind, don't reimplement\" mechanism." },
+      { label: "Result type", body: "`integer[]`." },
+      { label: "Semantics", body: "order-preserving deduplication — the first occurrence of each distinct value is kept, in its original position; later duplicates are dropped (`packages/client/src/compute-engine-enumerator.ts`'s comment on `CE_LIST_OPS` states this explicitly). This is compute-engine's own operator; enumeratio does not alter it." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          lines: [{ latex: "\\operatorname{Unique}([1, 3, 1, 2, 3, 3])", expect: "[1, 3, 2]" }],
+        },
+      ],
+    },
+    seeAlso: [{ head: "join" }, { head: "sort" }],
+  },
 ];

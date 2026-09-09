@@ -37,7 +37,7 @@ The unrank always prefers the largest available part first, so rank 1 is always 
 
 ## See also
 
-`PartitionsIntoKParts` · `DistinctPartitions` · `PartitionsMaxPart` · [`PartitionNumber`](/reference/PartitionNumber) · `unrank` · `rank` · `cardinality`
+`PartitionsIntoKParts` · `DistinctPartitions` · `PartitionsMaxPart` · [`PartitionNumber`](/reference/PartitionNumber) · [`unrank`](/reference/unrank) · [`rank`](/reference/rank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

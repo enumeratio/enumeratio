@@ -27,7 +27,7 @@ The 6 four-cycles in rank order (one-line) are $[2, 3, 4, 1], [2, 4, 1, 3], [3, 
 
 ## See also
 
-[`Permutations`](/reference/Permutations) · [`Involutions`](/reference/Involutions) · [`Derangements`](/reference/Derangements) · `rank` · `unrank` · `cardinality`
+[`Permutations`](/reference/Permutations) · [`Involutions`](/reference/Involutions) · [`Derangements`](/reference/Derangements) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 
