@@ -17,6 +17,7 @@ SELECT tag, collection FROM (VALUES
   ('permutation', 'cograssmannian_permutations'), ('permutation', 'connected_permutations'),
   ('permutation', 'cyclic_permutations'), ('permutation', 'affine_permutations'),
   ('permutation', 'decorated_permutations'), ('permutation', 'lehmer_codes'),
+  ('permutation', 'symmetric_group'),
   ('permutation', 'baxter_permutations'), ('permutation', 'simple_permutations'),
   ('permutation', 'non_crossing_permutations'), ('permutation', 'k_colored_permutations'),
   ('permutation', 'k_cycle_permutations'), ('permutation', 'k_descent_permutations'),
