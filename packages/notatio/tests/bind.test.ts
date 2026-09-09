@@ -175,6 +175,14 @@ describe('bind: errors', () => {
     }
   })
 
+  it('Sign (via the built-in sgn trigger) and Heaviside bind numeric', () => {
+    for (const latex of ['\\operatorname{sgn}(-5)', '\\operatorname{Heaviside}(-2)']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'numeric' })
+    }
+  })
+
   it('scalar |x| is absolute value (numeric)', () => {
     expect(bind(parser.parse('|-5|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bind(parser.parse('|3-10|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
