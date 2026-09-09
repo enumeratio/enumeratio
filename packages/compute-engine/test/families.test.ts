@@ -12,9 +12,9 @@ describe("closed-form Length across the six families (no walk)", () => {
     expect(num(["Length", ["IntegerCompositions", 10]])).toBe(512); // 2^9
     expect(num(["Length", ["IntegerPartitions", 10]])).toBe(42); // p(10)
     expect(num(["Length", ["PartitionsIntoKParts", 10, 3]])).toBe(8); // p(10,3)
-    expect(num(["Length", ["SetPartitions", 5]])).toBe(52); // Bell(5)
+    expect(num(["Length", ["SetPartitions", 5]])).toBe(52); // BellNumber(5)
     expect(num(["Length", ["SetPartitionsIntoKBlocks", 5, 2]])).toBe(15); // S(5,2)
-    expect(num(["Length", ["SetCompositions", 4]])).toBe(75); // Fubini(4)
+    expect(num(["Length", ["SetCompositions", 4]])).toBe(75); // FubiniNumber(4)
   });
   it("empty families count 0", () => {
     expect(num(["Length", ["SetPartitionsIntoKBlocks", 4, 5]])).toBe(0); // S(4,5)=0

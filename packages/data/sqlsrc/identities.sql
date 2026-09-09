@@ -131,8 +131,8 @@ INSERT INTO base_function (id, title, description) VALUES
   ('binomial', 'Binomial coefficient',
    'C(n,k) — the number of k-subsets of an n-set. An exact-bigint variant is also available (impl representation '
    '''bigint'', via an interleaved product/quotient — no intermediate rounding).'),
-  ('bell', 'Bell number', 'B(n) — the number of set partitions of an n-set.'),
-  ('fubini', 'Fubini (ordered Bell) number', 'a(n) — the number of set compositions (ordered set partitions) of '
+  ('bell_number', 'Bell number', 'B(n) — the number of set partitions of an n-set.'),
+  ('fubini_number', 'Fubini (ordered Bell) number', 'a(n) — the number of set compositions (ordered set partitions) of '
    'an n-set.'),
   ('stirling_second', 'Stirling number of the second kind',
    'S(n,k) — the number of set partitions of an n-set into exactly k blocks.'),
@@ -219,9 +219,9 @@ INSERT INTO base_reference (subject_kind, subject, system, identity, url, delta,
   ('function','factorial','wolfram','Factorial','https://reference.wolfram.com/language/ref/Factorial.html','','isomorphic'),
   ('function','factorial','mathlib4','Nat.factorial','https://leanprover-community.github.io/mathlib4_docs/Mathlib/Data/Nat/Factorial/Basic.html','','isomorphic'),
   ('function','binomial','wolfram','Binomial','https://reference.wolfram.com/language/ref/Binomial.html','','isomorphic'),
-  ('function','bell','oeis','A000110','https://oeis.org/A000110','','isomorphic'),
-  ('function','bell','wolfram','BellB','https://reference.wolfram.com/language/ref/BellB.html','','isomorphic'),
-  ('function','fubini','oeis','A000670','https://oeis.org/A000670','','isomorphic'),
+  ('function','bell_number','oeis','A000110','https://oeis.org/A000110','','isomorphic'),
+  ('function','bell_number','wolfram','BellB','https://reference.wolfram.com/language/ref/BellB.html','','isomorphic'),
+  ('function','fubini_number','oeis','A000670','https://oeis.org/A000670','','isomorphic'),
   ('function','partition_number','oeis','A000041','https://oeis.org/A000041','','isomorphic'),
   ('function','partition_number','wolfram','PartitionsP','https://reference.wolfram.com/language/ref/PartitionsP.html','','isomorphic'),
   ('function','stirling_second','wolfram','StirlingS2','https://reference.wolfram.com/language/ref/StirlingS2.html','','isomorphic'),

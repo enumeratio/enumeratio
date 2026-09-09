@@ -69,7 +69,7 @@ suggests collection names, function names, and the current scope's own symbols.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
-  {"id":"d1","latex":"\\operatorname{bell}(4)"},
+  {"id":"d1","latex":"\\operatorname{BellNumber}(4)"},
   {"id":"d2","latex":"\\binom{6}{2}"},
   {"id":"d3","latex":"f(n) = n^2 + 1"},
   {"id":"d4","latex":"f(3)"}
@@ -97,7 +97,7 @@ evaluation core without the surrounding chrome); `<enumeratio-notebook readonly>
 ::: info Engine coverage
 The docs wire the notebook to the **pure compute-engine stack** (`ts + ce + ce-enum`, no pglite — see
 `notebookEngine()`): every result is answered by [`@enumeratio/compute-engine`](/develop/packages/components/).
-That covers arithmetic, the counting sequences (`bell`, `catalan_number`, `partition_number`, …) and
+That covers arithmetic, the counting sequences (`bell_number`, `catalan_number`, `partition_number`, …) and
 `random_element`/enumeration over any collection with a certified CE twin. The located-element primitives
 (`\in` + locate, `next`/`prev`/`rank`) need a scalar-valued collection the compute-engine library carries a twin
 for; until more collections earn one, prefer the value-producing forms shown above.

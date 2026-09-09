@@ -87,10 +87,10 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Eulerian: { kernel: 'Eulerian' }, Choose: { kernel: 'Choose' },
   // Counting-sequence PRIMARIES = PascalCase of the (normalized *_number) catalog ident; Wolfram/cortex spellings
   // are helper aliases. `PartitionNumber` is the canonical name (cortex kernel NPartition). `BellNumber`/
-  // `CatalanNumber` above are already canonical. (`FubiniNumber` has no compute-engine kernel head to bind through
-  // yet — a {fn} binding doesn't application-parse via \operatorname; wiring it is part of the naming-alignment
-  // work, so its reference page reads the count off SetCompositions for now.)
+  // `CatalanNumber` above are already canonical. `FubiniNumber` is now a first-class head in
+  // `@enumeratio/compute-engine` (kernels-combinatorics.ts) — application-parses and evaluates directly.
   PartitionNumber: { kernel: 'NPartition' },
+  FubiniNumber: { kernel: 'FubiniNumber' },
   BellB: { kernel: 'BellNumber' }, PartitionsP: { kernel: 'NPartition' }, // Wolfram helper aliases
 
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────

@@ -28,8 +28,8 @@ export type ExpressionParser = {
 const escapeId = (id: string): string => id.replace(/_/g, '\\_')
 
 /** snake_case catalog id -> its PascalCase alias: `random_element` -> `RandomElement`, `catalan_number` ->
- *  `CatalanNumber`, `bell` -> `Bell`. Lets a user TYPE the clean word-run (no underscores, which MathLive turns
- *  into subscripts) and have it resolve to the same catalog id. */
+ *  `CatalanNumber`, `bell_number` -> `BellNumber`. Lets a user TYPE the clean word-run (no underscores, which
+ *  MathLive turns into subscripts) and have it resolve to the same catalog id. */
 export const pascalCase = (id: string): string => id.split('_').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join('')
 
 /** How an identifier SHOWS: its registered notation if any (spliced verbatim), otherwise `\operatorname{}` over
@@ -56,8 +56,8 @@ export const serializeLatex = (id: string, notation?: Record<string, string>): s
   notation?.[id] ?? `\\operatorname{${pascalCase(id)}}`
 
 /** One `kind:'function'`/`kind:'symbol'` dictionary entry per catalog id. The TRIGGER is the PascalCase spelling
- *  (what you type — `\operatorname{Permutations}(...)` parses to `[permutations, ...]`, `\operatorname{Bell}` to
- *  the symbol `bell`) while the MathJSON `name` stays the snake id everything downstream routes on; the snake
+ *  (what you type — `\operatorname{Permutations}(...)` parses to `[permutations, ...]`, `\operatorname{BellNumber}` to
+ *  the symbol `bell_number`) while the MathJSON `name` stays the snake id everything downstream routes on; the snake
  *  spelling is immaterial once you're in the notebook. An id with registered `notation` gets an extra parse
  *  trigger for its glyph and serializes to it. `symbols` adds direct macro -> id bindings (`\mathbb{N}`). */
 export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryEntry>[] {

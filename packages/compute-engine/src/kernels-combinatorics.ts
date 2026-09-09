@@ -21,8 +21,8 @@ export function CompositionCount(n: number): number {
   return n <= 0 ? 1 : 2 ** (n - 1);
 }
 
-/** BellB(n) = #set partitions of [n], via the BellB triangle. */
-export function BellB(n: number): number {
+/** BellNumber(n) = #set partitions of [n], via the Bell triangle. */
+export function BellNumber(n: number): number {
   if (n <= 0) return 1;
   let row = [1];
   for (let i = 1; i <= n; i++) {
@@ -33,8 +33,8 @@ export function BellB(n: number): number {
   return row[0];
 }
 
-/** Fubini(n) = #set compositions (ordered set partitions) of [n] = Σ_k C(n,k)·Fubini(n−k). */
-export function Fubini(n: number): number {
+/** FubiniNumber(n) = #set compositions (ordered set partitions) of [n] = Σ_k C(n,k)·FubiniNumber(n−k). */
+export function FubiniNumber(n: number): number {
   const a = [1];
   for (let m = 1; m <= n; m++) {
     let s = 0;
@@ -59,7 +59,7 @@ export function StirlingS2(n: number, k: number): number {
 }
 
 /** p(n) = #integer partitions of n, Euler's pentagonal-number recurrence. */
-export function PartitionsP(n: number): number {
+export function PartitionNumber(n: number): number {
   if (n < 0) return 0;
   const p = [1];
   for (let m = 1; m <= n; m++) {
@@ -138,7 +138,7 @@ export function CompositionFromMask(n: number, mask: number): number[] {
 
 /** rank-th integer partition of n, largest-part-first order. */
 export function IntegerPartitionUnrank(n: number, rank: number): number[] {
-  const total = PartitionsP(n);
+  const total = PartitionNumber(n);
   let r = total ? ((rank % total) + total) % total : 0;
   const out: number[] = [];
   let m = n, max = n;
@@ -182,10 +182,10 @@ function getBTable(n: number): number[][] {
   return b;
 }
 
-/** rank-th restricted growth string of length n, lex order. Count = BellB(n). */
+/** rank-th restricted growth string of length n, lex order. Count = BellNumber(n). */
 export function RgsUnrank(n: number, rank: number): number[] {
   if (n === 0) return [];
-  const total = BellB(n);
+  const total = BellNumber(n);
   const r = ((rank % total) + total) % total;
   const b = getBTable(n);
   const result: number[] = [0];
@@ -247,11 +247,11 @@ function countCompletions(remaining: number, missing: number, k: number): number
   return v;
 }
 
-/** rank-th set composition of [n] as labels[i] = 1-based block index of element i. Count = Fubini(n).
+/** rank-th set composition of [n] as labels[i] = 1-based block index of element i. Count = FubiniNumber(n).
  *  Floor order: k ascending, then lex on labels. */
 export function SetCompositionUnrank(n: number, rank: number): number[] {
   if (n === 0) return [];
-  const total = Fubini(n);
+  const total = FubiniNumber(n);
   let r = total ? ((rank % total) + total) % total : 0;
   let k = 1;
   for (;;) { const cnt = CountSurjections(n, k); if (r < cnt) break; r -= cnt; k++; }

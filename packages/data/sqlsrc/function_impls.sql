@@ -67,11 +67,11 @@ INSERT INTO base_function_impl (function, engine, impl_ref, arg_types, return_ty
   ('binomial', 'ts', 'binomial', '{int,int}', 'numeric', 'float64', NULL),
   ('binomial', 'ts', 'binomial_bigint', '{int,int}', 'bigint', 'bigint', 'JS bigint twin of binomial_bigint'),
 
-  ('bell', 'pg', 'bell', '{int}', 'numeric', 'numeric', NULL),
-  ('bell', 'ts', 'bell', '{int}', 'numeric', 'float64', NULL),
+  ('bell_number', 'pg', 'bell', '{int}', 'numeric', 'numeric', NULL),
+  ('bell_number', 'ts', 'bell', '{int}', 'numeric', 'float64', NULL),
 
-  ('fubini', 'pg', 'fubini', '{int}', 'numeric', 'numeric', NULL),
-  ('fubini', 'ts', 'fubini', '{int}', 'numeric', 'float64', NULL),
+  ('fubini_number', 'pg', 'fubini', '{int}', 'numeric', 'numeric', NULL),
+  ('fubini_number', 'ts', 'fubini', '{int}', 'numeric', 'float64', NULL),
 
   ('stirling_second', 'pg', 'stirling_second', '{int,int}', 'numeric', 'numeric', NULL),
   ('stirling_second', 'ts', 'stirling_second', '{int,int}', 'numeric', 'float64', NULL),

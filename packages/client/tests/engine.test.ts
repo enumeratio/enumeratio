@@ -120,8 +120,8 @@ describe('ts-engine · capability is data, and correctness beats speed', () => {
   it('ts == pg for every curated function with a printable ts implementation', async () => {
     // one small, in-domain call per function, derived from its impl row's argument kinds — no per-function code
     const args: Record<string, number[]> = {
-      catalan_number: [6], little_schroder_number: [5], factorial: [10], binomial: [10, 4], bell: [8],
-      fubini: [6], stirling_second: [7, 3], partition_number: [12], gcd: [12, 18], lcm: [4, 6], pow: [3, 5],
+      catalan_number: [6], little_schroder_number: [5], factorial: [10], binomial: [10, 4], bell_number: [8],
+      fubini_number: [6], stirling_second: [7, 3], partition_number: [12], gcd: [12, 18], lcm: [4, 6], pow: [3, 5],
       double_factorial_odd: [6], gaussian_norm: [0], multicomplex_popcount: [23], inversions: [0], stirling1: [6, 3],
       eulerianA: [6, 2], integer_partition_k_count: [10, 3],
     }
@@ -149,17 +149,17 @@ describe('ts-engine · capability is data, and correctness beats speed', () => {
   })
 
   it('refuses to print a float64 near-miss, and the router falls through to the oracle', async () => {
-    // bell has only a float64 ts twin; bell(30) is far past 2^53
-    expect(reg.impls('bell', 'ts').map((i) => i.representation)).toEqual(['float64'])
-    expect(ts.can(parseCalc('bell(30)'))).toBe(true)
-    await expect(value(ts, 'bell(30)')).rejects.toBeInstanceOf(InexactResult)
+    // bell_number has only a float64 ts twin; bell_number(30) is far past 2^53
+    expect(reg.impls('bell_number', 'ts').map((i) => i.representation)).toEqual(['float64'])
+    expect(ts.can(parseCalc('bell_number(30)'))).toBe(true)
+    await expect(value(ts, 'bell_number(30)')).rejects.toBeInstanceOf(InexactResult)
 
-    const { plan, rows } = router.evaluate(parseCalc('bell(30)'))
+    const { plan, rows } = router.evaluate(parseCalc('bell_number(30)'))
     const out: Record<string, unknown>[] = []
     for await (const row of rows) out.push(row as Record<string, unknown>)
     expect((await plan).engine).toBe('pg')
-    expect(String(Object.values(out[0])[0])).toBe(await value(pg, 'bell(30)'))
-    expect(await value(ts, 'bell(20)')).toBe(await value(pg, 'bell(20)'))   // inside 2^53, ts answers
+    expect(String(Object.values(out[0])[0])).toBe(await value(pg, 'bell_number(30)'))
+    expect(await value(ts, 'bell_number(20)')).toBe(await value(pg, 'bell_number(20)'))   // inside 2^53, ts answers
   })
 
   it('lcm is curated with no pg implementation — pg declines, ts answers, the router says so', async () => {
