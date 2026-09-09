@@ -183,6 +183,12 @@ describe('bind: errors', () => {
     }
   })
 
+  it('a \\mid b (Divides) binds BOOLEAN', () => {
+    const bound = bind(parser.parse('3\\mid 12'), new Map(), catalog)
+    expect(bound.errors).toEqual([])
+    expect(bound.type).toEqual({ k: 'scalar', pg: 'boolean' })
+  })
+
   it('scalar |x| is absolute value (numeric)', () => {
     expect(bind(parser.parse('|-5|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bind(parser.parse('|3-10|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })

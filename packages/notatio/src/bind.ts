@@ -220,7 +220,7 @@ function compute(e: Node, path: NodePath, ctx: Ctx): Type {
     if ('op' in opBinding) return typeOp(opBinding.op, a, path, ctx)
     if ('fn' in opBinding) return typeApply(opBinding.fn, a, path, ctx)
     // a CE-native numeric op (Max/Sqrt/Zeta/…) — type its args, result is numeric; ce-engine evaluates it.
-    if ('kernel' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType('numeric') }
+    if ('kernel' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType(opBinding.result ?? 'numeric') }
     // special
     if (opBinding.special === 'contains') return typeContains(a, path, ctx)
     if (opBinding.special === 'element_at') return typeElementAt(a, path, ctx)
