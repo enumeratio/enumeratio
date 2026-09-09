@@ -130,8 +130,8 @@ as families migrate.
 - [**Involutions**](/reference/Involutions) — The self-inverse permutations of $[n]$ — those equal to their own inverse ($\sigma = \sigma^{-1}$).
 - [**Derangements**](/reference/Derangements) — The permutations of $[n]$ with no fixed point — $\sigma(i) \neq i$ for every $i$.
 - [**AlternatingPermutations**](/reference/AlternatingPermutations) — The up-down permutations of $[n]$: $a_1 < a_2 > a_3 < a_4 > \cdots$.
-- [**Permutations321Avoiding**](/reference/Permutations321Avoiding) — The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).
-- [**Permutations132Avoiding**](/reference/Permutations132Avoiding) — The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\sigma_i < \sigma_k < \sigma_j$).
+- [**PermutationsAvoiding321**](/reference/PermutationsAvoiding321) — The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).
+- [**PermutationsAvoiding132**](/reference/PermutationsAvoiding132) — The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\sigma_i < \sigma_k < \sigma_j$).
 - [**PermutationsAvoiding123**](/reference/PermutationsAvoiding123) — The permutations of $[n]$ with no increasing subsequence of length 3 (pattern $123$).
 - [**PermutationsAvoiding213**](/reference/PermutationsAvoiding213) — The permutations of $[n]$ avoiding the pattern $213$ (no $i<j<k$ with $\sigma_j < \sigma_i < \sigma_k$).
 - [**PermutationsAvoiding231**](/reference/PermutationsAvoiding231) — The permutations of $[n]$ avoiding the pattern $231$ — equivalently the stack-sortable permutations.
