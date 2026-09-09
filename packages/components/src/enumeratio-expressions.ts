@@ -2,9 +2,10 @@ import { LitElement, html, css, type CSSResultGroup, type TemplateResult } from 
 import { customElement, property, state } from 'lit/decorators.js'
 import { evaluate, fnRef, reseedRandom, type Expr, type HandleExpr, type Row, type SelectExpr } from '@enumeratio/client'
 import {
-  bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase,
+  bind, complete, lower, makeParser, LineGraph, identifierDisplay, pascalCase, scalarType,
   head, args, isSymbol, symbolName,
-  type Bound, type Completion, type Node, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Parsed, type Scope, type Type,
+  OPERATORS, SESSION_SYSTEM, SESSION_VERSION, SESSION_VERSION_NUMBER,
+  type Bound, type Completion, type Node, type ExpressionParser, type IdentifierDisplay, type LineId, type LineModel, type LowerResult, type Parsed, type Scope, type Type, type ValueRef,
 } from '@enumeratio/notatio'
 import { loadNotebookCatalog, type NotebookCatalog } from './notebook-catalog'
 import type { Completer, CompletionCandidate } from './enumeratio-math-input'
@@ -577,6 +578,48 @@ export class EnumeratioExpressions extends LitElement {
     this.results.set(id, next)
   }
 
+  /** A math cell's own display row number (1-based) — comments don't count, mirroring `renderLines`'s `mathNum`
+   *  counter exactly (see there) so `$Line` always shows what the gutter shows. 0 if `id` isn't a math cell in
+   *  `displayOrder` (shouldn't happen for a line evalLine is actually processing). */
+  private lineNumberOf(id: LineId): number {
+    let n = 0
+    for (const lid of this.displayOrder) {
+      if (this.lineKinds.get(lid) === 'comment') continue
+      n++
+      if (lid === id) return n
+    }
+    return 0
+  }
+
+  /** `$`-session var (#406) → its current `{text, pg}`, given the asking line's own row number. `$System`/`$Version`
+   *  are static; `$Seed`/`$Line` read this environment's live state. Kept a plain switch (not a lookup table) since
+   *  each case reads different live state and the set is small and fixed. */
+  private sessionValue(kind: string, lineNumber: number): { text: string; pg: string } {
+    switch (kind) {
+      case 'System': return { text: SESSION_SYSTEM, pg: 'text' }
+      case 'Version': return { text: SESSION_VERSION, pg: 'text' }
+      case 'VersionNumber': return { text: String(SESSION_VERSION_NUMBER), pg: 'natural_number' }
+      case 'Seed': return { text: String(this.seed), pg: 'natural_number' }
+      case 'Line': return { text: String(lineNumber), pg: 'natural_number' }
+      default: throw new Error(`sessionValue: unknown $-session kind "${kind}"`)
+    }
+  }
+
+  /** Re-populate `scope` with every `$`-session var (see names.ts's OPERATORS `session` entries — the ONE place
+   *  that list is authored) ahead of binding THIS line, so `typeSymbol`'s existing scope-lookup (bind.ts — checked
+   *  before catalog/builtin) resolves `$System`/`$Seed`/`$Line`/… the same way it resolves any other previously-
+   *  computed scope var, with zero changes to bind.ts/lower.ts. Re-run per line (not once per pass): `$Line` must
+   *  read differently for every line that references it. */
+  private injectSessionScope(id: LineId): void {
+    const lineNumber = this.lineNumberOf(id)
+    for (const [name, binding] of Object.entries(OPERATORS)) {
+      if (!('session' in binding)) continue
+      const { text, pg } = this.sessionValue(binding.session, lineNumber)
+      const value: ValueRef = { k: 'scalar', text, pg }
+      this.scope.set(name, { k: 'var', type: scalarType(pg), value })
+    }
+  }
+
   private async evalLine(id: LineId, models: Map<LineId, LineModel>): Promise<void> {
     const notebook = this.notebook!
     this.lineAst.delete(id) // fresh each pass; set once the line parses (below)
@@ -618,6 +661,7 @@ export class EnumeratioExpressions extends LitElement {
     // A define re-binds its symbol from scratch: back to the declared type (no value) or gone — never a stale value.
     if (model.bindKind === 'define' && model.defines) this.resetBinding(model.defines)
 
+    this.injectSessionScope(id)
     let bound: Bound
     try {
       bound = bind(model.parsed, this.scope, notebook.catalog)
@@ -989,6 +1033,10 @@ function typeBadge(t: Type, value?: string): string {
 /** Notation for a scalar carrier, refined by the evaluated value when the pg type is the generic `numeric`. */
 function scalarSet(pg: string, value?: string): string {
   if (pg === 'rational_number') return 'ℚ'
+  // `text` (e.g. `$System`/`$Version` — #406) is never value-sniffed: an actual STRING that happens to look
+  // numeric ("1.0") must not read as ℝ — the numeric-look heuristic below is for a generic/registered algebra
+  // scalar whose VALUE decides its notation, not for a type that is explicitly non-numeric.
+  if (pg === 'text') return pg
   const v = value?.trim()
   if (v) {
     if (v.startsWith('[')) return 'list' // a list/tuple element (e.g. a random permutation) — not a scalar set

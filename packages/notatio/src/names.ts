@@ -11,7 +11,9 @@
 // Heads verified empirically against the installed compute-engine (0.125.0) — see the probing note by each
 // non-obvious one; a CE canonical name is not always what you'd guess (`\gcd` → head `"GCD"`, not `"Gcd"`).
 
-export type OperatorBinding = { op: string } | { fn: string } | { special: string } | { kernel: string; result?: 'numeric' | 'boolean' }
+export type OperatorBinding =
+  | { op: string } | { fn: string } | { special: string } | { kernel: string; result?: 'numeric' | 'boolean' }
+  | { session: string }   // a Wolfram-style `$`-var — resolved by the HOST eval-core from its own live state, never a kernel
 
 export const OPERATORS: Record<string, OperatorBinding> = {
   // ── base_operation (algebra.sql) — arithmetic, order, lattice ────────────────────────────────────────────────
@@ -97,7 +99,31 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership
   At: { special: 'element_at' },        // `L[i]` — index into a handle or array
   Count: { special: 'cardinality' },    // `|S|`/`\#S` — collection size
+
+  // ── `$`-session symbols (Wolfram-style, #406) — resolved by the notebook eval-core from its own live state
+  // (RNG seed, the asking cell's row, a version constant) at EVAL time, not typed/lowered specially here: bind.ts's
+  // `typeSymbol` already checks `scope` before catalog/builtin, so the host just pre-populates `scope` with a
+  // `{k:'var', value}` Binding for each of these per line-eval (see enumeratio-expressions.ts's
+  // `injectSessionScope`) — these OPERATORS entries are only the REGISTRY of which MathJSON symbol names ARE
+  // session vars, read by latex.ts (to build the parser dictionary + the `$`-spelling rewrite) and by the host
+  // (to know which scope keys to (re)inject). The `session` VALUE here is the resolver-facing kind name, not a
+  // display spelling. The MathJSON symbol/key is `Dollar<Name>` — NOT the literal `$Name` a user types: CE's
+  // dictionary validation rejects `$` in a symbol's `name` outright ("must be a valid symbol", checked live) — see
+  // latex.ts's `sessionDictionary`/`normalizeLatex` for how the typed `$Name` spelling maps onto this key.
+  DollarSystem: { session: 'System' },
+  DollarVersion: { session: 'Version' },
+  DollarVersionNumber: { session: 'VersionNumber' },
+  DollarSeed: { session: 'Seed' },
+  DollarLine: { session: 'Line' },
 }
+
+/** Static `$`-session constants (#406) — resolved ONCE, not live state (contrast `$Seed`/`$Line`, which the host
+ *  recomputes every eval). `$System` names the language/library; `$Version`/`$VersionNumber` are notatio's OWN
+ *  language version — hand-bumped here, independent of any package's own package.json semver (this monorepo's
+ *  packages don't carry a meaningful release version to mirror). */
+export const SESSION_SYSTEM = 'enumeratio'
+export const SESSION_VERSION = '1.0'
+export const SESSION_VERSION_NUMBER = 1
 
 /** CE heads with no curated `base_function` id AND no `{kernel}` binding — a bind() encountering one reports "unknown
  *  operator" naming the head. Now EMPTY: the scalar math heads route to CE via `{kernel}` (see OPERATORS), and `Abs`

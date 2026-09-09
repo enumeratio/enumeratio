@@ -78,6 +78,8 @@ function lowerExpr(e: Node, path: NodePath, scope: Scope, types: Map<NodePath, T
     if ('fn' in opBinding) return lowerCall(opBinding.fn, a, path, scope, types)
     // a CE-native op → an apply on its CE head; ce-engine evaluates it (numeric approximation for now).
     if ('kernel' in opBinding) return { kind: 'apply', fn: fnRef(opBinding.kernel), args: a.map((arg, i) => lowerArg(arg, argPath(path, i), scope, types)) }
+    // unreachable (see bind.ts's matching comment) — kept for the same TS narrowing reason.
+    if ('session' in opBinding) throw new Error(`lower: "$${opBinding.session}" is not callable`)
     if (opBinding.special === 'contains') return lowerContains(a, path, scope, types)
     if (opBinding.special === 'element_at') return lowerBaseIndexed('element_at', a, path, scope, types)
     return lowerBaseIndexed('cardinality', a.slice(0, 1), path, scope, types)   // 'cardinality' — Count takes one arg

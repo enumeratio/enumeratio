@@ -6,6 +6,7 @@ import type { LatexDictionaryEntry } from '@cortex-js/compute-engine/latex-synta
 import type { Expression, MathJsonSymbol, NodePath, Parsed, ParseError, SpanMap, Span, Stmt } from './ast.js'
 import { args, head, isSymbol, mapExpr, symbolName } from './ast.js'
 import { normalize, head as nHead, args as nArgs, isSymbol as nIsSymbol, symbolName as nSymbolName, type Node } from './node.js'
+import { OPERATORS } from './names.js'
 
 /** The catalog surface a parser is bound to: collection ids (bare symbols), function ids (call heads), and any
  *  extra LaTeX macro -> catalog-id bindings (e.g. `'\\mathbb{N}': 'natural_numbers'`). */
@@ -91,6 +92,36 @@ export function catalogDictionary(names: CatalogNames): Partial<LatexDictionaryE
     entries.push({ latexTrigger: macro, parse: id })
   }
   return entries
+}
+
+// ── `$`-session symbols (#406) ───────────────────────────────────────────────────────────────────────────────────
+// A bare `$` is not a valid identifier char to CE's tokenizer under ANY escaping — `\$System`, `\operatorname{\$
+// System}`, `\mathrm{\$System}` all fail to parse (checked live against @cortex-js/compute-engine 0.125: each
+// reports `invalid-first-char`/`unexpected-command`/`unexpected-token`). So a `$`-var is never handed to CE's own
+// parser as such — `normalizeLatex` below recognizes it in the RAW text (same pre-parse pass that already rewrites
+// bare catalog-id runs) and rewrites straight to the internal `\operatorname{Dollar<Name>}` spelling, which IS an
+// ordinary identifier as far as CE is concerned. Two raw spellings are recognized: `$Name` (a bare `$` glyph — what
+// a programmatic `mathfield.insert('$Name')` produces) and `\$Name` (an escaped `\$` — what a REAL keystroke in
+// MathLive serializes a typed `$` to; checked live in a `<enumeratio-expression-line>`'s math-field). Both compose
+// with `pascalCase`'s Pascal-word convention: `SESSION_VAR_NAMES` holds the bare suffix (`System`, `VersionNumber`,
+// …), read straight off `OPERATORS`'s `session` entries so this file and names.ts can never list a different set.
+const SESSION_VAR_NAMES = new Set(Object.values(OPERATORS).flatMap((b) => ('session' in b ? [b.session] : [])))
+
+/** One `kind:'symbol'` dictionary entry per `$`-session var — same `standaloneSymbol` shape catalogDictionary's
+ *  entries use, but keyed by the fixed internal `Dollar<Name>` OPERATORS key (never a literal `$…` — CE's own
+ *  dictionary validation rejects `$` in a symbol's `name`, checked live) for BOTH the parse trigger and the
+ *  MathJSON symbol, so bind.ts's plain scope lookup (see enumeratio-expressions.ts's `injectSessionScope`) needs no
+ *  translation between the two. */
+function sessionDictionary(): Partial<LatexDictionaryEntry>[] {
+  return Object.entries(OPERATORS)
+    .filter((e): e is [string, { session: string }] => 'session' in e[1])
+    .map(([name]) => ({
+      kind: 'symbol' as const,
+      symbolTrigger: name,
+      name,
+      serialize: `\\operatorname{${name}}`,
+      standaloneSymbol: true,
+    }))
 }
 
 // ── pre-parse: `.`-method sugar ────────────────────────────────────────────────────────────────────────────────
@@ -188,6 +219,23 @@ function normalizeLatex(latex: string, catalogIds: ReadonlySet<string>, aliases:
   const protectStack: number[] = [] // brace depths at which a protected (\operatorname{/\mathrm{/\text{) group started
   while (i < latex.length) {
     const c = latex[i]
+    // `$Name` / `\$Name` naming a known `$`-session var (see the SESSION_VAR_NAMES block above) → rewrite straight
+    // to its internal `\operatorname{}` spelling before either the backslash-command or identifier branch below
+    // ever sees the `$` — CE's own tokenizer rejects a `$` character outright, in or out of `\operatorname{}`
+    // (checked live), so this is the ONLY point a `$`-var can be recognized. An unrecognized `$word` (typo, or a
+    // literal dollar amount like `\$5`) falls through unconsumed to the normal per-character handling below,
+    // same degraded-but-unchanged behavior as before this rewrite existed.
+    if (protectStack.length === 0 && (c === '$' || (c === '\\' && latex[i + 1] === '$'))) {
+      const dollarLen = c === '$' ? 1 : 2
+      let k = i + dollarLen
+      while (k < latex.length && /[A-Za-z]/.test(latex[k])) k++
+      const word = latex.slice(i + dollarLen, k)
+      if (SESSION_VAR_NAMES.has(word)) {
+        appendRaw(`\\operatorname{Dollar${word}}`, i)
+        i = k
+        continue
+      }
+    }
     if (c === '\\') {
       let j = i + 1
       while (j < latex.length && /[A-Za-z]/.test(latex[j])) j++
@@ -532,7 +580,7 @@ export function makeParser(catalog: CatalogNames): ExpressionParser {
   // comprehension keyword (`[i^2 for i=[1,2,3]]`). The normalizer only ever matches a WHOLE letter-run, so this
   // rewrites a standalone `for`, never the `for` inside a word like `before`.
   aliases.set('for', 'for')
-  const dictionary: Partial<LatexDictionaryEntry>[] = [...LATEX_DICTIONARY, ...catalogDictionary(catalog)]
+  const dictionary: Partial<LatexDictionaryEntry>[] = [...LATEX_DICTIONARY, ...catalogDictionary(catalog), ...sessionDictionary()]
   const syntax = new LatexSyntax({ dictionary: dictionary as never, preserveLatex: true })
 
   return {
