@@ -57,6 +57,12 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   // types it ∈ 𝔹 (the ce-engine already prints CE's True/False as true/false). Checked live on 0.125.
   Divides: { kernel: 'Divides', result: 'boolean' },
   NotDivides: { kernel: 'NotDivides', result: 'boolean' },   // `a \nmid b` — glyph trigger, boolean
+  // Boolean logic over boolean-producing operands (comparisons, \mid, \in) — all glyph triggers, no `\operatorname{}`.
+  // `(3<5) \land (2<4)` → true, `\lnot(3<5)` → false. Bare `\mathrm{True}`/`\mathrm{False}` LITERALS aren't bound yet
+  // (they parse to unknown symbols) — logic is over predicates for now. Checked live on 0.125.
+  And: { kernel: 'And', result: 'boolean' }, Or: { kernel: 'Or', result: 'boolean' }, Not: { kernel: 'Not', result: 'boolean' },
+  Xor: { kernel: 'Xor', result: 'boolean' }, Nand: { kernel: 'Nand', result: 'boolean' }, Nor: { kernel: 'Nor', result: 'boolean' },
+  Implies: { kernel: 'Implies', result: 'boolean' }, Equivalent: { kernel: 'Equivalent', result: 'boolean' },
   // base logs: `\log_2(x)` parses to the `Lb` head, `\lg` to `Lg` — both evaluate on 0.125 (`\log_2(8)` → 3,
   // `\lg(1000)` → 3). (`\log_{10}(x)` canonicalizes straight to `Log`, already curated.)
   // Set relations (`\subseteq`/`\subset`/…) are deliberately NOT here: our `\{…\}` binds as a LIST (integer[]), so
