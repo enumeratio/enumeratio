@@ -28,13 +28,29 @@ export const NODES: NodeDoc[] = [
     ],
     examples: {
       params: [4],
-      narrative: [
-        "$\\operatorname{Count}(\\operatorname{SymmetricGroup}(4)) = {count}$",
-        "The lexicographically-first permutation of $[4]$ (1-based position 1) is ${at(0)}$; the last (position 24) is ${at(23)}$.",
-        "The 6 words of $[3]$ in lex order are ${first(6; 3)}$, so $[2,3,1]$ sits at the 4th position: $\\operatorname{Rank}(\\operatorname{SymmetricGroup}(3),\\ [2,3,1]) = {rank([2,3,1]; 3)}$ — `Rank` is 1-based; the generic [`rank`](/reference/rank) reports the same position 0-based (`{rank0([2,3,1]; 3)}`).",
+      blocks: [
+        {
+          md: "The symmetric group $S_n$ collects all $n!$ permutations of $[n]$. Enumerate the group, then count it — the cardinality is $4! = {count}$:",
+          lines: [
+            { latex: "\\operatorname{Permutations}(4)" },
+            { latex: "\\left|\\operatorname{Permutations}(4)\\right|", expect: "{count}" },
+          ],
+        },
+        {
+          md: "Elements are indexed 1-based in lexicographic order — the first and last permutations of $[4]$:",
+          lines: [
+            { latex: "\\operatorname{Permutations}(4)[1]", expect: "{at(0)}" },
+            { latex: "\\operatorname{Permutations}(4)[24]", expect: "{at(23)}" },
+          ],
+        },
+        {
+          md: "The lines of one example share a scope, so a parameter set once carries down — here $|S_n| = n!$ read straight off a bound $n$:",
+          lines: [
+            { latex: "n = 4" },
+            { latex: "\\operatorname{Factorial}(n)", expect: "{count}" },
+          ],
+        },
       ],
-      // NOTE: live-notebook seeds are held until the notebook parser speaks the library vocabulary
-      // (SymmetricGroup/Count/At + fixed rank/unrank lowering). render.ts emits the block when `notebook` is set.
     },
     seeAlso: [
       { head: "KPermutations" }, { head: "SignedPermutations" }, { head: "ColoredPermutations" },

@@ -25,15 +25,33 @@ export interface SeeAlso {
   note?: string;
 }
 
+/** One live input line in a worked-example block. `latex` is passed to the environment VERBATIM (it is runnable
+ *  source — the `{…}` placeholder delimiter collides with LaTeX braces). `expect`, when given, makes it an ASSERTED
+ *  input: the environment compares the rendered value to it and shows a ✓/✗. `expect` DOES resolve {placeholders}
+ *  (it is a value, not LaTeX), so it stays pinned to the live kernel. */
+export interface ExampleLine {
+  latex: string;
+  expect?: string;
+}
+
+/** A Wolfram-style worked example: a markdown preamble followed by a small live environment of one or more input
+ *  lines sharing one lexical scope. Rendered as prose + a bare <enumeratio-expressions> (no notebook chrome). */
+export interface ExampleBlock {
+  /** markdown preamble shown above the live inputs; {placeholders} resolve. Omit for inputs with no lead-in. */
+  md?: string;
+  lines: ExampleLine[];
+}
+
 /** How a collection page's Examples numbers are computed — all values come from the real pack kernels. */
 export interface CollectionExamples {
   /** sample parameters the bare {count}/{first(..)}/{at(..)} placeholders bind to. */
   params: number[];
-  /** authored example paragraphs; {placeholders} resolve against `params` (or explicit args). */
-  narrative: string[];
-  /** LaTeX lines seeding a live, editable notebook embedded under the worked examples — each one
-   *  evaluates in-browser (pure-CE, no pg). {placeholders} resolve here too. Same forms readers see in
-   *  the narrative, now runnable. Omit for no live block. */
+  /** Wolfram-style worked examples: prose interleaved with live, asserted inputs. When present, this REPLACES the
+   *  legacy `narrative` + `notebook` rendering (the examples themselves are the live block). */
+  blocks?: ExampleBlock[];
+  /** LEGACY (pre-`blocks`): authored example paragraphs; {placeholders} resolve against `params` (or explicit args). */
+  narrative?: string[];
+  /** LEGACY (pre-`blocks`): LaTeX lines seeding a live notebook under the narrative. {placeholders} resolve here too. */
   notebook?: string[];
 }
 
@@ -89,21 +107,36 @@ export function renderPage(n: ResolvedNode): string {
   for (const d of n.details) out.push(`- **${d.label}:** ${d.body}`);
   out.push("");
 
-  const exampleLines = n.examples?.narrative ?? n.examplesRaw;
-  if (exampleLines && exampleLines.length) {
-    out.push("## Examples", "");
-    for (const p of exampleLines) out.push(p, "");
-  }
-
-  // Live, editable notebook seeded with the same forms — evaluates in-browser (pure-CE). ClientOnly because
-  // the custom element + engine are browser-only (Node prerender skips it). The value attribute is a JSON
-  // NotebookSeed; single-quoted so the JSON's own double quotes need no escaping (only `'` and `&` do).
-  if (n.examples?.notebook && n.examples.notebook.length) {
-    const seed = JSON.stringify({ lines: n.examples.notebook.map((latex) => ({ latex })) })
+  // The value attribute below is a JSON seed; single-quoted so the JSON's own double quotes need no escaping
+  // (only `'` and `&` do). ClientOnly because the custom element + engine are browser-only (Node prerender skips it).
+  const seedAttr = (lines: ExampleLine[]): string =>
+    JSON.stringify({
+      lines: lines.map((l) => ({ latex: l.latex, ...(l.expect !== undefined ? { expect: l.expect } : {}) })),
+    })
       .replace(/&/g, "&amp;")
       .replace(/'/g, "&#39;");
-    out.push("Try it live — edit any line and it re-evaluates (nothing here is a screenshot):", "");
-    out.push("<ClientOnly>", `  <enumeratio-notebook value='${seed}'></enumeratio-notebook>`, "</ClientOnly>", "");
+
+  if (n.examples?.blocks && n.examples.blocks.length) {
+    // Wolfram-style: prose interleaved with live, asserted inputs. The examples ARE the runnable block — each is a
+    // bare <enumeratio-expressions> (the notebook's eval core, no toolbar/frame), so a page reads as worked examples,
+    // not a heavyweight editor. An asserted line shows a ✓ (or ✗ + expected) computed live against the pack kernel.
+    out.push("## Examples", "");
+    for (const b of n.examples.blocks) {
+      if (b.md) out.push(b.md, "");
+      out.push("<ClientOnly>", `  <enumeratio-expressions value='${seedAttr(b.lines)}'></enumeratio-expressions>`, "</ClientOnly>", "");
+    }
+  } else {
+    // LEGACY (pre-`blocks`): narrative paragraphs + one live notebook seeded with the same forms.
+    const exampleLines = n.examples?.narrative ?? n.examplesRaw;
+    if (exampleLines && exampleLines.length) {
+      out.push("## Examples", "");
+      for (const p of exampleLines) out.push(p, "");
+    }
+    if (n.examples?.notebook && n.examples.notebook.length) {
+      const seed = seedAttr(n.examples.notebook.map((latex) => ({ latex })));
+      out.push("Try it live — edit any line and it re-evaluates (nothing here is a screenshot):", "");
+      out.push("<ClientOnly>", `  <enumeratio-notebook value='${seed}'></enumeratio-notebook>`, "</ClientOnly>", "");
+    }
   }
 
   out.push("## See also", "");

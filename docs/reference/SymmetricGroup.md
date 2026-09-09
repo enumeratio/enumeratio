@@ -23,16 +23,22 @@
 
 ## Examples
 
-$\operatorname{Count}(\operatorname{SymmetricGroup}(4)) = 24$
-
-The lexicographically-first permutation of $[4]$ (1-based position 1) is $[1, 2, 3, 4]$; the last (position 24) is $[4, 3, 2, 1]$.
-
-The 6 words of $[3]$ in lex order are $[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]$, so $[2,3,1]$ sits at the 4th position: $\operatorname{Rank}(\operatorname{SymmetricGroup}(3),\ [2,3,1]) = 4$ — `Rank` is 1-based; the generic [`rank`](/reference/rank) reports the same position 0-based (`3`).
-
-Try it live — edit any line and it re-evaluates (nothing here is a screenshot):
+The symmetric group $S_n$ collects all $n!$ permutations of $[n]$. Enumerate the group, then count it — the cardinality is $4! = 24$:
 
 <ClientOnly>
-  <enumeratio-notebook value='{"lines":[{"latex":"Permutations(4)"},{"latex":"\\left|Permutations(4)\\right|"},{"latex":"Permutations(4)[1]"}]}'></enumeratio-notebook>
+  <enumeratio-expressions value='{"lines":[{"latex":"\\operatorname{Permutations}(4)"},{"latex":"\\left|\\operatorname{Permutations}(4)\\right|","expect":"24"}]}'></enumeratio-expressions>
+</ClientOnly>
+
+Elements are indexed 1-based in lexicographic order — the first and last permutations of $[4]$:
+
+<ClientOnly>
+  <enumeratio-expressions value='{"lines":[{"latex":"\\operatorname{Permutations}(4)[1]","expect":"[1, 2, 3, 4]"},{"latex":"\\operatorname{Permutations}(4)[24]","expect":"[4, 3, 2, 1]"}]}'></enumeratio-expressions>
+</ClientOnly>
+
+The lines of one example share a scope, so a parameter set once carries down — here $|S_n| = n!$ read straight off a bound $n$:
+
+<ClientOnly>
+  <enumeratio-expressions value='{"lines":[{"latex":"n = 4"},{"latex":"\\operatorname{Factorial}(n)","expect":"24"}]}'></enumeratio-expressions>
 </ClientOnly>
 
 ## See also

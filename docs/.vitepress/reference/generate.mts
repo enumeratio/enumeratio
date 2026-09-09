@@ -120,10 +120,20 @@ function resolveNode(n: NodeDoc, xrefsBySubject: Map<string, XRef[]>): ResolvedN
     tagline: R(n.tagline),
     usage: n.usage.map((u) => ({ form: R(u.form), meaning: R(u.meaning) })),
     details: n.details.map((d) => ({ label: d.label, body: R(d.body) })),
-    // notebook seeds pass through VERBATIM — they're live-eval inputs, and the {…} placeholder delimiter
-    // would collide with LaTeX braces (\operatorname{rank} etc.). The notebook computes their values live.
+    // Example input LaTeX passes through VERBATIM — it's live-eval source, and the {…} placeholder delimiter would
+    // collide with LaTeX braces (\operatorname{rank} etc.). Everything ELSE resolves: narrative prose, a block's
+    // markdown preamble, and each asserted line's `expect` (a value, not LaTeX), so the pinned expectation always
+    // tracks the live kernel.
     examples: n.examples
-      ? { ...n.examples, narrative: n.examples.narrative.map(R), notebook: n.examples.notebook ?? defaultNotebookSeed(n) }
+      ? {
+          ...n.examples,
+          narrative: n.examples.narrative?.map(R),
+          notebook: n.examples.notebook ?? defaultNotebookSeed(n),
+          blocks: n.examples.blocks?.map((b) => ({
+            md: b.md !== undefined ? R(b.md) : undefined,
+            lines: b.lines.map((l) => ({ latex: l.latex, expect: l.expect !== undefined ? R(l.expect) : undefined })),
+          })),
+        }
       : undefined,
     examplesRaw: n.examplesRaw?.map(R),
     seeAlsoResolved,
