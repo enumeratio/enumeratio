@@ -101,7 +101,7 @@ function defaultNotebookSeed(n: NodeDoc): string[] | undefined {
 
 function resolveNode(n: NodeDoc, xrefsBySubject: Map<string, XRef[]>): ResolvedNode {
   const resolve =
-    n.kind === "collection" && n.examples ? makeResolver(n.head, n.examples.params) : identity;
+    n.kind === "collection" && n.examples ? makeResolver(n.kernelHead ?? n.head, n.examples.params) : identity;
   const R = (s: string) => resolve(s);
   const xrefs = (n.catalogId ? xrefsBySubject.get(n.catalogId) : undefined) ?? [];
   const xrefsResolved = [...xrefs]

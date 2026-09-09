@@ -6,7 +6,7 @@ expression language recognizes — one page per node: what it means, its usage f
 
 This is a *language* reference (the AST/MathJSON vocabulary a notebook line compiles through), distinct from the
 [Data Reference](/develop/data/) (the pg-catalog's own collections/functions/stats/maps tables) — the same
-mathematical family often has a foot in both: e.g. `SymmetricGroup` here is the same family as the catalog's
+mathematical family often has a foot in both: e.g. `Permutations` here is the same family as the catalog's
 `permutations`, reachable by either spelling in a notebook (see each collection page's "Catalog alias" note).
 
 ## How a page is organized
@@ -47,7 +47,7 @@ counting-sequence pages are still hand-authored and will migrate into the datase
 A couple of forms sketched for a future notebook release — an action/`To` node (`p \to \text{expr}`, a run/ticker
 control) and a `for`-comprehension (`[expr \text{ for } i = [\dots]]`) — aren't in the merged expression language
 today, so there's nothing to verify a page against. They'll get pages once they land. Likewise, `Abs`/`|x|` over a
-*scalar* has no curated binding yet (see the note on [`cardinality`](/reference/cardinality) for the *collection*
+*scalar* has no curated binding yet (see the note on `cardinality` for the *collection*
 form, `|C|`, which does work today via a separate head, `Count`).
 :::
 
@@ -69,15 +69,15 @@ The mechanisms every collection gets for free — dispatched either by head name
 by the argument's own type (`next`/`prev`/`rank`/`locate`/`unrank`/`random_element` — see
 `packages/expressions/src/bind.ts`'s `NEXT_PREV_RANK` / `HANDLE_ELEM`).
 
-[`unrank`](/reference/unrank) · [`rank`](/reference/rank) · [`random_element`](/reference/random-element) ·
-[`cardinality`](/reference/cardinality) (`Count`, `|C|`, `\#C`) · `next` · `prev` · `locate` · `Element`
+`unrank` · `rank` · `random_element` ·
+`cardinality` (`Count`, `|C|`, `\#C`) · `next` · `prev` · `locate` · `Element`
 (`x \in C`, membership) · `At` (`L[i]`, plain list indexing)
 
 ## List operations
 
 Bound to compute-engine's own list heads rather than reimplemented.
 
-[`join`](/reference/join) (→ `Join`) · [`sort`](/reference/sort) (→ `Sort`) · [`unique`](/reference/unique)
+`join` (→ `Join`) · `sort` (→ `Sort`) · `unique`
 (→ `Unique`) · `scramble` (→ `Scramble`, Fisher–Yates) · `random_sample` (→ `RandomSample`, n random elements)
 
 ## Builtin symbols
@@ -91,8 +91,8 @@ Bare symbols that denote a catalog set rather than a scope variable (`names.ts`'
 First-class Listable scalar operators the compute-engine library adds (Wolfram has most of these; CE itself has
 none of them).
 
-[`BellB`](/reference/bell-b) · [`CatalanNumber`](/reference/catalan-number) · [`Fubini`](/reference/fubini) ·
-[`PartitionsP`](/reference/partitions-p) · `PartitionsQ` · `Factorial2` (double factorial) · `PolygonalNumber`
+`BellB` · `CatalanNumber` · `Fubini` ·
+`PartitionsP` · `PartitionsQ` · `Factorial2` (double factorial) · `PolygonalNumber`
 
 ## Digit & bitwise functions
 
@@ -122,7 +122,7 @@ as families migrate.
 
 ### Permutations & permutation classes
 
-- [**SymmetricGroup**](/reference/SymmetricGroup) — The collection of permutations of $\{1, \dots, n\}$, in one-line notation.
+- [**Permutations**](/reference/Permutations) — The collection of permutations of $\{1, \dots, n\}$, in one-line notation.
 - [**KPermutations**](/reference/KPermutations) — The ordered arrangements of $k$ distinct symbols drawn from $\{1, \dots, n\}$ — injections $[k] \hookrightarrow [n]$.
 - [**SignedPermutations**](/reference/SignedPermutations) — The hyperoctahedral group $B_n$ — permutations of $[n]$ with an independent $\pm$ sign on each entry.
 - [**ColoredPermutations**](/reference/ColoredPermutations) — The wreath product $\mathbb{Z}_k \wr S_n$ — a permutation of $[n]$ with an independent color in $\{0, \dots, k-1\}$ on each position.
@@ -148,17 +148,17 @@ as families migrate.
 `CompositionsIntoParts1And2` · `CompositionsIntoPartsAtLeast2` · `KColoredCompositions` ·
 `PalindromicCompositions`
 
-**Partitions & set partitions** (17) — [`IntegerPartitions`](/reference/integer-partitions) ·
+**Partitions & set partitions** (17) — `IntegerPartitions` ·
 `PartitionsIntoKParts` · `DistinctPartitions` · `PartitionsMaxPart` · `PartitionsInBox` · `SetPartitions` ·
 `SetPartitionsIntoKBlocks` · `SetCompositions` · `PerfectMatchings` · `NonCrossingPartitions` ·
 `NonNestingPartitions` · `PartitionsIntoAtMostKParts` · `PartitionsIntoOddParts` · `SelfConjugatePartitions` ·
 `SetPartitionsIntoAtMostKBlocks` · `SetPartitionsNoSingletons` · `PartitionsIntoParts1And2`
 
-**Subsets, multisets, tuples & functions** (10) — [`Subsets`](/reference/subsets) · `KSubsets` · `Multisets` ·
+**Subsets, multisets, tuples & functions** (10) — `Subsets` · `KSubsets` · `Multisets` ·
 `Tuples` · `Surjections` · `Endofunctions` · `EvenSubsets` · `OddSubsets` · `SubsetsOfSizeAtMost` ·
 `SubsetsWithoutConsecutive`
 
-**Lattice paths & Catalan objects** (12) — `LatticePaths` · [`DyckPaths`](/reference/dyck-paths) ·
+**Lattice paths & Catalan objects** (12) — `LatticePaths` · `DyckPaths` ·
 `MotzkinPaths` · `SchroderPaths` · `BicoloredMotzkinPaths` · `DelannoyPaths` · `GrandDyckPaths` ·
 `GrandMotzkinPaths` · `LittleSchroderPaths` · `NonCrossingMatchings` · `StandardYoungTableaux2xN` ·
 `Triangulations`

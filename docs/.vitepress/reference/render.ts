@@ -68,11 +68,15 @@ export interface XRef {
 export interface NodeDoc {
   head: string;
   /** Route/filename. Optional — defaults to the head itself (the canonical PascalCase identifier), so
-   *  `SymmetricGroup` → /reference/SymmetricGroup. Set only to override. */
+   *  `Permutations` → /reference/Permutations. Set only to override. */
   slug?: string;
   /** The pg-catalog collection id (snake) this head corresponds to, when there is a twin. Join key for
    *  external cross-references (base_reference) and OEIS, and the basis of the "Catalog alias" note. */
   catalogId?: string;
+  /** The compute-engine PACK kernel head to compute examples against, when it differs from the page `head` (the
+   *  library still registers this collection under a different name). Defaults to `head`. E.g. the `Permutations`
+   *  page resolves its example numbers against the pack's `SymmetricGroup` kernel until the library head is renamed. */
+  kernelHead?: string;
   /** sidebar/grouping family label, e.g. "Permutations & permutation classes". */
   family: string;
   kind: NodeKind;

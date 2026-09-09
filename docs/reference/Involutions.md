@@ -27,7 +27,7 @@ The 10 involutions of $[4]$ in rank order are $[1, 2, 3, 4], [2, 1, 3, 4], [3, 2
 
 ## See also
 
-[`SymmetricGroup`](/reference/SymmetricGroup) · [`Derangements`](/reference/Derangements) · `PerfectMatchings` (fixed-point-free involutions) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`Permutations`](/reference/Permutations) · [`Derangements`](/reference/Derangements) · `PerfectMatchings` (fixed-point-free involutions) · `rank` · `unrank` · `cardinality`
 
 ## External references
 

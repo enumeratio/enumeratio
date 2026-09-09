@@ -14,7 +14,7 @@
 ## Details
 
 - **Arity:** 2 — the ground size $n$ and the arrangement length $k$.
-- **Element:** a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`SymmetricGroup`](/reference/SymmetricGroup).
+- **Element:** a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`Permutations`](/reference/Permutations).
 - **Result type:** `collection` of `list<integer>`, each of length $k$.
 - **Count:** $n^{\underline{k}} = n!/(n-k)!$, the falling factorial (`FallingFactorial`, via `KPermutationCount` in `packages/compute-engine/src/kernels-extra.ts`).
 - **Order:** lexicographic, decoded as a mixed-radix falling-factorial numeral — position $p$ takes the $\lfloor r / (n-1-p)^{\underline{k-1-p}} \rfloor$-th still-available symbol, then recurses (`KPermutationUnrank`/`KPermutationRank`).
@@ -25,11 +25,11 @@
 
 $\operatorname{Count}(\operatorname{KPermutations}(4,\ 2)) = 12$
 
-The first six $2$-arrangements of $[4]$ in lex order are $[1, 2], [1, 3], [1, 4], [2, 1], [2, 3], [2, 4]$ — so $[2,3]$ sits at 1-based position $\operatorname{Rank}(\operatorname{KPermutations}(4,\ 2),\ [2,3]) = 5$ (the generic 0-based [`rank`](/reference/rank) reports `4`).
+The first six $2$-arrangements of $[4]$ in lex order are $[1, 2], [1, 3], [1, 4], [2, 1], [2, 3], [2, 4]$ — so $[2,3]$ sits at 1-based position $\operatorname{Rank}(\operatorname{KPermutations}(4,\ 2),\ [2,3]) = 5$ (the generic 0-based `rank` reports `4`).
 
 ## See also
 
-[`SymmetricGroup`](/reference/SymmetricGroup) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`Permutations`](/reference/Permutations) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · `rank` · `unrank` · `cardinality`
 
 ## External references
 

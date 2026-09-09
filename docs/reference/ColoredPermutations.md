@@ -15,7 +15,7 @@
 - **Arity:** 2 — the ground size $n$ and the number of colors $k$.
 - **Element:** a pair `[image, colors]`: `image` a permutation of $[n]$ (one-line), `colors` a length-$n$ word over $\{0, \dots, k-1\}$. E.g. `[[1, 2], [1, 0]]` colors position 1 with $1$ and position 2 with $0$.
 - **Result type:** `collection` of `list<list<integer>>` (the two length-$n$ lists).
-- **Count:** $k^n\,n!$ (`ColoredPermutationCount`). At $k=1$ this is [`SymmetricGroup`](/reference/SymmetricGroup); at $k=2$, [`SignedPermutations`](/reference/SignedPermutations).
+- **Count:** $k^n\,n!$ (`ColoredPermutationCount`). At $k=1$ this is [`Permutations`](/reference/Permutations); at $k=2$, [`SignedPermutations`](/reference/SignedPermutations).
 - **Order:** mixed-radix: $\text{colorNum} = \lfloor r/n! \rfloor$ read big-endian base-$k$ into the color word, over the lex permutation $r \bmod n!$ (`ColoredPermutationUnrank`/`Rank`).
 - **Random access:** $O(n)$ — a Lehmer decode plus an $n$-digit base-$k$ expansion.
 
@@ -29,7 +29,7 @@ $\operatorname{Rank}(\operatorname{ColoredPermutations}(2,\ 2),\ [[1,2],[1,0]]) 
 
 ## See also
 
-[`SymmetricGroup`](/reference/SymmetricGroup) ($k = 1$) · [`SignedPermutations`](/reference/SignedPermutations) ($k = 2$) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`Permutations`](/reference/Permutations) ($k = 1$) · [`SignedPermutations`](/reference/SignedPermutations) ($k = 2$) · `rank` · `unrank` · `cardinality`
 
 ## External references
 
