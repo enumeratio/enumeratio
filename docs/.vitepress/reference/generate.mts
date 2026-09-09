@@ -12,10 +12,14 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { allEntries, adaptEntry, type NestedTree } from "../../../packages/compute-engine/src/packs/index.ts";
 import { sharedCore } from "@enumeratio/data/node";
-import { COLL_HEADS } from "../../../packages/client/src/ce-enum-engine.ts";
 import { pascalCase } from "../../../packages/notatio/src/latex.ts";
+import { loadCatalog } from "./emit-catalog.mts";
 import { NODES } from "./nodes.ts";
 import { renderPage, type NodeDoc, type ResolvedNode, type XRef } from "./render.ts";
+
+// The emitted catalog (base_compute_engine_twin among the rest) — the single source of the collection↔library
+// twin fact, read here instead of importing the client's engine internals.
+const CATALOG = loadCatalog();
 
 // External-reference systems: display label + preferred order (unknown systems sort last, alphabetically).
 // The set is read LIVE from base_reference, so a new system (mathworld, fungrim, dlmf, …) appears automatically.
@@ -87,14 +91,14 @@ const kebab = (head: string): string =>
     .toLowerCase();
 
 /** A live-notebook seed synthesized from the catalog for a collection the pure-CE notebook can ENUMERATE — i.e.
- *  one with a compute-engine library twin (`COLL_HEADS`, the single source of that fact). Uses the collection's
- *  PascalCase entity name (what the notebook resolves — `permutations` → `Permutations`, the primary entity; a
- *  distinct `SymmetricGroup` alt-sort would be its own node) applied to the page's example params:
- *  `[ Name(params), |Name(params)|, Name(params)[1] ]` — the entity, its cardinality, and its first element.
- *  Only when the node didn't hand-author its own seed. Not enumerable / not a collection → no live notebook. */
+ *  one with a compute-engine library twin (`base_compute_engine_twin`, via the emitted catalog — the single source
+ *  of that fact). Uses the collection's PascalCase entity name (what the notebook resolves — `permutations` →
+ *  `Permutations`, the primary entity; a distinct `SymmetricGroup` alt-sort would be its own node) applied to the
+ *  page's example params: `[ Name(params), |Name(params)|, Name(params)[1] ]` — the entity, its cardinality, and its
+ *  first element. Only when the node didn't hand-author its own seed. Not enumerable / not a collection → none. */
 function defaultNotebookSeed(n: NodeDoc): string[] | undefined {
   if (n.kind !== "collection" || !n.catalogId || !n.examples) return undefined;
-  if (!(n.catalogId in COLL_HEADS)) return undefined;
+  if (!CATALOG[n.catalogId]?.computeEngineTwin) return undefined;
   const call = `${pascalCase(n.catalogId)}(${n.examples.params.join(", ")})`;
   return [call, `\\left|${call}\\right|`, `${call}[1]`];
 }
