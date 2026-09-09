@@ -7,15 +7,18 @@ import type { NodeDoc } from "./render.js";
 export const NODES: NodeDoc[] = [
   // ═══════════════ Permutations & permutation classes ═══════════════
   {
-    head: "SymmetricGroup",
+    head: "Permutations",
     catalogId: "permutations",
+    // the compute-engine pack still registers this collection's kernel as `SymmetricGroup` (packs/core.ts) — resolve
+    // example numbers against that until the library head is renamed to match the catalog/notatio name.
+    kernelHead: "SymmetricGroup",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The collection of permutations of $\\{1, \\dots, n\\}$, in one-line notation.",
     usage: [
-      { form: "\\operatorname{SymmetricGroup}(n)", meaning: "the collection of all $n!$ permutations of $[n]$" },
-      { form: "\\operatorname{At}(\\operatorname{SymmetricGroup}(n),\\ i)", meaning: "the permutation at 1-based position $i$ in lexicographic order" },
-      { form: "\\operatorname{Rank}(\\operatorname{SymmetricGroup}(n),\\ p)", meaning: "$p$'s 1-based lexicographic position" },
+      { form: "\\operatorname{Permutations}(n)", meaning: "the collection of all $n!$ permutations of $[n]$" },
+      { form: "\\operatorname{At}(\\operatorname{Permutations}(n),\\ i)", meaning: "the permutation at 1-based position $i$ in lexicographic order" },
+      { form: "\\operatorname{Rank}(\\operatorname{Permutations}(n),\\ p)", meaning: "$p$'s 1-based lexicographic position" },
     ],
     details: [
       { label: "Arity", body: "1 — a single natural number $n$." },
@@ -24,13 +27,13 @@ export const NODES: NodeDoc[] = [
       { label: "Count", body: "$n!$ ([Factorial](https://reference.wolfram.com/language/ref/Factorial.html))." },
       { label: "Order", body: "lexicographic on the one-line word, via Lehmer-code decode/encode (`PermutationUnrank`/`PermutationRank` in `packages/compute-engine/src/kernels.ts`) — the same rank/unrank pair the SQL catalog's `permutation_unrank_lex` uses." },
       { label: "Random access", body: "$O(n)$ — decoding a Lehmer code touches every position once; not $O(1)$ despite the closed-form count." },
-      { label: "Catalog alias", body: "the pg-catalog collection `permutations` is this same family (`COLL_HEADS`, `packages/client/src/ce-enum-engine.ts`) — a notebook can spell either `SymmetricGroup(4)` or `permutations(4)`." },
+      { label: "Catalog alias", body: "the pg-catalog collection `permutations` is this same family (`COLL_HEADS`, `packages/client/src/ce-enum-engine.ts`) — a notebook can spell either `Permutations(4)` or `permutations(4)`." },
     ],
     examples: {
       params: [4],
       blocks: [
         {
-          md: "The symmetric group $S_n$ collects all $n!$ permutations of $[n]$. Enumerate the group, then count it — the cardinality is $4! = {count}$:",
+          md: "$\\operatorname{Permutations}(n)$ is all $n!$ orderings of $[n]$ (the symmetric group $S_n$). Enumerate them, then count — $4! = {count}$:",
           lines: [
             { latex: "\\operatorname{Permutations}(4)" },
             { latex: "\\left|\\operatorname{Permutations}(4)\\right|", expect: "{count}" },
@@ -71,7 +74,7 @@ export const NODES: NodeDoc[] = [
     ],
     details: [
       { label: "Arity", body: "2 — the ground size $n$ and the arrangement length $k$." },
-      { label: "Element", body: "a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`SymmetricGroup`](/reference/SymmetricGroup)." },
+      { label: "Element", body: "a length-$k$ list of distinct values from $[n]$. At $k = n$ this is the same set as [`Permutations`](/reference/Permutations)." },
       { label: "Result type", body: "`collection` of `list<integer>`, each of length $k$." },
       { label: "Count", body: "$n^{\\underline{k}} = n!/(n-k)!$, the falling factorial (`FallingFactorial`, via `KPermutationCount` in `packages/compute-engine/src/kernels-extra.ts`)." },
       { label: "Order", body: "lexicographic, decoded as a mixed-radix falling-factorial numeral — position $p$ takes the $\\lfloor r / (n-1-p)^{\\underline{k-1-p}} \\rfloor$-th still-available symbol, then recurses (`KPermutationUnrank`/`KPermutationRank`)." },
@@ -82,11 +85,11 @@ export const NODES: NodeDoc[] = [
       params: [4, 2],
       narrative: [
         "$\\operatorname{Count}(\\operatorname{KPermutations}(4,\\ 2)) = {count}$",
-        "The first six $2$-arrangements of $[4]$ in lex order are ${first(6)}$ — so $[2,3]$ sits at 1-based position $\\operatorname{Rank}(\\operatorname{KPermutations}(4,\\ 2),\\ [2,3]) = {rank([2,3])}$ (the generic 0-based [`rank`](/reference/rank) reports `{rank0([2,3])}`).",
+        "The first six $2$-arrangements of $[4]$ in lex order are ${first(6)}$ — so $[2,3]$ sits at 1-based position $\\operatorname{Rank}(\\operatorname{KPermutations}(4,\\ 2),\\ [2,3]) = {rank([2,3])}$ (the generic 0-based `rank` reports `{rank0([2,3])}`).",
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup", note: "the $k = n$ case" }, { head: "Tuples", note: "arrangements *with* repetition" },
+      { head: "Permutations", note: "the $k = n$ case" }, { head: "Tuples", note: "arrangements *with* repetition" },
       { head: "Surjections" }, { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -118,7 +121,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup", note: "the unsigned $A_{n-1}$ case" }, { head: "ColoredPermutations", note: "$B_n = \\mathbb{Z}_2 \\wr S_n$, the $k=2$ colored case" },
+      { head: "Permutations", note: "the unsigned $A_{n-1}$ case" }, { head: "ColoredPermutations", note: "$B_n = \\mathbb{Z}_2 \\wr S_n$, the $k=2$ colored case" },
       { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -136,7 +139,7 @@ export const NODES: NodeDoc[] = [
       { label: "Arity", body: "2 — the ground size $n$ and the number of colors $k$." },
       { label: "Element", body: "a pair `[image, colors]`: `image` a permutation of $[n]$ (one-line), `colors` a length-$n$ word over $\\{0, \\dots, k-1\\}$. E.g. `[[1, 2], [1, 0]]` colors position 1 with $1$ and position 2 with $0$." },
       { label: "Result type", body: "`collection` of `list<list<integer>>` (the two length-$n$ lists)." },
-      { label: "Count", body: "$k^n\\,n!$ (`ColoredPermutationCount`). At $k=1$ this is [`SymmetricGroup`](/reference/SymmetricGroup); at $k=2$, [`SignedPermutations`](/reference/SignedPermutations)." },
+      { label: "Count", body: "$k^n\\,n!$ (`ColoredPermutationCount`). At $k=1$ this is [`Permutations`](/reference/Permutations); at $k=2$, [`SignedPermutations`](/reference/SignedPermutations)." },
       { label: "Order", body: "mixed-radix: $\\text{colorNum} = \\lfloor r/n! \\rfloor$ read big-endian base-$k$ into the color word, over the lex permutation $r \\bmod n!$ (`ColoredPermutationUnrank`/`Rank`)." },
       { label: "Random access", body: "$O(n)$ — a Lehmer decode plus an $n$-digit base-$k$ expansion." },
     ],
@@ -149,7 +152,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup", note: "$k = 1$" }, { head: "SignedPermutations", note: "$k = 2$" },
+      { head: "Permutations", note: "$k = 1$" }, { head: "SignedPermutations", note: "$k = 2$" },
       { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -179,7 +182,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup" }, { head: "Involutions" }, { head: "Derangements" },
+      { head: "Permutations" }, { head: "Involutions" }, { head: "Derangements" },
       { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -209,7 +212,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup" }, { head: "Derangements" }, { head: "PerfectMatchings", note: "fixed-point-free involutions" },
+      { head: "Permutations" }, { head: "Derangements" }, { head: "PerfectMatchings", note: "fixed-point-free involutions" },
       { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -240,7 +243,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup" }, { head: "Involutions" }, { head: "CyclicPermutations" },
+      { head: "Permutations" }, { head: "Involutions" }, { head: "CyclicPermutations" },
       { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -271,7 +274,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup" }, { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
+      { head: "Permutations" }, { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
   {
@@ -302,7 +305,7 @@ export const NODES: NodeDoc[] = [
     },
     seeAlso: [
       { head: "PermutationsAvoiding132" }, { head: "PermutationsAvoiding123" }, { head: "PermutationsAvoiding231" },
-      { head: "SymmetricGroup" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
+      { head: "Permutations" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
   {
@@ -333,7 +336,7 @@ export const NODES: NodeDoc[] = [
     },
     seeAlso: [
       { head: "PermutationsAvoiding321" }, { head: "PermutationsAvoiding123" }, { head: "PermutationsAvoiding312" },
-      { head: "SymmetricGroup" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
+      { head: "Permutations" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
   {
@@ -483,7 +486,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "SymmetricGroup" }, { head: "Groupings" }, { head: "unrank" }, { head: "cardinality" },
+      { head: "Permutations" }, { head: "Groupings" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
 ];
