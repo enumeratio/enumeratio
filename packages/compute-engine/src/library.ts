@@ -10,7 +10,7 @@
 // wiring: turning specs into CollectionHandlers, the view/combinator accelerators, and Rank/RandomElement.
 import type { LibraryDefinition, Expression, ComputeEngine, CollectionHandlers } from "@cortex-js/compute-engine";
 import { Inversions } from "./kernels.js";
-import { BellB, Fubini, PartitionsP } from "./kernels-combinatorics.js";
+import { BellNumber, FubiniNumber, PartitionNumber } from "./kernels-combinatorics.js";
 import {
   CatalanNumber, PartitionsQ, PolygonalNumber, Factorial2, IntegerDigitsKernel, FromDigitsKernel, RealDigitsKernel,
   IntegerLengthKernel, IntegerReverseKernel, DigitSumKernel, DigitCountKernel, DigitCountOfKernel,
@@ -363,11 +363,15 @@ export const enumeratioLibrary: LibraryDefinition = {
       evaluate: (ops: ReadonlyArray<Expression>) => engineOf(ops[0]).number(Inversions(asIntList(ops[0]))),
     },
 
-    // ── the counting sequences, as first-class Listable scalar operators (heads CE lacks; mirror Wolfram) ──
-    BellB: numberOp(BellB),
+    // ── the counting sequences, as first-class Listable scalar operators (heads CE lacks). Primary spelling is
+    // PascalCase-of-the-catalog-ident (BellNumber/FubiniNumber/PartitionNumber); Wolfram's own spellings (BellB,
+    // PartitionsP) are kept below as aliases so existing notebooks/dictionary entries still resolve. ──
+    BellNumber: numberOp(BellNumber),
+    BellB: numberOp(BellNumber),
     CatalanNumber: numberOp(CatalanNumber),
-    Fubini: numberOp(Fubini),
-    PartitionsP: numberOp((n) => PartitionsP(n)),
+    FubiniNumber: numberOp(FubiniNumber),
+    PartitionNumber: numberOp((n) => PartitionNumber(n)),
+    PartitionsP: numberOp((n) => PartitionNumber(n)),
     PartitionsQ: numberOp((n) => PartitionsQ(n)),
     // Double factorial n!! (Wolfram Factorial2) — CE has Factorial but not this one.
     Factorial2: numberOp(Factorial2),

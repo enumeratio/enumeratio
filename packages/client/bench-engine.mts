@@ -77,13 +77,13 @@ const pgBatched = (text: string, n: number) => {
 const g = (re: number, im: number) => `gaussian_integer(${re}, ${im})`
 const m = (cs: number[], mod: number) => `multicomplex([${cs.join(', ')}], ${mod})`
 const POINTS: Record<string, [string, string]> = {
-  bell:                      ['bell(5)',                       'bell(20)'],
+  bell_number:               ['bell_number(5)',                'bell_number(20)'],
   binomial:                  ['binomial(5, 2)',                'binomial(60, 30)'],
   catalan_number:            ['catalan_number(5)',             'catalan_number(30)'],
   double_factorial_odd:      ['double_factorial_odd(5)',       'double_factorial_odd(15)'],
   eulerianA:                 ['eulerianA(5, 2)',               'eulerianA(18, 7)'],
   factorial:                 ['factorial(5)',                  'factorial(20)'],
-  fubini:                    ['fubini(5)',                     'fubini(16)'],
+  fubini_number:             ['fubini_number(5)',              'fubini_number(16)'],
   gaussian_add:              [`gaussian_add(${g(1, 2)}, ${g(3, 4)})`,   `gaussian_add(${g(30000, 20000)}, ${g(20000, 10000)})`],
   gaussian_mul:              [`gaussian_mul(${g(1, 2)}, ${g(3, 4)})`,   `gaussian_mul(${g(30000, 20000)}, ${g(20000, 10000)})`],
   gaussian_neg:              [`gaussian_neg(${g(1, 2)})`,               `gaussian_neg(${g(30000, 20000)})`],

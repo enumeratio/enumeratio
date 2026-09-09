@@ -13,9 +13,13 @@ describe("counting-sequence operators", () => {
   it("scalar values", () => {
     expect(num(["BellB", 5])).toBe(52);
     expect(num(["CatalanNumber", 6])).toBe(132);
-    expect(num(["Fubini", 4])).toBe(75);
+    expect(num(["FubiniNumber", 4])).toBe(75);
     expect(num(["PartitionsP", 10])).toBe(42);
     expect(num(["PartitionsQ", 10])).toBe(10); // distinct partitions of 10
+  });
+  it("primary PascalCase-of-ident spellings match their Wolfram-alias counterparts", () => {
+    expect(num(["BellNumber", 5])).toBe(num(["BellB", 5]));
+    expect(num(["PartitionNumber", 10])).toBe(num(["PartitionsP", 10]));
   });
   it("PolygonalNumber: 1-arg triangular, 2-arg r-gonal", () => {
     expect(num(["PolygonalNumber", 5])).toBe(15); // T(5) = triangular

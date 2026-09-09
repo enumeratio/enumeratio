@@ -4,11 +4,11 @@ import type { PackEntry } from "./types.js";
 import { Factorial, PermutationUnrank, PermutationRank, IsPermutationOf } from "../kernels.js";
 import {
   CompositionCount, CompositionFromMask, CompositionRank, IsCompositionOf,
-  PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank, IsPartitionOf,
+  PartitionNumber, IntegerPartitionUnrank, IntegerPartitionRank, IsPartitionOf,
   KPartPartitionCount, IntegerPartitionKUnrank, IntegerPartitionKRank,
-  BellB, RgsUnrank, RgsRank, RgsToBlocks, BlocksToRgs, IsSetPartitionOf,
+  BellNumber, RgsUnrank, RgsRank, RgsToBlocks, BlocksToRgs, IsSetPartitionOf,
   StirlingS2, SetPartitionsIntoKBlocksUnrank, SetPartitionsIntoKBlocksRank,
-  Fubini, SetCompositionUnrank, SetCompositionRank, LabelsToOrderedBlocks, BlocksToLabels,
+  FubiniNumber, SetCompositionUnrank, SetCompositionRank, LabelsToOrderedBlocks, BlocksToLabels,
 } from "../kernels-combinatorics.js";
 import {
   SubsetCount, SubsetUnrank, SubsetRank, IsSubsetOf,
@@ -67,7 +67,7 @@ export const entries: PackEntry[] = [
   ints("WeakCompositions", 2, ([n, k]) => WeakCompositionCount(n, k), ([n, k], r) => WeakCompositionUnrank(n, k, r), (a, [n, k]) => IsWeakCompositionOf(a, n, k), (a) => WeakCompositionRank(a)),
 
   // ── partitions ──
-  ints("IntegerPartitions", 1, ([n]) => PartitionsP(n), ([n], r) => IntegerPartitionUnrank(n, r), (a, [n]) => IsPartitionOf(a, n), (a, [n]) => IntegerPartitionRank(a, n)),
+  ints("IntegerPartitions", 1, ([n]) => PartitionNumber(n), ([n], r) => IntegerPartitionUnrank(n, r), (a, [n]) => IsPartitionOf(a, n), (a, [n]) => IntegerPartitionRank(a, n)),
   ints("PartitionsIntoKParts", 2, ([n, k]) => KPartPartitionCount(n, k), ([n, k], r) => IntegerPartitionKUnrank(n, k, r), (a, [n, k]) => IsPartitionOf(a, n, k), (a, [n]) => IntegerPartitionKRank(a, n)),
   ints("DistinctPartitions", 1, ([n]) => PartitionsQ(n), ([n], r) => DistinctPartitionUnrank(n, r), (a, [n]) => IsDistinctPartitionOf(a, n), (a, [n]) => DistinctPartitionRank(a, n)),
   ints("PartitionsMaxPart", 2, ([n, m]) => PartitionsMaxPartCount(n, m), ([n, m], r) => PartitionsMaxPartUnrank(n, m, r), (a, [n, m]) => IsPartitionMaxPart(a, n, m), (a, [, m]) => PartitionsMaxPartRank(a, m)),
@@ -91,11 +91,11 @@ export const entries: PackEntry[] = [
   ints("FibonacciWords", 1, ([n]) => FibonacciWordCount(n), ([n], r) => FibonacciWordUnrank(n, r), (a, [n]) => IsFibonacciWord(a, n), (a) => FibonacciWordRank(a)),
 
   // ── set partitions / matchings (blocks) ──
-  { head: "SetPartitions", paramCount: 1, kind: "blocks", count: ([n]) => BellB(n),
+  { head: "SetPartitions", paramCount: 1, kind: "blocks", count: ([n]) => BellNumber(n),
     unrank: ([n], r) => RgsToBlocks(RgsUnrank(n, r)), valid: (b, [n]) => IsSetPartitionOf(b, n), rank: (b, [n]) => RgsRank(BlocksToRgs(b, n)) },
   { head: "SetPartitionsIntoKBlocks", paramCount: 2, kind: "blocks", count: ([n, k]) => StirlingS2(n, k),
     unrank: ([n, k], r) => RgsToBlocks(SetPartitionsIntoKBlocksUnrank(n, k, r)), valid: (b, [n, k]) => IsSetPartitionOf(b, n, k), rank: (b, [n, k]) => SetPartitionsIntoKBlocksRank(BlocksToRgs(b, n), k) },
-  { head: "SetCompositions", paramCount: 1, kind: "blocks", count: ([n]) => Fubini(n),
+  { head: "SetCompositions", paramCount: 1, kind: "blocks", count: ([n]) => FubiniNumber(n),
     unrank: ([n], r) => LabelsToOrderedBlocks(SetCompositionUnrank(n, r)), valid: (b, [n]) => IsSetPartitionOf(b, n), rank: (b, [n]) => SetCompositionRank(BlocksToLabels(b), n) },
   { head: "PerfectMatchings", paramCount: 1, kind: "blocks", count: ([n]) => PerfectMatchingCount(n),
     unrank: ([n], r) => PerfectMatchingUnrank(n, r), valid: (b, [n]) => IsPerfectMatchingOf(b, n), rank: (b, [n]) => PerfectMatchingRank(b, n) },

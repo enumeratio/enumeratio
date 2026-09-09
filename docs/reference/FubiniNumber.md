@@ -18,20 +18,13 @@
 - **Domain:** $n \geq 0$.
 - **Counts:** the collection `SetCompositions(n)` — ordered set partitions of $[n]$ (`packages/compute-engine/src/packs/core.ts`: `SetCompositions`'s count is literally the Fubini number).
 - **Relation to BellNumber:** $\operatorname{FubiniNumber}(n) \geq B_n$ for $n \geq 1$ — every set partition contributes $k!$ ordered compositions, where $k$ is its number of blocks.
-- **Notebook spelling:** the `FubiniNumber` symbol isn't application-parseable in the notebook yet (it has no compute-engine kernel head — unlike `BellNumber`/`PartitionNumber`); a live line counts `SetCompositions(n)` directly, which is the Fubini number by construction. Wiring the symbol is tracked in the compute-engine/catalog naming-alignment work.
 
 ## Examples
 
-The 3 ordered set partitions of $\{1,2\}$ — enumerate `SetCompositions(2)`, whose count is the Fubini number $\operatorname{FubiniNumber}(2)$:
+$\operatorname{FubiniNumber}$ is native to the notebook's compute engine — the first few values, and the count of `SetCompositions` it agrees with:
 
 <ClientOnly>
-  <enumeratio-expressions value='{"lines":[{"latex":"\\operatorname{SetCompositions}(2)"},{"latex":"\\left|\\operatorname{SetCompositions}(2)\\right|","expect":"3"}]}'></enumeratio-expressions>
-</ClientOnly>
-
-At $n = 4$, $\operatorname{FubiniNumber}(4) = 75$ — read off the collection count:
-
-<ClientOnly>
-  <enumeratio-expressions value='{"lines":[{"latex":"\\left|\\operatorname{SetCompositions}(4)\\right|","expect":"75"}]}'></enumeratio-expressions>
+  <enumeratio-expressions value='{"lines":[{"latex":"\\operatorname{FubiniNumber}(0)","expect":"1"},{"latex":"\\operatorname{FubiniNumber}(2)","expect":"3"},{"latex":"\\operatorname{FubiniNumber}(4)","expect":"75"},{"latex":"\\left|\\operatorname{SetCompositions}(4)\\right|","expect":"75"}]}'></enumeratio-expressions>
 </ClientOnly>
 
 ## See also

@@ -13,7 +13,7 @@
 //   next(elem) / prev(elem)   → At(coll, rank±1 +1)
 //   random_element(handle)    → RandomElement(coll)
 //   cardinality(handle)       → Length(coll)
-//   bell(n) / binomial(n,k) / … + arithmetic ops → the scalar heads (KERNEL_OPS ∪ the counting sequences)
+//   bell_number(n) / binomial(n,k) / … + arithmetic ops → the scalar heads (KERNEL_OPS ∪ the counting sequences)
 //
 // The twin lookup is the one place the notebook's collection ids meet the library's Pascal heads. Two sources,
 // merged by `twinOf` below: `base_compute_engine_twin` in the catalog (the snake_case catalog ids that have a
@@ -41,14 +41,14 @@ const LIBRARY_TWIN: Record<string, { head: string; arity: number }> = {
 type TwinOf = (coll: string) => { head: string; arity: number } | undefined
 
 /** scalar function id → CE head. The arithmetic/curated vocabulary ce-engine already maps, plus the counting
- *  sequences the library exposes as operators — so a PURE-CE notebook (pg gone) still computes `bell`/`catalan`
+ *  sequences the library exposes as operators — so a PURE-CE notebook (pg gone) still computes `bell_number`/`catalan`
  *  exactly, off the library rather than pg. */
 const SCALAR_FN: Record<string, string> = {
   ...KERNEL_OPS,
-  bell: 'BellB',
+  bell_number: 'BellNumber',
   catalan_number: 'CatalanNumber',
-  fubini: 'Fubini',
-  partition_number: 'PartitionsP',
+  fubini_number: 'FubiniNumber',
+  partition_number: 'PartitionNumber',
 }
 
 const ENUM_PRIMS = new Set(['unrank', 'locate', 'rank', 'next', 'prev', 'random_element', 'cardinality', 'count', 'random_shuffle', 'random_sample'])

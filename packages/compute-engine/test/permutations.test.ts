@@ -77,12 +77,14 @@ describe("library shape", () => {
     expect(new Set(heads).size).toBe(heads.length); // no duplicate heads
     // 94 collections + 7 combinators + Rank/RandomElement/RandomSample/Inversions + number/digit/integer/bit ops.
     // No shuffle head here: we reuse CE's own RandomShuffle, wrapped at install (see overrideRandomShuffle), not
-    // declared statically.
-    expect(heads.length).toBe(122);
+    // declared statically. BellNumber/FubiniNumber/PartitionNumber are the primary spellings (PascalCase-of-the
+    // catalog ident); BellB/PartitionsP stay registered too, as Wolfram-spelling aliases.
+    expect(heads.length).toBe(124);
     for (const h of ["SubsetsOfSizeAtMost", "EvenSubsets", "OddSubsets", "Necklaces", "LyndonWords"]) {
       expect(heads).toContain(h);
     }
-    for (const h of ["Groupings", "BellB", "CatalanNumber", "Fubini", "PartitionsP", "PartitionsQ", "Factorial2",
+    for (const h of ["Groupings", "BellNumber", "BellB", "CatalanNumber", "FubiniNumber", "PartitionNumber",
+      "PartitionsP", "PartitionsQ", "Factorial2",
       "PolygonalNumber", "IntegerDigits", "FromDigits", "RealDigits",
       "IntegerLength", "IntegerReverse", "DigitSum", "DigitCount", "BitAnd", "BitOr", "BitXor"]) {
       expect(heads).toContain(h);

@@ -123,7 +123,7 @@ is the one CE head we *don't* curate generically — the bar has to be free to m
 > `Sign` reaches the evaluator only through the built-in lowercase trigger `\operatorname{sgn}` — the capital
 > `\operatorname{Sign}(-5)` does **not** application-parse under our LaTeX build (it becomes `Sign × (-5)`). The
 > trig family is the same: `\sin` works because it has a backslash macro, not because `\operatorname{Sin}` parses.
-> Catalog heads (`Fibonacci`, `bell`, …) get their PascalCase trigger explicitly registered (see
+> Catalog heads (`Fibonacci`, `BellNumber`, …) get their PascalCase trigger explicitly registered (see
 > [Widening a head](#widening-a-head)); the CE-native ones reuse whatever built-in trigger CE already ships.
 
 <ClientOnly>
@@ -144,9 +144,9 @@ is the one CE head we *don't* curate generically — the bar has to be free to m
 | `\sup` `\inf` | evaluates over a finite set | `\sup\{1,2,3\}` → `3` |
 | `\gcd` `\lcm` | evaluates (variadic, exact) | `\gcd(12,18,8)` → `2` |
 | `\bmod` | evaluates | `17\bmod5` → `2` |
-| catalog counting heads | evaluate (exact, via ts twins) | `\binom{6}{2}`, `5!`, `\operatorname{bell}(4)`, `CatalanNumber(5)`, `Fibonacci(10)` |
+| catalog counting heads | evaluate (exact, via ts twins) | `\binom{6}{2}`, `5!`, `\operatorname{BellNumber}(4)`, `CatalanNumber(5)`, `Fibonacci(10)` |
 
-The counting sequences (`bell`, `catalan_number`, `partition_number`, `fibonacci`, …) resolve against the catalog,
+The counting sequences (`bell_number`, `catalan_number`, `partition_number`, `fibonacci`, …) resolve against the catalog,
 so they cross-check against the same collections the atlas enumerates. See the
 [Compute Engine dictionary](/develop/reference/ce-dictionary#number-theory) for the full head list and typing.
 

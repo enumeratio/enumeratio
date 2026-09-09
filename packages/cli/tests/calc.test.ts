@@ -48,10 +48,10 @@ it('routes a curated identity pg cannot compute to the engine that can', async (
 })
 
 it('falls through to the oracle rather than printing a float64 near-miss', async () => {
-  const r = parse(await calc('bell(30)'))
-  expect(r.engine).toBe('pg')                       // ts has only a float64 twin, and bell(30) is past 2^53
-  expect(r.value).toBe(await oracle('bell(30)'))
-  expect(parse(await calc('bell(20)')).engine).toBe('ts') // inside 2^53 the fast engine answers
+  const r = parse(await calc('bell_number(30)'))
+  expect(r.engine).toBe('pg')                       // ts has only a float64 twin, and bell_number(30) is past 2^53
+  expect(r.value).toBe(await oracle('bell(30)'))    // oracle() runs raw SQL — the pg fn is still named `bell`
+  expect(parse(await calc('bell_number(20)')).engine).toBe('ts') // inside 2^53 the fast engine answers
 })
 
 it('an uncurated name is pg’s to try — the registry has no opinion on it', async () => {
