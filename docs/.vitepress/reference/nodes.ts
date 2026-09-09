@@ -489,4 +489,287 @@ export const NODES: NodeDoc[] = [
       { head: "Permutations" }, { head: "Groupings" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
+  // ═══════════════ Counting sequences ═══════════════
+  {
+    head: "BellB",
+    family: "Counting sequences",
+    kind: "sequence",
+    tagline: "The number of ways to partition an $n$-element set into non-empty, unordered blocks.",
+    usage: [
+      { form: "\\operatorname{BellB}(n)", meaning: "the $n$-th Bell number, $B_n$" },
+      { form: "\\operatorname{BellB}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — a natural number $n$." },
+      { label: "Result type", body: "`(integer) -> integer`, Listable — applied to a list, threads element-wise." },
+      { label: "Implementation", body: "the Bell triangle (`packages/compute-engine/src/kernels-combinatorics.ts`) — each row built from the previous one in $O(n)$ additions, $O(n^2)$ total for $B_0, \\dots, B_n$; not a closed form." },
+      { label: "Domain", body: "$n \\geq 0$; $B_0 = 1$ by convention (the empty set has exactly one partition: itself, with zero blocks)." },
+      { label: "Counts", body: "the collection `SetPartitions(n)` — $\\operatorname{Count}(\\operatorname{SetPartitions}(n)) = B_n$ by construction (`packages/compute-engine/src/packs/core.ts`)." },
+      { label: "Notebook spelling", body: "this library's own `BellB` id isn't wired into the notebook's expression parser yet — a live line reaches the same sequence via the compute-engine-native `BellNumber(n)` head, or by counting `SetPartitions(n)` directly (both below)." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "$B_n$ counts the ways to partition $\\{1, \\dots, n\\}$ into unordered blocks — enumerate `SetPartitions(3)`, and its count is $B_3$:",
+          lines: [
+            { latex: "\\operatorname{SetPartitions}(3)" },
+            { latex: "\\left|\\operatorname{SetPartitions}(3)\\right|", expect: "5" },
+          ],
+        },
+        {
+          md: "The compute engine's own native spelling for this sequence is `BellNumber` (same recurrence) — $B_6 = 203$:",
+          lines: [{ latex: "\\operatorname{BellNumber}(6)", expect: "203" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "SetPartitions" }, { head: "Fubini", note: "the ordered version" }, { head: "PartitionsP", note: "integer, not set, partitions" },
+      { head: "CatalanNumber" },
+    ],
+  },
+  {
+    head: "CatalanNumber",
+    family: "Counting sequences",
+    kind: "sequence",
+    tagline: "The $n$-th Catalan number, $C_n = \\dfrac{1}{n+1}\\dbinom{2n}{n}$ — the size of dozens of combinatorial families, Dyck paths among them.",
+    usage: [
+      { form: "\\operatorname{CatalanNumber}(n)", meaning: "$C_n$" },
+      { form: "\\operatorname{CatalanNumber}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — a natural number $n$." },
+      { label: "Result type", body: "`(integer) -> integer`, Listable." },
+      { label: "Implementation", body: "the closed form $\\lfloor \\binom{2n}{n}/(n+1) \\rceil$ via this library's own `Binomial` kernel, rounded to absorb floating-point error at larger $n$ (`packages/compute-engine/src/kernels-extra.ts`) — $O(n)$ per call, not memoized across calls." },
+      { label: "Domain", body: "$n \\geq 0$ returns the sequence; a negative $n$ returns $0$." },
+      { label: "Counts", body: "[`DyckPaths`](/reference/DyckPaths)`(n)`. Also the underlying count for several other lattice-path/tree families in this library (`Triangulations`, `NonCrossingMatchings`), each with its own bijection to a Dyck path." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "$C_n$ is native to the notebook's compute engine — the first few values:",
+          lines: [
+            { latex: "\\operatorname{CatalanNumber}(0)", expect: "1" },
+            { latex: "\\operatorname{CatalanNumber}(4)", expect: "14" },
+          ],
+        },
+        {
+          md: "It agrees with the [`DyckPaths`](/reference/DyckPaths) collection by construction:",
+          lines: [{ latex: "\\left|\\operatorname{DyckPaths}(4)\\right|", expect: "14" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "DyckPaths" }, { head: "BellB" }, { head: "Fubini" }, { head: "PartitionsP" },
+    ],
+  },
+  {
+    head: "Fubini",
+    family: "Counting sequences",
+    kind: "sequence",
+    tagline: "The number of ways to partition an $n$-element set into non-empty blocks AND put those blocks in order — the ordered Bell numbers.",
+    usage: [
+      { form: "\\operatorname{Fubini}(n)", meaning: "the $n$-th Fubini (ordered Bell) number" },
+      { form: "\\operatorname{Fubini}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — a natural number $n$." },
+      { label: "Result type", body: "`(integer) -> integer`, Listable." },
+      { label: "Implementation", body: "the recurrence $\\operatorname{Fubini}(n) = \\sum_{k=1}^{n} \\binom{n}{k}\\operatorname{Fubini}(n-k)$, $\\operatorname{Fubini}(0) = 1$, built bottom-up in one array (`packages/compute-engine/src/kernels-combinatorics.ts`) — $O(n^2)$ total for the whole table up to $n$." },
+      { label: "Domain", body: "$n \\geq 0$." },
+      { label: "Counts", body: "the collection `SetCompositions(n)` — ordered set partitions of $[n]$ (`packages/compute-engine/src/packs/core.ts`: `SetCompositions`'s count is literally `Fubini(n)`)." },
+      { label: "Relation to BellB", body: "$\\operatorname{Fubini}(n) \\geq B_n$ for $n \\geq 1$ — every set partition contributes $k!$ ordered compositions, where $k$ is its number of blocks." },
+      { label: "Notebook spelling", body: "this library's own `Fubini` id isn't wired into the notebook's expression parser yet (and, unlike `BellB`/`PartitionsP`, the compute engine has no native alias for it either) — a live line counts `SetCompositions(n)` directly, which is `Fubini(n)` by construction." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "The 3 ordered set partitions of $\\{1,2\\}$ — enumerate `SetCompositions(2)`, and its count is $\\operatorname{Fubini}(2)$:",
+          lines: [
+            { latex: "\\operatorname{SetCompositions}(2)" },
+            { latex: "\\left|\\operatorname{SetCompositions}(2)\\right|", expect: "3" },
+          ],
+        },
+        {
+          md: "At $n = 4$: $\\operatorname{Fubini}(4) = 75$:",
+          lines: [{ latex: "\\left|\\operatorname{SetCompositions}(4)\\right|", expect: "75" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "SetCompositions" }, { head: "BellB", note: "the unordered count" }, { head: "CatalanNumber" },
+    ],
+  },
+  {
+    head: "PartitionsP",
+    family: "Counting sequences",
+    kind: "sequence",
+    tagline: "$p(n)$ — the number of integer partitions of $n$ (OEIS [A000041](https://oeis.org/A000041)).",
+    usage: [
+      { form: "\\operatorname{PartitionsP}(n)", meaning: "$p(n)$" },
+      { form: "\\operatorname{PartitionsP}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — a natural number $n$." },
+      { label: "Result type", body: "`(integer) -> integer`, Listable." },
+      { label: "Implementation", body: "Euler's pentagonal-number recurrence, $p(n) = \\sum_{k\\geq1} (-1)^{k-1}\\left(p\\!\\left(n - \\tfrac{k(3k-1)}{2}\\right) + p\\!\\left(n - \\tfrac{k(3k+1)}{2}\\right)\\right)$, built bottom-up in one array (`packages/compute-engine/src/kernels-extra.ts`) — sub-quadratic (the pentagonal gaps grow, so each row's inner loop terminates well before $n$ terms)." },
+      { label: "Domain", body: "$n \\geq 0$; a negative $n$ returns $0$." },
+      { label: "Counts", body: "the collection [`IntegerPartitions`](/reference/IntegerPartitions) — $\\operatorname{Count}(\\operatorname{IntegerPartitions}(n)) = p(n)$ by construction." },
+      { label: "Distinct from PartitionsQ", body: "`PartitionsQ(n)` counts partitions into *distinct* parts only — a different, smaller sequence with its own collection, `DistinctPartitions`." },
+      { label: "Notebook spelling", body: "this library's own `PartitionsP` id isn't wired into the notebook's expression parser yet — a live line reaches the same sequence via the compute-engine-native `NPartition(n)` head, or by counting `IntegerPartitions(n)` directly (both below)." },
+    ],
+    examples: {
+      params: [],
+      blocks: [
+        {
+          md: "The compute engine's own native spelling for this sequence is `NPartition` — $p(5) = 7$:",
+          lines: [{ latex: "\\operatorname{NPartition}(5)", expect: "7" }],
+        },
+        {
+          md: "It matches counting [`IntegerPartitions`](/reference/IntegerPartitions) directly:",
+          lines: [{ latex: "\\left|\\operatorname{IntegerPartitions}(5)\\right|", expect: "7" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "IntegerPartitions" }, { head: "PartitionsQ" }, { head: "DistinctPartitions" }, { head: "BellB", note: "set, not integer, partitions" },
+    ],
+  },
+  // ═══════════════ Subsets, multisets, tuples & functions ═══════════════
+  {
+    head: "Subsets",
+    catalogId: "subsets",
+    family: "Subsets, multisets, tuples & functions",
+    kind: "collection",
+    tagline: "The power set of $\\{1, \\dots, n\\}$ — every subset, of every size, including $\\varnothing$ and the full set.",
+    usage: [
+      { form: "\\operatorname{Subsets}(n)", meaning: "all $2^n$ subsets of $[n]$" },
+      { form: "\\operatorname{At}(\\operatorname{Subsets}(n),\\ i)", meaning: "the subset at 1-based position $i$" },
+      { form: "\\operatorname{Rank}(\\operatorname{Subsets}(n),\\ S)", meaning: "$S$'s 1-based position" },
+    ],
+    details: [
+      { label: "Arity", body: "1. For subsets of a fixed size $k$, see `KSubsets(n, k)`." },
+      { label: "Element", body: "a strictly increasing list of members, e.g. `[1, 3, 4]` $\\subseteq [5]$. The empty set is `[]`." },
+      { label: "Result type", body: "`collection` of `list<integer>` (any length $0$ to $n$)." },
+      { label: "Count", body: "$2^n$." },
+      { label: "Order", body: "binary membership mask — element $i$ (1-indexed) is present iff bit $i-1$ of the 0-based rank is set (`SubsetUnrank`/`SubsetRank` in `packages/compute-engine/src/packs/subsets.ts`). Rank 0 is $\\varnothing$; the top rank $2^n-1$ is the full set $[n]$." },
+      { label: "Random access", body: "$O(n)$ — unrank/rank both scan the $n$ bit positions once." },
+      { label: "Catalog alias", body: "the pg-catalog collection `subsets` is this same family (`COLL_HEADS`, `packages/client/src/ce-enum-engine.ts`)." },
+      { label: "Related order", body: "a companion order, `GrayCodeSubsets(n)`, visits the same $2^n$ subsets with each consecutive pair differing by exactly one element (a reflected binary Gray code) rather than by bitmask value." },
+    ],
+    examples: {
+      params: [3],
+      blocks: [
+        {
+          md: "$\\operatorname{Subsets}(n)$ is the power set of $[n]$ — all $2^3 = {count}$ subsets of $[3]$:",
+          lines: [
+            { latex: "\\operatorname{Subsets}(3)" },
+            { latex: "\\left|\\operatorname{Subsets}(3)\\right|", expect: "{count}" },
+          ],
+        },
+        {
+          md: "Reading a 0-based rank in binary (LSB = element 1) gives the membership mask directly — rank 0 is $\\varnothing$, the top rank is the full set:",
+          lines: [
+            { latex: "\\operatorname{Subsets}(3)[1]", expect: "{at(0)}" },
+            { latex: "\\operatorname{Subsets}(3)[8]", expect: "{at(7)}" },
+          ],
+        },
+        {
+          md: "$\\{2, 4\\} \\subseteq [4]$ has mask $2^1 + 2^3 = 10_{10} = 1010_2$, a 0-based rank of $10$ — 1-based rank ${rank([2,4]; 4)}$, so indexing back at that position recovers it:",
+          lines: [{ latex: "\\operatorname{Subsets}(4)[11]", expect: "{at(10; 4)}" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "KSubsets" }, { head: "GrayCodeSubsets" }, { head: "EvenSubsets" }, { head: "OddSubsets" },
+      { head: "unrank" }, { head: "rank" }, { head: "cardinality" },
+    ],
+  },
+  // ═══════════════ Lattice paths & Catalan objects ═══════════════
+  {
+    head: "DyckPaths",
+    catalogId: "dyck_paths",
+    family: "Lattice paths & Catalan objects",
+    kind: "collection",
+    tagline: "Lattice paths of $2n$ unit steps (up $=1$, down $=0$) from $(0,0)$ to $(2n,0)$ that never dip below the axis.",
+    usage: [
+      { form: "\\operatorname{DyckPaths}(n)", meaning: "all Dyck paths of semilength $n$ ($n$ up-steps, $n$ down-steps)" },
+      { form: "\\operatorname{At}(\\operatorname{DyckPaths}(n),\\ i)", meaning: "the path at 1-based position $i$" },
+      { form: "\\operatorname{Rank}(\\operatorname{DyckPaths}(n),\\ w)", meaning: "$w$'s 1-based position" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — the semilength $n$ (path length is $2n$)." },
+      { label: "Element", body: "a list of $2n$ entries, each $1$ (up-step) or $0$ (down-step), with every prefix sum $\\geq 0$ and the full sum $= 0$." },
+      { label: "Result type", body: "`collection` of `list<integer>` of length $2n$, entries in $\\{0, 1\\}$." },
+      { label: "Count", body: "$\\operatorname{CatalanNumber}(n) = \\binom{2n}{n}/(n+1)$." },
+      { label: "Order", body: "\"up-before-down\" — at each step, the unrank prefers an up-step whenever the number of paths completable that way covers the target rank, else takes a down-step and subtracts that count (`DyckPathUnrank`/`DyckPathRank` in `packages/compute-engine/src/kernels-extra.ts`, via a memoized `dyckCompletions(remainingSteps, height)` table)." },
+      { label: "Random access", body: "$O(n)$ amortized — one `dyckCompletions` lookup per of the $2n$ steps." },
+      { label: "Catalog alias", body: "the pg-catalog collection `dyck_paths` is this same family (`COLL_HEADS`, `packages/client/src/ce-enum-engine.ts`)." },
+      { label: "Related families", body: "`MotzkinPaths` (up/level/down steps), `SchroderPaths` (large Schröder numbers), `GrandDyckPaths`/`GrandMotzkinPaths` (paths allowed below the axis)." },
+    ],
+    examples: {
+      params: [3],
+      blocks: [
+        {
+          md: "$\\operatorname{Count}(\\operatorname{DyckPaths}(3)) = \\operatorname{CatalanNumber}(3) = \\binom{6}{3}/4 = {count}$:",
+          lines: [
+            { latex: "\\operatorname{DyckPaths}(3)" },
+            { latex: "\\left|\\operatorname{DyckPaths}(3)\\right|", expect: "{count}" },
+          ],
+        },
+        {
+          md: "\"Up-before-down\" order always tries $1$ first, so the very first path stays as high as possible for as long as possible — all ups then all downs:",
+          lines: [{ latex: "\\operatorname{DyckPaths}(3)[1]", expect: "{at(0)}" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "MotzkinPaths" }, { head: "SchroderPaths" }, { head: "GrandDyckPaths" }, { head: "CatalanNumber" },
+      { head: "unrank" }, { head: "rank" }, { head: "cardinality" },
+    ],
+  },
+  // ═══════════════ Partitions & set partitions ═══════════════
+  {
+    head: "IntegerPartitions",
+    catalogId: "integer_partitions",
+    family: "Partitions & set partitions",
+    kind: "collection",
+    tagline: "The collection of integer partitions of $n$ — ways to write $n$ as a sum of positive integers, order disregarded.",
+    usage: [
+      { form: "\\operatorname{IntegerPartitions}(n)", meaning: "all partitions of $n$ into positive parts" },
+      { form: "\\operatorname{At}(\\operatorname{IntegerPartitions}(n),\\ i)", meaning: "the partition at 1-based position $i$" },
+      { form: "\\operatorname{Rank}(\\operatorname{IntegerPartitions}(n),\\ p)", meaning: "$p$'s 1-based position" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — the number $n$ being partitioned. (A separate two-argument family, `PartitionsIntoKParts(n, k)`, fixes the number of parts.)" },
+      { label: "Element", body: "a list of positive integers summing to $n$, always in **weakly decreasing** (largest-part-first) normal form: `[3, 2, 2, 1]` is $3+2+2+1=8$." },
+      { label: "Result type", body: "`collection` of `list<integer>`, weakly decreasing, summing to $n$." },
+      { label: "Count", body: "$p(n)$ — [`PartitionsP`](/reference/PartitionsP), computed by Euler's pentagonal-number recurrence." },
+      { label: "Order", body: "greedy descending — the unrank walks remaining sum $m$ and a shrinking part-size ceiling, always choosing the largest part consistent with the target rank (`IntegerPartitionUnrank` in `packages/compute-engine/src/kernels-combinatorics.ts`). This is a well-defined total order but not lexicographic on the part sequence in the usual sense — don't assume adjacent ranks differ by a small edit." },
+      { label: "Random access", body: "polynomial, not $O(1)$ — unrank/rank both walk the partition's own parts (at most $n$ of them), consulting a memoized partial-count table (`partsAtMost`) at each step." },
+      { label: "Catalog alias", body: "the pg-catalog collection `integer_partitions` is this same family (`COLL_HEADS`, `packages/client/src/ce-enum-engine.ts`)." },
+    ],
+    examples: {
+      params: [5],
+      blocks: [
+        {
+          md: "$\\operatorname{Count}(\\operatorname{IntegerPartitions}(5)) = \\operatorname{PartitionsP}(5) = {count}$ — the 7 partitions of 5 are $5,\\ 4{+}1,\\ 3{+}2,\\ 3{+}1{+}1,\\ 2{+}2{+}1,\\ 2{+}1{+}1{+}1,\\ 1{+}1{+}1{+}1{+}1$:",
+          lines: [
+            { latex: "\\operatorname{IntegerPartitions}(5)" },
+            { latex: "\\left|\\operatorname{IntegerPartitions}(5)\\right|", expect: "{count}" },
+          ],
+        },
+        {
+          md: "The unrank always prefers the largest available part first, so rank 1 is always the single part $n$ itself:",
+          lines: [{ latex: "\\operatorname{IntegerPartitions}(5)[1]", expect: "{at(0)}" }],
+        },
+      ],
+    },
+    seeAlso: [
+      { head: "PartitionsIntoKParts" }, { head: "DistinctPartitions" }, { head: "PartitionsMaxPart" },
+      { head: "PartitionsP" }, { head: "unrank" }, { head: "rank" }, { head: "cardinality" },
+    ],
+  },
 ];

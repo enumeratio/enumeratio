@@ -91,8 +91,8 @@ Bare symbols that denote a catalog set rather than a scope variable (`names.ts`'
 First-class Listable scalar operators the compute-engine library adds (Wolfram has most of these; CE itself has
 none of them).
 
-`BellB` · `CatalanNumber` · `Fubini` ·
-`PartitionsP` · `PartitionsQ` · `Factorial2` (double factorial) · `PolygonalNumber`
+[`BellB`](/reference/BellB) · [`CatalanNumber`](/reference/CatalanNumber) · [`Fubini`](/reference/Fubini) ·
+[`PartitionsP`](/reference/PartitionsP) · `PartitionsQ` · `Factorial2` (double factorial) · `PolygonalNumber`
 
 ## Digit & bitwise functions
 
@@ -138,6 +138,25 @@ as families migrate.
 - [**PermutationsAvoiding312**](/reference/PermutationsAvoiding312) — The permutations of $[n]$ avoiding the pattern $312$ (no $i<j<k$ with $\sigma_j < \sigma_k < \sigma_i$).
 - [**StirlingPermutations**](/reference/StirlingPermutations) — The permutations of the multiset $\{1,1,2,2,\dots,n,n\}$ in which everything between the two copies of $i$ exceeds $i$.
 
+### Counting sequences
+
+- [**BellB**](/reference/BellB) — The number of ways to partition an $n$-element set into non-empty, unordered blocks.
+- [**CatalanNumber**](/reference/CatalanNumber) — The $n$-th Catalan number, $C_n = \dfrac{1}{n+1}\dbinom{2n}{n}$ — the size of dozens of combinatorial families, Dyck paths among them.
+- [**Fubini**](/reference/Fubini) — The number of ways to partition an $n$-element set into non-empty blocks AND put those blocks in order — the ordered Bell numbers.
+- [**PartitionsP**](/reference/PartitionsP) — $p(n)$ — the number of integer partitions of $n$ (OEIS [A000041](https://oeis.org/A000041)).
+
+### Subsets, multisets, tuples & functions
+
+- [**Subsets**](/reference/Subsets) — The power set of $\{1, \dots, n\}$ — every subset, of every size, including $\varnothing$ and the full set.
+
+### Lattice paths & Catalan objects
+
+- [**DyckPaths**](/reference/DyckPaths) — Lattice paths of $2n$ unit steps (up $=1$, down $=0$) from $(0,0)$ to $(2n,0)$ that never dip below the axis.
+
+### Partitions & set partitions
+
+- [**IntegerPartitions**](/reference/IntegerPartitions) — The collection of integer partitions of $n$ — ways to write $n$ as a sum of positive integers, order disregarded.
+
 <!-- CATALOG:END -->
 
 ### Not yet migrated
@@ -148,17 +167,17 @@ as families migrate.
 `CompositionsIntoParts1And2` · `CompositionsIntoPartsAtLeast2` · `KColoredCompositions` ·
 `PalindromicCompositions`
 
-**Partitions & set partitions** (17) — `IntegerPartitions` ·
+**Partitions & set partitions** (16) —
 `PartitionsIntoKParts` · `DistinctPartitions` · `PartitionsMaxPart` · `PartitionsInBox` · `SetPartitions` ·
 `SetPartitionsIntoKBlocks` · `SetCompositions` · `PerfectMatchings` · `NonCrossingPartitions` ·
 `NonNestingPartitions` · `PartitionsIntoAtMostKParts` · `PartitionsIntoOddParts` · `SelfConjugatePartitions` ·
 `SetPartitionsIntoAtMostKBlocks` · `SetPartitionsNoSingletons` · `PartitionsIntoParts1And2`
 
-**Subsets, multisets, tuples & functions** (10) — `Subsets` · `KSubsets` · `Multisets` ·
+**Subsets, multisets, tuples & functions** (9) — `KSubsets` · `Multisets` ·
 `Tuples` · `Surjections` · `Endofunctions` · `EvenSubsets` · `OddSubsets` · `SubsetsOfSizeAtMost` ·
 `SubsetsWithoutConsecutive`
 
-**Lattice paths & Catalan objects** (12) — `LatticePaths` · `DyckPaths` ·
+**Lattice paths & Catalan objects** (11) — `LatticePaths` ·
 `MotzkinPaths` · `SchroderPaths` · `BicoloredMotzkinPaths` · `DelannoyPaths` · `GrandDyckPaths` ·
 `GrandMotzkinPaths` · `LittleSchroderPaths` · `NonCrossingMatchings` · `StandardYoungTableaux2xN` ·
 `Triangulations`
