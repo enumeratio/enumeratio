@@ -1,25 +1,28 @@
-# Notatio LaTeX coverage
+# @enumeratio/notatio
 
-**Notatio** ([`@enumeratio/notatio`](/develop/packages/)) is the notebook's expression language. You write LaTeX;
-it parses to a small closed AST, binds and types it against the catalog, lowers it to the engine IR, and evaluates
-it. The parser is [MathLive / Compute Engine](https://mathlive.io/compute-engine/guides/latex-syntax/)'s own
-`latex-syntax` module, so *what you can type* is the LaTeX MathLive accepts — but *what Notatio does* with each
-construct is its own story: some LaTeX **evaluates**, some **parses but has no meaning here**, and some **does not
-parse at all**.
+**Notatio** is the notebook's expression language. You write LaTeX; it parses to a small closed AST, binds and
+types it against the catalog, lowers it to the engine IR, and evaluates it. The parser is
+[MathLive / Compute Engine](https://mathlive.io/compute-engine/guides/latex-syntax/)'s own `latex-syntax` module,
+so *what you can type* is the LaTeX MathLive accepts — but *what Notatio does* with each construct is its own story:
+some LaTeX **evaluates**, some **parses but has no meaning here**, and some **does not parse at all**.
 
-This page walks the LaTeX feature categories from
+The rest of this page is a **LaTeX-syntax coverage reference**: it walks the LaTeX feature categories from
 [MathLive's command reference](https://mathlive.io/mathfield/reference/commands/) and, for each, says exactly what
 Notatio does. It is the *feature* view; its companion, the [Compute Engine dictionary](/develop/reference/ce-dictionary),
 is the *head* view — every MathJSON operator, whether we route it, and where the gaps are. Read them together: a gap
 here is an item there.
 
 > [!NOTE] How results are produced
-> Every "→ result" below was produced by running the LaTeX through the real pipeline (`makeParser` → `bind` → `lower`
-> → the pure `ts + ce + ce-enum` notebook engine, no pglite). Three substrates answer: **ts** = our exact
+> Every "→ result" below is real. The section demos are **read-only [`<enumeratio-expressions>`](/develop/packages/components/expression-set)**
+> (the notebook's evaluation core, non-editable), each line carrying an `expect` so it self-checks — a green ✓ next
+> to a value means the live pipeline agrees with what this page claims. They run the same `makeParser` → `bind` →
+> `lower` → `ts + ce + ce-enum` path the notebook uses (no pglite). Three substrates answer: **ts** = our exact
 > `@enumeratio/math` twins (exact bigints), **ce** = the Compute Engine kernel (trig, roots, ζ, constants —
 > numeric or exact-symbolic), **ce-enum** = the enumeration library (collections, sums, ranges, comprehensions).
 
 ## Try it
+
+An editable notebook — everything below it is the same engine, shown read-only.
 
 <ClientOnly>
 <enumeratio-notebook value='{"lines":[
@@ -72,6 +75,17 @@ no pg to be bit-identical to, so it keeps the exact value.
 | `\sqrt[n]{x}` | evaluates | `\sqrt[3]{27}` → `3` |
 | `x_2` (subscript) | **parses as one symbol**, unknown unless in scope | `x_2` → `unknown symbol "x_2"` (subscripts name a variable, they aren't indexing) |
 
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"\\binom{6}{2}","expect":"15"},
+  {"latex":"\\sqrt{9}","expect":"3"},
+  {"latex":"\\sqrt{2}"},
+  {"latex":"\\frac{22}{7}","expect":"22/7"}
+]}'></enumeratio-expressions>
+</ClientOnly>
+
+The third line shows the exact-symbolic render (`√2` stays `√2`, not a decimal); the rest self-check.
+
 ## Absolute value, floor, ceiling
 
 | You type | Notatio | Example → result |
@@ -83,6 +97,14 @@ no pg to be bit-identical to, so it keeps the exact value.
 
 `|…|` is deliberately overloaded: over a scalar it is `Abs`, over a collection it is the size. This is why `Abs`
 is the one CE head we *don't* curate generically — the bar has to be free to mean cardinality.
+
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"|{-5}|","expect":"5"},
+  {"latex":"\\lfloor 3.7\\rfloor","expect":"3"},
+  {"latex":"\\lceil 3.2\\rceil","expect":"4"}
+]}'></enumeratio-expressions>
+</ClientOnly>
 
 ## Functions
 
@@ -103,6 +125,15 @@ is the one CE head we *don't* curate generically — the bar has to be free to m
 > trig family is the same: `\sin` works because it has a backslash macro, not because `\operatorname{Sin}` parses.
 > Catalog heads (`Fibonacci`, `bell`, …) get their PascalCase trigger explicitly registered (see
 > [Widening a head](#widening-a-head)); the CE-native ones reuse whatever built-in trigger CE already ships.
+
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"\\sin(\\frac{\\pi}{2})","expect":"1"},
+  {"latex":"\\log(100)","expect":"2"},
+  {"latex":"\\operatorname{sgn}(-5)","expect":"-1"},
+  {"latex":"\\operatorname{Heaviside}(0)","expect":"1/2"}
+]}'></enumeratio-expressions>
+</ClientOnly>
 
 ## Bounds, extrema & number theory
 
@@ -128,10 +159,10 @@ so they cross-check against the same collections the atlas enumerates. See the
 | `\bigcup` `\bigcap` | **not supported** | indexed set-builders don't lower yet |
 
 <ClientOnly>
-<enumeratio-notebook value='{"lines":[
-  {"id":"s1","latex":"\\sum_{i=1}^{10} i^2"},
-  {"id":"s2","latex":"\\prod_{k=1}^{5} k"}
-]}'></enumeratio-notebook>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"\\sum_{i=1}^{10} i^2","expect":"385"},
+  {"latex":"\\prod_{k=1}^{5} k","expect":"120"}
+]}'></enumeratio-expressions>
 </ClientOnly>
 
 ## Greek letters & constants
@@ -162,10 +193,10 @@ shadows the constant, and a variable named `\varphi` is yours.
 | `\{x \mid P\}` (restriction) | **parses, not supported** | → `Condition`, no set-builder binder |
 
 <ClientOnly>
-<enumeratio-notebook value='{"lines":[
-  {"id":"l1","latex":"[i^2 \\text{ for } i=[1,2,3,4]]"},
-  {"id":"l2","latex":"[2..8]"}
-]}'></enumeratio-notebook>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"[i^2 \\text{ for } i=[1,2,3,4]]","expect":"[1, 4, 9, 16]"},
+  {"latex":"[2..8]","expect":"[2, 3, 4, 5, 6, 7, 8]"}
+]}'></enumeratio-expressions>
 </ClientOnly>
 
 ## Comparisons & logic
@@ -180,6 +211,14 @@ shadows the constant, and a variable named `\varphi` is yours.
 
 Comparisons swap operands the way CE does (`3>5` parses to `Less(5,3)`); the result is always a boolean over pure
 scalars. The logic family is a known gap — it waits on non-scalar (boolean) return typing in the binder.
+
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"3\\le5","expect":"true"},
+  {"latex":"5\\ge3","expect":"true"},
+  {"latex":"3\\ne4","expect":"true"}
+]}'></enumeratio-expressions>
+</ClientOnly>
 
 ## Matrices & environments
 

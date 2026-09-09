@@ -11,7 +11,7 @@
 // Heads verified empirically against the installed compute-engine (0.125.0) — see the probing note by each
 // non-obvious one; a CE canonical name is not always what you'd guess (`\gcd` → head `"GCD"`, not `"Gcd"`).
 
-export type OperatorBinding = { op: string } | { fn: string } | { special: string } | { kernel: string }
+export type OperatorBinding = { op: string } | { fn: string } | { special: string } | { kernel: string; result?: 'numeric' | 'boolean' }
 
 export const OPERATORS: Record<string, OperatorBinding> = {
   // ── base_operation (algebra.sql) — arithmetic, order, lattice ────────────────────────────────────────────────
@@ -52,6 +52,10 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   // Pascal spelling — deferred). NB the CAPITAL `\operatorname{Sign}` does NOT application-parse under our
   // LatexSyntax build (only the lowercase `sgn` trigger does); `Heaviside` does. Both return integers → exact.
   Sign: { kernel: 'Sign' }, Heaviside: { kernel: 'Heaviside' },
+  // `a \mid b` ("a divides b") parses to the CE `Divides` head (a glyph trigger, like the comparisons — no
+  // `\operatorname{}` needed) and returns a BOOLEAN: `3 \mid 12` → true, `3 \mid 13` → false. `result: 'boolean'`
+  // types it ∈ 𝔹 (the ce-engine already prints CE's True/False as true/false). Checked live on 0.125.
+  Divides: { kernel: 'Divides', result: 'boolean' },
   Sqrt: { kernel: 'Sqrt' }, Root: { kernel: 'Root' },
   Exp: { kernel: 'Exp' }, Ln: { kernel: 'Ln' }, Log: { kernel: 'Log' },
   Sin: { kernel: 'Sin' }, Cos: { kernel: 'Cos' }, Tan: { kernel: 'Tan' },

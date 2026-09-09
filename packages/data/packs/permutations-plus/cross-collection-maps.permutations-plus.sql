@@ -6,9 +6,9 @@
 -- [permutations.to_lehmer_code <-> lehmer_codes.to_permutation]  the order-isomorphic sibling bijection.
 -- Both functions (to_inversion / to_permutation) are defined and rank-verified in lehmer_codes.sql; here we
 -- surface them as first-class maps in BOTH directions (one identity, two carriers).
-INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat) VALUES
-  ('permutations','to_lehmer_code','to_inversion','lehmer_codes','To Lehmer code',NULL),
-  ('lehmer_codes','to_permutation','to_permutation','permutations','To permutation',NULL);
+INSERT INTO base_map (collection, map_id, mapping_fn, codomain, title, findstat, inverse, is_bijection, is_order_iso) VALUES
+  ('permutations','to_lehmer_code','to_inversion','lehmer_codes','To Lehmer code',NULL,'to_permutation',true,true),
+  ('lehmer_codes','to_permutation','to_permutation','permutations','To permutation',NULL,'to_lehmer_code',true,true);
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
   ('permutations','to_lehmer_code: 321 ↦ 210, 231 ↦ 110 (rendered in the codomain form)','eq','210|110','permutation → its Lehmer code',$q$
