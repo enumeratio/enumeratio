@@ -15,11 +15,12 @@ CREATE TABLE base_compute_engine_twin (
 
 -- The certified core twins. Every row here shares its name with the head (PascalCase of the catalog id) — as
 -- of #406, `permutations` no longer needs the old SymmetricGroup-alias workaround: the library head is now
--- literally `Permutations`, and the catalog's DISTINCT `symmetric_group` collection (#411 — same n! underlying
--- set, cycle notation, Coxeter-length order) gets its own twin, `SymmetricGroup`, matching that library head.
+-- literally `Permutations`. The catalog's DISTINCT `symmetric_group` collection (#411 — same n! underlying set,
+-- cycle notation, Coxeter-length order) gets its own twin, `SymmetricGroup`, matching that library head — but
+-- symmetric_group lives in the permutations-plus PACK (loads after core), so its twin row can't sit here (an FK
+-- to a not-yet-realized collection) — see packs/permutations-plus/compute_engine_twin.permutations-plus.sql.
 INSERT INTO base_compute_engine_twin (collection, head, arity) VALUES
   ('permutations',         'Permutations',        1),
-  ('symmetric_group',      'SymmetricGroup',      1),
   ('integer_compositions', 'IntegerCompositions', 1),
   ('integer_partitions',   'IntegerPartitions',   1),
   ('set_partitions',       'SetPartitions',       1),

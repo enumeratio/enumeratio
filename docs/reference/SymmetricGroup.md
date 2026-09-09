@@ -20,7 +20,20 @@
 - **Order:** by COXETER LENGTH (the number of inversions of the one-line word), ascending — identity first ($0$), the reversal last ($\binom{n}{2}$) — tiebreak lexicographic on the one-line word. This is NOT `Permutations`' plain-lex order: `SymmetricGroup` and `Permutations` are a *sibling pair* (a bijective but non-order-isomorphic `base_map`, `packages/data/packs/permutations-plus/cross-collection-maps.permutations-plus.sql`), not order-isomorphic twins like `Permutations`/`LehmerCodes`.
 - **Random access:** a Mahonian-numbers DP: find the inversions block via cumulative counts, then decode the within-block offset as a fixed-digit-sum bounded Lehmer code (`symmetric_group_mahonian_table` / `symmetric_group_unrank_by_coxeter`, `packages/data/packs/permutations-plus/symmetric_group.sql`).
 - **Borrowed stat:** opts in to `Permutations`' `inversions` stat across the sibling bijection (`base_sibling_borrow`, #409) — by construction it equals the element's own Coxeter length, a self-consistency check exercised in `symmetric_group.sibling_borrow.sql`.
-- **Notebook status:** not yet live-enumerable in the pure-CE notebook: the compute-engine library head `SymmetricGroup` is currently still bound to `Permutations`' lex-order kernel (a pending #406 rename — see `packages/compute-engine/src/packs/core.ts`), so this catalog collection has no `base_compute_engine_twin` yet. Wiring a live TS kernel for cycle-notation/Coxeter order is follow-up work, tracked against that rename.
+
+## Examples
+
+$\operatorname{SymmetricGroup}(n)$ is the same $n!$-element $S_n$ as `Permutations`, read in Coxeter-length order — count agrees: $4! = 24$:
+
+<ClientOnly>
+  <enumeratio-expressions value='{"lines":[{"latex":"\\operatorname{SymmetricGroup}(4)"},{"latex":"\\left|\\operatorname{SymmetricGroup}(4)\\right|","expect":"24"}]}'></enumeratio-expressions>
+</ClientOnly>
+
+The identity (Coxeter length 0) is first; the full reversal (max length $\binom{n}{2}$) is last:
+
+<ClientOnly>
+  <enumeratio-expressions value='{"lines":[{"latex":"\\operatorname{SymmetricGroup}(4)[1]","expect":"[[1], [2], [3], [4]]"},{"latex":"\\operatorname{SymmetricGroup}(4)[24]","expect":"[[1, 4], [2, 3]]"}]}'></enumeratio-expressions>
+</ClientOnly>
 
 ## See also
 
