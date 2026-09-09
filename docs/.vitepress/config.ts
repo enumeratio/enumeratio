@@ -153,6 +153,7 @@ export default defineConfig({
           items: [
             { text: '@enumeratio/data', link: '/develop/packages/data/' },
             { text: '@enumeratio/client', link: '/develop/packages/client/' },
+            { text: '@enumeratio/notatio', link: '/develop/packages/notatio/' },
             {
               text: '@enumeratio/cli',
               link: '/develop/packages/cli/',
@@ -215,7 +216,6 @@ export default defineConfig({
         },
         { text: 'API Reference', link: '/develop/api' },
         { text: 'CE dictionary', link: '/develop/reference/ce-dictionary' },
-        { text: 'Notatio LaTeX coverage', link: '/develop/reference/notatio-latex' },
         { text: 'Sources', link: '/develop/sources' },
         { text: 'Glossary', link: '/develop/glossary' },
         {
