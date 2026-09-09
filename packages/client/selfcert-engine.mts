@@ -14,7 +14,7 @@
 //
 //   node --import tsx selfcert-engine.mts [filter]
 import {
-  calcText, ceEngine, close, evaluate, exprFromStatement, extendDb, InexactResult, lowerScalar, makeDb, parseCalc, pgEngine,
+  calcText, computeEngineScalar, close, evaluate, exprFromStatement, extendDb, InexactResult, lowerScalar, makeDb, parseCalc, pgEngine,
   provideCatalog, provideDb, provideEngine, registry, resetRegistry, routerEngine, rowSql, runSql, tsEngine,
   type Expr, type SelectExpr,
 } from './src/index.ts'
@@ -32,7 +32,7 @@ const reg = await registry()
 if (reg.dirty) { console.error(`cannot self-certify: ${reg.dirty}`); process.exit(1) }
 const pg = pgEngine()
 const ts = tsEngine(reg)
-const ce = ceEngine(reg)
+const ce = computeEngineScalar(reg)
 await pg.ready?.()
 provideEngine(() => routerEngine([ts, ce, pg]))
 

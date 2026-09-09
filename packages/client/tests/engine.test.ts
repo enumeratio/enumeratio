@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { buildCatalogSnapshot } from '@enumeratio/data/catalog-snapshot'
 import { coreBundleHash } from '@enumeratio/data/node'
 import {
-  cancelDb, ceEngine, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, notatioEngine, provideCatalog, makeDb, makeWorkerDb,
+  cancelDb, computeEngineScalar, close, evaluate, extendDb, exprFromStatement, fnRef, InexactResult, notatioEngine, provideCatalog, makeDb, makeWorkerDb,
   parseCalc, lowerScalar, pgEngine, planRows, provideDb, provideEngine, registry, Registry, resetRegistry, routerEngine, runSql,
   setQueryTimeout, standardEngine, textFromSelect, tsEngine, type Expr, type RowQuery, type SelectExpr,
 } from '../src/index.ts'
@@ -348,7 +348,7 @@ describe('op / handle / cast — the four scalar-surface-only IR kinds, end to e
 
 describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () => {
   let reg: Awaited<ReturnType<typeof registry>>
-  let ce: ReturnType<typeof ceEngine>
+  let ce: ReturnType<typeof computeEngineScalar>
   let pg: ReturnType<typeof pgEngine>
 
   beforeAll(async () => {
@@ -356,7 +356,7 @@ describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () =
     pg = pgEngine(() => makeDb())
     useLiveCatalog()
     reg = await registry()
-    ce = ceEngine(reg)
+    ce = computeEngineScalar(reg)
   })
   afterAll(async () => { await ce.close(); await close(); resetRegistry() })
 
@@ -426,7 +426,7 @@ describe('ce-engine · compute-engine\'s kernel, exact integer or decline', () =
   })
 
   it('a symbolic constant (Pi) is boxed as a symbol and folds to a decimal under numericFallback', async () => {
-    const ceN = ceEngine(reg, { numericFallback: true })
+    const ceN = computeEngineScalar(reg, { numericFallback: true })
     const pi: SelectExpr = { kind: 'const', name: 'Pi' }
     expect(ceN.can({ select: [pi] })).toBe(true)
     expect((await value(ceN, { select: [pi] })).startsWith('3.14159')).toBe(true)

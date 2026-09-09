@@ -6,10 +6,10 @@
 //
 //   • ENUMERATION over a collection handle — `unrank`/`rank`/`locate`/`next`/`prev`/`random_element`/`cardinality`,
 //     and a bare handle result — is answered by `@enumeratio/compute-engine`'s CollectionHandlers via
-//     `ceEnumEngine` (the library's O(1) `At`/`Rank`/`Length` IS the enumerator). This is the ONLY substrate that
-//     touches a handle.
+//     `computeEngineEnumerator` (the library's O(1) `At`/`Rank`/`Length` IS the enumerator). This is the ONLY
+//     substrate that touches a handle.
 //   • SCALAR math — arithmetic, curated identities, CE-native heads (trig/√/ζ/…), constants — is answered by our
-//     own `@enumeratio/math` twins (`tsEngine`) when they have an EXACT impl, else by compute-engine (`ceEngine`).
+//     own `@enumeratio/math` twins (`tsEngine`) when they have an EXACT impl, else by compute-engine (`computeEngineScalar`).
 //     ts goes first only because it carries exact bigint for the curated sequences (`bell(30)` to the last digit)
 //     that CE has no operator for; where ts has no impl, or reports its float64 result would be INEXACT, CE — the
 //     kernel we reuse directly and intentionally — takes it. That ts→ce step is the one runtime decision here, and
@@ -19,8 +19,8 @@
 // What is NOT here: `pgEngine`. The notebook never round-trips to SQL. The pg path is kept for the EXPLORER and for
 // cross-verification — the same IR compiles to SQL, and a differential harness can check the two agree (parity is
 // a design constraint + a free correctness oracle), but that is a separate wiring, never the notebook's evaluator.
-import { ceEngine } from './ce-engine'
-import { ceEnumEngine } from './ce-enum-engine'
+import { computeEngineScalar } from './compute-engine-scalar'
+import { computeEngineEnumerator } from './compute-engine-enumerator'
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import type { Expr } from './ir'
 import type { Registry } from './registry'
@@ -31,9 +31,9 @@ export function notatioEngine(reg: Registry): Engine {
   // exactRationals: the notebook has no pg to be bit-identical to, so int/int division yields an exact reduced
   // rational ∈ ℚ (ts declines the non-integral quotient → ce prints `p/q`) rather than a float (#365). ce also
   // renders CE-native results as exact LaTeX and folds constants/`.N()` numerically (symbolicLatex/numericFallback).
-  const enumE = ceEnumEngine()
+  const enumE = computeEngineEnumerator(reg)
   const ts = tsEngine(reg, { exactRationals: true })
-  const ce = ceEngine(reg, { exactRationals: true, numericFallback: true, symbolicLatex: true })
+  const ce = computeEngineScalar(reg, { exactRationals: true, numericFallback: true, symbolicLatex: true })
 
   /** The ordered substrate candidates for `expr`, chosen explicitly by shape — enumeration to the CE library,
    *  everything else to the scalar pair (exact twins, then the CE kernel). The list is tried in order, an

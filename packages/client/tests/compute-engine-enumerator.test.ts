@@ -1,11 +1,32 @@
 import { describe, it, expect } from 'vitest'
-import { ceEnumEngine } from '../src/ce-enum-engine'
+import { computeEngineEnumerator } from '../src/compute-engine-enumerator'
 import { fnRef, type Expr, type SelectExpr, type HandleExpr } from '../src/ir'
+import { Registry, type CatalogSnapshot, type CollectionRow } from '../src/registry'
 
 // Pure-CE enumeration: the notebook's handle-primitives (unrank/locate/rank/next/cardinality) answered entirely by
-// @enumeratio/compute-engine's CollectionHandlers on the shared CE instance — no pg, no registry, no Db provided.
+// @enumeratio/compute-engine's CollectionHandlers on the shared CE instance — no pg, no Db provided. The registry
+// carries only the catalog-owned twin fact (`base_compute_engine_twin`) for the snake_case ids these tests use;
+// Pascal-head cases (SymmetricGroup, DyckPaths, KSubsets, …) resolve via compute-engine-enumerator's own LIBRARY_TWIN
+// regardless of what the registry knows.
 
-const engine = ceEnumEngine()
+const collRow = (id: string, computeEngineTwin: CollectionRow['computeEngineTwin']): CollectionRow => ({
+  id, carrier: null, grades: [], unbounded: false, aliasOf: null, category: 'mathematical', tags: [],
+  hooks: { fiberCount: false, fiberUnrank: false, fiberElements: false, containsInFiber: false },
+  computeEngineTwin,
+})
+
+const snapshot: CatalogSnapshot = {
+  hash: '', builtAt: '', functions: [], carriers: [], engines: [], columnGroups: [], grants: [], foldable: [],
+  typeOperations: [],
+  collections: [
+    collRow('permutations', { head: 'SymmetricGroup', arity: 1 }),
+    collRow('dyck_paths', { head: 'DyckPaths', arity: 1 }),
+    collRow('triangular_numbers', null),
+  ],
+}
+
+const reg = new Registry(snapshot, null)
+const engine = computeEngineEnumerator(reg)
 const handle = (coll: string, ...positional: number[]): SelectExpr => ({
   kind: 'handle', handle: { coll, named: {}, positional } as HandleExpr,
 })
@@ -19,7 +40,7 @@ async function one(col: SelectExpr): Promise<string> {
   throw new Error('no row')
 }
 
-describe('ceEnumEngine — pure-CE enumeration over library CollectionHandlers', () => {
+describe('computeEngineEnumerator — pure-CE enumeration over library CollectionHandlers', () => {
   it('unrank = At(coll, r+1), 0-based in / 1-based out', async () => {
     expect(await one(ap('unrank', handle('SymmetricGroup', 4), lit(0)))).toBe('[1,2,3,4]') // identity
     expect(await one(ap('unrank', handle('SymmetricGroup', 4), lit(23)))).toBe('[4,3,2,1]') // last, 24=4!
