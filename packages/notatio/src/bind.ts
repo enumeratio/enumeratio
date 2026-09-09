@@ -221,6 +221,10 @@ function compute(e: Node, path: NodePath, ctx: Ctx): Type {
     if ('fn' in opBinding) return typeApply(opBinding.fn, a, path, ctx)
     // a CE-native numeric op (Max/Sqrt/Zeta/…) — type its args, result is numeric; ce-engine evaluates it.
     if ('kernel' in opBinding) { for (let i = 0; i < a.length; i++) argT(i); return scalarType(opBinding.result ?? 'numeric') }
+    // a `$`-session symbol is never a call head (it's a bare-symbol dictionary entry — see names.ts) — this
+    // branch is unreachable in practice, kept only so the `special` narrowing below type-checks against the
+    // widened OperatorBinding union.
+    if ('session' in opBinding) { ctx.errors(path, `"$${opBinding.session}" is not callable`); return UNKNOWN }
     // special
     if (opBinding.special === 'contains') return typeContains(a, path, ctx)
     if (opBinding.special === 'element_at') return typeElementAt(a, path, ctx)
