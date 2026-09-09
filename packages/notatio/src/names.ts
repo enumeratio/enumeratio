@@ -45,8 +45,13 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   Supremum: { kernel: 'Supremum' }, Infimum: { kernel: 'Infimum' },   // \sup / \inf over a bounded set
   Floor: { kernel: 'Floor' }, Ceil: { kernel: 'Ceil' }, Round: { kernel: 'Round' }, Clamp: { kernel: 'Clamp' },
   Mod: { kernel: 'Mod' },
-  // (Sign/Heaviside deferred — their CE names collide with existing LatexSyntax dictionary entries, so a plain
-  // function registration dup-warns; they need a trigger-only entry — a later pass.)
+  // Sign/Heaviside route to CE like the trig family. They reach the parser through a BUILT-IN LatexSyntax trigger —
+  // `\operatorname{sgn}(-5)` → head `Sign` → -1, and `\operatorname{Heaviside}(-2)` → 0 — so they need NO
+  // `KERNEL_WORD_OPS` entry (registering the PascalCase `Sign`/`Heaviside` spelling as a parser function is exactly
+  // what dup-warns against CE's existing dictionary entry; a trigger-only entry would be the clean way to add the
+  // Pascal spelling — deferred). NB the CAPITAL `\operatorname{Sign}` does NOT application-parse under our
+  // LatexSyntax build (only the lowercase `sgn` trigger does); `Heaviside` does. Both return integers → exact.
+  Sign: { kernel: 'Sign' }, Heaviside: { kernel: 'Heaviside' },
   Sqrt: { kernel: 'Sqrt' }, Root: { kernel: 'Root' },
   Exp: { kernel: 'Exp' }, Ln: { kernel: 'Ln' }, Log: { kernel: 'Log' },
   Sin: { kernel: 'Sin' }, Cos: { kernel: 'Cos' }, Tan: { kernel: 'Tan' },

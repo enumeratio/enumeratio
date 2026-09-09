@@ -215,6 +215,7 @@ export default defineConfig({
         },
         { text: 'API Reference', link: '/develop/api' },
         { text: 'CE dictionary', link: '/develop/reference/ce-dictionary' },
+        { text: 'Notatio LaTeX coverage', link: '/develop/reference/notatio-latex' },
         { text: 'Sources', link: '/develop/sources' },
         { text: 'Glossary', link: '/develop/glossary' },
         {
