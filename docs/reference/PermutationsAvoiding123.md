@@ -18,7 +18,7 @@
 - **Count:** the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)).
 - **Order:** lexicographic among the avoiders — built value-by-value smallest-first, counting the pattern-free completions of each prefix (`countAvoiding`, `packages/compute-engine/src/packs/permutations.ts`).
 - **Random access:** prefix-counting recomputed per descent — heavier than the closed Catalan convolution, but $n$ stays small in practice.
-- **Naming:** the `PermutationsAvoiding<pat>` spelling, shared with the $213/231/312$ heads.
+- **Naming:** the `PermutationsAvoiding<pat>` spelling, shared with every length-3 class.
 
 ## Examples
 
@@ -28,7 +28,7 @@ The 14 avoiders of $[4]$ in lex order are $[1, 4, 3, 2], [2, 1, 4, 3], [2, 4, 1,
 
 ## See also
 
-[`PermutationsAvoiding213`](/reference/PermutationsAvoiding213) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) · [`Permutations321Avoiding`](/reference/Permutations321Avoiding) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
+[`PermutationsAvoiding213`](/reference/PermutationsAvoiding213) · [`PermutationsAvoiding231`](/reference/PermutationsAvoiding231) · [`PermutationsAvoiding312`](/reference/PermutationsAvoiding312) · [`PermutationsAvoiding321`](/reference/PermutationsAvoiding321) · [`CatalanNumber`](/reference/catalan-number) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

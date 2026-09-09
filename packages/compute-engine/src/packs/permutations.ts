@@ -8,7 +8,7 @@ import type { PackEntry } from "./types.js";
 const normRank = (r: number, total: number): number =>
   total > 0 ? (((Math.trunc(r) % total) + total) % total) : 0;
 
-// ─── Permutations321Avoiding(n) / Permutations132Avoiding(n): Catalan-counted pattern-avoiding
+// ─── PermutationsAvoiding321(n) / PermutationsAvoiding132(n): Catalan-counted pattern-avoiding
 // permutations of [n] (one-line notation). ──────────────────────────────────────────────────────
 
 // Catalan(n) table [C(0),...,C(n)] via plain DP, recomputed per call — n
@@ -63,7 +63,7 @@ function has132(e: number[]): boolean {
   return false;
 }
 
-// ---- Permutations132Avoiding(n) --------------------------------------------
+// ---- PermutationsAvoiding132(n) --------------------------------------------
 // Permutations of [n] (one-line) avoiding pattern 132 (no i<j<k with
 // e[i]<e[k]<e[j]). Count = Catalan(n).
 //
@@ -96,7 +96,7 @@ function unrank132Range(offset: number, size: number, r: number, cat: number[]):
     }
     rem -= block;
   }
-  throw new Error("Permutations132Avoiding unrank: r out of range");
+  throw new Error("PermutationsAvoiding132 unrank: r out of range");
 }
 
 function rank132Range(e: number[], offset: number, size: number, cat: number[]): number {
@@ -113,27 +113,27 @@ function rank132Range(e: number[], offset: number, size: number, cat: number[]):
   return preceding + leftRank * cat[rightSize] + rightRank;
 }
 
-function permutations132AvoidingCount(p: number[]): number {
+function permutationsAvoiding132Count(p: number[]): number {
   const n = p[0];
   return catalanTable(n)[n];
 }
 
-function permutations132AvoidingUnrank(p: number[], r: number): number[] {
+function permutationsAvoiding132Unrank(p: number[], r: number): number[] {
   const n = p[0];
   return unrank132Range(0, n, r, catalanTable(n));
 }
 
-function permutations132AvoidingRank(e: any, p: number[]): number {
+function permutationsAvoiding132Rank(e: any, p: number[]): number {
   const n = p[0];
   return rank132Range(e as number[], 0, n, catalanTable(n));
 }
 
-function permutations132AvoidingValid(e: any, p: number[]): boolean {
+function permutationsAvoiding132Valid(e: any, p: number[]): boolean {
   const n = p[0];
   return isPermutationOf1ToN(e, n) && !has132(e);
 }
 
-// ---- Permutations321Avoiding(n) --------------------------------------------
+// ---- PermutationsAvoiding321(n) --------------------------------------------
 // Permutations of [n] (one-line) avoiding pattern 321 (no i<j<k with
 // e[i]>e[j]>e[k]). Count = Catalan(n).
 //
@@ -176,13 +176,13 @@ function count321(remaining: number[], M: number, T: number, memo: Map<string, n
   return total;
 }
 
-function permutations321AvoidingCount(p: number[]): number {
+function permutationsAvoiding321Count(p: number[]): number {
   const n = p[0];
   const remaining = Array.from({ length: n }, (_, i) => i + 1);
   return count321(remaining, 0, 0, new Map());
 }
 
-function permutations321AvoidingUnrank(p: number[], r: number): number[] {
+function permutationsAvoiding321Unrank(p: number[], r: number): number[] {
   const n = p[0];
   const memo = new Map<string, number>();
   let remaining = Array.from({ length: n }, (_, i) => i + 1);
@@ -204,7 +204,7 @@ function permutations321AvoidingUnrank(p: number[], r: number): number[] {
       }
       rem -= c;
     }
-    if (chosen === -1) throw new Error("Permutations321Avoiding unrank: r out of range");
+    if (chosen === -1) throw new Error("PermutationsAvoiding321 unrank: r out of range");
     result.push(chosen);
     remaining = remaining.filter((x) => x !== chosen);
     if (chosen > M) M = chosen;
@@ -213,7 +213,7 @@ function permutations321AvoidingUnrank(p: number[], r: number): number[] {
   return result;
 }
 
-function permutations321AvoidingRank(e: any, p: number[]): number {
+function permutationsAvoiding321Rank(e: any, p: number[]): number {
   const n = p[0];
   const perm = e as number[];
   const memo = new Map<string, number>();
@@ -238,7 +238,7 @@ function permutations321AvoidingRank(e: any, p: number[]): number {
   return total;
 }
 
-function permutations321AvoidingValid(e: any, p: number[]): boolean {
+function permutationsAvoiding321Valid(e: any, p: number[]): boolean {
   const n = p[0];
   return isPermutationOf1ToN(e, n) && !has321(e);
 }
@@ -723,22 +723,22 @@ function IsAlternatingPermutation(a: unknown, n: number): boolean {
 
 export const entries: PackEntry[] = [
   {
-    head: "Permutations321Avoiding",
+    head: "PermutationsAvoiding321",
     paramCount: 1,
     kind: "ints",
-    count: permutations321AvoidingCount,
-    unrank: permutations321AvoidingUnrank,
-    rank: permutations321AvoidingRank,
-    valid: permutations321AvoidingValid,
+    count: permutationsAvoiding321Count,
+    unrank: permutationsAvoiding321Unrank,
+    rank: permutationsAvoiding321Rank,
+    valid: permutationsAvoiding321Valid,
   },
   {
-    head: "Permutations132Avoiding",
+    head: "PermutationsAvoiding132",
     paramCount: 1,
     kind: "ints",
-    count: permutations132AvoidingCount,
-    unrank: permutations132AvoidingUnrank,
-    rank: permutations132AvoidingRank,
-    valid: permutations132AvoidingValid,
+    count: permutationsAvoiding132Count,
+    unrank: permutationsAvoiding132Unrank,
+    rank: permutationsAvoiding132Rank,
+    valid: permutationsAvoiding132Valid,
   },
   {
     head: "PermutationsAvoiding123",

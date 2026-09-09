@@ -259,14 +259,14 @@ export const NODES: NodeDoc[] = [
     ],
   },
   {
-    head: "Permutations321Avoiding",
+    head: "PermutationsAvoiding321",
     catalogId: "permutations_avoiding_321",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ with no decreasing subsequence of length 3 (pattern $321$).",
     usage: [
-      { form: "\\operatorname{Permutations321Avoiding}(n)", meaning: "all $321$-avoiding permutations of $[n]$" },
-      { form: "\\operatorname{At}(\\operatorname{Permutations321Avoiding}(n),\\ i)", meaning: "the avoider at 1-based position $i$" },
+      { form: "\\operatorname{PermutationsAvoiding321}(n)", meaning: "all $321$-avoiding permutations of $[n]$" },
+      { form: "\\operatorname{At}(\\operatorname{PermutationsAvoiding321}(n),\\ i)", meaning: "the avoider at 1-based position $i$" },
     ],
     details: [
       { label: "Arity", body: "1 — the ground size $n$." },
@@ -275,29 +275,29 @@ export const NODES: NodeDoc[] = [
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108)) — as for every single-pattern class of length 3." },
       { label: "Order", body: "lexicographic: built left to right, smallest legal value first, where a value is legal iff it exceeds the running maximum inversion-bottom (the walk that keeps every prefix $321$-avoiding), memoized per state (`packages/compute-engine/src/packs/permutations.ts`)." },
       { label: "Random access", body: "each of the $n$ positions sums a memoized state count; polynomial in $n$, not a closed convolution." },
-      { label: "Naming", body: "spelled `Permutations321Avoiding` (pattern-suffix), like its sibling [`Permutations132Avoiding`](/reference/Permutations132Avoiding); the four other length-3 classes use the `PermutationsAvoiding<pat>` spelling instead." },
+      { label: "Naming", body: "the `PermutationsAvoiding<pat>` spelling, shared with every length-3 class." },
     ],
     examples: {
       params: [4],
       narrative: [
-        "$\\operatorname{Count}(\\operatorname{Permutations321Avoiding}(4)) = {count}$ (the Catalan number $C_4$).",
+        "$\\operatorname{Count}(\\operatorname{PermutationsAvoiding321}(4)) = {count}$ (the Catalan number $C_4$).",
         "The 14 avoiders of $[4]$ in this order are ${first(14)}$ — lex-first is the identity ${at(0)}$.",
       ],
     },
     seeAlso: [
-      { head: "Permutations132Avoiding" }, { head: "PermutationsAvoiding123" }, { head: "PermutationsAvoiding231" },
+      { head: "PermutationsAvoiding132" }, { head: "PermutationsAvoiding123" }, { head: "PermutationsAvoiding231" },
       { head: "SymmetricGroup" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
   {
-    head: "Permutations132Avoiding",
+    head: "PermutationsAvoiding132",
     catalogId: "permutations_avoiding_132",
     family: "Permutations & permutation classes",
     kind: "collection",
     tagline: "The permutations of $[n]$ avoiding the pattern $132$ (no $i<j<k$ with $\\sigma_i < \\sigma_k < \\sigma_j$).",
     usage: [
-      { form: "\\operatorname{Permutations132Avoiding}(n)", meaning: "all $132$-avoiding permutations of $[n]$" },
-      { form: "\\operatorname{At}(\\operatorname{Permutations132Avoiding}(n),\\ i)", meaning: "the avoider at 1-based position $i$" },
+      { form: "\\operatorname{PermutationsAvoiding132}(n)", meaning: "all $132$-avoiding permutations of $[n]$" },
+      { form: "\\operatorname{At}(\\operatorname{PermutationsAvoiding132}(n),\\ i)", meaning: "the avoider at 1-based position $i$" },
     ],
     details: [
       { label: "Arity", body: "1 — the ground size $n$." },
@@ -306,17 +306,17 @@ export const NODES: NodeDoc[] = [
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108))." },
       { label: "Order", body: "the Catalan convolution recursion on the position $m$ of the maximum value $n$ — every value left of $m$ exceeds every value right of $m$, and each side recursively avoids $132$ (`packages/compute-engine/src/packs/permutations.ts`). This is *not* lexicographic." },
       { label: "Random access", body: "$O(n^2)$ arithmetic — a Catalan table plus the recursive split/merge." },
-      { label: "Naming", body: "pattern-suffix spelling, matching [`Permutations321Avoiding`](/reference/Permutations321Avoiding)." },
+      { label: "Naming", body: "the `PermutationsAvoiding<pat>` spelling, shared with every length-3 class." },
     ],
     examples: {
       params: [4],
       narrative: [
-        "$\\operatorname{Count}(\\operatorname{Permutations132Avoiding}(4)) = {count}$ ($C_4$).",
-        "In this order the 14 avoiders of $[4]$ are ${first(14)}$ — rank $0$ is ${at(0)}$ (the max-position recursion puts the reversed identity first, so the order differs from the lex order of [`Permutations321Avoiding`](/reference/Permutations321Avoiding)).",
+        "$\\operatorname{Count}(\\operatorname{PermutationsAvoiding132}(4)) = {count}$ ($C_4$).",
+        "In this order the 14 avoiders of $[4]$ are ${first(14)}$ — rank $0$ is ${at(0)}$ (the max-position recursion puts the reversed identity first, so the order differs from the lex order of [`PermutationsAvoiding321`](/reference/PermutationsAvoiding321)).",
       ],
     },
     seeAlso: [
-      { head: "Permutations321Avoiding" }, { head: "PermutationsAvoiding123" }, { head: "PermutationsAvoiding312" },
+      { head: "PermutationsAvoiding321" }, { head: "PermutationsAvoiding123" }, { head: "PermutationsAvoiding312" },
       { head: "SymmetricGroup" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
@@ -337,7 +337,7 @@ export const NODES: NodeDoc[] = [
       { label: "Count", body: "the Catalan number $C_n$ (OEIS [A000108](https://oeis.org/A000108))." },
       { label: "Order", body: "lexicographic among the avoiders — built value-by-value smallest-first, counting the pattern-free completions of each prefix (`countAvoiding`, `packages/compute-engine/src/packs/permutations.ts`)." },
       { label: "Random access", body: "prefix-counting recomputed per descent — heavier than the closed Catalan convolution, but $n$ stays small in practice." },
-      { label: "Naming", body: "the `PermutationsAvoiding<pat>` spelling, shared with the $213/231/312$ heads." },
+      { label: "Naming", body: "the `PermutationsAvoiding<pat>` spelling, shared with every length-3 class." },
     ],
     examples: {
       params: [4],
@@ -348,7 +348,7 @@ export const NODES: NodeDoc[] = [
     },
     seeAlso: [
       { head: "PermutationsAvoiding213" }, { head: "PermutationsAvoiding231" }, { head: "PermutationsAvoiding312" },
-      { head: "Permutations321Avoiding" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
+      { head: "PermutationsAvoiding321" }, { head: "CatalanNumber" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
   {
