@@ -85,6 +85,13 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   CatalanNumber: { kernel: 'CatalanNumber' }, BellNumber: { kernel: 'BellNumber' }, NPartition: { kernel: 'NPartition' },
   PrimePi: { kernel: 'PrimePi' }, Stirling: { kernel: 'Stirling' }, StirlingS1: { kernel: 'StirlingS1' },
   Eulerian: { kernel: 'Eulerian' }, Choose: { kernel: 'Choose' },
+  // Counting-sequence PRIMARIES = PascalCase of the (normalized *_number) catalog ident; Wolfram/cortex spellings
+  // are helper aliases. `PartitionNumber` is the canonical name (cortex kernel NPartition). `BellNumber`/
+  // `CatalanNumber` above are already canonical. (`FubiniNumber` has no compute-engine kernel head to bind through
+  // yet — a {fn} binding doesn't application-parse via \operatorname; wiring it is part of the naming-alignment
+  // work, so its reference page reads the count off SetCompositions for now.)
+  PartitionNumber: { kernel: 'NPartition' },
+  BellB: { kernel: 'BellNumber' }, PartitionsP: { kernel: 'NPartition' }, // Wolfram helper aliases
 
   // ── generic engine primitives, dispatched by head name alone (not argument-typed) ───────────────────────────
   Element: { special: 'contains' },     // `x \in C` as an EXPRESSION (not a declare) — boolean membership
