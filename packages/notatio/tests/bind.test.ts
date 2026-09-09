@@ -183,10 +183,20 @@ describe('bind: errors', () => {
     }
   })
 
-  it('a \\mid b (Divides) binds BOOLEAN', () => {
-    const bound = bind(parser.parse('3\\mid 12'), new Map(), catalog)
-    expect(bound.errors).toEqual([])
-    expect(bound.type).toEqual({ k: 'scalar', pg: 'boolean' })
+  it('a \\mid b (Divides) and a \\nmid b (NotDivides) bind BOOLEAN', () => {
+    for (const latex of ['3\\mid 12', '3\\nmid 13']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'boolean' })
+    }
+  })
+
+  it('base logs \\log_2 (Lb) and \\lg (Lg) bind numeric', () => {
+    for (const latex of ['\\log_2(8)', '\\lg(1000)']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'numeric' })
+    }
   })
 
   it('scalar |x| is absolute value (numeric)', () => {

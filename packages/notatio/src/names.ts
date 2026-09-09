@@ -56,6 +56,12 @@ export const OPERATORS: Record<string, OperatorBinding> = {
   // `\operatorname{}` needed) and returns a BOOLEAN: `3 \mid 12` → true, `3 \mid 13` → false. `result: 'boolean'`
   // types it ∈ 𝔹 (the ce-engine already prints CE's True/False as true/false). Checked live on 0.125.
   Divides: { kernel: 'Divides', result: 'boolean' },
+  NotDivides: { kernel: 'NotDivides', result: 'boolean' },   // `a \nmid b` — glyph trigger, boolean
+  // base logs: `\log_2(x)` parses to the `Lb` head, `\lg` to `Lg` — both evaluate on 0.125 (`\log_2(8)` → 3,
+  // `\lg(1000)` → 3). (`\log_{10}(x)` canonicalizes straight to `Log`, already curated.)
+  // Set relations (`\subseteq`/`\subset`/…) are deliberately NOT here: our `\{…\}` binds as a LIST (integer[]), so
+  // those route to the enumeration engine and yield no boolean — they need real set typing first.
+  Lb: { kernel: 'Lb' }, Lg: { kernel: 'Lg' },
   Sqrt: { kernel: 'Sqrt' }, Root: { kernel: 'Root' },
   Exp: { kernel: 'Exp' }, Ln: { kernel: 'Ln' }, Log: { kernel: 'Log' },
   Sin: { kernel: 'Sin' }, Cos: { kernel: 'Cos' }, Tan: { kernel: 'Tan' },
