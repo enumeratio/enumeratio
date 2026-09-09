@@ -163,7 +163,7 @@ describe("membership per family", () => {
 // assert it is a bijection onto exactly N distinct, valid elements. An O(1) at makes this O(N) to check.
 describe("enumerate-all bijection check (at is a bijection onto valid elements)", () => {
   const families: Array<{ name: string; coll: any }> = [
-    { name: "SymmetricGroup(4)", coll: ["SymmetricGroup", 4] },
+    { name: "Permutations(4)", coll: ["Permutations", 4] },
     { name: "IntegerCompositions(6)", coll: ["IntegerCompositions", 6] },
     { name: "IntegerPartitions(7)", coll: ["IntegerPartitions", 7] },
     { name: "PartitionsIntoKParts(9,3)", coll: ["PartitionsIntoKParts", 9, 3] },

@@ -357,7 +357,7 @@ export const enumeratioLibrary: LibraryDefinition = {
       },
     },
 
-    // Scalar stat over a permutation word. Composes with At: Inversions(At(SymmetricGroup(9), 5)).
+    // Scalar stat over a permutation word. Composes with At: Inversions(At(Permutations(9), 5)).
     Inversions: {
       signature: "(list<integer>) -> integer",
       evaluate: (ops: ReadonlyArray<Expression>) => engineOf(ops[0]).number(Inversions(asIntList(ops[0]))),
@@ -437,10 +437,46 @@ export const enumeratioLibrary: LibraryDefinition = {
 /** Declare the enumeratio definitions into an existing engine (which keeps its standard library). */
 export function installEnumeratio(ce: ComputeEngine): ComputeEngine {
   const defs = enumeratioLibrary.definitions as Record<string, unknown>;
-  for (const [name, def] of Object.entries(defs)) ce.declare(name, def as any);
+  for (const [name, def] of Object.entries(defs)) {
+    if (name === "Permutations") continue; // coexists with CE's native head — declared once, below
+    ce.declare(name, def as any);
+  }
+  declarePermutationsCoexisting(ce, defs.Permutations as { signature: string; collection: CollectionHandlers });
   seedCeRandom(ce);
   overrideRandomShuffle(ce);
   return ce;
+}
+
+/** `Permutations` COEXISTS with CE's native collection-arrangements operator — `Permutations(coll, k?)` →
+ *  list<list> of arrangements — rather than override it: an integer argument dispatches to OUR Sₙ lex kernel (the
+ *  `n!` one-line words of `[n]`, `ourDef` below); any other argument (a collection, or `(coll, k)`) delegates
+ *  untouched to CE's own handlers, captured here before this declare touches the symbol.
+ *
+ *  CE refuses a second real `ce.declare` of an already-declared operator ("already declared in this scope") — so
+ *  this merged declare has to be the ONLY place "Permutations" is wired; `installEnumeratio` skips it in the
+ *  general defs loop and calls this instead. Native `Permutations` has no `evaluate` — Length/At/materialize all
+ *  go through its `collection` trait (iterator/count/at/contains/…), same shape as `gradedHandlers` produces for
+ *  ours, so per-handler dispatch (not a wrapped `evaluate`) is the natural coexistence point. The merged
+ *  `signature` intersects our own `(integer) -> collection` arm onto CE's native arms so an integer argument
+ *  still type-checks. */
+function declarePermutationsCoexisting(
+  ce: ComputeEngine,
+  ourDef: { signature: string; collection: CollectionHandlers },
+): void {
+  const native = ce.expr("Permutations").operatorDefinition;
+  const nativeCollection = native?.collection;
+  if (!nativeCollection) { ce.declare("Permutations", ourDef as any); return; } // no native collection trait — nothing to preserve
+  const isOurs = (c: any) => c?.op1?.isInteger === true;
+  const keys = new Set([...Object.keys(ourDef.collection), ...Object.keys(nativeCollection)]);
+  const collection = Object.fromEntries([...keys].map((k) => {
+    const ours = (ourDef.collection as any)[k];
+    const theirs = (nativeCollection as any)[k];
+    const merged = !ours ? theirs : !theirs ? ours
+      : (c: any, ...rest: any[]) => (isOurs(c) ? ours(c, ...rest) : theirs(c, ...rest));
+    return [k, merged];
+  })) as CollectionHandlers;
+  const signature = `((integer) -> collection) & ${native.signature.toString()}`;
+  ce.declare("Permutations", { signature, collection });
 }
 
 /** Route CE's own RNG through our seeded stream, so `seedRandom()` governs CE-native random ops (RandomShuffle,

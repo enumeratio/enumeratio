@@ -1,7 +1,11 @@
 // The originally hand-authored collections, expressed as PackEntry[] over the certified kernel library
 // (../kernels*.ts). Same registration mechanism as the pure-kernel packs — no special-casing in library.ts.
 import type { PackEntry } from "./types.js";
-import { Factorial, PermutationUnrank, PermutationRank, IsPermutationOf } from "../kernels.js";
+import {
+  Factorial, PermutationUnrank, PermutationRank, IsPermutationOf,
+  PermutationToCycles, CyclesToPermutation, IsCyclesOf,
+  SymmetricGroupUnrankByCoxeter, SymmetricGroupCoxeterRank,
+} from "../kernels.js";
 import {
   CompositionCount, CompositionFromMask, CompositionRank, IsCompositionOf,
   PartitionNumber, IntegerPartitionUnrank, IntegerPartitionRank, IsPartitionOf,
@@ -48,8 +52,14 @@ const ints = (head: string, paramCount: 1 | 2, count: (p: number[]) => number,
   rank: (e: any, p: number[]) => number): PackEntry => ({ head, paramCount, kind: "ints", count, unrank, rank, valid });
 
 export const entries: PackEntry[] = [
-  // ── permutations (one-line words) ──
-  ints("SymmetricGroup", 1, ([n]) => Factorial(n), ([n], r) => PermutationUnrank(n, r), (a, [n]) => IsPermutationOf(a, n), (a) => PermutationRank(a)),
+  // ── permutations (one-line words), and the SAME set read as a group (disjoint cycle notation, Coxeter-length
+  // order) — a bijective but non-order-isomorphic SIBLING pair, not order-iso twins (#406). ──
+  ints("Permutations", 1, ([n]) => Factorial(n), ([n], r) => PermutationUnrank(n, r), (a, [n]) => IsPermutationOf(a, n), (a) => PermutationRank(a)),
+  { head: "SymmetricGroup", paramCount: 1, kind: "blocks",
+    count: ([n]) => Factorial(n),
+    unrank: ([n], r) => PermutationToCycles(SymmetricGroupUnrankByCoxeter(n, r)),
+    valid: (cycles, [n]) => IsCyclesOf(cycles, n),
+    rank: (cycles) => SymmetricGroupCoxeterRank(CyclesToPermutation(cycles)) },
   ints("KPermutations", 2, ([n, k]) => KPermutationCount(n, k), ([n, k], r) => KPermutationUnrank(n, k, r), (a, [n, k]) => IsKPermutationOf(a, n, k), (a, [n]) => KPermutationRank(a, n)),
   ints("SignedPermutations", 1, ([n]) => SignedPermutationCount(n), ([n], r) => SignedPermutationUnrank(n, r), (a, [n]) => IsSignedPermutationOf(a, n), (a) => SignedPermutationRank(a)),
   ints("CyclicPermutations", 1, ([n]) => CyclicPermutationCount(n), ([n], r) => CyclicPermutationUnrank(n, r), (a, [n]) => IsCyclicPermutationOf(a, n), (a) => CyclicPermutationRank(a)),

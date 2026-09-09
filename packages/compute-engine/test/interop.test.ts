@@ -25,23 +25,23 @@ describe("CE's standard library is untouched by install", () => {
 
 describe("CE operators compose over OUR collection", () => {
   it("our count binds to CE's own number theory (not a private silo)", () => {
-    expect(sym(["Equal", ["Length", ["SymmetricGroup", 12]], ["Factorial", 12]])).toBe("True");
+    expect(sym(["Equal", ["Length", ["Permutations", 12]], ["Factorial", 12]])).toBe("True");
   });
   it("CE scalar ops consume our element", () => {
-    expect(num(["Length", ["At", ["SymmetricGroup", 9], 1]])).toBe(9); // CE Length over our word
-    expect(num(["Sum", ["At", ["SymmetricGroup", 4], 24]])).toBe(10); // 4+3+2+1
-    expect(num(["Last", ["At", ["SymmetricGroup", 4], 24]])).toBe(1);
-    expect(num(["First", ["At", ["SymmetricGroup", 4], 24]])).toBe(4);
+    expect(num(["Length", ["At", ["Permutations", 9], 1]])).toBe(9); // CE Length over our word
+    expect(num(["Sum", ["At", ["Permutations", 4], 24]])).toBe(10); // 4+3+2+1
+    expect(num(["Last", ["At", ["Permutations", 4], 24]])).toBe(1);
+    expect(num(["First", ["At", ["Permutations", 4], 24]])).toBe(4);
   });
   it("CE Map+Sum fold over our lazy collection (Map is function-first)", () => {
     // sum of the last entry across the first three permutations of [4]: 4 + 3 + 4 = 11
-    const s = num(["Sum", ["Map", ["Function", ["Last", "p"], "p"], ["Take", ["SymmetricGroup", 4], 3]]]);
+    const s = num(["Sum", ["Map", ["Function", ["Last", "p"], "p"], ["Take", ["Permutations", 4], 3]]]);
     expect(s).toBe(11);
   });
   it("our stat, mapped by CE over the whole family, reduced by CE", () => {
     // total inversions of S_3 = Σ inversions = 0+1+1+2+2+3 = 9
-    expect(num(["Sum", ["Map", ["Function", ["Inversions", "p"], "p"], ["SymmetricGroup", 3]]])).toBe(9);
+    expect(num(["Sum", ["Map", ["Function", ["Inversions", "p"], "p"], ["Permutations", 3]]])).toBe(9);
     // max inversions over S_5 = C(5,2) = 10, via CE's Max over our mapped stat
-    expect(num(["Max", ["Map", ["Function", ["Inversions", "p"], "p"], ["SymmetricGroup", 5]]])).toBe(10);
+    expect(num(["Max", ["Map", ["Function", ["Inversions", "p"], "p"], ["Permutations", 5]]])).toBe(10);
   });
 });
