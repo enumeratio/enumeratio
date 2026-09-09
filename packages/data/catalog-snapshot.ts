@@ -51,6 +51,9 @@ export type CollectionRow = {
   /** which of the realizer's optional hooks this collection actually defines (to_regprocedure, as base_realize
    *  itself asks) — what an engine would have to reimplement to claim the row half */
   hooks: { fiberCount: boolean; fiberUnrank: boolean; fiberElements: boolean; containsInFiber: boolean }
+  /** the @enumeratio/compute-engine twin (library head + construction arity) when this collection has a certified
+   *  one — what the pure-CE notebook enumerator drives; null when there is no CE twin (base_compute_engine_twin). */
+  computeEngineTwin: { head: string; arity: number } | null
 }
 
 export type GrantRow = { engine: string; columnGroup: string; scopeKind: string; scope: string; mode: string }
@@ -158,8 +161,11 @@ export async function buildCatalogSnapshot(source: SnapshotSource, hash: string)
            to_regprocedure(format('fiber_count(%I)', c.id || '_fiber'))              IS NOT NULL AS h_count,
            to_regprocedure(format('fiber_unrank(%I, rank_index)', c.id || '_fiber')) IS NOT NULL AS h_unrank,
            to_regprocedure(format('fiber_elements(%I)', c.id || '_fiber'))           IS NOT NULL AS h_elements,
-           to_regprocedure(format('contains_in_fiber(%I, %s)', c.id || '_fiber', coalesce(c.carrier, 'text'))) IS NOT NULL AS h_contains
-      FROM base_catalog c LEFT JOIN base_collection_category cc ON cc.collection = c.id
+           to_regprocedure(format('contains_in_fiber(%I, %s)', c.id || '_fiber', coalesce(c.carrier, 'text'))) IS NOT NULL AS h_contains,
+           cet.head AS ce_head, cet.arity AS ce_arity
+      FROM base_catalog c
+      LEFT JOIN base_collection_category cc ON cc.collection = c.id
+      LEFT JOIN base_compute_engine_twin cet ON cet.collection = c.id
      ORDER BY c.id`))
     .map((r): CollectionRow => ({
       id: String(r.id),
@@ -170,6 +176,7 @@ export async function buildCatalogSnapshot(source: SnapshotSource, hash: string)
       category: String(r.category),
       tags: pgArray(String(r.tags)),
       hooks: { fiberCount: r.h_count === true, fiberUnrank: r.h_unrank === true, fiberElements: r.h_elements === true, containsInFiber: r.h_contains === true },
+      computeEngineTwin: r.ce_head == null ? null : { head: String(r.ce_head), arity: Number(r.ce_arity) },
     }))
 
   // the composite types some impl row names, and their attribute layout — what an engine needs to build one

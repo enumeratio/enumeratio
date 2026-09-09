@@ -32,6 +32,9 @@ export interface CatalogCollection {
   maps: CatalogMap[];
   xrefs: CatalogXRef[];
   oeis: CatalogOeis[];
+  /** the @enumeratio/compute-engine twin (library head + arity), or null — the generator reads this instead of a
+   *  client-side map (base_compute_engine_twin). */
+  computeEngineTwin: { head: string; arity: number } | null;
 }
 export type CatalogEmit = Record<string, CatalogCollection>;
 
@@ -45,10 +48,11 @@ async function emit(): Promise<CatalogEmit> {
   const maps = await rows(`SELECT collection, map_id, mapping_fn FROM base_map ORDER BY collection, map_id`);
   const refs = await rows(`SELECT subject, system, identity, url, delta, relation FROM base_reference WHERE subject_kind='collection' ORDER BY subject, system`);
   const oeis = await rows(`SELECT collection, a_number, name FROM base_oeis WHERE collection IS NOT NULL ORDER BY collection, a_number`);
+  const twins = await rows(`SELECT collection, head, arity FROM base_compute_engine_twin ORDER BY collection`);
 
   const out: CatalogEmit = {};
   const ensure = (id: string): CatalogCollection =>
-    (out[id] ??= { title: null, carrier: null, unbounded: false, aliasOf: null, axes: [], params: [], stats: [], maps: [], xrefs: [], oeis: [] });
+    (out[id] ??= { title: null, carrier: null, unbounded: false, aliasOf: null, axes: [], params: [], stats: [], maps: [], xrefs: [], oeis: [], computeEngineTwin: null });
 
   for (const r of cat) {
     const c = ensure(r.id);
@@ -62,6 +66,7 @@ async function emit(): Promise<CatalogEmit> {
   for (const m of maps) out[m.collection]?.maps.push({ id: m.map_id, fn: m.mapping_fn });
   for (const r of refs) out[r.subject]?.xrefs.push({ system: r.system, identity: r.identity, url: r.url, delta: r.delta, relation: r.relation });
   for (const o of oeis) out[o.collection]?.oeis.push({ a: o.a_number, name: o.name });
+  for (const t of twins) { const c = out[t.collection]; if (c) c.computeEngineTwin = { head: t.head, arity: Number(t.arity) }; }
   return out;
 }
 
