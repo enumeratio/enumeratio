@@ -53,6 +53,7 @@ export const KERNEL_OPS: Record<string, string> = {
   Max: 'Max', Min: 'Min', Supremum: 'Supremum', Infimum: 'Infimum',
   Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Clamp: 'Clamp', Mod: 'Mod',
   Sign: 'Sign', Heaviside: 'Heaviside', Divides: 'Divides', NotDivides: 'NotDivides', Lb: 'Lb', Lg: 'Lg',
+  And: 'And', Or: 'Or', Not: 'Not', Xor: 'Xor', Nand: 'Nand', Nor: 'Nor', Implies: 'Implies', Equivalent: 'Equivalent',
   Sqrt: 'Sqrt', Root: 'Root', Abs: 'Abs', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
   Sin: 'Sin', Cos: 'Cos', Tan: 'Tan',
   Arcsin: 'Arcsin', Arccos: 'Arccos', Arctan: 'Arctan', Sec: 'Sec', Csc: 'Csc', Cot: 'Cot',
@@ -69,7 +70,7 @@ export const KERNEL_OPS: Record<string, string> = {
  *  as a symbol (`ce.box`), never a call. */
 const CE_CONSTANTS = new Set(['Pi', 'GoldenRatio', 'CatalanConstant'])
 
-const KERNEL_HEADS = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sign', 'Heaviside', 'Divides', 'NotDivides', 'Lb', 'Lg', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
+const KERNEL_HEADS = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sign', 'Heaviside', 'Divides', 'NotDivides', 'Lb', 'Lg', 'And', 'Or', 'Not', 'Xor', 'Nand', 'Nor', 'Implies', 'Equivalent', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>
@@ -80,7 +81,7 @@ let ceP: Promise<CEInstance> | null = null
  *  pays for the (sizable) compute-engine bundle. `precision` only governs FLOAT fallback rendering; exactness
  *  itself comes from the bignum/exact-rational kernel underneath and holds regardless of this setting — set high
  *  enough that it is never the thing limiting how large an exact integer this engine can carry. */
-export async function ceInstance(): Promise<CEInstance> {
+export async function computeEngineInstance(): Promise<CEInstance> {
   if (!ceP) ceP = Promise.all([
     import('@cortex-js/compute-engine'),
     import('@enumeratio/compute-engine'),
@@ -110,7 +111,7 @@ const ceImplRow = (label: string): ImplRow => ({
   representation: 'text', cost: null, note: null,
 })
 
-export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean; symbolicLatex?: boolean } = {}): Engine {
+export function computeEngineScalar(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean; symbolicLatex?: boolean } = {}): Engine {
   const exactRationals = factoryOpts.exactRationals ?? false
   // numericFallback: instead of declining a result that isn't an exact integer/rational (an irrational or symbolic
   // CE value like √2 or ⅙π²), render its floating-point approximation (`N`). The notebook sets this so CE-native
@@ -274,7 +275,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
       const cols = expr.select.map((c, i) => ({ id: labelOfExpr(c, i), kind: 'stat' as const }))
 
       const rowP = (async (): Promise<Row> => {
-        const ce = await ceInstance()
+        const ce = await computeEngineInstance()
         const row: Row = {}
         for (const [i, c] of expr.select.entries()) {
           const boxed = toCE(ce, c)

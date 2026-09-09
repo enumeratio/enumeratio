@@ -1,9 +1,9 @@
-// ce-enum-engine — the ENUMERATOR half of the compute-engine seam. Where `ceEngine` (ce-engine.ts) claims
-// FROM-less SCALAR trees (factorial, binomial, arithmetic), this engine claims the notebook's ENUMERATION
-// primitives — `unrank`/`locate`/`rank`/`next`/`prev`/`random_element`/`cardinality` over a collection HANDLE —
-// and answers them by driving `@enumeratio/compute-engine`'s own CollectionHandlers on the shared, enumeratio-aware
-// CE instance (the same one ce-engine.ts memoizes). It is what lets the notebook run PURE CE: no pg round-trip,
-// the O(1) `at`/`Rank` the library already carries IS the enumerator.
+// compute-engine-enumerator — the ENUMERATOR half of the compute-engine seam. Where `computeEngineScalar`
+// (compute-engine-scalar.ts) claims FROM-less SCALAR trees (factorial, binomial, arithmetic), this engine claims
+// the notebook's ENUMERATION primitives — `unrank`/`locate`/`rank`/`next`/`prev`/`random_element`/`cardinality`
+// over a collection HANDLE — and answers them by driving `@enumeratio/compute-engine`'s own CollectionHandlers on
+// the shared, enumeratio-aware CE instance (the same one compute-engine-scalar.ts memoizes). It is what lets the
+// notebook run PURE CE: no pg round-trip, the O(1) `at`/`Rank` the library already carries IS the enumerator.
 //
 // The mapping is direct (all indices: our IR `rank` is 0-based, CE `At`/`Rank` are 1-based):
 //   handle(coll(p…))          → the CE collection expr  ['<Head>', …p]
@@ -15,43 +15,30 @@
 //   cardinality(handle)       → Length(coll)
 //   bell(n) / binomial(n,k) / … + arithmetic ops → the scalar heads (KERNEL_OPS ∪ the counting sequences)
 //
-// COLL_HEADS is the one place the notebook's collection ids meet the library's Pascal heads. It maps BOTH
-// directions of the impedance: a CE head to itself (so a notebook already sourced from the library binds with no
-// alias), and the snake_case catalog ids that have a certified CE twin. A handle whose coll is NOT in the map is
-// declined (can() is false) — the router then falls through, and a pg-less notebook simply can't enumerate that
-// collection, which is the honest state of a partial port.
-import { ceInstance, KERNEL_OPS } from './ce-engine'
+// The twin lookup is the one place the notebook's collection ids meet the library's Pascal heads. Two sources,
+// merged by `twinOf` below: `base_compute_engine_twin` in the catalog (the snake_case catalog ids that have a
+// certified CE twin — reached via `Registry.collection(id)?.computeEngineTwin`), and LIBRARY_TWIN (this file) for
+// a notebook sourced straight from the library, whose Pascal heads are the library's own vocabulary, not a catalog
+// fact. A handle whose coll resolves to neither is declined (can() is false) — the router then falls through, and
+// a pg-less notebook simply can't enumerate that collection, which is the honest state of a partial port.
+import { computeEngineInstance, KERNEL_OPS } from './compute-engine-scalar'
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import { handleColl, type Expr, type HandleExpr, type SelectExpr } from './ir'
 import { labelOfExpr } from './engine-util'
 import type { Row } from './core'
+import type { Registry } from './registry'
 
-/** catalog / library collection id → { CE head, param arity }. Identity rows let a notebook sourced straight from
- *  the library bind without an alias; the snake_case rows are the certified catalog twins (mirrors the engine
- *  package's own sql-target `SQL_COLLECTION`, the other direction of the same correspondence). Extend as more
- *  catalog collections earn a CE twin. */
-export const COLL_HEADS: Record<string, { head: string; arity: number }> = {
-  // ── library heads, identity (a notebook sourced from @enumeratio/compute-engine) ──
-  SymmetricGroup: { head: 'SymmetricGroup', arity: 1 },
-  IntegerCompositions: { head: 'IntegerCompositions', arity: 1 },
-  IntegerPartitions: { head: 'IntegerPartitions', arity: 1 },
-  PartitionsIntoKParts: { head: 'PartitionsIntoKParts', arity: 2 },
-  SetPartitions: { head: 'SetPartitions', arity: 1 },
-  SetPartitionsIntoKBlocks: { head: 'SetPartitionsIntoKBlocks', arity: 2 },
-  SetCompositions: { head: 'SetCompositions', arity: 1 },
-  Subsets: { head: 'Subsets', arity: 1 },
-  KSubsets: { head: 'KSubsets', arity: 2 },
-  DyckPaths: { head: 'DyckPaths', arity: 1 },
-  // ── snake_case catalog ids with a certified CE twin ──
-  permutations: { head: 'SymmetricGroup', arity: 1 },
-  integer_compositions: { head: 'IntegerCompositions', arity: 1 },
-  integer_partitions: { head: 'IntegerPartitions', arity: 1 },
-  set_partitions: { head: 'SetPartitions', arity: 1 },
-  set_compositions: { head: 'SetCompositions', arity: 1 },
-  subsets: { head: 'Subsets', arity: 1 },
-  k_subsets: { head: 'KSubsets', arity: 2 },
-  dyck_paths: { head: 'DyckPaths', arity: 1 },
+/** Identity rows for a notebook sourced straight from @enumeratio/compute-engine — library vocabulary, legitimately
+ *  client-side (the catalog only owns the snake catalog-id→twin fact, via `base_compute_engine_twin`). */
+const LIBRARY_TWIN: Record<string, { head: string; arity: number }> = {
+  SymmetricGroup: { head: 'SymmetricGroup', arity: 1 }, IntegerCompositions: { head: 'IntegerCompositions', arity: 1 },
+  IntegerPartitions: { head: 'IntegerPartitions', arity: 1 }, PartitionsIntoKParts: { head: 'PartitionsIntoKParts', arity: 2 },
+  SetPartitions: { head: 'SetPartitions', arity: 1 }, SetPartitionsIntoKBlocks: { head: 'SetPartitionsIntoKBlocks', arity: 2 },
+  SetCompositions: { head: 'SetCompositions', arity: 1 }, Subsets: { head: 'Subsets', arity: 1 },
+  KSubsets: { head: 'KSubsets', arity: 2 }, DyckPaths: { head: 'DyckPaths', arity: 1 },
 }
+
+type TwinOf = (coll: string) => { head: string; arity: number } | undefined
 
 /** scalar function id → CE head. The arithmetic/curated vocabulary ce-engine already maps, plus the counting
  *  sequences the library exposes as operators — so a PURE-CE notebook (pg gone) still computes `bell`/`catalan`
@@ -76,7 +63,7 @@ const CE_LIST_OPS = new Set(['join', 'sort', 'unique', 'sum', 'total', 'min', 'm
  *  its 0-based rank, so an enclosing `rank`/`next`/`prev` reads them off instead of re-deriving. */
 type Trans = { ce: any; coll?: any; rank?: any }
 
-type CE = Awaited<ReturnType<typeof ceInstance>>
+type CE = Awaited<ReturnType<typeof computeEngineInstance>>
 
 function paramsOf(ce: CE, h: HandleExpr): any[] {
   if ('raw' in h) return []
@@ -84,15 +71,15 @@ function paramsOf(ce: CE, h: HandleExpr): any[] {
   return vals.map((v) => (ce as any).number(Number(v)))
 }
 
-function collExpr(ce: CE, h: HandleExpr): any | undefined {
+function collExpr(ce: CE, h: HandleExpr, twin: TwinOf): any | undefined {
   const coll = handleColl(h)
-  const m = coll ? COLL_HEADS[coll] : undefined
+  const m = coll ? twin(coll) : undefined
   if (!m) return undefined
   return (ce as any).function(m.head, paramsOf(ce, h))
 }
 
 /** SelectExpr → CE, recursively. Called only on trees `supports()` has cleared. */
-function translate(ce: CE, e: SelectExpr): Trans {
+function translate(ce: CE, e: SelectExpr, twin: TwinOf): Trans {
   const fn = (name: string, args: any[]) => (ce as any).function(name, args)
   const num = (x: any) => (ce as any).number(x)
   switch (e.kind) {
@@ -102,53 +89,53 @@ function translate(ce: CE, e: SelectExpr): Trans {
       return { ce: num(typeof v === 'bigint' ? v : Number(v)) }
     }
     case 'handle': {
-      const c = collExpr(ce, e.handle)
+      const c = collExpr(ce, e.handle, twin)
       return { ce: c, coll: c }
     }
     case 'cast':
-      return translate(ce, e.expr) // the element already carries its value; the carrier cast is a no-op here
+      return translate(ce, e.expr, twin) // the element already carries its value; the carrier cast is a no-op here
     case 'op':
-      return { ce: fn(KERNEL_OPS[e.op], e.args.map((a) => translate(ce, a).ce)) }
+      return { ce: fn(KERNEL_OPS[e.op], e.args.map((a) => translate(ce, a, twin).ce)) }
     case 'apply': {
       const id = String(e.fn)
       if (id === 'unrank') {
-        const h = translate(ce, e.args[0])
-        const r = translate(ce, e.args[1]).ce
+        const h = translate(ce, e.args[0], twin)
+        const r = translate(ce, e.args[1], twin).ce
         return { ce: fn('At', [h.coll, fn('Add', [r, num(1)])]), coll: h.coll, rank: r }
       }
       if (id === 'locate') {
-        const h = translate(ce, e.args[0])
-        const v = translate(ce, e.args[1]).ce
+        const h = translate(ce, e.args[0], twin)
+        const v = translate(ce, e.args[1], twin).ce
         return { ce: v, coll: h.coll, rank: fn('Subtract', [fn('Rank', [h.coll, v]), num(1)]) }
       }
       if (id === 'rank') {
-        const x = translate(ce, e.args[0])
+        const x = translate(ce, e.args[0], twin)
         return { ce: x.rank ?? fn('Subtract', [fn('Rank', [x.coll, x.ce]), num(1)]) }
       }
       if (id === 'next' || id === 'prev') {
-        const x = translate(ce, e.args[0])
+        const x = translate(ce, e.args[0], twin)
         const step = id === 'next' ? 1 : -1
         const rank = fn('Add', [x.rank, num(step)])
         return { ce: fn('At', [x.coll, fn('Add', [rank, num(1)])]), coll: x.coll, rank }
       }
-      if (id === 'random_element') return { ce: fn('RandomElement', [translate(ce, e.args[0]).coll]) }
-      if (id === 'cardinality' || id === 'count') return { ce: fn('Length', [translate(ce, e.args[0]).coll]) }
+      if (id === 'random_element') return { ce: fn('RandomElement', [translate(ce, e.args[0], twin).coll]) }
+      if (id === 'cardinality' || id === 'count') return { ce: fn('Length', [translate(ce, e.args[0], twin).coll]) }
       // CE's own RandomShuffle — over a collection view (pass its handle so CE iterates our CollectionHandlers) or
       // a plain list. Our library adds the Set-noop + seeded-RNG wiring; the head is CE's, not a bespoke one.
-      if (id === 'random_shuffle') { const h = translate(ce, e.args[0]); return { ce: fn('RandomShuffle', [h.coll ?? h.ce]) } }
+      if (id === 'random_shuffle') { const h = translate(ce, e.args[0], twin); return { ce: fn('RandomShuffle', [h.coll ?? h.ce]) } }
       if (id === 'random_sample') {
-        const h = translate(ce, e.args[0])
-        return { ce: fn('RandomSample', [h.coll, translate(ce, e.args[1]).ce]) }
+        const h = translate(ce, e.args[0], twin)
+        return { ce: fn('RandomSample', [h.coll, translate(ce, e.args[1], twin).ce]) }
       }
       // `total` (Desmos's list-sum name) is our alias for CE's `Sum` over a list.
-      if (id === 'total') return { ce: fn('Sum', e.args.map((a) => translate(ce, a).ce)) }
+      if (id === 'total') return { ce: fn('Sum', e.args.map((a) => translate(ce, a, twin).ce)) }
       // Join/Sort/Unique come in already-Pascal (CE canonicalized them); sum/min/max/… stay lowercase — capitalize
       // to the CE operator either way, then pass through for CE to evaluate.
-      if (CE_LIST_OPS.has(id)) return { ce: fn(id[0].toUpperCase() + id.slice(1), e.args.map((a) => translate(ce, a).ce)) }
+      if (CE_LIST_OPS.has(id)) return { ce: fn(id[0].toUpperCase() + id.slice(1), e.args.map((a) => translate(ce, a, twin).ce)) }
       // A `List` apply (from a `for` comprehension's unroll) → a CE List of the translated element expressions.
-      if (id === 'List') return { ce: fn('List', e.args.map((a) => translate(ce, a).ce)) }
+      if (id === 'List') return { ce: fn('List', e.args.map((a) => translate(ce, a, twin).ce)) }
       // a scalar identity (bell, binomial, gcd, …)
-      return { ce: fn(SCALAR_FN[id], e.args.map((a) => translate(ce, a).ce)) }
+      return { ce: fn(SCALAR_FN[id], e.args.map((a) => translate(ce, a, twin).ce)) }
     }
     default:
       throw new Error(`ce-enum: cannot translate a ${e.kind} node`)
@@ -158,7 +145,7 @@ function translate(ce: CE, e: SelectExpr): Trans {
 /** The first reason a select column is NOT a CE-enumerable tree, or undefined. Also reports (via the returned
  *  `usesColl` out-param through the closure) whether the tree actually touches a handle/enum-prim — a pure scalar
  *  belongs to ce-engine/ts-engine, not here. */
-function rejectTree(e: SelectExpr, seen: { coll: boolean }): string | undefined {
+function rejectTree(e: SelectExpr, seen: { coll: boolean }, twin: TwinOf): string | undefined {
   switch (e.kind) {
     case 'lit':
       // A LIST literal (`[3,4,2]`) is ours to evaluate too — translate builds a CE List. A scalar literal alone is
@@ -169,21 +156,21 @@ function rejectTree(e: SelectExpr, seen: { coll: boolean }): string | undefined 
       seen.coll = true
       const coll = handleColl(e.handle)
       if (!coll) return 'ce-enum cannot enumerate a raw handle'
-      if (!COLL_HEADS[coll]) return `ce-enum has no CE twin for "${coll}"`
+      if (!twin(coll)) return `ce-enum has no CE twin for "${coll}"`
       return undefined
     }
     case 'cast':
-      return rejectTree(e.expr, seen)
+      return rejectTree(e.expr, seen, twin)
     case 'op': {
       if (!KERNEL_OPS[e.op]) return `ce-enum has no operator for "${e.op}"`
-      for (const a of e.args) { const bad = rejectTree(a, seen); if (bad) return bad }
+      for (const a of e.args) { const bad = rejectTree(a, seen, twin); if (bad) return bad }
       return undefined
     }
     case 'apply': {
       const id = String(e.fn)
       if (id === 'List' || ENUM_PRIMS.has(id) || CE_LIST_OPS.has(id)) seen.coll = true
       else if (!SCALAR_FN[id]) return `ce-enum has no operator for "${id}"`
-      for (const a of e.args) { const bad = rejectTree(a, seen); if (bad) return bad }
+      for (const a of e.args) { const bad = rejectTree(a, seen, twin); if (bad) return bad }
       return undefined
     }
     default:
@@ -207,12 +194,14 @@ function render(result: any): string {
   return ''
 }
 
-export function ceEnumEngine(): Engine {
+export function computeEngineEnumerator(reg: Registry): Engine {
+  const twin: TwinOf = (coll) => reg.collection(coll)?.computeEngineTwin ?? LIBRARY_TWIN[coll]
+
   function reject(expr: Expr): string | undefined {
     if (expr.from) return 'ce-enum is a scalar/element engine — the row half (FROM) is pg/ts territory'
     if (!expr.select.length) return 'an expression with no columns denotes nothing'
     const seen = { coll: false }
-    for (const col of expr.select) { const bad = rejectTree(col, seen); if (bad) return bad }
+    for (const col of expr.select) { const bad = rejectTree(col, seen, twin); if (bad) return bad }
     if (!seen.coll) return 'no handle or enumeration primitive — a pure scalar belongs to ce/ts'
     return undefined
   }
@@ -228,10 +217,10 @@ export function ceEnumEngine(): Engine {
       const cols = expr.select.map((c, i) => ({ id: labelOfExpr(c, i), kind: 'stat' as const }))
 
       const rowP = (async (): Promise<Row> => {
-        const ce = await ceInstance()
+        const ce = await computeEngineInstance()
         const row: Row = {}
         for (const [i, c] of expr.select.entries()) {
-          const boxed = translate(ce, c).ce
+          const boxed = translate(ce, c, twin).ce
           const result = await boxed.evaluateAsync({ signal: opts.signal })
           row[cols[i].id] = render(result)
         }
