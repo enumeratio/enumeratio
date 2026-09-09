@@ -29,7 +29,7 @@ $\operatorname{Rank}(\operatorname{ColoredPermutations}(2,\ 2),\ [[1,2],[1,0]]) 
 
 ## See also
 
-[`Permutations`](/reference/Permutations) ($k = 1$) · [`SignedPermutations`](/reference/SignedPermutations) ($k = 2$) · `rank` · `unrank` · `cardinality`
+[`Permutations`](/reference/Permutations) ($k = 1$) · [`SignedPermutations`](/reference/SignedPermutations) ($k = 2$) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

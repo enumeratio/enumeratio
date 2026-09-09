@@ -38,7 +38,7 @@ $\operatorname{Count}(\operatorname{DyckPaths}(3)) = \operatorname{CatalanNumber
 
 ## See also
 
-`MotzkinPaths` · `SchroderPaths` · `GrandDyckPaths` · [`CatalanNumber`](/reference/CatalanNumber) · `unrank` · `rank` · `cardinality`
+`MotzkinPaths` · `SchroderPaths` · `GrandDyckPaths` · [`CatalanNumber`](/reference/CatalanNumber) · [`unrank`](/reference/unrank) · [`rank`](/reference/rank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

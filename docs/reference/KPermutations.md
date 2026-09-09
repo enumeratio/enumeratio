@@ -29,7 +29,7 @@ The first six $2$-arrangements of $[4]$ in lex order are $[1, 2], [1, 3], [1, 4]
 
 ## See also
 
-[`Permutations`](/reference/Permutations) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · `rank` · `unrank` · `cardinality`
+[`Permutations`](/reference/Permutations) (the $k = n$ case) · `Tuples` (arrangements *with* repetition) · `Surjections` · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

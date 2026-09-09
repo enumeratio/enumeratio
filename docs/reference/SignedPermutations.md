@@ -30,7 +30,7 @@ $\operatorname{Rank}(\operatorname{SignedPermutations}(2),\ [-1, 2]) = 3$ (0-bas
 
 ## See also
 
-[`Permutations`](/reference/Permutations) (the unsigned $A_{n-1}$ case) · [`ColoredPermutations`](/reference/ColoredPermutations) ($B_n = \mathbb{Z}_2 \wr S_n$, the $k=2$ colored case) · `rank` · `unrank` · `cardinality`
+[`Permutations`](/reference/Permutations) (the unsigned $A_{n-1}$ case) · [`ColoredPermutations`](/reference/ColoredPermutations) ($B_n = \mathbb{Z}_2 \wr S_n$, the $k=2$ colored case) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

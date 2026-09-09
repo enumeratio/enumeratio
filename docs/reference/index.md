@@ -157,6 +157,19 @@ as families migrate.
 
 - [**IntegerPartitions**](/reference/IntegerPartitions) — The collection of integer partitions of $n$ — ways to write $n$ as a sum of positive integers, order disregarded.
 
+### Notebook primitives
+
+- [**rank**](/reference/rank) — The index of an already-located element within its collection — the inverse of `unrank`.
+- [**unrank**](/reference/unrank) — The element at a given index — $O(1)$ to $O(n)$ random access into any collection, no scan.
+- [**random_element**](/reference/random_element) — A uniformly random element of a collection — $O(1)$–$O(n)$ at any size, never enumerates.
+- [**cardinality**](/reference/cardinality) — The size of a collection — $|C|$.
+
+### List operations
+
+- [**join**](/reference/join) — Concatenate lists into one.
+- [**sort**](/reference/sort) — Sort a list into ascending order.
+- [**unique**](/reference/unique) — Remove duplicate elements from a list, preserving first-occurrence order.
+
 <!-- CATALOG:END -->
 
 ### Not yet migrated
