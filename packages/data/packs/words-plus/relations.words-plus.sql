@@ -6,8 +6,8 @@
 -- itself) exist.
 
 INSERT INTO base_example (suite, title, kind, expected, description, sql) VALUES
-  ('relations','the order-iso relation is flagged: binary_words_by_weight ↔ k_subsets is the only is_order_iso row','eq','binary_words_by_weight→k_subsets','is_order_iso holds exactly where declared',$q$
-    SELECT string_agg(domain||'→'||codomain, ',' ORDER BY domain) FROM base_relation WHERE is_order_iso $q$),
+  ('relations','the order-iso relation is flagged: binary_words_by_weight ↔ k_subsets is AMONG the is_order_iso rows (floor, not an exact list — #387 added another)','eq','true','is_order_iso holds at least where declared',$q$
+    SELECT bool_or(domain||'→'||codomain = 'binary_words_by_weight→k_subsets')::text FROM base_relation WHERE is_order_iso $q$),
   -- is_order_iso VERIFIED (window where both sides finite): the flagged relation's forward map is order-preserving —
   -- the k-th element of binary_words_by_weight(n,k) maps to the k-th element of k_subsets(n,k), n=0..6.
   ('relations','is_order_iso verified: the declared order-iso forward map preserves rank order, n=0..6','eq','true','k-th domain element ↦ k-th codomain element',$q$
