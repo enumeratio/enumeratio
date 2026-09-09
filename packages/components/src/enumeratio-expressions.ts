@@ -88,6 +88,11 @@ export class EnumeratioExpressions extends LitElement {
     this.requestUpdate('value', old)
   }
 
+  /** READ-ONLY display mode: lines render non-editable (no math-input editing, no add/remove/reorder/scrub chrome,
+   *  no cell menu) and never mutate — the environment still parses, evaluates, and asserts. For embedding worked
+   *  examples in docs/reference pages. Reflected so `:host([readonly])` styling and the notebook subclass see it. */
+  @property({ type: Boolean, reflect: true }) readonly = false
+
   @state() protected notebook: NotebookCatalog | null = null
   @state() protected displayOrder: LineId[] = []
   @state() private results = new Map<LineId, LineResult>()
@@ -713,6 +718,7 @@ export class EnumeratioExpressions extends LitElement {
   // ── line event handlers ──────────────────────────────────────────────────────────────────────────────────────
 
   private onLineInput = (ev: CustomEvent<{ lineId: LineId; latex: string }>): void => {
+    if (this.readonly) return
     const { lineId, latex } = ev.detail
     this.latexById.set(lineId, latex)
     if (this.lineKinds.get(lineId) === 'comment') {
@@ -737,6 +743,7 @@ export class EnumeratioExpressions extends LitElement {
   }
 
   private onLineCommit = (ev: CustomEvent<{ lineId: LineId }>): void => {
+    if (this.readonly) return
     const id = this.addLine('', ev.detail.lineId)
     this.focusAfterUpdate = id
     this.requestUpdate()
@@ -751,10 +758,12 @@ export class EnumeratioExpressions extends LitElement {
   }
 
   private onLineRemove = (ev: CustomEvent<{ lineId: LineId }>): void => {
+    if (this.readonly) return
     this.removeLine(ev.detail.lineId)
   }
 
   private onLineRun = (ev: CustomEvent<{ lineId: LineId }>): void => {
+    if (this.readonly) return
     void this.runAction(ev.detail.lineId)
   }
 
@@ -774,6 +783,7 @@ export class EnumeratioExpressions extends LitElement {
   /** Drag: rewrite the define's source to the scrubbed value and recompute (debounced) so downstream cells follow
    *  live. Rewriting the line keeps the scrubber inside the pure recompute+undo model, like actions do. */
   private onLineScrub = (ev: CustomEvent<{ lineId: LineId; value: number }>): void => {
+    if (this.readonly) return
     const { lineId, value } = ev.detail
     const name = this.graph.lines().find((m) => m.id === lineId)?.defines
     if (!name || !this.parser) return
@@ -786,6 +796,7 @@ export class EnumeratioExpressions extends LitElement {
   }
 
   private onLineScrubBounds = (ev: CustomEvent<{ lineId: LineId; min: number; max: number }>): void => {
+    if (this.readonly) return
     const { lineId, min, max } = ev.detail
     const step = this.scrubBounds.get(lineId)?.step ?? (Number.isInteger(min) && Number.isInteger(max) ? 1 : 0.1)
     this.scrubBounds.set(lineId, { min, max, step })
@@ -807,6 +818,7 @@ export class EnumeratioExpressions extends LitElement {
   /** A per-cell menu action from a line (its right-click menu or gutter config icon), routed to the matching op —
    *  the line names the target, so it acts on the clicked cell whether or not it's the active one. */
   private onLineAction = (ev: CustomEvent<{ lineId: LineId; action: 'N' | 'hold' | 'duplicate' | 'clear' }>): void => {
+    if (this.readonly) return
     const { lineId, action } = ev.detail
     if (action === 'N' || action === 'hold') this.setLineMode(lineId, action)
     else this.menuAction(lineId, action)
@@ -839,6 +851,7 @@ export class EnumeratioExpressions extends LitElement {
   }
 
   private onLineReorder = (ev: CustomEvent<{ sourceId: LineId; targetId: LineId; position?: 'above' | 'below' }>): void => {
+    if (this.readonly) return
     const { sourceId, targetId, position = 'above' } = ev.detail
     const from = this.displayOrder.indexOf(sourceId)
     if (from === -1 || sourceId === targetId) return
@@ -900,6 +913,7 @@ export class EnumeratioExpressions extends LitElement {
               .latex=${this.latexById.get(id) ?? ''}
               .completer=${completer}
               .classify=${this.classify}
+              .readonly=${this.readonly}
               .active=${this.activeLineId === id}
               .mode=${this.lineModes.get(id) ?? ''}
               .kind=${this.lineKinds.get(id) ?? 'math'}

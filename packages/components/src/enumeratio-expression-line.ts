@@ -84,6 +84,9 @@ export class EnumeratioExpressionLine extends LitElement {
   @property({ type: String }) kind: 'math' | 'comment' = 'math'
   /** Whether Delete is allowed — false for the notebook's last remaining line (nothing to fall back to). */
   @property({ type: Boolean }) canDelete = true
+  /** READ-ONLY row: non-editable math-input, no edit chrome (⋯/✕), no drag handle, no cell menu. The value/result
+   *  and its ✓/✗ assert still render. Set by a read-only `<enumeratio-expressions>` for docs/reference examples. */
+  @property({ type: Boolean }) readonly = false
 
   /** A comment cell is either being edited (raw markdown in a textarea) or rendered (KaTeX/markdown HTML). Empty
    *  comments always show the editor so there's somewhere to type. */
@@ -152,6 +155,7 @@ export class EnumeratioExpressionLine extends LitElement {
   }
 
   private onKeydownCapture = (ev: KeyboardEvent): void => {
+    if (this.readonly) return
     if (ev.key === 'Backspace' && this.latex === '') {
       this.emit('line-remove', { lineId: this.lineId })
     }
@@ -169,6 +173,7 @@ export class EnumeratioExpressionLine extends LitElement {
   }
   private closeMenu = (): void => { this.menuPos = null }
   private onContextMenu = (ev: MouseEvent): void => {
+    if (this.readonly) return // no cell menu in a read-only row — let the browser's own context menu through
     ev.preventDefault()
     this.openMenuAt(ev.clientX, ev.clientY)
   }
@@ -266,8 +271,9 @@ export class EnumeratioExpressionLine extends LitElement {
     const isComment = this.kind === 'comment'
     const errVisible = this.showError && !!s.error && this.latex.trim() !== ''
     const hasValue = !errVisible && !s.busy && (s.value != null || s.valueTex != null)
-    // A comment shows its editor while it's being edited, or whenever it's empty (so there's somewhere to type).
-    const showEditor = this.editing || this.latex.trim() === ''
+    // A comment shows its editor while it's being edited, or whenever it's empty (so there's somewhere to type) —
+    // never in a read-only row, where prose always shows rendered.
+    const showEditor = !this.readonly && (this.editing || this.latex.trim() === '')
     // The meta slot shows the error (when there is one) in place of the type — the natural home for a parse/bind
     // failure, right where the type would otherwise sit.
     const lineClass = `line${this.active ? ' active' : ''}${this.dragging ? ' dragging' : ''}${this.dropEdge ? ` drop-${this.dropEdge}` : ''}${isComment ? ' comment-cell' : ''}`
@@ -276,21 +282,23 @@ export class EnumeratioExpressionLine extends LitElement {
            @focusin=${() => this.emit('line-focus', { lineId: this.lineId })}
            @dragover=${this.onDragOver} @dragleave=${this.onDragLeave} @drop=${this.onDrop}>
         <div class="gutter">
-          <span class="rownum ${isComment ? 'dragonly' : ''}" draggable="true"
+          <span class="rownum ${isComment ? 'dragonly' : ''}" draggable=${this.readonly ? 'false' : 'true'}
                 @dragstart=${this.onDragStart} @dragend=${this.onDragEnd}
-                title="drag to reorder">${isComment ? '' : this.index}</span>
-          ${!isComment && s.action
+                title=${this.readonly ? '' : 'drag to reorder'}>${isComment ? '' : this.index}</span>
+          ${!isComment && s.action && !this.readonly
             ? html`<button class="rowbtn" @mousedown=${(e: MouseEvent) => e.preventDefault()}
                       @click=${() => this.emit('line-run', { lineId: this.lineId })}
                       title="run this action" aria-label="run this action">→</button>`
             : ''}
-          <div class="chrome">
+          ${this.readonly
+            ? ''
+            : html`<div class="chrome">
             <button class="rowbtn cfg" @mousedown=${(e: MouseEvent) => e.preventDefault()}
                     @click=${this.onConfigClick} title="cell options" aria-label="cell options">⋯</button>
             <button class="rowbtn del" @mousedown=${(e: MouseEvent) => e.preventDefault()}
                     @click=${this.onDelete} ?disabled=${!this.canDelete}
                     title="delete cell" aria-label="delete cell">✕</button>
-          </div>
+          </div>`}
         </div>
         <div class="body">
           ${isComment
@@ -307,8 +315,9 @@ export class EnumeratioExpressionLine extends LitElement {
               <div class="field">
                 <enumeratio-math-input
                   .latex=${this.latex}
-                  .completer=${this.completer}
+                  .completer=${this.readonly ? null : this.completer}
                   .classify=${this.classify}
+                  ?readonly=${this.readonly}
                   @enumeratio-input=${this.onInput}
                   @enumeratio-commit=${this.onCommit}
                   @enumeratio-move=${this.onMove}

@@ -146,6 +146,7 @@ export class EnumeratioNotebook extends EnumeratioExpressions {
 
   // ── chrome (base hook) ───────────────────────────────────────────────────────────────────────────────────────
   protected renderChrome(): TemplateResult {
+    if (this.readonly) return html`` // a read-only notebook shows the lines only — no add/undo/ticker/keyboard toolbar
     return html`
       <div class="toolbar">
         <div class="tools-left">
