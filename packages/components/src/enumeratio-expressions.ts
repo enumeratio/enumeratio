@@ -36,7 +36,7 @@ export type LineMode = 'N' | 'hold'
  *  prose (markdown + inline `$…$`) that never touches the math pipeline. */
 export type LineKind = 'comment'
 export type ScrubBounds = { min: number; max: number; step: number }
-export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode; kind?: LineKind; scrub?: ScrubBounds }[] }
+export type NotebookSeed = { lines: { id?: string; latex: string; mode?: LineMode; kind?: LineKind; scrub?: ScrubBounds; expect?: string }[] }
 
 type LineResult = LineState
 
@@ -77,7 +77,8 @@ export class EnumeratioExpressions extends LitElement {
         const mode = this.lineModes.get(id)
         const kind = this.lineKinds.get(id)
         const scrub = this.scrubBounds.get(id)
-        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}), ...(kind ? { kind } : {}), ...(scrub ? { scrub } : {}) }
+        const expect = this.expectById.get(id)
+        return { id, latex: this.latexById.get(id) ?? '', ...(mode ? { mode } : {}), ...(kind ? { kind } : {}), ...(scrub ? { scrub } : {}), ...(expect !== undefined ? { expect } : {}) }
       }),
     } satisfies NotebookSeed)
   }
@@ -102,6 +103,9 @@ export class EnumeratioExpressions extends LitElement {
   private scrubBounds = new Map<LineId, { min: number; max: number; step: number }>()
   /** Per-line collection-preview element count (grows on "pull more"). */
   private previewCounts = new Map<LineId, number>()
+  /** Per-line EXPECTED value — a reference-page example seeds this to make the line an asserted input. The rendered
+   *  value is compared against it (see `setResult`) and the line shows a ✓/✗. Absent = an ordinary (unchecked) line. */
+  private expectById = new Map<LineId, string>()
   private readonly graph = new LineGraph()
   private parser: ExpressionParser | null = null
   private scope: Scope = new Map()
@@ -184,6 +188,7 @@ export class EnumeratioExpressions extends LitElement {
     this.lineModes.delete(id)
     this.lineKinds.delete(id)
     this.scrubBounds.delete(id)
+    this.expectById.delete(id)
     const removed = this.graph.lines().find((m) => m.id === id)
     if (removed?.defines) {
       if (removed.bindKind === 'declare') { this.declared.delete(removed.defines); this.scope.delete(removed.defines) }
@@ -288,6 +293,7 @@ export class EnumeratioExpressions extends LitElement {
     this.lineModes.clear()
     this.lineKinds.clear()
     this.scrubBounds.clear()
+    this.expectById.clear()
     this.scope = new Map()
     this.declared.clear()
     this.results = new Map()
@@ -299,6 +305,7 @@ export class EnumeratioExpressions extends LitElement {
       if (l.mode) this.lineModes.set(id, l.mode)
       if (l.kind) this.lineKinds.set(id, l.kind)
       if (l.scrub) this.scrubBounds.set(id, l.scrub)
+      if (l.expect !== undefined) this.expectById.set(id, l.expect)
       order.push(id)
       if (l.kind !== 'comment') { this.graph.set(id, l.latex, this.parser); dirty.add(id) }
     }
@@ -469,6 +476,7 @@ export class EnumeratioExpressions extends LitElement {
       if (l.mode) this.lineModes.set(id, l.mode)
       if (l.kind) this.lineKinds.set(id, l.kind)
       if (l.scrub) this.scrubBounds.set(id, l.scrub)
+      if (l.expect !== undefined) this.expectById.set(id, l.expect)
       this.displayOrder.push(id)
     }
   }
@@ -547,7 +555,21 @@ export class EnumeratioExpressions extends LitElement {
 
   private setResult(id: LineId, patch: LineResult): void {
     const ast = this.lineAst.get(id)
-    this.results.set(id, ast ? { ...patch, ast } : patch)
+    let next: LineResult = ast ? { ...patch, ast } : patch
+    // An asserted line (a reference example carrying `expect`) gets its rendered value compared here — one place,
+    // so it covers the value / located-element / collection-preview paths alike. Only a settled result counts
+    // (skip busy / action / comment / held); an error against an expectation is a fail.
+    const expect = this.expectById.get(id)
+    if (expect !== undefined && !next.busy && !next.action && next.comment == null && !next.held) {
+      const got = next.error != null ? null : (next.value ?? next.valueTex ?? null)
+      if (got != null || next.error != null) {
+        // Whitespace-insensitive: the build-computed expectation formats lists as `[1, 2, 3]` while the engine
+        // renders `[1,2,3]` — the values are equal, only the spacing differs, so normalize both before comparing.
+        const norm = (s: string) => s.replace(/\s+/g, '')
+        next = { ...next, assert: { status: got != null && norm(got) === norm(expect) ? 'pass' : 'fail', expect } }
+      }
+    }
+    this.results.set(id, next)
   }
 
   private async evalLine(id: LineId, models: Map<LineId, LineModel>): Promise<void> {

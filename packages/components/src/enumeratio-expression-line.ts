@@ -62,6 +62,9 @@ export type LineState = {
   /** This cell defines a free numeric parameter (`n = 3`) — show a Desmos-style scrubber below it. `value` is the
    *  current setting; `min`/`max`/`step` bound the slider. Dragging live-rewrites the define. */
   scrub?: { value: number; min: number; max: number; step: number }
+  /** This line is an ASSERTED input (a reference-page example carrying an expected value): the owner compared the
+   *  rendered value to `expect` and set `status`. `pass` shows a quiet ✓; `fail` lights up with expected-vs-got. */
+  assert?: { status: 'pass' | 'fail'; expect: string }
 }
 
 const ERROR_SHOW_DELAY_MS = 350
@@ -330,6 +333,11 @@ export class EnumeratioExpressionLine extends LitElement {
                                 title="pull more elements">…</button>`
                       : ''}`
                   : ''}
+                ${s.assert
+                  ? s.assert.status === 'pass'
+                    ? html`<span class="assert pass" title="matches the expected value">✓</span>`
+                    : html`<span class="assert fail" title="does not match the expected value">✗ <span class="exp">expected ${s.assert.expect}</span></span>`
+                  : ''}
               </div>
               ${errVisible ? html`<div class="error">${s.error}</div>` : ''}
               ${s.scrub
@@ -380,6 +388,10 @@ export class EnumeratioExpressionLine extends LitElement {
       font-family: ui-monospace, SFMono-Regular, monospace;
     }
     .value .tex { font-weight: 400; }
+    .assert { margin-left: 0.5rem; font-size: 0.9em; }
+    .assert.pass { color: var(--p-green-500, #16a34a); }
+    .assert.fail { color: var(--p-red-500, #dc2626); }
+    .assert .exp { color: var(--enumeratio-muted, var(--p-text-muted-color, currentColor)); font-size: 0.9em; }
     .line {
       position: relative;
       display: flex;
