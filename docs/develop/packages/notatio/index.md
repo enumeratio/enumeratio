@@ -75,6 +75,17 @@ no pg to be bit-identical to, so it keeps the exact value.
 | `\sqrt[n]{x}` | evaluates | `\sqrt[3]{27}` → `3` |
 | `x_2` (subscript) | **parses as one symbol**, unknown unless in scope | `x_2` → `unknown symbol "x_2"` (subscripts name a variable, they aren't indexing) |
 
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"\\binom{6}{2}","expect":"15"},
+  {"latex":"\\sqrt{9}","expect":"3"},
+  {"latex":"\\sqrt{2}"},
+  {"latex":"\\frac{22}{7}","expect":"22/7"}
+]}'></enumeratio-expressions>
+</ClientOnly>
+
+The third line shows the exact-symbolic render (`√2` stays `√2`, not a decimal); the rest self-check.
+
 ## Absolute value, floor, ceiling
 
 | You type | Notatio | Example → result |
@@ -86,6 +97,14 @@ no pg to be bit-identical to, so it keeps the exact value.
 
 `|…|` is deliberately overloaded: over a scalar it is `Abs`, over a collection it is the size. This is why `Abs`
 is the one CE head we *don't* curate generically — the bar has to be free to mean cardinality.
+
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"|{-5}|","expect":"5"},
+  {"latex":"\\lfloor 3.7\\rfloor","expect":"3"},
+  {"latex":"\\lceil 3.2\\rceil","expect":"4"}
+]}'></enumeratio-expressions>
+</ClientOnly>
 
 ## Functions
 
