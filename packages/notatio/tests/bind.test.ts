@@ -199,6 +199,14 @@ describe('bind: errors', () => {
     }
   })
 
+  it('logic operators over boolean operands bind BOOLEAN', () => {
+    for (const latex of ['(3<5)\\land(2<4)', '(3<5)\\lor(6<4)', '\\lnot(3<5)', '(3<5)\\implies(6<4)']) {
+      const bound = bind(parser.parse(latex), new Map(), catalog)
+      expect(bound.errors, latex).toEqual([])
+      expect(bound.type, latex).toEqual({ k: 'scalar', pg: 'boolean' })
+    }
+  })
+
   it('scalar |x| is absolute value (numeric)', () => {
     expect(bind(parser.parse('|-5|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })
     expect(bind(parser.parse('|3-10|'), new Map(), catalog).type).toEqual({ k: 'scalar', pg: 'numeric' })

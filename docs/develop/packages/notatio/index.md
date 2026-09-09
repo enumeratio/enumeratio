@@ -207,19 +207,22 @@ shadows the constant, and a variable named `\varphi` is yours.
 | `\le` `<` `\ge` `>` `=` `\ne` | evaluates (boolean) | `3\le5` → `true`, `3\ne4` → `true` |
 | `x \in C` (as an expression) | evaluates (membership boolean) | over a catalog collection |
 | `\mid` `\nmid` (divides) | evaluates (boolean) | `3\mid12` → `true`, `3\nmid13` → `true` (heads `Divides`/`NotDivides`) |
-| `\land` `\lor` `\lnot` | **not supported** | `And`/`Or`/`Not` need a boolean-typed binder |
-| `\forall` `\exists` `\implies` `\iff` | **not supported** | quantifiers/implication don't bind |
+| `\land` `\lor` `\lnot` `\veebar` `\barwedge` `\implies` `\iff` | evaluates (boolean) over boolean operands | `(3<5)\land(2<4)` → `true`, `\lnot(3<5)` → `false` |
+| `\mathrm{True}` `\mathrm{False}` (bare literals) | **not supported** | parse to unknown symbols — logic works over *predicates*, not bare literals, for now |
+| `\forall` `\exists` | **not supported** | quantifiers bind a variable — no binder yet |
 
 Comparisons swap operands the way CE does (`3>5` parses to `Less(5,3)`); the result is always a boolean over pure
-scalars. `\mid`/`\nmid` are boolean too, typed `∈ 𝔹`. The logic family (`\land`/`\forall`/…) is still a gap — it
-waits on the binder typing boolean over non-scalar operands.
+scalars. `\mid`/`\nmid` and the logic connectives are boolean too, typed `∈ 𝔹`, and compose over any
+boolean-producing operand (a comparison, `\mid`, `\in`). Still gaps: bare `True`/`False` literals (they parse to
+unknown symbols) and the quantifiers `\forall`/`\exists` (they bind a variable).
 
 <ClientOnly>
 <enumeratio-expressions readonly value='{"lines":[
-  {"latex":"3\\le5","expect":"true"},
-  {"latex":"3\\ne4","expect":"true"},
   {"latex":"3\\mid12","expect":"true"},
-  {"latex":"3\\nmid13","expect":"true"}
+  {"latex":"(3<5)\\land(2<4)","expect":"true"},
+  {"latex":"(3<5)\\lor(6<4)","expect":"true"},
+  {"latex":"\\lnot(3<5)","expect":"false"},
+  {"latex":"(3<5)\\implies(6<4)","expect":"false"}
 ]}'></enumeratio-expressions>
 </ClientOnly>
 
