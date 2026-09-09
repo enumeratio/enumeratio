@@ -57,8 +57,34 @@ export const NODES: NodeDoc[] = [
     },
     seeAlso: [
       { head: "KPermutations" }, { head: "SignedPermutations" }, { head: "ColoredPermutations" },
-      { head: "Derangements" }, { head: "Involutions" }, { head: "rank" }, { head: "unrank" },
-      { head: "random_element" }, { head: "cardinality" },
+      { head: "Derangements" }, { head: "Involutions" }, { head: "SymmetricGroup", note: "same set, cycle notation, Coxeter-length order" },
+      { head: "rank" }, { head: "unrank" }, { head: "random_element" }, { head: "cardinality" },
+    ],
+  },
+  {
+    head: "SymmetricGroup",
+    catalogId: "symmetric_group",
+    family: "Permutations & permutation classes",
+    kind: "collection",
+    tagline: "Permutations of $\\{1, \\dots, n\\}$ READ AS A GROUP: disjoint cycle notation, ordered by Coxeter length — a sibling of [`Permutations`](/reference/Permutations) over the same $n!$ underlying set.",
+    usage: [
+      { form: "\\operatorname{SymmetricGroup}(n)", meaning: "the collection of all $n!$ permutations of $[n]$, in cycle notation" },
+      { form: "\\operatorname{At}(\\operatorname{SymmetricGroup}(n),\\ i)", meaning: "the permutation at 1-based position $i$ in Coxeter-length order" },
+      { form: "\\operatorname{Rank}(\\operatorname{SymmetricGroup}(n),\\ p)", meaning: "$p$'s 1-based Coxeter-length position" },
+    ],
+    details: [
+      { label: "Arity", body: "1 — a single natural number $n$." },
+      { label: "Element", body: "disjoint cycle notation, e.g. $(1\\ 2\\ 3)(4)$ for $n=4$: cycles in increasing order of their minimal element, each starting at that minimum; fixed points appear as singleton cycles, so the identity of $S_n$ is $n$ singletons." },
+      { label: "Result type", body: "`collection` of cycle-notation permutations, same underlying set as `Permutations`." },
+      { label: "Count", body: "$n!$ — same cardinality as `Permutations` (they share the underlying $n!$-element set)." },
+      { label: "Order", body: "by COXETER LENGTH (the number of inversions of the one-line word), ascending — identity first ($0$), the reversal last ($\\binom{n}{2}$) — tiebreak lexicographic on the one-line word. This is NOT `Permutations`' plain-lex order: `SymmetricGroup` and `Permutations` are a *sibling pair* (a bijective but non-order-isomorphic `base_map`, `packages/data/packs/permutations-plus/cross-collection-maps.permutations-plus.sql`), not order-isomorphic twins like `Permutations`/`LehmerCodes`." },
+      { label: "Random access", body: "a Mahonian-numbers DP: find the inversions block via cumulative counts, then decode the within-block offset as a fixed-digit-sum bounded Lehmer code (`symmetric_group_mahonian_table` / `symmetric_group_unrank_by_coxeter`, `packages/data/packs/permutations-plus/symmetric_group.sql`)." },
+      { label: "Borrowed stat", body: "opts in to `Permutations`' `inversions` stat across the sibling bijection (`base_sibling_borrow`, #409) — by construction it equals the element's own Coxeter length, a self-consistency check exercised in `symmetric_group.sibling_borrow.sql`." },
+      { label: "Notebook status", body: "not yet live-enumerable in the pure-CE notebook: the compute-engine library head `SymmetricGroup` is currently still bound to `Permutations`' lex-order kernel (a pending #406 rename — see `packages/compute-engine/src/packs/core.ts`), so this catalog collection has no `base_compute_engine_twin` yet. Wiring a live TS kernel for cycle-notation/Coxeter order is follow-up work, tracked against that rename." },
+    ],
+    seeAlso: [
+      { head: "Permutations", note: "same underlying set, plain-lex order, one-line notation" },
+      { head: "rank" }, { head: "unrank" }, { head: "cardinality" },
     ],
   },
   {

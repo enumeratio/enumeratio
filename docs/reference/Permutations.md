@@ -43,7 +43,7 @@ The lines of one example share a scope, so a parameter set once carries down —
 
 ## See also
 
-[`KPermutations`](/reference/KPermutations) · [`SignedPermutations`](/reference/SignedPermutations) · [`ColoredPermutations`](/reference/ColoredPermutations) · [`Derangements`](/reference/Derangements) · [`Involutions`](/reference/Involutions) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`random_element`](/reference/random_element) · [`cardinality`](/reference/cardinality)
+[`KPermutations`](/reference/KPermutations) · [`SignedPermutations`](/reference/SignedPermutations) · [`ColoredPermutations`](/reference/ColoredPermutations) · [`Derangements`](/reference/Derangements) · [`Involutions`](/reference/Involutions) · [`SymmetricGroup`](/reference/SymmetricGroup) (same set, cycle notation, Coxeter-length order) · [`rank`](/reference/rank) · [`unrank`](/reference/unrank) · [`random_element`](/reference/random_element) · [`cardinality`](/reference/cardinality)
 
 ## External references
 

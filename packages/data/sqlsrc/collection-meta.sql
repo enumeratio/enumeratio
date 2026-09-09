@@ -153,6 +153,7 @@ INSERT INTO base_collection_meta (collection, title, description) VALUES
   ('affine_permutations',         'Affine Permutations',         'Bijections of ℤ commuting with the shift (affine symmetric group).'),
   ('decorated_permutations',      'Decorated Permutations',      'Permutations with each fixed point signed — positroid cells.'),
   ('lehmer_codes',                'Lehmer Codes',                'Inversion tables encoding permutations (the factoradic digits).'),
+  ('symmetric_group',             'Symmetric Group',             'Permutations read as a group, in disjoint cycle notation — ordered by Coxeter length, a sibling of Permutations.'),
   -- ── lattice paths ───────────────────────────────────────────────────────────────────────────────────────────
   ('dyck_paths',                  'Dyck Paths',                  'Up/down paths staying nonnegative, returning to 0.'),
   ('k_dyck_paths',                'k-ary Dyck Paths',            'Fuss-Catalan lattice paths: n up-steps of rise k−1, prefixes ≥ 0 — C(kn,n)/((k−1)n+1); k-ary trees.'),

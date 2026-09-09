@@ -123,6 +123,7 @@ as families migrate.
 ### Permutations & permutation classes
 
 - [**Permutations**](/reference/Permutations) — The collection of permutations of $\{1, \dots, n\}$, in one-line notation.
+- [**SymmetricGroup**](/reference/SymmetricGroup) — Permutations of $\{1, \dots, n\}$ READ AS A GROUP: disjoint cycle notation, ordered by Coxeter length — a sibling of [`Permutations`](/reference/Permutations) over the same $n!$ underlying set.
 - [**KPermutations**](/reference/KPermutations) — The ordered arrangements of $k$ distinct symbols drawn from $\{1, \dots, n\}$ — injections $[k] \hookrightarrow [n]$.
 - [**SignedPermutations**](/reference/SignedPermutations) — The hyperoctahedral group $B_n$ — permutations of $[n]$ with an independent $\pm$ sign on each entry.
 - [**ColoredPermutations**](/reference/ColoredPermutations) — The wreath product $\mathbb{Z}_k \wr S_n$ — a permutation of $[n]$ with an independent color in $\{0, \dots, k-1\}$ on each position.
