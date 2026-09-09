@@ -34,4 +34,4 @@ It agrees with the [`DyckPaths`](/reference/DyckPaths) collection by constructio
 
 ## See also
 
-[`DyckPaths`](/reference/DyckPaths) · [`BellB`](/reference/BellB) · [`Fubini`](/reference/Fubini) · [`PartitionsP`](/reference/PartitionsP)
+[`DyckPaths`](/reference/DyckPaths) · [`BellNumber`](/reference/BellNumber) · [`FubiniNumber`](/reference/FubiniNumber) · [`PartitionNumber`](/reference/PartitionNumber)

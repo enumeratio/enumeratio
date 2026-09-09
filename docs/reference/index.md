@@ -91,8 +91,8 @@ Bare symbols that denote a catalog set rather than a scope variable (`names.ts`'
 First-class Listable scalar operators the compute-engine library adds (Wolfram has most of these; CE itself has
 none of them).
 
-[`BellB`](/reference/BellB) · [`CatalanNumber`](/reference/CatalanNumber) · [`Fubini`](/reference/Fubini) ·
-[`PartitionsP`](/reference/PartitionsP) · `PartitionsQ` · `Factorial2` (double factorial) · `PolygonalNumber`
+[`BellNumber`](/reference/BellNumber) · [`CatalanNumber`](/reference/CatalanNumber) · [`FubiniNumber`](/reference/FubiniNumber) ·
+[`PartitionNumber`](/reference/PartitionNumber) · `PartitionsQ` · `Factorial2` (double factorial) · `PolygonalNumber`
 
 ## Digit & bitwise functions
 
@@ -140,10 +140,10 @@ as families migrate.
 
 ### Counting sequences
 
-- [**BellB**](/reference/BellB) — The number of ways to partition an $n$-element set into non-empty, unordered blocks.
+- [**BellNumber**](/reference/BellNumber) — The number of ways to partition an $n$-element set into non-empty, unordered blocks.
 - [**CatalanNumber**](/reference/CatalanNumber) — The $n$-th Catalan number, $C_n = \dfrac{1}{n+1}\dbinom{2n}{n}$ — the size of dozens of combinatorial families, Dyck paths among them.
-- [**Fubini**](/reference/Fubini) — The number of ways to partition an $n$-element set into non-empty blocks AND put those blocks in order — the ordered Bell numbers.
-- [**PartitionsP**](/reference/PartitionsP) — $p(n)$ — the number of integer partitions of $n$ (OEIS [A000041](https://oeis.org/A000041)).
+- [**FubiniNumber**](/reference/FubiniNumber) — The number of ways to partition an $n$-element set into non-empty blocks AND put those blocks in order — the ordered Bell numbers.
+- [**PartitionNumber**](/reference/PartitionNumber) — $p(n)$ — the number of integer partitions of $n$ (OEIS [A000041](https://oeis.org/A000041)).
 
 ### Subsets, multisets, tuples & functions
 

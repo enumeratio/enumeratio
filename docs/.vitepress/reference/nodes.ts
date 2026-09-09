@@ -491,13 +491,13 @@ export const NODES: NodeDoc[] = [
   },
   // ═══════════════ Counting sequences ═══════════════
   {
-    head: "BellB",
+    head: "BellNumber",
     family: "Counting sequences",
     kind: "sequence",
     tagline: "The number of ways to partition an $n$-element set into non-empty, unordered blocks.",
     usage: [
-      { form: "\\operatorname{BellB}(n)", meaning: "the $n$-th Bell number, $B_n$" },
-      { form: "\\operatorname{BellB}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+      { form: "\\operatorname{BellNumber}(n)", meaning: "the $n$-th Bell number, $B_n$" },
+      { form: "\\operatorname{BellNumber}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
     ],
     details: [
       { label: "Arity", body: "1 — a natural number $n$." },
@@ -505,7 +505,7 @@ export const NODES: NodeDoc[] = [
       { label: "Implementation", body: "the Bell triangle (`packages/compute-engine/src/kernels-combinatorics.ts`) — each row built from the previous one in $O(n)$ additions, $O(n^2)$ total for $B_0, \\dots, B_n$; not a closed form." },
       { label: "Domain", body: "$n \\geq 0$; $B_0 = 1$ by convention (the empty set has exactly one partition: itself, with zero blocks)." },
       { label: "Counts", body: "the collection `SetPartitions(n)` — $\\operatorname{Count}(\\operatorname{SetPartitions}(n)) = B_n$ by construction (`packages/compute-engine/src/packs/core.ts`)." },
-      { label: "Notebook spelling", body: "this library's own `BellB` id isn't wired into the notebook's expression parser yet — a live line reaches the same sequence via the compute-engine-native `BellNumber(n)` head, or by counting `SetPartitions(n)` directly (both below)." },
+      { label: "Also known as", body: "Wolfram spells this `BellB`; both `BellB(n)` and the compute-engine-native `BellNumber(n)` resolve as aliases." },
     ],
     examples: {
       params: [],
@@ -518,13 +518,13 @@ export const NODES: NodeDoc[] = [
           ],
         },
         {
-          md: "The compute engine's own native spelling for this sequence is `BellNumber` (same recurrence) — $B_6 = 203$:",
+          md: "$B_6 = 203$:",
           lines: [{ latex: "\\operatorname{BellNumber}(6)", expect: "203" }],
         },
       ],
     },
     seeAlso: [
-      { head: "SetPartitions" }, { head: "Fubini", note: "the ordered version" }, { head: "PartitionsP", note: "integer, not set, partitions" },
+      { head: "SetPartitions" }, { head: "FubiniNumber", note: "the ordered version" }, { head: "PartitionNumber", note: "integer, not set, partitions" },
       { head: "CatalanNumber" },
     ],
   },
@@ -561,55 +561,57 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "DyckPaths" }, { head: "BellB" }, { head: "Fubini" }, { head: "PartitionsP" },
+      { head: "DyckPaths" }, { head: "BellNumber" }, { head: "FubiniNumber" }, { head: "PartitionNumber" },
     ],
   },
   {
-    head: "Fubini",
+    head: "FubiniNumber",
     family: "Counting sequences",
     kind: "sequence",
     tagline: "The number of ways to partition an $n$-element set into non-empty blocks AND put those blocks in order — the ordered Bell numbers.",
     usage: [
-      { form: "\\operatorname{Fubini}(n)", meaning: "the $n$-th Fubini (ordered Bell) number" },
-      { form: "\\operatorname{Fubini}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+      { form: "\\operatorname{FubiniNumber}(n)", meaning: "the $n$-th Fubini (ordered Bell) number" },
+      { form: "\\operatorname{FubiniNumber}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
     ],
     details: [
       { label: "Arity", body: "1 — a natural number $n$." },
       { label: "Result type", body: "`(integer) -> integer`, Listable." },
-      { label: "Implementation", body: "the recurrence $\\operatorname{Fubini}(n) = \\sum_{k=1}^{n} \\binom{n}{k}\\operatorname{Fubini}(n-k)$, $\\operatorname{Fubini}(0) = 1$, built bottom-up in one array (`packages/compute-engine/src/kernels-combinatorics.ts`) — $O(n^2)$ total for the whole table up to $n$." },
+      { label: "Implementation", body: "the recurrence $\\operatorname{FubiniNumber}(n) = \\sum_{k=1}^{n} \\binom{n}{k}\\operatorname{FubiniNumber}(n-k)$, $\\operatorname{FubiniNumber}(0) = 1$, built bottom-up in one array (`packages/compute-engine/src/kernels-combinatorics.ts`) — $O(n^2)$ total for the whole table up to $n$." },
       { label: "Domain", body: "$n \\geq 0$." },
-      { label: "Counts", body: "the collection `SetCompositions(n)` — ordered set partitions of $[n]$ (`packages/compute-engine/src/packs/core.ts`: `SetCompositions`'s count is literally `Fubini(n)`)." },
-      { label: "Relation to BellB", body: "$\\operatorname{Fubini}(n) \\geq B_n$ for $n \\geq 1$ — every set partition contributes $k!$ ordered compositions, where $k$ is its number of blocks." },
-      { label: "Notebook spelling", body: "this library's own `Fubini` id isn't wired into the notebook's expression parser yet (and, unlike `BellB`/`PartitionsP`, the compute engine has no native alias for it either) — a live line counts `SetCompositions(n)` directly, which is `Fubini(n)` by construction." },
+      { label: "Counts", body: "the collection `SetCompositions(n)` — ordered set partitions of $[n]$ (`packages/compute-engine/src/packs/core.ts`: `SetCompositions`'s count is literally the Fubini number)." },
+      { label: "Relation to BellNumber", body: "$\\operatorname{FubiniNumber}(n) \\geq B_n$ for $n \\geq 1$ — every set partition contributes $k!$ ordered compositions, where $k$ is its number of blocks." },
+      { label: "Notebook spelling", body: "the `FubiniNumber` symbol isn't application-parseable in the notebook yet (it has no compute-engine kernel head — unlike `BellNumber`/`PartitionNumber`); a live line counts `SetCompositions(n)` directly, which is the Fubini number by construction. Wiring the symbol is tracked in the compute-engine/catalog naming-alignment work." },
     ],
     examples: {
       params: [],
       blocks: [
         {
-          md: "The 3 ordered set partitions of $\\{1,2\\}$ — enumerate `SetCompositions(2)`, and its count is $\\operatorname{Fubini}(2)$:",
+          md: "The 3 ordered set partitions of $\\{1,2\\}$ — enumerate `SetCompositions(2)`, whose count is the Fubini number $\\operatorname{FubiniNumber}(2)$:",
           lines: [
             { latex: "\\operatorname{SetCompositions}(2)" },
             { latex: "\\left|\\operatorname{SetCompositions}(2)\\right|", expect: "3" },
           ],
         },
         {
-          md: "At $n = 4$: $\\operatorname{Fubini}(4) = 75$:",
-          lines: [{ latex: "\\left|\\operatorname{SetCompositions}(4)\\right|", expect: "75" }],
+          md: "At $n = 4$, $\\operatorname{FubiniNumber}(4) = 75$ — read off the collection count:",
+          lines: [
+            { latex: "\\left|\\operatorname{SetCompositions}(4)\\right|", expect: "75" },
+          ],
         },
       ],
     },
     seeAlso: [
-      { head: "SetCompositions" }, { head: "BellB", note: "the unordered count" }, { head: "CatalanNumber" },
+      { head: "SetCompositions" }, { head: "BellNumber", note: "the unordered count" }, { head: "CatalanNumber" },
     ],
   },
   {
-    head: "PartitionsP",
+    head: "PartitionNumber",
     family: "Counting sequences",
     kind: "sequence",
     tagline: "$p(n)$ — the number of integer partitions of $n$ (OEIS [A000041](https://oeis.org/A000041)).",
     usage: [
-      { form: "\\operatorname{PartitionsP}(n)", meaning: "$p(n)$" },
-      { form: "\\operatorname{PartitionsP}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
+      { form: "\\operatorname{PartitionNumber}(n)", meaning: "$p(n)$" },
+      { form: "\\operatorname{PartitionNumber}(\\{n_1, n_2, \\dots\\})", meaning: "threads element-wise over a list (Listable)" },
     ],
     details: [
       { label: "Arity", body: "1 — a natural number $n$." },
@@ -618,14 +620,14 @@ export const NODES: NodeDoc[] = [
       { label: "Domain", body: "$n \\geq 0$; a negative $n$ returns $0$." },
       { label: "Counts", body: "the collection [`IntegerPartitions`](/reference/IntegerPartitions) — $\\operatorname{Count}(\\operatorname{IntegerPartitions}(n)) = p(n)$ by construction." },
       { label: "Distinct from PartitionsQ", body: "`PartitionsQ(n)` counts partitions into *distinct* parts only — a different, smaller sequence with its own collection, `DistinctPartitions`." },
-      { label: "Notebook spelling", body: "this library's own `PartitionsP` id isn't wired into the notebook's expression parser yet — a live line reaches the same sequence via the compute-engine-native `NPartition(n)` head, or by counting `IntegerPartitions(n)` directly (both below)." },
+      { label: "Also known as", body: "Wolfram spells this `PartitionsP`; both `PartitionsP(n)` and the compute-engine-native `NPartition(n)` resolve as aliases." },
     ],
     examples: {
       params: [],
       blocks: [
         {
-          md: "The compute engine's own native spelling for this sequence is `NPartition` — $p(5) = 7$:",
-          lines: [{ latex: "\\operatorname{NPartition}(5)", expect: "7" }],
+          md: "$p(5) = 7$:",
+          lines: [{ latex: "\\operatorname{PartitionNumber}(5)", expect: "7" }],
         },
         {
           md: "It matches counting [`IntegerPartitions`](/reference/IntegerPartitions) directly:",
@@ -634,7 +636,7 @@ export const NODES: NodeDoc[] = [
       ],
     },
     seeAlso: [
-      { head: "IntegerPartitions" }, { head: "PartitionsQ" }, { head: "DistinctPartitions" }, { head: "BellB", note: "set, not integer, partitions" },
+      { head: "IntegerPartitions" }, { head: "PartitionsQ" }, { head: "DistinctPartitions" }, { head: "BellNumber", note: "set, not integer, partitions" },
     ],
   },
   // ═══════════════ Subsets, multisets, tuples & functions ═══════════════
@@ -746,7 +748,7 @@ export const NODES: NodeDoc[] = [
       { label: "Arity", body: "1 — the number $n$ being partitioned. (A separate two-argument family, `PartitionsIntoKParts(n, k)`, fixes the number of parts.)" },
       { label: "Element", body: "a list of positive integers summing to $n$, always in **weakly decreasing** (largest-part-first) normal form: `[3, 2, 2, 1]` is $3+2+2+1=8$." },
       { label: "Result type", body: "`collection` of `list<integer>`, weakly decreasing, summing to $n$." },
-      { label: "Count", body: "$p(n)$ — [`PartitionsP`](/reference/PartitionsP), computed by Euler's pentagonal-number recurrence." },
+      { label: "Count", body: "$p(n)$ — [`PartitionNumber`](/reference/PartitionNumber), computed by Euler's pentagonal-number recurrence." },
       { label: "Order", body: "greedy descending — the unrank walks remaining sum $m$ and a shrinking part-size ceiling, always choosing the largest part consistent with the target rank (`IntegerPartitionUnrank` in `packages/compute-engine/src/kernels-combinatorics.ts`). This is a well-defined total order but not lexicographic on the part sequence in the usual sense — don't assume adjacent ranks differ by a small edit." },
       { label: "Random access", body: "polynomial, not $O(1)$ — unrank/rank both walk the partition's own parts (at most $n$ of them), consulting a memoized partial-count table (`partsAtMost`) at each step." },
       { label: "Catalog alias", body: "the pg-catalog collection `integer_partitions` is this same family (`COLL_HEADS`, `packages/client/src/ce-enum-engine.ts`)." },
@@ -755,7 +757,7 @@ export const NODES: NodeDoc[] = [
       params: [5],
       blocks: [
         {
-          md: "$\\operatorname{Count}(\\operatorname{IntegerPartitions}(5)) = \\operatorname{PartitionsP}(5) = {count}$ — the 7 partitions of 5 are $5,\\ 4{+}1,\\ 3{+}2,\\ 3{+}1{+}1,\\ 2{+}2{+}1,\\ 2{+}1{+}1{+}1,\\ 1{+}1{+}1{+}1{+}1$:",
+          md: "$\\operatorname{Count}(\\operatorname{IntegerPartitions}(5)) = \\operatorname{PartitionNumber}(5) = {count}$ — the 7 partitions of 5 are $5,\\ 4{+}1,\\ 3{+}2,\\ 3{+}1{+}1,\\ 2{+}2{+}1,\\ 2{+}1{+}1{+}1,\\ 1{+}1{+}1{+}1{+}1$:",
           lines: [
             { latex: "\\operatorname{IntegerPartitions}(5)" },
             { latex: "\\left|\\operatorname{IntegerPartitions}(5)\\right|", expect: "{count}" },
@@ -769,7 +771,7 @@ export const NODES: NodeDoc[] = [
     },
     seeAlso: [
       { head: "PartitionsIntoKParts" }, { head: "DistinctPartitions" }, { head: "PartitionsMaxPart" },
-      { head: "PartitionsP" }, { head: "unrank" }, { head: "rank" }, { head: "cardinality" },
+      { head: "PartitionNumber" }, { head: "unrank" }, { head: "rank" }, { head: "cardinality" },
     ],
   },
 ];
