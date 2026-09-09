@@ -80,7 +80,7 @@ let ceP: Promise<CEInstance> | null = null
  *  pays for the (sizable) compute-engine bundle. `precision` only governs FLOAT fallback rendering; exactness
  *  itself comes from the bignum/exact-rational kernel underneath and holds regardless of this setting — set high
  *  enough that it is never the thing limiting how large an exact integer this engine can carry. */
-export async function ceInstance(): Promise<CEInstance> {
+export async function computeEngineInstance(): Promise<CEInstance> {
   if (!ceP) ceP = Promise.all([
     import('@cortex-js/compute-engine'),
     import('@enumeratio/compute-engine'),
@@ -110,7 +110,7 @@ const ceImplRow = (label: string): ImplRow => ({
   representation: 'text', cost: null, note: null,
 })
 
-export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean; symbolicLatex?: boolean } = {}): Engine {
+export function computeEngineScalar(reg: Registry, factoryOpts: { exactRationals?: boolean; numericFallback?: boolean; symbolicLatex?: boolean } = {}): Engine {
   const exactRationals = factoryOpts.exactRationals ?? false
   // numericFallback: instead of declining a result that isn't an exact integer/rational (an irrational or symbolic
   // CE value like √2 or ⅙π²), render its floating-point approximation (`N`). The notebook sets this so CE-native
@@ -274,7 +274,7 @@ export function ceEngine(reg: Registry, factoryOpts: { exactRationals?: boolean;
       const cols = expr.select.map((c, i) => ({ id: labelOfExpr(c, i), kind: 'stat' as const }))
 
       const rowP = (async (): Promise<Row> => {
-        const ce = await ceInstance()
+        const ce = await computeEngineInstance()
         const row: Row = {}
         for (const [i, c] of expr.select.entries()) {
           const boxed = toCE(ce, c)

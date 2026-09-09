@@ -7,7 +7,7 @@
 // declines this way must not have produced side effects, which is true of every pure evaluation.
 import type { CanOpts, Engine, EngineDelta, EngineOpts, EvaluateResult, Plan } from './engine'
 import type { Expr } from './ir'
-import { ceEngine } from './ce-engine'
+import { computeEngineScalar } from './compute-engine-scalar'
 import { notatioEngine } from './notatio-engine'
 import { pgEngine } from './pg-engine'
 import { registry } from './registry'
@@ -46,7 +46,7 @@ export function routerEngine(engines: Engine[]): Engine {
             // An ASYNC engine (ce, unlike ts's fully-synchronous evalTree) derives `r.plan` from the same pending
             // work as `r.rows` — so a soft decline caught above by draining `rows` leaves `r.plan` independently
             // rejecting with the SAME error, on its own microtask, with nobody ever awaiting it. Attach a no-op
-            // catch so that rejection doesn't surface as an unhandled promise rejection (found by ce-engine's
+            // catch so that rejection doesn't surface as an unhandled promise rejection (found by compute-engine-scalar's
             // arrival — ts never hit this path, since its InexactResult throws before evaluate() even returns).
             r?.plan.catch(() => {})
             last = err
@@ -79,14 +79,16 @@ export function routerEngine(engines: Engine[]): Engine {
 export async function standardEngine(dbFactory?: () => Db | Promise<Db>): Promise<Engine> {
   const reg = await registry()
   const pg = pgEngine(dbFactory)
-  return routerEngine([tsEngine(reg), ceEngine(reg), pg])
+  return routerEngine([tsEngine(reg), computeEngineScalar(reg), pg])
 }
 
 /** The PURE-CE stack — ts + ce + ce-enum, NO pg. Every computation the notebook runs is answered by
- *  `@enumeratio/compute-engine` (scalar counting/arithmetic via ce-engine, enumeration via ce-enum-engine) or by
- *  ts-engine's native ops; nothing round-trips to SQL. `registry()` still reads the catalog snapshot (for the
- *  grammar/type seam the binder needs), so a Db provider must exist — but it is never the evaluator. A collection
- *  without a CE twin (see COLL_HEADS) simply can't be enumerated here: the honest edge of a partial port. */
+ *  `@enumeratio/compute-engine` (scalar counting/arithmetic via compute-engine-scalar, enumeration via
+ *  compute-engine-enumerator) or by ts-engine's native ops; nothing round-trips to SQL. `registry()` still reads
+ *  the catalog snapshot (for the grammar/type seam the binder needs), so a Db provider must exist — but it is
+ *  never the evaluator. A collection without a CE twin (the catalog's `base_compute_engine_twin`, plus
+ *  compute-engine-enumerator's own LIBRARY_TWIN for heads typed directly) simply can't be enumerated here: the
+ *  honest edge of a partial port. */
 export async function notebookEngine(): Promise<Engine> {
   return notatioEngine(await registry())   // the single, explicit-dispatch, SQL-free engine — see notatio-engine.ts
 }
