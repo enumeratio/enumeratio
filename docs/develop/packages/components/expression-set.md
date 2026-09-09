@@ -14,8 +14,9 @@ already-evaluated result populates.
 
 | name | kind | type | meaning |
 |---|---|---|---|
-| `value` | attribute/property | JSON string | seeds the notebook: `{ lines: [{ id?, latex }] }`. Also readable live — see below |
+| `value` | attribute/property | JSON string | seeds the notebook: `{ lines: [{ id?, latex, expect? }] }`. Also readable live — see below |
 | `storage-key` | attribute | string | when set, lines persist to `localStorage[storage-key]` and seed FROM it (taking precedence over `value`) if non-empty |
+| `readonly` | attribute | boolean | render lines non-editable (read-only field, no per-cell chrome/drag/menu, no toolbar) and never mutate — the environment still parses, evaluates, and asserts. For embedding worked examples as live, self-checking, non-editable displays |
 
 `value` is a **seed/serialize pair, not a mirrored attribute**: writing it seeds the initial lines (once, at
 connect); reading `.value` always returns the *live* `{lines:[...]}` JSON, not an echo of whatever was last written.
@@ -78,6 +79,20 @@ suggests collection names, function names, and the current scope's own symbols.
 Edit any line — later re-embeddings (`f(3)`) recompute automatically. Press Enter to open a new line below the
 current one; Backspace on an empty line removes it; drag the `⋮⋮` handle to reorder rows (cosmetic — evaluation
 still follows the dependency graph).
+
+### Read-only, self-checking examples
+
+`readonly` renders the same engine non-editable — no field editing, no chrome, no toolbar — so a page can embed
+worked examples that still evaluate live. Give a line an `expect` and it self-checks: a green ✓ means the live
+result matches. For a bare, frameless embed (a reference page), use `<enumeratio-expressions>` (the notebook's
+evaluation core without the surrounding chrome); `<enumeratio-notebook readonly>` adds the frame.
+
+<ClientOnly>
+<enumeratio-expressions readonly value='{"lines":[
+  {"latex":"\\binom{6}{2}","expect":"15"},
+  {"latex":"\\sum_{i=1}^{4} i","expect":"10"}
+]}'></enumeratio-expressions>
+</ClientOnly>
 
 ::: info Engine coverage
 The docs wire the notebook to the **pure compute-engine stack** (`ts + ce + ce-enum`, no pglite — see
