@@ -113,7 +113,7 @@ is the one CE head we *don't* curate generically — the bar has to be free to m
 | `\sin` `\cos` `\tan` … | evaluates (exact at nice angles, else symbolic/numeric) | `\sin(\frac{\pi}{2})` → `1`, `\cos(0)` → `1` |
 | `\arcsin` `\arctan` … + hyperbolics | evaluates | `\arctan(1)` → `\frac{\pi}{4}` |
 | `\ln` `\log` | evaluates for numeric args | `\ln(1)` → `0`, `\log(100)` → `2` |
-| `\log_b(x)` (base subscript) | **parses, not supported** | `\log_2(8)` → head `Lb`, unmapped (use `\frac{\log(8)}{\log(2)}`) |
+| `\log_b(x)` (base subscript) | evaluates | `\log_2(8)` → `3` (head `Lb`), `\lg(1000)` → `3` (head `Lg`); `\log_{10}(x)` canonicalises to `Log` |
 | `\exp(x)` / bare `e` | **not supported** | `e` → `unknown symbol "e"` — `ExponentialE` has no Notatio binding yet |
 | `\Gamma` `\zeta` | evaluates (exact-symbolic) | `\zeta(2)` → `\frac{\pi^2}{6}` |
 | `\operatorname{sgn}(x)` | evaluates (**Sign**, integer) | `\operatorname{sgn}(-5)` → `-1` |
@@ -130,6 +130,7 @@ is the one CE head we *don't* curate generically — the bar has to be free to m
 <enumeratio-expressions readonly value='{"lines":[
   {"latex":"\\sin(\\frac{\\pi}{2})","expect":"1"},
   {"latex":"\\log(100)","expect":"2"},
+  {"latex":"\\log_2(8)","expect":"3"},
   {"latex":"\\operatorname{sgn}(-5)","expect":"-1"},
   {"latex":"\\operatorname{Heaviside}(0)","expect":"1/2"}
 ]}'></enumeratio-expressions>
@@ -205,18 +206,20 @@ shadows the constant, and a variable named `\varphi` is yours.
 |---|---|---|
 | `\le` `<` `\ge` `>` `=` `\ne` | evaluates (boolean) | `3\le5` → `true`, `3\ne4` → `true` |
 | `x \in C` (as an expression) | evaluates (membership boolean) | over a catalog collection |
+| `\mid` `\nmid` (divides) | evaluates (boolean) | `3\mid12` → `true`, `3\nmid13` → `true` (heads `Divides`/`NotDivides`) |
 | `\land` `\lor` `\lnot` | **not supported** | `And`/`Or`/`Not` need a boolean-typed binder |
 | `\forall` `\exists` `\implies` `\iff` | **not supported** | quantifiers/implication don't bind |
-| `\mid` (divides) | **not supported** | `3\mid12` → `Divides`, unmapped (boolean return) |
 
 Comparisons swap operands the way CE does (`3>5` parses to `Less(5,3)`); the result is always a boolean over pure
-scalars. The logic family is a known gap — it waits on non-scalar (boolean) return typing in the binder.
+scalars. `\mid`/`\nmid` are boolean too, typed `∈ 𝔹`. The logic family (`\land`/`\forall`/…) is still a gap — it
+waits on the binder typing boolean over non-scalar operands.
 
 <ClientOnly>
 <enumeratio-expressions readonly value='{"lines":[
   {"latex":"3\\le5","expect":"true"},
-  {"latex":"5\\ge3","expect":"true"},
-  {"latex":"3\\ne4","expect":"true"}
+  {"latex":"3\\ne4","expect":"true"},
+  {"latex":"3\\mid12","expect":"true"},
+  {"latex":"3\\nmid13","expect":"true"}
 ]}'></enumeratio-expressions>
 </ClientOnly>
 

@@ -52,7 +52,7 @@ export const KERNEL_OPS: Record<string, string> = {
   // notebook renders them as a numeric approximation for now (see `numericFallback`).
   Max: 'Max', Min: 'Min', Supremum: 'Supremum', Infimum: 'Infimum',
   Floor: 'Floor', Ceil: 'Ceil', Round: 'Round', Clamp: 'Clamp', Mod: 'Mod',
-  Sign: 'Sign', Heaviside: 'Heaviside', Divides: 'Divides',
+  Sign: 'Sign', Heaviside: 'Heaviside', Divides: 'Divides', NotDivides: 'NotDivides', Lb: 'Lb', Lg: 'Lg',
   Sqrt: 'Sqrt', Root: 'Root', Abs: 'Abs', Exp: 'Exp', Ln: 'Ln', Log: 'Log',
   Sin: 'Sin', Cos: 'Cos', Tan: 'Tan',
   Arcsin: 'Arcsin', Arccos: 'Arccos', Arctan: 'Arctan', Sec: 'Sec', Csc: 'Csc', Cot: 'Cot',
@@ -69,7 +69,7 @@ export const KERNEL_OPS: Record<string, string> = {
  *  as a symbol (`ce.box`), never a call. */
 const CE_CONSTANTS = new Set(['Pi', 'GoldenRatio', 'CatalanConstant'])
 
-const KERNEL_HEADS = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sign', 'Heaviside', 'Divides', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
+const KERNEL_HEADS = new Set(['Max', 'Min', 'Supremum', 'Infimum', 'Floor', 'Ceil', 'Round', 'Clamp', 'Mod', 'Sign', 'Heaviside', 'Divides', 'NotDivides', 'Lb', 'Lg', 'Sqrt', 'Root', 'Abs', 'Exp', 'Ln', 'Log', 'Sin', 'Cos', 'Tan', 'Arcsin', 'Arccos', 'Arctan', 'Sec', 'Csc', 'Cot', 'Sinh', 'Cosh', 'Tanh', 'Coth', 'Gamma', 'Zeta', 'Factorial2', 'Fibonacci', 'Lucas', 'Totient', 'NextPrime', 'Multinomial', 'CatalanNumber', 'BellNumber', 'NPartition', 'PrimePi', 'Stirling', 'StirlingS1', 'Eulerian', 'Choose'])
 
 type CEModule = typeof import('@cortex-js/compute-engine')
 type CEInstance = InstanceType<CEModule['ComputeEngine']>
