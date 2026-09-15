@@ -153,3 +153,31 @@ long one a popup menu — unless a trailing symbol names one, Wolfram's
 <notatio-plot value="_a * Sin(_k * x) + _m" domain="-6.283,6.283" />
 </notatio-manipulate>
 </Story>
+
+## As expressions
+
+A control is a symbol, so an interface is an expression. The controls' variables are
+declared where the control is — `Slider(k, (0, 5))`, or `Slider((k, 2), (0, 5))` to
+say where it starts — and read as wildcards everywhere else in the same expression,
+which `<notatio-out>` draws as a tangle. `Row`, `Column`, `Grid`, `Panel` and
+`Labeled` arrange; a string is text; anything else is a readout. An entry of a
+choice list may be `Labeled(value, "label")`.
+
+<Story
+  title="An interface as an expression">
+<template #description>
+The same thing a cell could evaluate to, or the REPL could hold: no markup, just the
+symbols the engine knows.
+</template>
+<notatio-out format="notatio" value='Row([Slider((k, 2), (0, 5, 0.5)), "so", Dynamic(k^2)])' />
+</Story>
+
+<Story
+  title="A panel of controls and a plot">
+<notatio-out format="notatio" value='Column([Panel(Grid([[Labeled(Slider((a, 1), (0.2, 2, 0.1)), "amplitude"), Labeled(SetterBar((k, 2), [1, 2, 3, 5]), "frequency")]])), Plot(a * Sin(k * x), (x, -6.283, 6.283))])' />
+</Story>
+
+<Story
+  title="Every kind, in one grid">
+<notatio-out format="notatio" value='Grid([[Checkbox((on, True)), Toggler(size, ["a few", "several", "many"]), PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon"), Labeled(8, "octagon")])], [on, size, 180 - 360/n]])' />
+</Story>

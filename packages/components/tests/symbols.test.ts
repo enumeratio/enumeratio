@@ -2,7 +2,13 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { afterAll, expect, test } from "vite-plus/test";
-import { markupOf, renderingOf, VISUAL_SYMBOLS, visualSymbol } from "../src/symbols.ts";
+import {
+  controlNames,
+  DRAWING_SYMBOLS,
+  markupOf,
+  renderingOf,
+  visualSymbol,
+} from "../src/symbols.ts";
 
 // A head that draws, and the component that draws it. The corpus is one expression per
 // visual symbol plus the shapes that matter -- an iterator with and without a range, a
@@ -39,6 +45,33 @@ const CORPUS = [
   "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
   'Image("data:image/png;base64,AAA")',
   "Sin(x) + 1",
+  // The controls: a variable, or a variable with its start; a range or a list; and the
+  // scope that binds them when anything else reads the variable.
+  "Slider(k, (0, 5))",
+  "Slider((k, 2), (0, 5, 0.5))",
+  "VerticalSlider(h, (0, 10, 1))",
+  "Animator(t, (0, 6.28, 0.05))",
+  "Knob(n, (1, 8, 1))",
+  "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
+  "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
+  "SetterBar(k, [2, 3, 5, 7])",
+  'RadioButtonBar((q, 2), [Labeled(1, "one"), Labeled(2, "two")])',
+  "TogglerBar((s, [1, 3]), [1, 2, 3, 4, 5])",
+  "Toggler(on)",
+  'Toggler(size, ["a few", "several", "many"])',
+  "PopupMenu(n, [4, 5, 6, 8])",
+  "ListPicker(L, [2, 3, 5, 7, 11])",
+  "Checkbox((c, True))",
+  'ColorSlider((c, "#3451b2"))',
+  "InputField((f, Sin(x)))",
+  "Locator((p, (1, 0.5)))",
+  "Dynamic(k^2)",
+  // Layout, and the implicit scope: `k` is declared by the slider and read by the rest.
+  "Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])",
+  'Column([Slider(k, (0, 5)), "so", k^2])',
+  "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
+  'Panel(Labeled(Checkbox(on), "on?"))',
+  "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
 ];
 
 const GOLDEN = fileURLToPath(new URL("./symbols.golden.json", import.meta.url));
@@ -67,7 +100,11 @@ afterAll(() => {
 test("every visual symbol's tag is its name, kebab-cased, or its family's", () => {
   const kebab = (head: string): string =>
     "notatio-" + head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase();
-  for (const s of VISUAL_SYMBOLS) {
+  for (const s of DRAWING_SYMBOLS) {
+    if (s.fixed !== undefined && Object.keys(s.fixed).length === 0) {
+      expect(s.tag, s.head).toBe(kebab(s.head));
+      continue;
+    }
     if (s.fixed === undefined) expect(s.tag, s.head).toBe(kebab(s.head));
     else
       expect(["notatio-chart", "notatio-graph-plot", "notatio-vector-plot"], s.head).toContain(
@@ -76,4 +113,10 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
   }
   expect(visualSymbol("Sin")).toBeUndefined();
   expect(visualSymbol("Plot")?.tag).toBe("notatio-plot");
+});
+
+test("the controls' variables are collected, and only where they are declared", () => {
+  const { json } = parseNotatio("Row([Slider(k, (0, 5)), Dynamic(k^2), Checkbox(on)])");
+  expect([...controlNames(json)].sort()).toEqual(["k", "on"]);
+  expect(controlNames(parseNotatio("Sin(k)").json).size).toBe(0);
 });

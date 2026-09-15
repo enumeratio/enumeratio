@@ -1477,6 +1477,25 @@ notatio-locator { display: contents; }
 }
 .notatio-toggler-grip[data-on] .notatio-switch-thumb { left: calc(100% - 1.05em + 2px); }
 
+/* --- layout: Row, Column, Grid, Panel, Labeled ---------------------------------- */
+notatio-row { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6em; vertical-align: middle; }
+notatio-column { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0.5em; vertical-align: top; }
+notatio-grid { display: inline-grid; gap: 0.4em 0.8em; align-items: center; vertical-align: top; }
+notatio-panel {
+  display: inline-block;
+  padding: 0.6em 0.9em;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft, #f6f6f7);
+  vertical-align: top;
+}
+notatio-labeled { display: inline-flex; align-items: center; gap: 0.4em; vertical-align: middle; }
+notatio-labeled[position="before"] .notatio-label { order: -1; }
+notatio-labeled[position="above"],
+notatio-labeled[position="below"] { flex-direction: column; align-items: flex-start; gap: 0.15em; }
+notatio-labeled[position="above"] .notatio-label { order: -1; }
+.notatio-label { font-size: 0.85em; color: var(--vp-c-text-2, #666); }
+
 /* A prose control panel: a paragraph like the ones around it, set off only by
    its knobs. */
 .notatio-manip-prose { margin: 0 0 0.8em; }

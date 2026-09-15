@@ -120,6 +120,31 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Dendrogram",
   "CollectionTable",
   "Manipulate",
+  // The controls (Wolfram's Control family) and the layout that arranges them: an
+  // expression over these draws as an interface, with the controls' variables bound
+  // through the page (design/components-and-symbols.md).
+  "Slider",
+  "VerticalSlider",
+  "Animator",
+  "Knob",
+  "Slider2D",
+  "IntervalSlider",
+  "SetterBar",
+  "RadioButtonBar",
+  "TogglerBar",
+  "Toggler",
+  "PopupMenu",
+  "ListPicker",
+  "Checkbox",
+  "ColorSlider",
+  "Locator",
+  "InputField",
+  "Dynamic",
+  "Row",
+  "Column",
+  "Grid",
+  "Panel",
+  "Labeled",
 ];
 
 export function declareGraphics(ce: ComputeEngine): void {

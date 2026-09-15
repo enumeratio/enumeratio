@@ -167,6 +167,34 @@ All five landed 2026-09-15, in this order:
    `labels` pulling to bar. The component's `type` defaults to `auto` and applies the
    same rule, so `Chart(data)` and `<notatio-chart data>` agree by construction.
 
+## 6a. The controls, and an interface as an expression
+
+Landed 2026-09-15, on top of §6. Wolfram's `Control` family is now a component per
+symbol -- `Slider`, `VerticalSlider`, `Animator`, `Slider2D`, `IntervalSlider`,
+`SetterBar`, `RadioButtonBar`, `TogglerBar`, `Toggler`, `PopupMenu`, `ListPicker`,
+`Checkbox`, `ColorSlider`, `Locator`, `InputField` -- plus the layout heads `Row`,
+`Column`, `Grid`, `Panel`, `Labeled`, and `Dynamic`. Three things hold it together:
+
+- **One contract** (`components/src/controls.ts`). Every control has a `name`, a
+  MathJSON `binding` (a number, `True`, a `List`, an expression) and dispatches
+  `notatio-control-change`; its tag is in `CONTROL_TAGS`. A scope (`<notatio-tangle>`,
+  `<notatio-manipulate>`) binds any of them without knowing which it has, and a
+  template gets a `List` from a toggler bar as readily as a number from a slider.
+- **The strip picks like Wolfram.** Manipulate's `params` draw these components: a
+  range is a slider, a short list a setter bar, a long one a popup menu, and a trailing
+  symbol in the tuple (`{k, {1, 2, 3}, PopupMenu}`) is `ControlType`.
+- **An expression with controls is a scope.** `renderingOf` collects the variables the
+  controls declare (a control's first argument, alone or as `(k, init)`), rewrites every
+  other occurrence to the wildcard `_k`, and wraps the rendering in a tangle. So
+  `Row([Slider(k, (0, 5)), Dynamic(k^2)])` evaluates in a cell and draws as a live
+  interface, and a `Grid` of controls and readouts is a small application. Labelled
+  entries are `Labeled(value, "label")`, since Epsil's `->` is a `KeyValuePair` that
+  wants a string key.
+
+The Vue wrappers follow for free: `<Slider>`, `<SetterBar>`, `<Row>`, … are generated
+from the element sources like the rest, and the reference follows a class's attributes
+up its parents (`NotatioAnimator extends NotatioSlider`).
+
 ## 7. Open questions
 
 - **Argument conventions.** Wolfram's `{x, 0, 10}` iterator is our `(x, 0, 10)` tuple

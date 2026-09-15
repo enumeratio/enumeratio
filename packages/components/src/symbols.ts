@@ -13,11 +13,15 @@ import { serializeNotatio } from "@enumeratio/formats/notatio";
 // draws several symbols, distinguished by an attribute; the family head (`Chart`) leaves
 // that attribute unset and lets the component choose.
 
-/** What to render: a tag, its attributes, and any children (a `Manipulate` body). */
+/**
+ * What to render: a tag, its attributes, and any children (a `Manipulate` body, a
+ * `Row`'s entries) -- or, for a string in a layout, a run of text.
+ */
 export interface Rendering {
   readonly tag: string;
   readonly attributes: Readonly<Record<string, string>>;
   readonly children?: readonly Rendering[];
+  readonly text?: string;
 }
 
 /** One visual symbol: the tag it renders as, and the attributes its arguments become. */
@@ -59,6 +63,10 @@ const numOf = (node: unknown): number | undefined => {
 };
 
 const strOf = (node: unknown): string | undefined => {
+  // A string is `{str}`, or -- the engine's own spelling of a literal -- `'…'`.
+  if (typeof node === "string" && node.length >= 2 && node.startsWith("'") && node.endsWith("'")) {
+    return node.slice(1, -1);
+  }
   const str = (node as { str?: unknown })?.str;
   return typeof str === "string" ? str : undefined;
 };
@@ -328,10 +336,270 @@ function vectorField(ops: readonly Json[]): Record<string, string> {
   return out;
 }
 
-const BY_HEAD = new Map(VISUAL_SYMBOLS.map((s) => [s.head, s]));
+// --- the controls -----------------------------------------------------------------
+//
+// A control's first argument names the variable it binds -- `Slider(k, (0, 5))` -- or
+// carries its starting value too, `Slider((k, 2), (0, 5))`, the way a Manipulate
+// parameter does. The rest are the control's own: a range tuple, a list of entries.
+
+/**
+ * A number as an attribute: cleaned of the binary noise the notatio parser leaves on a
+ * decimal (`0.3` arrives as 0.30000000000000004), which a control would otherwise
+ * carry into its readout. Anything else is notatio.
+ */
+const clean = (node: Json): string => {
+  const v = numOf(node);
+  return v === undefined ? notatio(node) : String(Number(v.toPrecision(12)));
+};
+
+/** `k` or `(k, init)`: the variable and, if given, where it starts. */
+function variable(node: Json | undefined): { name?: string; init?: Json } {
+  const parts = tupleOf(node);
+  if (parts !== undefined) return { name: symOf(parts[0]), init: parts[1] };
+  return { name: symOf(node) };
+}
+
+/** `(min, max)` / `(min, max, step)` as attributes. */
+function rangeAttributes(node: Json | undefined): Record<string, string> {
+  const parts = tupleOf(node);
+  const out: Record<string, string> = {};
+  if (parts === undefined) return out;
+  if (parts[0] !== undefined) out.min = clean(parts[0]);
+  if (parts[1] !== undefined) out.max = clean(parts[1]);
+  if (parts[2] !== undefined) out.step = clean(parts[2]);
+  return out;
+}
+
+/** An entry of a choice list: `Labeled(value, "label")` shows one thing and binds another. */
+function entryOf(node: Json): string {
+  if (headOf(node) === "Labeled") {
+    const [value, label] = opsOf(node);
+    const text = label === undefined ? undefined : (strOf(label) ?? notatio(label));
+    return value === undefined
+      ? ""
+      : text === undefined
+        ? notatio(value)
+        : `${notatio(value)} -> ${text}`;
+  }
+  return strOf(node) ?? notatio(node);
+}
+
+/** A list of entries as the `|`-separated `values` attribute. */
+const entries = (node: Json | undefined): string | undefined =>
+  tupleOf(node)?.map(entryOf).join("|");
+
+/** A control over a range: name, start, and `(min, max, step)`. */
+const ranged = (head: string, tag: string, extra: Record<string, string> = {}): VisualSymbol => ({
+  head,
+  tag,
+  fixed: extra,
+  attributes: (ops) => {
+    const out: Record<string, string> = {};
+    const { name, init } = variable(ops[0]);
+    if (name) out.name = name;
+    if (init !== undefined) out.value = clean(init);
+    Object.assign(out, rangeAttributes(ops[1]));
+    return out;
+  },
+});
+
+/** A control over a list of entries: name, start, and the entries. */
+const listed = (head: string, tag: string, extra: Record<string, string> = {}): VisualSymbol => ({
+  head,
+  tag,
+  fixed: extra,
+  attributes: (ops) => {
+    const out: Record<string, string> = {};
+    const { name, init } = variable(ops[0]);
+    if (name) out.name = name;
+    if (init !== undefined) {
+      // A starting selection is one entry, or a list of them for a multiple choice.
+      const many = tupleOf(init);
+      out.value =
+        many === undefined
+          ? entryOf(init).split(" -> ")[0]
+          : many.map((v) => entryOf(v).split(" -> ")[0]).join("|");
+    }
+    const values = entries(ops[1]);
+    if (values !== undefined) out.values = values;
+    return out;
+  },
+});
+
+/** A control over a point: name, start `(x, y)`, and the corners `((x0, y0), (x1, y1))`. */
+const planar = (head: string, tag: string): VisualSymbol => ({
+  head,
+  tag,
+  attributes: (ops) => {
+    const out: Record<string, string> = {};
+    const { name, init } = variable(ops[0]);
+    if (name) out.name = name;
+    const point = tupleOf(init);
+    if (point !== undefined && point.length === 2) out.value = point.map(clean).join(",");
+    const corners = tupleOf(ops[1]);
+    const lo = tupleOf(corners?.[0]);
+    const hi = tupleOf(corners?.[1]);
+    if (lo !== undefined && lo.length === 2) out.min = lo.map(clean).join(",");
+    if (hi !== undefined && hi.length === 2) out.max = hi.map(clean).join(",");
+    const step = ops[2] === undefined ? undefined : (tupleOf(ops[2]) ?? [ops[2]]);
+    if (step !== undefined) out.step = step.map(clean).join(",");
+    return out;
+  },
+});
+
+/** A control that binds a value with no range to speak of: a checkbox, a colour, a field. */
+const simple = (head: string, tag: string): VisualSymbol => ({
+  head,
+  tag,
+  attributes: (ops) => {
+    const out: Record<string, string> = {};
+    const { name, init } = variable(ops[0]);
+    if (name) out.name = name;
+    if (init !== undefined) out.value = strOf(init) ?? notatio(init);
+    return out;
+  },
+});
+
+export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
+  ranged("Slider", "notatio-slider"),
+  ranged("VerticalSlider", "notatio-vertical-slider"),
+  ranged("Animator", "notatio-animator"),
+  ranged("Knob", "notatio-knob"),
+  {
+    ...ranged("IntervalSlider", "notatio-interval-slider"),
+    // The start is an interval, `(r, (1, 3))`, which the component takes as `1,3`.
+    attributes: (ops) => {
+      const out = ranged("IntervalSlider", "notatio-interval-slider").attributes(ops);
+      const { init } = variable(ops[0]);
+      const pair = tupleOf(init);
+      if (pair !== undefined && pair.length === 2) out.value = pair.map(clean).join(",");
+      return out;
+    },
+  },
+  planar("Slider2D", "notatio-slider-2d"),
+  listed("SetterBar", "notatio-setter-bar"),
+  listed("RadioButtonBar", "notatio-radio-button-bar"),
+  listed("TogglerBar", "notatio-toggler-bar"),
+  listed("Toggler", "notatio-toggler"),
+  listed("PopupMenu", "notatio-popup-menu"),
+  listed("ListPicker", "notatio-list-picker"),
+  simple("Checkbox", "notatio-checkbox"),
+  simple("ColorSlider", "notatio-color-slider"),
+  simple("InputField", "notatio-input-field"),
+  {
+    ...planar("Locator", "notatio-locator"),
+    // A locator has no corners of its own: it takes the plot's.
+    attributes: (ops) => {
+      const out: Record<string, string> = {};
+      const { name, init } = variable(ops[0]);
+      if (name) out.name = name;
+      const point = tupleOf(init);
+      if (point !== undefined && point.length === 2) out.value = point.map(clean).join(",");
+      return out;
+    },
+  },
+  {
+    head: "Dynamic",
+    tag: "notatio-dynamic",
+    attributes: (ops): Record<string, string> =>
+      ops[0] === undefined ? {} : { value: notatio(ops[0]) },
+  },
+];
+
+const CONTROL_HEADS = new Set(
+  CONTROL_SYMBOLS.filter((c) => c.head !== "Dynamic").map((c) => c.head),
+);
+
+// --- layout ---------------------------------------------------------------------------
+
+/** A layout head's operands render as its children; a list is spread. */
+const layout = (head: string, tag: string): VisualSymbol => ({
+  head,
+  tag,
+  attributes: () => ({}),
+  children: (ops) => (ops.length === 1 ? (tupleOf(ops[0]) ?? [ops[0]]) : [...ops]),
+});
+
+export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
+  layout("Row", "notatio-row"),
+  layout("Column", "notatio-column"),
+  {
+    // `Grid([[a, b], [c, d]])`: the rows' lengths give the columns, the cells the children.
+    head: "Grid",
+    tag: "notatio-grid",
+    attributes: (ops) => {
+      const rows = tupleOf(ops[0]) ?? [];
+      const width = Math.max(1, ...rows.map((r) => tupleOf(r)?.length ?? 1));
+      return { columns: String(width) };
+    },
+    children: (ops) => (tupleOf(ops[0]) ?? []).flatMap((r) => tupleOf(r) ?? [r]),
+  },
+  layout("Panel", "notatio-panel"),
+  {
+    head: "Labeled",
+    tag: "notatio-labeled",
+    attributes: (ops): Record<string, string> => {
+      const label = ops[1];
+      return label === undefined ? {} : { label: strOf(label) ?? notatio(label) };
+    },
+    children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
+  },
+];
+
+const ALL_SYMBOLS: readonly VisualSymbol[] = [
+  ...VISUAL_SYMBOLS,
+  ...CONTROL_SYMBOLS,
+  ...LAYOUT_SYMBOLS,
+];
+
+const BY_HEAD = new Map(ALL_SYMBOLS.map((s) => [s.head, s]));
+
+/** The variables the controls in an expression bind. */
+export function controlNames(expr: Json, into = new Set<string>()): Set<string> {
+  const head = headOf(expr);
+  if (head !== undefined && CONTROL_HEADS.has(head)) {
+    const { name } = variable(opsOf(expr)[0]);
+    if (name) into.add(name);
+  }
+  for (const op of opsOf(expr)) controlNames(op, into);
+  return into;
+}
+
+/**
+ * `name` -> `_name` everywhere a control's variable is READ -- but not where a control
+ * declares it, which is its first argument. That is what lets `Row([Slider(k, (0, 5)),
+ * Dynamic(k^2)])` bind: the slider keeps `k`, the readout gets `_k`.
+ */
+function slottedExceptDeclarations(node: Json, names: ReadonlySet<string>): Json {
+  const head = headOf(node);
+  if (head !== undefined && CONTROL_HEADS.has(head)) {
+    const ops = opsOf(node);
+    const rest = ops.slice(1).map((op) => slottedExceptDeclarations(op, names));
+    const fn = [head, ...(ops[0] === undefined ? [] : [ops[0]]), ...rest];
+    return Array.isArray(node) ? (fn as unknown as Json) : ({ ...(node as object), fn } as Json);
+  }
+  const sym = symOf(node);
+  if (sym !== undefined && names.has(sym)) {
+    return typeof node === "string" ? `_${sym}` : ({ ...(node as object), sym: `_${sym}` } as Json);
+  }
+  if (Array.isArray(node)) {
+    return node.map((n) => slottedExceptDeclarations(n as Json, names)) as unknown as Json;
+  }
+  const fn = (node as { fn?: unknown[] })?.fn;
+  if (Array.isArray(fn)) {
+    return {
+      ...(node as object),
+      fn: fn.map((n) => slottedExceptDeclarations(n as Json, names)),
+    } as Json;
+  }
+  return node;
+}
 
 /** The visual symbol behind a head, or undefined for a head that typesets. */
 export const visualSymbol = (head: string): VisualSymbol | undefined => BY_HEAD.get(head);
+
+/** Every head that draws: the pictures, the controls, the layout. */
+export const DRAWING_SYMBOLS: readonly VisualSymbol[] = ALL_SYMBOLS;
 
 /**
  * The rendering of an expression: its head's component with the arguments as attributes,
@@ -342,22 +610,38 @@ export const visualSymbol = (head: string): VisualSymbol | undefined => BY_HEAD.
  * controls.
  */
 export function renderingOf(expr: Json, inManipulate = false): Rendering | undefined {
+  // An expression with controls in it is a SCOPE: the controls' variables are read as
+  // wildcards everywhere else in it, and a tangle around the whole binds them.
+  if (!inManipulate) {
+    const names = controlNames(expr);
+    if (names.size > 0) {
+      const inner = render(slottedExceptDeclarations(expr, names), true);
+      return inner === undefined
+        ? undefined
+        : { tag: "notatio-tangle", attributes: {}, children: [inner] };
+    }
+  }
+  return render(expr, inManipulate);
+}
+
+function render(expr: Json, inScope: boolean): Rendering | undefined {
   const head = headOf(expr);
   if (head === "Image") {
     const uri = strOf(opsOf(expr)[0]);
     return uri === undefined ? undefined : { tag: "img", attributes: { src: uri } };
   }
+  // A string in a layout is a run of text, not a thing to typeset.
+  const text = strOf(expr);
+  if (text !== undefined && inScope) return { tag: "span", attributes: {}, text };
   const symbol = head === undefined ? undefined : BY_HEAD.get(head);
   if (symbol === undefined) {
-    return inManipulate
-      ? { tag: "notatio-dynamic", attributes: { value: notatio(expr) } }
-      : undefined;
+    return inScope ? { tag: "notatio-dynamic", attributes: { value: notatio(expr) } } : undefined;
   }
   const ops = opsOf(expr);
   const attributes = { ...symbol.fixed, ...symbol.attributes(ops) };
   const children = symbol.children?.(ops).map(
     (c) =>
-      renderingOf(c, true) ?? {
+      render(c, true) ?? {
         tag: "notatio-dynamic",
         attributes: { value: notatio(c) },
       },
@@ -377,6 +661,9 @@ export function markupOf(rendering: Rendering): string {
     .map(([k, v]) => ` ${k}="${attr(v)}"`)
     .join("");
   if (rendering.tag === "img") return `<img${attributes}>`;
-  const inner = rendering.children?.map(markupOf).join("") ?? "";
+  const inner =
+    rendering.text !== undefined
+      ? rendering.text.replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      : (rendering.children?.map(markupOf).join("") ?? "");
   return `<${rendering.tag}${attributes}>${inner}</${rendering.tag}>`;
 }
