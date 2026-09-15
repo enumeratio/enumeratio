@@ -1,0 +1,41 @@
+{
+  "name": "@enumeratio/groupalgebra",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Group-algebra extensions for @cortex-js/compute-engine: cyclic, dihedral and product groups, their group algebras, conjugacy classes and centres.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/algebra": "workspace:*",
+    "@enumeratio/boxed": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@enumeratio/algebra": "workspace:*",
+    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/hypercomplex": "workspace:*",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0"
+  }
+}

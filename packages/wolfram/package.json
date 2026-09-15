@@ -1,0 +1,30 @@
+{
+  "name": "@enumeratio/wolfram",
+  "version": "0.0.0",
+  "private": true,
+  "description": "MathJSON → Wolfram Language transpiler — a compute-engine compilation target, for cross-validating against a Wolfram kernel.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

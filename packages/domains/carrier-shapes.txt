@@ -1,0 +1,86 @@
+finset|members int[], n int
+integer_factorization|sign boolean, primes numeric[], powers int[]
+fraction|num numeric, den numeric
+composition|parts int[]
+word|letters int[]
+multicomplex|coeffs int[], modulus int
+fractional_number|numerator int, denominator int
+singleton|point int
+permutation|image int[]
+glyph_kind|kind text, title text
+hypernumerary_word|digits int[]
+finite_set_element|atom int, size int
+gaussian_rational|re rational_number, im rational_number
+factorization|primes numeric[], powers int[]
+multiset|elements int[], n int
+standard_tableau|row_word int[]
+dyck_path|steps int[]
+set_composition|labels int[]
+factoradic_numeral|digits int[]
+gaussian_integer|re int, im int
+rational_number|numerator int, denominator int
+binary_word|bits int[]
+integer_partition|parts int[]
+binary_tree|shape int[]
+signed_subset|coords int[], n int
+modular_residue|residue int, modulus int
+gaussian_fractional|re fractional_number, im fractional_number
+set_partition|rgs int[]
+gelfand_tsetlin_pattern|rows int[]
+rook_placement|cols int[]
+alternating_sign_matrix|matrix int[]
+standard_tableau_pair|p standard_tableau, q standard_tableau
+semistandard_tableau|entries int[], shape int[]
+skew_tableau|lam int[], mu int[], row_word int[]
+rooted_labeled_tree|parent int[]
+plane_tree|degrees int[]
+non_crossing_tree|edges int[]
+labeled_graph|n int, edges int[]
+k_ary_tree|shape int[]
+labeled_tree|prufer int[]
+unlabeled_free_tree|levels int[]
+phylogenetic_tree|inserts int[]
+ordered_tree|steps int[]
+dissection|diagonals int[], m int
+increasing_binary_tree|root int, left_child int[], right_child int[]
+rooted_unlabeled_tree|levels int[]
+perfect_matching|pairs int[]
+goldbach_partition|p int, q int
+collatz_trajectory|terms int[]
+egyptian_fraction|denominators int[]
+hyperbinary_word|digits int[]
+pythagorean_triple|leg_a int, leg_b int, hypotenuse int
+square_decomposition|root numeric, square_free numeric
+k_motzkin_path|steps int[]
+continued_fraction|terms int[]
+colored_motzkin_path|steps int[], colors int[]
+distribution_match_hit|stat_collection text, stat_id text, map_path text[], q_a numeric, q_d numeric
+k_dyck_path|steps int[]
+delannoy_path|steps int[]
+rational_dyck_path|steps int[]
+motzkin_path|steps int[]
+schroeder_path|steps int[]
+core_partition|parts int[]
+total_partition|steps int[]
+lukasiewicz_path|steps int[]
+weak_composition|parts int[]
+find_stat_hit|stat_collection text, stat_id text, map_path text[], q_a numeric, q_d numeric
+ternary_gray_code|digits int[]
+ascent_sequence|terms int[]
+signed_permutation|image int[]
+ordered_factorization|factors int[]
+skew_partition|lam int[], mu int[]
+plane_partition|entries int[], shape int[]
+endofunction|images int[]
+multiplicative_partition|factors int[]
+arrangement|word int[]
+decorated_permutation|word int[]
+surjection|values int[]
+signed_set_composition|labels int[], signs int[]
+tournament|n int, reversed int[]
+permutation_cycles|cycles int[]
+permutation_inversion|code int[]
+parking_function|spots int[]
+affine_permutation|affine_window int[]
+subexcedant_seq|terms int[]
+colored_permutation|image int[], colors int[]

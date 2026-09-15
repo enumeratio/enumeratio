@@ -1,0 +1,412 @@
+{
+  "arithmetic": [
+    {
+      "in": "2 + 2",
+      "out": "\u001b[2mOut[1]= \u001b[0m4"
+    },
+    {
+      "in": "1/2 + 1/3",
+      "out": "\u001b[2mOut[2]= \u001b[0m5 / 6"
+    },
+    {
+      "in": "2^10",
+      "out": "\u001b[2mOut[3]= \u001b[0m1_024"
+    },
+    {
+      "in": "Sqrt(144)",
+      "out": "\u001b[2mOut[4]= \u001b[0m12"
+    }
+  ],
+  "big-numbers": [
+    {
+      "in": "3^40",
+      "out": "\u001b[2mOut[1]= \u001b[0m12_157_665_459_056_928_801"
+    },
+    {
+      "in": "Factorial(25)",
+      "out": "\u001b[2mOut[2]= \u001b[0m15_511_210_043_330_985_984_000_000"
+    },
+    {
+      "in": "22/7 - Pi",
+      "out": "\u001b[2mOut[3]= \u001b[0m22 / 7 - Pi"
+    }
+  ],
+  "constants": [
+    {
+      "in": "e^(i*Pi)",
+      "out": "\u001b[2mOut[1]= \u001b[0m-1"
+    },
+    {
+      "in": "Cos(Pi/3)",
+      "out": "\u001b[2mOut[2]= \u001b[0m1 / 2"
+    },
+    {
+      "in": "Ln(e^2)",
+      "out": "\u001b[2mOut[3]= \u001b[0m2"
+    }
+  ],
+  "symbolic": [
+    {
+      "in": "x^2 + 2x + 1",
+      "out": "\u001b[2mOut[1]= \u001b[0mx ^ 2 + 2x + 1"
+    },
+    {
+      "in": "Sin(x)^2 + Cos(x)^2",
+      "out": "\u001b[2mOut[2]= \u001b[0mSin(x) ^ 2 + Cos(x) ^ 2"
+    },
+    {
+      "in": "(x + 1)*(x - 1)",
+      "out": "\u001b[2mOut[3]= \u001b[0m(x - 1) * (x + 1)"
+    }
+  ],
+  "number-theory": [
+    {
+      "in": "GCD(48, 60)",
+      "out": "\u001b[2mOut[1]= \u001b[0m12"
+    },
+    {
+      "in": "Totient(36)",
+      "out": "\u001b[2mOut[2]= \u001b[0m12"
+    },
+    {
+      "in": "Mod(2^10, 7)",
+      "out": "\u001b[2mOut[3]= \u001b[0m2"
+    }
+  ],
+  "calculus": [
+    {
+      "in": "$\\frac{d}{dx}(x^3 + 2x)$",
+      "out": "\u001b[2mOut[1]= \u001b[0m3 * x ^ 2 + 2"
+    },
+    {
+      "in": "$\\int_0^1 x^2 dx$",
+      "out": "\u001b[2mOut[2]= \u001b[0m1 / 3"
+    },
+    {
+      "in": "$\\sum_{k=1}^{10} k^2$",
+      "out": "\u001b[2mOut[3]= \u001b[0m385"
+    },
+    {
+      "in": "$\\lim_{x\\to 0} \\frac{\\sin x}{x}$",
+      "out": "\u001b[2mOut[4]= \u001b[0m1"
+    }
+  ],
+  "binomial": [
+    {
+      "in": "Binomial(10, 3)",
+      "out": "\u001b[2mOut[1]= \u001b[0m120"
+    },
+    {
+      "in": "Binomial(52, 5)",
+      "out": "\u001b[2mOut[2]= \u001b[0m2_598_960"
+    },
+    {
+      "in": "$\\binom{10}{3}$",
+      "out": "\u001b[2mOut[3]= \u001b[0m120"
+    }
+  ],
+  "counting-sequences": [
+    {
+      "in": "Fibonacci(20)",
+      "out": "\u001b[2mOut[1]= \u001b[0m6_765"
+    },
+    {
+      "in": "LucasL(10)",
+      "out": "\u001b[2mOut[2]= \u001b[0m123"
+    },
+    {
+      "in": "CatalanNumber(8)",
+      "out": "\u001b[2mOut[3]= \u001b[0m1_430"
+    },
+    {
+      "in": "Stirling(6, 3)",
+      "out": "\u001b[2mOut[4]= \u001b[0m90"
+    }
+  ],
+  "multinomial": [
+    {
+      "in": "Factorial(8)",
+      "out": "\u001b[2mOut[1]= \u001b[0m40_320"
+    },
+    {
+      "in": "Multinomial(2, 3, 4)",
+      "out": "\u001b[2mOut[2]= \u001b[0m1_260"
+    }
+  ],
+  "perm-stats": [
+    {
+      "in": "Inversions([3, 1, 2])",
+      "out": "\u001b[2mOut[1]= \u001b[0m2"
+    },
+    {
+      "in": "Descents([2, 4, 1, 3])",
+      "out": "\u001b[2mOut[2]= \u001b[0m1"
+    },
+    {
+      "in": "MajorIndex([2, 4, 1, 3])",
+      "out": "\u001b[2mOut[3]= \u001b[0m2"
+    }
+  ],
+  "perm-stats-more": [
+    {
+      "in": "Ascents([1, 3, 2, 5, 4])",
+      "out": "\u001b[2mOut[1]= \u001b[0m2"
+    },
+    {
+      "in": "Excedances(Permutation([3, 1, 2]))",
+      "out": "\u001b[2mOut[2]= \u001b[0m1"
+    },
+    {
+      "in": "FixedPoints(Permutation([1, 3, 2]))",
+      "out": "\u001b[2mOut[3]= \u001b[0m1"
+    }
+  ],
+  "syntaxes": [
+    {
+      "in": "Binomial(10, 3)",
+      "out": "\u001b[2mOut[1]= \u001b[0m120"
+    },
+    {
+      "in": "$\\binom{10}{3}$",
+      "out": "\u001b[2mOut[2]= \u001b[0m120"
+    },
+    {
+      "in": ":latex \\binom{10}{3}",
+      "out": "\u001b[2mOut[3]= \u001b[0m120"
+    },
+    {
+      "in": ":wolfram Binomial[10, 3]",
+      "out": "\u001b[2mOut[4]= \u001b[0m120"
+    },
+    {
+      "in": ":mathjson [\"Binomial\", 10, 3]",
+      "out": "\u001b[2mOut[5]= \u001b[0m120"
+    }
+  ],
+  "islands": [
+    {
+      "in": "Binomial(10, 3) + $\\frac{1}{2}$",
+      "out": "\u001b[2mOut[1]= \u001b[0m241 / 2"
+    },
+    {
+      "in": "2 * $\\sqrt{2}$",
+      "out": "\u001b[2mOut[2]= \u001b[0m2 * Sqrt(2)"
+    }
+  ],
+  "input-mode": [
+    {
+      "in": ":in latex",
+      "out": "\u001b[2m  default input -> latex\u001b[0m"
+    },
+    {
+      "in": "\\binom{6}{2}",
+      "out": "\u001b[2mOut[1]= \u001b[0m15"
+    },
+    {
+      "in": "\\frac{1}{2} + \\frac{1}{3}",
+      "out": "\u001b[2mOut[2]= \u001b[0m5 / 6"
+    },
+    {
+      "in": ":in epsil",
+      "out": "\u001b[2m  default input -> epsil\u001b[0m"
+    },
+    {
+      "in": "Binomial(6, 2)",
+      "out": "\u001b[2mOut[3]= \u001b[0m15"
+    }
+  ],
+  "forms": [
+    {
+      "in": "x^2 + 1",
+      "out": "\u001b[2mOut[1]= \u001b[0mx ^ 2 + 1"
+    },
+    {
+      "in": ":form tex",
+      "out": "\u001b[2m  form -> tex\u001b[0m"
+    },
+    {
+      "in": "x^2 + 1",
+      "out": "\u001b[2mOut[2]= \u001b[0mx^2+1"
+    },
+    {
+      "in": ":form wolfram",
+      "out": "\u001b[2m  form -> wolfram\u001b[0m"
+    },
+    {
+      "in": "x^2 + 1",
+      "out": "\u001b[2mOut[3]= \u001b[0mPlus[Power[x, 2], 1]"
+    },
+    {
+      "in": ":form numpy",
+      "out": "\u001b[2m  form -> numpy\u001b[0m"
+    },
+    {
+      "in": "x^2 + 1",
+      "out": "\u001b[2mOut[4]= \u001b[0mx ** 2 + 1"
+    },
+    {
+      "in": ":form js",
+      "out": "\u001b[2m  form -> js\u001b[0m"
+    },
+    {
+      "in": "x^2 + 1",
+      "out": "\u001b[2mOut[5]= \u001b[0m(_.x * _.x) + 1"
+    },
+    {
+      "in": ":form notatio",
+      "out": "\u001b[2m  form -> notatio\u001b[0m"
+    }
+  ],
+  "compile-targets": [
+    {
+      "in": ":form numpy",
+      "out": "\u001b[2m  form -> numpy\u001b[0m"
+    },
+    {
+      "in": "Sqrt(x^2 + 1)",
+      "out": "\u001b[2mOut[1]= \u001b[0mnp.sqrt(x ** 2 + 1)"
+    },
+    {
+      "in": ":form glsl",
+      "out": "\u001b[2m  form -> glsl\u001b[0m"
+    },
+    {
+      "in": "Sin(x) * Cos(x)",
+      "out": "\u001b[2mOut[2]= \u001b[0msin(x) * cos(x)"
+    },
+    {
+      "in": ":form wgsl",
+      "out": "\u001b[2m  form -> wgsl\u001b[0m"
+    },
+    {
+      "in": "Sin(x) * Cos(x)",
+      "out": "\u001b[2mOut[3]= \u001b[0msin(x) * cos(x)"
+    },
+    {
+      "in": ":form notatio",
+      "out": "\u001b[2m  form -> notatio\u001b[0m"
+    }
+  ],
+  "history": [
+    {
+      "in": "1/2",
+      "out": "\u001b[2mOut[1]= \u001b[0m1 / 2"
+    },
+    {
+      "in": "% * 6",
+      "out": "\u001b[2mOut[2]= \u001b[0m3"
+    },
+    {
+      "in": "% + 1",
+      "out": "\u001b[2mOut[3]= \u001b[0m4"
+    },
+    {
+      "in": "%1 + %2",
+      "out": "\u001b[2mOut[4]= \u001b[0m7 / 2"
+    }
+  ],
+  "variables": [
+    {
+      "in": "let n = 5",
+      "out": "\u001b[2mOut[1]= \u001b[0mn = 5"
+    },
+    {
+      "in": "Factorial(n)",
+      "out": "\u001b[2mOut[2]= \u001b[0m120"
+    },
+    {
+      "in": "let r = 2",
+      "out": "\u001b[2mOut[3]= \u001b[0mr = 2"
+    },
+    {
+      "in": "Binomial(n, r)",
+      "out": "\u001b[2mOut[4]= \u001b[0m10"
+    },
+    {
+      "in": ":vars",
+      "out": "  \u001b[36mn\u001b[0m = 5\n  \u001b[36mr\u001b[0m = 2"
+    }
+  ],
+  "glyph-permutation": [
+    {
+      "in": ":glyph permutation [3, 1, 4, 2]",
+      "out": "\u001b[2m  permutation([3, 1, 4, 2])\u001b[0m",
+      "graphic": "glyph"
+    }
+  ],
+  "glyph-partition": [
+    {
+      "in": ":glyph partition [5, 3, 3, 1]",
+      "out": "\u001b[2m  partition([5, 3, 3, 1])\u001b[0m",
+      "graphic": "glyph"
+    }
+  ],
+  "glyph-composition": [
+    {
+      "in": ":glyph composition [2, 1, 3, 1]",
+      "out": "\u001b[2m  composition([2, 1, 3, 1])\u001b[0m",
+      "graphic": "glyph"
+    }
+  ],
+  "glyph-subset": [
+    {
+      "in": ":glyph subset [1, 3, 4]",
+      "out": "\u001b[2m  subset([1, 3, 4])\u001b[0m",
+      "graphic": "glyph"
+    }
+  ],
+  "glyph-dyck": [
+    {
+      "in": ":glyph dyck [1, 1, 0, 1, 0, 0]",
+      "out": "\u001b[2m  dyck([1, 1, 0, 1, 0, 0])\u001b[0m",
+      "graphic": "glyph"
+    }
+  ],
+  "plot": [
+    {
+      "in": ":plot x^2 - 3",
+      "out": "\u001b[2m  plot(x^2 - 3)\u001b[0m",
+      "graphic": "plot"
+    }
+  ],
+  "plot-trig": [
+    {
+      "in": ":plot Sin(x)",
+      "out": "\u001b[2m  plot(Sin(x))\u001b[0m",
+      "graphic": "plot"
+    },
+    {
+      "in": ":plot 1/x",
+      "out": "\u001b[2m  plot(1/x)\u001b[0m",
+      "graphic": "plot"
+    }
+  ],
+  "formats-registry": [
+    {
+      "in": ":formats",
+      "out": "  InputForm     .txt       text/plain  [export/import]\n  TeX           .tex       application/x-tex  [export/import]\n  MathML        .mml       application/mathml-presentation+xml  [export]\n  MathJSON      .json      application/json  [export/import]\n  WL            .wl .m     application/vnd.wolfram.wl  [export/import]\n  Epsil         .epsil .ep text/x-epsil  [export/import]\n  Python        .py        text/x-python  [export]\n  GLSL          .glsl .frag x-shader/x-fragment  [export]\n  WGSL          .wgsl      text/wgsl  [export]\n  JavaScript    .js .mjs   text/javascript  [export]\n  SVG           .svg       image/svg+xml  [export/import]\n\n  export: InputForm, TeX, MathML, MathJSON, WL, Epsil, Python, GLSL, WGSL, JavaScript, SVG\n  import: InputForm, TeX, MathJSON, WL, Epsil, SVG\n  (display form: notatio)"
+    },
+    {
+      "in": ":mime image/png",
+      "out": "  image/png -> (none)"
+    },
+    {
+      "in": ":mime application/json",
+      "out": "  application/json -> MathJSON"
+    }
+  ],
+  "errors": [
+    {
+      "in": "1 +",
+      "out": "\u001b[31m  error: Epsil: unexpected-symbol +\u001b[0m"
+    },
+    {
+      "in": "\\binom{10}{3}",
+      "out": "\u001b[31m  error: Epsil: unexpected-symbol \\\u001b[0m"
+    },
+    {
+      "in": "1 + 1",
+      "out": "\u001b[2mOut[1]= \u001b[0m2"
+    }
+  ]
+}

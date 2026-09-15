@@ -1,0 +1,157 @@
+{
+  "cli-evaluate": [
+    {
+      "cmd": "notatio \"Binomial(10, 3)\"",
+      "out": "120",
+      "code": 0
+    },
+    {
+      "cmd": "notatio \"1/2 + 1/3\"",
+      "out": "5 / 6",
+      "code": 0
+    },
+    {
+      "cmd": "notatio \"Fibonacci(20)\"",
+      "out": "6_765",
+      "code": 0
+    }
+  ],
+  "cli-forms": [
+    {
+      "cmd": "notatio -f wolfram \"x^2 + 1\"",
+      "out": "Plus[Power[x, 2], 1]",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -f numpy \"Sqrt(x^2 + 1)\"",
+      "out": "np.sqrt(x ** 2 + 1)",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -f js \"Sin(x) + 1\"",
+      "out": "Math.sin(_.x) + 1",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -f glsl \"Sin(x) * Cos(x)\"",
+      "out": "sin(x) * cos(x)",
+      "code": 0
+    }
+  ],
+  "cli-wolfram-form-names": [
+    {
+      "cmd": "notatio -f TeXForm \"1/2 + 1/3\"",
+      "out": "\\frac{5}{6}",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -f FullForm \"x^2 + 1\"",
+      "out": "Plus[Power[x, 2], 1]",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -f InputForm -f tex -f wolfram \"Sqrt(2)\"",
+      "out": "Sqrt(2)\n\\sqrt{2}\nSqrt[2]",
+      "code": 0
+    }
+  ],
+  "cli-json": [
+    {
+      "cmd": "notatio --json \"Binomial(10, 3)\"",
+      "out": "{\"ok\":true,\"input\":\"Binomial(10, 3)\",\"syntax\":\"epsil\",\"form\":\"notatio\",\"result\":\"120\",\"forms\":{\"notatio\":\"120\",\"tex\":\"120\",\"mathjson\":120,\"wolfram\":\"120\"}}",
+      "code": 0
+    },
+    {
+      "cmd": "notatio --json -f tex \"1/3\"",
+      "out": "{\"ok\":true,\"input\":\"1/3\",\"syntax\":\"epsil\",\"form\":\"tex\",\"result\":\"\\\\frac{1}{3}\",\"forms\":{\"tex\":\"\\\\frac{1}{3}\"}}",
+      "code": 0
+    },
+    {
+      "cmd": "notatio --json \"1 +\"",
+      "out": "{\"ok\":false,\"input\":\"1 +\",\"error\":\"Epsil: unexpected-symbol +\"}",
+      "code": 1
+    }
+  ],
+  "cli-convert": [
+    {
+      "cmd": "notatio convert -i wolfram -f tex \"Binomial[10, 3]\"",
+      "out": "\\binom{10}{3}",
+      "code": 0
+    },
+    {
+      "cmd": "notatio convert -f wolfram \"Binomial(10, 3) + 1\"",
+      "out": "Plus[1, Binomial[10, 3]]",
+      "code": 0
+    },
+    {
+      "cmd": "notatio eval -f wolfram \"Binomial(10, 3) + 1\"",
+      "out": "121",
+      "code": 0
+    }
+  ],
+  "cli-numeric": [
+    {
+      "cmd": "notatio -N \"Pi + Sqrt(2)\"",
+      "out": "4.555_806_215_962_888_287_264_332",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -N -p 8 \"Pi\"",
+      "out": "3.141_592_653_589_793",
+      "code": 0
+    },
+    {
+      "cmd": "notatio \"Pi + Sqrt(2)\"",
+      "out": "Sqrt(2) + Pi",
+      "code": 0
+    }
+  ],
+  "cli-lists": [
+    {
+      "cmd": "notatio forms",
+      "out": "  * notatio   notatio (restricted Epsil)\n    tex       TeXForm\n    mathjson  MathJSON\n    wolfram   WolframFullForm\n    epsil     Epsil\n    numpy     NumPy / Python\n    glsl      GLSL\n    wgsl      WGSL\n    js        JavaScript",
+      "code": 0
+    },
+    {
+      "cmd": "notatio forms --json",
+      "out": "[{\"name\":\"notatio\",\"label\":\"notatio (restricted Epsil)\",\"default\":true},{\"name\":\"tex\",\"label\":\"TeXForm\",\"default\":false},{\"name\":\"mathjson\",\"label\":\"MathJSON\",\"default\":false},{\"name\":\"wolfram\",\"label\":\"WolframFullForm\",\"default\":false},{\"name\":\"epsil\",\"label\":\"Epsil\",\"default\":false},{\"name\":\"numpy\",\"label\":\"NumPy / Python\",\"default\":false},{\"name\":\"glsl\",\"label\":\"GLSL\",\"default\":false},{\"name\":\"wgsl\",\"label\":\"WGSL\",\"default\":false},{\"name\":\"js\",\"label\":\"JavaScript\",\"default\":false}]",
+      "code": 0
+    },
+    {
+      "cmd": "notatio completion zsh",
+      "out": "#compdef notatio\n# zsh completion for notatio -- eval \"$(notatio completion zsh)\"\n_notatio() {\n  local -a subcommands forms syntaxes\n  subcommands=(eval convert forms formats serve completion)\n  forms=(notatio tex mathjson wolfram epsil numpy glsl wgsl js)\n  syntaxes=(latex mathjson wolfram epsil)\n  _arguments -s \\\n    '(-f --form)'{-f,--form}'[output form]:form:(${forms})' \\\n    '(-i --in)'{-i,--in}'[input syntax]:syntax:(${syntaxes})' \\\n    '-c[expression]:expr:' \\\n    '(-N --numeric)'{-N,--numeric}'[numeric approximation]' \\\n    '(-p --precision)'{-p,--precision}'[significant digits]:digits:' \\\n    '--json[structured JSON output]' \\\n    '(-h --help)'{-h,--help}'[show help]' \\\n    '(-V --version)'{-V,--version}'[show version]' \\\n    '1:subcommand or expression:(${subcommands})' \\\n    '*::expr:'\n}\ncompdef _notatio notatio",
+      "code": 0
+    }
+  ],
+  "cli-syntaxes": [
+    {
+      "cmd": "notatio -i latex \"\\binom{10}{3}\"",
+      "out": "120",
+      "code": 0
+    },
+    {
+      "cmd": "notatio -i wolfram \"Inversions[List[3,1,2]]\"",
+      "out": "2",
+      "code": 0
+    }
+  ],
+  "cli-errors": [
+    {
+      "cmd": "notatio \"1 +\"",
+      "out": "[stderr] error: Epsil: unexpected-symbol +",
+      "code": 1
+    }
+  ],
+  "cli-help": [
+    {
+      "cmd": "notatio --help",
+      "out": "notatio — evaluate compute-engine expressions\n\nUsage:\n  notatio [options] <expr>       evaluate <expr> and print the result\n  notatio eval [options] <expr>  same, explicit\n  notatio convert [options] <expr>\n                                 re-render <expr> in another form without evaluating\n  echo <expr> | notatio          read the expression from stdin (or pass \"-\")\n  notatio                        (a TTY, no expr) start the interactive REPL\n  notatio forms | formats        list the output forms | the format registry\n  notatio completion <shell>     print a completion script: bash, zsh, fish\n  notatio serve [--port N]       run the local HTTP compute host\n\nOptions:\n  -f, --form <name>   output form: notatio, tex, mathjson, wolfram, epsil, numpy, glsl, wgsl, js\n                      (repeatable; Wolfram names like TeXForm, InputForm, FullForm work too)\n  -i, --in <syntax>   input syntax: latex, mathjson, wolfram, epsil (default epsil)\n  -c <expr>           the expression to evaluate\n  -N, --numeric       numeric approximation of the result\n  -p, --precision <n> working precision in significant digits\n      --json          print a structured result: { ok, input, syntax, form, result, forms }\n  -h, --help          show this help\n  -V, --version       show the version\n\nDefaults for --form, --in, and --precision can live in a config file\n($NOTATIO_CONFIG, ~/.config/notatio/config.json, or ~/.notatiorc).",
+      "code": 0
+    },
+    {
+      "cmd": "notatio --version",
+      "out": "0.0.0",
+      "code": 0
+    }
+  ]
+}

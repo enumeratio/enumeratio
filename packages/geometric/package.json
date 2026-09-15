@@ -1,0 +1,38 @@
+{
+  "name": "@enumeratio/geometric",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The geometric-algebra layer over @enumeratio/hypercomplex: grade projection, the outer and regressive products, the contractions, the involutions and the Poincare dual.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/hypercomplex": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0"
+  }
+}

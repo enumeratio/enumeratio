@@ -1,0 +1,106 @@
+{
+  "\\frac{x+1}{y-2}": {
+    "canonical": "(x + 1) / (y - 2)",
+    "raw": "(x + 1) / (y - 2)"
+  },
+  "1 - 2x": {
+    "canonical": "-2 * x + 1",
+    "raw": "1 - 2x"
+  },
+  "x - y - z": {
+    "canonical": "x - y - z",
+    "raw": "x - y - z"
+  },
+  "a - (b - c)": {
+    "canonical": "a - b + c",
+    "raw": "a - (b - c)"
+  },
+  "-x": {
+    "canonical": "-x",
+    "raw": "-x"
+  },
+  "x \\ge 3": {
+    "canonical": "3 <= x",
+    "raw": "x >= 3"
+  },
+  "\\int_0^1 x^2 dx": {
+    "canonical": "Integrate(x ^ 2, (x, 0, 1))",
+    "raw": "Integrate(x ^ 2, (x, 0, 1))"
+  },
+  "\\sum_{n=1}^{10} n^2": {
+    "canonical": "Sum(n ^ 2, (n, 1, 10))",
+    "raw": "Sum(n ^ 2, (n, 1, 10))"
+  },
+  "\\prod_{k=1}^{5} k": {
+    "canonical": "Product(k, (k, 1, 5))",
+    "raw": "Product(k, (k, 1, 5))"
+  },
+  "\\lim_{x\\to 0}\\frac{\\sin x}{x}": {
+    "canonical": "Limit(Sin(x) / x, 0)",
+    "raw": "Limit(Sin(x) / x, 0)"
+  },
+  "e^{i\\pi}+1": {
+    "canonical": "1 + ExponentialE ^ (i * Pi)",
+    "raw": "e ^ (i * Pi) + 1"
+  },
+  "2 + 3i": {
+    "canonical": "2 + 3i",
+    "raw": "2 + 3i"
+  },
+  "\\sin(x)\\cos(y)": {
+    "canonical": "Sin(x) * Cos(y)",
+    "raw": "Sin(x) * Cos(y)"
+  },
+  "\\sqrt{x}": {
+    "canonical": "Sqrt(x)",
+    "raw": "Sqrt(x)"
+  },
+  "\\sqrt[3]{x}": {
+    "canonical": "Root(x, 3)",
+    "raw": "Root(x, 3)"
+  },
+  "\\frac{1}{2}": {
+    "canonical": "1 / 2",
+    "raw": "1 / 2"
+  },
+  "x^2+1": {
+    "canonical": "x ^ 2 + 1",
+    "raw": "x ^ 2 + 1"
+  },
+  "10^{-3}": {
+    "canonical": "10 ^ -3",
+    "raw": "10 ^ (-3)"
+  },
+  "\\binom{5}{3}": {
+    "canonical": "Binomial(5, 3)",
+    "raw": "Binomial(5, 3)"
+  },
+  "|x|": {
+    "canonical": "Abs(x)",
+    "raw": "Abs(x)"
+  },
+  "\\log_2(8)": {
+    "canonical": "Log(8, 2)",
+    "raw": "Lb(8)"
+  },
+  "\\begin{pmatrix}1&2\\\\3&4\\end{pmatrix}": {
+    "canonical": "Matrix([[1, 2], [3, 4]])",
+    "raw": "Matrix([[1, 2], [3, 4]])"
+  },
+  "\\{1,2,3\\}": {
+    "canonical": "{1, 2, 3}",
+    "raw": "{1, 2, 3}"
+  },
+  "[1,2,3]": {
+    "canonical": "[1, 2, 3]",
+    "raw": "[1, 2, 3]"
+  },
+  "x_1 + x_2": {
+    "canonical": "x_1 + x_2",
+    "raw": "x_1 + x_2"
+  },
+  "\\frac{d}{dx} x^2": {
+    "canonical": "D(x ^ 2, x)",
+    "raw": "D(x ^ 2, x)"
+  }
+}

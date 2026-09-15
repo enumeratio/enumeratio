@@ -1,0 +1,46 @@
+{
+  "name": "@enumeratio/reference",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Structured, verified example data for compute-engine functions — the single source for reference pages and their tests.",
+  "license": "WTFPL",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vp test",
+    "check": "vp check",
+    "crosswalk:collect": "vp node scripts/collect-crosswalk.ts",
+    "crosswalk:fetch": "vp node scripts/fetch-fungrim-symbols.ts && vp node scripts/fetch-inventories.ts && vp node scripts/fetch-wikidata.ts && vp node scripts/fetch-dlmf.ts",
+    "crosswalk:find": "vp node scripts/find-oeis.ts && vp node scripts/find-findstat.ts",
+    "crosswalk:check": "vp node scripts/check-crosswalk.ts",
+    "crosswalk:verify": "vp node scripts/verify-fungrim.ts",
+    "crosswalk:audit": "vp node scripts/audit-wikidata.ts"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/braid": "workspace:*",
+    "@enumeratio/catalog": "workspace:*",
+    "@enumeratio/collections": "workspace:*",
+    "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/domains": "workspace:*",
+    "@enumeratio/entry": "workspace:*",
+    "@enumeratio/groupalgebra": "workspace:*",
+    "@enumeratio/hecke": "workspace:*",
+    "@enumeratio/hopf": "workspace:*",
+    "@enumeratio/hypercomplex": "workspace:*",
+    "@enumeratio/incidence": "workspace:*",
+    "@enumeratio/modular": "workspace:*",
+    "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/oracle": "workspace:*",
+    "@enumeratio/quiver": "workspace:*",
+    "@enumeratio/statistics": "workspace:*",
+    "@enumeratio/wolfram": "workspace:*",
+    "@types/node": "^24",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

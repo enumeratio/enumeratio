@@ -1,0 +1,5164 @@
+{
+  "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+  "summary": {
+    "unmapped": 164,
+    "agree": 671,
+    "disagree": 24
+  },
+  "cases": [
+    {
+      "id": "Abs#1",
+      "source": "Abs[-5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Abs#10",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Abs#2",
+      "source": "Abs[5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Abs#3",
+      "source": "Abs[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Abs#4",
+      "source": "Abs[Rational[-7, 2]]",
+      "verdict": "agree",
+      "theirs": "Rational[7, 2]"
+    },
+    {
+      "id": "Abs#5",
+      "source": "Abs[Complex[3, 4]]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Abs#6",
+      "source": "Abs[List[-1, 2, -3]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3]"
+    },
+    {
+      "id": "Abs#7",
+      "source": "(Abs[-8] == Abs[8])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Abs#8",
+      "source": "LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Abs#9",
+      "source": "Abs[Subtract[70, 95]]",
+      "verdict": "agree",
+      "theirs": "25"
+    },
+    {
+      "id": "AlexanderPolynomial#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlexanderPolynomial#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlexanderPolynomial#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlexanderPolynomial#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlgebraDimension#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlgebraDimension#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlgebraDimension#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlgebraSignature#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlgebraSignature#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "AlgebraSignature#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Antipode#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Antipode#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Antipode#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Append#1",
+      "source": "Append[List[1, 2, 3], 4]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "Append#2",
+      "source": "(Append[List[1, 2, 3], 4] == Join[List[1, 2, 3], List[4]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Append#3",
+      "source": "Append[List[1, 2, 3], List[9]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, List[9]]"
+    },
+    {
+      "id": "Arccos#1",
+      "source": "ArcCos[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Arccos#2",
+      "source": "ArcCos[Rational[1, 2]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 3], Pi]"
+    },
+    {
+      "id": "Arccos#3",
+      "source": "ArcCos[0]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 2], Pi]"
+    },
+    {
+      "id": "Arccos#4",
+      "source": "ArcCos[-1]",
+      "verdict": "agree",
+      "theirs": "Pi"
+    },
+    {
+      "id": "Arccos#5",
+      "source": "(Cos[ArcCos[Rational[1, 2]]] == Rational[1, 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Arccos#6",
+      "source": "ArcCos[2]",
+      "verdict": "agree",
+      "theirs": "ArcCos[2]"
+    },
+    {
+      "id": "Arcsin#1",
+      "source": "ArcSin[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Arcsin#2",
+      "source": "ArcSin[Rational[1, 2]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Pi]"
+    },
+    {
+      "id": "Arcsin#3",
+      "source": "ArcSin[1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 2], Pi]"
+    },
+    {
+      "id": "Arcsin#4",
+      "source": "ArcSin[-1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[-1, 2], Pi]"
+    },
+    {
+      "id": "Arcsin#5",
+      "source": "(Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Arcsin#6",
+      "source": "(Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Arcsin#7",
+      "source": "ArcSin[2]",
+      "verdict": "agree",
+      "theirs": "ArcSin[2]"
+    },
+    {
+      "id": "Arctan#1",
+      "source": "ArcTan[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Arctan#2",
+      "source": "ArcTan[1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 4], Pi]"
+    },
+    {
+      "id": "Arctan#3",
+      "source": "ArcTan[Sqrt[3]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 3], Pi]"
+    },
+    {
+      "id": "Arctan#4",
+      "source": "(Tan[ArcTan[1]] == 1)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Arctan#5",
+      "source": "ArcTan[Infinity]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 2], Pi]"
+    },
+    {
+      "id": "Arctan#6",
+      "source": "ArcTan[-Infinity]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[-1, 2], Pi]"
+    },
+    {
+      "id": "Arctan#7",
+      "source": "ArcTan[1, 1]",
+      "verdict": "disagree",
+      "theirs": "Times[Rational[1, 4], Pi]"
+    },
+    {
+      "id": "At#1",
+      "source": "Part[List[1, 2, 3, 4], 2]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "At#2",
+      "source": "Part[List[1, 2, 3, 4], -1]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "At#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "At#4",
+      "source": "Part[Part[List[List[1, 2], List[3, 4]], 2], 1]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "At#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "At#6",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "At#7",
+      "source": "Part[List[1, 2, 3], 10]",
+      "verdict": "disagree",
+      "theirs": "Part[List[1, 2, 3], 10]"
+    },
+    {
+      "id": "Basis#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Basis#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Basis#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "BellNumber#1",
+      "source": "BellB[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "BellNumber#2",
+      "source": "BellB[1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "BellNumber#3",
+      "source": "BellB[3]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "BellNumber#4",
+      "source": "BellB[5]",
+      "verdict": "agree",
+      "theirs": "52"
+    },
+    {
+      "id": "BellNumber#5",
+      "source": "BellB[10]",
+      "verdict": "agree",
+      "theirs": "115975"
+    },
+    {
+      "id": "BellNumber#6",
+      "source": "(BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "BellNumber#7",
+      "source": "BellB[4]",
+      "verdict": "agree",
+      "theirs": "15"
+    },
+    {
+      "id": "BellNumber#8",
+      "source": "BellB[-1]",
+      "verdict": "agree",
+      "theirs": "BellB[-1]"
+    },
+    {
+      "id": "BernoulliB#1",
+      "source": "BernoulliB[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "BernoulliB#2",
+      "source": "BernoulliB[1]",
+      "verdict": "agree",
+      "theirs": "Rational[-1, 2]"
+    },
+    {
+      "id": "BernoulliB#3",
+      "source": "BernoulliB[2]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 6]"
+    },
+    {
+      "id": "BernoulliB#4",
+      "source": "BernoulliB[4]",
+      "verdict": "agree",
+      "theirs": "Rational[-1, 30]"
+    },
+    {
+      "id": "BernoulliB#5",
+      "source": "BernoulliB[12]",
+      "verdict": "agree",
+      "theirs": "Rational[-691, 2730]"
+    },
+    {
+      "id": "BernoulliB#6",
+      "source": "(BernoulliB[5] == 0)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "BernoulliB#7",
+      "source": "Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]",
+      "verdict": "agree",
+      "theirs": "30"
+    },
+    {
+      "id": "BernoulliB#8",
+      "source": "BernoulliB[-1]",
+      "verdict": "agree",
+      "theirs": "BernoulliB[-1]"
+    },
+    {
+      "id": "BernoulliB#9",
+      "source": "BernoulliB[20]",
+      "verdict": "agree",
+      "theirs": "Rational[-174611, 330]"
+    },
+    {
+      "id": "Beta#1",
+      "source": "Beta[2, 3]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 12]"
+    },
+    {
+      "id": "Beta#2",
+      "source": "Beta[1, 1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Beta#3",
+      "source": "Beta[3, 3]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 30]"
+    },
+    {
+      "id": "Beta#4",
+      "source": "Beta[List[1, 2], 2]",
+      "verdict": "agree",
+      "theirs": "List[Rational[1, 2], Rational[1, 6]]"
+    },
+    {
+      "id": "Beta#5",
+      "source": "(Beta[2, 5] == Beta[5, 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Beta#6",
+      "source": "(Times[9, Times[Beta[4, 6], Binomial[8, 3]]] == 1)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Beta#7",
+      "source": "Beta[0.5, 0.5]",
+      "verdict": "agree",
+      "theirs": "3.1415926535897936`"
+    },
+    {
+      "id": "Beta#8",
+      "source": "Beta[-1, 2]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "BetaRegularized#1",
+      "source": "BetaRegularized[0, 2, 3]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "BetaRegularized#2",
+      "source": "BetaRegularized[1, 2, 3]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "BetaRegularized#3",
+      "source": "BetaRegularized[0.5, 2, 3]",
+      "verdict": "agree",
+      "theirs": "0.6875000000000003`"
+    },
+    {
+      "id": "BetaRegularized#4",
+      "source": "BetaRegularized[0.5, 1, 1]",
+      "verdict": "agree",
+      "theirs": "0.5`"
+    },
+    {
+      "id": "BetaRegularized#5",
+      "source": "(Plus[BetaRegularized[0.3, 2, 3], BetaRegularized[0.7, 3, 2]] == 1)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "BetaRegularized#6",
+      "source": "BetaRegularized[0.5, 10, 10]",
+      "verdict": "agree",
+      "theirs": "0.49999999999999906`"
+    },
+    {
+      "id": "BetaRegularized#7",
+      "source": "(BetaRegularized[0.7, 3, 2] == Plus[Power[0.7, 4], Times[4, 0.3, Power[0.7, 3]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "BetaRegularized#8",
+      "source": "BetaRegularized[2, 2, 3]",
+      "verdict": "disagree",
+      "theirs": "8"
+    },
+    {
+      "id": "Binomial#1",
+      "source": "Binomial[5, 2]",
+      "verdict": "agree",
+      "theirs": "10"
+    },
+    {
+      "id": "Binomial#10",
+      "source": "Binomial[5, 7]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Binomial#11",
+      "source": "Binomial[5, -1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Binomial#12",
+      "source": "Binomial[-5, 2]",
+      "verdict": "agree",
+      "theirs": "15"
+    },
+    {
+      "id": "Binomial#2",
+      "source": "Binomial[10, 3]",
+      "verdict": "agree",
+      "theirs": "120"
+    },
+    {
+      "id": "Binomial#3",
+      "source": "Binomial[4, 2]",
+      "verdict": "agree",
+      "theirs": "6"
+    },
+    {
+      "id": "Binomial#4",
+      "source": "Binomial[5, 0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Binomial#5",
+      "source": "Binomial[5, 5]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Binomial#6",
+      "source": "(Binomial[10, 3] == Binomial[10, 7])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Binomial#7",
+      "source": "(Plus[Binomial[9, 2], Binomial[9, 3]] == Binomial[10, 3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Binomial#8",
+      "source": "(Plus[Binomial[4, 0], Binomial[4, 1], Binomial[4, 2], Binomial[4, 3], Binomial[4, 4]] == Power[2, 4])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Binomial#9",
+      "source": "Binomial[52, 5]",
+      "verdict": "agree",
+      "theirs": "2598960"
+    },
+    {
+      "id": "Braid#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Braid#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Braid#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Braid#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "BrauerAlgebra#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "BrauerAlgebra#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "BrauerAlgebra#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "BrauerAlgebra#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "CatalanNumber#1",
+      "source": "CatalanNumber[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "CatalanNumber#10",
+      "source": "CatalanNumber[-1]",
+      "verdict": "disagree",
+      "theirs": "-1"
+    },
+    {
+      "id": "CatalanNumber#11",
+      "source": "CatalanNumber[15]",
+      "verdict": "agree",
+      "theirs": "9694845"
+    },
+    {
+      "id": "CatalanNumber#2",
+      "source": "CatalanNumber[1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "CatalanNumber#3",
+      "source": "CatalanNumber[5]",
+      "verdict": "agree",
+      "theirs": "42"
+    },
+    {
+      "id": "CatalanNumber#4",
+      "source": "CatalanNumber[10]",
+      "verdict": "agree",
+      "theirs": "16796"
+    },
+    {
+      "id": "CatalanNumber#5",
+      "source": "Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]",
+      "verdict": "agree",
+      "theirs": "42"
+    },
+    {
+      "id": "CatalanNumber#6",
+      "source": "Subtract[Binomial[10, 5], Binomial[10, 6]]",
+      "verdict": "agree",
+      "theirs": "42"
+    },
+    {
+      "id": "CatalanNumber#7",
+      "source": "Divide[CatalanNumber[6], CatalanNumber[5]]",
+      "verdict": "agree",
+      "theirs": "Rational[22, 7]"
+    },
+    {
+      "id": "CatalanNumber#8",
+      "source": "CatalanNumber[3]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "CatalanNumber#9",
+      "source": "CatalanNumber[4]",
+      "verdict": "agree",
+      "theirs": "14"
+    },
+    {
+      "id": "Ceil#1",
+      "source": "Ceiling[Rational[7, 2]]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Ceil#2",
+      "source": "Ceiling[3.2]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Ceil#3",
+      "source": "Ceiling[5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Ceil#4",
+      "source": "Ceiling[List[1.2, -1.2, 3.7]]",
+      "verdict": "agree",
+      "theirs": "List[2, -1, 4]"
+    },
+    {
+      "id": "Ceil#5",
+      "source": "(Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Ceil#6",
+      "source": "(Ceiling[5] == Floor[5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Ceil#7",
+      "source": "Ceiling[Divide[17, 5]]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Ceil#8",
+      "source": "Ceiling[-3.7]",
+      "verdict": "agree",
+      "theirs": "-3"
+    },
+    {
+      "id": "Ceil#9",
+      "source": "Ceiling[Indeterminate]",
+      "verdict": "agree",
+      "theirs": "Indeterminate"
+    },
+    {
+      "id": "ChineseRemainder#1",
+      "source": "ChineseRemainder[List[3, 4], List[4, 5]]",
+      "verdict": "agree",
+      "theirs": "19"
+    },
+    {
+      "id": "ChineseRemainder#2",
+      "source": "ChineseRemainder[List[2, 3, 5], List[3, 5, 7]]",
+      "verdict": "agree",
+      "theirs": "68"
+    },
+    {
+      "id": "ChineseRemainder#3",
+      "source": "And[(Mod[ChineseRemainder[List[3, 4], List[4, 5]], 4] == 3), (Mod[ChineseRemainder[List[3, 4], List[4, 5]], 5] == 4)]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "ChineseRemainder#4",
+      "source": "ChineseRemainder[List[1, 2], List[6, 10]]",
+      "verdict": "agree",
+      "theirs": "ChineseRemainder[List[1, 2], List[6, 10]]"
+    },
+    {
+      "id": "Chop#1",
+      "source": "Chop[1.2]",
+      "verdict": "agree",
+      "theirs": "1.2`"
+    },
+    {
+      "id": "Chop#2",
+      "source": "Chop[1*^-11]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 100000000000]"
+    },
+    {
+      "id": "Chop#3",
+      "source": "Chop[-1*^-11]",
+      "verdict": "agree",
+      "theirs": "Rational[-1, 100000000000]"
+    },
+    {
+      "id": "Chop#4",
+      "source": "Chop[Complex[1*^-12, 3]]",
+      "verdict": "agree",
+      "theirs": "Complex[Rational[1, 1000000000000], 3]"
+    },
+    {
+      "id": "Chop#5",
+      "source": "Chop[Subtract[Times[3, N[Divide[1, 3]]], 1]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Chop#6",
+      "source": "Chop[Plus[1, 1*^-12]]",
+      "verdict": "agree",
+      "theirs": "Rational[1000000000001, 1000000000000]"
+    },
+    {
+      "id": "Chop#7",
+      "source": "Chop[1.0000000001*^-10]",
+      "verdict": "agree",
+      "theirs": "1.0000000001`*^-10"
+    },
+    {
+      "id": "Clamp#1",
+      "source": "Clip[5, List[0, 3]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Clamp#2",
+      "source": "Clip[-1, List[0, 3]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Clamp#3",
+      "source": "Clip[2, List[0, 3]]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Clamp#4",
+      "source": "(Clip[Clip[5, List[0, 3]], List[0, 3]] == Clip[5, List[0, 3]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Clamp#5",
+      "source": "Clip[112, List[0, 100]]",
+      "verdict": "agree",
+      "theirs": "100"
+    },
+    {
+      "id": "Clamp#6",
+      "source": "Clip[5, List[3, 0]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Clamp#7",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ClassSum#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ClassSum#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ClassSum#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ClassSum#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ConjugacyClasses#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ConjugacyClasses#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ConjugacyClasses#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ConjugacyClasses#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ContinuedFraction#1",
+      "source": "ContinuedFraction[Rational[355, 113]]",
+      "verdict": "agree",
+      "theirs": "List[3, 7, 16]"
+    },
+    {
+      "id": "ContinuedFraction#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ContinuedFraction#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ContinuedFraction#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Coproduct#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Coproduct#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Coproduct#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Cos#1",
+      "source": "Cos[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Cos#10",
+      "source": "Cos[2]",
+      "verdict": "agree",
+      "theirs": "Cos[2]"
+    },
+    {
+      "id": "Cos#11",
+      "source": "Cos[Divide[Pi, 5]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 4], Plus[1, Power[5, Rational[1, 2]]]]"
+    },
+    {
+      "id": "Cos#2",
+      "source": "Cos[Divide[Pi, 6]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 2], Power[3, Rational[1, 2]]]"
+    },
+    {
+      "id": "Cos#3",
+      "source": "Cos[Divide[Pi, 4]]",
+      "verdict": "agree",
+      "theirs": "Power[2, Rational[-1, 2]]"
+    },
+    {
+      "id": "Cos#4",
+      "source": "Cos[Divide[Pi, 3]]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 2]"
+    },
+    {
+      "id": "Cos#5",
+      "source": "Cos[Divide[Pi, 2]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Cos#6",
+      "source": "Cos[Pi]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Cos#7",
+      "source": "(Cos[Minus[Divide[Pi, 3]]] == Cos[Divide[Pi, 3]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Cos#8",
+      "source": "(Cos[Divide[Pi, 6]] == Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Cos#9",
+      "source": "Cos[List[0, Divide[Pi, 2], Pi]]",
+      "verdict": "agree",
+      "theirs": "List[1, 0, -1]"
+    },
+    {
+      "id": "Cosh#1",
+      "source": "N[Cosh[0]]",
+      "verdict": "agree",
+      "theirs": "1.`"
+    },
+    {
+      "id": "Cosh#2",
+      "source": "N[Cosh[1]]",
+      "verdict": "agree",
+      "theirs": "1.5430806348152437`"
+    },
+    {
+      "id": "Cosh#3",
+      "source": "(Cosh[Minus[1]] == Cosh[1])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Cosh#4",
+      "source": "(Subtract[Power[Cosh[1], 2], Power[Sinh[1], 2]] == 1)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Cosh#5",
+      "source": "Cosh[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Cot#1",
+      "source": "Cot[Divide[Pi, 6]]",
+      "verdict": "agree",
+      "theirs": "Power[3, Rational[1, 2]]"
+    },
+    {
+      "id": "Cot#2",
+      "source": "Cot[Divide[Pi, 4]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Cot#3",
+      "source": "Cot[Divide[Pi, 3]]",
+      "verdict": "agree",
+      "theirs": "Power[3, Rational[-1, 2]]"
+    },
+    {
+      "id": "Cot#4",
+      "source": "(Cot[Divide[Pi, 4]] == Divide[1, Tan[Divide[Pi, 4]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Cot#5",
+      "source": "(Plus[1, Power[Cot[Divide[Pi, 6]], 2]] == Power[Csc[Divide[Pi, 6]], 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Cot#6",
+      "source": "Cot[0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Cot#7",
+      "source": "Cot[Divide[Pi, 2]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Count#1",
+      "source": "Count[List[1, 2, 2, 3, 2], 2]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Count#2",
+      "source": "Count[List[1, 2, 2, 3, 2, 4], 2]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Count#3",
+      "source": "Count[List[1, 2, 3], 9]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Csc#1",
+      "source": "Csc[Divide[Pi, 6]]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Csc#2",
+      "source": "Csc[Divide[Pi, 4]]",
+      "verdict": "agree",
+      "theirs": "Power[2, Rational[1, 2]]"
+    },
+    {
+      "id": "Csc#3",
+      "source": "Csc[Divide[Pi, 2]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Csc#4",
+      "source": "(Csc[Divide[Pi, 6]] == Divide[1, Sin[Divide[Pi, 6]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Csc#5",
+      "source": "Csc[0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Diagram#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Diagram#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Diagram#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Diagram#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Digamma#1",
+      "source": "PolyGamma[0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Digamma#2",
+      "source": "PolyGamma[-1]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Digamma#3",
+      "source": "PolyGamma[0.5]",
+      "verdict": "agree",
+      "theirs": "-1.9635100260214235`"
+    },
+    {
+      "id": "Digamma#4",
+      "source": "(Plus[PolyGamma[1], EulerGamma] == 0)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Digamma#5",
+      "source": "(PolyGamma[2] == Plus[PolyGamma[1], 1])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Digamma#6",
+      "source": "(Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]] == 0)",
+      "verdict": "agree",
+      "theirs": "Equal[Plus[EulerGamma, Times[2, Log[2]], PolyGamma[0, Rational[1, 2]]], 0]"
+    },
+    {
+      "id": "Digamma#7",
+      "source": "(Plus[PolyGamma[6], EulerGamma] == Plus[1, Rational[1, 2], Rational[1, 3], Rational[1, 4], Rational[1, 5]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Digamma#8",
+      "source": "PolyGamma[1]",
+      "verdict": "agree",
+      "theirs": "Times[-1, EulerGamma]"
+    },
+    {
+      "id": "Digamma#9",
+      "source": "PolyGamma[-0.5]",
+      "verdict": "agree",
+      "theirs": "0.03648997397857645`"
+    },
+    {
+      "id": "DigitCount#1",
+      "source": "DigitCount[2147]",
+      "verdict": "agree",
+      "theirs": "List[1, 1, 0, 1, 0, 0, 1, 0, 0, 0]"
+    },
+    {
+      "id": "DigitCount#2",
+      "source": "DigitCount[2147, 2]",
+      "verdict": "agree",
+      "theirs": "List[5, 7]"
+    },
+    {
+      "id": "DigitCount#3",
+      "source": "DigitCount[2147, 10, 1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "DigitCount#4",
+      "source": "DigitCount[122000, 10, 0]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "DigitSum#1",
+      "source": "Total[IntegerDigits[58127]]",
+      "verdict": "agree",
+      "theirs": "23"
+    },
+    {
+      "id": "DigitSum#2",
+      "source": "Total[IntegerDigits[58127, 2]]",
+      "verdict": "agree",
+      "theirs": "9"
+    },
+    {
+      "id": "DigitSum#3",
+      "source": "Total[IntegerDigits[0]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "DigitSum#4",
+      "source": "(Mod[Total[IntegerDigits[58127]], 9] == Mod[58127, 9])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Divisors#1",
+      "source": "Divisors[1729]",
+      "verdict": "agree",
+      "theirs": "List[1, 7, 13, 19, 91, 133, 247, 1729]"
+    },
+    {
+      "id": "Divisors#2",
+      "source": "Divisors[20]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 4, 5, 10, 20]"
+    },
+    {
+      "id": "Divisors#3",
+      "source": "Divisors[1]",
+      "verdict": "agree",
+      "theirs": "List[1]"
+    },
+    {
+      "id": "Divisors#4",
+      "source": "Divisors[13]",
+      "verdict": "agree",
+      "theirs": "List[1, 13]"
+    },
+    {
+      "id": "Divisors#5",
+      "source": "Divisors[720]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720]"
+    },
+    {
+      "id": "Divisors#6",
+      "source": "(Length[Divisors[20]] == DivisorSigma[0, 20])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "DivisorSigma#1",
+      "source": "DivisorSigma[0, 20]",
+      "verdict": "agree",
+      "theirs": "6"
+    },
+    {
+      "id": "DivisorSigma#2",
+      "source": "DivisorSigma[1, 20]",
+      "verdict": "agree",
+      "theirs": "42"
+    },
+    {
+      "id": "DivisorSigma#3",
+      "source": "DivisorSigma[2, 20]",
+      "verdict": "agree",
+      "theirs": "546"
+    },
+    {
+      "id": "DivisorSigma#4",
+      "source": "DivisorSigma[1, 6]",
+      "verdict": "agree",
+      "theirs": "12"
+    },
+    {
+      "id": "DivisorSigma#5",
+      "source": "DivisorSigma[1, 28]",
+      "verdict": "agree",
+      "theirs": "56"
+    },
+    {
+      "id": "DivisorSigma#6",
+      "source": "(Times[DivisorSigma[1, 9], DivisorSigma[1, 8]] == DivisorSigma[1, 72])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "DivisorSigma#7",
+      "source": "DivisorSigma[1, 1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Erf#1",
+      "source": "Erf[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Erf#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Erf#3",
+      "source": "Erf[-Infinity]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Erf#4",
+      "source": "Erf[0.5]",
+      "verdict": "agree",
+      "theirs": "0.5204998778130465`"
+    },
+    {
+      "id": "Erf#5",
+      "source": "(Plus[Erf[2], Erf[-2]] == 0)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Erf#6",
+      "source": "(Plus[Erf[2], Erfc[2]] == 1)",
+      "verdict": "agree",
+      "theirs": "Equal[Plus[Erf[2], Erfc[2]], 1]"
+    },
+    {
+      "id": "Erf#7",
+      "source": "Erf[0.7071067811865476]",
+      "verdict": "agree",
+      "theirs": "0.6826894921370861`"
+    },
+    {
+      "id": "Erf#8",
+      "source": "Erf[1]",
+      "verdict": "agree",
+      "theirs": "Erf[1]"
+    },
+    {
+      "id": "Erf#9",
+      "source": "Erf[3.5]",
+      "verdict": "agree",
+      "theirs": "0.9999992569016276`"
+    },
+    {
+      "id": "Erfc#1",
+      "source": "Erfc[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Erfc#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Erfc#3",
+      "source": "Erfc[-Infinity]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Erfc#4",
+      "source": "Erfc[0.5]",
+      "verdict": "agree",
+      "theirs": "0.4795001221869535`"
+    },
+    {
+      "id": "Erfc#5",
+      "source": "(Plus[Erfc[-1], Erfc[1]] == 2)",
+      "verdict": "agree",
+      "theirs": "Equal[Plus[Erfc[-1], Erfc[1]], 2]"
+    },
+    {
+      "id": "Erfc#6",
+      "source": "(Plus[Erf[2], Erfc[2]] == 1)",
+      "verdict": "agree",
+      "theirs": "Equal[Plus[Erf[2], Erfc[2]], 1]"
+    },
+    {
+      "id": "Erfc#7",
+      "source": "Erfc[1]",
+      "verdict": "agree",
+      "theirs": "Erfc[1]"
+    },
+    {
+      "id": "Erfc#8",
+      "source": "Erfc[3.5]",
+      "verdict": "agree",
+      "theirs": "7.43098372341413`*^-7"
+    },
+    {
+      "id": "ErfInv#1",
+      "source": "InverseErf[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "ErfInv#2",
+      "source": "InverseErf[1]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[1]"
+    },
+    {
+      "id": "ErfInv#3",
+      "source": "InverseErf[-1]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "ErfInv#4",
+      "source": "InverseErf[0.5]",
+      "verdict": "agree",
+      "theirs": "0.47693627620446993`"
+    },
+    {
+      "id": "ErfInv#5",
+      "source": "(Erf[InverseErf[0.5]] == 0.5)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "ErfInv#6",
+      "source": "InverseErf[2]",
+      "verdict": "agree",
+      "theirs": "InverseErf[2]"
+    },
+    {
+      "id": "ErfInv#7",
+      "source": "InverseErf[0.9999]",
+      "verdict": "agree",
+      "theirs": "2.75106390571208`"
+    },
+    {
+      "id": "Exp#1",
+      "source": "Exp[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Exp#2",
+      "source": "Exp[1]",
+      "verdict": "agree",
+      "theirs": "E"
+    },
+    {
+      "id": "Exp#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Exp#4",
+      "source": "(Exp[Log[5]] == 5)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Exp#5",
+      "source": "(Times[Exp[2], Exp[3]] == Exp[5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Exp#6",
+      "source": "Exp[List[0, 1]]",
+      "verdict": "agree",
+      "theirs": "List[1, E]"
+    },
+    {
+      "id": "ExtendedGCD#1",
+      "source": "ExtendedGCD[2, 3]",
+      "verdict": "disagree",
+      "theirs": "List[1, List[-1, 1]]"
+    },
+    {
+      "id": "ExtendedGCD#2",
+      "source": "ExtendedGCD[12, 18]",
+      "verdict": "disagree",
+      "theirs": "List[6, List[-1, 1]]"
+    },
+    {
+      "id": "ExtendedGCD#3",
+      "source": "ExtendedGCD[3, 11]",
+      "verdict": "disagree",
+      "theirs": "List[1, List[4, -1]]"
+    },
+    {
+      "id": "ExtendedGCD#4",
+      "source": "ExtendedGCD[0, 5]",
+      "verdict": "disagree",
+      "theirs": "List[5, List[0, 1]]"
+    },
+    {
+      "id": "ExtendedGCD#5",
+      "source": "Plus[Times[2, -1], Times[3, 1]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Factorial#1",
+      "source": "Factorial[5]",
+      "verdict": "agree",
+      "theirs": "120"
+    },
+    {
+      "id": "Factorial#10",
+      "source": "Factorial[20]",
+      "verdict": "agree",
+      "theirs": "2432902008176640000"
+    },
+    {
+      "id": "Factorial#2",
+      "source": "Factorial[6]",
+      "verdict": "agree",
+      "theirs": "720"
+    },
+    {
+      "id": "Factorial#3",
+      "source": "Factorial[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Factorial#4",
+      "source": "Factorial[10]",
+      "verdict": "agree",
+      "theirs": "3628800"
+    },
+    {
+      "id": "Factorial#5",
+      "source": "Factorial[List[1, 2, 3, 4]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 6, 24]"
+    },
+    {
+      "id": "Factorial#6",
+      "source": "(Factorial[5] == Times[5, Factorial[4]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Factorial#7",
+      "source": "Factorial[Rational[1, 2]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 2], Power[Pi, Rational[1, 2]]]"
+    },
+    {
+      "id": "Factorial#8",
+      "source": "Factorial[8]",
+      "verdict": "agree",
+      "theirs": "40320"
+    },
+    {
+      "id": "Factorial#9",
+      "source": "Factorial[-1]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Factorial2#1",
+      "source": "Factorial2[7]",
+      "verdict": "agree",
+      "theirs": "105"
+    },
+    {
+      "id": "Factorial2#2",
+      "source": "Factorial2[8]",
+      "verdict": "agree",
+      "theirs": "384"
+    },
+    {
+      "id": "Factorial2#3",
+      "source": "Factorial2[10]",
+      "verdict": "agree",
+      "theirs": "3840"
+    },
+    {
+      "id": "Factorial2#4",
+      "source": "Factorial2[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Factorial2#5",
+      "source": "(Factorial[8] == Times[Factorial2[8], Factorial2[7]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Factorial2#6",
+      "source": "Factorial2[9]",
+      "verdict": "agree",
+      "theirs": "945"
+    },
+    {
+      "id": "Factorial2#7",
+      "source": "Factorial2[-2]",
+      "verdict": "disagree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Factorial2#8",
+      "source": "Factorial2[15]",
+      "verdict": "agree",
+      "theirs": "2027025"
+    },
+    {
+      "id": "FactorInteger#1",
+      "source": "FactorInteger[360]",
+      "verdict": "agree",
+      "theirs": "List[List[2, 3], List[3, 2], List[5, 1]]"
+    },
+    {
+      "id": "FactorInteger#2",
+      "source": "FactorInteger[84]",
+      "verdict": "agree",
+      "theirs": "List[List[2, 2], List[3, 1], List[7, 1]]"
+    },
+    {
+      "id": "FactorInteger#3",
+      "source": "FactorInteger[1729]",
+      "verdict": "agree",
+      "theirs": "List[List[7, 1], List[13, 1], List[19, 1]]"
+    },
+    {
+      "id": "FactorInteger#4",
+      "source": "(Times[Power[2, 3], Power[3, 2], 5] == 360)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "FactorInteger#5",
+      "source": "FactorInteger[1]",
+      "verdict": "agree",
+      "theirs": "List[List[1, 1]]"
+    },
+    {
+      "id": "FactorInteger#6",
+      "source": "FactorInteger[0]",
+      "verdict": "agree",
+      "theirs": "List[List[0, 1]]"
+    },
+    {
+      "id": "FactorInteger#7",
+      "source": "FactorInteger[-60]",
+      "verdict": "agree",
+      "theirs": "List[List[-1, 1], List[2, 2], List[3, 1], List[5, 1]]"
+    },
+    {
+      "id": "Fibonacci#1",
+      "source": "Fibonacci[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Fibonacci#10",
+      "source": "Fibonacci[50]",
+      "verdict": "agree",
+      "theirs": "12586269025"
+    },
+    {
+      "id": "Fibonacci#2",
+      "source": "Fibonacci[1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Fibonacci#3",
+      "source": "Fibonacci[10]",
+      "verdict": "agree",
+      "theirs": "55"
+    },
+    {
+      "id": "Fibonacci#4",
+      "source": "Fibonacci[20]",
+      "verdict": "agree",
+      "theirs": "6765"
+    },
+    {
+      "id": "Fibonacci#5",
+      "source": "(Fibonacci[10] == Plus[Fibonacci[9], Fibonacci[8]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Fibonacci#6",
+      "source": "Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Fibonacci#7",
+      "source": "(GCD[Fibonacci[12], Fibonacci[18]] == Fibonacci[GCD[12, 18]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Fibonacci#8",
+      "source": "Fibonacci[-5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Fibonacci#9",
+      "source": "Divide[Fibonacci[20], Fibonacci[19]]",
+      "verdict": "agree",
+      "theirs": "Rational[6765, 4181]"
+    },
+    {
+      "id": "First#1",
+      "source": "First[List[1, 2, 3]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "First#2",
+      "source": "First[List[10, 20, 30]]",
+      "verdict": "agree",
+      "theirs": "10"
+    },
+    {
+      "id": "First#3",
+      "source": "(First[List[1, 2, 3]] == Part[List[1, 2, 3], 1])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "First#4",
+      "source": "First[List[]]",
+      "verdict": "disagree",
+      "theirs": "First[List[]]"
+    },
+    {
+      "id": "Flatten#1",
+      "source": "Flatten[List[List[1, 2], List[3, 4]]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "Flatten#2",
+      "source": "Flatten[List[List[1, List[2, 3]], List[4]]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "Flatten#3",
+      "source": "Flatten[List[List[1, 2], List[3, List[4]]], 1]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, List[4]]"
+    },
+    {
+      "id": "Flatten#4",
+      "source": "(Flatten[Partition[List[1, 2, 3, 4, 5, 6], 2]] == List[1, 2, 3, 4, 5, 6])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Floor#1",
+      "source": "Floor[Rational[7, 2]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Floor#2",
+      "source": "Floor[3.7]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Floor#3",
+      "source": "Floor[5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Floor#4",
+      "source": "Floor[List[1.2, -1.2, 3.7]]",
+      "verdict": "agree",
+      "theirs": "List[1, -2, 3]"
+    },
+    {
+      "id": "Floor#5",
+      "source": "(Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Floor#6",
+      "source": "(Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Floor#7",
+      "source": "Floor[Divide[17, 5]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Floor#8",
+      "source": "Floor[-3.2]",
+      "verdict": "agree",
+      "theirs": "-4"
+    },
+    {
+      "id": "Floor#9",
+      "source": "Floor[-Infinity]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "FormClassNumber#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FormClassNumber#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FormClassNumber#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FormClassNumber#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FromDigits#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FromDigits#1",
+      "source": "FromDigits[List[5, 1, 2, 8]]",
+      "verdict": "agree",
+      "theirs": "5128"
+    },
+    {
+      "id": "FromDigits#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FromDigits#2",
+      "source": "FromDigits[List[1, 0, 1, 1, 0, 1, 1], 2]",
+      "verdict": "agree",
+      "theirs": "91"
+    },
+    {
+      "id": "FromDigits#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FromDigits#3",
+      "source": "(FromDigits[IntegerDigits[58127]] == 58127)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "FromDigits#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "FromDigits#4",
+      "source": "FromDigits[List[7, 11, 0, 0, 0, 122]]",
+      "verdict": "agree",
+      "theirs": "810122"
+    },
+    {
+      "id": "FromDigits#5",
+      "source": "FromDigits[List[]]",
+      "verdict": "disagree",
+      "theirs": "0"
+    },
+    {
+      "id": "Gamma#1",
+      "source": "Gamma[0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Gamma#10",
+      "source": "(Power[Gamma[Rational[1, 2]], 2] == Pi)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Gamma#2",
+      "source": "Gamma[2.5]",
+      "verdict": "agree",
+      "theirs": "1.329340388179137`"
+    },
+    {
+      "id": "Gamma#3",
+      "source": "Gamma[List[0, -1]]",
+      "verdict": "agree",
+      "theirs": "List[DirectedInfinity[], DirectedInfinity[]]"
+    },
+    {
+      "id": "Gamma#4",
+      "source": "(Gamma[6] == Factorial[5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Gamma#5",
+      "source": "(Gamma[6] == Times[5, Gamma[5]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Gamma#6",
+      "source": "(Times[Gamma[Rational[1, 3]], Gamma[Rational[2, 3]]] == Divide[Pi, Sin[Divide[Pi, 3]]])",
+      "verdict": "agree",
+      "theirs": "Equal[Times[Gamma[Rational[1, 3]], Gamma[Rational[2, 3]]], Times[2, Power[3, Rational[-1, 2]], Pi]]"
+    },
+    {
+      "id": "Gamma#7",
+      "source": "(Gamma[Rational[1, 2]] == Sqrt[Pi])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Gamma#8",
+      "source": "(Divide[Power[Pi, 2], Gamma[3]] == Divide[Power[Pi, 2], 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Gamma#9",
+      "source": "Gamma[Rational[5, 2]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[3, 4], Power[Pi, Rational[1, 2]]]"
+    },
+    {
+      "id": "GammaLn#1",
+      "source": "LogGamma[0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[1]"
+    },
+    {
+      "id": "GammaLn#2",
+      "source": "LogGamma[2.5]",
+      "verdict": "agree",
+      "theirs": "0.2846828704729192`"
+    },
+    {
+      "id": "GammaLn#3",
+      "source": "(LogGamma[5] == Log[Gamma[5]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GammaLn#4",
+      "source": "(LogGamma[1] == 0)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GammaLn#5",
+      "source": "(LogGamma[6] == Plus[LogGamma[5], Log[5]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GammaLn#6",
+      "source": "(LogGamma[Rational[1, 2]] == Times[Rational[1, 2], Log[Pi]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GammaLn#7",
+      "source": "(LogGamma[11] == Log[Factorial[10]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GammaLn#8",
+      "source": "LogGamma[5]",
+      "verdict": "agree",
+      "theirs": "Log[24]"
+    },
+    {
+      "id": "GammaLn#9",
+      "source": "(LogGamma[101] == Log[Factorial[100]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GammaRegularized#1",
+      "source": "GammaRegularized[1, 0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "GammaRegularized#2",
+      "source": "GammaRegularized[1, 1]",
+      "verdict": "agree",
+      "theirs": "Power[E, -1]"
+    },
+    {
+      "id": "GammaRegularized#3",
+      "source": "GammaRegularized[2.5, 1.5]",
+      "verdict": "agree",
+      "theirs": "0.6999858358786275`"
+    },
+    {
+      "id": "GammaRegularized#4",
+      "source": "GammaRegularized[5, -1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[3, 8], E]"
+    },
+    {
+      "id": "GammaRegularized#5",
+      "source": "GammaRegularized[3, 2]",
+      "verdict": "agree",
+      "theirs": "Times[5, Power[E, -2]]"
+    },
+    {
+      "id": "GammaRegularized#6",
+      "source": "GammaRegularized[2.5, -1]",
+      "verdict": "disagree",
+      "theirs": "Complex[0.9999999999999998`, -0.6280082302883814`]"
+    },
+    {
+      "id": "GCD#1",
+      "source": "GCD[12, 18]",
+      "verdict": "agree",
+      "theirs": "6"
+    },
+    {
+      "id": "GCD#10",
+      "source": "(Times[GCD[12, 18], LCM[12, 18]] == Times[12, 18])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GCD#2",
+      "source": "GCD[24, 36]",
+      "verdict": "agree",
+      "theirs": "12"
+    },
+    {
+      "id": "GCD#3",
+      "source": "GCD[20, 30, 45]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "GCD#4",
+      "source": "GCD[4]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "GCD#5",
+      "source": "GCD[]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "GCD#6",
+      "source": "GCD[0, 5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "GCD#7",
+      "source": "GCD[-12, 9, 57]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "GCD#8",
+      "source": "GCD[List[2, 4], List[6, 8]]",
+      "verdict": "disagree",
+      "theirs": "List[2, 4]"
+    },
+    {
+      "id": "GCD#9",
+      "source": "(GCD[12, 18] == GCD[18, 12])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "GroupBasis#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "GroupBasis#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "GroupBasis#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "GroupBasis#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeSpecialize#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeSpecialize#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeSpecialize#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeT#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeT#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeT#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeT#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HeckeT#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HurwitzZeta#1",
+      "source": "HurwitzZeta[2, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "HurwitzZeta#2",
+      "source": "HurwitzZeta[2, 2]",
+      "verdict": "agree",
+      "theirs": "Plus[-1, Times[Rational[1, 6], Power[Pi, 2]]]"
+    },
+    {
+      "id": "HurwitzZeta#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HurwitzZeta#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "HurwitzZeta#5",
+      "source": "HurwitzZeta[1, 3]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "HurwitzZeta#6",
+      "source": "HurwitzZeta[-3, Rational[7, 3]]",
+      "verdict": "disagree",
+      "theirs": "HurwitzZeta[-3, Rational[7, 3]]"
+    },
+    {
+      "id": "IndexOf#1",
+      "source": "First[FirstPosition[List[1, 2, 3], 2, List[0]]]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "IndexOf#2",
+      "source": "First[FirstPosition[List[1, 2, 3], 9, List[0]]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "IndexOf#3",
+      "source": "(Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0]]]] == 20)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IntegerDigits#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#1",
+      "source": "IntegerDigits[1234]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "IntegerDigits#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#2",
+      "source": "IntegerDigits[2147, 2]",
+      "verdict": "agree",
+      "theirs": "List[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1]"
+    },
+    {
+      "id": "IntegerDigits#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#3",
+      "source": "IntegerDigits[0]",
+      "verdict": "agree",
+      "theirs": "List[0]"
+    },
+    {
+      "id": "IntegerDigits#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#4",
+      "source": "IntegerDigits[-3134]",
+      "verdict": "agree",
+      "theirs": "List[3, 1, 3, 4]"
+    },
+    {
+      "id": "IntegerDigits#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#5",
+      "source": "IntegerDigits[6345354, 10, 4]",
+      "verdict": "agree",
+      "theirs": "List[5, 3, 5, 4]"
+    },
+    {
+      "id": "IntegerDigits#6",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#7",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "IntegerDigits#8",
+      "source": "IntegerDigits[255, 16]",
+      "verdict": "agree",
+      "theirs": "List[15, 15]"
+    },
+    {
+      "id": "IntegerString#1",
+      "source": "IntegerString[42]",
+      "verdict": "agree",
+      "theirs": "\"42\""
+    },
+    {
+      "id": "IntegerString#2",
+      "source": "IntegerString[17651, 2]",
+      "verdict": "agree",
+      "theirs": "\"100010011110011\""
+    },
+    {
+      "id": "IntegerString#3",
+      "source": "IntegerString[255, 16]",
+      "verdict": "agree",
+      "theirs": "\"ff\""
+    },
+    {
+      "id": "IntegerString#4",
+      "source": "IntegerString[0]",
+      "verdict": "agree",
+      "theirs": "\"0\""
+    },
+    {
+      "id": "IntegerString#5",
+      "source": "IntegerString[-42]",
+      "verdict": "disagree",
+      "theirs": "\"42\""
+    },
+    {
+      "id": "Intersection#1",
+      "source": "Intersection[List[1, 2, 3], List[2, 3, 4]]",
+      "verdict": "agree",
+      "theirs": "List[2, 3]"
+    },
+    {
+      "id": "Intersection#2",
+      "source": "Intersection[List[1, 2, 3, 4], List[2, 3, 4, 5]]",
+      "verdict": "agree",
+      "theirs": "List[2, 3, 4]"
+    },
+    {
+      "id": "Intersection#3",
+      "source": "Intersection[List[1, 2, 3], List[2, 3, 4], List[2, 3, 5]]",
+      "verdict": "agree",
+      "theirs": "List[2, 3]"
+    },
+    {
+      "id": "Intersection#4",
+      "source": "(Intersection[Union[List[1, 2, 3]], Union[List[1, 2, 3]]] == Union[List[1, 2, 3]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Intersection#5",
+      "source": "(Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]] == Plus[Length[Union[List[1, 2, 3], List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Intersection#6",
+      "source": "Intersection[List[1, 2], List[3, 4]]",
+      "verdict": "disagree",
+      "theirs": "List[]"
+    },
+    {
+      "id": "Intersection#7",
+      "source": "Intersection[Divisors[45], Divisors[78]]",
+      "verdict": "agree",
+      "theirs": "List[1, 3]"
+    },
+    {
+      "id": "IsPrime#1",
+      "source": "PrimeQ[1]",
+      "verdict": "agree",
+      "theirs": "False"
+    },
+    {
+      "id": "IsPrime#2",
+      "source": "PrimeQ[2]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsPrime#3",
+      "source": "PrimeQ[13]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsPrime#4",
+      "source": "PrimeQ[4]",
+      "verdict": "agree",
+      "theirs": "False"
+    },
+    {
+      "id": "IsPrime#5",
+      "source": "PrimeQ[97]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsPrime#6",
+      "source": "PrimeQ[Plus[Power[2, 31], -1]]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsPrime#7",
+      "source": "PrimeQ[1000000007]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsPrime#8",
+      "source": "PrimeQ[List[1, 2, 3, 4, 5, 6]]",
+      "verdict": "agree",
+      "theirs": "List[False, True, True, False, True, False]"
+    },
+    {
+      "id": "IsSquareFree#1",
+      "source": "SquareFreeQ[10]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsSquareFree#2",
+      "source": "SquareFreeQ[4]",
+      "verdict": "agree",
+      "theirs": "False"
+    },
+    {
+      "id": "IsSquareFree#3",
+      "source": "SquareFreeQ[12]",
+      "verdict": "agree",
+      "theirs": "False"
+    },
+    {
+      "id": "IsSquareFree#4",
+      "source": "SquareFreeQ[17]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsSquareFree#5",
+      "source": "SquareFreeQ[1]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "IsSquareFree#6",
+      "source": "(SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "JacobiSymbol#1",
+      "source": "JacobiSymbol[10, 5]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "JacobiSymbol#2",
+      "source": "JacobiSymbol[3, 5]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "JacobiSymbol#3",
+      "source": "JacobiSymbol[1001, 9907]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "JacobiSymbol#4",
+      "source": "JacobiSymbol[0, 1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "JacobiSymbol#5",
+      "source": "(Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]] == JacobiSymbol[Times[3, 5], 7])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Join#1",
+      "source": "Join[List[1, 2], List[3, 4]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "Join#2",
+      "source": "Join[List[1, 2], List[3, 4], List[5]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4, 5]"
+    },
+    {
+      "id": "Join#3",
+      "source": "(Join[List[1, 2], List[3, 4]] == Flatten[List[List[1, 2], List[3, 4]], 1])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "JonesPolynomial#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "JonesPolynomial#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "JonesPolynomial#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "JonesPolynomial#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Last#1",
+      "source": "Last[List[1, 2, 3]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Last#2",
+      "source": "Last[List[10, 20, 30]]",
+      "verdict": "agree",
+      "theirs": "30"
+    },
+    {
+      "id": "Last#3",
+      "source": "(Last[List[1, 2, 3]] == Part[List[1, 2, 3], -1])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Lb#1",
+      "source": "Log2[8]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Lb#2",
+      "source": "Log2[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Lb#3",
+      "source": "Log2[1024]",
+      "verdict": "agree",
+      "theirs": "10"
+    },
+    {
+      "id": "Lb#4",
+      "source": "(Log2[64] == Log2[64])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Lb#5",
+      "source": "Log2[Rational[1, 8]]",
+      "verdict": "agree",
+      "theirs": "-3"
+    },
+    {
+      "id": "LCM#1",
+      "source": "LCM[4, 6]",
+      "verdict": "agree",
+      "theirs": "12"
+    },
+    {
+      "id": "LCM#2",
+      "source": "LCM[4, 6, 10]",
+      "verdict": "agree",
+      "theirs": "60"
+    },
+    {
+      "id": "LCM#3",
+      "source": "LCM[5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "LCM#4",
+      "source": "LCM[0, 5]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "LCM#5",
+      "source": "LCM[-3, 7]",
+      "verdict": "agree",
+      "theirs": "21"
+    },
+    {
+      "id": "LCM#6",
+      "source": "(Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Length#1",
+      "source": "Length[List[1, 2, 3, 4]]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Length#2",
+      "source": "Length[List[1, 2, 3, 4, 5]]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Length#3",
+      "source": "Length[Union[List[1, 2, 3]]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Length#4",
+      "source": "(Length[Join[List[1, 2, 3], List[4, 5]]] == Plus[Length[List[1, 2, 3]], Length[List[4, 5]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "LerchPhi#1",
+      "source": "LerchPhi[1, 2, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "LerchPhi#2",
+      "source": "LerchPhi[1, 2, 2]",
+      "verdict": "agree",
+      "theirs": "Plus[-1, Times[Rational[1, 6], Power[Pi, 2]]]"
+    },
+    {
+      "id": "LerchPhi#3",
+      "source": "LerchPhi[1, 4, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 90], Power[Pi, 4]]"
+    },
+    {
+      "id": "LerchPhi#4",
+      "source": "LerchPhi[1, -1, 1]",
+      "verdict": "disagree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "LerchPhi#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "LerchPhi#6",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "LerchPhi#7",
+      "source": "LerchPhi[2, 0, 7]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "LerchPhi#8",
+      "source": "(LerchPhi[1, 3, 1] == Zeta[3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "LerchPhi#9",
+      "source": "(LerchPhi[-1, 2, 1] == Divide[Power[Pi, 2], 12])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Ln#1",
+      "source": "Log[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Ln#2",
+      "source": "Log[E]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Ln#3",
+      "source": "Log[0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "Ln#4",
+      "source": "(Log[Exp[5]] == 5)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Ln#5",
+      "source": "(Plus[Log[2], Log[3]] == Log[6])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Ln#6",
+      "source": "Log[-1]",
+      "verdict": "agree",
+      "theirs": "Times[Complex[0, 1], Pi]"
+    },
+    {
+      "id": "Log#1",
+      "source": "Log[10, 100]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Log#2",
+      "source": "Log[10, 100]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Log#3",
+      "source": "Log[2, 8]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Log#4",
+      "source": "(Log[10, 100] == Log[10, 100])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Log#5",
+      "source": "(Log[2, Times[8, 4]] == Plus[Log[2, 8], Log[2, 4]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Log#6",
+      "source": "(Log[2, Power[2, 5]] == Times[5, Log[2, 2]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Log#7",
+      "source": "Log[10, 0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "Log#8",
+      "source": "Log[10, -5]",
+      "verdict": "agree",
+      "theirs": "Times[Plus[Times[Complex[0, 1], Pi], Log[5]], Power[Log[10], -1]]"
+    },
+    {
+      "id": "Log10#1",
+      "source": "Log10[1000]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Log10#2",
+      "source": "Log10[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Log10#3",
+      "source": "Log10[100000]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Log10#4",
+      "source": "(Log10[1000] == Log[10, 1000])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Log10#5",
+      "source": "Log10[0.001]",
+      "verdict": "agree",
+      "theirs": "-3.`"
+    },
+    {
+      "id": "Log10#6",
+      "source": "Log10[Rational[1, 100]]",
+      "verdict": "agree",
+      "theirs": "-2"
+    },
+    {
+      "id": "Log2#1",
+      "source": "Log2[8]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Log2#2",
+      "source": "Log2[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Log2#3",
+      "source": "Log2[1024]",
+      "verdict": "agree",
+      "theirs": "10"
+    },
+    {
+      "id": "Log2#4",
+      "source": "(Log2[8] == Log[2, 8])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Log2#5",
+      "source": "Log2[0.5]",
+      "verdict": "agree",
+      "theirs": "-1.`"
+    },
+    {
+      "id": "Log2#6",
+      "source": "Log2[Rational[1, 8]]",
+      "verdict": "agree",
+      "theirs": "-3"
+    },
+    {
+      "id": "LorenzBraid#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "LorenzBraid#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "LorenzBraid#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "LorenzBraid#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "LucasL#1",
+      "source": "LucasL[0]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "LucasL#10",
+      "source": "LucasL[30]",
+      "verdict": "agree",
+      "theirs": "1860498"
+    },
+    {
+      "id": "LucasL#2",
+      "source": "LucasL[1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "LucasL#3",
+      "source": "LucasL[5]",
+      "verdict": "agree",
+      "theirs": "11"
+    },
+    {
+      "id": "LucasL#4",
+      "source": "LucasL[10]",
+      "verdict": "agree",
+      "theirs": "123"
+    },
+    {
+      "id": "LucasL#5",
+      "source": "(LucasL[6] == Plus[Fibonacci[5], Fibonacci[7]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "LucasL#6",
+      "source": "(Fibonacci[6] == Divide[Plus[LucasL[5], LucasL[7]], 5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "LucasL#7",
+      "source": "Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "LucasL#8",
+      "source": "LucasL[-1]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "LucasL#9",
+      "source": "Divide[LucasL[15], LucasL[14]]",
+      "verdict": "agree",
+      "theirs": "Rational[1364, 843]"
+    },
+    {
+      "id": "Max#1",
+      "source": "Max[3, 1, 4, 1, 5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Max#2",
+      "source": "Max[List[3, 1, 4]]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Max#3",
+      "source": "Max[-1, -5]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Max#4",
+      "source": "Max[3]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Max#5",
+      "source": "(Max[3, 7] == Max[7, 3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Max#6",
+      "source": "(Max[List[3, 1, 4], List[9, 2]] == 9)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Max#7",
+      "source": "Max[68, 72, 65, 80, 74]",
+      "verdict": "agree",
+      "theirs": "80"
+    },
+    {
+      "id": "Max#8",
+      "source": "Max[]",
+      "verdict": "disagree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "Max#9",
+      "source": "Max[Indeterminate, 3]",
+      "verdict": "agree",
+      "theirs": "Indeterminate"
+    },
+    {
+      "id": "Mean#1",
+      "source": "Mean[List[1, 2, 3, 4]]",
+      "verdict": "agree",
+      "theirs": "Rational[5, 2]"
+    },
+    {
+      "id": "Mean#2",
+      "source": "Mean[List[2, 4, 4, 4, 5, 5, 7, 9]]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Mean#3",
+      "source": "(Mean[List[1, 2, 3, 4]] == Divide[Plus[1, 2, 3, 4], Length[List[1, 2, 3, 4]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Mean#4",
+      "source": "Mean[List[-100, 1, 1, 1, 1, 20]]",
+      "verdict": "agree",
+      "theirs": "Rational[-38, 3]"
+    },
+    {
+      "id": "Median#1",
+      "source": "Median[List[1, 2, 3, 4, 5]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Median#2",
+      "source": "Median[List[1, 2, 3, 4]]",
+      "verdict": "agree",
+      "theirs": "Rational[5, 2]"
+    },
+    {
+      "id": "Median#3",
+      "source": "(Median[List[5, 3, 1, 4, 2]] == Part[Sort[List[5, 3, 1, 4, 2]], 3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Median#4",
+      "source": "Median[List[-100, 1, 1, 1, 1, 20]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Min#1",
+      "source": "Min[3, 1, 4, 1, 5]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Min#2",
+      "source": "Min[List[3, 1, 4]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Min#3",
+      "source": "Min[-1, -5]",
+      "verdict": "agree",
+      "theirs": "-5"
+    },
+    {
+      "id": "Min#4",
+      "source": "Min[3]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Min#5",
+      "source": "(Min[3, 7] == Min[7, 3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Min#6",
+      "source": "(Plus[Min[4, 9], Max[4, 9]] == Plus[4, 9])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Min#7",
+      "source": "Min[68, 72, 65, 80, 74]",
+      "verdict": "agree",
+      "theirs": "65"
+    },
+    {
+      "id": "Min#8",
+      "source": "Min[-Infinity, 3]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "Min#9",
+      "source": "Min[List[3, 1], 0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Mod#1",
+      "source": "Mod[17, 5]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Mod#2",
+      "source": "Mod[100, 7]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Mod#3",
+      "source": "Mod[-7, 3]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Mod#4",
+      "source": "Mod[List[1, 2, 3, 4, 5], 3]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 0, 1, 2]"
+    },
+    {
+      "id": "Mod#5",
+      "source": "Mod[5, 0]",
+      "verdict": "agree",
+      "theirs": "Indeterminate"
+    },
+    {
+      "id": "Mod#6",
+      "source": "(Mod[17, 5] == Mod[Plus[17, Times[3, 5]], 5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Mode#1",
+      "source": "First[Commonest[List[1, 2, 2, 3]]]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Mode#2",
+      "source": "(Count[List[1, 2, 2, 3], First[Commonest[List[1, 2, 2, 3]]]] == 2)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "ModularClasses#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularClasses#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularClasses#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularClasses#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularWord#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularWord#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularWord#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "ModularWord#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusFunction#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusFunction#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusFunction#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusFunction#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusInvert#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusInvert#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusInvert#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MoebiusMu#1",
+      "source": "MoebiusMu[1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "MoebiusMu#2",
+      "source": "MoebiusMu[11]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "MoebiusMu#3",
+      "source": "MoebiusMu[12]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "MoebiusMu#4",
+      "source": "MoebiusMu[10]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "MoebiusMu#5",
+      "source": "Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "MoebiusMu#6",
+      "source": "MoebiusMu[0]",
+      "verdict": "disagree",
+      "theirs": "0"
+    },
+    {
+      "id": "MotzkinAlgebra#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MotzkinAlgebra#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MotzkinAlgebra#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "MotzkinAlgebra#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Multinomial#1",
+      "source": "Multinomial[1, 2, 1]",
+      "verdict": "agree",
+      "theirs": "12"
+    },
+    {
+      "id": "Multinomial#2",
+      "source": "Multinomial[2, 3, 4]",
+      "verdict": "agree",
+      "theirs": "1260"
+    },
+    {
+      "id": "Multinomial#3",
+      "source": "(Multinomial[7, 3] == Binomial[10, 3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Multinomial#4",
+      "source": "(Multinomial[1, 2, 3] == Multinomial[3, 1, 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Multinomial#5",
+      "source": "Multinomial[1, 4, 4, 2]",
+      "verdict": "agree",
+      "theirs": "34650"
+    },
+    {
+      "id": "Multinomial#6",
+      "source": "Multinomial[0, 0, 0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Multinomial#7",
+      "source": "Multinomial[5]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "MultiplicativeOrder#1",
+      "source": "MultiplicativeOrder[5, 8]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "MultiplicativeOrder#2",
+      "source": "MultiplicativeOrder[3, 7]",
+      "verdict": "agree",
+      "theirs": "6"
+    },
+    {
+      "id": "MultiplicativeOrder#3",
+      "source": "MultiplicativeOrder[2, 7]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "MultiplicativeOrder#4",
+      "source": "(Mod[EulerPhi[7], MultiplicativeOrder[3, 7]] == 0)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "MultiplicativeOrder#5",
+      "source": "MultiplicativeOrder[10, 22]",
+      "verdict": "agree",
+      "theirs": "MultiplicativeOrder[10, 22]"
+    },
+    {
+      "id": "Negate#1",
+      "source": "Minus[5]",
+      "verdict": "agree",
+      "theirs": "-5"
+    },
+    {
+      "id": "Negate#2",
+      "source": "Minus[-5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Negate#3",
+      "source": "Minus[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Negate#4",
+      "source": "Minus[Rational[3, 4]]",
+      "verdict": "agree",
+      "theirs": "Rational[-3, 4]"
+    },
+    {
+      "id": "Negate#5",
+      "source": "Minus[List[1, -2, 3]]",
+      "verdict": "agree",
+      "theirs": "List[-1, 2, -3]"
+    },
+    {
+      "id": "Negate#6",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Negate#7",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Negate#8",
+      "source": "Minus[42.5]",
+      "verdict": "agree",
+      "theirs": "-42.5`"
+    },
+    {
+      "id": "Negate#9",
+      "source": "Minus[Infinity]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[-1]"
+    },
+    {
+      "id": "NextPrime#1",
+      "source": "NextPrime[10]",
+      "verdict": "agree",
+      "theirs": "11"
+    },
+    {
+      "id": "NextPrime#2",
+      "source": "NextPrime[100]",
+      "verdict": "agree",
+      "theirs": "101"
+    },
+    {
+      "id": "NextPrime#3",
+      "source": "NextPrime[10, 2]",
+      "verdict": "agree",
+      "theirs": "13"
+    },
+    {
+      "id": "NextPrime#4",
+      "source": "NextPrime[10, -1]",
+      "verdict": "agree",
+      "theirs": "7"
+    },
+    {
+      "id": "NonCommutativeMultiply#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NonCommutativeMultiply#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NonCommutativeMultiply#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NonCommutativeMultiply#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NonCommutativeMultiply#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NonCommutativeMultiply#6",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Norm#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Norm#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Norm#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Norm#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Norm#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NSymR#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NSymR#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NSymR#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NSymR#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NthPrime#1",
+      "source": "Prime[1]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "NthPrime#2",
+      "source": "Prime[10]",
+      "verdict": "agree",
+      "theirs": "29"
+    },
+    {
+      "id": "NthPrime#3",
+      "source": "Prime[100]",
+      "verdict": "agree",
+      "theirs": "541"
+    },
+    {
+      "id": "NthPrime#4",
+      "source": "Prime[1000]",
+      "verdict": "agree",
+      "theirs": "7919"
+    },
+    {
+      "id": "NthPrime#5",
+      "source": "(PrimePi[Prime[100]] == 100)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "NthPrime#6",
+      "source": "Prime[0]",
+      "verdict": "agree",
+      "theirs": "Prime[0]"
+    },
+    {
+      "id": "NumeralSystemShape#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "NumeralSystemShape#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "OrbitDiagram#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "OrbitDiagram#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "OrbitDiagram#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Ordering#1",
+      "source": "Ordering[List[3, 1, 2]]",
+      "verdict": "agree",
+      "theirs": "List[2, 3, 1]"
+    },
+    {
+      "id": "Ordering#2",
+      "source": "Ordering[List[2, 1, 2, 1]]",
+      "verdict": "agree",
+      "theirs": "List[2, 4, 1, 3]"
+    },
+    {
+      "id": "Partition#1",
+      "source": "Partition[List[1, 2, 3, 4, 5, 6], 2]",
+      "verdict": "agree",
+      "theirs": "List[List[1, 2], List[3, 4], List[5, 6]]"
+    },
+    {
+      "id": "Partition#2",
+      "source": "Partition[List[1, 2, 3, 4, 5, 6], 3, 1]",
+      "verdict": "agree",
+      "theirs": "List[List[1, 2, 3], List[2, 3, 4], List[3, 4, 5], List[4, 5, 6]]"
+    },
+    {
+      "id": "PartitionAlgebra#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PartitionAlgebra#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PartitionAlgebra#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PartitionAlgebra#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Pochhammer#1",
+      "source": "Pochhammer[5, 3]",
+      "verdict": "agree",
+      "theirs": "210"
+    },
+    {
+      "id": "Pochhammer#2",
+      "source": "Pochhammer[2, 0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Pochhammer#3",
+      "source": "Pochhammer[1, 5]",
+      "verdict": "agree",
+      "theirs": "120"
+    },
+    {
+      "id": "Pochhammer#4",
+      "source": "Pochhammer[3, 4]",
+      "verdict": "agree",
+      "theirs": "360"
+    },
+    {
+      "id": "Pochhammer#5",
+      "source": "(Pochhammer[1, 5] == Factorial[5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Pochhammer#6",
+      "source": "Pochhammer[5, -2]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 12]"
+    },
+    {
+      "id": "Pochhammer#7",
+      "source": "Divide[Pochhammer[5, 3], Factorial[3]]",
+      "verdict": "agree",
+      "theirs": "35"
+    },
+    {
+      "id": "Pochhammer#8",
+      "source": "Pochhammer[-3, 4]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "PolyGamma#1",
+      "source": "(PolyGamma[1, 1] == Zeta[2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PolyGamma#2",
+      "source": "(PolyGamma[2, 1] == Times[-2, Zeta[3]])",
+      "verdict": "agree",
+      "theirs": "Equal[PolyGamma[2, 1], Times[-2, Zeta[3]]]"
+    },
+    {
+      "id": "PolyGamma#3",
+      "source": "(PolyGamma[1, Rational[1, 2]] == Divide[Power[Pi, 2], 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PolyGamma#4",
+      "source": "(Subtract[PolyGamma[1, 1], PolyGamma[1, 2]] == 1)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PolyGamma#5",
+      "source": "PolyGamma[1, 0.5]",
+      "verdict": "agree",
+      "theirs": "4.934802200544679`"
+    },
+    {
+      "id": "PolyGamma#6",
+      "source": "PolyGamma[1, 0]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "PolyGamma#7",
+      "source": "N[PolyGamma[1, Complex[1, 1]]]",
+      "verdict": "agree",
+      "theirs": "Complex[0.46300009662276376`, -0.7942335427593189`]"
+    },
+    {
+      "id": "PolyGamma#8",
+      "source": "PolyGamma[1, List[1, 2]]",
+      "verdict": "agree",
+      "theirs": "List[Times[Rational[1, 6], Power[Pi, 2]], Plus[-1, Times[Rational[1, 6], Power[Pi, 2]]]]"
+    },
+    {
+      "id": "PolyGamma#9",
+      "source": "PolyGamma[1, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "PolyLog#1",
+      "source": "PolyLog[2, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "PolyLog#10",
+      "source": "PolyLog[2, List[0.5, 0.25]]",
+      "verdict": "agree",
+      "theirs": "List[0.5822405264650127`, 0.2676526390827326`]"
+    },
+    {
+      "id": "PolyLog#11",
+      "source": "PolyLog[2.5, 2]",
+      "verdict": "disagree",
+      "theirs": "Complex[2.789660332381895`, -1.3638037005377295`]"
+    },
+    {
+      "id": "PolyLog#12",
+      "source": "PolyLog[2, Rational[1, 2]]",
+      "verdict": "agree",
+      "theirs": "Plus[Times[Rational[1, 12], Power[Pi, 2]], Times[Rational[-1, 2], Power[Log[2], 2]]]"
+    },
+    {
+      "id": "PolyLog#2",
+      "source": "PolyLog[2, -1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[-1, 12], Power[Pi, 2]]"
+    },
+    {
+      "id": "PolyLog#3",
+      "source": "PolyLog[4, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 90], Power[Pi, 4]]"
+    },
+    {
+      "id": "PolyLog#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PolyLog#5",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PolyLog#6",
+      "source": "(Plus[PolyLog[2, 0.5], Times[0.5, Power[Log[2], 2]]] == Divide[Power[Pi, 2], 12])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PolyLog#7",
+      "source": "PolyLog[0.5, 1]",
+      "verdict": "disagree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "PolyLog#8",
+      "source": "PolyLog[0.5, 0.5]",
+      "verdict": "agree",
+      "theirs": "0.8061267230428522`"
+    },
+    {
+      "id": "PolyLog#9",
+      "source": "PolyLog[2.5, -0.5]",
+      "verdict": "agree",
+      "theirs": "-0.4622977821900634`"
+    },
+    {
+      "id": "PosetElements#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PosetElements#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PosetElements#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "PowerMod#1",
+      "source": "PowerMod[2, 10, 3]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "PowerMod#2",
+      "source": "PowerMod[3, 50, 11]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "PowerMod#3",
+      "source": "PowerMod[2, -1, 7]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "PowerMod#4",
+      "source": "PowerMod[7, 13, 33]",
+      "verdict": "agree",
+      "theirs": "13"
+    },
+    {
+      "id": "PowerMod#5",
+      "source": "(PowerMod[2, 10, 3] == Mod[Power[2, 10], 3])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PowerMod#6",
+      "source": "PowerMod[2, -1, 4]",
+      "verdict": "agree",
+      "theirs": "PowerMod[2, -1, 4]"
+    },
+    {
+      "id": "PowerModList#1",
+      "source": "PowerModList[1, Divide[1, 2], 15]",
+      "verdict": "agree",
+      "theirs": "List[1, 4, 11, 14]"
+    },
+    {
+      "id": "PowerModList#2",
+      "source": "PowerModList[-1, Divide[1, 2], 65]",
+      "verdict": "agree",
+      "theirs": "List[8, 18, 47, 57]"
+    },
+    {
+      "id": "PowerModList#3",
+      "source": "PowerModList[-1, Divide[1, 2], 15]",
+      "verdict": "agree",
+      "theirs": "List[]"
+    },
+    {
+      "id": "PowerModList#4",
+      "source": "PowerModList[1, Divide[1, 2], 8]",
+      "verdict": "agree",
+      "theirs": "List[1, 3, 5, 7]"
+    },
+    {
+      "id": "PowerModList#5",
+      "source": "PowerModList[-1, Divide[1, 2], 625]",
+      "verdict": "agree",
+      "theirs": "List[182, 443]"
+    },
+    {
+      "id": "PowerModList#6",
+      "source": "PowerModList[8, Divide[1, 3], 13]",
+      "verdict": "agree",
+      "theirs": "List[2, 5, 6]"
+    },
+    {
+      "id": "PowerModList#7",
+      "source": "Mod[Times[Plus[1, 4], Subtract[1, 4]], 15]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "PrimeNu#1",
+      "source": "PrimeNu[24]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "PrimeNu#2",
+      "source": "PrimeNu[360]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "PrimeNu#3",
+      "source": "PrimeNu[32]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "PrimeNu#4",
+      "source": "PrimeNu[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "PrimeNu#5",
+      "source": "(PrimeNu[50] == Length[FactorInteger[50]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PrimeOmega#1",
+      "source": "PrimeOmega[30]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "PrimeOmega#2",
+      "source": "PrimeOmega[360]",
+      "verdict": "agree",
+      "theirs": "6"
+    },
+    {
+      "id": "PrimeOmega#3",
+      "source": "PrimeOmega[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "PrimeOmega#4",
+      "source": "(PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PrimeOmega#5",
+      "source": "GreaterEqual[PrimeOmega[8], PrimeNu[8]]",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "PrimePi#1",
+      "source": "PrimePi[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "PrimePi#2",
+      "source": "PrimePi[2]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "PrimePi#3",
+      "source": "PrimePi[15]",
+      "verdict": "agree",
+      "theirs": "6"
+    },
+    {
+      "id": "PrimePi#4",
+      "source": "PrimePi[100]",
+      "verdict": "agree",
+      "theirs": "25"
+    },
+    {
+      "id": "PrimePi#5",
+      "source": "(PrimePi[Prime[50]] == 50)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Product#1",
+      "source": "Apply[Times, List[1, 2, 3, 4]]",
+      "verdict": "agree",
+      "theirs": "24"
+    },
+    {
+      "id": "Product#2",
+      "source": "Apply[Times, List[]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Product#3",
+      "source": "(Apply[Times, List[1, 2, 3, 4]] == Factorial[4])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Product#4",
+      "source": "Apply[Times, Range[1, 6]]",
+      "verdict": "agree",
+      "theirs": "720"
+    },
+    {
+      "id": "QSymM#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QSymM#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QSymM#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QSymM#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Quaternions#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Quaternions#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Quaternions#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverCompose#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverCompose#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverCompose#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverIsAcyclic#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverIsAcyclic#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverIsAcyclic#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverPath#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverPath#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "QuiverPath#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "RademacherSymbol#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "RademacherSymbol#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "RademacherSymbol#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "RademacherSymbol#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Rationalize#1",
+      "source": "Rationalize[0.1]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 10]"
+    },
+    {
+      "id": "Rationalize#2",
+      "source": "Rationalize[2]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Rationalize#3",
+      "source": "Rationalize[2.5]",
+      "verdict": "agree",
+      "theirs": "Rational[5, 2]"
+    },
+    {
+      "id": "Rationalize#4",
+      "source": "Rationalize[0.3333333333333333]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 3]"
+    },
+    {
+      "id": "Rationalize#5",
+      "source": "(Rationalize[Pi, 0.01] == Rational[22, 7])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Rationalize#6",
+      "source": "Rationalize[Pi, 0.000001]",
+      "verdict": "agree",
+      "theirs": "Rational[355, 113]"
+    },
+    {
+      "id": "Rationalize#7",
+      "source": "Rationalize[0.75]",
+      "verdict": "agree",
+      "theirs": "Rational[3, 4]"
+    },
+    {
+      "id": "Rationalize#8",
+      "source": "Rationalize[0.333333]",
+      "verdict": "agree",
+      "theirs": "0.333333`"
+    },
+    {
+      "id": "Rationalize#9",
+      "source": "Rationalize[0.1, 0.5]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Root#1",
+      "source": "Power[27, Divide[1, 3]]",
+      "verdict": "agree",
+      "theirs": "3"
+    },
+    {
+      "id": "Root#2",
+      "source": "Power[16, Divide[1, 4]]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Root#3",
+      "source": "Power[-8, Divide[1, 3]]",
+      "verdict": "agree",
+      "theirs": "Times[2, Power[-1, Rational[1, 3]]]"
+    },
+    {
+      "id": "Root#4",
+      "source": "Power[2, Divide[1, 3]]",
+      "verdict": "agree",
+      "theirs": "Power[2, Rational[1, 3]]"
+    },
+    {
+      "id": "Root#5",
+      "source": "Power[16, Divide[1, -2]]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 4]"
+    },
+    {
+      "id": "Root#6",
+      "source": "(Power[Power[8, Divide[1, 3]], 3] == 8)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Root#7",
+      "source": "(Power[16, Divide[1, 2]] == Sqrt[16])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Root#8",
+      "source": "Power[1000, Divide[1, 3]]",
+      "verdict": "agree",
+      "theirs": "10"
+    },
+    {
+      "id": "Root#9",
+      "source": "Power[-8, Divide[1, 2]]",
+      "verdict": "agree",
+      "theirs": "Times[Complex[0, 2], Power[2, Rational[1, 2]]]"
+    },
+    {
+      "id": "Round#1",
+      "source": "Round[Rational[7, 2]]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Round#10",
+      "source": "Round[-2.5]",
+      "verdict": "disagree",
+      "theirs": "-2"
+    },
+    {
+      "id": "Round#2",
+      "source": "Round[3.5]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Round#3",
+      "source": "Round[5]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Round#4",
+      "source": "Round[3.14159, Power[10, Minus[2]]]",
+      "verdict": "agree",
+      "theirs": "Rational[157, 50]"
+    },
+    {
+      "id": "Round#5",
+      "source": "Round[List[1.5, -1.5, 2.4]]",
+      "verdict": "agree",
+      "theirs": "List[2, -2, 2]"
+    },
+    {
+      "id": "Round#6",
+      "source": "(Round[1234, Power[10, Minus[-2]]] == 1200)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Round#7",
+      "source": "(Round[3.14159, Power[10, Minus[0]]] == Round[3.14159])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Round#8",
+      "source": "Round[19.995, Power[10, Minus[2]]]",
+      "verdict": "agree",
+      "theirs": "20"
+    },
+    {
+      "id": "Round#9",
+      "source": "Round[2.5]",
+      "verdict": "disagree",
+      "theirs": "2"
+    },
+    {
+      "id": "Sec#1",
+      "source": "Sec[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Sec#2",
+      "source": "Sec[Divide[Pi, 4]]",
+      "verdict": "agree",
+      "theirs": "Power[2, Rational[1, 2]]"
+    },
+    {
+      "id": "Sec#3",
+      "source": "Sec[Divide[Pi, 3]]",
+      "verdict": "agree",
+      "theirs": "2"
+    },
+    {
+      "id": "Sec#4",
+      "source": "Sec[Pi]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Sec#5",
+      "source": "(Sec[Divide[Pi, 3]] == Divide[1, Cos[Divide[Pi, 3]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sec#6",
+      "source": "(Plus[1, Power[Tan[Divide[Pi, 6]], 2]] == Power[Sec[Divide[Pi, 6]], 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sec#7",
+      "source": "Sec[Divide[Pi, 2]]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "SetMinus#1",
+      "source": "Complement[Union[List[1, 2, 3]], Union[List[2]]]",
+      "verdict": "agree",
+      "theirs": "List[1, 3]"
+    },
+    {
+      "id": "SetMinus#2",
+      "source": "Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]",
+      "verdict": "agree",
+      "theirs": "List[1, 3]"
+    },
+    {
+      "id": "SetMinus#3",
+      "source": "Complement[Union[List[1, 2, 3]], Union[List[9]]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3]"
+    },
+    {
+      "id": "SetMinus#4",
+      "source": "(Complement[Union[List[1, 2, 3, 4]], Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]] == Intersection[Union[List[1, 2, 3, 4]], Union[List[2, 4]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "SetMinus#5",
+      "source": "Complement[Union[List[2, 4]], Union[List[1, 2, 3, 4]]]",
+      "verdict": "disagree",
+      "theirs": "List[]"
+    },
+    {
+      "id": "Sign#1",
+      "source": "Sign[-3]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Sign#10",
+      "source": "Sign[Indeterminate]",
+      "verdict": "agree",
+      "theirs": "Indeterminate"
+    },
+    {
+      "id": "Sign#2",
+      "source": "Sign[3]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Sign#3",
+      "source": "Sign[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Sign#4",
+      "source": "Sign[Rational[-1, 2]]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Sign#5",
+      "source": "Sign[Complex[3, 4]]",
+      "verdict": "agree",
+      "theirs": "Complex[Rational[3, 5], Rational[4, 5]]"
+    },
+    {
+      "id": "Sign#6",
+      "source": "Sign[List[-3, 0, 7]]",
+      "verdict": "agree",
+      "theirs": "List[-1, 0, 1]"
+    },
+    {
+      "id": "Sign#7",
+      "source": "(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sign#8",
+      "source": "(Times[-5, Sign[-5]] == Abs[-5])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sign#9",
+      "source": "Sign[Subtract[70, 95]]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Sin#1",
+      "source": "Sin[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Sin#10",
+      "source": "Sin[List[0, Divide[Pi, 2], Pi]]",
+      "verdict": "agree",
+      "theirs": "List[0, 1, 0]"
+    },
+    {
+      "id": "Sin#11",
+      "source": "Sin[Times[30, Degree]]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 2]"
+    },
+    {
+      "id": "Sin#12",
+      "source": "Sin[1]",
+      "verdict": "agree",
+      "theirs": "Sin[1]"
+    },
+    {
+      "id": "Sin#13",
+      "source": "Sin[Divide[Pi, 5]]",
+      "verdict": "agree",
+      "theirs": "Power[Plus[Rational[5, 8], Times[Rational[-1, 8], Power[5, Rational[1, 2]]]], Rational[1, 2]]"
+    },
+    {
+      "id": "Sin#2",
+      "source": "Sin[Divide[Pi, 6]]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 2]"
+    },
+    {
+      "id": "Sin#3",
+      "source": "Sin[Divide[Pi, 4]]",
+      "verdict": "agree",
+      "theirs": "Power[2, Rational[-1, 2]]"
+    },
+    {
+      "id": "Sin#4",
+      "source": "Sin[Divide[Pi, 3]]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 2], Power[3, Rational[1, 2]]]"
+    },
+    {
+      "id": "Sin#5",
+      "source": "Sin[Divide[Pi, 2]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Sin#6",
+      "source": "Sin[Pi]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Sin#7",
+      "source": "Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Sin#8",
+      "source": "(Sin[Minus[Divide[Pi, 6]]] == Minus[Sin[Divide[Pi, 6]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sin#9",
+      "source": "Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 2]"
+    },
+    {
+      "id": "Sinh#1",
+      "source": "N[Sinh[0]]",
+      "verdict": "agree",
+      "theirs": "0.`"
+    },
+    {
+      "id": "Sinh#2",
+      "source": "N[Sinh[1]]",
+      "verdict": "agree",
+      "theirs": "1.1752011936438014`"
+    },
+    {
+      "id": "Sinh#3",
+      "source": "(Sinh[Minus[1]] == Minus[Sinh[1]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sinh#4",
+      "source": "(Sinh[1] == Divide[Subtract[Exp[1], Exp[Minus[1]]], 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sinh#5",
+      "source": "Sinh[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Sort#1",
+      "source": "Sort[List[3, 1, 2]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3]"
+    },
+    {
+      "id": "Sort#2",
+      "source": "Sort[List[4, 2, 5, 1, 3]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4, 5]"
+    },
+    {
+      "id": "Sort#3",
+      "source": "(Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sort#4",
+      "source": "(Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sort#5",
+      "source": "Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]",
+      "verdict": "agree",
+      "theirs": "List[3, 2, 1]"
+    },
+    {
+      "id": "Sqrt#1",
+      "source": "Sqrt[16]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Sqrt#10",
+      "source": "Sqrt[Rational[-4, 9]]",
+      "verdict": "agree",
+      "theirs": "Complex[0, Rational[2, 3]]"
+    },
+    {
+      "id": "Sqrt#2",
+      "source": "Sqrt[2]",
+      "verdict": "agree",
+      "theirs": "Power[2, Rational[1, 2]]"
+    },
+    {
+      "id": "Sqrt#3",
+      "source": "Sqrt[Rational[4, 9]]",
+      "verdict": "agree",
+      "theirs": "Rational[2, 3]"
+    },
+    {
+      "id": "Sqrt#4",
+      "source": "Sqrt[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Sqrt#5",
+      "source": "Sqrt[-4]",
+      "verdict": "agree",
+      "theirs": "Complex[0, 2]"
+    },
+    {
+      "id": "Sqrt#6",
+      "source": "((Sqrt[16])^2 == 16)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sqrt#7",
+      "source": "(Sqrt[16] == Power[16, Rational[1, 2]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Sqrt#8",
+      "source": "Sqrt[Plus[(3)^2, (4)^2]]",
+      "verdict": "agree",
+      "theirs": "5"
+    },
+    {
+      "id": "Sqrt#9",
+      "source": "Sqrt[-2]",
+      "verdict": "agree",
+      "theirs": "Times[Complex[0, 1], Power[2, Rational[1, 2]]]"
+    },
+    {
+      "id": "Square#1",
+      "source": "(5)^2",
+      "verdict": "agree",
+      "theirs": "25"
+    },
+    {
+      "id": "Square#2",
+      "source": "(-5)^2",
+      "verdict": "agree",
+      "theirs": "25"
+    },
+    {
+      "id": "Square#3",
+      "source": "(Rational[2, 3])^2",
+      "verdict": "agree",
+      "theirs": "Rational[4, 9]"
+    },
+    {
+      "id": "Square#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Square#5",
+      "source": "(List[2, 3, -4])^2",
+      "verdict": "agree",
+      "theirs": "List[4, 9, 16]"
+    },
+    {
+      "id": "Square#6",
+      "source": "((-5)^2 == (5)^2)",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Square#7",
+      "source": "((Complex[1, 1])^2 == Complex[0, 2])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Square#8",
+      "source": "(3)^2",
+      "verdict": "agree",
+      "theirs": "9"
+    },
+    {
+      "id": "Square#9",
+      "source": "(Infinity)^2",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[1]"
+    },
+    {
+      "id": "Stirling#1",
+      "source": "StirlingS2[5, 2]",
+      "verdict": "agree",
+      "theirs": "15"
+    },
+    {
+      "id": "Stirling#2",
+      "source": "StirlingS2[6, 3]",
+      "verdict": "agree",
+      "theirs": "90"
+    },
+    {
+      "id": "Stirling#3",
+      "source": "StirlingS2[5, 1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Stirling#4",
+      "source": "StirlingS2[5, 5]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Stirling#5",
+      "source": "(Sum[StirlingS2[4, k], List[k, 0, 4]] == BellB[4])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Stirling#6",
+      "source": "StirlingS2[0, 0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "StirlingS1#1",
+      "source": "StirlingS1[5, 2]",
+      "verdict": "agree",
+      "theirs": "-50"
+    },
+    {
+      "id": "StirlingS1#2",
+      "source": "StirlingS1[4, 2]",
+      "verdict": "agree",
+      "theirs": "11"
+    },
+    {
+      "id": "StirlingS1#3",
+      "source": "StirlingS1[3, 3]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "StirlingS1#4",
+      "source": "StirlingS1[5, 0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "StirlingS1#5",
+      "source": "(Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]] == Factorial[4])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "StirlingS1#6",
+      "source": "StirlingS1[5, 3]",
+      "verdict": "agree",
+      "theirs": "35"
+    },
+    {
+      "id": "StirlingS1#7",
+      "source": "StirlingS1[0, 0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "StirlingS1#8",
+      "source": "StirlingS1[10, 1]",
+      "verdict": "agree",
+      "theirs": "-362880"
+    },
+    {
+      "id": "Subfactorial#1",
+      "source": "Subfactorial[0]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Subfactorial#2",
+      "source": "Subfactorial[1]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Subfactorial#3",
+      "source": "Subfactorial[4]",
+      "verdict": "agree",
+      "theirs": "9"
+    },
+    {
+      "id": "Subfactorial#4",
+      "source": "Subfactorial[5]",
+      "verdict": "agree",
+      "theirs": "44"
+    },
+    {
+      "id": "Subfactorial#5",
+      "source": "(Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Subfactorial#6",
+      "source": "Subfactorial[6]",
+      "verdict": "agree",
+      "theirs": "265"
+    },
+    {
+      "id": "Subfactorial#7",
+      "source": "Subfactorial[-1]",
+      "verdict": "agree",
+      "theirs": "Subfactorial[-1]"
+    },
+    {
+      "id": "Tan#1",
+      "source": "Tan[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Tan#10",
+      "source": "Tan[1]",
+      "verdict": "agree",
+      "theirs": "Tan[1]"
+    },
+    {
+      "id": "Tan#2",
+      "source": "Tan[Divide[Pi, 6]]",
+      "verdict": "agree",
+      "theirs": "Power[3, Rational[-1, 2]]"
+    },
+    {
+      "id": "Tan#3",
+      "source": "Tan[Divide[Pi, 4]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Tan#4",
+      "source": "Tan[Divide[Pi, 3]]",
+      "verdict": "agree",
+      "theirs": "Power[3, Rational[1, 2]]"
+    },
+    {
+      "id": "Tan#5",
+      "source": "(Tan[Divide[Pi, 4]] == Divide[Sin[Divide[Pi, 4]], Cos[Divide[Pi, 4]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Tan#6",
+      "source": "Tan[Minus[Divide[Pi, 4]]]",
+      "verdict": "agree",
+      "theirs": "-1"
+    },
+    {
+      "id": "Tan#7",
+      "source": "Tan[Plus[Divide[Pi, 4], Pi]]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Tan#8",
+      "source": "Tan[List[0, Divide[Pi, 4]]]",
+      "verdict": "agree",
+      "theirs": "List[0, 1]"
+    },
+    {
+      "id": "Tan#9",
+      "source": "Tan[Divide[Pi, 2]]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Tanh#1",
+      "source": "N[Tanh[0]]",
+      "verdict": "agree",
+      "theirs": "0.`"
+    },
+    {
+      "id": "Tanh#2",
+      "source": "N[Tanh[1]]",
+      "verdict": "agree",
+      "theirs": "0.7615941559557649`"
+    },
+    {
+      "id": "Tanh#3",
+      "source": "(Tanh[1] == Divide[Sinh[1], Cosh[1]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Tanh#4",
+      "source": "Tanh[0]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "TemperleyLiebAlgebra#1",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "TemperleyLiebAlgebra#2",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "TemperleyLiebAlgebra#3",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "TemperleyLiebAlgebra#4",
+      "source": "",
+      "verdict": "unmapped",
+      "theirs": ""
+    },
+    {
+      "id": "Totient#1",
+      "source": "EulerPhi[12]",
+      "verdict": "agree",
+      "theirs": "4"
+    },
+    {
+      "id": "Totient#2",
+      "source": "EulerPhi[36]",
+      "verdict": "agree",
+      "theirs": "12"
+    },
+    {
+      "id": "Totient#3",
+      "source": "EulerPhi[1]",
+      "verdict": "agree",
+      "theirs": "1"
+    },
+    {
+      "id": "Totient#4",
+      "source": "EulerPhi[391]",
+      "verdict": "agree",
+      "theirs": "352"
+    },
+    {
+      "id": "Totient#5",
+      "source": "Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]",
+      "verdict": "agree",
+      "theirs": "12"
+    },
+    {
+      "id": "Totient#6",
+      "source": "(EulerPhi[12] == Times[EulerPhi[4], EulerPhi[3]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Union#1",
+      "source": "Union[List[1, 2, 3], List[3, 4]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "Union#2",
+      "source": "Union[List[1, 2], List[2, 3], List[3, 4]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 4]"
+    },
+    {
+      "id": "Union#3",
+      "source": "(Union[List[1, 2, 3], List[2, 3, 4]] == Union[List[2, 3, 4], List[1, 2, 3]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Union#4",
+      "source": "(Length[Union[List[1, 2, 3], List[2, 3, 4]]] == Subtract[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])",
+      "verdict": "agree",
+      "theirs": "True"
+    },
+    {
+      "id": "Union#5",
+      "source": "Union[Divisors[10], Divisors[15]]",
+      "verdict": "agree",
+      "theirs": "List[1, 2, 3, 5, 10, 15]"
+    },
+    {
+      "id": "Zeta#1",
+      "source": "Zeta[2]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "Zeta#10",
+      "source": "Zeta[3]",
+      "verdict": "agree",
+      "theirs": "Zeta[3]"
+    },
+    {
+      "id": "Zeta#11",
+      "source": "Zeta[-1]",
+      "verdict": "agree",
+      "theirs": "Rational[-1, 12]"
+    },
+    {
+      "id": "Zeta#12",
+      "source": "Zeta[2, 1]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "Zeta#13",
+      "source": "Zeta[2, 2]",
+      "verdict": "agree",
+      "theirs": "Plus[-1, Times[Rational[1, 6], Power[Pi, 2]]]"
+    },
+    {
+      "id": "Zeta#14",
+      "source": "Zeta[2, 0]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 6], Power[Pi, 2]]"
+    },
+    {
+      "id": "Zeta#2",
+      "source": "Zeta[4]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 90], Power[Pi, 4]]"
+    },
+    {
+      "id": "Zeta#3",
+      "source": "Zeta[6]",
+      "verdict": "agree",
+      "theirs": "Times[Rational[1, 945], Power[Pi, 6]]"
+    },
+    {
+      "id": "Zeta#4",
+      "source": "Zeta[List[-1, -2, -3]]",
+      "verdict": "agree",
+      "theirs": "List[Rational[-1, 12], 0, Rational[1, 120]]"
+    },
+    {
+      "id": "Zeta#5",
+      "source": "Zeta[0]",
+      "verdict": "agree",
+      "theirs": "Rational[-1, 2]"
+    },
+    {
+      "id": "Zeta#6",
+      "source": "Zeta[-2]",
+      "verdict": "agree",
+      "theirs": "0"
+    },
+    {
+      "id": "Zeta#7",
+      "source": "Zeta[-3]",
+      "verdict": "agree",
+      "theirs": "Rational[1, 120]"
+    },
+    {
+      "id": "Zeta#8",
+      "source": "Zeta[1]",
+      "verdict": "agree",
+      "theirs": "DirectedInfinity[]"
+    },
+    {
+      "id": "Zeta#9",
+      "source": "(Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])",
+      "verdict": "agree",
+      "theirs": "True"
+    }
+  ]
+}

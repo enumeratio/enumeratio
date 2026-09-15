@@ -1,0 +1,35 @@
+{
+  "name": "@enumeratio/oracle",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Cross-check the reference catalogue against external systems: signature-level mappings, emitters, batch runners, and the blessed values a scan produces.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/wolfram": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@types/node": "^24",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

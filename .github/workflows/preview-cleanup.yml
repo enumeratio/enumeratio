@@ -1,0 +1,61 @@
+name: Preview cleanup (Cloudflare Pages)
+
+# CF never expires a deployment, and ci.yml uploads one per commit. Two sweeps (.github/scripts/sweep-previews.ts):
+#   PR closed  — every deployment stamped with that PR's number goes, force-pushed-away commits included.
+#   weekly     — every untagged preview older than 30 days goes; a tagged commit's preview stays reachable at its
+#                <sha7>.enumeratio.pages.dev for good, and the newest main preview always survives.
+# Best-effort: a failed delete never fails the run.
+
+on:
+  pull_request:
+    types: [closed]
+  schedule:
+    - cron: "33 5 * * 1" # Monday 05:33 UTC
+  workflow_dispatch:
+    inputs:
+      max_age_days:
+        description: Delete untagged previews older than this many days
+        default: "30"
+      dry_run:
+        description: Only report what would be deleted
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pull-requests: write # note the teardown on the PR
+
+concurrency:
+  group: preview-cleanup-${{ github.event.pull_request.number || 'sweep' }}
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the age sweep asks git which commits carry a tag
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Sweep
+        continue-on-error: true
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          DRY_RUN: ${{ inputs.dry_run == true && '1' || '' }}
+          MODE: ${{ github.event_name == 'pull_request' && 'pr' || 'age' }}
+          ARG: ${{ github.event.pull_request.number || inputs.max_age_days || '30' }}
+        run: node .github/scripts/sweep-previews.ts "$MODE" "$ARG" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Note teardown on the PR
+        if: github.event_name == 'pull_request'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          body=$(printf '<!-- cf-preview -->\nPreview deployments removed on close.')
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --body "$body" || true

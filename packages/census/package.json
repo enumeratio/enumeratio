@@ -1,0 +1,40 @@
+{
+  "name": "@enumeratio/census",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The whole namespace in one engine — what we declare, what it collides with, and what Wolfram can do that we cannot.",
+  "license": "WTFPL",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/braid": "workspace:*",
+    "@enumeratio/catalog": "workspace:*",
+    "@enumeratio/collections": "workspace:*",
+    "@enumeratio/diagram": "workspace:*",
+    "@enumeratio/domains": "workspace:*",
+    "@enumeratio/formats": "workspace:*",
+    "@enumeratio/geometric": "workspace:*",
+    "@enumeratio/groupalgebra": "workspace:*",
+    "@enumeratio/hecke": "workspace:*",
+    "@enumeratio/hopf": "workspace:*",
+    "@enumeratio/hypercomplex": "workspace:*",
+    "@enumeratio/incidence": "workspace:*",
+    "@enumeratio/modular": "workspace:*",
+    "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/quiver": "workspace:*",
+    "@enumeratio/statistics": "workspace:*",
+    "@enumeratio/wolfram": "workspace:*",
+    "@types/node": "^24",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

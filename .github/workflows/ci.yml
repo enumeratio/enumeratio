@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write # the `preview` job keeps a sticky preview-URL comment
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Lint/typecheck + the docs build, once; the dist is the artifact `preview` deploys.
+  build:
+    name: check + site build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm exec vp check
+      - run: pnpm --filter @enumeratio/web run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-dist
+          path: web/.vitepress/dist
+          retention-days: 3
+
+  test:
+    name: tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: pnpm -r --filter '!@enumeratio/web' run test
+
+  # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
+  # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `build` made: no second
+  # site build, no CF build minutes. Same-repo only — fork PRs have no secrets. `--branch` is CF's one alias slot,
+  # so it carries the sha; the commit message carries the PR number for preview-cleanup.yml to match on.
+  preview:
+    name: preview (Cloudflare Pages)
+    needs: build
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: site-dist
+          path: dist
+      - id: meta
+        env:
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR: ${{ github.event.pull_request.number }}
+          HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+        run: |
+          echo "deploy=$HAS_TOKEN" >> "$GITHUB_OUTPUT"
+          [ "$HAS_TOKEN" = true ] || echo "::notice::no CLOUDFLARE_API_TOKEN secret — preview skipped"
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "sha7=${SHA:0:7}" >> "$GITHUB_OUTPUT"
+          if [ -n "$PR" ]; then echo "stamp=[preview-PR-$PR]" >> "$GITHUB_OUTPUT"
+          else echo "stamp=[preview-${GITHUB_REF_NAME}]" >> "$GITHUB_OUTPUT"; fi
+      - id: deploy
+        if: steps.meta.outputs.deploy == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: >
+            pages deploy dist
+            --project-name=enumeratio
+            --branch=${{ steps.meta.outputs.sha7 }}
+            --commit-hash=${{ steps.meta.outputs.sha }}
+            --commit-message=${{ steps.meta.outputs.stamp }}
+      - name: Preview URL
+        if: steps.meta.outputs.deploy == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALIAS_URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}
+          SHA7: ${{ steps.meta.outputs.sha7 }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          alias="${ALIAS_URL:-https://$SHA7.enumeratio.pages.dev}"
+          echo "Preview ($SHA7): $alias" >> "$GITHUB_STEP_SUMMARY"
+          [ -n "$PR" ] || exit 0
+          body=$(printf '<!-- cf-preview -->\nPreview (%s): %s' "$SHA7" "$alias")
+          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --body "$body" \
+            || gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "$body"

@@ -1,0 +1,20 @@
+{
+  "name": "@enumeratio/entry",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The shape of a reference entry — the types every package's entries are written against, and the rules an implementations block has to satisfy. A leaf, so the packages that own the heads can type their entries without depending on the package that documents them.",
+  "license": "WTFPL",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  }
+}

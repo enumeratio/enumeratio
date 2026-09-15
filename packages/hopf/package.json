@@ -1,0 +1,41 @@
+{
+  "name": "@enumeratio/hopf",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Combinatorial Hopf algebra extensions for @cortex-js/compute-engine: NSym and QSym on compositions, with product, coproduct and antipode.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/algebra": "workspace:*",
+    "@enumeratio/boxed": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@enumeratio/algebra": "workspace:*",
+    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/hypercomplex": "workspace:*",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0"
+  }
+}

@@ -1,0 +1,28 @@
+packages:
+  - web
+  - packages/*
+  - tools/*
+
+catalogMode: prefer
+
+catalog:
+  "@types/node": ^24
+  typescript: ^7.0.2
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.1
+  vite-plus: 0.3.1
+# NOTE: no global `vite@*` override. VitePress (web/) needs vanilla Vite;
+# forcing every transitive vite to vite-plus-core (Rolldown) breaks it. Library
+# packages opt into vite-plus explicitly via `vite: catalog:`.
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"
+# Both ship prebuilt platform packages (@esbuild/darwin-arm64,
+# @parcel/watcher-darwin-arm64) that pnpm installs as optional deps, so their
+# postinstall build scripts are redundant here. Left unanswered, these placeholders
+# failed every `pnpm install` with ERR_PNPM_IGNORED_BUILDS after linking had already
+# succeeded.
+allowBuilds:
+  "@parcel/watcher": false
+  esbuild: false

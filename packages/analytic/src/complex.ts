@@ -1,0 +1,51 @@
+// Minimal complex arithmetic for the numeric special-function kernels. Just what
+// Euler–Maclaurin needs: the field ops plus a principal-branch power. A real,
+// positive base with a real exponent takes the plain Math.pow fast path so real
+// inputs stay free of imaginary rounding noise.
+
+export interface Cx {
+  re: number;
+  im: number;
+}
+
+export const cx = (re: number, im = 0): Cx => ({ re, im });
+
+export const add = (x: Cx, y: Cx): Cx => ({ re: x.re + y.re, im: x.im + y.im });
+export const sub = (x: Cx, y: Cx): Cx => ({ re: x.re - y.re, im: x.im - y.im });
+
+export const mul = (x: Cx, y: Cx): Cx => ({
+  re: x.re * y.re - x.im * y.im,
+  im: x.re * y.im + x.im * y.re,
+});
+
+export const div = (x: Cx, y: Cx): Cx => {
+  const d = y.re * y.re + y.im * y.im;
+  return { re: (x.re * y.re + x.im * y.im) / d, im: (x.im * y.re - x.re * y.im) / d };
+};
+
+export const scale = (x: Cx, k: number): Cx => ({ re: x.re * k, im: x.im * k });
+
+export const abs = (x: Cx): number => Math.hypot(x.re, x.im);
+
+export const isReal = (x: Cx, eps = 0): boolean => Math.abs(x.im) <= eps;
+
+/** Principal-branch complex logarithm: ln|z| + i·arg z, branch cut on (-∞, 0]. */
+export const clog = (z: Cx): Cx => ({
+  re: 0.5 * Math.log(z.re * z.re + z.im * z.im),
+  im: Math.atan2(z.im, z.re),
+});
+
+/** Complex exponential. */
+export const cexp = (z: Cx): Cx => {
+  const r = Math.exp(z.re);
+  return { re: r * Math.cos(z.im), im: r * Math.sin(z.im) };
+};
+
+/**
+ * Principal-branch power z^w. Positive real base with real exponent uses
+ * Math.pow directly; everything else goes through exp(w·log z).
+ */
+export const cpow = (z: Cx, w: Cx): Cx => {
+  if (z.im === 0 && z.re > 0 && w.im === 0) return { re: Math.pow(z.re, w.re), im: 0 };
+  return cexp(mul(w, clog(z)));
+};

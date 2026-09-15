@@ -1,0 +1,70 @@
+{
+  "IntegerDigits(93784, MixedRadix([24, 60, 60]))": {
+    "latex": "\\mathrm{IntegerDigits}(93\\,784, \\mathrm{MixedRadix}(\\bigl\\lbrack24, 60, 60\\bigr\\rbrack))",
+    "errors": []
+  },
+  "FromDigits([1, 2, 3, 4], MixedRadix([24, 60, 60]))": {
+    "latex": "\\mathrm{FromDigits}(\\bigl\\lbrack1, 2, 3, 4\\bigr\\rbrack, \\mathrm{MixedRadix}(\\bigl\\lbrack24, 60, 60\\bigr\\rbrack))",
+    "errors": []
+  },
+  "At(SymmetricGroup(4), 6)": {
+    "latex": "\\mathrm{SymmetricGroup}(4)[6]",
+    "errors": []
+  },
+  "CircleTimes(f_1, f_2, f_1, f_2)": {
+    "latex": "f_1\\otimes f_2\\otimes f_1\\otimes f_2",
+    "errors": []
+  },
+  "CircleTimes(theta_2, theta_1)": {
+    "latex": "\\theta_2\\otimes\\theta_1",
+    "errors": []
+  },
+  "LorenzBraid(\"LLRLR\")": {
+    "latex": "\\mathrm{LorenzBraid}(\\text{LLRLR})",
+    "errors": []
+  },
+  "1 / 2 + 1 / 3": {
+    "latex": "\\frac{1}{2}+\\frac{1}{3}",
+    "errors": []
+  },
+  "Integrate(x ^ 2, (x, 0, 1))": {
+    "latex": "\\int_{0}^{1}\\!x^2\\, \\mathrm{d}x",
+    "errors": []
+  },
+  "Sin(x) * Cos(y)": {
+    "latex": "\\sin(x)\\cos(y)",
+    "errors": []
+  },
+  "x^2 - y^2": {
+    "latex": "x^2-y^2",
+    "errors": []
+  },
+  "Binomial(n, k) + Sin(x)": {
+    "latex": "\\binom{n}{k}+\\sin(x)",
+    "errors": []
+  },
+  "Zeta(3)": {
+    "latex": "\\Zeta(3)",
+    "errors": []
+  },
+  "N(Zeta(3))": {
+    "latex": "N(\\Zeta(3))",
+    "errors": []
+  },
+  "TraditionalForm(Binomial(10, 3))": {
+    "latex": "\\mathrm{TraditionalForm}(\\binom{10}{3})",
+    "errors": []
+  },
+  "$\\frac{1}{2}$ + Sqrt(2)": {
+    "latex": "\\frac{1}{2}+\\sqrt{2}",
+    "errors": []
+  },
+  "{1, 2, 3}": {
+    "latex": "\\lbrace1, 2, 3\\rbrace",
+    "errors": []
+  },
+  "HurwitzZeta(s, a)": {
+    "latex": "\\mathrm{HurwitzZeta}(s, a)",
+    "errors": []
+  }
+}

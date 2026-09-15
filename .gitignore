@@ -1,0 +1,45 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# dotenv environment variable files
+.env
+.env.*
+!.env.example
+
+# Editor directories and files
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Scratch probe scripts (grounding one-offs)
+_*.mjs
+
+# AI agent worktrees
+.claude/worktrees/
+!.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# the extractor INPUT — regenerate from an enumeratio checkout, see scripts/extract.ts
+catalog-dump.json
+
+# VitePress writes these beside a data loader while resolving it.
+*.timestamp-*.mjs

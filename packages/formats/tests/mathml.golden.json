@@ -1,0 +1,764 @@
+{
+  "integer": {
+    "json": 42,
+    "mathml": "<mn>42</mn>"
+  },
+  "negative integer": {
+    "json": -7,
+    "mathml": "<mrow><mo>−</mo><mn>7</mn></mrow>"
+  },
+  "big integer": {
+    "json": {
+      "num": "123456789012345678901234567890"
+    },
+    "mathml": "<mn>123456789012345678901234567890</mn>"
+  },
+  "decimal": {
+    "json": 3.25,
+    "mathml": "<mn>3.25</mn>"
+  },
+  "scientific": {
+    "json": {
+      "num": "6.02e23"
+    },
+    "mathml": "<mrow><mn>6.02</mn><mo>×</mo><msup><mn>10</mn><mn>23</mn></msup></mrow>"
+  },
+  "scientific negative exponent": {
+    "json": 1e-9,
+    "mathml": "<mrow><mn>1</mn><mo>×</mo><msup><mn>10</mn><mrow><mo>−</mo><mn>9</mn></mrow></msup></mrow>"
+  },
+  "repeating decimal": {
+    "json": {
+      "num": "1.(3)"
+    },
+    "mathml": "<mrow><mn>1.</mn><mover><mn>3</mn><mo>‾</mo></mover></mrow>"
+  },
+  "not a number": {
+    "json": {
+      "num": "NaN"
+    },
+    "mathml": "<mi>NaN</mi>"
+  },
+  "positive infinity": {
+    "json": {
+      "num": "+Infinity"
+    },
+    "mathml": "<mi>∞</mi>"
+  },
+  "negative infinity": {
+    "json": {
+      "num": "-Infinity"
+    },
+    "mathml": "<mrow><mo>−</mo><mi>∞</mi></mrow>"
+  },
+  "symbol": {
+    "json": "x",
+    "mathml": "<mi>x</mi>"
+  },
+  "multi-letter symbol": {
+    "json": "speed",
+    "mathml": "<mi>speed</mi>"
+  },
+  "symbol object": {
+    "json": {
+      "sym": "y"
+    },
+    "mathml": "<mi>y</mi>"
+  },
+  "greek symbol": {
+    "json": "alpha",
+    "mathml": "<mi>α</mi>"
+  },
+  "constant pi": {
+    "json": "Pi",
+    "mathml": "<mi>π</mi>"
+  },
+  "constant e": {
+    "json": "ExponentialE",
+    "mathml": "<mi>e</mi>"
+  },
+  "constant i": {
+    "json": "ImaginaryUnit",
+    "mathml": "<mi>i</mi>"
+  },
+  "constant infinity": {
+    "json": "PositiveInfinity",
+    "mathml": "<mi>∞</mi>"
+  },
+  "constant negative infinity": {
+    "json": "NegativeInfinity",
+    "mathml": "<mrow><mo>−</mo><mi>∞</mi></mrow>"
+  },
+  "half": {
+    "json": "Half",
+    "mathml": "<mfrac><mn>1</mn><mn>2</mn></mfrac>"
+  },
+  "subscripted symbol": {
+    "json": "x_1",
+    "mathml": "<msub><mi>x</mi><mn>1</mn></msub>"
+  },
+  "symbol with word subscript": {
+    "json": "v_max",
+    "mathml": "<msub><mi>v</mi><mi>max</mi></msub>"
+  },
+  "string literal": {
+    "json": {
+      "str": "hello"
+    },
+    "mathml": "<ms>hello</ms>"
+  },
+  "quoted string": {
+    "json": "'hi'",
+    "mathml": "<ms>hi</ms>"
+  },
+  "add two": {
+    "json": ["Add", "x", 1],
+    "mathml": "<mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>"
+  },
+  "add many": {
+    "json": ["Add", "a", "b", "c", "d"],
+    "mathml": "<mrow><mi>a</mi><mo>+</mo><mi>b</mi><mo>+</mo><mi>c</mi><mo>+</mo><mi>d</mi></mrow>"
+  },
+  "add negative literal": {
+    "json": ["Add", "x", -2],
+    "mathml": "<mrow><mi>x</mi><mo>−</mo><mn>2</mn></mrow>"
+  },
+  "add negate": {
+    "json": ["Add", "x", ["Negate", "y"]],
+    "mathml": "<mrow><mi>x</mi><mo>−</mo><mi>y</mi></mrow>"
+  },
+  "add negative coefficient": {
+    "json": ["Add", ["Multiply", -2, "x"], 1],
+    "mathml": "<mrow><mrow><mrow><mo>−</mo><mn>2</mn></mrow><mo>&#x2062;</mo><mi>x</mi></mrow><mo>+</mo><mn>1</mn></mrow>"
+  },
+  "add minus-one coefficient": {
+    "json": ["Add", 1, ["Multiply", -1, "x"]],
+    "mathml": "<mrow><mn>1</mn><mo>−</mo><mi>x</mi></mrow>"
+  },
+  "add leading negative": {
+    "json": ["Add", -2, "x"],
+    "mathml": "<mrow><mrow><mo>−</mo><mn>2</mn></mrow><mo>+</mo><mi>x</mi></mrow>"
+  },
+  "add double negative": {
+    "json": ["Add", "a", ["Negate", ["Negate", "b"]]],
+    "mathml": "<mrow><mi>a</mi><mo>−</mo><mrow><mo>(</mo><mrow><mo>−</mo><mi>b</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "add nested add": {
+    "json": ["Add", "a", ["Add", "b", "c"]],
+    "mathml": "<mrow><mi>a</mi><mo>+</mo><mrow><mo>(</mo><mrow><mi>b</mi><mo>+</mo><mi>c</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "subtract": {
+    "json": ["Subtract", "x", "y"],
+    "mathml": "<mrow><mi>x</mi><mo>−</mo><mi>y</mi></mrow>"
+  },
+  "subtract a sum": {
+    "json": ["Subtract", "a", ["Add", "b", "c"]],
+    "mathml": "<mrow><mi>a</mi><mo>−</mo><mrow><mo>(</mo><mrow><mi>b</mi><mo>+</mo><mi>c</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "subtract a negative": {
+    "json": ["Subtract", "a", -3],
+    "mathml": "<mrow><mi>a</mi><mo>−</mo><mrow><mo>(</mo><mrow><mo>−</mo><mn>3</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "subtract chain": {
+    "json": ["Subtract", ["Subtract", "x", "y"], "z"],
+    "mathml": "<mrow><mrow><mi>x</mi><mo>−</mo><mi>y</mi></mrow><mo>−</mo><mi>z</mi></mrow>"
+  },
+  "unary minus": {
+    "json": ["Negate", "x"],
+    "mathml": "<mrow><mo>−</mo><mi>x</mi></mrow>"
+  },
+  "unary minus of sum": {
+    "json": ["Negate", ["Add", "x", 1]],
+    "mathml": "<mrow><mo>−</mo><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "unary minus of product": {
+    "json": ["Negate", ["Multiply", 2, "x"]],
+    "mathml": "<mrow><mo>−</mo><mrow><mn>2</mn><mo>&#x2062;</mo><mi>x</mi></mrow></mrow>"
+  },
+  "unary minus of power": {
+    "json": ["Negate", ["Power", "x", 2]],
+    "mathml": "<mrow><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup></mrow>"
+  },
+  "double unary minus": {
+    "json": ["Negate", ["Negate", "x"]],
+    "mathml": "<mrow><mo>−</mo><mrow><mo>(</mo><mrow><mo>−</mo><mi>x</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "unary minus of negative literal": {
+    "json": ["Negate", -1],
+    "mathml": "<mrow><mo>−</mo><mrow><mo>(</mo><mrow><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "multiply symbols": {
+    "json": ["Multiply", "a", "b"],
+    "mathml": "<mrow><mi>a</mi><mo>&#x2062;</mo><mi>b</mi></mrow>"
+  },
+  "multiply coefficient": {
+    "json": ["Multiply", 2, "x"],
+    "mathml": "<mrow><mn>2</mn><mo>&#x2062;</mo><mi>x</mi></mrow>"
+  },
+  "multiply numbers": {
+    "json": ["Multiply", 2, 3],
+    "mathml": "<mrow><mn>2</mn><mo>⋅</mo><mn>3</mn></mrow>"
+  },
+  "multiply minus-one": {
+    "json": ["Multiply", -1, "x", "y"],
+    "mathml": "<mrow><mo>−</mo><mrow><mi>x</mi><mo>&#x2062;</mo><mi>y</mi></mrow></mrow>"
+  },
+  "multiply by negative": {
+    "json": ["Multiply", "a", ["Negate", "b"]],
+    "mathml": "<mrow><mi>a</mi><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><mo>−</mo><mi>b</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "multiply by negative literal": {
+    "json": ["Multiply", "a", -2],
+    "mathml": "<mrow><mi>a</mi><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><mo>−</mo><mn>2</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "multiply sums": {
+    "json": ["Multiply", ["Add", "x", 1], ["Subtract", "x", 1]],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>&#x2062;</mo><mrow><mo>(</mo><mrow><mi>x</mi><mo>−</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "multiply fraction": {
+    "json": ["Multiply", 2, ["Rational", 1, 2]],
+    "mathml": "<mrow><mn>2</mn><mo>⋅</mo><mfrac><mn>1</mn><mn>2</mn></mfrac></mrow>"
+  },
+  "invisible operator": {
+    "json": ["InvisibleOperator", 2, "x"],
+    "mathml": "<mrow><mn>2</mn><mo>&#x2062;</mo><mi>x</mi></mrow>"
+  },
+  "divide": {
+    "json": ["Divide", "x", "y"],
+    "mathml": "<mfrac><mi>x</mi><mi>y</mi></mfrac>"
+  },
+  "divide sums": {
+    "json": ["Divide", ["Add", "x", 1], ["Subtract", "y", 2]],
+    "mathml": "<mfrac><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mrow><mi>y</mi><mo>−</mo><mn>2</mn></mrow></mfrac>"
+  },
+  "nested fractions": {
+    "json": ["Divide", ["Divide", 1, 2], ["Divide", 3, 4]],
+    "mathml": "<mfrac><mfrac><mn>1</mn><mn>2</mn></mfrac><mfrac><mn>3</mn><mn>4</mn></mfrac></mfrac>"
+  },
+  "fraction in numerator": {
+    "json": ["Divide", ["Divide", "a", "b"], "c"],
+    "mathml": "<mfrac><mfrac><mi>a</mi><mi>b</mi></mfrac><mi>c</mi></mfrac>"
+  },
+  "rational": {
+    "json": ["Rational", 2, 3],
+    "mathml": "<mfrac><mn>2</mn><mn>3</mn></mfrac>"
+  },
+  "negative rational": {
+    "json": ["Rational", -1, 3],
+    "mathml": "<mfrac><mrow><mo>−</mo><mn>1</mn></mrow><mn>3</mn></mfrac>"
+  },
+  "power": {
+    "json": ["Power", "x", 2],
+    "mathml": "<msup><mi>x</mi><mn>2</mn></msup>"
+  },
+  "power of sum": {
+    "json": ["Power", ["Add", "x", 1], 2],
+    "mathml": "<msup><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mn>2</mn></msup>"
+  },
+  "power of power": {
+    "json": ["Power", ["Power", "x", 2], 3],
+    "mathml": "<msup><msup><mi>x</mi><mn>2</mn></msup><mn>3</mn></msup>"
+  },
+  "power of negative": {
+    "json": ["Power", -2, 2],
+    "mathml": "<msup><mrow><mo>(</mo><mrow><mo>−</mo><mn>2</mn></mrow><mo>)</mo></mrow><mn>2</mn></msup>"
+  },
+  "power of negate": {
+    "json": ["Power", ["Negate", "x"], 2],
+    "mathml": "<msup><mrow><mo>(</mo><mrow><mo>−</mo><mi>x</mi></mrow><mo>)</mo></mrow><mn>2</mn></msup>"
+  },
+  "power of fraction": {
+    "json": ["Power", ["Rational", 1, 2], "n"],
+    "mathml": "<msup><mrow><mo>(</mo><mfrac><mn>1</mn><mn>2</mn></mfrac><mo>)</mo></mrow><mi>n</mi></msup>"
+  },
+  "power negative exponent": {
+    "json": ["Power", "x", ["Negate", 1]],
+    "mathml": "<msup><mi>x</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup>"
+  },
+  "power fraction exponent": {
+    "json": ["Power", "x", ["Rational", 1, 2]],
+    "mathml": "<msup><mi>x</mi><mfrac><mn>1</mn><mn>2</mn></mfrac></msup>"
+  },
+  "power of product": {
+    "json": ["Power", ["Multiply", "a", "b"], 2],
+    "mathml": "<msup><mrow><mo>(</mo><mrow><mi>a</mi><mo>&#x2062;</mo><mi>b</mi></mrow><mo>)</mo></mrow><mn>2</mn></msup>"
+  },
+  "power of function": {
+    "json": ["Power", ["Sin", "x"], 2],
+    "mathml": "<msup><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mn>2</mn></msup>"
+  },
+  "power of subscript": {
+    "json": ["Power", "x_1", 2],
+    "mathml": "<msup><msub><mi>x</mi><mn>1</mn></msub><mn>2</mn></msup>"
+  },
+  "power tower": {
+    "json": ["Power", "a", ["Power", "b", "c"]],
+    "mathml": "<msup><mi>a</mi><msup><mi>b</mi><mi>c</mi></msup></msup>"
+  },
+  "power in product": {
+    "json": ["Multiply", 3, ["Power", "x", 2]],
+    "mathml": "<mrow><mn>3</mn><mo>&#x2062;</mo><msup><mi>x</mi><mn>2</mn></msup></mrow>"
+  },
+  "euler identity": {
+    "json": ["Add", ["Power", "ExponentialE", ["Multiply", ["Complex", 0, 1], "Pi"]], 1],
+    "mathml": "<mrow><msup><mi>e</mi><mrow><mi>i</mi><mo>&#x2062;</mo><mi>π</mi></mrow></msup><mo>+</mo><mn>1</mn></mrow>"
+  },
+  "square": {
+    "json": ["Square", "x"],
+    "mathml": "<msup><mi>x</mi><mn>2</mn></msup>"
+  },
+  "exp": {
+    "json": ["Exp", ["Negate", "x"]],
+    "mathml": "<msup><mi>e</mi><mrow><mo>−</mo><mi>x</mi></mrow></msup>"
+  },
+  "sqrt": {
+    "json": ["Sqrt", "x"],
+    "mathml": "<msqrt><mi>x</mi></msqrt>"
+  },
+  "sqrt of sum": {
+    "json": ["Sqrt", ["Add", ["Power", "x", 2], 1]],
+    "mathml": "<msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>1</mn></mrow></msqrt>"
+  },
+  "nested sqrt": {
+    "json": ["Sqrt", ["Add", 1, ["Sqrt", 2]]],
+    "mathml": "<msqrt><mrow><mn>1</mn><mo>+</mo><msqrt><mn>2</mn></msqrt></mrow></msqrt>"
+  },
+  "root": {
+    "json": ["Root", "x", 3],
+    "mathml": "<mroot><mi>x</mi><mn>3</mn></mroot>"
+  },
+  "root of fraction": {
+    "json": ["Root", ["Divide", 1, "x"], "n"],
+    "mathml": "<mroot><mfrac><mn>1</mn><mi>x</mi></mfrac><mi>n</mi></mroot>"
+  },
+  "abs": {
+    "json": ["Abs", ["Subtract", "x", "y"]],
+    "mathml": "<mrow><mo>|</mo><mrow><mi>x</mi><mo>−</mo><mi>y</mi></mrow><mo>|</mo></mrow>"
+  },
+  "norm": {
+    "json": ["Norm", "v"],
+    "mathml": "<mrow><mo>‖</mo><mi>v</mi><mo>‖</mo></mrow>"
+  },
+  "floor": {
+    "json": ["Floor", "x"],
+    "mathml": "<mrow><mo>⌊</mo><mi>x</mi><mo>⌋</mo></mrow>"
+  },
+  "ceil": {
+    "json": ["Ceil", "x"],
+    "mathml": "<mrow><mo>⌈</mo><mi>x</mi><mo>⌉</mo></mrow>"
+  },
+  "factorial": {
+    "json": ["Factorial", "n"],
+    "mathml": "<mrow><mi>n</mi><mo>!</mo></mrow>"
+  },
+  "factorial of sum": {
+    "json": ["Factorial", ["Add", "n", 1]],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>!</mo></mrow>"
+  },
+  "double factorial": {
+    "json": ["Factorial2", "n"],
+    "mathml": "<mrow><mi>n</mi><mo>!!</mo></mrow>"
+  },
+  "binomial": {
+    "json": ["Binomial", "n", "k"],
+    "mathml": "<mrow><mo>(</mo><mfrac linethickness=\"0\"><mi>n</mi><mi>k</mi></mfrac><mo>)</mo></mrow>"
+  },
+  "complex number": {
+    "json": ["Complex", 2, 3],
+    "mathml": "<mrow><mn>2</mn><mo>+</mo><mrow><mn>3</mn><mo>&#x2062;</mo><mi>i</mi></mrow></mrow>"
+  },
+  "complex unit imaginary": {
+    "json": ["Complex", 2, 1],
+    "mathml": "<mrow><mn>2</mn><mo>+</mo><mi>i</mi></mrow>"
+  },
+  "complex pure imaginary": {
+    "json": ["Complex", 0, 3],
+    "mathml": "<mrow><mn>3</mn><mo>&#x2062;</mo><mi>i</mi></mrow>"
+  },
+  "complex object form": {
+    "json": {
+      "fn": [
+        "Add",
+        {
+          "sym": "x"
+        },
+        {
+          "num": "1"
+        }
+      ]
+    },
+    "mathml": "<mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow>"
+  },
+  "sin": {
+    "json": ["Sin", "x"],
+    "mathml": "<mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "sin of product": {
+    "json": ["Sin", ["Multiply", 2, "x"]],
+    "mathml": "<mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mrow><mn>2</mn><mo>&#x2062;</mo><mi>x</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "sin times cos": {
+    "json": ["Multiply", ["Sin", "x"], ["Cos", "y"]],
+    "mathml": "<mrow><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>&#x2062;</mo><mrow><mi>cos</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>y</mi><mo>)</mo></mrow></mrow></mrow>"
+  },
+  "ln": {
+    "json": ["Ln", "x"],
+    "mathml": "<mrow><mi>ln</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "log base": {
+    "json": ["Log", 8, 2],
+    "mathml": "<mrow><msub><mi>log</mi><mn>2</mn></msub><mo>&#x2061;</mo><mrow><mo>(</mo><mn>8</mn><mo>)</mo></mrow></mrow>"
+  },
+  "lb": {
+    "json": ["Lb", 8],
+    "mathml": "<mrow><mi>lb</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mn>8</mn><mo>)</mo></mrow></mrow>"
+  },
+  "gamma function": {
+    "json": ["Gamma", ["Add", "n", 1]],
+    "mathml": "<mrow><mi>Γ</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "user function": {
+    "json": ["f", "x", "y"],
+    "mathml": "<mrow><mi>f</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>)</mo></mrow></mrow>"
+  },
+  "user function no args": {
+    "json": ["f"],
+    "mathml": "<mrow><mi>f</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mo>)</mo></mrow></mrow>"
+  },
+  "unknown head": {
+    "json": ["Zeta", "s"],
+    "mathml": "<mrow><mi>Zeta</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>s</mi><mo>)</mo></mrow></mrow>"
+  },
+  "nested calls": {
+    "json": ["f", ["g", "x"], ["h", "y", "z"]],
+    "mathml": "<mrow><mi>f</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mrow><mi>g</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mo>,</mo><mrow><mi>h</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>y</mi><mo>,</mo><mi>z</mi><mo>)</mo></mrow></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "subscript": {
+    "json": ["Subscript", "a", "n"],
+    "mathml": "<msub><mi>a</mi><mi>n</mi></msub>"
+  },
+  "subscript of sum": {
+    "json": ["Subscript", ["Add", "a", "b"], "n"],
+    "mathml": "<msub><mrow><mo>(</mo><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><mo>)</mo></mrow><mi>n</mi></msub>"
+  },
+  "superscript": {
+    "json": ["Superscript", "A", "T"],
+    "mathml": "<msup><mi>A</mi><mi>T</mi></msup>"
+  },
+  "subscript and power": {
+    "json": ["Power", ["Subscript", "a", "n"], 2],
+    "mathml": "<msup><msub><mi>a</mi><mi>n</mi></msub><mn>2</mn></msup>"
+  },
+  "list": {
+    "json": ["List", 1, 2, 3],
+    "mathml": "<mrow><mo>[</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo>]</mo></mrow>"
+  },
+  "empty list": {
+    "json": ["List"],
+    "mathml": "<mrow><mo>[</mo><mo>]</mo></mrow>"
+  },
+  "list of lists": {
+    "json": ["List", ["List", 1, 2], ["List", 3, 4]],
+    "mathml": "<mrow><mo>[</mo><mrow><mo>[</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>]</mo></mrow><mo>,</mo><mrow><mo>[</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>]</mo></mrow><mo>]</mo></mrow>"
+  },
+  "set": {
+    "json": ["Set", "a", "b"],
+    "mathml": "<mrow><mo>{</mo><mi>a</mi><mo>,</mo><mi>b</mi><mo>}</mo></mrow>"
+  },
+  "tuple": {
+    "json": ["Tuple", "x", 0, 1],
+    "mathml": "<mrow><mo>(</mo><mi>x</mi><mo>,</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>)</mo></mrow>"
+  },
+  "pair": {
+    "json": ["Pair", "x", "y"],
+    "mathml": "<mrow><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>)</mo></mrow>"
+  },
+  "matrix": {
+    "json": ["Matrix", ["List", ["List", 1, 2], ["List", 3, 4]]],
+    "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>)</mo></mrow>"
+  },
+  "matrix with brackets": {
+    "json": ["Matrix", ["List", ["List", 1, 2], ["List", 3, 4]], "'[]'"],
+    "mathml": "<mrow><mo>[</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>]</mo></mrow>"
+  },
+  "matrix with str delimiters": {
+    "json": [
+      "Matrix",
+      ["List", ["List", 1, 2], ["List", 3, 4]],
+      {
+        "str": "||"
+      }
+    ],
+    "mathml": "<mrow><mo>|</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable><mo>|</mo></mrow>"
+  },
+  "matrix no delimiters": {
+    "json": ["Matrix", ["List", ["List", 1, 2], ["List", 3, 4]], "'..'"],
+    "mathml": "<mrow><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable></mrow>"
+  },
+  "matrix of expressions": {
+    "json": [
+      "Matrix",
+      [
+        "List",
+        ["List", ["Divide", 1, 2], ["Negate", "x"]],
+        ["List", ["Power", "x", 2], ["Sqrt", 2]]
+      ]
+    ],
+    "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mfrac><mn>1</mn><mn>2</mn></mfrac></mtd><mtd><mrow><mo>−</mo><mi>x</mi></mrow></mtd></mtr><mtr><mtd><msup><mi>x</mi><mn>2</mn></msup></mtd><mtd><msqrt><mn>2</mn></msqrt></mtd></mtr></mtable><mo>)</mo></mrow>"
+  },
+  "column vector": {
+    "json": ["Matrix", ["List", ["List", 1], ["List", 2], ["List", 3]]],
+    "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow>"
+  },
+  "nested matrices": {
+    "json": [
+      "Matrix",
+      ["List", ["List", ["Matrix", ["List", ["List", 1, 0], ["List", 0, 1]]], 0], ["List", 0, 1]]
+    ],
+    "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow>"
+  },
+  "delimiter": {
+    "json": ["Delimiter", ["Add", "x", 1]],
+    "mathml": "<mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow>"
+  },
+  "delimiter brackets": {
+    "json": ["Delimiter", ["Sequence", "a", "b"], "'[]'", "';'"],
+    "mathml": "<mrow><mo>[</mo><mi>a</mi><mo>;</mo><mi>b</mi><mo>]</mo></mrow>"
+  },
+  "delimited negate": {
+    "json": ["Negate", ["Delimiter", ["Negate", "x"]]],
+    "mathml": "<mrow><mo>−</mo><mrow><mo>(</mo><mrow><mo>−</mo><mi>x</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "equal": {
+    "json": ["Equal", "x", 1],
+    "mathml": "<mrow><mi>x</mi><mo>=</mo><mn>1</mn></mrow>"
+  },
+  "equal sum": {
+    "json": ["Equal", ["Add", "x", "y"], ["Multiply", 2, "z"]],
+    "mathml": "<mrow><mrow><mi>x</mi><mo>+</mo><mi>y</mi></mrow><mo>=</mo><mrow><mn>2</mn><mo>&#x2062;</mo><mi>z</mi></mrow></mrow>"
+  },
+  "not equal": {
+    "json": ["NotEqual", "x", "y"],
+    "mathml": "<mrow><mi>x</mi><mo>≠</mo><mi>y</mi></mrow>"
+  },
+  "less": {
+    "json": ["Less", "a", "b"],
+    "mathml": "<mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi></mrow>"
+  },
+  "less equal": {
+    "json": ["LessEqual", 3, "x"],
+    "mathml": "<mrow><mn>3</mn><mo>≤</mo><mi>x</mi></mrow>"
+  },
+  "greater": {
+    "json": ["Greater", "a", "b"],
+    "mathml": "<mrow><mi>a</mi><mo>&gt;</mo><mi>b</mi></mrow>"
+  },
+  "greater equal": {
+    "json": ["GreaterEqual", "x", 3],
+    "mathml": "<mrow><mi>x</mi><mo>≥</mo><mn>3</mn></mrow>"
+  },
+  "approx": {
+    "json": ["Approx", "Pi", 3.14],
+    "mathml": "<mrow><mi>π</mi><mo>≈</mo><mn>3.14</mn></mrow>"
+  },
+  "chained relation": {
+    "json": ["Less", "a", "b", "c"],
+    "mathml": "<mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi><mo>&lt;</mo><mi>c</mi></mrow>"
+  },
+  "mixed relation": {
+    "json": ["LessEqual", ["Less", "a", "b"], "c"],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi></mrow><mo>)</mo></mrow><mo>≤</mo><mi>c</mi></mrow>"
+  },
+  "relation of relations": {
+    "json": ["Equal", ["Less", "a", "b"], ["Greater", "c", "d"]],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi></mrow><mo>)</mo></mrow><mo>=</mo><mrow><mo>(</mo><mrow><mi>c</mi><mo>&gt;</mo><mi>d</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "relation in sum": {
+    "json": ["Add", ["Equal", "a", "b"], 1],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>a</mi><mo>=</mo><mi>b</mi></mrow><mo>)</mo></mrow><mo>+</mo><mn>1</mn></mrow>"
+  },
+  "element": {
+    "json": ["Element", "x", "RealNumbers"],
+    "mathml": "<mrow><mi>x</mi><mo>∈</mo><mi>ℝ</mi></mrow>"
+  },
+  "and": {
+    "json": ["And", ["Less", "a", "b"], ["LessEqual", "b", "c"]],
+    "mathml": "<mrow><mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi></mrow><mo>∧</mo><mrow><mi>b</mi><mo>≤</mo><mi>c</mi></mrow></mrow>"
+  },
+  "or": {
+    "json": ["Or", "p", "q"],
+    "mathml": "<mrow><mi>p</mi><mo>∨</mo><mi>q</mi></mrow>"
+  },
+  "and of or": {
+    "json": ["And", ["Or", "p", "q"], "r"],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>p</mi><mo>∨</mo><mi>q</mi></mrow><mo>)</mo></mrow><mo>∧</mo><mi>r</mi></mrow>"
+  },
+  "or of and": {
+    "json": ["Or", ["And", "p", "q"], "r"],
+    "mathml": "<mrow><mrow><mi>p</mi><mo>∧</mo><mi>q</mi></mrow><mo>∨</mo><mi>r</mi></mrow>"
+  },
+  "not": {
+    "json": ["Not", "p"],
+    "mathml": "<mrow><mo>¬</mo><mi>p</mi></mrow>"
+  },
+  "not of and": {
+    "json": ["Not", ["And", "p", "q"]],
+    "mathml": "<mrow><mo>¬</mo><mrow><mo>(</mo><mrow><mi>p</mi><mo>∧</mo><mi>q</mi></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "implies": {
+    "json": ["Implies", "p", "q"],
+    "mathml": "<mrow><mi>p</mi><mo>⇒</mo><mi>q</mi></mrow>"
+  },
+  "equivalent": {
+    "json": ["Equivalent", "p", "q"],
+    "mathml": "<mrow><mi>p</mi><mo>⇔</mo><mi>q</mi></mrow>"
+  },
+  "sum with limits": {
+    "json": ["Sum", ["Power", "n", 2], ["Limits", "n", 1, 10]],
+    "mathml": "<mrow><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><mn>10</mn></munderover><msup><mi>n</mi><mn>2</mn></msup></mrow>"
+  },
+  "sum with tuple": {
+    "json": ["Sum", ["Power", "n", 2], ["Tuple", "n", 1, 10]],
+    "mathml": "<mrow><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><mn>10</mn></munderover><msup><mi>n</mi><mn>2</mn></msup></mrow>"
+  },
+  "sum canonical": {
+    "json": ["Sum", ["Function", ["Block", ["Power", "n", 2]], "n"], ["Limits", "n", 1, 10]],
+    "mathml": "<mrow><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow><mn>10</mn></munderover><msup><mi>n</mi><mn>2</mn></msup></mrow>"
+  },
+  "sum of sum": {
+    "json": ["Sum", ["Add", "n", 1], ["Limits", "n", 0, "Infinity"]],
+    "mathml": "<mrow><munderover><mo>∑</mo><mrow><mi>n</mi><mo>=</mo><mn>0</mn></mrow><mi>∞</mi></munderover><mrow><mo>(</mo><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow></mrow>"
+  },
+  "sum no bounds": {
+    "json": ["Sum", "a_n"],
+    "mathml": "<mrow><mo>∑</mo><msub><mi>a</mi><mi>n</mi></msub></mrow>"
+  },
+  "sum variable only": {
+    "json": ["Sum", "a_n", "n"],
+    "mathml": "<mrow><munder><mo>∑</mo><mi>n</mi></munder><msub><mi>a</mi><mi>n</mi></msub></mrow>"
+  },
+  "product": {
+    "json": ["Product", "k", ["Limits", "k", 1, 5]],
+    "mathml": "<mrow><munderover><mo>∏</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mn>5</mn></munderover><mi>k</mi></mrow>"
+  },
+  "definite integral": {
+    "json": ["Integrate", ["Function", ["Block", ["Power", "x", 2]], "x"], ["Limits", "x", 0, 1]],
+    "mathml": "<mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><msup><mi>x</mi><mn>2</mn></msup><mrow><mi>d</mi><mi>x</mi></mrow></mrow>"
+  },
+  "indefinite integral": {
+    "json": ["Integrate", ["Sin", "x"], "x"],
+    "mathml": "<mrow><mo>∫</mo><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mrow>"
+  },
+  "integral of sum": {
+    "json": ["Integrate", ["Add", "x", 1], ["Tuple", "x", 0, 1]],
+    "mathml": "<mrow><msubsup><mo>∫</mo><mn>0</mn><mn>1</mn></msubsup><mrow><mo>(</mo><mrow><mi>x</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mrow>"
+  },
+  "limit": {
+    "json": ["Limit", ["Function", ["Block", ["Divide", ["Sin", "x"], "x"]], "x"], 0],
+    "mathml": "<mrow><munder><mi>lim</mi><mrow><mi>x</mi><mo>→</mo><mn>0</mn></mrow></munder><mfrac><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mi>x</mi></mfrac></mrow>"
+  },
+  "limit raw": {
+    "json": ["Limit", ["Function", ["Divide", ["Sin", "x"], "x"], "x"], 0],
+    "mathml": "<mrow><munder><mi>lim</mi><mrow><mi>x</mi><mo>→</mo><mn>0</mn></mrow></munder><mfrac><mrow><mi>sin</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow><mi>x</mi></mfrac></mrow>"
+  },
+  "derivative": {
+    "json": ["D", ["Power", "x", 2], "x"],
+    "mathml": "<mrow><mfrac><mi>d</mi><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><msup><mi>x</mi><mn>2</mn></msup></mrow>"
+  },
+  "derivative prime": {
+    "json": ["Apply", ["Derivative", "f", 1], "x"],
+    "mathml": "<mrow><mrow><mi>f</mi><mo>′</mo></mrow><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "derivative double prime": {
+    "json": ["Apply", ["Derivative", "f", 2], "x"],
+    "mathml": "<mrow><mrow><mi>f</mi><mo>″</mo></mrow><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "derivative high order": {
+    "json": ["Apply", ["Derivative", "f", 5], "x"],
+    "mathml": "<mrow><msup><mi>f</mi><mrow><mo>(</mo><mn>5</mn><mo>)</mo></mrow></msup><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "derivative default order": {
+    "json": ["Apply", ["Derivative", "f"], "x"],
+    "mathml": "<mrow><mrow><mi>f</mi><mo>′</mo></mrow><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "apply": {
+    "json": ["Apply", "f", "x"],
+    "mathml": "<mrow><mi>f</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>)</mo></mrow></mrow>"
+  },
+  "apply many": {
+    "json": ["Apply", "f", "x", "y"],
+    "mathml": "<mrow><mi>f</mi><mo>&#x2061;</mo><mrow><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>)</mo></mrow></mrow>"
+  },
+  "interval closed": {
+    "json": ["Interval", 0, 1],
+    "mathml": "<mrow><mo>[</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo>]</mo></mrow>"
+  },
+  "interval open": {
+    "json": ["Interval", ["Open", 0], ["Open", 1]],
+    "mathml": "<mrow><mo>(</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo>)</mo></mrow>"
+  },
+  "interval half open right": {
+    "json": ["Interval", 0, ["Open", 1]],
+    "mathml": "<mrow><mo>[</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo>)</mo></mrow>"
+  },
+  "interval half open left": {
+    "json": ["Interval", ["Open", 0], 1],
+    "mathml": "<mrow><mo>(</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo>]</mo></mrow>"
+  },
+  "subset": {
+    "json": ["Subset", "A", "B"],
+    "mathml": "<mrow><mi>A</mi><mo>⊂</mo><mi>B</mi></mrow>"
+  },
+  "subset equal": {
+    "json": ["SubsetEqual", "A", "B"],
+    "mathml": "<mrow><mi>A</mi><mo>⊆</mo><mi>B</mi></mrow>"
+  },
+  "not element": {
+    "json": ["NotElement", "x", "Integers"],
+    "mathml": "<mrow><mi>x</mi><mo>∉</mo><mi>ℤ</mi></mrow>"
+  },
+  "piecewise two cases": {
+    "json": ["Which", ["Greater", "x", 0], ["Power", "x", 2], "True", ["Negate", "x"]],
+    "mathml": "<mrow><mo>{</mo><mtable><mtr><mtd><msup><mi>x</mi><mn>2</mn></msup></mtd><mtd><mrow><mtext>if </mtext><mrow><mi>x</mi><mo>&gt;</mo><mn>0</mn></mrow></mrow></mtd></mtr><mtr><mtd><mrow><mo>−</mo><mi>x</mi></mrow></mtd><mtd><mtext>otherwise</mtext></mtd></mtr></mtable></mrow>"
+  },
+  "piecewise no default": {
+    "json": ["Which", ["Greater", "x", 0], "x"],
+    "mathml": "<mrow><mo>{</mo><mtable><mtr><mtd><mi>x</mi></mtd><mtd><mrow><mtext>if </mtext><mrow><mi>x</mi><mo>&gt;</mo><mn>0</mn></mrow></mrow></mtd></mtr></mtable></mrow>"
+  },
+  "wedge": {
+    "json": ["Wedge", "a", "b"],
+    "mathml": "<mrow><mi>a</mi><mo>∧</mo><mi>b</mi></mrow>"
+  },
+  "wedge three": {
+    "json": ["Wedge", "a", "b", "c"],
+    "mathml": "<mrow><mi>a</mi><mo>∧</mo><mi>b</mi><mo>∧</mo><mi>c</mi></mrow>"
+  },
+  "vee": {
+    "json": ["Vee", "a", "b", "algebra"],
+    "mathml": "<mrow><mi>a</mi><mo>∨</mo><mi>b</mi></mrow>"
+  },
+  "wedge of sum": {
+    "json": ["Wedge", ["Add", "a", 1], "b"],
+    "mathml": "<mrow><mrow><mo>(</mo><mrow><mi>a</mi><mo>+</mo><mn>1</mn></mrow><mo>)</mo></mrow><mo>∧</mo><mi>b</mi></mrow>"
+  },
+  "ordered juxtaposition": {
+    "json": ["InvisibleOperator", "e_2", "e_1"],
+    "mathml": "<mrow><msub><mi>e</mi><mn>2</mn></msub><mo>&#x2062;</mo><msub><mi>e</mi><mn>1</mn></msub></mrow>"
+  },
+  "error": {
+    "json": ["Error", "'unknown-symbol'"],
+    "mathml": "<merror><mrow><ms>unknown-symbol</ms></mrow></merror>"
+  },
+  "xml special characters": {
+    "json": ["Less", "'a<b'", "'c&d'"],
+    "mathml": "<mrow><ms>a&lt;b</ms><mo>&lt;</mo><ms>c&amp;d</ms></mrow>"
+  },
+  "dictionary": {
+    "json": {
+      "dict": {
+        "a": 1
+      }
+    },
+    "mathml": "<merror><mtext>{&quot;dict&quot;:{&quot;a&quot;:1}}</mtext></merror>"
+  }
+}

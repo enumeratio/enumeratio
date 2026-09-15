@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+# Force-protect main/master: refuse any non-fast-forward (force) push or deletion
+# of the protected branches, for every remote (present or future). Note: a
+# `git push --no-verify` bypasses this (a git limitation), and it does not catch
+# local ref rewrites like `git branch -f main` or `git reset` on main — pushes only.
+z=0000000000000000000000000000000000000000
+
+while read -r _local_ref local_sha remote_ref remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main | refs/heads/master) ;;
+    *) continue ;;
+  esac
+
+  # Refuse to delete the protected branch.
+  if [ "$local_sha" = "$z" ]; then
+    echo "pre-push: refusing to delete $remote_ref (force-protected)." >&2
+    exit 1
+  fi
+
+  # Creating the branch on the remote for the first time is fine.
+  [ "$remote_sha" = "$z" ] && continue
+
+  # Fast-forward only: the remote tip must be an ancestor of what we push.
+  if ! git merge-base --is-ancestor "$remote_sha" "$local_sha"; then
+    echo "pre-push: refusing non-fast-forward (force) push to $remote_ref." >&2
+    echo "  main is force-protected (.vite-hooks/pre-push)." >&2
+    exit 1
+  fi
+done
+
+exit 0

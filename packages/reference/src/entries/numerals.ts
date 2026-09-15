@@ -1,0 +1,370 @@
+import type { ReferenceEntry } from "../types.ts";
+
+// Reference entries for @enumeratio/numerals. `IntegerDigits` and `FromDigits` are
+// compute-engine's OWN heads — what this library adds is systems in the base slot, so
+// the entries document that widening rather than introducing parallel heads.
+
+const DOMAIN = "Numeral systems";
+const L = (...xs: number[]) => ["List", ...xs];
+
+export const numerals: readonly ReferenceEntry[] = [
+  {
+    name: "IntegerDigits",
+    domain: DOMAIN,
+    signature: "IntegerDigits(n, system, width?)",
+    summary:
+      "The digits of $n$, most significant first. The base slot takes a whole numeral SYSTEM, not only an integer — factoradic, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed, primorial, combinatorial or residue.",
+    signatures: [
+      {
+        call: "IntegerDigits(n, b)",
+        description: "fixed radix $b$ — compute-engine's own, unchanged",
+      },
+      {
+        call: "IntegerDigits(n, system)",
+        description: "digits in any of the systems below",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "IntegerDigits(n, system, width)",
+        description: "left-padded with zeros to `width` digits",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "Systems: `MixedRadix([…])`, `Factoradic`, `PrimorialRadix`, `BalancedRadix(b)`, `NegativeRadix(b)`, `BijectiveRadix(k)`, `Zeckendorf`, `Ostrowski([…])`, `CombinatorialSystem(k)`, `ResidueSystem([…])`, `AdicNumerals(b, prec?)`",
+      "`Ostrowski([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf",
+      "`BalancedRadix` and `NegativeRadix` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead",
+      "The factoradic digits of $n$ are the Lehmer code of the $n$-th permutation, so padding to the permutation's size makes the two line up",
+      "An integer with no numeral in a system — anything past $\\prod m_i$ in a residue system, say — leaves the call standing rather than answering",
+      "Bijective bases have no zero DIGIT, but zero itself is the empty numeral: that is what makes the correspondence with strings a bijection",
+      "Inverted by [[FromDigits]] with the same system",
+    ],
+    examples: [
+      {
+        expr: ["IntegerDigits", 93784, ["MixedRadix", L(24, 60, 60)]],
+        expected: L(1, 2, 3, 4),
+        caption: "93 784 seconds as days, hours, minutes, seconds",
+      },
+      {
+        expr: ["IntegerDigits", 5, "Factoradic", 4],
+        expected: L(0, 2, 1, 0),
+        caption: "the Lehmer code of the 6th permutation of four things",
+        category: "Applications",
+      },
+      {
+        expr: ["IntegerDigits", 100, "Zeckendorf"],
+        expected: L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+        caption: "$100 = 89 + 8 + 3$, with no two adjacent ones",
+      },
+      {
+        expr: ["IntegerDigits", 20, ["Ostrowski", L(1, 1, 1, 1, 1, 1, 1, 1)]],
+        expected: L(0, 1, 0, 1, 0, 1, 0, 0),
+        caption: "the same $20 = 13 + 5 + 2$, over a continued fraction's convergents",
+        category: "Scope",
+      },
+      {
+        expr: ["IntegerDigits", -5, ["BalancedRadix", 3]],
+        expected: L(-1, 1, 1),
+        caption: "a negative integer, with no sign",
+        category: "Scope",
+      },
+      {
+        expr: ["IntegerDigits", 703, ["BijectiveRadix", 26]],
+        expected: L(1, 1, 1),
+        caption: "spreadsheet column AAA",
+        category: "Scope",
+      },
+      {
+        expr: ["IntegerDigits", 23, ["ResidueSystem", L(3, 5, 7)]],
+        expected: L(2, 3, 2),
+        caption: "independent residues — no place values",
+        category: "Scope",
+      },
+      {
+        expr: ["IntegerDigits", -3, ["AdicNumerals", 10, 6]],
+        expected: L(9, 9, 9, 9, 9, 7),
+        caption:
+          "the 10-adic truncation: a negative is spelled by its digits, and the width is part of the numeral",
+        category: "Scope",
+      },
+      {
+        expr: ["IntegerDigits", 255, 16],
+        expected: L(15, 15),
+        caption: "an integer base is still the native handler",
+        category: "Properties",
+      },
+    ],
+    seeAlso: ["FromDigits", "NumeralSystemShape"],
+  },
+  {
+    name: "FromDigits",
+    domain: DOMAIN,
+    signature: "FromDigits(digits, system)",
+    summary:
+      "The integer a digit string denotes, in any numeral system. The inverse of [[IntegerDigits]] — and the round trip is the whole specification of a system.",
+    signatures: [
+      { call: "FromDigits(digits, b)", description: "fixed radix — compute-engine's own" },
+      {
+        call: "FromDigits(digits, system)",
+        description: "read the digits in that system",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies",
+      "In a residue system with moduli that are not pairwise coprime the map is not a bijection, and an inconsistent string has no value",
+      "Zeckendorf is the clearest case of a system whose digits are constrained by a forbidden PATTERN rather than a per-place bound",
+    ],
+    examples: [
+      {
+        expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadix", L(24, 60, 60)]],
+        expected: 93784,
+        caption: "1d 2h 3m 4s back to seconds",
+      },
+      {
+        expr: ["FromDigits", L(0, 2, 1, 0), "Factoradic"],
+        expected: 5,
+        caption: "a Lehmer code back to its rank",
+        category: "Applications",
+      },
+      {
+        expr: ["FromDigits", L(2, 3, 2), ["ResidueSystem", L(3, 5, 7)]],
+        expected: 23,
+        caption: "CRT reconstruction",
+      },
+      {
+        expr: ["FromDigits", L(1, 1), "Zeckendorf"],
+        expected: ["FromDigits", L(1, 1), "Zeckendorf"],
+        caption: "two adjacent ones is not a numeral, so it denotes nothing",
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "NumeralSystemShape"],
+  },
+  {
+    name: "NumeralSystemShape",
+    domain: DOMAIN,
+    signature: "NumeralSystemShape(system)",
+    summary: "What a system's digits are allowed to look like, in one line.",
+    signatures: [
+      {
+        call: "NumeralSystemShape(system)",
+        description: "a description of the digit constraint",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "Useful for the systems whose constraint is not a simple range — Zeckendorf's forbidden pattern, or a residue system whose moduli are not pairwise coprime",
+      "A residue system reports whether it is a bijection at all",
+    ],
+    examples: [
+      {
+        expr: ["NumeralSystemShape", "Zeckendorf"],
+        expected: "'binary digits over Fibonacci places, with no two adjacent ones'",
+      },
+      {
+        expr: ["NumeralSystemShape", ["BijectiveRadix", 26]],
+        expected: "'digits 1…26, no zero digit; zero is the EMPTY numeral'",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "FromDigits"],
+  },
+  {
+    name: "AdicNumeral",
+    domain: DOMAIN,
+    signature: "AdicNumeral(b, x, prec?)",
+    summary:
+      "A $b$-adic number: the rational $x$ read in $\\mathbb{Z}_b$ (or $\\mathbb{Q}_p$ for prime $b$), exact when built from a rational, $+ O(b^{prec})$ when capped. The ring operations work on it.",
+    signatures: [
+      {
+        call: "AdicNumeral(b, x)",
+        description: "exact: $x$ any rational whose denominator $b$ can invert",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "AdicNumeral(b, x, prec)",
+        description: "$x$ known modulo $b^{prec}$, normalised to its representative",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "Two values share the head. An EXACT adic is a rational, and its expansion can be produced to any depth (it is eventually periodic). A CAPPED adic is known only modulo $b^{prec}$ — what a Hensel lift produces, and what any arithmetic with a capped operand yields; the precision of a sum is the weaker operand's, of a product $\\min(v_1 + p_2, v_2 + p_1)$",
+      "Prime $b$ gives the field $\\mathbb{Q}_p$: any non-zero divisor works and the result may have negative valuation (digits past the point). Composite $b$ gives the ring $\\mathbb{Z}_b$ — no field, zero divisors, and division only by units (coprime to $b$)",
+      "A rational the base cannot expand — $1/2$ in $\\mathbb{Z}_{10}$ — leaves the call standing",
+      "A rational operand beside an adic one is read in the same base, so `AdicNumeral(10, 1/3) * 3` is `AdicNumeral(10, 1)`. Adics of different bases never combine",
+      "Not a compute-engine number type: the value is a function expression, and `Add`, `Multiply`, `Negate`, `Divide`, `Power` are wrapped to recognise it (`Subtract` reaches them by canonicalisation)",
+      "Default precision for anything unbounded — Hensel lifting, `AdicSqrt` — is 20 digits",
+    ],
+    examples: [
+      {
+        expr: ["Multiply", ["AdicNumeral", 10, ["Rational", 1, 3]], 3],
+        expected: ["AdicNumeral", 10, 1],
+        caption: "$…6667 × 3 = 1$: $1/3$ is a 10-adic integer",
+      },
+      {
+        expr: ["Add", ["AdicNumeral", 10, -1], 1],
+        expected: ["AdicNumeral", 10, 0],
+        caption: "$…999 + 1 = 0$, carrying forever",
+      },
+      {
+        expr: ["AdicNumeral", 10, ["Rational", 1, 3], 8],
+        expected: ["AdicNumeral", 10, 66666667, 8],
+        caption: "capped: the representative modulo $10^8$",
+        category: "Scope",
+      },
+      {
+        expr: ["Divide", ["AdicNumeral", 5, 3], 5],
+        expected: ["AdicNumeral", 5, ["Rational", 3, 5]],
+        caption: "prime base: $\\mathbb{Q}_5$ is a field, so the point moves",
+        category: "Scope",
+      },
+      {
+        expr: ["Divide", ["AdicNumeral", 10, 3], 2],
+        expected: ["Multiply", ["Rational", 1, 2], ["AdicNumeral", 10, 3]],
+        caption: "composite base: 2 is not a unit of $\\mathbb{Z}_{10}$, so this declines",
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["AdicExpansion", "AdicValuation", "AdicSqrt", "HenselLift", "IntegerDigits"],
+  },
+  {
+    name: "AdicExpansion",
+    domain: DOMAIN,
+    signature: "AdicExpansion(x, count?)",
+    summary:
+      "The digits of a $b$-adic number, written with the infinite end on the left: $\\ldots 6667$ for $1/3$ in $\\mathbb{Z}_{10}$, $0.12$ for $7/25$ in $\\mathbb{Q}_5$, $+ O(b^n)$ when capped.",
+    signatures: [
+      {
+        call: "AdicExpansion(x, count?)",
+        description: "the first `count` digits (default 20) as a string",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "AdicDigits(x, count?)",
+        description:
+          "the same digits as a list, LEAST significant first — the only order that lists something with no left end",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "The ellipsis marks the infinite left end and is dropped only when nothing hides there: an exact non-negative integer (times $b^v$)",
+      "Digits past the point are the negative-valuation places, prime bases only",
+      "Digits $\\ge 10$ are bracketed, so base 16 reads `…[15][15][15]`",
+    ],
+    examples: [
+      {
+        expr: ["AdicExpansion", ["AdicNumeral", 10, ["Rational", 1, 3]], 8],
+        expected: "'…66666667'",
+      },
+      {
+        expr: ["AdicExpansion", ["AdicNumeral", 2, ["Rational", 1, 3]], 8],
+        expected: "'…10101011'",
+        caption: "the same $1/3$, 2-adically",
+      },
+      {
+        expr: ["AdicExpansion", ["AdicNumeral", 5, ["Rational", 7, 25]], 8],
+        expected: "'0.12'",
+        caption: "$7/25 = 2·5^{-2} + 1·5^{-1}$",
+        category: "Scope",
+      },
+      {
+        expr: ["AdicDigits", ["AdicNumeral", 10, ["Rational", 1, 3]], 6],
+        expected: L(7, 6, 6, 6, 6, 6),
+        caption: "as a list, least significant first",
+      },
+    ],
+    seeAlso: ["AdicNumeral", "IntegerDigits"],
+  },
+  {
+    name: "AdicValuation",
+    domain: DOMAIN,
+    signature: "AdicValuation(x)",
+    summary:
+      "The $b$-adic valuation $v_b(x)$ — the power of $b$ dividing $x$ — with its companions: the norm $|x|_b = b^{-v}$ and the unit part $u$ in $x = b^v · u$.",
+    signatures: [
+      {
+        call: "AdicValuation(x)",
+        description: "$v_b(x)$; `PositiveInfinity` for zero",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "AdicNorm(x)",
+        description: "$b^{-v_b(x)}$: small when highly divisible by $b$",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "AdicUnitPart(x)",
+        description: "$x / b^{v_b(x)}$, a unit of $\\mathbb{Z}_b$",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "For composite $b$ this is the largest $k$ with $b^k | x$, which is not a valuation in the strict sense (it is not additive: $v_{10}(2) + v_{10}(5) = 0 ≠ v_{10}(10)$) — but it is what the expansion's leading zeros count",
+      "A capped zero is $O(b^{prec})$, so its valuation is reported as the precision: all that is known",
+      "Wolfram's `IntegerExponent[n, p]` is the valuation on integers",
+    ],
+    examples: [
+      { expr: ["AdicValuation", ["AdicNumeral", 5, 75]], expected: 2 },
+      { expr: ["AdicNorm", ["AdicNumeral", 5, 75]], expected: ["Rational", 1, 25] },
+      { expr: ["AdicUnitPart", ["AdicNumeral", 5, 75]], expected: ["AdicNumeral", 5, 3] },
+      {
+        expr: ["AdicValuation", ["AdicNumeral", 5, ["Rational", 3, 25]]],
+        expected: -2,
+        caption: "negative in $\\mathbb{Q}_5$",
+        category: "Scope",
+      },
+    ],
+    seeAlso: ["AdicNumeral", "AdicExpansion"],
+  },
+  {
+    name: "HenselLift",
+    domain: DOMAIN,
+    signature: "HenselLift(f, seed, b, prec?)",
+    summary:
+      "The $b$-adic root of a polynomial that reduces to `seed` mod $b$, by Newton's iteration — Hensel's lemma made to run. `AdicSqrt` is the special case $f = x^2 − a$.",
+    signatures: [
+      {
+        call: "HenselLift(f, seed, b, prec?)",
+        description: "needs $f(seed) ≡ 0$ and $f'(seed)$ a unit mod $b$; $f$ in one free variable",
+        library: "enumeratio-numerals",
+      },
+      {
+        call: "AdicSqrt(x, prec?)",
+        description: "a square root in $\\mathbb{Z}_p$, prime $p$; declines when there is none",
+        library: "enumeratio-numerals",
+      },
+    ],
+    details: [
+      "Each Newton step doubles the number of correct digits, so 20 digits take five steps",
+      "The result is capped at `prec` (default 20): a root found this way is known modulo $b^{prec}$ and nothing more, which is where capped values come from",
+      "A root with $f'(seed) ≡ 0$ is not simple and does not lift this way — $x^3 − x$ from 1 in $\\mathbb{Z}_2$ declines",
+      "Composite $b$ works when $f'(seed)$ is coprime to $b$, and that is how the non-rational elements of $\\mathbb{Z}_{10}$ appear: $x^2 − x$ from 5 lifts to the idempotent $…890625$",
+      "Square roots: an odd prime needs $x$ to be a quadratic residue mod $p$; $p = 2$ needs $x ≡ 1 \\pmod 8$ and starts the iteration one level up, since $f'(a) = 2a$ is not a unit",
+    ],
+    examples: [
+      {
+        expr: ["HenselLift", ["Subtract", ["Power", "x", 2], 2], 3, 7, 6],
+        expected: ["AdicNumeral", 7, 38181, 6],
+        caption: "$\\sqrt{2}$ in $\\mathbb{Z}_7$, from $3^2 ≡ 2 \\pmod 7$",
+      },
+      {
+        expr: ["Power", ["AdicSqrt", ["AdicNumeral", 7, 2], 6], 2],
+        expected: ["AdicNumeral", 7, 2, 6],
+        caption: "and squaring it gives 2 back, to the same precision",
+      },
+      {
+        expr: ["AdicExpansion", ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 5, 10, 8]],
+        expected: "'…12890625 + O(10^8)'",
+        caption: "a 10-adic idempotent: $e^2 = e$, and $e ≠ 0, 1$",
+        category: "Applications",
+      },
+      {
+        expr: ["AdicSqrt", ["AdicNumeral", 7, 3]],
+        expected: ["AdicSqrt", ["AdicNumeral", 7, 3]],
+        caption: "3 is not a square mod 7, so it has no 7-adic square root",
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["AdicNumeral", "AdicExpansion"],
+  },
+];

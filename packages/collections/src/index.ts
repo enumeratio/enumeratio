@@ -1,0 +1,8 @@
+export { declareCollections } from "./library.ts";
+export { allEntries } from "./packs/index.ts";
+export type { FamilySpec, PackEntry } from "./packs/types.ts";
+export { declareStats, type StatsOptions } from "./stats.ts";
+
+// Reference entries live at the buildless `@enumeratio/collections/reference`
+// subpath -- they import the ReferenceEntry type from another src-only package,
+// which tsdown's dts step can't follow, so they stay out of the runtime build.

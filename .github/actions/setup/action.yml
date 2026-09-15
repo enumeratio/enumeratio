@@ -1,0 +1,17 @@
+name: Setup
+description: pnpm + node + install, then build every library package (type-aware lint, tests and scripts resolve siblings through dist/).
+
+runs:
+  using: composite
+  steps:
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 12.3.4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        cache: pnpm
+    - run: pnpm install --frozen-lockfile
+      shell: bash
+    - run: pnpm -r --filter '!@enumeratio/web' run build
+      shell: bash

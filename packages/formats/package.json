@@ -1,0 +1,55 @@
+{
+  "name": "@enumeratio/formats",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A Wolfram-style format registry with Import/Export over MathJSON, Wolfram, TeX, code, and image formats.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./inputform": {
+      "types": "./dist/inputform.d.mts",
+      "import": "./dist/inputform.mjs"
+    },
+    "./mathml": {
+      "types": "./dist/mathml.d.mts",
+      "import": "./dist/mathml.mjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.mts",
+      "import": "./dist/node.mjs"
+    },
+    "./notatio": {
+      "types": "./dist/notatio.d.mts",
+      "import": "./dist/notatio.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack src/index.ts src/node.ts src/notatio.ts src/inputform.ts src/mathml.ts",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/raster": "workspace:*",
+    "@enumeratio/wolfram": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@types/node": "^24",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0"
+  }
+}

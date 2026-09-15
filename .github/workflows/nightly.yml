@@ -1,0 +1,50 @@
+name: Nightly
+
+# Scheduled, non-blocking sweeps that need something a PR gate should not wait on — an external oracle, the
+# network — or that are only worth running once a day. Never a required check; the nightly-fixup routine reads
+# these runs (06:15 UTC) and files what failed. Quickcheck's deep sample is its own workflow (quickcheck.yml).
+
+on:
+  schedule:
+    - cron: "5 4 * * *" # daily 04:05 UTC
+    - cron: "17 3 * * 0" # weekly Sunday 03:17 UTC — the network-bound jobs
+  workflow_dispatch:
+    inputs:
+      weekly:
+        description: Also run the weekly jobs
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  # The analytic heads (HurwitzZeta, LerchPhi, PolyLog, PolyGamma …) against mpmath, the one oracle that installs
+  # from pip. The Wolfram sweeps (packages/wolfram, packages/oracle) need a licensed kernel and stay manual.
+  mpmath-oracle:
+    name: analytic ⟷ mpmath
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install mpmath
+      - run: node packages/analytic/scripts/validate-mpmath.ts
+
+  # Follow every crosswalk link (Wikipedia, MathWorld, DLMF, Fungrim …) and report the ones that no longer answer.
+  crosswalk-links:
+    name: crosswalk links resolve
+    if: github.event.schedule == '17 3 * * 0' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: node packages/reference/scripts/check-crosswalk.ts 2>&1 | tee -a "$GITHUB_STEP_SUMMARY"
