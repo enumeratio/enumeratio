@@ -13,7 +13,7 @@ dimension, and today a layer is one of four things:
 | layer    | drawn by                 | comes from                            |
 | -------- | ------------------------ | ------------------------------------- |
 | portrait | `<notatio-complex-plot>` | a cell free in `z` (WebGPU canvas)    |
-| surface  | `<notatio-plot3d>`       | a cell free in `x` and `y` (SVG)      |
+| surface  | `<notatio-plot-3d>`      | a cell free in `x` and `y` (SVG)      |
 | curve    | `<notatio-plot>`         | a cell free in `x` (SVG)              |
 | image    | `<img>`                  | a cell evaluating to `Image` (raster) |
 
@@ -97,7 +97,7 @@ exist, and document formats are expensive to change later.
 
 Current homes, and what is wrong with them:
 
-- `@enumeratio/elements` holds the web components **and** the reactive core
+- `@enumeratio/components` holds the web components **and** the reactive core
   (`reactive.ts`), the space model (`space.ts`), the layer stacking, and the projection
   inference. Those last three are not about the DOM at all — they are the model a
   worksheet is a _view_ of. They are in elements because elements is where the worksheet
@@ -108,12 +108,12 @@ Current homes, and what is wrong with them:
 
 A plausible split — **not a decision, a starting point for one**:
 
-| package                | holds                                                      |
-| ---------------------- | ---------------------------------------------------------- |
-| `@enumeratio/graphics` | graphics objects, frames, `Image`, `Rasterize`, projection |
-| `@enumeratio/document` | `Cell`, `In`, `Out`, the reactive core, worksheet model    |
-| `@enumeratio/elements` | web components only — views over the two above             |
-| `@enumeratio/raster`   | unchanged: the native rasterizer                           |
+| package                  | holds                                                      |
+| ------------------------ | ---------------------------------------------------------- |
+| `@enumeratio/graphics`   | graphics objects, frames, `Image`, `Rasterize`, projection |
+| `@enumeratio/document`   | `Cell`, `In`, `Out`, the reactive core, worksheet model    |
+| `@enumeratio/components` | web components only — views over the two above             |
+| `@enumeratio/raster`     | unchanged: the native rasterizer                           |
 
 The test for whether that split is right is whether the CLI can use `graphics` and
 `document` without pulling in a DOM, and whether `elements` shrinks to views. If either

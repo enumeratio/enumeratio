@@ -52,7 +52,7 @@ expressions: the one you typed, and the one compute-engine canonicalized it into
 | `\log_2(8)`                            | `Lb(8)`                       | `Log(8, 2)`                   |
 | `\begin{pmatrix}1&2\\3&4\end{pmatrix}` | `Matrix([[1, 2], [3, 4]])`    | `Matrix([[1, 2], [3, 4]])`    |
 
-Copying out of a `<notatio-input>` gives you the first column: the field knows the LaTeX
+Copying out of a `<notatio-in>` gives you the first column: the field knows the LaTeX
 you typed, so it prints from that rather than from a canonicalized rewrite of it. An Out
 renders whatever the cell computed, which is usually the second.
 
@@ -84,9 +84,9 @@ prints expressions, it does not rewrite them.
 
 ## Elsewhere
 
-- **Clipboard** — copying from a `<notatio-input>` yields InputForm rather than LaTeX,
+- **Clipboard** — copying from a `<notatio-in>` yields InputForm rather than LaTeX,
   for the selected range or the whole field.
-- **Out menu** — any `<notatio-output>` offers `InputForm` alongside StandardForm,
+- **Out menu** — any `<notatio-out>` offers `InputForm` alongside StandardForm,
   MathJSON and the code forms.
 - **CLI** — `InputForm` is the display form the REPL prints, and
   `notatio -f inputform` exports it. `notatio`, `text` and the old `Notatio` still

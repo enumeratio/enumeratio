@@ -35,7 +35,7 @@ is sampled by compiling the expression to a native function (no per-point symbol
 evaluation), so it stays responsive.
 
 <Story title="ζ(s, a) over s ∈ [2,5], a ∈ (0,3]">
-<notatio-plot3d value="HurwitzZeta(x, y)" x-domain="2,5" y-domain="0.35,3" label="ζ(s, a)" color-legend />
+<notatio-plot-3d value="HurwitzZeta(x, y)" x-domain="2,5" y-domain="0.35,3" label="ζ(s, a)" color-legend />
 </Story>
 
 Here $x$ is $s$ and $y$ is $a$. Push $a$ toward $0$ and the sheet lifts off — the $n = 0$
@@ -60,7 +60,7 @@ which is the exponent every term is raised to.
 
 <ClientOnly>
 <notatio-manipulate params="{ {z, 0}, -0.95, 0.95, 0.01}" fps>
-  <notatio-plot3d
+  <notatio-plot-3d
     value="LerchPhi(_z, x, y)"
     x-domain="2,5"
     y-domain="0.35,3"
@@ -80,7 +80,7 @@ on the dial:
 
 <ClientOnly>
 <notatio-manipulate params="{ {s, 2}, 0.5, 6, 0.05}" fps>
-  <notatio-plot3d
+  <notatio-plot-3d
     value="LerchPhi(x, _s, y)"
     x-domain="-0.9,0.9"
     y-domain="0.5,3"
@@ -95,7 +95,7 @@ Raising $s$ flattens it: every term carries $(n+a)^{-s}$, so a larger exponent c
 tail and leaves the $n = 0$ term standing alone.
 
 <Story title="ζ(s, a) evaluated on the GPU (denser grid)">
-<notatio-plot3d value="HurwitzZeta(x, y)" x-domain="2,5" y-domain="0.35,3" gpu="120" label="ζ(s, a)" color-legend />
+<notatio-plot-3d value="HurwitzZeta(x, y)" x-domain="2,5" y-domain="0.35,3" gpu="120" label="ζ(s, a)" color-legend />
 </Story>
 
 ## The parent: LerchPhi
@@ -121,7 +121,7 @@ takes **~4 ms on the GPU versus ~270 ms on the CPU** here (~65×), because every
 own series in parallel.
 
 <Story title="Φ(z, 2, a) on the GPU">
-<notatio-plot3d value="LerchPhi(x, 2, y)" x-domain="-0.9,0.9" y-domain="0.5,3" gpu="120" label="Φ(z, 2, a)" color-legend />
+<notatio-plot-3d value="LerchPhi(x, 2, y)" x-domain="-0.9,0.9" y-domain="0.5,3" gpu="120" label="Φ(z, 2, a)" color-legend />
 </Story>
 
 ## Where it gets beautiful

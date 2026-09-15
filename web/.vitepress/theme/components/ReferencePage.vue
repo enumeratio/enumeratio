@@ -27,7 +27,7 @@ const forSignature = (signature: { arity?: number; call: string }): ResolvedRefe
     }));
 };
 
-// notatio-output takes the MathJSON expression as a JSON string.
+// notatio-out takes the MathJSON expression as a JSON string.
 const toJson = (expr: unknown): string => JSON.stringify(expr);
 
 const escapeAttr = (s: string): string =>
@@ -193,14 +193,14 @@ const grouped = computed(() => {
         >
           <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
           <p v-if="ex.caption" class="ref-caption" v-html="linkify(ex.caption)"></p>
-          <notatio-output
+          <notatio-out
             label="In"
             :value="toJson(ex.expr)"
             format="mathjson"
             :resolveHead.prop="resolveHead"
           />
           <div class="ref-out">
-            <notatio-output
+            <notatio-out
               v-if="entry.outEvaluate !== false"
               label="Out"
               :value="toJson(ex.expr)"
@@ -211,7 +211,7 @@ const grouped = computed(() => {
               :planned="ex.aspirational"
               @notatio-assert="onAssert(i, $event)"
             />
-            <notatio-output
+            <notatio-out
               v-else
               label="Out"
               :value="toJson(ex.expr)"
@@ -258,7 +258,7 @@ const grouped = computed(() => {
           <code v-if="sourceOf(impl)" class="ref-impl-source">{{ sourceOf(impl) }}</code>
         </div>
         <ClientOnly>
-          <notatio-output
+          <notatio-out
             v-if="impl.expr !== undefined"
             label="Def"
             :value="toJson(impl.expr)"
@@ -475,7 +475,7 @@ const grouped = computed(() => {
   color: var(--vp-c-text-2);
   font-size: 0.8rem;
 }
-.ref-impl notatio-output {
+.ref-impl notatio-out {
   display: block;
   margin: 0.5rem 0 0;
 }

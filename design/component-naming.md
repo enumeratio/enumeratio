@@ -1,10 +1,12 @@
 # Design: naming the components
 
-Status: **agreed, deliberately not executed**. An audit of the component tags against
-the symbols they represent, and a proposal. Nothing is renamed yet, and that is a
-choice: this code is under active development, and a repo-wide tag rename during it
-would collide with everything in flight for no benefit that cannot wait. §6 is the
-order to do it in when there is a quiet moment.
+Status: **landed** (2026-09-15). An audit of the component tags against the symbols they
+represent, the rule that came out of it, and the renames it called for — all executed in
+one pass, once the code was quiet enough: the package is `@enumeratio/components`, every
+tag in §4 has its kebab-cased symbol name, the class names follow, and the multiplexing
+question (§5) is answered in [components-and-symbols.md](./components-and-symbols.md) §4
+— a family tag stays a family tag, mirrored by a family head. The audit is kept as the
+record of why.
 
 ## 1. The problem
 
@@ -20,9 +22,9 @@ a thing. Same for `contourplot`, `polarplot`, `vectorplot`, `graphplot`, `plot3d
 `Out` are what they _are_, and are what the elements already print in their own row
 labels.
 
-**The package disagrees with the docs.** `@enumeratio/elements` ships things the reference
-calls components, because _element_ is overloaded here — a group element, a basis element,
-a matrix element. The docs were moved to "components"; the package was not.
+**The package disagreed with the docs.** `@enumeratio/elements` shipped things the reference
+called components, because _element_ is overloaded here — a group element, a basis element,
+a matrix element. The docs were moved to "components" first; the package followed.
 
 ## 2. Prior art
 
@@ -48,22 +50,26 @@ are one token, so `Plot3D` is `plot-3d`, not `plot3-d`.
 
 ## 4. The audit
 
-### Aligned, once renamed
+### Renamed (all landed)
 
-The first two rows are **agreed** (2026-09-14), not proposed — they go first when §6
-runs. See [components-and-symbols.md](./components-and-symbols.md) §5.
-
-| Today                 | Symbol        | Proposed               |
+| Was                   | Symbol        | Now                    |
 | --------------------- | ------------- | ---------------------- |
-| `notatio-input`       | `In`          | `notatio-in` (agreed)  |
-| `notatio-output`      | `Out`         | `notatio-out` (agreed) |
+| `notatio-input`       | `In`          | `notatio-in`           |
+| `notatio-output`      | `Out`         | `notatio-out`          |
 | `notatio-plot3d`      | `Plot3D`      | `notatio-plot-3d`      |
+| `notatio-listplot3d`  | `ListPlot3D`  | `notatio-list-plot-3d` |
+| `notatio-barchart3d`  | `BarChart3D`  | `notatio-bar-chart-3d` |
 | `notatio-contourplot` | `ContourPlot` | `notatio-contour-plot` |
 | `notatio-densityplot` | `DensityPlot` | `notatio-density-plot` |
 | `notatio-polarplot`   | `PolarPlot`   | `notatio-polar-plot`   |
 | `notatio-vectorplot`  | `VectorPlot`  | `notatio-vector-plot`  |
 | `notatio-graphplot`   | `GraphPlot`   | `notatio-graph-plot`   |
 | `notatio-curve3d`     | —             | `notatio-curve-3d`     |
+
+Class names went with them: `NotatioIn`, `NotatioOut`, `NotatioPlot3D`, `NotatioCurve3D`,
+`NotatioListPlot3D`, `NotatioBarChart3D` (a digit-and-letters token is one token, so `3D`
+not `3d`). Playground pages carry the tag's slug (`/playground/plot-3d`), and the reference
+routes follow the tag as they always did.
 
 ### Already aligned
 
@@ -123,18 +129,17 @@ nearest symbol is `ParametricPlot3D`, which is not what it does; the name is our
 out of this should say what a component is called when it represents nothing in Wolfram —
 otherwise the next one drifts the same way.
 
-## 6. The order, when the code is quiet
+## 6. How it was done
 
-1. **Rename the package** `@enumeratio/elements` → `@enumeratio/components` (and
-   `packages/elements` → `packages/components`). Mechanical, no design content, breaks
-   nothing outside the repo — there is no published consumer.
-2. **Rename the aligned tags** per §4. Mechanical once §5's multiplexing question is
-   answered, but it moves doc routes and playground slugs with it.
-3. **Decide the multiplexing question** — tag names the family, or split per symbol.
-4. **Settle the class names** alongside the tags.
+One pass, 2026-09-15: the package rename (`@enumeratio/elements` →
+`@enumeratio/components`, `packages/elements` → `packages/components`), the tags of §4,
+the class names, the playground page slugs — a scripted textual rewrite over the repo
+with the tag, class and route maps, plus `git mv` for the files, then a build and the
+site. The multiplexing question was answered first (family tags stay; see
+components-and-symbols.md §4), which is what made the rest mechanical. The one thing to
+watch for in a rename like this is a CSS class that shares a tag's name — the In label's
+class was `notatio-in`, and became `notatio-in-label` to match `notatio-out-label`.
 
-(1) is independent of the rest and could go first. (2) should wait on (3).
-
-None of this is urgent, and none of it should interrupt work in flight. The cost of
-waiting is that new components keep arriving in the old spelling — `notatio-curve3d`
-did, mid-draft — so the rule is worth agreeing even while the renames wait.
+The rule for what arrives next: a new component is named for its symbol on the day it is
+written, kebab-cased, and a family component keeps the family's name with the member in
+an attribute.

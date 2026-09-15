@@ -2,7 +2,7 @@
 // A storybook-style demo card: a title, the live component in a framed canvas,
 // and a collapsible source snippet. One Story per representation / feature.
 // `id` (or a slug of the title) gives each card a stable anchor so a single
-// example is directly linkable: /playground/plot3d#two-overlaid-surfaces.
+// example is directly linkable: /playground/plot-3d#two-overlaid-surfaces.
 //
 // The snippet is printed from the body itself -- the default slot's vnodes, written
 // back out as markup -- so the components are authored once and the source cannot

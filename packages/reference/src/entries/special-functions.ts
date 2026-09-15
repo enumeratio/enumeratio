@@ -537,7 +537,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         origin: "component",
         form: "<notatio-complex-plot>",
         environment: "browser",
-        source: "packages/elements/src/notatio-complex-plot.ts",
+        source: "packages/components/src/notatio-complex-plot.ts",
         produces: "a rendered phase portrait",
         note: "For a plotted ζ the head's meaning bottoms out here: the element IS the answer, and there is no expression it reduces to.",
       },

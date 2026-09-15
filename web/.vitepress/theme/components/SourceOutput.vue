@@ -27,9 +27,9 @@ const toJson = (expr: unknown): string => JSON.stringify(expr);
       >
         <p v-if="row.label" class="so-label">{{ row.label }}</p>
         <div class="so-io">
-          <notatio-output label="In" :value="toJson(row.expr)" format="mathjson" />
+          <notatio-out label="In" :value="toJson(row.expr)" format="mathjson" />
           <span class="so-arrow">→</span>
-          <notatio-output
+          <notatio-out
             label="Out"
             :value="toJson(row.expr)"
             format="mathjson"
