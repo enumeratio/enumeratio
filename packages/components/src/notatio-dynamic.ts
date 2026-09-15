@@ -76,11 +76,18 @@ export class NotatioDynamic extends LitElement {
    * The test is whether the engine already chose to print a DECIMAL POINT: an exact
    * answer comes back as a surd or a fraction and is left alone, while its `N(…)`
    * arrives with twenty digits, which is not a thing to put in the middle of a
-   * sentence. A non-numeric result (a list, a symbol) has no `re` and is left alone.
+   * sentence. A list or an application is shortened leaf by leaf; a symbol is left alone.
    */
   #shorten(engine: ComputeEngine, expr: BoxedExpression): BoxedExpression {
     if (!(this.digits > 0) || !/\d\.\d/.test(expr.latex)) return expr;
     const round = (v: number) => Number(v.toPrecision(this.digits));
+    // A list or an application -- a point, a colour, an interval -- is shortened leaf by
+    // leaf, since what a control binds is as often a `List` as a number.
+    const ops = (expr as unknown as { ops?: readonly BoxedExpression[] | null }).ops;
+    if (ops && expr.operator) {
+      const shortened = ops.map((op) => this.#shorten(engine, op));
+      return engine.box([expr.operator, ...shortened.map((op) => op.json)] as never);
+    }
     const re = expr.re;
     const im = expr.im;
     if (!Number.isFinite(re) || !Number.isFinite(im)) return expr;

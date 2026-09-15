@@ -354,3 +354,97 @@ function quantizeOnGrid(phase: number, step: number): number {
   if (!(Number.isInteger(step) && Math.abs(step) >= 1)) return phase;
   return Math.round(phase / step) * step;
 }
+
+/** What a single control lends `Sweep`: where its value is, and the settings the panel edits. */
+export interface SweepHost {
+  /** The value now, on the span (an index for a list). */
+  at: () => number;
+  /** Apply a value playback landed on. */
+  set: (value: number) => void;
+  span: () => Span;
+  loop: () => Loop;
+  setLoop: (loop: Loop) => void;
+  rate: () => number;
+  setRate: (rate: number) => void;
+  /** Milliseconds per step at rate 1. */
+  interval: () => number;
+  /** Playing started or stopped: re-render. */
+  onState: () => void;
+}
+
+/**
+ * Playback for one control -- a knob, a slider, a toggler, a pinned input -- stepping on
+ * the grid the way its loop says, at its rate, with the long press that opens the
+ * speed-and-loop panel. `SliderPlayback` is the same thing for a panel of many.
+ */
+export class Sweep {
+  #playing = false;
+  #direction: Direction = 1;
+  readonly press: LongPress;
+  #playback: Playback;
+
+  constructor(
+    private readonly host: SweepHost,
+    openMenu: (options: {
+      anchor: HTMLElement;
+      settings: { rate: number; loop: Loop };
+      onChange: (settings: { rate: number; loop: Loop }) => void;
+    }) => unknown,
+    longPressMs: number,
+  ) {
+    this.#playback = new Playback(
+      () => this.#advance(),
+      () => host.interval() / (host.rate() > 0 ? host.rate() : 1),
+    );
+    this.press = new LongPress(longPressMs, (anchor) => {
+      this.stop();
+      openMenu({
+        anchor,
+        settings: { rate: host.rate(), loop: host.loop() },
+        onChange: ({ rate, loop }) => {
+          host.setRate(rate);
+          host.setLoop(loop);
+        },
+      });
+    });
+  }
+
+  get playing(): boolean {
+    return this.#playing;
+  }
+
+  toggle(): void {
+    if (this.#playing) this.stop();
+    else this.start();
+  }
+
+  /** Start; a play-through that already reached its end starts over. */
+  start(): void {
+    if (this.#playing) return;
+    const at = this.host.at();
+    const from = rewindFor(at, this.host.span(), this.host.loop(), this.#direction);
+    if (from !== at) this.host.set(from);
+    this.#playback.start();
+    this.#playing = true;
+    this.host.onState();
+  }
+
+  stop(): void {
+    if (!this.#playing) return;
+    this.#playback.stop();
+    this.#playing = false;
+    this.host.onState();
+  }
+
+  /** One implicit advance along the span -- also what a toggler's click is. */
+  advance(): boolean {
+    const next = iterate(this.host.at(), 1, this.host.span(), this.host.loop(), this.#direction);
+    this.#direction = next.direction;
+    this.host.set(next.value);
+    return !next.done;
+  }
+
+  #advance(): void {
+    if (!this.advance()) this.stop();
+  }
+}

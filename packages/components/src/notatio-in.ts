@@ -4,16 +4,8 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { loadEditor, loadEngine, loadMarkup } from "./mathlive.ts";
 import { splitHead, WRAPPER_HEADS, wrapHead } from "./heads.ts";
-import {
-  type Direction,
-  iterate,
-  type Loop,
-  Playback,
-  rewindFor,
-  sweepInterval,
-} from "./playback.ts";
+import { type Loop, Sweep, sweepInterval } from "./playback.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
-import { LongPress } from "./popover.ts";
 import { inferRange, symbolLatex } from "./reactive.ts";
 import { ensureStyles } from "./styles.ts";
 import { isIntegerKnob, numberLatex, parseComplex } from "./tangle.ts";
@@ -196,14 +188,22 @@ export class NotatioIn extends LitElement {
 
   // --- playback ------------------------------------------------------------------
 
-  #playback = new Playback(
-    () => this.#advance(),
-    () =>
-      (Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace) /
-      (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+  #sweep = new Sweep(
+    {
+      at: () => this.#number ?? 0,
+      set: (v) => this.#write(v),
+      span: () => this.#span,
+      loop: () => this.#loop,
+      setLoop: (loop) => (this.loop = loop),
+      rate: () => (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+      setRate: (rate) => (this.rate = rate),
+      interval: () =>
+        Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace,
+      onState: () => (this._playing = this.#sweep.playing),
+    },
+    openPlaybackMenu,
+    LONG_PRESS_MS,
   );
-  #direction: Direction = 1;
-  #playMenu = new LongPress(LONG_PRESS_MS, (anchor) => this.#openPlayMenu(anchor));
 
   /** The number a pinned field holds, if it holds one (and only a real one). */
   get #number(): number | undefined {
@@ -244,45 +244,8 @@ export class NotatioIn extends LitElement {
     this.#emit();
   }
 
-  #advance(): void {
-    const at = this.#number;
-    if (at === undefined) return this.#stop();
-    const next = iterate(at, 1, this.#span, this.#loop, this.#direction);
-    this.#direction = next.direction;
-    if (next.value !== at) this.#write(next.value);
-    if (next.done) this.#stop();
-  }
-
-  #togglePlay(): void {
-    if (this._playing) this.#stop();
-    else this.#start();
-  }
-
-  #start(): void {
-    const at = this.#number;
-    if (this._playing || at === undefined) return;
-    const from = rewindFor(at, this.#span, this.#loop, this.#direction);
-    if (from !== at) this.#write(from);
-    this.#playback.start();
-    this._playing = true;
-  }
-
   #stop(): void {
-    if (!this._playing) return;
-    this.#playback.stop();
-    this._playing = false;
-  }
-
-  #openPlayMenu(anchor: HTMLElement): void {
-    this.#stop();
-    openPlaybackMenu({
-      anchor,
-      settings: { rate: this.rate, loop: this.#loop },
-      onChange: ({ rate, loop }) => {
-        this.rate = rate;
-        this.loop = loop;
-      },
-    });
+    this.#sweep.stop();
   }
 
   #playButton(): unknown {
@@ -295,13 +258,13 @@ export class NotatioIn extends LitElement {
       aria-label=${this._playing ? "pause" : "play"}
       aria-pressed=${this._playing ? "true" : "false"}
       ?disabled=${!numeric}
-      @pointerdown=${this.#playMenu.down}
-      @pointerup=${this.#playMenu.up}
-      @pointercancel=${this.#playMenu.cancel}
-      @pointerleave=${this.#playMenu.cancel}
-      @contextmenu=${this.#playMenu.contextmenu}
+      @pointerdown=${this.#sweep.press.down}
+      @pointerup=${this.#sweep.press.up}
+      @pointercancel=${this.#sweep.press.cancel}
+      @pointerleave=${this.#sweep.press.cancel}
+      @contextmenu=${this.#sweep.press.contextmenu}
       @click=${(e: Event) => {
-        if (!this.#playMenu.click(e)) this.#togglePlay();
+        if (!this.#sweep.press.click(e) && this.#number !== undefined) this.#sweep.toggle();
       }}
     >
       ${this._playing ? "\u23F8" : "\u25B6"}

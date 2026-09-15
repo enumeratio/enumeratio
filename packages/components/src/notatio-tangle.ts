@@ -1,9 +1,15 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { LitElement, nothing } from "lit";
 import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 import { debug } from "./debug.ts";
 import { loadEngine } from "./mathlive.ts";
-import { KNOB_EVENT, type KnobChange } from "./notatio-knob.ts";
+import {
+  CONTROL_EVENT,
+  type ControlChange,
+  type ControlElement,
+  controlSelector,
+} from "./controls.ts";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
 import "./notatio-toggler.ts";
@@ -47,8 +53,8 @@ export class NotatioTangle extends LitElement {
 
   #engine: ComputeEngine | undefined;
   #templates: Template[] = [];
-  /** Current value per knob name; a discrete knob contributes its index. */
-  #values = new Map<string, { re: number; im: number }>();
+  /** Current value per control name, as MathJSON: a number, `True`, a `List`, ... */
+  #values = new Map<string, MathJsonExpression>();
 
   constructor() {
     super();
@@ -64,11 +70,11 @@ export class NotatioTangle extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener(KNOB_EVENT, this.#onKnob as EventListener);
+    this.addEventListener(CONTROL_EVENT, this.#onControl as EventListener);
   }
 
   override disconnectedCallback(): void {
-    this.removeEventListener(KNOB_EVENT, this.#onKnob as EventListener);
+    this.removeEventListener(CONTROL_EVENT, this.#onControl as EventListener);
     super.disconnectedCallback();
   }
 
@@ -78,7 +84,7 @@ export class NotatioTangle extends LitElement {
 
   /** Every control this tangle owns — a nested tangle keeps its own. */
   get controls(): Element[] {
-    return [...this.querySelectorAll("notatio-knob, notatio-toggler")].filter(
+    return [...this.querySelectorAll(controlSelector())].filter(
       (el) => el.closest("notatio-tangle") === this,
     );
   }
@@ -100,21 +106,21 @@ export class NotatioTangle extends LitElement {
   }
 
   /**
-   * Seed a control's starting value into the scope. Each control exposes `bound` — the
-   * one number it contributes, whatever it looks like on the page — so the scope never
-   * has to know whether it is reading a scrubber, a list or a word.
+   * Seed a control's starting value into the scope. Each control exposes `binding` — the
+   * one value it contributes, whatever it looks like on the page — so the scope never
+   * has to know whether it is reading a scrubber, a list, a word or a bar of them.
    */
   #read(el: Element): void {
-    const control = el as Element & { name?: string; bound?: number; _im?: number };
-    if (!control.name) return;
-    this.#values.set(control.name, { re: control.bound ?? 0, im: control._im ?? 0 });
+    const control = el as Partial<ControlElement>;
+    if (!control.name || control.binding === undefined) return;
+    this.#values.set(control.name, control.binding);
   }
 
-  #onKnob = (event: CustomEvent<KnobChange>): void => {
-    const { name, re, im } = event.detail;
+  #onControl = (event: CustomEvent<ControlChange>): void => {
+    const { name, value } = event.detail;
     if (!name) return;
-    this.#values.set(name, { re, im });
-    if (this.trace) log("%s := %s%s", name, re, im ? ` + ${im}i` : "");
+    this.#values.set(name, value);
+    if (this.trace) log("%s := %o", name, value);
     this.#apply();
   };
 
@@ -123,9 +129,7 @@ export class NotatioTangle extends LitElement {
     const engine = this.#engine;
     if (!engine) return;
     const boxed = new Map<string, BoxedExpression>();
-    for (const [name, { re, im }] of this.#values) {
-      boxed.set(name, im === 0 ? engine.number(re) : engine.box(["Complex", re, im]));
-    }
+    for (const [name, value] of this.#values) boxed.set(name, engine.box(value as never));
     applyTemplates(engine, this.#templates, boxed);
   }
 

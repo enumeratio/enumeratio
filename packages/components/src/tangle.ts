@@ -175,6 +175,39 @@ export function parseEntries(raw: string): string[] {
     .filter((s) => s.length > 0);
 }
 
+/**
+ * One entry of a choice list: what it binds and what it shows. Wolfram's `v -> label`
+ * form gives the two separately; a bare entry is both.
+ */
+export interface Choice {
+  value: string;
+  label: string;
+}
+
+/** Parse `a|b -> B|c`: entries split on `|`, an arrow inside one splits value from label. */
+export function parseChoices(raw: string): Choice[] {
+  return parseEntries(raw).map((entry) => {
+    const arrow = entry.indexOf("->");
+    if (arrow < 0) return { value: entry, label: entry };
+    return { value: entry.slice(0, arrow).trim(), label: entry.slice(arrow + 2).trim() };
+  });
+}
+
+/**
+ * What a choice binds, as MathJSON: a number when it is one; `True`/`False` and any
+ * labelled value as the symbol it names (the author separated a value from its label
+ * precisely to bind the value); a bare word as its index, which is the only thing a
+ * word can contribute to an expression.
+ */
+export function choiceBinding(choice: Choice | undefined, index: number): number | string {
+  if (choice === undefined) return index;
+  const numeric = Number(choice.value);
+  if (choice.value !== "" && Number.isFinite(numeric)) return numeric;
+  if (choice.value === "True" || choice.value === "False") return choice.value;
+  if (choice.value !== choice.label && /^[A-Za-z_][\w]*$/.test(choice.value)) return choice.value;
+  return index;
+}
+
 /** A `re + im i` pair read from an author's `value`: `2`, `-1.5`, `3+2i`, `-i`. */
 export function parseComplex(raw: string): { re: number; im: number } | undefined {
   const text = raw.replace(/[\s_]/g, "");

@@ -29,6 +29,7 @@ import {
   adaptiveParam,
   adaptiveSample,
   linePlot,
+  type PlotFrame,
   type PlotPoint,
   type PlotSeries,
 } from "./plot.ts";
@@ -135,6 +136,12 @@ export class NotatioPlot extends LitElement {
 
   #series: PlotSeries[] = [];
   #xAt: (px: number) => number = () => Number.NaN;
+  #frame: PlotFrame | undefined;
+
+  /** The plot area's geometry after the last render, for an overlay such as a locator. */
+  get frame(): PlotFrame | undefined {
+    return this.#frame;
+  }
   /** Steps a playing slider on the grid, one per interval: a plot's redraw is worth rationing. */
   #playback = new SliderPlayback(
     {
@@ -344,7 +351,7 @@ export class NotatioPlot extends LitElement {
   #draw(): void {
     if (this.#series.length === 0) return;
     const on = (v: string): boolean => v !== "false" && v !== undefined;
-    const { svg, xAt } = linePlot(this.#series, {
+    const { svg, xAt, frame } = linePlot(this.#series, {
       axes: this.axes !== "false",
       xScale: this.xScale,
       yScale: this.yScale,
@@ -360,6 +367,9 @@ export class NotatioPlot extends LitElement {
     });
     this._svg = svg;
     this.#xAt = xAt;
+    this.#frame = frame;
+    // Overlays reposition on the new geometry.
+    this.dispatchEvent(new CustomEvent("notatio-plot-render"));
   }
 
   #onPointerMove = (e: PointerEvent): void => {

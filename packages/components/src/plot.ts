@@ -204,11 +204,26 @@ export interface PlotOptions {
   colorBy?: "x" | "y";
 }
 
+/**
+ * The plot area's geometry, so something drawn OVER the picture -- a hover readout, a
+ * `<notatio-locator>` -- can go between data and viewBox coordinates both ways.
+ */
+export interface PlotFrame {
+  /** The plot area in viewBox units: left, top, right, bottom. */
+  readonly box: readonly [number, number, number, number];
+  /** Data coordinates for a viewBox point. */
+  readonly toData: (px: number, py: number) => [number, number];
+  /** ViewBox coordinates for a data point. */
+  readonly toPixel: (x: number, y: number) => [number, number];
+}
+
 /** A rendered plot plus the pixel→data mapping the element needs for hover. */
 export interface RenderedPlot {
   svg: string;
   /** Data-space x for a viewBox x-coordinate (NaN when the plot is empty). */
   xAt: (px: number) => number;
+  /** The plot area, or undefined for an empty plot. */
+  frame?: PlotFrame;
 }
 
 const isSeriesList = (
@@ -326,6 +341,11 @@ export function linePlot(
   const sx = (x: number): number => mL + ((X.fwd(x) - txmin) / (txmax - txmin || 1)) * plotW;
   const syT = (ty: number): number => mT + ((tymax - ty) / (tymax - tymin || 1)) * (H - mT - mB);
   const xAt = (px: number): number => X.inv(txmin + ((px - mL) / plotW) * (txmax - txmin));
+  const frameOut: PlotFrame = {
+    box: [mL, mT, W - mR, H - mB],
+    toData: (px, py) => [xAt(px), Y.inv(tymax - ((py - mT) / (H - mT - mB)) * (tymax - tymin))],
+    toPixel: (x, y) => [sx(x), syT(Y.fwd(y))],
+  };
 
   // Zero-axis pixel positions, shared by the axes, the fill baseline, and grid.
   const xZeroPx = isLinear(opts.xScale) && txmin <= 0 && 0 <= txmax ? sx(0) : mL;
@@ -501,5 +521,9 @@ export function linePlot(
   const clip = `<clipPath id="${clipId}"><rect x="${n2(mL - 3)}" y="${n2(mT)}" width="${n2(plotW + 6)}" height="${n2(H - mT - mB)}"/></clipPath>`;
   const clipped = `<g clip-path="url(#${clipId})">${fills}${curves}</g>`;
 
-  return { svg: frame(clip + grid + chrome + clipped + legend + titleSvg + readout), xAt };
+  return {
+    svg: frame(clip + grid + chrome + clipped + legend + titleSvg + readout),
+    xAt,
+    frame: frameOut,
+  };
 }

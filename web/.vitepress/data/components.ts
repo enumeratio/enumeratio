@@ -104,16 +104,37 @@ function balanced(text: string, open: number): string {
 /** camelCase → kebab-case, the attribute name Lit infers when none is given. */
 const kebab = (name: string): string => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
 
-function parse(file: string, playgrounds: Map<string, string>): ComponentDoc | undefined {
-  const text = readFileSync(join(srcDir, file), "utf8");
+/** The attribute table declared in one class body, and what it extends. */
+interface ClassDoc {
+  className: string;
+  parent: string;
+  attributes: AttributeDoc[];
+}
 
-  const define = text.match(/customElements\.define\(\s*"([^"]+)"/);
-  const cls = text.match(/(\/\*\*[\s\S]*?\*\/)?\s*export class (\w+) extends LitElement/);
-  if (!define || !cls) return undefined;
+/**
+ * Every exported class in a source file with its own `static properties`, so a
+ * component that extends another (`NotatioAnimator extends NotatioSlider`, or any
+ * control over `ChoiceControl`) can inherit the attributes it did not redeclare.
+ */
+function classesIn(text: string): ClassDoc[] {
+  const out: ClassDoc[] = [];
+  const decl = /export (?:abstract )?class (\w+) extends (\w+)/g;
+  for (const m of text.matchAll(decl)) {
+    const from = m.index ?? 0;
+    const at = text.indexOf("static", from);
+    const next = text.indexOf("export class", from + 1);
+    const own =
+      at !== -1 &&
+      (next === -1 || at < next) &&
+      /static (?:override )?properties/.test(text.slice(at, at + 40));
+    const open = own ? text.indexOf("{", text.indexOf("properties", at)) : -1;
+    const body = open === -1 ? "" : balanced(text, open);
+    out.push({ className: m[1], parent: m[2], attributes: attributesIn(text, body) });
+  }
+  return out;
+}
 
-  const open = text.indexOf("{", text.indexOf("static properties"));
-  const body = open === -1 ? "" : balanced(text, open);
-
+function attributesIn(text: string, body: string): AttributeDoc[] {
   const attributes: AttributeDoc[] = [];
   // Each entry is `name: { … },`, optionally preceded by its own JSDoc block.
   const entry = /(\/\*\*[\s\S]*?\*\/)?\s*(\w+)\s*:\s*\{([^}]*)\}/g;
@@ -133,6 +154,42 @@ function parse(file: string, playgrounds: Map<string, string>): ComponentDoc | u
       description: doc ? cleanDoc(doc) : "",
     });
   }
+  return attributes;
+}
+
+/** Every class with an attribute table, across the whole source tree, by name. */
+function classTable(): Map<string, ClassDoc> {
+  const table = new Map<string, ClassDoc>();
+  for (const f of readdirSync(srcDir).filter((f) => f.endsWith(".ts"))) {
+    for (const c of classesIn(readFileSync(join(srcDir, f), "utf8"))) table.set(c.className, c);
+  }
+  return table;
+}
+
+/** A class's attributes with its ancestors' first, each attribute once. */
+function inherited(className: string, table: Map<string, ClassDoc>): AttributeDoc[] {
+  const chain: AttributeDoc[][] = [];
+  const seen = new Set<string>();
+  for (let c = table.get(className); c && !seen.has(c.className); c = table.get(c.parent)) {
+    seen.add(c.className);
+    chain.unshift(c.attributes);
+  }
+  const out = new Map<string, AttributeDoc>();
+  for (const attrs of chain) for (const a of attrs) out.set(a.property, a);
+  return [...out.values()];
+}
+
+function parse(
+  file: string,
+  playgrounds: Map<string, string>,
+  table: Map<string, ClassDoc>,
+): ComponentDoc | undefined {
+  const text = readFileSync(join(srcDir, file), "utf8");
+
+  // A tag is defined directly or through `defineControl`, which also registers it.
+  const define = text.match(/(?:customElements\.define|defineControl)\(\s*"([^"]+)"/);
+  const cls = text.match(/(\/\*\*[\s\S]*?\*\/)?\s*export class (\w+) extends (\w+)/);
+  if (!define || !cls) return undefined;
 
   return {
     tag: define[1],
@@ -140,16 +197,17 @@ function parse(file: string, playgrounds: Map<string, string>): ComponentDoc | u
     source: `packages/components/src/${file}`,
     summary: cls[1] ? cleanDoc(cls[1]) : "",
     playground: playgrounds.get(define[1]),
-    attributes,
+    attributes: inherited(cls[2], table),
   };
 }
 
 /** Re-read every element module. Called per build (and per change, in dev). */
 export function collectComponents(): ComponentDoc[] {
   const playgrounds = playgroundPages();
+  const table = classTable();
   return readdirSync(srcDir)
     .filter((f) => f.startsWith("notatio-") && f.endsWith(".ts"))
-    .map((f) => parse(f, playgrounds))
+    .map((f) => parse(f, playgrounds, table))
     .filter((c): c is ComponentDoc => c !== undefined)
     .sort((a, b) => a.tag.localeCompare(b.tag));
 }

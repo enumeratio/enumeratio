@@ -1,18 +1,13 @@
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { entryMarkup, LONG_PRESS_MS, PRESS_SLOP_PX } from "./choice-menu.ts";
+import { defineControl, emitControl, numberJson } from "./controls.ts";
 import { clamp } from "./manipulate.ts";
-import {
-  type Loop,
-  type Direction,
-  iterate,
-  Playback,
-  rewindFor,
-  sweepInterval,
-} from "./playback.ts";
+import { iterate, type Loop, Sweep, sweepInterval } from "./playback.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
+import { playButton } from "./play-button.ts";
 import { capture, release } from "./pointer.ts";
-import { LongPress } from "./popover.ts";
 import { inferRange } from "./reactive.ts";
 import { ensureStyles } from "./styles.ts";
 import {
@@ -30,19 +25,6 @@ import {
   parseEntries,
   scrubValue,
 } from "./tangle.ts";
-
-/** What a knob publishes when it moves; `<notatio-tangle>` listens for it. */
-export interface KnobChange {
-  name: string;
-  re: number;
-  im: number;
-  /** The chosen index, for a knob over an explicit `choices` list. */
-  index?: number;
-  /** True when playback moved it rather than the reader. */
-  played?: boolean;
-}
-
-export const KNOB_EVENT = "notatio-knob-change";
 
 /** Two taps this close together mean "let me type it". */
 const DOUBLE_TAP_MS = 400;
@@ -206,15 +188,22 @@ export class NotatioKnob extends LitElement {
   /** A second finger on the screen while dragging: touch's answer to holding Alt. */
   #secondFinger = false;
   #repeats = 0;
-  #playback = new Playback(
-    () => this.#advance(),
-    () =>
-      (Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace) /
-      (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+  #sweep = new Sweep(
+    {
+      at: () => (this.discrete ? this._index : this._re),
+      set: (v) => this.#commit(this.discrete ? { index: v } : { re: v }, true),
+      span: () => this.#span,
+      loop: () => this.#loop,
+      setLoop: (loop) => (this.loop = loop),
+      rate: () => (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+      setRate: (rate) => (this.rate = rate),
+      interval: () =>
+        Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace,
+      onState: () => (this._playing = this.#sweep.playing),
+    },
+    openPlaybackMenu,
+    LONG_PRESS_MS,
   );
-  /** Which way playback and a toggler-style advance are heading; `reflect` flips it. */
-  #direction: Direction = 1;
-  #playMenu = new LongPress(LONG_PRESS_MS, (anchor) => this.#openPlayMenu(anchor));
   #inView: IntersectionObserver | undefined;
 
   constructor() {
@@ -319,46 +308,8 @@ export class NotatioKnob extends LitElement {
     return this.discrete ? { min: 0, max: this.#entries.length - 1, step: 1 } : this.range;
   }
 
-  /** One playback step, the way the loop says; a finished play-through stops. */
-  #advance(): void {
-    const at = this.discrete ? this._index : this._re;
-    const next = iterate(at, 1, this.#span, this.#loop, this.#direction);
-    this.#direction = next.direction;
-    this.#commit(this.discrete ? { index: next.value } : { re: next.value }, true);
-    if (next.done) this.#stop();
-  }
-
-  #openPlayMenu(anchor: HTMLElement): void {
-    this.#stop();
-    openPlaybackMenu({
-      anchor,
-      settings: { rate: this.rate, loop: this.#loop },
-      onChange: ({ rate, loop }) => {
-        this.rate = rate;
-        this.loop = loop;
-      },
-    });
-  }
-
-  #togglePlay(): void {
-    if (this._playing) this.#stop();
-    else this.#start();
-  }
-
-  #start(): void {
-    if (this._playing) return;
-    // A play-through that already ran to its end starts over.
-    const at = this.discrete ? this._index : this._re;
-    const from = rewindFor(at, this.#span, this.#loop, this.#direction);
-    if (from !== at) this.#commit(this.discrete ? { index: from } : { re: from }, true);
-    this.#playback.start();
-    this._playing = true;
-  }
-
   #stop(): void {
-    if (!this._playing) return;
-    this.#playback.stop();
-    this._playing = false;
+    this.#sweep.stop();
   }
 
   /** `autoplay`: sweep while on screen, and only then. */
@@ -372,8 +323,8 @@ export class NotatioKnob extends LitElement {
     }
     this.#inView = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) this.#start();
-        else this.#stop();
+        if (entry?.isIntersecting) this.#sweep.start();
+        else this.#sweep.stop();
       },
       { threshold: 0.5 },
     );
@@ -602,7 +553,7 @@ export class NotatioKnob extends LitElement {
     if (this._editing) return;
     if (event.key === " ") {
       event.preventDefault();
-      if (!event.repeat) this.#togglePlay();
+      if (!event.repeat) this.#sweep.toggle();
       return;
     }
     this.#stop();
@@ -735,6 +686,11 @@ export class NotatioKnob extends LitElement {
     return this.discrete ? boundEntry(this.entry, this._index) : this._re;
   }
 
+  /** The bound value as MathJSON: the number, complex when it has an imaginary part. */
+  get binding(): MathJsonExpression {
+    return this.discrete ? this.bound : numberJson(this._re, this._im);
+  }
+
   /**
    * Take a new value and tell the surrounding tangle about it, if anything changed.
    * `played` marks a step of playback's own, as against the reader's hand.
@@ -747,19 +703,12 @@ export class NotatioKnob extends LitElement {
     this._re = re;
     this._im = im;
     this._index = index;
-    this.dispatchEvent(
-      new CustomEvent<KnobChange>(KNOB_EVENT, {
-        bubbles: true,
-        composed: true,
-        detail: {
-          name: this.name,
-          re: this.bound,
-          im: this.discrete ? 0 : im,
-          index: this.discrete ? index : undefined,
-          played,
-        },
-      }),
-    );
+    emitControl(this, {
+      name: this.name,
+      value: this.binding,
+      index: this.discrete ? index : undefined,
+      played,
+    });
   }
 
   /** What a screen reader is told this knob is showing. */
@@ -812,26 +761,7 @@ export class NotatioKnob extends LitElement {
 
   /** The play/pause button `play` asks for: a sibling of the grip, not part of the drag. */
   #playButton(): unknown {
-    if (!this.play) return nothing;
-    return html`<button
-      type="button"
-      class="notatio-knob-play"
-      data-notatio-knob
-      aria-label=${this._playing ? "pause" : "play"}
-      aria-pressed=${this._playing ? "true" : "false"}
-      title="play; hold for speed and loop"
-      @pointerdown=${this.#playMenu.down}
-      @pointerup=${this.#playMenu.up}
-      @pointercancel=${this.#playMenu.cancel}
-      @pointerleave=${this.#playMenu.cancel}
-      @contextmenu=${this.#playMenu.contextmenu}
-      @click=${(e: Event) => {
-        e.stopPropagation();
-        if (!this.#playMenu.click(e)) this.#togglePlay();
-      }}
-    >
-      ${this._playing ? "\u23F8" : "\u25B6"}
-    </button>`;
+    return this.play ? playButton(this.#sweep, { own: true }) : nothing;
   }
 
   #field(): unknown {
@@ -882,6 +812,4 @@ export class NotatioKnob extends LitElement {
   }
 }
 
-if (!customElements.get("notatio-knob")) {
-  customElements.define("notatio-knob", NotatioKnob);
-}
+defineControl("notatio-knob", NotatioKnob);

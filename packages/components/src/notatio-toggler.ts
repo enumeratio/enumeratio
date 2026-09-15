@@ -1,38 +1,33 @@
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { entryMarkup, LONG_PRESS_MS, openChoiceMenu, PRESS_SLOP_PX } from "./choice-menu.ts";
-import { KNOB_EVENT, type KnobChange } from "./notatio-knob.ts";
-import {
-  type Loop,
-  type Direction,
-  iterate,
-  Playback,
-  rewindFor,
-  sweepInterval,
-} from "./playback.ts";
+import { defineControl, emitControl } from "./controls.ts";
+import { playButton } from "./play-button.ts";
+import { iterate, type Loop, Sweep, sweepInterval } from "./playback.ts";
 import { openPlaybackMenu } from "./playback-menu.ts";
 import { capture, release } from "./pointer.ts";
-import { LongPress } from "./popover.ts";
 import { ensureStyles } from "./styles.ts";
 import {
-  boundEntry,
-  cycleIndex,
+  type Choice,
+  choiceBinding,
   gearing,
   holdMultiplier,
   modifierGear,
-  parseEntries,
-  type Gear,
+  parseChoices,
 } from "./tangle.ts";
 
 /**
  * `<notatio-toggler name="size" values="a few|several|many">` -- a word in the prose
  * that **cycles when you click it**, Wolfram's `Toggler` and Tangle's toggle in one.
  *
- * The entries are separated by `|`, since commas belong to the sentence. An entry that
- * looks like a value is typeset; a word is set as prose. Inside a `<notatio-tangle>`
- * the binding `_name` takes the entry's value when it is a number, and otherwise its
- * **index**, so a toggle over words still drives the rest of the document
- * (`<notatio-when test="_size > 1">`).
+ * With no `values` it is Wolfram's `Toggler[x]`: a switch between `False` and `True`.
+ * Otherwise the entries are separated by `|`, since commas belong to the sentence, and
+ * an entry may be written `value -> label` to show one thing and bind another. An
+ * entry that looks like a value is typeset; a word is set as prose. Inside a
+ * `<notatio-tangle>` the binding `_name` is the entry's value when it is a number or a
+ * named value, and otherwise its **index**, so a toggle over words still drives the
+ * rest of the document (`<notatio-when test="_size > 1">`).
  *
  * A toggler is a `<notatio-knob>` **without an axis**, and that is the whole
  * difference: there is no direction to drag a word in, so a click steps it once, and a
@@ -52,13 +47,13 @@ export class NotatioToggler extends LitElement {
   static properties = {
     /** The binding this toggler drives: `name="a"` fills the wildcard `_a`. */
     name: { type: String, reflect: true },
-    /** The entries to cycle through, separated by `|`. */
+    /** The entries to cycle through, `|`-separated, each optionally `value -> label`. None: a True/False switch. */
     values: { type: String },
-    /** The entry to start on: one of `values`, or its index. */
+    /** The entry to start on: one of `values` (by value or label), or its index. */
     value: { type: String },
     /** Show a play/pause button beside the word. Space toggles playback regardless. */
     play: { type: Boolean, reflect: true },
-    /** Loop while scrolled into view; pause when scrolled out. */
+    /** Cycle while scrolled into view; pause when scrolled out. */
     autoplay: { type: Boolean },
     /** Milliseconds per entry while playing. */
     interval: { type: Number },
@@ -66,9 +61,9 @@ export class NotatioToggler extends LitElement {
     rate: { type: Number, reflect: true },
     /** What reaching an end does: `cycle` (default), `reflect` or `none`. */
     loop: { type: String, reflect: true },
-    _playing: { state: true },
     _index: { state: true },
     _markup: { state: true },
+    _playing: { state: true },
   };
 
   declare name: string;
@@ -79,11 +74,11 @@ export class NotatioToggler extends LitElement {
   declare interval: number;
   declare rate: number;
   declare loop: Loop | "";
-  declare _playing: boolean;
   declare _index: number;
   declare _markup: string;
+  declare _playing: boolean;
 
-  #entries: string[] = [];
+  #choices: Choice[] = [];
   #typesetFrom: string | undefined;
   /** The pointer now pressing, and where it went down -- a press, until it moves. */
   #press: { id: number; x: number; y: number } | undefined;
@@ -93,20 +88,28 @@ export class NotatioToggler extends LitElement {
    * would be light-dismissed by the very release that follows.
    */
   #menuArmed = false;
-  /** The click after a drag or a menu is not a click; the button gets told so. */
+  /** The click after a menu is not a click; the button gets told so. */
   #swallowClick = false;
   #repeats = 0;
   #closeMenu: (() => void) | undefined;
-  #playback = new Playback(
-    () => this.#advance(),
-    () =>
-      (Number.isFinite(this.interval) && this.interval > 0
-        ? this.interval
-        : sweepInterval(this.#entries.length)) /
-      (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+  #sweep = new Sweep(
+    {
+      at: () => this._index,
+      set: (i) => this.#set(i),
+      span: () => this.#span,
+      loop: () => this.#loop,
+      setLoop: (loop) => (this.loop = loop),
+      rate: () => (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+      setRate: (rate) => (this.rate = rate),
+      interval: () =>
+        Number.isFinite(this.interval) && this.interval > 0
+          ? this.interval
+          : sweepInterval(this.#choices.length),
+      onState: () => (this._playing = this.#sweep.playing),
+    },
+    openPlaybackMenu,
+    LONG_PRESS_MS,
   );
-  #direction: Direction = 1;
-  #playMenu = new LongPress(LONG_PRESS_MS, (anchor) => this.#openPlayMenu(anchor));
   #inView: IntersectionObserver | undefined;
 
   constructor() {
@@ -119,9 +122,9 @@ export class NotatioToggler extends LitElement {
     this.interval = Number.NaN;
     this.rate = 1;
     this.loop = "";
-    this._playing = false;
     this._index = 0;
     this._markup = "";
+    this._playing = false;
     ensureStyles();
   }
 
@@ -131,31 +134,75 @@ export class NotatioToggler extends LitElement {
 
   override disconnectedCallback(): void {
     this.#closeMenu?.();
-    this.#stop();
+    this.#sweep.stop();
     this.#inView?.disconnect();
     this.#inView = undefined;
     super.disconnectedCallback();
   }
 
-  // --- playback ------------------------------------------------------------------
-
-  #togglePlay(): void {
-    if (this._playing) this.#stop();
-    else this.#start();
+  /** A switch, when no entries were given: `False`, then `True`. */
+  get switch(): boolean {
+    return this.values.trim() === "";
   }
 
-  #start(): void {
-    if (this._playing) return;
-    const from = rewindFor(this._index, this.#span, this.#loop, this.#direction);
-    if (from !== this._index) this.#set(from);
-    this.#playback.start();
-    this._playing = true;
+  /** The entry now showing. */
+  get entry(): string {
+    return this.#choices[this._index]?.label ?? "";
   }
 
-  #stop(): void {
-    if (!this._playing) return;
-    this.#playback.stop();
-    this._playing = false;
+  /** The number this toggler binds, for the callers that want one. */
+  get bound(): number {
+    const b = this.binding;
+    return typeof b === "number" ? b : b === "True" ? 1 : b === "False" ? 0 : this._index;
+  }
+
+  /** The bound value as MathJSON: the entry's value, `True`/`False`, or the index. */
+  get binding(): MathJsonExpression {
+    return choiceBinding(this.#choices[this._index], this._index);
+  }
+
+  protected override willUpdate(changed: PropertyValues): void {
+    if (changed.has("values") || changed.has("value")) {
+      this.#choices = this.switch
+        ? [
+            { value: "False", label: "False" },
+            { value: "True", label: "True" },
+          ]
+        : parseChoices(this.values);
+      const raw = this.value.trim();
+      const at = this.#choices.findIndex((c) => c.value === raw || c.label === raw);
+      const asIndex = Number(raw);
+      const n = this.#choices.length;
+      this._index = at >= 0 ? at : Number.isInteger(asIndex) && n > 0 ? ((asIndex % n) + n) % n : 0;
+    }
+    if (changed.has("autoplay")) this.#watchView();
+    void this.#typeset();
+  }
+
+  async #typeset(): Promise<void> {
+    const source = this.entry;
+    if (source === this.#typesetFrom) return;
+    this.#typesetFrom = source;
+    this._markup = this.switch ? "" : await entryMarkup(source);
+  }
+
+  #set(index: number): void {
+    if (index === this._index) return;
+    this._index = index;
+    emitControl(this, { name: this.name, value: this.binding, index });
+  }
+
+  get #loop(): Loop {
+    return this.loop === "reflect" || this.loop === "none" ? this.loop : "cycle";
+  }
+
+  get #span(): { min: number; max: number; step: number } {
+    return { min: 0, max: this.#choices.length - 1, step: 1 };
+  }
+
+  /** An explicit step -- an arrow -- wraps only on `cycle`. */
+  #step(delta: number): void {
+    this.#set(iterate(this._index, delta, this.#span, this.#loop).value);
   }
 
   #watchView(): void {
@@ -168,86 +215,12 @@ export class NotatioToggler extends LitElement {
     }
     this.#inView = new IntersectionObserver(
       ([entry]) => {
-        if (entry?.isIntersecting) this.#start();
-        else this.#stop();
+        if (entry?.isIntersecting) this.#sweep.start();
+        else this.#sweep.stop();
       },
       { threshold: 0.5 },
     );
     this.#inView.observe(this);
-  }
-
-  /** The entry now showing. */
-  get entry(): string {
-    return this.#entries[this._index] ?? "";
-  }
-
-  /** The number this toggler binds: the entry when it is one, and otherwise its index. */
-  get bound(): number {
-    return boundEntry(this.entry, this._index);
-  }
-
-  protected override willUpdate(changed: PropertyValues): void {
-    if (changed.has("values") || changed.has("value")) {
-      this.#entries = parseEntries(this.values);
-      const at = this.#entries.indexOf(this.value.trim());
-      const asIndex = Number(this.value);
-      this._index =
-        at >= 0 ? at : Number.isInteger(asIndex) ? cycleIndex(asIndex, 0, this.#entries.length) : 0;
-    }
-    if (changed.has("autoplay")) this.#watchView();
-    void this.#typeset();
-  }
-
-  async #typeset(): Promise<void> {
-    const source = this.entry;
-    if (source === this.#typesetFrom) return;
-    this.#typesetFrom = source;
-    this._markup = await entryMarkup(source);
-  }
-
-  #set(index: number): void {
-    if (index === this._index) return;
-    this._index = index;
-    this.dispatchEvent(
-      new CustomEvent<KnobChange>(KNOB_EVENT, {
-        bubbles: true,
-        composed: true,
-        detail: { name: this.name, re: this.bound, im: 0, index },
-      }),
-    );
-  }
-
-  get #loop(): Loop {
-    return this.loop === "reflect" || this.loop === "none" ? this.loop : "cycle";
-  }
-
-  get #span(): { min: number; max: number; step: number } {
-    return { min: 0, max: this.#entries.length - 1, step: 1 };
-  }
-
-  /** An implicit advance -- a click, a tick of playback -- goes the way the loop says. */
-  #advance(): void {
-    const next = iterate(this._index, 1, this.#span, this.#loop, this.#direction);
-    this.#direction = next.direction;
-    this.#set(next.value);
-    if (next.done) this.#stop();
-  }
-
-  /** An explicit step -- an arrow -- wraps only on `cycle`. */
-  #step(delta: number): void {
-    this.#set(iterate(this._index, delta, this.#span, this.#loop).value);
-  }
-
-  #openPlayMenu(anchor: HTMLElement): void {
-    this.#stop();
-    openPlaybackMenu({
-      anchor,
-      settings: { rate: this.rate, loop: this.#loop },
-      onChange: ({ rate, loop }) => {
-        this.rate = rate;
-        this.loop = loop;
-      },
-    });
   }
 
   // --- pointer -------------------------------------------------------------------
@@ -257,12 +230,13 @@ export class NotatioToggler extends LitElement {
     // Safari does not focus a button on click; a press should leave it as focused as
     // a Tab would.
     (event.currentTarget as HTMLElement).focus({ preventScroll: true });
-    this.#stop();
+    this.#sweep.stop();
     capture(event.currentTarget as HTMLElement, event.pointerId);
     this.#press = { id: event.pointerId, x: event.clientX, y: event.clientY };
     this.#swallowClick = false;
     this.#menuArmed = false;
-    this.#longPress = setTimeout(() => (this.#menuArmed = true), LONG_PRESS_MS);
+    // A switch has two states and nothing to pick from: no menu.
+    if (!this.switch) this.#longPress = setTimeout(() => (this.#menuArmed = true), LONG_PRESS_MS);
   };
 
   /** A press that wanders is a text selection, not a press: it opens nothing. */
@@ -286,14 +260,14 @@ export class NotatioToggler extends LitElement {
     }
   };
 
-  /** The button's own click, which a plain press still produces: step once. */
+  /** The button's own click, which a plain press still produces: step once, the way the loop says. */
   #onClick = (event: MouseEvent): void => {
     if (this.#swallowClick) {
       this.#swallowClick = false;
       event.preventDefault();
       return;
     }
-    this.#advance();
+    this.#sweep.advance();
   };
 
   #cancelLongPress(): void {
@@ -302,6 +276,7 @@ export class NotatioToggler extends LitElement {
   }
 
   #onContextMenu = (event: Event): void => {
+    if (this.switch) return;
     event.preventDefault();
     // Android fires this from a long touch while the finger is still down; arm as a
     // long press does, and let the release open it.
@@ -313,7 +288,7 @@ export class NotatioToggler extends LitElement {
     if (this.#closeMenu) return;
     this.#cancelLongPress();
     this.#swallowClick = true;
-    const items = await Promise.all(this.#entries.map((entry) => entryMarkup(entry)));
+    const items = await Promise.all(this.#choices.map((c) => entryMarkup(c.label)));
     const grip = this.#grip;
     if (!grip) return;
     this.#closeMenu = openChoiceMenu({
@@ -341,17 +316,17 @@ export class NotatioToggler extends LitElement {
     if (event.key === " ") {
       // Space is playback, not a click: the button must not also fire.
       event.preventDefault();
-      if (!event.repeat) this.#togglePlay();
+      if (!event.repeat) this.#sweep.toggle();
       return;
     }
-    this.#stop();
+    this.#sweep.stop();
     this.#repeats = event.repeat ? this.#repeats + 1 : 0;
-    const gear: Gear =
+    const gear =
       event.key === "PageUp" || event.key === "PageDown"
         ? "coarse"
         : (modifierGear(event) ?? "normal");
     const delta = gearing(1, 1, gear, true).step * holdMultiplier(this.#repeats);
-    const last = this.#entries.length - 1;
+    const last = this.#choices.length - 1;
     // Left/right only: a toggler is a line of entries, not a column of them.
     switch (event.key) {
       case "ArrowRight":
@@ -377,32 +352,16 @@ export class NotatioToggler extends LitElement {
     this.#repeats = 0;
   };
 
-  #playButton(): unknown {
-    if (!this.play) return nothing;
-    return html`<button
-      type="button"
-      class="notatio-knob-play"
-      aria-label=${this._playing ? "pause" : "play"}
-      aria-pressed=${this._playing ? "true" : "false"}
-      title="play; hold for speed and loop"
-      @pointerdown=${this.#playMenu.down}
-      @pointerup=${this.#playMenu.up}
-      @pointercancel=${this.#playMenu.cancel}
-      @pointerleave=${this.#playMenu.cancel}
-      @contextmenu=${this.#playMenu.contextmenu}
-      @click=${(e: Event) => {
-        if (!this.#playMenu.click(e)) this.#togglePlay();
-      }}
-    >
-      ${this._playing ? "\u23F8" : "\u25B6"}
-    </button>`;
-  }
-
   protected override render(): unknown {
+    const on = this.switch && this._index === 1;
     return html`<button
         type="button"
         class="notatio-toggler-grip"
+        role=${this.switch ? "switch" : nothing}
+        aria-checked=${this.switch ? String(on) : nothing}
         aria-label=${this.name || "choice"}
+        ?data-switch=${this.switch}
+        ?data-on=${on}
         ?data-playing=${this._playing}
         @pointerdown=${this.#onPointerDown}
         @pointermove=${this.#onPointerMove}
@@ -413,11 +372,9 @@ export class NotatioToggler extends LitElement {
         @keydown=${this.#onKeyDown}
         @keyup=${this.#onKeyUp}
       >
-        ${unsafeHTML(this._markup)}</button
-      >${this.#playButton()}`;
+        ${this.switch ? html`<span class="notatio-switch-track"><span class="notatio-switch-thumb"></span></span>` : unsafeHTML(this._markup)}</button
+      >${this.play ? playButton(this.#sweep) : nothing}`;
   }
 }
 
-if (!customElements.get("notatio-toggler")) {
-  customElements.define("notatio-toggler", NotatioToggler);
-}
+defineControl("notatio-toggler", NotatioToggler);

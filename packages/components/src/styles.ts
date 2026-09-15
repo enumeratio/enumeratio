@@ -1210,6 +1210,273 @@ notatio-knob[axis="y"] .notatio-knob-ladder {
   border-color: var(--vp-c-brand-1, #3451b2);
 }
 
+/* --- the controls: Wolfram's Control family as inline pieces ------------------------
+   Every control is inline (a slider in a strip, a bar in a sentence) and shares the
+   brand colour for what is set, the divider colour for what is not. */
+notatio-slider, notatio-vertical-slider, notatio-animator, notatio-slider-2d,
+notatio-setter-bar, notatio-radio-button-bar, notatio-toggler-bar, notatio-popup-menu,
+notatio-checkbox, notatio-interval-slider, notatio-color-slider, notatio-input-field {
+  display: inline-block;
+  vertical-align: middle;
+}
+notatio-list-picker { display: inline-block; vertical-align: top; }
+
+.notatio-slider { display: inline-flex; align-items: center; gap: 0.4em; }
+.notatio-slider-track {
+  min-width: 8rem;
+  accent-color: var(--vp-c-brand-1, #3451b2);
+}
+.notatio-slider[data-vertical] { flex-direction: column; }
+.notatio-slider[data-vertical] .notatio-slider-track {
+  min-width: 0;
+  writing-mode: vertical-lr;
+  direction: rtl;
+  height: 8rem;
+}
+.notatio-slider-readout {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85em;
+  color: var(--vp-c-text-2, #666);
+  min-width: 2.5em;
+}
+
+/* The pad of a Slider2D: a square with a dot, y up. */
+.notatio-slider-2d { display: inline-flex; align-items: flex-end; gap: 0.5em; }
+.notatio-pad {
+  position: relative;
+  display: inline-block;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 4px;
+  background:
+    linear-gradient(var(--vp-c-divider, #e2e2e3) 1px, transparent 1px) 0 0 / 100% 25%,
+    linear-gradient(90deg, var(--vp-c-divider, #e2e2e3) 1px, transparent 1px) 0 0 / 25% 100%,
+    var(--vp-c-bg-soft, #f6f6f7);
+  cursor: crosshair;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.notatio-pad:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
+.notatio-pad-dot,
+.notatio-locator-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1, #3451b2);
+  box-shadow: 0 0 0 2px var(--vp-c-bg, #fff);
+  pointer-events: none;
+}
+.notatio-slider-2d[data-dragging] .notatio-pad-dot { transform: scale(1.25); }
+
+/* A locator lives on a plot, so the plot is its frame of reference. */
+notatio-plot { position: relative; }
+notatio-locator { display: contents; }
+.notatio-locator-dot {
+  pointer-events: auto;
+  cursor: grab;
+  touch-action: none;
+  z-index: 1;
+}
+.notatio-locator-dot[data-dragging] { cursor: grabbing; transform: scale(1.25); }
+.notatio-locator-dot:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
+
+/* Bars: setter, radio, toggler -- a row of joined buttons. */
+.notatio-bar {
+  display: inline-flex;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 6px;
+  overflow: hidden;
+  vertical-align: middle;
+}
+.notatio-bar-option {
+  font: inherit;
+  font-size: 0.9em;
+  padding: 0.15em 0.6em;
+  border: 0;
+  border-right: 1px solid var(--vp-c-divider, #e2e2e3);
+  background: none;
+  color: var(--vp-c-text-1, inherit);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+.notatio-bar-option:last-child { border-right: 0; }
+.notatio-bar-option:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent); }
+.notatio-bar-option[aria-pressed="true"],
+.notatio-bar-option[aria-checked="true"] {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, transparent);
+  color: var(--vp-c-brand-1, #3451b2);
+}
+.notatio-bar-option:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: -2px; }
+.notatio-radio-dot {
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  box-sizing: border-box;
+}
+.notatio-bar-option[aria-checked="true"] .notatio-radio-dot {
+  background: currentColor;
+  box-shadow: inset 0 0 0 2px var(--vp-c-bg, #fff);
+}
+
+/* A popup menu: the current entry and a caret; the list is the shared choice menu. */
+.notatio-popup-btn {
+  font: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.15em 0.5em 0.15em 0.6em;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 6px;
+  background: var(--vp-c-bg, #fff);
+  color: var(--vp-c-text-1, inherit);
+  cursor: pointer;
+}
+.notatio-popup-btn:hover { border-color: var(--vp-c-brand-1, #3451b2); }
+.notatio-popup-btn:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 2px; }
+.notatio-popup-caret::after { content: "\\25BE"; font-size: 0.8em; opacity: 0.7; }
+
+/* A list picker: the entries in view, selected ones filled. */
+.notatio-list-picker {
+  display: inline-block;
+  min-width: 8rem;
+  overflow-y: auto;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 6px;
+  background: var(--vp-c-bg, #fff);
+  padding: 2px;
+}
+.notatio-list-picker:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
+.notatio-list-option {
+  padding: 0.15em 0.6em;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.notatio-list-option:hover { background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 8%, transparent); }
+.notatio-list-option[aria-selected="true"] {
+  background: color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 14%, transparent);
+  color: var(--vp-c-brand-1, #3451b2);
+}
+.notatio-list-picker:focus-visible .notatio-list-option[data-active] {
+  outline: 1px solid var(--vp-c-brand-1, #3451b2);
+}
+
+.notatio-checkbox { display: inline-flex; align-items: center; gap: 0.35em; cursor: pointer; }
+.notatio-checkbox input { accent-color: var(--vp-c-brand-1, #3451b2); margin: 0; }
+
+/* An interval slider: two native ranges on one track, thumbs only catching the pointer. */
+.notatio-interval-slider { display: inline-flex; align-items: center; gap: 0.4em; }
+.notatio-interval-track {
+  position: relative;
+  display: inline-block;
+  width: 10rem;
+  height: 1.4em;
+}
+.notatio-interval-fill {
+  position: absolute;
+  top: 50%;
+  height: 4px;
+  margin-top: -2px;
+  background: var(--vp-c-brand-1, #3451b2);
+  border-radius: 2px;
+  pointer-events: none;
+}
+.notatio-interval-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  margin: 0;
+  background: none;
+  pointer-events: none;
+  accent-color: var(--vp-c-brand-1, #3451b2);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.notatio-interval-thumb[data-thumb="lo"] { z-index: 1; }
+.notatio-interval-thumb::-webkit-slider-runnable-track { height: 4px; background: var(--vp-c-divider, #e2e2e3); border-radius: 2px; }
+.notatio-interval-thumb[data-thumb="hi"]::-webkit-slider-runnable-track { background: transparent; }
+.notatio-interval-thumb::-moz-range-track { height: 4px; background: var(--vp-c-divider, #e2e2e3); border-radius: 2px; }
+.notatio-interval-thumb[data-thumb="hi"]::-moz-range-track { background: transparent; }
+.notatio-interval-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1, #3451b2);
+  border: 2px solid var(--vp-c-bg, #fff);
+  cursor: ew-resize;
+}
+.notatio-interval-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--vp-c-brand-1, #3451b2);
+  border: 2px solid var(--vp-c-bg, #fff);
+  cursor: ew-resize;
+}
+.notatio-interval-thumb:focus-visible { outline: none; }
+.notatio-interval-thumb:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px color-mix(in srgb, var(--vp-c-brand-1, #3451b2) 35%, transparent); }
+
+.notatio-color-slider {
+  width: 2.2em;
+  height: 1.6em;
+  padding: 0;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.notatio-input-field {
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  padding: 0.1em 0.4em;
+  border: 1px solid var(--vp-c-divider, #e2e2e3);
+  border-radius: 4px;
+  background: var(--vp-c-bg, #fff);
+  color: inherit;
+}
+.notatio-input-field:focus-visible { outline: 2px solid var(--vp-c-brand-1, #3451b2); outline-offset: 1px; }
+.notatio-input-field[aria-invalid="true"] { border-color: #c0392b; }
+
+/* A toggler with no entries is a switch: a pill with a knob at one end or the other. */
+.notatio-toggler-grip[data-switch] {
+  border-bottom: 0;
+  padding: 0;
+  vertical-align: middle;
+}
+.notatio-switch-track {
+  display: inline-block;
+  width: 1.9em;
+  height: 1.05em;
+  border-radius: 1em;
+  background: var(--vp-c-divider, #d0d0d3);
+  position: relative;
+  transition: background 0.15s;
+  vertical-align: -0.2em;
+}
+.notatio-toggler-grip[data-on] .notatio-switch-track { background: var(--vp-c-brand-1, #3451b2); }
+.notatio-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.05em - 4px);
+  height: calc(1.05em - 4px);
+  border-radius: 50%;
+  background: var(--vp-c-bg, #fff);
+  transition: left 0.15s;
+}
+.notatio-toggler-grip[data-on] .notatio-switch-thumb { left: calc(100% - 1.05em + 2px); }
+
 /* A prose control panel: a paragraph like the ones around it, set off only by
    its knobs. */
 .notatio-manip-prose { margin: 0 0 0.8em; }

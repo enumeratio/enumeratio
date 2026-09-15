@@ -5,6 +5,36 @@
 // Kept dependency-free and unit-tested; the elements do the compute-engine
 // substitution and the DOM.
 
+/**
+ * Which control draws a parameter, when the author names one -- Wolfram's `ControlType`
+ * -- as a trailing symbol in the tuple: `{k, 0, 1, 0.1, VerticalSlider}`,
+ * `{k, {1, 2, 3}, PopupMenu}`. Otherwise the kind of range picks, as Manipulate does.
+ */
+export type ControlType =
+  | "Slider"
+  | "VerticalSlider"
+  | "Animator"
+  | "Knob"
+  | "SetterBar"
+  | "RadioButtonBar"
+  | "PopupMenu"
+  | "Toggler"
+  | "ListPicker"
+  | "InputField";
+
+export const CONTROL_TYPES: readonly ControlType[] = [
+  "Slider",
+  "VerticalSlider",
+  "Animator",
+  "Knob",
+  "SetterBar",
+  "RadioButtonBar",
+  "PopupMenu",
+  "Toggler",
+  "ListPicker",
+  "InputField",
+];
+
 export interface SliderControl {
   kind: "slider";
   name: string;
@@ -12,6 +42,7 @@ export interface SliderControl {
   min: number;
   max: number;
   step: number;
+  control?: ControlType;
 }
 
 export interface ChoiceControl {
@@ -19,6 +50,7 @@ export interface ChoiceControl {
   name: string;
   value: number;
   choices: number[];
+  control?: ControlType;
 }
 
 export type Control = SliderControl | ChoiceControl;
@@ -184,12 +216,17 @@ export function parseControls(spec: string): Control[] {
     name = name.trim();
     if (!name) continue;
 
+    // A trailing control type names the control that draws the parameter.
+    const last = fields[fields.length - 1].trim() as ControlType;
+    const control = fields.length > 2 && CONTROL_TYPES.includes(last) ? last : undefined;
+    if (control !== undefined) fields.pop();
+
     // `{name, {choices...}}` -> a discrete choice setter.
     if (fields.length === 2 && fields[1].startsWith("{")) {
       const choices = splitTop(fields[1].slice(1, -1), ",").map(num).filter(Number.isFinite);
       if (choices.length === 0) continue;
       const value = init !== undefined && choices.includes(init) ? init : choices[0];
-      controls.push({ kind: "choice", name, value, choices });
+      controls.push({ kind: "choice", name, value, choices, ...(control && { control }) });
       continue;
     }
 
@@ -198,7 +235,15 @@ export function parseControls(spec: string): Control[] {
     if (!Number.isFinite(min) || !Number.isFinite(max)) continue;
     const step = fields[3] !== undefined ? num(fields[3]) : defaultStep(min, max);
     const value = clamp(init ?? min, min, max);
-    controls.push({ kind: "slider", name, value, min, max, step: step > 0 ? step : 1 });
+    controls.push({
+      kind: "slider",
+      name,
+      value,
+      min,
+      max,
+      step: step > 0 ? step : 1,
+      ...(control && { control }),
+    });
   }
   return controls;
 }

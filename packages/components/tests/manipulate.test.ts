@@ -170,3 +170,14 @@ test("a control value displays to the step's precision", () => {
   expect(formatValue(2.119744, 0.1)).toBe("2.1"); // mid-ease, between grid points
   expect(formatValue(6, 1)).toBe("6");
 });
+
+test("a trailing symbol in a control tuple names the control that draws it", () => {
+  expect(parseControls("{k, 0, 1, 0.1, VerticalSlider}")).toEqual([
+    { kind: "slider", name: "k", value: 0, min: 0, max: 1, step: 0.1, control: "VerticalSlider" },
+  ]);
+  expect(parseControls("{k, {1, 2, 3}, PopupMenu}")).toEqual([
+    { kind: "choice", name: "k", value: 1, choices: [1, 2, 3], control: "PopupMenu" },
+  ]);
+  // An unknown trailing symbol is not a control type, and not a step either.
+  expect(parseControls("{k, 0, 1, Whatever}")[0]).toMatchObject({ kind: "slider", step: 1 });
+});

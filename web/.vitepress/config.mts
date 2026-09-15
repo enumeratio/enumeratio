@@ -152,6 +152,7 @@ export default defineConfig({
           { text: "Collection table", link: "/playground/collection-table" },
           { text: "Worksheet", link: "/playground/worksheet" },
           { text: "Manipulate", link: "/playground/manipulate" },
+          { text: "Controls", link: "/playground/controls" },
           { text: "REPL (terminal)", link: "/playground/repl" },
           { text: "Command line", link: "/playground/cli" },
           {

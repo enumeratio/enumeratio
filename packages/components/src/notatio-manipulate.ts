@@ -6,7 +6,7 @@ import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 import { controlsTemplate } from "./manipulate-ui.ts";
 import { type Control, clamp, parseControls } from "./manipulate.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
-import { KNOB_EVENT, type KnobChange } from "./notatio-knob.ts";
+import { CONTROL_EVENT, type ControlChange } from "./controls.ts";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
 import { type Loop, SliderPlayback } from "./playback.ts";
@@ -140,11 +140,11 @@ export class NotatioManipulate extends LitElement {
     if (this.controls === "below") this.append(this.#host);
     else this.prepend(this.#host);
     // A prose panel's knobs report the way a tangle's do.
-    this.#host.addEventListener(KNOB_EVENT, this.#onKnob as EventListener);
+    this.#host.addEventListener(CONTROL_EVENT, this.#onKnob as EventListener);
     return this.#host;
   }
 
-  #onKnob = (event: CustomEvent<KnobChange>): void => {
+  #onKnob = (event: CustomEvent<ControlChange>): void => {
     event.stopPropagation();
     this.#setControl(event.detail.name, String(event.detail.re));
   };

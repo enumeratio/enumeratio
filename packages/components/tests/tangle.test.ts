@@ -1,6 +1,8 @@
 import { expect, test } from "vite-plus/test";
 import {
   boundEntry,
+  choiceBinding,
+  parseChoices,
   complexLatex,
   cycleIndex,
   displayStep,
@@ -167,4 +169,18 @@ test("a value off the step's grid is printed to one more place, never rounded on
   expect(numberLatex(3.5, 0.5)).toBe("3.5");
   // Both parts of a complex value share the wider place count.
   expect(complexLatex(3.05, 1, 0.5)).toBe("3.05 + 1.00i");
+});
+
+test("a choice list may label its entries with an arrow, and binds by value", () => {
+  expect(parseChoices("a|2 -> two| True -> yes ")).toEqual([
+    { value: "a", label: "a" },
+    { value: "2", label: "two" },
+    { value: "True", label: "yes" },
+  ]);
+  const choices = parseChoices("a few|3|True|k -> the k one");
+  expect(choiceBinding(choices[0], 0)).toBe(0); // a word: its index
+  expect(choiceBinding(choices[1], 1)).toBe(3); // a number: itself
+  expect(choiceBinding(choices[2], 2)).toBe("True"); // a truth value: the symbol
+  expect(choiceBinding(choices[3], 3)).toBe("k"); // labelled: the value named
+  expect(choiceBinding(undefined, 4)).toBe(4);
 });
