@@ -12,11 +12,11 @@ the part component-naming already owns.
 
 ## 1. What exists
 
-- **`@enumeratio/components`**: ~30 Lit custom elements, `notatio-*`. Every expression
+- **`@enumeratio/elements`**: ~30 Lit custom elements, `notatio-*`. Every expression
   attribute is notatio; LaTeX lives only in `$…$` islands, and the editable elements
   (`notatio-cell`, `notatio-notebook`, `notatio-worksheet`) convert notatio to LaTeX
   for the MathLive field through one seam, `source.ts`. `in-form="latex"` is the escape
-  hatch. `notatio-in` _is_ the field and keeps LaTeX; `notatio-out` renders a given
+  hatch. `notatio-input` _is_ the field and keeps LaTeX; `notatio-output` renders a given
   encoding and keeps `format`.
 - **`/reference/components`** is generated at build time from the element sources
   (`web/.vitepress/data/components.ts`): `static properties` is the attribute surface,
@@ -44,7 +44,7 @@ the vdom syntax reads as the expression does, inline in markdown, and the same m
 one file away in React, since a wrapper is nothing but props → attributes.
 
 Not every symbol needs a component. Most are mathematics to typeset, and `<Out>` (the
-`notatio-out` of today) covers them. But for the ones that draw — the plots, the
+`notatio-output` of today) covers them. But for the ones that draw — the plots, the
 tables, the controls, the notebook structures — having the symbol available as a tag
 does not hurt and is what lets an author compose an interface out of the same names the
 engine knows.
@@ -71,7 +71,7 @@ Two wrinkles the generator has to know about:
 
 ## 3. Symbols as expressions that draw
 
-The other end. Today an expression renders through `<notatio-out>`, which typesets
+The other end. Today an expression renders through `<notatio-output>`, which typesets
 anything as mathematics. Some heads are not mathematics to typeset; they are instructions
 to draw. Wolfram's `Plot[Sin[x], {x, 0, 10}]` prints as a picture, and so do
 `Manipulate`, `Graphics`, `Image`. We have `Image` as a value (`formats/src/graphics.ts`)
@@ -84,8 +84,8 @@ and the plot elements as tags; what is missing is that a head **is** its compone
 | `Manipulate(body, (a, 0, 1), …)`                          | `<notatio-manipulate>` with a control per bound, `body` inside |
 | `CollectionTable(coll)`                                   | `<notatio-collection-table>`                                   |
 | `Image(uri)`                                              | `<img>`                                                        |
-| `TraditionalForm(e)`, `InputForm(e)`, … (`WRAPPER_HEADS`) | `<notatio-out form=…>` of `e`                                  |
-| anything else                                             | `<notatio-out>` — typeset                                      |
+| `TraditionalForm(e)`, `InputForm(e)`, … (`WRAPPER_HEADS`) | `<notatio-output form=…>` of `e`                               |
+| anything else                                             | `<notatio-output>` — typeset                                   |
 
 Against component-naming §3 this is the naming rule run backwards: kebab-case the head,
 prefix `notatio-`, and the tag falls out, so once the renames land the map needs no table
@@ -115,7 +115,7 @@ controls). What it gives:
 
 Component-naming §5 flags four components that multiplex several symbols behind an
 attribute: `notatio-chart` (`type`: `BarChart`, `Histogram`, `PieChart`, …),
-`notatio-graph-plot`, `notatio-vector-plot`, `notatio-figure`. The question there was
+`notatio-graphplot`, `notatio-vectorplot`, `notatio-figure`. The question there was
 whether to split them per symbol or keep the family tag.
 
 The answer this note proposes is to **multiplex the heads the same way**. A `Chart` head
@@ -132,21 +132,22 @@ the family component with the attribute set. The table in §3 then has family ro
 per-symbol rows, and the split-versus-family question in component-naming closes the
 same way for tags and heads at once.
 
-## 5. The renames
+## 5. Renames recorded here
 
-Landed 2026-09-15, all of component-naming §4 at once: the package is
-`@enumeratio/components`, `notatio-input` / `notatio-output` became `notatio-in` /
-`notatio-out` (the `In` and `Out` symbols the elements already print as their row
-labels), the compound names are kebab-cased. head→tag is now a function of the symbol.
+Two of component-naming §4's rows are **agreed** (2026-09-14) rather than proposed:
+`notatio-output` → `notatio-out` and `notatio-input` → `notatio-in`, aligning with the
+`Out` and `In` symbols the elements already print as their row labels. They go first when
+§6 executes; the Vue mirrors are `<Out>` and `<In>`. Component-naming remains the queue
+for tags (the census `RENAME_QUEUE` holds engine heads only, by its own rule).
 
 ## 6. What it would need
 
-1. ~~**The renames**~~ — done, §5.
+1. **The renames** (component-naming §6), so head→tag is a function.
 2. **An argument map per visual head** — where argument positions land as attributes; the
    natural place to _declare_ the heads too (`Plot`, `Manipulate`, `Chart` are not
    declared today; a REPL cannot hold them). Inert declarations with signatures are a
    prerequisite and independent of everything else here.
-3. **`notatio-out` deferring to the head's component** for a visual head, so an Out
+3. **`notatio-output` deferring to the head's component** for a visual head, so an Out
    that evaluates to `Plot(…)` draws. This is a web-component concern, so it works
    everywhere the elements do; the cost is `output` depending on every plot element,
    which is the price of "evaluation returns a picture".

@@ -73,6 +73,6 @@ test("every partition definition has an independent reading", () => {
 for (const definition of PARTITION_STATISTICS) {
   test(`${definition.head} agrees over every partition of 0..8`, () => {
     const expected = EXPECTED[definition.head]!;
-    for (const l of ALL) expect(evaluate(definition.head, l), `[${String(l)}]`).toBe(expected(l));
+    for (const l of ALL) expect(evaluate(definition.head, l), `[${l}]`).toBe(expected(l));
   });
 }

@@ -1,7 +1,7 @@
 // Example expressions for the source-output (language) pages. Each row shows In
 // (StandardForm) → Out (the language's source of the *expression*), with an
 // optional note (how it translates / a footgun) or a `divergence` (a "differs
-// from <system>" chip). Output is derived live by <notatio-out>, so it can't
+// from <system>" chip). Output is derived live by <notatio-output>, so it can't
 // drift. A short editable `sample` per language seeds the try-it cell.
 
 export interface SourceRow {
@@ -14,7 +14,7 @@ export interface SourceRow {
 export interface SourceLanguageMeta {
   readonly id: string;
   readonly title: string;
-  /** The <notatio-out> form that emits this language's source. */
+  /** The <notatio-output> form that emits this language's source. */
   readonly form: string;
   readonly system: string;
   readonly blurb: string;

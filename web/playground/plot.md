@@ -18,7 +18,7 @@ to read off the nearest sample. Function curves are sampled adaptively (à la
 (`PlotLabel`), and `color-by="x|y"` to recolour the curve along a ramp
 (`ColorFunction`). `params` adds interactive `Manipulate` sliders — see
 [Manipulate](#manipulate) below. Surfaces live on the separate
-[Plot 3D](/playground/plot-3d) page.
+[Plot 3D](/playground/plot3d) page.
 
 ## Curves
 
@@ -178,4 +178,4 @@ harmonics with ▶.
 
 - More `Manipulate` control kinds (checkbox, 2-D locator), and a shared play-all.
 - Image export — a REPL requests a plot and gets back a link to a rendered file.
-- Surfaces have their own page: [Plot 3D](/playground/plot-3d).
+- Surfaces have their own page: [Plot 3D](/playground/plot3d).

@@ -20,13 +20,12 @@ test("composition is an operation, so the names are optional", () => {
   // argument as anonymous restrictions, and the reason FindStat has a head called
   // `InverseAfterComplementAfterReverse` in the first place.
   for (const p of [[1], [2, 1], [2, 3, 1], [3, 1, 4, 2]]) {
-    expect(value([["Compose", "Complement", "Reverse"], perm(...p)]), `[${String(p)}]`).toEqual(
+    expect(value([["Compose", "Complement", "Reverse"], perm(...p)]), `[${p}]`).toEqual(
       value(["ReverseComplement", perm(...p)]),
     );
-    expect(
-      value([["Compose", "Inverse", "Complement", "Reverse"], perm(...p)]),
-      `[${String(p)}]`,
-    ).toEqual(value(["InverseAfterComplementAfterReverse", perm(...p)]));
+    expect(value([["Compose", "Inverse", "Complement", "Reverse"], perm(...p)]), `[${p}]`).toEqual(
+      value(["InverseAfterComplementAfterReverse", perm(...p)]),
+    );
   }
 });
 

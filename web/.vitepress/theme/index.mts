@@ -3,7 +3,7 @@ import { defineAsyncComponent } from "vue";
 import DefaultTheme from "vitepress/theme";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
-// @enumeratio/components (the whole element + compute-engine tree) via Playground, and
+// @enumeratio/elements (the whole element + compute-engine tree) via Playground, and
 // @enumeratio/reference (all the entry data) via the reference/component pages — which,
 // resolved from source, is ~all of the monorepo. Keeping them out of the initial theme
 // bundle lets a page's shell paint immediately; each page pulls only the components it
@@ -49,7 +49,7 @@ export default {
     if (!import.meta.env.SSR) {
       // Publish the readiness promise synchronously (before any element mounts) so
       // the shared engine waits for these libraries to be declared before its first
-      // evaluation — see `loadEngine` in @enumeratio/components. The imports resolve
+      // evaluation — see `loadEngine` in @enumeratio/elements. The imports resolve
       // from source here, which is slower than a prebuilt dist, so this gate is what
       // keeps cells/plots from rendering before their heads exist.
       const startEngine = async (): Promise<void> => {
@@ -72,7 +72,7 @@ export default {
           { declareModular },
           { declareBraid },
         ] = await Promise.all([
-          import("@enumeratio/components"),
+          import("@enumeratio/elements"),
           import("@enumeratio/collections"),
           import("@enumeratio/statistics"),
           import("@enumeratio/domains"),

@@ -99,7 +99,7 @@ bindings.
 <Story
   title="Sweep a surface frequency">
 <notatio-manipulate v-pre params="{ {k, 1}, 0.5, 3}">
-<notatio-plot-3d value="Sin(_k * x) * Cos(_k * y)" x-domain="-3.14,3.14" y-domain="-3.14,3.14" />
+<notatio-plot3d value="Sin(_k * x) * Cos(_k * y)" x-domain="-3.14,3.14" y-domain="-3.14,3.14" />
 </notatio-manipulate>
 </Story>
 

@@ -120,7 +120,7 @@ function denert(p: number[]): number {
 /** Cycle lengths, read by walking orbits with a visited set — the ordinary algorithm, which
  *  is exactly what the expression definition deliberately does NOT do. */
 function cycleLengths(p: number[]): number[] {
-  const seen = Array.from({ length: p.length }, (): boolean => false);
+  const seen = new Array<boolean>(p.length).fill(false);
   const lengths: number[] = [];
   for (let start = 0; start < p.length; start++) {
     if (seen[start]) continue;
@@ -180,8 +180,7 @@ for (const definition of PERMUTATION_STATISTICS) {
   const upTo = cubic ? 5 : 6;
   test(`${definition.head} agrees over every permutation of 1..${upTo}`, () => {
     const expected = EXPECTED[definition.head]!;
-    for (const p of universe)
-      expect(evaluate(definition.head, p), `[${String(p)}]`).toBe(expected(p));
+    for (const p of universe) expect(evaluate(definition.head, p), `[${p}]`).toBe(expected(p));
   });
 }
 

@@ -114,7 +114,7 @@ function examplesFor(definition: Definition): Example[] {
       if (bare && out.some((e) => e.caption?.endsWith("as a plain list"))) continue;
       const expr = [definition.head, subject];
       const result = ce.box(expr as never).evaluate();
-      if (result.json === undefined || JSON.stringify(result.json).includes("Error")) continue;
+      if (result.json === undefined || String(result.json).includes("Error")) continue;
       out.push({
         expr,
         expected: result.json,

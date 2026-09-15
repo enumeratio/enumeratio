@@ -9,7 +9,7 @@ what every other input (LaTeX, …) parses into. A notatio component takes it vi
 An expression is a number, a string (a symbol), or a function as an array
 `["Head", ...args]`:
 
-<notatio-out value='["Add", ["Power", "x", 2], 1]' format="mathjson" label="In" />
+<notatio-output value='["Add", ["Power", "x", 2], 1]' format="mathjson" label="In" />
 
 Toggle the Out form (hover the label) to **FullForm** to read the MathJSON back,
 or **StandardForm**/**TeXForm** to see it typeset.
@@ -35,4 +35,4 @@ or **StandardForm**/**TeXForm** to see it typeset.
 - **Lists are a head too.** `["List", 1, 2, 3]`, not a bare JSON array at the top
   level — the outermost array is always `[head, ...args]`.
 
-<notatio-out value='["List", ["Rational", 1, 2], ["Rational", 1, 3]]' format="mathjson" label="In" />
+<notatio-output value='["List", ["Rational", 1, 2], ["Rational", 1, 3]]' format="mathjson" label="In" />

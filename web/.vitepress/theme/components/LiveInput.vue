@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // A live, editable input wired to an evaluated output: type math on the left,
 // see the boxed/evaluated result update on the right. Demonstrates the
-// non-read-only <notatio-in> driving <notatio-out> via notatio-change.
-import { formOfHead, splitHead } from "@enumeratio/components";
+// non-read-only <notatio-input> driving <notatio-output> via notatio-change.
+import { formOfHead, splitHead } from "@enumeratio/elements";
 import { ref } from "vue";
 
 const props = defineProps<{ value?: string }>();
@@ -24,10 +24,10 @@ function onChange(e: Event) {
 <template>
   <ClientOnly>
     <div class="live">
-      <notatio-in :value="props.value ?? ''" @notatio-change="onChange" />
+      <notatio-input :value="props.value ?? ''" @notatio-change="onChange" />
       <div class="live-arrow">→</div>
       <div class="live-out">
-        <notatio-out :value="latex" format="latex" :form="form" evaluate />
+        <notatio-output :value="latex" format="latex" :form="form" evaluate />
       </div>
     </div>
   </ClientOnly>

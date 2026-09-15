@@ -82,6 +82,15 @@ const nextInBlock = (i: MathJSON): MathJSON => {
   return ["If", ["Greater", ["Length", later], 0], ["Min", later], i];
 };
 
+/** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. The
+ *  block structure a map reads at every position (`parts`, the leaders) is computed once
+ *  here rather than once per position per read; see tableau.ts for the rule. */
+const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
+  "Apply",
+  ["Function", body, name],
+  value,
+];
+
 /** A fold over `1 .. n`, indexing rather than iterating a structure — the rule from
  *  tableau.ts, which is what makes these evaluate at all. */
 const byIndex = (
@@ -160,52 +169,70 @@ const conjugateOfCycleType: MathJSON = byIndex(
   "q",
 );
 
-/** Sum of the first `m` entries of `list` — 0 when m = 0, stated rather than left to fall out
- *  since `Range(1, 0)` never evaluates (the tableau.ts rule again). A scalar Fold accumulator,
- *  like `leadersUpTo` — NOT a multi-field one: a Fold whose accumulator is a tuple indexed
- *  back out with `At` does not evaluate down to a concrete value here, so `parts` blowing up
- *  through an intermediate cumulative-bounds LIST (as `ConjugacyClassRepresentative` and
- *  `Foata` first tried) silently fails to reduce. Recomputed per position instead — cheap
- *  for the handful of cycles a permutation has. */
-const prefixSum = (list: MathJSON, m: MathJSON): MathJSON => [
-  "If",
-  ["Equal", m, 0],
-  0,
-  byIndex(m, 0, ["Add", "sacc", ["At", list, "s"]], "sacc", "s"),
-];
+/** The cumulative sums of `list` — entry m is the sum of its first m entries — built as a
+ *  list accumulator the way `descentPositions` and tableau.ts's recording tableau are (a
+ *  `Join` onto the accumulator, indexed back with `At`). An earlier version summed the
+ *  prefix afresh at every position instead, which put a fold inside a fold inside the map
+ *  over positions; bound once with `bind`, this is read with a single `At`. */
+const cumulative = (list: MathJSON): MathJSON =>
+  byIndex(
+    ["Count", list],
+    ["List"],
+    [
+      "Join",
+      "cacc",
+      [
+        "List",
+        [
+          "Add",
+          ["If", ["Equal", "c", 1], 0, ["At", "cacc", ["Subtract", "c", 1]]],
+          ["At", list, "c"],
+        ],
+      ],
+    ],
+    "cacc",
+    "c",
+  );
 
-/** Which block (1-indexed) of `list`'s parts position `p` falls into — the least m with
- *  cumulative length >= p. */
-const blockIndexAt = (list: MathJSON, p: MathJSON): MathJSON => [
+/** Which block (1-indexed) position `p` falls into, given the blocks' cumulative `ends` —
+ *  one more than the number of ends before it. A `Range`-fold with `At`, per the rule. */
+const blockIndexAt = (ends: MathJSON, p: MathJSON): MathJSON => [
   "Add",
-  [
-    "Count",
-    ["Filter", ["Range", 1, ["Count", list]], ["Function", ["Less", prefixSum(list, "m"), p], "m"]],
-  ],
+  byIndex(
+    ["Count", ends],
+    0,
+    ["Add", "bacc", ["If", ["Less", ["At", ends, "bi"], p], 1, 0]],
+    "bacc",
+    "bi",
+  ),
   1,
 ];
-const blockStartAt = (list: MathJSON, p: MathJSON): MathJSON => [
-  "Add",
-  prefixSum(list, ["Subtract", blockIndexAt(list, p), 1]),
+/** Where block `blk` starts, given the cumulative `ends`. */
+const blockStart = (ends: MathJSON, blk: MathJSON): MathJSON => [
+  "If",
+  ["Equal", blk, 1],
   1,
+  ["Add", ["At", ends, ["Subtract", blk, 1]], 1],
 ];
-const blockEndAt = (list: MathJSON, p: MathJSON): MathJSON =>
-  prefixSum(list, blockIndexAt(list, p));
 
 // ConjugacyClassRepresentative writes the canonical permutation for a cycle type: cycles in
 // DECREASING length order, filled with consecutive integers, each cycle (a a+1 … a+len-1)
 // written as the one-line word a+1, a+2, …, a+len-1, a — i.e. a cyclic left-shift of its
 // block. (FindStat does not pin down an ordering for this map; this is the convention we
 // picked and it is exercised end to end by the bijectivity test.)
-const conjugacyClassRepresentative: MathJSON = (() => {
-  const parts = descending(cycleLengths);
-  return forEach(positions, [
-    "If",
-    ["Less", "i", blockEndAt(parts, "i")],
-    ["Add", "i", 1],
-    blockStartAt(parts, "i"),
-  ]);
-})();
+const conjugacyClassRepresentative: MathJSON = bind(
+  "ends",
+  cumulative(descending(cycleLengths)),
+  forEach(
+    positions,
+    bind("blk", blockIndexAt("ends", "i"), [
+      "If",
+      ["Less", "i", ["At", "ends", "blk"]],
+      ["Add", "i", 1],
+      blockStart("ends", "blk"),
+    ]),
+  ),
+);
 
 // Foata's (first) fundamental transformation: write the permutation in cycle notation with
 // each cycle rotated to start at its own maximum, order the cycles by increasing maximum,
@@ -223,18 +250,25 @@ const foataWord: MathJSON = (() => {
     ["Function", ["Length", ["Union", forEach(positions, iterate("m", "k"), "k")]], "m"],
     maximaAscending,
   ];
-  const leaderOf = (p: MathJSON): MathJSON => [
-    "At",
+  const leader: MathJSON = ["At", "leaders", "blk"];
+  const offset: MathJSON = ["Subtract", "i", blockStart("ends", "blk")];
+  return bind(
+    "leaders",
     maximaAscending,
-    blockIndexAt(lengthsByLeader, p),
-  ];
-  const offsetOf = (p: MathJSON): MathJSON => ["Subtract", p, blockStartAt(lengthsByLeader, p)];
-  return forEach(positions, [
-    "If",
-    ["Equal", offsetOf("i"), 0],
-    leaderOf("i"),
-    iterate(leaderOf("i"), offsetOf("i")),
-  ]);
+    bind(
+      "ends",
+      cumulative(lengthsByLeader),
+      forEach(
+        positions,
+        bind("blk", blockIndexAt("ends", "i"), [
+          "If",
+          ["Equal", offset, 0],
+          leader,
+          iterate(leader, offset),
+        ]),
+      ),
+    ),
+  );
 })();
 
 /** The descent positions. `Range(1, 0)` never evaluates, so n < 2 is stated rather than

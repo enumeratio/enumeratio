@@ -35,7 +35,7 @@ Two ideas are lifted wholesale.
 **`*Form` symbols.** A single expression can be shown many ways, and each way is a
 _named representation you can ask for_ rather than a mode the renderer happens to
 be in. `StandardForm`, `TraditionalForm`, `FullForm`, `TeXForm` ship on
-`<notatio-out>`; the pictorial ones live in `<notatio-figure>` and the plots.
+`<notatio-output>`; the pictorial ones live in `<notatio-figure>` and the plots.
 The [playground overview](/playground/) tracks the whole table.
 
 <Story
@@ -43,7 +43,7 @@ The [playground overview](/playground/) tracks the whole table.
 <template #description>
 Open the In/Out menu. Each entry is a representation, requested by name.
 </template>
-<notatio-out value="\frac{\sin(x)}{x^2+1}" label="Out" />
+<notatio-output value="\frac{\sin(x)}{x^2+1}" label="Out" />
 </Story>
 
 **`Manipulate`.** A parameterised expression with a control per parameter, where
@@ -76,7 +76,7 @@ quirk, or a genuine difference of convention, and those need different fixes.
 <template #description>
 The transpiler, in the page. This is the same path the oracle sweep runs through.
 </template>
-<notatio-out value='["Binomial","n","k"]' format="mathjson" form="wolfram" label="Out" />
+<notatio-output value='["Binomial","n","k"]' format="mathjson" form="wolfram" label="Out" />
 </Story>
 
 Some of what the sweep found is worth keeping in public: `N[HurwitzZeta[-n, a]]`

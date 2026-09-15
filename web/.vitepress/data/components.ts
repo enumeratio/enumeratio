@@ -1,4 +1,4 @@
-// The component reference, read straight out of `@enumeratio/components` at build
+// The component reference, read straight out of `@enumeratio/elements` at build
 // time. Nothing is generated into the repo: the attribute tables are derived from each
 // element's own `static properties`, `declare` types and constructor defaults, so they
 // cannot drift from the source.
@@ -31,9 +31,9 @@ export interface AttributeDoc {
 }
 
 export interface ComponentDoc {
-  /** The custom-element tag, e.g. `notatio-plot-3d`. */
+  /** The custom-element tag, e.g. `notatio-plot3d`. */
   tag: string;
-  /** The exported class name, e.g. `NotatioPlot3D`. */
+  /** The exported class name, e.g. `NotatioPlot3d`. */
   className: string;
   /** The source file, relative to the repo root. */
   source: string;
@@ -45,7 +45,7 @@ export interface ComponentDoc {
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
-const srcDir = resolve(here, "../../../packages/components/src");
+const srcDir = resolve(here, "../../../packages/elements/src");
 const playgroundDir = resolve(here, "../../playground");
 
 /** Every markdown page under the playground, as a path relative to it. */
@@ -134,7 +134,7 @@ function parse(file: string, playgrounds: Map<string, string>): ComponentDoc | u
   return {
     tag: define[1],
     className: cls[2],
-    source: `packages/components/src/${file}`,
+    source: `packages/elements/src/${file}`,
     summary: cls[1] ? cleanDoc(cls[1]) : "",
     playground: playgrounds.get(define[1]),
     attributes,

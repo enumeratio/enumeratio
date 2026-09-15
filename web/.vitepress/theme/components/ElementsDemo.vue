@@ -6,20 +6,20 @@
         <notatio-cell value="1 / 2 + 1 / 3" />
       </section>
       <section>
-        <h4>&lt;notatio-out&gt; -- read-only, evaluated LaTeX</h4>
-        <notatio-out value="\sqrt{16}+2^3" format="latex" evaluate />
+        <h4>&lt;notatio-output&gt; -- read-only, evaluated LaTeX</h4>
+        <notatio-output value="\sqrt{16}+2^3" format="latex" evaluate />
       </section>
       <section>
-        <h4>&lt;notatio-out&gt; -- MathJSON</h4>
-        <notatio-out value='["Add", ["Power", "x", 2], 1]' format="mathjson" />
+        <h4>&lt;notatio-output&gt; -- MathJSON</h4>
+        <notatio-output value='["Add", ["Power", "x", 2], 1]' format="mathjson" />
       </section>
       <section>
-        <h4>&lt;notatio-in&gt; -- editor</h4>
-        <notatio-in value="x^2 + 1" />
+        <h4>&lt;notatio-input&gt; -- editor</h4>
+        <notatio-input value="x^2 + 1" />
       </section>
       <section>
-        <h4>&lt;notatio-in readonly&gt; -- no editor loaded</h4>
-        <notatio-in value="\int_0^1 x^2 \, dx" readonly />
+        <h4>&lt;notatio-input readonly&gt; -- no editor loaded</h4>
+        <notatio-input value="\int_0^1 x^2 \, dx" readonly />
       </section>
     </div>
   </ClientOnly>

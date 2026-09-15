@@ -1,10 +1,10 @@
 # LaTeX
 
-LaTeX is compute-engine's default text input: `ce.parse("\\frac{1}{2}")`. `<notatio-out>`
+LaTeX is compute-engine's default text input: `ce.parse("\\frac{1}{2}")`. `<notatio-output>`
 takes it via `format="latex"` (its default); the plotting elements take notatio
 instead, and read LaTeX only inside a `$…$` island.
 
-<notatio-out value="\sin(x)^2 + \cos(x)^2" format="latex" label="In" />
+<notatio-output value="\sin(x)^2 + \cos(x)^2" format="latex" label="In" />
 
 The same string typesets and parses to MathJSON. (An unevaluated LaTeX input
 renders but doesn't populate the AST forms yet — add `evaluate` to box it, or see
