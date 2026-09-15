@@ -50,6 +50,19 @@ Only the value is yours.
 </Story>
 
 <Story
+  title="A declaration that plays">
+<template #description>
+A pinned number can sweep itself: <code>play</code> adds a button, <code>min</code>,
+<code>max</code> and <code>step</code> bound the sweep (inferred from the value when
+absent, the way a knob's are), and each step is emitted as if it had been typed.
+<code>loop</code> says what the ends do — <code>cycle</code>, <code>reflect</code>, or
+<code>none</code>, the default, since a range has ends. Hold ▶ for the speed-and-loop
+panel; typing into the field stops it.
+</template>
+<notatio-input bind="n" domain="integer" value="n \coloneq 3" min="0" max="12" step="1" play loop="reflect" />
+</Story>
+
+<Story
   title="Any type compute-engine knows">
 <template #description>
 The domain is whatever type you name — <code>\mathbb{Z}</code>, <code>\mathbb{R}</code>,

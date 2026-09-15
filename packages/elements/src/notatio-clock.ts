@@ -1,6 +1,10 @@
-import { html, LitElement } from "lit";
+import { html, LitElement, type PropertyValues } from "lit";
 
+import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { type Clock, pageClock, type Tick } from "./clock.ts";
+import type { Loop } from "./playback.ts";
+import { openPlaybackMenu } from "./playback-menu.ts";
+import { LongPress } from "./popover.ts";
 import { ensureStyles } from "./styles.ts";
 
 /**
@@ -13,6 +17,11 @@ import { ensureStyles } from "./styles.ts";
  *
  * Several of these on one page are all views of the same clock and stay in step with each
  * other, which is the same property seen from the other side.
+ *
+ * `loop` says what the end of a cycle does -- `cycle` (default), `reflect` or `none` --
+ * and `rate` multiplies the speed; both are the page clock's, so whichever control set
+ * them last wins. Holding the play button opens the same speed-and-loop panel every
+ * other play button has.
  */
 export class NotatioClock extends LitElement {
   static properties = {
@@ -21,6 +30,10 @@ export class NotatioClock extends LitElement {
     /** Hide the scrubber, leaving just the play button. */
     compact: { type: String },
     label: { type: String },
+    /** What the end of a cycle does: `cycle` (default), `reflect` or `none`. */
+    loop: { type: String, reflect: true },
+    /** Speed, as a multiplier on real time. */
+    rate: { type: Number, reflect: true },
     _phase: { state: true },
     _playing: { state: true },
   };
@@ -28,17 +41,32 @@ export class NotatioClock extends LitElement {
   declare period: number;
   declare compact: string;
   declare label: string;
+  declare loop: Loop | "";
+  declare rate: number;
   declare _phase: number;
   declare _playing: boolean;
 
   #clock: Clock = pageClock();
   #unwatch: (() => void) | undefined;
+  #playMenu = new LongPress(LONG_PRESS_MS, (anchor) => {
+    this.#clock.pause();
+    openPlaybackMenu({
+      anchor,
+      settings: { rate: this.#clock.rate, loop: this.#clock.loop },
+      onChange: ({ rate, loop }) => {
+        this.rate = rate;
+        this.loop = loop;
+      },
+    });
+  });
 
   constructor() {
     super();
     this.period = 0;
     this.compact = "false";
     this.label = "";
+    this.loop = "";
+    this.rate = Number.NaN;
     this._phase = 0;
     this._playing = true;
     ensureStyles();
@@ -46,6 +74,18 @@ export class NotatioClock extends LitElement {
 
   protected override createRenderRoot(): HTMLElement {
     return this;
+  }
+
+  /** The attributes are the page clock's settings; write them through as they change. */
+  protected override willUpdate(changed: PropertyValues): void {
+    if (
+      changed.has("loop") &&
+      (this.loop === "cycle" || this.loop === "reflect" || this.loop === "none")
+    ) {
+      this.#clock.loop = this.loop;
+    }
+    if (changed.has("rate") && Number.isFinite(this.rate) && this.rate > 0)
+      this.#clock.rate = this.rate;
   }
 
   override connectedCallback(): void {
@@ -72,7 +112,14 @@ export class NotatioClock extends LitElement {
         title=${this._playing ? "Pause every figure on the page" : "Play"}
         aria-label=${this._playing ? "Pause" : "Play"}
         aria-pressed=${String(this._playing)}
-        @click=${() => this.#clock.toggle()}
+        @pointerdown=${this.#playMenu.down}
+        @pointerup=${this.#playMenu.up}
+        @pointercancel=${this.#playMenu.cancel}
+        @pointerleave=${this.#playMenu.cancel}
+        @contextmenu=${this.#playMenu.contextmenu}
+        @click=${(e: Event) => {
+          if (!this.#playMenu.click(e)) this.#clock.toggle();
+        }}
       >
         ${this._playing ? "❚❚" : "▶"}
       </button>

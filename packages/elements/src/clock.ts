@@ -25,6 +25,8 @@ type Listener = (tick: Tick) => void;
 
 const WINDOW = globalThis as typeof globalThis & { __notatioClock?: Clock };
 
+import type { Loop } from "./playback.ts";
+
 /** Seconds for one full cycle. Slow enough to follow a strand around a knot by eye. */
 const DEFAULT_PERIOD = 12;
 
@@ -32,6 +34,8 @@ export class Clock {
   #time = 0;
   #period = DEFAULT_PERIOD;
   #playing = true;
+  #loop: Loop = "cycle";
+  #rate = 1;
   #last: number | undefined;
   #frame: number | undefined;
   #listeners = new Set<Listener>();
@@ -40,9 +44,41 @@ export class Clock {
     return this.#time;
   }
 
+  /**
+   * Where in the cycle the clock is, in `[0, 1]`, the way its loop reads the time:
+   * `cycle` goes round, `reflect` goes there and back, `none` goes once and stays.
+   */
   get phase(): number {
     const turns = this.#time / this.#period;
+    if (this.#loop === "reflect") {
+      const t = turns - 2 * Math.floor(turns / 2);
+      return t <= 1 ? t : 2 - t;
+    }
+    if (this.#loop === "none") return Math.min(1, turns);
     return turns - Math.floor(turns);
+  }
+
+  /** What the end of a cycle does. Changing it keeps the current phase. */
+  get loop(): Loop {
+    return this.#loop;
+  }
+
+  set loop(loop: Loop) {
+    if (loop === this.#loop) return;
+    const phase = this.phase;
+    this.#loop = loop;
+    this.#time = phase * this.#period;
+    this.#announce();
+  }
+
+  /** Speed, as a multiplier on real time. */
+  get rate(): number {
+    return this.#rate;
+  }
+
+  set rate(rate: number) {
+    this.#rate = Number.isFinite(rate) && rate > 0 ? rate : 1;
+    this.#announce();
   }
 
   get playing(): boolean {
@@ -65,6 +101,8 @@ export class Clock {
 
   play(): void {
     if (this.#playing) return;
+    // A play-through that already reached its end starts over.
+    if (this.#loop === "none" && this.#time >= this.#period) this.#time = 0;
     this.#playing = true;
     this.#last = undefined;
     this.#announce();
@@ -83,10 +121,26 @@ export class Clock {
     else this.play();
   }
 
-  /** Jump to a phase in `[0, 1)` — what a scrubber writes. */
+  /** Jump to a phase in `[0, 1)` — what a scrubber writes. A play-through clamps instead. */
   seek(phase: number): void {
-    const wrapped = (((Number(phase) || 0) % 1) + 1) % 1;
-    this.#time = wrapped * this.#period;
+    const p = Number(phase) || 0;
+    const at = this.#loop === "none" ? Math.max(0, Math.min(1, p)) : ((p % 1) + 1) % 1;
+    this.#time = at * this.#period;
+    this.#announce();
+  }
+
+  /**
+   * Move the clock on by `seconds` of real time, at its rate, and tell the watchers.
+   * The frames call this; so can a test, or anything that wants to drive it by hand.
+   */
+  advance(seconds: number): void {
+    this.#time += Math.max(0, seconds) * this.#rate;
+    if (this.#loop === "none" && this.#time >= this.#period) {
+      // The one play-through is over: hold the end, and stop.
+      this.#time = this.#period;
+      this.#playing = false;
+      this.#stop();
+    }
     this.#announce();
   }
 
@@ -118,9 +172,9 @@ export class Clock {
       this.#frame = undefined;
       // The first frame after a pause has no previous stamp, so it advances by nothing —
       // otherwise the whole paused interval arrives at once and every figure jumps.
-      if (this.#last !== undefined) this.#time += (now - this.#last) / 1000;
+      const dt = this.#last === undefined ? 0 : (now - this.#last) / 1000;
       this.#last = now;
-      this.#announce();
+      this.advance(dt);
       this.#schedule();
     });
   }

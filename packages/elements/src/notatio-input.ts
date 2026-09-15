@@ -1,10 +1,22 @@
 import { toInputForm } from "@enumeratio/formats/inputform";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { LONG_PRESS_MS } from "./choice-menu.ts";
 import { loadEditor, loadEngine, loadMarkup } from "./mathlive.ts";
 import { splitHead, WRAPPER_HEADS, wrapHead } from "./heads.ts";
-import { symbolLatex } from "./reactive.ts";
+import {
+  type Direction,
+  iterate,
+  type Loop,
+  Playback,
+  rewindFor,
+  sweepInterval,
+} from "./playback.ts";
+import { openPlaybackMenu } from "./playback-menu.ts";
+import { LongPress } from "./popover.ts";
+import { inferRange, symbolLatex } from "./reactive.ts";
 import { ensureStyles } from "./styles.ts";
+import { isIntegerKnob, numberLatex, parseComplex } from "./tangle.ts";
 
 /** The subset of MathLive's `<math-field>` this element drives. */
 interface MathField extends HTMLElement {
@@ -72,6 +84,13 @@ const PROMPT = "value";
  * to the domain instead of to `p`. So `value` stays the plain `p \coloneq 3` that
  * everything downstream already understands, and the type travels beside it as
  * structure. Enforcing it is a separate job, done by whoever declares the symbol.
+ *
+ * A pinned field holding a number can **play**: `play` adds a button that sweeps the
+ * value through `min`..`max` by `step` (inferred from the value when not given, the
+ * way a knob's are), emitting each step as if it had been typed. `loop` says what the
+ * ends do -- `cycle`, `reflect` or `none` (the default: a range has ends) -- `interval`
+ * and `rate` set the pace, and holding the button opens the speed-and-loop panel.
+ * Typing into the field stops it.
  */
 export class NotatioInput extends LitElement {
   static properties = {
@@ -102,7 +121,20 @@ export class NotatioInput extends LitElement {
      * that attribute already means "which symbol this component is" elsewhere.
      */
     domain: { type: String },
+    /** Show a play button that sweeps a pinned numeric value through its range. */
+    play: { type: Boolean, reflect: true },
+    /** What a sweep does at the ends: `cycle`, `reflect` or `none` (default). */
+    loop: { type: String, reflect: true },
+    /** Playback speed as a multiplier on `interval`. */
+    rate: { type: Number, reflect: true },
+    /** Milliseconds per step; defaults to a whole sweep in a few seconds. */
+    interval: { type: Number },
+    /** The sweep's range and step; inferred from the value when not given. */
+    min: { type: Number },
+    max: { type: Number },
+    step: { type: Number },
     _markup: { state: true },
+    _playing: { state: true },
   };
 
   declare value: string;
@@ -112,7 +144,15 @@ export class NotatioInput extends LitElement {
   declare _pending: string;
   declare bind: string;
   declare domain: string;
+  declare play: boolean;
+  declare loop: Loop | "";
+  declare rate: number;
+  declare interval: number;
+  declare min: number;
+  declare max: number;
+  declare step: number;
   declare _markup: string;
+  declare _playing: boolean;
 
   constructor() {
     super();
@@ -123,7 +163,15 @@ export class NotatioInput extends LitElement {
     this.inputForm = "";
     this.bind = "";
     this.domain = "";
+    this.play = false;
+    this.loop = "";
+    this.rate = 1;
+    this.interval = Number.NaN;
+    this.min = Number.NaN;
+    this.max = Number.NaN;
+    this.step = Number.NaN;
     this._markup = "";
+    this._playing = false;
     ensureStyles();
   }
 
@@ -142,7 +190,122 @@ export class NotatioInput extends LitElement {
 
   override disconnectedCallback(): void {
     this.removeEventListener("copy", this.#onCopy, true);
+    this.#stop();
     super.disconnectedCallback();
+  }
+
+  // --- playback ------------------------------------------------------------------
+
+  #playback = new Playback(
+    () => this.#advance(),
+    () =>
+      (Number.isFinite(this.interval) && this.interval > 0 ? this.interval : this.#pace) /
+      (Number.isFinite(this.rate) && this.rate > 0 ? this.rate : 1),
+  );
+  #direction: Direction = 1;
+  #playMenu = new LongPress(LONG_PRESS_MS, (anchor) => this.#openPlayMenu(anchor));
+
+  /** The number a pinned field holds, if it holds one (and only a real one). */
+  get #number(): number | undefined {
+    if (!this.#pinned) return undefined;
+    const parsed = parseComplex(valuePart(this.value));
+    return parsed !== undefined && parsed.im === 0 ? parsed.re : undefined;
+  }
+
+  /** Whole numbers when the domain says so, or when the value was written as one. */
+  get #integer(): boolean {
+    const domain = this.domain.trim();
+    if (domain === "integer" || domain === "finite_integer") return true;
+    return isIntegerKnob(valuePart(this.value), this.step);
+  }
+
+  /** The sweep's span: the author's bounds, else the same window a knob would infer. */
+  get #span(): { min: number; max: number; step: number } {
+    const base = inferRange(this.#number ?? 0, this.#integer);
+    const step = Number.isFinite(this.step) && this.step > 0 ? this.step : base.step;
+    const min = Number.isFinite(this.min) ? this.min : base.min;
+    const max = Number.isFinite(this.max) ? this.max : base.max;
+    return max > min ? { min, max, step } : { ...base, step };
+  }
+
+  get #loop(): Loop {
+    return this.loop === "cycle" || this.loop === "reflect" ? this.loop : "none";
+  }
+
+  get #pace(): number {
+    const { min, max, step } = this.#span;
+    return sweepInterval((max - min) / step + 1);
+  }
+
+  /** Write a swept value into the binding, as if it had been typed. */
+  #write(v: number): void {
+    const { step } = this.#span;
+    this.value = `${symbolLatex(this.bind)}\\coloneq ${numberLatex(v, step)}`;
+    this.#emit();
+  }
+
+  #advance(): void {
+    const at = this.#number;
+    if (at === undefined) return this.#stop();
+    const next = iterate(at, 1, this.#span, this.#loop, this.#direction);
+    this.#direction = next.direction;
+    if (next.value !== at) this.#write(next.value);
+    if (next.done) this.#stop();
+  }
+
+  #togglePlay(): void {
+    if (this._playing) this.#stop();
+    else this.#start();
+  }
+
+  #start(): void {
+    const at = this.#number;
+    if (this._playing || at === undefined) return;
+    const from = rewindFor(at, this.#span, this.#loop, this.#direction);
+    if (from !== at) this.#write(from);
+    this.#playback.start();
+    this._playing = true;
+  }
+
+  #stop(): void {
+    if (!this._playing) return;
+    this.#playback.stop();
+    this._playing = false;
+  }
+
+  #openPlayMenu(anchor: HTMLElement): void {
+    this.#stop();
+    openPlaybackMenu({
+      anchor,
+      settings: { rate: this.rate, loop: this.#loop },
+      onChange: ({ rate, loop }) => {
+        this.rate = rate;
+        this.loop = loop;
+      },
+    });
+  }
+
+  #playButton(): unknown {
+    if (!this.play || !this.#pinned) return html``;
+    const numeric = this.#number !== undefined;
+    return html`<button
+      type="button"
+      class="notatio-head-btn notatio-input-play"
+      title=${numeric ? "play; hold for speed and loop" : "not a number"}
+      aria-label=${this._playing ? "pause" : "play"}
+      aria-pressed=${this._playing ? "true" : "false"}
+      ?disabled=${!numeric}
+      @pointerdown=${this.#playMenu.down}
+      @pointerup=${this.#playMenu.up}
+      @pointercancel=${this.#playMenu.cancel}
+      @pointerleave=${this.#playMenu.cancel}
+      @contextmenu=${this.#playMenu.contextmenu}
+      @click=${(e: Event) => {
+        if (!this.#playMenu.click(e)) this.#togglePlay();
+      }}
+    >
+      ${this._playing ? "\u23F8" : "\u25B6"}
+    </button>`;
   }
 
   get #field(): MathField | null {
@@ -152,6 +315,8 @@ export class NotatioInput extends LitElement {
   #onInput = (): void => {
     const next = this.#pinned ? this.#fromPrompt() : (this.#field?.value ?? "");
     if (next === undefined || next === this.value) return;
+    // The reader's hand wins over the sweep.
+    this.#stop();
     this.value = next;
     this.#emit();
   };
@@ -340,6 +505,7 @@ export class NotatioInput extends LitElement {
       : pending;
     return html`<div class="notatio-input-row">
       <math-field @input=${this.#onInput}></math-field>
+      ${this.#playButton()}
       <button
         type="button"
         class="notatio-head-btn"

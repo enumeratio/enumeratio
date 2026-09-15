@@ -71,3 +71,38 @@ test("toggle is the two of them", () => {
   clock.toggle();
   expect(clock.playing).toBe(true);
 });
+
+test("the loop decides what the end of a cycle does", () => {
+  const clock = new Clock();
+  clock.period = 4;
+  clock.advance(5); // a cycle and a quarter
+  expect(clock.phase).toBeCloseTo(0.25, 12);
+
+  clock.loop = "reflect"; // keeps the phase it is at
+  expect(clock.phase).toBeCloseTo(0.25, 12);
+  clock.advance(4); // to 1.25 turns: on the way back
+  expect(clock.phase).toBeCloseTo(0.75, 12);
+  clock.advance(2); // 1.75 turns
+  expect(clock.phase).toBeCloseTo(0.25, 12);
+
+  clock.loop = "none";
+  clock.seek(0.5);
+  clock.advance(10);
+  expect(clock.phase).toBe(1);
+  expect(clock.playing).toBe(false); // ran its course
+  clock.play(); // starts over
+  expect(clock.playing).toBe(true);
+  expect(clock.phase).toBe(0);
+  clock.seek(1.5); // a play-through clamps where a cycle would wrap
+  expect(clock.phase).toBe(1);
+});
+
+test("the rate scales real time", () => {
+  const clock = new Clock();
+  clock.period = 4;
+  clock.rate = 2;
+  clock.advance(1);
+  expect(clock.phase).toBeCloseTo(0.5, 12);
+  clock.rate = 0; // nonsense is one, not stopped
+  expect(clock.rate).toBe(1);
+});
