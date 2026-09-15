@@ -426,7 +426,7 @@ environments — TypeScript in the engine, WGSL on the GPU (through compute-engi
 The reference page renders the block: one row per implementation, badged by origin and
 environment, with the pointer for a `native` / `component` / `compiled` row and the
 `primitive` reason above them. A `reference` row shows its expression in **TreeForm** — a
-`<notatio-out form="tree" raw>` — the tree of heads opened one level at a time, each
+`<notatio-output form="tree" raw>` — the tree of heads opened one level at a time, each
 closed node summarised as a line of InputForm, and each head that has an entry linked to
 it. `raw` matters: the definition is shown as authored, not canonicalised, because its
 spelling is the point.

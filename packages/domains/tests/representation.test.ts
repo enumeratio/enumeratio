@@ -42,10 +42,9 @@ test("every representation round-trips", () => {
           : [[], [1, 0], [1, 1, 0, 0], [1, 0, 1, 0]];
     for (const sample of samples) {
       const written = representation.render(sample);
-      expect(
-        representation.parse(written),
-        `${representation.name} on [${String(sample)}]`,
-      ).toEqual(sample);
+      expect(representation.parse(written), `${representation.name} on [${sample}]`).toEqual(
+        sample,
+      );
     }
   }
 });
@@ -55,7 +54,7 @@ test("Render and ParseAs are inverse through the engine", () => {
     for (const name of ["oneline", "cycle", "dense"]) {
       const written = ce.box(["Render", perm(...p), `'${name}'`] as never).evaluate();
       const back = ce.box(["ParseAs", written, "'permutation'", `'${name}'`] as never).evaluate();
-      expect(back.json, `${name} [${String(p)}]`).toEqual(["Permutation", ["List", ...p]]);
+      expect(back.json, `${name} [${p}]`).toEqual(["Permutation", ["List", ...p]]);
     }
   }
 });

@@ -19,7 +19,7 @@ Drag to turn the attractor over — from the side it is a pair of wings, from ab
 of spirals. <code>LorenzCurve(n)</code> integrates n steps and evaluates to the points.
 </template>
 <ClientOnly>
-<notatio-curve-3d
+<notatio-curve3d
   value="LorenzCurve(7000)"
   open
   azimuth="0"

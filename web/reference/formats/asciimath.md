@@ -8,7 +8,7 @@ where it fits with compute-engine, because the support is one-directional.
 compute-engine **emits** AsciiMath — it's what `String(expr)` / `expr.toString()`
 returns, and it surfaces as the **AsciiMathForm** output form:
 
-<notatio-out value='["Divide", ["Sin", "x"], 2]' format="mathjson" form="asciimath" label="Out" />
+<notatio-output value='["Divide", ["Sin", "x"], 2]' format="mathjson" form="asciimath" label="Out" />
 
 But compute-engine does **not** parse AsciiMath as _input_. `ce.parse` reads
 [LaTeX](/reference/formats/latex); to build an expression without LaTeX, hand it

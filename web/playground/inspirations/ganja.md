@@ -197,7 +197,7 @@ are plots of a function over a two-real-dimensional algebra. That is exactly wha
 `<notatio-complex-plot>` and the GPU phase portrait already do; what is missing
 is only that they take `z` rather than an arbitrary algebra's element.
 The 1-D and 2-D _function_ graphs ganja offers are `<notatio-plot>` and
-`<notatio-density-plot>`.
+`<notatio-densityplot>`.
 
 **A near thing.** 2-D PGA in SVG — points, lines, join and meet, distances and
 angles, projections, rotors and translators. Every one of those is a line, a dot

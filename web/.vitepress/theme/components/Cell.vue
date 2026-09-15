@@ -4,7 +4,7 @@
 // element's attributes, typed, so a markdown author composes Vue and gets completion and
 // a compile-time check on the spelling; the element underneath is unchanged. Anything
 // not declared here falls through as an attribute.
-import type { InForm } from "@enumeratio/components";
+import type { InForm } from "@enumeratio/elements";
 
 withDefaults(
   defineProps<{

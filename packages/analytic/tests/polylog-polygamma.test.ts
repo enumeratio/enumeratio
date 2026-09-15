@@ -20,8 +20,8 @@ const sameExact = (input: Expr, expected: Expr) =>
 
 const num = (input: Expr): number => ce.box(input).N().re;
 
-const ZETA3 = 1.2020569031595942;
-const CATALAN = 0.915965594177219;
+const ZETA3 = 1.2020569031595942854;
+const CATALAN = 0.915965594177219015;
 
 // --- PolyLog Liₛ(z) = z·Φ(z, s, 1) ------------------------------------------------
 
@@ -42,7 +42,7 @@ test("Li₁(z) = −ln(1 − z), symbolically and numerically", () => {
 test("Liₛ(1) = ζ(s) at the non-integer orders the native handler declines", () => {
   // ζ(1/2) = −1.46035450880958681…; ζ(3/2) = 2.61237534868548834…
   expect(num(["PolyLog", ["Rational", 1, 2], 1])).toBeCloseTo(-1.4603545088095868, 12);
-  expect(num(["PolyLog", ["Rational", 3, 2], 1])).toBeCloseTo(2.6123753486854882, 12);
+  expect(num(["PolyLog", ["Rational", 3, 2], 1])).toBeCloseTo(2.6123753486854883, 12);
 });
 
 test("Liₛ(z) at non-integer and complex order s (mpmath values)", () => {
@@ -104,7 +104,7 @@ test("complex argument — the case the native handler declines (mpmath values)"
   expect(a.re).toBeCloseTo(0.4630000966227638, 12);
   expect(a.im).toBeCloseTo(-0.7942335427593189, 12);
   const b = ce.box(["PolyGamma", 2, ["Complex", 0.5, 0.3]]).N();
-  expect(b.re).toBeCloseTo(-0.17725989989006738, 11);
+  expect(b.re).toBeCloseTo(-0.17725989989006736, 11);
   expect(b.im).toBeCloseTo(10.451822205943449, 11);
 });
 

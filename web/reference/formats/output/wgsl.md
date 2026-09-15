@@ -20,4 +20,4 @@ real unknowns, the compute shader the plot grid evaluator dispatches, one invoca
 grid point. Three or more unknowns, or an expression neither path can emit, has no shader
 form and the entry is left off the menu.
 
-<notatio-out value="\zeta(s)" form="gpushader" label="Out" />
+<notatio-output value="\zeta(s)" form="gpushader" label="Out" />

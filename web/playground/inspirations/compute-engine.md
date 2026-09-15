@@ -54,7 +54,7 @@ bolted on: <code>StandardForm</code>, <code>FullForm</code> and
 <code>TeXForm</code> come out of the same boxed expression, and the MathJSON
 underneath is what all of them are reading.
 </template>
-<notatio-out value="\binom{n}{k}" label="Out" />
+<notatio-output value="\binom{n}{k}" label="Out" />
 </Story>
 
 <Story
@@ -91,7 +91,7 @@ possible, and it is worth naming the four seams we actually use:
   identical bare list. That is the substrate for
   [domains](/reference/domains/).
 - **A pluggable compiler.** The engine compiles an expression to a target, and
-  the target list is open — which is why `<notatio-out>` can show you the same
+  the target list is open — which is why `<notatio-output>` can show you the same
   expression as Python, as JavaScript, as WGSL, and why the GPU phase portraits
   compile a notatio expression straight to a shader.
 
@@ -100,7 +100,7 @@ possible, and it is worth naming the four seams we actually use:
 <template #description>
 Not a pretty-printer — this is the compile target the GPU pages actually run.
 </template>
-<notatio-out value="\sin(x) + y^2" form="gpushader" label="Out" />
+<notatio-output value="\sin(x) + y^2" form="gpushader" label="Out" />
 </Story>
 
 ## Where we diverge

@@ -26,6 +26,19 @@ type MathJSON =
 const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const count = (list: MathJSON): MathJSON => ["Count", list];
 
+/** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument.
+ *
+ *  The third rule. A sub-term embedded by value at several places is evaluated at each of
+ *  them — compute-engine has no common-subexpression elimination — and a tableau referenced
+ *  from inside a loop over its own rows is rebuilt once per row. Binding it evaluates it once.
+ *  Names must not collide with anything bound around them, or with the engine's constants
+ *  (`e`, `i`, `pi`): the ones used here are short words, never single letters. */
+const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
+  "Apply",
+  ["Function", body, name],
+  value,
+];
+
 /** A fold over `1 .. n`, indexing rather than iterating a structure. */
 const overRange = (
   n: MathJSON,
@@ -46,41 +59,35 @@ const greaterThan = (row: MathJSON, x: MathJSON): MathJSON =>
   );
 
 /** The entry `x` bumps out of `row`, or 0 when it simply appends. */
-export const bumpedFrom = (row: MathJSON, x: MathJSON): MathJSON => [
-  "If",
-  ["Equal", count(greaterThan(row, x)), 0],
-  0,
-  ["Min", greaterThan(row, x)],
-];
+export const bumpedFrom = (row: MathJSON, x: MathJSON): MathJSON =>
+  bind("larger", greaterThan(row, x), ["If", ["Equal", count("larger"), 0], 0, ["Min", "larger"]]);
 
-/** `row` after inserting `x`: the smallest larger entry is replaced, or `x` is appended. */
-export const rowAfterInserting = (row: MathJSON, x: MathJSON): MathJSON => [
-  "If",
-  ["Equal", count(greaterThan(row, x)), 0],
-  overRange(
-    ["Add", count(row), 1],
-    ["List"],
-    [
-      "If",
-      ["Greater", "n", count(row)],
-      ["Join", "nacc", ["List", x]],
-      ["Join", "nacc", ["List", at(row, "n")]],
-    ],
-    "nacc",
-    "n",
-  ),
-  overRange(
-    count(row),
-    ["List"],
-    [
-      "Join",
+/** `row` after inserting `x`: the smallest larger entry is replaced, or `x` is appended.
+ *  The bumped entry is fixed once, outside the walk over the row. */
+export const rowAfterInserting = (row: MathJSON, x: MathJSON): MathJSON =>
+  bind("bumped", bumpedFrom(row, x), [
+    "If",
+    ["Equal", "bumped", 0],
+    overRange(
+      ["Add", count(row), 1],
+      ["List"],
+      [
+        "If",
+        ["Greater", "n", count(row)],
+        ["Join", "nacc", ["List", x]],
+        ["Join", "nacc", ["List", at(row, "n")]],
+      ],
       "nacc",
-      ["List", ["If", ["Equal", at(row, "n"), bumpedFrom(row, x)], x, at(row, "n")]],
-    ],
-    "nacc",
-    "n",
-  ),
-];
+      "n",
+    ),
+    overRange(
+      count(row),
+      ["List"],
+      ["Join", "nacc", ["List", ["If", ["Equal", at(row, "n"), "bumped"], x, at(row, "n")]]],
+      "nacc",
+      "n",
+    ),
+  ]);
 
 const TABLEAU: MathJSON = ["At", "st", 1];
 const CARRIED: MathJSON = ["At", "st", 2];
@@ -154,14 +161,25 @@ export const insertionTableau: MathJSON = [
   "_raw",
 ];
 
+/** `body` with `tab` bound to the insertion tableau, built once. */
+const withInsertionTableau = (body: MathJSON): MathJSON => bind("tab", insertionTableau, body);
+
+/** The row lengths of `tableau`, as a partition. */
+const shapeOf = (tableau: MathJSON): MathJSON =>
+  overRange(
+    count(tableau),
+    ["List"],
+    ["Join", "sacc", ["List", count(at(tableau, "s"))]],
+    "sacc",
+    "s",
+  );
+
+/** `tableau` as a ROW WORD — its rows concatenated. */
+const rowWordOf = (tableau: MathJSON): MathJSON =>
+  overRange(count(tableau), ["List"], ["Join", "wacc", at(tableau, "w")], "wacc", "w");
+
 /** The shape of that tableau — the row lengths, as a partition. */
-export const insertionShape: MathJSON = overRange(
-  ["Count", insertionTableau],
-  ["List"],
-  ["Join", "sacc", ["List", ["Count", at(insertionTableau, "s")]]],
-  "sacc",
-  "s",
-);
+export const insertionShape: MathJSON = withInsertionTableau(shapeOf("tab"));
 
 /**
  * The insertion tableau as a ROW WORD — its rows concatenated.
@@ -171,13 +189,7 @@ export const insertionShape: MathJSON = overRange(
  * carrier holds one array instead of a ragged nested one. A nested list is REJECTED by the
  * type, which is the extracted carrier shapes earning their keep for the third time.
  */
-export const insertionRowWord: MathJSON = overRange(
-  ["Count", insertionTableau],
-  ["List"],
-  ["Join", "wacc", at(insertionTableau, "w")],
-  "wacc",
-  "w",
-);
+export const insertionRowWord: MathJSON = withInsertionTableau(rowWordOf("tab"));
 
 /**
  * The insertion tableau's READING WORD: rows read bottom to top, each left to right — the
@@ -185,16 +197,14 @@ export const insertionRowWord: MathJSON = overRange(
  * (1 at the bottom) is row `count + 1 - w` of the tableau as stored (1 at the top), which is
  * the whole difference from `insertionRowWord` above.
  */
-export const insertionReadingWord: MathJSON = overRange(
-  ["Count", insertionTableau],
-  ["List"],
-  [
-    "Join",
+export const insertionReadingWord: MathJSON = withInsertionTableau(
+  overRange(
+    count("tab"),
+    ["List"],
+    ["Join", "wacc", at("tab", ["Subtract", ["Add", count("tab"), 1], "w"])],
     "wacc",
-    at(insertionTableau, ["Subtract", ["Add", ["Count", insertionTableau], 1], "w"]),
-  ],
-  "wacc",
-  "w",
+    "w",
+  ),
 );
 
 // ── the recording tableau, and the pair ──────────────────────────────────────────────────
@@ -213,11 +223,12 @@ const Q_SO_FAR: MathJSON = ["At", "s", 2];
  *  position available to record. */
 const KTH: MathJSON = ["At", "_raw", "k"];
 
-const insertedP: MathJSON = afterInserting(P_SO_FAR, KTH);
+/** P after the k-th insertion, bound once per fold step — `recordedQ` reads it per row. */
+const insertedP: MathJSON = "insertedP";
 
 /** Q after the k-th insertion: the row that grew gets `k` appended. */
 const recordedQ: MathJSON = overRange(
-  ["Count", insertedP],
+  count(insertedP),
   ["List"],
   [
     "Join",
@@ -244,23 +255,23 @@ const recordedQ: MathJSON = overRange(
 /** The RSK pair `(P, Q)`, both as tableaux of rows. */
 export const rskPair: MathJSON = [
   "Fold",
-  ["Function", ["List", insertedP, recordedQ], "s", "k"],
+  [
+    "Function",
+    bind("insertedP", afterInserting(P_SO_FAR, KTH), ["List", insertedP, recordedQ]),
+    "s",
+    "k",
+  ],
   ["List", ["List"], ["List"]],
   ["Range", 1, ["Count", "_raw"]],
 ];
 
 /** The recording tableau alone, as a row word. */
-export const recordingRowWord: MathJSON = overRange(
-  ["Count", ["At", rskPair, 2]],
-  ["List"],
-  ["Join", "wacc", at(["At", rskPair, 2], "w")],
-  "wacc",
-  "w",
-);
+export const recordingRowWord: MathJSON = bind("pq", rskPair, rowWordOf(at("pq", 2)));
 
-/** Both tableaux as row words, ready for the `standard_tableau_pair` constructor. */
-export const rskRowWords: MathJSON = [
+/** Both tableaux as row words, ready for the `standard_tableau_pair` constructor — one RSK
+ *  run for the pair, not one per half. */
+export const rskRowWords: MathJSON = bind("pq", rskPair, [
   "Tuple",
-  ["StandardTableau", insertionRowWord],
-  ["StandardTableau", recordingRowWord],
-];
+  ["StandardTableau", rowWordOf(at("pq", 1))],
+  ["StandardTableau", rowWordOf(at("pq", 2))],
+]);

@@ -1,7 +1,7 @@
 # Output syntax
 
 The mirror of [input syntax](/guide/): the forms an expression comes back _out_
-in. Any output cell (`<notatio-out>`) offers these through the form selector
+in. Any output cell (`<notatio-output>`) offers these through the form selector
 on its right — and they compose (TeXForm of a MatrixForm is the `\begin{pmatrix}`
 string).
 
