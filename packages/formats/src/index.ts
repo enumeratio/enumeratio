@@ -31,6 +31,7 @@ export {
 export {
   dataUri,
   declareGraphics,
+  GRAPHICS_HEADS,
   imageUri,
   type Rasterizer,
   setRasterizer,

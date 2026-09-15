@@ -1,5 +1,5 @@
 import type { EnhanceAppContext } from "vitepress";
-import { defineAsyncComponent } from "vue";
+import { type Component, defineAsyncComponent } from "vue";
 import DefaultTheme from "vitepress/theme";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
@@ -21,7 +21,13 @@ const CliReference = defineAsyncComponent(() => import("./components/CliReferenc
 const SymbolRef = defineAsyncComponent(() => import("./components/Symbol.vue"));
 const ComponentIndex = defineAsyncComponent(() => import("./components/ComponentIndex.vue"));
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
-const Cell = defineAsyncComponent(() => import("./components/Cell.vue"));
+
+// The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, … -- emitted by
+// data/wrappers.ts from the element sources; one registration per file, named for it.
+const wrappers = import.meta.glob("./generated/*.vue") as Record<
+  string,
+  () => Promise<{ default: Component }>
+>;
 
 export default {
   extends: DefaultTheme,
@@ -39,9 +45,10 @@ export default {
     app.component("CliReference", CliReference);
     app.component("Symbol", SymbolRef);
     app.component("ComponentPage", ComponentPage);
-    // A symbol as a Vue component over its web component -- one so far, see
-    // design/components-and-symbols.md.
-    app.component("Cell", Cell);
+    for (const [path, load] of Object.entries(wrappers)) {
+      const name = path.slice(path.lastIndexOf("/") + 1, -".vue".length);
+      app.component(name, defineAsyncComponent(load));
+    }
     // Client only: register the custom elements (they call customElements.define)
     // and declare the extension libraries against the shared engine so their heads
     // evaluate in the playground and docs -- collections (Combinations/Subsets/…),

@@ -21,9 +21,10 @@ field the value as written; `in-form="wolfram"` swaps the field for a full-form 
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props
-are the attributes, typed — the first of the wrappers sketched in
-`design/components-and-symbols.md`. A markdown author composes Vue and gets a
-compile-time check on the spelling; the element underneath is unchanged.
+are the attributes, typed — generated from the element source, like every other
+component's (see [the playground overview](/playground/#as-vue-components)). A markdown
+author composes Vue and gets a compile-time check on the spelling; the element
+underneath is unchanged.
 
 <Story
   title="The Vue wrapper">

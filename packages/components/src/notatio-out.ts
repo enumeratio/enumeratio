@@ -11,6 +11,7 @@ import { collectErrors, deepEqual } from "./assert.ts";
 import { highlightCode } from "./highlight.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
+import { markupOf, renderingOf } from "./symbols.ts";
 import { toTraditionalLatex } from "./traditional.ts";
 
 type Format = "latex" | "mathjson" | "notatio";
@@ -193,6 +194,7 @@ export class NotatioOut extends LitElement {
      */
     resolveHead: { attribute: false },
     _markup: { state: true },
+    _visual: { state: true },
     _traditional: { state: true },
     _matrix: { state: true },
     _canMatrix: { state: true },
@@ -221,6 +223,13 @@ export class NotatioOut extends LitElement {
   declare label: string;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   declare _markup: string;
+  /**
+   * The picture, when the result is a head that draws: markup for the head's component
+   * (`symbols.ts`), shown in place of the typeset expression on the standard form. The
+   * tags are the package's own, registered by its entry point; this element does not
+   * import them, so a host that registers only `notatio-out` sees the typeset fallback.
+   */
+  declare _visual: string;
   declare _traditional: string;
   declare _matrix: string;
   declare _canMatrix: boolean;
@@ -252,6 +261,7 @@ export class NotatioOut extends LitElement {
     this.form = "standard";
     this.label = "";
     this._markup = "";
+    this._visual = "";
     this._traditional = "";
     this._matrix = "";
     this._canMatrix = false;
@@ -434,6 +444,8 @@ export class NotatioOut extends LitElement {
       this._latex = latex;
       this._json = json === undefined ? "" : JSON.stringify(json);
       this._markup = latex ? convert(latex) : "";
+      const rendering = json === undefined ? undefined : renderingOf(json as MathJsonExpression);
+      this._visual = rendering === undefined ? "" : markupOf(rendering);
       this._wolfram = json === undefined ? "" : toWolfram(json as Parameters<typeof toWolfram>[0]);
       // MathMLForm: presentation MathML, straight off the MathJSON tree -- no engine,
       // and output only, so nothing parses it back.
@@ -464,6 +476,7 @@ export class NotatioOut extends LitElement {
       this.#assert(json);
     } catch (err) {
       this._markup = "";
+      this._visual = "";
       this._latex = "";
       this._json = "";
       this._status = "error";
@@ -789,7 +802,8 @@ export class NotatioOut extends LitElement {
       case "wolfram":
         return this.#code(this._wolfram, FORM_LANG.wolfram!);
       default:
-        return html`${unsafeHTML(this._markup)}`;
+        // A head that draws is drawn: evaluation returned a picture, not a formula.
+        return html`${unsafeHTML(this._visual || this._markup)}`;
     }
   }
 

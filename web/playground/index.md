@@ -37,6 +37,39 @@ experimental and move fast.
 Somebody else's idea, taken seriously enough to build — see
 [Inspirations](/playground/inspirations/).
 
+## As Vue components
+
+Every component is also a Vue component named for its **symbol** — `<Plot>`, `<Plot3D>`,
+`<Cell>`, `<Manipulate>` — with the element's attributes as typed props, so a page gets a
+compile-time check on the spelling and never writes `<ClientOnly>` itself. The family
+components come with one wrapper per member too: `<Histogram>`, `<BarChart>`, `<PieChart>`
+are `<Chart>` with `type` fixed, `<StreamPlot>` is `<VectorPlot>`, `<TreeGraph>` is
+`<GraphPlot>`. They are generated from the element sources when the site builds
+(`web/.vitepress/data/wrappers.ts`), so an attribute added to an element is a prop the
+same day.
+
+<Story
+  title="The symbols, as tags">
+<Plot value="Sin(x)" domain="0,10" />
+<Histogram data="[1,2,2,3,3,3,4,4,5]" />
+</Story>
+
+## Symbols that draw
+
+The other direction: a head that draws _is_ its component. `Plot`, `Histogram`,
+`Manipulate` and the rest are declared on the engine and held rather than evaluated, so
+`Plot(Sin(x), (x, 0, 10))` is an expression a cell can hold — and its Out draws it, the
+way a notebook does, instead of printing the word. The map from a head's arguments to
+the component's attributes is `@enumeratio/components/symbols`; the family head `Chart`
+leaves `type` unset and lets the data decide.
+
+<Story
+  title="An Out that evaluates to a picture">
+<notatio-cell value="Plot(Sin(x), (x, 0, 10))" />
+<notatio-cell value="Chart([3, 1, 4, 1, 5])" />
+<notatio-cell value="Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))" />
+</Story>
+
 ## Input syntax
 
 Every expression attribute is **notatio** — the restricted-Epsil subset, so
@@ -66,22 +99,22 @@ each way is a named **representation** you can request explicitly. The textual
 forms ship on `<notatio-out>` (the In/Out menu); the visual forms live in
 `<notatio-figure>` and the plot components.
 
-| Representation           | Kind       | Status  | Wolfram analogue                                                                     |
-| ------------------------ | ---------- | ------- | ------------------------------------------------------------------------------------ |
-| StandardForm             | textual    | shipped | <Symbol type="wolfram">StandardForm</Symbol>                                         |
-| TraditionalForm          | textual    | shipped | <Symbol type="wolfram">TraditionalForm</Symbol>                                      |
-| FullForm                 | textual    | shipped | <Symbol type="wolfram">FullForm</Symbol>                                             |
-| TeXForm                  | textual    | shipped | <Symbol type="wolfram">TeXForm</Symbol>                                              |
-| MathMLForm               | textual    | shipped | <Symbol type="wolfram">MathMLForm</Symbol>                                           |
-| Permutation matrix       | picture    | shipped | <Symbol type="wolfram">MatrixPlot</Symbol>                                           |
-| Ferrers / Young          | picture    | shipped | —                                                                                    |
-| Composition bar          | picture    | shipped | —                                                                                    |
-| Subset cells             | picture    | shipped | —                                                                                    |
-| Dyck path                | picture    | shipped | —                                                                                    |
-| Function plot            | plot       | shipped | <Symbol type="wolfram">Plot</Symbol>                                                 |
-| Surface / 3-D plot       | plot       | shipped | <Symbol type="wolfram">Plot3D</Symbol>                                               |
-| MatrixForm (true matrix) | textual    | roadmap | <Symbol type="wolfram">MatrixForm</Symbol> (via TeX)                                 |
-| Interactive markup       | structured | roadmap | <Symbol type="wolfram">Manipulate</Symbol>, <Symbol type="wolfram">Graphics</Symbol> |
+| Representation           | Kind       | Status  | Wolfram analogue                                                                                                                |
+| ------------------------ | ---------- | ------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| StandardForm             | textual    | shipped | <Symbol type="wolfram">StandardForm</Symbol>                                                                                    |
+| TraditionalForm          | textual    | shipped | <Symbol type="wolfram">TraditionalForm</Symbol>                                                                                 |
+| FullForm                 | textual    | shipped | <Symbol type="wolfram">FullForm</Symbol>                                                                                        |
+| TeXForm                  | textual    | shipped | <Symbol type="wolfram">TeXForm</Symbol>                                                                                         |
+| MathMLForm               | textual    | shipped | <Symbol type="wolfram">MathMLForm</Symbol>                                                                                      |
+| Permutation matrix       | picture    | shipped | <Symbol type="wolfram">MatrixPlot</Symbol>                                                                                      |
+| Ferrers / Young          | picture    | shipped | —                                                                                                                               |
+| Composition bar          | picture    | shipped | —                                                                                                                               |
+| Subset cells             | picture    | shipped | —                                                                                                                               |
+| Dyck path                | picture    | shipped | —                                                                                                                               |
+| Function plot            | plot       | shipped | <Symbol type="wolfram">Plot</Symbol>                                                                                            |
+| Surface / 3-D plot       | plot       | shipped | <Symbol type="wolfram">Plot3D</Symbol>                                                                                          |
+| MatrixForm (true matrix) | textual    | roadmap | <Symbol type="wolfram">MatrixForm</Symbol> (via TeX)                                                                            |
+| Interactive markup       | structured | shipped | <Symbol type="wolfram">Manipulate</Symbol> as a head that draws (above); <Symbol type="wolfram">Graphics</Symbol> still roadmap |
 
 ## Two problems, kept separate
 
@@ -91,8 +124,10 @@ forms ship on `<notatio-out>` (the In/Out menu); the visual forms live in
 2. **Default selection / fallback** — given an expression and the graphics
    capabilities available, _choose_ a good representation (a permutation might
    default to a matrix; a univariate function to a plot; progressively enhancing
-   from plain text up). Deliberately deferred — we'll design the fallback logic
-   once enough real examples accumulate here.
+   from plain text up). One case of it is shipped: a head that draws is drawn by its
+   component, and the `Chart` family chooses its member from the data's shape. The
+   general rule — what a bare permutation or a bare function defaults to — is still
+   deferred until enough real examples accumulate here.
 
 A future REPL will call the same representation layer to _request an image_ and
 hand back a link (local file or hosted), rather than only rendering inline.

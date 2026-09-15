@@ -175,3 +175,38 @@ test("a title renders centred above the frame", () => {
   const s = barChartSvg([1, 2, 3], { title: "Widgets" });
   expect(s).toContain(">Widgets<");
 });
+
+// The family head's rule: which member the data's shape asks for.
+test("chooseChartType reads the chart off the data's shape", async () => {
+  const { chooseChartType } = await import("../src/notatio-chart.ts");
+  expect(chooseChartType([3, 1, 4, 1, 5])).toBe("bar");
+  expect(chooseChartType(Array.from({ length: 40 }, (_, i) => i % 7))).toBe("histogram");
+  expect(
+    chooseChartType(
+      Array.from({ length: 40 }, (_, i) => i),
+      { labels: true },
+    ),
+  ).toBe("bar");
+  expect(
+    chooseChartType([
+      [0, 1],
+      [1, 3],
+      [2, 2],
+    ]),
+  ).toBe("list");
+  // Two-wide rows are pairs (ListPlot's own reading), so a matrix needs three columns.
+  expect(
+    chooseChartType([
+      [1, 0, 2],
+      [0, 3, 1],
+    ]),
+  ).toBe("array");
+  expect(
+    chooseChartType([
+      [1, 2, 3, 4, 5],
+      [2, 4, 6, 8],
+    ]),
+  ).toBe("box");
+  expect(chooseChartType("nonsense")).toBe("bar");
+  expect(chooseChartType([])).toBe("bar");
+});

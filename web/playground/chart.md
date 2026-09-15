@@ -2,8 +2,9 @@
 
 Data-driven 2-D charts (Wolfram's [Data Visualization
 guide](https://www.wolfram.com/language/elementary-introduction/2nd-ed/34-visualizing-data.html)),
-rendered by one element, `<notatio-chart>`. `type` picks the chart kind;
-`data` is JSON (a value list, a matrix, or a list of series — see each story
+rendered by one element, `<notatio-chart>`. `type` picks the chart kind — or is left
+off, and the chart is chosen from the data's shape (the family head `Chart` does the
+same; the named heads `Histogram`, `BarChart`, … are the members); `data` is JSON (a value list, a matrix, or a list of series — see each story
 below); `labels` (also JSON) and `label` (a title, Wolfram's `PlotLabel`) are
 optional. `list` and `listline` (ListPlot / ListLinePlot) reuse the same
 sampled-point renderer as [Plot](/playground/plot) — a bare number list reads
@@ -79,6 +80,17 @@ five-number summary (min, Q1, median, Q3, max).
   title="A stem plot">
 <template #description>A vertical stem from the zero baseline to each value, with a dot on top.</template>
 <notatio-chart type="discrete" data="[1,-2,3,4,-1,2]" />
+</Story>
+
+## Chosen from the data
+
+<Story
+  title="No type: the shape decides">
+<template #description>A short number list is bars, a long one a histogram, pairs are points, a matrix is an array plot, ragged rows are boxes — <code>chooseChartType</code>, which is also the rule behind the <code>Chart</code> head.</template>
+<notatio-chart data="[3,1,4,1,5]" />
+<notatio-chart data="[5,3,8,1,9,2,7,4,6,3,5,8,2,9,1,4,7,3,6,5,2,8,4,1,9]" />
+<notatio-chart data="[[0,1],[1,3],[2,2],[3,5]]" />
+<notatio-chart data="[[1,0,2],[0,3,1],[2,1,0]]" />
 </Story>
 
 ## Roadmap

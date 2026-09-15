@@ -139,20 +139,33 @@ Landed 2026-09-15, all of component-naming §4 at once: the package is
 `notatio-out` (the `In` and `Out` symbols the elements already print as their row
 labels), the compound names are kebab-cased. head→tag is now a function of the symbol.
 
-## 6. What it would need
+## 6. What it took
 
-1. ~~**The renames**~~ — done, §5.
-2. **An argument map per visual head** — where argument positions land as attributes; the
-   natural place to _declare_ the heads too (`Plot`, `Manipulate`, `Chart` are not
-   declared today; a REPL cannot hold them). Inert declarations with signatures are a
-   prerequisite and independent of everything else here.
-3. **`notatio-out` deferring to the head's component** for a visual head, so an Out
-   that evaluates to `Plot(…)` draws. This is a web-component concern, so it works
-   everywhere the elements do; the cost is `output` depending on every plot element,
-   which is the price of "evaluation returns a picture".
-4. **The wrapper generator** in `components.ts` (Vue first, React the same loop),
-   emitting into the build, registering in the theme; `Cell.vue` retires into it.
-5. **The `Chart` family head** with its autochoosing rule, as the test case for §4.
+All five landed 2026-09-15, in this order:
+
+1. **The renames** — §5.
+2. **The heads, declared** — `GRAPHICS_HEADS` in `formats/src/graphics.ts`, inert (a
+   signature, no `evaluate`), so `Plot(Sin(x), (x, 0, 10))` is an expression the engine
+   holds with its arguments canonicalised (`(x, 0, 10)` is a `Tuple` however it was
+   typed). The engine's own `Histogram(data, bins)` is redeclared with the second slot
+   optional: one argument holds as the picture, two compute as before.
+3. **The argument map** — `components/src/symbols.ts`, pure: `VISUAL_SYMBOLS` (head, tag,
+   fixed attributes, operands → attributes, operands → children), `renderingOf(expr)`
+   and `markupOf(rendering)`. A `Manipulate` body becomes a child with its parameters
+   as `_name` wildcards, which is how the component already binds a slot. `<notatio-out>`
+   asks it after evaluating, and on the standard form draws the rendering instead of the
+   typeset expression. It does not import the elements — the package entry registers
+   them — so a host that registers only `notatio-out` sees the typeset fallback.
+4. **The wrapper generator** — `web/.vitepress/data/wrappers.ts`, run when the site config
+   loads: one `.vue` per component named for its tag (`Plot3D`), one per family member
+   in `VISUAL_SYMBOLS` (`Histogram` is `<Chart>` with `type` fixed), into
+   `theme/generated/` (gitignored) and registered by the theme from a glob. Props are
+   the attribute table `components.ts` already reads; an absent prop is not bound, so
+   the element keeps its own default. `Cell.vue` is gone; `<Cell>` is generated now.
+5. **The `Chart` family head** — `chooseChartType` in `notatio-chart.ts`: matrix → array,
+   ragged rows → box, pairs → list, a short number list → bar, a long one → histogram,
+   `labels` pulling to bar. The component's `type` defaults to `auto` and applies the
+   same rule, so `Chart(data)` and `<notatio-chart data>` agree by construction.
 
 ## 7. Open questions
 
@@ -167,5 +180,11 @@ labels), the compound names are kebab-cased. head→tag is now a function of the
   `notatio-worksheet` has no Wolfram name; `Notebook` is taken by our notebook.
   `notatio-figure`'s eleven glyphs are the hardest case — a `Figure(kind, …)` family
   head is the §4 answer, if the glyphs are worth a symbol at all.
-- **Hints for the family heads.** What `Chart` can be told — a preferred type, an axis
-  mapping — and whether that is the same hint slot `notatio-chart`'s attributes are.
+- **Hints for the family heads.** `Chart(data, "pie")` names the member; anything richer
+  — an axis mapping, a bin count — has no notatio spelling beyond the attributes, which
+  is the argument-conventions question again.
+- **A React mirror.** The generator is one template away from emitting `.tsx`; nothing
+  needs it yet.
+- **Other renderers.** The terminal (`notatio-terminal`'s host side) could draw a `Plot`
+  head through `@enumeratio/raster` the way it already draws glyphs — the same
+  `renderingOf` map with a different set of components behind the tags.

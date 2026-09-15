@@ -21,6 +21,36 @@ export type ChartType =
   | "array"
   | "discrete";
 
+const isNumber = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+
+/**
+ * The chart the data asks for, when none is named -- the `Chart` family head's rule, and
+ * the component's when `type` is `auto` or empty. Read off the shape alone:
+ *
+ * - a matrix (rows of numbers, more than one row) is an `array` plot;
+ * - rows of unequal length are series, one `box` per row;
+ * - `[x, y]` pairs are a `list` plot (so a two-column matrix reads as pairs, as it does
+ *   for `ListPlot`);
+ * - a short number list is a `bar` per value, a long one is a `histogram` of them.
+ *
+ * A hint -- `labels`, which only a categorical chart shows -- pulls a number list to
+ * `bar` whatever its length. Anything unreadable falls to `bar`, whose renderer draws
+ * nothing for it.
+ */
+export function chooseChartType(data: unknown, hints: { labels?: boolean } = {}): ChartType {
+  if (!Array.isArray(data) || data.length === 0) return "bar";
+  if (data.every(isNumber)) {
+    if (hints.labels) return "bar";
+    return data.length > 12 ? "histogram" : "bar";
+  }
+  if (data.every((e) => Array.isArray(e) && e.length === 2 && e.every(isNumber))) return "list";
+  if (data.every((e) => Array.isArray(e) && e.every(isNumber))) {
+    const widths = new Set((data as unknown[][]).map((row) => row.length));
+    return widths.size === 1 && data.length > 1 ? "array" : "box";
+  }
+  return "bar";
+}
+
 /** Parse a JSON attribute defensively -- an empty/invalid value reads as `undefined`. */
 function parseJson(value: string): unknown {
   const text = value.trim();
@@ -31,8 +61,6 @@ function parseJson(value: string): unknown {
     return undefined;
   }
 }
-
-const isNumber = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
 
 /**
  * Normalize `data` into {x,y} points for ListPlot / ListLinePlot: a bare
@@ -90,13 +118,20 @@ function toMatrix(data: unknown): number[][] {
  * - `array` -- ArrayPlot: a 2-D numeric matrix as a heatmap.
  * - `discrete` -- DiscretePlot: a stem plot (vertical stems + dots).
  *
+ * With no `type` (or `type="auto"`) the chart is chosen from the data's shape -- see
+ * `chooseChartType` -- which is what the `Chart` head does too: this component is the
+ * family, `type` names the member.
+ *
  * `data` (and `labels`) are JSON, parsed defensively -- an empty/invalid value
  * renders nothing rather than throwing. `label` is a title (Wolfram's
  * `PlotLabel`); `bins` overrides the histogram's automatic bin count.
  */
 export class NotatioChart extends LitElement {
   static properties = {
-    /** Which chart: `bar`, `histogram`, `pie`, `box`, `array`, `discrete`, `list` or `listline`. */
+    /**
+     * Which chart: `bar`, `histogram`, `pie`, `box`, `array`, `discrete`, `list` or
+     * `listline` -- or `auto` (the default), chosen from the data's shape (`chooseChartType`).
+     */
     type: { type: String, reflect: true },
     /** The values, as JSON — a number list, or `[x,y]` pairs where the chart takes points. */
     data: { type: String },
@@ -108,7 +143,7 @@ export class NotatioChart extends LitElement {
     label: { type: String },
   };
 
-  declare type: ChartType;
+  declare type: ChartType | "auto";
   declare data: string;
   declare labels: string;
   declare bins: number | undefined;
@@ -116,7 +151,7 @@ export class NotatioChart extends LitElement {
 
   constructor() {
     super();
-    this.type = "bar";
+    this.type = "auto";
     this.data = "";
     this.labels = "";
     this.bins = undefined;
@@ -144,7 +179,11 @@ export class NotatioChart extends LitElement {
     const labels = Array.isArray(labelsList) ? labelsList.map(String) : undefined;
     const title = this.label || undefined;
     const points = toPoints(data);
-    switch (this.type) {
+    const type =
+      this.type && this.type !== "auto"
+        ? this.type
+        : chooseChartType(data, { labels: labels !== undefined });
+    switch (type) {
       case "list":
         return linePlotSvg([{ points, style: "points" }], { title });
       case "listline":

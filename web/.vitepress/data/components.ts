@@ -26,6 +26,8 @@ export interface AttributeDoc {
   default: string;
   /** Whether the property reflects back to the attribute. */
   reflects: boolean;
+  /** Set from script only (`attribute: false`): no attribute, so no wrapper prop either. */
+  propertyOnly: boolean;
   /** Prose from a `/** … *\/` above the entry in `static properties`. */
   description: string;
 }
@@ -127,6 +129,7 @@ function parse(file: string, playgrounds: Map<string, string>): ComponentDoc | u
       type: declared ? declared[1].trim().replace(/\s+/g, " ") : "",
       default: assigned ? assigned[1].trim() : "",
       reflects: /reflect\s*:\s*true/.test(options),
+      propertyOnly: /attribute\s*:\s*false/.test(options),
       description: doc ? cleanDoc(doc) : "",
     });
   }

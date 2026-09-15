@@ -7,6 +7,15 @@ const props = defineProps<{ tag: string }>();
 const component = computed(() => components.find((c) => c.tag === props.tag));
 
 const paragraphs = computed(() => split(component.value?.summary ?? ""));
+
+// The same rule data/wrappers.ts names the generated Vue component by.
+const wrapper = computed(() =>
+  props.tag
+    .replace(/^notatio-/, "")
+    .split("-")
+    .map((part) => (/^\d/.test(part) ? part.toUpperCase() : part[0].toUpperCase() + part.slice(1)))
+    .join(""),
+);
 </script>
 
 <template>
@@ -17,6 +26,8 @@ const paragraphs = computed(() => split(component.value?.summary ?? ""));
       <a v-if="component.playground" :href="component.playground">Stories in the playground</a>
       <span v-if="component.playground" class="sep">·</span>
       <code>{{ component.source }}</code>
+      <span class="sep">·</span>
+      in Vue: <code>&lt;{{ wrapper }}&gt;</code>
     </p>
 
     <h2>Attributes</h2>

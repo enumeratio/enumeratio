@@ -1,0 +1,303 @@
+{
+  "Plot(Sin(x), (x, 0, 10))": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "Sin(x)",
+        "var": "x",
+        "domain": "0,10"
+      }
+    },
+    "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\"></notatio-plot>"
+  },
+  "Plot(Sin(x))": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "Sin(x)"
+      }
+    },
+    "markup": "<notatio-plot value=\"Sin(x)\"></notatio-plot>"
+  },
+  "Plot3D(x * y, (x, -1, 1), (y, -1, 1))": {
+    "rendering": {
+      "tag": "notatio-plot-3d",
+      "attributes": {
+        "value": "x * y",
+        "xvar": "x",
+        "x-domain": "-1,1",
+        "yvar": "y",
+        "y-domain": "-1,1"
+      }
+    },
+    "markup": "<notatio-plot-3d value=\"x * y\" xvar=\"x\" x-domain=\"-1,1\" yvar=\"y\" y-domain=\"-1,1\"></notatio-plot-3d>"
+  },
+  "ContourPlot(x^2 + y^2, (x, -2, 2), (y, -2, 2))": {
+    "rendering": {
+      "tag": "notatio-contour-plot",
+      "attributes": {
+        "expr": "x ^ 2 + y ^ 2",
+        "xvar": "x",
+        "xrange": "-2,2",
+        "yvar": "y",
+        "yrange": "-2,2"
+      }
+    },
+    "markup": "<notatio-contour-plot expr=\"x ^ 2 + y ^ 2\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\"></notatio-contour-plot>"
+  },
+  "DensityPlot(Sin(x) * Cos(y), (x, 0, 6), (y, 0, 6))": {
+    "rendering": {
+      "tag": "notatio-density-plot",
+      "attributes": {
+        "expr": "Sin(x) * Cos(y)",
+        "xvar": "x",
+        "xrange": "0,6",
+        "yvar": "y",
+        "yrange": "0,6"
+      }
+    },
+    "markup": "<notatio-density-plot expr=\"Sin(x) * Cos(y)\" xvar=\"x\" xrange=\"0,6\" yvar=\"y\" yrange=\"0,6\"></notatio-density-plot>"
+  },
+  "PolarPlot(1 + Cos(t), (t, 0, 2 * Pi))": {
+    "rendering": {
+      "tag": "notatio-polar-plot",
+      "attributes": {
+        "expr": "1 + Cos(t)",
+        "tvar": "t",
+        "trange": "0,2Pi"
+      }
+    },
+    "markup": "<notatio-polar-plot expr=\"1 + Cos(t)\" tvar=\"t\" trange=\"0,2Pi\"></notatio-polar-plot>"
+  },
+  "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))": {
+    "rendering": {
+      "tag": "notatio-vector-plot",
+      "attributes": {
+        "u": "-y",
+        "v": "x",
+        "xvar": "x",
+        "xrange": "-2,2",
+        "yvar": "y",
+        "yrange": "-2,2"
+      }
+    },
+    "markup": "<notatio-vector-plot u=\"-y\" v=\"x\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\"></notatio-vector-plot>"
+  },
+  "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))": {
+    "rendering": {
+      "tag": "notatio-vector-plot",
+      "attributes": {
+        "type": "stream",
+        "u": "-y",
+        "v": "x",
+        "xvar": "x",
+        "xrange": "-2,2",
+        "yvar": "y",
+        "yrange": "-2,2"
+      }
+    },
+    "markup": "<notatio-vector-plot type=\"stream\" u=\"-y\" v=\"x\" xvar=\"x\" xrange=\"-2,2\" yvar=\"y\" yrange=\"-2,2\"></notatio-vector-plot>"
+  },
+  "ComplexPlot(Zeta(z), z)": {
+    "rendering": {
+      "tag": "notatio-complex-plot",
+      "attributes": {
+        "value": "Zeta(z)",
+        "var": "z"
+      }
+    },
+    "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
+  },
+  "ListPlot([1, 4, 9, 16])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "list",
+        "data": "[1,4,9,16]"
+      }
+    },
+    "markup": "<notatio-chart type=\"list\" data=\"[1,4,9,16]\"></notatio-chart>"
+  },
+  "ListLinePlot([[0, 1], [1, 3], [2, 2]])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "listline",
+        "data": "[[0,1],[1,3],[2,2]]"
+      }
+    },
+    "markup": "<notatio-chart type=\"listline\" data=\"[[0,1],[1,3],[2,2]]\"></notatio-chart>"
+  },
+  "BarChart([3, 1, 4, 1, 5])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "bar",
+        "data": "[3,1,4,1,5]"
+      }
+    },
+    "markup": "<notatio-chart type=\"bar\" data=\"[3,1,4,1,5]\"></notatio-chart>"
+  },
+  "Histogram([1, 2, 2, 3, 3, 3])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "histogram",
+        "data": "[1,2,2,3,3,3]"
+      }
+    },
+    "markup": "<notatio-chart type=\"histogram\" data=\"[1,2,2,3,3,3]\"></notatio-chart>"
+  },
+  "PieChart([1, 2, 3])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "pie",
+        "data": "[1,2,3]"
+      }
+    },
+    "markup": "<notatio-chart type=\"pie\" data=\"[1,2,3]\"></notatio-chart>"
+  },
+  "BoxWhiskerChart([[1, 2, 3, 4, 5], [2, 4, 6, 8]])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "box",
+        "data": "[[1,2,3,4,5],[2,4,6,8]]"
+      }
+    },
+    "markup": "<notatio-chart type=\"box\" data=\"[[1,2,3,4,5],[2,4,6,8]]\"></notatio-chart>"
+  },
+  "ArrayPlot([[1, 0], [0, 1]])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "array",
+        "data": "[[1,0],[0,1]]"
+      }
+    },
+    "markup": "<notatio-chart type=\"array\" data=\"[[1,0],[0,1]]\"></notatio-chart>"
+  },
+  "DiscretePlot([1, 2, 4, 8])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "type": "discrete",
+        "data": "[1,2,4,8]"
+      }
+    },
+    "markup": "<notatio-chart type=\"discrete\" data=\"[1,2,4,8]\"></notatio-chart>"
+  },
+  "Chart([3, 1, 4, 1, 5])": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "data": "[3,1,4,1,5]"
+      }
+    },
+    "markup": "<notatio-chart data=\"[3,1,4,1,5]\"></notatio-chart>"
+  },
+  "Chart([1, 2, 3], \"pie\")": {
+    "rendering": {
+      "tag": "notatio-chart",
+      "attributes": {
+        "data": "[1,2,3]",
+        "type": "pie"
+      }
+    },
+    "markup": "<notatio-chart data=\"[1,2,3]\" type=\"pie\"></notatio-chart>"
+  },
+  "ListPlot3D([[1, 2], [3, 4]])": {
+    "rendering": {
+      "tag": "notatio-list-plot-3d",
+      "attributes": {
+        "data": "[[1,2],[3,4]]"
+      }
+    },
+    "markup": "<notatio-list-plot-3d data=\"[[1,2],[3,4]]\"></notatio-list-plot-3d>"
+  },
+  "BarChart3D([[1, 2], [3, 4]])": {
+    "rendering": {
+      "tag": "notatio-bar-chart-3d",
+      "attributes": {
+        "data": "[[1,2],[3,4]]"
+      }
+    },
+    "markup": "<notatio-bar-chart-3d data=\"[[1,2],[3,4]]\"></notatio-bar-chart-3d>"
+  },
+  "GraphPlot([[1, 2], [2, 3]])": {
+    "rendering": {
+      "tag": "notatio-graph-plot",
+      "attributes": {
+        "type": "graph",
+        "data": "[[1,2],[2,3]]"
+      }
+    },
+    "markup": "<notatio-graph-plot type=\"graph\" data=\"[[1,2],[2,3]]\"></notatio-graph-plot>"
+  },
+  "TreeGraph([[1, 2], [1, 3]])": {
+    "rendering": {
+      "tag": "notatio-graph-plot",
+      "attributes": {
+        "type": "tree",
+        "data": "[[1,2],[1,3]]"
+      }
+    },
+    "markup": "<notatio-graph-plot type=\"tree\" data=\"[[1,2],[1,3]]\"></notatio-graph-plot>"
+  },
+  "CollectionTable(Subsets(4))": {
+    "rendering": {
+      "tag": "notatio-collection-table",
+      "attributes": {
+        "expr": "Subsets(4)"
+      }
+    },
+    "markup": "<notatio-collection-table expr=\"Subsets(4)\"></notatio-collection-table>"
+  },
+  "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))": {
+    "rendering": {
+      "tag": "notatio-manipulate",
+      "attributes": {
+        "params": "{a, 1, 5}"
+      },
+      "children": [
+        {
+          "tag": "notatio-plot",
+          "attributes": {
+            "value": "Sin(_a * x)",
+            "var": "x",
+            "domain": "0,10"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-manipulate params=\"{a, 1, 5}\"><notatio-plot value=\"Sin(_a * x)\" var=\"x\" domain=\"0,10\"></notatio-plot></notatio-manipulate>"
+  },
+  "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))": {
+    "rendering": {
+      "tag": "notatio-manipulate",
+      "attributes": {
+        "params": "{a, 0, 5, 0.5}; {{b, 2}, 0, 3}"
+      },
+      "children": [
+        {
+          "tag": "notatio-dynamic",
+          "attributes": {
+            "value": "Sin(_a) + _b"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-manipulate params=\"{a, 0, 5, 0.5}; {{b, 2}, 0, 3}\"><notatio-dynamic value=\"Sin(_a) + _b\"></notatio-dynamic></notatio-manipulate>"
+  },
+  "Image(\"data:image/png;base64,AAA\")": {
+    "rendering": {
+      "tag": "img",
+      "attributes": {
+        "src": "data:image/png;base64,AAA"
+      }
+    },
+    "markup": "<img src=\"data:image/png;base64,AAA\">"
+  },
+  "Sin(x) + 1": {}
+}

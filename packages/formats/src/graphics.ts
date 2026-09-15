@@ -1,5 +1,8 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 
+type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
+type EvaluateHandlerOptions = Parameters<NonNullable<NativeEvaluate>>[1];
+
 // Graphics as *values*: an `Image` head, and a `Rasterize` that makes one.
 //
 // Rasterizing already existed as a library call (`@enumeratio/raster`, used to put
@@ -81,7 +84,69 @@ function svgOf(expr: BoxedExpression): string | undefined {
  *   itself; what it is *for* is being drawn by whatever is showing the expression.
  * - `Rasterize(graphic)` — an SVG document rendered to pixels, as an `Image`.
  */
+/**
+ * The heads that draw. Each names a picture rather than a value -- Wolfram's `Plot`,
+ * `Histogram`, `Manipulate` print as pictures, not formulas -- and each has a component
+ * of the same name (kebab-cased, `notatio-` in front) that is its rendering; the
+ * argument-to-attribute map lives with the components (`@enumeratio/components/symbols`).
+ * Here they are declared so the engine can *hold* one: `Plot(Sin(x), (x, 0, 10))` is an
+ * expression a REPL prints, a cell evaluates to, a worksheet composites. Evaluation
+ * leaves them alone, and a `Manipulate` body keeps its free parameters because a free
+ * symbol evaluates to itself.
+ */
+export const GRAPHICS_HEADS: readonly string[] = [
+  "Plot",
+  "Plot3D",
+  "ContourPlot",
+  "DensityPlot",
+  "PolarPlot",
+  "VectorPlot",
+  "StreamPlot",
+  "ComplexPlot",
+  "ListPlot",
+  "ListLinePlot",
+  "ListPlot3D",
+  "BarChart",
+  "BarChart3D",
+  "Histogram",
+  "PieChart",
+  "BoxWhiskerChart",
+  "ArrayPlot",
+  "DiscretePlot",
+  "Chart",
+  "GraphPlot",
+  "TreeGraph",
+  "LayeredGraphPlot",
+  "Dendrogram",
+  "CollectionTable",
+  "Manipulate",
+];
+
 export function declareGraphics(ce: ComputeEngine): void {
+  // Inert: no `evaluate`, so the expression stays what it says, while its arguments
+  // are canonicalised as usual -- an iterator typed as `(x, 0, 10)` in LaTeX arrives as a
+  // `Tuple`, not a `Delimiter`, and a free parameter stays a free symbol. A head the
+  // engine already knows (its own `Histogram`) is handled below rather than redeclared.
+  for (const head of GRAPHICS_HEADS) {
+    if (ce.lookupDefinition(head)) continue;
+    ce.declare(head, { signature: "(any*) -> any" });
+  }
+
+  // The engine's own `Histogram(data, bins)` computes the bins and rejects a lone
+  // argument at the signature. Wolfram's one-argument `Histogram[data]` is the picture;
+  // widen the slot so it holds, and hand two arguments straight back to the native
+  // handler. The signature otherwise mirrors the engine's, so nothing else changes.
+  const histogram = ce.lookupDefinition("Histogram");
+  const native: NativeEvaluate =
+    histogram !== undefined && "operator" in histogram ? histogram.operator.evaluate : undefined;
+  if (native !== undefined) {
+    ce.declare("Histogram", {
+      signature: "(collection<any>, (list<number> | number)?) -> any",
+      evaluate: (ops: readonly BoxedExpression[], options: EvaluateHandlerOptions) =>
+        ops.length === 1 ? undefined : native(ops, options),
+    });
+  }
+
   ce.declare("Image", {
     signature: "(string, number?, number?) -> expression",
     // A literal: evaluating it further would only take it apart.

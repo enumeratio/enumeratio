@@ -1,6 +1,14 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { dataUri, declareGraphics, imageUri, setRasterizer, svgDataUri } from "../src/graphics.ts";
+import {
+  dataUri,
+  declareGraphics,
+  GRAPHICS_HEADS,
+  imageUri,
+  setRasterizer,
+  svgDataUri,
+} from "../src/graphics.ts";
+import { parseNotatio } from "../src/notatio.ts";
 
 const SVG =
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="10" height="10"/></svg>';
@@ -73,4 +81,26 @@ test("Rasterize leaves an Image alone and declines a non-graphic", () => {
 test("data URIs encode without a DOM", () => {
   expect(dataUri(new Uint8Array([0, 1, 2]), "image/png")).toBe("data:image/png;base64,AAEC");
   expect(svgDataUri(SVG).startsWith("data:image/svg+xml;base64,")).toBe(true);
+});
+
+// The heads that draw are held, not evaluated: what the engine hands back is what a
+// component can render, with the arguments as they were written.
+test("a graphics head holds, arguments and all", () => {
+  const ce = engine();
+  const held = (src: string): unknown => ce.box(parseNotatio(src).json).evaluate().json;
+  expect(held("Plot(Sin(x), (x, 0, 10))")).toEqual(["Plot", ["Sin", "x"], ["Tuple", "x", 0, 10]]);
+  expect(held("Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))")).toEqual([
+    "Manipulate",
+    ["Plot", ["Sin", ["Multiply", "a", "x"]], ["Tuple", "x", 0, 10]],
+    ["Tuple", "a", 1, 5],
+  ]);
+  expect(held("Chart([1, 2, 3])")).toEqual(["Chart", ["List", 1, 2, 3]]);
+  for (const head of GRAPHICS_HEADS) expect(ce.lookupDefinition(head), head).toBeDefined();
+});
+
+test("Histogram draws at one argument and still computes at two", () => {
+  const ce = engine();
+  const run = (src: string): unknown => ce.box(parseNotatio(src).json).evaluate().json;
+  expect(run("Histogram([1, 2, 2, 3])")).toEqual(["Histogram", ["List", 1, 2, 2, 3]]);
+  expect(run("Histogram([1, 2, 2, 3], 2)")).toEqual(["List", ["Tuple", 1, 1], ["Tuple", 2, 3]]);
 });
