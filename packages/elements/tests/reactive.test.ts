@@ -56,7 +56,7 @@ test("a binding does not write through to a symbol the page already mentions", (
   // that outer binding -- so two worksheets using `x`, or a worksheet and the reference
   // pages, would silently share variables.
   const engine = new ComputeEngine();
-  engine.box(["Add", "shared", 1]).unknowns; // some other element on the page
+  void engine.box(["Add", "shared", 1]).unknowns; // some other element on the page
   const cells = [
     { id: 1, value: "shared \\coloneq 2" },
     { id: 2, value: "shared + 1" },

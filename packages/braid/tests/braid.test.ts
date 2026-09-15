@@ -108,10 +108,10 @@ test("positive permutation braids realise their permutation, minimally", () => {
   for (const n of [2, 3, 4, 5]) {
     for (const permutation of permutations(n)) {
       const b = positivePermutationBraid(permutation)!;
-      expect(permutationOf(b), `${permutation}`).toEqual(permutation);
-      expect(isPositive(b), `${permutation}`).toBe(true);
+      expect(permutationOf(b), String(permutation)).toEqual(permutation);
+      expect(isPositive(b), String(permutation)).toBe(true);
       // No pair of strands crosses twice: the length is exactly the inversion count.
-      expect(crossings(b), `${permutation}`).toBe(inversions(permutation));
+      expect(crossings(b), String(permutation)).toBe(inversions(permutation));
     }
   }
   expect(positivePermutationBraid([0, 0, 1])).toBeUndefined(); // not a permutation
