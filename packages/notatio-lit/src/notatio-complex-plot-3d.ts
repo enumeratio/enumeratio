@@ -6,19 +6,27 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import {
+  CANVAS_THRESHOLD,
   type ComplexFunction,
   type ComplexSurface,
   complexFunction,
   complexGrid,
   complexSurfaceOf,
-  complexSurfaceSvg,
+  complexSurfaceScene,
   debug,
+  drawSurfaceScene,
   evalComplexGridGPU,
   Orbit,
   ORBIT_HINT,
   parseComplexDomain,
   sampleComplexSurface,
+  type SurfacePaint,
+  type SurfaceScene,
+  surfaceSceneSvg,
 } from "@enumeratio/notatio";
+
+const W = 360;
+const H = 260;
 
 const log = debug("complex-plot-3d");
 
@@ -34,6 +42,10 @@ const log = debug("complex-plot-3d");
  * portrait uses in a compute shader instead -- a number also sets `samples` -- and falls
  * back to the CPU where WebGPU is missing. Drag rotates, ctrl/⌘ + wheel zooms,
  * double-click resets the view.
+ *
+ * A grid past `CANVAS_THRESHOLD` samples a side is painted on a canvas rather than
+ * serialised as SVG: the same projection and painter's order, but no DOM node per face,
+ * so a GPU-resolution surface still turns under the pointer.
  */
 export class NotatioComplexPlot3D extends LitElement {
   static properties = {
@@ -60,6 +72,7 @@ export class NotatioComplexPlot3D extends LitElement {
     /** Caption drawn above the surface. */
     label: { type: String },
     _svg: { state: true },
+    _dense: { state: true },
     _status: { state: true },
     _hover: { state: true },
   };
@@ -76,10 +89,13 @@ export class NotatioComplexPlot3D extends LitElement {
   declare zoom: number;
   declare label: string;
   declare _svg: string;
+  declare _dense: boolean;
   declare _status: string;
   declare _hover: [number, number] | undefined;
 
   #surface: ComplexSurface | undefined;
+  #scene: SurfaceScene | undefined;
+  #frame = 0;
   #usedGpu = false;
   #orbit = new Orbit(this);
 
@@ -97,6 +113,7 @@ export class NotatioComplexPlot3D extends LitElement {
     this.zoom = 1;
     this.label = "";
     this._svg = "";
+    this._dense = false;
     this._status = "";
     this._hover = undefined;
     ensureStyles();
@@ -173,6 +190,7 @@ export class NotatioComplexPlot3D extends LitElement {
         surface = sampleComplexSurface(f, { domain, samples: Number(this.samples), maxHeight });
       }
       this.#surface = surface;
+      this._dense = Math.max(surface.xs.length, surface.ys.length) > CANVAS_THRESHOLD;
       this._status = "";
       this.#draw();
     } catch (error) {
@@ -194,7 +212,9 @@ export class NotatioComplexPlot3D extends LitElement {
 
   #draw(): void {
     if (!this.#surface) return;
-    this._svg = complexSurfaceSvg(this.#surface, {
+    const scene = complexSurfaceScene(this.#surface, {
+      width: W,
+      height: H,
       axes: this.axes !== "false",
       azimuth: this.azimuth,
       elevation: this.elevation,
@@ -202,16 +222,75 @@ export class NotatioComplexPlot3D extends LitElement {
       title: this.label || undefined,
       hover: this._hover,
     });
+    if (this._dense) {
+      this.#scene = scene;
+      this.#paintSoon();
+    } else {
+      this._svg = surfaceSceneSvg(scene);
+    }
+  }
+
+  /** Paint at most once per animation frame: a drag delivers events faster than that,
+   *  and only the last view matters. */
+  #paintSoon(): void {
+    if (this.#frame) return;
+    this.#frame = requestAnimationFrame(() => {
+      this.#frame = 0;
+      this.#paint();
+    });
+  }
+
+  #paint(): void {
+    const canvas = this.querySelector("canvas");
+    const scene = this.#scene;
+    if (!canvas || !scene) return;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    if (canvas.width !== W * dpr || canvas.height !== H * dpr) {
+      canvas.width = W * dpr;
+      canvas.height = H * dpr;
+    }
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawSurfaceScene(ctx, scene, this.#paintColors());
+  }
+
+  /** The theme's colours, resolved: a canvas cannot read the CSS variables the SVG uses. */
+  #paintColors(): SurfacePaint {
+    const style = getComputedStyle(this);
+    const read = (names: string[], fallback: string): string => {
+      for (const name of names) {
+        const v = style.getPropertyValue(name).trim();
+        if (v) return v;
+      }
+      return fallback;
+    };
+    return {
+      fg: read(["--notatio-fg"], style.color || "currentColor"),
+      bg: read(["--notatio-bg", "--vp-c-bg"], "#ffffff"),
+      edge: read(["--notatio-border", "--vp-c-divider"], "rgba(128, 128, 128, 0.6)"),
+      accent: read(["--notatio-accent", "--vp-c-brand-1"], "#d97706"),
+    };
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    // The canvas appears with the first dense render; paint it once it is there.
+    if (changed.has("_dense") && this._dense) this.#paintSoon();
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    if (this.#frame) cancelAnimationFrame(this.#frame);
+    this.#frame = 0;
   }
 
   #toViewBox(e: PointerEvent): [number, number] | undefined {
-    const svg = this.querySelector("svg");
-    if (!svg) return undefined;
-    const rect = svg.getBoundingClientRect();
-    const [, , vw, vh] = (svg.getAttribute("viewBox") ?? "0 0 360 260").split(" ").map(Number);
+    const el = this.querySelector("svg, canvas");
+    if (!el) return undefined;
+    const rect = el.getBoundingClientRect();
     return [
-      ((e.clientX - rect.left) / (rect.width || 1)) * vw,
-      ((e.clientY - rect.top) / (rect.height || 1)) * vh,
+      ((e.clientX - rect.left) / (rect.width || 1)) * W,
+      ((e.clientY - rect.top) / (rect.height || 1)) * H,
     ];
   }
 
@@ -236,7 +315,11 @@ export class NotatioComplexPlot3D extends LitElement {
         @dblclick=${this.#orbit.onDblClick}
         @wheel=${this.#orbit.onWheel}
         title=${ORBIT_HINT}
-        >${unsafeHTML(this._svg)}</span
+        >${
+          this._dense
+            ? html`<canvas role="img" aria-label="surface plot"></canvas>`
+            : unsafeHTML(this._svg)
+        }</span
       >${
         this.#usedGpu
           ? html`<div class="notatio-toolbar">

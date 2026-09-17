@@ -95,6 +95,48 @@ function projector(
   };
 }
 
+/** A point on the page, in viewBox units. */
+type Pt = readonly [number, number];
+
+/**
+ * What a surface draws, before it is drawn: the axes, the depth-sorted faces with their
+ * fills, the chrome. `surfacesSvg` serialises it; `drawSurfaceScene` paints it on a
+ * canvas, for a grid too dense to live in the DOM as polygons.
+ */
+export interface SurfaceScene {
+  readonly width: number;
+  readonly height: number;
+  readonly axes?: {
+    readonly floor: readonly Pt[];
+    readonly edges: readonly (readonly [Pt, Pt])[];
+    readonly ticks: readonly { at: Pt; anchor: "middle" | "end"; text: string }[];
+  };
+  /** The faces in painter's order, far to near: four `x,y` corners each, flat, and a
+   * fill per face. Flat rather than an object per face because a dense grid has tens
+   * of thousands, and the scene is rebuilt on every turn of the view. */
+  readonly faces: { readonly count: number; readonly xy: Float64Array; readonly fill: string[] };
+  /** Face opacity when surfaces overlay, else undefined. */
+  readonly opacity?: number;
+  readonly edgeWidth: number;
+  readonly legend?: {
+    readonly x: number;
+    readonly y: number;
+    readonly w: number;
+    readonly h: number;
+    readonly swatches: readonly { y: number; h: number; fill: string }[];
+    readonly labels: readonly { y: number; text: string }[];
+  };
+  readonly title?: string;
+  readonly readout?: { at: Pt; text: string };
+}
+
+const EMPTY = (W: number, H: number): SurfaceScene => ({
+  width: W,
+  height: H,
+  faces: { count: 0, xy: new Float64Array(0), fill: [] },
+  edgeWidth: 0.5,
+});
+
 /**
  * Render a height grid as an oblique-projected surface. Quads are filled with a
  * height-shaded accent and drawn back-to-front so nearer cells overlay farther
@@ -108,16 +150,19 @@ export function surfaceSvg(grid: Grid, opts: Surface3dOptions = {}): string {
  * own colour, with cells depth-sorted across all surfaces so they interleave
  * correctly. All grids must share the sample coordinates (`xs` / `ys`). */
 export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {}): string {
+  return surfaceSceneSvg(surfaceScene(grids, opts));
+}
+
+/** Project and sort: the scene `surfacesSvg` and `drawSurfaceScene` both draw. */
+export function surfaceScene(grids: readonly Grid[], opts: Surface3dOptions = {}): SurfaceScene {
   const W = opts.width ?? 360;
   const H = opts.height ?? 260;
   const projectN = projector(W, H, opts.azimuth ?? 45, opts.elevation ?? 15, opts.zoom ?? 1);
-  const frame = (body: string): string =>
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="surface plot">${body}</svg>`;
 
   const grid = grids[0] ?? [];
   const ny = grid.length;
   const nx = ny > 0 ? grid[0].length : 0;
-  if (nx < 2 || ny < 2) return frame("");
+  if (nx < 2 || ny < 2) return EMPTY(W, H);
 
   const X = scale(opts.xScale);
   const Y = scale(opts.yScale);
@@ -143,7 +188,7 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
     .flatMap((g) => g.flat())
     .map((z) => Z.fwd(z))
     .filter(Number.isFinite);
-  if (finiteZ.length === 0) return frame("");
+  if (finiteZ.length === 0) return EMPTY(W, H);
   let zmin = Math.min(...finiteZ);
   let zmax = Math.max(...finiteZ);
   if (zmin === zmax) {
@@ -151,11 +196,12 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
     zmax += 1;
   }
   const pzOf = (z: number): number => (Z.fwd(z) - zmin) / (zmax - zmin);
+  const xy = (p: Projected): Pt => [p[0], p[1]];
 
   // Boxed axes behind the surface: a floor rectangle plus the three edges from
   // the farthest floor corner (so they never cross the surface), labelled with
   // the coordinate ranges.
-  let axesSvg = "";
+  let axes: SurfaceScene["axes"];
   if (opts.axes !== false) {
     const corners: Array<[number, number]> = [
       [0, 0],
@@ -163,111 +209,133 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
       [1, 1],
       [0, 1],
     ];
-    const floor = corners
-      .map(([x, y]) => projectN(x, y, 0))
-      .map(([x, y]) => `${n2(x)},${n2(y)}`)
-      .join(" ");
-    const edge = (a: Projected, b: Projected): string =>
-      `<line x1="${n2(a[0])}" y1="${n2(a[1])}" x2="${n2(b[0])}" y2="${n2(b[1])}" stroke="${EDGE}" stroke-width="1" opacity="0.5"/>`;
     const [bx, by] = corners.reduce((far, c) =>
       projectN(c[0], c[1], 0)[2] < projectN(far[0], far[1], 0)[2] ? c : far,
     );
-    const o = projectN(bx, by, 0);
-    axesSvg += `<polygon points="${floor}" fill="none" stroke="${EDGE}" stroke-width="1" opacity="0.35"/>`;
-    axesSvg +=
-      edge(o, projectN(1 - bx, by, 0)) +
-      edge(o, projectN(bx, 1 - by, 0)) +
-      edge(o, projectN(bx, by, 1));
-    const tick = (p: Projected, anchor: string, s: string): string =>
-      `<text x="${n2(p[0])}" y="${n2(p[1])}" text-anchor="${anchor}" font-size="9" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.6">${s}</text>`;
+    const o = xy(projectN(bx, by, 0));
     // Each floor edge is labelled at its free end with that end's coordinate.
     const xEnd = opts.xs ? opts.xs[bx === 0 ? nx - 1 : 0] : 1 - bx;
     const yEnd = opts.ys ? opts.ys[by === 0 ? ny - 1 : 0] : 1 - by;
-    axesSvg +=
-      tick(projectN(1 - bx, by, 0), "middle", label(xEnd)) +
-      tick(projectN(bx, 1 - by, 0), "middle", label(yEnd)) +
-      tick(projectN(bx, by, 1), "end", label(Z.inv(zmax)));
+    axes = {
+      floor: corners.map(([x, y]) => xy(projectN(x, y, 0))),
+      edges: [
+        [o, xy(projectN(1 - bx, by, 0))],
+        [o, xy(projectN(bx, 1 - by, 0))],
+        [o, xy(projectN(bx, by, 1))],
+      ],
+      ticks: [
+        { at: xy(projectN(1 - bx, by, 0)), anchor: "middle", text: label(xEnd) },
+        { at: xy(projectN(bx, 1 - by, 0)), anchor: "middle", text: label(yEnd) },
+        { at: xy(projectN(bx, by, 1)), anchor: "end", text: label(Z.inv(zmax)) },
+      ],
+    };
   }
 
-  interface Cell {
-    depth: number;
-    poly: string;
-    t: number;
-    surface: number;
-    i: number;
-    j: number;
-  }
-  const cells: Cell[] = [];
+  // Project every vertex once (a face shares each of its corners with three others),
+  // then gather the faces and sort them far-to-near on their mean view depth.
+  const nv = nx * ny;
+  const vx = new Float64Array(nv * grids.length);
+  const vy = new Float64Array(nv * grids.length);
+  const vd = new Float64Array(nv * grids.length);
+  const vz = new Float64Array(nv * grids.length); // normalised height, NaN if not finite
   grids.forEach((g, si) => {
-    for (let j = 0; j < ny - 1; j++) {
-      for (let i = 0; i < nx - 1; i++) {
-        const zs = [g[j][i], g[j][i + 1], g[j + 1][i + 1], g[j + 1][i]];
-        if (!zs.every((z) => Number.isFinite(Z.fwd(z)))) continue;
-        const corners: Projected[] = [
-          projectN(pxOf(i), pyOf(j), pzOf(zs[0])),
-          projectN(pxOf(i + 1), pyOf(j), pzOf(zs[1])),
-          projectN(pxOf(i + 1), pyOf(j + 1), pzOf(zs[2])),
-          projectN(pxOf(i), pyOf(j + 1), pzOf(zs[3])),
-        ];
-        const avgPz = (pzOf(zs[0]) + pzOf(zs[1]) + pzOf(zs[2]) + pzOf(zs[3])) / 4;
-        cells.push({
-          // Painter's order: sort far-to-near on the cell's mean view depth.
-          depth: corners.reduce((sum, c) => sum + c[2], 0) / 4,
-          t: avgPz,
-          surface: si,
-          i,
-          j,
-          poly: corners.map(([x, y]) => `${n2(x)},${n2(y)}`).join(" "),
-        });
+    for (let j = 0; j < ny; j++) {
+      const py = pyOf(j);
+      for (let i = 0; i < nx; i++) {
+        const k = si * nv + j * nx + i;
+        const z = Z.fwd(g[j][i]);
+        if (!Number.isFinite(z)) {
+          vz[k] = Number.NaN;
+          continue;
+        }
+        const pz = (z - zmin) / (zmax - zmin);
+        const [x, y, d] = projectN(pxOf(i), py, pz);
+        vx[k] = x;
+        vy[k] = y;
+        vd[k] = d;
+        vz[k] = pz;
       }
     }
   });
-  cells.sort((a, b) => a.depth - b.depth);
+
+  // A face is its top-left vertex index; the four corners follow from the grid.
+  const faceAt: number[] = [];
+  const depth: number[] = [];
+  for (let si = 0; si < grids.length; si++) {
+    for (let j = 0; j < ny - 1; j++) {
+      for (let i = 0; i < nx - 1; i++) {
+        const a = si * nv + j * nx + i;
+        const b = a + 1;
+        const c = a + nx + 1;
+        const d = a + nx;
+        const t = vz[a] + vz[b] + vz[c] + vz[d];
+        if (Number.isNaN(t)) continue;
+        faceAt.push(a);
+        depth.push((vd[a] + vd[b] + vd[c] + vd[d]) / 4);
+      }
+    }
+  }
+  const order = Uint32Array.from(faceAt.keys()).sort((p, q) => depth[p] - depth[q]);
 
   const shade = (base: string, t: number): string =>
     `color-mix(in srgb, ${base} ${n2(22 + 60 * t)}%, ${BG})`;
-  // Overlaid surfaces get a touch of transparency so a lower one shows through.
-  const opacity = grids.length > 1 ? ' fill-opacity="0.85"' : "";
   const fill = opts.fill ?? ((c) => shade(SURF[c.surface % SURF.length], c.t));
-  const edgeWidth = n2(opts.edgeWidth ?? 0.5);
-  const surface = cells
-    .map(
-      (c) =>
-        `<polygon points="${c.poly}" fill="${fill(c)}"${opacity} stroke="${EDGE}" stroke-width="${edgeWidth}" stroke-linejoin="round"/>`,
-    )
-    .join("");
+  const count = order.length;
+  const corners = new Float64Array(count * 8);
+  const fills: string[] = [];
+  for (let n = 0; n < count; n++) {
+    const a = faceAt[order[n]];
+    const b = a + 1;
+    const c = a + nx + 1;
+    const d = a + nx;
+    const o = n * 8;
+    corners[o] = vx[a];
+    corners[o + 1] = vy[a];
+    corners[o + 2] = vx[b];
+    corners[o + 3] = vy[b];
+    corners[o + 4] = vx[c];
+    corners[o + 5] = vy[c];
+    corners[o + 6] = vx[d];
+    corners[o + 7] = vy[d];
+    const surface = Math.floor(a / nv);
+    const local = a - surface * nv;
+    fills[n] = fill({
+      i: local % nx,
+      j: Math.floor(local / nx),
+      t: (vz[a] + vz[b] + vz[c] + vz[d]) / 4,
+      surface,
+    });
+  }
 
   // A height color-scale key: swatches matching the surface shading, from zmax
   // (top) down to zmin, labelled with the raw z range.
-  let legend = "";
+  let legend: SurfaceScene["legend"];
   if (opts.colorLegend) {
     const bx = W - 14;
     const bw = 8;
     const top = 16;
     const bh = 76;
     const steps = 8;
-    for (let k = 0; k < steps; k++) {
-      const t = 1 - k / steps;
-      legend += `<rect x="${n2(bx)}" y="${n2(top + (bh * k) / steps)}" width="${bw}" height="${n2(bh / steps + 0.5)}" fill="${shade(ACCENT, t)}" stroke="none"/>`;
-    }
-    const zlab = (v: number, y: number): string =>
-      `<text x="${n2(bx - 2)}" y="${n2(y)}" text-anchor="end" font-size="9" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.6">${label(Z.inv(v))}</text>`;
-    legend +=
-      `<rect x="${n2(bx)}" y="${n2(top)}" width="${bw}" height="${n2(bh)}" fill="none" stroke="${EDGE}" stroke-width="0.5" opacity="0.5"/>` +
-      zlab(zmax, top + 4) +
-      zlab(zmin, top + bh);
-  }
-
-  let titleSvg = "";
-  if (opts.title) {
-    const esc = (s: string): string =>
-      s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    titleSvg = `<text x="${n2(W / 2)}" y="13" text-anchor="middle" font-size="12" font-family="ui-sans-serif, system-ui, sans-serif" fill="${FG}">${esc(opts.title)}</text>`;
+    legend = {
+      x: bx,
+      y: top,
+      w: bw,
+      h: bh,
+      swatches: Array.from({ length: steps }, (_, k) => ({
+        y: top + (bh * k) / steps,
+        h: bh / steps + 0.5,
+        fill: shade(ACCENT, 1 - k / steps),
+      })),
+      labels: [
+        { y: top + 4, text: label(Z.inv(zmax)) },
+        { y: top + bh, text: label(Z.inv(zmin)) },
+      ],
+    };
   }
 
   // Hover readout: mark the projected grid vertex nearest the pointer and list
   // its data coordinates. Searches every surface's vertices.
-  let readout = "";
+  let readout: SurfaceScene["readout"];
   if (opts.hover) {
     const [hx, hy] = opts.hover;
     let best: { d: number; px: number; py: number; x: number; y: number; z: number } | undefined;
@@ -291,13 +359,204 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
       }
     });
     if (best && best.d < 40) {
-      readout +=
-        `<circle cx="${n2(best.px)}" cy="${n2(best.py)}" r="3.5" fill="${BG}" stroke="${ACCENT}" stroke-width="2"/>` +
-        `<text x="6" y="${n2(H - 6)}" font-size="10" font-family="ui-monospace, monospace" fill="${FG}" paint-order="stroke" stroke="${BG}" stroke-width="3" stroke-linejoin="round">(${label(best.x)}, ${label(best.y)}, ${label(best.z)})</text>`;
+      readout = {
+        at: [best.px, best.py],
+        text: `(${label(best.x)}, ${label(best.y)}, ${label(best.z)})`,
+      };
     }
   }
 
+  return {
+    width: W,
+    height: H,
+    axes,
+    faces: { count, xy: corners, fill: fills },
+    // Overlaid surfaces get a touch of transparency so a lower one shows through.
+    opacity: grids.length > 1 ? 0.85 : undefined,
+    edgeWidth: opts.edgeWidth ?? 0.5,
+    legend,
+    title: opts.title || undefined,
+    readout,
+  };
+}
+
+const esc = (s: string): string =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** The scene as SVG, themed through CSS variables. */
+export function surfaceSceneSvg(scene: SurfaceScene): string {
+  const { width: W, height: H } = scene;
+  const frame = (body: string): string =>
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="surface plot">${body}</svg>`;
+  const pts = (points: readonly Pt[]): string =>
+    points.map(([x, y]) => `${n2(x)},${n2(y)}`).join(" ");
+
+  let axesSvg = "";
+  if (scene.axes) {
+    const { floor, edges, ticks } = scene.axes;
+    axesSvg += `<polygon points="${pts(floor)}" fill="none" stroke="${EDGE}" stroke-width="1" opacity="0.35"/>`;
+    for (const [a, b] of edges) {
+      axesSvg += `<line x1="${n2(a[0])}" y1="${n2(a[1])}" x2="${n2(b[0])}" y2="${n2(b[1])}" stroke="${EDGE}" stroke-width="1" opacity="0.5"/>`;
+    }
+    for (const t of ticks) {
+      axesSvg += `<text x="${n2(t.at[0])}" y="${n2(t.at[1])}" text-anchor="${t.anchor}" font-size="9" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.6">${t.text}</text>`;
+    }
+  }
+
+  const opacity = scene.opacity === undefined ? "" : ` fill-opacity="${n2(scene.opacity)}"`;
+  const edgeWidth = n2(scene.edgeWidth);
+  const { count, xy, fill } = scene.faces;
+  const faces: string[] = [];
+  for (let n = 0; n < count; n++) {
+    const o = n * 8;
+    const points = `${n2(xy[o])},${n2(xy[o + 1])} ${n2(xy[o + 2])},${n2(xy[o + 3])} ${n2(xy[o + 4])},${n2(xy[o + 5])} ${n2(xy[o + 6])},${n2(xy[o + 7])}`;
+    faces[n] =
+      `<polygon points="${points}" fill="${fill[n]}"${opacity} stroke="${EDGE}" stroke-width="${edgeWidth}" stroke-linejoin="round"/>`;
+  }
+  const surface = faces.join("");
+
+  let legend = "";
+  if (scene.legend) {
+    const { x, y, w, h, swatches, labels } = scene.legend;
+    for (const sw of swatches) {
+      legend += `<rect x="${n2(x)}" y="${n2(sw.y)}" width="${w}" height="${n2(sw.h)}" fill="${sw.fill}" stroke="none"/>`;
+    }
+    legend += `<rect x="${n2(x)}" y="${n2(y)}" width="${w}" height="${n2(h)}" fill="none" stroke="${EDGE}" stroke-width="0.5" opacity="0.5"/>`;
+    for (const l of labels) {
+      legend += `<text x="${n2(x - 2)}" y="${n2(l.y)}" text-anchor="end" font-size="9" font-family="ui-monospace, monospace" fill="${FG}" opacity="0.6">${l.text}</text>`;
+    }
+  }
+
+  const titleSvg = scene.title
+    ? `<text x="${n2(W / 2)}" y="13" text-anchor="middle" font-size="12" font-family="ui-sans-serif, system-ui, sans-serif" fill="${FG}">${esc(scene.title)}</text>`
+    : "";
+
+  let readout = "";
+  if (scene.readout) {
+    const { at, text } = scene.readout;
+    readout =
+      `<circle cx="${n2(at[0])}" cy="${n2(at[1])}" r="3.5" fill="${BG}" stroke="${ACCENT}" stroke-width="2"/>` +
+      `<text x="6" y="${n2(H - 6)}" font-size="10" font-family="ui-monospace, monospace" fill="${FG}" paint-order="stroke" stroke="${BG}" stroke-width="3" stroke-linejoin="round">${text}</text>`;
+  }
+
   return frame(axesSvg + surface + legend + titleSvg + readout);
+}
+
+/** Concrete colours for a canvas, which cannot read CSS variables. */
+export interface SurfacePaint {
+  readonly fg: string;
+  readonly bg: string;
+  readonly edge: string;
+  readonly accent: string;
+}
+
+/**
+ * Paint the scene on a 2-D canvas, in the scene's own units -- the caller scales the
+ * context for the canvas size and the device pixel ratio. Twenty-five thousand faces as
+ * DOM polygons is a second of parsing and layout on every turn of the view; as canvas
+ * fills it is a few milliseconds. Face fills must be concrete colours here: the default
+ * accent shading is a `color-mix` over CSS variables and will not paint.
+ */
+export function drawSurfaceScene(
+  ctx: CanvasRenderingContext2D,
+  scene: SurfaceScene,
+  paint: SurfacePaint,
+): void {
+  const { width: W, height: H } = scene;
+  ctx.clearRect(0, 0, W, H);
+  ctx.lineJoin = "round";
+
+  const poly = (points: readonly Pt[]): void => {
+    ctx.beginPath();
+    points.forEach(([x, y], k) => (k === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)));
+    ctx.closePath();
+  };
+
+  if (scene.axes) {
+    const { floor, edges, ticks } = scene.axes;
+    ctx.strokeStyle = paint.edge;
+    ctx.lineWidth = 1;
+    ctx.globalAlpha = 0.35;
+    poly(floor);
+    ctx.stroke();
+    ctx.globalAlpha = 0.5;
+    for (const [a, b] of edges) {
+      ctx.beginPath();
+      ctx.moveTo(a[0], a[1]);
+      ctx.lineTo(b[0], b[1]);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 0.6;
+    ctx.fillStyle = paint.fg;
+    ctx.font = "9px ui-monospace, monospace";
+    for (const t of ticks) {
+      ctx.textAlign = t.anchor === "end" ? "right" : "center";
+      ctx.fillText(t.text, t.at[0], t.at[1]);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.strokeStyle = paint.edge;
+  ctx.lineWidth = scene.edgeWidth;
+  const stroke = scene.edgeWidth > 0;
+  if (scene.opacity !== undefined) ctx.globalAlpha = scene.opacity;
+  const { count, xy, fill } = scene.faces;
+  for (let n = 0; n < count; n++) {
+    const o = n * 8;
+    ctx.beginPath();
+    ctx.moveTo(xy[o], xy[o + 1]);
+    ctx.lineTo(xy[o + 2], xy[o + 3]);
+    ctx.lineTo(xy[o + 4], xy[o + 5]);
+    ctx.lineTo(xy[o + 6], xy[o + 7]);
+    ctx.closePath();
+    ctx.fillStyle = fill[n];
+    ctx.fill();
+    if (stroke) ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  if (scene.legend) {
+    const { x, y, w, h, swatches, labels } = scene.legend;
+    for (const sw of swatches) {
+      ctx.fillStyle = sw.fill;
+      ctx.fillRect(x, sw.y, w, sw.h);
+    }
+    ctx.strokeStyle = paint.edge;
+    ctx.lineWidth = 0.5;
+    ctx.globalAlpha = 0.5;
+    ctx.strokeRect(x, y, w, h);
+    ctx.globalAlpha = 0.6;
+    ctx.fillStyle = paint.fg;
+    ctx.font = "9px ui-monospace, monospace";
+    ctx.textAlign = "right";
+    for (const l of labels) ctx.fillText(l.text, x - 2, l.y);
+    ctx.globalAlpha = 1;
+  }
+
+  if (scene.title) {
+    ctx.fillStyle = paint.fg;
+    ctx.font = "12px ui-sans-serif, system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(scene.title, W / 2, 13);
+  }
+
+  if (scene.readout) {
+    const { at, text } = scene.readout;
+    ctx.beginPath();
+    ctx.arc(at[0], at[1], 3.5, 0, 2 * Math.PI);
+    ctx.fillStyle = paint.bg;
+    ctx.fill();
+    ctx.strokeStyle = paint.accent;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.font = "10px ui-monospace, monospace";
+    ctx.textAlign = "left";
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = paint.bg;
+    ctx.strokeText(text, 6, H - 6);
+    ctx.fillStyle = paint.fg;
+    ctx.fillText(text, 6, H - 6);
+  }
 }
 
 // --- parametric curves in space ------------------------------------------------------

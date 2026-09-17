@@ -33,6 +33,7 @@ notatio-plot-3d svg { width: 360px; max-width: 100%; height: auto; overflow: vis
 notatio-complex-plot-3d { display: block; line-height: 0; }
 notatio-complex-plot-3d .notatio-plot-box { display: inline-block; max-width: 100%; }
 notatio-complex-plot-3d svg { width: 360px; max-width: 100%; height: auto; overflow: visible; }
+notatio-complex-plot-3d canvas { width: 360px; max-width: 100%; aspect-ratio: 360 / 260; height: auto; display: block; }
 notatio-complex-plot-3d .notatio-plot-status { line-height: 1.4; font-size: 0.85em; opacity: 0.7; margin: 0.25em 0; }
 
 /* Charts (BarChart, Histogram, PieChart, …) share the same sizing as Plot. */

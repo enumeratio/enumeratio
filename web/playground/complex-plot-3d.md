@@ -100,6 +100,11 @@ itself, the iterator's complex corners becoming the `domain`.
 
 ## Notes
 
+- **Canvas past 80 samples a side.** Below that the surface is SVG polygons, which
+  print and theme through CSS. Above it the same scene is painted on a canvas: a face as a
+  DOM node costs more to parse and lay out than to fill, and at 40 000 faces the difference
+  is a turn of the view that takes a second against one that takes a frame or two.
+
 - **Clipping, not infinity.** |f| near a pole grows without bound; the surface is cut at
   `max-height`, as Wolfram's is, so a single pole does not flatten everything else to the
   floor.

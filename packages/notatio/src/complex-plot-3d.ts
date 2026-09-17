@@ -7,7 +7,12 @@ import {
   polyLog,
   zetaGeneralized,
 } from "@enumeratio/analytic/src";
-import { type Surface3dOptions, surfaceSvg } from "./plot3d.ts";
+import {
+  type Surface3dOptions,
+  type SurfaceScene,
+  surfaceScene,
+  surfaceSceneSvg,
+} from "./plot3d.ts";
 
 // Wolfram's `ComplexPlot3D`: |f(z)| as a surface over the complex plane, each face
 // coloured by arg f(z) -- the same hue wheel `notatio-complex-plot` paints, lifted into
@@ -338,11 +343,14 @@ export function sampleComplexSurface(
 
 // --- colouring ------------------------------------------------------------------------
 
-/** The face colour for a hue in [0, 1): the same wheel the portrait paints. */
+/** One string per degree, so a face costs a lookup rather than a format. */
+const HUES = Array.from({ length: 360 }, (_, deg) => `hsl(${deg} 75% 55%)`);
+
+/** The face colour for a hue in [0, 1): the same wheel the portrait paints. A face with
+ * no argument (a pole hit exactly) is a neutral grey -- concrete, so it paints on a
+ * canvas too. */
 export const hueColor = (t: number): string =>
-  Number.isFinite(t)
-    ? `hsl(${Math.round((((t % 1) + 1) % 1) * 360)} 75% 55%)`
-    : "var(--notatio-border, #999)";
+  Number.isFinite(t) ? HUES[Math.round((((t % 1) + 1) % 1) * 360) % 360] : "hsl(0 0% 55%)";
 
 /**
  * The hue of a face from its four corners. Arg jumps by 2π across the negative real
@@ -370,19 +378,56 @@ export interface ComplexSurfaceSvgOptions extends Omit<
   "xs" | "ys" | "colorLegend" | "zScale"
 > {}
 
-/** The surface as SVG: heights from the grid, each face coloured by its corners' hues. */
+/**
+ * Above this many samples a side the surface is painted on a canvas rather than
+ * serialised as SVG polygons: the DOM cost of a face is what the dense grids pay for.
+ */
+export const CANVAS_THRESHOLD = 80;
+
+/** The surface as a scene: heights from the grid, each face coloured by its corners' hues. */
+export function complexSurfaceScene(
+  surface: ComplexSurface,
+  opts: ComplexSurfaceSvgOptions = {},
+): SurfaceScene {
+  const { heights, hues, xs, ys } = surface;
+  const nx = xs.length;
+  // The circular mean of the corners' hues, per face, with the unit vectors taken once
+  // per vertex: a dense grid asks for this tens of thousands of times a frame.
+  const cx = new Float64Array(nx * ys.length);
+  const cy = new Float64Array(nx * ys.length);
+  hues.forEach((row, j) =>
+    row.forEach((t, i) => {
+      const k = j * nx + i;
+      if (Number.isFinite(t)) {
+        cx[k] = Math.cos(2 * Math.PI * t);
+        cy[k] = Math.sin(2 * Math.PI * t);
+      }
+    }),
+  );
+  return surfaceScene([heights], {
+    // Mesh lines thin out as the grid densifies, or a GPU-resolution surface is all edge.
+    edgeWidth: Math.min(0.5, 30 / Math.max(nx, ys.length)),
+    ...opts,
+    xs,
+    ys,
+    fill: ({ i, j }) => {
+      const a = j * nx + i;
+      const b = a + 1;
+      const c = a + nx + 1;
+      const d = a + nx;
+      const x = cx[a] + cx[b] + cx[c] + cx[d];
+      const y = cy[a] + cy[b] + cy[c] + cy[d];
+      if (x === 0 && y === 0) return hueColor(Number.NaN);
+      const t = Math.atan2(y, x) / (2 * Math.PI);
+      return hueColor(t < 0 ? t + 1 : t);
+    },
+  });
+}
+
+/** The surface as SVG. */
 export function complexSurfaceSvg(
   surface: ComplexSurface,
   opts: ComplexSurfaceSvgOptions = {},
 ): string {
-  const { heights, hues, xs, ys } = surface;
-  return surfaceSvg(heights, {
-    // Mesh lines thin out as the grid densifies, or a GPU-resolution surface is all edge.
-    edgeWidth: Math.min(0.5, 30 / Math.max(xs.length, ys.length)),
-    ...opts,
-    xs,
-    ys,
-    fill: ({ i, j }) =>
-      hueColor(faceHue([hues[j][i], hues[j][i + 1], hues[j + 1][i + 1], hues[j + 1][i]])),
-  });
+  return surfaceSceneSvg(complexSurfaceScene(surface, opts));
 }
