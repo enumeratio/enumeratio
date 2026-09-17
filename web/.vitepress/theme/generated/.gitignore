@@ -1,2 +1,0 @@
-# Vue wrappers over the components, emitted by data/wrappers.ts when the config loads.
-*.vue

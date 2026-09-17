@@ -10,11 +10,13 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
+    "./reflect": "./dist/reflect.mjs",
     "./symbols": "./dist/symbols.mjs",
+    "./vdom": "./dist/vdom.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/symbols.ts",
+    "build": "vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check"
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/braid": "workspace:*",
+    "@types/node": "catalog:",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",
     "vite": "catalog:",

@@ -38,3 +38,4 @@ export * from "./traditional.ts";
 export * from "./vectorplot.ts";
 export * from "./playback.ts";
 export * from "./controls.ts";
+export * from "./vdom.ts";

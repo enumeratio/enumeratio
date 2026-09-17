@@ -1,5 +1,6 @@
 import type { EnhanceAppContext } from "vitepress";
-import { type Component, defineAsyncComponent } from "vue";
+import { defineAsyncComponent } from "vue";
+import { registerNotatio } from "@enumeratio/notatio-vue";
 import DefaultTheme from "vitepress/theme";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
@@ -22,12 +23,8 @@ const SymbolRef = defineAsyncComponent(() => import("./components/Symbol.vue"));
 const ComponentIndex = defineAsyncComponent(() => import("./components/ComponentIndex.vue"));
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
 
-// The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, … -- emitted by
-// data/wrappers.ts from the element sources; one registration per file, named for it.
-const wrappers = import.meta.glob("./generated/*.vue") as Record<
-  string,
-  () => Promise<{ default: Component }>
->;
+// The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
+// from @enumeratio/notatio-vue, generated there from the element sources.
 
 export default {
   extends: DefaultTheme,
@@ -45,10 +42,7 @@ export default {
     app.component("CliReference", CliReference);
     app.component("Symbol", SymbolRef);
     app.component("ComponentPage", ComponentPage);
-    for (const [path, load] of Object.entries(wrappers)) {
-      const name = path.slice(path.lastIndexOf("/") + 1, -".vue".length);
-      app.component(name, defineAsyncComponent(load));
-    }
+    registerNotatio(app);
     // Client only: register the custom elements (they call customElements.define)
     // and declare the extension libraries against the shared engine so their heads
     // evaluate in the playground and docs -- collections (Combinations/Subsets/…),

@@ -181,3 +181,34 @@ symbols the engine knows.
   title="Every kind, in one grid">
 <notatio-out format="notatio" value='Grid([[Checkbox((on, True)), Toggler(size, ["a few", "several", "many"]), PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon"), Labeled(8, "octagon")])], [on, size, 180 - 360/n]])' />
 </Story>
+
+## In Vue
+
+The same trees, from the template side. Every symbol is a Vue component
+(`<Slider>`, `<Row>`, `<Dynamic>` — from `@enumeratio/notatio-vue`, generated from the
+element sources), and `<Notatio expr>` renders an expression as the vdom it is —
+`vdomOf` in the base package, handed to Vue's `h`. `structural` draws the expression
+verbatim: every head a tag, every argument a child.
+
+<Story
+  title="The symbols as components">
+<Tangle>
+<Row>
+<Slider name="k" :min="0" :max="5" :step="0.5" value="2" readout />
+<Dynamic value="_k ^ 2" />
+</Row>
+</Tangle>
+</Story>
+
+<Story
+  title="An expression, as a vdom">
+<Notatio expr='Row([Slider((k, 1), (0, 5, 0.5)), "squared is", Dynamic(k^2)])' />
+</Story>
+
+<Story
+  title="The structural tree">
+<template #description>
+Nothing interpreted: <code>Sin(x)^2 + 1</code> as its own tags. Inspect the DOM.
+</template>
+<Notatio expr="Sin(x)^2 + 1" structural />
+</Story>
