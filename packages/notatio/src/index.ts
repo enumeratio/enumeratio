@@ -39,3 +39,4 @@ export * from "./vectorplot.ts";
 export * from "./playback.ts";
 export * from "./controls.ts";
 export * from "./vdom.ts";
+export * from "./heads-data.ts";

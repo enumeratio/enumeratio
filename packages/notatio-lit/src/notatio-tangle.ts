@@ -1,17 +1,11 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { CONTROL_EVENT } from "@enumeratio/notatio";
 import { LitElement, nothing } from "lit";
-import { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
-import { loadEngine } from "./mathlive.ts";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
 import "./notatio-toggler.ts";
 import "./notatio-when.ts";
+import { Scope } from "./scope.ts";
 import { ensureStyles } from "./styles.ts";
-import { CONTROL_EVENT, type ControlChange, debug } from "@enumeratio/notatio";
-import { type ControlElement, controlSelector } from "./define.ts";
-
-const log = debug("tangle");
 
 /**
  * `<notatio-tangle>` -- a **reactive document**, after Bret Victor's
@@ -37,6 +31,10 @@ const log = debug("tangle");
  * Unlike `<notatio-manipulate>` — the same substitution machinery behind a Wolfram-style
  * panel of sliders — a tangle has no chrome of its own and renders nothing. Nested
  * tangles are separate scopes: a control belongs to its nearest enclosing one.
+ *
+ * A tangle is not required: the page itself is a scope, and a control and a readout
+ * with no wrapper at all still find each other. The wrapper is for isolation -- two
+ * examples on one page that both call their knob `n`.
  */
 export class NotatioTangle extends LitElement {
   static properties = {
@@ -46,10 +44,7 @@ export class NotatioTangle extends LitElement {
 
   declare trace: boolean;
 
-  #engine: ComputeEngine | undefined;
-  #templates: Template[] = [];
-  /** Current value per control name, as MathJSON: a number, `True`, a `List`, ... */
-  #values = new Map<string, MathJsonExpression>();
+  #scope = new Scope(this, this);
 
   constructor() {
     super();
@@ -65,67 +60,22 @@ export class NotatioTangle extends LitElement {
 
   override connectedCallback(): void {
     super.connectedCallback();
-    this.addEventListener(CONTROL_EVENT, this.#onControl as EventListener);
+    this.addEventListener(CONTROL_EVENT, this.#scope.onControl);
   }
 
   override disconnectedCallback(): void {
-    this.removeEventListener(CONTROL_EVENT, this.#onControl as EventListener);
+    this.removeEventListener(CONTROL_EVENT, this.#scope.onControl);
     super.disconnectedCallback();
   }
 
   protected override firstUpdated(): void {
-    void this.#start();
+    this.#scope.trace = this.trace;
+    void this.#scope.refresh();
   }
 
   /** Every control this tangle owns — a nested tangle keeps its own. */
   get controls(): Element[] {
-    return [...this.querySelectorAll(controlSelector())].filter(
-      (el) => el.closest("notatio-tangle") === this,
-    );
-  }
-
-  async #start(): Promise<void> {
-    // The controls may not have been upgraded yet, and their values live on the
-    // instances (VitePress binds custom-element strings as properties).
-    customElements.upgrade(this);
-    await Promise.all(
-      [...new Set(this.controls.map((el) => el.localName))].map((tag) =>
-        customElements.whenDefined(tag),
-      ),
-    );
-    const engine = (this.#engine ??= await loadEngine());
-    for (const el of this.controls) this.#read(el);
-    this.#templates = captureTemplates(this, new Set(this.#values.keys()), engine);
-    log("scope %o over %d templates", [...this.#values.keys()], this.#templates.length);
-    this.#apply();
-  }
-
-  /**
-   * Seed a control's starting value into the scope. Each control exposes `binding` — the
-   * one value it contributes, whatever it looks like on the page — so the scope never
-   * has to know whether it is reading a scrubber, a list, a word or a bar of them.
-   */
-  #read(el: Element): void {
-    const control = el as Partial<ControlElement>;
-    if (!control.name || control.binding === undefined) return;
-    this.#values.set(control.name, control.binding);
-  }
-
-  #onControl = (event: CustomEvent<ControlChange>): void => {
-    const { name, value } = event.detail;
-    if (!name) return;
-    this.#values.set(name, value);
-    if (this.trace) log("%s := %o", name, value);
-    this.#apply();
-  };
-
-  /** Refill every template from the current scope. */
-  #apply(): void {
-    const engine = this.#engine;
-    if (!engine) return;
-    const boxed = new Map<string, BoxedExpression>();
-    for (const [name, value] of this.#values) boxed.set(name, engine.box(value as never));
-    applyTemplates(engine, this.#templates, boxed);
+    return this.#scope.controls;
   }
 
   protected override render(): unknown {

@@ -637,6 +637,9 @@ importers:
       '@enumeratio/braid':
         specifier: workspace:*
         version: link:../braid
+      '@enumeratio/reference':
+        specifier: workspace:*
+        version: link:../reference
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4

@@ -212,3 +212,38 @@ Nothing interpreted: <code>Sin(x)^2 + 1</code> as its own tags. Inspect the DOM.
 </template>
 <Notatio expr="Sin(x)^2 + 1" structural />
 </Story>
+
+## Every symbol, and no wrapper
+
+Every head the engine knows is an element, `notatio-` plus its name: the ones that
+draw or control have components of their own, and the rest are **generic** — a
+`<notatio-binomial>` typesets `Binomial(…)`, its arguments its children (or its
+`value`, the text the symbol's constructor takes). And the page is itself a scope: a
+control and a readout with no `<notatio-tangle>` around them still find each other;
+the wrapper is for isolation, when two examples reuse a name.
+
+<Story
+  title="Generic elements">
+<template #description>
+No component was written for <code>Binomial</code>, <code>Sqrt</code> or
+<code>Add</code>. The outermost typesets; the ones inside are structure.
+</template>
+<p>
+<notatio-binomial>n, 2</notatio-binomial>,
+<notatio-sqrt><notatio-add><notatio-power>x, 2</notatio-power><notatio-integer value="1" /></notatio-add></notatio-sqrt>,
+<notatio-integer value="42" />, <notatio-string value="a string" />.
+</p>
+</Story>
+
+<Story
+  title="The page as the scope">
+<template #description>
+No tangle: the slider is named <code>m</code> nowhere else on this page, so the page
+scope binds it to the readout and to the generic element beside it.
+</template>
+<p>
+<notatio-slider name="m" value="4" min="0" max="10" step="1" readout /> choose 2 is
+<notatio-binomial evaluate>_m, 2</notatio-binomial>, and squared it is
+<notatio-dynamic value="_m^2" />.
+</p>
+</Story>

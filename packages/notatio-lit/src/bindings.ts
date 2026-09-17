@@ -20,14 +20,20 @@ export type Template = { el: Element; json: Json } & ({ attr: string } | { prop:
  *
  * VitePress/Vue set custom-element string bindings as PROPERTIES rather than attributes,
  * so a wildcard may live on either; both are captured. Nodes under `skip` (a control
- * panel of our own making) are left alone.
+ * panel of our own making), or for which the `skip` predicate holds, are left alone.
  */
 export function captureTemplates(
   root: Element,
   names: ReadonlySet<string>,
   engine: ComputeEngine,
-  skip?: Element,
+  skip?: Element | ((el: Element) => boolean),
 ): Template[] {
+  const skipped =
+    skip === undefined
+      ? () => false
+      : typeof skip === "function"
+        ? skip
+        : (el: Element) => el === skip || skip.contains(el);
   const parseLatex = (tex: string) => engine.parse(tex).json;
   const slotted = (src: string): Json | undefined => {
     if (!src.includes("_")) return undefined;
@@ -37,7 +43,7 @@ export function captureTemplates(
   };
   const templates: Template[] = [];
   for (const el of root.querySelectorAll("*")) {
-    if (skip !== undefined && (el === skip || skip.contains(el))) continue;
+    if (skipped(el)) continue;
     for (const attr of el.getAttributeNames()) {
       const json = slotted(el.getAttribute(attr) ?? "");
       if (json !== undefined) templates.push({ el, attr, json });

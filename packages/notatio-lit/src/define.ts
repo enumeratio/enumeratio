@@ -7,6 +7,7 @@ import {
   type ControlChange,
   numericParts,
 } from "@enumeratio/notatio";
+import { pageScope } from "./scope.ts";
 
 /** What a scope reads off a control element. */
 export interface ControlElement extends HTMLElement, BoundControl {}
@@ -14,10 +15,15 @@ export interface ControlElement extends HTMLElement, BoundControl {}
 /** Every registered control tag, for a scope's `querySelectorAll`. */
 export const CONTROL_TAGS = new Set<string>();
 
-/** Define a control's custom element and record its tag. Idempotent. */
+/**
+ * Define a control's custom element and record its tag. Idempotent. The page scope
+ * re-reads once a new kind of control exists, since markup already on the page may
+ * hold some.
+ */
 export function defineControl(tag: string, ctor: CustomElementConstructor): void {
   CONTROL_TAGS.add(tag);
   if (!customElements.get(tag)) customElements.define(tag, ctor);
+  if (typeof document !== "undefined") void pageScope().refresh();
 }
 
 /** The selector that finds every control under an element. */

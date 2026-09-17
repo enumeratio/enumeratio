@@ -187,6 +187,30 @@ histogram: `h("notatio-chart", { type: "histogram", data: "[1,2,2,3]" })` -- the
 lowered into one JSON prop, since the chart's API takes it that way and a thousand
 `notatio-integer` children would be a thousand elements for one array.
 
+## Three things the examples raised
+
+**`_k` is notatio, not LaTeX and not a regex.** `<Dynamic value="_k ^ 2" />` is right as
+written: the attribute is notatio (Epsil), and `_k` is Epsil's wildcard -- compute-engine's
+slot notation, the same `_` the pattern matcher uses. LaTeX is what goes in `$…$` islands
+(`value="$\sin(kx)$"`), and a wildcard can sit inside one too. The renderer writes `_k`
+where a control declares `k`; an author writes it by hand. What the rule _does_ insist on
+is that anything LaTeX be fenced, which is the subset of Epsil the site already uses.
+
+**Atoms take `value`, and so does everything else.** `<Integer value="2" />` rather than
+`<Integer>2</Integer>` -- `value` is the text the symbol's constructor takes: an atom's
+literal, and for any other head the whole expression as notatio. Children are the other
+spelling, the argument form. Both are accepted by every generic element, and `value` is
+what a scope reads and writes, so it is also how a generic element becomes a template:
+the outermost publishes its children's expression as `value`, and a `_k` in it follows a
+knob. This generalises to any carrier with a text representation it can serialise.
+
+**The `<Tangle>` is for isolation, not for binding.** The page is a scope: a control and
+a readout with no wrapper find each other through it, and a page assembled by a
+framework binds as it mounts. A tangle (or a Manipulate) is an explicit scope over its
+subtree, for the case that matters on a page of examples -- two of them each calling
+their knob `n`. `renderingOf` still wraps an expression that declares controls in one,
+since an expression is self-contained by intent; hand-written markup needs none.
+
 ## What the examples say
 
 1. **Children are arguments, props are the component's API.** The structural tree has
@@ -198,8 +222,9 @@ lowered into one JSON prop, since the chart's API takes it that way and a thousa
    know about the other.
 3. **Scopes are realization, not structure.** `Tangle` and `_k` never appear in an
    expression; the renderer adds them where a control declares a variable.
-4. **Atoms are leaf tags in the generated tree and text in the hand-written one.**
-   `<Integer>2</Integer>` is what a generator emits; `2` is what a person types.
+4. **Atoms are leaf tags in the generated tree and text or `value` in the hand-written
+   one.** `<Integer value="2" />` is the constructor spelling; `2` inside a parent's
+   argument text is what a person types.
 5. **Only the outermost generic element typesets.** Inner ones are structure with
    `display: contents`; they exist so the tree is addressable, not so each draws.
 
@@ -226,6 +251,11 @@ whole of notatio from one import.
   plus the per-symbol wrapper generator moved out of the site into `notatio-vue` (a
   React template is the same loop) so both frameworks get `<Slider>`, `<Plot>`,
   `<Binomial>`.
-- Generic elements in `notatio-lit`: one factory class registered per symbol the engine
-  knows, with `expression` gathered from children, typesetting at the outermost. Every
-  symbol gets a tag; the ~50 with hand-written classes keep them and gain child-reading.
+- Generic elements in `notatio-lit` (`generic.ts`, landed): one class per head in the
+  base's `HEADS` (`heads-data.ts`, collected from the engine's symbols, the reference
+  entries and the drawing heads), registered at its tag unless a hand-written element
+  owns it; `expression` from `value` or from the children; only the outermost typesets.
+  Child-reading on the hand-written components is still to do.
+- The page scope (`scope.ts`, landed): `<notatio-tangle>` and the page share one `Scope`;
+  the page's re-reads merge, since an applied template has its result where its wildcard
+  was.

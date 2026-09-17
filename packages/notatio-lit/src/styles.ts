@@ -1477,6 +1477,14 @@ notatio-locator { display: contents; }
 }
 .notatio-toggler-grip[data-on] .notatio-switch-thumb { left: calc(100% - 1.05em + 2px); }
 
+/* A generic symbol element: inline, and only the outermost draws -- through an
+   out that is inline too, since it sits in a sentence. */
+[data-notatio-generic] { display: inline; }
+[data-notatio-generic] [data-notatio-generic] { display: contents; }
+.notatio-generic-args { display: none; }
+notatio-out.notatio-generic-out { display: inline; }
+notatio-out.notatio-generic-out > * { display: inline; }
+
 /* --- layout: Row, Column, Grid, Panel, Labeled ---------------------------------- */
 notatio-row { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.6em; vertical-align: middle; }
 notatio-column { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0.5em; vertical-align: top; }

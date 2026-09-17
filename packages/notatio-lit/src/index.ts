@@ -2,6 +2,12 @@
 // a consumer that wants the components has the whole of notatio from one import.
 export * from "@enumeratio/notatio";
 
+// The page is a scope: controls and readouts with no `<notatio-tangle>` around them
+// bind through it. Installed once, client side.
+import { pageScope } from "./scope.ts";
+if (typeof document !== "undefined") pageScope();
+export { pageScope, Scope } from "./scope.ts";
+
 // Importing any element module registers its custom element as a side effect.
 import "./notatio-in.ts";
 import "./notatio-out.ts";
@@ -200,3 +206,15 @@ declare global {
     "notatio-terminal": NotatioTerminal;
   }
 }
+
+// Every other head the engine knows gets a generic element at its tag, now that the
+// hand-written ones are defined and can keep theirs.
+import { defineGenerics } from "./generic.ts";
+export {
+  defineGeneric,
+  defineGenerics,
+  expressionOf,
+  isExpressive,
+  NotatioGeneric,
+} from "./generic.ts";
+if (typeof customElements !== "undefined") defineGenerics();

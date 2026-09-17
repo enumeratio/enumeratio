@@ -19,7 +19,8 @@
     "build": "vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
-    "check": "vp check"
+    "check": "vp check",
+    "heads:collect": "node --experimental-strip-types scripts/collect-heads.ts"
   },
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/braid": "workspace:*",
+    "@enumeratio/reference": "workspace:*",
     "@types/node": "catalog:",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",
