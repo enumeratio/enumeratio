@@ -1,6 +1,6 @@
 # Design: the AST as a vdom
 
-Status: **proposal, with worked examples**. Companion to
+Status: **landed** (structural tree, frameworks, generics, options; 2026-09-16). Companion to
 [components-and-symbols.md](./components-and-symbols.md): that note says a symbol and its
 component are the same thing seen from two ends; this one writes out what the tree
 looks like from the component end, so the shape can be judged before anything is built.
@@ -110,9 +110,35 @@ Pseudo-Vue, both spellings:
 ```
 
 The second spelling is the one every generic element already has; a built component
-supports it by reading its children when it has no `value` -- the same lowering,
-applied by the component to its own children instead of by `renderingOf` to the AST.
-One map, used from both sides.
+supports it because the element adopts its structural children (`structure.ts` in
+`notatio-lit`) -- the same lowering, applied by the element to its own children instead
+of by `renderingOf` to the AST. One map, used from both sides. A head with a fixed
+signature also takes its arguments by name, from the reference entry's parameters:
+`<Binomial n="5" k="2" />`.
+
+### Options
+
+Options are Wolfram's rules, and the rules are Wolfram's: `PlotRange -> (-1, 1)` after
+the positional arguments, singly or in (nested) lists, flattened, the **leftmost**
+setting of a name winning (`OptionsPattern`). The expression is never rewritten to
+hold them -- no dictionary form; a `[K -> v]` list stays a list of `KeyValuePair` (or
+the `Tuple` the engine canonicalises a symbol-keyed pair to). `optionsOf` in `formats`
+reads them off; `withOptions` writes them back.
+
+In the vdom an option is a prop, kebab-cased: `PlotRange -> (-1, 1)` is
+`h("notatio-plot", { "plot-range": "-1,1" })`. An option whose value has a rendering of
+its own is a slotted child instead, `slot` naming the option; one whose value is a
+graphics primitive (`Epilog -> Point((1, 0.5))`) travels as its notatio text, since it
+is marks on the plot's own axes rather than a picture of its own. A component that
+spells an option differently (`PlotLabel` is the plot's `label`) maps it in
+`VisualSymbol.options`; an element's own attributes are its options too, read back by
+name (`plot-range` on the element is `PlotRange` on the expression).
+
+```vue
+<Plot value="Sin(x)" var="x" domain="0,10" plot-range="-1,1" epilog="Point((1, 0.5))" />
+<!-- or, structurally -->
+<Plot plot-range="-1,1" epilog="Point((1, 0.5))"><Sin>x</Sin><Tuple>x, 0, 10</Tuple></Plot>
+```
 
 ## 4. Controls and a scope: `Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])`
 
@@ -211,12 +237,21 @@ subtree, for the case that matters on a page of examples -- two of them each cal
 their knob `n`. `renderingOf` still wraps an expression that declares controls in one,
 since an expression is self-contained by intent; hand-written markup needs none.
 
+## Where the lowering lives
+
+Only in the elements. `notatio-vue` and `notatio-react` render `structuralOf` and
+nothing else: heads to tags, arguments to children, options to props. A `<Plot>` that
+reaches the DOM with a `<Sin>` inside it is lowered by `<notatio-plot>` when it adopts
+its children (`structure.ts`), and a `<Dynamic>` beside a `<Slider>` reads the slider's
+name as a wildcard through the same step. The frameworks know no component's API, and
+adding one is a change to one table in the base.
+
 ## What the examples say
 
-1. **Children are arguments, props are the component's API.** The structural tree has
-   no props at all; props only appear when a component lowers arguments into its own
-   attributes. So "what are the attributes of a generic element?" has the answer _none_
-   -- its children are its arguments, and text is notatio.
+1. **Children are arguments, props are options -- or, for a fixed signature, named
+   arguments.** The structural tree carries an option as a prop, an argument as a child
+   (or an atom's `value`); a component's own API only appears when the element lowers.
+   Every other attribute on a generic element is an option.
 2. **The lowering is one table, read from two sides.** `renderingOf` applies it to an
    AST; a component reading its own children applies it to markup. Neither needs to
    know about the other.
@@ -236,26 +271,28 @@ Split 2026-09-16 along exactly this line:
 | --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
 | `@enumeratio/notatio`       | the base: `symbols.ts` (head → tag, the lowering), the control contract (`controls.ts`), the arithmetic of scrubbing and playback, the pure SVG renderers | compute-engine, formats     |
 | `@enumeratio/notatio-lit`   | every `notatio-*` element, the DOM half of the contract (`define.ts`), the frame loops (`sweep.ts`), bindings, styles, popovers, MathLive                 | notatio, lit, mathlive      |
-| `@enumeratio/notatio-vue`   | `<Notatio expr>` over `toVNode(h)`, and the generated per-symbol wrappers (`<Slider>`, `<Plot>`, `<Binomial>`) -- what VitePress uses                     | notatio, notatio-lit, vue   |
+| `@enumeratio/notatio-vue`   | `<Notatio expr>` over `structuralOf` and `toVNode(h)`, and the generated per-symbol wrappers (`<Slider>`, `<Plot>`, `<Binomial>`) -- what VitePress uses  | notatio, notatio-lit, vue   |
 | `@enumeratio/notatio-react` | the same over `createElement`                                                                                                                             | notatio, notatio-lit, react |
 
 The base has no UI framework and no DOM at import; the CLI draws through it in Node.
 The lit package re-exports the base, so a consumer that wants the components has the
 whole of notatio from one import.
 
-## What it would take
+## Where it is
 
-- `vdom.ts` in the base: `toVNode(rendering, h)` over the realized tree (exists as
-  `Rendering`; only the `h` adapter is new), and `structuralOf(expr)` for the verbatim
-  tree. `notatio-vue` and `notatio-react` are each a `<Notatio expr>` over `toVNode`,
-  plus the per-symbol wrapper generator moved out of the site into `notatio-vue` (a
-  React template is the same loop) so both frameworks get `<Slider>`, `<Plot>`,
+- `vdom.ts` in the base: `structuralOf(expr)` for the verbatim tree and `toVNode(h)`
+  over it; `notatio-vue` and `notatio-react` are each a `<Notatio expr>` over those,
+  plus the per-symbol wrapper generator, so both frameworks get `<Slider>`, `<Plot>`,
   `<Binomial>`.
-- Generic elements in `notatio-lit` (`generic.ts`, landed): one class per head in the
-  base's `HEADS` (`heads-data.ts`, collected from the engine's symbols, the reference
-  entries and the drawing heads), registered at its tag unless a hand-written element
-  owns it; `expression` from `value` or from the children; only the outermost typesets.
-  Child-reading on the hand-written components is still to do.
-- The page scope (`scope.ts`, landed): `<notatio-tangle>` and the page share one `Scope`;
-  the page's re-reads merge, since an applied template has its result where its wildcard
+- `options.ts` in `formats`: `optionsOf` / `withOptions`; `lowerOptions` and
+  `VisualSymbol.options` in the base's `symbols.ts`; `primitives.ts` for what `Epilog`
+  carries.
+- Generic elements in `notatio-lit` (`generic.ts`): one class per head in the base's
+  `HEADS` (`heads-data.ts`, collected from the engine's symbols, the reference entries
+  and the drawing heads, with `PARAMS` for the fixed signatures), registered at its tag
+  unless a hand-written element owns it; `expression` from `value`, the children or the
+  named attributes; only the outermost typesets. `structure.ts` adopts the same
+  spelling on the hand-written components.
+- The page scope (`scope.ts`): `<notatio-tangle>` and the page share one `Scope`; the
+  page's re-reads merge, since an applied template has its result where its wildcard
   was.

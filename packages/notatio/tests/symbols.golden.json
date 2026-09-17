@@ -804,5 +804,49 @@
       ]
     },
     "markup": "<notatio-tangle><notatio-row><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-tangle>"
+  },
+  "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "Sin(x)",
+        "var": "x",
+        "domain": "0,10",
+        "plot-range": "-1,1",
+        "epilog": "Point((1, 0.5))"
+      }
+    },
+    "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" plot-range=\"-1,1\" epilog=\"Point((1, 0.5))\"></notatio-plot>"
+  },
+  "Plot(Sin(x), (x, 0, 10), [PlotLabel -> \"sine\", GridLines -> True], PlotLabel -> \"no\")": {
+    "rendering": {
+      "tag": "notatio-plot",
+      "attributes": {
+        "value": "Sin(x)",
+        "var": "x",
+        "domain": "0,10",
+        "label": "sine",
+        "grid": "true"
+      }
+    },
+    "markup": "<notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" label=\"sine\" grid=\"true\"></notatio-plot>"
+  },
+  "Slider(k, (0, 5), Appearance -> \"Labeled\")": {
+    "rendering": {
+      "tag": "notatio-tangle",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "notatio-slider",
+          "attributes": {
+            "name": "k",
+            "min": "0",
+            "max": "5",
+            "appearance": "Labeled"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-tangle><notatio-slider name=\"k\" min=\"0\" max=\"5\" appearance=\"Labeled\"></notatio-slider></notatio-tangle>"
   }
 }

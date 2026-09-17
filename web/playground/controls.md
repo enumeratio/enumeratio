@@ -182,13 +182,56 @@ symbols the engine knows.
 <notatio-out format="notatio" value='Grid([[Checkbox((on, True)), Toggler(size, ["a few", "several", "many"]), PopupMenu((n, 6), [Labeled(4, "square"), Labeled(6, "hexagon"), Labeled(8, "octagon")])], [on, size, 180 - 360/n]])' />
 </Story>
 
+## Options
+
+Options are Wolfram's: rules after the positional arguments, `PlotRange -> (-1, 1)`,
+singly or in lists, the leftmost setting of a name winning. On an element they are
+attributes — `plot-range`, or the name a component already has (`PlotLabel` is the
+plot's `label`) — and one whose value is something to draw, like `Epilog`, is
+carried the same way, as the notatio it was.
+
+<Story
+  title="Options as rules, and as attributes">
+<template #description>
+The expression and the element say the same thing; <code>Epilog</code> marks the
+plot with a graphics primitive.
+</template>
+<notatio-out format="notatio" value='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1.5, 1.5), PlotLabel -> "sine", Epilog -> [Point((1.5, 1)), Line([(0, 0), (10, 0)])])' />
+<notatio-plot value="Sin(x)" var="x" domain="0,10" plot-range="-1.5,1.5" label="sine" epilog="[Point((1.5, 1)), Line([(0, 0), (10, 0)])]" />
+</Story>
+
+## Structure, not attributes
+
+A built component can also be written the way its expression reads: the arguments
+as children, the options as attributes in Wolfram's names. The element lowers them
+itself — `<notatio-plot>` holding a `<notatio-sin>` and a `<notatio-tuple>` is
+`Plot(Sin(x), (x, 0, 10))` — so a framework that hands the DOM an expression's tree
+needs to know nothing about the components. A head with a fixed signature takes its
+arguments by name too: `<notatio-binomial n="5" k="2">`.
+
+<Story
+  title="A plot, structurally">
+<notatio-plot plot-range="-1,1" grid-lines="true">
+<notatio-sin>x</notatio-sin>
+<notatio-tuple>x, 0, 10</notatio-tuple>
+</notatio-plot>
+</Story>
+
+<Story
+  title="Named arguments">
+<p>
+<notatio-binomial n="5" k="2" evaluate />, and
+<notatio-fibonacci n="10" evaluate />.
+</p>
+</Story>
+
 ## In Vue
 
 The same trees, from the template side. Every symbol is a Vue component
 (`<Slider>`, `<Row>`, `<Dynamic>` — from `@enumeratio/notatio-vue`, generated from the
-element sources), and `<Notatio expr>` renders an expression as the vdom it is —
-`vdomOf` in the base package, handed to Vue's `h`. `structural` draws the expression
-verbatim: every head a tag, every argument a child.
+element sources), and `<Notatio expr>` renders an expression as the tree it is —
+`structuralOf` in the base package, handed to Vue's `h`: every head a tag, every
+argument a child, every option a prop. The elements do the rest.
 
 <Story
   title="The symbols as components">
@@ -202,15 +245,16 @@ verbatim: every head a tag, every argument a child.
 
 <Story
   title="An expression, as a vdom">
+<template #description>
+Inspect the DOM: a <code>notatio-row</code> holding a <code>notatio-list</code> of a
+<code>notatio-slider</code>, a string and a <code>notatio-dynamic</code>.
+</template>
 <Notatio expr='Row([Slider((k, 1), (0, 5, 0.5)), "squared is", Dynamic(k^2)])' />
 </Story>
 
 <Story
-  title="The structural tree">
-<template #description>
-Nothing interpreted: <code>Sin(x)^2 + 1</code> as its own tags. Inspect the DOM.
-</template>
-<Notatio expr="Sin(x)^2 + 1" structural />
+  title="A plot with options, as a vdom">
+<Notatio expr='Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1.5, 1)))' />
 </Story>
 
 ## Every symbol, and no wrapper

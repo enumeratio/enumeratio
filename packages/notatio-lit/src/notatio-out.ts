@@ -172,6 +172,10 @@ export class NotatioOut extends LitElement {
     value: { type: String },
     /** How to read `value`: `latex`, `mathjson` or `notatio`. */
     format: { type: String },
+    /** Sit inline in a sentence: the rendering alone, no label, no menu, no status. */
+    inline: { type: Boolean, reflect: true },
+    /** Set as a centred display equation (`\displaystyle`), for `$$…$$`. */
+    display: { type: Boolean, reflect: true },
     /** Evaluate before rendering, rather than rendering the input as given. */
     evaluate: { type: Boolean },
     /** Box without evaluating, so the source and AST forms populate. */
@@ -218,6 +222,8 @@ export class NotatioOut extends LitElement {
 
   declare value: string;
   declare format: Format;
+  declare inline: boolean;
+  declare display: boolean;
   declare evaluate: boolean;
   declare box: boolean;
   declare raw: boolean;
@@ -263,6 +269,8 @@ export class NotatioOut extends LitElement {
     this.expect = "";
     this.planned = false;
     this.form = "standard";
+    this.inline = false;
+    this.display = false;
     this.label = "";
     this._markup = "";
     this._visual = "";
@@ -290,12 +298,18 @@ export class NotatioOut extends LitElement {
   }
 
   protected override willUpdate(changed: PropertyValues): void {
+    // Prose math keeps its LaTeX on the attribute, so a copied selection (a clone,
+    // which carries attributes but not properties) can be serialised back to `$…$`.
+    if ((this.inline || this.display) && changed.has("value") && this.value) {
+      if (this.getAttribute("value") !== this.value) this.setAttribute("value", this.value);
+    }
     if (
       changed.has("value") ||
       changed.has("format") ||
       changed.has("evaluate") ||
       changed.has("box") ||
       changed.has("raw") ||
+      changed.has("display") ||
       changed.has("expect")
     ) {
       void this.#recompute();
@@ -319,7 +333,8 @@ export class NotatioOut extends LitElement {
       !this.expect &&
       this.form === "standard"
     ) {
-      return { latex: source, json: undefined };
+      // MathLive's static renderer takes its style from the LaTeX itself.
+      return { latex: this.display ? `\\displaystyle ${source}` : source, json: undefined };
     }
     const engine = await loadEngine();
     // `raw` keeps the authored tree; evaluation canonicalises regardless, so it wins.
@@ -812,6 +827,8 @@ export class NotatioOut extends LitElement {
   }
 
   protected override render(): unknown {
+    // Inline or display: the rendering and nothing else, for a formula in prose.
+    if (this.inline || this.display) return html`${this.#content()}`;
     // Layout: a plain (unselectable) In/Out label on the left, the rendered
     // value in the middle, and the form dropdown floated to the right.
     return html`<span class="notatio-line"

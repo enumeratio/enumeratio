@@ -1,6 +1,6 @@
 // A document-level copy handler: when a selection spans notatio elements, put
 // Markdown on the clipboard instead of the browser's mangled default. Inline
-// math (`<notatio-tex>`) becomes `$latex$`, a code box (`<notatio-code>`) becomes
+// math (`<notatio-out inline>`) becomes `$latex$`, a code box (`<notatio-code>`) becomes
 // an inline code span or a fenced block, and the surrounding prose is kept. A
 // no-op (default copy) for any selection that doesn't touch our elements.
 
@@ -17,7 +17,7 @@ function onCopy(event: ClipboardEvent): void {
   if (!selection || selection.isCollapsed || selection.rangeCount === 0) return;
   const fragment = selection.getRangeAt(0).cloneContents();
   // Only intervene when the selection actually contains one of our elements.
-  if (!fragment.querySelector?.("notatio-tex, notatio-code")) return;
+  if (!fragment.querySelector?.("notatio-out[inline], notatio-out[display], notatio-code")) return;
   const text = serialize(fragment)
     .replace(/[ \t]+\n/g, "\n")
     .replace(/\n{3,}/g, "\n\n")
@@ -51,9 +51,11 @@ function serialize(node: Node): string {
   const el = node as Element;
   const tag = el.tagName.toLowerCase();
 
-  if (tag === "notatio-tex") {
+  // Prose math (`inline` and `display` are reflected; `format` may be a property only).
+  if (tag === "notatio-out" && (el.hasAttribute("inline") || el.hasAttribute("display"))) {
     const value = el.getAttribute("value") ?? "";
-    return value ? `$${value}$` : "";
+    if (!value) return "";
+    return el.hasAttribute("display") ? `\n$$${value}$$\n` : `$${value}$`;
   }
   if (tag === "notatio-code") {
     const value = el.getAttribute("value") ?? "";

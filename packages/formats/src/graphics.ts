@@ -146,6 +146,15 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Grid",
   "Panel",
   "Labeled",
+  // Graphics primitives: marks a plot draws in its own coordinates (`Epilog -> Point(…)`).
+  "Point",
+  "Line",
+  "Arrow",
+  "Circle",
+  "Disk",
+  "Polygon",
+  "Rectangle",
+  "Text",
 ];
 
 export function declareGraphics(ce: ComputeEngine): void {

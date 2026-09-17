@@ -1,4 +1,5 @@
 import { type MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { optionsOf } from "@enumeratio/formats";
 import { serializeNotatio } from "@enumeratio/formats/notatio";
 
 // A symbol and its component are the same thing seen from two ends
@@ -30,10 +31,18 @@ export interface VisualSymbol {
   readonly tag: string;
   /** Attributes fixed by the symbol itself -- a family member's `type`. */
   readonly fixed?: Readonly<Record<string, string>>;
-  /** The argument-to-attribute map, over the head's operands. */
+  /** The argument-to-attribute map, over the head's POSITIONAL operands. */
   readonly attributes: (ops: readonly MathJsonExpression[]) => Record<string, string>;
   /** Operands that render as children rather than attributes (a `Manipulate` body). */
   readonly children?: (ops: readonly MathJsonExpression[]) => MathJsonExpression[];
+  /**
+   * Where a Wolfram option lands when it is not simply the kebab-cased attribute:
+   * `PlotLabel` is the plot's `label`, `AxesLabel` is two attributes. A string names
+   * the attribute; a function returns the attributes.
+   */
+  readonly options?: Readonly<
+    Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>
+  >;
 }
 
 type Json = MathJsonExpression;
@@ -234,6 +243,28 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
     head: "Plot",
     tag: "notatio-plot",
     attributes: (ops) => oneVariable(ops, { value: "value", variable: "var", range: "domain" }),
+    options: {
+      PlotLabel: "label",
+      GridLines: "grid",
+      PlotLegends: "legend",
+      // `AxesLabel -> ("x", "y")`, or one label for the x axis.
+      AxesLabel: (value) => {
+        const parts = tupleOf(value) ?? [value];
+        const out: Record<string, string> = {};
+        if (parts[0] !== undefined) out["x-label"] = strOf(parts[0]) ?? notatio(parts[0]);
+        if (parts[1] !== undefined) out["y-label"] = strOf(parts[1]) ?? notatio(parts[1]);
+        return out;
+      },
+      // A range is `(a, b)` for y, or `((x0, x1), (y0, y1))`; the component takes the y pair.
+      PlotRange: (value): Record<string, string> => {
+        const parts = tupleOf(value);
+        if (parts === undefined) return {};
+        const y =
+          tupleOf(parts[1]) ??
+          (parts.length === 2 && tupleOf(parts[0]) === undefined ? parts : undefined);
+        return y === undefined ? {} : { "plot-range": y.map(clean).join(",") };
+      },
+    },
   },
   {
     head: "Plot3D",
@@ -561,7 +592,7 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   },
 ];
 
-const CONTROL_HEADS = new Set(
+export const CONTROL_HEADS = new Set(
   CONTROL_SYMBOLS.filter((c) => c.head !== "Dynamic").map((c) => c.head),
 );
 
@@ -601,6 +632,48 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   },
 ];
 
+/** `PlotRange` -> `plot-range`: an option's attribute when the symbol says nothing. */
+export const optionAttribute = (name: string): string =>
+  name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+
+/** An option's value as attribute text: a string bare, `True` as `true`, the rest notatio. */
+function optionText(value: Json): string | undefined {
+  const sym = symOf(value);
+  if (sym === "True") return "true";
+  if (sym === "False") return undefined;
+  return strOf(value) ?? notatio(value);
+}
+
+/**
+ * Lower a head's options (`optionsOf`) into attributes -- and, for a value that is
+ * itself something that draws, a slotted child, since an attribute whose value is a
+ * node IS a named child. Graphics primitives (`Epilog -> Point((0, 0))`) stay text:
+ * the component parses them in its own coordinates.
+ */
+export function lowerOptions(
+  symbol: Pick<VisualSymbol, "options"> | undefined,
+  options: Readonly<Record<string, Json>>,
+): { attributes: Record<string, string>; children: Rendering[] } {
+  const attributes: Record<string, string> = {};
+  const children: Rendering[] = [];
+  for (const [name, value] of Object.entries(options)) {
+    const rule = symbol?.options?.[name];
+    if (typeof rule === "function") {
+      Object.assign(attributes, rule(value));
+      continue;
+    }
+    const attr = rule ?? optionAttribute(name);
+    const drawn = renderingOf(value);
+    if (drawn !== undefined && drawn.tag !== "notatio-tangle") {
+      children.push({ ...drawn, attributes: { ...drawn.attributes, slot: attr } });
+      continue;
+    }
+    const text = optionText(value);
+    if (text !== undefined) attributes[attr] = text;
+  }
+  return { attributes, children };
+}
+
 const ALL_SYMBOLS: readonly VisualSymbol[] = [
   ...VISUAL_SYMBOLS,
   ...CONTROL_SYMBOLS,
@@ -625,7 +698,7 @@ export function controlNames(expr: Json, into = new Set<string>()): Set<string> 
  * declares it, which is its first argument. That is what lets `Row([Slider(k, (0, 5)),
  * Dynamic(k^2)])` bind: the slider keeps `k`, the readout gets `_k`.
  */
-function slottedExceptDeclarations(node: Json, names: ReadonlySet<string>): Json {
+export function slottedExceptDeclarations(node: Json, names: ReadonlySet<string>): Json {
   const head = headOf(node);
   if (head !== undefined && CONTROL_HEADS.has(head)) {
     const ops = opsOf(node);
@@ -692,16 +765,21 @@ function render(expr: Json, inScope: boolean): Rendering | undefined {
   if (symbol === undefined) {
     return inScope ? { tag: "notatio-dynamic", attributes: { value: notatio(expr) } } : undefined;
   }
-  const ops = opsOf(expr);
-  const attributes = { ...symbol.fixed, ...symbol.attributes(ops) };
-  const children = symbol.children?.(ops).map(
-    (c) =>
-      render(c, true) ?? {
-        tag: "notatio-dynamic",
-        attributes: { value: notatio(c) },
-      },
-  );
-  return children === undefined
+  // The trailing rules are options, Wolfram's way; the rest are the positional operands.
+  const { ops, options } = optionsOf(expr);
+  const lowered = lowerOptions(symbol, options);
+  const attributes = { ...symbol.fixed, ...symbol.attributes(ops), ...lowered.attributes };
+  const children = [
+    ...(symbol.children?.(ops).map(
+      (c) =>
+        render(c, true) ?? {
+          tag: "notatio-dynamic",
+          attributes: { value: notatio(c) },
+        },
+    ) ?? []),
+    ...lowered.children,
+  ];
+  return children.length === 0
     ? { tag: symbol.tag, attributes }
     : { tag: symbol.tag, attributes, children };
 }

@@ -8,8 +8,8 @@ let injected = false;
 
 const CSS = `
 notatio-in, notatio-out, notatio-cell { display: block; }
-notatio-tex { display: inline; }
-notatio-tex[display] {
+notatio-out[inline] { display: inline; }
+notatio-out[display] {
   display: block;
   text-align: center;
   margin: 1.1rem 0;

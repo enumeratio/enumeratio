@@ -56,7 +56,7 @@ export default defineConfig({
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {
     if (pageData.params?.name) pageData.title = pageData.params.name;
   },
-  // `$latex$` / `$$latex$$` render through <notatio-tex>, the same MathLive path the
+  // `$latex$` / `$$latex$$` render through <notatio-out format="latex">, the same MathLive path the
   // reference pages use — one renderer for the whole site, and no second math library.
   markdown: {
     config: (md) => {

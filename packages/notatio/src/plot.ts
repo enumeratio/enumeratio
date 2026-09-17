@@ -7,6 +7,7 @@
 // in distinct colours; a series can draw as points (ListPlot) instead of a
 // line; a parametric curve is just a series whose points aren't x-sorted.
 
+import { type Primitive, primitivesSvg } from "./primitives.ts";
 import { isLinear, scale } from "./scales.ts";
 
 const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
@@ -174,6 +175,10 @@ export interface PlotSeries {
 export interface PlotOptions {
   width?: number;
   height?: number;
+  /** Marks drawn over the curves in data coordinates (Wolfram's `Epilog`). */
+  epilog?: readonly Primitive[];
+  /** Marks drawn under the curves (Wolfram's `Prolog`). */
+  prolog?: readonly Primitive[];
   /** Draw the zero-axes and range labels (default true). */
   axes?: boolean;
   /** Scaling function name for the x / y axis (default "linear"). */
@@ -521,8 +526,20 @@ export function linePlot(
   const clip = `<clipPath id="${clipId}"><rect x="${n2(mL - 3)}" y="${n2(mT)}" width="${n2(plotW + 6)}" height="${n2(H - mT - mB)}"/></clipPath>`;
   const clipped = `<g clip-path="url(#${clipId})">${fills}${curves}</g>`;
 
+  const marks = (ps: readonly Primitive[] | undefined): string =>
+    ps && ps.length ? primitivesSvg(ps, frameOut.toPixel, ACCENT) : "";
   return {
-    svg: frame(clip + grid + chrome + clipped + legend + titleSvg + readout),
+    svg: frame(
+      clip +
+        grid +
+        marks(opts.prolog) +
+        chrome +
+        clipped +
+        marks(opts.epilog) +
+        legend +
+        titleSvg +
+        readout,
+    ),
     xAt,
     frame: frameOut,
   };

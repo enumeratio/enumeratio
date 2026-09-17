@@ -6,7 +6,9 @@
 // hands either to any framework's `h`.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { type Rendering, renderingOf } from "./symbols.ts";
+import { optionsOf } from "@enumeratio/formats";
+import { serializeNotatio } from "@enumeratio/formats/notatio";
+import { optionAttribute, type Rendering, renderingOf } from "./symbols.ts";
 
 type Json = MathJsonExpression;
 
@@ -28,55 +30,86 @@ const headOf = (node: unknown): string | undefined => {
   return Array.isArray(fn) && typeof fn[0] === "string" ? fn[0] : undefined;
 };
 
-const opsOf = (node: unknown): Json[] => {
-  const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
-  return Array.isArray(fn) ? (fn.slice(1) as Json[]) : [];
-};
-
 /**
  * An atom as its leaf: Wolfram's `Integer`, `Real`, `String` and `Symbol`, with the
  * value as the node's text. `True`/`False` are symbols like any other.
  */
 function atom(node: Json): Rendering | undefined {
+  const leaf = (tag: string, value: string): Rendering => ({ tag, attributes: { value } });
   if (typeof node === "number") {
-    return {
-      tag: Number.isInteger(node) ? "notatio-integer" : "notatio-real",
-      attributes: {},
-      text: String(node),
-    };
+    return leaf(Number.isInteger(node) ? "notatio-integer" : "notatio-real", String(node));
   }
   if (typeof node === "string") {
     if (node.length >= 2 && node.startsWith("'") && node.endsWith("'")) {
-      return { tag: "notatio-string", attributes: {}, text: node.slice(1, -1) };
+      return leaf("notatio-string", node.slice(1, -1));
     }
-    return { tag: "notatio-symbol", attributes: {}, text: node };
+    return leaf("notatio-symbol", node);
   }
   const num = (node as { num?: unknown }).num;
   if (typeof num === "string" || typeof num === "number") {
     const text = String(num);
-    return { tag: /^-?\d+$/.test(text) ? "notatio-integer" : "notatio-real", attributes: {}, text };
+    return leaf(/^-?\d+$/.test(text) ? "notatio-integer" : "notatio-real", text);
   }
   const str = (node as { str?: unknown }).str;
-  if (typeof str === "string") return { tag: "notatio-string", attributes: {}, text: str };
+  if (typeof str === "string") return leaf("notatio-string", str);
   const sym = (node as { sym?: unknown }).sym;
-  if (typeof sym === "string") return { tag: "notatio-symbol", attributes: {}, text: sym };
+  if (typeof sym === "string") return leaf("notatio-symbol", sym);
   return undefined;
 }
 
 /**
- * The expression verbatim as a vdom: no props anywhere, every argument a child, atoms
- * as leaves. Nothing is interpreted, so nothing is lost -- the tree is the expression,
- * addressable node by node.
+ * The expression verbatim as a vdom: every positional argument a child, atoms as leaves
+ * with their literal as `value`, and the trailing options (Wolfram's rules) as props --
+ * `PlotRange -> All` is `plot-range="All"`, and an option whose value is itself an
+ * application is a slotted child, since an attribute whose value is a node is a named
+ * child. Nothing else is interpreted: the element the tag names does the lowering.
  */
 export function structuralOf(expr: Json): Rendering {
   const leaf = atom(expr);
   if (leaf !== undefined) return leaf;
   const head = headOf(expr);
   if (head === undefined) {
-    return { tag: "notatio-symbol", attributes: {}, text: JSON.stringify(expr) };
+    return { tag: "notatio-symbol", attributes: { value: JSON.stringify(expr) } };
   }
-  return { tag: tagOf(head), attributes: {}, children: opsOf(expr).map(structuralOf) };
+  const { ops, options } = optionsOf(expr);
+  const attributes: Record<string, string> = {};
+  const children = ops.map(structuralOf);
+  for (const [name, value] of Object.entries(options)) {
+    const attr = optionAttribute(name);
+    const valueHead = headOf(value);
+    if (valueHead !== undefined && !PRIMITIVE_HEADS.has(valueHead)) {
+      const child = structuralOf(value);
+      children.push({ ...child, attributes: { ...child.attributes, slot: attr } });
+      continue;
+    }
+    const sym = typeof value === "string" ? value : (value as { sym?: unknown }).sym;
+    if (sym === "False") continue;
+    attributes[attr] = sym === "True" ? "true" : (stringOf(value) ?? serializeNotatio(value));
+  }
+  return { tag: tagOf(head), attributes, children };
 }
+
+/** Graphics primitives travel as text: a plot draws them in its own coordinates. */
+const PRIMITIVE_HEADS = new Set([
+  "Point",
+  "Line",
+  "Arrow",
+  "Circle",
+  "Disk",
+  "Polygon",
+  "Rectangle",
+  "Text",
+  "List",
+  "Tuple",
+]);
+
+const stringOf = (node: Json): string | undefined => {
+  if (typeof node === "string" && node.length >= 2 && node.startsWith("'") && node.endsWith("'")) {
+    return node.slice(1, -1);
+  }
+  const str = (node as { str?: unknown }).str;
+  return typeof str === "string" ? str : undefined;
+};
 
 /**
  * The tree that draws: a head with a component has its arguments lowered into that

@@ -22,8 +22,8 @@ test("the structural tree is the expression verbatim: heads are tags, arguments 
     tag: "notatio-binomial",
     props: {},
     children: [
-      { tag: "notatio-symbol", props: {}, children: ["n"] },
-      { tag: "notatio-integer", props: {}, children: ["2"] },
+      { tag: "notatio-symbol", props: { value: "n" }, children: [] },
+      { tag: "notatio-integer", props: { value: "2" }, children: [] },
     ],
   });
   const nested = parseNotatio("Sin(x)^2 + 1").json;
@@ -32,8 +32,7 @@ test("the structural tree is the expression verbatim: heads are tags, arguments 
   expect(tree.children?.map((c) => c.tag)).toEqual(["notatio-power", "notatio-integer"]);
   expect(structuralOf(parseNotatio('"so"').json)).toEqual({
     tag: "notatio-string",
-    attributes: {},
-    text: "so",
+    attributes: { value: "so" },
   });
   expect(structuralOf(parseNotatio("2.5").json).tag).toBe("notatio-real");
 });
@@ -68,4 +67,22 @@ test("toVNode hands the tree to any h, text as a lone child", () => {
     props: {},
     children: [{ tag: "span", props: {}, children: ["so"] }],
   });
+});
+
+test("options ride as props in the structural tree, a node-valued one as a slotted child", () => {
+  const tree = structuralOf(
+    parseNotatio(
+      'Plot(Sin(x), (x, 0, 10), PlotRange -> All, Frame -> True, Epilog -> Point((1, 0.5)), PlotLabel -> "wave", Inset -> Plot(Cos(x)))',
+    ).json,
+  );
+  expect(tree.tag).toBe("notatio-plot");
+  expect(tree.children?.slice(0, 2).map((c) => c.tag)).toEqual(["notatio-sin", "notatio-tuple"]);
+  expect(tree.attributes).toEqual({
+    "plot-range": "All",
+    frame: "true",
+    epilog: "Point((1, 0.5))",
+    "plot-label": "wave",
+  });
+  const inset = tree.children?.find((c) => c.attributes.slot === "inset");
+  expect(inset?.tag).toBe("notatio-plot");
 });

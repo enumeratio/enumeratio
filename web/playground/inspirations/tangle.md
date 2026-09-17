@@ -313,9 +313,9 @@ and starts being a document.
 title="A sentence and a curve, one knob">
 <notatio-tangle>
 <p>
-The curve <notatio-tex value="\sin(kx)" /> with
+The curve <notatio-out inline format="latex" value="\sin(kx)" /> with
 <notatio-knob name="k" value="3" min="1" max="8" step="1" /> crosses zero
-<notatio-dynamic value="2 * _k + 1" /> times on <notatio-tex value="[-\pi,\pi]" />.
+<notatio-dynamic value="2 * _k + 1" /> times on <notatio-out inline format="latex" value="[-\pi,\pi]" />.
 </p>
 <notatio-plot value="Sin(_k * x)" domain="-3.1416,3.1416" grid />
 </notatio-tangle>
@@ -331,7 +331,7 @@ the drag. This is the case a panel of sliders handles badly: the quantity is a
 <notatio-tangle>
 <p>
 Moving the pole <notatio-knob name="a" value="0.5+0.5i" complex step="0.1" min="-2" max="2" />
-drags the singularity of <notatio-tex value="1/(z-a)" /> around the plane.
+drags the singularity of <notatio-out inline format="latex" value="1/(z-a)" /> around the plane.
 </p>
 <notatio-complex-plot value="1 / (z - (_a))" domain="-2,2,-2,2" />
 </notatio-tangle>

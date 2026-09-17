@@ -74,6 +74,11 @@ const CORPUS = [
   "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
   'Panel(Labeled(Checkbox(on), "on?"))',
   "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])",
+  // Options: trailing rules, singly or in a list, leftmost winning; a drawable option
+  // (`Epilog`) is a slotted child, the rest are attributes.
+  "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))",
+  'Plot(Sin(x), (x, 0, 10), [PlotLabel -> "sine", GridLines -> True], PlotLabel -> "no")',
+  'Slider(k, (0, 5), Appearance -> "Labeled")',
 ];
 
 const GOLDEN = fileURLToPath(new URL("./symbols.golden.json", import.meta.url));

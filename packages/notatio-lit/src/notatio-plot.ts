@@ -1,4 +1,5 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
 import {
   hurwitzZetaReal,
@@ -35,6 +36,8 @@ import {
   type PlotFrame,
   type PlotPoint,
   type PlotSeries,
+  type Primitive,
+  primitivesOf,
 } from "@enumeratio/notatio";
 import { SliderPlayback } from "./sweep.ts";
 
@@ -90,6 +93,10 @@ export class NotatioPlot extends LitElement {
     adaptive: { type: String },
     /** Clamp the y range, as `lo,hi`; empty fits the samples. */
     plotRange: { type: String, attribute: "plot-range" },
+    /** Marks drawn over the curve, as notatio graphics primitives: `Point((1, 0.5))`, `Line([...])`, `Circle(c, r)`, `Text("t", p)`. Wolfram's `Epilog`. */
+    epilog: { type: String },
+    /** Marks drawn under the curve; Wolfram's `Prolog`. */
+    prolog: { type: String },
     /** Anything but `"false"` draws grid lines. */
     grid: { type: String },
     /** Anything but `"false"` fills between the curve and the axis. */
@@ -124,6 +131,8 @@ export class NotatioPlot extends LitElement {
   declare mode: string;
   declare adaptive: string;
   declare plotRange: string;
+  declare epilog: string;
+  declare prolog: string;
   declare grid: string;
   declare fill: string;
   declare legend: string;
@@ -176,6 +185,8 @@ export class NotatioPlot extends LitElement {
     this.mode = "";
     this.adaptive = "true";
     this.plotRange = "";
+    this.epilog = "";
+    this.prolog = "";
     this.grid = "false";
     this.fill = "false";
     this.legend = "false";
@@ -367,12 +378,21 @@ export class NotatioPlot extends LitElement {
       yLabel: this.yLabel || undefined,
       title: this.label || undefined,
       colorBy: this.colorBy === "x" ? "x" : this.colorBy === "y" ? "y" : undefined,
+      epilog: this.#marks(this.epilog),
+      prolog: this.#marks(this.prolog),
     });
     this._svg = svg;
     this.#xAt = xAt;
     this.#frame = frame;
     // Overlays reposition on the new geometry.
     this.dispatchEvent(new CustomEvent("notatio-plot-render"));
+  }
+
+  /** Graphics primitives from an `epilog`/`prolog` attribute's notatio; nothing on a parse error. */
+  #marks(source: string): Primitive[] | undefined {
+    if (!source.trim()) return undefined;
+    const { json, errors } = parseNotatio(source);
+    return errors.length ? undefined : primitivesOf(json as MathJsonExpression);
   }
 
   #onPointerMove = (e: PointerEvent): void => {

@@ -21,6 +21,20 @@ for (const atom of ["Integer", "Real", "Rational", "Complex", "String", "Symbol"
 // A tag needs a name that survives kebab-casing: letters and digits, starting with a letter.
 const heads = [...names].filter((n) => /^[A-Za-z][A-Za-z0-9]*$/.test(n)).sort();
 
+// The parameter names a reference entry's signature spells -- `SetMinus(a, b)` -- for
+// the heads of FIXED arity: a `…` marks a variadic, which takes its arguments as
+// children only. The engine's own symbols have types, not names, so they are absent.
+const params: Record<string, string[]> = {};
+for (const e of entries) {
+  const m = /^\w+\((.*)\)$/.exec(e.signature.trim());
+  if (!m || m[1].includes("…") || m[1].includes("...")) continue;
+  const list = m[1]
+    .split(",")
+    .map((p) => p.trim().replace(/\?$/, ""))
+    .filter((p) => p.length > 0);
+  if (list.length > 0 && list.every((p) => /^[a-z][A-Za-z0-9]*$/.test(p))) params[e.name] = list;
+}
+
 const out = resolve(dirname(fileURLToPath(import.meta.url)), "../src/heads-data.ts");
 writeFileSync(
   out,
@@ -32,6 +46,12 @@ writeFileSync(
 //   node --experimental-strip-types packages/notatio/scripts/collect-heads.ts
 
 export const HEADS: readonly string[] = ${JSON.stringify(heads, null, 2)};
+
+/**
+ * The parameter names of the heads of fixed arity, from the reference signatures --
+ * what \`<notatio-set-minus a="…" b="…">\` spells by name.
+ */
+export const PARAMS: Readonly<Record<string, readonly string[]>> = ${JSON.stringify(params, null, 2)};
 `,
 );
-console.log(`${heads.length} heads -> ${out}`);
+console.log(`${heads.length} heads, ${Object.keys(params).length} with named parameters -> ${out}`);

@@ -1,0 +1,148 @@
+// The structural spelling of a built component, lowered in place: a `<notatio-plot>`
+// whose children are `<notatio-sin>…</notatio-sin><notatio-tuple>x, 0, 10</notatio-tuple>`
+// is `Plot(Sin(x), (x, 0, 10))`, and the same table `renderingOf` uses to turn that
+// expression into attributes (`symbols.ts`, in the base) turns these children into
+// them here. A framework that emits the structural tree -- `<Notatio>` in Vue or React,
+// or a hand-written `<Plot><Sin>…` -- needs to know nothing about the lowering: the
+// element does it (design/vdom.md).
+//
+// Options arrive as attributes already (`plot-range="All"`); the ones a component
+// spells differently (`PlotLabel` is the plot's `label`) are mapped the same way.
+
+import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { parseNotatio } from "@enumeratio/formats/notatio";
+import {
+  CONTROL_HEADS,
+  DRAWING_SYMBOLS,
+  lowerOptions,
+  optionAttribute,
+  slottedExceptDeclarations,
+  type VisualSymbol,
+} from "@enumeratio/notatio";
+import { controlSelector } from "./define.ts";
+import { isExpressive } from "./generic.ts";
+
+const BY_TAG = new Map<string, VisualSymbol>();
+for (const s of DRAWING_SYMBOLS)
+  if (!BY_TAG.has(s.tag) && s.fixed === undefined) BY_TAG.set(s.tag, s);
+for (const s of DRAWING_SYMBOLS) if (!BY_TAG.has(s.tag)) BY_TAG.set(s.tag, s);
+
+const ADOPTED = new WeakSet<Element>();
+
+/** The argument children: the expressive ones that are not slotted options. */
+function argumentsOf(el: Element): MathJsonExpression[] {
+  const out: MathJsonExpression[] = [];
+  for (const child of el.children) {
+    if (child.hasAttribute("slot") || child.classList.contains("notatio-structure-args")) continue;
+    if (isExpressive(child)) {
+      const e = child.expression;
+      if (e !== undefined) out.push(e);
+    }
+  }
+  return out;
+}
+
+/** The options the element's attributes spell in Wolfram's names, parsed back. */
+function optionsOn(el: Element, symbol: VisualSymbol): Record<string, MathJsonExpression> {
+  const options: Record<string, MathJsonExpression> = {};
+  for (const name of Object.keys(symbol.options ?? {})) {
+    const raw = el.getAttribute(optionAttribute(name));
+    if (raw === null) continue;
+    const { json, errors } = parseNotatio(raw === "true" ? "True" : raw);
+    if (!errors.length) options[name] = json as MathJsonExpression;
+  }
+  return options;
+}
+
+const SCOPES = "notatio-tangle, notatio-manipulate";
+
+/**
+ * The names the controls in `el`'s scope declare -- what a readout beside them reads
+ * as wildcards. A control's own name is on it once it is adopted, which is why the
+ * controls are adopted first.
+ */
+function scopeNames(el: Element): Set<string> {
+  const root = el.closest(SCOPES) ?? document.body;
+  const names = new Set<string>();
+  for (const c of root.querySelectorAll(controlSelector())) {
+    if (c.closest(SCOPES) !== (root === document.body ? null : root)) continue;
+    const name = c.getAttribute("name") ?? (c as { name?: string }).name;
+    if (name) names.add(name);
+  }
+  return names;
+}
+
+/**
+ * Lower a built component's structural children and Wolfram-named options into its
+ * own attributes, once, leaving an attribute the author set alone. The argument
+ * children are moved into a hidden holder so they stay readable but do not show. A
+ * variable a control in the same scope declares is read as its wildcard, so
+ * `Dynamic(k^2)` beside `Slider(k, …)` follows the slider -- the realisation of a scope,
+ * done where the expression meets the page.
+ */
+export function adoptStructure(el: Element): void {
+  const symbol = BY_TAG.get(el.localName);
+  if (symbol === undefined || ADOPTED.has(el)) return;
+  // The children may not have been upgraded yet, and their expressions live on the
+  // instances.
+  customElements.upgrade(el);
+  let args = argumentsOf(el);
+  const options = optionsOn(el, symbol);
+  if (args.length === 0 && Object.keys(options).length === 0) return;
+  ADOPTED.add(el);
+  if (args.length > 0) {
+    const names = scopeNames(el);
+    if (names.size > 0) {
+      // A control declares its variable in its first argument; everything else reads.
+      const whole = slottedExceptDeclarations([symbol.head, ...args] as never, names) as unknown;
+      const fn = (whole as { fn?: unknown[] }).fn ?? (whole as unknown[]);
+      args = (fn as MathJsonExpression[]).slice(1);
+    }
+  }
+  // An argument's attribute yields to one the author set -- empty counts as unset, since
+  // an upgraded control has already reflected `name=""`. An option's attribute is
+  // rewritten: it came from the element's own `plot-range="(-1, 1)"`, in Wolfram's
+  // spelling, and the component wants its own.
+  if (args.length > 0) {
+    for (const [attr, value] of Object.entries(symbol.attributes(args))) {
+      if (!el.getAttribute(attr)) el.setAttribute(attr, value);
+    }
+  }
+  for (const [attr, value] of Object.entries(lowerOptions(symbol, options).attributes)) {
+    if (el.getAttribute(attr) !== value) el.setAttribute(attr, value);
+  }
+  if (args.length > 0) {
+    const holder = document.createElement("span");
+    holder.className = "notatio-structure-args";
+    holder.hidden = true;
+    // A copy: appending to the holder removes from the live collection.
+    for (const child of Array.from(el.children)) {
+      if (!child.hasAttribute("slot") && isExpressive(child)) holder.append(child);
+    }
+    el.prepend(holder);
+  }
+}
+
+/** Adopt every built component under `root` that was written structurally: controls first. */
+export function adoptStructures(root: ParentNode): void {
+  const tags = [...BY_TAG.entries()];
+  const controls = tags.filter(([, s]) => CONTROL_HEADS.has(s.head)).map(([t]) => t);
+  const rest = tags.filter(([, s]) => !CONTROL_HEADS.has(s.head)).map(([t]) => t);
+  for (const tag of [...controls, ...rest])
+    for (const el of root.querySelectorAll(tag)) adoptStructure(el);
+}
+
+let watching = false;
+
+/** Watch the document for structurally written components as they arrive. */
+export function watchStructures(): void {
+  if (watching || typeof document === "undefined") return;
+  watching = true;
+  const scan = (): void => adoptStructures(document.body);
+  new MutationObserver((records) => {
+    if (records.some((r) => [...r.addedNodes].some((n) => n.nodeType === Node.ELEMENT_NODE))) {
+      queueMicrotask(scan);
+    }
+  }).observe(document.body, { childList: true, subtree: true });
+  queueMicrotask(scan);
+}

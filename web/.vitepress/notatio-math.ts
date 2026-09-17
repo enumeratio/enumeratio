@@ -23,8 +23,8 @@ interface StateBlock {
 }
 
 // `$latex$` and `$$latex$$` in markdown, rendered by MathLive through
-// <notatio-tex> — the same path ReferencePage.vue already uses for the `$…$` in
-// reference summaries. Routing prose math through the same component is the point:
+// <notatio-out format="latex"> — the same path ReferencePage.vue already uses for
+// the `$…$` in reference summaries. Routing prose math through the same component is the point:
 // one renderer for the whole site, so a formula in a guide and a formula in a
 // reference entry look identical, and neither needs a second math library.
 
@@ -47,7 +47,7 @@ const escapeAttr = (s: string): string =>
 // which ate the `{-1}` out of `$\sqrt{-1}$`. Escaping at token-creation time means no
 // literal brace is left in the token for it to find.
 const tex = (escaped: string, display = false): string =>
-  `<notatio-tex${display ? " display" : ""} value="${escaped}"></notatio-tex>`;
+  `<notatio-out ${display ? "display" : "inline"} format="latex" value="${escaped}"></notatio-out>`;
 
 /**
  * Inline `$…$`. Deliberately conservative, because `$` is load-bearing elsewhere in

@@ -8,8 +8,11 @@
 //   - otherwise its ARGUMENTS ARE ITS CHILDREN: each child element contributes its own
 //     `expression`, and a run of text is a notatio argument list, so
 //     `<notatio-binomial>n, 2</notatio-binomial>` and
-//     `<notatio-binomial><notatio-symbol>n</notatio-symbol><notatio-integer>2</notatio-integer></notatio-binomial>`
-//     are the same thing.
+//     `<notatio-binomial><notatio-symbol value="n" /><notatio-integer value="2" /></notatio-binomial>`
+//     are the same thing -- or, for a head of fixed arity whose parameters the reference
+//     names, the arguments are ATTRIBUTES: `<notatio-binomial n="5" k="2">`;
+//   - every other attribute is an OPTION, Wolfram's way: `<notatio-plot plot-range="All">`
+//     is `Plot(…, PlotRange -> All)`, the name un-kebab-cased.
 //
 // Only the OUTERMOST generic element typesets, through `<notatio-out>`; the ones inside
 // it are structure -- they exist so the tree is addressable, not so each draws. Inside
@@ -17,8 +20,9 @@
 // `<notatio-binomial>_n, 2</notatio-binomial>` follows a knob.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
+import { optionsOf, withOptions } from "@enumeratio/formats";
 import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
-import { HEADS, tagOf } from "@enumeratio/notatio";
+import { HEADS, PARAMS, tagOf } from "@enumeratio/notatio";
 import { html, LitElement, nothing } from "lit";
 import "./notatio-out.ts";
 import { ensureStyles } from "./styles.ts";
@@ -40,6 +44,27 @@ const ATOMS: Record<string, (text: string) => MathJsonExpression> = {
   String: (t) => ({ str: t }) as MathJsonExpression,
   Symbol: (t) => t.trim(),
 };
+
+/** Attributes that are the element's own, never an option. */
+const OWN = new Set([
+  "value",
+  "evaluate",
+  "class",
+  "style",
+  "id",
+  "slot",
+  "hidden",
+  "title",
+  "role",
+  "tabindex",
+]);
+
+/** `plot-range` -> `PlotRange`: an attribute's option name. */
+export const optionNameOf = (attr: string): string =>
+  attr
+    .split("-")
+    .map((part) => part[0].toUpperCase() + part.slice(1))
+    .join("");
 
 /** What every element in a structural tree offers: the expression it stands for. */
 export interface Expressive extends HTMLElement {
@@ -117,6 +142,8 @@ export class NotatioGeneric extends LitElement {
         characterData: true,
         attributes: true,
       });
+      // An option or a named argument is an attribute on the element itself.
+      this.#observer.observe(this, { attributes: true });
     }
   }
 
@@ -145,14 +172,45 @@ export class NotatioGeneric extends LitElement {
     }
   }
 
-  /** The head over its children, or the atom of its text. */
+  /** The head over its arguments -- named attributes, else children -- with the options. */
   #fromChildren(): MathJsonExpression | undefined {
     const atom = ATOMS[this.head];
     if (atom) {
       const text = this.#ownText();
       return text ? atom(text) : undefined;
     }
-    return [this.head, ...this.#arguments()] as MathJsonExpression;
+    const named = this.#namedArguments();
+    const args = named ?? this.#arguments();
+    return withOptions(this.head, args, this.#options());
+  }
+
+  /** The arguments spelled as attributes, when this head's parameters are named and given. */
+  #namedArguments(): MathJsonExpression[] | undefined {
+    const params = PARAMS[this.head];
+    if (params === undefined || !params.some((p) => this.hasAttribute(p.toLowerCase())))
+      return undefined;
+    const args: MathJsonExpression[] = [];
+    for (const p of params) {
+      const raw = this.getAttribute(p.toLowerCase());
+      if (raw === null) break;
+      const { json, errors } = parseNotatio(raw);
+      if (errors.length) break;
+      args.push(json as MathJsonExpression);
+    }
+    return args;
+  }
+
+  /** Every attribute that is neither the element's own nor a named argument: an option. */
+  #options(): Record<string, MathJsonExpression> {
+    const params = new Set((PARAMS[this.head] ?? []).map((p) => p.toLowerCase()));
+    const options: Record<string, MathJsonExpression> = {};
+    for (const { name, value } of this.attributes) {
+      if (OWN.has(name) || params.has(name) || name.startsWith("data-") || name.startsWith("aria-"))
+        continue;
+      const { json, errors } = parseNotatio(value === "" || value === "true" ? "True" : value);
+      if (!errors.length) options[optionNameOf(name)] = json as MathJsonExpression;
+    }
+    return options;
   }
 
   /** The expression this element stands for: `value` if set, else the head over its children. */
@@ -166,6 +224,15 @@ export class NotatioGeneric extends LitElement {
       return errors.length ? undefined : (json as MathJsonExpression);
     }
     return this.#fromChildren();
+  }
+
+  /** The positional arguments and the options, apart. */
+  get split(): {
+    ops: readonly MathJsonExpression[];
+    options: Readonly<Record<string, MathJsonExpression>>;
+  } {
+    const e = this.expression;
+    return e === undefined ? { ops: [], options: {} } : optionsOf(e);
   }
 
   /** The nodes that are the arguments: the holder's, once moved; else the element's own. */

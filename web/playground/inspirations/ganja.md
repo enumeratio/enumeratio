@@ -152,7 +152,7 @@ than guessing from the generators it can see. The identity underneath is
 <notatio-tangle>
 In dimension <notatio-knob name="n" value="3" min="2" max="5" step="1" />, the
 pseudoscalar is <notatio-dynamic value="Pseudoscalar(CliffordAlgebra(_n))" />,
-the dual of <notatio-tex value="e_1" /> is
+the dual of <notatio-out inline format="latex" value="e_1" /> is
 <notatio-dynamic value="Dual(e_1, CliffordAlgebra(_n))" />, and wedging the two
 back together gives <notatio-dynamic value="Wedge(e_1, Dual(e_1, CliffordAlgebra(_n)))" />.
 </notatio-tangle>
@@ -180,7 +180,7 @@ involution is nothing but a sign that depends on which of those a term is.
 </template>
 <notatio-tangle>
 Grade <notatio-knob name="k" value="1" min="0" max="3" step="1" /> of
-<notatio-tex value="1 + 2e_1 + 3e_1e_2" /> is
+<notatio-out inline format="latex" value="1 + 2e_1 + 3e_1e_2" /> is
 <notatio-dynamic value="GradePart(1 + 2*e_1 + 3*e_1*e_2, _k)" />. Its reversion is
 <notatio-dynamic value="Reversion(1 + 2*e_1 + 3*e_1*e_2)" />, its grade involution
 <notatio-dynamic value="GradeInvolution(1 + 2*e_1 + 3*e_1*e_2)" />.

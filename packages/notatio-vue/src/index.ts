@@ -1,11 +1,13 @@
 // @enumeratio/notatio-vue: notatio in Vue. The symbols as components -- `<Slider>`,
 // `<Plot>`, `<Row>`, generated from the element sources (`generate.ts`) -- and
-// `<Notatio expr>`, which renders an expression as the vdom `vdomOf` gives it: a tree
-// of the same custom elements, made by Vue's `h`. The elements themselves come from
+// `<Notatio expr>`, which renders an expression as the vdom it IS (`structuralOf`):
+// every head a tag, every argument a child, every option an attribute, made by Vue's
+// `h`. No lowering happens here -- the elements do that, reading their own children --
+// and no scope is added: the page is one. The elements come from
 // `@enumeratio/notatio-lit`, imported here for their registration.
 
 import { parseNotatio } from "@enumeratio/formats/notatio";
-import { type Rendering, structuralOf, toVNode, vdomOf } from "@enumeratio/notatio";
+import { type Rendering, structuralOf, toVNode } from "@enumeratio/notatio";
 import { loadEngine } from "@enumeratio/notatio-lit";
 import { type App, defineComponent, h, ref, type VNode, watchEffect } from "vue";
 import { components } from "./generated.ts";
@@ -15,10 +17,9 @@ export * from "./generated.ts";
 
 /**
  * `<Notatio expr="Row([Slider(k, (0, 5)), Dynamic(k^2)])" />` -- an expression drawn as
- * the vdom it is: the controls, the layout, the readouts, each a component, the
- * controls' variables bound through the page. `structural` draws the expression
- * verbatim instead -- every head a tag, every argument a child -- which is the tree
- * with nothing interpreted. `json` takes MathJSON in place of notatio.
+ * the vdom it is: every head a tag, every argument a child, every option an attribute;
+ * the controls, the layout, the readouts each find their component by name, and the
+ * controls' variables bind through the page. `json` takes MathJSON in place of notatio.
  */
 export const Notatio = defineComponent({
   name: "Notatio",
@@ -27,8 +28,6 @@ export const Notatio = defineComponent({
     expr: { type: String, required: false },
     /** The expression, as a MathJSON string -- an alternative to `expr`. */
     json: { type: String, required: false },
-    /** Draw the structural tree rather than the one that draws. */
-    structural: { type: Boolean, required: false },
   },
   setup(props) {
     const tree = ref<Rendering | undefined>(undefined);
@@ -38,7 +37,7 @@ export const Notatio = defineComponent({
         tree.value = undefined;
         return;
       }
-      tree.value = props.structural ? structuralOf(json as never) : vdomOf(json as never);
+      tree.value = structuralOf(json as never);
     });
     return () =>
       tree.value === undefined

@@ -16,7 +16,6 @@ import "./notatio-clock.ts";
 import "./notatio-torus-square.ts";
 import "./notatio-notebook.ts";
 import "./notatio-worksheet.ts";
-import "./notatio-tex.ts";
 import "./notatio-figure.ts";
 import "./notatio-plot.ts";
 import "./notatio-plot-3d.ts";
@@ -101,7 +100,6 @@ import type { NotatioVectorPlot } from "./notatio-vector-plot.ts";
 import type { NotatioBarChart3D } from "./notatio-bar-chart-3d.ts";
 import type { NotatioListPlot3D } from "./notatio-list-plot-3d.ts";
 import type { NotatioTerminal } from "./notatio-terminal.ts";
-import type { NotatioTex } from "./notatio-tex.ts";
 
 export { NotatioIn } from "./notatio-in.ts";
 export { NotatioOut } from "./notatio-out.ts";
@@ -111,7 +109,6 @@ export { NotatioTorusSquare } from "./notatio-torus-square.ts";
 export { NotatioCollectionTable } from "./notatio-collection-table.ts";
 export { NotatioNotebook, referencesOrdinal } from "./notatio-notebook.ts";
 export { NotatioWorksheet } from "./notatio-worksheet.ts";
-export { NotatioTex } from "./notatio-tex.ts";
 export { NotatioCode } from "./notatio-code.ts";
 export { NotatioFigure } from "./notatio-figure.ts";
 export { NotatioPlot } from "./notatio-plot.ts";
@@ -168,7 +165,6 @@ declare global {
     "notatio-cell": NotatioCell;
     "notatio-collection-table": NotatioCollectionTable;
     "notatio-notebook": NotatioNotebook;
-    "notatio-tex": NotatioTex;
     "notatio-code": NotatioCode;
     "notatio-figure": NotatioFigure;
     "notatio-plot": NotatioPlot;
@@ -222,3 +218,9 @@ export {
   NotatioGeneric,
 } from "./generic.ts";
 if (typeof customElements !== "undefined") defineGenerics();
+
+// A built component written structurally -- its arguments as children, its options as
+// Wolfram-named attributes -- is lowered into its own attributes as it arrives.
+import { watchStructures } from "./structure.ts";
+export { adoptStructure, adoptStructures, watchStructures } from "./structure.ts";
+watchStructures();

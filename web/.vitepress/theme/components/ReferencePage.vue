@@ -38,7 +38,8 @@ const linkify = (text?: string): string =>
   (text ?? "")
     .replace(
       /\$([^$]+)\$/g,
-      (_match, tex: string) => `<notatio-tex value="${escapeAttr(tex)}"></notatio-tex>`,
+      (_match, tex: string) =>
+        `<notatio-out inline format="latex" value="${escapeAttr(tex)}"></notatio-out>`,
     )
     .replace(/\[\[([A-Za-z0-9]+)\]\]/g, (_match, name: string) =>
       getEntry(name) ? `<a class="ref-link" href="/reference/symbol/${name}">${name}</a>` : name,

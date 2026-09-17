@@ -91,7 +91,7 @@ cheap way to do these: fold the new name into whatever work already touches the 
 | `notatio-code`      | a source box; the language is an attribute                                                                                                               |
 | `notatio-terminal`  | a REPL surface                                                                                                                                           |
 | `notatio-figure`    | eleven glyph kinds behind one `kind` attribute (see below)                                                                                               |
-| `notatio-tex`       | arguably `TeXForm`, but it renders inline math rather than printing a form                                                                               |
+| `notatio-tex`       | retired: `<notatio-out inline format="latex">` renders prose math now                                                                                    |
 
 ## 5. The glitches worth indexing
 
