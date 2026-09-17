@@ -21,10 +21,6 @@ export interface FrontierEntry {
 
 export const FRONTIER: readonly FrontierEntry[] = [
   {
-    head: "Plot",
-    uses: 510,
-  },
-  {
     head: "FullSimplify",
     uses: 436,
   },
@@ -45,10 +41,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 91,
   },
   {
-    head: "ArrayPlot",
-    uses: 90,
-  },
-  {
     head: "FunctionMonotonicity",
     uses: 80,
   },
@@ -59,14 +51,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "FunctionRange",
     uses: 78,
-  },
-  {
-    head: "Point",
-    uses: 77,
-  },
-  {
-    head: "Plot3D",
-    uses: 74,
   },
   {
     head: "FunctionAnalytic",
@@ -89,24 +73,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 64,
   },
   {
-    head: "DiscretePlot",
-    uses: 63,
-  },
-  {
     head: "FunctionSingularities",
     uses: 60,
   },
   {
     head: "FunctionSurjective",
     uses: 60,
-  },
-  {
-    head: "ListPlot",
-    uses: 60,
-  },
-  {
-    head: "ComplexPlot3D",
-    uses: 57,
   },
   {
     head: "FunctionDiscontinuities",
@@ -157,10 +129,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 40,
   },
   {
-    head: "ListLinePlot",
-    uses: 40,
-  },
-  {
     head: "O",
     uses: 37,
   },
@@ -193,10 +161,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 27,
   },
   {
-    head: "PolarPlot",
-    uses: 27,
-  },
-  {
     head: "Cycles",
     uses: 26,
   },
@@ -223,10 +187,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "PiecewiseExpand",
     uses: 23,
-  },
-  {
-    head: "DensityPlot",
-    uses: 22,
   },
   {
     head: "Permute",
@@ -275,10 +235,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "ParametricPlot3D",
     uses: 19,
-  },
-  {
-    head: "ContourPlot",
-    uses: 18,
   },
   {
     head: "FindSequenceFunction",
@@ -334,10 +290,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FindInstance",
-    uses: 16,
-  },
-  {
-    head: "Line",
     uses: 16,
   },
   {
@@ -405,10 +357,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 14,
   },
   {
-    head: "Arrow",
-    uses: 13,
-  },
-  {
     head: "NestWhile",
     uses: 13,
   },
@@ -474,10 +422,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "BooleanConvert",
-    uses: 9,
-  },
-  {
-    head: "Disk",
     uses: 9,
   },
   {
@@ -605,10 +549,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "ListPlot3D",
-    uses: 7,
-  },
-  {
     head: "RandomFunction",
     uses: 7,
   },
@@ -630,10 +570,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ArrayMesh",
-    uses: 6,
-  },
-  {
-    head: "BarChart",
     uses: 6,
   },
   {
@@ -713,10 +649,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "Rectangle",
-    uses: 6,
-  },
-  {
     head: "RotationTransform",
     uses: 6,
   },
@@ -746,10 +678,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ChiSquareDistribution",
-    uses: 5,
-  },
-  {
-    head: "Circle",
     uses: 5,
   },
   {

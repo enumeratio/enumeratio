@@ -239,6 +239,63 @@ export const HEADS: Record<string, string> = {
   StieltjesGamma: "StieltjesGamma",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
+
+  // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
+  //
+  // Deliberately Wolfram-named: "Wolfram's `Plot`, `Histogram`, `Manipulate` print as
+  // pictures, not formulas" (see that file). We declare them inert — the expression is
+  // held rather than computed, for a worksheet or REPL to draw — so this is the same
+  // concept under the same name, not a numeric result a kernel oracle could cross-check.
+  Plot: "Plot",
+  Plot3D: "Plot3D",
+  ContourPlot: "ContourPlot",
+  DensityPlot: "DensityPlot",
+  PolarPlot: "PolarPlot",
+  VectorPlot: "VectorPlot",
+  StreamPlot: "StreamPlot",
+  ComplexPlot: "ComplexPlot",
+  ComplexPlot3D: "ComplexPlot3D",
+  ListPlot: "ListPlot",
+  ListLinePlot: "ListLinePlot",
+  ListPlot3D: "ListPlot3D",
+  BarChart: "BarChart",
+  BarChart3D: "BarChart3D",
+  PieChart: "PieChart",
+  BoxWhiskerChart: "BoxWhiskerChart",
+  ArrayPlot: "ArrayPlot",
+  DiscretePlot: "DiscretePlot",
+  GraphPlot: "GraphPlot",
+  TreeGraph: "TreeGraph",
+  LayeredGraphPlot: "LayeredGraphPlot",
+  Dendrogram: "Dendrogram",
+  Manipulate: "Manipulate",
+  Slider: "Slider",
+  VerticalSlider: "VerticalSlider",
+  Animator: "Animator",
+  Slider2D: "Slider2D",
+  IntervalSlider: "IntervalSlider",
+  SetterBar: "SetterBar",
+  RadioButtonBar: "RadioButtonBar",
+  TogglerBar: "TogglerBar",
+  Toggler: "Toggler",
+  PopupMenu: "PopupMenu",
+  ListPicker: "ListPicker",
+  Checkbox: "Checkbox",
+  ColorSlider: "ColorSlider",
+  Locator: "Locator",
+  InputField: "InputField",
+  Dynamic: "Dynamic",
+  Row: "Row",
+  Column: "Column",
+  Grid: "Grid",
+  Panel: "Panel",
+  Labeled: "Labeled",
+  Point: "Point",
+  Line: "Line",
+  Arrow: "Arrow",
+  Circle: "Circle",
+  Disk: "Disk",
+  Rectangle: "Rectangle",
 };
 
 /** Wolfram heads we answer under one of our own heads, but only in a particular CALL
