@@ -108,6 +108,27 @@
     },
     "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"
   },
+  "ComplexPlot3D(1/(z^2 + 1), (z, -2 - 2 * i, 2 + 2 * i))": {
+    "rendering": {
+      "tag": "notatio-complex-plot-3d",
+      "attributes": {
+        "value": "1 / (z ^ 2 + 1)",
+        "var": "z",
+        "domain": "-2,2,-2,2"
+      }
+    },
+    "markup": "<notatio-complex-plot-3d value=\"1 / (z ^ 2 + 1)\" var=\"z\" domain=\"-2,2,-2,2\"></notatio-complex-plot-3d>"
+  },
+  "ComplexPlot3D(Gamma(z), z)": {
+    "rendering": {
+      "tag": "notatio-complex-plot-3d",
+      "attributes": {
+        "value": "Gamma(z)",
+        "var": "z"
+      }
+    },
+    "markup": "<notatio-complex-plot-3d value=\"Gamma(z)\" var=\"z\"></notatio-complex-plot-3d>"
+  },
   "ListPlot([1, 4, 9, 16])": {
     "rendering": {
       "tag": "notatio-chart",

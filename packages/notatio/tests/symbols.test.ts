@@ -26,6 +26,8 @@ const CORPUS = [
   "VectorPlot((-y, x), (x, -2, 2), (y, -2, 2))",
   "StreamPlot((-y, x), (x, -2, 2), (y, -2, 2))",
   "ComplexPlot(Zeta(z), z)",
+  "ComplexPlot3D(1/(z^2 + 1), (z, -2 - 2 * i, 2 + 2 * i))",
+  "ComplexPlot3D(Gamma(z), z)",
   "ListPlot([1, 4, 9, 16])",
   "ListLinePlot([[0, 1], [1, 3], [2, 2]])",
   "BarChart([3, 1, 4, 1, 5])",

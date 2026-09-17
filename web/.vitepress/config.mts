@@ -149,6 +149,7 @@ export default defineConfig({
           { text: "GraphPlot", link: "/playground/graph-plot" },
           { text: "Polytope", link: "/playground/polytope" },
           { text: "Complex Plot", link: "/playground/complex-plot" },
+          { text: "Complex Plot 3D", link: "/playground/complex-plot-3d" },
           { text: "Collection table", link: "/playground/collection-table" },
           { text: "Worksheet", link: "/playground/worksheet" },
           { text: "Manipulate", link: "/playground/manipulate" },

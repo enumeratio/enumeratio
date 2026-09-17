@@ -55,6 +55,9 @@ export interface Surface3dOptions {
   /** Pointer position in viewBox units; marks the nearest sample and reads out
    * its (x, y, z). */
   hover?: readonly [number, number];
+  /** A fill per face, given its cell and normalised mean height; default the
+   * height-shaded accent. */
+  fill?: (face: { i: number; j: number; t: number; surface: number }) => string;
 }
 
 /** A projected point plus its distance toward the viewer (larger = nearer). */
@@ -189,6 +192,8 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
     poly: string;
     t: number;
     surface: number;
+    i: number;
+    j: number;
   }
   const cells: Cell[] = [];
   grids.forEach((g, si) => {
@@ -208,6 +213,8 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
           depth: corners.reduce((sum, c) => sum + c[2], 0) / 4,
           t: avgPz,
           surface: si,
+          i,
+          j,
           poly: corners.map(([x, y]) => `${n2(x)},${n2(y)}`).join(" "),
         });
       }
@@ -219,10 +226,11 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
     `color-mix(in srgb, ${base} ${n2(22 + 60 * t)}%, ${BG})`;
   // Overlaid surfaces get a touch of transparency so a lower one shows through.
   const opacity = grids.length > 1 ? ' fill-opacity="0.85"' : "";
+  const fill = opts.fill ?? ((c) => shade(SURF[c.surface % SURF.length], c.t));
   const surface = cells
     .map(
       (c) =>
-        `<polygon points="${c.poly}" fill="${shade(SURF[c.surface % SURF.length], c.t)}"${opacity} stroke="${EDGE}" stroke-width="0.5" stroke-linejoin="round"/>`,
+        `<polygon points="${c.poly}" fill="${fill(c)}"${opacity} stroke="${EDGE}" stroke-width="0.5" stroke-linejoin="round"/>`,
     )
     .join("");
 

@@ -24,6 +24,7 @@ experimental and move fast.
 - [Chart](/playground/chart) — `<notatio-chart>`, data-driven 2-D charts (bar, histogram, pie, box-whisker, array, discrete, list)
 - [GraphPlot](/playground/graph-plot) — `<notatio-graph-plot>`, graph & hierarchical layouts (tree, graph, layered graph, dendrogram)
 - [Complex Plot](/playground/complex-plot) — `<notatio-complex-plot>`, domain-colouring of a complex expression, one WebGPU invocation per pixel
+- [Complex Plot 3D](/playground/complex-plot-3d) — `<notatio-complex-plot-3d>`, |f(z)| as a surface over the plane, faces coloured by arg f(z)
 - [Collection table](/playground/collection-table) — `<notatio-collection-table>`, a paged table over a lazy indexed collection, with statistics as columns
 - [Worksheet](/playground/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
 - [Manipulate](/playground/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content

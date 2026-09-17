@@ -71,6 +71,44 @@ const strOf = (node: unknown): string | undefined => {
   return typeof str === "string" ? str : undefined;
 };
 
+/**
+ * A complex literal as `[re, im]`: a number, `Complex(a, b)`, or the `a + b i` /
+ * `b i` a parse leaves before the engine folds it -- or undefined.
+ */
+function complexOf(node: Json | undefined): [number, number] | undefined {
+  if (node === undefined) return undefined;
+  const n = numOf(node);
+  if (n !== undefined) return [n, 0];
+  // `i` is the symbol before the engine canonicalises it, `ImaginaryUnit` after.
+  const sym = symOf(node);
+  if (sym === "ImaginaryUnit" || sym === "i") return [0, 1];
+  const head = headOf(node);
+  const ops = opsOf(node);
+  if (head === "Complex" && ops.length === 2) {
+    const re = numOf(ops[0]);
+    const im = numOf(ops[1]);
+    return re !== undefined && im !== undefined ? [re, im] : undefined;
+  }
+  if (head === "Negate" && ops.length === 1) {
+    const inner = complexOf(ops[0]);
+    return inner && [-inner[0], -inner[1]];
+  }
+  if (head === "Multiply" && ops.length === 2) {
+    const [a, b] = [complexOf(ops[0]), complexOf(ops[1])];
+    return a && b ? [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]] : undefined;
+  }
+  if (head === "Add" && ops.length >= 2) {
+    const parts = ops.map(complexOf);
+    if (parts.some((p) => p === undefined)) return undefined;
+    return (parts as [number, number][]).reduce((s, p) => [s[0] + p[0], s[1] + p[1]], [0, 0]);
+  }
+  if (head === "Subtract" && ops.length === 2) {
+    const [a, b] = [complexOf(ops[0]), complexOf(ops[1])];
+    return a && b ? [a[0] - b[0], a[1] - b[1]] : undefined;
+  }
+  return undefined;
+}
+
 /** notatio for an operand, as an attribute value. */
 const notatio = (node: Json): string => serializeNotatio(node);
 
@@ -257,6 +295,23 @@ export const VISUAL_SYMBOLS: readonly VisualSymbol[] = [
       if (ops[0] !== undefined) out.value = notatio(ops[0]);
       const variable = symOf(ops[1]) ?? iterator(ops[1]).variable;
       if (variable) out.var = variable;
+      return out;
+    },
+  },
+  {
+    // `ComplexPlot3D(f, (z, a + b i, c + d i))`: the iterator's corners are complex, and
+    // the component takes the rectangle they span as `re0,re1,im0,im1`.
+    head: "ComplexPlot3D",
+    tag: "notatio-complex-plot-3d",
+    attributes: (ops) => {
+      const out: Record<string, string> = {};
+      if (ops[0] !== undefined) out.value = notatio(ops[0]);
+      const parts = tupleOf(ops[1]);
+      const variable = symOf(ops[1]) ?? symOf(parts?.[0]);
+      if (variable) out.var = variable;
+      const lo = complexOf(parts?.[1]);
+      const hi = complexOf(parts?.[2]);
+      if (lo && hi) out.domain = `${lo[0]},${hi[0]},${lo[1]},${hi[1]}`;
       return out;
     },
   },

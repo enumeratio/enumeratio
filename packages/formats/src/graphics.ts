@@ -103,6 +103,7 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "VectorPlot",
   "StreamPlot",
   "ComplexPlot",
+  "ComplexPlot3D",
   "ListPlot",
   "ListLinePlot",
   "ListPlot3D",

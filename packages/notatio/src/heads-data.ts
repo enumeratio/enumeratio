@@ -137,6 +137,7 @@ export const HEADS: readonly string[] = [
   "ComplexInfinity",
   "ComplexNumbers",
   "ComplexPlot",
+  "ComplexPlot3D",
   "ComplexRoots",
   "Comprehension",
   "Condition",

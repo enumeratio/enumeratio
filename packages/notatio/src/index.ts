@@ -10,6 +10,7 @@ export * from "./chart.ts";
 export * from "./clock.ts";
 export * from "./collection-table.ts";
 export * from "./complex-plot.ts";
+export * from "./complex-plot-3d.ts";
 export * from "./contour.ts";
 export * from "./debug.ts";
 export * from "./densityplot.ts";
