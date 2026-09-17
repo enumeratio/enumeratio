@@ -26,7 +26,6 @@
     "@enumeratio/modular": "workspace:*",
     "@enumeratio/notatio": "workspace:*",
     "@enumeratio/notatio-lit": "workspace:*",
-    "@enumeratio/notatio-vue": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/quiver": "workspace:*",
     "@enumeratio/reference": "workspace:*",

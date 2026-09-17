@@ -228,7 +228,7 @@ arguments by name too: `<notatio-binomial n="5" k="2">`.
 ## In Vue
 
 The same trees, from the template side. Every symbol is a Vue component
-(`<Slider>`, `<Row>`, `<Dynamic>` — from `@enumeratio/notatio-vue`, generated from the
+(`<Slider>`, `<Row>`, `<Dynamic>` — from `@enumeratio/notatio/vue`, generated from the
 element sources), and `<Notatio expr>` renders an expression as the tree it is —
 `structuralOf` in the base package, handed to Vue's `h`: every head a tag, every
 argument a child, every option a prop. The elements do the rest.

@@ -1,4 +1,0 @@
-dist
-node_modules
-# The symbols as components, emitted by src/generate.ts from the element sources.
-src/generated.ts

@@ -1,6 +1,6 @@
 import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
-import { registerNotatio } from "@enumeratio/notatio-vue";
+import { registerNotatio } from "@enumeratio/notatio/vue";
 import DefaultTheme from "vitepress/theme";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
@@ -24,7 +24,7 @@ const ComponentIndex = defineAsyncComponent(() => import("./components/Component
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
 
 // The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
-// from @enumeratio/notatio-vue, generated there from the element sources.
+// from @enumeratio/notatio/vue, generated there from the element sources.
 
 export default {
   extends: DefaultTheme,

@@ -2,13 +2,13 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
-import { generate } from "@enumeratio/notatio-vue/generate";
+import { generate } from "@enumeratio/notatio/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
 
 // The symbols as Vue components are generated here, before the theme is bundled, so
-// `@enumeratio/notatio-vue`'s `src/generated.ts` exists for the theme to register.
-generate();
+// `@enumeratio/notatio`'s `src/vue-generated.ts` exists for the theme to register.
+generate("vue");
 
 // Resolve every @enumeratio/* import (bare and subpaths) to its source, so the docs
 // site reads sibling packages directly and never depends on a prior `vp pack` of

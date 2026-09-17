@@ -2,7 +2,7 @@
   "name": "@enumeratio/notatio",
   "version": "0.0.0",
   "private": true,
-  "description": "notatio: the base of the notation layer — the symbol-to-component map and its lowering, the arithmetic of scrubbing and playback, the control contract, and the pure SVG renderers. No UI framework.",
+  "description": "notatio: the base of the notation layer — the symbol-to-component map and its lowering, the AST as a vdom, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers; and the framework glue (`./vue`, `./react`) over the elements. No UI framework of its own.",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -10,17 +10,21 @@
   "type": "module",
   "exports": {
     ".": "./dist/index.mjs",
+    "./generate": "./dist/generate.mjs",
+    "./react": "./dist/react.mjs",
     "./reflect": "./dist/reflect.mjs",
     "./symbols": "./dist/symbols.mjs",
     "./vdom": "./dist/vdom.mjs",
+    "./vue": "./dist/vue.mjs",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts",
+    "build": "node --experimental-strip-types src/generate.ts && vp pack src/index.ts src/symbols.ts src/vdom.ts src/reflect.ts src/vue.ts src/react.ts src/generate.ts",
     "dev": "vp pack --watch",
     "test": "vp test",
     "check": "vp check",
-    "heads:collect": "node --experimental-strip-types scripts/collect-heads.ts"
+    "heads:collect": "node --experimental-strip-types scripts/collect-heads.ts",
+    "generate": "node --experimental-strip-types src/generate.ts"
   },
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
@@ -32,12 +36,25 @@
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/reference": "workspace:*",
     "@types/node": "catalog:",
+    "@types/react": "^19.1.0",
     "@webgpu/types": "^0.1.60",
+    "react": "^19.1.0",
     "typescript": "^7.0.2",
     "vite": "catalog:",
-    "vite-plus": "catalog:"
+    "vite-plus": "catalog:",
+    "vue": "^3.5.42"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0"
+    "@cortex-js/compute-engine": "^0.128.0",
+    "react": ">=18",
+    "vue": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
+    }
   }
 }

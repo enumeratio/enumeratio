@@ -1,2 +1,5 @@
 dist
 node_modules
+# The symbols as framework components, emitted by src/generate.ts from the element sources.
+src/vue-generated.ts
+src/react-generated.ts

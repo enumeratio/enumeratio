@@ -1,19 +1,21 @@
-// @enumeratio/notatio-vue: notatio in Vue. The symbols as components -- `<Slider>`,
+// @enumeratio/notatio/vue: notatio in Vue. The symbols as components -- `<Slider>`,
 // `<Plot>`, `<Row>`, generated from the element sources (`generate.ts`) -- and
 // `<Notatio expr>`, which renders an expression as the vdom it IS (`structuralOf`):
 // every head a tag, every argument a child, every option an attribute, made by Vue's
 // `h`. No lowering happens here -- the elements do that, reading their own children --
-// and no scope is added: the page is one. The elements come from
-// `@enumeratio/notatio-lit`, imported here for their registration.
+// and no scope is added: the page is one. The elements themselves are
+// `@enumeratio/notatio-lit`, which the page imports once for their registration; this
+// module only names them.
 
 import { parseNotatio } from "@enumeratio/formats/notatio";
-import { type Rendering, structuralOf, toVNode } from "@enumeratio/notatio";
-import { loadEngine } from "@enumeratio/notatio-lit";
 import { type App, defineComponent, h, ref, type VNode, watchEffect } from "vue";
-import { components } from "./generated.ts";
+import { loadEngine } from "./engine.ts";
+import type { Rendering } from "./symbols.ts";
+import { structuralOf, toVNode } from "./vdom.ts";
+import { components } from "./vue-generated.ts";
 
 export { components };
-export * from "./generated.ts";
+export * from "./vue-generated.ts";
 
 /**
  * `<Notatio expr="Row([Slider(k, (0, 5)), Dynamic(k^2)])" />` -- an expression drawn as

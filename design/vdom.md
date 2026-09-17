@@ -239,7 +239,7 @@ since an expression is self-contained by intent; hand-written markup needs none.
 
 ## Where the lowering lives
 
-Only in the elements. `notatio-vue` and `notatio-react` render `structuralOf` and
+Only in the elements. `notatio/vue` and `notatio/react` render `structuralOf` and
 nothing else: heads to tags, arguments to children, options to props. A `<Plot>` that
 reaches the DOM with a `<Sin>` inside it is lowered by `<notatio-plot>` when it adopts
 its children (`structure.ts`), and a `<Dynamic>` beside a `<Slider>` reads the slider's
@@ -265,25 +265,29 @@ adding one is a change to one table in the base.
 
 ## The packages
 
-Split 2026-09-16 along exactly this line:
+Two, split along the dependency that matters:
 
-| package                     | what                                                                                                                                                      | depends on                  |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `@enumeratio/notatio`       | the base: `symbols.ts` (head → tag, the lowering), the control contract (`controls.ts`), the arithmetic of scrubbing and playback, the pure SVG renderers | compute-engine, formats     |
-| `@enumeratio/notatio-lit`   | every `notatio-*` element, the DOM half of the contract (`define.ts`), the frame loops (`sweep.ts`), bindings, styles, popovers, MathLive                 | notatio, lit, mathlive      |
-| `@enumeratio/notatio-vue`   | `<Notatio expr>` over `structuralOf` and `toVNode(h)`, and the generated per-symbol wrappers (`<Slider>`, `<Plot>`, `<Binomial>`) -- what VitePress uses  | notatio, notatio-lit, vue   |
-| `@enumeratio/notatio-react` | the same over `createElement`                                                                                                                             | notatio, notatio-lit, react |
+| package                   | what                                                                                                                                                                                                                     | depends on              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------- |
+| `@enumeratio/notatio`     | the base: `symbols.ts` (head → tag, the lowering), `vdom.ts`, the control contract, the arithmetic of scrubbing and playback, the pure SVG renderers, the shared engine; and the framework glue at `./vue` and `./react` | compute-engine, formats |
+| `@enumeratio/notatio-lit` | every `notatio-*` element, the DOM half of the contract (`define.ts`), structural adoption, the frame loops, bindings, styles, popovers, MathLive, xterm                                                                 | notatio, lit, mathlive  |
 
 The base has no UI framework and no DOM at import; the CLI draws through it in Node.
-The lit package re-exports the base, so a consumer that wants the components has the
-whole of notatio from one import.
+`./vue` and `./react` are subpaths, so they cost nothing unless imported, and `vue` /
+`react` are optional peers: each is `<Notatio expr>` over `structuralOf` and
+`toVNode(h)` plus the generated per-symbol wrappers (`<Slider>`, `<Plot>`,
+`<Binomial>`), sixty lines of glue that name the elements without registering them --
+a page imports `@enumeratio/notatio-lit` once for that. The vue and react packages of
+the first split (2026-09-16) folded back the same day: they had no dependency of their
+own to justify a package. The lit package stays separate because MathLive and xterm
+are heavy and DOM-only, and a Node consumer must not install them.
 
 ## Where it is
 
 - `vdom.ts` in the base: `structuralOf(expr)` for the verbatim tree and `toVNode(h)`
-  over it; `notatio-vue` and `notatio-react` are each a `<Notatio expr>` over those,
-  plus the per-symbol wrapper generator, so both frameworks get `<Slider>`, `<Plot>`,
-  `<Binomial>`.
+  over it; `vue.ts` and `react.ts` are each a `<Notatio expr>` over those, and
+  `generate.ts` the per-symbol wrapper generator, so both frameworks get `<Slider>`,
+  `<Plot>`, `<Binomial>`.
 - `options.ts` in `formats`: `optionsOf` / `withOptions`; `lowerOptions` and
   `VisualSymbol.options` in the base's `symbols.ts`; `primitives.ts` for what `Epilog`
   carries.
