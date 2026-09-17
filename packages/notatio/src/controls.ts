@@ -3,8 +3,9 @@
 // `<notatio-manipulate>`) can bind any of them without knowing which it has.
 //
 // A control has a `name`, publishes a MathJSON `binding` (a number, `True`, a `List`, an
-// expression) and dispatches `notatio-control-change` when it moves. Its tag is in
-// `CONTROL_TAGS`, which is how a scope finds the controls it owns.
+// expression) and dispatches `notatio-control-change` when it moves. This is the shape
+// of that, with nothing of the DOM in it; registering a tag and dispatching the event
+// are the components' (`notatio-lit/src/define.ts`).
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 
@@ -25,50 +26,28 @@ export interface ControlChange {
   played?: boolean;
 }
 
-/** What a scope reads off a control element. */
-export interface ControlElement extends HTMLElement {
+/** What a scope reads off a control: its name and its bound value. (`Control` is the Manipulate spec.) */
+export interface BoundControl {
   name: string;
   /** The bound value as MathJSON. */
   readonly binding: MathJsonExpression;
 }
-
-/** Every registered control tag, for a scope's `querySelectorAll`. */
-export const CONTROL_TAGS = new Set<string>();
-
-/** Define a control's custom element and record its tag. Idempotent. */
-export function defineControl(tag: string, ctor: CustomElementConstructor): void {
-  CONTROL_TAGS.add(tag);
-  if (!customElements.get(tag)) customElements.define(tag, ctor);
-}
-
-/** The selector that finds every control under an element. */
-export const controlSelector = (): string => [...CONTROL_TAGS].join(", ");
 
 /** MathJSON for a real or complex number. */
 export function numberJson(re: number, im = 0): MathJsonExpression {
   return im === 0 ? re : (["Complex", re, im] as MathJsonExpression);
 }
 
-/** Dispatch a change from `el`, filling the numeric shorthand from the value when it is one. */
-export function emitControl(
-  el: HTMLElement,
-  detail: Omit<ControlChange, "re" | "im"> & { re?: number; im?: number },
-): void {
-  const { value } = detail;
-  let re = detail.re ?? 0;
-  let im = detail.im ?? 0;
-  if (detail.re === undefined) {
-    if (typeof value === "number") re = value;
-    else if (Array.isArray(value) && value[0] === "Complex") {
-      re = Number(value[1]);
-      im = Number(value[2]);
-    }
+/** The numeric shorthand of a change, filled from the value when it is a number. */
+export function numericParts(
+  value: MathJsonExpression,
+  re?: number,
+  im?: number,
+): { re: number; im: number } {
+  if (re !== undefined) return { re, im: im ?? 0 };
+  if (typeof value === "number") return { re: value, im: 0 };
+  if (Array.isArray(value) && value[0] === "Complex") {
+    return { re: Number(value[1]), im: Number(value[2]) };
   }
-  el.dispatchEvent(
-    new CustomEvent<ControlChange>(CONTROL_EVENT, {
-      bubbles: true,
-      composed: true,
-      detail: { ...detail, value, re, im },
-    }),
-  );
+  return { re: 0, im: 0 };
 }

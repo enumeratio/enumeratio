@@ -292,7 +292,7 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
 // --- parametric curves in space ------------------------------------------------------
 
 /** A point in space. */
-export type Point3 = readonly [number, number, number];
+export type Triple = readonly [number, number, number];
 
 export interface Curve3dOptions extends Surface3dOptions {
   /** Stroke width of the curve itself, in viewBox units. */
@@ -310,7 +310,7 @@ export interface Curve3dOptions extends Surface3dOptions {
 }
 
 /** The bounding box of a point set, as the ranges each axis spans. */
-function bounds(points: readonly Point3[]): [number, number][] {
+function bounds(points: readonly Triple[]): [number, number][] {
   const box: [number, number][] = [
     [Infinity, -Infinity],
     [Infinity, -Infinity],
@@ -339,7 +339,7 @@ function bounds(points: readonly Point3[]): [number, number][] {
  * The curve is scaled into the unit cube first, so the same camera serves it as serves
  * a surface, and the two can share a scene.
  */
-export function curve3dSvg(points: readonly Point3[], opts: Curve3dOptions = {}): string {
+export function curve3dSvg(points: readonly Triple[], opts: Curve3dOptions = {}): string {
   const W = opts.width ?? 360;
   const H = opts.height ?? 260;
   const stroke = opts.stroke ?? 2.4;
@@ -353,7 +353,7 @@ export function curve3dSvg(points: readonly Point3[], opts: Curve3dOptions = {})
   const spans = box.map(([lo, hi]) => hi - lo);
   const span = Math.max(...spans, 1e-9);
   const mid = box.map(([lo, hi]) => (lo + hi) / 2);
-  const unit = (p: Point3): Point3 => [
+  const unit = (p: Triple): Triple => [
     (p[0] - mid[0]) / span + 0.5,
     (p[1] - mid[1]) / span + 0.5,
     (p[2] - mid[2]) / span + 0.5,
@@ -400,7 +400,7 @@ export function curve3dSvg(points: readonly Point3[], opts: Curve3dOptions = {})
     const rings = 28;
     const around = 40;
     const faces: { d: string; depth: number }[] = [];
-    const at = (u: number, v: number): Point3 => {
+    const at = (u: number, v: number): Triple => {
       const r = major + minor * Math.cos(v);
       return [r * Math.cos(u), r * Math.sin(u), -minor * Math.sin(v)];
     };

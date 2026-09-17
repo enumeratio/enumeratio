@@ -2,6 +2,7 @@ import { expect, test } from "vite-plus/test";
 import {
   arrayPlotSvg,
   barChartSvg,
+  chooseChartType,
   boxWhiskerChartSvg,
   discretePlotSvg,
   fiveNumberSummary,
@@ -177,8 +178,7 @@ test("a title renders centred above the frame", () => {
 });
 
 // The family head's rule: which member the data's shape asks for.
-test("chooseChartType reads the chart off the data's shape", async () => {
-  const { chooseChartType } = await import("../src/notatio-chart.ts");
+test("chooseChartType reads the chart off the data's shape", () => {
   expect(chooseChartType([3, 1, 4, 1, 5])).toBe("bar");
   expect(chooseChartType(Array.from({ length: 40 }, (_, i) => i % 7))).toBe("histogram");
   expect(

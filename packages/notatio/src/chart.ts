@@ -7,6 +7,19 @@
 
 import { niceTicks } from "./plot.ts";
 
+/** The members of the `Chart` family, by the attribute `type` that picks one. */
+export type ChartType =
+  | "list"
+  | "listline"
+  | "bar"
+  | "histogram"
+  | "pie"
+  | "box"
+  | "array"
+  | "discrete";
+
+export const isNumber = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v);
+
 const ACCENT = "var(--notatio-accent, var(--vp-c-brand-1, #d97706))";
 const AXIS = "var(--notatio-border, var(--vp-c-divider, currentColor))";
 const FG = "var(--notatio-fg, currentColor)";
@@ -442,4 +455,32 @@ export function discretePlotSvg(values: readonly number[], opts: DiscretePlotOpt
   const axis = `<line x1="${n2(mL)}" y1="${n2(zeroY)}" x2="${n2(W - mR)}" y2="${n2(zeroY)}" stroke="${AXIS}" stroke-width="1" opacity="0.5"/>`;
 
   return frame(W, H, titleSvg(W, opts.title) + axis + stems, "discrete plot");
+}
+
+/**
+ * The chart the data asks for, when none is named -- the `Chart` family head's rule, and
+ * the component's when `type` is `auto` or empty. Read off the shape alone:
+ *
+ * - a matrix (rows of numbers, more than one row) is an `array` plot;
+ * - rows of unequal length are series, one `box` per row;
+ * - `[x, y]` pairs are a `list` plot (so a two-column matrix reads as pairs, as it does
+ *   for `ListPlot`);
+ * - a short number list is a `bar` per value, a long one is a `histogram` of them.
+ *
+ * A hint -- `labels`, which only a categorical chart shows -- pulls a number list to
+ * `bar` whatever its length. Anything unreadable falls to `bar`, whose renderer draws
+ * nothing for it.
+ */
+export function chooseChartType(data: unknown, hints: { labels?: boolean } = {}): ChartType {
+  if (!Array.isArray(data) || data.length === 0) return "bar";
+  if (data.every(isNumber)) {
+    if (hints.labels) return "bar";
+    return data.length > 12 ? "histogram" : "bar";
+  }
+  if (data.every((e) => Array.isArray(e) && e.length === 2 && e.every(isNumber))) return "list";
+  if (data.every((e) => Array.isArray(e) && e.every(isNumber))) {
+    const widths = new Set((data as unknown[][]).map((row) => row.length));
+    return widths.size === 1 && data.length > 1 ? "array" : "box";
+  }
+  return "bar";
 }

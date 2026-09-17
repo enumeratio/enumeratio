@@ -138,10 +138,11 @@ Landed 2026-09-15, all of component-naming §4 at once: `notatio-input` /
 `notatio-output` became `notatio-in` / `notatio-out` (the `In` and `Out` symbols the
 elements already print as their row labels), the compound names are kebab-cased.
 head→tag is now a function of the symbol. The package went to `@enumeratio/components`
-that day and on to **`@enumeratio/notatio`** (`packages/notatio`) the next: the tags are
-`notatio-*`, and the enumeratio/notatio split -- the mathematics and its notation --
-is what the repo is named for, so the package is named for the thing rather than the
-shape of it.
+that day and on to **`@enumeratio/notatio`** the next: the tags are `notatio-*`, and the
+enumeratio/notatio split -- the mathematics and its notation -- is what the repo is
+named for, so the package is named for the thing rather than the shape of it. The same
+day it split in two: `@enumeratio/notatio` is the base with no framework in it, and the
+elements are `@enumeratio/notatio-lit` ([vdom.md](./vdom.md) has the layout).
 
 ## 6. What it took
 

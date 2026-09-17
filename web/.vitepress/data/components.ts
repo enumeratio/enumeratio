@@ -1,4 +1,4 @@
-// The component reference, read straight out of `@enumeratio/notatio` at build
+// The component reference, read straight out of `@enumeratio/notatio-lit` at build
 // time. Nothing is generated into the repo: the attribute tables are derived from each
 // element's own `static properties`, `declare` types and constructor defaults, so they
 // cannot drift from the source.
@@ -47,7 +47,7 @@ export interface ComponentDoc {
 }
 
 const here = dirname(fileURLToPath(import.meta.url));
-const srcDir = resolve(here, "../../../packages/notatio/src");
+const srcDir = resolve(here, "../../../packages/notatio-lit/src");
 const playgroundDir = resolve(here, "../../playground");
 
 /** Every markdown page under the playground, as a path relative to it. */
@@ -194,7 +194,7 @@ function parse(
   return {
     tag: define[1],
     className: cls[2],
-    source: `packages/notatio/src/${file}`,
+    source: `packages/notatio-lit/src/${file}`,
     summary: cls[1] ? cleanDoc(cls[1]) : "",
     playground: playgrounds.get(define[1]),
     attributes: inherited(cls[2], table),
