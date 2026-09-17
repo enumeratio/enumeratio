@@ -8,7 +8,8 @@ round the other way. `value` is **notatio**; LaTeX goes in a `$…$` island.
 
 The surface is sampled on the CPU (`samples` per side, default 40) through the base
 package's complex evaluator — the elementary operations and the analytic special functions —
-or through the engine's own numeric evaluation for anything else. The view is the one every
+or through the engine's own numeric evaluation for anything else; `gpu` moves the sampling
+to a compute shader (see [GPU evaluation](#gpu-evaluation)). The view is the one every
 3-D figure has: **drag to rotate** (`azimuth` / `elevation`), **ctrl/⌘ + wheel to zoom**,
 **double-click to reset**. Hover to read out `(re, im, |f|)`.
 
@@ -50,6 +51,41 @@ The pole at <code>z = 1</code>, and up the critical line the first non-trivial z
 every hue winds round.
 </template>
 <notatio-complex-plot-3d value="Zeta(z)" domain="-2,3,0,30" samples="70" max-height="3" />
+</Story>
+
+## GPU evaluation
+
+Set `gpu` and the grid is evaluated in a WebGPU compute shader through the same complex
+lowering the [portrait](/playground/complex-plot) uses -- `gpu="160"` also sets the
+sample count, since the GPU takes a far denser grid in stride. Where WebGPU is missing,
+or the expression has no lowering, the CPU sampler runs instead; a **GPU** badge under
+the figure says which happened.
+
+<Story
+  title="A dense rational surface">
+<template #description>
+The rational function again at 160 samples a side, so the spikes come to a point and the
+hue is continuous across each face.
+</template>
+<notatio-complex-plot-3d value="(z^3 - 1)/(z^2 + 1)" gpu="160" max-height="3" />
+</Story>
+
+<Story
+  title="An essential singularity">
+<template #description>
+<code>Exp(1/z)</code> near the origin: the surface climbs to the ceiling on the right and
+falls to the floor on the left, and between them every hue passes infinitely often.
+</template>
+<notatio-complex-plot-3d value="Exp(1/z)" domain="-1,1,-1,1" gpu="200" max-height="3" elevation="30" />
+</Story>
+
+<Story
+  title="The trigamma function">
+<template #description>
+<code>PolyGamma(1, z)</code> through the analytic kernels on the GPU: double poles at
+<code>0, −1, −2, …</code>, so the hue winds twice round each spike.
+</template>
+<notatio-complex-plot-3d value="PolyGamma(1, z)" domain="-4,2,-2,2" gpu="160" max-height="5" />
 </Story>
 
 ## As an expression

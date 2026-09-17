@@ -241,7 +241,7 @@ export type ComplexDomain = readonly [number, number, number, number];
 export interface ComplexSurfaceOptions {
   /** Real and imaginary extents (default `[-2, 2, -2, 2]`). */
   domain?: ComplexDomain;
-  /** Samples per side (default 40). */
+  /** Samples per side, clamped to 2..400 (default 40). */
   samples?: number;
   /**
    * Height ceiling. |f| is unbounded near a pole, and one spike would flatten the rest
@@ -274,28 +274,37 @@ export const hueOf = (z: Complex): number => {
   return t < 0 ? t + 1 : t;
 };
 
-/** Sample |f| and arg f over the domain. Never throws: a sample that blows up is NaN. */
-export function sampleComplexSurface(
-  f: ComplexFunction,
-  opts: ComplexSurfaceOptions = {},
-): ComplexSurface {
+/** The sample coordinates of a domain, `samples` per side. */
+export function complexGrid(opts: ComplexSurfaceOptions = {}): { xs: number[]; ys: number[] } {
   const [re0, re1, im0, im1] = opts.domain ?? [-2, 2, -2, 2];
-  const n = Math.max(2, Math.min(200, Math.round(opts.samples ?? 40)));
-  const cap = opts.maxHeight !== undefined && opts.maxHeight > 0 ? opts.maxHeight : 4;
-  const xs = Array.from({ length: n }, (_, i) => re0 + ((re1 - re0) * i) / (n - 1));
-  const ys = Array.from({ length: n }, (_, j) => im0 + ((im1 - im0) * j) / (n - 1));
+  const n = Math.max(2, Math.min(400, Math.round(opts.samples ?? 40)));
+  return {
+    xs: Array.from({ length: n }, (_, i) => re0 + ((re1 - re0) * i) / (n - 1)),
+    ys: Array.from({ length: n }, (_, j) => im0 + ((im1 - im0) * j) / (n - 1)),
+  };
+}
+
+/**
+ * Heights and hues from sampled values, row-major: `values[j * nx + i]` is `[re, im]`
+ * at `(xs[i], ys[j])` -- as a flat `Float32Array` of pairs off the GPU, or a list.
+ */
+export function complexSurfaceOf(
+  values: Float32Array | readonly Complex[],
+  xs: readonly number[],
+  ys: readonly number[],
+  maxHeight?: number,
+): ComplexSurface {
+  const cap = maxHeight !== undefined && maxHeight > 0 ? maxHeight : 4;
+  const nx = xs.length;
   const heights: number[][] = [];
   const hues: number[][] = [];
-  for (const y of ys) {
+  for (let j = 0; j < ys.length; j++) {
     const hRow: number[] = [];
     const cRow: number[] = [];
-    for (const x of xs) {
-      let w: Complex;
-      try {
-        w = f([x, y]);
-      } catch {
-        w = [Number.NaN, Number.NaN];
-      }
+    for (let i = 0; i < nx; i++) {
+      const k = j * nx + i;
+      const w: Complex =
+        values instanceof Float32Array ? [values[k * 2], values[k * 2 + 1]] : values[k];
       const r = Math.hypot(w[0], w[1]);
       // A pole is a real feature: keep the height, clipped, so the surface rises to the
       // ceiling around it rather than tearing a hole.
@@ -305,7 +314,26 @@ export function sampleComplexSurface(
     heights.push(hRow);
     hues.push(cRow);
   }
-  return { heights, hues, xs, ys };
+  return { heights, hues, xs: [...xs], ys: [...ys] };
+}
+
+/** Sample |f| and arg f over the domain. Never throws: a sample that blows up is NaN. */
+export function sampleComplexSurface(
+  f: ComplexFunction,
+  opts: ComplexSurfaceOptions = {},
+): ComplexSurface {
+  const { xs, ys } = complexGrid(opts);
+  const values: Complex[] = [];
+  for (const y of ys) {
+    for (const x of xs) {
+      try {
+        values.push(f([x, y]));
+      } catch {
+        values.push([Number.NaN, Number.NaN]);
+      }
+    }
+  }
+  return complexSurfaceOf(values, xs, ys, opts.maxHeight);
 }
 
 // --- colouring ------------------------------------------------------------------------
@@ -349,6 +377,8 @@ export function complexSurfaceSvg(
 ): string {
   const { heights, hues, xs, ys } = surface;
   return surfaceSvg(heights, {
+    // Mesh lines thin out as the grid densifies, or a GPU-resolution surface is all edge.
+    edgeWidth: Math.min(0.5, 30 / Math.max(xs.length, ys.length)),
     ...opts,
     xs,
     ys,

@@ -58,6 +58,8 @@ export interface Surface3dOptions {
   /** A fill per face, given its cell and normalised mean height; default the
    * height-shaded accent. */
   fill?: (face: { i: number; j: number; t: number; surface: number }) => string;
+  /** Width of the mesh lines between faces (default 0.5); a dense grid wants less. */
+  edgeWidth?: number;
 }
 
 /** A projected point plus its distance toward the viewer (larger = nearer). */
@@ -227,10 +229,11 @@ export function surfacesSvg(grids: readonly Grid[], opts: Surface3dOptions = {})
   // Overlaid surfaces get a touch of transparency so a lower one shows through.
   const opacity = grids.length > 1 ? ' fill-opacity="0.85"' : "";
   const fill = opts.fill ?? ((c) => shade(SURF[c.surface % SURF.length], c.t));
+  const edgeWidth = n2(opts.edgeWidth ?? 0.5);
   const surface = cells
     .map(
       (c) =>
-        `<polygon points="${c.poly}" fill="${fill(c)}"${opacity} stroke="${EDGE}" stroke-width="0.5" stroke-linejoin="round"/>`,
+        `<polygon points="${c.poly}" fill="${fill(c)}"${opacity} stroke="${EDGE}" stroke-width="${edgeWidth}" stroke-linejoin="round"/>`,
     )
     .join("");
 

@@ -1,8 +1,12 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { expect, test } from "vite-plus/test";
+import { emitComplexWGSL } from "@enumeratio/analytic/src";
+import { complexComputeShader } from "../src/gpu-eval.ts";
 import {
   complexFunction,
+  complexGrid,
+  complexSurfaceOf,
   complexSurfaceSvg,
   faceHue,
   hueOf,
@@ -108,4 +112,32 @@ test("the SVG paints one hue-filled face per cell", () => {
   // z itself: arg on the positive real axis is hue 0 -- red -- and the face just
   // above the axis on the right leans that way.
   expect(svg).toContain('viewBox="0 0 360 260"');
+});
+
+test("a GPU value buffer colours the same way as the CPU sampler", () => {
+  const f = fn("z^2");
+  const { xs, ys } = complexGrid({ domain: [-1, 1, -1, 1], samples: 3 });
+  const values = new Float32Array(xs.length * ys.length * 2);
+  ys.forEach((y, j) =>
+    xs.forEach((x, i) => {
+      const [re, im] = f([x, y]);
+      values[(j * xs.length + i) * 2] = re;
+      values[(j * xs.length + i) * 2 + 1] = im;
+    }),
+  );
+  const gpu = complexSurfaceOf(values, xs, ys, 4);
+  const cpu = sampleComplexSurface(f, { domain: [-1, 1, -1, 1], samples: 3 });
+  expect(gpu.heights).toEqual(cpu.heights);
+  expect(gpu.hues).toEqual(cpu.hues);
+});
+
+test("the complex compute shader binds the grid and the literal slots", () => {
+  const { json } = parseNotatio("1/(z^2 + 1)");
+  const emitted = emitComplexWGSL(ce.box(json).json as never, "z");
+  expect(emitted).toBeDefined();
+  const code = complexComputeShader("z", emitted!.code);
+  expect(code).toContain("let z = vec2f(");
+  expect(code).toContain("array<vec2f>");
+  expect(code).toContain("prm.p[0].xy");
+  expect(code).toContain("fn cdiv");
 });

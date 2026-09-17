@@ -1,4 +1,5 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
+import { emitComplexWGSL } from "@enumeratio/analytic/src";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
@@ -8,8 +9,11 @@ import {
   type ComplexFunction,
   type ComplexSurface,
   complexFunction,
+  complexGrid,
+  complexSurfaceOf,
   complexSurfaceSvg,
   debug,
+  evalComplexGridGPU,
   Orbit,
   ORBIT_HINT,
   parseComplexDomain,
@@ -26,7 +30,9 @@ const log = debug("complex-plot-3d");
  *
  * `value` is **notatio**; LaTeX is accepted inside a `$…$` island. Sampled on the CPU
  * through the base package's complex evaluator, or through the engine's own numeric
- * evaluation for a head it has no lowering for. Drag rotates, ctrl/⌘ + wheel zooms,
+ * evaluation for a head it has no lowering for. `gpu` runs the same complex lowering the
+ * portrait uses in a compute shader instead -- a number also sets `samples` -- and falls
+ * back to the CPU where WebGPU is missing. Drag rotates, ctrl/⌘ + wheel zooms,
  * double-click resets the view.
  */
 export class NotatioComplexPlot3D extends LitElement {
@@ -37,8 +43,10 @@ export class NotatioComplexPlot3D extends LitElement {
     var: { type: String },
     /** The rectangle to sample, as `re0,re1,im0,im1`. */
     domain: { type: String },
-    /** Samples per side, clamped to 2..200. */
+    /** Samples per side, clamped to 2..400. */
     samples: { type: Number },
+    /** Evaluate the grid in a WebGPU compute shader. A number also sets `samples`. */
+    gpu: { type: String },
     /** Height ceiling for |f|, since a pole goes to infinity. */
     maxHeight: { type: Number, attribute: "max-height" },
     /** `"false"` hides the axes frame and its range labels. */
@@ -60,6 +68,7 @@ export class NotatioComplexPlot3D extends LitElement {
   declare var: string;
   declare domain: string;
   declare samples: number;
+  declare gpu: string;
   declare maxHeight: number;
   declare axes: string;
   declare azimuth: number;
@@ -71,6 +80,7 @@ export class NotatioComplexPlot3D extends LitElement {
   declare _hover: [number, number] | undefined;
 
   #surface: ComplexSurface | undefined;
+  #usedGpu = false;
   #orbit = new Orbit(this);
 
   constructor() {
@@ -79,6 +89,7 @@ export class NotatioComplexPlot3D extends LitElement {
     this.var = "z";
     this.domain = "-2,2,-2,2";
     this.samples = 40;
+    this.gpu = "false";
     this.maxHeight = 4;
     this.axes = "true";
     this.azimuth = 45;
@@ -105,6 +116,7 @@ export class NotatioComplexPlot3D extends LitElement {
       changed.has("var") ||
       changed.has("domain") ||
       changed.has("samples") ||
+      changed.has("gpu") ||
       changed.has("maxHeight")
     ) {
       void this.#recompute();
@@ -140,12 +152,27 @@ export class NotatioComplexPlot3D extends LitElement {
       }
       const expr = engine.box(json);
       const variable = this.var || "z";
-      const f = complexFunction(expr.json, variable) ?? this.#engineFunction(expr, variable);
-      this.#surface = sampleComplexSurface(f, {
-        domain: parseComplexDomain(this.domain),
-        samples: Number(this.samples),
-        maxHeight: Number(this.maxHeight),
-      });
+      const domain = parseComplexDomain(this.domain);
+      const maxHeight = Number(this.maxHeight);
+      // Opt-in GPU path: the portrait's complex lowering, dispatched over the grid. Only
+      // taken when `gpu` is set, the expression lowers, and WebGPU answers -- otherwise
+      // the CPU sampler below runs, at the CPU sample count.
+      const wantGpu = this.gpu !== "false" && this.gpu !== undefined && this.gpu !== "";
+      let surface: ComplexSurface | undefined;
+      if (wantGpu) {
+        const emitted = emitComplexWGSL(expr.json as never, variable);
+        if (emitted) {
+          const { xs, ys } = complexGrid({ domain, samples: Number(this.gpu) || this.samples });
+          const values = await evalComplexGridGPU(emitted, variable, xs, ys);
+          if (values) surface = complexSurfaceOf(values, xs, ys, maxHeight);
+        }
+      }
+      this.#usedGpu = surface !== undefined;
+      if (!surface) {
+        const f = complexFunction(expr.json, variable) ?? this.#engineFunction(expr, variable);
+        surface = sampleComplexSurface(f, { domain, samples: Number(this.samples), maxHeight });
+      }
+      this.#surface = surface;
       this._status = "";
       this.#draw();
     } catch (error) {
@@ -210,7 +237,17 @@ export class NotatioComplexPlot3D extends LitElement {
         @wheel=${this.#orbit.onWheel}
         title=${ORBIT_HINT}
         >${unsafeHTML(this._svg)}</span
-      >${this._status ? html`<p class="notatio-plot-status">${this._status}</p>` : null}`;
+      >${
+        this.#usedGpu
+          ? html`<div class="notatio-toolbar">
+              <span
+                title="grid evaluated on the GPU"
+                style="padding:.05em .4em;border-radius:4px;font-size:.72em;font-weight:600;letter-spacing:.04em;background:var(--notatio-accent,#d97706);color:#fff"
+                >GPU</span
+              >
+            </div>`
+          : ""
+      }${this._status ? html`<p class="notatio-plot-status">${this._status}</p>` : null}`;
   }
 }
 
