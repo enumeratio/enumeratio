@@ -1,5 +1,5 @@
 // Node-side rendering of the core's structured graphics: turn a Graphic into an
-// SVG (via the pure @enumeratio/components renderers), write it to a temp file, and
+// SVG (via the pure @enumeratio/notatio renderers), write it to a temp file, and
 // — on a graphics-capable terminal — rasterize to PNG and show it inline. This
 // module is Node-only; the browser terminal draws the same Graphic itself.
 
@@ -8,8 +8,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { rasterize } from "@enumeratio/raster";
 // Pure renderers from the sibling package's source (no DOM, no build step).
-import { renderGlyph } from "../../components/src/glyphs.ts";
-import { linePlotSvg } from "../../components/src/plot.ts";
+import { renderGlyph } from "../../notatio/src/glyphs.ts";
+import { linePlotSvg } from "../../notatio/src/plot.ts";
 import type { Graphic } from "./core.ts";
 
 /** Draw a core Graphic as an SVG string. */

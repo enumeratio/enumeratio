@@ -2,7 +2,7 @@
 // A live, editable input wired to an evaluated output: type math on the left,
 // see the boxed/evaluated result update on the right. Demonstrates the
 // non-read-only <notatio-in> driving <notatio-out> via notatio-change.
-import { formOfHead, splitHead } from "@enumeratio/components";
+import { formOfHead, splitHead } from "@enumeratio/notatio";
 import { ref } from "vue";
 
 const props = defineProps<{ value?: string }>();

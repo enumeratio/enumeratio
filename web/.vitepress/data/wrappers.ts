@@ -21,7 +21,7 @@ import {
 } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { VISUAL_SYMBOLS } from "@enumeratio/components/symbols";
+import { VISUAL_SYMBOLS } from "@enumeratio/notatio/symbols";
 import { type AttributeDoc, collectComponents, type ComponentDoc } from "./components.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));

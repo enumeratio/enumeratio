@@ -12,7 +12,7 @@ the part component-naming already owns.
 
 ## 1. What exists
 
-- **`@enumeratio/components`**: ~30 Lit custom elements, `notatio-*`. Every expression
+- **`@enumeratio/notatio`**: ~30 Lit custom elements, `notatio-*`. Every expression
   attribute is notatio; LaTeX lives only in `$…$` islands, and the editable elements
   (`notatio-cell`, `notatio-notebook`, `notatio-worksheet`) convert notatio to LaTeX
   for the MathLive field through one seam, `source.ts`. `in-form="latex"` is the escape
@@ -134,10 +134,14 @@ same way for tags and heads at once.
 
 ## 5. The renames
 
-Landed 2026-09-15, all of component-naming §4 at once: the package is
-`@enumeratio/components`, `notatio-input` / `notatio-output` became `notatio-in` /
-`notatio-out` (the `In` and `Out` symbols the elements already print as their row
-labels), the compound names are kebab-cased. head→tag is now a function of the symbol.
+Landed 2026-09-15, all of component-naming §4 at once: `notatio-input` /
+`notatio-output` became `notatio-in` / `notatio-out` (the `In` and `Out` symbols the
+elements already print as their row labels), the compound names are kebab-cased.
+head→tag is now a function of the symbol. The package went to `@enumeratio/components`
+that day and on to **`@enumeratio/notatio`** (`packages/notatio`) the next: the tags are
+`notatio-*`, and the enumeratio/notatio split -- the mathematics and its notation --
+is what the repo is named for, so the package is named for the thing rather than the
+shape of it.
 
 ## 6. What it took
 

@@ -4,7 +4,7 @@
 // only the lighter `mathlive/ssr` markup chunk and never the editor.
 //
 // This module owns the whole MathLive integration (fonts, CSS, engine) so hosts
-// depend on @enumeratio/components alone, not on mathlive or compute-engine.
+// depend on @enumeratio/notatio alone, not on mathlive or compute-engine.
 
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 

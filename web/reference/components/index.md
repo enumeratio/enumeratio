@@ -4,7 +4,7 @@ Every `<notatio-*>` custom element, with its attributes, types and defaults read
 out of the source at build time — so these tables cannot drift from the code.
 
 The components are plain custom elements built on [Lit](https://lit.dev). They need no
-framework: import `@enumeratio/components` for the side effect and use the tags in any
+framework: import `@enumeratio/notatio` for the side effect and use the tags in any
 HTML. The [playground](/playground/) shows each one working; this reference is for
 reading the dials.
 

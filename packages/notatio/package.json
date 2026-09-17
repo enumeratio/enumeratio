@@ -1,5 +1,5 @@
 {
-  "name": "@enumeratio/components",
+  "name": "@enumeratio/notatio",
   "version": "0.0.0",
   "private": true,
   "description": "notatio: the web components for exploring enumeratio and compute-engine expressions — notatio-in, notatio-out, notatio-cell.",

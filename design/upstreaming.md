@@ -195,7 +195,7 @@ What is wrong is WHERE it has to happen. The dictionary is a **constructor optio
 - **Two libraries cannot both add entries.** Each would have to know about the other's, or
   a third party composes `[...LATEX_DICTIONARY, ...a, ...b]` by hand.
 
-That is why `packages/components/src/traditional.ts` exists at all: an output-only side table
+That is why `packages/notatio/src/traditional.ts` exists at all: an output-only side table
 of fifteen heads, walked by hand, because the input direction is closed off by the
 architecture rather than absent from the API. It is also the same wound as §3.2 and §3.6 —
 extensions cannot share a head, cannot name themselves, and cannot contribute notation.
@@ -536,5 +536,5 @@ capital zeta is a Z). MathLive renders it as a roman **Z**, so a cell whose nota
 `Zeta(s)` shows `Z(s)` in its field. The parser accepts both `\zeta(3)` and `\Zeta(3)` as
 `["Zeta", 3]`, so the fix is one character in the serializer's LaTeX dictionary entry, and
 round-trips. Seen once the editable components started handing the engine's own LaTeX to
-the field (`packages/components/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
+the field (`packages/notatio/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
 not.

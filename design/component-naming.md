@@ -2,7 +2,7 @@
 
 Status: **landed** (2026-09-15). An audit of the component tags against the symbols they
 represent, the rule that came out of it, and the renames it called for — all executed in
-one pass, once the code was quiet enough: the package is `@enumeratio/components`, every
+one pass, once the code was quiet enough: the package is `@enumeratio/notatio`, every
 tag in §4 has its kebab-cased symbol name, the class names follow, and the multiplexing
 question (§5) is answered in [components-and-symbols.md](./components-and-symbols.md) §4
 — a family tag stays a family tag, mirrored by a family head. The audit is kept as the
@@ -132,7 +132,7 @@ otherwise the next one drifts the same way.
 ## 6. How it was done
 
 One pass, 2026-09-15: the package rename (`@enumeratio/elements` →
-`@enumeratio/components`, `packages/elements` → `packages/components`), the tags of §4,
+`@enumeratio/notatio`, `packages/elements` → `packages/notatio`), the tags of §4,
 the class names, the playground page slugs — a scripted textual rewrite over the repo
 with the tag, class and route maps, plus `git mv` for the files, then a build and the
 site. The multiplexing question was answered first (family tags stay; see

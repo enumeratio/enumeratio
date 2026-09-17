@@ -88,7 +88,7 @@ function svgOf(expr: BoxedExpression): string | undefined {
  * The heads that draw. Each names a picture rather than a value -- Wolfram's `Plot`,
  * `Histogram`, `Manipulate` print as pictures, not formulas -- and each has a component
  * of the same name (kebab-cased, `notatio-` in front) that is its rendering; the
- * argument-to-attribute map lives with the components (`@enumeratio/components/symbols`).
+ * argument-to-attribute map lives with the components (`@enumeratio/notatio/symbols`).
  * Here they are declared so the engine can *hold* one: `Plot(Sin(x), (x, 0, 10))` is an
  * expression a REPL prints, a cell evaluates to, a worksheet composites. Evaluation
  * leaves them alone, and a `Manipulate` body keeps its free parameters because a free
