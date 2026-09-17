@@ -225,8 +225,8 @@ test("LerchPhi at z = −1 (rim): Euler transform hits the Dirichlet-eta constan
   // the Euler transform recovers these to machine precision.
   const ln2 = Math.LN2;
   const pi2_12 = Math.PI ** 2 / 12;
-  const catalan = 0.915965594177219;
-  const zeta3 = 1.2020569031595942;
+  const catalan = 0.915965594177219015;
+  const zeta3 = 1.2020569031595943;
   expect(Math.abs(num(["LerchPhi", -1, 1, 1]) - ln2)).toBeLessThan(1e-14); // η(1) = ln 2
   expect(Math.abs(num(["LerchPhi", -1, 2, 1]) - pi2_12)).toBeLessThan(1e-14); // η(2) = π²/12
   // Φ(−1, 2, ½) = 4G (Catalan)

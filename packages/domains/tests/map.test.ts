@@ -68,24 +68,21 @@ test("extending a built-in keeps everything the built-in did", () => {
 test("Reverse, Complement and Inverse agree with plain readings", () => {
   for (const p of ALL) {
     const n = p.length;
-    expect(result(["Reverse", perm(...p)]), `rev [${String(p)}]`).toEqual([
-      "List",
-      ...[...p].reverse(),
-    ]);
-    expect(result(["Complement", perm(...p)]), `comp [${String(p)}]`).toEqual([
+    expect(result(["Reverse", perm(...p)]), `rev [${p}]`).toEqual(["List", ...[...p].reverse()]);
+    expect(result(["Complement", perm(...p)]), `comp [${p}]`).toEqual([
       "List",
       ...p.map((v) => n + 1 - v),
     ]);
     const inverse = Array.from({ length: n }, (_, i) => p.indexOf(i + 1) + 1);
-    expect(result(["Inverse", perm(...p)]), `inv [${String(p)}]`).toEqual(["List", ...inverse]);
+    expect(result(["Inverse", perm(...p)]), `inv [${p}]`).toEqual(["List", ...inverse]);
   }
 });
 
 test("Inverse is an involution, and Reverse is too", () => {
   // A property rather than a table — the kind of check a typed map makes expressible.
   for (const p of ALL) {
-    expect(result(["Inverse", ["Inverse", perm(...p)]]), `[${String(p)}]`).toEqual(["List", ...p]);
-    expect(result(["Reverse", ["Reverse", perm(...p)]]), `[${String(p)}]`).toEqual(["List", ...p]);
+    expect(result(["Inverse", ["Inverse", perm(...p)]]), `[${p}]`).toEqual(["List", ...p]);
+    expect(result(["Reverse", ["Reverse", perm(...p)]]), `[${p}]`).toEqual(["List", ...p]);
   }
 });
 
@@ -99,7 +96,7 @@ test("DescentSet's size and sum are Descents and MajorIndex", () => {
     // A finset is (members, n) — it carries its ground size — so the result is a Tuple. That
     // the shape shows up here rather than being papered over is the point of extracting
     // carrier shapes from enumeratio rather than guessing them.
-    expect(result(["DescentSet", perm(...p)]), `[${String(p)}]`).toEqual([
+    expect(result(["DescentSet", perm(...p)]), `[${p}]`).toEqual([
       "Tuple",
       ["List", ...descents],
       p.length,
@@ -114,7 +111,7 @@ test("DescentSet's size and sum are Descents and MajorIndex", () => {
 test("ToLehmerCode is subexcedant and totals the inversions", () => {
   for (const p of ALL) {
     const code = p.map((v, i) => p.slice(i + 1).filter((w) => w < v).length);
-    expect(result(["ToLehmerCode", perm(...p)]), `[${String(p)}]`).toEqual(["List", ...code]);
+    expect(result(["ToLehmerCode", perm(...p)]), `[${p}]`).toEqual(["List", ...code]);
     expect(ce.box(["Inversions", perm(...p)] as never).evaluate().re).toBe(
       code.reduce((a, b) => a + b, 0),
     );
@@ -123,7 +120,7 @@ test("ToLehmerCode is subexcedant and totals the inversions", () => {
 
 test("CycleType crosses carriers and partitions n", () => {
   const cycleLengths = (p: number[]): number[] => {
-    const seen = Array.from({ length: p.length }, (): boolean => false);
+    const seen = new Array<boolean>(p.length).fill(false);
     const lengths: number[] = [];
     for (let start = 0; start < p.length; start++) {
       if (seen[start]) continue;
@@ -142,10 +139,7 @@ test("CycleType crosses carriers and partitions n", () => {
     "integer_partition",
   );
   for (const p of ALL)
-    expect(result(["CycleType", perm(...p)]), `[${String(p)}]`).toEqual([
-      "List",
-      ...cycleLengths(p),
-    ]);
+    expect(result(["CycleType", perm(...p)]), `[${p}]`).toEqual(["List", ...cycleLengths(p)]);
 });
 
 test("a map's output feeds a statistic of the TARGET carrier", () => {
@@ -163,25 +157,20 @@ test("the new maps agree with plain readings", () => {
     p.length === 0 ? [] : [p.at(-1)!, ...p.slice(0, -1)];
   for (const p of ALL) {
     const n = p.length;
-    expect(result(["CyclicShift", perm(...p)]), `shift [${String(p)}]`).toEqual([
-      "List",
-      ...rotateLeft(p),
-    ]);
-    expect(result(["InverseCyclicShift", perm(...p)]), `unshift [${String(p)}]`).toEqual([
+    expect(result(["CyclicShift", perm(...p)]), `shift [${p}]`).toEqual(["List", ...rotateLeft(p)]);
+    expect(result(["InverseCyclicShift", perm(...p)]), `unshift [${p}]`).toEqual([
       "List",
       ...rotateRight(p),
     ]);
     const peaks = p
       .map((_, k) => k + 1)
       .filter((i) => i > 1 && i < n && p[i - 2]! < p[i - 1]! && p[i - 1]! > p[i]!);
-    expect(result(["PeakSet", perm(...p)]), `peaks [${String(p)}]`).toEqual([
+    expect(result(["PeakSet", perm(...p)]), `peaks [${p}]`).toEqual([
       "Tuple",
       ["List", ...peaks],
       n,
     ]);
-    expect(ce.box(["Peaks", perm(...p)] as never).evaluate().re, `[${String(p)}]`).toBe(
-      peaks.length,
-    );
+    expect(ce.box(["Peaks", perm(...p)] as never).evaluate().re, `[${p}]`).toBe(peaks.length);
   }
 });
 
@@ -201,18 +190,16 @@ test("a composed map really composes its steps", () => {
   for (const p of ALL) {
     const n = p.length;
     const reversed = [...p].reverse();
-    expect(result(["ReverseComplement", perm(...p)]), `[${String(p)}]`).toEqual([
+    expect(result(["ReverseComplement", perm(...p)]), `[${p}]`).toEqual([
       "List",
       ...reversed.map((v) => n + 1 - v),
     ]);
-    expect(
-      result(["ReverseComplement", perm(...p)]),
-      `= Complement(Reverse) [${String(p)}]`,
-    ).toEqual(result(["Complement", ["Reverse", perm(...p)]]));
-    expect(
-      result(["InverseAfterComplementAfterReverse", perm(...p)]),
-      `three-step [${String(p)}]`,
-    ).toEqual(result(["Inverse", ["Complement", ["Reverse", perm(...p)]]]));
+    expect(result(["ReverseComplement", perm(...p)]), `= Complement(Reverse) [${p}]`).toEqual(
+      result(["Complement", ["Reverse", perm(...p)]]),
+    );
+    expect(result(["InverseAfterComplementAfterReverse", perm(...p)]), `three-step [${p}]`).toEqual(
+      result(["Inverse", ["Complement", ["Reverse", perm(...p)]]]),
+    );
   }
 });
 
@@ -233,8 +220,8 @@ test("CyclePartition labels each position with its cycle's rank", () => {
   // A set partition IS a restricted growth string, so the block label is the rank of the
   // cycle's least element — not an arbitrary identifier.
   const rgs = (p: number[]): number[] => {
-    const seen = Array.from({ length: p.length }, (): boolean => false);
-    const labels = Array.from({ length: p.length }, (): number => 0);
+    const seen = new Array<boolean>(p.length).fill(false);
+    const labels = new Array<number>(p.length).fill(0);
     let block = 0;
     for (let start = 0; start < p.length; start++) {
       if (seen[start]) continue;
@@ -249,7 +236,7 @@ test("CyclePartition labels each position with its cycle's rank", () => {
     return labels;
   };
   for (const p of ALL)
-    expect(result(["CyclePartition", perm(...p)]), `[${String(p)}]`).toEqual(["List", ...rgs(p)]);
+    expect(result(["CyclePartition", perm(...p)]), `[${p}]`).toEqual(["List", ...rgs(p)]);
 });
 
 /** Every restricted growth string of length n — i.e. every set partition of [n], in the
@@ -282,10 +269,10 @@ test("ArcRepresentation links each position to the next in its block", () => {
     });
   for (const n of [1, 2, 3, 4, 5])
     for (const rgs of restrictedGrowthStrings(n))
-      expect(
-        result(["ArcRepresentation", ["SetPartition", ["List", ...rgs]]]),
-        String(rgs),
-      ).toEqual(["List", ...linking(rgs)]);
+      expect(result(["ArcRepresentation", ["SetPartition", ["List", ...rgs]]]), `${rgs}`).toEqual([
+        "List",
+        ...linking(rgs),
+      ]);
 });
 
 test("DescentComposition cuts n at the descents", () => {
@@ -296,15 +283,12 @@ test("DescentComposition cuts n at the descents", () => {
       .filter((i) => p[i - 1]! > p[i]!);
     const bounds = [0, ...descents, p.length];
     const parts = bounds.slice(1).map((b, k) => b - bounds[k]!);
-    expect(result(["DescentComposition", perm(...p)]), `[${String(p)}]`).toEqual([
-      "List",
-      ...parts,
-    ]);
+    expect(result(["DescentComposition", perm(...p)]), `[${p}]`).toEqual(["List", ...parts]);
     expect(
       parts.reduce((a, b) => a + b, 0),
-      `[${String(p)}] sums to n`,
+      `[${p}] sums to n`,
     ).toBe(p.length);
-    expect(parts.length, `[${String(p)}] length`).toBe(descents.length + 1);
+    expect(parts.length, `[${p}] length`).toBe(descents.length + 1);
   }
 });
 
@@ -318,7 +302,7 @@ test("the empty word has a composition with NO parts", () => {
 /** The permutation's cycles, each as its forward orbit [start, p(start), p(p(start)), …]. */
 function cyclesOf(p: number[]): number[][] {
   const n = p.length;
-  const seen = Array.from({ length: n + 1 }, (): boolean => false);
+  const seen = new Array<boolean>(n + 1).fill(false);
   const cycles: number[][] = [];
   for (let start = 1; start <= n; start++) {
     if (seen[start]) continue;
@@ -367,7 +351,7 @@ const leftToRightMaxima = (word: number[]): number =>
 
 test("ConjugateAfterCycleType is the conjugate of the cycle type", () => {
   for (const p of ALL) {
-    expect(result(["ConjugateAfterCycleType", perm(...p)]), `[${String(p)}]`).toEqual([
+    expect(result(["ConjugateAfterCycleType", perm(...p)]), `[${p}]`).toEqual([
       "List",
       ...conjugateOf(cycleTypeOf(p)),
     ]);
@@ -377,19 +361,19 @@ test("ConjugateAfterCycleType is the conjugate of the cycle type", () => {
 test("ConjugacyClassRepresentative is canonical and shares the cycle type", () => {
   for (const p of ALL) {
     const rep = canonicalRepresentative(p);
-    expect(result(["ConjugacyClassRepresentative", perm(...p)]), `[${String(p)}]`).toEqual([
+    expect(result(["ConjugacyClassRepresentative", perm(...p)]), `[${p}]`).toEqual([
       "List",
       ...rep,
     ]);
-    expect(cycleTypeOf(rep), `[${String(p)}] same cycle type`).toEqual(cycleTypeOf(p));
+    expect(cycleTypeOf(rep), `[${p}] same cycle type`).toEqual(cycleTypeOf(p));
     // Already canonical: representing the representative is a no-op.
-    expect(canonicalRepresentative(rep), `[${String(p)}] idempotent`).toEqual(rep);
+    expect(canonicalRepresentative(rep), `[${p}] idempotent`).toEqual(rep);
   }
 });
 
 test("Foata agrees with the cycle-rotation reading", () => {
   for (const p of ALL) {
-    expect(result(["Foata", perm(...p)]), `[${String(p)}]`).toEqual(["List", ...foataOf(p)]);
+    expect(result(["Foata", perm(...p)]), `[${p}]`).toEqual(["List", ...foataOf(p)]);
   }
 });
 
@@ -406,10 +390,10 @@ test("Foata (via the engine) is a bijection on S_n for n <= 5, sending k cycles 
       const image = word.slice(1) as number[];
       expect(
         image.slice().sort((a, b) => a - b),
-        `[${String(p)}] a permutation`,
+        `[${p}] a permutation`,
       ).toEqual(Array.from({ length: n }, (_, k) => k + 1));
       seen.add(image.join(","));
-      expect(leftToRightMaxima(image), `[${String(p)}] maxima = cycles`).toBe(cyclesOf(p).length);
+      expect(leftToRightMaxima(image), `[${p}] maxima = cycles`).toBe(cyclesOf(p).length);
     }
     expect(seen.size, `S${n} bijective`).toBe(permutations(n).length);
   }
@@ -428,10 +412,10 @@ test("Foata's defining property holds on S_n for n <= 7 (reference algorithm)", 
       const image = foataOf(p);
       expect(
         image.slice().sort((a, b) => a - b),
-        `[${String(p)}] a permutation`,
+        `[${p}] a permutation`,
       ).toEqual(Array.from({ length: n }, (_, k) => k + 1));
       seen.add(image.join(","));
-      expect(leftToRightMaxima(image), `[${String(p)}] maxima = cycles`).toBe(cyclesOf(p).length);
+      expect(leftToRightMaxima(image), `[${p}] maxima = cycles`).toBe(cyclesOf(p).length);
     }
     expect(seen.size, `S${n} bijective`).toBe(permutations(n).length);
   }

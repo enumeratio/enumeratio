@@ -43,10 +43,8 @@ test("conventional notation does NOT read back on its own", () => {
 test("the engine's own serialisation keeps a trigger, and round-trips", () => {
   for (const p of ALL) {
     const written = ce.box(perm(...p) as never).evaluate().latex;
-    expect(written, `[${String(p)}]`).toContain(
-      triggerFor(DOMAINS.find((d) => d.name === "Permutation")!),
-    );
-    expect(ce.parse(written).json, `[${String(p)}]`).toEqual(["Permutation", ["List", ...p]]);
+    expect(written, `[${p}]`).toContain(triggerFor(DOMAINS.find((d) => d.name === "Permutation")!));
+    expect(ce.parse(written).json, `[${p}]`).toEqual(["Permutation", ["List", ...p]]);
   }
 });
 
@@ -74,7 +72,7 @@ test("every latex representation is display-only, and says so by having no parse
 });
 
 test("each carrier and medium has exactly one canonical representation", () => {
-  for (const carrier of new Set(ALL_REPRESENTATIONS.map((r) => r.on)))
+  for (const carrier of [...new Set(ALL_REPRESENTATIONS.map((r) => r.on))])
     for (const medium of ["ascii", "latex"] as const) {
       const canonical = representationsFor(carrier).filter(
         (r) => r.medium === medium && r.canonical === true,

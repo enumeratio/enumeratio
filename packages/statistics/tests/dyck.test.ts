@@ -133,7 +133,7 @@ test("every Dyck definition has an independent reading", () => {
 for (const definition of DYCK_STATISTICS) {
   test(`${definition.head} agrees over every Dyck path of semilength 0..5`, () => {
     const expected = EXPECTED[definition.head]!;
-    for (const w of ALL) expect(evaluate(definition.head, w), `[${String(w)}]`).toBe(expected(w));
+    for (const w of ALL) expect(evaluate(definition.head, w), `[${w}]`).toBe(expected(w));
   });
 }
 
@@ -190,7 +190,7 @@ test("Dinv and Bounce golden values", () => {
     { word: [1, 0, 1, 0], dinv: 1, bounce: 1 }, // UDUD
   ];
   for (const { word, dinv, bounce } of cases) {
-    expect(evaluate("Dinv", word), `Dinv[${String(word)}]`).toBe(dinv);
-    expect(evaluate("Bounce", word), `Bounce[${String(word)}]`).toBe(bounce);
+    expect(evaluate("Dinv", word), `Dinv[${word}]`).toBe(dinv);
+    expect(evaluate("Bounce", word), `Bounce[${word}]`).toBe(bounce);
   }
 });

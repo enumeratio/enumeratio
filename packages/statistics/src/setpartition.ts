@@ -11,6 +11,7 @@ import {
   and,
   at,
   atLeastValue,
+  bind,
   count,
   equals,
   forEach,
@@ -69,20 +70,22 @@ const arcsOfBlockAt = (i: MathJSON): MathJSON => [
 /** Every arc, in block order. Order does not matter below: crossing and nesting are read off
  *  each pair's endpoints directly, not off the arcs' position in this list. Guarded against
  *  `Range(1, 0)` — the empty partition (zero blocks) has none. */
-const arcs: MathJSON = [
+const arcList: MathJSON = [
   "If",
   less(length(), 1),
   ["List"],
   ["Flatten", forEach(upTo(length()), arcsOfBlockAt("blk"), "blk"), 1],
 ];
+/** The arcs as a bound name: `withArcs` evaluates `arcList` ONCE per definition, where the
+ *  pairwise scans below would otherwise rebuild it at every `At` of every (i, j). */
+const arcs: MathJSON = "arcs";
+const withArcs = (body: MathJSON): MathJSON => bind("arcs", arcList, body);
 const arcCount: MathJSON = ["Length", arcs];
 
 const arcAt = (i: MathJSON): MathJSON => at(i, arcs);
 
 /** [isCrossing, isNesting] for arc i against arc j, computed together so the shared terms —
- *  which arc starts first, and its partner's endpoints — are each built ONCE as a JS value and
- *  reused by reference, rather than re-embedding `arcs` (itself a `Flatten(Map(...))`) a dozen
- *  times over in one formula. Relabel the two arcs a < b by left endpoint (distinct: a
+ *  which arc starts first, and its partner's endpoints — are each stated once. Relabel the two arcs a < b by left endpoint (distinct: a
  *  position starts at most one arc); c is the right endpoint of whichever starts at a, d the
  *  other's. Crossing is then exactly a < b < c < d and nesting a < b < d < c — Kasraoui–Zeng's
  *  definitions, read off without knowing beforehand which arc is which. */
@@ -107,12 +110,19 @@ const isNesting = (i: MathJSON, j: MathJSON): MathJSON => at(2, pairFlags(i, j))
 const hasArcPair = (body: MathJSON): MathJSON => ["If", less(arcCount, 2), 0, body];
 const laterArcs: MathJSON = ["Range", add("i", 1), arcCount];
 
-const crossings: MathJSON = hasArcPair(
-  sumOver(upTo(arcCount), count(laterArcs, isCrossing("i", "j"), "j"), "i"),
+const crossingPairs: MathJSON = sumOver(
+  upTo(arcCount),
+  count(laterArcs, isCrossing("i", "j"), "j"),
+  "i",
 );
-const nestings: MathJSON = hasArcPair(
-  sumOver(upTo(arcCount), count(laterArcs, isNesting("i", "j"), "j"), "i"),
+const nestingPairs: MathJSON = sumOver(
+  upTo(arcCount),
+  count(laterArcs, isNesting("i", "j"), "j"),
+  "i",
 );
+const crossings: MathJSON = withArcs(hasArcPair(crossingPairs));
+const nestings: MathJSON = withArcs(hasArcPair(nestingPairs));
+const crossingsAndNestings: MathJSON = withArcs(hasArcPair(add(crossingPairs, nestingPairs)));
 
 export const SET_PARTITION_STATISTICS: readonly Definition[] = [
   stat("Blocks", "The number of blocks.", ["Length", "_x"]),
@@ -151,5 +161,5 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
     nestings,
     "The complementary case to Crossings: one arc's span strictly contains the other's. Equidistributed with Crossings over set partitions of [n] (Kasraoui–Zeng), and the noncrossing and nonnesting partitions are each counted by the Catalan numbers.",
   ),
-  stat("CrossingNestingTotal", "Crossings plus nestings.", add(crossings, nestings)),
+  stat("CrossingNestingTotal", "Crossings plus nestings.", crossingsAndNestings),
 ];

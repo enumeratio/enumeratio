@@ -12,8 +12,10 @@
 import { ALL_STATISTICS } from "./all.ts";
 import { type Definition, headsOf, signatureOf } from "./types.ts";
 
-/** Heads that carry no meaning of their own — expression plumbing, not operations. */
-const STRUCTURAL = new Set(["Function", "Delimiter", "Sequence", "Hold"]);
+/** Heads that carry no meaning of their own — expression plumbing, not operations.
+ *  `Apply` is here as the other half of `Function`: applied to a lambda it is `bind`, a
+ *  `let`, and binds no more mathematics than the lambda does. */
+const STRUCTURAL = new Set(["Function", "Apply", "Delimiter", "Sequence", "Hold"]);
 
 /** Every head appearing in any definition, with how many definitions use it. */
 export function headUsage(

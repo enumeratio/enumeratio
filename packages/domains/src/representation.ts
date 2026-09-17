@@ -61,7 +61,7 @@ export interface Representation {
 /** Cycles of a permutation, each starting at its least element, in order of least element —
  *  including fixed points, which is what makes the notation reversible without knowing n. */
 function cyclesOf(image: readonly number[]): number[][] {
-  const seen = Array.from({ length: image.length }, (): boolean => false);
+  const seen = new Array<boolean>(image.length).fill(false);
   const cycles: number[][] = [];
   for (let start = 0; start < image.length; start++) {
     if (seen[start]) continue;
@@ -109,7 +109,7 @@ export const REPRESENTATIONS: readonly Representation[] = [
       );
       if (groups.length === 0) return text.trim() === "" ? [] : undefined;
       const size = Math.max(...groups.flat());
-      const image = Array.from({ length: size }, (): number => 0);
+      const image = new Array<number>(size).fill(0);
       for (const cycle of groups)
         for (const [index, entry] of cycle.entries())
           image[entry - 1] = cycle[(index + 1) % cycle.length]!;
@@ -124,7 +124,7 @@ export const REPRESENTATIONS: readonly Representation[] = [
     render: (image) => image.map((v) => BASE36[v] ?? "?").join(""),
     // Reversible only up to 35 entries, which is the point of the name.
     parse: (text) => {
-      const digits = Array.from(text.trim(), (ch) => BASE36.indexOf(ch));
+      const digits = [...text.trim()].map((ch) => BASE36.indexOf(ch));
       return digits.every((v) => v >= 1) ? digits : undefined;
     },
   },
@@ -168,7 +168,7 @@ export const REPRESENTATIONS: readonly Representation[] = [
     canonical: true,
     title: "Balanced parentheses",
     render: (steps) => steps.map((step) => (step === 1 ? "(" : ")")).join(""),
-    parse: (text) => Array.from(text.trim(), (ch) => (ch === "(" ? 1 : 0)),
+    parse: (text) => [...text.trim()].map((ch) => (ch === "(" ? 1 : 0)),
   },
 ];
 

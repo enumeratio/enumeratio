@@ -44,12 +44,12 @@ export function lorenzPermutation(word: string): number[] | undefined {
   // periods costs nothing and removes the need to argue about it.
   const key = (i: number): string => rotate(word, i).repeat(2);
   const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => (key(a) < key(b) ? -1 : 1));
-  const rank = Array.from({ length: n }, () => 0);
+  const rank = new Array<number>(n);
   order.forEach((index, position) => {
     rank[index] = position;
   });
   // The flow sends the point with itinerary w^(i) to the one with itinerary w^(i+1).
-  const permutation = Array.from({ length: n }, () => 0);
+  const permutation = new Array<number>(n);
   for (let i = 0; i < n; i++) permutation[rank[i] as number] = rank[(i + 1) % n] as number;
   return permutation;
 }
