@@ -7,6 +7,7 @@ import { homedir } from "node:os";
 import { join } from "node:path";
 import { createInterface } from "node:readline";
 import { dim } from "./ansi.ts";
+import { drivable, drive } from "./drive.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { NodeHost } from "./node-host.ts";
 
@@ -30,21 +31,36 @@ export function runRepl(defaults: SessionDefaults = {}): void {
   rl.prompt();
 
   rl.on("line", (line: string) => {
-    const input = line.trim();
-    if (input) {
-      lines.push(input);
-      const out = host.eval(input);
-      if (out.clear) console.clear();
-      if (out.inline) process.stdout.write(`${out.inline}\n`);
-      if (out.text) console.log(`${out.text}\n`);
-      else if (!out.clear) console.log("");
-      if (out.exit) {
-        rl.close();
-        return;
+    void (async () => {
+      const input = line.trim();
+      if (input) {
+        lines.push(input);
+        const { session } = host.repl;
+        const before = session.history.length;
+        const out = host.eval(input);
+        if (out.clear) console.clear();
+        if (out.inline) process.stdout.write(`${out.inline}\n`);
+        const last = session.history.at(-1);
+        // A result with controls in it is driven at the keyboard, then printed where it was left.
+        if (color && session.history.length > before && last && drivable(last.expr.json)) {
+          const left = await drive(last.expr.json, {
+            color,
+            stdin: process.stdin,
+            stdout: process.stdout,
+            show: (expr) => session.render(session.ce.box(expr).evaluate()),
+          });
+          const final = session.ce.box(left).evaluate();
+          console.log(`${host.repl.formatOut(last.n, session.render(final))}\n`);
+        } else if (out.text) console.log(`${out.text}\n`);
+        else if (!out.clear) console.log("");
+        if (out.exit) {
+          rl.close();
+          return;
+        }
       }
-    }
-    setPrompt();
-    rl.prompt();
+      setPrompt();
+      rl.prompt();
+    })();
   });
 
   rl.on("close", () => {

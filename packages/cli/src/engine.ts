@@ -7,7 +7,7 @@
 import { type BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/collections";
 import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
-import { exportTo, importFrom } from "@enumeratio/formats";
+import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
 
 export type Syntax = "latex" | "mathjson" | "wolfram" | "epsil";
@@ -209,6 +209,9 @@ export class Session {
     // here -- one head, one owner.
     declareStatistics(this.ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: DOMAIN_TYPES });
     declareMaps(this.ce, CONSTRUCTOR_FOR);
+    // The heads that draw stay inert, so a `Plot` or a `Slider` survives evaluation as
+    // the picture (or the control) it names, for a host that can show one.
+    declareGraphics(this.ce);
     this.configure(defaults);
   }
 

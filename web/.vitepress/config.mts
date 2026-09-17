@@ -154,6 +154,7 @@ export default defineConfig({
           { text: "Worksheet", link: "/playground/worksheet" },
           { text: "Manipulate", link: "/playground/manipulate" },
           { text: "Controls", link: "/playground/controls" },
+          { text: "Environments", link: "/playground/environments" },
           { text: "REPL (terminal)", link: "/playground/repl" },
           { text: "Command line", link: "/playground/cli" },
           {

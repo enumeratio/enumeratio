@@ -43,3 +43,5 @@ export * from "./vdom.ts";
 export * from "./heads-data.ts";
 export * from "./primitives.ts";
 export * from "./engine.ts";
+export * from "./environment.ts";
+export * from "./reduce.ts";

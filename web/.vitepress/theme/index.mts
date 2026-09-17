@@ -22,6 +22,9 @@ const CliReference = defineAsyncComponent(() => import("./components/CliReferenc
 const SymbolRef = defineAsyncComponent(() => import("./components/Symbol.vue"));
 const ComponentIndex = defineAsyncComponent(() => import("./components/ComponentIndex.vue"));
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
+const EnvironmentPreview = defineAsyncComponent(
+  () => import("./components/EnvironmentPreview.vue"),
+);
 
 // The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
 // from @enumeratio/notatio/vue, generated there from the element sources.
@@ -38,6 +41,7 @@ export default {
     app.component("GlyphGallery", GlyphGallery);
     app.component("LiveInput", LiveInput);
     app.component("SourceOutput", SourceOutput);
+    app.component("EnvironmentPreview", EnvironmentPreview);
     app.component("ComponentIndex", ComponentIndex);
     app.component("CliReference", CliReference);
     app.component("Symbol", SymbolRef);

@@ -43,27 +43,35 @@ export interface VisualSymbol {
   readonly options?: Readonly<
     Record<string, string | ((value: MathJsonExpression) => Record<string, string>)>
   >;
+  /** For a control: the shape of what it binds, which is how `reduce` reads it statically. */
+  readonly control?: ControlKind;
 }
+
+/**
+ * What a control's arguments declare: a range `(min, max, step)`, a list of entries, a
+ * point in a box, an interval in a range, a point on a plot, or a bare value.
+ */
+export type ControlKind = "ranged" | "listed" | "planar" | "interval" | "locator" | "simple";
 
 type Json = MathJsonExpression;
 
-const headOf = (node: unknown): string | undefined => {
+export const headOf = (node: unknown): string | undefined => {
   const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
   return Array.isArray(fn) && typeof fn[0] === "string" ? fn[0] : undefined;
 };
 
-const opsOf = (node: unknown): Json[] => {
+export const opsOf = (node: unknown): Json[] => {
   const fn = Array.isArray(node) ? node : (node as { fn?: unknown[] })?.fn;
   return Array.isArray(fn) ? (fn.slice(1) as Json[]) : [];
 };
 
-const symOf = (node: unknown): string | undefined => {
+export const symOf = (node: unknown): string | undefined => {
   if (typeof node === "string") return node;
   const sym = (node as { sym?: unknown })?.sym;
   return typeof sym === "string" ? sym : undefined;
 };
 
-const numOf = (node: unknown): number | undefined => {
+export const numOf = (node: unknown): number | undefined => {
   if (typeof node === "number") return node;
   const num = (node as { num?: unknown })?.num;
   if (typeof num === "string") return Number(num);
@@ -71,7 +79,7 @@ const numOf = (node: unknown): number | undefined => {
   return undefined;
 };
 
-const strOf = (node: unknown): string | undefined => {
+export const strOf = (node: unknown): string | undefined => {
   // A string is `{str}`, or -- the engine's own spelling of a literal -- `'…'`.
   if (typeof node === "string" && node.length >= 2 && node.startsWith("'") && node.endsWith("'")) {
     return node.slice(1, -1);
@@ -140,7 +148,7 @@ const json = (node: Json): string => JSON.stringify(toJsonData(node));
  * The elements of a tuple -- `Tuple` or `List`, or the `Delimiter(Sequence(…))` a LaTeX
  * parse leaves for `(x, 0, 10)` before canonicalisation -- or undefined.
  */
-function tupleOf(node: Json | undefined): Json[] | undefined {
+export function tupleOf(node: Json | undefined): Json[] | undefined {
   const head = headOf(node);
   if (head === "Tuple" || head === "List") return opsOf(node);
   if (head === "Delimiter") {
@@ -439,7 +447,7 @@ const clean = (node: Json): string => {
 };
 
 /** `k` or `(k, init)`: the variable and, if given, where it starts. */
-function variable(node: Json | undefined): { name?: string; init?: Json } {
+export function variable(node: Json | undefined): { name?: string; init?: Json } {
   const parts = tupleOf(node);
   if (parts !== undefined) return { name: symOf(parts[0]), init: parts[1] };
   return { name: symOf(node) };
@@ -479,6 +487,7 @@ const ranged = (head: string, tag: string, extra: Record<string, string> = {}): 
   head,
   tag,
   fixed: extra,
+  control: "ranged",
   attributes: (ops) => {
     const out: Record<string, string> = {};
     const { name, init } = variable(ops[0]);
@@ -494,6 +503,7 @@ const listed = (head: string, tag: string, extra: Record<string, string> = {}): 
   head,
   tag,
   fixed: extra,
+  control: "listed",
   attributes: (ops) => {
     const out: Record<string, string> = {};
     const { name, init } = variable(ops[0]);
@@ -516,6 +526,7 @@ const listed = (head: string, tag: string, extra: Record<string, string> = {}): 
 const planar = (head: string, tag: string): VisualSymbol => ({
   head,
   tag,
+  control: "planar",
   attributes: (ops) => {
     const out: Record<string, string> = {};
     const { name, init } = variable(ops[0]);
@@ -537,6 +548,7 @@ const planar = (head: string, tag: string): VisualSymbol => ({
 const simple = (head: string, tag: string): VisualSymbol => ({
   head,
   tag,
+  control: "simple",
   attributes: (ops) => {
     const out: Record<string, string> = {};
     const { name, init } = variable(ops[0]);
@@ -553,6 +565,7 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   ranged("Knob", "notatio-knob"),
   {
     ...ranged("IntervalSlider", "notatio-interval-slider"),
+    control: "interval",
     // The start is an interval, `(r, (1, 3))`, which the component takes as `1,3`.
     attributes: (ops) => {
       const out = ranged("IntervalSlider", "notatio-interval-slider").attributes(ops);
@@ -574,6 +587,7 @@ export const CONTROL_SYMBOLS: readonly VisualSymbol[] = [
   simple("InputField", "notatio-input-field"),
   {
     ...planar("Locator", "notatio-locator"),
+    control: "locator",
     // A locator has no corners of its own: it takes the plot's.
     attributes: (ops) => {
       const out: Record<string, string> = {};
@@ -606,6 +620,13 @@ const layout = (head: string, tag: string): VisualSymbol => ({
   children: (ops) => (ops.length === 1 ? (tupleOf(ops[0]) ?? [ops[0]]) : [...ops]),
 });
 
+const LABEL_POSITIONS: Readonly<Record<string, string>> = {
+  Top: "above",
+  Bottom: "below",
+  Left: "before",
+  Right: "after",
+};
+
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   layout("Row", "notatio-row"),
   layout("Column", "notatio-column"),
@@ -622,11 +643,16 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   },
   layout("Panel", "notatio-panel"),
   {
+    // `Labeled(body, label, Bottom)`: Wolfram's third argument places the label.
     head: "Labeled",
     tag: "notatio-labeled",
     attributes: (ops): Record<string, string> => {
+      const out: Record<string, string> = {};
       const label = ops[1];
-      return label === undefined ? {} : { label: strOf(label) ?? notatio(label) };
+      if (label !== undefined) out.label = strOf(label) ?? notatio(label);
+      const position = LABEL_POSITIONS[symOf(ops[2]) ?? ""];
+      if (position !== undefined) out.position = position;
+      return out;
     },
     children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
   },

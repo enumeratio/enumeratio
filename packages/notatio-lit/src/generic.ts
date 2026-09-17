@@ -128,7 +128,14 @@ export class NotatioGeneric extends LitElement {
       const holder = document.createElement("span");
       holder.className = "notatio-generic-args";
       holder.hidden = true;
-      holder.append(...this.childNodes);
+      // The author's nodes only: an element re-rooted by a move (a layout unwrapping
+      // its list) already holds Lit's markers and its own typeset output.
+      const own = [...this.childNodes].filter(
+        (n) =>
+          n.nodeType !== Node.COMMENT_NODE &&
+          !(n instanceof Element && n.classList.contains("notatio-generic-out")),
+      );
+      holder.append(...own);
       this.prepend(holder);
       this.#args = holder;
       this.#derive();
@@ -217,7 +224,9 @@ export class NotatioGeneric extends LitElement {
   get expression(): MathJsonExpression | undefined {
     const head = this.head;
     const text = this.value.trim();
-    if (text) {
+    // A derived `value` is a publication of the children, and can lag them (a child
+    // adopted after it was written); the children themselves are current.
+    if (text && !this.#derived) {
       const atom = ATOMS[head];
       if (atom) return atom(text);
       const { json, errors } = parseNotatio(text);
