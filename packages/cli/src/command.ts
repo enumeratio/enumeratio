@@ -6,6 +6,8 @@
 
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { allFormats } from "@enumeratio/formats";
+import { can, type Environment, PIPE } from "../../notatio/src/environment.ts";
+import { reduce } from "../../notatio/src/reduce.ts";
 import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.ts";
 import { formatsTable } from "./core.ts";
 import {
@@ -63,6 +65,11 @@ export interface EvalRequest {
   numeric?: boolean;
   /** Working precision in significant digits. */
   precision?: number;
+  /**
+   * Reduce the result for an environment that cannot drive it (a pipe pins the
+   * controls, captions the declarations); omitted, the result is left as it is.
+   */
+  environment?: Environment;
 }
 
 export interface EvalOk {
@@ -103,6 +110,13 @@ export function evaluateCommand(req: EvalRequest, defaults: SessionDefaults = {}
       ({ raw: expr, syntax } = session.parse(req.input));
     } else {
       ({ expr, syntax } = session.evaluate(req.input));
+    }
+    if (req.environment !== undefined && !can.drive(req.environment) && req.evaluate !== false) {
+      // Only a result with something to reduce is re-evaluated; the rest stays as evaluated.
+      const reduced = reduce(expr.json as never, req.environment);
+      if (JSON.stringify(reduced) !== JSON.stringify(expr.json)) {
+        expr = session.ce.box(reduced as never).evaluate();
+      }
     }
     if (req.numeric) expr = expr.N();
     // The primary form must render; a secondary one that can't is just left out.
@@ -288,6 +302,9 @@ function evaluate(
       evaluate: p.subcommand !== "convert",
       numeric: p.numeric,
       precision,
+      // Text on stdout is going to a pipe or a page, never a reader with keys; the
+      // structured reply keeps the expression whole for whoever asked.
+      environment: p.json ? undefined : PIPE,
     },
     defaults,
   );

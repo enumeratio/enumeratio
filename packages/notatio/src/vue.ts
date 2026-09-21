@@ -8,8 +8,24 @@
 // module only names them.
 
 import { parseNotatio } from "@enumeratio/formats/notatio";
-import { type App, defineComponent, h, ref, type VNode, watchEffect } from "vue";
+import {
+  type App,
+  defineComponent,
+  h,
+  onMounted,
+  onUnmounted,
+  ref,
+  type VNode,
+  watchEffect,
+} from "vue";
 import { loadEngine } from "./engine.ts";
+import {
+  type Environment,
+  environmentNamed,
+  pageEnvironment,
+  watchPageEnvironment,
+} from "./environment.ts";
+import { reduce } from "./reduce.ts";
 import type { Rendering } from "./symbols.ts";
 import { structuralOf, toVNode } from "./vdom.ts";
 import { components } from "./vue-generated.ts";
@@ -30,16 +46,28 @@ export const Notatio = defineComponent({
     expr: { type: String, required: false },
     /** The expression, as a MathJSON string -- an alternative to `expr`. */
     json: { type: String, required: false },
+    /** A preset to reduce for (`print`, `pipe`, …); by default the page's own, as it changes. */
+    env: { type: String, required: false },
   },
   setup(props) {
     const tree = ref<Rendering | undefined>(undefined);
+    // The page's environment: printing pins or samples the controls, a narrow window
+    // stacks the rows -- the expression is reduced for it before it is drawn.
+    const page = ref<Environment>(pageEnvironment());
+    let unwatch = (): void => {};
+    onMounted(() => {
+      page.value = pageEnvironment();
+      unwatch = watchPageEnvironment((env) => (page.value = env));
+    });
+    onUnmounted(() => unwatch());
     watchEffect(async () => {
       const json = await parse(props.expr, props.json);
       if (json === undefined) {
         tree.value = undefined;
         return;
       }
-      tree.value = structuralOf(json as never);
+      const env = environmentNamed(props.env) ?? page.value;
+      tree.value = structuralOf(reduce(json as never, env));
     });
     return () =>
       tree.value === undefined

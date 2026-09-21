@@ -10,6 +10,7 @@ import { dim } from "./ansi.ts";
 import { drivable, drive } from "./drive.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { NodeHost } from "./node-host.ts";
+import { textOf } from "./textual.ts";
 
 const HISTORY_FILE = join(homedir(), ".notatio_history");
 
@@ -47,10 +48,9 @@ export function runRepl(defaults: SessionDefaults = {}): void {
             color,
             stdin: process.stdin,
             stdout: process.stdout,
-            show: (expr) => session.render(session.ce.box(expr).evaluate()),
+            show: (expr) => textOf(session, expr),
           });
-          const final = session.ce.box(left).evaluate();
-          console.log(`${host.repl.formatOut(last.n, session.render(final))}\n`);
+          console.log(`${host.repl.formatOut(last.n, textOf(session, left))}\n`);
         } else if (out.text) console.log(`${out.text}\n`);
         else if (!out.clear) console.log("");
         if (out.exit) {

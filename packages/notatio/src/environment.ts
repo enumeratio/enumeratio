@@ -173,3 +173,35 @@ export const can = {
   /** Something can move over time on its own. */
   animate: (env: Environment): boolean => env.time === "live",
 };
+
+const PAGE_QUERIES = [
+  "print",
+  "(hover: hover)",
+  "(pointer: coarse)",
+  "(prefers-color-scheme: dark)",
+  "(max-width: 640px)",
+];
+
+/** The environment this page is in right now; `WEB` where there is no window. */
+export function pageEnvironment(): Environment {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return WEB;
+  return browserEnvironment(mediaSignals((q) => window.matchMedia(q)));
+}
+
+/**
+ * Follow the page's environment as it changes -- the browser printing, a window
+ * narrowing, the theme flipping -- and return the unsubscribe.
+ */
+export function watchPageEnvironment(onChange: (env: Environment) => void): () => void {
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") return () => {};
+  const lists = PAGE_QUERIES.map((q) => window.matchMedia(q));
+  const notify = (): void => onChange(pageEnvironment());
+  for (const list of lists) list.addEventListener("change", notify);
+  return () => {
+    for (const list of lists) list.removeEventListener("change", notify);
+  };
+}
+
+/** A preset by name, for an `env="print"` attribute. */
+export const environmentNamed = (name: string | undefined): Environment | undefined =>
+  ENVIRONMENTS.find((e) => e.name === name);

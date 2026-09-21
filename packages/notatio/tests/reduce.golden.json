@@ -339,6 +339,26 @@
     "notatio": "Locator((p, (1, 0.5)))",
     "markup": "<notatio-tangle><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-tangle>"
   },
+  "web: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
+    "notatio": "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
+    "markup": "<notatio-tangle><notatio-row><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-row></notatio-tangle>"
+  },
+  "print: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
+    "notatio": "Labeled(\n         Plot(Sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
+    "markup": "<notatio-labeled label=\"p = (1, 0.5)\" position=\"below\"><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot></notatio-labeled>"
+  },
+  "tty: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
+    "notatio": "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
+    "markup": "<notatio-tangle><notatio-row><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-row></notatio-tangle>"
+  },
+  "pipe: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
+    "notatio": "Labeled(\n         Plot(Sin(x), (x, 0, 10), Epilog -> [Point((2, 0)), Point((1, 0.5))]),\n         \"p = (1, 0.5)\",\n         Bottom,\n       )",
+    "markup": "<notatio-labeled label=\"p = (1, 0.5)\" position=\"below\"><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"[Point((2, 0)), Point((1, 0.5))]\"></notatio-plot></notatio-labeled>"
+  },
+  "compact: Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])": {
+    "notatio": "Column([\n         Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))),\n         Locator((p, (1, 0.5))),\n       ])",
+    "markup": "<notatio-tangle><notatio-column><notatio-plot value=\"Sin(x)\" var=\"x\" domain=\"0,10\" epilog=\"Point((2, 0))\"></notatio-plot><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-column></notatio-tangle>"
+  },
   "web: ComplexPlot(Zeta(z), z)": {
     "notatio": "ComplexPlot(Zeta(z), z)",
     "markup": "<notatio-complex-plot value=\"Zeta(z)\" var=\"z\"></notatio-complex-plot>"

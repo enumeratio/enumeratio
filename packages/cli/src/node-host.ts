@@ -10,9 +10,11 @@ import {
   readFormat,
   writeFormat,
 } from "@enumeratio/formats/node";
-import { type CommandHandler, type LineOutput, Repl } from "./core.ts";
+import { type CommandHandler, type Graphic, type LineOutput, Repl } from "./core.ts";
 import type { SessionDefaults } from "./engine.ts";
 import { graphicLabel, graphicToSvg, inlineImage, writeSvg } from "./node-graphics.ts";
+import { samplePlot } from "./textual.ts";
+import { textPlot } from "../../notatio/src/textplot.ts";
 
 export interface HostOutput {
   text: string;
@@ -33,13 +35,28 @@ export class NodeHost {
   /** Evaluate a line and fold in Node-side graphic handling. */
   eval(line: string): HostOutput {
     const out = this.repl.eval(line);
-    if (!out.graphic) return { text: out.text, exit: out.exit, clear: out.clear };
-    const svg = graphicToSvg(out.graphic);
+    const graphic = out.graphic ?? this.plotResult(out);
+    if (!graphic) return { text: out.text, exit: out.exit, clear: out.clear };
+    const svg = graphicToSvg(graphic);
     this.lastSvg = svg;
-    const label = graphicLabel(out.graphic);
+    const label = graphicLabel(graphic);
     const file = writeSvg(label, svg);
     const inline = inlineImage(`${label}.png`, svg) ?? undefined;
-    return { text: `${out.text} -> file://${file}`, inline, exit: out.exit, clear: out.clear };
+    // No image protocol: the plot on braille cells, which any terminal or pipe can show.
+    const text =
+      inline === undefined && graphic.kind === "plot"
+        ? `${out.text}\n${textPlot(graphic.points, { width: 60, height: 12 })}`
+        : `${out.text} -> file://${file}`;
+    return { text, inline, exit: out.exit, clear: out.clear };
+  }
+
+  /** An evaluated `Plot(f, (x, a, b))` is a picture, like `:plot` makes. */
+  private plotResult(out: LineOutput): Graphic | undefined {
+    if (out.exit || out.clear) return undefined;
+    const last = this.repl.session.history.at(-1);
+    if (!last || !out.text.includes(`Out[${last.n}]`)) return undefined;
+    const points = samplePlot(this.repl.session, last.expr.json as never);
+    return points === undefined ? undefined : { kind: "plot", expr: last.input, points };
   }
 
   private commands(): Record<string, CommandHandler> {

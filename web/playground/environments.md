@@ -10,9 +10,9 @@ plot on paper is rasterized; a `Row` in a narrow column stacks. The web and a te
 have an engine and a way in, so there the expression is left alone. See
 `design/rendering-environments.md`.
 
-Every card below renders the reduced expression with the ordinary components, so a
-print of this page is the same reduction done for real: print it (or open the print
-preview) and the sliders become grids.
+Every `<Notatio>` on the site reduces for the page's own environment as it changes --
+print it (or open the print preview) and the sliders become grids; narrow the window and
+the rows stack. The cards below let you pick the environment instead.
 
 <Story
   title="A Manipulate, sampled or pinned">
@@ -49,6 +49,15 @@ A toggler's entries are the sample: one cell per choice, labelled.
 Frames in a row, on the step grid; a print of a sweep.
 </template>
 <EnvironmentPreview expr='Row([Animator(t, (0, 1, 0.25)), Sin(Pi * t)])' />
+</Story>
+
+<Story
+  title="A Locator becomes a mark">
+<template #description>
+A pinned <code>Locator</code> is drawn as an <code>Epilog</code> point on the plot it sat
+over, joined to any marks the plot already had.
+</template>
+<EnvironmentPreview expr='Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])' />
 </Story>
 
 <Story

@@ -295,9 +295,17 @@ list -- and that a built component inside a structural tree had no `expression` 
 parent to read. Both are fixed in `structure.ts` (layouts unwrap their lists; adoption
 runs deepest-first and puts an `expression` on what it adopts).
 
-Still to do, in the order it pays: the static-policy option's name (§7); the
-text-surface plot (braille/ASCII) so a `Plot` in a pipe shows something; a typst
-serializer; `OutputForm`.
+Second round (same branch): `<Notatio>` in Vue and React reduces for the page's own
+environment (`pageEnvironment` / `watchPageEnvironment`: printing pins or samples, a
+narrow window stacks the rows) or for an `env="print"` it is given; `textPlot`
+(`notatio/src/textplot.ts`) draws a `Plot` on braille cells, which the CLI uses for an
+evaluated `Plot` at a terminal without an image protocol and under the control strip;
+one-shot text output (a pipe) reduces for `PIPE` while `--json` keeps the expression
+whole; a pinned `Locator` is `Epilog -> Point(…)` on the first `Plot` in the tree.
+
+Still to do, in the order it pays: the static-policy option's name (§7); a text layout
+for `Grid` / `Row` / `Labeled` on the text surface (the pipe prints them as notatio); a
+typst serializer; `OutputForm`.
 
 ## 7. Open questions
 

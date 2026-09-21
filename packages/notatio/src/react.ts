@@ -10,6 +10,13 @@
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { createElement, type ReactElement, useEffect, useState } from "react";
 import { loadEngine } from "./engine.ts";
+import {
+  type Environment,
+  environmentNamed,
+  pageEnvironment,
+  watchPageEnvironment,
+} from "./environment.ts";
+import { reduce } from "./reduce.ts";
 import type { Rendering } from "./symbols.ts";
 import { structuralOf, toVNode } from "./vdom.ts";
 import { components } from "./react-generated.ts";
@@ -22,6 +29,8 @@ export interface NotatioProps {
   expr?: string;
   /** The expression, as a MathJSON string -- an alternative to `expr`. */
   json?: string;
+  /** A preset to reduce for (`print`, `pipe`, …); by default the page's own, as it changes. */
+  env?: string;
 }
 
 /**
@@ -30,18 +39,23 @@ export interface NotatioProps {
  * the controls, the layout, the readouts each find their component by name, and the
  * controls' variables bind through the page.
  */
-export function Notatio({ expr, json }: NotatioProps): ReactElement {
+export function Notatio({ expr, json, env }: NotatioProps): ReactElement {
   const [tree, setTree] = useState<Rendering | undefined>(undefined);
+  // The page's environment: printing pins or samples the controls, a narrow window
+  // stacks the rows -- the expression is reduced for it before it is drawn.
+  const [page, setPage] = useState<Environment>(pageEnvironment);
+  useEffect(() => watchPageEnvironment(setPage), []);
   useEffect(() => {
     let live = true;
     void parse(expr, json).then((parsed) => {
       if (!live) return;
-      setTree(parsed === undefined ? undefined : structuralOf(parsed as never));
+      const target = environmentNamed(env) ?? page;
+      setTree(parsed === undefined ? undefined : structuralOf(reduce(parsed as never, target)));
     });
     return () => {
       live = false;
     };
-  }, [expr, json]);
+  }, [expr, json, env, page]);
   if (tree === undefined) return createElement("span", { className: "notatio-pending" });
   let key = 0;
   return toVNode<ReactElement>(tree, (tag, attrs, children) =>

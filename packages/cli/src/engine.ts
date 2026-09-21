@@ -270,12 +270,20 @@ export class Session {
 
   /** Numerically sample a one-variable expression — points for a line plot. */
   sample(input: string, opts: SampleOptions = {}): PlotPoint[] {
+    const { syntax, body } = classifyInput(input, this.defaultSyntax);
+    return this.sampleBoxed(this.box(syntax, this.substitute(body, syntax)), opts);
+  }
+
+  /** Sample an already-parsed body -- a `Plot` head's first argument. */
+  sampleJson(json: unknown, opts: SampleOptions = {}): PlotPoint[] {
+    return this.sampleBoxed(this.ce.box(json as Parameters<ComputeEngine["box"]>[0]), opts);
+  }
+
+  private sampleBoxed(expr: BoxedExpression, opts: SampleOptions): PlotPoint[] {
     const variable = opts.variable ?? "x";
     const from = opts.from ?? -5;
     const to = opts.to ?? 5;
     const steps = Math.max(2, opts.steps ?? 120);
-    const { syntax, body } = classifyInput(input, this.defaultSyntax);
-    const expr = this.box(syntax, this.substitute(body, syntax));
     const points: PlotPoint[] = [];
     for (let i = 0; i < steps; i++) {
       const x = from + ((to - from) * i) / (steps - 1);

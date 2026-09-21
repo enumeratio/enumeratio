@@ -45,3 +45,4 @@ export * from "./primitives.ts";
 export * from "./engine.ts";
 export * from "./environment.ts";
 export * from "./reduce.ts";
+export * from "./textplot.ts";

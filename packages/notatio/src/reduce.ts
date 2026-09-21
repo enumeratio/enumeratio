@@ -9,7 +9,7 @@
 // See design/rendering-environments.md.
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
-import { optionsOf } from "@enumeratio/formats";
+import { optionsOf, withOptions } from "@enumeratio/formats";
 import { serializeNotatio } from "@enumeratio/formats/notatio";
 import { can, type Environment, type Reading } from "./environment.ts";
 import {
@@ -303,6 +303,36 @@ export function pin(expr: Json, values: ReadonlyMap<string, Json>): Json {
   return r.name === "" ? expr : (values.get(r.name) ?? (r.name as Json));
 }
 
+/**
+ * A pinned `Locator` is a mark on the plot it sat over: `Epilog -> Point((x, y))` on the
+ * first `Plot` in the tree (joined to an `Epilog` already there). Nothing to mark, nothing
+ * changes.
+ */
+function markLocator(node: Json, point: Json): { node: Json; marked: boolean } {
+  const head = headOf(node);
+  if (head === undefined) return { node, marked: false };
+  if (head === "Plot") {
+    const { ops, options } = optionsOf(node);
+    const mark = ["Point", point] as unknown as Json;
+    const epilog = options.Epilog;
+    const joined =
+      epilog === undefined
+        ? mark
+        : (["List", ...(tupleOf(epilog) ?? [epilog]), mark] as unknown as Json);
+    return { node: withOptions("Plot", ops, { ...options, Epilog: joined }), marked: true };
+  }
+  const ops = opsOf(node);
+  for (let i = 0; i < ops.length; i++) {
+    const r = markLocator(ops[i]!, point);
+    if (r.marked) {
+      const next = [...ops];
+      next[i] = r.node;
+      return { node: [head, ...next] as unknown as Json, marked: true };
+    }
+  }
+  return { node, marked: false };
+}
+
 const SAMPLEABLE = new Set<ControlKind>(["ranged", "listed", "simple"]);
 
 /** The one declaration to sample, under the expression's own say and then the policy. */
@@ -359,6 +389,10 @@ function staticControls(expr: Json, env: Environment): Json {
   } else {
     body = settle(substitute(expr, pinned));
     if (body === undefined) return expr;
+  }
+  for (const d of decls) {
+    const point = d.kind === "locator" ? pinned.get(d.name) : undefined;
+    if (point !== undefined) body = markLocator(body, point).node;
   }
   return captions.length === 0
     ? body

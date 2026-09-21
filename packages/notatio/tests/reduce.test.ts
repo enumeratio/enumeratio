@@ -37,6 +37,7 @@ const CORPUS = [
   "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)",
   "IntervalSlider((r, (1, 3)), (0, 5, 0.5))",
   "Locator((p, (1, 0.5)))",
+  "Row([Plot(Sin(x), (x, 0, 10), Epilog -> Point((2, 0))), Locator((p, (1, 0.5)))])",
   "ComplexPlot(Zeta(z), z)",
   "Row([ComplexPlot3D(Gamma(z), z), Plot(Sin(x), (x, 0, 10))])",
   "Sin(x) + 1",
