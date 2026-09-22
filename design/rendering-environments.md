@@ -303,6 +303,11 @@ evaluated `Plot` at a terminal without an image protocol and under the control s
 one-shot text output (a pipe) reduces for `PIPE` while `--json` keeps the expression
 whole; a pinned `Locator` is `Epilog -> Point(…)` on the first `Plot` in the tree.
 
+Ways in, for a reader: printing any page of the site (every `<Notatio>` reduces for
+`print`), narrowing the window past 640px, the cards on `/playground/environments`, the
+REPL's `:env <name>` and the CLI's `--env <name>`, and the demo corpus's **Environments**
+group, which runs in both browser terminals.
+
 Still to do, in the order it pays: the static-policy option's name (§7); a text layout
 for `Grid` / `Row` / `Labeled` on the text surface (the pipe prints them as notatio); a
 typst serializer; `OutputForm`.

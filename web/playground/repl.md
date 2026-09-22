@@ -9,6 +9,10 @@ Results are exact; `:help` lists every command.
   one line.
 - **Output**: `:form <name>` switches how results print (`:forms` to list).
 - **Graphics**: `:plot <expr>` and `:glyph <kind> <list>` draw below the terminal.
+- **Environments**: `:env print` / `:env pipe` reduce every result for somewhere that
+  cannot drive a control — a slider pins or samples into small multiples; `:env auto`
+  hands it back. At a real terminal the controls are live instead: see
+  [Environments](/playground/environments#at-a-terminal).
 - **Keys**: ↑/↓ history, ←/→ edit, Ctrl+C cancels a line, Ctrl+L clears.
 
 <notatio-terminal></notatio-terminal>

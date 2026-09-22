@@ -283,6 +283,46 @@ export const DEMOS: readonly Demo[] = [
     tags: ["graphics", "plot"],
   },
 
+  // --- Environments -------------------------------------------------------
+  {
+    id: "environment-pin",
+    title: "A control with nothing to drive it",
+    description:
+      ":env says where the result is going. A pipe or a page cannot move a slider, so the control pins and its declaration becomes a caption.",
+    category: "Environments",
+    lines: [":env pipe", "Manipulate(a^2 + b, (a, 0, 1), ((b, 2), 0, 3))", ":env auto"],
+    tags: ["environments"],
+    highlight: true,
+  },
+  {
+    id: "environment-sample",
+    title: "A slider printed as small multiples",
+    description:
+      "Print samples the first control on its step grid instead of pinning it -- the page-native reading of a slider.",
+    category: "Environments",
+    lines: [
+      ":env print",
+      "Manipulate(a * x, (a, 1, 3, 1))",
+      'Toggler(size, ["a few", "several", "many"])',
+      ":env auto",
+    ],
+    tags: ["environments"],
+  },
+  {
+    id: "environment-static-option",
+    title: "The expression can say which reading it wants",
+    description:
+      'Static -> "Pin", "Sample", or a count of samples, as a trailing rule on the control or its Manipulate.',
+    category: "Environments",
+    lines: [
+      ":env print",
+      'Manipulate(a^2, (a, 0, 1), Static -> "Pin")',
+      "Manipulate(a^2, (a, 0, 1), Static -> 3)",
+      ":env auto",
+    ],
+    tags: ["environments"],
+  },
+
   // --- Formats ------------------------------------------------------------
   {
     id: "formats-registry",
@@ -317,6 +357,18 @@ export const CLI_DEMOS: readonly Demo[] = [
     description: "Epsil in, exact result out.",
     category: "Evaluate",
     lines: ['"Binomial(10, 3)"', '"1/2 + 1/3"', '"Fibonacci(20)"'],
+  },
+  {
+    id: "cli-environments",
+    title: "Reduce for where it is going",
+    description:
+      "Text on stdout is a pipe: a control pins, with its range in the caption. --env print samples it into small multiples instead; --json keeps the expression whole.",
+    category: "Environments",
+    lines: [
+      '"Manipulate(a^2 + b, (a, 0, 1), ((b, 2), 0, 3))"',
+      '--env print "Manipulate(a * x, (a, 1, 3, 1))"',
+      '--env web "Manipulate(a^2, (a, 0, 1))"',
+    ],
   },
   {
     id: "cli-forms",

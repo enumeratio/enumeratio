@@ -10,6 +10,14 @@ import {
   importFormats,
   mimeTypeToFormatList,
 } from "@enumeratio/formats";
+import type { BoxedExpression } from "@cortex-js/compute-engine";
+import {
+  can,
+  type Environment,
+  ENVIRONMENTS,
+  environmentNamed,
+} from "../../notatio/src/environment.ts";
+import { reduce } from "../../notatio/src/reduce.ts";
 import { bold, cyan, dim, red } from "./ansi.ts";
 import {
   FORM_LABEL,
@@ -58,6 +66,8 @@ export interface ReplOptions {
   commands?: Record<string, CommandHandler>;
   /** Session defaults (display form, input syntax, precision). */
   defaults?: SessionDefaults;
+  /** An environment to reduce results for (`:env`); by default the host's own. */
+  environment?: Environment;
 }
 
 /** Parse `[3,1,2]`, `3 1 2`, or `3,1,2` into an integer list. */
@@ -75,11 +85,18 @@ export function parseIntList(src: string): number[] {
 export class Repl {
   readonly session: Session;
   color: boolean;
+  /**
+   * An environment to reduce every result for, in place of this terminal's own --
+   * `:env print` shows what a printed page would get (a control sampled into small
+   * multiples) without leaving the REPL.
+   */
+  environment: Environment | undefined;
   private readonly extra: Map<string, CommandHandler>;
 
   constructor(opts: ReplOptions = {}) {
     this.session = new Session(opts.defaults);
     this.color = opts.color ?? true;
+    this.environment = opts.environment;
     this.extra = new Map(Object.entries(opts.commands ?? {}));
   }
 
@@ -107,10 +124,17 @@ export class Repl {
       if (input.startsWith(":")) return this.meta(input);
       if (/^let\s/.test(input)) return this.assignment(input);
       const res = this.session.evaluate(input);
-      return { text: this.formatOut(res.n, this.session.render(res.expr)) };
+      return { text: this.formatOut(res.n, this.session.render(this.reduced(res.expr))) };
     } catch (err) {
       return { text: red(`  error: ${(err as Error).message}`, this.color) };
     }
+  }
+
+  /** The result as the chosen environment would have it; unreduced by default. */
+  reduced(expr: BoxedExpression): BoxedExpression {
+    if (this.environment === undefined || can.drive(this.environment)) return expr;
+    const out = reduce(expr.json as never, this.environment);
+    return this.session.ce.box(out as never).evaluate();
   }
 
   /** Style an `Out[n]= …` line (multi-line bodies start on the next line). */
@@ -147,6 +171,27 @@ export class Repl {
               `  ${f === s.form ? cyan("*", this.color) : " "} ${f.padEnd(9)} ${FORM_LABEL[f]}`,
           ).join("\n"),
         };
+      case "env": {
+        if (!arg) {
+          return {
+            text: [
+              `  current environment: ${this.environment?.name ?? "(this terminal)"}`,
+              ...ENVIRONMENTS.map((e) => `    ${e.name}`),
+            ].join("\n"),
+          };
+        }
+        if (arg === "none" || arg === "auto") {
+          this.environment = undefined;
+          return { text: dim("  environment -> this terminal", this.color) };
+        }
+        const env = environmentNamed(arg);
+        if (!env)
+          throw new Error(
+            `unknown environment: ${arg} (${ENVIRONMENTS.map((e) => e.name).join(", ")}, auto)`,
+          );
+        this.environment = env;
+        return { text: dim(`  environment -> ${env.name}`, this.color) };
+      }
       case "form": {
         if (!arg) return { text: `  current form: ${s.form}` };
         const form = resolveForm(arg);
@@ -235,6 +280,7 @@ const HELP = `Commands:
   let <name> = <expr>    bind a variable
   %  %%  %n              refer to the last / 2nd-last / n-th result
   :form [name]           show or set the display form (see :forms)
+  :env [name]            reduce results for an environment (print, pipe, …; auto to stop)
   :in <syntax>           default input syntax: latex | mathjson | wolfram | epsil
   :plot <expr>           plot a one-variable expression in x
   :glyph <kind> <list>   draw a combinatorial glyph: ${GLYPH_KINDS.join(" | ")}

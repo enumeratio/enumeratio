@@ -82,6 +82,37 @@ it; the Node CLI writes an SVG to a temp file (and shows it inline on iTerm2 /
 kitty). Try `:glyph partition [5,3,3,1]` or `:plot Sin(x)` in the
 [REPL playground](/playground/repl).
 
+## Environments
+
+A result can carry controls — a `Slider`, a `Toggler`, a whole `Manipulate`. What
+happens to them depends on where the result is going, and the CLI knows two answers.
+
+**At a TTY** the controls are real: the REPL draws a strip of text sliders under the
+input, ←/→ move the focused one (Shift for the coarse gear), Tab changes focus, Space
+plays, and Enter prints where you left it as `Out[n]`. A `Plot` under the strip is drawn
+on braille cells (or inline as an image on iTerm2 / kitty), so it redraws as you scrub.
+
+**Anywhere else** — a pipe, a file, a page — there is nothing to move a slider with, so
+the expression is _reduced_: the controls pin to their starting values and their
+declarations become a caption, or, for `print`, the first one is sampled into a grid of
+small multiples.
+
+```bash
+notatio "Manipulate(a^2 + b, (a, 0, 1), ((b, 2), 0, 3))"
+# Labeled(2, "a = 0 (0 ≤ a ≤ 1); b = 2 (0 ≤ b ≤ 3)", Bottom)
+
+notatio --env print "Manipulate(a * x, (a, 1, 3, 1))"
+# Grid([[Labeled(x, "a = 1", Bottom), Labeled(2x, "a = 2", Bottom), …]])
+```
+
+`--env` names one explicitly (`web`, `print`, `tty`, `pipe`, `compact`); `--json` skips
+the reduction and hands back the expression whole. In the REPL, `:env <name>` does the
+same for every result until `:env auto`. The expression can ask for a reading itself with
+a trailing rule — `Static -> "Pin"`, `Static -> "Sample"`, or `Static -> 3` for a sample
+count. The same rewrite runs on the site, where printing a page turns its sliders into
+grids: see [the Environments playground](/playground/environments) and
+`design/rendering-environments.md`.
+
 ## Command line
 
 Outside the browser, `notatio` is also a plain command: give it an expression and
@@ -182,6 +213,7 @@ Everything the interactive session accepts; `:help` prints the same list.
 | `let <name> = <expr>`                                   | bind a variable                      |
 | `%` · `%%` · `%n`                                       | last / 2nd-last / n-th result        |
 | `:form [name]`                                          | show or set the display form         |
+| `:env [name]`                                           | reduce results for an environment    |
 | `:forms`                                                | list the display forms               |
 | `:in <syntax>`                                          | set the default input syntax         |
 | `:plot <expr>`                                          | plot a one-variable expression       |

@@ -16,6 +16,23 @@
       "code": 0
     }
   ],
+  "cli-environments": [
+    {
+      "cmd": "notatio \"Manipulate(a^2 + b, (a, 0, 1), ((b, 2), 0, 3))\"",
+      "out": "Labeled(2, \"a = 0 (0 ≤ a ≤ 1); b = 2 (0 ≤ b ≤ 3)\", Bottom)",
+      "code": 0
+    },
+    {
+      "cmd": "notatio --env print \"Manipulate(a * x, (a, 1, 3, 1))\"",
+      "out": "Grid([[\n        Labeled(x, \"a = 1\", Bottom),\n        Labeled(2x, \"a = 2\", Bottom),\n        Labeled(3x, \"a = 3\", Bottom),\n      ]])",
+      "code": 0
+    },
+    {
+      "cmd": "notatio --env web \"Manipulate(a^2, (a, 0, 1))\"",
+      "out": "Manipulate(a ^ 2, (a, 0, 1))",
+      "code": 0
+    }
+  ],
   "cli-forms": [
     {
       "cmd": "notatio -f wolfram \"x^2 + 1\"",
@@ -145,7 +162,7 @@
   "cli-help": [
     {
       "cmd": "notatio --help",
-      "out": "notatio — evaluate compute-engine expressions\n\nUsage:\n  notatio [options] <expr>       evaluate <expr> and print the result\n  notatio eval [options] <expr>  same, explicit\n  notatio convert [options] <expr>\n                                 re-render <expr> in another form without evaluating\n  echo <expr> | notatio          read the expression from stdin (or pass \"-\")\n  notatio                        (a TTY, no expr) start the interactive REPL\n  notatio forms | formats        list the output forms | the format registry\n  notatio completion <shell>     print a completion script: bash, zsh, fish\n  notatio serve [--port N]       run the local HTTP compute host\n\nOptions:\n  -f, --form <name>   output form: notatio, tex, mathjson, wolfram, epsil, numpy, glsl, wgsl, js\n                      (repeatable; Wolfram names like TeXForm, InputForm, FullForm work too)\n  -i, --in <syntax>   input syntax: latex, mathjson, wolfram, epsil (default epsil)\n  -c <expr>           the expression to evaluate\n  -N, --numeric       numeric approximation of the result\n  -p, --precision <n> working precision in significant digits\n      --json          print a structured result: { ok, input, syntax, form, result, forms }\n  -h, --help          show this help\n  -V, --version       show the version\n\nDefaults for --form, --in, and --precision can live in a config file\n($NOTATIO_CONFIG, ~/.config/notatio/config.json, or ~/.notatiorc).",
+      "out": "notatio — evaluate compute-engine expressions\n\nUsage:\n  notatio [options] <expr>       evaluate <expr> and print the result\n  notatio eval [options] <expr>  same, explicit\n  notatio convert [options] <expr>\n                                 re-render <expr> in another form without evaluating\n  echo <expr> | notatio          read the expression from stdin (or pass \"-\")\n  notatio                        (a TTY, no expr) start the interactive REPL\n  notatio forms | formats        list the output forms | the format registry\n  notatio completion <shell>     print a completion script: bash, zsh, fish\n  notatio serve [--port N]       run the local HTTP compute host\n\nOptions:\n  -f, --form <name>   output form: notatio, tex, mathjson, wolfram, epsil, numpy, glsl, wgsl, js\n                      (repeatable; Wolfram names like TeXForm, InputForm, FullForm work too)\n  -i, --in <syntax>   input syntax: latex, mathjson, wolfram, epsil (default epsil)\n  -c <expr>           the expression to evaluate\n  -N, --numeric       numeric approximation of the result\n  -p, --precision <n> working precision in significant digits\n      --env <name>    reduce the result for an environment: web, print, tty, pipe, compact\n                      (text output defaults to pipe: controls pin, with a caption)\n      --json          print a structured result: { ok, input, syntax, form, result, forms }\n  -h, --help          show this help\n  -V, --version       show the version\n\nDefaults for --form, --in, and --precision can live in a config file\n($NOTATIO_CONFIG, ~/.config/notatio/config.json, or ~/.notatiorc).",
       "code": 0
     },
     {

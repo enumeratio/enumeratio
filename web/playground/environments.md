@@ -14,6 +14,22 @@ Every `<Notatio>` on the site reduces for the page's own environment as it chang
 print it (or open the print preview) and the sliders become grids; narrow the window and
 the rows stack. The cards below let you pick the environment instead.
 
+## Kick the tires
+
+Three ways in, and all of them read the same `reduce`:
+
+- **Print this page.** ⌘P (or the browser's print preview) and every `<Notatio>` on the
+  site — here, on [Controls](/playground/controls), anywhere — re-renders for `print`:
+  the sliders become grids of small multiples, the readouts are evaluated once, a
+  WebGPU portrait rasterizes.
+- **Narrow the window** past 640px (or open the site on a phone). `Row` becomes
+  `Column`; the controls stay live, because a phone can still drive them.
+- **Edit a card below.** The text box takes notatio; the code block under it is the
+  reduced expression, and the frame under that is what the components make of it.
+
+At a terminal it is the same rewrite with a different answer, because a TTY _can_ drive
+a control — see [At a terminal](#at-a-terminal) below.
+
 <Story
   title="A Manipulate, sampled or pinned">
 <template #description>
@@ -68,3 +84,59 @@ only stacks the layout.
 </template>
 <EnvironmentPreview expr='Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])' env="compact" />
 </Story>
+
+## At a terminal
+
+A TTY has an engine and keys, so the controls are real there — only keyed rather than
+pointed. Evaluate an expression with controls in it and the REPL draws a strip: ←/→ move
+the focused one (Shift for the coarse gear), Tab changes focus, Space plays, Enter
+leaves it where you stopped and prints that as `Out[n]`. A `Plot` under the strip is
+drawn on braille cells where the terminal has no image protocol, so it moves as you
+scrub:
+
+```text
+In[1]:= Manipulate(Plot(Sin(a * x) / a, (x, 0, 6.28)), (a, 1, 4))
+
+  a = 1.24          ◂━━●━━━━━━━━━━━━━━━━━━━━━━▸  1 … 4
+  ←/→ move · shift: coarse · tab: next · space: play · enter: done
+
+ 0.806 │⠀⠀⠀⠀⠀⠀⠀⠀⡠⠔⠊⠉⠉⠉⠒⠤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠔⠊⠉
+       │⠀⠀⠀⠀⠀⠀⡠⠊⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⠊⠀⠀⠀⠀
+       │⠀⠀⠀⠀⢠⠊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠢⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠊⠀⠀⠀⠀⠀⠀
+       │⠀⠀⠀⡰⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡰⠁⠀⠀⠀⠀⠀⠀⠀
+       │⠀⢀⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠎⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       │⢠⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠱⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+-0.806 │⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠢⢄⣀⣀⣀⠤⠒⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+       └────────────────────────────────────────────────────────────
+        0                                                       6.28
+```
+
+Try it from a checkout:
+
+```bash
+pnpm --filter @enumeratio/cli exec tsx src/main.ts
+```
+
+```text
+Manipulate(Plot(Sin(a * x) / a, (x, 0, 6.28)), (a, 1, 4))
+Row([Slider((k, 2), (0, 5)), "squared is", Dynamic(k^2)])
+Toggler(size, ["a few", "several", "many"])
+```
+
+`:env <name>` reduces every result for another environment without leaving the session —
+`:env print` shows what the printed page gets, `:env auto` hands the controls back. Piped
+output reduces for `pipe` on its own, and `--env` names one explicitly:
+
+```bash
+notatio "Manipulate(a^2 + b, (a, 0, 1), ((b, 2), 0, 3))"
+# Labeled(2, "a = 0 (0 ≤ a ≤ 1); b = 2 (0 ≤ b ≤ 3)", Bottom)
+
+notatio --env print "Manipulate(a * x, (a, 1, 3, 1))"
+# Grid([[Labeled(x, "a = 1", Bottom), Labeled(2x, "a = 2", Bottom), …]])
+
+notatio --json "Manipulate(a^2, (a, 0, 1))"   # structured: the expression, whole
+```
+
+Both live in the browser terminals too: the **Environments** group in the
+[REPL playground](/playground/repl) dropdown runs the `:env` demos, and the
+[command-line playground](/playground/cli) has the `--env` ones.

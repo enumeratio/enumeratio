@@ -6,7 +6,13 @@
 
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { allFormats } from "@enumeratio/formats";
-import { can, type Environment, PIPE } from "../../notatio/src/environment.ts";
+import {
+  can,
+  type Environment,
+  ENVIRONMENTS,
+  environmentNamed,
+  PIPE,
+} from "../../notatio/src/environment.ts";
 import { reduce } from "../../notatio/src/reduce.ts";
 import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.ts";
 import { formatsTable } from "./core.ts";
@@ -45,6 +51,8 @@ Options:
   -c <expr>           the expression to evaluate
   -N, --numeric       numeric approximation of the result
   -p, --precision <n> working precision in significant digits
+      --env <name>    reduce the result for an environment: ${ENVIRONMENTS.map((e) => e.name).join(", ")}
+                      (text output defaults to pipe: controls pin, with a caption)
       --json          print a structured result: { ok, input, syntax, form, result, forms }
   -h, --help          show this help
   -V, --version       show the version
@@ -195,6 +203,8 @@ interface ParsedArgs {
   numeric: boolean;
   precision?: string;
   json: boolean;
+  /** `--env <name>`: the environment to reduce the result for. */
+  env?: string;
   /** `-` was given: the expression is on stdin even if a positional exists. */
   stdin: boolean;
 }
@@ -225,6 +235,8 @@ function parseArgs(argv: readonly string[]): ParsedArgs | CommandResult {
     else if (a === "-N" || a === "--numeric") p.numeric = true;
     else if (a === "-p" || a === "--precision") p.precision = args.shift();
     else if (a.startsWith("--precision=")) p.precision = a.slice("--precision=".length);
+    else if (a === "--env") p.env = args.shift();
+    else if (a.startsWith("--env=")) p.env = a.slice("--env=".length);
     else if (a === "--json") p.json = true;
     else if (a.startsWith("-") && a.length > 1) return usageError(`unknown option: ${a}`);
     else p.positional.push(a);
@@ -271,6 +283,12 @@ function evaluate(
   const expr = p.stdin ? stdin?.trim() : (p.expr ?? p.positional[0] ?? stdin?.trim());
   if (!expr) return usageError(USAGE.trimEnd());
 
+  const chosen = p.env === undefined ? undefined : environmentNamed(p.env);
+  if (p.env !== undefined && chosen === undefined)
+    return usageError(
+      `unknown environment: ${p.env} (${ENVIRONMENTS.map((e) => e.name).join(", ")})`,
+    );
+
   const forms: Form[] = [];
   for (const name of p.forms) {
     const form = resolveForm(name);
@@ -303,8 +321,9 @@ function evaluate(
       numeric: p.numeric,
       precision,
       // Text on stdout is going to a pipe or a page, never a reader with keys; the
-      // structured reply keeps the expression whole for whoever asked.
-      environment: p.json ? undefined : PIPE,
+      // structured reply keeps the expression whole for whoever asked. `--env` names
+      // another one to reduce for -- `print` samples a control into small multiples.
+      environment: chosen ?? (p.json ? undefined : PIPE),
     },
     defaults,
   );

@@ -19,6 +19,7 @@ export const FLAGS = [
   "--numeric",
   "-p",
   "--precision",
+  "--env",
   "--json",
   "-h",
   "--help",
