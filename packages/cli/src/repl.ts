@@ -50,7 +50,10 @@ export function runRepl(defaults: SessionDefaults = {}): void {
             stdout: process.stdout,
             show: (expr) => textOf(session, expr),
           });
-          console.log(`${host.repl.formatOut(last.n, textOf(session, left))}\n`);
+          // `Out[n]` is what the reader left on the screen, so a later line that
+          // references it gets the state they stopped at, not the undriven controls.
+          last.expr = session.ce.box(left).evaluate();
+          console.log(`${host.repl.formatOut(last.n, textOf(session, last.expr.json))}\n`);
         } else if (out.text) console.log(`${out.text}\n`);
         else if (!out.clear) console.log("");
         if (out.exit) {

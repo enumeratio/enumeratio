@@ -13,6 +13,8 @@ export interface TextPlotOptions {
   height?: number;
   /** The y range to show; by default the finite points' own. */
   yRange?: [number, number];
+  /** Columns held for the y labels (default 7) -- fixed, so a redraw cannot shift the frame. */
+  gutter?: number;
 }
 
 const BRAILLE = 0x2800;
@@ -22,10 +24,21 @@ const DOT = [
   [0x08, 0x10, 0x20, 0x80],
 ] as const;
 
-const label = (v: number): string => {
+/** The gutter is fixed, so an axis label never moves the curve sideways as it changes. */
+const GUTTER = 7;
+
+/** A y label that fits `width` columns: three significant figures, exponential when it must. */
+function label(v: number, width: number): string {
   const s = Number(v.toPrecision(3));
-  return Math.abs(s) >= 1e5 || (Math.abs(s) < 1e-3 && s !== 0) ? s.toExponential(1) : String(s);
-};
+  const plain =
+    Math.abs(s) >= 1e5 || (Math.abs(s) < 1e-3 && s !== 0) ? s.toExponential(1) : String(s);
+  if (plain.length <= width) return plain;
+  for (let digits = 2; digits >= 0; digits--) {
+    const short = s.toExponential(digits);
+    if (short.length <= width) return short;
+  }
+  return s.toExponential(0);
+}
 
 /** Draw `points` (ascending x) as braille lines, framed. */
 export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {}): string {
@@ -66,17 +79,17 @@ export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {
     else line(prev, cur, dot);
     prev = cur;
   }
-  const gutter = Math.max(label(y0).length, label(y1).length);
+  const gutter = Math.max(3, opts.gutter ?? GUTTER);
   const lines: string[] = [];
   for (let r = 0; r < height; r++) {
-    const tag = r === 0 ? label(y1) : r === height - 1 ? label(y0) : "";
+    const tag = r === 0 ? label(y1, gutter) : r === height - 1 ? label(y0, gutter) : "";
     let row = "";
     for (let c = 0; c < width; c++) row += String.fromCharCode(BRAILLE + cells[r * width + c]!);
     lines.push(`${tag.padStart(gutter)} │${row}`);
   }
   lines.push(`${" ".repeat(gutter)} └${"─".repeat(width)}`);
-  const lo = label(x0);
-  const hi = label(x1);
+  const lo = label(x0, gutter);
+  const hi = label(x1, gutter);
   lines.push(
     `${" ".repeat(gutter)}  ${lo}${" ".repeat(Math.max(1, width - lo.length - hi.length))}${hi}`,
   );

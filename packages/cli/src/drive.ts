@@ -55,26 +55,58 @@ function driven(decl: Declaration): Driven | undefined {
 }
 
 const WIDTH = 24;
+const LABEL_COLS = 20;
+
+/**
+ * One control as a line, with where its parts landed so a click can be read back:
+ * `track` is the 0-based column of the first cell of a slider's bar, `spans` the
+ * columns each entry of a choice occupies.
+ */
+interface Strip {
+  text: string;
+  track?: number;
+  spans?: { from: number; to: number; index: number }[];
+}
 
 /** `k = 2   ◂━━━●━━━━━━━━━▸  0 … 5`, or the entries with the chosen one marked. */
-function strip(d: Driven, focused: boolean, color: boolean): string {
+function strip(d: Driven, focused: boolean, color: boolean): Strip {
   const name = focused ? bold(cyan(d.decl.name, color), color) : d.decl.name;
   const raw = `  ${name} = ${text(d.value)}`;
   // Pad by what shows, not by the escape codes around the focused name.
-  const label = raw + " ".repeat(Math.max(2, 20 - stripAnsi(raw).length));
+  const shown = stripAnsi(raw).length;
+  const label = raw + " ".repeat(Math.max(2, LABEL_COLS - shown));
+  const at0 = Math.max(shown, LABEL_COLS - 2) + 2;
   if (d.range !== undefined) {
     const v = numOf(d.value) ?? d.range.min;
     const at = Math.round(((v - d.range.min) / (d.range.max - d.range.min || 1)) * WIDTH);
     const bar = "━".repeat(at) + "●" + "━".repeat(Math.max(0, WIDTH - at));
-    return `${label}◂${bar}▸  ${dim(`${d.range.min} … ${d.range.max}`, color)}`;
+    return {
+      text: `${label}◂${bar}▸  ${dim(`${d.range.min} … ${d.range.max}`, color)}`,
+      track: at0 + 1,
+    };
   }
   if (d.entries !== undefined) {
-    const choices = d.entries.map((e) =>
-      text(e) === text(d.value) ? bold(`[${text(e)}]`, color) : dim(text(e), color),
-    );
-    return `${label}${choices.join("  ")}`;
+    const spans: { from: number; to: number; index: number }[] = [];
+    let col = at0;
+    const choices = d.entries.map((e, index) => {
+      const chosen = text(e) === text(d.value);
+      const shape = chosen ? `[${text(e)}]` : text(e);
+      spans.push({ from: col, to: col + shape.length - 1, index });
+      col += shape.length + 2;
+      return chosen ? bold(shape, color) : dim(shape, color);
+    });
+    return { text: `${label}${choices.join("  ")}`, spans };
   }
-  return label;
+  return { text: label };
+}
+
+/** Put a ranged control at a fraction of its span, snapped to the step grid. */
+function seek(d: Driven, fraction: number): void {
+  if (d.range === undefined) return;
+  const { min, max, step } = d.range;
+  const raw = min + Math.min(1, Math.max(0, fraction)) * (max - min);
+  const snapped = min + Math.round((raw - min) / step) * step;
+  d.value = Number(Math.min(max, Math.max(min, snapped)).toPrecision(12)) as Json;
 }
 
 /** Move a control by `steps` grid positions (negative for back), gear already applied. */
@@ -98,6 +130,35 @@ function tick(d: Driven): void {
   const v = numOf(d.value) ?? d.range.min;
   const { value } = iterate(v, 1, d.range, "cycle", 1);
   d.value = Number(value.toPrecision(12)) as Json;
+}
+
+// SGR mouse reporting (1006) with button-event tracking (1002), so a press, a drag and
+// a wheel all arrive as `ESC [ < b ; x ; y M|m`. Every terminal worth driving speaks it.
+const MOUSE_ON = "\x1b[?1000h\x1b[?1002h\x1b[?1006h";
+const MOUSE_OFF = "\x1b[?1006l\x1b[?1002l\x1b[?1000l";
+// ESC assembled from its code point, as in ansi.ts, so the source carries no control character.
+const MOUSE_EVENT = new RegExp(`${String.fromCharCode(27)}\\[<(\\d+);(\\d+);(\\d+)([Mm])`, "g");
+
+interface MouseEvent {
+  button: number;
+  x: number;
+  y: number;
+  press: boolean;
+}
+
+/** Every mouse report in a chunk of input. */
+function mouseEvents(chunk: string): MouseEvent[] {
+  const out: MouseEvent[] = [];
+  MOUSE_EVENT.lastIndex = 0;
+  for (let m = MOUSE_EVENT.exec(chunk); m !== null; m = MOUSE_EVENT.exec(chunk)) {
+    out.push({
+      button: Number(m[1]),
+      x: Number(m[2]),
+      y: Number(m[3]),
+      press: m[4] === "M",
+    });
+  }
+  return out;
 }
 
 export interface DriveHost {
@@ -127,18 +188,61 @@ export function drive(expr: Json, host: DriveHost): Promise<Json> {
   let lines = 0;
   let playing: NodeJS.Timeout | undefined;
   const { stdin, stdout, color } = host;
+  // Where the strips landed last draw, so a mouse report can be read back onto them:
+  // the rows counted UP from the line below the frame, which is where the cursor sits.
+  let strips: Strip[] = [];
+  const mouse = stdin.isTTY === true;
 
   const draw = (): void => {
     if (lines > 0) stdout.write(`\x1b[${lines}A\x1b[J`);
     const body = host.show(pinnedNow());
+    strips = controls.map((d, i) => strip(d, i === focus, color));
     const out = [
-      ...controls.map((d, i) => strip(d, i === focus, color)),
-      dim("  ←/→ move · shift: coarse · tab: next · space: play · enter: done", color),
+      ...strips.map((s) => s.text),
+      dim(
+        mouse
+          ? "  drag or click a slider · ←/→ move · shift: coarse · tab: next · space: play · enter: done"
+          : "  ←/→ move · shift: coarse · tab: next · space: play · enter: done",
+        color,
+      ),
       "",
       ...body.split("\n"),
     ];
     stdout.write(out.join("\n") + "\n");
     lines = out.length;
+  };
+
+  /** The control a mouse row lands on: the strips sit `lines` rows above the cursor. */
+  const controlAt = (row: number): number | undefined => {
+    const bottom = stdout.rows ?? 24;
+    const first = bottom - lines + 1;
+    const i = row - first;
+    return i >= 0 && i < controls.length ? i : undefined;
+  };
+
+  const onMouse = (e: MouseEvent): boolean => {
+    const wheel = (e.button & 64) !== 0;
+    const i = controlAt(e.y) ?? (wheel ? undefined : focus);
+    if (i === undefined) return false;
+    const d = controls[i]!;
+    if (wheel) {
+      move(d, e.button === 64 ? 1 : -1);
+      focus = i;
+      return true;
+    }
+    if (!e.press && (e.button & 32) === 0) return false;
+    focus = i;
+    const s = strips[i];
+    if (d.range !== undefined && s?.track !== undefined) {
+      seek(d, (e.x - 1 - s.track) / WIDTH);
+      return true;
+    }
+    const span = s?.spans?.find((p) => e.x - 1 >= p.from && e.x - 1 <= p.to);
+    if (span !== undefined && d.entries !== undefined) {
+      d.value = d.entries[span.index]!;
+      return true;
+    }
+    return true;
   };
 
   const stop = (): void => {
@@ -153,13 +257,24 @@ export function drive(expr: Json, host: DriveHost): Promise<Json> {
     for (const l of held) stdin.off("keypress", l);
     const wasRaw = stdin.isRaw;
     if (stdin.isTTY) stdin.setRawMode(true);
+    if (mouse) stdout.write(MOUSE_ON);
 
     const finish = (): void => {
       stop();
       stdin.off("keypress", onKey);
+      stdin.off("data", onData);
+      if (mouse) stdout.write(MOUSE_OFF);
       if (stdin.isTTY) stdin.setRawMode(wasRaw ?? false);
       for (const l of held) stdin.on("keypress", l);
       resolve(pinnedNow());
+    };
+
+    // Mouse reports arrive as raw bytes; keypress sees them too, and ignores them.
+    const onData = (chunk: Buffer | string): void => {
+      if (!mouse) return;
+      let moved = false;
+      for (const e of mouseEvents(String(chunk))) moved = onMouse(e) || moved;
+      if (moved) draw();
     };
 
     const onKey = (_: string, key: Key = {}): void => {
@@ -198,6 +313,7 @@ export function drive(expr: Json, host: DriveHost): Promise<Json> {
       draw();
     };
     stdin.on("keypress", onKey);
+    if (mouse) stdin.on("data", onData);
     draw();
   });
 }

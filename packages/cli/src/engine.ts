@@ -212,6 +212,7 @@ export class Session {
     // The heads that draw stay inert, so a `Plot` or a `Slider` survives evaluation as
     // the picture (or the control) it names, for a host that can show one.
     declareGraphics(this.ce);
+    this.declareHistory();
     this.configure(defaults);
   }
 
@@ -220,6 +221,36 @@ export class Session {
     if (defaults.form) this.form = defaults.form;
     if (defaults.syntax) this.defaultSyntax = defaults.syntax;
     if (defaults.precision !== undefined) this.ce.precision = defaults.precision;
+  }
+
+  /**
+   * `Out(n)`, `In(n)` and `InString(n)` over this session's history, as Wolfram has them:
+   * `Out` is the RESULT, already evaluated, and `%n` is its shorthand; `In` is the input,
+   * RE-EVALUATED at the point it is asked for (Wolfram assigns it a delayed value, so
+   * `In[1]` of a random draw gives a new draw); `InString` is the line as it was typed.
+   * A negative index counts back from the last line, so `Out(-1)` is `%`.
+   */
+  private declareHistory(): void {
+    const at = (ops: readonly BoxedExpression[], what: string): EvalResult => {
+      const n = ops[0]?.re;
+      if (n === undefined || !Number.isInteger(n) || n === 0)
+        throw new Error(`${what} takes a line number`);
+      const res = n > 0 ? this.history[n - 1] : this.history.at(n);
+      if (!res) throw new Error(`no line ${n}`);
+      return res;
+    };
+    this.ce.declare("Out", {
+      signature: "(number) -> any",
+      evaluate: (ops) => at(ops, "Out").expr,
+    });
+    this.ce.declare("In", {
+      signature: "(number) -> any",
+      evaluate: (ops) => at(ops, "In").raw.evaluate(),
+    });
+    this.ce.declare("InString", {
+      signature: "(number) -> string",
+      evaluate: (ops) => this.ce.string(at(ops, "InString").input),
+    });
   }
 
   /** Parse a line (syntax pragma, `%` substitution) without evaluating or recording it. */

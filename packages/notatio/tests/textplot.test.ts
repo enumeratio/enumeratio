@@ -18,6 +18,22 @@ test("a sine wave fills the frame, top to bottom, with its extremes labelled", (
   for (const l of lines.slice(0, 6)) expect(l.slice(-40)).not.toBe("⠀".repeat(40));
 });
 
+test("the gutter is fixed, so the frame does not shift when a label changes width", () => {
+  const widths = [0.5, 12345, -0.000123, 1].map((k) => {
+    const out = textPlot(
+      sine.map((p) => ({ x: p.x, y: p.y * k })),
+      { width: 40, height: 6 },
+    );
+    return new Set(
+      out
+        .split("\n")
+        .map((l) => l.indexOf("│"))
+        .filter((i) => i >= 0),
+    );
+  });
+  for (const set of widths) expect([...set]).toEqual([8]);
+});
+
 test("a pole breaks the line rather than drawing across it", () => {
   const points = [
     { x: -1, y: -1 },

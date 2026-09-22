@@ -60,6 +60,35 @@ compilation targets — they only apply to numeric/function expressions.
 
 ## History and variables
 
+Each line is numbered, and a committed line can be referenced from a later one, the way a
+Wolfram notebook does:
+
+- `Out(n)` is the **result** of line `n`, already evaluated; `%n` is its shorthand, `%` the
+  last and `%%` the one before. A negative index counts back, so `Out(-1)` is `%`.
+- `In(n)` is the **input** of line `n`, **re-evaluated** where you ask for it. Wolfram gives
+  `In[n]` a delayed value, so `In[1]` of a random draw draws again; ours re-evaluates the
+  parsed input the same way.
+- `InString(n)` is that line as you typed it, as a string.
+
+Bracket spelling is Wolfram's; in notatio (Epsil) `[…]` builds a list, so the calls are
+written `Out(2)`, or `:wolfram Out[2]` for one line in Wolfram syntax.
+
+```text
+In[1]:= Binomial(10, 3)
+Out[1]= 120
+In[2]:= Out(1) + 1
+Out[2]= 121
+In[3]:= InString(1)
+Out[3]= "Binomial(10, 3)"
+In[4]:= In(1) / 2
+Out[4]= 60
+```
+
+A line with controls in it is committed the same way: **Enter** ends the strip and what you
+left on screen becomes `Out[n]`, so a later line reading `Out[n]` gets the state you stopped
+at — the session is Wolfram-style, one committed cell at a time, not a sheet that keeps
+re-running (that is [notatio-notebook](/playground/notebook)).
+
 - `%` is the last result, `%%` the one before, `%n` the n-th `Out`.
 - `let name = <expr>` binds a variable the engine remembers; later lines resolve
   it, and `:vars` lists the bindings.
@@ -88,9 +117,12 @@ A result can carry controls — a `Slider`, a `Toggler`, a whole `Manipulate`. W
 happens to them depends on where the result is going, and the CLI knows two answers.
 
 **At a TTY** the controls are real: the REPL draws a strip of text sliders under the
-input, ←/→ move the focused one (Shift for the coarse gear), Tab changes focus, Space
-plays, and Enter prints where you left it as `Out[n]`. A `Plot` under the strip is drawn
-on braille cells (or inline as an image on iTerm2 / kitty), so it redraws as you scrub.
+input. Click or drag a slider with the **mouse** (the wheel steps it); with the keyboard,
+←/→ move the focused one, Shift for the coarse gear, Tab changes focus, Space plays.
+**Enter** commits the line — what you left on screen becomes `Out[n]`, referenceable from
+later lines. A `Plot` under the strip is drawn on braille cells (or inline as an image on
+iTerm2 / kitty), so it redraws as you scrub; the y-axis gutter is a fixed width, so the
+curve never shifts sideways as a label changes.
 
 **Anywhere else** — a pipe, a file, a page — there is nothing to move a slider with, so
 the expression is _reduced_: the controls pin to their starting values and their
@@ -206,18 +238,19 @@ first.
 
 Everything the interactive session accepts; `:help` prints the same list.
 
-| Command                                                 | Does                                 |
-| ------------------------------------------------------- | ------------------------------------ |
-| `<expr>`                                                | evaluate (Epsil by default)          |
-| `:wolfram` / `:mathjson` / `:latex` / `:epsil` `<expr>` | force an input syntax for one line   |
-| `let <name> = <expr>`                                   | bind a variable                      |
-| `%` · `%%` · `%n`                                       | last / 2nd-last / n-th result        |
-| `:form [name]`                                          | show or set the display form         |
-| `:env [name]`                                           | reduce results for an environment    |
-| `:forms`                                                | list the display forms               |
-| `:in <syntax>`                                          | set the default input syntax         |
-| `:plot <expr>`                                          | plot a one-variable expression       |
-| `:glyph <kind> <list>`                                  | draw a combinatorial glyph           |
-| `:export <path>` · `:import <path>`                     | write / read a file (Node)           |
-| `:formats` · `:mime <type>`                             | the format registry · MIME → formats |
-| `:vars` · `:clear` · `:help` · `:quit`                  | variables · clear · help · exit      |
+| Command                                                 | Does                                                        |
+| ------------------------------------------------------- | ----------------------------------------------------------- |
+| `<expr>`                                                | evaluate (Epsil by default)                                 |
+| `:wolfram` / `:mathjson` / `:latex` / `:epsil` `<expr>` | force an input syntax for one line                          |
+| `let <name> = <expr>`                                   | bind a variable                                             |
+| `%` · `%%` · `%n`                                       | last / 2nd-last / n-th result                               |
+| `Out(n)` · `In(n)` · `InString(n)`                      | n-th result · n-th input, re-evaluated · n-th line as typed |
+| `:form [name]`                                          | show or set the display form                                |
+| `:env [name]`                                           | reduce results for an environment                           |
+| `:forms`                                                | list the display forms                                      |
+| `:in <syntax>`                                          | set the default input syntax                                |
+| `:plot <expr>`                                          | plot a one-variable expression                              |
+| `:glyph <kind> <list>`                                  | draw a combinatorial glyph                                  |
+| `:export <path>` · `:import <path>`                     | write / read a file (Node)                                  |
+| `:formats` · `:mime <type>`                             | the format registry · MIME → formats                        |
+| `:vars` · `:clear` · `:help` · `:quit`                  | variables · clear · help · exit                             |

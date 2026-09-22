@@ -111,6 +111,11 @@ In[1]:= Manipulate(Plot(Sin(a * x) / a, (x, 0, 6.28)), (a, 1, 4))
         0                                                       6.28
 ```
 
+The slider takes the **mouse** too, where the terminal reports one: click a point on the
+bar, drag along it, or roll the wheel over it. **Enter** commits the line — what you left
+becomes `Out[n]`, so a later line can read it back (`Out(n)`, `%n`; `In(n)` re-evaluates
+the input instead, as in Wolfram).
+
 Try it from a checkout:
 
 ```bash

@@ -219,6 +219,15 @@ export const DEMOS: readonly Demo[] = [
     highlight: true,
   },
   {
+    id: "history-refs",
+    title: "Reference earlier lines by number",
+    description:
+      "Out(n) is the n-th result and %n its shorthand; In(n) RE-EVALUATES the n-th input, as Wolfram's delayed In[n] does; InString(n) is the line as typed. A negative index counts back from the last.",
+    category: "Session",
+    lines: ["Binomial(10, 3)", "Out(1) + 1", "InString(1)", "In(1) / 2", "Out(-1)"],
+    tags: ["history"],
+  },
+  {
     id: "variables",
     title: "Variables with let",
     description: "Bind a name; later lines resolve it; :vars lists them.",

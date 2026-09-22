@@ -303,6 +303,13 @@ evaluated `Plot` at a terminal without an image protocol and under the control s
 one-shot text output (a pipe) reduces for `PIPE` while `--json` keeps the expression
 whole; a pinned `Locator` is `Epilog -> Point(…)` on the first `Plot` in the tree.
 
+The terminal strip takes the mouse where the terminal reports one (SGR 1006 with
+button-event tracking): click a point on the bar, drag along it, wheel to step. The
+y-axis gutter is a fixed width, so a changing label cannot shift the curve. And a line
+is _committed_ by Enter, Wolfram-style: what the reader left becomes `Out[n]`, which
+`Out(n)` / `%n` read back, while `In(n)` re-evaluates that line's input (Wolfram gives
+`In[n]` a delayed value) and `InString(n)` returns it as typed.
+
 Ways in, for a reader: printing any page of the site (every `<Notatio>` reduces for
 `print`), narrowing the window past 640px, the cards on `/playground/environments`, the
 REPL's `:env <name>` and the CLI's `--env <name>`, and the demo corpus's **Environments**

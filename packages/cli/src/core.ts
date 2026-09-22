@@ -279,6 +279,8 @@ const HELP = `Commands:
                          (short aliases: :tex, :mj or :json, :wl, :ep)
   let <name> = <expr>    bind a variable
   %  %%  %n              refer to the last / 2nd-last / n-th result
+  Out(n)  In(n)          the n-th result / the n-th input, re-evaluated (n<0 counts back)
+  InString(n)            the n-th input line, as typed
   :form [name]           show or set the display form (see :forms)
   :env [name]            reduce results for an environment (print, pipe, …; auto to stop)
   :in <syntax>           default input syntax: latex | mathjson | wolfram | epsil

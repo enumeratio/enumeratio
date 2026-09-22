@@ -13,6 +13,8 @@ Results are exact; `:help` lists every command.
   cannot drive a control — a slider pins or samples into small multiples; `:env auto`
   hands it back. At a real terminal the controls are live instead: see
   [Environments](/playground/environments#at-a-terminal).
+- **History**: `Out(n)` is the n-th result (`%n` for short, `%`/`%%` for the last two),
+  `In(n)` re-evaluates the n-th input, `InString(n)` is the line as typed.
 - **Keys**: ↑/↓ history, ←/→ edit, Ctrl+C cancels a line, Ctrl+L clears.
 
 <notatio-terminal></notatio-terminal>

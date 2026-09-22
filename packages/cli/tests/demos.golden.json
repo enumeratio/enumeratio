@@ -305,6 +305,28 @@
       "out": "\u001b[2mOut[4]= \u001b[0m7 / 2"
     }
   ],
+  "history-refs": [
+    {
+      "in": "Binomial(10, 3)",
+      "out": "\u001b[2mOut[1]= \u001b[0m120"
+    },
+    {
+      "in": "Out(1) + 1",
+      "out": "\u001b[2mOut[2]= \u001b[0m121"
+    },
+    {
+      "in": "InString(1)",
+      "out": "\u001b[2mOut[3]= \u001b[0m\"Binomial(10, 3)\""
+    },
+    {
+      "in": "In(1) / 2",
+      "out": "\u001b[2mOut[4]= \u001b[0m60"
+    },
+    {
+      "in": "Out(-1)",
+      "out": "\u001b[2mOut[5]= \u001b[0m60"
+    }
+  ],
   "variables": [
     {
       "in": "let n = 5",
