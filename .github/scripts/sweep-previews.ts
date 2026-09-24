@@ -1,9 +1,12 @@
 // Delete Cloudflare Pages preview deployments — CF never expires them on its own.
 //
 //   node .github/scripts/sweep-previews.ts pr <number>       everything stamped [preview-PR-<number>]
+//   node .github/scripts/sweep-previews.ts closed [days=1]   a PR's previews, once it has been closed <days>
 //   node .github/scripts/sweep-previews.ts age [days=30]     untagged previews older than <days>
 //
-// Env: CF_API_TOKEN, CF_ACCOUNT_ID, CF_PROJECT (default enumeratio), DRY_RUN=1 to only report.
+// Env: CF_API_TOKEN, CF_ACCOUNT_ID, CF_PROJECT (default enumeratio), DRY_RUN=1 to only report;
+// `closed` also asks `gh` about each PR (GH_TOKEN, GITHUB_REPOSITORY) and notes the teardown on
+// its preview comment.
 // "Tagged" is decided against the checkout this runs in (`git tag --points-at`), so the age sweep
 // needs the tags fetched; a commit git no longer knows counts as untagged. The most recent
 // preview of main is kept whatever its age, and production deployments are never touched.
@@ -57,12 +60,50 @@ function isTagged(sha: string): boolean {
   }
 }
 
+const prOf = (d: Deployment): string | undefined =>
+  /\[preview-PR-(\d+)\]/.exec(d.deployment_trigger.metadata.commit_message)?.[1];
+
+const gh = (...args: string[]): string =>
+  execFileSync("gh", ["api", ...args], { encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] });
+
+/** When each PR was closed, for the PRs that are; open ones are left out. */
+function closedAt(prs: Iterable<string>): Map<string, number> {
+  const closed = new Map<string, number>();
+  for (const pr of prs) {
+    try {
+      const at = gh(
+        `repos/${process.env.GITHUB_REPOSITORY}/pulls/${pr}`,
+        "--jq",
+        ".closed_at",
+      ).trim();
+      if (at && at !== "null") closed.set(pr, Date.parse(at));
+    } catch {
+      console.error(`warn: could not look up PR #${pr}; keeping its previews`);
+    }
+  }
+  return closed;
+}
+
+let swept = new Set<string>();
+
 function select(deployments: Deployment[]): Deployment[] {
   const previews = deployments.filter((d) => d.environment === "preview");
   if (mode === "pr") {
     if (!argument) throw new Error("pr mode needs the PR number");
     const stamp = `[preview-PR-${argument}]`;
     return previews.filter((d) => d.deployment_trigger.metadata.commit_message.includes(stamp));
+  }
+  if (mode === "closed") {
+    const cutoff = Date.now() - Number(argument ?? 1) * 86_400_000;
+    const closed = closedAt(new Set(previews.map(prOf).filter((pr) => pr !== undefined)));
+    const doomed = previews.filter((d) => {
+      const at = closed.get(prOf(d) ?? "");
+      return (
+        at !== undefined && at < cutoff && !isTagged(d.deployment_trigger.metadata.commit_hash)
+      );
+    });
+    swept = new Set(doomed.map(prOf).filter((pr) => pr !== undefined));
+    return doomed;
   }
   if (mode === "age") {
     const days = Number(argument ?? 30);
@@ -77,7 +118,7 @@ function select(deployments: Deployment[]): Deployment[] {
         !isTagged(d.deployment_trigger.metadata.commit_hash),
     );
   }
-  throw new Error(`unknown mode ${JSON.stringify(mode)} — expected pr or age`);
+  throw new Error(`unknown mode ${JSON.stringify(mode)} — expected pr, closed or age`);
 }
 
 const deployments = await listAll();
@@ -101,3 +142,35 @@ for (const d of doomed) {
 console.log(
   `${dryRun ? "would delete" : "deleted"} ${dryRun ? doomed.length : deleted} of ${deployments.length} deployments (${mode}${argument ? ` ${argument}` : ""})`,
 );
+
+// The preview line of each swept PR's comment says so; whatever follows it (review links) stays.
+for (const pr of dryRun ? [] : swept) {
+  try {
+    const id = gh(
+      `repos/${process.env.GITHUB_REPOSITORY}/issues/${pr}/comments`,
+      "--paginate",
+      "--jq",
+      '.[] | select(.body | startswith("<!-- cf-preview -->")) | .id',
+    )
+      .trim()
+      .split("\n")
+      .at(-1);
+    if (!id) continue;
+    const body = gh(
+      `repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${id}`,
+      "--jq",
+      ".body",
+    );
+    const lines = body.replace(/\n$/, "").split("\n");
+    lines[1] = "Preview deployments removed (PR closed).";
+    gh(
+      `repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${id}`,
+      "-X",
+      "PATCH",
+      "-f",
+      `body=${lines.join("\n")}`,
+    );
+  } catch {
+    console.error(`warn: could not note the teardown on PR #${pr}`);
+  }
+}

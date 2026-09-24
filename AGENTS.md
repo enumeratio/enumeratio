@@ -76,8 +76,10 @@ release. Add a tool name to select part of the graph. For example, run
   `web/public/CNAME` names the domain).
 - **Every build** of every commit — PR pushes and `main` — also goes up as a Cloudflare Pages
   preview at `<sha7>.enumeratio.pages.dev`, direct-uploaded from the artifact the gate already
-  built. `preview-cleanup.yml` deletes a PR's previews when it closes, and weekly deletes
-  untagged previews older than 30 days; a tagged commit's preview stays. Needs repo secrets
+  built. The PR's sticky `<!-- cf-preview -->` comment carries the URL; review links go below
+  its first two lines, which each push rewrites and leaves the rest. `preview-cleanup.yml`
+  nightly deletes a PR's previews a day after it closes, and untagged previews older than 30
+  days; a tagged commit's preview stays. Needs repo secrets
   `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`.
 - **Advisory sweeps** — never required checks. `quickcheck.yml` samples the collection
   kernels on every push touching them and deeply each night; a failure files/reopens one
