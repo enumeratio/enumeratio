@@ -138,9 +138,16 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "PowerMod",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "PowerMod",
+    elsewhere: ["wolfram"],
+  },
+  {
+    name: "PowerModList",
+    provenance: "extension",
+    declared: "enumeratio-number-theory",
+    wolframAlias: "PowerModList",
     elsewhere: ["wolfram"],
   },
   {
@@ -264,10 +271,24 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "MultiplicativeOrder",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "MultiplicativeOrder",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "PrimitiveRootList",
+    provenance: "extension",
+    declared: "enumeratio-number-theory",
+    wolframAlias: "PrimitiveRootList",
+    elsewhere: ["wolfram"],
+  },
+  {
+    name: "RationalReconstruction",
+    provenance: "extension",
+    declared: "enumeratio-number-theory",
+    wolframAlias: null,
+    elsewhere: [],
   },
   {
     name: "IntegerDigits",
@@ -737,13 +758,6 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-hypercomplex",
     wolframAlias: null,
     elsewhere: [],
-  },
-  {
-    name: "PowerModList",
-    provenance: "extension",
-    declared: "enumeratio-hypercomplex",
-    wolframAlias: "PowerModList",
-    elsewhere: ["wolfram"],
   },
   {
     name: "Diagram",

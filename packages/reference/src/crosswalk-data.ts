@@ -2867,6 +2867,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     fungrimEntries: ["04427b"],
   },
   {
+    name: "PrimitiveRootList",
+    wolfram: "PrimitiveRootList",
+  },
+  {
     name: "Product",
     fungrimEntries: ["33f13a"],
     wolfram: "Product",
@@ -2886,6 +2890,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sympy",
         call: "Rational($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "RationalReconstruction",
+    oracle: [
+      {
+        system: "sage",
+        call: "rational_reconstruction($1, $2)",
         arity: 2,
       },
     ],

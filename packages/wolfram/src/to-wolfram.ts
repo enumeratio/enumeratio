@@ -135,6 +135,7 @@ export const HEADS: Record<string, string> = {
   PowerMod: "PowerMod",
   PowerModList: "PowerModList",
   MultiplicativeOrder: "MultiplicativeOrder",
+  PrimitiveRootList: "PrimitiveRootList",
   ChineseRemainder: "ChineseRemainder",
   JacobiSymbol: "JacobiSymbol",
   LegendreSymbol: "LegendreSymbol",

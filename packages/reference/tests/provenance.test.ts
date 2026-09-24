@@ -115,8 +115,10 @@ const OVERRIDDEN = [
   "Gamma",
   "GammaRegularized",
   "IntegerDigits",
+  "MultiplicativeOrder",
   "Norm",
   "PolyLog",
+  "PowerMod",
   "Zeta",
 ];
 
@@ -154,9 +156,12 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  *
  * Everything here is a domain object rather than a function a general CAS would carry —
  * except ClausenCl, a textbook special function that Wolfram simply has no head for (it is
- * spelled Im[PolyLog[n, E^(I θ)]] there; mpmath has it as clsin/clcos, under other names).
+ * spelled Im[PolyLog[n, E^(I θ)]] there; mpmath has it as clsin/clcos, under other names) —
+ * and RationalReconstruction, which the three leave to private helpers but SageMath and Maple
+ * expose (`rational_reconstruction`, `iratrecon`).
  */
 const NOVEL = [
+  "RationalReconstruction",
   "ClausenCl",
   "Basis",
   "AlgebraSignature",
@@ -201,7 +206,9 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
   // general system already carries, that we implemented again.
   const known = ours.filter((record) => record.elsewhere.length > 0);
   expect(known.map((record) => record.name)).toEqual([
+    "PowerModList",
     "KroneckerSymbol",
+    "PrimitiveRootList",
     "HurwitzZeta",
     "LerchPhi",
     "BarnesG",
@@ -214,7 +221,6 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "DirichletL",
     "HarmonicNumber",
     "NonCommutativeMultiply",
-    "PowerModList",
     "Coproduct",
   ]);
   // LerchPhi is in all three, so it has the strongest oracle coverage of anything we add.
