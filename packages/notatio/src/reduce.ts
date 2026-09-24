@@ -15,6 +15,7 @@ import { can, type Environment, type Reading } from "./environment.ts";
 import {
   CONTROL_HEADS,
   type ControlKind,
+  HELD_HEADS,
   headOf,
   numOf,
   opsOf,
@@ -71,6 +72,7 @@ function manipulateParameter(node: Json, reading?: Reading | number): Declaratio
 /** Every declaration in an expression, in tree order. */
 export function declarations(expr: Json, into: Declaration[] = []): Declaration[] {
   const head = headOf(expr);
+  if (head !== undefined && HELD_HEADS.has(head)) return into;
   if (head === "Manipulate") {
     const { ops, options } = optionsOf(expr);
     const reading = readingOf(options[STATIC_OPTION]);
@@ -233,7 +235,7 @@ function substitute(node: Json, values: ReadonlyMap<string, Json>, unwrap = fals
   const sym = symOf(node);
   if (sym !== undefined) return values.get(sym) ?? node;
   const head = headOf(node);
-  if (head === undefined) return node;
+  if (head === undefined || HELD_HEADS.has(head)) return node;
   const ops = opsOf(node);
   if (head === "Manipulate" || (head === "Dynamic" && unwrap)) {
     return ops[0] === undefined ? node : substitute(ops[0], values, unwrap);
@@ -310,7 +312,7 @@ export function pin(expr: Json, values: ReadonlyMap<string, Json>): Json {
  */
 function markLocator(node: Json, point: Json): { node: Json; marked: boolean } {
   const head = headOf(node);
-  if (head === undefined) return { node, marked: false };
+  if (head === undefined || HELD_HEADS.has(head)) return { node, marked: false };
   if (head === "Plot") {
     const { ops, options } = optionsOf(node);
     const mark = ["Point", point] as unknown as Json;
@@ -404,7 +406,7 @@ const GPU_HEADS = new Set(["ComplexPlot", "ComplexPlot3D"]);
 /** The environment's other rules, applied top-down: surfaces and layout. */
 function surfaces(node: Json, env: Environment): Json {
   const head = headOf(node);
-  if (head === undefined) return node;
+  if (head === undefined || HELD_HEADS.has(head)) return node;
   const ops = opsOf(node).map((op) => surfaces(op, env));
   if (GPU_HEADS.has(head) && !can.draw(env, "gpu") && can.draw(env, "raster")) {
     return ["Rasterize", [head, ...ops]] as unknown as Json;

@@ -47,6 +47,9 @@ const CORPUS = [
   "Manipulate(Sin(a) + b, (a, 0, 5, 0.5), ((b, 2), 0, 3))",
   'Image("data:image/png;base64,AAA")',
   "Sin(x) + 1",
+  // A cell: the held input, its forms, and the value it should come to.
+  "Cell(PowerModList(3, 1/2, 11))",
+  'Cell(1 + 1, InForm -> "InputForm", OutForm -> "TraditionalForm", Expected -> 2)',
   // The controls: a variable, or a variable with its start; a range or a list; and the
   // scope that binds them when anything else reads the variable.
   "Slider(k, (0, 5))",

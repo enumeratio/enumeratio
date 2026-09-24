@@ -26,7 +26,7 @@
         "sage": {
           "input": "sin((pi / 6))",
           "output": "1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",4]]": {
@@ -38,7 +38,7 @@
         "sage": {
           "input": "sin((pi / 4))",
           "output": "1/2*sqrt(2)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",3]]": {
@@ -50,7 +50,7 @@
         "sage": {
           "input": "sin((pi / 3))",
           "output": "1/2*sqrt(3)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",2]]": {
@@ -110,7 +110,7 @@
         "sage": {
           "input": "sin(((pi / 6) + (2 * pi)))",
           "output": "1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"List\",0,[\"Divide\",\"Pi\",2],\"Pi\"]]": {
@@ -122,7 +122,9 @@
         "sage": {
           "input": "sin([0, (pi / 2), pi])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Sin is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Sin\",[\"Degrees\",30]]": {
@@ -141,7 +143,7 @@
         "sage": {
           "input": "sin(1)",
           "output": "sin(1)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",5]]": {
@@ -153,7 +155,7 @@
         "sage": {
           "input": "sin((pi / 5))",
           "output": "1/4*sqrt(-2*sqrt(5) + 10)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     },
@@ -179,7 +181,7 @@
         "sage": {
           "input": "cos((pi / 6))",
           "output": "1/2*sqrt(3)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",4]]": {
@@ -191,7 +193,7 @@
         "sage": {
           "input": "cos((pi / 4))",
           "output": "1/2*sqrt(2)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",3]]": {
@@ -203,7 +205,7 @@
         "sage": {
           "input": "cos((pi / 3))",
           "output": "1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",2]]": {
@@ -263,7 +265,9 @@
         "sage": {
           "input": "cos([0, (pi / 2), pi])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Cos is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Cos\",2]": {
@@ -275,7 +279,7 @@
         "sage": {
           "input": "cos(2)",
           "output": "cos(2)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",5]]": {
@@ -287,7 +291,7 @@
         "sage": {
           "input": "cos((pi / 5))",
           "output": "1/4*sqrt(5) + 1/4",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     },
@@ -313,7 +317,7 @@
         "sage": {
           "input": "tan((pi / 6))",
           "output": "1/3*sqrt(3)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",4]]": {
@@ -337,7 +341,7 @@
         "sage": {
           "input": "tan((pi / 3))",
           "output": "sqrt(3)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Tan\",[\"Divide\",\"Pi\",4]],[\"Divide\",[\"Sin\",[\"Divide\",\"Pi\",4]],[\"Cos\",[\"Divide\",\"Pi\",4]]]]": {
@@ -385,7 +389,9 @@
         "sage": {
           "input": "tan([0, (pi / 4)])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Tan is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",2]]": {
@@ -411,7 +417,7 @@
         "sage": {
           "input": "tan(1)",
           "output": "tan(1)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     },
@@ -828,7 +834,7 @@
         "sage": {
           "input": "exp(1)",
           "output": "e",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Exp\",[\"Ln\",5]],5]": {
@@ -864,7 +870,9 @@
         "sage": {
           "input": "exp([0, 1])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Exp is Listable and threads over the list; Sage's takes scalars only."
         }
       }
     },

@@ -23,33 +23,34 @@
 // which says the same). Sage bundles mpmath and SymPy, so a Sage lane would subsume both,
 // at the cost of a much heavier dependency for no extra coverage. We call mpmath directly.
 
-import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
+import { KernelKilled, runKernel } from "@enumeratio/oracle/bounded";
 
 const dataPath = new URL("../src/provenance-data.ts", import.meta.url);
 const source = readFileSync(dataPath, "utf8");
 const names = [...source.matchAll(/"name": "([^"]+)"/g)].map((match) => match[1] as string);
 
 /** Which names Wolfram knows as built-in System` symbols. */
-function askWolfram(heads: readonly string[]): Set<string> {
+async function askWolfram(heads: readonly string[]): Promise<Set<string>> {
   // A Wolfram list is {a, b, …} — a JSON array would parse as Part and quietly return one
   // match instead of the real answer, which is exactly what it did the first time.
   const list = `{${heads.map((head) => `"${head}"`).join(", ")}}`;
   const code = `Print[StringRiffle[Select[${list}, Length[Names["System\`" <> #]] > 0 &], ","]]`;
   try {
-    const out = execFileSync("wolframscript", ["-code", code], {
-      encoding: "utf8",
-      timeout: 120_000,
-    });
+    const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 120_000 });
     return new Set(out.trim().split(",").filter(Boolean));
   } catch (error) {
+    // A missing kernel leaves the column empty; a killed one must not pass for that.
+    if (error instanceof KernelKilled) throw error;
     process.stderr.write(`wolframscript unavailable: ${String(error)}\n`);
     return new Set();
   }
 }
 
 /** Which names SymPy and mpmath expose, under our spelling or its snake_case form. */
-function askPython(heads: readonly string[]): { sympy: Set<string>; mpmath: Set<string> } {
+async function askPython(
+  heads: readonly string[],
+): Promise<{ sympy: Set<string>; mpmath: Set<string> }> {
   const program = `
 import json, sys
 names = json.loads(sys.stdin.read())
@@ -72,21 +73,21 @@ for module in ("sympy", "mpmath"):
 print(json.dumps(out))
 `;
   try {
-    const out = execFileSync("python3", ["-c", program], {
-      encoding: "utf8",
+    const out = await runKernel("python3", ["-c", program], {
       input: JSON.stringify(heads),
-      timeout: 120_000,
+      timeoutMs: 120_000,
     });
     const parsed = JSON.parse(out) as { sympy: string[]; mpmath: string[] };
     return { sympy: new Set(parsed.sympy), mpmath: new Set(parsed.mpmath) };
   } catch (error) {
+    if (error instanceof KernelKilled) throw error;
     process.stderr.write(`python3 unavailable: ${String(error)}\n`);
     return { sympy: new Set(), mpmath: new Set() };
   }
 }
 
-const wolfram = askWolfram(names);
-const { sympy, mpmath } = askPython(names);
+const wolfram = await askWolfram(names);
+const { sympy, mpmath } = await askPython(names);
 
 /** Rewrite one record's coverage arrays in place, preserving everything else. */
 const updated = source.replace(

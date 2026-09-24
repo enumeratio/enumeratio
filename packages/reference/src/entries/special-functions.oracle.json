@@ -40,7 +40,9 @@
         "sage": {
           "input": "gamma([0, -1])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Gamma is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Equal\",[\"Gamma\",6],[\"Factorial\",5]]": {
@@ -114,7 +116,7 @@
         "sage": {
           "input": "gamma((5/2))",
           "output": "3/4*sqrt(pi)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Power\",[\"Gamma\",[\"Rational\",1,2]],2],\"Pi\"]": {
@@ -437,7 +439,7 @@
         "sage": {
           "input": "zeta(2)",
           "output": "1/6*pi^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",4]": {
@@ -449,7 +451,7 @@
         "sage": {
           "input": "zeta(4)",
           "output": "1/90*pi^4",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",6]": {
@@ -461,7 +463,7 @@
         "sage": {
           "input": "zeta(6)",
           "output": "1/945*pi^6",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",[\"List\",-1,-2,-3]]": {
@@ -473,7 +475,9 @@
         "sage": {
           "input": "zeta([-1, -2, -3])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Zeta is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Zeta\",0]": {
@@ -485,7 +489,7 @@
         "sage": {
           "input": "zeta(0)",
           "output": "-1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",-2]": {
@@ -509,7 +513,7 @@
         "sage": {
           "input": "zeta(-3)",
           "output": "1/120",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",1]": {
@@ -547,7 +551,7 @@
         "sage": {
           "input": "zeta(3)",
           "output": "zeta(3)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",-1]": {
@@ -559,7 +563,7 @@
         "sage": {
           "input": "zeta(-1)",
           "output": "-1/12",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",2,1]": {
@@ -571,7 +575,7 @@
         "sage": {
           "input": "hurwitz_zeta(2, 1)",
           "output": "1/6*pi^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",2,2]": {
@@ -583,7 +587,7 @@
         "sage": {
           "input": "hurwitz_zeta(2, 2)",
           "output": "1/6*pi^2 - 1",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Zeta\",2,0]": {
@@ -595,7 +599,9 @@
         "sage": {
           "input": "hurwitz_zeta(2, 0)",
           "output": "ValueError: psi2_eval(): pole",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "convention",
+          "note": "compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; Sage's hurwitz_zeta(s, 0) is a pole."
         }
       }
     },
@@ -609,7 +615,7 @@
         "sage": {
           "input": "hurwitz_zeta(2, 1)",
           "output": "1/6*pi^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"HurwitzZeta\",2,2]": {
@@ -621,7 +627,7 @@
         "sage": {
           "input": "hurwitz_zeta(2, 2)",
           "output": "1/6*pi^2 - 1",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"HurwitzZeta\",1,3]": {
@@ -649,7 +655,7 @@
         "sage": {
           "input": "hurwitz_zeta(-3, (7/3))",
           "output": "-7813/3240",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     },
@@ -716,7 +722,7 @@
         "sage": {
           "input": "polylog(2, 1)",
           "output": "1/6*pi^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"PolyLog\",2,-1]": {
@@ -728,7 +734,7 @@
         "sage": {
           "input": "polylog(2, -1)",
           "output": "-1/12*pi^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"PolyLog\",4,1]": {
@@ -740,7 +746,7 @@
         "sage": {
           "input": "polylog(4, 1)",
           "output": "1/90*pi^4",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Add\",[\"PolyLog\",2,0.5],[\"Multiply\",0.5,[\"Power\",[\"Ln\",2],2]]],[\"Divide\",[\"Power\",\"Pi\",2],12]]": {
@@ -768,7 +774,9 @@
         "sage": {
           "input": "polylog(0.5, 1)",
           "output": "NaN + NaN*I",
-          "verdict": "inconclusive"
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "compute-engine continues Li_s(1) = ζ(s) to s = 1/2; Sage's polylog returns NaN there."
         }
       },
       "[\"PolyLog\",0.5,0.5]": {
@@ -804,7 +812,9 @@
         "sage": {
           "input": "polylog(2, [0.5, 0.25])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PolyLog is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"PolyLog\",2.5,2]": {
@@ -832,7 +842,7 @@
         "sage": {
           "input": "polylog(2, (1/2))",
           "output": "1/12*pi^2 - 1/2*log(2)^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     },
@@ -894,7 +904,7 @@
         "sage": {
           "input": "psi(1, 0.5)",
           "output": "psi(1, 0.500000000000000)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"PolyGamma\",1,0]": {
@@ -906,7 +916,9 @@
         "sage": {
           "input": "psi(1, 0)",
           "output": "ValueError: psi2_eval(): pole",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Sage raises an error."
         }
       },
       "[\"N\",[\"PolyGamma\",1,[\"Complex\",1,1]]]": {
@@ -925,7 +937,9 @@
         "sage": {
           "input": "psi(1, [1, 2])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PolyGamma is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"PolyGamma\",1,1]": {
@@ -937,7 +951,7 @@
         "sage": {
           "input": "psi(1, 1)",
           "output": "1/6*pi^2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     },

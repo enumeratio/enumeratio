@@ -6,14 +6,14 @@
 // Requires wolframscript on PATH. Run from the package:
 //   node scripts/collect-kronecker-golden.ts
 
-import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { kroneckerSymbol } from "../src/kronecker.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 const RANGE = 10;
 
 const code = `Do[Print[a," ",n," ",KroneckerSymbol[a,n]],{a,-${RANGE},${RANGE}},{n,-${RANGE},${RANGE}}]`;
-const output = execFileSync("wolframscript", ["-code", code], { encoding: "utf8" });
+const output = await runKernel("wolframscript", ["-code", code]);
 
 interface GoldenCase {
   a: number;

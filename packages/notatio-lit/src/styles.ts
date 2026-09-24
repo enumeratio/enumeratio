@@ -406,6 +406,26 @@ a.notatio-tree-head { text-decoration: underline dotted; text-underline-offset: 
 .notatio-tree-summary .tok-str { color: #2f8a3e; }
 .notatio-tree-summary .tok-punct { color: var(--vp-c-text-3, #999); }
 
+/* Pending: three dots before the first rendering; a re-evaluation dims the old one
+   (after a beat, so a fast one doesn't flicker). */
+.notatio-pending { display: inline-flex; gap: 0.25em; align-items: center; min-height: 1.2em; }
+.notatio-pending span {
+  width: 0.35em;
+  height: 0.35em;
+  border-radius: 50%;
+  background: var(--vp-c-text-3, #999);
+  animation: notatio-pending 1s ease-in-out infinite;
+}
+.notatio-pending span:nth-child(2) { animation-delay: 0.15s; }
+.notatio-pending span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes notatio-pending {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+notatio-out .notatio-render { transition: opacity 0.2s; }
+notatio-out[busy] .notatio-render { opacity: 0.5; transition-delay: 0.15s; }
+@media (prefers-reduced-motion: reduce) { .notatio-pending span { animation: none; opacity: 0.6; } }
+
 /* In/Out row: the label dropdown trigger and the rendered value on one line. */
 .notatio-line { display: flex; align-items: baseline; gap: 0.5rem; }
 /* Plain, unselectable In/Out label on the left of the row. */

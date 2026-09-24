@@ -197,6 +197,12 @@ export class NotatioOut extends LitElement {
     /** Row label, e.g. `In` or `Out`. */
     label: { type: String, reflect: true },
     /**
+     * Read-only: set while the value is being evaluated or typeset (the engine loads
+     * lazily, so the first one can take a moment). Styled as a pending state; a script
+     * can wait for `:not([busy])`.
+     */
+    busy: { type: Boolean, reflect: true },
+    /**
      * Put the form menu on the label instead of a selector at the right: click `In`/`Out`
      * to open it. Leaves the right of the row free.
      */
@@ -240,6 +246,7 @@ export class NotatioOut extends LitElement {
   declare form: Form;
   declare label: string;
   declare labelMenu: boolean;
+  declare busy: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   declare _markup: string;
   /**
@@ -284,6 +291,7 @@ export class NotatioOut extends LitElement {
     this.display = false;
     this.label = "";
     this.labelMenu = false;
+    this.busy = false;
     this._markup = "";
     this._visual = "";
     this._traditional = "";
@@ -472,10 +480,25 @@ export class NotatioOut extends LitElement {
     }
   }
 
+  #runs = 0;
+
   async #recompute(): Promise<void> {
+    const run = ++this.#runs;
+    this.busy = true;
+    try {
+      await this.#compute(run);
+    } finally {
+      if (run === this.#runs) this.busy = false;
+    }
+  }
+
+  // `run` is this computation's ticket: a newer one (the value changed meanwhile) wins,
+  // so a slow earlier evaluation can't overwrite it when it finally lands.
+  async #compute(run: number): Promise<void> {
     try {
       const { latex, json, messages } = await this.#evaluate();
       const convert = await loadMarkup();
+      if (run !== this.#runs) return;
       this._messages = messages;
       this._expanded = new Set([""]);
       this._tree = json;
@@ -497,6 +520,7 @@ export class NotatioOut extends LitElement {
         this._canMatrix = false;
       } else {
         const engine = await loadEngine();
+        if (run !== this.#runs) return;
         this._traditional = convert(toTraditionalLatex(json, engine));
         // MatrixForm: lay a List value out as a matrix via compute-engine's
         // Matrix head (which serialises to \begin{pmatrix}…), then typeset it.
@@ -514,6 +538,7 @@ export class NotatioOut extends LitElement {
       }
       this.#assert(json);
     } catch (err) {
+      if (run !== this.#runs) return;
       this._markup = "";
       this._visual = "";
       this._latex = "";
@@ -846,6 +871,12 @@ export class NotatioOut extends LitElement {
   }
 
   #content(): unknown {
+    // Nothing to show yet: say so, rather than an empty row.
+    if (this.busy && !this._markup && !this._visual) {
+      return html`<span class="notatio-pending" role="status" aria-label="evaluating"
+        ><span></span><span></span><span></span
+      ></span>`;
+    }
     if (CODE_FORMS.has(this.form)) {
       return this.#code(this._code[this.form as CodeForm] ?? "", FORM_LANG[this.form]!);
     }

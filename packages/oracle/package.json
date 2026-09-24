@@ -14,6 +14,7 @@
       "import": "./dist/index.mjs"
     },
     "./src": "./src/index.ts",
+    "./bounded": "./src/bounded.ts",
     "./package.json": "./package.json"
   },
   "scripts": {

@@ -186,6 +186,11 @@ export function declareGraphics(ce: ComputeEngine): void {
     });
   }
 
+  // A cell holds its input: `Cell(1 + 1)` is the pair "1 + 1 → 2", not a cell of 2.
+  if (!ce.lookupDefinition("Cell")) {
+    ce.declare("Cell", { signature: "(any, any*) -> any", lazy: true });
+  }
+
   ce.declare("Image", {
     signature: "(string, number?, number?) -> expression",
     // A literal: evaluating it further would only take it apart.

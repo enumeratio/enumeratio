@@ -627,6 +627,26 @@ const LABEL_POSITIONS: Readonly<Record<string, string>> = {
   Right: "after",
 };
 
+/** A form's name as the cell's `in-form` / `out-form` take it: `TeXForm` is `tex`. */
+const FORM_IDS: Readonly<Record<string, string>> = {
+  StandardForm: "standard",
+  TraditionalForm: "traditional",
+  InputForm: "input",
+  MatrixForm: "matrix",
+  TreeForm: "tree",
+  MathJSON: "full",
+  TeXForm: "tex",
+  AsciiMathForm: "asciimath",
+  MathMLForm: "mathml",
+  WolframFullForm: "wolfram",
+  PythonForm: "python",
+  JavaScriptForm: "javascript",
+};
+const formId = (value: Json): string | undefined => {
+  const name = strOf(value) ?? symOf(value);
+  return name === undefined ? undefined : (FORM_IDS[name] ?? name);
+};
+
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   {
     // `DynamicModule(body)` -- an explicit scope over its subtree. The bindings live in
@@ -635,6 +655,30 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
+  },
+  {
+    // `Cell(expr)`: an In/Out pair -- the held expression as the input, its value as the
+    // output. The forms pick the editor and the rendering; `Expected` is the assertion.
+    head: "Cell",
+    tag: "notatio-cell",
+    attributes: (ops): Record<string, string> =>
+      ops[0] === undefined ? {} : { value: notatio(ops[0]) },
+    options: {
+      InForm: (value): Record<string, string> => {
+        const id = formId(value);
+        return id === undefined ? {} : { "in-form": id };
+      },
+      OutForm: (value): Record<string, string> => {
+        const id = formId(value);
+        return id === undefined ? {} : { "out-form": id };
+      },
+      // Parser bookkeeping is not part of the value.
+      Expected: (value) => ({
+        expect: JSON.stringify(value, (key, v: unknown) =>
+          key === "sourceOffsets" ? undefined : v,
+        ),
+      }),
+    },
   },
   layout("Row", "notatio-row"),
   layout("Column", "notatio-column"),
@@ -716,9 +760,16 @@ const ALL_SYMBOLS: readonly VisualSymbol[] = [
 
 const BY_HEAD = new Map(ALL_SYMBOLS.map((s) => [s.head, s]));
 
+/**
+ * Heads that hold their contents as source: a `Cell`'s input is what it evaluates itself,
+ * so the page neither binds the controls inside it nor rewrites or pins them.
+ */
+export const HELD_HEADS: ReadonlySet<string> = new Set(["Cell"]);
+
 /** The variables the controls in an expression bind. */
 export function controlNames(expr: Json, into = new Set<string>()): Set<string> {
   const head = headOf(expr);
+  if (head !== undefined && HELD_HEADS.has(head)) return into;
   if (head !== undefined && CONTROL_HEADS.has(head)) {
     const { name } = variable(opsOf(expr)[0]);
     if (name) into.add(name);
@@ -734,6 +785,7 @@ export function controlNames(expr: Json, into = new Set<string>()): Set<string> 
  */
 export function slottedExceptDeclarations(node: Json, names: ReadonlySet<string>): Json {
   const head = headOf(node);
+  if (head !== undefined && HELD_HEADS.has(head)) return node;
   if (head !== undefined && CONTROL_HEADS.has(head)) {
     const ops = opsOf(node);
     const rest = ops.slice(1).map((op) => slottedExceptDeclarations(op, names));
