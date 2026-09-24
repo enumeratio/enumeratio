@@ -9,13 +9,16 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-code.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
+import { visualMarkup } from "./visual.ts";
 import {
   collectErrors,
   deepEqual,
+  type Environment,
+  environmentNamed,
   highlightCode,
-  markupOf,
-  renderingOf,
+  pageEnvironment,
   toTraditionalLatex,
+  watchPageEnvironment,
 } from "@enumeratio/notatio";
 
 type Format = "latex" | "mathjson" | "notatio";
@@ -194,6 +197,8 @@ export class NotatioOut extends LitElement {
     form: { type: String, reflect: true },
     /** Row label, e.g. `In` or `Out`. */
     label: { type: String, reflect: true },
+    /** A preset to reduce the picture for (`print`, `pipe`, …); by default the page's own, as it changes. */
+    env: { type: String },
     /**
      * Read-only: set while the value is being evaluated or typeset (the engine loads
      * lazily, so the first one can take a moment). Styled as a pending state; a script
@@ -242,6 +247,7 @@ export class NotatioOut extends LitElement {
   declare planned: boolean;
   declare form: Form;
   declare label: string;
+  declare env: string;
   declare labelMenu: boolean;
   declare busy: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
@@ -285,6 +291,7 @@ export class NotatioOut extends LitElement {
     this.inline = false;
     this.display = false;
     this.label = "";
+    this.env = "";
     this.labelMenu = false;
     this.busy = false;
     this._markup = "";
@@ -333,6 +340,7 @@ export class NotatioOut extends LitElement {
       // unfilled; asking for it is what pays for the engine.
       void this.#recompute();
     }
+    if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
   }
 
   async #evaluate(): Promise<{ latex: string; json: unknown }> {
@@ -493,8 +501,8 @@ export class NotatioOut extends LitElement {
       this._latex = latex;
       this._json = json === undefined ? "" : JSON.stringify(json);
       this._markup = latex ? convert(latex) : "";
-      const rendering = json === undefined ? undefined : renderingOf(json as MathJsonExpression);
-      this._visual = rendering === undefined ? "" : markupOf(rendering);
+      this.#value = json as MathJsonExpression | undefined;
+      this.#visualize();
       this._wolfram = json === undefined ? "" : toWolfram(json as Parameters<typeof toWolfram>[0]);
       // MathMLForm: presentation MathML, straight off the MathJSON tree -- no engine,
       // and output only, so nothing parses it back.
@@ -590,7 +598,40 @@ export class NotatioOut extends LitElement {
     else doc?.removeEventListener("pointerdown", this.#onDocPointerDown);
   };
 
+  // The value the picture is drawn from, kept so a change of environment redraws it
+  // without evaluating again.
+  #value: MathJsonExpression | undefined;
+  #page: Environment = pageEnvironment();
+  #unwatch = (): void => {};
+
+  #visualize(): void {
+    // Own attribute, then the nearest ancestor that forces one, then the page.
+    const env =
+      environmentNamed(this.env) ??
+      environmentNamed(this.parentElement?.closest("[env]")?.getAttribute("env") ?? undefined) ??
+      this.#page;
+    this._visual = this.#value === undefined ? "" : visualMarkup(this.#value, env);
+  }
+
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#page = pageEnvironment();
+    const unwatch = watchPageEnvironment((env) => {
+      this.#page = env;
+      this.#visualize();
+    });
+    // A forcing ancestor can switch environment too (a preview card's picker).
+    const forcing = this.parentElement?.closest("[env]");
+    const observer = new MutationObserver(() => this.#visualize());
+    if (forcing) observer.observe(forcing, { attributes: true, attributeFilter: ["env"] });
+    this.#unwatch = () => {
+      unwatch();
+      observer.disconnect();
+    };
+  }
+
   override disconnectedCallback(): void {
+    this.#unwatch();
     globalThis.document?.removeEventListener("pointerdown", this.#onDocPointerDown);
     clearTimeout(this.#closeTimer);
     super.disconnectedCallback();

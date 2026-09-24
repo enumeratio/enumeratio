@@ -109,6 +109,8 @@ export class NotatioCell extends LitElement {
     expect: { type: String },
     /** Mark an `expect` mismatch as a known gap, while the cell is clean. */
     planned: { type: Boolean },
+    /** Forwarded to the Out: a preset its picture reduces for, else the page's own. */
+    env: { type: String },
     /** Set once the reader has made an edit; reflected so a stylesheet can key on it. */
     dirty: { type: Boolean, reflect: true },
     /** Property only: forwarded to the In and Out `notatio-out`s' `resolveHead`. */
@@ -127,6 +129,7 @@ export class NotatioCell extends LitElement {
   declare box: boolean;
   declare expect: string;
   declare planned: boolean;
+  declare env: string;
   declare dirty: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   /** The editor currently shown -- starts at `inForm`, changed live via the In menu. */
@@ -152,6 +155,7 @@ export class NotatioCell extends LitElement {
     this.box = false;
     this.expect = "";
     this.planned = false;
+    this.env = "";
     this.dirty = false;
     this._editForm = "standard";
     this._raw = "";
@@ -447,6 +451,7 @@ export class NotatioCell extends LitElement {
       ?box=${this.box}
       expect=${this.dirty ? "" : this.expect}
       ?planned=${!this.dirty && this.planned}
+      env=${this.env}
       .resolveHead=${this.resolveHead}
     ></notatio-out>`;
   }
