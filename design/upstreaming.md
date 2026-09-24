@@ -552,4 +552,5 @@ capital zeta is a Z). MathLive renders it as a roman **Z**, so a cell whose nota
 `["Zeta", 3]`, so the fix is one character in the serializer's LaTeX dictionary entry, and
 round-trips. Seen once the editable components started handing the engine's own LaTeX to
 the field (`packages/notatio/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
-not.
+not. Patched locally for every engine we build (`packages/notatio/src/latex.ts`), alongside
+the same fix for `LCM`, `Rank` and `Erf`, pending upstreaming.

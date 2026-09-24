@@ -12,7 +12,7 @@
 // depend back on collections without a cycle the task graph rejects. Nothing depends on
 // this package, which is what lets it depend on everything.
 
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareAestimatio } from "@enumeratio/aestimatio/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
@@ -37,6 +37,7 @@ import { declareHopf } from "@enumeratio/hopf/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
+import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
@@ -81,7 +82,9 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
 
 /** An engine with everything we ship declared on it. */
 export const fullEngine = (): ComputeEngine => {
-  const ce = new ComputeEngine();
+  const ce = new ComputeEngine({
+    latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
+  });
   for (const declare of DECLARATIONS) declare(ce);
   return ce;
 };

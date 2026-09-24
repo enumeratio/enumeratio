@@ -332,6 +332,9 @@ importers:
       '@enumeratio/modular':
         specifier: workspace:*
         version: link:../modular
+      '@enumeratio/notatio':
+        specifier: workspace:*
+        version: link:../notatio
       '@enumeratio/number-theory':
         specifier: workspace:*
         version: link:../number-theory
@@ -380,6 +383,9 @@ importers:
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats
+      '@enumeratio/notatio':
+        specifier: workspace:*
+        version: link:../notatio
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster
