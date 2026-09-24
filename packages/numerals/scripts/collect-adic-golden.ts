@@ -6,9 +6,9 @@
 // Requires `sage` on PATH. Run from the package:
 //   node scripts/collect-adic-golden.ts
 
-import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import * as adic from "../src/adic.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 const PREC = 12;
 
@@ -60,7 +60,7 @@ for p, x in ${JSON.stringify(SQRTS)}:
 print(json.dumps(out, default=int))
 `;
 
-const output = execFileSync("sage", ["-c", code], { encoding: "utf8" });
+const output = await runKernel("sage", ["-c", code]);
 const golden = JSON.parse(output.trim().split("\n").at(-1) ?? "{}") as Golden;
 
 const disagree: string[] = [];

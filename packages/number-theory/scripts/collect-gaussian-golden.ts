@@ -5,9 +5,9 @@
 // Requires wolframscript on PATH. Run from the package:
 //   node scripts/collect-gaussian-golden.ts
 
-import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { type GoldenCase, type Value, ours } from "../tests/gaussian-cases.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 let seed = 0x5eed_1234;
 const next = (): number => {
@@ -72,11 +72,7 @@ enc[x_] := x /. Complex[a_, b_] :> {"C", a, b};
 Scan[Function[pair, Module[{r = Quiet[ReleaseHold[pair[[1]]]]},
   Print[ExportString[If[Head[r] === Symbol[pair[[2]]], Null, enc[r]], "RawJSON", "Compact" -> True]]]],
   {${cases.map((c) => `{Hold[${call(c)}], "${head(c.op)}"}`).join(",\n")}}]`;
-const output = execFileSync("wolframscript", ["-code", code], {
-  encoding: "utf8",
-  maxBuffer: 1 << 26,
-  timeout: 600_000,
-});
+const output = await runKernel("wolframscript", ["-code", code], { timeoutMs: 600_000 });
 const lines = output
   .trim()
   .split("\n")

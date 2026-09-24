@@ -14,9 +14,9 @@
 // Requires python3 with mpmath. Not part of `vp test`; run:
 //   vp node packages/analytic/scripts/validate-mpmath.ts
 
-import { execFileSync } from "node:child_process";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "../src/index.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -168,7 +168,7 @@ for k, v in enumerate(cases):
     print(f"{k}|{v.real}|{v.imag}")
 `;
 
-const out = execFileSync("python3", ["-c", py], { encoding: "utf8", timeout: 120_000 });
+const out = await runKernel("python3", ["-c", py], { timeoutMs: 120_000 });
 
 const got = new Map<number, [number, number]>();
 for (const line of out.split("\n")) {

@@ -5,10 +5,10 @@
 // does. Requires python3 + mpmath and wolframscript on PATH. Run from the package:
 //   node scripts/collect-elliptic-goldens.ts
 
-import { execFileSync } from "node:child_process";
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "../src/index.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -127,10 +127,7 @@ for k, v in cases:
     v = mpc(v)
     print(f"{k}|{v.real}|{v.imag}")
 `;
-const mp = parseLines(
-  execFileSync("python3", ["-c", py], { encoding: "utf8", timeout: 300_000 }),
-  Number,
-);
+const mp = parseLines(await runKernel("python3", ["-c", py], { timeoutMs: 300_000 }), Number);
 
 const wlCode = pending
   .map((p, k) =>
@@ -142,7 +139,7 @@ const wlCode = pending
   .join(";\n");
 const wlClean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
 const wl = parseLines(
-  execFileSync("wolframscript", ["-code", wlCode], { encoding: "utf8", timeout: 300_000 }),
+  await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }),
   wlClean,
 );
 
