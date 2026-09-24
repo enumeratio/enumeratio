@@ -65,13 +65,16 @@ anything that lands there next as unproven, not impossible. The maps frontier ho
 Work that needs no thinking, only a quiet moment. Each design doc's `Status:` line is the
 authority; these are the ones currently parked:
 
-- [component-naming.md](./component-naming.md) — **agreed, deliberately not executed.** A
-  repo-wide tag rename, held back while the components are under active development. §6 of
-  that document is the order to do it in.
 - [numeral-naming.md](./numeral-naming.md) — **needs a decision**, not execution.
 - [knots.md](./knots.md) — the value landed, the table did not.
 
-## 3. Open threads
+## 3. The old repo
+
+[legacy-port.md](./legacy-port.md) is the backlog of what the Postgres-era predecessor did
+that this one does not yet: presentations and table control, polytopes, species, collections
+without kernels, and guides.
+
+## 4. Open threads
 
 Ideas with a shape but no plan, recorded where they came up rather than collected here:
 
@@ -80,17 +83,15 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   the mathematics, and no Wolfram counterpart to align against —
   [symbols.md §5](./symbols.md).
 - **Upstreaming** — what compute-engine would have to change for our heads to be droppable
-  into it: [upstreaming.md](./upstreaming.md). Two things there are ready to send today
-  ([§8](./upstreaming.md)): the engine's Wikidata ids, 41 of 101 wrong, corrected in
-  `reference/src/crosswalk/curated.ts` `WIKIDATA_FIXES`; and `EllipticE`'s precision at
-  complex modulus, caught by three Fungrim identities.
+  into it: [upstreaming.md](./upstreaming.md). [§8](./upstreaming.md) is what is ready to
+  send today, each with its reproduction.
 - **The name split** — `enumeratio` is the symbol definitions and their evaluation on
   compute-engine and Epsil; `notatio` is the notebook, explorer and tools around them, and
   the notation they read and write ([README](../README.md)). Package and folder
-  names do not all say so yet; renaming waits, like [component-naming.md](./component-naming.md)
-  does, for a quiet moment.
+  names do not all say so yet; renaming waits for a quiet moment, and
+  [component-naming.md](./component-naming.md) is how the last one went.
 
-## 4. What this file is not
+## 5. What this file is not
 
 Not a priority order, and not a commitment. If something here has been done, delete the line
 — a roadmap with finished items on it is how a roadmap stops being read.
