@@ -112,12 +112,15 @@ export const HEADS: Record<string, string> = {
   CatalanNumber: "CatalanNumber",
   BellNumber: "BellB",
   BernoulliB: "BernoulliB",
+  BernoulliPolynomial: "BernoulliB",
   HarmonicNumber: "HarmonicNumber",
   Stirling: "StirlingS2", // compute-engine `Stirling` is the second kind
   StirlingS1: "StirlingS1",
   Pochhammer: "Pochhammer",
   // Fungrim's name for the same head — see @enumeratio/analytic's rising-factorial.ts.
   RisingFactorial: "Pochhammer",
+  // Fungrim's name for falling factorial — see @enumeratio/analytic's falling-factorial.ts.
+  FallingFactorial: "FactorialPower",
   // number theory
   IsPrime: "PrimeQ",
   IsSquareFree: "SquareFreeQ",
@@ -257,15 +260,11 @@ export const HEADS: Record<string, string> = {
   CarlsonRD: "CarlsonRD",
   CarlsonRJ: "CarlsonRJ",
   CarlsonRG: "CarlsonRG",
-  // Wolfram's ModularLambda[τ] uses the same λ = θ₂⁴/θ₃⁴ convention (nome q = e^{iπτ}),
-  // so this maps directly. `ModularJ` is deliberately NOT mapped here: Wolfram's
-  // KleinInvariantJ is j/1728 (a fixed rescaling), and HEADS is a plain name-for-name
-  // map with no way to attach that scale — an entry here would silently emit
-  // `KleinInvariantJ[τ]` for `ModularJ[τ]`, off by a factor of 1728. `EisensteinG` has
-  // no Wolfram counterpart under that name either (checked; Wolfram exposes the
-  // invariants via `WeierstrassInvariants`, not a bare Eisenstein-G head), so it is
-  // left unmapped too.
+  // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
+  // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
+  // ConstGlaisher is our spelling; Wolfram's is Glaisher.
+  ConstGlaisher: "Glaisher",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 
