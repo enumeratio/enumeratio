@@ -82,7 +82,9 @@ release. Add a tool name to select part of the graph. For example, run
 - **Advisory sweeps** — never required checks. `quickcheck.yml` samples the collection
   kernels on every push touching them and deeply each night; a failure files/reopens one
   rolling issue, `quickcheck sampling regression`, labelled `nightly-fixup`. `nightly.yml`
-  cross-checks the analytic heads against mpmath nightly and follows every crosswalk link
-  weekly. The Wolfram sweeps (`packages/wolfram`, `packages/oracle`) need a licensed kernel
-  and stay manual. The nightly-fixup routine (06:15 UTC) reads these runs, files
-  `CI failure: <workflow> › <job>` issues, and opens fix PRs — it never merges.
+  cross-checks the analytic heads against mpmath and rescans the Julia lane (Nemo +
+  Combinatorics.jl) against the committed sidecars nightly, and follows every crosswalk link
+  weekly. The Wolfram sweeps (`packages/wolfram`, `packages/oracle`) need a licensed kernel,
+  and Oscar and Mathlib a multi-GB install, so those stay manual. The nightly-fixup routine
+  (06:15 UTC) reads these runs, files `CI failure: <workflow> › <job>` issues, and opens fix
+  PRs — it never merges.

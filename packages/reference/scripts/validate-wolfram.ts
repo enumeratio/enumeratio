@@ -7,14 +7,14 @@
 //
 // Requires Wolfram Engine + wolframscript on PATH. Not part of `vp test` (needs an
 // external kernel); run manually:
-//   vp node packages/wolfram/scripts/validate-reference.ts
+//   node packages/reference/scripts/validate-wolfram.ts
 //
 // Extension heads with no Wolfram equivalent (our collections/statistics) stay
 // symbolic in Wolfram and are reported separately as "wl-unsupported", not failures.
 
-import { execFileSync } from "node:child_process";
-import { entries } from "../../reference/src/entries.ts";
-import { toWolfram } from "../src/to-wolfram.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
+import { toWolfram } from "@enumeratio/wolfram/src";
+import { entries } from "../src/entries.ts";
 
 type Expected = unknown;
 
@@ -59,7 +59,7 @@ const code = cases
       `Print["${k}|", ToString[N[Quiet[ToExpression[${JSON.stringify(c.wl)}]]], InputForm]]`,
   )
   .join(";\n");
-const out = execFileSync("wolframscript", ["-code", code], { encoding: "utf8", timeout: 180_000 });
+const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 180_000 });
 
 const got = new Map<number, string>();
 for (const line of out.split("\n")) {

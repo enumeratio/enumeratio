@@ -15,6 +15,21 @@
           "input": "(17 % 5)",
           "output": "2",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "mod(17, 5)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "mod(17, 5)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((17 : ℤ) % 5)",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",100,7]": {
@@ -25,6 +40,21 @@
         },
         "sage": {
           "input": "(100 % 7)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "mod(100, 7)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "mod(100, 7)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((100 : ℤ) % 7)",
           "output": "2",
           "verdict": "agree"
         }
@@ -39,6 +69,21 @@
           "input": "(-7 % 3)",
           "output": "2",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "mod(-7, 3)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "mod(-7, 3)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(((-7) : ℤ) % 3)",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",[\"List\",1,2,3,4,5],3]": {
@@ -50,7 +95,30 @@
         "sage": {
           "input": "([1, 2, 3, 4, 5] % 3)",
           "output": "TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Mod is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "julia": {
+          "input": "mod([1, 2, 3, 4, 5], 3)",
+          "output": "MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function `mod` exists, but no meth",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Mod is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only."
+        },
+        "oscar": {
+          "input": "mod([1, 2, 3, 4, 5], 3)",
+          "output": "MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function `mod` exists, but no meth",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Mod is Listable and threads over the list; Oscar's takes scalars only."
+        },
+        "mathlib4": {
+          "input": "(([1, 2, 3, 4, 5] : ℤ) % 3)",
+          "output": "Type mismatch",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Mod is Listable and threads over the list; Mathlib's takes scalars only."
         }
       },
       "[\"Mod\",5,0]": {
@@ -62,7 +130,30 @@
         "sage": {
           "input": "(5 % 0)",
           "output": "ZeroDivisionError: Integer modulo by zero",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"NaN\" and Sage raises an error."
+        },
+        "julia": {
+          "input": "mod(5, 0)",
+          "output": "DivideError: integer division error",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"NaN\" and Nemo/Combinatorics.jl raises an error."
+        },
+        "oscar": {
+          "input": "mod(5, 0)",
+          "output": "DivideError: integer division error",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"NaN\" and Oscar raises an error."
+        },
+        "mathlib4": {
+          "input": "((5 : ℤ) % 0)",
+          "output": "5",
+          "verdict": "inconclusive",
+          "kind": "convention",
+          "note": "Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined (NaN)."
         }
       },
       "[\"Equal\",[\"Mod\",17,5],[\"Mod\",[\"Add\",17,[\"Multiply\",3,5]],5]]": {
@@ -74,6 +165,21 @@
         "sage": {
           "input": "bool((17 % 5) == ((17 + (3 * 5)) % 5))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(mod(17, 5) == mod((17 + (3 * 5)), 5))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(mod(17, 5) == mod((17 + (3 * 5)), 5))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (((17 : ℤ) % 5) = (((17 + (3 * 5)) : ℤ) % 5)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -183,14 +289,18 @@
         "sage": {
           "input": "power_mod(2, -1, 4)",
           "output": "ZeroDivisionError: inverse of Mod(2, 4) does not exist",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"PowerMod\", 2, -1, 4] and Sage raises an error."
         }
       },
       "[\"PowerMod\",4,[\"Rational\",1,2],7]": {
         "sage": {
           "input": "power_mod(4, (1/2), 7)",
           "output": "TypeError: no conversion of this rational to integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's PowerMod takes a rational exponent as a modular root; Sage's power_mod takes integer exponents only."
         },
         "wolfram": {
           "input": "PowerMod[4, Rational[1, 2], 7]",
@@ -202,7 +312,9 @@
         "sage": {
           "input": "power_mod(2, [10, 11, 12, 13, 14], 5)",
           "output": "TypeError: unable to coerce <class 'list'> to an integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PowerMod is Listable and threads over the list; Sage's takes scalars only."
         },
         "wolfram": {
           "input": "PowerMod[2, List[10, 11, 12, 13, 14], 5]",
@@ -226,7 +338,9 @@
         "sage": {
           "input": "power_mod(3, (1/2), ((10^30) + 57))",
           "output": "TypeError: no conversion of this rational to integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's PowerMod takes a rational exponent as a modular root; Sage's power_mod takes integer exponents only."
         },
         "wolfram": {
           "input": "PowerMod[3, Rational[1, 2], Plus[Power[10, 30], 57]]",
@@ -288,7 +402,9 @@
         "sage": {
           "input": "power_mod(2, (1/2), 5)",
           "output": "TypeError: no conversion of this rational to integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's PowerMod takes a rational exponent as a modular root; Sage's power_mod takes integer exponents only."
         },
         "wolfram": {
           "input": "PowerMod[2, Rational[1, 2], 5]",
@@ -329,6 +445,21 @@
         },
         "sage": {
           "input": "(((1 + 4) * (1 - 4)) % 15)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "mod(((1 + 4) * (1 - 4)), 15)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "mod(((1 + 4) * (1 - 4)), 15)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((((1 + 4) * (1 - 4)) : ℤ) % 15)",
           "output": "0",
           "verdict": "agree"
         }
@@ -430,7 +561,9 @@
         "sage": {
           "input": "enumeratio_power_mod_list([1, 2, 3, 4], (1/2), 5)",
           "output": "TypeError: unable to coerce <class 'list'> to an integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PowerModList is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"PowerModList\",-1,[\"Rational\",1,2],[\"Add\",[\"Power\",10,30],57]]": {
@@ -578,7 +711,9 @@
         "sage": {
           "input": "enumeratio_power_mod_list(2, -1, 4)",
           "output": "ZeroDivisionError: inverse of Mod(2, 4) does not exist",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"List\"] and Sage raises an error."
         }
       },
       "[\"PowerModList\",1,[\"Rational\",1,2],8]": {
@@ -613,12 +748,16 @@
         "wolfram": {
           "input": "PowerModList[0, Rational[1, 2], Power[3, 40]]",
           "output": "$Aborted",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "resource",
+          "note": "Wolfram hit the scan's per-item time or memory cap on this input; we answer it."
         },
         "sage": {
           "input": "enumeratio_power_mod_list(0, (1/2), (3^40))",
           "output": "MemoryError: over 1024 MiB",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "resource",
+          "note": "Sage hit the scan's per-item time or memory cap on this input; we answer it."
         }
       },
       "[\"PowerModList\",1,[\"Rational\",1,2],[\"List\",8,15,21,24]]": {
@@ -632,7 +771,9 @@
         "sage": {
           "input": "enumeratio_power_mod_list(1, (1/2), [8, 15, 21, 24])",
           "output": "TypeError: unhashable type: 'list'",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PowerModList is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"PowerModList\",[\"Complex\",0,1],[\"Rational\",1,2],7]": {
@@ -671,7 +812,9 @@
         "sage": {
           "input": "inverse_mod(2, 4)",
           "output": "ZeroDivisionError: inverse of Mod(2, 4) does not exist",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"ModularInverse\", 2, 4] and Sage raises an error."
         },
         "wolfram": {
           "input": "ModularInverse[2, 4]",
@@ -782,7 +925,9 @@
         "sage": {
           "input": "Mod(10, 22).multiplicative_order()",
           "output": "ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"MultiplicativeOrder\", 10, 22] and Sage raises an error."
         }
       },
       "[\"MultiplicativeOrder\",3,[\"Subtract\",[\"Power\",2,127],1]]": {
@@ -815,14 +960,18 @@
         "wolfram": {
           "input": "MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]]",
           "output": "$Aborted",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "resource",
+          "note": "Wolfram hit the scan's per-item time or memory cap on this input; we answer it."
         }
       },
       "[\"PowerMod\",3,[\"MultiplicativeOrder\",3,[\"Subtract\",[\"Power\",2,61],1],[\"List\",2]],[\"Subtract\",[\"Power\",2,61],1]]": {
         "wolfram": {
           "input": "PowerMod[3, MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]], Subtract[Power[2, 61], 1]]",
           "output": "$Aborted",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "resource",
+          "note": "Wolfram hit the scan's per-item time or memory cap on this input; we answer it."
         }
       },
       "[\"MultiplicativeOrder\",2,7,[\"List\",3]]": {
@@ -837,8 +986,8 @@
       "[\"PrimitiveRootList\",7]": {
         "sage": {
           "input": "enumeratio_primitive_root_list(7)",
-          "output": "NameError: name 'enumeratio_primitive_root_list' is not defined",
-          "verdict": "error"
+          "output": "[3, 5]",
+          "verdict": "agree"
         },
         "wolfram": {
           "input": "PrimitiveRootList[7]",
@@ -849,8 +998,8 @@
       "[\"PrimitiveRootList\",18]": {
         "sage": {
           "input": "enumeratio_primitive_root_list(18)",
-          "output": "NameError: name 'enumeratio_primitive_root_list' is not defined",
-          "verdict": "error"
+          "output": "[5, 11]",
+          "verdict": "agree"
         },
         "wolfram": {
           "input": "PrimitiveRootList[18]",
@@ -861,8 +1010,8 @@
       "[\"Length\",[\"PrimitiveRootList\",1009]]": {
         "sage": {
           "input": "len(enumeratio_primitive_root_list(1009))",
-          "output": "NameError: name 'enumeratio_primitive_root_list' is not defined",
-          "verdict": "error"
+          "output": "288",
+          "verdict": "agree"
         },
         "wolfram": {
           "input": "Length[PrimitiveRootList[1009]]",
@@ -873,8 +1022,8 @@
       "[\"Equal\",[\"Length\",[\"PrimitiveRootList\",1009]],[\"Totient\",[\"Totient\",1009]]]": {
         "sage": {
           "input": "bool(len(enumeratio_primitive_root_list(1009)) == euler_phi(euler_phi(1009)))",
-          "output": "NameError: name 'enumeratio_primitive_root_list' is not defined",
-          "verdict": "error"
+          "output": "True",
+          "verdict": "agree"
         },
         "wolfram": {
           "input": "(Length[PrimitiveRootList[1009]] == EulerPhi[EulerPhi[1009]])",
@@ -885,8 +1034,8 @@
       "[\"PrimitiveRootList\",8]": {
         "sage": {
           "input": "enumeratio_primitive_root_list(8)",
-          "output": "NameError: name 'enumeratio_primitive_root_list' is not defined",
-          "verdict": "error"
+          "output": "[]",
+          "verdict": "agree"
         },
         "wolfram": {
           "input": "PrimitiveRootList[8]",
@@ -897,8 +1046,10 @@
       "[\"Length\",[\"PrimitiveRootList\",1000003]]": {
         "sage": {
           "input": "len(enumeratio_primitive_root_list(1000003))",
-          "output": "NameError: name 'enumeratio_primitive_root_list' is not defined",
-          "verdict": "error"
+          "output": "333332",
+          "verdict": "inconclusive",
+          "kind": "unevaluated",
+          "note": "Sage enumerates all 333332 primitive roots of 1000003; compute-engine's PrimitiveRootList leaves a modulus this large unevaluated."
         },
         "wolfram": {
           "input": "Length[PrimitiveRootList[1000003]]",

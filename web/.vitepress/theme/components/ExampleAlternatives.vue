@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isCrosswalkSystem, SOURCES } from "@enumeratio/reference";
 import { computed, ref } from "vue";
 
 // Another system's run of one example: the source it was given and what came back. Same
@@ -14,7 +15,10 @@ const props = defineProps<{
   notes?: Record<string, string>;
 }>();
 
-const LABEL: Record<string, string> = { wolfram: "Wolfram", sage: "Sage", sympy: "SymPy" };
+// Tabs are narrow: the short name where the crosswalk's label is long.
+const SHORT: Record<string, string> = { wolfram: "Wolfram", sage: "Sage" };
+const label = (system: string): string =>
+  SHORT[system] ?? (isCrosswalkSystem(system) ? SOURCES[system].label : system);
 const MARK: Record<Alternative["verdict"], string> = {
   agree: "",
   disagree: "≠",
@@ -48,10 +52,10 @@ const shown = computed(() =>
         class="alt-tab"
         :class="[`is-${alternatives[system]!.verdict}`, { 'is-active': active === system }]"
         :aria-selected="active === system"
-        :title="`${LABEL[system] ?? system} ${TITLE[alternatives[system]!.verdict]}`"
+        :title="`${label(system)} ${TITLE[alternatives[system]!.verdict]}`"
         @click="toggle(system)"
       >
-        {{ LABEL[system] ?? system }}
+        {{ label(system) }}
         <span v-if="MARK[alternatives[system]!.verdict]" class="alt-mark">{{
           MARK[alternatives[system]!.verdict]
         }}</span>

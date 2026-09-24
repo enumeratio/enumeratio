@@ -30,6 +30,7 @@
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/algebra": "workspace:*",
     "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/oracle": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
