@@ -314,6 +314,7 @@ export const HEADS: Record<string, string> = {
   InputField: "InputField",
   Dynamic: "Dynamic",
   DynamicModule: "DynamicModule",
+  Cell: "Cell",
   Row: "Row",
   Column: "Column",
   Grid: "Grid",

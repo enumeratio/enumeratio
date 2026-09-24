@@ -321,6 +321,27 @@
     "markup": "<img src=\"data:image/png;base64,AAA\">"
   },
   "Sin(x) + 1": {},
+  "Cell(PowerModList(3, 1/2, 11))": {
+    "rendering": {
+      "tag": "notatio-cell",
+      "attributes": {
+        "value": "PowerModList(3, 1 / 2, 11)"
+      }
+    },
+    "markup": "<notatio-cell value=\"PowerModList(3, 1 / 2, 11)\"></notatio-cell>"
+  },
+  "Cell(1 + 1, InForm -> \"InputForm\", OutForm -> \"TraditionalForm\", Expected -> 2)": {
+    "rendering": {
+      "tag": "notatio-cell",
+      "attributes": {
+        "value": "1 + 1",
+        "in-form": "input",
+        "out-form": "traditional",
+        "expect": "{\"num\":\"2\"}"
+      }
+    },
+    "markup": "<notatio-cell value=\"1 + 1\" in-form=\"input\" out-form=\"traditional\" expect=\"{&quot;num&quot;:&quot;2&quot;}\"></notatio-cell>"
+  },
   "Slider(k, (0, 5))": {
     "rendering": {
       "tag": "notatio-dynamic-module",
