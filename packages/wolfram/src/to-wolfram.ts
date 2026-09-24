@@ -313,6 +313,7 @@ export const HEADS: Record<string, string> = {
   Locator: "Locator",
   InputField: "InputField",
   Dynamic: "Dynamic",
+  DynamicModule: "DynamicModule",
   Row: "Row",
   Column: "Column",
   Grid: "Grid",
