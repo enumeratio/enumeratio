@@ -195,6 +195,11 @@ export class NotatioOut extends LitElement {
     /** Row label, e.g. `In` or `Out`. */
     label: { type: String, reflect: true },
     /**
+     * Put the form menu on the label instead of a selector at the right: click `In`/`Out`
+     * to open it. Leaves the right of the row free.
+     */
+    labelMenu: { type: Boolean, attribute: "label-menu" },
+    /**
      * Property only (set it from script, not markup): what TreeForm knows about a head. A
      * resolver from a head name to its `HeadInfo` -- a link to its page, the defining
      * expression it can be unfolded into, the reason it sits on the primitive frontier. A
@@ -231,6 +236,7 @@ export class NotatioOut extends LitElement {
   declare planned: boolean;
   declare form: Form;
   declare label: string;
+  declare labelMenu: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   declare _markup: string;
   /**
@@ -272,6 +278,7 @@ export class NotatioOut extends LitElement {
     this.inline = false;
     this.display = false;
     this.label = "";
+    this.labelMenu = false;
     this._markup = "";
     this._visual = "";
     this._traditional = "";
@@ -612,14 +619,27 @@ export class NotatioOut extends LitElement {
   };
 
   #menu(): unknown {
+    const onLabel = this.labelMenu;
+    const summary = onLabel
+      ? html`<summary
+          class="notatio-io-label notatio-label-btn"
+          title=${`${FORM_LABEL[this.form]} — click for forms`}
+        >
+          ${this.label}${
+            this.form === "standard"
+              ? ""
+              : html`<span class="notatio-label-form">${FORM_LABEL[this.form]}</span>`
+          }
+        </summary>`
+      : html`<summary class="notatio-menu-btn">${FORM_LABEL[this.form]}</summary>`;
     return html`<details
-      class="notatio-menu"
-      @mouseenter=${this.#hoverOpen}
-      @mouseleave=${this.#hoverClose}
+      class=${onLabel ? "notatio-menu is-on-label" : "notatio-menu"}
+      @mouseenter=${onLabel ? undefined : this.#hoverOpen}
+      @mouseleave=${onLabel ? undefined : this.#hoverClose}
       @toggle=${this.#onToggle}
       @keydown=${(e: KeyboardEvent) => e.key === "Escape" && this.#closeMenu()}
     >
-      <summary class="notatio-menu-btn">${FORM_LABEL[this.form]}</summary>
+      ${summary}
       <div class="notatio-menu-list" role="menu">
         ${FORMS.filter((f) => this.#formAvailable(f)).map(
           (f) =>
@@ -831,6 +851,11 @@ export class NotatioOut extends LitElement {
     if (this.inline || this.display) return html`${this.#content()}`;
     // Layout: a plain (unselectable) In/Out label on the left, the rendered
     // value in the middle, and the form dropdown floated to the right.
+    if (this.label && this.labelMenu) {
+      return html`<span class="notatio-line"
+          >${this.#menu()}<span class="notatio-render">${this.#content()}</span></span
+        >${this.#status()}`;
+    }
     return html`<span class="notatio-line"
         >${this.label ? html`<span class="notatio-io-label">${this.label}</span>` : ""}<span
           class="notatio-render"

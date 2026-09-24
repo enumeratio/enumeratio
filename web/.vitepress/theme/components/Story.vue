@@ -7,7 +7,16 @@
 // The snippet is printed from the body itself -- the default slot's vnodes, written
 // back out as markup -- so the components are authored once and the source cannot
 // drift from what is rendered. Bound props print as their values.
-import { Comment, computed, Fragment, getCurrentInstance, Text, type VNode, useSlots } from "vue";
+import {
+  Comment,
+  computed,
+  Fragment,
+  getCurrentInstance,
+  ref,
+  Text,
+  type VNode,
+  useSlots,
+} from "vue";
 
 const props = defineProps<{ title?: string; id?: string }>();
 const slots = useSlots();
@@ -92,6 +101,38 @@ function print(nodes: VNode[], depth = 0): string[] {
 
 /** The body as source, printed fresh each render so it follows what is shown. */
 const source = (): string => print(slots.default?.() ?? []).join("\n");
+
+// The source is editable when it is plain markup: custom elements re-render from HTML, a Vue
+// component (a capitalised tag) would not. An edited story renders the edit instead of the
+// body and stops asserting -- `expect` described the original.
+const editable = (): boolean => !/<[A-Z]/.test(source());
+const edited = ref<string | undefined>();
+let timer: ReturnType<typeof setTimeout> | undefined;
+const onEdit = (event: Event): void => {
+  const text = (event.target as HTMLTextAreaElement).value;
+  clearTimeout(timer);
+  timer = setTimeout(() => {
+    edited.value = text === source() ? undefined : text;
+  }, 400);
+};
+const reset = (): void => {
+  clearTimeout(timer);
+  edited.value = undefined;
+};
+const live = computed((): string => {
+  if (edited.value === undefined) return "";
+  const template = document.createElement("template");
+  // HTML has no self-closing custom elements: `<x />` would swallow what follows it.
+  template.innerHTML = edited.value.replace(
+    /<([a-z][\w-]*)((?:[^<>"']|"[^"]*"|'[^']*')*?)\s*\/>/g,
+    "<$1$2></$1>",
+  );
+  for (const el of template.content.querySelectorAll("[expect], [planned]")) {
+    el.removeAttribute("expect");
+    el.removeAttribute("planned");
+  }
+  return template.innerHTML;
+});
 </script>
 
 <template>
@@ -102,12 +143,30 @@ const source = (): string => print(slots.default?.() ?? []).join("\n");
       </h3>
       <p v-if="$slots.description" class="story-desc"><slot name="description" /></p>
     </div>
-    <div class="story-canvas">
-      <ClientOnly><slot /></ClientOnly>
+    <div class="story-canvas" :class="{ 'is-edited': edited !== undefined }">
+      <ClientOnly>
+        <!-- eslint-disable-next-line vue/no-v-html -- the reader's own edit, in their own page -->
+        <div v-if="edited !== undefined" class="story-live" v-html="live"></div>
+        <slot v-else />
+      </ClientOnly>
     </div>
     <details v-if="$slots.default" class="story-code">
-      <summary>source</summary>
-      <pre><code>{{ source() }}</code></pre>
+      <summary>
+        source<template v-if="editable()"> · editable</template>
+        <button v-if="edited !== undefined" class="story-reset" @click.prevent="reset">
+          edited · reset
+        </button>
+      </summary>
+      <textarea
+        v-if="editable()"
+        :key="edited === undefined ? 'original' : 'edited'"
+        class="story-edit"
+        spellcheck="false"
+        :rows="source().split('\n').length + 1"
+        :value="edited ?? source()"
+        @input="onEdit"
+      ></textarea>
+      <pre v-else><code>{{ source() }}</code></pre>
     </details>
   </div>
 </template>
@@ -175,6 +234,41 @@ const source = (): string => print(slots.default?.() ?? []).join("\n");
   font-size: 0.75rem;
   color: var(--vp-c-text-3);
   user-select: none;
+}
+.story-live {
+  display: contents;
+}
+.story-canvas.is-edited {
+  outline: 1px dashed var(--vp-c-brand-1);
+  outline-offset: -1px;
+}
+.story-reset {
+  float: right;
+  color: var(--vp-c-text-3);
+  font-size: 0.72rem;
+  cursor: pointer;
+}
+.story-reset:hover {
+  color: var(--vp-c-brand-1);
+}
+.story-edit {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 1rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: var(--vp-c-text-1);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+  resize: vertical;
+}
+.story-edit:focus {
+  outline: 1px solid var(--vp-c-brand-1);
+  outline-offset: -1px;
 }
 .story-code pre {
   margin: 0;
