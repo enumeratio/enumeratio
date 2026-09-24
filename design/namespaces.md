@@ -19,7 +19,7 @@ Measured against the live catalog (`bootCore('all')`, every pack loaded), not es
 
 |              |   count |                                                                                   |
 | ------------ | ------: | --------------------------------------------------------------------------------- |
-| collections  | **281** | `integer_partitions`, `weak_compositions_into_k_parts`, `carlitz_compositions`, … |
+| collections  | **282** | `integer_partitions`, `weak_compositions_into_k_parts`, `carlitz_compositions`, … |
 | carriers     |  **87** | `integer_partition`, `permutation`, `dyck_path`, `set_partition`, …               |
 | stat _rows_  |    1053 | one per (collection, stat)                                                        |
 | stat _names_ | **242** | `major_index`, `big_omega`, `binary_weight`, …                                    |

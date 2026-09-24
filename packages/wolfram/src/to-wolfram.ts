@@ -116,6 +116,8 @@ export const HEADS: Record<string, string> = {
   Stirling: "StirlingS2", // compute-engine `Stirling` is the second kind
   StirlingS1: "StirlingS1",
   Pochhammer: "Pochhammer",
+  // Fungrim's name for the same head — see @enumeratio/analytic's rising-factorial.ts.
+  RisingFactorial: "Pochhammer",
   // number theory
   IsPrime: "PrimeQ",
   IsSquareFree: "SquareFreeQ",
@@ -164,6 +166,10 @@ export const HEADS: Record<string, string> = {
   PolyGamma: "PolyGamma",
   GammaRegularized: "GammaRegularized",
   BetaRegularized: "BetaRegularized",
+  ChebyshevT: "ChebyshevT",
+  ChebyshevU: "ChebyshevU",
+  // Fungrim's name for LegendreP — see @enumeratio/analytic's legendre.ts.
+  LegendrePolynomial: "LegendreP",
   // collections
   At: "Part",
   First: "First",
@@ -242,6 +248,11 @@ export const HEADS: Record<string, string> = {
   DirichletCharacter: "DirichletCharacter",
   DirichletL: "DirichletL",
   StieltjesGamma: "StieltjesGamma",
+  CarlsonRF: "CarlsonRF",
+  CarlsonRC: "CarlsonRC",
+  CarlsonRD: "CarlsonRD",
+  CarlsonRJ: "CarlsonRJ",
+  CarlsonRG: "CarlsonRG",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 

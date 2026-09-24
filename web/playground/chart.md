@@ -70,8 +70,15 @@ five-number summary (min, Q1, median, Q3, max).
 
 <Story
   title="A matrix as a heatmap">
-<template #description>Each cell's value maps to a colour ramp from blue (low) to accent (high).</template>
+<template #description>Each cell's value maps to a colour ramp from blue (low) to accent (high). Cells are square: the frame's height follows rows/cols, up to a square.</template>
 <notatio-chart type="array" data="[[0,1,2,3],[1,2,3,4],[2,3,4,5],[3,4,5,6]]" />
+</Story>
+
+<Story
+  title="A 0/1 matrix is two-tone">
+<template #description>Like Wolfram's white/black: 0 is the background, 1 the foreground, so it follows the theme.</template>
+<notatio-chart type="array" data="[[1,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0],[1,0,1,0,0,0,0,0],[0,0,0,1,0,0,0,0],[1,1,0,0,1,0,0,0],[0,0,0,0,0,1,0,0],[1,0,1,0,0,0,1,0],[0,0,0,0,0,0,0,1]]" />
+<notatio-chart type="array" data="[[0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1]]" />
 </Story>
 
 ## DiscretePlot

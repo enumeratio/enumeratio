@@ -7,20 +7,24 @@ import {
 import { barnesG, logBarnesG } from "./barnes-g.ts";
 import { bernoulliPolyExpr } from "./bernoulli.ts";
 import { type BoxInput, type EvalOptions, isFiniteNum, isRealInt, numberResult } from "./box.ts";
+import { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 import { clausen } from "./clausen.ts";
 import { cx } from "./complex.ts";
 import { dirichletBeta, dirichletEta } from "./dirichlet.ts";
 import { characterExponent, dirichletL, eulerPhi } from "./dirichlet-l.ts";
 import { evaluateHarmonicNumber } from "./harmonic.ts";
+import { evaluateLegendreP } from "./legendre.ts";
 import { logGamma } from "./loggamma.ts";
 import { atEnginePrecision } from "./precise.ts";
+import { evaluateRisingFactorial } from "./rising-factorial.ts";
 import { stieltjesGamma } from "./stieltjes.ts";
 
 // The heads for the special functions beyond the zeta family — BarnesG, LogBarnesG,
 // LogGamma, ClausenCl, DirichletEta, DirichletBeta, StieltjesGamma, DirichletCharacter,
-// DirichletL, HarmonicNumber — plus the Catalan constant several of their closed forms land on. Same shape as the zeta heads: exact
-// Wolfram reductions first, then the numeric kernel when a number is wanted, symbolic
-// otherwise. Declared by `declareAnalytic`.
+// DirichletL, HarmonicNumber, ChebyshevT, ChebyshevU, LegendrePolynomial, RisingFactorial —
+// plus the Catalan constant several of their closed forms land on. Same shape as the zeta
+// heads: exact Wolfram reductions first, then the numeric kernel when a number is wanted,
+// symbolic otherwise. Declared by `declareAnalytic`.
 
 type Json = number | string | { num: string } | Json[];
 const box = (ce: ComputeEngine, expr: Json): BoxedExpression => ce.box(expr as unknown as BoxInput);
@@ -400,5 +404,37 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
   ce.declare("HarmonicNumber", {
     signature: "(number, number?) -> number",
     evaluate: (ops, options) => evaluateHarmonicNumber(ce, ops, wants(ops, options)),
+  });
+
+  ce.declare("ChebyshevT", {
+    signature: "(integer, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateChebyshevT(ce, ops[0], ops[1], wants(ops, options)),
+  });
+
+  ce.declare("ChebyshevU", {
+    signature: "(integer, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateChebyshevU(ce, ops[0], ops[1], wants(ops, options)),
+  });
+
+  ce.declare("LegendrePolynomial", {
+    signature: "(integer, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateLegendreP(ce, ops[0], ops[1], wants(ops, options)),
+  });
+
+  ce.declare("RisingFactorial", {
+    signature: "(number, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateRisingFactorial(ce, ops[0], ops[1], wants(ops, options)),
   });
 }
