@@ -33,7 +33,7 @@ export * from "./scales.ts";
 export * from "./source.ts";
 export * from "./space.ts";
 export * from "./symbols.ts";
-export * from "./tangle.ts";
+export * from "./scrub.ts";
 export * from "./torussquare.ts";
 export * from "./traditional.ts";
 export * from "./vectorplot.ts";

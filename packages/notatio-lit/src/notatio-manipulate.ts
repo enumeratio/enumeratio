@@ -146,7 +146,7 @@ export class NotatioManipulate extends LitElement {
     // `controls="below"` puts them back after the content.
     if (this.controls === "below") this.append(this.#host);
     else this.prepend(this.#host);
-    // A prose panel's knobs report the way a tangle's do.
+    // A prose panel's knobs report the way a dynamic module's do.
     this.#host.addEventListener(CONTROL_EVENT, this.#onKnob as EventListener);
     return this.#host;
   }

@@ -86,14 +86,14 @@ const DOUBLE_TAP_MS = 400;
  * </notatio-knob>
  * ```
  *
- * Inside a `<notatio-tangle>` the knob's `name` becomes the wildcard `_name`, and every
+ * Inside a `<notatio-dynamic-module>` the knob's `name` becomes the wildcard `_name`, and every
  * notatio template in the surrounding prose re-derives as it moves.
  *
  * ```html
- * <notatio-tangle>
+ * <notatio-dynamic-module>
  *   Eat <notatio-knob name="n" value="3" min="0" max="12" step="1" /> cookies and take on
  *   <notatio-dynamic value="_n * 50" /> calories.
- * </notatio-tangle>
+ * </notatio-dynamic-module>
  * ```
  *
  * The name is descriptive, not a Wolfram symbol: Wolfram has no inline draggable value
@@ -696,7 +696,7 @@ export class NotatioKnob extends LitElement {
   }
 
   /**
-   * Take a new value and tell the surrounding tangle about it, if anything changed.
+   * Take a new value and tell the surrounding scope about it, if anything changed.
    * `played` marks a step of playback's own, as against the reader's hand.
    */
   #commit(next: { re?: number; im?: number; index?: number }, played = false): void {

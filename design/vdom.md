@@ -165,7 +165,7 @@ inside `Row` is spread into the row's children. And because a control **declares
 every other read of `k` becomes the wildcard `_k`, and the whole is wrapped in a scope:
 
 ```js
-h("notatio-tangle", {}, [
+h("notatio-dynamic-module", {}, [
   h("notatio-row", {}, [
     h("notatio-slider", { name: "k", value: "2", min: "0", max: "5" }),
     h("notatio-dynamic", { value: "_k ^ 2" }),
@@ -176,16 +176,16 @@ h("notatio-tangle", {}, [
 Pseudo-Vue:
 
 ```vue
-<Tangle>
+<DynamicModule>
   <Row>
     <Slider name="k" value="2" min="0" max="5" />
     <Dynamic value="_k ^ 2" />
   </Row>
-</Tangle>
+</DynamicModule>
 ```
 
 This is where the two trees differ most, and deliberately: the structural tree has no
-`_k` and no `Tangle` -- those are the _realization_ of "a control binds a variable", and
+`_k` and no `DynamicModule` -- those are the _realization_ of "a control binds a variable", and
 they belong to the renderer, not to the expression. An author writing markup by hand
 writes the realized form (as the playground pages do); an author writing an expression
 never sees it.
@@ -200,7 +200,7 @@ h("notatio-manipulate", { params: "{a, 1, 5}" }, [
 ]);
 ```
 
-The same shape as §4 with `Manipulate` playing `Tangle`: the trailing tuples are the
+The same shape as §4 with `Manipulate` playing `DynamicModule`: the trailing tuples are the
 declarations, the body is the child, the body's `a` is `_a`. A `Manipulate` _is_ a scope
 with a control strip; the general form in §4 is the scope without the strip.
 
@@ -230,9 +230,9 @@ what a scope reads and writes, so it is also how a generic element becomes a tem
 the outermost publishes its children's expression as `value`, and a `_k` in it follows a
 knob. This generalises to any carrier with a text representation it can serialise.
 
-**The `<Tangle>` is for isolation, not for binding.** The page is a scope: a control and
+**The `<DynamicModule>` is for isolation, not for binding.** The page is a scope: a control and
 a readout with no wrapper find each other through it, and a page assembled by a
-framework binds as it mounts. A tangle (or a Manipulate) is an explicit scope over its
+framework binds as it mounts. A dynamic module (or a Manipulate) is an explicit scope over its
 subtree, for the case that matters on a page of examples -- two of them each calling
 their knob `n`. `renderingOf` still wraps an expression that declares controls in one,
 since an expression is self-contained by intent; hand-written markup needs none.
@@ -255,7 +255,7 @@ adding one is a change to one table in the base.
 2. **The lowering is one table, read from two sides.** `renderingOf` applies it to an
    AST; a component reading its own children applies it to markup. Neither needs to
    know about the other.
-3. **Scopes are realization, not structure.** `Tangle` and `_k` never appear in an
+3. **Scopes are realization, not structure.** `DynamicModule` and `_k` never appear in an
    expression; the renderer adds them where a control declares a variable.
 4. **Atoms are leaf tags in the generated tree and text or `value` in the hand-written
    one.** `<Integer value="2" />` is the constructor spelling; `2` inside a parent's
@@ -297,6 +297,6 @@ are heavy and DOM-only, and a Node consumer must not install them.
   unless a hand-written element owns it; `expression` from `value`, the children or the
   named attributes; only the outermost typesets. `structure.ts` adopts the same
   spelling on the hand-written components.
-- The page scope (`scope.ts`): `<notatio-tangle>` and the page share one `Scope`; the
+- The page scope (`scope.ts`): `<notatio-dynamic-module>` and the page share one `Scope`; the
   page's re-reads merge, since an applied template has its result where its wildcard
   was.

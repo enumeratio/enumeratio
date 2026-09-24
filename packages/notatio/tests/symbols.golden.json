@@ -323,7 +323,7 @@
   "Sin(x) + 1": {},
   "Slider(k, (0, 5))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -336,11 +336,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-slider name=\"k\" min=\"0\" max=\"5\"></notatio-slider></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-slider name=\"k\" min=\"0\" max=\"5\"></notatio-slider></notatio-dynamic-module>"
   },
   "Slider((k, 2), (0, 5, 0.5))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -355,11 +355,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-slider></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-slider></notatio-dynamic-module>"
   },
   "VerticalSlider(h, (0, 10, 1))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -373,11 +373,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-vertical-slider name=\"h\" min=\"0\" max=\"10\" step=\"1\"></notatio-vertical-slider></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-vertical-slider name=\"h\" min=\"0\" max=\"10\" step=\"1\"></notatio-vertical-slider></notatio-dynamic-module>"
   },
   "Animator(t, (0, 6.28, 0.05))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -391,11 +391,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-animator name=\"t\" min=\"0\" max=\"6.28\" step=\"0.05\"></notatio-animator></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-animator name=\"t\" min=\"0\" max=\"6.28\" step=\"0.05\"></notatio-animator></notatio-dynamic-module>"
   },
   "Knob(n, (1, 8, 1))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -409,11 +409,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-knob name=\"n\" min=\"1\" max=\"8\" step=\"1\"></notatio-knob></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-knob name=\"n\" min=\"1\" max=\"8\" step=\"1\"></notatio-knob></notatio-dynamic-module>"
   },
   "IntervalSlider((r, (1, 3)), (0, 5, 0.5))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -428,11 +428,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-interval-slider name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-interval-slider></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-interval-slider name=\"r\" value=\"1,3\" min=\"0\" max=\"5\" step=\"0.5\"></notatio-interval-slider></notatio-dynamic-module>"
   },
   "Slider2D((p, (0.3, 0.6)), ((0, 0), (1, 1)), 0.01)": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -447,11 +447,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-slider-2d name=\"p\" value=\"0.3,0.6\" min=\"0,0\" max=\"1,1\" step=\"0.01\"></notatio-slider-2d></notatio-dynamic-module>"
   },
   "SetterBar(k, [2, 3, 5, 7])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -463,11 +463,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-setter-bar name=\"k\" values=\"2|3|5|7\"></notatio-setter-bar></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-setter-bar name=\"k\" values=\"2|3|5|7\"></notatio-setter-bar></notatio-dynamic-module>"
   },
   "RadioButtonBar((q, 2), [Labeled(1, \"one\"), Labeled(2, \"two\")])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -480,11 +480,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-radio-button-bar name=\"q\" value=\"2\" values=\"1 -> one|2 -> two\"></notatio-radio-button-bar></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-radio-button-bar name=\"q\" value=\"2\" values=\"1 -> one|2 -> two\"></notatio-radio-button-bar></notatio-dynamic-module>"
   },
   "TogglerBar((s, [1, 3]), [1, 2, 3, 4, 5])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -497,11 +497,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-toggler-bar name=\"s\" value=\"1|3\" values=\"1|2|3|4|5\"></notatio-toggler-bar></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-toggler-bar name=\"s\" value=\"1|3\" values=\"1|2|3|4|5\"></notatio-toggler-bar></notatio-dynamic-module>"
   },
   "Toggler(on)": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -512,11 +512,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-toggler name=\"on\"></notatio-toggler></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-toggler name=\"on\"></notatio-toggler></notatio-dynamic-module>"
   },
   "Toggler(size, [\"a few\", \"several\", \"many\"])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -528,11 +528,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-toggler name=\"size\" values=\"a few|several|many\"></notatio-toggler></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-toggler name=\"size\" values=\"a few|several|many\"></notatio-toggler></notatio-dynamic-module>"
   },
   "PopupMenu(n, [4, 5, 6, 8])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -544,11 +544,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-popup-menu name=\"n\" values=\"4|5|6|8\"></notatio-popup-menu></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-popup-menu name=\"n\" values=\"4|5|6|8\"></notatio-popup-menu></notatio-dynamic-module>"
   },
   "ListPicker(L, [2, 3, 5, 7, 11])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -560,11 +560,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-list-picker name=\"L\" values=\"2|3|5|7|11\"></notatio-list-picker></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-list-picker name=\"L\" values=\"2|3|5|7|11\"></notatio-list-picker></notatio-dynamic-module>"
   },
   "Checkbox((c, True))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -576,11 +576,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-checkbox name=\"c\" value=\"True\"></notatio-checkbox></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-checkbox name=\"c\" value=\"True\"></notatio-checkbox></notatio-dynamic-module>"
   },
   "ColorSlider((c, \"#3451b2\"))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -592,11 +592,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-color-slider name=\"c\" value=\"#3451b2\"></notatio-color-slider></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-color-slider name=\"c\" value=\"#3451b2\"></notatio-color-slider></notatio-dynamic-module>"
   },
   "InputField((f, Sin(x)))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -608,11 +608,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-input-field name=\"f\" value=\"Sin(x)\"></notatio-input-field></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-input-field name=\"f\" value=\"Sin(x)\"></notatio-input-field></notatio-dynamic-module>"
   },
   "Locator((p, (1, 0.5)))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -624,7 +624,7 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-locator name=\"p\" value=\"1,0.5\"></notatio-locator></notatio-dynamic-module>"
   },
   "Dynamic(k^2)": {
     "rendering": {
@@ -637,7 +637,7 @@
   },
   "Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -663,11 +663,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-row><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-row></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-row><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-row></notatio-dynamic-module>"
   },
   "Column([Slider(k, (0, 5)), \"so\", k^2])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -697,11 +697,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-column><notatio-slider name=\"k\" min=\"0\" max=\"5\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" min=\"0\" max=\"5\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
   "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -742,11 +742,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-grid columns=\"2\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></notatio-grid></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-grid columns=\"2\"><notatio-slider name=\"a\" min=\"0\" max=\"1\"></notatio-slider><notatio-slider name=\"b\" min=\"0\" max=\"1\"></notatio-slider><notatio-dynamic value=\"_a + _b\"></notatio-dynamic><notatio-dynamic value=\"_a * _b\"></notatio-dynamic></notatio-grid></notatio-dynamic-module>"
   },
   "Panel(Labeled(Checkbox(on), \"on?\"))": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -771,11 +771,11 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-panel><notatio-labeled label=\"on?\"><notatio-checkbox name=\"on\"></notatio-checkbox></notatio-labeled></notatio-panel></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-panel><notatio-labeled label=\"on?\"><notatio-checkbox name=\"on\"></notatio-checkbox></notatio-labeled></notatio-panel></notatio-dynamic-module>"
   },
   "Row([Plot(Sin(k * x), (x, 0, 10)), Slider((k, 1), (1, 5))])": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -803,7 +803,7 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-row><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-row><notatio-plot value=\"Sin(_k * x)\" var=\"x\" domain=\"0,10\"></notatio-plot><notatio-slider name=\"k\" value=\"1\" min=\"1\" max=\"5\"></notatio-slider></notatio-row></notatio-dynamic-module>"
   },
   "Plot(Sin(x), (x, 0, 10), PlotRange -> (-1, 1), Epilog -> Point((1, 0.5)))": {
     "rendering": {
@@ -833,7 +833,7 @@
   },
   "Slider(k, (0, 5), Appearance -> \"Labeled\")": {
     "rendering": {
-      "tag": "notatio-tangle",
+      "tag": "notatio-dynamic-module",
       "attributes": {},
       "children": [
         {
@@ -847,6 +847,6 @@
         }
       ]
     },
-    "markup": "<notatio-tangle><notatio-slider name=\"k\" min=\"0\" max=\"5\" appearance=\"Labeled\"></notatio-slider></notatio-tangle>"
+    "markup": "<notatio-dynamic-module><notatio-slider name=\"k\" min=\"0\" max=\"5\" appearance=\"Labeled\"></notatio-slider></notatio-dynamic-module>"
   }
 }

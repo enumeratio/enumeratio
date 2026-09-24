@@ -69,10 +69,16 @@ export const Notatio = defineComponent({
       const env = environmentNamed(props.env) ?? page.value;
       tree.value = structuralOf(reduce(json as never, env));
     });
-    return () =>
-      tree.value === undefined
-        ? h("span", { class: "notatio-pending" })
-        : toVNode<VNode>(tree.value, (tag, attrs, children) => h(tag, { ...attrs }, [...children]));
+    return () => {
+      if (tree.value === undefined) return h("span", { class: "notatio-pending" });
+      const node = toVNode<VNode>(tree.value, (tag, attrs, children) =>
+        h(tag, { ...attrs }, [...children]),
+      );
+      // A forced environment is ambient context, not part of the expression, so it rides
+      // on a wrapper the elements find with `closest("[env]")` rather than on the root --
+      // an attribute there would be read as an option by a generic element.
+      return props.env ? h("span", { env: props.env, style: "display: contents" }, [node]) : node;
+    };
   },
 });
 

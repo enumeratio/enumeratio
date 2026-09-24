@@ -15,13 +15,13 @@ map.
 
 Five components come out of that, and they are all inline:
 
-| Component           | What it is                                   | After                |
-| ------------------- | -------------------------------------------- | -------------------- |
-| `<notatio-tangle>`  | the scope; renders nothing of its own        | Tangle's `Tangle`    |
-| `<notatio-knob>`    | a number you drag inside the prose           | `TKAdjustableNumber` |
-| `<notatio-toggler>` | a word that cycles when clicked              | Wolfram's `Toggler`  |
-| `<notatio-dynamic>` | a derived readout                            | Wolfram's `Dynamic`  |
-| `<notatio-when>`    | a phrase that appears only under a condition | Tangle's `TKIf`      |
+| Component                  | What it is                                   | After                |
+| -------------------------- | -------------------------------------------- | -------------------- |
+| `<notatio-dynamic-module>` | the scope; renders nothing of its own        | Tangle's `Tangle`    |
+| `<notatio-knob>`           | a number you drag inside the prose           | `TKAdjustableNumber` |
+| `<notatio-toggler>`        | a word that cycles when clicked              | Wolfram's `Toggler`  |
+| `<notatio-dynamic>`        | a derived readout                            | Wolfram's `Dynamic`  |
+| `<notatio-when>`           | a phrase that appears only under a condition | Tangle's `TKIf`      |
 
 The binding machinery is the one `<notatio-manipulate>` already uses: a knob
 named `a` publishes the wildcard `_a`, and **any** notatio expression in the
@@ -37,10 +37,10 @@ them exist.
 The canonical Tangle demo. Drag the <strong>3</strong> — right raises it, left
 lowers it. Nothing else on the page is a control.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 You eat <notatio-knob name="n" value="3" min="0" max="12" step="1" /> cookies,
 which is <notatio-dynamic value="_n * 50" /> calories.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 The value follows the pointer's **position**, not a rate. Drag out and back and
@@ -59,11 +59,11 @@ is unreadable, and reading it is the point.
 moves faster under the same gesture. <code>N(…)</code> forces the decimal —
 without it the engine would hand back an exact power of a fraction.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 A rate of <notatio-knob name="r" value="0.05" min="0" max="0.25" step="0.005" sensitivity="4" />
 compounded over <notatio-knob name="y" value="10" min="1" max="40" step="1" /> years
 multiplies a stake by <notatio-dynamic value="N((1 + _r)^_y)" />.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Gears
@@ -91,12 +91,12 @@ Drag the principal and drift upward to move by ten thousands, then back down
 into the band to settle the last thousand. Drift below the band on the rate to
 land on a quarter point.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 A loan of <notatio-knob name="p" value="25000" min="1000" max="500000" step="1000" /> at
 <notatio-knob name="r" value="0.06" min="0.01" max="0.2" step="0.001" /> over
 <notatio-knob name="y" value="30" min="1" max="40" step="1" /> years costs
 <notatio-dynamic value="N(12 * _y * _p * (_r/12) / (1 - (1 + _r/12)^(-12 * _y)))" digits="7" /> in all.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 An integer knob has no tenth of a step to offer, so its fine gear keeps whole
@@ -142,12 +142,12 @@ in a few seconds and, being <code>loop="cycle"</code>, starts over at the top �
 without that a numeric knob plays through once and stops. The toggler cycles its
 entries every second and a half. Hold either ▶ for the speed and loop panel.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 At <notatio-knob name="t" value="0" min="0" max="6.28" step="0.04" play loop="cycle" /> the wave has
 reached <notatio-dynamic value="N(Sin(_t))" digits="3" />, and it is
 <notatio-toggler name="mood" values="rising|falling|rising again" play interval="1500" />.
 <notatio-plot value="Sin(x - _t)" domain="-6.283,6.283" />
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Two axes
@@ -163,12 +163,12 @@ axis you cannot find again.
 Drag horizontally for the real part, vertically for the imaginary one. The same
 gesture that moves a real knob along the line moves this one around the plane.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 The number <notatio-knob name="z" value="3+2i" complex step="0.25" /> has modulus
 <notatio-dynamic value="N(Abs(_z))" /> and argument
 <notatio-dynamic value="N(Arg(_z))" /> radians. Its square is
 <notatio-dynamic value="_z^2" />.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Scrub a discrete thing
@@ -179,10 +179,10 @@ ends rather than wrapped.
 
 <Story
   title="Scrubbing a list">
-<notatio-tangle>
+<notatio-dynamic-module>
 The <notatio-knob name="p" value="7" choices="2|3|5|7|11|13|17|19" /> is a prime you
 cannot arrive at by adding — so the knob walks the list rather than a range.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 The more interesting discrete case is a **family of objects**, where the knob is
@@ -195,11 +195,11 @@ the glyph is just another template.
 The knob is the ground-set size; the glyph and the count both read it. Neither
 knows the other exists.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 Ground set of <notatio-knob name="n" value="5" min="1" max="9" step="1" /> elements:
 <notatio-figure kind="subset" value="[1,3]" n="_n" />
 — which is one of <notatio-dynamic value="2^_n" /> subsets.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -210,10 +210,10 @@ the collection's own order, and the glyph draws whichever one it lands on. No
 <code>step</code> here — a value written <code>1</code> rather than
 <code>1.0</code> already says it is a count.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 Permutation <notatio-knob name="k" value="1" min="1" max="24" /> of 4:
 <notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Drag the thing itself
@@ -233,11 +233,11 @@ Drag across the matrix. The knob is still an index into the 24 permutations of
 <code>{1..4}</code> — it just has nothing of its own on the page, and the ring on
 hover is the whole affordance.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 <notatio-knob name="k" value="1" min="1" max="24">
 <notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
 </notatio-knob>
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -247,7 +247,7 @@ The same gesture on a different family. Nothing in the sentence knows the contro
 is a picture rather than a number — a knob publishes one binding whatever it looks
 like.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 <p>
 <notatio-knob name="n" value="4" min="1" max="8">
 <notatio-figure kind="partition" value="At(IntegerPartitions(_n), 1)" />
@@ -255,7 +255,7 @@ like.
 is the first of <notatio-dynamic value="Count(IntegerPartitions(_n))" /> partitions of
 <notatio-dynamic value="_n" />.
 </p>
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Words, and prose that comes and goes
@@ -283,9 +283,9 @@ condition.
 Click the phrase to cycle it. The clause after it belongs to a
 <code>&lt;notatio-when&gt;</code>, and appears only on the last entry.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 There are <notatio-toggler name="crowd" values="a few|several|rather a lot of" /> people here<notatio-when test="_crowd > 1">, which is more than the room was built for</notatio-when>.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -295,11 +295,11 @@ There are <notatio-toggler name="crowd" values="a few|several|rather a lot of" /
 it fails. Two conditionals rather than an if/else attribute, because each half is
 prose with its own markup in it.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 A graph on <notatio-knob name="v" value="4" min="2" max="10" step="1" /> vertices has
 <notatio-dynamic value="Binomial(_v, 2)" /> possible edges, which is
 <notatio-when test="_v > 5">more than you want to draw by hand</notatio-when><notatio-when test="_v > 5" invert>still a picture you can draw</notatio-when>.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Out of the sentence and into the figure
@@ -311,14 +311,14 @@ and starts being a document.
 
 <Story
 title="A sentence and a curve, one knob">
-<notatio-tangle>
+<notatio-dynamic-module>
 <p>
 The curve <notatio-out inline format="latex" value="\sin(kx)" /> with
 <notatio-knob name="k" value="3" min="1" max="8" step="1" /> crosses zero
 <notatio-dynamic value="2 * _k + 1" /> times on <notatio-out inline format="latex" value="[-\pi,\pi]" />.
 </p>
 <notatio-plot value="Sin(_k * x)" domain="-3.1416,3.1416" grid />
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -328,13 +328,13 @@ One knob, two axes, and a picture that has to be re-evaluated on every frame of
 the drag. This is the case a panel of sliders handles badly: the quantity is a
 <em>point</em>, and it wants a gesture with two directions in it.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 <p>
 Moving the pole <notatio-knob name="a" value="0.5+0.5i" complex step="0.1" min="-2" max="2" />
 drags the singularity of <notatio-out inline format="latex" value="1/(z-a)" /> around the plane.
 </p>
 <notatio-complex-plot value="1 / (z - (_a))" domain="-2,2,-2,2" />
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Notes on the parts

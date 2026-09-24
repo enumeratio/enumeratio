@@ -17,7 +17,7 @@ import {
   parseEntries,
   scrubIndex,
   scrubValue,
-} from "../src/tangle.ts";
+} from "../src/scrub.ts";
 
 const RANGE = { min: -10, max: 10, step: 0.5 };
 

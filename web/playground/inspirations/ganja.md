@@ -44,13 +44,13 @@ Drag any of the three. <code>Cl(0,2,0)</code> is the quaternions,
 one shown — is 2-D projective geometric algebra, whose degenerate generator is the
 <code>θ</code> family wearing a different hat.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 <notatio-knob name="p" value="2" min="0" max="4" step="1" /> positive,
 <notatio-knob name="q" value="0" min="0" max="4" step="1" /> negative and
 <notatio-knob name="r" value="1" min="0" max="2" step="1" /> degenerate generators span
 <notatio-dynamic value="Basis(CliffordAlgebra(_p, _q, _r))" />, of dimension
 <notatio-dynamic value="AlgebraDimension(CliffordAlgebra(_p, _q, _r))" />.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 There is one difference that is ours to keep rather than close: ganja's elements
@@ -133,12 +133,12 @@ metric lives. <code>Wedge(e_1, e_1)</code> is zero whatever <code>e_1</code>
 squares to; that is what makes the outer product the half that survives a
 degenerate signature.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 <notatio-dynamic value="Wedge(e_1, e_2)" /> &middot;
 <notatio-dynamic value="Wedge(e_2, e_1)" /> &middot;
 <notatio-dynamic value="Wedge(e_1, e_1)" /> &middot;
 <notatio-dynamic value="GeometricProduct(e_1, e_1)" />
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -149,13 +149,13 @@ in each algebra, which is why <code>Dual</code> is told which one to work in rat
 than guessing from the generators it can see. The identity underneath is
 <code>Wedge(b, Dual(b)) = Pseudoscalar</code>, and it is what fixes the sign.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 In dimension <notatio-knob name="n" value="3" min="2" max="5" step="1" />, the
 pseudoscalar is <notatio-dynamic value="Pseudoscalar(CliffordAlgebra(_n))" />,
 the dual of <notatio-out inline format="latex" value="e_1" /> is
 <notatio-dynamic value="Dual(e_1, CliffordAlgebra(_n))" />, and wedging the two
 back together gives <notatio-dynamic value="Wedge(e_1, Dual(e_1, CliffordAlgebra(_n)))" />.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -165,11 +165,11 @@ The pseudoscalar of 2-D PGA, its square — <strong>zero</strong>, so it has no
 inverse and the textbook <code>x I⁻¹</code> dual does not exist — and the
 complement dual of the degenerate generator, which answers anyway.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 <notatio-dynamic value="Pseudoscalar(CliffordAlgebra(2,0,1))" /> &middot;
 <notatio-dynamic value="GeometricProduct(Pseudoscalar(CliffordAlgebra(2,0,1)), Pseudoscalar(CliffordAlgebra(2,0,1)))" /> &middot;
 <notatio-dynamic value="Dual(theta_1, CliffordAlgebra(2,0,1))" />
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 <Story
@@ -178,13 +178,13 @@ complement dual of the degenerate generator, which answers anyway.
 Scrub the grade. The element is a scalar plus a vector plus a bivector; each
 involution is nothing but a sign that depends on which of those a term is.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 Grade <notatio-knob name="k" value="1" min="0" max="3" step="1" /> of
 <notatio-out inline format="latex" value="1 + 2e_1 + 3e_1e_2" /> is
 <notatio-dynamic value="GradePart(1 + 2*e_1 + 3*e_1*e_2, _k)" />. Its reversion is
 <notatio-dynamic value="Reversion(1 + 2*e_1 + 3*e_1*e_2)" />, its grade involution
 <notatio-dynamic value="GradeInvolution(1 + 2*e_1 + 3*e_1*e_2)" />.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## What is worth drawing

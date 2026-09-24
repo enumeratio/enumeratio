@@ -7,7 +7,7 @@ import { ensureStyles } from "./styles.ts";
  * `<notatio-when test="_n > 3">…</notatio-when>` -- a run of prose that appears only
  * while its condition holds, Tangle's conditional sentence.
  *
- * `test` is a notatio predicate over the surrounding `<notatio-tangle>`'s knobs; the
+ * `test` is a notatio predicate over the surrounding `<notatio-dynamic-module>`'s knobs; the
  * wrapper substitutes their values into it, and this element shows or hides its own
  * children on the result. `invert` shows the children when the test is *false*, which
  * is how the two halves of an either/or sentence are written.
@@ -17,7 +17,7 @@ import { ensureStyles } from "./styles.ts";
  */
 export class NotatioWhen extends LitElement {
   static properties = {
-    /** The notatio predicate, over the tangle's knob wildcards. */
+    /** The notatio predicate, over the dynamic module's knob wildcards. */
     test: { type: String, reflect: true },
     /** Show the children when the test is false instead of true. */
     invert: { type: Boolean, reflect: true },
@@ -56,7 +56,7 @@ export class NotatioWhen extends LitElement {
     const { json, errors } = parseNotatio(source, {
       parseLatex: (tex: string) => engine.parse(tex).json,
     });
-    // An unfilled wildcard (`_n`, before the tangle has substituted) is not false, it is
+    // An unfilled wildcard (`_n`, before the dynamic module has substituted) is not false, it is
     // unknown — keep the previous state rather than flickering the prose out and back.
     if (errors.length) return !this.hasAttribute("hidden");
     const truth = engine.box(json).evaluate().json === "True";

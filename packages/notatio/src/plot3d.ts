@@ -663,7 +663,7 @@ export function curve3dSvg(points: readonly Triple[], opts: Curve3dOptions = {})
 
   // The surface the curve lies on, if it has one, drawn faintly behind everything. A
   // torus knot is *about* being a line on a doughnut, and without the doughnut the
-  // picture is just a tangle -- but it must stay in the background, since the knot is
+  // picture is just a dynamic module -- but it must stay in the background, since the knot is
   // what is being shown.
   if (opts.torus) {
     const { major, minor } = opts.torus;

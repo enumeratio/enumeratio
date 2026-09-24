@@ -121,6 +121,10 @@ export const GRAPHICS_HEADS: readonly string[] = [
   "Dendrogram",
   "CollectionTable",
   "Manipulate",
+  // A scope over a stretch of document: the controls inside it and the readouts that
+  // follow them share one set of local symbols. Wolfram's `DynamicModule`, which is
+  // what `Manipulate` is built on.
+  "DynamicModule",
   // The controls (Wolfram's Control family) and the layout that arranges them: an
   // expression over these draws as an interface, with the controls' variables bound
   // through the page (design/components-and-symbols.md).
