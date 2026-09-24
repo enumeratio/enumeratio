@@ -17,7 +17,7 @@ const engine = () => {
 test("the catalog is the measured shape, folded to names", () => {
   // Stats and maps are folded from (collection, stat) rows to NAMES with overload sets.
   // If these move, design/namespaces.md §1 is stale — that is the point of pinning them.
-  expect(COLLECTIONS.length).toBe(281);
+  expect(COLLECTIONS.length).toBe(282);
   expect(CARRIERS.length).toBe(87);
   expect(STATS.length).toBe(242);
   expect(MAPS.length).toBe(85);
