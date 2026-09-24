@@ -616,10 +616,18 @@ export class NotatioOut extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.#page = pageEnvironment();
-    this.#unwatch = watchPageEnvironment((env) => {
+    const unwatch = watchPageEnvironment((env) => {
       this.#page = env;
       this.#visualize();
     });
+    // A forcing ancestor can switch environment too (a preview card's picker).
+    const forcing = this.parentElement?.closest("[env]");
+    const observer = new MutationObserver(() => this.#visualize());
+    if (forcing) observer.observe(forcing, { attributes: true, attributeFilter: ["env"] });
+    this.#unwatch = () => {
+      unwatch();
+      observer.disconnect();
+    };
   }
 
   override disconnectedCallback(): void {
