@@ -11,7 +11,7 @@ import type { PlotPoint, Session } from "./engine.ts";
 type Json = Parameters<typeof headOf>[0];
 
 /** The points an `Epilog` draws: `Point((x, y))`, or a list with some in it. */
-function pointsOf(epilog: Json | undefined): PlotPoint[] {
+function pointsOf(epilog: Json): PlotPoint[] {
   if (epilog === undefined) return [];
   if (headOf(epilog) === "Point") {
     const [x, y] = tupleOf(opsOf(epilog)[0])?.map(numOf) ?? [];
@@ -32,7 +32,7 @@ export function plotOf(
   const variable = symOf(parts[0]) ?? "x";
   const from = numOf(parts[1]) ?? -5;
   const to = numOf(parts[2]) ?? 5;
-  return { body, variable, from, to, marks: pointsOf(options.Epilog as Json | undefined) };
+  return { body, variable, from, to, marks: pointsOf(options.Epilog) };
 }
 
 /** Sample a `Plot` result with the session, if it is one. */
