@@ -170,6 +170,10 @@ export const HEADS: Record<string, string> = {
   ChebyshevU: "ChebyshevU",
   // Fungrim's name for LegendreP — see @enumeratio/analytic's legendre.ts.
   LegendrePolynomial: "LegendreP",
+  // Fungrim's names for the incomplete Legendre elliptic integrals, same (φ, m) order —
+  // see @enumeratio/analytic's elliptic.ts.
+  IncompleteEllipticF: "EllipticF",
+  IncompleteEllipticE: "EllipticE",
   // collections
   At: "Part",
   First: "First",

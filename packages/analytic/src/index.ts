@@ -29,6 +29,7 @@ export { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 export { clausen } from "./clausen.ts";
 export { DEFINITIONS, PRIMITIVE } from "./definitions.ts";
 export { declareDerivatives } from "./derivatives.ts";
+export { declareElliptic } from "./elliptic.ts";
 export { dirichletBeta, dirichletBetaReal, dirichletEta, dirichletEtaReal } from "./dirichlet.ts";
 export {
   character,

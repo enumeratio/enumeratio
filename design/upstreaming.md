@@ -521,14 +521,35 @@ each looked up by name and confirmed against the item, are `WIKIDATA_FIXES` in
 whole patch. The ids that look wrong to the heuristic but are right (`Divide` → "division",
 `Nand` → "Sheffer stroke") are `WIKIDATA_CONFIRMED`, and are not part of it.
 
-**`EllipticE` is four digits accurate at complex modulus.** At m = 0.57 + 0.23i the engine
-gives 1.3249212925969696 − 0.11971669991852416i; mpmath gives 1.32480777269705 −
-0.119729445459512i, and so does the engine's own `Hypergeometric2F1` evaluating the
-identity E(m) = (π/2)·₂F₁(−½, ½; 1; m) — so it is `EllipticE` and not the comparison.
-Three Fungrim identities the engine ships (16d2e1, 752619, 9227bf) catch it;
-`packages/reference/scripts/verify-fungrim.ts` is the reproduction, and
-`KNOWN_CAUSES` in `packages/reference/src/crosswalk/fungrim.ts` is where it is recorded.
-`EllipticK` and `EllipticPi` agree with mpmath at the same point.
+**`EllipticE` is four digits accurate at complex modulus — patched locally, still worth
+sending.** At m = 0.57 + 0.23i the engine gives 1.3249212925969696 − 0.11971669991852416i;
+mpmath gives 1.32480777269705 − 0.119729445459512i, and so does the engine's own
+`Hypergeometric2F1` evaluating the identity E(m) = (π/2)·₂F₁(−½, ½; 1; m) — so it is
+`EllipticE` and not the comparison. `EllipticK` and `EllipticPi` agree with mpmath at the
+same point, and so — found while chasing this — does the two-argument incomplete form
+`EllipticE(φ, m)` at φ = π/2 (the complete case, `E(m) = E(π/2, m)`, DLMF 19.2.7); only the
+one-argument reduction is wrong. `packages/analytic/src/elliptic.ts` now patches
+`EllipticE`'s definition in place (see derivatives.ts for the attach-in-place pattern) to
+route the one-argument call through the accurate two-argument form instead of trusting the
+native reduction — real modulus is untouched, already exact there. Two of the three
+Fungrim identities that caught this (752619, 9227bf) now agree; the third (16d2e1)
+resurfaces at a different sample point (m = 1.17 + 0.45i) after the patch, but there it is
+compute-engine's `Hypergeometric2F1` that is off by a relative 5.2e-6 against mpmath's own
+2F1 — a separate, smaller imprecision, not this bug recurring. `EllipticE(φ, m)` has a
+second, related bug: for complex m, φ outside [−π/2, π/2] also loses precision (Fungrim
+identity c28288, e.g. φ = 0.57 + π, m = 0.57 + 0.23i), because native's own quasi-periodic
+reduction (DLMF 19.2.10) routes through the same broken one-argument path internally;
+`IncompleteEllipticE` (the Fungrim name for the two-argument form, also declared in
+elliptic.ts) does that reduction itself instead of trusting native's. Neither fix
+redeclares `EllipticE` — both patch its `evaluate` in place, so its canonical form, LaTeX,
+and the rest of its definition are untouched. `packages/reference/scripts/verify-fungrim.ts`
+is the reproduction; regenerating `fungrim-verified-data.ts` also surfaces roughly twenty
+new disagreements from `CarlsonRF`/`RC`/`RD`/`RJ`/`RG`, `ChebyshevT`/`U` and
+`LegendrePolynomial` (declared since this file was last regenerated, never checked against
+Fungrim before) — mostly branch-cut sign flips at negative real arguments outside these
+heads' documented domains, unrelated to `EllipticE` and not investigated here; regenerating
+that file and reconciling `KNOWN_CAUSES` against the larger disagreement set is its own
+task.
 
 **`Zeta` serializes as `\Zeta`.** `ce.box(["Zeta", 3]).latex` is `\Zeta(3)` — an uppercase
 command that is not LaTeX's (the Riemann zeta is `\zeta`; there is no `\Zeta`, since

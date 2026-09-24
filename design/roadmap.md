@@ -44,15 +44,22 @@ projects rather than like tickets:
 
 The Fungrim frontier is the newest and the most mechanical to work through. Fungrim ships
 1444 identities as rewrite rules; `crosswalk:verify` instantiates each one with values its
-guards allow and evaluates both sides. Where the engine can evaluate, 422 agree and the 3
-that do not are one bug of ours (`EllipticE` at complex modulus). Where it cannot — a head
+guards allow and evaluates both sides. The counts on disk (422 agree, 3 disagree) predate
+the Carlson/Chebyshev/Legendre/incomplete-elliptic heads below and are stale — they were
+declared and never checked against Fungrim. A fresh run agrees on 660 and disagrees on 22:
+the `EllipticE`-at-complex-modulus bug is fixed (patched in place, see
+[upstreaming.md §8](./upstreaming.md)), and most of the rest are newly-surfaced,
+not-yet-investigated branch-cut disagreements from those same recently-declared heads at
+arguments outside their documented domains — regenerating `fungrim-verified-data.ts` and
+reconciling `KNOWN_CAUSES` (`packages/reference/src/crosswalk/fungrim.ts`) against the
+larger set is its own task, not done here. Where the engine cannot evaluate at all — a head
 with no numeric evaluation at a complex argument, or one that hangs — the identity is
 unchecked, and the frontier ranks the heads by how many identities each unlocks, the ones
-the engine does not declare at all first. The top of it today is the Carlson symmetric
-elliptic integrals (`CarlsonRF`/`RD`/`RJ`/`RC`/`RG`, 184 identities between them, none
-declared), then the orthogonal polynomials (`ChebyshevT`/`U`, `LegendrePolynomial`) and
-the incomplete elliptic integrals. Every entry is an implementation task with a
-ready-made test suite attached; regenerate with `vp run crosswalk:verify` in
+the engine does not declare at all first: `CarlsonRF`/`RD`/`RJ`/`RC`/`RG`, the orthogonal
+polynomials (`ChebyshevT`/`U`, `LegendrePolynomial`), and the incomplete elliptic integrals
+were the top of it and are now declared (`packages/analytic/src/carlson.ts`,
+`chebyshev.ts`, `legendre.ts`, `elliptic.ts`). Every remaining entry is an implementation
+task with a ready-made test suite attached; regenerate with `vp run crosswalk:verify` in
 `packages/reference` (slow: it drives a worker process with a deadline, because a single
 evaluation can hang).
 
