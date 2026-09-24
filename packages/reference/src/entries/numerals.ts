@@ -133,6 +133,13 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "an integer base is still the native handler",
         category: "Properties",
       },
+      {
+        expr: ["IntegerDigits", -3, "Factoradic"],
+        expected: ["IntegerDigits", -3, "Factoradic"],
+        caption:
+          "no numeral for a negative in a system that spells only $n \\ge 0$; the message says which integers it does spell",
+        category: "Possible issues",
+      },
     ],
     seeAlso: ["FromDigits", "NumeralSystemShape", "DigitCount", "IntegerString"],
   },

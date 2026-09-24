@@ -8,7 +8,7 @@
 
 // The engine itself lives in the base (`@enumeratio/notatio`); re-exported here so
 // the elements' imports read as before.
-export { configureEngine, loadEngine } from "@enumeratio/notatio";
+export { configureEngine, configureLatex, loadEngine } from "@enumeratio/notatio";
 
 let assetsPromise: Promise<void> | undefined;
 let markupPromise: Promise<(latex: string) => string> | undefined;

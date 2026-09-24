@@ -1,4 +1,5 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { collectMessages, messageLine } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
 import { declareNumerals } from "../src/declare.ts";
 
@@ -137,4 +138,19 @@ test("Ostrowski declines a string its ceiling rule forbids", () => {
   expect(ce.box(["IntegerDigits", 12, ["Ostrowski", L(2, 2, 2)]]).evaluate().operator).toBe(
     "IntegerDigits",
   ); // out of range: q₃ = 12
+});
+
+test("a system that declines says why", () => {
+  const said = (input: Expr): string[] =>
+    collectMessages(ce, () => ce.box(input).evaluate()).messages.map(messageLine);
+  expect(said(["IntegerDigits", -3, "Factoradic"])).toEqual([
+    "IntegerDigits::nonum: -3 has no numeral in Factoradic. Factoradic spells the integers ≥ 0.",
+  ]);
+  expect(said(["FromDigits", L(1, 1, 0), "Zeckendorf"])).toEqual([
+    "FromDigits::nonum: [1, 1, 0] is not a numeral in Zeckendorf. In Zeckendorf: digits 0–1; no two adjacent ones.",
+  ]);
+  const ncop =
+    "ResidueSystem::ncop: The moduli [4, 6] are not pairwise coprime (gcd(4, 6) = 2), so this is not a bijection.";
+  expect(said(["IntegerDigits", 5, ["ResidueSystem", L(4, 6)]])).toEqual([ncop]);
+  expect(said(["IntegerDigits", 5, ["ResidueSystem", L(3, 5)]])).toEqual([]);
 });

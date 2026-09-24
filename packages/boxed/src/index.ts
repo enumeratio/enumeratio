@@ -161,3 +161,12 @@ export function widenSignature(
 
 /** A `widenSignature` gate for heads natively typed `integer`: anything not provably non-integer. */
 export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
+
+export {
+  collectMessages,
+  defineMessages,
+  emit,
+  formatArgument,
+  type Message,
+  messageLine,
+} from "./messages.ts";

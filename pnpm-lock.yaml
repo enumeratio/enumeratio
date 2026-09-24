@@ -744,6 +744,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../analytic
+      '@enumeratio/boxed':
+        specifier: workspace:*
+        version: link:../boxed
       '@enumeratio/cli':
         specifier: workspace:*
         version: link:../cli

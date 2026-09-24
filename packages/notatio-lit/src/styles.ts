@@ -516,6 +516,23 @@ notatio-out[busy] .notatio-render { opacity: 0.5; transition-delay: 0.15s; }
   background: var(--notatio-diag-bg, rgba(217, 147, 26, 0.14));
   color: var(--notatio-diag, #b7791f);
 }
+/* A head's message about why it did not evaluate -- a warning, not a failure. */
+.notatio-message {
+  display: block;
+  margin: 0.3rem 0 0;
+  padding: 0.15rem 0.5rem;
+  border-left: 3px solid var(--notatio-diag, #b7791f);
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2, #555);
+}
+.notatio-message-name {
+  font-family: var(--notatio-mono, monospace);
+  font-size: 0.8rem;
+  color: var(--notatio-diag, #b7791f);
+}
+.notatio-message-hint {
+  color: var(--vp-c-text-3, #888);
+}
 
 /* Manipulate-style parameter controls under a plot (self-contained block). */
 .notatio-controls {

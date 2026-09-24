@@ -195,6 +195,11 @@ What is wrong is WHERE it has to happen. The dictionary is a **constructor optio
 - **Two libraries cannot both add entries.** Each would have to know about the other's, or
   a third party composes `[...LATEX_DICTIONARY, ...a, ...b]` by hand.
 
+The workaround in the meantime is notatio's `configureLatex`: a host hands it each library's
+entries before the shared engine exists, and `loadEngine` builds the dictionary once, an entry
+for an existing name replacing the default one. `@enumeratio/residues` contributes `\pmod`
+that way. It is still assembly by the host, not contribution by the library.
+
 That is why `packages/notatio/src/traditional.ts` exists at all: an output-only side table
 of fifteen heads, walked by hand, because the input direction is closed off by the
 architecture rather than absent from the API. It is also the same wound as §3.2 and §3.6 —
