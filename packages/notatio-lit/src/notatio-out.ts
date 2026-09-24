@@ -83,8 +83,12 @@ interface TranscriptHost extends Element {
  * The nearest ancestor `<notatio-dynamic-module>`, if this Out sits inside one -- the way
  * a forced `env` is read from `closest("[env]")` (`#visualize`, below). A cell outside any
  * module evaluates exactly as it does today: no scope, no history, no `%`/`Out(n)`.
+ *
+ * Exported so `<notatio-cell>` can ask the same question: inside a transcript, Wolfram
+ * evaluates a cell only on Shift+Enter, so the cell defers handing a new value to its Out
+ * until the editor commits, rather than on every keystroke.
  */
-function transcriptHostOf(el: Element): TranscriptHost | undefined {
+export function transcriptHostOf(el: Element): TranscriptHost | undefined {
   const host = el.closest("notatio-dynamic-module");
   return host && typeof (host as Partial<TranscriptHost>).transcriptFor === "function"
     ? (host as TranscriptHost)

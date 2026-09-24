@@ -63,9 +63,14 @@ const PROMPT = "value";
 
 /**
  * `<notatio-in>` -- a LaTeX math field wrapping MathLive's `<math-field>`.
- * Emits `notatio-change` with `{ latex }` on each edit. When `readonly`, it
- * renders static markup via `mathlive/ssr` and never loads the (heavy) editor.
- * MathLive is lazy-loaded the first time an editable input mounts.
+ * Emits `notatio-change` with `{ latex }` on each edit, live as the reader types, and
+ * `notatio-commit` with the same shape when MathLive itself considers the edit
+ * committed -- its native `change` event, which it fires on Enter and on blur (only if
+ * the value actually changed since focus). A consumer that only cares about finished
+ * edits -- a cell inside a transcript, where Wolfram evaluates on Shift+Enter, not on
+ * every keystroke -- listens for `notatio-commit` instead. When `readonly`, it renders
+ * static markup via `mathlive/ssr` and never loads the (heavy) editor. MathLive is
+ * lazy-loaded the first time an editable input mounts.
  *
  * A reader can type a *wrapper head* around an expression -- `N(x)` for a number,
  * `FullForm(x)` for the AST, `TraditionalForm(x)` for the rendering (see
@@ -299,6 +304,17 @@ export class NotatioIn extends LitElement {
     );
   }
 
+  // MathLive's own `change` -- Enter, or blur with the value changed since focus.
+  #onCommit = (): void => {
+    this.dispatchEvent(
+      new CustomEvent("notatio-commit", {
+        detail: { latex: this.#emitted },
+        bubbles: true,
+        composed: true,
+      }),
+    );
+  };
+
   /**
    * What the field reports: the expression as written, or written inside the head. A
    * binding keeps its `\coloneq` outside the wrapper -- it is the value the head is
@@ -450,7 +466,7 @@ export class NotatioIn extends LitElement {
   protected override render(): unknown {
     if (this.readonly) return html`<span class="notatio-static">${unsafeHTML(this._markup)}</span>`;
     return html`<div class="notatio-in-row">
-      <math-field @input=${this.#onInput}></math-field>
+      <math-field @input=${this.#onInput} @change=${this.#onCommit}></math-field>
       ${this.#playButton()}
     </div>`;
   }
