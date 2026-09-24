@@ -1,4 +1,4 @@
-import type { ComputeEngine } from "@cortex-js/compute-engine";
+import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 import { collectMessages, type Message } from "@enumeratio/boxed";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
@@ -20,6 +20,7 @@ import {
   latexOf,
   pageEnvironment,
   toTraditionalLatex,
+  type Transcript,
   watchPageEnvironment,
 } from "@enumeratio/notatio";
 
@@ -71,6 +72,23 @@ function substitute(expr: unknown, bindings: ReadonlyMap<string, unknown>): unkn
   if (typeof expr === "string") return bindings.has(expr) ? bindings.get(expr) : expr;
   if (Array.isArray(expr)) return expr.map((node) => substitute(node, bindings));
   return expr;
+}
+
+/** A `<notatio-dynamic-module>` that can hand out its shared evaluation scope. */
+interface TranscriptHost extends Element {
+  transcriptFor(engine: ComputeEngine): Transcript;
+}
+
+/**
+ * The nearest ancestor `<notatio-dynamic-module>`, if this Out sits inside one -- the way
+ * a forced `env` is read from `closest("[env]")` (`#visualize`, below). A cell outside any
+ * module evaluates exactly as it does today: no scope, no history, no `%`/`Out(n)`.
+ */
+function transcriptHostOf(el: Element): TranscriptHost | undefined {
+  const host = el.closest("notatio-dynamic-module");
+  return host && typeof (host as Partial<TranscriptHost>).transcriptFor === "function"
+    ? (host as TranscriptHost)
+    : undefined;
 }
 
 /** The subtree of `tree` at `path`, or the tree itself for the empty path. */
@@ -372,9 +390,30 @@ export class NotatioOut extends LitElement {
     const engine = await loadEngine();
     // `raw` keeps the authored tree; evaluation canonicalises regardless, so it wins.
     const form = this.raw && !this.evaluate ? { form: "raw" as const } : undefined;
+    const host = transcriptHostOf(this);
+    const transcript = host?.transcriptFor(engine);
+    // `%` / `%%` / `%n` mean nothing outside a transcript's history; only rewrite the
+    // LaTeX source when one is actually in scope.
+    const text = transcript && this.format === "latex" ? transcript.substitute(source) : source;
+    const parseText = (): BoxedExpression =>
+      this.format === "latex" ? engine.parse(text, form) : engine.box(this.#json(engine), form);
     const { value: result, messages } = collectMessages(engine, () => {
-      const boxed =
-        this.format === "latex" ? engine.parse(source, form) : engine.box(this.#json(engine), form);
+      if (transcript && this.evaluate) {
+        // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:
+        // `engine.box` folds closed numeric arithmetic (`3 + 4` boxes straight to `7`).
+        const input =
+          this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
+        // Inside the transcript's scope: `a := 5` binds there, and the result becomes the
+        // next `In[n]`/`Out[n]`.
+        return transcript.run(() => {
+          const boxed = parseText();
+          const value = boxed.evaluate();
+          this.#historyN = transcript.record(input, boxed, value);
+          return value;
+        });
+      }
+      this.#historyN = undefined;
+      const boxed = parseText();
       return this.evaluate ? boxed.evaluate() : boxed;
     });
     return { latex: latexOf(engine, result), json: result.json, messages };
@@ -564,14 +603,21 @@ export class NotatioOut extends LitElement {
       }),
     );
     // Expose the evaluated result so a notebook can reference it (e.g. REPL `%n`).
-    // Empty on error/blank; the LaTeX round-trips back into a downstream input.
+    // Empty on error/blank; the LaTeX round-trips back into a downstream input. `n` is
+    // this line's transcript number, when it evaluated inside one -- a `<notatio-cell>`
+    // reads it back to label itself `In[n]` / `Out[n]`.
     this.dispatchEvent(
       new CustomEvent("notatio-result", {
-        detail: { latex: this._latex, json: this._json },
+        detail: { latex: this._latex, json: this._json, n: this.#historyN },
         bubbles: true,
         composed: true,
       }),
     );
+  }
+
+  /** This line's `In[n]`/`Out[n]` number, when the last evaluation ran in a transcript. */
+  get historyN(): number | undefined {
+    return this.#historyN;
   }
 
   #status(): unknown {
@@ -625,6 +671,10 @@ export class NotatioOut extends LitElement {
     if (open) doc?.addEventListener("pointerdown", this.#onDocPointerDown);
     else doc?.removeEventListener("pointerdown", this.#onDocPointerDown);
   };
+
+  // This evaluation's `In[n]`/`Out[n]` line number, when it ran inside a transcript --
+  // `undefined` outside one, or before the first evaluation.
+  #historyN: number | undefined;
 
   // The value the picture is drawn from, kept so a change of environment redraws it
   // without evaluating again.
@@ -712,6 +762,12 @@ export class NotatioOut extends LitElement {
     this.#closeTimer = setTimeout(() => this.#closeMenu(), 120);
   };
 
+  // `Out` inside a transcript reads `Out[3]`, Wolfram's own label -- the number is the
+  // evaluation's `$Line`, not this cell's position, so it can jump on a re-evaluation.
+  #labelText(): string {
+    return this.#historyN === undefined ? this.label : `${this.label}[${this.#historyN}]`;
+  }
+
   #menu(): unknown {
     const onLabel = this.labelMenu;
     const summary = onLabel
@@ -719,7 +775,7 @@ export class NotatioOut extends LitElement {
           class="notatio-io-label notatio-label-btn"
           title=${`${FORM_LABEL[this.form]} — click for forms`}
         >
-          ${this.label}${
+          ${this.#labelText()}${
             this.form === "standard"
               ? ""
               : html`<span class="notatio-label-form">${FORM_LABEL[this.form]}</span>`
@@ -957,7 +1013,7 @@ export class NotatioOut extends LitElement {
         >${this.#messages()}${this.#status()}`;
     }
     return html`<span class="notatio-line"
-        >${this.label ? html`<span class="notatio-io-label">${this.label}</span>` : ""}<span
+        >${this.label ? html`<span class="notatio-io-label">${this.#labelText()}</span>` : ""}<span
           class="notatio-render"
           >${this.#content()}</span
         >${this.label ? this.#menu() : ""}</span

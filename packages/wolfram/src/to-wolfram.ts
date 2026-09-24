@@ -323,6 +323,7 @@ export const HEADS: Record<string, string> = {
   Dynamic: "Dynamic",
   DynamicModule: "DynamicModule",
   Cell: "Cell",
+  Notebook: "Notebook",
   Row: "Row",
   Column: "Column",
   Grid: "Grid",

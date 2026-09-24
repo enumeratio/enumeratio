@@ -57,6 +57,27 @@ as trailing rules: `InForm` and `OutForm` name the forms (`InputForm`, `Traditio
 <notatio-cell value="Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])" env="print" />
 </Story>
 
+## Transcripts
+
+`DynamicModule([Cell(...), Cell(...), ...])` — a `List` of `Cell`s — shares one
+evaluation scope across its cells, evaluated in document order: a binding one cell
+makes is visible to the next (unlike "Cells in a column" above, where each cell is on
+its own). Wolfram's `$Line` transcript: editing a cell re-evaluates _that_ cell in the
+shared scope, but a later cell does not auto-follow — re-run it yourself to see the new
+binding. `Notebook(cells)` is Wolfram's own name for the same configuration.
+
+<Story
+  title="A shared scope">
+<template #description>The first cell binds <code>a</code>; the second reads it. Change the 5, then edit the second cell to re-run it -- a transcript does not re-run later cells on its own.</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(a := 5), Cell(a^2)])" />
+</Story>
+
+<Story
+  title="History: Out(n), In(n), InString(n)">
+<template #description>Every evaluation gets a line number, shown as the In/Out label. <code>Out(n)</code> reads a prior line's result back; <code>In(n)</code> re-evaluates that line's input against the CURRENT scope; <code>InString(n)</code> is its literal text.</template>
+<notatio-out format="notatio" value="Notebook([Cell(3 + 4), Cell(Out(1) * 2), Cell(InString(1))])" />
+</Story>
+
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props

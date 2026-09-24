@@ -647,6 +647,13 @@ const formId = (value: Json): string | undefined => {
   return name === undefined ? undefined : (FORM_IDS[name] ?? name);
 };
 
+// `DynamicModule(body)`'s children: a plain body renders as the module's one child; a
+// `List` of `Cell`s -- the transcript configuration -- renders each cell as its own
+// child, in document order, so `<notatio-dynamic-module>` sees the same light-DOM shape
+// whether it was authored as markup or lowered from this expression.
+const dynamicModuleChildren = (ops: readonly Json[]): Json[] =>
+  ops[0] === undefined ? [] : (tupleOf(ops[0]) ?? [ops[0]]);
+
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   {
     // `DynamicModule(body)` -- an explicit scope over its subtree. The bindings live in
@@ -654,7 +661,17 @@ export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
     head: "DynamicModule",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
-    children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
+    children: dynamicModuleChildren,
+  },
+  {
+    // `Notebook(cells)` -- Wolfram's name for the transcript configuration: a
+    // `DynamicModule` whose body is a `List` of `Cell`s, evaluated in document order in
+    // one shared scope. Same tag, same lowering; the element tells the two apart by
+    // what is actually inside it (`notatio-cell` children), not by which head named it.
+    head: "Notebook",
+    tag: "notatio-dynamic-module",
+    attributes: () => ({}),
+    children: dynamicModuleChildren,
   },
   {
     // `Cell(expr)`: an In/Out pair -- the held expression as the input, its value as the

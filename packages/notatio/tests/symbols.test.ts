@@ -50,6 +50,10 @@ const CORPUS = [
   // A cell: the held input, its forms, and the value it should come to.
   "Cell(PowerModList(3, 1/2, 11))",
   'Cell(1 + 1, InForm -> "InputForm", OutForm -> "TraditionalForm", Expected -> 2)',
+  // A transcript: `DynamicModule`/`Notebook` over a `List` of `Cell`s lowers each cell
+  // to its own child, in document order -- one shared scope, not one child per module.
+  "DynamicModule([Cell(1 + 1), Cell(2 + 2)])",
+  "Notebook([Cell(1 + 1), Cell(2 + 2)])",
   // The controls: a variable, or a variable with its start; a range or a list; and the
   // scope that binds them when anything else reads the variable.
   "Slider(k, (0, 5))",
@@ -111,6 +115,13 @@ test("every visual symbol's tag is its name, kebab-cased, or its family's", () =
   const kebab = (head: string): string =>
     "notatio-" + head.replace(/([a-z])([A-Z0-9])/g, "$1-$2").toLowerCase();
   for (const s of DRAWING_SYMBOLS) {
+    // `Notebook` is Wolfram's name for the transcript configuration -- a `DynamicModule`
+    // whose body is a `List` of `Cell`s -- so it deliberately shares `DynamicModule`'s
+    // tag rather than getting a `notatio-notebook` of its own.
+    if (s.head === "Notebook") {
+      expect(s.tag).toBe("notatio-dynamic-module");
+      continue;
+    }
     if (s.fixed !== undefined && Object.keys(s.fixed).length === 0) {
       expect(s.tag, s.head).toBe(kebab(s.head));
       continue;

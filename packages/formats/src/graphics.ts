@@ -191,6 +191,15 @@ export function declareGraphics(ce: ComputeEngine): void {
     ce.declare("Cell", { signature: "(any, any*) -> any", lazy: true });
   }
 
+  // `Notebook([Cell(...), ...])` -- Wolfram's transcript: a `DynamicModule` configured
+  // with a `List` of `Cell`s as its body, evaluated in document order in one shared scope
+  // (`@enumeratio/notatio/transcript`). Held like `Cell`, for the same reason: the cells
+  // are evaluated by whatever renders the notebook, one at a time, not by boxing the whole
+  // tree at once.
+  if (!ce.lookupDefinition("Notebook")) {
+    ce.declare("Notebook", { signature: "(any) -> any", lazy: true });
+  }
+
   ce.declare("Image", {
     signature: "(string, number?, number?) -> expression",
     // A literal: evaluating it further would only take it apart.

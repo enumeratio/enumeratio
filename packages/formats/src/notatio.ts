@@ -105,9 +105,16 @@ export function parseNotatio(src: string, options?: NotatioOptions): NotatioResu
   const [json, diagnostics] = parseEpsil(src, undefined, options);
   const errors = diagnostics.filter((d) => d.severity === "error").map((d) => diagText(d.message));
   const allowed = new Set(options?.allow);
+  // A `Cell`'s input is a cell, and a cell may be one `:=` binding (`Cell(a := 5)`).
+  const cellBindings = new Set<unknown>();
+  walk(json, (n) => {
+    if (headOf(n) !== "Cell") return;
+    const input = Array.isArray(n) ? n[1] : (n as { fn: unknown[] }).fn[1];
+    if (headOf(input) === "Assign") cellBindings.add(input);
+  });
   walk(json, (n) => {
     const head = headOf(n);
-    if (head && STATEMENT_HEADS.has(head) && !allowed.has(head)) {
+    if (head && STATEMENT_HEADS.has(head) && !allowed.has(head) && !cellBindings.has(n)) {
       errors.push(`notatio: ${head} is not allowed`);
     }
   });

@@ -1,4 +1,5 @@
-import { CONTROL_EVENT } from "@enumeratio/notatio";
+import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { CONTROL_EVENT, Transcript } from "@enumeratio/notatio";
 import { LitElement, nothing } from "lit";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
@@ -35,6 +36,15 @@ import { ensureStyles } from "./styles.ts";
  * A dynamic module is not required: the page itself is a scope, and a control and a readout
  * with no wrapper at all still find each other. The wrapper is for isolation -- two
  * examples on one page that both call their knob `n`.
+ *
+ * A SECOND, unrelated capability lives here too: a **transcript**. When a `<notatio-cell>`
+ * inside a module asks (`transcriptFor`), the module lazily creates one shared
+ * compute-engine scope and history (`@enumeratio/notatio`'s `Transcript`) and hands it back
+ * to every cell that asks -- so `Cell(a := 5)` then `Cell(a^2)` share a binding and
+ * `Out(n)` / `%` read each other back, Wolfram's `$Line` transcript. This is `Notebook`'s
+ * rendering (`Notebook(cells)` is `DynamicModule([Cell(...), ...])` under a Wolfram name,
+ * `symbols.ts`), and it is independent of the `_k` hole-filling `Scope` above: a module
+ * with no cells in it never creates one.
  */
 export class NotatioDynamicModule extends LitElement {
   static properties = {
@@ -45,6 +55,7 @@ export class NotatioDynamicModule extends LitElement {
   declare trace: boolean;
 
   #scope = new Scope(this, this);
+  #transcript: Transcript | undefined;
 
   constructor() {
     super();
@@ -76,6 +87,17 @@ export class NotatioDynamicModule extends LitElement {
   /** Every control this module owns — a nested module keeps its own. */
   get controls(): Element[] {
     return this.#scope.controls;
+  }
+
+  /**
+   * This module's shared evaluation scope, created the first time any cell inside it asks
+   * -- lazily, so a module with no cells never pays for one, and memoized, so the FIRST
+   * cell to evaluate (not necessarily the first in document order, since each cell loads
+   * the engine on its own schedule) settles which scope every other cell in this module
+   * shares.
+   */
+  transcriptFor(engine: ComputeEngine): Transcript {
+    return (this.#transcript ??= new Transcript(engine));
   }
 
   protected override render(): unknown {

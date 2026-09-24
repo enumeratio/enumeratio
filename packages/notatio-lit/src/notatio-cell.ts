@@ -47,7 +47,13 @@ async function parseSyntax(syntax: Syntax, text: string): Promise<unknown> {
     case "notatio":
     default: {
       const engine = await loadEngine();
-      const { json, errors } = parseNotatio(text, { parseLatex: (tex) => engine.parse(tex).json });
+      // `Assign` is otherwise a statement notatio rejects outside a notebook -- a cell IS
+      // a notebook line (`a := 5`, then `a^2` reads it back), whether or not it sits in a
+      // transcript.
+      const { json, errors } = parseNotatio(text, {
+        allow: ["Assign"],
+        parseLatex: (tex) => engine.parse(tex).json,
+      });
       if (errors.length) throw new Error(errors[0]);
       return json;
     }
@@ -119,6 +125,7 @@ export class NotatioCell extends LitElement {
     _raw: { state: true },
     _json: { state: true },
     _error: { state: true },
+    _n: { state: true },
   };
 
   declare value: string;
@@ -140,6 +147,8 @@ export class NotatioCell extends LitElement {
   declare _json: unknown;
   /** Why `_raw` did not parse, when it did not. */
   declare _error: string;
+  /** This cell's `In[n]`/`Out[n]` line number, read off the Out's own transcript result. */
+  declare _n: number | undefined;
 
   #token = 0;
   /** `slot="aside"` children, captured before our own render would otherwise wipe them. */
@@ -161,6 +170,7 @@ export class NotatioCell extends LitElement {
     this._raw = "";
     this._json = undefined;
     this._error = "";
+    this._n = undefined;
     ensureStyles();
   }
 
@@ -341,7 +351,7 @@ export class NotatioCell extends LitElement {
         class="notatio-io-label notatio-label-btn"
         title=${`${current.label} — click for input forms`}
       >
-        In${
+        In${this._n === undefined ? "" : `[${this._n}]`}${
           current.form === "standard"
             ? ""
             : html`<span class="notatio-label-form">${current.label}</span>`
@@ -453,8 +463,16 @@ export class NotatioCell extends LitElement {
       ?planned=${!this.dirty && this.planned}
       env=${this.env}
       .resolveHead=${this.resolveHead}
+      @notatio-result=${this.#onResult}
     ></notatio-out>`;
   }
+
+  // The Out is the only thing that actually evaluates (`notatio-out`'s own engine call),
+  // so it is the only thing that knows this line's transcript number; the In label just
+  // reads it back.
+  #onResult = (event: Event): void => {
+    this._n = (event as CustomEvent<{ n?: number }>).detail.n;
+  };
 
   protected override render(): unknown {
     return html`
