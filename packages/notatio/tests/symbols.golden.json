@@ -342,6 +342,48 @@
     },
     "markup": "<notatio-cell value=\"1 + 1\" in-form=\"input\" out-form=\"traditional\" expect=\"{&quot;num&quot;:&quot;2&quot;}\"></notatio-cell>"
   },
+  "DynamicModule([Cell(1 + 1), Cell(2 + 2)])": {
+    "rendering": {
+      "tag": "notatio-dynamic-module",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "1 + 1"
+          }
+        },
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "2 + 2"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-dynamic-module><notatio-cell value=\"1 + 1\"></notatio-cell><notatio-cell value=\"2 + 2\"></notatio-cell></notatio-dynamic-module>"
+  },
+  "Notebook([Cell(1 + 1), Cell(2 + 2)])": {
+    "rendering": {
+      "tag": "notatio-dynamic-module",
+      "attributes": {},
+      "children": [
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "1 + 1"
+          }
+        },
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "2 + 2"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-dynamic-module><notatio-cell value=\"1 + 1\"></notatio-cell><notatio-cell value=\"2 + 2\"></notatio-cell></notatio-dynamic-module>"
+  },
   "Slider(k, (0, 5))": {
     "rendering": {
       "tag": "notatio-dynamic-module",

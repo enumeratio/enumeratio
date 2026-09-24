@@ -36,6 +36,7 @@ export * from "./symbols.ts";
 export * from "./scrub.ts";
 export * from "./torussquare.ts";
 export * from "./traditional.ts";
+export * from "./transcript.ts";
 export * from "./vectorplot.ts";
 export * from "./playback.ts";
 export * from "./controls.ts";

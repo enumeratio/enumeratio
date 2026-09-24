@@ -41,3 +41,9 @@ test("juxtaposition of two symbols is an error (explicit * required)", () => {
   expect(parseNotatio("A Sin(x)").errors.length).toBeGreaterThan(0);
   expect(parseNotatio("A * Sin(x)").errors).toEqual([]);
 });
+
+test("a Cell's input may be one := binding; nowhere else", () => {
+  expect(parseNotatio("DynamicModule([Cell(a := 5), Cell(a^2)])").errors).toEqual([]);
+  expect(parseNotatio("Cell(b := (c := 1))").errors.length).toBeGreaterThan(0);
+  expect(parseNotatio("f(a := 1)").errors.length).toBeGreaterThan(0);
+});
