@@ -16,7 +16,9 @@ import {
   CONTROL_HEADS,
   DRAWING_SYMBOLS,
   lowerOptions,
+  markupOf,
   optionAttribute,
+  renderingOf,
   slottedExceptDeclarations,
   type VisualSymbol,
 } from "@enumeratio/notatio";
@@ -191,6 +193,12 @@ export function adoptStructure(el: Element): void {
       if (!child.hasAttribute("slot") && isExpressive(child)) holder.append(child);
     }
     el.prepend(holder);
+  }
+  // A head whose operands render as children (a Manipulate's body) shows them as the
+  // markup path does -- its parameters read as wildcards -- while the structure stays held.
+  if (symbol.children !== undefined && args.length > 0) {
+    const shown = renderingOf(withOptions(symbol.head, args, options), true)?.children ?? [];
+    el.insertAdjacentHTML("beforeend", shown.map(markupOf).join(""));
   }
 }
 

@@ -3,6 +3,8 @@
 // the small browser surface the terminal element consumes. Keep in sync with
 // packages/cli/src/browser.ts.
 declare module "@enumeratio/cli/browser" {
+  import type { Environment } from "@enumeratio/notatio";
+
   export type GlyphKind = "permutation" | "partition" | "composition" | "subset" | "dyck";
 
   export interface PlotPoint {
@@ -57,6 +59,41 @@ declare module "@enumeratio/cli/browser" {
     stderr: string;
     code: number;
   }
+  export interface Key {
+    name?: string;
+    shift?: boolean;
+    ctrl?: boolean;
+    sequence?: string;
+  }
+  export interface DriveScreen {
+    show(expr: unknown): string;
+    write(text: string): void;
+    color: boolean;
+    mouse: boolean;
+    cursorRow(): number;
+    columns(): number;
+  }
+  export interface Driver {
+    draw(): void;
+    key(key: Key): boolean;
+    data(chunk: string): void;
+    pinned(): unknown;
+    stop(): void;
+  }
+  export function keysOf(chunk: string): Key[];
+  export interface Presented {
+    echo: string;
+    out: string;
+    driver?: Driver;
+    settle(pinned: unknown): string;
+  }
+  export function present(
+    input: string,
+    env: Environment,
+    screen: Omit<DriveScreen, "show" | "color">,
+  ): Presented;
+  export function resumeHint(color: boolean): string;
+
   export function runCommand(argv: readonly string[], stdin?: string): CommandResult;
   export function splitArgs(line: string): string[];
   export function stripAnsi(s: string): string;

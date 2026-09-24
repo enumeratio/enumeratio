@@ -3,7 +3,7 @@
 // The Node host prefers an inline image where the terminal has one; this is what
 // stands in where it does not, and what the control strip draws under itself.
 
-import { headOf, numOf, opsOf, symOf, tupleOf } from "../../notatio/src/symbols.ts";
+import { headOf, numOf, opsOf, strOf, symOf, tupleOf } from "../../notatio/src/symbols.ts";
 import { textPlot } from "../../notatio/src/textplot.ts";
 import type { PlotPoint, Session } from "./engine.ts";
 
@@ -30,8 +30,17 @@ export function samplePlot(session: Session, json: Json): PlotPoint[] | undefine
   return session.sampleJson(plot.body, { variable: plot.variable, from: plot.from, to: plot.to });
 }
 
-/** The result as text: a plot drawn on cells, else the session's rendering. */
+/**
+ * The result as text: a plot drawn on cells, else the session's rendering. A plot a
+ * pipe pinned comes back `Labeled` with its caption, and keeps it under the cells.
+ */
 export function textOf(session: Session, json: Json, width = 60): string {
+  if (headOf(json) === "Labeled") {
+    const [body, label] = opsOf(json);
+    const caption = strOf(label);
+    if (body !== undefined && caption !== undefined && plotOf(body) !== undefined)
+      return `${textOf(session, body, width)}\n  ${caption}`;
+  }
   const points = samplePlot(session, json);
   if (points !== undefined) return textPlot(points, { width, height: 12 });
   return session.render(session.ce.box(json as never).evaluate());

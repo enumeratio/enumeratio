@@ -2,8 +2,13 @@ import {
   cliDemosByCategory,
   demosByCategory,
   dim,
+  type Driver,
   type Graphic,
+  keysOf,
+  present,
+  type Presented,
   red,
+  resumeHint,
   Repl,
   runCommand,
   splitArgs,
@@ -12,11 +17,13 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { createRef, ref } from "lit/directives/ref.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Terminal } from "@xterm/xterm";
-import { linePlotSvg, renderGlyph } from "@enumeratio/notatio";
+import { environmentNamed, linePlotSvg, renderGlyph, TTY } from "@enumeratio/notatio";
 
 // A real terminal emulator (xterm) running the actual @enumeratio/cli logic in
-// the browser. Two modes: `repl` drives the interactive core (In[n]/Out[n], :plot
-// draws below), `cli` runs one `notatio` command per line at a `$ notatio` prompt.
+// the browser. Three modes: `repl` drives the interactive core (In[n]/Out[n], :plot
+// draws below), `cli` runs one `notatio` command per line at a `$ notatio` prompt,
+// and `show` prints one expression as a terminal in `env` would, driving its
+// controls from the keyboard where that environment can.
 // A grouped example dropdown, a Play button that replays the corpus, and a Clear
 // button. xterm and its CSS load lazily.
 
@@ -98,14 +105,19 @@ function ensureTerminalStyles(): void {
 }
 
 /**
- * `<notatio-terminal>` — an in-browser terminal. `mode` is `repl` (default) or
- * `cli`. `seed` is a JSON array of lines to run on mount; `examples` (default on)
- * shows the dropdown + Play/Clear toolbar.
+ * `<notatio-terminal>` — an in-browser terminal. `mode` is `repl` (default), `cli`
+ * or `show`. `seed` is a JSON array of lines to run on mount; `examples` (default on)
+ * shows the dropdown + Play/Clear toolbar. In `show` mode, `value` is the expression
+ * and `env` the environment it is shown for (`tty` by default).
  */
 export class NotatioTerminal extends LitElement {
   static properties = {
-    /** `repl` for the interactive session, `cli` for the command-line transcript. */
+    /** `repl` for the interactive session, `cli` for the command-line transcript, `show` for one expression. */
     mode: { type: String },
+    /** In `show` mode, the expression, in notatio. */
+    value: { type: String },
+    /** In `show` mode, the environment it is shown for: `tty` or `pipe`. */
+    env: { type: String },
     /** A JSON array of input lines to run on load. */
     seed: { type: String },
     /** Show the example picker beside the terminal. */
@@ -114,7 +126,9 @@ export class NotatioTerminal extends LitElement {
     _playing: { state: true },
   };
 
-  declare mode: "repl" | "cli";
+  declare mode: "repl" | "cli" | "show";
+  declare value: string;
+  declare env: string;
   declare seed: string;
   declare examples: boolean;
   declare private _figure: string;
@@ -128,10 +142,15 @@ export class NotatioTerminal extends LitElement {
   private readonly hist: string[] = [];
   private histIdx = 0;
   private exited = false;
+  private static readonly SHOW_ROWS = 60;
+  private shown?: Presented;
+  private driving?: Driver;
 
   constructor() {
     super();
     this.mode = "repl";
+    this.value = "";
+    this.env = "tty";
     this.seed = "";
     this.examples = true;
     this._figure = "";
@@ -146,7 +165,7 @@ export class NotatioTerminal extends LitElement {
   protected override render() {
     return html`
       ${
-        this.examples
+        this.examples && this.mode !== "show"
           ? html`<div class="notatio-term__bar">
               <label class="notatio-term__hint" for="notatio-term-ex-${this.mode}">Examples</label>
               <select
@@ -180,7 +199,8 @@ export class NotatioTerminal extends LitElement {
     const host = this.screen.value;
     if (!host) return;
     const color = true;
-    this.engine = this.mode === "cli" ? cliEngine(color) : replEngine(color);
+    if (this.mode !== "show")
+      this.engine = this.mode === "cli" ? cliEngine(color) : replEngine(color);
 
     const [{ Terminal }, { FitAddon }] = await Promise.all([
       import("@xterm/xterm"),
@@ -197,11 +217,19 @@ export class NotatioTerminal extends LitElement {
     const fit = new FitAddon();
     term.loadAddon(fit);
     term.open(host);
-    fit.fit();
-    new ResizeObserver(() => fit.fit()).observe(host);
+    // A shown expression sizes the screen to what it printed; only the width follows the box.
+    const show = this.mode === "show";
+    const refit = (): void => {
+      if (!show) return fit.fit();
+      const cols = fit.proposeDimensions()?.cols;
+      if (cols !== undefined && cols !== term.cols) term.resize(cols, term.rows);
+    };
+    refit();
+    new ResizeObserver(refit).observe(host);
     term.onData((d) => this.onData(d));
     this.term = term;
 
+    if (this.mode === "show") return this.show();
     term.writeln(this.engine.banner());
     term.write("\r\n");
     this.newPrompt();
@@ -211,6 +239,64 @@ export class NotatioTerminal extends LitElement {
       } catch {
         // ignore a malformed seed
       }
+    }
+  }
+
+  protected override updated(changed: PropertyValues): void {
+    if (this.mode === "show" && this.term && (changed.has("value") || changed.has("env")))
+      this.show();
+  }
+
+  // --- Show --------------------------------------------------------------
+
+  /** Print `value` as a terminal in `env` would, from a clean screen. */
+  private show(): void {
+    const term = this.term;
+    if (!term) return;
+    this.driving?.stop();
+    this.driving = undefined;
+    term.reset();
+    term.resize(term.cols, NotatioTerminal.SHOW_ROWS);
+    // `convertEol` makes each `\n` a line break, as a TTY's own line discipline does.
+    const write = (text: string): void => term.write(text);
+    this.shown = present(this.value, environmentNamed(this.env) ?? TTY, {
+      write,
+      mouse: true,
+      cursorRow: () => term.buffer.active.cursorY + 1,
+      columns: () => term.cols,
+    });
+    write(`${this.shown.echo}\n`);
+    this.driving = this.shown.driver;
+    if (this.driving) this.driving.draw();
+    else write(this.shown.out);
+    // Writes are parsed asynchronously; the callback runs once they all have been.
+    term.write("", () => this.fitRows());
+  }
+
+  /** Shrink the screen to the rows in use; a redraw then stays within the viewport. */
+  private fitRows(): void {
+    const term = this.term;
+    if (!term) return;
+    const b = term.buffer.active;
+    term.resize(term.cols, Math.max(4, b.baseY + b.cursorY + 1));
+  }
+
+  private onShowData(data: string): void {
+    const d = this.driving;
+    if (d === undefined) {
+      // Done driving: Enter starts over, the way re-running the line would.
+      if (data === CTRL.ENTER && this.shown?.driver) this.show();
+      return;
+    }
+    d.data(data);
+    for (const key of keysOf(data)) {
+      if (!d.key(key)) continue;
+      d.stop();
+      this.driving = undefined;
+      const out = this.shown!.settle(d.pinned());
+      this.term?.resize(this.term.cols, NotatioTerminal.SHOW_ROWS);
+      this.term?.write(`${out}\n\n${resumeHint(true)}`, () => this.fitRows());
+      return;
     }
   }
 
@@ -341,6 +427,7 @@ export class NotatioTerminal extends LitElement {
   // --- Input -------------------------------------------------------------
 
   private onData(data: string): void {
+    if (this.mode === "show") return this.onShowData(data);
     if (this.exited) return;
     if (this._playing) this.stopPlay(); // any keystroke stops autoplay
     switch (data) {
@@ -460,6 +547,12 @@ notatio-terminal {
   overflow: hidden;
   background: ${THEME.background};
   padding: 0.5rem 0.5rem 0.25rem;
+}
+notatio-terminal[mode="show"] {
+  margin: 0;
+}
+notatio-terminal[mode="show"] .notatio-term__screen {
+  height: auto;
 }
 .notatio-term__screen .xterm-viewport {
   overflow-y: auto;
