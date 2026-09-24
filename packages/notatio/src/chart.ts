@@ -366,44 +366,69 @@ export function boxWhiskerChartSvg(
 
 export interface ArrayPlotOptions extends ChartOptions {}
 
-/** A 2-D numeric matrix as a heatmap grid: value -> a blue-to-accent ramp. */
+// The tallest a square-celled grid grows before it narrows instead: a square frame.
+const ARRAY_MAX_H = 340;
+
+/**
+ * A 2-D numeric matrix as a grid of cells. Cells are square by default (the frame's height
+ * follows rows/cols, as Wolfram's AspectRatio does), up to a square frame; past that the
+ * grid narrows and centres. An explicit `height` stretches cells to fill the frame instead.
+ * A 0/1 matrix is drawn two-tone -- 0 background, 1 foreground, like Wolfram's white/black;
+ * anything else maps value -> a blue-to-accent ramp.
+ */
 export function arrayPlotSvg(
   matrix: readonly (readonly number[])[],
   opts: ArrayPlotOptions = {},
 ): string {
   const W = opts.width ?? 340;
-  const H = opts.height ?? 200;
   const mT = opts.title ? 26 : 6;
   const m = 6;
   const rows = matrix.length;
   const cols = rows > 0 ? Math.max(...matrix.map((r) => r.length)) : 0;
-  if (rows === 0 || cols === 0) return frame(W, H, titleSvg(W, opts.title), "array plot");
+  if (rows === 0 || cols === 0)
+    return frame(W, opts.height ?? 200, titleSvg(W, opts.title), "array plot");
 
   const flat = matrix.flat().filter(Number.isFinite);
   const lo = flat.length ? Math.min(...flat) : 0;
   const hi = flat.length ? Math.max(...flat) : 1;
   const span = hi - lo || 1;
+  const binary = flat.every((v) => v === 0 || v === 1);
 
-  const plotW = W - 2 * m;
-  const plotH = H - mT - m;
-  const cw = plotW / cols;
-  const ch = plotH / rows;
-  const ramp = (t: number): string =>
-    `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, t)) * 100)}%, ${SERIES[1]})`;
+  let plotW = W - 2 * m;
+  let H: number;
+  let cw: number;
+  let ch: number;
+  if (opts.height !== undefined) {
+    H = opts.height;
+    cw = plotW / cols;
+    ch = (H - mT - m) / rows;
+  } else {
+    cw = ch = Math.min(plotW / cols, (ARRAY_MAX_H - mT - m) / rows);
+    plotW = cw * cols;
+    H = mT + ch * rows + m;
+  }
+  const x0 = (W - plotW) / 2;
+  const plotH = ch * rows;
+
+  const fill = binary
+    ? (v: number): string => (v === 1 ? FG : BG)
+    : (v: number): string =>
+        `color-mix(in srgb, ${ACCENT} ${n2(Math.max(0, Math.min(1, (v - lo) / span)) * 100)}%, ${SERIES[1]})`;
 
   const cells = matrix
     .flatMap((row, j) =>
       row.map((v, i) => {
         if (!Number.isFinite(v)) return "";
-        const t = (v - lo) / span;
-        const x = m + i * cw;
+        const x = x0 + i * cw;
         const y = mT + j * ch;
-        return `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(cw + 0.5)}" height="${n2(ch + 0.5)}" fill="${ramp(t)}"/>`;
+        return `<rect x="${n2(x)}" y="${n2(y)}" width="${n2(cw + 0.5)}" height="${n2(ch + 0.5)}" fill="${fill(v)}"/>`;
       }),
     )
     .join("");
+  // Wolfram frames an ArrayPlot; it also keeps 0-cells from bleeding into the page.
+  const border = `<rect x="${n2(x0)}" y="${n2(mT)}" width="${n2(plotW)}" height="${n2(plotH)}" fill="none" stroke="${AXIS}" stroke-width="1" opacity="0.5"/>`;
 
-  return frame(W, H, titleSvg(W, opts.title) + cells, "array plot");
+  return frame(W, H, titleSvg(W, opts.title) + cells + border, "array plot");
 }
 
 // ---------------------------------------------------------------------------
