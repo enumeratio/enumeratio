@@ -1,0 +1,33 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "IntegerDigits": {
+      "[\"IntegerDigits\",255,16]": {
+        "wolfram": {
+          "input": "IntegerDigits[255, 16]",
+          "output": "{15, 15}",
+          "verdict": "agree"
+        }
+      },
+      "[\"IntegerDigits\",93784,[\"MixedRadix\",[\"List\",24,60,60]]]": {
+        "wolfram": {
+          "input": "IntegerDigits[93784, MixedRadix[List[24, 60, 60]]]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "FromDigits": {
+      "[\"FromDigits\",[\"List\",1,2,3,4],[\"MixedRadix\",[\"List\",24,60,60]]]": {
+        "wolfram": {
+          "input": "FromDigits[List[1, 2, 3, 4], MixedRadix[List[24, 60, 60]]]",
+          "output": "93784",
+          "verdict": "agree"
+        }
+      }
+    }
+  }
+}

@@ -52,6 +52,10 @@ export const modular: readonly ReferenceEntry[] = [
         expected: M(1, 1, 1, 2),
         caption: "words multiply their matrices",
         category: "Scope",
+        divergence: {
+          wolfram:
+            "Wolfram has no word spelling for a modular-group element; its Dot leaves two strings unevaluated.",
+        },
       },
       {
         expr: ["Inverse", W("L")],

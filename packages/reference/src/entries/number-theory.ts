@@ -511,6 +511,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: ["List", ["List", 1, 4], ["List"], ["List"], ["List", 2, 3]],
         caption: "threads over lists: the squares mod 5 are exactly 1 and 4",
         category: "Scope",
+        divergence: {
+          wolfram:
+            "We thread element-wise over a List base; Wolfram's PowerModList doesn't accept a List in the base position and leaves the call unevaluated.",
+        },
       },
       {
         expr: ["PowerModList", -1, ["Rational", 1, 2], ["Add", ["Power", 10, 30], 57]],
@@ -644,6 +648,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: ["List"],
         caption: "no inverse when $\\gcd(a, m) \\ne 1$, so the list is empty",
         category: "Possible issues",
+        divergence: {
+          wolfram:
+            "We spell 'no inverse exists' as the empty list; Wolfram's PowerModList instead leaves the call unevaluated rather than returning {}.",
+        },
       },
       {
         expr: ["PowerModList", 1, ["Rational", 1, 2], 8],
@@ -668,6 +676,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
         caption:
           "a product of two 21-digit primes cannot be factored in budget, so even $\\sqrt 4$ stays unevaluated — finding the other two roots is as hard as factoring",
         category: "Possible issues",
+        divergence: {
+          wolfram:
+            "We decline once factoring the modulus exceeds our budget and leave the call symbolic; Wolfram's kernel factors this 41-digit product of two 21-digit primes within its own budget and returns all four square roots.",
+        },
       },
       {
         expr: ["PowerModList", 0, ["Rational", 1, 2], ["Power", 3, 40]],
@@ -687,6 +699,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
         caption:
           "the moduli with four or more square roots of 1 come in patterns: mod 24 every unit is one, since $(\\mathbb{Z}/24)^\\times \\cong C_2^3$",
         category: "Neat examples",
+        divergence: {
+          wolfram:
+            "We thread a rational exponent over a List of moduli; Wolfram's PowerModList doesn't accept a List modulus and leaves the call unevaluated.",
+        },
       },
       {
         expr: ["PowerModList", ["Complex", 0, 1], ["Rational", 1, 2], 7],
@@ -1917,6 +1933,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
         expected: ["Length", ["PrimitiveRootList", 1000003]],
         caption: "past 100 000 roots the list is not built",
         category: "Possible issues",
+        divergence: {
+          wolfram:
+            "We cap the built list at 100,000 roots and leave Length of it unevaluated past that; Wolfram computes $\\varphi(\\varphi(1000003)) = 333332$ directly without materializing the list.",
+        },
       },
     ],
     seeAlso: ["PrimitiveRoot", "MultiplicativeOrder", "PowerModList"],

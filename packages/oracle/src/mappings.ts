@@ -28,7 +28,7 @@ export interface Mapping {
 export const MAPPINGS: readonly Mapping[] = [
   // ── arithmetic and structure ────────────────────────────────────────────────
   { head: "Add", emit: { sympy: "($*+)", mpmath: "($*+)", sage: "($*+)" } },
-  { head: "Multiply", emit: { sympy: "($***)", mpmath: "($***)", sage: "($***)" } },
+  { head: "Multiply", emit: { sympy: "($**)", mpmath: "($**)", sage: "($**)" } },
   {
     head: "Subtract",
     arity: 2,
@@ -183,15 +183,22 @@ export const MAPPINGS: readonly Mapping[] = [
     emit: { wolfram: "LCM[$1, $2]", sympy: "lcm($1, $2)", sage: "lcm($1, $2)" },
   },
   {
+    head: "PowerMod",
+    arity: 3,
+    emit: { sage: "power_mod($1, $2, $3)" },
+    note: "Sage's power_mod takes a negative exponent, like ours; no rational base or exponent.",
+  },
+  {
     head: "PowerModList",
     arity: 3,
-    emit: { wolfram: "PowerModList[$1, $2, $3]" },
-    note: "Sage reaches this through Zmod(m)(a).nth_root(b, all=True); no one-liner in SymPy.",
+    emit: { wolfram: "PowerModList[$1, $2, $3]", sage: "enumeratio_power_mod_list($1, $2, $3)" },
+    note: "Sage reaches this through Zmod(m)(a).nth_root(b, all=True) (run.ts's SAGE_PREAMBLE); no one-liner in SymPy.",
   },
   {
     head: "PrimitiveRootList",
     arity: 1,
-    emit: { wolfram: "PrimitiveRootList[$1]" },
+    emit: { wolfram: "PrimitiveRootList[$1]", sage: "enumeratio_primitive_root_list($1)" },
+    note: "Sage's primitive_root gives one root only; run.ts's SAGE_PREAMBLE walks the powers coprime to phi(n).",
   },
   {
     head: "RationalReconstruction",
@@ -209,13 +216,35 @@ export const MAPPINGS: readonly Mapping[] = [
     emit: { wolfram: "HermiteDecomposition[$1]" },
   },
   {
+    head: "MultiplicativeOrder",
+    arity: 2,
+    emit: { sage: "Mod($1, $2).multiplicative_order()" },
+  },
+  {
+    head: "ModularInverse",
+    arity: 2,
+    emit: { sage: "inverse_mod($1, $2)" },
+  },
+  {
+    head: "FactorInteger",
+    arity: 1,
+    emit: { sage: "list(factor($1))" },
+    note: "Sage has no unit factor for 1, 0 or a negative n — a shape difference from compute-engine's explicit 1^1/0^1/-1^1, not a bug.",
+  },
+  {
+    head: "Divisors",
+    arity: 1,
+    emit: { sage: "divisors($1)" },
+  },
+  {
     head: "ContinuedFraction",
     arity: 1,
     emit: {
       wolfram: "ContinuedFraction[$1]",
       sympy: "list(continued_fraction($1))",
-      sage: "continued_fraction($1)",
+      sage: "list(continued_fraction($1))",
     },
+    note: "Sage's continued_fraction returns a ContinuedFraction object (str() is '[3; 7, 16]'); list(...) gives the plain quotients, like the SymPy row.",
   },
 
   // ── added from a scan's work queue; see reference/scripts/oracle-scan.ts ─────────────────────
@@ -280,8 +309,16 @@ export const MAPPINGS: readonly Mapping[] = [
     arity: 1,
     emit: { wolfram: "BernoulliB[$1]", sympy: "bernoulli($1)", sage: "bernoulli($1)" },
   },
-  { head: "Max", emit: { wolfram: "Max[$*,]", sympy: "Max($*,)", sage: "max([$*,])" } },
-  { head: "Min", emit: { wolfram: "Min[$*,]", sympy: "Min($*,)", sage: "min([$*,])" } },
+  {
+    head: "Max",
+    emit: { wolfram: "Max[$*,]", sympy: "Max($*,)", sage: "enumeratio_max($*,)" },
+    note: "Wolfram (and our Max) flattens nested lists into one pool; Sage's builtin max() on a list of lists compares them lexicographically instead, so it is routed through a flattening helper (run.ts's SAGE_PREAMBLE).",
+  },
+  {
+    head: "Min",
+    emit: { wolfram: "Min[$*,]", sympy: "Min($*,)", sage: "enumeratio_min($*,)" },
+    note: "Same flattening as Max.",
+  },
   {
     head: "Mod",
     arity: 2,

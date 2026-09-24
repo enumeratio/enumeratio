@@ -62,6 +62,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "An exact non-integer argument stays symbolic under plain evaluation (use N(); Wolfram's closed form in Glaisher's constant is not reproduced)",
+        divergence: {
+          wolfram:
+            "An exact non-integer argument stays symbolic here; Wolfram continues to a closed form in Glaisher's constant.",
+        },
       },
     ],
     implementations: [
@@ -352,6 +356,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["DirichletEta", ["Rational", 1, 2]],
         category: "Possible issues",
         caption: "An exact non-integer argument stays symbolic until N()",
+        divergence: {
+          wolfram:
+            "An exact non-integer argument stays symbolic here; Wolfram rewrites it as $(1-\\sqrt2)\\zeta(1/2)$ instead.",
+        },
       },
     ],
     implementations: [
@@ -431,6 +439,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "Even $s \\ge 4$ has no closed form and stays symbolic; N() gives $0.98894\\ldots$",
+        divergence: {
+          wolfram:
+            "Stays symbolic here; Wolfram rewrites it via $\\zeta(4, 1/4)$ and $\\zeta(4, 3/4)$ instead of a further-reduced number.",
+        },
       },
       {
         expr: ["DirichletBeta", 2.5],
@@ -676,6 +688,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: "ComplexInfinity",
         category: "Properties",
         caption: "…and keeps $\\zeta$'s pole; a non-principal $L$ is entire",
+        divergence: {
+          wolfram:
+            "We answer the pole as ComplexInfinity; Wolfram declines and leaves the call unevaluated instead.",
+        },
       },
       {
         expr: ["DirichletL", 5, 2, 0],

@@ -9,35 +9,83 @@ report — it is one of three things, and telling them apart is the review:
   branch cut, signed versus unsigned Stirling numbers of the first kind)
 - **our bug** — the interesting case, and the reason this exists
 
-The Wolfram rows are classified in `golden/divergences.json`.
+Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 
-Systems in this run: wolfram.
+Systems in this run: sage.
 
-## wolfram — agree 671, disagree 24, inconclusive 0, unmapped 164, error 0
+## sage — agree 237, disagree 19, inconclusive 53, unmapped 711, error 46
 
-| example              | ours                                                                                 | theirs                                               |
-| -------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| `Factorial2#7`       | `NaN`                                                                                | `DirectedInfinity[]`                                 |
-| `CatalanNumber#10`   | `["CatalanNumber",-1]`                                                               | `-1`                                                 |
-| `GCD#8`              | `2`                                                                                  | `List[2, 4]`                                         |
-| `MoebiusMu#6`        | `["MoebiusMu",0]`                                                                    | `0`                                                  |
-| `ExtendedGCD#1`      | `["Tuple",1,-1,1]`                                                                   | `List[1, List[-1, 1]]`                               |
-| `ExtendedGCD#2`      | `["Tuple",6,-1,1]`                                                                   | `List[6, List[-1, 1]]`                               |
-| `ExtendedGCD#3`      | `["Tuple",1,4,-1]`                                                                   | `List[1, List[4, -1]]`                               |
-| `ExtendedGCD#4`      | `["Tuple",5,0,1]`                                                                    | `List[5, List[0, 1]]`                                |
-| `FromDigits#5`       | `["FromDigits",["List"]]`                                                            | `0`                                                  |
-| `IntegerString#5`    | `'-42'`                                                                              | `"42"`                                               |
-| `Round#9`            | `3`                                                                                  | `2`                                                  |
-| `Round#10`           | `-3`                                                                                 | `-2`                                                 |
-| `Max#8`              | `NaN`                                                                                | `DirectedInfinity[-1]`                               |
-| `Arctan#7`           | `["Error","'unexpected-argument'","'1'",["ErrorTrace",["ErrorFrame","'Arctan'",2]]]` | `Times[Rational[1, 4], Pi]`                          |
-| `HurwitzZeta#6`      | `-2.41141975308642`                                                                  | `HurwitzZeta[-3, Rational[7, 3]]`                    |
-| `LerchPhi#4`         | `-0.08333333333333333`                                                               | `DirectedInfinity[]`                                 |
-| `PolyLog#7`          | `-1.4603545088095868`                                                                | `DirectedInfinity[]`                                 |
-| `PolyLog#11`         | `["PolyLog",2.5,2]`                                                                  | `Complex[2.789660332381895', -1.3638037005377295']`  |
-| `GammaRegularized#6` | `["GammaRegularized",2.5,-1]`                                                        | `Complex[0.9999999999999998', -0.6280082302883814']` |
-| `BetaRegularized#8`  | `["BetaRegularized",2,2,3]`                                                          | `8`                                                  |
-| `Intersection#6`     | `EmptySet`                                                                           | `List[]`                                             |
-| `SetMinus#5`         | `EmptySet`                                                                           | `List[]`                                             |
-| `First#4`            | `Missing`                                                                            | `First[List[]]`                                      |
-| `At#7`               | `NaN`                                                                                | `Part[List[1, 2, 3], 10]`                            |
+| example                           | ours                                                                                      | theirs                                                                                       |
+| --------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `combinatorics/CatalanNumber#10`  | `["CatalanNumber",-1]`                                                                    | `-1/2`                                                                                       |
+| `combinatorics/StirlingS1#1`      | `-50`                                                                                     | `50`                                                                                         |
+| `combinatorics/StirlingS1#8`      | `-362880`                                                                                 | `362880`                                                                                     |
+| `number-theory/PowerModList#24`   | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]` | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
+| `number-theory/FactorInteger#5`   | `["List",["Tuple",1,1]]`                                                                  | `[]`                                                                                         |
+| `number-theory/FactorInteger#7`   | `["List",["Tuple",-1,1],["Tuple",2,2],["Tuple",3,1],["Tuple",5,1]]`                       | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
+| `arithmetic/Sqrt#5`               | `{"re":0,"im":2}`                                                                         | `2*I`                                                                                        |
+| `arithmetic/Sqrt#9`               | `{"re":0,"im":1.4142135623730951}`                                                        | `sqrt(-2)`                                                                                   |
+| `arithmetic/Sqrt#10`              | `{"re":0,"im":0.6666666666666666}`                                                        | `2/3*I`                                                                                      |
+| `elementary/Tan#9`                | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
+| `elementary/Ln#3`                 | `NegativeInfinity`                                                                        | `-Infinity`                                                                                  |
+| `elementary/Ln#5`                 | `true`                                                                                    | `False`                                                                                      |
+| `elementary/Ln#6`                 | `{"re":0,"im":3.141592653589793}`                                                         | `I*pi`                                                                                       |
+| `special-functions/Gamma#1`       | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
+| `special-functions/Gamma#6`       | `true`                                                                                    | `False`                                                                                      |
+| `special-functions/Zeta#8`        | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
+| `special-functions/HurwitzZeta#5` | `ComplexInfinity`                                                                         | `hurwitz_zeta(1, 3)`                                                                         |
+| `special-functions/PolyLog#6`     | `true`                                                                                    | `False`                                                                                      |
+| `special-functions/PolyLog#11`    | `["PolyLog",2.5,2]`                                                                       | `2.78966033238278 - 1.36380370053935*I`                                                      |
+
+<details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
+
+| example                                  | message                                                                                      |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `combinatorics/Factorial#5`              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `combinatorics/Factorial#9`              | `ValueError: factorial only defined for nonnegative integers`                                |
+| `combinatorics/BellNumber#8`             | `ArithmeticError: Bell numbers not defined for negative indices`                             |
+| `sequences/BernoulliB#8`                 | `OverflowError: can't convert negative value to unsigned long`                               |
+| `number-theory/GCD#8`                    | `TypeError: unable to call gcd with [2, 4]`                                                  |
+| `number-theory/Mod#4`                    | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
+| `number-theory/Mod#5`                    | `ZeroDivisionError: Integer modulo by zero`                                                  |
+| `number-theory/PowerMod#6`               | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `number-theory/PowerMod#7`               | `TypeError: no conversion of this rational to integer`                                       |
+| `number-theory/PowerMod#8`               | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `number-theory/PowerMod#10`              | `TypeError: no conversion of this rational to integer`                                       |
+| `number-theory/PowerMod#18`              | `TypeError: no conversion of this rational to integer`                                       |
+| `number-theory/PowerModList#8`           | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `number-theory/PowerModList#22`          | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `number-theory/PowerModList#25`          | `MemoryError: over 1024 MiB`                                                                 |
+| `number-theory/PowerModList#26`          | `TypeError: unhashable type: 'list'`                                                         |
+| `number-theory/ModularInverse#4`         | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `number-theory/IsPrime#8`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `number-theory/FactorInteger#6`          | `ArithmeticError: factorization of 0 is not defined`                                         |
+| `number-theory/MultiplicativeOrder#5`    | `ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22`   |
+| `number-theory/PrimitiveRootList#1`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
+| `number-theory/PrimitiveRootList#2`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
+| `number-theory/PrimitiveRootList#3`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
+| `number-theory/PrimitiveRootList#4`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
+| `number-theory/PrimitiveRootList#6`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
+| `number-theory/PrimitiveRootList#7`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
+| `number-theory/RationalReconstruction#4` | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `number-theory/RationalReconstruction#6` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
+| `number-theory/RationalReconstruction#8` | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |
+| `arithmetic/Abs#6`                       | `TypeError: bad operand type for abs(): 'list'`                                              |
+| `arithmetic/Sign#6`                      | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `arithmetic/Negate#5`                    | `TypeError: bad operand type for unary -: 'list'`                                            |
+| `arithmetic/Square#5`                    | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'`                   |
+| `arithmetic/Floor#4`                     | `TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a ` |
+| `arithmetic/Ceil#4`                      | `TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a ` |
+| `arithmetic/Max#8`                       | `ValueError: max() iterable argument is empty`                                               |
+| `elementary/Sin#10`                      | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `elementary/Cos#9`                       | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `elementary/Tan#8`                       | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `elementary/Exp#6`                       | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `special-functions/Gamma#3`              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `special-functions/Zeta#4`               | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `special-functions/Zeta#14`              | `ValueError: psi2_eval(): pole`                                                              |
+| `special-functions/PolyLog#10`           | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `special-functions/PolyGamma#6`          | `ValueError: psi2_eval(): pole`                                                              |
+| `special-functions/PolyGamma#8`          | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+
+</details>

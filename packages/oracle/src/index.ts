@@ -2,6 +2,13 @@ export { emit, type Emitted, type MathJSON, unmappedHeads } from "./emit.ts";
 export { MAPPINGS, type Mapping, mappedHeads, mappingFor } from "./mappings.ts";
 export { type Result, runIn } from "./run.ts";
 export { SYSTEMS, type System, type SystemSpec, wiredSystems } from "./systems.ts";
-export { asNumber, compare, normalise, type Verdict } from "./compare.ts";
+export {
+  asNumber,
+  compare,
+  comparePythonStructured,
+  normalise,
+  parsePython,
+  type Verdict,
+} from "./compare.ts";
 export { compareTrees, type Leaf, reduce, symbolic, type Tree } from "./structural.ts";
 export { DIVERGENCE_KINDS, type Divergence, type DivergenceKind } from "./divergence.ts";

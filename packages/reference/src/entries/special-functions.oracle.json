@@ -1,0 +1,1130 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "Gamma": {
+      "[\"Gamma\",0]": {
+        "wolfram": {
+          "input": "Gamma[0]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "gamma(0)",
+          "output": "Infinity",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "The pole is ComplexInfinity here; Sage's gamma(0) spells the same pole 'Infinity' (unsigned), a different notation for the same undefined value."
+        }
+      },
+      "[\"Gamma\",2.5]": {
+        "wolfram": {
+          "input": "Gamma[2.5]",
+          "output": "1.329340388179137",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "gamma(2.5)",
+          "output": "1.32934038817914",
+          "verdict": "agree"
+        }
+      },
+      "[\"Gamma\",[\"List\",0,-1]]": {
+        "wolfram": {
+          "input": "Gamma[List[0, -1]]",
+          "output": "{ComplexInfinity, ComplexInfinity}",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "gamma([0, -1])",
+          "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
+          "verdict": "error"
+        }
+      },
+      "[\"Equal\",[\"Gamma\",6],[\"Factorial\",5]]": {
+        "wolfram": {
+          "input": "(Gamma[6] == Factorial[5])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(gamma(6) == factorial(5))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Gamma\",6],[\"Multiply\",5,[\"Gamma\",5]]]": {
+        "wolfram": {
+          "input": "(Gamma[6] == Times[5, Gamma[5]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(gamma(6) == (5 * gamma(5)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Multiply\",[\"Gamma\",[\"Rational\",1,3]],[\"Gamma\",[\"Rational\",2,3]]],[\"Divide\",\"Pi\",[\"Sin\",[\"Divide\",\"Pi\",3]]]]": {
+        "wolfram": {
+          "input": "(Times[Gamma[Rational[1, 3]], Gamma[Rational[2, 3]]] == Divide[Pi, Sin[Divide[Pi, 3]]])",
+          "output": "Gamma[1/3]*Gamma[2/3] == (2*Pi)/Sqrt[3]",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((gamma((1/3)) * gamma((2/3))) == (pi / sin((pi / 3))))",
+          "output": "False",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "True by the reflection formula; Sage's bool(a==b) doesn't invoke that identity automatically on unevaluated symbolic Gammas and reports False instead of attempting the proof."
+        }
+      },
+      "[\"Equal\",[\"Gamma\",[\"Rational\",1,2]],[\"Sqrt\",\"Pi\"]]": {
+        "wolfram": {
+          "input": "(Gamma[Rational[1, 2]] == Sqrt[Pi])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(gamma((1/2)) == sqrt(pi))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Divide\",[\"Power\",\"Pi\",2],[\"Gamma\",3]],[\"Divide\",[\"Power\",\"Pi\",2],2]]": {
+        "wolfram": {
+          "input": "(Divide[Power[Pi, 2], Gamma[3]] == Divide[Power[Pi, 2], 2])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(((pi^2) / gamma(3)) == ((pi^2) / 2))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Gamma\",[\"Rational\",5,2]]": {
+        "wolfram": {
+          "input": "Gamma[Rational[5, 2]]",
+          "output": "(3*Sqrt[Pi])/4",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "gamma((5/2))",
+          "output": "3/4*sqrt(pi)",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Equal\",[\"Power\",[\"Gamma\",[\"Rational\",1,2]],2],\"Pi\"]": {
+        "wolfram": {
+          "input": "(Power[Gamma[Rational[1, 2]], 2] == Pi)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((gamma((1/2))^2) == pi)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Gamma\",2.5,0,1.5]": {
+        "wolfram": {
+          "input": "Gamma[2.5, 0, 1.5]",
+          "output": "0.39882094539234453",
+          "verdict": "agree"
+        }
+      },
+      "[\"Gamma\",2.5,1.5,3]": {
+        "wolfram": {
+          "input": "Gamma[2.5, 1.5, 3]",
+          "output": "0.5234502669154895",
+          "verdict": "agree"
+        }
+      }
+    },
+    "GammaLn": {
+      "[\"GammaLn\",0]": {
+        "wolfram": {
+          "input": "LogGamma[0]",
+          "output": "Infinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaLn\",2.5]": {
+        "wolfram": {
+          "input": "LogGamma[2.5]",
+          "output": "0.2846828704729192",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GammaLn\",5],[\"Ln\",[\"Gamma\",5]]]": {
+        "wolfram": {
+          "input": "(LogGamma[5] == Log[Gamma[5]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GammaLn\",1],0]": {
+        "wolfram": {
+          "input": "(LogGamma[1] == 0)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GammaLn\",6],[\"Add\",[\"GammaLn\",5],[\"Ln\",5]]]": {
+        "wolfram": {
+          "input": "(LogGamma[6] == Plus[LogGamma[5], Log[5]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GammaLn\",[\"Rational\",1,2]],[\"Multiply\",[\"Rational\",1,2],[\"Ln\",\"Pi\"]]]": {
+        "wolfram": {
+          "input": "(LogGamma[Rational[1, 2]] == Times[Rational[1, 2], Log[Pi]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GammaLn\",11],[\"Ln\",[\"Factorial\",10]]]": {
+        "wolfram": {
+          "input": "(LogGamma[11] == Log[Factorial[10]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaLn\",5]": {
+        "wolfram": {
+          "input": "LogGamma[5]",
+          "output": "Log[24]",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GammaLn\",101],[\"Ln\",[\"Factorial\",100]]]": {
+        "wolfram": {
+          "input": "(LogGamma[101] == Log[Factorial[100]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Beta": {
+      "[\"Beta\",2,3]": {
+        "wolfram": {
+          "input": "Beta[2, 3]",
+          "output": "1/12",
+          "verdict": "agree"
+        }
+      },
+      "[\"Beta\",1,1]": {
+        "wolfram": {
+          "input": "Beta[1, 1]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Beta\",3,3]": {
+        "wolfram": {
+          "input": "Beta[3, 3]",
+          "output": "1/30",
+          "verdict": "agree"
+        }
+      },
+      "[\"Beta\",[\"List\",1,2],2]": {
+        "wolfram": {
+          "input": "Beta[List[1, 2], 2]",
+          "output": "{1/2, 1/6}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Beta\",2,5],[\"Beta\",5,2]]": {
+        "wolfram": {
+          "input": "(Beta[2, 5] == Beta[5, 2])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Multiply\",9,[\"Multiply\",[\"Beta\",4,6],[\"Binomial\",8,3]]],1]": {
+        "wolfram": {
+          "input": "(Times[9, Times[Beta[4, 6], Binomial[8, 3]]] == 1)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Beta\",0.5,0.5]": {
+        "wolfram": {
+          "input": "Beta[0.5, 0.5]",
+          "output": "3.1415926535897936",
+          "verdict": "agree"
+        }
+      },
+      "[\"Beta\",-1,2]": {
+        "wolfram": {
+          "input": "Beta[-1, 2]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Erf": {
+      "[\"Erf\",0]": {
+        "wolfram": {
+          "input": "Erf[0]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erf\",\"NegativeInfinity\"]": {
+        "wolfram": {
+          "input": "Erf[-Infinity]",
+          "output": "-1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erf\",0.5]": {
+        "wolfram": {
+          "input": "Erf[0.5]",
+          "output": "0.5204998778130465",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Erf\",2],[\"Erf\",-2]],0]": {
+        "wolfram": {
+          "input": "(Plus[Erf[2], Erf[-2]] == 0)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Erf\",2],[\"Erfc\",2]],1]": {
+        "wolfram": {
+          "input": "(Plus[Erf[2], Erfc[2]] == 1)",
+          "output": "Erf[2] + Erfc[2] == 1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erf\",0.7071067811865476]": {
+        "wolfram": {
+          "input": "Erf[0.7071067811865476]",
+          "output": "0.6826894921370861",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erf\",1]": {
+        "wolfram": {
+          "input": "Erf[1]",
+          "output": "Erf[1]",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erf\",3.5]": {
+        "wolfram": {
+          "input": "Erf[3.5]",
+          "output": "0.9999992569016276",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Erfc": {
+      "[\"Erfc\",0]": {
+        "wolfram": {
+          "input": "Erfc[0]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erfc\",\"NegativeInfinity\"]": {
+        "wolfram": {
+          "input": "Erfc[-Infinity]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erfc\",0.5]": {
+        "wolfram": {
+          "input": "Erfc[0.5]",
+          "output": "0.4795001221869535",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Erfc\",-1],[\"Erfc\",1]],2]": {
+        "wolfram": {
+          "input": "(Plus[Erfc[-1], Erfc[1]] == 2)",
+          "output": "Erfc[-1] + Erfc[1] == 2",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Erf\",2],[\"Erfc\",2]],1]": {
+        "wolfram": {
+          "input": "(Plus[Erf[2], Erfc[2]] == 1)",
+          "output": "Erf[2] + Erfc[2] == 1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erfc\",1]": {
+        "wolfram": {
+          "input": "Erfc[1]",
+          "output": "Erfc[1]",
+          "verdict": "agree"
+        }
+      },
+      "[\"Erfc\",3.5]": {
+        "wolfram": {
+          "input": "Erfc[3.5]",
+          "output": "7.43098372341413*^-7",
+          "verdict": "agree"
+        }
+      }
+    },
+    "ErfInv": {
+      "[\"ErfInv\",0]": {
+        "wolfram": {
+          "input": "InverseErf[0]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"ErfInv\",1]": {
+        "wolfram": {
+          "input": "InverseErf[1]",
+          "output": "Infinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"ErfInv\",-1]": {
+        "wolfram": {
+          "input": "InverseErf[-1]",
+          "output": "-Infinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"ErfInv\",0.5]": {
+        "wolfram": {
+          "input": "InverseErf[0.5]",
+          "output": "0.47693627620446993",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Erf\",[\"ErfInv\",0.5]],0.5]": {
+        "wolfram": {
+          "input": "(Erf[InverseErf[0.5]] == 0.5)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"ErfInv\",2]": {
+        "wolfram": {
+          "input": "InverseErf[2]",
+          "output": "InverseErf[2]",
+          "verdict": "agree"
+        }
+      },
+      "[\"ErfInv\",0.9999]": {
+        "wolfram": {
+          "input": "InverseErf[0.9999]",
+          "output": "2.75106390571208",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Zeta": {
+      "[\"Zeta\",2]": {
+        "wolfram": {
+          "input": "Zeta[2]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(2)",
+          "output": "1/6*pi^2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",4]": {
+        "wolfram": {
+          "input": "Zeta[4]",
+          "output": "Pi^4/90",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(4)",
+          "output": "1/90*pi^4",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",6]": {
+        "wolfram": {
+          "input": "Zeta[6]",
+          "output": "Pi^6/945",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(6)",
+          "output": "1/945*pi^6",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",[\"List\",-1,-2,-3]]": {
+        "wolfram": {
+          "input": "Zeta[List[-1, -2, -3]]",
+          "output": "{-1/12, 0, 1/120}",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta([-1, -2, -3])",
+          "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
+          "verdict": "error"
+        }
+      },
+      "[\"Zeta\",0]": {
+        "wolfram": {
+          "input": "Zeta[0]",
+          "output": "-1/2",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(0)",
+          "output": "-1/2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",-2]": {
+        "wolfram": {
+          "input": "Zeta[-2]",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(-2)",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Zeta\",-3]": {
+        "wolfram": {
+          "input": "Zeta[-3]",
+          "output": "1/120",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(-3)",
+          "output": "1/120",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",1]": {
+        "wolfram": {
+          "input": "Zeta[1]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(1)",
+          "output": "Infinity",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "The pole is ComplexInfinity here; Sage's zeta(1) spells the same pole 'Infinity', a different notation for the same divergence."
+        }
+      },
+      "[\"Equal\",[\"Divide\",1,[\"Zeta\",2]],[\"Divide\",6,[\"Power\",\"Pi\",2]]]": {
+        "wolfram": {
+          "input": "(Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((1 / zeta(2)) == (6 / (pi^2)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Zeta\",3]": {
+        "wolfram": {
+          "input": "Zeta[3]",
+          "output": "Zeta[3]",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(3)",
+          "output": "zeta(3)",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",-1]": {
+        "wolfram": {
+          "input": "Zeta[-1]",
+          "output": "-1/12",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "zeta(-1)",
+          "output": "-1/12",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",2,1]": {
+        "wolfram": {
+          "input": "Zeta[2, 1]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "hurwitz_zeta(2, 1)",
+          "output": "1/6*pi^2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",2,2]": {
+        "wolfram": {
+          "input": "Zeta[2, 2]",
+          "output": "-1 + Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "hurwitz_zeta(2, 2)",
+          "output": "1/6*pi^2 - 1",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Zeta\",2,0]": {
+        "wolfram": {
+          "input": "Zeta[2, 0]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "hurwitz_zeta(2, 0)",
+          "output": "ValueError: psi2_eval(): pole",
+          "verdict": "error"
+        }
+      }
+    },
+    "HurwitzZeta": {
+      "[\"HurwitzZeta\",2,1]": {
+        "wolfram": {
+          "input": "HurwitzZeta[2, 1]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "hurwitz_zeta(2, 1)",
+          "output": "1/6*pi^2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"HurwitzZeta\",2,2]": {
+        "wolfram": {
+          "input": "HurwitzZeta[2, 2]",
+          "output": "-1 + Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "hurwitz_zeta(2, 2)",
+          "output": "1/6*pi^2 - 1",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"HurwitzZeta\",1,3]": {
+        "wolfram": {
+          "input": "HurwitzZeta[1, 3]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "hurwitz_zeta(1, 3)",
+          "output": "hurwitz_zeta(1, 3)",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "The pole is ComplexInfinity here; Sage's hurwitz_zeta(1,3) declines entirely and returns the call unevaluated, a different spelling of the same pole."
+        }
+      },
+      "[\"HurwitzZeta\",-3,[\"Rational\",7,3]]": {
+        "wolfram": {
+          "input": "HurwitzZeta[-3, Rational[7, 3]]",
+          "output": "HurwitzZeta[-3, 7/3]",
+          "verdict": "disagree",
+          "kind": "precision",
+          "note": "Wolfram leaves HurwitzZeta[-3, 7/3] symbolic, and its N[] is off by 1/120 at non-positive integer s with rational a; FunctionExpand there, and mpmath, agree with our exact -7813/3240."
+        },
+        "sage": {
+          "input": "hurwitz_zeta(-3, (7/3))",
+          "output": "-7813/3240",
+          "verdict": "inconclusive"
+        }
+      }
+    },
+    "LerchPhi": {
+      "[\"LerchPhi\",1,2,1]": {
+        "wolfram": {
+          "input": "LerchPhi[1, 2, 1]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        }
+      },
+      "[\"LerchPhi\",1,2,2]": {
+        "wolfram": {
+          "input": "LerchPhi[1, 2, 2]",
+          "output": "-1 + Pi^2/6",
+          "verdict": "agree"
+        }
+      },
+      "[\"LerchPhi\",1,4,1]": {
+        "wolfram": {
+          "input": "LerchPhi[1, 4, 1]",
+          "output": "Pi^4/90",
+          "verdict": "agree"
+        }
+      },
+      "[\"LerchPhi\",1,-1,1]": {
+        "wolfram": {
+          "input": "LerchPhi[1, -1, 1]",
+          "output": "ComplexInfinity",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "At z = 1 compute-engine continues in s, giving ζ(-1) = -1/12; Wolfram's LerchPhi does not regularise the divergent series at z = 1 and returns ComplexInfinity (though its Zeta[-1] does)."
+        }
+      },
+      "[\"LerchPhi\",2,0,7]": {
+        "wolfram": {
+          "input": "LerchPhi[2, 0, 7]",
+          "output": "-1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"LerchPhi\",1,3,1],[\"Zeta\",3]]": {
+        "wolfram": {
+          "input": "(LerchPhi[1, 3, 1] == Zeta[3])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"LerchPhi\",-1,2,1],[\"Divide\",[\"Power\",\"Pi\",2],12]]": {
+        "wolfram": {
+          "input": "(LerchPhi[-1, 2, 1] == Divide[Power[Pi, 2], 12])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "PolyLog": {
+      "[\"PolyLog\",2,1]": {
+        "wolfram": {
+          "input": "PolyLog[2, 1]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(2, 1)",
+          "output": "1/6*pi^2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"PolyLog\",2,-1]": {
+        "wolfram": {
+          "input": "PolyLog[2, -1]",
+          "output": "-1/12*Pi^2",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(2, -1)",
+          "output": "-1/12*pi^2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"PolyLog\",4,1]": {
+        "wolfram": {
+          "input": "PolyLog[4, 1]",
+          "output": "Pi^4/90",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(4, 1)",
+          "output": "1/90*pi^4",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"PolyLog\",2,0.5],[\"Multiply\",0.5,[\"Power\",[\"Ln\",2],2]]],[\"Divide\",[\"Power\",\"Pi\",2],12]]": {
+        "wolfram": {
+          "input": "(Plus[PolyLog[2, 0.5], Times[0.5, Power[Log[2], 2]]] == Divide[Power[Pi, 2], 12])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((polylog(2, 0.5) + (0.5 * (log(2)^2))) == ((pi^2) / 12))",
+          "output": "False",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "True identity; the left side is a float and the right stays the symbolic Pi^2/12, and Sage's bool() doesn't coerce a float against an unevaluated symbolic constant, so it reports False instead of proving the identity."
+        }
+      },
+      "[\"PolyLog\",0.5,1]": {
+        "wolfram": {
+          "input": "PolyLog[0.5, 1]",
+          "output": "ComplexInfinity",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Li_{1/2}(1): compute-engine continues in s to ζ(1/2); Wolfram treats z = 1 as the branch point for s ≤ 1 and returns ComplexInfinity."
+        },
+        "sage": {
+          "input": "polylog(0.5, 1)",
+          "output": "NaN + NaN*I",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"PolyLog\",0.5,0.5]": {
+        "wolfram": {
+          "input": "PolyLog[0.5, 0.5]",
+          "output": "0.8061267230428522",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(0.5, 0.5)",
+          "output": "0.806126723042852",
+          "verdict": "agree"
+        }
+      },
+      "[\"PolyLog\",2.5,-0.5]": {
+        "wolfram": {
+          "input": "PolyLog[2.5, -0.5]",
+          "output": "-0.4622977821900634",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(2.5, -0.5)",
+          "output": "-0.462297782190063",
+          "verdict": "agree"
+        }
+      },
+      "[\"PolyLog\",2,[\"List\",0.5,0.25]]": {
+        "wolfram": {
+          "input": "PolyLog[2, List[0.5, 0.25]]",
+          "output": "{0.5822405264650127, 0.2676526390827326}",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(2, [0.5, 0.25])",
+          "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
+          "verdict": "error"
+        }
+      },
+      "[\"PolyLog\",2.5,2]": {
+        "wolfram": {
+          "input": "PolyLog[2.5, 2]",
+          "output": "2.789660332381895 - 1.3638037005377295*I",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "A non-integer order past |z| = 1 is left unevaluated here (the continuation is only implemented for integer s); Wolfram continues to a complex value."
+        },
+        "sage": {
+          "input": "polylog(2.5, 2)",
+          "output": "2.78966033238278 - 1.36380370053935*I",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "A non-integer order past |z| = 1 is left unevaluated here, matching the classified Wolfram row; Sage's polylog continues to the same complex value 2.7897 - 1.3638i."
+        }
+      },
+      "[\"PolyLog\",2,[\"Rational\",1,2]]": {
+        "wolfram": {
+          "input": "PolyLog[2, Rational[1, 2]]",
+          "output": "Pi^2/12 - Log[2]^2/2",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "polylog(2, (1/2))",
+          "output": "1/12*pi^2 - 1/2*log(2)^2",
+          "verdict": "inconclusive"
+        }
+      }
+    },
+    "PolyGamma": {
+      "[\"Equal\",[\"PolyGamma\",1,1],[\"Zeta\",2]]": {
+        "wolfram": {
+          "input": "(PolyGamma[1, 1] == Zeta[2])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(psi(1, 1) == zeta(2))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"PolyGamma\",2,1],[\"Multiply\",-2,[\"Zeta\",3]]]": {
+        "wolfram": {
+          "input": "(PolyGamma[2, 1] == Times[-2, Zeta[3]])",
+          "output": "PolyGamma[2, 1] == -2*Zeta[3]",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(psi(2, 1) == (-2 * zeta(3)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"PolyGamma\",1,[\"Rational\",1,2]],[\"Divide\",[\"Power\",\"Pi\",2],2]]": {
+        "wolfram": {
+          "input": "(PolyGamma[1, Rational[1, 2]] == Divide[Power[Pi, 2], 2])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(psi(1, (1/2)) == ((pi^2) / 2))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Subtract\",[\"PolyGamma\",1,1],[\"PolyGamma\",1,2]],1]": {
+        "wolfram": {
+          "input": "(Subtract[PolyGamma[1, 1], PolyGamma[1, 2]] == 1)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((psi(1, 1) - psi(1, 2)) == 1)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"PolyGamma\",1,0.5]": {
+        "wolfram": {
+          "input": "PolyGamma[1, 0.5]",
+          "output": "4.934802200544679",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "psi(1, 0.5)",
+          "output": "psi(1, 0.500000000000000)",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"PolyGamma\",1,0]": {
+        "wolfram": {
+          "input": "PolyGamma[1, 0]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "psi(1, 0)",
+          "output": "ValueError: psi2_eval(): pole",
+          "verdict": "error"
+        }
+      },
+      "[\"N\",[\"PolyGamma\",1,[\"Complex\",1,1]]]": {
+        "wolfram": {
+          "input": "N[PolyGamma[1, Complex[1, 1]]]",
+          "output": "0.46300009662276376 - 0.7942335427593189*I",
+          "verdict": "agree"
+        }
+      },
+      "[\"PolyGamma\",1,[\"List\",1,2]]": {
+        "wolfram": {
+          "input": "PolyGamma[1, List[1, 2]]",
+          "output": "{Pi^2/6, -1 + Pi^2/6}",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "psi(1, [1, 2])",
+          "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
+          "verdict": "error"
+        }
+      },
+      "[\"PolyGamma\",1,1]": {
+        "wolfram": {
+          "input": "PolyGamma[1, 1]",
+          "output": "Pi^2/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "psi(1, 1)",
+          "output": "1/6*pi^2",
+          "verdict": "inconclusive"
+        }
+      }
+    },
+    "Digamma": {
+      "[\"Digamma\",0]": {
+        "wolfram": {
+          "input": "PolyGamma[0]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"Digamma\",-1]": {
+        "wolfram": {
+          "input": "PolyGamma[-1]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"Digamma\",0.5]": {
+        "wolfram": {
+          "input": "PolyGamma[0.5]",
+          "output": "-1.9635100260214235",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Digamma\",1],\"EulerGamma\"],0]": {
+        "wolfram": {
+          "input": "(Plus[PolyGamma[1], EulerGamma] == 0)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Digamma\",2],[\"Add\",[\"Digamma\",1],1]]": {
+        "wolfram": {
+          "input": "(PolyGamma[2] == Plus[PolyGamma[1], 1])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Digamma\",[\"Rational\",1,2]],\"EulerGamma\",[\"Multiply\",2,[\"Ln\",2]]],0]": {
+        "wolfram": {
+          "input": "(Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]] == 0)",
+          "output": "EulerGamma + 2*Log[2] + PolyGamma[0, 1/2] == 0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Digamma\",6],\"EulerGamma\"],[\"Add\",1,[\"Rational\",1,2],[\"Rational\",1,3],[\"Rational\",1,4],[\"Rational\",1,5]]]": {
+        "wolfram": {
+          "input": "(Plus[PolyGamma[6], EulerGamma] == Plus[1, Rational[1, 2], Rational[1, 3], Rational[1, 4], Rational[1, 5]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Digamma\",1]": {
+        "wolfram": {
+          "input": "PolyGamma[1]",
+          "output": "-EulerGamma",
+          "verdict": "agree"
+        }
+      },
+      "[\"Digamma\",-0.5]": {
+        "wolfram": {
+          "input": "PolyGamma[-0.5]",
+          "output": "0.03648997397857645",
+          "verdict": "agree"
+        }
+      }
+    },
+    "GammaRegularized": {
+      "[\"GammaRegularized\",1,0]": {
+        "wolfram": {
+          "input": "GammaRegularized[1, 0]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaRegularized\",1,1]": {
+        "wolfram": {
+          "input": "GammaRegularized[1, 1]",
+          "output": "E^(-1)",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaRegularized\",2.5,1.5]": {
+        "wolfram": {
+          "input": "GammaRegularized[2.5, 1.5]",
+          "output": "0.6999858358786275",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaRegularized\",5,-1]": {
+        "wolfram": {
+          "input": "GammaRegularized[5, -1]",
+          "output": "(3*E)/8",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaRegularized\",3,2]": {
+        "wolfram": {
+          "input": "GammaRegularized[3, 2]",
+          "output": "5/E^2",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaRegularized\",2.5,-1]": {
+        "wolfram": {
+          "input": "GammaRegularized[2.5, -1]",
+          "output": "0.9999999999999998 - 0.6280082302883814*I",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A non-integer order with negative z is left symbolic here (real domain only); Wolfram continues into the complex plane."
+        }
+      },
+      "[\"GammaRegularized\",2.5,0,1.5]": {
+        "wolfram": {
+          "input": "GammaRegularized[2.5, 0, 1.5]",
+          "output": "0.30001416412137244",
+          "verdict": "agree"
+        }
+      },
+      "[\"GammaRegularized\",-1.5,0,1.5]": {
+        "wolfram": {
+          "input": "GammaRegularized[-1.5, 0, 1.5]",
+          "output": "0.985260074360347",
+          "verdict": "agree"
+        }
+      }
+    },
+    "BetaRegularized": {
+      "[\"BetaRegularized\",0,2,3]": {
+        "wolfram": {
+          "input": "BetaRegularized[0, 2, 3]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"BetaRegularized\",1,2,3]": {
+        "wolfram": {
+          "input": "BetaRegularized[1, 2, 3]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"BetaRegularized\",0.5,2,3]": {
+        "wolfram": {
+          "input": "BetaRegularized[0.5, 2, 3]",
+          "output": "0.6875000000000003",
+          "verdict": "agree"
+        }
+      },
+      "[\"BetaRegularized\",0.5,1,1]": {
+        "wolfram": {
+          "input": "BetaRegularized[0.5, 1, 1]",
+          "output": "0.5",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"BetaRegularized\",0.3,2,3],[\"BetaRegularized\",0.7,3,2]],1]": {
+        "wolfram": {
+          "input": "(Plus[BetaRegularized[0.3, 2, 3], BetaRegularized[0.7, 3, 2]] == 1)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"BetaRegularized\",0.5,10,10]": {
+        "wolfram": {
+          "input": "BetaRegularized[0.5, 10, 10]",
+          "output": "0.49999999999999906",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"BetaRegularized\",0.7,3,2],[\"Add\",[\"Power\",0.7,4],[\"Multiply\",4,0.3,[\"Power\",0.7,3]]]]": {
+        "wolfram": {
+          "input": "(BetaRegularized[0.7, 3, 2] == Plus[Power[0.7, 4], Times[4, 0.3, Power[0.7, 3]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"BetaRegularized\",2,2,3]": {
+        "wolfram": {
+          "input": "BetaRegularized[2, 2, 3]",
+          "output": "8",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "x outside [0, 1] is left unevaluated here; Wolfram continues the regularised incomplete beta function and gets 8."
+        }
+      }
+    }
+  }
+}

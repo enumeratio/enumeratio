@@ -64,6 +64,10 @@ export const hypercomplex: readonly ReferenceEntry[] = [
         expected: 6,
         caption: "scalars: the implied identity factor",
         category: "Scope",
+        divergence: {
+          wolfram:
+            "Our CircleTimes commits to a concrete algebra where scalars multiply as usual; Wolfram's builtin CircleTimes is inert notation with no arithmetic rules, so it leaves $2\\otimes3$ displayed rather than reduced to 6.",
+        },
       },
       {
         expr: ["CircleTimes", "i_2", "i_1"],
