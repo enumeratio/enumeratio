@@ -1,0 +1,74 @@
+{
+  "[\"PowerModList\",3,[\"Rational\",1,2],11]": {
+    "wolfram": { "input": "PowerModList[3, 1/2, 11]", "output": "{5, 6}", "verdict": "agree" },
+    "sage": {
+      "input": "Zmod(11)(3).nth_root(2, all=True)",
+      "output": "[5, 6]",
+      "verdict": "agree"
+    }
+  },
+  "[\"PowerModList\",2,10,1000]": {
+    "wolfram": { "input": "PowerModList[2, 10, 1000]", "output": "{24}", "verdict": "agree" },
+    "sage": { "input": "[power_mod(2, 10, 1000)]", "output": "[24]", "verdict": "agree" }
+  },
+  "[\"PowerModList\",2,[\"Rational\",3,2],17]": {
+    "wolfram": { "input": "PowerModList[2, 3/2, 17]", "output": "{5, 12}", "verdict": "agree" },
+    "sage": {
+      "input": "(Zmod(17)(2)^3).nth_root(2, all=True)",
+      "output": "[5, 12]",
+      "verdict": "agree"
+    }
+  },
+  "[\"PowerModList\",2,[\"Rational\",2,3],31]": {
+    "wolfram": {
+      "input": "PowerModList[2, 2/3, 31]",
+      "output": "{16, 18, 28}",
+      "verdict": "agree"
+    },
+    "sage": {
+      "input": "(Zmod(31)(2)^2).nth_root(3, all=True)",
+      "output": "[16, 18, 28]",
+      "verdict": "agree"
+    }
+  },
+  "[\"PowerModList\",3,-1,7]": {
+    "wolfram": { "input": "PowerModList[3, -1, 7]", "output": "{5}", "verdict": "agree" },
+    "sage": { "input": "[power_mod(3, -1, 7)]", "output": "[5]", "verdict": "agree" }
+  },
+  "[\"PowerModList\",-1,[\"Rational\",1,2],625]": {
+    "wolfram": {
+      "input": "PowerModList[-1, 1/2, 625]",
+      "output": "{182, 443}",
+      "verdict": "agree"
+    },
+    "sage": {
+      "input": "Zmod(625)(-1).sqrt(all=True)",
+      "output": "[182, 443]",
+      "verdict": "agree"
+    }
+  },
+  "[\"PowerModList\",[\"Rational\",2,3],[\"Rational\",1,2],23]": {
+    "wolfram": {
+      "input": "PowerModList[2/3, 1/2, 23]",
+      "output": "PowerModList[2/3, 1/2, 23]   (PowerModList::arg1)",
+      "verdict": "unevaluated"
+    },
+    "sage": {
+      "input": "Zmod(23)(2/3).sqrt(all=True)",
+      "output": "[4, 19]",
+      "verdict": "agree"
+    }
+  },
+  "[\"PowerModList\",2,-1,4]": {
+    "wolfram": {
+      "input": "PowerModList[2, -1, 4]",
+      "output": "PowerModList[2, -1, 4]   (PowerMod::ninv: 2 is not invertible modulo 4)",
+      "verdict": "unevaluated"
+    },
+    "sage": {
+      "input": "Zmod(4)(2)^-1",
+      "output": "ZeroDivisionError: inverse of Mod(2, 4) does not exist",
+      "verdict": "error"
+    }
+  }
+}
