@@ -132,21 +132,61 @@ test("box-whisker chart labels render under each box", () => {
 // ArrayPlot
 // ---------------------------------------------------------------------------
 
+// Filled rects only: the frame border is `fill="none"`.
+const cells = (s: string): number => (s.match(/<rect [^>]*fill="(?!none)/g) ?? []).length;
+const viewBox = (s: string): number[] =>
+  s
+    .match(/viewBox="([^"]+)"/)![1]!
+    .split(" ")
+    .map(Number);
+
 test("array plot draws one cell per matrix entry", () => {
   const s = arrayPlotSvg([
     [1, 2],
     [3, 4],
   ]);
-  expect(count(s, "rect")).toBe(4);
+  expect(cells(s)).toBe(4);
 });
 
 test("array plot handles ragged rows without throwing", () => {
   const s = arrayPlotSvg([[1, 2, 3], [4]]);
-  expect(count(s, "rect")).toBe(4);
+  expect(cells(s)).toBe(4);
 });
 
 test("empty matrix yields a frame, no cells", () => {
   expect(count(arrayPlotSvg([]), "rect")).toBe(0);
+});
+
+test("array plot cells are square: height follows rows/cols", () => {
+  const wide = arrayPlotSvg([[2, 3, 4, 5]]);
+  expect(viewBox(wide)).toEqual([0, 0, 340, 6 + 82 + 6]);
+  const sq = arrayPlotSvg([
+    [2, 3],
+    [4, 5],
+  ]);
+  expect(viewBox(sq)).toEqual([0, 0, 340, 340]);
+});
+
+test("a tall array plot caps at a square frame and narrows", () => {
+  const s = arrayPlotSvg(Array.from({ length: 8 }, () => [2, 3]));
+  expect(viewBox(s)).toEqual([0, 0, 340, 340]);
+  const w = s.match(/width="([\d.]+)" height="([\d.]+)" fill="none"/)!;
+  expect(Number(w[1]) / Number(w[2])).toBeCloseTo(2 / 8);
+});
+
+test("an explicit height stretches cells to fill", () => {
+  expect(viewBox(arrayPlotSvg([[2, 3, 4, 5]], { height: 200 }))).toEqual([0, 0, 340, 200]);
+});
+
+test("a 0/1 array plot is two-tone: background for 0, foreground for 1", () => {
+  const s = arrayPlotSvg([
+    [0, 1],
+    [1, 0],
+  ]);
+  expect(s).not.toContain("color-mix");
+  expect(s.split("var(--notatio-fg").length - 1).toBe(2);
+  expect(s.split("var(--notatio-bg").length - 1).toBe(2);
+  expect(arrayPlotSvg([[0, 2]])).toContain("color-mix");
 });
 
 // ---------------------------------------------------------------------------

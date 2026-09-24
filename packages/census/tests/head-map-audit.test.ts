@@ -12,9 +12,7 @@ import { HEAD_MAP_AUDIT } from "../src/head-map-audit-data.ts";
 /** Heads already known to be undeclared, so today's run is green. A head lands here only
  *  when `vp node packages/census/scripts/audit-head-map.ts` puts it in the `undeclared`
  *  category — remove the line once the engine declares it, don't add one preemptively. */
-const ALLOWED_UNDECLARED: Record<string, string> = {
-  Prepend: "mapped in HEADS, never declared by any package",
-};
+const ALLOWED_UNDECLARED: Record<string, string> = {};
 
 test("no head-map entry is undeclared unless the allowlist says so", () => {
   const undeclared = HEAD_MAP_AUDIT.filter((e) => e.category === "undeclared").map((e) => e.head);

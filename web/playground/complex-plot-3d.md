@@ -6,10 +6,10 @@ over the complex plane, each face coloured by arg f(z) on the same hue wheel the
 `max-height` (default 4) with every hue winding round it; a zero is a dimple the hues wind
 round the other way. `value` is **notatio**; LaTeX goes in a `$…$` island.
 
-The surface is sampled on the CPU (`samples` per side, default 40) through the base
+The surface is sampled `samples` per side (default 40) in a WebGPU compute shader where it
+can be (see [GPU evaluation](#gpu-evaluation)), and otherwise on the CPU through the base
 package's complex evaluator — the elementary operations and the analytic special functions —
-or through the engine's own numeric evaluation for anything else; `gpu` moves the sampling
-to a compute shader (see [GPU evaluation](#gpu-evaluation)). The view is the one every
+or through the engine's own numeric evaluation for anything else. The view is the one every
 3-D figure has: **drag to rotate** (`azimuth` / `elevation`), **ctrl/⌘ + wheel to zoom**,
 **double-click to reset**. Hover to read out `(re, im, |f|)`.
 
@@ -55,11 +55,12 @@ every hue winds round.
 
 ## GPU evaluation
 
-Set `gpu` and the grid is evaluated in a WebGPU compute shader through the same complex
-lowering the [portrait](/playground/complex-plot) uses -- `gpu="160"` also sets the
-sample count, since the GPU takes a far denser grid in stride. Where WebGPU is missing,
-or the expression has no lowering, the CPU sampler runs instead; a **GPU** badge under
-the figure says which happened.
+Where WebGPU is available the grid is evaluated in a compute shader through the same
+complex lowering the [portrait](/playground/complex-plot) uses. `gpu="160"` sets the
+sample count for the GPU alone, since it takes a far denser grid in stride; `gpu="false"`
+keeps the sampling on the CPU. Where WebGPU is missing, or the expression has no
+lowering, the CPU sampler runs instead; a **GPU** badge under the figure says which
+happened.
 
 <Story
   title="A dense rational surface">

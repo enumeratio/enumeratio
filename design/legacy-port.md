@@ -64,9 +64,9 @@ which works per cell, not per column or per policy.
 
 ## 2. Polytopes
 
-`packages/polytope` has the permutahedron, associahedron, cross-polytope and simplex, and
-`<notatio-polytope>` covers what the old WebGL figure did (face selection, face labels from
-a representation). Left:
+`packages/polytope` has the permutahedron, associahedron, cross-polytope, simplex and
+hypercube, and `<notatio-polytope>` covers what the old WebGL figure did (face selection,
+face labels from a representation). Left:
 
 - **Cyclohedron W_n** — `packages/data/packs/polytopes/polytope-collections.sql`, the
   largest block. Faces are centrally symmetric dissections of a (2n+2)-gon, the fixed points
@@ -75,8 +75,6 @@ a representation). Left:
   C(n,k)·C(n+k,k), summing to the central Delannoy numbers (A001850); enumerate by orbits,
   not by filtering. Issue #330 (open): an explicit Delannoy-path bijection for unrank —
   try tubings of the cycle graph.
-- **Hypercube** — the dual reading of the signed-subset carrier: dim = n − |fixed axes|,
-  containment reversed.
 - **Vertex-only families** — hypersimplex Δ(k,n) on k-subsets (Johnson-graph adjacency),
   Birkhoff B_n on permutations (permutation matrices, transposition adjacency), type-B
   permutahedron on signed permutations.
@@ -128,8 +126,7 @@ vexillary, Grassmannian, simple/separable, pattern classes, tournaments), trees-
 (non-crossing/non-nesting partitions, perfect matchings, phylogenetic and unlabelled rooted
 trees), paths (Delannoy, Riordan, Fine), tableaux (ASMs, semistandard, Gelfand–Tsetlin),
 and compositions/partitions/words-plus (Carlitz, plane partitions, Lyndon words, necklaces
-and bracelets). `StirlingPermutations` is the one old collection missing from the
-catalogue.
+and bracelets).
 
 Branches with content not yet here: `claude/234-gf` (bivariate and recurrence generating-
 function programs), `auto/symmetric-group-slice2-401` (cycle notation, Coxeter-length

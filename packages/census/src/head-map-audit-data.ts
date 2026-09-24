@@ -266,8 +266,9 @@ export const HEAD_MAP_AUDIT: readonly AuditEntry[] = [
   },
   {
     head: "Prepend",
-    category: "undeclared",
-    reason: "ce.lookupDefinition finds nothing",
+    category: "unevaluated",
+    reason:
+      'signature "(collection<any>, value) -> collection" gives no arm with a derivable sample — unverified, not cleared',
   },
   {
     head: "Product",

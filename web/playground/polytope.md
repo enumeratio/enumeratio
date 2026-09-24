@@ -19,9 +19,10 @@ algorithm, because every face of a polytope is convex.
 | `permutahedron`  | set compositions of {1.._n_}  | a truncated octahedron at 4  |
 | `simplex`        | nonempty subsets of {1.._n_}  | a tetrahedron at 4           |
 | `cross-polytope` | signed subsets                | an octahedron at 3           |
+| `hypercube`      | signed subsets, dual reading  | a cube at 3                  |
 | `associahedron`  | dissections of an (_n_+2)-gon | 3 squares + 6 pentagons at 4 |
 
-## The four
+## The five
 
 <Story
   title="The permutahedron">
@@ -54,6 +55,17 @@ polytope's span off its vertices rather than assuming one.
 </template>
 <notatio-polytope which="simplex" n="4" />
 <notatio-polytope which="cross-polytope" n="3" />
+</Story>
+
+<Story
+  title="The hypercube">
+<template #description>
+The dual reading of the cross-polytope's signed subsets: a face now fixes some
+axes to ±1 and leaves the rest free, so dim = <em>n</em> − |fixed axes| and
+containment runs the other way. Order 3 is an ordinary cube — 8 vertices, 12
+edges, 6 square facets.
+</template>
+<notatio-polytope which="hypercube" n="3" />
 </Story>
 
 ## Selecting a face

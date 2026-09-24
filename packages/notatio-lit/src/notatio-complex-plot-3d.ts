@@ -36,12 +36,12 @@ const log = debug("complex-plot-3d");
  * wheel `<notatio-complex-plot>` paints. A pole is a spike that rises to `max-height`
  * with every hue winding round it; a zero is a dimple the hues wind round the other way.
  *
- * `value` is **notatio**; LaTeX is accepted inside a `$…$` island. Sampled on the CPU
- * through the base package's complex evaluator, or through the engine's own numeric
- * evaluation for a head it has no lowering for. `gpu` runs the same complex lowering the
- * portrait uses in a compute shader instead -- a number also sets `samples` -- and falls
- * back to the CPU where WebGPU is missing. Drag rotates, ctrl/⌘ + wheel zooms,
- * double-click resets the view.
+ * `value` is **notatio**; LaTeX is accepted inside a `$…$` island. Sampled in a WebGPU
+ * compute shader through the same complex lowering the portrait uses, falling back to
+ * the CPU -- the base package's complex evaluator, or the engine's own numeric evaluation
+ * for a head it has no lowering for -- where WebGPU is missing or the expression doesn't
+ * lower. `gpu="false"` forces the CPU; a number sets the GPU's `samples`. Drag rotates,
+ * ctrl/⌘ + wheel zooms, double-click resets the view.
  *
  * A grid past `CANVAS_THRESHOLD` samples a side is painted on a canvas rather than
  * serialised as SVG: the same projection and painter's order, but no DOM node per face,
@@ -57,7 +57,7 @@ export class NotatioComplexPlot3D extends LitElement {
     domain: { type: String },
     /** Samples per side, clamped to 2..400. */
     samples: { type: Number },
-    /** Evaluate the grid in a WebGPU compute shader. A number also sets `samples`. */
+    /** `"false"` samples on the CPU even where WebGPU is available. A number sets `samples` for the GPU. */
     gpu: { type: String },
     /** Height ceiling for |f|, since a pole goes to infinity. */
     maxHeight: { type: Number, attribute: "max-height" },
@@ -105,7 +105,7 @@ export class NotatioComplexPlot3D extends LitElement {
     this.var = "z";
     this.domain = "-2,2,-2,2";
     this.samples = 40;
-    this.gpu = "false";
+    this.gpu = "";
     this.maxHeight = 4;
     this.axes = "true";
     this.azimuth = 45;
@@ -171,17 +171,20 @@ export class NotatioComplexPlot3D extends LitElement {
       const variable = this.var || "z";
       const domain = parseComplexDomain(this.domain);
       const maxHeight = Number(this.maxHeight);
-      // Opt-in GPU path: the portrait's complex lowering, dispatched over the grid. Only
-      // taken when `gpu` is set, the expression lowers, and WebGPU answers -- otherwise
-      // the CPU sampler below runs, at the CPU sample count.
-      const wantGpu = this.gpu !== "false" && this.gpu !== undefined && this.gpu !== "";
+      // The portrait's complex lowering, dispatched over the grid, unless `gpu="false"`.
+      // Where the expression doesn't lower or WebGPU doesn't answer, the CPU sampler below
+      // runs, at the CPU sample count.
       let surface: ComplexSurface | undefined;
-      if (wantGpu) {
-        const emitted = emitComplexWGSL(expr.json as never, variable);
-        if (emitted) {
-          const { xs, ys } = complexGrid({ domain, samples: Number(this.gpu) || this.samples });
-          const values = await evalComplexGridGPU(emitted, variable, xs, ys);
-          if (values) surface = complexSurfaceOf(values, xs, ys, maxHeight);
+      if (this.gpu !== "false") {
+        try {
+          const emitted = emitComplexWGSL(expr.json as never, variable);
+          if (emitted) {
+            const { xs, ys } = complexGrid({ domain, samples: Number(this.gpu) || this.samples });
+            const values = await evalComplexGridGPU(emitted, variable, xs, ys);
+            if (values) surface = complexSurfaceOf(values, xs, ys, maxHeight);
+          }
+        } catch (error) {
+          log("GPU sampling failed; using the CPU", raw, error);
         }
       }
       this.#usedGpu = surface !== undefined;
