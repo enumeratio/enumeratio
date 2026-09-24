@@ -1,5 +1,6 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { installPacks } from "./packs/install.ts";
+import { declareListOps } from "./list-ops.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
 
 /**
@@ -14,5 +15,6 @@ import { declareStats, type StatsOptions } from "./stats.ts";
  */
 export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}): void {
   installPacks(ce);
+  declareListOps(ce);
   declareStats(ce, options);
 }

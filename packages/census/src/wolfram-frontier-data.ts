@@ -345,10 +345,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 14,
   },
   {
-    head: "Prepend",
-    uses: 14,
-  },
-  {
     head: "RandomVariate",
     uses: 14,
   },
