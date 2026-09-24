@@ -4,8 +4,9 @@
 // classification is the useful part — "Round[2.5] is 2 there and 3 here" is a fact, but
 // "compute-engine rounds half away from zero and Wolfram rounds half to even" is the
 // convention behind a whole family of facts, and what a reader of the reference needs.
-// Each disagreeing row in an entry file's `<stem>.oracle.json` sidecar carries its
-// classification; the reference's oracle test refuses an unclassified one.
+// Every row in an entry file's `<stem>.oracle.json` sidecar that is not an agreement —
+// disagree, error or inconclusive — carries its classification; the reference's oracle test
+// refuses an unclassified one.
 
 import type { MathJSON } from "./emit.ts";
 import type { Tree } from "./structural.ts";
@@ -26,6 +27,10 @@ export const DIVERGENCE_KINDS = {
   convention: "a different definition of the operation",
   /** Wolfram's numeric evaluation is off; its symbolic evaluation and other oracles agree with us. */
   precision: "a numeric-evaluation quirk on the Wolfram side",
+  /** compute-engine threads a Listable head over a list; the other system takes scalars only. */
+  threading: "threaded over a list here, scalars only there",
+  /** The other system hit the scan's time or memory cap, so said nothing either way. */
+  resource: "the other system ran out of time or memory",
   /** Not yet reviewed — a scan adds these and a person replaces them. */
   unclassified: "not yet reviewed",
 } as const;

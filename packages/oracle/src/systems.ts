@@ -4,7 +4,7 @@
 // runner: a system with no mappings yet still belongs in the type, so a scan reports
 // "unmapped" for it rather than pretending the question was never asked.
 
-export type System = "wolfram" | "sympy" | "mpmath" | "sage" | "julia" | "lean";
+export type System = "wolfram" | "sympy" | "mpmath" | "sage" | "oscar" | "julia" | "mathlib4";
 
 export interface SystemSpec {
   readonly name: System;
@@ -43,16 +43,23 @@ export const SYSTEMS: readonly SystemSpec[] = [
       "exact number theory and combinatorics; bundles SymPy and mpmath but has much more besides",
   },
   {
-    name: "julia",
-    label: "Julia / Oscar",
-    wired: false,
+    name: "oscar",
+    label: "Oscar (Julia)",
+    wired: true,
     strength:
-      "computational algebra — the closest thing to an oracle for the diagram and group algebras",
+      "Julia's Sage: GAP, Singular, polymake and FLINT under one roof — the oracle for the group and diagram algebras",
   },
   {
-    name: "lean",
+    name: "julia",
+    label: "Julia (Nemo + Combinatorics.jl)",
+    wired: true,
+    strength:
+      "FLINT number theory and the classic combinatorial counts, light enough to install in CI",
+  },
+  {
+    name: "mathlib4",
     label: "Lean 4 / Mathlib",
-    wired: false,
+    wired: true,
     strength:
       "definitions rather than values: the place to check that a convention is the standard one",
   },

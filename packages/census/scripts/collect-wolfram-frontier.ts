@@ -18,13 +18,13 @@
 //
 //   vp node packages/reference/scripts/collect-wolfram-frontier.ts
 
-import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { HEADS, isSystemName, STRUCTURAL, SYMBOLS } from "@enumeratio/wolfram/src";
 import { bindings, fullEngine } from "../src/engine.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 /** The Wolfram symbols we claim to map to — the sweep set, derived rather than listed so it
  *  grows with the head map instead of drifting from it. */
@@ -56,11 +56,7 @@ Export[${JSON.stringify(out)}, Association @@ (# -> grab[#] & /@ syms), "JSON"];
 // tail, and the only symptom is a missing output file.
 const wl = join(work, "collect.wl");
 writeFileSync(wl, script);
-execFileSync("wolframscript", ["-file", wl], {
-  encoding: "utf8",
-  timeout: 1_800_000,
-  maxBuffer: 64 * 1024 * 1024,
-});
+await runKernel("wolframscript", ["-file", wl], { timeoutMs: 1_800_000 });
 
 type Examples = Record<string, Record<string, string[]>>;
 const examples = JSON.parse(readFileSync(out, "utf8")) as Examples;

@@ -1,6 +1,14 @@
 export { emit, type Emitted, type MathJSON, unmappedHeads } from "./emit.ts";
 export { MAPPINGS, type Mapping, mappedHeads, mappingFor } from "./mappings.ts";
-export { type Result, runIn } from "./run.ts";
+export { type Result, juliaFlags, runIn } from "./run.ts";
+export {
+  type Bounds,
+  type BoundedResult,
+  KernelKilled,
+  memoryCapMb,
+  runBounded,
+  runKernel,
+} from "./bounded.ts";
 export { SYSTEMS, type System, type SystemSpec, wiredSystems } from "./systems.ts";
 export {
   asNumber,

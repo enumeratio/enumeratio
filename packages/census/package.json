@@ -32,6 +32,7 @@
     "@enumeratio/modular": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/oracle": "workspace:*",
     "@enumeratio/quiver": "workspace:*",
     "@enumeratio/residues": "workspace:*",
     "@enumeratio/statistics": "workspace:*",

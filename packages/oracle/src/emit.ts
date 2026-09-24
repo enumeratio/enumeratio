@@ -61,7 +61,11 @@ export function emit(expr: MathJSON, system: System): Emitted {
 
   const walk = (node: MathJSON): string => {
     // Wolfram's exponent marker is `*^`, and `1e-11` there is `1 * e - 11`.
-    if (typeof node === "number") return system === "wolfram" ? toWolfram(node) : String(node);
+    if (typeof node === "number") {
+      if (system === "wolfram") return toWolfram(node);
+      // Lean reads `f -1` as `f - 1`.
+      return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
+    }
     if (typeof node === "boolean") return node ? "True" : "False";
     if (typeof node === "string") {
       // A MathJSON string literal is single-quoted; anything else is a symbol.

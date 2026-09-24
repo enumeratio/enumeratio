@@ -7,8 +7,11 @@
 
 import { compareTrees, type Tree } from "./structural.ts";
 
-/** A number if the text denotes one — including Python complex and Wolfram real syntax. */
+/** A number if the text denotes one — including Python complex and Wolfram real syntax, and
+ * an exact rational as SymPy and Lean (`p/q`) or Julia (`p//q`) print it. */
 export function asNumber(text: string): number | undefined {
+  const ratio = /^\s*([-+]?\d+)\s*\/\/?\s*(\d+)\s*$/.exec(text);
+  if (ratio !== null && Number(ratio[2]) !== 0) return Number(ratio[1]) / Number(ratio[2]);
   const cleaned = text
     .trim()
     .replace(/\*\^/g, "e")

@@ -8,9 +8,9 @@
 // Wolfram's `N[…, 25]` prints with a precision backtick (1.644…`25.) and uses
 // `*^` for exponents; both are sanitized before parsing.
 
-import { execFileSync } from "node:child_process";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "../src/index.ts";
+import { runKernel } from "@enumeratio/oracle/bounded";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -112,7 +112,7 @@ const code = cases
   )
   .join(";\n");
 
-const out = execFileSync("wolframscript", ["-code", code], { encoding: "utf8", timeout: 300_000 });
+const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 300_000 });
 
 const clean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
 

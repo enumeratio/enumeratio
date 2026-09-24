@@ -4,7 +4,7 @@ import { entryFiles, oracleSidecars } from "../src/index.ts";
 
 // The goldens a scan (scripts/oracle-scan.ts) writes: one `<stem>.oracle.json` sidecar per
 // entries file. Not regenerated here — that needs a kernel — so these are consistency
-// checks: every disagreement carries a real classification, every sidecar row still
+// checks: every row short of agreement carries a real classification, every sidecar row still
 // describes a current example, and a Wolfram row's `input` is what we'd still emit today.
 
 // Keyed by stem AND head: a head name isn't unique across domains (`IntegerDigits`
@@ -22,13 +22,19 @@ for (const { stem, entries } of entryFiles) {
   }
 }
 
-test("every disagreement is classified, with a note", () => {
+test("every row that is not an agreement is classified, with a note", () => {
   for (const [stem, sidecar] of Object.entries(oracleSidecars)) {
     for (const [head, byKey] of Object.entries(sidecar.examples ?? {})) {
       for (const [key, bySystem] of Object.entries(byKey)) {
         for (const [system, row] of Object.entries(bySystem)) {
-          if (row.verdict !== "disagree") continue;
           const label = `${stem}/${head} ${key} (${system})`;
+          if (row.tolerance !== undefined) {
+            // A loosened comparison is a stated choice, so it is explained like a divergence.
+            expect(row.tolerance, label).toBeGreaterThan(0);
+            expect(row.tolerance, label).toBeLessThan(1);
+            expect((row.note ?? "").length, label).toBeGreaterThan(20);
+          }
+          if (row.verdict === "agree") continue;
           expect(row.kind, label).not.toBe("unclassified");
           expect(Object.keys(DIVERGENCE_KINDS), label).toContain(row.kind);
           expect((row.note ?? "").length, label).toBeGreaterThan(20);

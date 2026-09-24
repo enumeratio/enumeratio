@@ -201,6 +201,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
         version: 0.128.0
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -335,6 +338,9 @@ importers:
       '@enumeratio/numerals':
         specifier: workspace:*
         version: link:../numerals
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
       '@enumeratio/quiver':
         specifier: workspace:*
         version: link:../quiver
@@ -674,6 +680,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
         version: 0.128.0
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -797,6 +806,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
         version: 0.128.0
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
@@ -819,6 +831,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
         version: 0.128.0
+      '@enumeratio/oracle':
+        specifier: workspace:*
+        version: link:../oracle
       typescript:
         specifier: ^7.0.2
         version: 7.0.2
