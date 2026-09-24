@@ -15,6 +15,7 @@ import { declareHopf } from "@enumeratio/hopf/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareIncidence } from "@enumeratio/incidence/src";
 import { declareModular } from "@enumeratio/modular/src";
+import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
 
@@ -30,6 +31,7 @@ export const DECLARATIONS = [
   declareHopf,
   declareGroupAlgebra,
   declareModular,
+  declareNumberTheory,
   declareBraid,
 ];
 

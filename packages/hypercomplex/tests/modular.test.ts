@@ -2,11 +2,9 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareHypercomplex } from "../src/declare.ts";
 import {
-  BRUTE_FORCE_LIMIT,
   distinctPrimeCount,
   factorize,
   imaginaryUnitsMod,
-  powerModList,
   splitUnitCountMod,
   splitUnitsMod,
 } from "../src/modular.ts";
@@ -86,60 +84,4 @@ test("a split unit of ℤ/m realises j_1 — the identities transport", () => {
   // And the idempotent (1+j_1)/2 lands on an idempotent residue: (1+4)/2 = 5·8 = 40 ≡ 10,
   // and 10² = 100 ≡ 10 (mod 15).
   expect(ce.box(["Mod", ["Multiply", 10, 10], 15]).evaluate().json).toBe(10);
-});
-
-test("PowerModList is the head: one general form, not a bespoke pair", () => {
-  // Wolfram's PowerModList[a, 1/r, m] — the split units of ℤ/m are the square roots
-  // of 1, its imaginary units the square roots of −1. No `SplitUnits` head needed.
-  expect(ce.box(["PowerModList", 1, ["Divide", 1, 2], 15]).evaluate().json).toEqual([
-    "List",
-    1,
-    4,
-    11,
-    14,
-  ]);
-  expect(ce.box(["PowerModList", -1, ["Divide", 1, 2], 13]).evaluate().json).toEqual([
-    "List",
-    5,
-    8,
-  ]);
-  expect(ce.box(["PowerModList", -1, ["Divide", 1, 2], 15]).evaluate().json).toEqual(["List"]);
-  // An integer exponent is an ordinary power, as in Wolfram: 2^10 = 1024 ≡ 24 (mod 100).
-  expect(ce.box(["PowerModList", 2, 10, 100].slice() as never).evaluate().json).toEqual([
-    "List",
-    24,
-  ]);
-  expect(ce.box(["PowerModList", 1, ["Divide", 1, 2], "m"]).evaluate().operator).toBe(
-    "PowerModList",
-  );
-});
-
-test("PowerModList handles roots beyond the square, by scanning", () => {
-  // Cube roots of 1 mod 7: x³ ≡ 1 has three solutions, since 3 | 7−1.
-  expect(ce.box(["PowerModList", 1, ["Divide", 1, 3], 7]).evaluate().json).toEqual([
-    "List",
-    1,
-    2,
-    4,
-  ]);
-  // 8 has THREE cube roots mod 13 (2, 5, 6) because 3 divides 13−1 — the same reason
-  // 1 has three. A single root would be the wrong answer here.
-  expect(ce.box(["PowerModList", 8, ["Divide", 1, 3], 13]).evaluate().json).toEqual([
-    "List",
-    2,
-    5,
-    6,
-  ]);
-  expect(ce.box(["PowerModList", 2, ["Divide", 1, 2], 7]).evaluate().json).toEqual(["List", 3, 4]);
-});
-
-test("the exact square-root path is unbounded; other roots are capped", () => {
-  // ±1 square roots go through CRT + Hensel, so a modulus past the scan limit is fine.
-  const big = 5 ** 12; // 244 140 625, well past BRUTE_FORCE_LIMIT
-  expect(big).toBeGreaterThan(BRUTE_FORCE_LIMIT);
-  const roots = powerModList(-1, 2, big);
-  expect(roots?.length).toBe(2);
-  for (const r of roots ?? []) expect((BigInt(r) * BigInt(r)) % BigInt(big)).toBe(BigInt(big - 1));
-  // A cube root at that size would need a scan, so it declines instead.
-  expect(powerModList(1, 3, big)).toBeUndefined();
 });

@@ -1,12 +1,9 @@
 export { type Algebra, algebraOf, basisBlades, NAMED_ALGEBRAS } from "./algebra.ts";
 export { declareHypercomplex } from "./declare.ts";
 export {
-  BRUTE_FORCE_LIMIT,
   distinctPrimeCount,
   factorize,
   imaginaryUnitsMod,
-  powerMod,
-  powerModList,
   splitUnitCountMod,
   splitUnitsMod,
 } from "./modular.ts";

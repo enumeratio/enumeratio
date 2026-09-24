@@ -75,6 +75,7 @@ export default {
           { declareHopf },
           { declareGroupAlgebra },
           { declareModular },
+          { declareNumberTheory },
           { declareBraid },
         ] = await Promise.all([
           import("@enumeratio/notatio-lit"),
@@ -93,6 +94,7 @@ export default {
           import("@enumeratio/hopf"),
           import("@enumeratio/groupalgebra"),
           import("@enumeratio/modular"),
+          import("@enumeratio/number-theory"),
           import("@enumeratio/braid"),
         ]);
         // Carriers first: everything below declares heads OVER these minted types, so they
@@ -129,6 +131,7 @@ export default {
         configureEngine(declareHopf);
         configureEngine(declareGroupAlgebra);
         configureEngine(declareModular);
+        configureEngine(declareNumberTheory);
         configureEngine(declareBraid);
       };
       // The promise is assigned synchronously (any element's loadEngine awaits it), but

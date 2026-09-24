@@ -33,6 +33,7 @@
     "@enumeratio/hypercomplex": "workspace:*",
     "@enumeratio/incidence": "workspace:*",
     "@enumeratio/modular": "workspace:*",
+    "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/oracle": "workspace:*",
     "@enumeratio/quiver": "workspace:*",
