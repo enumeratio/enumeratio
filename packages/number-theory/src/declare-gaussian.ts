@@ -117,10 +117,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     },
   );
 
-  // Two arguments are the integer/Gaussian inverse, answered here outright: @enumeratio/modular
-  // re-declares ModularInverse for PSL(2, ℤ) matrices (one argument), which drops the native
-  // integer handler — so the one-argument form keeps whatever handler is current.
-  widenSignature(ce, "ModularInverse", "(value, value?) -> value");
+  widenSignature(ce, "ModularInverse", "(value, value) -> value", mayBeInteger);
   wrapOperator(
     ce,
     ["ModularInverse", 1, 1],

@@ -8,6 +8,67 @@ const F = (a: number, b: number, c: number): MathJSON => ["QuadraticForm", a, b,
 
 export const modular: readonly ReferenceEntry[] = [
   {
+    name: "ModularMatrix",
+    domain: DOMAIN,
+    signature: "ModularMatrix(a, b, c, d)",
+    summary:
+      "An element of $\\mathrm{PSL}(2,\\mathbb{Z})$ — or an $LR$ word standing for one. Wolfram has no dedicated modular-group heads: elements multiply, invert and raise to a power exactly like any other integer matrix, via `Dot`, `Inverse` and `MatrixPower` — which is why those are widened in place to recognise a `ModularMatrix` or a word, rather than declared afresh.",
+    signatures: [
+      {
+        call: "ModularMatrix(a, b, c, d)",
+        description: "the matrix $\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}$, determinant 1",
+        library: "enumeratio-modular",
+      },
+      { call: "Dot(m, n)", description: "the group product — compute-engine's own head" },
+      {
+        call: "MatrixPower(m, k)",
+        description: "$m$ to the $k$-th power, for any integer $k$ — compute-engine's own head",
+      },
+      { call: "Inverse(m)", description: "the group inverse — compute-engine's own head" },
+    ],
+    details: [
+      'Every head here also accepts a WORD in place of a matrix — `ModularMatrix("LR")` or just the string',
+      "A plain nested-list matrix pairs with a `ModularMatrix` too, since it canonicalises the same way; a `Tuple` or a `Vector` does not, and is left unevaluated — there's no settled convention for what that pairing should mean",
+      "$M$ and $-M$ are the same element of $\\mathrm{PSL}(2,\\mathbb{Z})$, so `Inverse` and `MatrixPower` may hand back the negated matrix",
+    ],
+    examples: [
+      {
+        expr: ["Dot", M(1, 1, 0, 1), M(1, 0, 1, 1)],
+        expected: M(2, 1, 1, 1),
+        caption: "the group product",
+      },
+      {
+        expr: ["Inverse", M(1, 1, 0, 1)],
+        expected: M(1, -1, 0, 1),
+        caption: "no division needed at determinant 1",
+      },
+      {
+        expr: ["MatrixPower", M(1, 1, 0, 1), 5],
+        expected: M(1, 5, 0, 1),
+        caption: "$T^5$",
+      },
+      {
+        expr: ["Dot", W("L"), W("R")],
+        expected: M(1, 1, 1, 2),
+        caption: "words multiply their matrices",
+        category: "Scope",
+      },
+      {
+        expr: ["Inverse", W("L")],
+        expected: M(1, 0, -1, 1),
+        caption: "the inverse of a word",
+        category: "Scope",
+      },
+      {
+        expr: ["MatrixPower", W("R"), 3],
+        expected: M(1, 3, 0, 1),
+        caption: "$R^3$",
+        category: "Scope",
+      },
+    ],
+    seeAlso: ["ModularWord", "RademacherSymbol"],
+  },
+  {
     name: "ModularWord",
     domain: DOMAIN,
     signature: "ModularWord(matrix)",
