@@ -25,13 +25,15 @@
   "dependencies": {
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",
-    "@enumeratio/numerals": "workspace:*"
+    "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/residues": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/boxed": "workspace:*",
     "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/residues": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

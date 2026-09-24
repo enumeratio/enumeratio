@@ -58,7 +58,7 @@ onUnmounted(() => media?.removeEventListener("change", onMedia));
       </div>
       <textarea v-model="source" class="env-source" rows="2" spellcheck="false" />
       <notatio-code language="notatio" :value="notatio" hide-lang />
-      <div class="env-out">
+      <div class="env-out" :env="environment.name">
         <Notatio v-if="json" :key="json" :json="json" />
       </div>
     </div>

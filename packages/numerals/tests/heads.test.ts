@@ -89,12 +89,27 @@ test("the combinatorial system and the primorial base", () => {
   expect(value(["IntegerDigits", 30, "PrimorialRadix"])).toEqual(L(1, 0, 0, 0));
 });
 
-test("systems describe their own digit shape", () => {
-  expect(value(["NumeralSystemShape", "Zeckendorf"])).toContain("no two adjacent ones");
-  expect(value(["NumeralSystemShape", ["ResidueSystem", L(4, 6)]])).toContain(
-    "NOT pairwise coprime",
-  );
-  expect(value(["NumeralSystemShape", ["BijectiveRadix", 26]])).toContain("EMPTY numeral");
+test("systems describe their own shape as a Dictionary", () => {
+  expect(value(["NumeralSystemShape", ["ResidueSystem", L(4, 6)]])).toEqual([
+    "Dictionary",
+    ["KeyValuePair", { str: "Bijective" }, "False"],
+    ["KeyValuePair", { str: "Integers" }, ["Range", 0, 23]],
+    ["KeyValuePair", { str: "Digits" }, ["List", ["Range", 0, 3], ["Range", 0, 5]]],
+    ["KeyValuePair", { str: "Width" }, 2],
+  ]);
+  expect(value(["NumeralSystemShape", "Zeckendorf"])).toEqual([
+    "Dictionary",
+    ["KeyValuePair", { str: "Bijective" }, "True"],
+    ["KeyValuePair", { str: "Integers" }, "NonNegativeIntegers"],
+    ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
+    ["KeyValuePair", { str: "Rule" }, "'no two adjacent ones'"],
+  ]);
+  // Balanced digits spell every integer, negatives included, with no sign.
+  expect(value(["NumeralSystemShape", ["BalancedRadix", 3]])).toContainEqual([
+    "KeyValuePair",
+    { str: "Integers" },
+    "Integers",
+  ]);
 });
 
 test("an unreadable system leaves the call alone", () => {
@@ -112,7 +127,6 @@ test("Ostrowski takes a continued fraction in the base slot", () => {
   // Its digits are Zeckendorf's, less the forced lowest zero and the leading zeros.
   expect(value(["IntegerDigits", 12, "Zeckendorf"])).toEqual(L(1, 0, 1, 0, 1));
   expect(value(["IntegerDigits", 9, ["Ostrowski", L(2, 2, 2)]])).toEqual(L(1, 2, 0));
-  expect(value(["NumeralSystemShape", ["Ostrowski", L(2, 2, 2)]])).toContain("ceiling");
 });
 
 test("Ostrowski declines a string its ceiling rule forbids", () => {

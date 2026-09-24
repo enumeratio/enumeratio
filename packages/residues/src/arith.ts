@@ -57,6 +57,25 @@ export function crt(channels: readonly (readonly [bigint, bigint])[]): bigint {
   return result;
 }
 
+/**
+ * The x mod lcm(mᵢ) agreeing with every (residue, modulus), as [x, lcm], for moduli that need
+ * not be coprime — or undefined when two channels disagree on a shared factor.
+ */
+export function crtSolve(
+  channels: readonly (readonly [bigint, bigint])[],
+): [bigint, bigint] | undefined {
+  let [x, m] = [0n, 1n];
+  for (const [residue, modulus] of channels) {
+    const g = gcd(m, modulus);
+    const gap = residue - x;
+    if (mod(gap, g) !== 0n) return undefined;
+    const step = modulus / g;
+    x = mod(x + m * mod((gap / g) * (invMod(m / g, step) ?? 0n), step), m * step);
+    m *= step;
+  }
+  return [x, m];
+}
+
 /** ⌊√n⌋ by Newton's method. */
 export function isqrt(n: bigint): bigint {
   if (n < 2n) return n;

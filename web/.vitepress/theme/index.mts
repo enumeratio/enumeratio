@@ -68,6 +68,7 @@ export default {
           { declareHypercomplex },
           { declareGeometric },
           { declareDiagrams },
+          { declareResidues },
           { declareNumerals },
           { declareHecke },
           { declareIncidence },
@@ -88,6 +89,7 @@ export default {
           import("@enumeratio/hypercomplex"),
           import("@enumeratio/geometric"),
           import("@enumeratio/diagram"),
+          import("@enumeratio/residues"),
           import("@enumeratio/numerals"),
           import("@enumeratio/hecke"),
           import("@enumeratio/incidence"),
@@ -126,6 +128,7 @@ export default {
         // and the ordered product that library declares, so it has to come after.
         configureEngine(declareGeometric);
         configureEngine(declareDiagrams);
+        configureEngine(declareResidues);
         configureEngine(declareNumerals);
         configureEngine(declareHecke);
         configureEngine(declareIncidence);

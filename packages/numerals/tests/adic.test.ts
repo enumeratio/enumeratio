@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { stringAt } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
+import { invMod, mod } from "@enumeratio/residues";
 import * as adic from "../src/adic.ts";
 import { declareNumerals } from "../src/declare.ts";
 
@@ -63,8 +64,8 @@ test("products at fixed precision match Sage's representatives", () => {
     // when v < 0. Compare modulo p^(absolute precision) on the integer side.
     const [num, den] = parseRational(c.value);
     const modulus = adic.pow(BigInt(c.p), z.prec!);
-    const sage = adic.mod(num * (adic.inverseMod(den, modulus) ?? 1n), modulus);
-    const ours = adic.mod(z.num * (adic.inverseMod(z.den, modulus) ?? 1n), modulus);
+    const sage = mod(num * (invMod(den, modulus) ?? 1n), modulus);
+    const ours = mod(z.num * (invMod(z.den, modulus) ?? 1n), modulus);
     expect(ours, `${c.x} · ${c.y} in Q_${c.p}`).toBe(sage);
   }
 });

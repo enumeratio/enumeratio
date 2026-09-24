@@ -1,4 +1,4 @@
-import { crt, gcd, invMod, mod } from "@enumeratio/number-theory";
+import { crt, gcd, invMod, mod } from "@enumeratio/residues";
 import * as Q from "./rational.ts";
 import type { Q as Rational } from "./rational.ts";
 

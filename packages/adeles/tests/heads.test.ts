@@ -1,6 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
+import { declareResidues } from "@enumeratio/residues/src";
 import { expect, test } from "vite-plus/test";
 import { declareAdeles, visualPosition } from "../src/declare.ts";
 import { fibonacciPair } from "../src/profinite.ts";
@@ -8,6 +9,7 @@ import { fibonacciPair } from "../src/profinite.ts";
 // What the Sage oracle (golden.test.ts) does not reach: our own additions and edges.
 
 const ce = new ComputeEngine();
+declareResidues(ce);
 declareNumerals(ce);
 declareNumberTheory(ce);
 declareAdeles(ce);

@@ -1,5 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import {
+  crtSolve,
   discreteLog,
   factorInteger,
   isPrime,
@@ -7,7 +8,6 @@ import {
   powerModList,
   powerModRoots,
   primitiveRootList,
-  rationalReconstruction,
 } from "../src/index.ts";
 
 /** Brute force: every x in [0, m) with xʳ ≡ b. Independent of CRT, Hensel and Sylow. */
@@ -107,18 +107,27 @@ test("primitive roots", () => {
   expect(primitiveRootList(2n)).toEqual([1n]);
 });
 
-test("rational reconstruction inverts u·v⁻¹ for small fractions", () => {
-  const p = 1000003n;
-  for (const [u, v] of [
-    [22n, 7n],
-    [-355n, 113n],
-    [1n, 1n],
-    [0n, 1n],
+test("crtSolve agrees with a scan, coprime or not", () => {
+  for (const [m, n] of [
+    [4n, 6n],
+    [3n, 5n],
+    [8n, 12n],
+    [9n, 9n],
   ] as const) {
-    const [image] = powerModList([u, v], 1n, 1n, p)!;
-    expect(rationalReconstruction(image!, p)).toEqual([u, v]);
+    for (let a = 0n; a < m; a++) {
+      for (let b = 0n; b < n; b++) {
+        let found: bigint | undefined;
+        for (let x = 0n; x < m * n && found === undefined; x++)
+          if (x % m === a && x % n === b) found = x;
+        const solved = crtSolve([
+          [a, m],
+          [b, n],
+        ]);
+        expect(solved?.[0]).toBe(found);
+        // The answer is modulo lcm(m, n): both divide it, and it divides m·n.
+        if (solved !== undefined)
+          expect([solved[1] % m, solved[1] % n, (m * n) % solved[1]]).toEqual([0n, 0n, 0n]);
+      }
+    }
   }
-  // Mod 11 the bounds are |n|, d ≤ 2, whose images are 0, 1, 2, 5, 6, 9, 10 — not 3.
-  expect(rationalReconstruction(6n, 11n)).toEqual([1n, 2n]);
-  expect(rationalReconstruction(3n, 11n)).toBeUndefined();
 });

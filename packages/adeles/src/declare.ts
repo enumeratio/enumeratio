@@ -10,6 +10,7 @@ import {
   wrapOperator,
 } from "@enumeratio/boxed";
 import { ADIC, adicOf, adic } from "@enumeratio/numerals";
+import { isPrime, mod } from "@enumeratio/residues";
 import * as I from "./idele.ts";
 import type { IdeleFinite } from "./idele.ts";
 import { profiniteDecomposition } from "./matrix.ts";
@@ -146,7 +147,7 @@ export function declareAdeles(ce: ComputeEngine): void {
         const components: { p: bigint; value: Rational; prec: number }[] = [];
         for (const expr of adics) {
           const a = expr.operator === ADIC ? adicOf(expr) : undefined;
-          if (a === undefined || a.prec === undefined || !adic.isPrime(a.base)) return undefined;
+          if (a === undefined || a.prec === undefined || !isPrime(a.base)) return undefined;
           components.push({ p: a.base, value: Q.q(a.num, a.den), prec: a.prec });
         }
         const glued = P.fromPadics(components);
@@ -408,7 +409,7 @@ export function declareAdeles(ce: ComputeEngine): void {
     () => (ops) => {
       const p = bigIntegerAt(ops[0]);
       const x = profiniteOf(ops[1]);
-      if (p === undefined || x === undefined || !adic.isPrime(p)) return undefined;
+      if (p === undefined || x === undefined || !isPrime(p)) return undefined;
       const image = P.toPadic(x, p);
       if (image.prec !== undefined && image.prec < 1) return undefined;
       const cap = integerAt(ops[2]);
@@ -499,7 +500,7 @@ function declareProfinitePlot(ce: ComputeEngine): void {
         if (image === undefined || !P.isIntegral(image)) return undefined;
         const step = P.isExact(image) ? size : Q.gcdQ(image.modulus, [size, 1n])[0];
         const column = visualPosition(a, level);
-        for (let b = adic.mod(image.value[0], step); b < size; b += step)
+        for (let b = mod(image.value[0], step); b < size; b += step)
           cells[n - 1 - visualPosition(b, level)]![column] = 1;
       }
       return ce.function("ArrayPlot", [

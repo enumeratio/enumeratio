@@ -11,6 +11,8 @@
 // the unranking maps for permutations and subsets wearing a different hat; one
 // (Zeckendorf) has a digit ALPHABET but a forbidden pattern instead of a place bound.
 
+import { crtSolve, gcd } from "@enumeratio/residues";
+
 /** A numeral system: the two directions, plus what its digits are allowed to be. */
 export interface NumeralSystem {
   readonly name: string;
@@ -18,9 +20,29 @@ export interface NumeralSystem {
   toDigits(n: number): number[] | undefined;
   /** The integer a digit string denotes, or `undefined` if the digits are invalid. */
   fromDigits(digits: readonly number[]): number | undefined;
-  /** One line on what the digits look like — used by the docs and the error path. */
-  readonly shape: string;
+  /** What its numerals look like. */
+  readonly shape: Shape;
 }
+
+/** A digit's bounds, inclusive; an absent upper bound is unbounded. */
+export type DigitBound = readonly [number, number | undefined];
+
+/** What a system's numerals look like: the integers it spells, and with which digits. */
+export interface Shape {
+  /** Whether every integer in `range` has exactly one numeral, and every numeral one integer. */
+  readonly bijective: boolean;
+  /** The integers with a numeral, [least, greatest]; an absent end is unbounded. */
+  readonly range: readonly [bigint | undefined, bigint | undefined];
+  /** One bound for every place, or one per place, most significant first. */
+  readonly digits?: DigitBound | readonly DigitBound[];
+  /** The length of every numeral, when it is fixed. */
+  readonly width?: number;
+  /** A constraint no per-place bound captures. */
+  readonly rule?: string;
+}
+
+const NATURALS = [0n, undefined] as const;
+const ALL = [undefined, undefined] as const;
 
 const isInt = (x: number): boolean => Number.isSafeInteger(x);
 
@@ -31,7 +53,7 @@ export function radix(b: number): NumeralSystem | undefined {
   if (!isInt(b) || b < 2) return undefined;
   return {
     name: `Radix(${b})`,
-    shape: `digits 0…${b - 1}`,
+    shape: { bijective: true, range: NATURALS, digits: [0, b - 1] },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       if (n === 0) return [0];
@@ -56,7 +78,7 @@ export function balancedRadix(b: number): NumeralSystem | undefined {
   const half = (b - 1) / 2;
   return {
     name: `BalancedRadix(${b})`,
-    shape: `digits −${half}…${half}, and negatives need no sign`,
+    shape: { bijective: true, range: ALL, digits: [-half, half] },
     toDigits: (n) => {
       if (!isInt(n)) return undefined;
       if (n === 0) return [0];
@@ -85,7 +107,7 @@ export function negativeRadix(b: number): NumeralSystem | undefined {
   if (!isInt(b) || b < 2) return undefined;
   return {
     name: `NegativeRadix(${b})`,
-    shape: `digits 0…${b - 1} over place values (−${b})^k`,
+    shape: { bijective: true, range: ALL, digits: [0, b - 1] },
     toDigits: (n) => {
       if (!isInt(n)) return undefined;
       if (n === 0) return [0];
@@ -114,7 +136,12 @@ export function bijectiveRadix(k: number): NumeralSystem | undefined {
   if (!isInt(k) || k < 1) return undefined;
   return {
     name: `BijectiveRadix(${k})`,
-    shape: `digits 1…${k}, no zero digit; zero is the EMPTY numeral`,
+    shape: {
+      bijective: true,
+      range: NATURALS,
+      digits: [1, k],
+      rule: "no zero digit; zero is the empty numeral",
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       // Zero is the empty string, not a missing case. That is what makes the system
@@ -152,7 +179,12 @@ export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined 
   const total = bases.reduce((a, b) => a * b, 1);
   return {
     name: `MixedRadix(${bases.join(",")})`,
-    shape: `digit i below ${bases.join(", ")}; leading digit unbounded`,
+    shape: {
+      bijective: true,
+      range: NATURALS,
+      digits: [[0, undefined], ...bases.map((b): DigitBound => [0, b - 1])],
+      width: bases.length + 1,
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       const digits = [Math.floor(n / total)];
@@ -180,7 +212,11 @@ export function mixedRadix(bases: readonly number[]): NumeralSystem | undefined 
 export function factoradic(): NumeralSystem {
   return {
     name: "Factoradic",
-    shape: "digit at place k is at most k; the units digit is always 0",
+    shape: {
+      bijective: true,
+      range: NATURALS,
+      rule: "the digit at place k is at most k, so the units digit is always 0",
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       if (n === 0) return [0];
@@ -216,7 +252,11 @@ const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 
 export function primorialRadix(): NumeralSystem {
   return {
     name: "PrimorialRadix",
-    shape: "digit at place k is below the (k+1)-th prime",
+    shape: {
+      bijective: true,
+      range: NATURALS,
+      rule: "the digit at place k is below the (k+1)-th prime",
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       if (n === 0) return [0];
@@ -266,7 +306,12 @@ function fibonacciWeights(limit: number): number[] {
 export function zeckendorf(): NumeralSystem {
   return {
     name: "Zeckendorf",
-    shape: "binary digits over Fibonacci places, with no two adjacent ones",
+    shape: {
+      bijective: true,
+      range: NATURALS,
+      digits: [0, 1],
+      rule: "no two adjacent ones",
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       if (n === 0) return [0];
@@ -313,7 +358,13 @@ export function combinatorialSystem(k: number): NumeralSystem | undefined {
   if (!isInt(k) || k < 1) return undefined;
   return {
     name: `CombinatorialSystem(${k})`,
-    shape: `a strictly decreasing k-tuple c_k > … > c_1 ≥ 0`,
+    shape: {
+      bijective: true,
+      range: NATURALS,
+      digits: [0, undefined],
+      width: k,
+      rule: "strictly decreasing",
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
       const digits: number[] = [];
@@ -338,19 +389,6 @@ export function combinatorialSystem(k: number): NumeralSystem | undefined {
 
 // ── residue systems: no place values at all ─────────────────────────────────────
 
-const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b));
-
-function inverseMod(a: number, m: number): number | undefined {
-  let [old, cur] = [((a % m) + m) % m, m];
-  let [s, next] = [1, 0];
-  while (cur !== 0) {
-    const q = Math.floor(old / cur);
-    [old, cur] = [cur, old - q * cur];
-    [s, next] = [next, s - q * next];
-  }
-  return old === 1 ? ((s % m) + m) % m : undefined;
-}
-
 /**
  * Residue number system: the "digits" are n mod each modulus, and there are no place
  * values — the digits are INDEPENDENT, which is what makes addition and multiplication
@@ -361,14 +399,17 @@ function inverseMod(a: number, m: number): number | undefined {
 export function residueSystem(moduli: readonly number[]): NumeralSystem | undefined {
   if (moduli.length === 0 || !moduli.every((m) => isInt(m) && m >= 2)) return undefined;
   const coprime = moduli.every((m, i) =>
-    moduli.every((other, j) => i === j || gcd(m, other) === 1),
+    moduli.every((other, j) => i === j || gcd(BigInt(m), BigInt(other)) === 1n),
   );
   const total = moduli.reduce((a, b) => a * b, 1);
   return {
     name: `ResidueSystem(${moduli.join(",")})`,
-    shape: coprime
-      ? `independent residues mod ${moduli.join(", ")} — a bijection onto [0, ${total})`
-      : `residues mod ${moduli.join(", ")} — NOT pairwise coprime, so not a bijection`,
+    shape: {
+      bijective: coprime,
+      range: [0n, BigInt(total - 1)],
+      digits: moduli.map((m): DigitBound => [0, m - 1]),
+      width: moduli.length,
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0 || n >= total) return undefined;
       return moduli.map((m) => n % m);
@@ -376,22 +417,10 @@ export function residueSystem(moduli: readonly number[]): NumeralSystem | undefi
     fromDigits: (digits) => {
       if (digits.length !== moduli.length) return undefined;
       if (!digits.every((d, i) => isInt(d) && d >= 0 && d < moduli[i]!)) return undefined;
-      // Reconstruct by CRT, then CHECK — with non-coprime moduli a digit string can be
-      // inconsistent, and there is no integer to return.
-      let result = 0;
-      let combined = 1;
-      for (const [i, m] of moduli.entries()) {
-        const inverse = inverseMod(combined % m, m);
-        if (inverse === undefined) {
-          // Shared factor: fall back to a search over the span the CRT cannot resolve.
-          const candidate = searchResidues(digits, moduli, total);
-          return candidate;
-        }
-        const shift = (((digits[i]! - result) % m) + m) % m;
-        result += combined * ((shift * inverse) % m);
-        combined *= m;
-      }
-      return result % total;
+      // With moduli that share a factor a digit string can be inconsistent, and then there
+      // is no integer to return.
+      const solved = crtSolve(digits.map((d, i) => [BigInt(d), BigInt(moduli[i]!)] as const));
+      return solved === undefined ? undefined : Number(solved[0]);
     },
   };
 }
@@ -441,7 +470,13 @@ export function ostrowski(quotients: readonly number[]): NumeralSystem | undefin
   };
   return {
     name: `Ostrowski([${quotients.join(", ")}])`,
-    shape: `digits over the convergent denominators ${places.slice(0, m).join(", ")}, no digit at its ceiling above a non-zero one`,
+    shape: {
+      bijective: true,
+      range: [0n, BigInt(places[m]! - 1)],
+      digits: quotients.map((a, i): DigitBound => [0, i === 0 ? a - 1 : a]).reverse(),
+      width: m,
+      rule: "no digit at its ceiling above a non-zero one",
+    },
     toDigits: (n) => {
       if (!isInt(n) || n < 0 || n >= places[m]!) return undefined;
       // Greedy from the top. It lands inside the constraints by itself: taking as much as
@@ -466,18 +501,6 @@ export function ostrowski(quotients: readonly number[]): NumeralSystem | undefin
   };
 }
 
-/** The unique n < total matching every residue, when CRT cannot be run directly. */
-function searchResidues(
-  digits: readonly number[],
-  moduli: readonly number[],
-  total: number,
-): number | undefined {
-  for (let n = 0; n < total; n++) {
-    if (moduli.every((m, i) => n % m === digits[i])) return n;
-  }
-  return undefined;
-}
-
 // ── b-adic truncation ───────────────────────────────────────────────────────────
 
 /**
@@ -496,7 +519,12 @@ export function adicNumerals(b: number, prec: number = 20): NumeralSystem | unde
     residue * 2n > span ? residue - span : residue;
   return {
     name: `AdicNumerals(${b}, ${prec})`,
-    shape: `${prec} digits 0…${b - 1}; a negative carries infinitely many leading ${b - 1}s, cut at ${prec}`,
+    shape: {
+      bijective: true,
+      range: [modulus / 2n - modulus + 1n, modulus / 2n],
+      digits: [0, b - 1],
+      width: prec,
+    },
     toDigits: (n) => {
       if (!isInt(n)) return undefined;
       let rest = ((BigInt(n) % modulus) + modulus) % modulus;

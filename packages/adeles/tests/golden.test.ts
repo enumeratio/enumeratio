@@ -1,6 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
+import { declareResidues } from "@enumeratio/residues/src";
 import { describe, expect, test } from "vite-plus/test";
 import { declareAdeles } from "../src/declare.ts";
 import golden from "./adeles.golden.json" with { type: "json" };
@@ -8,6 +9,7 @@ import golden from "./adeles.golden.json" with { type: "json" };
 // Every case is pinned against Hertogh's Sage `adeles` (scripts/collect-golden.py).
 
 const ce = new ComputeEngine();
+declareResidues(ce);
 declareNumerals(ce);
 declareNumberTheory(ce);
 declareAdeles(ce);
