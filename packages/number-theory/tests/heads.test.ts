@@ -103,6 +103,13 @@ test("Gaussian integers reach the integer heads, as in Wolfram", () => {
   ]);
 });
 
+test("widened integer heads still leave a non-integer alone", () => {
+  expect(run(["FactorInteger", 2.5])).toEqual(["FactorInteger", 2.5]);
+  expect(run(["Divisors", ["Rational", 5, 2]])).toEqual(["Divisors", ["Rational", 5, 2]]);
+  expect(run(["ExtendedGCD", 2.5, 3])).toEqual(["ExtendedGCD", 2.5, 3]);
+  expect(run(["ExtendedGCD", 6, 4])).toEqual(["Tuple", 2, 1, -1]);
+});
+
 test("Gaussian results stay exact past a double", () => {
   const big = ["Complex", { num: "100000000000000000001" }, { num: "9007199254740993" }];
   expect(run(["Mod", big, ["Complex", 2, 1]])).toBe(0);

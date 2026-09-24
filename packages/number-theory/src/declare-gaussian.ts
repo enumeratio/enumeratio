@@ -1,5 +1,11 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, optionsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import {
+  mayBeInteger,
+  operandsOf,
+  optionsOf,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/boxed";
 import { invMod } from "./arith.ts";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
@@ -91,7 +97,12 @@ export function declareGaussian(ce: ComputeEngine): void {
     );
   }
 
-  widenSignature(ce, "ExtendedGCD", "(number, number) -> tuple<number, number, number>");
+  widenSignature(
+    ce,
+    "ExtendedGCD",
+    "(number, number) -> tuple<number, number, number>",
+    mayBeInteger,
+  );
   wrapOperator(
     ce,
     ["ExtendedGCD", 1, 1],
@@ -131,9 +142,10 @@ export function declareGaussian(ce: ComputeEngine): void {
   const optionHead = (
     head: string,
     signature: string,
+    native: ((op: BoxedExpression) => boolean) | undefined,
     answer: (z: Gaussian) => BoxedExpression | undefined,
   ): void => {
-    widenSignature(ce, head, signature);
+    widenSignature(ce, head, signature, native);
     const definition = ce.lookupDefinition(head);
     const operator =
       definition !== undefined && "operator" in definition ? definition.operator : undefined;
@@ -143,7 +155,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     if (!flags.broadcastExemptions.includes("tuples")) {
       flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
     }
-    const native = operator.evaluate;
+    const nativeEvaluate = operator.evaluate;
     const evaluate: typeof operator.evaluate = (ops, options) => {
       const option = gaussianOption(head, ops);
       if (option === "other" || option.positional !== 1) return undefined;
@@ -153,15 +165,15 @@ export function declareGaussian(ce: ComputeEngine): void {
       }
       const z = gaussianAt(ops[0]);
       if (z !== undefined && (z[1] !== 0n || option.value === true)) return answer(z);
-      return native?.(ops.slice(0, 1), options);
+      return nativeEvaluate?.(ops.slice(0, 1), options);
     };
     operator.evaluate = evaluate;
   };
 
-  optionHead("IsPrime", "(number, any*) -> boolean", (z) =>
+  optionHead("IsPrime", "(number, any*) -> boolean", undefined, (z) =>
     ce.symbol(isGaussianPrime(z) ? "True" : "False"),
   );
-  optionHead("FactorInteger", "(number, any*) -> list", (z) => {
+  optionHead("FactorInteger", "(number, any*) -> list", mayBeInteger, (z) => {
     const factors = factorGaussian(z);
     return factors === undefined
       ? undefined
@@ -169,7 +181,7 @@ export function declareGaussian(ce: ComputeEngine): void {
           factors.map(([p, e]) => ce.function("Tuple", [gaussianExpression(ce, p), ce.number(e)])),
         );
   });
-  optionHead("Divisors", "(number, any*) -> list", (z) => {
+  optionHead("Divisors", "(number, any*) -> list", mayBeInteger, (z) => {
     const divisors = divisorsGaussian(z);
     return divisors === undefined
       ? undefined
