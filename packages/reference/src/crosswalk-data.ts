@@ -1823,6 +1823,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "HarmonicNumber",
   },
   {
+    name: "HermiteDecomposition",
+    wolfram: "HermiteDecomposition",
+  },
+  {
     name: "HurwitzZeta",
     fungrimEntries: [
       "150b3e",
@@ -1973,6 +1977,17 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IntegerDigits",
     wolfram: "IntegerDigits",
+  },
+  {
+    name: "IntegerExponent",
+    wolfram: "IntegerExponent",
+    oracle: [
+      {
+        system: "sympy",
+        call: "multiplicity($2, $1)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "IntegerPartitions",

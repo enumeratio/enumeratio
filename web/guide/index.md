@@ -16,6 +16,9 @@ exploration that lets you.
 - [**Numeral systems**](/guide/numerals/) — one base slot, nine systems: factoradic,
   Zeckendorf, balanced, negative, bijective, mixed, primorial, combinatorial and
   residue — two of which are the unranking maps above in disguise.
+- [**Adèles and idèles**](/guide/adeles/) — numbers known modulo m as values: profinite
+  integers and rationals, the adèle ring and idèle group of ℚ, profinite Fibonacci
+  numbers and strong approximation, after Hertogh's Sage package.
 
 ## Algebras
 

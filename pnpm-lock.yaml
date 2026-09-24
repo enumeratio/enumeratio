@@ -256,6 +256,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
         version: 0.128.0
+      '@enumeratio/adeles':
+        specifier: workspace:*
+        version: link:../adeles
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../analytic
@@ -876,6 +879,9 @@ importers:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
         version: 0.128.0
+      '@enumeratio/adeles':
+        specifier: workspace:*
+        version: link:../adeles
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../analytic
@@ -1006,6 +1012,9 @@ importers:
 
   web:
     dependencies:
+      '@enumeratio/adeles':
+        specifier: workspace:*
+        version: link:../packages/adeles
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../packages/analytic

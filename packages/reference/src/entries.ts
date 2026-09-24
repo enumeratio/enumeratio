@@ -1,4 +1,5 @@
 import type { ReferenceEntry } from "./types.ts";
+import { adeles } from "./entries/adeles.ts";
 import { arithmetic } from "./entries/arithmetic.ts";
 import { combinatorics } from "./entries/combinatorics.ts";
 import { collections } from "./entries/collections.ts";
@@ -25,6 +26,7 @@ export const entries: readonly ReferenceEntry[] = [
   ...combinatorics,
   ...sequences,
   ...numberTheory,
+  ...adeles,
   ...arithmetic,
   ...elementary,
   ...specialFunctions,

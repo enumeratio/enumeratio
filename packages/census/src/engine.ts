@@ -13,6 +13,7 @@
 // this package, which is what lets it depend on everything.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
@@ -54,6 +55,7 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
   declareGroupAlgebra,
   declareModular,
   declareNumberTheory,
+  declareAdeles,
   declareBraid,
   declareCollections,
   declareGraphics,
