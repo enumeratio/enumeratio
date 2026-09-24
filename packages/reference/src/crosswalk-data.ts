@@ -2638,6 +2638,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Mod",
   },
   {
+    name: "ModularInverse",
+    wolfram: "ModularInverse",
+  },
+  {
     name: "MoebiusMu",
     wolfram: "MoebiusMu",
     oracle: [
@@ -2874,6 +2878,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "Product",
     fungrimEntries: ["33f13a"],
     wolfram: "Product",
+  },
+  {
+    name: "Quotient",
+    wolfram: "Quotient",
   },
   {
     name: "Random",

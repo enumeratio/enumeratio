@@ -78,6 +78,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine's GCD is integer-only",
       },
+      {
+        expr: ["GCD", ["Complex", 3, 1], ["Complex", 1, 3]],
+        expected: ["Complex", 1, 1],
+        category: "Scope",
+        caption: "Gaussian integers: the associate in the first quadrant",
+      },
     ],
     seeAlso: ["LCM", "ExtendedGCD"],
   },
@@ -134,6 +140,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine's LCM is integer-only",
       },
+      {
+        expr: ["LCM", ["Complex", 3, 1], ["Complex", -1, 3]],
+        expected: ["Complex", 3, 1],
+        category: "Scope",
+        caption: "$-1 + 3i = i(3 + i)$: associates share their multiples",
+      },
     ],
     seeAlso: ["GCD"],
   },
@@ -146,6 +158,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         call: "Mod(a, b)",
         description: "remainder of $a$ on division by $b$, with the sign of $b$.",
+      },
+      {
+        call: "Mod(z, m)",
+        description:
+          "for Gaussian integers, $z - m\\,\\mathrm{Quotient}(z, m)$: the remainder in the box around 0",
+        library: "enumeratio-number-theory",
       },
     ],
     details: [
@@ -187,8 +205,87 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine only supports the 2-argument form",
       },
+      {
+        expr: ["Mod", ["Complex", 7, 5], 3],
+        expected: ["Complex", 1, -1],
+        category: "Scope",
+        caption: "Gaussian integers: the quotient rounds, so each part lands in $(-m/2, m/2]$",
+      },
+      {
+        expr: ["Mod", ["Complex", 7, 5], ["Complex", 2, 1]],
+        expected: ["Complex", 0, -1],
+        category: "Scope",
+        caption: "a Gaussian modulus: $7 + 5i = (2 + i)(4 + i) - i$",
+      },
+      {
+        expr: [
+          "Mod",
+          ["Complex", { num: "100000000000000000001" }, { num: "9007199254740993" }],
+          ["Complex", 2, 1],
+        ],
+        expected: 0,
+        category: "Scope",
+        caption: "exact in both parts past $2^{53}$",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Mod", ["Complex", 7, 5], ["Complex", 2, 1]],
+          [
+            "Subtract",
+            ["Complex", 7, 5],
+            ["Multiply", ["Complex", 2, 1], ["Quotient", ["Complex", 7, 5], ["Complex", 2, 1]]],
+          ],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "the remainder of [[Quotient]]",
+      },
+      {
+        expr: ["List", ["Mod", ["Complex", 1, 2], 2], ["Mod", ["Complex", 3, 2], 2]],
+        expected: ["List", 1, -1],
+        category: "Possible issues",
+        caption: "rounding ties to even means $1$ and $-1$ both appear as remainders mod 2",
+      },
     ],
     seeAlso: ["PowerMod"],
+  },
+  {
+    name: "Quotient",
+    domain: "Number theory",
+    signature: "Quotient(m, n)",
+    summary:
+      "The integer quotient of $m$ by $n$ — for Gaussian integers, $m/n$ rounded to the nearest lattice point.",
+    signatures: [
+      {
+        call: "Quotient(m, n)",
+        description:
+          "$\\lfloor m/n \\rfloor$ for integers; $m/n$ rounded half-even in each part for Gaussian integers",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "For integers, $\\lfloor m/n \\rfloor$, so $m = n\\,\\mathrm{Quotient}(m, n) + \\mathrm{Mod}(m, n)$ with the remainder taking the sign of $n$.",
+      "For Gaussian integers the quotient rounds instead, ties to even, which is what makes $\\mathbb{Z}[i]$ Euclidean: the remainder then has smaller norm than $n$.",
+      "compute-engine has no Quotient; this follows Wolfram's.",
+    ],
+    examples: [
+      { expr: ["Quotient", 17, 5], expected: 3 },
+      { expr: ["Quotient", -7, 2], expected: -4, caption: "the floor, not truncation" },
+      {
+        expr: ["Quotient", ["Complex", 7, 5], ["Complex", 2, 1]],
+        expected: ["Complex", 4, 1],
+        category: "Scope",
+        caption: "$(7 + 5i)/(2 + i) = 3.8 + 0.6i$, rounded",
+      },
+      {
+        expr: ["Quotient", ["Complex", 5, 5], 2],
+        expected: ["Complex", 2, 2],
+        category: "Possible issues",
+        caption: "$2.5 + 2.5i$ rounds to even in each part",
+      },
+    ],
+    seeAlso: ["Mod", "GCD"],
   },
   {
     name: "PowerMod",
@@ -216,7 +313,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Equal to $\\mathrm{Mod}(a^b, m)$ for positive $b$, just far more efficient. See [[Mod]].",
       "A rational exponent $s/r$ gives the least $x$ with $x^r \\equiv a^s$ — the first element of [[PowerModList]] — and stays unevaluated when there is none.",
       "Threads over lists in any argument.",
-      "Gaussian-integer arguments (which Wolfram accepts) are not yet supported.",
+      "Gaussian integers are reduced as [[Mod]] reduces them; a rational-integer modulus must be positive, and a result that comes out real is reported in $[0, m)$.",
     ],
     examples: [
       { expr: ["PowerMod", 2, 10, 3], expected: 1 },
@@ -281,9 +378,24 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PowerMod", ["Complex", 2, 1], 2, 3],
         expected: ["Complex", 0, 1],
-        aspirational: true,
         category: "Scope",
-        caption: "Gaussian integers: $(2+i)^2 = 3 + 4i \\equiv i \\pmod 3$ — not yet supported",
+        caption: "Gaussian integers: $(2+i)^2 = 3 + 4i \\equiv i \\pmod 3$",
+      },
+      {
+        expr: ["PowerMod", ["Complex", 1, 2], ["Power", 10, 30], ["Complex", 7, 2]],
+        expected: ["Complex", 1, 2],
+        category: "Scope",
+        caption: "a Gaussian modulus, and an exponent of $10^{30}$",
+      },
+      {
+        expr: ["PowerMod", ["Complex", 11, -7], -4, ["Complex", 7, 4]],
+        expected: ["Complex", -2, -1],
+        category: "Scope",
+        caption: "$11 - 7i$ is a unit mod $7 + 4i$, so it has negative powers",
+        divergence: {
+          wolfram:
+            "Wolfram asks for a unit modulo the norm 65 here, not modulo $7 + 4i$, and leaves this unevaluated.",
+        },
       },
       {
         expr: ["PowerMod", 7, ["Totient", 19], 19],
@@ -347,7 +459,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "At most 100 000 roots are listed; past that the call stays unevaluated rather than build the list.",
       "Beyond Wolfram, a rational $a = u/v$ with $\\gcd(v, m) = 1$ is read in $\\mathbb{Z}/m$ as $u \\cdot v^{-1}$, the image of $\\mathbb{Z}_{(m)}$; a denominator sharing a factor with $m$ has no image, and the list is empty. See [[RationalReconstruction]] for the way back.",
       "Threads over lists in any argument.",
-      "Gaussian-integer arguments (which Wolfram's PowerMod accepts) are not yet supported.",
+      "Over the Gaussian integers — beyond Wolfram, whose PowerModList takes integers only — $m$ factors into Gaussian prime powers: a split prime maps onto $\\mathbb{Z}/p^e$ by $i \\mapsto \\sqrt{-1}$, an inert $p$ has residue field $\\mathbb{F}_{p^2}$ and lifts by Hensel, and $1 + i$ lifts by testing both residues.",
     ],
     examples: [
       {
@@ -576,6 +688,27 @@ export const numberTheory: readonly ReferenceEntry[] = [
           "the moduli with four or more square roots of 1 come in patterns: mod 24 every unit is one, since $(\\mathbb{Z}/24)^\\times \\cong C_2^3$",
         category: "Neat examples",
       },
+      {
+        expr: ["PowerModList", ["Complex", 0, 1], ["Rational", 1, 2], 7],
+        expected: ["List", ["Complex", -2, -2], ["Complex", 2, 2]],
+        category: "Scope",
+        caption:
+          "a square root of $i$ in $\\mathbb{Z}[i]/(7)$, the field of 49 elements: $(2 + 2i)^2 = 8i \\equiv i$",
+        divergence: { wolfram: "Wolfram's PowerModList takes integers only." },
+      },
+      {
+        expr: [
+          "PowerModList",
+          ["Complex", 3, 4],
+          ["Rational", 1, 2],
+          ["Add", ["Power", 10, 20], 39],
+        ],
+        expected: ["List", ["Complex", -2, -1], ["Complex", 2, 1]],
+        category: "Scope",
+        caption:
+          "$10^{20} + 39$ is inert, so its residue field is $\\mathbb{F}_{p^2}$ with $p$ of 21 digits",
+        divergence: { wolfram: "Wolfram's PowerModList takes integers only." },
+      },
     ],
     seeAlso: [
       "PowerMod",
@@ -584,6 +717,46 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "PrimitiveRootList",
       "RationalReconstruction",
     ],
+  },
+  {
+    name: "ModularInverse",
+    domain: "Number theory",
+    signature: "ModularInverse(a, m)",
+    summary: "The $x$ with $a x \\equiv 1 \\pmod m$, when $a$ is a unit mod $m$.",
+    signatures: [
+      { call: "ModularInverse(a, m)", description: "the inverse of $a$ modulo $m$, in $[0, m)$" },
+      {
+        call: "ModularInverse(z, m)",
+        description: "over the Gaussian integers",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Exists exactly when $\\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.",
+      "Read off the Bézout coefficient of [[ExtendedGCD]].",
+      "For Gaussian integers, Wolfram reduces the inverse into $[0, m)$ part by part for a positive rational-integer $m$, and as [[Mod]] does otherwise.",
+    ],
+    examples: [
+      { expr: ["ModularInverse", 3, 7], expected: 5, caption: "$3 \\cdot 5 = 15 \\equiv 1$" },
+      {
+        expr: ["ModularInverse", ["Complex", 2, 1], 7],
+        expected: ["Complex", 6, 4],
+        category: "Scope",
+        caption: "$(2 + i)(6 + 4i) = 8 + 14i \\equiv 1 \\pmod 7$",
+      },
+      {
+        expr: ["ModularInverse", ["Complex", 11, -7], ["Complex", 7, 4]],
+        expected: ["Complex", -1, 2],
+        category: "Scope",
+      },
+      {
+        expr: ["ModularInverse", 2, 4],
+        expected: ["ModularInverse", 2, 4],
+        category: "Possible issues",
+        caption: "$\\gcd(2, 4) = 2$: no inverse",
+      },
+    ],
+    seeAlso: ["PowerMod", "ExtendedGCD", "PowerModList"],
   },
   {
     name: "Totient",
@@ -777,7 +950,15 @@ export const numberTheory: readonly ReferenceEntry[] = [
     domain: "Number theory",
     signature: "IsPrime(n)",
     summary: "Tests whether n is a prime number.",
-    signatures: [{ call: "IsPrime(n)", description: "tests whether $n$ is prime." }],
+    signatures: [
+      { call: "IsPrime(n)", description: "tests whether $n$ is prime." },
+      {
+        call: "IsPrime(n, GaussianIntegers -> True)",
+        description:
+          "tests whether $n$ is prime in $\\mathbb{Z}[i]$; a complex $n$ is always tested there",
+        library: "enumeratio-number-theory",
+      },
+    ],
     details: [
       "A prime has no positive divisors other than 1 and itself; 1 itself is not prime.",
       'Returns False unless n is provably prime -- there\'s no third "unknown" outcome.',
@@ -814,6 +995,28 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine's IsPrime requires a positive integer and returns False",
       },
+      {
+        expr: ["IsPrime", ["Complex", 2, 1]],
+        expected: "True",
+        category: "Scope",
+        caption: "a Gaussian prime: its norm 5 is prime",
+      },
+      {
+        expr: ["IsPrime", 5, ["KeyValuePair", "GaussianIntegers", "True"]],
+        expected: "False",
+        category: "Scope",
+        caption: "$5 = (2 + i)(2 - i)$ splits in $\\mathbb{Z}[i]$",
+      },
+      {
+        expr: [
+          "IsPrime",
+          ["List", 2, 3, 5, 7, 11, 13],
+          ["KeyValuePair", "GaussianIntegers", "True"],
+        ],
+        expected: ["List", "False", "True", "False", "True", "True", "False"],
+        category: "Properties",
+        caption: "an odd prime stays prime in $\\mathbb{Z}[i]$ exactly when $p \\equiv 3 \\pmod 4$",
+      },
     ],
     seeAlso: ["FactorInteger", "NextPrime"],
   },
@@ -826,6 +1029,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         call: "FactorInteger(n)",
         description: "prime factorization of $n$ as $[\\mathrm{prime}, \\mathrm{exponent}]$ pairs.",
+      },
+      {
+        call: "FactorInteger(n, GaussianIntegers -> True)",
+        description:
+          "the factorisation in $\\mathbb{Z}[i]$: a unit first when it is not 1, then first-quadrant primes; a complex $n$ is always factored there",
+        library: "enumeratio-number-theory",
       },
     ],
     details: [
@@ -885,6 +1094,39 @@ export const numberTheory: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine does not",
+      },
+      {
+        expr: ["FactorInteger", 5, ["KeyValuePair", "GaussianIntegers", "True"]],
+        expected: [
+          "List",
+          ["Tuple", ["Complex", 0, -1], 1],
+          ["Tuple", ["Complex", 1, 2], 1],
+          ["Tuple", ["Complex", 2, 1], 1],
+        ],
+        category: "Scope",
+        caption: "$5 = -i(1 + 2i)(2 + i)$",
+      },
+      {
+        expr: ["FactorInteger", ["Complex", 3, 4]],
+        expected: ["List", ["Tuple", ["Complex", 2, 1], 2]],
+        category: "Scope",
+        caption: "$3 + 4i = (2 + i)^2$",
+      },
+      {
+        expr: [
+          "FactorInteger",
+          ["Complex", { num: "100000000000000000039" }, { num: "100000000000000000129" }],
+        ],
+        expected: [
+          "List",
+          ["Tuple", ["Complex", 0, -1], 1],
+          ["Tuple", ["Complex", 1, 1], 1],
+          ["Tuple", ["Complex", 99, 34], 1],
+          ["Tuple", ["Complex", 1538, 213], 1],
+          ["Tuple", ["Complex", 277789996706096, 549000467740335], 1],
+        ],
+        category: "Scope",
+        caption: "a 21-digit Gaussian integer, through its norm",
       },
     ],
     seeAlso: ["NthPrime", "Divisors", "PrimeNu", "PrimeOmega"],
@@ -990,7 +1232,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
     domain: "Number theory",
     signature: "Divisors(n)",
     summary: "All positive divisors of n, in increasing order.",
-    signatures: [{ call: "Divisors(n)", description: "all positive divisors of $n$, increasing." }],
+    signatures: [
+      { call: "Divisors(n)", description: "all positive divisors of $n$, increasing." },
+      {
+        call: "Divisors(n, GaussianIntegers -> True)",
+        description: "the first-quadrant divisors in $\\mathbb{Z}[i]$, by real part then imaginary",
+        library: "enumeratio-number-theory",
+      },
+    ],
     details: [
       "Includes both 1 and $n$ itself; a prime's only divisors are those two.",
       "The count of divisors, $d(n)$, equals $\\sigma_0(n)$. See [[DivisorSigma]].",
@@ -1065,6 +1314,17 @@ export const numberTheory: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine does not",
+      },
+      {
+        expr: ["Divisors", ["Complex", 3, 4]],
+        expected: ["List", 1, ["Complex", 2, 1], ["Complex", 3, 4]],
+        category: "Scope",
+      },
+      {
+        expr: ["Divisors", 13, ["KeyValuePair", "GaussianIntegers", "True"]],
+        expected: ["List", 1, ["Complex", 2, 3], ["Complex", 3, 2], 13],
+        category: "Scope",
+        caption: "$13 = (2 + 3i)(3 - 2i)$ splits, so it gains two divisors",
       },
     ],
     seeAlso: ["FactorInteger", "DivisorSigma"],
@@ -1499,6 +1759,16 @@ export const numberTheory: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine only accepts two arguments",
+      },
+      {
+        expr: ["ExtendedGCD", ["Complex", 7, 2], ["Complex", 3, -5]],
+        expected: ["Tuple", 1, ["Complex", -1, -2], ["Complex", -2, 2]],
+        category: "Scope",
+        caption: "Gaussian integers, by Euclid with the rounded quotient",
+        divergence: {
+          wolfram:
+            "Bézout coefficients are not unique; in about one case in a thousand Wolfram returns another valid pair.",
+        },
       },
     ],
     seeAlso: ["GCD"],

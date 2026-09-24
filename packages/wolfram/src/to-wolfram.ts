@@ -136,6 +136,8 @@ export const HEADS: Record<string, string> = {
   PowerModList: "PowerModList",
   MultiplicativeOrder: "MultiplicativeOrder",
   PrimitiveRootList: "PrimitiveRootList",
+  Quotient: "Quotient",
+  ModularInverse: "ModularInverse",
   ChineseRemainder: "ChineseRemainder",
   JacobiSymbol: "JacobiSymbol",
   LegendreSymbol: "LegendreSymbol",

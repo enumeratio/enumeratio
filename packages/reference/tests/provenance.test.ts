@@ -110,11 +110,14 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * on; a name disappearing means an override that has silently stopped taking effect.
  */
 const OVERRIDDEN = [
+  "Divisors",
   "Element",
+  "FactorInteger",
   "FromDigits",
   "Gamma",
   "GammaRegularized",
   "IntegerDigits",
+  "IsPrime",
   "MultiplicativeOrder",
   "Norm",
   "PolyLog",
@@ -206,6 +209,7 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
   // general system already carries, that we implemented again.
   const known = ours.filter((record) => record.elsewhere.length > 0);
   expect(known.map((record) => record.name)).toEqual([
+    "Quotient",
     "PowerModList",
     "KroneckerSymbol",
     "PrimitiveRootList",

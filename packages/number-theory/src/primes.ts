@@ -88,6 +88,26 @@ export function isPrime(n: bigint): boolean {
   return strongLucasProbablePrime(n);
 }
 
+/** ⌊n^(1/k)⌋ for n ≥ 0, k ≥ 1, by Newton's method from above. */
+function integerRoot(n: bigint, k: bigint): bigint {
+  if (n < 2n) return n;
+  let x = 1n << (BigInt(n.toString(2).length) / k + 1n);
+  for (;;) {
+    const y = ((k - 1n) * x + n / x ** (k - 1n)) / k;
+    if (y >= x) return x;
+    x = y;
+  }
+}
+
+/** [r, k] with rᵏ = n and k ≥ 2 as large as possible, or undefined when n is no perfect power. */
+function perfectPower(n: bigint): [bigint, bigint] | undefined {
+  for (let k = BigInt(n.toString(2).length); k >= 2n; k--) {
+    const r = integerRoot(n, k);
+    if (r > 1n && r ** k === n) return [r, k];
+  }
+  return undefined;
+}
+
 /** Steps of Pollard's rho before `factorInteger` gives up on a cofactor. */
 export const RHO_BUDGET = 1 << 20;
 
@@ -140,16 +160,22 @@ export function factorInteger(n: bigint): [bigint, number][] | undefined {
     rest = left;
   }
   const budget = { steps: RHO_BUDGET };
-  const pending = rest > 1n ? [rest] : [];
+  const pending: [bigint, number][] = rest > 1n ? [[rest, 1]] : [];
   while (pending.length > 0) {
-    const m = pending.pop()!;
+    const [m, multiplicity] = pending.pop()!;
     if (isPrime(m)) {
-      add(m, 1);
+      add(m, multiplicity);
+      continue;
+    }
+    // Rho cannot split p² for a large prime p within budget; a root can.
+    const power = perfectPower(m);
+    if (power !== undefined) {
+      pending.push([power[0], multiplicity * Number(power[1])]);
       continue;
     }
     const factor = rho(m, budget);
     if (factor === undefined) return undefined;
-    pending.push(factor, m / factor);
+    pending.push([factor, multiplicity], [m / factor, multiplicity]);
   }
   return [...counts].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
 }

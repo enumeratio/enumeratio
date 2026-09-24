@@ -137,6 +137,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy"],
   },
   {
+    name: "Quotient",
+    provenance: "extension",
+    declared: "enumeratio-number-theory",
+    wolframAlias: "Quotient",
+    elsewhere: ["wolfram"],
+  },
+  {
     name: "PowerMod",
     provenance: "override",
     declared: null,
@@ -149,6 +156,13 @@ export const provenance: readonly HeadRecord[] = [
     declared: "enumeratio-number-theory",
     wolframAlias: "PowerModList",
     elsewhere: ["wolfram"],
+  },
+  {
+    name: "ModularInverse",
+    provenance: "compute-engine",
+    declared: null,
+    wolframAlias: "ModularInverse",
+    elsewhere: [],
   },
   {
     name: "Totient",
@@ -180,14 +194,14 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "IsPrime",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "PrimeQ",
     elsewhere: ["sympy"],
   },
   {
     name: "FactorInteger",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "FactorInteger",
     elsewhere: ["wolfram"],
@@ -208,7 +222,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Divisors",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Divisors",
     elsewhere: ["wolfram", "sympy"],

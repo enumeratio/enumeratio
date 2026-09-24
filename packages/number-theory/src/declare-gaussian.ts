@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { optionsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, optionsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { invMod } from "./arith.ts";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divisorsGaussian,
@@ -9,6 +10,7 @@ import {
   gcd,
   inverseMod,
   isGaussianPrime,
+  isReal,
   lcm,
   mod,
   quotient,
@@ -103,14 +105,24 @@ export function declareGaussian(ce: ComputeEngine): void {
     },
   );
 
-  widenSignature(ce, "ModularInverse", "(number, number) -> number");
+  // Two arguments are the integer/Gaussian inverse, answered here outright: @enumeratio/modular
+  // re-declares ModularInverse for PSL(2, ℤ) matrices (one argument), which drops the native
+  // integer handler — so the one-argument form keeps whatever handler is current.
+  widenSignature(ce, "ModularInverse", "(value, value?) -> value");
   wrapOperator(
     ce,
     ["ModularInverse", 1, 1],
-    (ops) => gaussianCall(ops) !== undefined,
+    (ops) => ops.length === 2 && ops.every((op) => gaussianAt(op) !== undefined),
     () => (ops) => {
-      const [a, m] = gaussianCall(ops)!;
-      return g(inverseMod(a!, m!));
+      const [a, m] = ops.map(gaussianAt) as [Gaussian, Gaussian];
+      if (!isReal(a) || !isReal(m)) return g(inverseMod(a, m));
+      if (m[0] === 0n) return undefined;
+      const n = m[0] < 0n ? -m[0] : m[0];
+      const inverse = invMod(a[0], n);
+      // Wolfram's sign convention: the inverse takes the sign of the modulus.
+      return inverse === undefined
+        ? undefined
+        : ce.number(m[0] < 0n && inverse !== 0n ? inverse - n : inverse);
     },
   );
 
@@ -132,13 +144,18 @@ export function declareGaussian(ce: ComputeEngine): void {
       flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
     }
     const native = operator.evaluate;
-    operator.evaluate = (ops, options) => {
+    const evaluate: typeof operator.evaluate = (ops, options) => {
       const option = gaussianOption(head, ops);
       if (option === "other" || option.positional !== 1) return undefined;
+      // With the tuple exemption the engine no longer threads a list for us.
+      if (ops[0]?.operator === "List") {
+        return list(operandsOf(ops[0]).map((item) => evaluate!([item, ...ops.slice(1)], options)!));
+      }
       const z = gaussianAt(ops[0]);
       if (z !== undefined && (z[1] !== 0n || option.value === true)) return answer(z);
       return native?.(ops.slice(0, 1), options);
     };
+    operator.evaluate = evaluate;
   };
 
   optionHead("IsPrime", "(number, any*) -> boolean", (z) =>
