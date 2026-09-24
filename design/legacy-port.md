@@ -128,8 +128,7 @@ vexillary, Grassmannian, simple/separable, pattern classes, tournaments), trees-
 (non-crossing/non-nesting partitions, perfect matchings, phylogenetic and unlabelled rooted
 trees), paths (Delannoy, Riordan, Fine), tableaux (ASMs, semistandard, Gelfand–Tsetlin),
 and compositions/partitions/words-plus (Carlitz, plane partitions, Lyndon words, necklaces
-and bracelets). `StirlingPermutations` is the one old collection missing from the
-catalogue.
+and bracelets).
 
 Branches with content not yet here: `claude/234-gf` (bivariate and recurrence generating-
 function programs), `auto/symmetric-group-slice2-401` (cycle notation, Coxeter-length
