@@ -521,65 +521,24 @@ each looked up by name and confirmed against the item, are `WIKIDATA_FIXES` in
 whole patch. The ids that look wrong to the heuristic but are right (`Divide` → "division",
 `Nand` → "Sheffer stroke") are `WIKIDATA_CONFIRMED`, and are not part of it.
 
-**`EllipticE` is four digits accurate at complex modulus — patched locally, still worth
-sending.** At m = 0.57 + 0.23i the engine gives 1.3249212925969696 − 0.11971669991852416i;
-mpmath gives 1.32480777269705 − 0.119729445459512i, and so does the engine's own
-`Hypergeometric2F1` evaluating the identity E(m) = (π/2)·₂F₁(−½, ½; 1; m) — so it is
-`EllipticE` and not the comparison. `EllipticK` and `EllipticPi` agree with mpmath at the
-same point, and so — found while chasing this — does the two-argument incomplete form
-`EllipticE(φ, m)` at φ = π/2 (the complete case, `E(m) = E(π/2, m)`, DLMF 19.2.7); only the
-one-argument reduction is wrong. `packages/analytic/src/elliptic.ts` now patches
-`EllipticE`'s definition in place (see derivatives.ts for the attach-in-place pattern) to
-route the one-argument call through the accurate two-argument form instead of trusting the
-native reduction — real modulus is untouched, already exact there. Two of the three
-Fungrim identities that caught this (752619, 9227bf) now agree; the third (16d2e1)
-resurfaces at a different sample point (m = 1.17 + 0.45i) after the patch, but there it is
-compute-engine's `Hypergeometric2F1` that is off by a relative 5.2e-6 against mpmath's own
-2F1 — a separate, smaller imprecision, not this bug recurring. `EllipticE(φ, m)` has a
-second, related bug: for complex m, φ outside [−π/2, π/2] also loses precision (Fungrim
-identity c28288, e.g. φ = 0.57 + π, m = 0.57 + 0.23i), because native's own quasi-periodic
-reduction (DLMF 19.2.10) routes through the same broken one-argument path internally;
-`IncompleteEllipticE` (the Fungrim name for the two-argument form, also declared in
-elliptic.ts) does that reduction itself instead of trusting native's. Neither fix
-redeclares `EllipticE` — both patch its `evaluate` in place, so its canonical form, LaTeX,
-and the rest of its definition are untouched. `packages/reference/scripts/verify-fungrim.ts`
-is the reproduction.
+**`EllipticE` is four digits accurate at complex modulus.** At m = 0.57 + 0.23i the engine
+gives 1.3249212925969696 − 0.11971669991852416i; mpmath gives 1.32480777269705 −
+0.119729445459512i, as does the engine's own `Hypergeometric2F1` on E(m) = (π/2)·₂F₁(−½, ½;
+1; m). The two-argument `EllipticE(π/2, m)` is right, so only the one-argument reduction is
+wrong — and native `EllipticE(φ, m)` for φ outside [−π/2, π/2] inherits it through its
+quasi-periodic reduction (DLMF 19.2.10). Patched in place locally
+(`packages/analytic/src/elliptic.ts`); `verify-fungrim.ts` reproduces it.
 
-**`CarlsonRG(0,0,z)` diverged; `CarlsonRJ` now declines the argument regions it isn't
-verified on, rather than guessing.** Declaring `CarlsonRF`/`RC`/`RD`/`RJ`/`RG`,
-`ChebyshevT`/`U` and `LegendrePolynomial` (never checked against Fungrim before) surfaced 22
-disagreements on a fresh `verify-fungrim` run. `CarlsonRG` picked the largest-magnitude
-argument to play RF/RD's nonzero "z", which for `RG(0,0,z)` left the other _two_ zero
-arguments together — `RF(0,0,·)` diverges — blowing up to ~1e29; DLMF 19.20.3's elementary
-`RG(0,0,z) = √z/2` is now a direct special case. `CarlsonRJ` was missing `x > 0` in its
-`RC` Cauchy-principal-value guard (misfired for `x ≤ 0, y < 0`, dividing by `x−y ≈ 0`) and
-the all-negative reflection `RJ(−x,−y,−z,−w) = i·RJ(x,y,z,w)` (duplicating negative reals
-directly lands every `√` on the branch cut) — both fixed. The remaining `CarlsonRJ`
-disagreements turned out to be two different things: real arguments split across zero in a
-shape neither covered branch reaches (mixed positive/negative among x, y, z with p ≥ 0, or
-the reverse) and complex arguments with two or more of x, y, z, p past the cut at once,
-where the per-step α/β/`RC` sum's branch choice provably disagrees with mpmath's `elliprj`
-— both regions the declared head now declines on (stays symbolic) rather than asserting a
-wrong number; `carlsonRJDeclines` in `carlson.ts` is the exact predicate, cited against
-DLMF 19.16/19.20. Two disagreements (`b468f3`, `e04867`) turned out not to be bugs at all:
-they land inside the _documented_ p < 0 branch, whose real Cauchy principal value (matching
-Wolfram's own `CarlsonRJ`) is a deliberate convention choice against Fungrim's complex
-continuation — real convention differences, moved to `KNOWN_CAUSES`. All four fixes and the
-decline predicate are in `packages/analytic/src/carlson.ts`, with regression tests in
-`packages/analytic/tests/carlson.test.ts` (including that a declined region stays symbolic
-and its nearest covered neighbor still evaluates). A fresh run is 668 agree, 10 disagree,
-322 inconclusive (`fungrim-verified-data.ts`); the 10 remaining disagreements are 3
-`CarlsonRC` and 2 `CarlsonRJ` convention differences against Fungrim's cut convention, 1
-pre-existing `EllipticE` imprecision plus one new instance of it, and the three
-compiled-rule errors below.
+**`Hypergeometric2F1` is off by 5.2e-6 relative at complex argument** — Fungrim 16d2e1 at
+m = 1.17 + 0.45i, against mpmath's `hyp2f1`.
 
-- `42eb01`: compute-engine's compiled Fungrim rule flips a sign — Fungrim's `1 − x²` became
-  `x² − 1`, breaking the Pell-like Chebyshev identity `T_n² − (x²−1)U_{n−1}² = 1`; our
-  `ChebyshevT`/`U` match mpmath, the compiled rule doesn't.
-- `4c7aeb`: compute-engine's compiled rule is off by one index — `sin(x)·U_n(cos x) =
-sin((n+1)x)`, not `sin(n·x)`; confirmed against mpmath.
-- `5f09f4`: compute-engine's compiled rule's replace side (`ChebyshevU(2n, x)`) doesn't
-  match `U_{n−1}(2x²−1) + T_n(2x²−1)` against mpmath either — another index error.
+**Three compiled Fungrim rules in `identities` are wrong** (checked against mpmath):
+
+- `42eb01`: Fungrim's `1 − x²` became `x² − 1`, so the rule asserts
+  `(x²−1)U_{n−1}² + T_n² = 1`; at n = 1, x = 2 the left side is 7.
+- `4c7aeb`: off by one — `sin(x)·U_n(cos x) = sin((n+1)x)`, not `sin(n·x)`.
+- `5f09f4`: the replace side `ChebyshevU(2n, x)` does not equal
+  `U_{n−1}(2x²−1) + T_n(2x²−1)`; another index error.
 
 **`Zeta` serializes as `\Zeta`.** `ce.box(["Zeta", 3]).latex` is `\Zeta(3)` — an uppercase
 command that is not LaTeX's (the Riemann zeta is `\zeta`; there is no `\Zeta`, since

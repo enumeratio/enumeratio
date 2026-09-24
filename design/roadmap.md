@@ -44,30 +44,15 @@ projects rather than like tickets:
 
 The Fungrim frontier is the newest and the most mechanical to work through. Fungrim ships
 1444 identities as rewrite rules; `crosswalk:verify` instantiates each one with values its
-guards allow and evaluates both sides. Declaring the Carlson/Chebyshev/Legendre/incomplete-
-elliptic heads below moved the count from 422 agree, 3 disagree to 668 agree, 10 disagree,
-322 inconclusive (`fungrim-verified-data.ts`); the `EllipticE`-at-complex-modulus bug is
-fixed (patched in place, see [upstreaming.md §8](./upstreaming.md)), along with a
-`CarlsonRG` divergence and two `CarlsonRJ` real-argument branch gaps
-(`packages/analytic/src/carlson.ts`, tests in `carlson.test.ts`). `CarlsonRJ` also now
-declines (stays symbolic) on the argument regions those two gaps don't cover — real
-arguments split across zero outside its two verified branches, and complex arguments with
-two or more of x, y, z, p past the branch cut at once — rather than asserting a wrong
-number there; `carlsonRJDeclines` is the predicate. The 10 remaining disagreements are
-classified in `KNOWN_CAUSES` (`packages/reference/src/crosswalk/fungrim.ts`): three are
-`CarlsonRC` and two are `CarlsonRJ`, both real principal values differing from Fungrim's
-branch convention; three are compute-engine's own compiled-rule errors in the
-`ChebyshevT`/`U` identities (confirmed against mpmath, not ours); two are the
-`EllipticE`-at-complex-modulus imprecision. Where the engine cannot evaluate at all — a head
-with no numeric evaluation at a complex argument, or one that hangs — the identity is
-unchecked, and the frontier ranks the heads by how many identities each unlocks, the ones
-the engine does not declare at all first: `CarlsonRF`/`RD`/`RJ`/`RC`/`RG`, the orthogonal
-polynomials (`ChebyshevT`/`U`, `LegendrePolynomial`), and the incomplete elliptic integrals
-were the top of it and are now declared (`packages/analytic/src/carlson.ts`,
-`chebyshev.ts`, `legendre.ts`, `elliptic.ts`). Every remaining entry is an implementation
-task with a ready-made test suite attached; regenerate with `vp run crosswalk:verify` in
-`packages/reference` (slow: it drives a worker process with a deadline, because a single
-evaluation can hang).
+guards allow and evaluates both sides. Every disagreement left is classified in
+`KNOWN_CAUSES` (`packages/reference/src/crosswalk/fungrim.ts`): branch-convention
+differences from our real principal values, and compute-engine bugs listed in
+[upstreaming.md §8](./upstreaming.md). Where the engine cannot evaluate — no numeric arm at
+a complex argument, or a hang — the identity is unchecked, and the frontier ranks those
+heads by how many identities each unlocks, undeclared heads first. Every entry is an
+implementation task with a ready-made test suite attached. Regenerate from
+`packages/reference` with `vp run crosswalk:verify` (~45 s; each worker's heap is capped by
+`--heap`, because a single evaluation can hang).
 
 The two statistics/maps frontiers are the opposite kind of work: small, well-specified, and
 each already carrying the argument for why it was left. The statistics one is **empty** as
