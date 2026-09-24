@@ -44,15 +44,21 @@ projects rather than like tickets:
 
 The Fungrim frontier is the newest and the most mechanical to work through. Fungrim ships
 1444 identities as rewrite rules; `crosswalk:verify` instantiates each one with values its
-guards allow and evaluates both sides. The counts on disk (422 agree, 3 disagree) predate
-the Carlson/Chebyshev/Legendre/incomplete-elliptic heads below and are stale — they were
-declared and never checked against Fungrim. A fresh run agrees on 660 and disagrees on 22:
-the `EllipticE`-at-complex-modulus bug is fixed (patched in place, see
-[upstreaming.md §8](./upstreaming.md)), and most of the rest are newly-surfaced,
-not-yet-investigated branch-cut disagreements from those same recently-declared heads at
-arguments outside their documented domains — regenerating `fungrim-verified-data.ts` and
-reconciling `KNOWN_CAUSES` (`packages/reference/src/crosswalk/fungrim.ts`) against the
-larger set is its own task, not done here. Where the engine cannot evaluate at all — a head
+guards allow and evaluates both sides. Declaring the Carlson/Chebyshev/Legendre/incomplete-
+elliptic heads below moved the count from 422 agree, 3 disagree to 668 agree, 10 disagree,
+322 inconclusive (`fungrim-verified-data.ts`); the `EllipticE`-at-complex-modulus bug is
+fixed (patched in place, see [upstreaming.md §8](./upstreaming.md)), along with a
+`CarlsonRG` divergence and two `CarlsonRJ` real-argument branch gaps
+(`packages/analytic/src/carlson.ts`, tests in `carlson.test.ts`). `CarlsonRJ` also now
+declines (stays symbolic) on the argument regions those two gaps don't cover — real
+arguments split across zero outside its two verified branches, and complex arguments with
+two or more of x, y, z, p past the branch cut at once — rather than asserting a wrong
+number there; `carlsonRJDeclines` is the predicate. The 10 remaining disagreements are
+classified in `KNOWN_CAUSES` (`packages/reference/src/crosswalk/fungrim.ts`): three are
+`CarlsonRC` and two are `CarlsonRJ`, both real principal values differing from Fungrim's
+branch convention; three are compute-engine's own compiled-rule errors in the
+`ChebyshevT`/`U` identities (confirmed against mpmath, not ours); two are the
+`EllipticE`-at-complex-modulus imprecision. Where the engine cannot evaluate at all — a head
 with no numeric evaluation at a complex argument, or one that hangs — the identity is
 unchecked, and the frontier ranks the heads by how many identities each unlocks, the ones
 the engine does not declare at all first: `CarlsonRF`/`RD`/`RJ`/`RC`/`RG`, the orthogonal

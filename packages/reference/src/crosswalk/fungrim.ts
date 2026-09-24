@@ -8,15 +8,37 @@
 import { fungrimVerified } from "../fungrim-verified-data.ts";
 
 /**
- * Why an identity disagrees, where we have looked into it. Every case so far has been OUR
- * evaluation rather than Fungrim's mathematics, which is the useful direction: the corpus is
- * a test of the engine as much as the engine is a reader of the corpus.
+ * Why an identity disagrees, where we have looked into it. Most cases are OUR evaluation
+ * rather than Fungrim's mathematics (a real bug, or a branch convention we chose
+ * differently than Fungrim's compiled rule) -- the corpus is a test of the engine as much
+ * as the engine is a reader of the corpus. A few are compute-engine's own compiled rule
+ * (a sign or index error unrelated to any head we declare), caught by cross-checking both
+ * sides against mpmath independently.
  */
 export const KNOWN_CAUSES: Readonly<Record<string, string>> = {
   "16d2e1":
     "compute-engine's EllipticE is imprecise at complex modulus — at m = 0.57 + 0.23i it gives 1.32492…, where mpmath and the identity's own hypergeometric side both give 1.324807…; the identity is right",
-  "752619": "the same EllipticE imprecision at complex modulus",
-  "9227bf": "the same EllipticE imprecision at complex modulus",
+  "48333c":
+    "the same EllipticE imprecision at complex modulus, reached through this CarlsonRG identity",
+
+  "00cdb7":
+    "CarlsonRC(x, -y) for real x, y > 0: our RC returns DLMF 19.2.19's real Cauchy principal value (mpmath's plain elliprc(x,-y) agrees); this identity's Artanh form is Fungrim's analytic continuation approached from above the cut (y + i0), which has a nonzero imaginary part mpmath reproduces exactly under that same perturbation — a real convention difference, not a wrong value",
+  "25435b":
+    "the same CarlsonRC principal-value-vs-approached-from-above convention difference, at RC(1,-1)",
+  "4becdd":
+    "the same CarlsonRC principal-value-vs-approached-from-above convention difference, folded into a Conjugate identity",
+
+  "42eb01":
+    "compute-engine's compiled Fungrim rule has a sign error: the correct identity is T_n(x)^2 - (x^2-1)*U_{n-1}(x)^2 = 1 (DLMF 18.9.14 / the Pell-like Chebyshev identity, confirmed with mpmath's chebyt/chebyu), but the compiled rule adds instead of subtracting; our ChebyshevT/U match mpmath exactly at the tested points, the compiled replace side does not",
+  "4c7aeb":
+    "compute-engine's compiled Fungrim rule is off by one index: sin(x)*U_n(cos x) = sin((n+1)x), not sin(n*x) (confirmed with mpmath's chebyu/sin); our ChebyshevU matches mpmath's sin(2x) at n=1 exactly, the compiled replace side computes sin(x) instead",
+  "5f09f4":
+    "compute-engine's compiled Fungrim rule's replace side (ChebyshevU(2n, x)) does not match U_{n-1}(2x^2-1) + T_n(2x^2-1) at n=1 against mpmath either — our ChebyshevT/U agree with mpmath's chebyt/chebyu on the match side; the compiled rule itself is wrong, independent of our heads",
+
+  b468f3:
+    "CarlsonRJ(0,1,1,-1): falls inside our documented p < 0, x,y,z ≥ 0 Cauchy-principal-value branch (DLMF 19.20.14), which is deliberately real — same convention as Wolfram's CarlsonRJ there, confirmed — while Fungrim's expected value is complex, Fungrim's analytic continuation approached from one side of the cut rather than the principal value; the real part agrees with mpmath's elliprj exactly, only the (conventionally dropped) imaginary part differs",
+  e04867:
+    "the same CarlsonRJ real-CPV-vs-complex-continuation convention difference, at RJ(1,1,1,-1)",
 };
 
 export interface FungrimScore {

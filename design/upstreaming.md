@@ -543,13 +543,43 @@ reduction (DLMF 19.2.10) routes through the same broken one-argument path intern
 elliptic.ts) does that reduction itself instead of trusting native's. Neither fix
 redeclares `EllipticE` — both patch its `evaluate` in place, so its canonical form, LaTeX,
 and the rest of its definition are untouched. `packages/reference/scripts/verify-fungrim.ts`
-is the reproduction; regenerating `fungrim-verified-data.ts` also surfaces roughly twenty
-new disagreements from `CarlsonRF`/`RC`/`RD`/`RJ`/`RG`, `ChebyshevT`/`U` and
-`LegendrePolynomial` (declared since this file was last regenerated, never checked against
-Fungrim before) — mostly branch-cut sign flips at negative real arguments outside these
-heads' documented domains, unrelated to `EllipticE` and not investigated here; regenerating
-that file and reconciling `KNOWN_CAUSES` against the larger disagreement set is its own
-task.
+is the reproduction.
+
+**`CarlsonRG(0,0,z)` diverged; `CarlsonRJ` now declines the argument regions it isn't
+verified on, rather than guessing.** Declaring `CarlsonRF`/`RC`/`RD`/`RJ`/`RG`,
+`ChebyshevT`/`U` and `LegendrePolynomial` (never checked against Fungrim before) surfaced 22
+disagreements on a fresh `verify-fungrim` run. `CarlsonRG` picked the largest-magnitude
+argument to play RF/RD's nonzero "z", which for `RG(0,0,z)` left the other _two_ zero
+arguments together — `RF(0,0,·)` diverges — blowing up to ~1e29; DLMF 19.20.3's elementary
+`RG(0,0,z) = √z/2` is now a direct special case. `CarlsonRJ` was missing `x > 0` in its
+`RC` Cauchy-principal-value guard (misfired for `x ≤ 0, y < 0`, dividing by `x−y ≈ 0`) and
+the all-negative reflection `RJ(−x,−y,−z,−w) = i·RJ(x,y,z,w)` (duplicating negative reals
+directly lands every `√` on the branch cut) — both fixed. The remaining `CarlsonRJ`
+disagreements turned out to be two different things: real arguments split across zero in a
+shape neither covered branch reaches (mixed positive/negative among x, y, z with p ≥ 0, or
+the reverse) and complex arguments with two or more of x, y, z, p past the cut at once,
+where the per-step α/β/`RC` sum's branch choice provably disagrees with mpmath's `elliprj`
+— both regions the declared head now declines on (stays symbolic) rather than asserting a
+wrong number; `carlsonRJDeclines` in `carlson.ts` is the exact predicate, cited against
+DLMF 19.16/19.20. Two disagreements (`b468f3`, `e04867`) turned out not to be bugs at all:
+they land inside the _documented_ p < 0 branch, whose real Cauchy principal value (matching
+Wolfram's own `CarlsonRJ`) is a deliberate convention choice against Fungrim's complex
+continuation — real convention differences, moved to `KNOWN_CAUSES`. All four fixes and the
+decline predicate are in `packages/analytic/src/carlson.ts`, with regression tests in
+`packages/analytic/tests/carlson.test.ts` (including that a declined region stays symbolic
+and its nearest covered neighbor still evaluates). A fresh run is 668 agree, 10 disagree,
+322 inconclusive (`fungrim-verified-data.ts`); the 10 remaining disagreements are 3
+`CarlsonRC` and 2 `CarlsonRJ` convention differences against Fungrim's cut convention, 1
+pre-existing `EllipticE` imprecision plus one new instance of it, and the three
+compiled-rule errors below.
+
+- `42eb01`: compute-engine's compiled Fungrim rule flips a sign — Fungrim's `1 − x²` became
+  `x² − 1`, breaking the Pell-like Chebyshev identity `T_n² − (x²−1)U_{n−1}² = 1`; our
+  `ChebyshevT`/`U` match mpmath, the compiled rule doesn't.
+- `4c7aeb`: compute-engine's compiled rule is off by one index — `sin(x)·U_n(cos x) =
+sin((n+1)x)`, not `sin(n·x)`; confirmed against mpmath.
+- `5f09f4`: compute-engine's compiled rule's replace side (`ChebyshevU(2n, x)`) doesn't
+  match `U_{n−1}(2x²−1) + T_n(2x²−1)` against mpmath either — another index error.
 
 **`Zeta` serializes as `\Zeta`.** `ce.box(["Zeta", 3]).latex` is `\Zeta(3)` — an uppercase
 command that is not LaTeX's (the Riemann zeta is `\zeta`; there is no `\Zeta`, since

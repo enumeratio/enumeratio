@@ -332,7 +332,7 @@ test("a head's Fungrim chip carries how its identities came out", () => {
   // EllipticE's disagreements are on the chip, and the entry says why.
   const elliptic = crosswalkFor("EllipticE");
   const chip = elliptic.find((r) => r.system === "fungrim");
-  expect(chip?.verified?.disagree).toBe(3);
+  expect(chip?.verified?.disagree).toBe(2);
   const entry = elliptic.find((r) => r.identity === "16d2e1");
   expect(entry?.note).toContain("EllipticE is imprecise at complex modulus");
 });
