@@ -605,7 +605,11 @@ export class NotatioOut extends LitElement {
   #unwatch = (): void => {};
 
   #visualize(): void {
-    const env = environmentNamed(this.env) ?? this.#page;
+    // Own attribute, then the nearest ancestor that forces one, then the page.
+    const env =
+      environmentNamed(this.env) ??
+      environmentNamed(this.parentElement?.closest("[env]")?.getAttribute("env") ?? undefined) ??
+      this.#page;
     this._visual = this.#value === undefined ? "" : visualMarkup(this.#value, env);
   }
 
