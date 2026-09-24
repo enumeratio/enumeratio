@@ -24,7 +24,6 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compare,
@@ -35,7 +34,9 @@ import {
   type MathJSON,
   reduce,
   runIn,
+  runKernel,
   symbolic,
+  SYSTEMS,
   type System,
   type Tree,
   type Verdict,
@@ -82,6 +83,8 @@ const leaf = (expr: MathJSON): Leaf => {
 
 /** Our side of a TEXT comparison (the Python-family systems): the number, else the JSON. */
 const show = (expr: MathJSON): string => {
+  // A list prints as the systems print one, element by element.
+  if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
   const value = leaf(expr);
   return typeof value === "number"
     ? String(value)
@@ -116,7 +119,6 @@ const cases: Case[] = entryFiles.flatMap(({ stem, entries }) =>
       .filter((item) => headFilter === undefined || item.head === headFilter),
   ),
 );
-const caseById = new Map(cases.map((item) => [item.id, item]));
 
 type Outcome = {
   readonly id: string;
@@ -139,12 +141,27 @@ const theirTree = (fullForm: string): Tree | undefined => {
   }
 };
 
+/** A committed row's `tolerance`, read before the sidecars are loaded for rewriting. */
+const toleranceOf = (() => {
+  const cache = new Map<
+    string,
+    Record<string, Record<string, Record<string, { tolerance?: number }>>>
+  >();
+  return (item: Case, system: string): number | undefined => {
+    if (!cache.has(item.stem)) {
+      const url = new URL(`../src/entries/${item.stem}.oracle.json`, import.meta.url);
+      cache.set(item.stem, existsSync(url) ? JSON.parse(readFileSync(url, "utf8")).examples : {});
+    }
+    return cache.get(item.stem)?.[item.head]?.[item.key]?.[system]?.tolerance;
+  };
+})();
+
 for (const system of systems) {
   const emitted = cases.map((item) => ({ item, out: emit(item.expr, system) }));
   const runnable = emitted.filter((row) => row.out.ok);
   const sources = runnable.map((row) => (row.out as { source: string }).source);
   process.stderr.write(`${system}: ${runnable.length}/${cases.length} emit — running…\n`);
-  const results = runIn(system, sources);
+  const results = await runIn(system, sources);
 
   const outcomes: Outcome[] = [];
   const missing: Record<string, number> = {};
@@ -168,15 +185,22 @@ for (const system of systems) {
       return;
     }
     const theirs = result.value ?? "";
+    const tolerance = toleranceOf(row.item, system);
     let verdict: Verdict;
     if (system === "wolfram") {
       const tree = theirTree(theirs);
       verdict =
-        tree === undefined ? "inconclusive" : compareTrees(reduce(row.item.expected, leaf), tree);
+        tree === undefined
+          ? "inconclusive"
+          : compareTrees(reduce(row.item.expected, leaf), tree, tolerance);
     } else {
-      verdict = compare(show(row.item.expected), theirs);
+      verdict = compare(show(row.item.expected), theirs, tolerance);
       if (verdict === "disagree") {
-        const structured = comparePythonStructured(reduce(row.item.expected, leaf), theirs);
+        const structured = comparePythonStructured(
+          reduce(row.item.expected, leaf),
+          theirs,
+          tolerance,
+        );
         if (structured === "agree") verdict = structured;
       }
     }
@@ -220,6 +244,7 @@ interface OtherRow {
   readonly verdict: Verdict | "error";
   readonly kind?: string;
   readonly note?: string;
+  readonly tolerance?: number;
 }
 type Sidecar = {
   kernels: Record<string, string>;
@@ -239,12 +264,10 @@ const sidecars = new Map(entryFiles.map((f) => [f.stem, loadSidecar(f.stem)]));
 
 const kernelOf: Partial<Record<System, string>> = {};
 if (systems.includes("wolfram")) {
-  kernelOf.wolfram = execFileSync("wolframscript", ["-code", "$Version"], {
-    encoding: "utf8",
-  }).trim();
+  kernelOf.wolfram = (await runKernel("wolframscript", ["-code", "$Version"])).trim();
 }
 if (systems.includes("sage")) {
-  kernelOf.sage = execFileSync("sage", ["-c", "print(version())"], { encoding: "utf8" }).trim();
+  kernelOf.sage = (await runKernel("sage", ["-c", "print(version())"])).trim();
 }
 
 for (const system of systems) {
@@ -287,20 +310,29 @@ for (const system of systems) {
           else existingForHead[item.key] = rest;
           continue;
         }
-        const row: OtherRow =
-          outcome.verdict === "disagree"
-            ? {
-                input: outcome.source,
-                output: outcome.display,
-                verdict: outcome.verdict,
-                kind:
-                  prior?.verdict === "disagree" ? (prior.kind ?? "unclassified") : "unclassified",
-                note: prior?.verdict === "disagree" ? (prior.note ?? "") : "",
-              }
-            : { input: outcome.source, output: outcome.display, verdict: outcome.verdict };
+        // Anything but agreement needs a classification; one carries forward while the
+        // verdict holds, and a verdict that moves is reviewed afresh. A tolerance is a
+        // property of the example, so it carries forward regardless.
+        const same = prior?.verdict === outcome.verdict;
+        const row: OtherRow = {
+          input: outcome.source,
+          output: outcome.display,
+          verdict: outcome.verdict,
+          ...(outcome.verdict === "agree"
+            ? {}
+            : {
+                kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
+                note: same ? (prior?.note ?? "") : "",
+              }),
+          ...(prior?.tolerance === undefined
+            ? {}
+            : { tolerance: prior.tolerance, note: prior.note ?? "" }),
+        };
         existingForHead[item.key] = { ...existingForHead[item.key], [system]: row };
       }
-      sidecar.examples[head] = existingForHead;
+      // A head with no rows stays out, so a rescan leaves an untouched file identical.
+      if (Object.keys(existingForHead).length > 0) sidecar.examples[head] = existingForHead;
+      else delete sidecar.examples[head];
     }
   }
 }
@@ -325,13 +357,49 @@ if (fresh.length > 0) {
 
 // A readable digest of the disagreements, COMMITTED — the sidecars are regenerated per
 // kernel version and are not worth diffing wholesale, but the disagreements are exactly the
-// thing to review and to watch move over time.
+// thing to review and to watch move over time. Built from every sidecar rather than this
+// run, so it covers every system scanned so far and a rescan that changes nothing leaves it
+// identical — which is what lets the nightly lanes fail on drift.
+const exampleAt = new Map(
+  entryFiles.flatMap(({ stem, entries }) =>
+    entries.flatMap((entry) =>
+      entry.examples
+        .filter((example) => example.aspirational !== true)
+        .map((example, index) => [
+          `${stem}\0${entry.name}\0${JSON.stringify(example.expr)}`,
+          { id: `${stem}/${entry.name}#${index + 1}`, expected: example.expected as MathJSON },
+        ]),
+    ),
+  ),
+);
+interface DigestRow extends OtherRow {
+  readonly id: string;
+  readonly expected: MathJSON;
+}
+const rowsBySystem = new Map<string, DigestRow[]>();
+for (const { stem } of entryFiles) {
+  const sidecar = sidecars.get(stem) as Sidecar;
+  for (const [head, byKey] of Object.entries(sidecar.examples)) {
+    for (const [key, bySystem] of Object.entries(byKey)) {
+      const example = exampleAt.get(`${stem}\0${head}\0${key}`);
+      if (example === undefined) continue;
+      for (const [system, row] of Object.entries(bySystem)) {
+        const rows = rowsBySystem.get(system) ?? [];
+        rows.push({ ...row, ...example });
+        rowsBySystem.set(system, rows);
+      }
+    }
+  }
+}
+const scanned = SYSTEMS.map((spec) => spec.name).filter((name) => rowsBySystem.has(name));
+
 const lines: string[] = [
   "# Oracle disagreements",
   "",
-  "Generated by `vp node packages/reference/scripts/oracle-scan.ts`. Each row is an example where an",
-  "external system returned something other than our pinned `expected`. A row is NOT a bug",
-  "report — it is one of three things, and telling them apart is the review:",
+  "Generated by `vp node packages/reference/scripts/oracle-scan.ts` from the entry sidecars. Each",
+  "row is an example where an external system returned something other than our pinned",
+  "`expected`. A row is NOT a bug report — it is one of three things, and telling them apart is",
+  "the review:",
   "",
   "- **a formatter bug** — we emitted the wrong source, so the system answered a different question",
   "- **a convention difference** — both are right under their own definitions (rounding mode,",
@@ -339,33 +407,31 @@ const lines: string[] = [
   "- **our bug** — the interesting case, and the reason this exists",
   "",
   "Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.",
-  "",
-  `Systems in this run: ${systems.join(", ")}.`,
+  "Counts cover mapped examples only; unmapped ones have no row.",
   "",
 ];
-for (const system of systems) {
-  const outcomes = report[system] ?? [];
-  const bad = outcomes.filter((outcome) => outcome.verdict === "disagree");
-  const broken = outcomes.filter((outcome) => outcome.verdict === "error");
-  const tally = (verdict: string) => outcomes.filter((o) => o.verdict === verdict).length;
+for (const system of scanned) {
+  const rows = (rowsBySystem.get(system) ?? []).sort((a, b) => a.id.localeCompare(b.id));
+  const bad = rows.filter((row) => row.verdict === "disagree");
+  const broken = rows.filter((row) => row.verdict === "error");
+  const tally = (verdict: string) => rows.filter((row) => row.verdict === verdict).length;
   lines.push(
-    `## ${system} — agree ${tally("agree")}, disagree ${bad.length}, inconclusive ${tally("inconclusive")}, unmapped ${tally("unmapped")}, error ${broken.length}`,
+    `## ${system} — agree ${tally("agree")}, disagree ${bad.length}, inconclusive ${tally("inconclusive")}, error ${broken.length}`,
     "",
   );
   if (bad.length > 0) {
-    lines.push("| example | ours | theirs |", "| --- | --- | --- |");
-    for (const outcome of bad) {
-      const ours = show(caseById.get(outcome.id)?.expected ?? "");
-      lines.push(`| \`${outcome.id}\` | \`${trim(ours)}\` | \`${trim(outcome.theirs)}\` |`);
+    lines.push("| example | kind | ours | theirs |", "| --- | --- | --- | --- |");
+    for (const row of bad) {
+      lines.push(
+        `| \`${row.id}\` | ${row.kind ?? ""} | \`${trim(show(row.expected))}\` | \`${trim(row.output)}\` |`,
+      );
     }
     lines.push("");
   }
   if (broken.length > 0) {
     lines.push("<details><summary>errors — usually a mapping whose SHAPE is wrong</summary>", "");
     lines.push("| example | message |", "| --- | --- |");
-    for (const outcome of broken) {
-      lines.push(`| \`${outcome.id}\` | \`${trim(outcome.theirs)}\` |`);
-    }
+    for (const row of broken) lines.push(`| \`${row.id}\` | \`${trim(row.output)}\` |`);
     lines.push("", "</details>", "");
   }
 }

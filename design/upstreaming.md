@@ -453,7 +453,7 @@ On the systems themselves, since the question keeps coming up:
   dependency for no extra coverage. We call mpmath and SymPy directly.
 
 Still not automated: comparing **values** head-by-head against SymPy and mpmath the way
-`wolfram/scripts/validate-reference.ts` already does for Wolfram. That validator works —
+`reference/scripts/validate-wolfram.ts` already does for Wolfram. That validator works —
 542 examples compared, 393 agree, 57 disagree, 92 Wolfram-unsupported — but its
 "unsupported" detection is leaky, counting our own heads as disagreements when Wolfram
 simply leaves them symbolic, so the 57 needs triage before the number means anything.

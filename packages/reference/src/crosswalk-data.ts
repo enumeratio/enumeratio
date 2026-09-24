@@ -334,6 +334,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "bell_number($1)",
         arity: 1,
       },
+      {
+        system: "oscar",
+        call: "bell($1)",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "bell($1)",
+        arity: 1,
+      },
     ],
   },
   {
@@ -518,6 +528,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "binomial($1, $2)",
         arity: 2,
       },
+      {
+        system: "oscar",
+        call: "binomial(ZZ($1), ZZ($2))",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "binomial(ZZ($1), ZZ($2))",
+        arity: 2,
+      },
     ],
   },
   {
@@ -536,6 +556,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "catalan_number($1)",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "Combinatorics.catalannum($1)",
         arity: 1,
       },
     ],
@@ -1475,6 +1500,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "factorial($1)",
         arity: 1,
       },
+      {
+        system: "oscar",
+        call: "factorial(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "factorial(ZZ($1))",
+        arity: 1,
+      },
     ],
   },
   {
@@ -1539,6 +1574,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "fibonacci($1)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "fibonacci($1)",
+        arity: 1,
+      },
+      {
+        system: "julia",
         call: "fibonacci($1)",
         arity: 1,
       },
@@ -1665,6 +1710,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "gcd($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "oscar",
+        call: "gcd(ZZ($1), ZZ($2))",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "gcd(ZZ($1), ZZ($2))",
         arity: 2,
       },
     ],
@@ -2061,6 +2116,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "is_prime($1)",
         arity: 1,
       },
+      {
+        system: "oscar",
+        call: "is_prime(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "is_prime(ZZ($1))",
+        arity: 1,
+      },
     ],
   },
   {
@@ -2346,6 +2411,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "lcm($1, $2)",
         arity: 2,
       },
+      {
+        system: "oscar",
+        call: "lcm(ZZ($1), ZZ($2))",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "lcm(ZZ($1), ZZ($2))",
+        arity: 2,
+      },
     ],
   },
   {
@@ -2597,6 +2672,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "lucas_number2($1, 1, -1)",
         arity: 1,
       },
+      {
+        system: "julia",
+        call: "Combinatorics.lucasnum($1)",
+        arity: 1,
+      },
     ],
   },
   {
@@ -2665,6 +2745,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "Mod",
     fungrimEntries: ["540931", "75231e", "959a25"],
     wolfram: "Mod",
+    oracle: [
+      {
+        system: "oscar",
+        call: "mod($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "mod($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "ModularInverse",
@@ -2689,6 +2781,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "moebius($1)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "moebius_mu($1)",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "moebius_mu($1)",
         arity: 1,
       },
     ],
@@ -3321,6 +3423,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "stirling_number2($1, $2)",
         arity: 2,
       },
+      {
+        system: "julia",
+        call: "Combinatorics.stirlings2($1, $2)",
+        arity: 2,
+      },
     ],
   },
   {
@@ -3331,6 +3438,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "stirling_number1($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "Combinatorics.stirlings1($1, $2)",
         arity: 2,
       },
     ],
@@ -3465,6 +3577,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "euler_phi($1)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "euler_phi(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "euler_phi(ZZ($1))",
         arity: 1,
       },
     ],

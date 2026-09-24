@@ -15,6 +15,21 @@
           "input": "fibonacci(0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "fibonacci(0)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.fib 0)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "fibonacci(0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Fibonacci\",1]": {
@@ -24,6 +39,21 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "fibonacci(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "fibonacci(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.fib 1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
           "input": "fibonacci(1)",
           "output": "1",
           "verdict": "agree"
@@ -39,6 +69,21 @@
           "input": "fibonacci(10)",
           "output": "55",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "fibonacci(10)",
+          "output": "55",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.fib 10)",
+          "output": "55",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "fibonacci(10)",
+          "output": "55",
+          "verdict": "agree"
         }
       },
       "[\"Fibonacci\",20]": {
@@ -48,6 +93,21 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "fibonacci(20)",
+          "output": "6765",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "fibonacci(20)",
+          "output": "6765",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.fib 20)",
+          "output": "6765",
+          "verdict": "agree"
+        },
+        "oscar": {
           "input": "fibonacci(20)",
           "output": "6765",
           "verdict": "agree"
@@ -63,6 +123,21 @@
           "input": "bool(fibonacci(10) == (fibonacci(9) + fibonacci(8)))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(fibonacci(10) == (fibonacci(9) + fibonacci(8)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide ((Nat.fib 10) = ((Nat.fib 9) + (Nat.fib 8))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(fibonacci(10) == (fibonacci(9) + fibonacci(8)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Multiply\",[\"Fibonacci\",5],[\"Fibonacci\",7]],[\"Power\",[\"Fibonacci\",6],2]]": {
@@ -73,6 +148,21 @@
         },
         "sage": {
           "input": "((fibonacci(5) * fibonacci(7)) - (fibonacci(6)^2))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(((Nat.fib 5) * (Nat.fib 7)) - ((Nat.fib 6) ^ 2))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "((fibonacci(5) * fibonacci(7)) - (big(fibonacci(6))^2))",
           "output": "1",
           "verdict": "agree"
         }
@@ -87,6 +177,21 @@
           "input": "bool(gcd(fibonacci(12), fibonacci(18)) == fibonacci(gcd(12, 18)))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide ((Int.gcd (Nat.fib 12) (Nat.fib 18)) = (Nat.fib (Int.gcd 12 18))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(gcd(ZZ(fibonacci(12)), ZZ(fibonacci(18))) == fibonacci(gcd(ZZ(12), ZZ(18))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Fibonacci\",-5]": {
@@ -96,6 +201,23 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "fibonacci(-5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "fibonacci(-5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.fib (-5))",
+          "output": "failed to synthesize instance of type class",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Fibonacci to this argument."
+        },
+        "oscar": {
           "input": "fibonacci(-5)",
           "output": "5",
           "verdict": "agree"
@@ -110,7 +232,22 @@
         "sage": {
           "input": "(fibonacci(20) / fibonacci(19))",
           "output": "6765/4181",
-          "verdict": "inconclusive"
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(fibonacci(20) // fibonacci(19))",
+          "output": "1.6180339631667064",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(((Nat.fib 20) : ℚ) / (Nat.fib 19))",
+          "output": "6765/4181",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(fibonacci(20) // fibonacci(19))",
+          "output": "1.6180339631667064",
+          "verdict": "agree"
         }
       },
       "[\"Fibonacci\",50]": {
@@ -120,6 +257,21 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "fibonacci(50)",
+          "output": "12586269025",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "fibonacci(50)",
+          "output": "12586269025",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.fib 50)",
+          "output": "12586269025",
+          "verdict": "agree"
+        },
+        "oscar": {
           "input": "fibonacci(50)",
           "output": "12586269025",
           "verdict": "agree"
@@ -137,6 +289,11 @@
           "input": "lucas_number2(0, 1, -1)",
           "output": "2",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.lucasnum(0)",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"LucasL\",1]": {
@@ -147,6 +304,11 @@
         },
         "sage": {
           "input": "lucas_number2(1, 1, -1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.lucasnum(1)",
           "output": "1",
           "verdict": "agree"
         }
@@ -161,6 +323,11 @@
           "input": "lucas_number2(5, 1, -1)",
           "output": "11",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.lucasnum(5)",
+          "output": "11",
+          "verdict": "agree"
         }
       },
       "[\"LucasL\",10]": {
@@ -171,6 +338,11 @@
         },
         "sage": {
           "input": "lucas_number2(10, 1, -1)",
+          "output": "123",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.lucasnum(10)",
           "output": "123",
           "verdict": "agree"
         }
@@ -185,6 +357,11 @@
           "input": "bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(Combinatorics.lucasnum(6) == (fibonacci(5) + fibonacci(7)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Fibonacci\",6],[\"Divide\",[\"Add\",[\"LucasL\",5],[\"LucasL\",7]],5]]": {
@@ -197,6 +374,11 @@
           "input": "bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(fibonacci(6) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Multiply\",[\"LucasL\",4],[\"LucasL\",6]],[\"Power\",[\"LucasL\",5],2]]": {
@@ -207,6 +389,11 @@
         },
         "sage": {
           "input": "((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))",
           "output": "5",
           "verdict": "agree"
         }
@@ -221,6 +408,13 @@
           "input": "lucas_number2(-1, 1, -1)",
           "output": "-1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.lucasnum(-1)",
+          "output": "DomainError with -1: n must be nonnegative",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only."
         }
       },
       "[\"Divide\",[\"LucasL\",15],[\"LucasL\",14]]": {
@@ -232,7 +426,12 @@
         "sage": {
           "input": "(lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))",
           "output": "1364/843",
-          "verdict": "inconclusive"
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))",
+          "output": "1.6180308422301304",
+          "verdict": "agree"
         }
       },
       "[\"LucasL\",30]": {
@@ -243,6 +442,11 @@
         },
         "sage": {
           "input": "lucas_number2(30, 1, -1)",
+          "output": "1860498",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.lucasnum(30)",
           "output": "1860498",
           "verdict": "agree"
         }
@@ -270,7 +474,7 @@
         "sage": {
           "input": "bernoulli(1)",
           "output": "-1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",2]": {
@@ -282,7 +486,7 @@
         "sage": {
           "input": "bernoulli(2)",
           "output": "1/6",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",4]": {
@@ -294,7 +498,7 @@
         "sage": {
           "input": "bernoulli(4)",
           "output": "-1/30",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",12]": {
@@ -306,7 +510,7 @@
         "sage": {
           "input": "bernoulli(12)",
           "output": "-691/2730",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"BernoulliB\",5],0]": {
@@ -342,7 +546,9 @@
         "sage": {
           "input": "bernoulli(-1)",
           "output": "OverflowError: can't convert negative value to unsigned long",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"BernoulliB\", -1] and Sage raises an error."
         }
       },
       "[\"BernoulliB\",20]": {
@@ -354,7 +560,7 @@
         "sage": {
           "input": "bernoulli(20)",
           "output": "-174611/330",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     }

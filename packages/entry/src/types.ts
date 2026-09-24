@@ -11,9 +11,11 @@ export interface OtherSystemRun {
   readonly input: string;
   readonly output: string;
   readonly verdict: OtherSystemVerdict;
-  /** `disagree` only: one of `DIVERGENCE_KINDS`, carried forward by the scan. */
+  /** Any verdict but `agree`: one of `DIVERGENCE_KINDS`, carried forward by the scan. */
   readonly kind?: string;
   readonly note?: string;
+  /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
+  readonly tolerance?: number;
 }
 
 /** A MathJSON expression (form-agnostic compute-engine input/output). */
