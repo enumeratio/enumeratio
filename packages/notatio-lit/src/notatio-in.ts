@@ -15,7 +15,6 @@ import {
   sweepInterval,
   symbolLatex,
   wrapHead,
-  WRAPPER_HEADS,
 } from "@enumeratio/notatio";
 import { Sweep } from "./sweep.ts";
 
@@ -68,12 +67,12 @@ const PROMPT = "value";
  * renders static markup via `mathlive/ssr` and never loads the (heavy) editor.
  * MathLive is lazy-loaded the first time an editable input mounts.
  *
- * A control on the field writes a *wrapper head* around what the reader typed --
- * `N(x)` for a number, `FullForm(x)` for the AST, `TraditionalForm(x)` for the
- * rendering (see `WRAPPER_HEADS`). The head lands in the emitted value, not in the
- * editor: the field keeps showing the expression as written, so the wrapper is a
- * reversible request rather than an edit. A value handed back wrapped is unwrapped
- * again into expression plus head, which is also how a saved one is restored.
+ * A reader can type a *wrapper head* around an expression -- `N(x)` for a number,
+ * `FullForm(x)` for the AST, `TraditionalForm(x)` for the rendering (see
+ * `WRAPPER_HEADS`). The head lands in the emitted value, not in the editor: the field
+ * strips it from the display and keeps showing the expression as written, so the
+ * wrapper is a reversible request rather than an edit. A value handed back wrapped is
+ * unwrapped again into expression plus head, which is also how a saved one is restored.
  *
  * With `bind` (and optionally `type`) the field is *pinned*: it shows a declaration
  * like `p \in \mathbb{Z} \coloneq 3` where only the value is editable. The
@@ -110,7 +109,6 @@ export class NotatioIn extends LitElement {
      * editor keeps showing the expression as written.
      */
     head: { type: String, reflect: true },
-    _pending: { state: true },
     /**
      * Pin this field to a binding: the symbol name and its `\coloneq` become fixed
      * chrome, and only the value can be edited.
@@ -142,7 +140,6 @@ export class NotatioIn extends LitElement {
   declare readonly: boolean;
   declare inputForm: string;
   declare head: string;
-  declare _pending: string;
   declare bind: string;
   declare domain: string;
   declare play: boolean;
@@ -160,7 +157,6 @@ export class NotatioIn extends LitElement {
     this.value = "";
     this.readonly = false;
     this.head = "";
-    this._pending = WRAPPER_HEADS[0].head;
     this.inputForm = "";
     this.bind = "";
     this.domain = "";
@@ -316,23 +312,6 @@ export class NotatioIn extends LitElement {
     return `${this.value.slice(0, cut)} ${wrapHead(this.value.slice(cut), this.head)}`;
   }
 
-  /** The button applies the head shown on it, and takes it off again. Off by default. */
-  #onHead = (): void => {
-    if (!this.value.trim()) return; // nothing to ask about
-    this.head = this.head ? "" : this._pending;
-    this.#emit();
-  };
-
-  /** Picking from the menu both chooses the head and writes it. */
-  #pickHead(head: string): void {
-    this._pending = head;
-    const menu = this.querySelector<HTMLDetailsElement>(".notatio-head-menu");
-    if (menu) menu.open = false;
-    if (!this.value.trim()) return;
-    this.head = head;
-    this.#emit();
-  }
-
   /** True when this field shows a pinned declaration rather than a free expression. */
   get #pinned(): boolean {
     return !this.readonly && this.bind.trim() !== "";
@@ -400,7 +379,6 @@ export class NotatioIn extends LitElement {
     const { head, body } = splitHead(this.value.slice(cut));
     if (!head) return;
     this.head = head;
-    this._pending = head;
     this.value = `${this.value.slice(0, cut)}${m ? " " : ""}${body}`;
   }
 
@@ -471,42 +449,9 @@ export class NotatioIn extends LitElement {
 
   protected override render(): unknown {
     if (this.readonly) return html`<span class="notatio-static">${unsafeHTML(this._markup)}</span>`;
-    const pending = WRAPPER_HEADS.find((h) => h.head === this._pending) ?? WRAPPER_HEADS[0];
-    const applied = this.head
-      ? (WRAPPER_HEADS.find((h) => h.head === this.head) ?? pending)
-      : pending;
     return html`<div class="notatio-in-row">
       <math-field @input=${this.#onInput}></math-field>
       ${this.#playButton()}
-      <button
-        type="button"
-        class="notatio-head-btn"
-        title=${applied.title}
-        aria-pressed=${this.head ? "true" : "false"}
-        @click=${this.#onHead}
-      >
-        ${applied.label}
-      </button>
-      <details class="notatio-head-menu">
-        <summary
-          class="notatio-head-caret"
-          title="Wrap in a head"
-          aria-label="Wrap in a head"
-        ></summary>
-        <div class="notatio-menu-list" role="menu">
-          ${WRAPPER_HEADS.map(
-            (h) => html`<button
-              role="menuitemradio"
-              aria-checked=${this.head === h.head}
-              class=${this.head === h.head ? "is-current" : ""}
-              title=${h.title}
-              @click=${() => this.#pickHead(h.head)}
-            >
-              ${h.head}(…)
-            </button>`,
-          )}
-        </div>
-      </details>
     </div>`;
   }
 }

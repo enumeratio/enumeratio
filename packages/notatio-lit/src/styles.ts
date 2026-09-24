@@ -95,18 +95,31 @@ notatio-in math-field {
   border-radius: 8px;
   padding: 0.4rem 0.6rem;
 }
-/* The field and its head control form one input group: no gap, one shared seam. */
+/* In a cell the field reads as typeset math: no box until it has focus or hover. */
+.notatio-cell notatio-in math-field {
+  background: transparent;
+  border-color: transparent;
+  padding-left: 0.2rem;
+}
+.notatio-cell notatio-in math-field:hover { border-color: var(--notatio-border, var(--vp-c-divider, #d4d4d8)); }
+.notatio-cell notatio-in math-field:focus-within {
+  border-color: var(--notatio-accent, var(--vp-c-brand-1, #3451b2));
+  background: var(--notatio-bg, var(--vp-c-bg-soft, transparent));
+}
+/* The field and its play button (when shown) form one input group: no gap, one
+   shared seam -- the field's right corner only flattens when something sits there. */
 .notatio-in-row { display: flex; align-items: stretch; position: relative; }
 .notatio-in-row math-field {
   flex: 1;
   min-width: 0;
+}
+.notatio-in-row math-field:not(:last-child) {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
-/* The head as a control: quiet until applied, then it reads as engaged. It sits on the
-   field's own border -- the shared edge is drawn once, by the button. */
-.notatio-head-btn,
-.notatio-head-caret {
+/* A control sitting beside the field (currently just the play button): quiet
+   until active, on the field's own border -- the shared edge is drawn once. */
+.notatio-head-btn {
   flex: 0 0 auto;
   margin-left: -1px;
   padding: 0 0.5rem;
@@ -120,26 +133,14 @@ notatio-in math-field {
   user-select: none;
   list-style: none;
 }
-.notatio-head-btn:hover,
-.notatio-head-caret:hover { color: var(--vp-c-brand-1, #3451b2); }
+.notatio-head-btn:last-child { border-radius: 0 8px 8px 0; }
+.notatio-head-btn:hover { color: var(--vp-c-brand-1, #3451b2); }
 .notatio-head-btn[aria-pressed="true"] {
   z-index: 1; /* the applied border wins the seam it shares with the field */
   border-color: var(--vp-c-brand-1, #3451b2);
   color: var(--vp-c-brand-1, #3451b2);
   background: var(--vp-c-brand-soft, var(--vp-c-bg-soft, #f2f2f2));
 }
-/* The menu caps the group; its disclosure triangle is the caret itself. */
-.notatio-head-menu { position: relative; display: flex; }
-.notatio-head-caret {
-  display: flex;
-  align-items: center;
-  padding: 0 0.4rem;
-  border-radius: 0 8px 8px 0;
-}
-.notatio-head-caret::after { content: "▾"; }
-.notatio-head-caret::-webkit-details-marker { display: none; }
-.notatio-head-menu[open] .notatio-head-caret { color: var(--vp-c-brand-1, #3451b2); }
-.notatio-head-menu .notatio-menu-list { top: 100%; min-width: 9rem; }
 
 /* Hide the toolbar toggles; the context menu is still available on right-click. */
 notatio-in math-field::part(virtual-keyboard-toggle),
@@ -164,6 +165,40 @@ notatio-in math-field::part(menu-toggle) { display: none; }
   white-space: pre-wrap;
   word-break: break-word;
 }
+
+/* <notatio-cell>: the plain text editors for in-form="input"/"full"/"wolfram"/"tex". */
+.notatio-cell-text {
+  box-sizing: border-box;
+  max-width: 100%;
+  font-family: var(--notatio-mono, ui-monospace, monospace);
+  font-size: 0.85rem;
+  color: var(--notatio-fg, var(--vp-c-text-1, inherit));
+  background: var(--notatio-bg, var(--vp-c-bg-soft, transparent));
+  border: 1px solid var(--notatio-border, var(--vp-c-divider, #d4d4d8));
+  border-radius: 8px;
+  padding: 0.35rem 0.6rem;
+  resize: vertical;
+}
+/* Appears once an edit lands; restores the cell's original value and editor. */
+.notatio-reset {
+  flex: 0 0 auto;
+  margin-left: auto;
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--vp-c-text-3, #aaa);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.notatio-reset:hover { color: var(--vp-c-brand-1, #3451b2); }
+/* slot="aside" children (badges, alternatives), relocated here in light DOM;
+   hidden while the cell is dirty, since they describe the original value. Wraps,
+   so a panel like ExampleAlternatives' can drop to a full-width row below. */
+.notatio-aside { margin-left: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.notatio-aside[hidden] { display: none; }
+/* The editor takes what the label and reset leave, never more. */
+.notatio-row > .notatio-render { flex: 1 1 auto; min-width: 0; }
 
 /* <notatio-notebook>: a variable-centric (desmos-like) session. Ordinals are
    incidental handles on the left; each cell's value/binding shows below it. */

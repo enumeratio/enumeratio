@@ -3,9 +3,11 @@
 `<notatio-cell>` — a notebook-style In/Out pair: an editable input with its
 evaluated output beneath, each labelled. The summary line sits above the cell.
 
-`value` is notatio; the cell converts it to LaTeX for the MathLive field, and what you
-type there is LaTeX from then on. `in-form="latex"` skips the conversion and hands the
-field the value as written; `in-form="wolfram"` swaps the field for a full-form box.
+`value` is notatio by default -- `format` names the syntax it's written in
+(`notatio`, `latex`, `mathjson` or `wolfram`). `in-form` picks the editor: `standard`
+(the MathLive field, the default), or a plain text field in `input` (InputForm),
+`full` (the MathJSON AST), `wolfram` (Wolfram source) or `tex` (LaTeX) -- each parsed
+back on Enter or blur. Click the In label to switch editors or copy the value out.
 
 <Story
   title="A notebook cell">

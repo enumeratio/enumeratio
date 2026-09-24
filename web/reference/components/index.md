@@ -15,10 +15,12 @@ An attribute that holds an expression — `value`, `expr`, `u`/`v` — is writte
 (`x y` is a parse error, though `3x` is not). LaTeX is read only inside a `$…$` island:
 `value="$x\sin(x)$"`.
 
-That includes the editable components: a `<notatio-cell>`'s `value` and a
-`<notatio-notebook>`'s or `<notatio-worksheet>`'s `seed` are notatio, converted to LaTeX
-only for the MathLive field that edits them; `in-form="latex"` hands the field LaTeX as
-written. A seed may bind with `:=` — a cell is notatio plus one binding.
+That includes the editable components: a `<notatio-notebook>`'s or `<notatio-worksheet>`'s
+`seed` is notatio, converted to LaTeX only for the MathLive field that edits it;
+`in-form="latex"` hands the field LaTeX as written. A seed may bind with `:=` — a cell is
+notatio plus one binding. `<notatio-cell>` is different: its `value` is written in the
+syntax its `format` names (`notatio` by default, or `latex`, `mathjson`, `wolfram`), and
+its `in-form` instead picks which editor shows it.
 
 Two components keep LaTeX as their own form. `<notatio-in>` _is_ the math field, so its
 `value` is the field's LaTeX. `<notatio-out>` renders an encoding it is handed rather
