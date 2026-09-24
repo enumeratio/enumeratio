@@ -1,0 +1,898 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "Binomial": {
+      "[\"Binomial\",5,2]": {
+        "wolfram": {
+          "input": "Binomial[5, 2]",
+          "output": "10",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(5, 2)",
+          "output": "10",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",10,3]": {
+        "wolfram": {
+          "input": "Binomial[10, 3]",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(10, 3)",
+          "output": "120",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",4,2]": {
+        "wolfram": {
+          "input": "Binomial[4, 2]",
+          "output": "6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(4, 2)",
+          "output": "6",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",5,0]": {
+        "wolfram": {
+          "input": "Binomial[5, 0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(5, 0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",5,5]": {
+        "wolfram": {
+          "input": "Binomial[5, 5]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(5, 5)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Binomial\",10,3],[\"Binomial\",10,7]]": {
+        "wolfram": {
+          "input": "(Binomial[10, 3] == Binomial[10, 7])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(binomial(10, 3) == binomial(10, 7))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Binomial\",9,2],[\"Binomial\",9,3]],[\"Binomial\",10,3]]": {
+        "wolfram": {
+          "input": "(Plus[Binomial[9, 2], Binomial[9, 3]] == Binomial[10, 3])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((binomial(9, 2) + binomial(9, 3)) == binomial(10, 3))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Binomial\",4,0],[\"Binomial\",4,1],[\"Binomial\",4,2],[\"Binomial\",4,3],[\"Binomial\",4,4]],[\"Power\",2,4]]": {
+        "wolfram": {
+          "input": "(Plus[Binomial[4, 0], Binomial[4, 1], Binomial[4, 2], Binomial[4, 3], Binomial[4, 4]] == Power[2, 4])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)) == (2^4))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",52,5]": {
+        "wolfram": {
+          "input": "Binomial[52, 5]",
+          "output": "2598960",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(52, 5)",
+          "output": "2598960",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",5,7]": {
+        "wolfram": {
+          "input": "Binomial[5, 7]",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(5, 7)",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",5,-1]": {
+        "wolfram": {
+          "input": "Binomial[5, -1]",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(5, -1)",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Binomial\",-5,2]": {
+        "wolfram": {
+          "input": "Binomial[-5, 2]",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "binomial(-5, 2)",
+          "output": "15",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Multinomial": {
+      "[\"Multinomial\",1,2,1]": {
+        "wolfram": {
+          "input": "Multinomial[1, 2, 1]",
+          "output": "12",
+          "verdict": "agree"
+        }
+      },
+      "[\"Multinomial\",2,3,4]": {
+        "wolfram": {
+          "input": "Multinomial[2, 3, 4]",
+          "output": "1260",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Multinomial\",7,3],[\"Binomial\",10,3]]": {
+        "wolfram": {
+          "input": "(Multinomial[7, 3] == Binomial[10, 3])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Multinomial\",1,2,3],[\"Multinomial\",3,1,2]]": {
+        "wolfram": {
+          "input": "(Multinomial[1, 2, 3] == Multinomial[3, 1, 2])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Multinomial\",1,4,4,2]": {
+        "wolfram": {
+          "input": "Multinomial[1, 4, 4, 2]",
+          "output": "34650",
+          "verdict": "agree"
+        }
+      },
+      "[\"Multinomial\",0,0,0]": {
+        "wolfram": {
+          "input": "Multinomial[0, 0, 0]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Multinomial\",5]": {
+        "wolfram": {
+          "input": "Multinomial[5]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Factorial": {
+      "[\"Factorial\",5]": {
+        "wolfram": {
+          "input": "Factorial[5]",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(5)",
+          "output": "120",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial\",6]": {
+        "wolfram": {
+          "input": "Factorial[6]",
+          "output": "720",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(6)",
+          "output": "720",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial\",0]": {
+        "wolfram": {
+          "input": "Factorial[0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial\",10]": {
+        "wolfram": {
+          "input": "Factorial[10]",
+          "output": "3628800",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(10)",
+          "output": "3628800",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Factorial[List[1, 2, 3, 4]]",
+          "output": "{1, 2, 6, 24}",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial([1, 2, 3, 4])",
+          "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
+          "verdict": "error"
+        }
+      },
+      "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
+        "wolfram": {
+          "input": "(Factorial[5] == Times[5, Factorial[4]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(factorial(5) == (5 * factorial(4)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial\",[\"Rational\",1,2]]": {
+        "wolfram": {
+          "input": "Factorial[Rational[1, 2]]",
+          "output": "Sqrt[Pi]/2",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial((1/2))",
+          "output": "1/2*sqrt(pi)",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Factorial\",8]": {
+        "wolfram": {
+          "input": "Factorial[8]",
+          "output": "40320",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(8)",
+          "output": "40320",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial\",-1]": {
+        "wolfram": {
+          "input": "Factorial[-1]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(-1)",
+          "output": "ValueError: factorial only defined for nonnegative integers",
+          "verdict": "error"
+        }
+      },
+      "[\"Factorial\",20]": {
+        "wolfram": {
+          "input": "Factorial[20]",
+          "output": "2432902008176640000",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "factorial(20)",
+          "output": "2432902008176640000",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Factorial2": {
+      "[\"Factorial2\",7]": {
+        "wolfram": {
+          "input": "Factorial2[7]",
+          "output": "105",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial2\",8]": {
+        "wolfram": {
+          "input": "Factorial2[8]",
+          "output": "384",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial2\",10]": {
+        "wolfram": {
+          "input": "Factorial2[10]",
+          "output": "3840",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial2\",0]": {
+        "wolfram": {
+          "input": "Factorial2[0]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Factorial\",8],[\"Multiply\",[\"Factorial2\",8],[\"Factorial2\",7]]]": {
+        "wolfram": {
+          "input": "(Factorial[8] == Times[Factorial2[8], Factorial2[7]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial2\",9]": {
+        "wolfram": {
+          "input": "Factorial2[9]",
+          "output": "945",
+          "verdict": "agree"
+        }
+      },
+      "[\"Factorial2\",-2]": {
+        "wolfram": {
+          "input": "Factorial2[-2]",
+          "output": "ComplexInfinity",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "The pole at a negative even argument is NaN here and ComplexInfinity in Wolfram."
+        }
+      },
+      "[\"Factorial2\",15]": {
+        "wolfram": {
+          "input": "Factorial2[15]",
+          "output": "2027025",
+          "verdict": "agree"
+        }
+      }
+    },
+    "CatalanNumber": {
+      "[\"CatalanNumber\",0]": {
+        "wolfram": {
+          "input": "CatalanNumber[0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"CatalanNumber\",1]": {
+        "wolfram": {
+          "input": "CatalanNumber[1]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(1)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"CatalanNumber\",5]": {
+        "wolfram": {
+          "input": "CatalanNumber[5]",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(5)",
+          "output": "42",
+          "verdict": "agree"
+        }
+      },
+      "[\"CatalanNumber\",10]": {
+        "wolfram": {
+          "input": "CatalanNumber[10]",
+          "output": "16796",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(10)",
+          "output": "16796",
+          "verdict": "agree"
+        }
+      },
+      "[\"Divide\",[\"Binomial\",[\"Multiply\",2,5],5],[\"Add\",5,1]]": {
+        "wolfram": {
+          "input": "Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "(binomial((2 * 5), 5) / (5 + 1))",
+          "output": "42",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subtract\",[\"Binomial\",10,5],[\"Binomial\",10,6]]": {
+        "wolfram": {
+          "input": "Subtract[Binomial[10, 5], Binomial[10, 6]]",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "(binomial(10, 5) - binomial(10, 6))",
+          "output": "42",
+          "verdict": "agree"
+        }
+      },
+      "[\"Divide\",[\"CatalanNumber\",6],[\"CatalanNumber\",5]]": {
+        "wolfram": {
+          "input": "Divide[CatalanNumber[6], CatalanNumber[5]]",
+          "output": "22/7",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "(catalan_number(6) / catalan_number(5))",
+          "output": "22/7",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"CatalanNumber\",3]": {
+        "wolfram": {
+          "input": "CatalanNumber[3]",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(3)",
+          "output": "5",
+          "verdict": "agree"
+        }
+      },
+      "[\"CatalanNumber\",4]": {
+        "wolfram": {
+          "input": "CatalanNumber[4]",
+          "output": "14",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(4)",
+          "output": "14",
+          "verdict": "agree"
+        }
+      },
+      "[\"CatalanNumber\",-1]": {
+        "wolfram": {
+          "input": "CatalanNumber[-1]",
+          "output": "-1",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A negative index is left unevaluated here; Wolfram extends CatalanNumber through Gamma and gives C(-1) = -1."
+        },
+        "sage": {
+          "input": "catalan_number(-1)",
+          "output": "-1/2",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "A negative index is left unevaluated here; Sage's catalan_number continues through its own Gamma-based extension and gives C(-1) = -1/2, a different value again from Wolfram's C(-1) = -1."
+        }
+      },
+      "[\"CatalanNumber\",15]": {
+        "wolfram": {
+          "input": "CatalanNumber[15]",
+          "output": "9694845",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "catalan_number(15)",
+          "output": "9694845",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Pochhammer": {
+      "[\"Pochhammer\",5,3]": {
+        "wolfram": {
+          "input": "Pochhammer[5, 3]",
+          "output": "210",
+          "verdict": "agree"
+        }
+      },
+      "[\"Pochhammer\",2,0]": {
+        "wolfram": {
+          "input": "Pochhammer[2, 0]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Pochhammer\",1,5]": {
+        "wolfram": {
+          "input": "Pochhammer[1, 5]",
+          "output": "120",
+          "verdict": "agree"
+        }
+      },
+      "[\"Pochhammer\",3,4]": {
+        "wolfram": {
+          "input": "Pochhammer[3, 4]",
+          "output": "360",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Pochhammer\",1,5],[\"Factorial\",5]]": {
+        "wolfram": {
+          "input": "(Pochhammer[1, 5] == Factorial[5])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Pochhammer\",5,-2]": {
+        "wolfram": {
+          "input": "Pochhammer[5, -2]",
+          "output": "1/12",
+          "verdict": "agree"
+        }
+      },
+      "[\"Divide\",[\"Pochhammer\",5,3],[\"Factorial\",3]]": {
+        "wolfram": {
+          "input": "Divide[Pochhammer[5, 3], Factorial[3]]",
+          "output": "35",
+          "verdict": "agree"
+        }
+      },
+      "[\"Pochhammer\",-3,4]": {
+        "wolfram": {
+          "input": "Pochhammer[-3, 4]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Subfactorial": {
+      "[\"Subfactorial\",0]": {
+        "wolfram": {
+          "input": "Subfactorial[0]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subfactorial\",1]": {
+        "wolfram": {
+          "input": "Subfactorial[1]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subfactorial\",4]": {
+        "wolfram": {
+          "input": "Subfactorial[4]",
+          "output": "9",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subfactorial\",5]": {
+        "wolfram": {
+          "input": "Subfactorial[5]",
+          "output": "44",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Subfactorial\",4],[\"Add\",[\"Multiply\",4,[\"Subfactorial\",3]],[\"Power\",-1,4]]]": {
+        "wolfram": {
+          "input": "(Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subfactorial\",6]": {
+        "wolfram": {
+          "input": "Subfactorial[6]",
+          "output": "265",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subfactorial\",-1]": {
+        "wolfram": {
+          "input": "Subfactorial[-1]",
+          "output": "Subfactorial[-1]",
+          "verdict": "agree"
+        }
+      }
+    },
+    "StirlingS1": {
+      "[\"StirlingS1\",5,2]": {
+        "wolfram": {
+          "input": "StirlingS1[5, 2]",
+          "output": "-50",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(5, 2)",
+          "output": "50",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Signed here (s(5,2) = -50); Sage's stirling_number1 is unsigned by definition and returns 50 -- documented in mappings.ts, not a bug."
+        }
+      },
+      "[\"StirlingS1\",4,2]": {
+        "wolfram": {
+          "input": "StirlingS1[4, 2]",
+          "output": "11",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(4, 2)",
+          "output": "11",
+          "verdict": "agree"
+        }
+      },
+      "[\"StirlingS1\",3,3]": {
+        "wolfram": {
+          "input": "StirlingS1[3, 3]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(3, 3)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"StirlingS1\",5,0]": {
+        "wolfram": {
+          "input": "StirlingS1[5, 0]",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(5, 0)",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Sum\",[\"Abs\",[\"StirlingS1\",4,\"k\"]],[\"Tuple\",\"k\",0,4]],[\"Factorial\",4]]": {
+        "wolfram": {
+          "input": "(Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]] == Factorial[4])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"StirlingS1\",5,3]": {
+        "wolfram": {
+          "input": "StirlingS1[5, 3]",
+          "output": "35",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(5, 3)",
+          "output": "35",
+          "verdict": "agree"
+        }
+      },
+      "[\"StirlingS1\",0,0]": {
+        "wolfram": {
+          "input": "StirlingS1[0, 0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(0, 0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"StirlingS1\",10,1]": {
+        "wolfram": {
+          "input": "StirlingS1[10, 1]",
+          "output": "-362880",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number1(10, 1)",
+          "output": "362880",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Same unsigned-vs-signed convention: s(10,1) = -362880 here, Sage's unsigned stirling_number1 gives 362880."
+        }
+      }
+    },
+    "Stirling": {
+      "[\"Stirling\",5,2]": {
+        "wolfram": {
+          "input": "StirlingS2[5, 2]",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number2(5, 2)",
+          "output": "15",
+          "verdict": "agree"
+        }
+      },
+      "[\"Stirling\",6,3]": {
+        "wolfram": {
+          "input": "StirlingS2[6, 3]",
+          "output": "90",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number2(6, 3)",
+          "output": "90",
+          "verdict": "agree"
+        }
+      },
+      "[\"Stirling\",5,1]": {
+        "wolfram": {
+          "input": "StirlingS2[5, 1]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number2(5, 1)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Stirling\",5,5]": {
+        "wolfram": {
+          "input": "StirlingS2[5, 5]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number2(5, 5)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Sum\",[\"Stirling\",4,\"k\"],[\"Tuple\",\"k\",0,4]],[\"BellNumber\",4]]": {
+        "wolfram": {
+          "input": "(Sum[StirlingS2[4, k], List[k, 0, 4]] == BellB[4])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Stirling\",0,0]": {
+        "wolfram": {
+          "input": "StirlingS2[0, 0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "stirling_number2(0, 0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      }
+    },
+    "BellNumber": {
+      "[\"BellNumber\",0]": {
+        "wolfram": {
+          "input": "BellB[0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"BellNumber\",1]": {
+        "wolfram": {
+          "input": "BellB[1]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(1)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"BellNumber\",3]": {
+        "wolfram": {
+          "input": "BellB[3]",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(3)",
+          "output": "5",
+          "verdict": "agree"
+        }
+      },
+      "[\"BellNumber\",5]": {
+        "wolfram": {
+          "input": "BellB[5]",
+          "output": "52",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(5)",
+          "output": "52",
+          "verdict": "agree"
+        }
+      },
+      "[\"BellNumber\",10]": {
+        "wolfram": {
+          "input": "BellB[10]",
+          "output": "115975",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(10)",
+          "output": "115975",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"BellNumber\",5],[\"Add\",[\"Multiply\",[\"Binomial\",4,0],[\"BellNumber\",0]],[\"Multiply\",[\"Binomial\",4,1],[\"BellNumber\",1]],[\"Multiply\",[\"Binomial\",4,2],[\"BellNumber\",2]],[\"Multiply\",[\"Binomial\",4,3],[\"BellNumber\",3]],[\"Multiply\",[\"Binomial\",4,4],[\"BellNumber\",4]]]]": {
+        "wolfram": {
+          "input": "(BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"BellNumber\",4]": {
+        "wolfram": {
+          "input": "BellB[4]",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(4)",
+          "output": "15",
+          "verdict": "agree"
+        }
+      },
+      "[\"BellNumber\",-1]": {
+        "wolfram": {
+          "input": "BellB[-1]",
+          "output": "BellB[-1]",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bell_number(-1)",
+          "output": "ArithmeticError: Bell numbers not defined for negative indices",
+          "verdict": "error"
+        }
+      }
+    }
+  }
+}

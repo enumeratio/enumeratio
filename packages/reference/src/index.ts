@@ -7,7 +7,7 @@ export type {
   ReferenceExample,
   ReferenceImplementation,
 } from "./types.ts";
-export { entries } from "./entries.ts";
+export { entries, entryFiles, oracleKernels, oracleSidecars } from "./entries.ts";
 export { ENGINE_DOMAIN, engineEntries } from "./engine-entries.ts";
 export { engineSymbols, type EngineSymbol } from "./engine-symbols-data.ts";
 export {

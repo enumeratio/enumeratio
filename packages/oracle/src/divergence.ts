@@ -1,11 +1,11 @@
-// The catalogue of places where a Wolfram kernel and compute-engine disagree, as data.
+// The catalogue of places where another system and compute-engine disagree, as data.
 //
 // A scan (reference/scripts/oracle-scan.ts) produces the disagreements; a person classifies each one. The
 // classification is the useful part — "Round[2.5] is 2 there and 3 here" is a fact, but
 // "compute-engine rounds half away from zero and Wolfram rounds half to even" is the
 // convention behind a whole family of facts, and what a reader of the reference needs.
-// `reference/golden/oracle/divergences.json` holds the catalogue; its test refuses an
-// unclassified entry.
+// Each disagreeing row in an entry file's `<stem>.oracle.json` sidecar carries its
+// classification; the reference's oracle test refuses an unclassified one.
 
 import type { MathJSON } from "./emit.ts";
 import type { Tree } from "./structural.ts";

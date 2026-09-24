@@ -1,0 +1,33 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "ContinuedFraction": {
+      "[\"ContinuedFraction\",[\"Rational\",355,113]]": {
+        "wolfram": {
+          "input": "ContinuedFraction[Rational[355, 113]]",
+          "output": "{3, 7, 16}",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "list(continued_fraction((355/113)))",
+          "output": "[3, 7, 16]",
+          "verdict": "agree"
+        }
+      }
+    },
+    "ModularMatrix": {
+      "[\"Dot\",\"'L'\",\"'R'\"]": {
+        "wolfram": {
+          "input": "Dot[\"L\", \"R\"]",
+          "output": "\"L\" . \"R\"",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "An LR word is an enumeratio spelling of a PSL(2,Z) element; Wolfram's Dot has no reading for two strings and leaves the call unevaluated."
+        }
+      }
+    }
+  }
+}

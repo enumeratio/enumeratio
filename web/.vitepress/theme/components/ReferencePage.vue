@@ -2,7 +2,6 @@
 import { toInputForm } from "@enumeratio/formats";
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
 import { computed, nextTick, reactive, ref } from "vue";
-import alternativesData from "../../data/alternatives-prototype.json";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
@@ -122,10 +121,23 @@ const resetEdit = (i: number): void => {
   delete edits[i];
 };
 
-// Other systems' runs of each example, keyed by the example's expression.
-const ALTERNATIVES = alternativesData as Record<string, Record<string, Alternative>>;
-const alternativesOf = (ex: { expr: unknown }): Record<string, Alternative> | undefined =>
-  ALTERNATIVES[JSON.stringify(ex.expr)];
+// Other systems' runs of each example, attached by entries.ts from the entry's
+// `<stem>.oracle.json` sidecar (see `@enumeratio/oracle`).
+const alternativesOf = (ex: {
+  others?: Record<string, Alternative>;
+}): Record<string, Alternative> | undefined =>
+  ex.others && Object.keys(ex.others).length > 0 ? ex.others : undefined;
+// A row's own note, preferring the entry's authored `divergence` prose over the scan's.
+const notesOf = (ex: {
+  others?: Record<string, { note?: string }>;
+  divergence?: Record<string, string>;
+}): Record<string, string> => {
+  const notes: Record<string, string> = { ...ex.divergence };
+  for (const [system, run] of Object.entries(ex.others ?? {})) {
+    if (notes[system] === undefined && run.note) notes[system] = run.note;
+  }
+  return notes;
+};
 const sectionsOpen = ref(true);
 
 // Examples grouped into categories, keeping each example's original index so
@@ -310,7 +322,7 @@ const grouped = computed(() => {
             <ExampleAlternatives
               v-else-if="alternativesOf(ex)"
               :alternatives="alternativesOf(ex)!"
-              :notes="ex.divergence"
+              :notes="notesOf(ex)"
             />
             <span v-for="d in divergences(ex)" v-else :key="d.system" class="ref-divergent-badge">
               differs from {{ d.label }}

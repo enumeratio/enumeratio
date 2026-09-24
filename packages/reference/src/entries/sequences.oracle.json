@@ -1,0 +1,362 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "Fibonacci": {
+      "[\"Fibonacci\",0]": {
+        "wolfram": {
+          "input": "Fibonacci[0]",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "fibonacci(0)",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Fibonacci\",1]": {
+        "wolfram": {
+          "input": "Fibonacci[1]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "fibonacci(1)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Fibonacci\",10]": {
+        "wolfram": {
+          "input": "Fibonacci[10]",
+          "output": "55",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "fibonacci(10)",
+          "output": "55",
+          "verdict": "agree"
+        }
+      },
+      "[\"Fibonacci\",20]": {
+        "wolfram": {
+          "input": "Fibonacci[20]",
+          "output": "6765",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "fibonacci(20)",
+          "output": "6765",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Fibonacci\",10],[\"Add\",[\"Fibonacci\",9],[\"Fibonacci\",8]]]": {
+        "wolfram": {
+          "input": "(Fibonacci[10] == Plus[Fibonacci[9], Fibonacci[8]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(fibonacci(10) == (fibonacci(9) + fibonacci(8)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subtract\",[\"Multiply\",[\"Fibonacci\",5],[\"Fibonacci\",7]],[\"Power\",[\"Fibonacci\",6],2]]": {
+        "wolfram": {
+          "input": "Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "((fibonacci(5) * fibonacci(7)) - (fibonacci(6)^2))",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"GCD\",[\"Fibonacci\",12],[\"Fibonacci\",18]],[\"Fibonacci\",[\"GCD\",12,18]]]": {
+        "wolfram": {
+          "input": "(GCD[Fibonacci[12], Fibonacci[18]] == Fibonacci[GCD[12, 18]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(gcd(fibonacci(12), fibonacci(18)) == fibonacci(gcd(12, 18)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Fibonacci\",-5]": {
+        "wolfram": {
+          "input": "Fibonacci[-5]",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "fibonacci(-5)",
+          "output": "5",
+          "verdict": "agree"
+        }
+      },
+      "[\"Divide\",[\"Fibonacci\",20],[\"Fibonacci\",19]]": {
+        "wolfram": {
+          "input": "Divide[Fibonacci[20], Fibonacci[19]]",
+          "output": "6765/4181",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "(fibonacci(20) / fibonacci(19))",
+          "output": "6765/4181",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Fibonacci\",50]": {
+        "wolfram": {
+          "input": "Fibonacci[50]",
+          "output": "12586269025",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "fibonacci(50)",
+          "output": "12586269025",
+          "verdict": "agree"
+        }
+      }
+    },
+    "LucasL": {
+      "[\"LucasL\",0]": {
+        "wolfram": {
+          "input": "LucasL[0]",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "lucas_number2(0, 1, -1)",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"LucasL\",1]": {
+        "wolfram": {
+          "input": "LucasL[1]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "lucas_number2(1, 1, -1)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"LucasL\",5]": {
+        "wolfram": {
+          "input": "LucasL[5]",
+          "output": "11",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "lucas_number2(5, 1, -1)",
+          "output": "11",
+          "verdict": "agree"
+        }
+      },
+      "[\"LucasL\",10]": {
+        "wolfram": {
+          "input": "LucasL[10]",
+          "output": "123",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "lucas_number2(10, 1, -1)",
+          "output": "123",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"LucasL\",6],[\"Add\",[\"Fibonacci\",5],[\"Fibonacci\",7]]]": {
+        "wolfram": {
+          "input": "(LucasL[6] == Plus[Fibonacci[5], Fibonacci[7]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Fibonacci\",6],[\"Divide\",[\"Add\",[\"LucasL\",5],[\"LucasL\",7]],5]]": {
+        "wolfram": {
+          "input": "(Fibonacci[6] == Divide[Plus[LucasL[5], LucasL[7]], 5])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Subtract\",[\"Multiply\",[\"LucasL\",4],[\"LucasL\",6]],[\"Power\",[\"LucasL\",5],2]]": {
+        "wolfram": {
+          "input": "Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))",
+          "output": "5",
+          "verdict": "agree"
+        }
+      },
+      "[\"LucasL\",-1]": {
+        "wolfram": {
+          "input": "LucasL[-1]",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "lucas_number2(-1, 1, -1)",
+          "output": "-1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Divide\",[\"LucasL\",15],[\"LucasL\",14]]": {
+        "wolfram": {
+          "input": "Divide[LucasL[15], LucasL[14]]",
+          "output": "1364/843",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "(lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))",
+          "output": "1364/843",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"LucasL\",30]": {
+        "wolfram": {
+          "input": "LucasL[30]",
+          "output": "1860498",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "lucas_number2(30, 1, -1)",
+          "output": "1860498",
+          "verdict": "agree"
+        }
+      }
+    },
+    "BernoulliB": {
+      "[\"BernoulliB\",0]": {
+        "wolfram": {
+          "input": "BernoulliB[0]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(0)",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"BernoulliB\",1]": {
+        "wolfram": {
+          "input": "BernoulliB[1]",
+          "output": "-1/2",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(1)",
+          "output": "-1/2",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"BernoulliB\",2]": {
+        "wolfram": {
+          "input": "BernoulliB[2]",
+          "output": "1/6",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(2)",
+          "output": "1/6",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"BernoulliB\",4]": {
+        "wolfram": {
+          "input": "BernoulliB[4]",
+          "output": "-1/30",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(4)",
+          "output": "-1/30",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"BernoulliB\",12]": {
+        "wolfram": {
+          "input": "BernoulliB[12]",
+          "output": "-691/2730",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(12)",
+          "output": "-691/2730",
+          "verdict": "inconclusive"
+        }
+      },
+      "[\"Equal\",[\"BernoulliB\",5],0]": {
+        "wolfram": {
+          "input": "(BernoulliB[5] == 0)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(bernoulli(5) == 0)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Divide\",[\"Add\",[\"Multiply\",[\"Binomial\",3,0],[\"BernoulliB\",0],[\"Power\",5,3]],[\"Multiply\",[\"Binomial\",3,1],[\"BernoulliB\",1],[\"Power\",5,2]],[\"Multiply\",[\"Binomial\",3,2],[\"BernoulliB\",2],[\"Power\",5,1]]],3]": {
+        "wolfram": {
+          "input": "Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]",
+          "output": "30",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "(((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)",
+          "output": "30",
+          "verdict": "agree"
+        }
+      },
+      "[\"BernoulliB\",-1]": {
+        "wolfram": {
+          "input": "BernoulliB[-1]",
+          "output": "BernoulliB[-1]",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(-1)",
+          "output": "OverflowError: can't convert negative value to unsigned long",
+          "verdict": "error"
+        }
+      },
+      "[\"BernoulliB\",20]": {
+        "wolfram": {
+          "input": "BernoulliB[20]",
+          "output": "-174611/330",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bernoulli(20)",
+          "output": "-174611/330",
+          "verdict": "inconclusive"
+        }
+      }
+    }
+  }
+}

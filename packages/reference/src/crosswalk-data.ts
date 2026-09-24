@@ -624,7 +624,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
-        call: "continued_fraction($1)",
+        call: "list(continued_fraction($1))",
         arity: 1,
       },
     ],
@@ -1031,6 +1031,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "Divisors",
     fungrimEntries: ["08ff0b"],
     wolfram: "Divisors",
+    oracle: [
+      {
+        system: "sage",
+        call: "divisors($1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Dot",
@@ -1402,6 +1409,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "FactorInteger",
     wolfram: "FactorInteger",
+    oracle: [
+      {
+        system: "sage",
+        call: "list(factor($1))",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Factorial",
@@ -2620,7 +2634,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
-        call: "max([$*,])",
+        call: "enumeratio_max($*,)",
       },
     ],
   },
@@ -2643,7 +2657,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
-        call: "min([$*,])",
+        call: "enumeratio_min($*,)",
       },
     ],
   },
@@ -2655,6 +2669,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "ModularInverse",
     wolfram: "ModularInverse",
+    oracle: [
+      {
+        system: "sage",
+        call: "inverse_mod($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "MoebiusMu",
@@ -2683,6 +2704,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MultiplicativeOrder",
     wolfram: "MultiplicativeOrder",
+    oracle: [
+      {
+        system: "sage",
+        call: "Mod($1, $2).multiplicative_order()",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "Multiply",
@@ -2832,10 +2860,24 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PowerMod",
     wolfram: "PowerMod",
+    oracle: [
+      {
+        system: "sage",
+        call: "power_mod($1, $2, $3)",
+        arity: 3,
+      },
+    ],
   },
   {
     name: "PowerModList",
     wolfram: "PowerModList",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_power_mod_list($1, $2, $3)",
+        arity: 3,
+      },
+    ],
   },
   {
     name: "Prime",
@@ -2888,6 +2930,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PrimitiveRootList",
     wolfram: "PrimitiveRootList",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_primitive_root_list($1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Product",

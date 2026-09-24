@@ -1,0 +1,405 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "BarnesG": {
+      "[\"BarnesG\",5]": {
+        "wolfram": {
+          "input": "BarnesG[5]",
+          "output": "12",
+          "verdict": "agree"
+        }
+      },
+      "[\"BarnesG\",7]": {
+        "wolfram": {
+          "input": "BarnesG[7]",
+          "output": "34560",
+          "verdict": "agree"
+        }
+      },
+      "[\"BarnesG\",[\"List\",1,2,3,4,5,6]]": {
+        "wolfram": {
+          "input": "BarnesG[List[1, 2, 3, 4, 5, 6]]",
+          "output": "{1, 1, 1, 2, 12, 288}",
+          "verdict": "agree"
+        }
+      },
+      "[\"BarnesG\",0]": {
+        "wolfram": {
+          "input": "BarnesG[0]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"BarnesG\",-3]": {
+        "wolfram": {
+          "input": "BarnesG[-3]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"BarnesG\",2.5]": {
+        "wolfram": {
+          "input": "BarnesG[2.5]",
+          "output": "0.947573901083827",
+          "verdict": "agree"
+        }
+      },
+      "[\"BarnesG\",[\"Rational\",5,2]]": {
+        "wolfram": {
+          "input": "BarnesG[Rational[5, 2]]",
+          "output": "(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "An exact non-integer argument stays symbolic under plain evaluation here; Wolfram continues to a closed form in Glaisher's constant."
+        }
+      }
+    },
+    "LogBarnesG": {
+      "[\"LogBarnesG\",4]": {
+        "wolfram": {
+          "input": "LogBarnesG[4]",
+          "output": "Log[2]",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogBarnesG\",3]": {
+        "wolfram": {
+          "input": "LogBarnesG[3]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogBarnesG\",0]": {
+        "wolfram": {
+          "input": "LogBarnesG[0]",
+          "output": "-Infinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogBarnesG\",10.5]": {
+        "wolfram": {
+          "input": "LogBarnesG[10.5]",
+          "output": "42.278883636795044",
+          "verdict": "agree"
+        }
+      }
+    },
+    "LogGamma": {
+      "[\"LogGamma\",3]": {
+        "wolfram": {
+          "input": "LogGamma[3]",
+          "output": "Log[2]",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogGamma\",1]": {
+        "wolfram": {
+          "input": "LogGamma[1]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogGamma\",[\"Rational\",1,2]]": {
+        "wolfram": {
+          "input": "LogGamma[Rational[1, 2]]",
+          "output": "Log[Pi]/2",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogGamma\",0]": {
+        "wolfram": {
+          "input": "LogGamma[0]",
+          "output": "Infinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogGamma\",2.5]": {
+        "wolfram": {
+          "input": "LogGamma[2.5]",
+          "output": "0.2846828704729192",
+          "verdict": "agree"
+        }
+      },
+      "[\"LogGamma\",[\"Complex\",-2.5,1.5]]": {
+        "wolfram": {
+          "input": "LogGamma[Complex[-2.5, 1.5]]",
+          "output": "-3.7175134511917927 - 7.7130655258341925*I",
+          "verdict": "agree"
+        }
+      }
+    },
+    "DirichletEta": {
+      "[\"DirichletEta\",1]": {
+        "wolfram": {
+          "input": "DirichletEta[1]",
+          "output": "Log[2]",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletEta\",2]": {
+        "wolfram": {
+          "input": "DirichletEta[2]",
+          "output": "Pi^2/12",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletEta\",3]": {
+        "wolfram": {
+          "input": "DirichletEta[3]",
+          "output": "(3*Zeta[3])/4",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletEta\",[\"List\",0,-1,-2,-3]]": {
+        "wolfram": {
+          "input": "DirichletEta[List[0, -1, -2, -3]]",
+          "output": "{1/2, 1/4, 0, -1/8}",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletEta\",0.5]": {
+        "wolfram": {
+          "input": "DirichletEta[0.5]",
+          "output": "0.604898643421631",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletEta\",[\"Rational\",1,2]]": {
+        "wolfram": {
+          "input": "DirichletEta[Rational[1, 2]]",
+          "output": "(1 - Sqrt[2])*Zeta[1/2]",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "An exact non-integer argument stays symbolic here; Wolfram rewrites it as (1 - sqrt(2)) Zeta[1/2] instead of a further-reduced number."
+        }
+      }
+    },
+    "DirichletBeta": {
+      "[\"DirichletBeta\",1]": {
+        "wolfram": {
+          "input": "DirichletBeta[1]",
+          "output": "Pi/4",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletBeta\",2]": {
+        "wolfram": {
+          "input": "DirichletBeta[2]",
+          "output": "Catalan",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletBeta\",3]": {
+        "wolfram": {
+          "input": "DirichletBeta[3]",
+          "output": "Pi^3/32",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletBeta\",7]": {
+        "wolfram": {
+          "input": "DirichletBeta[7]",
+          "output": "(61*Pi^7)/184320",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletBeta\",[\"List\",0,-1,-2,-3,-4]]": {
+        "wolfram": {
+          "input": "DirichletBeta[List[0, -1, -2, -3, -4]]",
+          "output": "{1/2, 0, -1/2, 0, 5/2}",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletBeta\",4]": {
+        "wolfram": {
+          "input": "DirichletBeta[4]",
+          "output": "(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16",
+          "verdict": "disagree",
+          "kind": "unevaluated",
+          "note": "Even s >= 4 has no closed form here and stays symbolic; Wolfram expresses it via HurwitzZeta(4, 1/4) and HurwitzZeta(4, 3/4) instead of a further-reduced number."
+        }
+      },
+      "[\"DirichletBeta\",2.5]": {
+        "wolfram": {
+          "input": "DirichletBeta[2.5]",
+          "output": "0.948622174037055",
+          "verdict": "agree"
+        }
+      }
+    },
+    "StieltjesGamma": {
+      "[\"StieltjesGamma\",0]": {
+        "wolfram": {
+          "input": "StieltjesGamma[0]",
+          "output": "EulerGamma",
+          "verdict": "agree"
+        }
+      },
+      "[\"StieltjesGamma\",1]": {
+        "wolfram": {
+          "input": "StieltjesGamma[1]",
+          "output": "StieltjesGamma[1]",
+          "verdict": "agree"
+        }
+      },
+      "[\"StieltjesGamma\",1,1.5]": {
+        "wolfram": {
+          "input": "StieltjesGamma[1, 1.5]",
+          "output": "0.0328346803149491",
+          "verdict": "agree"
+        }
+      },
+      "[\"StieltjesGamma\",3,0.5]": {
+        "wolfram": {
+          "input": "StieltjesGamma[3, 0.5]",
+          "output": "-0.6674242737113807",
+          "verdict": "agree"
+        }
+      },
+      "[\"StieltjesGamma\",2,-1]": {
+        "wolfram": {
+          "input": "StieltjesGamma[2, -1]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"StieltjesGamma\",40]": {
+        "wolfram": {
+          "input": "StieltjesGamma[40]",
+          "output": "StieltjesGamma[40]",
+          "verdict": "agree"
+        }
+      }
+    },
+    "DirichletCharacter": {
+      "[\"DirichletCharacter\",4,2,3]": {
+        "wolfram": {
+          "input": "DirichletCharacter[4, 2, 3]",
+          "output": "-1",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletCharacter\",5,2,2]": {
+        "wolfram": {
+          "input": "DirichletCharacter[5, 2, 2]",
+          "output": "I",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletCharacter\",5,2,5]": {
+        "wolfram": {
+          "input": "DirichletCharacter[5, 2, 5]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletCharacter\",5,3,2]": {
+        "wolfram": {
+          "input": "DirichletCharacter[5, 3, 2]",
+          "output": "-1",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletCharacter\",1,1,7]": {
+        "wolfram": {
+          "input": "DirichletCharacter[1, 1, 7]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletCharacter\",5,9,2]": {
+        "wolfram": {
+          "input": "DirichletCharacter[5, 9, 2]",
+          "output": "DirichletCharacter[5, 9, 2]",
+          "verdict": "agree"
+        }
+      }
+    },
+    "DirichletL": {
+      "[\"DirichletL\",4,2,1]": {
+        "wolfram": {
+          "input": "DirichletL[4, 2, 1]",
+          "output": "Pi/4",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletL\",12,1,1]": {
+        "wolfram": {
+          "input": "DirichletL[12, 1, 1]",
+          "output": "DirichletL[12, 1, 1]",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "We answer the pole as ComplexInfinity (a principal character mod 12 keeps zeta's pole at s=1); Wolfram declines and leaves the call unevaluated instead."
+        }
+      },
+      "[\"DirichletL\",5,2,0]": {
+        "wolfram": {
+          "input": "DirichletL[5, 2, 0]",
+          "output": "3/5 + I/5",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletL\",8,2,-3]": {
+        "wolfram": {
+          "input": "DirichletL[8, 2, -3]",
+          "output": "11",
+          "verdict": "agree"
+        }
+      },
+      "[\"DirichletL\",5,2,2]": {
+        "wolfram": {
+          "input": "DirichletL[5, 2, 2]",
+          "output": "DirichletL[5, 2, 2]",
+          "verdict": "agree"
+        }
+      }
+    },
+    "HarmonicNumber": {
+      "[\"HarmonicNumber\",10]": {
+        "wolfram": {
+          "input": "HarmonicNumber[10]",
+          "output": "7381/2520",
+          "verdict": "agree"
+        }
+      },
+      "[\"HarmonicNumber\",0]": {
+        "wolfram": {
+          "input": "HarmonicNumber[0]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"HarmonicNumber\",5,-1]": {
+        "wolfram": {
+          "input": "HarmonicNumber[5, -1]",
+          "output": "15",
+          "verdict": "agree"
+        }
+      },
+      "[\"HarmonicNumber\",2.5]": {
+        "wolfram": {
+          "input": "HarmonicNumber[2.5]",
+          "output": "1.680372305546776",
+          "verdict": "agree"
+        }
+      },
+      "[\"HarmonicNumber\",-3]": {
+        "wolfram": {
+          "input": "HarmonicNumber[-3]",
+          "output": "ComplexInfinity",
+          "verdict": "agree"
+        }
+      },
+      "[\"HarmonicNumber\",5,[\"Rational\",1,2]]": {
+        "wolfram": {
+          "input": "HarmonicNumber[5, Rational[1, 2]]",
+          "output": "HarmonicNumber[5, 1/2]",
+          "verdict": "agree"
+        }
+      }
+    }
+  }
+}

@@ -3,6 +3,19 @@ import type { Reference } from "./reference.ts";
 /** Systems compute-engine results may be cross-checked against (see `divergence`). */
 export type DivergenceSystem = "wolfram" | "numpy" | "sympy";
 
+/** How an external system's run of an example compared to ours. */
+export type OtherSystemVerdict = "agree" | "disagree" | "inconclusive" | "error";
+
+/** One system's exact run of one example — from the oracle sidecars (see `@enumeratio/oracle`). */
+export interface OtherSystemRun {
+  readonly input: string;
+  readonly output: string;
+  readonly verdict: OtherSystemVerdict;
+  /** `disagree` only: one of `DIVERGENCE_KINDS`, carried forward by the scan. */
+  readonly kind?: string;
+  readonly note?: string;
+}
+
 /** A MathJSON expression (form-agnostic compute-engine input/output). */
 export type MathJSON =
   | number
@@ -40,6 +53,8 @@ export interface ReferenceExample {
    * per key and the note. State what that system does instead.
    */
   readonly divergence?: Partial<Record<DivergenceSystem, string>>;
+  /** Per-system oracle runs of this exact example, attached from the entry's `.oracle.json` sidecar. */
+  readonly others?: Readonly<Record<string, OtherSystemRun>>;
 }
 
 /** One call signature the head accepts, with a short explanation. */

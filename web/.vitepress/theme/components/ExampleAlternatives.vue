@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-// Another system's run of one example: the source it was given and what came back.
+// Another system's run of one example: the source it was given and what came back. Same
+// vocabulary as the oracle sidecars (`OtherSystemRun`, packages/entry/src/types.ts).
 export interface Alternative {
   readonly input: string;
   readonly output: string;
-  readonly verdict: "agree" | "differ" | "unevaluated" | "error";
+  readonly verdict: "agree" | "disagree" | "inconclusive" | "error";
 }
 
 const props = defineProps<{
@@ -16,14 +17,14 @@ const props = defineProps<{
 const LABEL: Record<string, string> = { wolfram: "Wolfram", sage: "Sage", sympy: "SymPy" };
 const MARK: Record<Alternative["verdict"], string> = {
   agree: "",
-  differ: "≠",
-  unevaluated: "∅",
+  disagree: "≠",
+  inconclusive: "∅",
   error: "!",
 };
 const TITLE: Record<Alternative["verdict"], string> = {
   agree: "agrees",
-  differ: "gives a different answer",
-  unevaluated: "leaves it unevaluated",
+  disagree: "gives a different answer",
+  inconclusive: "leaves it unevaluated",
   error: "raises an error",
 };
 
@@ -95,8 +96,8 @@ const shown = computed(() =>
 .alt-mark {
   margin-left: 0.15rem;
 }
-.alt-tab.is-differ .alt-mark,
-.alt-tab.is-unevaluated .alt-mark,
+.alt-tab.is-disagree .alt-mark,
+.alt-tab.is-inconclusive .alt-mark,
 .alt-tab.is-error .alt-mark {
   color: #b7791f;
 }

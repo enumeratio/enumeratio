@@ -2,15 +2,17 @@
 //
 // `@enumeratio/oracle` already does the hard part: emit every documented example into
 // another system's syntax, run it in that system's kernel, and compare the answers. The
-// result is committed as a golden sweep, and it is exactly the evidence a crosswalk chip
-// wants -- "this is the same function over there" is a claim, and the sweep is a check of
-// it. So the chip carries the count, and a head whose examples DISAGREE says that instead.
+// result is attached to each example as `others` (entries.ts, from the per-entry-file
+// `<stem>.oracle.json` sidecars) — exactly the evidence a crosswalk chip wants: "this is
+// the same function over there" is a claim, and the sidecar is a check of it. So the chip
+// carries the count, and a head whose examples DISAGREE says that instead.
 //
-// The scan needs a kernel, so it is not a gate; a head with no case in the sweep simply
-// gets no mark. The catalogue of classified disagreements lives beside the sweep.
+// The scan needs a kernel, so it is not a gate; a head with no scanned example simply gets
+// no mark. The classification of each disagreement lives on its row in the sidecar.
 
-import sweep from "../../golden/oracle/wolfram-sweep.json" with { type: "json" };
+import { entries, oracleKernels } from "../entries.ts";
 import type { CrosswalkSystem } from "./sources.ts";
+import { isCrosswalkSystem } from "./sources.ts";
 
 /** How a head's examples fared in one system's kernel. */
 export interface OracleAgreement {
@@ -21,39 +23,30 @@ export interface OracleAgreement {
   readonly kernel: string;
 }
 
-interface SweepCase {
-  readonly id: string;
-  readonly verdict: string;
+// head -> system -> tally
+const BY_HEAD = new Map<string, Map<CrosswalkSystem, { agree: number; disagree: number }>>();
+for (const entry of entries) {
+  for (const example of entry.examples) {
+    for (const [system, run] of Object.entries(example.others ?? {})) {
+      if (!isCrosswalkSystem(system)) continue;
+      const bySystem = BY_HEAD.get(entry.name) ?? new Map();
+      const row = bySystem.get(system) ?? { agree: 0, disagree: 0 };
+      if (run.verdict === "agree") row.agree += 1;
+      if (run.verdict === "disagree") row.disagree += 1;
+      bySystem.set(system, row);
+      BY_HEAD.set(entry.name, bySystem);
+    }
+  }
 }
 
-const tally = (
-  system: CrosswalkSystem,
-  kernel: string,
-  cases: readonly SweepCase[],
-): Map<string, OracleAgreement> => {
-  const byHead = new Map<string, { agree: number; disagree: number }>();
-  for (const one of cases) {
-    const head = one.id.slice(0, one.id.lastIndexOf("#"));
-    const row = byHead.get(head) ?? { agree: 0, disagree: 0 };
-    if (one.verdict === "agree") row.agree += 1;
-    if (one.verdict === "disagree") row.disagree += 1;
-    byHead.set(head, row);
-  }
-  return new Map(
-    [...byHead]
-      .filter(([, row]) => row.agree || row.disagree)
-      .map(([head, row]) => [head, { system, kernel, ...row }]),
-  );
-};
-
-// One sweep so far. A second system's golden joins the same shape.
-const SWEEPS: readonly ReadonlyMap<string, OracleAgreement>[] = [
-  tally("wolfram", sweep.kernel, sweep.cases as readonly SweepCase[]),
-];
-
 /** Every system that has run this head's examples, with how they came out. */
-export const oracleAgreements = (head: string): OracleAgreement[] =>
-  SWEEPS.flatMap((s) => {
-    const row = s.get(head);
-    return row ? [row] : [];
-  });
+export const oracleAgreements = (head: string): OracleAgreement[] => {
+  const bySystem = BY_HEAD.get(head);
+  if (bySystem === undefined) return [];
+  return [...bySystem]
+    .filter(([, row]) => row.agree || row.disagree)
+    .flatMap(([system, row]) => {
+      const kernel = oracleKernels[system];
+      return kernel === undefined ? [] : [{ system, kernel, ...row }];
+    });
+};

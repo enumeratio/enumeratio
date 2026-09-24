@@ -1,0 +1,561 @@
+{
+  "kernels": {
+    "wolfram": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {
+    "Union": {
+      "[\"Union\",[\"List\",1,2,3],[\"List\",3,4]]": {
+        "wolfram": {
+          "input": "Union[List[1, 2, 3], List[3, 4]]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Union\",[\"List\",1,2],[\"List\",2,3],[\"List\",3,4]]": {
+        "wolfram": {
+          "input": "Union[List[1, 2], List[2, 3], List[3, 4]]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Union\",[\"List\",1,2,3],[\"List\",2,3,4]],[\"Union\",[\"List\",2,3,4],[\"List\",1,2,3]]]": {
+        "wolfram": {
+          "input": "(Union[List[1, 2, 3], List[2, 3, 4]] == Union[List[2, 3, 4], List[1, 2, 3]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Length\",[\"Union\",[\"List\",1,2,3],[\"List\",2,3,4]]],[\"Subtract\",[\"Add\",[\"Length\",[\"List\",1,2,3]],[\"Length\",[\"List\",2,3,4]]],[\"Length\",[\"Intersection\",[\"List\",1,2,3],[\"List\",2,3,4]]]]]": {
+        "wolfram": {
+          "input": "(Length[Union[List[1, 2, 3], List[2, 3, 4]]] == Subtract[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Union\",[\"Divisors\",10],[\"Divisors\",15]]": {
+        "wolfram": {
+          "input": "Union[Divisors[10], Divisors[15]]",
+          "output": "{1, 2, 3, 5, 10, 15}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Intersection": {
+      "[\"Intersection\",[\"List\",1,2,3],[\"List\",2,3,4]]": {
+        "wolfram": {
+          "input": "Intersection[List[1, 2, 3], List[2, 3, 4]]",
+          "output": "{2, 3}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Intersection\",[\"List\",1,2,3,4],[\"List\",2,3,4,5]]": {
+        "wolfram": {
+          "input": "Intersection[List[1, 2, 3, 4], List[2, 3, 4, 5]]",
+          "output": "{2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Intersection\",[\"List\",1,2,3],[\"List\",2,3,4],[\"List\",2,3,5]]": {
+        "wolfram": {
+          "input": "Intersection[List[1, 2, 3], List[2, 3, 4], List[2, 3, 5]]",
+          "output": "{2, 3}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Intersection\",[\"Set\",1,2,3],[\"Set\",1,2,3]],[\"Set\",1,2,3]]": {
+        "wolfram": {
+          "input": "(Intersection[Union[List[1, 2, 3]], Union[List[1, 2, 3]]] == Union[List[1, 2, 3]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Add\",[\"Length\",[\"List\",1,2,3]],[\"Length\",[\"List\",2,3,4]]],[\"Add\",[\"Length\",[\"Union\",[\"List\",1,2,3],[\"List\",2,3,4]]],[\"Length\",[\"Intersection\",[\"List\",1,2,3],[\"List\",2,3,4]]]]]": {
+        "wolfram": {
+          "input": "(Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]] == Plus[Length[Union[List[1, 2, 3], List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Intersection\",[\"List\",1,2],[\"List\",3,4]]": {
+        "wolfram": {
+          "input": "Intersection[List[1, 2], List[3, 4]]",
+          "output": "{}",
+          "verdict": "disagree",
+          "kind": "shape",
+          "note": "An empty result is the symbol EmptySet here and the empty list {} in Wolfram."
+        }
+      },
+      "[\"Intersection\",[\"Divisors\",45],[\"Divisors\",78]]": {
+        "wolfram": {
+          "input": "Intersection[Divisors[45], Divisors[78]]",
+          "output": "{1, 3}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "SetMinus": {
+      "[\"SetMinus\",[\"Set\",1,2,3],[\"Set\",2]]": {
+        "wolfram": {
+          "input": "Complement[Union[List[1, 2, 3]], Union[List[2]]]",
+          "output": "{1, 3}",
+          "verdict": "agree"
+        }
+      },
+      "[\"SetMinus\",[\"Set\",1,2,3,4],[\"Set\",2,4]]": {
+        "wolfram": {
+          "input": "Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]",
+          "output": "{1, 3}",
+          "verdict": "agree"
+        }
+      },
+      "[\"SetMinus\",[\"Set\",1,2,3],[\"Set\",9]]": {
+        "wolfram": {
+          "input": "Complement[Union[List[1, 2, 3]], Union[List[9]]]",
+          "output": "{1, 2, 3}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"SetMinus\",[\"Set\",1,2,3,4],[\"SetMinus\",[\"Set\",1,2,3,4],[\"Set\",2,4]]],[\"Intersection\",[\"Set\",1,2,3,4],[\"Set\",2,4]]]": {
+        "wolfram": {
+          "input": "(Complement[Union[List[1, 2, 3, 4]], Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]] == Intersection[Union[List[1, 2, 3, 4]], Union[List[2, 4]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"SetMinus\",[\"Set\",2,4],[\"Set\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Complement[Union[List[2, 4]], Union[List[1, 2, 3, 4]]]",
+          "output": "{}",
+          "verdict": "disagree",
+          "kind": "shape",
+          "note": "An empty result is the symbol EmptySet here and the empty list {} in Wolfram."
+        }
+      }
+    },
+    "First": {
+      "[\"First\",[\"List\",1,2,3]]": {
+        "wolfram": {
+          "input": "First[List[1, 2, 3]]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"First\",[\"List\",10,20,30]]": {
+        "wolfram": {
+          "input": "First[List[10, 20, 30]]",
+          "output": "10",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"First\",[\"List\",1,2,3]],[\"At\",[\"List\",1,2,3],1]]": {
+        "wolfram": {
+          "input": "(First[List[1, 2, 3]] == Part[List[1, 2, 3], 1])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"First\",[\"List\"]]": {
+        "wolfram": {
+          "input": "First[List[]]",
+          "output": "First[{}]",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message)."
+        }
+      }
+    },
+    "Last": {
+      "[\"Last\",[\"List\",1,2,3]]": {
+        "wolfram": {
+          "input": "Last[List[1, 2, 3]]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"Last\",[\"List\",10,20,30]]": {
+        "wolfram": {
+          "input": "Last[List[10, 20, 30]]",
+          "output": "30",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Last\",[\"List\",1,2,3]],[\"At\",[\"List\",1,2,3],-1]]": {
+        "wolfram": {
+          "input": "(Last[List[1, 2, 3]] == Part[List[1, 2, 3], -1])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "At": {
+      "[\"At\",[\"List\",1,2,3,4],2]": {
+        "wolfram": {
+          "input": "Part[List[1, 2, 3, 4], 2]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"At\",[\"List\",1,2,3,4],-1]": {
+        "wolfram": {
+          "input": "Part[List[1, 2, 3, 4], -1]",
+          "output": "4",
+          "verdict": "agree"
+        }
+      },
+      "[\"At\",[\"At\",[\"List\",[\"List\",1,2],[\"List\",3,4]],2],1]": {
+        "wolfram": {
+          "input": "Part[Part[List[List[1, 2], List[3, 4]], 2], 1]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"At\",[\"List\",1,2,3],10]": {
+        "wolfram": {
+          "input": "Part[List[1, 2, 3], 10]",
+          "output": "{1, 2, 3}[[10]]",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message)."
+        }
+      }
+    },
+    "IndexOf": {
+      "[\"IndexOf\",[\"List\",1,2,3],2]": {
+        "wolfram": {
+          "input": "First[FirstPosition[List[1, 2, 3], 2, List[0]]]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"IndexOf\",[\"List\",1,2,3],9]": {
+        "wolfram": {
+          "input": "First[FirstPosition[List[1, 2, 3], 9, List[0]]]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"At\",[\"List\",10,20,30],[\"IndexOf\",[\"List\",10,20,30],20]],20]": {
+        "wolfram": {
+          "input": "(Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0]]]] == 20)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Sort": {
+      "[\"Sort\",[\"List\",3,1,2]]": {
+        "wolfram": {
+          "input": "Sort[List[3, 1, 2]]",
+          "output": "{1, 2, 3}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Sort\",[\"List\",4,2,5,1,3]]": {
+        "wolfram": {
+          "input": "Sort[List[4, 2, 5, 1, 3]]",
+          "output": "{1, 2, 3, 4, 5}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Sort\",[\"Sort\",[\"List\",3,1,2]]],[\"Sort\",[\"List\",3,1,2]]]": {
+        "wolfram": {
+          "input": "(Sort[Sort[List[3, 1, 2]]] == Sort[List[3, 1, 2]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Sort\",[\"List\",3,1,2]],[\"At\",[\"List\",3,1,2],[\"Ordering\",[\"List\",3,1,2]]]]": {
+        "wolfram": {
+          "input": "(Sort[List[3, 1, 2]] == Part[List[3, 1, 2], Ordering[List[3, 1, 2]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Sort\",[\"List\",3,1,2],[\"Function\",[\"Greater\",\"_1\",\"_2\"]]]": {
+        "wolfram": {
+          "input": "Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]",
+          "output": "{3, 2, 1}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Ordering": {
+      "[\"Ordering\",[\"List\",3,1,2]]": {
+        "wolfram": {
+          "input": "Ordering[List[3, 1, 2]]",
+          "output": "{2, 3, 1}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Ordering\",[\"List\",2,1,2,1]]": {
+        "wolfram": {
+          "input": "Ordering[List[2, 1, 2, 1]]",
+          "output": "{2, 4, 1, 3}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Length": {
+      "[\"Length\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Length[List[1, 2, 3, 4]]",
+          "output": "4",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "len([1, 2, 3, 4])",
+          "output": "4",
+          "verdict": "agree"
+        }
+      },
+      "[\"Length\",[\"List\",1,2,3,4,5]]": {
+        "wolfram": {
+          "input": "Length[List[1, 2, 3, 4, 5]]",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "len([1, 2, 3, 4, 5])",
+          "output": "5",
+          "verdict": "agree"
+        }
+      },
+      "[\"Length\",[\"Set\",1,2,3]]": {
+        "wolfram": {
+          "input": "Length[Union[List[1, 2, 3]]]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Length\",[\"Join\",[\"List\",1,2,3],[\"List\",4,5]]],[\"Add\",[\"Length\",[\"List\",1,2,3]],[\"Length\",[\"List\",4,5]]]]": {
+        "wolfram": {
+          "input": "(Length[Join[List[1, 2, 3], List[4, 5]]] == Plus[Length[List[1, 2, 3]], Length[List[4, 5]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Count": {
+      "[\"Count\",[\"List\",1,2,2,3,2],2]": {
+        "wolfram": {
+          "input": "Count[List[1, 2, 2, 3, 2], 2]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"Count\",[\"List\",1,2,2,3,2,4],2]": {
+        "wolfram": {
+          "input": "Count[List[1, 2, 2, 3, 2, 4], 2]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"Count\",[\"List\",1,2,3],9]": {
+        "wolfram": {
+          "input": "Count[List[1, 2, 3], 9]",
+          "output": "0",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Join": {
+      "[\"Join\",[\"List\",1,2],[\"List\",3,4]]": {
+        "wolfram": {
+          "input": "Join[List[1, 2], List[3, 4]]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Join\",[\"List\",1,2],[\"List\",3,4],[\"List\",5]]": {
+        "wolfram": {
+          "input": "Join[List[1, 2], List[3, 4], List[5]]",
+          "output": "{1, 2, 3, 4, 5}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Join\",[\"List\",1,2],[\"List\",3,4]],[\"Flatten\",[\"List\",[\"List\",1,2],[\"List\",3,4]],1]]": {
+        "wolfram": {
+          "input": "(Join[List[1, 2], List[3, 4]] == Flatten[List[List[1, 2], List[3, 4]], 1])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Flatten": {
+      "[\"Flatten\",[\"List\",[\"List\",1,2],[\"List\",3,4]]]": {
+        "wolfram": {
+          "input": "Flatten[List[List[1, 2], List[3, 4]]]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Flatten\",[\"List\",[\"List\",1,[\"List\",2,3]],[\"List\",4]]]": {
+        "wolfram": {
+          "input": "Flatten[List[List[1, List[2, 3]], List[4]]]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Flatten\",[\"List\",[\"List\",1,2],[\"List\",3,[\"List\",4]]],1]": {
+        "wolfram": {
+          "input": "Flatten[List[List[1, 2], List[3, List[4]]], 1]",
+          "output": "{1, 2, 3, {4}}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Flatten\",[\"Partition\",[\"List\",1,2,3,4,5,6],2]],[\"List\",1,2,3,4,5,6]]": {
+        "wolfram": {
+          "input": "(Flatten[Partition[List[1, 2, 3, 4, 5, 6], 2]] == List[1, 2, 3, 4, 5, 6])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Append": {
+      "[\"Append\",[\"List\",1,2,3],4]": {
+        "wolfram": {
+          "input": "Append[List[1, 2, 3], 4]",
+          "output": "{1, 2, 3, 4}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Append\",[\"List\",1,2,3],4],[\"Join\",[\"List\",1,2,3],[\"List\",4]]]": {
+        "wolfram": {
+          "input": "(Append[List[1, 2, 3], 4] == Join[List[1, 2, 3], List[4]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Append\",[\"List\",1,2,3],[\"List\",9]]": {
+        "wolfram": {
+          "input": "Append[List[1, 2, 3], List[9]]",
+          "output": "{1, 2, 3, {9}}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Partition": {
+      "[\"Partition\",[\"List\",1,2,3,4,5,6],2]": {
+        "wolfram": {
+          "input": "Partition[List[1, 2, 3, 4, 5, 6], 2]",
+          "output": "{{1, 2}, {3, 4}, {5, 6}}",
+          "verdict": "agree"
+        }
+      },
+      "[\"Partition\",[\"List\",1,2,3,4,5,6],3,1]": {
+        "wolfram": {
+          "input": "Partition[List[1, 2, 3, 4, 5, 6], 3, 1]",
+          "output": "{{1, 2, 3}, {2, 3, 4}, {3, 4, 5}, {4, 5, 6}}",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Mean": {
+      "[\"Mean\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Mean[List[1, 2, 3, 4]]",
+          "output": "5/2",
+          "verdict": "agree"
+        }
+      },
+      "[\"Mean\",[\"List\",2,4,4,4,5,5,7,9]]": {
+        "wolfram": {
+          "input": "Mean[List[2, 4, 4, 4, 5, 5, 7, 9]]",
+          "output": "5",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Mean\",[\"List\",1,2,3,4]],[\"Divide\",[\"Add\",1,2,3,4],[\"Length\",[\"List\",1,2,3,4]]]]": {
+        "wolfram": {
+          "input": "(Mean[List[1, 2, 3, 4]] == Divide[Plus[1, 2, 3, 4], Length[List[1, 2, 3, 4]]])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Mean\",[\"List\",-100,1,1,1,1,20]]": {
+        "wolfram": {
+          "input": "Mean[List[-100, 1, 1, 1, 1, 20]]",
+          "output": "-38/3",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Median": {
+      "[\"Median\",[\"List\",1,2,3,4,5]]": {
+        "wolfram": {
+          "input": "Median[List[1, 2, 3, 4, 5]]",
+          "output": "3",
+          "verdict": "agree"
+        }
+      },
+      "[\"Median\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Median[List[1, 2, 3, 4]]",
+          "output": "5/2",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Median\",[\"List\",5,3,1,4,2]],[\"At\",[\"Sort\",[\"List\",5,3,1,4,2]],3]]": {
+        "wolfram": {
+          "input": "(Median[List[5, 3, 1, 4, 2]] == Part[Sort[List[5, 3, 1, 4, 2]], 3])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Median\",[\"List\",-100,1,1,1,1,20]]": {
+        "wolfram": {
+          "input": "Median[List[-100, 1, 1, 1, 1, 20]]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Mode": {
+      "[\"Mode\",[\"List\",1,2,2,3]]": {
+        "wolfram": {
+          "input": "First[Commonest[List[1, 2, 2, 3]]]",
+          "output": "2",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Count\",[\"List\",1,2,2,3],[\"Mode\",[\"List\",1,2,2,3]]],2]": {
+        "wolfram": {
+          "input": "(Count[List[1, 2, 2, 3], First[Commonest[List[1, 2, 2, 3]]]] == 2)",
+          "output": "True",
+          "verdict": "agree"
+        }
+      }
+    },
+    "Product": {
+      "[\"Product\",[\"List\",1,2,3,4]]": {
+        "wolfram": {
+          "input": "Apply[Times, List[1, 2, 3, 4]]",
+          "output": "24",
+          "verdict": "agree"
+        }
+      },
+      "[\"Product\",[\"List\"]]": {
+        "wolfram": {
+          "input": "Apply[Times, List[]]",
+          "output": "1",
+          "verdict": "agree"
+        }
+      },
+      "[\"Equal\",[\"Product\",[\"List\",1,2,3,4]],[\"Factorial\",4]]": {
+        "wolfram": {
+          "input": "(Apply[Times, List[1, 2, 3, 4]] == Factorial[4])",
+          "output": "True",
+          "verdict": "agree"
+        }
+      },
+      "[\"Product\",[\"Range\",1,6]]": {
+        "wolfram": {
+          "input": "Apply[Times, Range[1, 6]]",
+          "output": "720",
+          "verdict": "agree"
+        }
+      }
+    }
+  }
+}

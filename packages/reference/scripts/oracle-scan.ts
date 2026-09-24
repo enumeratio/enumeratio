@@ -1,4 +1,4 @@
-// Run every documented example through every wired system, and write the report.
+// Run every documented example through every wired system, and write the oracle sidecars.
 //
 // The report is a work queue, not a verdict. Five outcomes per (example, system):
 //
@@ -12,21 +12,24 @@
 //                 mapping is there but its SHAPE is wrong.
 //
 // Wolfram answers as `FullForm`, which is parsed back to MathJSON and compared by value
-// (structural.ts); the Python-family systems are compared as text (compare.ts).
+// (structural.ts); the Python-family systems are compared as text (compare.ts), with a
+// structural fallback (`comparePythonStructured`) for a Python literal against a shape we'd
+// otherwise call a false disagreement.
 //
-// Nothing here is a gate: it needs four external kernels. Run it, read it, classify the
-// new rows in golden/divergences.json, commit the goldens.
+// Nothing here is a gate: it needs external kernels. Run it, read it, classify any new
+// `unclassified` rows the sidecars pick up, commit the sidecars.
 //
-//   vp node packages/reference/scripts/oracle-scan.ts            # everything wired
-//   vp node packages/reference/scripts/oracle-scan.ts wolfram    # one system
+//   vp node packages/reference/scripts/oracle-scan.ts                    # everything wired
+//   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
+//   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compare,
+  comparePythonStructured,
   compareTrees,
-  type Divergence,
   emit,
   type Leaf,
   type MathJSON,
@@ -39,11 +42,13 @@ import {
   wiredSystems,
 } from "@enumeratio/oracle/src";
 import { fromWolfram } from "@enumeratio/wolfram/src";
-import { entries } from "../src/index.ts";
+import { entryFiles } from "../src/entries.ts";
 
 interface Case {
   readonly id: string;
+  readonly stem: string;
   readonly head: string;
+  readonly key: string;
   readonly expr: MathJSON;
   readonly expected: MathJSON;
 }
@@ -88,15 +93,28 @@ const show = (expr: MathJSON): string => {
 /** Keep a table cell readable, and never let a backtick break the markdown. */
 const trim = (text: string): string => text.replace(/`/g, "'").replace(/\|/g, "/").slice(0, 90);
 
-const cases: Case[] = entries.flatMap((entry) =>
-  entry.examples
-    .filter((example) => example.aspirational !== true)
-    .map((example, index) => ({
-      id: `${entry.name}#${index + 1}`,
-      head: entry.name,
-      expr: example.expr as MathJSON,
-      expected: example.expected as MathJSON,
-    })),
+const args = process.argv.slice(2);
+const headIndex = args.indexOf("--head");
+const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
+const requested = args.filter(
+  (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head",
+);
+const systems = (requested.length > 0 ? requested : wiredSystems()) as System[];
+
+const cases: Case[] = entryFiles.flatMap(({ stem, entries }) =>
+  entries.flatMap((entry) =>
+    entry.examples
+      .filter((example) => example.aspirational !== true)
+      .map((example, index) => ({
+        id: `${stem}/${entry.name}#${index + 1}`,
+        stem,
+        head: entry.name,
+        key: JSON.stringify(example.expr),
+        expr: example.expr as MathJSON,
+        expected: example.expected as MathJSON,
+      }))
+      .filter((item) => headFilter === undefined || item.head === headFilter),
+  ),
 );
 const caseById = new Map(cases.map((item) => [item.id, item]));
 
@@ -105,10 +123,9 @@ type Outcome = {
   readonly source: string;
   readonly verdict: Verdict | "unmapped" | "error";
   readonly theirs: string;
+  /** A reader-facing form of `theirs` — Wolfram's InputForm, or the Python `str(...)`. */
+  readonly display: string;
 };
-
-const requested = process.argv.slice(2).filter((argument) => !argument.startsWith("-"));
-const systems = (requested.length > 0 ? requested : wiredSystems()) as System[];
 
 const report: Record<string, Outcome[]> = {};
 const missingBySystem: Record<string, Record<string, number>> = {};
@@ -134,14 +151,20 @@ for (const system of systems) {
   for (const row of emitted) {
     if (!row.out.ok) {
       for (const head of row.out.missing) missing[head] = (missing[head] ?? 0) + 1;
-      outcomes.push({ id: row.item.id, source: "", verdict: "unmapped", theirs: "" });
+      outcomes.push({ id: row.item.id, source: "", verdict: "unmapped", theirs: "", display: "" });
     }
   }
   runnable.forEach((row, index) => {
     const source = sources[index] as string;
-    const result = results[index] as { value?: string; error?: string };
+    const result = results[index] as { value?: string; display?: string; error?: string };
     if (result.error !== undefined) {
-      outcomes.push({ id: row.item.id, source, verdict: "error", theirs: result.error });
+      outcomes.push({
+        id: row.item.id,
+        source,
+        verdict: "error",
+        theirs: result.error,
+        display: result.error,
+      });
       return;
     }
     const theirs = result.value ?? "";
@@ -152,8 +175,12 @@ for (const system of systems) {
         tree === undefined ? "inconclusive" : compareTrees(reduce(row.item.expected, leaf), tree);
     } else {
       verdict = compare(show(row.item.expected), theirs);
+      if (verdict === "disagree") {
+        const structured = comparePythonStructured(reduce(row.item.expected, leaf), theirs);
+        if (structured === "agree") verdict = structured;
+      }
     }
-    outcomes.push({ id: row.item.id, source, verdict, theirs });
+    outcomes.push({ id: row.item.id, source, verdict, theirs, display: result.display ?? theirs });
   });
   report[system] = outcomes;
   missingBySystem[system] = missing;
@@ -179,64 +206,126 @@ writeFileSync(
   `${JSON.stringify({ generated: new Date().toISOString(), systems, report, queue }, null, 2)}\n`,
 );
 
-// ── the Wolfram goldens ───────────────────────────────────────────────────────
+// ── the per-entry-file sidecars ──────────────────────────────────────────────────
 //
-// Two committed files. The sweep is every (example, verdict, answer) — regenerated
-// wholesale, diffed to see what moved. The divergence catalogue is the disagreements WITH
-// a classification, which a person supplies: the scan carries existing classifications
-// forward by example id, adds new rows as `unclassified`, and drops rows that no longer
-// disagree. The test refuses an unclassified row, so a scan that finds something new
-// cannot be committed without someone saying what it is.
+// One `<stem>.oracle.json` beside each entries/<stem>.ts, keyed by head then by the
+// example's `JSON.stringify(expr)` — the shape `entries.ts` reads back and the page looks
+// examples up by. Scanning a system replaces only that system's rows for the heads touched
+// this run (every head, unless `--head` narrowed it), keeping every other system's rows and
+// dropping stale rows for examples that no longer exist.
 
-const wolfram = report["wolfram"];
-if (wolfram !== undefined) {
-  const summary: Record<string, number> = {};
-  for (const outcome of wolfram) summary[outcome.verdict] = (summary[outcome.verdict] ?? 0) + 1;
-  const kernel = execFileSync("wolframscript", ["-code", "$Version"], { encoding: "utf8" }).trim();
-  const sweep = {
-    kernel,
-    summary,
-    cases: [...wolfram].sort((a, b) => a.id.localeCompare(b.id)),
-  };
-  writeFileSync(
-    new URL("../golden/oracle/wolfram-sweep.json", import.meta.url),
-    `${JSON.stringify(sweep, null, 2)}\n`,
-  );
+interface OtherRow {
+  readonly input: string;
+  readonly output: string;
+  readonly verdict: Verdict | "error";
+  readonly kind?: string;
+  readonly note?: string;
+}
+type Sidecar = {
+  kernels: Record<string, string>;
+  examples: Record<string, Record<string, Record<string, OtherRow>>>;
+};
 
-  const catalogueUrl = new URL("../golden/oracle/divergences.json", import.meta.url);
-  const existing: Divergence[] = existsSync(catalogueUrl)
-    ? (JSON.parse(readFileSync(catalogueUrl, "utf8")) as Divergence[])
-    : [];
-  const known = new Map(existing.map((row) => [row.id, row]));
-  const catalogue: Divergence[] = wolfram
-    .filter((outcome) => outcome.verdict === "disagree")
-    .sort((a, b) => a.id.localeCompare(b.id))
-    .map((outcome) => {
-      const item = caseById.get(outcome.id) as Case;
-      const prior = known.get(outcome.id);
-      return {
-        id: outcome.id,
-        kind: prior?.kind ?? "unclassified",
-        note: prior?.note ?? "",
-        expr: item.expr,
-        source: outcome.source,
-        ours: reduce(item.expected, leaf),
-        theirs: theirTree(outcome.theirs) ?? outcome.theirs,
-      };
-    });
-  writeFileSync(catalogueUrl, `${JSON.stringify(catalogue, null, 2)}\n`);
+const sidecarUrl = (stem: string): URL =>
+  new URL(`../src/entries/${stem}.oracle.json`, import.meta.url);
+const loadSidecar = (stem: string): Sidecar => {
+  const url = sidecarUrl(stem);
+  if (!existsSync(url)) return { kernels: {}, examples: {} };
+  return JSON.parse(readFileSync(url, "utf8")) as Sidecar;
+};
 
-  const fresh = catalogue.filter((row) => row.kind === "unclassified").map((row) => row.id);
-  const resolved = existing.filter((row) => !catalogue.some((c) => c.id === row.id));
-  if (fresh.length > 0) process.stderr.write(`\nunclassified divergences: ${fresh.join(", ")}\n`);
-  if (resolved.length > 0) {
-    process.stderr.write(`resolved (dropped): ${resolved.map((row) => row.id).join(", ")}\n`);
+const touchedStems = new Set(cases.map((c) => c.stem));
+const sidecars = new Map(entryFiles.map((f) => [f.stem, loadSidecar(f.stem)]));
+
+const kernelOf: Partial<Record<System, string>> = {};
+if (systems.includes("wolfram")) {
+  kernelOf.wolfram = execFileSync("wolframscript", ["-code", "$Version"], {
+    encoding: "utf8",
+  }).trim();
+}
+if (systems.includes("sage")) {
+  kernelOf.sage = execFileSync("sage", ["-c", "print(version())"], { encoding: "utf8" }).trim();
+}
+
+for (const system of systems) {
+  const outcomes = report[system] ?? [];
+  // Every head touched this run, so a head with zero rows for `system` (all unmapped) still
+  // gets its stale rows for that system cleared out below.
+  const headsThisRun = new Set(cases.map((c) => c.head));
+  const outcomeByCaseId = new Map(outcomes.map((o) => [o.id, o]));
+
+  for (const stem of touchedStems) {
+    const sidecar = sidecars.get(stem) as Sidecar;
+    if (kernelOf[system] !== undefined) sidecar.kernels[system] = kernelOf[system] as string;
+    const stemHeads = new Set(
+      cases.filter((c) => c.stem === stem && headsThisRun.has(c.head)).map((c) => c.head),
+    );
+    for (const head of stemHeads) {
+      const ofHead = cases.filter((c) => c.stem === stem && c.head === head);
+      const currentKeys = new Set(ofHead.map((c) => c.key));
+      const existingForHead = sidecar.examples[head] ?? {};
+      // Drop this system's row for a key that no longer names a current example.
+      for (const key of Object.keys(existingForHead)) {
+        if (currentKeys.has(key)) continue;
+        const row = existingForHead[key] as Record<string, OtherRow>;
+        if (!(system in row)) continue;
+        const { [system]: _dropped, ...rest } = row;
+        if (Object.keys(rest).length === 0) delete existingForHead[key];
+        else existingForHead[key] = rest;
+      }
+      for (const item of ofHead) {
+        const outcome = outcomeByCaseId.get(item.id);
+        const prior = existingForHead[item.key]?.[system];
+        if (outcome === undefined || outcome.verdict === "unmapped") {
+          // Unmapped this run: clear a stale row for this system, keep the others.
+          if (prior === undefined) continue;
+          const { [system]: _dropped, ...rest } = existingForHead[item.key] as Record<
+            string,
+            OtherRow
+          >;
+          if (Object.keys(rest).length === 0) delete existingForHead[item.key];
+          else existingForHead[item.key] = rest;
+          continue;
+        }
+        const row: OtherRow =
+          outcome.verdict === "disagree"
+            ? {
+                input: outcome.source,
+                output: outcome.display,
+                verdict: outcome.verdict,
+                kind:
+                  prior?.verdict === "disagree" ? (prior.kind ?? "unclassified") : "unclassified",
+                note: prior?.verdict === "disagree" ? (prior.note ?? "") : "",
+              }
+            : { input: outcome.source, output: outcome.display, verdict: outcome.verdict };
+        existingForHead[item.key] = { ...existingForHead[item.key], [system]: row };
+      }
+      sidecar.examples[head] = existingForHead;
+    }
   }
 }
 
-// A readable digest of the disagreements, COMMITTED — the full JSON is regenerated per
-// kernel version and is not worth diffing, but the disagreements are exactly the thing to
-// review and to watch move over time.
+for (const { stem } of entryFiles) {
+  const sidecar = sidecars.get(stem) as Sidecar;
+  writeFileSync(sidecarUrl(stem), `${JSON.stringify(sidecar, null, 2)}\n`);
+}
+
+const fresh = [...sidecars.values()].flatMap((sidecar) =>
+  Object.entries(sidecar.examples).flatMap(([head, byKey]) =>
+    Object.entries(byKey).flatMap(([, bySystem]) =>
+      Object.entries(bySystem)
+        .filter(([, row]) => row.kind === "unclassified")
+        .map(([system]) => `${head} (${system})`),
+    ),
+  ),
+);
+if (fresh.length > 0) {
+  process.stderr.write(`\nunclassified divergences: ${[...new Set(fresh)].join(", ")}\n`);
+}
+
+// A readable digest of the disagreements, COMMITTED — the sidecars are regenerated per
+// kernel version and are not worth diffing wholesale, but the disagreements are exactly the
+// thing to review and to watch move over time.
 const lines: string[] = [
   "# Oracle disagreements",
   "",
@@ -249,7 +338,7 @@ const lines: string[] = [
   "  branch cut, signed versus unsigned Stirling numbers of the first kind)",
   "- **our bug** — the interesting case, and the reason this exists",
   "",
-  "The Wolfram rows are classified in `golden/divergences.json`.",
+  "Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.",
   "",
   `Systems in this run: ${systems.join(", ")}.`,
   "",
