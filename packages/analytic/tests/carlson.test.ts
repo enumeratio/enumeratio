@@ -168,6 +168,26 @@ test("stays symbolic under plain evaluate; a float argument evaluates numericall
   expect(num(["CarlsonRF", 1.0, 2, 3])).toBeCloseTo(0.7269459354689082, 12);
 });
 
+test("RJ's real p < 0 branch is the Cauchy principal value (Carlson 1995 eq. (33)), pinned against Wolfram's CarlsonRJ", () => {
+  const cases: [number, number, number, number, number][] = [
+    [1, 2, 3, -1, -0.09324045243867641],
+    [0, 2, 3, -1, -0.8732889802533521], // one argument 0
+    [1, 2, 3, -2.5, -0.24776810835275714],
+  ];
+  for (const [x, y, z, p, expected] of cases) {
+    const v = carlsonRJ(cx(x), cx(y), cx(z), cx(p));
+    expect(v.im).toBeCloseTo(0, 12);
+    expect(v.re).toBeCloseTo(expected, 12);
+  }
+});
+
+test("RJ's CPV real part agrees with mpmath's complex analytic continuation there (Sokhotski–Plemelj)", () => {
+  // mpmath's elliprj(x,y,z,-q) for real x,y,z,q>0 returns the analytic continuation off
+  // the branch point, not the principal value — but its real part is the same number.
+  const v = carlsonRJ(cx(1), cx(2), cx(3), cx(-1));
+  expect(v.re).toBeCloseTo(-0.0932404524386764, 13); // mpmath elliprj(1,2,3,-1).real
+});
+
 test("RC's real y < 0 branch is the Cauchy principal value (DLMF 19.2.19), not RF(x,y,y) directly", () => {
   // Pinned against mpmath's elliprc(1,-1), which is defined as this principal value.
   const v = carlsonRC(cx(1), cx(-1));

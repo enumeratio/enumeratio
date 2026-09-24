@@ -25,10 +25,8 @@ import { abs, add, cpow, cx, type Cx, div, mul, scale, sub } from "./complex.ts"
 // The one place a cut actually bites in ordinary use is `CarlsonRC(x, y)` with real x > 0
 // and real y < 0, whose principal value is a Cauchy principal value (DLMF 19.2.19) rather
 // than what plugging a negative real straight into RF(x,y,y) would give; that case is
-// special-cased below. The analogous real-negative-p principal value for RJ (DLMF
-// 19.16.5) is NOT special-cased — it is a rarer edge case, and its substitution needs its
-// own careful derivation; a real p < 0 currently gets whatever the direct duplication
-// produces off the branch point, which is not the Cauchy principal value there.
+// special-cased below. `CarlsonRJ`'s analogous real-negative-p principal value (Carlson
+// 1995 eq. (33); DLMF 19.20.14) IS special-cased, in `carlsonRJ` itself — see there.
 
 const MAX_ITERS = 100;
 const TOL = 1e-15;
@@ -127,8 +125,49 @@ export function carlsonRD(x0: Cx, y0: Cx, z0: Cx): Cx {
  * reciprocal.) p converges to the common limit only linearly, so this needs the
  * (x,y,z,p)-convergence check, same as the loop below; once that holds, `fac` is already
  * negligible and the partial sum needs no separate closing term.
+ *
+ * Real p < 0, with x, y, z real, nonnegative and at most one 0, is the Cauchy principal
+ * value (Carlson 1995 eq. (33); DLMF 19.20.14) rather than whatever the direct duplication
+ * would produce off the branch point at t = −p. Permuting x, y, z so that y is the median
+ * value — `(z−y)(y−x) ≥ 0`, which sorting ascending always satisfies — lets a positive
+ * substitute `p` stand in:
+ *   p = y + (z−y)(y−x)/(y+q),   q = −p₀,
+ *   (y+q)·RJ(x,y,z,−q) = (p−y)·RJ(x,y,z,p) − 3·RF(x,y,z) + 3√(xyz/(xz+pq))·RC(xz+pq, pq).
+ * RJ is fully symmetric in its first three arguments (unlike RD), so relabeling them by
+ * sorted value changes nothing about which value this computes. Confirmed against a
+ * Wolfram kernel, whose own `CarlsonRJ` already returns this same real principal value
+ * (not the complex analytic continuation mpmath's `elliprj` gives for real p < 0, whose
+ * real part agrees with this to machine precision — Sokhotski–Plemelj's real part, as
+ * expected of a principal value).
  */
 export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
+  if (
+    p0.im === 0 &&
+    p0.re < 0 &&
+    x0.im === 0 &&
+    x0.re >= 0 &&
+    y0.im === 0 &&
+    y0.re >= 0 &&
+    z0.im === 0 &&
+    z0.re >= 0
+  ) {
+    const [x, y, z] = [x0.re, y0.re, z0.re].sort((a, b) => a - b);
+    if ([x, y, z].filter((v) => v === 0).length <= 1) {
+      const q = -p0.re;
+      const p = y + ((z - y) * (y - x)) / (y + q);
+      const pq = p * q;
+      const xz = x * z;
+      const denom = xz + pq;
+      if (denom > 0) {
+        const rc = carlsonRC(cx(denom), cx(pq));
+        const rf = carlsonRF(cx(x), cx(y), cx(z));
+        const rjPos = carlsonRJ(cx(x), cx(y), cx(z), cx(p));
+        const rcTerm = scale(mul(cx(Math.sqrt((x * y * z) / denom)), rc), 3);
+        return scale(add(add(scale(rjPos, p - y), scale(rf, -3)), rcTerm), 1 / (y + q));
+      }
+    }
+  }
+
   let x = x0;
   let y = y0;
   let z = z0;
