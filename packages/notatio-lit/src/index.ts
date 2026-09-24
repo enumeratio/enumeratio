@@ -155,7 +155,13 @@ export { applyTemplates, captureTemplates, type Template } from "./bindings.ts";
 export { NotatioTerminal } from "./notatio-terminal.ts";
 
 // The MathLive/compute-engine integration, so hosts depend on this package alone.
-export { configureEngine, ensureMathliveAssets, loadEngine, loadMarkup } from "./mathlive.ts";
+export {
+  configureEngine,
+  configureLatex,
+  ensureMathliveAssets,
+  loadEngine,
+  loadMarkup,
+} from "./mathlive.ts";
 export type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 
 declare global {

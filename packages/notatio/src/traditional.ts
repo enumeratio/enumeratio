@@ -1,4 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
+import { latexOf } from "./latex.ts";
 
 // Conventional ("traditional") notation for heads that compute-engine otherwise
 // serialises functionally (e.g. \mathrm{CatalanNumber}(n)). Anything not listed
@@ -19,6 +20,9 @@ const NOTATION: Record<string, (args: string[]) => string | undefined> = {
   DivisorSigma: ([k, n]) => `\\sigma_{${k}}(${n})`,
   PrimeNu: ([n]) => `\\omega(${n})`,
   PrimeOmega: ([n]) => `\\Omega(${n})`,
+  // A residue class as the coset it is.
+  IntegerMod: ([a, m]) => `${a}+${m}\\mathbb{Z}`,
+  IntegerModRing: ([m]) => `\\mathbb{Z}/${m}\\mathbb{Z}`,
 };
 
 /**
@@ -35,5 +39,5 @@ export function toTraditionalLatex(node: unknown, ce: ComputeEngine): string {
       if (latex !== undefined) return latex;
     }
   }
-  return ce.box(node as Parameters<ComputeEngine["box"]>[0]).latex;
+  return latexOf(ce, ce.box(node as Parameters<ComputeEngine["box"]>[0]));
 }

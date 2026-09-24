@@ -59,7 +59,7 @@ export default {
       // keeps cells/plots from rendering before their heads exist.
       const startEngine = async (): Promise<void> => {
         const [
-          { configureEngine },
+          { configureEngine, configureLatex },
           { declareCollections },
           { ALL_STATISTICS, declareStatistics },
           { declareDomains, declareMaps, DOMAINS },
@@ -68,7 +68,7 @@ export default {
           { declareHypercomplex },
           { declareGeometric },
           { declareDiagrams },
-          { declareResidues },
+          { declareResidues, RESIDUES_LATEX },
           { declareNumerals },
           { declareHecke },
           { declareIncidence },
@@ -110,6 +110,8 @@ export default {
         const domainTypes = Object.fromEntries(
           DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
         );
+        // Notation has to be in before the engine is built: its dictionary is fixed then.
+        configureLatex(RESIDUES_LATEX);
         configureEngine(declareDomains);
         // A combinatorial statistic is a function of a carrier, so that is what these heads
         // take. The ones that are ALSO plain list functions accept a bare list too.

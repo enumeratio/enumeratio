@@ -17,3 +17,4 @@ export {
   integerModExpression,
   integerModOf,
 } from "./integer-mod-declare.ts";
+export { RESIDUES_LATEX } from "./latex.ts";
