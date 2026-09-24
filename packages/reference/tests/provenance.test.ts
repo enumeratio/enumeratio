@@ -132,6 +132,7 @@ const OVERRIDDEN = [
   "Norm",
   "PolyLog",
   "PowerMod",
+  "QuotientRing",
   "Zeta",
 ];
 

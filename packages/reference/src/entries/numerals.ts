@@ -379,26 +379,54 @@ export const numerals: readonly ReferenceEntry[] = [
     name: "NumeralSystemShape",
     domain: DOMAIN,
     signature: "NumeralSystemShape(system)",
-    summary: "What a system's digits are allowed to look like, in one line.",
+    summary:
+      "What a system's numerals look like, as a Dictionary: whether it is a bijection, which integers it spells, and with which digits.",
     signatures: [
       {
         call: "NumeralSystemShape(system)",
-        description: "a description of the digit constraint",
+        description:
+          "`Bijective`, `Integers`, and when they apply `Digits` (one set, or one per place), `Width` and `Rule`",
         library: "enumeratio-numerals",
       },
     ],
     details: [
-      "Useful for the systems whose constraint is not a simple range — Zeckendorf's forbidden pattern, or a residue system whose moduli are not pairwise coprime",
-      "A residue system reports whether it is a bijection at all",
+      "`Digits` is one set when every place shares it, and a list — most significant first — when places differ, as in a mixed radix or a residue system",
+      "`Rule` names a constraint no per-place bound captures: Zeckendorf's no two adjacent ones, Ostrowski's ceiling rule",
+      "A residue system whose moduli share a factor still spells every integer below $\\prod m_i$, but not uniquely: `Bijective` is False",
     ],
     examples: [
       {
-        expr: ["NumeralSystemShape", "Zeckendorf"],
-        expected: "'binary digits over Fibonacci places, with no two adjacent ones'",
+        expr: ["NumeralSystemShape", ["ResidueSystem", L(4, 6)]],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "False"],
+          ["KeyValuePair", { str: "Integers" }, ["Range", 0, 23]],
+          ["KeyValuePair", { str: "Digits" }, ["List", ["Range", 0, 3], ["Range", 0, 5]]],
+          ["KeyValuePair", { str: "Width" }, 2],
+        ],
+        caption: "4 and 6 share a factor, so this is not a bijection",
       },
       {
-        expr: ["NumeralSystemShape", ["BijectiveRadix", 26]],
-        expected: "'digits 1…26, no zero digit; zero is the EMPTY numeral'",
+        expr: ["NumeralSystemShape", "Zeckendorf"],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "True"],
+          ["KeyValuePair", { str: "Integers" }, "NonNegativeIntegers"],
+          ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
+          ["KeyValuePair", { str: "Rule" }, "'no two adjacent ones'"],
+        ],
+        category: "Scope",
+      },
+      {
+        expr: ["NumeralSystemShape", ["BalancedRadix", 3]],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "True"],
+          ["KeyValuePair", { str: "Integers" }, "Integers"],
+          ["KeyValuePair", { str: "Digits" }, ["Range", -1, 1]],
+        ],
+        caption: "every integer, negatives included, with no sign",
+        category: "Scope",
       },
     ],
     seeAlso: ["IntegerDigits", "FromDigits"],

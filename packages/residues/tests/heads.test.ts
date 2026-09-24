@@ -110,6 +110,8 @@ test("ChineseRemainder and MultiplicativeOrder take IntegerMod values", () => {
 });
 
 test("IntegerModRing is ℤ/m as a finite collection", () => {
+  expect(run(["QuotientRing", "Integers", 5])).toEqual(["IntegerModRing", 5]);
+  expect(ce.parse("\\mathbb{Z}/6\\mathbb{Z}").evaluate().json).toEqual(["IntegerModRing", 6]);
   expect(run(["Count", ["IntegerModRing", 5]])).toBe(5);
   expect(run(["Element", ["IntegerMod", 3, 5], ["IntegerModRing", 5]])).toBe("True");
   expect(run(["Element", ["IntegerMod", 3, 7], ["IntegerModRing", 5]])).toBe("False");

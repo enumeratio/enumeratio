@@ -900,6 +900,7 @@ export const residues: readonly ReferenceEntry[] = [
     details: [
       "A collection: it counts, enumerates and answers membership, so `Count`, `ListFrom` and `Element` work on it directly",
       "Membership is by modulus — `IntegerMod(3, 7)` is not in `IntegerModRing(5)`",
+      "compute-engine's `QuotientRing(Integers, m)` — what $\\mathbb{Z}/m\\mathbb{Z}$ parses to — specialises to it",
     ],
     examples: [
       {
@@ -907,6 +908,12 @@ export const residues: readonly ReferenceEntry[] = [
         expected: ["List", ["IntegerMod", 0, 3], ["IntegerMod", 1, 3], ["IntegerMod", 2, 3]],
       },
       { expr: ["Count", ["IntegerModRing", 12]], expected: 12 },
+      {
+        expr: ["QuotientRing", "Integers", 12],
+        expected: ["IntegerModRing", 12],
+        caption: "$\\mathbb{Z}/12\\mathbb{Z}$",
+        category: "Scope",
+      },
       {
         expr: ["Element", ["IntegerMod", 3, 5], ["IntegerModRing", 5]],
         expected: "True",

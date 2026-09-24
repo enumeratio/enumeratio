@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
-import { computed, reactive, ref } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
@@ -120,6 +120,23 @@ const notesOf = (ex: {
 };
 const sectionsOpen = ref(true);
 
+/** A section's anchor: `Possible issues` → `#possible-issues`. */
+const sectionId = (category: string): string => category.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+// A linked section opens even under "close all", and is scrolled to once the client-only
+// sections exist (the browser's own hash scroll runs before they render).
+const targeted = ref("");
+const followHash = async (): Promise<void> => {
+  targeted.value = decodeURIComponent(location.hash.slice(1));
+  if (targeted.value === "") return;
+  await nextTick();
+  document.getElementById(targeted.value)?.scrollIntoView();
+};
+onMounted(() => {
+  void followHash();
+  window.addEventListener("hashchange", followHash);
+});
+onBeforeUnmount(() => window.removeEventListener("hashchange", followHash));
+
 // Examples grouped into categories, keeping each example's original index so
 // assertion status stays addressable.
 const CATEGORY_ORDER = [
@@ -215,9 +232,18 @@ const grouped = computed(() => {
         :key="group.category"
         class="ref-section"
         :class="{ 'is-bare': grouped.length <= 1 }"
-        :open="sectionsOpen"
+        :id="sectionId(group.category)"
+        :open="sectionsOpen || sectionId(group.category) === targeted"
       >
-        <summary class="ref-category">{{ group.category }}</summary>
+        <summary class="ref-category">
+          {{ group.category }}
+          <a
+            class="ref-anchor"
+            :href="`#${sectionId(group.category)}`"
+            :aria-label="`Link to ${group.category}`"
+            >#</a
+          >
+        </summary>
         <div
           v-for="{ ex, i } in group.items"
           :key="i"
@@ -381,6 +407,20 @@ const grouped = computed(() => {
 }
 .ref-section:not([open]) > summary.ref-category::before {
   transform: rotate(-90deg);
+}
+.ref-anchor {
+  margin-left: 0.35rem;
+  color: var(--vp-c-brand-1);
+  opacity: 0;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.ref-section > summary:hover .ref-anchor,
+.ref-anchor:focus {
+  opacity: 1;
+}
+.ref-section {
+  scroll-margin-top: calc(var(--vp-nav-height) + 1rem);
 }
 .ref-section.is-bare > summary {
   display: none;

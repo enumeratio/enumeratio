@@ -1,11 +1,13 @@
 import { expect, test } from "vite-plus/test";
 import {
+  adicNumerals,
   balancedRadix,
   bijectiveRadix,
   combinatorialSystem,
   factoradic,
   mixedRadix,
   negativeRadix,
+  type DigitBound,
   type NumeralSystem,
   ostrowski,
   primorialRadix,
@@ -41,6 +43,53 @@ test("every system round-trips over its domain", () => {
   roundTrips(balancedRadix(3)!, range(-200, 200));
   roundTrips(negativeRadix(2)!, range(-200, 200));
   roundTrips(negativeRadix(10)!, range(-200, 200));
+});
+
+/** A system's numerals obey its own declared shape: range, width and per-place bounds. */
+const keepsShape = (system: NumeralSystem, values: readonly number[]): void => {
+  const {
+    range: [lo, hi],
+    digits,
+    width,
+  } = system.shape;
+  const within = (d: number, [least, most]: DigitBound) =>
+    d >= least && (most === undefined || d <= most);
+  for (const n of values) {
+    const inRange = (lo === undefined || BigInt(n) >= lo) && (hi === undefined || BigInt(n) <= hi);
+    const spelled = system.toDigits(n);
+    expect(spelled !== undefined, `${system.name} spells ${n} iff it is in range`).toBe(inRange);
+    if (spelled === undefined) continue;
+    if (width !== undefined) expect(spelled, `${system.name} width at ${n}`).toHaveLength(width);
+    if (digits === undefined) continue;
+    const bounds = typeof digits[0] === "number" ? undefined : (digits as readonly DigitBound[]);
+    spelled.forEach((d, i) => {
+      const bound = bounds?.[i] ?? (digits as DigitBound);
+      expect(within(d, bound), `${system.name} digit ${i} of ${n}`).toBe(true);
+    });
+  }
+};
+
+test("every system keeps the shape it declares", () => {
+  const sample = range(-150, 450);
+  for (const system of [
+    radix(2)!,
+    radix(16)!,
+    balancedRadix(3)!,
+    negativeRadix(2)!,
+    bijectiveRadix(26)!,
+    mixedRadix([24, 60, 60])!,
+    factoradic(),
+    primorialRadix(),
+    zeckendorf(),
+    combinatorialSystem(3)!,
+    residueSystem([3, 5, 7])!,
+    residueSystem([4, 6])!,
+    ostrowski([2, 2, 2])!,
+    adicNumerals(10, 2)!,
+    adicNumerals(3, 5)!,
+  ]) {
+    keepsShape(system, sample);
+  }
 });
 
 // ── each system's digits, characterised independently of how they were produced ──
@@ -174,7 +223,7 @@ test("residue systems are carry-free and need pairwise coprime moduli", () => {
   expect(rns.toDigits(105)).toBeUndefined();
   // Non-coprime moduli: not a bijection, and an inconsistent digit string has no value.
   const shared = residueSystem([4, 6])!;
-  expect(shared.shape).toContain("NOT pairwise coprime");
+  expect(shared.shape.bijective).toBe(false);
   expect(shared.fromDigits([1, 2])).toBeUndefined(); // n ≡ 1 (mod 4) and 2 (mod 6) is unsolvable
   expect(shared.fromDigits([2, 2])).toBe(2);
 });

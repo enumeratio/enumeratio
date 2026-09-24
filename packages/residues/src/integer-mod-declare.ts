@@ -3,6 +3,7 @@ import {
   bigIntegerAt,
   bigRationalAt,
   operandsOf,
+  symbolNameOf,
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
@@ -84,6 +85,18 @@ export function declareIntegerMod(ce: ComputeEngine): void {
       },
     },
   });
+
+  // compute-engine's QuotientRing(Integers, m) — what `\mathbb{Z}/m\mathbb{Z}` parses to — is
+  // inert; over the integers it specialises to IntegerModRing(m).
+  wrapOperator(
+    ce,
+    ["QuotientRing", "Integers", 2],
+    (ops) =>
+      ops[0] !== undefined &&
+      symbolNameOf(ops[0]) === "Integers" &&
+      (bigIntegerAt(ops[1]) ?? 0n) >= 1n,
+    () => (ops) => ce.function(INTEGER_MOD_RING, [ops[1]!]),
+  );
 
   /** Every operand as an element of the ring the IntegerMod operands meet in. */
   const lift = (ops: readonly BoxedExpression[]): IntegerMod[] | undefined => {

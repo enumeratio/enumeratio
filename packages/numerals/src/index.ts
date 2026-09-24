@@ -9,9 +9,11 @@ export {
   factoradic,
   mixedRadix,
   negativeRadix,
+  type DigitBound,
   type NumeralSystem,
   primorialRadix,
   radix,
   residueSystem,
+  type Shape,
   zeckendorf,
 } from "./systems.ts";
