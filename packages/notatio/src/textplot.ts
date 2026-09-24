@@ -15,7 +15,11 @@ export interface TextPlotOptions {
   yRange?: [number, number];
   /** Columns held for the y labels (default 7) -- fixed, so a redraw cannot shift the frame. */
   gutter?: number;
+  /** Points marked over the curve (a plot's `Epilog`, a pinned Locator), each as one `●`. */
+  marks?: readonly PlotPoint[];
 }
+
+const MARK = "●";
 
 const BRAILLE = 0x2800;
 // Dot bits by (column, row) inside one cell, per the Unicode braille layout.
@@ -50,7 +54,12 @@ export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {
   const ys = finite.map((p) => p.y);
   const x0 = Math.min(...xs);
   const x1 = Math.max(...xs);
-  let [y0, y1] = opts.yRange ?? [Math.min(...ys), Math.max(...ys)];
+  const marks = (opts.marks ?? []).filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y));
+  // A mark off the curve's own range widens it, so it is on the page rather than lost.
+  let [y0, y1] = opts.yRange ?? [
+    Math.min(...ys, ...marks.map((p) => p.y)),
+    Math.max(...ys, ...marks.map((p) => p.y)),
+  ];
   if (y1 === y0) {
     y0 -= 1;
     y1 += 1;
@@ -79,12 +88,22 @@ export function textPlot(points: readonly PlotPoint[], opts: TextPlotOptions = {
     else line(prev, cur, dot);
     prev = cur;
   }
+  // A mark takes its whole cell, so it reads as a point and not as more curve.
+  const marked = new Set<number>();
+  for (const m of marks) {
+    const [cx, cy] = toDot(m);
+    if (cx >= 0 && cy >= 0 && cx < cols && cy < rows)
+      marked.add(Math.floor(cy / 4) * width + Math.floor(cx / 2));
+  }
   const gutter = Math.max(3, opts.gutter ?? GUTTER);
   const lines: string[] = [];
   for (let r = 0; r < height; r++) {
     const tag = r === 0 ? label(y1, gutter) : r === height - 1 ? label(y0, gutter) : "";
     let row = "";
-    for (let c = 0; c < width; c++) row += String.fromCharCode(BRAILLE + cells[r * width + c]!);
+    for (let c = 0; c < width; c++) {
+      const i = r * width + c;
+      row += marked.has(i) ? MARK : String.fromCharCode(BRAILLE + cells[i]!);
+    }
     lines.push(`${tag.padStart(gutter)} │${row}`);
   }
   lines.push(`${" ".repeat(gutter)} └${"─".repeat(width)}`);

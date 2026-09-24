@@ -29,3 +29,21 @@ describe("driver", () => {
     expect(keysOf("\x1b[<0;10;3M")).toEqual([]);
   });
 });
+
+describe("a point control", () => {
+  it("takes ←/→ as x and ↑/↓ as y, and marks its plot", () => {
+    let screen = "";
+    const d = driver(json("Row([Plot(Sin(x), (x, 0, 10)), Locator((p, (1, 0.5)))])"), {
+      show: (e) => JSON.stringify(e),
+      write: (text) => (screen += text),
+      color: false,
+      mouse: false,
+      cursorRow: () => 24,
+      columns: () => 200,
+    })!;
+    d.draw();
+    for (const chunk of ["\x1b[C", "\x1b[1;2A"]) for (const k of keysOf(chunk)) d.key(k);
+    expect(screen).toContain("p = (1.1, 1.5)");
+    expect(JSON.stringify(d.pinned())).toContain('"Epilog"');
+  });
+});

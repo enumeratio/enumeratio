@@ -36,6 +36,14 @@ interface Driven {
   readonly entries?: readonly Json[];
   /** The range a ranged control moves in, if it is one. */
   readonly range?: { min: number; max: number; step: number };
+  /** The box a point control (Slider2D, Locator) moves in, and its step per axis. */
+  readonly plane?: { step: [number, number]; min?: [number, number]; max?: [number, number] };
+}
+
+/** `(x, y)` as numbers, if that is what the node is. */
+function pairOf(node: Json | undefined): [number, number] | undefined {
+  const [x, y, ...rest] = tupleOf(node)?.map(numOf) ?? [];
+  return x === undefined || y === undefined || rest.length > 0 ? undefined : [x, y];
 }
 
 // A string shows bare (it is a choice's label); anything else as notatio, `(1, 0.5)`.
@@ -50,6 +58,15 @@ function driven(decl: Declaration): Driven | undefined {
     if (min === undefined || max === undefined) return { decl, value };
     // No step: a hundred positions across the range, the slider's own default.
     return { decl, value, range: { min, max, step: step ?? (max - min) / 100 } };
+  }
+  if (decl.kind === "planar" || decl.kind === "locator") {
+    if (pairOf(value) === undefined) return { decl, value };
+    // A Slider2D has corners; a Locator takes its plot's, which the driver does not see,
+    // so it steps by a tenth and is not held in.
+    const [min, max] = (tupleOf(decl.spec) ?? []).map(pairOf);
+    if (min === undefined || max === undefined) return { decl, value, plane: { step: [0.1, 0.1] } };
+    const step: [number, number] = [(max[0] - min[0]) / 100, (max[1] - min[1]) / 100];
+    return { decl, value, plane: { step, min, max } };
   }
   const entries = sampleValues(decl, Number.POSITIVE_INFINITY);
   return entries === undefined ? { decl, value } : { decl, value, entries };
@@ -85,6 +102,11 @@ function strip(d: Driven, focused: boolean, color: boolean): Strip {
       text: `${label}◂${bar}▸  ${dim(`${d.range.min} … ${d.range.max}`, color)}`,
       track: at0 + 1,
     };
+  }
+  if (d.plane !== undefined) {
+    const { min, max } = d.plane;
+    const box = min && max ? `  (${min.join(", ")}) … (${max.join(", ")})` : "";
+    return { text: `${label}${dim(`←/→ x · ↑/↓ y${box}`, color)}` };
   }
   if (d.entries !== undefined) {
     const spans: { from: number; to: number; index: number }[] = [];
@@ -123,6 +145,19 @@ function move(d: Driven, steps: number): void {
     const n = d.entries.length;
     d.value = d.entries[((((i < 0 ? 0 : i) + steps) % n) + n) % n]!;
   }
+}
+
+/** Move a point control by grid steps along each axis, held inside its box if it has one. */
+function shift(d: Driven, dx: number, dy: number): void {
+  const at = pairOf(d.value);
+  if (d.plane === undefined || at === undefined) return;
+  const { step, min, max } = d.plane;
+  const axis = (i: 0 | 1, by: number): number => {
+    const v = at[i] + by * step[i];
+    const held = min && max ? Math.min(max[i], Math.max(min[i], v)) : v;
+    return Number(held.toPrecision(12));
+  };
+  d.value = ["Tuple", axis(0, dx), axis(1, dy)] as unknown as Json;
 }
 
 /** One playback tick for an Animator: the next grid value, cycling. */
@@ -291,19 +326,26 @@ export function driver(expr: Json, screen: DriveScreen): Driver | undefined {
         case "tab":
           focus = (focus + (key.shift === true ? controls.length - 1 : 1)) % controls.length;
           break;
+        // A point control takes ↑/↓ as its y; for the rest they move focus.
         case "down":
-          focus = (focus + 1) % controls.length;
+        case "j":
+          if (d.plane !== undefined) shift(d, 0, -gear);
+          else focus = (focus + 1) % controls.length;
           break;
         case "up":
-          focus = (focus - 1 + controls.length) % controls.length;
+        case "k":
+          if (d.plane !== undefined) shift(d, 0, gear);
+          else focus = (focus - 1 + controls.length) % controls.length;
           break;
         case "right":
         case "l":
-          move(d, gear);
+          if (d.plane !== undefined) shift(d, gear, 0);
+          else move(d, gear);
           break;
         case "left":
         case "h":
-          move(d, -gear);
+          if (d.plane !== undefined) shift(d, -gear, 0);
+          else move(d, -gear);
           break;
         case "space":
           if (playing !== undefined) halt();
