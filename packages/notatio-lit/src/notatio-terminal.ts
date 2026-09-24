@@ -42,6 +42,9 @@ const CTRL = {
   CLEAR: "\x0c",
 } as const;
 
+const HIDE_CURSOR = "\x1b[?25l";
+const SHOW_CURSOR = "\x1b[?25h";
+
 const THEME = {
   background: "#181818",
   foreground: "#e4e4e4",
@@ -267,6 +270,8 @@ export class NotatioTerminal extends LitElement {
     });
     write(`${this.shown.echo}\n`);
     this.driving = this.shown.driver;
+    // A cursor only where there is something to key: a pipe is output, not a prompt.
+    write(this.driving ? SHOW_CURSOR : HIDE_CURSOR);
     if (this.driving) this.driving.draw();
     else write(this.shown.out);
     // Writes are parsed asynchronously; the callback runs once they all have been.
@@ -295,7 +300,7 @@ export class NotatioTerminal extends LitElement {
       this.driving = undefined;
       const out = this.shown!.settle(d.pinned());
       this.term?.resize(this.term.cols, NotatioTerminal.SHOW_ROWS);
-      this.term?.write(`${out}\n\n${resumeHint(true)}`, () => this.fitRows());
+      this.term?.write(`${HIDE_CURSOR}${out}\n\n${resumeHint(true)}`, () => this.fitRows());
       return;
     }
   }
