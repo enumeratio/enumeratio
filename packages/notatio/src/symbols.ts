@@ -628,6 +628,14 @@ const LABEL_POSITIONS: Readonly<Record<string, string>> = {
 };
 
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
+  {
+    // `DynamicModule(body)` -- an explicit scope over its subtree. The bindings live in
+    // the controls inside it, so it takes no arguments of its own.
+    head: "DynamicModule",
+    tag: "notatio-dynamic-module",
+    attributes: () => ({}),
+    children: (ops) => (ops[0] === undefined ? [] : [ops[0]]),
+  },
   layout("Row", "notatio-row"),
   layout("Column", "notatio-column"),
   {
@@ -690,7 +698,7 @@ export function lowerOptions(
     }
     const attr = rule ?? optionAttribute(name);
     const drawn = renderingOf(value);
-    if (drawn !== undefined && drawn.tag !== "notatio-tangle") {
+    if (drawn !== undefined && drawn.tag !== "notatio-dynamic-module") {
       children.push({ ...drawn, attributes: { ...drawn.attributes, slot: attr } });
       continue;
     }
@@ -765,14 +773,14 @@ export const DRAWING_SYMBOLS: readonly VisualSymbol[] = ALL_SYMBOLS;
  */
 export function renderingOf(expr: Json, inManipulate = false): Rendering | undefined {
   // An expression with controls in it is a SCOPE: the controls' variables are read as
-  // wildcards everywhere else in it, and a tangle around the whole binds them.
+  // wildcards everywhere else in it, and a dynamic module around the whole binds them.
   if (!inManipulate) {
     const names = controlNames(expr);
     if (names.size > 0) {
       const inner = render(slottedExceptDeclarations(expr, names), true);
       return inner === undefined
         ? undefined
-        : { tag: "notatio-tangle", attributes: {}, children: [inner] };
+        : { tag: "notatio-dynamic-module", attributes: {}, children: [inner] };
     }
   }
   return render(expr, inManipulate);

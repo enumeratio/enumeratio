@@ -63,7 +63,7 @@ Two wrinkles the generator has to know about:
   prop bound as `:box="box"` sets the _property_, which Lit handles. Fine for
   `notatio-*` (all boolean attributes are Lit properties), wrong for a plain HTML
   element — the generator is only for ours.
-- **Slots and children.** `notatio-manipulate` and `notatio-tangle` wrap light-DOM
+- **Slots and children.** `notatio-manipulate` and `notatio-dynamic-module` wrap light-DOM
   children whose attributes carry `_name` wildcards; a wrapper passes its default slot
   straight through. `captureTemplates` reads attributes _and_ properties, so a child
   written as `<Plot :value="…">` inside a `<Manipulate>` is captured the same as a raw
@@ -182,7 +182,7 @@ symbol -- `Slider`, `VerticalSlider`, `Animator`, `Slider2D`, `IntervalSlider`,
 
 - **One contract** (`components/src/controls.ts`). Every control has a `name`, a
   MathJSON `binding` (a number, `True`, a `List`, an expression) and dispatches
-  `notatio-control-change`; its tag is in `CONTROL_TAGS`. A scope (`<notatio-tangle>`,
+  `notatio-control-change`; its tag is in `CONTROL_TAGS`. A scope (`<notatio-dynamic-module>`,
   `<notatio-manipulate>`) binds any of them without knowing which it has, and a
   template gets a `List` from a toggler bar as readily as a number from a slider.
 - **The strip picks like Wolfram.** Manipulate's `params` draw these components: a
@@ -190,7 +190,7 @@ symbol -- `Slider`, `VerticalSlider`, `Animator`, `Slider2D`, `IntervalSlider`,
   symbol in the tuple (`{k, {1, 2, 3}, PopupMenu}`) is `ControlType`.
 - **An expression with controls is a scope.** `renderingOf` collects the variables the
   controls declare (a control's first argument, alone or as `(k, init)`), rewrites every
-  other occurrence to the wildcard `_k`, and wraps the rendering in a tangle. So
+  other occurrence to the wildcard `_k`, and wraps the rendering in a dynamic module. So
   `Row([Slider(k, (0, 5)), Dynamic(k^2)])` evaluates in a cell and draws as a live
   interface, and a `Grid` of controls and readouts is a small application. Labelled
   entries are `Labeled(value, "label")`, since Epsil's `->` is a `KeyValuePair` that

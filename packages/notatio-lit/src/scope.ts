@@ -1,5 +1,5 @@
 // A scope: the controls in a stretch of the page and the templates that read them. A
-// `<notatio-tangle>` is an explicit one over its subtree; the PAGE is the implicit one,
+// `<notatio-dynamic-module>` is an explicit one over its subtree; the PAGE is the implicit one,
 // so a `<notatio-slider name="k">` and a `<notatio-dynamic value="_k^2">` written
 // anywhere on a page, with no wrapper, still find each other -- the wrapper is only
 // for isolation, when two examples reuse a name (design/vdom.md).
@@ -26,7 +26,7 @@ const idOf = (el: Element): number => {
 };
 
 /** The explicit scopes: an element under one of these belongs to it, not to the page. */
-const OWNERS = "notatio-tangle, notatio-manipulate";
+const OWNERS = "notatio-dynamic-module, notatio-manipulate";
 
 export class Scope {
   #engine: ComputeEngine | undefined;

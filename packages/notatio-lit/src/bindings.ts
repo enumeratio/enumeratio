@@ -2,7 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
 
 // Wildcard binding: the substitution machinery shared by `<notatio-manipulate>` and
-// `<notatio-tangle>`. Both work the same way -- a descendant attribute (or custom-element
+// `<notatio-dynamic-module>`. Both work the same way -- a descendant attribute (or custom-element
 // string property) that is a notatio expression carrying a NAMED WILDCARD (`_a`) is a
 // template, and every control move refills it and writes the evaluated result back.
 //

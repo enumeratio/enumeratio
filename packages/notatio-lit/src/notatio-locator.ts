@@ -25,12 +25,12 @@ interface Framed extends HTMLElement {
  * ten times that, Alt a tenth.
  *
  * ```html
- * <notatio-tangle>
+ * <notatio-dynamic-module>
  *   <notatio-plot value="Sin(x)" domain="-6.283,6.283">
  *     <notatio-locator name="p" value="0,0" />
  *   </notatio-plot>
  *   The dot is at <notatio-dynamic value="_p" />.
- * </notatio-tangle>
+ * </notatio-dynamic-module>
  * ```
  *
  * A `<notatio-slider-2d>` is the same control on a square of its own, off the picture.

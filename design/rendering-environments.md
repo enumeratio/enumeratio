@@ -211,11 +211,11 @@ braille/block-character plots, a truecolor chart -- what `plotext` and `ratatui`
 is `surface`; everything else is unchanged.
 
 The interesting part is that a TTY _has_ an engine, so controls are real, only keyed
-rather than pointed. The tangle knob maps almost exactly: a number in a sentence that the
+rather than pointed. The dynamic module knob maps almost exactly: a number in a sentence that the
 arrows scrub, with the same gear concept (Shift = coarse, Alt = fine, digits = type-in),
 and a slider draws as `k = 2  ◂━━━●━━━━▸ [0, 5]` with a focus ring moving between
 controls on Tab. Playback is a timer that redraws. The scrub and playback arithmetic
-(`tangle.ts`, `playback.ts`) is already in the base with no DOM in it; the terminal
+(`scrub.ts`, `playback.ts`) is already in the base with no DOM in it; the terminal
 backend would be a fifth mount over `Rendering` -- `notatio-terminal` has the host side
 of this already. Piped output is the static column: `reduce` with no engine, `InputForm`
 at the leaves, and a plot as text or omitted with a note.

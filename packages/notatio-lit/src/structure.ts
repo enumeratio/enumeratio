@@ -55,7 +55,7 @@ function optionsOn(el: Element, symbol: VisualSymbol): Record<string, MathJsonEx
   return options;
 }
 
-const SCOPES = "notatio-tangle, notatio-manipulate";
+const SCOPES = "notatio-dynamic-module, notatio-manipulate";
 
 /** The heads whose arguments are their children on the page, not attributes. */
 const LAYOUT_HEADS = new Set(["Row", "Column", "Grid", "Panel", "Labeled"]);

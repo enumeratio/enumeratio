@@ -31,7 +31,7 @@ experimental and move fast.
 - [REPL (terminal)](/playground/repl) — `<notatio-terminal>`, the real CLI eval core in a browser terminal
 - [Command line](/playground/cli) — the same terminal in one-shot `notatio <expr>` mode
 - [Polytope](/playground/polytope) — `<notatio-polytope>`, a polytope's face poset, where every mark is a clickable face
-- [Tangle](/playground/inspirations/tangle) — `<notatio-tangle>` and the inline controls (`<notatio-knob>`, `<notatio-toggler>`, `<notatio-dynamic>`, `<notatio-when>`): reactive prose
+- [Tangle](/playground/inspirations/tangle) — `<notatio-dynamic-module>` and the inline controls (`<notatio-knob>`, `<notatio-toggler>`, `<notatio-dynamic>`, `<notatio-when>`): reactive prose
 
 ## Inspirations
 

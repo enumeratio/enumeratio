@@ -101,12 +101,12 @@ are Sage's shape as much as anyone's, and it is the shape our collections take.
 A lazy enumerated set indexed by position. Drag the matrix to walk it. The
 collection is never built — <code>At</code> unranks.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 Permutation <notatio-dynamic value="_k" /> of 24:
 <notatio-knob name="k" value="1" min="1" max="24">
 <notatio-figure kind="permutation" value="At(Permutations(Range(1,4)), _k)" />
 </notatio-knob>
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## What we would take, and what we would not

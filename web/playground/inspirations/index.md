@@ -24,7 +24,7 @@ a survey until the design is clear, and some is a debt we are simply naming.
 
 - [Tangle](/playground/inspirations/tangle) — Bret Victor's reactive documents:
   numbers you drag inside a sentence, and prose that re-derives itself. **Built**
-  as `<notatio-tangle>` and its inline controls.
+  as `<notatio-dynamic-module>` and its inline controls.
 - [ganja.js](/playground/inspirations/ganja) — Steven De Keninck's geometric
   algebra generator. **Half built**: the operator layer shipped as
   `@enumeratio/geometric`; the renderer has not.

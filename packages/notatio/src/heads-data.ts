@@ -219,6 +219,7 @@ export const HEADS: readonly string[] = [
   "DropWhile",
   "DyckPaths",
   "Dynamic",
+  "DynamicModule",
   "Eigen",
   "Eigenvalues",
   "Eigenvectors",

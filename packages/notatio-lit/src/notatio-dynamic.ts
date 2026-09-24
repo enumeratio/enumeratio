@@ -10,7 +10,7 @@ import { ensureStyles } from "./styles.ts";
  * Wolfram's `Dynamic`. It typesets whatever its `value` evaluates to and nothing else:
  * no editor, no assertion, no In/Out row.
  *
- * Inside a `<notatio-tangle>` the wildcards are the surrounding knobs, and the wrapper
+ * Inside a `<notatio-dynamic-module>` the wildcards are the surrounding knobs, and the wrapper
  * rewrites this element's `value` on every move — so what the element itself sees is
  * always a concrete expression. `N(…)` around the value forces a decimal where the
  * exact answer would be a fraction or a surd, and `digits` says how much of that
@@ -61,7 +61,7 @@ export class NotatioDynamic extends LitElement {
       parseLatex: (tex: string) => engine.parse(tex).json,
     });
     // Unparseable input renders nothing rather than an error, as everywhere else here;
-    // turn on the `tangle` debug namespace to see why.
+    // turn on the `scope` debug namespace to see why.
     if (errors.length) {
       this._markup = "";
       return;

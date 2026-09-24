@@ -2,7 +2,7 @@
 // a consumer that wants the components has the whole of notatio from one import.
 export * from "@enumeratio/notatio";
 
-// The page is a scope: controls and readouts with no `<notatio-tangle>` around them
+// The page is a scope: controls and readouts with no `<notatio-dynamic-module>` around them
 // bind through it. Installed once, client side.
 import { pageScope } from "./scope.ts";
 if (typeof document !== "undefined") pageScope();
@@ -32,7 +32,7 @@ import "./notatio-graph-plot.ts";
 import "./notatio-complex-plot.ts";
 import "./notatio-complex-plot-3d.ts";
 import "./notatio-manipulate.ts";
-import "./notatio-tangle.ts";
+import "./notatio-dynamic-module.ts";
 import "./notatio-slider.ts";
 import "./notatio-vertical-slider.ts";
 import "./notatio-animator.ts";
@@ -67,7 +67,7 @@ import type { NotatioOut } from "./notatio-out.ts";
 import type { NotatioNotebook } from "./notatio-notebook.ts";
 import type { NotatioPlot } from "./notatio-plot.ts";
 import type { NotatioManipulate } from "./notatio-manipulate.ts";
-import type { NotatioTangle } from "./notatio-tangle.ts";
+import type { NotatioDynamicModule } from "./notatio-dynamic-module.ts";
 import type { NotatioKnob } from "./notatio-knob.ts";
 import type { NotatioSlider } from "./notatio-slider.ts";
 import type { NotatioVerticalSlider } from "./notatio-vertical-slider.ts";
@@ -126,7 +126,7 @@ export { NotatioBarChart3D } from "./notatio-bar-chart-3d.ts";
 export { NotatioChart } from "./notatio-chart.ts";
 export { NotatioGraphPlot, type GraphType } from "./notatio-graph-plot.ts";
 export { NotatioManipulate } from "./notatio-manipulate.ts";
-export { NotatioTangle } from "./notatio-tangle.ts";
+export { NotatioDynamicModule } from "./notatio-dynamic-module.ts";
 export { NotatioKnob } from "./notatio-knob.ts";
 export { NotatioToggler } from "./notatio-toggler.ts";
 export { NotatioSlider } from "./notatio-slider.ts";
@@ -179,7 +179,7 @@ declare global {
     "notatio-chart": NotatioChart;
     "notatio-graph-plot": NotatioGraphPlot;
     "notatio-manipulate": NotatioManipulate;
-    "notatio-tangle": NotatioTangle;
+    "notatio-dynamic-module": NotatioDynamicModule;
     "notatio-knob": NotatioKnob;
     "notatio-toggler": NotatioToggler;
     "notatio-slider": NotatioSlider;

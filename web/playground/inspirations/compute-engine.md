@@ -65,11 +65,11 @@ right is the same value asked for numerically. Exactness is the default and
 approximation is a request — which is the property that lets a coefficient stay
 π all the way through a product.
 </template>
-<notatio-tangle>
+<notatio-dynamic-module>
 The square root of <notatio-knob name="n" value="12" min="1" max="40" /> is
 <notatio-dynamic value="Sqrt(_n)" digits="0" />, or
 <notatio-dynamic value="N(Sqrt(_n))" digits="12" /> if you insist.
-</notatio-tangle>
+</notatio-dynamic-module>
 </Story>
 
 ## Why we could extend it at all

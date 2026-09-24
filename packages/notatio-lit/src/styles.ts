@@ -1081,15 +1081,15 @@ notatio-worksheet {
   font-variant-numeric: tabular-nums;
 }
 
-/* --- Tangle: inline reactive prose ------------------------------------------------
+/* --- Reactive prose, after Tangle ------------------------------------------------
    The controls sit INSIDE a sentence, so everything here is inline and must not
    disturb the line: no padding that changes the leading, no border that reserves
    width, and the hover arrows are positioned out of flow so nothing reflows when
    they appear. */
-/* A tangle wraps prose -- paragraphs, figures, whole sections -- so it is a block.
+/* A dynamic module wraps prose -- paragraphs, figures, whole sections -- so it is a block.
    A conditional is a PHRASE inside a sentence and must contribute no box at all;
    display:contents is what keeps it in the line it was written in. */
-notatio-tangle { display: block; }
+notatio-dynamic-module { display: block; }
 notatio-when { display: contents; }
 notatio-when[hidden] { display: none; }
 notatio-dynamic { display: inline; }

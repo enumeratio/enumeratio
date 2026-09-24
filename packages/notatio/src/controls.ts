@@ -1,5 +1,5 @@
 // The contract every control keeps -- a knob in a sentence, a slider in a Manipulate
-// strip, a bar of togglers, a menu -- so that a scope (`<notatio-tangle>`,
+// strip, a bar of togglers, a menu -- so that a scope (`<notatio-dynamic-module>`,
 // `<notatio-manipulate>`) can bind any of them without knowing which it has.
 //
 // A control has a `name`, publishes a MathJSON `binding` (a number, `True`, a `List`, an
