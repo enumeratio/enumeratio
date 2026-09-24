@@ -199,6 +199,16 @@ export const MAPPINGS: readonly Mapping[] = [
     emit: { sage: "rational_reconstruction($1, $2)" },
   },
   {
+    head: "IntegerExponent",
+    arity: 2,
+    emit: { wolfram: "IntegerExponent[$1, $2]", sympy: "multiplicity($2, $1)" },
+  },
+  {
+    head: "HermiteDecomposition",
+    arity: 1,
+    emit: { wolfram: "HermiteDecomposition[$1]" },
+  },
+  {
     head: "ContinuedFraction",
     arity: 1,
     emit: {

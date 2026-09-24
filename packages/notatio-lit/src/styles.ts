@@ -409,6 +409,14 @@ a.notatio-tree-head { text-decoration: underline dotted; text-underline-offset: 
   text-decoration-color: currentColor;
 }
 .notatio-menu-btn::-webkit-details-marker { display: none; }
+/* The label as the menu trigger: it stays put, and the list opens under it. */
+.notatio-menu.is-on-label { margin-left: 0; }
+.notatio-menu.is-on-label .notatio-menu-list { left: 0; right: auto; }
+.notatio-label-btn { list-style: none; cursor: pointer; }
+.notatio-label-btn::-webkit-details-marker { display: none; }
+.notatio-label-btn:hover,
+.notatio-menu[open] .notatio-label-btn { color: var(--vp-c-brand-1, #3451b2); }
+.notatio-label-form { margin-left: 0.3rem; opacity: 0.8; }
 .notatio-menu-list {
   position: absolute;
   right: 0;

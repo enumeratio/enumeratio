@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { toInputForm } from "@enumeratio/formats";
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
-import { computed, reactive } from "vue";
+import { computed, nextTick, reactive, ref } from "vue";
+import alternativesData from "../../data/alternatives-prototype.json";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import Crosswalk from "./Crosswalk.vue";
+import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
 
 const props = defineProps<{ name: string }>();
 const entry = computed(() => getEntry(props.name));
@@ -90,6 +93,41 @@ const divergences = (ex: {
     note,
   }));
 
+// An example can be edited in place: click its input to get it as notatio. An edited
+// example is just a live cell -- it no longer asserts, and what other systems said about the
+// original no longer applies to it.
+const edits = reactive<Record<number, string>>({});
+const editing = ref<number | undefined>();
+const editField = ref<HTMLInputElement[]>([]);
+const startEdit = async (i: number, expr: unknown, event: Event): Promise<void> => {
+  if ((event.target as Element).closest?.(".notatio-menu")) return;
+  editing.value = i;
+  await nextTick();
+  const field = editField.value[0];
+  if (!field) return;
+  field.value = edits[i] ?? toInputForm(expr as Parameters<typeof toInputForm>[0]);
+  field.focus();
+};
+const commitEdit = (i: number, expr: unknown, text: string): void => {
+  if (editing.value !== i) return;
+  editing.value = undefined;
+  const original = toInputForm(expr as Parameters<typeof toInputForm>[0]);
+  if (text.trim() === "" || text.trim() === original) delete edits[i];
+  else {
+    edits[i] = text.trim();
+    delete status[i];
+  }
+};
+const resetEdit = (i: number): void => {
+  delete edits[i];
+};
+
+// Other systems' runs of each example, keyed by the example's expression.
+const ALTERNATIVES = alternativesData as Record<string, Record<string, Alternative>>;
+const alternativesOf = (ex: { expr: unknown }): Record<string, Alternative> | undefined =>
+  ALTERNATIVES[JSON.stringify(ex.expr)];
+const sectionsOpen = ref(true);
+
 // Examples grouped into categories, keeping each example's original index so
 // assertion status stays addressable.
 const CATEGORY_ORDER = [
@@ -171,14 +209,21 @@ const grouped = computed(() => {
       </ClientOnly>
     </template>
 
-    <h2 v-if="grouped.length">Examples</h2>
+    <div v-if="grouped.length" class="ref-examples-head">
+      <h2>Examples</h2>
+      <span class="ref-view">
+        <button v-if="grouped.length > 1" @click="sectionsOpen = !sectionsOpen">
+          {{ sectionsOpen ? "close all" : "open all" }}
+        </button>
+      </span>
+    </div>
     <ClientOnly>
       <details
         v-for="group in grouped"
         :key="group.category"
         class="ref-section"
         :class="{ 'is-bare': grouped.length <= 1 }"
-        open
+        :open="sectionsOpen"
       >
         <summary class="ref-category">{{ group.category }}</summary>
         <div
@@ -186,24 +231,65 @@ const grouped = computed(() => {
           :key="i"
           class="ref-example"
           :class="{
-            'is-mismatch': status[i] === 'mismatch' && !ex.aspirational,
+            'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && edits[i] === undefined,
             'is-diagnostic': status[i] === 'error' && !ex.aspirational,
             'is-planned': ex.aspirational,
-            'is-divergent': divergences(ex).length > 0,
+            'is-divergent': divergences(ex).length > 0 && edits[i] === undefined,
+            'is-edited': edits[i] !== undefined,
           }"
         >
           <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
           <p v-if="ex.caption" class="ref-caption" v-html="linkify(ex.caption)"></p>
-          <notatio-out
-            label="In"
-            :value="toJson(ex.expr)"
-            format="mathjson"
-            :resolveHead.prop="resolveHead"
-          />
-          <div class="ref-out">
+          <div v-if="editing === i" class="ref-in ref-editing">
+            <span class="ref-edit-label">In</span>
+            <input
+              ref="editField"
+              class="ref-edit"
+              spellcheck="false"
+              aria-label="edit this example, in notatio"
+              @keydown.enter="commitEdit(i, ex.expr, ($event.target as HTMLInputElement).value)"
+              @keydown.escape="editing = undefined"
+              @blur="commitEdit(i, ex.expr, ($event.target as HTMLInputElement).value)"
+            />
+          </div>
+          <div v-else class="ref-in" @click="startEdit(i, ex.expr, $event)">
+            <notatio-out
+              v-if="edits[i] !== undefined"
+              :key="`in-edit-${edits[i]}`"
+              label="In"
+              label-menu
+              :value="edits[i]"
+              format="notatio"
+              :resolveHead.prop="resolveHead"
+            />
+            <notatio-out
+              v-else
+              label="In"
+              label-menu
+              :value="toJson(ex.expr)"
+              format="mathjson"
+              :resolveHead.prop="resolveHead"
+            />
+            <button v-if="edits[i] !== undefined" class="ref-reset" @click.stop="resetEdit(i)">
+              edited · reset
+            </button>
+          </div>
+          <div v-if="edits[i] !== undefined" class="ref-out">
+            <notatio-out
+              :key="`out-edit-${edits[i]}`"
+              label="Out"
+              label-menu
+              :value="edits[i]"
+              format="notatio"
+              :form="entry.outForm ?? 'standard'"
+              evaluate
+            />
+          </div>
+          <div v-else class="ref-out">
             <notatio-out
               v-if="entry.outEvaluate !== false"
               label="Out"
+              label-menu
               :value="toJson(ex.expr)"
               format="mathjson"
               :form="entry.outForm ?? 'standard'"
@@ -215,18 +301,26 @@ const grouped = computed(() => {
             <notatio-out
               v-else
               label="Out"
+              label-menu
               :value="toJson(ex.expr)"
               format="mathjson"
               :form="entry.outForm ?? 'standard'"
             />
             <span v-if="ex.aspirational" class="ref-planned-badge"> not yet implemented </span>
+            <ExampleAlternatives
+              v-else-if="alternativesOf(ex)"
+              :alternatives="alternativesOf(ex)!"
+              :notes="ex.divergence"
+            />
             <span v-for="d in divergences(ex)" v-else :key="d.system" class="ref-divergent-badge">
               differs from {{ d.label }}
             </span>
           </div>
-          <template v-for="d in divergences(ex)" :key="d.system">
-            <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-            <p class="ref-divergence-note" v-html="linkify(d.note)"></p>
+          <template v-if="edits[i] === undefined && !alternativesOf(ex)">
+            <template v-for="d in divergences(ex)" :key="d.system">
+              <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
+              <p class="ref-divergence-note" v-html="linkify(d.note)"></p>
+            </template>
           </template>
         </div>
       </details>
@@ -394,6 +488,13 @@ const grouped = computed(() => {
   white-space: nowrap;
 }
 /* A deliberate, documented divergence from Wolfram behaviour (result is correct). */
+.ref-example.is-edited {
+  border-style: dashed;
+}
+/* The caption describes the original, not the edit. */
+.ref-example.is-edited .ref-caption {
+  opacity: 0.45;
+}
 .ref-example.is-divergent {
   border-left: 3px solid #d9931a;
 }
@@ -416,8 +517,61 @@ const grouped = computed(() => {
   font-size: 1rem;
   color: var(--vp-c-text-1);
 }
+/* Click the input to edit it; the field sits where the typeset input was. */
+.ref-in {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.ref-in :deep(.notatio-render) {
+  cursor: text;
+}
+.ref-in > notatio-out {
+  flex: 1;
+}
+.ref-edit-label {
+  color: var(--vp-c-text-3);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.75rem;
+}
+.ref-edit {
+  flex: 1;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--vp-c-brand-1);
+  border-radius: 6px;
+  background: var(--vp-c-bg);
+  font-family: var(--vp-font-family-mono);
+  font-size: 0.85rem;
+}
+.ref-reset {
+  color: var(--vp-c-text-3);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.ref-reset:hover {
+  color: var(--vp-c-brand-1);
+}
+.ref-examples-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.ref-view {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+}
+.ref-view button {
+  color: var(--vp-c-text-3);
+  cursor: pointer;
+}
+.ref-view button:hover {
+  color: var(--vp-c-brand-1);
+}
 .ref-out {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.5rem;
 }

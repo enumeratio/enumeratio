@@ -1,5 +1,12 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, integerAt, operandsOf, stringAt } from "@enumeratio/boxed";
+import {
+  bigIntegerAt,
+  integerAt,
+  operandsOf,
+  stringAt,
+  widenSignature,
+  wrapOperator,
+} from "@enumeratio/boxed";
 import { kroneckerSymbol } from "./kronecker.ts";
 import {
   areFareyNeighbours,
@@ -136,28 +143,62 @@ export function declareModular(ce: ComputeEngine): void {
   };
 
   // ── the group ───────────────────────────────────────────────────────────────
+  // Wolfram has no modular-group heads: a PSL(2,ℤ) element goes through Dot / Inverse /
+  // MatrixPower like any integer matrix. Those natives are widened in place to take a
+  // ModularMatrix or a word; any other pairing is left to the native handler.
 
-  ce.declare("ModularProduct", {
-    signature: "(value, value) -> value",
-    evaluate: (ops) => {
-      const [m, n] = [matrixOf(ops[0]), matrixOf(ops[1])];
-      return m === undefined || n === undefined ? undefined : matrixExpression(multiply(m, n));
+  /** True for a value our handlers know how to read: `ModularMatrix(...)` or a word. */
+  const isModularOperand = (expr: BoxedExpression): boolean =>
+    expr.operator === "ModularMatrix" || /^[LR]+$/.test(stringAt(expr) ?? "");
+
+  const matrixType = ce.type("matrix");
+
+  widenSignature(ce, "Dot", "(value, value) -> value", (op) =>
+    op.type.matches(ce.type("matrix | tuple | vector")),
+  );
+  wrapOperator(
+    ce,
+    ["Dot", 1, 1],
+    (ops) =>
+      ops.length === 2 &&
+      ops.some(isModularOperand) &&
+      ops.every((op) => matrixOf(op) !== undefined),
+    () => (ops) => {
+      const [m, n] = ops.map(matrixOf) as [Matrix, Matrix];
+      return matrixExpression(multiply(m, n));
     },
-  });
-  aboutMatrix("ModularInverse", "(value) -> value", (m) => {
-    const inverse = invert(m);
-    return inverse === undefined ? undefined : matrixExpression(inverse);
-  });
-  ce.declare("ModularPower", {
-    signature: "(value, integer) -> value",
-    evaluate: (ops) => {
-      const m = matrixOf(ops[0]);
-      const k = integerAt(ops[1]);
-      if (m === undefined || k === undefined) return undefined;
+  );
+
+  widenSignature(
+    ce,
+    "MatrixPower",
+    "(value, real) -> value",
+    (op) => op.type.matches(matrixType) || op.type.matches(ce.type("real")),
+  );
+  wrapOperator(
+    ce,
+    ["MatrixPower", 1, 1],
+    (ops) =>
+      isModularOperand(ops[0]) && matrixOf(ops[0]) !== undefined && integerAt(ops[1]) !== undefined,
+    () => (ops) => {
+      const m = matrixOf(ops[0])!;
+      const k = integerAt(ops[1])!;
       const result = power(m, k);
       return result === undefined ? undefined : matrixExpression(result);
     },
-  });
+  );
+
+  widenSignature(ce, "Inverse", "(value) -> value", (op) => op.type.matches(matrixType));
+  wrapOperator(
+    ce,
+    ["Inverse", 1],
+    (ops) => isModularOperand(ops[0]) && matrixOf(ops[0]) !== undefined,
+    () => (ops) => {
+      const inverse = invert(matrixOf(ops[0])!);
+      return inverse === undefined ? undefined : matrixExpression(inverse);
+    },
+  );
+
   aboutMatrix("ModularTrace", "(value) -> integer", (m) => ce.number(trace(m)));
   /** Identity, Elliptic, Parabolic or Hyperbolic — the trichotomy by |trace| against 2. */
   aboutMatrix("ModularKind", "(value) -> string", (m) => {

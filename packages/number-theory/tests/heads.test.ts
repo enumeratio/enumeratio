@@ -103,6 +103,26 @@ test("Gaussian integers reach the integer heads, as in Wolfram", () => {
   ]);
 });
 
+test("FactorInteger and Divisors over the integers, as in Wolfram", () => {
+  expect(run(["FactorInteger", -12])).toEqual([
+    "List",
+    ["Tuple", -1, 1],
+    ["Tuple", 2, 2],
+    ["Tuple", 3, 1],
+  ]);
+  expect(run(["FactorInteger", 1])).toEqual(["List", ["Tuple", 1, 1]]);
+  expect(run(["FactorInteger", 0])).toEqual(["List", ["Tuple", 0, 1]]);
+  expect(run(["Divisors", -12])).toEqual(["List", 1, 2, 3, 4, 6, 12]);
+  expect(run(["Divisors", 1])).toEqual(["List", 1]);
+  expect(run(["Divisors", 0])).toEqual(["Divisors", 0]);
+  // p³ for a 21-digit prime: compute-engine's own rho gives up here.
+  const p = 100000000000000000039n;
+  const factors = ce.box(["FactorInteger", { num: String(p ** 3n) }]).evaluate();
+  expect(operandsOf(factors).map((t) => operandsOf(t).map(bigIntegerAt))).toEqual([[p, 3n]]);
+  const divisors = ce.box(["Divisors", { num: String(p ** 2n) }]).evaluate();
+  expect(operandsOf(divisors).map(bigIntegerAt)).toEqual([1n, p, p ** 2n]);
+});
+
 test("widened integer heads still leave a non-integer alone", () => {
   expect(run(["FactorInteger", 2.5])).toEqual(["FactorInteger", 2.5]);
   expect(run(["Divisors", ["Rational", 5, 2]])).toEqual(["Divisors", ["Rational", 5, 2]]);

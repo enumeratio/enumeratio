@@ -6,6 +6,7 @@
 // is meant to have them; shared setup belongs here.
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
@@ -32,6 +33,7 @@ export const DECLARATIONS = [
   declareGroupAlgebra,
   declareModular,
   declareNumberTheory,
+  declareAdeles,
   declareBraid,
 ];
 
