@@ -119,14 +119,14 @@ but it was never built. Whether to make species the backbone here is an open dec
 
 ## 4. Collections without kernels
 
-Catalogued but not computable (no head declared): most of number-sets (Carmichael,
-amicable/abundant/perfect, Goldbach partitions, Pythagorean triples, Farey,
-Stern–Brocot/Calkin–Wilf paths, Collatz, figurate families), permutations-plus (Baxter,
-vexillary, Grassmannian, simple/separable, pattern classes, tournaments), trees-graphs
-(non-crossing/non-nesting partitions, perfect matchings, phylogenetic and unlabelled rooted
-trees), paths (Delannoy, Riordan, Fine), tableaux (ASMs, semistandard, Gelfand–Tsetlin),
-and compositions/partitions/words-plus (Carlitz, plane partitions, Lyndon words, necklaces
-and bracelets).
+201 of 282 catalogued collections have no declared head (`!ce.lookupDefinition(name)` over
+census's `fullEngine()`). Of those, 89 are numeric sets (primes, perfect/abundant, figurate
+families…) — none declared yet, and the first sets the pattern for unbounded collections.
+The rest, by carrier: compositions (Carlitz, palindromic, odd, k-bounded…), permutation
+classes (Baxter, separable, simple, vexillary, Grassmannian…), integer-partition variants,
+binary-word families (bracelets, Stern–Brocot/Calkin–Wilf paths), plane partitions,
+tableaux (semistandard, skew, shifted, Gelfand–Tsetlin, ASMs), unlabelled/phylogenetic
+trees, and a long tail of one-offs. Packs live in `packages/collections/src/packs/`.
 
 Branches with content not yet here: `claude/234-gf` (bivariate and recurrence generating-
 function programs), `auto/symmetric-group-slice2-401` (cycle notation, Coxeter-length
