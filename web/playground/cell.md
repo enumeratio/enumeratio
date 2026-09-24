@@ -50,6 +50,13 @@ as trailing rules: `InForm` and `OutForm` name the forms (`InputForm`, `Traditio
 <notatio-cell value="Cell(1 + 1)" />
 </Story>
 
+<Story
+  title="A control in a cell">
+<template #description>The In is source and stays as written; the Out reduces for where it lands, so printing the page samples the slider (<code>env="print"</code> shows it here) rather than drawing one that cannot move.</template>
+<notatio-cell value="Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])" />
+<notatio-cell value="Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])" env="print" />
+</Story>
+
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props
