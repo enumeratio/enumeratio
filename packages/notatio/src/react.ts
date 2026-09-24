@@ -58,9 +58,11 @@ export function Notatio({ expr, json, env }: NotatioProps): ReactElement {
   }, [expr, json, env, page]);
   if (tree === undefined) return createElement("span", { className: "notatio-pending" });
   let key = 0;
-  return toVNode<ReactElement>(tree, (tag, attrs, children) =>
+  const node = toVNode<ReactElement>(tree, (tag, attrs, children) =>
     createElement(tag, { ...attrs, key: key++ }, ...children),
   );
+  // A forced environment rides on a wrapper, not the root -- see the Vue twin.
+  return env ? createElement("span", { env, style: { display: "contents" } }, node) : node;
 }
 
 /** Parse the source: MathJSON as given, notatio with the engine for its `$…$` islands. */
