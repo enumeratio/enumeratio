@@ -18,6 +18,7 @@ import { atEnginePrecision, preciseHurwitzZeta } from "./precise.ts";
 import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareElliptic } from "./elliptic.ts";
+import { declareModular } from "./modular.ts";
 import { declareSpecialFunctions } from "./special-functions.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
@@ -328,7 +329,8 @@ function evaluateLerch(
  * `RisingFactorial`, and the `Catalan` constant — the Carlson symmetric elliptic
  * integrals in carlson.ts: `CarlsonRF`, `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG`
  * — and, in elliptic.ts, `IncompleteEllipticF`/`IncompleteEllipticE` plus an in-place
- * precision fix for native `EllipticE` at complex modulus.
+ * precision fix for native `EllipticE` at complex modulus; the modular heads in
+ * modular.ts: `ModularJ`, `ModularLambda`, `EisensteinG`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -410,5 +412,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareSpecialFunctions(ce);
   declareCarlson(ce);
   declareElliptic(ce);
+  declareModular(ce);
   declareDerivatives(ce);
 }

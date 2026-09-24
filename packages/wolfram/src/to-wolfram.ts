@@ -257,6 +257,15 @@ export const HEADS: Record<string, string> = {
   CarlsonRD: "CarlsonRD",
   CarlsonRJ: "CarlsonRJ",
   CarlsonRG: "CarlsonRG",
+  // Wolfram's ModularLambda[τ] uses the same λ = θ₂⁴/θ₃⁴ convention (nome q = e^{iπτ}),
+  // so this maps directly. `ModularJ` is deliberately NOT mapped here: Wolfram's
+  // KleinInvariantJ is j/1728 (a fixed rescaling), and HEADS is a plain name-for-name
+  // map with no way to attach that scale — an entry here would silently emit
+  // `KleinInvariantJ[τ]` for `ModularJ[τ]`, off by a factor of 1728. `EisensteinG` has
+  // no Wolfram counterpart under that name either (checked; Wolfram exposes the
+  // invariants via `WeierstrassInvariants`, not a bare Eisenstein-G head), so it is
+  // left unmapped too.
+  ModularLambda: "ModularLambda",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 

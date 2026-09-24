@@ -50,6 +50,7 @@ export { evaluateHarmonicNumber } from "./harmonic.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
+export { declareModular } from "./modular.ts";
 export { logGamma, logGammaReal } from "./loggamma.ts";
 export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
 export { polyLog, polyLogReal } from "./polylog.ts";
