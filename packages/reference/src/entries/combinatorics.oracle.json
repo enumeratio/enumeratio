@@ -15,6 +15,21 @@
           "input": "binomial(5, 2)",
           "output": "10",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(5), ZZ(2))",
+          "output": "10",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 5 2)",
+          "output": "10",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(5), ZZ(2))",
+          "output": "10",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",10,3]": {
@@ -25,6 +40,21 @@
         },
         "sage": {
           "input": "binomial(10, 3)",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(10), ZZ(3))",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 10 3)",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(10), ZZ(3))",
           "output": "120",
           "verdict": "agree"
         }
@@ -39,6 +69,21 @@
           "input": "binomial(4, 2)",
           "output": "6",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(4), ZZ(2))",
+          "output": "6",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 4 2)",
+          "output": "6",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(4), ZZ(2))",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",5,0]": {
@@ -49,6 +94,21 @@
         },
         "sage": {
           "input": "binomial(5, 0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(5), ZZ(0))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 5 0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(5), ZZ(0))",
           "output": "1",
           "verdict": "agree"
         }
@@ -63,6 +123,21 @@
           "input": "binomial(5, 5)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(5), ZZ(5))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 5 5)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(5), ZZ(5))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Binomial\",10,3],[\"Binomial\",10,7]]": {
@@ -74,6 +149,21 @@
         "sage": {
           "input": "bool(binomial(10, 3) == binomial(10, 7))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide ((Nat.choose 10 3) = (Nat.choose 10 7)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -87,6 +177,21 @@
           "input": "bool((binomial(9, 2) + binomial(9, 3)) == binomial(10, 3))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (((Nat.choose 9 2) + (Nat.choose 9 3)) = (Nat.choose 10 3)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Add\",[\"Binomial\",4,0],[\"Binomial\",4,1],[\"Binomial\",4,2],[\"Binomial\",4,3],[\"Binomial\",4,4]],[\"Power\",2,4]]": {
@@ -99,6 +204,21 @@
           "input": "bool((binomial(4, 0) + binomial(4, 1) + binomial(4, 2) + binomial(4, 3) + binomial(4, 4)) == (2^4))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (((Nat.choose 4 0) + (Nat.choose 4 1) + (Nat.choose 4 2) + (Nat.choose 4 3) + (Nat.choose 4 4)) = (2 ^ 4)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",52,5]": {
@@ -109,6 +229,21 @@
         },
         "sage": {
           "input": "binomial(52, 5)",
+          "output": "2598960",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(52), ZZ(5))",
+          "output": "2598960",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 52 5)",
+          "output": "2598960",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(52), ZZ(5))",
           "output": "2598960",
           "verdict": "agree"
         }
@@ -123,6 +258,21 @@
           "input": "binomial(5, 7)",
           "output": "0",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(5), ZZ(7))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 5 7)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(5), ZZ(7))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",5,-1]": {
@@ -135,6 +285,21 @@
           "input": "binomial(5, -1)",
           "output": "0",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(5), ZZ(-1))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose 5 (-1))",
+          "output": "failed to synthesize instance of type class",
+          "verdict": "error"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(5), ZZ(-1))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",-5,2]": {
@@ -145,6 +310,21 @@
         },
         "sage": {
           "input": "binomial(-5, 2)",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "binomial(ZZ(-5), ZZ(2))",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.choose (-5) 2)",
+          "output": "failed to synthesize instance of type class",
+          "verdict": "error"
+        },
+        "oscar": {
+          "input": "binomial(ZZ(-5), ZZ(2))",
           "output": "15",
           "verdict": "agree"
         }
@@ -212,6 +392,21 @@
           "input": "factorial(5)",
           "output": "120",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "factorial(ZZ(5))",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial 5)",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(5))",
+          "output": "120",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",6]": {
@@ -222,6 +417,21 @@
         },
         "sage": {
           "input": "factorial(6)",
+          "output": "720",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "factorial(ZZ(6))",
+          "output": "720",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial 6)",
+          "output": "720",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(6))",
           "output": "720",
           "verdict": "agree"
         }
@@ -236,6 +446,21 @@
           "input": "factorial(0)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "factorial(ZZ(0))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial 0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(0))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",10]": {
@@ -246,6 +471,21 @@
         },
         "sage": {
           "input": "factorial(10)",
+          "output": "3628800",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "factorial(ZZ(10))",
+          "output": "3628800",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial 10)",
+          "output": "3628800",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(10))",
           "output": "3628800",
           "verdict": "agree"
         }
@@ -260,6 +500,21 @@
           "input": "factorial([1, 2, 3, 4])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
           "verdict": "error"
+        },
+        "julia": {
+          "input": "factorial(ZZ([1, 2, 3, 4]))",
+          "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
+          "verdict": "error"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial [1, 2, 3, 4])",
+          "output": "Application type mismatch: The argument",
+          "verdict": "error"
+        },
+        "oscar": {
+          "input": "factorial(ZZ([1, 2, 3, 4]))",
+          "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
+          "verdict": "error"
         }
       },
       "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
@@ -271,6 +526,21 @@
         "sage": {
           "input": "bool(factorial(5) == (5 * factorial(4)))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide ((Nat.factorial 5) = (5 * (Nat.factorial 4))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -284,6 +554,21 @@
           "input": "factorial((1/2))",
           "output": "1/2*sqrt(pi)",
           "verdict": "inconclusive"
+        },
+        "julia": {
+          "input": "factorial(ZZ((1 // 2)))",
+          "output": "AssertionError: denominator(x) == 1",
+          "verdict": "error"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial ((1 : ℚ) / 2))",
+          "output": "Type mismatch",
+          "verdict": "error"
+        },
+        "oscar": {
+          "input": "factorial(ZZ((1 // 2)))",
+          "output": "AssertionError: denominator(x) == 1",
+          "verdict": "error"
         }
       },
       "[\"Factorial\",8]": {
@@ -294,6 +579,21 @@
         },
         "sage": {
           "input": "factorial(8)",
+          "output": "40320",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "factorial(ZZ(8))",
+          "output": "40320",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial 8)",
+          "output": "40320",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(8))",
           "output": "40320",
           "verdict": "agree"
         }
@@ -308,6 +608,21 @@
           "input": "factorial(-1)",
           "output": "ValueError: factorial only defined for nonnegative integers",
           "verdict": "error"
+        },
+        "julia": {
+          "input": "factorial(ZZ(-1))",
+          "output": "DomainError with -1: Argument must be non-negative",
+          "verdict": "error"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial (-1))",
+          "output": "failed to synthesize instance of type class",
+          "verdict": "error"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(-1))",
+          "output": "DomainError with -1: Argument must be non-negative",
+          "verdict": "error"
         }
       },
       "[\"Factorial\",20]": {
@@ -318,6 +633,21 @@
         },
         "sage": {
           "input": "factorial(20)",
+          "output": "2432902008176640000",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "factorial(ZZ(20))",
+          "output": "2432902008176640000",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.factorial 20)",
+          "output": "2432902008176640000",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "factorial(ZZ(20))",
           "output": "2432902008176640000",
           "verdict": "agree"
         }
@@ -394,6 +724,16 @@
           "input": "catalan_number(0)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 0)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"CatalanNumber\",1]": {
@@ -404,6 +744,16 @@
         },
         "sage": {
           "input": "catalan_number(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 1)",
           "output": "1",
           "verdict": "agree"
         }
@@ -418,6 +768,16 @@
           "input": "catalan_number(5)",
           "output": "42",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(5)",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 5)",
+          "output": "42",
+          "verdict": "agree"
         }
       },
       "[\"CatalanNumber\",10]": {
@@ -428,6 +788,16 @@
         },
         "sage": {
           "input": "catalan_number(10)",
+          "output": "16796",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(10)",
+          "output": "16796",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 10)",
           "output": "16796",
           "verdict": "agree"
         }
@@ -442,6 +812,21 @@
           "input": "(binomial((2 * 5), 5) / (5 + 1))",
           "output": "42",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))",
+          "output": "42.0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(((Nat.choose (2 * 5) 5) : ℚ) / (5 + 1))",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))",
+          "output": "42.0",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Binomial\",10,5],[\"Binomial\",10,6]]": {
@@ -452,6 +837,21 @@
         },
         "sage": {
           "input": "(binomial(10, 5) - binomial(10, 6))",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((Nat.choose 10 5) - (Nat.choose 10 6))",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))",
           "output": "42",
           "verdict": "agree"
         }
@@ -466,6 +866,16 @@
           "input": "(catalan_number(6) / catalan_number(5))",
           "output": "22/7",
           "verdict": "inconclusive"
+        },
+        "julia": {
+          "input": "(Combinatorics.catalannum(6) // Combinatorics.catalannum(5))",
+          "output": "3.142857142857143",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(((catalan 6) : ℚ) / (catalan 5))",
+          "output": "22/7",
+          "verdict": "agree"
         }
       },
       "[\"CatalanNumber\",3]": {
@@ -478,6 +888,16 @@
           "input": "catalan_number(3)",
           "output": "5",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(3)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 3)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"CatalanNumber\",4]": {
@@ -488,6 +908,16 @@
         },
         "sage": {
           "input": "catalan_number(4)",
+          "output": "14",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(4)",
+          "output": "14",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 4)",
           "output": "14",
           "verdict": "agree"
         }
@@ -506,6 +936,16 @@
           "verdict": "disagree",
           "kind": "unevaluated",
           "note": "A negative index is left unevaluated here; Sage's catalan_number continues through its own Gamma-based extension and gives C(-1) = -1/2, a different value again from Wolfram's C(-1) = -1."
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(-1)",
+          "output": "DomainError with -1: n must be nonnegative",
+          "verdict": "error"
+        },
+        "mathlib4": {
+          "input": "(catalan (-1))",
+          "output": "failed to synthesize instance of type class",
+          "verdict": "error"
         }
       },
       "[\"CatalanNumber\",15]": {
@@ -516,6 +956,16 @@
         },
         "sage": {
           "input": "catalan_number(15)",
+          "output": "9694845",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.catalannum(15)",
+          "output": "9694845",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(catalan 15)",
           "output": "9694845",
           "verdict": "agree"
         }
@@ -643,6 +1093,20 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "Signed here (s(5,2) = -50); Sage's stirling_number1 is unsigned by definition and returns 50 -- documented in mappings.ts, not a bug."
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(5, 2)",
+          "output": "50",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 5 2)",
+          "output": "50",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
         }
       },
       "[\"StirlingS1\",4,2]": {
@@ -653,6 +1117,16 @@
         },
         "sage": {
           "input": "stirling_number1(4, 2)",
+          "output": "11",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(4, 2)",
+          "output": "11",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 4 2)",
           "output": "11",
           "verdict": "agree"
         }
@@ -667,6 +1141,16 @@
           "input": "stirling_number1(3, 3)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(3, 3)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 3 3)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"StirlingS1\",5,0]": {
@@ -677,6 +1161,16 @@
         },
         "sage": {
           "input": "stirling_number1(5, 0)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(5, 0)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 5 0)",
           "output": "0",
           "verdict": "agree"
         }
@@ -698,6 +1192,16 @@
           "input": "stirling_number1(5, 3)",
           "output": "35",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(5, 3)",
+          "output": "35",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 5 3)",
+          "output": "35",
+          "verdict": "agree"
         }
       },
       "[\"StirlingS1\",0,0]": {
@@ -708,6 +1212,16 @@
         },
         "sage": {
           "input": "stirling_number1(0, 0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(0, 0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 0 0)",
           "output": "1",
           "verdict": "agree"
         }
@@ -724,6 +1238,20 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "Same unsigned-vs-signed convention: s(10,1) = -362880 here, Sage's unsigned stirling_number1 gives 362880."
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings1(10, 1)",
+          "output": "362880",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingFirst 10 1)",
+          "output": "362880",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram."
         }
       }
     },
@@ -738,6 +1266,16 @@
           "input": "stirling_number2(5, 2)",
           "output": "15",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings2(5, 2)",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingSecond 5 2)",
+          "output": "15",
+          "verdict": "agree"
         }
       },
       "[\"Stirling\",6,3]": {
@@ -748,6 +1286,16 @@
         },
         "sage": {
           "input": "stirling_number2(6, 3)",
+          "output": "90",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings2(6, 3)",
+          "output": "90",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingSecond 6 3)",
           "output": "90",
           "verdict": "agree"
         }
@@ -762,6 +1310,16 @@
           "input": "stirling_number2(5, 1)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings2(5, 1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingSecond 5 1)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Stirling\",5,5]": {
@@ -772,6 +1330,16 @@
         },
         "sage": {
           "input": "stirling_number2(5, 5)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings2(5, 5)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingSecond 5 5)",
           "output": "1",
           "verdict": "agree"
         }
@@ -793,6 +1361,16 @@
           "input": "stirling_number2(0, 0)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "Combinatorics.stirlings2(0, 0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.stirlingSecond 0 0)",
+          "output": "1",
+          "verdict": "agree"
         }
       }
     },
@@ -807,6 +1385,16 @@
           "input": "bell_number(0)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "bell(0)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "bell(0)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"BellNumber\",1]": {
@@ -817,6 +1405,16 @@
         },
         "sage": {
           "input": "bell_number(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "bell(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "bell(1)",
           "output": "1",
           "verdict": "agree"
         }
@@ -831,6 +1429,16 @@
           "input": "bell_number(3)",
           "output": "5",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "bell(3)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "bell(3)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"BellNumber\",5]": {
@@ -841,6 +1449,16 @@
         },
         "sage": {
           "input": "bell_number(5)",
+          "output": "52",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "bell(5)",
+          "output": "52",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "bell(5)",
           "output": "52",
           "verdict": "agree"
         }
@@ -855,6 +1473,16 @@
           "input": "bell_number(10)",
           "output": "115975",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "bell(10)",
+          "output": "115975",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "bell(10)",
+          "output": "115975",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"BellNumber\",5],[\"Add\",[\"Multiply\",[\"Binomial\",4,0],[\"BellNumber\",0]],[\"Multiply\",[\"Binomial\",4,1],[\"BellNumber\",1]],[\"Multiply\",[\"Binomial\",4,2],[\"BellNumber\",2]],[\"Multiply\",[\"Binomial\",4,3],[\"BellNumber\",3]],[\"Multiply\",[\"Binomial\",4,4],[\"BellNumber\",4]]]]": {
@@ -866,6 +1494,16 @@
         "sage": {
           "input": "bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -879,6 +1517,16 @@
           "input": "bell_number(4)",
           "output": "15",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "bell(4)",
+          "output": "15",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "bell(4)",
+          "output": "15",
+          "verdict": "agree"
         }
       },
       "[\"BellNumber\",-1]": {
@@ -890,6 +1538,16 @@
         "sage": {
           "input": "bell_number(-1)",
           "output": "ArithmeticError: Bell numbers not defined for negative indices",
+          "verdict": "error"
+        },
+        "julia": {
+          "input": "bell(-1)",
+          "output": "DomainError with -1: Argument must be non-negative",
+          "verdict": "error"
+        },
+        "oscar": {
+          "input": "bell(-1)",
+          "output": "DomainError with -1: Argument must be non-negative",
           "verdict": "error"
         }
       }

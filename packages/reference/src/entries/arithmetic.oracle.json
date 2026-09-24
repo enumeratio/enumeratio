@@ -222,6 +222,21 @@
           "input": "(-5)",
           "output": "-5",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(-(5))",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-(5))",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-(5))",
+          "output": "-5",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",-5]": {
@@ -232,6 +247,21 @@
         },
         "sage": {
           "input": "(--5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(-(-5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-((-5)))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-(-5))",
           "output": "5",
           "verdict": "agree"
         }
@@ -246,6 +276,21 @@
           "input": "(-0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(-(0))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-(0))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-(0))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",[\"Rational\",3,4]]": {
@@ -258,6 +303,21 @@
           "input": "(-(3/4))",
           "output": "-3/4",
           "verdict": "inconclusive"
+        },
+        "julia": {
+          "input": "(-((3 // 4)))",
+          "output": "-0.75",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-(((3 : ℚ) / 4)))",
+          "output": "-3/4",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-((3 // 4)))",
+          "output": "-0.75",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",[\"List\",1,-2,3]]": {
@@ -270,6 +330,21 @@
           "input": "(-[1, -2, 3])",
           "output": "TypeError: bad operand type for unary -: 'list'",
           "verdict": "error"
+        },
+        "julia": {
+          "input": "(-([1, -2, 3]))",
+          "output": "[-1, 2, -3]",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-([1, (-2), 3]))",
+          "output": "[-1, 2, -3]",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-([1, -2, 3]))",
+          "output": "[-1, 2, -3]",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",42.5]": {
@@ -281,6 +356,21 @@
         "sage": {
           "input": "(-42.5)",
           "output": "-42.5000000000000",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(-(42.5))",
+          "output": "-42.5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(-(42.5))",
+          "output": "-42.500000",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(-(42.5))",
+          "output": "-42.5",
           "verdict": "agree"
         }
       },
