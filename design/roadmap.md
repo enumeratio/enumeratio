@@ -90,6 +90,10 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
   names do not all say so yet; renaming waits, like [component-naming.md](./component-naming.md)
   does, for a quiet moment.
 
+- **Run our own test suites under aestimatio** — a notatio/aestimatio evaluation process,
+  per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
+  today ([aestimatio.md](./aestimatio.md) §5).
+
 ## 4. What this file is not
 
 Not a priority order, and not a commitment. If something here has been done, delete the line

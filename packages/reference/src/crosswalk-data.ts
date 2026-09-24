@@ -2647,6 +2647,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Median",
   },
   {
+    name: "MemoryConstrained",
+    wolfram: "MemoryConstrained",
+  },
+  {
     name: "Min",
     fungrimEntries: ["27766c", "540931", "737f2b", "75231e", "805c7a", "da7fb1"],
     wolfram: "Min",
@@ -3436,6 +3440,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Tanh",
   },
   {
+    name: "TimeConstrained",
+    wolfram: "TimeConstrained",
+  },
+  {
     name: "Totient",
     fungrimEntries: [
       "05e9ae",
@@ -3484,6 +3492,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Variance",
     wolfram: "Variance",
+  },
+  {
+    name: "VerificationTest",
+    wolfram: "VerificationTest",
   },
   {
     name: "Zeta",

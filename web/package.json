@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@enumeratio/adeles": "workspace:*",
+    "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/cli": "workspace:*",

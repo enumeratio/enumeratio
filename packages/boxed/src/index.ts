@@ -130,6 +130,7 @@ export function wrapOperator(
 }
 
 export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";
+export { checkpoint, DeadlineExceededError, withDeadline } from "./deadline.ts";
 
 /**
  * Widen the signature of an operator the engine already defines, in place, so arguments its

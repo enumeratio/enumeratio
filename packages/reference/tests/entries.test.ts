@@ -2,6 +2,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 // Buildless src subpath: the reference tests must run without a prior `vp pack`
 // of @enumeratio/analytic (CI runs tests before builds).
 import { declareAdeles } from "@enumeratio/adeles/src";
+import { declareAestimatio } from "@enumeratio/aestimatio/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareHecke } from "@enumeratio/hecke/src";
@@ -19,6 +20,7 @@ import { expect, test } from "vite-plus/test";
 import { entries } from "../src/index.ts";
 
 const ce = new ComputeEngine();
+declareAestimatio(ce);
 // The special-functions entries document heads provided by @enumeratio/analytic
 // (HurwitzZeta, the two-argument Zeta); declare them so their examples validate.
 declareAnalytic(ce);

@@ -35,6 +35,9 @@ export const SYMBOLS: Record<string, string> = {
   NegativeInfinity: "-Infinity",
   ComplexInfinity: "ComplexInfinity",
   Nothing: "Null",
+  // @enumeratio/aestimatio's own marker, under Wolfram's `$`-prefixed spelling — compute-engine's
+  // symbol grammar rejects a leading `$` (see aestimatio/src/declare.ts).
+  Aborted: "$Aborted",
 };
 
 /** compute-engine head → Wolfram head. Identity entries are listed on purpose: the
@@ -141,6 +144,11 @@ export const HEADS: Record<string, string> = {
   PowerModList: "PowerModList",
   MultiplicativeOrder: "MultiplicativeOrder",
   PrimitiveRootList: "PrimitiveRootList",
+  // aestimatio: Wolfram's own concepts, named identically.
+  TimeConstrained: "TimeConstrained",
+  MemoryConstrained: "MemoryConstrained",
+  VerificationTest: "VerificationTest",
+  TestResultObject: "TestResultObject",
   Quotient: "Quotient",
   ModularInverse: "ModularInverse",
   ChineseRemainder: "ChineseRemainder",

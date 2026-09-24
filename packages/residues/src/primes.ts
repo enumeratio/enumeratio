@@ -7,6 +7,7 @@
 // which is exactly the case RSA relies on. So it is budgeted: past `RHO_BUDGET` steps it
 // gives up and says so, rather than hanging.
 
+import { checkpoint } from "@enumeratio/boxed";
 import { gcd, isqrt, mod, powMod, valuation } from "./arith.ts";
 
 const SMALL_PRIMES: readonly bigint[] = (() => {
@@ -129,6 +130,7 @@ function rho(n: bigint, budget: { steps: number }): bigint | undefined {
         }
         budget.steps -= batch;
         g = gcd(q, n);
+        checkpoint();
       }
       r *= 2;
     }

@@ -4,6 +4,7 @@
 // residue field of an inert Gaussian prime — so they are written once against the few
 // operations a group needs.
 
+import { checkpoint } from "@enumeratio/boxed";
 import { gcd, invMod, isqrt, mod, valuation } from "./arith.ts";
 
 export interface Group<T> {
@@ -44,12 +45,14 @@ export function discreteLogPrimeOrder<T>(
   for (let j = 0n; j < step; j++, power = group.mul(power, gamma)) {
     const k = group.key(power);
     if (!baby.has(k)) baby.set(k, j);
+    if ((j & 0x3ffn) === 0n) checkpoint();
   }
   const giant = group.inverse(group.pow(gamma, step));
   let target = h;
   for (let i = 0n; i < step; i++, target = group.mul(target, giant)) {
     const j = baby.get(group.key(target));
     if (j !== undefined) return i * step + j;
+    if ((i & 0x3ffn) === 0n) checkpoint();
   }
   return undefined;
 }
@@ -137,11 +140,13 @@ export function rootsInCyclicGroup<T>(
   for (const { q, s } of sylow) {
     const order = q ** BigInt(s);
     let generator: T | undefined;
+    let tried = 0n;
     for (const c of elements()) {
       if (!group.equal(group.pow(c, n / q), group.one)) {
         generator = group.pow(c, n / order);
         break;
       }
+      if ((++tried & 0x3ffn) === 0n) checkpoint();
     }
     if (generator === undefined) return undefined;
     const log = discreteLogPrimePower(group, generator, group.pow(b, projection(order)), q, s);

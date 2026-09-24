@@ -1,0 +1,44 @@
+{
+  "name": "@enumeratio/aestimatio",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Controlling evaluation over @cortex-js/compute-engine: cancellable evaluate, cooperative deadlines (TimeConstrained), MemoryConstrained (enforced only in the isolated evaluator), and VerificationTest. ./node adds a worker_threads isolated evaluator, kept out of the main entry.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./node": {
+      "types": "./dist/node.d.mts",
+      "import": "./dist/node.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./src/node": "./src/node.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack src/index.ts src/node.ts src/worker.ts",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/boxed": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@enumeratio/boxed": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0"
+  }
+}
