@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { toInputForm } from "@enumeratio/formats";
 import { crosswalkFor, type ResolvedReference } from "@enumeratio/reference";
-import { computed, nextTick, reactive, ref } from "vue";
+import { computed, reactive, ref } from "vue";
 import { getEntry, resolveHead } from "../../data/reference.ts";
 import Crosswalk from "./Crosswalk.vue";
 import ExampleAlternatives, { type Alternative } from "./ExampleAlternatives.vue";
@@ -75,7 +74,8 @@ const PRIMITIVE_REASON: Record<string, string> = {
   axiom: "definitional — what other things are defined in terms of",
 };
 
-// Assertion outcome per example, reported by the Out cell's notatio-assert event.
+// Assertion outcome per example, reported by the cell's Out via notatio-assert
+// (bubbles straight through -- the cell doesn't need to relay it).
 const status = reactive<Record<number, string>>({});
 const onAssert = (i: number, event: Event): void => {
   status[i] = (event as CustomEvent<{ status: string }>).detail.status;
@@ -92,33 +92,13 @@ const divergences = (ex: {
     note,
   }));
 
-// An example can be edited in place: click its input to get it as notatio. An edited
-// example is just a live cell -- it no longer asserts, and what other systems said about the
-// original no longer applies to it.
-const edits = reactive<Record<number, string>>({});
-const editing = ref<number | undefined>();
-const editField = ref<HTMLInputElement[]>([]);
-const startEdit = async (i: number, expr: unknown, event: Event): Promise<void> => {
-  if ((event.target as Element).closest?.(".notatio-menu")) return;
-  editing.value = i;
-  await nextTick();
-  const field = editField.value[0];
-  if (!field) return;
-  field.value = edits[i] ?? toInputForm(expr as Parameters<typeof toInputForm>[0]);
-  field.focus();
-};
-const commitEdit = (i: number, expr: unknown, text: string): void => {
-  if (editing.value !== i) return;
-  editing.value = undefined;
-  const original = toInputForm(expr as Parameters<typeof toInputForm>[0]);
-  if (text.trim() === "" || text.trim() === original) delete edits[i];
-  else {
-    edits[i] = text.trim();
-    delete status[i];
-  }
-};
-const resetEdit = (i: number): void => {
-  delete edits[i];
+// An example is a live notatio-cell; the cell owns editing, conversion and reset. We
+// just track which examples are dirty (edited), for the card's classes and to hide
+// what described the original value.
+const dirty = reactive<Record<number, boolean>>({});
+const onDirty = (i: number, event: Event): void => {
+  dirty[i] = (event as CustomEvent<{ dirty: boolean }>).detail.dirty;
+  if (dirty[i]) delete status[i];
 };
 
 // Other systems' runs of each example, attached by entries.ts from the entry's
@@ -243,92 +223,46 @@ const grouped = computed(() => {
           :key="i"
           class="ref-example"
           :class="{
-            'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && edits[i] === undefined,
+            'is-mismatch': status[i] === 'mismatch' && !ex.aspirational && !dirty[i],
             'is-diagnostic': status[i] === 'error' && !ex.aspirational,
             'is-planned': ex.aspirational,
-            'is-divergent': divergences(ex).length > 0 && edits[i] === undefined,
-            'is-edited': edits[i] !== undefined,
+            'is-divergent': divergences(ex).length > 0 && !dirty[i],
+            'is-edited': dirty[i],
           }"
         >
           <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
           <p v-if="ex.caption" class="ref-caption" v-html="linkify(ex.caption)"></p>
-          <div v-if="editing === i" class="ref-in ref-editing">
-            <span class="ref-edit-label">In</span>
-            <input
-              ref="editField"
-              class="ref-edit"
-              spellcheck="false"
-              aria-label="edit this example, in notatio"
-              @keydown.enter="commitEdit(i, ex.expr, ($event.target as HTMLInputElement).value)"
-              @keydown.escape="editing = undefined"
-              @blur="commitEdit(i, ex.expr, ($event.target as HTMLInputElement).value)"
-            />
-          </div>
-          <div v-else class="ref-in" @click="startEdit(i, ex.expr, $event)">
-            <notatio-out
-              v-if="edits[i] !== undefined"
-              :key="`in-edit-${edits[i]}`"
-              label="In"
-              label-menu
-              :value="edits[i]"
-              format="notatio"
-              :resolveHead.prop="resolveHead"
-            />
-            <notatio-out
-              v-else
-              label="In"
-              label-menu
-              :value="toJson(ex.expr)"
-              format="mathjson"
-              :resolveHead.prop="resolveHead"
-            />
-            <button v-if="edits[i] !== undefined" class="ref-reset" @click.stop="resetEdit(i)">
-              edited · reset
-            </button>
-          </div>
-          <div v-if="edits[i] !== undefined" class="ref-out">
-            <notatio-out
-              :key="`out-edit-${edits[i]}`"
-              label="Out"
-              label-menu
-              :value="edits[i]"
-              format="notatio"
-              :form="entry.outForm ?? 'standard'"
-              evaluate
-            />
-          </div>
-          <div v-else class="ref-out">
-            <notatio-out
-              v-if="entry.outEvaluate !== false"
-              label="Out"
-              label-menu
-              :value="toJson(ex.expr)"
-              format="mathjson"
-              :form="entry.outForm ?? 'standard'"
-              evaluate
-              :expect="toJson(ex.expected)"
-              :planned="ex.aspirational"
-              @notatio-assert="onAssert(i, $event)"
-            />
-            <notatio-out
-              v-else
-              label="Out"
-              label-menu
-              :value="toJson(ex.expr)"
-              format="mathjson"
-              :form="entry.outForm ?? 'standard'"
-            />
-            <span v-if="ex.aspirational" class="ref-planned-badge"> not yet implemented </span>
+          <notatio-cell
+            format="mathjson"
+            :value="toJson(ex.expr)"
+            :out-form="entry.outForm ?? 'standard'"
+            :evaluate.prop="entry.outEvaluate !== false"
+            :expect="entry.outEvaluate === false ? '' : toJson(ex.expected)"
+            :planned.prop="entry.outEvaluate !== false && !!ex.aspirational"
+            :resolveHead.prop="resolveHead"
+            @notatio-dirty="onDirty(i, $event)"
+            @notatio-assert="onAssert(i, $event)"
+          >
+            <span v-if="ex.aspirational" slot="aside" class="ref-planned-badge"
+              >not yet implemented</span
+            >
             <ExampleAlternatives
               v-else-if="alternativesOf(ex)"
+              slot="aside"
               :alternatives="alternativesOf(ex)!"
               :notes="notesOf(ex)"
             />
-            <span v-for="d in divergences(ex)" v-else :key="d.system" class="ref-divergent-badge">
+            <span
+              v-for="d in divergences(ex)"
+              v-else
+              :key="d.system"
+              slot="aside"
+              class="ref-divergent-badge"
+            >
               differs from {{ d.label }}
             </span>
-          </div>
-          <template v-if="edits[i] === undefined && !alternativesOf(ex)">
+          </notatio-cell>
+          <template v-if="!dirty[i] && !alternativesOf(ex)">
             <template v-for="d in divergences(ex)" :key="d.system">
               <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
               <p class="ref-divergence-note" v-html="linkify(d.note)"></p>
@@ -529,41 +463,6 @@ const grouped = computed(() => {
   font-size: 1rem;
   color: var(--vp-c-text-1);
 }
-/* Click the input to edit it; the field sits where the typeset input was. */
-.ref-in {
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
-}
-.ref-in :deep(.notatio-render) {
-  cursor: text;
-}
-.ref-in > notatio-out {
-  flex: 1;
-}
-.ref-edit-label {
-  color: var(--vp-c-text-3);
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.75rem;
-}
-.ref-edit {
-  flex: 1;
-  padding: 0.2rem 0.45rem;
-  border: 1px solid var(--vp-c-brand-1);
-  border-radius: 6px;
-  background: var(--vp-c-bg);
-  font-family: var(--vp-font-family-mono);
-  font-size: 0.85rem;
-}
-.ref-reset {
-  color: var(--vp-c-text-3);
-  font-size: 0.72rem;
-  white-space: nowrap;
-  cursor: pointer;
-}
-.ref-reset:hover {
-  color: var(--vp-c-brand-1);
-}
 .ref-examples-head {
   display: flex;
   align-items: baseline;
@@ -580,12 +479,6 @@ const grouped = computed(() => {
 }
 .ref-view button:hover {
   color: var(--vp-c-brand-1);
-}
-.ref-out {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem;
 }
 .ref-caption {
   margin: 0 0 0.4rem;

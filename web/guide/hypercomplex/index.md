@@ -176,8 +176,8 @@ just agree with `×`.
 <notatio-cell value="NonCommutativeMultiply(e_1, e_2)" />
 <notatio-cell value="NonCommutativeMultiply(e_2, e_1)" />
 <notatio-cell value="GeometricProduct(e_1, e_2, e_1, e_2)" />
-<notatio-cell in-form="latex" value="e_2e_1" />
-<notatio-cell in-form="latex" value="e_1e_2e_1" />
+<notatio-cell format="latex" value="e_2e_1" />
+<notatio-cell format="latex" value="e_1e_2e_1" />
 <notatio-cell value="e_2 * e_1" />
 </Story>
 

@@ -11,7 +11,7 @@ Unlike the other code forms, Wolfram full form is a **format** — it round-trip
 The cell below is the reverse direction: type Wolfram full form and it parses
 back to an expression (via `fromWolfram`), rendered here as StandardForm.
 
-<notatio-cell in-form="wolfram" value="Plus[Binomial[10, 3], Power[x, 2]]" />
+<notatio-cell format="wolfram" in-form="wolfram" value="Plus[Binomial[10, 3], Power[x, 2]]" box />
 
 Each row below shows an expression and its Wolfram full-form source. Some carry a
 known behavioural divergence — compute-engine's result is correct for
