@@ -7,6 +7,7 @@ import {
   wrapOperator,
 } from "@enumeratio/boxed";
 import { invMod } from "./arith.ts";
+import { factorInteger } from "./primes.ts";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divisorsGaussian,
@@ -138,12 +139,15 @@ export function declareGaussian(ce: ComputeEngine): void {
   );
 
   // The option heads. A complex argument is read in ℤ[i] as it stands; a rational integer
-  // only when asked. `GaussianIntegers -> False` (or no option) is the native call.
+  // only when asked. `GaussianIntegers -> False` (or no option) is the rational-integer call:
+  // `integer` where given (compute-engine's own factoriser gives up on p³ for a 21-digit p),
+  // else — or when it declines — the native handler.
   const optionHead = (
     head: string,
     signature: string,
     native: ((op: BoxedExpression) => boolean) | undefined,
     answer: (z: Gaussian) => BoxedExpression | undefined,
+    integer?: (n: bigint) => BoxedExpression | undefined,
   ): void => {
     widenSignature(ce, head, signature, native);
     const definition = ce.lookupDefinition(head);
@@ -165,7 +169,10 @@ export function declareGaussian(ce: ComputeEngine): void {
       }
       const z = gaussianAt(ops[0]);
       if (z !== undefined && (z[1] !== 0n || option.value === true)) return answer(z);
-      return nativeEvaluate?.(ops.slice(0, 1), options);
+      return (
+        (z !== undefined ? integer?.(z[0]) : undefined) ??
+        nativeEvaluate?.(ops.slice(0, 1), options)
+      );
     };
     operator.evaluate = evaluate;
   };
@@ -173,18 +180,50 @@ export function declareGaussian(ce: ComputeEngine): void {
   optionHead("IsPrime", "(number, any*) -> boolean", undefined, (z) =>
     ce.symbol(isGaussianPrime(z) ? "True" : "False"),
   );
-  optionHead("FactorInteger", "(number, any*) -> list", mayBeInteger, (z) => {
-    const factors = factorGaussian(z);
-    return factors === undefined
-      ? undefined
-      : list(
-          factors.map(([p, e]) => ce.function("Tuple", [gaussianExpression(ce, p), ce.number(e)])),
+  // 0 and ±1 have no prime factorisation; the native handler spells them as Wolfram does.
+  const factorsOf = (n: bigint): [bigint, number][] | undefined =>
+    n > 1n || n < -1n ? factorInteger(n) : undefined;
+  const pairs = (factors: readonly (readonly [BoxedExpression, number])[]): BoxedExpression =>
+    list(factors.map(([p, e]) => ce.function("Tuple", [p, ce.number(e)])));
+
+  optionHead(
+    "FactorInteger",
+    "(number, any*) -> list",
+    mayBeInteger,
+    (z) => {
+      const factors = factorGaussian(z);
+      return factors === undefined
+        ? undefined
+        : pairs(factors.map(([p, e]) => [gaussianExpression(ce, p), e]));
+    },
+    (n) => {
+      const factors = factorsOf(n);
+      if (factors === undefined) return undefined;
+      const sign: [bigint, number][] = n < 0n ? [[-1n, 1]] : [];
+      return pairs([...sign, ...factors].map(([p, e]) => [ce.number(p), e]));
+    },
+  );
+  optionHead(
+    "Divisors",
+    "(number, any*) -> list",
+    mayBeInteger,
+    (z) => {
+      const divisors = divisorsGaussian(z);
+      return divisors === undefined
+        ? undefined
+        : list(divisors.map((d) => gaussianExpression(ce, d)));
+    },
+    (n) => {
+      const factors = factorsOf(n);
+      if (factors === undefined) return undefined;
+      let divisors = [1n];
+      for (const [p, e] of factors) {
+        divisors = divisors.flatMap((d) =>
+          Array.from({ length: e + 1 }, (_, k) => d * p ** BigInt(k)),
         );
-  });
-  optionHead("Divisors", "(number, any*) -> list", mayBeInteger, (z) => {
-    const divisors = divisorsGaussian(z);
-    return divisors === undefined
-      ? undefined
-      : list(divisors.map((d) => gaussianExpression(ce, d)));
-  });
+      }
+      divisors.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
+      return list(divisors.map((d) => ce.number(d)));
+    },
+  );
 }
