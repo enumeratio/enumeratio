@@ -14,6 +14,7 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAdeles } from "@enumeratio/adeles/src";
+import { declareAestimatio } from "@enumeratio/aestimatio/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { ENUMERATIO, declareCatalog } from "@enumeratio/catalog/src";
@@ -44,6 +45,7 @@ import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 
 /** Every declaration, in an order that satisfies what depends on what. */
 export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
+  declareAestimatio,
   declareAnalytic,
   declareHypercomplex,
   declareGeometric,

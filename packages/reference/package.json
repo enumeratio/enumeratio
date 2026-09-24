@@ -21,6 +21,7 @@
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/adeles": "workspace:*",
+    "@enumeratio/aestimatio": "workspace:*",
     "@enumeratio/analytic": "workspace:*",
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/catalog": "workspace:*",

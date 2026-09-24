@@ -174,8 +174,16 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * and RationalReconstruction, which the three leave to private helpers but SageMath and Maple
  * expose (`rational_reconstruction`, `iratrecon`). IntegerMod and IntegerModRing are Sage's
  * `Mod(a, m)` and `Zmod(m)`.
+ *
+ * TimeConstrained, MemoryConstrained and VerificationTest are genuinely Wolfram's own (see
+ * `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled in by
+ * the external-kernel coverage script, which needs a Wolfram kernel this offline test suite
+ * doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
  */
 const NOVEL = [
+  "TimeConstrained",
+  "MemoryConstrained",
+  "VerificationTest",
   "IntegerMod",
   "IntegerModRing",
   "RationalReconstruction",

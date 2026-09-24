@@ -79,6 +79,7 @@ export default {
           { declareNumberTheory },
           { declareAdeles },
           { declareBraid },
+          { declareAestimatio },
         ] = await Promise.all([
           import("@enumeratio/notatio-lit"),
           import("@enumeratio/collections"),
@@ -100,6 +101,7 @@ export default {
           import("@enumeratio/number-theory"),
           import("@enumeratio/adeles"),
           import("@enumeratio/braid"),
+          import("@enumeratio/aestimatio"),
         ]);
         // Carriers first: everything below declares heads OVER these minted types, so they
         // have to exist before a signature can name one.
@@ -141,6 +143,7 @@ export default {
         configureEngine(declareNumberTheory);
         configureEngine(declareAdeles);
         configureEngine(declareBraid);
+        configureEngine(declareAestimatio);
       };
       // The promise is assigned synchronously (any element's loadEngine awaits it), but
       // the heavy 15-package source import is deferred to browser idle, so the initial

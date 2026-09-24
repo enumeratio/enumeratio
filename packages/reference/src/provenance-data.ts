@@ -25,6 +25,27 @@ export interface HeadRecord {
 
 export const provenance: readonly HeadRecord[] = [
   {
+    name: "TimeConstrained",
+    provenance: "extension",
+    declared: "enumeratio-aestimatio",
+    wolframAlias: "TimeConstrained",
+    elsewhere: [],
+  },
+  {
+    name: "MemoryConstrained",
+    provenance: "extension",
+    declared: "enumeratio-aestimatio",
+    wolframAlias: "MemoryConstrained",
+    elsewhere: [],
+  },
+  {
+    name: "VerificationTest",
+    provenance: "extension",
+    declared: "enumeratio-aestimatio",
+    wolframAlias: "VerificationTest",
+    elsewhere: [],
+  },
+  {
     name: "Binomial",
     provenance: "compute-engine",
     declared: null,

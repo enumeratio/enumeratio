@@ -17,6 +17,7 @@
 // p^k roots — so the enumeration is capped at `MAX_ROOTS` and answers undefined past it.
 // And the only thing that can make it impossible is factoring m.
 
+import { checkpoint } from "@enumeratio/boxed";
 import { invMod, mod, powMod } from "./arith.ts";
 import { type Group, rootsInCyclicGroup } from "./cyclic.ts";
 import { factorInteger } from "./primes.ts";
@@ -63,6 +64,7 @@ function rootsModPrimePower(b: bigint, r: bigint, p: bigint, e: number): bigint[
   for (let k = 1; k < e && roots.length > 0; k++) {
     const next = modulus * p;
     const lifted: bigint[] = [];
+    checkpoint();
     for (const x of roots) {
       const value = mod(powMod(x, r, next) - target, next); // ≡ 0 mod p^k
       const slope = mod(r * powMod(x, r - 1n, p), p);

@@ -1,4 +1,6 @@
 import type { OtherSystemRun, ReferenceEntry, ReferenceExample } from "./types.ts";
+import { aestimatio } from "./entries/aestimatio.ts";
+import aestimatioOracle from "./entries/aestimatio.oracle.json" with { type: "json" };
 import { arithmetic } from "./entries/arithmetic.ts";
 import arithmeticOracle from "./entries/arithmetic.oracle.json" with { type: "json" };
 import { combinatorics } from "./entries/combinatorics.ts";
@@ -130,6 +132,7 @@ export const oracleSidecars: Readonly<Record<string, OracleSidecar>> = {
 /** One domain file, its entries (with `others` attached), and the stem the scan script
  * writes its sidecar under (`src/entries/<stem>.oracle.json`). */
 export const entryFiles: readonly { stem: string; entries: readonly ReferenceEntry[] }[] = [
+  { stem: "aestimatio", entries: attach(aestimatioOracle, aestimatio) },
   { stem: "combinatorics", entries: attach(combinatoricsOracle, combinatorics) },
   { stem: "sequences", entries: attach(sequencesOracle, sequences) },
   { stem: "residues", entries: attach(residuesOracle, residues) },

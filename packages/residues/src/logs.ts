@@ -7,6 +7,7 @@
 // dividing the order of k, as √q — cheap for smooth orders, and exactly as hard as the
 // cryptographers need it to be for a safe prime.
 
+import { checkpoint } from "@enumeratio/boxed";
 import { crt, gcd, mod, powMod } from "./arith.ts";
 import { factorInteger } from "./primes.ts";
 import { discreteLogPrimePower } from "./cyclic.ts";
@@ -112,7 +113,10 @@ export function primitiveRootList(n: bigint): bigint[] | undefined {
   const isGenerator = (g: bigint): boolean =>
     gcd(g, n) === 1n && phiFactors.every(([q]) => powMod(g, phi / q, n) !== 1n);
   let g = 2n;
-  while (!isGenerator(g)) g++;
+  while (!isGenerator(g)) {
+    g++;
+    checkpoint();
+  }
   // The rest are gᵏ for k coprime to φ(n): φ(φ(n)) of them.
   const count = phiFactors.reduce((t, [q, e]) => t * (q - 1n) * q ** BigInt(e - 1), 1n);
   if (count > BigInt(MAX_PRIMITIVE_ROOTS)) return undefined;
