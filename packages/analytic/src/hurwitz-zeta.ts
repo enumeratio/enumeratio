@@ -322,7 +322,8 @@ function evaluateLerch(
  *
  * Also declares the heads in special-functions.ts: `BarnesG`, `LogBarnesG`, `LogGamma`,
  * `ClausenCl`, `DirichletEta`, `DirichletBeta`, `StieltjesGamma`, `DirichletCharacter`,
- * `DirichletL`, `HarmonicNumber`, and the `Catalan` constant.
+ * `DirichletL`, `HarmonicNumber`, `ChebyshevT`, `ChebyshevU`, `LegendrePolynomial`,
+ * `RisingFactorial`, and the `Catalan` constant.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {

@@ -577,10 +577,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "ChebyshevU",
-    uses: 6,
-  },
-  {
     head: "DirichletTransform",
     uses: 6,
   },
