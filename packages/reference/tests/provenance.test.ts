@@ -111,6 +111,7 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  */
 const OVERRIDDEN = [
   "Divisors",
+  "Dot",
   "Element",
   "FactorInteger",
   "Fibonacci",
@@ -118,8 +119,10 @@ const OVERRIDDEN = [
   "Gamma",
   "GammaRegularized",
   "IntegerDigits",
+  "Inverse",
   "IsPrime",
   "LucasL",
+  "MatrixPower",
   "MultiplicativeOrder",
   "Norm",
   "PolyLog",
@@ -199,6 +202,7 @@ const NOVEL = [
   "NSymR",
   "GroupBasis",
   "ClassSum",
+  "ModularMatrix",
   "ModularWord",
   "ModularClasses",
   "RademacherSymbol",

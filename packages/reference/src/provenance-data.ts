@@ -1019,6 +1019,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "ModularMatrix",
+    provenance: "extension",
+    declared: "enumeratio-modular",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "ModularWord",
     provenance: "extension",
     declared: "enumeratio-modular",
