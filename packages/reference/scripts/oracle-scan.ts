@@ -24,7 +24,6 @@
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compare,
@@ -35,6 +34,7 @@ import {
   type MathJSON,
   reduce,
   runIn,
+  runKernel,
   symbolic,
   type System,
   type Tree,
@@ -82,6 +82,8 @@ const leaf = (expr: MathJSON): Leaf => {
 
 /** Our side of a TEXT comparison (the Python-family systems): the number, else the JSON. */
 const show = (expr: MathJSON): string => {
+  // A list prints as the systems print one, element by element.
+  if (Array.isArray(expr) && expr[0] === "List") return `[${expr.slice(1).map(show).join(", ")}]`;
   const value = leaf(expr);
   return typeof value === "number"
     ? String(value)
@@ -144,7 +146,7 @@ for (const system of systems) {
   const runnable = emitted.filter((row) => row.out.ok);
   const sources = runnable.map((row) => (row.out as { source: string }).source);
   process.stderr.write(`${system}: ${runnable.length}/${cases.length} emit — running…\n`);
-  const results = runIn(system, sources);
+  const results = await runIn(system, sources);
 
   const outcomes: Outcome[] = [];
   const missing: Record<string, number> = {};
@@ -239,12 +241,10 @@ const sidecars = new Map(entryFiles.map((f) => [f.stem, loadSidecar(f.stem)]));
 
 const kernelOf: Partial<Record<System, string>> = {};
 if (systems.includes("wolfram")) {
-  kernelOf.wolfram = execFileSync("wolframscript", ["-code", "$Version"], {
-    encoding: "utf8",
-  }).trim();
+  kernelOf.wolfram = (await runKernel("wolframscript", ["-code", "$Version"])).trim();
 }
 if (systems.includes("sage")) {
-  kernelOf.sage = execFileSync("sage", ["-c", "print(version())"], { encoding: "utf8" }).trim();
+  kernelOf.sage = (await runKernel("sage", ["-c", "print(version())"])).trim();
 }
 
 for (const system of systems) {

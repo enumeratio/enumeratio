@@ -20,6 +20,12 @@ test("a mapping is chosen by signature, not by name alone", () => {
 test("emitting fills positional and variadic templates", () => {
   expect(emit(["Zeta", 2, 1], "sage")).toEqual({ ok: true, source: "hurwitz_zeta(2, 1)" });
   expect(emit(["Add", 1, 2, 3], "sympy")).toEqual({ ok: true, source: "(1 + 2 + 3)" });
+  expect(emit(["Multiply", 2, 3], "sympy")).toEqual({ ok: true, source: "(2 * 3)" });
+  // Lean reads `f -1` as `f - 1`.
+  expect(emit(["Binomial", 5, -1], "mathlib4")).toEqual({
+    ok: true,
+    source: "(Nat.choose 5 (-1))",
+  });
   expect(emit(["List", 1, 2], "sympy")).toEqual({ ok: true, source: "[1, 2]" });
   expect(emit(["Binomial", 10, 3], "wolfram")).toEqual({ ok: true, source: "Binomial[10, 3]" });
   // Constants are per-system.
@@ -44,6 +50,8 @@ test("comparison is forgiving about spelling and strict about value", () => {
   expect(compare("3", "4")).toBe("disagree");
   expect(compare("[1, 2, 3]", "{1, 2, 3}")).toBe("agree"); // Wolfram braces
   expect(compare("2", "2.0")).toBe("agree");
+  expect(compare("0.75", "3/4")).toBe("agree"); // SymPy, Lean
+  expect(compare("0.75", "3//4")).toBe("agree"); // Julia
   // A symbolic answer against a numeric one settles nothing either way.
   expect(compare("1.644934", "pi**2/6")).toBe("inconclusive");
   expect(compare("3", "")).toBe("inconclusive");
@@ -57,10 +65,19 @@ test("every system is declared, and the unwired ones are honest about it", () =>
     "sympy",
     "mpmath",
     "sage",
+    "oscar",
     "julia",
-    "lean",
+    "mathlib4",
   ]);
-  expect(wiredSystems()).toEqual(["wolfram", "sympy", "mpmath", "sage"]);
+  expect(wiredSystems()).toEqual([
+    "wolfram",
+    "sympy",
+    "mpmath",
+    "sage",
+    "oscar",
+    "julia",
+    "mathlib4",
+  ]);
   // Naming an unwired system is the point: a scan then reports "unmapped" for it rather
   // than silently never asking.
   for (const system of SYSTEMS) expect(system.strength.length).toBeGreaterThan(20);
