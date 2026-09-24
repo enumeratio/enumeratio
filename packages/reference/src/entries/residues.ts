@@ -614,7 +614,7 @@ export const residues: readonly ReferenceEntry[] = [
     details: [
       "When the moduli are pairwise coprime, the result is unique modulo $m_1m_2\\cdots m_n$ by the Chinese remainder theorem.",
       "A solution exists for non-coprime moduli only when the remainders agree on every shared factor; otherwise the system is inconsistent.",
-      "compute-engine leaves inconsistent systems unevaluated rather than raising an error.",
+      "An inconsistent system is left unevaluated, with a `ChineseRemainder::nsol` message naming the two congruences that clash.",
       "compute-engine only supports the 2-argument form.",
     ],
     examples: [
@@ -653,7 +653,7 @@ export const residues: readonly ReferenceEntry[] = [
         expected: ["ChineseRemainder", ["List", 1, 2], ["List", 6, 10]],
         category: "Possible issues",
         caption:
-          "No solution exists when the remainders are inconsistent at $\\gcd(6,10)=2$; compute-engine leaves it unevaluated",
+          "No solution exists when the remainders are inconsistent at $\\gcd(6,10)=2$, so the call stays unevaluated and says why",
       },
       {
         expr: ["ChineseRemainder", ["List", 1, 2], ["List", 3, 5], 100],
@@ -841,6 +841,8 @@ export const residues: readonly ReferenceEntry[] = [
       "Two classes with different moduli meet in $\\mathbb{Z}/\\gcd(m, n)$, the largest ring both reduce to — Sage's coercion",
       "[[ChineseRemainder]] of classes is the class mod $\\operatorname{lcm}$ that reduces to each, and [[MultiplicativeOrder]] of a unit is its order",
       "The elements of [[IntegerModRing]](m)",
+      "Written $a \\pmod{m}$, and typed that way too; `a \\bmod m` is still [[Mod]], and `a \\equiv b \\pmod{m}` is still a congruence. TraditionalForm writes the coset, $a + m\\mathbb{Z}$",
+      "A call that declines — dividing by a non-unit — stays unevaluated with an `IntegerMod::ninv` message, after Wolfram's `PowerMod::ninv`",
     ],
     examples: [
       { expr: ["IntegerMod", 10, 7], expected: ["IntegerMod", 3, 7] },
@@ -878,7 +880,13 @@ export const residues: readonly ReferenceEntry[] = [
       {
         expr: ["Divide", 1, ["IntegerMod", 2, 4]],
         expected: ["Divide", 1, ["IntegerMod", 2, 4]],
-        caption: "2 is not a unit mod 4",
+        caption: "2 is not a unit mod 4, and the message says so",
+        category: "Possible issues",
+      },
+      {
+        expr: ["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 2, 6]],
+        expected: ["ChineseRemainder", ["IntegerMod", 1, 4], ["IntegerMod", 2, 6]],
+        caption: "odd mod 4 and even mod 6 at once: no such class",
         category: "Possible issues",
       },
     ],
@@ -900,7 +908,7 @@ export const residues: readonly ReferenceEntry[] = [
     details: [
       "A collection: it counts, enumerates and answers membership, so `Count`, `ListFrom` and `Element` work on it directly",
       "Membership is by modulus — `IntegerMod(3, 7)` is not in `IntegerModRing(5)`",
-      "compute-engine's `QuotientRing(Integers, m)` — what $\\mathbb{Z}/m\\mathbb{Z}$ parses to — specialises to it",
+      "compute-engine's `QuotientRing(Integers, m)` — what $\\mathbb{Z}/m\\mathbb{Z}$ parses to — specialises to it, and it is written back that way",
     ],
     examples: [
       {

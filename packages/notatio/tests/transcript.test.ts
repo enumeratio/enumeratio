@@ -1,5 +1,6 @@
 import { ComputeEngine, type BoxedExpression } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
+import { strOf } from "../src/symbols.ts";
 import { Transcript } from "../src/transcript.ts";
 
 // A transcript's own evaluate, outside any element: parse `latex` (after `%`
@@ -74,7 +75,7 @@ test("Out(n) reads back a prior line's frozen value, InString(n) its literal tex
   const t = new Transcript(engine);
   evaluate(t, engine, "3 + 4");
   expect(evaluateJson(t, engine, ["Out", 1], "Out(1)").value.re).toBe(7);
-  expect(evaluateJson(t, engine, ["InString", 1], "InString(1)").value.string).toBe("3 + 4");
+  expect(strOf(evaluateJson(t, engine, ["InString", 1], "InString(1)").value.json)).toBe("3 + 4");
 });
 
 test("In(n) re-evaluates its input against the CURRENT bindings; Out(n) stays frozen", () => {

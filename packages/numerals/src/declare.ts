@@ -1,5 +1,13 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, symbolNameOf } from "@enumeratio/boxed";
+import {
+  defineMessages,
+  emit,
+  formatArgument,
+  integerAt,
+  operandsOf,
+  symbolNameOf,
+} from "@enumeratio/boxed";
+import { gcd } from "@enumeratio/residues";
 import { declareAdic } from "./adic-declare.ts";
 import {
   adicNumerals,
@@ -103,7 +111,47 @@ export function systemOf(expr: BoxedExpression): NumeralSystem | undefined {
   return NULLARY[expr.operator]?.();
 }
 
+/** The integers a system spells, as prose: `≥ 0`, `from 0 to 23`. */
+function rangeText([lo, hi]: Shape["range"]): string {
+  if (lo === undefined) return hi === undefined ? "every integer" : `the integers ≤ ${hi}`;
+  return hi === undefined ? `the integers ≥ ${lo}` : `the integers from ${lo} to ${hi}`;
+}
+
+const boundText = ([lo, hi]: DigitBound): string => (hi === undefined ? `≥ ${lo}` : `${lo}–${hi}`);
+
+/** What a valid numeral looks like, as prose, for a digit string that is not one. */
+function numeralText({ digits, width, rule }: Shape): string {
+  const parts: string[] = [];
+  if (width !== undefined) parts.push(`exactly ${width} digits`);
+  if (digits !== undefined) {
+    parts.push(
+      typeof digits[0] === "number"
+        ? `digits ${boundText(digits as DigitBound)}`
+        : `digits ${(digits as readonly DigitBound[]).map(boundText).join(", ")} by place`,
+    );
+  }
+  if (rule !== undefined) parts.push(rule);
+  return parts.join("; ");
+}
+
+/** Two of the moduli that share a factor, and that factor. */
+function sharedFactor(moduli: readonly number[]): [number, number, bigint] | undefined {
+  for (const [i, m] of moduli.entries()) {
+    for (const n of moduli.slice(i + 1)) {
+      const g = gcd(BigInt(m), BigInt(n));
+      if (g !== 1n) return [m, n, g];
+    }
+  }
+  return undefined;
+}
+
 export function declareNumerals(ce: ComputeEngine): void {
+  defineMessages(ce, "IntegerDigits", { nonum: "`1` has no numeral in `2`." });
+  defineMessages(ce, "FromDigits", { nonum: "`1` is not a numeral in `2`." });
+  defineMessages(ce, "ResidueSystem", {
+    ncop: "The moduli `1` are not pairwise coprime (gcd(`2`, `3`) = `4`), so this is not a bijection.",
+  });
+
   // The system heads are names, not computations — they stay inert.
   for (const head of Object.keys(NULLARY)) ce.declare(head, { signature: "() -> value" });
   for (const head of Object.keys(ONE_ARGUMENT)) {
@@ -113,7 +161,20 @@ export function declareNumerals(ce: ComputeEngine): void {
     ce.declare(head, { signature: "(integer, integer?) -> value" });
   }
   for (const head of Object.keys(LIST_ARGUMENT)) {
-    ce.declare(head, { signature: "(list<integer>) -> value" });
+    ce.declare(head, {
+      signature: "(list<integer>) -> value",
+      // Inert still, but a residue system over moduli that share a factor is worth a word.
+      ...(head === "ResidueSystem"
+        ? {
+            evaluate: (ops: readonly BoxedExpression[]) => {
+              const moduli = integerList(ops[0]);
+              const shared = moduli === undefined ? undefined : sharedFactor(moduli);
+              if (shared !== undefined) emit(ce, head, "ncop", [moduli, ...shared]);
+              return undefined;
+            },
+          }
+        : {}),
+    });
   }
   declareAdic(ce);
 
@@ -149,8 +210,12 @@ export function declareNumerals(ce: ComputeEngine): void {
       const n = integerAt(ops[0]);
       if (n === undefined) return undefined;
       const digits = system.toDigits(n);
-      // No numeral for this integer in this system — say nothing rather than guess.
-      if (digits === undefined) return undefined;
+      // No numeral for this integer in this system — decline, and say which ones have one.
+      if (digits === undefined) {
+        const hint = `${formatArgument(ops[1])} spells ${rangeText(system.shape.range)}.`;
+        emit(ce, "IntegerDigits", "nonum", [n, ops[1]], hint);
+        return undefined;
+      }
       // The third operand pads on the left, as it does natively. It is what makes the
       // factoradic digits of n line up with the Lehmer code of the n-th permutation of
       // a FIXED size: the code needs one digit per position, leading zeros included.
@@ -176,7 +241,12 @@ export function declareNumerals(ce: ComputeEngine): void {
       const value = system.fromDigits(digits);
       // An invalid digit string — two adjacent Zeckendorf ones, an out-of-range mixed
       // radix digit, inconsistent residues — denotes no integer at all.
-      return value === undefined ? undefined : ce.number(value);
+      if (value === undefined) {
+        const hint = `In ${formatArgument(ops[1])}: ${numeralText(system.shape)}.`;
+        emit(ce, "FromDigits", "nonum", [ops[0], ops[1]], hint);
+        return undefined;
+      }
+      return ce.number(value);
     },
   );
 

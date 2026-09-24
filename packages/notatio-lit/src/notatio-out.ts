@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { type MathJsonExpression, serializeEpsil } from "@cortex-js/compute-engine/epsil";
+import { collectMessages, type Message } from "@enumeratio/boxed";
 import { normalizeInputForm, toInputForm } from "@enumeratio/formats/inputform";
 import { toMathML } from "@enumeratio/formats/mathml";
 import { parseNotatio } from "@enumeratio/formats/notatio";
@@ -16,6 +17,7 @@ import {
   type Environment,
   environmentNamed,
   highlightCode,
+  latexOf,
   pageEnvironment,
   toTraditionalLatex,
   type Transcript,
@@ -249,6 +251,7 @@ export class NotatioOut extends LitElement {
     _code: { state: true },
     _status: { state: true },
     _detail: { state: true },
+    _messages: { state: true },
     _expanded: { state: true },
     _tree: { state: true },
     _folded: { state: true },
@@ -289,6 +292,8 @@ export class NotatioOut extends LitElement {
   declare _code: Partial<Record<CodeForm, string>>;
   declare _status: Status;
   declare _detail: string;
+  /** What the heads that declined to evaluate said about it (`IntegerMod::ninv`, …). */
+  declare _messages: readonly Message[];
   /** TreeForm nodes currently open, keyed by path (`"0.1"` is the second child of the first). */
   declare _expanded: ReadonlySet<string>;
   /** The TreeForm working tree: `_json` with any unfolded definitions substituted in. */
@@ -326,6 +331,7 @@ export class NotatioOut extends LitElement {
     this._code = {};
     this._status = "";
     this._detail = "";
+    this._messages = [];
     this._expanded = new Set([""]);
     this._tree = undefined;
     this._folded = new Map();
@@ -361,9 +367,9 @@ export class NotatioOut extends LitElement {
     if (changed.has("env") && changed.get("env") !== undefined) this.#visualize();
   }
 
-  async #evaluate(): Promise<{ latex: string; json: unknown }> {
+  async #evaluate(): Promise<{ latex: string; json: unknown; messages: readonly Message[] }> {
     const source = this.value ?? "";
-    if (!source.trim()) return { latex: "", json: undefined };
+    if (!source.trim()) return { latex: "", json: undefined, messages: [] };
     // Fast path: render given LaTeX as-is, no engine, when nothing needs it.
     // `box` forces boxing (without evaluating) so the source/AST forms populate.
     // Every other form needs the parsed expression, so only StandardForm takes it.
@@ -375,7 +381,11 @@ export class NotatioOut extends LitElement {
       this.form === "standard"
     ) {
       // MathLive's static renderer takes its style from the LaTeX itself.
-      return { latex: this.display ? `\\displaystyle ${source}` : source, json: undefined };
+      return {
+        latex: this.display ? `\\displaystyle ${source}` : source,
+        json: undefined,
+        messages: [],
+      };
     }
     const engine = await loadEngine();
     // `raw` keeps the authored tree; evaluation canonicalises regardless, so it wins.
@@ -387,28 +397,26 @@ export class NotatioOut extends LitElement {
     const text = transcript && this.format === "latex" ? transcript.substitute(source) : source;
     const parseText = (): BoxedExpression =>
       this.format === "latex" ? engine.parse(text, form) : engine.box(this.#json(engine), form);
-    if (transcript && this.evaluate) {
-      // `InString(n)` reads back what the reader typed -- for a `<notatio-cell>`, that's
-      // notatio/InputForm (a Cell hands its Out already-parsed MathJSON, not raw text);
-      // only literal LaTeX `value` is itself already that text. Read the JSON *before*
-      // boxing: `engine.box` itself folds closed numeric arithmetic (`3 + 4` boxes
-      // straight to `7`), so `boxed.json` is already too late to recover "3 + 4" from.
-      const input =
-        this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
-      // Synchronous, inside the transcript's scope: `a := 5` binds there, and the result
-      // becomes the next `In[n]`/`Out[n]`, findable by `Out(n)`/`In(n)`/`InString(n)` and
-      // by `%` from any cell evaluated after it.
-      return transcript.run(() => {
-        const boxed = parseText();
-        const value = boxed.evaluate();
-        this.#historyN = transcript.record(input, boxed, value);
-        return { latex: value.latex, json: value.json };
-      });
-    }
-    this.#historyN = undefined;
-    const boxed = parseText();
-    const result = this.evaluate ? boxed.evaluate() : boxed;
-    return { latex: result.latex, json: result.json };
+    const { value: result, messages } = collectMessages(engine, () => {
+      if (transcript && this.evaluate) {
+        // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:
+        // `engine.box` folds closed numeric arithmetic (`3 + 4` boxes straight to `7`).
+        const input =
+          this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
+        // Inside the transcript's scope: `a := 5` binds there, and the result becomes the
+        // next `In[n]`/`Out[n]`.
+        return transcript.run(() => {
+          const boxed = parseText();
+          const value = boxed.evaluate();
+          this.#historyN = transcript.record(input, boxed, value);
+          return value;
+        });
+      }
+      this.#historyN = undefined;
+      const boxed = parseText();
+      return this.evaluate ? boxed.evaluate() : boxed;
+    });
+    return { latex: latexOf(engine, result), json: result.json, messages };
   }
 
   /** `value` as MathJSON, for the two encodings that are not LaTeX. A notatio diagnostic throws. */
@@ -535,9 +543,10 @@ export class NotatioOut extends LitElement {
   // so a slow earlier evaluation can't overwrite it when it finally lands.
   async #compute(run: number): Promise<void> {
     try {
-      const { latex, json } = await this.#evaluate();
+      const { latex, json, messages } = await this.#evaluate();
       const convert = await loadMarkup();
       if (run !== this.#runs) return;
+      this._messages = messages;
       this._expanded = new Set([""]);
       this._tree = json;
       this._folded = new Map();
@@ -581,13 +590,14 @@ export class NotatioOut extends LitElement {
       this._visual = "";
       this._latex = "";
       this._json = "";
+      this._messages = [];
       this._status = "error";
       this._detail = err instanceof Error ? err.message : String(err);
     }
     // Let containers (e.g. a reference cell) react to the assertion outcome.
     this.dispatchEvent(
       new CustomEvent("notatio-assert", {
-        detail: { status: this._status, message: this._detail },
+        detail: { status: this._status, message: this._detail, messages: this._messages },
         bubbles: true,
         composed: true,
       }),
@@ -625,6 +635,20 @@ export class NotatioOut extends LitElement {
       default:
         return html``;
     }
+  }
+
+  // Messages sit under the output, as Wolfram prints them under a cell: the result is
+  // still the unevaluated call, and this says why.
+  #messages(): unknown {
+    if (this._messages.length === 0) return html``;
+    return html`${this._messages.map(
+      (m) =>
+        html`<span class="notatio-message"
+          ><span class="notatio-message-name">${m.head}::${m.code}</span> ${m.text}${
+            m.hint ? html` <span class="notatio-message-hint">${m.hint}</span>` : ""
+          }</span
+        >`,
+    )}`;
   }
 
   #details(): HTMLDetailsElement | null {
@@ -986,14 +1010,14 @@ export class NotatioOut extends LitElement {
     if (this.label && this.labelMenu) {
       return html`<span class="notatio-line"
           >${this.#menu()}<span class="notatio-render">${this.#content()}</span></span
-        >${this.#status()}`;
+        >${this.#messages()}${this.#status()}`;
     }
     return html`<span class="notatio-line"
         >${this.label ? html`<span class="notatio-io-label">${this.#labelText()}</span>` : ""}<span
           class="notatio-render"
           >${this.#content()}</span
         >${this.label ? this.#menu() : ""}</span
-      >${this.#status()}`;
+      >${this.#messages()}${this.#status()}`;
   }
 }
 
