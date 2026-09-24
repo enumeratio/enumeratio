@@ -15,6 +15,21 @@
           "input": "gcd(12, 18)",
           "output": "6",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "gcd(ZZ(12), ZZ(18))",
+          "output": "6",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "gcd(ZZ(12), ZZ(18))",
+          "output": "6",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Int.gcd 12 18)",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"GCD\",24,36]": {
@@ -25,6 +40,21 @@
         },
         "sage": {
           "input": "gcd(24, 36)",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "gcd(ZZ(24), ZZ(36))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "gcd(ZZ(24), ZZ(36))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Int.gcd 24 36)",
           "output": "12",
           "verdict": "agree"
         }
@@ -60,6 +90,21 @@
           "input": "gcd(0, 5)",
           "output": "5",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "gcd(ZZ(0), ZZ(5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "gcd(ZZ(0), ZZ(5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Int.gcd 0 5)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"GCD\",-12,9,57]": {
@@ -80,7 +125,30 @@
         "sage": {
           "input": "gcd([2, 4], [6, 8])",
           "output": "TypeError: unable to call gcd with [2, 4]",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's GCD pools the elements of list arguments; Sage's gcd takes scalars only."
+        },
+        "julia": {
+          "input": "gcd(ZZ([2, 4]), ZZ([6, 8]))",
+          "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's GCD pools the elements of list arguments; Nemo/Combinatorics.jl's gcd takes scalars only."
+        },
+        "oscar": {
+          "input": "gcd(ZZ([2, 4]), ZZ([6, 8]))",
+          "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's GCD pools the elements of list arguments; Oscar's gcd takes scalars only."
+        },
+        "mathlib4": {
+          "input": "(Int.gcd [2, 4] [6, 8])",
+          "output": "Application type mismatch: The argument",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's GCD pools the elements of list arguments; Mathlib's gcd takes scalars only."
         }
       },
       "[\"Equal\",[\"GCD\",12,18],[\"GCD\",18,12]]": {
@@ -93,6 +161,21 @@
           "input": "bool(gcd(12, 18) == gcd(18, 12))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(gcd(ZZ(12), ZZ(18)) == gcd(ZZ(18), ZZ(12)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide ((Int.gcd 12 18) = (Int.gcd 18 12)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Multiply\",[\"GCD\",12,18],[\"LCM\",12,18]],[\"Multiply\",12,18]]": {
@@ -104,6 +187,21 @@
         "sage": {
           "input": "bool((gcd(12, 18) * lcm(12, 18)) == (12 * 18))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "((gcd(ZZ(12), ZZ(18)) * lcm(ZZ(12), ZZ(18))) == (12 * 18))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (((Int.gcd 12 18) * (Int.lcm 12 18)) = (12 * 18)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -124,6 +222,21 @@
         },
         "sage": {
           "input": "lcm(4, 6)",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "lcm(ZZ(4), ZZ(6))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "lcm(ZZ(4), ZZ(6))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Int.lcm 4 6)",
           "output": "12",
           "verdict": "agree"
         }
@@ -152,6 +265,21 @@
           "input": "lcm(0, 5)",
           "output": "0",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "lcm(ZZ(0), ZZ(5))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "lcm(ZZ(0), ZZ(5))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Int.lcm 0 5)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"LCM\",-3,7]": {
@@ -162,6 +290,21 @@
         },
         "sage": {
           "input": "lcm(-3, 7)",
+          "output": "21",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "lcm(ZZ(-3), ZZ(7))",
+          "output": "21",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "lcm(ZZ(-3), ZZ(7))",
+          "output": "21",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Int.lcm (-3) 7)",
           "output": "21",
           "verdict": "agree"
         }
@@ -175,6 +318,21 @@
         "sage": {
           "input": "bool((gcd(27, 81) * lcm(27, 81)) == (27 * 81))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "((gcd(ZZ(27), ZZ(81)) * lcm(ZZ(27), ZZ(81))) == (27 * 81))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (((Int.gcd 27 81) * (Int.lcm 27 81)) = (27 * 81)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -197,6 +355,21 @@
           "input": "euler_phi(12)",
           "output": "4",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "euler_phi(ZZ(12))",
+          "output": "4",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "euler_phi(ZZ(12))",
+          "output": "4",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.totient 12)",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Totient\",36]": {
@@ -207,6 +380,21 @@
         },
         "sage": {
           "input": "euler_phi(36)",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "euler_phi(ZZ(36))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "euler_phi(ZZ(36))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.totient 36)",
           "output": "12",
           "verdict": "agree"
         }
@@ -221,6 +409,21 @@
           "input": "euler_phi(1)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "euler_phi(ZZ(1))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "euler_phi(ZZ(1))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.totient 1)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Totient\",391]": {
@@ -231,6 +434,21 @@
         },
         "sage": {
           "input": "euler_phi(391)",
+          "output": "352",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "euler_phi(ZZ(391))",
+          "output": "352",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "euler_phi(ZZ(391))",
+          "output": "352",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.totient 391)",
           "output": "352",
           "verdict": "agree"
         }
@@ -245,6 +463,21 @@
           "input": "(euler_phi(1) + euler_phi(2) + euler_phi(3) + euler_phi(4) + euler_phi(6) + euler_phi(12))",
           "output": "12",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((Nat.totient 1) + (Nat.totient 2) + (Nat.totient 3) + (Nat.totient 4) + (Nat.totient 6) + (Nat.totient 12))",
+          "output": "12",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Totient\",12],[\"Multiply\",[\"Totient\",4],[\"Totient\",3]]]": {
@@ -256,6 +489,21 @@
         "sage": {
           "input": "bool(euler_phi(12) == (euler_phi(4) * euler_phi(3)))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide ((Nat.totient 12) = ((Nat.totient 4) * (Nat.totient 3))))",
+          "output": "true",
           "verdict": "agree"
         }
       }
@@ -345,6 +593,11 @@
           "input": "prime_pi(1)",
           "output": "0",
           "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.primeCounting 1)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"PrimePi\",2]": {
@@ -355,6 +608,11 @@
         },
         "sage": {
           "input": "prime_pi(2)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.primeCounting 2)",
           "output": "1",
           "verdict": "agree"
         }
@@ -369,6 +627,11 @@
           "input": "prime_pi(15)",
           "output": "6",
           "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.primeCounting 15)",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"PrimePi\",100]": {
@@ -379,6 +642,11 @@
         },
         "sage": {
           "input": "prime_pi(100)",
+          "output": "25",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(Nat.primeCounting 100)",
           "output": "25",
           "verdict": "agree"
         }
@@ -402,6 +670,21 @@
           "input": "is_prime(1)",
           "output": "False",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(1))",
+          "output": "false",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(1))",
+          "output": "false",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime 1))",
+          "output": "false",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",2]": {
@@ -413,6 +696,21 @@
         "sage": {
           "input": "is_prime(2)",
           "output": "True",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(2))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(2))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime 2))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -426,6 +724,21 @@
           "input": "is_prime(13)",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(13))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(13))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime 13))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",4]": {
@@ -437,6 +750,21 @@
         "sage": {
           "input": "is_prime(4)",
           "output": "False",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(4))",
+          "output": "false",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(4))",
+          "output": "false",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime 4))",
+          "output": "false",
           "verdict": "agree"
         }
       },
@@ -450,6 +778,21 @@
           "input": "is_prime(97)",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(97))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(97))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime 97))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",[\"Add\",[\"Power\",2,31],-1]]": {
@@ -462,6 +805,23 @@
           "input": "is_prime(((2^31) + -1))",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(((big(2)^31) + -1)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(((big(2)^31) + -1)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime ((2 ^ 31) + (-1))))",
+          "output": "failed to synthesize instance of type class",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends IsPrime to this argument."
         }
       },
       "[\"IsPrime\",1000000007]": {
@@ -474,6 +834,21 @@
           "input": "is_prime(1000000007)",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "is_prime(ZZ(1000000007))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(1000000007))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime 1000000007))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",[\"List\",1,2,3,4,5,6]]": {
@@ -485,7 +860,30 @@
         "sage": {
           "input": "is_prime([1, 2, 3, 4, 5, 6])",
           "output": "TypeError: unable to coerce <class 'list'> to an integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's IsPrime is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "julia": {
+          "input": "is_prime(ZZ([1, 2, 3, 4, 5, 6]))",
+          "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's IsPrime is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only."
+        },
+        "oscar": {
+          "input": "is_prime(ZZ([1, 2, 3, 4, 5, 6]))",
+          "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's IsPrime is Listable and threads over the list; Oscar's takes scalars only."
+        },
+        "mathlib4": {
+          "input": "(decide (Nat.Prime [1, 2, 3, 4, 5, 6]))",
+          "output": "Application type mismatch: The argument",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's IsPrime is Listable and threads over the list; Mathlib's takes scalars only."
         }
       },
       "[\"IsPrime\",[\"Complex\",2,1]]": {
@@ -543,6 +941,21 @@
           "input": "bool(((2^3) * (3^2) * 5) == 360)",
           "output": "True",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "(((big(2)^3) * (big(3)^2) * 5) == 360)",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(((big(2)^3) * (big(3)^2) * 5) == 360)",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(decide (((2 ^ 3) * (3 ^ 2) * 5) = 360))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"FactorInteger\",1]": {
@@ -568,7 +981,9 @@
         "sage": {
           "input": "list(factor(0))",
           "output": "ArithmeticError: factorization of 0 is not defined",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine factors 0 as {{0, 1}}, as Wolfram does; Sage declines to factor 0."
         }
       },
       "[\"FactorInteger\",-60]": {
@@ -812,6 +1227,21 @@
           "input": "moebius(1)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "moebius_mu(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "moebius_mu(1)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(ArithmeticFunction.moebius 1)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"MoebiusMu\",11]": {
@@ -822,6 +1252,21 @@
         },
         "sage": {
           "input": "moebius(11)",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "moebius_mu(11)",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "moebius_mu(11)",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(ArithmeticFunction.moebius 11)",
           "output": "-1",
           "verdict": "agree"
         }
@@ -836,6 +1281,21 @@
           "input": "moebius(12)",
           "output": "0",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "moebius_mu(12)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "moebius_mu(12)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(ArithmeticFunction.moebius 12)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"MoebiusMu\",10]": {
@@ -848,6 +1308,21 @@
           "input": "moebius(10)",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "moebius_mu(10)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "moebius_mu(10)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "(ArithmeticFunction.moebius 10)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Add\",[\"MoebiusMu\",1],[\"MoebiusMu\",2],[\"MoebiusMu\",3],[\"MoebiusMu\",4],[\"MoebiusMu\",6],[\"MoebiusMu\",12]]": {
@@ -858,6 +1333,21 @@
         },
         "sage": {
           "input": "(moebius(1) + moebius(2) + moebius(3) + moebius(4) + moebius(6) + moebius(12))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "(moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "(moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))",
           "output": "0",
           "verdict": "agree"
         }
@@ -873,7 +1363,30 @@
         "sage": {
           "input": "moebius(0)",
           "output": "0",
-          "verdict": "inconclusive"
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "Sage defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated."
+        },
+        "julia": {
+          "input": "moebius_mu(0)",
+          "output": "DomainError with 0: Argument must be positive",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"MoebiusMu\", 0] and Nemo/Combinatorics.jl raises an error."
+        },
+        "oscar": {
+          "input": "moebius_mu(0)",
+          "output": "DomainError with 0: Argument must be positive",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"MoebiusMu\", 0] and Oscar raises an error."
+        },
+        "mathlib4": {
+          "input": "(ArithmeticFunction.moebius 0)",
+          "output": "0",
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "Mathlib defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated."
         }
       }
     },
@@ -1005,6 +1518,21 @@
           "input": "((2 * -1) + (3 * 1))",
           "output": "1",
           "verdict": "agree"
+        },
+        "julia": {
+          "input": "((2 * -1) + (3 * 1))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "oscar": {
+          "input": "((2 * -1) + (3 * 1))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mathlib4": {
+          "input": "((2 * (-1)) + (3 * 1))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"ExtendedGCD\",[\"Complex\",7,2],[\"Complex\",3,-5]]": {
@@ -1119,42 +1647,48 @@
         "sage": {
           "input": "rational_reconstruction(6, 11)",
           "output": "1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"RationalReconstruction\",[\"PowerMod\",[\"Rational\",22,7],1,1000003],1000003]": {
         "sage": {
           "input": "rational_reconstruction(power_mod((22/7), 1, 1000003), 1000003)",
           "output": "22/7",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"RationalReconstruction\",[\"List\",6,9,10],11]": {
         "sage": {
           "input": "rational_reconstruction([6, 9, 10], 11)",
           "output": "TypeError: unable to coerce <class 'list'> to an integer",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's RationalReconstruction is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"RationalReconstruction\",[\"PowerMod\",[\"Rational\",55835135,15519504],1,[\"Subtract\",[\"Power\",2,61],1]],[\"Subtract\",[\"Power\",2,61],1]]": {
         "sage": {
           "input": "rational_reconstruction(power_mod((55835135/15519504), 1, ((2^61) - 1)), ((2^61) - 1))",
           "output": "55835135/15519504",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"RationalReconstruction\",[\"PowerMod\",[\"Rational\",55835135,15519504],1,1000000007],1000000007]": {
         "sage": {
           "input": "rational_reconstruction(power_mod((55835135/15519504), 1, 1000000007), 1000000007)",
           "output": "ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"RationalReconstruction\", 301316272, 10 and Sage raises an error."
         }
       },
       "[\"RationalReconstruction\",3,11]": {
         "sage": {
           "input": "rational_reconstruction(3, 11)",
           "output": "ArithmeticError: rational reconstruction of 3 (mod 11) does not exist",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"RationalReconstruction\", 3, 11] and Sage raises an error."
         }
       }
     },

@@ -38,20 +38,20 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/ExtendedGCD#3`           | shape          | `["Tuple",1,4,-1]`                                                                        | `{1, {4, -1}}`                                                                               |
 | `number-theory/ExtendedGCD#4`           | shape          | `["Tuple",5,0,1]`                                                                         | `{5, {0, 1}}`                                                                                |
 | `number-theory/ExtendedGCD#6`           | shape          | `["Tuple",1,["Complex",-1,-2],["Complex",-2,2]]`                                          | `{1, {-1 - 2*I, -2 + 2*I}}`                                                                  |
-| `number-theory/FromDigits#5`            | domain         | `["FromDigits",["List"]]`                                                                 | `0`                                                                                          |
 | `number-theory/GCD#8`                   | convention     | `2`                                                                                       | `{2, 4}`                                                                                     |
-| `number-theory/IntegerString#5`         | convention     | `'-42'`                                                                                   | `"42"`                                                                                       |
 | `number-theory/MoebiusMu#6`             | domain         | `["MoebiusMu",0]`                                                                         | `0`                                                                                          |
-| `number-theory/PowerMod#11`             | domain         | `3`                                                                                       | `PowerMod[2/3, 1, 7]`                                                                        |
-| `number-theory/PowerMod#14`             | convention     | `{"re":-2,"im":-1}`                                                                       | `PowerMod[11 - 7*I, -4, 7 + 4*I]`                                                            |
-| `number-theory/PowerModList#22`         | undefined-form | `[]`                                                                                      | `PowerModList[2, -1, 4]`                                                                     |
-| `number-theory/PowerModList#24`         | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]` | `{2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
-| `number-theory/PowerModList#26`         | domain         | `[[1, 3, 5, 7], [1, 4, 11, 14], [1, 8, 13, 20], [1, 5, 7, 11, 13, 17, 19, 23]]`           | `PowerModList[1, 1/2, {8, 15, 21, 24}]`                                                      |
-| `number-theory/PowerModList#27`         | domain         | `[{"re":-2,"im":-2}, {"re":2,"im":2}]`                                                    | `PowerModList[I, 1/2, 7]`                                                                    |
-| `number-theory/PowerModList#28`         | domain         | `[{"re":-2,"im":-1}, {"re":2,"im":1}]`                                                    | `PowerModList[3 + 4*I, 1/2, 100000000000000000039]`                                          |
-| `number-theory/PowerModList#7`          | domain         | `[4, 19]`                                                                                 | `PowerModList[2/3, 1/2, 23]`                                                                 |
-| `number-theory/PowerModList#8`          | domain         | `[[1, 4], [], [], [2, 3]]`                                                                | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
-| `number-theory/PrimitiveRootList#7`     | domain         | `["Length",["PrimitiveRootList",1000003]]`                                                | `333332`                                                                                     |
+| `numerals/FromDigits#5`                 | domain         | `["FromDigits",["List"]]`                                                                 | `0`                                                                                          |
+| `numerals/IntegerString#5`              | convention     | `'-42'`                                                                                   | `"42"`                                                                                       |
+| `residues/PowerMod#11`                  | domain         | `3`                                                                                       | `PowerMod[2/3, 1, 7]`                                                                        |
+| `residues/PowerMod#14`                  | convention     | `{"re":-2,"im":-1}`                                                                       | `PowerMod[11 - 7*I, -4, 7 + 4*I]`                                                            |
+| `residues/PowerModList#22`              | undefined-form | `[]`                                                                                      | `PowerModList[2, -1, 4]`                                                                     |
+| `residues/PowerModList#24`              | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]` | `{2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
+| `residues/PowerModList#26`              | domain         | `[[1, 3, 5, 7], [1, 4, 11, 14], [1, 8, 13, 20], [1, 5, 7, 11, 13, 17, 19, 23]]`           | `PowerModList[1, 1/2, {8, 15, 21, 24}]`                                                      |
+| `residues/PowerModList#27`              | domain         | `[{"re":-2,"im":-2}, {"re":2,"im":2}]`                                                    | `PowerModList[I, 1/2, 7]`                                                                    |
+| `residues/PowerModList#28`              | domain         | `[{"re":-2,"im":-1}, {"re":2,"im":1}]`                                                    | `PowerModList[3 + 4*I, 1/2, 100000000000000000039]`                                          |
+| `residues/PowerModList#7`               | domain         | `[4, 19]`                                                                                 | `PowerModList[2/3, 1/2, 23]`                                                                 |
+| `residues/PowerModList#8`               | domain         | `[[1, 4], [], [], [2, 3]]`                                                                | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
+| `residues/PrimitiveRootList#7`          | domain         | `["Length",["PrimitiveRootList",1000003]]`                                                | `333332`                                                                                     |
 | `special-functions/BetaRegularized#8`   | domain         | `["BetaRegularized",2,2,3]`                                                               | `8`                                                                                          |
 | `special-functions/GammaRegularized#6`  | domain         | `["GammaRegularized",2.5,-1]`                                                             | `0.9999999999999998 - 0.6280082302883814*I`                                                  |
 | `special-functions/HurwitzZeta#6`       | precision      | `-2.41141975308642`                                                                       | `HurwitzZeta[-3, 7/3]`                                                                       |
@@ -61,11 +61,11 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                | message    |
-| -------------------------------------- | ---------- |
-| `number-theory/MultiplicativeOrder#10` | `$Aborted` |
-| `number-theory/MultiplicativeOrder#8`  | `$Aborted` |
-| `number-theory/PowerModList#25`        | `$Aborted` |
+| example                           | message    |
+| --------------------------------- | ---------- |
+| `residues/MultiplicativeOrder#10` | `$Aborted` |
+| `residues/MultiplicativeOrder#8`  | `$Aborted` |
+| `residues/PowerModList#25`        | `$Aborted` |
 
 </details>
 
@@ -84,7 +84,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `elementary/Tan#9`                | undefined-form | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
 | `number-theory/FactorInteger#5`   | shape          | `[["Tuple",1,1]]`                                                                         | `[]`                                                                                         |
 | `number-theory/FactorInteger#7`   | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                           | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
-| `number-theory/PowerModList#24`   | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]` | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
+| `residues/PowerModList#24`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]` | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
 | `special-functions/Gamma#1`       | undefined-form | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
 | `special-functions/Gamma#6`       | convention     | `true`                                                                                    | `False`                                                                                      |
 | `special-functions/HurwitzZeta#5` | undefined-form | `ComplexInfinity`                                                                         | `hurwitz_zeta(1, 3)`                                                                         |
@@ -113,22 +113,22 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/FactorInteger#6`          | `ArithmeticError: factorization of 0 is not defined`                                         |
 | `number-theory/GCD#8`                    | `TypeError: unable to call gcd with [2, 4]`                                                  |
 | `number-theory/IsPrime#8`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `number-theory/Mod#4`                    | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
-| `number-theory/Mod#5`                    | `ZeroDivisionError: Integer modulo by zero`                                                  |
-| `number-theory/ModularInverse#4`         | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
-| `number-theory/MultiplicativeOrder#5`    | `ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22`   |
-| `number-theory/PowerMod#10`              | `TypeError: no conversion of this rational to integer`                                       |
-| `number-theory/PowerMod#18`              | `TypeError: no conversion of this rational to integer`                                       |
-| `number-theory/PowerMod#6`               | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
-| `number-theory/PowerMod#7`               | `TypeError: no conversion of this rational to integer`                                       |
-| `number-theory/PowerMod#8`               | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `number-theory/PowerModList#22`          | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
-| `number-theory/PowerModList#25`          | `MemoryError: over 1024 MiB`                                                                 |
-| `number-theory/PowerModList#26`          | `TypeError: unhashable type: 'list'`                                                         |
-| `number-theory/PowerModList#8`           | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `number-theory/RationalReconstruction#4` | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `number-theory/RationalReconstruction#6` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
 | `number-theory/RationalReconstruction#8` | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |
+| `residues/Mod#4`                         | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
+| `residues/Mod#5`                         | `ZeroDivisionError: Integer modulo by zero`                                                  |
+| `residues/ModularInverse#4`              | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `residues/MultiplicativeOrder#5`         | `ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22`   |
+| `residues/PowerMod#10`                   | `TypeError: no conversion of this rational to integer`                                       |
+| `residues/PowerMod#18`                   | `TypeError: no conversion of this rational to integer`                                       |
+| `residues/PowerMod#6`                    | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `residues/PowerMod#7`                    | `TypeError: no conversion of this rational to integer`                                       |
+| `residues/PowerMod#8`                    | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `residues/PowerModList#22`               | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `residues/PowerModList#25`               | `MemoryError: over 1024 MiB`                                                                 |
+| `residues/PowerModList#26`               | `TypeError: unhashable type: 'list'`                                                         |
+| `residues/PowerModList#8`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `sequences/BernoulliB#8`                 | `OverflowError: can't convert negative value to unsigned long`                               |
 | `special-functions/Gamma#3`              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
 | `special-functions/PolyGamma#6`          | `ValueError: psi2_eval(): pole`                                                              |
@@ -151,9 +151,9 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#9`  | `DomainError with -1: Argument must be non-negative`                                         |
 | `number-theory/GCD#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#8`    | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/Mod#4`        | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
-| `number-theory/Mod#5`        | `DivideError: integer division error`                                                        |
 | `number-theory/MoebiusMu#6`  | `DomainError with 0: Argument must be positive`                                              |
+| `residues/Mod#4`             | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
+| `residues/Mod#5`             | `DivideError: integer division error`                                                        |
 
 </details>
 
@@ -175,9 +175,9 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#9`      | `DomainError with -1: Argument must be non-negative`                                         |
 | `number-theory/GCD#8`            | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/Mod#4`            | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
-| `number-theory/Mod#5`            | `DivideError: integer division error`                                                        |
 | `number-theory/MoebiusMu#6`      | `DomainError with 0: Argument must be positive`                                              |
+| `residues/Mod#4`                 | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
+| `residues/Mod#5`                 | `DivideError: integer division error`                                                        |
 | `sequences/LucasL#8`             | `DomainError with -1: n must be nonnegative`                                                 |
 
 </details>
@@ -202,7 +202,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/GCD#8`            | `Application type mismatch: The argument`     |
 | `number-theory/IsPrime#6`        | `failed to synthesize instance of type class` |
 | `number-theory/IsPrime#8`        | `Application type mismatch: The argument`     |
-| `number-theory/Mod#4`            | `Type mismatch`                               |
+| `residues/Mod#4`                 | `Type mismatch`                               |
 | `sequences/Fibonacci#8`          | `failed to synthesize instance of type class` |
 
 </details>
