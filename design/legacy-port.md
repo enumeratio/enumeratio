@@ -64,9 +64,9 @@ which works per cell, not per column or per policy.
 
 ## 2. Polytopes
 
-`packages/polytope` has the permutahedron, associahedron, cross-polytope and simplex, and
-`<notatio-polytope>` covers what the old WebGL figure did (face selection, face labels from
-a representation). Left:
+`packages/polytope` has the permutahedron, associahedron, cross-polytope, simplex and
+hypercube, and `<notatio-polytope>` covers what the old WebGL figure did (face selection,
+face labels from a representation). Left:
 
 - **Cyclohedron W_n** — `packages/data/packs/polytopes/polytope-collections.sql`, the
   largest block. Faces are centrally symmetric dissections of a (2n+2)-gon, the fixed points
@@ -75,8 +75,6 @@ a representation). Left:
   C(n,k)·C(n+k,k), summing to the central Delannoy numbers (A001850); enumerate by orbits,
   not by filtering. Issue #330 (open): an explicit Delannoy-path bijection for unrank —
   try tubings of the cycle graph.
-- **Hypercube** — the dual reading of the signed-subset carrier: dim = n − |fixed axes|,
-  containment reversed.
 - **Vertex-only families** — hypersimplex Δ(k,n) on k-subsets (Johnson-graph adjacency),
   Birkhoff B_n on permutations (permutation matrices, transposition adjacency), type-B
   permutahedron on signed permutations.

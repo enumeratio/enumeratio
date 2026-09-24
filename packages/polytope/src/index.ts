@@ -1,6 +1,7 @@
 export { ASSOCIAHEDRON } from "./associahedron.ts";
 export { CROSS_POLYTOPE } from "./crosspolytope.ts";
 export { type Face, factorial, polytope, type Polytope, type PolytopeSpec } from "./face.ts";
+export { HYPERCUBE } from "./hypercube.ts";
 export { PERMUTAHEDRON } from "./permutahedron.ts";
 export {
   type DrawOptions,
@@ -33,6 +34,7 @@ export { SIMPLEX } from "./simplex.ts";
 import { ASSOCIAHEDRON } from "./associahedron.ts";
 import { CROSS_POLYTOPE } from "./crosspolytope.ts";
 import type { Polytope } from "./face.ts";
+import { HYPERCUBE } from "./hypercube.ts";
 import { PERMUTAHEDRON } from "./permutahedron.ts";
 import { SIMPLEX } from "./simplex.ts";
 
@@ -42,4 +44,5 @@ export const POLYTOPES: Record<string, Polytope> = {
   simplex: SIMPLEX,
   "cross-polytope": CROSS_POLYTOPE,
   associahedron: ASSOCIAHEDRON,
+  hypercube: HYPERCUBE,
 };

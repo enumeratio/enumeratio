@@ -2,6 +2,8 @@ import { expect, test } from "vite-plus/test";
 import {
   ASSOCIAHEDRON,
   CROSS_POLYTOPE,
+  factorial,
+  HYPERCUBE,
   PERMUTAHEDRON,
   type Polytope,
   SIMPLEX,
@@ -38,6 +40,31 @@ test("the cross-polytope is the octahedron at order 3 and the 16-cell at order 4
   expect(ringSizes(CROSS_POLYTOPE, 3), "eight triangles").toEqual([3, 3, 3, 3, 3, 3, 3, 3]);
 });
 
+test("the hypercube is a cube at order 3 and a tesseract at order 4", () => {
+  // f_k = C(n,k)·2^(n−k): the dual reading of the cross-polytope's signed subsets — a face
+  // fixes n−k axes to ±1 rather than spanning k of them.
+  const choose = (n: number, k: number): number =>
+    k < 0 || k > n ? 0 : factorial(n) / (factorial(k) * factorial(n - k));
+  const fk = (n: number, k: number): number => choose(n, k) * 2 ** (n - k);
+  expect(counts(HYPERCUBE, 3)).toEqual({ 0: fk(3, 0), 1: fk(3, 1), 2: fk(3, 2), 3: fk(3, 3) });
+  expect(counts(HYPERCUBE, 4)).toEqual({
+    0: fk(4, 0),
+    1: fk(4, 1),
+    2: fk(4, 2),
+    3: fk(4, 3),
+    4: fk(4, 4),
+  });
+  expect(ringSizes(HYPERCUBE, 3), "six squares").toEqual([4, 4, 4, 4, 4, 4]);
+  // Euler characteristic of the boundary, over the PROPER faces (0 through n−1): V−E+F=2 at
+  // n=3, and the alternating sum vanishes at n=4 — 1 − (−1)^n either way.
+  const euler = (n: number): number =>
+    Object.entries(counts(HYPERCUBE, n))
+      .filter(([d]) => Number(d) < n)
+      .reduce((sum, [d, count]) => sum + (Number(d) % 2 === 0 ? count : -count), 0);
+  expect(euler(3)).toBe(1 - (-1) ** 3);
+  expect(euler(4)).toBe(1 - (-1) ** 4);
+});
+
 test("the cross-polytope fills its ambient space rather than a hyperplane", () => {
   // The permutahedron's coordinates sum to a constant; the cross-polytope's do not, which is
   // why the cast reads a polytope's span off its vertices instead of assuming a hyperplane.
@@ -64,7 +91,7 @@ test("the associahedron's vertices are Catalan and its facets are 3 squares + 6 
 });
 
 test("every polytope's 1-skeleton comes out of the poset", () => {
-  for (const P of [SIMPLEX, CROSS_POLYTOPE, ASSOCIAHEDRON, PERMUTAHEDRON])
+  for (const P of [SIMPLEX, CROSS_POLYTOPE, HYPERCUBE, ASSOCIAHEDRON, PERMUTAHEDRON])
     for (const n of [3, 4]) {
       const points = scene(P, n);
       expect(skeleton(P, points).length, `${P.name} n=${n}`).toBe(stratum(points, 1).length);
@@ -72,7 +99,7 @@ test("every polytope's 1-skeleton comes out of the poset", () => {
 });
 
 test("containment is an order on every polytope, with the body on top", () => {
-  for (const P of [SIMPLEX, CROSS_POLYTOPE, ASSOCIAHEDRON]) {
+  for (const P of [SIMPLEX, CROSS_POLYTOPE, HYPERCUBE, ASSOCIAHEDRON]) {
     const faces = P.enumerate(3);
     const body = faces.find((f) => P.dimension(f) === P.dimensionAt(3))!;
     for (const face of faces) {

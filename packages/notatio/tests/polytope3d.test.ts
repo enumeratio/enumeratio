@@ -1,4 +1,10 @@
-import { ASSOCIAHEDRON, CROSS_POLYTOPE, PERMUTAHEDRON as P, SIMPLEX } from "@enumeratio/polytope";
+import {
+  ASSOCIAHEDRON,
+  CROSS_POLYTOPE,
+  HYPERCUBE,
+  PERMUTAHEDRON as P,
+  SIMPLEX,
+} from "@enumeratio/polytope";
 import { expect, test } from "vite-plus/test";
 import {
   parseFaces,
@@ -127,6 +133,7 @@ test("every polytope draws, and the marks are the faces", () => {
   const expected = [
     [SIMPLEX, 4, 4, 6, 4],
     [CROSS_POLYTOPE, 3, 6, 12, 8],
+    [HYPERCUBE, 3, 8, 12, 6],
     [ASSOCIAHEDRON, 4, 14, 21, 9],
   ] as const;
   for (const [P, n, dots, lines, faces] of expected) {
