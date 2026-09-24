@@ -8,8 +8,7 @@
 // Everything canonical — a gcd, a prime, a divisor — is the associate in the first quadrant:
 // Re > 0 and Im ≥ 0. There is exactly one among the four z, iz, −z, −iz for z ≠ 0.
 
-import { factorInteger, isPrime } from "./primes.ts";
-import { powerModRoots } from "./roots.ts";
+import { factorInteger, isPrime, powerModRoots } from "@enumeratio/residues";
 
 export type Gaussian = readonly [re: bigint, im: bigint];
 

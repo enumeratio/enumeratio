@@ -1,4 +1,4 @@
-import { factorInteger, isPrime } from "@enumeratio/number-theory";
+import { factorInteger, isPrime } from "@enumeratio/residues";
 import { adic } from "@enumeratio/numerals";
 import * as P from "./profinite.ts";
 import type { Profinite } from "./profinite.ts";

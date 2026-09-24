@@ -1,8 +1,8 @@
 {
-  "name": "@enumeratio/numerals",
+  "name": "@enumeratio/residues",
   "version": "0.0.0",
   "private": true,
-  "description": "Numeral-system extensions for @cortex-js/compute-engine: IntegerDigits/FromDigits over radix, mixed-radix, factoradic, balanced, negative, bijective, Zeckendorf, combinatorial and residue systems.",
+  "description": "Modular arithmetic for @cortex-js/compute-engine: residues, CRT, factoring, every r-th root of a residue (PowerModList), discrete logarithms, primitive roots, and IntegerMod — an element of Z/m as a value — all over bigints.",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -23,13 +23,11 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/boxed": "workspace:*",
-    "@enumeratio/residues": "workspace:*"
+    "@enumeratio/boxed": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/boxed": "workspace:*",
-    "@enumeratio/residues": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

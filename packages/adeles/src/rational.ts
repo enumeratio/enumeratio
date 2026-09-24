@@ -1,4 +1,4 @@
-import { gcd } from "@enumeratio/number-theory";
+import { gcd } from "@enumeratio/residues";
 
 // Exact rationals over bigints: [numerator, denominator], denominator positive, reduced.
 

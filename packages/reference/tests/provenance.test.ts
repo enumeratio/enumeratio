@@ -72,6 +72,10 @@ const VANILLA: MathJSON[] = [
   ["IntegerDigits", 0, 2],
   ["FromDigits", ["List", 1, 0, 1], 2],
   ["FromDigits", ["List", 2, 5, 5], 10],
+  // Residues, which also take IntegerMod classes.
+  ["ChineseRemainder", ["List", 3, 4], ["List", 4, 5]],
+  ["ChineseRemainder", ["List", 1, 2], ["List", 6, 10]],
+  ["PowerMod", 3, -1, 7],
   // Continued fractions, which we used to shadow outright.
   ["ContinuedFraction", ["Rational", 355, 113]],
   ["ContinuedFraction", 355, 113],
@@ -110,6 +114,7 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * on; a name disappearing means an override that has silently stopped taking effect.
  */
 const OVERRIDDEN = [
+  "ChineseRemainder",
   "Divisors",
   "Dot",
   "Element",
@@ -127,6 +132,7 @@ const OVERRIDDEN = [
   "Norm",
   "PolyLog",
   "PowerMod",
+  "QuotientRing",
   "Zeta",
 ];
 
@@ -166,9 +172,12 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * except ClausenCl, a textbook special function that Wolfram simply has no head for (it is
  * spelled Im[PolyLog[n, E^(I θ)]] there; mpmath has it as clsin/clcos, under other names) —
  * and RationalReconstruction, which the three leave to private helpers but SageMath and Maple
- * expose (`rational_reconstruction`, `iratrecon`).
+ * expose (`rational_reconstruction`, `iratrecon`). IntegerMod and IntegerModRing are Sage's
+ * `Mod(a, m)` and `Zmod(m)`.
  */
 const NOVEL = [
+  "IntegerMod",
+  "IntegerModRing",
   "RationalReconstruction",
   "ProfiniteNumber",
   "Adele",
@@ -220,10 +229,10 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
   // general system already carries, that we implemented again.
   const known = ours.filter((record) => record.elsewhere.length > 0);
   expect(known.map((record) => record.name)).toEqual([
-    "Quotient",
     "PowerModList",
-    "KroneckerSymbol",
     "PrimitiveRootList",
+    "Quotient",
+    "KroneckerSymbol",
     "IntegerExponent",
     "HermiteDecomposition",
     "HurwitzZeta",

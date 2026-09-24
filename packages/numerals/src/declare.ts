@@ -9,11 +9,13 @@ import {
   factoradic,
   mixedRadix,
   negativeRadix,
+  type DigitBound,
   type NumeralSystem,
   ostrowski,
   primorialRadix,
   radix,
   residueSystem,
+  type Shape,
   zeckendorf,
 } from "./systems.ts";
 
@@ -178,12 +180,45 @@ export function declareNumerals(ce: ComputeEngine): void {
     },
   );
 
-  /** What a system's digits look like, for discovery. */
+  /** The integers from `lo` to `hi` as a set, either end possibly unbounded. */
+  const integers = (lo: bigint | number | undefined, hi: bigint | number | undefined) => {
+    if (hi === undefined) {
+      if (lo === undefined) return ce.symbol("Integers");
+      if (lo === 0 || lo === 0n) return ce.symbol("NonNegativeIntegers");
+    }
+    const end = (x: bigint | number | undefined, infinity: string) =>
+      x === undefined ? ce.symbol(infinity) : ce.number(x);
+    return ce.function("Range", [end(lo, "NegativeInfinity"), end(hi, "PositiveInfinity")]);
+  };
+  const digitSet = ([lo, hi]: DigitBound) => integers(lo, hi);
+  const isBound = (digits: Shape["digits"]): digits is DigitBound =>
+    typeof digits?.[0] === "number";
+
+  /** What a system's numerals look like, as a Dictionary — for discovery. */
   ce.declare("NumeralSystemShape", {
-    signature: "(any) -> string",
+    signature: "(any) -> any",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const system = ops[0] === undefined ? undefined : systemOf(ops[0]);
-      return system === undefined ? undefined : ce.string(system.shape);
+      if (system === undefined) return undefined;
+      const { bijective, range, digits, width, rule } = system.shape;
+      const fields: [string, BoxedExpression][] = [
+        ["Bijective", ce.symbol(bijective ? "True" : "False")],
+        ["Integers", integers(...range)],
+      ];
+      if (digits !== undefined) {
+        fields.push([
+          "Digits",
+          isBound(digits)
+            ? digitSet(digits)
+            : ce.function("List", (digits as readonly DigitBound[]).map(digitSet)),
+        ]);
+      }
+      if (width !== undefined) fields.push(["Width", ce.number(width)]);
+      if (rule !== undefined) fields.push(["Rule", ce.string(rule)]);
+      return ce.function(
+        "Dictionary",
+        fields.map(([key, value]) => ce.function("KeyValuePair", [ce.string(key), value])),
+      );
     },
   });
 }

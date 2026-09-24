@@ -6,8 +6,7 @@ import {
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
-import { invMod } from "./arith.ts";
-import { factorInteger } from "./primes.ts";
+import { factorInteger, invMod } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import {
   divisorsGaussian,

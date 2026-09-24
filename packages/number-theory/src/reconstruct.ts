@@ -9,7 +9,7 @@
 // images with ChineseRemainder, and read the fraction back once the product of the primes
 // is large enough.
 
-import { gcd, isqrt, mod } from "./arith.ts";
+import { gcd, isqrt, mod } from "@enumeratio/residues";
 
 /**
  * The fraction n/d with n ≡ a·d (mod m), |n| ≤ N, 0 < d ≤ D and gcd(n, d) = 1, as [n, d];

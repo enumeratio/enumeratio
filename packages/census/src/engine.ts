@@ -39,6 +39,7 @@ import { declareModular } from "@enumeratio/modular/src";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
+import { declareResidues } from "@enumeratio/residues/src";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 
 /** Every declaration, in an order that satisfies what depends on what. */
@@ -47,6 +48,7 @@ export const DECLARATIONS: ((ce: ComputeEngine) => void)[] = [
   declareHypercomplex,
   declareGeometric,
   declareDiagrams,
+  declareResidues,
   declareNumerals,
   declareHecke,
   declareIncidence,

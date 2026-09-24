@@ -1,8 +1,9 @@
 import type { ReferenceEntry } from "../types.ts";
 
-// Reference entries for @enumeratio/numerals. `IntegerDigits` and `FromDigits` are
-// compute-engine's OWN heads — what this library adds is systems in the base slot, so
-// the entries document that widening rather than introducing parallel heads.
+// Reference entries for @enumeratio/numerals, and compute-engine's other digit heads.
+// `IntegerDigits` and `FromDigits` are compute-engine's OWN heads — what this library adds
+// is systems in the base slot, so one entry documents both the native forms and the
+// widening rather than introducing parallel heads.
 
 const DOMAIN = "Numeral systems";
 const L = (...xs: number[]) => ["List", ...xs];
@@ -11,13 +12,18 @@ export const numerals: readonly ReferenceEntry[] = [
   {
     name: "IntegerDigits",
     domain: DOMAIN,
-    signature: "IntegerDigits(n, system, width?)",
+    signature: "IntegerDigits(n, base?, width?)",
     summary:
-      "The digits of $n$, most significant first. The base slot takes a whole numeral SYSTEM, not only an integer — factoradic, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed, primorial, combinatorial or residue.",
+      "The digits of $n$, most significant first — base 10 by default. The base slot takes a whole numeral SYSTEM, not only an integer — factoradic, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed, primorial, combinatorial or residue.",
     signatures: [
       {
-        call: "IntegerDigits(n, b)",
-        description: "fixed radix $b$ — compute-engine's own, unchanged",
+        call: "IntegerDigits(n)",
+        description: "digits of $n$ in base 10, most significant first.",
+      },
+      { call: "IntegerDigits(n, base)", description: "digits of $n$ in the given base." },
+      {
+        call: "IntegerDigits(n, base, len)",
+        description: "the $len$ least-significant digits, zero-padded if needed.",
       },
       {
         call: "IntegerDigits(n, system)",
@@ -31,6 +37,10 @@ export const numerals: readonly ReferenceEntry[] = [
       },
     ],
     details: [
+      "Digits come out most significant first, matching ordinary positional notation.",
+      "In a fixed base the sign of n is discarded, so negative integers give the same digits as their absolute value.",
+      "IntegerDigits(0) is $\\{0\\}$ -- there's always at least one digit.",
+      "The 3-argument form keeps only the len least-significant digits, truncating or zero-padding as needed.",
       "Systems: `MixedRadix([…])`, `Factoradic`, `PrimorialRadix`, `BalancedRadix(b)`, `NegativeRadix(b)`, `BijectiveRadix(k)`, `Zeckendorf`, `Ostrowski([…])`, `CombinatorialSystem(k)`, `ResidueSystem([…])`, `AdicNumerals(b, prec?)`",
       "`Ostrowski([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf",
       "`BalancedRadix` and `NegativeRadix` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead",
@@ -40,6 +50,36 @@ export const numerals: readonly ReferenceEntry[] = [
       "Inverted by [[FromDigits]] with the same system",
     ],
     examples: [
+      { expr: ["IntegerDigits", 1234], expected: ["List", 1, 2, 3, 4] },
+      {
+        expr: ["IntegerDigits", 2147, 2],
+        expected: ["List", 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+      },
+      {
+        expr: ["IntegerDigits", 0],
+        expected: ["List", 0],
+        category: "Possible issues",
+        caption: "Unlike [[IntegerString]] there's always at least one digit, even for 0",
+      },
+      {
+        expr: ["IntegerDigits", -3134],
+        expected: ["List", 3, 1, 3, 4],
+        category: "Possible issues",
+        caption: "The sign is discarded",
+      },
+      {
+        expr: ["IntegerDigits", 6345354, 10, 4],
+        expected: ["List", 5, 3, 5, 4],
+        category: "Applications",
+        caption: "The 3-argument form keeps only the 4 least-significant digits",
+      },
+      {
+        expr: ["IntegerDigits", ["List", 6, 7, 2], 2],
+        expected: ["List", ["List", 1, 1, 0], ["List", 1, 1, 1], ["List", 1, 0]],
+        aspirational: true,
+        category: "Scope",
+        caption: "compute-engine does not",
+      },
       {
         expr: ["IntegerDigits", 93784, ["MixedRadix", L(24, 60, 60)]],
         expected: L(1, 2, 3, 4),
@@ -94,16 +134,23 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Properties",
       },
     ],
-    seeAlso: ["FromDigits", "NumeralSystemShape"],
+    seeAlso: ["FromDigits", "NumeralSystemShape", "DigitCount", "IntegerString"],
   },
   {
     name: "FromDigits",
     domain: DOMAIN,
-    signature: "FromDigits(digits, system)",
+    signature: "FromDigits(digits, base?)",
     summary:
       "The integer a digit string denotes, in any numeral system. The inverse of [[IntegerDigits]] — and the round trip is the whole specification of a system.",
     signatures: [
-      { call: "FromDigits(digits, b)", description: "fixed radix — compute-engine's own" },
+      {
+        call: "FromDigits([d1, d2, …])",
+        description: "integer formed from a digit list in base 10.",
+      },
+      {
+        call: "FromDigits([d1, d2, …], base)",
+        description: "integer formed from a digit list in the given base.",
+      },
       {
         call: "FromDigits(digits, system)",
         description: "read the digits in that system",
@@ -114,8 +161,47 @@ export const numerals: readonly ReferenceEntry[] = [
       "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies",
       "In a residue system with moduli that are not pairwise coprime the map is not a bijection, and an inconsistent string has no value",
       "Zeckendorf is the clearest case of a system whose digits are constrained by a forbidden PATTERN rather than a per-place bound",
+      "Reading a `ResidueSystem` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back",
+      "In a fixed base, the inverse of [[IntegerDigits]]: $\\mathrm{FromDigits}(\\mathrm{IntegerDigits}(n))=n$ for $n\\ge0$.",
+      "Digits need not be restricted to $0..\\mathrm{base}-1$ -- a digit $\\ge$ base simply carries into higher place values.",
+      "An empty digit list has no natural value; compute-engine leaves it unevaluated rather than returning 0.",
+      "compute-engine's FromDigits takes a list of digits, not a digit string.",
     ],
     examples: [
+      { expr: ["FromDigits", ["List", 5, 1, 2, 8]], expected: 5128 },
+      {
+        expr: ["FromDigits", ["List", 1, 0, 1, 1, 0, 1, 1], 2],
+        expected: 91,
+      },
+      {
+        expr: ["Equal", ["FromDigits", ["IntegerDigits", 58127]], 58127],
+        expected: "True",
+        category: "Properties",
+        caption: "FromDigits inverts [[IntegerDigits]]",
+      },
+      {
+        expr: ["FromDigits", ["List", 7, 11, 0, 0, 0, 122]],
+        expected: 810122,
+        category: "Neat examples",
+        caption:
+          "Digits ≥ the base carry into higher place values: $7\\times10^5+11\\times10^4+122=810122$",
+      },
+      {
+        expr: ["FromDigits", ["List"]],
+        expected: ["FromDigits", ["List"]],
+        category: "Possible issues",
+        caption: "An empty digit list is left unevaluated rather than treated as 0",
+        divergence: {
+          wolfram: "An empty digit list is left unevaluated here; Wolfram reads it as 0.",
+        },
+      },
+      {
+        expr: ["FromDigits", "'1923'"],
+        expected: 1923,
+        aspirational: true,
+        category: "Scope",
+        caption: "compute-engine's FromDigits only takes a list of digits",
+      },
       {
         expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadix", L(24, 60, 60)]],
         expected: 93784,
@@ -139,32 +225,208 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Possible issues",
       },
     ],
-    seeAlso: ["IntegerDigits", "NumeralSystemShape"],
+    seeAlso: ["IntegerDigits", "NumeralSystemShape", "ChineseRemainder"],
+  },
+  {
+    name: "IntegerString",
+    domain: DOMAIN,
+    signature: "IntegerString(n, base?)",
+    summary: "The string representation of n in the given base (default 10).",
+    signatures: [
+      { call: "IntegerString(n)", description: "string form of $n$ in base 10." },
+      {
+        call: "IntegerString(n, base)",
+        description: "string form of $n$ in the given base, up to base 36.",
+      },
+    ],
+    details: [
+      "Bases above 10 use letters a-z for digit values beyond 9, up to base 36.",
+      "compute-engine keeps a leading minus sign for negative n",
+      "compute-engine only supports the 2-argument form.",
+      "compute-engine's second argument is always a numeric base.",
+    ],
+    examples: [
+      { expr: ["IntegerString", 42], expected: "'42'" },
+      { expr: ["IntegerString", 17651, 2], expected: "'100010011110011'" },
+      {
+        expr: ["IntegerString", 255, 16],
+        expected: "'ff'",
+        caption: "Bases above 10 use letters a-z",
+      },
+      {
+        expr: ["IntegerString", 0],
+        expected: "'0'",
+        category: "Possible issues",
+      },
+      {
+        expr: ["IntegerString", -42],
+        expected: "'-42'",
+        category: "Possible issues",
+        caption: "compute-engine keeps the sign",
+        divergence: { wolfram: "compute-engine keeps the sign; Wolfram's IntegerString drops it." },
+      },
+      {
+        expr: ["IntegerString", 5, 2, 8],
+        expected: "'00000101'",
+        aspirational: true,
+        category: "Scope",
+        caption: "compute-engine only supports the 2-argument form",
+      },
+    ],
+    seeAlso: ["IntegerDigits"],
+  },
+  {
+    name: "DigitCount",
+    domain: DOMAIN,
+    signature: "DigitCount(n, base?)",
+    summary: "Counts of each digit (1 through 9, then 0) occurring in n, base 10 by default.",
+    signatures: [
+      { call: "DigitCount(n)", description: "counts of each digit 1-9 then 0, base 10." },
+      {
+        call: "DigitCount(n, base)",
+        description: "counts of each digit in the given base, highest digit value first.",
+      },
+      { call: "DigitCount(n, base, digit)", description: "count of just one digit value." },
+    ],
+    details: [
+      "Equivalent to tallying [[IntegerDigits]](n, base) bucket by bucket.",
+      "The default base-10 form orders counts 1 through 9, then 0 last.",
+      "The 3-argument form isolates the count of a single digit value.",
+      'Trailing zeros count individually -- 122000 has three trailing 0 digits, not a single "trailing zeros" tally.',
+    ],
+    examples: [
+      {
+        expr: ["DigitCount", 2147],
+        expected: ["List", 1, 1, 0, 1, 0, 0, 1, 0, 0, 0],
+      },
+      {
+        expr: ["DigitCount", 2147, 2],
+        expected: ["List", 5, 7],
+        caption: "In base 2, counts of digit 1 then digit 0",
+      },
+      {
+        expr: ["DigitCount", 2147, 10, 1],
+        expected: 1,
+        category: "Applications",
+        caption: "The 3-argument form isolates a single digit's count",
+      },
+      {
+        expr: ["DigitCount", 122000, 10, 0],
+        expected: 3,
+        category: "Possible issues",
+        caption: "Three trailing zeros, not four: $122000$ has digits $1,2,2,0,0,0$",
+      },
+      {
+        expr: ["DigitCount", ["List", 23, 45]],
+        expected: [
+          "List",
+          ["List", 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+          ["List", 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "compute-engine does not",
+      },
+    ],
+    seeAlso: ["IntegerDigits", "DigitSum"],
+  },
+  {
+    name: "DigitSum",
+    domain: DOMAIN,
+    signature: "DigitSum(n, base?)",
+    summary: "The sum of the digits of n in the given base (default 10).",
+    signatures: [
+      { call: "DigitSum(n)", description: "sum of the digits of $n$, base 10." },
+      { call: "DigitSum(n, base)", description: "sum of the digits of $n$ in the given base." },
+    ],
+    details: [
+      "Equivalent to summing [[IntegerDigits]](n, base).",
+      "In base 2, the digit sum is the number of set bits (population count).",
+      "$n\\equiv\\mathrm{DigitSum}(n)\\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.",
+      "The sign of n is discarded before summing.",
+      "compute-engine only supports the 2-argument form.",
+    ],
+    examples: [
+      { expr: ["DigitSum", 58127], expected: 23 },
+      {
+        expr: ["DigitSum", 58127, 2],
+        expected: 9,
+        caption: "In base 2 this is the number of set bits",
+      },
+      {
+        expr: ["DigitSum", 0],
+        expected: 0,
+        category: "Possible issues",
+      },
+      {
+        expr: ["Equal", ["Mod", ["DigitSum", 58127], 9], ["Mod", 58127, 9]],
+        expected: "True",
+        category: "Properties",
+        caption:
+          "Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root",
+      },
+      {
+        expr: ["DigitSum", 6345354, 10, 4],
+        expected: 18,
+        aspirational: true,
+        category: "Scope",
+        caption: "compute-engine only supports the 2-argument form",
+      },
+    ],
+    seeAlso: ["DigitCount"],
   },
   {
     name: "NumeralSystemShape",
     domain: DOMAIN,
     signature: "NumeralSystemShape(system)",
-    summary: "What a system's digits are allowed to look like, in one line.",
+    summary:
+      "What a system's numerals look like, as a Dictionary: whether it is a bijection, which integers it spells, and with which digits.",
     signatures: [
       {
         call: "NumeralSystemShape(system)",
-        description: "a description of the digit constraint",
+        description:
+          "`Bijective`, `Integers`, and when they apply `Digits` (one set, or one per place), `Width` and `Rule`",
         library: "enumeratio-numerals",
       },
     ],
     details: [
-      "Useful for the systems whose constraint is not a simple range — Zeckendorf's forbidden pattern, or a residue system whose moduli are not pairwise coprime",
-      "A residue system reports whether it is a bijection at all",
+      "`Digits` is one set when every place shares it, and a list — most significant first — when places differ, as in a mixed radix or a residue system",
+      "`Rule` names a constraint no per-place bound captures: Zeckendorf's no two adjacent ones, Ostrowski's ceiling rule",
+      "A residue system whose moduli share a factor still spells every integer below $\\prod m_i$, but not uniquely: `Bijective` is False",
     ],
     examples: [
       {
-        expr: ["NumeralSystemShape", "Zeckendorf"],
-        expected: "'binary digits over Fibonacci places, with no two adjacent ones'",
+        expr: ["NumeralSystemShape", ["ResidueSystem", L(4, 6)]],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "False"],
+          ["KeyValuePair", { str: "Integers" }, ["Range", 0, 23]],
+          ["KeyValuePair", { str: "Digits" }, ["List", ["Range", 0, 3], ["Range", 0, 5]]],
+          ["KeyValuePair", { str: "Width" }, 2],
+        ],
+        caption: "4 and 6 share a factor, so this is not a bijection",
       },
       {
-        expr: ["NumeralSystemShape", ["BijectiveRadix", 26]],
-        expected: "'digits 1…26, no zero digit; zero is the EMPTY numeral'",
+        expr: ["NumeralSystemShape", "Zeckendorf"],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "True"],
+          ["KeyValuePair", { str: "Integers" }, "NonNegativeIntegers"],
+          ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
+          ["KeyValuePair", { str: "Rule" }, "'no two adjacent ones'"],
+        ],
+        category: "Scope",
+      },
+      {
+        expr: ["NumeralSystemShape", ["BalancedRadix", 3]],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "True"],
+          ["KeyValuePair", { str: "Integers" }, "Integers"],
+          ["KeyValuePair", { str: "Digits" }, ["Range", -1, 1]],
+        ],
+        caption: "every integer, negatives included, with no sign",
+        category: "Scope",
       },
     ],
     seeAlso: ["IntegerDigits", "FromDigits"],
