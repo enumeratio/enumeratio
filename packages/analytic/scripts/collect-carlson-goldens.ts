@@ -160,6 +160,31 @@ for (const [x, y, z, p] of rjQuads) {
   });
 }
 
+// --- CarlsonRJ(x,y,z,p), real p < 0: the Cauchy principal value (Carlson 1995 eq. (33);
+// DLMF 19.20.14). Wolfram's own `CarlsonRJ` already returns this real value for real p < 0
+// — mpmath's `elliprj` instead returns the complex analytic continuation, whose real part
+// agrees with the principal value (Sokhotski–Plemelj) but carries a nonzero imaginary part
+// this golden format can't express as a second oracle column here, so these rows compare
+// against Wolfram only.
+const rjNegP: [Val, Val, Val, Val][] = [
+  [1, 2, 3, -1],
+  [0, 2, 3, -1], // one argument 0 (the "at most one may be 0" case)
+  [1, 2, 3, -2.5],
+  [0.5, 1.5, 4, -0.3],
+  [2, 2, 2, -1], // equal x,y,z
+];
+for (const [x, y, z, p] of rjNegP) {
+  push({
+    golden: {
+      head: "CarlsonRJ",
+      args: [toCE(x), toCE(y), toCE(z), toCE(p)],
+      label: `RJ(${label(x)},${label(y)},${label(z)},${label(p)}) [CPV]`,
+      tol: 1e-10,
+    },
+    wl: `CarlsonRJ[${toWL(x)}, ${toWL(y)}, ${toWL(z)}, ${toWL(p)}]`,
+  });
+}
+
 // --- Run the oracles --------------------------------------------------------------
 const parseLines = (out: string, clean: (s: string) => number): Map<number, Pair> => {
   const got = new Map<number, Pair>();

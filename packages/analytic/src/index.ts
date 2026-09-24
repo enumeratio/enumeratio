@@ -29,6 +29,7 @@ export { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 export { clausen } from "./clausen.ts";
 export { DEFINITIONS, PRIMITIVE } from "./definitions.ts";
 export { declareDerivatives } from "./derivatives.ts";
+export { declareElliptic } from "./elliptic.ts";
 export { dirichletBeta, dirichletBetaReal, dirichletEta, dirichletEtaReal } from "./dirichlet.ts";
 export {
   character,
@@ -49,6 +50,7 @@ export { evaluateHarmonicNumber } from "./harmonic.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
+export { declareModular } from "./modular.ts";
 export { logGamma, logGammaReal } from "./loggamma.ts";
 export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
 export { polyLog, polyLogReal } from "./polylog.ts";

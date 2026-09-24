@@ -44,17 +44,15 @@ projects rather than like tickets:
 
 The Fungrim frontier is the newest and the most mechanical to work through. Fungrim ships
 1444 identities as rewrite rules; `crosswalk:verify` instantiates each one with values its
-guards allow and evaluates both sides. Where the engine can evaluate, 422 agree and the 3
-that do not are one bug of ours (`EllipticE` at complex modulus). Where it cannot — a head
-with no numeric evaluation at a complex argument, or one that hangs — the identity is
-unchecked, and the frontier ranks the heads by how many identities each unlocks, the ones
-the engine does not declare at all first. The top of it today is the Carlson symmetric
-elliptic integrals (`CarlsonRF`/`RD`/`RJ`/`RC`/`RG`, 184 identities between them, none
-declared), then the orthogonal polynomials (`ChebyshevT`/`U`, `LegendrePolynomial`) and
-the incomplete elliptic integrals. Every entry is an implementation task with a
-ready-made test suite attached; regenerate with `vp run crosswalk:verify` in
-`packages/reference` (slow: it drives a worker process with a deadline, because a single
-evaluation can hang).
+guards allow and evaluates both sides. Every disagreement left is classified in
+`KNOWN_CAUSES` (`packages/reference/src/crosswalk/fungrim.ts`): branch-convention
+differences from our real principal values, and compute-engine bugs listed in
+[upstreaming.md §8](./upstreaming.md). Where the engine cannot evaluate — no numeric arm at
+a complex argument, or a hang — the identity is unchecked, and the frontier ranks those
+heads by how many identities each unlocks, undeclared heads first. Every entry is an
+implementation task with a ready-made test suite attached. Regenerate from
+`packages/reference` with `vp run crosswalk:verify` (~45 s; each worker's heap is capped by
+`--heap`, because a single evaluation can hang).
 
 The two statistics/maps frontiers are the opposite kind of work: small, well-specified, and
 each already carrying the argument for why it was left. The statistics one is **empty** as

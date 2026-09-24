@@ -10,7 +10,7 @@
 // result per line, and when the deadline passes the parent records the rule it died on as
 // unevaluable and restarts after it.
 //
-//   vp node packages/reference/scripts/verify-fungrim.ts [--budget 20000]
+//   vp node packages/reference/scripts/verify-fungrim.ts [--budget 20000] [--heap 1024]
 
 import { spawn } from "node:child_process";
 import { writeFileSync } from "node:fs";
@@ -26,6 +26,8 @@ const option = (flag: string, fallback: number): number => {
 };
 /** How long a worker may go without producing a line before we assume it is stuck. */
 const BUDGET = option("--budget", 20_000);
+/** Worker heap cap in MB: a runaway evaluation dies here instead of starving the machine. */
+const HEAP = option("--heap", 1024);
 
 const rules = FUNGRIM_CORE.rules as unknown as readonly FungrimRule[];
 const results = new Map<number, Outcome>();
@@ -35,7 +37,11 @@ function sweepFrom(from: number): Promise<number> {
   return new Promise((resolve) => {
     const child = spawn(
       process.execPath,
-      [new URL("check-fungrim-rule.ts", import.meta.url).pathname, String(from)],
+      [
+        `--max-old-space-size=${HEAP}`,
+        new URL("check-fungrim-rule.ts", import.meta.url).pathname,
+        String(from),
+      ],
       { stdio: ["ignore", "pipe", "inherit"] },
     );
     let last = from - 1;

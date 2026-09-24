@@ -7,21 +7,28 @@ import {
 import { barnesG, logBarnesG } from "./barnes-g.ts";
 import { bernoulliPolyExpr } from "./bernoulli.ts";
 import { type BoxInput, type EvalOptions, isFiniteNum, isRealInt, numberResult } from "./box.ts";
+import { evaluateBernoulliPolynomial } from "./bernoulli-polynomial.ts";
 import { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 import { clausen } from "./clausen.ts";
 import { cx } from "./complex.ts";
+import { evaluateCsgn } from "./csgn.ts";
 import { dirichletBeta, dirichletEta } from "./dirichlet.ts";
 import { characterExponent, dirichletL, eulerPhi } from "./dirichlet-l.ts";
+import { evaluateCongruentMod } from "./congruent-mod.ts";
 import { evaluateHarmonicNumber } from "./harmonic.ts";
 import { evaluateLegendreP } from "./legendre.ts";
 import { logGamma } from "./loggamma.ts";
 import { atEnginePrecision } from "./precise.ts";
 import { evaluateRisingFactorial } from "./rising-factorial.ts";
+import { evaluateFallingFactorial } from "./falling-factorial.ts";
+import { evaluateXGCD } from "./xgcd.ts";
+import { GLAISHER_VALUE } from "./const-glaisher.ts";
 import { stieltjesGamma } from "./stieltjes.ts";
 
 // The heads for the special functions beyond the zeta family — BarnesG, LogBarnesG,
 // LogGamma, ClausenCl, DirichletEta, DirichletBeta, StieltjesGamma, DirichletCharacter,
-// DirichletL, HarmonicNumber, ChebyshevT, ChebyshevU, LegendrePolynomial, RisingFactorial —
+// DirichletL, HarmonicNumber, ChebyshevT, ChebyshevU, LegendrePolynomial, RisingFactorial,
+// BernoulliPolynomial, FallingFactorial, XGCD, Csgn, ConstGlaisher, CongruentMod —
 // plus the Catalan constant several of their closed forms land on. Same shape as the zeta
 // heads: exact Wolfram reductions first, then the numeric kernel when a number is wanted,
 // symbolic otherwise. Declared by `declareAnalytic`.
@@ -436,5 +443,50 @@ export function declareSpecialFunctions(ce: ComputeEngine): void {
       ops[0] === undefined || ops[1] === undefined
         ? undefined
         : evaluateRisingFactorial(ce, ops[0], ops[1], wants(ops, options)),
+  });
+
+  ce.declare("BernoulliPolynomial", {
+    signature: "(integer, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateBernoulliPolynomial(ce, ops[0], ops[1], wants(ops, options)),
+  });
+
+  ce.declare("FallingFactorial", {
+    signature: "(number, number) -> number",
+    evaluate: (ops, options) =>
+      ops[0] === undefined || ops[1] === undefined
+        ? undefined
+        : evaluateFallingFactorial(ce, ops[0], ops[1], wants(ops, options)),
+  });
+
+  ce.declare("XGCD", {
+    signature: "(integer, integer) -> tuple<integer, integer, integer>",
+    evaluate: (ops) =>
+      ops[0] === undefined || ops[1] === undefined ? undefined : evaluateXGCD(ce, ops[0], ops[1]),
+  });
+
+  ce.declare("Csgn", {
+    signature: "(number) -> number",
+    broadcastable: true,
+    evaluate: (ops) => (ops[0] === undefined ? undefined : evaluateCsgn(ce, ops[0])),
+  });
+
+  if (ce.lookupDefinition("ConstGlaisher") === undefined) {
+    ce.declare("ConstGlaisher", {
+      type: "real",
+      isConstant: true,
+      holdUntil: "N",
+      value: ce.number(GLAISHER_VALUE),
+    });
+  }
+
+  ce.declare("CongruentMod", {
+    signature: "(integer, integer, integer) -> boolean",
+    evaluate: (ops) =>
+      ops[0] === undefined || ops[1] === undefined || ops[2] === undefined
+        ? undefined
+        : evaluateCongruentMod(ce, ops[0], ops[1], ops[2]),
   });
 }

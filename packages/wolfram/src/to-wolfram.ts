@@ -112,12 +112,15 @@ export const HEADS: Record<string, string> = {
   CatalanNumber: "CatalanNumber",
   BellNumber: "BellB",
   BernoulliB: "BernoulliB",
+  BernoulliPolynomial: "BernoulliB",
   HarmonicNumber: "HarmonicNumber",
   Stirling: "StirlingS2", // compute-engine `Stirling` is the second kind
   StirlingS1: "StirlingS1",
   Pochhammer: "Pochhammer",
   // Fungrim's name for the same head — see @enumeratio/analytic's rising-factorial.ts.
   RisingFactorial: "Pochhammer",
+  // Fungrim's name for falling factorial — see @enumeratio/analytic's falling-factorial.ts.
+  FallingFactorial: "FactorialPower",
   // number theory
   IsPrime: "PrimeQ",
   IsSquareFree: "SquareFreeQ",
@@ -170,6 +173,10 @@ export const HEADS: Record<string, string> = {
   ChebyshevU: "ChebyshevU",
   // Fungrim's name for LegendreP — see @enumeratio/analytic's legendre.ts.
   LegendrePolynomial: "LegendreP",
+  // Fungrim's names for the incomplete Legendre elliptic integrals, same (φ, m) order —
+  // see @enumeratio/analytic's elliptic.ts.
+  IncompleteEllipticF: "EllipticF",
+  IncompleteEllipticE: "EllipticE",
   // collections
   At: "Part",
   First: "First",
@@ -253,6 +260,11 @@ export const HEADS: Record<string, string> = {
   CarlsonRD: "CarlsonRD",
   CarlsonRJ: "CarlsonRJ",
   CarlsonRG: "CarlsonRG",
+  // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
+  // can't carry a scale. EisensteinG has no Wolfram head.
+  ModularLambda: "ModularLambda",
+  // ConstGlaisher is our spelling; Wolfram's is Glaisher.
+  ConstGlaisher: "Glaisher",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 

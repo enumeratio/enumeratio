@@ -11,12 +11,12 @@
   "scripts": {
     "test": "vp test",
     "check": "vp check",
-    "crosswalk:collect": "vp node scripts/collect-crosswalk.ts",
-    "crosswalk:fetch": "vp node scripts/fetch-fungrim-symbols.ts && vp node scripts/fetch-inventories.ts && vp node scripts/fetch-wikidata.ts && vp node scripts/fetch-dlmf.ts",
-    "crosswalk:find": "vp node scripts/find-oeis.ts && vp node scripts/find-findstat.ts",
-    "crosswalk:check": "vp node scripts/check-crosswalk.ts",
-    "crosswalk:verify": "vp node scripts/verify-fungrim.ts",
-    "crosswalk:audit": "vp node scripts/audit-wikidata.ts"
+    "crosswalk:collect": "node scripts/collect-crosswalk.ts",
+    "crosswalk:fetch": "node scripts/fetch-fungrim-symbols.ts && node scripts/fetch-inventories.ts && node scripts/fetch-wikidata.ts && node scripts/fetch-dlmf.ts",
+    "crosswalk:find": "node scripts/find-oeis.ts && node scripts/find-findstat.ts",
+    "crosswalk:check": "node scripts/check-crosswalk.ts",
+    "crosswalk:verify": "node scripts/verify-fungrim.ts",
+    "crosswalk:audit": "node scripts/audit-wikidata.ts"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",

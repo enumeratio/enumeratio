@@ -523,12 +523,22 @@ whole patch. The ids that look wrong to the heuristic but are right (`Divide` �
 
 **`EllipticE` is four digits accurate at complex modulus.** At m = 0.57 + 0.23i the engine
 gives 1.3249212925969696 − 0.11971669991852416i; mpmath gives 1.32480777269705 −
-0.119729445459512i, and so does the engine's own `Hypergeometric2F1` evaluating the
-identity E(m) = (π/2)·₂F₁(−½, ½; 1; m) — so it is `EllipticE` and not the comparison.
-Three Fungrim identities the engine ships (16d2e1, 752619, 9227bf) catch it;
-`packages/reference/scripts/verify-fungrim.ts` is the reproduction, and
-`KNOWN_CAUSES` in `packages/reference/src/crosswalk/fungrim.ts` is where it is recorded.
-`EllipticK` and `EllipticPi` agree with mpmath at the same point.
+0.119729445459512i, as does the engine's own `Hypergeometric2F1` on E(m) = (π/2)·₂F₁(−½, ½;
+1; m). The two-argument `EllipticE(π/2, m)` is right, so only the one-argument reduction is
+wrong — and native `EllipticE(φ, m)` for φ outside [−π/2, π/2] inherits it through its
+quasi-periodic reduction (DLMF 19.2.10). Patched in place locally
+(`packages/analytic/src/elliptic.ts`); `verify-fungrim.ts` reproduces it.
+
+**`Hypergeometric2F1` is off by 5.2e-6 relative at complex argument** — Fungrim 16d2e1 at
+m = 1.17 + 0.45i, against mpmath's `hyp2f1`.
+
+**Three compiled Fungrim rules in `identities` are wrong** (checked against mpmath):
+
+- `42eb01`: Fungrim's `1 − x²` became `x² − 1`, so the rule asserts
+  `(x²−1)U_{n−1}² + T_n² = 1`; at n = 1, x = 2 the left side is 7.
+- `4c7aeb`: off by one — `sin(x)·U_n(cos x) = sin((n+1)x)`, not `sin(n·x)`.
+- `5f09f4`: the replace side `ChebyshevU(2n, x)` does not equal
+  `U_{n−1}(2x²−1) + T_n(2x²−1)`; another index error.
 
 **`Zeta` serializes as `\Zeta`.** `ce.box(["Zeta", 3]).latex` is `\Zeta(3)` — an uppercase
 command that is not LaTeX's (the Riemann zeta is `\zeta`; there is no `\Zeta`, since
