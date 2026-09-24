@@ -2,6 +2,8 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { CancellationError } from "@cortex-js/compute-engine";
 import {
   DeadlineExceededError,
+  defineMessages,
+  emit,
   optionsOf,
   stringAt,
   symbolNameOf,
@@ -87,7 +89,14 @@ export function declareAestimatio(ce: ComputeEngine): void {
       "Evaluates expr under a memory cap of bytes. Only enforced inside the isolated (worker) evaluator — in-process this stays unevaluated.",
     signature: "(any, number, any?) -> any",
     lazy: true,
-    evaluate: () => undefined,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      emit(ce, "MemoryConstrained", "isolated", [ops[1] ?? ce.number(0)]);
+      return undefined;
+    },
+  });
+  defineMessages(ce, "MemoryConstrained", {
+    isolated:
+      "a limit of `1` bytes is enforced only by the isolated evaluator; here the call stays unevaluated.",
   });
 
   declareVerificationTest(ce);
