@@ -26,6 +26,9 @@ const CORPUS = [
   "Manipulate(a^2, (a, 0, 1), Static -> 3)",
   "Manipulate(k * x, (k, [1, 2, 3], PopupMenu))",
   "Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])",
+  // A cell holds its input: reduction pins a control around it, not inside it.
+  "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+  "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))",
   'Column([Slider(k, (0, 5), Static -> "Pin"), "so", k^2])',
   "Grid([[Slider(a, (0, 1)), Slider(b, (0, 1))], [a + b, a * b]])",
   'Panel(Labeled(Checkbox(on), "on?"))',

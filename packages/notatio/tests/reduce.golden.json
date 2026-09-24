@@ -119,6 +119,46 @@
     "notatio": "Column([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"
   },
+  "web: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
+    "notatio": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+    "markup": "<notatio-dynamic-module><notatio-column><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
+  },
+  "print: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
+    "notatio": "Grid([[\n        Labeled(Cell(Binomial(10, 3)), \"k = 0\", Bottom),\n        Labeled(Cell(Binomial(10, 3)), \"k = 1\", Bottom),\n        Labeled(Cell(Binomial(10, 3)), \"k = 2\", Bottom),\n      ], [\n          Labeled(Cell(Binomial(10, 3)), \"k = 3\", Bottom),\n          Labeled(Cell(Binomial(10, 3)), \"k = 4\", Bottom),\n          Labeled(Cell(Binomial(10, 3)), \"k = 5\", Bottom),\n        ]])",
+    "markup": "<notatio-grid columns=\"3\"><notatio-labeled label=\"k = 0\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 1\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 2\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 3\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 4\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled><notatio-labeled label=\"k = 5\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled></notatio-grid>"
+  },
+  "tty: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
+    "notatio": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+    "markup": "<notatio-dynamic-module><notatio-column><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
+  },
+  "pipe: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
+    "notatio": "Labeled(Cell(Binomial(10, 3)), \"k = 2 (0 ≤ k ≤ 5)\", Bottom)",
+    "markup": "<notatio-labeled label=\"k = 2 (0 ≤ k ≤ 5)\" position=\"below\"><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell></notatio-labeled>"
+  },
+  "compact: Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])": {
+    "notatio": "Column([Cell(Binomial(10, 3)), Slider((k, 2), (0, 5))])",
+    "markup": "<notatio-dynamic-module><notatio-column><notatio-cell value=\"Binomial(10, 3)\"></notatio-cell><notatio-slider name=\"k\" value=\"2\" min=\"0\" max=\"5\"></notatio-slider></notatio-column></notatio-dynamic-module>"
+  },
+  "web: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
+    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
+  },
+  "print: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
+    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
+  },
+  "tty: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
+    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
+  },
+  "pipe: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
+    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
+  },
+  "compact: Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))": {
+    "notatio": "Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)]))",
+    "markup": "<notatio-cell value=\"Row([Slider((k, 2), (0, 5)), Dynamic(k ^ 2)])\"></notatio-cell>"
+  },
   "web: Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k^2])": {
     "notatio": "Column([Slider(k, (0, 5), Static -> \"Pin\"), \"so\", k ^ 2])",
     "markup": "<notatio-dynamic-module><notatio-column><notatio-slider name=\"k\" min=\"0\" max=\"5\" static=\"Pin\"></notatio-slider><span>so</span><notatio-dynamic value=\"_k ^ 2\"></notatio-dynamic></notatio-column></notatio-dynamic-module>"

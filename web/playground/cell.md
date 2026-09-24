@@ -20,6 +20,36 @@ back on Enter or blur. Click the In label to switch editors or copy the value ou
 <notatio-cell value="Sum(k, (k, 1, n))" />
 </Story>
 
+## As an expression
+
+`Cell` is a symbol too: `Cell(expr)` holds `expr` unevaluated and draws as this element,
+so a cell can be written in notatio anywhere an expression goes. Options, Wolfram's way,
+as trailing rules: `InForm` and `OutForm` name the forms (`InputForm`, `TraditionalForm`,
+…) and `Expected` is the value the Out should come to.
+
+<Story
+  title="A cell, written as an expression">
+<notatio-out format="notatio" value="Cell(PowerModList(3, 1/2, 11))" />
+</Story>
+
+<Story
+  title="Options">
+<template #description>InputForm edits as text; the Out is checked against Expected (edit it and the check drops).</template>
+<notatio-out format="notatio" value='Cell(Binomial(10, 3), InForm -> "InputForm", OutForm -> "TraditionalForm", Expected -> 120)' />
+</Story>
+
+<Story
+  title="Cells in a column">
+<template #description>A list of cells, laid out -- each evaluates on its own, with no shared state yet.</template>
+<notatio-out format="notatio" value="Column([Cell(1/2 + 1/3), Cell(Sum(k, (k, 1, 10))), Cell(PrimitiveRootList(7))])" />
+</Story>
+
+<Story
+  title="A cell that evaluates to a cell">
+<template #description>The In here is <code>Cell(1 + 1)</code>; its value is itself, drawn.</template>
+<notatio-cell value="Cell(1 + 1)" />
+</Story>
+
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props
