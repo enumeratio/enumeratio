@@ -229,17 +229,6 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     },
   });
 
-  // The ORDERED product, for the anticommuting family. Native `×` cannot host it:
-  // `Multiply` is commutative by declaration, so it sorts e_2·e_1 into e_1·e_2 during
-  // canonicalisation and the sign is lost before any handler runs.
-  //
-  // A separate head is the established answer to this, not a workaround. Wolfram
-  // spells it `NonCommutativeMultiply` (infix `**`), distinct from `Times`; and matrix
-  // multiplication is `Dot` (infix `.`) for the same reason — compute-engine's own
-  // `Dot` is declared `commutative: false`, so `Dot(A,B)` and `Dot(B,A)` stay apart
-  // while `Multiply` would not. So take Wolfram's name for the primary head, with
-  // `GeometricProduct` as the domain-specific alias. Both work for the commuting
-  // families too, where they simply agree with `×`.
   declareAlgebras(ce);
   declareOrderedJuxtaposition(ce);
 }

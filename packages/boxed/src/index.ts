@@ -136,12 +136,27 @@ export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } 
  * native declaration would reject at boxing reach `evaluate` — where a `wrapOperator` handler
  * can answer them and hand everything else to the native one. Re-declaring the head instead
  * would drop the rest of its definition.
+ *
+ * The native handler trusted boxing to have checked its operands; `nativeAccepts` restores
+ * that gate for it (a call it rejects stays unevaluated). Wrap after widening, so the
+ * wrappers fall through to the gated handler.
  */
-export function widenSignature(ce: ComputeEngine, name: string, signature: string): void {
+export function widenSignature(
+  ce: ComputeEngine,
+  name: string,
+  signature: string,
+  nativeAccepts?: (op: BoxedExpression) => boolean,
+): void {
   const definition = ce.lookupDefinition(name);
   const operator =
     definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  if (operator !== undefined) {
-    (operator as { signature: unknown }).signature = ce.type(signature);
-  }
+  if (operator === undefined) return;
+  (operator as { signature: unknown }).signature = ce.type(signature);
+  const native = operator.evaluate;
+  if (nativeAccepts === undefined || native === undefined) return;
+  operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) =>
+    ops.every(nativeAccepts) ? native(ops, options) : undefined;
 }
+
+/** A `widenSignature` gate for heads natively typed `integer`: anything not provably non-integer. */
+export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
