@@ -80,7 +80,7 @@ export function carlsonRF(x0: Cx, y0: Cx, z0: Cx): Cx {
  * recursive call on a positive second argument where the direct definition applies.
  */
 export function carlsonRC(x: Cx, y: Cx): Cx {
-  if (y.im === 0 && y.re < 0 && x.im === 0) {
+  if (y.im === 0 && y.re < 0 && x.im === 0 && x.re > 0) {
     const shifted = carlsonRF(cx(x.re - y.re), cx(-y.re), cx(-y.re));
     return mul(cpow(cx(x.re / (x.re - y.re)), cx(0.5)), shifted);
   }
@@ -126,6 +126,13 @@ export function carlsonRD(x0: Cx, y0: Cx, z0: Cx): Cx {
  * (x,y,z,p)-convergence check, same as the loop below; once that holds, `fac` is already
  * negligible and the partial sum needs no separate closing term.
  *
+ * All four arguments real and ≤ 0 (not all zero) is the reflection RJ(−x,−y,−z,−w) =
+ * i·RJ(x,y,z,w), x,y,z,w ≥ 0 (DLMF 19.7.5's sign-reflection specialized to RJ; confirmed
+ * against mpmath at both boundary and generic points). Duplicating negative reals directly
+ * lands every √ exactly on `csqrt`'s branch cut, where the accumulated per-step branch
+ * choice in the sum below does not actually reduce to this value — reflecting first avoids
+ * the cut entirely.
+ *
  * Real p < 0, with x, y, z real, nonnegative and at most one 0, is the Cauchy principal
  * value (Carlson 1995 eq. (33); DLMF 19.20.14) rather than whatever the direct duplication
  * would produce off the branch point at t = −p. Permuting x, y, z so that y is the median
@@ -141,6 +148,12 @@ export function carlsonRD(x0: Cx, y0: Cx, z0: Cx): Cx {
  * expected of a principal value).
  */
 export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
+  if (
+    [x0, y0, z0, p0].every((v) => v.im === 0 && v.re <= 0) &&
+    [x0, y0, z0, p0].some((v) => v.re < 0)
+  ) {
+    return mul(cx(0, 1), carlsonRJ(cx(-x0.re), cx(-y0.re), cx(-z0.re), cx(-p0.re)));
+  }
   if (
     p0.im === 0 &&
     p0.re < 0 &&
@@ -206,21 +219,57 @@ export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
  * semi-axes √x, √y, √z. Reduced through RF and RD (DLMF 19.21.10):
  *   2·RG(x,y,z) = z·RF(x,y,z) − (x−z)(y−z)·RD(x,y,z)/3 + √(xy/z),   z ≠ 0.
  * RG is symmetric, so any nonzero argument can play "z" here; picking the
- * largest-magnitude one keeps the divisions well away from cancellation. All three zero
- * is the one case with no nonzero argument to pick, and RG(0,0,0) = 0 directly from the
- * integral.
+ * largest-magnitude one keeps the divisions well away from cancellation — PROVIDED the
+ * other two aren't both zero, where the reduction breaks down: RF(0,0,z) diverges (two
+ * zero arguments is one too many for RF, not just one), so "z" must instead be one of the
+ * two coincident zeros there. DLMF 19.20.3 gives the elementary answer directly:
+ * RG(0,0,z) = √z/2 (and RG(0,0,0) = 0, the one case with no nonzero argument to pick).
  */
 export function carlsonRG(x: Cx, y: Cx, z: Cx): Cx {
   const args = [x, y, z];
+  const zeros = args.filter((v) => abs(v) === 0).length;
+  if (zeros === 3) return cx(0); // x = y = z = 0
+  if (zeros === 2) {
+    const nonzero = args.find((v) => abs(v) !== 0)!;
+    return scale(csqrt(nonzero), 0.5); // RG(0,0,z) = √z/2
+  }
   let pick = 0;
   for (let i = 1; i < 3; i++) if (abs(args[i]) > abs(args[pick])) pick = i;
   const c = args[pick];
-  if (abs(c) === 0) return cx(0); // x = y = z = 0
   const [a, b] = args.filter((_, i) => i !== pick);
   const term1 = mul(c, carlsonRF(a, b, c));
   const term2 = scale(mul(sub(a, c), mul(sub(b, c), carlsonRD(a, b, c))), -1 / 3);
   const sqrtTerm = csqrt(div(mul(a, b), c));
   return scale(add(add(term1, term2), sqrtTerm), 0.5);
+}
+
+/**
+ * Is `(x,y,z,p)` outside the argument regions `carlsonRJ` is verified correct on (DLMF
+ * 19.16, 19.20)? Three regions ARE covered and return a genuine, mpmath/Wolfram-checked
+ * value: all four real and ≥ 0 (no branch cut in reach); all four real and ≤ 0, not all
+ * zero (the reflection above); and real p < 0 with x, y, z real ≥ 0 and at most one zero
+ * (the Cauchy principal value above — its imaginary part is deliberately 0, matching
+ * Wolfram's `CarlsonRJ` there rather than mpmath's complex analytic continuation, even at
+ * a tie between two of x, y, z where one internal term vanishes; the real part still
+ * checks out against mpmath in every case tested). Everything else that touches a branch
+ * cut is unverified: real arguments split across zero in a shape the CPV formula doesn't
+ * cover (e.g. a negative x, y or z with p ≥ 0), or genuinely complex arguments with two or
+ * more of x, y, z, p on the wrong side of the cut (Re < 0) at once, where the per-step
+ * α/β/`RC` sum's implicit branch choice has been observed to disagree with mpmath's
+ * `elliprj`. Declining there keeps the declared head from asserting a number it hasn't
+ * earned; the underlying `carlsonRJ` above is unchanged for internal callers.
+ */
+function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
+  const args = [x, y, z, p];
+  if (args.every((v) => v.im === 0)) {
+    if (args.every((v) => v.re >= 0)) return false; // no cut in reach
+    if (args.every((v) => v.re <= 0) && args.some((v) => v.re !== 0)) return false; // reflection
+    const [xr, yr, zr] = [x.re, y.re, z.re].sort((a, b) => a - b);
+    const cpv =
+      p.re < 0 && xr >= 0 && yr >= 0 && zr >= 0 && [xr, yr, zr].filter((v) => v === 0).length <= 1;
+    return !cpv;
+  }
+  return args.filter((v) => v.re < 0).length >= 2;
 }
 
 // --- Real-scalar wrappers, for the plotting/compiled pipeline (see box.ts's realCompile) --
@@ -296,10 +345,9 @@ export function declareCarlson(ce: ComputeEngine): void {
       ) {
         return undefined;
       }
-      return numberResult(
-        ce,
-        carlsonRJ(cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im), cx(p.re, p.im)),
-      );
+      const [xc, yc, zc, pc] = [cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im), cx(p.re, p.im)];
+      if (carlsonRJDeclines(xc, yc, zc, pc)) return undefined; // stays symbolic — see there
+      return numberResult(ce, carlsonRJ(xc, yc, zc, pc));
     },
   });
 
