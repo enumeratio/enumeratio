@@ -36,11 +36,11 @@ which works per cell, not per column or per policy.
 - **Alternate text notations that round-trip** — `packages/data/sqlsrc/representations.sql`:
   each named notation (cycle, one-line, blocks, parts, dots, bars, exponential …) is a
   `(render, parse)` pair, so any notation is also an input syntax.
-- **Printer policy** — `packages/data/sqlsrc/policies.sql`: rows of `(scope ∈ {collection,
-carrier, category, tag, all}, environment, archetype, clause, mode ∈ {permissive,
-restrictive, override}, priority)`, resolved by one general→specific fold. Decides default
-  columns, which printers a column kind allows, and how an environment degrades (print
-  revokes svg and links). Natural fit for the environment capability record.
+- **Printer policy** — `packages/data/sqlsrc/policies.sql`: rows scoped to a collection,
+  carrier, category, tag or everything, each with an environment, archetype, clause, mode
+  (permissive, restrictive or override) and priority, resolved by one general→specific
+  fold, GRANT/REVOKE-style. Decides default columns, which printers a column kind allows,
+  and how an environment degrades (print revokes svg and links). Natural fit for the environment capability record.
 - **Typed columns** — `packages/client/src/select.ts`: a column is one of ~20 kinds (repr,
   map, stat, dist, pivot, agg, over, glyph, data, title …), each with its own printer set
   (`plain | grouped | katex | link | svg | bars`). `<notatio-collection-table>` columns are
