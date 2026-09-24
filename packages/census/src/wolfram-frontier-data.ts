@@ -873,10 +873,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "Quotient",
-    uses: 4,
-  },
-  {
     head: "RandomPermutation",
     uses: 4,
   },
