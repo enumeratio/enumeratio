@@ -3,6 +3,7 @@ import {
   bigIntegerAt,
   bigRationalAt,
   integerAt,
+  mayBeInteger,
   operandsOf,
   symbolNameOf,
   widenSignature,
@@ -361,7 +362,7 @@ export function declareAdeles(ce: ComputeEngine): void {
   // ── existing heads learn profinite arguments ──────────────────────────────────
 
   const sequence = (head: string, kernel: (x: Profinite) => Profinite | undefined): void => {
-    widenSignature(ce, head, "(integer | value) -> integer | value");
+    widenSignature(ce, head, "(integer | value) -> integer | value", mayBeInteger);
     wrapOperator(
       ce,
       [head, "n"],
@@ -376,7 +377,9 @@ export function declareAdeles(ce: ComputeEngine): void {
   sequence("Fibonacci", P.fibonacci);
   sequence("LucasL", P.lucas);
 
-  widenSignature(ce, "Numerator", "(number | value) -> nothing | number | value");
+  // Natively `(number)`: the gate keeps the native handler to what its signature took.
+  const isNumber = (op: BoxedExpression): boolean => op.type.matches("number");
+  widenSignature(ce, "Numerator", "(number | value) -> nothing | number | value", isNumber);
   wrapOperator(
     ce,
     ["Numerator", "x"],
@@ -386,7 +389,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       return x === undefined ? undefined : writeProfinite(P.numerator(x));
     },
   );
-  widenSignature(ce, "Denominator", "(number | value) -> nothing | number | value");
+  widenSignature(ce, "Denominator", "(number | value) -> nothing | number | value", isNumber);
   wrapOperator(
     ce,
     ["Denominator", "x"],

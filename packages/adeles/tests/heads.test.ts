@@ -123,3 +123,10 @@ test("ProfinitePlot draws the identity as a diagonal", () => {
   );
   expect(run(["ProfinitePlot", "x", "x", 9])).toEqual(["ProfinitePlot", "x", "x", 9]);
 });
+
+test("widened heads still refuse what their native signatures refused", () => {
+  expect(run(["Fibonacci", 2.5])).toEqual(["Fibonacci", 2.5]);
+  expect(run(["Numerator", ["Rational", 3, 4]])).toBe(3);
+  expect(run(["Denominator", ["Rational", 3, 4]])).toBe(4);
+  expect(run(["Numerator", ["Adele", 5]])).toEqual(["Numerator", ["Adele", 5]]);
+});
