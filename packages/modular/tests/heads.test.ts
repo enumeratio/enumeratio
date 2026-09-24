@@ -13,9 +13,9 @@ const M = (a: number, b: number, c: number, d: number): Expr => ["ModularMatrix"
 const W = (word: string): Expr => `'${word}'`;
 
 test("the group: products, inverses, powers and the trace trichotomy", () => {
-  same(["ModularProduct", M(1, 1, 0, 1), M(1, 0, 1, 1)], M(2, 1, 1, 1));
-  same(["ModularInverse", M(1, 1, 0, 1)], M(1, -1, 0, 1));
-  same(["ModularPower", M(1, 1, 0, 1), 5], M(1, 5, 0, 1));
+  same(["Dot", M(1, 1, 0, 1), M(1, 0, 1, 1)], M(2, 1, 1, 1));
+  same(["Inverse", M(1, 1, 0, 1)], M(1, -1, 0, 1));
+  same(["MatrixPower", M(1, 1, 0, 1), 5], M(1, 5, 0, 1));
   same(["ModularTrace", M(1, 1, 1, 2)], 3);
   same(["ModularKind", M(1, 0, 0, 1)], W("Identity"));
   same(["ModularKind", M(0, -1, 1, 0)], W("Elliptic"));
@@ -29,6 +29,15 @@ test("a word IS a matrix — every head takes either spelling", () => {
   same(["ModularTrace", ["ModularMatrix", W("LRLR")]], 7);
   // A nested list works too, so CE's own matrix notation is accepted.
   same(["ModularTrace", ["List", ["List", 1, 1], ["List", 1, 2]]], 3);
+  // Dot/MatrixPower/Inverse take a word too — they read via the same matrixOf.
+  same(["Dot", W("L"), W("R")], M(1, 1, 1, 2));
+});
+
+test("Dot leaves a non-matrix operand paired with a ModularMatrix unevaluated", () => {
+  // A nested List canonicalises the same way `Matrix(...)` does, so it reads as an ordinary
+  // integer matrix (matching what ModularTrace already accepted); a Tuple does not, and
+  // there's no settled convention for what it should mean next to a ModularMatrix.
+  expect(ce.box(["Dot", ["Tuple", 1, 2], M(1, 1, 0, 1)]).evaluate().operator).toBe("Dot");
 });
 
 test("the S/T factorisation round-trips", () => {
