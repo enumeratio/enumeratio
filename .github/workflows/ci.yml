@@ -90,6 +90,16 @@ jobs:
           alias="${ALIAS_URL:-https://$SHA7.enumeratio.pages.dev}"
           echo "Preview ($SHA7): $alias" >> "$GITHUB_STEP_SUMMARY"
           [ -n "$PR" ] || exit 0
-          body=$(printf '<!-- cf-preview -->\nPreview (%s): %s' "$SHA7" "$alias")
-          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --body "$body" \
-            || gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "$body"
+          # One sticky comment: its first two lines are ours, and anything below them (review links added by
+          # hand) survives a push.
+          line="Preview ($SHA7): $alias"
+          id=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq '.[] | select(.body | startswith("<!-- cf-preview -->")) | .id' | tail -n1)
+          if [ -n "$id" ]; then
+            rest=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$id" --jq .body | tail -n +3)
+            body=$(printf '<!-- cf-preview -->\n%s' "$line")
+            [ -n "$rest" ] && body=$(printf '%s\n%s' "$body" "$rest")
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$id" -f body="$body" >/dev/null
+          else
+            gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "$(printf '<!-- cf-preview -->\n%s' "$line")"
+          fi

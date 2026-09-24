@@ -1,18 +1,21 @@
 name: Preview cleanup (Cloudflare Pages)
 
-# CF never expires a deployment, and ci.yml uploads one per commit. Two sweeps (.github/scripts/sweep-previews.ts):
-#   PR closed  — every deployment stamped with that PR's number goes, force-pushed-away commits included.
-#   weekly     — every untagged preview older than 30 days goes; a tagged commit's preview stays reachable at its
-#                <sha7>.enumeratio.pages.dev for good, and the newest main preview always survives.
+# CF never expires a deployment, and ci.yml uploads one per commit. Two nightly sweeps
+# (.github/scripts/sweep-previews.ts):
+#   closed — a PR's deployments go once it has been closed a day (force-pushed-away commits included), so the
+#            review links on a just-merged PR still work the morning after.
+#   age    — every untagged preview older than 30 days goes; a tagged commit's preview stays reachable at its
+#            <sha7>.enumeratio.pages.dev for good, and the newest main preview always survives.
 # Best-effort: a failed delete never fails the run.
 
 on:
-  pull_request:
-    types: [closed]
   schedule:
-    - cron: "33 5 * * 1" # Monday 05:33 UTC
+    - cron: "33 5 * * *" # 05:33 UTC
   workflow_dispatch:
     inputs:
+      closed_days:
+        description: Delete a PR's previews once it has been closed this many days
+        default: "1"
       max_age_days:
         description: Delete untagged previews older than this many days
         default: "30"
@@ -26,12 +29,11 @@ permissions:
   pull-requests: write # note the teardown on the PR
 
 concurrency:
-  group: preview-cleanup-${{ github.event.pull_request.number || 'sweep' }}
+  group: preview-cleanup
   cancel-in-progress: false
 
 jobs:
   cleanup:
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -41,21 +43,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
-      - name: Sweep
+      - name: Sweep closed PRs
+        continue-on-error: true
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run == true && '1' || '' }}
+        run: node .github/scripts/sweep-previews.ts closed "${{ inputs.closed_days || '1' }}" | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Sweep by age
         continue-on-error: true
         env:
           CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           DRY_RUN: ${{ inputs.dry_run == true && '1' || '' }}
-          MODE: ${{ github.event_name == 'pull_request' && 'pr' || 'age' }}
-          ARG: ${{ github.event.pull_request.number || inputs.max_age_days || '30' }}
-        run: node .github/scripts/sweep-previews.ts "$MODE" "$ARG" | tee -a "$GITHUB_STEP_SUMMARY"
-      - name: Note teardown on the PR
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
-        run: |
-          body=$(printf '<!-- cf-preview -->\nPreview deployments removed on close.')
-          gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --edit-last --body "$body" || true
+        run: node .github/scripts/sweep-previews.ts age "${{ inputs.max_age_days || '30' }}" | tee -a "$GITHUB_STEP_SUMMARY"
