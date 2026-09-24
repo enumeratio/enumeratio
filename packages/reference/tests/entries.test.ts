@@ -1,6 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 // Buildless src subpath: the reference tests must run without a prior `vp pack`
 // of @enumeratio/analytic (CI runs tests before builds).
+import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareHecke } from "@enumeratio/hecke/src";
@@ -40,6 +41,8 @@ declareGroupAlgebra(ce);
 declareModular(ce);
 // …and arithmetic in ℤ/m.
 declareNumberTheory(ce);
+// …and adèles and idèles over Q (needs numerals and number-theory declared first).
+declareAdeles(ce);
 // …and the braid groups.
 declareBraid(ce);
 

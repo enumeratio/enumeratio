@@ -91,6 +91,7 @@ export default defineConfig({
             link: "/guide/numerals/",
             items: [{ text: "b-adic numbers", link: "/guide/numerals/adic" }],
           },
+          { text: "Adèles and idèles", link: "/guide/adeles/" },
           {
             text: "Hypercomplex algebras",
             link: "/guide/hypercomplex/",

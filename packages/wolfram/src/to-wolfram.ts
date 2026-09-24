@@ -142,6 +142,8 @@ export const HEADS: Record<string, string> = {
   JacobiSymbol: "JacobiSymbol",
   LegendreSymbol: "LegendreSymbol",
   KroneckerSymbol: "KroneckerSymbol",
+  IntegerExponent: "IntegerExponent",
+  HermiteDecomposition: "HermiteDecomposition",
   IntegerDigits: "IntegerDigits",
   FromDigits: "FromDigits",
   IntegerString: "IntegerString",

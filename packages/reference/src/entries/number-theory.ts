@@ -2281,4 +2281,67 @@ export const numberTheory: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["DigitCount"],
   },
+  {
+    name: "IntegerExponent",
+    domain: "Number theory",
+    signature: "IntegerExponent(n, b?)",
+    summary: "The largest $k$ with $b^k \\mid n$ — the $b$-adic valuation of $n$ as an integer.",
+    signatures: [
+      {
+        call: "IntegerExponent(n, b)",
+        description: "the multiplicity of $b$ in $n$",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "IntegerExponent(n)",
+        description: "base 10",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Integers only: a rational's $p$-adic valuation is [[AdicValuation]]'s, over [[AdicNumeral]].",
+      "$n = 0$ has every power of $b$ as a divisor, so `IntegerExponent(0, b)` is `PositiveInfinity`.",
+      "$b$ need not be prime — `IntegerExponent(n, 6)` is the largest $k$ with $6^k \\mid n$, not the 2-adic or 3-adic valuation.",
+    ],
+    examples: [
+      { expr: ["IntegerExponent", 2000, 5], expected: 3, caption: "$2000 = 5^3 \\cdot 16$" },
+      { expr: ["IntegerExponent", 2000], expected: 3, caption: "base 10 by default" },
+      {
+        expr: ["IntegerExponent", 0, 5],
+        expected: "PositiveInfinity",
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["AdicValuation", "FactorInteger"],
+  },
+  {
+    name: "HermiteDecomposition",
+    domain: "Number theory",
+    signature: "HermiteDecomposition(m)",
+    summary:
+      "$\\{u, h\\}$ with $u$ unimodular and $u \\cdot m = h$ upper triangular in Hermite normal form.",
+    signatures: [
+      {
+        call: "HermiteDecomposition(m)",
+        description: "a unimodular $u$ and $h = u \\cdot m$ in Hermite normal form",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "$h$ is upper triangular with positive pivots, and every entry above a pivot is reduced into $[0, \\text{pivot})$ — the row-reduced convention that makes $h$ unique for a given $m$.",
+      "$u \\in GL_n(\\mathbb{Z})$: $\\det u = \\pm 1$, so $u$ is invertible over $\\mathbb{Z}$, not merely over $\\mathbb{Q}$.",
+      "Used by [[ProfiniteDecomposition]] to put a matrix over $\\hat{\\mathbb{Q}}$ into strong-approximation form (Hertogh's Algorithm 8.4).",
+    ],
+    examples: [
+      {
+        expr: ["HermiteDecomposition", ["List", ["List", 0, -3], ["List", 2, 0]]],
+        expected: [
+          "List",
+          ["List", ["List", 0, 1], ["List", -1, 0]],
+          ["List", ["List", 2, 0], ["List", 0, 3]],
+        ],
+      },
+    ],
+    seeAlso: ["ProfiniteDecomposition", "ExtendedGCD"],
+  },
 ];

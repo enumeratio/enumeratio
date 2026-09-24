@@ -4,6 +4,8 @@ import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gauss
 import { declareGaussian } from "./declare-gaussian.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
+import { valuation } from "./arith.ts";
+import { hermiteDecomposition } from "./hermite.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootList } from "./logs.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
 import { powerModList } from "./roots.ts";
@@ -149,6 +151,44 @@ export function declareNumberTheory(ce: ComputeEngine): void {
         return undefined;
       const found = rationalReconstruction(a, m, n, d);
       return found === undefined ? undefined : ce.number([found[0], found[1]]);
+    },
+  });
+
+  // Wolfram's IntegerExponent[n, b]: the largest k with bᵏ | n; b defaults to 10, n = 0 gives
+  // ∞. Integers only, as in Wolfram — a p-adic valuation of a rational is AdicValuation's.
+  ce.declare("IntegerExponent", {
+    description: "The largest k with bᵏ dividing n (b defaults to 10); ∞ for n = 0.",
+    signature: "(integer, integer?) -> integer | number",
+    broadcastable: true,
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const n = bigIntegerAt(ops[0]);
+      const b = ops[1] === undefined ? 10n : bigIntegerAt(ops[1]);
+      if (n === undefined || b === undefined || b < 2n) return undefined;
+      if (n === 0n) return ce.symbol("PositiveInfinity");
+      return ce.number(valuation(n, b)[0]);
+    },
+  });
+
+  // Wolfram's HermiteDecomposition[m] = {u, h}: u unimodular, u·m = h in Hermite normal form.
+  ce.declare("HermiteDecomposition", {
+    description:
+      "{u, h} with u unimodular and u·m = h upper triangular: positive pivots, entries above each pivot reduced into [0, pivot).",
+    signature: "(list<list<integer>>) -> list",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      const rows = operandsOf(ops[0]).map((row) => operandsOf(row).map(bigIntegerAt));
+      const width = rows[0]?.length ?? 0;
+      if (
+        rows.length === 0 ||
+        rows.some((row) => row.length !== width || row.some((x) => x === undefined))
+      )
+        return undefined;
+      const { u, h } = hermiteDecomposition(rows as bigint[][]);
+      const matrix = (x: bigint[][]): BoxedExpression =>
+        ce.function(
+          "List",
+          x.map((row) => list(row)),
+        );
+      return ce.function("List", [matrix(u), matrix(h)]);
     },
   });
 }

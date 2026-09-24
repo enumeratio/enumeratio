@@ -1,0 +1,42 @@
+{
+  "name": "@enumeratio/adeles",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Adèles and idèles over Q for @cortex-js/compute-engine: profinite numbers (Ẑ and Q̂) known modulo a rational, adèles, idèles, profinite Fibonacci and the GL_n(Q̂) = GL_n(Ẑ)·GL_n⁺(Q) factorisation — a port of Hertogh's Sage `adeles`.",
+  "license": "WTFPL",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./src": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "check": "vp check"
+  },
+  "dependencies": {
+    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/number-theory": "workspace:*",
+    "@enumeratio/numerals": "workspace:*"
+  },
+  "devDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0",
+    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/number-theory": "workspace:*",
+    "@enumeratio/numerals": "workspace:*",
+    "typescript": "^7.0.2",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "peerDependencies": {
+    "@cortex-js/compute-engine": "^0.128.0"
+  }
+}
