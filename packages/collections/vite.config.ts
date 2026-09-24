@@ -12,4 +12,9 @@ export default defineConfig({
     options: { typeAware: true, typeCheck: true },
   },
   fmt: {},
+  // The permutation-family exhaustive round-trips (ConnectedPermutations, AlternatingPermutations,
+  // the pattern avoiders) run into the thousands of elements at n=7-8; comfortably under the default
+  // timeout individually, but generous headroom here matches the convention sibling packages use for
+  // their own exhaustive suites.
+  test: { testTimeout: 30_000 },
 });
