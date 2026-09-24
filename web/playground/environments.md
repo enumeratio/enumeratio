@@ -52,6 +52,15 @@ left is that thing.
 </Story>
 
 <Story
+  title="A control in a cell">
+<template #description>
+A <code>Cell</code>'s In is source, so reduction leaves it as written; the cell's Out
+evaluates on its own and reduces there, for the environment around it.
+</template>
+<EnvironmentPreview expr='Cell(Row([Slider((k, 2), (0, 5)), Dynamic(k^2)]))' env="print" />
+</Story>
+
+<Story
   title="A choice, enumerated">
 <template #description>
 A toggler's entries are the sample: one cell per choice, labelled.
