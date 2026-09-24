@@ -128,3 +128,20 @@ export function wrapOperator(
     return applies(values) ? handler(values, options) : native?.(ops, options);
   };
 }
+
+export { isOptionList, optionName, optionsOf, ruleOf, type Split, withOptions } from "./options.ts";
+
+/**
+ * Widen the signature of an operator the engine already defines, in place, so arguments its
+ * native declaration would reject at boxing reach `evaluate` — where a `wrapOperator` handler
+ * can answer them and hand everything else to the native one. Re-declaring the head instead
+ * would drop the rest of its definition.
+ */
+export function widenSignature(ce: ComputeEngine, name: string, signature: string): void {
+  const definition = ce.lookupDefinition(name);
+  const operator =
+    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  if (operator !== undefined) {
+    (operator as { signature: unknown }).signature = ce.type(signature);
+  }
+}

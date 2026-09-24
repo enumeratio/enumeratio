@@ -1,5 +1,9 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/boxed";
+import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
+import { declareGaussian } from "./declare-gaussian.ts";
+import { gaussianPowerModList } from "./gaussian-roots.ts";
+import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
 import { discreteLog, multiplicativeOrder, primitiveRootList } from "./logs.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
 import { powerModList } from "./roots.ts";
@@ -22,10 +26,29 @@ const nativeEvaluate = (ce: ComputeEngine, name: string): Native => {
 };
 
 export function declareNumberTheory(ce: ComputeEngine): void {
+  declareGaussian(ce);
+
   const list = (xs: readonly bigint[]): BoxedExpression =>
     ce.function(
       "List",
       xs.map((x) => ce.number(x)),
+    );
+
+  /** A call reaches into ℤ[i] when its base or modulus is a Gaussian integer off the real line. */
+  const inGaussian = (ops: readonly BoxedExpression[]): boolean =>
+    isComplexGaussian(ops[0]) || isComplexGaussian(ops[2]);
+
+  /** The same list over ℤ[i] — beyond Wolfram, whose PowerModList stops at the integers. */
+  const gaussianRoots = (ops: readonly BoxedExpression[]): Gaussian[] | undefined => {
+    const [a, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
+    const exponent = bigRationalAt(ops[1]);
+    if (a === undefined || m === undefined || exponent === undefined) return undefined;
+    return gaussianPowerModList(a, exponent[0], exponent[1], m);
+  };
+  const gaussianList = (zs: readonly Gaussian[]): BoxedExpression =>
+    ce.function(
+      "List",
+      zs.map((z) => gaussianExpression(ce, z)),
     );
 
   /** a^(s/r) mod m, as the list of every x with xʳ ≡ aˢ — the heart of both heads below. */
@@ -41,9 +64,13 @@ export function declareNumberTheory(ce: ComputeEngine): void {
   ce.declare("PowerModList", {
     description:
       "Every x in [0, m) with x^r ≡ a^s (mod m), for an exponent s/r; a rational a = u/v reads as u·v⁻¹.",
-    signature: "(number, number, integer) -> list<integer>",
+    signature: "(number, number, number) -> list<number>",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
+      if (inGaussian(ops)) {
+        const found = gaussianRoots(ops);
+        return found === undefined ? undefined : gaussianList(found);
+      }
       const found = roots(ops);
       return found === undefined ? undefined : list(found);
     },
@@ -55,9 +82,22 @@ export function declareNumberTheory(ce: ComputeEngine): void {
   ce.declare("PowerMod", {
     description:
       "a^b mod m. A negative b inverts a; a rational b = s/r gives the least x with x^r ≡ a^s; a rational a = u/v reads as u·v⁻¹.",
-    signature: "(number, number, integer) -> integer",
+    signature: "(number, number, number) -> number",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
+      if (inGaussian(ops)) {
+        const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
+        const exponent = bigRationalAt(ops[1]);
+        if (z === undefined || m === undefined || exponent === undefined) return undefined;
+        if (exponent[1] === 1n) {
+          const value = gaussianPowerMod(z, exponent[0], m);
+          return value === undefined ? undefined : gaussianExpression(ce, value);
+        }
+        const found = gaussianRoots(ops);
+        return found === undefined || found.length === 0
+          ? undefined
+          : gaussianExpression(ce, found[0]!);
+      }
       if (ops.every((op) => op.isInteger === true) && nativePowerMod !== undefined) {
         return nativePowerMod(ops, options) as BoxedExpression | undefined;
       }

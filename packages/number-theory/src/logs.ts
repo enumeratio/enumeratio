@@ -9,7 +9,8 @@
 
 import { crt, gcd, mod, powMod } from "./arith.ts";
 import { factorInteger } from "./primes.ts";
-import { discreteLogPrimePower } from "./roots.ts";
+import { discreteLogPrimePower } from "./cyclic.ts";
+import { unitsMod } from "./roots.ts";
 
 type Factors = [bigint, number][];
 
@@ -66,7 +67,13 @@ export function discreteLog(k: bigint, n: bigint, targets: readonly bigint[]): b
     for (const [q, e] of factors) {
       const prime = q ** BigInt(e);
       const cofactor = order / prime;
-      const x = discreteLogPrimePower(powMod(k, cofactor, n), powMod(h, cofactor, n), q, e, n);
+      const x = discreteLogPrimePower(
+        unitsMod(n),
+        powMod(k, cofactor, n),
+        powMod(h, cofactor, n),
+        q,
+        e,
+      );
       if (x === undefined) {
         ok = false;
         break;

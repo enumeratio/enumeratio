@@ -1,0 +1,161 @@
+import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { optionsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
+import {
+  divisorsGaussian,
+  extendedGcd,
+  factorGaussian,
+  type Gaussian,
+  gcd,
+  inverseMod,
+  isGaussianPrime,
+  lcm,
+  mod,
+  quotient,
+} from "./gaussian.ts";
+
+// compute-engine's integer heads, carried into ℤ[i] the way Wolfram carries them: a Gaussian
+// argument switches Mod, Quotient, GCD, LCM, ExtendedGCD and ModularInverse over on its own,
+// and `GaussianIntegers -> True` asks IsPrime, FactorInteger and Divisors to read a rational
+// integer in ℤ[i] (5 = (2 + i)(2 − i) is no longer prime). Each native head keeps its own
+// handler for everything else: the signature is widened in place and the Gaussian case is
+// attached in front.
+
+type Ops = readonly BoxedExpression[];
+
+/** Every operand a Gaussian integer, and at least one of them off the real line. */
+const gaussianCall = (ops: Ops): Gaussian[] | undefined => {
+  const values = ops.map(gaussianAt);
+  if (values.some((z) => z === undefined) || !ops.some(isComplexGaussian)) return undefined;
+  return values as Gaussian[];
+};
+
+/**
+ * The `GaussianIntegers` option among the trailing rules: true, false, or undefined when absent.
+ * Any other option leaves the call alone.
+ */
+function gaussianOption(head: string, ops: Ops): { positional: number; value?: boolean } | "other" {
+  const split = optionsOf([head, ...ops.map((op) => op.json)] as never);
+  const names = Object.keys(split.options);
+  if (names.some((name) => name !== "GaussianIntegers")) return "other";
+  const setting = split.options.GaussianIntegers;
+  return {
+    positional: split.ops.length,
+    value: setting === undefined ? undefined : setting === "True",
+  };
+}
+
+export function declareGaussian(ce: ComputeEngine): void {
+  const list = (items: readonly BoxedExpression[]): BoxedExpression => ce.function("List", items);
+  const g = (z: Gaussian | undefined): BoxedExpression | undefined =>
+    z === undefined ? undefined : gaussianExpression(ce, z);
+
+  widenSignature(ce, "Mod", "(number, number) -> number");
+  wrapOperator(
+    ce,
+    ["Mod", 1, 1],
+    (ops) => gaussianCall(ops) !== undefined,
+    () => (ops) => {
+      const [z, m] = gaussianCall(ops)!;
+      return g(mod(z!, m!));
+    },
+  );
+
+  // Wolfram's Quotient: ⌊m/n⌋ for integers, z/m rounded half-even for Gaussian integers.
+  ce.declare("Quotient", {
+    description:
+      "The integer quotient of m by n: ⌊m/n⌋ for integers; for Gaussian integers, m/n rounded to the nearest lattice point, ties to even.",
+    signature: "(number, number) -> number",
+    evaluate: (ops: Ops) => {
+      const gaussian = gaussianCall(ops);
+      if (gaussian !== undefined) return g(quotient(gaussian[0]!, gaussian[1]!));
+      const [m, n] = ops.map(gaussianAt);
+      if (m === undefined || n === undefined || n[0] === 0n) return undefined;
+      const [a, b] = [m[0], n[0]];
+      const q = a / b;
+      return ce.number(q * b !== a && a < 0n !== b < 0n ? q - 1n : q);
+    },
+  });
+
+  for (const [head, fold] of [
+    ["GCD", gcd],
+    ["LCM", lcm],
+  ] as const) {
+    wrapOperator(
+      ce,
+      [head, 1, 1],
+      (ops) => gaussianCall(ops) !== undefined,
+      () => (ops) => g(gaussianCall(ops)!.reduce((acc, z) => fold(acc, z))),
+    );
+  }
+
+  widenSignature(ce, "ExtendedGCD", "(number, number) -> tuple<number, number, number>");
+  wrapOperator(
+    ce,
+    ["ExtendedGCD", 1, 1],
+    (ops) => gaussianCall(ops) !== undefined,
+    () => (ops) => {
+      const [a, b] = gaussianCall(ops)!;
+      return ce.function(
+        "Tuple",
+        extendedGcd(a!, b!).map((z) => gaussianExpression(ce, z)),
+      );
+    },
+  );
+
+  widenSignature(ce, "ModularInverse", "(number, number) -> number");
+  wrapOperator(
+    ce,
+    ["ModularInverse", 1, 1],
+    (ops) => gaussianCall(ops) !== undefined,
+    () => (ops) => {
+      const [a, m] = gaussianCall(ops)!;
+      return g(inverseMod(a!, m!));
+    },
+  );
+
+  // The option heads. A complex argument is read in ℤ[i] as it stands; a rational integer
+  // only when asked. `GaussianIntegers -> False` (or no option) is the native call.
+  const optionHead = (
+    head: string,
+    signature: string,
+    answer: (z: Gaussian) => BoxedExpression | undefined,
+  ): void => {
+    widenSignature(ce, head, signature);
+    const definition = ce.lookupDefinition(head);
+    const operator =
+      definition !== undefined && "operator" in definition ? definition.operator : undefined;
+    if (operator === undefined) return;
+    // A rule canonicalises to a Tuple, which a broadcastable head would thread over.
+    const flags = operator as { broadcastExemptions: readonly string[] };
+    if (!flags.broadcastExemptions.includes("tuples")) {
+      flags.broadcastExemptions = [...flags.broadcastExemptions, "tuples"];
+    }
+    const native = operator.evaluate;
+    operator.evaluate = (ops, options) => {
+      const option = gaussianOption(head, ops);
+      if (option === "other" || option.positional !== 1) return undefined;
+      const z = gaussianAt(ops[0]);
+      if (z !== undefined && (z[1] !== 0n || option.value === true)) return answer(z);
+      return native?.(ops.slice(0, 1), options);
+    };
+  };
+
+  optionHead("IsPrime", "(number, any*) -> boolean", (z) =>
+    ce.symbol(isGaussianPrime(z) ? "True" : "False"),
+  );
+  optionHead("FactorInteger", "(number, any*) -> list", (z) => {
+    const factors = factorGaussian(z);
+    return factors === undefined
+      ? undefined
+      : list(
+          factors.map(([p, e]) => ce.function("Tuple", [gaussianExpression(ce, p), ce.number(e)])),
+        );
+  });
+  optionHead("Divisors", "(number, any*) -> list", (z) => {
+    const divisors = divisorsGaussian(z);
+    return divisors === undefined
+      ? undefined
+      : list(divisors.map((d) => gaussianExpression(ce, d)));
+  });
+}

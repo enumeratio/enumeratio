@@ -433,6 +433,9 @@ importers:
 
   packages/formats:
     dependencies:
+      '@enumeratio/boxed':
+        specifier: workspace:*
+        version: link:../boxed
       '@enumeratio/raster':
         specifier: workspace:*
         version: link:../raster

@@ -72,3 +72,39 @@ test("PrimitiveRootList and RationalReconstruction", () => {
   expect(run(["RationalReconstruction", 6, 11])).toEqual(["Rational", 1, 2]);
   expect(run(["RationalReconstruction", 3, 11])).toEqual(["RationalReconstruction", 3, 11]);
 });
+
+test("Gaussian integers reach the integer heads, as in Wolfram", () => {
+  const c = (re: number, im: number) => ["Complex", re, im];
+  const gaussian = ["KeyValuePair", "GaussianIntegers", "True"];
+  expect(run(["Mod", c(7, 5), 3])).toEqual(c(1, -1));
+  expect(run(["Mod", 7, 3])).toBe(1);
+  expect(run(["Quotient", c(7, 5), c(2, 1)])).toEqual(c(4, 1));
+  expect(run(["Quotient", -7, 2])).toBe(-4);
+  expect(run(["GCD", c(3, 1), c(1, 3)])).toEqual(c(1, 1));
+  expect(run(["LCM", c(3, 1), c(-1, 3)])).toEqual(c(3, 1));
+  expect(run(["ExtendedGCD", c(3, 1), 5])).toEqual(["Tuple", c(1, 2), 2, -1]);
+  expect(run(["ModularInverse", c(3, -1), c(5, 2)])).toEqual(c(-1, -1));
+  expect(run(["PowerMod", c(2, 1), 2, 3])).toEqual(c(0, 1));
+  expect(run(["IsPrime", c(2, 1)])).toBe("True");
+  expect(run(["IsPrime", 5, gaussian])).toBe("False");
+  expect(run(["IsPrime", 5])).toBe("True");
+  expect(run(["IsPrime", ["List", 2, 3, 4]])).toEqual(["List", "True", "True", "False"]);
+  expect(run(["FactorInteger", 5, gaussian])).toEqual([
+    "List",
+    ["Tuple", c(0, -1), 1],
+    ["Tuple", c(1, 2), 1],
+    ["Tuple", c(2, 1), 1],
+  ]);
+  expect(run(["Divisors", 5, gaussian])).toEqual(["List", 1, c(1, 2), c(2, 1), 5]);
+  expect(run(["PowerModList", c(2, 1), ["Rational", 1, 2], 5])).toEqual([
+    "List",
+    c(-1, 2),
+    c(1, -2),
+  ]);
+});
+
+test("Gaussian results stay exact past a double", () => {
+  const big = ["Complex", { num: "100000000000000000001" }, { num: "9007199254740993" }];
+  expect(run(["Mod", big, ["Complex", 2, 1]])).toBe(0);
+  expect(run(["GCD", big, ["Complex", 0, { num: "9007199254740993" }]])).toBeDefined();
+});
