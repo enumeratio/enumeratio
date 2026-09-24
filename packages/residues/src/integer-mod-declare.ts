@@ -2,12 +2,14 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
   bigIntegerAt,
   bigRationalAt,
+  defineMessages,
+  emit,
   operandsOf,
   symbolNameOf,
   widenSignature,
   wrapOperator,
 } from "@enumeratio/boxed";
-import { gcd } from "./arith.ts";
+import { gcd, mod } from "./arith.ts";
 import * as Z from "./integer-mod.ts";
 import type { IntegerMod } from "./integer-mod.ts";
 
@@ -44,16 +46,60 @@ const modulusOf = (expr: BoxedExpression | undefined): bigint | undefined => {
 export const integerModExpression = (ce: ComputeEngine, x: IntegerMod): BoxedExpression =>
   ce.function(INTEGER_MOD, [ce.number(x.residue), ce.number(x.modulus)]);
 
+/** The first two congruences no integer satisfies together, with the gcd that rules it out. */
+export function clash(
+  xs: readonly (readonly [bigint, bigint])[],
+): [readonly [bigint, bigint], readonly [bigint, bigint], bigint] | undefined {
+  for (const [i, x] of xs.entries()) {
+    for (const y of xs.slice(i + 1)) {
+      const g = gcd(x[1], y[1]);
+      if (mod(x[0] - y[0], g) !== 0n) return [x, y, g];
+    }
+  }
+  return undefined;
+}
+
 export function declareIntegerMod(ce: ComputeEngine): void {
   const write = (x: IntegerMod | undefined): BoxedExpression | undefined =>
     x === undefined ? undefined : integerModExpression(ce, x);
 
+  // After Wolfram's PowerMod::ninv and ChineseRemainder::nsol.
+  defineMessages(ce, INTEGER_MOD, { ninv: "`1` is not a unit mod `2`; gcd(`1`, `2`) = `3`." });
+  defineMessages(ce, "ChineseRemainder", {
+    nsol: "No integer is `1` mod `2` and `3` mod `4`: gcd(`2`, `4`) = `5` does not divide their difference.",
+  });
+  const notUnit = (a: bigint, m: bigint): undefined => {
+    const r = mod(a, m);
+    emit(ce, INTEGER_MOD, "ninv", [r, m, gcd(r, m)]);
+    return undefined;
+  };
+  const inconsistent = (xs: readonly (readonly [bigint, bigint])[]): undefined => {
+    const found = clash(xs);
+    if (found !== undefined) {
+      const [[r1, m1], [r2, m2], g] = found;
+      emit(ce, "ChineseRemainder", "nsol", [r1, m1, r2, m2, g]);
+    }
+    return undefined;
+  };
+
   // Evaluating the constructor normalises into [0, m), and declines a non-unit denominator.
   ce.declare(INTEGER_MOD, {
     description: "a mod m as an element of ℤ/m; a rational a = u/v reads as u·v⁻¹.",
-    signature: "(number, integer) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) =>
-      write(integerModOf(ce.function(INTEGER_MOD, ops))),
+    signature: "(any, integer) -> value",
+    evaluate: (ops: readonly BoxedExpression[]) => {
+      // IntegerMod(IntegerMod(a, m), n) for n | m: the same class, read in the smaller ring
+      // -- what `a \pmod{m} + b \pmod{m}` parses to.
+      const inner = integerModOf(ops[0]);
+      const n = bigIntegerAt(ops[1]);
+      if (inner !== undefined && n !== undefined && n >= 1n && inner.modulus % n === 0n) {
+        return write({ residue: mod(inner.residue, n), modulus: n });
+      }
+      const x = integerModOf(ce.function(INTEGER_MOD, ops));
+      if (x !== undefined) return write(x);
+      const r = bigRationalAt(ops[0]);
+      const m = bigIntegerAt(ops[1]);
+      return r !== undefined && m !== undefined && m >= 1n ? notUnit(r[1], m) : undefined;
+    },
   });
 
   ce.declare(INTEGER_MOD_RING, {
@@ -125,7 +171,12 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   wrapOperator(ce, ["Add", "x", "y"], anyIntegerMod, () => fold(Z.add));
   wrapOperator(ce, ["Multiply", "x", "y"], anyIntegerMod, () => fold(Z.multiply));
-  wrapOperator(ce, ["Divide", "x", "y"], anyIntegerMod, () => fold(Z.divide));
+  wrapOperator(ce, ["Divide", "x", "y"], anyIntegerMod, () =>
+    fold((x, y) => {
+      const q = Z.divide(x, y);
+      return q ?? notUnit(y.residue, gcd(x.modulus, y.modulus));
+    }),
+  );
   wrapOperator(ce, ["Negate", "x"], anyIntegerMod, () => (ops) => {
     const x = integerModOf(ops[0]);
     return write(x === undefined ? undefined : Z.negate(x));
@@ -137,7 +188,8 @@ export function declareIntegerMod(ce: ComputeEngine): void {
     () => (ops) => {
       const x = integerModOf(ops[0]);
       const e = bigIntegerAt(ops[1]);
-      return write(x === undefined || e === undefined ? undefined : Z.power(x, e));
+      if (x === undefined || e === undefined) return undefined;
+      return write(Z.power(x, e) ?? notUnit(x.residue, x.modulus));
     },
   );
 
@@ -150,7 +202,27 @@ export function declareIntegerMod(ce: ComputeEngine): void {
     (ops) => ops.every(isIntegerMod),
     () => (ops) => {
       const xs = ops.map(integerModOf);
-      return xs.every((x) => x !== undefined) ? write(Z.chineseRemainder(xs)) : undefined;
+      if (!xs.every((x) => x !== undefined)) return undefined;
+      return write(Z.chineseRemainder(xs)) ?? inconsistent(xs.map((x) => [x.residue, x.modulus]));
+    },
+  );
+  // The native (residues, moduli) form declines an inconsistent system silently.
+  const integers = (op: BoxedExpression | undefined): bigint[] | undefined => {
+    if (op?.operator !== "List") return undefined;
+    const xs = operandsOf(op).map(bigIntegerAt);
+    return xs.every((x) => x !== undefined) ? xs : undefined;
+  };
+  wrapOperator(
+    ce,
+    ["ChineseRemainder", "x", "y"],
+    (ops) => ops.length === 2 && integers(ops[0]) !== undefined && integers(ops[1]) !== undefined,
+    (native) => (ops, options) => {
+      const answer = native?.(ops, options);
+      if (answer !== undefined) return answer;
+      const [rs, ms] = [integers(ops[0])!, integers(ops[1])!];
+      return rs.length === ms.length && ms.every((m) => m >= 1n)
+        ? inconsistent(rs.map((r, i) => [r, ms[i]!]))
+        : undefined;
     },
   );
 }
