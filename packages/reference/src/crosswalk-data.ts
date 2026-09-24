@@ -2638,6 +2638,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Mod",
   },
   {
+    name: "ModularInverse",
+    wolfram: "ModularInverse",
+  },
+  {
     name: "MoebiusMu",
     wolfram: "MoebiusMu",
     oracle: [
@@ -2867,9 +2871,17 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     fungrimEntries: ["04427b"],
   },
   {
+    name: "PrimitiveRootList",
+    wolfram: "PrimitiveRootList",
+  },
+  {
     name: "Product",
     fungrimEntries: ["33f13a"],
     wolfram: "Product",
+  },
+  {
+    name: "Quotient",
+    wolfram: "Quotient",
   },
   {
     name: "Random",
@@ -2886,6 +2898,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sympy",
         call: "Rational($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "RationalReconstruction",
+    oracle: [
+      {
+        system: "sage",
+        call: "rational_reconstruction($1, $2)",
         arity: 2,
       },
     ],

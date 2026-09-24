@@ -39,6 +39,7 @@
     "check": "vp check"
   },
   "dependencies": {
+    "@enumeratio/boxed": "workspace:*",
     "@enumeratio/raster": "workspace:*",
     "@enumeratio/wolfram": "workspace:*"
   },

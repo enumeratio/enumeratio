@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, wrapOperator } from "@enumeratio/boxed";
+import { wrapOperator } from "@enumeratio/boxed";
 import {
   addMultivectors,
   conjugateMultivector,
@@ -15,7 +15,6 @@ import {
   toMultivector,
 } from "./multivector.ts";
 import { declareAlgebras } from "./algebra.ts";
-import { powerMod, powerModList } from "./modular.ts";
 
 // How the units reach compute-engine's arithmetic.
 //
@@ -241,36 +240,6 @@ export function declareHypercomplex(ce: ComputeEngine): void {
   // while `Multiply` would not. So take Wolfram's name for the primary head, with
   // `GeometricProduct` as the domain-specific alias. Both work for the commuting
   // families too, where they simply agree with `×`.
-  // ── where these units already live: ℤ/m ───────────────────────────────────────
-  // Split and imaginary units are not only formal: ℤ/m contains them outright, one per
-  // ±1 choice across the CRT channels. Rather than a bespoke head per target, this is
-  // Wolfram's PowerModList — `PowerModList(1, 1/2, m)` is the split units of ℤ/m and
-  // `PowerModList(-1, 1/2, m)` its imaginary units. See modular.ts for the counting law.
-  ce.declare("PowerModList", {
-    signature: "(integer, number, integer) -> list<integer>",
-    evaluate: (ops: readonly BoxedExpression[]) => {
-      const a = integerAt(ops[0]);
-      const m = integerAt(ops[2]);
-      const exponent = ops[1];
-      if (a === undefined || m === undefined || exponent === undefined) return undefined;
-      if (exponent.im !== 0 || !Number.isFinite(exponent.re)) return undefined;
-      const list = (xs: readonly number[]) =>
-        ce.function(
-          "List",
-          xs.map((x) => ce.number(x)),
-        );
-      // An integer exponent is an ordinary power; 1/r asks for the r-th roots.
-      if (Number.isInteger(exponent.re)) {
-        const value = powerMod(a, exponent.re, m);
-        return value === undefined ? undefined : list([value]);
-      }
-      const root = Math.round(1 / exponent.re);
-      if (root < 2 || Math.abs(exponent.re - 1 / root) > 1e-12) return undefined;
-      const roots = powerModList(a, root, m);
-      return roots === undefined ? undefined : list(roots);
-    },
-  });
-
   declareAlgebras(ce);
   declareOrderedJuxtaposition(ce);
 }

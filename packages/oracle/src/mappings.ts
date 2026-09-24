@@ -189,6 +189,16 @@ export const MAPPINGS: readonly Mapping[] = [
     note: "Sage reaches this through Zmod(m)(a).nth_root(b, all=True); no one-liner in SymPy.",
   },
   {
+    head: "PrimitiveRootList",
+    arity: 1,
+    emit: { wolfram: "PrimitiveRootList[$1]" },
+  },
+  {
+    head: "RationalReconstruction",
+    arity: 2,
+    emit: { sage: "rational_reconstruction($1, $2)" },
+  },
+  {
     head: "ContinuedFraction",
     arity: 1,
     emit: {

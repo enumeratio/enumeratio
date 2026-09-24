@@ -9,6 +9,7 @@ import { declareQuiver } from "@enumeratio/quiver/src";
 import { declareHopf } from "@enumeratio/hopf/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareModular } from "@enumeratio/modular/src";
+import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
@@ -37,6 +38,8 @@ declareHopf(ce);
 declareGroupAlgebra(ce);
 // …and the modular group.
 declareModular(ce);
+// …and arithmetic in ℤ/m.
+declareNumberTheory(ce);
 // …and the braid groups.
 declareBraid(ce);
 

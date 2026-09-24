@@ -78,6 +78,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine's GCD is integer-only",
       },
+      {
+        expr: ["GCD", ["Complex", 3, 1], ["Complex", 1, 3]],
+        expected: ["Complex", 1, 1],
+        category: "Scope",
+        caption: "Gaussian integers: the associate in the first quadrant",
+      },
     ],
     seeAlso: ["LCM", "ExtendedGCD"],
   },
@@ -134,6 +140,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine's LCM is integer-only",
       },
+      {
+        expr: ["LCM", ["Complex", 3, 1], ["Complex", -1, 3]],
+        expected: ["Complex", 3, 1],
+        category: "Scope",
+        caption: "$-1 + 3i = i(3 + i)$: associates share their multiples",
+      },
     ],
     seeAlso: ["GCD"],
   },
@@ -146,6 +158,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         call: "Mod(a, b)",
         description: "remainder of $a$ on division by $b$, with the sign of $b$.",
+      },
+      {
+        call: "Mod(z, m)",
+        description:
+          "for Gaussian integers, $z - m\\,\\mathrm{Quotient}(z, m)$: the remainder in the box around 0",
+        library: "enumeratio-number-theory",
       },
     ],
     details: [
@@ -187,8 +205,87 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine only supports the 2-argument form",
       },
+      {
+        expr: ["Mod", ["Complex", 7, 5], 3],
+        expected: ["Complex", 1, -1],
+        category: "Scope",
+        caption: "Gaussian integers: the quotient rounds, so each part lands in $(-m/2, m/2]$",
+      },
+      {
+        expr: ["Mod", ["Complex", 7, 5], ["Complex", 2, 1]],
+        expected: ["Complex", 0, -1],
+        category: "Scope",
+        caption: "a Gaussian modulus: $7 + 5i = (2 + i)(4 + i) - i$",
+      },
+      {
+        expr: [
+          "Mod",
+          ["Complex", { num: "100000000000000000001" }, { num: "9007199254740993" }],
+          ["Complex", 2, 1],
+        ],
+        expected: 0,
+        category: "Scope",
+        caption: "exact in both parts past $2^{53}$",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Mod", ["Complex", 7, 5], ["Complex", 2, 1]],
+          [
+            "Subtract",
+            ["Complex", 7, 5],
+            ["Multiply", ["Complex", 2, 1], ["Quotient", ["Complex", 7, 5], ["Complex", 2, 1]]],
+          ],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "the remainder of [[Quotient]]",
+      },
+      {
+        expr: ["List", ["Mod", ["Complex", 1, 2], 2], ["Mod", ["Complex", 3, 2], 2]],
+        expected: ["List", 1, -1],
+        category: "Possible issues",
+        caption: "rounding ties to even means $1$ and $-1$ both appear as remainders mod 2",
+      },
     ],
     seeAlso: ["PowerMod"],
+  },
+  {
+    name: "Quotient",
+    domain: "Number theory",
+    signature: "Quotient(m, n)",
+    summary:
+      "The integer quotient of $m$ by $n$ — for Gaussian integers, $m/n$ rounded to the nearest lattice point.",
+    signatures: [
+      {
+        call: "Quotient(m, n)",
+        description:
+          "$\\lfloor m/n \\rfloor$ for integers; $m/n$ rounded half-even in each part for Gaussian integers",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "For integers, $\\lfloor m/n \\rfloor$, so $m = n\\,\\mathrm{Quotient}(m, n) + \\mathrm{Mod}(m, n)$ with the remainder taking the sign of $n$.",
+      "For Gaussian integers the quotient rounds instead, ties to even, which is what makes $\\mathbb{Z}[i]$ Euclidean: the remainder then has smaller norm than $n$.",
+      "compute-engine has no Quotient; this follows Wolfram's.",
+    ],
+    examples: [
+      { expr: ["Quotient", 17, 5], expected: 3 },
+      { expr: ["Quotient", -7, 2], expected: -4, caption: "the floor, not truncation" },
+      {
+        expr: ["Quotient", ["Complex", 7, 5], ["Complex", 2, 1]],
+        expected: ["Complex", 4, 1],
+        category: "Scope",
+        caption: "$(7 + 5i)/(2 + i) = 3.8 + 0.6i$, rounded",
+      },
+      {
+        expr: ["Quotient", ["Complex", 5, 5], 2],
+        expected: ["Complex", 2, 2],
+        category: "Possible issues",
+        caption: "$2.5 + 2.5i$ rounds to even in each part",
+      },
+    ],
+    seeAlso: ["Mod", "GCD"],
   },
   {
     name: "PowerMod",
@@ -197,13 +294,26 @@ export const numberTheory: readonly ReferenceEntry[] = [
     summary: "Modular exponentiation: a^b mod m, computed without forming a^b directly.",
     signatures: [
       { call: "PowerMod(a, b, m)", description: "modular exponentiation, $a^b \\bmod m$." },
+      {
+        call: "PowerMod(a, 1/r, m)",
+        description:
+          "the least $x \\ge 0$ with $x^r \\equiv a \\pmod m$; more generally $s/r$ for $x^r \\equiv a^s$",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "PowerMod(u/v, b, m)",
+        description: "a rational base, read in $\\mathbb{Z}/m$ as $u \\cdot v^{-1}$",
+        library: "enumeratio-number-theory",
+      },
     ],
     details: [
       "Computed by repeated squaring, without ever forming $a^b$ directly -- efficient even for huge $b$.",
       "A negative $b$ gives the modular inverse of $a$ raised to $|b|$, when it exists.",
       "The inverse is undefined whenever $\\gcd(a,m)\\neq1$; compute-engine leaves such calls unevaluated.",
       "Equal to $\\mathrm{Mod}(a^b, m)$ for positive $b$, just far more efficient. See [[Mod]].",
-      "compute-engine's PowerMod requires an integer exponent.",
+      "A rational exponent $s/r$ gives the least $x$ with $x^r \\equiv a^s$ — the first element of [[PowerModList]] — and stays unevaluated when there is none.",
+      "Threads over lists in any argument.",
+      "Gaussian integers are reduced as [[Mod]] reduces them; a rational-integer modulus must be positive, and a result that comes out real is reported in $[0, m)$.",
     ],
     examples: [
       { expr: ["PowerMod", 2, 10, 3], expected: 1 },
@@ -235,12 +345,418 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PowerMod", 4, ["Rational", 1, 2], 7],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's PowerMod only accepts integer exponents",
+        caption: "a rational exponent is a modular root: the least of $2, 5$",
+      },
+      {
+        expr: ["PowerMod", 2, ["List", 10, 11, 12, 13, 14], 5],
+        expected: ["List", 4, 3, 1, 2, 4],
+        category: "Scope",
+        caption: "threads over lists; the period is the order of 2 mod 5",
+      },
+      {
+        expr: ["PowerMod", ["Add", ["Power", 10, 300], 1], 7, 5],
+        expected: 1,
+        category: "Scope",
+        caption: "a 301-digit base",
+      },
+      {
+        expr: ["PowerMod", 3, ["Rational", 1, 2], ["Add", ["Power", 10, 30], 57]],
+        expected: { num: "492767688934650018614948489645" },
+        category: "Scope",
+        caption: "a square root of 3 modulo the prime $10^{30} + 57$",
+      },
+      {
+        expr: ["PowerMod", ["Rational", 2, 3], 1, 7],
+        expected: 3,
+        category: "Scope",
+        caption: "a rational base: $2 \\cdot 3^{-1} = 2 \\cdot 5 \\equiv 3 \\pmod 7$",
+        divergence: {
+          wolfram: "Wolfram's PowerMod takes integers (and Gaussian integers) only.",
+        },
+      },
+      {
+        expr: ["PowerMod", ["Complex", 2, 1], 2, 3],
+        expected: ["Complex", 0, 1],
+        category: "Scope",
+        caption: "Gaussian integers: $(2+i)^2 = 3 + 4i \\equiv i \\pmod 3$",
+      },
+      {
+        expr: ["PowerMod", ["Complex", 1, 2], ["Power", 10, 30], ["Complex", 7, 2]],
+        expected: ["Complex", 1, 2],
+        category: "Scope",
+        caption: "a Gaussian modulus, and an exponent of $10^{30}$",
+      },
+      {
+        expr: ["PowerMod", ["Complex", 11, -7], -4, ["Complex", 7, 4]],
+        expected: ["Complex", -2, -1],
+        category: "Scope",
+        caption: "$11 - 7i$ is a unit mod $7 + 4i$, so it has negative powers",
+        divergence: {
+          wolfram:
+            "Wolfram asks for a unit modulo the norm 65 here, not modulo $7 + 4i$, and leaves this unevaluated.",
+        },
+      },
+      {
+        expr: ["PowerMod", 7, ["Totient", 19], 19],
+        expected: 1,
+        category: "Properties",
+        caption: "Euler's theorem: $a^{\\varphi(m)} \\equiv 1$ for $a$ coprime to $m$",
+      },
+      {
+        expr: ["PowerMod", 2, 340, 341],
+        expected: 1,
+        category: "Applications",
+        caption: "$341 = 11 \\cdot 31$ passes Fermat's test to base 2 — the least pseudoprime",
+      },
+      {
+        expr: [
+          "Equal",
+          ["PowerMod", ["PowerMod", 5, 6, 23], 15, 23],
+          ["PowerMod", ["PowerMod", 5, 15, 23], 6, 23],
+        ],
+        expected: "True",
+        category: "Applications",
+        caption: "Diffie–Hellman: both parties reach the shared key $5^{6 \\cdot 15} \\bmod 23$",
+      },
+      {
+        expr: ["PowerMod", 2, ["Rational", 1, 2], 5],
+        expected: ["PowerMod", 2, ["Rational", 1, 2], 5],
+        category: "Possible issues",
+        caption: "2 is not a square mod 5, so there is no root",
       },
     ],
-    seeAlso: ["Mod"],
+    seeAlso: ["Mod", "PowerModList", "ModularInverse"],
+  },
+  {
+    name: "PowerModList",
+    domain: "Number theory",
+    signature: "PowerModList(a, s/r, m)",
+    summary:
+      "Every $x$ in $[0, m)$ with $x^r \\equiv a^s \\pmod m$ — all the values $a^{s/r}$ can take modulo $m$.",
+    signatures: [
+      {
+        call: "PowerModList(a, s/r, m)",
+        description: "every $x$ in $[0, m)$ with $x^r \\equiv a^s \\pmod m$, ascending",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "PowerModList(a, k, m)",
+        description: "an integer exponent gives the single value $\\{a^k \\bmod m\\}$",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "PowerModList(a, -1, m)",
+        description: "the modular inverse $\\{a^{-1}\\}$, or $\\{\\}$ when $\\gcd(a, m) \\ne 1$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "The problem splits over the prime powers of $m$ by the Chinese remainder theorem: a root mod $m$ is one root per channel $p^e$, every combination, so the count is the product of the channel counts.",
+      "Mod a prime $p$ the units are cyclic of order $p - 1$, so $x^r \\equiv b$ has exactly $\\gcd(r, p-1)$ roots or none. One root is built Sylow subgroup by Sylow subgroup — only the primes dividing $r$ need a discrete log — so $p - 1$ is never factored and a 30-digit prime costs a millisecond.",
+      "Roots are Hensel-lifted up each prime power: a root with $r x^{r-1} \\not\\equiv 0 \\pmod p$ lifts uniquely; a singular one (the 2-adic channel of a square root, or $p \\mid x$) lifts to all $p$ of its lifts or to none.",
+      "The modulus has to be factored, by trial division and Pollard's rho under a step budget. A product of two large primes is out of reach, and the call stays unevaluated — which is the whole security of the Rabin cryptosystem.",
+      "At most 100 000 roots are listed; past that the call stays unevaluated rather than build the list.",
+      "Beyond Wolfram, a rational $a = u/v$ with $\\gcd(v, m) = 1$ is read in $\\mathbb{Z}/m$ as $u \\cdot v^{-1}$, the image of $\\mathbb{Z}_{(m)}$; a denominator sharing a factor with $m$ has no image, and the list is empty. See [[RationalReconstruction]] for the way back.",
+      "Threads over lists in any argument.",
+      "Over the Gaussian integers — beyond Wolfram, whose PowerModList takes integers only — $m$ factors into Gaussian prime powers: a split prime maps onto $\\mathbb{Z}/p^e$ by $i \\mapsto \\sqrt{-1}$, an inert $p$ has residue field $\\mathbb{F}_{p^2}$ and lifts by Hensel, and $1 + i$ lifts by testing both residues.",
+    ],
+    examples: [
+      {
+        expr: ["PowerModList", 3, ["Rational", 1, 2], 11],
+        expected: ["List", 5, 6],
+        caption: "the square roots of 3 modulo 11: $5^2 = 25$ and $6^2 = 36$ are both $\\equiv 3$",
+      },
+      {
+        expr: ["PowerModList", 2, 10, 1000],
+        expected: ["List", 24],
+        caption: "an integer exponent is an ordinary power: $2^{10} = 1024$",
+      },
+      {
+        expr: ["PowerModList", 2, ["Rational", 3, 2], 17],
+        expected: ["List", 5, 12],
+        caption: "a general exponent $s/r$: every $x$ with $x^2 \\equiv 2^3$",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", 2, ["Rational", 2, 3], 31],
+        expected: ["List", 16, 18, 28],
+        caption: "the three cube roots of $2^2 = 4$, since $3 \\mid 30$",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", 3, -1, 7],
+        expected: ["List", 5],
+        caption: "exponent $-1$ is the modular inverse: $3 \\cdot 5 = 15 \\equiv 1$",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", -1, ["Rational", 1, 2], 625],
+        expected: ["List", 182, 443],
+        caption: "a prime power: the root $2$ of $x^2 \\equiv -1 \\pmod 5$, Hensel-lifted to $5^4$",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", ["Rational", 2, 3], ["Rational", 1, 2], 23],
+        expected: ["List", 4, 19],
+        caption: "a rational base reads as $2 \\cdot 3^{-1}$ in $\\mathbb{Z}/23$",
+        category: "Scope",
+        divergence: {
+          wolfram:
+            "Wolfram's PowerModList takes integers only and leaves a rational base unevaluated.",
+        },
+      },
+      {
+        expr: ["PowerModList", ["List", 1, 2, 3, 4], ["Rational", 1, 2], 5],
+        expected: ["List", ["List", 1, 4], ["List"], ["List"], ["List", 2, 3]],
+        caption: "threads over lists: the squares mod 5 are exactly 1 and 4",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", -1, ["Rational", 1, 2], ["Add", ["Power", 10, 30], 57]],
+        expected: [
+          "List",
+          { num: "164543371520667882579352850009" },
+          { num: "835456628479332117420647150048" },
+        ],
+        caption:
+          "$\\sqrt{-1}$ modulo the 31-digit prime $10^{30} + 57$ — no scan, no factoring of $p - 1$",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", 2, ["Rational", 1, 3], ["Subtract", ["Power", 2, 89], 1]],
+        expected: [
+          "List",
+          1073741824,
+          { num: "205880356524696485265270985" },
+          { num: "413089663117993651110549302" },
+        ],
+        caption:
+          "the cube roots of 2 modulo the Mersenne prime $2^{89} - 1$; the first is $2^{30}$, since $2^{90} = 2 \\cdot 2^{89} \\equiv 2$",
+        category: "Scope",
+      },
+      {
+        expr: ["PowerModList", -1, ["Rational", 1, 2], ["Power", 5, 40]],
+        expected: [
+          "List",
+          { num: "2224618918409236552857702057" },
+          { num: "6870328099320045826292688568" },
+        ],
+        caption: "forty Hensel steps up from $\\sqrt{-1} \\equiv 2 \\pmod 5$",
+        category: "Scope",
+      },
+      {
+        expr: [
+          "Length",
+          [
+            "PowerModList",
+            1,
+            ["Rational", 1, 2],
+            ["Multiply", 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53],
+          ],
+        ],
+        expected: 32768,
+        caption:
+          "the square roots of 1 modulo the product of the first 16 primes: one per $\\pm$ sign over the 15 odd channels, $2^{15}$",
+        category: "Scope",
+      },
+      {
+        expr: [
+          "Length",
+          ["PowerModList", 1, ["Rational", 1, 1000], ["Subtract", ["Power", 2, 61], 1]],
+        ],
+        expected: 50,
+        caption:
+          "the 1000th roots of unity mod $2^{61} - 1$: $\\gcd(1000, 2^{61} - 2) = 50$ of them",
+        category: "Scope",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Length", ["PowerModList", 1, ["Rational", 1, 12], 1009]],
+          ["GCD", 12, 1008],
+        ],
+        expected: "True",
+        caption: "mod a prime there are exactly $\\gcd(r, p - 1)$ $r$-th roots of unity",
+        category: "Properties",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Length", ["PowerModList", 1, ["Rational", 1, 2], 1155]],
+          ["Power", 2, ["PrimeNu", 1155]],
+        ],
+        expected: "True",
+        caption:
+          "for odd $m$ the square roots of 1 are the $2^{\\omega(m)}$ sign vectors over the CRT channels: $1155 = 3 \\cdot 5 \\cdot 7 \\cdot 11$",
+        category: "Properties",
+      },
+      {
+        expr: [
+          "Equal",
+          ["PowerMod", 4, ["Rational", 1, 2], 7],
+          ["First", ["PowerModList", 4, ["Rational", 1, 2], 7]],
+        ],
+        expected: "True",
+        caption: "[[PowerMod]] with a rational exponent is the least element of the list",
+        category: "Properties",
+      },
+      {
+        expr: ["PowerModList", 1, ["Rational", 1, 2], 15],
+        expected: ["List", 1, 4, 11, 14],
+        caption:
+          "the split units of $\\mathbb{Z}/15$: $j_1 \\mapsto 4$ is a ring homomorphism $\\mathbb{R}[j]/(j^2 - 1) \\to \\mathbb{Z}/15$",
+        category: "Applications",
+      },
+      {
+        expr: ["Mod", ["Multiply", ["Add", 1, 4], ["Subtract", 1, 4]], 15],
+        expected: 0,
+        caption: "so the identity $(1+j)(1-j) = 0$ transports by $j \\mapsto 4$",
+        category: "Applications",
+      },
+      {
+        expr: ["PowerModList", -1, ["Rational", 1, 2], 65],
+        expected: ["List", 8, 18, 47, 57],
+        caption:
+          "imaginary units of $\\mathbb{Z}/65$ exist because $5$ and $13$ are both $\\equiv 1 \\pmod 4$",
+        category: "Applications",
+      },
+      {
+        expr: [
+          "PowerModList",
+          ["PowerMod", 123456789, 2, ["Multiply", 1000003, 1000033]],
+          ["Rational", 1, 2],
+          ["Multiply", 1000003, 1000033],
+        ],
+        expected: ["List", 123456789, 30305547335, 969730452764, 999912543310],
+        caption:
+          "Rabin decryption: knowing the factors of $n$, the four square roots of the ciphertext include the message",
+        category: "Applications",
+      },
+      {
+        expr: ["PowerModList", -1, ["Rational", 1, 2], 15],
+        expected: ["List"],
+        caption: "no square root of $-1$: $3 \\equiv 3 \\pmod 4$ blocks its channel",
+        category: "Possible issues",
+      },
+      {
+        expr: ["PowerModList", 2, -1, 4],
+        expected: ["List"],
+        caption: "no inverse when $\\gcd(a, m) \\ne 1$, so the list is empty",
+        category: "Possible issues",
+      },
+      {
+        expr: ["PowerModList", 1, ["Rational", 1, 2], 8],
+        expected: ["List", 1, 3, 5, 7],
+        caption:
+          "the 2-adic channel breaks the $2^{\\omega(m)}$ law: $\\mathbb{Z}/2^a$ has four square roots of 1 for $a \\ge 3$",
+        category: "Possible issues",
+      },
+      {
+        expr: [
+          "PowerModList",
+          4,
+          ["Rational", 1, 2],
+          ["Multiply", ["Add", ["Power", 10, 20], 39], ["Add", ["Power", 10, 20], 129]],
+        ],
+        expected: [
+          "PowerModList",
+          4,
+          ["Rational", 1, 2],
+          { num: "10000000000000000016800000000000000005031" },
+        ],
+        caption:
+          "a product of two 21-digit primes cannot be factored in budget, so even $\\sqrt 4$ stays unevaluated — finding the other two roots is as hard as factoring",
+        category: "Possible issues",
+      },
+      {
+        expr: ["PowerModList", 0, ["Rational", 1, 2], ["Power", 3, 40]],
+        expected: ["PowerModList", 0, ["Rational", 1, 2], { num: "12157665459056928801" }],
+        caption: "$x^2 \\equiv 0 \\pmod{3^{40}}$ has $3^{20}$ roots — too many to list",
+        category: "Possible issues",
+      },
+      {
+        expr: ["PowerModList", 1, ["Rational", 1, 2], ["List", 8, 15, 21, 24]],
+        expected: [
+          "List",
+          ["List", 1, 3, 5, 7],
+          ["List", 1, 4, 11, 14],
+          ["List", 1, 8, 13, 20],
+          ["List", 1, 5, 7, 11, 13, 17, 19, 23],
+        ],
+        caption:
+          "the moduli with four or more square roots of 1 come in patterns: mod 24 every unit is one, since $(\\mathbb{Z}/24)^\\times \\cong C_2^3$",
+        category: "Neat examples",
+      },
+      {
+        expr: ["PowerModList", ["Complex", 0, 1], ["Rational", 1, 2], 7],
+        expected: ["List", ["Complex", -2, -2], ["Complex", 2, 2]],
+        category: "Scope",
+        caption:
+          "a square root of $i$ in $\\mathbb{Z}[i]/(7)$, the field of 49 elements: $(2 + 2i)^2 = 8i \\equiv i$",
+        divergence: { wolfram: "Wolfram's PowerModList takes integers only." },
+      },
+      {
+        expr: [
+          "PowerModList",
+          ["Complex", 3, 4],
+          ["Rational", 1, 2],
+          ["Add", ["Power", 10, 20], 39],
+        ],
+        expected: ["List", ["Complex", -2, -1], ["Complex", 2, 1]],
+        category: "Scope",
+        caption:
+          "$10^{20} + 39$ is inert, so its residue field is $\\mathbb{F}_{p^2}$ with $p$ of 21 digits",
+        divergence: { wolfram: "Wolfram's PowerModList takes integers only." },
+      },
+    ],
+    seeAlso: [
+      "PowerMod",
+      "ModularInverse",
+      "MultiplicativeOrder",
+      "PrimitiveRootList",
+      "RationalReconstruction",
+    ],
+  },
+  {
+    name: "ModularInverse",
+    domain: "Number theory",
+    signature: "ModularInverse(a, m)",
+    summary: "The $x$ with $a x \\equiv 1 \\pmod m$, when $a$ is a unit mod $m$.",
+    signatures: [
+      { call: "ModularInverse(a, m)", description: "the inverse of $a$ modulo $m$, in $[0, m)$" },
+      {
+        call: "ModularInverse(z, m)",
+        description: "over the Gaussian integers",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Exists exactly when $\\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.",
+      "Read off the Bézout coefficient of [[ExtendedGCD]].",
+      "For Gaussian integers, Wolfram reduces the inverse into $[0, m)$ part by part for a positive rational-integer $m$, and as [[Mod]] does otherwise.",
+    ],
+    examples: [
+      { expr: ["ModularInverse", 3, 7], expected: 5, caption: "$3 \\cdot 5 = 15 \\equiv 1$" },
+      {
+        expr: ["ModularInverse", ["Complex", 2, 1], 7],
+        expected: ["Complex", 6, 4],
+        category: "Scope",
+        caption: "$(2 + i)(6 + 4i) = 8 + 14i \\equiv 1 \\pmod 7$",
+      },
+      {
+        expr: ["ModularInverse", ["Complex", 11, -7], ["Complex", 7, 4]],
+        expected: ["Complex", -1, 2],
+        category: "Scope",
+      },
+      {
+        expr: ["ModularInverse", 2, 4],
+        expected: ["ModularInverse", 2, 4],
+        category: "Possible issues",
+        caption: "$\\gcd(2, 4) = 2$: no inverse",
+      },
+    ],
+    seeAlso: ["PowerMod", "ExtendedGCD", "PowerModList"],
   },
   {
     name: "Totient",
@@ -434,7 +950,15 @@ export const numberTheory: readonly ReferenceEntry[] = [
     domain: "Number theory",
     signature: "IsPrime(n)",
     summary: "Tests whether n is a prime number.",
-    signatures: [{ call: "IsPrime(n)", description: "tests whether $n$ is prime." }],
+    signatures: [
+      { call: "IsPrime(n)", description: "tests whether $n$ is prime." },
+      {
+        call: "IsPrime(n, GaussianIntegers -> True)",
+        description:
+          "tests whether $n$ is prime in $\\mathbb{Z}[i]$; a complex $n$ is always tested there",
+        library: "enumeratio-number-theory",
+      },
+    ],
     details: [
       "A prime has no positive divisors other than 1 and itself; 1 itself is not prime.",
       'Returns False unless n is provably prime -- there\'s no third "unknown" outcome.',
@@ -471,6 +995,28 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine's IsPrime requires a positive integer and returns False",
       },
+      {
+        expr: ["IsPrime", ["Complex", 2, 1]],
+        expected: "True",
+        category: "Scope",
+        caption: "a Gaussian prime: its norm 5 is prime",
+      },
+      {
+        expr: ["IsPrime", 5, ["KeyValuePair", "GaussianIntegers", "True"]],
+        expected: "False",
+        category: "Scope",
+        caption: "$5 = (2 + i)(2 - i)$ splits in $\\mathbb{Z}[i]$",
+      },
+      {
+        expr: [
+          "IsPrime",
+          ["List", 2, 3, 5, 7, 11, 13],
+          ["KeyValuePair", "GaussianIntegers", "True"],
+        ],
+        expected: ["List", "False", "True", "False", "True", "True", "False"],
+        category: "Properties",
+        caption: "an odd prime stays prime in $\\mathbb{Z}[i]$ exactly when $p \\equiv 3 \\pmod 4$",
+      },
     ],
     seeAlso: ["FactorInteger", "NextPrime"],
   },
@@ -483,6 +1029,12 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         call: "FactorInteger(n)",
         description: "prime factorization of $n$ as $[\\mathrm{prime}, \\mathrm{exponent}]$ pairs.",
+      },
+      {
+        call: "FactorInteger(n, GaussianIntegers -> True)",
+        description:
+          "the factorisation in $\\mathbb{Z}[i]$: a unit first when it is not 1, then first-quadrant primes; a complex $n$ is always factored there",
+        library: "enumeratio-number-theory",
       },
     ],
     details: [
@@ -542,6 +1094,39 @@ export const numberTheory: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine does not",
+      },
+      {
+        expr: ["FactorInteger", 5, ["KeyValuePair", "GaussianIntegers", "True"]],
+        expected: [
+          "List",
+          ["Tuple", ["Complex", 0, -1], 1],
+          ["Tuple", ["Complex", 1, 2], 1],
+          ["Tuple", ["Complex", 2, 1], 1],
+        ],
+        category: "Scope",
+        caption: "$5 = -i(1 + 2i)(2 + i)$",
+      },
+      {
+        expr: ["FactorInteger", ["Complex", 3, 4]],
+        expected: ["List", ["Tuple", ["Complex", 2, 1], 2]],
+        category: "Scope",
+        caption: "$3 + 4i = (2 + i)^2$",
+      },
+      {
+        expr: [
+          "FactorInteger",
+          ["Complex", { num: "100000000000000000039" }, { num: "100000000000000000129" }],
+        ],
+        expected: [
+          "List",
+          ["Tuple", ["Complex", 0, -1], 1],
+          ["Tuple", ["Complex", 1, 1], 1],
+          ["Tuple", ["Complex", 99, 34], 1],
+          ["Tuple", ["Complex", 1538, 213], 1],
+          ["Tuple", ["Complex", 277789996706096, 549000467740335], 1],
+        ],
+        category: "Scope",
+        caption: "a 21-digit Gaussian integer, through its norm",
       },
     ],
     seeAlso: ["NthPrime", "Divisors", "PrimeNu", "PrimeOmega"],
@@ -647,7 +1232,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
     domain: "Number theory",
     signature: "Divisors(n)",
     summary: "All positive divisors of n, in increasing order.",
-    signatures: [{ call: "Divisors(n)", description: "all positive divisors of $n$, increasing." }],
+    signatures: [
+      { call: "Divisors(n)", description: "all positive divisors of $n$, increasing." },
+      {
+        call: "Divisors(n, GaussianIntegers -> True)",
+        description: "the first-quadrant divisors in $\\mathbb{Z}[i]$, by real part then imaginary",
+        library: "enumeratio-number-theory",
+      },
+    ],
     details: [
       "Includes both 1 and $n$ itself; a prime's only divisors are those two.",
       "The count of divisors, $d(n)$, equals $\\sigma_0(n)$. See [[DivisorSigma]].",
@@ -722,6 +1314,17 @@ export const numberTheory: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine does not",
+      },
+      {
+        expr: ["Divisors", ["Complex", 3, 4]],
+        expected: ["List", 1, ["Complex", 2, 1], ["Complex", 3, 4]],
+        category: "Scope",
+      },
+      {
+        expr: ["Divisors", 13, ["KeyValuePair", "GaussianIntegers", "True"]],
+        expected: ["List", 1, ["Complex", 2, 3], ["Complex", 3, 2], 13],
+        category: "Scope",
+        caption: "$13 = (2 + 3i)(3 - 2i)$ splits, so it gains two divisors",
       },
     ],
     seeAlso: ["FactorInteger", "DivisorSigma"],
@@ -1157,6 +1760,16 @@ export const numberTheory: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "compute-engine only accepts two arguments",
       },
+      {
+        expr: ["ExtendedGCD", ["Complex", 7, 2], ["Complex", 3, -5]],
+        expected: ["Tuple", 1, ["Complex", -1, -2], ["Complex", -2, 2]],
+        category: "Scope",
+        caption: "Gaussian integers, by Euclid with the rounded quotient",
+        divergence: {
+          wolfram:
+            "Bézout coefficients are not unique; in about one case in a thousand Wolfram returns another valid pair.",
+        },
+      },
     ],
     seeAlso: ["GCD"],
   },
@@ -1170,12 +1783,19 @@ export const numberTheory: readonly ReferenceEntry[] = [
         call: "MultiplicativeOrder(a, n)",
         description: "smallest positive $k$ with $a^k\\equiv1\\pmod n$.",
       },
+      {
+        call: "MultiplicativeOrder(a, n, {r1, r2, …})",
+        description:
+          "smallest positive $k$ with $a^k \\equiv r_i \\pmod n$ for some $i$ — a discrete logarithm",
+        library: "enumeratio-number-theory",
+      },
     ],
     details: [
       "Also called the modulo order; defined only when $\\gcd(a,n)=1$, since otherwise no power of $a$ can reach 1 mod $n$.",
       "Always divides $\\varphi(n)$, by Lagrange's theorem applied to the group of units mod $n$. See [[Totient]].",
-      "compute-engine leaves the call unevaluated when no order exists.",
-      "compute-engine doesn't support it.",
+      "Unevaluated when no order exists.",
+      "Computed from Carmichael's $\\lambda(n)$ by stripping primes off it, so $n$ and each $p - 1$ must be factored.",
+      "The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.",
     ],
     examples: [
       { expr: ["MultiplicativeOrder", 5, 8], expected: 2 },
@@ -1201,12 +1821,201 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["MultiplicativeOrder", 3, 7, ["List", -1, 1]],
         expected: 3,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine doesn't support it",
+        caption: "the first power of 3 to reach $\\pm 1$: $3^3 = 27 \\equiv -1$",
+      },
+      {
+        expr: ["MultiplicativeOrder", 5, 7, ["List", 2, 3, 4]],
+        expected: 2,
+        category: "Scope",
+        caption: "$5^2 = 25 \\equiv 4$",
+      },
+      {
+        expr: ["MultiplicativeOrder", 3, ["Subtract", ["Power", 2, 61], 1], ["List", 2]],
+        expected: { num: "159602976958324900" },
+        category: "Scope",
+        caption: "a discrete log mod the Mersenne prime $2^{61} - 1$, whose $p - 1$ is smooth",
+      },
+      {
+        expr: ["MultiplicativeOrder", 3, ["Subtract", ["Power", 2, 127], 1]],
+        expected: { num: "56713727820156410577229101238628035242" },
+        category: "Scope",
+        caption: "3 has order $(p-1)/3$ modulo $2^{127} - 1$",
+      },
+      {
+        expr: [
+          "PowerMod",
+          3,
+          ["MultiplicativeOrder", 3, ["Subtract", ["Power", 2, 61], 1], ["List", 2]],
+          ["Subtract", ["Power", 2, 61], 1],
+        ],
+        expected: 2,
+        category: "Properties",
+        caption: "the discrete log inverts [[PowerMod]]",
+      },
+      {
+        expr: ["MultiplicativeOrder", 2, 7, ["List", 3]],
+        expected: ["MultiplicativeOrder", 2, 7, ["List", 3]],
+        category: "Possible issues",
+        caption: "3 is not a power of 2 mod 7 — the powers are $\\{1, 2, 4\\}$",
       },
     ],
     seeAlso: ["PowerMod"],
+  },
+  {
+    name: "PrimitiveRootList",
+    domain: "Number theory",
+    signature: "PrimitiveRootList(n)",
+    summary:
+      "Every primitive root of $n$ — every generator of $(\\mathbb{Z}/n)^\\times$ — ascending.",
+    signatures: [
+      {
+        call: "PrimitiveRootList(n)",
+        description: "the generators of the unit group mod $n$, or $\\{\\}$ when it is not cyclic",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "$(\\mathbb{Z}/n)^\\times$ is cyclic exactly for $n = 1, 2, 4, p^k, 2p^k$ with $p$ an odd prime; otherwise there are no primitive roots and the list is empty.",
+      "When there is one generator $g$ there are $\\varphi(\\varphi(n))$: the powers $g^k$ with $\\gcd(k, \\varphi(n)) = 1$.",
+      "A candidate $g$ is a generator iff $g^{\\varphi(n)/q} \\not\\equiv 1$ for every prime $q \\mid \\varphi(n)$, so $\\varphi(n)$ has to be factored.",
+      "At most 100 000 roots are listed; past that the call stays unevaluated. [[PrimitiveRoot]] gives the least one at any size.",
+    ],
+    examples: [
+      { expr: ["PrimitiveRootList", 7], expected: ["List", 3, 5] },
+      {
+        expr: ["PrimitiveRootList", 18],
+        expected: ["List", 5, 11],
+        caption: "$18 = 2 \\cdot 3^2$ is of the form $2p^k$",
+        category: "Scope",
+      },
+      {
+        expr: ["Length", ["PrimitiveRootList", 1009]],
+        expected: 288,
+        category: "Scope",
+      },
+      {
+        expr: ["Equal", ["Length", ["PrimitiveRootList", 1009]], ["Totient", ["Totient", 1009]]],
+        expected: "True",
+        caption: "there are $\\varphi(\\varphi(n))$ of them",
+        category: "Properties",
+      },
+      {
+        expr: ["Equal", ["First", ["PrimitiveRootList", 1009]], ["PrimitiveRoot", 1009]],
+        expected: "True",
+        caption: "the first is [[PrimitiveRoot]]",
+        category: "Properties",
+      },
+      {
+        expr: ["PrimitiveRootList", 8],
+        expected: ["List"],
+        caption: "$(\\mathbb{Z}/8)^\\times \\cong C_2 \\times C_2$ is not cyclic",
+        category: "Possible issues",
+      },
+      {
+        expr: ["Length", ["PrimitiveRootList", 1000003]],
+        expected: ["Length", ["PrimitiveRootList", 1000003]],
+        caption: "past 100 000 roots the list is not built",
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["PrimitiveRoot", "MultiplicativeOrder", "PowerModList"],
+  },
+  {
+    name: "RationalReconstruction",
+    domain: "Number theory",
+    signature: "RationalReconstruction(a, m)",
+    summary:
+      "The small fraction $n/d$ whose image in $\\mathbb{Z}/m$ is $a$ — the inverse of reading $n/d$ as $n \\cdot d^{-1} \\bmod m$.",
+    signatures: [
+      {
+        call: "RationalReconstruction(a, m)",
+        description:
+          "the $n/d$ with $n \\equiv a d \\pmod m$ and $|n|, d \\le \\sqrt{(m-1)/2}$, when there is one",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "RationalReconstruction(a, m, N, D)",
+        description: "with explicit bounds $|n| \\le N$, $0 < d \\le D$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Every residue is the image of infinitely many fractions, but at most one with $2ND < m$ — so under the default balanced bounds the answer, when it exists, is unique.",
+      "Wang's algorithm: the extended Euclidean algorithm on $(m, a)$, stopped at the first remainder $\\le N$; the remainder and its cofactor are $n$ and $d$.",
+      "Not a Wolfram built-in; the name follows SageMath's `rational_reconstruction` (Maple: `iratrecon`).",
+      "Unevaluated when no fraction within the bounds maps to $a$. Threads over lists.",
+    ],
+    examples: [
+      {
+        expr: ["RationalReconstruction", 6, 11],
+        expected: ["Rational", 1, 2],
+        caption: "$2 \\cdot 6 = 12 \\equiv 1 \\pmod{11}$",
+      },
+      {
+        expr: ["RationalReconstruction", ["PowerMod", ["Rational", 22, 7], 1, 1000003], 1000003],
+        expected: ["Rational", 22, 7],
+        caption: "a round trip through $\\mathbb{Z}/1000003$",
+      },
+      {
+        expr: ["RationalReconstruction", 5, 11, 5, 1],
+        expected: 5,
+        caption: "explicit bounds: denominators of 1 only",
+        category: "Scope",
+      },
+      {
+        expr: ["RationalReconstruction", ["List", 6, 9, 10], 11],
+        expected: ["List", ["Rational", 1, 2], -2, -1],
+        category: "Scope",
+      },
+      {
+        expr: [
+          "RationalReconstruction",
+          ["PowerMod", ["Rational", 55835135, 15519504], 1, ["Subtract", ["Power", 2, 61], 1]],
+          ["Subtract", ["Power", 2, 61], 1],
+        ],
+        expected: ["Rational", 55835135, 15519504],
+        caption: "the harmonic number $H_{20}$, back from its image mod $2^{61} - 1$",
+        category: "Scope",
+      },
+      {
+        expr: [
+          "RationalReconstruction",
+          ["PowerMod", ["Rational", 55835135, 15519504], 1, 1000000007],
+          1000000007,
+        ],
+        expected: ["RationalReconstruction", 301316272, 1000000007],
+        caption:
+          "one word-size prime is not enough for $H_{20}$: $2ND < m$ needs $m$ past $1.7 \\cdot 10^{15}$",
+        category: "Applications",
+      },
+      {
+        expr: [
+          "RationalReconstruction",
+          [
+            "ChineseRemainder",
+            [
+              "List",
+              ["PowerMod", ["Rational", 55835135, 15519504], 1, 1000000007],
+              ["PowerMod", ["Rational", 55835135, 15519504], 1, 1000000009],
+            ],
+            ["List", 1000000007, 1000000009],
+          ],
+          ["Multiply", 1000000007, 1000000009],
+        ],
+        expected: ["Rational", 55835135, 15519504],
+        caption:
+          "multi-modular arithmetic: glue two images with [[ChineseRemainder]], and the product modulus is large enough",
+        category: "Applications",
+      },
+      {
+        expr: ["RationalReconstruction", 3, 11],
+        expected: ["RationalReconstruction", 3, 11],
+        caption: "mod 11 the bounds are $|n|, d \\le 2$, and no such fraction is $\\equiv 3$",
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["PowerModList", "ChineseRemainder", "Rationalize", "ContinuedFraction"],
   },
   {
     name: "IntegerDigits",

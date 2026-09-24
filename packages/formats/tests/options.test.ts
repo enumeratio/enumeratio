@@ -1,6 +1,6 @@
 import { expect, test } from "vite-plus/test";
 import { parseNotatio, serializeNotatio } from "../src/notatio.ts";
-import { isOptionList, optionsOf, ruleOf, withOptions } from "../src/options.ts";
+import { isOptionList, optionsOf, ruleOf, withOptions } from "@enumeratio/boxed";
 
 const parse = (src: string) => parseNotatio(src).json;
 

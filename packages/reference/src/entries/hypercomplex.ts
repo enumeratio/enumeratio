@@ -209,7 +209,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
         category: "Scope",
       },
     ],
-    seeAlso: ["Basis", "AlgebraDimension", "Quaternions"],
+    seeAlso: ["Basis", "AlgebraDimension", "Quaternions", "PowerModList"],
   },
   {
     name: "AlgebraDimension",
@@ -278,74 +278,5 @@ export const hypercomplex: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["Basis", "NonCommutativeMultiply", "AlgebraSignature"],
-  },
-  {
-    name: "PowerModList",
-    domain: DOMAIN,
-    signature: "PowerModList(a, 1/r, m)",
-    summary:
-      "Every $x$ in $[0, m)$ with $x^r \\equiv a \\pmod m$ — and so the place these units already live: the split units of $\\mathbb{Z}/m$ are $\\mathrm{PowerModList}(1, 1/2, m)$, its imaginary units $\\mathrm{PowerModList}(-1, 1/2, m)$.",
-    signatures: [
-      {
-        call: "PowerModList(a, 1/r, m)",
-        description: "the $r$-th roots of $a$ modulo $m$, ascending",
-        library: "enumeratio-hypercomplex",
-      },
-      {
-        call: "PowerModList(a, k, m)",
-        description: "an integer exponent gives the single value $a^k \\bmod m$",
-        library: "enumeratio-hypercomplex",
-      },
-    ],
-    details: [
-      "By CRT a root is a root in every channel independently, and an odd prime power has exactly the two square roots of 1, $\\pm 1$ — so for ODD $m$ there are $2^{\\omega(m)}$ square roots of 1, one per $\\pm$ sign vector across the places",
-      "$\\omega(m)$ counts DISTINCT primes; the 2-adic channel is the exception, with 1, 2 and 4 roots for $2$, $4$ and $2^{a \\ge 3}$",
-      "A square root of $-1$ exists only where every odd prime factor is $\\equiv 1 \\pmod 4$ and $4 \\nmid m$ — half the primes, so split units are generic and imaginary ones special",
-      "Square roots of $\\pm 1$ take an exact CRT route with the root Hensel-lifted up each prime power, so $m$ is unbounded there; other roots are found by scanning $[0, m)$ and are capped",
-      "Sending $j_1 \\mapsto x$ for a split unit $x$ is a ring homomorphism, so the symbolic identities transport into $\\mathbb{Z}/m$",
-    ],
-    examples: [
-      {
-        expr: ["PowerModList", 1, ["Divide", 1, 2], 15],
-        expected: ["List", 1, 4, 11, 14],
-        caption: "$15 = 3\\cdot 5$, so $2^2 = 4$ split units",
-      },
-      {
-        expr: ["PowerModList", -1, ["Divide", 1, 2], 65],
-        expected: ["List", 8, 18, 47, 57],
-        caption: "$65 = 5\\cdot 13$, both $\\equiv 1 \\pmod 4$",
-      },
-      {
-        expr: ["PowerModList", -1, ["Divide", 1, 2], 15],
-        expected: ["List"],
-        caption: "none: $3 \\equiv 3 \\pmod 4$",
-        category: "Possible issues",
-      },
-      {
-        expr: ["PowerModList", 1, ["Divide", 1, 2], 8],
-        expected: ["List", 1, 3, 5, 7],
-        caption: "the 2-adic exception to $2^{\\omega(m)}$",
-        category: "Possible issues",
-      },
-      {
-        expr: ["PowerModList", -1, ["Divide", 1, 2], 625],
-        expected: ["List", 182, 443],
-        caption: "Hensel-lifted from $2$ mod $5$",
-        category: "Scope",
-      },
-      {
-        expr: ["PowerModList", 8, ["Divide", 1, 3], 13],
-        expected: ["List", 2, 5, 6],
-        caption: "beyond squares: three cube roots, since $3 \\mid 12$",
-        category: "Scope",
-      },
-      {
-        expr: ["Mod", ["Multiply", ["Add", 1, 4], ["Subtract", 1, 4]], 15],
-        expected: 0,
-        caption: "$(1+j)(1-j) = 0$ transported by $j \\mapsto 4$",
-        category: "Applications",
-      },
-    ],
-    seeAlso: ["Norm", "Quaternions"],
   },
 ];

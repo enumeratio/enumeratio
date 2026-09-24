@@ -28,6 +28,7 @@
     "@enumeratio/hypercomplex": "workspace:*",
     "@enumeratio/incidence": "workspace:*",
     "@enumeratio/modular": "workspace:*",
+    "@enumeratio/number-theory": "workspace:*",
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/quiver": "workspace:*",
     "@enumeratio/statistics": "workspace:*",
