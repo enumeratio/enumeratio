@@ -11,7 +11,7 @@
 
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { withOptions } from "@enumeratio/formats";
-import { parseNotatio } from "@enumeratio/formats/notatio";
+import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
 import {
   CONTROL_HEADS,
   DRAWING_SYMBOLS,
@@ -72,9 +72,11 @@ const heldArguments = (el: Element): Element[] => {
  * A layout written structurally -- `<notatio-row><notatio-list>…</notatio-list></notatio-row>`
  * -- lays out the list's entries, so they come up to be the layout's own children; a
  * grid's rows come up two levels. A string among them is a run of text, as
- * `renderingOf` reads it; a label is an attribute, so it goes into the holder.
+ * `renderingOf` reads it; a label is an attribute, so it goes into the holder. An
+ * expression that reads a control's variable is a readout of it, as `renderingOf` makes
+ * one: `Sin(Pi * t)` beside `Animator(t, …)` follows the animator.
  */
-function unwrapLayout(el: Element, head: string): void {
+function unwrapLayout(el: Element, head: string, names: ReadonlySet<string>): void {
   const entries: Element[] = [];
   const spread = (child: Element, depth: number): void => {
     if (child.localName === "notatio-list" && depth > 0) {
@@ -94,6 +96,16 @@ function unwrapLayout(el: Element, head: string): void {
     text.textContent = (entry as { value?: string }).value || entry.getAttribute("value") || "";
     entry.replaceWith(text);
   };
+  const asReadout = (entry: Element): void => {
+    const generic = entry.hasAttribute("data-notatio-generic") && isExpressive(entry);
+    const expr = generic ? entry.expression : undefined;
+    if (expr === undefined || names.size === 0) return;
+    const slotted = slottedExceptDeclarations(expr as never, names);
+    if (JSON.stringify(slotted) === JSON.stringify(expr)) return;
+    const readout = document.createElement("notatio-dynamic");
+    readout.setAttribute("value", serializeNotatio(slotted as never));
+    entry.replaceWith(readout);
+  };
   if (head === "Labeled") {
     // `Labeled(body, label, position)`: everything past the body is an attribute already.
     const [body, ...rest] = expressive;
@@ -104,13 +116,17 @@ function unwrapLayout(el: Element, head: string): void {
       holder.append(...rest);
       el.prepend(holder);
     }
-    if (body !== undefined) asText(body);
+    if (body !== undefined) {
+      asText(body);
+      asReadout(body);
+    }
     return;
   }
   for (const child of expressive) spread(child, head === "Grid" ? 2 : 1);
   for (const entry of entries) {
     if (entry.parentElement !== el) el.append(entry);
     asText(entry);
+    asReadout(entry);
   }
 }
 
@@ -181,7 +197,7 @@ export function adoptStructure(el: Element): void {
     if (el.getAttribute(attr) !== value) el.setAttribute(attr, value);
   }
   if (LAYOUT_HEADS.has(symbol.head)) {
-    unwrapLayout(el, symbol.head);
+    unwrapLayout(el, symbol.head, scopeNames(el));
     return;
   }
   if (args.length > 0) {

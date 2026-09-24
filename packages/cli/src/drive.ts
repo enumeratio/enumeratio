@@ -7,6 +7,7 @@
 // session -- the same rewrite `reduce` uses for print, run once per keypress instead
 // of once. This is the base's `Rendering` mounted on a cell grid; nothing of lit here.
 
+import { serializeNotatio } from "@enumeratio/formats/notatio";
 import { iterate } from "../../notatio/src/playback.ts";
 import {
   type Declaration,
@@ -37,7 +38,8 @@ interface Driven {
   readonly range?: { min: number; max: number; step: number };
 }
 
-const text = (node: Json): string => strOf(node) ?? String(numOf(node) ?? JSON.stringify(node));
+// A string shows bare (it is a choice's label); anything else as notatio, `(1, 0.5)`.
+const text = (node: Json): string => strOf(node) ?? serializeNotatio(node as never);
 
 function driven(decl: Declaration): Driven | undefined {
   const value = pinValue(decl);

@@ -5,6 +5,7 @@
 // environment when the browser prints, so what comes out of the printer is the
 // reduction, not a picture of a slider. A text-only environment (tty, pipe) is shown
 // in a terminal, printed the way the CLI prints it and, for a tty, driven from its keys.
+// `#<card>=<env>` links to a card opened on an environment; picking one writes it.
 import {
   browserEnvironment,
   ENVIRONMENTS,
@@ -13,7 +14,7 @@ import {
   reduce,
 } from "@enumeratio/notatio";
 import { parseNotatio, serializeNotatio } from "@enumeratio/formats/notatio";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 const props = defineProps<{ expr: string; env?: string }>();
 
@@ -36,6 +37,24 @@ const notatio = computed(() =>
 const json = computed(() => (reduced.value === undefined ? "" : JSON.stringify(reduced.value)));
 const textOnly = computed(() => environment.value.surface.every((s) => s === "text"));
 
+const card = ref<HTMLElement>();
+const story = (): HTMLElement | null | undefined => card.value?.closest<HTMLElement>(".story[id]");
+
+/** Open on the environment the hash names for this card, and bring the card into view. */
+const followHash = (): void => {
+  const id = story()?.id;
+  const [target, env] = decodeURIComponent(location.hash.slice(1)).split("=");
+  if (id === undefined || target !== id || !ENVIRONMENTS.some((e) => e.name === env)) return;
+  chosen.value = env!;
+  story()?.scrollIntoView();
+};
+const pick = (): void => {
+  const id = story()?.id;
+  if (id) history.replaceState(history.state, "", `#${id}=${chosen.value}`);
+};
+// The card mounts inside ClientOnly, after this component does.
+watch(card, (el) => el && followHash());
+
 let media: MediaQueryList | undefined;
 const onMedia = (e: MediaQueryListEvent): void => {
   printing.value = e.matches;
@@ -44,16 +63,20 @@ onMounted(() => {
   media = window.matchMedia("print");
   printing.value = mediaSignals((q) => window.matchMedia(q)).print === true;
   media.addEventListener("change", onMedia);
+  window.addEventListener("hashchange", followHash);
 });
-onUnmounted(() => media?.removeEventListener("change", onMedia));
+onUnmounted(() => {
+  media?.removeEventListener("change", onMedia);
+  window.removeEventListener("hashchange", followHash);
+});
 </script>
 
 <template>
   <ClientOnly>
-    <div class="env">
+    <div ref="card" class="env">
       <div class="env-bar">
         <label v-for="e in ENVIRONMENTS" :key="e.name" class="env-pick">
-          <input v-model="chosen" type="radio" :value="e.name" />
+          <input v-model="chosen" type="radio" :value="e.name" @change="pick" />
           {{ e.name }}
         </label>
         <span v-if="printing" class="env-note">printing</span>
