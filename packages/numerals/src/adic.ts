@@ -11,6 +11,8 @@
 //
 // Everything is bigint: 20 digits of base 10 is already past 2^53.
 
+import { gcd, invMod, isPrime, mod, valuation as integerValuation } from "@enumeratio/residues";
+
 export interface Adic {
   readonly base: bigint;
   /** The value as an exact rational; for a capped value, its normalised representative. */
@@ -23,49 +25,11 @@ export interface Adic {
 /** The precision an unbounded computation (a Hensel lift) is carried to. */
 export const DEFAULT_PRECISION = 20;
 
-const abs = (x: bigint): bigint => (x < 0n ? -x : x);
-
-export const gcd = (a: bigint, b: bigint): bigint => {
-  let x = abs(a);
-  let y = abs(b);
-  while (y !== 0n) [x, y] = [y, x % y];
-  return x;
-};
-
-/** `x mod m` in `[0, m)`, for any sign of `x`. */
-export const mod = (x: bigint, m: bigint): bigint => ((x % m) + m) % m;
-
 export const pow = (b: bigint, e: number): bigint => b ** BigInt(e);
 
-/** The inverse of `a` modulo `m`, or `undefined` when `gcd(a, m) ≠ 1`. */
-export function inverseMod(a: bigint, m: bigint): bigint | undefined {
-  let [r0, r1] = [mod(a, m), m];
-  let [s0, s1] = [1n, 0n];
-  while (r1 !== 0n) {
-    const q = r0 / r1;
-    [r0, r1] = [r1, r0 - q * r1];
-    [s0, s1] = [s1, s0 - q * s1];
-  }
-  return r0 === 1n ? mod(s0, m) : undefined;
-}
-
 /** The largest `k` with `b^k | n` (`Infinity` for `n = 0`). */
-export function order(base: bigint, n: bigint): number {
-  if (n === 0n) return Number.POSITIVE_INFINITY;
-  let k = 0;
-  let rest = abs(n);
-  while (rest % base === 0n) {
-    rest /= base;
-    k += 1;
-  }
-  return k;
-}
-
-export const isPrime = (n: bigint): boolean => {
-  if (n < 2n) return false;
-  for (let d = 2n; d * d <= n; d += 1n) if (n % d === 0n) return false;
-  return true;
-};
+const order = (base: bigint, n: bigint): number =>
+  n === 0n ? Number.POSITIVE_INFINITY : integerValuation(n, base)[0];
 
 /**
  * The b-adic valuation of `num/den`. For prime `b` this is `ord(num) − ord(den)`; for
@@ -109,7 +73,7 @@ export function capped(base: bigint, num: bigint, den: bigint, prec: number): Ad
   const scale = pow(base, Math.abs(v));
   const [un, ud] = v >= 0 ? [n / scale, d] : [n, d / scale];
   const modulus = pow(base, prec - v);
-  const inverse = inverseMod(ud, modulus);
+  const inverse = invMod(ud, modulus);
   if (inverse === undefined) return undefined; // cannot happen once valuation() passed
   const m = mod(un * inverse, modulus);
   return v >= 0 ? { base, num: m * scale, den: 1n, prec } : { base, num: m, den: scale, prec };
@@ -240,7 +204,7 @@ export function expansion(x: Adic, count: number): Expansion {
   const scale = pow(x.base, Math.abs(v));
   let [n, d] = v >= 0 ? [x.num / scale, x.den] : [x.num, x.den / scale];
   const available = x.prec === undefined ? count : Math.max(0, Math.min(count, x.prec - v));
-  const inverse = inverseMod(d, x.base) ?? 0n; // d is coprime to base by construction
+  const inverse = invMod(d, x.base) ?? 0n; // d is coprime to base by construction
   const digits: number[] = [];
   for (let i = 0; i < available; i += 1) {
     const digit = mod(n * inverse, x.base);
@@ -298,7 +262,7 @@ export function henselLift(
   const f0 = f(a);
   const df0 = df(a);
   if (f0 === undefined || df0 === undefined) return undefined;
-  if (mod(f0, p) !== 0n || inverseMod(df0, p) === undefined) return undefined;
+  if (mod(f0, p) !== 0n || invMod(df0, p) === undefined) return undefined;
   let known = 1;
   while (known < prec) {
     known = Math.min(prec, known * 2);
@@ -306,7 +270,7 @@ export function henselLift(
     const fa = f(a);
     const dfa = df(a);
     if (fa === undefined || dfa === undefined) return undefined;
-    const inverse = inverseMod(dfa, modulus);
+    const inverse = invMod(dfa, modulus);
     if (inverse === undefined) return undefined;
     a = mod(a - fa * inverse, modulus);
   }
@@ -328,7 +292,7 @@ export function sqrt(x: Adic, prec: number = DEFAULT_PRECISION): Adic | undefine
   if (unit === undefined) return undefined;
   const target = Math.min(prec, unit.prec ?? prec);
   const modulus = pow(p, target);
-  const u = mod(unit.num * (inverseMod(unit.den, modulus) ?? 0n), modulus);
+  const u = mod(unit.num * (invMod(unit.den, modulus) ?? 0n), modulus);
   let root: bigint | undefined;
   if (p === 2n) {
     if (mod(u, 8n) !== 1n) return undefined;

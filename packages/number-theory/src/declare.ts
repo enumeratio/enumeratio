@@ -1,31 +1,16 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareGaussian } from "./declare-gaussian.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
-import { valuation } from "./arith.ts";
 import { hermiteDecomposition } from "./hermite.ts";
-import { discreteLog, multiplicativeOrder, primitiveRootList } from "./logs.ts";
 import { rationalReconstruction } from "./reconstruct.ts";
-import { powerModList } from "./roots.ts";
 
-// Wiring ℤ/m to compute-engine. Every head answers over bigints and stays unevaluated —
-// never approximate — when it cannot answer: no such residue, an unfactorable modulus, or
-// more roots than it will list.
-//
-// PowerMod and MultiplicativeOrder are compute-engine's own heads, re-declared here for the
-// forms Wolfram gives them and compute-engine lacks (a rational exponent; the list of
-// targets). The native handler is captured first and still answers everything else.
-
-type Native = ((ops: readonly BoxedExpression[], options: EvaluateOptions) => unknown) | undefined;
-
-const nativeEvaluate = (ce: ComputeEngine, name: string): Native => {
-  const definition = ce.lookupDefinition(name);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
-  return operator?.evaluate as Native;
-};
+// Number theory past ℤ/m, on top of @enumeratio/residues (declare that first): PowerMod and
+// PowerModList reach ℤ[i], plus rational reconstruction, integer valuations and Hermite
+// normal form. Every head stays unevaluated — never approximate — when it cannot answer.
 
 export function declareNumberTheory(ce: ComputeEngine): void {
   declareGaussian(ce);
@@ -47,96 +32,29 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     if (a === undefined || m === undefined || exponent === undefined) return undefined;
     return gaussianPowerModList(a, exponent[0], exponent[1], m);
   };
-  const gaussianList = (zs: readonly Gaussian[]): BoxedExpression =>
-    ce.function(
-      "List",
-      zs.map((z) => gaussianExpression(ce, z)),
-    );
 
-  /** a^(s/r) mod m, as the list of every x with xʳ ≡ aˢ — the heart of both heads below. */
-  const roots = (ops: readonly BoxedExpression[]): bigint[] | undefined => {
-    const a = bigRationalAt(ops[0]);
+  wrapOperator(ce, ["PowerModList", "a", "b", "m"], inGaussian, () => (ops) => {
+    const found = gaussianRoots(ops);
+    return found === undefined
+      ? undefined
+      : ce.function(
+          "List",
+          found.map((z) => gaussianExpression(ce, z)),
+        );
+  });
+
+  wrapOperator(ce, ["PowerMod", "a", "b", "m"], inGaussian, () => (ops) => {
+    const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
     const exponent = bigRationalAt(ops[1]);
-    const m = bigIntegerAt(ops[2]);
-    if (a === undefined || exponent === undefined || m === undefined) return undefined;
-    return powerModList(a, exponent[0], exponent[1], m);
-  };
-
-  // Wolfram's PowerModList[a, s/r, m]. Threads over lists, as Wolfram's does.
-  ce.declare("PowerModList", {
-    description:
-      "Every x in [0, m) with x^r ≡ a^s (mod m), for an exponent s/r; a rational a = u/v reads as u·v⁻¹.",
-    signature: "(number, number, number) -> list<number>",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
-      if (inGaussian(ops)) {
-        const found = gaussianRoots(ops);
-        return found === undefined ? undefined : gaussianList(found);
-      }
-      const found = roots(ops);
-      return found === undefined ? undefined : list(found);
-    },
-  });
-
-  // PowerMod with Wolfram's rational exponent — `PowerMod(a, 1/r, m)` is the least r-th
-  // root — and a rational base. Integer forms go to the native handler unchanged.
-  const nativePowerMod = nativeEvaluate(ce, "PowerMod");
-  ce.declare("PowerMod", {
-    description:
-      "a^b mod m. A negative b inverts a; a rational b = s/r gives the least x with x^r ≡ a^s; a rational a = u/v reads as u·v⁻¹.",
-    signature: "(number, number, number) -> number",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-      if (inGaussian(ops)) {
-        const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
-        const exponent = bigRationalAt(ops[1]);
-        if (z === undefined || m === undefined || exponent === undefined) return undefined;
-        if (exponent[1] === 1n) {
-          const value = gaussianPowerMod(z, exponent[0], m);
-          return value === undefined ? undefined : gaussianExpression(ce, value);
-        }
-        const found = gaussianRoots(ops);
-        return found === undefined || found.length === 0
-          ? undefined
-          : gaussianExpression(ce, found[0]!);
-      }
-      if (ops.every((op) => op.isInteger === true) && nativePowerMod !== undefined) {
-        return nativePowerMod(ops, options) as BoxedExpression | undefined;
-      }
-      const found = roots(ops);
-      return found === undefined || found.length === 0 ? undefined : ce.number(found[0]!);
-    },
-  });
-
-  // MultiplicativeOrder[k, n, {r₁, …}]: the least m > 0 with kᵐ ≡ some rᵢ — a discrete log.
-  ce.declare("MultiplicativeOrder", {
-    description:
-      "The least m > 0 with k^m ≡ 1 (mod n); with a list of targets, the least m with k^m ≡ any of them — a discrete logarithm.",
-    signature: "(integer, integer, list<integer>?) -> integer",
-    evaluate: (ops: readonly BoxedExpression[]) => {
-      const k = bigIntegerAt(ops[0]);
-      const n = bigIntegerAt(ops[1]);
-      if (k === undefined || n === undefined) return undefined;
-      if (ops[2] === undefined) {
-        const order = multiplicativeOrder(k, n);
-        return order === undefined ? undefined : ce.number(order);
-      }
-      const targets = operandsOf(ops[2]).map(bigIntegerAt);
-      if (targets.some((t) => t === undefined)) return undefined;
-      const log = discreteLog(k, n, targets as bigint[]);
-      return log === undefined ? undefined : ce.number(log);
-    },
-  });
-
-  ce.declare("PrimitiveRootList", {
-    description: "Every primitive root of n, ascending — empty unless (ℤ/n)* is cyclic.",
-    signature: "(integer) -> list<integer>",
-    broadcastable: true,
-    evaluate: (ops: readonly BoxedExpression[]) => {
-      const n = bigIntegerAt(ops[0]);
-      const found = n === undefined ? undefined : primitiveRootList(n);
-      return found === undefined ? undefined : list(found);
-    },
+    if (z === undefined || m === undefined || exponent === undefined) return undefined;
+    if (exponent[1] === 1n) {
+      const value = gaussianPowerMod(z, exponent[0], m);
+      return value === undefined ? undefined : gaussianExpression(ce, value);
+    }
+    const found = gaussianRoots(ops);
+    return found === undefined || found.length === 0
+      ? undefined
+      : gaussianExpression(ce, found[0]!);
   });
 
   ce.declare("RationalReconstruction", {

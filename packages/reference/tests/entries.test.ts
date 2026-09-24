@@ -14,6 +14,7 @@ import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareBraid } from "@enumeratio/braid/src";
 import { declareHypercomplex } from "@enumeratio/hypercomplex/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
+import { declareResidues } from "@enumeratio/residues/src";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/index.ts";
 
@@ -25,6 +26,8 @@ declareAnalytic(ce);
 declareHypercomplex(ce);
 // …and the diagram algebras.
 declareDiagrams(ce);
+// …and arithmetic in ℤ/m, which the numeral systems and number theory build on.
+declareResidues(ce);
 // …and the numeral systems.
 declareNumerals(ce);
 // …and the Hecke algebra.
@@ -39,9 +42,9 @@ declareHopf(ce);
 declareGroupAlgebra(ce);
 // …and the modular group.
 declareModular(ce);
-// …and arithmetic in ℤ/m.
+// …and number theory past ℤ/m.
 declareNumberTheory(ce);
-// …and adèles and idèles over Q (needs numerals and number-theory declared first).
+// …and adèles and idèles over Q (needs residues, numerals and number-theory declared first).
 declareAdeles(ce);
 // …and the braid groups.
 declareBraid(ce);

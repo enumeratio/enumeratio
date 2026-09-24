@@ -19,12 +19,14 @@ import { declareModular } from "@enumeratio/modular/src";
 import { declareNumberTheory } from "@enumeratio/number-theory/src";
 import { declareNumerals } from "@enumeratio/numerals/src";
 import { declareQuiver } from "@enumeratio/quiver/src";
+import { declareResidues } from "@enumeratio/residues/src";
 
 /** Every library we ship, in the order the reference tests declare them. */
 export const DECLARATIONS = [
   declareAnalytic,
   declareHypercomplex,
   declareDiagrams,
+  declareResidues,
   declareNumerals,
   declareHecke,
   declareIncidence,

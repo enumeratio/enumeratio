@@ -11,6 +11,8 @@
 // the unranking maps for permutations and subsets wearing a different hat; one
 // (Zeckendorf) has a digit ALPHABET but a forbidden pattern instead of a place bound.
 
+import { crtSolve, gcd } from "@enumeratio/residues";
+
 /** A numeral system: the two directions, plus what its digits are allowed to be. */
 export interface NumeralSystem {
   readonly name: string;
@@ -338,19 +340,6 @@ export function combinatorialSystem(k: number): NumeralSystem | undefined {
 
 // ── residue systems: no place values at all ─────────────────────────────────────
 
-const gcd = (a: number, b: number): number => (b === 0 ? Math.abs(a) : gcd(b, a % b));
-
-function inverseMod(a: number, m: number): number | undefined {
-  let [old, cur] = [((a % m) + m) % m, m];
-  let [s, next] = [1, 0];
-  while (cur !== 0) {
-    const q = Math.floor(old / cur);
-    [old, cur] = [cur, old - q * cur];
-    [s, next] = [next, s - q * next];
-  }
-  return old === 1 ? ((s % m) + m) % m : undefined;
-}
-
 /**
  * Residue number system: the "digits" are n mod each modulus, and there are no place
  * values — the digits are INDEPENDENT, which is what makes addition and multiplication
@@ -361,7 +350,7 @@ function inverseMod(a: number, m: number): number | undefined {
 export function residueSystem(moduli: readonly number[]): NumeralSystem | undefined {
   if (moduli.length === 0 || !moduli.every((m) => isInt(m) && m >= 2)) return undefined;
   const coprime = moduli.every((m, i) =>
-    moduli.every((other, j) => i === j || gcd(m, other) === 1),
+    moduli.every((other, j) => i === j || gcd(BigInt(m), BigInt(other)) === 1n),
   );
   const total = moduli.reduce((a, b) => a * b, 1);
   return {
@@ -376,22 +365,10 @@ export function residueSystem(moduli: readonly number[]): NumeralSystem | undefi
     fromDigits: (digits) => {
       if (digits.length !== moduli.length) return undefined;
       if (!digits.every((d, i) => isInt(d) && d >= 0 && d < moduli[i]!)) return undefined;
-      // Reconstruct by CRT, then CHECK — with non-coprime moduli a digit string can be
-      // inconsistent, and there is no integer to return.
-      let result = 0;
-      let combined = 1;
-      for (const [i, m] of moduli.entries()) {
-        const inverse = inverseMod(combined % m, m);
-        if (inverse === undefined) {
-          // Shared factor: fall back to a search over the span the CRT cannot resolve.
-          const candidate = searchResidues(digits, moduli, total);
-          return candidate;
-        }
-        const shift = (((digits[i]! - result) % m) + m) % m;
-        result += combined * ((shift * inverse) % m);
-        combined *= m;
-      }
-      return result % total;
+      // With moduli that share a factor a digit string can be inconsistent, and then there
+      // is no integer to return.
+      const solved = crtSolve(digits.map((d, i) => [BigInt(d), BigInt(moduli[i]!)] as const));
+      return solved === undefined ? undefined : Number(solved[0]);
     },
   };
 }
@@ -464,18 +441,6 @@ export function ostrowski(quotients: readonly number[]): NumeralSystem | undefin
       return padded.reduce((total, digit, i) => total + digit * places[m - 1 - i]!, 0);
     },
   };
-}
-
-/** The unique n < total matching every residue, when CRT cannot be run directly. */
-function searchResidues(
-  digits: readonly number[],
-  moduli: readonly number[],
-  total: number,
-): number | undefined {
-  for (let n = 0; n < total; n++) {
-    if (moduli.every((m, i) => n % m === digits[i])) return n;
-  }
-  return undefined;
 }
 
 // ── b-adic truncation ───────────────────────────────────────────────────────────

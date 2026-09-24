@@ -2,7 +2,7 @@
   "name": "@enumeratio/number-theory",
   "version": "0.0.0",
   "private": true,
-  "description": "Arithmetic in Z/m for @cortex-js/compute-engine: every r-th root of a residue (PowerModList), discrete logarithms, primitive roots and rational reconstruction, all over bigints.",
+  "description": "Number theory past Z/m for @cortex-js/compute-engine: Gaussian integers, rational reconstruction, Hermite normal form and integer valuations, all over bigints.",
   "license": "WTFPL",
   "files": [
     "dist"
@@ -23,11 +23,15 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@enumeratio/boxed": "workspace:*"
+    "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/residues": "workspace:*"
   },
   "devDependencies": {
     "@cortex-js/compute-engine": "^0.128.0",
     "@enumeratio/boxed": "workspace:*",
+    "@enumeratio/numerals": "workspace:*",
+    "@enumeratio/residues": "workspace:*",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"

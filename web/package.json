@@ -31,6 +31,7 @@
     "@enumeratio/numerals": "workspace:*",
     "@enumeratio/quiver": "workspace:*",
     "@enumeratio/reference": "workspace:*",
+    "@enumeratio/residues": "workspace:*",
     "@enumeratio/statistics": "workspace:*"
   },
   "devDependencies": {
