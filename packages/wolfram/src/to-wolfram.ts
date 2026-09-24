@@ -246,6 +246,11 @@ export const HEADS: Record<string, string> = {
   DirichletCharacter: "DirichletCharacter",
   DirichletL: "DirichletL",
   StieltjesGamma: "StieltjesGamma",
+  CarlsonRF: "CarlsonRF",
+  CarlsonRC: "CarlsonRC",
+  CarlsonRD: "CarlsonRD",
+  CarlsonRJ: "CarlsonRJ",
+  CarlsonRG: "CarlsonRG",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 

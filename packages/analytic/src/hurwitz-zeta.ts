@@ -15,6 +15,7 @@ import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
 import { atEnginePrecision, preciseHurwitzZeta } from "./precise.ts";
+import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareSpecialFunctions } from "./special-functions.ts";
 
@@ -323,7 +324,8 @@ function evaluateLerch(
  * Also declares the heads in special-functions.ts: `BarnesG`, `LogBarnesG`, `LogGamma`,
  * `ClausenCl`, `DirichletEta`, `DirichletBeta`, `StieltjesGamma`, `DirichletCharacter`,
  * `DirichletL`, `HarmonicNumber`, `ChebyshevT`, `ChebyshevU`, `LegendrePolynomial`,
- * `RisingFactorial`, and the `Catalan` constant.
+ * `RisingFactorial`, and the `Catalan` constant — and the Carlson symmetric elliptic
+ * integrals in carlson.ts: `CarlsonRF`, `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -403,5 +405,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   }
 
   declareSpecialFunctions(ce);
+  declareCarlson(ce);
   declareDerivatives(ce);
 }

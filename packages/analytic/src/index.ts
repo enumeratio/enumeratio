@@ -12,6 +12,19 @@ export {
   bernoulliPolyExpr,
   bernoulliRational,
 } from "./bernoulli.ts";
+export {
+  carlsonRC,
+  carlsonRCReal,
+  carlsonRD,
+  carlsonRDReal,
+  carlsonRF,
+  carlsonRFReal,
+  carlsonRG,
+  carlsonRGReal,
+  carlsonRJ,
+  carlsonRJReal,
+  declareCarlson,
+} from "./carlson.ts";
 export { evaluateChebyshevT, evaluateChebyshevU } from "./chebyshev.ts";
 export { clausen } from "./clausen.ts";
 export { DEFINITIONS, PRIMITIVE } from "./definitions.ts";
