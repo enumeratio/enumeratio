@@ -213,7 +213,9 @@
         "mathlib4": {
           "input": "(Nat.fib (-5))",
           "output": "failed to synthesize instance of type class",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Fibonacci to this argument."
         },
         "oscar": {
           "input": "fibonacci(-5)",
@@ -230,7 +232,7 @@
         "sage": {
           "input": "(fibonacci(20) / fibonacci(19))",
           "output": "6765/4181",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         },
         "julia": {
           "input": "(fibonacci(20) // fibonacci(19))",
@@ -410,7 +412,9 @@
         "julia": {
           "input": "Combinatorics.lucasnum(-1)",
           "output": "DomainError with -1: n must be nonnegative",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only."
         }
       },
       "[\"Divide\",[\"LucasL\",15],[\"LucasL\",14]]": {
@@ -422,7 +426,7 @@
         "sage": {
           "input": "(lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))",
           "output": "1364/843",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         },
         "julia": {
           "input": "(Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))",
@@ -470,7 +474,7 @@
         "sage": {
           "input": "bernoulli(1)",
           "output": "-1/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",2]": {
@@ -482,7 +486,7 @@
         "sage": {
           "input": "bernoulli(2)",
           "output": "1/6",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",4]": {
@@ -494,7 +498,7 @@
         "sage": {
           "input": "bernoulli(4)",
           "output": "-1/30",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"BernoulliB\",12]": {
@@ -506,7 +510,7 @@
         "sage": {
           "input": "bernoulli(12)",
           "output": "-691/2730",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"BernoulliB\",5],0]": {
@@ -542,7 +546,9 @@
         "sage": {
           "input": "bernoulli(-1)",
           "output": "OverflowError: can't convert negative value to unsigned long",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"BernoulliB\", -1] and Sage raises an error."
         }
       },
       "[\"BernoulliB\",20]": {
@@ -554,7 +560,7 @@
         "sage": {
           "input": "bernoulli(20)",
           "output": "-174611/330",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       }
     }

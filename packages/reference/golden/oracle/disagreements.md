@@ -69,14 +69,13 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 237, disagree 19, inconclusive 53, error 46
+## sage — agree 293, disagree 18, inconclusive 4, error 40
 
 | example                           | kind           | ours                                                                                      | theirs                                                                                       |
 | --------------------------------- | -------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
 | `arithmetic/Sqrt#10`              | shape          | `{"re":0,"im":0.6666666666666666}`                                                        | `2/3*I`                                                                                      |
 | `arithmetic/Sqrt#5`               | shape          | `{"re":0,"im":2}`                                                                         | `2*I`                                                                                        |
 | `arithmetic/Sqrt#9`               | shape          | `{"re":0,"im":1.4142135623730951}`                                                        | `sqrt(-2)`                                                                                   |
-| `combinatorics/CatalanNumber#10`  | unevaluated    | `["CatalanNumber",-1]`                                                                    | `-1/2`                                                                                       |
 | `combinatorics/StirlingS1#1`      | convention     | `-50`                                                                                     | `50`                                                                                         |
 | `combinatorics/StirlingS1#8`      | convention     | `-362880`                                                                                 | `362880`                                                                                     |
 | `elementary/Ln#3`                 | shape          | `NegativeInfinity`                                                                        | `-Infinity`                                                                                  |
@@ -127,12 +126,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/PowerModList#25`          | `MemoryError: over 1024 MiB`                                                                 |
 | `number-theory/PowerModList#26`          | `TypeError: unhashable type: 'list'`                                                         |
 | `number-theory/PowerModList#8`           | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `number-theory/PrimitiveRootList#1`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
-| `number-theory/PrimitiveRootList#2`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
-| `number-theory/PrimitiveRootList#3`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
-| `number-theory/PrimitiveRootList#4`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
-| `number-theory/PrimitiveRootList#6`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
-| `number-theory/PrimitiveRootList#7`      | `NameError: name 'enumeratio_primitive_root_list' is not defined`                            |
 | `number-theory/RationalReconstruction#4` | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `number-theory/RationalReconstruction#6` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
 | `number-theory/RationalReconstruction#8` | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |

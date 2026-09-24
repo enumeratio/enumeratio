@@ -294,7 +294,9 @@
         "mathlib4": {
           "input": "(Nat.choose 5 (-1))",
           "output": "failed to synthesize instance of type class",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument."
         },
         "oscar": {
           "input": "binomial(ZZ(5), ZZ(-1))",
@@ -321,7 +323,9 @@
         "mathlib4": {
           "input": "(Nat.choose (-5) 2)",
           "output": "failed to synthesize instance of type class",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Binomial to this argument."
         },
         "oscar": {
           "input": "binomial(ZZ(-5), ZZ(2))",
@@ -499,22 +503,30 @@
         "sage": {
           "input": "factorial([1, 2, 3, 4])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Factorial is Listable and threads over the list; Sage's takes scalars only."
         },
         "julia": {
           "input": "factorial(ZZ([1, 2, 3, 4]))",
           "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Factorial is Listable and threads over the list; Nemo/Combinatorics.jl's takes scalars only."
         },
         "mathlib4": {
           "input": "(Nat.factorial [1, 2, 3, 4])",
           "output": "Application type mismatch: The argument",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Factorial is Listable and threads over the list; Mathlib's takes scalars only."
         },
         "oscar": {
           "input": "factorial(ZZ([1, 2, 3, 4]))",
           "output": "MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type `ZZRing` exists, but ",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Factorial is Listable and threads over the list; Oscar's takes scalars only."
         }
       },
       "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
@@ -553,22 +565,28 @@
         "sage": {
           "input": "factorial((1/2))",
           "output": "1/2*sqrt(pi)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         },
         "julia": {
           "input": "factorial(ZZ((1 // 2)))",
           "output": "AssertionError: denominator(x) == 1",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine extends Factorial to non-integers through Gamma; Nemo/Combinatorics.jl's factorial takes integers only."
         },
         "mathlib4": {
           "input": "(Nat.factorial ((1 : ℚ) / 2))",
           "output": "Type mismatch",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine extends Factorial to non-integers through Gamma; Mathlib's factorial takes integers only."
         },
         "oscar": {
           "input": "factorial(ZZ((1 // 2)))",
           "output": "AssertionError: denominator(x) == 1",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine extends Factorial to non-integers through Gamma; Oscar's factorial takes integers only."
         }
       },
       "[\"Factorial\",8]": {
@@ -607,22 +625,30 @@
         "sage": {
           "input": "factorial(-1)",
           "output": "ValueError: factorial only defined for nonnegative integers",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Sage raises an error."
         },
         "julia": {
           "input": "factorial(ZZ(-1))",
           "output": "DomainError with -1: Argument must be non-negative",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Nemo/Combinatorics.jl raises an error."
         },
         "mathlib4": {
           "input": "(Nat.factorial (-1))",
           "output": "failed to synthesize instance of type class",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends Factorial to this argument."
         },
         "oscar": {
           "input": "factorial(ZZ(-1))",
           "output": "DomainError with -1: Argument must be non-negative",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Oscar raises an error."
         }
       },
       "[\"Factorial\",20]": {
@@ -865,7 +891,7 @@
         "sage": {
           "input": "(catalan_number(6) / catalan_number(5))",
           "output": "22/7",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         },
         "julia": {
           "input": "(Combinatorics.catalannum(6) // Combinatorics.catalannum(5))",
@@ -933,19 +959,23 @@
         "sage": {
           "input": "catalan_number(-1)",
           "output": "-1/2",
-          "verdict": "disagree",
-          "kind": "unevaluated",
-          "note": "A negative index is left unevaluated here; Sage's catalan_number continues through its own Gamma-based extension and gives C(-1) = -1/2, a different value again from Wolfram's C(-1) = -1."
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "Sage continues Catalan numbers through the Gamma function (C(-1) = -1/2); compute-engine's stays unevaluated off the naturals."
         },
         "julia": {
           "input": "Combinatorics.catalannum(-1)",
           "output": "DomainError with -1: n must be nonnegative",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"CatalanNumber\", -1] and Nemo/Combinatorics.jl raises an error."
         },
         "mathlib4": {
           "input": "(catalan (-1))",
           "output": "failed to synthesize instance of type class",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "domain",
+          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends CatalanNumber to this argument."
         }
       },
       "[\"CatalanNumber\",15]": {
@@ -1538,17 +1568,23 @@
         "sage": {
           "input": "bell_number(-1)",
           "output": "ArithmeticError: Bell numbers not defined for negative indices",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"BellNumber\", -1] and Sage raises an error."
         },
         "julia": {
           "input": "bell(-1)",
           "output": "DomainError with -1: Argument must be non-negative",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"BellNumber\", -1] and Nemo/Combinatorics.jl raises an error."
         },
         "oscar": {
           "input": "bell(-1)",
           "output": "DomainError with -1: Argument must be non-negative",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers [\"BellNumber\", -1] and Oscar raises an error."
         }
       }
     }

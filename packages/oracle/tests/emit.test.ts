@@ -52,6 +52,9 @@ test("comparison is forgiving about spelling and strict about value", () => {
   expect(compare("2", "2.0")).toBe("agree");
   expect(compare("0.75", "3/4")).toBe("agree"); // SymPy, Lean
   expect(compare("0.75", "3//4")).toBe("agree"); // Julia
+  // A row's own tolerance loosens only that comparison.
+  expect(compare("1.0", "1.001")).toBe("disagree");
+  expect(compare("1.0", "1.001", 1e-2)).toBe("agree");
   // A symbolic answer against a numeric one settles nothing either way.
   expect(compare("1.644934", "pi**2/6")).toBe("inconclusive");
   expect(compare("3", "")).toBe("inconclusive");

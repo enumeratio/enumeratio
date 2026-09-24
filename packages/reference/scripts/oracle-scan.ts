@@ -141,6 +141,21 @@ const theirTree = (fullForm: string): Tree | undefined => {
   }
 };
 
+/** A committed row's `tolerance`, read before the sidecars are loaded for rewriting. */
+const toleranceOf = (() => {
+  const cache = new Map<
+    string,
+    Record<string, Record<string, Record<string, { tolerance?: number }>>>
+  >();
+  return (item: Case, system: string): number | undefined => {
+    if (!cache.has(item.stem)) {
+      const url = new URL(`../src/entries/${item.stem}.oracle.json`, import.meta.url);
+      cache.set(item.stem, existsSync(url) ? JSON.parse(readFileSync(url, "utf8")).examples : {});
+    }
+    return cache.get(item.stem)?.[item.head]?.[item.key]?.[system]?.tolerance;
+  };
+})();
+
 for (const system of systems) {
   const emitted = cases.map((item) => ({ item, out: emit(item.expr, system) }));
   const runnable = emitted.filter((row) => row.out.ok);
@@ -170,15 +185,22 @@ for (const system of systems) {
       return;
     }
     const theirs = result.value ?? "";
+    const tolerance = toleranceOf(row.item, system);
     let verdict: Verdict;
     if (system === "wolfram") {
       const tree = theirTree(theirs);
       verdict =
-        tree === undefined ? "inconclusive" : compareTrees(reduce(row.item.expected, leaf), tree);
+        tree === undefined
+          ? "inconclusive"
+          : compareTrees(reduce(row.item.expected, leaf), tree, tolerance);
     } else {
-      verdict = compare(show(row.item.expected), theirs);
+      verdict = compare(show(row.item.expected), theirs, tolerance);
       if (verdict === "disagree") {
-        const structured = comparePythonStructured(reduce(row.item.expected, leaf), theirs);
+        const structured = comparePythonStructured(
+          reduce(row.item.expected, leaf),
+          theirs,
+          tolerance,
+        );
         if (structured === "agree") verdict = structured;
       }
     }
@@ -222,6 +244,7 @@ interface OtherRow {
   readonly verdict: Verdict | "error";
   readonly kind?: string;
   readonly note?: string;
+  readonly tolerance?: number;
 }
 type Sidecar = {
   kernels: Record<string, string>;
@@ -287,17 +310,24 @@ for (const system of systems) {
           else existingForHead[item.key] = rest;
           continue;
         }
-        const row: OtherRow =
-          outcome.verdict === "disagree"
-            ? {
-                input: outcome.source,
-                output: outcome.display,
-                verdict: outcome.verdict,
-                kind:
-                  prior?.verdict === "disagree" ? (prior.kind ?? "unclassified") : "unclassified",
-                note: prior?.verdict === "disagree" ? (prior.note ?? "") : "",
-              }
-            : { input: outcome.source, output: outcome.display, verdict: outcome.verdict };
+        // Anything but agreement needs a classification; one carries forward while the
+        // verdict holds, and a verdict that moves is reviewed afresh. A tolerance is a
+        // property of the example, so it carries forward regardless.
+        const same = prior?.verdict === outcome.verdict;
+        const row: OtherRow = {
+          input: outcome.source,
+          output: outcome.display,
+          verdict: outcome.verdict,
+          ...(outcome.verdict === "agree"
+            ? {}
+            : {
+                kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
+                note: same ? (prior?.note ?? "") : "",
+              }),
+          ...(prior?.tolerance === undefined
+            ? {}
+            : { tolerance: prior.tolerance, note: prior.note ?? "" }),
+        };
         existingForHead[item.key] = { ...existingForHead[item.key], [system]: row };
       }
       // A head with no rows stays out, so a rescan leaves an untouched file identical.

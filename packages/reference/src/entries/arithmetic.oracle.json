@@ -50,7 +50,7 @@
         "sage": {
           "input": "abs((-7/2))",
           "output": "7/2",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Abs\",[\"Complex\",3,4]]": {
@@ -69,7 +69,9 @@
         "sage": {
           "input": "abs([-1, 2, -3])",
           "output": "TypeError: bad operand type for abs(): 'list'",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Abs is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Equal\",[\"Abs\",-8],[\"Abs\",8]]": {
@@ -169,7 +171,9 @@
         "sage": {
           "input": "sign([-3, 0, 7])",
           "output": "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Equal\",[\"Sign\",[\"Complex\",3,4]],[\"Divide\",[\"Complex\",3,4],[\"Abs\",[\"Complex\",3,4]]]]": {
@@ -302,7 +306,7 @@
         "sage": {
           "input": "(-(3/4))",
           "output": "-3/4",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         },
         "julia": {
           "input": "(-((3 // 4)))",
@@ -329,7 +333,9 @@
         "sage": {
           "input": "(-[1, -2, 3])",
           "output": "TypeError: bad operand type for unary -: 'list'",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Negate is Listable and threads over the list; Sage's takes scalars only."
         },
         "julia": {
           "input": "(-([1, -2, 3]))",
@@ -416,7 +422,7 @@
         "sage": {
           "input": "((2/3))^2",
           "output": "4/9",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Square\",[\"List\",2,3,-4]]": {
@@ -428,7 +434,9 @@
         "sage": {
           "input": "([2, 3, -4])^2",
           "output": "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Square is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Equal\",[\"Square\",-5],[\"Square\",5]]": {
@@ -492,7 +500,7 @@
         "sage": {
           "input": "sqrt(2)",
           "output": "sqrt(2)",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",[\"Rational\",4,9]]": {
@@ -504,7 +512,7 @@
         "sage": {
           "input": "sqrt((4/9))",
           "output": "2/3",
-          "verdict": "inconclusive"
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",0]": {
@@ -709,7 +717,9 @@
         "sage": {
           "input": "floor([1.2, -1.2, 3.7])",
           "output": "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Equal\",[\"Add\",[\"Floor\",[\"Rational\",7,2]],1],[\"Ceil\",[\"Rational\",7,2]]]": {
@@ -814,7 +824,9 @@
         "sage": {
           "input": "ceil([1.2, -1.2, 3.7])",
           "output": "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only."
         }
       },
       "[\"Equal\",[\"Ceil\",[\"Rational\",7,2]],[\"Add\",[\"Floor\",[\"Rational\",7,2]],1]]": {
@@ -1205,7 +1217,9 @@
         "sage": {
           "input": "enumeratio_max()",
           "output": "ValueError: max() iterable argument is empty",
-          "verdict": "error"
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"NaN\" and Sage raises an error."
         }
       },
       "[\"Max\",\"NaN\",3]": {

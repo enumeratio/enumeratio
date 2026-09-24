@@ -126,7 +126,15 @@ async function runPython(
   preamble: string,
   args: readonly string[] = ["-c"],
   evalExpr = (src: string) => `eval(${src})`,
+  valueOf?: string,
 ): Promise<Result[]> {
+  // With `valueOf`, the value line is that helper's rendering (compared) and a second
+  // `|`-marked line carries the kernel's own form (displayed), as for Wolfram.
+  const print = valueOf
+    ? `v = ${evalExpr("src")}
+        print("<<%d>>%s" % (i + 1, ${valueOf}(v)), flush=True)
+        print("<<%d|>>%s" % (i + 1, str(v)), flush=True)`
+    : `print("<<%d>>%s" % (i + 1, str(${evalExpr("src")})), flush=True)`;
   const program = `${preamble}
 import json, signal, sys
 def _timeout(signum, frame):
@@ -136,7 +144,7 @@ sources = json.loads(${JSON.stringify(JSON.stringify(sources))})
 for i, src in enumerate(sources):
     signal.alarm(${ITEM_SECONDS})
     try:
-        print("<<%d>>%s" % (i + 1, str(${evalExpr("src")})), flush=True)
+        ${print}
     except BaseException as exc:
         print("<<%d>>!!%s" % (i + 1, type(exc).__name__ + ": " + str(exc)[:100]), flush=True)
     finally:
@@ -150,7 +158,8 @@ for i, src in enumerate(sources):
     ...args,
     program,
   ]);
-  return "out" in run ? collect(run.out, sources.length) : failAll(sources.length, run.reason);
+  if (!("out" in run)) return failAll(sources.length, run.reason);
+  return valueOf ? collectWolfram(run.out, sources.length) : collect(run.out, sources.length);
 }
 
 /** A Julia environment next to this package: `oscar/` for Oscar, `julia/` for Nemo +
@@ -264,9 +273,33 @@ function collectWolfram(output: string, count: number): Result[] {
   return results;
 }
 
-// The one Sage helper an emit needs but has no one-liner for: PowerModList(a, s/r, m).
-// `Zmod(m)(a)` has no fractional-power method, so the root and the power split by hand.
+// Sage helpers for emits with no one-liner. PowerModList(a, s/r, m): `Zmod(m)(a)` has no
+// fractional-power method, so the root and the power split by hand. PrimitiveRootList(n):
+// `primitive_root` gives one root, so walk its powers coprime to phi(n). And the value a
+// scan compares: a closed form (`1/2*sqrt(2)`, `pi^2/6`) as its number, exact rationals and
+// integers as they are.
 const SAGE_PREAMBLE = `
+def enumeratio_primitive_root_list(n):
+    try:
+        g = primitive_root(n)
+    except ValueError:
+        return []
+    phi = euler_phi(n)
+    return sorted(int(power_mod(g, k, n)) for k in range(1, phi + 1) if gcd(k, phi) == 1)
+
+def enumeratio_value(x):
+    if isinstance(x, list):
+        return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"
+    if isinstance(x, (bool, int, tuple)):
+        return str(x)
+    try:
+        if x in QQ:
+            return str(x)
+        z = CC(x)
+        return repr(float(z.real())) if z.imag() == 0 else str(x)
+    except Exception:
+        return str(x)
+
 def enumeratio_power_mod_list(a, s, m):
     s = QQ(s)
     return sorted(int(x) for x in (Zmod(m)(a)**s.numerator()).nth_root(s.denominator(), all=True))
@@ -323,6 +356,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
         `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}`,
         ["-c"],
         (src) => `sage_eval(${src}, locals=globals())`,
+        "enumeratio_value",
       );
     case "oscar":
       return runJulia(sources, "oscar", "Oscar");
