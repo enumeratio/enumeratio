@@ -45,6 +45,9 @@ export {
   type Syntax,
   SYNTAXES,
 } from "./engine.ts";
+export { type DriveScreen, type Driver, drivable, driver, type Key, keysOf } from "./drive.ts";
+export { textOf } from "./textual.ts";
+export { type Presented, present, resumeHint } from "./present.ts";
 export { blue, bold, cyan, dim, green, magenta, red, stripAnsi, yellow } from "./ansi.ts";
 export {
   CLI_DEMOS,

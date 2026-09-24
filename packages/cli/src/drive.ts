@@ -7,7 +7,7 @@
 // session -- the same rewrite `reduce` uses for print, run once per keypress instead
 // of once. This is the base's `Rendering` mounted on a cell grid; nothing of lit here.
 
-import { emitKeypressEvents } from "node:readline";
+import { serializeNotatio } from "@enumeratio/formats/notatio";
 import { iterate } from "../../notatio/src/playback.ts";
 import {
   type Declaration,
@@ -21,7 +21,7 @@ import { bold, cyan, dim, stripAnsi } from "./ansi.ts";
 
 type Json = Parameters<typeof pin>[0];
 
-interface Key {
+export interface Key {
   name?: string;
   shift?: boolean;
   ctrl?: boolean;
@@ -36,9 +36,18 @@ interface Driven {
   readonly entries?: readonly Json[];
   /** The range a ranged control moves in, if it is one. */
   readonly range?: { min: number; max: number; step: number };
+  /** The box a point control (Slider2D, Locator) moves in, and its step per axis. */
+  readonly plane?: { step: [number, number]; min?: [number, number]; max?: [number, number] };
 }
 
-const text = (node: Json): string => strOf(node) ?? String(numOf(node) ?? JSON.stringify(node));
+/** `(x, y)` as numbers, if that is what the node is. */
+function pairOf(node: Json | undefined): [number, number] | undefined {
+  const [x, y, ...rest] = tupleOf(node)?.map(numOf) ?? [];
+  return x === undefined || y === undefined || rest.length > 0 ? undefined : [x, y];
+}
+
+// A string shows bare (it is a choice's label); anything else as notatio, `(1, 0.5)`.
+const text = (node: Json): string => strOf(node) ?? serializeNotatio(node as never);
 
 function driven(decl: Declaration): Driven | undefined {
   const value = pinValue(decl);
@@ -49,6 +58,15 @@ function driven(decl: Declaration): Driven | undefined {
     if (min === undefined || max === undefined) return { decl, value };
     // No step: a hundred positions across the range, the slider's own default.
     return { decl, value, range: { min, max, step: step ?? (max - min) / 100 } };
+  }
+  if (decl.kind === "planar" || decl.kind === "locator") {
+    if (pairOf(value) === undefined) return { decl, value };
+    // A Slider2D has corners; a Locator takes its plot's, which the driver does not see,
+    // so it steps by a tenth and is not held in.
+    const [min, max] = (tupleOf(decl.spec) ?? []).map(pairOf);
+    if (min === undefined || max === undefined) return { decl, value, plane: { step: [0.1, 0.1] } };
+    const step: [number, number] = [(max[0] - min[0]) / 100, (max[1] - min[1]) / 100];
+    return { decl, value, plane: { step, min, max } };
   }
   const entries = sampleValues(decl, Number.POSITIVE_INFINITY);
   return entries === undefined ? { decl, value } : { decl, value, entries };
@@ -84,6 +102,11 @@ function strip(d: Driven, focused: boolean, color: boolean): Strip {
       text: `${label}◂${bar}▸  ${dim(`${d.range.min} … ${d.range.max}`, color)}`,
       track: at0 + 1,
     };
+  }
+  if (d.plane !== undefined) {
+    const { min, max } = d.plane;
+    const box = min && max ? `  (${min.join(", ")}) … (${max.join(", ")})` : "";
+    return { text: `${label}${dim(`←/→ x · ↑/↓ y${box}`, color)}` };
   }
   if (d.entries !== undefined) {
     const spans: { from: number; to: number; index: number }[] = [];
@@ -124,6 +147,19 @@ function move(d: Driven, steps: number): void {
   }
 }
 
+/** Move a point control by grid steps along each axis, held inside its box if it has one. */
+function shift(d: Driven, dx: number, dy: number): void {
+  const at = pairOf(d.value);
+  if (d.plane === undefined || at === undefined) return;
+  const { step, min, max } = d.plane;
+  const axis = (i: 0 | 1, by: number): number => {
+    const v = at[i] + by * step[i];
+    const held = min && max ? Math.min(max[i], Math.max(min[i], v)) : v;
+    return Number(held.toPrecision(12));
+  };
+  d.value = ["Tuple", axis(0, dx), axis(1, dy)] as unknown as Json;
+}
+
 /** One playback tick for an Animator: the next grid value, cycling. */
 function tick(d: Driven): void {
   if (d.range === undefined) return move(d, 1);
@@ -161,41 +197,55 @@ function mouseEvents(chunk: string): MouseEvent[] {
   return out;
 }
 
-export interface DriveHost {
+/** Where a driver draws: the host's terminal, whatever carries it. */
+export interface DriveScreen {
   /** Evaluate a pinned expression and render it as the session would. */
   show(expr: Json): string;
+  write(text: string): void;
   color: boolean;
-  stdin: NodeJS.ReadStream;
-  stdout: NodeJS.WriteStream;
+  /** Whether mouse reports can arrive; the hint and the reporting mode follow it. */
+  mouse: boolean;
+  /** The 1-based row the cursor is on -- the line just below the frame. */
+  cursorRow(): number;
+  /** The terminal's width, so a line that wraps is counted as the rows it takes. */
+  columns(): number;
+}
+
+/** A keyboard loop over the controls of one expression, fed by whichever host has the keys. */
+export interface Driver {
+  draw(): void;
+  /** One key; true when the reader is done. */
+  key(key: Key): boolean;
+  /** Raw input that may carry mouse reports. */
+  data(chunk: string): void;
+  /** The expression pinned where the controls are now. */
+  pinned(): Json;
+  /** Stop playback and mouse reporting. */
+  stop(): void;
 }
 
 /** Whether an expression has anything to drive. */
 export const drivable = (expr: Json): boolean => declarations(expr).length > 0;
 
-/**
- * Drive the controls of `expr` until the reader is done; resolves with the pinned
- * expression they left it at. Takes over the keypress stream while it runs.
- */
-export function drive(expr: Json, host: DriveHost): Promise<Json> {
+/** The driver for `expr`'s controls, or `undefined` when it has none to move. */
+export function driver(expr: Json, screen: DriveScreen): Driver | undefined {
   const controls = declarations(expr)
     .map(driven)
     .filter((d): d is Driven => d !== undefined);
+  if (controls.length === 0) return undefined;
   const values = (): Map<string, Json> => new Map(controls.map((d) => [d.decl.name, d.value]));
-  const pinnedNow = (): Json => pin(expr, values());
-  if (controls.length === 0) return Promise.resolve(pinnedNow());
+  const pinned = (): Json => pin(expr, values());
 
   let focus = 0;
   let lines = 0;
-  let playing: NodeJS.Timeout | undefined;
-  const { stdin, stdout, color } = host;
-  // Where the strips landed last draw, so a mouse report can be read back onto them:
-  // the rows counted UP from the line below the frame, which is where the cursor sits.
+  let playing: ReturnType<typeof setInterval> | undefined;
+  const { color, mouse } = screen;
+  // Where the strips landed last draw, so a mouse report can be read back onto them.
   let strips: Strip[] = [];
-  const mouse = stdin.isTTY === true;
 
   const draw = (): void => {
-    if (lines > 0) stdout.write(`\x1b[${lines}A\x1b[J`);
-    const body = host.show(pinnedNow());
+    const lead = lines > 0 ? `\x1b[${lines}A\x1b[J` : mouse ? MOUSE_ON : "";
+    const body = screen.show(pinned());
     strips = controls.map((d, i) => strip(d, i === focus, color));
     const out = [
       ...strips.map((s) => s.text),
@@ -208,15 +258,14 @@ export function drive(expr: Json, host: DriveHost): Promise<Json> {
       "",
       ...body.split("\n"),
     ];
-    stdout.write(out.join("\n") + "\n");
-    lines = out.length;
+    screen.write(lead + out.join("\n") + "\n");
+    const cols = Math.max(1, screen.columns());
+    lines = out.reduce((n, l) => n + Math.max(1, Math.ceil(stripAnsi(l).length / cols)), 0);
   };
 
-  /** The control a mouse row lands on: the strips sit `lines` rows above the cursor. */
+  /** The control a mouse row lands on: the frame ends on the row above the cursor. */
   const controlAt = (row: number): number | undefined => {
-    const bottom = stdout.rows ?? 24;
-    const first = bottom - lines + 1;
-    const i = row - first;
+    const i = row - (screen.cursorRow() - lines);
     return i >= 0 && i < controls.length ? i : undefined;
   };
 
@@ -245,75 +294,101 @@ export function drive(expr: Json, host: DriveHost): Promise<Json> {
     return true;
   };
 
-  const stop = (): void => {
+  const halt = (): void => {
     if (playing !== undefined) clearInterval(playing);
     playing = undefined;
   };
 
-  return new Promise((resolve) => {
-    emitKeypressEvents(stdin);
-    // readline owns the keypress stream; hold its listeners while the strip does.
-    const held = stdin.listeners("keypress") as ((...args: unknown[]) => void)[];
-    for (const l of held) stdin.off("keypress", l);
-    const wasRaw = stdin.isRaw;
-    if (stdin.isTTY) stdin.setRawMode(true);
-    if (mouse) stdout.write(MOUSE_ON);
-
-    const finish = (): void => {
-      stop();
-      stdin.off("keypress", onKey);
-      stdin.off("data", onData);
-      if (mouse) stdout.write(MOUSE_OFF);
-      if (stdin.isTTY) stdin.setRawMode(wasRaw ?? false);
-      for (const l of held) stdin.on("keypress", l);
-      resolve(pinnedNow());
-    };
-
-    // Mouse reports arrive as raw bytes; keypress sees them too, and ignores them.
-    const onData = (chunk: Buffer | string): void => {
+  return {
+    draw,
+    pinned,
+    stop: () => {
+      halt();
+      if (mouse) screen.write(MOUSE_OFF);
+    },
+    data: (chunk) => {
       if (!mouse) return;
       let moved = false;
-      for (const e of mouseEvents(String(chunk))) moved = onMouse(e) || moved;
+      for (const e of mouseEvents(chunk)) moved = onMouse(e) || moved;
       if (moved) draw();
-    };
-
-    const onKey = (_: string, key: Key = {}): void => {
+    },
+    key: (key) => {
       const gear = key.shift === true ? 10 : 1;
       const d = controls[focus]!;
       switch (key.name) {
         case "return":
         case "q":
         case "escape":
-          return finish();
+          return true;
         case "c":
-          if (key.ctrl === true) return finish();
-          break;
+          if (key.ctrl === true) return true;
+          return false;
         case "tab":
+          focus = (focus + (key.shift === true ? controls.length - 1 : 1)) % controls.length;
+          break;
+        // A point control takes ↑/↓ as its y; for the rest they move focus.
         case "down":
-          focus = (focus + 1) % controls.length;
+        case "j":
+          if (d.plane !== undefined) shift(d, 0, -gear);
+          else focus = (focus + 1) % controls.length;
           break;
         case "up":
-          focus = (focus - 1 + controls.length) % controls.length;
+        case "k":
+          if (d.plane !== undefined) shift(d, 0, gear);
+          else focus = (focus - 1 + controls.length) % controls.length;
           break;
         case "right":
         case "l":
-          move(d, gear);
+          if (d.plane !== undefined) shift(d, gear, 0);
+          else move(d, gear);
           break;
         case "left":
         case "h":
-          move(d, -gear);
+          if (d.plane !== undefined) shift(d, -gear, 0);
+          else move(d, -gear);
           break;
         case "space":
-          if (playing !== undefined) stop();
+          if (playing !== undefined) halt();
           else playing = setInterval(() => (tick(d), draw()), 120);
           break;
         default:
-          return;
+          return false;
       }
       draw();
-    };
-    stdin.on("keypress", onKey);
-    if (mouse) stdin.on("data", onData);
-    draw();
-  });
+      return false;
+    },
+  };
+}
+
+// The sequences a terminal sends for the keys the driver reads, for a host with no
+// readline to name them (xterm's `onData`). ESC is built from its code point, as above.
+const ESC = String.fromCharCode(27);
+const SEQUENCES: Record<string, Key> = {
+  [`${ESC}[A`]: { name: "up" },
+  [`${ESC}[B`]: { name: "down" },
+  [`${ESC}[C`]: { name: "right" },
+  [`${ESC}[D`]: { name: "left" },
+  [`${ESC}[1;2A`]: { name: "up", shift: true },
+  [`${ESC}[1;2B`]: { name: "down", shift: true },
+  [`${ESC}[1;2C`]: { name: "right", shift: true },
+  [`${ESC}[1;2D`]: { name: "left", shift: true },
+  [`${ESC}[Z`]: { name: "tab", shift: true },
+  "\t": { name: "tab" },
+  "\r": { name: "return" },
+  " ": { name: "space" },
+  [ESC]: { name: "escape" },
+  [String.fromCharCode(3)]: { name: "c", ctrl: true },
+};
+
+/** Name the keys in a chunk of raw terminal input; mouse reports are left to `data`. */
+export function keysOf(chunk: string): Key[] {
+  const rest = chunk.replace(MOUSE_EVENT, "");
+  const known = SEQUENCES[rest];
+  if (known !== undefined) return [{ ...known, sequence: rest }];
+  // Typed characters: one key each, uppercase as the shifted letter.
+  if (rest.startsWith(ESC)) return [];
+  return Array.from(rest, (ch) => ({
+    ...(SEQUENCES[ch] ?? { name: ch.toLowerCase(), shift: ch !== ch.toLowerCase() }),
+    sequence: ch,
+  }));
 }
