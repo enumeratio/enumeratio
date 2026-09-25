@@ -27,6 +27,8 @@ test("LogGamma(10^300) uses Stirling directly, not Gamma(10^300) first", () => {
   const r = ce.box(["N", ["LogGamma", ["Power", 10, 300]]]).evaluate();
   expect(Number.isFinite(r.re)).toBe(true);
   expect(r.re / 6.897755278982137e302).toBeCloseTo(1, 12); // agrees to a double's precision
+  // prints as a double, not a 303-digit exact-integer expansion of that double's bits
+  expect(r.toString().length).toBeLessThan(25);
   // small arguments, and the actual poles, are unaffected
   expect(ce.box(["LogGamma", 5]).evaluate().json).toEqual([
     "Add",

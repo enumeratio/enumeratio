@@ -3,12 +3,58 @@ import { bigIntegerAt, bigRationalAt, wrapOperator } from "@enumeratio/boxed";
 import { isFiniteNum } from "./box.ts";
 import { cx } from "./complex.ts";
 import { logGamma } from "./loggamma.ts";
+import { DOUBLE_DIGITS } from "./precise.ts";
 
 /** A wrapper's arity key doesn't filter calls; widened heads reach it with other arities. */
 const exactly =
   (n: number, p: (ops: readonly BoxedExpression[]) => boolean) =>
   (ops: readonly BoxedExpression[]): boolean =>
     ops.length === n && p(ops);
+
+/**
+ * Box a JS double as a float, not an exact bignum integer. `ce.number(x)` for a huge,
+ * integer-VALUED double — which every double past 2^53 is, having no fractional bits
+ * left to hold — prints as a full decimal expansion of that double's exact binary value
+ * (`ce.number(6.897755278982137e302).toString()` gives a 303-digit integer, not
+ * `6.897755278982137e+302`) whenever `ce.precision` is at or below `DOUBLE_DIGITS`:
+ * compute-engine represents a number as either a machine double or a bignum depending on
+ * `ce.precision` (`bignumPreferred`), and only the bignum representation's printer treats
+ * an "exact-looking" huge integer sensibly, rounding it to the requested precision instead
+ * of expanding it. `.json` and `.latex` are unaffected either way — this is purely a
+ * `.toString()` ceiling on the machine-double path — but constructing the number while
+ * `ce.precision` is nudged one digit above `DOUBLE_DIGITS`, then restoring it, forces the
+ * bignum path for just this literal without touching the caller's precision setting.
+ */
+function floatNumber(ce: ComputeEngine, x: number): BoxedExpression {
+  const saved = ce.precision;
+  if (saved <= DOUBLE_DIGITS) ce.precision = DOUBLE_DIGITS + 1;
+  try {
+    return ce.number(x.toString());
+  } finally {
+    ce.precision = saved;
+  }
+}
+
+/**
+ * As `floatNumber`, but for a complex result. The same nudge-and-restore around building
+ * the `Complex` node reliably fixes `.re`/`.im`/`.json`/`.latex` (all already correct here
+ * regardless), but NOT `.toString()`: compute-engine canonicalizes `Complex(re, im)` into
+ * its own machine-pair value, which — unlike a plain real Number literal — doesn't
+ * consult `bignumPreferred`/`ce.precision` when deciding whether to print an
+ * integer-valued component in full; that particular expansion is a compute-engine
+ * limitation in its Complex formatter, not something reachable from here. Still worth
+ * doing: it's no worse than the plain construction, and it's what keeps the real branch
+ * (`floatNumber`) correct.
+ */
+function floatComplex(ce: ComputeEngine, re: number, im: number): BoxedExpression {
+  const saved = ce.precision;
+  if (saved <= DOUBLE_DIGITS) ce.precision = DOUBLE_DIGITS + 1;
+  try {
+    return ce.box(["Complex", { num: re.toString() }, { num: im.toString() }]).evaluate();
+  } finally {
+    ce.precision = saved;
+  }
+}
 
 // #113 "wrong answers today": three heads whose existing numeric kernel gives a
 // finite, correct answer in general but a specific wrong one at the argument
@@ -43,7 +89,8 @@ function declarePreciseLogGamma(ce: ComputeEngine): void {
       if (!overflowed) return r;
       const g = logGamma(cx(z.re, z.im));
       if (!Number.isFinite(g.re) || !Number.isFinite(g.im)) return r; // genuinely non-finite
-      return g.im === 0 ? ce.number(g.re) : ce.number(ce.complex(g.re, g.im));
+      if (g.im === 0) return floatNumber(ce, g.re);
+      return floatComplex(ce, g.re, g.im);
     },
   );
 }
