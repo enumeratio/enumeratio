@@ -23,7 +23,9 @@
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 
+import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
@@ -365,12 +367,15 @@ for (const system of systems) {
 
 // An unchanged sidecar is left as it is on disk, however it happens to be formatted, so a
 // rescan that finds nothing new leaves the tree clean (the nightly lanes fail on drift).
+// Whatever is written goes through the repo formatter at the end, so it lands as committed.
+const written: string[] = [];
 for (const { stem } of entryFiles) {
   const sidecar = sidecars.get(stem) as Sidecar;
   const url = sidecarUrl(stem);
   if (existsSync(url) && isDeepStrictEqual(JSON.parse(readFileSync(url, "utf8")), sidecar))
     continue;
   writeFileSync(url, `${JSON.stringify(sidecar, null, 2)}\n`);
+  written.push(fileURLToPath(url));
 }
 
 const fresh = [...sidecars.values()].flatMap((sidecar) =>
@@ -466,10 +471,10 @@ for (const system of scanned) {
     lines.push("", "</details>", "");
   }
 }
-writeFileSync(
-  new URL("../golden/oracle/disagreements.md", import.meta.url),
-  `${lines.join("\n")}\n`,
-);
+const digestUrl = new URL("../golden/oracle/disagreements.md", import.meta.url);
+writeFileSync(digestUrl, `${lines.join("\n")}\n`);
+written.push(fileURLToPath(digestUrl));
+execFileSync("pnpm", ["exec", "vp", "fmt", ...written], { stdio: "inherit" });
 
 process.stderr.write(`\nmost-wanted mappings:\n`);
 for (const [head, count] of queue.slice(0, 12)) {

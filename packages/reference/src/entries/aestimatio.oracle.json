@@ -28,19 +28,19 @@
       "[\"VerificationTest\",[\"Add\",2,3],5]": {
         "wolfram": {
           "input": "VerificationTest[Plus[2, 3], 5]",
-          "output": "TestObject[<|\"MetaInformation\" -> None, \"AbsoluteTime\" -> 3.999285508798199`15.65558739432617*^9, \"SameTest\" -> SameQ, \"SameMessages\" -> Testing`MessageMatchQ, \"MemoryConstraint\" -> Infinity, \"TimeConstraint\" -> Infinity, \"CreationID\" -> \"eb594ac0-bd2e-4cc8-9677-961120602880\", \"TestID\" -> \"t0mzx9mpg2zv8p\", \"TestFileName\" -> \"\", \"EvaluationID\" -> \"756eb47c-54ba-4352-b75c-fd4dcfe67f6e\", \"Input\" -> HoldForm[2 + 3], \"ExpectedMessages\" -> HoldForm[{}], \"ActualOutput\" -> HoldForm[5], \"ActualMessages\" -> {}, \"AbsoluteTimeUsed\" -> 0.000045`1.8037275116073357, \"CPUTimeUsed\" -> 0.00004000000000026205, \"MemoryUsed\" -> 3456, \"IntermediateTestsTree\" -> {}, \"ExpectedOutput\" -> HoldForm[5], \"Outcome\" -> \"Success\", \"FailureType\" -> None|>]",
+          "output": "TestObject[<|\"Outcome\" -> \"Success\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[5], \"ActualOutput\" -> HoldForm[5]|>]",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Same outcome, different record: ours is a TestResultObject of Outcome/Input/ExpectedOutput/ActualOutput/AbsoluteTimeUsed rules; Wolfram 13+ returns a TestObject association that also carries timestamps, UUIDs and message fields."
+          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput)."
         }
       },
       "[\"VerificationTest\",[\"Add\",2,3],6]": {
         "wolfram": {
           "input": "VerificationTest[Plus[2, 3], 6]",
-          "output": "TestObject[<|\"MetaInformation\" -> None, \"AbsoluteTime\" -> 3.999285508819482`15.655587394328485*^9, \"SameTest\" -> SameQ, \"SameMessages\" -> Testing`MessageMatchQ, \"MemoryConstraint\" -> Infinity, \"TimeConstraint\" -> Infinity, \"CreationID\" -> \"260fab7d-bf4c-431f-99ad-0082e5917762\", \"TestID\" -> \"t0w9drhltjtdqr\", \"TestFileName\" -> \"\", \"EvaluationID\" -> \"0f437ec6-5085-43e0-8b06-dcb9c6fc1d40\", \"Input\" -> HoldForm[2 + 3], \"ExpectedMessages\" -> HoldForm[{}], \"ActualOutput\" -> HoldForm[5], \"ActualMessages\" -> {}, \"AbsoluteTimeUsed\" -> 0.000047`1.8226128557677093, \"CPUTimeUsed\" -> 0.00004499999999962867, \"MemoryUsed\" -> 3936, \"IntermediateTestsTree\" -> {}, \"ExpectedOutput\" -> HoldForm[6], \"Outcome\" -> \"Failure\", \"FailureType\" -> \"SameTestFailure\"|>]",
+          "output": "TestObject[<|\"Outcome\" -> \"Failure\", \"Input\" -> HoldForm[2 + 3], \"ExpectedOutput\" -> HoldForm[6], \"ActualOutput\" -> HoldForm[5]|>]",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Same outcome, different record: ours is a TestResultObject of Outcome/Input/ExpectedOutput/ActualOutput/AbsoluteTimeUsed rules; Wolfram 13+ returns a TestObject association that also carries timestamps, UUIDs and message fields."
+          "note": "Same outcome, different record: ours is a TestResultObject of rules with Input evaluated; Wolfram returns a TestObject association with Input held (the scan keeps only its Outcome/Input/ExpectedOutput/ActualOutput)."
         }
       }
     }
