@@ -5,10 +5,10 @@ summary: A scalar function f extended to a square matrix m, via its eigendecompo
 signatures:
   - call: MatrixFunction(f, m)
     description: f applied to the square matrix m, via its eigendecomposition.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "Exact where the structure gives one: a diagonal m (any size, including symbolic entries) reduces to elementwise f down the diagonal; f = Exp reduces to [[MatrixExp]] for any m; a 2×2 m otherwise reduces to Lagrange's formula at its two eigenvalues, with the Jordan-block limit f(λ)·I + f′(λ)·(M − λI) (f′ via compute-engine's own D) when they coincide."
-  - 'No general n×n closed form past that: a non-diagonal matrix larger than 2×2 needs a numerical-linear-algebra kernel (Parlett recurrence or a Schur form), which this does not implement -- those calls stay symbolic.'
+  - "No general n×n closed form past that: a non-diagonal matrix larger than 2×2 needs a numerical-linear-algebra kernel (Parlett recurrence or a Schur form), which this does not implement -- those calls stay symbolic."
 examples:
   - id: the-principal-square-root-of-a-diagonal-matrix
     expr: [MatrixFunction, Sqrt, [List, [List, 4, 0], [List, 0, 9]]]

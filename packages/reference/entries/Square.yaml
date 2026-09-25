@@ -1,16 +1,16 @@
 name: Square
 domain: Arithmetic
 signature: Square(x)
-summary: 'The second power of x: $x^2$.'
+summary: "The second power of x: $x^2$."
 signatures:
   - call: Square(x)
     description: the second power $x^2$.
 details:
   - 'Canonicalizes to $x^2$: $\mathrm{Square}(x)$ and $\mathrm{Power}(x, 2)$ are the same expression. See [[Sqrt]].'
-  - 'Even function: $(-x)^2 = x^2$, so the sign of the input is lost.'
+  - "Even function: $(-x)^2 = x^2$, so the sign of the input is lost."
   - Always non-negative for real x; for a complex number it need not be, e.g. $(1+i)^2 = 2i$.
   - Threads element-wise over a list.
-  - 'Square is purely a convenience head: it canonicalizes away to $x^2$ (Power).'
+  - "Square is purely a convenience head: it canonicalizes away to $x^2$ (Power)."
 examples:
   - id: square-5
     expr: [Square, 5]
@@ -34,7 +34,7 @@ examples:
     expr: [Equal, [Square, -5], [Square, 5]]
     expected: True
     category: Properties
-    caption: 'Even function: $(-x)^2 = x^2$'
+    caption: "Even function: $(-x)^2 = x^2$"
   - id: 1-i-2-2i-squaring-a-complex-number-needn-t-stay
     expr: [Equal, [Square, [Complex, 1, 1]], [Complex, 0, 2]]
     expected: True

@@ -1,7 +1,7 @@
 name: ClassSum
 domain: Group algebras
 signature: ClassSum(group, k)
-summary: 'The $k$-th class sum: add up one conjugacy class. Class sums are the basis of the CENTRE of $k[G]$ — a commutative subalgebra of a usually non-commutative algebra.'
+summary: "The $k$-th class sum: add up one conjugacy class. Class sums are the basis of the CENTRE of $k[G]$ — a commutative subalgebra of a usually non-commutative algebra."
 signatures:
   - call: ClassSum(group, k)
     description: the sum of the $k$-th conjugacy class (1-indexed)
@@ -30,7 +30,7 @@ examples:
     caption: a lone reflection is not
     category: Properties
   - id: in-an-abelian-group-everything-is-central
-    expr: [IsCentral, [CyclicGroup, 6], [GroupBasis, [String, '3']]]
+    expr: [IsCentral, [CyclicGroup, 6], [GroupBasis, [String, "3"]]]
     expected: True
     caption: in an abelian group everything is central
     category: Scope

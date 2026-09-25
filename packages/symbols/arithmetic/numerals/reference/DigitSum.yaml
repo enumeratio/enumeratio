@@ -31,7 +31,7 @@ examples:
     expr: [Equal, [Mod, [DigitSum, 58127], 9], [Mod, 58127, 9]]
     expected: True
     category: Properties
-    caption: 'Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root'
+    caption: "Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root"
   - id: 255-ff-16-15-15
     expr: [DigitSum, 255, 16]
     expected: 30

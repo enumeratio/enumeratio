@@ -1,7 +1,7 @@
 name: NumberExpand
 domain: Numeral systems
 signature: NumberExpand(n, base?, len?)
-summary: 'The place-value terms of $n$: each digit times its power of the base.'
+summary: "The place-value terms of $n$: each digit times its power of the base."
 signatures:
   - call: NumberExpand(n)
     description: the base-10 place-value terms of $n$
@@ -11,7 +11,7 @@ signatures:
   - call: NumberExpand(n, base, len)
     description: padded to `len` digits (leading zero terms) first
 details:
-  - 'The terms sum back to $n$: `Total(NumberExpand(n))` is $n$'
+  - "The terms sum back to $n$: `Total(NumberExpand(n))` is $n$"
   - Every term carries the sign of $n$, not just the leading one
 examples:
   - id: numberexpand-1-234

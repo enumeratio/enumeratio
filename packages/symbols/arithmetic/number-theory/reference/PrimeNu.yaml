@@ -44,17 +44,17 @@ examples:
     expr: [PrimeNu, [Factorial, 50]]
     expected: 15
     category: Scope
-    caption: 'Large integers: the 15 primes up to 50 divide $50!$'
+    caption: "Large integers: the 15 primes up to 50 divide $50!$"
   - id: gaussian-integers-3-i-1-i-2-i
     expr: [PrimeNu, [Complex, 3, 1]]
     expected: 2
     category: Scope
-    caption: 'Gaussian integers: $3+i=(1+i)(2-i)$'
+    caption: "Gaussian integers: $3+i=(1+i)(2-i)$"
   - id: gaussianintegers-true-5-splits-so-105-has-4
     expr: [PrimeNu, 105, [KeyValuePair, GaussianIntegers, True]]
     expected: 4
     category: Scope
-    caption: 'GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors'
+    caption: "GaussianIntegers -> True: $5$ splits, so $105$ has 4 Gaussian prime factors"
   - id: listable-over-a-range
     expr: [PrimeNu, [Range, 20]]
     expected: [List, 0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]

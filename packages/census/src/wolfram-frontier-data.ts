@@ -41,20 +41,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 209,
   },
   {
-    head: "FunctionDomain",
-    uses: 194,
-  },
-  {
     head: "NumericArray",
     uses: 157,
   },
   {
     head: "ComplexContourPlot",
     uses: 155,
-  },
-  {
-    head: "RandomVariate",
-    uses: 153,
   },
   {
     head: "Hue",
@@ -65,18 +57,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 130,
   },
   {
-    head: "FunctionRange",
-    uses: 124,
-  },
-  {
-    head: "FunctionMonotonicity",
-    uses: 121,
-  },
-  {
-    head: "FunctionAnalytic",
-    uses: 116,
-  },
-  {
     head: "Graphics3D",
     uses: 110,
   },
@@ -85,32 +65,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 107,
   },
   {
-    head: "FunctionConvexity",
-    uses: 107,
-  },
-  {
-    head: "FunctionSign",
-    uses: 107,
-  },
-  {
-    head: "FunctionInjective",
-    uses: 103,
-  },
-  {
-    head: "FunctionSingularities",
-    uses: 99,
-  },
-  {
-    head: "FunctionSurjective",
-    uses: 97,
-  },
-  {
     head: "Opacity",
     uses: 97,
-  },
-  {
-    head: "FunctionDiscontinuities",
-    uses: 95,
   },
   {
     head: "RGBColor",
@@ -125,32 +81,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 82,
   },
   {
-    head: "SeriesCoefficient",
-    uses: 66,
-  },
-  {
     head: "Module",
     uses: 62,
   },
   {
-    head: "O",
-    uses: 60,
-  },
-  {
-    head: "Refine",
-    uses: 58,
-  },
-  {
-    head: "FunctionMeromorphic",
-    uses: 55,
-  },
-  {
     head: "ParametricPlot",
     uses: 53,
-  },
-  {
-    head: "CellularAutomaton",
-    uses: 47,
   },
   {
     head: "FullForm",
@@ -173,14 +109,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 43,
   },
   {
-    head: "PiecewiseExpand",
-    uses: 43,
-  },
-  {
-    head: "Assuming",
-    uses: 36,
-  },
-  {
     head: "DifferentialRootReduce",
     uses: 36,
   },
@@ -193,19 +121,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 35,
   },
   {
-    head: "Distributed",
-    uses: 34,
-  },
-  {
     head: "SuperscriptBox",
     uses: 34,
   },
   {
     head: "Activate",
-    uses: 33,
-  },
-  {
-    head: "LaplaceTransform",
     uses: 33,
   },
   {
@@ -219,14 +139,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Rotate",
     uses: 31,
-  },
-  {
-    head: "Thread",
-    uses: 31,
-  },
-  {
-    head: "MeijerGReduce",
-    uses: 30,
   },
   {
     head: "Reap",
@@ -249,20 +161,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 27,
   },
   {
-    head: "FourierTransform",
-    uses: 26,
-  },
-  {
     head: "TagBox",
     uses: 26,
   },
   {
     head: "ToBoxes",
     uses: 25,
-  },
-  {
-    head: "DifferenceDelta",
-    uses: 24,
   },
   {
     head: "Fourier",
@@ -273,15 +177,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 24,
   },
   {
-    head: "Surd",
-    uses: 22,
-  },
-  {
     head: "Button",
-    uses: 21,
-  },
-  {
-    head: "MeijerG",
     uses: 21,
   },
   {
@@ -345,20 +241,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 19,
   },
   {
-    head: "Normalize",
-    uses: 18,
-  },
-  {
     head: "RegionEqual",
     uses: 18,
   },
   {
     head: "Specularity",
     uses: 18,
-  },
-  {
-    head: "BetaDistribution",
-    uses: 17,
   },
   {
     head: "Control",
@@ -537,10 +425,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "EmpiricalDistribution",
-    uses: 11,
-  },
-  {
     head: "GridBox",
     uses: 11,
   },
@@ -557,14 +441,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "PascalBinomial",
-    uses: 11,
-  },
-  {
-    head: "Piecewise",
-    uses: 11,
-  },
-  {
     head: "RegionNearest",
     uses: 11,
   },
@@ -573,19 +449,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "Expectation",
-    uses: 10,
-  },
-  {
     head: "FaceForm",
-    uses: 10,
-  },
-  {
-    head: "FunctionPeriod",
-    uses: 10,
-  },
-  {
-    head: "HankelMatrix",
     uses: 10,
   },
   {
@@ -658,10 +522,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Extract",
-    uses: 9,
-  },
-  {
-    head: "GammaDistribution",
     uses: 9,
   },
   {
@@ -797,10 +657,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "BinormalDistribution",
-    uses: 7,
-  },
-  {
     head: "BSplineCurve",
     uses: 7,
   },
@@ -861,10 +717,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "MapAt",
-    uses: 7,
-  },
-  {
     head: "MatrixQ",
     uses: 7,
   },
@@ -886,10 +738,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "PermutationReplace",
-    uses: 7,
-  },
-  {
-    head: "Probability",
     uses: 7,
   },
   {
@@ -961,19 +809,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 6,
   },
   {
-    head: "LetterNumber",
-    uses: 6,
-  },
-  {
     head: "ListLinePlot3D",
     uses: 6,
   },
   {
     head: "MathieuGroupM24",
-    uses: 6,
-  },
-  {
-    head: "MovingMap",
     uses: 6,
   },
   {

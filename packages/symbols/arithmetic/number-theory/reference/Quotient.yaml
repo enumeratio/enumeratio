@@ -56,7 +56,7 @@ examples:
     expr: [Quotient, [List, 10, 20, 30], 7]
     expected: [List, 1, 2, 4]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
 seeAlso:
   - Mod
   - GCD

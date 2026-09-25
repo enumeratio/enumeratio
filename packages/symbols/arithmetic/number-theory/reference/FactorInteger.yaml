@@ -53,7 +53,8 @@ examples:
     caption: Threads element-wise over a list, as Wolfram's Listable heads do
   - id: 5-i-1-2i-2-i
     expr: [FactorInteger, 5, [KeyValuePair, GaussianIntegers, True]]
-    expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1]]
+    expected:
+      [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1]]
     category: Scope
     caption: $5 = -i(1 + 2i)(2 + i)$
   - id: 3-4i-2-i-2
@@ -62,8 +63,17 @@ examples:
     category: Scope
     caption: $3 + 4i = (2 + i)^2$
   - id: a-21-digit-gaussian-integer-through-its-norm
-    expr: [FactorInteger, [Complex, {num: '100000000000000000039'}, {num: '100000000000000000129'}]]
-    expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 1], 1], [Tuple, [Complex, 99, 34], 1], [Tuple, [Complex, 1538, 213], 1], [Tuple, [Complex, 277789996706096, 549000467740335], 1]]
+    expr:
+      [FactorInteger, [Complex, { num: "100000000000000000039" }, { num: "100000000000000000129" }]]
+    expected:
+      [
+        List,
+        [Tuple, [Complex, 0, -1], 1],
+        [Tuple, [Complex, 1, 1], 1],
+        [Tuple, [Complex, 99, 34], 1],
+        [Tuple, [Complex, 1538, 213], 1],
+        [Tuple, [Complex, 277789996706096, 549000467740335], 1],
+      ]
     category: Scope
     caption: a 21-digit Gaussian integer, through its norm
   - id: factorinteger-120
@@ -89,17 +99,23 @@ examples:
     caption: '$36=-(1+i)^4\cdot3^2$: 2 ramifies, 3 stays prime'
   - id: listable-threads-over-a-list
     expr: [FactorInteger, [List, 11, 101, 1001]]
-    expected: [List, [List, [Tuple, 11, 1]], [List, [Tuple, 101, 1]], [List, [Tuple, 7, 1], [Tuple, 11, 1], [Tuple, 13, 1]]]
+    expected:
+      [
+        List,
+        [List, [Tuple, 11, 1]],
+        [List, [Tuple, 101, 1]],
+        [List, [Tuple, 7, 1], [Tuple, 11, 1], [Tuple, 13, 1]],
+      ]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
   - id: 1-is-a-unit-and-factors-as-itself
     expr: [FactorInteger, -1]
     expected: [List, [Tuple, -1, 1]]
     category: Possible issues
     caption: $-1$ is a unit and factors as itself
   - id: a-21-digit-prime-cubed-factors-at-once
-    expr: [FactorInteger, [Power, {num: '100000000000000000039'}, 3]]
-    expected: [List, [Tuple, {num: '100000000000000000039'}, 3]]
+    expr: [FactorInteger, [Power, { num: "100000000000000000039" }, 3]]
+    expected: [List, [Tuple, { num: "100000000000000000039" }, 3]]
     category: Scope
     caption: A 21-digit prime cubed factors at once
 seeAlso:

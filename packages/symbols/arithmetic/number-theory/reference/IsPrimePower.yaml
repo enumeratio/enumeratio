@@ -7,7 +7,7 @@ signatures:
     description: $n = p^k$ for a prime $p$, $k \ge 1$
     library: enumeratio-number-theory
 details:
-  - '$1=p^0$ does not count: it has no prime base.'
+  - "$1=p^0$ does not count: it has no prime base."
   - Wolfram's `PrimePowerQ`.
 examples:
   - id: 8-2-3

@@ -22,7 +22,7 @@ examples:
     expr: [FirstPosition, [List, a, [List, a, b], b], b]
     expected: [List, 2, 2]
     category: Properties
-    caption: 'A match nested inside an earlier sublist beats a plain match later at the top level: depth-first, outer to inner, left to right'
+    caption: "A match nested inside an earlier sublist beats a plain match later at the top level: depth-first, outer to inner, left to right"
 seeAlso:
   - IndexOf
   - Position

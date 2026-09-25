@@ -1,0 +1,34 @@
+name: FactorialPower
+domain: Collections
+signature: FactorialPower(x, n)
+summary: The falling factorial x(x-1)…(x-n+1), n factors, for a concrete-number x.
+signatures:
+  - call: FactorialPower(x, n)
+    description: x(x-1)(x-2)…(x-n+1)
+    library: enumeratio-collections
+  - call: FactorialPower(x, n, h)
+    description: x(x-h)(x-2h)…(x-(n-1)h), stepping by h instead of 1
+    library: enumeratio-collections
+details:
+  - A negative integer n inverts the product -- FactorialPower(x, -m, h) = 1 / ((x+h)(x+2h)…(x+mh)).
+  - A non-integer n (step h = 1 only) generalizes via Gamma(x+1)/Gamma(x-n+1).
+  - A symbolic x is left unevaluated -- Wolfram itself only opens the product via FunctionExpand, not by default.
+examples:
+  - id: symbolic-falling
+    expr: [FactorialPower, x, 3]
+    expected: [FactorialPower, x, 3]
+    caption: A symbolic x stays unevaluated, matching Wolfram's own default behavior
+  - id: numeric
+    expr: [FactorialPower, 5, 3]
+    expected: 60
+    caption: 5 × 4 × 3 = 60
+  - id: step
+    expr: [FactorialPower, x, 2, h]
+    expected: [FactorialPower, x, 2, h]
+    category: Scope
+    caption: A symbolic x with a third (step) argument also stays unevaluated
+  - id: zero
+    expr: [FactorialPower, x, 0]
+    expected: 1
+    category: Scope
+    caption: The empty product is 1, even for a symbolic x

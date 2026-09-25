@@ -18,12 +18,22 @@ examples:
     expr: [Union, [List, 1, 2], [List, 2, 3], [List, 3, 4]]
     expected: [Set, 1, 2, 3, 4]
   - id: union-is-commutative-argument-order-doesn-t
-    expr: [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
+    expr:
+      [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
     expected: True
     category: Properties
     caption: "$Union$ is commutative: argument order doesn't matter"
   - id: inclusion-exclusion-a-cup-b-a-b-a-cap-b-see
-    expr: [Equal, [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]], [Subtract, [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]], [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]]]]
+    expr:
+      [
+        Equal,
+        [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]],
+        [
+          Subtract,
+          [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]],
+          [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]],
+        ],
+      ]
     expected: True
     category: Properties
     caption: 'Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Length]] and [[Intersection]]'
@@ -51,12 +61,18 @@ examples:
     category: Scope
     caption: Symbolic elements, merged across three lists
   - id: elements-can-themselves-be-lists-1-2-and-2-1
-    expr: [Union, [List, [List, 1, 2], [List, 1, 2, 3]], [List, [List, 2, 1], [List, 1, 2]], [List, [List, 3, 2, 1], [List, 1, 2, 3]]]
+    expr:
+      [
+        Union,
+        [List, [List, 1, 2], [List, 1, 2, 3]],
+        [List, [List, 2, 1], [List, 1, 2]],
+        [List, [List, 3, 2, 1], [List, 1, 2, 3]],
+      ]
     expected: [Set, [List, 1, 2], [List, 1, 2, 3], [List, 2, 1], [List, 3, 2, 1]]
     category: Scope
     caption: Elements can themselves be lists; $\{1, 2\}$ and $\{2, 1\}$ stay distinct
     divergence:
-      wolfram: 'Wolfram sorts the result into canonical order, shorter lists first: {{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}.'
+      wolfram: "Wolfram sorts the result into canonical order, shorter lists first: {{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}."
   - id: with-no-arguments-the-union-is-empty
     expr: [Union]
     expected: EmptySet

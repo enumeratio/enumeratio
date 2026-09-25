@@ -1,7 +1,7 @@
 name: Subfactorial
 domain: Combinatorics
 signature: Subfactorial(n)
-summary: 'The number of derangements of n objects: permutations that leave no element in its original position.'
+summary: "The number of derangements of n objects: permutations that leave no element in its original position."
 signatures:
   - call: Subfactorial(n)
     description: the number of derangements $D_n$ of n objects.
@@ -9,7 +9,7 @@ details:
   - Closed form $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$, so $D_n$ is n! divided by e and rounded to the nearest integer.
   - 'Recurrence: $D_n = n\,D_{n-1} + (-1)^n$, with $D_0 = 1$.'
   - Also satisfies the two-term recurrence $D_{n+1} = n\,(D_n + D_{n-1})$.
-  - 'The classic hat-check problem: $D_n$ counts the ways n people can have their hats returned so nobody gets their own.'
+  - "The classic hat-check problem: $D_n$ counts the ways n people can have their hats returned so nobody gets their own."
   - compute-engine leaves negative arguments unevaluated rather than extending Subfactorial analytically.
 examples:
   - id: subfactorial-0
@@ -29,12 +29,12 @@ examples:
     expr: [Equal, [Subfactorial, 4], [Add, [Multiply, 4, [Subfactorial, 3]], [Power, -1, 4]]]
     expected: True
     category: Properties
-    caption: 'Recurrence: $D_n = n D_{n-1} + (-1)^n$'
+    caption: "Recurrence: $D_n = n D_{n-1} + (-1)^n$"
   - id: the-hat-check-problem-the-number-of-ways-6
     expr: [Subfactorial, 6]
     expected: 265
     category: Applications
-    caption: 'The hat-check problem: the number of ways 6 people can have their hats returned so nobody gets their own'
+    caption: "The hat-check problem: the number of ways 6 people can have their hats returned so nobody gets their own"
   - id: a-negative-argument-is-left-unevaluated
     expr: [Subfactorial, -1]
     expected: [Subfactorial, -1]
@@ -47,10 +47,10 @@ examples:
     caption: Threads element-wise over a list, as Wolfram's Listable heads do
   - id: subfactorial-20
     expr: [Subfactorial, 20]
-    expected: {num: '895014631192902121'}
+    expected: { num: "895014631192902121" }
   - id: exact-for-large-n
     expr: [Subfactorial, 48]
-    expected: {num: '4566824330931624695767452273778667071025042534230906772538913'}
+    expected: { num: "4566824330931624695767452273778667071025042534230906772538913" }
     category: Scope
     caption: Exact for large n
   - id: real-arguments-evaluate-as-frac-gamma-n-1-1-e

@@ -5,7 +5,7 @@ summary: The Dirichlet L-function $L(s, \chi) = \sum_{n\ge1} \chi(n)\,n^{-s}$ of
 signatures:
   - call: DirichletL(k, j, s)
     description: the L-function of [[DirichletCharacter]] $\chi_j \bmod k$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "$L(s, \\chi_1 \\bmod 1) = \\zeta(s)$, and for the principal character mod $k$ the Euler factors at the primes dividing $k$ drop out: $L(s, \\chi_1) = \\zeta(s)\\prod_{p \\mid k}(1 - p^{-s})$ — so it inherits $\\zeta$'s pole at $s = 1$. Every non-principal $L$ is entire."
   - $L(s, \chi_2 \bmod 4) = \beta(s)$, the [[DirichletBeta]] function; $\eta(s)$ is not an L-function of this family (the alternating sign is not a character mod 2) but is $(1 - 2^{1-s})\zeta(s)$. See [[DirichletEta]].
@@ -16,14 +16,20 @@ examples:
   - id: modulus-1-the-riemann-zeta-function-itself
     expr: [DirichletL, 1, 1, s]
     expected: [Zeta, s]
-    caption: 'Modulus 1: the Riemann zeta function itself'
+    caption: "Modulus 1: the Riemann zeta function itself"
   - id: l-1-chi-2-bmod-4-beta-1-pi-4-leibniz-s-series
     expr: [DirichletL, 4, 2, 1]
     expected: [Multiply, [Rational, 1, 4], Pi]
     caption: $L(1, \chi_2 \bmod 4) = \beta(1) = \pi/4$ — Leibniz's series
   - id: a-principal-character-drops-the-euler-factors-at
     expr: [DirichletL, 12, 1, s]
-    expected: [Multiply, [Add, [Negate, [Power, 2, [Negate, s]]], 1], [Add, [Negate, [Power, 3, [Negate, s]]], 1], [Zeta, s]]
+    expected:
+      [
+        Multiply,
+        [Add, [Negate, [Power, 2, [Negate, s]]], 1],
+        [Add, [Negate, [Power, 3, [Negate, s]]], 1],
+        [Zeta, s],
+      ]
     category: Properties
     caption: A principal character drops the Euler factors at $2$ and $3$
   - id: and-keeps-zeta-s-pole-a-non-principal-l-is
@@ -83,9 +89,16 @@ examples:
     caption: '$L(1, \chi_{-3}) = \pi/(3\sqrt3)$: $s = 1$ for a real (quadratic) odd character has a closed form, from the Fourier expansion of $\sum \chi(n)/n$'
   - id: listable-in-s-threads-over-a-list
     expr: [DirichletL, 1, 1, [List, 1, 2, 3, 4]]
-    expected: [List, ComplexInfinity, [Multiply, [Rational, 1, 6], [Power, Pi, 2]], [Zeta, 3], [Multiply, [Rational, 1, 90], [Power, Pi, 4]]]
+    expected:
+      [
+        List,
+        ComplexInfinity,
+        [Multiply, [Rational, 1, 6], [Power, Pi, 2]],
+        [Zeta, 3],
+        [Multiply, [Rational, 1, 90], [Power, Pi, 4]],
+      ]
     category: Scope
-    caption: 'Listable in $s$: threads over a list'
+    caption: "Listable in $s$: threads over a list"
   - id: interval-arithmetic-in-s-decreasing-here
     expr: [DirichletL, 5, 1, [Interval, 1.23, 1.24]]
     expected: [Interval, 4.113958567039058, 4.25898895010849]
@@ -95,7 +108,16 @@ implementations:
   - origin: reference
     form: notatio
     environment: engine
-    expr: [Multiply, [Sum, [Multiply, [DirichletCharacter, _k, _j, r], [HurwitzZeta, _s, [Divide, r, _k]]], [Triple, r, 1, _k]], [Power, _k, [Negate, _s]]]
+    expr:
+      [
+        Multiply,
+        [
+          Sum,
+          [Multiply, [DirichletCharacter, _k, _j, r], [HurwitzZeta, _s, [Divide, r, _k]]],
+          [Triple, r, 1, _k],
+        ],
+        [Power, _k, [Negate, _s]],
+      ]
     note: The Hurwitz decomposition — the definition the kernel evaluates, away from s = 1.
   - origin: native
     form: typescript

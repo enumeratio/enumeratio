@@ -1,0 +1,41 @@
+# Integer arithmetic and number theory.
+
+GCD:
+  - id: gcd-random-10000-bit
+    role: bench
+    expr: [GCD, $a, $b]
+    bench:
+      tags: [number-theory, big-integer]
+      source: GMP
+      precision: exact
+      sample: { seed: 20260925, count: 8, draw: { a: [bits, 10000], b: [bits, 10000] } }
+PowerMod:
+  - id: powermod-random-2048-bit
+    role: bench
+    expr: [PowerMod, $a, $e, $m]
+    bench:
+      tags: [number-theory, big-integer]
+      source: RSA-sized modular exponentiation
+      precision: exact
+      sample:
+        {
+          seed: 20260925,
+          count: 8,
+          draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] },
+        }
+PrimePi:
+  - id: primepi-10-to-the-7
+    role: bench
+    expr: [PrimePi, 10000000]
+    expected: 664579
+    bench:
+      tags: [number-theory, primes]
+      precision: exact
+Prime:
+  - id: prime-10-to-the-5
+    role: bench
+    expr: [Prime, 100000]
+    expected: 1299709
+    bench:
+      tags: [number-theory, primes]
+      precision: exact

@@ -7,7 +7,7 @@ signatures:
     description: the polylogarithm $\operatorname{Li}_s(z)$ at integer order $s$.
   - call: PolyLog(s, z)
     description: extends the same call to non-integer and complex order $s$, for $|z| \leq 1$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ in terms of the Lerch transcendent — see [[LerchPhi]], which is how the non-integer orders are computed.
   - '$\operatorname{Li}_s(1) = \zeta(s)$: the ordinary zeta lives on the $z = 1$ edge. See [[Zeta]].'
@@ -40,17 +40,22 @@ examples:
     category: Properties
     caption: $\operatorname{Li}_{-1}(z) = z/(1-z)^2$ — negative orders are rational
   - id: li-2-1-2-pi-2-12-ln-2-2-2
-    expr: [Equal, [Add, [PolyLog, 2, 0.5], [Multiply, 0.5, [Power, [Ln, 2], 2]]], [Divide, [Power, Pi, 2], 12]]
+    expr:
+      [
+        Equal,
+        [Add, [PolyLog, 2, 0.5], [Multiply, 0.5, [Power, [Ln, 2], 2]]],
+        [Divide, [Power, Pi, 2], 12],
+      ]
     expected: True
     category: Properties
     caption: $\operatorname{Li}_2(1/2) = \pi^2/12 - (\ln 2)^2/2$
   - id: li-1-2-1-zeta-1-2-a-non-integer-order-from
     expr: [PolyLog, 0.5, 1]
-    expected: {num: '-1.46035450880958681289'}
+    expected: { num: "-1.46035450880958681289" }
     category: Applications
     caption: $\operatorname{Li}_{1/2}(1) = \zeta(1/2)$ — a non-integer order, from `@enumeratio/analytic`
     divergence:
-      wolfram: 'Li_{1/2}(1): compute-engine continues in s to ζ(1/2); Wolfram treats z = 1 as the branch point for s ≤ 1 and returns ComplexInfinity.'
+      wolfram: "Li_{1/2}(1): compute-engine continues in s to ζ(1/2); Wolfram treats z = 1 as the branch point for s ≤ 1 and returns ComplexInfinity."
   - id: li-1-2-1-2-0-80612672-via-the-lerch-series
     expr: [PolyLog, 0.5, 0.5]
     expected: 0.8061267230428522
@@ -82,11 +87,17 @@ examples:
     caption: A machine-precision argument
   - id: li-0-z-z-1-z-past-the-unit-disk
     expr: [PolyLog, 0, 5.5]
-    expected: {num: '-1.222222222222222222221'}
+    expected: { num: "-1.222222222222222222221" }
     caption: $\operatorname{Li}_0(z) = z/(1-z)$, past the unit disk
   - id: li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac
     expr: [PolyLog, 3, [Rational, 1, 2]]
-    expected: [Add, [Multiply, [Rational, -1, 12], [Ln, 2], [Power, Pi, 2]], [Multiply, [Rational, 1, 6], [Power, [Ln, 2], 3]], [Multiply, [Rational, 7, 8], [Zeta, 3]]]
+    expected:
+      [
+        Add,
+        [Multiply, [Rational, -1, 12], [Ln, 2], [Power, Pi, 2]],
+        [Multiply, [Rational, 1, 6], [Power, [Ln, 2], 3]],
+        [Multiply, [Rational, 7, 8], [Zeta, 3]],
+      ]
     caption: $\operatorname{Li}_3(1/2) = \frac78\zeta(3) - \frac{\pi^2}{12}\ln 2 + \frac16\ln^3 2$
   - id: complex-order-and-argument
     expr: [PolyLog, [Complex, 0.2, 1], [Complex, 0.5, -0.5]]
@@ -105,7 +116,8 @@ examples:
     caption: $\operatorname{Li}_3(-1) = -\eta(3) = -\frac34\zeta(3)$
   - id: li-2-2-pi-2-4-i-pi-ln-2-exactly
     expr: [PolyLog, 2, 2]
-    expected: [Add, [Multiply, [Complex, 0, -1], Pi, [Ln, 2]], [Multiply, [Rational, 1, 4], [Power, Pi, 2]]]
+    expected:
+      [Add, [Multiply, [Complex, 0, -1], Pi, [Ln, 2]], [Multiply, [Rational, 1, 4], [Power, Pi, 2]]]
     category: Scope
     caption: $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ exactly
   - id: li-n-1-1-2-1-n-zeta-n-for-symbolic-n
@@ -151,7 +163,7 @@ examples:
     caption: $\frac{d}{dx}\operatorname{Li}_n(x) = \operatorname{Li}_{n-1}(x)/x$; today the derivative stays an unapplied `Derivative`
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [PolyLog, 2, [Rational, 1, 2]], 30]
-    expected: {num: '0.582240526465012505902656320160'}
+    expected: { num: "0.582240526465012505902656320160" }
     category: Scope
     caption: To 30 significant digits, past a double's reach
   - hidden: true
@@ -281,11 +293,11 @@ examples:
   - hidden: true
     id: n-polylog-neg-1-neg-0p5
     expr: [N, [PolyLog, -1, -0.5]]
-    expected: {num: '-0.222222222222222222222'}
+    expected: { num: "-0.222222222222222222222" }
   - hidden: true
     id: n-polylog-neg-1-0p25
     expr: [N, [PolyLog, -1, 0.25]]
-    expected: {num: '0.444444444444444444445'}
+    expected: { num: "0.444444444444444444445" }
   - hidden: true
     id: n-polylog-neg-1-0p9
     expr: [N, [PolyLog, -1, 0.9]]
@@ -293,7 +305,7 @@ examples:
   - hidden: true
     id: n-polylog-neg-1-1-over-3
     expr: [N, [PolyLog, -1, [Rational, 1, 3]]]
-    expected: {num: '0.74999999999999999999925'}
+    expected: { num: "0.74999999999999999999925" }
   - hidden: true
     id: n-polylog-neg-1-0p4-plus-0p3i
     expr: [N, [PolyLog, -1, [Complex, 0.4, 0.3]]]

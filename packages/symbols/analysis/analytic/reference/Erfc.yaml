@@ -23,7 +23,7 @@ examples:
     expected: 2
   - id: a-floating-point-argument-evaluates-directly-to
     expr: [Erfc, 0.5]
-    expected: {num: '0.479500122186953462317'}
+    expected: { num: "0.479500122186953462317" }
     caption: A floating-point argument evaluates directly to a high-precision decimal
   - id: erfc-z-2-erfc-z-here-at-z-1
     expr: [Equal, [Add, [Erfc, -1], [Erfc, 1]], 2]
@@ -42,7 +42,7 @@ examples:
     caption: An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument like 0.5 for a decimal
   - id: the-gaussian-tail-shrinks-fast-only-about-7
     expr: [Erfc, 3.5]
-    expected: {num: '7.43098372341412745524e-7'}
+    expected: { num: "7.43098372341412745524e-7" }
     category: Neat examples
     caption: 'The Gaussian tail shrinks fast: only about $7\times10^{-7}$ of the area lies beyond $3.5$ standard deviations'
   - id: threads-element-wise-over-a-list-as-wolfram-s
@@ -52,7 +52,7 @@ examples:
     caption: Threads element-wise over a list, as Wolfram's Listable heads do
   - id: a-machine-precision-argument
     expr: [Erfc, 1.5]
-    expected: {num: '0.033894853524689272933'}
+    expected: { num: "0.033894853524689272933" }
     caption: A machine-precision argument
   - id: complex-arguments-should-evaluate-as-they-do-for
     expr: [Erfc, [Complex, 1.5, -1]]
@@ -68,7 +68,7 @@ examples:
     expr: [Erfc, [Interval, 0.2, 0.3]]
     expected: [Interval, 0.6713732405408726, 0.7772974107895215]
     category: Scope
-    caption: 'Interval arithmetic: Erfc is decreasing, so the endpoints swap'
+    caption: "Interval arithmetic: Erfc is decreasing, so the endpoints swap"
   - id: uncertainty-propagation
     expr: [Erfc, [Around, 2, 0.01]]
     expected: [Around, 0.004677734981047266, 0.00020666985354092054]
@@ -86,7 +86,7 @@ examples:
     caption: $\frac{d}{dx}\operatorname{erfc}(x) = -\frac{2}{\sqrt\pi}e^{-x^2}$
   - id: far-in-the-tail-erfc-keeps-full-relative
     expr: [Erfc, 9.5]
-    expected: {num: '3.76921448565487994168e-41'}
+    expected: { num: "3.76921448565487994168e-41" }
     category: Possible issues
     caption: 'Far in the tail Erfc keeps full relative precision: $\operatorname{erfc}(9.5) \approx 3.8\times10^{-41}$...'
   - id: whereas-1-erf-9-5-cancels-to-exactly-0-in
@@ -96,7 +96,7 @@ examples:
     caption: ...whereas $1 - \operatorname{erf}(9.5)$ cancels to exactly 0 in floating point
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Erfc, 2], 30]
-    expected: {num: '0.00467773498104726583793074363275'}
+    expected: { num: "0.00467773498104726583793074363275" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

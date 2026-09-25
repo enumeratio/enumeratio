@@ -27,7 +27,12 @@ examples:
     category: Scope
     caption: Running products, via Multiply instead of Add
   - id: foldlist-length-is-one-more
-    expr: [Equal, [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]], [Add, [Length, [List, 1, 2, 3, 4, 5]], 1]]
+    expr:
+      [
+        Equal,
+        [Length, [FoldList, Add, 0, [List, 1, 2, 3, 4, 5]]],
+        [Add, [Length, [List, 1, 2, 3, 4, 5]], 1],
+      ]
     expected: True
     category: Properties
     caption: One longer than the input list

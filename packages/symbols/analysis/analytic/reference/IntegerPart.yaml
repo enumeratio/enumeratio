@@ -1,11 +1,11 @@
 name: IntegerPart
 domain: Elementary functions
 signature: IntegerPart(x)
-summary: 'The integer part of x: x truncated toward 0.'
+summary: "The integer part of x: x truncated toward 0."
 signatures:
   - call: IntegerPart(x)
     description: x truncated toward 0.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'Truncates toward 0, unlike [[Floor]] (which rounds toward $-\infty$): $\mathrm{IntegerPart}(-2.4) = -2$, where $\mathrm{Floor}(-2.4) = -3$.'
   - Exact at an exact argument -- a rational reduces to an exact integer, and so does a symbolic constant like Pi ($\mathrm{IntegerPart}(\pi) = 3$, not a decimal).
@@ -39,9 +39,14 @@ examples:
     expr: [IntegerPart, [Complex, 2.5, 3.7]]
     expected: [Complex, 2, 3]
     category: Scope
-    caption: 'Complex numbers: real and imaginary parts truncated separately'
+    caption: "Complex numbers: real and imaginary parts truncated separately"
   - id: x-integerpart-x-fractionalpart-x
-    expr: [Equal, [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]], [Rational, -7, 2]]
+    expr:
+      [
+        Equal,
+        [Add, [IntegerPart, [Rational, -7, 2]], [FractionalPart, [Rational, -7, 2]]],
+        [Rational, -7, 2],
+      ]
     expected: True
     category: Properties
     caption: $x = \mathrm{IntegerPart}(x) + \mathrm{FractionalPart}(x)$

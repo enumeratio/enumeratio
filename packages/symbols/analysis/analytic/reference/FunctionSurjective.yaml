@@ -1,0 +1,28 @@
+name: FunctionSurjective
+domain: Elementary functions
+signature: FunctionSurjective(f, x, Reals)
+summary: True if every real y is f(x) for some x on f's domain, False otherwise.
+signatures:
+  - call: FunctionSurjective(f, x, Reals)
+    description: whether f, as a function of the real variable x, is onto the real numbers.
+    library: "@enumeratio/analytic"
+details:
+  - Only the codomain `Reals` (or `RealNumbers`) is supported -- any other third argument, or none, declines rather than guess at a codomain this file has no notion of.
+  - An odd-degree polynomial and Ln (of an affine argument) are onto R; an even-degree polynomial, Exp, Sqrt, and a nonzero constant over an affine denominator (never zero) are not; Tan is onto R.
+examples:
+  - id: an-odd-degree-polynomial-is-onto
+    expr: [FunctionSurjective, [Power, x, 3], x, Reals]
+    expected: True
+    caption: An odd-degree polynomial hits every real value, by the intermediate value theorem
+  - id: exp-misses-the-non-positive-reals
+    expr: [FunctionSurjective, [Exp, x], x, Reals]
+    expected: False
+    caption: Exp's range is the positive reals only
+  - id: log-is-onto-the-reals
+    expr: [FunctionSurjective, [Ln, x], x, Reals]
+    expected: True
+    caption: Log is onto R even though its domain is only the positive reals
+  - id: a-reciprocal-never-hits-zero
+    expr: [FunctionSurjective, [Divide, 1, x], x, Reals]
+    expected: False
+    caption: A reciprocal never takes the value 0

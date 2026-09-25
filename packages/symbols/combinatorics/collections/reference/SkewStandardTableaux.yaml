@@ -15,7 +15,7 @@ examples:
     expr: [Count, [SkewStandardTableaux, 3]]
     expected: 24
     category: Basic
-    caption: '$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells'
+    caption: "$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells"
 enumerate:
   expr: SkewStandardTableaux(3)
 seeAlso:

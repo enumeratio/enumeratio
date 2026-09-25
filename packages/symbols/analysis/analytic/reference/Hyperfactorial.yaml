@@ -5,7 +5,7 @@ summary: 'The hyperfactorial $H(n) = \prod_{k=1}^n k^k$, continued to complex ar
 signatures:
   - call: Hyperfactorial(n)
     description: the hyperfactorial of n.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $H(0) = 1$, the empty product.
   - Continued off the nonnegative integers by $H(z) = \Gamma(z+1)^z / G(z+1)$ (G = [[BarnesG]]); numeric there, checked against a Wolfram kernel to double precision.
@@ -32,7 +32,7 @@ examples:
     caption: Continued off the integers
   - id: h-10-well-past-double-range-exact-bigint
     expr: [Hyperfactorial, 10]
-    expected: {num: '215779412229418562091680268288e+15'}
+    expected: { num: "215779412229418562091680268288e+15" }
     category: Scope
     caption: $H(10)$, well past double range — exact bigint arithmetic, not a rounded double.
 primitive: numeric

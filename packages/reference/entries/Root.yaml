@@ -32,7 +32,7 @@ examples:
   - id: a-negative-index-gives-the-reciprocal-root-x-1-n
     expr: [Root, 16, -2]
     expected: [Rational, 1, 4]
-    caption: 'A negative index gives the reciprocal root: $x^{-1/n}$'
+    caption: "A negative index gives the reciprocal root: $x^{-1/n}$"
   - id: sqrt-n-x-n-x-for-a-perfect-nth-power
     expr: [Equal, [Power, [Root, 8, 3], 3], 8]
     expected: True
@@ -65,7 +65,7 @@ examples:
     caption: Any odd root of a negative number is real
   - id: approximate-negative-radicands-stay-real-too
     expr: [Root, -3.5, 5]
-    expected: {num: '-1.28473515712343933868'}
+    expected: { num: "-1.28473515712343933868" }
     category: Scope
     caption: Approximate negative radicands stay real too
   - id: threads-element-wise-over-a-list

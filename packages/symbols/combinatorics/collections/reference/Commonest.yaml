@@ -34,7 +34,7 @@ examples:
     expr: [Commonest, [List, 1, 2, 3]]
     expected: [List, 1, 2, 3]
     category: Scope
-    caption: 'All distinct: all tie'
+    caption: "All distinct: all tie"
   - id: a-single-most-frequent-element-still-comes-back
     expr: [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]
     expected: [List, 3]
@@ -45,7 +45,12 @@ examples:
     category: Scope
     caption: The $n$ commonest, most frequent first
   - id: without-a-tie-the-single-commonest-element-is
-    expr: [Equal, [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]], [Mode, [List, 1, 2, 2, 3, 3, 3, 4]]]
+    expr:
+      [
+        Equal,
+        [First, [Commonest, [List, 1, 2, 2, 3, 3, 3, 4]]],
+        [Mode, [List, 1, 2, 2, 3, 3, 3, 4]],
+      ]
     expected: True
     category: Properties
     caption: Without a tie, the single commonest element is the [[Mode]]

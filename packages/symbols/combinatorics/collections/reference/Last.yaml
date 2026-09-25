@@ -6,7 +6,7 @@ signatures:
   - call: Last(collection)
     description: the last element of the collection.
   - call: Last(collection, default)
-    description: '`default` when the collection is empty, instead of the last element.'
+    description: "`default` when the collection is empty, instead of the last element."
     library: enumeratio-collections
   - call: Last(expr)
     description: the last operand of any expression, not just a collection.
@@ -51,7 +51,7 @@ examples:
     expr: [Last, [Add, [Power, a, 2], [Power, b, 2]]]
     expected: [Power, b, 2]
     category: Scope
-    caption: 'Any expression, not just a list: the last term of a sum'
+    caption: "Any expression, not just a list: the last term of a sum"
   - id: a-default-is-ignored-when-the-collection-has-a
     expr: [Last, [List, a, b], x]
     expected: b

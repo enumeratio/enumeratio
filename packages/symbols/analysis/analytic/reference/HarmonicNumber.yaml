@@ -5,10 +5,10 @@ summary: The harmonic number $H_n = \sum_{k=1}^n \tfrac1k$, exact at a non-negat
 signatures:
   - call: HarmonicNumber(n)
     description: the harmonic number $H_n = \sum_{k=1}^n 1/k$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
   - call: HarmonicNumber(n, r)
     description: the generalized harmonic number $H_n^{(r)} = \sum_{k=1}^n k^{-r}$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'At a non-negative integer $n$ (and an integer $r$ of either sign, in the two-argument form) the sum is exact: $H_0 = 0$, $H_1 = 1$, $H_2 = \tfrac32$, $H_{10} = \tfrac{7381}{2520}$.'
   - Continued off the lattice by the standard digamma identity $H_z = \psi(z+1) + \gamma$ ([[PolyGamma]], [[EulerGamma]]) and its generalization $H_z^{(r)} = \zeta(r) - \zeta(r, z+1)$ ([[Zeta]], [[HurwitzZeta]]) — both reduce to the same exact values at the integers, so there is one formula, not a case split.
@@ -31,7 +31,7 @@ examples:
     caption: $H_5^{(-1)} = \sum_{k=1}^5 k = 15$ — a negative order is still exact
   - id: a-floating-point-argument-evaluates-via-psi-z-1
     expr: [HarmonicNumber, 2.5]
-    expected: {num: '1.680372305546776047837'}
+    expected: { num: "1.680372305546776047837" }
     caption: A floating-point argument evaluates via $\psi(z+1) + \gamma$
   - id: no-sum-below-n-0
     expr: [HarmonicNumber, -3]
@@ -49,12 +49,12 @@ examples:
     caption: $H_{10}^{(2)} = \sum_{k=1}^{10} k^{-2}$, exact
   - id: non-integer-arguments-via-psi-z-1-gamma
     expr: [HarmonicNumber, 0.33]
-    expected: {num: '0.441523646937363528111'}
+    expected: { num: "0.441523646937363528111" }
     category: Scope
     caption: Non-integer arguments via $\psi(z+1) + \gamma$
   - id: the-generalized-form-off-the-integers-via-zeta-r
     expr: [HarmonicNumber, 0.8, 3]
-    expected: {num: '0.940124048948776980484'}
+    expected: { num: "0.940124048948776980484" }
     category: Scope
     caption: The generalized form off the integers, via $\zeta(r) - \zeta(r, z+1)$
   - id: complex-arguments
@@ -69,12 +69,25 @@ examples:
     caption: 'Order $r = 1$ off the integers is plain $H_z$: $H_e = 1.75002\ldots$ — routed to the one-argument form directly rather than through $\zeta(1) - \zeta(1, z+1)$, which is a pole at every $z$'
   - id: listable-threads-over-a-list
     expr: [HarmonicNumber, [List, 2, 3, 5, 7, 11]]
-    expected: [List, [Rational, 3, 2], [Rational, 11, 6], [Rational, 137, 60], [Rational, 363, 140], [Rational, 83711, 27720]]
+    expected:
+      [
+        List,
+        [Rational, 3, 2],
+        [Rational, 11, 6],
+        [Rational, 137, 60],
+        [Rational, 363, 140],
+        [Rational, 83711, 27720],
+      ]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
   - id: threads-elementwise-over-an-array-of-orders-and
     expr: [HarmonicNumber, 2, [List, [List, [Rational, 1, 2], 2], [List, 2, [Rational, 1, 2]]]]
-    expected: [List, [List, [Add, 1, [Divide, 1, [Sqrt, 2]]], [Rational, 5, 4]], [List, [Rational, 5, 4], [Add, 1, [Divide, 1, [Sqrt, 2]]]]]
+    expected:
+      [
+        List,
+        [List, [Add, 1, [Divide, 1, [Sqrt, 2]]], [Rational, 5, 4]],
+        [List, [Rational, 5, 4], [Add, 1, [Divide, 1, [Sqrt, 2]]]],
+      ]
     category: Scope
     caption: Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\sqrt2$ is a finite sum; not yet
     aspirational: true
@@ -92,7 +105,7 @@ examples:
     expr: [HarmonicNumber, n, -1]
     expected: [Multiply, [Rational, 1, 2], n, [Add, n, 1]]
     category: Properties
-    caption: 'Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum; stays symbolic'
+    caption: "Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum; stays symbolic"
     aspirational: true
   - id: the-harmonic-series-diverges
     expr: [HarmonicNumber, PositiveInfinity]
@@ -116,12 +129,12 @@ examples:
     caption: Uncertainty propagation in the order
   - id: to-exactly-30-significant-digits-not-yet-31-come
     expr: [N, [HarmonicNumber, [Rational, 1, 2]], 30]
-    expected: {num: '0.613705638880109381165535757084'}
+    expected: { num: "0.613705638880109381165535757084" }
     category: Scope
     caption: To exactly 30 significant digits, the last one correctly rounded
   - id: order-1-gives-h-z-itself-not-the-zeta-1-pole
     expr: [N, [HarmonicNumber, 2.5, 1]]
-    expected: {num: '1.680372305546776047837'}
+    expected: { num: "1.680372305546776047837" }
     category: Scope
     caption: Order 1 gives $H_z$ itself, not the $\zeta(1)$ pole another order's formula would hit.
     group: harmonic-order-one

@@ -5,7 +5,7 @@ summary: Rewrite every exponential in `expr` as circular or hyperbolic functions
 signatures:
   - call: ExpToTrig(expr)
     description: "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue."
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Rewrites `Exp(ix)` to `cos(x) + i·sin(x)` and a real `Exp(x)` to `cosh(x) + sinh(x)` everywhere in the tree, then simplifies. A combination that cancels back down to a single Cosh/Sinh/Sin -- the Scope examples -- falls out of that simplification pass; there is no separate 'recognize this shape' rule.
 examples:
@@ -23,7 +23,19 @@ examples:
     category: Scope
     caption: Recognizes [[Cosh]]
   - id: recognizes-sin
-    expr: [ExpToTrig, [Divide, [Subtract, [Exp, [Multiply, ImaginaryUnit, x]], [Exp, [Negate, [Multiply, ImaginaryUnit, x]]]], [Multiply, 2, ImaginaryUnit]]]
+    expr:
+      [
+        ExpToTrig,
+        [
+          Divide,
+          [
+            Subtract,
+            [Exp, [Multiply, ImaginaryUnit, x]],
+            [Exp, [Negate, [Multiply, ImaginaryUnit, x]]],
+          ],
+          [Multiply, 2, ImaginaryUnit],
+        ],
+      ]
     expected: [Sin, x]
     category: Scope
     caption: Recognizes [[Sin]]

@@ -5,7 +5,7 @@ summary: The incomplete Legendre elliptic integral of the third kind, $\Pi(n;\va
 signatures:
   - call: IncompleteEllipticPi(n, phi, m)
     description: the incomplete elliptic integral of the third kind, characteristic n, amplitude φ, parameter m.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $m = k^2$, the same convention [[EllipticE]] / [[EllipticF]] use — not the elliptic modulus k itself.
   - '$\varphi = \pi/2$ is the complete integral: $\Pi(n;\pi/2,m) = $ [[EllipticPi]]$(n,m)$.'
@@ -37,7 +37,11 @@ examples:
     category: Possible issues
     caption: Symbolic arguments are left unevaluated rather than guessed at
   - id: all-three-arguments-complex-matches-mpmath-s
-    expr: [N, [IncompleteEllipticPi, [Complex, 1.17, 0.45], [Complex, 1.17, 0.45], [Complex, 1.17, 0.45]]]
+    expr:
+      [
+        N,
+        [IncompleteEllipticPi, [Complex, 1.17, 0.45], [Complex, 1.17, 0.45], [Complex, 1.17, 0.45]],
+      ]
     expected: [Complex, 0.34301406182773686, 1.0786856693549958]
     category: Scope
     caption: All three arguments complex — matches mpmath's <code>ellippi</code>

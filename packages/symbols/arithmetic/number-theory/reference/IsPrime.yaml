@@ -54,7 +54,7 @@ examples:
     expr: [IsPrime, [Complex, 2, 1]]
     expected: True
     category: Scope
-    caption: 'a Gaussian prime: its norm 5 is prime'
+    caption: "a Gaussian prime: its norm 5 is prime"
   - id: 5-2-i-2-i-splits-in-z-i
     expr: [IsPrime, 5, [KeyValuePair, GaussianIntegers, True]]
     expected: False
@@ -72,12 +72,12 @@ examples:
     expr: [IsPrime, [Add, [Power, 10, 3000], 1]]
     expected: False
     category: Scope
-    caption: 'Large integers: $10^{3000}+1$ is divisible by $10^8+1$'
+    caption: "Large integers: $10^{3000}+1$ is divisible by $10^8+1$"
   - id: the-fermat-number-f-5-2-32-1-is-composite-641
     expr: [IsPrime, [Add, [Power, 2, 32], 1]]
     expected: False
     category: Neat examples
-    caption: 'The Fermat number $F_5=2^{32}+1$ is composite: 641 divides it'
+    caption: "The Fermat number $F_5=2^{32}+1$ is composite: 641 divides it"
   - id: non-integers-are-not-prime
     expr: [IsPrime, [Rational, 1, 2]]
     expected: False
@@ -89,7 +89,7 @@ examples:
     category: Possible issues
     caption: A symbol stays unevaluated
     divergence:
-      wolfram: 'PrimeQ[x] is False: anything not explicitly a prime integer is not prime.'
+      wolfram: "PrimeQ[x] is False: anything not explicitly a prime integer is not prime."
 seeAlso:
   - FactorInteger
   - NextPrime
