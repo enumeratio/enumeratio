@@ -406,10 +406,10 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
       {
         expr: ["N", ["LogGamma", ["Power", 10, 300]]],
-        expected: { num: "6.897755278982137e+302" },
+        expected: 6.897755278982137e302,
         category: "Scope",
         caption:
-          "Huge arguments: $\\ln\\Gamma(10^{300}) \\approx 6.898\\times10^{302}$, from Stirling's series directly rather than through $\\Gamma(10^{300})$ itself, which overflows a double long before its log would -- to a double's precision, not the engine's bignum (this is the fallback kernel, not compute-engine's own arithmetic)",
+          "Huge arguments: $\\ln\\Gamma(10^{300}) \\approx 6.898\\times10^{302}$, from Stirling's series directly rather than through $\\Gamma(10^{300})$ itself, which overflows a double long before its log would -- a magnitude that fits a double, so it comes back as one rather than the engine's bignum (this is the fallback kernel, not compute-engine's own arithmetic)",
       },
       {
         expr: ["LogGamma", ["Interval", 0.41, 0.42]],

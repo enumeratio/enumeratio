@@ -1868,9 +1868,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Mean", ["List", "Pi", "ExponentialE", 2]],
         expected: ["Multiply", ["Rational", 1, 3], ["Add", 2, "ExponentialE", "Pi"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Exact constants give an exact mean $\\frac{2+e+\\pi}{3}$; not yet",
+        caption: "Exact constants give an exact mean $\\frac{2+e+\\pi}{3}$",
       },
       {
         expr: ["Mean", ["List", ["List", "a", "u"], ["List", "b", "v"], ["List", "c", "w"]]],
@@ -1971,10 +1970,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Median", ["List", "Pi", "ExponentialE", 2]],
         expected: "ExponentialE",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Exact constants are ordered by value, putting $e$ in the middle; compute-engine's Median needs explicit numbers — not yet",
+        caption: "Exact constants are ordered by value, putting $e$ in the middle",
       },
       {
         expr: ["Median", ["Range", 1, 100]],

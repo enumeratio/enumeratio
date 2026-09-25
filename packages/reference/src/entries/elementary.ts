@@ -1711,13 +1711,10 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Arctan2", 2, 0.5],
-        expected: ["Arctan", 4],
+        expected: { num: "1.32581766366803246506" },
         category: "Scope",
-        caption: "Arctan2 takes $y$ first: the angle of the point $(0.5, 2)$ is $\\arctan 4$",
-        divergence: {
-          wolfram:
-            "Wolfram's ArcTan[0.5, 2] stays at machine precision, 1.32582; compute-engine returns the exact Arctan(4) for the float input.",
-        },
+        caption:
+          "Arctan2 takes $y$ first: the angle of the point $(0.5, 2)$ is $\\arctan 4 \\approx 1.3258$, evaluated numerically for the float input",
       },
       {
         expr: ["Arctan", ["Add", 2, ["Sqrt", 3]]],

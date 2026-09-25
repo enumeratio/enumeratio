@@ -353,7 +353,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "At",
     kind: "operator",
     description:
-      "Access an element of an indexed collection. If the index is negative, it is counted from the end. Multiple indices can be provided to access nested collections (e.g., matrices). If the index is a finite collection of booleans, returns the elements where the mask is True (a mask is a filter, and its length must match the collection length; otherwise it is an error). If the index is a finite collection of integers, returns the elements at those indices, preserving position: an out-of-range index yields the absence marker, it is not dropped. Out-of-band access (an out-of-range index, or a dictionary key that is not present) yields a POSITION-PRESERVING marker: `NaN` when the collection’s elements are numeric, `Missing` otherwise. It never yields `Nothing`, which would erase the position.",
+      "Access an element of an indexed collection. If the index is negative, it is counted from the end. Multiple indices can be provided to access nested collections (e.g., matrices). If the index is a finite collection of booleans, returns the elements where the mask is True (a mask is a filter, and its length must match the collection length; otherwise it is an error). If the index is a finite collection of integers, returns the elements at those indices, preserving position: an out-of-range index yields the absence marker, it is not dropped. Out-of-band access (an out-of-range index, or a dictionary key that is not present) yields a POSITION-PRESERVING marker: `NaN` when the collection’s elements are numeric, `Missing` otherwise. It never yields `Nothing`, which would erase the position. An index that is provably not an integer (`2.5`, `3/2`, `5 + √17`), as a scalar or as an entry of an index list, selects no element and yields the same marker. An index that cannot be decided (an unknown, an exact constant within rounding of an integer) leaves `At` unevaluated.",
     signature:
       "(value: any, index: (boolean | indexed_collection<any> | number | string)+) -> unknown",
   },
@@ -635,7 +635,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Coalesce",
     kind: "operator",
     description:
-      "Return the first operand that is not ABSENT (`Missing` or `NaN`), evaluated left-to-right. If every operand is absent, the last operand’s value is returned verbatim (still absent).",
+      "Return the first operand that is not ABSENT (`Missing`, `Undefined` or `NaN`), evaluated left-to-right. If every operand is absent, the last operand’s value is returned verbatim (still absent).",
     signature: "(any+) -> unknown",
   },
   {
@@ -691,7 +691,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "ColorToString",
     kind: "operator",
-    description: "Convert a color to a string in the specified format",
+    description:
+      'Convert a color to a string in the specified format: "hex" (the default), "rgb", "hsl", "oklch", "srgb" (the same as "hex") or "display-p3" (the CSS spelling `color(display-p3 r g b)`). The hex, rgb, hsl and srgb formats map the color into the sRGB gamut, and display-p3 maps it into the Display-P3 gamut, with the CSS Color 4 gamut mapping: the OKLCh chroma is reduced at constant lightness and hue. The channels are not clipped one by one. The oklch format has no gamut and is not mapped',
     signature: "(color | string | tuple, string?) -> string",
   },
   {
@@ -892,7 +893,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Cross",
     kind: "operator",
     description: "Cross product of two 3-vectors.",
-    signature: "(tuple | vector, tuple | vector) -> vector",
+    signature: "(tuple | vector, tuple | vector) -> tuple | vector",
   },
   {
     name: "Csc",
@@ -1147,7 +1148,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Dot",
     kind: "operator",
     description: "Dot product (vector inner product) or matrix product.",
-    signature: "(matrix | tuple | vector, matrix | tuple | vector) -> value",
+    signature:
+      "(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value",
     keywords: ["dot product", "inner product", "scalar product"],
   },
   {
@@ -1632,6 +1634,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
     signature: "(complex | infinity, complex | infinity) -> number",
   },
   {
+    name: "GamutMap",
+    kind: "operator",
+    description:
+      'Map a color into a target gamut, "srgb" (the default) or "display-p3", with the CSS Color 4 gamut-mapping algorithm: the OKLCh chroma is reduced, at constant lightness and hue, until the color is inside the gamut or until clipping each channel changes the color by less than a just noticeable difference (ΔE_OK 0.02). A lightness of 1 or more gives white, and 0 or less gives black. A color already inside the gamut is returned unchanged. The result is an Rgb color, in sRGB coordinates also for "display-p3": its channels are in [0, 1] for "srgb", and for "display-p3" they can be outside [0, 1] (extended sRGB) for a color that is inside the Display-P3 gamut but outside the sRGB gamut. Color values themselves have no gamut: only this operator and the string output map a color',
+    signature: "(color | string | tuple, string?) -> color",
+  },
+  {
     name: "GasConstant",
     kind: "constant",
     description: "Molar gas constant",
@@ -1871,7 +1880,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Input",
     kind: "operator",
     description:
-      "Read one line of text from the host: the terminal in a command-line host, the `prompt()` dialog in a browser. The optional operand is a prompt string, displayed before reading. Evaluates to the line read, without the trailing newline; to `Nothing` at end-of-input (or a canceled dialog). On a host with no interactive input, stays unevaluated.",
+      "Read one line of text from the host: the terminal in a command-line host, the `prompt()` dialog in a browser. The optional operand is a prompt string, displayed before reading. Evaluates to the line read, without the trailing newline; to `Nothing` at end-of-input (or a canceled dialog). On a host with no interactive input, stays unevaluated. When the host denies console access, evaluates to a `capability-denied` error.",
     signature: "(prompt: string?) console -> nothing | string",
   },
   {
@@ -2042,7 +2051,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "IsMissing",
     kind: "operator",
     description:
-      "True if the value is ABSENT — the `Missing` symbol, or a `NaN` number (regardless of provenance). R’s `is.na` (`TRUE` for both `NA` and `NaN`). There is no NaN-specific test operator (R’s `is.nan`).",
+      "True if the value is ABSENT — the `Missing` or `Undefined` symbol, or a `NaN` number (regardless of provenance). R’s `is.na` (`TRUE` for both `NA` and `NaN`). There is no NaN-specific test operator (R’s `is.nan`).",
     signature: "(any) -> boolean",
   },
   {
@@ -2177,7 +2186,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Smooth escape-time value for a Julia set with parameter c. Returns 1 for points inside the set, values in [0,1) for escaping points.",
-    signature: "(number, number, integer) -> real",
+    signature: "(complex, complex, integer) -> real",
   },
   {
     name: "K",
@@ -2405,7 +2414,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Smooth escape-time value for the Mandelbrot set. Returns 1 for points inside the set, values in [0,1) for escaping points.",
-    signature: "(number, integer) -> real",
+    signature: "(complex, integer) -> real",
   },
   {
     name: "Map",
@@ -2604,7 +2613,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "ND",
     kind: "operator",
     description: "Numerical derivative evaluated at a point.",
-    signature: "(function, at: number) -> number",
+    signature: "(function, at: number) -> list<number> | number | tuple",
   },
   {
     name: "NDSolve",
@@ -3326,7 +3335,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Print",
     kind: "operator",
     description:
-      "Print the operands to the host console, separated by spaces and followed by a newline. String operands print their content (without quotes); other expressions print their text form. Evaluates to `Nothing`. On a host without a console, prints nothing.",
+      "Print the operands to the host console, separated by spaces and followed by a newline. String operands print their content (without quotes); other expressions print their text form. Evaluates to `Nothing`. On a host without a console, prints nothing. When the host denies console access, evaluates to a `capability-denied` error.",
     signature: "(any*) console -> nothing",
   },
   {
@@ -3434,8 +3443,9 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "RandomChoice",
     kind: "operator",
     description:
-      "RandomChoice(domain, k): a list of k independent draws from `domain`, with replacement. `k` may exceed the size of the domain — that is what replacement means.",
-    signature: "(collection<any> | set<real>, number) random -> list<any>",
+      "RandomChoice(domain, k): a list of k independent draws from `domain`, with replacement. `k` may exceed the size of the domain — that is what replacement means. Choosing from a string yields a string.",
+    signature:
+      "((T, number) random -> T where T: string) & ((collection<any> | set<real>, number) random -> list<any>)",
   },
   {
     name: "RandomExpression",
@@ -3958,7 +3968,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "StringFrom",
     kind: "operator",
-    description: "Create a string by converting its arguments to a string and joining them.",
+    description:
+      'StringFrom(value, format?): create a string from `value`. With no format, a number or a list of numbers is read as Unicode scalar values (`StringFrom(65)` is `"A"`), and any other value is printed (`StringFrom(True)` is `"True"`). The formats are `"default"` (print the value), `"unicode-scalars"`, `"utf-8"` and `"utf-16"`.',
     signature: "(any, format: string?) -> string",
   },
   {
@@ -4181,8 +4192,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Timing",
     kind: "operator",
     description:
-      "`Timing(expr)` evaluates `expr` and return a `Pair` of the number of second elapsed for the evaluation, and the value of the evaluation",
-    signature: "(value, repeat: integer?) -> tuple<result: value, time: number>",
+      "`Timing(expr)` evaluates `expr` and returns a pair: the time the evaluation took, in microseconds, then the value. `Timing(expr, n)` evaluates `expr` n times (at least 3), drops the fastest and the slowest run, and returns the mean time of the others",
+    signature: "(value, repeat: integer?) -> tuple<time: number, result: value>",
   },
   {
     name: "To",
