@@ -124,7 +124,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
         divergence: {
           wolfram:
-            "Wolfram returns a TestObject association (with timestamps and IDs) rather than a TestResultObject of rules; the outcome is the same.",
+            "Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.",
         },
       },
       {
@@ -141,7 +141,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
         divergence: {
           wolfram:
-            "Wolfram returns a TestObject association (with timestamps and IDs) rather than a TestResultObject of rules; the outcome is the same.",
+            "Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.",
         },
       },
       {

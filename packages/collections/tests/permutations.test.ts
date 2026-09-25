@@ -1,11 +1,11 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { expect, test, afterAll } from "vite-plus/test";
-import { entries } from "../src/packs/permutations.ts";
+import { entries } from "../src/families/permutations.ts";
 
-// Certify every permutation-carrier pack: rank(unrank(p, r), p) === r across the whole
+// Certify every permutation family: rank(unrank(p, r), p) === r across the whole
 // family, unranked elements are valid members, and count matches the enumeration —
-// same recipe as packs.test.ts, at sizes that stay well under the exhaustive suite's
+// same recipe as subsets.test.ts, at sizes that stay well under the exhaustive suite's
 // budget (ConnectedPermutations and the pattern avoiders grow fastest of the batch).
 const PARAMS: Record<string, number[][]> = {
   EvenPermutations: [[0], [1], [2], [3], [4], [5], [6]],

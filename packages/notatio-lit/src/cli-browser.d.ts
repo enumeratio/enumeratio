@@ -91,6 +91,7 @@ declare module "@enumeratio/cli/browser" {
     input: string,
     env: Environment,
     screen: Omit<DriveScreen, "show" | "color">,
+    plotHeight?: number,
   ): Presented;
   export function resumeHint(color: boolean): string;
 

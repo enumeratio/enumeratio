@@ -219,14 +219,21 @@ export function adoptStructure(el: Element): void {
 }
 
 /**
- * Adopt every built component under `root` that was written structurally: the controls
- * first, so their names are on them when a readout looks for its scope; then the rest
- * deepest first, so a component's expression is there before its parent reads it.
+ * Adopt every built component under `root` that was written structurally: what sits
+ * inside a control's arguments, then the controls, so their names are on them when a
+ * readout looks for its scope; then the rest deepest first, so a component's
+ * expression is there before its parent reads it.
  */
 export function adoptStructures(root: ParentNode): void {
   const tags = [...BY_TAG.entries()];
   const controls = tags.filter(([, s]) => CONTROL_HEADS.has(s.head)).map(([t]) => t);
   const rest = tags.filter(([, s]) => !CONTROL_HEADS.has(s.head)).map(([t]) => t);
+  // A control's own arguments can be built too (a `Labeled` entry); they must stand for
+  // their expressions before the control reads its entries from them.
+  const within = Array.from(root.querySelectorAll(rest.join(","))).filter(
+    (el) => el.parentElement?.closest(controls.join(",")) != null,
+  );
+  for (const el of within.reverse()) adoptStructure(el);
   for (const el of root.querySelectorAll(controls.join(","))) adoptStructure(el);
   // Reverse document order: a descendant always follows its ancestor.
   const others = Array.from(root.querySelectorAll(rest.join(",")));

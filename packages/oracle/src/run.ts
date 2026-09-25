@@ -107,10 +107,12 @@ async function withFile<T>(name: string, program: string, run: (file: string) =>
  * reader. Each source
  * is handed to `ToExpression` as a string: a syntax error then yields `$Failed` for that
  * item instead of aborting the batch, which used to silently zero every item after the
- * first bad one. */
+ * first bad one. A `TestObject` keeps only its outcome fields: the rest (timestamps, IDs,
+ * timings, memory) change every run and would rewrite its sidecar row on every scan. */
 async function runWolfram(sources: readonly string[]): Promise<Result[]> {
   const list = sources.map((source) => JSON.stringify(source)).join(", ");
-  const code = `Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]]}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]], {i, 1, ${sources.length}}]`;
+  const stable = `/. TestObject[a_Association] :> TestObject[KeyTake[a, {"Outcome", "Input", "ExpectedOutput", "ActualOutput"}]]`;
+  const code = `Do[Module[{v = Quiet[MemoryConstrained[TimeConstrained[ToExpression[{${list}}[[i]]], ${ITEM_SECONDS}, $Aborted], ${MAX_BYTES}, $Aborted]] ${stable}}, Print["<<", i, ">>", ToString[FullForm[v]]]; Print["<<", i, "#>>", ToString[FullForm[Quiet[TimeConstrained[N[v], ${ITEM_SECONDS}, v]]]]]; Print["<<", i, "|>>", ToString[InputForm[v]]]], {i, 1, ${sources.length}}]`;
   const run = await transcript("wolframscript", ["-code", code], { timeoutMs: 600_000 });
   return "out" in run
     ? collectWolfram(run.out, sources.length)

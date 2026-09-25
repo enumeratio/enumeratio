@@ -1,9 +1,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { expect, test, afterAll } from "vite-plus/test";
-import { entries } from "../src/packs/compositions.ts";
+import { entries } from "../src/families/compositions.ts";
 
-// Certify every composition-carrier pack: rank(unrank(p, r), p) === r across the whole family,
+// Certify every composition family: rank(unrank(p, r), p) === r across the whole family,
 // unranked elements are valid members, and count matches the enumeration — same recipe as
 // permutations.test.ts.
 const PARAMS: Record<string, number[][]> = {

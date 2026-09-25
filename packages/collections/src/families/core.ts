@@ -1,6 +1,6 @@
-// The originally hand-authored collections, expressed as PackEntry[] over the certified kernel library
-// (./kernels*.ts). Same registration mechanism as the pure-kernel packs — no special-casing in library.ts.
-import type { PackEntry } from "./types.ts";
+// The originally hand-authored collections, expressed as FamilyKernel[] over the certified kernel library
+// (./kernels*.ts). Same registration mechanism as the other families — no special-casing in library.ts.
+import type { FamilyKernel } from "./types.ts";
 import { Factorial, PermutationUnrank, PermutationRank, IsPermutationOf } from "./kernels.ts";
 import {
   CompositionCount,
@@ -158,7 +158,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): PackEntry => ({
+): FamilyKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -168,7 +168,7 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: PackEntry[] = [
+export const entries: FamilyKernel[] = [
   // ── permutations (one-line words) ──
   ints(
     "SymmetricGroup",

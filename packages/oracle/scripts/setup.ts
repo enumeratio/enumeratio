@@ -25,7 +25,11 @@ const STEPS: Record<string, () => [string, string[], { cwd?: string; env?: NodeJ
 };
 
 const INSTANTIATE = "using Pkg; Pkg.instantiate(); Pkg.precompile()";
-const ONE_AT_A_TIME = { ...process.env, JULIA_NUM_PRECOMPILE_TASKS: "1" };
+// One precompile task unless the caller says otherwise (CI, with a raised ORACLE_MEMORY_MB).
+const ONE_AT_A_TIME = {
+  ...process.env,
+  JULIA_NUM_PRECOMPILE_TASKS: process.env["JULIA_NUM_PRECOMPILE_TASKS"] ?? "1",
+};
 
 const requested = process.argv.slice(2);
 for (const name of requested.length > 0 ? requested : Object.keys(STEPS)) {

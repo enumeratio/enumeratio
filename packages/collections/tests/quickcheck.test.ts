@@ -1,9 +1,9 @@
 import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random, shrink } from "../scripts/properties.ts";
-import type { PackEntry } from "../src/packs/types.ts";
+import type { FamilyKernel } from "../src/families/types.ts";
 
 /** A correct family: the k-element prefixes of [0, n), ranked lexicographically. */
-const words = (broken?: Partial<PackEntry>): PackEntry => ({
+const words = (broken?: Partial<FamilyKernel>): FamilyKernel => ({
   head: "Words",
   paramCount: 2,
   kind: "ints",
