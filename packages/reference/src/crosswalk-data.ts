@@ -1918,6 +1918,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Fold",
   },
   {
+    name: "FourierTransform",
+    wolfram: "FourierTransform",
+  },
+  {
     name: "FractionalPart",
     wolfram: "FractionalPart",
   },
@@ -2517,8 +2521,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "InverseErfc",
   },
   {
+    name: "InverseFourierTransform",
+    wolfram: "InverseFourierTransform",
+  },
+  {
     name: "InverseGammaRegularized",
     wolfram: "InverseGammaRegularized",
+  },
+  {
+    name: "InverseLaplaceTransform",
+    wolfram: "InverseLaplaceTransform",
   },
   {
     name: "IsComposite",
@@ -2919,6 +2931,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "LaplaceTransform",
+    wolfram: "LaplaceTransform",
+  },
+  {
     name: "Last",
     wolfram: "Last",
   },
@@ -3219,6 +3235,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Median",
     wolfram: "Median",
+  },
+  {
+    name: "MeijerG",
+    wolfram: "MeijerG",
+  },
+  {
+    name: "MeijerGReduce",
+    wolfram: "MeijerGReduce",
   },
   {
     name: "MemoryConstrained",

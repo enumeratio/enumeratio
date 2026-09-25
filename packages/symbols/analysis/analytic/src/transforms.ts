@@ -478,7 +478,7 @@ function matchInverseFourier(
   ce: ComputeEngine,
   expr: BoxedExpression,
   w: BoxedExpression,
-  t: BoxedExpression,
+  _t: BoxedExpression,
 ): BoxedExpression | undefined {
   const wName = symbolNameOf(w);
   if (wName === undefined) return undefined;
