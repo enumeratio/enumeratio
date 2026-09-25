@@ -130,12 +130,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 3, -0.5]],
-      "expected": 0.4143983221171617,
+      "expected": 0.41439832211715993,
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 3, -1.5]],
-      "expected": 0.1181020258208659,
+      "expected": 0.11810202582086413,
       "hidden": true
     },
     {
@@ -199,12 +199,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 5, -0.5]],
-      "expected": ["Complex", 0.14476040944446772, -1.9594348786357652e-14],
+      "expected": 0.14476040944446772,
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 5, -1.5]],
-      "expected": ["Complex", 0.013073166646110865, -1.9674983966548424e-14],
+      "expected": 0.013073166646110865,
       "hidden": true
     },
     {
@@ -515,7 +515,7 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 0.5, -0.5]],
-      "expected": ["Complex", -0.6048986434216299, -1.414213562373095],
+      "expected": ["Complex", -0.6048986434216299, -1.4142135623730951],
       "hidden": true
     },
     {
@@ -584,12 +584,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 1.5, -0.5]],
-      "expected": ["Complex", 4.776537947554832, 2.82842712474619],
+      "expected": ["Complex", 4.776537947554833, 2.8284271247461903],
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 1.5, -1.5]],
-      "expected": ["Complex", 4.776537947554832, 3.372758178698007],
+      "expected": ["Complex", 4.776537947554833, 3.3727581786980076],
       "hidden": true
     },
     {
@@ -653,12 +653,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 2.5, -0.5]],
-      "expected": ["Complex", 6.2471106345688145, -5.65685424949238],
+      "expected": ["Complex", 6.247110634568813, -5.656854249492381],
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 2.5, -1.5]],
-      "expected": ["Complex", 6.2471106345688145, -6.019741618793591],
+      "expected": ["Complex", 6.247110634568813, -6.019741618793592],
       "hidden": true
     },
     {
@@ -722,7 +722,7 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", -0.5, -0.5]],
-      "expected": ["Complex", 0.060888465580597545, 0.7071067811865475],
+      "expected": ["Complex", 0.060888465580597545, 0.7071067811865476],
       "hidden": true
     },
     {

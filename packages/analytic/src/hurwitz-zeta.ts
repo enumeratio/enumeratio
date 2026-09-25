@@ -11,7 +11,7 @@ import {
   realCompile,
   wantsNumber,
 } from "./box.ts";
-import { add, cexp, cpow, cx, type Cx, mul, scale } from "./complex.ts";
+import { add, cexp, cosPi, cpow, cx, type Cx, mul, scale, sinPi } from "./complex.ts";
 import { logGamma } from "./loggamma.ts";
 import { lerchPhi } from "./lerch.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
@@ -57,6 +57,15 @@ function cpowInto(zr: number, zi: number, wr: number, wi: number): void {
   if (zi === 0 && zr > 0 && wi === 0) {
     _pr = Math.pow(zr, wr);
     _pi = 0;
+    return;
+  }
+  // A negative real base to a real power: |z|^w · e^{iπw}, with the phase exact at
+  // half-integers. cos(−1.5π) in floating point is −1.8e−16, not 0, and next to a huge
+  // |z|^w (a tiny |z| to a negative power) that leaked hundreds into the real part.
+  if (zi === 0 && zr < 0 && wi === 0) {
+    const m = Math.pow(-zr, wr);
+    _pr = m * cosPi(wr);
+    _pi = m * sinPi(wr);
     return;
   }
   const logr = 0.5 * Math.log(zr * zr + zi * zi);
@@ -315,10 +324,17 @@ function evaluateLerch(
   if (z.im === 0 && z.re === 1) {
     return finish(box(["HurwitzZeta", s.json as unknown as Json, a.json as unknown as Json]));
   }
+  // Φ(0, s, a) = a^(−s): only the n = 0 term survives (0⁰ = 1).
+  if (z.is(0)) {
+    return finish(box(["Power", a.json as unknown as Json, ["Negate", s.json as unknown as Json]]));
+  }
   // Φ(z, 0, a) = 1/(1 − z), independent of a (the geometric series and its continuation).
   if (isRealInt(s) && s.re === 0) {
     return finish(box(["Divide", 1, ["Subtract", 1, z.json as unknown as Json]]));
   }
+  // Past |z| = 1 the series needs a continuation we don't have: stay unevaluated. (The
+  // kernel's NaN used to come back as ComplexInfinity — a pole that isn't there.)
+  if (numeric && isFiniteNum(z) && Math.hypot(z.re, z.im) > 1) return undefined;
   if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a)) {
     return numberResult(
       ce,
