@@ -204,10 +204,9 @@ examples:
     caption: 'Area under one arch: $\int_0^\pi \sin x\,dx = 2$'
   - id: int-sin-3-x-dx-cos-x-frac-13-cos-3-x-odd-powers
     expr: [Integrate, [Power, [Sin, x], 3], x]
-    expected: [Add, [Negate, [Cos, x]], [Multiply, [Rational, 1, 3], [Power, [Cos, x], 3]]]
-    aspirational: true
+    expected: [Add, [Multiply, [Rational, 1, 3], [Power, [Cos, x], 3]], [Negate, [Cos, x]]]
     category: Scope
-    caption: $\int \sin^3 x\,dx = -\cos x + \tfrac13\cos^3 x$; odd powers of sine are not yet integrated
+    caption: $\int \sin^3 x\,dx = -\cos x + \tfrac13\cos^3 x$, by $u = \cos x$ -- any odd power of $\sin$ or $\cos$, times any power of the other
   - id: taylor-series-about-0-only-odd-powers-appear
     expr: [Series, [Sin, x], x, 0, 10]
     expected:
