@@ -1,0 +1,25 @@
+name: CentralMoment
+domain: Statistics
+signature: CentralMoment(dist, r)
+summary: The central moment $E[(X-Mean)^r]$.
+signatures:
+  - call: CentralMoment(dist, r)
+    description: exact for $r=0$ (always $1$), $r=1$ (always $0$) and $r=2$ (always [[Variance]]); $r\geq 3$ stays unevaluated.
+    library: enumeratio-statistics
+details:
+  - Generic over every distribution this package's [[Variance]] answers, old or new.
+examples:
+  - id: centralmoment-order-0
+    expr: [CentralMoment, [ChiSquareDistribution, 3], 0]
+    expected: 1
+  - id: centralmoment-order-1
+    expr: [CentralMoment, [ChiSquareDistribution, 3], 1]
+    expected: 0
+  - id: centralmoment-order-2-is-variance
+    expr: [CentralMoment, [ChiSquareDistribution, 3], 2]
+    expected: 6
+seeAlso:
+  - Moment
+  - FactorialMoment
+  - Cumulant
+  - Variance

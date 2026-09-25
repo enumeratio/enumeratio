@@ -1,0 +1,17 @@
+name: SurvivalFunction
+domain: Statistics
+signature: SurvivalFunction(dist, x)
+summary: The survival function $1 - CDF(dist, x)$ — $P(X > x)$.
+signatures:
+  - call: SurvivalFunction(dist, x)
+    description: generic over every distribution this package's [[CDF]] answers, old or new — it goes back through [[CDF]] rather than switching on the distribution's head.
+    library: enumeratio-statistics
+details:
+  - Exact wherever [[CDF]] is exact for `dist`; unevaluated otherwise.
+examples:
+  - id: survivalfunction-chisquare
+    expr: [SurvivalFunction, [ChiSquareDistribution, 3], 2]
+    expected: [GammaRegularized, [Rational, 3, 2], 1]
+seeAlso:
+  - CDF
+  - HazardFunction

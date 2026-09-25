@@ -1,0 +1,22 @@
+name: Cumulant
+domain: Statistics
+signature: Cumulant(dist, r)
+summary: The cumulant $\kappa_r$.
+signatures:
+  - call: Cumulant(dist, r)
+    description: exact for $r=1$ (=[[Mean]]) and $r=2$ (=[[Variance]]) — the only two orders with a formula that doesn't need higher raw moments this generic layer doesn't have. $r=0$ and $r\geq 3$ stay unevaluated.
+    library: enumeratio-statistics
+details:
+  - Generic over every distribution this package's [[Mean]]/[[Variance]] answer, old or new.
+examples:
+  - id: cumulant-order-1-is-mean
+    expr: [Cumulant, [ChiSquareDistribution, 3], 1]
+    expected: 3
+  - id: cumulant-order-2-is-variance
+    expr: [Cumulant, [ChiSquareDistribution, 3], 2]
+    expected: 6
+seeAlso:
+  - Moment
+  - CentralMoment
+  - Mean
+  - Variance

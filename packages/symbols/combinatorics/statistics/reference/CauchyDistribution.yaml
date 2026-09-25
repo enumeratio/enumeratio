@@ -1,0 +1,31 @@
+name: CauchyDistribution
+domain: Statistics
+signature: CauchyDistribution(a, b)
+summary: The Cauchy distribution with location $a$ and scale $b$ — heavy-tailed enough that its mean and variance don't exist.
+signatures:
+  - call: CauchyDistribution(a, b)
+    description: an inert distribution object — carries $a, b$, unevaluated.
+    library: enumeratio-statistics
+  - call: CauchyDistribution()
+    description: the standard Cauchy distribution, $a=0, b=1$.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = 1/(\pi b(1+((x-a)/b)^2))$, exact.
+  - $CDF$ has an elementary closed form (via [[Arctan]]) that this file does NOT implement — left unevaluated, grouped with [[StudentTDistribution]] and [[HypergeometricDistribution]] as the three distributions in this batch without a coded CDF (a documented gap, not a mathematical one).
+  - $Mean$ and $Variance$ are `Indeterminate` — they genuinely do not exist for this distribution, matching Wolfram.
+  - '[[RandomVariate]] samples via inverse transform: $a + b\tan(\pi(U-1/2))$.'
+examples:
+  - id: cauchy-pdf-exact
+    expr: [PDF, [CauchyDistribution, 0, 1], 0]
+    expected: [Divide, 1, Pi]
+  - id: cauchy-mean-indeterminate
+    expr: [Mean, [CauchyDistribution, 0, 1]]
+    expected: Indeterminate
+    category: Possible issues
+  - id: cauchy-default-is-standard
+    expr: [CauchyDistribution]
+    expected: [CauchyDistribution, 0, 1]
+seeAlso:
+  - StudentTDistribution
+  - LaplaceDistribution
+  - PDF

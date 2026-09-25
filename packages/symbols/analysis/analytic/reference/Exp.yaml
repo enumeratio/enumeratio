@@ -154,9 +154,8 @@ examples:
   - id: a-product-of-exponentials-should-combine-e-x-e-y
     expr: [Multiply, [Exp, x], [Exp, y]]
     expected: [Power, ExponentialE, [Add, x, y]]
-    aspirational: true
     category: Properties
-    caption: "A product of exponentials should combine: $e^x e^y = e^{x+y}$; left as a product"
+    caption: "A product of exponentials combines: $e^x e^y = e^{x+y}$"
   - id: euler-s-formula-e-ix-cos-x-i-sin-x-via-exptotrig
     expr: [ExpToTrig, [Exp, [Multiply, ImaginaryUnit, x]]]
     expected: [Add, [Multiply, [Complex, 0, 1], [Sin, x]], [Cos, x]]
