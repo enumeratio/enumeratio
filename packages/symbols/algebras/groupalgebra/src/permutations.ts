@@ -81,7 +81,7 @@ export const dropFixedCycles = (cycles: readonly Cycle[]): Cycle[] =>
 
 /** The inverse permutation: reverse the mapping. */
 export function invertPermutation(sigma: readonly number[]): number[] {
-  const inverse = new Array<number>(sigma.length);
+  const inverse = Array.from<number>({ length: sigma.length });
   sigma.forEach((value, i) => {
     inverse[value - 1] = i + 1;
   });
