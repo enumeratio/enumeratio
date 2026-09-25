@@ -269,6 +269,7 @@ const OVERRIDDEN = [
   "Multinomial",
   "MultiplicativeOrder",
   "Multiply",
+  "N",
   "NextPrime",
   "Norm",
   "NthPrime",

@@ -21,7 +21,8 @@ import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
-import { atEnginePrecision, DOUBLE_DIGITS } from "./precise.ts";
+import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "./precise.ts";
+import { lerchPhiBig } from "./lerch-big.ts";
 import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareElliptic } from "./elliptic.ts";
@@ -74,6 +75,7 @@ import { declareClosedForms113 } from "./closed-forms-113.ts";
 import { declarePrecision113 } from "./precision-113.ts";
 import { declareLinearAlgebra113 } from "./linear-algebra-113.ts";
 import { declareSpecialFunctionsRemaining } from "./special-functions-remaining.ts";
+import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -543,6 +545,12 @@ function evaluateLerch(
     );
     return continued === undefined ? undefined : numberResult(ce, continued);
   }
+  if (numeric) {
+    // Real arguments past a double's digits: the arbitrary-precision series (lerch-big.ts).
+    const [zb, sb, ab] = [z, s, a].map((x) => bigRealOperand(ce, x));
+    const phi = zb && sb && ab ? lerchPhiBig(zb, sb, ab, ce.precision) : undefined;
+    if (phi !== undefined) return bigResult(ce, phi);
+  }
   if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a)) {
     return numberResult(
       ce,
@@ -747,4 +755,5 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declarePrecision113(ce);
   declareLinearAlgebra113(ce);
   declareSpecialFunctionsRemaining(ce);
+  declareCorrectlyRoundedN(ce);
 }

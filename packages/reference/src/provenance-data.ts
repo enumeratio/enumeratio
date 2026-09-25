@@ -613,6 +613,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "N",
+    provenance: "override",
+    declared: null,
+    wolframAlias: "N",
+    elsewhere: [],
+  },
+  {
     name: "Sin",
     provenance: "override",
     declared: null,
