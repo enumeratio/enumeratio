@@ -1326,4 +1326,32 @@ export const provenance: readonly HeadRecord[] = [
     wolframAlias: null,
     elsewhere: [],
   },
+  {
+    name: "RootedUnlabeledTrees",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "UnlabeledFreeTrees",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "PhylogeneticTrees",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "NonCrossingTrees",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
 ];
