@@ -1,0 +1,31 @@
+name: TransformedDistribution
+domain: Statistics
+signature: TransformedDistribution(expr, Distributed(x, dist))
+summary: The distribution of $expr(x)$ where $x \sim dist$ — exact for $expr$ affine in $x$, plus $x^2$ of a standard normal.
+signatures:
+  - call: TransformedDistribution(expr, Distributed(x, dist))
+    description: the distribution of expr(x) for x ~ dist; exact for expr affine in x, plus x^2 of a standard normal.
+    library: enumeratio-statistics
+details:
+  - '$expr = a\,x + b$ ($a \ne 0$): change of variables — $PDF(y) = PDF(dist,(y-b)/a)/|a|$; $CDF(y) = CDF(dist,(y-b)/a)$ for $a>0$, or $1 - CDF(dist,(y-b)/a)$ (plus $PDF(dist,(y-b)/a)$ when $dist$ is discrete, since the inequality flips through an equality) for $a<0$; $Mean = a\,Mean(dist)+b$; $Variance = a^2\,Variance(dist)$ exactly.'
+  - "$expr = x^2$, $dist = $ [[NormalDistribution]]$(0,1)$: `ChiSquareDistribution(1)` by definition — [[PDF]]/[[CDF]]/[[Mean]]/[[Variance]]/[[RandomVariate]] all forward to it."
+  - Any other shape of $expr$, or a non-affine one with a non-standard-normal $x^2$ base, stays unevaluated — no numeric approximation.
+examples:
+  - id: transformed-affine-mean
+    expr: [Mean, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]
+    expected: 3
+  - id: transformed-affine-variance
+    expr:
+      [Variance, [TransformedDistribution, [Add, [Multiply, 2, x], 3], [Distributed, x, [NormalDistribution, 0, 1]]]]
+    expected: 4
+  - id: transformed-negative-affine-cdf
+    expr: [CDF, [TransformedDistribution, [Negate, x], [Distributed, x, [NormalDistribution, 0, 1]]], 0]
+    expected: [Rational, 1, 2]
+  - id: transformed-chisquare-mean
+    expr: [Mean, [TransformedDistribution, [Power, x, 2], [Distributed, x, [NormalDistribution, 0, 1]]]]
+    expected: 1
+seeAlso:
+  - Distributed
+  - ChiSquareDistribution
+  - Mean
+  - Variance

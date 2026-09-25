@@ -33,7 +33,10 @@ export const finish = (expr: BoxedExpression, options: EvaluateOptions | undefin
 
 /** Whether `expr`'s JSON mentions the symbol `name` — the same substring test
  *  `generalized-special.ts`'s `stillMentions` uses for a head, applied to a bound variable. */
-const mentions = (expr: BoxedExpression, name: string): boolean => JSON.stringify(expr.json).includes(`"${name}"`);
+/** Exported for `distributions-4.ts`'s affine-transform detection (`TransformedDistribution`),
+ *  which needs the same "does this subexpression involve the bound variable" test. */
+export const mentions = (expr: BoxedExpression, name: string): boolean =>
+  JSON.stringify(expr.json).includes(`"${name}"`);
 
 const isConstantOf = (expr: BoxedExpression, varName: string): boolean => !mentions(expr, varName);
 
@@ -404,12 +407,14 @@ function extendDistributionStats(ce: ComputeEngine): void {
 
 // --- Distributed / Expectation / Probability --------------------------------------------------
 
-interface Binding {
+export interface Binding {
   readonly varName: string;
   readonly dist: BoxedExpression;
 }
 
-const bindingOf = (expr: BoxedExpression): Binding | undefined => {
+/** Exported for `distributions-4.ts`'s `TransformedDistribution`, which needs the same
+ *  `Distributed(x, dist)` parse this file already does for `Expectation`/`Probability`. */
+export const bindingOf = (expr: BoxedExpression): Binding | undefined => {
   if (expr.operator !== "Distributed") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 2) return undefined;
