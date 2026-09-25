@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, symlinkSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitepress";
@@ -44,6 +44,26 @@ for (const d of readdirSync(pkgsDir, { withFileTypes: true })) {
   }
 }
 
+// speculative/ (repo root, gitignored): open design, rendered by `vitepress dev` only. It is
+// linked into the site as web/speculative (also gitignored) and left out of builds.
+const dev = process.argv.includes("dev");
+const webDir = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const speculativeDir = resolve(webDir, "../speculative");
+const speculativeLink = resolve(webDir, "speculative");
+if (dev && existsSync(speculativeDir) && !existsSync(speculativeLink)) {
+  symlinkSync(speculativeDir, speculativeLink, "dir");
+}
+const speculative =
+  dev && existsSync(speculativeLink)
+    ? readdirSync(speculativeLink)
+        .filter((f) => f.endsWith(".md"))
+        .sort()
+        .map((f) => ({
+          text: f.replace(/\.md$/, ""),
+          link: `/speculative/${f.replace(/\.md$/, "")}`,
+        }))
+    : [];
+
 export default defineConfig({
   vite: { resolve: { alias: srcAliases } },
   title: "enumeratio",
@@ -51,6 +71,7 @@ export default defineConfig({
     "enumeratio: a family of mathematical symbol definitions on the Cortex compute-engine and Epsil, collections first. notatio: the notebook and explorer around it.",
   lang: "en-US",
   cleanUrls: true,
+  srcExclude: dev ? [] : ["speculative/**"],
   // Dynamic reference routes carry their name in params; use it as the page title
   // (the raw markdown H1 is `{{ $params.name }}`, which VitePress can't read).
   transformPageData(pageData: { params?: { name?: string }; title?: string }) {
@@ -192,6 +213,7 @@ export default defineConfig({
         text: "CLI",
         items: [{ text: "Overview", link: "/cli/" }],
       },
+      ...(speculative.length > 0 ? [{ text: "Speculative (dev only)", items: speculative }] : []),
     ],
     socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/notatio" }],
   },

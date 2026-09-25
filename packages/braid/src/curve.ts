@@ -5,9 +5,9 @@
 // theorem -- a torus knot is a positive braid closure, and the Lorenz template realises
 // exactly those -- which is why they sit together.
 //
-// (Points in space are a graphics concern and this is not their permanent home; see
-// design/graphics-and-space.md. They are here because this is the package that already
-// knows what a torus knot and a Lorenz orbit are.)
+// (Points in space are a graphics concern and this is not their permanent home --
+// graphics objects have no package of their own yet. They are here because this is the
+// package that already knows what a torus knot and a Lorenz orbit are.)
 
 /** A point in space. */
 export type Point3 = readonly [number, number, number];

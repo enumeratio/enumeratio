@@ -135,8 +135,8 @@ fn polygammaLog(m: vec2f, z: vec2f) -> vec3f {
 }
 
 // Iterated quadratic maps. Not special functions, and this is not their permanent home
-// (see design/graphics-and-space.md) -- they live here because this is the shared WGSL
-// preamble every GPU layer already gets.
+// (graphics objects have no package of their own yet) -- they live here because this is
+// the shared WGSL preamble every GPU layer already gets.
 //
 // Both return the n-th iterate itself rather than an escape count, which is the honest
 // complex-valued object: colouring it gives the familiar picture, because the exterior
