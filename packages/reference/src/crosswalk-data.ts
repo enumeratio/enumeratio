@@ -347,6 +347,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Around",
+    wolfram: "Around",
+  },
+  {
     name: "Arsech",
     wolfram: "ArcSech",
   },
@@ -691,6 +695,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "CenteredInterval",
+    wolfram: "CenteredInterval",
+  },
+  {
     name: "ChineseRemainder",
     wolfram: "ChineseRemainder",
   },
@@ -732,6 +740,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "ComplexExpand",
+    wolfram: "ComplexExpand",
   },
   {
     name: "ComplexInfinity",
@@ -1599,6 +1611,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "ExpToTrig",
+    wolfram: "ExpToTrig",
+  },
+  {
     name: "ExponentialE",
     wolfram: "E",
   },
@@ -1846,8 +1862,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FromDigits",
   },
   {
+    name: "FullSimplify",
+    wolfram: "FullSimplify",
+  },
+  {
     name: "Function",
     wolfram: "Function",
+  },
+  {
+    name: "FunctionExpand",
+    wolfram: "FunctionExpand",
   },
   {
     name: "GCD",
@@ -3004,6 +3028,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "MatrixExp",
   },
   {
+    name: "MatrixFunction",
+    wolfram: "MatrixFunction",
+  },
+  {
     name: "MatrixRank",
     wolfram: "MatrixRank",
   },
@@ -3343,6 +3371,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "PowerExpand",
+    wolfram: "PowerExpand",
   },
   {
     name: "PowerMod",

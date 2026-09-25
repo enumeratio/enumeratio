@@ -21,24 +21,12 @@ export interface FrontierEntry {
 
 export const FRONTIER: readonly FrontierEntry[] = [
   {
-    head: "FullSimplify",
-    uses: 436,
-  },
-  {
-    head: "FunctionExpand",
-    uses: 148,
-  },
-  {
     head: "FunctionDomain",
     uses: 120,
   },
   {
     head: "ComplexContourPlot",
     uses: 94,
-  },
-  {
-    head: "CenteredInterval",
-    uses: 91,
   },
   {
     head: "FunctionMonotonicity",
@@ -82,10 +70,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FunctionDiscontinuities",
-    uses: 57,
-  },
-  {
-    head: "MatrixFunction",
     uses: 57,
   },
   {
@@ -133,20 +117,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 37,
   },
   {
-    head: "ComplexExpand",
-    uses: 35,
-  },
-  {
     head: "NestList",
     uses: 35,
   },
   {
     head: "Accumulate",
     uses: 33,
-  },
-  {
-    head: "PowerExpand",
-    uses: 32,
   },
   {
     head: "Directive",
@@ -198,10 +174,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ExponentialGeneratingFunction",
-    uses: 21,
-  },
-  {
-    head: "ExpToTrig",
     uses: 21,
   },
   {
