@@ -134,9 +134,8 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       {
         expr: ["MatrixRank", ["List", ["List", "a", "b"], ["List", "c", "d"]]],
         expected: 2,
-        aspirational: true,
         caption:
-          "A generic symbolic matrix should have full rank; compute-engine leaves it unevaluated",
+          "A matrix of pairwise-distinct symbols has full rank -- its determinant, as a polynomial in independent indeterminates, can never be identically zero",
       },
       {
         expr: ["MatrixRank", ["List", ["List", 1, 2.5], ["List", 3.5, 4]]],
@@ -221,12 +220,18 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
         description: "the matrix exponential of the square matrix `A`.",
         library: LIBRARY,
       },
+      {
+        call: "MatrixExp(A, v)",
+        description: "$e^A v$: `A`'s matrix exponential applied to the vector `v`.",
+        library: LIBRARY,
+      },
     ],
     details: [
       "NOT [[Exp]] of a matrix, which broadcasts element-wise instead -- see that entry's divergence note.",
-      "Exact where the structure gives one: a diagonal A reduces to elementwise Exp on the diagonal; a 2×2 A reduces to a closed form in Cosh, Sinh and Sqrt of its trace and determinant (which also covers every 2×2 nilpotent and repeated-eigenvalue case); a nilpotent A of any size, with exact entries, reduces to its truncated Taylor series.",
+      "Exact where the structure gives one: a diagonal A reduces to elementwise Exp on the diagonal; a 2×2 A reduces to a closed form in Cosh, Sinh and Sqrt of its trace and determinant (which also covers every 2×2 nilpotent and repeated-eigenvalue case, and -- written to recognize a provably negative discriminant -- every 2×2 rotation generator, in Cos and Sin instead); a nilpotent A of any size, with exact entries, reduces to its truncated Taylor series.",
       "Otherwise numeric only, produced under N(): scaling-and-squaring, in double precision.",
       "Rejects a non-square argument, same as [[MatrixRank]]'s siblings [[Inverse]], [[MatrixPower]], and [[Determinant]].",
+      "MatrixExp(A, v) computes $e^A$ first (via whichever path above applies) and multiplies by `v`; it is not a matrix-free method, just a shorter call.",
     ],
     examples: [
       {
@@ -289,25 +294,22 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
           ["List", ["Cos", 1], ["Sin", 1]],
           ["List", ["Negate", ["Sin", 1]], ["Cos", 1]],
         ],
-        aspirational: true,
         category: "Applications",
         caption:
-          "A skew-symmetric generator gives a rotation matrix; the 2×2 closed form is left in $\\cosh i$ and $\\sinh i$ rather than reduced to $\\cos 1$ and $\\sin 1$",
+          "A skew-symmetric generator gives a rotation matrix: the 2×2 closed form recognizes its purely imaginary eigenvalues and reduces straight to $\\cos 1$ and $\\sin 1$, not $\\cosh i$ and $\\sinh i$",
       },
       {
         expr: ["MatrixExp", ["List", ["List", 0, ["Negate", "Pi"]], ["List", "Pi", 0]]],
         expected: ["List", ["List", -1, 0], ["List", 0, -1]],
-        aspirational: true,
         category: "Neat examples",
-        caption:
-          "Euler's identity for matrices: rotation by $\\pi$ is $-I$; not yet, as $\\cosh\\sqrt{-\\pi^2}$ is not reduced",
+        caption: "Euler's identity for matrices: rotation by $\\pi$ is $-I$",
       },
       {
         expr: ["MatrixExp", ["List", ["List", 0, 1], ["List", 0, 0]], ["List", 1, 1]],
         expected: ["List", 2, 1],
-        aspirational: true,
         category: "Scope",
-        caption: "Applied to a vector, $e^A v$ without forming $e^A$; not yet",
+        caption:
+          "Applied to a vector, $e^A v$: computed as $e^A$ (via whichever closed form applies) times $v$, not a matrix-free method",
       },
       {
         expr: ["MatrixExp", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]]],
