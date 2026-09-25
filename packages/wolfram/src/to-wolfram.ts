@@ -371,6 +371,10 @@ export const HEADS: Record<string, string> = {
   FactorialMoment: "FactorialMoment",
   Cumulant: "Cumulant",
   InverseCDF: "InverseCDF",
+  // Third-wave distribution heads (@enumeratio/statistics/src/distributions-3.ts) —
+  // identity here already.
+  CharacteristicFunction: "CharacteristicFunction",
+  MomentGeneratingFunction: "MomentGeneratingFunction",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
@@ -478,6 +482,15 @@ export const HEADS: Record<string, string> = {
   // FourierParameters -> {0, 1}, which is all this transpiler's own heads implement.
   FourierTransform: "FourierTransform",
   InverseFourierTransform: "InverseFourierTransform",
+  // Fourier[list] / InverseFourier[list]: same argument order, same default
+  // FourierParameters -> {0, 1}, and an optional trailing FourierParameters rule both
+  // sides read the same way.
+  Fourier: "Fourier",
+  InverseFourier: "InverseFourier",
+  // FourierSeries[f, x, n] / FourierCoefficient[f, x, n]: same order, both always on
+  // [-Pi, Pi] (no period argument on either side).
+  FourierSeries: "FourierSeries",
+  FourierCoefficient: "FourierCoefficient",
   // MeijerG[{{a..},{a..}}, {{b..},{b..}}, z] — same nested-list shape and argument order.
   MeijerG: "MeijerG",
   // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized
@@ -678,6 +691,25 @@ export const HEADS: Record<string, string> = {
   Circle: "Circle",
   Disk: "Disk",
   Rectangle: "Rectangle",
+
+  // Wolfram-frontier expression/pattern/string heads (@enumeratio/collections's
+  // expression-ops.ts): genuinely Wolfram's own names, waiting on a coverage run to fill in
+  // `elsewhere` — see NOVEL in packages/reference/tests/provenance.test.ts.
+  ToString: "ToString",
+  MapThread: "MapThread",
+  MatchQ: "MatchQ",
+  MapIndexed: "MapIndexed",
+  StringLength: "StringLength",
+  FreeQ: "FreeQ",
+  StringTake: "StringTake",
+  Replace: "Replace",
+  Through: "Through",
+  ToCharacterCode: "ToCharacterCode",
+  FromCharacterCode: "FromCharacterCode",
+  Level: "Level",
+  Pick: "Pick",
+  ReplacePart: "ReplacePart",
+  AssociationThread: "AssociationThread",
 };
 
 /** Wolfram heads we answer under one of our own heads, but only in a particular CALL

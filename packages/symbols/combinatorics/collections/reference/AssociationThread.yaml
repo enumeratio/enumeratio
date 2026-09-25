@@ -1,0 +1,27 @@
+name: AssociationThread
+domain: Collections
+signature: AssociationThread(keys, values) / AssociationThread(keys -> values)
+summary: An Association pairing keys with values, positionally.
+signatures:
+  - call: AssociationThread(keys, values)
+    description: Association(Rule(keys[1], values[1]), …) — keys and values the same length
+    library: enumeratio-collections
+  - call: AssociationThread(keys -> values)
+    description: the same, with keys and values given as one Rule instead of two arguments
+    library: enumeratio-collections
+details:
+  - Builds the SAME `Association` head as [[Association]] — Rule pairs, not compute-engine's string-keyed Dictionary. See that entry's own notes for why.
+examples:
+  - id: pairs-keys-with-values-two-argument-form
+    expr: [AssociationThread, [List, a, b], [List, 1, 2]]
+    expected: [Association, [Rule, a, 1], [Rule, b, 2]]
+  - id: accepts-the-one-argument-rule-keys-values-form
+    expr: [AssociationThread, [Rule, [List, a, b], [List, 1, 2]]]
+    expected: [Association, [Rule, a, 1], [Rule, b, 2]]
+    category: Scope
+  - id: length-on-the-result-agrees-with-association
+    expr: [Length, [AssociationThread, [List, a, b, c], [List, 1, 2, 3]]]
+    expected: 3
+    category: Scope
+seeAlso:
+  - Association

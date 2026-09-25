@@ -33,6 +33,26 @@ examples:
     expected: False
     category: Scope
     caption: transcendental
+  - id: sqrt-4-is-rational-once-simplified
+    expr: [IsQuadraticIrrational, [Sqrt, 4]]
+    expected: False
+    category: Scope
+    caption: rational once simplified
+  - id: a-plain-integer
+    expr: [IsQuadraticIrrational, 5]
+    expected: False
+    category: Scope
+    caption: a plain integer
+  - id: a-rational-multiple-of-a-surd
+    expr: [IsQuadraticIrrational, [Multiply, 3, [Sqrt, 2]]]
+    expected: True
+    category: Scope
+    caption: a rational multiple of a surd
+  - id: a-surd-subtracted-from-a-rational
+    expr: [IsQuadraticIrrational, [Subtract, 1, [Sqrt, 3]]]
+    expected: True
+    category: Scope
+    caption: a surd subtracted from a rational
 seeAlso:
   - ContinuedFraction
   - Convergents

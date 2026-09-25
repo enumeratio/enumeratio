@@ -57,3 +57,18 @@ singular-h-gains-a-zero-row-and-u-is-no-longer:
     in: HermiteDecomposition[List[List[1, 2], List[2, 4]]]
   wolfram:
     in: HermiteDecomposition[List[List[1, 2], List[2, 4]]]
+another-3-times-3-full-rank-case:
+  epsil:
+    in: HermiteDecomposition([[2, 3, 5], [7, 11, 13], [17, 19, 23]])
+    out: |-
+      [
+        [[11, -3, 0], [47, -11, -1], [54, -13, -1]],
+        [[1, 0, 16], [0, 1, 69], [0, 0, 78]],
+      ]
+  tex:
+    in: \mathrm{HermiteDecomposition}(\bigl\lbrack\bigl\lbrack2, 3, 5\bigr\rbrack, \bigl\lbrack7, 11, 13\bigr\rbrack, \bigl\lbrack17, 19, 23\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack11, -3, 0\bigr\rbrack, \bigl\lbrack47, -11, -1\bigr\rbrack, \bigl\lbrack54, -13, -1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 16\bigr\rbrack, \bigl\lbrack0, 1, 69\bigr\rbrack, \bigl\lbrack0, 0, 78\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: HermiteDecomposition[List[List[2, 3, 5], List[7, 11, 13], List[17, 19, 23]]]
+  wolfram:
+    in: HermiteDecomposition[List[List[2, 3, 5], List[7, 11, 13], List[17, 19, 23]]]

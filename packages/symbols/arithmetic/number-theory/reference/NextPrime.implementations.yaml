@@ -164,3 +164,14 @@ negative-n-wolfram-counts-7-as-prime-and-returns:
     in: NextPrime[-10]
   wolfram:
     in: NextPrime[-10]
+nextprime-neg-2:
+  epsil:
+    in: NextPrime(-2)
+    out: "2"
+  tex:
+    in: \mathrm{NextPrime}(-2)
+    out: "2"
+  fullform:
+    in: NextPrime[-2]
+  wolfram:
+    in: NextPrime[-2]

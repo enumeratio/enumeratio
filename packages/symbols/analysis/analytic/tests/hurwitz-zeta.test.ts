@@ -246,7 +246,7 @@ test("LerchPhi compile handler emits a real kernel call (JS + WGSL) and runs", (
   expect(Math.abs(v - lerchPhiReal(0.5, 2, 1))).toBeLessThan(1e-12);
 });
 
-// --- Found by the oracle quickcheck (mpmath and Wolfram agree) ---------------------
+// --- Found by the oracle Plausible (mpmath and Wolfram agree) ---------------------
 
 test("a negative real base's phase is exact: ζ(1.5, −10⁻¹²) keeps the real part ζ(1.5)", () => {
   // (−10⁻¹²)^(−1.5) is 10¹⁸·i, purely imaginary; a floating cos(−1.5π) leaked ~−184 into Re.

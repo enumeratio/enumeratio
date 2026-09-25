@@ -127,3 +127,36 @@ just-the-first-4-digits-6-3-4-5-18-not-the-full:
     in: DigitSum[6345354, 10, 4]
   wolfram:
     in: DigitSum[6345354, 10, 4]
+a-negative-k-sums-the-last-3-digits-instead:
+  epsil:
+    in: DigitSum(6_345_354, 10, -3)
+    out: "12"
+  tex:
+    in: \mathrm{DigitSum}(6\,345\,354, 10, -3)
+    out: "12"
+  fullform:
+    in: DigitSum[6345354, 10, -3]
+  wolfram:
+    in: DigitSum[6345354, 10, -3]
+k-at-least-the-digit-count-is-the-plain-sum:
+  epsil:
+    in: DigitSum(6_345_354, 10, 7)
+    out: "30"
+  tex:
+    in: \mathrm{DigitSum}(6\,345\,354, 10, 7)
+    out: "30"
+  fullform:
+    in: DigitSum[6345354, 10, 7]
+  wolfram:
+    in: DigitSum[6345354, 10, 7]
+sign-is-discarded-in-the-3-argument-form-too:
+  epsil:
+    in: DigitSum(-6_345_354, 10, 4)
+    out: "18"
+  tex:
+    in: \mathrm{DigitSum}(-6\,345\,354, 10, 4)
+    out: "18"
+  fullform:
+    in: DigitSum[-6345354, 10, 4]
+  wolfram:
+    in: DigitSum[-6345354, 10, 4]

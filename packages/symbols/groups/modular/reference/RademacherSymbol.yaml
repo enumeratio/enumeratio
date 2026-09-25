@@ -41,6 +41,21 @@ examples:
     expected: 7
     caption: $\Phi$ on $T^n$ just counts
     category: Scope
+  - id: the-same-number-by-counting-letters
+    expr: [WordSymbol, "'LRRRR'"]
+    expected: 3
+    caption: the same number, by counting letters
+    category: Scope
+  - id: and-again-by-the-linking-number
+    expr: [LinkingWithTrefoil, "'LRRRR'"]
+    expected: 3
+    caption: and again, by the linking number
+    category: Scope
+  - id: s-1-5
+    expr: [DedekindSum, 1, 5]
+    expected: [Rational, 1, 5]
+    caption: $s(1,5)$
+    category: Scope
 seeAlso:
   - ModularClasses
   - ModularWord

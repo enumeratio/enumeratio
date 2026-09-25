@@ -70,6 +70,11 @@ examples:
     expected: -7
     category: Possible issues
     caption: "Negative $n$: Wolfram counts $-7$ as prime and returns it"
+  - role: test
+    id: nextprime-neg-2
+    expr: [NextPrime, -2]
+    expected: 2
+    category: Possible issues
 seeAlso:
   - NthPrime
   - PrimePi

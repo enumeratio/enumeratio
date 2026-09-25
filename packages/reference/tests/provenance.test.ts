@@ -453,6 +453,10 @@ const NOVEL = [
   "InverseLaplaceTransform",
   "FourierTransform",
   "InverseFourierTransform",
+  "Fourier",
+  "InverseFourier",
+  "FourierSeries",
+  "FourierCoefficient",
   "MeijerG",
   "MeijerGReduce",
   "CubeRoot",
@@ -703,6 +707,24 @@ const NOVEL = [
   "LineGraph",
   "AdjacencyGraph",
   "RandomGraph",
+  // The Wolfram-frontier expression/pattern/string heads (expression-ops.ts): all fifteen
+  // are genuinely Wolfram's own names (see HEADS in @enumeratio/wolfram), waiting on the
+  // same coverage run to fill in `elsewhere`.
+  "ToString",
+  "MapThread",
+  "MatchQ",
+  "MapIndexed",
+  "StringLength",
+  "FreeQ",
+  "StringTake",
+  "Replace",
+  "Through",
+  "ToCharacterCode",
+  "FromCharacterCode",
+  "Level",
+  "Pick",
+  "ReplacePart",
+  "AssociationThread",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {
