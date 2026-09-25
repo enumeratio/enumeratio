@@ -10,12 +10,17 @@ export const residues: readonly ReferenceEntry[] = [
   {
     name: "Mod",
     domain: DOMAIN,
-    signature: "Mod(a, b)",
+    signature: "Mod(a, b, d?)",
     summary: "The remainder of a on division by b.",
     signatures: [
       {
         call: "Mod(a, b)",
         description: "remainder of $a$ on division by $b$, with the sign of $b$.",
+      },
+      {
+        call: "Mod(a, b, d)",
+        description: "the $x \\equiv a \\pmod b$ with $d \\le x < d + b$.",
+        library: "enumeratio-number-theory",
       },
       {
         call: "Mod(z, m)",
@@ -29,7 +34,7 @@ export const residues: readonly ReferenceEntry[] = [
       "When $b>0$ the result lies in $[0,b)$; the sign of the result always matches the sign of $b$.",
       "Periodic: $a\\bmod n=(a+kn)\\bmod n$ for any integer $k$.",
       "compute-engine returns NaN for a zero modulus rather than leaving the call unevaluated.",
-      "compute-engine only supports the 2-argument form.",
+      "A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.",
     ],
     examples: [
       { expr: ["Mod", 17, 5], expected: 2 },
@@ -58,10 +63,10 @@ export const residues: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Mod", 17, 5, 1],
-        expected: 3,
-        aspirational: true,
+        expected: 2,
         category: "Scope",
-        caption: "compute-engine only supports the 2-argument form",
+        caption:
+          "A third argument offsets the range: the result lies in $[d, d + n)$, here $[1, 6)$",
       },
       {
         expr: ["Mod", ["Complex", 7, 5], 3],
@@ -606,6 +611,11 @@ export const residues: readonly ReferenceEntry[] = [
         description: "smallest non-negative $x$ with $x\\equiv r_i\\pmod{m_i}$ for every $i$.",
       },
       {
+        call: "ChineseRemainder([r1, r2, …], [m1, m2, …], d)",
+        description: "the smallest such $x$ with $x \\ge d$.",
+        library: "enumeratio-residues",
+      },
+      {
         call: "ChineseRemainder(IntegerMod(r1, m1), IntegerMod(r2, m2), …)",
         description: "the [[IntegerMod]] class mod $\\operatorname{lcm}(m_i)$ that reduces to each",
         library: "enumeratio-residues",
@@ -615,7 +625,7 @@ export const residues: readonly ReferenceEntry[] = [
       "When the moduli are pairwise coprime, the result is unique modulo $m_1m_2\\cdots m_n$ by the Chinese remainder theorem.",
       "A solution exists for non-coprime moduli only when the remainders agree on every shared factor; otherwise the system is inconsistent.",
       "An inconsistent system is left unevaluated, with a `ChineseRemainder::nsol` message naming the two congruences that clash.",
-      "compute-engine only supports the 2-argument form.",
+      "A third argument $d$ asks for the smallest solution $x \\ge d$ instead, as Wolfram's does.",
     ],
     examples: [
       {
@@ -658,9 +668,9 @@ export const residues: readonly ReferenceEntry[] = [
       {
         expr: ["ChineseRemainder", ["List", 1, 2], ["List", 3, 5], 100],
         expected: 112,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine only supports the 2-argument form",
+        caption:
+          "A third argument asks for the smallest solution $x \\ge d$: here $x \\equiv 7 \\pmod{15}$, so 112",
       },
     ],
     seeAlso: ["Mod", "IntegerMod", "FromDigits"],

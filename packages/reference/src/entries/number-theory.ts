@@ -14,7 +14,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Paired with [[LCM]] by $\\gcd(a,b)\\cdot\\operatorname{lcm}(a,b)=ab$.",
       "compute-engine discards signs before computing, so $\\gcd(-a,b)=\\gcd(a,b)$.",
       "$\\gcd(0,n)=n$ since every integer divides 0; with no arguments at all compute-engine returns 0, GCD's identity element.",
-      "compute-engine only accepts integers.",
+      "Extends to rationals: $\\gcd(p_1/q_1, \\dots) = \\gcd(p_1, \\dots)/\\operatorname{lcm}(q_1, \\dots)$.",
     ],
     examples: [
       { expr: ["GCD", 12, 18], expected: 6 },
@@ -74,9 +74,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["GCD", ["Rational", 1, 3], ["Rational", 2, 5], ["Rational", 3, 7]],
         expected: ["Rational", 1, 105],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's GCD is integer-only",
+        caption: "Over the rationals: the gcd of the numerators over the lcm of the denominators",
       },
       {
         expr: ["GCD", ["Complex", 3, 1], ["Complex", 1, 3]],
@@ -100,7 +99,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Paired with [[GCD]] by $\\gcd(a,b)\\cdot\\operatorname{lcm}(a,b)=ab$.",
       "compute-engine discards signs before computing, so $\\operatorname{lcm}(-a,b)=\\operatorname{lcm}(a,b)$.",
       "$\\operatorname{lcm}(0,n)=0$: 0 absorbs, since 0 is a multiple of everything but nothing else divides back into it.",
-      "compute-engine only accepts integers.",
+      "Extends to rationals: $\\operatorname{lcm}(p_1/q_1, \\dots) = \\operatorname{lcm}(p_1, \\dots)/\\gcd(q_1, \\dots)$.",
     ],
     examples: [
       { expr: ["LCM", 4, 6], expected: 12 },
@@ -135,10 +134,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
       },
       {
         expr: ["LCM", ["Rational", 1, 3], ["Rational", 2, 5], ["Rational", 3, 7]],
-        expected: 2,
-        aspirational: true,
+        expected: 6,
         category: "Scope",
-        caption: "compute-engine's LCM is integer-only",
+        caption:
+          "Over the rationals: the lcm of the numerators over the gcd of the denominators — the smallest positive rational that is an integer multiple of each",
       },
       {
         expr: ["LCM", ["Complex", 3, 1], ["Complex", -1, 3]],
@@ -202,7 +201,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Multiplicative: $\\varphi(mn)=\\varphi(m)\\varphi(n)$ whenever $\\gcd(m,n)=1$.",
       "For $n=p_1^{k_1}\\cdots p_m^{k_m}$, $\\varphi(n)=n\\prod_i\\left(1-\\frac1{p_i}\\right)$.",
       "Divisor sum identity: $\\sum_{d\\mid n}\\varphi(d)=n$.",
-      "compute-engine requires a positive integer.",
+      "$\\varphi(0) = 0$, as in Wolfram; a list argument is threaded over element-wise.",
     ],
     examples: [
       { expr: ["Totient", 12], expected: 4 },
@@ -238,16 +237,14 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["Totient", 0],
         expected: 0,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine requires a positive integer",
+        caption: "$\\varphi(0) = 0$, as in Wolfram",
       },
       {
         expr: ["Totient", ["List", 2, 4, 6]],
         expected: ["List", 1, 2, 2],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["MultiplicativeOrder", "DivisorSigma"],
@@ -268,7 +265,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\\le n$.",
       "NextPrime(n, k) generalizes to the $(m+k)$th prime, so a negative $k$ steps backward to a prime below $n$.",
       "n need not be prime or even an integer; compute-engine simply finds the next prime above it.",
-      "compute-engine does not.",
+      "Threads element-wise over a list, as Wolfram's Listable heads do.",
     ],
     examples: [
       { expr: ["NextPrime", 10], expected: 11 },
@@ -287,9 +284,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["NextPrime", ["List", 1, 5, 10, 15]],
         expected: ["List", 2, 7, 11, 17],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["NthPrime", "PrimePi"],
@@ -306,7 +302,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Inverse of [[PrimePi]]: $\\pi(p_n)=n$.",
       "Grows asymptotically like $n\\ln n$, by the prime number theorem.",
       "n must be a positive integer; compute-engine leaves non-positive n, including NthPrime(0), unevaluated.",
-      "compute-engine does not.",
+      "Threads element-wise over a list, as Wolfram's Listable heads do.",
     ],
     examples: [
       { expr: ["NthPrime", 1], expected: 2, caption: "The first prime is 2" },
@@ -333,9 +329,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["NthPrime", ["List", 1, 3, 4, 10]],
         expected: ["List", 2, 5, 7, 29],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["FactorInteger", "PrimePi"],
@@ -350,7 +345,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "Inverse of [[NthPrime]]: $\\pi(p_n)=n$.",
       "Asymptotically $\\pi(x)\\sim x/\\ln x$, the prime number theorem.",
       "n need not be an integer or prime itself -- PrimePi(n) counts primes up to whatever real value is given.",
-      "compute-engine does not.",
+      "Threads element-wise over a list, as Wolfram's Listable heads do.",
     ],
     examples: [
       { expr: ["PrimePi", 1], expected: 0, caption: "No primes are ≤ 1" },
@@ -366,9 +361,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PrimePi", ["List", 10, 100]],
         expected: ["List", 4, 25],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["NthPrime", "NextPrime"],
@@ -519,9 +513,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
           ["List", ["Tuple", 2, 2], ["Tuple", 3, 1]],
           ["List", ["Tuple", 2, 1], ["Tuple", 3, 2]],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["FactorInteger", 5, ["KeyValuePair", "GaussianIntegers", "True"]],
@@ -595,9 +588,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PrimeNu", ["List", 4, 28, 180]],
         expected: ["List", 1, 2, 3],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["PrimeOmega", "FactorInteger"],
@@ -648,9 +640,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["PrimeOmega", ["List", 4, 12, 24]],
         expected: ["List", 2, 3, 4],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["PrimeNu", "FactorInteger"],
@@ -673,7 +664,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "The count of divisors, $d(n)$, equals $\\sigma_0(n)$. See [[DivisorSigma]].",
       "Highly composite numbers (like 720) pack unusually many divisors relative to their size.",
       "compute-engine only returns ordinary positive divisors.",
-      "compute-engine does not.",
+      "Threads element-wise over a list, as Wolfram's Listable heads do.",
     ],
     examples: [
       {
@@ -739,9 +730,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["Divisors", ["List", 4, 6]],
         expected: ["List", ["List", 1, 2, 4], ["List", 1, 2, 3, 6]],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["Divisors", ["Complex", 3, 4]],
@@ -772,7 +762,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
       "$k=0$ gives the divisor count $d(n)$; $k=1$ gives the ordinary sum of divisors.",
       "Multiplicative: $\\sigma_k(mn)=\\sigma_k(m)\\sigma_k(n)$ whenever $\\gcd(m,n)=1$.",
       "A perfect number $n$ satisfies $\\sigma_1(n)=2n$, as with 6 and 28.",
-      "compute-engine requires a non-negative integer exponent.",
+      "A negative order sums reciprocal powers: $\\sigma_{-k}(n) = \\sigma_k(n)/n^k$.",
     ],
     examples: [
       {
@@ -818,9 +808,9 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["DivisorSigma", -1, 6],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine requires a non-negative integer exponent",
+        caption:
+          "A negative order sums reciprocal powers: $\\sigma_{-1}(6) = 1 + \\frac12 + \\frac13 + \\frac16 = 2$",
       },
     ],
     seeAlso: ["Divisors"],
@@ -877,9 +867,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["MoebiusMu", ["List", 1, 2, 3, 4]],
         expected: ["List", 1, -1, -1, 0],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["FactorInteger", "IsSquareFree"],
@@ -922,9 +911,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["IsSquareFree", ["List", 10, 4, 12]],
         expected: ["List", "True", "False", "False"],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["MoebiusMu", "FactorInteger"],
@@ -978,9 +966,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["JacobiSymbol", ["List", 2, 3, 5, 7, 11], 3],
         expected: ["List", -1, 0, -1, 1, -1],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["PowerMod", "LegendreSymbol", "KroneckerSymbol"],
@@ -1062,10 +1049,8 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["KroneckerSymbol", ["List", 2, 3, 5, 7, 11], 6],
         expected: ["List", 0, 0, 1, 1, 1],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine does not thread over a list — Wolfram's KroneckerSymbol is Listable in a",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["JacobiSymbol", "LegendreSymbol"],

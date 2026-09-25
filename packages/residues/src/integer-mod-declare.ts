@@ -225,4 +225,21 @@ export function declareIntegerMod(ce: ComputeEngine): void {
         : undefined;
     },
   );
+  // Wolfram's ChineseRemainder[rs, ms, d]: the smallest solution x ≥ d, rather than the least
+  // non-negative one. Solutions repeat with period lcm(ms).
+  wrapOperator(
+    ce,
+    ["ChineseRemainder", "x", "y"],
+    (ops) => ops.length === 3,
+    (native) => (ops, options) => {
+      const [ms, d] = [integers(ops[1]), bigIntegerAt(ops[2])];
+      if (ms === undefined || d === undefined || !ms.every((m) => m >= 1n)) return undefined;
+      const x = bigIntegerAt(native?.(ops.slice(0, 2), options));
+      if (x === undefined) return undefined;
+      const period = ms.reduce((a, b) => (a * b) / gcd(a, b), 1n);
+      const gap = d - x;
+      const steps = gap >= 0n ? (gap + period - 1n) / period : -(-gap / period); // ⌈gap/period⌉
+      return ce.number(x + steps * period);
+    },
+  );
 }

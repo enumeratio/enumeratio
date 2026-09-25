@@ -197,6 +197,10 @@ importers:
         version: 0.3.1(@types/node@24.13.4)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.104.0)(tsx@4.23.13)(typescript@7.0.2)(yaml@2.9.0)
 
   packages/analytic:
+    dependencies:
+      '@enumeratio/boxed':
+        specifier: workspace:*
+        version: link:../boxed
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0

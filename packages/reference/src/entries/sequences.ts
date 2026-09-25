@@ -17,7 +17,7 @@ export const sequences: readonly ReferenceEntry[] = [
       "Consecutive ratios $F_{n+1}/F_n$ converge to the golden ratio $\\varphi$. See [[LucasL]].",
       "GCD identity: $\\gcd(F_m, F_n) = F_{\\gcd(m,n)}$.",
       "Extends to negative n via $F_{-n} = (-1)^{n+1} F_n$.",
-      "compute-engine only accepts a single integer index (no threading over a list, no complex $n$).",
+      "compute-engine only accepts an integer index (no complex $n$); a list of indices is threaded over element-wise.",
     ],
     examples: [
       { expr: ["Fibonacci", 0], expected: 0 },
@@ -66,10 +66,8 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         expr: ["Fibonacci", ["List", 1, 2, 3, 4]],
         expected: ["List", 1, 1, 2, 3],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine only accepts a single integer index; a list argument is not threaded",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["Fibonacci", 50],
@@ -93,7 +91,7 @@ export const sequences: readonly ReferenceEntry[] = [
       "Related to Fibonacci by $L_n = F_{n-1} + F_{n+1}$ and, conversely, $F_n = \\dfrac{L_{n-1} + L_{n+1}}{5}$.",
       "Consecutive ratios $L_{n+1}/L_n$ converge to the golden ratio, just as they do for [[Fibonacci]].",
       "Extends to negative n via $L_{-n} = (-1)^n L_n$.",
-      "compute-engine only accepts a single integer index (no threading over a list, no complex $n$).",
+      "compute-engine only accepts an integer index (no complex $n$); a list of indices is threaded over element-wise.",
     ],
     examples: [
       { expr: ["LucasL", 0], expected: 2 },
@@ -134,10 +132,8 @@ export const sequences: readonly ReferenceEntry[] = [
       {
         expr: ["LucasL", ["List", 1, 2, 3, 4]],
         expected: ["List", 1, 3, 4, 7],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine only accepts a single integer index; a list argument is not threaded",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["LucasL", 30],
@@ -151,16 +147,23 @@ export const sequences: readonly ReferenceEntry[] = [
   {
     name: "BernoulliB",
     domain: "Sequences",
-    signature: "BernoulliB(n)",
+    signature: "BernoulliB(n, x?)",
     summary:
       "The nth Bernoulli number, a rational sequence appearing in power-sum (Faulhaber) formulas and series expansions.",
-    signatures: [{ call: "BernoulliB(n)", description: "the nth Bernoulli number $B_n$." }],
+    signatures: [
+      { call: "BernoulliB(n)", description: "the nth Bernoulli number $B_n$." },
+      {
+        call: "BernoulliB(n, x)",
+        description: "the Bernoulli polynomial $B_n(x)$.",
+        library: "@enumeratio/analytic",
+      },
+    ],
     details: [
       "Defined by the generating function $\\dfrac{t}{e^t-1} = \\sum_{n=0}^{\\infty} B_n \\dfrac{t^n}{n!}$.",
       '$B_n = 0$ for every odd $n > 1$; $B_1 = -\\frac12$ under this (the "$B_n^-$") convention.',
       "Drive Faulhaber's formula for power sums, $\\sum_{k=0}^{n-1} k^p = \\frac{1}{p+1}\\sum_{j=0}^{p}\\binom{p+1}{j} B_j\\, n^{p+1-j}$. See [[Binomial]].",
       "Related to the Riemann zeta function: $\\zeta(-n) = -\\dfrac{B_{n+1}}{n+1}$ for $n \\ge 1$, and $\\zeta(2n) = \\dfrac{(-1)^{n+1} B_{2n} (2\\pi)^{2n}}{2\\,(2n)!}$.",
-      "compute-engine only defines $B_n$ for nonnegative integer $n$; the two-argument Bernoulli polynomial $B_n(x)$ is not yet supported.",
+      "compute-engine only defines $B_n$ for nonnegative integer $n$. With a second argument, BernoulliB(n, x) is the Bernoulli polynomial $B_n(x)$, as in Wolfram — the same as [[BernoulliPolynomial]].",
     ],
     examples: [
       { expr: ["BernoulliB", 0], expected: 1 },
@@ -199,18 +202,16 @@ export const sequences: readonly ReferenceEntry[] = [
       },
       {
         expr: ["BernoulliB", 1, "x"],
-        expected: ["Subtract", "x", ["Rational", 1, 2]],
-        aspirational: true,
+        expected: ["Add", "x", ["Rational", -1, 2]],
         category: "Scope",
         caption:
-          "The two-argument Bernoulli polynomial $B_1(x) = x - \\frac{1}{2}$ is not yet supported (only the numeric sequence)",
+          "With a second argument, the Bernoulli polynomial $B_n(x)$ — [[BernoulliPolynomial]] under Wolfram's name",
       },
       {
         expr: ["BernoulliB", ["List", 1, 2, 3]],
         expected: ["List", ["Rational", -1, 2], ["Rational", 1, 6], 0],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine only accepts a single index; a list argument is not threaded",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["BernoulliB", 20],

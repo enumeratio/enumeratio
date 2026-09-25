@@ -306,10 +306,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Beta", ["Rational", 9, 2], ["Rational", 7, 2]],
         expected: ["Multiply", ["Rational", 5, 2048], "Pi"],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Half-integer arguments should evaluate to the exact closed form $\\frac{5\\pi}{2048}$ via Gamma; currently left unevaluated. Compare [[Binomial]]'s own half-integer gap",
+          "Half-integer arguments evaluate exactly through $\\Gamma(m + \\tfrac12) = \\frac{(2m)!}{4^m m!}\\sqrt{\\pi}$. Compare [[Binomial]] at half-integers",
       },
     ],
     seeAlso: ["Gamma", "Binomial", "BetaRegularized"],
@@ -376,10 +375,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erf", ["List", 0, 1]],
         expected: ["List", 0, ["Erf", 1]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's Erf rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Erfc", "ErfInv"],
@@ -442,10 +439,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erfc", ["List", 0, 1]],
         expected: ["List", 1, ["Erfc", 1]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's Erfc rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Erf"],
@@ -501,10 +496,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["ErfInv", ["List", 0, 1]],
         expected: ["List", 0, "PositiveInfinity"],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's InverseErf rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Erf", "Erfc"],
@@ -1246,10 +1239,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", ["List", 1, 2], 1],
         expected: ["List", ["Divide", 1, "ExponentialE"], ["Divide", 2, "ExponentialE"]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's GammaRegularized rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Gamma", "BetaRegularized"],
@@ -1322,10 +1313,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["BetaRegularized", 0.5, ["List", 1, 2], 1],
         expected: ["List", 0.5, 0.25],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's BetaRegularized rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Beta", "GammaRegularized", "Binomial"],
