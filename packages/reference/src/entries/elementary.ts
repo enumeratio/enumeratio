@@ -1479,6 +1479,16 @@ export const elementary: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
       },
+      {
+        expr: ["Arcsin", -2],
+        expected: [
+          "Add",
+          ["Multiply", ["Rational", -1, 2], "Pi"],
+          ["Multiply", ["Complex", 0, 1], ["Ln", ["Add", 2, ["Sqrt", 3]]]],
+        ],
+        category: "Scope",
+        caption: "$\\arcsin(-2)$ past $[-1,1]$: the odd-function mirror of $\\arcsin(2)$.",
+      },
     ],
     seeAlso: ["Sin", "Arccos", "Arctan"],
   },
@@ -1903,6 +1913,13 @@ export const elementary: readonly ReferenceEntry[] = [
         expected: ["Divide", -1, ["Add", ["Power", "x", 2], 1]],
         category: "Scope",
         caption: "Derivative: $-\\frac{1}{1 + x^2}$",
+      },
+      {
+        expr: ["Arccot", ["Negate", ["Sqrt", 3]]],
+        expected: ["Multiply", ["Rational", 5, 6], "Pi"],
+        category: "Scope",
+        caption:
+          "$\\operatorname{arccot}(-\\sqrt{3}) = \\tfrac{5\\pi}{6}$ — past $\\pi/2$, not mirrored through 0, in compute-engine's own $(0,\\pi)$ range.",
       },
     ],
     seeAlso: ["Cot", "Arctan"],
@@ -2975,6 +2992,13 @@ export const elementary: readonly ReferenceEntry[] = [
         expected: { num: "0.6931471805599453094172321214581765680755" },
         category: "Scope",
         caption: "To 40 significant digits, every one correctly rounded",
+      },
+      {
+        expr: ["Ln", ["Rational", -1, 2]],
+        expected: ["Add", ["Multiply", ["Complex", 0, 1], "Pi"], ["Negate", ["Ln", 2]]],
+        category: "Scope",
+        caption:
+          "$\\ln(-\\tfrac12) = i\\pi - \\ln 2$ — a negative rational, folded through the unit-fraction rule too.",
       },
     ],
     seeAlso: ["Exp", "Log", "Log2"],
