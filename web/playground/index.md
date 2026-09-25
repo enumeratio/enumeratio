@@ -6,6 +6,8 @@ controls that make up the interface. One page per component, each a focused, sha
 place to look at the behaviour and talk about how to improve it. Some pages are
 experimental and move fast.
 
+These are demos of the parts. To use the whole thing, open a [worksheet](/worksheet/).
+
 ## Components
 
 - [Notebook](/playground/notebook) — `<notatio-notebook>`, a scoped session
@@ -29,8 +31,7 @@ experimental and move fast.
 - [Collection table](/playground/collection-table) — `<notatio-collection-table>`, a paged table over a lazy indexed collection, with statistics as columns
 - [Worksheet](/playground/worksheet) — `<notatio-worksheet>`, named expressions whose knobs and plots fall out of the cells
 - [Manipulate](/playground/manipulate) — `<notatio-manipulate>`, Wolfram-style controls bound to named wildcards in any slotted content
-- [REPL (terminal)](/playground/repl) — `<notatio-terminal>`, the real CLI eval core in a browser terminal
-- [Command line](/playground/cli) — the same terminal in one-shot `notatio <expr>` mode
+- [Terminal](/playground/terminal) — `<notatio-terminal>`, the real CLI eval core in a browser terminal, as a session or one `notatio <expr>` at a time
 - [Polytope](/playground/polytope) — `<notatio-polytope>`, a polytope's face poset, where every mark is a clickable face
 - [Tangle](/playground/inspirations/tangle) — `<notatio-dynamic-module>` and the inline controls (`<notatio-knob>`, `<notatio-toggler>`, `<notatio-dynamic>`, `<notatio-when>`): reactive prose
 
