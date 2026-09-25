@@ -1,0 +1,27 @@
+weibull-pdf-exact:
+  epsil:
+    in: PDF(WeibullDistribution(2, 5), 4)
+    out: 8 / (25 * ExponentialE ^ (16 / 25))
+  tex:
+    in: \operatorname{PDF}(\mathrm{WeibullDistribution}(2, 5), 4)
+    out: (8)(25\exp(\frac{16}{25}))^{-1}
+  wolfram:
+    in: PDF[WeibullDistribution[2, 5], 4]
+weibull-cdf-exact:
+  epsil:
+    in: CDF(WeibullDistribution(2, 5), 4)
+    out: 1 - ExponentialE ^ (-16 / 25)
+  tex:
+    in: \operatorname{CDF}(\mathrm{WeibullDistribution}(2, 5), 4)
+    out: 1-\exp(-\frac{16}{25})
+  wolfram:
+    in: CDF[WeibullDistribution[2, 5], 4]
+weibull-mean-exact:
+  epsil:
+    in: Mean(WeibullDistribution(2, 5))
+    out: 5 * Gamma(3 / 2)
+  tex:
+    in: \mathrm{mean}(\mathrm{WeibullDistribution}(2, 5))
+    out: 5\Gamma(\frac{3}{2})
+  wolfram:
+    in: Mean[WeibullDistribution[2, 5]]

@@ -1,0 +1,27 @@
+cauchy-pdf-exact:
+  epsil:
+    in: PDF(CauchyDistribution(0, 1), 0)
+    out: 1 / Pi
+  tex:
+    in: \operatorname{PDF}(\mathrm{CauchyDistribution}(0, 1), 0)
+    out: \frac{1}{\pi}
+  wolfram:
+    in: PDF[CauchyDistribution[0, 1], 0]
+cauchy-mean-indeterminate:
+  epsil:
+    in: Mean(CauchyDistribution(0, 1))
+    out: Indeterminate
+  tex:
+    in: \mathrm{mean}(\mathrm{CauchyDistribution}(0, 1))
+    out: \mathrm{Indeterminate}
+  wolfram:
+    in: Mean[CauchyDistribution[0, 1]]
+cauchy-default-is-standard:
+  epsil:
+    in: CauchyDistribution()
+    out: CauchyDistribution(0, 1)
+  tex:
+    in: \mathrm{CauchyDistribution}()
+    out: \mathrm{CauchyDistribution}(0, 1)
+  wolfram:
+    in: CauchyDistribution[]

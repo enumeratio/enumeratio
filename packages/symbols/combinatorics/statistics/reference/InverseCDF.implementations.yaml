@@ -1,0 +1,9 @@
+inversecdf-normal-median:
+  epsil:
+    in: InverseCDF(NormalDistribution(0, 1), 1 / 2)
+    out: -6_957_290_979_756_837e-32
+  tex:
+    in: \mathrm{InverseCDF}(\operatorname{NormalDistribution}(0, 1), \frac{1}{2})
+    out: -6\,957\,290\,979\,756\,837\cdot10^{-32}
+  wolfram:
+    in: InverseCDF[NormalDistribution[0, 1], Rational[1, 2]]

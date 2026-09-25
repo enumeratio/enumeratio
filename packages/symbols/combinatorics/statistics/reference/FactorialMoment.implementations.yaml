@@ -1,0 +1,9 @@
+factorialmoment-order-2:
+  epsil:
+    in: FactorialMoment(GeometricDistribution(1 / 4), 2)
+    out: "18"
+  tex:
+    in: \mathrm{FactorialMoment}(\mathrm{GeometricDistribution}(\frac{1}{4}), 2)
+    out: "18"
+  wolfram:
+    in: FactorialMoment[GeometricDistribution[Rational[1, 4]], 2]
