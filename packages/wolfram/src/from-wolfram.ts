@@ -183,17 +183,6 @@ function applyHead(name: string, args: MathJson[]): MathJson {
       : ["Clamp", ...args];
   }
   if (name === "Total" && args.length === 1) return ["Sum", args[0]];
-  // Array[f, n] is our Tabulate(f, n); Array[f, {n1, n2, ...}] spreads the dims into
-  // separate Tabulate args (see the Tabulate case in SPECIAL).
-  if (name === "Array" && args.length === 2) {
-    const dims = args[1];
-    return isList(dims) ? ["Tabulate", args[0], ...dims.slice(1)] : ["Tabulate", ...args];
-  }
-  // FoldList[f, list] (no seed) is our Scan(list, f) reordered; the seeded
-  // FoldList[f, x, list] is length+1 and has no Scan equivalent, so it's left unmapped.
-  if (name === "FoldList" && args.length === 2) return ["Scan", args[1], args[0]];
-  // Accumulate[list] = FoldList[Plus, list] — our Scan(list, Add).
-  if (name === "Accumulate" && args.length === 1) return ["Scan", args[0], "Add"];
   // An iterator `{k, a, b}` is a Tuple on the compute-engine side, not a List.
   if ((name === "Sum" || name === "Product") && args.length >= 2) {
     return [
