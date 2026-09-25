@@ -137,6 +137,13 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * native pair round a big argument through a double — `GCD(20!, 10^100+3)` came back
  * 163840000 instead of 7 — so this is a correction, not only an addition), plus threading a
  * single list argument against the rest (`declare-widened.ts`, number-theory).
+ * Also from #113: `Chop`'s second-argument tolerance, `Stirling`/`StirlingS1` at k > n
+ * (0, past the diagonal) and threading `Stirling` over a list, `Binomial`/`CatalanNumber`/
+ * `Multinomial`/`Factorial2`/`Subfactorial`/`Pochhammer` through Gamma for real and complex
+ * arguments, `Fibonacci`/`LucasL` at a real index and as the two-argument polynomial (and
+ * `BellNumber`'s own Touchard-polynomial form), `IntegerString`'s bigint arithmetic, and
+ * `FromDigits`'s symbolic/negative base and Roman-numeral reading -- all in number-theory,
+ * numerals or collections, additive in the same way: native for anything not ours.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -161,6 +168,7 @@ const OVERRIDDEN = [
   "CatalanNumber",
   "Ceil",
   "ChineseRemainder",
+  "Chop",
   "Clamp",
   "ContinuedFraction",
   "Cosh",
@@ -235,9 +243,14 @@ const OVERRIDDEN = [
   "Sin",
   "Sinh",
   "Sort",
+  "Stirling",
   "StirlingS1",
   "Subfactorial",
   "Subtract",
+  // Not itself overridden -- the StirlingS1/Stirling orthogonality identity sums a term
+  // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
+  // expression's own outer head, the same reason Add is here.
+  "Sum",
   "Tanh",
   "Totient",
   "Union",
