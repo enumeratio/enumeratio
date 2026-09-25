@@ -105,6 +105,11 @@ examples:
     expected: x
     category: Scope
     caption: $\sinh(\operatorname{arsinh} x) = x$ for every $x$
+  - id: sinh-arsinh-2-2-for-every-x
+    expr: [Sinh, [Arsinh, 2]]
+    expected: 2
+    category: Scope
+    caption: $\sinh(\operatorname{arsinh}(2)) = 2$
   - id: derivative-cosh-x
     expr: [D, [Sinh, x], x]
     expected: [Cosh, x]

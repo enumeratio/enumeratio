@@ -134,6 +134,11 @@ examples:
     expected: x
     category: Scope
     caption: $\tan(\arctan x) = x$ for every $x$
+  - id: tan-arctan-2-2-for-every-x
+    expr: [Tan, [Arctan, 2]]
+    expected: 2
+    category: Scope
+    caption: $\tan(\arctan(2)) = 2$
   - id: tan-arcsin-x-frac-x-sqrt-1-x-2
     expr: [Tan, [Arcsin, x]]
     expected: [Divide, x, [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]

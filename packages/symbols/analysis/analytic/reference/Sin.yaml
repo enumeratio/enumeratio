@@ -172,6 +172,16 @@ examples:
     expected: x
     category: Scope
     caption: $\sin(\arcsin x) = x$ for every $x$
+  - id: sin-arcsin-2-2-past-the-real-domain
+    expr: [Sin, [Arcsin, 2]]
+    expected: 2
+    category: Scope
+    caption: $\sin(\arcsin(2)) = 2$, even past $[-1, 1]$ where Arcsin's own closed form would otherwise hide the identity from a plain evaluate()
+  - id: sin-arcsin-of-a-complex-argument
+    expr: [Sin, [Arcsin, [Complex, 1, 2]]]
+    expected: [Complex, 1, 2]
+    category: Scope
+    caption: $\sin(\arcsin(1+2i)) = 1+2i$
   - id: sin-arccos-x-sqrt-1-x-2
     expr: [Sin, [Arccos, x]]
     expected: [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]
