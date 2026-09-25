@@ -14,8 +14,7 @@
       "import": "./dist/index.mjs"
     },
     "./src": "./src/index.ts",
-    "./package.json": "./package.json",
-    "./reference": "./src/entries.ts"
+    "./package.json": "./package.json"
   },
   "scripts": {
     "build": "vp pack",

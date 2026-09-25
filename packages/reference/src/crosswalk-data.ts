@@ -4380,6 +4380,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "List",
   },
   {
+    name: "Tuples",
+    wolfram: "Tuples",
+  },
+  {
     name: "Union",
     wolfram: "Union",
   },

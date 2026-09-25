@@ -5,8 +5,10 @@ import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { expect, test } from "vite-plus/test";
 import { declareDomains } from "../src/declare.ts";
 import { DOMAINS } from "../src/domain-data.ts";
-import { entries } from "../src/entries.ts";
+import { readEntries } from "@enumeratio/entry/node";
 import { declareMaps } from "../src/map.ts";
+
+const entries = readEntries(new URL("../reference/", import.meta.url));
 
 // The same stack both engines declare, in the same order.
 const ce = new ComputeEngine();

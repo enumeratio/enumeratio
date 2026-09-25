@@ -2,7 +2,20 @@
 // @enumeratio/analytic (CI runs tests before builds).
 import { runCases } from "@enumeratio/aestimatio/src/node";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/index.ts";
+import { referenceData } from "../src/node.ts";
+
+// Every head the reference engine declares, from every package's YAML. A head two packages
+// document runs once per copy, named `<package>: <Head>`; statistics and domains run under
+// their own engines, in their own packages' tests.
+const OWN_ENGINE = new Set(["statistics", "domains"]);
+const { heads } = referenceData();
+const loaded = heads.filter((h) => !OWN_ENGINE.has(h.package));
+const copies = new Map<string, number>();
+for (const h of loaded) copies.set(h.head, (copies.get(h.head) ?? 0) + 1);
+const entries = loaded.map((h) => ({
+  ...h.entry,
+  name: copies.get(h.head)! > 1 ? `${h.package}: ${h.head}` : h.head,
+}));
 
 /** A `{num}` literal's digit string, or `undefined` for anything else. */
 const numOf = (x: unknown): string | undefined =>

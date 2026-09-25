@@ -1,6 +1,9 @@
 import { DIVERGENCE_KINDS, emit } from "@enumeratio/oracle/src";
 import { expect, test } from "vite-plus/test";
-import { entryFiles, oracleSidecars } from "../src/index.ts";
+import { entryFiles as filesOf, referenceData } from "../src/node.ts";
+
+const entryFiles = filesOf();
+const oracleSidecars = referenceData().sidecars;
 
 // The goldens a scan (scripts/oracle-scan.ts) writes: one `<stem>.oracle.json` sidecar per
 // entries file. Not regenerated here — that needs a kernel — so these are consistency
