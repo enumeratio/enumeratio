@@ -1,6 +1,6 @@
 # aestimatio — controlling evaluation
 
-compute-engine and our extensions are the nucleus: they say what an expression _means_ and
+compute-engine and our extensions say what an expression _means_ and
 compute it. `@enumeratio/aestimatio` is the layer that decides **when** a computation runs,
 **how long** and **how much memory** it may take, **whether it is cancelled**, and **whether
 its answer checks out**. We computed fine without it; it exists so a page, a notebook or a
