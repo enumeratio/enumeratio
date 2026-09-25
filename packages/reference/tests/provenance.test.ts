@@ -115,7 +115,10 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * signature rather than the native one, so even the error differs. `LambertW` is here for
  * exact values at algebraically nice points (0, e, -1/e, ...) that a bare engine leaves
  * unevaluated outside `N()`, and for branches other than 0/-1 — additive in both cases, never
- * changing a value the native handler already gave concretely. `Floor`, `Ceil`, `Round`,
+ * changing a value the native handler already gave concretely. `Beta` is here for the
+ * third and fourth arguments (the incomplete and generalized incomplete beta) and for
+ * `B(a, 1) = 1/a`, exactly the same additive shape as `Gamma`'s third argument.
+ * `Floor`, `Ceil`, `Round`,
  * `Max`, `Min` and `IsOdd` are here for folding an exact constant expression (Pi, e, ...) a
  * bare engine leaves symbolic, plus Floor/Ceil/Round's own idempotence and Max/Min dropping
  * an exactly-repeated argument; `Sin`, `Sinh`, `Cosh`, `Tanh`, `Arccot`, `Arccsc` and
@@ -139,6 +142,7 @@ const OVERRIDDEN = [
   "At",
   "BellNumber",
   "BernoulliB",
+  "Beta",
   "BetaRegularized",
   "Binomial",
   "CatalanNumber",
