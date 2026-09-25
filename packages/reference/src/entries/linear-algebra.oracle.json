@@ -9,42 +9,66 @@
         "wolfram": {
           "input": "ArrayDepth[5]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ArrayDepth}[5]",
+            "output": "0"
+          }
         }
       },
       "[\"Rank\",[\"List\",1,2,3]]": {
         "wolfram": {
           "input": "ArrayDepth[List[1, 2, 3]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ArrayDepth}[\\{1,2,3\\}]",
+            "output": "1"
+          }
         }
       },
       "[\"Rank\",[\"List\",[\"List\",1,0],[\"List\",0,1]]]": {
         "wolfram": {
           "input": "ArrayDepth[List[List[1, 0], List[0, 1]]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ArrayDepth}\\left[\\left( \\begin{array}{cc}  1 & 0 \\\\  0 & 1 \\\\ \\end{array} \\right)\\right]",
+            "output": "2"
+          }
         }
       },
       "[\"Rank\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]]": {
         "wolfram": {
           "input": "ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ArrayDepth}\\left[\\left( \\begin{array}{cc}  \\{1,2\\} & \\{3,4\\} \\\\  \\{5,6\\} & \\{7,8\\} \\\\ \\end{array} \\right)\\right]",
+            "output": "3"
+          }
         }
       },
       "[\"Equal\",[\"Rank\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]],[\"Length\",[\"Shape\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]]]]": {
         "wolfram": {
           "input": "(ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]] == Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ArrayDepth}\\left[\\left( \\begin{array}{cc}  \\{1,2\\} & \\{3,4\\} \\\\  \\{5,6\\} & \\{7,8\\} \\\\ \\end{array} \\right)\\right]=\\text{Length}\\left[\\text{Dimensions}\\left[\\left( \\begin{array}{cc}  \\{1,2\\} & \\{3,4\\} \\\\  \\{5,6\\} & \\{7,8\\} \\\\ \\end{array} \\right)\\right]\\right]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Rank\",[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
         "wolfram": {
           "input": "ArrayDepth[List[List[1, 2], List[2, 4]]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ArrayDepth}\\left[\\left( \\begin{array}{cc}  1 & 2 \\\\  2 & 4 \\\\ \\end{array} \\right)\\right]",
+            "output": "2"
+          }
         }
       }
     },
@@ -53,42 +77,66 @@
         "wolfram": {
           "input": "MatrixRank[List[List[1, 0], List[0, 1]]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MatrixRank}\\left[\\left( \\begin{array}{cc}  1 & 0 \\\\  0 & 1 \\\\ \\end{array} \\right)\\right]",
+            "output": "2"
+          }
         }
       },
       "[\"MatrixRank\",[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 2], List[2, 4]]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MatrixRank}\\left[\\left( \\begin{array}{cc}  1 & 2 \\\\  2 & 4 \\\\ \\end{array} \\right)\\right]",
+            "output": "1"
+          }
         }
       },
       "[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]]": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MatrixRank}\\left[\\left( \\begin{array}{ccc}  1 & 2 & 3 \\\\  4 & 5 & 6 \\\\  7 & 8 & 9 \\\\ \\end{array} \\right)\\right]",
+            "output": "2"
+          }
         }
       },
       "[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",2,4,6]]]": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 2, 3], List[2, 4, 6]]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MatrixRank}\\left[\\left( \\begin{array}{ccc}  1 & 2 & 3 \\\\  2 & 4 & 6 \\\\ \\end{array} \\right)\\right]",
+            "output": "1"
+          }
         }
       },
       "[\"MatrixRank\",[\"List\",[\"List\",0,0],[\"List\",0,0]]]": {
         "wolfram": {
           "input": "MatrixRank[List[List[0, 0], List[0, 0]]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MatrixRank}\\left[\\left( \\begin{array}{cc}  0 & 0 \\\\  0 & 0 \\\\ \\end{array} \\right)\\right]",
+            "output": "0"
+          }
         }
       },
       "[\"Equal\",[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]],[\"MatrixRank\",[\"Transpose\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]]]]": {
         "wolfram": {
           "input": "(MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]] == MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{MatrixRank}\\left[\\left( \\begin{array}{ccc}  1 & 2 & 3 \\\\  4 & 5 & 6 \\\\  7 & 8 & 9 \\\\ \\end{array} \\right)\\right]=\\text{MatrixRank}\\left[\\left( \\begin{array}{ccc}  1 & 2 & 3 \\\\  4 & 5 & 6 \\\\  7 & 8 & 9 \\\\ \\end{array} \\right)^T\\right]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"MatrixRank\",[\"List\",1,2,3]]": {
@@ -97,7 +145,11 @@
           "output": "MatrixRank[{1, 2, 3}]",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "Wolfram declines a vector (not a matrix); compute-engine reads it as 1×n."
+          "note": "Wolfram declines a vector (not a matrix); compute-engine reads it as 1×n.",
+          "tex": {
+            "input": "\\text{MatrixRank}[\\{1,2,3\\}]",
+            "output": "\\text{MatrixRank}[\\{1,2,3\\}]"
+          }
         }
       }
     }

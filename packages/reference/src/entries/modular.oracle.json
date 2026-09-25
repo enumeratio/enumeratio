@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "ContinuedFraction[Rational[355, 113]]",
           "output": "{3, 7, 16}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{ContinuedFraction}\\left[\\frac{355}{113}\\right]",
+            "output": "\\{3,7,16\\}"
+          }
         },
         "sage": {
           "input": "list(continued_fraction((355/113)))",
@@ -30,7 +34,11 @@
           "output": "\"L\" . \"R\"",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "An LR word is an enumeratio spelling of a PSL(2,Z) element; Wolfram's Dot has no reading for two strings and leaves the call unevaluated."
+          "note": "An LR word is an enumeratio spelling of a PSL(2,Z) element; Wolfram's Dot has no reading for two strings and leaves the call unevaluated.",
+          "tex": {
+            "input": "\\text{L}.\\text{R}",
+            "output": "\\text{L}.\\text{R}"
+          }
         }
       }
     }

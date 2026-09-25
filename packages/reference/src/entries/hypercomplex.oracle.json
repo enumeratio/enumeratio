@@ -11,7 +11,11 @@
           "output": "2 (x) 3",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Our CircleTimes commits to a concrete algebra where scalars multiply as usual; Wolfram's builtin CircleTimes is inert notation with no arithmetic rules, so it leaves 2 (x) 3 displayed rather than reduced to 6."
+          "note": "Our CircleTimes commits to a concrete algebra where scalars multiply as usual; Wolfram's builtin CircleTimes is inert notation with no arithmetic rules, so it leaves 2 (x) 3 displayed rather than reduced to 6.",
+          "tex": {
+            "input": "2\\otimes 3",
+            "output": "2\\otimes 3"
+          }
         }
       }
     }

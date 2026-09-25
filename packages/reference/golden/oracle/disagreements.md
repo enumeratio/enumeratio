@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1354, disagree 70, inconclusive 0, error 3
+## wolfram — agree 1416, disagree 71, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -45,6 +45,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/ExtendedGCD#4`           | shape          | `["Tuple",5,0,1]`                                                                            | `{5, {0, 1}}`                                                                                |
 | `number-theory/ExtendedGCD#6`           | shape          | `["Tuple",1,["Complex",-1,-2],["Complex",-2,2]]`                                             | `{1, {-1 - 2*I, -2 + 2*I}}`                                                                  |
 | `number-theory/GCD#8`                   | convention     | `2`                                                                                          | `{2, 4}`                                                                                     |
+| `number-theory/IsSquareFree#7`          | unclassified   | `[true, false, false]`                                                                       | `SquareFreeQ[{10, 4, 12}]`                                                                   |
 | `number-theory/MoebiusMu#6`             | domain         | `["MoebiusMu",0]`                                                                            | `0`                                                                                          |
 | `numerals/FromDigits#5`                 | domain         | `["FromDigits",["List"]]`                                                                    | `0`                                                                                          |
 | `numerals/IntegerString#5`              | convention     | `'-42'`                                                                                      | `"42"`                                                                                       |
@@ -104,10 +105,10 @@ Counts cover mapped examples only; unmapped ones have no row.
 | ------------------------------ | -------------- | ------------------- | ------------------------------------ |
 | `arithmetic/Max#8`             | convention     | `NaN`               | `-oo`                                |
 | `elementary/Ln#3`              | undefined-form | `NegativeInfinity`  | `zoo`                                |
-| `number-theory/LCM#7`          | convention     | `{"re":3,"im":1}`   | `-1 + 3*I`                           |
-| `residues/Mod#11`              | domain         | `[1, -1]`           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]` |
-| `residues/Mod#7`               | domain         | `{"re":1,"im":-1}`  | `Mod(1 + 5*I, 3)`                    |
-| `residues/Mod#8`               | domain         | `{"re":0,"im":-1}`  | `Mod(7 + 5*I, 2 + I)`                |
+| `number-theory/LCM#8`          | convention     | `{"re":3,"im":1}`   | `-1 + 3*I`                           |
+| `residues/Mod#12`              | domain         | `[1, -1]`           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]` |
+| `residues/Mod#8`               | domain         | `{"re":1,"im":-1}`  | `Mod(1 + 5*I, 3)`                    |
+| `residues/Mod#9`               | domain         | `{"re":0,"im":-1}`  | `Mod(7 + 5*I, 2 + I)`                |
 | `sequences/BernoulliB#2`       | convention     | `-0.5`              | `1/2`                                |
 | `sequences/BernoulliB#7`       | convention     | `30`                | `55`                                 |
 | `special-functions/PolyLog#11` | undefined-form | `["PolyLog",2.5,2]` | `polylog(2.5, 2)`                    |
@@ -175,11 +176,11 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `elementary/Ln#3`                 | shape          | `NegativeInfinity`                                                                           | `-Infinity`                                                                                  |
 | `elementary/Ln#5`                 | convention     | `true`                                                                                       | `False`                                                                                      |
 | `elementary/Tan#9`                | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `number-theory/Divisors#7`        | domain         | `[1, {"re":2,"im":1}, {"re":3,"im":4}]`                                                      | `[-4*I - 3, 2*I - 1, 1]`                                                                     |
-| `number-theory/FactorInteger#10`  | domain         | `[["Tuple",["Complex",0,-1],1], ["Tuple",["Complex",1,1],1], ["Tuple",["Complex",99,34],1],` | `[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)` |
+| `number-theory/Divisors#8`        | domain         | `[1, {"re":2,"im":1}, {"re":3,"im":4}]`                                                      | `[-4*I - 3, 2*I - 1, 1]`                                                                     |
+| `number-theory/FactorInteger#10`  | domain         | `[["Tuple",["Complex",2,1],2]]`                                                              | `[(2*I - 1, 2)]`                                                                             |
+| `number-theory/FactorInteger#11`  | domain         | `[["Tuple",["Complex",0,-1],1], ["Tuple",["Complex",1,1],1], ["Tuple",["Complex",99,34],1],` | `[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)` |
 | `number-theory/FactorInteger#5`   | shape          | `[["Tuple",1,1]]`                                                                            | `[]`                                                                                         |
 | `number-theory/FactorInteger#7`   | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                              | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
-| `number-theory/FactorInteger#9`   | domain         | `[["Tuple",["Complex",2,1],2]]`                                                              | `[(2*I - 1, 2)]`                                                                             |
 | `residues/ModularInverse#2`       | domain         | `{"re":6,"im":4}`                                                                            | `-3*I - 1`                                                                                   |
 | `residues/PowerModList#24`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
 | `special-functions/Gamma#1`       | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
@@ -213,10 +214,10 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/RationalReconstruction#4` | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `number-theory/RationalReconstruction#6` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
 | `number-theory/RationalReconstruction#8` | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |
-| `residues/Mod#11`                        | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `residues/Mod#10`                        | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `residues/Mod#12`                        | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/Mod#4`                         | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
 | `residues/Mod#5`                         | `ZeroDivisionError: Integer modulo by zero`                                                  |
-| `residues/Mod#7`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/Mod#8`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/Mod#9`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/ModularInverse#4`              | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
@@ -255,18 +256,18 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#5`  | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `combinatorics/Factorial#7`  | `AssertionError: denominator(x) == 1`                                                        |
 | `combinatorics/Factorial#9`  | `DomainError with -1: Argument must be non-negative`                                         |
-| `number-theory/GCD#11`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `number-theory/GCD#12`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/GCD#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#8`    | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#9`    | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/LCM#7`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `number-theory/LCM#8`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/MoebiusMu#6`  | `DomainError with 0: Argument must be positive`                                              |
-| `residues/Mod#11`            | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `residues/Mod#10`            | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `residues/Mod#12`            | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
 | `residues/Mod#4`             | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
 | `residues/Mod#5`             | `DivideError: integer division error`                                                        |
-| `residues/Mod#7`             | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `residues/Mod#8`             | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
-| `residues/Mod#9`             | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `residues/Mod#8`             | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `residues/Mod#9`             | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
 
 </details>
 
@@ -286,18 +287,18 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#5`      | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `combinatorics/Factorial#7`      | `AssertionError: denominator(x) == 1`                                                        |
 | `combinatorics/Factorial#9`      | `DomainError with -1: Argument must be non-negative`                                         |
-| `number-theory/GCD#11`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `number-theory/GCD#12`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/GCD#8`            | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#9`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/LCM#7`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `number-theory/LCM#8`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/MoebiusMu#6`      | `DomainError with 0: Argument must be positive`                                              |
-| `residues/Mod#11`                | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `residues/Mod#10`                | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `residues/Mod#12`                | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
 | `residues/Mod#4`                 | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
 | `residues/Mod#5`                 | `DivideError: integer division error`                                                        |
-| `residues/Mod#7`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `residues/Mod#8`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
-| `residues/Mod#9`                 | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `residues/Mod#8`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `residues/Mod#9`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
 | `sequences/LucasL#8`             | `DomainError with -1: n must be nonnegative`                                                 |
 
 </details>

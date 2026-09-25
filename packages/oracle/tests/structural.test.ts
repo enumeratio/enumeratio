@@ -47,3 +47,9 @@ test("numeric values still reduce, inside lists too", () => {
     1,
   ]);
 });
+
+test("truth values reduce to booleans whichever evaluator reads the rest", () => {
+  expect(reduce("True", symbolic)).toBe(true);
+  expect(reduce(["List", "True", "False"], valuesOnly(symbolic))).toEqual([true, false]);
+  expect(compareTrees(reduce("True", symbolic), reduce("True", symbolic))).toBe("agree");
+});
