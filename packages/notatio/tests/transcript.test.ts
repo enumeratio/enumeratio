@@ -130,3 +130,22 @@ test("Out(n) with no such line is a diagnostic, not a silent Missing", () => {
   const t = new Transcript(engine);
   expect(() => evaluateJson(t, engine, ["Out", 1], "Out(1)")).toThrow(/no line 1/);
 });
+
+// --- history: false (a reactive DynamicModule's own Transcript) ----------------------
+
+test("history: false still shares a scope, but keeps no line numbers", () => {
+  const engine = new ComputeEngine();
+  const t = new Transcript(engine, { history: false });
+  evaluate(t, engine, "a\\coloneq 5");
+  expect(evaluate(t, engine, "a^2").value.re).toBe(25); // the scope is still shared
+  expect(t.record("a^2", engine.parse("a^2"), engine.box(25))).toBeUndefined();
+  expect(t.history).toEqual([]);
+});
+
+test("history: false never declares Out/In/InString -- Out(1) stays an ordinary, undefined call", () => {
+  const engine = new ComputeEngine();
+  const t = new Transcript(engine, { history: false });
+  evaluate(t, engine, "5"); // a line exists; Out(1) would read it if Out were declared here
+  const result = evaluateJson(t, engine, ["Out", 1], "Out(1)").value;
+  expect(result.re).not.toBe(5); // never resolved to the recorded value -- there is none
+});

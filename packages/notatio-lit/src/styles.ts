@@ -157,6 +157,14 @@ notatio-in math-field::part(menu-toggle) { display: none; }
 .notatio-out-label { color: var(--vp-c-brand-1, #b3355a); }
 .notatio-error { color: var(--vp-c-danger-1, #c0392b); font-family: var(--notatio-mono, monospace); }
 
+/* A reactive dynamic module (TrackedSymbols) flags a cell its schedule rejects -- a
+   duplicate definition, a cycle, an ordinal reference -- with this attribute; the
+   message itself is the cell's title attribute. */
+notatio-cell[data-reactive-error] {
+  outline: 1px dashed var(--vp-c-danger-1, #c0392b);
+  outline-offset: 2px;
+}
+
 .notatio-render { display: inline-block; }
 
 .notatio-form-src {

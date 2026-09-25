@@ -384,6 +384,52 @@
     },
     "markup": "<notatio-dynamic-module><notatio-cell value=\"1 + 1\"></notatio-cell><notatio-cell value=\"2 + 2\"></notatio-cell></notatio-dynamic-module>"
   },
+  "DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)": {
+    "rendering": {
+      "tag": "notatio-dynamic-module",
+      "attributes": {
+        "tracked-symbols": "all"
+      },
+      "children": [
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "b := a + 1"
+          }
+        },
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "a := 5"
+          }
+        },
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "b ^ 2"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-dynamic-module tracked-symbols=\"all\"><notatio-cell value=\"b := a + 1\"></notatio-cell><notatio-cell value=\"a := 5\"></notatio-cell><notatio-cell value=\"b ^ 2\"></notatio-cell></notatio-dynamic-module>"
+  },
+  "DynamicModule([Cell(a := 5)], TrackedSymbols -> [a, b])": {
+    "rendering": {
+      "tag": "notatio-dynamic-module",
+      "attributes": {
+        "tracked-symbols": "a,b"
+      },
+      "children": [
+        {
+          "tag": "notatio-cell",
+          "attributes": {
+            "value": "a := 5"
+          }
+        }
+      ]
+    },
+    "markup": "<notatio-dynamic-module tracked-symbols=\"a,b\"><notatio-cell value=\"a := 5\"></notatio-cell></notatio-dynamic-module>"
+  },
   "Slider(k, (0, 5))": {
     "rendering": {
       "tag": "notatio-dynamic-module",

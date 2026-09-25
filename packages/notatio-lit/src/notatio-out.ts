@@ -624,6 +624,17 @@ export class NotatioOut extends LitElement {
     return this.#historyN;
   }
 
+  /**
+   * Force a fresh evaluation even though none of `value`/`format`/… changed -- for a
+   * host whose shared scope changed under this Out rather than its own props (a
+   * reactive `DynamicModule`'s downstream cell, re-run after an upstream one commits;
+   * `reactive-module.ts` is the caller). `willUpdate`'s own dirty-check would otherwise
+   * see nothing to do.
+   */
+  revalidate(): Promise<void> {
+    return this.#recompute();
+  }
+
   #status(): unknown {
     // A passing assertion is silent -- only surface failures. `mismatch` is an
     // expected-vs-actual disagreement; `error` is a compute-engine diagnostic.

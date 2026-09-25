@@ -1,12 +1,24 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { CONTROL_EVENT, Transcript } from "@enumeratio/notatio";
+import { CONTROL_EVENT, Transcript, type TrackedSymbols } from "@enumeratio/notatio";
 import { LitElement, nothing } from "lit";
 import "./notatio-dynamic.ts";
 import "./notatio-knob.ts";
 import "./notatio-toggler.ts";
 import "./notatio-when.ts";
+import { ReactiveModule } from "./reactive-module.ts";
 import { Scope } from "./scope.ts";
 import { ensureStyles } from "./styles.ts";
+
+/** `tracked-symbols="all"` or a comma list -- `symbols.ts`'s `TrackedSymbols` lowering. */
+function parseTrackedSymbols(attr: string): TrackedSymbols | undefined {
+  const value = attr.trim();
+  if (!value) return undefined;
+  if (value.toLowerCase() === "all") return "All";
+  return value
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
 
 /**
  * `<notatio-dynamic-module>` -- a **reactive document**, after Bret Victor's
@@ -50,16 +62,25 @@ export class NotatioDynamicModule extends LitElement {
   static properties = {
     /** Announce every knob move on the console under the `scope` debug namespace. */
     trace: { type: Boolean },
+    /**
+     * `All` / a comma list of symbol names -- `symbols.ts`'s `TrackedSymbols` lowering.
+     * Absent (the default) keeps this a plain transcript: cells evaluate top to bottom,
+     * `Out`/`In`/`InString`/`%` stay live, and cell-number references are allowed.
+     */
+    trackedSymbols: { type: String, attribute: "tracked-symbols" },
   };
 
   declare trace: boolean;
+  declare trackedSymbols: string;
 
   #scope = new Scope(this, this);
   #transcript: Transcript | undefined;
+  #reactive: ReactiveModule | undefined;
 
   constructor() {
     super();
     this.trace = false;
+    this.trackedSymbols = "";
     ensureStyles();
   }
 
@@ -72,12 +93,27 @@ export class NotatioDynamicModule extends LitElement {
   override connectedCallback(): void {
     super.connectedCallback();
     this.addEventListener(CONTROL_EVENT, this.#scope.onControl);
+    this.addEventListener("notatio-change", this.#onCellChange as EventListener);
   }
 
   override disconnectedCallback(): void {
     this.removeEventListener(CONTROL_EVENT, this.#scope.onControl);
+    this.removeEventListener("notatio-change", this.#onCellChange as EventListener);
     super.disconnectedCallback();
   }
+
+  /**
+   * A descendant `<notatio-cell>` committed a new input -- the trigger a reactive module
+   * reacts to (design/rendering-environments.md). Only meaningful once `TrackedSymbols`
+   * is set; a plain transcript ignores its own cells' commits here.
+   */
+  #onCellChange = (event: CustomEvent<{ notatio: string; json: unknown }>): void => {
+    if (!this.#reactive) return;
+    const el = event.target;
+    if (el instanceof Element && el.tagName === "NOTATIO-CELL") {
+      this.#reactive.commit(el, event.detail.notatio, event.detail.json as never);
+    }
+  };
 
   protected override firstUpdated(): void {
     this.#scope.trace = this.trace;
@@ -94,10 +130,25 @@ export class NotatioDynamicModule extends LitElement {
    * -- lazily, so a module with no cells never pays for one, and memoized, so the FIRST
    * cell to evaluate (not necessarily the first in document order, since each cell loads
    * the engine on its own schedule) settles which scope every other cell in this module
-   * shares.
+   * shares. `TrackedSymbols` decides which `Transcript` that first call builds: a plain
+   * one (history on, `Out`/`In`/`InString`/`%` live, `In[n]`/`Out[n]` labels) by default,
+   * or `history: false` once reactive -- cells can be read in any order there, so a
+   * position-keyed label would be misleading, and a reference to one is rejected outright
+   * by `tracked-symbols.ts`'s own schedule.
+   *
+   * When `TrackedSymbols` is set, every call also feeds the reactive graph: cheap, since
+   * `register` skips a `<notatio-cell>` it already knows, and it is the only place this
+   * class is handed an engine to box a not-yet-edited cell's `value` with.
    */
   transcriptFor(engine: ComputeEngine): Transcript {
-    return (this.#transcript ??= new Transcript(engine));
+    const tracked = parseTrackedSymbols(this.trackedSymbols);
+    const transcript = (this.#transcript ??= new Transcript(engine, {
+      history: tracked === undefined,
+    }));
+    if (tracked !== undefined) {
+      (this.#reactive ??= new ReactiveModule(tracked)).register(this, engine, transcript);
+    }
+    return transcript;
   }
 
   protected override render(): unknown {
