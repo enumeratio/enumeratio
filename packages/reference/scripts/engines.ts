@@ -10,6 +10,7 @@ import { declareAdeles } from "@enumeratio/adeles/src";
 import { declareAestimatio } from "@enumeratio/aestimatio/src";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { declareBraid } from "@enumeratio/braid/src";
+import { declareCollections } from "@enumeratio/collections/src";
 import { declareDiagrams } from "@enumeratio/diagram/src";
 import { declareGroupAlgebra } from "@enumeratio/groupalgebra/src";
 import { declareHecke } from "@enumeratio/hecke/src";
@@ -31,6 +32,7 @@ const LIBRARY_DECLARATIONS = [
   declareAnalytic,
   declareHypercomplex,
   declareDiagrams,
+  declareCollections,
   declareResidues,
   declareNumerals,
   declareHecke,
