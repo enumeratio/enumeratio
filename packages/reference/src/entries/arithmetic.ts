@@ -1309,10 +1309,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Rationalize", "Pi", 0.001],
         expected: ["Rational", 201, 64],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Should give the rational with the smallest denominator within 0.001 of $\\pi$, $201/64$; compute-engine returns the closer continued-fraction convergent $333/106$",
+          "The rational with the smallest denominator within 0.001 of $\\pi$ -- $201/64$, not compute-engine's own closer-but-larger-denominator continued-fraction convergent $333/106$",
       },
       {
         expr: ["Rationalize", ["Add", 1.2, ["Multiply", 6.7, "x"]]],

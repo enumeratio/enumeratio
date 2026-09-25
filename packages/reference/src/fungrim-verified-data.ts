@@ -1307,7 +1307,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["CarlsonRG", "EllipticE", "EllipticK", "Imaginary", "Real"],
     verdict: "disagree",
     detail:
-      'at _x = ["Complex",0.5700000000000001,0.23], _c = 0.17: 0.33756511460500216 vs 0.33851037749099544 (relative gap 1.0e-3)',
+      'at _x = ["Complex",0.5700000000000001,0.23], _c = 0.17: 0.33756511460500216 vs 0.3385103774909951 (relative gap 1.0e-3)',
   },
   {
     entry: "483e7e",
