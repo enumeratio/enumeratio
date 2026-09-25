@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { compare, normalise } from "../src/compare.ts";
+import { compare, compareCombination, linearCombination, normalise } from "../src/compare.ts";
 import { emit, unmappedHeads } from "../src/emit.ts";
 import { MAPPINGS, mappingFor } from "../src/mappings.ts";
 import { SYSTEMS, wiredSystems } from "../src/systems.ts";
@@ -101,4 +101,26 @@ test("no mapping template references an operand it cannot have", () => {
       }
     }
   }
+});
+
+test("a String of a bare name emits as a string literal, not a free symbol", () => {
+  expect(emit(["GroupBasis", ["String", "s0"]], "oscar")).toEqual({
+    ok: true,
+    source: 'EnumeratioBasis("s0")',
+  });
+});
+
+test("an algebra element compares as a combination, whatever order its terms are in", () => {
+  const ours = ["Add", ["GroupBasis", "'1'"], ["Multiply", 2, ["GroupBasis", `'"s0"'`]]];
+  expect(linearCombination(ours)).toEqual(
+    new Map([
+      ["GroupBasis(1)", 1],
+      ["GroupBasis(s0)", 2],
+    ]),
+  );
+  expect(compareCombination(ours, 'combination:{"GroupBasis(s0)":2,"GroupBasis(1)":1}')).toBe(
+    "agree",
+  );
+  expect(compareCombination(ours, 'combination:{"GroupBasis(1)":1}')).toBe("disagree");
+  expect(compareCombination("x", 'combination:{"GroupBasis(1)":1}')).toBe("inconclusive");
 });

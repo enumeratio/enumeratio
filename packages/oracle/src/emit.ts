@@ -105,6 +105,9 @@ export function emit(expr: MathJSON, system: System): Emitted {
   };
 
   const walkCall = (head: string, operands: readonly MathJSON[]): string => {
+    // `["String", "s0"]` spells a string, not the symbol s0.
+    if (head === "String" && operands.length === 1 && typeof operands[0] === "string")
+      return JSON.stringify(operands[0]);
     const mapping = mappingFor(head, operands.length);
     const template = mapping?.emit[system];
     if (template !== undefined) return fill(template, operands.map(walk));

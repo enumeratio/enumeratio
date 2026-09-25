@@ -492,6 +492,40 @@ export const MAPPINGS: readonly Mapping[] = [
     },
   },
   { head: "Length", arity: 1, emit: { wolfram: "Length[$1]", sympy: "len($1)", sage: "len($1)" } },
+
+  // ── groups and group algebras: Oscar, through oscar/preamble.jl ──────────────
+  // A group comes back labelled as ours (packages/groupalgebra), so element-level heads can
+  // name elements the way our examples do.
+  {
+    head: "CyclicGroup",
+    arity: 1,
+    emit: { oscar: "enumeratio_cyclic(cyclic_group(PermGroup, $1), $1)" },
+  },
+  {
+    head: "DihedralGroup",
+    arity: 1,
+    emit: { oscar: "enumeratio_dihedral(dihedral_group(PermGroup, 2 * $1), $1)" },
+    note: "Our DihedralGroup(n) is the symmetries of an n-gon; Oscar and GAP index dihedral groups by order, so it is dihedral_group(2n) there.",
+  },
+  { head: "GroupDirectProduct", arity: 2, emit: { oscar: "enumeratio_direct_product($1, $2)" } },
+  { head: "GroupOrder", arity: 1, emit: { oscar: "order(($1).G)" } },
+  { head: "GroupIsAbelian", arity: 1, emit: { oscar: "is_abelian(($1).G)" } },
+  {
+    head: "GroupCentreDimension",
+    arity: 1,
+    emit: { oscar: "number_of_conjugacy_classes(($1).G)" },
+  },
+  { head: "GroupAlgebra", arity: 1, emit: { oscar: "($1).A" } },
+  { head: "AlgebraDimension", arity: 1, emit: { oscar: "dim($1)" } },
+  { head: "GroupBasis", arity: 1, emit: { oscar: "EnumeratioBasis($1)" } },
+  { head: "GroupProduct", arity: 3, emit: { oscar: "enumeratio_product($1, $2, $3)" } },
+  {
+    head: "ClassSum",
+    arity: 2,
+    emit: { oscar: "enumeratio_class_sum($1, $2)" },
+    note: "Classes are numbered in our order, by each class's smallest element; Oscar's conjugacy_classes order differs, so the helper re-sorts.",
+  },
+  { head: "IsCentral", arity: 2, emit: { oscar: "enumeratio_is_central($1, $2)" } },
 ];
 
 /** The mapping that applies to a head at a given arity, preferring the arity-specific one. */

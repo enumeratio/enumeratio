@@ -5,6 +5,7 @@
 // within a relative tolerance; anything else has to match after normalising whitespace,
 // brackets and the several ways these systems spell a list.
 
+import type { MathJSON } from "./emit.ts";
 import { compareTrees, type Tree } from "./structural.ts";
 
 /** A number if the text denotes one — including Python complex and Wolfram real syntax, and
@@ -123,4 +124,57 @@ export function comparePythonStructured(
 ): Verdict | undefined {
   const theirsTree = parsePython(theirs);
   return theirsTree === undefined ? undefined : compareTrees(ours, theirsTree, tolerance);
+}
+
+/** A basis label as MathJSON writes it: `'3'`, the evaluated `'"s0"'`, or `["String", "s0"]`. */
+function basisLabel(label: MathJSON): string | undefined {
+  if (Array.isArray(label))
+    return label[0] === "String" && typeof label[1] === "string" ? label[1] : undefined;
+  if (typeof label !== "string" || !/^'.*'$/s.test(label)) return undefined;
+  const inner = label.slice(1, -1);
+  return /^".*"$/s.test(inner) ? (JSON.parse(inner) as string) : inner;
+}
+
+/**
+ * An algebra element as `Head(label) → coefficient`, from sums, scalar multiples and
+ * negations of one-argument basis calls (`["GroupBasis", "'1'"]`). `undefined` for anything
+ * else — a sum over two different heads is fine, a basis element times a basis element is not.
+ */
+export function linearCombination(expr: MathJSON): Map<string, number> | undefined {
+  const out = new Map<string, number>();
+  const add = (e: MathJSON, factor: number): boolean => {
+    if (typeof e === "number") return false;
+    if (!Array.isArray(e) || typeof e[0] !== "string") return false;
+    const [head, ...ops] = e as readonly MathJSON[];
+    if (head === "Add") return ops.every((op) => add(op, factor));
+    if (head === "Negate" && ops.length === 1) return add(ops[0] as MathJSON, -factor);
+    if (head === "Multiply") {
+      const scalars = ops.filter((op): op is number => typeof op === "number");
+      const rest = ops.filter((op) => typeof op !== "number");
+      if (rest.length !== 1) return false;
+      return add(
+        rest[0] as MathJSON,
+        scalars.reduce((a, b) => a * b, factor),
+      );
+    }
+    const label = ops.length === 1 ? basisLabel(ops[0] as MathJSON) : undefined;
+    if (label === undefined) return false;
+    const key = `${head as string}(${label})`;
+    out.set(key, (out.get(key) ?? 0) + factor);
+    return true;
+  };
+  if (!add(expr, 1)) return undefined;
+  for (const [key, c] of out) if (c === 0) out.delete(key);
+  return out;
+}
+
+/** Ours against an answer printed as `combination:{"GroupBasis(1)": 2, …}`: equal as maps,
+ * whatever order either side wrote its terms in. */
+export function compareCombination(ours: MathJSON, theirs: string): Verdict {
+  const mine = linearCombination(ours);
+  if (mine === undefined) return "inconclusive";
+  const parsed = JSON.parse(theirs.slice("combination:".length)) as Record<string, number>;
+  const keys = new Set([...mine.keys(), ...Object.keys(parsed)]);
+  for (const key of keys) if ((mine.get(key) ?? 0) !== (parsed[key] ?? 0)) return "disagree";
+  return "agree";
 }
