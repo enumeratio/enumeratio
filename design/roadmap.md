@@ -94,13 +94,6 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
 - **Run our own test suites under aestimatio** — a notatio/aestimatio evaluation process,
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
   today (see design/speculative/aestimatio.md).
-- **A profiler job in CI** — an advisory nightly sweep, like `quickcheck.yml`. It runs each
-  package's suite with vitest's JSON reporter and records per-test and per-file durations plus
-  package wall time, keyed by commit, then files a rolling issue when a test drifts well past its
-  trailing median. The slowest few files also get a `--cpu-prof` capture as an artifact. The
-  exhaustive suites are CPU-bound and hosted runners vary about 2× from run to run, so compare
-  medians or ratios within a run, never single wall-clock numbers. Where the history lives (an
-  artifact, a data branch, or the docs site) is still open.
 
 ## 5. What this file is not
 
