@@ -123,11 +123,17 @@ test("special forms: anonymous functions use slots", () => {
   expect(toWolfram(["Function", ["Power", "_", 2]])).toBe("Function[Power[Slot[1], 2]]");
 });
 
+test("DigitSum is Wolfram's own head, third argument included", () => {
+  expect(toWolfram(["DigitSum", 58127, 2])).toBe("DigitSum[58127, 2]");
+  // DigitSum[n, b, k] sums the FIRST k digits: 18 here. Total[IntegerDigits[n, b, k]] would
+  // keep the last k and give 17, which is what the old lowering sent the kernel.
+  expect(toWolfram(["DigitSum", 6345354, 10, 4])).toBe("DigitSum[6345354, 10, 4]");
+});
+
 test("special forms lowered to a Wolfram expression with no head of its own", () => {
   expect(toWolfram(["IndexOf", ["List", 1, 2, 3], 9])).toBe(
     "First[FirstPosition[List[1, 2, 3], 9, List[0]]]",
   );
-  expect(toWolfram(["DigitSum", 58127, 2])).toBe("Total[IntegerDigits[58127, 2]]");
   expect(toWolfram(["Degrees", 30])).toBe("Times[30, Degree]");
   expect(toWolfram(["Mode", ["List", 1, 2, 2]])).toBe("First[Commonest[List[1, 2, 2]]]");
 });
