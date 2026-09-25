@@ -5,7 +5,7 @@ summary: True if distinct x on f's domain always give distinct f(x), False other
 signatures:
   - call: FunctionInjective(f, x)
     description: whether f, as a function of the real variable x over its own domain, is one-to-one.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Unlike [[FunctionMonotonicity]], injectivity is asked about f's OWN domain, not all of R -- `1/x` is injective even though $x\ne0$.
   - True for an affine function, an odd-power monomial, Exp, Ln, and a nonzero constant over an affine denominator (a Mobius map); False for an even-power monomial and for Tan (periodic, hence many-to-one on its full domain).

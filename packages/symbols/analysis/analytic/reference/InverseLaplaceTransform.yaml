@@ -5,7 +5,7 @@ summary: The inverse Laplace transform, as a small dictionary of common images (
 signatures:
   - call: InverseLaplaceTransform(F, s, t)
     description: $f(t)$ such that $\mathcal{L}\{f\}(s) = F(s)$, read off a fixed table of images.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'Covered: $s^{-n}$ ($n$ a positive integer) $\to t^{n-1}/(n-1)!$; $1/(s-a) \to e^{at}$; $s/(s^2+a^2) \to \cos(at)$; $a/(s^2+a^2) \to \sin(at)$; $s/(s^2-a^2) \to \cosh(at)$; $a/(s^2-a^2) \to \sinh(at)$; sums and a constant factor.'
   - "Declined: anything outside that table — a general rational function of `s` (partial-fraction decomposition is not attempted), a non-positive or non-integer power of `s`, an image that doesn't depend on `s` at all."

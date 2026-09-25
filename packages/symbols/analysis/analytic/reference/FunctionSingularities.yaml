@@ -5,7 +5,7 @@ summary: Where f fails to be analytic, as a condition in x.
 signatures:
   - call: FunctionSingularities(f, x)
     description: the set of real x where f is not analytic (a pole, or outside its domain, including its branch points).
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "Not simply the complement of [[FunctionDomain]] -- confirmed against `wolframscript`, Sqrt and Log are singular AT their boundary point too, even though the real value there is defined ($\\sqrt0=0$): `FunctionSingularities(Sqrt(x), x)` is `x<=0`, not the strict `x<0` the domain's complement would give."
   - A polynomial or Exp has none (`False`); a rational function's are the real zeros of its denominator; Sqrt/Ln's are the closed complement of where their argument is positive; Tan's are `Cos(x)==0`.

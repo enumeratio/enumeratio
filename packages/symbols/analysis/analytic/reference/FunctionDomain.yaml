@@ -5,7 +5,7 @@ summary: The set of real x where f (an expression in the single real variable x)
 signatures:
   - call: FunctionDomain(f, x)
     description: the domain of f as a function of the real variable x, expressed as an inequality or a disjunction of inequalities.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Built on one shared classifier for an elementary real expression in a single variable — see [[FunctionMonotonicity]], [[FunctionRange]], and the rest of the `Function*` family, which all reduce the expression the same way before answering their own question.
   - 'Covers: polynomials and rational functions (division by zero, denominator degree <= 2 or a bare power like $x^n$); Sqrt of an affine or quadratic argument (an even root, requiring the radicand >= 0); Ln/Log of an affine argument; and Exp, Sin, Cos, Tan of an affine argument (domain all of $\mathbb R$, except Tan -- see below).'

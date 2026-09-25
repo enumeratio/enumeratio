@@ -5,7 +5,7 @@ summary: The one-sided Laplace transform $F(s) = \int_0^\infty f(t) e^{-st}\,dt$
 signatures:
   - call: LaplaceTransform(f, t, s)
     description: $F(s) = \int_0^\infty f(t) e^{-st}\,dt$, for `f` a function of `t`.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "Covered: $t^n$ ($n$ a concrete real $> -1$), $e^{at}$, $\\sin(at)$, $\\cos(at)$, $\\sinh(at)$, $\\cosh(at)$, `UnitStep(t - a)` and `DiracDelta(t - a)` (sign of `a` determined via `isPositive`/`isNegative`, declined if unknown), sums (linearity), a constant factor, and the first shifting theorem — an `Exp(a t)` factor multiplying an otherwise-transformable piece shifts $s \\to s - a$ in that piece's transform, covering $t^n e^{at}$, $e^{at}\\sin(bt)$, etc."
   - 'Declined: an opaque function `f(t)` (Wolfram itself only expands the derivative/second-shifting theorems symbolically, which would mean synthesizing `f(0)` or a self-referential `LaplaceTransform[f[t],t,s]` for an arbitrary `f`); a product of two independently-transformable pieces outside the shifting-theorem shape (e.g. $t^2 \sin(t)$); `UnitStep`/`DiracDelta` at $a = 0$ or an undetermined-sign `a`; any exponent not linear in `t`.'
@@ -23,12 +23,19 @@ examples:
     expected: [Divide, 3, [Add, [Power, s, 2], 9]]
     caption: $\mathcal{L}\{\sin(3t)\} = 3/(s^2+9)$
   - id: t-cubed-exp-shift
-    expr: [LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Power, t, 3]], t, s]
+    expr:
+      [LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Power, t, 3]], t, s]
     expected: [Divide, 6, [Power, [Add, s, -2], 4]]
     category: Scope
     caption: first shifting theorem — $\mathcal{L}\{t^3 e^{2t}\} = 6/(s-2)^4$
   - id: exp-sin-shift
-    expr: [LaplaceTransform, [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Sin, [Multiply, 3, t]]], t, s]
+    expr:
+      [
+        LaplaceTransform,
+        [Multiply, [Power, ExponentialE, [Multiply, 2, t]], [Sin, [Multiply, 3, t]]],
+        t,
+        s,
+      ]
     expected: [Divide, 3, [Add, [Power, [Add, s, -2], 2], 9]]
     category: Scope
     caption: $\mathcal{L}\{e^{2t}\sin(3t)\} = 3/((s-2)^2+9)$

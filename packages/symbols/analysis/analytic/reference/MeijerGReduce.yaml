@@ -4,8 +4,8 @@ signature: MeijerGReduce(expr, x)
 summary: Rewrites a handful of elementary and special functions into MeijerG form, using identities that hold for the whole operand (not just a linear argument), so each is unconditional.
 signatures:
   - call: MeijerGReduce(expr, x)
-    description: '`expr` (a function of `x`) rewritten as a `MeijerG` call, for the heads below.'
-    library: '@enumeratio/analytic'
+    description: "`expr` (a function of `x`) rewritten as a `MeijerG` call, for the heads below."
+    library: "@enumeratio/analytic"
 details:
   - 'Covered: $e^g \to G^{1,0}_{0,1}(-g \mid {}; 0)$, $\sin(g) \to \sqrt{\pi}\,G^{1,0}_{0,2}(g^2/4 \mid {}; 1/2, 0)$, $\cos(g) \to \sqrt{\pi}\,G^{1,0}_{0,2}(g^2/4 \mid {}; 0, 1/2)$, $\ln(1+g) \to G^{1,2}_{2,2}(g \mid 1,1; 1,0)$, and $J_n(g) \to G^{1,0}_{0,2}(g^2/4 \mid {}; n/2, -n/2)$ — for any `g` (and, for the Bessel case, any `n`), since each identity holds for the operand as a whole rather than requiring a linear argument.'
   - Emits the plain 4-argument `MeijerG` form. Wolfram's own `MeijerGReduce` often prefers a generalized 5-argument `MeijerG[…, z, r]` with $r \neq 1$ to keep the argument free of an explicit square root; both are correct, and what's verified here is that ours round-trips numerically through this package's own `MeijerG` evaluator, not that it matches Wolfram's textual form.
@@ -17,7 +17,17 @@ examples:
     caption: $e^{x} = G^{1,0}_{0,1}(-x \mid {}; 0)$
   - id: sin
     expr: [MeijerGReduce, [Sin, x], x]
-    expected: [Multiply, [MeijerG, [List, [List], [List]], [List, [List, [Rational, 1, 2]], [List, 0]], [Multiply, [Rational, 1, 4], [Power, x, 2]]], [Sqrt, Pi]]
+    expected:
+      [
+        Multiply,
+        [
+          MeijerG,
+          [List, [List], [List]],
+          [List, [List, [Rational, 1, 2]], [List, 0]],
+          [Multiply, [Rational, 1, 4], [Power, x, 2]],
+        ],
+        [Sqrt, Pi],
+      ]
     caption: $\sin(x) = \sqrt{\pi}\,G^{1,0}_{0,2}(x^2/4 \mid {}; 1/2, 0)$
   - id: log1p
     expr: [MeijerGReduce, [Ln, [Add, 1, x]], x]
@@ -25,7 +35,13 @@ examples:
     caption: $\ln(1+x) = G^{1,2}_{2,2}(x \mid 1,1; 1,0)$
   - id: bessel-j
     expr: [MeijerGReduce, [BesselJ, n, x], x]
-    expected: [MeijerG, [List, [List], [List]], [List, [List, [Multiply, [Rational, 1, 2], n]], [List, [Multiply, [Rational, -1, 2], n]]], [Multiply, [Rational, 1, 4], [Power, x, 2]]]
+    expected:
+      [
+        MeijerG,
+        [List, [List], [List]],
+        [List, [List, [Multiply, [Rational, 1, 2], n]], [List, [Multiply, [Rational, -1, 2], n]]],
+        [Multiply, [Rational, 1, 4], [Power, x, 2]],
+      ]
     category: Scope
     caption: $J_n(x) = G^{1,0}_{0,2}(x^2/4 \mid {}; n/2, -n/2)$, symbolic order $n$
 primitive: kernel

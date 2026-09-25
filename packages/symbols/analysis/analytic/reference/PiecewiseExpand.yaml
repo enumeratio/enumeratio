@@ -5,10 +5,10 @@ summary: Rewrite [[Abs]], [[Sign]], [[UnitStep]], [[Clip]], and 2-argument [[Max
 signatures:
   - call: PiecewiseExpand(expr)
     description: rewrite using whatever is already assumed real (e.g. inside an enclosing [[Assuming]]).
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
   - call: PiecewiseExpand(expr, assumptions)
     description: assume $assumptions$ (scoped, as in [[Assuming]]) for the rewrite, then forget it.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Each rewrite fires only once its argument(s) are known real — `Abs`/`Sign`/`UnitStep`/`Clip` on a genuinely complex value are not piecewise-comparable, so (matching Wolfram's own `PiecewiseExpand`) an argument whose realness isn't established is left untouched rather than guessed at.
   - Rewrites recurse into subexpressions, so `PiecewiseExpand(Abs(x) + 1, …)` rewrites the `Abs` inside the sum.
@@ -32,6 +32,7 @@ examples:
     category: Possible issues
     caption: with no assumption that $x$ is real, `Abs` is left alone — same as Wolfram
   - id: max-of-two-real-variables
-    expr: [PiecewiseExpand, [Max, x, y], [And, [Element, x, RealNumbers], [Element, y, RealNumbers]]]
+    expr:
+      [PiecewiseExpand, [Max, x, y], [And, [Element, x, RealNumbers], [Element, y, RealNumbers]]]
     expected: [Piecewise, [List, [List, x, [LessEqual, y, x]]], y]
     caption: $\max(x,y)$ expanded, once both are known real

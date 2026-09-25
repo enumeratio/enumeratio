@@ -5,7 +5,7 @@ summary: The set of values f takes as x ranges over its domain, as a condition i
 signatures:
   - call: FunctionRange(f, x, y)
     description: the range of f as a function of the real variable x, expressed as a condition in y.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Uses the same classifier as [[FunctionDomain]]. An odd-degree polynomial is onto $\mathbb R$ by the intermediate value theorem regardless of its other coefficients; a degree-2 polynomial's range comes from its vertex.
   - 'Covers: odd-degree polynomials (True); degree-2 polynomials (from the vertex); a nonzero constant over an affine denominator ($y \ne 0$); Sqrt of an affine or quadratic argument; Ln of an affine argument (True); Exp of an affine argument ($y>0$); Sin/Cos of an affine argument ($-1\le y\le1$); Tan of an affine argument (True).'
