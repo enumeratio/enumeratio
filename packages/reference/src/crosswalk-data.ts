@@ -958,6 +958,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "CubeRoot",
   },
   {
+    name: "Cycles",
+    wolfram: "Cycles",
+  },
+  {
     name: "DedekindEta",
     fungrimEntries: [
       "02d14f",
@@ -2192,6 +2196,25 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "GroupElements",
+    wolfram: "GroupElements",
+  },
+  {
+    name: "GroupGenerators",
+    wolfram: "GroupGenerators",
+  },
+  {
+    name: "GroupOrder",
+    wolfram: "GroupOrder",
+    oracle: [
+      {
+        system: "oscar",
+        call: "order(($1).G)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "Gudermannian",
     wolfram: "Gudermannian",
   },
@@ -2503,6 +2526,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "InverseGammaRegularized",
     wolfram: "InverseGammaRegularized",
+  },
+  {
+    name: "InversePermutation",
+    wolfram: "InversePermutation",
   },
   {
     name: "IsComposite",
@@ -3473,6 +3500,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "PerfectNumber",
     wolfram: "PerfectNumber",
+  },
+  {
+    name: "PermutationCycles",
+    wolfram: "PermutationCycles",
+  },
+  {
+    name: "PermutationGroup",
+    wolfram: "PermutationGroup",
+  },
+  {
+    name: "Permute",
+    wolfram: "Permute",
   },
   {
     name: "Pi",
