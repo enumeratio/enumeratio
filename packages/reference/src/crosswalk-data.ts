@@ -2944,18 +2944,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Length",
     wolfram: "Length",
-    oracle: [
-      {
-        system: "sympy",
-        call: "len($1)",
-        arity: 1,
-      },
-      {
-        system: "sage",
-        call: "len($1)",
-        arity: 1,
-      },
-    ],
   },
   {
     name: "LerchPhi",
@@ -3227,7 +3215,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "Max($*,)",
+        call: "enumeratio_max($*,)",
       },
       {
         system: "sage",
@@ -3258,7 +3246,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "Min($*,)",
+        call: "enumeratio_min($*,)",
       },
       {
         system: "sage",

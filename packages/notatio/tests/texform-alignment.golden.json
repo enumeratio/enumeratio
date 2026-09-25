@@ -16746,7 +16746,7 @@
   "special-functions/PolyLog#11": {
     "ours": {
       "input": "\\operatorname{Li}_{2.5}(2)",
-      "output": "\\operatorname{Li}_{2.5}(2)"
+      "output": "2.789\\,660\\,332\\,382\\,777\\,8-1.363\\,803\\,700\\,539\\,351i"
     },
     "wolfram": {
       "input": "\\text{Li}_{2.5}(2)",
@@ -16754,7 +16754,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "special-functions/PolyLog#12": {
