@@ -93,7 +93,7 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     hidden: { type: "boolean", description: "Deprecated: superseded by role: test." },
     others: { type: "object", additionalProperties: OTHER_SYSTEM_RUN },
   },
-  required: ["expr", "expected"],
+  required: ["id", "expr", "expected"],
   additionalProperties: false,
 };
 
@@ -277,6 +277,8 @@ const describe = (error: ErrorObject): string => {
       return `unexpected property "${String(params.additionalProperty)}"`;
     case "enum":
       return `expected one of ${JSON.stringify(params.allowedValues)}, got ${JSON.stringify(error.data)}`;
+    case "pattern":
+      return `does not match /${String(params.pattern)}/`;
     case "anyOf":
       return `matches none of ${(error.schema as unknown[]).length} allowed shapes`;
     default:

@@ -13,7 +13,7 @@ const MINIMAL_ENTRY = {
   domain: "Numbers",
   signature: "Mod(a, b)",
   summary: "Remainder of a divided by b.",
-  examples: [{ expr: ["Mod", 5, 0], expected: "NaN" }],
+  examples: [{ id: "zero-modulus", expr: ["Mod", 5, 0], expected: "NaN" }],
 };
 
 test("a well-formed entry passes", () => {

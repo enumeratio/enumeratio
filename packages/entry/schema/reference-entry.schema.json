@@ -207,7 +207,7 @@
           }
         }
       },
-      "required": ["expr", "expected"],
+      "required": ["id", "expr", "expected"],
       "additionalProperties": false
     },
     "ReferenceSignature": {
