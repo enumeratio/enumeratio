@@ -7,12 +7,12 @@ name: Perf
 # service. Hosted runners wobble ~2x run to run, so drift compares the current duration to the
 # trailing median (never a single number) and only flags a test past BOTH a ratio (1.5x) and an
 # absolute floor (200ms) — see tools/perf/src/history.ts. A drift files/reopens ONE rolling issue
-# ("perf drift", labelled `nightly-fixup`, the same routine quickcheck.yml uses); a clean run closes
+# ("perf drift", labelled `nightly-fixup`, the same routine plausible.yml uses); a clean run closes
 # it. Never a required check — this workflow does not gate merges.
 
 on:
   schedule:
-    - cron: "51 4 * * *" # 04:51 UTC, after nightly.yml and quickcheck.yml
+    - cron: "51 4 * * *" # 04:51 UTC, after nightly.yml and plausible.yml
   workflow_dispatch:
 
 permissions:

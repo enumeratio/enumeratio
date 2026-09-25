@@ -67,13 +67,16 @@ const OWN_KINDS = new Set(["BetaDistribution", "GammaDistribution", "BinormalDis
 
 // --- parameter extraction ---------------------------------------------------------------------
 
-const betaParams = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
+export const betaParams = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   return ops.length === 2 ? [ops[0], ops[1]] : undefined;
 };
 
 /** GammaDistribution(shape) defaults scale to 1; GammaDistribution(shape, scale) both given. */
-const gammaParams = (ce: ComputeEngine, dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
+export const gammaParams = (
+  ce: ComputeEngine,
+  dist: BoxedExpression,
+): [BoxedExpression, BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   if (ops.length === 1) return [ops[0], ce.One];
   if (ops.length === 2) return [ops[0], ops[1]];

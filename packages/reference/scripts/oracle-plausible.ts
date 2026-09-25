@@ -15,8 +15,8 @@
 // The seed is the date, so every ecosystem's job draws the same samples on the same night,
 // and any night can be replayed:
 //
-//   node packages/reference/scripts/oracle-quickcheck.ts mpmath sympy
-//   node packages/reference/scripts/oracle-quickcheck.ts julia --seed 2026-09-25 --samples 4
+//   node packages/reference/scripts/oracle-plausible.ts mpmath sympy
+//   node packages/reference/scripts/oracle-plausible.ts julia --seed 2026-09-25 --samples 4
 
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/aestimatio/src/node";
@@ -242,7 +242,7 @@ interface Finding {
 }
 const findings: Finding[] = [];
 const lines: string[] = [
-  `## Oracle quickcheck — seed \`${seed}\``,
+  `## Oracle Plausible — seed \`${seed}\``,
   "",
   `${samples.length} samples from ${templates.length} templates; ours skipped ${samples.length - expectedOf.size} (timed out or raised).`,
   "",
@@ -321,7 +321,7 @@ const summary = `${lines.join("\n")}\n`;
 process.stdout.write(summary);
 if (process.env["GITHUB_STEP_SUMMARY"]) appendFileSync(process.env["GITHUB_STEP_SUMMARY"], summary);
 writeFileSync(
-  new URL("../golden/oracle/quickcheck.json", import.meta.url),
+  new URL("../golden/oracle/plausible.json", import.meta.url),
   `${JSON.stringify({ seed, systems, samples: samples.length, findings }, null, 2)}\n`,
 );
 if (strict && findings.length > 0) process.exitCode = 1;

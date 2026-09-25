@@ -130,5 +130,17 @@ examples:
     id: mod-7-3
     expr: [Mod, 7, 3]
     expected: 1
+  - id: eulers-number-mod-2-reduces-exactly
+    expr: [Mod, ExponentialE, 2]
+    expected: [Add, -2, ExponentialE]
+    category: Scope
+    caption: $e \approx 2.718$, one period past 2
+    role: test
+  - id: a-free-symbol-is-untouched
+    expr: [Mod, x, 2]
+    expected: [Mod, x, 2]
+    category: Possible issues
+    caption: A free (non-numeric) symbol is untouched — the wrapper declines
+    role: test
 seeAlso:
   - PowerMod

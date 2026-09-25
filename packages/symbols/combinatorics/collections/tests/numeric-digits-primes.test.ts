@@ -218,7 +218,7 @@ test("NarcissisticNumbers matches an independent digit-power-sum predicate for i
 
 test("NarcissisticNumbers.unrank returns exact bigint past the safe-integer prefix, never NaN (issue #90)", () => {
   // Past the 43rd term, unrank used to answer NaN -- a known value the `number` element
-  // couldn't carry, but one that made every large pair collide under quickcheck's
+  // couldn't carry, but one that made every large pair collide under Plausible's
   // JSON.stringify-keyed injectivity check (NaN -> "null" for all of them). Now it returns
   // the exact bigint instead, so every rank stays distinct.
   const entry = byHead.get("NarcissisticNumbers");
