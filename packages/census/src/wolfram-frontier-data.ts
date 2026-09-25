@@ -145,10 +145,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 34,
   },
   {
-    head: "Conditioned",
-    uses: 33,
-  },
-  {
     head: "QuantityArray",
     uses: 33,
   },
@@ -178,10 +174,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "GridBox",
-    uses: 27,
-  },
-  {
-    head: "NProbability",
     uses: 27,
   },
   {
@@ -550,10 +542,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ListPolarPlot",
-    uses: 10,
-  },
-  {
-    head: "NExpectation",
     uses: 10,
   },
   {

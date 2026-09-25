@@ -400,6 +400,11 @@ export const HEADS: Record<string, string> = {
   TransformedDistribution: "TransformedDistribution",
   MarginalDistribution: "MarginalDistribution",
   DirichletDistribution: "DirichletDistribution",
+  // Fifth-wave (narrowed) probability heads (@enumeratio/statistics/src/distributions-5.ts) —
+  // identity here already.
+  NExpectation: "NExpectation",
+  NProbability: "NProbability",
+  Conditioned: "Conditioned",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
