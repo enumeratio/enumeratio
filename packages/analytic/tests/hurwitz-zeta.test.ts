@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
@@ -7,6 +8,7 @@ import {
   hurwitzZeta,
   hurwitzZetaReal,
   zetaGeneralized,
+  zetaGeneralizedReal,
 } from "../src/hurwitz-zeta.ts";
 import { lerchPhi, lerchPhiReal } from "../src/lerch.ts";
 
@@ -201,6 +203,74 @@ test("compile handler emits a real kernel call (JS + WGSL) and runs correctly", 
   const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
   const v = g({ x: 1, __hz: hurwitzZetaReal });
   expect(Math.abs(v - hurwitzZetaReal(2, 1))).toBeLessThan(1e-12);
+});
+
+test("one-argument Zeta compiles to the generalized kernel at a = 1 (JS + WGSL)", () => {
+  const js = new JavaScriptTarget().compile(ce.box(["Zeta", "x"])) as { code?: string };
+  expect(js.code).toBe("_.__zg(_.x, 1)");
+  const wgsl = new WGSLTarget().compile(ce.box(["Zeta", "x"])) as { code?: string };
+  expect(wgsl.code).toBe("zetaGen(vec2f(x, 0.0), vec2f(1.0, 0.0)).x");
+  // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
+  const g = new Function("_", `return (${js.code});`) as (s: Record<string, unknown>) => number;
+  expect(g({ x: 3, __zg: zetaGeneralizedReal })).toBeCloseTo(1.2020569031595942, 13);
+});
+
+// --- One-argument Zeta at complex s -----------------------------------------------
+
+// compute-engine's native Zeta evaluates real s only; complex s is filled from ζ(s, 1).
+// Oracle values are pinned in zeta.golden.json (scripts/collect-zeta-goldens.ts, mpmath).
+interface ZetaGolden {
+  s: [number, number];
+  label: string;
+  tol: number;
+  mpmath: [number, number];
+}
+const zetaGoldens: ZetaGolden[] = JSON.parse(
+  readFileSync(new URL("./zeta.golden.json", import.meta.url), "utf8"),
+);
+
+const offBy = (engine: ComputeEngine, head: Expr[]): string[] =>
+  zetaGoldens.flatMap((g) => {
+    const r = engine.box([...head.slice(0, 1), ["Complex", ...g.s], ...head.slice(1)] as never).N();
+    const ref = g.mpmath;
+    const err =
+      Math.max(Math.abs(r.re - ref[0]), Math.abs(r.im - ref[1])) /
+      Math.max(1, Math.hypot(ref[0], ref[1]));
+    return err <= g.tol ? [] : [`${g.label}: relerr ${err.toExponential(2)}`];
+  });
+
+test("Zeta(s) at complex s matches mpmath, on and off the critical line", () => {
+  expect(offBy(ce, ["Zeta"])).toEqual([]);
+  expect(offBy(ce, ["Zeta", 1])).toEqual([]);
+  expect(offBy(ce, ["HurwitzZeta", 1])).toEqual([]);
+});
+
+test("Zeta(s) at complex s holds with the engine at 40 digits", () => {
+  // A compute-engine complex is a pair of doubles, so there is no bignum path to take:
+  // the answer is the double kernel's, not an unevaluated Zeta.
+  const engine = new ComputeEngine();
+  declareAnalytic(engine);
+  engine.precision = 40;
+  expect(offBy(engine, ["Zeta"])).toEqual([]);
+});
+
+test("Zeta(s) keeps the native behaviour wherever native evaluates", () => {
+  sameExact(["Zeta", 2], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]);
+  expect(ce.box(["Zeta", 1]).evaluate().json).toBe("ComplexInfinity");
+  expect(ce.box(["Zeta", "s"]).N().json).toEqual(["Zeta", "s"]);
+  expect(ce.box(["Zeta", ["Rational", 1, 2]]).evaluate().json).toEqual([
+    "Zeta",
+    ["Rational", 1, 2],
+  ]);
+  // An exact complex stays symbolic under evaluate(), as an exact real does; N() gives a number.
+  expect(ce.box(["Zeta", ["Complex", 2, 1]]).evaluate().json).toEqual(["Zeta", ["Complex", 2, 1]]);
+  expect(ce.box(["Zeta", ["Complex", 2, 1]]).N().im).toBeCloseTo(-0.4375308659196079, 14);
+  // Threads over a list, complex entries included.
+  expect(ce.box(["Zeta", ["List", 2, ["Complex", 0.5, 14]]]).evaluate().json).toEqual([
+    "List",
+    ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
+    ["Complex", 0.022241142609992697, -0.10325812326645332],
+  ]);
 });
 
 // --- LerchPhi Φ(z, s, a) = Σ zⁿ (n+a)^(−s) -----------------------------------------

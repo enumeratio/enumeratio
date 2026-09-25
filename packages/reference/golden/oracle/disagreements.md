@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1206, disagree 44, inconclusive 0, error 3
+## wolfram — agree 1207, disagree 44, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -72,7 +72,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 662, disagree 9, inconclusive 4, error 27
+## sympy — agree 663, disagree 9, inconclusive 4, error 27
 
 | example                        | kind           | ours                | theirs                               |
 | ------------------------------ | -------------- | ------------------- | ------------------------------------ |
@@ -120,7 +120,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mpmath — agree 404, disagree 2, inconclusive 0, error 4
+## mpmath — agree 405, disagree 2, inconclusive 0, error 4
 
 | example                           | kind           | ours                | theirs                                                                 |
 | --------------------------------- | -------------- | ------------------- | ---------------------------------------------------------------------- |
@@ -133,7 +133,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | ------------------------------- | --------------------------------- |
 | `special-functions/Gamma#1`     | `ValueError: gamma function pole` |
 | `special-functions/PolyGamma#6` | `ZeroDivisionError: `             |
-| `special-functions/Zeta#14`     | `ZeroDivisionError: `             |
+| `special-functions/Zeta#15`     | `ZeroDivisionError: `             |
 | `special-functions/Zeta#8`      | `ValueError: zeta(1) pole`        |
 
 </details>
@@ -214,7 +214,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `special-functions/PolyGamma#6`          | `ValueError: psi2_eval(): pole`                                                              |
 | `special-functions/PolyGamma#8`          | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
 | `special-functions/PolyLog#10`           | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `special-functions/Zeta#14`              | `ValueError: psi2_eval(): pole`                                                              |
+| `special-functions/Zeta#15`              | `ValueError: psi2_eval(): pole`                                                              |
 | `special-functions/Zeta#4`               | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
 
 </details>
