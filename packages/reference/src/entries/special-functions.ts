@@ -141,10 +141,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Gamma", 2, 0, "z"],
-        expected: ["Gamma", 2, 0, "z"],
-        category: "Possible issues",
+        expected: [
+          "Add",
+          ["Negate", ["Multiply", ["Add", "z", 1], ["Power", "ExponentialE", ["Negate", "z"]]]],
+          1,
+        ],
+        category: "Properties",
         caption:
-          "A three-argument call whose two halves do not themselves reduce keeps its own form rather than showing the difference -- Wolfram leaves $\\mathrm{Gamma}[2, 0, z]$ the same way",
+          "Now that $\\Gamma(2, z)$ has a closed form, the three-argument difference reduces through it too: $\\Gamma(2, 0, z) = 1 - (1+z)e^{-z}$. Wolfram's bare `Gamma[2, 0, z]` stays unevaluated (only `FunctionExpand` reaches this); this engine reduces both",
       },
       {
         expr: ["Gamma", 4.5],
@@ -196,17 +200,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Gamma", 2, "x"],
         expected: ["Multiply", ["Add", "x", 1], ["Power", "ExponentialE", ["Negate", "x"]]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An integer order should reduce to a closed form, $\\Gamma(2, x) = (1 + x)e^{-x}$; only $s = 1$ does today",
+        caption: "An integer order reduces to a closed form: $\\Gamma(2, x) = (1 + x)e^{-x}$",
       },
       {
         expr: ["Gamma", 2, 1],
         expected: ["Divide", 2, "ExponentialE"],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\Gamma(2, 1) = 2/e$; not yet -- exact arguments stay symbolic",
+        caption: "$\\Gamma(2, 1) = 2/e$, the same closed form at an exact argument",
       },
       {
         expr: [
@@ -262,11 +263,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Gamma", ["Rational", 1, 2], "x"],
-        expected: ["Multiply", ["Sqrt", "Pi"], ["Erfc", ["Sqrt", "x"]]],
-        aspirational: true,
+        expected: ["Multiply", ["Erfc", ["Sqrt", "x"]], ["Sqrt", "Pi"]],
         category: "Properties",
-        caption:
-          "$\\Gamma(1/2, x) = \\sqrt{\\pi}\\,\\operatorname{erfc}(\\sqrt{x})$. See [[Erfc]]; not yet",
+        caption: "$\\Gamma(1/2, x) = \\sqrt{\\pi}\\,\\operatorname{erfc}(\\sqrt{x})$. See [[Erfc]]",
       },
       {
         expr: ["Divide", ["D", ["Gamma", "x"], "x"], ["Gamma", "x"]],
@@ -520,25 +519,22 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Beta", ["Rational", 1, 2], 2, 3],
         expected: ["Rational", 11, 192],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Three arguments: the incomplete beta $B_z(a, b) = \\int_0^z t^{a-1}(1-t)^{b-1}\\,dt$, here $B_{1/2}(2, 3) = 11/192$; the arity is not declared",
+          "Three arguments: the incomplete beta $B_z(a, b) = \\int_0^z t^{a-1}(1-t)^{b-1}\\,dt$, here $B_{1/2}(2, 3) = 11/192$",
       },
       {
         expr: ["Beta", ["Rational", 1, 4], ["Rational", 1, 2], 2, 3],
         expected: ["Rational", 109, 3072],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Four arguments: the generalized incomplete beta $B_{z_1}(a, b) - B_{z_0}(a, b)$, here $\\int_{1/4}^{1/2} t(1-t)^2\\,dt = 109/3072$; not declared",
+          "Four arguments: the generalized incomplete beta $B_{z_1}(a, b) - B_{z_0}(a, b)$, here $\\int_{1/4}^{1/2} t(1-t)^2\\,dt = 109/3072$",
       },
       {
         expr: ["Beta", "a", 1],
         expected: ["Divide", 1, "a"],
-        aspirational: true,
         category: "Properties",
-        caption: "$B(a, 1) = 1/a$ for symbolic $a$; not yet",
+        caption: "$B(a, 1) = 1/a$ for symbolic $a$",
       },
       {
         expr: ["Beta", 2, "b"],
@@ -641,18 +637,16 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erf", 0.5, 1.5],
         expected: 0.4456052686622642,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Two arguments: the generalized $\\operatorname{erf}(z_0, z_1) = \\operatorname{erf}(z_1) - \\operatorname{erf}(z_0)$; the arity is not declared",
+          "Two arguments: the generalized $\\operatorname{erf}(z_0, z_1) = \\operatorname{erf}(z_1) - \\operatorname{erf}(z_0)$",
       },
       {
         expr: ["Erf", 1, 2],
-        expected: ["Subtract", ["Erf", 2], ["Erf", 1]],
-        aspirational: true,
+        expected: ["Add", ["Negate", ["Erf", 1]], ["Erf", 2]],
         category: "Scope",
         caption:
-          "...which with exact arguments is the difference $\\operatorname{erf}(2) - \\operatorname{erf}(1)$; not declared",
+          "...which with exact arguments is the difference $\\operatorname{erf}(2) - \\operatorname{erf}(1)$",
       },
       {
         expr: ["Erf", ["Interval", -2.1, -1.9]],
@@ -678,18 +672,16 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erf", ["Negate", "x"]],
         expected: ["Negate", ["Erf", "x"]],
-        aspirational: true,
         category: "Properties",
         caption:
-          "Oddness applied symbolically: $\\operatorname{erf}(-x) = -\\operatorname{erf}(x)$; not yet",
+          "Oddness applied symbolically: $\\operatorname{erf}(-x) = -\\operatorname{erf}(x)$",
       },
       {
         expr: ["Erf", ["ErfInv", "x"]],
         expected: "x",
-        aspirational: true,
         category: "Properties",
         caption:
-          "$\\operatorname{erf}(\\operatorname{erfinv}(x)) = x$ symbolically. See [[ErfInv]]; not yet",
+          "$\\operatorname{erf}(\\operatorname{erfinv}(x)) = x$ symbolically. See [[ErfInv]]",
       },
       {
         expr: ["Erf", "ImaginaryUnit"],
@@ -904,10 +896,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["ErfInv", 0.4, 0.2],
         expected: 0.6317759030550063,
-        aspirational: true,
         category: "Scope",
         caption:
-          "Two arguments: $\\operatorname{erfinv}(z_0, z)$ solves $z = \\operatorname{erf}(z_0, x) = \\operatorname{erf}(x) - \\operatorname{erf}(z_0)$; the arity is not declared",
+          "Two arguments: $\\operatorname{erfinv}(z_0, z)$ solves $z = \\operatorname{erf}(z_0, x) = \\operatorname{erf}(x) - \\operatorname{erf}(z_0)$",
       },
       {
         expr: ["ErfInv", ["Interval", 0.5, 0.6]],
@@ -934,10 +925,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["ErfInv", ["Negate", "x"]],
         expected: ["Negate", ["ErfInv", "x"]],
-        aspirational: true,
         category: "Properties",
         caption:
-          "Odd: $\\operatorname{erfinv}(-x) = -\\operatorname{erfinv}(x)$ applied symbolically; not yet",
+          "Odd: $\\operatorname{erfinv}(-x) = -\\operatorname{erfinv}(x)$ applied symbolically",
       },
       {
         expr: ["D", ["ErfInv", "x"], "x"],
@@ -1316,9 +1306,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["HurwitzZeta", 2, ["Rational", 1, 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\zeta(2, 1/2) = \\pi^2/2$; not yet -- rational $a$ stays symbolic",
+        caption:
+          "$\\zeta(2, 1/2) = \\pi^2/2$ -- the $s = 2$ instance of $\\zeta(s, 1/2) = (2^s-1)\\zeta(s)$",
       },
       {
         expr: ["HurwitzZeta", 2, ["Rational", 1, 4]],
@@ -1330,9 +1320,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["HurwitzZeta", "s", ["Rational", 1, 2]],
         expected: ["Multiply", ["Add", ["Power", 2, "s"], -1], ["Zeta", "s"]],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\zeta(s, 1/2) = (2^s - 1)\\zeta(s)$ for symbolic $s$; not yet",
+        caption: "$\\zeta(s, 1/2) = (2^s - 1)\\zeta(s)$ for symbolic $s$",
       },
       {
         expr: ["HurwitzZeta", "s", 1],
@@ -1529,17 +1518,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["LerchPhi", "z", "s", 1],
         expected: ["Divide", ["PolyLog", "s", "z"], "z"],
-        aspirational: true,
         category: "Properties",
-        caption:
-          "$\\Phi(z, s, 1) = \\operatorname{Li}_s(z)/z$ symbolically. See [[PolyLog]]; not yet",
+        caption: "$\\Phi(z, s, 1) = \\operatorname{Li}_s(z)/z$ symbolically. See [[PolyLog]]",
       },
       {
         expr: ["LerchPhi", "z", 1, 1],
         expected: ["Divide", ["Negate", ["Ln", ["Add", ["Negate", "z"], 1]]], "z"],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\Phi(z, 1, 1) = -\\ln(1-z)/z$; not yet",
+        caption:
+          "$\\Phi(z, 1, 1) = -\\ln(1-z)/z$ -- the $s = 1$ instance, through $\\operatorname{Li}_1(z) = -\\ln(1-z)$",
       },
       {
         expr: ["LerchPhi", 1, 2, ["Rational", 1, 4]],
@@ -1552,10 +1539,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["LerchPhi", -1, 1, 1],
         expected: ["Ln", 2],
-        aspirational: true,
         category: "Properties",
         caption:
-          "$\\Phi(-1, 1, 1) = \\eta(1) = \\ln 2$, the alternating harmonic series; not yet in closed form",
+          "$\\Phi(-1, 1, 1) = \\eta(1) = \\ln 2$, the alternating harmonic series -- via $\\Phi(z,1,1) = -\\ln(1-z)/z$",
       },
       {
         expr: ["LerchPhi", ["Rational", 1, 2], 1, 1],
@@ -1806,24 +1792,21 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyLog", 1, 2, 1],
         expected: ["Zeta", 3],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Three arguments: the Nielsen generalized polylogarithm $S_{n,p}(z)$, with $S_{1,2}(1) = \\zeta(3)$; the arity is not declared",
+          "Three arguments: the Nielsen generalized polylogarithm $S_{n,p}(z)$, with $S_{1,2}(1) = \\zeta(3)$",
       },
       {
         expr: ["PolyLog", 2, 2, 1],
         expected: ["Multiply", ["Rational", 1, 360], ["Power", "Pi", 4]],
-        aspirational: true,
         category: "Scope",
-        caption: "$S_{2,2}(1) = \\pi^4/360$; not declared",
+        caption: "$S_{2,2}(1) = \\pi^4/360$",
       },
       {
         expr: ["PolyLog", 1, 2, 0.5],
         expected: 0.0947530042301277,
-        aspirational: true,
         category: "Scope",
-        caption: "$S_{1,2}(1/2) = \\zeta(3)/8 - \\ln^3 2/6$; not declared",
+        caption: "$S_{1,2}(1/2) = \\zeta(3)/8 - \\ln^3 2/6$",
       },
       {
         expr: ["PolyLog", "s", 1],
@@ -1924,9 +1907,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyGamma", 5],
         expected: ["Add", ["Rational", 25, 12], ["Negate", "EulerGamma"]],
-        aspirational: true,
         caption:
-          "One argument is the digamma: $\\psi(5) = H_4 - \\gamma = \\frac{25}{12} - \\gamma$; the one-argument form is not declared (see [[Digamma]])",
+          "One argument is the digamma: $\\psi(5) = H_4 - \\gamma = \\frac{25}{12} - \\gamma$. See [[Digamma]]",
       },
       {
         expr: ["PolyGamma", 3, 5],
@@ -1952,16 +1934,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyGamma", 100.5],
         expected: 4.605174352581845,
-        aspirational: true,
         category: "Scope",
-        caption: "One-argument digamma at a machine-precision point; not declared",
+        caption: "One-argument digamma at a machine-precision point",
       },
       {
         expr: ["PolyGamma", ["Complex", 2.5, 3]],
         expected: ["Complex", 1.2812739190662314, 0.9798053153445596],
-        aspirational: true,
         category: "Scope",
-        caption: "One-argument digamma at a complex point; not declared",
+        caption: "One-argument digamma at a complex point",
       },
       {
         expr: ["PolyGamma", 1, ["Complex", 2.5, 3]],
@@ -2356,16 +2336,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", 2, "x"],
         expected: ["Multiply", ["Add", "x", 1], ["Power", "ExponentialE", ["Negate", "x"]]],
-        aspirational: true,
         category: "Properties",
-        caption: "$Q(2, x) = (1 + x)e^{-x}$; only order 1 reduces symbolically today",
+        caption:
+          "$Q(2, x) = (1 + x)e^{-x}$, through $Q(s,x) = \\Gamma(s,x)/\\Gamma(s)$ now that $\\Gamma(2,x)$ has a closed form",
       },
       {
         expr: ["GammaRegularized", ["Rational", 1, 2], "x"],
         expected: ["Erfc", ["Sqrt", "x"]],
-        aspirational: true,
         category: "Properties",
-        caption: "$Q(1/2, x) = \\operatorname{erfc}(\\sqrt x)$. See [[Erfc]]; not yet",
+        caption: "$Q(1/2, x) = \\operatorname{erfc}(\\sqrt x)$. See [[Erfc]]",
       },
     ],
     seeAlso: ["Gamma", "BetaRegularized"],
@@ -2463,10 +2442,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["BetaRegularized", 0.2, 0.5, 2, 3],
         expected: 0.5067,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Four arguments: the generalized $I_{z_1}(a, b) - I_{z_0}(a, b)$; the arity is not declared",
+        caption: "Four arguments: the generalized $I_{z_1}(a, b) - I_{z_0}(a, b)$",
       },
       {
         expr: ["BetaRegularized", ["Interval", 0.2, 0.3], 2, 1],

@@ -401,10 +401,15 @@ test("Γ(1, z) = e^{−z}, so Γ(1, 0, z) collapses to 1 − e^{−z} (Wolfram's
 });
 
 test("a three-argument call that cannot reduce keeps its own form", () => {
-  // Γ(2, 0, z): Wolfram leaves this as Gamma[2, 0, z] too — the difference of two
-  // unevaluated calls would be worse than the call itself.
-  exactJson(["Gamma", 2, 0, "z"], ["Gamma", 2, 0, "z"]);
+  // Γ(s, 0, z) with a fully symbolic order still can't reduce either half.
   exactJson(["Gamma", "s", 0, "z"], ["Gamma", "s", 0, "z"]);
+});
+
+test("Γ(2, 0, z) now reduces through Γ(2, z) = (1+z)e^{-z} (see generalized-special.ts)", () => {
+  sameExact(
+    ["Gamma", 2, 0, "z"],
+    ["Subtract", 1, ["Multiply", ["Add", "z", 1], ["Exp", ["Negate", "z"]]]],
+  );
 });
 
 test("Q(s, z) = Γ(s, z)/Γ(s) covers the complex arguments the native handler declines", () => {

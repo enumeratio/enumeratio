@@ -91,4 +91,6 @@ export { declareRiemannSiegel } from "./riemann-siegel.ts";
 export { landauFunction } from "./sloane-a.ts";
 export { zetaWGSL } from "./shader.ts";
 export { stieltjesGamma, stieltjesGammaReal } from "./stieltjes.ts";
+export { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
+export { declareGeneralizedSpecial } from "./generalized-special.ts";
 export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts";

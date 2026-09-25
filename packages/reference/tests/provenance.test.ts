@@ -115,7 +115,9 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * signature rather than the native one, so even the error differs. `LambertW` is here for
  * exact values at algebraically nice points (0, e, -1/e, ...) that a bare engine leaves
  * unevaluated outside `N()`, and for branches other than 0/-1 — additive in both cases, never
- * changing a value the native handler already gave concretely.
+ * changing a value the native handler already gave concretely. `Beta` is here for the
+ * third and fourth arguments (the incomplete and generalized incomplete beta) and for
+ * `B(a, 1) = 1/a`, exactly the same additive shape as `Gamma`'s third argument.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -127,6 +129,7 @@ const OVERRIDDEN = [
   "At",
   "BellNumber",
   "BernoulliB",
+  "Beta",
   "BetaRegularized",
   "Binomial",
   "CatalanNumber",
