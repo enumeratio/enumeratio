@@ -7,7 +7,7 @@ signatures:
     description: 'the base-10 narcissistic numbers, excluding the trivial 0: a finite indexed collection of exactly 88.'
 details:
   - "A lazy indexed collection, but $Count(NarcissisticNumbers) = 88$, not $+\\infty$: Diamond \\& Kellner's digit-length bound proves base 10 has no more, and the largest is the 39-digit $115132219018763992565095597973971522401$. OEIS A005188 (which also lists the trivial $0 = 0^1$; this family starts at 1)."
-  - $At(NarcissisticNumbers, k)$ unranks from a table verified against every OEIS term -- $At(NarcissisticNumbers, 10) = 153$. Terms past the 43rd exceed what a numeric collection element can represent exactly (IEEE-754 double precision, $2^{53}-1$); $At$ answers $NaN$ for those -- a known value, just not one this element type can carry, same as an out-of-range $At$ elsewhere in the library.
+  - $At(NarcissisticNumbers, k)$ unranks from a table verified against every OEIS term -- $At(NarcissisticNumbers, 10) = 153$. Terms past the 43rd exceed $2^{53}-1$ (IEEE-754 double precision) and come back as exact `bigint` instead, so every one of the 88 -- including the 39-digit largest -- is exact, never $NaN$.
   - 'Membership goes through [[Element]]: $Element(153, NarcissisticNumbers)$ is true ($1^3+5^3+3^3=153$), $Element(154, NarcissisticNumbers)$ is false.'
 examples:
   - id: narcissistic-armstrong-numbers-are-proven-finite
@@ -15,6 +15,11 @@ examples:
     expected: 88
     category: Properties
     caption: 'Narcissistic (Armstrong) numbers are proven finite: exactly 88 exist.'
+  - id: the-88th-largest-term-is-exact-past-2-53
+    expr: [At, NarcissisticNumbers, 88]
+    expected: {num: '115132219018763992565095597973971522401'}
+    category: Scope
+    caption: The 88th and largest term, a 39-digit exact integer well past $2^{53}-1$
 enumerate:
   expr: Take(NarcissisticNumbers, 20)
 seeAlso:
