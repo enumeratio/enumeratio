@@ -842,17 +842,17 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 1]],
-      "expected": ["Complex", -0.0008178931329495371, -0.22307168869777091],
+      "expected": ["Complex", -0.0008178931329526073, -0.2230716886977791],
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 2]],
-      "expected": ["Complex", -1.0008178931329497, -0.22307168869777091],
+      "expected": ["Complex", -1.0008178931329526, -0.2230716886977791],
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 3]],
-      "expected": ["Complex", -2.088685980146858, 0.6805560140961944],
+      "expected": ["Complex", -2.0886859801468614, 0.6805560140961857],
       "hidden": true
     },
     {
@@ -1796,6 +1796,902 @@
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.11446511663271236, -0.08926367800980035],
       "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 2, 1]],
+      "expected": ["Complex", 1.2337005501361697, -1.0887930451518009],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 2, 2]],
+      "expected": ["Complex", 0.11685027506808499, -0.5443965225759004],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 2, 0.5]],
+      "expected": ["Complex", 4.840291449348404, -1.5397858910711786],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.012149359885121095, -0.3849464727677946],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 2, -2.5]],
+      "expected": ["Complex", 55.771220483676125, -12.318287128569425],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 3, 1]],
+      "expected": ["Complex", 1.381035953114462, -0.37734691473012405],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 3, 2]],
+      "expected": ["Complex", 0.19051797655723104, -0.188673457365062],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 3, 0.5]],
+      "expected": ["Complex", 8.921391406560604, -0.5336491245309852],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.08219970349200281, -0.13341228113274625],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 3, -2.5]],
+      "expected": ["Complex", 38.71453865989224, -4.269192996247894],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 0.5, 1]],
+      "expected": ["Complex", -0.8050307649337429, -1.064467019431226],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 0.5, 2]],
+      "expected": ["Complex", -0.9025153824668717, -0.5322335097156131],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 0.5, 0.5]],
+      "expected": ["Complex", -0.3953858882319452, -1.505383695578505],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.8606481531151232, -0.3763459238946262],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, 0.5, -2.5]],
+      "expected": ["Complex", -3.1630871058555616, -19.965372508009548],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.7821035196383173, -0.5898143877850942],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", -0.10894824018084143, -0.2949071938925471],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.2663465887755483, 1.5814239980763576],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.15685648448997386, -0.15595056574690955],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", 332.0979843736517, 238.17654980358446],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 2, 1]],
+      "expected": 0.7183731834418394,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 2, 2]],
+      "expected": 0.1408134082790773,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 2, 0.5]],
+      "expected": 3.444734229330254,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 2, ["Rational", 5, 2]]],
+      "expected": 0.08340577955479463,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 2, -2.5]],
+      "expected": -12.286762723530918,
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 3, 1]],
+      "expected": 0.8341416819832855,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 3, 2]],
+      "expected": 0.0829291590083558,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 3, 0.5]],
+      "expected": 7.563284617347448,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.038969302485020396, 1.1518563880485999e-14],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 3, -2.5]],
+      "expected": -91.97768434618699,
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 0.5, 1]],
+      "expected": 0.4456443557760612,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 0.5, 2]],
+      "expected": 0.2771778221119692,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 0.5, 0.5]],
+      "expected": 0.7431924320288376,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.24049300787788896, 2.3564483697668948e-14],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, 0.5, -2.5]],
+      "expected": ["Complex", -5.9455394562307005, -4.656316619670605],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.7462766702233421, 0.14040868638941306],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.12686166488833184, -0.07020434319469351],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.511183002874043, 2.6760511428484537],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.06276107967435696, -0.05760320164903357],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", 248.07432901528844, 220.3438744855333],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 2, 1]],
+      "expected": ["Complex", 0.7733934744376991, -1.150464098407734],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 2, 2]],
+      "expected": ["Complex", -0.07553550852076699, -0.383488032802578],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 2, 0.5]],
+      "expected": ["Complex", 4.3083059100926135, -1.9926622707261163],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.11389193591563543, -0.22140691896956835],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 2, -2.5]],
+      "expected": ["Complex", 153.81759290583392, -53.80188130960513],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 3, 1]],
+      "expected": ["Complex", 1.2473741980802437, -0.6319569980911071],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 3, 2]],
+      "expected": ["Complex", 0.08245806602674785, -0.21065233269703562],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 3, 0.5]],
+      "expected": ["Complex", 8.962435484818293, -1.0945816288925054],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.008171843992156041, -0.12162018098805609],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 3, -2.5]],
+      "expected": ["Complex", 169.03286920120505, -29.553703980097676],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 0.5, 1]],
+      "expected": ["Complex", -0.5673384497546599, -0.5636784807928212],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 0.5, 2]],
+      "expected": ["Complex", -0.5224461499182197, -0.1878928269309404],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 0.5, 0.5]],
+      "expected": ["Complex", -0.3058884181277133, -0.976319767866404],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.4632879692537757, -0.10847997420737818],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, 0.5, -2.5]],
+      "expected": ["Complex", -8.258987289448257, -42.17050106856762],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.6014155729908605, -0.5726915889959038],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", -0.1328614756697132, -0.19089719633196794],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.074330146279176, 1.3820906569318172],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.1364278712328939, -0.07198068689298973],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", 754.4393998220863, 554.5049540922392],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 2, 1]],
+      "expected": ["Complex", 1.582930180181653, -0.8492041366130668],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 2, 2]],
+      "expected": ["Complex", 0.38862012012110225, -0.5661360910753779],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 2, 0.5]],
+      "expected": ["Complex", 5.118490668726073, -1.040058411081376],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.20081066758195837, -0.46224818270283363],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 2, -2.5]],
+      "expected": ["Complex", 27.101572673617163, -3.5101971373996417],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 3, 1]],
+      "expected": ["Complex", 1.37391833821352, -0.1721613235288588],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 3, 2]],
+      "expected": ["Complex", 0.249278892142347, -0.11477421568590583],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 3, 0.5]],
+      "expected": ["Complex", 8.758392281291254, -0.2108536980439579],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.13953237193191523, -0.09371275468620348],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 3, -2.5]],
+      "expected": ["Complex", 11.051129504913542, -0.7116312308983647],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 0.5, 1]],
+      "expected": ["Complex", -1.0310938016261064, -1.8556964357740158],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 0.5, 2]],
+      "expected": ["Complex", -1.354062534417405, -1.237130957182677],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 0.5, 0.5]],
+      "expected": ["Complex", -0.4727012388667624, -2.272754692573877],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", -1.382959854502865, -1.0101131966995007],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, 0.5, -2.5]],
+      "expected": ["Complex", -1.5953666811753227, -12.709728006201562],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.9288306730423472, -0.5652075721936586],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", -0.04744621797176859, -0.37680504812910587],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.383048389778828, 1.7479834843533375],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", -0.13623106961632314, -0.24217666122590845],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", 188.05452580732162, 129.95094730887928],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 2, 1]],
+      "expected": 0.7649204402503819,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 2, 2]],
+      "expected": 0.1567197064997453,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 2, 0.5]],
+      "expected": 3.54500455887494,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 2, ["Rational", 5, 2]]],
+      "expected": 0.09407610024072302,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 2, -2.5]],
+      "expected": -3.4710570528695897,
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 3, 1]],
+      "expected": 0.8652249667708318,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 3, 2]],
+      "expected": 0.08985002215277751,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 3, 0.5]],
+      "expected": 7.6520443679635575,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.042883916625780595, 1.6178031136959703e-14],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 3, -2.5]],
+      "expected": -43.44520529743256,
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 0.5, 1]],
+      "expected": 0.5118021812475761,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 0.5, 2]],
+      "expected": 0.32546521250162286,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 0.5, 0.5]],
+      "expected": 0.827894231949178,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.2837446848744865, -5.362377208939506e-14],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, 0.5, -2.5]],
+      "expected": ["Complex", -2.794143032828476, -2.589691175981552],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.7925489657221488, 0.12307454646952756],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.1383006895185598, -0.08204969764636073],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.61930607559321, 2.668732631457893],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.0688725160431137, -0.06670071419538852],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", 139.4440155178161, 127.21487477502689],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, 1]],
+      "expected": ["Complex", 0.8171642289751408, 0.4383195138244752],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, 2]],
+      "expected": ["Complex", 0.13876065132481796, 0.16079821117483864],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, 0.5]],
+      "expected": ["Complex", 3.7921142608467866, 0.8560748069785533],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.07302936892606517, 0.10831051920486563],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, -2.5]],
+      "expected": ["Complex", -51.39666281091311, -0.11216250956877438],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, 1]],
+      "expected": ["Complex", 0.9605393291259245, 0.2620237606132513],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, 2]],
+      "expected": ["Complex", 0.09691737007048522, 0.06818902047228032],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, 0.5]],
+      "expected": ["Complex", 8.006976954441546, 0.6457371392370688],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.04322144848568627, 0.039913749099422996],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, -2.5]],
+      "expected": ["Complex", -63.14556851667916, -55.70965503308343],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, 1]],
+      "expected": ["Complex", 0.2518733705484473, 0.5942372440727618],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, 2]],
+      "expected": ["Complex", 0.08806957173879393, 0.41809810059517377],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, 0.5]],
+      "expected": ["Complex", 0.5773820436149282, 0.7684091077547665],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.060065923306197685, 0.368282582441825],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, -2.5]],
+      "expected": ["Complex", 2.475463147093155, -6.813575698374405],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.1260285363129376, 0.6413553659592582],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.28174785364629107, 0.0778596586666771],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.192905834798345, 3.7884971130059952],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.17175237042929112, 0.031954991049997425],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", -457.91134140962885, 71.22772232965785],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, 1]],
+      "expected": ["Complex", 0.7446897666774631, 0.09767689334428908],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, 2]],
+      "expected": ["Complex", 0.14788992102402837, 0.033475351786492316],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, 0.5]],
+      "expected": ["Complex", 3.510343411490998, 0.20933833108241673],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.08772363908006542, 0.022451843102527576],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, -2.5]],
+      "expected": ["Complex", 7.2387742675368125, 8.864424682985405],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, 1]],
+      "expected": ["Complex", 0.8553387457226991, 0.06489298901815407],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, 2]],
+      "expected": ["Complex", 0.08673380628741796, 0.01456054484617424],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, 0.5]],
+      "expected": ["Complex", 7.631459552290882, 0.18381299382141847],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.04093064173669238, 0.008246898188157391],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, -2.5]],
+      "expected": ["Complex", -2.0910882737014767, 67.79138574742537],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, 1]],
+      "expected": ["Complex", 0.46553880567110584, 0.13821464441436376],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, 2]],
+      "expected": ["Complex", 0.2892019802792986, 0.10065822390995441],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, 0.5]],
+      "expected": ["Complex", 0.773036344755627, 0.17710899785683046],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.2506624678277473, 0.09007985632981672],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, -2.5]],
+      "expected": ["Complex", -3.574854956018253, 3.468728991325334],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.8125648486721178, 0.23356370470540438],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.15837428667606818, -0.050126278686223436],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.6030184823997615, 2.911418398487827],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.08535910853571303, -0.04777757995380055],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", 244.75788905917892, -108.8372736947882],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, 1]],
+      "expected": ["Complex", 1.0512753535586392, 0.35234019825173524],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, 2]],
+      "expected": ["Complex", 0.24698376639549866, 0.16256851061973257],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, 0.5]],
+      "expected": ["Complex", 4.157406968302781, 0.5964288969053857],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.15055546795563676, 0.11982927618077492],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, -2.5]],
+      "expected": ["Complex", -6.713683691062509, 9.459163380965968],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, 1]],
+      "expected": ["Complex", 1.0600183930694895, 0.16372732384786165],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, 2]],
+      "expected": ["Complex", 0.13473745235770138, 0.05307952090741297],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, 0.5]],
+      "expected": ["Complex", 8.176233084955843, 0.35863779701452814],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.06790730062055826, 0.034208132622012555],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, -2.5]],
+      "expected": ["Complex", -11.007681973911316, -4.132179140120582],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, 1]],
+      "expected": ["Complex", 0.6468487828189053, 0.9042982627040883],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, 2]],
+      "expected": ["Complex", 0.3664465259922781, 0.7181204866387976],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, 0.5]],
+      "expected": ["Complex", 1.0703168525560947, 1.058323277527613],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.3021697628691992, 0.6567535519940397],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, -2.5]],
+      "expected": ["Complex", 0.18135576554179678, -1.4915088888884338],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.3623883910300945, 0.28623973226309374],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.3776044633523171, -0.06700535594248992],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.6223281025197807, 3.1374223913038595],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.2377088936515321, -0.07033177818547647],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], -2.5]],
+      "expected": ["Complex", -92.1275927724354, 93.92654608335769],
+      "hidden": true,
+      "divergence": {
+        "wolfram": "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch."
+      }
     }
   ],
   "PolyLog": [

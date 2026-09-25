@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1217, disagree 45, inconclusive 0, error 3
+## wolfram — agree 1354, disagree 70, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -59,7 +59,32 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `residues/PowerModList#8`               | domain         | `[[1, 4], [], [], [2, 3]]`                                                                   | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
 | `special-functions/BetaRegularized#8`   | domain         | `["BetaRegularized",2,2,3]`                                                                  | `8`                                                                                          |
 | `special-functions/GammaRegularized#6`  | domain         | `["GammaRegularized",2.5,-1]`                                                                | `0.9999999999999998 - 0.6280082302883814*I`                                                  |
+| `special-functions/LerchPhi#200`        | convention     | `{"re":38.71453865989224,"im":-4.269192996247894}`                                           | `104.02772384507739 - 4.269192996247893*I`                                                   |
+| `special-functions/LerchPhi#205`        | convention     | `{"re":-3.1630871058555616,"im":-19.965372508009548}`                                        | `4.75921583752595 - 12.043069564628038*I`                                                    |
+| `special-functions/LerchPhi#210`        | convention     | `{"re":332.0979843736517,"im":238.17654980358446}`                                           | `39.35281478642287 + 22.39721772102415*I`                                                    |
+| `special-functions/LerchPhi#220`        | convention     | `-91.97768434618699`                                                                         | `-29.034869531372177 - 1.1059478000009414*^-14*I`                                            |
+| `special-functions/LerchPhi#225`        | convention     | `{"re":-5.9455394562307005,"im":-4.656316619670605}`                                         | `-1.2892228365600795 + 1.9382590652050522*^-16*I`                                            |
+| `special-functions/LerchPhi#230`        | convention     | `{"re":248.07432901528844,"im":220.3438744855333}`                                           | `-8.501055789332833 - 10.961345717993117*I`                                                  |
+| `special-functions/LerchPhi#240`        | convention     | `{"re":169.03286920120505,"im":-29.553703980097676}`                                         | `314.9386469789826 - 29.553703980097694*I`                                                   |
+| `special-functions/LerchPhi#245`        | convention     | `{"re":-8.258987289448257,"im":-42.17050106856762}`                                          | `7.550880046726434 - 26.360633732392905*I`                                                   |
+| `special-functions/LerchPhi#250`        | convention     | `{"re":754.4393998220863,"im":554.5049540922392}`                                            | `112.02214251367533 + 59.66618957774957*I`                                                   |
+| `special-functions/LerchPhi#260`        | convention     | `{"re":11.051129504913542,"im":-0.7116312308983647}`                                         | `48.068018393802376 - 0.711631230898362*I`                                                   |
+| `special-functions/LerchPhi#265`        | convention     | `{"re":-1.5953666811753227,"im":-12.709728006201562}`                                        | `3.44381423758941 - 7.6705470874368356*I`                                                    |
+| `special-functions/LerchPhi#270`        | convention     | `{"re":188.05452580732162,"im":129.95094730887928}`                                          | `19.05095385185434 + 11.260195772958092*I`                                                   |
+| `special-functions/LerchPhi#280`        | convention     | `-43.44520529743256`                                                                         | `-8.206094186321462 - 5.108829761684327*^-15*I`                                              |
+| `special-functions/LerchPhi#285`        | convention     | `{"re":-2.794143032828476,"im":-2.589691175981552}`                                          | `-0.2044518568469269 - 3.827487258676203*^-17*I`                                             |
+| `special-functions/LerchPhi#290`        | convention     | `{"re":139.4440155178161,"im":127.21487477502689}`                                           | `-2.4322178506955483 - 3.1202928516189257*I`                                                 |
+| `special-functions/LerchPhi#300`        | convention     | `{"re":-63.14556851667916,"im":-55.70965503308343}`                                          | `-110.42497592408667 + 9.475530152101694*I`                                                  |
+| `special-functions/LerchPhi#305`        | convention     | `{"re":2.475463147093155,"im":-6.813575698374405}`                                           | `-7.608072838412566 - 2.3174168611844586*I`                                                  |
+| `special-functions/LerchPhi#310`        | convention     | `{"re":-457.91134140962885,"im":71.22772232965785}`                                          | `-46.142787156209735 - 42.90442114783229*I`                                                  |
+| `special-functions/LerchPhi#320`        | convention     | `{"re":-2.0910882737014767,"im":67.79138574742537}`                                          | `17.14802283740964 + 20.383978340017954*I`                                                   |
+| `special-functions/LerchPhi#325`        | convention     | `{"re":-3.574854956018253,"im":3.468728991325334}`                                           | `1.02676676378177 + 1.218062498742225*I`                                                     |
+| `special-functions/LerchPhi#330`        | convention     | `{"re":244.75788905917892,"im":-108.8372736947882}`                                          | `-2.6384307117707664 + 12.751078290666381*I`                                                 |
+| `special-functions/LerchPhi#340`        | convention     | `{"re":-11.007681973911316,"im":-4.132179140120582}`                                         | `-13.125607899837256 + 19.441154193212753*I`                                                 |
+| `special-functions/LerchPhi#345`        | convention     | `{"re":0.18135576554179678,"im":-1.4915088888884338}`                                        | `-1.5447221959379853 + 2.3250420549362065*I`                                                 |
+| `special-functions/LerchPhi#350`        | convention     | `{"re":-92.1275927724354,"im":93.92654608335769}`                                            | `-11.9430502347019 + 3.2226235505187835*I`                                                   |
 | `special-functions/LerchPhi#4`          | convention     | `-0.08333333333333333`                                                                       | `ComplexInfinity`                                                                            |
+| `special-functions/LerchPhi#7`          | precision      | `{"re":0.002025009957012008,"im":0.0033278975368131974}`                                     | `0.0020250151909632203 + 0.003327898913888968*I`                                             |
 | `special-functions/PolyLog#11`          | unevaluated    | `["PolyLog",2.5,2]`                                                                          | `2.789660332381895 - 1.3638037005377295*I`                                                   |
 | `special-functions/PolyLog#7`           | convention     | `-1.4603545088095868`                                                                        | `ComplexInfinity`                                                                            |
 
@@ -73,7 +98,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 663, disagree 9, inconclusive 4, error 27
+## sympy — agree 824, disagree 9, inconclusive 4, error 27
 
 | example                        | kind           | ours                | theirs                               |
 | ------------------------------ | -------------- | ------------------- | ------------------------------------ |
@@ -121,7 +146,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## mpmath — agree 405, disagree 2, inconclusive 0, error 4
+## mpmath — agree 534, disagree 2, inconclusive 0, error 4
 
 | example                           | kind           | ours                | theirs                                                                 |
 | --------------------------------- | -------------- | ------------------- | ---------------------------------------------------------------------- |

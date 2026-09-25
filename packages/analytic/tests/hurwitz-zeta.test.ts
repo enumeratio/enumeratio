@@ -409,9 +409,19 @@ test("a negative real base's phase is exact: ζ(1.5, −10⁻¹²) keeps the rea
   expect(hurwitzZeta({ re: 5, im: 0 }, { re: -0.5, im: 0 }).im).toBe(0);
 });
 
-test("LerchPhi past |z| = 1 stays unevaluated rather than claiming a pole", () => {
-  const input = ["N", ["LerchPhi", 2.809, 2, 2]] as const;
-  expect(ce.box(input).evaluate().json).toEqual(["LerchPhi", 2.809, 2, 2]);
+test("LerchPhi continues past |z| = 1 (values from mpmath)", () => {
+  const at = (z: Expr, s: Expr, a: Expr) => ce.box(["N", ["LerchPhi", z, s, a]] as Expr).N();
+  // On the cut, real z > 1: the side below it, as mpmath and Wolfram take.
+  const cut = at(2.809, 2, 2);
+  expect(cut.re).toBeCloseTo(-0.0565877019732229, 10);
+  expect(cut.im).toBeCloseTo(-0.4112203779716626, 10);
+  const off = at(["Complex", 1, 2], ["Complex", 3, -1], ["Complex", 4, 2]);
+  expect(off.re).toBeCloseTo(0.002025009957009909, 12);
+  expect(off.im).toBeCloseTo(0.003327897536813559, 12);
+  // A negative a, shifted up by the recurrence.
+  expect(at(-2, 2, -2.5).re).toBeCloseTo(-12.28676272353094, 9);
+  // Where the terms cancel below double precision it says nothing rather than guess.
+  expect(ce.box(["N", ["LerchPhi", 10, 10, 10]]).evaluate().json).toEqual(["LerchPhi", 10, 10, 10]);
 });
 
 test("Φ(0, s, a) = a^(−s)", () => {
