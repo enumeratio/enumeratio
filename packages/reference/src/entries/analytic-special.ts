@@ -1940,4 +1940,80 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["HypergeometricUStar", "Hypergeometric1F1Regularized"],
   },
+  {
+    name: "Khinchin",
+    domain: "Special functions",
+    signature: "Khinchin",
+    summary:
+      "Khinchin's constant $K_0 = 2.68545\\ldots$, the almost-sure geometric mean of continued-fraction terms.",
+    signatures: [
+      {
+        call: "Khinchin",
+        description: "Khinchin's constant, a new mathematical-constant symbol.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "For Lebesgue-almost every real number, the geometric mean of the terms $a_1, a_2, \\dots$ in its continued-fraction expansion $x = [a_0; a_1, a_2, \\dots]$ converges to $K_0$, independent of $x$ -- a fact with no known elementary proof.",
+      "A symbol, like [[ConstGlaisher]]: prints as itself under plain evaluation, and resolves to a decimal only under N().",
+    ],
+    examples: [
+      { expr: ["N", "Khinchin"], expected: 2.6854520010653062, caption: "Khinchin's constant" },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/khinchin.ts",
+      },
+    ],
+  },
+  {
+    name: "Hyperfactorial",
+    domain: "Special functions",
+    signature: "Hyperfactorial(n)",
+    summary:
+      "The hyperfactorial $H(n) = \\prod_{k=1}^n k^k$, continued to complex arguments: $H(z) = \\Gamma(z+1)^z / G(z+1)$.",
+    signatures: [
+      {
+        call: "Hyperfactorial(n)",
+        description: "the hyperfactorial of n.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "$H(0) = 1$, the empty product.",
+      "Continued off the nonnegative integers by $H(z) = \\Gamma(z+1)^z / G(z+1)$ (G = [[BarnesG]]); numeric there, checked against a Wolfram kernel to double precision.",
+      "Exact at a nonnegative integer -- an arbitrarily large exact product, not a decimal.",
+      "Real, nonnegative domain only: BarnesG's zeros at the nonpositive integers give the continuation poles there, and no reference example calls for a negative or complex argument.",
+    ],
+    examples: [
+      { expr: ["Hyperfactorial", 4], expected: 27648, caption: "$1^1\\,2^2\\,3^3\\,4^4$" },
+      { expr: ["Hyperfactorial", 0], expected: 1, caption: "The empty product" },
+      {
+        expr: ["Hyperfactorial", ["List", 1, 2, 3, 4, 5, 6]],
+        expected: ["List", 1, 4, 108, 27648, 86400000, 4031078400000],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["Hyperfactorial", 0.5],
+        expected: 0.8804492351734234,
+        category: "Scope",
+        caption: "Continued off the integers",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hyperfactorial.ts",
+      },
+    ],
+    seeAlso: ["BarnesG"],
+  },
 ];

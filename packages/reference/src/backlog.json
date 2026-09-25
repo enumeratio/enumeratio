@@ -924,37 +924,6 @@
       }
     ]
   },
-  "Hyperfactorial": {
-    "wolfram": "Hyperfactorial",
-    "summary": "The hyperfactorial H(n) = prod_{k=1}^n k^k, continued to complex arguments; Gamma(n+1)^n / BarnesG(n+1).",
-    "signature": "Hyperfactorial(n)",
-    "home": "analytic",
-    "neededBy": ["BarnesG"],
-    "examples": [
-      {
-        "expr": ["Hyperfactorial", 4],
-        "expected": 27648,
-        "caption": "$1^1\\,2^2\\,3^3\\,4^4$"
-      },
-      {
-        "expr": ["Hyperfactorial", 0],
-        "expected": 1,
-        "caption": "The empty product"
-      },
-      {
-        "expr": ["Hyperfactorial", ["List", 1, 2, 3, 4, 5, 6]],
-        "expected": ["List", 1, 4, 108, 27648, 86400000, 4031078400000],
-        "category": "Scope",
-        "caption": "Listable"
-      },
-      {
-        "expr": ["Hyperfactorial", 0.5],
-        "expected": 0.8804492351734234,
-        "category": "Scope",
-        "caption": "Continued off the integers"
-      }
-    ]
-  },
   "HypergeometricPFQ": {
     "wolfram": "HypergeometricPFQ",
     "summary": "The generalized hypergeometric function ${}_pF_q(a; b; z)$.",
@@ -1432,20 +1401,6 @@
         "expected": "False",
         "category": "Scope",
         "caption": "Transcendental"
-      }
-    ]
-  },
-  "Khinchin": {
-    "wolfram": "Khinchin",
-    "summary": "Khinchin's constant $K_0 = 2.68545\\ldots$, the almost-sure geometric mean of continued-fraction terms.",
-    "signature": "Khinchin",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["N", "Khinchin"],
-        "expected": 2.6854520010653062,
-        "caption": "Khinchin's constant"
       }
     ]
   },

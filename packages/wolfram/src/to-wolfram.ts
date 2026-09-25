@@ -322,6 +322,10 @@ export const HEADS: Record<string, string> = {
   RealSign: "RealSign",
   UnitStep: "UnitStep",
   Gudermannian: "Gudermannian",
+  // Khinchin's constant — same name and meaning as Wolfram's.
+  Khinchin: "Khinchin",
+  // Hyperfactorial — same name and meaning as Wolfram's.
+  Hyperfactorial: "Hyperfactorial",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 
