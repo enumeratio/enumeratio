@@ -434,6 +434,35 @@ notatio-out .notatio-render { transition: opacity 0.2s; }
 notatio-out[busy] .notatio-render { opacity: 0.5; transition-delay: 0.15s; }
 @media (prefers-reduced-motion: reduce) { .notatio-pending span { animation: none; opacity: 0.6; } }
 
+/* A running Worker-evaluator cell can be interrupted -- shown beside the pending dots
+   (notatio-out.ts's #content), never for a local (synchronous, uninterruptible) one. */
+.notatio-stop {
+  margin-left: 0.4em;
+  border: 1px solid var(--notatio-border, var(--vp-c-divider, #d4d4d8));
+  border-radius: 4px;
+  padding: 0 0.3em;
+  background: none;
+  color: var(--vp-c-text-3, #999);
+  font-size: 0.65em;
+  line-height: 1.4;
+  cursor: pointer;
+}
+.notatio-stop:hover { color: var(--vp-c-danger-1, #b7373d); border-color: currentColor; }
+
+/* A module's aestimatio session was hard-killed and restarted (a time-constraint
+   deadline an evaluation never cooperated with) -- notatio-dynamic-module.ts's own
+   #onSessionReset prepends this notice; nothing else in the module renders its own
+   markup (it is a scope, not a control panel), so this is the one exception. */
+.notatio-worker-reset {
+  margin-bottom: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--vp-c-warning-1, #e0af68);
+  border-radius: 6px;
+  background: var(--vp-c-warning-soft, rgba(224, 175, 104, 0.14));
+  color: var(--vp-c-text-1, inherit);
+  font-size: 0.85rem;
+}
+
 /* In/Out row: the label dropdown trigger and the rendered value on one line. */
 .notatio-line { display: flex; align-items: baseline; gap: 0.5rem; }
 /* Plain, unselectable In/Out label on the left of the row. */

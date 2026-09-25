@@ -29,6 +29,15 @@ interface RevalidatableOut extends Element {
 }
 const outOf = (cell: Element): RevalidatableOut | null => cell.querySelector("notatio-out");
 
+/** The `Evaluator` half of `notatio-dynamic-module.ts`'s host -- read off `register`'s
+ * own `root` (which IS the module element; see `register`'s own comment) by duck
+ * typing rather than widening `register`'s parameter type, so its signature -- one of
+ * the hooks a reordered notebook/worksheet is built on -- stays exactly as it was. */
+interface WorkerHost {
+  readonly evaluatorKind?: "Local" | "Worker";
+  evaluateRemote?(json: unknown): Promise<{ value: unknown; reset: boolean }>;
+}
+
 /**
  * The DOM-facing half of `TrackedSymbols` (`@enumeratio/notatio`'s `tracked-symbols.ts`
  * has the pure graph): one `CellBindings` per `<notatio-cell>` a `<notatio-dynamic-module>`
@@ -59,6 +68,7 @@ export class ReactiveModule {
   readonly tracked: TrackedSymbols;
   #engine: ComputeEngine | undefined;
   #transcript: Transcript | undefined;
+  #host: (ParentNode & WorkerHost) | undefined;
   readonly #cells = new Map<number, CellBindings>();
   readonly #json = new Map<number, MathJsonExpression | undefined>();
   readonly #elements = new Map<number, Element>();
@@ -78,6 +88,7 @@ export class ReactiveModule {
   register(root: ParentNode, engine: ComputeEngine, transcript: Transcript): void {
     this.#engine = engine;
     this.#transcript = transcript;
+    this.#host = root as ParentNode & WorkerHost;
     const discovered: number[] = [];
     for (const el of root.querySelectorAll("notatio-cell")) {
       if (this.#known.has(el)) continue;
@@ -136,21 +147,34 @@ export class ReactiveModule {
     return this.#run(sched.order, sched);
   }
 
-  /** Prewarm `ids` through the shared scope, in order, then revalidate their Outs. */
+  /**
+   * Prewarm `ids` through the shared scope, in order, then revalidate their Outs.
+   *
+   * `Evaluator -> "Worker"` skips the prewarm loop entirely: each cell's own Out
+   * already evaluates through the module's session (`notatio-out.ts`'s own
+   * `evaluateRemote` branch), and the revalidate loop below already runs them, in
+   * this same dependency order, one at a time (`await`ed) -- so it binds names into
+   * the session correctly on its own. Prewarming too would just evaluate every cell
+   * twice, for nothing: the session, unlike this class's local `#engine`, is the
+   * scope a cell's OWN evaluation already binds into.
+   */
   async #run(ids: readonly number[], sched: Schedule): Promise<void> {
     if (!this.#engine || !this.#transcript) return;
     const bad = new Set(sched.diagnostics.map((d) => d.cellId));
-    for (const id of ids) {
-      if (bad.has(id)) continue; // a duplicate/cycle/ordinal cell has nothing safe to run
-      const json = this.#json.get(id);
-      if (json === undefined) continue;
-      try {
-        this.#transcript.run(() => this.#engine!.box(json).evaluate());
-      } catch {
-        // Surfaced through the cell's own Out (revalidate, below) rather than here.
+    if (this.#host?.evaluatorKind !== "Worker") {
+      for (const id of ids) {
+        if (bad.has(id)) continue; // a duplicate/cycle/ordinal cell has nothing safe to run
+        const json = this.#json.get(id);
+        if (json === undefined) continue;
+        try {
+          this.#transcript.run(() => this.#engine!.box(json).evaluate());
+        } catch {
+          // Surfaced through the cell's own Out (revalidate, below) rather than here.
+        }
       }
     }
     for (const id of ids) {
+      if (bad.has(id)) continue;
       const out = this.#elements.get(id) && outOf(this.#elements.get(id)!);
       if (out?.revalidate) await out.revalidate();
     }

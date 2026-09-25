@@ -698,28 +698,42 @@ const trackedSymbolsOption = (value: Json): Record<string, string> => {
   return names && names.length > 0 ? { "tracked-symbols": names.join(",") } : {};
 };
 
+/**
+ * `Evaluator -> "Local" | "Worker"` -- Wolfram's own option name, borrowed from
+ * `Dynamic` (design/aestimatio.md): which kernel a `DynamicModule`'s cells evaluate
+ * against. `"Local"` (the default, and anything not recognised as `"Worker"`) leaves
+ * the attribute unset -- today's in-page evaluation; `"Worker"` sets it, routing
+ * evaluation to the module's own `@enumeratio/aestimatio/browser` session instead
+ * (`notatio-dynamic-module.ts`'s `evaluateRemote`).
+ */
+const evaluatorOption = (value: Json): Record<string, string> => {
+  const sym = symOf(value);
+  return sym === "Worker" ? { evaluator: "worker" } : {};
+};
+
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   {
     // `DynamicModule(body)` -- an explicit scope over its subtree. The bindings live in
-    // the controls inside it, so it takes no arguments of its own; `TrackedSymbols` is
-    // its one option.
+    // the controls inside it, so it takes no arguments of its own; `TrackedSymbols` and
+    // `Evaluator` are its options.
     head: "DynamicModule",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: dynamicModuleChildren,
-    options: { TrackedSymbols: trackedSymbolsOption },
+    options: { TrackedSymbols: trackedSymbolsOption, Evaluator: evaluatorOption },
   },
   {
     // `Notebook(cells)` -- Wolfram's name for the transcript configuration: a
     // `DynamicModule` whose body is a `List` of `Cell`s, evaluated in document order in
-    // one shared scope. Same tag, same lowering (`TrackedSymbols` included); the element
-    // tells the two apart by what is actually inside it (`notatio-cell` children) and
-    // whether `tracked-symbols` is set, not by which head named it.
+    // one shared scope. Same tag, same lowering (`TrackedSymbols`/`Evaluator`
+    // included); the element tells the two apart by what is actually inside it
+    // (`notatio-cell` children) and whether `tracked-symbols` is set, not by which
+    // head named it.
     head: "Notebook",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: dynamicModuleChildren,
-    options: { TrackedSymbols: trackedSymbolsOption },
+    options: { TrackedSymbols: trackedSymbolsOption, Evaluator: evaluatorOption },
   },
   {
     // `Cell(expr)`: an In/Out pair -- the held expression as the input, its value as the
