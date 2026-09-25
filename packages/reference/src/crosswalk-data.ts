@@ -2923,6 +2923,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "MatrixExp",
+    wolfram: "MatrixExp",
+  },
+  {
     name: "MatrixRank",
     wolfram: "MatrixRank",
   },

@@ -224,6 +224,7 @@ export const HEADS: Record<string, string> = {
   Variance: "Variance",
   StandardDeviation: "StandardDeviation",
   Determinant: "Det",
+  MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
   Rank: "ArrayDepth",
   Transpose: "Transpose",

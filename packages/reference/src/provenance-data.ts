@@ -683,6 +683,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "MatrixExp",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "MatrixExp",
+    elsewhere: [],
+  },
+  {
     name: "Gamma",
     provenance: "override",
     declared: null,

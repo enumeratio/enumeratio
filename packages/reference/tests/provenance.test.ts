@@ -225,6 +225,7 @@ const NOVEL = [
   "Idele",
   "ProfiniteDecomposition",
   "ProfinitePlot",
+  "MatrixExp",
   "ClausenCl",
   "Basis",
   "AlgebraSignature",
