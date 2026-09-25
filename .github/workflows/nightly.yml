@@ -65,6 +65,24 @@ jobs:
         with:
           system: julia
 
+  # The numeric and number-theory crates a Rust user would reach for (num, primal, statrs) and the adic crate,
+  # nightly: rustup takes the pinned toolchain from packages/oracle/rust/rust-toolchain.toml.
+  rust-oracle:
+    name: reference ⟷ Rust (num, primal, statrs, adic)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/oracle/rust
+      - run: node packages/oracle/scripts/setup.ts rust
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: rust
+
   # The group and diagram algebras (and a few counts) against Oscar, weekly: a multi-GB install whose precompile
   # julia-actions/cache keeps between runs. The kernel is 2-3 GB resident, so the watchdog cap is raised to fit
   # a parallel precompile on the runner.

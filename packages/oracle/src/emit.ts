@@ -24,8 +24,14 @@ const isCall = (value: MathJSON): value is readonly MathJSON[] =>
 
 /** compute-engine symbol constants, per system. */
 const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
-  Pi: { wolfram: "Pi", sympy: "pi", mpmath: "pi", sage: "pi" },
-  ExponentialE: { wolfram: "E", sympy: "E", mpmath: "e", sage: "e" },
+  Pi: { wolfram: "Pi", sympy: "pi", mpmath: "pi", sage: "pi", rust: "x(std::f64::consts::PI)" },
+  ExponentialE: {
+    wolfram: "E",
+    sympy: "E",
+    mpmath: "e",
+    sage: "e",
+    rust: "x(std::f64::consts::E)",
+  },
   ImaginaryUnit: { wolfram: "I", sympy: "I", mpmath: "mpc(0,1)", sage: "I" },
   EulerGamma: { wolfram: "EulerGamma", sympy: "EulerGamma", mpmath: "euler", sage: "euler_gamma" },
   GoldenRatio: {
@@ -34,8 +40,14 @@ const CONSTANTS: Record<string, Partial<Record<System, string>>> = {
     mpmath: "phi",
     sage: "golden_ratio",
   },
-  True: { wolfram: "True", sympy: "True", mpmath: "True", sage: "True" },
-  False: { wolfram: "False", sympy: "False", mpmath: "False", sage: "False" },
+  True: { wolfram: "True", sympy: "True", mpmath: "True", sage: "True", rust: "V::Bool(true)" },
+  False: {
+    wolfram: "False",
+    sympy: "False",
+    mpmath: "False",
+    sage: "False",
+    rust: "V::Bool(false)",
+  },
 };
 
 /**
@@ -64,6 +76,8 @@ export function emit(expr: MathJSON, system: System): Emitted {
     if (typeof node === "number") {
       if (system === "wolfram") return toWolfram(node);
       // Lean reads `f -1` as `f - 1`.
+      // Rust values are the prelude's dynamic `V` (rust/src/prelude.rs).
+      if (system === "rust") return Number.isSafeInteger(node) ? `n(${node})` : `x(${node})`;
       return system === "mathlib4" && node < 0 ? `(${node})` : String(node);
     }
     if (typeof node === "boolean") return node ? "True" : "False";
@@ -81,8 +95,11 @@ export function emit(expr: MathJSON, system: System): Emitted {
     }
     if (!isCall(node)) {
       const value = (node as { num?: unknown }).num;
-      if (typeof value === "string")
-        return system === "wolfram" ? toWolfram({ num: value }) : value;
+      if (typeof value === "string") {
+        if (system === "wolfram") return toWolfram({ num: value });
+        if (system === "rust") return /^-?\d+$/.test(value) ? `big("${value}")` : `x(${value})`;
+        return value;
+      }
       missing.push("literal:unrecognised");
       return "0";
     }

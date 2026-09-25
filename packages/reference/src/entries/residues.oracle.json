@@ -30,6 +30,11 @@
           "input": "((17 : ℤ) % 5)",
           "output": "2",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "mod_floor(n(17), n(5))",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",100,7]": {
@@ -57,6 +62,11 @@
           "input": "((100 : ℤ) % 7)",
           "output": "2",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "mod_floor(n(100), n(7))",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",-7,3]": {
@@ -82,6 +92,11 @@
         },
         "mathlib4": {
           "input": "(((-7) : ℤ) % 3)",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "mod_floor(n(-7), n(3))",
           "output": "2",
           "verdict": "agree"
         }
@@ -119,6 +134,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Mod is Listable and threads over the list; Mathlib's takes scalars only."
+        },
+        "rust": {
+          "input": "mod_floor(list(vec![n(1), n(2), n(3), n(4), n(5)]), n(3))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Mod\",5,0]": {
@@ -154,6 +176,13 @@
           "verdict": "inconclusive",
           "kind": "convention",
           "note": "Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined (NaN)."
+        },
+        "rust": {
+          "input": "mod_floor(n(5), n(0))",
+          "output": "panic: attempt to divide by zero",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"NaN\", and Rust gives panic: attempt to divide by zero."
         }
       },
       "[\"Equal\",[\"Mod\",17,5],[\"Mod\",[\"Add\",17,[\"Multiply\",3,5]],5]]": {
@@ -179,6 +208,11 @@
         },
         "mathlib4": {
           "input": "(decide (((17 : ℤ) % 5) = (((17 + (3 * 5)) : ℤ) % 5)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -230,6 +264,11 @@
           "input": "power_mod(2, 10, 3)",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(2), n(10), n(3))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"PowerMod\",3,50,11]": {
@@ -240,6 +279,11 @@
         },
         "sage": {
           "input": "power_mod(3, 50, 11)",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(3), n(50), n(11))",
           "output": "1",
           "verdict": "agree"
         }
@@ -254,6 +298,13 @@
           "input": "power_mod(2, -1, 7)",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(2), n(-1), n(7))",
+          "output": "panic: negative exponentiation is not supported!",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",7,13,33]": {
@@ -264,6 +315,11 @@
         },
         "sage": {
           "input": "power_mod(7, 13, 33)",
+          "output": "13",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(7), n(13), n(33))",
           "output": "13",
           "verdict": "agree"
         }
@@ -277,6 +333,11 @@
         "sage": {
           "input": "bool(power_mod(2, 10, 3) == ((2^10) % 3))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -292,6 +353,13 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers [\"PowerMod\", 2, -1, 4] and Sage raises an error."
+        },
+        "rust": {
+          "input": "powermod(n(2), n(-1), n(4))",
+          "output": "panic: negative exponentiation is not supported!",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",4,[\"Rational\",1,2],7]": {
@@ -306,6 +374,13 @@
           "input": "PowerMod[4, Rational[1, 2], 7]",
           "output": "2",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(4), rational(n(1), n(2)), n(7))",
+          "output": "panic: an integer, not 1/2",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",2,[\"List\",10,11,12,13,14],5]": {
@@ -320,6 +395,13 @@
           "input": "PowerMod[2, List[10, 11, 12, 13, 14], 5]",
           "output": "{4, 3, 1, 2, 4}",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(2), list(vec![n(10), n(11), n(12), n(13), n(14)]), n(5))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's PowerMod is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"PowerMod\",[\"Add\",[\"Power\",10,300],1],7,5]": {
@@ -330,6 +412,11 @@
         },
         "wolfram": {
           "input": "PowerMod[Plus[Power[10, 300], 1], 7, 5]",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod((power(n(10), n(300)) + n(1)), n(7), n(5))",
           "output": "1",
           "verdict": "agree"
         }
@@ -346,6 +433,13 @@
           "input": "PowerMod[3, Rational[1, 2], Plus[Power[10, 30], 57]]",
           "output": "492767688934650018614948489645",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(3), rational(n(1), n(2)), (power(n(10), n(30)) + n(57)))",
+          "output": "panic: an integer, not 1/2",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",[\"Rational\",2,3],1,7]": {
@@ -360,6 +454,13 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "We extend PowerMod to a rational base; Wolfram's PowerMod takes integers (and Gaussian integers) only and leaves a rational base unevaluated."
+        },
+        "rust": {
+          "input": "powermod(rational(n(2), n(3)), n(1), n(7))",
+          "output": "panic: an integer, not 2/3",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",7,[\"Totient\",19],19]": {
@@ -384,6 +485,11 @@
           "input": "PowerMod[2, 340, 341]",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(2), n(340), n(341))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"PowerMod\",[\"PowerMod\",5,6,23],15,23],[\"PowerMod\",[\"PowerMod\",5,15,23],6,23]]": {
@@ -395,6 +501,11 @@
         "wolfram": {
           "input": "(PowerMod[PowerMod[5, 6, 23], 15, 23] == PowerMod[PowerMod[5, 15, 23], 6, 23])",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(powermod(powermod(n(5), n(6), n(23)), n(15), n(23)), powermod(powermod(n(5), n(15), n(23)), n(6), n(23)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -410,6 +521,13 @@
           "input": "PowerMod[2, Rational[1, 2], 5]",
           "output": "PowerMod[2, 1/2, 5]",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "powermod(n(2), rational(n(1), n(2)), n(5))",
+          "output": "panic: an integer, not 1/2",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root)."
         }
       },
       "[\"PowerMod\",[\"Complex\",2,1],2,3]": {
@@ -460,6 +578,11 @@
         },
         "mathlib4": {
           "input": "((((1 + 4) * (1 - 4)) : ℤ) % 15)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "mod_floor(((n(1) + n(4)) * (n(1) - n(4))), n(15))",
           "output": "0",
           "verdict": "agree"
         }

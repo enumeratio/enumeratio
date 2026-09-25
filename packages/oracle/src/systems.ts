@@ -4,7 +4,15 @@
 // runner: a system with no mappings yet still belongs in the type, so a scan reports
 // "unmapped" for it rather than pretending the question was never asked.
 
-export type System = "wolfram" | "sympy" | "mpmath" | "sage" | "oscar" | "julia" | "mathlib4";
+export type System =
+  | "wolfram"
+  | "sympy"
+  | "mpmath"
+  | "sage"
+  | "oscar"
+  | "julia"
+  | "mathlib4"
+  | "rust";
 
 export interface SystemSpec {
   readonly name: System;
@@ -62,6 +70,13 @@ export const SYSTEMS: readonly SystemSpec[] = [
     wired: true,
     strength:
       "definitions rather than values: the place to check that a convention is the standard one",
+  },
+  {
+    name: "rust",
+    label: "Rust (num, primal, statrs, adic)",
+    wired: true,
+    strength:
+      "the numeric and number-theory crates a Rust user would reach for, and the adic crate for p-adic numbers",
   },
 ];
 

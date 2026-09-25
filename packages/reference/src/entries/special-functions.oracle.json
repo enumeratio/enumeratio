@@ -17,6 +17,13 @@
           "verdict": "disagree",
           "kind": "undefined-form",
           "note": "The pole is ComplexInfinity here; Sage's gamma(0) spells the same pole 'Infinity' (unsigned), a different notation for the same undefined value."
+        },
+        "rust": {
+          "input": "gamma(n(0))",
+          "output": "PositiveInfinity",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\", and Rust gives PositiveInfinity."
         }
       },
       "[\"Gamma\",2.5]": {
@@ -28,6 +35,11 @@
         "sage": {
           "input": "gamma(2.5)",
           "output": "1.32934038817914",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "gamma(x(2.5))",
+          "output": "1.3293403881791408",
           "verdict": "agree"
         }
       },
@@ -43,6 +55,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Gamma is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "gamma(list(vec![n(0), n(-1)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Gamma is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Gamma\",6],[\"Factorial\",5]]": {
@@ -55,6 +74,11 @@
           "input": "bool(gamma(6) == factorial(5))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(gamma(n(6)), factorial(n(5)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Gamma\",6],[\"Multiply\",5,[\"Gamma\",5]]]": {
@@ -66,6 +90,11 @@
         "sage": {
           "input": "bool(gamma(6) == (5 * gamma(5)))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(gamma(n(6)), (n(5) * gamma(n(5))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -81,6 +110,11 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "True by the reflection formula; Sage's bool(a==b) doesn't invoke that identity automatically on unevaluated symbolic Gammas and reports False instead of attempting the proof."
+        },
+        "rust": {
+          "input": "equal((gamma(rational(n(1), n(3))) * gamma(rational(n(2), n(3)))), (x(std::f64::consts::PI) / sin((x(std::f64::consts::PI) / n(3)))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Gamma\",[\"Rational\",1,2]],[\"Sqrt\",\"Pi\"]]": {
@@ -92,6 +126,11 @@
         "sage": {
           "input": "bool(gamma((1/2)) == sqrt(pi))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(gamma(rational(n(1), n(2))), sqrt(x(std::f64::consts::PI)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -105,6 +144,11 @@
           "input": "bool(((pi^2) / gamma(3)) == ((pi^2) / 2))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Gamma\",[\"Rational\",5,2]]": {
@@ -117,6 +161,11 @@
           "input": "gamma((5/2))",
           "output": "3/4*sqrt(pi)",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "gamma(rational(n(5), n(2)))",
+          "output": "1.3293403881791408",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Power\",[\"Gamma\",[\"Rational\",1,2]],2],\"Pi\"]": {
@@ -128,6 +177,11 @@
         "sage": {
           "input": "bool((gamma((1/2))^2) == pi)",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))",
+          "output": "true",
           "verdict": "agree"
         }
       },

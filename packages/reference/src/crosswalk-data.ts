@@ -126,11 +126,36 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "abs($1)",
         arity: 1,
       },
+      {
+        system: "rust",
+        call: "abs($1)",
+        arity: 1,
+      },
     ],
   },
   {
     name: "Add",
     wolfram: "Plus",
+  },
+  {
+    name: "AdicNumeral",
+    oracle: [
+      {
+        system: "rust",
+        call: "adic($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "AdicValuation",
+    oracle: [
+      {
+        system: "rust",
+        call: "adic_valuation($1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "AiryAi",
@@ -558,6 +583,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "binomial(ZZ($1), ZZ($2))",
         arity: 2,
       },
+      {
+        system: "rust",
+        call: "binomial($1, $2)",
+        arity: 2,
+      },
     ],
   },
   {
@@ -617,6 +647,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "ceil($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "ceil($1)",
         arity: 1,
       },
@@ -780,6 +815,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "cos($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "cos($1)",
         arity: 1,
       },
@@ -1287,6 +1327,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "bool($1 == $2)",
         arity: 2,
       },
+      {
+        system: "rust",
+        call: "equal($1, $2)",
+        arity: 2,
+      },
     ],
   },
   {
@@ -1486,6 +1531,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "exp($1)",
         arity: 1,
       },
+      {
+        system: "rust",
+        call: "exp($1)",
+        arity: 1,
+      },
     ],
   },
   {
@@ -1573,6 +1623,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "julia",
         call: "factorial(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "factorial($1)",
         arity: 1,
       },
     ],
@@ -1715,6 +1770,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "floor($1)",
         arity: 1,
       },
+      {
+        system: "rust",
+        call: "floor($1)",
+        arity: 1,
+      },
     ],
   },
   {
@@ -1785,6 +1845,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "julia",
         call: "gcd(ZZ($1), ZZ($2))",
+        arity: 2,
+      },
+      {
+        system: "rust",
+        call: "gcd($1, $2)",
         arity: 2,
       },
     ],
@@ -1908,6 +1973,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "gamma($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "gamma($1)",
         arity: 1,
       },
@@ -2199,6 +2269,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "julia",
         call: "is_prime(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "is_prime($1)",
         arity: 1,
       },
     ],
@@ -2496,6 +2571,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "lcm(ZZ($1), ZZ($2))",
         arity: 2,
       },
+      {
+        system: "rust",
+        call: "lcm($1, $2)",
+        arity: 2,
+      },
     ],
   },
   {
@@ -2579,6 +2659,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "List",
     wolfram: "List",
+    oracle: [
+      {
+        system: "rust",
+        call: "list(vec![$*,])",
+      },
+    ],
   },
   {
     name: "Ln",
@@ -2693,6 +2779,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "log($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "ln($1)",
         arity: 1,
       },
     ],
@@ -2837,6 +2928,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "julia",
         call: "mod($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "rust",
+        call: "mod_floor($1, $2)",
         arity: 2,
       },
     ],
@@ -3066,6 +3162,13 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Power",
     wolfram: "Power",
+    oracle: [
+      {
+        system: "rust",
+        call: "power($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "PowerMod",
@@ -3074,6 +3177,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sage",
         call: "power_mod($1, $2, $3)",
+        arity: 3,
+      },
+      {
+        system: "rust",
+        call: "powermod($1, $2, $3)",
         arity: 3,
       },
     ],
@@ -3099,6 +3207,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "nth_prime($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "nth_prime($1)",
         arity: 1,
       },
@@ -3128,6 +3241,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "prime_pi($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "prime_pi($1)",
         arity: 1,
       },
@@ -3176,6 +3294,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       {
         system: "sympy",
         call: "Rational($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "rust",
+        call: "rational($1, $2)",
         arity: 2,
       },
     ],
@@ -3423,6 +3546,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "sin($1)",
         arity: 1,
       },
+      {
+        system: "rust",
+        call: "sin($1)",
+        arity: 1,
+      },
     ],
   },
   {
@@ -3497,6 +3625,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "sqrt($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "sqrt($1)",
         arity: 1,
       },
@@ -3649,6 +3782,11 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       },
       {
         system: "sage",
+        call: "tan($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
         call: "tan($1)",
         arity: 1,
       },

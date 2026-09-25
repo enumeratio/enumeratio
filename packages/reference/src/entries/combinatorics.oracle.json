@@ -30,6 +30,11 @@
           "input": "binomial(ZZ(5), ZZ(2))",
           "output": "10",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(5), n(2))",
+          "output": "10",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",10,3]": {
@@ -55,6 +60,11 @@
         },
         "oscar": {
           "input": "binomial(ZZ(10), ZZ(3))",
+          "output": "120",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(10), n(3))",
           "output": "120",
           "verdict": "agree"
         }
@@ -84,6 +94,11 @@
           "input": "binomial(ZZ(4), ZZ(2))",
           "output": "6",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(4), n(2))",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",5,0]": {
@@ -109,6 +124,11 @@
         },
         "oscar": {
           "input": "binomial(ZZ(5), ZZ(0))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(5), n(0))",
           "output": "1",
           "verdict": "agree"
         }
@@ -138,6 +158,11 @@
           "input": "binomial(ZZ(5), ZZ(5))",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(5), n(5))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Binomial\",10,3],[\"Binomial\",10,7]]": {
@@ -163,6 +188,11 @@
         },
         "oscar": {
           "input": "(binomial(ZZ(10), ZZ(3)) == binomial(ZZ(10), ZZ(7)))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(binomial(n(10), n(3)), binomial(n(10), n(7)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -192,6 +222,11 @@
           "input": "((binomial(ZZ(9), ZZ(2)) + binomial(ZZ(9), ZZ(3))) == binomial(ZZ(10), ZZ(3)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal((binomial(n(9), n(2)) + binomial(n(9), n(3))), binomial(n(10), n(3)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Add\",[\"Binomial\",4,0],[\"Binomial\",4,1],[\"Binomial\",4,2],[\"Binomial\",4,3],[\"Binomial\",4,4]],[\"Power\",2,4]]": {
@@ -217,6 +252,11 @@
         },
         "oscar": {
           "input": "((binomial(ZZ(4), ZZ(0)) + binomial(ZZ(4), ZZ(1)) + binomial(ZZ(4), ZZ(2)) + binomial(ZZ(4), ZZ(3)) + binomial(ZZ(4), ZZ(4))) == (big(2)^4))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal((binomial(n(4), n(0)) + binomial(n(4), n(1)) + binomial(n(4), n(2)) + binomial(n(4), n(3)) + binomial(n(4), n(4))), power(n(2), n(4)))",
           "output": "true",
           "verdict": "agree"
         }
@@ -246,6 +286,11 @@
           "input": "binomial(ZZ(52), ZZ(5))",
           "output": "2598960",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(52), n(5))",
+          "output": "2598960",
+          "verdict": "agree"
         }
       },
       "[\"Binomial\",5,7]": {
@@ -271,6 +316,11 @@
         },
         "oscar": {
           "input": "binomial(ZZ(5), ZZ(7))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(5), n(7))",
           "output": "0",
           "verdict": "agree"
         }
@@ -302,6 +352,13 @@
           "input": "binomial(ZZ(5), ZZ(-1))",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(5), n(-1))",
+          "output": "1",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones."
         }
       },
       "[\"Binomial\",-5,2]": {
@@ -331,6 +388,13 @@
           "input": "binomial(ZZ(-5), ZZ(2))",
           "output": "15",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "binomial(n(-5), n(2))",
+          "output": "0",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones."
         }
       }
     },
@@ -411,6 +475,11 @@
           "input": "factorial(ZZ(5))",
           "output": "120",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "factorial(n(5))",
+          "output": "120.0",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",6]": {
@@ -437,6 +506,11 @@
         "oscar": {
           "input": "factorial(ZZ(6))",
           "output": "720",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "factorial(n(6))",
+          "output": "720.0",
           "verdict": "agree"
         }
       },
@@ -465,6 +539,11 @@
           "input": "factorial(ZZ(0))",
           "output": "1",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "factorial(n(0))",
+          "output": "1.0",
+          "verdict": "agree"
         }
       },
       "[\"Factorial\",10]": {
@@ -491,6 +570,11 @@
         "oscar": {
           "input": "factorial(ZZ(10))",
           "output": "3628800",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "factorial(n(10))",
+          "output": "3628800.0",
           "verdict": "agree"
         }
       },
@@ -527,6 +611,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Factorial is Listable and threads over the list; Oscar's takes scalars only."
+        },
+        "rust": {
+          "input": "factorial(list(vec![n(1), n(2), n(3), n(4)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Factorial is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Factorial\",5],[\"Multiply\",5,[\"Factorial\",4]]]": {
@@ -552,6 +643,11 @@
         },
         "oscar": {
           "input": "(factorial(ZZ(5)) == (5 * factorial(ZZ(4))))",
+          "output": "true",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(factorial(n(5)), (n(5) * factorial(n(4))))",
           "output": "true",
           "verdict": "agree"
         }
@@ -587,6 +683,13 @@
           "verdict": "error",
           "kind": "domain",
           "note": "compute-engine extends Factorial to non-integers through Gamma; Oscar's factorial takes integers only."
+        },
+        "rust": {
+          "input": "factorial(rational(n(1), n(2)))",
+          "output": "panic: an integer, not 1/2",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "statrs' factorial takes non-negative integers; compute-engine extends Factorial through Gamma."
         }
       },
       "[\"Factorial\",8]": {
@@ -613,6 +716,11 @@
         "oscar": {
           "input": "factorial(ZZ(8))",
           "output": "40320",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "factorial(n(8))",
+          "output": "40320.0",
           "verdict": "agree"
         }
       },
@@ -649,6 +757,13 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers \"ComplexInfinity\" and Oscar raises an error."
+        },
+        "rust": {
+          "input": "factorial(n(-1))",
+          "output": "panic: a non-negative integer",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline: compute-engine answers \"ComplexInfinity\", and Rust gives panic: a non-negative integer."
         }
       },
       "[\"Factorial\",20]": {
@@ -675,6 +790,11 @@
         "oscar": {
           "input": "factorial(ZZ(20))",
           "output": "2432902008176640000",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "factorial(n(20))",
+          "output": "2.43290200817664e18",
           "verdict": "agree"
         }
       }
@@ -853,6 +973,11 @@
           "input": "(binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))",
           "output": "42.0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(binomial((n(2) * n(5)), n(5)) / (n(5) + n(1)))",
+          "output": "42",
+          "verdict": "agree"
         }
       },
       "[\"Subtract\",[\"Binomial\",10,5],[\"Binomial\",10,6]]": {
@@ -878,6 +1003,11 @@
         },
         "oscar": {
           "input": "(binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))",
+          "output": "42",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(binomial(n(10), n(5)) - binomial(n(10), n(6)))",
           "output": "42",
           "verdict": "agree"
         }

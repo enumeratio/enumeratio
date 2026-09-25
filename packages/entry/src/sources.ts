@@ -28,6 +28,7 @@ export type CrosswalkSystem =
   | "mathlib4"
   | "oscar"
   | "julia"
+  | "rust"
   | "matlab"
   | "rosettacode";
 
@@ -68,6 +69,7 @@ export const SOURCES: Readonly<Record<CrosswalkSystem, CrosswalkSource>> = {
   mathlib4: { label: "mathlib4" },
   oscar: { label: "Oscar" },
   julia: { label: "Julia" },
+  rust: { label: "Rust" },
   matlab: { label: "MATLAB" },
   rosettacode: {
     label: "Rosetta Code",
@@ -99,6 +101,7 @@ export const SYSTEM_ORDER: readonly CrosswalkSystem[] = [
   "mathlib4",
   "oscar",
   "julia",
+  "rust",
   "matlab",
   "rosettacode",
 ];
