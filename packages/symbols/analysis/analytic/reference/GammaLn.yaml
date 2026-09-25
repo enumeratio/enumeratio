@@ -73,11 +73,10 @@ examples:
     category: Scope
     caption: Complex arguments; here the principal $\ln\Gamma(z)$ and Wolfram's $\mathrm{LogGamma}$ agree, as the imaginary part stays inside $(-\pi, \pi]$
   - id: a-huge-inexact-argument-should-still-evaluate
-    expr: [GammaLn, { num: "1e1000" }]
+    expr: [GammaLn, { num: "1.0e1000" }]
     expected: { num: "2.30158509299404568402e+1003" }
-    aspirational: true
     category: Scope
-    caption: "A huge inexact argument should still evaluate (Stirling's series): $\\ln\\Gamma(10^{1000}) \\approx 2.3016 \\times 10^{1003}$; left unevaluated today"
+    caption: "A huge inexact argument, far past a double, from Stirling's series: $\\ln\\Gamma(10^{1000}) \\approx 2.3016 \\times 10^{1003}$"
   - id: threads-over-a-list-and-the-integer-points
     expr: [GammaLn, [List, 1, 2, 3]]
     expected: [List, 0, 0, [Ln, 2]]

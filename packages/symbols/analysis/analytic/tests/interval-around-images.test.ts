@@ -63,11 +63,7 @@ test("Interval: monotonic images across the circular and inverse-circular heads"
 });
 
 test("Interval: hyperbolic, Exp, Ln and Sqrt images", () => {
-  expect(json(["Tanh", ["Interval", 0, ["Ln", 2]]])).toEqual([
-    "Interval",
-    ["Tanh", 0],
-    ["Tanh", ["Ln", 2]],
-  ]);
+  expect(json(["Tanh", ["Interval", 0, ["Ln", 2]]])).toEqual(["Interval", 0, ["Rational", 3, 5]]);
   expect(json(["Exp", ["Interval", -1, ["Ln", 2]]])).toEqual([
     "Interval",
     ["Divide", 1, "ExponentialE"],

@@ -1,5 +1,6 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import type { Json } from "./bernoulli.ts";
+import { bernoulliRational } from "./bernoulli.ts";
 import { type BoxInput, isRealInt } from "./box.ts";
 
 // HarmonicNumber(n) = Σ_{k=1}^n 1/k and HarmonicNumber(n, r) = Σ_{k=1}^n k^{-r} — exact
@@ -55,6 +56,34 @@ function harmonicRational(n: number, r: number): Rat {
   return sum;
 }
 
+/** Largest z summed term by term at a non-integer order -- Wolfram's own cut-off. */
+const FINITE_SUM_MAX = 4;
+
+/** Largest k for which H_z^(−k) expands to its Faulhaber polynomial. */
+const FAULHABER_MAX = 20;
+
+const isExactRational = (x: BoxedExpression): boolean =>
+  isNumber(x) && x.isExact && x.im === 0 && !isRealInt(x);
+
+const binomial = (n: number, k: number): bigint => {
+  let r = 1n;
+  for (let i = 0; i < k; i++) r = (r * BigInt(n - i)) / BigInt(i + 1);
+  return r;
+};
+
+/** Σ_{j=1}^z j^k = (1/(k+1)) Σ_{i=0}^{k} C(k+1, i) B⁺ᵢ z^(k+1−i), with B⁺₁ = +1/2. */
+function faulhaber(k: number, z: Json): Json {
+  const terms: Json[] = [];
+  for (let i = 0; i <= k; i++) {
+    const [bn, bd] = i === 1 ? [1n, 2n] : bernoulliRational(i);
+    if (bn === 0n) continue;
+    const coeff = normalize([binomial(k + 1, i) * bn, bd * BigInt(k + 1)]);
+    const e = k + 1 - i;
+    terms.push(["Multiply", ratNode(coeff), e === 1 ? z : ["Power", z, e]]);
+  }
+  return ["Add", ...terms];
+}
+
 /**
  * Evaluate HarmonicNumber(z) / HarmonicNumber(z, r). Exact rational at a non-negative
  * integer z with an integer (or absent) r; ComplexInfinity at a negative integer z,
@@ -79,6 +108,20 @@ export function evaluateHarmonicNumber(
 
   if (isRealInt(z) && z.re > 0 && (r === undefined || isRealInt(r))) {
     return finish(box(ratNode(harmonicRational(z.re, r === undefined ? 1 : r.re))));
+  }
+
+  // A positive integer z and an exact non-integer order: still a finite sum, of radicals.
+  if (isRealInt(z) && z.re > 0 && z.re <= FINITE_SUM_MAX && r !== undefined && isExactRational(r)) {
+    const terms: Json[] = [];
+    for (let k = 1; k <= z.re; k++) terms.push(["Power", k, ["Negate", r.json as unknown as Json]]);
+    return finish(box(["Add", ...terms]));
+  }
+
+  // A negative integer order is Faulhaber's polynomial in z for every z, the continuation
+  // included (H_z^(−k) = ζ(−k) − ζ(−k, z+1) is a Bernoulli-polynomial difference).
+  if (!numeric && r !== undefined && isRealInt(r) && r.re < 0 && r.re >= -FAULHABER_MAX) {
+    if (isNumber(z)) return undefined;
+    return box(faulhaber(-r.re, z.json as unknown as Json)).evaluate();
   }
 
   // Everything else — non-integer/complex z, or a non-integer order — is the continuation,

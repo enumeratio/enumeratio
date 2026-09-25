@@ -167,9 +167,8 @@ examples:
   - id: sin-x-cos-x-should-simplify-to-tan-x-simplify
     expr: [Simplify, [Divide, [Sin, x], [Cos, x]]]
     expected: [Tan, x]
-    aspirational: true
     category: Properties
-    caption: $\sin x / \cos x$ should simplify to $\tan x$; Simplify leaves the quotient
+    caption: $\sin x / \cos x$ simplifies to $\tan x$
   - id: rewritten-in-exponentials
     expr: [TrigToExp, [Tan, x]]
     expected:

@@ -128,9 +128,8 @@ examples:
   - id: cos-infty-should-be-the-oscillation-range-1-1
     expr: [Cos, PositiveInfinity]
     expected: [Interval, -1, 1]
-    aspirational: true
     category: Scope
-    caption: $\cos(\infty)$ should be the oscillation range $[-1, 1]$; compute-engine returns a type error
+    caption: $\cos(\infty)$ is the oscillation range $[-1, 1]$, as for [[Sin]]
   - id: an-imaginary-argument-rewrites-to-cosh-cos-ix
     expr: [Cos, [Multiply, ImaginaryUnit, x]]
     expected: [Cosh, x]

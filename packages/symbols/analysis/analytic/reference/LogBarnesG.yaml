@@ -69,10 +69,9 @@ examples:
     caption: 'The continuation, not $\ln$ of the value: $G(-2.5) > 0$, yet the imaginary part is $6\pi$'
   - id: huge-arguments-straight-from-the-asymptotic
     expr: [N, [LogBarnesG, [Power, 10, 1000]]]
-    expected: { num: "1.15054254649702284200899572734e2003" }
+    expected: { num: "1.15054254649702284201e+2003" }
     category: Scope
-    caption: 'Huge arguments, straight from the asymptotic series: $\ln G(10^{1000}) \approx 1.1505\times10^{2003}$; stays unevaluated (and arguments near $10^{20}$ exceed the time cap)'
-    aspirational: true
+    caption: 'Huge arguments, straight from the asymptotic series: $\ln G(10^{1000}) \approx 1.1505\times10^{2003}$'
   - id: interval-arithmetic-over-an-increasing-stretch
     expr: [LogBarnesG, [Interval, 0.111, 0.112]]
     expected: [Interval, -2.106284277112393, -2.096646198881469]

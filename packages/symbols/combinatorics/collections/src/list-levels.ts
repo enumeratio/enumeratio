@@ -446,6 +446,15 @@ export function declareListLevelHeads(ce: ComputeEngine): void {
       const nativeOperator = Object.create(operator) as typeof operator;
       nativeOperator.canonical = nativeCanonical;
       operator.canonical = (ops, options) => {
+        // All as a part spec is every part, Span(1, −1); the bare symbol would otherwise
+        // be read as compute-engine's own All(collection, predicate) head and fail typing.
+        if (ops.slice(1).some((op) => symbolNameOf(op) === "All")) {
+          const all = ce.function("Span", [ce.One, ce.number(-1)]);
+          return ce.function(
+            "At",
+            ops.map((op, i) => (i > 0 && symbolNameOf(op) === "All" ? all : op)),
+          );
+        }
         if (ops.length !== 2 || integerAt(ops[1]) === undefined) {
           return nativeCanonical?.call(nativeOperator, ops, options);
         }

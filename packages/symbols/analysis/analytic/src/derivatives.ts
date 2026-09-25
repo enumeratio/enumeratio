@@ -57,6 +57,53 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
     "1": { params: ["z"], body: ["Multiply", ["BarnesG", "z"], LOG_BARNES_G_PRIME] },
   },
 
+  // ∂ₐB(a, b) = B(a, b)(ψ(a) − ψ(a + b)), and symmetrically in b.
+  Beta: {
+    "1,0": {
+      params: ["a", "b"],
+      body: [
+        "Multiply",
+        ["Beta", "a", "b"],
+        ["Subtract", ["Digamma", "a"], ["Digamma", ["Add", "a", "b"]]],
+      ],
+    },
+    "0,1": {
+      params: ["a", "b"],
+      body: [
+        "Multiply",
+        ["Beta", "a", "b"],
+        ["Subtract", ["Digamma", "b"], ["Digamma", ["Add", "a", "b"]]],
+      ],
+    },
+  },
+  // The inverse-function rule on erf′(y) = (2/√π)e^(−y²).
+  ErfInv: {
+    "1": {
+      params: ["x"],
+      body: [
+        "Multiply",
+        ["Rational", 1, 2],
+        ["Sqrt", "Pi"],
+        ["Exp", ["Power", ["ErfInv", "x"], 2]],
+      ],
+    },
+  },
+  ErfcInv: {
+    "1": {
+      params: ["x"],
+      body: [
+        "Multiply",
+        ["Rational", -1, 2],
+        ["Sqrt", "Pi"],
+        ["Exp", ["Power", ["ErfcInv", "x"], 2]],
+      ],
+    },
+  },
+  // Li_s′(z) = Li_{s−1}(z)/z, termwise on the series; ∂ₛ has no closed form.
+  PolyLog: {
+    "0,1": { params: ["s", "z"], body: ["Divide", ["PolyLog", ["Subtract", "s", 1], "z"], "z"] },
+  },
+
   // gd′(x) = sech(x): the Gudermannian's defining property.
   Gudermannian: { "1": { params: ["x"], body: ["Sech", "x"] } },
 

@@ -157,10 +157,9 @@ examples:
     caption: $\operatorname{Li}_s(1) = \zeta(s)$ for symbolic $s$
   - id: frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative
     expr: [D, [PolyLog, n, x], x]
-    expected: [Divide, [PolyLog, [Subtract, n, 1], x], x]
-    aspirational: true
+    expected: [Divide, [PolyLog, [Add, n, -1], x], x]
     category: Properties
-    caption: $\frac{d}{dx}\operatorname{Li}_n(x) = \operatorname{Li}_{n-1}(x)/x$; today the derivative stays an unapplied `Derivative`
+    caption: $\frac{d}{dx}\operatorname{Li}_n(x) = \operatorname{Li}_{n-1}(x)/x$
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [PolyLog, 2, [Rational, 1, 2]], 30]
     expected: { num: "0.582240526465012505902656320160" }

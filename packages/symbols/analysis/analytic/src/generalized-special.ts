@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 import { bigRationalAt, operandsOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
 import { declined, type EvalOptions, isRealInt, type NativeEval } from "./box.ts";
 
@@ -78,6 +78,21 @@ export function declareGeneralizedBeta(ce: ComputeEngine): void {
         const [a, b] = ops;
         // B(a, 1) = Γ(a)Γ(1)/Γ(a+1) = 1/a, exact for any a (including symbolic).
         if (isRealInt(b) && b.re === 1) return finish(ce.function("Divide", [ce.One, a]), options);
+        // B(a, n) = (n−1)!/(a(a+1)⋯(a+n−1)) at a small positive integer n, either side.
+        const small = (x: BoxedExpression) => isRealInt(x) && x.re >= 2 && x.re <= 10;
+        const [x, n] =
+          small(b) && !isNumber(a) ? [a, b.re] : small(a) && !isNumber(b) ? [b, a.re] : [];
+        if (x !== undefined && n !== undefined) {
+          const factors = Array.from({ length: n }, (_, k) =>
+            k === 0 ? x : ce.function("Add", [x, ce.number(k)]),
+          );
+          let factorial = 1;
+          for (let k = 2; k < n; k++) factorial *= k;
+          return finish(
+            ce.function("Divide", [ce.number(factorial), ce.function("Multiply", factors)]),
+            options,
+          );
+        }
         return r;
       }
       if (ops.length === 3) {

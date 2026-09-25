@@ -76,9 +76,8 @@ examples:
   - id: complex-arguments-should-evaluate-as-psi-m-does
     expr: [Digamma, [Complex, 2.5, 3]]
     expected: [Complex, 1.2812739190662314, 0.9798053153445596]
-    aspirational: true
     category: Scope
-    caption: Complex arguments should evaluate, as $\psi^{(m)}$ does for $m \geq 1$ (see [[PolyGamma]]); left unevaluated today
+    caption: Inexact complex arguments evaluate, as $\psi^{(m)}$ does for $m \geq 1$ (see [[PolyGamma]])
   - id: psi-infty-infty-growing-like-ln-z
     expr: [Digamma, PositiveInfinity]
     expected: PositiveInfinity
