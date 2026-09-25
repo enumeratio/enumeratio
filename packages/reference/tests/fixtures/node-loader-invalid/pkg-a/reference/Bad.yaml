@@ -1,0 +1,7 @@
+name: Bad
+domain: Numbers
+signature: Bad(x)
+examples:
+  - expr: [Bad, 1]
+    expected: 1
+    typo: oops

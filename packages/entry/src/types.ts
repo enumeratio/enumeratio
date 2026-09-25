@@ -68,11 +68,31 @@ export interface ReferenceExample {
    * Kept as data but not shown by default: an edge case or a grid point that the tests and
    * oracles run like any other example, too many or too minor to render. Hidden examples
    * mostly live in an entry file's `<stem>.examples.json`.
+   *
+   * @deprecated Superseded by `role: "test"` (design/examples-as-data.md §5). Both are read
+   * during the migration; `hidden` goes away once every example carries a `role`.
    */
   readonly hidden?: boolean;
+  /**
+   * A stable identity, unique within the head (design/examples-as-data.md §3): lowercase,
+   * hyphen-separated, at most 48 characters, assigned once by slugging the caption (or the
+   * InputForm when there is none) and never re-derived. Optional during the migration
+   * (step 1); step 2 makes it required and keys everything -- tests, oracle rows, page
+   * anchors -- by it instead of by array position.
+   */
+  readonly id?: string;
+  /**
+   * What the example is FOR (design/examples-as-data.md §5). `demo` (the default) is shown
+   * on the reference page; `test` runs in the evaluation test and the scans like any other
+   * example but is skipped by the page, superseding `hidden`.
+   */
+  readonly role?: ExampleRole;
   /** Per-system oracle runs of this exact example, attached from the entry's `.oracle.json` sidecar. */
   readonly others?: Readonly<Record<string, OtherSystemRun>>;
 }
+
+/** What an example is for (design/examples-as-data.md §5) -- superseding `hidden`. */
+export type ExampleRole = "demo" | "test";
 
 /** One call signature the head accepts, with a short explanation. */
 export interface ReferenceSignature {
@@ -215,3 +235,62 @@ export interface ReferenceEntry {
    */
   readonly stub?: "engine" | "carrier";
 }
+
+// --- the implementations record (design/examples-as-data.md §2, §6) -----------------------
+//
+// `reference/<Head>.implementations.yaml` holds, per example id, every implementation's
+// rendering of it and, for other systems, their answer. Own forms ("epsil", "tex",
+// "traditional", "notatio") and external systems share this shape -- an own form simply has
+// no `verdict`, `messages`, or claim to answer with.
+
+/** One rendered form of an example: retypeable text going in, and what it prints as. */
+export interface RenderedForm {
+  readonly in: string;
+  readonly out: string;
+}
+
+/**
+ * One classification of a `SystemImplementation` whose `verdict` isn't `agree` -- written by
+ * hand, and carried forward by the scan while the verdict holds (design/examples-as-data.md
+ * §6). A row may need more than one (a divergence AND a tolerance note), hence the list.
+ */
+export interface ImplementationMessage {
+  /** One of `DIVERGENCE_KINDS` (`@enumeratio/oracle`). */
+  readonly kind: string;
+  readonly note?: string;
+  /** `ours` only: the GitHub issue tracking the gap. */
+  readonly issue?: number;
+  /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
+  readonly tolerance?: number;
+}
+
+/**
+ * One system's writing of one example and, unless it's one of our own forms, its answer.
+ *
+ * | Field                | Written by                                              |
+ * | -------------------- | -------------------------------------------------------- |
+ * | `in`                 | `UPDATE_FORMS=1` -- what our transpiler emits for it      |
+ * | `out`, `tex`, `verdict` | the scan's `--accept`; absent for an own form, or until scanned |
+ * | `messages`           | hand, the classification of a non-`agree` verdict          |
+ */
+export interface SystemImplementation {
+  readonly in: string;
+  readonly out?: string;
+  /** Wolfram (and any system that has one): its TeXForm of `in` and of `out`. */
+  readonly tex?: RenderedForm;
+  readonly verdict?: OtherSystemVerdict;
+  readonly messages?: readonly ImplementationMessage[];
+}
+
+/**
+ * All implementations of one example, keyed by our own forms ("epsil", "tex", "traditional",
+ * "notatio") or an external system name (`CrosswalkSystem`) -- one value in
+ * `<Head>.implementations.yaml`, itself keyed by example id (see `HeadImplementations`).
+ */
+export type ExampleImplementations = Readonly<Record<string, SystemImplementation>>;
+
+/**
+ * The whole `<Head>.implementations.yaml` file: every example's implementations, keyed by
+ * the example's `id`. Nothing in it is keyed by expression text or array position.
+ */
+export type HeadImplementations = Readonly<Record<string, ExampleImplementations>>;

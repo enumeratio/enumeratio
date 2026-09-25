@@ -1,0 +1,9 @@
+name: FromDigits
+domain: Residues
+signature: FromDigits(digits, base)
+summary: Reconstructs a number from a list of digits, an arbitrary base.
+examples:
+  - id: base-ten
+    expr: [FromDigits, [List, 1, 2, 3], 10]
+    expected: 123
+    category: Basic
