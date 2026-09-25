@@ -224,9 +224,25 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     fungrimEntries: ["c580f4"],
   },
   {
+    name: "Arccsc",
+    wolfram: "ArcCsc",
+  },
+  {
     name: "Arcosh",
     fungrimEntries: ["2fc479", "718f3a", "d9765b"],
     wolfram: "ArcCosh",
+  },
+  {
+    name: "Arcoth",
+    wolfram: "ArcCoth",
+  },
+  {
+    name: "Arcsch",
+    wolfram: "ArcCsch",
+  },
+  {
+    name: "Arcsec",
+    wolfram: "ArcSec",
   },
   {
     name: "Arcsin",
@@ -329,6 +345,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "dcc1e5",
       "fbfb81",
     ],
+  },
+  {
+    name: "Arsech",
+    wolfram: "ArcSech",
   },
   {
     name: "Arsinh",
@@ -746,6 +766,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f1a29b",
       "fe1b96",
     ],
+  },
+  {
+    name: "Contains",
+    wolfram: "MemberQ",
   },
   {
     name: "ContinuedFraction",
@@ -2293,10 +2317,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsEven",
     fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
+    wolfram: "EvenQ",
   },
   {
     name: "IsOdd",
     fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
+    wolfram: "OddQ",
   },
   {
     name: "IsPrime",
@@ -3976,6 +4002,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Union",
     wolfram: "Union",
+  },
+  {
+    name: "Unique",
+    wolfram: "DeleteDuplicates",
   },
   {
     name: "Variance",

@@ -2,9 +2,12 @@ export {
   declareAnalytic,
   hurwitzZeta,
   hurwitzZetaReal,
+  setZetaKernel,
   zetaGeneralized,
   zetaGeneralizedReal,
+  type ZetaKernel,
 } from "./hurwitz-zeta.ts";
+export { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta.ts";
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
 export { besselJZero } from "./bessel-zeros.ts";
 export {

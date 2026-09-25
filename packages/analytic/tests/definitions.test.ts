@@ -149,8 +149,8 @@ test("the stock derivative table still works", () => {
 
 // The double-precision kernels top out around 1e-15. Where a head can be routed through a
 // compute-engine native that carries bignums — Zeta, PolyGamma, GammaLn — N() is asked for
-// more digits and gets them. A complex result never can: a compute-engine complex number is
-// a pair of doubles.
+// more digits and gets them, as does ζ(s, a) on its own bignum kernel. A complex result never
+// can: a compute-engine complex number is a pair of doubles.
 const AT_40_DIGITS: readonly [Expr, string][] = [
   [["HurwitzZeta", 3, ["Rational", 1, 2]], "8.414398322117159997798167130580149935355"],
   [["Zeta", 3, ["Rational", 1, 2]], "8.414398322117159997798167130580149935355"],
@@ -177,16 +177,15 @@ for (const [expr, digits] of AT_40_DIGITS) {
   });
 }
 
-// A NON-integer order has no polygamma to fall back on. It goes through the Euler–Maclaurin
-// in precise.ts — the same series as the kernel, written as an expression so compute-engine's
-// own arithmetic carries it — and the answer is rounded to the digits actually asked for.
+// A NON-integer order has no polygamma to fall back on. It goes through the BigDecimal
+// Euler–Maclaurin in bigzeta.ts, and the answer is rounded to the digits actually asked for.
 test("a non-integer order answers with as many digits as were asked for", () => {
   const value = at40(["HurwitzZeta", ["Rational", 1, 2], ["Rational", 5, 4]]) as { num: string };
   expect(value.num.replace(/[-.]/g, "").replace(/^0+/, "").length).toBe(40);
 });
 
 // Left of the strip the direct terms grow like N^(−Re s) and cancel down to an O(1) result,
-// so the series is carried at more digits than asked for and rounded back. Pinned against
+// so the kernel carries more digits than asked for and rounds back. Pinned against
 // mpmath in precise-zeta.golden.json (scripts/collect-precise-zeta-goldens.ts).
 interface PreciseZetaGolden {
   s: [number, number];
@@ -237,13 +236,14 @@ for (const { s, a, digits, mpmath } of PRECISE_ZETA) {
   });
 }
 
-test("the symbolic Euler–Maclaurin agrees with compute-engine's own Zeta", () => {
-  // ζ(s, 1) = ζ(s) is routed to the native Zeta, so take the Euler–Maclaurin one step off
-  // and shift it back: ζ(s, 2) = ζ(s) − 1.
+test("the bignum Euler–Maclaurin agrees with compute-engine's own Zeta to 40 digits", () => {
+  // ζ(s, ½) = (2ˢ − 1) ζ(s): our kernel on the left, the native Zeta on the right.
   const engine = engine40();
   const half: Expr = ["Rational", 1, 2];
-  const viaEulerMaclaurin = box40(engine, ["Add", ["HurwitzZeta", half, 2], 1]).N().re;
-  expect(viaEulerMaclaurin).toBeCloseTo(box40(engine, ["Zeta", half]).N().re, 14);
+  const ours = box40(engine, ["HurwitzZeta", half, half]).N().bignumRe;
+  const native = box40(engine, ["Multiply", ["Subtract", ["Sqrt", 2], 1], ["Zeta", half]]).N()
+    .bignumRe;
+  expect(ours?.sub(native!).abs().lt(1e-38)).toBe(true);
 });
 
 test("plain evaluate() is untouched by the precise path", () => {

@@ -625,11 +625,11 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           'The notorious "sum of all positive integers" result from zeta-function regularization, $\\zeta(-1) = -1/12$',
       },
       {
-        expr: ["N", ["Zeta", ["Complex", 0.5, 14]], 10],
-        expected: ["Complex", 0.02224114261, -0.1032581233],
+        expr: ["N", ["Zeta", ["Complex", 0.5, 14]]],
+        expected: ["Complex", 0.02224114260999359, -0.10325812326645006],
         category: "Scope",
         caption:
-          "On the critical line, $\\zeta(1/2 + 14i) = 0.02224\\ldots - 0.10326\\ldots i$ — complex $s$, from @enumeratio/analytic (compute-engine's Zeta evaluates real $s$ only). Complex $s$ runs on doubles whose last digits depend on the JavaScript engine's Math functions, so the example asks for ten",
+          "On the critical line, $\\zeta(1/2 + 14i) = 0.02224\\ldots - 0.10326\\ldots i$ — complex $s$, from @enumeratio/analytic (compute-engine's Zeta evaluates real $s$ only). Computed in arbitrary precision and rounded once, so each part is the nearest double in every JavaScript engine",
       },
       {
         expr: ["Zeta", 2, 1],

@@ -164,3 +164,52 @@ test("extension heads Wolfram shares are vouched for, not passed through", () =>
   expect(isWolframHead("CircleTimes")).toBe(true);
   expect(isWolframHead("FareySequence")).toBe(true);
 });
+
+test("the reciprocal inverse trig/hyperbolic heads rename straight to Wolfram's Arc*/ArcC*", () => {
+  expect(toWolfram(["Arccsc", 2])).toBe("ArcCsc[2]");
+  expect(toWolfram(["Arcsec", 2])).toBe("ArcSec[2]");
+  expect(toWolfram(["Arcoth", 2])).toBe("ArcCoth[2]");
+  expect(toWolfram(["Arcsch", 2])).toBe("ArcCsch[2]");
+  expect(toWolfram(["Arsech", ["Rational", 1, 2]])).toBe("ArcSech[Rational[1, 2]]");
+});
+
+// A negative argument for each: Wolfram's principal range agrees with compute-engine's for
+// all five straight renames, but NOT for Arccot (see the next test) — this is the check
+// that would have caught that one before it shipped.
+test("the reciprocal inverse trig/hyperbolic renames hold at a negative argument", () => {
+  expect(toWolfram(["Arccsc", -2])).toBe("ArcCsc[-2]");
+  expect(toWolfram(["Arcsec", -2])).toBe("ArcSec[-2]");
+  expect(toWolfram(["Arcoth", -2])).toBe("ArcCoth[-2]");
+  expect(toWolfram(["Arcsch", -2])).toBe("ArcCsch[-2]");
+});
+
+test("Arccot is NOT a straight rename to ArcCot — the principal ranges disagree at negative x", () => {
+  // compute-engine's Arccot has range (0, π); Wolfram's ArcCot has range (-π/2, π/2], so
+  // Arccot(-1) = 3π/4 but ArcCot[-1] = -π/4 — a straight rename would silently misanswer.
+  // Pi/2 - ArcTan[x] matches compute-engine's range everywhere, so that's what's emitted.
+  expect(toWolfram(["Arccot", 1])).toBe("Subtract[Divide[Pi, 2], ArcTan[1]]");
+  expect(toWolfram(["Arccot", -1])).toBe("Subtract[Divide[Pi, 2], ArcTan[-1]]");
+  expect(isWolframHead("Arccot")).toBe(true);
+});
+
+test("IsOdd/IsEven rename to OddQ/EvenQ", () => {
+  expect(toWolfram(["IsOdd", 3])).toBe("OddQ[3]");
+  expect(toWolfram(["IsEven", 4])).toBe("EvenQ[4]");
+});
+
+test("Contains(xs, v) renames to Wolfram's MemberQ[list, form], same argument order", () => {
+  expect(toWolfram(["Contains", ["List", 1, 2, 3], 2])).toBe("MemberQ[List[1, 2, 3], 2]");
+});
+
+test("Unique(xs) renames to Wolfram's DeleteDuplicates[list]", () => {
+  expect(toWolfram(["Unique", ["List", 1, 2, 2, 3]])).toBe("DeleteDuplicates[List[1, 2, 2, 3]]");
+});
+
+test("PositionalNumerals(b) unwraps to the bare base Wolfram's IntegerDigits/FromDigits take", () => {
+  expect(toWolfram(["IntegerDigits", 2147, ["PositionalNumerals", 2]])).toBe(
+    "IntegerDigits[2147, 2]",
+  );
+  expect(toWolfram(["FromDigits", ["List", 1, 0, 1], ["PositionalNumerals", 2]])).toBe(
+    "FromDigits[List[1, 0, 1], 2]",
+  );
+});

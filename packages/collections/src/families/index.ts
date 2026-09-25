@@ -8,6 +8,7 @@ import { entries as permutationClasses } from "./permutation-classes.ts";
 import { entries as compositions } from "./compositions.ts";
 import { entries as partitions } from "./partitions.ts";
 import { entries as binaryWordFamilies } from "./binary-word-families.ts";
+import { entries as unlabeledTrees } from "./unlabeled-trees.ts";
 import type { FamilyKernel } from "./types.ts";
 
 export * from "./types.ts";
@@ -24,4 +25,5 @@ export const allEntries: readonly FamilyKernel[] = [
   ...compositions,
   ...partitions,
   ...binaryWordFamilies,
+  ...unlabeledTrees,
 ];
