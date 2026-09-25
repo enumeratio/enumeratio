@@ -115,8 +115,10 @@ function parseSymbolOrCall(): MathJson {
     expect("]");
     return applyHead(name, args);
   }
-  if (name === "True") return true;
-  if (name === "False") return false;
+  // Truth values round-trip as the MathJSON symbol strings "True"/"False", matching how
+  // this codebase writes them elsewhere (option values, etc.) — not JS booleans.
+  if (name === "True") return "True";
+  if (name === "False") return "False";
   return REVERSE_SYMBOLS[name] ?? REVERSE_HEADS[name] ?? unqualify(name);
 }
 

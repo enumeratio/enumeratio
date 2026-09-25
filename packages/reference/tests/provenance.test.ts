@@ -109,30 +109,58 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * each falls back to the native handler when the input is not ours. `Gamma` and
  * `GammaRegularized` are here for the third argument (Wolfram's generalized incomplete
  * gamma, which a bare engine rejects as an unexpected argument), plus Γ(1, z) = e^{−z}.
+ * Most of the integer and special functions are here for threading over a list, which a
+ * bare engine rejects as a type error (`threadOverLists` in @enumeratio/boxed).
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
  */
 const OVERRIDDEN = [
+  "BellNumber",
+  "BernoulliB",
+  "BetaRegularized",
+  "Binomial",
+  "CatalanNumber",
   "ChineseRemainder",
+  "DigitCount",
+  "DivisorSigma",
   "Divisors",
   "Dot",
   "Element",
+  "Erf",
+  "ErfInv",
+  "Erfc",
   "FactorInteger",
+  "Factorial2",
   "Fibonacci",
   "FromDigits",
   "Gamma",
   "GammaRegularized",
   "IntegerDigits",
+  "IntegerString",
   "Inverse",
   "IsPrime",
+  "IsSquareFree",
+  "JacobiSymbol",
   "LucasL",
   "MatrixPower",
+  "Mod",
+  "MoebiusMu",
+  "Multinomial",
   "MultiplicativeOrder",
+  "NextPrime",
   "Norm",
+  "NthPrime",
+  "Pochhammer",
   "PolyLog",
   "PowerMod",
+  "PrimeNu",
+  "PrimeOmega",
+  "PrimePi",
   "QuotientRing",
+  "StirlingS1",
+  "Subfactorial",
+  "Totient",
   "Zeta",
 ];
 

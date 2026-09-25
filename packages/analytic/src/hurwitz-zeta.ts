@@ -1,4 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { threadOverLists } from "@enumeratio/boxed";
 import { bernoulliNumber, bernoulliPolyExpr, type Json } from "./bernoulli.ts";
 import {
   type BoxInput,
@@ -16,6 +17,7 @@ import { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta
 import { logGamma } from "./loggamma.ts";
 import { lerchPhi } from "./lerch.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
+import { declareWidened } from "./widened.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
 import { atEnginePrecision, DOUBLE_DIGITS } from "./precise.ts";
@@ -574,22 +576,36 @@ export function declareAnalytic(ce: ComputeEngine): void {
 
   // Gamma(s, z₀, z₁) and GammaRegularized(s, z₀, z₁): the generalized incomplete gamma,
   // whose z₀ = 0 case is the lower incomplete gamma. Native for one and two arguments.
-  // The operand type and `broadcastable` follow each native definition — Gamma's second
-  // argument is optional and it threads over a list, GammaRegularized's is required and it
-  // does not — so that redeclaring changes the arity and nothing else, type errors included.
-  for (const [head, secondRequired, broadcastable] of [
-    ["Gamma", false, true],
-    ["GammaRegularized", true, false],
+  // The operand type follows each native definition — Gamma's second argument is optional,
+  // GammaRegularized's is required — so that redeclaring changes the arity and nothing else,
+  // type errors included. Both thread over a list, as Wolfram's Listable heads do (natively
+  // only Gamma does).
+  for (const [head, secondRequired] of [
+    ["Gamma", false],
+    ["GammaRegularized", true],
   ] as const) {
     const native: NativeEval = ce.box([head, 2, 1]).operatorDefinition?.evaluate;
     const z = "complex | infinity";
     ce.declare(head, {
       signature: `(${z}, (${z})${secondRequired ? "" : "?"}, (${z})?) -> number`,
-      broadcastable,
+      broadcastable: true,
       evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
         evaluateIncompleteGamma(ce, head, native, ops, options),
     });
   }
+
+  // Native heads that reject a list argument with a type error, where Wolfram's thread
+  // over it: Erf([0, 1]) is [0, Erf(1)].
+  threadOverLists(ce, [
+    "Binomial",
+    "Pochhammer",
+    "BernoulliB",
+    "Erf",
+    "Erfc",
+    "ErfInv",
+    "BetaRegularized",
+  ]);
+  declareWidened(ce);
 
   declareSpecialFunctions(ce);
   declareCarlson(ce);

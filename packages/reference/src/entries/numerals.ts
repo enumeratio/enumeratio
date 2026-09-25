@@ -77,9 +77,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["IntegerDigits", ["List", 6, 7, 2], 2],
         expected: ["List", ["List", 1, 1, 0], ["List", 1, 1, 1], ["List", 1, 0]],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["IntegerDigits", 2147, ["PositionalNumerals", 2]],
@@ -162,6 +161,11 @@ export const numerals: readonly ReferenceEntry[] = [
         description: "integer formed from a digit list in base 10.",
       },
       {
+        call: "FromDigits(string, base?)",
+        description: "integer formed from a digit string, 0-9 then a-z.",
+        library: "enumeratio-numerals",
+      },
+      {
         call: "FromDigits([d1, d2, …], base)",
         description: "integer formed from a digit list in the given base.",
       },
@@ -212,9 +216,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["FromDigits", "'1923'"],
         expected: 1923,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's FromDigits only takes a list of digits",
+        caption: "The digits can be given as a string, 0-9 then a-z",
       },
       {
         expr: ["FromDigits", L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1), ["PositionalNumerals", 2]],
@@ -250,7 +253,7 @@ export const numerals: readonly ReferenceEntry[] = [
   {
     name: "IntegerString",
     domain: DOMAIN,
-    signature: "IntegerString(n, base?)",
+    signature: "IntegerString(n, base?, length?)",
     summary: "The string representation of n in the given base (default 10).",
     signatures: [
       { call: "IntegerString(n)", description: "string form of $n$ in base 10." },
@@ -258,11 +261,17 @@ export const numerals: readonly ReferenceEntry[] = [
         call: "IntegerString(n, base)",
         description: "string form of $n$ in the given base, up to base 36.",
       },
+      {
+        call: "IntegerString(n, base, length)",
+        description:
+          "padded with leading zeros to exactly `length` digits, or cut to the last `length`.",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "Bases above 10 use letters a-z for digit values beyond 9, up to base 36.",
       "compute-engine keeps a leading minus sign for negative n",
-      "compute-engine only supports the 2-argument form.",
+      "A third argument pads with leading zeros to that length, or keeps only the last that many digits; with it, a negative n is left unevaluated (Wolfram drops the sign, compute-engine keeps it).",
       "compute-engine's second argument is always a numeric base.",
     ],
     examples: [
@@ -288,9 +297,9 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["IntegerString", 5, 2, 8],
         expected: "'00000101'",
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine only supports the 2-argument form",
+        caption:
+          "A third argument pads with leading zeros to that length (or keeps only the last that many digits)",
       },
     ],
     seeAlso: ["IntegerDigits"],
@@ -343,9 +352,8 @@ export const numerals: readonly ReferenceEntry[] = [
           ["List", 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
           ["List", 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["IntegerDigits", "DigitSum"],
