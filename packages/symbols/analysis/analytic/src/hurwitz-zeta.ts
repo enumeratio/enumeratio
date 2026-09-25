@@ -66,6 +66,7 @@ import { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
 import { declareGeneralizedSpecial } from "./generalized-special.ts";
 import { declareConstantRounding } from "./constant-rounding.ts";
 import { declareTrigNormalisation } from "./trig-normalisation.ts";
+import { declareTrigReduction } from "./trig-reduction.ts";
 import { declareElementarySpecialValues } from "./elementary-special-values.ts";
 import { declareElementaryRemaining } from "./elementary-remaining.ts";
 import { declareThreading113 } from "./threading-113.ts";
@@ -582,6 +583,9 @@ function evaluateLerch(
  * `Khinchin` constant (khinchin.ts); and `Hyperfactorial` (hyperfactorial.ts).
  * Also, in q-series.ts, the q-analogues `QPochhammer`, `QFactorial`, `QBinomial`;
  * and, in riemann-siegel.ts, `RiemannSiegelTheta`, `RiemannSiegelZ`, `RiemannZetaZero`.
+ * Also, in trig-reduction.ts, an in-place fix for native `Sin`/`Cos`/`Tan`/`Sec`/`Csc`/`Cot`
+ * on a huge exact or bignum argument, whose reduction mod 2*pi native loses to a premature
+ * round to a machine double (or to `ce.precision`, under `N()`).
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -720,6 +724,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareGeneralizedSpecial(ce);
   declareConstantRounding(ce);
   declareTrigNormalisation(ce);
+  declareTrigReduction(ce);
   declareElementarySpecialValues(ce);
   declareElementaryRemaining(ce);
   declareThreading113(ce);
