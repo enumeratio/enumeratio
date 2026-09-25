@@ -1,3 +1,4 @@
+import { openSession, type BrowserSession } from "@enumeratio/aestimatio/browser";
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { CONTROL_EVENT, Transcript, type TrackedSymbols } from "@enumeratio/notatio";
 import { LitElement, nothing } from "lit";
@@ -19,6 +20,22 @@ function parseTrackedSymbols(attr: string): TrackedSymbols | undefined {
     .map((s) => s.trim())
     .filter(Boolean);
 }
+
+/** `Evaluator -> "Local" | "Worker"` -- Wolfram's own option name, borrowed from
+ * `Dynamic` (design/aestimatio.md's "Build" note). Anything else (absent, `"Local"`,
+ * an unrecognised value) is the default, in-page evaluation. */
+type Evaluator = "Local" | "Worker";
+function parseEvaluator(attr: string): Evaluator {
+  return attr.trim().toLowerCase() === "worker" ? "Worker" : "Local";
+}
+
+/** A host a page can point a `Worker`-evaluator module's session at -- set once by the
+ * host (mirrors `@enumeratio/notatio`'s own `__notatioEngineReady` gate) before any
+ * `Evaluator -> "Worker"` module opens its session, since the worker needs to import
+ * the same libraries the page declared into its own engine (`declareGraphics`,
+ * `declareCollections`, …) to mean the same thing. A module with no such host set
+ * still opens a session, just with no libraries beyond aestimatio's own. */
+type WorkerSetupGate = { __notatioWorkerSetup?: string };
 
 /**
  * `<notatio-dynamic-module>` -- a **reactive document**, after Bret Victor's
@@ -68,20 +85,98 @@ export class NotatioDynamicModule extends LitElement {
      * `Out`/`In`/`InString`/`%` stay live, and cell-number references are allowed.
      */
     trackedSymbols: { type: String, attribute: "tracked-symbols" },
+    /** `Evaluator -> "Local" | "Worker"` -- see `notatio-out.ts`'s `TranscriptHost`. */
+    evaluator: { type: String },
+    /** Module URL whose `configure(ce)` declares the page's libraries into the
+     * session's engine -- overrides the host-wide `__notatioWorkerSetup` gate for
+     * this one module (a test, or a page with more than one library set). */
+    workerSetup: { type: String, attribute: "worker-setup" },
+    /**
+     * `TimeConstraint`, in ms -- Wolfram's own option name (`aestimatio`'s
+     * `TimeConstrained`/`evaluateIsolated` already use it): tried cooperatively
+     * first, then hard-kills and restarts the session (design/aestimatio.md §2-3).
+     * Unset (the default) means no deadline at all -- a `Worker` evaluator without
+     * one can still be interrupted by the "stop" control, just never automatically.
+     */
+    timeConstraint: { type: Number, attribute: "time-constraint" },
   };
 
   declare trace: boolean;
   declare trackedSymbols: string;
+  declare evaluator: string;
+  declare workerSetup: string;
+  declare timeConstraint: number;
 
   #scope = new Scope(this, this);
   #transcript: Transcript | undefined;
   #reactive: ReactiveModule | undefined;
+  #session: BrowserSession | undefined;
 
   constructor() {
     super();
     this.trace = false;
     this.trackedSymbols = "";
+    this.evaluator = "";
+    this.workerSetup = "";
+    this.timeConstraint = 0;
     ensureStyles();
+  }
+
+  /** `"Worker"` once `Evaluator -> "Worker"` is set; `"Local"` (the default)
+   * otherwise. `notatio-out.ts`'s `TranscriptHost` reads this to decide whether a
+   * cell's evaluation belongs on this thread or in `#session`. */
+  get evaluatorKind(): Evaluator {
+    return parseEvaluator(this.evaluator);
+  }
+
+  #openSession(): BrowserSession {
+    const setup =
+      this.workerSetup || (globalThis as WorkerSetupGate).__notatioWorkerSetup || undefined;
+    // Not `name`d: each module instance gets its own private session rather than
+    // joining a page-wide `SharedWorker` -- two `Evaluator -> "Worker"` modules on
+    // one page are unrelated scopes, same as two plain transcripts are.
+    return openSession({ setup });
+  }
+
+  /**
+   * Runs `json` in this module's session instead of locally -- `notatio-out.ts`
+   * calls this only when `evaluatorKind` is `"Worker"`. The session is opened lazily,
+   * on the first call, and kept for the module's lifetime (or until a hard kill
+   * replaces it, or `disconnectedCallback` closes it) so `:=` bindings persist across
+   * cells the way a plain transcript's local scope does.
+   */
+  evaluateRemote(
+    json: unknown,
+    options: { signal?: AbortSignal } = {},
+  ): Promise<{ value: unknown; reset: boolean }> {
+    this.#session ??= this.#openSession();
+    const timeMs = this.timeConstraint > 0 ? this.timeConstraint : undefined;
+    return this.#session.evaluate(json, { timeMs, signal: options.signal }).then((result) => {
+      if (result.reset) this.#onSessionReset();
+      else this.#clearSessionResetNotice();
+      return result;
+    });
+  }
+
+  /**
+   * A `time-constraint` deadline never got a cooperative answer, so the session's own
+   * hard kill fired: the worker was terminated and a fresh one spawned in its place
+   * (`@enumeratio/aestimatio/browser`'s own `openSession`), losing every binding this
+   * module's cells had made. There is no cooperative recovery from that -- the reader
+   * has to re-run the cells that mattered -- so this says so, in the light DOM, since
+   * nothing else here renders anything of its own (this class's own doc comment).
+   */
+  #onSessionReset(): void {
+    if (this.querySelector(":scope > .notatio-worker-reset")) return;
+    const banner = document.createElement("div");
+    banner.className = "notatio-worker-reset";
+    banner.setAttribute("role", "status");
+    banner.textContent = "Worker session restarted — earlier bindings lost; re-run cells.";
+    this.prepend(banner);
+  }
+
+  #clearSessionResetNotice(): void {
+    this.querySelector(":scope > .notatio-worker-reset")?.remove();
   }
 
   // Nothing of ours belongs in the document: the prose and its inline controls are the
@@ -99,6 +194,8 @@ export class NotatioDynamicModule extends LitElement {
   override disconnectedCallback(): void {
     this.removeEventListener(CONTROL_EVENT, this.#scope.onControl);
     this.removeEventListener("notatio-change", this.#onCellChange as EventListener);
+    this.#session?.close();
+    this.#session = undefined;
     super.disconnectedCallback();
   }
 
