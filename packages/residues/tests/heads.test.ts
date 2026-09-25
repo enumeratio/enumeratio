@@ -69,6 +69,10 @@ test("MultiplicativeOrder gains the discrete-log form", () => {
 test("PrimitiveRootList", () => {
   expect(run(["PrimitiveRootList", 7])).toEqual(["List", 3, 5]);
   expect(run(["PrimitiveRootList", 8])).toEqual(["List"]);
+  // Past the listing cap the head stays unevaluated, but its length and elements still answer.
+  expect(run(["PrimitiveRootList", 1000003])).toEqual(["PrimitiveRootList", 1000003]);
+  expect(run(["Length", ["PrimitiveRootList", 1000003]])).toBe(333332);
+  expect(run(["At", ["PrimitiveRootList", 1000003], 1])).toBe(2);
 });
 
 test("IntegerMod normalises, and reads a rational through the inverse", () => {

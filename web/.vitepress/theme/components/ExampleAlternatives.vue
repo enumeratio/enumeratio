@@ -8,6 +8,9 @@ export interface Alternative {
   readonly input: string;
   readonly output: string;
   readonly verdict: "agree" | "disagree" | "inconclusive" | "error";
+  readonly kind?: string;
+  /** Set on a `kind: "ours"` row: the issue tracking our side's gap. */
+  readonly issue?: number;
 }
 
 const props = defineProps<{
@@ -69,6 +72,12 @@ const shown = computed(() =>
         <span class="alt-label">Out</span><code>{{ shown.output }}</code>
       </div>
       <p v-if="active && notes?.[active]" class="alt-note">{{ notes[active] }}</p>
+      <p v-if="shown.kind === 'ours' && shown.issue" class="alt-note">
+        A gap on our side, tracked in
+        <a :href="`https://github.com/enumeratio/enumeratio.dev/issues/${shown.issue}`"
+          >#{{ shown.issue }}</a
+        >.
+      </p>
     </div>
   </div>
 </template>

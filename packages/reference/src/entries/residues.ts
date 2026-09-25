@@ -806,13 +806,10 @@ export const residues: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Length", ["PrimitiveRootList", 1000003]],
-        expected: ["Length", ["PrimitiveRootList", 1000003]],
-        caption: "past 100 000 roots the list is not built",
+        expected: 333332,
+        caption:
+          "past 100 000 roots the list is not built, but its length is still $\\varphi(\\varphi(n))$",
         category: "Possible issues",
-        divergence: {
-          wolfram:
-            "We cap the built list at 100,000 roots and leave Length of it unevaluated past that; Wolfram computes $\\varphi(\\varphi(1000003)) = 333332$ directly without materializing the list.",
-        },
       },
     ],
     seeAlso: ["PrimitiveRoot", "MultiplicativeOrder", "PowerModList"],

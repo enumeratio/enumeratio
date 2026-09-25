@@ -7,7 +7,9 @@ import {
   multiplicativeOrder,
   powerModList,
   powerModRoots,
+  primitiveRootCount,
   primitiveRootList,
+  primitiveRoots,
 } from "../src/index.ts";
 
 /** Brute force: every x in [0, m) with xʳ ≡ b. Independent of CRT, Hensel and Sylow. */
@@ -105,6 +107,14 @@ test("primitive roots", () => {
   expect(primitiveRootList(8n)).toEqual([]);
   expect(primitiveRootList(18n)).toEqual([5n, 11n]);
   expect(primitiveRootList(2n)).toEqual([1n]);
+  expect(primitiveRootList(1000003n)).toBeUndefined(); // past MAX_PRIMITIVE_ROOTS
+  for (const n of [1n, 2n, 4n, 7n, 8n, 18n, 1000003n]) {
+    const listed = primitiveRootList(n);
+    if (listed !== undefined) expect([...primitiveRoots(n)]).toEqual(listed);
+  }
+  expect(primitiveRootCount(1000003n)).toBe(333332n);
+  expect(primitiveRootCount(8n)).toBe(0n);
+  expect(primitiveRoots(1000003n).next().value).toBe(2n);
 });
 
 test("crtSolve agrees with a scan, coprime or not", () => {

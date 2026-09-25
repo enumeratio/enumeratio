@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 790, disagree 41, inconclusive 0, error 3
+## wolfram — agree 791, disagree 40, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                      | theirs                                                                                       |
 | --------------------------------------- | -------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -51,7 +51,6 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `residues/PowerModList#28`              | domain         | `[{"re":-2,"im":-1}, {"re":2,"im":1}]`                                                    | `PowerModList[3 + 4*I, 1/2, 100000000000000000039]`                                          |
 | `residues/PowerModList#7`               | domain         | `[4, 19]`                                                                                 | `PowerModList[2/3, 1/2, 23]`                                                                 |
 | `residues/PowerModList#8`               | domain         | `[[1, 4], [], [], [2, 3]]`                                                                | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
-| `residues/PrimitiveRootList#7`          | domain         | `["Length",["PrimitiveRootList",1000003]]`                                                | `333332`                                                                                     |
 | `special-functions/BetaRegularized#8`   | domain         | `["BetaRegularized",2,2,3]`                                                               | `8`                                                                                          |
 | `special-functions/GammaRegularized#6`  | domain         | `["GammaRegularized",2.5,-1]`                                                             | `0.9999999999999998 - 0.6280082302883814*I`                                                  |
 | `special-functions/HurwitzZeta#6`       | precision      | `-2.41141975308642`                                                                       | `HurwitzZeta[-3, 7/3]`                                                                       |
@@ -69,7 +68,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 293, disagree 18, inconclusive 4, error 40
+## sage — agree 294, disagree 18, inconclusive 3, error 40
 
 | example                           | kind           | ours                                                                                      | theirs                                                                                       |
 | --------------------------------- | -------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
