@@ -9,6 +9,7 @@ export {
 } from "./hurwitz-zeta.ts";
 export { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta.ts";
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
+export { besselJZero } from "./bessel-zeros.ts";
 export {
   bernoulliNumber,
   bernoulliPolyAt,
@@ -50,14 +51,18 @@ export {
   mandelbrotReal,
 } from "./fractal.ts";
 export { evaluateHarmonicNumber } from "./harmonic.ts";
+export { digammaFunctionZero } from "./digamma-zero.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
+export { hypergeometricUStar } from "./hypergeometric-ustar.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";
 export { logGamma, logGammaReal } from "./loggamma.ts";
+export { multiZetaValue } from "./multizeta.ts";
 export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
 export { polyLog, polyLogReal } from "./polylog.ts";
 export { evaluateRisingFactorial } from "./rising-factorial.ts";
+export { landauFunction } from "./sloane-a.ts";
 export { zetaWGSL } from "./shader.ts";
 export { stieltjesGamma, stieltjesGammaReal } from "./stieltjes.ts";
 export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts";

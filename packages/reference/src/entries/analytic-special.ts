@@ -816,4 +816,263 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["PolyGamma", "EulerGamma", "Zeta", "HurwitzZeta"],
   },
+  {
+    name: "BesselJZero",
+    domain: "Special functions",
+    signature: "BesselJZero(nu, k)",
+    summary:
+      "The $k$-th positive zero of the Bessel function $J_\\nu$, for real $\\nu > -1$ and positive integer $k$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "BesselJZero(nu, k)",
+        description: "the $k$-th positive zero of $J_\\nu$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine's native `BesselJ` only evaluates numerically at integer order, so the zero-finder here carries its own real $J_\\nu$ series (term-ratio, stable for the double-precision range zero-finding needs) rather than depending on it — which matters for exactly the half-integer orders Fungrim's identities use.",
+      "McMahon's asymptotic expansion seeds a bracket around the $k$-th zero, then bisection (with a few closing Newton steps) converges it.",
+      "Matches mpmath's `besseljzero(nu, k)` and Wolfram's `BesselJZero[nu, k]`.",
+    ],
+    examples: [
+      {
+        expr: ["N", ["BesselJZero", ["Rational", 3, 2], 1]],
+        expected: 4.493409457909064,
+        caption: "$j_{3/2,1} = 4.4934\\ldots$ — also the first positive root of $\\tan x = x$",
+      },
+      {
+        expr: ["N", ["BesselJZero", 0, 1]],
+        expected: 2.404825557695773,
+        caption: "$j_{0,1} = 2.4048\\ldots$",
+      },
+      {
+        expr: ["N", ["BesselJZero", 0, 3]],
+        expected: 8.653727912911013,
+        caption: "the third zero of $J_0$",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/bessel-zeros.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "BesselJZero[nu, k]; mpmath.besseljzero(nu, k).",
+      },
+    ],
+    seeAlso: ["Sinc"],
+  },
+  {
+    name: "DigammaFunctionZero",
+    domain: "Special functions",
+    signature: "DigammaFunctionZero(n)",
+    summary:
+      "The $n$-th real zero of the digamma function $\\psi$: $n=0$ names the zero on $(0,\\infty)$ ($x_0 \\approx 1.4616$), $n \\ge 1$ the zero on $(-n, -n+1)$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "DigammaFunctionZero(n)",
+        description: "the $n$-th real zero of $\\psi$, $n \\ge 0$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "$\\psi$ is real, meromorphic, with simple poles at $0, -1, -2, \\dots$ and strictly increasing between consecutive poles ($\\psi' = $ trigamma $> 0$), so each interval carries exactly one zero — bisection on the native [[PolyGamma]]/[[Digamma]] finds it without a separate digamma implementation.",
+      "$\\psi(x_0) = 0$ at $x_0 \\approx 1.4616321449683623$, sometimes called the digamma's positive real zero.",
+    ],
+    examples: [
+      {
+        expr: ["N", ["DigammaFunctionZero", 0]],
+        expected: 1.4616321449683622,
+        caption: "the digamma function's positive real zero",
+      },
+      {
+        expr: ["N", ["DigammaFunctionZero", 1]],
+        expected: -0.5040830082644554,
+        caption: "the zero in $(-1, 0)$",
+      },
+      {
+        expr: ["Chop", ["N", ["Digamma", ["DigammaFunctionZero", 2]]]],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\psi$ vanishes exactly there, by construction",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/digamma-zero.ts",
+      },
+      {
+        origin: "mapped",
+        form: "mpmath",
+        environment: "external",
+        note: "findroot(digamma, ...) at the appropriate bracket — Wolfram has no direct equivalent head.",
+      },
+    ],
+    seeAlso: ["PolyGamma"],
+  },
+  {
+    name: "MultiZetaValue",
+    domain: "Special functions",
+    signature: "MultiZetaValue(s1, s2)",
+    summary:
+      "The depth-2 multiple zeta value $\\zeta(s_1, s_2) = \\sum_{n_1 > n_2 \\ge 1} n_1^{-s_1} n_2^{-s_2}$, for integers $s_1, s_2 \\ge 2$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "MultiZetaValue(s1, s2)",
+        description: "the depth-2 Euler sum $\\zeta(s_1, s_2)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Scoped to depth 2 with both weights $\\ge 2$ — every `MultiZetaValue` identity Fungrim declares is this shape, which is also exactly what makes the double sum converge unconditionally. A general depth-$n$ MZV over compositions is a different, open-ended project and is not attempted here.",
+      "Numerically: $\\zeta(s_1,s_2) = \\sum_{n\\ge1} n^{-s_1} H_{n-1}^{(s_2)}$, summed directly for $10^5$ terms with the tail approximated by $\\zeta(s_2)\\cdot\\sum_{n>N} n^{-s_1}$ (both from the native [[Zeta]]).",
+      "Small cases have closed forms Fungrim states directly: $\\zeta(2,2) = \\tfrac34\\zeta(4)$, $\\zeta(3,3) = \\tfrac12(\\zeta(3)^2-\\zeta(6))$, and Euler's reflection $\\zeta(a)\\zeta(b) - \\zeta(a+b) = \\zeta(a,b) + \\zeta(b,a)$ for $a,b\\ge2$.",
+    ],
+    examples: [
+      {
+        expr: ["N", ["MultiZetaValue", 2, 2]],
+        expected: 0.8117424252833536,
+        caption: "$\\zeta(2,2) = \\tfrac34\\zeta(4)$",
+      },
+      {
+        expr: ["N", ["MultiZetaValue", 3, 3]],
+        expected: 0.2137988682245925,
+        caption: "$\\zeta(3,3) = \\tfrac12(\\zeta(3)^2-\\zeta(6))$",
+      },
+      {
+        expr: ["MultiZetaValue", 1, 2],
+        expected: ["MultiZetaValue", 1, 2],
+        category: "Possible issues",
+        caption: "$s_1 < 2$ stays symbolic — outside the depth-2, both-weights-$\\ge2$ scope",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/multizeta.ts",
+      },
+    ],
+    seeAlso: ["Zeta", "HurwitzZeta"],
+  },
+  {
+    name: "HypergeometricUStar",
+    domain: "Special functions",
+    signature: "HypergeometricUStar(a, b, z)",
+    summary:
+      "The regularized Tricomi confluent hypergeometric function $U^*(a,b,z) = z^a\\,U(a,b,z)$, for $b$ not an integer. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "HypergeometricUStar(a, b, z)",
+        description: "$z^a$ times Tricomi's confluent hypergeometric $U(a,b,z)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "compute-engine declares `HypergeometricU` but does not evaluate it numerically (a symbolic stub only), so $U$ itself is supplied here via Kummer's connection formula in terms of the entire confluent hypergeometric $M = {}_1F_1$: $U(a,b,z) = \\tfrac{\\Gamma(1-b)}{\\Gamma(a-b+1)}M(a,b,z) + \\tfrac{\\Gamma(b-1)}{\\Gamma(a)}z^{1-b}M(a-b+1,2-b,z)$.",
+      "$1/\\Gamma$ is taken directly (zero at the nonpositive integers) rather than as a raw division, so the formula stays finite exactly where $a-b+1$ or $a$ lands on one of $\\Gamma$'s poles — not an edge case Fungrim's own identities avoid.",
+      "$b$ at (or very near) an integer is declined: both $\\Gamma(1-b)$ and $\\Gamma(b-1)$ blow up there, and the log-case limit that resolves it is not implemented.",
+      "$z^{1-b}$ and the closing $z^a$ take the principal branch, matching mpmath's `hyperu` and Wolfram's `HypergeometricU`.",
+    ],
+    examples: [
+      {
+        expr: [
+          "Chop",
+          [
+            "Subtract",
+            ["N", ["HypergeometricUStar", ["Rational", 1, 2], ["Rational", 3, 2], 2]],
+            1,
+          ],
+        ],
+        expected: 0,
+        caption: "$U^*(\\tfrac12,\\tfrac32,2) = 1$",
+      },
+      {
+        expr: ["HypergeometricUStar", 1.3, 2.7, 4.0],
+        expected: 1.1137052905867906,
+        caption: "a generic point, checked against mpmath's `hyperu`",
+      },
+      {
+        expr: ["HypergeometricUStar", 1, 2, 3],
+        expected: ["HypergeometricUStar", 1, 2, 3],
+        category: "Possible issues",
+        caption:
+          "integer $b$ stays symbolic — the connection formula's log-case limit is not implemented",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hypergeometric-ustar.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "z^a HypergeometricU[a,b,z]; z**a * mpmath.hyperu(a,b,z).",
+      },
+    ],
+    seeAlso: [],
+  },
+  {
+    name: "SloaneA",
+    domain: "Special functions",
+    signature: "SloaneA(id, n)",
+    summary:
+      "The $n$-th term of an OEIS sequence, `id` a quoted A-number — scoped to the specific sequences Fungrim's own `SloaneA` identities cite, each aliased to a head that already computes it. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "SloaneA(id, n)",
+        description: "the $n$-th term of OEIS sequence `id`.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "A general OEIS lookup is out of reach — most sequences have no closed form at all — so this aliases exactly the A-numbers Fungrim's identities use: A000045 ([[Fibonacci]]), A000040 (the primes, via `PrimeNumber`), A000720 (`PrimePi`), A000041 (`NPartition`), A000110 (`BellNumber`), A000142 (`Factorial`), A027641/A027642 (the numerator/denominator of [[BernoulliB]]), and A000793 (Landau's function $g(n)$, the largest order of an element of $S_n$ — computed directly, since compute-engine's `LandauG` is a symbolic stub with no numeric evaluator).",
+      "An id this package does not carry stays symbolic rather than guessing (e.g. A060691, which Fungrim cites only inside a derivative formula for AGM's Taylor coefficients, not as an equation for the sequence's value).",
+    ],
+    examples: [
+      {
+        expr: ["SloaneA", "'A000045'", 10],
+        expected: 55,
+        caption: "A000045 is the Fibonacci numbers: the 10th is 55",
+      },
+      {
+        expr: ["SloaneA", "'A000793'", 10],
+        expected: 30,
+        caption: "A000793, Landau's function: $g(10) = 30$",
+      },
+      {
+        expr: ["SloaneA", "'A060691'", 5],
+        expected: ["SloaneA", "'A060691'", 5],
+        category: "Possible issues",
+        caption: "An OEIS id outside the declared alias table stays symbolic",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/sloane-a.ts",
+      },
+    ],
+    seeAlso: ["Fibonacci", "BellNumber", "BernoulliB"],
+  },
 ];
