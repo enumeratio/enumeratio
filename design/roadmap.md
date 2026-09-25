@@ -65,7 +65,6 @@ anything that lands there next as unproven, not impossible. The maps frontier ho
 Work that needs no thinking, only a quiet moment. Each design doc's `Status:` line is the
 authority; these are the ones currently parked:
 
-- Numeral system renames — **needs a decision**, not execution; see design/speculative/numeral-naming.md.
 - [knots.md](./knots.md) — the value landed, the table did not.
 
 ## 3. The old repo
