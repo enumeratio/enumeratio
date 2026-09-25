@@ -1,0 +1,58 @@
+[
+  {
+    "head": "MultiZetaValue",
+    "args": [2, 2],
+    "label": "MultiZetaValue(2,2)",
+    "tol": 1e-9,
+    "mpmath": [0.8117424252833536, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [3, 3],
+    "label": "MultiZetaValue(3,3)",
+    "tol": 1e-9,
+    "mpmath": [0.213798868224592547, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [2, 3],
+    "label": "MultiZetaValue(2,3)",
+    "tol": 1e-9,
+    "mpmath": [0.7115661975505724, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [3, 2],
+    "label": "MultiZetaValue(3,2)",
+    "tol": 1e-9,
+    "mpmath": [0.2288103976033537, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [4, 2],
+    "label": "MultiZetaValue(4,2)",
+    "tol": 1e-9,
+    "mpmath": [0.08848338245436871, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [2, 4],
+    "label": "MultiZetaValue(2,4)",
+    "tol": 1e-9,
+    "mpmath": [0.6745239140339681, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [5, 2],
+    "label": "MultiZetaValue(5,2)",
+    "tol": 1e-9,
+    "mpmath": [0.03857512434275326, 0]
+  },
+  {
+    "head": "MultiZetaValue",
+    "args": [3, 4],
+    "label": "MultiZetaValue(3,4)",
+    "tol": 1e-9,
+    "mpmath": [0.2075050146157321, 0]
+  }
+]

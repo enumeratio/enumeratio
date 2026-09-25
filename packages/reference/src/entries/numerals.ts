@@ -361,18 +361,23 @@ export const numerals: readonly ReferenceEntry[] = [
   {
     name: "DigitSum",
     domain: DOMAIN,
-    signature: "DigitSum(n, base?)",
+    signature: "DigitSum(n, base?, k?)",
     summary: "The sum of the digits of n in the given base (default 10).",
     signatures: [
       { call: "DigitSum(n)", description: "sum of the digits of $n$, base 10." },
       { call: "DigitSum(n, base)", description: "sum of the digits of $n$ in the given base." },
+      {
+        call: "DigitSum(n, base, k)",
+        description:
+          "sum of just the first $k$ digits (most significant first); a negative $k$ sums the last $|k|$ instead (least significant first).",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "Equivalent to summing [[IntegerDigits]](n, base).",
       "In base 2, the digit sum is the number of set bits (population count).",
       "$n\\equiv\\mathrm{DigitSum}(n)\\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.",
       "The sign of n is discarded before summing.",
-      "compute-engine only supports the 2-argument form.",
     ],
     examples: [
       { expr: ["DigitSum", 58127], expected: 23 },
@@ -396,9 +401,8 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["DigitSum", 6345354, 10, 4],
         expected: 18,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine only supports the 2-argument form",
+        caption: "Just the first 4 digits, $6+3+4+5=18$, not the full digit sum (30)",
       },
     ],
     seeAlso: ["DigitCount"],

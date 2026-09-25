@@ -317,6 +317,24 @@ export const entries: readonly ReferenceEntry[] = [
     ],
   },
   {
+    name: "FromPermutation",
+    domain: "Combinatorial maps",
+    signature: "FromPermutation(Permutation)",
+    summary:
+      "The increasing binary tree built by minimum-splitting recursion: the position of the smallest value roots the tree, everything before it recurses to the left, everything after it to the right.",
+    details: [
+      "Takes a `Permutation` and returns a `IncreasingBinaryTree` — a typed map, so a wrong carrier is a type error rather than a wrong answer.",
+      "Paired with ToPermutation, whose overload set (IncreasingBinaryTree among others) names this map's codomain — the catalog dump folds map rows to names with no source-collection field, so that pairing is what disambiguates it. The root is always 1: every permutation of [n] holds the value 1, and heap order puts the global minimum at the top regardless of which permutation it came from. See increasing-binary-tree.ts for the non-recursive (nearest-smaller-value) characterisation used to build it without folding over a list taken out of the accumulator (tableau.ts).",
+    ],
+    examples: [
+      {
+        expr: ["FromPermutation", ["Permutation", ["List", 2, 3, 1]]],
+        expected: ["IncreasingBinaryTree", ["Tuple", 1, ["List", 2, 0, 0], ["List", 0, 3, 0]]],
+        caption: "the one-line word $231$",
+      },
+    ],
+  },
+  {
     name: "KnuthClassRepresentative",
     domain: "Combinatorial maps",
     signature: "KnuthClassRepresentative(Permutation)",
@@ -424,35 +442,16 @@ export const entries: readonly ReferenceEntry[] = [
     name: "PermutahedronVertex",
     domain: "Combinatorial maps",
     signature: "PermutahedronVertex(Permutation)",
-    summary: "A geometric embedding rather than a combinatorial rewrite. Not yet defined.",
+    summary:
+      "Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (domain-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close. Not yet defined.",
     details: [
       "Would take a `Permutation` to a `Finset`.",
-      "On the map frontier: A geometric embedding rather than a combinatorial rewrite.",
+      "On the map frontier: Not a geometric embedding this repo's carriers can hold honestly: the vertex (σ(1), …, σ(n)) — or the Loday point packages/polytope/src/permutahedron.ts already computes — is an ORDERED tuple of coordinates, and `finset` (domain-data.ts: `tuple<list<integer>, integer>`) is an unordered SET of positions, the same carrier DescentSet and PeakSet use. Reordering the coordinates gives a different vertex but the same finset, so the map would not even be injective, let alone honest. A `finset`-valued PermutahedronVertex is a type mismatch dressed as a definition, not a gap to close.",
       "Listed in `UNDEFINED_MAPS` (@enumeratio/domains) with that reason — a claim to be justified, not a place to put anything inconvenient.",
     ],
     examples: [
       {
         expr: ["PermutahedronVertex", ["Permutation", ["List", 2, 3, 1]]],
-        expected: ["List"],
-        caption: "the one-line word $231$ — once there is a definition to evaluate",
-        aspirational: true,
-      },
-    ],
-  },
-  {
-    name: "FromPermutation",
-    domain: "Combinatorial maps",
-    signature: "FromPermutation(Permutation)",
-    summary:
-      "A catalog alias whose source collection is ambiguous without the enumeratio map row it came from. Not yet defined.",
-    details: [
-      "Would take a `Permutation` to a `Permutation`.",
-      "On the map frontier: A catalog alias whose source collection is ambiguous without the enumeratio map row it came from.",
-      "Listed in `UNDEFINED_MAPS` (@enumeratio/domains) with that reason — a claim to be justified, not a place to put anything inconvenient.",
-    ],
-    examples: [
-      {
-        expr: ["FromPermutation", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["List"],
         caption: "the one-line word $231$ — once there is a definition to evaluate",
         aspirational: true,

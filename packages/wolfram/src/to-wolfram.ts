@@ -290,6 +290,7 @@ export const HEADS: Record<string, string> = {
   DirichletBeta: "DirichletBeta",
   DirichletCharacter: "DirichletCharacter",
   DirichletL: "DirichletL",
+  BesselJZero: "BesselJZero",
   StieltjesGamma: "StieltjesGamma",
   CarlsonRF: "CarlsonRF",
   CarlsonRC: "CarlsonRC",

@@ -124,6 +124,7 @@ const OVERRIDDEN = [
   "ChineseRemainder",
   "Digamma",
   "DigitCount",
+  "DigitSum",
   "DivisorSigma",
   "Divisors",
   "Dot",
@@ -131,6 +132,7 @@ const OVERRIDDEN = [
   "Erf",
   "ErfInv",
   "Erfc",
+  "ExtendedGCD",
   "FactorInteger",
   "Factorial2",
   "Fibonacci",
@@ -213,7 +215,8 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * TimeConstrained, MemoryConstrained and VerificationTest are genuinely Wolfram's own (see
  * `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled in by
  * the external-kernel coverage script, which needs a Wolfram kernel this offline test suite
- * doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
+ * doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`. BesselJZero
+ * (Wolfram, mpmath) waits on the same run.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -228,6 +231,11 @@ const NOVEL = [
   "ProfiniteDecomposition",
   "ProfinitePlot",
   "ClausenCl",
+  "BesselJZero",
+  "DigammaFunctionZero",
+  "MultiZetaValue",
+  "HypergeometricUStar",
+  "SloaneA",
   "Basis",
   "AlgebraSignature",
   "AlgebraDimension",

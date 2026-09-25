@@ -3,6 +3,7 @@ import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import {
   affected,
+  boundName,
   cellBindings,
   schedule,
   type CellBindings,
@@ -28,6 +29,23 @@ interface RevalidatableOut extends Element {
   revalidate?: () => Promise<void>;
 }
 const outOf = (cell: Element): RevalidatableOut | null => cell.querySelector("notatio-out");
+
+/** A `<notatio-cell>`'s own `value`, read as a property first. */
+interface ValueElement extends Element {
+  value?: string;
+}
+/**
+ * `el`'s source, for a cell `register` has not seen yet. `<notatio-cell>`'s `value` is a
+ * plain (non-reflecting) property -- a host that sets it with `.value=${…}` (every host
+ * in this repo, notebook and worksheet alike) never writes the ATTRIBUTE at all, so
+ * `getAttribute("value")` reads back empty and a freshly-discovered cell registered as
+ * though it were blank: no `assigns`, no `reads`, invisible to `schedule`/`affected`
+ * until its OWN first edit gave it a real entry via `commit`. That silently broke every
+ * downstream cell's reactivity on initial load. The property is read first; the
+ * attribute stays as a fallback for a cell that only ever sets `value=` as markup.
+ */
+const valueOf = (el: Element): string =>
+  (el as ValueElement).value ?? el.getAttribute("value") ?? "";
 
 /** The `Evaluator` half of `notatio-dynamic-module.ts`'s host -- read off `register`'s
  * own `root` (which IS the module element; see `register`'s own comment) by duck
@@ -98,7 +116,7 @@ export class ReactiveModule {
       // for real the first time it commits.
       const format = el.getAttribute("format") ?? "notatio";
       if (format !== "notatio") continue;
-      discovered.push(this.#update(el, el.getAttribute("value") ?? ""));
+      discovered.push(this.#update(el, valueOf(el)));
     }
     const sched = this.#applyDiagnostics();
     if (discovered.length > 0) void this.#settle(sched);
@@ -167,7 +185,22 @@ export class ReactiveModule {
         const json = this.#json.get(id);
         if (json === undefined) continue;
         try {
-          this.#transcript.run(() => this.#engine!.box(json).evaluate());
+          this.#transcript.run(() => {
+            const boxed = this.#engine!.box(json);
+            // Claim the name LOCALLY before it assigns -- `reactive.ts`'s `runPass` and
+            // `notatio-out.ts`'s own prewarm-free evaluate both do this for the same
+            // reason: an `Assign` with nothing declared locally yet writes through to
+            // the page's shared root instead of this transcript's own scope, which is
+            // how two sheets on a page binding the same name (or a cell registered
+            // after a sibling's `s := …` already leaked one) end up reading each other.
+            try {
+              const name = boundName(json);
+              if (name !== undefined) this.#engine!.declare(name, "unknown");
+            } catch {
+              /* already declared locally, or protected */
+            }
+            boxed.evaluate();
+          });
         } catch {
           // Surfaced through the cell's own Out (revalidate, below) rather than here.
         }
