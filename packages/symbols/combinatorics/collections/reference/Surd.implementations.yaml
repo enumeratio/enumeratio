@@ -1,0 +1,18 @@
+negative-cube-root:
+  epsil:
+    in: Surd(-8, 3)
+    out: "-2"
+  tex:
+    in: \mathrm{Surd}(-8, 3)
+    out: "-2"
+  wolfram:
+    in: Surd[-8, 3]
+nonnegative-base:
+  epsil:
+    in: Surd(8, 3)
+    out: "2"
+  tex:
+    in: \mathrm{Surd}(8, 3)
+    out: "2"
+  wolfram:
+    in: Surd[8, 3]

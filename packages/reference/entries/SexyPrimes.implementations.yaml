@@ -1,0 +1,29 @@
+the-first-20-lesser-sexy-primes-oeis-a023201:
+  epsil:
+    in: Take(SexyPrimes, 20)
+    out: |-
+      [
+        5,
+        7,
+        11,
+        13,
+        17,
+        23,
+        31,
+        37,
+        41,
+        47,
+        53,
+        61,
+        67,
+        73,
+        83,
+        97,
+        101,
+        103,
+        107,
+        131,
+      ]
+  tex:
+    in: \mathrm{Take}(\mathrm{SexyPrimes}, 20)
+    out: \bigl\lbrack5, 7, 11, 13, 17, 23, 31, 37, 41, 47, 53, 61, 67, 73, 83, 97, 101, 103, 107, 131\bigr\rbrack

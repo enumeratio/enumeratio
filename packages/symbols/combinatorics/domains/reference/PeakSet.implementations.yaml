@@ -1,0 +1,7 @@
+the-one-line-word-231:
+  epsil:
+    in: PeakSet(Permutation([2, 3, 1]))
+    out: Finset(([2], 3))
+  tex:
+    in: \mathrm{PeakSet}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Finset}((\bigl\lbrack2\bigr\rbrack,3))

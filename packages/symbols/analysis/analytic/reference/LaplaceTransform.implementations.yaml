@@ -1,0 +1,35 @@
+t-cubed:
+  epsil:
+    in: LaplaceTransform(t ^ 3, t, s)
+    out: 6 / s ^ 4
+  tex:
+    in: \mathrm{LaplaceTransform}(t^3, t, s)
+    out: \frac{6}{s^4}
+exp-at:
+  epsil:
+    in: LaplaceTransform(ExponentialE ^ (2t), t, s)
+    out: 1 / (s - 2)
+  tex:
+    in: \mathrm{LaplaceTransform}(\exp(2t), t, s)
+    out: \frac{1}{s-2}
+sin-at:
+  epsil:
+    in: LaplaceTransform(Sin(3t), t, s)
+    out: 3 / (s ^ 2 + 9)
+  tex:
+    in: \mathrm{LaplaceTransform}(\sin(3t), t, s)
+    out: \frac{3}{s^2+9}
+t-cubed-exp-shift:
+  epsil:
+    in: LaplaceTransform(ExponentialE ^ (2t) * t ^ 3, t, s)
+    out: 6 / (s - 2) ^ 4
+  tex:
+    in: \mathrm{LaplaceTransform}(\exp(2t)t^3, t, s)
+    out: \frac{6}{(s-2)^4}
+exp-sin-shift:
+  epsil:
+    in: LaplaceTransform(ExponentialE ^ (2t) * Sin(3t), t, s)
+    out: 3 / ((s - 2) ^ 2 + 9)
+  tex:
+    in: \mathrm{LaplaceTransform}(\exp(2t)\sin(3t), t, s)
+    out: (3)((s-2)^2+9)^{-1}

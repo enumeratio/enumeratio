@@ -1,48 +1,75 @@
 ln-1:
+  epsil:
+    in: Ln(1)
+    out: "0"
+  tex:
+    in: \ln(1)
+    out: "0"
   wolfram:
     in: Log[1]
     out: "0"
     tex:
       in: \log (1)
       out: "0"
+  sympy:
+    in: log(1)
+    out: "0"
+  mpmath:
+    in: log(1)
+    out: "0.0"
   sage:
     in: log(1)
     out: "0"
   rust:
     in: ln(n(1))
     out: "0.0"
-  mpmath:
-    in: log(1)
-    out: "0.0"
-  sympy:
-    in: log(1)
-    out: "0"
 ln-exponentiale:
+  epsil:
+    in: Ln(ExponentialE)
+    out: "1"
+  tex:
+    in: \ln(e)
+    out: "1"
   wolfram:
     in: Log[E]
     out: "1"
     tex:
       in: \log (e)
       out: "1"
+  sympy:
+    in: log(E)
+    out: "1"
+  mpmath:
+    in: log(e)
+    out: "1.0"
   sage:
     in: log(e)
     out: "1"
   rust:
     in: ln(x(std::f64::consts::E))
     out: "1.0"
-  mpmath:
-    in: log(e)
-    out: "1.0"
-  sympy:
-    in: log(E)
-    out: "1"
 ln-0:
+  epsil:
+    in: Ln(0)
+    out: NegativeInfinity
+  tex:
+    in: \ln(0)
+    out: -\infty
   wolfram:
     in: Log[0]
     out: -Infinity
     tex:
       in: \log (0)
       out: -\infty
+  sympy:
+    in: log(0)
+    out: zoo
+    verdict: disagree
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers NegativeInfinity, SymPy gives zoo."
+  mpmath:
+    in: log(0)
+    out: -inf
   sage:
     in: log(0)
     out: -Infinity
@@ -52,41 +79,58 @@ ln-0:
   rust:
     in: ln(n(0))
     out: NegativeInfinity
-  mpmath:
-    in: log(0)
-    out: -inf
-  sympy:
-    in: log(0)
-    out: zoo
-    verdict: disagree
-    kind: undefined-form
-    note: "A pole or undefined value: compute-engine answers NegativeInfinity, SymPy gives zoo."
 inverse-of-exp-ln-e-x-x:
+  epsil:
+    in: Ln(Exp(5)) == 5
+    out: True
+  tex:
+    in: \ln(e^{5})=5
+    out: \top
+  traditional:
+    in: \ln(e^{5})=5
+    out: \mathrm{True}
   wolfram:
     in: (Log[Exp[5]] == 5)
+    back: Unreadable
     out: True
     tex:
       in: \log (\exp (5))=5
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(log(exp(5)), 5)
+    out: True
+  mpmath:
+    in: almosteq(log(exp(5)), 5, 1e-20)
+    out: True
   sage:
     in: bool(log(exp(5)) == 5)
     out: True
   rust:
     in: equal(ln(exp(n(5))), n(5))
     out: "true"
-  mpmath:
-    in: almosteq(log(exp(5)), 5, 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(log(exp(5)), 5)
-    out: True
 product-rule-ln-ab-ln-a-ln-b:
+  epsil:
+    in: Ln(2) + Ln(3) == Ln(6)
+    out: True
+  tex:
+    in: \ln(2)+\ln(3)=\ln(6)
+    out: \top
+  traditional:
+    in: \ln(2)+\ln(3)=\ln(6)
+    out: \mathrm{True}
   wolfram:
     in: (Plus[Log[2], Log[3]] == Log[6])
+    back: Unreadable
     out: True
     tex:
       in: \log (2)+\log (3)=\log (6)
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((log(2) + log(3)), log(6))
+    out: True
+  mpmath:
+    in: almosteq((log(2) + log(3)), log(6), 1e-20)
+    out: True
   sage:
     in: bool((log(2) + log(3)) == log(6))
     out: False
@@ -96,19 +140,25 @@ product-rule-ln-ab-ln-a-ln-b:
   rust:
     in: equal((ln(n(2)) + ln(n(3))), ln(n(6)))
     out: "true"
-  mpmath:
-    in: almosteq((log(2) + log(3)), log(6), 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal((log(2) + log(3)), log(6))
-    out: True
 ln-1-i-pi-the-principal-value-past-the-branch:
+  epsil:
+    in: Ln(-1)
+    out: i * Pi
+  tex:
+    in: \ln(-1)
+    out: i\pi
   wolfram:
     in: Log[-1]
     out: I*Pi
     tex:
       in: \log (-1)
       out: i \pi
+  sympy:
+    in: log(-1)
+    out: I*pi
+  mpmath:
+    in: log(-1)
+    out: (0.0 + 3.14159265358979323846264338328j)
   sage:
     in: log(-1)
     out: I*pi
@@ -118,13 +168,275 @@ ln-1-i-pi-the-principal-value-past-the-branch:
     verdict: disagree
     kind: domain
     note: Rust's f64 ln is real-only and gives NaN; compute-engine continues into the complex plane.
-  mpmath:
-    in: log(-1)
-    out: (0.0 + 3.14159265358979323846264338328j)
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Ln(1.5)
+    out: 0.405_465_108_108_164_381_978
+  tex:
+    in: \ln(1.5)
+    out: 0.405\,465\,108\,108\,164\,381\,978
+  wolfram:
+    in: Log[1.5]
   sympy:
-    in: log(-1)
-    out: I*pi
+    in: log(1.5)
+  mpmath:
+    in: log(1.5)
+  sage:
+    in: log(1.5)
+  rust:
+    in: ln(x(1.5))
+n-for-a-decimal-value:
+  epsil:
+    in: N(Ln(1_000))
+    out: 6.907_755_278_982_137_052_05
+  tex:
+    in: N(\ln(1\,000))
+    out: 6.907\,755\,278\,982\,137\,052\,05
+  wolfram:
+    in: N[Log[1000]]
+  sympy:
+    in: N(log(1000), 30)
+  mpmath:
+    in: (log(1000))
+  sage:
+    in: N(log(1000))
+  rust:
+    in: nf(ln(n(1000)))
+arbitrary-precision-via-n:
+  epsil:
+    in: N(Ln(5 / 2))
+    out: 0.916_290_731_874_155_065_184
+  tex:
+    in: N(\ln(\frac{5}{2}))
+    out: 0.916\,290\,731\,874\,155\,065\,184
+  wolfram:
+    in: N[Log[Rational[5, 2]]]
+  sympy:
+    in: N(log(Rational(5, 2)), 30)
+  sage:
+    in: N(log((5/2)))
+  rust:
+    in: nf(ln(rational(n(5), n(2))))
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Ln(2.5 + i)
+    out: 0.990_500_734_433_291_704_176 + 0.380_506_377_112_364_9i
+  tex:
+    in: \ln(2.5+i)
+    out: 0.990\,500\,734\,433\,291\,704\,176+0.380\,506\,377\,112\,364\,9i
+  wolfram:
+    in: Log[Complex[2.5, 1]]
+  sympy:
+    in: log((2.5 + 1*I))
+  mpmath:
+    in: log(mpc(2.5, 1))
+  sage:
+    in: log((2.5 + 1*I))
+a-negative-float-gives-the-principal-complex:
+  epsil:
+    in: Ln(-2.5)
+    out: 0.916_290_731_874_155_065_184 + 3.141_592_653_589_793i
+  tex:
+    in: \ln(-2.5)
+    out: 0.916\,290\,731\,874\,155\,065\,184+3.141\,592\,653\,589\,793i
+  wolfram:
+    in: Log[-2.5]
+  sympy:
+    in: log(-2.5)
+  mpmath:
+    in: log(-2.5)
+  sage:
+    in: log(-2.5)
+  rust:
+    in: ln(x(-2.5))
+threads-element-wise-over-a-list:
+  epsil:
+    in: Ln([1, 2.1, 3.1, 4.1])
+    out: |-
+      [
+        0,
+        0.741_937_344_729_377_312_483,
+        1.131_402_111_491_100_561_91,
+        1.410_986_973_710_262_119_85,
+      ]
+  tex:
+    in: \ln(\bigl\lbrack1, 2.1, 3.1, 4.1\bigr\rbrack)
+    out: \bigl\lbrack0, 0.741\,937\,344\,729\,377\,312\,483, 1.131\,402\,111\,491\,100\,561\,91, 1.410\,986\,973\,710\,262\,119\,85\bigr\rbrack
+  wolfram:
+    in: Log[List[1, 2.1, 3.1, 4.1]]
+  sympy:
+    in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+  mpmath:
+    in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+  sage:
+    in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+  rust:
+    in: ln(list(vec![n(1), x(2.1), x(3.1), x(4.1)]))
 an-integer-power-is-pulled-out-ln-1000-3-ln-10:
+  epsil:
+    in: Ln(1_000)
+    out: 3 * Ln(10)
+  tex:
+    in: \ln(1\,000)
+    out: 3\ln(10)
   wolfram:
     in: Log[1000]
     note: Wolfram leaves Log[1000] as is.
+  sympy:
+    in: log(1000)
+  mpmath:
+    in: log(1000)
+  sage:
+    in: log(1000)
+  rust:
+    in: ln(n(1000))
+ln-exponentiale-pow-3:
+  epsil:
+    in: Ln(ExponentialE ^ 3)
+    out: "3"
+  tex:
+    in: \ln(e^{3})
+    out: "3"
+  wolfram:
+    in: Log[Power[E, 3]]
+  sympy:
+    in: log((E**3))
+  mpmath:
+    in: log((e**3))
+  sage:
+    in: log((e^3))
+  rust:
+    in: ln(power(x(std::f64::consts::E), n(3)))
+ln-positiveinfinity:
+  epsil:
+    in: Ln(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \ln(\infty)
+    out: \infty
+  wolfram:
+    in: Log[Infinity]
+ln-z-to-infty-and-its-real-part-goes-to-infty-ln:
+  epsil:
+    in: Ln(ComplexInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \ln(\tilde\infty)
+    out: \infty
+  wolfram:
+    in: Log[ComplexInfinity]
+ln-i-i-pi-2-exactly:
+  epsil:
+    in: Ln(ImaginaryUnit)
+    out: 1 / 2 * i * Pi
+  tex:
+    in: \ln(i)
+    out: (\frac{1}{2}i)\pi
+  wolfram:
+    in: Log[I]
+  sympy:
+    in: log(I)
+  mpmath:
+    in: log(mpc(0,1))
+  sage:
+    in: log(I)
+a-unit-fraction-becomes-a-negated-logarithm-ln:
+  epsil:
+    in: Ln(1 / 2)
+    out: -Ln(2)
+  tex:
+    in: \ln(\frac{1}{2})
+    out: -\ln(2)
+  wolfram:
+    in: Log[Rational[1, 2]]
+  sympy:
+    in: log(Rational(1, 2))
+  sage:
+    in: log((1/2))
+  rust:
+    in: ln(rational(n(1), n(2)))
+interval-arithmetic-ln-is-increasing-so-ln-frac:
+  epsil:
+    in: Ln(Interval(1 / 3, ExponentialE))
+    out: Interval(-Ln(3), 1)
+  tex:
+    in: \ln(\mathrm{Interval}(\frac{1}{3}, e))
+    out: \mathrm{Interval}(-\ln(3), 1)
+  wolfram:
+    in: Log[Interval[List[Rational[1, 3], E]]]
+uncertainty-propagation-ln-2-pm-0-01-approx-0:
+  epsil:
+    in: Ln(Around(2, 0.01))
+    out: Around(0.693_147_180_559_945_3, 0.005)
+  tex:
+    in: \ln(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.693\,147\,180\,559\,945\,3, 0.005)
+  wolfram:
+    in: Log[Around[2, 0.01]]
+ln-exp-x:
+  epsil:
+    in: Ln(Exp(x))
+    out: x
+  tex:
+    in: \ln(e^{x})
+    out: x
+derivative-1-x:
+  epsil:
+    in: D(Ln(x), x)
+    out: 1 / x
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\ln(x)
+    out: \frac{1}{x}
+antiderivative-x-ln-x-x:
+  epsil:
+    in: Integrate(Ln(x), x)
+    out: -x + x * Ln(x)
+  tex:
+    in: \int\!\ln(x)\, \mathrm{d}x
+    out: x\ln(x)-x
+mercator-series-for-ln-1-x:
+  epsil:
+    in: Series(Ln(1 + x), x, 0, 4)
+    out: -1 / 4 * x ^ 4 + 1 / 3 * x ^ 3 + -1 / 2 * x ^ 2 + x + BigO(x ^ 5)
+  tex:
+    in: \operatorname{Series}(\ln(1+x), x, 0, 4)
+    out: x-\frac{x^2}{2}+\frac{x^3}{3}-\frac{x^4}{4}+O\left(x^5\right)
+powerexpand-splits-a-logarithm-of-a-product:
+  epsil:
+    in: PowerExpand(Ln(x * y))
+    out: Ln(x) + Ln(y)
+  tex:
+    in: \mathrm{PowerExpand}(\ln(xy))
+    out: \ln(x)+\ln(y)
+to-40-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Ln(2), 40)
+    out: 0.693_147_180_559_945_309_417_232_121_458_176_568_075_5
+  tex:
+    in: N(\ln(2), 40)
+    out: 0.693\,147\,180\,559\,945\,309\,417
+  wolfram:
+    in: N[Log[2], 40]
+  sympy:
+    in: N(log(2), 30)
+  mpmath:
+    in: (log(2))
+  sage:
+    in: N(log(2))
+  rust:
+    in: nf(ln(n(2)))
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
+  epsil:
+    in: Ln(-1 / 2)
+    out: i * Pi - Ln(2)
+  tex:
+    in: \ln(-\frac{1}{2})
+    out: i\pi-\ln(2)
+  wolfram:
+    in: Log[Rational[-1, 2]]
+  sympy:
+    in: log(Rational(-1, 2))
+  sage:
+    in: log((-1/2))
+  rust:
+    in: ln(rational(n(-1), n(2)))

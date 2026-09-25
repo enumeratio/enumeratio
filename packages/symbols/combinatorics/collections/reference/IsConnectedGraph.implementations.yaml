@@ -1,0 +1,45 @@
+petersen-is-connected:
+  epsil:
+    in: IsConnectedGraph(PetersenGraph())
+    out: True
+  tex:
+    in: \mathrm{IsConnectedGraph}(\mathrm{PetersenGraph}())
+    out: \top
+  traditional:
+    in: \mathrm{IsConnectedGraph}(\mathrm{PetersenGraph}())
+    out: \mathrm{True}
+  wolfram:
+    in: ConnectedGraphQ[PetersenGraph[]]
+two-disjoint-edges-are-not-connected:
+  epsil:
+    in: |-
+      IsConnectedGraph(Graph([1, 2, 3, 4], [
+                                             UndirectedEdge(1, 2),
+                                             UndirectedEdge(3, 4),
+                                           ]))
+    out: False
+  tex:
+    in: \mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \bot
+  traditional:
+    in: \mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \mathrm{False}
+  wolfram:
+    in: ConnectedGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]
+weakly-connected-despite-two-scc:
+  epsil:
+    in: |-
+      IsConnectedGraph(Graph([1, 2, 3], [
+                                          DirectedEdge(1, 2),
+                                          DirectedEdge(2, 1),
+                                          DirectedEdge(2, 3),
+                                        ]))
+    out: True
+  tex:
+    in: \mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack))
+    out: \top
+  traditional:
+    in: \mathrm{IsConnectedGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1), \mathrm{DirectedEdge}(2, 3)\bigr\rbrack))
+    out: \mathrm{True}
+  wolfram:
+    in: ConnectedGraphQ[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[2, 1], DirectedEdge[2, 3]]]]

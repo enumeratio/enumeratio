@@ -1,0 +1,7 @@
+b-4:
+  epsil:
+    in: Count(SetPartitions(4))
+    out: "15"
+  tex:
+    in: \mathrm{Count}(\mathrm{SetPartitions}(4))
+    out: "15"

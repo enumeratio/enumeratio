@@ -1,0 +1,7 @@
+count-separablepermutations-5-90-the-large:
+  epsil:
+    in: Count(SeparablePermutations(5))
+    out: "90"
+  tex:
+    in: \mathrm{Count}(\mathrm{SeparablePermutations}(5))
+    out: "90"

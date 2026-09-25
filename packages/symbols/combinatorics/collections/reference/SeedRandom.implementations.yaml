@@ -1,0 +1,18 @@
+seedrandom-returns-nothing:
+  epsil:
+    in: SeedRandom(7)
+    out: Nothing
+  tex:
+    in: \mathrm{SeedRandom}(7)
+    out: \mathrm{Nothing}
+  wolfram:
+    in: SeedRandom[7]
+seedrandom-pins-the-next-draw:
+  epsil:
+    in: Last([SeedRandom(7), RandomInteger(100)])
+    out: "1"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomInteger}(100)\bigr\rbrack)
+    out: "1"
+  wolfram:
+    in: Last[List[SeedRandom[7], RandomInteger[100]]]

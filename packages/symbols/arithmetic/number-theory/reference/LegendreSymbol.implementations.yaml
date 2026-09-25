@@ -1,21 +1,100 @@
 2-is-a-quadratic-residue-mod-7-32-2-mod-7:
+  epsil:
+    in: LegendreSymbol(2, 7)
+    out: "1"
+  tex:
+    in: \mathrm{LegendreSymbol}(2, 7)
+    out: "1"
+  traditional:
+    in: \left(\frac{2}{7}\right)
+    out: "1"
   wolfram:
     in: JacobiSymbol[2, 7]
+    back: [JacobiSymbol, 2, 7]
     out: "1"
     tex:
       in: \left(\frac{2}{7}\right)
       out: "1"
 3-is-not-a-quadratic-residue-mod-7:
+  epsil:
+    in: LegendreSymbol(3, 7)
+    out: "-1"
+  tex:
+    in: \mathrm{LegendreSymbol}(3, 7)
+    out: "-1"
+  traditional:
+    in: \left(\frac{3}{7}\right)
+    out: "-1"
   wolfram:
     in: JacobiSymbol[3, 7]
+    back: [JacobiSymbol, 3, 7]
     out: "-1"
     tex:
       in: \left(\frac{3}{7}\right)
       out: "-1"
 0-when-p-divides-n:
+  epsil:
+    in: LegendreSymbol(14, 7)
+    out: "0"
+  tex:
+    in: \mathrm{LegendreSymbol}(14, 7)
+    out: "0"
+  traditional:
+    in: \left(\frac{14}{7}\right)
+    out: "0"
   wolfram:
     in: JacobiSymbol[14, 7]
+    back: [JacobiSymbol, 14, 7]
     out: "0"
     tex:
       in: \left(\frac{14}{7}\right)
       out: "0"
+1-is-a-residue-mod-p-exactly-when-p-equiv-1-pmod:
+  epsil:
+    in: LegendreSymbol(-1, 13)
+    out: "1"
+  tex:
+    in: \mathrm{LegendreSymbol}(-1, 13)
+    out: "1"
+  traditional:
+    in: \left(\frac{-1}{13}\right)
+    out: "1"
+  wolfram:
+    in: JacobiSymbol[-1, 13]
+    back: [JacobiSymbol, -1, 13]
+euler-s-criterion-a-p-equiv-a-p-1-2-pmod-p-here:
+  epsil:
+    in: LegendreSymbol(3, 7) == PowerMod(3, 3, 7) - 7
+    out: True
+  tex:
+    in: \mathrm{LegendreSymbol}(3, 7)=\mathrm{PowerMod}(3, 3, 7)-7
+    out: \top
+  traditional:
+    in: \left(\frac{3}{7}\right)=\left(3^3\bmod 7\right)-7
+    out: \mathrm{True}
+  wolfram:
+    in: (JacobiSymbol[3, 7] == Subtract[PowerMod[3, 3, 7], 7])
+    back: Unreadable
+listable-in-n-the-residues-mod-7-are-1-2-4:
+  epsil:
+    in: LegendreSymbol([1, 2, 3, 4, 5, 6], 7)
+    out: "[1, 1, -1, 1, -1, -1]"
+  tex:
+    in: \mathrm{LegendreSymbol}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 7)
+    out: \bigl\lbrack1, 1, -1, 1, -1, -1\bigr\rbrack
+  wolfram:
+    in: JacobiSymbol[List[1, 2, 3, 4, 5, 6], 7]
+    back: [JacobiSymbol, [List, 1, 2, 3, 4, 5, 6], 7]
+9-is-not-prime-so-the-call-stays-symbolic-see:
+  epsil:
+    in: LegendreSymbol(2, 9)
+    out: LegendreSymbol(2, 9)
+  tex:
+    in: \mathrm{LegendreSymbol}(2, 9)
+    out: \mathrm{LegendreSymbol}(2, 9)
+  traditional:
+    in: \left(\frac{2}{9}\right)
+    out: \left(\frac{2}{9}\right)
+  wolfram:
+    in: JacobiSymbol[2, 9]
+    back: [JacobiSymbol, 2, 9]

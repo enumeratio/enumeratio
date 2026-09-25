@@ -1,0 +1,80 @@
+lambertw-0:
+  epsil:
+    in: LambertW(0)
+    out: "0"
+  tex:
+    in: \operatorname{W}(0)
+    out: "0"
+  wolfram:
+    in: ProductLog[0]
+    back: [ProductLog, 0]
+1-cdot-e-1-e:
+  epsil:
+    in: LambertW(ExponentialE)
+    out: "1"
+  tex:
+    in: \operatorname{W}(e)
+    out: "1"
+  wolfram:
+    in: ProductLog[E]
+    back: [ProductLog, ExponentialE]
+the-branch-point-1-e:
+  epsil:
+    in: LambertW(-(1 / ExponentialE))
+    out: "-1"
+  tex:
+    in: \operatorname{W}(-\frac{1}{e})
+    out: "-1"
+  wolfram:
+    in: ProductLog[Minus[Divide[1, E]]]
+    back: [ProductLog, [Negate, [Divide, 1, ExponentialE]]]
+2e-2-w-e-w-at-w-2:
+  epsil:
+    in: LambertW(2 * ExponentialE ^ 2)
+    out: "2"
+  tex:
+    in: \operatorname{W}(2e^{2})
+    out: "2"
+  wolfram:
+    in: ProductLog[Times[2, Power[E, 2]]]
+    back: [ProductLog, [Multiply, 2, [Power, ExponentialE, 2]]]
+ln-2-cdot-e-ln-2-frac-ln-2-2:
+  epsil:
+    in: LambertW(-(Ln(2) / 2))
+    out: -Ln(2)
+  tex:
+    in: \operatorname{W}(-\frac{\ln(2)}{2})
+    out: -\ln(2)
+  wolfram:
+    in: ProductLog[Minus[Divide[Log[2], 2]]]
+    back: [ProductLog, [Negate, [Divide, [Ln, 2], 2]]]
+a-branch-other-than-0-or-1-checked-against-n:
+  epsil:
+    in: N(LambertW(-0.14, -3))
+    out: -4.645_279_174_278_859 + -13.812_745_325_218_817 * i
+  tex:
+    in: N(\operatorname{W}_{-3}(-0.14))
+    out: -4.645\,279\,174\,278\,859-13.812\,745\,325\,218\,817i
+  wolfram:
+    in: N[ProductLog[-3, -0.14]]
+    back: [N, [ProductLog, -3, -0.14]]
+the-branch-k-1-written-in-compute-engine-s-z-k:
+  epsil:
+    in: N(LambertW(1, 1))
+    out: -1.533_913_319_793_574_4 + 4.375_185_153_061_898i
+  tex:
+    in: N(\operatorname{W}_{1}(1))
+    out: -1.533\,913\,319\,793\,574\,4+4.375\,185\,153\,061\,898i
+  wolfram:
+    in: N[ProductLog[1, 1]]
+    back: [N, [ProductLog, 1, 1]]
+the-real-branch-k-1-on-1-e-z-0:
+  epsil:
+    in: N(LambertW(-0.2, -1))
+    out: -2.542_641_357_773_526_424_29
+  tex:
+    in: N(\operatorname{W}_{-1}(-0.2))
+    out: -2.542\,641\,357\,773\,526\,424\,29
+  wolfram:
+    in: N[ProductLog[-1, -0.2]]
+    back: [N, [ProductLog, -1, -0.2]]

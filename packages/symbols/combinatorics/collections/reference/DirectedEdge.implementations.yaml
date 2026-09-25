@@ -1,0 +1,9 @@
+an-edge-from-1-to-2:
+  epsil:
+    in: DirectedEdge(1, 2)
+    out: DirectedEdge(1, 2)
+  tex:
+    in: \mathrm{DirectedEdge}(1, 2)
+    out: \mathrm{DirectedEdge}(1, 2)
+  wolfram:
+    in: DirectedEdge[1, 2]

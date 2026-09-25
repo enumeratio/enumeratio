@@ -1,0 +1,40 @@
+polynomials-are-entire:
+  epsil:
+    in: FunctionAnalytic(x ^ 2, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionAnalytic}(x^2, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionAnalytic}(x^2, x)
+    out: \mathrm{True}
+a-pole-anywhere-in-the-plane-disqualifies-it:
+  epsil:
+    in: FunctionAnalytic(1 / x, x)
+    out: False
+  tex:
+    in: \mathrm{FunctionAnalytic}(\frac{1}{x}, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionAnalytic}(\frac{1}{x}, x)
+    out: \mathrm{False}
+sqrt-has-a-branch-point:
+  epsil:
+    in: FunctionAnalytic(Sqrt(x), x)
+    out: False
+  tex:
+    in: \mathrm{FunctionAnalytic}(\sqrt{x}, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionAnalytic}(\sqrt{x}, x)
+    out: \mathrm{False}
+sine-is-entire:
+  epsil:
+    in: FunctionAnalytic(Sin(x), x)
+    out: True
+  tex:
+    in: \mathrm{FunctionAnalytic}(\sin(x), x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionAnalytic}(\sin(x), x)
+    out: \mathrm{True}

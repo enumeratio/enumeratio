@@ -1,0 +1,7 @@
+"4":
+  epsil:
+    in: Count(Derangements(4))
+    out: "9"
+  tex:
+    in: \mathrm{Count}(\mathrm{Derangements}(4))
+    out: "9"

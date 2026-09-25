@@ -1,4 +1,10 @@
 integerstring-42:
+  epsil:
+    in: IntegerString(42)
+    out: '"42"'
+  tex:
+    in: \mathrm{IntegerString}(42)
+    out: \text{42}
   wolfram:
     in: IntegerString[42]
     out: '"42"'
@@ -6,6 +12,12 @@ integerstring-42:
       in: \text{IntegerString}[42]
       out: "42"
 integerstring-17-651-2:
+  epsil:
+    in: IntegerString(17_651, 2)
+    out: '"100010011110011"'
+  tex:
+    in: \mathrm{IntegerString}(17\,651, 2)
+    out: \text{100010011110011}
   wolfram:
     in: IntegerString[17651, 2]
     out: '"100010011110011"'
@@ -13,6 +25,12 @@ integerstring-17-651-2:
       in: \text{IntegerString}[17651,2]
       out: "100010011110011"
 bases-above-10-use-letters-a-z:
+  epsil:
+    in: IntegerString(255, 16)
+    out: '"ff"'
+  tex:
+    in: \mathrm{IntegerString}(255, 16)
+    out: \text{ff}
   wolfram:
     in: IntegerString[255, 16]
     out: '"ff"'
@@ -20,6 +38,12 @@ bases-above-10-use-letters-a-z:
       in: \text{IntegerString}[255,16]
       out: \text{ff}
 integerstring-0:
+  epsil:
+    in: IntegerString(0)
+    out: '"0"'
+  tex:
+    in: \mathrm{IntegerString}(0)
+    out: \text{0}
   wolfram:
     in: IntegerString[0]
     out: '"0"'
@@ -27,6 +51,12 @@ integerstring-0:
       in: \text{IntegerString}[0]
       out: "0"
 compute-engine-keeps-the-sign:
+  epsil:
+    in: IntegerString(-42)
+    out: '"-42"'
+  tex:
+    in: \mathrm{IntegerString}(-42)
+    out: \text{-42}
   wolfram:
     in: IntegerString[-42]
     out: '"42"'
@@ -36,7 +66,67 @@ compute-engine-keeps-the-sign:
     verdict: disagree
     kind: convention
     note: compute-engine keeps the sign; Wolfram's IntegerString drops it.
+base-36-is-the-largest-with-digit-values-up-to-z:
+  epsil:
+    in: IntegerString(35, 36)
+    out: '"z"'
+  tex:
+    in: \mathrm{IntegerString}(35, 36)
+    out: \text{z}
+  wolfram:
+    in: IntegerString[35, 36]
+threads-over-a-list:
+  epsil:
+    in: IntegerString([1, 2, 3])
+    out: '["1", "2", "3"]'
+  tex:
+    in: \mathrm{IntegerString}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\text{1}, \text{2}, \text{3}\bigr\rbrack
+  wolfram:
+    in: IntegerString[List[1, 2, 3]]
+50-in-hexadecimal-exact-past-double-precision:
+  epsil:
+    in: IntegerString(50!, 16)
+    out: '"49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000"'
+  tex:
+    in: \mathrm{IntegerString}(50!, 16)
+    out: 49eebc961ed279b02b1ef4f28d19a84f5\,973a1d2c7\,800\,000\,000\,000
+  wolfram:
+    in: IntegerString[Factorial[50], 16]
+roman-numerals-with-the-base-roman:
+  epsil:
+    in: IntegerString(1_988, "Roman")
+    out: '"MCMLXXXVIII"'
+  tex:
+    in: \mathrm{IntegerString}(1\,988, \text{Roman})
+    out: \text{MCMLXXXVIII}
+  wolfram:
+    in: IntegerString[1988, "Roman"]
+a-width-pads-with-leading-zeros:
+  epsil:
+    in: IntegerString(255, 16, 4)
+    out: '"00ff"'
+  tex:
+    in: \mathrm{IntegerString}(255, 16, 4)
+    out: ff
+  wolfram:
+    in: IntegerString[255, 16, 4]
+a-width-shorter-than-the-numeral-keeps-the-least:
+  epsil:
+    in: IntegerString(1_234_567, 10, 3)
+    out: '"567"'
+  tex:
+    in: \mathrm{IntegerString}(1\,234\,567, 10, 3)
+    out: \text{567}
+  wolfram:
+    in: IntegerString[1234567, 10, 3]
 a-third-argument-pads-with-leading-zeros-to-that:
+  epsil:
+    in: IntegerString(5, 2, 8)
+    out: '"00000101"'
+  tex:
+    in: \mathrm{IntegerString}(5, 2, 8)
+    out: "101"
   wolfram:
     in: IntegerString[5, 2, 8]
     out: '"00000101"'

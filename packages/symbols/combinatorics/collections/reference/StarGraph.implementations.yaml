@@ -1,0 +1,9 @@
+centre-degree-of-a-6-vertex-star:
+  epsil:
+    in: VertexDegree(StarGraph(6), 1)
+    out: "5"
+  tex:
+    in: \mathrm{VertexDegree}(\mathrm{StarGraph}(6), 1)
+    out: "5"
+  wolfram:
+    in: VertexDegree[StarGraph[6], 1]

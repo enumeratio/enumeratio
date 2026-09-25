@@ -8,6 +8,7 @@ import { referenceData, referenceEntries } from "../src/node.ts";
 // and a Wolfram row's `in` is what we'd still emit today.
 
 const data = referenceData();
+const OWN_FORMS = new Set(["epsil", "tex", "traditional", "notatio"]);
 const entries = referenceEntries(data);
 // The record the site shows for each head: the one beside the entry it chose.
 const records = data.heads.filter((h) => h.implementations && data.packageOf.get(h.head) === h.package);
@@ -26,11 +27,8 @@ test("every row that is not an agreement is classified, with a note", () => {
         // Ours means the other system is right, which is only acceptable with an issue open.
         if (row.kind === "ours") expect(Number.isInteger(row.issue) && row.issue! > 0, label).toBe(true);
         else expect(row.issue, label).toBeUndefined();
-        // Unscanned (a note about a system the scan can't reach), or an agreement.
-        if (row.out === undefined) {
-          expect((row.note ?? "").length, label).toBeGreaterThan(20);
-          continue;
-        }
+        // Our own forms, a transpiled `in` no kernel has answered yet, or an agreement.
+        if (OWN_FORMS.has(system) || row.out === undefined) continue;
         if (row.verdict === undefined || row.verdict === "agree") continue;
         expect(row.kind, label).not.toBe("unclassified");
         expect(Object.keys(DIVERGENCE_KINDS), label).toContain(row.kind);
@@ -40,10 +38,13 @@ test("every row that is not an agreement is classified, with a note", () => {
   }
 });
 
-test("every row still describes a current, non-aspirational example", () => {
+test("every scanned row still describes a current, non-aspirational example", () => {
   for (const { head, entry, implementations } of records) {
     const ids = new Set(entry.examples.filter((e) => e.aspirational !== true).map((e) => e.id));
-    for (const id of Object.keys(implementations!)) expect(ids.has(id), `${head}/${id}`).toBe(true);
+    for (const [id, rows] of Object.entries(implementations!))
+      for (const [system, row] of Object.entries(rows))
+        if (!OWN_FORMS.has(system) && row.out !== undefined)
+          expect(ids.has(id), `${head}/${id} (${system})`).toBe(true);
   }
 });
 

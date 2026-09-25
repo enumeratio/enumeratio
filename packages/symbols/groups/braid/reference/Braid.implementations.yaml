@@ -1,0 +1,40 @@
+sigma1sigma2-cycles-the-three-strands:
+  epsil:
+    in: BraidPermutation(Braid(3, [1, 2]))
+    out: "[2, 3, 1]"
+  tex:
+    in: \mathrm{BraidPermutation}(\mathrm{Braid}(3, \bigl\lbrack1, 2\bigr\rbrack))
+    out: \bigl\lbrack2, 3, 1\bigr\rbrack
+  traditional:
+    in: \mathrm{BraidPermutation}(\sigma_{1}\sigma_{2})
+    out: \bigl\lbrack2, 3, 1\bigr\rbrack
+the-hopf-link:
+  epsil:
+    in: BraidComponents(Braid(2, [1, 1]))
+    out: "2"
+  tex:
+    in: \mathrm{BraidComponents}(\mathrm{Braid}(2, \bigl\lbrack1, 1\bigr\rbrack))
+    out: "2"
+  traditional:
+    in: \mathrm{BraidComponents}(\sigma_{1}^{2})
+    out: "2"
+t-2-q-is-a-knot-for-odd-q:
+  epsil:
+    in: BraidIsKnot(TorusBraid(2, 5))
+    out: True
+  tex:
+    in: \mathrm{BraidIsKnot}(\mathrm{TorusBraid}(2, 5))
+    out: \top
+  traditional:
+    in: \mathrm{BraidIsKnot}(T_{2,5})
+    out: \mathrm{True}
+two-positive-crossings-and-one-negative:
+  epsil:
+    in: BraidWrithe(Braid(3, [1, -2, 1]))
+    out: "1"
+  tex:
+    in: \mathrm{BraidWrithe}(\mathrm{Braid}(3, \bigl\lbrack1, -2, 1\bigr\rbrack))
+    out: "1"
+  traditional:
+    in: w(\sigma_{1}\sigma_{2}^{-1}\sigma_{1})
+    out: "1"

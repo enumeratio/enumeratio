@@ -1,0 +1,7 @@
+count-smoothpermutations-5-88-a032351:
+  epsil:
+    in: Count(SmoothPermutations(5))
+    out: "88"
+  tex:
+    in: \mathrm{Count}(\mathrm{SmoothPermutations}(5))
+    out: "88"

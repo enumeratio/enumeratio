@@ -1,0 +1,7 @@
+count-tristrings-6-44-binary-strings-of-length-6:
+  epsil:
+    in: Count(TriStrings(6))
+    out: "44"
+  tex:
+    in: \mathrm{Count}(\mathrm{TriStrings}(6))
+    out: "44"

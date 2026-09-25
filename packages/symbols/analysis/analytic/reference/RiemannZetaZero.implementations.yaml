@@ -1,0 +1,27 @@
+the-first-nontrivial-zero-frac-12-14-1347-i:
+  epsil:
+    in: N(RiemannZetaZero(1))
+    out: 0.5 + 14.134_725_141_734_693i
+  tex:
+    in: N(\mathrm{RiemannZetaZero}(1))
+    out: 0.5+14.134\,725\,141\,734\,693i
+  wolfram:
+    in: N[ZetaZero[1]]
+n-riemannzetazero-2:
+  epsil:
+    in: N(RiemannZetaZero(2))
+    out: 0.5 + 21.022_039_638_771_556i
+  tex:
+    in: N(\mathrm{RiemannZetaZero}(2))
+    out: 0.5+21.022\,039\,638\,771\,556i
+  wolfram:
+    in: N[ZetaZero[2]]
+n-riemannzetazero-10:
+  epsil:
+    in: N(RiemannZetaZero(10))
+    out: 0.5 + 49.773_832_477_672_3i
+  tex:
+    in: N(\mathrm{RiemannZetaZero}(10))
+    out: 0.5+49.773\,832\,477\,672\,3i
+  wolfram:
+    in: N[ZetaZero[10]]

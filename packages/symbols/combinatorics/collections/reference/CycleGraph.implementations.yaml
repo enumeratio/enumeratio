@@ -1,0 +1,24 @@
+c5-is-not-bipartite:
+  epsil:
+    in: IsBipartiteGraph(CycleGraph(5))
+    out: False
+  tex:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))
+    out: \bot
+  traditional:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))
+    out: \mathrm{False}
+  wolfram:
+    in: BipartiteGraphQ[CycleGraph[5]]
+c6-is-bipartite:
+  epsil:
+    in: IsBipartiteGraph(CycleGraph(6))
+    out: True
+  tex:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))
+    out: \top
+  traditional:
+    in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))
+    out: \mathrm{True}
+  wolfram:
+    in: BipartiteGraphQ[CycleGraph[6]]

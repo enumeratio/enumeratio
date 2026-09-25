@@ -154,6 +154,10 @@ export const PACKAGES = fileURLToPath(new URL("../../", import.meta.url));
 /** Every system's kernel version, as the last scan of it recorded (scripts/oracle-scan.ts). */
 const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
 
+/** Our own forms of an example (notatio/scripts/forms.ts): rows a record keeps beside the
+ * systems', with no kernel behind them. */
+const OWN_FORMS = new Set(["epsil", "tex", "traditional", "notatio"]);
+
 /** A record row as the page reads it: a scanned system's run of one example. */
 const runOf = (row: SystemImplementation): OtherSystemRun => ({
   input: row.in,
@@ -208,7 +212,7 @@ export function referenceData(
       examples: h.entry.examples.map((example) => {
         const rows = record[example.id];
         if (rows === undefined) return example;
-        const scanned = Object.entries(rows).filter(([, row]) => row.out !== undefined);
+        const scanned = Object.entries(rows).filter(([key, row]) => !OWN_FORMS.has(key) && row.out !== undefined);
         // A chip is Wolfram's: the one system with authored "differs from" prose. Other
         // systems' notes explain their rows (a transpiler shape, a kernel's convention), and so
         // does a note on a row where Wolfram errored.
@@ -254,7 +258,9 @@ export function oracleAgreementsOf(
         if (run.verdict === "disagree") row.disagree += 1;
         tally.set(system, row);
       }
+    // By system name, so the order rows sit in a record doesn't matter.
     const rows = [...tally]
+      .sort(([a], [b]) => a.localeCompare(b))
       .filter(([system, row]) => (row.agree || row.disagree) && data.kernels[system] !== undefined)
       .map(([system, row]) => ({ system, kernel: data.kernels[system]!, ...row }));
     if (rows.length > 0) out[entry.name] = rows;

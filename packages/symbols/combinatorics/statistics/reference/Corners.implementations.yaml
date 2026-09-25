@@ -1,0 +1,14 @@
+the-partition-4-2-1-of-7:
+  epsil:
+    in: Corners(IntegerPartition([4, 2, 1]))
+    out: "3"
+  tex:
+    in: \mathrm{Corners}(\mathrm{IntegerPartition}(\bigl\lbrack4, 2, 1\bigr\rbrack))
+    out: "3"
+the-partition-3-3-1-of-7:
+  epsil:
+    in: Corners(IntegerPartition([3, 3, 1]))
+    out: "2"
+  tex:
+    in: \mathrm{Corners}(\mathrm{IntegerPartition}(\bigl\lbrack3, 3, 1\bigr\rbrack))
+    out: "2"

@@ -1,0 +1,28 @@
+a-cubic-is-increasing-everywhere:
+  epsil:
+    in: FunctionMonotonicity(x ^ 3, x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionMonotonicity}(x^3, x)
+    out: "1"
+a-parabola-is-not-globally-monotonic:
+  epsil:
+    in: FunctionMonotonicity(x ^ 2, x)
+    out: Indeterminate
+  tex:
+    in: \mathrm{FunctionMonotonicity}(x^2, x)
+    out: \mathrm{Indeterminate}
+exp-of-an-affine-argument-is-always-monotonic:
+  epsil:
+    in: FunctionMonotonicity(Exp(x), x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionMonotonicity}(e^{x}, x)
+    out: "1"
+a-restricted-domain-answers-indeterminate:
+  epsil:
+    in: FunctionMonotonicity(Sqrt(x), x)
+    out: Indeterminate
+  tex:
+    in: \mathrm{FunctionMonotonicity}(\sqrt{x}, x)
+    out: \mathrm{Indeterminate}

@@ -1,0 +1,21 @@
+only-1-is-fixed:
+  epsil:
+    in: FixedPoints([1, 3, 2])
+    out: "1"
+  tex:
+    in: \mathrm{FixedPoints}(\bigl\lbrack1, 3, 2\bigr\rbrack)
+    out: "1"
+the-identity-fixes-all:
+  epsil:
+    in: FixedPoints([1, 2, 3])
+    out: "3"
+  tex:
+    in: \mathrm{FixedPoints}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "3"
+a-derangement-fixes-nothing:
+  epsil:
+    in: FixedPoints([2, 3, 1])
+    out: "0"
+  tex:
+    in: \mathrm{FixedPoints}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+    out: "0"

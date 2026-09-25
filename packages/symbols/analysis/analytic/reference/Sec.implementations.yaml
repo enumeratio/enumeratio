@@ -1,4 +1,10 @@
 sec-0:
+  epsil:
+    in: Sec(0)
+    out: "1"
+  tex:
+    in: \sec(0)
+    out: "1"
   wolfram:
     in: Sec[0]
     out: "1"
@@ -6,6 +12,12 @@ sec-0:
       in: \sec (0)
       out: "1"
 sec-pi-over-4:
+  epsil:
+    in: Sec(Pi / 4)
+    out: Sqrt(2)
+  tex:
+    in: \sec(\frac{\pi}{4})
+    out: \sqrt{2}
   wolfram:
     in: Sec[Divide[Pi, 4]]
     out: Sqrt[2]
@@ -13,6 +25,12 @@ sec-pi-over-4:
       in: \sec \left(\frac{\pi }{4}\right)
       out: \sqrt{2}
 sec-pi-over-3:
+  epsil:
+    in: Sec(Pi / 3)
+    out: "2"
+  tex:
+    in: \sec(\frac{\pi}{3})
+    out: "2"
   wolfram:
     in: Sec[Divide[Pi, 3]]
     out: "2"
@@ -20,6 +38,12 @@ sec-pi-over-3:
       in: \sec \left(\frac{\pi }{3}\right)
       out: "2"
 sec-pi:
+  epsil:
+    in: Sec(Pi)
+    out: "-1"
+  tex:
+    in: \sec(\pi)
+    out: "-1"
   wolfram:
     in: Sec[Pi]
     out: "-1"
@@ -27,23 +51,161 @@ sec-pi:
       in: \sec (\pi )
       out: "-1"
 reciprocal-of-cos-sec-x-frac-1-cos-x:
+  epsil:
+    in: Sec(Pi / 3) == 1 / Cos(Pi / 3)
+    out: True
+  tex:
+    in: \sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}
+    out: \top
+  traditional:
+    in: \sec(\frac{\pi}{3})=\frac{1}{\cos(\frac{\pi}{3})}
+    out: \mathrm{True}
   wolfram:
     in: (Sec[Divide[Pi, 3]] == Divide[1, Cos[Divide[Pi, 3]]])
+    back: Unreadable
     out: True
     tex:
       in: \sec \left(\frac{\pi }{3}\right)=\frac{1}{\cos \left(\frac{\pi }{3}\right)}
       out: \text{True}
 pythagorean-identity-1-tan-2-x-sec-2-x:
+  epsil:
+    in: 1 + Tan(Pi / 6) ^ 2 == Sec(Pi / 6) ^ 2
+    out: True
+  tex:
+    in: 1+\tan(\pi/6)^2=\sec(\pi/6)^2
+    out: \top
+  traditional:
+    in: 1+\tan(\pi/6)^2=\sec(\pi/6)^2
+    out: \mathrm{True}
   wolfram:
     in: (Plus[1, Power[Tan[Divide[Pi, 6]], 2]] == Power[Sec[Divide[Pi, 6]], 2])
+    back: Unreadable
     out: True
     tex:
       in: 1+\tan ^2\left(\frac{\pi }{6}\right)=\sec ^2\left(\frac{\pi }{6}\right)
       out: \text{True}
 a-pole-cos-pi-2-0:
+  epsil:
+    in: Sec(Pi / 2)
+    out: ComplexInfinity
+  tex:
+    in: \sec(\frac{\pi}{2})
+    out: \tilde\infty
   wolfram:
     in: Sec[Divide[Pi, 2]]
     out: ComplexInfinity
     tex:
       in: \sec \left(\frac{\pi }{2}\right)
       out: \text{ComplexInfinity}
+sec-30-circ-frac-2-sqrt-3-3-exactly:
+  epsil:
+    in: Sec(Degrees(30))
+    out: 2 / 3 * Sqrt(3)
+  tex:
+    in: \sec(30^{\circ})
+    out: \frac{2\sqrt{3}}{3}
+  wolfram:
+    in: Sec[Times[30, Degree]]
+    back: [Sec, [Multiply, 30, Degree]]
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Sec(1.2)
+    out: 2.759_703_601_332_406_456_89
+  tex:
+    in: \sec(1.2)
+    out: 2.759\,703\,601\,332\,406\,456\,89
+  wolfram:
+    in: Sec[1.2]
+n-of-an-exact-argument-gives-an-arbitrary:
+  epsil:
+    in: N(Sec(6 / 5))
+    out: 2.759_703_601_332_406_456_89
+  tex:
+    in: N(\sec(\frac{6}{5}))
+    out: 2.759\,703\,601\,332\,406\,456\,89
+  wolfram:
+    in: N[Sec[Rational[6, 5]]]
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Sec(2.5 + i)
+    out: -0.611_108_564_155_231_6 + 0.347_676_660_710_495_97i
+  tex:
+    in: \sec(2.5+i)
+    out: -0.611\,108\,564\,155\,231\,6+0.347\,676\,660\,710\,495\,97i
+  wolfram:
+    in: Sec[Complex[2.5, 1]]
+threads-element-wise-over-a-matrix:
+  epsil:
+    in: Sec([[5 * (Pi / 6), 0], [Pi / 6, -(Pi / 4)]])
+    out: "[[-2 / 3 * Sqrt(3), 1], [2 / 3 * Sqrt(3), Sqrt(2)]]"
+  tex:
+    in: \sec(\bigl\lbrack\bigl\lbrack\frac{5\pi}{6}, 0\bigr\rbrack, \bigl\lbrack\frac{\pi}{6}, -\pi/4\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack-\frac{2\sqrt{3}}{3}, 1\bigr\rbrack, \bigl\lbrack\frac{2\sqrt{3}}{3}, \sqrt{2}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Sec[List[List[Times[5, Divide[Pi, 6]], 0], List[Divide[Pi, 6], Minus[Divide[Pi, 4]]]]]
+sec-pi-12-sqrt-6-sqrt-2:
+  epsil:
+    in: Sec(Pi / 12)
+    out: -Sqrt(2) + Sqrt(6)
+  tex:
+    in: \sec(\frac{\pi}{12})
+    out: \sqrt{6}-\sqrt{2}
+  wolfram:
+    in: Sec[Divide[Pi, 12]]
+sec-pi-5-sqrt-5-1:
+  epsil:
+    in: Sec(Pi / 5)
+    out: -1 + Sqrt(5)
+  tex:
+    in: \sec(\frac{\pi}{5})
+    out: \sqrt{5}-1
+  wolfram:
+    in: Sec[Divide[Pi, 5]]
+sec-pi-8-sqrt-4-2-sqrt-2:
+  epsil:
+    in: Sec(Pi / 8)
+    out: Sqrt(4 - 2 * Sqrt(2))
+  tex:
+    in: \sec(\frac{\pi}{8})
+    out: \sqrt{4-2\sqrt{2}}
+  wolfram:
+    in: Sec[Divide[Pi, 8]]
+interval-arithmetic-the-image-of-pi-6-pi-3-is:
+  epsil:
+    in: Sec(Interval(Pi / 6, Pi / 3))
+    out: Interval(2 / 3 * Sqrt(3), 2)
+  tex:
+    in: \sec(\mathrm{Interval}(\frac{\pi}{6}, \frac{\pi}{3}))
+    out: \mathrm{Interval}(\frac{2\sqrt{3}}{3}, 2)
+  wolfram:
+    in: Sec[Interval[List[Divide[Pi, 6], Divide[Pi, 3]]]]
+uncertainty-propagation-sec-2-pm-0-01-approx-2:
+  epsil:
+    in: Sec(Around(2, 0.01))
+    out: Around(-2.402_997_961_722_381, 0.052_506_463_376_995_806)
+  tex:
+    in: \sec(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(-2.402\,997\,961\,722\,381, 0.052\,506\,463\,376\,995\,806)
+  wolfram:
+    in: Sec[Around[2, 0.01]]
+evenness-drops-the-sign-of-a-symbolic-argument:
+  epsil:
+    in: Sec(-x)
+    out: Sec(x)
+  tex:
+    in: \sec(-x)
+    out: \sec(x)
+derivative-sec-x-tan-x:
+  epsil:
+    in: D(Sec(x), x)
+    out: Tan(x) * Sec(x)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\sec(x)
+    out: \tan(x)\sec(x)
+antiderivative-ln-sec-x-tan-x:
+  epsil:
+    in: Integrate(Sec(x), x)
+    out: Ln(Abs(Tan(x) + Sec(x)))
+  tex:
+    in: \int\!\sec(x)\, \mathrm{d}x
+    out: \ln(\vert\tan(x)+\sec(x)\vert)

@@ -1,18 +1,38 @@
 scan-list-1-2-3-4-add:
+  epsil:
+    in: Scan([1, 2, 3, 4], Add)
+    out: "[1, 3, 6, 10]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{Add})
+    out: \bigl\lbrack1, 3, 6, 10\bigr\rbrack
   wolfram:
     in: FoldList[Plus, List[1, 2, 3, 4]]
+    back: [FoldList, Add, [List, 1, 2, 3, 4]]
     out: "{1, 3, 6, 10}"
     tex:
       in: \text{FoldList}[\text{Plus},\{1,2,3,4\}]
       out: \{1,3,6,10\}
 the-running-maximum:
+  epsil:
+    in: Scan([1, 2, 3, 4], Max)
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{Max})
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
   wolfram:
     in: FoldList[Max, List[1, 2, 3, 4]]
+    back: [FoldList, Max, [List, 1, 2, 3, 4]]
     out: "{1, 2, 3, 4}"
     tex:
       in: \text{FoldList}[\text{Max},\{1,2,3,4\}]
       out: \{1,2,3,4\}
 the-seeded-form-is-still-the-same-length-as-xs:
+  epsil:
+    in: Scan([1, 2, 3], Add, 10)
+    out: "[11, 13, 16]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{Add}, 10)
+    out: \bigl\lbrack11, 13, 16\bigr\rbrack
   wolfram:
     in: enumeratio`Scan[List[1, 2, 3], Plus, 10]
     out: enumeratio`Scan[{1, 2, 3}, Plus, 10]
@@ -22,3 +42,57 @@ the-seeded-form-is-still-the-same-length-as-xs:
     verdict: disagree
     kind: convention
     note: "Wolfram's seeded FoldList[f, x, list] is length+1: it prepends the seed itself."
+the-shape-of-a-running-fold:
+  epsil:
+    in: Scan([a, b, c], f)
+    out: "[a, f(a, b), f(f(a, b), c)]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack a, b, c\bigr\rbrack, f)
+    out: \bigl\lbrack a, f(a, b), f(f(a, b), c)\bigr\rbrack
+running-products-the-factorials:
+  epsil:
+    in: Scan([1, 2, 3, 4, 5], Multiply)
+    out: "[1, 2, 6, 24, 120]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \mathrm{Multiply})
+    out: \bigl\lbrack1, 2, 6, 24, 120\bigr\rbrack
+  wolfram:
+    in: FoldList[Times, List[1, 2, 3, 4, 5]]
+    back: [FoldList, Multiply, [List, 1, 2, 3, 4, 5]]
+running-sums-of-symbolic-elements-wolfram-s:
+  epsil:
+    in: Scan([a, b, c], Add)
+    out: "[a, a + b, a + b + c]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{Add})
+    out: \bigl\lbrack a, a+b, a+b+c\bigr\rbrack
+the-running-minimum:
+  epsil:
+    in: Scan([3, 1, 4, 1, 5], Min)
+    out: "[3, 1, 1, 1, 1]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack3, 1, 4, 1, 5\bigr\rbrack, \mathrm{Min})
+    out: \bigl\lbrack3, 1, 1, 1, 1\bigr\rbrack
+  wolfram:
+    in: FoldList[Min, List[3, 1, 4, 1, 5]]
+    back: [FoldList, Min, [List, 3, 1, 4, 1, 5]]
+an-empty-list-scans-to-an-empty-list:
+  epsil:
+    in: Scan([], Add)
+    out: "[]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack \bigr\rbrack, \mathrm{Add})
+    out: \bigl\lbrack \bigr\rbrack
+  wolfram:
+    in: FoldList[Plus, List[]]
+    back: [FoldList, Add, [List]]
+the-values-of-every-prefix-of-the-binary-digits:
+  epsil:
+    in: Scan([1, 0, 1, 1], Function(2 * _1 + _2))
+    out: "[1, 2, 5, 11]"
+  tex:
+    in: \mathrm{Scan}(\bigl\lbrack1, 0, 1, 1\bigr\rbrack, ()\mapsto2\operatorname{\_1}+\operatorname{\_2})
+    out: \bigl\lbrack1, 2, 5, 11\bigr\rbrack
+  wolfram:
+    in: FoldList[Function[Plus[Times[2, Slot[1]], Slot[2]]], List[1, 0, 1, 1]]
+    back: [FoldList, [Function, [Add, [Multiply, 2, _1], _2]], [List, 1, 0, 1, 1]]

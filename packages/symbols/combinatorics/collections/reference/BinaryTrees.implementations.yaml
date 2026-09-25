@@ -1,0 +1,7 @@
+c-4:
+  epsil:
+    in: Count(BinaryTrees(4))
+    out: "14"
+  tex:
+    in: \mathrm{Count}(\mathrm{BinaryTrees}(4))
+    out: "14"

@@ -1,0 +1,27 @@
+sum-p-1-p-2:
+  epsil:
+    in: N(PrimeZetaP(2))
+    out: 0.452_247_420_041_065_5
+  tex:
+    in: N(\mathrm{PrimeZetaP}(2))
+    out: 0.452\,247\,420\,041\,065\,5
+  wolfram:
+    in: N[PrimeZetaP[2]]
+n-primezetap-3:
+  epsil:
+    in: N(PrimeZetaP(3))
+    out: 0.174_762_639_299_443_55
+  tex:
+    in: N(\mathrm{PrimeZetaP}(3))
+    out: 0.174\,762\,639\,299\,443\,55
+  wolfram:
+    in: N[PrimeZetaP[3]]
+primezetap-2p5:
+  epsil:
+    in: PrimeZetaP(2.5)
+    out: 0.273_680_737_993_234
+  tex:
+    in: \mathrm{PrimeZetaP}(2.5)
+    out: 0.273\,680\,737\,993\,234
+  wolfram:
+    in: PrimeZetaP[2.5]

@@ -1,16 +1,52 @@
 abelian-one-class-per-element:
+  epsil:
+    in: GroupCentreDimension(CyclicGroup(6))
+    out: "6"
+  tex:
+    in: \mathrm{GroupCentreDimension}(\mathrm{CyclicGroup}(6))
+    out: "6"
+  traditional:
+    in: \mathrm{GroupCentreDimension}(C_{6})
+    out: "6"
   oscar:
     in: number_of_conjugacy_classes((enumeratio_cyclic(cyclic_group(PermGroup, 6), 6)).G)
     out: "6"
 d-3-cong-s-3:
+  epsil:
+    in: GroupCentreDimension(DihedralGroup(3))
+    out: "3"
+  tex:
+    in: \mathrm{GroupCentreDimension}(\mathrm{DihedralGroup}(3))
+    out: "3"
+  traditional:
+    in: \mathrm{GroupCentreDimension}(D_{3})
+    out: "3"
   oscar:
     in: number_of_conjugacy_classes((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3)).G)
     out: "3"
 4-6-2:
+  epsil:
+    in: GroupCentreDimension(DihedralGroup(4))
+    out: "5"
+  tex:
+    in: \mathrm{GroupCentreDimension}(\mathrm{DihedralGroup}(4))
+    out: "5"
+  traditional:
+    in: \mathrm{GroupCentreDimension}(D_{4})
+    out: "5"
   oscar:
     in: number_of_conjugacy_classes((enumeratio_dihedral(dihedral_group(PermGroup, 2 * 4), 4)).G)
     out: "5"
 direct-products-work-too:
+  epsil:
+    in: GroupOrder(GroupDirectProduct(CyclicGroup(2), CyclicGroup(3)))
+    out: "6"
+  tex:
+    in: \mathrm{GroupOrder}(\mathrm{GroupDirectProduct}(\mathrm{CyclicGroup}(2), \mathrm{CyclicGroup}(3)))
+    out: "6"
+  traditional:
+    in: \left|C_{2}\times C_{3}\right|
+    out: "6"
   oscar:
     in: order((enumeratio_direct_product(enumeratio_cyclic(cyclic_group(PermGroup, 2), 2), enumeratio_cyclic(cyclic_group(PermGroup, 3), 3))).G)
     out: "6"

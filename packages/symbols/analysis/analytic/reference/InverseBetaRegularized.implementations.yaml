@@ -1,0 +1,59 @@
+the-median-of-beta-2-3:
+  epsil:
+    in: InverseBetaRegularized(0.5, 2, 3)
+    out: 0.385_727_568_132_389_5
+  tex:
+    in: \mathrm{InverseBetaRegularized}(0.5, 2, 3)
+    out: 0.385\,727\,568\,132\,389\,5
+  wolfram:
+    in: InverseBetaRegularized[0.5, 2, 3]
+inversebetaregularized-0p3-2p5-1p5:
+  epsil:
+    in: InverseBetaRegularized(0.3, 2.5, 1.5)
+    out: 0.509_497_412_428_341_3
+  tex:
+    in: \mathrm{InverseBetaRegularized}(0.3, 2.5, 1.5)
+    out: 0.509\,497\,412\,428\,341\,3
+  wolfram:
+    in: InverseBetaRegularized[0.3, 2.5, 1.5]
+i-x-2-1-x-2-so-the-inverse-at-1-4-is-1-2:
+  epsil:
+    in: InverseBetaRegularized(0.25, 2, 1)
+    out: "0.5"
+  tex:
+    in: \mathrm{InverseBetaRegularized}(0.25, 2, 1)
+    out: "0.5"
+  wolfram:
+    in: InverseBetaRegularized[0.25, 2, 1]
+i-x-1-1-x-is-its-own-inverse:
+  epsil:
+    in: InverseBetaRegularized(s, 1, 1)
+    out: s
+  tex:
+    in: \mathrm{InverseBetaRegularized}(s, 1, 1)
+    out: s
+i-x-a-1-x-a-inverts-to-s-1-a:
+  epsil:
+    in: InverseBetaRegularized(s, a, 1)
+    out: s ^ (1 / a)
+  tex:
+    in: \mathrm{InverseBetaRegularized}(s, a, 1)
+    out: \sqrt[a]{s}
+inversebetaregularized-0-2-3:
+  epsil:
+    in: InverseBetaRegularized(0, 2, 3)
+    out: "0"
+  tex:
+    in: \mathrm{InverseBetaRegularized}(0, 2, 3)
+    out: "0"
+  wolfram:
+    in: InverseBetaRegularized[0, 2, 3]
+inversebetaregularized-1-2-3:
+  epsil:
+    in: InverseBetaRegularized(1, 2, 3)
+    out: "1"
+  tex:
+    in: \mathrm{InverseBetaRegularized}(1, 2, 3)
+    out: "1"
+  wolfram:
+    in: InverseBetaRegularized[1, 2, 3]

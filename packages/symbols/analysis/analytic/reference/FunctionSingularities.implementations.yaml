@@ -1,0 +1,31 @@
+a-pole-at-the-origin:
+  epsil:
+    in: FunctionSingularities(1 / x, x)
+    out: x == 0
+  tex:
+    in: \mathrm{FunctionSingularities}(\frac{1}{x}, x)
+    out: x=0
+sqrt-is-singular-at-its-own-boundary:
+  epsil:
+    in: FunctionSingularities(Sqrt(x), x)
+    out: x <= 0
+  tex:
+    in: \mathrm{FunctionSingularities}(\sqrt{x}, x)
+    out: x\le0
+a-polynomial-has-no-singularities:
+  epsil:
+    in: FunctionSingularities(x ^ 2, x)
+    out: False
+  tex:
+    in: \mathrm{FunctionSingularities}(x^2, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionSingularities}(x^2, x)
+    out: \mathrm{False}
+log-s-branch-cut:
+  epsil:
+    in: FunctionSingularities(Ln(x), x)
+    out: x <= 0
+  tex:
+    in: \mathrm{FunctionSingularities}(\ln(x), x)
+    out: x\le0

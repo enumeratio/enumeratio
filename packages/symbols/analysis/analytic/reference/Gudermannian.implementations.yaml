@@ -1,0 +1,41 @@
+gudermannian-0:
+  epsil:
+    in: Gudermannian(0)
+    out: "0"
+  tex:
+    in: \mathrm{Gudermannian}(0)
+    out: "0"
+  wolfram:
+    in: Gudermannian[0]
+at-a-machine-precision-argument:
+  epsil:
+    in: Gudermannian(1.5)
+    out: 1.131_728_345_250_509_1
+  tex:
+    in: \mathrm{Gudermannian}(1.5)
+    out: 1.131\,728\,345\,250\,509\,1
+  wolfram:
+    in: Gudermannian[1.5]
+horizontal-asymptote-pi-2:
+  epsil:
+    in: Gudermannian(PositiveInfinity)
+    out: 1 / 2 * Pi
+  tex:
+    in: \mathrm{Gudermannian}(\infty)
+    out: \frac{\pi}{2}
+  wolfram:
+    in: Gudermannian[Infinity]
+gd-x-sech-x:
+  epsil:
+    in: D(Gudermannian(x), x)
+    out: Sech(x)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{Gudermannian}(x)
+    out: \mathrm{sech}(x)
+an-odd-function:
+  epsil:
+    in: Gudermannian(-x)
+    out: -Gudermannian(x)
+  tex:
+    in: \mathrm{Gudermannian}(-x)
+    out: -\mathrm{Gudermannian}(x)

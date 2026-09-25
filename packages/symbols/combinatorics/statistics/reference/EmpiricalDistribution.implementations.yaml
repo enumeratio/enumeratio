@@ -1,0 +1,36 @@
+empirical-pdf-is-the-observed-proportion:
+  epsil:
+    in: PDF(EmpiricalDistribution([1, 2, 2, 3]), 2)
+    out: 1 / 2
+  tex:
+    in: \operatorname{PDF}(\mathrm{EmpiricalDistribution}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack), 2)
+    out: \frac{1}{2}
+  wolfram:
+    in: PDF[EmpiricalDistribution[List[1, 2, 2, 3]], 2]
+empirical-cdf-is-the-observed-proportion-at-most:
+  epsil:
+    in: CDF(EmpiricalDistribution([1, 2, 2, 3]), 2)
+    out: 3 / 4
+  tex:
+    in: \operatorname{CDF}(\mathrm{EmpiricalDistribution}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack), 2)
+    out: \frac{3}{4}
+  wolfram:
+    in: CDF[EmpiricalDistribution[List[1, 2, 2, 3]], 2]
+empirical-mean-matches-mean-of-the-data:
+  epsil:
+    in: Mean(EmpiricalDistribution([1, 2, 2, 3]))
+    out: "2"
+  tex:
+    in: \mathrm{mean}(\mathrm{EmpiricalDistribution}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))
+    out: "2"
+  wolfram:
+    in: Mean[EmpiricalDistribution[List[1, 2, 2, 3]]]
+empirical-variance-matches-variance-of-the-data:
+  epsil:
+    in: Variance(EmpiricalDistribution([1, 2, 2, 3]))
+    out: 2 / 3
+  tex:
+    in: \mathrm{Variance}(\mathrm{EmpiricalDistribution}(\bigl\lbrack1, 2, 2, 3\bigr\rbrack))
+    out: \frac{2}{3}
+  wolfram:
+    in: Variance[EmpiricalDistribution[List[1, 2, 2, 3]]]

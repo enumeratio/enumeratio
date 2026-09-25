@@ -1,0 +1,21 @@
+1-dips-below-both-neighbors:
+  epsil:
+    in: Valleys([3, 1, 2])
+    out: "1"
+  tex:
+    in: \mathrm{Valleys}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "1"
+monotone-increasing-has-no-interior-valley:
+  epsil:
+    in: Valleys([1, 2, 3])
+    out: "0"
+  tex:
+    in: \mathrm{Valleys}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "0"
+the-lone-valley-at-position-3:
+  epsil:
+    in: Valleys([1, 3, 2, 4])
+    out: "1"
+  tex:
+    in: \mathrm{Valleys}(\bigl\lbrack1, 3, 2, 4\bigr\rbrack)
+    out: "1"

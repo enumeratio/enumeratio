@@ -1,0 +1,35 @@
+3-2-4-2-the-gaussian-norm:
+  epsil:
+    in: Norm(3 + 4i_1)
+    out: "25"
+  tex:
+    in: \left\Vert 3+4i_1\right\Vert
+    out: "25"
+the-4-times-4-multiplication-determinant:
+  epsil:
+    in: Norm(1 + 2i_1 + 3 * i_1 * i_2)
+    out: "160"
+  tex:
+    in: \left\Vert 1+2i_1+3i_1i_2\right\Vert
+    out: "160"
+split-units-give-a-2-b-2-which-is-indefinite:
+  epsil:
+    in: Norm(3 + 4j_1)
+    out: "-7"
+  tex:
+    in: \left\Vert 3+4j_1\right\Vert
+    out: "-7"
+a-zero-divisor:
+  epsil:
+    in: Norm(1 + i_1 * i_2)
+    out: "0"
+  tex:
+    in: \left\Vert 1+i_1i_2\right\Vert
+    out: "0"
+each-factor-has-norm-2-over-c-1-but-4-over-c-2:
+  epsil:
+    in: Norm((1 + i_1) * (1 + i_2))
+    out: "16"
+  tex:
+    in: \left\Vert (1+i_1)(1+i_2)\right\Vert
+    out: "16"

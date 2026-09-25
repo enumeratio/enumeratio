@@ -42,6 +42,10 @@ release. Add a tool name to select part of the graph. For example, run
   "notatio", never "the notatio notation". A cell is notatio plus one `:=` binding
   (`parseNotatio` with `allow: ["Assign"]`); nothing else in notatio is a statement. See
   `design/syntax-and-formats.md`.
+- In the reference data, an example's retypeable text form (its InputForm) is keyed `epsil`,
+  and `notatio` keys its component serialisation, the vdom as Vue/React markup
+  (`design/examples-as-data.md` §2, signed off). That moves the name `notatio` toward the
+  component form and away from the restricted-Epsil subset; prose elsewhere hasn't caught up.
 - Package names have not all caught up; do not rename them in passing — see
   `design/component-naming.md` for how renames wait.
 
@@ -54,6 +58,12 @@ release. Add a tool name to select part of the graph. For example, run
   `@enumeratio/entry/node`'s `writeYaml`: the strict-schema structure, laid out by oxfmt, so a
   record is what `vp fmt` makes of it. Hand edits are fine; `vp fmt` or
   `node packages/reference/scripts/format-records.ts` tidies them.
+- Beside each entry, `<Head>.implementations.yaml` holds every example's forms (`epsil`, `tex`,
+  `traditional`, each system's `in`) and what the oracle kernels answered. After adding or
+  changing an example (or a printer or transpiler), run
+  `UPDATE_FORMS=1 node packages/notatio/scripts/collect-forms.ts`; notatio's forms test says so
+  when it's needed. Kernel answers come from `oracle-scan.ts --accept`; notes and
+  classifications on a row are written by hand.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`); the
   site gets them from its `virtual:reference-entries` module. Add a head by adding its file.
 

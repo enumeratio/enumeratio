@@ -1,0 +1,36 @@
+precision-exact-integer:
+  epsil:
+    in: Precision(2)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{Precision}(2)
+    out: \infty
+  wolfram:
+    in: Precision[2]
+precision-rational:
+  epsil:
+    in: Precision(1 / 3)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{Precision}(\frac{1}{3})
+    out: \infty
+  wolfram:
+    in: Precision[Rational[1, 3]]
+precision-inexact-literal:
+  epsil:
+    in: Precision(2.5)
+    out: "2"
+  tex:
+    in: \mathrm{Precision}(2.5)
+    out: "2"
+  wolfram:
+    in: Precision[2.5]
+precision-extended:
+  epsil:
+    in: Precision(3.141_592_653_589_793)
+    out: "16"
+  tex:
+    in: \mathrm{Precision}(3.141\,592\,653\,589\,793)
+    out: "16"
+  wolfram:
+    in: Precision[3.141592653589793]

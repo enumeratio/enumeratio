@@ -1,0 +1,43 @@
+at-a-1-it-is-the-bernoulli-number-b-2:
+  epsil:
+    in: NorlundB(2, 1)
+    out: 1 / 6
+  tex:
+    in: \mathrm{NorlundB}(2, 1)
+    out: \frac{1}{6}
+  wolfram:
+    in: NorlundB[2, 1]
+norlundb-4-1:
+  epsil:
+    in: NorlundB(4, 1)
+    out: -1 / 30
+  tex:
+    in: \mathrm{NorlundB}(4, 1)
+    out: -\frac{1}{30}
+  wolfram:
+    in: NorlundB[4, 1]
+norlundb-2-2:
+  epsil:
+    in: NorlundB(2, 2)
+    out: 5 / 6
+  tex:
+    in: \mathrm{NorlundB}(2, 2)
+    out: \frac{5}{6}
+  wolfram:
+    in: NorlundB[2, 2]
+norlundb-3-2:
+  epsil:
+    in: NorlundB(3, 2)
+    out: -1 / 2
+  tex:
+    in: \mathrm{NorlundB}(3, 2)
+    out: -\frac{1}{2}
+  wolfram:
+    in: NorlundB[3, 2]
+a-polynomial-in-a:
+  epsil:
+    in: NorlundB(1, a)
+    out: -1 / 2 * a
+  tex:
+    in: \mathrm{NorlundB}(1, a)
+    out: -\frac{a}{2}

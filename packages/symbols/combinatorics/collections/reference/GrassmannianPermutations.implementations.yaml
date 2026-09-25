@@ -1,0 +1,17 @@
+count-grassmannianpermutations-5-2-5-5-27:
+  epsil:
+    in: Count(GrassmannianPermutations(5))
+    out: "27"
+  tex:
+    in: \mathrm{Count}(\mathrm{GrassmannianPermutations}(5))
+    out: "27"
+grassmannian-and-cograssmannian-permutations:
+  epsil:
+    in: Count(GrassmannianPermutations(5)) == Count(CograssmannianPermutations(5))
+    out: True
+  tex:
+    in: \mathrm{Count}(\mathrm{GrassmannianPermutations}(5))=\mathrm{Count}(\mathrm{CograssmannianPermutations}(5))
+    out: \top
+  traditional:
+    in: \mathrm{Count}(\mathrm{GrassmannianPermutations}(5))=\mathrm{Count}(\mathrm{CograssmannianPermutations}(5))
+    out: \mathrm{True}

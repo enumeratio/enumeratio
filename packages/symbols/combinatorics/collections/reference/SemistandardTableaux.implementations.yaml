@@ -1,0 +1,14 @@
+count-semistandardtableaux-4-3-39-every-ssyt-of:
+  epsil:
+    in: Count(SemistandardTableaux(4, 3))
+    out: "39"
+  tex:
+    in: \mathrm{Count}(\mathrm{SemistandardTableaux}(4, 3))
+    out: "39"
+the-first-ssyt-of-3-cells-with-entries-in-1-2-as:
+  epsil:
+    in: SemistandardTableaux(3, 2)[1]
+    out: "[[1, 1], [2]]"
+  tex:
+    in: \mathrm{SemistandardTableaux}(3, 2)[1]
+    out: \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack

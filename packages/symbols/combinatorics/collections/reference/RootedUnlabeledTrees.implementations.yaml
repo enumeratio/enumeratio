@@ -1,0 +1,7 @@
+count-rootedunlabeledtrees-6-20-a000081:
+  epsil:
+    in: Count(RootedUnlabeledTrees(6))
+    out: "20"
+  tex:
+    in: \mathrm{Count}(\mathrm{RootedUnlabeledTrees}(6))
+    out: "20"
