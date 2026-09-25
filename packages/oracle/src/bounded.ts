@@ -33,7 +33,7 @@ export const memoryCapMb = (): number => Number(process.env["ORACLE_MEMORY_MB"])
 const POLL_MS = 500;
 
 /** Resident memory of every process in a group, in MB. */
-function groupRssMb(pgid: number): number {
+export function groupRssMb(pgid: number): number {
   let out: string;
   try {
     out = execFileSync("ps", ["-A", "-o", "pgid=,rss="], { encoding: "utf8" });
