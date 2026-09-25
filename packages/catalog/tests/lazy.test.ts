@@ -1,33 +1,32 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareCollections } from "@enumeratio/collections/src";
 import { expect, test } from "vite-plus/test";
-import { applicationCandidates, prepare, rawParse } from "../src/lazy.ts";
+import { applicationCandidates, canonicalParse, prepare, rawParse } from "../src/lazy.ts";
 import { ResourceRegistry } from "../src/registry.ts";
 import { catalogRegistry, ENUMERATIO } from "../src/resources.ts";
 import type { Resource } from "../src/types.ts";
 
 const res = (name: string): Resource => ({ name, context: "t", kind: "collection" });
 
-test("the non-canonical parse keeps the ambiguity that canonicalisation destroys", () => {
-  const ce = new ComputeEngine();
-  expect(rawParse(ce, "\\operatorname{Foo}(3)")).toEqual([
+test("compute-engine reads an unknown name applied to parentheses as an application", () => {
+  expect(canonicalParse(new ComputeEngine(), "\\operatorname{Foo}(3)")).toEqual(["Foo", 3]);
+  // The raw stage still keeps the unresolved reading, for a front end that wants to decide.
+  expect(rawParse(new ComputeEngine(), "\\operatorname{Foo}(3)")).toEqual([
     "InvisibleOperator",
     "Foo",
     ["Delimiter", 3],
   ]);
-  // …and this is why the raw parse is needed: the canonical form has already committed.
-  expect(ce.parse("\\operatorname{Foo}(3)").json).toEqual(["Multiply", 3, "Foo"]);
-  // Multi-argument application never had the problem — the comma defeats Multiply.
-  expect(ce.parse("\\operatorname{Foo}(3,4)").json).toEqual(["Foo", 3, 4]);
 });
 
-test("candidates are found in the raw tree", () => {
-  const ce = new ComputeEngine();
-  const raw = rawParse(ce, "\\operatorname{Foo}(3) + \\operatorname{Bar}(2) + a(b+c)");
-  expect(applicationCandidates(raw, ce).sort()).toEqual(["Bar", "Foo", "a"]);
+test("candidates are found in either tree", () => {
+  const src = "\\operatorname{Foo}(3) + \\operatorname{Bar}(2) + a(b+c)";
+  for (const parse of [canonicalParse, rawParse]) {
+    const ce = new ComputeEngine();
+    expect(applicationCandidates(parse(ce, src), ce).sort()).toEqual(["Bar", "Foo", "a"]);
+  }
 });
 
-test("resolving before canonicalisation repairs the tree", async () => {
+test("resolving installs the claimed names before boxing", async () => {
   const ce = new ComputeEngine();
   const registry = new ResourceRegistry().addAll([res("Foo"), res("Bar")]).bless("t");
   const box = await prepare(
@@ -42,16 +41,16 @@ test("resolving before canonicalisation repairs the tree", async () => {
       return true;
     },
   );
-  expect(box.json).toEqual(["Add", ["Multiply", "a", ["Add", "b", "c"]], ["Foo", 3], ["Bar", 2]]);
-  // `a` is not a name we claim, so it stays a multiplication — the registry decides.
-  expect(box.evaluate().toString()).toBe("a * (b + c) + 50");
+  expect(box.json).toEqual(["Add", ["a", ["Add", "b", "c"]], ["Foo", 3], ["Bar", 2]]);
+  // `a` is not a name we claim, so it stays an undeclared application.
+  expect(box.evaluate().toString()).toBe("a(b + c) + 50");
 });
 
-test("a declined install leaves the name alone", async () => {
+test("a declined install leaves the name undeclared", async () => {
   const ce = new ComputeEngine();
   const registry = new ResourceRegistry().add(res("Foo")).bless("t");
   const box = await prepare(ce, "\\operatorname{Foo}(3)", registry, () => false);
-  expect(box.json).toEqual(["Multiply", 3, "Foo"]);
+  expect(box.json).toEqual(["Foo", 3]);
 });
 
 test("MathJSON input needs no raw-parse step — heads are already explicit", async () => {

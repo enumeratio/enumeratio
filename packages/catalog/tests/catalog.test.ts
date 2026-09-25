@@ -71,7 +71,7 @@ test("the curried spelling works at the MathJSON layer", () => {
   expect(ce.box([["Resource", "'Subsets'"], 3] as never).evaluate().json).toEqual(
     ce.box(["Subsets", 3]).evaluate().json,
   );
-  expect(ce.parse("f(x)(3)").json).toEqual(["Multiply", 3, "f", "x"]);
+  expect(ce.parse("f(x)(3)").json).toEqual(["Multiply", 3, ["f", "x"]]);
 });
 
 test("an unblessed registry resolves nothing bare", () => {
