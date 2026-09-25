@@ -1,0 +1,25 @@
+name: NestWhile
+domain: Collections
+signature: NestWhile(f, x, test)
+summary: Applies a function repeatedly while a test on the current value holds.
+signatures:
+  - call: NestWhile(f, x, test)
+    description: Applies $f$ to $x$ repeatedly while $test$ of the CURRENT value reads $True$, and returns the first value where it doesn't.
+    library: enumeratio-collections
+  - call: NestWhile(f, x, test, m)
+    description: $test$ is called on the last $m$ values as $m$ separate arguments, instead of the bare current value.
+    library: enumeratio-collections
+  - call: NestWhile(f, x, test, m, max)
+    description: Additionally caps the number of $f$-applications at $max$.
+    library: enumeratio-collections
+details:
+  - Capped at 4096 applications of $f$ regardless of $max$ — see [[While]].
+examples:
+  - id: halve-while-even
+    expr: [NestWhile, [Function, [Divide, _1, 2]], 96, [Function, [Equal, [Mod, _1, 2], 0]]]
+    expected: 3
+    caption: halve while even, stopping at the first odd value
+seeAlso:
+  - NestWhileList
+  - While
+  - FixedPointList

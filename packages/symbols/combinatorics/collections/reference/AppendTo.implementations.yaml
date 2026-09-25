@@ -1,0 +1,9 @@
+append-to-a-bound-list:
+  epsil:
+    in: "[appendToDemoList := [1, 2, 3], AppendTo(appendToDemoList, 4)]"
+    out: "[[1, 2, 3], [1, 2, 3, 4]]"
+  tex:
+    in: \bigl\lbrack\mathrm{appendToDemoList}\coloneq\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{AppendTo}(\mathrm{appendToDemoList}, 4)\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack1, 2, 3, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: List[Assign[appendToDemoList, List[1, 2, 3]], AppendTo[appendToDemoList, 4]]
