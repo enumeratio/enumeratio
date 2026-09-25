@@ -54,6 +54,9 @@ const CORPUS = [
   // to its own child, in document order -- one shared scope, not one child per module.
   "DynamicModule([Cell(1 + 1), Cell(2 + 2)])",
   "Notebook([Cell(1 + 1), Cell(2 + 2)])",
+  // Reactive: `TrackedSymbols` lowers to one attribute, `all` or a symbol list.
+  "DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)",
+  "DynamicModule([Cell(a := 5)], TrackedSymbols -> [a, b])",
   // The controls: a variable, or a variable with its start; a range or a list; and the
   // scope that binds them when anything else reads the variable.
   "Slider(k, (0, 5))",

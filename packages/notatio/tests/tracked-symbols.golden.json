@@ -1,0 +1,50 @@
+{
+  "diamond: b and a's order does not matter, both feed c": {
+    "order": [2, 1, 3],
+    "diagnostics": [],
+    "affected": [2, 1, 3]
+  },
+  "an edit to an untracked symbol still re-runs itself, nothing downstream": {
+    "order": [1, 2],
+    "diagnostics": [],
+    "affected": [1]
+  },
+  "a tracked list only propagates through the named symbols": {
+    "order": [1, 2, 3],
+    "diagnostics": [],
+    "affected": [2]
+  },
+  "two cells assigning the same name is an error on both, no order for either": {
+    "order": [3],
+    "diagnostics": [
+      {
+        "cellId": 1,
+        "message": "`a` is defined in more than one cell"
+      },
+      {
+        "cellId": 2,
+        "message": "`a` is defined in more than one cell"
+      }
+    ],
+    "affected": [1]
+  },
+  "a cycle is an error on every member": {
+    "order": [],
+    "diagnostics": [
+      {
+        "cellId": 1,
+        "message": "cycle: a -> b"
+      },
+      {
+        "cellId": 2,
+        "message": "cycle: a -> b"
+      }
+    ],
+    "affected": [1]
+  },
+  "independent cells keep document order": {
+    "order": [1, 2, 3],
+    "diagnostics": [],
+    "affected": [1, 3]
+  }
+}

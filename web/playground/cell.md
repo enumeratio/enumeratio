@@ -78,6 +78,37 @@ binding. `Notebook(cells)` is Wolfram's own name for the same configuration.
 <notatio-out format="notatio" value="Notebook([Cell(3 + 4), Cell(Out(1) * 2), Cell(InString(1))])" />
 </Story>
 
+### Reactive
+
+`TrackedSymbols` -- Wolfram's own option name -- turns a `DynamicModule` from a
+transcript into a reactive module: `All` (or `Automatic`, or `True`) tracks every
+symbol a cell assigns; a list of symbols tracks only those. Order stops mattering --
+`Cell(b := a + 1)` before `Cell(a := 5)` is fine, since the graph is built from what
+each cell assigns and reads, not from where it sits. Two cells assigning the same name
+is an error on both (never last-writer-wins), a cycle is an error on every cell in it,
+and a cell-number reference (`Out(n)`, `%`) is rejected outright -- position means
+nothing once cells can be understood in any order.
+
+<Story
+  title="Order doesn't matter">
+<template #description>The middle cell reads <code>a</code>, defined by the cell after it.</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)" />
+</Story>
+
+<Story
+  title="A duplicate definition">
+<template #description>Both cells assign <code>a</code> -- a reactive module rejects that as ambiguous rather than picking a winner (shown here as a dashed outline on each; hover for the message).</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(a := 1), Cell(a := 2)], TrackedSymbols -> All)" />
+</Story>
+
+Only the graph and its diagnostics are wired up so far: the dependency order, the
+duplicate/cycle/ordinal checks above are real and run on every edit. Making a
+_downstream_ cell actually re-evaluate when an upstream one commits -- the live,
+Pluto-style part -- is deferred: it needs a hook into how a cell redraws itself, and
+that machinery is mid-rewrite on another branch (cells are moving from evaluating on
+every keystroke to evaluating on commit). Landing the re-run wire once that settles is
+the natural next step.
+
 ## As a Vue component
 
 `<Cell>` is the same element behind a Vue component named for the symbol, whose props

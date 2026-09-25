@@ -654,24 +654,48 @@ const formId = (value: Json): string | undefined => {
 const dynamicModuleChildren = (ops: readonly Json[]): Json[] =>
   ops[0] === undefined ? [] : (tupleOf(ops[0]) ?? [ops[0]]);
 
+/**
+ * `TrackedSymbols -> All | Automatic | True | {a, b}` -- Wolfram's option name for the
+ * capability that makes a `DynamicModule` reactive (design/rendering-environments.md's
+ * companion, `tracked-symbols.ts`): every cell that reads a changed tracked symbol
+ * re-evaluates, transitively, instead of the module staying a plain top-to-bottom
+ * transcript. Normalised to one attribute, `tracked-symbols`, so the element parses it
+ * without walking notatio again: `"all"` for `All`/`Automatic`/`True`, else a
+ * comma-joined symbol list. `False` (or the option simply absent) leaves the attribute
+ * unset -- the default, non-reactive configuration.
+ */
+const trackedSymbolsOption = (value: Json): Record<string, string> => {
+  const sym = symOf(value);
+  if (sym === "All" || sym === "Automatic" || sym === "True") return { "tracked-symbols": "all" };
+  if (sym === "False") return {};
+  const names = tupleOf(value)
+    ?.map((v) => symOf(v))
+    .filter((n): n is string => n !== undefined);
+  return names && names.length > 0 ? { "tracked-symbols": names.join(",") } : {};
+};
+
 export const LAYOUT_SYMBOLS: readonly VisualSymbol[] = [
   {
     // `DynamicModule(body)` -- an explicit scope over its subtree. The bindings live in
-    // the controls inside it, so it takes no arguments of its own.
+    // the controls inside it, so it takes no arguments of its own; `TrackedSymbols` is
+    // its one option.
     head: "DynamicModule",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: dynamicModuleChildren,
+    options: { TrackedSymbols: trackedSymbolsOption },
   },
   {
     // `Notebook(cells)` -- Wolfram's name for the transcript configuration: a
     // `DynamicModule` whose body is a `List` of `Cell`s, evaluated in document order in
-    // one shared scope. Same tag, same lowering; the element tells the two apart by
-    // what is actually inside it (`notatio-cell` children), not by which head named it.
+    // one shared scope. Same tag, same lowering (`TrackedSymbols` included); the element
+    // tells the two apart by what is actually inside it (`notatio-cell` children) and
+    // whether `tracked-symbols` is set, not by which head named it.
     head: "Notebook",
     tag: "notatio-dynamic-module",
     attributes: () => ({}),
     children: dynamicModuleChildren,
+    options: { TrackedSymbols: trackedSymbolsOption },
   },
   {
     // `Cell(expr)`: an In/Out pair -- the held expression as the input, its value as the
