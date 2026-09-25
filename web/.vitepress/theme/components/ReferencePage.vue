@@ -263,7 +263,7 @@ const grouped = computed(() => {
             :value="toJson(ex.expr)"
             :out-form="entry.outForm ?? 'standard'"
             :evaluate.prop="entry.outEvaluate !== false"
-            :expect="entry.outEvaluate === false ? '' : toJson(ex.expected)"
+            :expect="entry.outEvaluate === false || ex.volatile ? '' : toJson(ex.expected)"
             :planned.prop="entry.outEvaluate !== false && !!ex.aspirational"
             :resolveHead.prop="resolveHead"
             @notatio-dirty="onDirty(i, $event)"

@@ -55,6 +55,11 @@ export interface ReferenceExample {
    * per key and the note. State what that system does instead.
    */
   readonly divergence?: Partial<Record<DivergenceSystem, string>>;
+  /**
+   * Rule keys in the result whose values differ run to run (`AbsoluteTimeUsed`). The
+   * examples test masks them on both sides; the page doesn't assert the example.
+   */
+  readonly volatile?: readonly string[];
   /** Per-system oracle runs of this exact example, attached from the entry's `.oracle.json` sidecar. */
   readonly others?: Readonly<Record<string, OtherSystemRun>>;
 }
