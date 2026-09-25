@@ -86,6 +86,21 @@ examples:
     expected: [Cosh, x]
     category: Scope
     caption: 'Evenness drops the sign of a symbolic argument: $\cosh(-x) = \cosh x$'
+  - id: cosh-arcosh-x-x-for-every-x
+    expr: [Cosh, [Arcosh, x]]
+    expected: x
+    category: Scope
+    caption: $\cosh(\operatorname{arcosh} x) = x$ for every $x$
+  - id: cosh-arcosh-2-2
+    expr: [Cosh, [Arcosh, 2]]
+    expected: 2
+    category: Scope
+    caption: $\cosh(\operatorname{arcosh}(2)) = 2$
+  - id: cosh-arcosh-of-a-complex-argument
+    expr: [Cosh, [Arcosh, [Complex, 0, 3]]]
+    expected: [Complex, 0, 3]
+    category: Scope
+    caption: $\cosh(\operatorname{arcosh}(3i)) = 3i$
   - id: derivative-sinh-x
     expr: [D, [Cosh, x], x]
     expected: [Sinh, x]
