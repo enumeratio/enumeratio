@@ -1,0 +1,66 @@
+[
+  {
+    "head": "Gudermannian",
+    "arg": 0.5,
+    "label": "gd(0.5)",
+    "tol": 1e-12,
+    "mpmath": 0.48038107913372946,
+    "wolfram": 0.48038107913372946
+  },
+  {
+    "head": "Gudermannian",
+    "arg": 1.5,
+    "label": "gd(1.5)",
+    "tol": 1e-12,
+    "mpmath": 1.1317283452505091,
+    "wolfram": 1.1317283452505091
+  },
+  {
+    "head": "Gudermannian",
+    "arg": 3,
+    "label": "gd(3)",
+    "tol": 1e-12,
+    "mpmath": 1.4713043411171927,
+    "wolfram": 1.4713043411171927
+  },
+  {
+    "head": "Gudermannian",
+    "arg": -2.25,
+    "label": "gd(-2.25)",
+    "tol": 1e-12,
+    "mpmath": -1.3607733020976118,
+    "wolfram": -1.3607733020976116
+  },
+  {
+    "head": "Hyperfactorial",
+    "arg": 0.5,
+    "label": "H(0.5)",
+    "tol": 1e-11,
+    "mpmath": 0.8804492351734234,
+    "wolfram": 0.8804492351734247
+  },
+  {
+    "head": "Hyperfactorial",
+    "arg": 1.5,
+    "label": "H(1.5)",
+    "tol": 1e-11,
+    "mpmath": 1.6174885279489462,
+    "wolfram": 1.6174885279489442
+  },
+  {
+    "head": "Hyperfactorial",
+    "arg": 2.5,
+    "label": "H(2.5)",
+    "tol": 1e-11,
+    "mpmath": 15.984211992223717,
+    "wolfram": 15.98421199222368
+  },
+  {
+    "head": "Hyperfactorial",
+    "arg": 6.25,
+    "label": "H(6.25)",
+    "tol": 1e-10,
+    "mpmath": 92229745540481.69,
+    "wolfram": 92229745540482.6
+  }
+]

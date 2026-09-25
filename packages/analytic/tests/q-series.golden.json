@@ -1,0 +1,98 @@
+[
+  {
+    "label": "QPochhammer(2,3,3)",
+    "head": "QPochhammer",
+    "args": [2, 3, 3],
+    "tol": 1e-9,
+    "mpmath": -85,
+    "wolfram": -85
+  },
+  {
+    "label": "QPochhammer(1/2,1/2,3)",
+    "head": "QPochhammer",
+    "args": [[1, 2], [1, 2], 3],
+    "tol": 1e-9,
+    "mpmath": 0.328125,
+    "wolfram": 0.328125
+  },
+  {
+    "label": "QPochhammer(3,2,4)",
+    "head": "QPochhammer",
+    "args": [3, 2, 4],
+    "tol": 1e-9,
+    "mpmath": 2530,
+    "wolfram": 2530
+  },
+  {
+    "label": "QPochhammer(-1,3,2)",
+    "head": "QPochhammer",
+    "args": [-1, 3, 2],
+    "tol": 1e-9,
+    "mpmath": 8,
+    "wolfram": 8
+  },
+  {
+    "label": "QFactorial(3,2)",
+    "head": "QFactorial",
+    "args": [3, 2],
+    "tol": 1e-9,
+    "mpmath": 21,
+    "wolfram": 21
+  },
+  {
+    "label": "QFactorial(4,2)",
+    "head": "QFactorial",
+    "args": [4, 2],
+    "tol": 1e-9,
+    "mpmath": 315,
+    "wolfram": 315
+  },
+  {
+    "label": "QFactorial(3,1/2)",
+    "head": "QFactorial",
+    "args": [3, [1, 2]],
+    "tol": 1e-9,
+    "mpmath": 2.625,
+    "wolfram": 2.625
+  },
+  {
+    "label": "QFactorial(6,3)",
+    "head": "QFactorial",
+    "args": [6, 3],
+    "tol": 0.000001,
+    "mpmath": 91611520,
+    "wolfram": 91611520
+  },
+  {
+    "label": "QBinomial(4,2,2)",
+    "head": "QBinomial",
+    "args": [4, 2, 2],
+    "tol": 1e-9,
+    "mpmath": 35,
+    "wolfram": 35
+  },
+  {
+    "label": "QBinomial(6,3,1)",
+    "head": "QBinomial",
+    "args": [6, 3, 1],
+    "tol": 1e-9,
+    "mpmath": 20,
+    "wolfram": 20
+  },
+  {
+    "label": "QBinomial(5,2,3)",
+    "head": "QBinomial",
+    "args": [5, 2, 3],
+    "tol": 0.000001,
+    "mpmath": 1210,
+    "wolfram": 1210
+  },
+  {
+    "label": "QBinomial(8,3,2)",
+    "head": "QBinomial",
+    "args": [8, 3, 2],
+    "tol": 0.001,
+    "mpmath": 97155,
+    "wolfram": 97155
+  }
+]

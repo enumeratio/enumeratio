@@ -193,9 +193,12 @@ export const HEADS: Record<string, string> = {
   // Fungrim's name for LegendreP — see @enumeratio/analytic's legendre.ts.
   LegendrePolynomial: "LegendreP",
   // Fungrim's names for the incomplete Legendre elliptic integrals, same (φ, m) order —
-  // see @enumeratio/analytic's elliptic.ts.
+  // see @enumeratio/analytic's elliptic.ts. IncompleteEllipticPi's (n, φ, m) order also
+  // matches Wolfram's own three-argument EllipticPi[n, φ, m] directly, so this is a plain
+  // rename too, not a SPECIAL reordering.
   IncompleteEllipticF: "EllipticF",
   IncompleteEllipticE: "EllipticE",
+  IncompleteEllipticPi: "EllipticPi",
   // collections
   At: "Part",
   First: "First",
@@ -223,6 +226,15 @@ export const HEADS: Record<string, string> = {
   Mean: "Mean",
   Median: "Median",
   Commonest: "Commonest",
+  GeometricMean: "GeometricMean",
+  HarmonicMean: "HarmonicMean",
+  Nest: "Nest",
+  NestList: "NestList",
+  FixedPoint: "FixedPoint",
+  Outer: "Outer",
+  LinearRecurrence: "LinearRecurrence",
+  RecurrenceTable: "RecurrenceTable",
+  Association: "Association",
   Variance: "Variance",
   StandardDeviation: "StandardDeviation",
   Determinant: "Det",
@@ -323,6 +335,30 @@ export const HEADS: Record<string, string> = {
   PrimeZetaP: "PrimeZetaP",
   // ConstGlaisher is our spelling; Wolfram's is Glaisher.
   ConstGlaisher: "Glaisher",
+  // The elementary heads `@enumeratio/analytic` adds under Wolfram's own names.
+  CubeRoot: "CubeRoot",
+  IntegerPart: "IntegerPart",
+  FractionalPart: "FractionalPart",
+  RealAbs: "RealAbs",
+  RealSign: "RealSign",
+  UnitStep: "UnitStep",
+  Gudermannian: "Gudermannian",
+  // Khinchin's constant — same name and meaning as Wolfram's.
+  Khinchin: "Khinchin",
+  // Hyperfactorial — same name and meaning as Wolfram's.
+  Hyperfactorial: "Hyperfactorial",
+  // The q-series heads (packages/analytic/src/q-series.ts): same names, same argument
+  // order as Wolfram's.
+  QPochhammer: "QPochhammer",
+  QFactorial: "QFactorial",
+  QBinomial: "QBinomial",
+  // Riemann-Siegel (packages/analytic/src/riemann-siegel.ts): theta and Z keep Wolfram's
+  // names and single real argument. RiemannZetaZero is compute-engine/Fungrim's spelling
+  // for what Wolfram calls ZetaZero — same single argument k, just a different name, so
+  // a plain rename here (not SPECIAL) is enough.
+  RiemannSiegelTheta: "RiemannSiegelTheta",
+  RiemannSiegelZ: "RiemannSiegelZ",
+  RiemannZetaZero: "ZetaZero",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 

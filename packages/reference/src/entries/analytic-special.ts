@@ -1658,6 +1658,342 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     seeAlso: ["Fibonacci", "BellNumber", "BernoulliB"],
   },
   {
+    name: "QPochhammer",
+    domain: "Special functions",
+    signature: "QPochhammer(a, q, n)",
+    summary:
+      "The q-Pochhammer symbol $(a; q)_n = \\prod_{k=0}^{n-1} (1 - a q^k)$, for a nonnegative integer $n$ or $n = \\infty$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "QPochhammer(a, q, n)",
+        description: "the q-Pochhammer symbol $(a; q)_n$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Finite $n \\ge 0$ builds the product from exact boxed arithmetic — an exact rational $a$ or $q$ stays exact, and $n = 0$ gives the empty product, 1, even for symbolic $a$ and $q$.",
+      "$n = \\infty$ is Euler's infinite product, numeric-only and only where it converges ($|q| < 1$); it stays symbolic for exact operands (use `N()`) and for $|q| \\ge 1$.",
+      "Negative or symbolic $n$ is not implemented and stays symbolic — Wolfram's extension to negative $n$ via $(a;q)_{-n} = 1/\\prod_{k=1}^n(1 - a q^{-k})$ is not carried here.",
+    ],
+    examples: [
+      {
+        expr: ["QPochhammer", 2, 3, 3],
+        expected: -85,
+        caption: "$(1-2)(1-6)(1-18) = -85$",
+      },
+      {
+        expr: ["QPochhammer", ["Rational", 1, 2], ["Rational", 1, 2], 3],
+        expected: ["Rational", 21, 64],
+        caption: "Exact rational arithmetic, no `N()` needed",
+      },
+      {
+        expr: ["QPochhammer", "a", "q", 0],
+        expected: 1,
+        category: "Properties",
+        caption: "The empty product",
+      },
+      {
+        expr: ["QPochhammer", 0.5, 0.5, "PositiveInfinity"],
+        expected: 0.2887880950866024,
+        category: "Scope",
+        caption: "The infinite product, Euler's function at $q = \\tfrac12$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/q-series.ts",
+        note: "finite n: exact boxed Multiply/Subtract/Power, evaluated in place. Infinite n: a capped product until |q^k| underflows.",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "QPochhammer[a, q, n]; mpmath.qp(a, q, n).",
+      },
+    ],
+    seeAlso: ["QFactorial", "QBinomial"],
+  },
+  {
+    name: "QFactorial",
+    domain: "Special functions",
+    signature: "QFactorial(n, q)",
+    summary:
+      "The q-factorial $[n]_q! = [1]_q [2]_q \\cdots [n]_q$, where $[k]_q = 1 + q + \\cdots + q^{k-1}$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "QFactorial(n, q)",
+        description: "the q-factorial $[n]_q!$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Built as a product of q-integers $[k]_q$, each a sum of $k$ powers of $q$ — exact boxed arithmetic throughout, so it reduces to a number for numeric $q$ (rational stays rational) and to a genuine polynomial in $q$ that `Expand` can open up for symbolic $q$.",
+      "At $q = 1$, $[k]_1 = k$ termwise (no division, so no $q \\to 1$ limit to take), reducing exactly to $n!$.",
+    ],
+    examples: [
+      {
+        expr: ["QFactorial", 3, 2],
+        expected: 21,
+        caption: "$[1]_2 [2]_2 [3]_2 = 1 \\cdot 3 \\cdot 7$",
+      },
+      { expr: ["QFactorial", 4, 2], expected: 315 },
+      {
+        expr: ["QFactorial", 3, ["Rational", 1, 2]],
+        expected: ["Rational", 21, 8],
+        category: "Scope",
+      },
+      {
+        expr: ["QFactorial", 5, 1],
+        expected: 120,
+        category: "Properties",
+        caption: "At $q = 1$ it is the ordinary factorial",
+      },
+      {
+        expr: ["Expand", ["QFactorial", 3, "q"]],
+        expected: [
+          "Add",
+          ["Power", "q", 3],
+          ["Multiply", 2, ["Power", "q", 2]],
+          ["Multiply", 2, "q"],
+          1,
+        ],
+        category: "Applications",
+        caption:
+          "The inversion generating function of SymmetricGroup(3): $\\sum_\\pi q^{\\mathrm{inv}(\\pi)}$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/q-series.ts",
+        note: "product of q-integers, built at canonicalization time (not evaluate) so Expand sees the tree to open up.",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram",
+        environment: "external",
+        note: "QFactorial[n, q].",
+      },
+    ],
+    seeAlso: ["QPochhammer", "QBinomial", "Factorial"],
+  },
+  {
+    name: "QBinomial",
+    domain: "Special functions",
+    signature: "QBinomial(n, k, q)",
+    summary:
+      "The Gaussian (q-)binomial coefficient $\\binom{n}{k}_q$, the generating polynomial in $q$ for partitions fitting in a $k \\times (n-k)$ box. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "QBinomial(n, k, q)",
+        description: "the Gaussian binomial coefficient $\\binom{n}{k}_q$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Built by the Pascal-like recurrence $\\binom{n}{k}_q = \\binom{n-1}{k-1}_q + q^k \\binom{n-1}{k}_q$, with $\\binom{n}{0}_q = \\binom{n}{n}_q = 1$ — pure addition and multiplication, never division, so it stays a genuine polynomial for symbolic $q$ that `Expand` can open up. The equivalent quotient $[n]_q!/([k]_q![n-k]_q!)$ is exact numerically but `Expand` alone can't cancel it down to a polynomial when $q$ is symbolic, which is why the recurrence is used instead.",
+      "At $q = 1$ it reduces to the ordinary $\\binom{n}{k}$ by the same recurrence Pascal's triangle uses.",
+    ],
+    examples: [
+      {
+        expr: ["QBinomial", 4, 2, 2],
+        expected: 35,
+        caption: "$\\frac{(2^4-1)(2^3-1)}{(2^2-1)(2-1)} = 35$",
+      },
+      {
+        expr: ["Expand", ["QBinomial", 4, 2, "q"]],
+        expected: [
+          "Add",
+          ["Power", "q", 4],
+          ["Power", "q", 3],
+          ["Multiply", 2, ["Power", "q", 2]],
+          "q",
+          1,
+        ],
+        category: "Scope",
+        caption: "A polynomial in q whose coefficients count partitions in a 2 × 2 box",
+      },
+      {
+        expr: ["QBinomial", 6, 3, 1],
+        expected: 20,
+        category: "Properties",
+        caption: "At q = 1 it is Binomial(6, 3)",
+      },
+      {
+        expr: ["QBinomial", 5, 2, 3],
+        expected: 1210,
+        category: "Applications",
+        caption: "The number of 2-dimensional subspaces of $\\mathbb{F}_3^5$",
+      },
+    ],
+    primitive: "kernel",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/q-series.ts",
+        note: "the Pascal-like recurrence, built at canonicalization time so Expand sees the tree.",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram",
+        environment: "external",
+        note: "QBinomial[n, k, q].",
+      },
+    ],
+    seeAlso: ["QPochhammer", "QFactorial", "Binomial"],
+  },
+  {
+    name: "RiemannSiegelTheta",
+    domain: "Special functions",
+    signature: "RiemannSiegelTheta(t)",
+    summary:
+      "The Riemann–Siegel theta function $\\vartheta(t) = \\operatorname{Im}\\ln\\Gamma(\\tfrac14 + \\tfrac{it}{2}) - \\tfrac{t}{2}\\ln\\pi$, for real $t$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "RiemannSiegelTheta(t)",
+        description: "the Riemann–Siegel theta function $\\vartheta(t)$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Reuses the existing log-gamma continuation ([[LogGamma]], `packages/analytic/src/loggamma.ts`) rather than deriving one — $\\vartheta$ is just its imaginary part on the $\\operatorname{Re} = \\tfrac14$ line, minus the linear term.",
+      "Real $t$ only; a complex argument stays symbolic. $\\vartheta(0) = 0$ exactly (no `N()` needed) since $\\ln\\Gamma(\\tfrac14)$ is real.",
+      "Numeric otherwise: `N()`, or an inexact $t$, is required to reduce.",
+    ],
+    examples: [
+      { expr: ["RiemannSiegelTheta", 1.5], expected: -2.19819085737941 },
+      { expr: ["N", ["RiemannSiegelTheta", 10]], expected: -3.0670743962898954 },
+      {
+        expr: ["RiemannSiegelTheta", 0],
+        expected: 0,
+        category: "Properties",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/riemann-siegel.ts",
+        note: "built directly on the LogGamma kernel; no new zeta or gamma evaluation of its own.",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "RiemannSiegelTheta[t]; mpmath.siegeltheta(t).",
+      },
+    ],
+    seeAlso: ["RiemannSiegelZ", "Zeta", "LogGamma"],
+  },
+  {
+    name: "RiemannSiegelZ",
+    domain: "Special functions",
+    signature: "RiemannSiegelZ(t)",
+    summary:
+      "The Riemann–Siegel function $Z(t) = e^{i\\vartheta(t)}\\zeta(\\tfrac12 + it)$, real-valued for real $t$ by construction. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "RiemannSiegelZ(t)",
+        description: "the Riemann–Siegel Z-function.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "Reuses [[RiemannSiegelTheta]] and the existing generalized-zeta kernel ([[Zeta]]/[[HurwitzZeta]], `packages/analytic/src/hurwitz-zeta.ts`, at $a=1$) — no new zeta evaluation is added here, only the phase rotation onto the real line.",
+      "Real $t$ only; numeric via `N()` or an inexact $t$, same as [[RiemannSiegelTheta]].",
+      "The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.",
+    ],
+    examples: [
+      { expr: ["RiemannSiegelZ", 1.5], expected: -0.595568336782887 },
+      { expr: ["RiemannSiegelZ", 20.5], expected: 0.5993287025147513 },
+      {
+        expr: ["N", ["RiemannSiegelZ", 0]],
+        expected: -1.4603545088095868,
+        category: "Properties",
+        caption: "$Z(0) = \\zeta(1/2)$",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/riemann-siegel.ts",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "RiemannSiegelZ[t]; mpmath.siegelz(t).",
+      },
+    ],
+    seeAlso: ["RiemannSiegelTheta", "Zeta", "RiemannZetaZero"],
+  },
+  {
+    name: "RiemannZetaZero",
+    domain: "Special functions",
+    signature: "RiemannZetaZero(k)",
+    summary:
+      "The $k$-th nontrivial zero of the Riemann zeta function on the critical line, $\\tfrac12 + i t_k$ for a positive integer $k$. Wolfram calls this `ZetaZero`; compute-engine's own Fungrim identity table already spells it `RiemannZetaZero`. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "RiemannZetaZero(k)",
+        description: "the k-th nontrivial zero, $\\tfrac12 + i t_k$.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "$t_k$ is found by scanning [[RiemannSiegelZ]] for sign changes along the real line from $t \\approx 0$, counting crossings as it goes, then bisecting the bracket once the $k$-th crossing turns up. This counts crossings directly rather than bracketing between Gram points, so it isn't exposed to a Gram's-law failure (the first is at Gram index 126) the way a Gram-point method would be.",
+      "Supported range: $k$ such that $t_k \\le 2000$ — comfortably past the first 1000 zeros, and well beyond every example here. Above that the call is left symbolic rather than guess further out with an unvalidated scan; $k < 1$ is likewise left symbolic, and a non-integer $k$ is a type error.",
+      "Numeric only (`N()` or an inexact operand) — the real part is always exactly $\\tfrac12$; the search cost is in the imaginary part.",
+    ],
+    examples: [
+      {
+        expr: ["N", ["RiemannZetaZero", 1]],
+        expected: ["Complex", 0.5, 14.134725141734693],
+        caption: "The first nontrivial zero, $\\tfrac12 + 14.1347\\ldots i$",
+      },
+      {
+        expr: ["N", ["RiemannZetaZero", 2]],
+        expected: ["Complex", 0.5, 21.022039638771556],
+      },
+      {
+        expr: ["N", ["RiemannZetaZero", 10]],
+        expected: ["Complex", 0.5, 49.7738324776723],
+        category: "Scope",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/riemann-siegel.ts",
+        note: "sign-change scan of RiemannSiegelZ + bisection; see the file header for the range this covers.",
+      },
+      {
+        origin: "mapped",
+        form: "wolfram / mpmath",
+        environment: "external",
+        note: "ZetaZero[k]; mpmath.zetazero(k).",
+      },
+    ],
+    seeAlso: ["RiemannSiegelZ", "Zeta"],
+  },
+  {
     name: "Hypergeometric0F1",
     domain: "Special functions",
     signature: "Hypergeometric0F1(b, z)",
@@ -1939,6 +2275,82 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["HypergeometricUStar", "Hypergeometric1F1Regularized"],
+  },
+  {
+    name: "Khinchin",
+    domain: "Special functions",
+    signature: "Khinchin",
+    summary:
+      "Khinchin's constant $K_0 = 2.68545\\ldots$, the almost-sure geometric mean of continued-fraction terms.",
+    signatures: [
+      {
+        call: "Khinchin",
+        description: "Khinchin's constant, a new mathematical-constant symbol.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "For Lebesgue-almost every real number, the geometric mean of the terms $a_1, a_2, \\dots$ in its continued-fraction expansion $x = [a_0; a_1, a_2, \\dots]$ converges to $K_0$, independent of $x$ -- a fact with no known elementary proof.",
+      "A symbol, like [[ConstGlaisher]]: prints as itself under plain evaluation, and resolves to a decimal only under N().",
+    ],
+    examples: [
+      { expr: ["N", "Khinchin"], expected: 2.6854520010653062, caption: "Khinchin's constant" },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/khinchin.ts",
+      },
+    ],
+  },
+  {
+    name: "Hyperfactorial",
+    domain: "Special functions",
+    signature: "Hyperfactorial(n)",
+    summary:
+      "The hyperfactorial $H(n) = \\prod_{k=1}^n k^k$, continued to complex arguments: $H(z) = \\Gamma(z+1)^z / G(z+1)$.",
+    signatures: [
+      {
+        call: "Hyperfactorial(n)",
+        description: "the hyperfactorial of n.",
+        library: LIBRARY,
+      },
+    ],
+    details: [
+      "$H(0) = 1$, the empty product.",
+      "Continued off the nonnegative integers by $H(z) = \\Gamma(z+1)^z / G(z+1)$ (G = [[BarnesG]]); numeric there, checked against a Wolfram kernel to double precision.",
+      "Exact at a nonnegative integer -- an arbitrarily large exact product, not a decimal.",
+      "Real, nonnegative domain only: BarnesG's zeros at the nonpositive integers give the continuation poles there, and no reference example calls for a negative or complex argument.",
+    ],
+    examples: [
+      { expr: ["Hyperfactorial", 4], expected: 27648, caption: "$1^1\\,2^2\\,3^3\\,4^4$" },
+      { expr: ["Hyperfactorial", 0], expected: 1, caption: "The empty product" },
+      {
+        expr: ["Hyperfactorial", ["List", 1, 2, 3, 4, 5, 6]],
+        expected: ["List", 1, 4, 108, 27648, 86400000, 4031078400000],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["Hyperfactorial", 0.5],
+        expected: 0.8804492351734234,
+        category: "Scope",
+        caption: "Continued off the integers",
+      },
+    ],
+    primitive: "numeric",
+    implementations: [
+      {
+        origin: "native",
+        form: "typescript",
+        environment: "engine",
+        source: "packages/analytic/src/hyperfactorial.ts",
+      },
+    ],
+    seeAlso: ["BarnesG"],
   },
   {
     name: "ExpIntegralE",

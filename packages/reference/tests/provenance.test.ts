@@ -145,6 +145,7 @@ const OVERRIDDEN = [
   "Factorial2",
   "Fibonacci",
   "First",
+  "FixedPoint",
   "FromDigits",
   "Gamma",
   "GammaRegularized",
@@ -240,7 +241,9 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * suite doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
  * BesselJZero (Wolfram, mpmath) waits on the same run, and so do IntegerPartitions (Wolfram)
  * and SetPartitions (SymPy's `multiset_partitions`): the collection families read as
- * `unknown` until their entries carried examples.
+ * `unknown` until their entries carried examples. IncompleteEllipticPi (Wolfram's own
+ * EllipticPi[n, φ, m], mpmath's ellippi) waits too; KeiperLiLambda has no known
+ * equivalent elsewhere and should stay novel even after a coverage run.
  *
  * ExpIntegralE, InverseErfc, InverseGammaRegularized, InverseBetaRegularized, BellY,
  * NorlundB, PrimeZetaP, HypergeometricPFQ and KleinInvariantJ are the same story: all nine
@@ -260,18 +263,27 @@ const NOVEL = [
   "ProfiniteDecomposition",
   "ProfinitePlot",
   "MatrixExp",
+  "IncompleteEllipticPi",
+  "KeiperLiLambda",
   "ClausenCl",
   "BesselJZero",
   "DigammaFunctionZero",
   "MultiZetaValue",
   "HypergeometricUStar",
   "SloaneA",
+  "QPochhammer",
+  "QFactorial",
+  "QBinomial",
+  "RiemannSiegelTheta",
+  "RiemannSiegelZ",
+  "RiemannZetaZero",
   "Hypergeometric0F1",
   "Hypergeometric0F1Regularized",
   "Hypergeometric1F1Regularized",
   "Hypergeometric2F1Regularized",
   "Hypergeometric3F2Regularized",
   "HypergeometricU",
+  "Hyperfactorial",
   "ExpIntegralE",
   "InverseErfc",
   "InverseGammaRegularized",
@@ -281,6 +293,13 @@ const NOVEL = [
   "PrimeZetaP",
   "HypergeometricPFQ",
   "KleinInvariantJ",
+  "CubeRoot",
+  "IntegerPart",
+  "FractionalPart",
+  "RealAbs",
+  "RealSign",
+  "UnitStep",
+  "Gudermannian",
   "Basis",
   "AlgebraSignature",
   "AlgebraDimension",
@@ -316,6 +335,14 @@ const NOVEL = [
   "AlexanderPolynomial",
   "JonesPolynomial",
   "Commonest",
+  "Nest",
+  "NestList",
+  "Outer",
+  "LinearRecurrence",
+  "RecurrenceTable",
+  "Association",
+  "GeometricMean",
+  "HarmonicMean",
   "IntegerPartitions",
   "SetPartitions",
 ];

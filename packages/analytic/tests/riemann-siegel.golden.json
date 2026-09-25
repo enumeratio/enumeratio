@@ -1,0 +1,98 @@
+{
+  "thetaZ": [
+    {
+      "label": "RiemannSiegelTheta(1.5)",
+      "head": "RiemannSiegelTheta",
+      "t": 1.5,
+      "tol": 1e-10,
+      "mpmath": -2.1981908573794104,
+      "wolfram": -2.1981908573794104
+    },
+    {
+      "label": "RiemannSiegelTheta(10)",
+      "head": "RiemannSiegelTheta",
+      "t": 10,
+      "tol": 1e-10,
+      "mpmath": -3.0670743962898954,
+      "wolfram": -3.0670743962898954
+    },
+    {
+      "label": "RiemannSiegelTheta(0)",
+      "head": "RiemannSiegelTheta",
+      "t": 0,
+      "tol": 1e-12,
+      "mpmath": 0,
+      "wolfram": 0
+    },
+    {
+      "label": "RiemannSiegelTheta(50)",
+      "head": "RiemannSiegelTheta",
+      "t": 50,
+      "tol": 1e-9,
+      "mpmath": 26.46136607016141,
+      "wolfram": 26.46136607016141
+    },
+    {
+      "label": "RiemannSiegelZ(1.5)",
+      "head": "RiemannSiegelZ",
+      "t": 1.5,
+      "tol": 1e-9,
+      "mpmath": -0.595568336782887,
+      "wolfram": -0.5955683367828881
+    },
+    {
+      "label": "RiemannSiegelZ(20.5)",
+      "head": "RiemannSiegelZ",
+      "t": 20.5,
+      "tol": 1e-9,
+      "mpmath": 0.5993287025147513,
+      "wolfram": 0.599328702514749
+    },
+    {
+      "label": "RiemannSiegelZ(0)",
+      "head": "RiemannSiegelZ",
+      "t": 0,
+      "tol": 1e-9,
+      "mpmath": -1.4603545088095868,
+      "wolfram": -1.4603545088095868
+    },
+    {
+      "label": "RiemannSiegelZ(100)",
+      "head": "RiemannSiegelZ",
+      "t": 100,
+      "tol": 1e-8,
+      "mpmath": 2.6926970566644637,
+      "wolfram": 2.6926970566644637
+    }
+  ],
+  "zeros": [
+    {
+      "label": "RiemannZetaZero(1)",
+      "k": 1,
+      "tol": 1e-9,
+      "mpmath": 14.134725141734695,
+      "wolfram": 14.134725141734695
+    },
+    {
+      "label": "RiemannZetaZero(2)",
+      "k": 2,
+      "tol": 1e-9,
+      "mpmath": 21.022039638771556,
+      "wolfram": 21.022039638771556
+    },
+    {
+      "label": "RiemannZetaZero(10)",
+      "k": 10,
+      "tol": 1e-9,
+      "mpmath": 49.7738324776723,
+      "wolfram": 49.7738324776723
+    },
+    {
+      "label": "RiemannZetaZero(50)",
+      "k": 50,
+      "tol": 1e-8,
+      "mpmath": 143.11184580762063,
+      "wolfram": 143.11184580762063
+    }
+  ]
+}

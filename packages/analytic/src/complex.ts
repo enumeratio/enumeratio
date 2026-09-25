@@ -67,3 +67,15 @@ export function sinPi(x: number): number {
   if (r === 1.5) return -1;
   return Math.sin(Math.PI * r);
 }
+
+/** cos(x+iy) = cos x·cosh y − i·sin x·sinh y. */
+export const ccos = (z: Cx): Cx => ({
+  re: Math.cos(z.re) * Math.cosh(z.im),
+  im: -Math.sin(z.re) * Math.sinh(z.im),
+});
+
+/** sin(x+iy) = sin x·cosh y + i·cos x·sinh y. */
+export const csin = (z: Cx): Cx => ({
+  re: Math.sin(z.re) * Math.cosh(z.im),
+  im: Math.cos(z.re) * Math.sinh(z.im),
+});
