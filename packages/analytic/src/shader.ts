@@ -11,6 +11,8 @@
 //     Im(s) is large, because each term carries exp(Im(s)·arg z) and f32 loses the
 //     small-vs-huge cancellation. Use the CPU/mpmath path for real accuracy.
 //   • Fewer Euler–Maclaurin pairs (8) — later pairs fall below f32 epsilon anyway.
+//   • Left of Re(s) = 0 at a small positive integer a, `hurwitz` reflects as the CPU does;
+//     at any other a there the direct sum still cancels, and far worse in f32.
 //   • WGSL gotchas learned here: `target` is a reserved word; a dynamically indexed
 //     array must be a function `var`, not a module `const`.
 //
@@ -40,8 +42,51 @@ fn ccos(z: vec2f) -> vec2f { return vec2f(cos(z.x) * cosh(z.y), -sin(z.x) * sinh
 fn csinh(z: vec2f) -> vec2f { return vec2f(sinh(z.x) * cos(z.y), cosh(z.x) * sin(z.y)); }
 fn ccosh(z: vec2f) -> vec2f { return vec2f(cosh(z.x) * cos(z.y), sinh(z.x) * sin(z.y)); }
 
-// ζ(s, a) via Euler–Maclaurin. (n+a)=0 terms are dropped (Wolfram HurwitzZeta).
+// ζ(s, a). Euler–Maclaurin, except left of Re(s) = 0 at a small positive integer a, where
+// its direct terms cancel catastrophically: there ζ(s, m) = ζ(s) − Σ_{k<m} k^(−s), with ζ(s)
+// from the functional equation. Mirrors hurwitzZeta in hurwitz-zeta.ts. (n+a)=0 terms are
+// dropped (Wolfram HurwitzZeta).
 fn hurwitz(s: vec2f, a: vec2f) -> vec2f {
+  if (s.x >= 0.0 || a.y != 0.0 || a.x < 1.0 || a.x > 32.0 || fract(a.x) != 0.0) {
+    return hurwitzEM(s, a);
+  }
+  var z = reflectedZeta(s);
+  for (var k = 1; k < i32(a.x); k = k + 1) { z = z - cpow(vec2f(f32(k), 0.0), -s); }
+  return z;
+}
+
+// ζ(s) = 2ˢ πˢ⁻¹ sin(πs/2) Γ(1−s) ζ(1−s) for Re(s) < 0, the factors but ζ(1−s) summed as logs.
+fn reflectedZeta(s: vec2f) -> vec2f {
+  let r = vec2f(1.0 - s.x, -s.y);
+  let lg = 0.6931472 * s + 1.1447299 * vec2f(s.x - 1.0, s.y) + clgamma(r) + clogSin(1.5707963 * s);
+  return cmul(cexp(lg), hurwitzEM(r, vec2f(1.0, 0.0)));
+}
+
+// ln sin w up to 2πi, overflow-free: sin w = (i/2)·e^(−iw)·(1 − e^(2iw)) for Im w ≥ 0.
+fn clogSin(w0: vec2f) -> vec2f {
+  let flip = w0.y < 0.0;
+  let w = select(w0, cconj(w0), flip);
+  let u = cexp(vec2f(-2.0 * w.y, 2.0 * w.x));
+  let l = clog(vec2f(1.0 - u.x, -u.y)) + vec2f(w.y - 0.6931472, 1.5707963 - w.x);
+  return select(l, cconj(l), flip);
+}
+
+// lnΓ(z) up to 2πi, for Re(z) > 0: shift to Re ≥ 8, then Stirling to z⁻⁵.
+fn clgamma(z0: vec2f) -> vec2f {
+  var z = z0;
+  var shift = vec2f(0.0);
+  for (var k = 0; k < 8 && z.x < 8.0; k = k + 1) {
+    shift = shift + clog(z);
+    z = z + vec2f(1.0, 0.0);
+  }
+  let iz = cdiv(vec2f(1.0, 0.0), z);
+  let iz2 = cmul(iz, iz);
+  let ser = cmul(iz, vec2f(0.083333333, 0.0) + cmul(iz2, vec2f(-0.0027777778, 0.0) + iz2 * 0.00079365079));
+  return cmul(z - vec2f(0.5, 0.0), clog(z)) - z + vec2f(0.9189385, 0.0) + ser - shift;
+}
+
+// ζ(s, a) via Euler–Maclaurin.
+fn hurwitzEM(s: vec2f, a: vec2f) -> vec2f {
   var em = array<f32, 9>(
     0.0, 0.08333333, -0.0013888889, 0.000033068783, -0.00000082671958,
     0.000000020876757, -0.00000000052841901, 0.000000000013382537, -0.00000000000033896803);
