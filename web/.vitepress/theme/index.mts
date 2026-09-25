@@ -3,6 +3,7 @@ import { defineAsyncComponent } from "vue";
 import { registerNotatio } from "@enumeratio/notatio/vue";
 import DefaultTheme from "vitepress/theme";
 import { applyEngineLibraries } from "./engine-libraries.ts";
+import Layout from "./Layout.vue";
 import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
@@ -27,19 +28,14 @@ const ComponentPage = defineAsyncComponent(() => import("./components/ComponentP
 const EnvironmentPreview = defineAsyncComponent(
   () => import("./components/EnvironmentPreview.vue"),
 );
-// Dev-only (see web/review/index.md, excluded from `vitepress build`). The dynamic
-// import itself must stay inside an `import.meta.env.DEV` check, not just behind
-// `srcExclude` -- otherwise Rollup's static analysis still emits its chunk into the
-// production bundle even though no built page ever imports it.
-const ReviewMode = import.meta.env.DEV
-  ? defineAsyncComponent(() => import("./components/ReviewMode.vue"))
-  : undefined;
-
 // The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
 // from @enumeratio/notatio/vue, generated there from the element sources.
 
 export default {
   extends: DefaultTheme,
+  // Mounts the dev-only review sidebar on every page (see ./Layout.vue and
+  // web/review/index.md, excluded from `vitepress build`).
+  Layout,
   enhanceApp({ app }: EnhanceAppContext) {
     app.component("Playground", Playground);
     app.component("ElementsDemo", ElementsDemo);
@@ -55,7 +51,6 @@ export default {
     app.component("CliReference", CliReference);
     app.component("Symbol", SymbolRef);
     app.component("ComponentPage", ComponentPage);
-    if (ReviewMode) app.component("ReviewMode", ReviewMode);
     registerNotatio(app);
     // Client only: register the custom elements (they call customElements.define)
     // and declare the extension libraries against the shared engine so their heads
