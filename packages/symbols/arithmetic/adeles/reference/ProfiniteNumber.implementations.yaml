@@ -85,3 +85,166 @@ projecting-to-q-2:
     out: \mathrm{AdicNumeral}(2, 4, 3)
   fullform:
     in: AdicNumeral[2, ProfiniteNumber[100, 24]]
+projecting-to-q-3:
+  epsil:
+    in: AdicNumeral(3, ProfiniteNumber(100, 24))
+    out: AdicNumeral(3, 1, 1)
+  tex:
+    in: \mathrm{AdicNumeral}(3, \mathrm{ProfiniteNumber}(100, 24))
+    out: \mathrm{AdicNumeral}(3, 1, 1)
+  fullform:
+    in: AdicNumeral[3, ProfiniteNumber[100, 24]]
+5-doesn-t-divide-the-modulus-so-nothing-is-known:
+  epsil:
+    in: AdicNumeral(5, ProfiniteNumber(100, 24))
+    out: AdicNumeral(5, ProfiniteNumber(4, 24))
+  tex:
+    in: \mathrm{AdicNumeral}(5, \mathrm{ProfiniteNumber}(100, 24))
+    out: \mathrm{AdicNumeral}(5, \mathrm{ProfiniteNumber}(4, 24))
+  fullform:
+    in: AdicNumeral[5, ProfiniteNumber[100, 24]]
+gluing-projections-back-by-crt-is-the-identity:
+  epsil:
+    in: |-
+      ProfiniteNumber([
+                        AdicNumeral(2, ProfiniteNumber(100, 24)),
+                        AdicNumeral(3, ProfiniteNumber(100, 24)),
+                      ])
+    out: ProfiniteNumber(4, 24)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\bigl\lbrack\mathrm{AdicNumeral}(2, \mathrm{ProfiniteNumber}(100, 24)), \mathrm{AdicNumeral}(3, \mathrm{ProfiniteNumber}(100, 24))\bigr\rbrack)
+    out: \mathrm{ProfiniteNumber}(4, 24)
+  fullform:
+    in: ProfiniteNumber[List[AdicNumeral[2, ProfiniteNumber[100, 24]], AdicNumeral[3, ProfiniteNumber[100, 24]]]]
+profinitenumber-26-20-normalises-to-6-20:
+  epsil:
+    in: ProfiniteNumber(26, 20)
+    out: ProfiniteNumber(6, 20)
+  tex:
+    in: \mathrm{ProfiniteNumber}(26, 20)
+    out: \mathrm{ProfiniteNumber}(6, 20)
+  fullform:
+    in: ProfiniteNumber[26, 20]
+a-negative-value-normalises-into-the-coset:
+  epsil:
+    in: ProfiniteNumber(-1, 12)
+    out: ProfiniteNumber(11, 12)
+  tex:
+    in: \mathrm{ProfiniteNumber}(-1, 12)
+    out: \mathrm{ProfiniteNumber}(11, 12)
+  fullform:
+    in: ProfiniteNumber[-1, 12]
+a-negative-modulus-normalises-to-positive:
+  epsil:
+    in: ProfiniteNumber(5, -12)
+    out: ProfiniteNumber(5, 12)
+  tex:
+    in: \mathrm{ProfiniteNumber}(5, -12)
+    out: \mathrm{ProfiniteNumber}(5, 12)
+  fullform:
+    in: ProfiniteNumber[5, -12]
+a-rational-value-reduces-mod-a-rational-modulus:
+  epsil:
+    in: ProfiniteNumber(7 / 2, 3 / 2)
+    out: ProfiniteNumber(1 / 2, 3 / 2)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{7}{2}, \frac{3}{2})
+    out: \mathrm{ProfiniteNumber}(\frac{1}{2}, \frac{3}{2})
+  fullform:
+    in: ProfiniteNumber[Rational[7, 2], Rational[3, 2]]
+modulus-zero-collapses-to-the-rational-itself:
+  epsil:
+    in: ProfiniteNumber(1 / 3, 0)
+    out: 1 / 3
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{1}{3}, 0)
+    out: \frac{1}{3}
+  fullform:
+    in: ProfiniteNumber[Rational[1, 3], 0]
+subtracting-an-integer-from-a-profinite-number:
+  epsil:
+    in: ProfiniteNumber(7, 30) - 2
+    out: ProfiniteNumber(5, 30)
+  tex:
+    in: \mathrm{ProfiniteNumber}(7, 30)-2
+    out: \mathrm{ProfiniteNumber}(5, 30)
+  fullform:
+    in: Subtract[ProfiniteNumber[7, 30], 2]
+squaring-a-profinite-number:
+  epsil:
+    in: ProfiniteNumber(3, 12) ^ 2
+    out: ProfiniteNumber(9, 36)
+  tex:
+    in: \mathrm{ProfiniteNumber}(3, 12)^2
+    out: \mathrm{ProfiniteNumber}(9, 36)
+  fullform:
+    in: Power[ProfiniteNumber[3, 12], 2]
+dividing-by-an-exact-integer-divisor:
+  epsil:
+    in: ProfiniteNumber(4, 12) / 2
+    out: ProfiniteNumber(2, 6)
+  tex:
+    in: \frac{\mathrm{ProfiniteNumber}(4, 12)}{2}
+    out: \mathrm{ProfiniteNumber}(2, 6)
+  fullform:
+    in: Divide[ProfiniteNumber[4, 12], 2]
+dividing-by-a-profinite-number-stays-unevaluated:
+  epsil:
+    in: 1 / ProfiniteNumber(5, 12)
+    out: 1 / ProfiniteNumber(5, 12)
+  tex:
+    in: \frac{1}{\mathrm{ProfiniteNumber}(5, 12)}
+    out: \frac{1}{\mathrm{ProfiniteNumber}(5, 12)}
+  fullform:
+    in: Divide[1, ProfiniteNumber[5, 12]]
+lenstra-s-profinite-lucas-numbers:
+  epsil:
+    in: LucasL(ProfiniteNumber(3, 10))
+    out: ProfiniteNumber(4, 11)
+  tex:
+    in: \mathrm{LucasL}(\mathrm{ProfiniteNumber}(3, 10))
+    out: \mathrm{ProfiniteNumber}(4, 11)
+  traditional:
+    in: L_{\mathrm{ProfiniteNumber}(3, 10)}
+    out: \mathrm{ProfiniteNumber}(4, 11)
+  fullform:
+    in: LucasL[ProfiniteNumber[3, 10]]
+a-non-integer-numerator-refuses-fibonacci:
+  epsil:
+    in: Fibonacci(ProfiniteNumber(1 / 2, 3))
+    out: Fibonacci(ProfiniteNumber(1 / 2, 3))
+  tex:
+    in: \mathrm{Fibonacci}(\mathrm{ProfiniteNumber}(\frac{1}{2}, 3))
+    out: \mathrm{Fibonacci}(\mathrm{ProfiniteNumber}(\frac{1}{2}, 3))
+  traditional:
+    in: F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}
+    out: F_{\mathrm{ProfiniteNumber}(\frac{1}{2}, 3)}
+  fullform:
+    in: Fibonacci[ProfiniteNumber[Rational[1, 2], 3]]
+numerator-of-a-plain-rational-is-untouched:
+  epsil:
+    in: Numerator(3 / 4)
+    out: "3"
+  tex:
+    in: \mathrm{Numerator}(\frac{3}{4})
+    out: "3"
+  fullform:
+    in: Numerator[Rational[3, 4]]
+denominator-of-a-plain-rational-is-untouched:
+  epsil:
+    in: Denominator(3 / 4)
+    out: "4"
+  tex:
+    in: \mathrm{Denominator}(\frac{3}{4})
+    out: "4"
+  fullform:
+    in: Denominator[Rational[3, 4]]
+only-profinitenumber-gets-numerator-not-adele:
+  epsil:
+    in: Numerator(Adele(5))
+    out: Numerator(Adele(5))
+  tex:
+    in: \mathrm{Numerator}(\mathrm{Adele}(5))
+    out: \mathrm{Numerator}(\mathrm{Adele}(5))
+  fullform:
+    in: Numerator[Adele[5]]
