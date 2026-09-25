@@ -1,5 +1,5 @@
 // Node session: a real worker_threads worker held across evaluate() calls. Small
-// deadlines keep this fast (see design/aestimatio.md §3 and node.ts's own comments).
+// deadlines keep this fast (see design/computation.md §5.3 and node.ts's own comments).
 import { expect, test } from "vite-plus/test";
 import { openSession, type NodeWorkerLike } from "../src/node.ts";
 
@@ -21,7 +21,7 @@ test("a cooperative timeMs stop (compute-engine's own loop) keeps bindings: rese
   try {
     await session.evaluate(["Assign", "a", 5]);
 
-    // Sum is one of compute-engine's own loops (design/aestimatio.md §2): it checks the
+    // Sum is one of compute-engine's own loops (design/computation.md §5.2): it checks the
     // deadline itself and stops well inside the worker's cooperative timeMs, long before
     // the host's own (much later) hard-kill timer would ever fire.
     const slow = ["Sum", ["Mod", "k", 97], ["Tuple", "k", 1, 2_000_000_000]];

@@ -27,7 +27,7 @@ function parseTrackedSymbols(attr: string): TrackedSymbols | undefined {
 }
 
 /** `Evaluator -> "Local" | "Worker"` -- Wolfram's own option name, borrowed from
- * `Dynamic` (design/aestimatio.md's "Build" note). Anything else (absent, `"Local"`,
+ * `Dynamic` (design/computation.md §5.3). Anything else (absent, `"Local"`,
  * an unrecognised value) is the default, in-page evaluation. */
 type Evaluator = "Local" | "Worker";
 function parseEvaluator(attr: string): Evaluator {
@@ -75,7 +75,7 @@ export class WorkerUnavailableError extends Error {
  * below). So this is the closest honest approximation of "cooperative, then hard kill":
  * a short, fixed wait for a race the in-flight call might still win (it was nearly done
  * anyway), and a real `session.close()` + respawn if not -- the only reliable way to stop
- * a tight, uncooperative loop (design/aestimatio.md §3). Aborting the call *without* this
+ * a tight, uncooperative loop (design/computation.md §5.3). Aborting the call *without* this
  * (`BrowserSession.evaluate`'s own `signal`) only abandons it -- the worker keeps
  * computing in the background, and a later cell queues behind it on the same session.
  */
@@ -139,7 +139,7 @@ export class NotatioDynamicModule extends LitElement {
      * `TimeConstraint`, in SECONDS -- Wolfram's own option name and unit
      * (`VerificationTest`'s `TimeConstraint` is seconds too, unlike aestimatio's own
      * internal `timeMs`): tried cooperatively first, then hard-kills and restarts the
-     * session (design/aestimatio.md §2-3). Unset (the default, `0`) means no deadline
+     * session (design/computation.md §5.2–5.3). Unset (the default, `0`) means no deadline
      * at all -- a `Worker` evaluator without one can still be interrupted by the
      * "stop" control, just never automatically.
      */
@@ -264,7 +264,7 @@ export class NotatioDynamicModule extends LitElement {
       const onAbort = (): void => {
         graceTimer = setTimeout(() => {
           // Nothing landed within the grace -- the only reliable way to stop an
-          // uncooperative loop with no deadline of its own (design/aestimatio.md §3).
+          // uncooperative loop with no deadline of its own (design/computation.md §5.3).
           // This tab's bindings are gone either way; other calls already queued behind
           // this one on the session are abandoned along with it. This IS a genuine
           // user-requested stop, so `$Aborted` is the right answer -- no retry.

@@ -154,7 +154,7 @@ function substitute(expr: unknown, bindings: ReadonlyMap<string, unknown>): unkn
 interface TranscriptHost extends Element {
   transcriptFor(engine: ComputeEngine): Transcript;
   /**
-   * `Evaluator` (design/aestimatio.md, `notatio-dynamic-module.ts`): `"Local"`
+   * `Evaluator` (design/computation.md, `notatio-dynamic-module.ts`): `"Local"`
    * (default, or absent) evaluates in-page as today; `"Worker"` routes a cell's
    * evaluation to the module's `aestimatio` session instead (`evaluateRemote`,
    * below). Optional so a plain `TranscriptHost` (no `Evaluator` support at all)
@@ -165,7 +165,7 @@ interface TranscriptHost extends Element {
    * Runs `json` in the module's worker session rather than this page's engine --
    * only present, and only called, when `evaluatorKind` is `"Worker"`. `signal`
    * aborts THIS call (the module's "stop" control / Escape); the worker itself may
-   * keep running in the background (design/aestimatio.md §3's own limit on what an
+   * keep running in the background (design/computation.md §5.3's own limit on what an
    * abort can promise). `reset: true` means the session was hard-killed and
    * restarted -- earlier bindings are gone, surfaced by the module itself.
    */
@@ -538,7 +538,7 @@ export class NotatioOut extends LitElement {
     // `Evaluator -> "Worker"`: this cell's own evaluation happens off-thread, in the
     // module's aestimatio session -- not inside `transcript.run()` (that scope is a
     // LOCAL engine's; the worker holds its own persistent one, per
-    // design/aestimatio.md). Only parsing and the result's re-boxing (for typesetting)
+    // design/computation.md). Only parsing and the result's re-boxing (for typesetting)
     // touch the local scope. Messages (`collectMessages`) don't cross the worker
     // boundary yet -- deferred, see this package's PR description.
     if (transcript && this.evaluate && host?.evaluatorKind === "Worker" && host.evaluateRemote) {
