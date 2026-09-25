@@ -11,6 +11,7 @@ import {
 import { add, type Cx, div, mul, sub } from "./complex.ts";
 import { bernoulliNumber } from "./bernoulli.ts";
 import { hurwitzZeta } from "./hurwitz-zeta.ts";
+import { logGamma } from "./loggamma.ts";
 
 // Polygamma ψ⁽ᵐ⁾(z) = dᵐ⁺¹/dzᵐ⁺¹ ln Γ(z), straight off the Hurwitz zeta:
 // ψ⁽ᵐ⁾(z) = (−1)^(m+1) · m! · ζ(m+1, z) for integer m ≥ 1. compute-engine has a
@@ -71,9 +72,11 @@ export const polygammaReal = (m: number, x: number): number => polygamma(m, { re
 
 /**
  * Evaluate PolyGamma(m, z), deferring to compute-engine's native handler first and
- * stepping in only where it declines — a complex z at an integer order m ≥ 0 (m = 0
- * the digamma, via its own series above; m ≥ 1 via the Hurwitz zeta). Orders past
- * 170 overflow m! in double and are left to the native handler.
+ * stepping in only where it declines — a complex z at an integer order m ≥ −1 (m = −1
+ * is `LogGamma`, matching Wolfram's `PolyGamma[-1, z]`; m = 0 the digamma, via its own
+ * series above; m ≥ 1 via the Hurwitz zeta). Orders past 170 overflow m! in double and
+ * are left to the native handler. Orders m ≤ −2 (the K-function / Barnes G territory)
+ * are past what we cover and stay unevaluated.
  */
 export function evaluatePolygamma(
   ce: ComputeEngine,
@@ -88,9 +91,14 @@ export function evaluatePolygamma(
   const z = ops[1];
   if (m === undefined || z === undefined) return r;
   if (!wantsNumber(ops, options)) return r;
-  if (!isRealInt(m) || m.re < 0 || m.re > 170) return r;
+  if (!isRealInt(m) || m.re < -1 || m.re > 170) return r;
   if (!isFiniteNum(z)) return r;
 
-  const v = m.re === 0 ? digamma({ re: z.re, im: z.im }) : polygamma(m.re, { re: z.re, im: z.im });
+  const v =
+    m.re === -1
+      ? logGamma({ re: z.re, im: z.im })
+      : m.re === 0
+        ? digamma({ re: z.re, im: z.im })
+        : polygamma(m.re, { re: z.re, im: z.im });
   return numberResult(ce, v);
 }
