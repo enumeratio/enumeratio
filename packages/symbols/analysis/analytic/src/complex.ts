@@ -53,9 +53,15 @@ export const cpow = (z: Cx, w: Cx): Cx => {
   return cexp(mul(w, clog(z)));
 };
 
+// #loggamma reflection: `x - 2·⌊x/2⌋`, not `((x % 2) + 2) % 2` — the latter adds 2 before
+// reducing back down, and for x within a ulp of an even integer that round-trip corrupts
+// the low bits it's trying to preserve (e.g. x = 1e-6 came back as 1.0000000001397…e-6,
+// a relative error of ~1e-10, not the ~1e-16 either form owes). Sterbenz's lemma makes
+// `x - 2·⌊x/2⌋` exact whenever `2·⌊x/2⌋` is within a factor of 2 of x, which it always is.
+
 /** cos(πx), exact (0 or ±1) at multiples of ½ — where Math.cos(Math.PI·x) is off by ~1e−16. */
 export function cosPi(x: number): number {
-  const r = ((x % 2) + 2) % 2; // [0, 2)
+  const r = x - 2 * Math.floor(x / 2); // [0, 2)
   if (r === 0) return 1;
   if (r === 0.5 || r === 1.5) return 0;
   if (r === 1) return -1;
@@ -64,7 +70,7 @@ export function cosPi(x: number): number {
 
 /** sin(πx), exact (0 or ±1) at multiples of ½. */
 export function sinPi(x: number): number {
-  const r = ((x % 2) + 2) % 2;
+  const r = x - 2 * Math.floor(x / 2);
   if (r === 0 || r === 1) return 0;
   if (r === 0.5) return 1;
   if (r === 1.5) return -1;

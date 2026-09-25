@@ -702,7 +702,7 @@
   "LogGamma/off-the-positive-axis-this-is-the-continuation": {
     "ours": {
       "input": "\\log\\Gamma(-2.5+1.5i)",
-      "output": "-3.717\\,513\\,451\\,191\\,784\\,7-7.713\\,065\\,525\\,834\\,191i"
+      "output": "-3.717\\,513\\,451\\,191\\,792-7.713\\,065\\,525\\,834\\,192\\,5i"
     },
     "wolfram": {
       "input": "\\text{log$\\Gamma $}(-2.5+1.5 i)",

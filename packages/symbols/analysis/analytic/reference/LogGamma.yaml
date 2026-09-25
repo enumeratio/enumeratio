@@ -36,7 +36,7 @@ examples:
     caption: "$\\ln\\Gamma(2.5) = \\ln 1.3293\\ldots$ — to the engine's working precision, not a double: right of the imaginary axis this goes through compute-engine's own [[GammaLn]]"
   - id: off-the-positive-axis-this-is-the-continuation
     expr: [LogGamma, [Complex, -2.5, 1.5]]
-    expected: [Complex, -3.7175134511917847, -7.713065525834191]
+    expected: [Complex, -3.717513451191792, -7.7130655258341925]
     category: Possible issues
     caption: 'Off the positive axis this is the continuation: $\ln(\Gamma(-2.5+1.5i))$ with a principal log has imaginary part $-1.4299$, a full $2\pi$ away'
   - id: ln-gamma-5-ln-4-ln-24-split-into-prime
@@ -52,7 +52,7 @@ examples:
     caption: To the engine's working precision
   - id: complex-arguments
     expr: [LogGamma, [Complex, 2.5, 3]]
-    expected: [Complex, -1.4709546103488336, 2.822615638260796]
+    expected: [Complex, -1.4709546103488407, 2.8226156382607988]
     category: Scope
     caption: Complex arguments
   - id: threads-elementwise-over-an-array
@@ -67,7 +67,7 @@ examples:
     caption: Threads elementwise over an array
   - id: on-the-negative-axis-gamma-frac-32-frac-43-sqrt
     expr: [LogGamma, -1.5]
-    expected: [Complex, 0.8600470153764732, -6.283185307179586]
+    expected: [Complex, 0.8600470153764797, -6.283185307179586]
     category: Properties
     caption: 'On the negative axis: $\Gamma(-\tfrac32) = \tfrac43\sqrt\pi > 0$, but the continuation carries $-2\pi i$'
   - id: half-integers-past-frac-12-ln-gamma-frac-32-ln
