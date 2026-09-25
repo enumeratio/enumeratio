@@ -9,11 +9,18 @@ import { createEvaluatorPool, type WorkerLike } from "../src/browser.ts";
  * microtask after the call returns -- await this before driving a fake worker. */
 const tick = (): Promise<void> => Promise.resolve();
 
-function fakeWorker() {
+/** Auto-fires a `"started"` reply for every posted message (unless `autoStart` is false)
+ * -- simulating an already-warm worker, so `timeMs` tests exercise the small post-start
+ * kill margin rather than the (much larger, separately tested) spawn-timeout guard. */
+function fakeWorker(options: { autoStart?: boolean } = {}) {
+  const autoStart = options.autoStart ?? true;
   const posted: unknown[] = [];
   let terminated = 0;
   const worker: WorkerLike = {
-    postMessage: (message) => posted.push(message),
+    postMessage: (message) => {
+      posted.push(message);
+      if (autoStart) worker.onmessage?.({ data: { kind: "started" } });
+    },
     terminate: () => {
       terminated++;
     },
@@ -24,8 +31,9 @@ function fakeWorker() {
     worker,
     posted,
     terminatedCount: () => terminated,
+    /** Sends the final result. */
     respond: (response: { ok: boolean; json?: unknown; error?: string }) =>
-      worker.onmessage?.({ data: response }),
+      worker.onmessage?.({ data: { kind: "result", ...response } }),
     fail: () => worker.onerror?.({ message: "boom" }),
   };
 }
@@ -74,6 +82,30 @@ test("createEvaluatorPool replaces a worker killed by timeMs", async () => {
   const next = pool.evaluate(["Add", 1, 1]);
   await tick();
   expect(created).toHaveLength(2);
+  created[1]!.respond({ ok: true, json: 2 });
+  await expect(next).resolves.toBe(2);
+  pool.close();
+});
+
+test("createEvaluatorPool replaces a worker that never reports started (spawn-timeout guard)", async () => {
+  const created: ReturnType<typeof fakeWorker>[] = [];
+  const pool = createEvaluatorPool({
+    size: 1,
+    spawnTimeoutMs: 5, // small on purpose -- proving the guard fires, not timing production
+    createWorker: () => {
+      const fake = fakeWorker({ autoStart: false });
+      created.push(fake);
+      return fake.worker;
+    },
+  });
+
+  const stuck = pool.evaluate(["Add", 1, 1], { timeMs: 1000 });
+  await expect(stuck).resolves.toBe("Aborted");
+  expect(created[0]!.terminatedCount()).toBe(1);
+
+  const next = pool.evaluate(["Add", 1, 1], { timeMs: 1000 });
+  await tick();
+  expect(created).toHaveLength(2); // the never-started worker was replaced
   created[1]!.respond({ ok: true, json: 2 });
   await expect(next).resolves.toBe(2);
   pool.close();

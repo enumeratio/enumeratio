@@ -16,17 +16,25 @@ const ABORTED = "Aborted";
 
 /**
  * The worker is asked to stop cooperatively at `timeMs` first (`./cooperative-evaluate.ts`,
- * via `ce.withTimeLimit`/`checkpoint()`) — this call's own hard kill only fires this much
- * later, giving that a chance to land first. When it does, the worker answers normally
- * (reused; a session keeps its bindings); the hard kill only ever catches a tight,
- * uncooperative loop the cooperative deadline couldn't reach.
+ * via `ce.withTimeLimit`/`checkpoint()`) — a call's own hard kill only fires this much
+ * later than its `"started"` message (see `WorkerResponse`'s own comment in
+ * `./browser-worker.ts`), giving the cooperative deadline a chance to land first. When it
+ * does, the worker answers normally (reused; a session keeps its bindings); the hard kill
+ * only ever catches a tight, uncooperative loop the cooperative deadline couldn't reach.
  *
- * Generous on purpose, for the same reason as `./node.ts`'s own copy of this constant: a
- * freshly spawned worker's module load (importing `@cortex-js/compute-engine`) happens
- * before `timeMs`'s own clock starts, but still counts against this margin. A warm
- * (reused) worker pays none of that.
+ * Small on purpose: it only has to cover the round trip AFTER the worker is already
+ * running -- spawn and `@cortex-js/compute-engine` import time is excluded, since the
+ * hard-kill timer isn't armed until `"started"` arrives. See `SPAWN_TIMEOUT_MS` for the
+ * (separate, much larger) guard against a worker that never gets that far at all.
  */
-const COOPERATIVE_GRACE_MS = 500;
+const COOPERATIVE_GRACE_MS = 200;
+
+/**
+ * Guards a worker that never reports `"started"` at all -- see `./node.ts`'s own copy of
+ * this constant for why it's this generous, and why a spawn timeout is folded into the
+ * same `Aborted`/`reset: true` outcome as an ordinary hard kill.
+ */
+const SPAWN_TIMEOUT_MS = 10_000;
 
 interface WorkerMessageEvent {
   readonly data: unknown;
@@ -91,6 +99,9 @@ export interface EvaluateInWorkerOptions {
   readonly createWorker?: WorkerFactory;
   /** Injectable for tests; defaults to `probeMemoryBytes`. */
   readonly measureMemory?: () => Promise<number | undefined>;
+  /** Overrides `SPAWN_TIMEOUT_MS` -- for tests that want to exercise the spawn-timeout
+   * path without a real multi-second wait. */
+  readonly spawnTimeoutMs?: number;
 }
 
 function globalWorkerFactory(): WorkerFactory {
@@ -159,6 +170,7 @@ function evaluateInWorkerOnce(
   options: EvaluateInWorkerOptions = {},
 ): Promise<unknown> {
   const { timeMs, memoryBytes, setup, signal, memoryPollMs = 200 } = options;
+  const spawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const createWorker = options.createWorker ?? globalWorkerFactory();
   const measureMemory = options.measureMemory ?? probeMemoryBytes;
   // Loading `./browser-worker.ts` when this module is still its TypeScript source
@@ -169,7 +181,8 @@ function evaluateInWorkerOnce(
 
   return new Promise((resolve) => {
     let settled = false;
-    let timer: ReturnType<typeof setTimeout> | undefined;
+    let spawnTimer: ReturnType<typeof setTimeout> | undefined;
+    let killTimer: ReturnType<typeof setTimeout> | undefined;
     let memoryTimer: ReturnType<typeof setInterval> | undefined;
     const worker = createWorker(workerUrl, { type: "module" });
 
@@ -178,7 +191,8 @@ function evaluateInWorkerOnce(
     const finish = (value: unknown): void => {
       if (settled) return;
       settled = true;
-      if (timer !== undefined) clearTimeout(timer);
+      if (spawnTimer !== undefined) clearTimeout(spawnTimer);
+      if (killTimer !== undefined) clearTimeout(killTimer);
       if (memoryTimer !== undefined) clearInterval(memoryTimer);
       signal?.removeEventListener("abort", onAbort);
       worker.terminate();
@@ -191,9 +205,10 @@ function evaluateInWorkerOnce(
     }
     signal?.addEventListener("abort", onAbort);
 
-    if (timeMs !== undefined) {
-      timer = setTimeout(() => finish(ABORTED), timeMs + COOPERATIVE_GRACE_MS);
-    }
+    // Guards a worker that never reports "started" -- see SPAWN_TIMEOUT_MS. The real
+    // deadline (killTimer) only arms once "started" arrives, so cold spawn/import time
+    // is never counted against it.
+    if (timeMs !== undefined) spawnTimer = setTimeout(finish, spawnTimeoutMs, ABORTED);
 
     if (memoryBytes !== undefined) {
       memoryTimer = setInterval(() => {
@@ -204,7 +219,17 @@ function evaluateInWorkerOnce(
     }
 
     worker.onmessage = (event) => {
-      const message = event.data as { ok: boolean; json?: unknown };
+      const message = event.data as { kind?: "started" | "result"; ok?: boolean; json?: unknown };
+      if (message.kind === "started") {
+        if (spawnTimer !== undefined) {
+          clearTimeout(spawnTimer);
+          spawnTimer = undefined;
+        }
+        if (timeMs !== undefined)
+          killTimer = setTimeout(finish, timeMs + COOPERATIVE_GRACE_MS, ABORTED);
+        return;
+      }
+      // No `kind` (a test fake answering directly) or `kind: "result"`: the answer.
       finish(message.ok ? message.json : ABORTED);
     };
     // Covers a worker script error (a bad `setup` module, an uncaught exception).
@@ -228,6 +253,9 @@ export interface BrowserEvaluatorPoolOptions {
   readonly createWorker?: WorkerFactory;
   /** Injectable for tests; defaults to `probeMemoryBytes`. */
   readonly measureMemory?: () => Promise<number | undefined>;
+  /** Overrides `SPAWN_TIMEOUT_MS` for every call on this pool, unless a call's own
+   * `spawnTimeoutMs` overrides it again. */
+  readonly spawnTimeoutMs?: number;
 }
 
 export interface BrowserEvaluatorPool {
@@ -261,6 +289,7 @@ export function createEvaluatorPool(
   const maxSize = Math.max(1, options.size ?? defaultPoolSize());
   const createWorker = options.createWorker ?? globalWorkerFactory();
   const measureMemory = options.measureMemory ?? probeMemoryBytes;
+  const poolSpawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const ext = import.meta.url.endsWith(".ts") ? ".ts" : ".mjs";
   const workerUrl = new URL(`./browser-worker${ext}`, import.meta.url);
 
@@ -272,15 +301,21 @@ export function createEvaluatorPool(
 
   function evaluate(json: unknown, options: EvaluateInWorkerOptions = {}): Promise<unknown> {
     const { timeMs, memoryBytes, setup, signal, memoryPollMs = 200 } = options;
+    const spawnTimeoutMs = options.spawnTimeoutMs ?? poolSpawnTimeoutMs;
     return pool.acquire(DEFAULT_POOL_KEY).then(
       (worker) =>
         new Promise<unknown>((resolve) => {
           let settled = false;
-          let timer: ReturnType<typeof setTimeout> | undefined;
+          // Guards a worker that never reports "started" (see SPAWN_TIMEOUT_MS).
+          let spawnTimer: ReturnType<typeof setTimeout> | undefined;
+          // The real deadline: armed only once "started" confirms the worker is actually
+          // running THIS call, so cold spawn/import time never counts against it.
+          let killTimer: ReturnType<typeof setTimeout> | undefined;
           let memoryTimer: ReturnType<typeof setInterval> | undefined;
 
           const cleanup = (): void => {
-            if (timer !== undefined) clearTimeout(timer);
+            if (spawnTimer !== undefined) clearTimeout(spawnTimer);
+            if (killTimer !== undefined) clearTimeout(killTimer);
             if (memoryTimer !== undefined) clearInterval(memoryTimer);
             signal?.removeEventListener("abort", onAbort);
             worker.onmessage = null;
@@ -303,7 +338,7 @@ export function createEvaluatorPool(
           signal?.addEventListener("abort", onAbort);
 
           if (timeMs !== undefined) {
-            timer = setTimeout(() => finish(ABORTED, "replace"), timeMs + COOPERATIVE_GRACE_MS);
+            spawnTimer = setTimeout(() => finish(ABORTED, "replace"), spawnTimeoutMs);
           }
 
           if (memoryBytes !== undefined) {
@@ -315,7 +350,25 @@ export function createEvaluatorPool(
           }
 
           worker.onmessage = (event) => {
-            const message = event.data as { ok: boolean; json?: unknown };
+            const message = event.data as {
+              kind?: "started" | "result";
+              ok?: boolean;
+              json?: unknown;
+            };
+            if (message.kind === "started") {
+              if (spawnTimer !== undefined) {
+                clearTimeout(spawnTimer);
+                spawnTimer = undefined;
+              }
+              if (timeMs !== undefined) {
+                killTimer = setTimeout(
+                  () => finish(ABORTED, "replace"),
+                  timeMs + COOPERATIVE_GRACE_MS,
+                );
+              }
+              return;
+            }
+            // No `kind` (a test fake answering directly) or `kind: "result"`: the answer.
             finish(message.ok ? message.json : ABORTED, "reused");
           };
           worker.onerror = () => finish(ABORTED, "replace");
@@ -363,6 +416,9 @@ export interface BrowserSessionOptions {
   /** Injectable for tests; defaults to the global `Worker`. Only used when `SharedWorker`
    * isn't available (or a test forces the fallback by omitting `createSharedWorker`). */
   readonly createWorker?: WorkerFactory;
+  /** Overrides `SPAWN_TIMEOUT_MS` -- for tests that want to exercise the spawn-timeout
+   * path without a real multi-second wait. */
+  readonly spawnTimeoutMs?: number;
 }
 
 export interface BrowserEvaluateSessionOptions {
@@ -418,6 +474,7 @@ function sessionWorkerUrl(): URL {
  */
 export function openSession(options: BrowserSessionOptions = {}): BrowserSession {
   const { setup, name } = options;
+  const spawnTimeoutMs = options.spawnTimeoutMs ?? SPAWN_TIMEOUT_MS;
   const url = sessionWorkerUrl();
   const sharedFactory =
     options.createSharedWorker ??
@@ -465,17 +522,22 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
     const id = nextId++;
     return new Promise((resolve, reject) => {
       let settled = false;
-      let timer: ReturnType<typeof setTimeout> | undefined;
+      // Guards a worker/port that never reports "started" -- see SPAWN_TIMEOUT_MS.
+      let spawnTimer: ReturnType<typeof setTimeout> | undefined;
+      // The real deadline: armed only once "started" confirms the engine is actually
+      // running THIS call, so cold spawn/import/setup time never counts against it.
+      let killTimer: ReturnType<typeof setTimeout> | undefined;
       const currentPort = port;
-      // Captured now, not read from the live `dedicated`/`terminateCurrent` when the
-      // timer fires: a concurrent call could otherwise have already poisoned/respawned
-      // the session by then, and this call's own kill decision is about the port IT sent
-      // its message to, not whatever the session has moved on to since.
+      // Captured now, not read from the live `dedicated`/`terminateCurrent` when a timer
+      // fires: a concurrent call could otherwise have already poisoned/respawned the
+      // session by then, and this call's own kill decision is about the port IT sent its
+      // message to, not whatever the session has moved on to since.
       const wasDedicated = dedicated;
       const terminateMine = terminateCurrent;
 
       const cleanup = (): void => {
-        if (timer !== undefined) clearTimeout(timer);
+        if (spawnTimer !== undefined) clearTimeout(spawnTimer);
+        if (killTimer !== undefined) clearTimeout(killTimer);
         signal?.removeEventListener("abort", onAbort);
         if (currentPort.onmessage === onMessage) currentPort.onmessage = null;
       };
@@ -485,9 +547,41 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         cleanup();
         reject(new DOMException("The evaluate() call was aborted.", "AbortError"));
       };
+      const kill = (): void => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        if (wasDedicated) {
+          // Kill it outright (the only reliable cancel for a tight, uncooperative loop --
+          // design/aestimatio.md §3) and start fresh for the next call.
+          terminateMine?.();
+          spawnDedicated();
+        } else {
+          // SharedWorker, and nothing landed in time (cooperatively or via "started"):
+          // nothing here is safe to kill on other tabs' behalf. Poison THIS tab's handle
+          // -- close its port and abandon it -- and switch to a private dedicated worker
+          // instead; other tabs keep the shared session untouched.
+          currentPort.close?.();
+          spawnDedicated();
+        }
+        resolve({ value: ABORTED, reset: true });
+      };
       const onMessage = (event: WorkerMessageEvent): void => {
-        const m = event.data as { id: number; ok: boolean; json?: unknown };
+        const m = event.data as {
+          id: number;
+          kind?: "started" | "result";
+          ok?: boolean;
+          json?: unknown;
+        };
         if (m.id !== id || settled) return;
+        if (m.kind === "started") {
+          if (spawnTimer !== undefined) {
+            clearTimeout(spawnTimer);
+            spawnTimer = undefined;
+          }
+          if (timeMs !== undefined) killTimer = setTimeout(kill, timeMs + COOPERATIVE_GRACE_MS);
+          return;
+        }
         settled = true;
         cleanup();
         // A cooperative stop (m.json === "Aborted") arrives over THIS message path too --
@@ -502,28 +596,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
       }
       signal?.addEventListener("abort", onAbort);
 
-      if (timeMs !== undefined) {
-        timer = setTimeout(() => {
-          if (settled) return;
-          settled = true;
-          signal?.removeEventListener("abort", onAbort);
-          if (currentPort.onmessage === onMessage) currentPort.onmessage = null;
-          if (wasDedicated) {
-            // Kill it outright (the only reliable cancel for a tight, uncooperative
-            // loop -- design/aestimatio.md §3) and start fresh for the next call.
-            terminateMine?.();
-            spawnDedicated();
-          } else {
-            // SharedWorker, and the cooperative deadline didn't save it: nothing here
-            // is safe to kill on other tabs' behalf. Poison THIS tab's handle -- close
-            // its port and abandon it -- and switch to a private dedicated worker
-            // instead; other tabs keep the shared session untouched.
-            currentPort.close?.();
-            spawnDedicated();
-          }
-          resolve({ value: ABORTED, reset: true });
-        }, timeMs + COOPERATIVE_GRACE_MS);
-      }
+      if (timeMs !== undefined) spawnTimer = setTimeout(kill, spawnTimeoutMs);
 
       currentPort.postMessage({ id, json, timeMs });
     });

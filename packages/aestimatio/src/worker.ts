@@ -19,13 +19,19 @@ interface WorkerRequest {
   readonly setup?: string;
   /** The host's `timeMs`, evaluated cooperatively here first — see
    * ./cooperative-evaluate.ts. The host's own hard kill fires only if THIS deadline
-   * doesn't stop the call in time. */
+   * doesn't stop the call in time, and only starting once it sees this call's `"started"`
+   * (node.ts's own comment on why). */
   readonly timeMs?: number;
 }
 
 interface WorkerResponse {
   readonly id: number;
-  readonly ok: boolean;
+  /** `"started"`: engine construction and `setup` import for THIS call are done and
+   * `evaluateCooperatively` is about to run — the host arms its hard-kill timer from
+   * here, not from when it sent the request, so a slow spawn/import never eats into the
+   * deadline it wasn't given a chance to see. `"result"`: the actual answer. */
+  readonly kind: "started" | "result";
+  readonly ok?: boolean;
   readonly json?: unknown;
   readonly error?: string;
 }
@@ -39,8 +45,10 @@ async function handle(request: WorkerRequest): Promise<void> {
     const mod = (await import(setup)) as { configure: (ce: ComputeEngine) => void };
     mod.configure(ce);
   }
+  parentPort?.postMessage({ id, kind: "started" } satisfies WorkerResponse);
   parentPort?.postMessage({
     id,
+    kind: "result",
     ...evaluateCooperatively(ce, json, timeMs),
   } satisfies WorkerResponse);
 }

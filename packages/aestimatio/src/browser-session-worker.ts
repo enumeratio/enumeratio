@@ -25,7 +25,13 @@ interface EvaluateRequest {
 }
 interface EvaluateResponse {
   readonly id: number;
-  readonly ok: boolean;
+  /** `"started"`: the (already-configured) engine is about to run THIS call — the host
+   * arms its hard-kill timer from here, not from when it sent the request. See
+   * ./worker.ts's own comment; the same reasoning applies to a session's first call on a
+   * cold worker, or the first connection to a `SharedWorker` still importing `setup`.
+   * `"result"`: the actual answer. */
+  readonly kind: "started" | "result";
+  readonly ok?: boolean;
   readonly json?: unknown;
   readonly error?: string;
 }
@@ -57,9 +63,10 @@ function attachEvaluateHandler(port: PortLike): void {
     const request = event.data as EvaluateRequest;
     void (engine as Promise<ComputeEngine>).then((ce) => {
       const { id, json, timeMs } = request;
+      port.postMessage({ id, kind: "started" });
       // Bound to the session's one persistent `ce`: a `:=` here is visible to the next
       // call, on this port and (on a SharedWorker) any other tab's port too.
-      port.postMessage({ id, ...evaluateCooperatively(ce, json, timeMs) });
+      port.postMessage({ id, kind: "result", ...evaluateCooperatively(ce, json, timeMs) });
     });
   };
 }

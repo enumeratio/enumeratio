@@ -56,7 +56,12 @@ workers by memory limit, since `resourceLimits` are fixed at spawn. `evaluateIso
 uses), so a call built from compute-engine's own loops or a `checkpoint()`-ing kernel answers
 `Aborted` as an ordinary value well before anything is killed: the worker is reused, and a
 session keeps its bindings (`reset: false`). Only a tight, uncooperative loop the deadline
-never reaches still needs the host's own hard kill, fired a short grace period later.
+never reaches still needs the host's own hard kill, fired a short grace period later. That
+grace timer only starts once the worker itself reports `"started"` (engine/`setup` ready,
+about to run this call) — a cold spawn plus `@cortex-js/compute-engine` import never counts
+against `timeMs`. A worker that never reports `"started"` at all is caught by a separate,
+much larger spawn-timeout guard instead, folded into the same `Aborted`/`reset: true`
+outcome as an ordinary hard kill.
 
 A **session** (`openSession`) keeps one worker and one engine across calls, so `:=` bindings
 survive from one evaluation to the next. A hard-killed `timeMs` still terminates the worker;

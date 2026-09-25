@@ -8,11 +8,22 @@ import {
   type WorkerLike,
 } from "../src/browser.ts";
 
-function fakeWorker() {
+/** A message has an `id` exactly when it's an `evaluate` call (the `{ setup }` handshake
+ * doesn't) -- used below to auto-fire `"started"` only for those, immediately, simulating
+ * an already-warm worker/connection so `timeMs` tests exercise the small post-start kill
+ * margin rather than the (much larger, separately tested) spawn-timeout guard. */
+const idOf = (message: unknown): number | undefined => (message as { id?: number }).id;
+
+function fakeWorker(options: { autoStart?: boolean } = {}) {
+  const autoStart = options.autoStart ?? true;
   const posted: unknown[] = [];
   let terminated = 0;
   const worker: WorkerLike = {
-    postMessage: (message) => posted.push(message),
+    postMessage: (message) => {
+      posted.push(message);
+      const id = idOf(message);
+      if (autoStart && id !== undefined) worker.onmessage?.({ data: { id, kind: "started" } });
+    },
     terminate: () => {
       terminated++;
     },
@@ -23,15 +34,21 @@ function fakeWorker() {
     worker,
     posted,
     terminatedCount: () => terminated,
+    /** Sends the final result. */
     respond: (response: unknown) => worker.onmessage?.({ data: response }),
   };
 }
 
-function fakePort() {
+function fakePort(options: { autoStart?: boolean } = {}) {
+  const autoStart = options.autoStart ?? true;
   const posted: unknown[] = [];
   let closed = 0;
   const port: MessagePortLike = {
-    postMessage: (message) => posted.push(message),
+    postMessage: (message) => {
+      posted.push(message);
+      const id = idOf(message);
+      if (autoStart && id !== undefined) port.onmessage?.({ data: { id, kind: "started" } });
+    },
     onmessage: null,
     start: () => {},
     close: () => {
@@ -42,6 +59,7 @@ function fakePort() {
     port,
     posted,
     closedCount: () => closed,
+    /** Sends the final result. */
     respond: (response: unknown) => port.onmessage?.({ data: response }),
   };
 }
@@ -85,6 +103,25 @@ test("openSession (dedicated-Worker fallback) resets (reset: true) on a timeMs k
   expect(workers[0]!.terminatedCount()).toBe(1);
   expect(workers).toHaveLength(2); // replaced with a fresh worker
   expect(workers[1]!.posted).toEqual([{ setup: undefined }]); // fresh handshake
+
+  session.close();
+});
+
+test("openSession (dedicated-Worker fallback) replaces a worker that never reports started", async () => {
+  const workers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    spawnTimeoutMs: 5, // small on purpose -- proving the guard fires, not timing production
+    createWorker: () => {
+      const fake = fakeWorker({ autoStart: false });
+      workers.push(fake);
+      return fake.worker;
+    },
+  });
+
+  const killed = session.evaluate(["Add", 1, 1], { timeMs: 1000 });
+  await expect(killed).resolves.toEqual({ value: "Aborted", reset: true });
+  expect(workers[0]!.terminatedCount()).toBe(1);
+  expect(workers).toHaveLength(2); // the never-started worker was replaced
 
   session.close();
 });
@@ -156,6 +193,28 @@ test("an uncooperative SharedWorker call poisons this tab's session: switches to
 
   session.close();
   expect(dedicatedWorkers[0]!.terminatedCount()).toBe(1);
+});
+
+test("a SharedWorker that never reports started also poisons this tab's session (spawn-timeout guard)", async () => {
+  const shared = fakePort({ autoStart: false });
+  const dedicatedWorkers: ReturnType<typeof fakeWorker>[] = [];
+  const session = openSession({
+    name: "notebook",
+    spawnTimeoutMs: 5, // small on purpose -- proving the guard fires, not timing production
+    createSharedWorker: (): SharedWorkerLike => ({ port: shared.port }),
+    createWorker: () => {
+      const fake = fakeWorker();
+      dedicatedWorkers.push(fake);
+      return fake.worker;
+    },
+  });
+
+  const poisoned = session.evaluate(["Add", 1, 1], { timeMs: 1000 });
+  await expect(poisoned).resolves.toEqual({ value: "Aborted", reset: true });
+  expect(shared.closedCount()).toBe(1);
+  expect(dedicatedWorkers).toHaveLength(1); // switched to a private dedicated worker
+
+  session.close();
 });
 
 test("openSession passes its name through to createSharedWorker", () => {

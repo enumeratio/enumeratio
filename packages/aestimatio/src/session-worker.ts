@@ -25,7 +25,13 @@ interface EvaluateRequest {
 
 interface EvaluateResponse {
   readonly id: number;
-  readonly ok: boolean;
+  /** `"started"`: this call has reached the front of the queue and is about to run
+   * against the (already-configured) engine — the host arms its hard-kill timer from
+   * here, not from when it sent the request. `"result"`: the actual answer. See
+   * ./worker.ts's own comment; the same reasoning applies to a session's first call,
+   * which can otherwise be delayed behind the worker's own cold start. */
+  readonly kind: "started" | "result";
+  readonly ok?: boolean;
   readonly json?: unknown;
   readonly error?: string;
 }
@@ -42,9 +48,11 @@ async function main(): Promise<void> {
   // spawning) are queued by the port, not lost — safe to configure asynchronously above.
   parentPort?.on("message", (request: EvaluateRequest) => {
     const { id, json, timeMs } = request;
+    parentPort?.postMessage({ id, kind: "started" } satisfies EvaluateResponse);
     // Bound to the session's one persistent `ce`: a `:=` here is visible next call.
     parentPort?.postMessage({
       id,
+      kind: "result",
       ...evaluateCooperatively(ce, json, timeMs),
     } satisfies EvaluateResponse);
   });
