@@ -1,0 +1,36 @@
+x-occurs-in-x-2-plus-1:
+  epsil:
+    in: FreeQ(x ^ 2 + 1, x)
+    out: False
+  tex:
+    in: \mathrm{FreeQ}(x^2+1, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FreeQ}(x^2+1, x)
+    out: \mathrm{False}
+  fullform:
+    in: FreeQ[Plus[Power[x, 2], 1], x]
+y-never-occurs:
+  epsil:
+    in: FreeQ(x ^ 2 + 1, y)
+    out: True
+  tex:
+    in: \mathrm{FreeQ}(x^2+1, y)
+    out: \top
+  traditional:
+    in: \mathrm{FreeQ}(x^2+1, y)
+    out: \mathrm{True}
+  fullform:
+    in: FreeQ[Plus[Power[x, 2], 1], y]
+looks-inside-subexpressions-not-just-top-level:
+  epsil:
+    in: FreeQ([[a, b]], b)
+    out: False
+  tex:
+    in: \mathrm{FreeQ}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack\bigr\rbrack, b)
+    out: \bot
+  traditional:
+    in: \mathrm{FreeQ}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack\bigr\rbrack, b)
+    out: \mathrm{False}
+  fullform:
+    in: FreeQ[List[List[a, b]], b]

@@ -373,6 +373,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Association",
   },
   {
+    name: "AssociationThread",
+    wolfram: "AssociationThread",
+  },
+  {
     name: "Assuming",
     wolfram: "Assuming",
   },
@@ -1952,6 +1956,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Select",
   },
   {
+    name: "FindInstance",
+    wolfram: "FindInstance",
+  },
+  {
     name: "FindSequenceFunction",
     wolfram: "FindSequenceFunction",
   },
@@ -2028,6 +2036,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FoldList",
   },
   {
+    name: "Fourier",
+    wolfram: "Fourier",
+  },
+  {
+    name: "FourierCoefficient",
+    wolfram: "FourierCoefficient",
+  },
+  {
+    name: "FourierSeries",
+    wolfram: "FourierSeries",
+  },
+  {
     name: "FourierTransform",
     wolfram: "FourierTransform",
   },
@@ -2036,12 +2056,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FractionalPart",
   },
   {
+    name: "FreeQ",
+    wolfram: "FreeQ",
+  },
+  {
     name: "FrobeniusNumber",
     wolfram: "FrobeniusNumber",
   },
   {
     name: "FrobeniusSolve",
     wolfram: "FrobeniusSolve",
+  },
+  {
+    name: "FromCharacterCode",
+    wolfram: "FromCharacterCode",
   },
   {
     name: "FromDigits",
@@ -2672,6 +2700,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "EllipticPi",
   },
   {
+    name: "Inequality",
+    wolfram: "Inequality",
+  },
+  {
     name: "IntegerDigits",
     wolfram: "IntegerDigits",
   },
@@ -2737,6 +2769,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "InverseErfc",
     wolfram: "InverseErfc",
+  },
+  {
+    name: "InverseFourier",
+    wolfram: "InverseFourier",
   },
   {
     name: "InverseFourierTransform",
@@ -3246,6 +3282,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LetterNumber",
   },
   {
+    name: "Level",
+    wolfram: "Level",
+  },
+  {
     name: "LineGraph",
     wolfram: "LineGraph",
   },
@@ -3478,6 +3518,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MapAt",
     wolfram: "MapAt",
+  },
+  {
+    name: "MapIndexed",
+    wolfram: "MapIndexed",
+  },
+  {
+    name: "MapThread",
+    wolfram: "MapThread",
+  },
+  {
+    name: "MatchQ",
+    wolfram: "MatchQ",
   },
   {
     name: "MatrixExp",
@@ -3835,6 +3887,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Pi",
     wolfram: "Pi",
+  },
+  {
+    name: "Pick",
+    wolfram: "Pick",
   },
   {
     name: "Piecewise",
@@ -4197,6 +4253,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ConstantArray",
   },
   {
+    name: "Replace",
+    wolfram: "Replace",
+  },
+  {
+    name: "ReplacePart",
+    wolfram: "ReplacePart",
+  },
+  {
     name: "Rescale",
     wolfram: "Rescale",
   },
@@ -4232,6 +4296,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Round",
     wolfram: "Round",
+  },
+  {
+    name: "Rule",
+    wolfram: "Rule",
   },
   {
     name: "SawtoothWave",
@@ -4611,6 +4679,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "StringLength",
+    wolfram: "StringLength",
+  },
+  {
+    name: "StringTake",
+    wolfram: "StringTake",
+  },
+  {
     name: "Subfactorial",
     wolfram: "Subfactorial",
   },
@@ -4747,12 +4823,24 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Thread",
   },
   {
+    name: "Through",
+    wolfram: "Through",
+  },
+  {
     name: "Throw",
     wolfram: "Throw",
   },
   {
     name: "TimeConstrained",
     wolfram: "TimeConstrained",
+  },
+  {
+    name: "ToCharacterCode",
+    wolfram: "ToCharacterCode",
+  },
+  {
+    name: "ToString",
+    wolfram: "ToString",
   },
   {
     name: "Totient",

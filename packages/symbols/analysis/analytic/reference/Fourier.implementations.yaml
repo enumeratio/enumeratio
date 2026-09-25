@@ -1,0 +1,61 @@
+dft-of-1-2-3-4:
+  epsil:
+    in: Fourier([1, 2, 3, 4])
+    out: "[5, -1 + -1 * i, -1, -1 + i]"
+  tex:
+    in: \mathrm{Fourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack5, -1-i, -1, -1+i\bigr\rbrack
+  fullform:
+    in: Fourier[List[1, 2, 3, 4]]
+  wolfram:
+    in: Fourier[List[1, 2, 3, 4]]
+    out: "{5. + 0.*I, -1. - 1.*I, -1. + 0.*I, -1. + 1.*I}"
+round-trips-through-inversefourier:
+  epsil:
+    in: InverseFourier(Fourier([1, 2, 3, 4]))
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{InverseFourier}(\mathrm{Fourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack))
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: InverseFourier[Fourier[List[1, 2, 3, 4]]]
+  wolfram:
+    in: InverseFourier[Fourier[List[1, 2, 3, 4]]]
+    out: "{1., 2., 3., 4.}"
+a-2x2-matrix-the-separable-2d-transform:
+  epsil:
+    in: Fourier([[1, 2], [3, 4]])
+    out: "[[5, -1], [-2, 0]]"
+  tex:
+    in: \mathrm{Fourier}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack5, -1\bigr\rbrack, \bigl\lbrack-2, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Fourier[List[List[1, 2], List[3, 4]]]
+  wolfram:
+    in: Fourier[List[List[1, 2], List[3, 4]]]
+    out: "{{5., -1.}, {-2., 0.}}"
+a-custom-fourierparameters:
+  epsil:
+    in: Fourier([1, 2, 3, 4], FourierParameters -> [1, -1])
+    out: "[10, -2 + 2i, -2, -2 + -2 * i]"
+  tex:
+    in: \mathrm{Fourier}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{KeyValuePair}(\mathrm{FourierParameters}, \bigl\lbrack1, -1\bigr\rbrack))
+    out: \bigl\lbrack10, -2+2i, -2, -2-2i\bigr\rbrack
+  fullform:
+    in: Fourier[List[1, 2, 3, 4], KeyValuePair[FourierParameters, List[1, -1]]]
+  wolfram:
+    in: Fourier[{1, 2, 3, 4}, FourierParameters -> {1, -1}]
+    out: "{10. + 0.*I, -2. + 2.*I, -2. + 0.*I, -2. - 2.*I}"
+declines-a-symbolic-list:
+  epsil:
+    in: Fourier([a, b])
+    out: Fourier([a, b])
+  tex:
+    in: \mathrm{Fourier}(\bigl\lbrack a, b\bigr\rbrack)
+    out: \mathrm{Fourier}(\bigl\lbrack a, b\bigr\rbrack)
+  fullform:
+    in: Fourier[List[a, b]]
+  wolfram:
+    in: Fourier[{a, b}]
+    out: Fourier[{a, b}]
+    note: Wolfram raises `Fourier::fftl` ("... is not a nonempty list or rectangular array of numeric quantities") and returns the call unevaluated -- the same decline we make.

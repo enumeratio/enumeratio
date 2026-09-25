@@ -4,16 +4,16 @@
 // against deliberately broken kernels — because a harness that reports "0 failing" is only
 // worth anything if it has been shown to fail on something.
 //
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts             # everything, fresh seed
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts perm        # families matching "perm"
-//   vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts perm 123456 # replay exactly
-//   QUICKCHECK_POINTS=20 vp node …/quickcheck.ts                   # more points per family
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm        # families matching "perm"
+//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
+//   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
 
 import { allEntries } from "../src/families/index.ts";
-import { check, checkFamily, type Failure, random, shrink } from "./properties.ts";
+import { check, checkFamily, type Failure, shrink, streamFor } from "./properties.ts";
 
-const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 8);
-const PARAM_CAP = Number(process.env.QUICKCHECK_PARAM_CAP ?? 7);
+const POINTS = Number(process.env.PLAUSIBLE_POINTS ?? 8);
+const PARAM_CAP = Number(process.env.PLAUSIBLE_PARAM_CAP ?? 7);
 
 // Families backed by tableaux-plane.ts's `indexedFamily` engine: unrank/rank (and, for three of
 // them, count itself) fully materialize every element of the family before answering. That
@@ -49,13 +49,12 @@ const MAX_MATERIALIZED = 2_000_000;
 const args = process.argv.slice(2);
 const filter = args.find((argument) => !/^\d+$/.test(argument)) ?? "";
 const seed = Number(args.find((argument) => /^\d+$/.test(argument)) ?? Date.now() % 1_000_000);
-const draw = random(seed);
 
 const families = allEntries.filter((entry) =>
   filter === "" ? true : entry.head.toLowerCase().includes(filter.toLowerCase()),
 );
 
-process.stdout.write(`quickcheck seed ${seed} — ${families.length} families, ${POINTS} points each\n`);
+process.stdout.write(`plausible seed ${seed} — ${families.length} families, ${POINTS} points each\n`);
 if (families.length === 0) {
   process.stdout.write(`no family matches ${JSON.stringify(filter)}\n`);
   process.exit(1);
@@ -65,6 +64,7 @@ const failures: Failure[] = [];
 let checked = 0;
 
 for (const entry of families) {
+  const draw = streamFor(seed, entry.head);
   const fullEnumeration = FULL_ENUMERATION_FAMILIES.has(entry.head);
   const paramCap = fullEnumeration ? SMALL_PARAM_CAP : PARAM_CAP;
   for (let attempt = 0; attempt < POINTS; attempt++) {
@@ -114,7 +114,7 @@ for (const failure of failures) {
   process.stdout.write(
     `\n  ${failure.family}(${failure.params.join(", ")})${failure.rank >= 0 ? ` at rank ${failure.rank}` : ""}\n` +
       `    ${failure.property}: ${failure.detail}\n` +
-      `    replay: vp node packages/symbols/combinatorics/collections/scripts/quickcheck.ts ${failure.family} ${seed}\n`,
+      `    replay: vp node packages/symbols/combinatorics/collections/scripts/plausible.ts ${failure.family} ${seed}\n`,
   );
 }
 

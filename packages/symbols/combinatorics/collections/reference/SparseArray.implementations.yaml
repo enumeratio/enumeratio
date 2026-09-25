@@ -16,6 +16,8 @@ sparsearray-infers-dims:
     out: \bigl\lbrack\bigl\lbrack5, 0\bigr\rbrack, \bigl\lbrack0, 7\bigr\rbrack\bigr\rbrack
   fullform:
     in: SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]
+  wolfram:
+    in: SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]
 sparsearray-custom-default:
   epsil:
     in: SparseArray([Rule(2, 9)], 3, -1)
@@ -24,6 +26,8 @@ sparsearray-custom-default:
     in: \mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(2, 9)\bigr\rbrack, 3, -1)
     out: \bigl\lbrack-1, 9, -1\bigr\rbrack
   fullform:
+    in: SparseArray[List[Rule[2, 9]], 3, -1]
+  wolfram:
     in: SparseArray[List[Rule[2, 9]], 3, -1]
 sparsearray-normal-is-identity:
   epsil:

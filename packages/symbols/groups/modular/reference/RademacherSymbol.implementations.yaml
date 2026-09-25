@@ -43,3 +43,33 @@ phi-on-t-n-just-counts:
     out: "7"
   fullform:
     in: RademacherPhi[ModularMatrix[1, 7, 0, 1]]
+the-same-number-by-counting-letters:
+  epsil:
+    in: WordSymbol("LRRRR")
+    out: "3"
+  tex:
+    in: \mathrm{WordSymbol}(\text{LRRRR})
+    out: "3"
+  fullform:
+    in: WordSymbol["LRRRR"]
+and-again-by-the-linking-number:
+  epsil:
+    in: LinkingWithTrefoil("LRRRR")
+    out: "3"
+  tex:
+    in: \mathrm{LinkingWithTrefoil}(\text{LRRRR})
+    out: "3"
+  fullform:
+    in: LinkingWithTrefoil["LRRRR"]
+s-1-5:
+  epsil:
+    in: DedekindSum(1, 5)
+    out: 1 / 5
+  tex:
+    in: \mathrm{DedekindSum}(1, 5)
+    out: \frac{1}{5}
+  traditional:
+    in: s(1, 5)
+    out: \frac{1}{5}
+  fullform:
+    in: DedekindSum[1, 5]

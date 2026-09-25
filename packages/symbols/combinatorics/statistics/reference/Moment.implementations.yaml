@@ -42,3 +42,14 @@ moment-order-3-unevaluated:
     in: Moment[GeometricDistribution[Rational[1, 4]], 3]
   wolfram:
     in: Moment[GeometricDistribution[Rational[1, 4]], 3]
+moment-bernoulli-order-5:
+  epsil:
+    in: Moment(BernoulliDistribution(2 / 5), 5)
+    out: 2 / 5
+  tex:
+    in: \mathrm{Moment}(\mathrm{BernoulliDistribution}(\frac{2}{5}), 5)
+    out: \frac{2}{5}
+  fullform:
+    in: Moment[BernoulliDistribution[Rational[2, 5]], 5]
+  wolfram:
+    in: Moment[BernoulliDistribution[Rational[2, 5]], 5]

@@ -328,3 +328,179 @@ no-numeral-for-a-negative-in-a-system-that:
     out: \mathrm{IntegerDigits}(-3, \mathrm{FactorialNumerals})
   fullform:
     in: IntegerDigits[-3, FactorialNumerals]
+factoradic-5-is-the-lehmer-code-2-1-0:
+  epsil:
+    in: IntegerDigits(5, FactorialNumerals)
+    out: "[2, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(5, \mathrm{FactorialNumerals})
+    out: \bigl\lbrack2, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[5, FactorialNumerals]
+factoradic-463-a-longer-lehmer-code:
+  epsil:
+    in: IntegerDigits(463, FactorialNumerals)
+    out: "[3, 4, 1, 0, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(463, \mathrm{FactorialNumerals})
+    out: \bigl\lbrack3, 4, 1, 0, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[463, FactorialNumerals]
+balanced-ternary-5-is-1-1-1:
+  epsil:
+    in: IntegerDigits(5, BalancedNumerals(3))
+    out: "[1, -1, -1]"
+  tex:
+    in: \mathrm{IntegerDigits}(5, \mathrm{BalancedNumerals}(3))
+    out: \bigl\lbrack1, -1, -1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[5, BalancedNumerals[3]]
+negativenumerals-2-3-is-1-1-1:
+  epsil:
+    in: IntegerDigits(3, NegativeNumerals(2))
+    out: "[1, 1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(3, \mathrm{NegativeNumerals}(2))
+    out: \bigl\lbrack1, 1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[3, NegativeNumerals[2]]
+negativenumerals-2-minus-2-is-1-0:
+  epsil:
+    in: IntegerDigits(-2, NegativeNumerals(2))
+    out: "[1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(-2, \mathrm{NegativeNumerals}(2))
+    out: \bigl\lbrack1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-2, NegativeNumerals[2]]
+fixed-base-2-drops-the-sign-of-minus-5:
+  epsil:
+    in: IntegerDigits(-5, 2)
+    out: "[1, 0, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(-5, 2)
+    out: \bigl\lbrack1, 0, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[-5, 2]
+  wolfram:
+    in: IntegerDigits[-5, 2]
+positionalnumerals-declines-a-negative:
+  epsil:
+    in: IntegerDigits(-5, PositionalNumerals(2))
+    out: IntegerDigits(-5, PositionalNumerals(2))
+  tex:
+    in: \mathrm{IntegerDigits}(-5, \mathrm{PositionalNumerals}(2))
+    out: \mathrm{IntegerDigits}(-5, \mathrm{PositionalNumerals}(2))
+  fullform:
+    in: IntegerDigits[-5, 2]
+    back: [IntegerDigits, -5, 2]
+  wolfram:
+    in: IntegerDigits[-5, 2]
+combinatorial-base-3-zero-is-2-1-0:
+  epsil:
+    in: IntegerDigits(0, CombinatorialNumerals(3))
+    out: "[2, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(0, \mathrm{CombinatorialNumerals}(3))
+    out: \bigl\lbrack2, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[0, CombinatorialNumerals[3]]
+primorial-base-30-is-1-0-0-0:
+  epsil:
+    in: IntegerDigits(30, PrimorialNumerals)
+    out: "[1, 0, 0, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(30, \mathrm{PrimorialNumerals})
+    out: \bigl\lbrack1, 0, 0, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[30, PrimorialNumerals]
+an-even-balanced-base-declines:
+  epsil:
+    in: IntegerDigits(10, BalancedNumerals(4))
+    out: IntegerDigits(10, BalancedNumerals(4))
+  tex:
+    in: \mathrm{IntegerDigits}(10, \mathrm{BalancedNumerals}(4))
+    out: \mathrm{IntegerDigits}(10, \mathrm{BalancedNumerals}(4))
+  fullform:
+    in: IntegerDigits[10, BalancedNumerals[4]]
+an-unrecognized-system-symbol-leaves-the-call:
+  epsil:
+    in: IntegerDigits(10, NotASystem)
+    out: IntegerDigits(10, NotASystem)
+  tex:
+    in: \mathrm{IntegerDigits}(10, \mathrm{NotASystem})
+    out: \mathrm{IntegerDigits}(10, \mathrm{NotASystem})
+  fullform:
+    in: IntegerDigits[10, NotASystem]
+ostrowski-12-over-all-ones-convergents:
+  epsil:
+    in: IntegerDigits(12, OstrowskiNumerals([1, 1, 1, 1, 1, 1, 1, 1]))
+    out: "[0, 0, 1, 0, 1, 0, 1, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(12, \mathrm{OstrowskiNumerals}(\bigl\lbrack1, 1, 1, 1, 1, 1, 1, 1\bigr\rbrack))
+    out: \bigl\lbrack0, 0, 1, 0, 1, 0, 1, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[12, OstrowskiNumerals[List[1, 1, 1, 1, 1, 1, 1, 1]]]
+zeckendorf-12-is-8-3-1:
+  epsil:
+    in: IntegerDigits(12, ZeckendorfNumerals)
+    out: "[1, 0, 1, 0, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(12, \mathrm{ZeckendorfNumerals})
+    out: \bigl\lbrack1, 0, 1, 0, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[12, ZeckendorfNumerals]
+ostrowski-9-over-2-2-2-is-1-2-0:
+  epsil:
+    in: IntegerDigits(9, OstrowskiNumerals([2, 2, 2]))
+    out: "[1, 2, 0]"
+  tex:
+    in: \mathrm{IntegerDigits}(9, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+    out: \bigl\lbrack1, 2, 0\bigr\rbrack
+  fullform:
+    in: IntegerDigits[9, OstrowskiNumerals[List[2, 2, 2]]]
+ostrowski-declines-past-its-ceiling:
+  epsil:
+    in: IntegerDigits(12, OstrowskiNumerals([2, 2, 2]))
+    out: IntegerDigits(12, OstrowskiNumerals([2, 2, 2]))
+  tex:
+    in: \mathrm{IntegerDigits}(12, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+    out: \mathrm{IntegerDigits}(12, \mathrm{OstrowskiNumerals}(\bigl\lbrack2, 2, 2\bigr\rbrack))
+  fullform:
+    in: IntegerDigits[12, OstrowskiNumerals[List[2, 2, 2]]]
+past-the-product-there-is-no-residue-numeral:
+  epsil:
+    in: IntegerDigits(105, ResidueNumerals([3, 5, 7]))
+    out: IntegerDigits(105, ResidueNumerals([3, 5, 7]))
+  tex:
+    in: \mathrm{IntegerDigits}(105, \mathrm{ResidueNumerals}(\bigl\lbrack3, 5, 7\bigr\rbrack))
+    out: \mathrm{IntegerDigits}(105, \mathrm{ResidueNumerals}(\bigl\lbrack3, 5, 7\bigr\rbrack))
+  fullform:
+    in: IntegerDigits[105, ResidueNumerals[List[3, 5, 7]]]
+bijective-base-26-27-is-aa:
+  epsil:
+    in: IntegerDigits(27, BijectiveNumerals(26))
+    out: "[1, 1]"
+  tex:
+    in: \mathrm{IntegerDigits}(27, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack1, 1\bigr\rbrack
+  fullform:
+    in: IntegerDigits[27, BijectiveNumerals[26]]
+bijective-base-26-702-is-zz:
+  epsil:
+    in: IntegerDigits(702, BijectiveNumerals(26))
+    out: "[26, 26]"
+  tex:
+    in: \mathrm{IntegerDigits}(702, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack26, 26\bigr\rbrack
+  fullform:
+    in: IntegerDigits[702, BijectiveNumerals[26]]
+bijective-base-26-zero-is-the-empty-numeral:
+  epsil:
+    in: IntegerDigits(0, BijectiveNumerals(26))
+    out: "[]"
+  tex:
+    in: \mathrm{IntegerDigits}(0, \mathrm{BijectiveNumerals}(26))
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: IntegerDigits[0, BijectiveNumerals[26]]
