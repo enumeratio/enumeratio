@@ -59,6 +59,31 @@ function nestListValues(
  *  entry asked for. */
 const FIXED_POINT_MAX_ITERATIONS = 10_000;
 
+/**
+ * Whether `next` and `current` agree to the engine's working precision — `|Δ| ≤ |next| ·
+ * 10^(1 - precision)`, Wolfram's own rule of thumb for "close enough" at a given precision.
+ * Only meaningful for two inexact reals with a `bignumRe` (an exact value or a non-numeric
+ * result is `isSame`'s job, below), and deliberately done in `BigDecimal` arithmetic
+ * (`.cmp`, not compute-engine's own `LessEqual`/`isLess`): compute-engine's numeric
+ * comparison heads fold anything near machine-epsilon-of-zero together, so comparing a tiny
+ * absolute `delta` against an even tinier `tolerance` — exactly what iterations near a
+ * fixed point produce — comes back `true` no matter which is actually larger. `BigDecimal`'s
+ * own `.cmp` has no such fuzz.
+ */
+function withinWorkingPrecision(
+  ce: ComputeEngine,
+  next: BoxedExpression,
+  current: BoxedExpression,
+): boolean {
+  const nextBig = next.bignumRe;
+  const currentBig = current.bignumRe;
+  if (nextBig === undefined || currentBig === undefined) return false;
+  if (!nextBig.isFinite() || !currentBig.isFinite()) return false;
+  const delta = nextBig.sub(currentBig).abs();
+  const tolerance = nextBig.abs().mul(10 ** -(ce.precision - 1));
+  return delta.cmp(tolerance) <= 0;
+}
+
 function fixedPointValue(
   ce: ComputeEngine,
   fn: BoxedExpression,
@@ -67,7 +92,12 @@ function fixedPointValue(
   let current = x;
   for (let i = 0; i < FIXED_POINT_MAX_ITERATIONS; i++) {
     const next = applyFn(ce, fn, [current]);
-    if (next.isEqual(current) === true) return next;
+    // Wolfram's own stopping rule: two successive iterates read the SAME (`SameQ`), not
+    // merely numerically equal — structural equality, which is exact for an exact value
+    // (an integer sequence that has truly settled) and otherwise essentially never fires
+    // for an inexact one (see `withinWorkingPrecision`, right below).
+    if (next.isSame(current)) return next;
+    if (withinWorkingPrecision(ce, next, current)) return next;
     current = next;
   }
   return current;

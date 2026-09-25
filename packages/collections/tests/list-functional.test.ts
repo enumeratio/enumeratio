@@ -4,7 +4,8 @@ import { declareCollections } from "../src/library.ts";
 
 const ce = new ComputeEngine();
 declareCollections(ce);
-const run = (expr: unknown) => ce.box(expr as never).evaluate().json;
+const runExpr = (expr: unknown) => ce.box(expr as never).evaluate();
+const run = (expr: unknown) => runExpr(expr).json;
 
 // Nest / NestList
 
@@ -46,6 +47,28 @@ test("FixedPoint is idempotent once reached: one more f does nothing", () => {
 test("FixedPoint(f) alone (no x) still declines — the widened signature requires both", () => {
   const result = run(["FixedPoint", "f"]) as readonly unknown[];
   expect(result[0]).toEqual("Error");
+});
+
+// The termination rule (SameQ first, then agreement to working precision for an inexact
+// sequence — see list-functional.ts's `withinWorkingPrecision`) has to actually land near
+// the true fixed point, not just near ANOTHER iterate: assert the residual |f(x) - x| is
+// within a couple of orders of magnitude of the engine's own working precision, for both
+// inexact examples. A termination test that is too loose (e.g. compute-engine's own
+// `isEqual`, which this replaced) stops many iterations early, at a residual many orders of
+// magnitude looser than this.
+const residualBound = 10 ** -(ce.precision - 2);
+test("FixedPoint(Cos, 0.5) lands within the working precision of the true fixed point", () => {
+  const x = runExpr(["FixedPoint", "Cos", 0.5]);
+  const residual = Math.abs(ce.function("Subtract", [ce.function("Cos", [x]), x]).evaluate().re);
+  expect(residual).toBeLessThanOrEqual(residualBound);
+});
+test("FixedPoint(Newton's method, 1.5) lands within the working precision of sqrt(2)", () => {
+  const fn = ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]];
+  const x = runExpr(["FixedPoint", fn, 1.5]);
+  const residual = Math.abs(
+    ce.function("Subtract", [ce.function("Apply", [ce.box(fn as never), x]), x]).evaluate().re,
+  );
+  expect(residual).toBeLessThanOrEqual(residualBound);
 });
 
 // LinearRecurrence: cross-checked against a hand-rolled recurrence.
