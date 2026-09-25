@@ -94,6 +94,10 @@ test("Log arg-swap reverses cleanly for the explicit-base form", () => {
 
 test("structural forms with an unambiguous shape are reversed", () => {
   expect(fromWolfram("Slot[1]")).toBe("_1");
+  expect(fromWolfram(toWolfram(["Function", ["Power", "_", 2]]))).toEqual([
+    "Function",
+    ["Power", "_1", 2],
+  ]);
   expect(fromWolfram("Function[Greater[Slot[1], Slot[2]]]")).toEqual([
     "Function",
     ["Greater", "_1", "_2"],
