@@ -107,4 +107,13 @@ suite or growing without bound), then one `vitest` `test` per example asserting 
 reference engine declares EXCEPT `@enumeratio/aestimatio` itself — the worker's own engine
 already has it (worker.ts), and redeclaring throws.
 
+`worker.ts` keeps ONE configured `ComputeEngine` per `setup` URL for a worker's whole
+lifetime (declaring a whole library set on every single message, for every case, was the
+dominant cost of running many small cases through the pool) — only the declarations survive
+across calls. Each call still runs inside its own `ce.pushScope()`/`ce.popScope()` (mirroring
+`Transcript.run`), so a `:=` or other binding one call makes is gone before the next call on
+that same (reused) worker ever sees it. A worker that gets hard-killed is destroyed outright
+and replaced, so there's never a stale engine to worry about. Sessions are unaffected — they
+already keep one engine (and its bindings) on purpose.
+
 Future work (`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to design/speculative/aestimatio.md.
