@@ -2712,7 +2712,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         caption: "Narcissistic (Armstrong) numbers are proven finite: exactly 88 exist.",
       },
       {
-        id: "the-88th-largest-term-is-exact-past-2-53",
+        id: "the-88th-and-largest-term-is-exact",
         expr: ["At", "NarcissisticNumbers", 88],
         expected: { num: "115132219018763992565095597973971522401" },
         category: "Scope",

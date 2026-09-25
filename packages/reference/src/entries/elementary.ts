@@ -445,14 +445,6 @@ export const elementary: readonly ReferenceEntry[] = [
           "A huge exact argument is reduced modulo $2\\pi$ with enough working precision to get the digits right",
       },
       {
-        id: "a-huge-24-40-argument-reduces-exactly-mod-2-pi",
-        expr: ["N", ["Sin", ["Power", 24, 40]]],
-        expected: { num: "0.400083152719766047071" },
-        category: "Possible issues",
-        caption:
-          "$24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\\pi$ before Sin sees it, not rounded to working precision first",
-      },
-      {
         id: "functionexpand-gives-the-nested-radical-form",
         expr: ["FunctionExpand", ["Sin", ["Divide", "Pi", 15]]],
         expected: [
@@ -475,6 +467,14 @@ export const elementary: readonly ReferenceEntry[] = [
         expected: { num: "0.841470984807896506652502321630" },
         category: "Scope",
         caption: "To 30 significant digits, every one correctly rounded",
+      },
+      {
+        id: "a-huge-24-40-argument-reduces-exactly-mod-2-pi",
+        expr: ["N", ["Sin", ["Power", 24, 40]]],
+        expected: { num: "0.400083152719766047071" },
+        category: "Scope",
+        caption:
+          "$24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\\pi$ before Sin sees it, not rounded to working precision first",
       },
     ],
     seeAlso: ["Cos", "Tan", "Csc", "Arcsin"],
@@ -771,19 +771,19 @@ export const elementary: readonly ReferenceEntry[] = [
           "$\\pi/24$ is past the automatic special-angle table (as in Wolfram), so this stays symbolic",
       },
       {
-        id: "a-huge-10-100-argument-reduces-exactly-mod-2-pi",
-        expr: ["N", ["Cos", ["Power", 10, 100]]],
-        expected: { num: "-0.928081905074655343456" },
-        category: "Possible issues",
-        caption:
-          "$10^{100}$ has 101 digits; the exact argument is still reduced modulo $2\\pi$ before Cos sees it, not rounded to working precision first",
-      },
-      {
         id: "to-30-significant-digits-every-one-correctly",
         expr: ["N", ["Cos", 1], 30],
         expected: { num: "0.540302305868139717400936607443" },
         category: "Scope",
         caption: "To 30 significant digits, every one correctly rounded",
+      },
+      {
+        id: "a-huge-10-100-argument-reduces-exactly-mod-2-pi",
+        expr: ["N", ["Cos", ["Power", 10, 100]]],
+        expected: { num: "-0.928081905074655343456" },
+        category: "Scope",
+        caption:
+          "$10^{100}$ has 101 digits; the exact argument is still reduced modulo $2\\pi$ before Cos sees it, not rounded to working precision first",
       },
     ],
     seeAlso: ["Sin", "Tan", "Sec", "Arccos"],
