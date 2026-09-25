@@ -41,7 +41,8 @@ export const numerals: readonly ReferenceEntry[] = [
       "In a fixed base the sign of n is discarded, so negative integers give the same digits as their absolute value.",
       "IntegerDigits(0) is $\\{0\\}$ -- there's always at least one digit.",
       "The 3-argument form keeps only the len least-significant digits, truncating or zero-padding as needed.",
-      "Systems: `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`",
+      "Systems: `PositionalNumerals(b)`, `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `Radix`, `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`",
+      "`PositionalNumerals(b)` is ordinary base-$b$ notation, $b\\ge2$ — the same digits an integer base already gives, wrapped as a system value so it can stand wherever the others do (`NumeralSystemShape`, a constant-radix `MixedRadixNumerals` comparison)",
       "`OstrowskiNumerals([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf",
       "`BalancedNumerals` and `NegativeNumerals` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead",
       "The factoradic digits of $n$ are the Lehmer code of the $n$-th permutation, so padding to the permutation's size makes the two line up",
@@ -79,6 +80,12 @@ export const numerals: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine does not",
+      },
+      {
+        expr: ["IntegerDigits", 2147, ["PositionalNumerals", 2]],
+        expected: ["List", 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+        caption: "ordinary base 2, as a system value — same digits as the native 2-argument form",
+        category: "Scope",
       },
       {
         expr: ["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]],
@@ -208,6 +215,12 @@ export const numerals: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "compute-engine's FromDigits only takes a list of digits",
+      },
+      {
+        expr: ["FromDigits", L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1), ["PositionalNumerals", 2]],
+        expected: 2147,
+        caption: "ordinary base 2 as a system value",
+        category: "Scope",
       },
       {
         expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadixNumerals", L(24, 60, 60)]],
@@ -422,6 +435,17 @@ export const numerals: readonly ReferenceEntry[] = [
           ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
           ["KeyValuePair", { str: "Rule" }, "'no two adjacent ones'"],
         ],
+        category: "Scope",
+      },
+      {
+        expr: ["NumeralSystemShape", ["PositionalNumerals", 2]],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "True"],
+          ["KeyValuePair", { str: "Integers" }, "NonNegativeIntegers"],
+          ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
+        ],
+        caption: "ordinary base 2, in the same shape every other system reports",
         category: "Scope",
       },
       {

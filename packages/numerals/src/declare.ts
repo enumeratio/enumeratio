@@ -35,13 +35,15 @@ import {
 // The systems are the point: `FactorialNumerals`, `ZeckendorfNumerals`,
 // `BalancedNumerals(3)`, `NegativeNumerals(2)`, `BijectiveNumerals(26)`,
 // `MixedRadixNumerals([…])`, `PrimorialNumerals`, `CombinatorialNumerals(k)`,
-// `ResidueNumerals([…])` and `AdicNumerals(b)` are all just values in that slot.
-// `AdicNumeral` (singular) is the b-adic VALUE, with its arithmetic.
+// `ResidueNumerals([…])`, `AdicNumerals(b)` and `PositionalNumerals(b)` are all just
+// values in that slot. `AdicNumeral` (singular) is the b-adic VALUE, with its arithmetic.
+// `PositionalNumerals(b)` is ordinary base b, as a system value.
 //
 // The heads above replace an older one-word-per-radix-flavour naming (`Factoradic`,
-// `Zeckendorf`, `BalancedRadix`, …) with a single `…Numerals` suffix. `NUMERAL_ALIASES`
-// keeps the old spellings working: each is declared to evaluate to its canonical form,
-// so existing expressions and Wolfram source keep reading (see `declareNumerals` below).
+// `Zeckendorf`, `BalancedRadix`, `Radix`, …) with a single `…Numerals` suffix.
+// `NUMERAL_ALIASES` keeps the old spellings working: each is declared to evaluate to its
+// canonical form, so existing expressions and Wolfram source keep reading (see
+// `declareNumerals` below).
 
 type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
 type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
@@ -55,7 +57,7 @@ function integerList(expr: BoxedExpression | undefined): number[] | undefined {
 
 /** Heads that name a system taking one integer argument. */
 const ONE_ARGUMENT: Record<string, (k: number) => NumeralSystem | undefined> = {
-  Radix: radix,
+  PositionalNumerals: radix,
   BalancedNumerals: balancedRadix,
   NegativeNumerals: negativeRadix,
   BijectiveNumerals: bijectiveRadix,
@@ -89,6 +91,7 @@ const NULLARY: Record<string, () => NumeralSystem> = {
  * answer. `AdicNumerals` had no old spelling — it landed on the convention first.
  */
 export const NUMERAL_ALIASES: Readonly<Record<string, string>> = {
+  Radix: "PositionalNumerals",
   Factoradic: "FactorialNumerals",
   PrimorialRadix: "PrimorialNumerals",
   BalancedRadix: "BalancedNumerals",
