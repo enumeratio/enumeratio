@@ -334,12 +334,18 @@ export const collections: readonly ReferenceEntry[] = [
         description: "`default` when the collection is empty, instead of the first element.",
         library: "enumeratio-collections",
       },
+      {
+        call: "First(expr)",
+        description: "the first operand of any expression, not just a collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "$First(c) = At(c, 1)$. See [[At]].",
       "Positional indexing from the front (index 1) and back (negative indices).",
       "On an empty collection with no default given, returns the symbol $Missing$ rather than raising an error.",
       "A second argument supplies a default for an empty collection, instead of $Missing$.",
+      "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
       { expr: ["First", ["List", 1, 2, 3]], expected: 1 },
@@ -383,10 +389,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["First", ["Add", ["Power", "a", 2], ["Power", "b", 2]]],
         expected: ["Power", "a", 2],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Any expression, not just a list: the first term of a sum; compute-engine's First wants a collection — not yet",
+        caption: "Any expression, not just a list: the first term of a sum",
       },
       {
         expr: ["First", ["List", "a", "b"], "x"],
@@ -409,12 +413,18 @@ export const collections: readonly ReferenceEntry[] = [
         description: "`default` when the collection is empty, instead of the last element.",
         library: "enumeratio-collections",
       },
+      {
+        call: "Last(expr)",
+        description: "the last operand of any expression, not just a collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "$Last(c) = At(c, -1)$. See [[At]].",
       "Positional indexing from the front (index 1) and back (negative indices).",
       "Complements [[First]] for the other end of a collection.",
       "A second argument supplies a default for an empty collection, instead of $Missing$.",
+      "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
       { expr: ["Last", ["List", 1, 2, 3]], expected: 3 },
@@ -447,10 +457,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Last", ["Add", ["Power", "a", 2], ["Power", "b", 2]]],
         expected: ["Power", "b", 2],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Any expression, not just a list: the last term of a sum; compute-engine's Last wants a collection — not yet",
+        caption: "Any expression, not just a list: the last term of a sum",
       },
       {
         expr: ["Last", ["List", "a", "b"], "x"],
@@ -496,6 +504,12 @@ export const collections: readonly ReferenceEntry[] = [
           "a contiguous (or stepped) slice selected by a [[Span]], negative step included.",
         library: "enumeratio-collections",
       },
+      {
+        call: "At(matrix, rows, columns)",
+        description:
+          "the submatrix at the given rows and columns; `rows` (or `columns`) as `All` takes every row (or column).",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Negative indices count from the end: $At(c, -1)$ is the last element. See [[Last]].",
@@ -503,6 +517,7 @@ export const collections: readonly ReferenceEntry[] = [
       "An out-of-range index evaluates to $NaN$ rather than raising an error.",
       "Index 0 is the collection's own head, matching Wolfram's Part[c, 0] — compute-engine gave $NaN$ before.",
       "Positional element access, 1-based; negative indices count from the end.",
+      "Two index lists at the row and column positions extract a submatrix; a $Span$ takes a contiguous (optionally stepped or reversed) slice.",
     ],
     examples: [
       { expr: ["At", ["List", 1, 2, 3, 4], 2], expected: 2 },
@@ -589,7 +604,7 @@ export const collections: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption:
-          "$All$ at the first level takes a whole column; compute-engine's At has no $All$ — not yet",
+          "$All$ at the first level should take a whole column; the bare symbol $All$ collides with compute-engine's own boolean-reducer head of the same name, which the engine tries to invoke while boxing this call, before our override ever sees it — not yet",
       },
       {
         expr: [
@@ -599,10 +614,8 @@ export const collections: readonly ReferenceEntry[] = [
           ["List", 2, 3],
         ],
         expected: ["List", ["List", 2, 3], ["List", 8, 9]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3); not yet",
+        caption: "Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)",
       },
       {
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]],
@@ -621,6 +634,12 @@ export const collections: readonly ReferenceEntry[] = [
         expected: ["List", "f", "d", "c", "b", "a"],
         category: "Scope",
         caption: "A negative step ($-1;;1;;-1$) walks backwards, reversing the list",
+      },
+      {
+        expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]],
+        expected: ["List", "d", "f"],
+        category: "Scope",
+        caption: "Negative bounds: the last two elements",
       },
       {
         expr: ["At", ["Add", "a", "b", "c"], 2],
@@ -744,12 +763,18 @@ export const collections: readonly ReferenceEntry[] = [
         call: "Sort(collection, comparator)",
         description: "sorted by a custom [[Function]] comparator, e.g. descending order.",
       },
+      {
+        call: "Sort(expr)",
+        description: "the operands of any expression, sorted in place — not just a collection's.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Idempotent: sorting an already-sorted collection changes nothing.",
       "$Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]].",
-      "Orders numbers numerically and strings lexicographically.",
+      "Orders numbers numerically, strings lexicographically, and symbols alphabetically by name.",
       "The comparator form `Sort(list, p)` takes a predicate `p` reporting whether a pair is already in order.",
+      "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
       { expr: ["Sort", ["List", 3, 1, 2]], expected: ["List", 1, 2, 3] },
@@ -831,9 +856,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Sort", ["f", "b", "a", "c"]],
         expected: ["f", "a", "b", "c"],
-        aspirational: true,
         category: "Scope",
-        caption: "Sorts the arguments of any head, not just a list; not yet",
+        caption: "Sorts the arguments of any head, not just a list",
       },
       {
         expr: ["Equal", ["Sort", ["Reverse", ["List", 3, 1, 2]]], ["Sort", ["List", 3, 1, 2]]],
@@ -863,14 +887,21 @@ export const collections: readonly ReferenceEntry[] = [
       },
       {
         call: "Ordering(collection, n)",
-        description: "just the first `n` indices of the full ordering.",
+        description:
+          "just the first `n` indices of the full ordering; a negative `n` takes the last `|n|` (the largest elements); `{m, n}` takes positions `m` through `n` of the full ordering; `UpTo(n)` caps at `n` without erroring on a shorter collection.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Ordering(collection, All, Greater)",
+        description: "every index, ordered descending rather than ascending.",
         library: "enumeratio-collections",
       },
     ],
     details: [
       "$c[[Ordering(c)]] = Sort(c)$: applying the permutation at those positions recovers [[Sort]]'s result.",
       "Ties break in favor of earlier position, i.e. it's a stable ordering.",
-      "A second argument $n$ takes just the first $n$ indices of the full ordering.",
+      "Symbols order alphabetically by name, matching Wolfram's canonical ordering.",
+      "A second argument $n$ takes just the first $n$ indices of the full ordering; see the signatures above for the negative-count, $\\{m, n\\}$, and $UpTo$ forms.",
     ],
     examples: [
       { expr: ["Ordering", ["List", 3, 1, 2]], expected: ["List", 2, 3, 1] },
@@ -893,32 +924,26 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Ordering", ["List", "c", "a", "b"]],
         expected: ["List", 2, 3, 1],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Symbols order alphabetically; compute-engine returns the identity permutation for them",
+        caption: "Symbols order alphabetically",
       },
       {
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3], -1],
         expected: ["List", 4],
-        aspirational: true,
         category: "Scope",
-        caption: "A negative count gives the positions of the largest elements; not yet",
+        caption: "A negative count gives the positions of the largest elements",
       },
       {
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3], ["List", 4, -1]],
         expected: ["List", 6, 7, 2, 4],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A $\\{m, n\\}$ spec takes the 4th through the last entries of the ordering; not yet",
+        caption: "A $\\{m, n\\}$ spec takes the 4th through the last entries of the ordering",
       },
       {
         expr: ["Ordering", ["List", 2, 6, 1, 9, 3], "All", "Greater"],
         expected: ["List", 4, 2, 5, 1, 3],
-        aspirational: true,
         category: "Scope",
-        caption: "A third argument orders by a custom test, here descending; not yet",
+        caption: "A third argument orders by a custom test, here descending",
       },
       {
         expr: ["Ordering", ["List", 2, 6, 1, 9, 2], ["UpTo", 6]],
@@ -949,11 +974,17 @@ export const collections: readonly ReferenceEntry[] = [
     summary: "The number of elements in the collection.",
     signatures: [
       { call: "Length(collection)", description: "the number of elements in the collection." },
+      {
+        call: "Length(expr)",
+        description: "the number of top-level operands of any expression, not just a collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Works on any collection head, not just $List$ — e.g. $Set$.",
       "Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]].",
       "An atom has no parts, so its length is 0 — it isn't a type error.",
+      "Any other expression's length is its number of top-level operands, e.g. the number of terms in a sum.",
       "See [[Count]] to count occurrences of a specific value instead of every element.",
     ],
     examples: [
@@ -1002,17 +1033,14 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Length", ["Add", "a", "b", "c", "d"]],
         expected: 4,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Any expression: the number of terms in a sum; compute-engine's Length wants a collection — not yet",
+        caption: "Any expression: the number of terms in a sum",
       },
       {
         expr: ["Length", ["f", ["g", "x", "y"], "z"]],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "The number of arguments of a call, counting only the top level; not yet",
+        caption: "The number of arguments of a call, counting only the top level",
       },
       {
         expr: ["Length", "Pi"],
@@ -1190,10 +1218,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Join", ["Set", 1, 2], ["Set", 3]],
         expected: ["Set", 1, 2, 3],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Sets as well as lists, as long as all arguments share the head; left unevaluated since the level-aware Join override",
+        caption: "Sets as well as lists, as long as all arguments share the head",
       },
       {
         expr: ["Join", ["List", 1, 2], ["Range", 3, 5]],
@@ -1204,10 +1230,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Join"],
         expected: ["List"],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "With no arguments, the empty list; left unevaluated since the level-aware Join override",
+        caption: "With no arguments, the empty list",
       },
       {
         expr: [
@@ -1465,11 +1489,16 @@ export const collections: readonly ReferenceEntry[] = [
         call: "Append(collection, value)",
         description: "the collection with `value` added as its last element.",
       },
+      {
+        call: "Append(expr, value)",
+        description: "`value` added as the last operand of any expression, not just a collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "$Append(c, x) = Join(c, \\{x\\})$. See [[Join]].",
       "Appending a list nests it as a single element rather than splicing its contents in — use [[Join]] to splice.",
-      "Works on a set as well as a list.",
+      "Works on a set as well as a list, and on the operands of any expression.",
     ],
     examples: [
       {
@@ -1514,9 +1543,8 @@ export const collections: readonly ReferenceEntry[] = [
       {
         expr: ["Append", ["f", "a", "b"], "c"],
         expected: ["f", "a", "b", "c"],
-        aspirational: true,
         category: "Scope",
-        caption: "Any head, not just a list; not yet",
+        caption: "Any head, not just a list",
       },
       {
         expr: ["Append", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", 5, 6]],
@@ -1535,7 +1563,69 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Appending adds exactly one element. See [[Length]]",
       },
     ],
-    seeAlso: ["Join"],
+    seeAlso: ["Join", "Prepend"],
+  },
+  {
+    name: "Prepend",
+    domain: "Collections",
+    signature: "Prepend(collection, value)",
+    summary: "The collection with value added as its first element.",
+    signatures: [
+      {
+        call: "Prepend(collection, value)",
+        description: "the collection with `value` added as its first element.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Prepend(association, rule)",
+        description:
+          "`association` with `rule` (or a list of rules) inserted at the front; a prepended key displaces any later entry for the same key.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "$Prepend(c, x) = Join(\\{x\\}, c)$. See [[Join]].",
+      "Complements [[Append]] at the other end of a collection.",
+    ],
+    examples: [
+      {
+        expr: ["Prepend", ["List", "a", "b", "c", "d"], "x"],
+        expected: ["List", "x", "a", "b", "c", "d"],
+      },
+      {
+        expr: [
+          "Equal",
+          ["Prepend", ["List", 1, 2, 3], 0],
+          ["Join", ["List", 0], ["List", 1, 2, 3]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "$Prepend(c, x) = Join(\\{x\\}, c)$. See [[Join]]",
+      },
+      {
+        expr: ["Prepend", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]], ["Rule", 3, "d"]],
+        expected: ["Association", ["Rule", 3, "d"], ["Rule", 1, "a"], ["Rule", 2, "b"]],
+        category: "Scope",
+        caption: "A rule inserted at the front of an association",
+      },
+      {
+        expr: [
+          "Prepend",
+          ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]],
+          ["List", ["Rule", 3, "d"], ["Rule", 4, "e"]],
+        ],
+        expected: [
+          "Association",
+          ["Rule", 3, "d"],
+          ["Rule", 4, "e"],
+          ["Rule", 1, "a"],
+          ["Rule", 2, "b"],
+        ],
+        category: "Scope",
+        caption: "Several rules prepended at once",
+      },
+    ],
+    seeAlso: ["Append", "Join"],
   },
   {
     name: "Partition",
