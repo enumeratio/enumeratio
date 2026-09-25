@@ -376,7 +376,13 @@ onBeforeUnmount(() => {
           <p>{{ frameHostname }} refuses to be framed.</p>
           <a :href="frameUrl" target="_blank" rel="noreferrer">Open in new tab ↗</a>
         </div>
-        <iframe v-else-if="frameUrl" class="review-frame" :src="frameUrl" title="Item preview" />
+        <iframe
+          v-else-if="frameUrl"
+          :key="frameUrl"
+          class="review-frame"
+          :src="frameUrl"
+          title="Item preview"
+        />
       </main>
     </div>
   </div>
