@@ -13,6 +13,11 @@ details:
   - For a prime $k$ with primitive root $g$ this comes out as $\chi_j(g) = e^{2\pi i (j-1)/(k-1)}$.
   - An out-of-range $j$ (greater than $\varphi(k)$) names no character and is left unevaluated.
 examples:
+  - role: test
+    id: chi-1-mod-5-is-principal-1-on-the-units
+    expr: [DirichletCharacter, 5, 1, 2]
+    expected: 1
+    caption: $\chi_1$ mod 5 is the principal character — 1 on the units
   - id: the-nontrivial-character-mod-4-chi-2-3-1-this-is
     expr: [DirichletCharacter, 4, 2, 3]
     expected: -1
