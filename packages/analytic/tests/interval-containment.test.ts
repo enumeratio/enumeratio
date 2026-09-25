@@ -2,6 +2,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
+import { NOT_RIGOROUS } from "../src/interval.ts";
 
 // A containment property test for every head interval.ts extends: `f(Interval(l, h))`, where
 // it doesn't decline, must be a superset of `{f(x) : x ∈ [l, h]}` — never an interval that
@@ -10,6 +11,14 @@ import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 // because a naive derivative-sign check only finds one interior extremum, and this range
 // crosses two, π/2 and π). Random sub-intervals, deliberately including wide ones spanning
 // several periods for the periodic heads, catch what a handful of hand-picked examples won't.
+//
+// Containment is EXACT for every head interval.ts claims is rigorous: the true value at each
+// sample point -- computed at compute-engine's working precision and rounded to the nearest
+// double -- must lie inside the result, with no slack at all. (Sound in doubles: a result's
+// upper bound is a double at or above the true value, so it is at or above the nearest double
+// too, and likewise below.) Only the heads in `NOT_RIGOROUS`, whose images come from sampling,
+// get a small tolerance -- their result can miss an extremum between two samples, and this is
+// not the test that would prove otherwise.
 //
 // A deterministic PRNG (mulberry32), not Math.random(): a flaky property test is worse than no
 // property test, and reproducing a failure needs the same seed.
@@ -47,6 +56,9 @@ function checkContainment(
   pointCall: (x: number) => unknown,
   subIntervals = DEFAULT_SUB_INTERVALS,
 ): void {
+  // The head actually called -- a label can be descriptive ("BetaRegularized (interval in x…").
+  const head = (buildCall(domain[0], domain[1]) as readonly unknown[])[0] as string;
+  const rigorous = !NOT_RIGOROUS.includes(head);
   const [lo, hi] = domain;
   let checked = 0;
   let declined = 0;
@@ -57,39 +69,48 @@ function checkContainment(
     const h = Math.max(a, b);
     if (h - l < 1e-9) continue; // degenerate, not interesting
     const result = ce.box(buildCall(l, h) as never).evaluate();
-    let resultLo: number;
-    let resultHi: number;
+    // An image is one interval, a Union of disjoint ones (a periodic head across a pole), or a
+    // plain scalar (Sign: every point in range shares one sign).
+    const pieces: [number, number][] = [];
+    const pieceOf = (e: typeof result): [number, number] | undefined => {
+      const ends = operandsOf(e);
+      return ends.length === 2 ? [ends[0]!.N().re, ends[1]!.N().re] : undefined;
+    };
     if (result.operator === "Interval") {
-      const resultOps = operandsOf(result);
-      if (resultOps.length !== 2) continue;
-      resultLo = resultOps[0]!.N().re;
-      resultHi = resultOps[1]!.N().re;
+      const piece = pieceOf(result);
+      if (piece === undefined) continue;
+      pieces.push(piece);
+    } else if (result.operator === "Union") {
+      for (const part of operandsOf(result)) {
+        const piece = part.operator === "Interval" ? pieceOf(part) : undefined;
+        if (piece !== undefined) pieces.push(piece);
+      }
     } else {
-      // Sign resolves to a plain scalar (its whole point: every point in range shares one
-      // sign) rather than a degenerate Interval -- a single number is its own [lo, hi].
       const scalar = result.N().re;
       if (!Number.isFinite(scalar)) {
         declined++;
-        continue; // declined (or a pole in range): nothing to check containment against
+        continue; // declined: nothing to check containment against
       }
-      resultLo = scalar;
-      resultHi = scalar;
+      pieces.push([scalar, scalar]);
     }
-    if (!Number.isFinite(resultLo) || !Number.isFinite(resultHi)) continue;
+    if (pieces.length === 0 || pieces.some(([a, b]) => Number.isNaN(a) || Number.isNaN(b))) {
+      continue;
+    }
+    const [resultLo, resultHi] = [pieces[0]![0], pieces.at(-1)![1]];
     checked++;
-    const eps = 1e-6 * Math.max(1, Math.abs(resultLo), Math.abs(resultHi));
+    const eps = rigorous ? 0 : 1e-6 * Math.max(1, Math.abs(resultLo), Math.abs(resultHi));
+    const shown = pieces.map(([a, b]) => `[${a}, ${b}]`).join(" ∪ ");
     for (let p = 0; p < POINTS_PER_INTERVAL; p++) {
-      const x = l + ((h - l) * p) / (POINTS_PER_INTERVAL - 1);
+      // The last point is `h` itself: `l + (h - l)` can round an ulp past it, outside the
+      // interval under test.
+      const x = p === POINTS_PER_INTERVAL - 1 ? h : l + ((h - l) * p) / (POINTS_PER_INTERVAL - 1);
       const value = ce.box(pointCall(x) as never).N().re;
       if (!Number.isFinite(value)) continue; // a pole the sample happened to land on
+      const inside = pieces.some(([a, b]) => value >= a - eps && value <= b + eps);
       expect(
-        value,
-        `${label}: f(${x}) = ${value} outside [${resultLo}, ${resultHi}] from Interval(${l}, ${h})`,
-      ).toBeGreaterThanOrEqual(resultLo - eps);
-      expect(
-        value,
-        `${label}: f(${x}) = ${value} outside [${resultLo}, ${resultHi}] from Interval(${l}, ${h})`,
-      ).toBeLessThanOrEqual(resultHi + eps);
+        inside,
+        `${label}: f(${x}) = ${value} outside ${shown} from Interval(${l}, ${h})`,
+      ).toBe(true);
     }
   }
   // Every head must actually be exercised — an always-declining rule would pass vacuously.
@@ -366,4 +387,48 @@ test("Interval containment: multi-argument special functions at a fixed argument
     (x) => ["Binomial", ["Rational", 1, 2], x],
     40,
   );
+});
+
+test("Interval containment: Cosh's valley, Log in any base, and ln Γ through the kernel", () => {
+  const rng = mulberry32(6);
+  checkContainment(
+    "Cosh",
+    rng,
+    [-3, 3],
+    (l, h) => ["Cosh", ["Interval", l, h]],
+    (x) => ["Cosh", x],
+  );
+  for (const base of [2, 10, 0.5]) {
+    checkContainment(
+      "Log",
+      rng,
+      [0.01, 20],
+      (l, h) => ["Log", ["Interval", l, h], base],
+      (x) => ["Log", x, base],
+      60,
+    );
+  }
+  // Both sides of Γ's minimum at 1.4616…: ln Γ decreases on (0, x₀) and increases after it.
+  checkContainment(
+    "LogGamma",
+    rng,
+    [0.05, 6],
+    (l, h) => ["LogGamma", ["Interval", l, h]],
+    (x) => ["LogGamma", x],
+    60,
+  );
+});
+
+test("Interval containment: periodic heads across their poles come back as unions", () => {
+  const rng = mulberry32(7);
+  for (const head of ["Tan", "Cot", "Sec", "Csc"] as const) {
+    checkContainment(
+      head,
+      rng,
+      [-4, 4],
+      (l, h) => [head, ["Interval", l, h]],
+      (x) => [head, x],
+      80,
+    );
+  }
 });

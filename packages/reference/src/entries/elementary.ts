@@ -990,10 +990,9 @@ export const elementary: readonly ReferenceEntry[] = [
           ["Interval", "NegativeInfinity", -1],
           ["Interval", 1, "PositiveInfinity"],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "An interval straddling the pole at 0 maps to two unbounded pieces, $(-\\infty, -1] \\cup [1, \\infty)$; not yet",
+          "Across the pole at 0 the image comes in two unbounded pieces: $\\cot[-\\tfrac\\pi4, \\tfrac\\pi4] = (-\\infty, -1] \\cup [1, \\infty)$, a [[Union]] of intervals",
       },
       {
         expr: ["Cot", ["Around", 3, 0.01]],
@@ -2295,15 +2294,15 @@ export const elementary: readonly ReferenceEntry[] = [
         expected: ["Interval", 1, ["Rational", 5, 3]],
         aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: $\\cosh[0, \\ln 3] = [1, \\tfrac53]$; not yet",
+        caption:
+          "Interval arithmetic: $\\cosh[0, \\ln 3] = [1, \\tfrac53]$, the minimum at 0 included; the image comes back as $[\\cosh 0, \\cosh(\\ln 3)]$, since neither value folds on its own yet (see the $\\cosh 0$ example)",
       },
       {
         expr: ["Cosh", ["Around", ["Divide", 2, ["Sqrt", 3]], 0.1]],
         expected: ["Around", 1.744112480153778, 0.14289605814815756],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Uncertainty propagation: $\\cosh(2/\\sqrt3 \\pm 0.1) \\approx 1.744 \\pm 0.143$; Around is not yet a head",
+          "Uncertainty propagation, to first order: $\\cosh(2/\\sqrt3 \\pm 0.1) \\approx 1.744 \\pm 0.143$",
       },
       { expr: ["Cosh", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
       {
@@ -3135,18 +3134,19 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Log2", ["Interval", ["Rational", 1, 3], 2]],
-        expected: ["Interval", ["Negate", ["Log", 3, 2]], 1],
-        aspirational: true,
+        expected: ["Interval", ["Log", ["Rational", 1, 3], 2], 1],
         category: "Scope",
-        caption: "Interval arithmetic: $\\log_2[\\tfrac13, 2] = [-\\log_2 3, 1]$; not yet",
+        caption: "Interval arithmetic: $\\log_2[\\tfrac13, 2] = [\\log_2 \\tfrac13, 1]$",
+        divergence: {
+          wolfram: "Wolfram writes the lower end as -Log[2, 3], the same value.",
+        },
       },
       {
         expr: ["Log2", ["Around", ["Rational", 1, 5], 0.01]],
         expected: ["Around", -2.321928094887362, 0.07213475204444818],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Uncertainty propagation: $\\log_2(\\tfrac15 \\pm 0.01) \\approx -2.322 \\pm 0.072$; Around is not yet a head",
+          "Uncertainty propagation, to first order: $\\log_2(\\tfrac15 \\pm 0.01) \\approx -2.322 \\pm 0.072$",
       },
       {
         expr: ["D", ["Log2", "x"], "x"],
@@ -3229,19 +3229,20 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Log10", ["Interval", ["Rational", 1, 3], 2]],
-        expected: ["Interval", ["Negate", ["Log", 3, 10]], ["Log", 2, 10]],
-        aspirational: true,
+        expected: ["Interval", ["Log", ["Rational", 1, 3], 10], ["Log", 2, 10]],
         category: "Scope",
         caption:
-          "Interval arithmetic: $\\log_{10}[\\tfrac13, 2] = [-\\log_{10} 3, \\log_{10} 2]$; not yet",
+          "Interval arithmetic: $\\log_{10}[\\tfrac13, 2] = [\\log_{10} \\tfrac13, \\log_{10} 2]$",
+        divergence: {
+          wolfram: "Wolfram writes the lower end as -Log[10, 3], the same value.",
+        },
       },
       {
         expr: ["Log10", ["Around", ["Rational", 1, 101], 0.01]],
         expected: ["Around", -2.0043213737826426, 0.43863742672228434],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Uncertainty propagation: $\\log_{10}(\\tfrac1{101} \\pm 0.01) \\approx -2.00 \\pm 0.44$; Around is not yet a head",
+          "Uncertainty propagation, to first order: $\\log_{10}(\\tfrac1{101} \\pm 0.01) \\approx -2.00 \\pm 0.44$",
       },
       {
         expr: ["D", ["Log10", "x"], "x"],
