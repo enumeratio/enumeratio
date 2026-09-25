@@ -27,7 +27,7 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(50);
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(40);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -118,7 +118,17 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * signature rather than the native one, so even the error differs. `LambertW` is here for
  * exact values at algebraically nice points (0, e, -1/e, ...) that a bare engine leaves
  * unevaluated outside `N()`, and for branches other than 0/-1 — additive in both cases, never
- * changing a value the native handler already gave concretely. #113 adds `GammaLn` (an exact
+ * changing a value the native handler already gave concretely. `Beta` is here for the
+ * third and fourth arguments (the incomplete and generalized incomplete beta) and for
+ * `B(a, 1) = 1/a`, exactly the same additive shape as `Gamma`'s third argument.
+ * `Floor`, `Ceil`, `Round`,
+ * `Max`, `Min` and `IsOdd` are here for folding an exact constant expression (Pi, e, ...) a
+ * bare engine leaves symbolic, plus Floor/Ceil/Round's own idempotence and Max/Min dropping
+ * an exactly-repeated argument; `Sin`, `Sinh`, `Cosh`, `Tanh`, `Arccot`, `Arccsc` and
+ * `Arcsec` are here for symbolic normalisations (parity, a pi-multiple shift, an imaginary
+ * argument, an inverse composition) and special values a bare engine leaves standing —
+ * every one additive, never overriding a value the native handler already gave.
+ * #113 also adds `GammaLn` (an exact
  * positive-integer argument now reduces, `threading-113.ts`/`closed-forms-113.ts`),
  * `Rationalize` (threads over a list or a symbolic expression, `threading-113.ts`) and
  * `FromContinuedFraction` (a list of plain symbols builds the nested fraction,
@@ -129,16 +139,25 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  */
 const OVERRIDDEN = [
   "Abs",
+  // Not itself overridden -- two Floor examples are wrapped in a bare `Add` (Legendre's
+  // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
+  // outer head even though the divergence is Floor's.
   "Add",
+  "Arccot",
+  "Arccsc",
+  "Arcsec",
   "Arcsin",
   "At",
   "BellNumber",
   "BernoulliB",
+  "Beta",
   "BetaRegularized",
   "Binomial",
   "CatalanNumber",
+  "Ceil",
   "ChineseRemainder",
   "Clamp",
+  "Cosh",
   "Digamma",
   "DigitCount",
   "DigitSum",
@@ -156,6 +175,7 @@ const OVERRIDDEN = [
   "Fibonacci",
   "First",
   "FixedPoint",
+  "Floor",
   "FromContinuedFraction",
   "FromDigits",
   "Gamma",
@@ -164,6 +184,7 @@ const OVERRIDDEN = [
   "IntegerDigits",
   "IntegerString",
   "Inverse",
+  "IsOdd",
   "IsPrime",
   "IsSquareFree",
   "JacobiSymbol",
@@ -174,8 +195,10 @@ const OVERRIDDEN = [
   "Ln",
   "LucasL",
   "MatrixPower",
+  "Max",
   "Mean",
   "Median",
+  "Min",
   "Mod",
   "ModularInverse",
   "MoebiusMu",
@@ -198,11 +221,14 @@ const OVERRIDDEN = [
   "PrimePi",
   "QuotientRing",
   "Rationalize",
+  "Round",
   "Sin",
+  "Sinh",
   "Sort",
   "StirlingS1",
   "Subfactorial",
   "Subtract",
+  "Tanh",
   "Totient",
   "Union",
   "Zeta",

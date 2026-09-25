@@ -62,6 +62,11 @@ import { declareHyperfactorial } from "./hyperfactorial.ts";
 import { declareKeiperLi } from "./keiper-li.ts";
 import { declareQSeries } from "./q-series.ts";
 import { declareRiemannSiegel } from "./riemann-siegel.ts";
+import { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
+import { declareGeneralizedSpecial } from "./generalized-special.ts";
+import { declareConstantRounding } from "./constant-rounding.ts";
+import { declareTrigNormalisation } from "./trig-normalisation.ts";
+import { declareElementarySpecialValues } from "./elementary-special-values.ts";
 import { declareThreading113 } from "./threading-113.ts";
 import { declareClosedForms113 } from "./closed-forms-113.ts";
 
@@ -707,6 +712,11 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareKeiperLi(ce);
   declareQSeries(ce);
   declareRiemannSiegel(ce);
+  declareIncompleteSymbolic(ce);
+  declareGeneralizedSpecial(ce);
+  declareConstantRounding(ce);
+  declareTrigNormalisation(ce);
+  declareElementarySpecialValues(ce);
   declareThreading113(ce);
   declareClosedForms113(ce);
 }

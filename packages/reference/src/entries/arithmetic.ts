@@ -704,16 +704,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Floor", "Pi"],
         expected: 3,
-        aspirational: true,
         category: "Scope",
-        caption: "Should evaluate at an exact constant; $\\lfloor\\pi\\rfloor$ stays unevaluated",
+        caption: "Evaluates at an exact constant: $\\lfloor\\pi\\rfloor = 3$",
       },
       {
         expr: ["Floor", ["Negate", "Pi"]],
         expected: -4,
-        aspirational: true,
         category: "Scope",
-        caption: "...and at its negative, $\\lfloor -\\pi \\rfloor = -4$; not yet",
+        caption: "...and at its negative, $\\lfloor -\\pi \\rfloor = -4$",
       },
       {
         expr: ["Floor", 226, 10],
@@ -750,10 +748,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Floor", ["Floor", "x"]],
         expected: ["Floor", "x"],
-        aspirational: true,
         category: "Properties",
         caption:
-          "Idempotent: $\\lfloor\\lfloor x \\rfloor\\rfloor = \\lfloor x \\rfloor$, since the inner value is an integer; not simplified yet",
+          "Idempotent: $\\lfloor\\lfloor x \\rfloor\\rfloor = \\lfloor x \\rfloor$, since the inner value is already an integer",
       },
       {
         expr: ["Add", ["Floor", ["Divide", 100, 5]], ["Floor", ["Divide", 100, 25]]],
@@ -765,18 +762,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Add", ["Floor", ["Log", 12345]], 1],
         expected: 5,
-        aspirational: true,
         category: "Applications",
-        caption:
-          "The number of decimal digits of n is $\\lfloor \\log_{10} n \\rfloor + 1$; the floor of an exact logarithm doesn't evaluate yet",
+        caption: "The number of decimal digits of n is $\\lfloor \\log_{10} n \\rfloor + 1$",
       },
       {
         expr: ["Floor", ["Multiply", 1000, "ExponentialE"]],
         expected: 2718,
-        aspirational: true,
         category: "Applications",
-        caption:
-          "The first four digits of $e$; the floor of an exact constant doesn't evaluate yet",
+        caption: "The first four digits of $e$",
       },
     ],
     seeAlso: ["Ceil", "Round"],
@@ -853,9 +846,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Ceil", "Pi"],
         expected: 4,
-        aspirational: true,
         category: "Scope",
-        caption: "Should evaluate at an exact constant; $\\lceil\\pi\\rceil$ stays unevaluated",
+        caption: "Evaluates at an exact constant: $\\lceil\\pi\\rceil = 4$",
       },
       {
         expr: ["Ceil", 226, 10],
@@ -892,10 +884,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Ceil", ["Log", 1000, 2]],
         expected: 10,
-        aspirational: true,
         category: "Applications",
-        caption:
-          "Ten bits are enough to number 1000 items, $\\lceil \\log_2 1000 \\rceil$; the ceiling of an exact logarithm doesn't evaluate yet",
+        caption: "Ten bits are enough to number 1000 items, $\\lceil \\log_2 1000 \\rceil$",
       },
     ],
     seeAlso: ["Floor", "Round"],
@@ -1009,17 +999,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Round", "Pi"],
         expected: 3,
-        aspirational: true,
         category: "Scope",
-        caption: "Should evaluate at an exact constant; $\\mathrm{Round}(\\pi)$ stays unevaluated",
+        caption: "Evaluates at an exact constant: $\\mathrm{Round}(\\pi) = 3$",
       },
       {
         expr: ["Round", ["Multiply", 100, "ExponentialE"]],
         expected: 272,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$100e \\approx 271.83$ should round to 272; the round of an exact constant doesn't evaluate yet",
+        caption: "$100e \\approx 271.83$ rounds to 272",
       },
       {
         expr: ["Round", ["Complex", 5.37, -1.3]],
@@ -1463,10 +1450,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Max", ["List", "ExponentialE", "Pi", 2]],
         expected: "Pi",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Should compare exact constants numerically; $\\max(e, \\pi, 2)$ stays unevaluated",
+        caption: "Compares exact constants numerically: $\\max(e, \\pi, 2) = \\pi$",
       },
       {
         expr: ["Max", ["Interval", 1, 3], ["Interval", -3, 5]],
@@ -1479,9 +1464,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Max", "x", "x"],
         expected: "x",
-        aspirational: true,
         category: "Properties",
-        caption: "Idempotent: $\\max(x, x) = x$; repeated symbolic arguments aren't merged yet",
+        caption: "Idempotent: $\\max(x, x) = x$",
       },
       {
         expr: ["Max", ["List"]],
@@ -1584,10 +1568,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Min", ["List", "ExponentialE", "Pi", 5]],
         expected: "ExponentialE",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Should compare exact constants numerically; $\\min(e, \\pi, 5)$ stays unevaluated",
+        caption: "Compares exact constants numerically: $\\min(e, \\pi, 5) = e$",
       },
       {
         expr: ["Min", ["Interval", 1, 3], ["Interval", -3, 5]],
@@ -1600,9 +1582,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Min", "x", "x"],
         expected: "x",
-        aspirational: true,
         category: "Properties",
-        caption: "Idempotent: $\\min(x, x) = x$; repeated symbolic arguments aren't merged yet",
+        caption: "Idempotent: $\\min(x, x) = x$",
       },
       {
         expr: ["Min"],
@@ -1653,10 +1634,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["IsOdd", "Pi"],
         expected: "False",
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$\\pi$ is known not to be an integer, so it should be decided False; it stays unevaluated",
+        caption: "$\\pi$ is known not to be an integer, so it is decided False",
       },
       {
         expr: ["IsOdd", ["List", 1, 2, 3]],

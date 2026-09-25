@@ -400,23 +400,15 @@ test("Γ(1, z) = e^{−z}, so Γ(1, 0, z) collapses to 1 − e^{−z} (Wolfram's
   expect(num(["Gamma", 1, 0, 2.0])).toBeCloseTo(1 - Math.exp(-2), 14);
 });
 
-test("a three-argument call at a symbolic order keeps its own form", () => {
+test("a three-argument call that cannot reduce keeps its own form", () => {
+  // Γ(s, 0, z) with a fully symbolic order still can't reduce either half.
   exactJson(["Gamma", "s", 0, "z"], ["Gamma", "s", 0, "z"]);
 });
 
-test("#113: an integer-order three-argument call now reduces both halves (γ(2,z) = 1 − (1+z)e⁻ᶻ)", () => {
-  // Γ(2, 0, z) = Γ(2, 0) − Γ(2, z) = 1 − (1+z)e⁻ᶻ, matching Wolfram's
-  // FunctionExpand[Gamma[2, 0, z]] — this used to be `Gamma(2, 0, "z")` unevaluated
-  // (neither 2-argument half reduced on its own); closing Γ(n, x)'s own closed form
-  // for the #113 threading item (packages/analytic/src/closed-forms-113.ts) means
-  // the 3-argument call, built from that same 2-argument operator, reduces too.
-  exactJson(
+test("Γ(2, 0, z) now reduces through Γ(2, z) = (1+z)e^{-z} (see generalized-special.ts)", () => {
+  sameExact(
     ["Gamma", 2, 0, "z"],
-    [
-      "Add",
-      ["Negate", ["Multiply", ["Add", "z", 1], ["Power", "ExponentialE", ["Negate", "z"]]]],
-      1,
-    ],
+    ["Subtract", 1, ["Multiply", ["Add", "z", 1], ["Exp", ["Negate", "z"]]]],
   );
 });
 
