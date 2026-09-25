@@ -1,0 +1,71 @@
+name: Bench run
+description: Run the benchmark catalogue for some systems on this runner (always with our own side, as the same-machine anchor) and publish the reports to the bench-data branch. See design/benchmarking.md §6–7.
+
+inputs:
+  systems:
+    description: Comma-separated systems, e.g. ts,wolfram. Include ts.
+    required: true
+  job:
+    description: The run's job name in the index (nightly, wolfram-weekly, …). Drift compares runs of one job.
+    required: true
+  token:
+    description: A token that can push to bench-data.
+    required: true
+
+outputs:
+  dir:
+    description: The local run directory.
+    value: ${{ steps.run.outputs.dir }}
+  drifted:
+    description: Whether our side drifted against this job's trailing median ("true"/"false").
+    value: ${{ steps.publish.outputs.drifted }}
+
+runs:
+  using: composite
+  steps:
+    - id: run
+      shell: bash
+      env:
+        BENCH_TRIGGER: ${{ github.event_name == 'schedule' && inputs.job || 'dispatch' }}
+      run: |
+        set -o pipefail
+        node packages/bench/scripts/bench.ts --systems "${{ inputs.systems }}" --out .bench | tee bench.log
+        echo "dir=$(tail -n 1 bench.log)" >> "$GITHUB_OUTPUT"
+
+    - id: publish
+      shell: bash
+      run: |
+        git config --global user.name enumeratio
+        git config --global user.email enumeratio@users.noreply.github.com
+        remote="https://x-access-token:${{ inputs.token }}@github.com/${{ github.repository }}.git"
+        # Another job may publish at the same time: start from its tip, retry on a lost race.
+        # Runs never share files, and index.json is rebuilt from runs/*/run.json each time.
+        for attempt in 1 2 3 4 5; do
+          rm -rf bench-data
+          if git ls-remote --exit-code --heads "$remote" bench-data >/dev/null 2>&1; then
+            git clone --quiet --single-branch --branch bench-data --depth 50 "$remote" bench-data
+          else
+            git init --quiet -b bench-data bench-data
+            git -C bench-data remote add origin "$remote"
+          fi
+          node packages/bench/scripts/publish.ts --run "${{ steps.run.outputs.dir }}" --data bench-data \
+            --job "${{ inputs.job }}" --drift-report drift.json
+          git -C bench-data add -A
+          git -C bench-data commit --quiet -m "bench: ${{ inputs.job }} $(basename "${{ steps.run.outputs.dir }}")"
+          if git -C bench-data push --quiet origin bench-data; then pushed=1; break; fi
+          sleep $((attempt * 5))
+        done
+        [ -n "${pushed:-}" ] || { echo "::error::could not push to bench-data"; exit 1; }
+        if [ -s drift.json ] && [ "$(cat drift.json)" != "[]" ]; then
+          echo "drifted=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "drifted=false" >> "$GITHUB_OUTPUT"
+        fi
+
+    - uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: bench-${{ inputs.job }}-${{ github.run_id }}
+        path: .bench
+        retention-days: 7
+        if-no-files-found: ignore
