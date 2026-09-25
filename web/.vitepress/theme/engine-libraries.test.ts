@@ -24,8 +24,5 @@ test("heads more than one library declares still evaluate on the site's engine",
   const run = (json: unknown): unknown => ce.box(json as never).evaluate().json;
   expect(run(["Add", 1, 1])).toEqual(2);
   // domains' carrier constructor and groupalgebra's cycle notation share the name.
-  expect(run(["PermutationCycles", ["List", 2, 1, 3]])).toEqual([
-    "Cycles",
-    ["List", ["List", 1, 2]],
-  ]);
+  expect(run(["PermutationCycles", ["List", 2, 1, 3]])).toEqual(["Cycles", ["List", ["List", 1, 2]]]);
 });

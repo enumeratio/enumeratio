@@ -169,10 +169,7 @@ interface TranscriptHost extends Element {
    * abort can promise). `reset: true` means the session was hard-killed and
    * restarted -- earlier bindings are gone, surfaced by the module itself.
    */
-  evaluateRemote?(
-    json: unknown,
-    options?: { signal?: AbortSignal },
-  ): Promise<{ value: unknown; reset: boolean }>;
+  evaluateRemote?(json: unknown, options?: { signal?: AbortSignal }): Promise<{ value: unknown; reset: boolean }>;
 }
 
 /**
@@ -221,11 +218,7 @@ const CODE_TARGETS = {
   wgsl: "WGSLTarget",
 } as const;
 type CodeForm = keyof typeof CODE_TARGETS | "javascript" | "gpushader";
-const CODE_FORMS = new Set<Form>([
-  ...(Object.keys(CODE_TARGETS) as Form[]),
-  "javascript",
-  "gpushader",
-]);
+const CODE_FORMS = new Set<Form>([...(Object.keys(CODE_TARGETS) as Form[]), "javascript", "gpushader"]);
 
 // The display forms offered by the In/Out menu.
 const FORMS: readonly Form[] = [
@@ -513,13 +506,7 @@ export class NotatioOut extends LitElement {
     // Fast path: render given LaTeX as-is, no engine, when nothing needs it.
     // `box` forces boxing (without evaluating) so the source/AST forms populate.
     // Every other form needs the parsed expression, so only StandardForm takes it.
-    if (
-      this.format === "latex" &&
-      !this.evaluate &&
-      !this.box &&
-      !this.expect &&
-      this.form === "standard"
-    ) {
+    if (this.format === "latex" && !this.evaluate && !this.box && !this.expect && this.form === "standard") {
       // MathLive's static renderer takes its style from the LaTeX itself.
       return {
         latex: this.display ? `\\displaystyle ${source}` : source,
@@ -543,8 +530,7 @@ export class NotatioOut extends LitElement {
     // boundary yet -- deferred, see this package's PR description.
     if (transcript && this.evaluate && host?.evaluatorKind === "Worker" && host.evaluateRemote) {
       log("worker-evaluate", this.value);
-      const input =
-        this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
+      const input = this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
       const boxed = transcript.run(() => parseText());
       this.#abort = new AbortController();
       try {
@@ -590,8 +576,7 @@ export class NotatioOut extends LitElement {
       if (transcript && this.evaluate) {
         // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:
         // `engine.box` folds closed numeric arithmetic (`3 + 4` boxes straight to `7`).
-        const input =
-          this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
+        const input = this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
         // Inside the transcript's scope: `a := 5` binds there, and the result becomes the
         // next `In[n]`/`Out[n]`.
         return transcript.run(() => {
@@ -621,9 +606,7 @@ export class NotatioOut extends LitElement {
     });
     const name = parsed ? boundName(parsed.json) : undefined;
     const latex =
-      this.elideAbove > 0
-        ? (elideResult(result, this.elideAbove) ?? latexOf(engine, result))
-        : latexOf(engine, result);
+      this.elideAbove > 0 ? (elideResult(result, this.elideAbove) ?? latexOf(engine, result)) : latexOf(engine, result);
     return { latex, json: result.json, messages, name, plot: plotInfo };
   }
 
@@ -691,8 +674,7 @@ export class NotatioOut extends LitElement {
       }
       // JavaScript uses the free compile() path; its result carries `.code`.
       try {
-        const compileFn = (mod as unknown as { compile?: (e: unknown, o: unknown) => unknown })
-          .compile;
+        const compileFn = (mod as unknown as { compile?: (e: unknown, o: unknown) => unknown }).compile;
         const res = compileFn?.(json, { engine });
         const code = (res as { code?: unknown } | undefined)?.code;
         if (typeof code === "string") out.javascript = code;
@@ -719,10 +701,7 @@ export class NotatioOut extends LitElement {
           import("@enumeratio/analytic/src"),
           import("@enumeratio/notatio"),
         ]);
-        const emitted = emitComplexWGSL(
-          (expr as unknown as { json: unknown }).json as never,
-          unknowns[0],
-        );
+        const emitted = emitComplexWGSL((expr as unknown as { json: unknown }).json as never, unknowns[0]);
         if (emitted) return portraitShader(emitted.code);
       }
       const { computeShader, toWgslFn } = await import("@enumeratio/notatio");
@@ -999,10 +978,7 @@ export class NotatioOut extends LitElement {
     if (this._input) return this._input;
     try {
       const engine = await loadEngine();
-      const json =
-        this.format === "latex"
-          ? engine.parse(this.value ?? "", { form: "raw" }).json
-          : this.#json(engine);
+      const json = this.format === "latex" ? engine.parse(this.value ?? "", { form: "raw" }).json : this.#json(engine);
       this._input = toInputForm(json);
     } catch {
       this._input = "";
@@ -1033,14 +1009,9 @@ export class NotatioOut extends LitElement {
   #menu(): unknown {
     const onLabel = this.labelMenu;
     const summary = onLabel
-      ? html`<summary
-          class="notatio-io-label notatio-label-btn"
-          title=${`${FORM_LABEL[this.form]} — click for forms`}
-        >
+      ? html`<summary class="notatio-io-label notatio-label-btn" title=${`${FORM_LABEL[this.form]} — click for forms`}>
           ${this.#labelText()}${
-            this.form === "standard"
-              ? ""
-              : html`<span class="notatio-label-form">${FORM_LABEL[this.form]}</span>`
+            this.form === "standard" ? "" : html`<span class="notatio-label-form">${FORM_LABEL[this.form]}</span>`
           }
         </summary>`
       : html`<summary class="notatio-menu-btn">${FORM_LABEL[this.form]}</summary>`;
@@ -1144,9 +1115,7 @@ export class NotatioOut extends LitElement {
           </button>`
         : "";
     const primitive = info?.primitive
-      ? html`<span
-          class="notatio-tree-primitive"
-          title="On the primitive frontier: ${info.primitive}"
+      ? html`<span class="notatio-tree-primitive" title="On the primitive frontier: ${info.primitive}"
           >${info.primitive}</span
         >`
       : "";
@@ -1184,12 +1153,7 @@ export class NotatioOut extends LitElement {
         });
       const summary = `(${args.map(oneLine).join(", ")})`;
       return html`<div class="notatio-tree-node" data-path=${path}>
-        <button
-          type="button"
-          class="notatio-tree-toggle"
-          aria-expanded=${open}
-          @click=${() => this.#toggleNode(path)}
-        >
+        <button type="button" class="notatio-tree-toggle" aria-expanded=${open} @click=${() => this.#toggleNode(path)}>
           ${open ? "▾" : "▸"}
         </button>
         ${this.#origin(path)}${this.#head(head, path)}
@@ -1198,9 +1162,7 @@ export class NotatioOut extends LitElement {
             ? html`<div class="notatio-tree-children">
                 ${args.map((arg, i) => this.#node(arg, path ? `${path}.${i}` : `${i}`))}
               </div>`
-            : html`<span class="notatio-tree-summary"
-                >${unsafeHTML(highlightCode(summary, "notatio"))}</span
-              >`
+            : html`<span class="notatio-tree-summary">${unsafeHTML(highlightCode(summary, "notatio"))}</span>`
         }
       </div>`;
     }
@@ -1238,14 +1200,7 @@ export class NotatioOut extends LitElement {
       return html`<span class="notatio-pending" role="status" aria-label="evaluating"
         ><span></span><span></span><span></span>${
           stoppable
-            ? html`<button
-                type="button"
-                class="notatio-stop"
-                title="Stop (Esc)"
-                @click=${() => this.stop()}
-              >
-                ■
-              </button>`
+            ? html`<button type="button" class="notatio-stop" title="Stop (Esc)" @click=${() => this.stop()}>■</button>`
             : ""
         }</span
       >`;
@@ -1284,8 +1239,7 @@ export class NotatioOut extends LitElement {
     // Layout: a plain (unselectable) In/Out label on the left, the rendered
     // value in the middle, and the form dropdown floated to the right.
     if (this.label && this.labelMenu) {
-      return html`<span class="notatio-line"
-          >${this.#menu()}<span class="notatio-render">${this.#content()}</span></span
+      return html`<span class="notatio-line">${this.#menu()}<span class="notatio-render">${this.#content()}</span></span
         >${this.#messages()}${this.#status()}`;
     }
     return html`<span class="notatio-line"

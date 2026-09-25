@@ -14,11 +14,7 @@ type BoxInput = Parameters<ComputeEngine["box"]>[0];
  * Evaluate `definition` at `subject` — substitute the wildcard and evaluate. Exported
  * because it is also how the tests and the reduction analysis reach a definition.
  */
-export function applyDefinition(
-  ce: ComputeEngine,
-  definition: Definition,
-  subject: BoxedExpression,
-): BoxedExpression {
+export function applyDefinition(ce: ComputeEngine, definition: Definition, subject: BoxedExpression): BoxedExpression {
   // In a scope of its own: boxing declares the free `_x`, and a definition that fixes its
   // type (Depth's `Abs(At(_x, i) - i)` makes it a number) would otherwise pin that type on
   // the global `_x` for every later definition, whose `Length(_x)` then never reduces.
@@ -106,8 +102,7 @@ export function declareStatistics(
         // Unwrap only an actual carrier. `definition.on` IS the constructor head's spelling,
         // so this is what tells a `Permutation([3,1,2])` from the bare `[3,1,2]` that the
         // `alsoOnList` arm of the union lets through.
-        const inner =
-          subject.operator === definition.on ? (operandsOf(subject)[0] ?? subject) : subject;
+        const inner = subject.operator === definition.on ? (operandsOf(subject)[0] ?? subject) : subject;
         return applyDefinition(ce, definition, inner);
       },
     });

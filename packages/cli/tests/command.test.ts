@@ -91,9 +91,7 @@ test("stdin: implicit when no expression, explicit with -", () => {
 });
 
 test("convert re-renders without evaluating; eval is the explicit default", () => {
-  expect(run(["convert", "-i", "wolfram", "-f", "tex", "Binomial[10, 3]"]).stdout).toBe(
-    "\\binom{10}{3}\n",
-  );
+  expect(run(["convert", "-i", "wolfram", "-f", "tex", "Binomial[10, 3]"]).stdout).toBe("\\binom{10}{3}\n");
   expect(run(["eval", "-i", "wolfram", "Binomial[10, 3]"]).stdout).toBe("120\n");
 });
 
@@ -104,23 +102,15 @@ test("-N / --precision approximate numerically", () => {
 });
 
 test("host defaults apply under the flags", () => {
-  expect(runCommand(["x^2 + 1"], undefined, { form: "wolfram" }).stdout).toBe(
-    "Plus[Power[x, 2], 1]\n",
-  );
-  expect(runCommand(["-f", "tex", "x^2 + 1"], undefined, { form: "wolfram" }).stdout).toBe(
-    "x^2+1\n",
-  );
+  expect(runCommand(["x^2 + 1"], undefined, { form: "wolfram" }).stdout).toBe("Plus[Power[x, 2], 1]\n");
+  expect(runCommand(["-f", "tex", "x^2 + 1"], undefined, { form: "wolfram" }).stdout).toBe("x^2+1\n");
   expect(runCommand(["Binomial[10, 3]"], undefined, { syntax: "wolfram" }).stdout).toBe("120\n");
 });
 
 test("forms / formats / completion subcommands", () => {
   expect(run(["forms"]).stdout).toMatch(/\* notatio/);
-  expect(
-    JSON.parse(run(["forms", "--json"]).stdout).map((f: { name: string }) => f.name),
-  ).toContain("wolfram");
-  expect(
-    JSON.parse(run(["formats", "--json"]).stdout).some((f: { name: string }) => f.name === "WL"),
-  ).toBe(true);
+  expect(JSON.parse(run(["forms", "--json"]).stdout).map((f: { name: string }) => f.name)).toContain("wolfram");
+  expect(JSON.parse(run(["formats", "--json"]).stdout).some((f: { name: string }) => f.name === "WL")).toBe(true);
   expect(run(["formats"]).stdout).toMatch(/WL/);
   for (const shell of ["bash", "zsh", "fish"]) {
     const r = run(["completion", shell]);

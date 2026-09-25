@@ -2,9 +2,7 @@ import { expect, test } from "vite-plus/test";
 import { formOfHead, splitHead, stripHead, WRAPPER_HEADS, wrapHead } from "../src/heads.ts";
 
 test("wrapHead spells the head for the source's form", () => {
-  expect(wrapHead("\\frac{1}{2}+\\frac{1}{3}", "N")).toEqual(
-    "\\operatorname{N}(\\frac{1}{2}+\\frac{1}{3})",
-  );
+  expect(wrapHead("\\frac{1}{2}+\\frac{1}{3}", "N")).toEqual("\\operatorname{N}(\\frac{1}{2}+\\frac{1}{3})");
   expect(wrapHead("x^2 + 1", "FullForm", "notatio")).toEqual("FullForm(x^2 + 1)");
   // A `$…$` island only occurs in notatio, so the bare head is the right spelling.
   expect(wrapHead("$x^2$ + 1", "N")).toEqual("N($x^2$ + 1)");

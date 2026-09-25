@@ -1,12 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import {
-  adaptiveParam,
-  adaptiveSample,
-  linePlot,
-  linePlotSvg,
-  niceTicks,
-  type PlotPoint,
-} from "../src/plot.ts";
+import { adaptiveParam, adaptiveSample, linePlot, linePlotSvg, niceTicks, type PlotPoint } from "../src/plot.ts";
 
 const sample = (f: (x: number) => number, lo: number, hi: number, n = 40): PlotPoint[] =>
   Array.from({ length: n }, (_, i) => {
@@ -93,10 +86,7 @@ test("a parametric curve (points not x-sorted) stays one segment", () => {
 
 test("hover marks the nearest sample of each series and lists coordinates", () => {
   const { svg, xAt } = linePlot(
-    [
-      { points: sample((x) => x, 0, 10, 11), label: "f" },
-      { points: sample((x) => 2 * x, 0, 10, 11) },
-    ],
+    [{ points: sample((x) => x, 0, 10, 11), label: "f" }, { points: sample((x) => 2 * x, 0, 10, 11) }],
     { hover: 3.2 },
   );
   expect(count(svg, "circle")).toBe(2); // one marker per series

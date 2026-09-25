@@ -17,13 +17,7 @@
 // exact: the coefficients are Laurent polynomials in A, and δ's powers are multiplied out
 // rather than evaluated.
 
-import {
-  composeDiagrams,
-  type Diagram,
-  diagram,
-  diagramKey,
-  identityDiagram,
-} from "@enumeratio/diagram";
+import { composeDiagrams, type Diagram, diagram, diagramKey, identityDiagram } from "@enumeratio/diagram";
 import { type Braid, writhe } from "./braid.ts";
 import { add, constant, divide, type Laurent, monomial, multiply, trim, ZERO } from "./laurent.ts";
 
@@ -33,11 +27,7 @@ export type TemperleyLiebElement = ReadonlyMap<string, { diagram: Diagram; coeff
 /** δ = −A² − A⁻², the value of a closed loop. */
 export const LOOP_VALUE: Laurent = add(monomial(-1, 2), monomial(-1, -2));
 
-const put = (
-  into: Map<string, { diagram: Diagram; coefficient: Laurent }>,
-  d: Diagram,
-  coefficient: Laurent,
-): void => {
+const put = (into: Map<string, { diagram: Diagram; coefficient: Laurent }>, d: Diagram, coefficient: Laurent): void => {
   const key = diagramKey(d);
   const existing = into.get(key);
   const total = existing === undefined ? coefficient : add(existing.coefficient, coefficient);
@@ -45,9 +35,7 @@ const put = (
   else into.set(key, { diagram: d, coefficient: total });
 };
 
-export const tlElement = (
-  parts: readonly (readonly [Diagram, Laurent])[],
-): TemperleyLiebElement => {
+export const tlElement = (parts: readonly (readonly [Diagram, Laurent])[]): TemperleyLiebElement => {
   const out = new Map<string, { diagram: Diagram; coefficient: Laurent }>();
   for (const [d, coefficient] of parts) put(out, d, coefficient);
   return out;
@@ -217,12 +205,7 @@ export function mirrorJones(p: Laurent): Laurent {
 export function torusJones(p: number, q: number): Laurent | undefined {
   if (!Number.isSafeInteger(p) || !Number.isSafeInteger(q) || p < 2 || q < 2) return undefined;
   if (p > 20 || q > 20) return undefined;
-  const numerator = [
-    constant(1),
-    monomial(-1, p + 1),
-    monomial(-1, q + 1),
-    monomial(1, p + q),
-  ].reduce(add, ZERO);
+  const numerator = [constant(1), monomial(-1, p + 1), monomial(-1, q + 1), monomial(1, p + q)].reduce(add, ZERO);
   const denominator = add(constant(1), monomial(-1, 2));
   const quotient = divide(numerator, denominator);
   if (quotient === undefined) return undefined;

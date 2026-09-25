@@ -58,9 +58,7 @@ const trim = (text: string): string => text.replace(/`/g, "'").replace(/\|/g, "/
 const args = process.argv.slice(2);
 const headIndex = args.indexOf("--head");
 const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
-const requested = args.filter(
-  (argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head",
-);
+const requested = args.filter((argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head");
 // `--digest` scans nothing: it rebuilds `disagreements.md` from the committed sidecars.
 const digestOnly = args.includes("--digest");
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
@@ -99,10 +97,7 @@ const missingBySystem: Record<string, Record<string, number>> = {};
 
 /** A committed row's `tolerance`, read before the sidecars are loaded for rewriting. */
 const toleranceOf = (() => {
-  const cache = new Map<
-    string,
-    Record<string, Record<string, Record<string, { tolerance?: number }>>>
-  >();
+  const cache = new Map<string, Record<string, Record<string, Record<string, { tolerance?: number }>>>>();
   return (item: Case, system: string): number | undefined => {
     if (!cache.has(item.stem)) {
       const url = new URL(`../src/entries/${item.stem}.oracle.json`, import.meta.url);
@@ -149,13 +144,7 @@ for (const system of systems) {
     }
     const theirs = result.value ?? "";
     const tolerance = toleranceOf(row.item, system);
-    const verdict = verdictOf(
-      system,
-      row.item.expected,
-      result,
-      tolerance,
-      asksForDigits(row.item.expr),
-    );
+    const verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr));
     outcomes.push({
       id: row.item.id,
       source,
@@ -171,9 +160,7 @@ for (const system of systems) {
 
   const tally = new Map<string, number>();
   for (const outcome of outcomes) tally.set(outcome.verdict, (tally.get(outcome.verdict) ?? 0) + 1);
-  process.stderr.write(
-    `${system}: ${[...tally].map(([verdict, n]) => `${verdict} ${n}`).join(", ")}\n`,
-  );
+  process.stderr.write(`${system}: ${[...tally].map(([verdict, n]) => `${verdict} ${n}`).join(", ")}\n`);
 }
 
 // The heads costing the most coverage, across all systems — the queue, in priority order.
@@ -215,8 +202,7 @@ type Sidecar = {
   examples: Record<string, Record<string, Record<string, OtherRow>>>;
 };
 
-const sidecarUrl = (stem: string): URL =>
-  new URL(`../src/entries/${stem}.oracle.json`, import.meta.url);
+const sidecarUrl = (stem: string): URL => new URL(`../src/entries/${stem}.oracle.json`, import.meta.url);
 const loadSidecar = (stem: string): Sidecar => {
   const url = sidecarUrl(stem);
   if (!existsSync(url)) return { kernels: {}, examples: {} };
@@ -244,9 +230,7 @@ for (const system of systems) {
   for (const stem of touchedStems) {
     const sidecar = sidecars.get(stem) as Sidecar;
     if (kernelOf[system] !== undefined) sidecar.kernels[system] = kernelOf[system] as string;
-    const stemHeads = new Set(
-      cases.filter((c) => c.stem === stem && headsThisRun.has(c.head)).map((c) => c.head),
-    );
+    const stemHeads = new Set(cases.filter((c) => c.stem === stem && headsThisRun.has(c.head)).map((c) => c.head));
     for (const head of stemHeads) {
       const ofHead = cases.filter((c) => c.stem === stem && c.head === head);
       const currentKeys = new Set(ofHead.map((c) => c.key));
@@ -266,10 +250,7 @@ for (const system of systems) {
         if (outcome === undefined || outcome.verdict === "unmapped") {
           // Unmapped this run: clear a stale row for this system, keep the others.
           if (prior === undefined) continue;
-          const { [system]: _dropped, ...rest } = existingForHead[item.key] as Record<
-            string,
-            OtherRow
-          >;
+          const { [system]: _dropped, ...rest } = existingForHead[item.key] as Record<string, OtherRow>;
           if (Object.keys(rest).length === 0) delete existingForHead[item.key];
           else existingForHead[item.key] = rest;
           continue;
@@ -289,9 +270,7 @@ for (const system of systems) {
                 note: same ? (prior?.note ?? "") : "",
                 ...(same && prior?.issue !== undefined ? { issue: prior.issue } : {}),
               }),
-          ...(prior?.tolerance === undefined
-            ? {}
-            : { tolerance: prior.tolerance, note: prior.note ?? "" }),
+          ...(prior?.tolerance === undefined ? {} : { tolerance: prior.tolerance, note: prior.note ?? "" }),
           ...(outcome.shown === undefined ? {} : { shown: outcome.shown }),
           ...(outcome.tex === undefined ? {} : { tex: outcome.tex }),
         };
@@ -311,8 +290,7 @@ const written: string[] = [];
 for (const { stem } of entryFiles) {
   const sidecar = sidecars.get(stem) as Sidecar;
   const url = sidecarUrl(stem);
-  if (existsSync(url) && isDeepStrictEqual(JSON.parse(readFileSync(url, "utf8")), sidecar))
-    continue;
+  if (existsSync(url) && isDeepStrictEqual(JSON.parse(readFileSync(url, "utf8")), sidecar)) continue;
   writeFileSync(url, `${JSON.stringify(sidecar, null, 2)}\n`);
   written.push(fileURLToPath(url));
 }
@@ -397,9 +375,7 @@ for (const system of scanned) {
   if (bad.length > 0) {
     lines.push("| example | kind | ours | theirs |", "| --- | --- | --- | --- |");
     for (const row of bad) {
-      lines.push(
-        `| \`${row.id}\` | ${row.kind ?? ""} | \`${trim(show(row.expected))}\` | \`${trim(row.output)}\` |`,
-      );
+      lines.push(`| \`${row.id}\` | ${row.kind ?? ""} | \`${trim(show(row.expected))}\` | \`${trim(row.output)}\` |`);
     }
     lines.push("");
   }

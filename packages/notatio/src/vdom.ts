@@ -128,8 +128,6 @@ export function vdomOf(expr: Json): Rendering {
 /** Hand a rendering to a framework: `toVNode(vdomOf(expr), h)`. */
 export function toVNode<N>(rendering: Rendering, h: VNodeFactory<N>): N {
   const children: (N | string)[] =
-    rendering.text !== undefined
-      ? [rendering.text]
-      : (rendering.children?.map((c) => toVNode(c, h)) ?? []);
+    rendering.text !== undefined ? [rendering.text] : (rendering.children?.map((c) => toVNode(c, h)) ?? []);
   return h(rendering.tag, rendering.attributes, children);
 }

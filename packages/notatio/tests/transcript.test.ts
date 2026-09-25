@@ -19,12 +19,7 @@ function evaluate(t: Transcript, engine: ComputeEngine, latex: string) {
 // notatio/InputForm source: `Out(1)` and friends are ordinary function calls, boxed
 // straight from the parsed tree rather than round-tripped through LaTeX text (which
 // has no call syntax for an arbitrary declared symbol).
-function evaluateJson(
-  t: Transcript,
-  engine: ComputeEngine,
-  json: Parameters<ComputeEngine["box"]>[0],
-  input: string,
-) {
+function evaluateJson(t: Transcript, engine: ComputeEngine, json: Parameters<ComputeEngine["box"]>[0], input: string) {
   return t.run(() => {
     const raw: BoxedExpression = engine.box(json);
     const value = raw.evaluate();

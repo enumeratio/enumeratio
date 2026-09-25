@@ -32,8 +32,7 @@ export function assemble(loaded: readonly ReferenceEntry[]) {
     ...carrierStubs,
     ...engineEntries(new Set([...byName.keys(), ...carrierStubs.map((s) => s.name)])),
   ];
-  const getEntry = (name: string): ReferenceEntry | undefined =>
-    entries.find((entry) => entry.name === name);
+  const getEntry = (name: string): ReferenceEntry | undefined => entries.find((entry) => entry.name === name);
   /**
    * The head resolver a reference page hands to its TreeForm cells: a link to the entry, the
    * `reference` implementation to unfold into, and the primitive reason when there is one.

@@ -32,15 +32,11 @@ for (const [head, paramSets] of Object.entries(PARAMS)) {
 // ─── OEIS counts, cross-checked against brute force below (never trusted blindly). ─────────────────
 test("RootedUnlabeledTrees(n) = A000081", () => {
   const e = byHead.get("RootedUnlabeledTrees")!;
-  expect([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => e.count([n]))).toEqual([
-    1, 1, 2, 4, 9, 20, 48, 115, 286,
-  ]);
+  expect([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => e.count([n]))).toEqual([1, 1, 2, 4, 9, 20, 48, 115, 286]);
 });
 test("UnlabeledFreeTrees(n) = A000055", () => {
   const e = byHead.get("UnlabeledFreeTrees")!;
-  expect([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => e.count([n]))).toEqual([
-    1, 1, 1, 2, 3, 6, 11, 23, 47,
-  ]);
+  expect([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => e.count([n]))).toEqual([1, 1, 1, 2, 3, 6, 11, 23, 47]);
 });
 test("PhylogeneticTrees(n) = A001147 (2n-3)!!", () => {
   const e = byHead.get("PhylogeneticTrees")!;

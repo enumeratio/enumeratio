@@ -72,16 +72,11 @@ function bstParentsRef(p: readonly number[]): number[] {
 
 test("BinarySearchTree agrees with plain insertion, up to n = 4", () => {
   for (const p of ALL4)
-    expect(contents(["BinarySearchTree", perm(...p)]), `[${p}]`).toEqual([
-      "List",
-      ...bstParentsRef(p),
-    ]);
+    expect(contents(["BinarySearchTree", perm(...p)]), `[${p}]`).toEqual(["List", ...bstParentsRef(p)]);
 });
 
 test("BinarySearchTree is typed as binary_tree", () => {
-  expect(String(ce.box(["BinarySearchTree", perm(2, 3, 1)] as never).evaluate().type)).toBe(
-    "binary_tree",
-  );
+  expect(String(ce.box(["BinarySearchTree", perm(2, 3, 1)] as never).evaluate().type)).toBe("binary_tree");
 });
 
 test("distinct binary search trees over S_n are counted by Catalan(n)", () => {
@@ -124,10 +119,7 @@ const readingWordRef = (p: readonly number[]): number[] => insertionTableauRef(p
 
 test("KnuthClassRepresentative is the reading word of the insertion tableau, up to n = 4", () => {
   for (const p of ALL4)
-    expect(contents(["KnuthClassRepresentative", perm(...p)]), `[${p}]`).toEqual([
-      "List",
-      ...readingWordRef(p),
-    ]);
+    expect(contents(["KnuthClassRepresentative", perm(...p)]), `[${p}]`).toEqual(["List", ...readingWordRef(p)]);
 });
 
 test("KnuthClassRepresentative is idempotent and keeps σ's insertion tableau, up to n = 4", () => {
@@ -154,8 +146,7 @@ test("distinct Knuth class representatives over S_n count standard Young tableau
 const longCycleRef = (i: number, n: number): number => (i % n) + 1;
 /** K(w) = w^{-1} c, read off directly: position i holds w^{-1}(c(i)), and w^{-1}(x) is x's
  *  position in the one-line word. */
-const krewerasRef = (p: readonly number[]): number[] =>
-  p.map((_, i) => p.indexOf(longCycleRef(i + 1, p.length)) + 1);
+const krewerasRef = (p: readonly number[]): number[] => p.map((_, i) => p.indexOf(longCycleRef(i + 1, p.length)) + 1);
 
 /** w's cycles, as sets of 1-indexed points. */
 function cyclesOf(p: readonly number[]): number[][] {
@@ -178,8 +169,7 @@ function cyclesOf(p: readonly number[]): number[][] {
  *  with a1, a2 in one block and b1, b2 in the other. */
 function crosses(a: readonly number[], b: readonly number[]): boolean {
   for (const a1 of a)
-    for (const a2 of a)
-      for (const b1 of b) for (const b2 of b) if (a1 < b1 && b1 < a2 && a2 < b2) return true;
+    for (const a2 of a) for (const b1 of b) for (const b2 of b) if (a1 < b1 && b1 < a2 && a2 < b2) return true;
   return false;
 }
 /**
@@ -209,10 +199,7 @@ test("KrewerasComplement agrees with w⁻¹c on the non-crossing permutations, u
   for (const p of ALL4) {
     const evaluated = ce.box(["KrewerasComplement", perm(...p)] as never).evaluate();
     if (isNonCrossing(p)) {
-      expect(contents(["KrewerasComplement", perm(...p)]), `[${p}]`).toEqual([
-        "List",
-        ...krewerasRef(p),
-      ]);
+      expect(contents(["KrewerasComplement", perm(...p)]), `[${p}]`).toEqual(["List", ...krewerasRef(p)]);
     } else {
       // Declines: the call stays headed by `KrewerasComplement` rather than being answered
       // wrong — the way an unmatched `Filter` predicate is never materialised at all.
@@ -232,8 +219,7 @@ test("K∘K is conjugation by the long cycle, and K is a bijection of NC(n)", ()
   for (let n = 1; n <= 6; n++) {
     const nc = permutations(n).filter(isNonCrossing);
     const cOf = (i: number) => longCycleRef(i, n);
-    const cInvOf = (x: number) =>
-      Array.from({ length: n }, (_, i) => i + 1).find((i) => cOf(i) === x)!;
+    const cInvOf = (x: number) => Array.from({ length: n }, (_, i) => i + 1).find((i) => cOf(i) === x)!;
     const images = new Set<string>();
     for (const w of nc) {
       const k = krewerasRef(w);
@@ -276,8 +262,9 @@ function fromPermutationRef(p: readonly number[]): {
 
 /** The constructed value's Tuple — the single argument `IncreasingBinaryTree` wraps. */
 const tupleOf = (expr: unknown): { json: unknown }[] | undefined =>
-  (ce.box(expr as never).evaluate() as unknown as { ops?: { ops?: { json: unknown }[] }[] })
-    .ops?.[0]?.ops as { json: unknown }[] | undefined;
+  (ce.box(expr as never).evaluate() as unknown as { ops?: { ops?: { json: unknown }[] }[] }).ops?.[0]?.ops as
+    | { json: unknown }[]
+    | undefined;
 
 test("FromPermutation agrees with minimum-splitting recursion, up to n = 4", () => {
   for (const p of ALL4) {
@@ -296,9 +283,7 @@ test("FromPermutation's root is always 1", () => {
 });
 
 test("FromPermutation is typed as increasing_binary_tree", () => {
-  expect(String(ce.box(["FromPermutation", perm(2, 3, 1)] as never).evaluate().type)).toBe(
-    "increasing_binary_tree",
-  );
+  expect(String(ce.box(["FromPermutation", perm(2, 3, 1)] as never).evaluate().type)).toBe("increasing_binary_tree");
 });
 
 test("FromPermutation is a bijection from S_n onto the increasing binary trees on n nodes", () => {

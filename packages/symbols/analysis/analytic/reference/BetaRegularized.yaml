@@ -37,12 +37,7 @@ examples:
     category: Properties
     caption: $I_{1/2}(a, a) = 1/2$ for any a, here at $a = 10$
   - id: binomial-cdf-via-the-regularized-beta-for-x-sim
-    expr:
-      [
-        Equal,
-        [BetaRegularized, 0.7, 3, 2],
-        [Add, [Power, 0.7, 4], [Multiply, 4, 0.3, [Power, 0.7, 3]]],
-      ]
+    expr: [Equal, [BetaRegularized, 0.7, 3, 2], [Add, [Power, 0.7, 4], [Multiply, 4, 0.3, [Power, 0.7, 3]]]]
     expected: True
     category: Applications
     caption: 'Binomial CDF via the regularized beta: for $X \sim \text{Binomial}(4, 0.3)$, $P(X \leq 1) = I_{0.7}(3, 2)$'

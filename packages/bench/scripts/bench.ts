@@ -67,15 +67,12 @@ if (swap !== undefined && swap > 8192 && !values.force) {
   process.exit(1);
 }
 
-const ms = (ns: number | undefined): string =>
-  ns === undefined ? "" : `${(ns / 1e6).toFixed(3)} ms`;
+const ms = (ns: number | undefined): string => (ns === undefined ? "" : `${(ns / 1e6).toFixed(3)} ms`);
 const versions = new Map<BenchSystem, string>();
 const results = await runPlan(plan, systems, {
   interleave: values.interleave,
   onResult: (system, r) =>
-    console.log(
-      `${system.padEnd(8)} ${r.name.padEnd(48)} ${r.status.padEnd(11)} ${ms(r.median)} ${r.reason ?? ""}`,
-    ),
+    console.log(`${system.padEnd(8)} ${r.name.padEnd(48)} ${r.status.padEnd(11)} ${ms(r.median)} ${r.reason ?? ""}`),
   onVersion: (system, version) => versions.set(system, version),
 });
 for (const [system, list] of results) {

@@ -18,11 +18,7 @@ examples:
   - id: beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34
     expr: [FunctionExpand, [DirichletBeta, s]]
     expected:
-      [
-        Multiply,
-        [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]],
-        [Power, 4, [Negate, s]],
-      ]
+      [Multiply, [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]], [Power, 4, [Negate, s]]]
     caption: $\beta(s) = 4^{-s}(\zeta(s, \tfrac14) - \zeta(s, \tfrac34))$
   - id: g-frac-12-in-glaisher-s-constant
     expr: [FunctionExpand, [BarnesG, [Rational, 1, 2]]]
@@ -38,11 +34,7 @@ examples:
   - id: radicals-past-the-automatic-special-angle-table
     expr: [FunctionExpand, [Sin, [Divide, Pi, 15]]]
     expected:
-      [
-        Multiply,
-        [Rational, 1, 8],
-        [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]],
-      ]
+      [Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]
     caption: Radicals past the automatic special-angle table
   - id: half-angle-radicals-cos-frac-pi-24-frac-12-sqrt
     expr: [FunctionExpand, [Cos, [Divide, Pi, 24]]]

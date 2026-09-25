@@ -149,9 +149,7 @@ export function isPlanar(d: Diagram): boolean {
   for (let k = 0; k < n; k++) position.set(k + 1, k);
   for (let k = 0; k < n; k++) position.set(-(n - k), n + k);
 
-  const spans = d.blocks.map((block) =>
-    block.map((label) => position.get(label) ?? 0).sort((x, y) => x - y),
-  );
+  const spans = d.blocks.map((block) => block.map((label) => position.get(label) ?? 0).sort((x, y) => x - y));
   for (let i = 0; i < spans.length; i++) {
     for (let j = i + 1; j < spans.length; j++) {
       // Two blocks cross when their positions interleave as a < c < b < d.
@@ -170,8 +168,7 @@ export function isPlanar(d: Diagram): boolean {
 
 const blockSizes = (d: Diagram) => d.blocks.map((b) => b.length);
 const isMatching = (d: Diagram) => blockSizes(d).every((s) => s === 2);
-const crossesRows = (block: readonly number[]) =>
-  block.some((l) => l > 0) && block.some((l) => l < 0);
+const crossesRows = (block: readonly number[]) => block.some((l) => l > 0) && block.some((l) => l < 0);
 
 /** The diagram classes, each a subset of the partition diagrams closed under the product. */
 export type DiagramClass =

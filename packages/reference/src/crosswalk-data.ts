@@ -184,17 +184,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "AiryBi",
-    fungrimEntries: [
-      "4d65e5",
-      "51b241",
-      "685892",
-      "70ec9f",
-      "bd319e",
-      "d39c46",
-      "de9800",
-      "e72e96",
-      "eadca2",
-    ],
+    fungrimEntries: ["4d65e5", "51b241", "685892", "70ec9f", "bd319e", "d39c46", "de9800", "e72e96", "eadca2"],
   },
   {
     name: "AlgebraDimension",
@@ -311,17 +301,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "Arctan2",
-    fungrimEntries: [
-      "00e608",
-      "22fb4a",
-      "47331d",
-      "77e519",
-      "9dec3e",
-      "a6776b",
-      "b2a880",
-      "cf64b3",
-      "eca4ce",
-    ],
+    fungrimEntries: ["00e608", "22fb4a", "47331d", "77e519", "9dec3e", "a6776b", "b2a880", "cf64b3", "eca4ce"],
   },
   {
     name: "ArgMax",
@@ -1516,17 +1496,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "Erf",
-    fungrimEntries: [
-      "01440f",
-      "7f355d",
-      "94db18",
-      "98688d",
-      "abadc7",
-      "b5bd5d",
-      "bfc86e",
-      "cb93ea",
-      "fae9d3",
-    ],
+    fungrimEntries: ["01440f", "7f355d", "94db18", "98688d", "abadc7", "b5bd5d", "bfc86e", "cb93ea", "fae9d3"],
     wolfram: "Erf",
   },
   {
@@ -2472,16 +2442,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "Hypergeometric0F1",
-    fungrimEntries: [
-      "01bbb6",
-      "20e530",
-      "2df3e3",
-      "4d65e5",
-      "50f72f",
-      "54daa9",
-      "bd319e",
-      "e2878f",
-    ],
+    fungrimEntries: ["01bbb6", "20e530", "2df3e3", "4d65e5", "50f72f", "54daa9", "bd319e", "e2878f"],
     wolfram: "Hypergeometric0F1",
   },
   {
@@ -2537,17 +2498,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "Hypergeometric2F1Regularized",
-    fungrimEntries: [
-      "27bc34",
-      "504717",
-      "651a4a",
-      "65693e",
-      "90ac58",
-      "b25089",
-      "ca9123",
-      "db3eb9",
-      "fe6e74",
-    ],
+    fungrimEntries: ["27bc34", "504717", "651a4a", "65693e", "90ac58", "b25089", "ca9123", "db3eb9", "fe6e74"],
     wolfram: "Hypergeometric2F1Regularized",
   },
   {
@@ -4387,17 +4338,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "SloaneA",
-    fungrimEntries: [
-      "373aa1",
-      "447541",
-      "4fa169",
-      "60dc3e",
-      "6af603",
-      "8eed2c",
-      "9d0839",
-      "b6111c",
-      "d12aa0",
-    ],
+    fungrimEntries: ["373aa1", "447541", "4fa169", "60dc3e", "6af603", "8eed2c", "9d0839", "b6111c", "d12aa0"],
   },
   {
     name: "Sort",
@@ -4463,16 +4404,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "StieltjesGamma",
-    fungrimEntries: [
-      "51206a",
-      "60c6da",
-      "687b4d",
-      "70a705",
-      "8ae153",
-      "a6bdf5",
-      "b1a2e1",
-      "b6808d",
-    ],
+    fungrimEntries: ["51206a", "60c6da", "687b4d", "70a705", "8ae153", "a6bdf5", "b1a2e1", "b6808d"],
     wolfram: "StieltjesGamma",
   },
   {

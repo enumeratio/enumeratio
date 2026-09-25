@@ -23,15 +23,7 @@ examples:
     caption: from a list of terms
   - id: the-first-five-convergents-of-pi
     expr: [Convergents, Pi, 5]
-    expected:
-      [
-        List,
-        3,
-        [Rational, 22, 7],
-        [Rational, 333, 106],
-        [Rational, 355, 113],
-        [Rational, 103993, 33102],
-      ]
+    expected: [List, 3, [Rational, 22, 7], [Rational, 333, 106], [Rational, 355, 113], [Rational, 103993, 33102]]
     caption: the first five convergents of $\pi$
   - id: a-rational-the-last-convergent-is-the-number
     expr: [Convergents, [Rational, 47, 17]]

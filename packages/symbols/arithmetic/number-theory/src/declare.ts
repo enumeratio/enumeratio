@@ -11,11 +11,7 @@ import {
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareBacklog } from "./declare-backlog.ts";
-import {
-  declareGaussian,
-  declareGaussianRationalGcdLcm,
-  declareIntegerExponentGaussian,
-} from "./declare-gaussian.ts";
+import { declareGaussian, declareGaussianRationalGcdLcm, declareIntegerExponentGaussian } from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
@@ -110,9 +106,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
         return value === undefined ? undefined : gaussianExpression(ce, value);
       }
       const found = gaussianRoots(ops);
-      return found === undefined || found.length === 0
-        ? undefined
-        : gaussianExpression(ce, found[0]!);
+      return found === undefined || found.length === 0 ? undefined : gaussianExpression(ce, found[0]!);
     },
     3,
   );
@@ -125,8 +119,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const [a, m, n, d] = [0, 1, 2, 3].map((i) => bigIntegerAt(ops[i]));
       if (a === undefined || m === undefined) return undefined;
-      if ((ops[2] !== undefined && n === undefined) || (ops[3] !== undefined && d === undefined))
-        return undefined;
+      if ((ops[2] !== undefined && n === undefined) || (ops[3] !== undefined && d === undefined)) return undefined;
       const found = rationalReconstruction(a, m, n, d);
       return found === undefined ? undefined : ce.number([found[0], found[1]]);
     },
@@ -158,10 +151,7 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => {
       const rows = operandsOf(ops[0]).map((row) => operandsOf(row).map(bigIntegerAt));
       const width = rows[0]?.length ?? 0;
-      if (
-        rows.length === 0 ||
-        rows.some((row) => row.length !== width || row.some((x) => x === undefined))
-      )
+      if (rows.length === 0 || rows.some((row) => row.length !== width || row.some((x) => x === undefined)))
         return undefined;
       const { u, h } = hermiteDecomposition(rows as bigint[][]);
       const matrix = (x: bigint[][]): BoxedExpression =>
@@ -231,10 +221,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Binomial", "n", "n"],
-    (ops) =>
-      ops.length === 2 &&
-      integerAt(ops[0]) === undefined &&
-      sub(ops[0], ops[1]).evaluate().isSame(ce.Zero),
+    (ops) => ops.length === 2 && integerAt(ops[0]) === undefined && sub(ops[0], ops[1]).evaluate().isSame(ce.Zero),
     () => () => ce.One,
   );
 
@@ -264,8 +251,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // before, and every non-number, so the handlers beneath it still see those.
   const nativeTakes = (op: BoxedExpression): boolean => !inexactNumber(op);
   // Two exact numbers, for the Binomial gate below.
-  const isExact = (op: BoxedExpression): boolean =>
-    integerAt(op) !== undefined || bigRationalAt(op) !== undefined;
+  const isExact = (op: BoxedExpression): boolean => integerAt(op) !== undefined || bigRationalAt(op) !== undefined;
   widenSignature(ce, "CatalanNumber", "(any) -> any", nativeTakes);
   widenSignature(ce, "Subfactorial", "(any) -> any", nativeTakes);
   widenSignature(ce, "Factorial2", "(any) -> any", nativeTakes);
@@ -348,8 +334,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     // Fires once some part is a real or complex non-integer; but not if another part is
     // an exact non-integer rational, which stays for whatever already handles that case.
     (ops) => {
-      const exactRational = (op: BoxedExpression) =>
-        integerAt(op) === undefined && bigRationalAt(op) !== undefined;
+      const exactRational = (op: BoxedExpression) => integerAt(op) === undefined && bigRationalAt(op) !== undefined;
       return ops.some(inexactNumber) && !ops.some(exactRational);
     },
     () => (ops) => {
@@ -440,10 +425,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     (ops) => inexactNumber(ops[0]) && !isProfinite(ops[0]),
     () => (ops) => {
       const nu = ops[0];
-      return div(
-        sub(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)),
-        ce.function("Sqrt", [5]),
-      ).N();
+      return div(sub(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)), ce.function("Sqrt", [5])).N();
     },
     1,
   );
@@ -463,8 +445,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   // a nonnegative integer order n and any exact x. Built by running each recurrence up to
   // n, expanding at every step so the Horner nesting never survives to the final term.
   const notMatrix = (op: BoxedExpression): boolean => op.operator !== "List";
-  const expand = (expr: BoxedExpression): BoxedExpression =>
-    ce.function("Expand", [expr]).evaluate();
+  const expand = (expr: BoxedExpression): BoxedExpression => ce.function("Expand", [expr]).evaluate();
 
   wrapOperator(
     ce,

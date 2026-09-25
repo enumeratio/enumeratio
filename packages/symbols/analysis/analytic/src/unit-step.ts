@@ -20,10 +20,7 @@ function unitStepOf(x: BoxedExpression): 0 | 1 | undefined {
   return approx.re < 0 ? 0 : 1;
 }
 
-function evaluateUnitStep(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+function evaluateUnitStep(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   if (ops.length === 1 && ops[0]?.operator === "List") {
     const elements = operandsOf(ops[0]);
     const mapped: BoxedExpression[] = [];

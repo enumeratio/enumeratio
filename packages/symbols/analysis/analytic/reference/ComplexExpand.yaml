@@ -12,8 +12,7 @@ details:
 examples:
   - id: sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y
     expr: [ComplexExpand, [Sin, [Add, x, [Multiply, ImaginaryUnit, y]]]]
-    expected:
-      [Add, [Multiply, [Complex, 0, 1], [Cos, x], [Sinh, y]], [Multiply, [Sin, x], [Cosh, y]]]
+    expected: [Add, [Multiply, [Complex, 0, 1], [Cos, x], [Sinh, y]], [Multiply, [Sin, x], [Cosh, y]]]
     caption: $\sin(x + iy) = \sin x\cosh y + i\cos x\sinh y$
   - id: polar-form-of-a-complex-exponential
     expr: [ComplexExpand, [Exp, [Add, x, [Multiply, ImaginaryUnit, y]]]]

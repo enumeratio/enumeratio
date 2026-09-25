@@ -21,12 +21,7 @@ export {
 export { CATALOG_ALIASES, CURATED, DLMF_NAMES, FUNGRIM_NAMES } from "./crosswalk/curated.ts";
 export { dlmfNotations, normaliseName } from "./crosswalk/dlmf.ts";
 export { type OracleAgreement, oracleAgreements } from "./crosswalk/oracle.ts";
-export {
-  fungrimEntryVerdict,
-  type FungrimScore,
-  fungrimScore,
-  KNOWN_CAUSES,
-} from "./crosswalk/fungrim.ts";
+export { fungrimEntryVerdict, type FungrimScore, fungrimScore, KNOWN_CAUSES } from "./crosswalk/fungrim.ts";
 export { fungrimVerified, type FungrimVerdict } from "./fungrim-verified-data.ts";
 export { dlmf, type DlmfNotation } from "./dlmf-data.ts";
 export { findstat, type FindStatMatch } from "./findstat-data.ts";
@@ -48,11 +43,6 @@ export {
 export { inventory, type InventoryEntry } from "./inventory-data.ts";
 export { referencesOf, wikidataItem, wikipediaTitle } from "./crosswalk/wikidata.ts";
 export { wikidata, type WikidataItem } from "./wikidata-data.ts";
-export type {
-  Reference,
-  ReferenceOrigin,
-  ReferenceRelation,
-  ResolvedReference,
-} from "./crosswalk/types.ts";
+export type { Reference, ReferenceOrigin, ReferenceRelation, ResolvedReference } from "./crosswalk/types.ts";
 export { checkImplementations, type Exists, type Problem } from "./validate.ts";
 export { type HeadRecord, provenance } from "./provenance-data.ts";

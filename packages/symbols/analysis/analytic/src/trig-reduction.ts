@@ -90,18 +90,14 @@ function bigValueOf(expr: BoxedExpression): ExactValue | undefined {
     return { kind: "rational", num, den, digits: integerDigitsOfRational(num, den) };
   }
   const decimal = bignumDecimalOf(expr);
-  return decimal === undefined
-    ? undefined
-    : { kind: "decimal", decimal, digits: integerDigitsOfDecimal(decimal) };
+  return decimal === undefined ? undefined : { kind: "decimal", decimal, digits: integerDigitsOfDecimal(decimal) };
 }
 
 /** `value` as a `BigDecimal`, at whatever `BigDecimal.precision` is currently set to -- the
  * rational branch's division is the only precision-dependent step in the whole pipeline, so it
  * runs here, after the caller has sized the working precision from `value.digits`. */
 function toBigDecimal(value: ExactValue): BigDecimal {
-  return value.kind === "rational"
-    ? new BigDecimal(value.num).div(new BigDecimal(value.den))
-    : value.decimal;
+  return value.kind === "rational" ? new BigDecimal(value.num).div(new BigDecimal(value.den)) : value.decimal;
 }
 
 /** `value` reduced to (-2*pi, 2*pi) at the working precision `BigDecimal.precision` is already
@@ -118,11 +114,7 @@ type Circular = "Sin" | "Cos" | "Tan" | "Sec" | "Csc" | "Cot";
  * mod 2*pi in `BigDecimal` and never touching a machine double until the final rounding -- or
  * undefined to decline (falls back to native) when `expr` didn't resolve to a real number after
  * all, or the ratio it needs (Tan, Sec, Csc, Cot) divides by an exact zero. */
-function evaluateHugeTrig(
-  ce: ComputeEngine,
-  head: Circular,
-  expr: BoxedExpression,
-): BoxedExpression | undefined {
+function evaluateHugeTrig(ce: ComputeEngine, head: Circular, expr: BoxedExpression): BoxedExpression | undefined {
   const found = bigValueOf(expr.evaluate());
   if (found === undefined) return undefined;
   const targetDigits = Math.max(ce.precision, DOUBLE_DIGITS + 2);
@@ -159,9 +151,7 @@ function evaluateHugeTrig(
         break;
     }
     const rounded = result.toPrecision(targetDigits);
-    return ce.number(
-      ce.precision > DOUBLE_DIGITS ? rounded.toPrecision(ce.precision) : rounded.toNumber(),
-    );
+    return ce.number(ce.precision > DOUBLE_DIGITS ? rounded.toPrecision(ce.precision) : rounded.toNumber());
   } finally {
     BigDecimal.precision = saved;
   }

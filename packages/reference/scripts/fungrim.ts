@@ -73,11 +73,7 @@ function value(ce: ComputeEngine, expr: Json): { re: number; im: number } | unde
  * is bounded below by, and the offsets are deliberately unround so an identity cannot pass
  * by landing on a special point.
  */
-function sample(
-  wilds: readonly string[],
-  guards: readonly Guard[],
-  k: number,
-): Record<string, Json> {
+function sample(wilds: readonly string[], guards: readonly Guard[], k: number): Record<string, Json> {
   const types: Record<string, string> = {};
   const lower: Record<string, number> = {};
   for (const guard of guards) {

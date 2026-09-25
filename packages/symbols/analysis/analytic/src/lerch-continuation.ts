@@ -73,12 +73,7 @@ function hermiteTail(L: Cx, s: Cx, a: Cx): Cx {
  * gamma Γ(σ, x) for complex σ, x — compute-engine's, which matches Wolfram. Undefined when
  * that declines or the result isn't finite.
  */
-export function lerchContinued(
-  z: Cx,
-  s: Cx,
-  a: Cx,
-  upperGamma: (sigma: Cx, x: Cx) => Cx | undefined,
-): Cx | undefined {
+export function lerchContinued(z: Cx, s: Cx, a: Cx, upperGamma: (sigma: Cx, x: Cx) => Cx | undefined): Cx | undefined {
   // Shift a to Re(a) ≥ 1: Φ(a) = Σ_{k<m} zᵏ (a+k)^(−s) + zᵐ Φ(a+m).
   let head = cx(0);
   let zk = cx(1);

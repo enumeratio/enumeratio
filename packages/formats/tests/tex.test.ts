@@ -14,10 +14,6 @@ test("longer commands sharing a prefix are left alone", () => {
 });
 
 test("type-error markup is unwrapped to the operand it marked", () => {
-  expect(portableTeX("\\binom{\\mathtip{\\error{[2, 3]}}{\\in \\text{vector}}}{3}")).toBe(
-    "\\binom{{{[2, 3]}}}{3}",
-  );
-  expect(portableTeX("\\mathrm{Clamp}(1.5, \\error{\\blacksquare})")).toBe(
-    "\\mathrm{Clamp}(1.5, {\\blacksquare})",
-  );
+  expect(portableTeX("\\binom{\\mathtip{\\error{[2, 3]}}{\\in \\text{vector}}}{3}")).toBe("\\binom{{{[2, 3]}}}{3}");
+  expect(portableTeX("\\mathrm{Clamp}(1.5, \\error{\\blacksquare})")).toBe("\\mathrm{Clamp}(1.5, {\\blacksquare})");
 });

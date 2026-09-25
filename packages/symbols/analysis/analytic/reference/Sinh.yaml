@@ -67,11 +67,7 @@ examples:
     expected:
       [
         List,
-        [
-          List,
-          [Complex, 0, [Divide, [Sqrt, 3], 2]],
-          [Complex, 0, [Negate, [Divide, [Sqrt, 3], 2]]],
-        ],
+        [List, [Complex, 0, [Divide, [Sqrt, 3], 2]], [Complex, 0, [Negate, [Divide, [Sqrt, 3], 2]]]],
         [List, 0, [Complex, 0, [Rational, -1, 2]]],
       ]
     category: Scope
@@ -137,11 +133,7 @@ examples:
   - id: the-definition-sinh-x-frac-e-x-e-x-2
     expr: [TrigToExp, [Sinh, x]]
     expected:
-      [
-        Multiply,
-        [Rational, 1, 2],
-        [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]],
-      ]
+      [Multiply, [Rational, 1, 2], [Add, [Negate, [Power, ExponentialE, [Negate, x]]], [Power, ExponentialE, x]]]
     category: Properties
     caption: The definition $\sinh x = \frac{e^x - e^{-x}}{2}$
   - id: to-30-significant-digits-not-yet-the-last-digit

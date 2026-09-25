@@ -19,18 +19,14 @@ test("no backlog head is already documented", () => {
 test("every backlog head is needed by something we document, or by another backlog head", () => {
   const known = new Set([...documented, ...backlog.map((head) => head.name)]);
   expect(
-    backlog.flatMap((head) =>
-      head.neededBy.filter((name) => !known.has(name)).map((name) => `${head.name} ← ${name}`),
-    ),
+    backlog.flatMap((head) => head.neededBy.filter((name) => !known.has(name)).map((name) => `${head.name} ← ${name}`)),
   ).toEqual([]);
 });
 
 test("no backlog head repeats an example", () => {
   expect(
     backlog.filter(
-      (head) =>
-        new Set(head.examples.map((example) => JSON.stringify(example.expr))).size !==
-        head.examples.length,
+      (head) => new Set(head.examples.map((example) => JSON.stringify(example.expr))).size !== head.examples.length,
     ),
   ).toEqual([]);
 });
@@ -42,9 +38,7 @@ const MEMORY_BYTES = 512 * 1024 * 1024;
 
 const id = (name: string, index: number): string => `${name}#${index}`;
 const results = await runCases(
-  backlog.flatMap((head) =>
-    head.examples.map((example, index) => ({ id: id(head.name, index), input: example.expr })),
-  ),
+  backlog.flatMap((head) => head.examples.map((example, index) => ({ id: id(head.name, index), input: example.expr }))),
   { setup, timeMs: TIME_MS, memoryBytes: MEMORY_BYTES, materialize: true, concurrency: 3 },
 );
 const resultById = new Map(results.map((result) => [result.id, result]));
@@ -53,9 +47,7 @@ for (const head of backlog) {
   for (const [index, example] of head.examples.entries()) {
     test(`backlog ${head.name} example ${index + 1}`, () => {
       const result = resultById.get(id(head.name, index));
-      expect(result?.outcome, result?.outcome === "Error" ? result.reason : undefined).toBe(
-        "Evaluated",
-      );
+      expect(result?.outcome, result?.outcome === "Error" ? result.reason : undefined).toBe("Evaluated");
       // Not met yet. When this starts matching, the head (or this call form) has arrived:
       // give it an entry and move the example there.
       expect(result?.value).not.toEqual(example.expected);

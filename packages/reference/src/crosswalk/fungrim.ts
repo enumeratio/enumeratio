@@ -18,13 +18,11 @@ import { fungrimVerified } from "../fungrim-verified-data.ts";
 export const KNOWN_CAUSES: Readonly<Record<string, string>> = {
   "16d2e1":
     "compute-engine's EllipticE is imprecise at complex modulus — at m = 0.57 + 0.23i it gives 1.31754…, where mpmath and the identity's own hypergeometric side both give 1.324807…; the identity is right",
-  "48333c":
-    "the same EllipticE imprecision at complex modulus, reached through this CarlsonRG identity",
+  "48333c": "the same EllipticE imprecision at complex modulus, reached through this CarlsonRG identity",
 
   "00cdb7":
     "CarlsonRC(x, -y) for real x, y > 0: our RC returns DLMF 19.2.19's real Cauchy principal value (mpmath's plain elliprc(x,-y) agrees); this identity's Artanh form is Fungrim's analytic continuation approached from above the cut (y + i0), which has a nonzero imaginary part mpmath reproduces exactly under that same perturbation — a real convention difference, not a wrong value",
-  "25435b":
-    "the same CarlsonRC principal-value-vs-approached-from-above convention difference, at RC(1,-1)",
+  "25435b": "the same CarlsonRC principal-value-vs-approached-from-above convention difference, at RC(1,-1)",
   "4becdd":
     "the same CarlsonRC principal-value-vs-approached-from-above convention difference, folded into a Conjugate identity",
 
@@ -37,8 +35,7 @@ export const KNOWN_CAUSES: Readonly<Record<string, string>> = {
 
   b468f3:
     "CarlsonRJ(0,1,1,-1): falls inside our documented p < 0, x,y,z ≥ 0 Cauchy-principal-value branch (DLMF 19.20.14), which is deliberately real — same convention as Wolfram's CarlsonRJ there, confirmed — while Fungrim's expected value is complex, Fungrim's analytic continuation approached from one side of the cut rather than the principal value; the real part agrees with mpmath's elliprj exactly, only the (conventionally dropped) imaginary part differs",
-  e04867:
-    "the same CarlsonRJ real-CPV-vs-complex-continuation convention difference, at RJ(1,1,1,-1)",
+  e04867: "the same CarlsonRJ real-CPV-vs-complex-continuation convention difference, at RJ(1,1,1,-1)",
 };
 
 export interface FungrimScore {

@@ -12,16 +12,8 @@ const STEPS: Record<string, () => [string, string[], { cwd?: string; env?: NodeJ
   julia: () => ["julia", [...juliaFlags("julia"), "-e", INSTANTIATE], { env: ONE_AT_A_TIME }],
   oscar: () => ["julia", [...juliaFlags("oscar"), "-e", INSTANTIATE], { env: ONE_AT_A_TIME }],
   // Fetches and builds the pinned crates once, so a scan batch only compiles its own src/bin/batch.rs.
-  rust: () => [
-    "cargo",
-    ["build", "--quiet"],
-    { cwd: fileURLToPath(new URL("../rust", import.meta.url)) },
-  ],
-  mathlib4: () => [
-    "lake",
-    ["exe", "cache", "get"],
-    { cwd: fileURLToPath(new URL("../lean", import.meta.url)) },
-  ],
+  rust: () => ["cargo", ["build", "--quiet"], { cwd: fileURLToPath(new URL("../rust", import.meta.url)) }],
+  mathlib4: () => ["lake", ["exe", "cache", "get"], { cwd: fileURLToPath(new URL("../lean", import.meta.url)) }],
 };
 
 const INSTANTIATE = "using Pkg; Pkg.instantiate(); Pkg.precompile()";
@@ -34,8 +26,7 @@ const ONE_AT_A_TIME = {
 const requested = process.argv.slice(2);
 for (const name of requested.length > 0 ? requested : Object.keys(STEPS)) {
   const step = STEPS[name];
-  if (step === undefined)
-    throw new Error(`unknown kernel ${name}; one of ${Object.keys(STEPS).join(", ")}`);
+  if (step === undefined) throw new Error(`unknown kernel ${name}; one of ${Object.keys(STEPS).join(", ")}`);
   const [command, args, options] = step();
   process.stderr.write(`${name}: ${command} ${args.join(" ")}\n`);
   const run = await runBounded(command, args, { ...options, timeoutMs: 3_600_000 });

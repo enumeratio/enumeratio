@@ -30,17 +30,17 @@ import {
 } from "./vocabulary.ts";
 
 const on = "DyckPath";
-const stat = (
-  head: string,
-  summary: string,
-  expr: Definition["expr"],
-  note?: string,
-): Definition => ({ head, on, summary, expr, ...(note ? { note } : {}) });
+const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+  head,
+  on,
+  summary,
+  expr,
+  ...(note ? { note } : {}),
+});
 
 const step = (i: MathJSON): MathJSON => at(i);
 /** Height after the first `i` steps: each up step is +1, each down step is -1. */
-const heightAfter = (i: MathJSON): MathJSON =>
-  sumOver(upTo(i), subtract(["Multiply", 2, at("k")], 1), "k");
+const heightAfter = (i: MathJSON): MathJSON => sumOver(upTo(i), subtract(["Multiply", 2, at("k")], 1), "k");
 /** The height profile, one entry per prefix. */
 const profile: MathJSON = forEach(positions, heightAfter("i"));
 
@@ -101,11 +101,7 @@ const bounceStep: MathJSON = [
     "List",
     at(add(carried(1), 1), columnCeilings),
     add(carried(2), 1),
-    add(carried(3), [
-      "Multiply",
-      carried(2),
-      subtract(at(add(carried(1), 1), columnCeilings), carried(1)),
-    ]),
+    add(carried(3), ["Multiply", carried(2), subtract(at(add(carried(1), 1), columnCeilings), carried(1))]),
   ],
 ];
 
@@ -147,12 +143,7 @@ export const DYCK_STATISTICS: readonly Definition[] = [
   stat(
     "Hills",
     "Peaks at height 1 — an up step from the axis immediately followed by a down step.",
-    hasPair(
-      count(
-        upTo(subtract(length(), 1)),
-        and(and(isUp("i"), isDown(nextIndex)), equals(heightAfter("i"), 1)),
-      ),
-    ),
+    hasPair(count(upTo(subtract(length(), 1)), and(and(isUp("i"), isDown(nextIndex)), equals(heightAfter("i"), 1)))),
   ),
 
   stat(

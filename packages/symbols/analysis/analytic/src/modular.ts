@@ -83,9 +83,7 @@ const pow4 = (z: Cx): Cx => square(square(z));
 
 /** Call compute-engine's native `EisensteinE`/`JacobiTheta` at a concrete complex point. */
 function callNative(ce: ComputeEngine, head: string, args: readonly (number | Cx)[]): Cx {
-  const json = args.map((a) =>
-    typeof a === "number" ? a : (["Complex", a.re, a.im] as unknown as number),
-  );
+  const json = args.map((a) => (typeof a === "number" ? a : (["Complex", a.re, a.im] as unknown as number)));
   const r = ce.box([head, ...json] as never).N();
   return cx(r.re, r.im);
 }

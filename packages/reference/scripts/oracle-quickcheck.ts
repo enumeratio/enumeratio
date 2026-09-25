@@ -31,9 +31,7 @@ const option = (name: string): string | undefined => {
   const at = args.indexOf(`--${name}`);
   return at >= 0 ? args[at + 1] : undefined;
 };
-const systems = args.filter(
-  (a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--"),
-) as System[];
+const systems = args.filter((a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--")) as System[];
 const seed = option("seed") ?? new Date().toISOString().slice(0, 10);
 const perTemplate = Number(option("samples") ?? 3);
 const strict = args.includes("--strict");
@@ -55,10 +53,8 @@ const generator = (key: string): (() => number) => {
   };
 };
 type Random = () => number;
-const pick = <T>(random: Random, items: readonly T[]): T =>
-  items[Math.floor(random() * items.length)] as T;
-const between = (random: Random, lo: number, hi: number): number =>
-  lo + Math.floor(random() * (hi - lo + 1));
+const pick = <T>(random: Random, items: readonly T[]): T => items[Math.floor(random() * items.length)] as T;
+const between = (random: Random, lo: number, hi: number): number => lo + Math.floor(random() * (hi - lo + 1));
 
 // ── values, biased to the edges of a domain ──────────────────────────────────────
 
@@ -71,8 +67,7 @@ const integerNear = (random: Random, t: number): number => {
 const floatNear = (random: Random, t: number): number => {
   const span = 2 * Math.abs(t) + 2;
   const edges = [0, 0.5, -0.5, 1, -1, -t, t + 1e-9, t - 1e-9, 1e-12, -1e-12, t * 1e6, t / 1e6];
-  const value =
-    random() < 0.7 ? pick(random, edges) : Math.round((random() * 2 - 1) * span * 1000) / 1000;
+  const value = random() < 0.7 ? pick(random, edges) : Math.round((random() * 2 - 1) * span * 1000) / 1000;
   return Number.isFinite(value) ? value : t;
 };
 
@@ -192,9 +187,7 @@ for (const template of templates) {
     samples.push({ id: `${template.id}~${seen.size - 1}`, template, expr });
   }
 }
-process.stderr.write(
-  `seed ${seed}: ${samples.length} samples from ${templates.length} templates — evaluating ours…\n`,
-);
+process.stderr.write(`seed ${seed}: ${samples.length} samples from ${templates.length} templates — evaluating ours…\n`);
 
 // Ours, each sample isolated and capped: a runaway sample is skipped, not a hang.
 const ours = await runCases(
@@ -207,9 +200,7 @@ const ours = await runCases(
     concurrency: 3,
   },
 );
-const expectedOf = new Map(
-  ours.filter((r) => r.outcome === "Evaluated").map((r) => [r.id, r.value as MathJSON]),
-);
+const expectedOf = new Map(ours.filter((r) => r.outcome === "Evaluated").map((r) => [r.id, r.value as MathJSON]));
 
 // ── each lane ────────────────────────────────────────────────────────────────────
 
@@ -218,16 +209,11 @@ const UNDEFINED = new Set(["ComplexInfinity", "PositiveInfinity", "NegativeInfin
 const POLE = /pole|infinit|ZeroDivision|division by zero|divide by zero|modulo by zero|undefined/i;
 const RESOURCE = /TimeoutError|MemoryError|KernelDied|killed|\$Aborted/;
 /** The other system refusing an argument outside its function's domain. */
-const DOMAIN =
-  /DomainError|non-?negative|must be positive|positive integer|not an integer|zero modulus|expected/i;
+const DOMAIN = /DomainError|non-?negative|must be positive|positive integer|not an integer|zero modulus|expected/i;
 
 /** The kinds a sample earns without a person: both sides decline, in different words, or the
  * other system ran out of time or memory. Anything else is a finding. */
-function autoKind(
-  sample: MathJSON,
-  ours: MathJSON,
-  result: { value?: string; error?: string },
-): string | undefined {
+function autoKind(sample: MathJSON, ours: MathJSON, result: { value?: string; error?: string }): string | undefined {
   const theirs = result.error ?? result.value ?? "";
   if (result.error !== undefined && RESOURCE.test(theirs)) return "resource";
   // Unevaluated: the sample itself, or for `N(f(…))` the inner call.
@@ -242,8 +228,7 @@ function autoKind(
     /^(nan|zoo|oo|-oo|inf|-inf)$/i.test(theirs.trim());
   if (oursDeclines && theirsDeclines) return "undefined-form";
   // They refuse the argument: a domain difference when ours answers, both declining when not.
-  if (result.error !== undefined && DOMAIN.test(theirs))
-    return oursDeclines ? "undefined-form" : "domain";
+  if (result.error !== undefined && DOMAIN.test(theirs)) return oursDeclines ? "undefined-form" : "domain";
   return undefined;
 }
 
@@ -283,8 +268,7 @@ for (const system of systems) {
   runnable.forEach((row, i) => {
     const result = results[i] as { value?: string; numeric?: string; error?: string };
     const expected = expectedOf.get(row.sample.id) as MathJSON;
-    const verdict: Verdict | "error" =
-      result.error !== undefined ? "error" : verdictOf(system, expected, result);
+    const verdict: Verdict | "error" = result.error !== undefined ? "error" : verdictOf(system, expected, result);
     if (verdict === "agree") return void agree++;
     const baseline = row.sample.template.others[system];
     // The same way the template already differs, and that is classified: nothing new.
@@ -305,16 +289,11 @@ for (const system of systems) {
       theirs: (result.error ?? result.value ?? "").slice(0, 120),
       verdict,
       template: row.sample.template.id,
-      was:
-        baseline === undefined
-          ? "unscanned"
-          : `${baseline.verdict}${baseline.kind ? ` (${baseline.kind})` : ""}`,
+      was: baseline === undefined ? "unscanned" : `${baseline.verdict}${baseline.kind ? ` (${baseline.kind})` : ""}`,
     });
   });
   const autoText = [...autos].map(([kind, n]) => `${kind} ${n}`).join(", ") || "0";
-  lines.push(
-    `| ${system} | ${runnable.length} | ${agree} | ${inherited} | ${autoText} | ${found} |`,
-  );
+  lines.push(`| ${system} | ${runnable.length} | ${agree} | ${inherited} | ${autoText} | ${found} |`);
   process.stderr.write(
     `${system}: agree ${agree}, inherited ${inherited}, automatic ${automatic}, findings ${found}\n`,
   );
@@ -331,10 +310,7 @@ if (findings.length > 0) {
   }
   for (const [head, group] of [...byHead].sort((a, b) => b[1].length - a[1].length)) {
     lines.push(`<details><summary>${head} — ${group.length}</summary>`, "");
-    lines.push(
-      "| sample | ours | theirs | verdict | template (its row) |",
-      "| --- | --- | --- | --- | --- |",
-    );
+    lines.push("| sample | ours | theirs | verdict | template (its row) |", "| --- | --- | --- | --- | --- |");
     for (const f of group.slice(0, 8)) {
       lines.push(
         `| \`${cell(JSON.stringify(f.expr))}\` | \`${cell(JSON.stringify(f.ours))}\` | \`${cell(f.theirs)}\` | ${f.verdict} | ${f.template} (${f.was}) |`,

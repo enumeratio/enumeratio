@@ -24,12 +24,7 @@ test("every catalog statistic on a covered carrier is defined, native, or on the
   for (const carrier of COVERED) {
     for (const stat of STATS.filter((s) => s.on.includes(carrier))) {
       const signature = `${blessedName(stat.name)}@${carrier}`;
-      if (
-        !defined.has(signature) &&
-        !onFrontier.has(signature) &&
-        !native.has(signature) &&
-        !counted.has(signature)
-      )
+      if (!defined.has(signature) && !onFrontier.has(signature) && !native.has(signature) && !counted.has(signature))
         missing.push(signature);
     }
   }
@@ -43,6 +38,5 @@ test("nothing is both defined and on the frontier", () => {
 });
 
 test("every frontier entry says why", () => {
-  for (const entry of FRONTIER)
-    expect(entry.why.length, `${entry.head}@${entry.on}`).toBeGreaterThan(20);
+  for (const entry of FRONTIER) expect(entry.why.length, `${entry.head}@${entry.on}`).toBeGreaterThan(20);
 });

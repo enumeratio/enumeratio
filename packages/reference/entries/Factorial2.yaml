@@ -67,8 +67,7 @@ examples:
     category: Properties
     caption: 'Even double factorials: $(2n)!! = 2^n\,n!$'
   - id: odd-double-factorials-2n-1-frac-2n-2-n-n
-    expr:
-      [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
+    expr: [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
     expected: True
     category: Properties
     caption: 'Odd double factorials: $(2n-1)!! = \frac{(2n)!}{2^n\,n!}$'

@@ -20,13 +20,10 @@ interface GoldenCase {
   wolfram?: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./backlog-heads.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./backlog-heads.golden.json", import.meta.url), "utf8"));
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 test("the backlog heads landed this pass match a Wolfram kernel", () => {
   const off: string[] = [];
@@ -48,9 +45,7 @@ test("LambertW(z, 0) and LambertW(z, -1) still go through compute-engine's nativ
 });
 
 test("HypergeometricPFQ declines outside the unit disc when p = q + 1", () => {
-  expect(ce.box(["HypergeometricPFQ", ["List", 1, 1], ["List", 2], 1.5]).N().operator).toBe(
-    "HypergeometricPFQ",
-  );
+  expect(ce.box(["HypergeometricPFQ", ["List", 1, 1], ["List", 2], 1.5]).N().operator).toBe("HypergeometricPFQ");
 });
 
 test("PrimeZetaP declines at and below the convergence boundary", () => {

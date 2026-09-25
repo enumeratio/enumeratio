@@ -11,8 +11,7 @@ const RAMP_LO = "var(--notatio-series-2, #2f7ed8)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function label(x: number): string {
   if (!Number.isFinite(x)) return "";
@@ -82,8 +81,7 @@ export function densitySvg(
 
   const ny = grid.length;
   const nx = ny > 0 ? grid[0].length : 0;
-  if (nx < 1 || ny < 1 || xs.length < nx || ys.length < ny)
-    return frame(W, H, titleSvg(W, opts.title));
+  if (nx < 1 || ny < 1 || xs.length < nx || ys.length < ny) return frame(W, H, titleSvg(W, opts.title));
 
   const flat = grid.flat().filter(Number.isFinite);
   if (flat.length === 0) return frame(W, H, titleSvg(W, opts.title));

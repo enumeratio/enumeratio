@@ -24,11 +24,7 @@ test("the catalog is the measured shape, folded to names", () => {
 });
 
 test("a stat is one name defined on several carriers", () => {
-  expect(STATS.find((s) => s.name === "MajorIndex")?.on).toEqual([
-    "DyckPath",
-    "Permutation",
-    "StandardTableau",
-  ]);
+  expect(STATS.find((s) => s.name === "MajorIndex")?.on).toEqual(["DyckPath", "Permutation", "StandardTableau"]);
 });
 
 test("every collection's carrier is itself a carrier we know", () => {
@@ -46,9 +42,7 @@ test("registering the whole catalog declares nothing", () => {
 
 test("a resource with a head evaluates; one without stays symbolic", () => {
   const ce = engine();
-  expect(ce.box(["Resource", "'Subsets'", 3]).evaluate().json).toEqual(
-    ce.box(["Subsets", 3]).evaluate().json,
-  );
+  expect(ce.box(["Resource", "'Subsets'", 3]).evaluate().json).toEqual(ce.box(["Subsets", 3]).evaluate().json);
   // StepCompositions is a real catalog name with no kernel of its own (it's an aliasOf
   // FibonacciCompositions, which does have one) — declining is the honest answer, not an error.
   const held = ce.box(["Resource", "'StepCompositions'", 4]).evaluate();
@@ -97,7 +91,7 @@ test("every reference fix lands on a row, and the fixed rows are what consumers 
   const crank = REFERENCES.filter((r) => r.subject === "Crank" && r.system === "findstat");
   expect(crank.map((r) => r.identity)).toEqual(["St000474"]);
   expect(REFERENCES.some((r) => r.subject === "Area" && r.system === "findstat")).toBe(false);
-  expect(
-    REFERENCES.find((r) => r.subject === "DyckPaths" && r.system === "mathlib4")?.url,
-  ).toContain("Catalan/Basic.html#catalan");
+  expect(REFERENCES.find((r) => r.subject === "DyckPaths" && r.system === "mathlib4")?.url).toContain(
+    "Catalan/Basic.html#catalan",
+  );
 });

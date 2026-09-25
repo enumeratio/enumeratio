@@ -29,12 +29,8 @@ const collections = await q(`
          coalesce((SELECT jsonb_agg(jsonb_build_object('name', g.name, 'role', g.role) ORDER BY g.pos)
                    FROM base_grade g WHERE g.collection = c.id), '[]'::jsonb) AS grades
   FROM base_collection c LEFT JOIN base_collection_meta m ON m.collection = c.id ORDER BY c.id`);
-const stats = await q(
-  `SELECT collection, stat_id AS "statId", title, codomain FROM base_stat ORDER BY 1,2`,
-);
-const maps = await q(
-  `SELECT collection, map_id AS "mapId", codomain, title, scope, kind FROM base_map ORDER BY 1,2`,
-);
+const stats = await q(`SELECT collection, stat_id AS "statId", title, codomain FROM base_stat ORDER BY 1,2`);
+const maps = await q(`SELECT collection, map_id AS "mapId", codomain, title, scope, kind FROM base_map ORDER BY 1,2`);
 const carriers = await q<{ carrier: string }>(
   `SELECT DISTINCT carrier FROM base_collection WHERE carrier IS NOT NULL ORDER BY 1`,
 );

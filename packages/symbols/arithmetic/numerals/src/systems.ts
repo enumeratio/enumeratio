@@ -62,9 +62,7 @@ export function radix(b: number): NumeralSystem | undefined {
       return digits;
     },
     fromDigits: (digits) =>
-      digits.every((d) => isInt(d) && d >= 0 && d < b)
-        ? digits.reduce((acc, d) => acc * b + d, 0)
-        : undefined,
+      digits.every((d) => isInt(d) && d >= 0 && d < b) ? digits.reduce((acc, d) => acc * b + d, 0) : undefined,
   };
 }
 
@@ -93,9 +91,7 @@ export function balancedRadix(b: number): NumeralSystem | undefined {
       return digits;
     },
     fromDigits: (digits) =>
-      digits.every((d) => isInt(d) && Math.abs(d) <= half)
-        ? digits.reduce((acc, d) => acc * b + d, 0)
-        : undefined,
+      digits.every((d) => isInt(d) && Math.abs(d) <= half) ? digits.reduce((acc, d) => acc * b + d, 0) : undefined,
   };
 }
 
@@ -121,9 +117,7 @@ export function negativeRadix(b: number): NumeralSystem | undefined {
       return digits;
     },
     fromDigits: (digits) =>
-      digits.every((d) => isInt(d) && d >= 0 && d < b)
-        ? digits.reduce((acc, d) => acc * -b + d, 0)
-        : undefined,
+      digits.every((d) => isInt(d) && d >= 0 && d < b) ? digits.reduce((acc, d) => acc * -b + d, 0) : undefined,
   };
 }
 
@@ -159,9 +153,7 @@ export function bijectiveRadix(k: number): NumeralSystem | undefined {
       return digits;
     },
     fromDigits: (digits) =>
-      digits.every((d) => isInt(d) && d >= 1 && d <= k)
-        ? digits.reduce((acc, d) => acc * k + d, 0)
-        : undefined,
+      digits.every((d) => isInt(d) && d >= 1 && d <= k) ? digits.reduce((acc, d) => acc * k + d, 0) : undefined,
   };
 }
 
@@ -334,10 +326,7 @@ export function zeckendorf(): NumeralSystem {
       // The forbidden pattern is the whole point: two adjacent ones is not a numeral.
       if (digits.some((d, i) => d === 1 && digits[i + 1] === 1)) return undefined;
       const weights = fibonacciWeights(2 ** digits.length);
-      return digits.reduce<number>(
-        (acc, d, i) => acc + d * (weights[digits.length - 1 - i] ?? 0),
-        0,
-      );
+      return digits.reduce<number>((acc, d, i) => acc + d * (weights[digits.length - 1 - i] ?? 0), 0);
     },
   };
 }
@@ -398,9 +387,7 @@ export function combinatorialSystem(k: number): NumeralSystem | undefined {
  */
 export function residueSystem(moduli: readonly number[]): NumeralSystem | undefined {
   if (moduli.length === 0 || !moduli.every((m) => isInt(m) && m >= 2)) return undefined;
-  const coprime = moduli.every((m, i) =>
-    moduli.every((other, j) => i === j || gcd(BigInt(m), BigInt(other)) === 1n),
-  );
+  const coprime = moduli.every((m, i) => moduli.every((other, j) => i === j || gcd(BigInt(m), BigInt(other)) === 1n));
   const total = moduli.reduce((a, b) => a * b, 1);
   return {
     name: `ResidueNumerals(${moduli.join(",")})`,
@@ -515,8 +502,7 @@ export function adicNumerals(b: number, prec: number = 20): NumeralSystem | unde
   if (!isInt(b) || b < 2 || !isInt(prec) || prec < 1) return undefined;
   const base = BigInt(b);
   const modulus = base ** BigInt(prec);
-  const nearestZero = (residue: bigint, span: bigint): bigint =>
-    residue * 2n > span ? residue - span : residue;
+  const nearestZero = (residue: bigint, span: bigint): bigint => (residue * 2n > span ? residue - span : residue);
   return {
     name: `AdicNumerals(${b}, ${prec})`,
     shape: {

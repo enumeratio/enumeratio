@@ -89,11 +89,7 @@ test("ε_k² = 0 — dual numbers", () => {
   sameLatex("\\epsilon_1^2", 0);
   sameLatex("(1+\\epsilon_1)(1-\\epsilon_1)", 1);
   sameLatex("\\operatorname{Norm}(3+4\\epsilon_1)", 9); // a², the ε-part is invisible
-  sameLatex("(2+\\epsilon_1)^{-1}", [
-    "Subtract",
-    ["Rational", 1, 2],
-    ["Multiply", ["Rational", 1, 4], "epsilon_1"],
-  ]);
+  sameLatex("(2+\\epsilon_1)^{-1}", ["Subtract", ["Rational", 1, 2], ["Multiply", ["Rational", 1, 4], "epsilon_1"]]);
   sameLatex("\\epsilon_1\\epsilon_2", ["Multiply", "epsilon_1", "epsilon_2"]); // distinct: not 0
 });
 
@@ -126,19 +122,9 @@ test("θ_k are the Grassmann generators — anticommuting AND nilpotent", () => 
   // exterior algebra, and are the fermionic generators of a superalgebra.
   sameLatex("\\theta_1^2", 0);
   same(["NonCommutativeMultiply", "theta_1", "theta_2"], ["Multiply", "theta_1", "theta_2"]);
-  same(
-    ["NonCommutativeMultiply", "theta_2", "theta_1"],
-    ["Negate", ["Multiply", "theta_1", "theta_2"]],
-  );
+  same(["NonCommutativeMultiply", "theta_2", "theta_1"], ["Negate", ["Multiply", "theta_1", "theta_2"]]);
   // A 2-blade of Grassmann generators is itself nilpotent — Λ is graded-nilpotent.
-  same(
-    [
-      "NonCommutativeMultiply",
-      ["Multiply", "theta_1", "theta_2"],
-      ["Multiply", "theta_1", "theta_2"],
-    ],
-    0,
-  );
+  same(["NonCommutativeMultiply", ["Multiply", "theta_1", "theta_2"], ["Multiply", "theta_1", "theta_2"]], 0);
   // Any repeated generator kills the blade, so Λ(ℝ²) stops at grade 2.
   same(["NonCommutativeMultiply", "theta_1", "theta_2", "theta_1"], 0);
   expect(generatorOf("thetaSymbol_1")).toEqual(generatorOf("theta_1")); // \vartheta alias
@@ -154,9 +140,7 @@ test("an imaginary Clifford generator is also reachable as i·e_k", () => {
 test("the six families are the whole square × commutation grid", () => {
   const grid = FAMILIES.map((f) => `${f.square}/${f.anticommutes ? "anti" : "comm"}`);
   expect(new Set(grid).size).toBe(6);
-  expect([...grid].sort()).toEqual(
-    ["-1/anti", "-1/comm", "0/anti", "0/comm", "1/anti", "1/comm"].sort(),
-  );
+  expect([...grid].sort()).toEqual(["-1/anti", "-1/comm", "0/anti", "0/comm", "1/anti", "1/comm"].sort());
 });
 
 test("⊗ is an infix alias for the ordered product", () => {
@@ -175,11 +159,7 @@ test("the ordered head follows Wolfram's naming, and keeps its operand order", (
   // overloading `Times`, and matrix multiplication onto `Dot` (`.`) for the same
   // reason — compute-engine's `Dot` is likewise declared commutative: false.
   expect(ce.box(["Dot", "b", "a"]).operatorDefinition?.commutative).toBe(false);
-  expect(ce.box(["NonCommutativeMultiply", "e_2", "e_1"]).json).toEqual([
-    "NonCommutativeMultiply",
-    "e_2",
-    "e_1",
-  ]);
+  expect(ce.box(["NonCommutativeMultiply", "e_2", "e_1"]).json).toEqual(["NonCommutativeMultiply", "e_2", "e_1"]);
   // GeometricProduct is an alias, so the two agree everywhere.
   for (const pair of [
     ["e_1", "e_2"],

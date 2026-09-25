@@ -6,13 +6,7 @@
 
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { allFormats } from "@enumeratio/formats";
-import {
-  can,
-  type Environment,
-  ENVIRONMENTS,
-  environmentNamed,
-  PIPE,
-} from "../../notatio/src/environment.ts";
+import { can, type Environment, ENVIRONMENTS, environmentNamed, PIPE } from "../../notatio/src/environment.ts";
 import { evaluateReadouts, reduce } from "../../notatio/src/reduce.ts";
 import { completionScript, type Shell, SHELLS, SUBCOMMANDS } from "./completion.ts";
 import { formatsTable } from "./core.ts";
@@ -222,8 +216,7 @@ function parseArgs(argv: readonly string[]): ParsedArgs | CommandResult {
     json: false,
     stdin: false,
   };
-  if ((SUBCOMMANDS as readonly string[]).includes(args[0]))
-    p.subcommand = args.shift() as ParsedArgs["subcommand"];
+  if ((SUBCOMMANDS as readonly string[]).includes(args[0])) p.subcommand = args.shift() as ParsedArgs["subcommand"];
 
   while (args.length > 0) {
     const a = args.shift() as string;
@@ -251,11 +244,7 @@ function parseArgs(argv: readonly string[]): ParsedArgs | CommandResult {
  * Parse argv (already sliced past `node bin`) and run once. `stdin` is the
  * piped input, if any; `defaults` come from the host (a config file).
  */
-export function runCommand(
-  argv: readonly string[],
-  stdin?: string,
-  defaults: SessionDefaults = {},
-): CommandResult {
+export function runCommand(argv: readonly string[], stdin?: string, defaults: SessionDefaults = {}): CommandResult {
   const parsed = parseArgs(argv);
   if ("code" in parsed) return parsed;
 
@@ -278,19 +267,13 @@ export function runCommand(
   }
 }
 
-function evaluate(
-  p: ParsedArgs,
-  stdin: string | undefined,
-  defaults: SessionDefaults,
-): CommandResult {
+function evaluate(p: ParsedArgs, stdin: string | undefined, defaults: SessionDefaults): CommandResult {
   const expr = p.stdin ? stdin?.trim() : (p.expr ?? p.positional[0] ?? stdin?.trim());
   if (!expr) return usageError(USAGE.trimEnd());
 
   const chosen = p.env === undefined ? undefined : environmentNamed(p.env);
   if (p.env !== undefined && chosen === undefined)
-    return usageError(
-      `unknown environment: ${p.env} (${ENVIRONMENTS.map((e) => e.name).join(", ")})`,
-    );
+    return usageError(`unknown environment: ${p.env} (${ENVIRONMENTS.map((e) => e.name).join(", ")})`);
 
   const forms: Form[] = [];
   for (const name of p.forms) {
@@ -299,8 +282,7 @@ function evaluate(
     forms.push(form);
   }
   // Structured output carries the interchange forms too, unless forms were named.
-  if (p.json && forms.length === 0)
-    forms.push(defaults.form ?? "notatio", "tex", "mathjson", "wolfram");
+  if (p.json && forms.length === 0) forms.push(defaults.form ?? "notatio", "tex", "mathjson", "wolfram");
 
   let syntax: Syntax | undefined;
   if (p.syntax !== undefined) {
@@ -330,8 +312,7 @@ function evaluate(
     },
     defaults,
   );
-  if (p.json)
-    return { stdout: `${JSON.stringify(toWire(res))}\n`, stderr: "", code: res.ok ? 0 : 1 };
+  if (p.json) return { stdout: `${JSON.stringify(toWire(res))}\n`, stderr: "", code: res.ok ? 0 : 1 };
   if (!res.ok) return { stdout: "", stderr: `error: ${res.error}\n`, code: 1 };
   // One line per requested form, in the order asked; a form that couldn't render is noted.
   const lines = (forms.length ? forms : [res.form]).map(
@@ -342,9 +323,7 @@ function evaluate(
 
 function listForms(json: boolean, current: Form): CommandResult {
   if (json)
-    return ok(
-      `${JSON.stringify(FORMS.map((f) => ({ name: f, label: FORM_LABEL[f], default: f === current })))}\n`,
-    );
+    return ok(`${JSON.stringify(FORMS.map((f) => ({ name: f, label: FORM_LABEL[f], default: f === current })))}\n`);
   const rows = FORMS.map((f) => `  ${f === current ? "*" : " "} ${f.padEnd(9)} ${FORM_LABEL[f]}`);
   return ok(`${rows.join("\n")}\n`);
 }

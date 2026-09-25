@@ -16,12 +16,7 @@ examples:
     caption: $\mathcal{F}\{\delta(t)\} = 1/\sqrt{2\pi}$
   - id: gaussian
     expr: [FourierTransform, [Power, ExponentialE, [Negate, [Power, t, 2]]], t, w]
-    expected:
-      [
-        Multiply,
-        [Divide, [Sqrt, 2], 2],
-        [Power, ExponentialE, [Multiply, [Rational, -1, 4], [Power, w, 2]]],
-      ]
+    expected: [Multiply, [Divide, [Sqrt, 2], 2], [Power, ExponentialE, [Multiply, [Rational, -1, 4], [Power, w, 2]]]]
     caption: $\mathcal{F}\{e^{-t^2}\} = \frac{1}{\sqrt{2}}e^{-w^2/4}$ ($a = 1 > 0$, checked via `isPositive`)
   - id: cosine
     expr: [FourierTransform, [Cos, [Multiply, a, t]], t, w]

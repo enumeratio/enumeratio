@@ -107,12 +107,7 @@ examples:
     category: Scope
     caption: "a Gaussian modulus: $7 + 5i = (2 + i)(4 + i) - i$"
   - id: exact-in-both-parts-past-2-53
-    expr:
-      [
-        Mod,
-        [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }],
-        [Complex, 2, 1],
-      ]
+    expr: [Mod, [Complex, { num: "100000000000000000001" }, { num: "9007199254740993" }], [Complex, 2, 1]]
     expected: 0
     category: Scope
     caption: exact in both parts past $2^{53}$
@@ -121,11 +116,7 @@ examples:
       [
         Equal,
         [Mod, [Complex, 7, 5], [Complex, 2, 1]],
-        [
-          Subtract,
-          [Complex, 7, 5],
-          [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]],
-        ],
+        [Subtract, [Complex, 7, 5], [Multiply, [Complex, 2, 1], [Quotient, [Complex, 7, 5], [Complex, 2, 1]]]],
       ]
     expected: True
     category: Properties

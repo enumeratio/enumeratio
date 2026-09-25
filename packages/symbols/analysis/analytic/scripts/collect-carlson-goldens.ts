@@ -37,11 +37,7 @@ const toPy = (v: Val): string =>
       ? `(mpf(${v.rat[0]})/mpf(${v.rat[1]}))`
       : `mpc('${v.c[0]}','${v.c[1]}')`;
 const toWL = (v: Val): string =>
-  typeof v === "number"
-    ? String(v)
-    : "rat" in v
-      ? `${v.rat[0]}/${v.rat[1]}`
-      : `(${v.c[0]} + (${v.c[1]})*I)`;
+  typeof v === "number" ? String(v) : "rat" in v ? `${v.rat[0]}/${v.rat[1]}` : `(${v.c[0]} + (${v.c[1]})*I)`;
 const label = (v: Val): string =>
   typeof v === "number"
     ? String(v)
@@ -223,22 +219,16 @@ const mp = parseLines(await runKernel("python3", ["-c", py], { timeoutMs: 300_00
 
 const wlCode = pending
   .map((p, k) =>
-    p.wl
-      ? `With[{v=N[${p.wl}, 25]},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]`
-      : "",
+    p.wl ? `With[{v=N[${p.wl}, 25]},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]` : "",
   )
   .filter(Boolean)
   .join(";\n");
 const wlClean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
-const wl = parseLines(
-  await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }),
-  wlClean,
-);
+const wl = parseLines(await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }), wlClean);
 
 // --- Compare, report, write --------------------------------------------------------
 const relErr = (ours: Pair, ref: Pair): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 const goldens: GoldenCase[] = [];
 const disagree: string[] = [];
@@ -266,10 +256,7 @@ for (const [k, p] of pending.entries()) {
   goldens.push(g);
 }
 
-writeFileSync(
-  new URL("../tests/carlson.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/carlson.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 
 console.log(
   `cases ${goldens.length}  |  oracle comparisons ${compared}  |  agree ${compared - disagree.length}  disagree ${disagree.length}`,

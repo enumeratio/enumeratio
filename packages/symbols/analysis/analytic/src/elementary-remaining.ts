@@ -26,14 +26,12 @@ const neg = (ce: ComputeEngine, e: BoxedExpression | number | string) => ce.func
 const sqrt = (ce: ComputeEngine, e: BoxedExpression | number | string) => ce.function("Sqrt", [e]);
 const oneMinusSquare = (ce: ComputeEngine, x: BoxedExpression) =>
   ce.function("Add", [1, neg(ce, ce.function("Power", [x, 2]))]);
-const onePlusSquare = (ce: ComputeEngine, x: BoxedExpression) =>
-  ce.function("Add", [ce.function("Power", [x, 2]), 1]);
+const onePlusSquare = (ce: ComputeEngine, x: BoxedExpression) => ce.function("Add", [ce.function("Power", [x, 2]), 1]);
 
 /** A Multiply with a purely-imaginary numeric factor -- compute-engine folds a literal `i`
  * factor into a concrete `Complex(0, k)` coefficient rather than keeping `ImaginaryUnit`
  * itself as an operand, so this looks for that, same as trig-normalisation.ts. */
-const isImaginaryLiteral = (op: BoxedExpression): boolean =>
-  op.operator === "Complex" && op.re === 0 && op.im !== 0;
+const isImaginaryLiteral = (op: BoxedExpression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
 
 const hasImaginaryFactor = (op: BoxedExpression): boolean =>
   op.operator === "Multiply" && operandsOf(op).some(isImaginaryLiteral);
@@ -41,8 +39,7 @@ const hasImaginaryFactor = (op: BoxedExpression): boolean =>
 /** ComplexInfinity is a numeric value (its own `.symbol` is undefined -- it is not boxed as
  * a plain Symbol node), unlike the signed `PositiveInfinity`/`NegativeInfinity`: all three
  * have `isInfinity === true`, but only complex infinity's imaginary part is itself infinite. */
-const isComplexInfinity = (op: BoxedExpression): boolean =>
-  op.isInfinity === true && !Number.isFinite(op.im);
+const isComplexInfinity = (op: BoxedExpression): boolean => op.isInfinity === true && !Number.isFinite(op.im);
 
 /** t, given op = i*t: dividing back out by i is exact, letting compute-engine's own
  * arithmetic re-fold the real coefficient. Only called once `hasImaginaryFactor` says yes. */
@@ -63,8 +60,7 @@ function declareParity(ce: ComputeEngine): void {
       ce,
       [head, 1],
       (ops) => ops.length === 1 && ops[0]?.operator === "Negate",
-      () => (ops, options) =>
-        finish(neg(ce, ce.function(head, [operandsOf(ops[0]!)[0]!])), options),
+      () => (ops, options) => finish(neg(ce, ce.function(head, [operandsOf(ops[0]!)[0]!])), options),
     );
   }
   for (const head of even) {
@@ -121,10 +117,7 @@ function declareCrossComposition(ce: ComputeEngine): void {
     ["Cos", 1],
     (ops) => ops.length === 1 && ops[0]?.operator === "Arctan",
     () => (ops, options) =>
-      finish(
-        ce.function("Divide", [1, sqrt(ce, onePlusSquare(ce, operandsOf(ops[0]!)[0]!))]),
-        options,
-      ),
+      finish(ce.function("Divide", [1, sqrt(ce, onePlusSquare(ce, operandsOf(ops[0]!)[0]!))]), options),
   );
   wrapOperator(
     ce,
@@ -160,13 +153,7 @@ function declareImaginaryArgument(ce: ComputeEngine): void {
     ["Tan", 1],
     (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
     () => (ops, options) =>
-      finish(
-        ce.function("Multiply", [
-          "ImaginaryUnit",
-          ce.function("Tanh", [imaginaryFactor(ce, ops[0]!)]),
-        ]),
-        options,
-      ),
+      finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Tanh", [imaginaryFactor(ce, ops[0]!)])]), options),
   );
 }
 
@@ -222,34 +209,25 @@ function declareTrigToExpInverses(ce: ComputeEngine): void {
       ce.function("Add", [
         ce.function("Multiply", [
           ce.function("Complex", [0, ce.number([1, 2])]),
-          ce.function("Ln", [
-            ce.function("Add", [ce.function("Multiply", [ce.function("Complex", [0, -1]), x]), 1]),
-          ]),
+          ce.function("Ln", [ce.function("Add", [ce.function("Multiply", [ce.function("Complex", [0, -1]), x]), 1])]),
         ]),
         ce.function("Multiply", [
           ce.function("Complex", [0, ce.number([-1, 2])]),
-          ce.function("Ln", [
-            ce.function("Add", [ce.function("Multiply", [ce.function("Complex", [0, 1]), x]), 1]),
-          ]),
+          ce.function("Ln", [ce.function("Add", [ce.function("Multiply", [ce.function("Complex", [0, 1]), x]), 1])]),
         ]),
       ]),
     // arcoth(x) = (1/2)*ln((x+1)/(x-1))
     Arcoth: (x) =>
       ce.function("Multiply", [
         ce.number([1, 2]),
-        ce.function("Ln", [
-          ce.function("Divide", [ce.function("Add", [x, 1]), ce.function("Add", [x, -1])]),
-        ]),
+        ce.function("Ln", [ce.function("Divide", [ce.function("Add", [x, 1]), ce.function("Add", [x, -1])])]),
       ]),
     // arcsch(x) = ln(1/x + sqrt(1/x^2 + 1))
     Arcsch: (x) =>
       ce.function("Ln", [
         ce.function("Add", [
           ce.function("Divide", [1, x]),
-          sqrt(
-            ce,
-            ce.function("Add", [ce.function("Divide", [1, ce.function("Power", [x, 2])]), 1]),
-          ),
+          sqrt(ce, ce.function("Add", [ce.function("Divide", [1, ce.function("Power", [x, 2])]), 1])),
         ]),
       ]),
   };
@@ -388,8 +366,7 @@ function declareLogComplexInfinityAndReciprocalPower(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Log", 1],
-    (ops) =>
-      (ops.length === 1 || ops.length === 2) && ops[0] !== undefined && isComplexInfinity(ops[0]),
+    (ops) => (ops.length === 1 || ops.length === 2) && ops[0] !== undefined && isComplexInfinity(ops[0]),
     () => () => ce.symbol("PositiveInfinity"),
   );
   wrapOperator(

@@ -30,11 +30,7 @@ examples:
     category: Scope
     caption: The functional equation of [[Gamma]]
   - id: denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3
-    expr:
-      [
-        FullSimplify,
-        [Subtract, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]],
-      ]
+    expr: [FullSimplify, [Subtract, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]]]
     expected: 0
     category: Scope
     caption: Denests $\sqrt{5 + 2\sqrt6} = \sqrt2 + \sqrt3$

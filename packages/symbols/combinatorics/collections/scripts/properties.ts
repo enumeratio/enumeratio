@@ -108,11 +108,7 @@ export function check(entry: FamilyKernel, params: number[], rank: number): Fail
 }
 
 /** Bounds and injectivity, which are about the family rather than one point. */
-export function checkFamily(
-  entry: FamilyKernel,
-  params: number[],
-  draw: () => number,
-): Failure | undefined {
+export function checkFamily(entry: FamilyKernel, params: number[], draw: () => number): Failure | undefined {
   const total = entry.count(params);
   const fail = (property: string, detail: string): Failure => ({
     family: entry.head,
@@ -187,9 +183,7 @@ export function shrink(entry: FamilyKernel, failure: Failure): Failure {
       })();
       if (!Number.isFinite(total) || total <= 0) continue;
       const smaller =
-        best.rank >= 0
-          ? check(entry, params, Math.min(best.rank, total - 1))
-          : checkFamily(entry, params, random(1));
+        best.rank >= 0 ? check(entry, params, Math.min(best.rank, total - 1)) : checkFamily(entry, params, random(1));
       if (smaller?.property === best.property) {
         best = smaller;
         break;

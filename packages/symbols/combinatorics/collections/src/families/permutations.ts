@@ -4,14 +4,7 @@
 // PermutationRank/IsPermutationOf/LehmerCode/Inversions) and ./kernels-extra.ts (KPermutation*) wherever
 // the element representation already matches; only genuinely new combinatorics get new code here.
 import { binomial, catalanNumber } from "./shared.ts";
-import {
-  Factorial,
-  Inversions,
-  IsPermutationOf,
-  LehmerCode,
-  PermutationRank,
-  PermutationUnrank,
-} from "./kernels.ts";
+import { Factorial, Inversions, IsPermutationOf, LehmerCode, PermutationRank, PermutationUnrank } from "./kernels.ts";
 import {
   IsKPermutationOf,
   KPermutationCount,
@@ -124,8 +117,7 @@ function alternatingCount(n: number): number {
   const cached = alternatingCache.get(n);
   if (cached !== undefined) return cached;
   let total = 0;
-  for (let i = 1; i < n; i += 2)
-    total += binomial(n - 1, i) * alternatingCount(i) * alternatingCount(n - 1 - i);
+  for (let i = 1; i < n; i += 2) total += binomial(n - 1, i) * alternatingCount(i) * alternatingCount(n - 1 - i);
   alternatingCache.set(n, total);
   return total;
 }
@@ -156,9 +148,7 @@ function alternatingUnrank(n: number, r: number): number[] {
       // is computed on RELATIVE ranks 1..size, then relabeled onto its chosen actual values.
       const leftValues = KSubsetUnrank(n - 1, i, subsetIndex);
       const leftValueSet = new Set(leftValues);
-      const rightValues = Array.from({ length: n - 1 }, (_, k) => k + 1).filter(
-        (v) => !leftValueSet.has(v),
-      );
+      const rightValues = Array.from({ length: n - 1 }, (_, k) => k + 1).filter((v) => !leftValueSet.has(v));
       const leftArrangement = alternatingUnrank(i, li).map((v) => leftValues[v - 1]);
       const rightArrangement = alternatingUnrank(n - 1 - i, ri).map((v) => rightValues[v - 1]);
       return [...leftArrangement, n, ...rightArrangement];
@@ -176,8 +166,7 @@ function alternatingRank(perm: readonly number[]): number {
   const rightCount = alternatingCount(n - 1 - i);
   const perBlock = alternatingCount(i) * rightCount;
   let rank = 0;
-  for (let ii = 1; ii < i; ii += 2)
-    rank += binomial(n - 1, ii) * alternatingCount(ii) * alternatingCount(n - 1 - ii);
+  for (let ii = 1; ii < i; ii += 2) rank += binomial(n - 1, ii) * alternatingCount(ii) * alternatingCount(n - 1 - ii);
   const subsetIndex = KSubsetRank(leftValues.slice().sort((a, b) => a - b));
   const leftRankOf = new Map(
     leftValues
@@ -335,10 +324,7 @@ function patternOf(a: number, b: number, c: number): readonly [number, number, n
   const sorted = [a, b, c].slice().sort((x, y) => x - y);
   return [sorted.indexOf(a) + 1, sorted.indexOf(b) + 1, sorted.indexOf(c) + 1];
 }
-function containsPattern(
-  perm: readonly number[],
-  pattern: readonly [number, number, number],
-): boolean {
+function containsPattern(perm: readonly number[], pattern: readonly [number, number, number]): boolean {
   const n = perm.length;
   for (let i = 0; i < n; i++)
     for (let j = i + 1; j < n; j++)
@@ -616,8 +602,7 @@ function mahonianTable(n: number): number[][] {
     const maxDigit = n - 1 - pos;
     const prev = table[pos + 1];
     const poly: number[] = Array.from({ length: prev.length - 1 + maxDigit + 1 }, () => 0);
-    for (let d = 0; d <= maxDigit; d++)
-      for (let s = 0; s < prev.length; s++) poly[d + s] += prev[s];
+    for (let d = 0; d <= maxDigit; d++) for (let s = 0; s < prev.length; s++) poly[d + s] += prev[s];
     table[pos] = poly;
   }
   mahonianCache.set(n, table);

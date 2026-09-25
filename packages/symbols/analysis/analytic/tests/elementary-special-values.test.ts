@@ -12,17 +12,9 @@ declareAnalytic(ce);
 const evalJson = (expr: unknown) => ce.box(expr as never).evaluate().json;
 
 test("hyperbolic functions at an imaginary argument rewrite through the circular ones", () => {
-  expect(evalJson(["Sinh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]])).toEqual([
-    "Complex",
-    0,
-    1,
-  ]);
+  expect(evalJson(["Sinh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]])).toEqual(["Complex", 0, 1]);
   expect(evalJson(["Cosh", ["Multiply", "ImaginaryUnit", "Pi"]])).toEqual(-1);
-  expect(evalJson(["Tanh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 4]]])).toEqual([
-    "Complex",
-    0,
-    1,
-  ]);
+  expect(evalJson(["Tanh", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 4]]])).toEqual(["Complex", 0, 1]);
   // A real argument is untouched.
   expect(evalJson(["Sinh", "x"])).toEqual(["Sinh", "x"]);
 });
@@ -37,11 +29,7 @@ test("N() decimalizes the imaginary-argument rewrites, not just evaluate()", () 
 });
 
 test("Ln(i) = i*pi/2", () => {
-  expect(evalJson(["Ln", "ImaginaryUnit"])).toEqual([
-    "Multiply",
-    ["Complex", 0, ["Rational", 1, 2]],
-    "Pi",
-  ]);
+  expect(evalJson(["Ln", "ImaginaryUnit"])).toEqual(["Multiply", ["Complex", 0, ["Rational", 1, 2]], "Pi"]);
   // Unrelated arguments are untouched.
   expect(evalJson(["Ln", 1])).toEqual(0);
   // N() must decimalize, not hand back the exact 1/2*i*Pi (issue #107's bug).
@@ -59,11 +47,7 @@ test("Arccot's special-value table follows compute-engine's own (0, pi) range", 
   // Negative arguments land past pi/2, not mirrored through 0 -- Wolfram's own ArcCot
   // convention (ArcTan(1/x), range (-pi/2, pi/2]) would give -pi/4 and -5pi/6 here.
   expect(evalJson(["Arccot", -1])).toEqual(["Multiply", ["Rational", 3, 4], "Pi"]);
-  expect(evalJson(["Arccot", ["Negate", ["Sqrt", 3]]])).toEqual([
-    "Multiply",
-    ["Rational", 5, 6],
-    "Pi",
-  ]);
+  expect(evalJson(["Arccot", ["Negate", ["Sqrt", 3]]])).toEqual(["Multiply", ["Rational", 5, 6], "Pi"]);
   // PositiveInfinity is native's own case -- untouched.
   expect(evalJson(["Arccot", "PositiveInfinity"])).toEqual(0);
   // A generic rational with no exact Arctan fold stays symbolic, same as native.

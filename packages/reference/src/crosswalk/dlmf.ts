@@ -19,9 +19,7 @@ export const normaliseName = (name: string): string =>
     .replace(/\s+/g, " ")
     .trim()
     .split(" ")
-    .map((word) =>
-      /^[a-z]{4,}s$/.test(word) && !/(ss|us|is)$/.test(word) ? word.slice(0, -1) : word,
-    )
+    .map((word) => (/^[a-z]{4,}s$/.test(word) && !/(ss|us|is)$/.test(word) ? word.slice(0, -1) : word))
     .join(" ");
 
 const byName = new Map<string, DlmfNotation[]>();
@@ -33,5 +31,4 @@ for (const row of dlmf) {
 }
 
 /** Every notation the DLMF lists under a name, or nothing. */
-export const dlmfNotations = (name: string): readonly DlmfNotation[] =>
-  byName.get(normaliseName(name)) ?? [];
+export const dlmfNotations = (name: string): readonly DlmfNotation[] => byName.get(normaliseName(name)) ?? [];

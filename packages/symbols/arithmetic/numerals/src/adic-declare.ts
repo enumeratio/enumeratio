@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  bigIntegerAt,
-  bigRationalAt,
-  integerAt,
-  operandsOf,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, integerAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
 import * as adic from "./adic.ts";
 import type { Adic } from "./adic.ts";
 

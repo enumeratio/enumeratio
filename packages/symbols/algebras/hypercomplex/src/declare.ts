@@ -44,10 +44,7 @@ import { declareAlgebras } from "./algebra.ts";
 
 type NativeEvaluate = NonNullable<BoxedExpression["operatorDefinition"]>["evaluate"];
 type EvaluateOptions = Parameters<NonNullable<NativeEvaluate>>[1];
-type Handler = (
-  ops: readonly BoxedExpression[],
-  options: EvaluateOptions,
-) => BoxedExpression | undefined;
+type Handler = (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined;
 
 /** The definition of an operator the engine already defines, for attaching in place. */
 function operatorDefinitionOf(ce: ComputeEngine, name: string) {
@@ -119,8 +116,7 @@ const hasGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(cont
 
 /** `hasGenerator` for Add and Multiply, which run on every sum and product: a generator
  * under a non-arithmetic head can't be read as a multivector anyway, so don't look. */
-const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean =>
-  ops.some(reachesGenerator);
+const reachesAnyGenerator = (ops: readonly BoxedExpression[]): boolean => ops.some(reachesGenerator);
 
 export function declareHypercomplex(ce: ComputeEngine): void {
   const linear = (
@@ -163,9 +159,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     ["Negate", "x"],
     hasGenerator,
     () => (ops) =>
-      linear(ops, ([mv]) =>
-        mv === undefined ? undefined : toExpression(ce, scaleMultivector(ce, mv, ce.number(-1))),
-      ),
+      linear(ops, ([mv]) => (mv === undefined ? undefined : toExpression(ce, scaleMultivector(ce, mv, ce.number(-1))))),
     1,
   );
 
@@ -194,9 +188,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     () => (ops) =>
       linear(ops, (parts) => {
         const inverse = invertMultivector(ce, parts[1]!);
-        return inverse === undefined
-          ? undefined
-          : toExpression(ce, multiplyMultivectors(ce, parts[0]!, inverse));
+        return inverse === undefined ? undefined : toExpression(ce, multiplyMultivectors(ce, parts[0]!, inverse));
       }),
     2,
   );
@@ -206,9 +198,7 @@ export function declareHypercomplex(ce: ComputeEngine): void {
     ["Conjugate", "x"],
     hasGenerator,
     () => (ops) =>
-      linear(ops, ([mv]) =>
-        mv === undefined ? undefined : toExpression(ce, conjugateMultivector(ce, mv)),
-      ),
+      linear(ops, ([mv]) => (mv === undefined ? undefined : toExpression(ce, conjugateMultivector(ce, mv)))),
     1,
   );
 

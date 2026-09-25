@@ -20,11 +20,7 @@ describe("UniformDistribution: call-shape fix", () => {
   test("the {min, max} form (Wolfram's own) now works", () => {
     expect(evalOf(["PDF", ["UniformDistribution", ["List", 0, 1]], 0.5]).json).toEqual(1);
     expect(evalOf(["CDF", ["UniformDistribution", ["List", 0, 1]], 0.5]).json).toEqual(0.5);
-    expect(evalOf(["Mean", ["UniformDistribution", ["List", 0, 1]]]).json).toEqual([
-      "Rational",
-      1,
-      2,
-    ]);
+    expect(evalOf(["Mean", ["UniformDistribution", ["List", 0, 1]]]).json).toEqual(["Rational", 1, 2]);
   });
 
   test("the zero-argument default is {0, 1}", () => {
@@ -38,11 +34,7 @@ describe("UniformDistribution: call-shape fix", () => {
 
 describe("BetaDistribution", () => {
   test("PDF/CDF/Mean/Variance, exact", () => {
-    expect(evalOf(["PDF", ["BetaDistribution", 2, 3], ["Rational", 1, 2]]).json).toEqual([
-      "Rational",
-      3,
-      2,
-    ]);
+    expect(evalOf(["PDF", ["BetaDistribution", 2, 3], ["Rational", 1, 2]]).json).toEqual(["Rational", 3, 2]);
     expect(N(["CDF", ["BetaDistribution", 2, 3], ["Rational", 1, 2]])).toEqual(0.6875);
     expect(evalOf(["Mean", ["BetaDistribution", 2, 3]]).json).toEqual(["Rational", 2, 5]);
     expect(evalOf(["Variance", ["BetaDistribution", 2, 3]]).json).toEqual(["Rational", 1, 25]);
@@ -81,19 +73,19 @@ describe("BinormalDistribution", () => {
   test("the three call forms all reach the same PDF — cross-checked against mpmath", () => {
     const point = ["List", 0, 0];
     expect(N(["PDF", ["BinormalDistribution", 0.5], point])).toBeCloseTo(0.18377629847393068, 12);
-    expect(N(["PDF", ["BinormalDistribution", ["List", 1, 1], 0.5], point])).toBeCloseTo(
+    expect(N(["PDF", ["BinormalDistribution", ["List", 1, 1], 0.5], point])).toBeCloseTo(0.18377629847393068, 12);
+    expect(N(["PDF", ["BinormalDistribution", ["List", 0, 0], ["List", 1, 1], 0.5], point])).toBeCloseTo(
       0.18377629847393068,
       12,
     );
-    expect(
-      N(["PDF", ["BinormalDistribution", ["List", 0, 0], ["List", 1, 1], 0.5], point]),
-    ).toBeCloseTo(0.18377629847393068, 12);
   });
 
   test("Mean is the mean vector, Variance the covariance matrix", () => {
-    expect(
-      evalOf(["Mean", ["BinormalDistribution", ["List", 1, 2], ["List", 1, 1], 0.5]]).json,
-    ).toEqual(["List", 1, 2]);
+    expect(evalOf(["Mean", ["BinormalDistribution", ["List", 1, 2], ["List", 1, 1], 0.5]]).json).toEqual([
+      "List",
+      1,
+      2,
+    ]);
     // 1-argument form (rho only) — mu defaults to {0, 0}, sigma to {1, 1}.
     expect(evalOf(["Variance", ["BinormalDistribution", ["Rational", 1, 2]]]).json).toEqual([
       "List",
@@ -122,12 +114,8 @@ describe("EmpiricalDistribution", () => {
   });
 
   test("Mean/Variance match the data's own (sample, n-1) Mean/Variance", () => {
-    expect(evalOf(["Mean", ["EmpiricalDistribution", data]]).json).toEqual(
-      evalOf(["Mean", data]).json,
-    );
-    expect(evalOf(["Variance", ["EmpiricalDistribution", data]]).json).toEqual(
-      evalOf(["Variance", data]).json,
-    );
+    expect(evalOf(["Mean", ["EmpiricalDistribution", data]]).json).toEqual(evalOf(["Mean", data]).json);
+    expect(evalOf(["Variance", ["EmpiricalDistribution", data]]).json).toEqual(evalOf(["Variance", data]).json);
   });
 });
 
@@ -147,23 +135,22 @@ describe("Distributed / Expectation / Probability", () => {
   });
 
   test("Probability: Equal is exact for discrete, zero for continuous", () => {
-    expect(
-      evalOf(["Probability", ["Equal", "x", 2], ["Distributed", "x", ["PoissonDistribution", 3]]])
-        .json,
-    ).toEqual(evalOf(["PDF", ["PoissonDistribution", 3], 2]).json);
-    expect(
-      evalOf(["Probability", ["Equal", "x", 2], ["Distributed", "x", ["NormalDistribution", 0, 1]]])
-        .json,
-    ).toEqual(0);
+    expect(evalOf(["Probability", ["Equal", "x", 2], ["Distributed", "x", ["PoissonDistribution", 3]]]).json).toEqual(
+      evalOf(["PDF", ["PoissonDistribution", 3], 2]).json,
+    );
+    expect(evalOf(["Probability", ["Equal", "x", 2], ["Distributed", "x", ["NormalDistribution", 0, 1]]]).json).toEqual(
+      0,
+    );
   });
 
   test("Probability: LessEqual, Less and a chained range — cross-checked against mpmath", () => {
     const bound = ["Distributed", "x", ["PoissonDistribution", 3]];
     expect(N(["Probability", ["LessEqual", "x", 5], bound])).toBeCloseTo(0.9160820579686966, 12);
     expect(N(["Probability", ["Less", "x", 5], bound])).toBeCloseTo(0.8152632445237721, 12);
-    expect(
-      N(["Probability", ["And", ["LessEqual", 1, "x"], ["LessEqual", "x", 5]], bound]),
-    ).toBeCloseTo(0.8662949896008326, 12);
+    expect(N(["Probability", ["And", ["LessEqual", 1, "x"], ["LessEqual", "x", 5]], bound])).toBeCloseTo(
+      0.8662949896008326,
+      12,
+    );
   });
 
   test("Probability: canonicalized Greater/GreaterEqual (rewritten to Less/LessEqual)", () => {
@@ -217,17 +204,14 @@ describe("RandomVariate: deterministic, seeded", () => {
     },
     { name: "Beta(2, 3)", dist: ["BetaDistribution", 2, 3], mean: 0.4, variance: 0.04 },
     { name: "Gamma(2, 2)", dist: ["GammaDistribution", 2, 2], mean: 4, variance: 8 },
-  ])(
-    "$name: 10^4 seeded samples land within tolerance of the true mean/variance",
-    ({ dist, mean, variance }) => {
-      const stats = sampleStats(dist);
-      // A generous 3-sigma-ish bound on the sample mean (sqrt(variance/n)) and a looser one
-      // on the sample variance (whose own sampling error is larger) — this is a statistical
-      // sanity check, not an exact-value assertion, so it stays well clear of flaking.
-      expect(Math.abs(stats.mean - mean)).toBeLessThan(10 * Math.sqrt(variance / 10_000));
-      expect(Math.abs(stats.variance - variance)).toBeLessThan(0.25 * variance + 0.05);
-    },
-  );
+  ])("$name: 10^4 seeded samples land within tolerance of the true mean/variance", ({ dist, mean, variance }) => {
+    const stats = sampleStats(dist);
+    // A generous 3-sigma-ish bound on the sample mean (sqrt(variance/n)) and a looser one
+    // on the sample variance (whose own sampling error is larger) — this is a statistical
+    // sanity check, not an exact-value assertion, so it stays well clear of flaking.
+    expect(Math.abs(stats.mean - mean)).toBeLessThan(10 * Math.sqrt(variance / 10_000));
+    expect(Math.abs(stats.variance - variance)).toBeLessThan(0.25 * variance + 0.05);
+  });
 
   test("EmpiricalDistribution resamples from the data, uniformly", () => {
     const data = ["List", 1, 2, 3, 4, 5];
@@ -239,11 +223,9 @@ describe("RandomVariate: deterministic, seeded", () => {
     ce.box(["SeedRandom", 7]).evaluate();
     const n = 10_000;
     const draws = (
-      evalOf([
-        "RandomVariate",
-        ["BinormalDistribution", ["List", 1, 2], ["List", 1, 2], 0.5],
-        n,
-      ]) as unknown as { ops: { ops: { re: number }[] }[] }
+      evalOf(["RandomVariate", ["BinormalDistribution", ["List", 1, 2], ["List", 1, 2], 0.5], n]) as unknown as {
+        ops: { ops: { re: number }[] }[];
+      }
     ).ops;
     const pts = draws.map((o) => o.ops.map((c) => c.re));
     const mean1 = pts.reduce((a, p) => a + p[0], 0) / n;

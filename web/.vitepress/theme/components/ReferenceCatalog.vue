@@ -57,11 +57,7 @@ const linked = computed(() => shown.value.filter((r) => r.references?.length).le
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="r in shown"
-          :key="r.name + (r.badges?.join(',') ?? '')"
-          :class="{ 'is-frontier': r.frontier }"
-        >
+        <tr v-for="r in shown" :key="r.name + (r.badges?.join(',') ?? '')" :class="{ 'is-frontier': r.frontier }">
           <td class="ref-cat-name">
             <a v-if="r.href" :href="r.href"
               ><code>{{ r.name }}</code></a

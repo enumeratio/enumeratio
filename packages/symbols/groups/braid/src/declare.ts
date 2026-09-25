@@ -118,9 +118,7 @@ export function declareBraid(ce: ComputeEngine): void {
               ? ce.symbol(variable)
               : ce.function("Power", [ce.symbol(variable), ce.number(exponent)]);
         if (powerPart === undefined) return ce.number(coefficient);
-        return coefficient === 1
-          ? powerPart
-          : ce.function("Multiply", [ce.number(coefficient), powerPart]);
+        return coefficient === 1 ? powerPart : ce.function("Multiply", [ce.number(coefficient), powerPart]);
       });
     return terms.length === 1 ? (terms[0] as BoxedExpression) : ce.function("Add", terms);
   };
@@ -129,11 +127,7 @@ export function declareBraid(ce: ComputeEngine): void {
   ce.declare("Braid", { signature: "(integer, list?) -> value" });
 
   /** A head taking a braid and returning a value. */
-  const aboutBraid = (
-    head: string,
-    signature: string,
-    answer: (b: Braid) => BoxedExpression | undefined,
-  ): void => {
+  const aboutBraid = (head: string, signature: string, answer: (b: Braid) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -144,11 +138,7 @@ export function declareBraid(ce: ComputeEngine): void {
   };
 
   /** A head taking an LR word. */
-  const aboutWord = (
-    head: string,
-    signature: string,
-    answer: (word: string) => BoxedExpression | undefined,
-  ): void => {
+  const aboutWord = (head: string, signature: string, answer: (word: string) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -159,11 +149,7 @@ export function declareBraid(ce: ComputeEngine): void {
   };
 
   /** A head taking a knot, however that knot was named. */
-  const aboutKnot = (
-    head: string,
-    signature: string,
-    answer: (k: Knot) => BoxedExpression | undefined,
-  ): void => {
+  const aboutKnot = (head: string, signature: string, answer: (k: Knot) => BoxedExpression | undefined): void => {
     ce.declare(head, {
       signature,
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -199,13 +185,9 @@ export function declareBraid(ce: ComputeEngine): void {
   aboutBraid("BraidCrossings", "(value) -> integer", (b) => ce.number(crossings(b)));
   /** The exponent sum: the abelianisation B_n → Z, and the closed diagram's writhe. */
   aboutBraid("BraidWrithe", "(value) -> integer", (b) => ce.number(writhe(b)));
-  aboutBraid("BraidIsPositive", "(value) -> boolean", (b) =>
-    ce.symbol(isPositive(b) ? "True" : "False"),
-  );
+  aboutBraid("BraidIsPositive", "(value) -> boolean", (b) => ce.symbol(isPositive(b) ? "True" : "False"));
   /** The image in the symmetric group — forget which strand went over. */
-  aboutBraid("BraidPermutation", "(value) -> list", (b) =>
-    listExpression(permutationOf(b).map((i) => i + 1)),
-  );
+  aboutBraid("BraidPermutation", "(value) -> list", (b) => listExpression(permutationOf(b).map((i) => i + 1)));
 
   // ── the closure, and its invariants ─────────────────────────────────────────
 
@@ -227,8 +209,7 @@ export function declareBraid(ce: ComputeEngine): void {
    * knot, otherwise Bennequin on a positive braid's closure, (c − s + 1)/2.
    */
   aboutKnot("SeifertGenus", "(value) -> integer", (k) => {
-    const genus =
-      closedGenus(k) ?? (k.braid === undefined ? undefined : positiveBraidGenus(k.braid));
+    const genus = closedGenus(k) ?? (k.braid === undefined ? undefined : positiveBraidGenus(k.braid));
     return genus === undefined ? undefined : ce.number(genus);
   });
   /**
@@ -307,8 +288,7 @@ export function declareBraid(ce: ComputeEngine): void {
   aboutKnot("JonesPolynomial", "(value) -> expression", (k) => {
     // Only the torus family has a closed Jones form; a twist or pretzel knot's V comes
     // from whatever braid it carries, when it carries one.
-    const closed =
-      k.closed?.kind === "torus" ? torusJones(k.closed.torus.p, k.closed.torus.q) : undefined;
+    const closed = k.closed?.kind === "torus" ? torusJones(k.closed.torus.p, k.closed.torus.q) : undefined;
     if (closed !== undefined) return polynomialExpression(closed);
     const polynomial = k.braid === undefined ? undefined : jonesPolynomial(k.braid);
     return polynomial === undefined ? undefined : polynomialExpression(polynomial);
@@ -412,10 +392,7 @@ export function declareBraid(ce: ComputeEngine): void {
       const span = Number.isFinite(ops[3]?.re) ? (ops[3] as BoxedExpression).re : 2 * Math.PI;
       const samples = Math.max(
         24,
-        Math.min(
-          4000,
-          Math.round(Number.isFinite(ops[4]?.re) ? (ops[4] as BoxedExpression).re : 600),
-        ),
+        Math.min(4000, Math.round(Number.isFinite(ops[4]?.re) ? (ops[4] as BoxedExpression).re : 600)),
       );
       const [fx, fy, fz] = [x, y, z].map(sampler);
       const points: Point3[] = [];

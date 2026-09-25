@@ -111,8 +111,7 @@ export const linkingWithTrefoil = (m: Matrix): number | undefined => rademacherS
  * The LR word length of a class, which is its period under the modular flow in the
  * symbolic sense: the number of times the geodesic crosses the fundamental domain.
  */
-export const wordLength = (word: Word): number | undefined =>
-  /^[LR]+$/.test(word) ? word.length : undefined;
+export const wordLength = (word: Word): number | undefined => (/^[LR]+$/.test(word) ? word.length : undefined);
 
 /**
  * The trace of the matrix a positive word builds. For a hyperbolic class this determines

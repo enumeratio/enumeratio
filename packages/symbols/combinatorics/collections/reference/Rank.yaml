@@ -26,10 +26,7 @@ examples:
       [
         Equal,
         [Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]],
-        [
-          Length,
-          [Shape, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]],
-        ],
+        [Length, [Shape, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]],
       ]
     expected: True
     category: Properties

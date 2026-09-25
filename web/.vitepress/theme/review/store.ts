@@ -197,11 +197,7 @@ export function createReviewStore(source: BacklogSource = pickSource()) {
   /** Modifier-click entry point (see ReviewPanel.vue): reuse a matching item, or
    * create a fresh ad-hoc one keyed on page path + anchor id (an opaque string --
    * never parsed for shape, see adhoc.ts) and select it. */
-  async function selectOrCreateAdhoc(
-    pageLabel: string,
-    path: string,
-    anchorId: string,
-  ): Promise<void> {
+  async function selectOrCreateAdhoc(pageLabel: string, path: string, anchorId: string): Promise<void> {
     const existing = findByTarget(path, anchorId);
     if (existing) {
       selectItem(existing.id);

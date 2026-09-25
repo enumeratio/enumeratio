@@ -38,14 +38,9 @@ for (const line of output.trim().split("\n")) {
   }
 }
 
-writeFileSync(
-  new URL("../tests/kronecker.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/kronecker.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 
-console.log(
-  `cases ${goldens.length}  |  agree ${goldens.length - disagree.length}  disagree ${disagree.length}`,
-);
+console.log(`cases ${goldens.length}  |  agree ${goldens.length - disagree.length}  disagree ${disagree.length}`);
 if (disagree.length) {
   console.log("\n--- DISAGREEMENTS ---");
   for (const d of disagree) console.log("  " + d);

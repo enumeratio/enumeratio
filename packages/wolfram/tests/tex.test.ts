@@ -30,27 +30,17 @@ for (const [wolfram, ours] of BOTH) {
 
 test("a matrix is a list of equal-length lists", () => {
   const wolfram = "\\left( \\begin{array}{cc}  1 & 2 \\\\  3 & 4 \\\\ \\end{array} \\right)";
-  expect(fromWolframTeX(wolfram).replace(/\s+/g, "")).toBe(
-    "\\lbrack\\lbrack1,2\\rbrack,\\lbrack3,4\\rbrack\\rbrack",
-  );
+  expect(fromWolframTeX(wolfram).replace(/\s+/g, "")).toBe("\\lbrack\\lbrack1,2\\rbrack,\\lbrack3,4\\rbrack\\rbrack");
   expect(
-    toWolframTeX(
-      "\\bigl\\lbrack\\bigl\\lbrack1, 2\\bigr\\rbrack, \\bigl\\lbrack3, 4\\bigr\\rbrack\\bigr\\rbrack",
-    ),
+    toWolframTeX("\\bigl\\lbrack\\bigl\\lbrack1, 2\\bigr\\rbrack, \\bigl\\lbrack3, 4\\bigr\\rbrack\\bigr\\rbrack"),
   ).toBe("\\left(\\begin{array}{cc}1 & 2 \\\\ 3 & 4 \\\\ \\end{array}\\right)");
-  expect(toWolframTeX("\\lbrack\\lbrack1, 2\\rbrack, \\lbrack3\\rbrack\\rbrack")).toBe(
-    "\\{\\{1, 2\\}, \\{3\\}\\}",
-  );
+  expect(toWolframTeX("\\lbrack\\lbrack1, 2\\rbrack, \\lbrack3\\rbrack\\rbrack")).toBe("\\{\\{1, 2\\}, \\{3\\}\\}");
 });
 
 test("a head's name, in compute-engine's spelling and notatio's", () => {
   expect(fromWolframTeX("\\text{SquareFreeQ}[10]")).toBe("\\operatorname{IsSquareFree}(10)");
-  expect(fromWolframTeX("N\\left[\\sinh (1)\\right]")).toBe(
-    "\\operatorname{N}\\left(\\sinh (1)\\right)",
-  );
-  expect(fromWolframTeX("\\text{Scan}[f,\\text{Plus}]")).toBe(
-    "\\operatorname{Scan}(f,\\operatorname{Add})",
-  );
+  expect(fromWolframTeX("N\\left[\\sinh (1)\\right]")).toBe("\\operatorname{N}\\left(\\sinh (1)\\right)");
+  expect(fromWolframTeX("\\text{Scan}[f,\\text{Plus}]")).toBe("\\operatorname{Scan}(f,\\operatorname{Add})");
   expect(fromWolframTeX("\\text{enumeratio$\\grave{ }$Scan}")).toBe("\\text{Scan}");
   const heads = new Map([["Round", "\\mathrm{round}"]]);
   expect(fromWolframTeX("\\text{Round}[3.5]", { heads })).toBe("\\mathrm{round}(3.5)");

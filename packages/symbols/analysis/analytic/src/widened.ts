@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  bigIntegerAt,
-  bigRationalAt,
-  mayBeInteger,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator } from "@enumeratio/boxed";
 
 // compute-engine's Gamma-built combinatorial heads, widened to the exact values Wolfram gives
 // and the native handler leaves unevaluated or rejects: Binomial, Beta and CatalanNumber at
@@ -23,8 +17,7 @@ const reduced = ([p, q]: Rational): Rational => {
 };
 const times = (a: Rational, b: Rational): Rational => reduced([a[0] * b[0], a[1] * b[1]]);
 const over = (a: Rational, b: Rational): Rational => reduced([a[0] * b[1], a[1] * b[0]]);
-const plus = (a: Rational, b: Rational): Rational =>
-  reduced([a[0] * b[1] + b[0] * a[1], a[1] * b[1]]);
+const plus = (a: Rational, b: Rational): Rational => reduced([a[0] * b[1] + b[0] * a[1], a[1] * b[1]]);
 const minus = (a: Rational, b: Rational): Rational => plus(a, [-b[0], b[1]]);
 
 const factorial = (n: bigint): bigint => (n <= 1n ? 1n : n * factorial(n - 1n));
@@ -69,10 +62,7 @@ function gammaRatio(
     }
   }
   return ce
-    .function("Multiply", [
-      ce.number([c[0], c[1]]),
-      ce.function("Power", [ce.Pi, ce.number([h, 2])]),
-    ])
+    .function("Multiply", [ce.number([c[0], c[1]]), ce.function("Power", [ce.Pi, ce.number([h, 2])])])
     .evaluate();
 }
 
@@ -125,10 +115,7 @@ export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression
   if (g === undefined) return undefined;
   if (g === "pole") return ce.symbol("ComplexInfinity");
   return ce
-    .function("Multiply", [
-      ce.number([g.c[0], g.c[1]]),
-      ce.function("Power", [ce.Pi, ce.number([g.h, 2])]),
-    ])
+    .function("Multiply", [ce.number([g.c[0], g.c[1]]), ce.function("Power", [ce.Pi, ce.number([g.h, 2])])])
     .evaluate();
 }
 

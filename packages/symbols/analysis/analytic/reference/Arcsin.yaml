@@ -37,12 +37,7 @@ examples:
     caption: 'Co-function identity: $\arcsin(x) + \arccos(x) = \pi/2$'
   - id: outside-1-1-reduces-to-the-exact-closed-form
     expr: [Arcsin, 2]
-    expected:
-      [
-        Add,
-        [Multiply, [Rational, 1, 2], Pi],
-        [Multiply, [Complex, 0, -1], [Ln, [Add, 2, [Sqrt, 3]]]],
-      ]
+    expected: [Add, [Multiply, [Rational, 1, 2], Pi], [Multiply, [Complex, 0, -1], [Ln, [Add, 2, [Sqrt, 3]]]]]
     category: Scope
     caption: Outside $[-1, 1]$, reduces to the exact closed form $\frac{\pi}{2} - i\ln(2+\sqrt3)$ -- the branch compute-engine's own $N(\mathrm{Arcsin}(2))$ already takes, overriding its plain policy of leaving the call symbolic
     divergence:
@@ -157,12 +152,7 @@ examples:
     caption: To 30 significant digits, the last one correctly rounded
   - id: arcsin-2-past-1-1-the-odd-function-mirror-of
     expr: [Arcsin, -2]
-    expected:
-      [
-        Add,
-        [Multiply, [Rational, -1, 2], Pi],
-        [Multiply, [Complex, 0, 1], [Ln, [Add, 2, [Sqrt, 3]]]],
-      ]
+    expected: [Add, [Multiply, [Rational, -1, 2], Pi], [Multiply, [Complex, 0, 1], [Ln, [Add, 2, [Sqrt, 3]]]]]
     category: Scope
     caption: '$\arcsin(-2)$ past $[-1,1]$: the odd-function mirror of $\arcsin(2)$.'
 seeAlso:

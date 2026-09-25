@@ -55,8 +55,7 @@ function toGraph(data: unknown): GraphData | undefined {
   const rawEdges = Array.isArray(obj.edges) ? obj.edges : [];
   const edges = rawEdges
     .filter(
-      (e): e is [string | number, string | number] =>
-        Array.isArray(e) && e.length === 2 && isId(e[0]) && isId(e[1]),
+      (e): e is [string | number, string | number] => Array.isArray(e) && e.length === 2 && isId(e[0]) && isId(e[1]),
     )
     .map(([a, b]): [string, string] => [String(a), String(b)]);
   return { nodes, edges };
@@ -111,9 +110,7 @@ export class NotatioGraphPlot extends LitElement {
   }
 
   protected override shouldUpdate(changed: PropertyValues): boolean {
-    return (
-      changed.has("type") || changed.has("data") || changed.has("directed") || changed.has("label")
-    );
+    return changed.has("type") || changed.has("data") || changed.has("directed") || changed.has("label");
   }
 
   #markup(): string {

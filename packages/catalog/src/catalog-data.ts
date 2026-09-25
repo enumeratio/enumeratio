@@ -330,8 +330,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Boolean Permutations",
-    description:
-      "Products of pairwise-commuting simple reflections — no non-adjacent inversion; F(n+1).",
+    description: "Products of pairwise-commuting simple reflections — no non-adjacent inversion; F(n+1).",
   },
   {
     name: "BoundedPartPartitions",
@@ -548,8 +547,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Colored Motzkin Paths",
-    description:
-      "Motzkin paths with each level step one of r colors — r=1 Motzkin, r=2 Catalan(n+1).",
+    description: "Motzkin paths with each level step one of r colors — r=1 Motzkin, r=2 Catalan(n+1).",
   },
   {
     name: "CompositionsIntoKParts",
@@ -592,8 +590,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Connected Permutations",
-    description:
-      "Indecomposable permutations — no proper prefix maps onto an initial segment (A003319).",
+    description: "Indecomposable permutations — no proper prefix maps onto an initial segment (A003319).",
   },
   {
     name: "ContinuedFractions",
@@ -690,8 +687,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Cyclohedron",
-    description:
-      "Faces of the type-B associahedron / Bott–Taubes polytope (centrally symmetric polygon dissections).",
+    description: "Faces of the type-B associahedron / Bott–Taubes polytope (centrally symmetric polygon dissections).",
   },
   {
     name: "DecoratedPermutations",
@@ -993,8 +989,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     carrier: "FractionalNumber",
     grades: [],
     title: "Fractional Numbers",
-    description:
-      "Unreduced fractions n/d over ℤ×ℕ⁺ — the formal pair, not the reduced value it names.",
+    description: "Unreduced fractions n/d over ℤ×ℕ⁺ — the formal pair, not the reduced value it names.",
     unbounded: true,
   },
   {
@@ -1012,8 +1007,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     carrier: "GaussianFractional",
     grades: [],
     title: "Gaussian Fractionals",
-    description:
-      "ℚ(i) carried as a pair of unreduced fractions — the unreduced companion to the Gaussian rationals.",
+    description: "ℚ(i) carried as a pair of unreduced fractions — the unreduced companion to the Gaussian rationals.",
     unbounded: true,
   },
   {
@@ -1031,8 +1025,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     carrier: "GaussianRational",
     grades: [],
     title: "Gaussian Rationals",
-    description:
-      "The field ℚ(i) = {p+qi : p,q ∈ ℚ}, enumerated by a Cantor pairing over a signed-ℚ index.",
+    description: "The field ℚ(i) = {p+qi : p,q ∈ ℚ}, enumerated by a Cantor pairing over a signed-ℚ index.",
     unbounded: true,
   },
   {
@@ -1176,8 +1169,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Hyperbinary Representations",
-    description:
-      "Base-2 numerals of n over the widened digit alphabet {0,1,2}; counted by fusc(n+1).",
+    description: "Base-2 numerals of n over the widened digit alphabet {0,1,2}; counted by fusc(n+1).",
   },
   {
     name: "Hypernumerary",
@@ -1265,8 +1257,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     carrier: "IntegerNumber",
     grades: [],
     title: "Integer Numbers",
-    description:
-      "The integers ℤ, enumerated by the zigzag 0,+1,−1,… — carries ring arithmetic (+ − ·) and the order.",
+    description: "The integers ℤ, enumerated by the zigzag 0,+1,−1,… — carries ring arithmetic (+ − ·) and the order.",
     unbounded: true,
   },
   {
@@ -1435,8 +1426,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "k-ary Dyck Paths",
-    description:
-      "Fuss-Catalan lattice paths: n up-steps of rise k−1, prefixes ≥ 0 — C(kn,n)/((k−1)n+1); k-ary trees.",
+    description: "Fuss-Catalan lattice paths: n up-steps of rise k−1, prefixes ≥ 0 — C(kn,n)/((k−1)n+1); k-ary trees.",
   },
   {
     name: "KFreeIntegers",
@@ -1449,8 +1439,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "k-free integers",
-    description:
-      "Naturals with no prime raised to the k-th power or higher (max exponent < k); k selects the family.",
+    description: "Naturals with no prime raised to the k-th power or higher (max exponent < k); k selects the family.",
     unbounded: true,
   },
   {
@@ -1485,8 +1474,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "k-ary Lyndon Words",
-    description:
-      "Aperiodic words over base letters, lex-least in their rotation class ((1/n)Σμ(d)baseⁿ/ᵈ).",
+    description: "Aperiodic words over base letters, lex-least in their rotation class ((1/n)Σμ(d)baseⁿ/ᵈ).",
   },
   {
     name: "KMotzkinPaths",
@@ -1503,8 +1491,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "k-Motzkin Paths",
-    description:
-      "Motzkin paths of length n with exactly k level steps — the Motzkin triangle C(n,k)·Catalan((n−k)/2).",
+    description: "Motzkin paths of length n with exactly k level steps — the Motzkin triangle C(n,k)·Catalan((n−k)/2).",
   },
   {
     name: "KNecklaces",
@@ -1521,8 +1508,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "k-ary Necklaces",
-    description:
-      "Words over base letters up to rotation — the k-ary necklaces ((1/n)Σφ(d)baseⁿ/ᵈ).",
+    description: "Words over base letters up to rotation — the k-ary necklaces ((1/n)Σφ(d)baseⁿ/ᵈ).",
   },
   {
     name: "KPartPartitions",
@@ -1662,8 +1648,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     carrier: "Numeric",
     grades: [],
     title: "Little Schröder Numbers",
-    description:
-      "sₙ — the super-Catalan numbers; the dissections count; half the large Schröder numbers for n ≥ 1.",
+    description: "sₙ — the super-Catalan numbers; the dissections count; half the large Schröder numbers for n ≥ 1.",
     unbounded: true,
   },
   {
@@ -1681,8 +1666,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Little Schröder Triangle",
-    description:
-      "Little Schröder paths by number of hills — s(n,k); row-sums to the little Schröder numbers.",
+    description: "Little Schröder paths by number of hills — s(n,k); row-sums to the little Schröder numbers.",
   },
   {
     name: "LucasNumbers",
@@ -1704,8 +1688,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Lucas Strings",
-    description:
-      "Circular binary words with no two consecutive 1s (wrap included) — the Lucas numbers.",
+    description: "Circular binary words with no two consecutive 1s (wrap included) — the Lucas numbers.",
   },
   {
     name: "LuckyNumbers",
@@ -1740,8 +1723,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Lyndon Words",
-    description:
-      "Binary words strictly less than all their rotations — the primitive-necklace reps (A001037).",
+    description: "Binary words strictly less than all their rotations — the primitive-necklace reps (A001037).",
   },
   {
     name: "MersennePrimes",
@@ -1938,8 +1920,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Non-Crossing Trees",
-    description:
-      "Spanning trees on n+1 circle-labeled vertices with no crossing chords — C(3n,n)/(2n+1), A001764.",
+    description: "Spanning trees on n+1 circle-labeled vertices with no crossing chords — C(3n,n)/(2n+1), A001764.",
   },
   {
     name: "NonDecreasingParkingFunctions",
@@ -1965,8 +1946,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Non-Nesting Matchings",
-    description:
-      "Perfect matchings with no nested chords — the nesting-dual of non-crossing; also Catalan.",
+    description: "Perfect matchings with no nested chords — the nesting-dual of non-crossing; also Catalan.",
   },
   {
     name: "NonNestingPartitions",
@@ -1979,8 +1959,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Non-Nesting Partitions",
-    description:
-      "Set partitions with no nesting blocks — the nesting-dual of non-crossing; also Catalan.",
+    description: "Set partitions with no nesting blocks — the nesting-dual of non-crossing; also Catalan.",
   },
   {
     name: "OctagonalNumbers",
@@ -2223,8 +2202,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Av(123) Permutations",
-    description:
-      "123-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
+    description: "123-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
   },
   {
     name: "PermutationsAvoiding132",
@@ -2237,8 +2215,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Av(132) Permutations",
-    description:
-      "132-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
+    description: "132-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
   },
   {
     name: "PermutationsAvoiding213",
@@ -2251,8 +2228,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Av(213) Permutations",
-    description:
-      "213-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
+    description: "213-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
   },
   {
     name: "PermutationsAvoiding231",
@@ -2265,8 +2241,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Av(231) Permutations",
-    description:
-      "231-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
+    description: "231-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
   },
   {
     name: "PermutationsAvoiding312",
@@ -2279,8 +2254,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Av(312) Permutations",
-    description:
-      "312-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
+    description: "312-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
   },
   {
     name: "PermutationsAvoiding321",
@@ -2293,8 +2267,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Av(321) Permutations",
-    description:
-      "321-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
+    description: "321-avoiding permutations — Catalan (Knuth); all six length-3 classes are Wilf-equivalent.",
   },
   {
     name: "PerniciousNumbers",
@@ -2325,8 +2298,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Phylogenetic Trees",
-    description:
-      "Rooted binary trees on n labeled leaves, unlabeled internal nodes — (2n−3)!!, A001147.",
+    description: "Rooted binary trees on n labeled leaves, unlabeled internal nodes — (2n−3)!!, A001147.",
   },
   {
     name: "PlanePartitions",
@@ -2352,8 +2324,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Plane Trees",
-    description:
-      "Rooted plane trees on n nodes, carried by their pre-order child-count word — Catalan(n−1).",
+    description: "Rooted plane trees on n nodes, carried by their pre-order child-count word — Catalan(n−1).",
   },
   {
     name: "PolygonalNumbers",
@@ -2380,8 +2351,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Power Set",
-    description:
-      "Alias of Subsets — 2^[n], the set of all subsets of [n]. Same collection under its classical name.",
+    description: "Alias of Subsets — 2^[n], the set of all subsets of [n]. Same collection under its classical name.",
     aliasOf: "Subsets",
   },
   {
@@ -2453,8 +2423,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Prime pairs",
-    description:
-      "The lesser prime p of a pair (p, p+gap); gap selects the family (twin=2, cousin=4, sexy=6).",
+    description: "The lesser prime p of a pair (p, p+gap); gap selects the family (twin=2, cousin=4, sexy=6).",
     unbounded: true,
   },
   {
@@ -2490,8 +2459,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Primitive Binary Strings",
-    description:
-      "Aperiodic binary words (no proper period) — A027375; the Lyndon-word representatives.",
+    description: "Aperiodic binary words (no proper period) — A027375; the Lyndon-word representatives.",
   },
   {
     name: "PrimorialNumbers",
@@ -2626,8 +2594,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Rook Placements",
-    description:
-      "Non-attacking rooks on the n×n board — the partial permutations of [n] (A002720).",
+    description: "Non-attacking rooks on the n×n board — the partial permutations of [n] (A002720).",
   },
   {
     name: "RootedUnlabeledTrees",
@@ -2640,8 +2607,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Rooted Unlabeled Trees",
-    description:
-      "Rooted trees on n unlabeled nodes, up to isomorphism — children unordered (A000081).",
+    description: "Rooted trees on n unlabeled nodes, up to isomorphism — children unordered (A000081).",
   },
   {
     name: "RoughNumbers",
@@ -2672,8 +2638,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
     carrier: "Numeric",
     grades: [],
     title: "Schröder Numbers",
-    description:
-      "Sₙ = 2·sₙ for n ≥ 1 — twice the little Schröder numbers; the large Schröder path count.",
+    description: "Sₙ = 2·sₙ for n ≥ 1 — twice the little Schröder numbers; the large Schröder path count.",
     unbounded: true,
   },
   {
@@ -2704,8 +2669,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Schröder Triangle",
-    description:
-      "Large Schröder paths by number of flat steps — T(n,k); row-sums to the large Schröder numbers.",
+    description: "Large Schröder paths by number of flat steps — T(n,k); row-sums to the large Schröder numbers.",
   },
   {
     name: "SelfConjugatePartitions",
@@ -2857,8 +2821,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Signed Set Compositions",
-    description:
-      "Ordered set partitions of [n] with a ± sign per block — faces of the type-B permutahedron.",
+    description: "Ordered set partitions of [n] with a ± sign per block — faces of the type-B permutahedron.",
   },
   {
     name: "SignedSubsets",
@@ -2959,8 +2922,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Smooth numbers",
-    description:
-      "Positive integers whose greatest prime factor is at most k (k-smooth); k selects the family.",
+    description: "Positive integers whose greatest prime factor is at most k (k-smooth); k selects the family.",
     unbounded: true,
   },
   {
@@ -3164,8 +3126,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Subexcedant Sequences",
-    description:
-      "Words with aᵢ ≤ i — the factorial-base sequences; n! of them, bijective with permutations.",
+    description: "Words with aᵢ ≤ i — the factorial-base sequences; n! of them, bijective with permutations.",
   },
   {
     name: "Subsets",
@@ -3213,8 +3174,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Surjections",
-    description:
-      "Onto functions out of [n] (any codomain) — surjection words, Fubini-counted; graded by n.",
+    description: "Onto functions out of [n] (any codomain) — surjection words, Fubini-counted; graded by n.",
   },
   {
     name: "SurjectionsOntoK",
@@ -3493,8 +3453,7 @@ export const COLLECTIONS: readonly CatalogCollection[] = [
       },
     ],
     title: "Weak 3-Part Compositions",
-    description:
-      "Ordered triples of nonnegative integers summing to n; counted by the triangular numbers.",
+    description: "Ordered triples of nonnegative integers summing to n; counted by the triangular numbers.",
   },
   {
     name: "WeakCompositionsIntoKParts",
@@ -4362,13 +4321,7 @@ export const STATS: readonly CatalogOverload[] = [
   },
   {
     name: "Inversions",
-    on: [
-      "Arrangement",
-      "Permutation",
-      "PermutationCycles",
-      "PermutationInversion",
-      "SignedPermutation",
-    ],
+    on: ["Arrangement", "Permutation", "PermutationCycles", "PermutationInversion", "SignedPermutation"],
     title: "Inversions",
   },
   {
@@ -5316,8 +5269,7 @@ export const MAPS: readonly CatalogOverload[] = [
   {
     name: "InverseAfterComplementAfterReverse",
     on: ["Permutation"],
-    title:
-      "Inverse of the reverse-complement (composes the two permutohedron symmetries with permutation inversion)",
+    title: "Inverse of the reverse-complement (composes the two permutohedron symmetries with permutation inversion)",
   },
   {
     name: "InverseCyclicShift",
@@ -5627,8 +5579,7 @@ export const REFERENCES: readonly CatalogReference[] = [
     kind: "collection",
     subject: "AffinePermutations",
     system: "sage",
-    identity:
-      "AffinePermutationGroup(cartan_type) [sage.combinat.affine_permutation.AffinePermutation]",
+    identity: "AffinePermutationGroup(cartan_type) [sage.combinat.affine_permutation.AffinePermutation]",
     url: "https://doc.sagemath.org/html/en/reference/combinat/sage/combinat/affine_permutation.html",
     note: "window-notation elements of the affine symmetric group; our r-bounded-translation-box grading (n, radius) is our own restriction, not part of the sage class",
   },

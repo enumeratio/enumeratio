@@ -82,11 +82,7 @@ test("an author's value is read as a real or complex number", () => {
 });
 
 test("entries split on '|' so commas stay in the prose", () => {
-  expect(parseEntries("a few|several, even many|  lots ")).toEqual([
-    "a few",
-    "several, even many",
-    "lots",
-  ]);
+  expect(parseEntries("a few|several, even many|  lots ")).toEqual(["a few", "several, even many", "lots"]);
   expect(parseEntries("")).toEqual([]);
 });
 

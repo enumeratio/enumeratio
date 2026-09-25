@@ -33,8 +33,6 @@ export function planned(
 }[] {
   return plan.cases.flatMap((c) => {
     const cell: PlanCell | undefined = c.systems[system];
-    return cell !== undefined && "sources" in cell
-      ? [{ name: c.name, case: c, sources: cell.sources }]
-      : [];
+    return cell !== undefined && "sources" in cell ? [{ name: c.name, case: c, sources: cell.sources }] : [];
   });
 }

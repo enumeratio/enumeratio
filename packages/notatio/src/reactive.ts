@@ -85,9 +85,7 @@ export const INTEGER_TYPES = new Set([
 
 /** The symbol a cell binds, if it is an assignment. */
 export function boundName(json: unknown): string | undefined {
-  return Array.isArray(json) && json[0] === "Assign" && typeof json[1] === "string"
-    ? json[1]
-    : undefined;
+  return Array.isArray(json) && json[0] === "Assign" && typeof json[1] === "string" ? json[1] : undefined;
 }
 
 // --- controls ----------------------------------------------------------------------
@@ -130,10 +128,7 @@ export const DEFAULT_BOUND = 10;
  * This is a starting point, not a claim about the model: the endpoints are editable,
  * and `Auto` is still the eventual answer.
  */
-export function inferRange(
-  value: number,
-  integer = false,
-): { min: number; max: number; step: number } {
+export function inferRange(value: number, integer = false): { min: number; max: number; step: number } {
   const bound = Math.abs(value) <= DEFAULT_BOUND ? DEFAULT_BOUND : niceCeiling(Math.abs(value));
   // A whole-number axis steps by one; there is nothing between 3 and 4 to land on.
   if (integer) return { min: -Math.round(bound), max: Math.round(bound), step: 1 };
@@ -396,11 +391,7 @@ function assignedNames(engine: ComputeEngine, cells: readonly Cell[]): Map<strin
  * element on the page, so a pass that yielded mid-scope could interleave its bindings
  * with someone else's.
  */
-export function runPass(
-  engine: ComputeEngine,
-  cells: readonly Cell[],
-  options: PassOptions,
-): PassCell[] {
+export function runPass(engine: ComputeEngine, cells: readonly Cell[], options: PassOptions): PassCell[] {
   const out: PassCell[] = [];
   const names = assignedNames(engine, cells);
   const scope = engine.createScope({});
@@ -433,10 +424,7 @@ export function runPass(
 }
 
 /** `subs` on an expression that cannot take it is not worth failing a cell over. */
-function safeSubs(
-  expr: BoxedExpression,
-  bindings: Record<string, BoxedExpression>,
-): BoxedExpression | undefined {
+function safeSubs(expr: BoxedExpression, bindings: Record<string, BoxedExpression>): BoxedExpression | undefined {
   try {
     return expr.subs(bindings);
   } catch {
@@ -462,10 +450,7 @@ export const ELIDE_ABOVE = 64;
  * General, not worksheet-specific: any cell can ask for it (`notatio-out`'s
  * `elide-above`), with its own threshold.
  */
-export function elideResult(
-  expr: BoxedExpression,
-  above: number = ELIDE_ABOVE,
-): string | undefined {
+export function elideResult(expr: BoxedExpression, above: number = ELIDE_ABOVE): string | undefined {
   if (expr.operator !== "List") return undefined;
   // `ops` lives on compute-engine's narrowed function interface; read it structurally.
   const opsOf = (e: BoxedExpression): readonly BoxedExpression[] =>
@@ -519,10 +504,7 @@ function evaluateCell(
     const parsed = engine.parse(cell.value);
     const json = parsed.json;
     if (options.rejectOrdinals && referencesOrdinal(cell.value, json)) {
-      return fail(
-        "invalid",
-        "cell-number references aren't valid here — bind a variable with := instead",
-      );
+      return fail("invalid", "cell-number references aren't valid here — bind a variable with := instead");
     }
     const name = boundName(json);
     // Substituted but unevaluated, and taken before `evaluate` so an Assign's own

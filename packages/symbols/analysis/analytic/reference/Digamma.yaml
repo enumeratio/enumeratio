@@ -57,12 +57,7 @@ examples:
   - id: threads-over-a-list-reducing-each-positive
     expr: [Digamma, [List, 1, 2, 3]]
     expected:
-      [
-        List,
-        [Negate, EulerGamma],
-        [Add, 1, [Negate, EulerGamma]],
-        [Add, [Rational, 3, 2], [Negate, EulerGamma]],
-      ]
+      [List, [Negate, EulerGamma], [Add, 1, [Negate, EulerGamma]], [Add, [Rational, 3, 2], [Negate, EulerGamma]]]
     category: Scope
     caption: Threads over a list, reducing each positive-integer element to its closed form in $\gamma$
   - id: a-machine-precision-argument
@@ -85,8 +80,7 @@ examples:
     caption: $\psi(\infty) = \infty$, growing like $\ln z$
   - id: gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln
     expr: [Digamma, [Rational, 1, 4]]
-    expected:
-      [Add, [Multiply, -3, [Ln, 2]], [Multiply, [Rational, -1, 2], Pi], [Negate, EulerGamma]]
+    expected: [Add, [Multiply, -3, [Ln, 2]], [Multiply, [Rational, -1, 2], Pi], [Negate, EulerGamma]]
     category: Scope
     caption: "Gauss's digamma theorem: $\\psi(1/4) = -\\gamma - \\pi/2 - 3\\ln 2$"
   - id: psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3

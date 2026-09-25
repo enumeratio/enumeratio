@@ -24,10 +24,7 @@ function hyperfactorialReal(z: number): number {
   return Math.exp(z * lg - lbg);
 }
 
-function evaluateHyperfactorial(
-  ce: ComputeEngine,
-  x: BoxedExpression | undefined,
-): BoxedExpression | undefined {
+function evaluateHyperfactorial(ce: ComputeEngine, x: BoxedExpression | undefined): BoxedExpression | undefined {
   if (x === undefined) return undefined;
   const n = bigIntegerAt(x);
   if (n !== undefined && n >= 0n) return ce.number(hyperfactorialExact(n));

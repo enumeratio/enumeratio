@@ -48,11 +48,7 @@ test("Head[args], with the reverse of the HEADS map", () => {
   expect(fromWolfram("LogGamma[5]")).toEqual(["GammaLn", 5]);
   expect(fromWolfram("PrimeQ[7]")).toEqual(["IsPrime", 7]);
   expect(fromWolfram("Part[List[1, 2, 3], -1]")).toEqual(["At", ["List", 1, 2, 3], -1]);
-  expect(fromWolfram("Complement[List[1, 2], List[2]]")).toEqual([
-    "SetMinus",
-    ["List", 1, 2],
-    ["List", 2],
-  ]);
+  expect(fromWolfram("Complement[List[1, 2], List[2]]")).toEqual(["SetMinus", ["List", 1, 2], ["List", 2]]);
   expect(fromWolfram("Rational[-7813, 3240]")).toEqual(["Rational", -7813, 3240]);
   expect(fromWolfram("Complex[0., 2.]")).toEqual(["Complex", 0, 2]);
   expect(fromWolfram("Det[List[List[1, 2], List[3, 4]]]")).toEqual([
@@ -62,11 +58,7 @@ test("Head[args], with the reverse of the HEADS map", () => {
   // EvenQ used to fall through unchanged here; now that IsEven: "EvenQ" is in HEADS, a
   // head passed as a value reverses to its compute-engine name too (see the ArcCsc etc.
   // and IsOdd/IsEven tests below).
-  expect(fromWolfram("Select[List[1, 2, 3], EvenQ]")).toEqual([
-    "Filter",
-    ["List", 1, 2, 3],
-    "IsEven",
-  ]);
+  expect(fromWolfram("Select[List[1, 2, 3], EvenQ]")).toEqual(["Filter", ["List", 1, 2, 3], "IsEven"]);
   expect(fromWolfram("Dimensions[List[1, 2]]")).toEqual(["Shape", ["List", 1, 2]]);
   expect(fromWolfram("ConstantArray[5, 3]")).toEqual(["Repeat", 5, 3]);
   expect(fromWolfram("CompositeQ[9]")).toEqual(["IsComposite", 9]);
@@ -81,16 +73,8 @@ test("Divisible(n, m) swaps to our Divides(a, b)", () => {
 });
 
 test("AllTrue/AnyTrue rename back to All/Any", () => {
-  expect(fromWolfram("AllTrue[{1, 2, 3}, Positive]")).toEqual([
-    "All",
-    ["List", 1, 2, 3],
-    "Positive",
-  ]);
-  expect(fromWolfram("AnyTrue[{1, 2, 3}, Negative]")).toEqual([
-    "Any",
-    ["List", 1, 2, 3],
-    "Negative",
-  ]);
+  expect(fromWolfram("AllTrue[{1, 2, 3}, Positive]")).toEqual(["All", ["List", 1, 2, 3], "Positive"]);
+  expect(fromWolfram("AnyTrue[{1, 2, 3}, Negative]")).toEqual(["Any", ["List", 1, 2, 3], "Negative"]);
 });
 
 test("Fold keeps the same (f, init, xs) order", () => {
@@ -129,38 +113,20 @@ test("Log arg-swap reverses cleanly for the explicit-base form", () => {
 });
 
 test("a blank pattern comes back as the wildcard string toWolfram passed through", () => {
-  expect(fromWolfram("Count[List[1, a, 2, b], _Integer]")).toEqual([
-    "Count",
-    ["List", 1, "a", 2, "b"],
-    "_Integer",
-  ]);
-  expect(fromWolfram(toWolfram(["Count", ["List", 1, 2], "_Integer"]))).toEqual([
-    "Count",
-    ["List", 1, 2],
-    "_Integer",
-  ]);
+  expect(fromWolfram("Count[List[1, a, 2, b], _Integer]")).toEqual(["Count", ["List", 1, "a", 2, "b"], "_Integer"]);
+  expect(fromWolfram(toWolfram(["Count", ["List", 1, 2], "_Integer"]))).toEqual(["Count", ["List", 1, 2], "_Integer"]);
   expect(fromWolfram("f[__, ___Real]")).toEqual(["f", "__", "___Real"]);
 });
 
 test("structural forms with an unambiguous shape are reversed", () => {
   expect(fromWolfram("Slot[1]")).toBe("_1");
-  expect(fromWolfram(toWolfram(["Function", ["Power", "_", 2]]))).toEqual([
-    "Function",
-    ["Power", "_1", 2],
-  ]);
-  expect(fromWolfram("Function[Greater[Slot[1], Slot[2]]]")).toEqual([
-    "Function",
-    ["Greater", "_1", "_2"],
-  ]);
+  expect(fromWolfram(toWolfram(["Function", ["Power", "_", 2]]))).toEqual(["Function", ["Power", "_1", 2]]);
+  expect(fromWolfram("Function[Greater[Slot[1], Slot[2]]]")).toEqual(["Function", ["Greater", "_1", "_2"]]);
   expect(fromWolfram("Clip[5, List[0, 3]]")).toEqual(["Clamp", 5, 0, 3]);
   expect(fromWolfram("Clip[1.5]")).toEqual(["Clamp", 1.5]);
   expect(fromWolfram("Total[List[1, 2]]")).toEqual(["Sum", ["List", 1, 2]]);
   expect(fromWolfram("Apply[Times, List[1, 2]]")).toEqual(["Product", ["List", 1, 2]]);
-  expect(fromWolfram("Sum[f[k], List[k, 0, 4]]")).toEqual([
-    "Sum",
-    ["f", "k"],
-    ["Tuple", "k", 0, 4],
-  ]);
+  expect(fromWolfram("Sum[f[k], List[k, 0, 4]]")).toEqual(["Sum", ["f", "k"], ["Tuple", "k", 0, 4]]);
 });
 
 test("unmapped heads pass through unchanged", () => {
@@ -215,34 +181,21 @@ test("known-lossy cases are documented, not inverted, by fromWolfram", () => {
   expect(fromWolfram("Power[x, Divide[1, 3]]")).toEqual(["Power", "x", ["Divide", 1, 3]]);
 
   // A digits count becomes a step; a Set becomes a Union of one list.
-  expect(fromWolfram(toWolfram(["Round", 3.14159, 2]))).toEqual([
-    "Round",
-    3.14159,
-    ["Power", 10, -2],
-  ]);
+  expect(fromWolfram(toWolfram(["Round", 3.14159, 2]))).toEqual(["Round", 3.14159, ["Power", 10, -2]]);
   expect(fromWolfram(toWolfram(["Set", 1, 2]))).toEqual(["Union", ["List", 1, 2]]);
 });
 
 test("a context-qualified name comes back as the bare head", () => {
-  expect(fromWolfram("enumeratio`Area[DyckPath[List[1, 0]]]")).toEqual([
-    "Area",
-    ["DyckPath", ["List", 1, 0]],
-  ]);
+  expect(fromWolfram("enumeratio`Area[DyckPath[List[1, 0]]]")).toEqual(["Area", ["DyckPath", ["List", 1, 0]]]);
   expect(fromWolfram("enumeratio`Order")).toBe("Order");
 });
 
 test("iterator and interval shapes land in compute-engine's", () => {
-  expect(fromWolfram("Integrate[f[x], {x, 0, 1}]")).toEqual([
-    "Integrate",
-    ["f", "x"],
-    ["Limits", "x", 0, 1],
-  ]);
+  expect(fromWolfram("Integrate[f[x], {x, 0, 1}]")).toEqual(["Integrate", ["f", "x"], ["Limits", "x", 0, 1]]);
   expect(fromWolfram("Integrate[f[x], x]")).toEqual(["Integrate", ["f", "x"], "x"]);
   expect(fromWolfram("Interval[{0, 1}]")).toEqual(["Interval", 0, 1]);
   expect(fromWolfram("Mod[a, n, 1]")).toEqual(["Add", 1, ["Mod", ["Subtract", "a", 1], "n"]]);
-  expect(toWolfram(["Integrate", ["f", "x"], ["Limits", "x", 0, 1]])).toBe(
-    "Integrate[f[x], List[x, 0, 1]]",
-  );
+  expect(toWolfram(["Integrate", ["f", "x"], ["Limits", "x", 0, 1]])).toBe("Integrate[f[x], List[x, 0, 1]]");
   expect(toWolfram(["Interval", 0, 1])).toBe("Interval[List[0, 1]]");
 });
 
@@ -268,10 +221,7 @@ test("MemberQ renames back to Contains, same argument order", () => {
 });
 
 test("DeleteDuplicates renames back to Unique", () => {
-  expect(fromWolfram("DeleteDuplicates[List[1, 2, 2, 3]]")).toEqual([
-    "Unique",
-    ["List", 1, 2, 2, 3],
-  ]);
+  expect(fromWolfram("DeleteDuplicates[List[1, 2, 2, 3]]")).toEqual(["Unique", ["List", 1, 2, 2, 3]]);
 });
 
 test("a bare Wolfram base in IntegerDigits/FromDigits stays bare, not rewrapped as PositionalNumerals", () => {

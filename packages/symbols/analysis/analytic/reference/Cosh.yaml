@@ -113,12 +113,7 @@ examples:
     caption: Antiderivative
   - id: the-definition-cosh-x-frac-e-x-e-x-2
     expr: [TrigToExp, [Cosh, x]]
-    expected:
-      [
-        Multiply,
-        [Rational, 1, 2],
-        [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]],
-      ]
+    expected: [Multiply, [Rational, 1, 2], [Add, [Power, ExponentialE, x], [Power, ExponentialE, [Negate, x]]]]
     category: Properties
     caption: The definition $\cosh x = \frac{e^x + e^{-x}}{2}$
   - id: cosh-2-x-sinh-2-x-should-simplify-to-1

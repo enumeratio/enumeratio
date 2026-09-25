@@ -44,10 +44,7 @@ import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeome
 import { declareHypergeometric } from "./hypergeometric.ts";
 import { declareLambertW } from "./lambert-w.ts";
 import { declareInverseErfc } from "./inverse-erfc.ts";
-import {
-  declareInverseGammaRegularized,
-  declareInverseBetaRegularized,
-} from "./inverse-regularized.ts";
+import { declareInverseGammaRegularized, declareInverseBetaRegularized } from "./inverse-regularized.ts";
 import { declareNorlundB } from "./norlund.ts";
 import { declarePrimeZetaP } from "./prime-zeta.ts";
 import { declareExpIntegralE } from "./exp-integral-e.ts";
@@ -354,8 +351,7 @@ export function zetaGeneralized(s: Cx, a: Cx): Cx {
 
 /** Real-valued ζ(s, a) for real s, a — the shape compute-engine's compiled
  * (JS/GPU) plotting pipeline consumes, which is real-scalar. */
-export const hurwitzZetaReal = (s: number, a: number): number =>
-  hurwitzZeta({ re: s, im: 0 }, { re: a, im: 0 }).re;
+export const hurwitzZetaReal = (s: number, a: number): number => hurwitzZeta({ re: s, im: 0 }, { re: a, im: 0 }).re;
 export const zetaGeneralizedReal = (s: number, a: number): number =>
   zetaGeneralized({ re: s, im: 0 }, { re: a, im: 0 }).re;
 
@@ -451,11 +447,7 @@ function evaluateHurwitz(
     const sign: Json = n % 2 === 0 ? 1 : -1;
     const viaPolygamma = atEnginePrecision(
       ce,
-      box([
-        "Divide",
-        ["Multiply", sign, ["PolyGamma", n - 1, a.json as unknown as Json]],
-        ["Factorial", n - 1],
-      ]).N(),
+      box(["Divide", ["Multiply", sign, ["PolyGamma", n - 1, a.json as unknown as Json]], ["Factorial", n - 1]]).N(),
     );
     if (viaPolygamma !== undefined) return viaPolygamma;
   }
@@ -568,10 +560,7 @@ function evaluateLerch(
     if (phi !== undefined) return bigResult(ce, phi);
   }
   if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a)) {
-    return numberResult(
-      ce,
-      lerchPhi({ re: z.re, im: z.im }, { re: s.re, im: s.im }, { re: a.re, im: a.im }),
-    );
+    return numberResult(ce, lerchPhi({ re: z.re, im: z.im }, { re: s.re, im: s.im }, { re: a.re, im: a.im }));
   }
   return undefined; // stay symbolic
 }
@@ -651,8 +640,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
       if (!declined(r, "Zeta") || s === undefined || !isFiniteNum(s) || s.im === 0) return r;
       return evaluateHurwitz(ce, [s, ce.One], wantsNumber(ops, options)) ?? r;
     },
-    compile: (args, compile, ctx) =>
-      zetaCompile(args.length === 1 ? [args[0], ce.One] : args, compile, ctx),
+    compile: (args, compile, ctx) => zetaCompile(args.length === 1 ? [args[0], ce.One] : args, compile, ctx),
   });
 
   // LerchPhi(z, s, a): the Lerch transcendent (HurwitzZeta and PolyLog are special cases).
@@ -709,15 +697,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
 
   // Native heads that reject a list argument with a type error, where Wolfram's thread
   // over it: Erf([0, 1]) is [0, Erf(1)].
-  threadOverLists(ce, [
-    "Binomial",
-    "Pochhammer",
-    "BernoulliB",
-    "Erf",
-    "Erfc",
-    "ErfInv",
-    "BetaRegularized",
-  ]);
+  threadOverLists(ce, ["Binomial", "Pochhammer", "BernoulliB", "Erf", "Erfc", "ErfInv", "BetaRegularized"]);
   declareWidened(ce);
 
   declareSpecialFunctions(ce);

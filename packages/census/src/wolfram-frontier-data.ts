@@ -2084,12 +2084,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "Abs[CenteredInterval[-5, 3]]",
     "Abs[CenteredInterval[2 + 3*I, 1 + I]]",
   ],
-  Accumulate: [
-    "Accumulate[{a, b, c, d}]",
-    "Accumulate[{{a, b}, {c, d}, {e, f}}]",
-    "Accumulate[v]",
-    "Accumulate[data]",
-  ],
+  Accumulate: ["Accumulate[{a, b, c, d}]", "Accumulate[{{a, b}, {c, d}, {e, f}}]", "Accumulate[v]", "Accumulate[data]"],
   AllTrue: [
     "AllTrue[{2, 3, 4, 6, 8}, EvenQ]",
     "AllTrue[{2, 4, 6, 8}, EvenQ]",
@@ -2362,10 +2357,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "BellB[{1, 2, 3, 4, 5, 6}]",
     "BellB[n, Sin[x] + O[x]^3]",
   ],
-  BellY: [
-    "BellY[4, 2, {Subscript[x, 1], Subscript[x, 2], Subscript[x, 3]}]",
-    "BellY[Partition[Range[25], 5]]",
-  ],
+  BellY: ["BellY[4, 2, {Subscript[x, 1], Subscript[x, 2], Subscript[x, 3]}]", "BellY[Partition[Range[25], 5]]"],
   BernoulliB: ["BernoulliB[{2, 4, 6}]"],
   BesselJZero: ["BesselJZero[0., 2]", "BesselJZero[1, Around[2, 0.01]]"],
   Beta: [
@@ -2600,11 +2592,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "Commonest[data]",
   ],
   Complement: ["Complement[{a, b, c, d, e}, {a, c}, {d}]"],
-  CompleteKaryTree: [
-    "CompleteKaryTree[5]",
-    "CompleteKaryTree[3, 3]",
-    "CompleteKaryTree[3, 3, DirectedEdges -> True]",
-  ],
+  CompleteKaryTree: ["CompleteKaryTree[5]", "CompleteKaryTree[3, 3]", "CompleteKaryTree[3, 3, DirectedEdges -> True]"],
   Complex: ["Complex[2, 1]", "Complex[2, 0]"],
   ComplexExpand: [
     "ComplexExpand[3^(I*x)]",
@@ -2899,15 +2887,8 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "Dimensions[f[f[x, y], f[a, b], f[s, t]]]",
   ],
   DirectedEdge: ["DirectedEdge[a, b]", "DirectedEdge[a, b, t]"],
-  DirichletBeta: [
-    "DirichletBeta[s]",
-    "DirichletBeta[Around[2, 0.01]]",
-    "DirichletBeta[{{1, -1}, {-1, 1}}]",
-  ],
-  DirichletCharacter: [
-    "DirichletCharacter[20!, 300, 23]",
-    "DirichletCharacter[3, 2, {1, 2, 3, 4, 5}]",
-  ],
+  DirichletBeta: ["DirichletBeta[s]", "DirichletBeta[Around[2, 0.01]]", "DirichletBeta[{{1, -1}, {-1, 1}}]"],
+  DirichletCharacter: ["DirichletCharacter[20!, 300, 23]", "DirichletCharacter[3, 2, {1, 2, 3, 4, 5}]"],
   DirichletEta: [
     "DirichletEta[Interval[{1.5, 1.6}]]",
     "DirichletEta[CenteredInterval[3 + 2*I, (1 + I)/100]]",
@@ -3167,12 +3148,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "FactorialPower[1/2, 1/3, CenteredInterval[1/5, 1/1000]]",
     "FactorialPower[Around[2, 0.01], 2]",
   ],
-  FareySequence: [
-    "FareySequence[5]",
-    "FareySequence[24, 17]",
-    "FareySequence[3]",
-    "FareySequence[3, 2]",
-  ],
+  FareySequence: ["FareySequence[5]", "FareySequence[24, 17]", "FareySequence[3]", "FareySequence[3, 2]"],
   Fibonacci: [
     "Fibonacci[5.8, 3]",
     "Fibonacci[8]",
@@ -3507,14 +3483,8 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "GammaRegularized[2, {{7/2, 0}, {0, 13/2}}]",
     "GammaRegularized[1, {-Infinity, Infinity}]",
   ],
-  Gather: [
-    "Gather[{a, b, a, d, b}]",
-    "Gather[{{a, 1}, {b, 1}, {a, 2}, {d, 1}, {b, 3}}, First[#1] == First[#2] & ]",
-  ],
-  GatherBy: [
-    "GatherBy[{1, 2, 3, 4, 5}, OddQ]",
-    "GatherBy[{{a, 1}, {b, 1}, {a, 2}, {d, 1}, {b, 3}}, First]",
-  ],
+  Gather: ["Gather[{a, b, a, d, b}]", "Gather[{{a, 1}, {b, 1}, {a, 2}, {d, 1}, {b, 3}}, First[#1] == First[#2] & ]"],
+  GatherBy: ["GatherBy[{1, 2, 3, 4, 5}, OddQ]", "GatherBy[{{a, 1}, {b, 1}, {a, 2}, {d, 1}, {b, 3}}, First]"],
   GeneratingFunction: [
     "GeneratingFunction[1, n, x]",
     "GeneratingFunction[1/n!^2, n, x]",
@@ -3734,11 +3704,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "IntegerDigits[6345354, 10, 4]",
     "IntegerDigits[137, MixedRadix[{3, 12}]]",
   ],
-  IntegerExponent: [
-    "IntegerExponent[1230000]",
-    "IntegerExponent[2^10 + 2^7, 2]",
-    "IntegerExponent[144, 2]",
-  ],
+  IntegerExponent: ["IntegerExponent[1230000]", "IntegerExponent[2^10 + 2^7, 2]", "IntegerExponent[144, 2]"],
   IntegerLength: ["IntegerLength[123456789]", "IntegerLength[100!, 2]"],
   IntegerPart: [
     "IntegerPart[2.4]",
@@ -3776,10 +3742,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "IntegerString[1084, MixedRadix[{17, 15, 11}], 2]",
     'IntegerString[1950650, "TraditionalChineseFinancial"]',
   ],
-  Intersection: [
-    "Intersection[{1, 1, 2, 3}, {3, 1, 4}, {4, 1, 3, 3}]",
-    "Intersection[{a, b, c}, {b, c, d}]",
-  ],
+  Intersection: ["Intersection[{1, 1, 2, 3}, {3, 1, 4}, {4, 1, 3, 3}]", "Intersection[{a, b, c}, {b, c, d}]"],
   IntervalSlider: ["IntervalSlider[{0.2, 0.5}]"],
   InverseBetaRegularized: [
     "InverseBetaRegularized[0.8, 1, 2]",
@@ -3849,11 +3812,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "InversePermutation[Cycles[{{1, 2}, {3, 4}}]]",
     "InversePermutation[Cycles[{{1, 10^2, 10^4}, {10^6, 10^8}}]]",
   ],
-  JacobiSymbol: [
-    "JacobiSymbol[10, 5]",
-    "JacobiSymbol[10^10 + 1, Prime[1000]]",
-    "JacobiSymbol[7, 6]",
-  ],
+  JacobiSymbol: ["JacobiSymbol[10, 5]", "JacobiSymbol[10^10 + 1, Prime[1000]]", "JacobiSymbol[7, 6]"],
   Join: [
     "Join[{a, b, c}, {x, y}, {u, v, w}]",
     "Join[Join[{a, b, c}, {x, y}], {u, v, w}]",
@@ -4340,18 +4299,8 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "N[c]",
   ],
   NeighborhoodGraph: ["NeighborhoodGraph[g, _?(#1 < 3 & )]"],
-  Nest: [
-    "Nest[f, x, 4]",
-    "Nest[(1 + #1)^2 & , 1, 3]",
-    "Nest[(1 + #1)^2 & , x, 5]",
-    "Nest[Sqrt, 100., 4]",
-  ],
-  NestList: [
-    "NestList[f, x, 4]",
-    "NestList[Cos, 1., 10]",
-    "NestList[(1 + #1)^2 & , x, 3]",
-    "NestList[Sqrt, 100., 4]",
-  ],
+  Nest: ["Nest[f, x, 4]", "Nest[(1 + #1)^2 & , 1, 3]", "Nest[(1 + #1)^2 & , x, 5]", "Nest[Sqrt, 100., 4]"],
+  NestList: ["NestList[f, x, 4]", "NestList[Cos, 1., 10]", "NestList[(1 + #1)^2 & , x, 3]", "NestList[Sqrt, 100., 4]"],
   NextPrime: [
     "NextPrime[10]",
     "NextPrime[6]",
@@ -4491,9 +4440,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "PermutationCycles[{1, 2, 3, 4, 5}, Identity]",
     "PermutationCycles[Cycles[{{1, 3, 5}, {2, 4, 6}}]]",
   ],
-  PermutationGroup: [
-    "PermutationGroup[{Cycles[{{2, 10}, {4, 11}, {5, 7}}], Cycles[{{1, 4, 3}, {2, 5, 6}}]}]",
-  ],
+  PermutationGroup: ["PermutationGroup[{Cycles[{{2, 10}, {4, 11}, {5, 7}}], Cycles[{{1, 4, 3}, {2, 5, 6}}]}]"],
   Permute: [
     "Permute[{a, b, c, d, e}, Cycles[{{1, 3, 2}}]]",
     "Permute[{a, b, c, d, e}, {3, 1, 2}]",
@@ -4647,13 +4594,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "PowersRepresentations[6963472309248, 2, 3]",
     "PowersRepresentations[48988659276962496, 2, 3]",
   ],
-  Precision: [
-    "Precision[1.2]",
-    "Precision[1.2`20.]",
-    "Precision[12/10]",
-    "Precision[z]",
-    "Precision[%]",
-  ],
+  Precision: ["Precision[1.2]", "Precision[1.2`20.]", "Precision[12/10]", "Precision[z]", "Precision[%]"],
   Prepend: [
     "Prepend[{a, b, c, d}, x]",
     "Prepend[Association[1 -> a, 2 -> b], 3 -> d]",
@@ -4993,12 +4934,7 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "Round[123.3999999999999999999999999999999999999999999999999999999999`45.]",
     "Round[100.`45., 13.2456`10.]",
   ],
-  Row: [
-    "Row[{aaa, b, cccc}]",
-    'Row[{aaa, b, cccc}, "----"]',
-    'Row[Range[50], "."]',
-    "Row[{1/x, a, 1/x^2}]",
-  ],
+  Row: ["Row[{aaa, b, cccc}]", 'Row[{aaa, b, cccc}, "----"]', 'Row[Range[50], "."]', "Row[{1/x, a, 1/x^2}]"],
   Sec: [
     "Sec[Pi/6]",
     "Sec[30*Degree]",
@@ -5293,19 +5229,13 @@ export const CALL_FORMS: Readonly<Record<string, readonly string[]>> = {
     "Thread[f[{a, b}, {r, s}, {u, v}, {x, y}], List, 2]",
     "Thread[f[{a, b}, {r, s}, {u, v}, {x, y}], List, -2]",
   ],
-  TimeConstrained: [
-    "TimeConstrained[Do[i^2, {i, 10000000}], 1]",
-    "TimeConstrained[Pause[10], 1, $TimedOut]",
-  ],
+  TimeConstrained: ["TimeConstrained[Do[i^2, {i, 10000000}], 1]", "TimeConstrained[Pause[10], 1, $TimedOut]"],
   Toggler: [
     "Toggler[1, {1, 2, 3, 4}]",
     'Toggler[3, {1 -> "One", 2 -> "Two", 3 -> "Three"}]',
     "Toggler[0, {1, 2}, Style[, 30]]",
   ],
-  TogglerBar: [
-    "TogglerBar[{2, 5}, Range[5]]",
-    'TogglerBar[{1}, {1 -> " I ", 2 -> " II ", 3 -> " III "}]',
-  ],
+  TogglerBar: ["TogglerBar[{2, 5}, Range[5]]", 'TogglerBar[{1}, {1 -> " I ", 2 -> " II ", 3 -> " III "}]'],
   Transpose: [
     "Transpose[{{a, x}, {b, y}, {c, z}}]",
     "Transpose[m]",

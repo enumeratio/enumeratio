@@ -66,9 +66,7 @@ export function declareHecke(ce: ComputeEngine): void {
   };
 
   const toExpression = (element: Element<BoxedExpression>): BoxedExpression => {
-    const terms = [...element.values()].sort((a, b) =>
-      permutationKey(a.w).localeCompare(permutationKey(b.w)),
-    );
+    const terms = [...element.values()].sort((a, b) => permutationKey(a.w).localeCompare(permutationKey(b.w)));
     if (terms.length === 0) return ce.number(0);
     const parts = terms.map((term) => {
       const basis = ce.function("HeckeT", [
@@ -77,9 +75,7 @@ export function declareHecke(ce: ComputeEngine): void {
           term.w.map((v) => ce.number(v)),
         ),
       ]);
-      return term.coefficient.is(1) === true
-        ? basis
-        : ce.function("Multiply", [term.coefficient, basis]);
+      return term.coefficient.is(1) === true ? basis : ce.function("Multiply", [term.coefficient, basis]);
     });
     return parts.length === 1 ? parts[0]! : ce.function("Add", parts);
   };
@@ -95,9 +91,7 @@ export function declareHecke(ce: ComputeEngine): void {
     const ops = operandsOf(expr);
     if (expr.operator === "Add") {
       const parts = ops.map(toElement);
-      return parts.every((p): p is Element<BoxedExpression> => p !== undefined)
-        ? add(ring, parts)
-        : undefined;
+      return parts.every((p): p is Element<BoxedExpression> => p !== undefined) ? add(ring, parts) : undefined;
     }
     if (expr.operator === "Negate") {
       const inner = ops[0] === undefined ? undefined : toElement(ops[0]);

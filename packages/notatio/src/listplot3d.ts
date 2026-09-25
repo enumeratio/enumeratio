@@ -82,9 +82,7 @@ export function gridFromPoints(
 ): { grid: number[][]; xs: number[]; ys: number[] } {
   const cols = Math.max(1, Math.round(nx));
   const rows = Math.max(1, Math.round(ny));
-  const usable = points.filter(
-    (p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z),
-  );
+  const usable = points.filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z));
   const [xlo, xhi] = extent(usable.map((p) => p.x));
   const [ylo, yhi] = extent(usable.map((p) => p.y));
   const sums = Array.from({ length: rows }, () => Array.from({ length: cols }, () => 0));
@@ -99,12 +97,8 @@ export function gridFromPoints(
   }
   return {
     grid: sums.map((row, j) => row.map((s, i) => (hits[j][i] > 0 ? s / hits[j][i] : Number.NaN))),
-    xs: Array.from({ length: cols }, (_, i) =>
-      cols > 1 ? xlo + ((xhi - xlo) * i) / (cols - 1) : xlo,
-    ),
-    ys: Array.from({ length: rows }, (_, j) =>
-      rows > 1 ? ylo + ((yhi - ylo) * j) / (rows - 1) : ylo,
-    ),
+    xs: Array.from({ length: cols }, (_, i) => (cols > 1 ? xlo + ((xhi - xlo) * i) / (cols - 1) : xlo)),
+    ys: Array.from({ length: rows }, (_, j) => (rows > 1 ? ylo + ((yhi - ylo) * j) / (rows - 1) : ylo)),
   };
 }
 
@@ -116,11 +110,8 @@ export function gridFromPoints(
  */
 export function scatter3dSvg(points: readonly Point3[], opts: Scatter3dOptions = {}): string {
   const cam = camera(opts);
-  const usable = points.filter(
-    (p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z),
-  );
-  if (usable.length === 0)
-    return frameSvg(cam.width, cam.height, "3-D point plot", titleSvg(cam.width, opts.title));
+  const usable = points.filter((p) => Number.isFinite(p.x) && Number.isFinite(p.y) && Number.isFinite(p.z));
+  if (usable.length === 0) return frameSvg(cam.width, cam.height, "3-D point plot", titleSvg(cam.width, opts.title));
 
   const [xlo, xhi] = extent(usable.map((p) => p.x));
   const [ylo, yhi] = extent(usable.map((p) => p.y));
@@ -151,15 +142,8 @@ export function scatter3dSvg(points: readonly Point3[], opts: Scatter3dOptions =
     .join("");
 
   const axes =
-    opts.axes === false
-      ? ""
-      : axisBoxSvg(cam, { xEnd: xhi, yEnd: yhi, zEnd: opts.zRange ? opts.zRange[1] : zhi });
-  return frameSvg(
-    cam.width,
-    cam.height,
-    "3-D point plot",
-    axes + markers + titleSvg(cam.width, opts.title),
-  );
+    opts.axes === false ? "" : axisBoxSvg(cam, { xEnd: xhi, yEnd: yhi, zEnd: opts.zRange ? opts.zRange[1] : zhi });
+  return frameSvg(cam.width, cam.height, "3-D point plot", axes + markers + titleSvg(cam.width, opts.title));
 }
 
 /**
@@ -174,8 +158,7 @@ export function mesh3dSvg(grid: Grid, opts: Mesh3dOptions = {}): string {
   const aria = "3-D surface plot";
   const ny = grid.length;
   const nx = ny > 0 ? grid[0].length : 0;
-  if (nx < 2 || ny < 2)
-    return frameSvg(cam.width, cam.height, aria, titleSvg(cam.width, opts.title));
+  if (nx < 2 || ny < 2) return frameSvg(cam.width, cam.height, aria, titleSvg(cam.width, opts.title));
 
   const [zlo, zhi] = opts.zRange ? opts.zRange : extent(grid.flat());
   const sz = unitScale(zlo, zhi);

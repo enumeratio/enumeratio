@@ -65,21 +65,12 @@
   },
   {
     "id": "VerificationTest#7",
-    "expr": [
-      "VerificationTest",
-      ["Divide", 1, 0],
-      "ComplexInfinity",
-      ["KeyValuePair", "TestID", "'pole'"]
-    ],
+    "expr": ["VerificationTest", ["Divide", 1, 0], "ComplexInfinity", ["KeyValuePair", "TestID", "'pole'"]],
     "wolfram": "VerificationTest[Divide[1, 0], ComplexInfinity, KeyValuePair[TestID, \"pole\"]]"
   },
   {
     "id": "VerificationTest#8",
-    "expr": [
-      "VerificationTest",
-      ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 1],
-      ["Power", ["Add", "x", 1], 2]
-    ],
+    "expr": ["VerificationTest", ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 1], ["Power", ["Add", "x", 1], 2]],
     "wolfram": "VerificationTest[Plus[Power[x, 2], Times[2, x], 1], Power[Plus[x, 1], 2]]"
   },
   {
@@ -88,11 +79,7 @@
       "VerificationTest",
       ["Divide", 22, 7],
       3.14,
-      [
-        "KeyValuePair",
-        "SameTest",
-        ["Function", ["Less", ["Abs", ["Subtract", "a", "b"]], 0.01], "a", "b"]
-      ]
+      ["KeyValuePair", "SameTest", ["Function", ["Less", ["Abs", ["Subtract", "a", "b"]], 0.01], "a", "b"]]
     ],
     "wolfram": "VerificationTest[Divide[22, 7], 3.14, KeyValuePair[SameTest, Function[Less[Abs[Subtract[a, b]], 0.01], a, b]]]"
   },
@@ -115,14 +102,7 @@
     "id": "Binomial#8",
     "expr": [
       "Equal",
-      [
-        "Add",
-        ["Binomial", 4, 0],
-        ["Binomial", 4, 1],
-        ["Binomial", 4, 2],
-        ["Binomial", 4, 3],
-        ["Binomial", 4, 4]
-      ],
+      ["Add", ["Binomial", 4, 0], ["Binomial", 4, 1], ["Binomial", 4, 2], ["Binomial", 4, 3], ["Binomial", 4, 4]],
       ["Power", 2, 4]
     ],
     "wolfram": "Equal[Plus[Binomial[4, 0], Binomial[4, 1], Binomial[4, 2], Binomial[4, 3], Binomial[4, 4]], Power[2, 4]]"
@@ -154,22 +134,14 @@
   },
   {
     "id": "Binomial#27",
-    "expr": [
-      "Equal",
-      ["Sum", ["Power", ["Binomial", 6, "k"], 2], ["Tuple", "k", 0, 6]],
-      ["Binomial", 12, 6]
-    ],
+    "expr": ["Equal", ["Sum", ["Power", ["Binomial", 6, "k"], 2], ["Tuple", "k", 0, 6]], ["Binomial", 12, 6]],
     "wolfram": "Equal[Sum[Power[Binomial[6, k], 2], List[k, 0, 6]], Binomial[12, 6]]"
   },
   {
     "id": "Binomial#28",
     "expr": [
       "Equal",
-      [
-        "Sum",
-        ["Multiply", ["Binomial", 5, "k"], ["Binomial", 4, ["Subtract", 3, "k"]]],
-        ["Tuple", "k", 0, 3]
-      ],
+      ["Sum", ["Multiply", ["Binomial", 5, "k"], ["Binomial", 4, ["Subtract", 3, "k"]]], ["Tuple", "k", 0, 3]],
       ["Binomial", 9, 3]
     ],
     "wolfram": "Equal[Sum[Times[Binomial[5, k], Binomial[4, Subtract[3, k]]], List[k, 0, 3]], Binomial[9, 3]]"
@@ -233,11 +205,7 @@
     "expr": [
       "Equal",
       ["Multinomial", 3, 4, 5],
-      [
-        "Divide",
-        ["Factorial", 12],
-        ["Multiply", ["Factorial", 3], ["Factorial", 4], ["Factorial", 5]]
-      ]
+      ["Divide", ["Factorial", 12], ["Multiply", ["Factorial", 3], ["Factorial", 4], ["Factorial", 5]]]
     ],
     "wolfram": "Equal[Multinomial[3, 4, 5], Divide[Factorial[12], Times[Factorial[3], Factorial[4], Factorial[5]]]]"
   },
@@ -345,11 +313,7 @@
     "expr": [
       "Equal",
       ["CatalanNumber", 4],
-      [
-        "Sum",
-        ["Multiply", ["CatalanNumber", "i"], ["CatalanNumber", ["Subtract", 3, "i"]]],
-        ["Tuple", "i", 0, 3]
-      ]
+      ["Sum", ["Multiply", ["CatalanNumber", "i"], ["CatalanNumber", ["Subtract", 3, "i"]]], ["Tuple", "i", 0, 3]]
     ],
     "wolfram": "Equal[CatalanNumber[4], Sum[Times[CatalanNumber[i], CatalanNumber[Subtract[3, i]]], List[i, 0, 3]]]"
   },
@@ -405,11 +369,7 @@
   },
   {
     "id": "Subfactorial#5",
-    "expr": [
-      "Equal",
-      ["Subfactorial", 4],
-      ["Add", ["Multiply", 4, ["Subfactorial", 3]], ["Power", -1, 4]]
-    ],
+    "expr": ["Equal", ["Subfactorial", 4], ["Add", ["Multiply", 4, ["Subfactorial", 3]], ["Power", -1, 4]]],
     "wolfram": "Equal[Subfactorial[4], Plus[Times[4, Subfactorial[3]], Power[-1, 4]]]"
   },
   {
@@ -429,20 +389,12 @@
   },
   {
     "id": "Subfactorial#14",
-    "expr": [
-      "Equal",
-      ["Subfactorial", 10],
-      ["Round", ["Divide", ["Factorial", 10], "ExponentialE"]]
-    ],
+    "expr": ["Equal", ["Subfactorial", 10], ["Round", ["Divide", ["Factorial", 10], "ExponentialE"]]],
     "wolfram": "Equal[Subfactorial[10], Round[Divide[Factorial[10], E]]]"
   },
   {
     "id": "Subfactorial#15",
-    "expr": [
-      "Equal",
-      ["Subfactorial", 6],
-      ["Multiply", 5, ["Add", ["Subfactorial", 5], ["Subfactorial", 4]]]
-    ],
+    "expr": ["Equal", ["Subfactorial", 6], ["Multiply", 5, ["Add", ["Subfactorial", 5], ["Subfactorial", 4]]]],
     "wolfram": "Equal[Subfactorial[6], Times[5, Plus[Subfactorial[5], Subfactorial[4]]]]"
   },
   {
@@ -452,11 +404,7 @@
   },
   {
     "id": "StirlingS1#5",
-    "expr": [
-      "Equal",
-      ["Sum", ["Abs", ["StirlingS1", 4, "k"]], ["Tuple", "k", 0, 4]],
-      ["Factorial", 4]
-    ],
+    "expr": ["Equal", ["Sum", ["Abs", ["StirlingS1", 4, "k"]], ["Tuple", "k", 0, 4]], ["Factorial", 4]],
     "wolfram": "Equal[Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]], Factorial[4]]"
   },
   {
@@ -479,10 +427,7 @@
     "expr": [
       "Equal",
       ["Sum", ["Multiply", ["StirlingS1", 4, "k"], ["Power", "x", "k"]], ["Tuple", "k", 0, 4]],
-      [
-        "Expand",
-        ["Multiply", "x", ["Subtract", "x", 1], ["Subtract", "x", 2], ["Subtract", "x", 3]]
-      ]
+      ["Expand", ["Multiply", "x", ["Subtract", "x", 1], ["Subtract", "x", 2], ["Subtract", "x", 3]]]
     ],
     "wolfram": "Equal[Sum[Times[StirlingS1[4, k], Power[x, k]], List[k, 0, 4]], Expand[Times[x, Subtract[x, 1], Subtract[x, 2], Subtract[x, 3]]]]"
   },
@@ -520,12 +465,7 @@
         "Divide",
         [
           "Sum",
-          [
-            "Multiply",
-            ["Power", -1, ["Subtract", 3, "j"]],
-            ["Binomial", 3, "j"],
-            ["Power", "j", 6]
-          ],
+          ["Multiply", ["Power", -1, ["Subtract", 3, "j"]], ["Binomial", 3, "j"], ["Power", "j", 6]],
           ["Tuple", "j", 0, 3]
         ],
         ["Factorial", 3]
@@ -535,11 +475,7 @@
   },
   {
     "id": "Stirling#13",
-    "expr": [
-      "Sum",
-      ["Multiply", ["StirlingS1", 4, "k"], ["Stirling", "k", 2]],
-      ["Tuple", "k", 0, 4]
-    ],
+    "expr": ["Sum", ["Multiply", ["StirlingS1", 4, "k"], ["Stirling", "k", 2]], ["Tuple", "k", 0, 4]],
     "wolfram": "Sum[Times[StirlingS1[4, k], StirlingS2[k, 2]], List[k, 0, 4]]"
   },
   {
@@ -575,11 +511,7 @@
   },
   {
     "id": "BellNumber#15",
-    "expr": [
-      "Equal",
-      ["Mod", ["BellNumber", 9], 7],
-      ["Mod", ["Add", ["BellNumber", 2], ["BellNumber", 3]], 7]
-    ],
+    "expr": ["Equal", ["Mod", ["BellNumber", 9], 7], ["Mod", ["Add", ["BellNumber", 2], ["BellNumber", 3]], 7]],
     "wolfram": "Equal[Mod[BellB[9], 7], Mod[Plus[BellB[2], BellB[3]], 7]]"
   },
   {
@@ -619,20 +551,12 @@
   },
   {
     "id": "Fibonacci#17",
-    "expr": [
-      "Subtract",
-      ["Multiply", ["Fibonacci", 5], ["Fibonacci", 7]],
-      ["Power", ["Fibonacci", 6], 2]
-    ],
+    "expr": ["Subtract", ["Multiply", ["Fibonacci", 5], ["Fibonacci", 7]], ["Power", ["Fibonacci", 6], 2]],
     "wolfram": "Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]"
   },
   {
     "id": "Fibonacci#18",
-    "expr": [
-      "Equal",
-      ["GCD", ["Fibonacci", 12], ["Fibonacci", 18]],
-      ["Fibonacci", ["GCD", 12, 18]]
-    ],
+    "expr": ["Equal", ["GCD", ["Fibonacci", 12], ["Fibonacci", 18]], ["Fibonacci", ["GCD", 12, 18]]],
     "wolfram": "Equal[GCD[Fibonacci[12], Fibonacci[18]], Fibonacci[GCD[12, 18]]]"
   },
   {
@@ -657,20 +581,12 @@
   },
   {
     "id": "LucasL#12",
-    "expr": [
-      "LucasL",
-      2,
-      ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]
-    ],
+    "expr": ["LucasL", 2, ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]],
     "wolfram": "LucasL[2, List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]"
   },
   {
     "id": "LucasL#13",
-    "expr": [
-      "Subtract",
-      ["Power", ["LucasL", 10], 2],
-      ["Multiply", 5, ["Power", ["Fibonacci", 10], 2]]
-    ],
+    "expr": ["Subtract", ["Power", ["LucasL", 10], 2], ["Multiply", 5, ["Power", ["Fibonacci", 10], 2]]],
     "wolfram": "Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]"
   },
   {
@@ -875,11 +791,7 @@
   },
   {
     "id": "PowerMod#21",
-    "expr": [
-      "Equal",
-      ["PowerMod", ["PowerMod", 5, 6, 23], 15, 23],
-      ["PowerMod", ["PowerMod", 5, 15, 23], 6, 23]
-    ],
+    "expr": ["Equal", ["PowerMod", ["PowerMod", 5, 6, 23], 15, 23], ["PowerMod", ["PowerMod", 5, 15, 23], 6, 23]],
     "wolfram": "Equal[PowerMod[PowerMod[5, 6, 23], 15, 23], PowerMod[PowerMod[5, 15, 23], 6, 23]]"
   },
   {
@@ -916,48 +828,28 @@
     "id": "PowerModList#14",
     "expr": [
       "Length",
-      [
-        "PowerModList",
-        1,
-        ["Rational", 1, 2],
-        ["Multiply", 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]
-      ]
+      ["PowerModList", 1, ["Rational", 1, 2], ["Multiply", 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]]
     ],
     "wolfram": "Length[PowerModList[1, Rational[1, 2], Times[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53]]]"
   },
   {
     "id": "PowerModList#15",
-    "expr": [
-      "Length",
-      ["PowerModList", 1, ["Rational", 1, 1000], ["Subtract", ["Power", 2, 61], 1]]
-    ],
+    "expr": ["Length", ["PowerModList", 1, ["Rational", 1, 1000], ["Subtract", ["Power", 2, 61], 1]]],
     "wolfram": "Length[PowerModList[1, Rational[1, 1000], Subtract[Power[2, 61], 1]]]"
   },
   {
     "id": "PowerModList#16",
-    "expr": [
-      "Equal",
-      ["Length", ["PowerModList", 1, ["Rational", 1, 12], 1009]],
-      ["GCD", 12, 1008]
-    ],
+    "expr": ["Equal", ["Length", ["PowerModList", 1, ["Rational", 1, 12], 1009]], ["GCD", 12, 1008]],
     "wolfram": "Equal[Length[PowerModList[1, Rational[1, 12], 1009]], GCD[12, 1008]]"
   },
   {
     "id": "PowerModList#17",
-    "expr": [
-      "Equal",
-      ["Length", ["PowerModList", 1, ["Rational", 1, 2], 1155]],
-      ["Power", 2, ["PrimeNu", 1155]]
-    ],
+    "expr": ["Equal", ["Length", ["PowerModList", 1, ["Rational", 1, 2], 1155]], ["Power", 2, ["PrimeNu", 1155]]],
     "wolfram": "Equal[Length[PowerModList[1, Rational[1, 2], 1155]], Power[2, PrimeNu[1155]]]"
   },
   {
     "id": "PowerModList#18",
-    "expr": [
-      "Equal",
-      ["PowerMod", 4, ["Rational", 1, 2], 7],
-      ["First", ["PowerModList", 4, ["Rational", 1, 2], 7]]
-    ],
+    "expr": ["Equal", ["PowerMod", 4, ["Rational", 1, 2], 7], ["First", ["PowerModList", 4, ["Rational", 1, 2], 7]]],
     "wolfram": "Equal[PowerMod[4, Rational[1, 2], 7], First[PowerModList[4, Rational[1, 2], 7]]]"
   },
   {
@@ -1345,15 +1237,7 @@
   },
   {
     "id": "Totient#5",
-    "expr": [
-      "Add",
-      ["Totient", 1],
-      ["Totient", 2],
-      ["Totient", 3],
-      ["Totient", 4],
-      ["Totient", 6],
-      ["Totient", 12]
-    ],
+    "expr": ["Add", ["Totient", 1], ["Totient", 2], ["Totient", 3], ["Totient", 4], ["Totient", 6], ["Totient", 12]],
     "wolfram": "Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]"
   },
   {
@@ -1553,11 +1437,7 @@
   },
   {
     "id": "PrimeOmega#4",
-    "expr": [
-      "Equal",
-      ["PrimeOmega", ["Multiply", 24, 40]],
-      ["Add", ["PrimeOmega", 24], ["PrimeOmega", 40]]
-    ],
+    "expr": ["Equal", ["PrimeOmega", ["Multiply", 24, 40]], ["Add", ["PrimeOmega", 24], ["PrimeOmega", 40]]],
     "wolfram": "Equal[PrimeOmega[Times[24, 40]], Plus[PrimeOmega[24], PrimeOmega[40]]]"
   },
   {
@@ -1627,11 +1507,7 @@
   },
   {
     "id": "DivisorSigma#6",
-    "expr": [
-      "Equal",
-      ["Multiply", ["DivisorSigma", 1, 9], ["DivisorSigma", 1, 8]],
-      ["DivisorSigma", 1, 72]
-    ],
+    "expr": ["Equal", ["Multiply", ["DivisorSigma", 1, 9], ["DivisorSigma", 1, 8]], ["DivisorSigma", 1, 72]],
     "wolfram": "Equal[Times[DivisorSigma[1, 9], DivisorSigma[1, 8]], DivisorSigma[1, 72]]"
   },
   {
@@ -1906,10 +1782,7 @@
   },
   {
     "id": "HermiteDecomposition#3",
-    "expr": [
-      "HermiteDecomposition",
-      ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 10]]
-    ],
+    "expr": ["HermiteDecomposition", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 10]]],
     "wolfram": "HermiteDecomposition[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]"
   },
   {
@@ -2054,11 +1927,7 @@
   },
   {
     "id": "PartitionsQ#6",
-    "expr": [
-      "Equal",
-      ["PartitionsQ", 12],
-      ["Count", ["IntegerPartitions", 12, "All", ["List", 1, 3, 5, 7, 9, 11]]]
-    ],
+    "expr": ["Equal", ["PartitionsQ", 12], ["Count", ["IntegerPartitions", 12, "All", ["List", 1, 3, 5, 7, 9, 11]]]],
     "wolfram": "Equal[PartitionsQ[12], Count[IntegerPartitions[12, AllTrue, List[1, 3, 5, 7, 9, 11]]]]"
   },
   {
@@ -2272,10 +2141,7 @@
   },
   {
     "id": "Abs#13",
-    "expr": [
-      "Abs",
-      ["List", ["List", ["Rational", 1, 2], -1], ["List", ["Rational", -5, 3], ["Rational", 1, 2]]]
-    ],
+    "expr": ["Abs", ["List", ["List", ["Rational", 1, 2], -1], ["List", ["Rational", -5, 3], ["Rational", 1, 2]]]],
     "wolfram": "Abs[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]"
   },
   {
@@ -2338,11 +2204,7 @@
   },
   {
     "id": "Sign#7",
-    "expr": [
-      "Equal",
-      ["Sign", ["Complex", 3, 4]],
-      ["Divide", ["Complex", 3, 4], ["Abs", ["Complex", 3, 4]]]
-    ],
+    "expr": ["Equal", ["Sign", ["Complex", 3, 4]], ["Divide", ["Complex", 3, 4], ["Abs", ["Complex", 3, 4]]]],
     "wolfram": "Equal[Sign[Complex[3, 4]], Divide[Complex[3, 4], Abs[Complex[3, 4]]]]"
   },
   {
@@ -2357,10 +2219,7 @@
   },
   {
     "id": "Sign#15",
-    "expr": [
-      "Sign",
-      ["List", ["List", ["Rational", 1, 2], -1], ["List", ["Rational", -5, 3], ["Rational", 1, 2]]]
-    ],
+    "expr": ["Sign", ["List", ["List", ["Rational", 1, 2], -1], ["List", ["Rational", -5, 3], ["Rational", 1, 2]]]],
     "wolfram": "Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]"
   },
   {
@@ -3016,20 +2875,12 @@
   },
   {
     "id": "Sin#7",
-    "expr": [
-      "Add",
-      ["Power", ["Sin", ["Divide", "Pi", 6]], 2],
-      ["Power", ["Cos", ["Divide", "Pi", 6]], 2]
-    ],
+    "expr": ["Add", ["Power", ["Sin", ["Divide", "Pi", 6]], 2], ["Power", ["Cos", ["Divide", "Pi", 6]], 2]],
     "wolfram": "Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]"
   },
   {
     "id": "Sin#8",
-    "expr": [
-      "Equal",
-      ["Sin", ["Negate", ["Divide", "Pi", 6]]],
-      ["Negate", ["Sin", ["Divide", "Pi", 6]]]
-    ],
+    "expr": ["Equal", ["Sin", ["Negate", ["Divide", "Pi", 6]]], ["Negate", ["Sin", ["Divide", "Pi", 6]]]],
     "wolfram": "Equal[Sin[Minus[Divide[Pi, 6]]], Minus[Sin[Divide[Pi, 6]]]]"
   },
   {
@@ -3197,11 +3048,7 @@
   },
   {
     "id": "Cos#8",
-    "expr": [
-      "Equal",
-      ["Cos", ["Divide", "Pi", 6]],
-      ["Sin", ["Subtract", ["Divide", "Pi", 2], ["Divide", "Pi", 6]]]
-    ],
+    "expr": ["Equal", ["Cos", ["Divide", "Pi", 6]], ["Sin", ["Subtract", ["Divide", "Pi", 2], ["Divide", "Pi", 6]]]],
     "wolfram": "Equal[Cos[Divide[Pi, 6]], Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]]]"
   },
   {
@@ -3341,11 +3188,7 @@
     "id": "Tan#15",
     "expr": [
       "Tan",
-      [
-        "List",
-        ["List", ["Multiply", 5, ["Divide", "Pi", 6]], "Pi"],
-        ["List", ["Divide", "Pi", 3], ["Negate", "Pi"]]
-      ]
+      ["List", ["List", ["Multiply", 5, ["Divide", "Pi", 6]], "Pi"], ["List", ["Divide", "Pi", 3], ["Negate", "Pi"]]]
     ],
     "wolfram": "Tan[List[List[Times[5, Divide[Pi, 6]], Pi], List[Divide[Pi, 3], Minus[Pi]]]]"
   },
@@ -3558,11 +3401,7 @@
     "id": "Csc#10",
     "expr": [
       "Csc",
-      [
-        "List",
-        ["List", ["Divide", "Pi", 3], "Pi"],
-        ["List", ["Divide", "Pi", 6], ["Negate", ["Divide", "Pi", 2]]]
-      ]
+      ["List", ["List", ["Divide", "Pi", 3], "Pi"], ["List", ["Divide", "Pi", 6], ["Negate", ["Divide", "Pi", 2]]]]
     ],
     "wolfram": "Csc[List[List[Divide[Pi, 3], Pi], List[Divide[Pi, 6], Minus[Divide[Pi, 2]]]]]"
   },
@@ -3603,11 +3442,7 @@
   },
   {
     "id": "Arcsin#6",
-    "expr": [
-      "Equal",
-      ["Add", ["Arcsin", ["Rational", 1, 2]], ["Arccos", ["Rational", 1, 2]]],
-      ["Divide", "Pi", 2]
-    ],
+    "expr": ["Equal", ["Add", ["Arcsin", ["Rational", 1, 2]], ["Arccos", ["Rational", 1, 2]]], ["Divide", "Pi", 2]],
     "wolfram": "Equal[Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]], Divide[Pi, 2]]"
   },
   {
@@ -3622,10 +3457,7 @@
   },
   {
     "id": "Arcsin#12",
-    "expr": [
-      "Arcsin",
-      ["List", ["List", 1, ["Divide", 1, ["Sqrt", 2]]], ["List", 0, ["Divide", 1, ["Sqrt", 2]]]]
-    ],
+    "expr": ["Arcsin", ["List", ["List", 1, ["Divide", 1, ["Sqrt", 2]]], ["List", 0, ["Divide", 1, ["Sqrt", 2]]]]],
     "wolfram": "ArcSin[List[List[1, Divide[1, Sqrt[2]]], List[0, Divide[1, Sqrt[2]]]]]"
   },
   {
@@ -3695,10 +3527,7 @@
   },
   {
     "id": "Arccos#11",
-    "expr": [
-      "Arccos",
-      ["List", ["List", 1, ["Divide", 1, ["Sqrt", 2]]], ["List", 0, ["Divide", 1, ["Sqrt", 2]]]]
-    ],
+    "expr": ["Arccos", ["List", ["List", 1, ["Divide", 1, ["Sqrt", 2]]], ["List", 0, ["Divide", 1, ["Sqrt", 2]]]]],
     "wolfram": "ArcCos[List[List[1, Divide[1, Sqrt[2]]], List[0, Divide[1, Sqrt[2]]]]]"
   },
   {
@@ -4148,10 +3977,7 @@
   },
   {
     "id": "Exp#18",
-    "expr": [
-      "Exp",
-      ["List", ["List", 1, ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]], ["List", 0, 1]]
-    ],
+    "expr": ["Exp", ["List", ["List", 1, ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 2]]], ["List", 0, 1]]],
     "wolfram": "Exp[List[List[1, Times[I, Divide[Pi, 2]]], List[0, 1]]]"
   },
   {
@@ -4181,11 +4007,7 @@
   },
   {
     "id": "Exp#24",
-    "expr": [
-      "Limit",
-      ["Function", ["Power", ["Add", 1, ["Divide", 1, "x"]], "x"], "x"],
-      "PositiveInfinity"
-    ],
+    "expr": ["Limit", ["Function", ["Power", ["Add", 1, ["Divide", 1, "x"]], "x"], "x"], "PositiveInfinity"],
     "wolfram": "Limit[Function[Power[Plus[1, Divide[1, x]], x], x], Infinity]"
   },
   {
@@ -4410,20 +4232,10 @@
     "id": "Rank#5",
     "expr": [
       "Equal",
-      [
-        "Rank",
-        ["List", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 5, 6], ["List", 7, 8]]]
-      ],
+      ["Rank", ["List", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 5, 6], ["List", 7, 8]]]],
       [
         "Length",
-        [
-          "Shape",
-          [
-            "List",
-            ["List", ["List", 1, 2], ["List", 3, 4]],
-            ["List", ["List", 5, 6], ["List", 7, 8]]
-          ]
-        ]
+        ["Shape", ["List", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 5, 6], ["List", 7, 8]]]]
       ]
     ],
     "wolfram": "Equal[ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]], Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]]]"
@@ -4479,10 +4291,7 @@
     "expr": [
       "Equal",
       ["MatrixRank", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]],
-      [
-        "MatrixRank",
-        ["Transpose", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]]
-      ]
+      ["MatrixRank", ["Transpose", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]]]
     ],
     "wolfram": "Equal[MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]], MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]]]"
   },
@@ -4490,11 +4299,7 @@
     "id": "MatrixRank#12",
     "expr": [
       "MatrixRank",
-      [
-        "List",
-        ["List", "Pi", "ExponentialE"],
-        ["List", ["Multiply", 2, "Pi"], ["Multiply", 2, "ExponentialE"]]
-      ]
+      ["List", ["List", "Pi", "ExponentialE"], ["List", ["Multiply", 2, "Pi"], ["Multiply", 2, "ExponentialE"]]]
     ],
     "wolfram": "MatrixRank[List[List[Pi, E], List[Times[2, Pi], Times[2, E]]]]"
   },
@@ -4505,10 +4310,7 @@
   },
   {
     "id": "MatrixRank#14",
-    "expr": [
-      "MatrixRank",
-      ["List", ["List", 1, 2, 3, 4], ["List", 2, 4, 6, 8], ["List", 1, 0, 1, 0]]
-    ],
+    "expr": ["MatrixRank", ["List", ["List", 1, 2, 3, 4], ["List", 2, 4, 6, 8], ["List", 1, 0, 1, 0]]],
     "wolfram": "MatrixRank[List[List[1, 2, 3, 4], List[2, 4, 6, 8], List[1, 0, 1, 0]]]"
   },
   {
@@ -4533,15 +4335,9 @@
   },
   {
     "id": "MatrixRank#18",
-    "expr": [
-      "MatrixRank",
-      ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 4, 4]
-    ],
+    "expr": ["MatrixRank", ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 4, 4]],
     "wolfram": "MatrixRank[Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[4, 4]]]",
-    "back": [
-      "MatrixRank",
-      ["Array", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], ["List", 4, 4]]
-    ]
+    "back": ["MatrixRank", ["Array", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], ["List", 4, 4]]]
   },
   {
     "id": "MatrixExp#1",
@@ -4555,10 +4351,7 @@
   },
   {
     "id": "MatrixExp#4",
-    "expr": [
-      "N",
-      ["MatrixExp", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 10]]]
-    ],
+    "expr": ["N", ["MatrixExp", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 10]]]],
     "wolfram": "N[MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]]"
   },
   {
@@ -4607,11 +4400,7 @@
   },
   {
     "id": "Gamma#8",
-    "expr": [
-      "Equal",
-      ["Divide", ["Power", "Pi", 2], ["Gamma", 3]],
-      ["Divide", ["Power", "Pi", 2], 2]
-    ],
+    "expr": ["Equal", ["Divide", ["Power", "Pi", 2], ["Gamma", 3]], ["Divide", ["Power", "Pi", 2], 2]],
     "wolfram": "Equal[Divide[Power[Pi, 2], Gamma[3]], Divide[Power[Pi, 2], 2]]"
   },
   {
@@ -4646,11 +4435,7 @@
   },
   {
     "id": "Gamma#27",
-    "expr": [
-      "Gamma",
-      2,
-      ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]]
-    ],
+    "expr": ["Gamma", 2, ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]]],
     "wolfram": "Gamma[2, List[List[Rational[7, 2], 0], List[0, Rational[13, 2]]]]"
   },
   {
@@ -4700,11 +4485,7 @@
   },
   {
     "id": "GammaLn#6",
-    "expr": [
-      "Equal",
-      ["GammaLn", ["Rational", 1, 2]],
-      ["Multiply", ["Rational", 1, 2], ["Ln", "Pi"]]
-    ],
+    "expr": ["Equal", ["GammaLn", ["Rational", 1, 2]], ["Multiply", ["Rational", 1, 2], ["Ln", "Pi"]]],
     "wolfram": "Equal[LogGamma[Rational[1, 2]], Times[Rational[1, 2], Log[Pi]]]"
   },
   {
@@ -5180,11 +4961,7 @@
   },
   {
     "id": "Digamma#6",
-    "expr": [
-      "Equal",
-      ["Add", ["Digamma", ["Rational", 1, 2]], "EulerGamma", ["Multiply", 2, ["Ln", 2]]],
-      0
-    ],
+    "expr": ["Equal", ["Add", ["Digamma", ["Rational", 1, 2]], "EulerGamma", ["Multiply", 2, ["Ln", 2]]], 0],
     "wolfram": "Equal[Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]], 0]"
   },
   {
@@ -5410,10 +5187,7 @@
   },
   {
     "id": "LogGamma#10",
-    "expr": [
-      "LogGamma",
-      ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]
-    ],
+    "expr": ["LogGamma", ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]],
     "wolfram": "LogGamma[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]",
     "back": ["GammaLn", ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]]
   },
@@ -5467,10 +5241,7 @@
   },
   {
     "id": "DirichletEta#10",
-    "expr": [
-      "DirichletEta",
-      ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]
-    ],
+    "expr": ["DirichletEta", ["List", ["List", ["Rational", 1, 2], -1], ["List", 0, ["Rational", 1, 2]]]],
     "wolfram": "DirichletEta[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]"
   },
   {
@@ -5645,10 +5416,7 @@
   },
   {
     "id": "HypergeometricUStar#1",
-    "expr": [
-      "Chop",
-      ["Subtract", ["N", ["HypergeometricUStar", ["Rational", 1, 2], ["Rational", 3, 2], 2]], 1]
-    ],
+    "expr": ["Chop", ["Subtract", ["N", ["HypergeometricUStar", ["Rational", 1, 2], ["Rational", 3, 2], 2]], 1]],
     "wolfram": "Chop[Subtract[N[HypergeometricUStar[Rational[1, 2], Rational[3, 2], 2]], 1]]"
   },
   {
@@ -6012,20 +5780,13 @@
     "id": "FullSimplify#5",
     "expr": [
       "FullSimplify",
-      [
-        "Subtract",
-        ["Add", ["Sqrt", 2], ["Sqrt", 3]],
-        ["Sqrt", ["Add", 5, ["Multiply", 2, ["Sqrt", 6]]]]
-      ]
+      ["Subtract", ["Add", ["Sqrt", 2], ["Sqrt", 3]], ["Sqrt", ["Add", 5, ["Multiply", 2, ["Sqrt", 6]]]]]
     ],
     "wolfram": "FullSimplify[Subtract[Plus[Sqrt[2], Sqrt[3]], Sqrt[Plus[5, Times[2, Sqrt[6]]]]]]"
   },
   {
     "id": "FullSimplify#6",
-    "expr": [
-      "FullSimplify",
-      ["Subtract", ["Power", ["Cosh", "x"], 2], ["Power", ["Sinh", "x"], 2]]
-    ],
+    "expr": ["FullSimplify", ["Subtract", ["Power", ["Cosh", "x"], 2], ["Power", ["Sinh", "x"], 2]]],
     "wolfram": "FullSimplify[Subtract[Power[Cosh[x], 2], Power[Sinh[x], 2]]]"
   },
   {
@@ -6035,11 +5796,7 @@
   },
   {
     "id": "MatrixFunction#4",
-    "expr": [
-      "MatrixFunction",
-      ["Function", ["Power", "_1", 2]],
-      ["List", ["List", 1, 1], ["List", 0, 1]]
-    ],
+    "expr": ["MatrixFunction", ["Function", ["Power", "_1", 2]], ["List", ["List", 1, 1], ["List", 0, 1]]],
     "wolfram": "MatrixFunction[Function[Power[Slot[1], 2]], List[List[1, 1], List[0, 1]]]"
   },
   {
@@ -6069,11 +5826,7 @@
   },
   {
     "id": "CenteredInterval#1",
-    "expr": [
-      "Add",
-      ["CenteredInterval", 1, ["Rational", 1, 2]],
-      ["CenteredInterval", 2, ["Rational", 1, 4]]
-    ],
+    "expr": ["Add", ["CenteredInterval", 1, ["Rational", 1, 2]], ["CenteredInterval", 2, ["Rational", 1, 4]]],
     "wolfram": "Plus[CenteredInterval[1, Rational[1, 2]], CenteredInterval[2, Rational[1, 4]]]"
   },
   {
@@ -6088,11 +5841,7 @@
   },
   {
     "id": "CenteredInterval#4",
-    "expr": [
-      "Subtract",
-      ["CenteredInterval", 5, ["Rational", 1, 4]],
-      ["CenteredInterval", 1, ["Rational", 1, 4]]
-    ],
+    "expr": ["Subtract", ["CenteredInterval", 5, ["Rational", 1, 4]], ["CenteredInterval", 1, ["Rational", 1, 4]]],
     "wolfram": "Subtract[CenteredInterval[5, Rational[1, 4]], CenteredInterval[1, Rational[1, 4]]]"
   },
   {
@@ -6404,11 +6153,7 @@
   },
   {
     "id": "BrauerAlgebra#3",
-    "expr": [
-      "Element",
-      ["Diagram", ["List", ["List", 1, -2], ["List", 2, -1], ["List", 3, -3]]],
-      ["BrauerAlgebra", 3]
-    ],
+    "expr": ["Element", ["Diagram", ["List", ["List", 1, -2], ["List", 2, -1], ["List", 3, -3]]], ["BrauerAlgebra", 3]],
     "wolfram": "Element[Diagram[List[List[1, -2], List[2, -1], List[3, -3]]], BrauerAlgebra[3]]"
   },
   {
@@ -6470,11 +6215,7 @@
   },
   {
     "id": "OrbitDiagram#3",
-    "expr": [
-      "PartitionMobius",
-      ["Diagram", ["List", ["List", 1, -1]]],
-      ["Diagram", ["List", ["List", 1, -1]]]
-    ],
+    "expr": ["PartitionMobius", ["Diagram", ["List", ["List", 1, -1]]], ["Diagram", ["List", ["List", 1, -1]]]],
     "wolfram": "PartitionMobius[Diagram[List[List[1, -1]]], Diagram[List[List[1, -1]]]]"
   },
   {
@@ -6926,11 +6667,7 @@
   },
   {
     "id": "HeckeT#1",
-    "expr": [
-      "NonCommutativeMultiply",
-      ["HeckeT", ["List", 2, 1, 3]],
-      ["HeckeT", ["List", 1, 3, 2]]
-    ],
+    "expr": ["NonCommutativeMultiply", ["HeckeT", ["List", 2, 1, 3]], ["HeckeT", ["List", 1, 3, 2]]],
     "wolfram": "NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]]]"
   },
   {
@@ -6984,11 +6721,7 @@
   },
   {
     "id": "MoebiusInvert#3",
-    "expr": [
-      "MoebiusInvert",
-      ["BooleanLattice", 2],
-      ["PosetSumDown", ["BooleanLattice", 2], ["List", 5, 1, 2, 7]]
-    ],
+    "expr": ["MoebiusInvert", ["BooleanLattice", 2], ["PosetSumDown", ["BooleanLattice", 2], ["List", 5, 1, 2, 7]]],
     "wolfram": "MoebiusInvert[BooleanLattice[2], PosetSumDown[BooleanLattice[2], List[5, 1, 2, 7]]]"
   },
   {
@@ -7018,30 +6751,17 @@
   },
   {
     "id": "QuiverPath#3",
-    "expr": [
-      "AlgebraDimension",
-      ["PathAlgebra", ["Quiver", 2, ["List", ["List", 1, 2], ["List", 1, 2]]]]
-    ],
+    "expr": ["AlgebraDimension", ["PathAlgebra", ["Quiver", 2, ["List", ["List", 1, 2], ["List", 1, 2]]]]],
     "wolfram": "AlgebraDimension[PathAlgebra[Quiver[2, List[List[1, 2], List[1, 2]]]]]"
   },
   {
     "id": "QuiverCompose#1",
-    "expr": [
-      "QuiverCompose",
-      ["LinearQuiver", 4],
-      ["QuiverPath", 1, ["List", 0]],
-      ["QuiverPath", 2, ["List", 1]]
-    ],
+    "expr": ["QuiverCompose", ["LinearQuiver", 4], ["QuiverPath", 1, ["List", 0]], ["QuiverPath", 2, ["List", 1]]],
     "wolfram": "QuiverCompose[LinearQuiver[4], QuiverPath[1, List[0]], QuiverPath[2, List[1]]]"
   },
   {
     "id": "QuiverCompose#3",
-    "expr": [
-      "QuiverCompose",
-      ["LinearQuiver", 4],
-      ["QuiverPath", 1, ["List"]],
-      ["QuiverPath", 1, ["List", 0]]
-    ],
+    "expr": ["QuiverCompose", ["LinearQuiver", 4], ["QuiverPath", 1, ["List"]], ["QuiverPath", 1, ["List", 0]]],
     "wolfram": "QuiverCompose[LinearQuiver[4], QuiverPath[1, List[]], QuiverPath[1, List[0]]]"
   },
   {
@@ -7101,10 +6821,7 @@
   },
   {
     "id": "Antipode#3",
-    "expr": [
-      "HopfDegree",
-      ["NonCommutativeMultiply", ["QSymM", ["List", 1]], ["QSymM", ["List", 2]]]
-    ],
+    "expr": ["HopfDegree", ["NonCommutativeMultiply", ["QSymM", ["List", 1]], ["QSymM", ["List", 2]]]],
     "wolfram": "HopfDegree[NonCommutativeMultiply[QSymM[List[1]], QSymM[List[2]]]]"
   },
   {
@@ -7129,22 +6846,12 @@
   },
   {
     "id": "GroupBasis#1",
-    "expr": [
-      "GroupProduct",
-      ["CyclicGroup", 6],
-      ["GroupBasis", ["String", 2]],
-      ["GroupBasis", ["String", 5]]
-    ],
+    "expr": ["GroupProduct", ["CyclicGroup", 6], ["GroupBasis", ["String", 2]], ["GroupBasis", ["String", 5]]],
     "wolfram": "GroupProduct[CyclicGroup[6], GroupBasis[String[2]], GroupBasis[String[5]]]"
   },
   {
     "id": "GroupBasis#2",
-    "expr": [
-      "GroupProduct",
-      ["DihedralGroup", 4],
-      ["GroupBasis", ["String", "s0"]],
-      ["GroupBasis", ["String", "s0"]]
-    ],
+    "expr": ["GroupProduct", ["DihedralGroup", 4], ["GroupBasis", ["String", "s0"]], ["GroupBasis", ["String", "s0"]]],
     "wolfram": "GroupProduct[DihedralGroup[4], GroupBasis[String[s0]], GroupBasis[String[s0]]]"
   },
   {
@@ -7415,10 +7122,7 @@
   },
   {
     "id": "FormClassNumber#2",
-    "expr": [
-      "FormDiscriminant",
-      ["FormAction", ["QuadraticForm", 1, 1, -1], ["ModularMatrix", 1, 1, 0, 1]]
-    ],
+    "expr": ["FormDiscriminant", ["FormAction", ["QuadraticForm", 1, 1, -1], ["ModularMatrix", 1, 1, 0, 1]]],
     "wolfram": "FormDiscriminant[FormAction[QuadraticForm[1, 1, -1], ModularMatrix[1, 1, 0, 1]]]"
   },
   {
@@ -7548,11 +7252,7 @@
   },
   {
     "id": "Union#3",
-    "expr": [
-      "Equal",
-      ["Union", ["List", 1, 2, 3], ["List", 2, 3, 4]],
-      ["Union", ["List", 2, 3, 4], ["List", 1, 2, 3]]
-    ],
+    "expr": ["Equal", ["Union", ["List", 1, 2, 3], ["List", 2, 3, 4]], ["Union", ["List", 2, 3, 4], ["List", 1, 2, 3]]],
     "wolfram": "Equal[Union[List[1, 2, 3], List[2, 3, 4]], Union[List[2, 3, 4], List[1, 2, 3]]]"
   },
   {
@@ -7590,12 +7290,7 @@
   },
   {
     "id": "Union#9",
-    "expr": [
-      "Union",
-      ["List", "a", "b", "a", "c"],
-      ["List", "d", "a", "f", "b"],
-      ["List", "c", "a"]
-    ],
+    "expr": ["Union", ["List", "a", "b", "a", "c"], ["List", "d", "a", "f", "b"], ["List", "c", "a"]],
     "wolfram": "Union[List[a, b, a, c], List[d, a, f, b], List[c, a]]"
   },
   {
@@ -7892,11 +7587,7 @@
     "wolfram": "Equal[Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0]]]], 20]",
     "back": [
       "Equal",
-      [
-        "At",
-        ["List", 10, 20, 30],
-        ["First", ["FirstPosition", ["List", 10, 20, 30], 20, ["List", 0]]]
-      ],
+      ["At", ["List", 10, 20, 30], ["First", ["FirstPosition", ["List", 10, 20, 30], 20, ["List", 0]]]],
       20
     ]
   },
@@ -7910,19 +7601,13 @@
     "id": "IndexOf#5",
     "expr": ["IndexOf", ["List", "a", "b", "a", "a", "b", "c", "b"], "b"],
     "wolfram": "First[FirstPosition[List[a, b, a, a, b, c, b], b, List[0]]]",
-    "back": [
-      "First",
-      ["FirstPosition", ["List", "a", "b", "a", "a", "b", "c", "b"], "b", ["List", 0]]
-    ]
+    "back": ["First", ["FirstPosition", ["List", "a", "b", "a", "a", "b", "c", "b"], "b", ["List", 0]]]
   },
   {
     "id": "IndexOf#6",
     "expr": ["IndexOf", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", 3, 4]],
     "wolfram": "First[FirstPosition[List[List[1, 2], List[3, 4]], List[3, 4], List[0]]]",
-    "back": [
-      "First",
-      ["FirstPosition", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", 3, 4], ["List", 0]]
-    ]
+    "back": ["First", ["FirstPosition", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", 3, 4], ["List", 0]]]
   },
   {
     "id": "Position#1",
@@ -7956,11 +7641,7 @@
   },
   {
     "id": "Sort#4",
-    "expr": [
-      "Equal",
-      ["Sort", ["List", 3, 1, 2]],
-      ["At", ["List", 3, 1, 2], ["Ordering", ["List", 3, 1, 2]]]
-    ],
+    "expr": ["Equal", ["Sort", ["List", 3, 1, 2]], ["At", ["List", 3, 1, 2], ["Ordering", ["List", 3, 1, 2]]]],
     "wolfram": "Equal[Sort[List[3, 1, 2]], Part[List[3, 1, 2], Ordering[List[3, 1, 2]]]]"
   },
   {
@@ -8177,12 +7858,7 @@
   },
   {
     "id": "Join#4",
-    "expr": [
-      "Join",
-      ["List", ["List", 1, 2], ["List", 3, 4]],
-      ["List", ["List", 5, 6], ["List", 7, 8]],
-      2
-    ],
+    "expr": ["Join", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 5, 6], ["List", 7, 8]], 2],
     "wolfram": "Join[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]], 2]"
   },
   {
@@ -8243,23 +7919,14 @@
   },
   {
     "id": "Flatten#4",
-    "expr": [
-      "Equal",
-      ["Flatten", ["Partition", ["List", 1, 2, 3, 4, 5, 6], 2]],
-      ["List", 1, 2, 3, 4, 5, 6]
-    ],
+    "expr": ["Equal", ["Flatten", ["Partition", ["List", 1, 2, 3, 4, 5, 6], 2]], ["List", 1, 2, 3, 4, 5, 6]],
     "wolfram": "Equal[Flatten[Partition[List[1, 2, 3, 4, 5, 6], 2]], List[1, 2, 3, 4, 5, 6]]"
   },
   {
     "id": "Flatten#5",
     "expr": [
       "Flatten",
-      [
-        "List",
-        ["List", "a", "b"],
-        ["List", "c", ["List", "d"], "f"],
-        ["List", "g", ["List", "h", "k"]]
-      ]
+      ["List", ["List", "a", "b"], ["List", "c", ["List", "d"], "f"], ["List", "g", ["List", "h", "k"]]]
     ],
     "wolfram": "Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]]]"
   },
@@ -8267,12 +7934,7 @@
     "id": "Flatten#6",
     "expr": [
       "Flatten",
-      [
-        "List",
-        ["List", "a", "b"],
-        ["List", "c", ["List", "d"], "f"],
-        ["List", "g", ["List", "h", "k"]]
-      ],
+      ["List", ["List", "a", "b"], ["List", "c", ["List", "d"], "f"], ["List", "g", ["List", "h", "k"]]],
       1
     ],
     "wolfram": "Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]], 1]"
@@ -8351,11 +8013,7 @@
   },
   {
     "id": "Append#10",
-    "expr": [
-      "Equal",
-      ["Length", ["Append", ["List", 1, 2, 3], 4]],
-      ["Add", ["Length", ["List", 1, 2, 3]], 1]
-    ],
+    "expr": ["Equal", ["Length", ["Append", ["List", 1, 2, 3], 4]], ["Add", ["Length", ["List", 1, 2, 3]], 1]],
     "wolfram": "Equal[Length[Append[List[1, 2, 3], 4]], Plus[Length[List[1, 2, 3]], 1]]"
   },
   {
@@ -8473,11 +8131,7 @@
   },
   {
     "id": "Median#3",
-    "expr": [
-      "Equal",
-      ["Median", ["List", 5, 3, 1, 4, 2]],
-      ["At", ["Sort", ["List", 5, 3, 1, 4, 2]], 3]
-    ],
+    "expr": ["Equal", ["Median", ["List", 5, 3, 1, 4, 2]], ["At", ["Sort", ["List", 5, 3, 1, 4, 2]], 3]],
     "wolfram": "Equal[Median[List[5, 3, 1, 4, 2]], Part[Sort[List[5, 3, 1, 4, 2]], 3]]"
   },
   {
@@ -8520,11 +8174,7 @@
     "id": "Mode#2",
     "expr": ["Equal", ["Count", ["List", 1, 2, 2, 3], ["Mode", ["List", 1, 2, 2, 3]]], 2],
     "wolfram": "Equal[Count[List[1, 2, 2, 3], First[Commonest[List[1, 2, 2, 3]]]], 2]",
-    "back": [
-      "Equal",
-      ["Count", ["List", 1, 2, 2, 3], ["First", ["Commonest", ["List", 1, 2, 2, 3]]]],
-      2
-    ]
+    "back": ["Equal", ["Count", ["List", 1, 2, 2, 3], ["First", ["Commonest", ["List", 1, 2, 2, 3]]]], 2]
   },
   {
     "id": "Mode#3",
@@ -8582,11 +8232,7 @@
   },
   {
     "id": "Commonest#8",
-    "expr": [
-      "Equal",
-      ["First", ["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4]]],
-      ["Mode", ["List", 1, 2, 2, 3, 3, 3, 4]]
-    ],
+    "expr": ["Equal", ["First", ["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4]]], ["Mode", ["List", 1, 2, 2, 3, 3, 3, 4]]],
     "wolfram": "Equal[First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]], First[Commonest[List[1, 2, 2, 3, 3, 3, 4]]]]",
     "back": [
       "Equal",
@@ -8656,30 +8302,17 @@
   },
   {
     "id": "Product#16",
-    "expr": [
-      "Product",
-      ["Power", 2, ["Add", "i", "j"]],
-      ["Tuple", "i", 1, "p"],
-      ["Tuple", "j", 1, "i"]
-    ],
+    "expr": ["Product", ["Power", 2, ["Add", "i", "j"]], ["Tuple", "i", 1, "p"], ["Tuple", "j", 1, "i"]],
     "wolfram": "Product[Power[2, Plus[i, j]], List[i, 1, p], List[j, 1, i]]"
   },
   {
     "id": "Product#17",
-    "expr": [
-      "Product",
-      ["Add", 1, ["Divide", 1, ["Power", "k", 2]]],
-      ["Tuple", "k", 1, "PositiveInfinity"]
-    ],
+    "expr": ["Product", ["Add", 1, ["Divide", 1, ["Power", "k", 2]]], ["Tuple", "k", 1, "PositiveInfinity"]],
     "wolfram": "Product[Plus[1, Divide[1, Power[k, 2]]], List[k, 1, Infinity]]"
   },
   {
     "id": "Product#18",
-    "expr": [
-      "Product",
-      ["Subtract", 1, ["Divide", 1, ["Power", "k", 2]]],
-      ["Tuple", "k", 2, "PositiveInfinity"]
-    ],
+    "expr": ["Product", ["Subtract", 1, ["Divide", 1, ["Power", "k", 2]]], ["Tuple", "k", 2, "PositiveInfinity"]],
     "wolfram": "Product[Subtract[1, Divide[1, Power[k, 2]]], List[k, 2, Infinity]]"
   },
   {
@@ -8776,11 +8409,7 @@
     "id": "RecurrenceTable#1",
     "expr": [
       "RecurrenceTable",
-      [
-        "List",
-        ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]],
-        ["Equal", ["a", 1], 7]
-      ],
+      ["List", ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]], ["Equal", ["a", 1], 7]],
       "a",
       ["List", "n", 1, 5]
     ],
@@ -8818,11 +8447,7 @@
   },
   {
     "id": "Association#4",
-    "expr": [
-      "Join",
-      ["Association", ["Rule", "a", "b"]],
-      ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]]
-    ],
+    "expr": ["Join", ["Association", ["Rule", "a", "b"]], ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]]],
     "wolfram": "Join[Association[Rule[a, b]], Association[Rule[c, d], Rule[a, f]]]"
   },
   {
@@ -8852,12 +8477,7 @@
   },
   {
     "id": "Span#5",
-    "expr": [
-      "At",
-      ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]],
-      ["Span", 2, 3],
-      ["Span", 1, 2]
-    ],
+    "expr": ["At", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]], ["Span", 2, 3], ["Span", 1, 2]],
     "wolfram": "Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]"
   },
   {
@@ -8892,20 +8512,12 @@
   },
   {
     "id": "Gather#3",
-    "expr": [
-      "Gather",
-      ["List", 1, 2, 3, 4, 5, 6],
-      ["Function", ["Equal", ["Mod", "_1", 2], ["Mod", "_2", 2]]]
-    ],
+    "expr": ["Gather", ["List", 1, 2, 3, 4, 5, 6], ["Function", ["Equal", ["Mod", "_1", 2], ["Mod", "_2", 2]]]],
     "wolfram": "Gather[List[1, 2, 3, 4, 5, 6], Function[Equal[Mod[Slot[1], 2], Mod[Slot[2], 2]]]]"
   },
   {
     "id": "Gather#4",
-    "expr": [
-      "Equal",
-      ["Map", "Length", ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]]],
-      ["List", 1, 2, 2, 1, 1]
-    ],
+    "expr": ["Equal", ["Map", "Length", ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]]], ["List", 1, 2, 2, 1, 1]],
     "wolfram": "Equal[Map[Length, Gather[List[1, 7, 3, 7, 2, 3, 9]]], List[1, 2, 2, 1, 1]]"
   },
   {
@@ -8950,11 +8562,7 @@
   },
   {
     "id": "SplitBy#2",
-    "expr": [
-      "SplitBy",
-      ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      ["Function", ["Floor", ["Divide", "_1", 4]]]
-    ],
+    "expr": ["SplitBy", ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], ["Function", ["Floor", ["Divide", "_1", 4]]]],
     "wolfram": "SplitBy[List[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], Function[Floor[Divide[Slot[1], 4]]]]"
   },
   {
@@ -9069,11 +8677,7 @@
   },
   {
     "id": "Any#8",
-    "expr": [
-      "Equal",
-      ["Any", ["List", 1, 3, 5], "IsEven"],
-      ["Not", ["All", ["List", 1, 3, 5], "IsOdd"]]
-    ],
+    "expr": ["Equal", ["Any", ["List", 1, 3, 5], "IsEven"], ["Not", ["All", ["List", 1, 3, 5], "IsOdd"]]],
     "wolfram": "Equal[AnyTrue[List[1, 3, 5], EvenQ], Not[AllTrue[List[1, 3, 5], OddQ]]]"
   },
   {
@@ -9088,11 +8692,7 @@
   },
   {
     "id": "NoneTrue#4",
-    "expr": [
-      "Equal",
-      ["NoneTrue", ["List", 4, 6, 9], "IsPrime"],
-      ["Not", ["Any", ["List", 4, 6, 9], "IsPrime"]]
-    ],
+    "expr": ["Equal", ["NoneTrue", ["List", 4, 6, 9], "IsPrime"], ["Not", ["Any", ["List", 4, 6, 9], "IsPrime"]]],
     "wolfram": "Equal[NoneTrue[List[4, 6, 9], PrimeQ], Not[AnyTrue[List[4, 6, 9], PrimeQ]]]"
   },
   {
@@ -9132,12 +8732,7 @@
   },
   {
     "id": "Fold#12",
-    "expr": [
-      "Fold",
-      ["Function", ["Add", ["Multiply", "x", "_1"], "_2"]],
-      0,
-      ["List", "a", "b", "c"]
-    ],
+    "expr": ["Fold", ["Function", ["Add", ["Multiply", "x", "_1"], "_2"]], 0, ["List", "a", "b", "c"]],
     "wolfram": "Fold[Function[Plus[Times[x, Slot[1]], Slot[2]]], 0, List[a, b, c]]"
   },
   {
@@ -9173,11 +8768,7 @@
     "id": "Tabulate#8",
     "expr": ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 3, 3],
     "wolfram": "Array[Function[Divide[1, Subtract[Plus[Slot[1], Slot[2]], 1]]], List[3, 3]]",
-    "back": [
-      "Array",
-      ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]],
-      ["List", 3, 3]
-    ]
+    "back": ["Array", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], ["List", 3, 3]]
   },
   {
     "id": "Tabulate#9",

@@ -30,14 +30,7 @@ examples:
       [
         Divide,
         [Power, x, 3],
-        [
-          Add,
-          [Power, x, 4],
-          [Multiply, -4, [Power, x, 3]],
-          [Multiply, 6, [Power, x, 2]],
-          [Multiply, -4, x],
-          1,
-        ],
+        [Add, [Power, x, 4], [Multiply, -4, [Power, x, 3]], [Multiply, 6, [Power, x, 2]], [Multiply, -4, x], 1],
       ]
     caption: $x^3/(1-x)^4$
   - id: geometric

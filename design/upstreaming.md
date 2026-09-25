@@ -172,10 +172,7 @@ Verified against 0.128.0, not assumed:
 ```ts
 const ce = new ComputeEngine({
   latexSyntax: new LatexSyntax({
-    dictionary: [
-      ...LATEX_DICTIONARY,
-      { kind: "function", name: "HurwitzZeta", latexTrigger: "\\zeta_H" },
-    ],
+    dictionary: [...LATEX_DICTIONARY, { kind: "function", name: "HurwitzZeta", latexTrigger: "\\zeta_H" }],
   }),
 });
 ce.parse("\\zeta_H(2, 1)") // ["HurwitzZeta", 2, 1]

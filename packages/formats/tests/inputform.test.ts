@@ -75,19 +75,14 @@ for (const latex of CORPUS) {
   test(`InputForm round-trips: ${latex}`, () => {
     const expected = ce.parse(latex).json;
     expect(reparse(toInputForm(ce.parse(latex).json)), "from the canonical tree").toEqual(expected);
-    expect(
-      reparse(toInputForm(ce.parse(latex, { form: "raw" }).json)),
-      "from the raw tree",
-    ).toEqual(expected);
+    expect(reparse(toInputForm(ce.parse(latex, { form: "raw" }).json)), "from the raw tree").toEqual(expected);
   });
 }
 
 test("InputForm never emits a LaTeX island", () => {
   for (const latex of CORPUS) {
     for (const form of ["canonical", "raw"] as const) {
-      const printed = toInputForm(
-        form === "raw" ? ce.parse(latex, { form: "raw" }).json : ce.parse(latex).json,
-      );
+      const printed = toInputForm(form === "raw" ? ce.parse(latex, { form: "raw" }).json : ce.parse(latex).json);
       expect(printed, `${latex} (${form})`).not.toMatch(/\$/);
     }
   }

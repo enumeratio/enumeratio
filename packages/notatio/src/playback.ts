@@ -57,13 +57,7 @@ const clean = (v: number): number => (v === 0 ? 0 : Number(v.toPrecision(12)));
  * `steps` is a count of `span.step`s, signed for an explicit move; an implicit one
  * takes its sign from the direction.
  */
-export function iterate(
-  value: number,
-  steps: number,
-  span: Span,
-  loop: Loop,
-  direction?: Direction,
-): Iterated {
+export function iterate(value: number, steps: number, span: Span, loop: Loop, direction?: Direction): Iterated {
   const { min, max, step } = span;
   // The last grid point at or under the max: a span that is not a whole number of
   // steps ends on the grid, not past it.
@@ -134,9 +128,5 @@ export function advancePlayback(
 export function rewindFor(value: number, span: Span, loop: Loop, direction: Direction): number {
   if (loop !== "none") return value;
   const end = direction > 0 ? span.max : span.min;
-  return Math.abs(value - end) < Math.abs(span.step) / 2
-    ? direction > 0
-      ? span.min
-      : span.max
-    : value;
+  return Math.abs(value - end) < Math.abs(span.step) / 2 ? (direction > 0 ? span.min : span.max) : value;
 }

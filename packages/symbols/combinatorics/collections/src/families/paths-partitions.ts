@@ -176,8 +176,7 @@ function hasCrossingBlocks(blockOf: number[], n: number): boolean {
     for (let b = a + 1; b <= n; b++)
       for (let c = b + 1; c <= n; c++)
         for (let d = c + 1; d <= n; d++)
-          if (blockOf[a] === blockOf[c] && blockOf[b] === blockOf[d] && blockOf[a] !== blockOf[b])
-            return true;
+          if (blockOf[a] === blockOf[c] && blockOf[b] === blockOf[d] && blockOf[a] !== blockOf[b]) return true;
   return false;
 }
 

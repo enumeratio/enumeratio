@@ -179,9 +179,7 @@ export class NotatioManipulate extends LitElement {
     const found = captureTemplates(this, names, engine, this.prose ? undefined : this.#host);
     // A template already applied no longer reads as one; keep it rather than lose it.
     const slot = (t: Template): string => ("attr" in t ? `@${t.attr}` : t.prop);
-    const fresh = found.filter(
-      (t) => !this.#templates.some((o) => o.el === t.el && slot(o) === slot(t)),
-    );
+    const fresh = found.filter((t) => !this.#templates.some((o) => o.el === t.el && slot(o) === slot(t)));
     this.#templates = more ? [...this.#templates, ...fresh] : found;
   }
 
@@ -190,11 +188,7 @@ export class NotatioManipulate extends LitElement {
   #apply(): void {
     const engine = this.#engine;
     if (!engine) return;
-    applyTemplates(
-      engine,
-      this.#templates,
-      new Map(this._controls.map((c) => [c.name, engine.number(c.value)])),
-    );
+    applyTemplates(engine, this.#templates, new Map(this._controls.map((c) => [c.name, engine.number(c.value)])));
   }
 
   /** Playback covers one step per this many milliseconds, whatever the frame rate. */
@@ -262,10 +256,7 @@ export class NotatioManipulate extends LitElement {
         return markup === undefined ? part.latex : unsafeHTML(markup);
       }
       case "dynamic":
-        return html`<notatio-dynamic
-          value=${part.value}
-          digits=${ifDefined(part.options.digits)}
-        ></notatio-dynamic>`;
+        return html`<notatio-dynamic value=${part.value} digits=${ifDefined(part.options.digits)}></notatio-dynamic>`;
       case "knob": {
         const c = this._controls.find((k) => k.name === part.name);
         if (c === undefined) return nothing;

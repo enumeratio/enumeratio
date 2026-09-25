@@ -49,8 +49,7 @@ export const bigIntegerAt = (expr: BoxedExpression | undefined): bigint | undefi
   return den === 1 || den === 1n ? BigInt(num) : undefined;
 };
 
-const unquote = (text: string): string =>
-  text.replace(/^'(.*)'$/s, "$1").replace(/^"(.*)"$/s, "$1");
+const unquote = (text: string): string => text.replace(/^'(.*)'$/s, "$1").replace(/^"(.*)"$/s, "$1");
 
 /** The string an expression denotes — bare, `["String", …]`-wrapped, or quoted JSON. */
 export const stringAt = (expr: BoxedExpression | undefined): string | undefined => {
@@ -72,9 +71,7 @@ export const stringAt = (expr: BoxedExpression | undefined): string | undefined 
  * lanes as `bigIntegerAt`: a machine-range integer is a plain `number`, everything else
  * is an `ExactNumericValue` carrying `.rational`.
  */
-export const bigRationalAt = (
-  expr: BoxedExpression | undefined,
-): readonly [bigint, bigint] | undefined => {
+export const bigRationalAt = (expr: BoxedExpression | undefined): readonly [bigint, bigint] | undefined => {
   if (expr === undefined || expr.im !== 0 || expr.isRational !== true) return undefined;
   const value = (expr as { numericValue?: unknown }).numericValue;
   if (typeof value === "number") return Number.isInteger(value) ? [BigInt(value), 1n] : undefined;
@@ -102,8 +99,7 @@ export type EvaluateHandler = (
 export type Arity = number | { readonly min: number; readonly max?: number };
 
 const fitsArity = (arity: Arity | undefined, n: number): boolean =>
-  arity === undefined ||
-  (typeof arity === "number" ? n === arity : n >= arity.min && n <= (arity.max ?? Infinity));
+  arity === undefined || (typeof arity === "number" ? n === arity : n >= arity.min && n <= (arity.max ?? Infinity));
 
 /**
  * Attach to an operator the engine already defines so that `handler` answers whenever
@@ -139,8 +135,7 @@ export function wrapOperator(
   arity?: Arity,
 ): void {
   const definition = ce.lookupDefinition(probe[0]);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native = operator.evaluate;
   const handler = build(native);
@@ -172,8 +167,7 @@ export function widenSignature(
   nativeAccepts?: (op: BoxedExpression) => boolean,
 ): void {
   const definition = ce.lookupDefinition(name);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   (operator as { signature: unknown }).signature = ce.type(signature);
   const native = operator.evaluate;
@@ -201,12 +195,5 @@ export function threadOverLists(ce: ComputeEngine, names: readonly string[]): vo
 /** A `widenSignature` gate for heads natively typed `integer`: anything not provably non-integer. */
 export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
 
-export {
-  collectMessages,
-  defineMessages,
-  emit,
-  formatArgument,
-  type Message,
-  messageLine,
-} from "./messages.ts";
+export { collectMessages, defineMessages, emit, formatArgument, type Message, messageLine } from "./messages.ts";
 export { POWER_LATEX } from "./latex.ts";

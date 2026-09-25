@@ -25,8 +25,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "AGM",
     kind: "operator",
-    description:
-      "Arithmetic-geometric mean. AGM(z) is shorthand for AGM(1, z) (Fungrim convention).",
+    description: "Arithmetic-geometric mean. AGM(z) is shorthand for AGM(1, z) (Fungrim convention).",
     signature: "(complex | infinity, (complex | infinity)?) -> number",
   },
   {
@@ -124,8 +123,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Angle",
     kind: "operator",
-    description:
-      "Angle mark / measure (`\\angle ABC`, `\\varangle XYZ`, `∠ABC`) — opaque typed head; not evaluated.",
+    description: "Angle mark / measure (`\\angle ABC`, `\\varangle XYZ`, `∠ABC`) — opaque typed head; not evaluated.",
     signature: "(any+) -> number",
   },
   {
@@ -144,15 +142,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Apart",
     kind: "operator",
-    description:
-      "Alias for PartialFraction. Decompose a rational expression into partial fractions.",
+    description: "Alias for PartialFraction. Decompose a rational expression into partial fractions.",
     signature: "(value, symbol?) -> value",
   },
   {
     name: "AppellF1",
     kind: "operator",
-    description:
-      "Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.",
+    description: "Appell hypergeometric function F₁(a; b₁, b₂; c; x, y), double series for |x|, |y| < 1.",
     signature:
       "(complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
     wikidata: "Q2701540",
@@ -190,8 +186,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Arc",
     kind: "operator",
-    description:
-      "Arc / wide-hat accent measure (`\\widehat{ABC}`) — opaque typed head; not evaluated.",
+    description: "Arc / wide-hat accent measure (`\\widehat{ABC}`) — opaque typed head; not evaluated.",
     signature: "(any+) -> number",
   },
   {
@@ -354,8 +349,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Access an element of an indexed collection. If the index is negative, it is counted from the end. Multiple indices can be provided to access nested collections (e.g., matrices). If the index is a finite collection of booleans, returns the elements where the mask is True (a mask is a filter, and its length must match the collection length; otherwise it is an error). If the index is a finite collection of integers, returns the elements at those indices, preserving position: an out-of-range index yields the absence marker, it is not dropped. Out-of-band access (an out-of-range index, or a dictionary key that is not present) yields a POSITION-PRESERVING marker: `NaN` when the collection’s elements are numeric, `Missing` otherwise. It never yields `Nothing`, which would erase the position. An index that is provably not an integer (`2.5`, `3/2`, `5 + √17`), as a scalar or as an entry of an index list, selects no element and yields the same marker. An index that cannot be decided (an unknown, an exact constant within rounding of an integer) leaves `At` unevaluated.",
-    signature:
-      "(value: any, index: (boolean | indexed_collection<any> | number | string)+) -> unknown",
+    signature: "(value: any, index: (boolean | indexed_collection<any> | number | string)+) -> unknown",
   },
   {
     name: "AvogadroConstant",
@@ -450,8 +444,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "BinomialDistribution",
     kind: "operator",
-    description:
-      "Binomial distribution: number of successes in n independent trials, each with success probability p.",
+    description: "Binomial distribution: number of successes in n independent trials, each with success probability p.",
     signature: "(integer<0..>, real<0..1>) -> expression<BinomialDistribution>",
   },
   {
@@ -605,8 +598,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Split the collection into `k` nearly equal-sized groups. See `Partition` for splitting into fixed-size chunks.",
-    signature:
-      "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
+    signature: "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
   },
   {
     name: "ChunkBy",
@@ -626,10 +618,8 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Clamp",
     kind: "operator",
-    description:
-      "Clamp a value to the range [lo, hi] = min(max(x, lo), hi). Broadcasts over collection arguments.",
-    signature:
-      "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity",
+    description: "Clamp a value to the range [lo, hi] = min(max(x, lo), hi). Broadcasts over collection arguments.",
+    signature: "(real | signed_infinity, real | signed_infinity, real | signed_infinity) -> real | signed_infinity",
   },
   {
     name: "Coalesce",
@@ -705,8 +695,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Combinations",
     kind: "operator",
     description: "Return all k-element combinations of a collection.",
-    signature:
-      "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
+    signature: "((S, integer) -> list<string> where S: string) & ((collection, integer) -> list<list>)",
     wikidata: "Q193606",
   },
   {
@@ -820,8 +809,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Choose the foreground color with better APCA contrast against a background, answered as given: the interpreter keeps the color head the candidate was written with, and a compiled target answers the same color in its canonical form",
-    signature:
-      "(color | string | tuple, (color | string | tuple)?, (color | string | tuple)?) -> color",
+    signature: "(color | string | tuple, (color | string | tuple)?, (color | string | tuple)?) -> color",
   },
   {
     name: "Correlation",
@@ -910,8 +898,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Cycle",
     kind: "operator",
-    description:
-      "Produce an infinite sequence by cycling through the elements of a finite collection.",
+    description: "Produce an infinite sequence by cycling through the elements of a finite collection.",
     signature: "(list<any>) -> list",
   },
   {
@@ -938,8 +925,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Declare a symbol in the current scope, optionally assigning a type and an initial value. An optional trailing attributes dictionary (with keys `type`, `value`, `constant` and `holdUntil`) can further describe the definition, e.g. to declare a constant. With a value, evaluates to that value; otherwise evaluates to `Nothing`.",
-    signature:
-      "(symbol, type: (string | symbol)?, value: any?, attributes: dictionary<any>?) scope -> any",
+    signature: "(symbol, type: (string | symbol)?, value: any?, attributes: dictionary<any>?) scope -> any",
   },
   {
     name: "DeclareConformance",
@@ -968,8 +954,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       'Declare a type. Types are engine-global (not lexically scoped), so this is only valid at the top level of a program — inside a block or function body it is an error. The name is a symbol (or a string) and the type a string holding a type expression, e.g. `"tuple<x: integer, y: integer>"`. The type is nominal by default; an optional trailing attributes dictionary with `alias -> True` makes it a structural alias instead, and an additional `typeParams -> "T, U: number"` entry makes it a GENERIC alias whose uses must be applied (`Pair<integer>`). The declaration also mints a value constructor of the same name — `["point", 1, 2]`, an inert tagged value for a nominal type, a checked identity for an alias — except for a `record` body, which mints none. Evaluates to `Nothing`.',
-    signature:
-      "(string | symbol, type: string | symbol | type, attributes: dictionary<any>?) scope -> nothing",
+    signature: "(string | symbol, type: string | symbol | type, attributes: dictionary<any>?) scope -> nothing",
   },
   {
     name: "DedekindEta",
@@ -1009,8 +994,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Return a copy of the indexed collection with the element at the 1-based `index` removed. A negative index counts from the end. An out-of-range, zero, or non-integer index leaves the expression unevaluated. Deleting from a string yields a string.",
-    signature:
-      "((T, integer) -> T where T: string) & ((indexed_collection<T>, integer) -> list<T> where T)",
+    signature: "((T, integer) -> T where T: string) & ((indexed_collection<T>, integer) -> list<T> where T)",
   },
   {
     name: "Delimiter",
@@ -1046,8 +1030,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Dictionary",
     kind: "operator",
-    description:
-      "A collection of key -> value entries with string keys (`{x -> 1, y -> 2}` in Epsil).",
+    description: "A collection of key -> value entries with string keys (`{x -> 1, y -> 2}` in Epsil).",
     signature: "(tuple<string, unknown>*) -> dictionary",
   },
   {
@@ -1080,8 +1063,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "DigitSum",
     kind: "operator",
-    description:
-      "Return the sum of the digits of `n` in the given `base` (default 10). The sign of `n` is ignored.",
+    description: "Return the sum of the digits of `n` in the given `base` (default 10). The sign of `n` is ignored.",
     signature: "(integer, integer?) -> integer",
   },
   {
@@ -1099,8 +1081,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Discriminant",
     kind: "operator",
-    description:
-      "Return the discriminant of a polynomial. Example: Discriminant(x² - 5x + 6, x) → 1",
+    description: "Return the discriminant of a polynomial. Example: Discriminant(x² - 5x + 6, x) → 1",
     signature: "(value, symbol?) -> value",
   },
   {
@@ -1140,16 +1121,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Divisors",
     kind: "operator",
-    description:
-      "Return the sorted list of positive divisors of an integer `n`. The sign of `n` is ignored.",
+    description: "Return the sorted list of positive divisors of an integer `n`. The sign of `n` is ignored.",
     signature: "(integer) -> list<integer>",
   },
   {
     name: "Dot",
     kind: "operator",
     description: "Dot product (vector inner product) or matrix product.",
-    signature:
-      "(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value",
+    signature: "(list<tuple> | matrix | tuple | vector, list<tuple> | matrix | tuple | vector) -> value",
     keywords: ["dot product", "inner product", "scalar product"],
   },
   {
@@ -1273,8 +1252,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Equivalent",
     kind: "operator",
-    description:
-      "Logical equivalence (if and only if): true when both operands have the same truth value.",
+    description: "Logical equivalence (if and only if): true when both operands have the same truth value.",
     signature: "(boolean, boolean) -> boolean",
     wikidata: "Q220433",
   },
@@ -1325,8 +1303,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Eulerian",
     kind: "operator",
-    description:
-      "Eulerian number A(n, m): number of permutations of {1..n} with exactly m ascents.",
+    description: "Eulerian number A(n, m): number of permutations of {1..n} with exactly m ascents.",
     signature: "(integer, integer) -> integer",
   },
   {
@@ -1344,15 +1321,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Exists",
     kind: "operator",
-    description:
-      "Existential quantifier (there exists): true when the predicate holds for at least one value.",
+    description: "Existential quantifier (there exists): true when the predicate holds for at least one value.",
     signature: "(value, boolean) -> boolean",
   },
   {
     name: "ExistsUnique",
     kind: "operator",
-    description:
-      "Unique existential quantifier (there exists exactly one value satisfying the predicate).",
+    description: "Unique existential quantifier (there exists exactly one value satisfying the predicate).",
     signature: "(value, boolean) -> boolean",
   },
   {
@@ -1489,8 +1464,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Fill",
     kind: "operator",
-    description:
-      "Produce a 2D list (matrix) by applying a function to each pair of row and column indexes.",
+    description: "Produce a 2D list (matrix) by applying a function to each pair of row and column indexes.",
     signature: "(function, tuple) -> list",
   },
   {
@@ -1503,8 +1477,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Find",
     kind: "operator",
-    description:
-      "Return the first element of the collection satisfying the predicate, or Nothing if none found.",
+    description: "Return the first element of the collection satisfying the predicate, or Nothing if none found.",
     signature: "(collection<T>, predicate: (T) any -> boolean) -> any where T",
   },
   {
@@ -1560,8 +1533,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Fold a collection to a single value, applying a binary function f(accumulator, element) left to right from an initial value.",
-    signature:
-      "(reducer: (unknown, T) any -> unknown, initial: value, collection<T>) -> value where T",
+    signature: "(reducer: (unknown, T) any -> unknown, initial: value, collection<T>) -> value where T",
   },
   {
     name: "ForAll",
@@ -1616,8 +1588,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Gamma",
     kind: "operator",
-    description:
-      "Gamma function Γ(z); with two arguments, the upper incomplete gamma Γ(s, z) = ∫_z^∞ tˢ⁻¹ e⁻ᵗ dt.",
+    description: "Gamma function Γ(z); with two arguments, the upper incomplete gamma Γ(s, z) = ∫_z^∞ tˢ⁻¹ e⁻ᵗ dt.",
     signature: "(complex | infinity, (complex | infinity)?) -> number",
     wikidata: "Q190573",
   },
@@ -1689,8 +1660,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "GroupBy",
     kind: "operator",
-    description:
-      "Partition the collection into a dictionary of lists based on the key returned by the function.",
+    description: "Partition the collection into a dictionary of lists based on the key returned by the function.",
     signature: "(collection<T>, key: (T) any -> unknown) -> dictionary<list> where T",
   },
   {
@@ -1727,8 +1697,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Histogram",
     kind: "operator",
-    description:
-      "Compute a histogram of the values in a collection. Returns a list of (bin start, count) tuples.",
+    description: "Compute a histogram of the values in a collection. Returns a list of (bin start, count) tuples.",
     signature: "(collection<any>, list<number> | number) -> list<tuple<number, integer>>",
   },
   {
@@ -1780,8 +1749,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Hypergeometric2F1",
     kind: "operator",
     description: "Gauss hypergeometric function ₂F₁(a, b; c; z).",
-    signature:
-      "(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
+    signature: "(complex | infinity, complex | infinity, complex | infinity, complex | infinity) -> number",
     wikidata: "Q672619",
   },
   {
@@ -1852,15 +1820,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "IndexOf",
     kind: "operator",
-    description:
-      "Return the 1-based index of the first occurrence of value in collection, or 0 if not found.",
+    description: "Return the 1-based index of the first occurrence of value in collection, or 0 if not found.",
     signature: "(collection<any>, any) -> integer",
   },
   {
     name: "IndexWhere",
     kind: "operator",
-    description:
-      "Return the 1-based index of the first element satisfying the predicate, or 0 if not found.",
+    description: "Return the 1-based index of the first element satisfying the predicate, or 0 if not found.",
     signature: "(collection<T>, predicate: (T) any -> boolean) -> integer where T",
   },
   {
@@ -1907,8 +1873,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "IntegerString",
     kind: "operator",
-    description:
-      "`IntegerString(n, base=10)`       return a string representation of the integer `n` in base `base`.",
+    description: "`IntegerString(n, base=10)`       return a string representation of the integer `n` in base `base`.",
     signature: "(integer, integer?) -> string",
   },
   {
@@ -1955,8 +1920,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Interval",
     kind: "operator",
-    description:
-      "A set of real numbers between two endpoints. The endpoints may or may not be included.",
+    description: "A set of real numbers between two endpoints. The endpoints may or may not be included.",
     signature: "(number, number) -> set<real>",
   },
   {
@@ -1980,8 +1944,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "InvisibleOperator",
     kind: "operator",
-    description:
-      "Implicit operator used for juxtapositions such as function application or multiplication.",
+    description: "Implicit operator used for juxtapositions such as function application or multiplication.",
     signature: "function",
   },
   {
@@ -2097,8 +2060,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "IsSatisfiable",
     kind: "operator",
-    description:
-      "Check satisfiability using brute-force enumeration. O(2^n) complexity, max 20 variables.",
+    description: "Check satisfiability using brute-force enumeration. O(2^n) complexity, max 20 variables.",
     signature: "(boolean) -> boolean",
   },
   {
@@ -2161,8 +2123,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "JacobiTheta",
     kind: "operator",
-    description:
-      "Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).",
+    description: "Jacobi theta function θⱼ(z, τ), j ∈ {1,2,3,4}, nome q = e^{iπτ} (Fungrim convention).",
     signature: "(number, complex | infinity, complex | infinity, number?) -> number",
     wikidata: "Q1154532",
   },
@@ -2332,8 +2293,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Linspace",
     kind: "operator",
-    description:
-      "A sequence of evenly spaced numbers between a start and end value, both endpoints included.",
+    description: "A sequence of evenly spaced numbers between a start and end value, both endpoints included.",
     signature: "(start: number, end: number?, count: number?) -> indexed_collection",
   },
   {
@@ -2391,8 +2351,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Lucas",
     kind: "operator",
-    description:
-      "`Lucas` is an alias for `LucasL`, which is the preferred name. Returns the nth Lucas number.",
+    description: "`Lucas` is an alias for `LucasL`, which is the preferred name. Returns the nth Lucas number.",
     signature: "(integer) -> integer",
   },
   {
@@ -2405,8 +2364,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "MachineEpsilon",
     kind: "constant",
-    description:
-      "The difference between 1 and the next larger floating point number (machine epsilon).",
+    description: "The difference between 1 and the next larger floating point number (machine epsilon).",
     signature: "real",
   },
   {
@@ -2735,8 +2693,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Norm",
     kind: "operator",
     description: "Vector or matrix norm.",
-    signature:
-      "(list<number> | list<tuple> | number | tuple, (+oo | real | string)?) -> +oo | nan | real",
+    signature: "(list<number> | list<tuple> | number | tuple, (+oo | real | string)?) -> +oo | nan | real",
   },
   {
     name: "Normal",
@@ -2779,8 +2736,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "NotDivides",
     kind: "operator",
-    description:
-      "`NotDivides(a, b)` returns `True` if `a` does not divide `b`, corresponding to the notation `a ∤ b`.",
+    description: "`NotDivides(a, b)` returns `True` if `a` does not divide `b`, corresponding to the notation `a ∤ b`.",
     signature: "(integer, integer) -> boolean",
   },
   {
@@ -2799,15 +2755,13 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "NotExists",
     kind: "operator",
-    description:
-      "Negated existential quantifier (there does not exist): true when the predicate holds for no value.",
+    description: "Negated existential quantifier (there does not exist): true when the predicate holds for no value.",
     signature: "(value, boolean) -> boolean",
   },
   {
     name: "NotForAll",
     kind: "operator",
-    description:
-      "Negated universal quantifier (not for all): true when the predicate fails for at least one value.",
+    description: "Negated universal quantifier (not for all): true when the predicate fails for at least one value.",
     signature: "(value, boolean) -> boolean",
   },
   {
@@ -2861,8 +2815,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "NotSupersetEqual",
     kind: "operator",
-    description:
-      "Test whether the first collection is not a superset (possibly equal) of the second.",
+    description: "Test whether the first collection is not a superset (possibly equal) of the second.",
     signature: "(lhs: any, rhs: any) -> boolean",
   },
   {
@@ -2969,8 +2922,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "PDF",
     kind: "operator",
-    description:
-      "Probability density (continuous) or mass (discrete) function of a distribution, evaluated at x.",
+    description: "Probability density (continuous) or mass (discrete) function of a distribution, evaluated at x.",
     signature: "(distribution, real | signed_infinity) -> nan | real<0..>",
   },
   {
@@ -3024,8 +2976,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Permutations",
     kind: "operator",
     description: "Return all permutations of length k (default full length) of a collection.",
-    signature:
-      "((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>)",
+    signature: "((S, integer?) -> list<string> where S: string) & ((collection, integer?) -> list<list>)",
     keywords: ["nPr"],
   },
   {
@@ -3171,8 +3122,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "PolynomialRoots",
     kind: "operator",
-    description:
-      "Return the roots of a polynomial expression. Example: PolynomialRoots(x² - 5x + 6, x) → {2, 3}",
+    description: "Return the roots of a polynomial expression. Example: PolynomialRoots(x² - 5x + 6, x) → {2, 3}",
     signature: "(value, symbol?) -> set<value>",
   },
   {
@@ -3300,8 +3250,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "PrimeNumber",
     kind: "operator",
-    description:
-      "The nth prime number. `PrimeNumber` is an alias for `NthPrime`, which is the preferred name.",
+    description: "The nth prime number. `PrimeNumber` is an alias for `NthPrime`, which is the preferred name.",
     signature: "(integer) -> integer",
   },
   {
@@ -3314,8 +3263,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "PrimePi",
     kind: "operator",
-    description:
-      "Return π(n), the prime-counting function: the number of primes less than or equal to `n`.",
+    description: "Return π(n), the prime-counting function: the number of primes less than or equal to `n`.",
     signature: "(real) -> integer",
   },
   {
@@ -3465,16 +3413,14 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       'RandomSample(xs, k): a list of k elements drawn from the indexed collection `xs`, without replacement. "Without replacement" is over POSITIONS, not values: on a multiset, repeats are expected — RandomSample([1, 1, 2], 2) can return [1, 1]. Sampling a string yields a string. Wrap the call in `WithRandomSeed(seed, ...)` to make it deterministic.',
-    signature:
-      "((T, number) random -> T where T: string) & ((indexed_collection, number) random -> list)",
+    signature: "((T, number) random -> T where T: string) & ((indexed_collection, number) random -> list)",
   },
   {
     name: "RandomShuffle",
     kind: "operator",
     description:
       "Randomize the order of the elements in the collection. Shuffling a string yields a string. Wrap the call in `WithRandomSeed(seed, ...)` to make it deterministic.",
-    signature:
-      "((T) random -> T where T: string) & ((indexed_collection<T>) random -> list<T> where T)",
+    signature: "((T) random -> T where T: string) & ((indexed_collection<T>) random -> list<T> where T)",
   },
   {
     name: "Range",
@@ -3487,8 +3433,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Return the 1-based inclusive index span of the first occurrence of `needle` as a contiguous subsequence of the indexed collection, or `Nothing` when it does not occur. The search starts at index `from` (1 by default) and the span is always expressed in the original collection's indices, so `RangeOf(xs, needle, Last(r) + 1)` finds the next non-overlapping occurrence and the loop ends at `Nothing`. On a string the needle is matched character by character, so a match never begins or ends inside a grapheme cluster.",
-    signature:
-      "(indexed_collection<T>, indexed_collection<T>, from: integer?) -> nothing | range where T",
+    signature: "(indexed_collection<T>, indexed_collection<T>, from: integer?) -> nothing | range where T",
   },
   {
     name: "Rank",
@@ -3519,8 +3464,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Re",
     kind: "operator",
-    description:
-      "`Re` is an alias for `Real`, which is the preferred name. Returns the real part of a complex number.",
+    description: "`Re` is an alias for `Real`, which is the preferred name. Returns the real part of a complex number.",
     signature: "(complex | infinity) -> number",
   },
   {
@@ -3540,8 +3484,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Reduce (fold) a collection to a single value by repeatedly applying a binary function, with an optional initial value.",
-    signature:
-      "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> value where T",
+    signature: "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> value where T",
   },
   {
     name: "RegExp",
@@ -3593,8 +3536,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Residue",
     kind: "operator",
-    description:
-      "Residue of a function at a point (the coefficient of (x-a)⁻¹ in its Laurent expansion)",
+    description: "Residue of a function at a point (the coefficient of (x-a)⁻¹ in its Laurent expansion)",
     signature: "(expression, variable: symbol, point: value) -> number",
   },
   {
@@ -3615,8 +3557,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     name: "Reverse",
     kind: "operator",
     description: "Reverse the order of the elements of an indexed collection.",
-    signature:
-      "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T)",
+    signature: "((T) -> T where T: string) & ((T) -> T where T: list) & ((indexed_collection<T>) -> list<T> where T)",
   },
   {
     name: "Rgb",
@@ -3648,8 +3589,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Round",
     kind: "operator",
-    description:
-      "Rounds a number to the nearest integer, or (with a precision argument) to `n` decimal places.",
+    description: "Rounds a number to the nearest integer, or (with a precision argument) to `n` decimal places.",
     signature: "(real | signed_infinity, integer?) -> real | signed_infinity",
   },
   {
@@ -3689,8 +3629,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
     kind: "operator",
     description:
       "Return the cumulative fold of a collection: a same-length collection whose k-th element is the running result of applying a binary function left to right (optionally seeded by an initial value).",
-    signature:
-      "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> indexed_collection where T",
+    signature: "(collection<T>, reducer: (unknown, T) any -> unknown, initial: value?) -> indexed_collection where T",
   },
   {
     name: "Sec",
@@ -3869,8 +3808,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Sort",
     kind: "operator",
-    description:
-      "Return the elements of the collection sorted according to the given comparison function.",
+    description: "Return the elements of the collection sorted according to the given comparison function.",
     signature:
       "((T, order: (((character) any -> unknown) | ((character, character) any -> boolean | number))?) -> T where T: string) & ((indexed_collection<T>, order: (((T) any -> unknown) | ((any, any) any -> boolean | number))?) -> list<T> where T)",
   },
@@ -3940,8 +3878,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Stirling",
     kind: "operator",
-    description:
-      "Stirling number of the second kind S(n, m): ways to partition n elements into m non-empty subsets.",
+    description: "Stirling number of the second kind S(n, m): ways to partition n elements into m non-empty subsets.",
     signature: "(integer, integer) -> integer",
   },
   {
@@ -4096,8 +4033,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "SymmetricDifference",
     kind: "operator",
-    description:
-      "Return the symmetric difference of two sets (elements in either set but not both).",
+    description: "Return the symmetric difference of two sets (elements in either set but not both).",
     signature: "(set<any>, set<any>) -> set",
     wikidata: "Q1147242",
   },
@@ -4111,8 +4047,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Tabulate",
     kind: "operator",
-    description:
-      "Create a collection by applying a function to each index in the specified dimensions.",
+    description: "Create a collection by applying a function to each index in the specified dimensions.",
     signature: "(generator: function, integer, integer?) -> indexed_collection",
     keywords: ["table"],
   },
@@ -4139,8 +4074,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Tally",
     kind: "operator",
-    description:
-      "Return a tuple with the unique elements of the collection and their respective counts.",
+    description: "Return a tuple with the unique elements of the collection and their respective counts.",
     signature: "(collection<T>) -> tuple<list<T>, list<integer>> where T",
   },
   {
@@ -4236,8 +4170,7 @@ export const engineSymbols: readonly EngineSymbol[] = [
   {
     name: "Totient",
     kind: "operator",
-    description:
-      "Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n.",
+    description: "Euler's totient function φ(n): count of positive integers ≤ n that are coprime to n.",
     signature: "(integer) -> integer",
     wikidata: "Q190026",
   },

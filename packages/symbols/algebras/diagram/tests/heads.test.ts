@@ -16,10 +16,7 @@ const same = (input: Expr, expected: Expr) =>
 const evaluated = (input: Expr) => ce.box(input).evaluate().json;
 
 /** A diagram from blocks of signed labels. */
-const D = (...blocks: number[][]): Expr => [
-  "Diagram",
-  ["List", ...blocks.map((b) => ["List", ...b] as Expr)],
-];
+const D = (...blocks: number[][]): Expr => ["Diagram", ["List", ...blocks.map((b) => ["List", ...b] as Expr)]];
 const times = (...parts: Expr[]): Expr => ["NonCommutativeMultiply", ...parts];
 
 test("dimensions come back from the closed form, past the basis limit", () => {
@@ -88,9 +85,7 @@ test("a malformed diagram stays as written rather than being guessed at", () => 
   const missing: Expr = ["Diagram", ["List", ["List", 1, -1], ["List", 2]]];
   expect(evaluated(missing)).toEqual(["Diagram", ["List", ["List", 1, -1], ["List", 2]]]);
   // A product of diagrams on different strand counts is not a product at all.
-  expect(ce.box(times(D([1, -1]), D([1, 2], [-1, -2]))).evaluate().operator).toBe(
-    "NonCommutativeMultiply",
-  );
+  expect(ce.box(times(D([1, -1]), D([1, 2], [-1, -2]))).evaluate().operator).toBe("NonCommutativeMultiply");
 });
 
 test("the carrier normalises, so a written diagram equals a computed one", () => {
@@ -112,22 +107,13 @@ test("the hypercomplex library still answers alongside this one", () => {
 });
 
 test("the orbit basis is the partition lattice's Möbius inversion of the diagram basis", () => {
-  const D = (...blocks: number[][]): Expr => [
-    "Diagram",
-    ["List", ...blocks.map((b) => ["List", ...b] as Expr)],
-  ];
-  const X = (...blocks: number[][]): Expr => [
-    "OrbitDiagram",
-    ["List", ...blocks.map((b) => ["List", ...b] as Expr)],
-  ];
+  const D = (...blocks: number[][]): Expr => ["Diagram", ["List", ...blocks.map((b) => ["List", ...b] as Expr)]];
+  const X = (...blocks: number[][]): Expr => ["OrbitDiagram", ["List", ...blocks.map((b) => ["List", ...b] as Expr)]];
   // The coarsest partition of 2 points has nothing above it, so the bases agree there.
   same(["InOrbitBasis", D([1, -1])], X([1, -1]));
   same(["InDiagramBasis", X([1, -1])], D([1, -1]));
   // The finest partition of two points expands over both partitions: d = x_fine + x_coarse.
-  same(
-    ["InOrbitBasis", ["Diagram", ["List", ["List", 1], ["List", -1]]]],
-    ["Add", X([1], [-1]), X([1, -1])],
-  );
+  same(["InOrbitBasis", ["Diagram", ["List", ["List", 1], ["List", -1]]]], ["Add", X([1], [-1]), X([1, -1])]);
   // …and back the other way the coarser term is subtracted.
   same(
     ["InDiagramBasis", ["OrbitDiagram", ["List", ["List", 1], ["List", -1]]]],
@@ -139,10 +125,7 @@ test("the orbit basis is the partition lattice's Möbius inversion of the diagra
 
 test("the Möbius function, and how many coarsenings there are", () => {
   // Merging all four points of a 2-strand diagram: (−1)³·3! = −6.
-  const finest = [
-    "Diagram",
-    ["List", ["List", 1], ["List", 2], ["List", -1], ["List", -2]],
-  ] as Expr;
+  const finest = ["Diagram", ["List", ["List", 1], ["List", 2], ["List", -1], ["List", -2]]] as Expr;
   const coarsest = ["Diagram", ["List", ["List", 1, 2, -1, -2]]] as Expr;
   same(["PartitionMobius", finest, coarsest], -6);
   same(["PartitionMobius", finest, finest], 1);

@@ -76,11 +76,7 @@ test("FromDigits reads a {digits, exponent} pair, the shape RealDigits gives (#1
     [7, 25],
   ] as const) {
     const digitsPair = ce.box(["RealDigits", ["Rational", n, d]] as never).evaluate();
-    expect(ce.box(["FromDigits", digitsPair.json] as never).evaluate().json).toEqual([
-      "Rational",
-      n,
-      d,
-    ]);
+    expect(ce.box(["FromDigits", digitsPair.json] as never).evaluate().json).toEqual(["Rational", n, d]);
   }
   // A flat digit list (no exponent pairing) is untouched -- this wrapper only fires on
   // the nested {digits, exponent} shape.

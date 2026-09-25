@@ -111,8 +111,7 @@ export function primitivesOf(node: Json): Primitive[] {
 }
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 /**
  * The primitives as SVG, through a plot's own data-to-pixel mapping. `stroke` is the

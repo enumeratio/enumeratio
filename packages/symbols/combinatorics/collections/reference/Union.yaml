@@ -18,8 +18,7 @@ examples:
     expr: [Union, [List, 1, 2], [List, 2, 3], [List, 3, 4]]
     expected: [Set, 1, 2, 3, 4]
   - id: union-is-commutative-argument-order-doesn-t
-    expr:
-      [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
+    expr: [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
     expected: True
     category: Properties
     caption: "$Union$ is commutative: argument order doesn't matter"

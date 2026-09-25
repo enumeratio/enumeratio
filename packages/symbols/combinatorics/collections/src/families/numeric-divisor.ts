@@ -97,8 +97,7 @@ const isAbundant = (n: number): boolean => n >= 1 && sumProperDivisors(n) > n;
 // ---- exact-power / factor-shape predicates. ----
 
 const isSquareFree = (n: number): boolean => n >= 1 && primeFactorsOf(n).every(([, e]) => e === 1);
-const isKFree = (n: number, k: number): boolean =>
-  n >= 1 && primeFactorsOf(n).every(([, e]) => e < k);
+const isKFree = (n: number, k: number): boolean => n >= 1 && primeFactorsOf(n).every(([, e]) => e < k);
 const isPowerful = (n: number): boolean => n >= 1 && primeFactorsOf(n).every(([, e]) => e >= 2);
 
 function ipow(a: number, k: number): number {
@@ -303,9 +302,9 @@ const GIUGA_NUMBERS = [30, 858, 1722, 66198];
 // A000926, Euler's 65 numeri idonei -- exhaustive assuming GRH, otherwise at most one more
 // (necessarily > 1848) could exist.
 const IDONEAL_NUMBERS = [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 18, 21, 22, 24, 25, 28, 30, 33, 37, 40, 42, 45, 48,
-  57, 58, 60, 70, 72, 78, 85, 88, 93, 102, 105, 112, 120, 130, 133, 165, 168, 177, 190, 210, 232,
-  240, 253, 273, 280, 312, 330, 345, 357, 385, 408, 462, 520, 760, 840, 1320, 1365, 1848,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 15, 16, 18, 21, 22, 24, 25, 28, 30, 33, 37, 40, 42, 45, 48, 57, 58, 60, 70, 72,
+  78, 85, 88, 93, 102, 105, 112, 120, 130, 133, 165, 168, 177, 190, 210, 232, 240, 253, 273, 280, 312, 330, 345, 357,
+  385, 408, 462, 520, 760, 840, 1320, 1365, 1848,
 ];
 
 function tableEntry(table: readonly number[]): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
@@ -317,9 +316,7 @@ function tableEntry(table: readonly number[]): Pick<FamilyKernel, "unrank" | "va
 }
 
 /** A paramCount:0 scalar family driven by a plain predicate, via one shared nthMatchCache. */
-function predicateEntry(
-  predicate: (n: number) => boolean,
-): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
+function predicateEntry(predicate: (n: number) => boolean): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
   const cache = nthMatchCache(predicate);
   return {
     unrank: (_p, r) => cache.nth(r + 1),
@@ -331,9 +328,7 @@ function predicateEntry(
 /** Same shape, for a family whose membership can only be answered by rank (record-setting
  *  scans like HighlyCompositeNumbers, where "valid" has no cheaper test than "is it a
  *  record" -- which the cache already computes when asked for the rank). */
-function cacheEntry(
-  cache: ReturnType<typeof nthMatchCache>,
-): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
+function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
   return {
     unrank: (_p, r) => cache.nth(r + 1),
     valid: (element) => cache.rankOf(Number(element)) >= 0,

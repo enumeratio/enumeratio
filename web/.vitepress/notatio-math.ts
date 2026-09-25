@@ -82,12 +82,7 @@ function mathInline(state: StateInline, silent: boolean): boolean {
 }
 
 /** Block `$$ … $$`, on its own lines. Rendered in display style. */
-function mathBlock(
-  state: StateBlock,
-  startLine: number,
-  endLine: number,
-  silent: boolean,
-): boolean {
+function mathBlock(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
   const open = state.bMarks[startLine]! + state.tShift[startLine]!;
   const max = state.eMarks[startLine]!;
   if (open + 2 > max || state.src.slice(open, open + 2) !== "$$") return false;
@@ -137,11 +132,7 @@ export function notatioMath(md: MarkdownItLike): void {
   md.block.ruler.before("fence", "notatio_math_block", mathBlock, {
     alt: ["paragraph", "reference", "blockquote", "list"],
   });
-  const rules = md.renderer.rules as Record<
-    string,
-    (tokens: { content: string }[], index: number) => string
-  >;
+  const rules = md.renderer.rules as Record<string, (tokens: { content: string }[], index: number) => string>;
   rules["notatio_math_inline"] = (tokens, index) => tex(tokens[index]!.content);
-  rules["notatio_math_block"] = (tokens, index) =>
-    `${tex(tokens[index]!.content.replace(/\n/g, " "), true)}\n`;
+  rules["notatio_math_block"] = (tokens, index) => `${tex(tokens[index]!.content.replace(/\n/g, " "), true)}\n`;
 }

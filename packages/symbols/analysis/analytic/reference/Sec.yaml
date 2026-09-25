@@ -56,15 +56,7 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr:
-      [
-        Sec,
-        [
-          List,
-          [List, [Multiply, 5, [Divide, Pi, 6]], 0],
-          [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 4]]],
-        ],
-      ]
+    expr: [Sec, [List, [List, [Multiply, 5, [Divide, Pi, 6]], 0], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 4]]]]]
     expected:
       [
         List,

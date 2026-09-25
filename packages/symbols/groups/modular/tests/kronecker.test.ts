@@ -11,9 +11,7 @@ declareModular(ce);
 // Pinned against a Wolfram kernel — the full a, n ∈ [-10, 10] grid. Regenerate with
 // `node scripts/collect-kronecker-golden.ts` (requires wolframscript on PATH).
 const GOLDEN = fileURLToPath(new URL("./kronecker.golden.json", import.meta.url));
-const golden: readonly { a: number; n: number; value: number }[] = JSON.parse(
-  readFileSync(GOLDEN, "utf8"),
-);
+const golden: readonly { a: number; n: number; value: number }[] = JSON.parse(readFileSync(GOLDEN, "utf8"));
 
 test("KroneckerSymbol matches the Wolfram kernel over a, n ∈ [-10, 10]", () => {
   for (const { a, n, value } of golden) {

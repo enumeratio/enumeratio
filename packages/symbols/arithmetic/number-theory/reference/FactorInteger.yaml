@@ -53,8 +53,7 @@ examples:
     caption: Threads element-wise over a list, as Wolfram's Listable heads do
   - id: 5-i-1-2i-2-i
     expr: [FactorInteger, 5, [KeyValuePair, GaussianIntegers, True]]
-    expected:
-      [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1]]
+    expected: [List, [Tuple, [Complex, 0, -1], 1], [Tuple, [Complex, 1, 2], 1], [Tuple, [Complex, 2, 1], 1]]
     category: Scope
     caption: $5 = -i(1 + 2i)(2 + i)$
   - id: 3-4i-2-i-2
@@ -63,8 +62,7 @@ examples:
     category: Scope
     caption: $3 + 4i = (2 + i)^2$
   - id: a-21-digit-gaussian-integer-through-its-norm
-    expr:
-      [FactorInteger, [Complex, { num: "100000000000000000039" }, { num: "100000000000000000129" }]]
+    expr: [FactorInteger, [Complex, { num: "100000000000000000039" }, { num: "100000000000000000129" }]]
     expected:
       [
         List,
@@ -100,12 +98,7 @@ examples:
   - id: listable-threads-over-a-list
     expr: [FactorInteger, [List, 11, 101, 1001]]
     expected:
-      [
-        List,
-        [List, [Tuple, 11, 1]],
-        [List, [Tuple, 101, 1]],
-        [List, [Tuple, 7, 1], [Tuple, 11, 1], [Tuple, 13, 1]],
-      ]
+      [List, [List, [Tuple, 11, 1]], [List, [Tuple, 101, 1]], [List, [Tuple, 7, 1], [Tuple, 11, 1], [Tuple, 13, 1]]]
     category: Scope
     caption: "Listable: threads over a list"
   - id: 1-is-a-unit-and-factors-as-itself

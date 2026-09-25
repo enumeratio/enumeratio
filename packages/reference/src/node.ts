@@ -10,17 +10,8 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  type HeadImplementations,
-  parseYaml,
-  type ReferenceEntry,
-  type OtherSystemRun,
-} from "@enumeratio/entry";
-import {
-  HEAD_IMPLEMENTATIONS_SCHEMA,
-  REFERENCE_ENTRY_SCHEMA,
-  validateSchema,
-} from "@enumeratio/entry/schema";
+import { type HeadImplementations, parseYaml, type ReferenceEntry, type OtherSystemRun } from "@enumeratio/entry";
+import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA, validateSchema } from "@enumeratio/entry/schema";
 import { isCrosswalkSystem } from "./crosswalk/sources.ts";
 
 export interface LoadedHead {
@@ -107,16 +98,13 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
         issues.push({ file: entryPath, message: `failed to parse: ${(error as Error).message}` });
         continue;
       }
-      for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, entry))
-        issues.push({ file: entryPath, message });
+      for (const message of validateSchema(REFERENCE_ENTRY_SCHEMA, entry)) issues.push({ file: entryPath, message });
 
       const implementationsPath = join(referenceDir, `${head}${IMPLEMENTATIONS_SUFFIX}`);
       let implementations: HeadImplementations | undefined;
       if (existsSync(implementationsPath)) {
         try {
-          implementations = parseYaml(
-            readFileSync(implementationsPath, "utf8"),
-          ) as HeadImplementations;
+          implementations = parseYaml(readFileSync(implementationsPath, "utf8")) as HeadImplementations;
         } catch (error) {
           issues.push({
             file: implementationsPath,
@@ -163,9 +151,7 @@ const SIDECARS = fileURLToPath(new URL("./entries/", import.meta.url));
 /** A sidecar: kernel versions, and every system's run of an example, by head then id. */
 export type Sidecar = {
   readonly kernels?: Readonly<Record<string, string>>;
-  readonly examples?: Readonly<
-    Record<string, Readonly<Record<string, Readonly<Record<string, OtherSystemRun>>>>>
-  >;
+  readonly examples?: Readonly<Record<string, Readonly<Record<string, Readonly<Record<string, OtherSystemRun>>>>>>;
 };
 
 export interface ReferenceData {
@@ -199,10 +185,7 @@ export function referenceData(
     throw new Error(`reference data: ${issues.map((i) => `\n  ${i.file}: ${i.message}`).join("")}`);
 
   const sidecars: Record<string, Sidecar> = {};
-  const runs = new Map<
-    string,
-    Readonly<Record<string, Readonly<Record<string, OtherSystemRun>>>>
-  >();
+  const runs = new Map<string, Readonly<Record<string, Readonly<Record<string, OtherSystemRun>>>>>();
   const kernels: Record<string, string> = {};
   if (packagesRoot === PACKAGES && existsSync(SIDECARS))
     for (const file of readdirSync(SIDECARS)
@@ -245,8 +228,7 @@ export function referenceData(
 export function oracleAgreementsOf(
   data: ReferenceData,
 ): Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> {
-  const out: Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> =
-    {};
+  const out: Record<string, { system: string; agree: number; disagree: number; kernel: string }[]> = {};
   for (const entry of [...data.entries].sort((a, b) => a.name.localeCompare(b.name))) {
     const tally = new Map<string, { agree: number; disagree: number }>();
     for (const example of entry.examples)
@@ -284,26 +266,21 @@ export function referenceEntries(data: ReferenceData = referenceData()): readonl
 }
 
 /** One package's own entries (by directory name), as that package's tests run them. */
-export function packageEntries(
-  pkg: string,
-  data: ReferenceData = referenceData(),
-): readonly ReferenceEntry[] {
+export function packageEntries(pkg: string, data: ReferenceData = referenceData()): readonly ReferenceEntry[] {
   return data.heads.filter((h) => h.package === pkg).map((h) => h.entry);
 }
 
 /** Which sidecar (`src/entries/<stem>.oracle.json`) holds each head's oracle rows: the domain
  * files the entries came from before the flip. Goes away with the sidecars (§8 step 6). */
-const STEMS = JSON.parse(
-  readFileSync(new URL("./entries/stems.json", import.meta.url), "utf8"),
-) as Readonly<Record<string, string>>;
+const STEMS = JSON.parse(readFileSync(new URL("./entries/stems.json", import.meta.url), "utf8")) as Readonly<
+  Record<string, string>
+>;
 
 /** The sidecar a head without one gets: collections' own heads, and any new head. */
 export const UNFILED = "unfiled";
 
 /** The reference engine's entries, grouped by the sidecar that holds their oracle rows. */
-export function entryFiles(
-  data: ReferenceData = referenceData(),
-): { stem: string; entries: ReferenceEntry[] }[] {
+export function entryFiles(data: ReferenceData = referenceData()): { stem: string; entries: ReferenceEntry[] }[] {
   const byStem = new Map<string, ReferenceEntry[]>();
   const held = new Map<string, string>();
   for (const [stem, sidecar] of Object.entries(data.sidecars))
@@ -312,7 +289,5 @@ export function entryFiles(
     const stem = STEMS[entry.name] ?? held.get(entry.name) ?? UNFILED;
     byStem.set(stem, [...(byStem.get(stem) ?? []), entry]);
   }
-  return [...byStem]
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([stem, entries]) => ({ stem, entries }));
+  return [...byStem].sort(([a], [b]) => a.localeCompare(b)).map(([stem, entries]) => ({ stem, entries }));
 }

@@ -42,18 +42,14 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
       if (tol === undefined || !Number.isFinite(tol)) return undefined;
       const chopPart = (part: BoxedExpression): BoxedExpression => {
         const value = part.N().re;
-        return value !== undefined && Number.isFinite(value) && Math.abs(value) < tol
-          ? ce.Zero
-          : part;
+        return value !== undefined && Number.isFinite(value) && Math.abs(value) < tol ? ce.Zero : part;
       };
       if (x.operator === "Complex" || (x.im !== undefined && Number.isFinite(x.im) && x.im !== 0)) {
         const re = ce.number(x.re ?? 0);
         const im = ce.number(x.im ?? 0);
         const choppedRe = chopPart(re);
         const choppedIm = chopPart(im);
-        return choppedIm.isSame(ce.Zero)
-          ? choppedRe
-          : ce.function("Complex", [choppedRe, choppedIm]);
+        return choppedIm.isSame(ce.Zero) ? choppedRe : ce.function("Complex", [choppedRe, choppedIm]);
       }
       return chopPart(x);
     },

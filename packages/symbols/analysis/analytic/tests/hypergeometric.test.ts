@@ -26,8 +26,7 @@ const goldens: GoldenCase[] = JSON.parse(
 );
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 test("hypergeometric heads match mpmath and Wolfram", () => {
   const off: string[] = [];
@@ -54,24 +53,13 @@ test("Hypergeometric0F1 declines a pole (b a non-positive integer)", () => {
 test("the regularized heads stay finite at non-positive-integer lower parameters", () => {
   // 1/Γ(non-positive integer) = 0, so these are finite (and generally non-zero once the
   // series clears the pole zone) rather than a symbolic bounce.
-  expect(ce.box(["Hypergeometric0F1Regularized", -1, 0.5]).N().re).toBeCloseTo(
-    0.1471797367221067,
-    9,
-  );
-  expect(ce.box(["Hypergeometric1F1Regularized", 1, -1, 0.7]).N().re).toBeCloseTo(
-    0.9867388266605335,
-    8,
-  );
-  expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, -1, 0.3]).N().re).toBeCloseTo(
-    0.5247813411078718,
-    8,
-  );
+  expect(ce.box(["Hypergeometric0F1Regularized", -1, 0.5]).N().re).toBeCloseTo(0.1471797367221067, 9);
+  expect(ce.box(["Hypergeometric1F1Regularized", 1, -1, 0.7]).N().re).toBeCloseTo(0.9867388266605335, 8);
+  expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, -1, 0.3]).N().re).toBeCloseTo(0.5247813411078718, 8);
 });
 
 test("Hypergeometric2F1Regularized and Hypergeometric3F2Regularized decline |z| >= 1", () => {
-  expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5]).N().operator).toBe(
-    "Hypergeometric2F1Regularized",
-  );
+  expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, 1.5]).N().operator).toBe("Hypergeometric2F1Regularized");
   expect(ce.box(["Hypergeometric2F1Regularized", 1, 1, 2, ["Complex", 1, 0.5]]).N().operator).toBe(
     "Hypergeometric2F1Regularized",
   );

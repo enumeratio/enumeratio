@@ -9,12 +9,7 @@ signatures:
 examples:
   - id: three-of-k4s-vertices
     expr: [Subgraph, [CompleteGraph, 4], [List, 1, 2, 3]]
-    expected:
-      [
-        Graph,
-        [List, 1, 2, 3],
-        [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3], [UndirectedEdge, 2, 3]],
-      ]
+    expected: [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3], [UndirectedEdge, 2, 3]]]
     caption: The induced subgraph on 3 of $K_4$'s vertices is $K_3$
 seeAlso:
   - NeighborhoodGraph

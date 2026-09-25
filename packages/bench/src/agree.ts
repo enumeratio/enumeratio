@@ -12,9 +12,7 @@ export function answerText(json: unknown): string {
 
 /** A real decimal as `mantissa × 10^exponent`, exactly; `undefined` for anything else. */
 function decimal(text: string): { readonly m: bigint; readonly e: number } | undefined {
-  const match = /^\s*([-+]?)(\d*)(?:\.(\d*))?(?:[eE]([-+]?\d+)|\*\^([-+]?\d+))?\s*$/.exec(
-    text.replace(/`[\d.]*/g, ""),
-  );
+  const match = /^\s*([-+]?)(\d*)(?:\.(\d*))?(?:[eE]([-+]?\d+)|\*\^([-+]?\d+))?\s*$/.exec(text.replace(/`[\d.]*/g, ""));
   if (match === null || (match[2] === "" && (match[3] ?? "") === "")) return undefined;
   const frac = match[3] ?? "";
   const m = BigInt(`${match[1]}${match[2] || "0"}${frac}`);
@@ -39,8 +37,5 @@ export function agrees(value: string, expected: string, precision: Precision): b
   if (precision === "exact") return normalise(value) === normalise(expected);
   // Two digits of slack: the last places of a correctly rounded answer can differ.
   const digits = (precision === "machine" ? 15 : precision) - 2;
-  return (
-    agreeDigits(value, expected, digits) ??
-    compare(value, expected, 10 ** -Math.min(digits, 13)) === "agree"
-  );
+  return agreeDigits(value, expected, digits) ?? compare(value, expected, 10 ** -Math.min(digits, 13)) === "agree";
 }

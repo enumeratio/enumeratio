@@ -32,12 +32,7 @@ examples:
     expected: -1
     caption: "(a/2): odd a, and 3 mod 8 = 3, one of the two residues giving -1"
   - id: completely-multiplicative-in-n
-    expr:
-      [
-        Equal,
-        [KroneckerSymbol, 7, [Multiply, 3, 5]],
-        [Multiply, [KroneckerSymbol, 7, 3], [KroneckerSymbol, 7, 5]],
-      ]
+    expr: [Equal, [KroneckerSymbol, 7, [Multiply, 3, 5]], [Multiply, [KroneckerSymbol, 7, 3], [KroneckerSymbol, 7, 5]]]
     expected: True
     category: Properties
     caption: Completely multiplicative in n

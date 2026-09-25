@@ -32,7 +32,6 @@ examples:
     category: Possible issues
     caption: with no assumption that $x$ is real, `Abs` is left alone — same as Wolfram
   - id: max-of-two-real-variables
-    expr:
-      [PiecewiseExpand, [Max, x, y], [And, [Element, x, RealNumbers], [Element, y, RealNumbers]]]
+    expr: [PiecewiseExpand, [Max, x, y], [And, [Element, x, RealNumbers], [Element, y, RealNumbers]]]
     expected: [Piecewise, [List, [List, x, [LessEqual, y, x]]], y]
     caption: $\max(x,y)$ expanded, once both are known real

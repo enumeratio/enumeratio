@@ -179,11 +179,7 @@ const CORPUS: Record<string, MathJsonExpression> = {
   "sum no bounds": ["Sum", "a_n"],
   "sum variable only": ["Sum", "a_n", "n"],
   product: ["Product", "k", ["Limits", "k", 1, 5]],
-  "definite integral": [
-    "Integrate",
-    ["Function", ["Block", ["Power", "x", 2]], "x"],
-    ["Limits", "x", 0, 1],
-  ],
+  "definite integral": ["Integrate", ["Function", ["Block", ["Power", "x", 2]], "x"], ["Limits", "x", 0, 1]],
   "indefinite integral": ["Integrate", ["Sin", "x"], "x"],
   "integral of sum": ["Integrate", ["Add", "x", 1], ["Tuple", "x", 0, 1]],
   limit: ["Limit", ["Function", ["Block", ["Divide", ["Sin", "x"], "x"]], "x"], 0],

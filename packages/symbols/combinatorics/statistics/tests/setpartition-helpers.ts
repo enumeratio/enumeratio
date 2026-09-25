@@ -15,8 +15,7 @@ export function setPartitions(n: number): number[][][] {
   if (n === 0) return [[]];
   const out: number[][][] = [];
   for (const rest of setPartitions(n - 1)) {
-    for (let b = 0; b < rest.length; b++)
-      out.push(rest.map((block, k) => (k === b ? [...block, n] : block)));
+    for (let b = 0; b < rest.length; b++) out.push(rest.map((block, k) => (k === b ? [...block, n] : block)));
     out.push([...rest, [n]]);
   }
   return out;
@@ -42,10 +41,7 @@ export const arcsOf = (blocks: number[][]): [number, number][] =>
 
 /** Arcs [p1,q1] and [p2,q2] relabelled a<b by left endpoint; c is the right endpoint of
  *  whichever starts at a, d the other's. Crossing is a<b<c<d, nesting a<b<d<c. */
-function arcPairKind(
-  [p1, q1]: [number, number],
-  [p2, q2]: [number, number],
-): "crossing" | "nesting" | "neither" {
+function arcPairKind([p1, q1]: [number, number], [p2, q2]: [number, number]): "crossing" | "nesting" | "neither" {
   const aIsFirst = p1 < p2;
   const b = aIsFirst ? p2 : p1;
   const c = aIsFirst ? q1 : q2;

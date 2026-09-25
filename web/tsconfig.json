@@ -3,10 +3,5 @@
   "compilerOptions": {
     "types": ["vite/client"]
   },
-  "include": [
-    ".vitepress/**/*.ts",
-    ".vitepress/**/*.mts",
-    ".vitepress/**/*.vue",
-    ".vitepress/**/*.d.ts"
-  ]
+  "include": [".vitepress/**/*.ts", ".vitepress/**/*.mts", ".vitepress/**/*.vue", ".vitepress/**/*.d.ts"]
 }

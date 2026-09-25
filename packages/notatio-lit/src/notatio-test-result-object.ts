@@ -87,8 +87,7 @@ export class NotatioTestResultObject extends LitElement {
       ${
         this.outcome === "Error" || this.outcome === "Aborted"
           ? nothing
-          : html`<notatio-out format="notatio" .value=${this.actual} label="Out" label-menu>
-            </notatio-out>`
+          : html`<notatio-out format="notatio" .value=${this.actual} label="Out" label-menu> </notatio-out>`
       }
     </div>`;
   }

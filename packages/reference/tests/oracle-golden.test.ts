@@ -17,9 +17,7 @@ const KEYS_BY_STEM_HEAD = new Map<string, Set<string>>();
 for (const { stem, entries } of entryFiles) {
   for (const entry of entries) {
     const keys = new Set(
-      entry.examples
-        .filter((example) => example.aspirational !== true)
-        .map((example) => example.id),
+      entry.examples.filter((example) => example.aspirational !== true).map((example) => example.id),
     );
     KEYS_BY_STEM_HEAD.set(`${stem}::${entry.name}`, keys);
   }
@@ -38,8 +36,7 @@ test("every row that is not an agreement is classified, with a note", () => {
             expect((row.note ?? "").length, label).toBeGreaterThan(20);
           }
           // Ours means the other system is right, which is only acceptable with an issue open.
-          if (row.kind === "ours")
-            expect(Number.isInteger(row.issue) && row.issue! > 0, label).toBe(true);
+          if (row.kind === "ours") expect(Number.isInteger(row.issue) && row.issue! > 0, label).toBe(true);
           else expect(row.issue, label).toBeUndefined();
           if (row.verdict === "agree") continue;
           expect(row.kind, label).not.toBe("unclassified");

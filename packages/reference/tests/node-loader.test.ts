@@ -6,16 +6,12 @@ import { fileURLToPath } from "node:url";
 import { expect, test } from "vite-plus/test";
 import { loadReferenceData } from "../src/node.ts";
 
-const fixture = (name: string): string =>
-  fileURLToPath(new URL(`fixtures/${name}`, import.meta.url));
+const fixture = (name: string): string => fileURLToPath(new URL(`fixtures/${name}`, import.meta.url));
 
 test("loads every head from every package's reference/ directory", () => {
   const result = loadReferenceData(fixture("node-loader"));
   expect(result.issues).toEqual([]);
-  expect(result.heads.map((h) => `${h.package}/${h.head}`)).toEqual([
-    "pkg-a/Mod",
-    "pkg-b/FromDigits",
-  ]);
+  expect(result.heads.map((h) => `${h.package}/${h.head}`)).toEqual(["pkg-a/Mod", "pkg-b/FromDigits"]);
 });
 
 test("reads the optional .implementations.yaml alongside its entry", () => {

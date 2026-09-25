@@ -13,10 +13,9 @@ import { computed, useSlots } from "vue";
 import { getEntry } from "../../data/reference.ts";
 import { type SymbolKind, SYMBOL_SOURCES } from "../../data/symbol-links.ts";
 
-const props = withDefaults(
-  defineProps<{ name?: string; type?: SymbolKind; to?: string; plain?: boolean }>(),
-  { type: "notatio" },
-);
+const props = withDefaults(defineProps<{ name?: string; type?: SymbolKind; to?: string; plain?: boolean }>(), {
+  type: "notatio",
+});
 const slots = useSlots();
 
 /** The link text: the `name` prop, or the default slot rendered to text. */
@@ -57,9 +56,7 @@ const tip = computed(() => {
 // An unknown head is not a link. Silently rendering a dead one is worse than plain code:
 // the reference is generated, so a name that resolves to nothing is a typo or a rename --
 // and an outside system with no scheme and no crosswalk row has nowhere to send anyone.
-const known = computed(() =>
-  props.type === "notatio" ? entry.value !== undefined : href.value !== undefined,
-);
+const known = computed(() => (props.type === "notatio" ? entry.value !== undefined : href.value !== undefined));
 </script>
 
 <template>

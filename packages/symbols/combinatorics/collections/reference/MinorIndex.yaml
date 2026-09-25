@@ -22,8 +22,7 @@ examples:
     expected: 0
     caption: no ascents
   - id: major-and-minor-index-split-binom-n-2
-    expr:
-      [Equal, [Add, [MajorIndex, [List, 3, 1, 2]], [MinorIndex, [List, 3, 1, 2]]], [Binomial, 3, 2]]
+    expr: [Equal, [Add, [MajorIndex, [List, 3, 1, 2]], [MinorIndex, [List, 3, 1, 2]]], [Binomial, 3, 2]]
     expected: True
     category: Properties
     caption: major and minor index split $\binom{n}{2}$

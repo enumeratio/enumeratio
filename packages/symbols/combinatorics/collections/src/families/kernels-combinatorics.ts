@@ -193,8 +193,7 @@ function getBTable(n: number): number[][] {
   if (cached) return cached;
   const b: number[][] = Array.from({ length: n + 1 }, () => Array.from({ length: n + 2 }, () => 0));
   for (let m = 0; m <= n + 1; m++) b[0][m] = 1;
-  for (let k = 1; k <= n; k++)
-    for (let m = n; m >= 0; m--) b[k][m] = (m + 1) * b[k - 1][m] + b[k - 1][m + 1];
+  for (let k = 1; k <= n; k++) for (let m = n; m >= 0; m--) b[k][m] = (m + 1) * b[k - 1][m] + b[k - 1][m + 1];
   _btableCache.set(n, b);
   return b;
 }

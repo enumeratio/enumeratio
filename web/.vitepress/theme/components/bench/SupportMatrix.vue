@@ -30,9 +30,7 @@ function isSupported(caseName: string, sys: BenchSystem): boolean {
       <tbody>
         <tr v-for="c in plan.cases" :key="c.name">
           <td>
-            <a
-              :href="`/reference/symbol/${c.name.split('/')[0]}#example/${c.name.split('/').slice(1).join('/')}`"
-            >
+            <a :href="`/reference/symbol/${c.name.split('/')[0]}#example/${c.name.split('/').slice(1).join('/')}`">
               <code>{{ c.name }}</code>
             </a>
           </td>
