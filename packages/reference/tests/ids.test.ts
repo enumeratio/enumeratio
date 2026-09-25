@@ -8,7 +8,7 @@ import { entries } from "../src/index.ts";
 // Every example is addressed by `<Head>/<id>`: the page anchor `#example/<id>`, the test
 // name, the oracle row. One id space per head, across every package documenting it.
 const HOW =
-  "give it an `id` (lowercase words joined by `-`, at most 48 characters), unique within its head; once published, keep it when you edit the example";
+  "give it an `id` (lowercase words joined by `-`, at most 48 characters), unique within its head, or run `node packages/reference/scripts/migrate/add-ids.ts --write` to assign the missing ones; once published, keep an id when you edit the example";
 
 test("every example has a well-formed id, unique within its head", () => {
   const seen = new Map<string, Set<string>>();

@@ -9,6 +9,10 @@
 // writes ids into `special-functions.examples.json`, rekeys the oracle sidecars from
 // `JSON.stringify(expr)` to id, and dumps `(head, #example-N) → id` for the page links.
 // Without `--write` it only reports.
+//
+// Safe to re-run: ids already in the data are kept, so a lane that merged main and added
+// examples without ids runs it with `--write` to fill in just those, and to rekey any
+// sidecar rows it wrote by expression.
 
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
