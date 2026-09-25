@@ -222,3 +222,70 @@ export function divisorsGaussian(z: Gaussian): Gaussian[] | undefined {
   }
   return divisors.map((d) => normalize(d)[0]).sort(compare);
 }
+
+/** The prime factors of `factorGaussian`, less the leading unit entry it carries for a non-associate z. */
+const primeFactorsOf = (
+  factors: readonly (readonly [Gaussian, number])[],
+): (readonly [Gaussian, number])[] => factors.filter(([p]) => !isUnit(p));
+
+/** Wolfram's `PrimeNu[z, GaussianIntegers -> True]`: count of distinct Gaussian prime factors. */
+export function primeNuGaussian(z: Gaussian): number | undefined {
+  const factors = factorGaussian(z);
+  return factors === undefined ? undefined : primeFactorsOf(factors).length;
+}
+
+/** Wolfram's `PrimeOmega[z, GaussianIntegers -> True]`: Gaussian prime factors, with multiplicity. */
+export function primeOmegaGaussian(z: Gaussian): number | undefined {
+  const factors = factorGaussian(z);
+  return factors === undefined
+    ? undefined
+    : primeFactorsOf(factors).reduce((total, [, e]) => total + e, 0);
+}
+
+/** Wolfram's `MoebiusMu[z, GaussianIntegers -> True]`: 0 if not squarefree, else (−1)^(number of prime factors). */
+export function moebiusMuGaussian(z: Gaussian): number | undefined {
+  const factors = factorGaussian(z);
+  if (factors === undefined) return undefined;
+  const primes = primeFactorsOf(factors);
+  if (primes.some(([, e]) => e > 1)) return 0;
+  return primes.length % 2 === 0 ? 1 : -1;
+}
+
+/** Wolfram's `IsSquareFree[z, GaussianIntegers -> True]`: no repeated Gaussian prime factor. */
+export function isSquareFreeGaussian(z: Gaussian): boolean | undefined {
+  const factors = factorGaussian(z);
+  return factors === undefined ? undefined : primeFactorsOf(factors).every(([, e]) => e === 1);
+}
+
+/** zᵏ for k ≥ 0, by repeated squaring. */
+function powGaussian(z: Gaussian, k: number): Gaussian {
+  let result = ONE;
+  let base = z;
+  for (let e = k; e > 0; e >>= 1) {
+    if (e & 1) result = mul(result, base);
+    base = mul(base, base);
+  }
+  return result;
+}
+
+/** Wolfram's `DivisorSigma[k, z, GaussianIntegers -> True]`: Σ dᵏ over the divisors d of z, k ≥ 0. */
+export function divisorSigmaGaussian(k: bigint, z: Gaussian): Gaussian | undefined {
+  if (k < 0n || k > BigInt(Number.MAX_SAFE_INTEGER)) return undefined;
+  const divisors = divisorsGaussian(z);
+  return divisors === undefined
+    ? undefined
+    : divisors.reduce((total, d) => add(total, powGaussian(d, Number(k))), ZERO);
+}
+
+/** The largest k with bᵏ | z, or undefined when z = 0 (∞) or b is a unit (no largest k). */
+export function integerExponentGaussian(z: Gaussian, b: Gaussian): bigint | undefined {
+  if (isZero(z)) return undefined;
+  if (isUnit(b) || isZero(b)) return undefined;
+  let k = 0n;
+  let rest = z;
+  for (let next = divideExact(rest, b); next !== undefined; next = divideExact(rest, b)) {
+    rest = next;
+    k += 1n;
+  }
+  return k;
+}

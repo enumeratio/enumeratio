@@ -62,7 +62,7 @@ export const lists: readonly ReferenceEntry[] = [
         caption: "Vacuously true on an empty list",
       },
     ],
-    seeAlso: ["Any"],
+    seeAlso: ["Any", "NoneTrue"],
   },
   {
     name: "Any",
@@ -130,7 +130,42 @@ export const lists: readonly ReferenceEntry[] = [
         caption: "Some element passes exactly when not every element fails. See [[All]]",
       },
     ],
-    seeAlso: ["All"],
+    seeAlso: ["All", "NoneTrue"],
+  },
+  {
+    name: "NoneTrue",
+    domain: "Collections",
+    signature: "NoneTrue(xs, predicate)",
+    summary: "Whether no element of a collection satisfies a predicate.",
+    signatures: [
+      {
+        call: "NoneTrue(xs, predicate)",
+        description: "$True$ if $predicate$ holds for no element of $xs$, else $False$.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ["The negation of [[Any]]: $NoneTrue(xs, p) = Not(Any(xs, p))$."],
+    examples: [
+      { expr: ["NoneTrue", ["List", 1, 3, 5], "IsEven"], expected: "True" },
+      { expr: ["NoneTrue", ["List", 1, 2, 3], "IsEven"], expected: "False" },
+      {
+        expr: ["NoneTrue", ["List"], "IsEven"],
+        expected: "True",
+        category: "Scope",
+        caption: "Vacuously true on an empty list",
+      },
+      {
+        expr: [
+          "Equal",
+          ["NoneTrue", ["List", 4, 6, 9], "IsPrime"],
+          ["Not", ["Any", ["List", 4, 6, 9], "IsPrime"]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "The negation of [[Any]]",
+      },
+    ],
+    seeAlso: ["All", "Any"],
   },
   {
     name: "Fold",
