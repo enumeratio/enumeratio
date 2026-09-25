@@ -28,8 +28,11 @@ for (const [label, order] of [
 
     const exact = ce.box(["Rationalize", 0.1, 0] as never).evaluate().json;
     expect(Array.isArray(exact) && exact[0] === "Rational", JSON.stringify(exact)).toBe(true);
-    const [, p, q] = exact as [string, number, number];
-    expect(p / q).toBe(0.1);
+    // The denominator 2^55 is past 2^53, so it serialises as {num: "…"}.
+    const int = (j: unknown): number =>
+      Number(typeof j === "object" && j !== null ? (j as { num: string }).num : j);
+    const [, p, q] = exact as [string, unknown, unknown];
+    expect(int(p) / int(q)).toBe(0.1);
 
     // An already-exact x is returned unchanged at dx = 0, same as at dx > 0.
     expect(ce.box(["Rationalize", 2, 0] as never).evaluate().json).toBe(2);
