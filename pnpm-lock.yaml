@@ -619,6 +619,9 @@ importers:
       '@enumeratio/oracle':
         specifier: workspace:*
         version: link:../oracle
+      '@enumeratio/plausible':
+        specifier: workspace:*
+        version: link:../plausible
       '@enumeratio/quiver':
         specifier: workspace:*
         version: link:../symbols/algebras/quiver
