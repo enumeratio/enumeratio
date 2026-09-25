@@ -502,6 +502,43 @@ export const HEADS: Record<string, string> = {
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 
+  // Graphs (packages/symbols/combinatorics/collections/src/graphs.ts). Wolfram's InputForm
+  // prints UndirectedEdge/DirectedEdge infix (`1 <-> 2`, `1 -> 2`); `Head[args]` call form
+  // is equivalent WL syntax and evaluates identically, so a plain rename is enough here —
+  // no SPECIAL entry needed. `ConnectedGraphQ`/`TreeGraphQ`/`BipartiteGraphQ` are Wolfram's
+  // names for what we spell `Is…` (same convention as `IsPrime: "PrimeQ"` above).
+  //
+  // PathGraph is deliberately NOT here (see FOREIGN below instead): `PathGraph(n)` is our
+  // own convenience extension over a call shape real Wolfram ERRORS on (kernel-verified:
+  // `PathGraph[3]` only accepts a vertex list), and HEADS has no way to map conditionally
+  // on call shape -- a plain rename here would "vouch for" (`isWolframHead`) every call,
+  // including the one that errors.
+  UndirectedEdge: "UndirectedEdge",
+  DirectedEdge: "DirectedEdge",
+  Graph: "Graph",
+  VertexList: "VertexList",
+  EdgeList: "EdgeList",
+  VertexCount: "VertexCount",
+  EdgeCount: "EdgeCount",
+  VertexDegree: "VertexDegree",
+  AdjacencyMatrix: "AdjacencyMatrix",
+  IncidenceMatrix: "IncidenceMatrix",
+  CompleteGraph: "CompleteGraph",
+  CycleGraph: "CycleGraph",
+  StarGraph: "StarGraph",
+  GridGraph: "GridGraph",
+  HypercubeGraph: "HypercubeGraph",
+  CompleteKaryTree: "CompleteKaryTree",
+  PetersenGraph: "PetersenGraph",
+  ConnectedComponents: "ConnectedComponents",
+  IsConnectedGraph: "ConnectedGraphQ",
+  FindShortestPath: "FindShortestPath",
+  GraphDistance: "GraphDistance",
+  IsTreeGraph: "TreeGraphQ",
+  IsBipartiteGraph: "BipartiteGraphQ",
+  NeighborhoodGraph: "NeighborhoodGraph",
+  Subgraph: "Subgraph",
+
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //
   // Deliberately Wolfram-named: "Wolfram's `Plot`, `Histogram`, `Manipulate` print as
@@ -600,6 +637,13 @@ export const FOREIGN: Record<string, string> = {
   // a graphics object, never from a URI, so `Image["data:image/png;…"]` is not an image over
   // there — it is an Image of a string.
   Image: "a raster image built from a pixel array or a graphics object",
+  // Not unrelated like the rest of this list -- same graph, same vertex-list call shape --
+  // but ours ALSO accepts a bare integer (PathGraph(n), our own convenience extension) that
+  // real Wolfram's PathGraph rejects outright. HEADS can't map conditionally on call shape,
+  // and a plain rename would "vouch for" (isWolframHead) the call that errors, so every
+  // PathGraph(...) emits into our context instead -- conservative over precise, since the
+  // alternative risks handing a kernel oracle a call it doesn't accept.
+  PathGraph: "a path graph over an explicit vertex list only -- unlike ours, no bare-integer form",
 };
 
 /** Heads that need a bespoke emission rather than a plain rename. */

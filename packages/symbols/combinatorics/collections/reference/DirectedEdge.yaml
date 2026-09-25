@@ -1,0 +1,19 @@
+name: DirectedEdge
+domain: Collections
+signature: DirectedEdge(u, v)
+summary: A directed edge from u to v — the edge head [[Graph]] holds in its edge list.
+signatures:
+  - call: DirectedEdge(u, v)
+    description: an edge FROM $u$ TO $v$ — [[FindShortestPath]] and [[GraphDistance]] only traverse it forward, from $u$ to $v$.
+    library: enumeratio-collections
+details:
+  - Inert, like [[Graph]] itself — it holds exactly as written.
+  - Wolfram prints this infix as $u \to v$ (`u -> v`); notatio's own `->` already means [[KeyValuePair]] (not this), so this round-trips through call-form syntax, `DirectedEdge(u, v)`, which Wolfram accepts as equivalent input.
+examples:
+  - id: an-edge-from-1-to-2
+    expr: [DirectedEdge, 1, 2]
+    expected: [DirectedEdge, 1, 2]
+    caption: An edge from 1 to 2
+seeAlso:
+  - UndirectedEdge
+  - Graph

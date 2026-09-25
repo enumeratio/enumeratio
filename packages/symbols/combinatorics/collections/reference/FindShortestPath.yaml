@@ -1,0 +1,31 @@
+name: FindShortestPath
+domain: Collections
+signature: FindShortestPath(g, u, v)
+summary: A shortest path from u to v, respecting edge direction (BFS, unweighted).
+signatures:
+  - call: FindShortestPath(g, u, v)
+    description: the vertices of one shortest $u \to v$ path, both ends included; the empty list if $v$ is unreachable from $u$.
+    library: enumeratio-collections
+details:
+  - A directed edge is only traversable forward; an undirected edge, either way.
+examples:
+  - id: shortest-path-along-a-path-graph
+    expr: [FindShortestPath, [PathGraph, 5], 1, 5]
+    expected: [List, 1, 2, 3, 4, 5]
+  - id: no-path-back-against-directed-edges
+    expr:
+      [
+        FindShortestPath,
+        [
+          Graph,
+          [List, 1, 2, 3, 4],
+          [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 3], [UndirectedEdge, 3, 4]],
+        ],
+        4,
+        1,
+      ]
+    expected: [List]
+    caption: Directed edges block the way back
+seeAlso:
+  - GraphDistance
+  - Graph

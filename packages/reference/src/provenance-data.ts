@@ -263,6 +263,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "AdjacencyMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "AdjacencyMatrix",
+    elsewhere: [],
+  },
+  {
     name: "All",
     provenance: "override",
     declared: null,
@@ -445,6 +452,27 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "CompleteGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "CompleteGraph",
+    elsewhere: [],
+  },
+  {
+    name: "CompleteKaryTree",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "CompleteKaryTree",
+    elsewhere: [],
+  },
+  {
+    name: "ConnectedComponents",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "ConnectedComponents",
+    elsewhere: [],
+  },
+  {
     name: "Contains",
     provenance: "compute-engine",
     declared: null,
@@ -473,6 +501,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "CycleGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "CycleGraph",
+    elsewhere: [],
+  },
+  {
     name: "DeficientNumbers",
     provenance: "unknown",
     declared: null,
@@ -487,6 +522,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "DirectedEdge",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "DirectedEdge",
+    elsewhere: [],
+  },
+  {
     name: "DoubleFactorialNumbers",
     provenance: "unknown",
     declared: null,
@@ -498,6 +540,20 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "EdgeCount",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "EdgeCount",
+    elsewhere: [],
+  },
+  {
+    name: "EdgeList",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "EdgeList",
     elsewhere: [],
   },
   {
@@ -540,6 +596,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "FindShortestPath",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "FindShortestPath",
     elsewhere: [],
   },
   {
@@ -627,10 +690,31 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Graph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Graph",
+    elsewhere: [],
+  },
+  {
+    name: "GraphDistance",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "GraphDistance",
+    elsewhere: [],
+  },
+  {
     name: "GrassmannianPermutations",
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "GridGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "GridGraph",
     elsewhere: [],
   },
   {
@@ -683,10 +767,24 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "HypercubeGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "HypercubeGraph",
+    elsewhere: [],
+  },
+  {
     name: "IdonealNumbers",
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "IncidenceMatrix",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "IncidenceMatrix",
     elsewhere: [],
   },
   {
@@ -711,6 +809,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram", "sympy"],
   },
   {
+    name: "IsBipartiteGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "BipartiteGraphQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsConnectedGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "ConnectedGraphQ",
+    elsewhere: [],
+  },
+  {
     name: "IsMachineNumber",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -722,6 +834,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "NumericQ",
+    elsewhere: [],
+  },
+  {
+    name: "IsTreeGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "TreeGraphQ",
     elsewhere: [],
   },
   {
@@ -872,6 +991,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "NeighborhoodGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "NeighborhoodGraph",
+    elsewhere: [],
+  },
+  {
     name: "Nest",
     provenance: "extension",
     declared: "enumeratio-collections",
@@ -991,6 +1117,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "PathGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "PellNumbers",
     provenance: "unknown",
     declared: null,
@@ -1037,6 +1170,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "unknown",
     declared: null,
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "PetersenGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "PetersenGraph",
     elsewhere: [],
   },
   {
@@ -1404,6 +1544,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "StarGraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "StarGraph",
+    elsewhere: [],
+  },
+  {
     name: "StarNumbers",
     provenance: "unknown",
     declared: null,
@@ -1422,6 +1569,13 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "Subgraph",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "Subgraph",
     elsewhere: [],
   },
   {
@@ -1516,6 +1670,13 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "UndirectedEdge",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "UndirectedEdge",
+    elsewhere: [],
+  },
+  {
     name: "Union",
     provenance: "override",
     declared: null,
@@ -1548,6 +1709,27 @@ export const provenance: readonly HeadRecord[] = [
     provenance: "extension",
     declared: "enumeratio-collections",
     wolframAlias: "UpTo",
+    elsewhere: [],
+  },
+  {
+    name: "VertexCount",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "VertexCount",
+    elsewhere: [],
+  },
+  {
+    name: "VertexDegree",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "VertexDegree",
+    elsewhere: [],
+  },
+  {
+    name: "VertexList",
+    provenance: "extension",
+    declared: "enumeratio-collections",
+    wolframAlias: "VertexList",
     elsewhere: [],
   },
   {

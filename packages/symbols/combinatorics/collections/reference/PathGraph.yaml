@@ -1,0 +1,25 @@
+name: PathGraph
+domain: Collections
+signature: PathGraph(n)
+summary: A path graph — vertices joined in a line.
+signatures:
+  - call: PathGraph(vertices)
+    description: a path along `vertices`, in the order given — Wolfram's own (and only) form.
+    library: enumeratio-collections
+  - call: PathGraph(n)
+    description: the path $1 - 2 - \dots - n$ — our own convenience extension.
+    library: enumeratio-collections
+details:
+  - "`PathGraph(n)` is a convenience this library adds; `PathGraph[3]` is an ERROR in real Wolfram (kernel-verified) — it only accepts a vertex list. Both forms are accepted here, but the Wolfram transpiler treats the whole head as foreign (its own context, not a plain rename) since it cannot tell the two call shapes apart — see `FOREIGN` in `@enumeratio/wolfram`."
+examples:
+  - id: a-5-vertex-path
+    expr: [VertexDegree, [PathGraph, 5]]
+    expected: [List, 1, 2, 2, 2, 1]
+    caption: A 5-vertex path — the ends have degree 1
+  - id: a-path-along-named-vertices
+    expr: [PathGraph, [List, a, b, c]]
+    expected: [Graph, [List, a, b, c], [List, [UndirectedEdge, a, b], [UndirectedEdge, b, c]]]
+    caption: A path along named vertices
+seeAlso:
+  - CycleGraph
+  - CompleteGraph

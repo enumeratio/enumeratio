@@ -1,0 +1,23 @@
+name: IsBipartiteGraph
+domain: Collections
+signature: IsBipartiteGraph(g)
+summary: Whether a [[Graph]]'s vertices split into two sets with every edge crossing between them.
+signatures:
+  - call: IsBipartiteGraph(g)
+    description: true iff a 2-colouring exists (BFS, underlying graph, direction ignored) — false for any graph with an odd cycle, including a self-loop.
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `BipartiteGraphQ`; this library uses the `Is…` spelling everywhere.
+examples:
+  - id: even-cycle-is-bipartite
+    expr: [IsBipartiteGraph, [CycleGraph, 6]]
+    expected: True
+  - id: odd-cycle-is-not
+    expr: [IsBipartiteGraph, [CycleGraph, 5]]
+    expected: False
+  - id: a-self-loop-is-never-bipartite
+    expr: [IsBipartiteGraph, [Graph, [List, [UndirectedEdge, 1, 1]]]]
+    expected: False
+seeAlso:
+  - IsConnectedGraph
+  - CycleGraph
