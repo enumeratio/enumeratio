@@ -16,6 +16,15 @@ import {
   zeckendorf,
 } from "../src/systems.ts";
 
+/** An independent digit routine: JS's own base-N string formatting, not our algorithm. */
+const digitsViaToString = (n: number, b: number): number[] =>
+  n === 0
+    ? [0]
+    : n
+        .toString(b)
+        .split("")
+        .map((c) => Number.parseInt(c, 36));
+
 /** The property every numeral system must have: digits are a faithful re-spelling. */
 const roundTrips = (system: NumeralSystem, values: readonly number[]): void => {
   for (const n of values) {
@@ -73,6 +82,7 @@ test("every system keeps the shape it declares", () => {
   const sample = range(-150, 450);
   for (const system of [
     radix(2)!,
+    radix(10)!,
     radix(16)!,
     balancedRadix(3)!,
     negativeRadix(2)!,
@@ -230,11 +240,62 @@ test("residue systems are carry-free and need pairwise coprime moduli", () => {
 
 test("a malformed base yields no system at all", () => {
   expect(radix(1)).toBeUndefined();
+  expect(radix(0)).toBeUndefined();
+  expect(radix(-5)).toBeUndefined(); // that is NegativeNumerals's job, not this system's
+  expect(radix(2.5)).toBeUndefined();
   expect(balancedRadix(4)).toBeUndefined(); // must be odd
   expect(bijectiveRadix(0)).toBeUndefined();
   expect(combinatorialSystem(0)).toBeUndefined();
   expect(residueSystem([])).toBeUndefined();
   expect(mixedRadix([])).toBeUndefined();
+});
+
+// ── PositionalNumerals: ordinary base b, the plainest system of all ─────────────
+
+test("PositionalNumerals: name, and it round-trips like every other system", () => {
+  expect(radix(5)!.name).toBe("PositionalNumerals(5)");
+  roundTrips(radix(5)!, range(0, 400));
+});
+
+test("PositionalNumerals: brute-force round-trip against an independent digit routine", () => {
+  for (const b of [2, 3, 5, 7, 8, 10, 16, 36]) {
+    const system = radix(b)!;
+    for (const n of range(0, 600)) {
+      const digits = system.toDigits(n)!;
+      expect(digits, `base ${b} digits of ${n}`).toEqual(digitsViaToString(n, b));
+      expect(system.fromDigits(digits), `base ${b} round-trips ${n}`).toBe(n);
+    }
+  }
+});
+
+test("PositionalNumerals agrees with MixedRadixNumerals at a constant radix", () => {
+  // MixedRadixNumerals([b, b, …, b]) (width places) is ordinary base b with a fixed
+  // width and one extra unbounded leading place — so for n below b^width that leading
+  // digit is 0, and the rest is exactly PositionalNumerals(b)'s digits, left-padded.
+  const width = 4;
+  for (const b of [2, 3, 6, 10]) {
+    const positional = radix(b)!;
+    const mixed = mixedRadix(Array.from({ length: width }, () => b))!;
+    for (const n of range(0, b ** width - 1)) {
+      const mixedDigits = mixed.toDigits(n)!;
+      expect(mixedDigits[0], `base ${b} at ${n} fits within ${width} places`).toBe(0);
+      const digits = positional.toDigits(n)!;
+      const padded = [...Array.from({ length: width - digits.length }, () => 0), ...digits];
+      expect(padded, `base ${b} at ${n}`).toEqual(mixedDigits.slice(1));
+    }
+  }
+});
+
+test("PositionalNumerals: zero is a single digit, negatives have no numeral", () => {
+  const system = radix(10)!;
+  // Zero: one digit, same as every other system and as native IntegerDigits(0).
+  expect(system.toDigits(0)).toEqual([0]);
+  // Negatives: this system's domain is the non-negative integers, like FactorialNumerals,
+  // PrimorialNumerals, ZeckendorfNumerals and CombinatorialNumerals — it declines rather
+  // than silently dropping the sign the way a plain integer base does natively (see
+  // heads.test.ts for that contrast).
+  expect(system.toDigits(-1)).toBeUndefined();
+  expect(system.shape.range).toEqual([0n, undefined]);
 });
 
 test("Ostrowski numeration round-trips, and every representation is admissible", () => {

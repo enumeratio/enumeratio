@@ -90,6 +90,33 @@ test("residue systems, and where they stop being a numeral system", () => {
   );
 });
 
+test("PositionalNumerals agrees with the native fixed-radix handler for b ≥ 2", () => {
+  for (const [n, b] of [
+    [2147, 2],
+    [255, 16],
+    [93784, 10],
+    [0, 7],
+  ] as const) {
+    expect(value(["IntegerDigits", n, ["PositionalNumerals", b]]), `${n} base ${b}`).toEqual(
+      value(["IntegerDigits", n, b]),
+    );
+  }
+  const digits = L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1); // 2147 in base 2
+  expect(value(["FromDigits", digits, ["PositionalNumerals", 2]])).toBe(
+    value(["FromDigits", digits, 2]),
+  );
+});
+
+test("PositionalNumerals declines a negative — unlike the native handler, which drops the sign", () => {
+  // compute-engine's own fixed radix drops the sign (see "signless systems" above); as a
+  // system value PositionalNumerals instead declines, consistent with every sibling whose
+  // domain is the non-negative integers (FactorialNumerals, ZeckendorfNumerals, …).
+  expect(value(["IntegerDigits", -5, 2])).toEqual(L(1, 0, 1));
+  expect(ce.box(["IntegerDigits", -5, ["PositionalNumerals", 2]]).evaluate().operator).toBe(
+    "IntegerDigits",
+  );
+});
+
 test("the combinatorial system and the primorial base", () => {
   expect(value(["IntegerDigits", 0, ["CombinatorialNumerals", 3]])).toEqual(L(2, 1, 0));
   expect(value(["FromDigits", L(3, 2, 1), ["CombinatorialNumerals", 3]])).toBe(3);
@@ -165,6 +192,7 @@ test("every old spelling is a working alias for its `…Numerals` name", () => {
   // The base-slot args each old head takes, and an n in its domain — same shape (bare
   // symbol or call) is used to build both the old and the canonical expression below.
   const ARGS: Record<string, { args: readonly Expr[]; n: number }> = {
+    Radix: { args: [10], n: 463 },
     Factoradic: { args: [], n: 5 },
     PrimorialRadix: { args: [], n: 30 },
     BalancedRadix: { args: [3], n: -5 },

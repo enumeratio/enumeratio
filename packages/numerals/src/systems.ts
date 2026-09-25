@@ -52,7 +52,7 @@ const isInt = (x: number): boolean => Number.isSafeInteger(x);
 export function radix(b: number): NumeralSystem | undefined {
   if (!isInt(b) || b < 2) return undefined;
   return {
-    name: `Radix(${b})`,
+    name: `PositionalNumerals(${b})`,
     shape: { bijective: true, range: NATURALS, digits: [0, b - 1] },
     toDigits: (n) => {
       if (!isInt(n) || n < 0) return undefined;
