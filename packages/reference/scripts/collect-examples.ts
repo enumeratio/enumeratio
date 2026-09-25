@@ -14,7 +14,7 @@ import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "@enumeratio/analytic/src";
 import { dedupeId, type ReferenceExample, stringifyYaml } from "@enumeratio/entry";
 import { baseId } from "./migrate/ids.ts";
-import { readEntry, ROOT, SHIMS, sourcesOf, writeShims } from "./migrate/shims.ts";
+import { loadReferenceData, PACKAGES } from "../src/node.ts";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -160,10 +160,9 @@ const isGridPoint = (head: string, e: ReferenceExample): boolean =>
   e.expr[0] === "N" &&
   Array.isArray(e.expr[1]) &&
   e.expr[1][0] === head;
-const shim = SHIMS.find((s) => s.path.endsWith("/special-functions.ts"))!;
+const { heads } = loadReferenceData(PACKAGES);
 for (const [head, grid] of Object.entries(byHead)) {
-  const source = sourcesOf(shim.path).find((path) => path.endsWith(`/${head}.yaml`))!;
-  const entry = readEntry(source);
+  const { entry, entryPath } = heads.find((h) => h.head === head)!;
   const kept = entry.examples.filter((e) => !isGridPoint(head, e));
   const idOf = new Map(
     entry.examples.filter((e) => isGridPoint(head, e)).map((e) => [JSON.stringify(e.expr), e.id]),
@@ -175,9 +174,8 @@ for (const [head, grid] of Object.entries(byHead)) {
     taken.add(id);
     return { id, ...e } as ReferenceExample;
   });
-  writeFileSync(`${ROOT}${source}`, stringifyYaml({ ...entry, examples: [...kept, ...points] }));
+  writeFileSync(entryPath, stringifyYaml({ ...entry, examples: [...kept, ...points] }));
 }
-writeShims([{ ...shim, sources: sourcesOf(shim.path) }]);
 process.stderr.write(
   `${Object.entries(byHead)
     .map(([head, rows]) => `${head} ${rows.length}`)

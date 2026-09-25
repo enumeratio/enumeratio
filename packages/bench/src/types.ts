@@ -162,3 +162,22 @@ export interface Protocol {
   /** A single call under this is left out of cross-system comparison. */
   readonly tooFastNs: number;
 }
+
+/**
+ * `index.json` at the root of the `bench-data` branch (design/benchmarking.md §7): every run,
+ * newest last. Each run's files are `runs/<id>/plan.json` and `runs/<id>/<system>.json`.
+ */
+export interface BenchIndex {
+  readonly schema: 1;
+  readonly runs: readonly {
+    readonly id: string;
+    readonly sha: string;
+    readonly date: string;
+    readonly trigger: string;
+    readonly url?: string;
+    /** The GitHub job that produced it: systems in one job share a machine and a time window. */
+    readonly job: string;
+    readonly systems: readonly BenchSystem[];
+    readonly machine: string;
+  }[];
+}

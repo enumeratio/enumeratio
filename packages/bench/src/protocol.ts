@@ -15,6 +15,9 @@ export const PROTOCOL: Protocol = {
   tooFastNs: 10_000,
 };
 
+/** The line that asks a harness to exit. Not a case name: names always contain a `/`. */
+export const QUIT = "quit";
+
 export interface Timed {
   readonly k: number;
   readonly samplesNs: readonly number[];

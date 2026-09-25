@@ -1,4 +1,4 @@
-import { entries } from "../../.vitepress/data/reference.ts";
+import { entries } from "../../.vitepress/data/reference-node.ts";
 
 // One generated page per reference entry.
 export default {

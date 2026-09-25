@@ -6,8 +6,10 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { checkImplementations } from "@enumeratio/entry";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/entries.ts";
+import { readEntries } from "@enumeratio/entry/node";
 import { ce, DEFINITIONS, evaluate, permutations, PRIMITIVE } from "./definitions-helpers.ts";
+
+const entries = readEntries(new URL("../reference/", import.meta.url));
 
 const repoRoot = resolve(import.meta.dirname, "../../../../..");
 

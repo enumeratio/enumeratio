@@ -1,7 +1,9 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { HEADS } from "@enumeratio/wolfram/src";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/index.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 import { provenance } from "../src/provenance-data.ts";
 import { declaredEngine } from "../scripts/engines.ts";
 import { collect, divergences, divergingHeads, provenanceLedger } from "../scripts/provenance.ts";
@@ -269,6 +271,7 @@ const OVERRIDDEN = [
   "Multinomial",
   "MultiplicativeOrder",
   "Multiply",
+  "N",
   "NextPrime",
   "Norm",
   "NthPrime",
@@ -289,6 +292,7 @@ const OVERRIDDEN = [
   "Rationalize",
   "Round",
   "Sec",
+  "SetMinus",
   "Sign",
   "Sin",
   "Sinh",
@@ -565,38 +569,71 @@ const NOVEL = [
   "GeneratingFunction",
   "ExponentialGeneratingFunction",
   "FindSequenceFunction",
+  // collections' own entries, in the reference set since the loader reads every package
+  "Antiexcedances",
+  "Ascents",
+  "BinaryTrees",
+  "CycleCount",
+  "Derangements",
+  "Descents",
+  "Excedances",
+  "FixedPoints",
+  "IntegerCompositions",
+  "Inversions",
+  "Involutions",
+  "KSubsets",
+  "MajorIndex",
+  "MinorIndex",
+  "Multisets",
+  "Peaks",
+  "Records",
+  "Tuples",
+  "Valleys",
+  "Accumulate",
+  "Array",
+  "Cases",
+  "FoldList",
+  "IsMachineNumber",
+  "IsNumeric",
+  "Precision",
+  "RandomInteger",
+  "SeedRandom",
+  "SparseArray",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {
   const ours = provenance.filter((record) => record.provenance === "extension");
   const novel = ours.filter((record) => record.elsewhere.length === 0).map((r) => r.name);
-  expect(novel).toEqual(NOVEL);
+  // The entries come in the loader's order (domain, then name); what matters is the set.
+  expect([...novel].sort()).toEqual([...NOVEL].sort());
   // …and the rest exist elsewhere, which is the upstreaming shortlist: a function a
   // general system already carries, that we implemented again.
   const known = ours.filter((record) => record.elsewhere.length > 0);
-  expect(known.map((record) => record.name)).toEqual([
-    "PowerModList",
-    "PrimitiveRootList",
-    "Quotient",
-    "KroneckerSymbol",
-    "IntegerExponent",
-    "HermiteDecomposition",
-    "HurwitzZeta",
-    "LerchPhi",
-    "BarnesG",
-    "LogBarnesG",
-    "LogGamma",
-    "DirichletEta",
-    "DirichletBeta",
-    "StieltjesGamma",
-    "DirichletCharacter",
-    "DirichletL",
-    "HarmonicNumber",
-    "NonCommutativeMultiply",
-    "Coproduct",
-    "Subsets",
-    "SymmetricGroup",
-  ]);
+  expect(known.map((record) => record.name).sort()).toEqual(
+    [
+      "PowerModList",
+      "PrimitiveRootList",
+      "Quotient",
+      "KroneckerSymbol",
+      "IntegerExponent",
+      "HermiteDecomposition",
+      "HurwitzZeta",
+      "LerchPhi",
+      "BarnesG",
+      "LogBarnesG",
+      "LogGamma",
+      "DirichletEta",
+      "DirichletBeta",
+      "StieltjesGamma",
+      "DirichletCharacter",
+      "DirichletL",
+      "HarmonicNumber",
+      "NonCommutativeMultiply",
+      "Coproduct",
+      "Subsets",
+      "SymmetricGroup",
+    ].sort(),
+  );
   // LerchPhi is in all three, so it has the strongest oracle coverage of anything we add.
   expect(known.find((record) => record.name === "LerchPhi")?.elsewhere).toEqual([
     "wolfram",

@@ -98,9 +98,8 @@ examples:
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [BarnesG, [Rational, 1, 2]], 30]
     expected: {num: '0.603244281209446206191429224535'}
-    aspirational: true
     category: Scope
-    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+    caption: To 30 significant digits, past a double's reach
 implementations:
   - origin: reference
     form: notatio

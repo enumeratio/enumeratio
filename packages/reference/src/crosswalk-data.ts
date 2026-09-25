@@ -134,6 +134,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Accumulate",
+    wolfram: "Accumulate",
+  },
+  {
     name: "Add",
     wolfram: "Plus",
   },
@@ -351,6 +355,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Around",
   },
   {
+    name: "Array",
+    wolfram: "Array",
+  },
+  {
     name: "Arsech",
     wolfram: "ArcSech",
   },
@@ -367,10 +375,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Association",
     wolfram: "Association",
-  },
-  {
-    name: "Assuming",
-    wolfram: "Assuming",
   },
   {
     name: "At",
@@ -584,10 +588,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "BetaRegularized",
   },
   {
-    name: "BigO",
-    wolfram: "O",
-  },
-  {
     name: "Binomial",
     fungrimEntries: [
       "081188",
@@ -661,6 +661,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "CarmichaelLambda",
     wolfram: "CarmichaelLambda",
+  },
+  {
+    name: "Cases",
+    wolfram: "Cases",
   },
   {
     name: "CatalanConstant",
@@ -1930,6 +1934,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Fold",
   },
   {
+    name: "FoldList",
+    wolfram: "FoldList",
+  },
+  {
     name: "FractionalPart",
     wolfram: "FractionalPart",
   },
@@ -2567,6 +2575,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "IsEven",
     fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
     wolfram: "EvenQ",
+  },
+  {
+    name: "IsMachineNumber",
+    wolfram: "MachineNumberQ",
+  },
+  {
+    name: "IsNumeric",
+    wolfram: "NumericQ",
   },
   {
     name: "IsOdd",
@@ -3530,14 +3546,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Pi",
   },
   {
-    name: "Piecewise",
-    wolfram: "Piecewise",
-  },
-  {
-    name: "PiecewiseExpand",
-    wolfram: "PiecewiseExpand",
-  },
-  {
     name: "Pochhammer",
     wolfram: "Pochhammer",
   },
@@ -3669,6 +3677,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "PowersRepresentations",
   },
   {
+    name: "Precision",
+    wolfram: "Precision",
+  },
+  {
     name: "Prepend",
     wolfram: "Prepend",
   },
@@ -3775,6 +3787,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RandomReal",
   },
   {
+    name: "RandomInteger",
+    wolfram: "RandomInteger",
+  },
+  {
     name: "Range",
     wolfram: "Range",
   },
@@ -3858,10 +3874,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RecurrenceTable",
   },
   {
-    name: "Refine",
-    wolfram: "Refine",
-  },
-  {
     name: "Repeat",
     wolfram: "ConstantArray",
   },
@@ -3907,8 +3919,8 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Sech",
   },
   {
-    name: "SeriesCoefficient",
-    wolfram: "SeriesCoefficient",
+    name: "SeedRandom",
+    wolfram: "SeedRandom",
   },
   {
     name: "SetMinus",
@@ -4170,6 +4182,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Span",
     wolfram: "Span",
+  },
+  {
+    name: "SparseArray",
+    wolfram: "SparseArray",
   },
   {
     name: "Split",
@@ -4445,6 +4461,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Tuple",
     wolfram: "List",
+  },
+  {
+    name: "Tuples",
+    wolfram: "Tuples",
   },
   {
     name: "Union",

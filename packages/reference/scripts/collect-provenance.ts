@@ -14,9 +14,11 @@
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { HEADS } from "@enumeratio/wolfram/src";
-import { entries } from "../src/entries.ts";
+import { referenceEntries } from "../src/node.ts";
 import { declaredEngine } from "./engines.ts";
 import { type HeadRecord, collect } from "./provenance.ts";
+
+const entries = referenceEntries();
 
 // Coverage answers come from an external kernel (collect-coverage.ts); this pass is
 // offline, so carry whatever the last run found rather than blanking it.
