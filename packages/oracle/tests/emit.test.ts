@@ -49,7 +49,7 @@ test("threadArg rebuilds a List's nesting as Python list literals, applying the 
   // A fixed second operand carries through unchanged at every leaf.
   expect(emit(["Binomial", ["List", 2, -12, 6], -3], "sympy")).toEqual({
     ok: true,
-    source: "[binomial(2, -3), binomial(-12, -3), binomial(6, -3)]",
+    source: "[binomial(2, (-3)), binomial((-12), (-3)), binomial(6, (-3))]",
   });
   // A plain (non-list) operand skips threading and emits as before.
   expect(emit(["PrimePi", 10], "sympy")).toEqual({ ok: true, source: "primepi(10)" });
@@ -60,7 +60,7 @@ test("threadArg rebuilds a List's nesting as Python list literals, applying the 
   });
   expect(emit(["Mod", -10, ["List", 3, 4, 7]], "sympy")).toEqual({
     ok: true,
-    source: "[(-10 % 3), (-10 % 4), (-10 % 7)]",
+    source: "[((-10) % 3), ((-10) % 4), ((-10) % 7)]",
   });
   // threadArg is a Python-family concern only: Wolfram's own heads are already Listable.
   expect(emit(["Sin", ["List", 1, 2]], "wolfram")).toEqual({

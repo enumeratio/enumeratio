@@ -543,6 +543,7 @@ isprime-7:
     in: PrimeQ[7]
   sympy:
     in: isprime(7)
+    out: True
   sage:
     in: is_prime(7)
   oscar:
@@ -569,6 +570,10 @@ threads-element-wise-over-a-short-list:
     in: PrimeQ[List[2, 3, 4]]
   sympy:
     in: isprime([2, 3, 4])
+    out: "ValueError: [2, 3, 4] is not an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's IsPrime is Listable and threads over the list; SymPy's isprime takes a scalar only.
   sage:
     in: is_prime([2, 3, 4])
   oscar:
@@ -594,9 +599,10 @@ isprime-neg-1-is-false:
   wolfram:
     in: PrimeQ[-1]
   sympy:
-    in: isprime(-1)
+    in: isprime((-1))
+    out: False
   sage:
-    in: is_prime(-1)
+    in: is_prime((-1))
   oscar:
     in: is_prime(ZZ(-1))
   julia:
@@ -620,9 +626,10 @@ isprime-neg-4-is-false:
   wolfram:
     in: PrimeQ[-4]
   sympy:
-    in: isprime(-4)
+    in: isprime((-4))
+    out: False
   sage:
-    in: is_prime(-4)
+    in: is_prime((-4))
   oscar:
     in: is_prime(ZZ(-4))
   julia:
@@ -646,9 +653,13 @@ isprime-neg-2-is-true:
   wolfram:
     in: PrimeQ[-2]
   sympy:
-    in: isprime(-2)
+    in: isprime((-2))
+    out: False
+    verdict: disagree
+    kind: convention
+    note: compute-engine's IsPrime(-2) is True, per Wolfram's PrimeQ convention for associates (-2's associate 2 is prime); SymPy's isprime() only accepts positive primes.
   sage:
-    in: is_prime(-2)
+    in: is_prime((-2))
   oscar:
     in: is_prime(ZZ(-2))
   julia:

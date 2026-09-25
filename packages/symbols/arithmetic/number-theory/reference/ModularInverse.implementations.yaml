@@ -199,4 +199,4 @@ a-gaussian-base-and-a-gaussian-modulus:
   wolfram:
     in: ModularInverse[Complex[3, -1], Complex[5, 2]]
   sage:
-    in: inverse_mod((3 + -1*I), (5 + 2*I))
+    in: inverse_mod((3 + (-1)*I), (5 + 2*I))

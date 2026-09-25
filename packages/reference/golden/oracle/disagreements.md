@@ -97,7 +97,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sympy — agree 1122, disagree 24, inconclusive 12, error 27
+## sympy — agree 1172, disagree 30, inconclusive 14, error 29
 
 | example                                                        | kind           | ours                                    | theirs                                                                        |
 | -------------------------------------------------------------- | -------------- | --------------------------------------- | ----------------------------------------------------------------------------- |
@@ -109,10 +109,15 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `CatalanNumber/catalannumber-neg-1-is-neg-1`                   | convention     | `-1`                                    | `-1/2`                                                                        |
 | `ContinuedFraction/varphi-1-overline-1-purely-periodic-so-the` | shape          | `[1, [1]]`                              | `[[1]]`                                                                       |
 | `Gamma/values-far-past-the-double-range-gamma-200-5`           | convention     | `{"num":"5.57316894480137913364e+373"}` | `5.57316894480138e+373`                                                       |
+| `HurwitzZeta/pole-at-a-0-re-s-positive`                        | undefined-form | `ComplexInfinity`                       | `nan`                                                                         |
+| `HurwitzZeta/pole-at-a-neg-1-inexact-s`                        | undefined-form | `ComplexInfinity`                       | `nan`                                                                         |
+| `HurwitzZeta/pole-at-a-neg-2-re-s-positive`                    | undefined-form | `ComplexInfinity`                       | `nan`                                                                         |
 | `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`     | convention     | `true`                                  | `False`                                                                       |
+| `IsPrime/isprime-neg-2-is-true`                                | convention     | `true`                                  | `False`                                                                       |
 | `LCM/1-3i-i-3-i-associates-share-their-multiples`              | convention     | `{"re":3,"im":1}`                       | `-1 + 3*I`                                                                    |
 | `LCM/gaussian-primes-of-norm-41-and-13-the-lcm-is-the`         | convention     | `{"re":23,"im":2}`                      | `-23 - 2*I`                                                                   |
 | `LCM/gaussian-rationals-lcm-5-6i-1-3i-gcd-10-3`                | convention     | `{"re":21,"im":13}`                     | `-13 + 21*I`                                                                  |
+| `LerchPhi/n-lerchphi-10-10-10-cancels-below-precision`         | unevaluated    | `["LerchPhi",10,10,10]`                 | `-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I` |
 | `LerchPhi/where-the-continuation-s-terms-cancel-below`         | unevaluated    | `["LerchPhi",10,10,10]`                 | `-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12*I` |
 | `Ln/ln-0`                                                      | undefined-form | `NegativeInfinity`                      | `zoo`                                                                         |
 | `Max/the-max-of-an-empty-list-is-nan-too`                      | convention     | `NaN`                                   | `-oo`                                                                         |
@@ -125,6 +130,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `N/and-0-375-to-0-38`                                          | convention     | `0.38`                                  | `0.375000000000000000000000000000`                                            |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this`         | convention     | `2.9166666666666665`                    | `-3.08333333333333333333333333333`                                            |
 | `Zeta/zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s`                 | convention     | `16.41439832211716`                     | `0.414398322117159997798167130580`                                            |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`            | undefined-form | `["Zeta",["Complex",2,1]]`              | `zeta(2 + I)`                                                                 |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -144,6 +150,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `IsPrime/a-gaussian-prime-its-norm-5-is-prime`                      | `ValueError: 2 + I is not an integer`                                            |
 | `IsPrime/non-integers-are-not-prime`                                | `ValueError: 1/2 is not an integer`                                              |
 | `IsPrime/threads-element-wise-over-a-list`                          | `ValueError: [1, 2, 3, 4, 5, 6] is not an integer`                               |
+| `IsPrime/threads-element-wise-over-a-short-list`                    | `ValueError: [2, 3, 4] is not an integer`                                        |
 | `Mod/a-gaussian-integer-5-3i-2-2-2i`                                | `TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2`     |
 | `Mod/division-by-a-0-modulus-yields-nan-rather-than`                | `ZeroDivisionError: integer modulo by zero`                                      |
 | `Mod/threads-element-wise-over-a-list`                              | `TypeError: unsupported operand type(s) for %: 'list' and 'int'`                 |
@@ -157,27 +164,35 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `Totient/negative-n-varphi-n-varphi-n`                              | `ValueError: n should be a positive integer`                                     |
 | `Totient/varphi-0-0-as-in-wolfram`                                  | `ValueError: n should be a positive integer`                                     |
 | `Zeta/threads-over-a-list-reducing-every-element-to`                | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |
+| `Zeta/zeta-threads-over-mixed-exact-and-inexact-list`               | `AttributeError: 'list' object has no attribute 'is_Integer'`                    |
 
 </details>
 
-## mpmath — agree 657, disagree 4, inconclusive 3, error 5
+## mpmath — agree 690, disagree 6, inconclusive 3, error 10
 
 | example                                                | kind           | ours                                    | theirs                                                                         |
 | ------------------------------------------------------ | -------------- | --------------------------------------- | ------------------------------------------------------------------------------ |
 | `Gamma/values-far-past-the-double-range-gamma-200-5`   | convention     | `{"num":"5.57316894480137913364e+373"}` | `5.57316894480137913364320296291e+373`                                         |
 | `HurwitzZeta/pole-at-s-1-for-every-a`                  | undefined-form | `ComplexInfinity`                       | `+inf`                                                                         |
+| `LerchPhi/n-lerchphi-10-10-10-cancels-below-precision` | unevaluated    | `["LerchPhi",10,10,10]`                 | `(-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)` |
 | `LerchPhi/where-the-continuation-s-terms-cancel-below` | unevaluated    | `["LerchPhi",10,10,10]`                 | `(-4.4621307271021857018173488107e-11 - 1.57517219898109621882348115053e-12j)` |
 | `Zeta/zeta-1-2-35-12-exactly-but-at-a-negative-a-this` | convention     | `2.9166666666666665`                    | `-3.08333333333333333333333333333`                                             |
+| `Zeta/zeta-complex-argument-stays-symbolic-until-n`    | unevaluated    | `["Zeta",["Complex",2,1]]`              | `(1.15035570325490267174284993474 - 0.437530865919607881117527898593j)`        |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                                  | message                           |
-| -------------------------------------------------------- | --------------------------------- |
-| `Gamma/a-pole-of-gamma`                                  | `ValueError: gamma function pole` |
-| `Gamma/threads-over-a-list-so-poles-evaluate-concretely` | `ValueError: gamma function pole` |
-| `PolyGamma/a-pole-of-gamma-still-a-pole-after`           | `ZeroDivisionError: `             |
-| `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`  | `ValueError: zeta(1) pole`        |
-| `Zeta/zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so`      | `ZeroDivisionError: `             |
+| example                                                  | message                                      |
+| -------------------------------------------------------- | -------------------------------------------- |
+| `Gamma/a-pole-of-gamma`                                  | `ValueError: gamma function pole`            |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely` | `ValueError: gamma function pole`            |
+| `HurwitzZeta/pole-at-a-0-re-s-positive`                  | `ZeroDivisionError: `                        |
+| `HurwitzZeta/pole-at-a-neg-1-inexact-s`                  | `NoConvergence: zeta: too much cancellation` |
+| `HurwitzZeta/pole-at-a-neg-2-re-s-positive`              | `ZeroDivisionError: `                        |
+| `PolyGamma/a-pole-of-gamma-still-a-pole-after`           | `ZeroDivisionError: `                        |
+| `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`  | `ValueError: zeta(1) pole`                   |
+| `Zeta/zeta-2-neg-2-stays-finite-unlike-hurwitzzeta`      | `ZeroDivisionError: `                        |
+| `Zeta/zeta-3-0-drops-pole-term-like-s-2`                 | `ZeroDivisionError: `                        |
+| `Zeta/zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so`      | `ZeroDivisionError: `                        |
 
 </details>
 

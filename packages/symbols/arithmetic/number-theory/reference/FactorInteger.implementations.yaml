@@ -349,7 +349,7 @@ factorinteger-neg-12:
   wolfram:
     in: FactorInteger[-12]
   sage:
-    in: list(factor(-12))
+    in: list(factor((-12)))
 a-non-integer-real-stays-unevaluated:
   epsil:
     in: FactorInteger(2.5)
@@ -375,4 +375,4 @@ factorinteger-of-a-negative-rational:
   wolfram:
     in: FactorInteger[Rational[-3, 8]]
   sage:
-    in: list(factor((-3/8)))
+    in: list(factor(((-3)/8)))
