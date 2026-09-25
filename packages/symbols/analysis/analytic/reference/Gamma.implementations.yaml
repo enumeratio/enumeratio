@@ -64,12 +64,15 @@ threads-over-a-list-so-poles-evaluate-concretely:
     verdict: error
     kind: threading
     note: compute-engine's Gamma is Listable and threads over the list; the Rust crates take scalars.
-  sympy:
-    in: gamma([0, -1])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+  mpmath:
+    in: "[gamma(0), gamma((-1))]"
+    out: "ValueError: gamma function pole"
     verdict: error
-    kind: threading
-    note: compute-engine's Gamma threads over (or pools) the list; SymPy's takes scalars.
+    kind: undefined-form
+    note: The list wrapper is incidental -- mpmath's gamma(0) raises before the list is even built. Both decline at the pole (ours answers ComplexInfinity, mpmath raises), same as the single-argument pole example above.
+  sympy:
+    in: "[gamma(0), gamma((-1))]"
+    out: "[zoo, zoo]"
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5:
   wolfram:
     in: (Gamma[6] == Factorial[5])
@@ -173,18 +176,18 @@ squaring-the-reflection-formula-at-z-1-2:
     in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
     out: True
 threads-over-a-list-and-reduces-each-integer:
-  sympy:
-    in: gamma([1, 2, 3, 4, 5])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Gamma is Listable and threads over the list; SymPy's takes scalars only.
   rust:
     in: gamma(list(vec![n(1), n(2), n(3), n(4), n(5)]))
     out: "panic: threading: a list where the crate takes a scalar"
     verdict: error
     kind: threading
     note: compute-engine's Gamma is Listable and threads over the list; the Rust crate takes scalars only.
+  mpmath:
+    in: "[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]"
+    out: "[mpf('1.0'), mpf('1.0'), mpf('2.0'), mpf('6.0'), mpf('24.0')]"
+  sympy:
+    in: "[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]"
+    out: "[1, 1, 2, 6, 24]"
 gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer:
   wolfram:
     in: Gamma[Rational[5, 2]]
@@ -215,3 +218,56 @@ int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3:
     tex:
       in: \Gamma (2.5,1.5,3)
       out: "0.52345"
+a-machine-precision-argument-gamma-4-5-11-6317:
+  mpmath:
+    in: gamma(4.5)
+    out: "11.6317283965674489291442241094"
+  sympy:
+    in: gamma(4.5)
+    out: "11.6317283965674"
+gamma-5-4-24:
+  mpmath:
+    in: gamma(5)
+    out: "24.0"
+  sympy:
+    in: gamma(5)
+    out: "24"
+complex-arguments-evaluate-directly:
+  mpmath:
+    in: gamma(mpc(2.3, 1))
+    out: (0.719140936537281734129165979401 + 0.540614467909849141745661620038j)
+  sympy:
+    in: gamma((2.3 + 1*I))
+    out: 0.719140936537282 + 0.540614467909849*I
+values-far-past-the-double-range-gamma-200-5:
+  mpmath:
+    in: gamma(200.5)
+    out: "5.57316894480137913364320296291e+373"
+    verdict: disagree
+    kind: convention
+    note: Agrees with ours (5.57316894480137913364e+373) to every shared digit -- mpmath just carries more of them. The scan's tolerance compare can't line the two up past a double's exponent range (~1e308) and falls back to an exact text match, which a different digit count always fails; verified equal by hand.
+  sympy:
+    in: gamma(200.5)
+    out: "5.57316894480138e+373"
+    verdict: disagree
+    kind: convention
+    note: Agrees with ours (5.57316894480137913364e+373) rounded to SymPy's 15 significant digits. Same scan limitation as the mpmath row above -- text compare can't line up numbers past double's exponent range.
+gamma-i-2-pi-sinh-pi-0-27203:
+  mpmath:
+    in: ((fabs(gamma(mpc(0,1)))**2))
+    out: "0.272029054982133162950236583672"
+  sympy:
+    in: N((Abs(gamma(I))**2), 30)
+    out: "0.272029054982133162950236583672"
+half-integers-have-closed-forms-gamma-7-2-frac:
+  sympy:
+    in: gamma(Rational(7, 2))
+    out: 15*sqrt(pi)/8
+including-negative-half-integers-gamma-3-2-frac:
+  sympy:
+    in: gamma(Rational((-3), 2))
+    out: 4*sqrt(pi)/3
+to-40-significant-digits-every-one-correctly:
+  sympy:
+    in: N(gamma(Rational(1, 3)), 30)
+    out: "2.67893853470774763365569294097"

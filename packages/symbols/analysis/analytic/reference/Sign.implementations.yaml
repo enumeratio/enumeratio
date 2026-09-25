@@ -9,10 +9,10 @@ sign-neg-3:
     in: sign(-3)
     out: "-1"
   mpmath:
-    in: sign(-3)
+    in: sign((-3))
     out: "-1.0"
   sympy:
-    in: sign(-3)
+    in: sign((-3))
     out: "-1"
 sign-3:
   wolfram:
@@ -57,7 +57,7 @@ sign-neg-1-over-2:
     in: sign((-1/2))
     out: "-1"
   sympy:
-    in: sign(Rational(-1, 2))
+    in: sign(Rational((-1), 2))
     out: "-1"
 the-unit-complex-number-pointing-the-same:
   wolfram:
@@ -66,18 +66,18 @@ the-unit-complex-number-pointing-the-same:
     tex:
       in: \text{sgn}(3+4 i)
       out: \frac{3}{5}+\frac{4 i}{5}
-  mpmath:
-    in: sign(mpc(3, 4))
-    out: (0.6 + 0.8j)
-  sympy:
-    in: sign((3 + 4*I))
-    out: sign(3 + 4*I)
   sage:
     in: sign((3 + 4*I))
     out: sgn(4*I + 3)
     verdict: disagree
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  mpmath:
+    in: sign(mpc(3, 4))
+    out: (0.6 + 0.8j)
+  sympy:
+    in: sign((3 + 4*I))
+    out: sign(3 + 4*I)
 threads-element-wise-over-a-list:
   wolfram:
     in: Sign[List[-3, 0, 7]]
@@ -91,12 +91,12 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only.
+  mpmath:
+    in: "[sign((-3)), sign(0), sign(7)]"
+    out: "[mpf('-1.0'), mpf('0.0'), mpf('1.0')]"
   sympy:
-    in: sign([-3, 0, 7])
-    out: "AttributeError: 'list' object has no attribute 'is_Mul'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars.
+    in: "[sign((-3)), sign(0), sign(7)]"
+    out: "[-1, 0, 1]"
 sign-z-z-z-see-abs:
   wolfram:
     in: (Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])
@@ -104,11 +104,11 @@ sign-z-z-z-see-abs:
     tex:
       in: \text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }
       out: \text{True}
-  sympy:
-    in: enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))
-    out: True
   sage:
     in: bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))
+    out: True
+  sympy:
+    in: enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))
     out: True
 x-cdot-sign-x-x-here-at-x-5:
   wolfram:
@@ -121,10 +121,10 @@ x-cdot-sign-x-x-here-at-x-5:
     in: bool((-5 * sign(-5)) == abs(-5))
     out: True
   mpmath:
-    in: almosteq((-5 * sign(-5)), fabs(-5), 1e-20)
+    in: almosteq(((-5) * sign((-5))), fabs((-5)), 1e-20)
     out: True
   sympy:
-    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
+    in: enumeratio_equal(((-5) * sign((-5))), Abs((-5)))
     out: True
 tells-you-the-temperature-dropped-but-not-by-how:
   wolfram:
@@ -149,3 +149,77 @@ nan-propagates-rather-than-being-treated-as-0:
     tex:
       in: \text{sgn}(\text{Indeterminate})
       out: \text{Indeterminate}
+sign-neg-2p5:
+  mpmath:
+    in: sign((-2.5))
+    out: "-1.0"
+  sympy:
+    in: sign((-2.5))
+    out: "-1"
+sign-3p14:
+  mpmath:
+    in: sign(3.14)
+    out: "1.0"
+  sympy:
+    in: sign(3.14)
+    out: "1"
+a-complex-number-with-approximate-parts:
+  mpmath:
+    in: sign(mpc(1.4, 2.3))
+    out: (0.519946946895745222042694276671 + 0.854198555614438567289384025405j)
+  sympy:
+    in: sign((1.4 + 2.3*I))
+    out: 0.519946946895745 + 0.854198555614439*I
+an-exact-complex-argument-comes-back-exact-sign:
+  mpmath:
+    in: sign(mpc(1, 1))
+    out: (0.707106781186547524400844362105 + 0.707106781186547524400844362105j)
+  sympy:
+    in: sign((1 + 1*I))
+    out: sign(1 + I)
+exact-numeric-constants:
+  mpmath:
+    in: sign(pi)
+    out: "1.0"
+  sympy:
+    in: sign(pi)
+    out: "1"
+sign-neg-exponentiale:
+  mpmath:
+    in: sign((-e))
+    out: "-1.0"
+  sympy:
+    in: sign((-E))
+    out: "-1"
+sign-imaginaryunit:
+  mpmath:
+    in: sign(mpc(0,1))
+    out: (0.0 + 1.0j)
+  sympy:
+    in: sign(I)
+    out: I
+decides-the-sign-of-the-exact-number-sqrt-2-2-by:
+  mpmath:
+    in: sign((sqrt(2) - 2))
+    out: "-1.0"
+  sympy:
+    in: sign((sqrt(2) - 2))
+    out: "-1"
+2-sqrt-2-is-the-same-certified-decision-the:
+  mpmath:
+    in: sign((2 - sqrt(2)))
+    out: "1.0"
+  sympy:
+    in: sign((2 - sqrt(2)))
+    out: "1"
+the-sign-of-a-nonzero-complex-number-lies-on-the:
+  mpmath:
+    in: almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(Abs(sign((3 + 4*I))), 1)
+    out: True
+threads-over-a-matrix-entry-by-entry:
+  sympy:
+    in: "[[sign(Rational(1, 2)), sign((-1))], [sign(Rational((-5), 3)), sign(Rational(1, 2))]]"
+    out: "[[1, -1], [-1, 1]]"

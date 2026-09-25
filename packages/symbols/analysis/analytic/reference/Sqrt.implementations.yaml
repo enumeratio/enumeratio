@@ -88,10 +88,10 @@ a-perfect-square-radicand-evaluates-exactly-even:
     kind: domain
     note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
   mpmath:
-    in: sqrt(-4)
+    in: sqrt((-4))
     out: (0.0 + 2.0j)
   sympy:
-    in: sqrt(-4)
+    in: sqrt((-4))
     out: 2*I
 sqrt-x-2-x-for-a-perfect-square-see-square:
   wolfram:
@@ -158,10 +158,10 @@ negative-but-not-a-perfect-square-stays-symbolic:
     kind: domain
     note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
   mpmath:
-    in: sqrt(-2)
+    in: sqrt((-2))
     out: (0.0 + 1.41421356237309504880168872421j)
   sympy:
-    in: sqrt(-2)
+    in: sqrt((-2))
     out: sqrt(2)*I
 a-negative-rational-still-evaluates-exactly-when:
   wolfram:
@@ -180,5 +180,94 @@ a-negative-rational-still-evaluates-exactly-when:
     kind: domain
     note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
   sympy:
-    in: sqrt(Rational(-4, 9))
+    in: sqrt(Rational((-4), 9))
     out: 2*I/3
+an-approximate-number-gives-an-approximate-root:
+  mpmath:
+    in: sqrt(3.5)
+    out: "1.87082869338697069279187436616"
+  sympy:
+    in: sqrt(3.5)
+    out: "1.87082869338697"
+pulls-perfect-square-factors-out-of-the-radical:
+  mpmath:
+    in: sqrt(200)
+    out: "14.1421356237309504880168872421"
+  sympy:
+    in: sqrt(200)
+    out: 10*sqrt(2)
+sqrt-neg-25:
+  mpmath:
+    in: sqrt((-25))
+    out: (0.0 + 5.0j)
+  sympy:
+    in: sqrt((-25))
+    out: 5*I
+sqrt-8:
+  mpmath:
+    in: sqrt(8)
+    out: "2.82842712474619009760337744842"
+  sympy:
+    in: sqrt(8)
+    out: 2*sqrt(2)
+sqrt-neg-2p5:
+  mpmath:
+    in: sqrt((-2.5))
+    out: (0.0 + 1.58113883008418966599944677222j)
+  sympy:
+    in: sqrt((-2.5))
+    out: 1.58113883008419*I
+an-exact-complex-square-2-i-2-3-4i:
+  mpmath:
+    in: sqrt(mpc(3, 4))
+    out: (2.0 + 1.0j)
+  sympy:
+    in: sqrt((3 + 4*I))
+    out: 2 + I
+threads-element-wise-over-a-list:
+  mpmath:
+    in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
+  sympy:
+    in: "[sqrt(1), sqrt(4), sqrt(9)]"
+    out: "[1, 2, 3]"
+at-x-1-sqrt-x-2-1-not-1:
+  mpmath:
+    in: sqrt(((-1)**2))
+    out: "1.0"
+  sympy:
+    in: sqrt(((-1)**2))
+    out: "1"
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
+  mpmath:
+    in: (sqrt((-1)) * sqrt((-1)))
+    out: (-1.0 + 0.0j)
+  sympy:
+    in: (sqrt((-1)) * sqrt((-1)))
+    out: "-1"
+while-sqrt-1-1-1:
+  mpmath:
+    in: sqrt(((-1) * (-1)))
+    out: "1.0"
+  sympy:
+    in: sqrt(((-1) * (-1)))
+    out: "1"
+to-45-significant-digits-every-one-correctly:
+  mpmath:
+    in: (sqrt(2))
+    out: "1.41421356237309504880168872421"
+  sympy:
+    in: N(sqrt(2), 30)
+    out: "1.41421356237309504880168872421"
+rationalizes-the-denominator:
+  sympy:
+    in: sqrt(Rational(1, 2))
+    out: sqrt(2)/2
+sqrt-12-over-5:
+  sympy:
+    in: sqrt(Rational(12, 5))
+    out: 2*sqrt(15)/5
+threads-over-a-matrix-entry-by-entry-this-is-not:
+  sympy:
+    in: "[[sqrt(Rational(1, 2)), sqrt((-1))], [sqrt(0), sqrt(Rational(1, 2))]]"
+    out: "[[sqrt(2)/2, I], [0, sqrt(2)/2]]"

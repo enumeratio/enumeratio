@@ -119,12 +119,86 @@ ln-1-i-pi-the-principal-value-past-the-branch:
     kind: domain
     note: Rust's f64 ln is real-only and gives NaN; compute-engine continues into the complex plane.
   mpmath:
-    in: log(-1)
+    in: log((-1))
     out: (0.0 + 3.14159265358979323846264338328j)
   sympy:
-    in: log(-1)
+    in: log((-1))
     out: I*pi
 an-integer-power-is-pulled-out-ln-1000-3-ln-10:
   wolfram:
     in: Log[1000]
     note: Wolfram leaves Log[1000] as is.
+  mpmath:
+    in: log(1000)
+    out: "6.90775527898213705205397436405"
+  sympy:
+    in: log(1000)
+    out: log(1000)
+a-machine-precision-argument-evaluates:
+  mpmath:
+    in: log(1.5)
+    out: "0.405465108108164381978013115464"
+  sympy:
+    in: log(1.5)
+    out: "0.405465108108164"
+n-for-a-decimal-value:
+  mpmath:
+    in: (log(1000))
+    out: "6.90775527898213705205397436405"
+  sympy:
+    in: N(log(1000), 30)
+    out: "6.90775527898213705205397436405"
+evaluates-at-a-complex-argument:
+  mpmath:
+    in: log(mpc(2.5, 1))
+    out: (0.990500734433291704174403894723 + 0.38050637711236488630358791681j)
+  sympy:
+    in: log((2.5 + 1*I))
+    out: 0.990500734433292 + 0.380506377112365*I
+a-negative-float-gives-the-principal-complex:
+  mpmath:
+    in: log((-2.5))
+    out: (0.916290731874155065183527211768 + 3.14159265358979323846264338328j)
+  sympy:
+    in: log((-2.5))
+    out: 0.916290731874155 + I*pi
+threads-element-wise-over-a-list:
+  mpmath:
+    in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+    out: "[mpf('0.0'), mpf('0.741937344729377354776816987592111'), mpf('1.13140211149110059056208963437813'), mpf('1.41098697371026203319721877687743')]"
+  sympy:
+    in: "[log(1), log(2.1), log(3.1), log(4.1)]"
+    out: "[0, 0.741937344729377, 1.13140211149110, 1.41098697371026]"
+ln-exponentiale-pow-3:
+  mpmath:
+    in: log((e**3))
+    out: "3.0"
+  sympy:
+    in: log((E**3))
+    out: "3"
+ln-i-i-pi-2-exactly:
+  mpmath:
+    in: log(mpc(0,1))
+    out: (0.0 + 1.57079632679489661923132169164j)
+  sympy:
+    in: log(I)
+    out: I*pi/2
+to-40-significant-digits-every-one-correctly:
+  mpmath:
+    in: (log(2))
+    out: "0.693147180559945309417232121458"
+  sympy:
+    in: N(log(2), 30)
+    out: "0.693147180559945309417232121458"
+arbitrary-precision-via-n:
+  sympy:
+    in: N(log(Rational(5, 2)), 30)
+    out: "0.916290731874155065183527211768"
+a-unit-fraction-becomes-a-negated-logarithm-ln:
+  sympy:
+    in: log(Rational(1, 2))
+    out: -log(2)
+ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
+  sympy:
+    in: log(Rational((-1), 2))
+    out: -log(2) + I*pi

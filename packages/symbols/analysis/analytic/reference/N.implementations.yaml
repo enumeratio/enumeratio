@@ -1,0 +1,28 @@
+n-pi-30:
+  mpmath:
+    in: (pi)
+    out: "3.14159265358979323846264338328"
+  sympy:
+    in: N(pi, 30)
+    out: "3.14159265358979323846264338328"
+a-list-number-by-number:
+  sympy:
+    in: N([pi, E, sqrt(2)], 30)
+    out: "AttributeError: 'list' object has no attribute 'evalf'"
+    verdict: error
+    kind: threading
+    note: compute-engine's N is Listable and threads over the list; SymPy's N/evalf takes a scalar only.
+an-exact-tie-rounds-to-the-even-digit-0-125:
+  sympy:
+    in: N(Rational(1, 8), 30)
+    out: "0.125000000000000000000000000000"
+    verdict: disagree
+    kind: convention
+    note: The N/2 mapping drops the requested digit count and always asks for 30 (a numeric-tolerance comparison is a better witness generally); that defeats this example, whose entire point is the round-half-to-even behavior at 2 digits. Both sides are correct -- SymPy's 30-digit value is exact, ours is 1/8 rounded to 2 significant digits.
+and-0-375-to-0-38:
+  sympy:
+    in: N(Rational(3, 8), 30)
+    out: "0.375000000000000000000000000000"
+    verdict: disagree
+    kind: convention
+    note: Same as the previous row -- the N/2 mapping drops the requested digit count, defeating this round-half-to-even example. Both sides are correct at their own precision.

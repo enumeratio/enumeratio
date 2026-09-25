@@ -168,11 +168,8 @@ threads-element-wise-over-a-list:
     kind: threading
     note: compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars.
   sympy:
-    in: sin([0, (S(pi) / 2), pi])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sin threads over (or pools) the list; SymPy's takes scalars.
+    in: "[sin(0), sin((S(pi) / 2)), sin(pi)]"
+    out: "[0, 1, 0]"
 degrees-d-converts-a-degree-measure-to-radians:
   wolfram:
     in: Sin[Times[30, Degree]]
@@ -215,3 +212,81 @@ the-special-angle-table-reaches-past-30-45-60:
   sympy:
     in: sin((S(pi) / 5))
     out: sqrt(5/8 - sqrt(5)/8)
+a-machine-precision-argument-evaluates:
+  mpmath:
+    in: sin(1.2)
+    out: "0.932039085967226333578217548636"
+  sympy:
+    in: sin(1.2)
+    out: "0.932039085967226"
+evaluates-at-a-complex-argument:
+  mpmath:
+    in: sin(mpc(2.5, 1))
+    out: (0.923490776043173240823036301218 - 0.941504933270867276025389023751j)
+  sympy:
+    in: sin((2.5 + 1*I))
+    out: 0.923490776043173 - 0.941504933270867*I
+any-integer-multiple-of-pi-is-a-zero-of-sine:
+  mpmath:
+    in: sin((1000001 * pi))
+    out: "1.23297297519287531798936557837e-25"
+  sympy:
+    in: sin((1000001 * pi))
+    out: "0"
+a-huge-exact-argument-is-reduced-modulo-2-pi:
+  mpmath:
+    in: (sin((10**20)))
+    out: "-0.645251285265780844205811711313"
+  sympy:
+    in: N(sin((10**20)), 30)
+    out: "-0.645251285265780844205811711313"
+to-30-significant-digits-every-one-correctly:
+  mpmath:
+    in: (sin(1))
+    out: "0.84147098480789650665250232163"
+  sympy:
+    in: N(sin(1), 30)
+    out: "0.841470984807896506652502321630"
+a-huge-24-40-argument-reduces-exactly-mod-2-pi:
+  mpmath:
+    in: (sin((24**40)))
+    out: "0.400083152719766047070941915848"
+  sympy:
+    in: N(sin((24**40)), 30)
+    out: "0.400083152719766047070941915848"
+n-of-an-exact-argument-gives-an-arbitrary:
+  sympy:
+    in: N(sin(Rational(6, 5)), 30)
+    out: "0.932039085967226349670134435495"
+threads-element-wise-over-a-matrix:
+  sympy:
+    in: "[[sin((5 * (S(pi) / 6))), sin(0)], [sin((3 * (S(pi) / 2))), sin((-(S(pi) / 2)))]]"
+    out: "[[1/2, 0], [-1, -1]]"
+exact-value-at-pi-12-frac-sqrt-6-sqrt-2-4:
+  sympy:
+    in: sin((S(pi) / 12))
+    out: -sqrt(2)/4 + sqrt(6)/4
+sin-pi-8-frac-sqrt-2-sqrt-2-2:
+  sympy:
+    in: sin((S(pi) / 8))
+    out: sqrt(1/2 - sqrt(2)/4)
+sin-pi-10-frac-sqrt-5-1-4:
+  sympy:
+    in: sin((S(pi) / 10))
+    out: -1/4 + sqrt(5)/4
+sin-5-pi-12-frac-sqrt-6-sqrt-2-4:
+  sympy:
+    in: sin((Rational(5, 12) * pi))
+    out: sqrt(2)/4 + sqrt(6)/4
+sin-3-pi-8-frac-sqrt-2-sqrt-2-2:
+  sympy:
+    in: sin((Rational(3, 8) * pi))
+    out: sqrt(sqrt(2)/4 + 1/2)
+large-rational-multiples-of-pi-are-reduced:
+  sympy:
+    in: sin((Rational(100, 3) * pi))
+    out: -sqrt(3)/2
+pi-15-has-a-radical-form-but-like-wolfram-s:
+  sympy:
+    in: sin((S(pi) / 15))
+    out: sqrt(3)*(1/4 - sqrt(5)/4)/2 + sqrt(sqrt(5)/8 + 5/8)/2

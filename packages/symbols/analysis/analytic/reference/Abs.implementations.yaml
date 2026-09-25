@@ -12,10 +12,10 @@ abs-neg-5:
     in: abs(n(-5))
     out: "5"
   mpmath:
-    in: fabs(-5)
+    in: fabs((-5))
     out: "5.0"
   sympy:
-    in: Abs(-5)
+    in: Abs((-5))
     out: "5"
 abs-5:
   wolfram:
@@ -69,7 +69,7 @@ abs-neg-7-over-2:
     in: abs(rational(n(-7), n(2)))
     out: 7/2
   sympy:
-    in: Abs(Rational(-7, 2))
+    in: Abs(Rational((-7), 2))
     out: 7/2
 the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4:
   wolfram:
@@ -78,14 +78,14 @@ the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4:
     tex:
       in: "| 3+4 i|"
       out: "5"
+  sage:
+    in: abs((3 + 4*I))
+    out: "5"
   mpmath:
     in: fabs(mpc(3, 4))
     out: "5.0"
   sympy:
     in: Abs((3 + 4*I))
-    out: "5"
-  sage:
-    in: abs((3 + 4*I))
     out: "5"
 threads-element-wise-over-a-list:
   wolfram:
@@ -106,12 +106,12 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars.
+  mpmath:
+    in: "[fabs((-1)), fabs(2), fabs((-3))]"
+    out: "[mpf('1.0'), mpf('2.0'), mpf('3.0')]"
   sympy:
-    in: Abs([-1, 2, -3])
-    out: "TypeError: Bad argument type for Abs(): <class 'list'>"
-    verdict: error
-    kind: threading
-    note: compute-engine's Abs threads over (or pools) the list; SymPy's takes scalars.
+    in: "[Abs((-1)), Abs(2), Abs((-3))]"
+    out: "[1, 2, 3]"
 even-function-x-x:
   wolfram:
     in: (Abs[-8] == Abs[8])
@@ -126,10 +126,10 @@ even-function-x-x:
     in: equal(abs(n(-8)), abs(n(8)))
     out: "true"
   mpmath:
-    in: almosteq(fabs(-8), fabs(8), 1e-20)
+    in: almosteq(fabs((-8)), fabs(8), 1e-20)
     out: True
   sympy:
-    in: enumeratio_equal(Abs(-8), Abs(8))
+    in: enumeratio_equal(Abs((-8)), Abs(8))
     out: True
 triangle-inequality-a-b-le-a-b:
   wolfram:
@@ -157,3 +157,67 @@ the-gap-between-two-temperatures-70-and-95:
   sympy:
     in: Abs((70 - 95))
     out: "25"
+abs-neg-2p5:
+  mpmath:
+    in: fabs((-2.5))
+    out: "2.5"
+  sympy:
+    in: Abs((-2.5))
+    out: "2.50000000000000"
+the-modulus-of-a-complex-number-with-approximate:
+  mpmath:
+    in: fabs(mpc(1.4, 2.3))
+    out: "2.69258240356725181770864483644"
+  sympy:
+    in: Abs((1.4 + 2.3*I))
+    out: "2.69258240356725"
+exact-numeric-constants:
+  mpmath:
+    in: fabs((-pi))
+    out: "3.14159265358979323846264338328"
+  sympy:
+    in: Abs((-pi))
+    out: pi
+an-exact-complex-number-gives-an-exact-radical:
+  mpmath:
+    in: fabs(mpc(1, 1))
+    out: "1.41421356237309504880168872421"
+  sympy:
+    in: Abs((1 + 1*I))
+    out: sqrt(2)
+abs-imaginaryunit:
+  mpmath:
+    in: fabs(mpc(0,1))
+    out: "1.0"
+  sympy:
+    in: Abs(I)
+    out: "1"
+decides-the-sign-of-an-exact-numeric-expression:
+  mpmath:
+    in: fabs((sqrt(2) - 2))
+    out: "0.58578643762690495119831127579"
+  sympy:
+    in: Abs((sqrt(2) - 2))
+    out: 2 - sqrt(2)
+multiplicative-ab-a-b:
+  mpmath:
+    in: almosteq(fabs((mpc(1, 2) * mpc(3, (-1)))), (fabs(mpc(1, 2)) * fabs(mpc(3, (-1)))), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(Abs(((1 + 2*I) * (3 + (-1)*I))), (Abs((1 + 2*I)) * Abs((3 + (-1)*I))))
+    out: True
+the-distance-between-the-points-1-i-and-4-5i-of:
+  mpmath:
+    in: fabs((mpc(1, 1) - mpc(4, 5)))
+    out: "5.0"
+  sympy:
+    in: Abs(((1 + 1*I) - (4 + 5*I)))
+    out: "5"
+threads-over-a-matrix-entry-by-entry:
+  sympy:
+    in: "[[Abs(Rational(1, 2)), Abs((-1))], [Abs(Rational((-5), 3)), Abs(Rational(1, 2))]]"
+    out: "[[1/2, 1], [5/3, 1/2]]"
+e-i-pi-3-lies-on-the-unit-circle:
+  sympy:
+    in: Abs(exp((I * (S(pi) / 3))))
+    out: "1"
