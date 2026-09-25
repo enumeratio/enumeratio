@@ -5,7 +5,7 @@
   },
   "examples": {
     "Rank": {
-      "[\"Rank\",5]": {
+      "rank-5": {
         "wolfram": {
           "input": "ArrayDepth[5]",
           "output": "0",
@@ -16,7 +16,7 @@
           }
         }
       },
-      "[\"Rank\",[\"List\",1,2,3]]": {
+      "rank-list-1-2-3": {
         "wolfram": {
           "input": "ArrayDepth[List[1, 2, 3]]",
           "output": "1",
@@ -27,7 +27,7 @@
           }
         }
       },
-      "[\"Rank\",[\"List\",[\"List\",1,0],[\"List\",0,1]]]": {
+      "rank-list-list-1-0-list-0-1": {
         "wolfram": {
           "input": "ArrayDepth[List[List[1, 0], List[0, 1]]]",
           "output": "2",
@@ -38,7 +38,7 @@
           }
         }
       },
-      "[\"Rank\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]]": {
+      "rank-list-list-list-1-2-list-3-4-list-list-5-6": {
         "wolfram": {
           "input": "ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]",
           "output": "3",
@@ -49,7 +49,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Rank\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]],[\"Length\",[\"Shape\",[\"List\",[\"List\",[\"List\",1,2],[\"List\",3,4]],[\"List\",[\"List\",5,6],[\"List\",7,8]]]]]]": {
+      "the-length-of-the-array-s-shape": {
         "wolfram": {
           "input": "(ArrayDepth[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]] == Length[Dimensions[List[List[List[1, 2], List[3, 4]], List[List[5, 6], List[7, 8]]]]])",
           "output": "True",
@@ -60,7 +60,7 @@
           }
         }
       },
-      "[\"Rank\",[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
+      "a-singular-2-2-matrix-still-has-rank-2-its": {
         "wolfram": {
           "input": "ArrayDepth[List[List[1, 2], List[2, 4]]]",
           "output": "2",
@@ -73,7 +73,7 @@
       }
     },
     "MatrixRank": {
-      "[\"MatrixRank\",[\"List\",[\"List\",1,0],[\"List\",0,1]]]": {
+      "matrixrank-list-list-1-0-list-0-1": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 0], List[0, 1]]]",
           "output": "2",
@@ -84,7 +84,7 @@
           }
         }
       },
-      "[\"MatrixRank\",[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
+      "matrixrank-list-list-1-2-list-2-4": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 2], List[2, 4]]]",
           "output": "1",
@@ -95,7 +95,7 @@
           }
         }
       },
-      "[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]]": {
+      "matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]",
           "output": "2",
@@ -106,7 +106,7 @@
           }
         }
       },
-      "[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",2,4,6]]]": {
+      "non-square-matrices-too": {
         "wolfram": {
           "input": "MatrixRank[List[List[1, 2, 3], List[2, 4, 6]]]",
           "output": "1",
@@ -117,7 +117,7 @@
           }
         }
       },
-      "[\"MatrixRank\",[\"List\",[\"List\",0,0],[\"List\",0,0]]]": {
+      "matrixrank-list-list-0-0-list-0-0": {
         "wolfram": {
           "input": "MatrixRank[List[List[0, 0], List[0, 0]]]",
           "output": "0",
@@ -128,7 +128,7 @@
           }
         }
       },
-      "[\"Equal\",[\"MatrixRank\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]],[\"MatrixRank\",[\"Transpose\",[\"List\",[\"List\",1,2,3],[\"List\",4,5,6],[\"List\",7,8,9]]]]]": {
+      "row-rank-equals-column-rank": {
         "wolfram": {
           "input": "(MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]] == MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]])",
           "output": "True",
@@ -139,7 +139,7 @@
           }
         }
       },
-      "[\"MatrixRank\",[\"List\",1,2,3]]": {
+      "a-vector-is-treated-as-a-1-n-matrix-wolfram": {
         "wolfram": {
           "input": "MatrixRank[List[1, 2, 3]]",
           "output": "MatrixRank[{1, 2, 3}]",

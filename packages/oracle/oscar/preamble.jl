@@ -1,7 +1,7 @@
 # Helpers the `oscar` emit templates call (packages/oracle/src/mappings.ts): our groups, with
 # our element labels, built as Oscar permutation groups.
 #
-# Labels follow packages/groupalgebra/src/group.ts: Z_n is 0 … n−1 (rᵏ for the generating
+# Labels follow packages/symbols/algebras/groupalgebra/src/group.ts: Z_n is 0 … n−1 (rᵏ for the generating
 # n-cycle), D_n is `k` = rᵏ and `sk` = s·rᵏ, and a direct product is `a/b`. A group is built
 # once per constructor call site value, so `ClassSum(D(3), 2)` and the `D(3)` around it share
 # one group algebra.
