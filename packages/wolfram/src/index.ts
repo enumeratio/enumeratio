@@ -12,4 +12,4 @@ export {
   toWolfram,
 } from "./to-wolfram.ts";
 export { isSystemName, SYSTEM_NAMES } from "./system-names.ts";
-export { fromWolframTeX, toWolframTeX } from "./tex.ts";
+export { fromWolframTeX, type TeXOptions, toWolframTeX } from "./tex.ts";

@@ -3,7 +3,7 @@ import { fileURLToPath } from "node:url";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { entryFiles } from "@enumeratio/reference";
-import { fromWolframTeX } from "@enumeratio/wolfram";
+import { fromWolframTeX, HEADS } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 import { traditionalLatexOf } from "../src/traditional.ts";
@@ -34,6 +34,33 @@ const normal = (tex: string): string =>
     .replace(/\s+/g, "")
     .replace(/\{(\w)\}/g, "$1");
 
+/** Wolfram's TeXForm shows a real to six significant digits, and a whole one as `115.`; ours
+ *  shows every digit, a repeating tail as `\overline{…}`. Both are compared as Wolfram shows. */
+const shown = (tex: string): string =>
+  tex
+    .replace(/(\d+\.\d*)\\overline\{?(\d+)\}?/g, (_, head: string, cycle: string) =>
+      head.concat(cycle.repeat(Math.ceil(20 / cycle.length))),
+    )
+    .replace(/\d+\.\d+/g, (x) => {
+      const rounded = Number(x).toPrecision(6);
+      return rounded.includes("e") ? x : rounded.replace(/\.?0+$/, "");
+    })
+    .replace(/(\d)\.(?!\d)/g, "$1");
+
+/** How we write each head we have no notation for -- the TeX before `(x)` -- so Wolfram's
+ *  `\text{Round}[x]` reads as our `\mathrm{round}(x)`. */
+const heads = new Map(
+  [...new Set([...Object.keys(HEADS), ...entryFiles.flatMap((f) => f.entries.map((e) => e.name))])]
+    .map((name) => [
+      name,
+      /^(\\(?:mathrm|operatorname)\{[^{}]+\})\(x\)$/.exec(ours([name, "x"]))?.[1],
+    ])
+    .filter((entry): entry is [string, string] => entry[1] !== undefined),
+);
+
+const same = (mine: string, wolfram: string): boolean =>
+  shown(normal(mine)) === shown(normal(fromWolframTeX(wolfram, { heads })));
+
 interface Row {
   readonly ours: { readonly input: string; readonly output: string };
   readonly wolfram: { readonly input: string; readonly output: string };
@@ -51,8 +78,8 @@ for (const { stem, entries } of entryFiles) {
         ours: mine,
         wolfram,
         same: {
-          input: normal(mine.input) === normal(fromWolframTeX(wolfram.input)),
-          output: normal(mine.output) === normal(fromWolframTeX(wolfram.output)),
+          input: same(mine.input, wolfram.input),
+          output: same(mine.output, wolfram.output),
         },
       };
     });
