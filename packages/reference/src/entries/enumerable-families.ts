@@ -117,6 +117,97 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     },
     seeAlso: ["BellNumber", "Stirling", "Count", "At"],
   },
+  // ---- numeric-set prototypes (@enumeratio/collections numeric-sets.ts spike): bare
+  // integers, not lists, so no glyph fits and Count is genuinely infinite -- see each
+  // entry's details. `enumerate` needs a finite collection (`<notatio-collection-table>`
+  // rejects an infinite `Count`), so these page a `Take(...)` prefix instead of the family
+  // itself.
+  {
+    name: "Primes",
+    domain: "Collections",
+    signature: "Primes",
+    summary:
+      "The prime numbers $2, 3, 5, 7, 11, …$ as a lazy indexed collection, unranked by position.",
+    signatures: [
+      {
+        call: "Primes",
+        description: "the primes in increasing order, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(Primes) = +\\infty$, and $At(Primes, k)$ unranks the $k$-th prime without ever sieving a full prefix -- $At(Primes, 5) = 11$.",
+      "OEIS A000040.",
+      "Membership goes through [[Element]]: $Element(11, Primes)$ is true, $Element(9, Primes)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(Primes, 20)" },
+    seeAlso: ["Count", "At", "Element", "SquareNumbers", "AbundantNumbers", "SmoothNumbers"],
+  },
+  {
+    name: "SquareNumbers",
+    domain: "Collections",
+    signature: "SquareNumbers",
+    summary:
+      "The perfect squares $1, 4, 9, 16, …$ as a lazy indexed collection, unranked by position.",
+    signatures: [
+      {
+        call: "SquareNumbers",
+        description: "the squares $k^2$ for $k = 1, 2, 3, …$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SquareNumbers) = +\\infty$, and $At(SquareNumbers, k) = k^2$ unranks in closed form -- $At(SquareNumbers, 5) = 25$.",
+      "OEIS A000290.",
+      "Membership goes through [[Element]]: $Element(16, SquareNumbers)$ is true, $Element(15, SquareNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SquareNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes", "AbundantNumbers"],
+  },
+  {
+    name: "AbundantNumbers",
+    domain: "Collections",
+    signature: "AbundantNumbers",
+    summary:
+      "The abundant numbers $12, 18, 20, 24, …$ -- integers whose proper divisors sum past them -- as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "AbundantNumbers",
+        description:
+          "the $n$ with $\\sigma(n) - n > n$ (proper-divisor sum exceeds $n$), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(AbundantNumbers) = +\\infty$, and $At(AbundantNumbers, k)$ unranks the $k$-th abundant number by scanning forward from the last cached match -- $At(AbundantNumbers, 5) = 30$.",
+      "OEIS A005101.",
+      "Membership goes through [[Element]]: $Element(12, AbundantNumbers)$ is true, $Element(28, AbundantNumbers)$ is false (perfect, not abundant).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(AbundantNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes", "SquareNumbers"],
+  },
+  {
+    name: "SmoothNumbers",
+    domain: "Collections",
+    signature: "SmoothNumbers(k)",
+    summary:
+      "The $k$-smooth numbers -- positive integers with every prime factor $\\le k$ -- as a lazy indexed family, one collection per $k$.",
+    signatures: [
+      {
+        call: "SmoothNumbers(k)",
+        description:
+          "the positive integers whose prime factors are all $\\le k$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection for each $k$: $Count(SmoothNumbers(k)) = +\\infty$, and $At(SmoothNumbers(k), i)$ unranks the $i$-th $k$-smooth number -- $At(SmoothNumbers(7), 1) = 1$ (vacuously smooth).",
+      "7-smooth numbers are OEIS A002473.",
+      "Membership goes through [[Element]]: $Element(12, SmoothNumbers(7))$ is true (its factors $2, 3 \\le 7$), $Element(22, SmoothNumbers(7))$ is false ($22 = 2 \\times 11$).",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SmoothNumbers(7), 20)" },
+    seeAlso: ["Count", "At", "Element", "Primes"],
+  },
   {
     name: "RootedUnlabeledTrees",
     domain: "Collections",

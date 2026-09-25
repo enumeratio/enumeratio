@@ -16,18 +16,48 @@ type BoxInput = Parameters<ComputeEngine["box"]>[0];
 
 const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
 
+// Collection type an operator call returns. paramCount-0 values are typed directly in declareFamilies.
+const collectionTypeOf = (kind: FamilyKernel["kind"]): string => {
+  switch (kind) {
+    case "nested":
+      return "collection";
+    case "blocks":
+      return "list<list<list<integer>>>";
+    case "scalar":
+      return "list<integer>";
+    default:
+      return "list<list<integer>>";
+  }
+};
+
 const signatureOf = ({ kind, paramCount }: FamilyKernel): string => {
   const params = paramCount === 1 ? "(integer)" : "(integer, integer)";
-  if (kind === "nested") return `${params} -> collection`;
-  return `${params} -> ${kind === "ints" ? "list<list<integer>>" : "list<list<list<integer>>>"}`;
+  return `${params} -> ${collectionTypeOf(kind)}`;
 };
+
+// element codecs (element -> boxed MathJSON encoder, boxed -> element decoder).
+const encoderFor = (kind: FamilyKernel["kind"]) =>
+  kind === "ints"
+    ? listMJ
+    : kind === "blocks"
+      ? blocksMJ
+      : kind === "scalar"
+        ? (n: unknown) => n
+        : nestMJ;
+const decoderFor = (kind: FamilyKernel["kind"]) =>
+  kind === "ints"
+    ? asIntList
+    : kind === "blocks"
+      ? asBlockList
+      : kind === "scalar"
+        ? intOf
+        : denest;
 
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
  *  unranking, membership by `valid`. */
 function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers {
-  const encode = family.kind === "ints" ? listMJ : family.kind === "blocks" ? blocksMJ : nestMJ;
-  const decode =
-    family.kind === "ints" ? asIntList : family.kind === "blocks" ? asBlockList : denest;
+  const encode = encoderFor(family.kind);
+  const decode = decoderFor(family.kind);
   const params = (c: BoxedExpression): number[] => {
     const ops = asBoxed(c).ops ?? [];
     return Array.from({ length: family.paramCount }, (_, i) => intOf(ops[i]));
@@ -60,9 +90,15 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
   };
 }
 
-/** Declare every family as a lazy indexed collection head on `ce`. */
+/** Declare every family on `ce`: an indexed-collection operator, or for paramCount 0 an
+ *  indexed-collection value (`Primes`), which shadows CE's own `set` of that name on this engine. */
 export function declareFamilies(ce: ComputeEngine): void {
   for (const family of allEntries) {
-    ce.declare(family.head, { signature: signatureOf(family), collection: handlersOf(ce, family) });
+    const collection = handlersOf(ce, family);
+    if (family.paramCount === 0) {
+      ce.declare(family.head, { type: "indexed_collection<integer>", collection });
+    } else {
+      ce.declare(family.head, { signature: signatureOf(family), collection });
+    }
   }
 }
