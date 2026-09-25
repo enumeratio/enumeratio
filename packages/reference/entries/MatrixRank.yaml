@@ -46,8 +46,6 @@ examples:
     expected: 1
     category: Possible issues
     caption: A vector is treated as a 1×n matrix (Wolfram rejects it)
-    divergence:
-      wolfram: "Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix."
   - id: a-matrix-of-pairwise-distinct-symbols-has-full
     expr: [MatrixRank, [List, [List, a, b], [List, c, d]]]
     expected: 2

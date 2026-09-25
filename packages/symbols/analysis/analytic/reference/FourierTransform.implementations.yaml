@@ -1,0 +1,21 @@
+dirac-delta-at-origin:
+  epsil:
+    in: FourierTransform(DiracDelta(t), t, w)
+    out: Sqrt(1 / (2Pi))
+  tex:
+    in: \mathrm{FourierTransform}(\mathrm{DiracDelta}(t), t, w)
+    out: \sqrt{\frac{1}{2\pi}}
+gaussian:
+  epsil:
+    in: FourierTransform(ExponentialE ^ (-t ^ 2), t, w)
+    out: Sqrt(2) / 2 * ExponentialE ^ (-1 / 4 * w ^ 2)
+  tex:
+    in: \mathrm{FourierTransform}(\exp(-t^2), t, w)
+    out: \frac{1}{2}(\sqrt{2}\exp(-\frac{w^2}{4}))
+cosine:
+  epsil:
+    in: FourierTransform(Cos(a * t), t, w)
+    out: Sqrt(2) / 2 * (DiracDelta(a + w) + DiracDelta(-a + w)) * Sqrt(Pi)
+  tex:
+    in: \mathrm{FourierTransform}(\cos(at), t, w)
+    out: \frac{1}{2}(\sqrt{2}(\mathrm{DiracDelta}(a+w)+\mathrm{DiracDelta}(w-a))\sqrt{\pi})

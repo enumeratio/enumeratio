@@ -4,7 +4,7 @@
 // classification is the useful part — "Round[2.5] is 2 there and 3 here" is a fact, but
 // "compute-engine rounds half away from zero and Wolfram rounds half to even" is the
 // convention behind a whole family of facts, and what a reader of the reference needs.
-// Every row in an entry file's `<stem>.oracle.json` sidecar that is not an agreement —
+// Every row in a head's `<Head>.implementations.yaml` that is not an agreement —
 // disagree, error or inconclusive — carries its classification; the reference's oracle test
 // refuses an unclassified one.
 

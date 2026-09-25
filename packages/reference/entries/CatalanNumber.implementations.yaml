@@ -1,0 +1,500 @@
+catalannumber-0:
+  epsil:
+    in: CatalanNumber(0)
+    out: "1"
+  tex:
+    in: \mathrm{CatalanNumber}(0)
+    out: "1"
+  traditional:
+    in: C_{0}
+    out: "1"
+  wolfram:
+    in: CatalanNumber[0]
+    out: "1"
+    tex:
+      in: C_0
+      out: "1"
+  sympy:
+    in: catalan(0)
+    out: "1"
+  sage:
+    in: catalan_number(0)
+    out: "1"
+  julia:
+    in: Combinatorics.catalannum(0)
+    out: "1"
+  mathlib4:
+    in: (catalan 0)
+    out: "1"
+catalannumber-1:
+  epsil:
+    in: CatalanNumber(1)
+    out: "1"
+  tex:
+    in: \mathrm{CatalanNumber}(1)
+    out: "1"
+  traditional:
+    in: C_{1}
+    out: "1"
+  wolfram:
+    in: CatalanNumber[1]
+    out: "1"
+    tex:
+      in: C_1
+      out: "1"
+  sympy:
+    in: catalan(1)
+    out: "1"
+  sage:
+    in: catalan_number(1)
+    out: "1"
+  julia:
+    in: Combinatorics.catalannum(1)
+    out: "1"
+  mathlib4:
+    in: (catalan 1)
+    out: "1"
+catalannumber-5:
+  epsil:
+    in: CatalanNumber(5)
+    out: "42"
+  tex:
+    in: \mathrm{CatalanNumber}(5)
+    out: "42"
+  traditional:
+    in: C_{5}
+    out: "42"
+  wolfram:
+    in: CatalanNumber[5]
+    out: "42"
+    tex:
+      in: C_5
+      out: "42"
+  sympy:
+    in: catalan(5)
+    out: "42"
+  sage:
+    in: catalan_number(5)
+    out: "42"
+  julia:
+    in: Combinatorics.catalannum(5)
+    out: "42"
+  mathlib4:
+    in: (catalan 5)
+    out: "42"
+catalannumber-10:
+  epsil:
+    in: CatalanNumber(10)
+    out: 16_796
+  tex:
+    in: \mathrm{CatalanNumber}(10)
+    out: 16\,796
+  traditional:
+    in: C_{10}
+    out: 16\,796
+  wolfram:
+    in: CatalanNumber[10]
+    out: "16796"
+    tex:
+      in: C_{10}
+      out: "16796"
+  sympy:
+    in: catalan(10)
+    out: "16796"
+  sage:
+    in: catalan_number(10)
+    out: "16796"
+  julia:
+    in: Combinatorics.catalannum(10)
+    out: "16796"
+  mathlib4:
+    in: (catalan 10)
+    out: "16796"
+closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n:
+  epsil:
+    in: Binomial(2 * 5, 5) / (5 + 1)
+    out: "42"
+  tex:
+    in: \frac{\binom{2\times5}{5}}{5+1}
+    out: "42"
+  wolfram:
+    in: Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]
+    out: "42"
+    tex:
+      in: \frac{\binom{2\ 5}{5}}{5+1}
+      out: "42"
+  sympy:
+    in: (S(binomial((2 * 5), 5)) / (5 + 1))
+    out: "42"
+  sage:
+    in: (binomial((2 * 5), 5) / (5 + 1))
+    out: "42"
+  oscar:
+    in: (binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))
+    out: "42.0"
+  julia:
+    in: (binomial(ZZ((2 * 5)), ZZ(5)) // (5 + 1))
+    out: "42.0"
+  mathlib4:
+    in: "(((Nat.choose (2 * 5) 5) : ℚ) / (5 + 1))"
+    out: "42"
+  rust:
+    in: (binomial((n(2) * n(5)), n(5)) / (n(5) + n(1)))
+    out: "42"
+equivalently-c-n-binom-2n-n-binom-2n-n-1:
+  epsil:
+    in: Binomial(10, 5) - Binomial(10, 6)
+    out: "42"
+  tex:
+    in: \binom{10}{5}-\binom{10}{6}
+    out: "42"
+  wolfram:
+    in: Subtract[Binomial[10, 5], Binomial[10, 6]]
+    out: "42"
+    tex:
+      in: \binom{10}{5}-\binom{10}{6}
+      out: "42"
+  sympy:
+    in: (binomial(10, 5) - binomial(10, 6))
+    out: "42"
+  sage:
+    in: (binomial(10, 5) - binomial(10, 6))
+    out: "42"
+  oscar:
+    in: (binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))
+    out: "42"
+  julia:
+    in: (binomial(ZZ(10), ZZ(5)) - binomial(ZZ(10), ZZ(6)))
+    out: "42"
+  mathlib4:
+    in: ((Nat.choose 10 5) - (Nat.choose 10 6))
+    out: "42"
+  rust:
+    in: (binomial(n(10), n(5)) - binomial(n(10), n(6)))
+    out: "42"
+the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2:
+  epsil:
+    in: CatalanNumber(6) / CatalanNumber(5)
+    out: 22 / 7
+  tex:
+    in: \frac{\mathrm{CatalanNumber}(6)}{\mathrm{CatalanNumber}(5)}
+    out: \frac{22}{7}
+  traditional:
+    in: \frac{C_{6}}{C_{5}}
+    out: \frac{22}{7}
+  wolfram:
+    in: Divide[CatalanNumber[6], CatalanNumber[5]]
+    out: 22/7
+    tex:
+      in: \frac{C_6}{C_5}
+      out: \frac{22}{7}
+  sympy:
+    in: (S(catalan(6)) / catalan(5))
+    out: 22/7
+  sage:
+    in: (catalan_number(6) / catalan_number(5))
+    out: 22/7
+  julia:
+    in: (Combinatorics.catalannum(6) // Combinatorics.catalannum(5))
+    out: "3.142857142857143"
+  mathlib4:
+    in: "(((catalan 6) : ℚ) / (catalan 5))"
+    out: 22/7
+the-5-ways-to-balance-3-pairs-of-parentheses:
+  epsil:
+    in: CatalanNumber(3)
+    out: "5"
+  tex:
+    in: \mathrm{CatalanNumber}(3)
+    out: "5"
+  traditional:
+    in: C_{3}
+    out: "5"
+  wolfram:
+    in: CatalanNumber[3]
+    out: "5"
+    tex:
+      in: C_3
+      out: "5"
+  sympy:
+    in: catalan(3)
+    out: "5"
+  sage:
+    in: catalan_number(3)
+    out: "5"
+  julia:
+    in: Combinatorics.catalannum(3)
+    out: "5"
+  mathlib4:
+    in: (catalan 3)
+    out: "5"
+the-14-triangulations-of-a-hexagon-and-the-14:
+  epsil:
+    in: CatalanNumber(4)
+    out: "14"
+  tex:
+    in: \mathrm{CatalanNumber}(4)
+    out: "14"
+  traditional:
+    in: C_{4}
+    out: "14"
+  wolfram:
+    in: CatalanNumber[4]
+    out: "14"
+    tex:
+      in: C_4
+      out: "14"
+  sympy:
+    in: catalan(4)
+    out: "14"
+  sage:
+    in: catalan_number(4)
+    out: "14"
+  julia:
+    in: Combinatorics.catalannum(4)
+    out: "14"
+  mathlib4:
+    in: (catalan 4)
+    out: "14"
+catalannumber-neg-1-is-neg-1:
+  epsil:
+    in: CatalanNumber(-1)
+    out: "-1"
+  tex:
+    in: \mathrm{CatalanNumber}(-1)
+    out: "-1"
+  traditional:
+    in: C_{-1}
+    out: "-1"
+  wolfram:
+    in: CatalanNumber[-1]
+    note: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
+  sympy:
+    in: catalan(-1)
+  sage:
+    in: catalan_number(-1)
+  julia:
+    in: Combinatorics.catalannum(-1)
+  mathlib4:
+    in: (catalan (-1))
+catalannumber-0-past-neg-1:
+  epsil:
+    in: CatalanNumber(-2)
+    out: "0"
+  tex:
+    in: \mathrm{CatalanNumber}(-2)
+    out: "0"
+  traditional:
+    in: C_{-2}
+    out: "0"
+  wolfram:
+    in: CatalanNumber[-2]
+  sympy:
+    in: catalan(-2)
+  sage:
+    in: catalan_number(-2)
+  julia:
+    in: Combinatorics.catalannum(-2)
+  mathlib4:
+    in: (catalan (-2))
+catalannumber-neg-5-is-also-0:
+  epsil:
+    in: CatalanNumber(-5)
+    out: "0"
+  tex:
+    in: \mathrm{CatalanNumber}(-5)
+    out: "0"
+  traditional:
+    in: C_{-5}
+    out: "0"
+  wolfram:
+    in: CatalanNumber[-5]
+  sympy:
+    in: catalan(-5)
+  sage:
+    in: catalan_number(-5)
+  julia:
+    in: Combinatorics.catalannum(-5)
+  mathlib4:
+    in: (catalan (-5))
+they-grow-fast-c-15-already-passes-nine-million:
+  epsil:
+    in: CatalanNumber(15)
+    out: 9_694_845
+  tex:
+    in: \mathrm{CatalanNumber}(15)
+    out: 9\,694\,845
+  traditional:
+    in: C_{15}
+    out: 9\,694\,845
+  wolfram:
+    in: CatalanNumber[15]
+    out: "9694845"
+    tex:
+      in: C_{15}
+      out: "9694845"
+  sympy:
+    in: catalan(15)
+    out: "9694845"
+  sage:
+    in: catalan_number(15)
+    out: "9694845"
+  julia:
+    in: Combinatorics.catalannum(15)
+    out: "9694845"
+  mathlib4:
+    in: (catalan 15)
+    out: "9694845"
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: CatalanNumber([1, 2, 3, 4])
+    out: "[1, 2, 5, 14]"
+  tex:
+    in: \mathrm{CatalanNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 5, 14\bigr\rbrack
+  wolfram:
+    in: CatalanNumber[List[1, 2, 3, 4]]
+    out: "{1, 2, 5, 14}"
+    tex:
+      in: C_{\{1,2,3,4\}}
+      out: \{1,2,5,14\}
+  sympy:
+    in: catalan([1, 2, 3, 4])
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's CatalanNumber is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: catalan_number([1, 2, 3, 4])
+  julia:
+    in: Combinatorics.catalannum([1, 2, 3, 4])
+  mathlib4:
+    in: (catalan [1, 2, 3, 4])
+half-integer-arguments-evaluate-exactly-through:
+  epsil:
+    in: CatalanNumber(5 / 2)
+    out: 1_024 / (105Pi)
+  tex:
+    in: \mathrm{CatalanNumber}(\frac{5}{2})
+    out: \frac{1\,024}{105\pi}
+  traditional:
+    in: C_{\frac{5}{2}}
+    out: \frac{1\,024}{105\pi}
+  wolfram:
+    in: CatalanNumber[Rational[5, 2]]
+    out: 1024/(105*Pi)
+    tex:
+      in: C_{\frac{5}{2}}
+      out: \frac{1024}{105 \pi }
+  sympy:
+    in: catalan(Rational(5, 2))
+    out: catalan(5/2)
+  sage:
+    in: catalan_number((5/2))
+  julia:
+    in: Combinatorics.catalannum((5 // 2))
+  mathlib4:
+    in: "(catalan ((5 : ℚ) / 2))"
+catalannumber-30:
+  epsil:
+    in: CatalanNumber(30)
+    out: 3_814_986_502_092_304
+  tex:
+    in: \mathrm{CatalanNumber}(30)
+    out: 3\,814\,986\,502\,092\,304
+  traditional:
+    in: C_{30}
+    out: 3\,814\,986\,502\,092\,304
+  wolfram:
+    in: CatalanNumber[30]
+  sympy:
+    in: catalan(30)
+  sage:
+    in: catalan_number(30)
+  julia:
+    in: Combinatorics.catalannum(30)
+  mathlib4:
+    in: (catalan 30)
+segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i:
+  epsil:
+    in: CatalanNumber(4) == Sum(CatalanNumber(i) * CatalanNumber(3 - i), (i, 0, 3))
+    out: True
+  tex:
+    in: \mathrm{CatalanNumber}(4)=\sum_{i=0}^3\mathrm{CatalanNumber}(i)\mathrm{CatalanNumber}(3-i)
+    out: \top
+  traditional:
+    in: C_{4}=\sum_{i=0}^3C_{i}C_{3-i}
+    out: \mathrm{True}
+  wolfram:
+    in: (CatalanNumber[4] == Sum[Times[CatalanNumber[i], CatalanNumber[Subtract[3, i]]], List[i, 0, 3]])
+    back: Unreadable
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
+  epsil:
+    in: CatalanNumber(2.3)
+    out: 2.590_352_154_019_323_3
+  tex:
+    in: \mathrm{CatalanNumber}(2.3)
+    out: 2.590\,352\,154\,019\,323\,3
+  traditional:
+    in: C_{2.3}
+    out: 2.590\,352\,154\,019\,323\,3
+  wolfram:
+    in: CatalanNumber[2.3]
+  sympy:
+    in: catalan(2.3)
+  sage:
+    in: catalan_number(2.3)
+  julia:
+    in: Combinatorics.catalannum(2.3)
+  mathlib4:
+    in: (catalan 2.3)
+complex-arguments-evaluate-through-the-same:
+  epsil:
+    in: CatalanNumber(1.2 + i)
+    out: 0.730_728_624_207_283_9 + 0.569_846_406_969_342_5i
+  tex:
+    in: \mathrm{CatalanNumber}(1.2+i)
+    out: 0.730\,728\,624\,207\,283\,9+0.569\,846\,406\,969\,342\,5i
+  traditional:
+    in: C_{1.2+i}
+    out: 0.730\,728\,624\,207\,283\,9+0.569\,846\,406\,969\,342\,5i
+  wolfram:
+    in: CatalanNumber[Complex[1.2, 1]]
+  sympy:
+    in: catalan((1.2 + 1*I))
+  sage:
+    in: catalan_number((1.2 + 1*I))
+  julia:
+    in: Combinatorics.catalannum(complex(1.2, 1))
+c-1-2-frac-8-3-pi-by-analytic-continuation:
+  epsil:
+    in: CatalanNumber(1 / 2)
+    out: 8 / (3Pi)
+  tex:
+    in: \mathrm{CatalanNumber}(\frac{1}{2})
+    out: \frac{8}{3\pi}
+  traditional:
+    in: C_{\frac{1}{2}}
+    out: \frac{8}{3\pi}
+  wolfram:
+    in: CatalanNumber[Rational[1, 2]]
+  sympy:
+    in: catalan(Rational(1, 2))
+  sage:
+    in: catalan_number((1/2))
+  julia:
+    in: Combinatorics.catalannum((1 // 2))
+  mathlib4:
+    in: "(catalan ((1 : ℚ) / 2))"
+an-interval-argument-should-give-an-enclosing:
+  epsil:
+    in: CatalanNumber(Interval(0.5, 0.6))
+    out: Interval(0.848_826_363_156_775_1, 0.862_540_968_873_452_3)
+  tex:
+    in: \mathrm{CatalanNumber}(\mathrm{Interval}(0.5, 0.6))
+    out: \mathrm{Interval}(0.848\,826\,363\,156\,775\,1, 0.862\,540\,968\,873\,452\,3)
+  traditional:
+    in: C_{\mathrm{Interval}(0.5, 0.6)}
+    out: \mathrm{Interval}(0.848\,826\,363\,156\,775\,1, 0.862\,540\,968\,873\,452\,3)
+  wolfram:
+    in: CatalanNumber[Interval[List[0.5, 0.6]]]

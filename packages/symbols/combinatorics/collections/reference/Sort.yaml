@@ -57,8 +57,6 @@ examples:
     expected: [List, 1, [Sqrt, 2], 2, ExponentialE, 3, Pi]
     category: Scope
     caption: Exact numeric constants sort by their value
-    divergence:
-      wolfram: "Wolfram's default canonical order puts explicit numbers before symbolic ones: {1, 2, 3, Sqrt[2], E, Pi}; Sort[…, Less] gives this numeric order."
   - id: less-as-the-ordering-function-sorts-by-numeric
     expr: [Sort, [List, Pi, ExponentialE, 2, 3, 1, [Sqrt, 2]], Less]
     expected: [List, 1, [Sqrt, 2], 2, ExponentialE, 3, Pi]

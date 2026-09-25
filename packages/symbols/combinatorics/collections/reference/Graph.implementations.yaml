@@ -1,0 +1,18 @@
+a-triangle-vertices-inferred:
+  epsil:
+    in: Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)])
+    out: Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 3), UndirectedEdge(3, 1)])
+  tex:
+    in: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1)\bigr\rbrack)
+    out: \mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 1)\bigr\rbrack)
+  wolfram:
+    in: Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 1]]]
+an-isolated-vertex-needs-the-explicit-form:
+  epsil:
+    in: VertexList(Graph([1, 2, 3], [UndirectedEdge(1, 2)]))
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{VertexList}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  wolfram:
+    in: VertexList[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2]]]]

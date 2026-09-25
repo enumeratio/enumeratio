@@ -1,0 +1,18 @@
+a-3-by-4-grid:
+  epsil:
+    in: VertexCount(GridGraph([3, 4]))
+    out: "12"
+  tex:
+    in: \mathrm{VertexCount}(\mathrm{GridGraph}(\bigl\lbrack3, 4\bigr\rbrack))
+    out: "12"
+  wolfram:
+    in: VertexCount[GridGraph[List[3, 4]]]
+edge-count-of-a-3-by-4-grid:
+  epsil:
+    in: EdgeCount(GridGraph([3, 4]))
+    out: "17"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{GridGraph}(\bigl\lbrack3, 4\bigr\rbrack))
+    out: "17"
+  wolfram:
+    in: EdgeCount[GridGraph[List[3, 4]]]

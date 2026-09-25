@@ -1,0 +1,31 @@
+four-closed-geodesics-of-symbolic-length-4:
+  epsil:
+    in: ModularClasses(4)
+    out: '["LLLR", "LLRR", "LRLR", "LRRR"]'
+  tex:
+    in: \mathrm{ModularClasses}(4)
+    out: \bigl\lbrack\text{LLLR}, \text{LLRR}, \text{LRLR}, \text{LRRR}\bigr\rbrack
+the-same-geodesic-entered-elsewhere:
+  epsil:
+    in: ModularClass("LRL")
+    out: '"LLR"'
+  tex:
+    in: \mathrm{ModularClass}(\text{LRL})
+    out: \text{LLR}
+lrlr-is-lr-traversed-twice:
+  epsil:
+    in: IsPrimitiveClass("LRLR")
+    out: False
+  tex:
+    in: \mathrm{IsPrimitiveClass}(\text{LRLR})
+    out: \bot
+  traditional:
+    in: \mathrm{IsPrimitiveClass}(\text{LRLR})
+    out: \mathrm{False}
+same-word-length-as-lllr-different-geodesic:
+  epsil:
+    in: ModularTrace("LRLR")
+    out: "7"
+  tex:
+    in: \mathrm{ModularTrace}(\text{LRLR})
+    out: "7"

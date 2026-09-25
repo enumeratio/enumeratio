@@ -1,0 +1,368 @@
+totient-12:
+  epsil:
+    in: Totient(12)
+    out: "4"
+  tex:
+    in: \mathrm{Totient}(12)
+    out: "4"
+  traditional:
+    in: \varphi(12)
+    out: "4"
+  wolfram:
+    in: EulerPhi[12]
+    out: "4"
+    tex:
+      in: \phi (12)
+      out: "4"
+  sympy:
+    in: totient(12)
+    out: "4"
+  sage:
+    in: euler_phi(12)
+    out: "4"
+  oscar:
+    in: euler_phi(ZZ(12))
+    out: "4"
+  julia:
+    in: euler_phi(ZZ(12))
+    out: "4"
+  mathlib4:
+    in: (Nat.totient 12)
+    out: "4"
+totient-36:
+  epsil:
+    in: Totient(36)
+    out: "12"
+  tex:
+    in: \mathrm{Totient}(36)
+    out: "12"
+  traditional:
+    in: \varphi(36)
+    out: "12"
+  wolfram:
+    in: EulerPhi[36]
+    out: "12"
+    tex:
+      in: \phi (36)
+      out: "12"
+  sympy:
+    in: totient(36)
+    out: "12"
+  sage:
+    in: euler_phi(36)
+    out: "12"
+  oscar:
+    in: euler_phi(ZZ(36))
+    out: "12"
+  julia:
+    in: euler_phi(ZZ(36))
+    out: "12"
+  mathlib4:
+    in: (Nat.totient 36)
+    out: "12"
+totient-1:
+  epsil:
+    in: Totient(1)
+    out: "1"
+  tex:
+    in: \mathrm{Totient}(1)
+    out: "1"
+  traditional:
+    in: \varphi(1)
+    out: "1"
+  wolfram:
+    in: EulerPhi[1]
+    out: "1"
+    tex:
+      in: \phi (1)
+      out: "1"
+  sympy:
+    in: totient(1)
+    out: "1"
+  sage:
+    in: euler_phi(1)
+    out: "1"
+  oscar:
+    in: euler_phi(ZZ(1))
+    out: "1"
+  julia:
+    in: euler_phi(ZZ(1))
+    out: "1"
+  mathlib4:
+    in: (Nat.totient 1)
+    out: "1"
+rsa-key-setup-varphi-17-times-23-16-times-22-352:
+  epsil:
+    in: Totient(391)
+    out: "352"
+  tex:
+    in: \mathrm{Totient}(391)
+    out: "352"
+  traditional:
+    in: \varphi(391)
+    out: "352"
+  wolfram:
+    in: EulerPhi[391]
+    out: "352"
+    tex:
+      in: \phi (391)
+      out: "352"
+  sympy:
+    in: totient(391)
+    out: "352"
+  sage:
+    in: euler_phi(391)
+    out: "352"
+  oscar:
+    in: euler_phi(ZZ(391))
+    out: "352"
+  julia:
+    in: euler_phi(ZZ(391))
+    out: "352"
+  mathlib4:
+    in: (Nat.totient 391)
+    out: "352"
+sum-d-mid-n-varphi-d-n-checked-over-the-divisors:
+  epsil:
+    in: Totient(1) + Totient(2) + Totient(3) + Totient(4) + Totient(6) + Totient(12)
+    out: "12"
+  tex:
+    in: \mathrm{Totient}(1)+\mathrm{Totient}(2)+\mathrm{Totient}(3)+\mathrm{Totient}(4)+\mathrm{Totient}(6)+\mathrm{Totient}(12)
+    out: "12"
+  traditional:
+    in: \varphi(1)+\varphi(2)+\varphi(3)+\varphi(4)+\varphi(6)+\varphi(12)
+    out: "12"
+  wolfram:
+    in: Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]
+    out: "12"
+    tex:
+      in: \phi (1)+\phi (2)+\phi (3)+\phi (4)+\phi (6)+\phi (12)
+      out: "12"
+  sympy:
+    in: (totient(1) + totient(2) + totient(3) + totient(4) + totient(6) + totient(12))
+    out: "12"
+  sage:
+    in: (euler_phi(1) + euler_phi(2) + euler_phi(3) + euler_phi(4) + euler_phi(6) + euler_phi(12))
+    out: "12"
+  oscar:
+    in: (euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))
+    out: "12"
+  julia:
+    in: (euler_phi(ZZ(1)) + euler_phi(ZZ(2)) + euler_phi(ZZ(3)) + euler_phi(ZZ(4)) + euler_phi(ZZ(6)) + euler_phi(ZZ(12)))
+    out: "12"
+  mathlib4:
+    in: ((Nat.totient 1) + (Nat.totient 2) + (Nat.totient 3) + (Nat.totient 4) + (Nat.totient 6) + (Nat.totient 12))
+    out: "12"
+multiplicative-varphi-mn-varphi-m-varphi-n-when:
+  epsil:
+    in: Totient(12) == Totient(4) * Totient(3)
+    out: True
+  tex:
+    in: \mathrm{Totient}(12)=\mathrm{Totient}(4)\mathrm{Totient}(3)
+    out: \top
+  traditional:
+    in: \varphi(12)=\varphi(4)\varphi(3)
+    out: \mathrm{True}
+  wolfram:
+    in: (EulerPhi[12] == Times[EulerPhi[4], EulerPhi[3]])
+    back: Unreadable
+    out: True
+    tex:
+      in: \phi (12)=\phi (4) \phi (3)
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(totient(12), (totient(4) * totient(3)))
+    out: True
+  sage:
+    in: bool(euler_phi(12) == (euler_phi(4) * euler_phi(3)))
+    out: True
+  oscar:
+    in: (euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))
+    out: "true"
+  julia:
+    in: (euler_phi(ZZ(12)) == (euler_phi(ZZ(4)) * euler_phi(ZZ(3))))
+    out: "true"
+  mathlib4:
+    in: (decide ((Nat.totient 12) = ((Nat.totient 4) * (Nat.totient 3))))
+    out: "true"
+varphi-0-0-as-in-wolfram:
+  epsil:
+    in: Totient(0)
+    out: "0"
+  tex:
+    in: \mathrm{Totient}(0)
+    out: "0"
+  traditional:
+    in: \varphi(0)
+    out: "0"
+  wolfram:
+    in: EulerPhi[0]
+    out: "0"
+    tex:
+      in: \phi (0)
+      out: "0"
+  sympy:
+    in: totient(0)
+    out: "ValueError: n should be a positive integer"
+    verdict: error
+    kind: domain
+    note: compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines.
+  sage:
+    in: euler_phi(0)
+  oscar:
+    in: euler_phi(ZZ(0))
+  julia:
+    in: euler_phi(ZZ(0))
+  mathlib4:
+    in: (Nat.totient 0)
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Totient([2, 4, 6])
+    out: "[1, 2, 2]"
+  tex:
+    in: \mathrm{Totient}(\bigl\lbrack2, 4, 6\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 2\bigr\rbrack
+  wolfram:
+    in: EulerPhi[List[2, 4, 6]]
+    out: "{1, 2, 2}"
+    tex:
+      in: \phi (\{2,4,6\})
+      out: \{1,2,2\}
+  sympy:
+    in: "[totient(2), totient(4), totient(6)]"
+    out: "AttributeError: 'list' object has no attribute 'is_integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Totient is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[euler_phi(2), euler_phi(4), euler_phi(6)]"
+  oscar:
+    in: euler_phi(ZZ([2, 4, 6]))
+  julia:
+    in: euler_phi(ZZ([2, 4, 6]))
+  mathlib4:
+    in: (Nat.totient [2, 4, 6])
+totient-10:
+  epsil:
+    in: Totient(10)
+    out: "4"
+  tex:
+    in: \mathrm{Totient}(10)
+    out: "4"
+  traditional:
+    in: \varphi(10)
+    out: "4"
+  wolfram:
+    in: EulerPhi[10]
+  sympy:
+    in: totient(10)
+  sage:
+    in: euler_phi(10)
+  oscar:
+    in: euler_phi(ZZ(10))
+  julia:
+    in: euler_phi(ZZ(10))
+  mathlib4:
+    in: (Nat.totient 10)
+large-integers-varphi-50:
+  epsil:
+    in: Totient(50!)
+    out: 4_218_559_200_885_839_042_679_312_107_816_703_841_788_854_953_574_400_000_000_000_000
+  tex:
+    in: \mathrm{Totient}(50!)
+    out: 4\,218\,559\,200\,885\,839\,042\,679\,312\,107\,816\,703\,841\,788\,854\,953\,574\,400\,000\,000\,000\,000
+  traditional:
+    in: \varphi(50!)
+    out: 4\,218\,559\,200\,885\,839\,042\,679\,312\,107\,816\,703\,841\,788\,854\,953\,574\,400\,000\,000\,000\,000
+  wolfram:
+    in: EulerPhi[Factorial[50]]
+  sympy:
+    in: totient(factorial(50))
+  sage:
+    in: euler_phi(factorial(50))
+  oscar:
+    in: euler_phi(ZZ(factorial(ZZ(50))))
+  julia:
+    in: euler_phi(ZZ(factorial(ZZ(50))))
+  mathlib4:
+    in: (Nat.totient (Nat.factorial 50))
+negative-n-varphi-n-varphi-n:
+  epsil:
+    in: Totient(-10)
+    out: "4"
+  tex:
+    in: \mathrm{Totient}(-10)
+    out: "4"
+  traditional:
+    in: \varphi(-10)
+    out: "4"
+  wolfram:
+    in: EulerPhi[-10]
+  sympy:
+    in: totient(-10)
+  sage:
+    in: euler_phi(-10)
+  oscar:
+    in: euler_phi(ZZ(-10))
+  julia:
+    in: euler_phi(ZZ(-10))
+  mathlib4:
+    in: (Nat.totient (-10))
+varphi-p-p-1-for-a-prime-p:
+  epsil:
+    in: Totient(17)
+    out: "16"
+  tex:
+    in: \mathrm{Totient}(17)
+    out: "16"
+  traditional:
+    in: \varphi(17)
+    out: "16"
+  wolfram:
+    in: EulerPhi[17]
+  sympy:
+    in: totient(17)
+  sage:
+    in: euler_phi(17)
+  oscar:
+    in: euler_phi(ZZ(17))
+  julia:
+    in: euler_phi(ZZ(17))
+  mathlib4:
+    in: (Nat.totient 17)
+varphi-p-k-p-k-1-p-1-3-3-cdot-2-54:
+  epsil:
+    in: Totient(81)
+    out: "54"
+  tex:
+    in: \mathrm{Totient}(81)
+    out: "54"
+  traditional:
+    in: \varphi(81)
+    out: "54"
+  wolfram:
+    in: EulerPhi[81]
+  sympy:
+    in: totient(81)
+  sage:
+    in: euler_phi(81)
+  oscar:
+    in: euler_phi(ZZ(81))
+  julia:
+    in: euler_phi(ZZ(81))
+  mathlib4:
+    in: (Nat.totient 81)
+euler-s-theorem-a-varphi-n-equiv-1-pmod-n-when:
+  epsil:
+    in: PowerMod(7, Totient(10), 10)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(7, \mathrm{Totient}(10), 10)
+    out: "1"
+  traditional:
+    in: \left(7^{\varphi(10)}\bmod 10\right)
+    out: "1"
+  wolfram:
+    in: PowerMod[7, EulerPhi[10], 10]
+  sage:
+    in: power_mod(7, euler_phi(10), 10)

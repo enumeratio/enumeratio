@@ -80,7 +80,5 @@ examples:
     expected: 0
     category: Possible issues
     caption: An exact small number is chopped too
-    divergence:
-      wolfram: "Wolfram's Chop only touches approximate numbers: $\\mathrm{Chop}[10^{-20}]$ stays $1/10^{20}$."
 seeAlso:
   - Round

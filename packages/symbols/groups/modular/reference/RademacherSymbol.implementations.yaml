@@ -1,0 +1,37 @@
+four-rights-one-left:
+  epsil:
+    in: RademacherSymbol("LRRRR")
+    out: "3"
+  tex:
+    in: \mathrm{RademacherSymbol}(\text{LRRRR})
+    out: "3"
+  traditional:
+    in: \Psi(\text{LRRRR})
+    out: "3"
+turning-equally-both-ways-gives-linking-number:
+  epsil:
+    in: LinkingWithTrefoil("LLRR")
+    out: "0"
+  tex:
+    in: \mathrm{LinkingWithTrefoil}(\text{LLRR})
+    out: "0"
+the-arithmetic-side:
+  epsil:
+    in: DedekindSum(4, 3)
+    out: 1 / 18
+  tex:
+    in: \mathrm{DedekindSum}(4, 3)
+    out: \frac{1}{18}
+  traditional:
+    in: s(4, 3)
+    out: \frac{1}{18}
+phi-on-t-n-just-counts:
+  epsil:
+    in: RademacherPhi(ModularMatrix(1, 7, 0, 1))
+    out: "7"
+  tex:
+    in: \mathrm{RademacherPhi}(\mathrm{ModularMatrix}(1, 7, 0, 1))
+    out: "7"
+  traditional:
+    in: \Phi(\begin{pmatrix}1&7\\0&1\end{pmatrix})
+    out: "7"

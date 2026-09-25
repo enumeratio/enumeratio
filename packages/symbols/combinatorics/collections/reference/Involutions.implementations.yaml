@@ -1,0 +1,7 @@
+count-involutions-4:
+  epsil:
+    in: Count(Involutions(4))
+    out: "10"
+  tex:
+    in: \mathrm{Count}(\mathrm{Involutions}(4))
+    out: "10"

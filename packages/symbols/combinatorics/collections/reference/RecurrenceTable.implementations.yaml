@@ -1,0 +1,19 @@
+a-geometric-sequence:
+  epsil:
+    in: RecurrenceTable([a(n + 1) == 3 * a(n), a(1) == 7], a, [n, 1, 5])
+    out: "[7, 21, 63, 189, 567]"
+  tex:
+    in: \mathrm{RecurrenceTable}(\begin{cases}a(n+1)=3a(n)\\a(1)=7\end{cases}, a, \bigl\lbrack n, 1, 5\bigr\rbrack)
+    out: \bigl\lbrack7, 21, 63, 189, 567\bigr\rbrack
+the-fibonacci-recurrence:
+  epsil:
+    in: |-
+      RecurrenceTable(
+                       [a(n) == a(n - 1) + a(n - 2), a(1) == 1, a(2) == 1],
+                       a,
+                       [n, 1, 10],
+                     )
+    out: "[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]"
+  tex:
+    in: \mathrm{RecurrenceTable}(\begin{cases}a(n)=a(n-1)+a(n-2)\\a(1)=1\\a(2)=1\end{cases}, a, \bigl\lbrack n, 1, 10\bigr\rbrack)
+    out: \bigl\lbrack1, 1, 2, 3, 5, 8, 13, 21, 34, 55\bigr\rbrack

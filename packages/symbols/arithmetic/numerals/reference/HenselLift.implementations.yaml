@@ -1,0 +1,49 @@
+sqrt-2-in-z-7-from-3-2-2-pmod-7:
+  epsil:
+    in: HenselLift(x ^ 2 - 2, 3, 7, 6)
+    out: AdicNumeral(7, 38_181, 6)
+  tex:
+    in: \mathrm{HenselLift}(x^2-2, 3, 7, 6)
+    out: \mathrm{AdicNumeral}(7, 38\,181, 6)
+and-squaring-it-gives-2-back-to-the-same:
+  epsil:
+    in: AdicSqrt(AdicNumeral(7, 2), 6) ^ 2
+    out: AdicNumeral(7, 2, 6)
+  tex:
+    in: \mathrm{AdicSqrt}(\mathrm{AdicNumeral}(7, 2), 6)^2
+    out: \mathrm{AdicNumeral}(7, 2, 6)
+a-10-adic-idempotent-e-2-e-and-e-0-1:
+  epsil:
+    in: AdicExpansion(HenselLift(x ^ 2 - x, 5, 10, 8))
+    out: '"…12890625 + O(10^8)"'
+  tex:
+    in: \mathrm{AdicExpansion}(\mathrm{HenselLift}(x^2-x, 5, 10, 8))
+    out: \text{…12890625 + O(10^8)}
+3-is-not-a-square-mod-7-so-it-has-no-7-adic:
+  epsil:
+    in: AdicSqrt(AdicNumeral(7, 3))
+    out: AdicSqrt(AdicNumeral(7, 3))
+  tex:
+    in: \mathrm{AdicSqrt}(\mathrm{AdicNumeral}(7, 3))
+    out: \mathrm{AdicSqrt}(\mathrm{AdicNumeral}(7, 3))
+declines-at-a-non-simple-root-f-1-2-is-not-a:
+  epsil:
+    in: HenselLift(x ^ 3 - x, 1, 2, 6)
+    out: HenselLift(x ^ 3 - x, 1, 2, 6)
+  tex:
+    in: \mathrm{HenselLift}(x^3-x, 1, 2, 6)
+    out: \mathrm{HenselLift}(x^3-x, 1, 2, 6)
+the-two-roots-of-x-2-x-lifted-in-z-10-are:
+  epsil:
+    in: HenselLift(x ^ 2 - x, 5, 10, 8) * HenselLift(x ^ 2 - x, 6, 10, 8)
+    out: AdicNumeral(10, 0, 8)
+  tex:
+    in: \mathrm{HenselLift}(x^2-x, 5, 10, 8)\mathrm{HenselLift}(x^2-x, 6, 10, 8)
+    out: \mathrm{AdicNumeral}(10, 0, 8)
+and-they-sum-to-1-splitting-z-10-via-z-10-cong-z:
+  epsil:
+    in: HenselLift(x ^ 2 - x, 5, 10, 8) + HenselLift(x ^ 2 - x, 6, 10, 8)
+    out: AdicNumeral(10, 1, 8)
+  tex:
+    in: \mathrm{HenselLift}(x^2-x, 5, 10, 8)+\mathrm{HenselLift}(x^2-x, 6, 10, 8)
+    out: \mathrm{AdicNumeral}(10, 1, 8)

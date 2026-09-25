@@ -44,8 +44,6 @@ examples:
     expected: [BarnesG, [Rational, 5, 2]]
     category: Possible issues
     caption: An exact non-integer argument stays symbolic under plain evaluation (use N(); Wolfram's closed form in Glaisher's constant is not reproduced)
-    divergence:
-      wolfram: An exact non-integer argument stays symbolic here; Wolfram continues to a closed form in Glaisher's constant.
   - id: g-10-prod-k-0-8-k-exact
     expr: [BarnesG, 10]
     expected: 5056584744960000
@@ -73,8 +71,6 @@ examples:
     expected: [List, [List, [BarnesG, [Rational, 1, 2]], 1], [List, 1, [BarnesG, [Rational, 1, 2]]]]
     category: Scope
     caption: Threads elementwise over an array
-    divergence:
-      wolfram: Wolfram also threads, but writes $G(\tfrac12)$ as its closed form $2^{1/24} e^{1/8} \pi^{-1/4} A^{-3/2}$ in Glaisher's constant.
   - id: g-infty-infty
     expr: [BarnesG, PositiveInfinity]
     expected: PositiveInfinity

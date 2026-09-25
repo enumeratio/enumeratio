@@ -1,0 +1,113 @@
+fold-add-0-list-1-2-3-4:
+  epsil:
+    in: Fold(Add, 0, [1, 2, 3, 4])
+    out: "10"
+  tex:
+    in: \mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: "10"
+  wolfram:
+    in: Fold[Plus, 0, List[1, 2, 3, 4]]
+    out: "10"
+    tex:
+      in: \text{Fold}[\text{Plus},0,\{1,2,3,4\}]
+      out: "10"
+fold-multiply-1-list-1-2-3-4:
+  epsil:
+    in: Fold(Multiply, 1, [1, 2, 3, 4])
+    out: "24"
+  tex:
+    in: \mathrm{Fold}(\mathrm{Multiply}, 1, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: "24"
+  wolfram:
+    in: Fold[Times, 1, List[1, 2, 3, 4]]
+    out: "24"
+    tex:
+      in: \text{Fold}[\text{Times},1,\{1,2,3,4\}]
+      out: "24"
+the-shape-of-a-left-fold:
+  epsil:
+    in: Fold(f, x, [a, b, c])
+    out: f(f(f(x, a), b), c)
+  tex:
+    in: \mathrm{Fold}(f, x, \bigl\lbrack a, b, c\bigr\rbrack)
+    out: f(f(f(x, a), b), c)
+fold-max-0-list-3-1-4-1-5:
+  epsil:
+    in: Fold(Max, 0, [3, 1, 4, 1, 5])
+    out: "5"
+  tex:
+    in: \mathrm{Fold}(\mathrm{Max}, 0, \bigl\lbrack3, 1, 4, 1, 5\bigr\rbrack)
+    out: "5"
+  wolfram:
+    in: Fold[Max, 0, List[3, 1, 4, 1, 5]]
+symbolic-elements:
+  epsil:
+    in: Fold(Add, 0, [a, b, c])
+    out: a + b + c
+  tex:
+    in: \mathrm{Fold}(\mathrm{Add}, 0, \bigl\lbrack a, b, c\bigr\rbrack)
+    out: a+b+c
+any-two-argument-function-here-one-that-nests:
+  epsil:
+    in: Fold(Function([_1, _2]), x, [a, b])
+    out: "[[x, a], b]"
+  tex:
+    in: \mathrm{Fold}(()\mapsto\bigl\lbrack\operatorname{\_1}, \operatorname{\_2}\bigr\rbrack, x, \bigl\lbrack a, b\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack x, a\bigr\rbrack, b\bigr\rbrack
+without-a-seed-folding-starts-from-the-first:
+  epsil:
+    in: Fold(f, [a, b, c])
+    out: f(f(a, b), c)
+  tex:
+    in: \mathrm{Fold}(f, \bigl\lbrack a, b, c\bigr\rbrack)
+    out: f(f(a, b), c)
+folding-an-empty-list-returns-the-seed:
+  epsil:
+    in: Fold(f, x, [])
+    out: x
+  tex:
+    in: \mathrm{Fold}(f, x, \bigl\lbrack \bigr\rbrack)
+    out: x
+folding-with-add-is-a-sum-1-2-100:
+  epsil:
+    in: Fold(Add, 0, Range(100))
+    out: 5_050
+  tex:
+    in: \mathrm{Fold}(\mathrm{Add}, 0, 1..100)
+    out: 5\,050
+  wolfram:
+    in: Fold[Plus, 0, Range[100]]
+assemble-a-number-from-its-decimal-digits:
+  epsil:
+    in: Fold(Function(10 * _1 + _2), 0, [1, 2, 3, 4])
+    out: 1_234
+  tex:
+    in: \mathrm{Fold}(()\mapsto10\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: 1\,234
+  wolfram:
+    in: Fold[Function[Plus[Times[10, Slot[1]], Slot[2]]], 0, List[1, 2, 3, 4]]
+or-from-its-binary-digits-1011-2-11:
+  epsil:
+    in: Fold(Function(2 * _1 + _2), 0, [1, 0, 1, 1])
+    out: "11"
+  tex:
+    in: \mathrm{Fold}(()\mapsto2\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack1, 0, 1, 1\bigr\rbrack)
+    out: "11"
+  wolfram:
+    in: Fold[Function[Plus[Times[2, Slot[1]], Slot[2]]], 0, List[1, 0, 1, 1]]
+horner-s-rule-for-ax-2-bx-c:
+  epsil:
+    in: Fold(Function(x * _1 + _2), 0, [a, b, c])
+    out: x * (a * x + b) + c
+  tex:
+    in: \mathrm{Fold}(()\mapsto x\operatorname{\_1}+\operatorname{\_2}, 0, \bigl\lbrack a, b, c\bigr\rbrack)
+    out: x\times(ax+b)+c
+evaluate-the-continued-fraction-1-2-2-2-from-the:
+  epsil:
+    in: Fold(Function(_2 + 1 / _1), 2, [2, 2, 1])
+    out: 17 / 12
+  tex:
+    in: \mathrm{Fold}(()\mapsto\operatorname{\_2}+\frac{1}{\operatorname{\_1}}, 2, \bigl\lbrack2, 2, 1\bigr\rbrack)
+    out: \frac{17}{12}
+  wolfram:
+    in: Fold[Function[Plus[Slot[2], Divide[1, Slot[1]]]], 2, List[2, 2, 1]]

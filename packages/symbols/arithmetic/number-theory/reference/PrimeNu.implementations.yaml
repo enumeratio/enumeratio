@@ -1,0 +1,152 @@
+primenu-24:
+  epsil:
+    in: PrimeNu(24)
+    out: "2"
+  tex:
+    in: \mathrm{PrimeNu}(24)
+    out: "2"
+  traditional:
+    in: \omega(24)
+    out: "2"
+  wolfram:
+    in: PrimeNu[24]
+    out: "2"
+    tex:
+      in: \nu (24)
+      out: "2"
+primenu-360:
+  epsil:
+    in: PrimeNu(360)
+    out: "3"
+  tex:
+    in: \mathrm{PrimeNu}(360)
+    out: "3"
+  traditional:
+    in: \omega(360)
+    out: "3"
+  wolfram:
+    in: PrimeNu[360]
+    out: "3"
+    tex:
+      in: \nu (360)
+      out: "3"
+32-2-5-has-just-one-distinct-prime-factor:
+  epsil:
+    in: PrimeNu(32)
+    out: "1"
+  tex:
+    in: \mathrm{PrimeNu}(32)
+    out: "1"
+  traditional:
+    in: \omega(32)
+    out: "1"
+  wolfram:
+    in: PrimeNu[32]
+    out: "1"
+    tex:
+      in: \nu (32)
+      out: "1"
+1-has-no-prime-factors:
+  epsil:
+    in: PrimeNu(1)
+    out: "0"
+  tex:
+    in: \mathrm{PrimeNu}(1)
+    out: "0"
+  traditional:
+    in: \omega(1)
+    out: "0"
+  wolfram:
+    in: PrimeNu[1]
+    out: "0"
+    tex:
+      in: \nu (1)
+      out: "0"
+primenu-n-is-the-length-of-factorinteger-n:
+  epsil:
+    in: PrimeNu(50) == Length(FactorInteger(50))
+    out: True
+  tex:
+    in: \mathrm{PrimeNu}(50)=\mathrm{Length}(\mathrm{FactorInteger}(50))
+    out: \top
+  traditional:
+    in: \omega(50)=\mathrm{Length}(\mathrm{FactorInteger}(50))
+    out: \mathrm{True}
+  wolfram:
+    in: (PrimeNu[50] == Length[FactorInteger[50]])
+    back: Unreadable
+    out: True
+    tex:
+      in: \nu (50)=\text{Length}[\text{FactorInteger}[50]]
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: PrimeNu([4, 28, 180])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{PrimeNu}(\bigl\lbrack4, 28, 180\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  wolfram:
+    in: PrimeNu[List[4, 28, 180]]
+    out: "{1, 2, 3}"
+    tex:
+      in: \nu (\{4,28,180\})
+      out: \{1,2,3\}
+primenu-105:
+  epsil:
+    in: PrimeNu(105)
+    out: "3"
+  tex:
+    in: \mathrm{PrimeNu}(105)
+    out: "3"
+  traditional:
+    in: \omega(105)
+    out: "3"
+  wolfram:
+    in: PrimeNu[105]
+large-integers-the-15-primes-up-to-50-divide-50:
+  epsil:
+    in: PrimeNu(50!)
+    out: "15"
+  tex:
+    in: \mathrm{PrimeNu}(50!)
+    out: "15"
+  traditional:
+    in: \omega(50!)
+    out: "15"
+  wolfram:
+    in: PrimeNu[Factorial[50]]
+gaussian-integers-3-i-1-i-2-i:
+  epsil:
+    in: PrimeNu(3 + i)
+    out: "2"
+  tex:
+    in: \mathrm{PrimeNu}(3+i)
+    out: "2"
+  traditional:
+    in: \omega(3+i)
+    out: "2"
+  wolfram:
+    in: PrimeNu[Complex[3, 1]]
+gaussianintegers-true-5-splits-so-105-has-4:
+  epsil:
+    in: PrimeNu(105, GaussianIntegers -> True)
+    out: "4"
+  tex:
+    in: \mathrm{PrimeNu}(105, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: "4"
+  traditional:
+    in: \mathrm{PrimeNu}(105, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: "4"
+listable-over-a-range:
+  epsil:
+    in: PrimeNu(Range(20))
+    out: "[0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2]"
+  tex:
+    in: \mathrm{PrimeNu}(1..20)
+    out: \bigl\lbrack0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2\bigr\rbrack
+  traditional:
+    in: \omega(1..20)
+    out: \bigl\lbrack0, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 2, 1, 1, 2, 1, 2\bigr\rbrack
+  wolfram:
+    in: PrimeNu[Range[20]]

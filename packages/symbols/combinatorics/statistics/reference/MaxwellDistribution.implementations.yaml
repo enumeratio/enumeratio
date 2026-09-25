@@ -1,0 +1,39 @@
+maxwell-pdf-exact:
+  epsil:
+    in: PDF(MaxwellDistribution(1), 2)
+    out: 4 * Sqrt(2) / (ExponentialE ^ 2 * Sqrt(Pi))
+  tex:
+    in: \operatorname{PDF}(\mathrm{MaxwellDistribution}(1), 2)
+    out: \frac{4\sqrt{2}}{e^{2}\sqrt{\pi}}
+  wolfram:
+    in: PDF[MaxwellDistribution[1], 2]
+maxwell-cdf-exact:
+  epsil:
+    in: CDF(MaxwellDistribution(1), 2)
+    out: 1 - GammaRegularized(3 / 2, 2)
+  tex:
+    in: \operatorname{CDF}(\mathrm{MaxwellDistribution}(1), 2)
+    out: 1-\operatorname{GammaRegularized}(\frac{3}{2}, 2)
+  traditional:
+    in: \operatorname{CDF}(\mathrm{MaxwellDistribution}(1), 2)
+    out: 1-Q(\frac{3}{2}, 2)
+  wolfram:
+    in: CDF[MaxwellDistribution[1], 2]
+maxwell-mean-exact:
+  epsil:
+    in: Mean(MaxwellDistribution(1))
+    out: 2 * Sqrt(2) / Sqrt(Pi)
+  tex:
+    in: \mathrm{mean}(\mathrm{MaxwellDistribution}(1))
+    out: \frac{2\sqrt{2}}{\sqrt{\pi}}
+  wolfram:
+    in: Mean[MaxwellDistribution[1]]
+maxwell-variance-exact:
+  epsil:
+    in: Variance(MaxwellDistribution(1))
+    out: (-8 + 3Pi) / Pi
+  tex:
+    in: \mathrm{Variance}(\mathrm{MaxwellDistribution}(1))
+    out: \frac{3\pi-8}{\pi}
+  wolfram:
+    in: Variance[MaxwellDistribution[1]]

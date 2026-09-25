@@ -1,0 +1,14 @@
+dirac-delta:
+  epsil:
+    in: InverseFourierTransform(DiracDelta(w), w, t)
+    out: Sqrt(1 / (2Pi))
+  tex:
+    in: \mathrm{InverseFourierTransform}(\mathrm{DiracDelta}(w), w, t)
+    out: \sqrt{\frac{1}{2\pi}}
+constant:
+  epsil:
+    in: InverseFourierTransform(1, w, t)
+    out: Sqrt(2Pi)
+  tex:
+    in: \mathrm{InverseFourierTransform}(1, w, t)
+    out: \sqrt{2\pi}

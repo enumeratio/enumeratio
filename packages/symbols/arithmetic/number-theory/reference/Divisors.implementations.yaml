@@ -1,0 +1,217 @@
+divisors-1-729:
+  epsil:
+    in: Divisors(1_729)
+    out: "[1, 7, 13, 19, 91, 133, 247, 1_729]"
+  tex:
+    in: \mathrm{Divisors}(1\,729)
+    out: \bigl\lbrack1, 7, 13, 19, 91, 133, 247, 1\,729\bigr\rbrack
+  wolfram:
+    in: Divisors[1729]
+    out: "{1, 7, 13, 19, 91, 133, 247, 1729}"
+    tex:
+      in: \text{Divisors}[1729]
+      out: \{1,7,13,19,91,133,247,1729\}
+  sage:
+    in: divisors(1729)
+    out: "[1, 7, 13, 19, 91, 133, 247, 1729]"
+divisors-20:
+  epsil:
+    in: Divisors(20)
+    out: "[1, 2, 4, 5, 10, 20]"
+  tex:
+    in: \mathrm{Divisors}(20)
+    out: \bigl\lbrack1, 2, 4, 5, 10, 20\bigr\rbrack
+  wolfram:
+    in: Divisors[20]
+    out: "{1, 2, 4, 5, 10, 20}"
+    tex:
+      in: \text{Divisors}[20]
+      out: \{1,2,4,5,10,20\}
+  sage:
+    in: divisors(20)
+    out: "[1, 2, 4, 5, 10, 20]"
+1-has-exactly-one-divisor-itself:
+  epsil:
+    in: Divisors(1)
+    out: "[1]"
+  tex:
+    in: \mathrm{Divisors}(1)
+    out: \bigl\lbrack1\bigr\rbrack
+  wolfram:
+    in: Divisors[1]
+    out: "{1}"
+    tex:
+      in: \text{Divisors}[1]
+      out: \{1\}
+  sage:
+    in: divisors(1)
+    out: "[1]"
+a-prime-s-only-divisors-are-1-and-itself:
+  epsil:
+    in: Divisors(13)
+    out: "[1, 13]"
+  tex:
+    in: \mathrm{Divisors}(13)
+    out: \bigl\lbrack1, 13\bigr\rbrack
+  wolfram:
+    in: Divisors[13]
+    out: "{1, 13}"
+    tex:
+      in: \text{Divisors}[13]
+      out: \{1,13\}
+  sage:
+    in: divisors(13)
+    out: "[1, 13]"
+720-is-highly-composite-30-divisors-more-than:
+  epsil:
+    in: Divisors(720)
+    out: |-
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        15,
+        16,
+        18,
+        20,
+        24,
+        30,
+        36,
+        40,
+        45,
+        48,
+        60,
+        72,
+        80,
+        90,
+        120,
+        144,
+        180,
+        240,
+        360,
+        720,
+      ]
+  tex:
+    in: \mathrm{Divisors}(720)
+    out: \bigl\lbrack1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720\bigr\rbrack
+  wolfram:
+    in: Divisors[720]
+    out: "{1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720}"
+    tex:
+      in: \text{Divisors}[720]
+      out: \{1,2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,36,40,45,48,60,72,80,90,120,144,180,240,360,720\}
+  sage:
+    in: divisors(720)
+    out: "[1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720]"
+the-divisor-count-d-n-equals-sigma-0-n-see:
+  epsil:
+    in: Length(Divisors(20)) == DivisorSigma(0, 20)
+    out: True
+  tex:
+    in: \mathrm{Length}(\mathrm{Divisors}(20))=\mathrm{DivisorSigma}(0, 20)
+    out: \top
+  traditional:
+    in: \mathrm{Length}(\mathrm{Divisors}(20))=\sigma_{0}(20)
+    out: \mathrm{True}
+  wolfram:
+    in: (Length[Divisors[20]] == DivisorSigma[0, 20])
+    back: Unreadable
+    out: True
+    tex:
+      in: \text{Length}[\text{Divisors}[20]]=\sigma _0(20)
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Divisors([4, 6])
+    out: "[[1, 2, 4], [1, 2, 3, 6]]"
+  tex:
+    in: \mathrm{Divisors}(\bigl\lbrack4, 6\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2, 4\bigr\rbrack, \bigl\lbrack1, 2, 3, 6\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Divisors[List[4, 6]]
+    out: "{{1, 2, 4}, {1, 2, 3, 6}}"
+    tex:
+      in: \text{Divisors}[\{4,6\}]
+      out: \{\{1,2,4\},\{1,2,3,6\}\}
+  sage:
+    in: divisors([4, 6])
+divisors-3-plus-4i:
+  epsil:
+    in: Divisors(3 + 4i)
+    out: "[1, 2 + i, 3 + 4i]"
+  tex:
+    in: \mathrm{Divisors}(3+4i)
+    out: \bigl\lbrack1, 2+i, 3+4i\bigr\rbrack
+  wolfram:
+    in: Divisors[Complex[3, 4]]
+    out: "{1, 2 + I, 3 + 4*I}"
+    tex:
+      in: \text{Divisors}[3+4 i]
+      out: \{1,2+i,3+4 i\}
+  sage:
+    in: divisors((3 + 4*I))
+    out: "[-4*I - 3, 2*I - 1, 1]"
+    verdict: disagree
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Divisors over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+13-2-3i-3-2i-splits-so-it-gains-two-divisors:
+  epsil:
+    in: Divisors(13, GaussianIntegers -> True)
+    out: "[1, 2 + 3i, 3 + 2i, 13]"
+  tex:
+    in: \mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: \bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+  traditional:
+    in: \mathrm{Divisors}(13, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: \bigl\lbrack1, 2+3i, 3+2i, 13\bigr\rbrack
+divisors-6:
+  epsil:
+    in: Divisors(6)
+    out: "[1, 2, 3, 6]"
+  tex:
+    in: \mathrm{Divisors}(6)
+    out: \bigl\lbrack1, 2, 3, 6\bigr\rbrack
+  wolfram:
+    in: Divisors[6]
+  sage:
+    in: divisors(6)
+6-4i-i-1-i-2-3-2i:
+  epsil:
+    in: Divisors(6 + 4i)
+    out: "[1, 1 + i, 1 + 5i, 2, 3 + 2i, 6 + 4i]"
+  tex:
+    in: \mathrm{Divisors}(6+4i)
+    out: \bigl\lbrack1, 1+i, 1+5i, 2, 3+2i, 6+4i\bigr\rbrack
+  wolfram:
+    in: Divisors[Complex[6, 4]]
+  sage:
+    in: divisors((6 + 4*I))
+listable-threads-over-a-list:
+  epsil:
+    in: Divisors([605, 871, 824])
+    out: "[[1, 5, 11, 55, 121, 605], [1, 13, 67, 871], [1, 2, 4, 8, 103, 206, 412, 824]]"
+  tex:
+    in: \mathrm{Divisors}(\bigl\lbrack605, 871, 824\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 5, 11, 55, 121, 605\bigr\rbrack, \bigl\lbrack1, 13, 67, 871\bigr\rbrack, \bigl\lbrack1, 2, 4, 8, 103, 206, 412, 824\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Divisors[List[605, 871, 824]]
+  sage:
+    in: divisors([605, 871, 824])
+only-positive-divisors-even-for-negative-n:
+  epsil:
+    in: Divisors(-6)
+    out: "[1, 2, 3, 6]"
+  tex:
+    in: \mathrm{Divisors}(-6)
+    out: \bigl\lbrack1, 2, 3, 6\bigr\rbrack
+  wolfram:
+    in: Divisors[-6]
+  sage:
+    in: divisors(-6)

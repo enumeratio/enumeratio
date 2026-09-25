@@ -101,6 +101,11 @@ examples:
     expected: x
     category: Scope
     caption: $\sinh(\operatorname{arsinh} x) = x$ for every $x$
+  - id: sinh-arsinh-2-2-for-every-x
+    expr: [Sinh, [Arsinh, 2]]
+    expected: 2
+    category: Scope
+    caption: $\sinh(\operatorname{arsinh}(2)) = 2$
   - id: derivative-cosh-x
     expr: [D, [Sinh, x], x]
     expected: [Cosh, x]
@@ -123,8 +128,6 @@ examples:
       ]
     category: Scope
     caption: Taylor series about 0
-    divergence:
-      wolfram: Wolfram's Series[Sinh[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
   - id: the-definition-sinh-x-frac-e-x-e-x-2
     expr: [TrigToExp, [Sinh, x]]
     expected:

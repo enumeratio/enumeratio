@@ -1,0 +1,7 @@
+the-one-line-word-231:
+  epsil:
+    in: ConjugacyClassRepresentative(Permutation([2, 3, 1]))
+    out: Permutation([2, 3, 1])
+  tex:
+    in: \mathrm{ConjugacyClassRepresentative}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack)

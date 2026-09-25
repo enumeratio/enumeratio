@@ -1,0 +1,167 @@
+3-cdot-5-15-equiv-1:
+  epsil:
+    in: ModularInverse(3, 7)
+    out: "5"
+  tex:
+    in: \mathrm{ModularInverse}(3, 7)
+    out: "5"
+  traditional:
+    in: \left(3^{-1}\bmod 7\right)
+    out: "5"
+  wolfram:
+    in: ModularInverse[3, 7]
+    out: "5"
+    tex:
+      in: \text{ModularInverse}[3,7]
+      out: "5"
+  sage:
+    in: inverse_mod(3, 7)
+    out: "5"
+modularinverse-2-11:
+  epsil:
+    in: ModularInverse(2, 11)
+    out: "6"
+  tex:
+    in: \mathrm{ModularInverse}(2, 11)
+    out: "6"
+  traditional:
+    in: \left(2^{-1}\bmod 11\right)
+    out: "6"
+  wolfram:
+    in: ModularInverse[2, 11]
+  sage:
+    in: inverse_mod(2, 11)
+a-negative-argument-3-cdot-2-6-equiv-1:
+  epsil:
+    in: ModularInverse(-3, 7)
+    out: "2"
+  tex:
+    in: \mathrm{ModularInverse}(-3, 7)
+    out: "2"
+  traditional:
+    in: \left(-3^{-1}\bmod 7\right)
+    out: "2"
+  wolfram:
+    in: ModularInverse[-3, 7]
+  sage:
+    in: inverse_mod(-3, 7)
+a-21-digit-modulus:
+  epsil:
+    in: ModularInverse(3, 10 ^ 20 + 1)
+    out: 33_333_333_333_333_333_334
+  tex:
+    in: \mathrm{ModularInverse}(3, 10^{20}+1)
+    out: 33\,333\,333\,333\,333\,333\,334
+  traditional:
+    in: \left(3^{-1}\bmod 10^{20}+1\right)
+    out: 33\,333\,333\,333\,333\,333\,334
+  wolfram:
+    in: ModularInverse[3, Plus[Power[10, 20], 1]]
+  sage:
+    in: inverse_mod(3, ((10^20) + 1))
+listable-threads-over-a-list:
+  epsil:
+    in: ModularInverse([2, 3, 4], 11)
+    out: "[6, 4, 3]"
+  tex:
+    in: \mathrm{ModularInverse}(\bigl\lbrack2, 3, 4\bigr\rbrack, 11)
+    out: \bigl\lbrack6, 4, 3\bigr\rbrack
+  wolfram:
+    in: ModularInverse[List[2, 3, 4], 11]
+  sage:
+    in: inverse_mod([2, 3, 4], 11)
+the-same-as-powermod-with-exponent-1:
+  epsil:
+    in: ModularInverse(3, 7) == PowerMod(3, -1, 7)
+    out: True
+  tex:
+    in: \mathrm{ModularInverse}(3, 7)=\mathrm{PowerMod}(3, -1, 7)
+    out: \top
+  traditional:
+    in: \left(3^{-1}\bmod 7\right)=\left(\frac{1}{3}\bmod 7\right)
+    out: \mathrm{True}
+  wolfram:
+    in: (ModularInverse[3, 7] == PowerMod[3, -1, 7])
+    back: Unreadable
+  sage:
+    in: bool(inverse_mod(3, 7) == power_mod(3, -1, 7))
+a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2:
+  epsil:
+    in: 12_345 * ModularInverse(12_345, 2 ^ 61 - 1) % (2 ^ 61 - 1)
+    out: "1"
+  tex:
+    in: 12\,345\mathrm{ModularInverse}(12\,345, 2^{61}-1)\bmod(2^{61}-1)
+    out: "1"
+  traditional:
+    in: 12\,345\left(12\,345^{-1}\bmod 2^{61}-1\right)\bmod(2^{61}-1)
+    out: "1"
+  wolfram:
+    in: Mod[Times[12345, ModularInverse[12345, Subtract[Power[2, 61], 1]]], Subtract[Power[2, 61], 1]]
+  sage:
+    in: ((12345 * inverse_mod(12345, ((2^61) - 1))) % ((2^61) - 1))
+2-i-6-4i-8-14i-equiv-1-pmod-7:
+  epsil:
+    in: ModularInverse(2 + i, 7)
+    out: 6 + 4i
+  tex:
+    in: \mathrm{ModularInverse}(2+i, 7)
+    out: 6+4i
+  traditional:
+    in: \left(2+i^{-1}\bmod 7\right)
+    out: 6+4i
+  wolfram:
+    in: ModularInverse[Complex[2, 1], 7]
+    out: 6 + 4*I
+    tex:
+      in: \text{ModularInverse}[2+i,7]
+      out: 6+4 i
+  sage:
+    in: inverse_mod((2 + 1*I), 7)
+    out: -3*I - 1
+    verdict: disagree
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+modularinverse-11-plus-neg-7-times-i-7-plus-4i:
+  epsil:
+    in: ModularInverse(11 + -7 * i, 7 + 4i)
+    out: -1 + 2i
+  tex:
+    in: \mathrm{ModularInverse}(11-7i, 7+4i)
+    out: -1+2i
+  traditional:
+    in: \left(11-7i^{-1}\bmod 7+4i\right)
+    out: -1+2i
+  wolfram:
+    in: ModularInverse[Complex[11, -7], Complex[7, 4]]
+    out: -1 + 2*I
+    tex:
+      in: \text{ModularInverse}[11-7 i,7+4 i]
+      out: -1+2 i
+  sage:
+    in: inverse_mod((11 + -7*I), (7 + 4*I))
+    out: "28"
+    verdict: inconclusive
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+gcd-2-4-2-no-inverse:
+  epsil:
+    in: ModularInverse(2, 4)
+    out: ModularInverse(2, 4)
+  tex:
+    in: \mathrm{ModularInverse}(2, 4)
+    out: \mathrm{ModularInverse}(2, 4)
+  traditional:
+    in: \left(2^{-1}\bmod 4\right)
+    out: \left(2^{-1}\bmod 4\right)
+  wolfram:
+    in: ModularInverse[2, 4]
+    out: ModularInverse[2, 4]
+    tex:
+      in: \text{ModularInverse}[2,4]
+      out: \text{ModularInverse}[2,4]
+  sage:
+    in: inverse_mod(2, 4)
+    out: "ZeroDivisionError: inverse of Mod(2, 4) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["ModularInverse", 2, 4] and Sage raises an error.'

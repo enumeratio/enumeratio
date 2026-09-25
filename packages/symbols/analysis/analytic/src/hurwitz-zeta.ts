@@ -23,6 +23,7 @@ import { declareBetaContinuation } from "./beta-continuation.ts";
 import { declareComplexArguments } from "./complex-arguments.ts";
 import { declareDobinski } from "./dobinski.ts";
 import { declareHugeArguments } from "./huge-arguments.ts";
+import { declareInverseCompositions } from "./inverse-compositions.ts";
 import { declareHyperbolicExact } from "./hyperbolic-exact.ts";
 import { declareSimplifyIdentities } from "./simplify-identities.ts";
 import { declareTrigInfinity } from "./trig-infinity.ts";
@@ -767,6 +768,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareDobinski(ce);
   declareTrigPowerIntegrals(ce);
   declareHugeArguments(ce);
+  declareInverseCompositions(ce);
   declareCorrectlyRoundedN(ce);
   declareSignals(ce);
 }

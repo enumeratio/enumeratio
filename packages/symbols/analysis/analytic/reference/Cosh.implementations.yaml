@@ -1,0 +1,218 @@
+n-forces-the-numeric-result-that-plain:
+  epsil:
+    in: N(Cosh(0))
+    out: "1"
+  tex:
+    in: N(\cosh(0))
+    out: "1"
+  wolfram:
+    in: N[Cosh[0]]
+    out: 1.
+    tex:
+      in: N[\cosh (0)]
+      out: 1.
+n-cosh-1:
+  epsil:
+    in: N(Cosh(1))
+    out: 1.543_080_634_815_243_778_48
+  tex:
+    in: N(\cosh(1))
+    out: 1.543\,080\,634\,815\,243\,778\,48
+  wolfram:
+    in: N[Cosh[1]]
+    out: "1.5430806348152437"
+    tex:
+      in: N[\cosh (1)]
+      out: "1.54308"
+even-function-cosh-x-cosh-x:
+  epsil:
+    in: Cosh(-1) == Cosh(1)
+    out: True
+  tex:
+    in: \cosh(-1)=\cosh(1)
+    out: \top
+  traditional:
+    in: \cosh(-1)=\cosh(1)
+    out: \mathrm{True}
+  wolfram:
+    in: (Cosh[Minus[1]] == Cosh[1])
+    back: Unreadable
+    out: True
+    tex:
+      in: \cosh (-1)=\cosh (1)
+      out: \text{True}
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2:
+  epsil:
+    in: Cosh(1) ^ 2 - Sinh(1) ^ 2 == 1
+    out: True
+  tex:
+    in: \cosh(1)^2-\sinh(1)^2=1
+    out: \top
+  traditional:
+    in: \cosh(1)^2-\sinh(1)^2=1
+    out: \mathrm{True}
+  wolfram:
+    in: (Subtract[Power[Cosh[1], 2], Power[Sinh[1], 2]] == 1)
+    back: Unreadable
+    out: True
+    tex:
+      in: \cosh ^2(1)-\sinh ^2(1)=1
+      out: \text{True}
+stays-symbolic-even-at-0-same-as-sinh-wrap-in-n:
+  epsil:
+    in: Cosh(0)
+    out: "1"
+  tex:
+    in: \cosh(0)
+    out: "1"
+  wolfram:
+    in: Cosh[0]
+    out: "1"
+    tex:
+      in: \cosh (0)
+      out: "1"
+a-float-argument-evaluates-directly-no-n-needed:
+  epsil:
+    in: Cosh(1.2)
+    out: 1.810_655_567_324_374_793_09
+  tex:
+    in: \cosh(1.2)
+    out: 1.810\,655\,567\,324\,374\,793\,09
+  wolfram:
+    in: Cosh[1.2]
+arbitrary-precision-via-n:
+  epsil:
+    in: N(Cosh(6 / 5))
+    out: 1.810_655_567_324_374_793_09
+  tex:
+    in: N(\cosh(\frac{6}{5}))
+    out: 1.810\,655\,567\,324\,374\,793\,09
+  wolfram:
+    in: N[Cosh[Rational[6, 5]]]
+evaluates-at-a-complex-argument:
+  epsil:
+    in: Cosh(2.5 + i)
+    out: 3.313_290_146_113_224_5 + 5.091_071_522_949_698i
+  tex:
+    in: \cosh(2.5+i)
+    out: 3.313\,290\,146\,113\,224\,5+5.091\,071\,522\,949\,698i
+  wolfram:
+    in: Cosh[Complex[2.5, 1]]
+cosh-i-pi-cos-pi-1:
+  epsil:
+    in: Cosh(ImaginaryUnit * Pi)
+    out: "-1"
+  tex:
+    in: \cosh(i\pi)
+    out: "-1"
+  wolfram:
+    in: Cosh[Times[I, Pi]]
+element-wise-over-a-matrix-of-imaginary:
+  epsil:
+    in: |-
+      Cosh([
+             [ImaginaryUnit * (1Pi / 3), -(ImaginaryUnit * (1Pi / 3))],
+             [0, -(ImaginaryUnit * (1Pi / 6))],
+           ])
+    out: "[[1 / 2, 1 / 2], [1, Sqrt(3) / 2]]"
+  tex:
+    in: \cosh(\bigl\lbrack\bigl\lbrack\frac{i\times1\pi}{3}, -(i\times1\pi)/3\bigr\rbrack, \bigl\lbrack0, -(i\times1\pi)/6\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{1}{2}, \frac{1}{2}\bigr\rbrack, \bigl\lbrack1, \frac{\sqrt{3}}{2}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Cosh[List[List[Times[I, Divide[Times[1, Pi], 3]], Minus[Times[I, Divide[Times[1, Pi], 3]]]], List[0, Minus[Times[I, Divide[Times[1, Pi], 6]]]]]]
+interval-arithmetic-cosh-0-ln-3-1-frac-53-not:
+  epsil:
+    in: Cosh(Interval(0, Ln(3)))
+    out: Interval(1, 5 / 3)
+  tex:
+    in: \cosh(\mathrm{Interval}(0, \ln(3)))
+    out: \mathrm{Interval}(1, \frac{5}{3})
+  wolfram:
+    in: Cosh[Interval[List[0, Log[3]]]]
+uncertainty-propagation-cosh-2-sqrt-3-pm-0-1:
+  epsil:
+    in: Cosh(Around(2 / Sqrt(3), 0.1))
+    out: Around(1.744_112_480_153_778, 0.142_896_058_148_157_56)
+  tex:
+    in: \cosh(\mathrm{Around}(\frac{2}{\sqrt{3}}, 0.1))
+    out: \mathrm{Around}(1.744\,112\,480\,153\,778, 0.142\,896\,058\,148\,157\,56)
+  wolfram:
+    in: Cosh[Around[Divide[2, Sqrt[3]], 0.1]]
+cosh-positiveinfinity:
+  epsil:
+    in: Cosh(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \cosh(\infty)
+    out: \infty
+  wolfram:
+    in: Cosh[Infinity]
+evenness-drops-the-sign-of-a-symbolic-argument:
+  epsil:
+    in: Cosh(-x)
+    out: Cosh(x)
+  tex:
+    in: \cosh(-x)
+    out: \cosh(x)
+cosh-arcosh-x-x-for-every-x:
+  epsil:
+    in: Cosh(Arcosh(x))
+    out: x
+  tex:
+    in: \cosh(\mathrm{arcosh}(x))
+    out: x
+cosh-arcosh-2-2:
+  epsil:
+    in: Cosh(Arcosh(2))
+    out: "2"
+  tex:
+    in: \cosh(\mathrm{arcosh}(2))
+    out: "2"
+  wolfram:
+    in: Cosh[ArcCosh[2]]
+cosh-arcosh-of-a-complex-argument:
+  epsil:
+    in: Cosh(Arcosh(3i))
+    out: 3i
+  tex:
+    in: \cosh(\mathrm{arcosh}(3i))
+    out: 3i
+  wolfram:
+    in: Cosh[ArcCosh[Complex[0, 3]]]
+derivative-sinh-x:
+  epsil:
+    in: D(Cosh(x), x)
+    out: Sinh(x)
+  tex:
+    in: \frac{\mathrm{d}}{\mathrm{d}x}\cosh(x)
+    out: \sinh(x)
+antiderivative:
+  epsil:
+    in: Integrate(Cosh(x), x)
+    out: Sinh(x)
+  tex:
+    in: \int\!\cosh(x)\, \mathrm{d}x
+    out: \sinh(x)
+the-definition-cosh-x-frac-e-x-e-x-2:
+  epsil:
+    in: TrigToExp(Cosh(x))
+    out: 1 / 2 * (ExponentialE ^ x + ExponentialE ^ (-x))
+  tex:
+    in: \mathrm{TrigToExp}(\cosh(x))
+    out: \frac{1}{2}(e^{x}+\exp(-x))
+cosh-2-x-sinh-2-x-should-simplify-to-1:
+  epsil:
+    in: Simplify(Cosh(x) ^ 2 - Sinh(x) ^ 2)
+    out: "1"
+  tex:
+    in: \mathrm{Simplify}(\cosh(x)^2-\sinh(x)^2)
+    out: "1"
+to-30-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Cosh(1), 30)
+    out: 1.543_080_634_815_243_778_477_905_620_76
+  tex:
+    in: N(\cosh(1), 30)
+    out: 1.543\,080\,634\,815\,243\,778\,48
+  wolfram:
+    in: N[Cosh[1], 30]

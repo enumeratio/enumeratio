@@ -1,0 +1,40 @@
+an-odd-degree-polynomial-is-onto:
+  epsil:
+    in: FunctionSurjective(x ^ 3, x, Reals)
+    out: True
+  tex:
+    in: \mathrm{FunctionSurjective}(x^3, x, \mathrm{Reals})
+    out: \top
+  traditional:
+    in: \mathrm{FunctionSurjective}(x^3, x, \mathrm{Reals})
+    out: \mathrm{True}
+exp-misses-the-non-positive-reals:
+  epsil:
+    in: FunctionSurjective(Exp(x), x, Reals)
+    out: False
+  tex:
+    in: \mathrm{FunctionSurjective}(e^{x}, x, \mathrm{Reals})
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionSurjective}(e^{x}, x, \mathrm{Reals})
+    out: \mathrm{False}
+log-is-onto-the-reals:
+  epsil:
+    in: FunctionSurjective(Ln(x), x, Reals)
+    out: True
+  tex:
+    in: \mathrm{FunctionSurjective}(\ln(x), x, \mathrm{Reals})
+    out: \top
+  traditional:
+    in: \mathrm{FunctionSurjective}(\ln(x), x, \mathrm{Reals})
+    out: \mathrm{True}
+a-reciprocal-never-hits-zero:
+  epsil:
+    in: FunctionSurjective(1 / x, x, Reals)
+    out: False
+  tex:
+    in: \mathrm{FunctionSurjective}(\frac{1}{x}, x, \mathrm{Reals})
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionSurjective}(\frac{1}{x}, x, \mathrm{Reals})
+    out: \mathrm{False}

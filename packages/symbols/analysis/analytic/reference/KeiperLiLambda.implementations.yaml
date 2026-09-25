@@ -1,0 +1,49 @@
+lambda0-0-exact-under-plain-evaluation:
+  epsil:
+    in: KeiperLiLambda(0)
+    out: "0"
+  tex:
+    in: \mathrm{KeiperLiLambda}(0)
+    out: "0"
+lambda1-s-closed-form-exact-under-plain:
+  epsil:
+    in: KeiperLiLambda(1)
+    out: 1 + -1 / 2 * Ln(4Pi) + 1 / 2 * EulerGamma
+  tex:
+    in: \mathrm{KeiperLiLambda}(1)
+    out: 1-\frac{\ln(4\pi)}{2}+\frac{\gamma}{2}
+n-forces-the-closed-form-to-a-decimal:
+  epsil:
+    in: N(KeiperLiLambda(1))
+    out: 0.023_095_708_966_121_033_813_5
+  tex:
+    in: N(\mathrm{KeiperLiLambda}(1))
+    out: 0.023\,095\,708\,966\,121\,033\,813\,5
+n-2-is-numeric-only-the-contour-integral:
+  epsil:
+    in: N(KeiperLiLambda(2))
+    out: 0.092_345_735_228_047_94
+  tex:
+    in: N(\mathrm{KeiperLiLambda}(2))
+    out: 0.092\,345\,735\,228\,047\,94
+n-keiperlilambda-3:
+  epsil:
+    in: N(KeiperLiLambda(3))
+    out: 0.207_638_920_554_332_03
+  tex:
+    in: N(\mathrm{KeiperLiLambda}(3))
+    out: 0.207\,638\,920\,554\,332\,03
+declines-past-n-20-rather-than-returning-a-value:
+  epsil:
+    in: KeiperLiLambda(21)
+    out: KeiperLiLambda(21)
+  tex:
+    in: \mathrm{KeiperLiLambda}(21)
+    out: \mathrm{KeiperLiLambda}(21)
+lambda-1-1-gamma-2-frac-12-ln-4-pi-exactly:
+  epsil:
+    in: Chop(N(KeiperLiLambda(1)) - N(1 + EulerGamma / 2 - 1 / 2 * Ln(4Pi)))
+    out: "0"
+  tex:
+    in: \mathrm{chop}(N(\mathrm{KeiperLiLambda}(1))-N((1+\gamma/2)-\ln(4\pi)/2))
+    out: "0"

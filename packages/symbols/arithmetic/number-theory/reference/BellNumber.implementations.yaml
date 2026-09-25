@@ -1,0 +1,349 @@
+bellnumber-0:
+  epsil:
+    in: BellNumber(0)
+    out: "1"
+  tex:
+    in: \mathrm{BellNumber}(0)
+    out: "1"
+  traditional:
+    in: B_{0}
+    out: "1"
+  wolfram:
+    in: BellB[0]
+    out: "1"
+    tex:
+      in: B_0
+      out: "1"
+  sympy:
+    in: bell(0)
+    out: "1"
+  sage:
+    in: bell_number(0)
+    out: "1"
+  oscar:
+    in: bell(0)
+    out: "1"
+  julia:
+    in: bell(0)
+    out: "1"
+bellnumber-1:
+  epsil:
+    in: BellNumber(1)
+    out: "1"
+  tex:
+    in: \mathrm{BellNumber}(1)
+    out: "1"
+  traditional:
+    in: B_{1}
+    out: "1"
+  wolfram:
+    in: BellB[1]
+    out: "1"
+    tex:
+      in: B_1
+      out: "1"
+  sympy:
+    in: bell(1)
+    out: "1"
+  sage:
+    in: bell_number(1)
+    out: "1"
+  oscar:
+    in: bell(1)
+    out: "1"
+  julia:
+    in: bell(1)
+    out: "1"
+bellnumber-3:
+  epsil:
+    in: BellNumber(3)
+    out: "5"
+  tex:
+    in: \mathrm{BellNumber}(3)
+    out: "5"
+  traditional:
+    in: B_{3}
+    out: "5"
+  wolfram:
+    in: BellB[3]
+    out: "5"
+    tex:
+      in: B_3
+      out: "5"
+  sympy:
+    in: bell(3)
+    out: "5"
+  sage:
+    in: bell_number(3)
+    out: "5"
+  oscar:
+    in: bell(3)
+    out: "5"
+  julia:
+    in: bell(3)
+    out: "5"
+bellnumber-5:
+  epsil:
+    in: BellNumber(5)
+    out: "52"
+  tex:
+    in: \mathrm{BellNumber}(5)
+    out: "52"
+  traditional:
+    in: B_{5}
+    out: "52"
+  wolfram:
+    in: BellB[5]
+    out: "52"
+    tex:
+      in: B_5
+      out: "52"
+  sympy:
+    in: bell(5)
+    out: "52"
+  sage:
+    in: bell_number(5)
+    out: "52"
+  oscar:
+    in: bell(5)
+    out: "52"
+  julia:
+    in: bell(5)
+    out: "52"
+bellnumber-10:
+  epsil:
+    in: BellNumber(10)
+    out: 115_975
+  tex:
+    in: \mathrm{BellNumber}(10)
+    out: 115\,975
+  traditional:
+    in: B_{10}
+    out: 115\,975
+  wolfram:
+    in: BellB[10]
+    out: "115975"
+    tex:
+      in: B_{10}
+      out: "115975"
+  sympy:
+    in: bell(10)
+    out: "115975"
+  sage:
+    in: bell_number(10)
+    out: "115975"
+  oscar:
+    in: bell(10)
+    out: "115975"
+  julia:
+    in: bell(10)
+    out: "115975"
+recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at:
+  epsil:
+    in: |-
+      BellNumber(5) == Binomial(4, 0) * BellNumber(0) + Binomial(4, 1) * BellNumber(1) +
+                       Binomial(4, 2) * BellNumber(2) + Binomial(4, 3) * BellNumber(3) + Binomial(4, 4) *
+                                                           BellNumber(4)
+    out: True
+  tex:
+    in: \mathrm{BellNumber}(5)=\binom{4}{0}\mathrm{BellNumber}(0)+\binom{4}{1}\mathrm{BellNumber}(1)+\binom{4}{2}\mathrm{BellNumber}(2)+\binom{4}{3}\mathrm{BellNumber}(3)+\binom{4}{4}\mathrm{BellNumber}(4)
+    out: \top
+  traditional:
+    in: B_{5}=\binom{4}{0}B_{0}+\binom{4}{1}B_{1}+\binom{4}{2}B_{2}+\binom{4}{3}B_{3}+\binom{4}{4}B_{4}
+    out: \mathrm{True}
+  wolfram:
+    in: (BellB[5] == Plus[Times[Binomial[4, 0], BellB[0]], Times[Binomial[4, 1], BellB[1]], Times[Binomial[4, 2], BellB[2]], Times[Binomial[4, 3], BellB[3]], Times[Binomial[4, 4], BellB[4]]])
+    back: Unreadable
+    out: True
+    tex:
+      in: B_5=\binom{4}{0} B_0+\binom{4}{1} B_1+\binom{4}{2} B_2+\binom{4}{3} B_3+\binom{4}{4} B_4
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(bell(5), ((binomial(4, 0) * bell(0)) + (binomial(4, 1) * bell(1)) + (binomial(4, 2) * bell(2)) + (binomial(4, 3) * bell(3)) + (binomial(4, 4) * bell(4))))
+    out: True
+  sage:
+    in: bool(bell_number(5) == ((binomial(4, 0) * bell_number(0)) + (binomial(4, 1) * bell_number(1)) + (binomial(4, 2) * bell_number(2)) + (binomial(4, 3) * bell_number(3)) + (binomial(4, 4) * bell_number(4))))
+    out: True
+  oscar:
+    in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
+    out: "true"
+  julia:
+    in: (bell(5) == ((binomial(ZZ(4), ZZ(0)) * bell(0)) + (binomial(ZZ(4), ZZ(1)) * bell(1)) + (binomial(ZZ(4), ZZ(2)) * bell(2)) + (binomial(ZZ(4), ZZ(3)) * bell(3)) + (binomial(ZZ(4), ZZ(4)) * bell(4))))
+    out: "true"
+the-number-of-ways-to-partition-a-4-element-set:
+  epsil:
+    in: BellNumber(4)
+    out: "15"
+  tex:
+    in: \mathrm{BellNumber}(4)
+    out: "15"
+  traditional:
+    in: B_{4}
+    out: "15"
+  wolfram:
+    in: BellB[4]
+    out: "15"
+    tex:
+      in: B_4
+      out: "15"
+  sympy:
+    in: bell(4)
+    out: "15"
+  sage:
+    in: bell_number(4)
+    out: "15"
+  oscar:
+    in: bell(4)
+    out: "15"
+  julia:
+    in: bell(4)
+    out: "15"
+a-negative-argument-is-left-unevaluated:
+  epsil:
+    in: BellNumber(-1)
+    out: BellNumber(-1)
+  tex:
+    in: \mathrm{BellNumber}(-1)
+    out: \mathrm{BellNumber}(-1)
+  traditional:
+    in: B_{-1}
+    out: B_{-1}
+  wolfram:
+    in: BellB[-1]
+    out: BellB[-1]
+    tex:
+      in: B_{-1}
+      out: B_{-1}
+  sympy:
+    in: bell(-1)
+    out: "ValueError: a non-negative integer expected"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline BellNumber here: compute-engine leaves it unevaluated, SymPy raises."
+  sage:
+    in: bell_number(-1)
+    out: "ArithmeticError: Bell numbers not defined for negative indices"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BellNumber", -1] and Sage raises an error.'
+  oscar:
+    in: bell(-1)
+    out: "DomainError with -1: Argument must be non-negative"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BellNumber", -1] and Oscar raises an error.'
+  julia:
+    in: bell(-1)
+    out: "DomainError with -1: Argument must be non-negative"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["BellNumber", -1] and Nemo/Combinatorics.jl raises an error.'
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: BellNumber([1, 2, 3, 4])
+    out: "[1, 2, 5, 15]"
+  tex:
+    in: \mathrm{BellNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 5, 15\bigr\rbrack
+  wolfram:
+    in: BellB[List[1, 2, 3, 4]]
+    out: "{1, 2, 5, 15}"
+    tex:
+      in: B_{\{1,2,3,4\}}
+      out: \{1,2,5,15\}
+  sympy:
+    in: "[bell(1), bell(2), bell(3), bell(4)]"
+    out: "AttributeError: 'list' object has no attribute 'is_negative'"
+    verdict: error
+    kind: threading
+    note: compute-engine's BellNumber is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[bell_number(1), bell_number(2), bell_number(3), bell_number(4)]"
+  oscar:
+    in: bell([1, 2, 3, 4])
+  julia:
+    in: bell([1, 2, 3, 4])
+exact-for-large-n:
+  epsil:
+    in: BellNumber(30)
+    out: 846_749_014_511_809_332_450_147
+  tex:
+    in: \mathrm{BellNumber}(30)
+    out: 846\,749\,014\,511\,809\,332\,450\,147
+  traditional:
+    in: B_{30}
+    out: 846\,749\,014\,511\,809\,332\,450\,147
+  wolfram:
+    in: BellB[30]
+  sympy:
+    in: bell(30)
+  sage:
+    in: bell_number(30)
+  oscar:
+    in: bell(30)
+  julia:
+    in: bell(30)
+the-two-argument-form-gives-the-bell-touchard:
+  epsil:
+    in: BellNumber(5, x)
+    out: x ^ 5 + 10 * x ^ 4 + 25 * x ^ 3 + 15 * x ^ 2 + x
+  tex:
+    in: \mathrm{BellNumber}(5, x)
+    out: x^5+10x^4+25x^3+15x^2+x
+  traditional:
+    in: B_{5}(x)
+    out: x^5+10x^4+25x^3+15x^2+x
+the-bell-polynomial-at-a-real-point-b-20-0-5:
+  epsil:
+    in: BellNumber(20, 0.5)
+    out: 270_190_131_940.151_92
+  tex:
+    in: \mathrm{BellNumber}(20, 0.5)
+    out: 270\,190\,131\,940.151\,92
+  traditional:
+    in: B_{20}(0.5)
+    out: 270\,190\,131\,940.151\,92
+  wolfram:
+    in: BellB[20, 0.5]
+the-bell-polynomial-at-1-is-the-bell-number-b-n:
+  epsil:
+    in: BellNumber(5, 1)
+    out: "52"
+  tex:
+    in: \mathrm{BellNumber}(5, 1)
+    out: "52"
+  traditional:
+    in: B_{5}(1)
+    out: "52"
+  wolfram:
+    in: BellB[5, 1]
+dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac:
+  epsil:
+    in: Sum(k ^ 5 / k!, (k, 0, PositiveInfinity)) / ExponentialE
+    out: "52"
+  tex:
+    in: \frac{1}{e}(\sum_{k=0}^{\infty}\frac{k^5}{k!})
+    out: "52"
+  wolfram:
+    in: Divide[Sum[Divide[Power[k, 5], Factorial[k]], List[k, 0, Infinity]], E]
+touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod:
+  epsil:
+    in: BellNumber(9) % 7 == (BellNumber(2) + BellNumber(3)) % 7
+    out: True
+  tex:
+    in: \mathrm{BellNumber}(9)\bmod7=(\mathrm{BellNumber}(2)+\mathrm{BellNumber}(3))\bmod7
+    out: \top
+  traditional:
+    in: B_{9}\bmod7=(B_{2}+B_{3})\bmod7
+    out: \mathrm{True}
+  wolfram:
+    in: (Mod[BellB[9], 7] == Mod[Plus[BellB[2], BellB[3]], 7])
+    back: Unreadable
+  sympy:
+    in: enumeratio_equal((bell(9) % 7), ((bell(2) + bell(3)) % 7))
+  sage:
+    in: bool((bell_number(9) % 7) == ((bell_number(2) + bell_number(3)) % 7))
+  oscar:
+    in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))
+  julia:
+    in: (mod(bell(9), 7) == mod((bell(2) + bell(3)), 7))

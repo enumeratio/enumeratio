@@ -1,0 +1,30 @@
+1-to-2-then-2-to-3:
+  epsil:
+    in: QuiverCompose(LinearQuiver(4), QuiverPath(1, [0]), QuiverPath(2, [1]))
+    out: QuiverPath(1, [0, 1])
+  tex:
+    in: \mathrm{QuiverCompose}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack), \mathrm{QuiverPath}(2, \bigl\lbrack1\bigr\rbrack))
+    out: \mathrm{QuiverPath}(1, \bigl\lbrack0, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{QuiverCompose}(\vec{A}_{4}, \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack), \mathrm{QuiverPath}(2, \bigl\lbrack1\bigr\rbrack))
+    out: \mathrm{QuiverPath}(1, \bigl\lbrack0, 1\bigr\rbrack)
+the-ends-do-not-meet:
+  epsil:
+    in: QuiverCompose(LinearQuiver(4), QuiverPath(2, [1]), QuiverPath(1, [0]))
+    out: "0"
+  tex:
+    in: \mathrm{QuiverCompose}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(2, \bigl\lbrack1\bigr\rbrack), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack))
+    out: "0"
+  traditional:
+    in: \mathrm{QuiverCompose}(\vec{A}_{4}, \mathrm{QuiverPath}(2, \bigl\lbrack1\bigr\rbrack), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack))
+    out: "0"
+a-trivial-path-is-a-local-identity:
+  epsil:
+    in: QuiverCompose(LinearQuiver(4), QuiverPath(1, []), QuiverPath(1, [0]))
+    out: QuiverPath(1, [0])
+  tex:
+    in: \mathrm{QuiverCompose}(\mathrm{LinearQuiver}(4), \mathrm{QuiverPath}(1, \bigl\lbrack \bigr\rbrack), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack))
+    out: \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack)
+  traditional:
+    in: \mathrm{QuiverCompose}(\vec{A}_{4}, \mathrm{QuiverPath}(1, \bigl\lbrack \bigr\rbrack), \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack))
+    out: \mathrm{QuiverPath}(1, \bigl\lbrack0\bigr\rbrack)

@@ -1,0 +1,40 @@
+a-rational-function-is-meromorphic:
+  epsil:
+    in: FunctionMeromorphic(1 / x, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionMeromorphic}(\frac{1}{x}, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionMeromorphic}(\frac{1}{x}, x)
+    out: \mathrm{True}
+tangent-is-a-ratio-of-entire-functions:
+  epsil:
+    in: FunctionMeromorphic(Tan(x), x)
+    out: True
+  tex:
+    in: \mathrm{FunctionMeromorphic}(\tan(x), x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionMeromorphic}(\tan(x), x)
+    out: \mathrm{True}
+a-branch-point-is-not-a-pole:
+  epsil:
+    in: FunctionMeromorphic(Ln(x), x)
+    out: False
+  tex:
+    in: \mathrm{FunctionMeromorphic}(\ln(x), x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionMeromorphic}(\ln(x), x)
+    out: \mathrm{False}
+polynomials-are-meromorphic:
+  epsil:
+    in: FunctionMeromorphic(x ^ 2, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionMeromorphic}(x^2, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionMeromorphic}(x^2, x)
+    out: \mathrm{True}

@@ -1,0 +1,134 @@
+setminus-1-2-3-2:
+  epsil:
+    in: SetMinus({1, 2, 3}, {2})
+    out: "{1, 3}"
+  tex:
+    in: \lbrace1, 2, 3\rbrace\setminus\lbrace2\rbrace
+    out: \lbrace1, 3\rbrace
+  wolfram:
+    in: Complement[Union[List[1, 2, 3]], Union[List[2]]]
+    back: [SetMinus, [Union, [List, 1, 2, 3]], [Union, [List, 2]]]
+    out: "{1, 3}"
+    tex:
+      in: \text{Complement}[\text{Union}[\{1,2,3\}],\text{Union}[\{2\}]]
+      out: \{1,3\}
+setminus-1-2-3-4-2-4:
+  epsil:
+    in: SetMinus({1, 2, 3, 4}, {2, 4})
+    out: "{1, 3}"
+  tex:
+    in: \lbrace1, 2, 3, 4\rbrace\setminus\lbrace2, 4\rbrace
+    out: \lbrace1, 3\rbrace
+  wolfram:
+    in: Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]
+    back: [SetMinus, [Union, [List, 1, 2, 3, 4]], [Union, [List, 2, 4]]]
+    out: "{1, 3}"
+    tex:
+      in: \text{Complement}[\text{Union}[\{1,2,3,4\}],\text{Union}[\{2,4\}]]
+      out: \{1,3\}
+removing-elements-that-aren-t-present-leaves-the:
+  epsil:
+    in: SetMinus({1, 2, 3}, {9})
+    out: "{1, 2, 3}"
+  tex:
+    in: \lbrace1, 2, 3\rbrace\setminus\lbrace9\rbrace
+    out: \lbrace1, 2, 3\rbrace
+  wolfram:
+    in: Complement[Union[List[1, 2, 3]], Union[List[9]]]
+    back: [SetMinus, [Union, [List, 1, 2, 3]], [Union, [List, 9]]]
+    out: "{1, 2, 3}"
+    tex:
+      in: \text{Complement}[\text{Union}[\{1,2,3\}],\text{Union}[\{9\}]]
+      out: \{1,2,3\}
+a-setminus-a-setminus-b-a-cap-b-see-intersection:
+  epsil:
+    in: |-
+      SetMinus({1, 2, 3, 4}, SetMinus({1, 2, 3, 4}, {2, 4})) == Intersection({
+                                                                               1,
+                                                                               2,
+                                                                               3,
+                                                                               4,
+                                                                             }, {2, 4})
+    out: True
+  tex:
+    in: \lbrace1, 2, 3, 4\rbrace\setminus(\lbrace1, 2, 3, 4\rbrace\setminus\lbrace2, 4\rbrace)=\lbrace1, 2, 3, 4\rbrace\cap\lbrace2, 4\rbrace
+    out: \top
+  traditional:
+    in: \lbrace1, 2, 3, 4\rbrace\setminus(\lbrace1, 2, 3, 4\rbrace\setminus\lbrace2, 4\rbrace)=\lbrace1, 2, 3, 4\rbrace\cap\lbrace2, 4\rbrace
+    out: \mathrm{True}
+  wolfram:
+    in: (Complement[Union[List[1, 2, 3, 4]], Complement[Union[List[1, 2, 3, 4]], Union[List[2, 4]]]] == Intersection[Union[List[1, 2, 3, 4]], Union[List[2, 4]]])
+    back: Unreadable
+    out: True
+    tex:
+      in: \text{Complement}[\text{Union}[\{1,2,3,4\}],\text{Complement}[\text{Union}[\{1,2,3,4\}],\text{Union}[\{2,4\}]]]=\text{Union}[\{1,2,3,4\}]\cap \text{Union}[\{2,4\}]
+      out: \text{True}
+setminus-is-not-commutative-b-setminus-a-can:
+  epsil:
+    in: SetMinus({2, 4}, {1, 2, 3, 4})
+    out: EmptySet
+  tex:
+    in: \lbrace2, 4\rbrace\setminus\lbrace1, 2, 3, 4\rbrace
+    out: \emptyset
+  wolfram:
+    in: Complement[Union[List[2, 4]], Union[List[1, 2, 3, 4]]]
+    back: [SetMinus, [Union, [List, 2, 4]], [Union, [List, 1, 2, 3, 4]]]
+    out: "{}"
+    tex:
+      in: \text{Complement}[\text{Union}[\{2,4\}],\text{Union}[\{1,2,3,4\}]]
+      out: \{\}
+    verdict: disagree
+    kind: shape
+    note: An empty result is the symbol EmptySet here and the empty list {} in Wolfram.
+several-sets-can-be-removed-at-once:
+  epsil:
+    in: SetMinus({a, b, c, d, f}, {a, c}, {d})
+    out: "{b, f}"
+  tex:
+    in: \lbrace a, b, c, d, f\rbrace\setminus\lbrace a, c\rbrace\setminus\lbrace d\rbrace
+    out: \lbrace b, f\rbrace
+lists-as-well-as-sets-as-wolfram-s-complement:
+  epsil:
+    in: SetMinus([a, b, c, d, f], [a, c], [d])
+    out: "{b, f}"
+  tex:
+    in: \bigl\lbrack a, b, c, d, f\bigr\rbrack\setminus\operatorname{List}(a, c)\setminus\bigl\lbrack d\bigr\rbrack
+    out: \lbrace b, f\rbrace
+a-range-as-the-universe-to-remove-from-compute:
+  epsil:
+    in: SetMinus(Range(1, 10), {2, 3})
+    out: "{1, 4, 5, 6, 7, 8, 9, 10}"
+  tex:
+    in: (1..10)\setminus\lbrace2, 3\rbrace
+    out: \lbrace1, 4, 5, 6, 7, 8, 9, 10\rbrace
+  wolfram:
+    in: Complement[Range[1, 10], Union[List[2, 3]]]
+    back: [SetMinus, [Range, 1, 10], [Union, [List, 2, 3]]]
+removing-the-empty-set-changes-nothing-a:
+  epsil:
+    in: SetMinus({1, 2, 3}, EmptySet)
+    out: "{1, 2, 3}"
+  tex:
+    in: \lbrace1, 2, 3\rbrace\setminus\emptyset
+    out: \lbrace1, 2, 3\rbrace
+a-setminus-a-varnothing:
+  epsil:
+    in: SetMinus({1, 2, 3}, {1, 2, 3})
+    out: EmptySet
+  tex:
+    in: \lbrace1, 2, 3\rbrace\setminus\lbrace1, 2, 3\rbrace
+    out: \emptyset
+  wolfram:
+    in: Complement[Union[List[1, 2, 3]], Union[List[1, 2, 3]]]
+    back: [SetMinus, [Union, [List, 1, 2, 3]], [Union, [List, 1, 2, 3]]]
+the-result-keeps-the-first-set-s-order-rather:
+  epsil:
+    in: SetMinus({5, 4, 3, 2, 1}, {2})
+    out: "{5, 4, 3, 1}"
+  tex:
+    in: \lbrace5, 4, 3, 2, 1\rbrace\setminus\lbrace2\rbrace
+    out: \lbrace5, 4, 3, 1\rbrace
+  wolfram:
+    in: Complement[Union[List[5, 4, 3, 2, 1]], Union[List[2]]]
+    back: [SetMinus, [Union, [List, 5, 4, 3, 2, 1]], [Union, [List, 2]]]
+    note: "Wolfram's Complement sorts its result: Complement[{5, 4, 3, 2, 1}, {2}] is {1, 3, 4, 5}."

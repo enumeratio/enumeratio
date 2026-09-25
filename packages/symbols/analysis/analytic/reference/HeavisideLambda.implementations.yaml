@@ -1,0 +1,45 @@
+heavisidelambda-peak:
+  epsil:
+    in: HeavisideLambda(0)
+    out: "1"
+  tex:
+    in: \mathrm{HeavisideLambda}(0)
+    out: "1"
+  wolfram:
+    in: HeavisideLambda[0]
+heavisidelambda-endpoint:
+  epsil:
+    in: HeavisideLambda(1)
+    out: "0"
+  tex:
+    in: \mathrm{HeavisideLambda}(1)
+    out: "0"
+  wolfram:
+    in: HeavisideLambda[1]
+heavisidelambda-neg-endpoint:
+  epsil:
+    in: HeavisideLambda(-1)
+    out: "0"
+  tex:
+    in: \mathrm{HeavisideLambda}(-1)
+    out: "0"
+  wolfram:
+    in: HeavisideLambda[-1]
+heavisidelambda-outside:
+  epsil:
+    in: HeavisideLambda(2)
+    out: "0"
+  tex:
+    in: \mathrm{HeavisideLambda}(2)
+    out: "0"
+  wolfram:
+    in: HeavisideLambda[2]
+heavisidelambda-1-4:
+  epsil:
+    in: HeavisideLambda(1 / 4)
+    out: 3 / 4
+  tex:
+    in: \mathrm{HeavisideLambda}(\frac{1}{4})
+    out: \frac{3}{4}
+  wolfram:
+    in: HeavisideLambda[Rational[1, 4]]

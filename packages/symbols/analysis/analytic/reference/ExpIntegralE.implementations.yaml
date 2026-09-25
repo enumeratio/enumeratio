@@ -1,0 +1,52 @@
+e-1-3-2-gamma-0-3-2:
+  epsil:
+    in: ExpIntegralE(1, 1.5)
+    out: 0.100_019_582_406_632_65
+  tex:
+    in: \mathrm{ExpIntegralE}(1, 1.5)
+    out: 0.100\,019\,582\,406\,632\,65
+  wolfram:
+    in: ExpIntegralE[1, 1.5]
+expintegrale-2-1p5:
+  epsil:
+    in: ExpIntegralE(2, 1.5)
+    out: 0.073_100_786_538_480_84
+  tex:
+    in: \mathrm{ExpIntegralE}(2, 1.5)
+    out: 0.073\,100\,786\,538\,480\,84
+  wolfram:
+    in: ExpIntegralE[2, 1.5]
+non-integer-order:
+  epsil:
+    in: ExpIntegralE(0.5, 2.5)
+    out: 0.028_414_299_709_289_756
+  tex:
+    in: \mathrm{ExpIntegralE}(0.5, 2.5)
+    out: 0.028\,414\,299\,709\,289\,756
+  wolfram:
+    in: ExpIntegralE[0.5, 2.5]
+exact-arguments-under-n:
+  epsil:
+    in: N(ExpIntegralE(1, 1))
+    out: 0.219_383_934_395_520_29
+  tex:
+    in: N(\mathrm{ExpIntegralE}(1, 1))
+    out: 0.219\,383\,934\,395\,520\,29
+  wolfram:
+    in: N[ExpIntegralE[1, 1]]
+e-n-0-1-n-1-for-n-1:
+  epsil:
+    in: ExpIntegralE(2, 0)
+    out: "1"
+  tex:
+    in: \mathrm{ExpIntegralE}(2, 0)
+    out: "1"
+  wolfram:
+    in: ExpIntegralE[2, 0]
+e-0-x-e-x-x:
+  epsil:
+    in: ExpIntegralE(0, x)
+    out: ExponentialE ^ (-x) / x
+  tex:
+    in: \mathrm{ExpIntegralE}(0, x)
+    out: \frac{\exp(-x)}{x}

@@ -95,12 +95,12 @@ export interface StringifyOptions {
   /**
    * Field names whose value is MathJSON: it and every array/map nested inside it are
    * rendered in flow style (`[Mod, 5, 0]`), the only thing this writer ever flow-styles.
-   * Defaults to `expr` and `expected` (`ReferenceExample`, `ReferenceImplementation`).
+   * Defaults to `expr`, `expected` and a Wolfram row's `back` (the lossy round trip).
    */
   readonly mathJsonKeys?: readonly string[];
 }
 
-const DEFAULT_MATHJSON_KEYS: readonly string[] = ["expr", "expected"];
+const DEFAULT_MATHJSON_KEYS: readonly string[] = ["expr", "expected", "back"];
 
 /**
  * Stringify a value under the strict scalar schema. This is the single writer: every

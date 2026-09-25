@@ -1,0 +1,52 @@
+the-identity-s-class-is-a-singleton:
+  epsil:
+    in: ClassSum(DihedralGroup(3), 1)
+    out: GroupBasis("0")
+  tex:
+    in: \mathrm{ClassSum}(\mathrm{DihedralGroup}(3), 1)
+    out: \mathrm{GroupBasis}(\text{0})
+  traditional:
+    in: \mathrm{ClassSum}(D_{3}, 1)
+    out: \mathrm{GroupBasis}(\text{0})
+  oscar:
+    in: enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 1)
+    out: combination:{"GroupBasis(0)":1}
+class-sums-are-central:
+  epsil:
+    in: IsCentral(DihedralGroup(3), ClassSum(DihedralGroup(3), 2))
+    out: True
+  tex:
+    in: \mathrm{IsCentral}(\mathrm{DihedralGroup}(3), \mathrm{ClassSum}(\mathrm{DihedralGroup}(3), 2))
+    out: \top
+  traditional:
+    in: \mathrm{IsCentral}(D_{3}, \mathrm{ClassSum}(D_{3}, 2))
+    out: \mathrm{True}
+  oscar:
+    in: enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 2))
+    out: "true"
+a-lone-reflection-is-not:
+  epsil:
+    in: IsCentral(DihedralGroup(3), GroupBasis("\(s0)"))
+    out: False
+  tex:
+    in: \mathrm{IsCentral}(\mathrm{DihedralGroup}(3), \mathrm{GroupBasis}(\text{\mathrm{s0}}))
+    out: \bot
+  traditional:
+    in: \mathrm{IsCentral}(D_{3}, \mathrm{GroupBasis}(\text{\mathrm{s0}}))
+    out: \mathrm{False}
+  oscar:
+    in: enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), EnumeratioBasis("s0"))
+    out: "false"
+in-an-abelian-group-everything-is-central:
+  epsil:
+    in: IsCentral(CyclicGroup(6), GroupBasis("\(3)"))
+    out: True
+  tex:
+    in: \mathrm{IsCentral}(\mathrm{CyclicGroup}(6), \mathrm{GroupBasis}(\text{3}))
+    out: \top
+  traditional:
+    in: \mathrm{IsCentral}(C_{6}, \mathrm{GroupBasis}(\text{3}))
+    out: \mathrm{True}
+  oscar:
+    in: enumeratio_is_central(enumeratio_cyclic(cyclic_group(PermGroup, 6), 6), EnumeratioBasis("3"))
+    out: "true"

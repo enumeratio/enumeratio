@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   # The Python ecosystem: every example with an mpmath or SymPy mapping, rescanned against the committed
-  # sidecars, including the special-function grid kept as hidden examples in its heads' YAML. Each
+  # records, including the special-function grid kept as hidden examples in its heads' YAML. Each
   # ecosystem is its own nightly job: they share nothing to install. The heavier lanes run weekly below.
   python-oracle:
     name: reference ⟷ Python (mpmath, SymPy)
@@ -59,7 +59,7 @@ jobs:
           ecosystem: Python
 
   # The combinatorial counts and FLINT number theory against Nemo + Combinatorics.jl, the Julia lane light enough
-  # to install here. Rescans the committed julia rows in the entry sidecars and fails on any drift: a verdict that
+  # to install here. Rescans the committed julia rows in the implementations records and fails on any drift: a verdict that
   # moved, a new unclassified disagreement, an example added without a scan. Oscar and Mathlib need a multi-GB
   # install, so they run weekly below.
   julia-oracle:

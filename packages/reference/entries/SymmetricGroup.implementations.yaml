@@ -1,0 +1,31 @@
+the-order-of-s-5-is-5:
+  epsil:
+    in: GroupOrder(SymmetricGroup(5))
+    out: "120"
+  tex:
+    in: \mathrm{GroupOrder}(\mathrm{SymmetricGroup}(5))
+    out: "120"
+  traditional:
+    in: \left|\mathrm{SymmetricGroup}(5)\right|
+    out: "120"
+  wolfram:
+    in: GroupOrder[SymmetricGroup[5]]
+s-10-10:
+  epsil:
+    in: GroupOrder(SymmetricGroup(10))
+    out: 3_628_800
+  tex:
+    in: \mathrm{GroupOrder}(\mathrm{SymmetricGroup}(10))
+    out: 3\,628\,800
+  traditional:
+    in: \left|\mathrm{SymmetricGroup}(10)\right|
+    out: 3\,628\,800
+  wolfram:
+    in: GroupOrder[SymmetricGroup[10]]
+the-one-line-words-are-compute-engine-s:
+  epsil:
+    in: Length(Permutations([1, 2, 3]))
+    out: "6"
+  tex:
+    in: \mathrm{Length}(\mathrm{Permutations}(\bigl\lbrack1, 2, 3\bigr\rbrack))
+    out: "6"

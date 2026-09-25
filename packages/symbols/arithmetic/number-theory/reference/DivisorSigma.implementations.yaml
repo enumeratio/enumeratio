@@ -1,0 +1,218 @@
+k-0-gives-the-number-of-divisors:
+  epsil:
+    in: DivisorSigma(0, 20)
+    out: "6"
+  tex:
+    in: \mathrm{DivisorSigma}(0, 20)
+    out: "6"
+  traditional:
+    in: \sigma_{0}(20)
+    out: "6"
+  wolfram:
+    in: DivisorSigma[0, 20]
+    out: "6"
+    tex:
+      in: \sigma _0(20)
+      out: "6"
+k-1-gives-the-sum-of-divisors:
+  epsil:
+    in: DivisorSigma(1, 20)
+    out: "42"
+  tex:
+    in: \mathrm{DivisorSigma}(1, 20)
+    out: "42"
+  traditional:
+    in: \sigma_{1}(20)
+    out: "42"
+  wolfram:
+    in: DivisorSigma[1, 20]
+    out: "42"
+    tex:
+      in: \sigma _1(20)
+      out: "42"
+divisorsigma-2-20:
+  epsil:
+    in: DivisorSigma(2, 20)
+    out: "546"
+  tex:
+    in: \mathrm{DivisorSigma}(2, 20)
+    out: "546"
+  traditional:
+    in: \sigma_{2}(20)
+    out: "546"
+  wolfram:
+    in: DivisorSigma[2, 20]
+    out: "546"
+    tex:
+      in: \sigma _2(20)
+      out: "546"
+6-is-a-perfect-number-sigma-1-6-2-times-6:
+  epsil:
+    in: DivisorSigma(1, 6)
+    out: "12"
+  tex:
+    in: \mathrm{DivisorSigma}(1, 6)
+    out: "12"
+  traditional:
+    in: \sigma_{1}(6)
+    out: "12"
+  wolfram:
+    in: DivisorSigma[1, 6]
+    out: "12"
+    tex:
+      in: \sigma _1(6)
+      out: "12"
+28-is-the-next-perfect-number-sigma-1-28-2-times:
+  epsil:
+    in: DivisorSigma(1, 28)
+    out: "56"
+  tex:
+    in: \mathrm{DivisorSigma}(1, 28)
+    out: "56"
+  traditional:
+    in: \sigma_{1}(28)
+    out: "56"
+  wolfram:
+    in: DivisorSigma[1, 28]
+    out: "56"
+    tex:
+      in: \sigma _1(28)
+      out: "56"
+multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n:
+  epsil:
+    in: DivisorSigma(1, 9) * DivisorSigma(1, 8) == DivisorSigma(1, 72)
+    out: True
+  tex:
+    in: \mathrm{DivisorSigma}(1, 9)\mathrm{DivisorSigma}(1, 8)=\mathrm{DivisorSigma}(1, 72)
+    out: \top
+  traditional:
+    in: \sigma_{1}(9)\sigma_{1}(8)=\sigma_{1}(72)
+    out: \mathrm{True}
+  wolfram:
+    in: (Times[DivisorSigma[1, 9], DivisorSigma[1, 8]] == DivisorSigma[1, 72])
+    back: Unreadable
+    out: True
+    tex:
+      in: \sigma _1(9) \sigma _1(8)=\sigma _1(72)
+      out: \text{True}
+the-trivial-base-case:
+  epsil:
+    in: DivisorSigma(1, 1)
+    out: "1"
+  tex:
+    in: \mathrm{DivisorSigma}(1, 1)
+    out: "1"
+  traditional:
+    in: \sigma_{1}(1)
+    out: "1"
+  wolfram:
+    in: DivisorSigma[1, 1]
+    out: "1"
+    tex:
+      in: \sigma _1(1)
+      out: "1"
+a-negative-order-sums-reciprocal-powers-sigma-1:
+  epsil:
+    in: DivisorSigma(-1, 6)
+    out: "2"
+  tex:
+    in: \mathrm{DivisorSigma}(-1, 6)
+    out: "2"
+  traditional:
+    in: \sigma_{-1}(6)
+    out: "2"
+  wolfram:
+    in: DivisorSigma[-1, 6]
+    out: "2"
+    tex:
+      in: \sigma _{-1}(6)
+      out: "2"
+divisorsigma-2-6:
+  epsil:
+    in: DivisorSigma(2, 6)
+    out: "50"
+  tex:
+    in: \mathrm{DivisorSigma}(2, 6)
+    out: "50"
+  traditional:
+    in: \sigma_{2}(6)
+    out: "50"
+  wolfram:
+    in: DivisorSigma[2, 6]
+large-integers:
+  epsil:
+    in: DivisorSigma(2, 10 ^ 30)
+    out: 1_388_888_888_888_888_888_587_721_618_754_026_546_109_040_824_596_043_713_112_451
+  tex:
+    in: \mathrm{DivisorSigma}(2, 10^{30})
+    out: 1\,388\,888\,888\,888\,888\,888\,587\,721\,618\,754\,026\,546\,109\,040\,824\,596\,043\,713\,112\,451
+  traditional:
+    in: \sigma_{2}(10^{30})
+    out: 1\,388\,888\,888\,888\,888\,888\,587\,721\,618\,754\,026\,546\,109\,040\,824\,596\,043\,713\,112\,451
+  wolfram:
+    in: DivisorSigma[2, Power[10, 30]]
+negative-k-1-frac-14-frac-1-25-frac-1-100:
+  epsil:
+    in: DivisorSigma(-2, 10)
+    out: 13 / 10
+  tex:
+    in: \mathrm{DivisorSigma}(-2, 10)
+    out: \frac{13}{10}
+  traditional:
+    in: \sigma_{-2}(10)
+    out: \frac{13}{10}
+  wolfram:
+    in: DivisorSigma[-2, 10]
+rational-k-the-square-roots-of-the-divisors-of:
+  epsil:
+    in: DivisorSigma(1 / 2, 12)
+    out: 3 + Sqrt(2) + Sqrt(6) + 3 * Sqrt(3)
+  tex:
+    in: \mathrm{DivisorSigma}(\frac{1}{2}, 12)
+    out: 3+\sqrt{2}+\sqrt{6}+3\sqrt{3}
+  traditional:
+    in: \sigma_{\frac{1}{2}}(12)
+    out: 3+\sqrt{2}+\sqrt{6}+3\sqrt{3}
+  wolfram:
+    in: DivisorSigma[Rational[1, 2], 12]
+gaussian-integers-1-1-i-1-2i-3-i-over-divisors:
+  epsil:
+    in: DivisorSigma(1, 3 + i)
+    out: 6 + 4i
+  tex:
+    in: \mathrm{DivisorSigma}(1, 3+i)
+    out: 6+4i
+  traditional:
+    in: \sigma_{1}(3+i)
+    out: 6+4i
+  wolfram:
+    in: DivisorSigma[1, Complex[3, 1]]
+gaussianintegers-true-squares-of-1-1-i-2-3-3-3i:
+  epsil:
+    in: DivisorSigma(2, 6, GaussianIntegers -> True)
+    out: 50 + 20i
+  tex:
+    in: \mathrm{DivisorSigma}(2, 6, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: 50+20i
+  traditional:
+    in: \mathrm{DivisorSigma}(2, 6, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: 50+20i
+listable-in-n:
+  epsil:
+    in: DivisorSigma(2, [1, 2, 3, 4, 5])
+    out: "[1, 5, 10, 21, 26]"
+  tex:
+    in: \mathrm{DivisorSigma}(2, \bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)
+    out: \bigl\lbrack1, 5, 10, 21, 26\bigr\rbrack
+  wolfram:
+    in: DivisorSigma[2, List[1, 2, 3, 4, 5]]
+symbolic-k-expands-over-the-divisors:
+  epsil:
+    in: DivisorSigma(k, 30)
+    out: 2 ^ k + 3 ^ k + 5 ^ k + 6 ^ k + 10 ^ k + 15 ^ k + 30 ^ k + 1
+  tex:
+    in: \mathrm{DivisorSigma}(k, 30)
+    out: 2^{k}+3^{k}+5^{k}+6^{k}+10^{k}+15^{k}+30^{k}+1
+  traditional:
+    in: \sigma_{k}(30)
+    out: 2^{k}+3^{k}+5^{k}+6^{k}+10^{k}+15^{k}+30^{k}+1

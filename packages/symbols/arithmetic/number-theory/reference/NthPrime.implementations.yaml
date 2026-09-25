@@ -1,0 +1,134 @@
+the-first-prime-is-2:
+  epsil:
+    in: NthPrime(1)
+    out: "2"
+  tex:
+    in: \mathrm{NthPrime}(1)
+    out: "2"
+  traditional:
+    in: p_{1}
+    out: "2"
+  wolfram:
+    in: Prime[1]
+    out: "2"
+    tex:
+      in: p_1
+      out: "2"
+nthprime-10:
+  epsil:
+    in: NthPrime(10)
+    out: "29"
+  tex:
+    in: \mathrm{NthPrime}(10)
+    out: "29"
+  traditional:
+    in: p_{10}
+    out: "29"
+  wolfram:
+    in: Prime[10]
+    out: "29"
+    tex:
+      in: p_{10}
+      out: "29"
+nthprime-100:
+  epsil:
+    in: NthPrime(100)
+    out: "541"
+  tex:
+    in: \mathrm{NthPrime}(100)
+    out: "541"
+  traditional:
+    in: p_{100}
+    out: "541"
+  wolfram:
+    in: Prime[100]
+    out: "541"
+    tex:
+      in: p_{100}
+      out: "541"
+the-1000th-prime:
+  epsil:
+    in: NthPrime(1_000)
+    out: 7_919
+  tex:
+    in: \mathrm{NthPrime}(1\,000)
+    out: 7\,919
+  traditional:
+    in: p_{1\,000}
+    out: 7\,919
+  wolfram:
+    in: Prime[1000]
+    out: "7919"
+    tex:
+      in: p_{1000}
+      out: "7919"
+primepi-and-nthprime-are-inverses-pi-p-n-n:
+  epsil:
+    in: PrimePi(NthPrime(100)) == 100
+    out: True
+  tex:
+    in: \mathrm{PrimePi}(\mathrm{NthPrime}(100))=100
+    out: \top
+  traditional:
+    in: \pi(p_{100})=100
+    out: \mathrm{True}
+  wolfram:
+    in: (PrimePi[Prime[100]] == 100)
+    back: Unreadable
+    out: True
+    tex:
+      in: \pi \left(p_{100}\right)=100
+      out: \text{True}
+n-must-be-a-positive-integer-compute-engine:
+  epsil:
+    in: NthPrime(0)
+    out: NthPrime(0)
+  tex:
+    in: \mathrm{NthPrime}(0)
+    out: \mathrm{NthPrime}(0)
+  traditional:
+    in: p_{0}
+    out: p_{0}
+  wolfram:
+    in: Prime[0]
+    out: Prime[0]
+    tex:
+      in: p_0
+      out: p_0
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: NthPrime([1, 3, 4, 10])
+    out: "[2, 5, 7, 29]"
+  tex:
+    in: \mathrm{NthPrime}(\bigl\lbrack1, 3, 4, 10\bigr\rbrack)
+    out: \bigl\lbrack2, 5, 7, 29\bigr\rbrack
+  wolfram:
+    in: Prime[List[1, 3, 4, 10]]
+    out: "{2, 5, 7, 29}"
+    tex:
+      in: p_{\{1,3,4,10\}}
+      out: \{2,5,7,29\}
+the-millionth-prime:
+  epsil:
+    in: NthPrime(1_000_000)
+    out: 15_485_863
+  tex:
+    in: \mathrm{NthPrime}(1\,000\,000)
+    out: 15\,485\,863
+  traditional:
+    in: p_{1\,000\,000}
+    out: 15\,485\,863
+  wolfram:
+    in: Prime[1000000]
+a-prime-gap-p-31-p-30-127-113:
+  epsil:
+    in: NthPrime(31) - NthPrime(30)
+    out: "14"
+  tex:
+    in: \mathrm{NthPrime}(31)-\mathrm{NthPrime}(30)
+    out: "14"
+  traditional:
+    in: p_{31}-p_{30}
+    out: "14"
+  wolfram:
+    in: Subtract[Prime[31], Prime[30]]

@@ -1,0 +1,31 @@
+geometric:
+  epsil:
+    in: FindSequenceFunction([1, 2, 4, 8, 16], n)
+    out: 2 ^ n
+  tex:
+    in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 2, 4, 8, 16\bigr\rbrack, n)
+    out: 2^{n}
+polynomial:
+  epsil:
+    in: FindSequenceFunction([1, 4, 9, 16, 25], n)
+    out: n ^ 2 + 2n + 1
+  tex:
+    in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 4, 9, 16, 25\bigr\rbrack, n)
+    out: n^2+2n+1
+catalan-numbers:
+  epsil:
+    in: FindSequenceFunction([1, 1, 2, 5, 14, 42, 132], n)
+    out: CatalanNumber(n)
+  tex:
+    in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)
+    out: \mathrm{CatalanNumber}(n)
+  traditional:
+    in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 5, 14, 42, 132\bigr\rbrack, n)
+    out: C_{n}
+factorial:
+  epsil:
+    in: FindSequenceFunction([1, 1, 2, 6, 24, 120], n)
+    out: n!
+  tex:
+    in: \mathrm{FindSequenceFunction}(\bigl\lbrack1, 1, 2, 6, 24, 120\bigr\rbrack, n)
+    out: n!

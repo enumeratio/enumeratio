@@ -39,8 +39,6 @@ examples:
     expected: [List, False, True, False]
     category: Scope
     caption: Threads element-wise over a list
-    divergence:
-      wolfram: 'EvenQ tests its argument as a whole: $\mathrm{EvenQ}[\{1, 2, 3\}]$ is False.'
   - id: every-integer-is-exactly-one-of-odd-and-even-see
     expr: [Xor, [IsOdd, 12], [IsEven, 12]]
     expected: True
@@ -56,7 +54,5 @@ examples:
     expected: [IsEven, x]
     category: Possible issues
     caption: A symbol stays undecided rather than False
-    divergence:
-      wolfram: '$\mathrm{EvenQ}[x]$ is False: EvenQ tests the literal form, not what x might be.'
 seeAlso:
   - IsOdd

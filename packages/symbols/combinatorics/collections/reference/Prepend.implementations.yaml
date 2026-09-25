@@ -1,0 +1,34 @@
+prepend-list-a-b-c-d-x:
+  epsil:
+    in: Prepend([a, b, c, d], x)
+    out: "[x, a, b, c, d]"
+  tex:
+    in: \mathrm{Prepend}(\bigl\lbrack a, b, c, d\bigr\rbrack, x)
+    out: \bigl\lbrack x, a, b, c, d\bigr\rbrack
+prepend-c-x-join-x-c-see-join:
+  epsil:
+    in: Prepend([1, 2, 3], 0) == Join([0], [1, 2, 3])
+    out: True
+  tex:
+    in: \mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0)=\mathrm{Join}(\bigl\lbrack0\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0)=\mathrm{Join}(\bigl\lbrack0\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \mathrm{True}
+  wolfram:
+    in: (Prepend[List[1, 2, 3], 0] == Join[List[0], List[1, 2, 3]])
+    back: Unreadable
+a-rule-inserted-at-the-front-of-an-association:
+  epsil:
+    in: Prepend(Association(Rule(1, a), Rule(2, b)), Rule(3, d))
+    out: Association(Rule(3, d), Rule(1, a), Rule(2, b))
+  tex:
+    in: \mathrm{Prepend}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), \mathrm{Rule}(3, d))
+    out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
+several-rules-prepended-at-once:
+  epsil:
+    in: Prepend(Association(Rule(1, a), Rule(2, b)), [Rule(3, d), Rule(4, e)])
+    out: Association(Rule(3, d), Rule(4, e), Rule(1, a), Rule(2, b))
+  tex:
+    in: \mathrm{Prepend}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b)), \bigl\lbrack\mathrm{Rule}(3, d), \mathrm{Rule}(4, e)\bigr\rbrack)
+    out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(4, e), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))

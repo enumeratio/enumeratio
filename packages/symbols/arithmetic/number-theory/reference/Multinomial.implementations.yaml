@@ -1,0 +1,218 @@
+multinomial-1-2-1:
+  epsil:
+    in: Multinomial(1, 2, 1)
+    out: "12"
+  tex:
+    in: \mathrm{Multinomial}(1, 2, 1)
+    out: "12"
+  traditional:
+    in: \binom{4}{1,2,1}
+    out: "12"
+  wolfram:
+    in: Multinomial[1, 2, 1]
+    out: "12"
+    tex:
+      in: (4;1,2,1)
+      out: "12"
+multinomial-2-3-4:
+  epsil:
+    in: Multinomial(2, 3, 4)
+    out: 1_260
+  tex:
+    in: \mathrm{Multinomial}(2, 3, 4)
+    out: 1\,260
+  traditional:
+    in: \binom{9}{2,3,4}
+    out: 1\,260
+  wolfram:
+    in: Multinomial[2, 3, 4]
+    out: "1260"
+    tex:
+      in: (9;2,3,4)
+      out: "1260"
+with-two-arguments-it-reduces-to-binomial-binom:
+  epsil:
+    in: Multinomial(7, 3) == Binomial(10, 3)
+    out: True
+  tex:
+    in: \mathrm{Multinomial}(7, 3)=\binom{10}{3}
+    out: \top
+  traditional:
+    in: \binom{10}{7,3}=\binom{10}{3}
+    out: \mathrm{True}
+  wolfram:
+    in: (Multinomial[7, 3] == Binomial[10, 3])
+    back: Unreadable
+    out: True
+    tex:
+      in: (10;7,3)=\binom{10}{3}
+      out: \text{True}
+orderless-permuting-the-arguments-doesn-t-change:
+  epsil:
+    in: Multinomial(1, 2, 3) == Multinomial(3, 1, 2)
+    out: True
+  tex:
+    in: \mathrm{Multinomial}(1, 2, 3)=\mathrm{Multinomial}(3, 1, 2)
+    out: \top
+  traditional:
+    in: \binom{6}{1,2,3}=\binom{6}{3,1,2}
+    out: \mathrm{True}
+  wolfram:
+    in: (Multinomial[1, 2, 3] == Multinomial[3, 1, 2])
+    back: Unreadable
+    out: True
+    tex:
+      in: (6;1,2,3)=(6;3,1,2)
+      out: \text{True}
+the-number-of-distinct-letter-arrangements-of:
+  epsil:
+    in: Multinomial(1, 4, 4, 2)
+    out: 34_650
+  tex:
+    in: \mathrm{Multinomial}(1, 4, 4, 2)
+    out: 34\,650
+  traditional:
+    in: \binom{11}{1,4,4,2}
+    out: 34\,650
+  wolfram:
+    in: Multinomial[1, 4, 4, 2]
+    out: "34650"
+    tex:
+      in: (11;1,4,4,2)
+      out: "34650"
+all-zero-arguments-still-give-the-empty-product:
+  epsil:
+    in: Multinomial(0, 0, 0)
+    out: "1"
+  tex:
+    in: \mathrm{Multinomial}(0, 0, 0)
+    out: "1"
+  traditional:
+    in: \binom{0}{0,0,0}
+    out: "1"
+  wolfram:
+    in: Multinomial[0, 0, 0]
+    out: "1"
+    tex:
+      in: (0;0,0,0)
+      out: "1"
+a-single-argument-is-always-1-there-s-only-one:
+  epsil:
+    in: Multinomial(5)
+    out: "1"
+  tex:
+    in: \mathrm{Multinomial}(5)
+    out: "1"
+  wolfram:
+    in: Multinomial[5]
+    out: "1"
+    tex:
+      in: (5;5)
+      out: "1"
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Multinomial([2, 3, 5], 3)
+    out: "[10, 20, 56]"
+  tex:
+    in: \mathrm{Multinomial}(\bigl\lbrack2, 3, 5\bigr\rbrack, 3)
+    out: \bigl\lbrack10, 20, 56\bigr\rbrack
+  wolfram:
+    in: Multinomial[List[2, 3, 5], 3]
+    out: "{10, 20, 56}"
+    tex:
+      in: (\{2,3,5\}+3;\{2,3,5\},3)
+      out: \{10,20,56\}
+zero-parts-contribute-0-1:
+  epsil:
+    in: Multinomial(0, 0, 1)
+    out: "1"
+  tex:
+    in: \mathrm{Multinomial}(0, 0, 1)
+    out: "1"
+  traditional:
+    in: \binom{1}{0,0,1}
+    out: "1"
+  wolfram:
+    in: Multinomial[0, 0, 1]
+real-arguments-evaluate-via-the-gamma-function:
+  epsil:
+    in: Multinomial(2, 0.2, 5)
+    out: 34.317_803_519_999_95
+  tex:
+    in: \mathrm{Multinomial}(2, 0.2, 5)
+    out: 34.317\,803\,519\,999\,95
+  traditional:
+    in: \binom{7.2}{2,0.2,5}
+    out: 34.317\,803\,519\,999\,95
+  wolfram:
+    in: Multinomial[2, 0.2, 5]
+complex-arguments-evaluate-via-the-gamma:
+  epsil:
+    in: Multinomial(1 + i, 0.2, 4)
+    out: 2.894_060_302_449_624 + 9.104_625_875_691_285i
+  tex:
+    in: \mathrm{Multinomial}(1+i, 0.2, 4)
+    out: 2.894\,060\,302\,449\,624+9.104\,625\,875\,691\,285i
+  traditional:
+    in: \binom{1+i+0.2+4}{1+i,0.2,4}
+    out: 2.894\,060\,302\,449\,624+9.104\,625\,875\,691\,285i
+  wolfram:
+    in: Multinomial[Complex[1, 1], 0.2, 4]
+an-around-argument-should-propagate-its:
+  epsil:
+    in: Multinomial(Around(2, 0.01), 2)
+    out: Around(6, 0.035)
+  tex:
+    in: \mathrm{Multinomial}(\mathrm{Around}(2, 0.01), 2)
+    out: \mathrm{Around}(6, 0.035)
+  traditional:
+    in: \binom{\mathrm{Around}(2, 0.01)+2}{\mathrm{Around}(2, 0.01),2}
+    out: \mathrm{Around}(6, 0.035)
+  wolfram:
+    in: Multinomial[Around[2, 0.01], 2]
+the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3:
+  epsil:
+    in: Multinomial(3, 4, 5) == 12! / (3! * 4! * 5!)
+    out: True
+  tex:
+    in: \mathrm{Multinomial}(3, 4, 5)=(12!)(3!\times4!\times5!)^{-1}
+    out: \top
+  traditional:
+    in: \binom{12}{3,4,5}=(12!)(3!\times4!\times5!)^{-1}
+    out: \mathrm{True}
+  wolfram:
+    in: (Multinomial[3, 4, 5] == Divide[Factorial[12], Times[Factorial[3], Factorial[4], Factorial[5]]])
+    back: Unreadable
+all-ones-parts-give-n-every-part-is-a-single:
+  epsil:
+    in: Multinomial(1, 1, 1, 1)
+    out: "24"
+  tex:
+    in: \mathrm{Multinomial}(1, 1, 1, 1)
+    out: "24"
+  traditional:
+    in: \binom{4}{1,1,1,1}
+    out: "24"
+  wolfram:
+    in: Multinomial[1, 1, 1, 1]
+the-coefficient-of-a-2-b-3-c-in-a-b-c-6:
+  epsil:
+    in: Multinomial(2, 3, 1)
+    out: "60"
+  tex:
+    in: \mathrm{Multinomial}(2, 3, 1)
+    out: "60"
+  traditional:
+    in: \binom{6}{2,3,1}
+    out: "60"
+  wolfram:
+    in: Multinomial[2, 3, 1]
+with-no-arguments-it-is-the-empty-product-1:
+  epsil:
+    in: Multinomial()
+    out: "1"
+  tex:
+    in: \mathrm{Multinomial}()
+    out: "1"
+  wolfram:
+    in: Multinomial[]

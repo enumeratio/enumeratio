@@ -1,49 +1,57 @@
-// Fail when a rescan changed what the committed oracle sidecars SAY: a row's verdict,
-// classification, input or presence. A row's printed output is only reported, since a
-// float's last digits can differ between the machine that committed it and the runner, and
-// the verdict already says whether the value agrees. `kernels` (version stamps) is ignored.
+// Fail when a rescan changed what the committed implementations records SAY: a row's
+// verdict, classification, input or presence. A row's printed output is only reported,
+// since a float's last digits can differ between the machine that committed it and the
+// runner, and the verdict already says whether the value agrees.
 //
 //   node .github/scripts/oracle-drift.ts        # after oracle-scan.ts, in a checkout
 
 import { execFileSync } from "node:child_process";
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { basename } from "node:path";
+import { parseYaml } from "../../packages/entry/src/yaml.ts";
 
 type Row = Record<string, unknown>;
-type Sidecar = { examples?: Record<string, Record<string, Record<string, Row>>> };
+type Record_ = Record<string, Record<string, Row>>;
 
-const dir = "packages/reference/src/entries";
-const committed = (file: string): Sidecar => {
+const git = (...args: string[]): string => execFileSync("git", args, { encoding: "utf8" });
+const RECORD = /^packages\/.*\/(reference|entries)\/[^/]+\.implementations\.yaml$/;
+// Committed records, and any the scan just created.
+const files = [
+  ...new Set([...git("ls-files").split("\n"), ...git("ls-files", "--others", "--exclude-standard").split("\n")]),
+].filter((f) => RECORD.test(f));
+
+const read = (text: string | undefined): Record_ => (text ? ((parseYaml(text) ?? {}) as Record_) : {});
+const committed = (file: string): string | undefined => {
   try {
-    return JSON.parse(execFileSync("git", ["show", `HEAD:${dir}/${file}`], { encoding: "utf8" }));
+    return git("show", `HEAD:${file}`);
   } catch {
-    return {};
+    return undefined;
   }
 };
 
-const rows = (sidecar: Sidecar): Map<string, Row> => {
+const rows = (head: string, record: Record_): Map<string, Row> => {
   const out = new Map<string, Row>();
-  for (const [head, byKey] of Object.entries(sidecar.examples ?? {}))
-    for (const [key, bySystem] of Object.entries(byKey))
-      for (const [system, row] of Object.entries(bySystem)) out.set(`${head} ${key} (${system})`, row);
+  for (const [id, bySystem] of Object.entries(record))
+    for (const [system, row] of Object.entries(bySystem)) out.set(`${head}/${id} (${system})`, row);
   return out;
 };
 
 const said = (row: Row | undefined): string => {
   if (row === undefined) return "(no row)";
-  const { output: _output, ...rest } = row;
+  const { out: _out, shown: _shown, ...rest } = row;
   return JSON.stringify(rest, Object.keys(rest).sort());
 };
 
 const changed: string[] = [];
 const printed: string[] = [];
-for (const file of readdirSync(dir).filter((f) => f.endsWith(".oracle.json"))) {
-  const before = rows(committed(file));
-  const after = rows(JSON.parse(readFileSync(`${dir}/${file}`, "utf8")) as Sidecar);
+for (const file of files) {
+  const head = basename(file, ".implementations.yaml");
+  const before = rows(head, read(committed(file)));
+  const after = rows(head, read(existsSync(file) ? readFileSync(file, "utf8") : undefined));
   for (const id of new Set([...before.keys(), ...after.keys()])) {
     const [b, a] = [before.get(id), after.get(id)];
-    if (said(b) !== said(a)) changed.push(`${file} ${id}\n  was: ${said(b)}\n  now: ${said(a)}`);
-    else if (b?.["output"] !== a?.["output"])
-      printed.push(`${file} ${id}: ${String(b?.["output"])} → ${String(a?.["output"])}`);
+    if (said(b) !== said(a)) changed.push(`${id}\n  was: ${said(b)}\n  now: ${said(a)}`);
+    else if (b?.["out"] !== a?.["out"]) printed.push(`${id}: ${String(b?.["out"])} → ${String(a?.["out"])}`);
   }
 }
 

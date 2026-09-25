@@ -1,0 +1,83 @@
+unique-list-1-2-2-3-1:
+  epsil:
+    in: Unique([1, 2, 2, 3, 1])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{Unique}(\bigl\lbrack1, 2, 2, 3, 1\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[List[1, 2, 2, 3, 1]]
+    out: "{1, 2, 3}"
+    tex:
+      in: \text{DeleteDuplicates}[\{1,2,2,3,1\}]
+      out: \{1,2,3\}
+unique-list-a-b-a-c-b:
+  epsil:
+    in: Unique([a, b, a, c, b])
+    out: "[a, b, c]"
+  tex:
+    in: \mathrm{Unique}(\bigl\lbrack a, b, a, c, b\bigr\rbrack)
+    out: \bigl\lbrack a, b, c\bigr\rbrack
+keeps-first-occurrence-order-without-sorting:
+  epsil:
+    in: Unique([1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1])
+    out: "[1, 7, 8, 4, 3, 9, 2]"
+  tex:
+    in: \mathrm{Unique}(\bigl\lbrack1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1\bigr\rbrack)
+    out: \bigl\lbrack1, 7, 8, 4, 3, 9, 2\bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[List[1, 7, 8, 4, 3, 4, 1, 9, 9, 2, 1]]
+elements-can-themselves-be-lists:
+  epsil:
+    in: Unique([[1, 2], [1, 2], [3]])
+    out: "[[1, 2], [3]]"
+  tex:
+    in: \mathrm{Unique}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[List[List[1, 2], List[1, 2], List[3]]]
+unique-list:
+  epsil:
+    in: Unique([])
+    out: "[]"
+  tex:
+    in: \mathrm{Unique}(\bigl\lbrack \bigr\rbrack)
+    out: \bigl\lbrack \bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[List[]]
+a-second-argument-says-when-two-elements-count:
+  epsil:
+    in: Unique([1, 2, 3, 4, 5, 6], Function(Abs(_1 - _2) < 2))
+    out: "[1, 3, 5]"
+  tex:
+    in: \mathrm{Unique}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, ()\mapsto\vert\operatorname{\_1}-\operatorname{\_2}\vert\lt2)
+    out: \bigl\lbrack1, 3, 5\bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[List[1, 2, 3, 4, 5, 6], Function[Less[Abs[Subtract[Slot[1], Slot[2]]], 2]]]
+idempotent:
+  epsil:
+    in: Unique(Unique([1, 1, 2]))
+    out: "[1, 2]"
+  tex:
+    in: \mathrm{Unique}(\mathrm{Unique}(\bigl\lbrack1, 1, 2\bigr\rbrack))
+    out: \bigl\lbrack1, 2\bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[DeleteDuplicates[List[1, 1, 2]]]
+count-the-distinct-elements:
+  epsil:
+    in: Length(Unique([1, 2, 2, 3, 3, 3]))
+    out: "3"
+  tex:
+    in: \mathrm{Length}(\mathrm{Unique}(\bigl\lbrack1, 2, 2, 3, 3, 3\bigr\rbrack))
+    out: "3"
+  wolfram:
+    in: Length[DeleteDuplicates[List[1, 2, 2, 3, 3, 3]]]
+the-residues-mod-3-that-occur-in-order-of-first:
+  epsil:
+    in: Unique(Range(10) % 3)
+    out: "[1, 2, 0]"
+  tex:
+    in: \mathrm{Unique}((1..10)\bmod3)
+    out: \bigl\lbrack1, 2, 0\bigr\rbrack
+  wolfram:
+    in: DeleteDuplicates[Mod[Range[10], 3]]

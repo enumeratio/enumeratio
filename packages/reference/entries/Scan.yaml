@@ -21,8 +21,6 @@ examples:
     expected: [List, 11, 13, 16]
     category: Possible issues
     caption: The seeded form is still the same length as $xs$ — the seed isn't an output element
-    divergence:
-      wolfram: "Wolfram's seeded FoldList[f, x, list] is length+1: it prepends the seed itself."
   - id: the-shape-of-a-running-fold
     expr: [Scan, [List, a, b, c], f]
     expected: [List, a, [f, a, b], [f, [f, a, b], c]]

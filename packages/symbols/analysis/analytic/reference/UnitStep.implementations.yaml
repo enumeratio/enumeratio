@@ -1,0 +1,63 @@
+unitstep-neg-1:
+  epsil:
+    in: UnitStep(-1)
+    out: "0"
+  tex:
+    in: \mathrm{UnitStep}(-1)
+    out: "0"
+  wolfram:
+    in: UnitStep[-1]
+1-at-0-unlike-heaviside-s-1-2:
+  epsil:
+    in: UnitStep(0)
+    out: "1"
+  tex:
+    in: \mathrm{UnitStep}(0)
+    out: "1"
+  wolfram:
+    in: UnitStep[0]
+unitstep-2p5:
+  epsil:
+    in: UnitStep(2.5)
+    out: "1"
+  tex:
+    in: \mathrm{UnitStep}(2.5)
+    out: "1"
+  wolfram:
+    in: UnitStep[2.5]
+threads-element-wise-over-a-list:
+  epsil:
+    in: UnitStep([-1, 0, 1])
+    out: "[0, 1, 1]"
+  tex:
+    in: \mathrm{UnitStep}(\bigl\lbrack-1, 0, 1\bigr\rbrack)
+    out: \bigl\lbrack0, 1, 1\bigr\rbrack
+  wolfram:
+    in: UnitStep[List[-1, 0, 1]]
+several-arguments-the-product-of-their-unit:
+  epsil:
+    in: UnitStep(1, 2)
+    out: "1"
+  tex:
+    in: \mathrm{UnitStep}(1, 2)
+    out: "1"
+  wolfram:
+    in: UnitStep[1, 2]
+zero-as-soon-as-any-argument-is-negative:
+  epsil:
+    in: UnitStep(1, -1)
+    out: "0"
+  tex:
+    in: \mathrm{UnitStep}(1, -1)
+    out: "0"
+  wolfram:
+    in: UnitStep[1, -1]
+exact-numeric-arguments:
+  epsil:
+    in: UnitStep(Pi - 3)
+    out: "1"
+  tex:
+    in: \mathrm{UnitStep}(\pi-3)
+    out: "1"
+  wolfram:
+    in: UnitStep[Subtract[Pi, 3]]

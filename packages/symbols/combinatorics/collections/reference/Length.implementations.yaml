@@ -1,0 +1,165 @@
+length-list-1-2-3-4:
+  epsil:
+    in: Length([1, 2, 3, 4])
+    out: "4"
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: "4"
+  wolfram:
+    in: Length[List[1, 2, 3, 4]]
+    out: "4"
+    tex:
+      in: \text{Length}[\{1,2,3,4\}]
+      out: "4"
+  sympy:
+    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
+    out: "4"
+  sage:
+    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
+    out: "4"
+length-list-1-2-3-4-5:
+  epsil:
+    in: Length([1, 2, 3, 4, 5])
+    out: "5"
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)
+    out: "5"
+  wolfram:
+    in: Length[List[1, 2, 3, 4, 5]]
+    out: "5"
+    tex:
+      in: \text{Length}[\{1,2,3,4,5\}]
+      out: "5"
+  sympy:
+    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
+    out: "5"
+  sage:
+    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
+    out: "5"
+works-on-any-collection-not-just-list:
+  epsil:
+    in: Length({1, 2, 3})
+    out: "3"
+  tex:
+    in: \mathrm{Length}(\lbrace1, 2, 3\rbrace)
+    out: "3"
+  wolfram:
+    in: Length[Union[List[1, 2, 3]]]
+    back: [Length, [Union, [List, 1, 2, 3]]]
+    out: "3"
+    tex:
+      in: \text{Length}[\text{Union}[\{1,2,3\}]]
+      out: "3"
+length-join-a-b-length-a-length-b-see-join:
+  epsil:
+    in: Length(Join([1, 2, 3], [4, 5])) == Length([1, 2, 3]) + Length([4, 5])
+    out: True
+  tex:
+    in: \mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Length}(\mathrm{Join}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack))=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack4, 5\bigr\rbrack)
+    out: \mathrm{True}
+  wolfram:
+    in: (Length[Join[List[1, 2, 3], List[4, 5]]] == Plus[Length[List[1, 2, 3]], Length[List[4, 5]]])
+    back: Unreadable
+    out: True
+    tex:
+      in: \text{Length}[\text{Join}[\{1,2,3\},\{4,5\}]]=\text{Length}[\{1,2,3\}]+\text{Length}[\{4,5\}]
+      out: \text{True}
+an-atom-has-no-parts-so-its-length-is-0:
+  epsil:
+    in: Length(5)
+    out: "0"
+  tex:
+    in: \mathrm{Length}(5)
+    out: "0"
+  wolfram:
+    in: Length[5]
+  sympy:
+    in: (len(5) if hasattr(5, '__len__') else 0)
+    out: "TypeError: object of type 'int' has no len()"
+    verdict: error
+    kind: domain
+    note: compute-engine's Length is defined as 0 on a non-collection atom; SymPy's len() refuses a non-collection outright.
+  sage:
+    in: (len(5) if hasattr(5, '__len__') else 0)
+length-list-a-b-c-d:
+  epsil:
+    in: Length([a, b, c, d])
+    out: "4"
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack a, b, c, d\bigr\rbrack)
+    out: "4"
+the-empty-list-has-length-0:
+  epsil:
+    in: Length([])
+    out: "0"
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack \bigr\rbrack)
+    out: "0"
+  wolfram:
+    in: Length[List[]]
+  sympy:
+    in: (len([]) if hasattr([], '__len__') else 0)
+  sage:
+    in: (len([]) if hasattr([], '__len__') else 0)
+of-a-matrix-the-number-of-rows:
+  epsil:
+    in: Length([[1, 2], [3, 4], [5, 6]])
+    out: "3"
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack, \bigl\lbrack5, 6\bigr\rbrack\bigr\rbrack)
+    out: "3"
+  wolfram:
+    in: Length[List[List[1, 2], List[3, 4], List[5, 6]]]
+  sympy:
+    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
+  sage:
+    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
+a-set-holds-each-element-once-so-a-repeated:
+  epsil:
+    in: Length({1, 1, 2})
+    out: "2"
+  tex:
+    in: \mathrm{Length}(\lbrace1, 1, 2\rbrace)
+    out: "2"
+  wolfram:
+    in: Length[Union[List[1, 1, 2]]]
+    back: [Length, [Union, [List, 1, 1, 2]]]
+any-expression-the-number-of-terms-in-a-sum:
+  epsil:
+    in: Length(a + b + c + d)
+    out: "4"
+  tex:
+    in: \mathrm{Length}(a+b+c+d)
+    out: "4"
+the-number-of-arguments-of-a-call-counting-only:
+  epsil:
+    in: Length(f(g(x, y), z))
+    out: "2"
+  tex:
+    in: \mathrm{Length}(f(g(x, y), z))
+    out: "2"
+a-symbol-such-as-pi-is-an-atom-of-length-0:
+  epsil:
+    in: Length(Pi)
+    out: "0"
+  tex:
+    in: \mathrm{Length}(\pi)
+    out: "0"
+  wolfram:
+    in: Length[Pi]
+  sympy:
+    in: (len(pi) if hasattr(pi, '__len__') else 0)
+  sage:
+    in: (len(pi) if hasattr(pi, '__len__') else 0)
+a-lazy-range-is-counted-without-being:
+  epsil:
+    in: Length(Range(1, 20))
+    out: "20"
+  tex:
+    in: \mathrm{Length}(1..20)
+    out: "20"
+  wolfram:
+    in: Length[Range[1, 20]]

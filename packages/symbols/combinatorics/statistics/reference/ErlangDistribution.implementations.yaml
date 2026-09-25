@@ -1,0 +1,36 @@
+erlang-pdf-exact:
+  epsil:
+    in: PDF(ErlangDistribution(3, 2), 1)
+    out: 8 / (Gamma(3) * ExponentialE ^ 2)
+  tex:
+    in: \operatorname{PDF}(\mathrm{ErlangDistribution}(3, 2), 1)
+    out: \frac{8}{\Gamma(3)e^{2}}
+  wolfram:
+    in: PDF[ErlangDistribution[3, 2], 1]
+erlang-cdf-exact:
+  epsil:
+    in: CDF(ErlangDistribution(3, 2), 1)
+    out: 1 + -5 / ExponentialE ^ 2
+  tex:
+    in: \operatorname{CDF}(\mathrm{ErlangDistribution}(3, 2), 1)
+    out: 1-\frac{5}{e^{2}}
+  wolfram:
+    in: CDF[ErlangDistribution[3, 2], 1]
+erlang-mean-exact:
+  epsil:
+    in: Mean(ErlangDistribution(3, 2))
+    out: 3 / 2
+  tex:
+    in: \mathrm{mean}(\mathrm{ErlangDistribution}(3, 2))
+    out: \frac{3}{2}
+  wolfram:
+    in: Mean[ErlangDistribution[3, 2]]
+erlang-variance-exact:
+  epsil:
+    in: Variance(ErlangDistribution(3, 2))
+    out: 3 / 4
+  tex:
+    in: \mathrm{Variance}(\mathrm{ErlangDistribution}(3, 2))
+    out: \frac{3}{4}
+  wolfram:
+    in: Variance[ErlangDistribution[3, 2]]

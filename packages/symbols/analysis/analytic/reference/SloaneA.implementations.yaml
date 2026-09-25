@@ -1,0 +1,77 @@
+a000045-is-the-fibonacci-numbers-the-10th-is-55:
+  epsil:
+    in: SloaneA("A000045", 10)
+    out: "55"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000045}, 10)
+    out: "55"
+a000793-landau-s-function-g-10-30:
+  epsil:
+    in: SloaneA("A000793", 10)
+    out: "30"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000793}, 10)
+    out: "30"
+an-oeis-id-outside-the-declared-alias-table:
+  epsil:
+    in: SloaneA("A060691", 5)
+    out: SloaneA("A060691", 5)
+  tex:
+    in: \mathrm{SloaneA}(\text{A060691}, 5)
+    out: \mathrm{SloaneA}(\text{A060691}, 5)
+a000040-5-11-the-5th-prime:
+  epsil:
+    in: SloaneA("A000040", 5)
+    out: "11"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000040}, 5)
+    out: "11"
+a000041-10-42-the-number-of-partitions-of-10:
+  epsil:
+    in: SloaneA("A000041", 10)
+    out: "42"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000041}, 10)
+    out: "42"
+a000110-5-52-the-5th-bell-number:
+  epsil:
+    in: SloaneA("A000110", 5)
+    out: "52"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000110}, 5)
+    out: "52"
+a000142-5-120-5:
+  epsil:
+    in: SloaneA("A000142", 5)
+    out: "120"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000142}, 5)
+    out: "120"
+a000720-20-8-pi-20-the-prime-counting-function:
+  epsil:
+    in: SloaneA("A000720", 20)
+    out: "8"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000720}, 20)
+    out: "8"
+a027641-12-691-b-12-s-numerator:
+  epsil:
+    in: SloaneA("A027641", 12)
+    out: "-691"
+  tex:
+    in: \mathrm{SloaneA}(\text{A027641}, 12)
+    out: "-691"
+a027642-12-2730-b-12-s-denominator:
+  epsil:
+    in: SloaneA("A027642", 12)
+    out: 2_730
+  tex:
+    in: \mathrm{SloaneA}(\text{A027642}, 12)
+    out: 2\,730
+a000793-15-105-landau-s-function-g-15:
+  epsil:
+    in: SloaneA("A000793", 15)
+    out: "105"
+  tex:
+    in: \mathrm{SloaneA}(\text{A000793}, 15)
+    out: "105"

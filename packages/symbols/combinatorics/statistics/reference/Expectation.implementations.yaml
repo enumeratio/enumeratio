@@ -1,0 +1,28 @@
+expectation-of-the-bound-variable-is-the-mean:
+  epsil:
+    in: Expectation(x, Distributed(x, NormalDistribution(2, 3)))
+    out: "2"
+  tex:
+    in: \mathrm{Expectation}(x, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
+    out: "2"
+expectation-of-x-squared:
+  epsil:
+    in: Expectation(x ^ 2, Distributed(x, NormalDistribution(2, 3)))
+    out: "13"
+  tex:
+    in: \mathrm{Expectation}(x^2, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
+    out: "13"
+expectation-is-linear:
+  epsil:
+    in: Expectation(2x + 1, Distributed(x, NormalDistribution(2, 3)))
+    out: "5"
+  tex:
+    in: \mathrm{Expectation}(2x+1, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
+    out: "5"
+a-shape-with-no-closed-form-stays-unevaluated:
+  epsil:
+    in: Expectation(Sin(x), Distributed(x, NormalDistribution(2, 3)))
+    out: Expectation(Sin(x), Distributed(x, NormalDistribution(2, 3)))
+  tex:
+    in: \mathrm{Expectation}(\sin(x), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
+    out: \mathrm{Expectation}(\sin(x), \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))

@@ -1,0 +1,29 @@
+halving-and-flooring-until-nothing-changes:
+  epsil:
+    in: FixedPoint(Function(Floor(_1 / 2)), 100)
+    out: "0"
+  tex:
+    in: \mathrm{FixedPoint}(()\mapsto\lfloor\frac{\operatorname{\_1}}{2}\rfloor, 100)
+    out: "0"
+  wolfram:
+    in: FixedPoint[Function[Floor[Divide[Slot[1], 2]]], 100]
+the-dottie-number-the-fixed-point-of-cos:
+  epsil:
+    in: FixedPoint(Cos, 0.5)
+    out: 0.739_085_133_215_160_641_658
+  tex:
+    in: \mathrm{FixedPoint}(\cos, 0.5)
+    out: 0.739\,085\,133\,215\,160\,641\,658
+  wolfram:
+    in: FixedPoint[Cos, 0.5]
+    note: Wolfram iterates at machine (double) precision and reports 0.7390851332151607; this engine's default precision is 21 digits, and the two agree through the first 15 digits, diverging only in Wolfram's own machine-precision rounding beyond that.
+newton-s-method-for-sqrt-2-run-to-this-engine-s:
+  epsil:
+    in: FixedPoint(Function((_1 + 2 / _1) / 2), 1.5)
+    out: 1.414_213_562_373_095_048_801_687_5
+  tex:
+    in: \mathrm{FixedPoint}(()\mapsto\frac{\operatorname{\_1}+\frac{2}{\operatorname{\_1}}}{2}, 1.5)
+    out: 1.414\,213\,562\,373\,095\,048\,8
+  wolfram:
+    in: FixedPoint[Function[Divide[Plus[Slot[1], Divide[2, Slot[1]]], 2]], 1.5]
+    note: "Same precision difference as the Cos example above: Wolfram's machine-precision fixed point is 1.4142135623730951, agreeing with this one through the first 15 digits."

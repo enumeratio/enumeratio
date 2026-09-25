@@ -1,0 +1,12 @@
+survivalfunction-chisquare:
+  epsil:
+    in: SurvivalFunction(ChiSquareDistribution(3), 2)
+    out: GammaRegularized(3 / 2, 1)
+  tex:
+    in: \mathrm{SurvivalFunction}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: \operatorname{GammaRegularized}(\frac{3}{2}, 1)
+  traditional:
+    in: \mathrm{SurvivalFunction}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: Q(\frac{3}{2}, 1)
+  wolfram:
+    in: SurvivalFunction[ChiSquareDistribution[3], 2]
