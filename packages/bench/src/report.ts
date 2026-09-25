@@ -3,6 +3,8 @@
 import { execFileSync } from "node:child_process";
 import { machine } from "./machine.ts";
 import { PROTOCOL } from "./protocol.ts";
+import { CACHES } from "./registry.ts";
+import { versionOf } from "./versions.ts";
 import type { BenchSystem, CaseResult, Report } from "./types.ts";
 
 export interface RunInfo {
@@ -38,8 +40,13 @@ export function report(
   return { schema: 1, run, system, machine: machine(), protocol: PROTOCOL, results };
 }
 
-/** Version strings for the systems we can see from here. */
-export function systemInfo(name: BenchSystem): Report["system"] {
-  if (name === "ts") return { name, version: `node ${process.versions.node}`, caches: "uncleared" };
-  return { name, version: "unknown", caches: "uncleared" };
+/** A system's version (as its harness reported it, or probed) and cache policy. */
+export function systemInfo(name: BenchSystem, reported?: string): Report["system"] {
+  const { version, packages } = versionOf(name);
+  return {
+    name,
+    version: reported ?? version,
+    ...(packages === undefined ? {} : { packages }),
+    caches: CACHES[name] ?? "uncleared",
+  };
 }

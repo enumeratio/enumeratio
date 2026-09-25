@@ -35,6 +35,222 @@
     "protocol": 1,
     "cases": [
       {
+        "name": "Zeta/zeta-3p5-to-30-digits",
+        "precision": 30,
+        "budget": 10,
+        "expected": "1.12673386731705664642781249186",
+        "systems": {
+          "ts": {
+            "sources": ["[\"Zeta\",3.5]"]
+          },
+          "wolfram": {
+            "sources": ["Zeta[3.5]"]
+          },
+          "sympy": {
+            "reason": "precision"
+          },
+          "mpmath": {
+            "sources": ["zeta(3.5)"]
+          },
+          "sage": {
+            "reason": "precision"
+          },
+          "oscar": {
+            "reason": "precision"
+          },
+          "julia": {
+            "reason": "precision"
+          },
+          "rust": {
+            "reason": "precision"
+          }
+        }
+      },
+      {
+        "name": "PolyLog/polylog-3-one-half-to-30-digits",
+        "precision": 30,
+        "budget": 10,
+        "expected": "0.537213193608040200940623225595",
+        "systems": {
+          "ts": {
+            "sources": ["[\"PolyLog\",3,[\"Rational\",1,2]]"]
+          },
+          "wolfram": {
+            "sources": ["PolyLog[3, Rational[1, 2]]"]
+          },
+          "sympy": {
+            "reason": "precision"
+          },
+          "mpmath": {
+            "reason": "unmapped",
+            "missing": ["Rational/2"]
+          },
+          "sage": {
+            "reason": "precision"
+          },
+          "oscar": {
+            "reason": "precision"
+          },
+          "julia": {
+            "reason": "precision"
+          },
+          "rust": {
+            "reason": "precision"
+          }
+        }
+      },
+      {
+        "name": "HurwitzZeta/hurwitz-zeta-machine",
+        "precision": "machine",
+        "budget": 10,
+        "expected": "21.0692392022477",
+        "systems": {
+          "ts": {
+            "sources": ["[\"HurwitzZeta\",2.5,0.3]"]
+          },
+          "wolfram": {
+            "sources": ["HurwitzZeta[2.5, 0.3]"]
+          },
+          "sympy": {
+            "reason": "precision"
+          },
+          "mpmath": {
+            "sources": ["zeta(2.5, 0.3)"]
+          },
+          "sage": {
+            "sources": ["hurwitz_zeta(2.5, 0.3)"]
+          },
+          "oscar": {
+            "reason": "precision"
+          },
+          "julia": {
+            "reason": "unmapped",
+            "missing": ["HurwitzZeta/2"]
+          },
+          "rust": {
+            "reason": "unmapped",
+            "missing": ["HurwitzZeta/2"]
+          }
+        }
+      },
+      {
+        "name": "Gamma/gamma-random-reals-machine",
+        "precision": "machine",
+        "budget": 10,
+        "systems": {
+          "ts": {
+            "sources": [
+              "[\"Gamma\",24.026529921218753]",
+              "[\"Gamma\",17.407367952284403]",
+              "[\"Gamma\",38.77917202899698]",
+              "[\"Gamma\",46.78631058672909]",
+              "[\"Gamma\",44.87958628672641]",
+              "[\"Gamma\",6.665662877028808]",
+              "[\"Gamma\",49.318621157319285]",
+              "[\"Gamma\",23.027127810637467]",
+              "[\"Gamma\",48.55525078927167]",
+              "[\"Gamma\",35.59063852287363]",
+              "[\"Gamma\",29.168683981057256]",
+              "[\"Gamma\",3.201277957763523]",
+              "[\"Gamma\",24.212262262008153]",
+              "[\"Gamma\",33.7944600781193]",
+              "[\"Gamma\",12.926321253180504]",
+              "[\"Gamma\",35.72455013496801]"
+            ]
+          },
+          "wolfram": {
+            "sources": [
+              "Gamma[24.026529921218753]",
+              "Gamma[17.407367952284403]",
+              "Gamma[38.77917202899698]",
+              "Gamma[46.78631058672909]",
+              "Gamma[44.87958628672641]",
+              "Gamma[6.665662877028808]",
+              "Gamma[49.318621157319285]",
+              "Gamma[23.027127810637467]",
+              "Gamma[48.55525078927167]",
+              "Gamma[35.59063852287363]",
+              "Gamma[29.168683981057256]",
+              "Gamma[3.201277957763523]",
+              "Gamma[24.212262262008153]",
+              "Gamma[33.7944600781193]",
+              "Gamma[12.926321253180504]",
+              "Gamma[35.72455013496801]"
+            ]
+          },
+          "sympy": {
+            "reason": "precision"
+          },
+          "mpmath": {
+            "sources": [
+              "gamma(24.026529921218753)",
+              "gamma(17.407367952284403)",
+              "gamma(38.77917202899698)",
+              "gamma(46.78631058672909)",
+              "gamma(44.87958628672641)",
+              "gamma(6.665662877028808)",
+              "gamma(49.318621157319285)",
+              "gamma(23.027127810637467)",
+              "gamma(48.55525078927167)",
+              "gamma(35.59063852287363)",
+              "gamma(29.168683981057256)",
+              "gamma(3.201277957763523)",
+              "gamma(24.212262262008153)",
+              "gamma(33.7944600781193)",
+              "gamma(12.926321253180504)",
+              "gamma(35.72455013496801)"
+            ]
+          },
+          "sage": {
+            "sources": [
+              "gamma(24.026529921218753)",
+              "gamma(17.407367952284403)",
+              "gamma(38.77917202899698)",
+              "gamma(46.78631058672909)",
+              "gamma(44.87958628672641)",
+              "gamma(6.665662877028808)",
+              "gamma(49.318621157319285)",
+              "gamma(23.027127810637467)",
+              "gamma(48.55525078927167)",
+              "gamma(35.59063852287363)",
+              "gamma(29.168683981057256)",
+              "gamma(3.201277957763523)",
+              "gamma(24.212262262008153)",
+              "gamma(33.7944600781193)",
+              "gamma(12.926321253180504)",
+              "gamma(35.72455013496801)"
+            ]
+          },
+          "oscar": {
+            "reason": "precision"
+          },
+          "julia": {
+            "reason": "unmapped",
+            "missing": ["Gamma/1"]
+          },
+          "rust": {
+            "sources": [
+              "gamma(x(24.026529921218753))",
+              "gamma(x(17.407367952284403))",
+              "gamma(x(38.77917202899698))",
+              "gamma(x(46.78631058672909))",
+              "gamma(x(44.87958628672641))",
+              "gamma(x(6.665662877028808))",
+              "gamma(x(49.318621157319285))",
+              "gamma(x(23.027127810637467))",
+              "gamma(x(48.55525078927167))",
+              "gamma(x(35.59063852287363))",
+              "gamma(x(29.168683981057256))",
+              "gamma(x(3.201277957763523))",
+              "gamma(x(24.212262262008153))",
+              "gamma(x(33.7944600781193))",
+              "gamma(x(12.926321253180504))",
+              "gamma(x(35.72455013496801))"
+            ]
+          }
+        }
+      },
+      {
         "name": "Factorial/factorial-10-to-the-4",
         "precision": "exact",
         "budget": 10,
