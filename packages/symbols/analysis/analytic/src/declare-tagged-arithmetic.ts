@@ -1,5 +1,5 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
-import { aroundResolvers } from "./around.ts";
+import { aroundResolvers, declareAround } from "./around.ts";
 import { centeredIntervalResolvers, declareCenteredInterval } from "./centered-interval.ts";
 import { intervalResolvers } from "./interval.ts";
 import { registerTaggedHeads } from "./tagged-arithmetic.ts";
@@ -12,6 +12,7 @@ import { registerTaggedHeads } from "./tagged-arithmetic.ts";
 // would pay for that three times over on EVERY Add in the engine, tagged or not.
 export function declareTaggedArithmetic(ce: ComputeEngine): void {
   declareCenteredInterval(ce); // declares the CenteredInterval head itself
+  declareAround(ce);
   const interval = intervalResolvers(ce);
   const centered = centeredIntervalResolvers(ce);
   const around = aroundResolvers(ce);

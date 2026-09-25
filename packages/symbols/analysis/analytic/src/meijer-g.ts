@@ -1,9 +1,8 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf } from "@enumeratio/boxed";
 import { type EvalOptions, isFiniteNum, numberResult, wantsNumber } from "./box.ts";
-import { add, cexp, cpow, cx, type Cx, div, mul, scale } from "./complex.ts";
-import { logGamma } from "./loggamma.ts";
-import { pfqSeries } from "./hypergeometric.ts";
+import { add, cx, type Cx } from "./complex.ts";
+import { meijerGSeriesBig } from "./meijer-g-big.ts";
 
 // MeijerG[{{a1,…,an},{a(n+1),…,ap}}, {{b1,…,bm},{b(m+1),…,bq}}, z]: numeric evaluation
 // via the standard reduction to a finite sum of ordinary pFq series (DLMF 16.17.2),
@@ -22,9 +21,14 @@ import { pfqSeries } from "./hypergeometric.ts";
 // (a further, un-implemented degeneracy). Verified against wolframscript's `MeijerG`
 // at several parameter sets (see meijer-g.test.ts) including the exponential case
 // (m=1,n=0,p=0,q=1) and a case with both a- and b-parameters.
+//
+// The actual sum runs in BigDecimal (`meijerGSeriesBig`, meijer-g-big.ts): a plain-double
+// version of this sum was only accurate to ~1e-13 relative, not ~1e-16, from two stacked
+// cancellations — the Γ-prefactor's own shift recurrence, and the outer sum over poles b_h,
+// whose terms can be tens of times larger than their total. Only the cheap domain declines
+// (below) stay in double.
 
 const isNonPosInt = (z: Cx): boolean => z.im === 0 && z.re <= 0 && Number.isInteger(z.re);
-const gammaC = (z: Cx): Cx => (isNonPosInt(z) ? cx(NaN, NaN) : cexp(logGamma(z)));
 
 function listPair(expr: BoxedExpression | undefined): [Cx[], Cx[]] | undefined {
   if (expr === undefined || expr.operator !== "List") return undefined;
@@ -39,9 +43,11 @@ function listPair(expr: BoxedExpression | undefined): [Cx[], Cx[]] | undefined {
 }
 
 /**
- * The DLMF 16.17.2 sum, in plain Cx arithmetic. `a` is the p upper parameters (block1
- * ++ block2, in that order — the split only matters for the prefactor); `b` is the q
- * lower parameters, with the first `m` (`bBlock1.length`) the ones the sum runs over.
+ * The DLMF 16.17.2 sum. `a` is the p upper parameters (block1 ++ block2, in that order —
+ * the split only matters for the prefactor); `b` is the q lower parameters, with the first
+ * `m` (`bBlock1.length`) the ones the sum runs over. Declines the cheap domain checks in
+ * double (m ≥ 1, p ≤ q, pairwise-simple poles) before handing the arithmetic itself to
+ * `meijerGSeriesBig`.
  */
 function meijerGSeries(
   a: readonly Cx[],
@@ -60,44 +66,7 @@ function meijerGSeries(
       if (isNonPosInt(d) || (d.im === 0 && Number.isInteger(d.re))) return undefined; // non-simple pole
     }
   }
-  const sign = (p - m - n) % 2 === 0 ? 1 : -1;
-  let total = cx(0, 0);
-  for (let h = 0; h < m; h++) {
-    const bh = b[h];
-    let pref = cx(1, 0);
-    for (let j = 0; j < m; j++) {
-      if (j === h) continue;
-      const g = gammaC(add(b[j], scale(bh, -1)));
-      if (!Number.isFinite(g.re)) return undefined;
-      pref = mul(pref, g);
-    }
-    for (let j = 0; j < n; j++) {
-      const arg = add(cx(1, 0), add(bh, scale(a[j], -1)));
-      const g = gammaC(arg);
-      if (!Number.isFinite(g.re)) return undefined;
-      pref = mul(pref, g);
-    }
-    for (let j = m; j < q; j++) {
-      const arg = add(cx(1, 0), add(bh, scale(b[j], -1)));
-      const g = gammaC(arg);
-      if (!Number.isFinite(g.re)) return undefined;
-      pref = div(pref, g);
-    }
-    for (let j = n; j < p; j++) {
-      const arg = add(a[j], scale(bh, -1));
-      const g = gammaC(arg);
-      if (!Number.isFinite(g.re)) return undefined;
-      pref = div(pref, g);
-    }
-    const upper = a.map((aj) => add(cx(1, 0), add(bh, scale(aj, -1))));
-    const lower = b.filter((_, j) => j !== h).map((bj) => add(cx(1, 0), add(bh, scale(bj, -1))));
-    const argZ = sign > 0 ? z : scale(z, -1);
-    const series = pfqSeries(upper, lower, argZ);
-    if (series === undefined) return undefined;
-    const zPow = z.re === 0 && z.im === 0 && bh.re === 0 && bh.im === 0 ? cx(1, 0) : cpow(z, bh);
-    total = add(total, mul(mul(pref, zPow), series));
-  }
-  return total;
+  return meijerGSeriesBig(a, b, m, n, z);
 }
 
 export function declareMeijerG(ce: ComputeEngine): void {

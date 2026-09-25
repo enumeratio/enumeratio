@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
@@ -6,6 +7,11 @@ import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 // (elementary/special functions rewritten into MeijerG form) — see meijer-g.ts and
 // meijer-g-reduce.ts. Numeric values are each checked against `wolframscript`'s own
 // `MeijerG` (see the head's reference/*.yaml `details` for the exact calls).
+//
+// The bulk of the numeric coverage lives in meijer-g.golden.json (mpmath, ~30 parameter
+// sets spanning several m/p/q shapes, near-cancellation, |z| near 1 at p = q, and larger
+// z) and is checked to a few ulps below — the arithmetic itself runs in BigDecimal
+// (meijer-g-big.ts), so a double's ~1e-16 is the expected floor, not a compromise.
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -19,6 +25,45 @@ const g = (upper: [number[], number[]], lower: [number[], number[]], z: number) 
       z,
     ] as never)
     .N().re;
+
+type Param = number | { re: number; im: number };
+
+interface GoldenCase {
+  label: string;
+  upper: [Param[], Param[]];
+  lower: [Param[], Param[]];
+  z: Param;
+  tol: number;
+  mpmath: [number, number];
+}
+
+const goldens: GoldenCase[] = JSON.parse(
+  readFileSync(new URL("./meijer-g.golden.json", import.meta.url), "utf8"),
+);
+
+/** A `Param` as MathJSON — a bare number or `["Complex", re, im]`. */
+const paramJson = (p: Param): unknown => (typeof p === "number" ? p : ["Complex", p.re, p.im]);
+
+const relErr = (ours: [number, number], ref: [number, number]): number =>
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
+  Math.max(1, Math.hypot(ref[0], ref[1]));
+
+test("MeijerG matches mpmath to a few ulps across the golden parameter sets", () => {
+  const off: string[] = [];
+  for (const c of goldens) {
+    const expr = [
+      "MeijerG",
+      ["List", ["List", ...c.upper[0].map(paramJson)], ["List", ...c.upper[1].map(paramJson)]],
+      ["List", ["List", ...c.lower[0].map(paramJson)], ["List", ...c.lower[1].map(paramJson)]],
+      paramJson(c.z),
+    ];
+    const r = ce.box(expr as never).N();
+    const ours: [number, number] = [r.re, r.im];
+    const err = relErr(ours, c.mpmath);
+    if (!(err <= c.tol)) off.push(`${c.label}: relerr ${err.toExponential(2)} (tol ${c.tol})`);
+  }
+  expect(off).toEqual([]);
+});
 
 test("MeijerG: the plain-exponential case G^{1,0}_{0,1}(z | ; 0) = e^{-z}", () => {
   const got = g([[], []], [[0], []], 0.6);
