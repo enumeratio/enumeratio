@@ -89,9 +89,19 @@ is an error on both (never last-writer-wins), a cycle is an error on every cell 
 and a cell-number reference (`Out(n)`, `%`) is rejected outright -- position means
 nothing once cells can be understood in any order.
 
+Labels drop the `[n]` here too -- `In`/`Out`, not `In[n]`/`Out[n]`: a reactive module's
+cells can be read in any order, so a position-keyed label would be misleading, and it is
+exactly what the ordinal-reference rejection above is about.
+
 <Story
   title="Order doesn't matter">
-<template #description>The middle cell reads <code>a</code>, defined by the cell after it.</template>
+<template #description>The middle cell reads <code>a</code>, defined by the cell after it -- and gets the right answer on load, not just after an edit.</template>
+<notatio-out format="notatio" value="DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)" />
+</Story>
+
+<Story
+  title="Editing an upstream cell">
+<template #description>Change the 5 in the middle cell and commit (Enter or blur) -- the first and third cells update on their own, without being touched.</template>
 <notatio-out format="notatio" value="DynamicModule([Cell(b := a + 1), Cell(a := 5), Cell(b^2)], TrackedSymbols -> All)" />
 </Story>
 
@@ -100,14 +110,6 @@ nothing once cells can be understood in any order.
 <template #description>Both cells assign <code>a</code> -- a reactive module rejects that as ambiguous rather than picking a winner (shown here as a dashed outline on each; hover for the message).</template>
 <notatio-out format="notatio" value="DynamicModule([Cell(a := 1), Cell(a := 2)], TrackedSymbols -> All)" />
 </Story>
-
-Only the graph and its diagnostics are wired up so far: the dependency order, the
-duplicate/cycle/ordinal checks above are real and run on every edit. Making a
-_downstream_ cell actually re-evaluate when an upstream one commits -- the live,
-Pluto-style part -- is deferred: it needs a hook into how a cell redraws itself, and
-that machinery is mid-rewrite on another branch (cells are moving from evaluating on
-every keystroke to evaluating on commit). Landing the re-run wire once that settles is
-the natural next step.
 
 ## As a Vue component
 

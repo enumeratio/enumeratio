@@ -130,7 +130,11 @@ export class NotatioDynamicModule extends LitElement {
    * -- lazily, so a module with no cells never pays for one, and memoized, so the FIRST
    * cell to evaluate (not necessarily the first in document order, since each cell loads
    * the engine on its own schedule) settles which scope every other cell in this module
-   * shares.
+   * shares. `TrackedSymbols` decides which `Transcript` that first call builds: a plain
+   * one (history on, `Out`/`In`/`InString`/`%` live, `In[n]`/`Out[n]` labels) by default,
+   * or `history: false` once reactive -- cells can be read in any order there, so a
+   * position-keyed label would be misleading, and a reference to one is rejected outright
+   * by `tracked-symbols.ts`'s own schedule.
    *
    * When `TrackedSymbols` is set, every call also feeds the reactive graph: cheap, since
    * `register` skips a `<notatio-cell>` it already knows, and it is the only place this
@@ -138,9 +142,13 @@ export class NotatioDynamicModule extends LitElement {
    */
   transcriptFor(engine: ComputeEngine): Transcript {
     const tracked = parseTrackedSymbols(this.trackedSymbols);
-    if (tracked !== undefined)
-      (this.#reactive ??= new ReactiveModule(tracked)).register(this, engine);
-    return (this.#transcript ??= new Transcript(engine));
+    const transcript = (this.#transcript ??= new Transcript(engine, {
+      history: tracked === undefined,
+    }));
+    if (tracked !== undefined) {
+      (this.#reactive ??= new ReactiveModule(tracked)).register(this, engine, transcript);
+    }
+    return transcript;
   }
 
   protected override render(): unknown {
