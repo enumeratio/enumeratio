@@ -61,12 +61,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 2, -0.5]],
-      "expected": 8.934802200544675,
+      "expected": 8.934802200544679,
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 2, -1.5]],
-      "expected": 9.37924664498912,
+      "expected": 9.379246644989124,
       "hidden": true
     },
     {
@@ -130,12 +130,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 3, -0.5]],
-      "expected": 0.41439832211715993,
+      "expected": 0.41439832211716,
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 3, -1.5]],
-      "expected": 0.11810202582086413,
+      "expected": 0.1181020258208637,
       "hidden": true
     },
     {
@@ -199,12 +199,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 5, -0.5]],
-      "expected": 0.14476040944446772,
+      "expected": { "num": "0.144760409444467716272" },
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 5, -1.5]],
-      "expected": 0.013073166646110865,
+      "expected": { "num": "0.0130731666461138068073" },
       "hidden": true
     },
     {
@@ -515,7 +515,7 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 0.5, -0.5]],
-      "expected": ["Complex", -0.6048986434216299, -1.4142135623730951],
+      "expected": ["Complex", -0.6048986434216299, -1.414213562373095],
       "hidden": true
     },
     {
@@ -584,12 +584,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 1.5, -0.5]],
-      "expected": ["Complex", 4.776537947554833, 2.8284271247461903],
+      "expected": ["Complex", 4.776537947554832, 2.82842712474619],
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 1.5, -1.5]],
-      "expected": ["Complex", 4.776537947554833, 3.3727581786980076],
+      "expected": ["Complex", 4.776537947554832, 3.372758178698007],
       "hidden": true
     },
     {
@@ -653,12 +653,12 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", 2.5, -0.5]],
-      "expected": ["Complex", 6.247110634568813, -5.656854249492381],
+      "expected": ["Complex", 6.2471106345688145, -5.65685424949238],
       "hidden": true
     },
     {
       "expr": ["N", ["HurwitzZeta", 2.5, -1.5]],
-      "expected": ["Complex", 6.247110634568813, -6.019741618793592],
+      "expected": ["Complex", 6.2471106345688145, -6.019741618793591],
       "hidden": true
     },
     {
@@ -722,7 +722,7 @@
     },
     {
       "expr": ["N", ["HurwitzZeta", -0.5, -0.5]],
-      "expected": ["Complex", 0.060888465580597545, 0.7071067811865476],
+      "expected": ["Complex", 0.060888465580597545, 0.7071067811865475],
       "hidden": true
     },
     {

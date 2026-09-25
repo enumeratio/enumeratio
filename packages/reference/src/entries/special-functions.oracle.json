@@ -865,12 +865,7 @@
           "note": "compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; SymPy's zeta(s, 0) is a pole."
         }
       },
-      "[\"N\",[\"Zeta\",[\"Complex\",0.5,14]],10]": {
-        "wolfram": {
-          "input": "N[Zeta[Complex[0.5, 14]], 10]",
-          "output": "0.022241142609994033 - 0.10325812326645277*I",
-          "verdict": "agree"
-        },
+      "[\"N\",[\"Zeta\",[\"Complex\",0.5,14]]]": {
         "mpmath": {
           "input": "(zeta(mpc(0.5, 14)))",
           "output": "(0.022241142609993589246213199204 - 0.103258123266450057902363095553j)",
@@ -879,6 +874,11 @@
         "sympy": {
           "input": "N(zeta((0.5 + 14*I)), 30)",
           "output": "0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I",
+          "verdict": "agree"
+        },
+        "wolfram": {
+          "input": "N[Zeta[Complex[0.5, 14]]]",
+          "output": "0.022241142609994033 - 0.10325812326645277*I",
           "verdict": "agree"
         }
       }

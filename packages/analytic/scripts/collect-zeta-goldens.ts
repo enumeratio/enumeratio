@@ -1,7 +1,8 @@
 // Collect mpmath values for ζ(s, a) — at a positive integer a, complex s, which
-// compute-engine's native Zeta declines and ours fills from ζ(s, 1); and left of Re(s) = 0,
-// where the kernel reflects or sums a Taylor series in a rather than direct-summing — and
-// write them to tests/zeta.golden.json. The test suite checks the kernel, N() and the
+// compute-engine's native Zeta declines and ours fills from ζ(s, 1); left of Re(s) = 0,
+// where the double kernel reflects or sums a Taylor series in a rather than direct-summing;
+// and a few non-integer a at complex s — and write them to tests/zeta.golden.json, each as a
+// pair of doubles and as 40-digit strings. The test suite checks both kernels, N() and the
 // compiled real path against those pinned values, so `vp test` doesn't need mpmath; this
 // script does, and exits nonzero on a disagreement.
 //
@@ -10,6 +11,8 @@
 
 import { writeFileSync } from "node:fs";
 import { runKernel } from "@enumeratio/oracle/bounded";
+import { BigDecimal } from "@cortex-js/compute-engine";
+import { bigCx, hurwitzZetaBig } from "../src/bigzeta.ts";
 import { hurwitzZeta } from "../src/hurwitz-zeta.ts";
 
 type Pair = [number, number];
@@ -21,6 +24,8 @@ export interface ZetaGolden {
   /** Relative tolerance the test holds us to against mpmath. */
   tol: number;
   mpmath: Pair;
+  /** The same value to 40 significant digits. */
+  mpmath40: [string, string];
 }
 
 // On the critical line (the first zero, near it, and higher up) and off it, both sides of
@@ -70,33 +75,48 @@ const grid: [Pair, number, number?][] = [
   [[-20.5, 3], 2.7],
   [[-10.5, 0], 7.4],
   [[-3, 0], 1.3],
+  [[0.5, 14], 0.25],
+  [[2, 3], 3.7],
+  [[-2.5, 7], 0.75],
 ];
 
 const py = `
-from mpmath import mp, mpc, zeta
-mp.dps = 30
+from mpmath import mp, mpc, mpf, zeta
+mp.dps = 60
 cases = [
-${grid.map(([[re, im], a], k) => `    (${k}, zeta(mpc('${re}', '${im}'), ${a})),`).join("\n")}
+${grid.map(([[re, im], a], k) => `    (${k}, zeta(mpc('${re}', '${im}'), mpf('${a}'))),`).join("\n")}
 ]
 for k, v in cases:
-    print(f"{k}|{v.real}|{v.imag}")
+    print(f"{k}|{mp.nstr(v.real, 40, strip_zeros=False)}|{mp.nstr(v.imag, 40, strip_zeros=False)}")
 `;
 const out = await runKernel("python3", ["-c", py], { timeoutMs: 120_000 });
-const mp = new Map<number, Pair>();
+const mp = new Map<number, [string, string]>();
 for (const line of out.split("\n")) {
   const m = line.match(/^(\d+)\|(.*)\|(.*)$/);
-  if (m) mp.set(Number(m[1]), [Number(m[2]), Number(m[3])]);
+  if (m) mp.set(Number(m[1]), [m[2], m[3]]);
 }
 
 const relErr = (ours: Pair, ref: Pair): number =>
   Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
   Math.max(1, Math.hypot(ref[0], ref[1]));
 
+/** Within one unit in the 39th significant digit — each side is rounded to 40. */
+const agrees40 = (ours: BigDecimal, ref: string): boolean => {
+  const r = new BigDecimal(ref);
+  if (r.isZero()) return ours.isZero();
+  return ours
+    .sub(r)
+    .abs()
+    .lte(r.abs().mul(new BigDecimal("1e-38")));
+};
+
 const goldens: ZetaGolden[] = [];
 const disagree: string[] = [];
 for (const [k, [s, a, tol = TOL]] of grid.entries()) {
-  const ref = mp.get(k);
-  if (!ref || !ref.every(Number.isFinite)) throw new Error(`mpmath gave no value for case ${k}`);
+  const ref40 = mp.get(k);
+  const ref = ref40?.map(Number) as Pair | undefined;
+  if (!ref40 || !ref || !ref.every(Number.isFinite))
+    throw new Error(`mpmath gave no value for case ${k}`);
   const sLabel = s[1] === 0 ? `${s[0]}` : `${s[0]}${s[1] < 0 ? "" : "+"}${s[1]}i`;
   const label = a === 1 ? `ζ(${sLabel})` : `ζ(${sLabel}, ${a})`;
   const r = hurwitzZeta({ re: s[0], im: s[1] }, { re: a, im: 0 });
@@ -106,7 +126,13 @@ for (const [k, [s, a, tol = TOL]] of grid.entries()) {
     disagree.push(
       `${label}: ours=(${ours.join(", ")}) mpmath=(${ref.join(", ")}) relerr=${err.toExponential(2)}`,
     );
-  goldens.push({ s, a, label, tol, mpmath: ref });
+  const big = hurwitzZetaBig(bigCx(...s), bigCx(a), 40);
+  const off40 = !big || !agrees40(big.re, ref40[0]) || !agrees40(big.im, ref40[1]);
+  if (off40)
+    disagree.push(
+      `${label} @40: ours=(${String(big?.re)}, ${String(big?.im)}) mpmath=(${ref40.join(", ")})`,
+    );
+  goldens.push({ s, a, label, tol, mpmath: ref, mpmath40: ref40 });
 }
 
 writeFileSync(

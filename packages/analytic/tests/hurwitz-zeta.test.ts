@@ -1,12 +1,14 @@
 import { readFileSync } from "node:fs";
-import { ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, ComputeEngine } from "@cortex-js/compute-engine";
 import { JavaScriptTarget, WGSLTarget } from "@cortex-js/compute-engine/compile";
 import { expect, test } from "vite-plus/test";
 import { bernoulliRational } from "../src/bernoulli.ts";
+import { bigCx, hurwitzZetaBig } from "../src/bigzeta.ts";
 import {
   declareAnalytic,
   hurwitzZeta,
   hurwitzZetaReal,
+  setZetaKernel,
   zetaGeneralized,
   zetaGeneralizedReal,
 } from "../src/hurwitz-zeta.ts";
@@ -219,14 +221,16 @@ test("one-argument Zeta compiles to the generalized kernel at a = 1 (JS + WGSL)"
 // --- ζ(s, a) against mpmath: complex s, and left of the strip ------------------------
 
 // compute-engine's native Zeta evaluates real s only; complex s is filled from ζ(s, 1).
-// Left of Re(s) = 0 the kernel sums a Taylor series in a over reflected ζ(s + k) instead.
-// Oracle values are pinned in zeta.golden.json (scripts/collect-zeta-goldens.ts, mpmath).
+// Left of Re(s) = 0 the double kernel sums a Taylor series in a over reflected ζ(s + k)
+// instead. Oracle values are pinned in zeta.golden.json (scripts/collect-zeta-goldens.ts,
+// mpmath), as doubles and to 40 digits.
 interface ZetaGolden {
   s: [number, number];
   a: number;
   label: string;
   tol: number;
   mpmath: [number, number];
+  mpmath40: [string, string];
 }
 const zetaGoldens: ZetaGolden[] = JSON.parse(
   readFileSync(new URL("./zeta.golden.json", import.meta.url), "utf8"),
@@ -249,23 +253,68 @@ const complexRiemann = zetaGoldens.filter((g) => g.a === 1 && g.s[1] !== 0);
 const viaN = (engine: ComputeEngine, head: Expr[]) => (g: ZetaGolden) =>
   engine.box([head[0], ["Complex", ...g.s], ...head.slice(1)] as never).N();
 
-test("the ζ(s, a) kernel matches mpmath, complex s and left of the strip", () => {
+test("the double ζ(s, a) kernel matches mpmath, complex s and left of the strip", () => {
   expect(offBy(zetaGoldens, (g) => hurwitzZeta(cx(...g.s), cx(g.a)))).toEqual([]);
 });
 
-test("Zeta(s) at complex s matches mpmath, on and off the critical line", () => {
-  expect(offBy(complexRiemann, viaN(ce, ["Zeta"]))).toEqual([]);
-  expect(offBy(complexRiemann, viaN(ce, ["Zeta", 1]))).toEqual([]);
-  expect(offBy(complexRiemann, viaN(ce, ["HurwitzZeta", 1]))).toEqual([]);
+/** Within one unit in the 39th significant digit — each side is rounded to 40. */
+const agrees40 = (ours: BigDecimal, ref: string): boolean => {
+  const r = new BigDecimal(ref);
+  return r.isZero()
+    ? ours.isZero()
+    : ours
+        .sub(r)
+        .abs()
+        .lte(r.abs().mul(new BigDecimal("1e-38")));
+};
+
+test("the bignum ζ(s, a) kernel matches mpmath to 40 digits", () => {
+  const off = zetaGoldens.filter((g) => {
+    const r = hurwitzZetaBig(bigCx(...g.s), bigCx(g.a), 40);
+    return !r || !agrees40(r.re, g.mpmath40[0]) || !agrees40(r.im, g.mpmath40[1]);
+  });
+  expect(off.map((g) => g.label)).toEqual([]);
 });
 
-test("Zeta(s) at complex s holds with the engine at 40 digits", () => {
-  // A compute-engine complex is a pair of doubles, so there is no bignum path to take:
-  // the answer is the double kernel's, not an unevaluated Zeta.
-  const engine = new ComputeEngine();
-  declareAnalytic(engine);
-  engine.precision = 40;
-  expect(offBy(complexRiemann, viaN(engine, ["Zeta"]))).toEqual([]);
+test("the bignum ζ(s, a) kernel rounds to the nearest double", () => {
+  const off = zetaGoldens.filter((g) => {
+    const r = hurwitzZetaBig(bigCx(...g.s), bigCx(g.a), 17);
+    return r?.re.toNumber() !== g.mpmath[0] || r?.im.toNumber() !== g.mpmath[1];
+  });
+  expect(off.map((g) => g.label)).toEqual([]);
+});
+
+const parts = (x: { re: number; im: number }): [number, number] => [x.re, x.im];
+
+test("Zeta(s) at complex s is mpmath's value correctly rounded, on and off the critical line", () => {
+  for (const head of [["Zeta"], ["Zeta", 1], ["HurwitzZeta", 1]])
+    expect(complexRiemann.map((g) => parts(viaN(ce, head)(g)))).toEqual(
+      complexRiemann.map((g) => g.mpmath),
+    );
+});
+
+test("Zeta(s) at complex s is correctly rounded with the engine at 40 digits, and at machine", () => {
+  // A compute-engine complex is a pair of doubles, so 40 digits of kernel come back as the
+  // nearest pair of doubles.
+  for (const precision of [40, "machine"] as const) {
+    const engine = new ComputeEngine();
+    declareAnalytic(engine);
+    engine.precision = precision;
+    expect(complexRiemann.map((g) => parts(viaN(engine, ["Zeta"])(g)))).toEqual(
+      complexRiemann.map((g) => g.mpmath),
+    );
+  }
+});
+
+test("setZetaKernel('double') puts N() back on the double kernel", () => {
+  const g = complexRiemann[0];
+  try {
+    setZetaKernel("double");
+    expect(parts(viaN(ce, ["Zeta"])(g))).toEqual(parts(hurwitzZeta(cx(...g.s), cx(1))));
+  } finally {
+    setZetaKernel("bignum");
+  }
+  expect(parts(viaN(ce, ["Zeta"])(g))).toEqual(g.mpmath);
 });
 
 test("compiled Zeta(x, a) and HurwitzZeta(x, a) hold left of the strip", () => {
@@ -286,18 +335,12 @@ test("Zeta(s) keeps the native behaviour wherever native evaluates", () => {
   // An exact complex stays symbolic under evaluate(), as an exact real does; N() gives a number.
   expect(ce.box(["Zeta", ["Complex", 2, 1]]).evaluate().json).toEqual(["Zeta", ["Complex", 2, 1]]);
   expect(ce.box(["Zeta", ["Complex", 2, 1]]).N().im).toBeCloseTo(-0.4375308659196079, 13);
-  // Threads over a list, complex entries included.
-  // Float digits past ~1e-15 differ across platforms' libm, so the complex entry is held
-  // to a tolerance rather than exactly.
-  const [head, exact, complex] = ce.box(["Zeta", ["List", 2, ["Complex", 0.5, 14]]]).evaluate()
-    .json as [string, unknown, [string, number, number]];
-  expect([head, exact, complex[0]]).toEqual([
+  // Threads over a list, complex entries included — correctly rounded, so exact.
+  expect(ce.box(["Zeta", ["List", 2, ["Complex", 0.5, 14]]]).evaluate().json).toEqual([
     "List",
     ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]],
-    "Complex",
+    ["Complex", 0.02224114260999359, -0.10325812326645006],
   ]);
-  expect(complex[1]).toBeCloseTo(0.02224114260999359, 13);
-  expect(complex[2]).toBeCloseTo(-0.10325812326645006, 13);
 });
 
 // --- LerchPhi Φ(z, s, a) = Σ zⁿ (n+a)^(−s) -----------------------------------------

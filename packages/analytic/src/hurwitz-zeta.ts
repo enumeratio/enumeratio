@@ -12,12 +12,13 @@ import {
   wantsNumber,
 } from "./box.ts";
 import { add, cexp, clog, cosPi, cpow, cx, type Cx, mul, scale, sinPi } from "./complex.ts";
+import { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta.ts";
 import { logGamma } from "./loggamma.ts";
 import { lerchPhi } from "./lerch.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
-import { atEnginePrecision, preciseHurwitzZeta } from "./precise.ts";
+import { atEnginePrecision, DOUBLE_DIGITS } from "./precise.ts";
 import { declareCarlson } from "./carlson.ts";
 import { declareDerivatives } from "./derivatives.ts";
 import { declareElliptic } from "./elliptic.ts";
@@ -290,6 +291,44 @@ export const hurwitzZetaReal = (s: number, a: number): number =>
 export const zetaGeneralizedReal = (s: number, a: number): number =>
   zetaGeneralized({ re: s, im: 0 }, { re: a, im: 0 }).re;
 
+/**
+ * Which kernel numeric `HurwitzZeta` and `Zeta` evaluate on. `"bignum"` (the default) is
+ * bigzeta.ts: correctly rounded, the same in every JS engine, and as many digits as the
+ * engine asks for — at a cost of milliseconds rather than microseconds. `"double"` is
+ * `hurwitzZeta` above. Compiled code always uses the double kernel.
+ */
+export type ZetaKernel = "bignum" | "double";
+let zetaKernel: ZetaKernel = "bignum";
+export const setZetaKernel = (kernel: ZetaKernel): void => {
+  zetaKernel = kernel;
+};
+
+/**
+ * A numeric operand as BigDecimals. Above machine precision the real part is the engine's
+ * bignum (1/3 to every digit asked for); at machine precision it is the double, which is
+ * closer than the 15-digit bignum compute-engine would give.
+ */
+const bigOperand = (ce: ComputeEngine, x: BoxedExpression): BigCx =>
+  bigCx(ce.precision > DOUBLE_DIGITS ? (x.bignumRe ?? x.re) : x.re, x.im);
+
+/**
+ * ζ on the bignum kernel, boxed; undefined to fall back to the double one. A real result
+ * keeps the engine's precision. A complex one can't: compute-engine holds a complex number
+ * as a pair of doubles, so each part is the double nearest the bignum value.
+ */
+function bigZetaResult(
+  ce: ComputeEngine,
+  kernel: (s: BigCx, a: BigCx, digits: number) => BigCx | undefined,
+  s: BoxedExpression,
+  a: BoxedExpression,
+): BoxedExpression | undefined {
+  if (zetaKernel !== "bignum") return undefined;
+  const r = kernel(bigOperand(ce, s), bigOperand(ce, a), Math.max(ce.precision, 17));
+  if (r === undefined) return undefined;
+  if (!r.im.isZero()) return ce.number(ce.complex(r.re.toNumber(), r.im.toNumber()));
+  return ce.number(ce.precision > DOUBLE_DIGITS ? r.re.toPrecision(ce.precision) : r.re.toNumber());
+}
+
 function evaluateHurwitz(
   ce: ComputeEngine,
   ops: readonly BoxedExpression[],
@@ -345,16 +384,12 @@ function evaluateHurwitz(
     if (viaPolygamma !== undefined) return viaPolygamma;
   }
 
-  // Asked for more digits than a double holds? Take the same Euler–Maclaurin written as an
-  // expression, which compute-engine's own arithmetic carries to the requested precision.
-  if (numeric) {
-    const precise = preciseHurwitzZeta(ce, s, a);
-    if (precise !== undefined) return precise;
-  }
-
   // Numeric Euler–Maclaurin for everything else — only when a number is asked for.
   if (numeric && isFiniteNum(s) && isFiniteNum(a)) {
-    return numberResult(ce, hurwitzZeta({ re: s.re, im: s.im }, { re: a.re, im: a.im }));
+    return (
+      bigZetaResult(ce, hurwitzZetaBig, s, a) ??
+      numberResult(ce, hurwitzZeta({ re: s.re, im: s.im }, { re: a.re, im: a.im }))
+    );
   }
 
   return undefined; // stay symbolic
@@ -389,7 +424,10 @@ function evaluateZeta(
 
   // a concrete with Re(a) ≤ 0: generalized-zeta convention, numeric only.
   if (numeric && isFiniteNum(s)) {
-    return numberResult(ce, zetaGeneralized({ re: s.re, im: s.im }, { re: a.re, im: a.im }));
+    return (
+      bigZetaResult(ce, zetaGeneralizedBig, s, a) ??
+      numberResult(ce, zetaGeneralized({ re: s.re, im: s.im }, { re: a.re, im: a.im }))
+    );
   }
 
   return undefined; // stay symbolic
