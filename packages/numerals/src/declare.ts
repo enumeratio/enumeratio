@@ -1,11 +1,16 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import {
+  bigIntegerAt,
   defineMessages,
   emit,
   formatArgument,
   integerAt,
   operandsOf,
+  stringAt,
   symbolNameOf,
+  threadOverLists,
+  widenSignature,
+  wrapOperator,
 } from "@enumeratio/boxed";
 import { gcd } from "@enumeratio/residues";
 import { declareAdic } from "./adic-declare.ts";
@@ -305,6 +310,45 @@ export function declareNumerals(ce: ComputeEngine): void {
         return undefined;
       }
       return ce.number(value);
+    },
+  );
+
+  // After the redeclarations above, which would drop the flag. Thread over a list of n, as Wolfram's do: IntegerDigits([6, 7], 2) is [[1, 1, 0], [1, 1, 1]].
+  // A system in the base slot is a head, never a bare list, so it is not threaded over.
+  threadOverLists(ce, ["IntegerDigits", "DigitCount"]);
+
+  // Wolfram's FromDigits["1923"] and FromDigits["ff", 16]: the digits as a string, 0-9 then
+  // a-z. Natively the digits have to be a list.
+  wrapOperator(
+    ce,
+    ["FromDigits", ["List", 1, 0], 2],
+    (ops) => stringAt(ops[0]) !== undefined,
+    () => (ops) => {
+      const base = ops[1] === undefined ? 10 : integerAt(ops[1]);
+      const text = stringAt(ops[0])!.toLowerCase();
+      if (base === undefined || base < 2 || base > 36 || text === "") return undefined;
+      const digits = text.split("").map((c) => Number.parseInt(c, 36));
+      if (digits.some((d) => Number.isNaN(d) || d >= base)) return undefined;
+      return ce.number(digits.reduce((n, d) => n * BigInt(base) + BigInt(d), 0n));
+    },
+  );
+
+  // Wolfram's IntegerString[n, b, len]: the digits of n padded with leading zeros, or cut down
+  // to their last `len`. Wolfram drops the sign and compute-engine keeps it, so a negative n
+  // stays unevaluated rather than take either side.
+  widenSignature(ce, "IntegerString", "(integer, integer?, integer?) -> string");
+  wrapOperator(
+    ce,
+    ["IntegerString", 5, 2],
+    (ops) => ops.length === 3,
+    (native) => (ops, options) => {
+      const width = integerAt(ops[2]);
+      const n = bigIntegerAt(ops[0]);
+      if (width === undefined || width < 0 || n === undefined || n < 0n) return undefined;
+      const digits = stringAt(native?.(ops.slice(0, 2), options));
+      if (digits === undefined) return undefined;
+      const padded = digits.padStart(width, "0");
+      return ce.string(padded.slice(padded.length - width));
     },
   );
 

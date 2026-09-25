@@ -82,18 +82,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Binomial", ["List", 2, 3, 5, 7, 11], 3],
         expected: ["List", 0, 1, 10, 35, 165],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's [[Binomial]] is integer-only and errors on a list argument (no threading)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["Binomial", ["Rational", 9, 2], ["Rational", 7, 2]],
-        expected: ["Rational", 99, 8],
-        aspirational: true,
+        expected: ["Rational", 9, 2],
         category: "Scope",
         caption:
-          "Half-integer arguments should evaluate via the Gamma function, giving $\\frac{99}{8}$; currently left unevaluated",
+          "Half-integer arguments evaluate exactly through the Gamma function: here $n - k = 1$, so the answer is just $n = \\frac{9}{2}$",
       },
     ],
     seeAlso: ["Factorial", "Multinomial", "Pochhammer"],
@@ -115,7 +112,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "With two arguments it reduces to [[Binomial]]: $\\binom{k_1+k_2}{k_1}$.",
       "Orderless: permuting the arguments doesn't change the value.",
       "All-zero arguments and a single argument both reduce to the empty product, 1.",
-      "compute-engine requires all-integer scalar arguments; it does not thread over a list argument.",
+      "compute-engine requires all-integer arguments; a list argument is threaded over element-wise, as Wolfram's Listable heads do.",
     ],
     examples: [
       { expr: ["Multinomial", 1, 2, 1], expected: 12 },
@@ -155,10 +152,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Multinomial", ["List", 2, 3, 5], 3],
         expected: ["List", 10, 20, 56],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's [[Multinomial]] requires all-integer scalar arguments errors on a list argument (no threading)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Binomial", "Factorial"],
@@ -243,7 +238,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "Recurrence: $n!! = n\\,(n-2)!!$, with $0!! = 1$.",
       "Splits an ordinary factorial into its even and odd parts: $n! = n!!\\,(n-1)!!$.",
       "$(2n-1)!!$ counts the perfect matchings of $2n$ objects into pairs.",
-      "compute-engine's recurrence hits a pole at negative even integers (a division by the $0!!$ term), returning NaN instead of extending to negative odd arguments.",
+      "The recurrence run downwards extends it to negative odd integers, $(-2k-1)!! = \\dfrac{(-1)^k}{(2k-1)!!}$; at negative even integers it hits a pole (a division by the $0!!$ term) and returns NaN.",
     ],
     examples: [
       { expr: ["Factorial2", 7], expected: 105, caption: "7 × 5 × 3 × 1" },
@@ -284,10 +279,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Factorial2", -1],
         expected: 1,
-        aspirational: true,
         category: "Scope",
         caption:
-          "The recurrence should extend to negative odd integers, giving $(-1)!! = 1$; currently returns NaN",
+          "The recurrence $n!! = n \\cdot (n-2)!!$ run downwards extends it to negative odd integers: $(-1)!! = 1$, $(-3)!! = -1$, $(-5)!! = \\frac{1}{3}$",
       },
     ],
     seeAlso: ["Factorial"],
@@ -363,16 +357,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["CatalanNumber", ["List", 1, 2, 3, 4]],
         expected: ["List", 1, 2, 5, 14],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine is integer-only; a list argument is not threaded",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
         expr: ["CatalanNumber", ["Rational", 5, 2]],
         expected: ["Divide", 1024, ["Multiply", 105, "Pi"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Half-integer arguments should evaluate via analytic continuation",
+        caption:
+          "Half-integer arguments evaluate exactly through $C_n = \\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$",
       },
     ],
     seeAlso: ["Binomial", "BellNumber"],
@@ -426,10 +419,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Pochhammer", ["List", 2, 3, 4], 2],
         expected: ["List", 6, 12, 20],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's [[Pochhammer]] is scalar-only errors on a list argument (no threading)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Factorial", "Binomial"],
@@ -481,10 +472,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Subfactorial", ["List", 1, 2, 3, 4]],
         expected: ["List", 0, 1, 2, 9],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's [[Subfactorial]] is scalar-only errors on a list argument (no threading)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Factorial"],
@@ -507,7 +496,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "$s(n, n) = 1$ and $s(n, 0) = 0$ for $n > 0$, with the boundary case $s(0, 0) = 1$.",
       "The unsigned values in each row sum to $n!$: $\\sum_k |s(n, k)| = n!$",
       "$s(n, 1) = (-1)^{n-1}(n-1)!$.",
-      "compute-engine's [[StirlingS1]] is scalar-only; it does not thread the first argument over a list.",
+      "Threads element-wise over a list of $n$, as Wolfram's Listable heads do.",
     ],
     examples: [
       { expr: ["StirlingS1", 5, 2], expected: -50 },
@@ -547,10 +536,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["StirlingS1", ["List", 2, 4, 6], 2],
         expected: ["List", 1, 11, 274],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's [[StirlingS1]] is scalar-only errors on a list argument (no threading)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Binomial", "Stirling"],
@@ -660,10 +647,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["BellNumber", ["List", 1, 2, 3, 4]],
         expected: ["List", 1, 2, 5, 15],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's [[BellNumber]] is scalar-only errors on a list argument (no threading)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["StirlingS1"],

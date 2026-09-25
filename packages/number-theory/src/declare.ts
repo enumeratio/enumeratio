@@ -1,8 +1,15 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { bigIntegerAt, bigRationalAt, operandsOf, wrapOperator } from "@enumeratio/boxed";
+import {
+  bigIntegerAt,
+  bigRationalAt,
+  operandsOf,
+  threadOverLists,
+  wrapOperator,
+} from "@enumeratio/boxed";
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
 import { declareGaussian } from "./declare-gaussian.ts";
+import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
 import { type Gaussian, powerMod as gaussianPowerMod } from "./gaussian.ts";
 import { hermiteDecomposition } from "./hermite.ts";
@@ -14,6 +21,31 @@ import { rationalReconstruction } from "./reconstruct.ts";
 
 export function declareNumberTheory(ce: ComputeEngine): void {
   declareGaussian(ce);
+  declareWidened(ce);
+
+  // compute-engine's integer functions reject a list argument with a type error (or leave
+  // the call unevaluated); Wolfram's thread over it: Totient([2, 4, 6]) is [1, 2, 2].
+  threadOverLists(ce, [
+    "Totient",
+    "NextPrime",
+    "NthPrime",
+    "PrimePi",
+    "FactorInteger",
+    "Divisors",
+    "PrimeNu",
+    "PrimeOmega",
+    "MoebiusMu",
+    "IsSquareFree",
+    "JacobiSymbol",
+    "KroneckerSymbol",
+    "Multinomial",
+    "CatalanNumber",
+    "Subfactorial",
+    "StirlingS1",
+    "BellNumber",
+    "Fibonacci",
+    "LucasL",
+  ]);
 
   const list = (xs: readonly bigint[]): BoxedExpression =>
     ce.function(

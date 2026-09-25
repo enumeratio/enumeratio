@@ -159,6 +159,22 @@ export function widenSignature(
     ops.every(nativeAccepts) ? native(ops, options) : undefined;
 }
 
+/**
+ * Make operators the engine already defines thread over a list argument, as Wolfram's
+ * Listable heads do: `Totient([2, 4, 6])` is `[1, 2, 2]` instead of a type error. Flagged in
+ * place, like `wrapOperator`, so every other part of each definition — and any wrapper
+ * already attached — is kept. Only heads that reject or ignore a list natively belong here:
+ * the flag widens what they answer, it never changes an answer they already give.
+ */
+export function threadOverLists(ce: ComputeEngine, names: readonly string[]): void {
+  for (const name of names) {
+    const definition = ce.lookupDefinition(name);
+    if (definition !== undefined && "operator" in definition) {
+      (definition.operator as { broadcastable: boolean }).broadcastable = true;
+    }
+  }
+}
+
 /** A `widenSignature` gate for heads natively typed `integer`: anything not provably non-integer. */
 export const mayBeInteger = (op: BoxedExpression): boolean => op.isInteger !== false;
 
