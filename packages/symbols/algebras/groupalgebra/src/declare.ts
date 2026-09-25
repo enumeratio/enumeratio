@@ -30,6 +30,7 @@ import {
   dropFixedCycles,
   identityPermutation,
   invertPermutation,
+  isPermutation,
   permutationGroupClosure,
   permutationToCycles,
 } from "./permutations.ts";
@@ -109,6 +110,12 @@ function oneLineOf(expr: BoxedExpression): number[] | undefined {
 const maxSupport = (cycles: readonly Cycle[]): number =>
   cycles.reduce((m, cycle) => cycle.reduce((mm, x) => Math.max(mm, x), m), 0);
 
+/** A one-line word that is actually a permutation -- anything else is left unevaluated. */
+function permutationWordOf(expr: BoxedExpression): number[] | undefined {
+  const word = oneLineOf(expr);
+  return word !== undefined && isPermutation(word) ? word : undefined;
+}
+
 /** Either notation for a permutation, widened to degree `n` (identity past its own support). */
 function permutationOf(expr: BoxedExpression, n?: number): number[] | undefined {
   const cycles = cyclesOf(expr);
@@ -116,7 +123,7 @@ function permutationOf(expr: BoxedExpression, n?: number): number[] | undefined 
     if (!cyclesAreValid(cycles)) return undefined;
     return cyclesToPermutation(cycles, Math.max(n ?? 0, maxSupport(cycles)));
   }
-  const oneLine = oneLineOf(expr);
+  const oneLine = permutationWordOf(expr);
   if (oneLine === undefined) return undefined;
   if (n === undefined || n <= oneLine.length) return oneLine;
   return oneLine.concat(identityPermutation(n).slice(oneLine.length));
@@ -384,37 +391,54 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
 
   /** `PermutationCycles(perm)` -> cycle notation; `PermutationCycles(perm, f)` wraps EVERY
    *  position (fixed points included) with `f` instead of `Cycles`. */
-  ce.declare("PermutationCycles", {
-    signature: "(value, any?) -> value",
-    evaluate: (ops: readonly BoxedExpression[]) => {
-      const input = ops[0];
-      if (input === undefined) return undefined;
-      const head = ops[1];
-      if (head === undefined) {
-        // Cycles(...) is already in cycle notation -- pass it through unchanged.
-        if (input.operator === "Cycles") return input;
-        const perm = oneLineOf(input);
-        if (perm === undefined) return undefined;
-        return cyclesExpression(ce, permutationToCycles(perm));
-      }
-      const headName = symbolNameOf(head);
-      if (headName === undefined) return undefined;
-      const perm = permutationOf(input);
+  const permutationCycles = (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
+    const input = ops[0];
+    if (input === undefined) return undefined;
+    const head = ops[1];
+    if (head === undefined) {
+      // Cycles(...) is already in cycle notation -- pass it through unchanged.
+      if (input.operator === "Cycles") return input;
+      const perm = permutationWordOf(input);
       if (perm === undefined) return undefined;
-      const cycles = permutationToCycles(perm, true);
-      return ce.function(headName, [
-        ce.function(
-          "List",
-          cycles.map((cycle) =>
-            ce.function(
-              "List",
-              cycle.map((x) => ce.number(x)),
-            ),
+      return cyclesExpression(ce, permutationToCycles(perm));
+    }
+    const headName = symbolNameOf(head);
+    if (headName === undefined) return undefined;
+    const perm = permutationOf(input);
+    if (perm === undefined) return undefined;
+    const cycles = permutationToCycles(perm, true);
+    return ce.function(headName, [
+      ce.function(
+        "List",
+        cycles.map((cycle) =>
+          ce.function(
+            "List",
+            cycle.map((x) => ce.number(x)),
           ),
         ),
-      ]);
-    },
-  });
+      ),
+    ]);
+  };
+  const existing = ce.lookupDefinition("PermutationCycles");
+  if (existing === undefined || !("operator" in existing)) {
+    ce.declare("PermutationCycles", {
+      signature: "(value, any?) -> value",
+      evaluate: permutationCycles,
+    });
+  } else {
+    // @enumeratio/domains' carrier constructor got the name first; a second declare throws.
+    widenSignature(
+      ce,
+      "PermutationCycles",
+      `(${String(existing.operator.signature)}) & ((value, any?) -> value)`,
+    );
+    wrapOperator(
+      ce,
+      ["PermutationCycles"],
+      () => true,
+      (native) => (ops, options) => permutationCycles(ops) ?? native?.(ops, options),
+    );
+  }
 
   /** `InversePermutation(perm)`, in either notation. */
   ce.declare("InversePermutation", {
@@ -432,7 +456,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
           cycles.map((cycle) => [cycle[0]!, ...cycle.slice(1).reverse()]),
         );
       }
-      const perm = oneLineOf(input);
+      const perm = permutationWordOf(input);
       return perm === undefined
         ? undefined
         : ce.function(
