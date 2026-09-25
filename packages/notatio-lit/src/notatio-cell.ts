@@ -3,7 +3,7 @@ import { parseNotatio } from "@enumeratio/formats/notatio";
 import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import "./notatio-in.ts";
-import type { HeadInfo } from "./notatio-out.ts";
+import { type HeadInfo, transcriptHostOf } from "./notatio-out.ts";
 import "./notatio-out.ts";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
@@ -96,6 +96,17 @@ async function textInSyntax(syntax: Syntax, json: unknown, engine?: Engine): Pro
  * appears that restores the original value and clears it. `notatio-dirty` fires on
  * both transitions; `notatio-change` fires on every edit, with the result as both
  * notatio text and MathJSON.
+ *
+ * Inside a transcript (a `<notatio-dynamic-module>` ancestor, `transcriptHostOf`), a
+ * cell evaluates only on COMMIT -- Enter or blur -- never on every keystroke: Wolfram
+ * evaluates a notebook cell on Shift+Enter, not as you type, since each evaluation
+ * advances the shared `$Line` history (`Out(n)` would otherwise land on every
+ * intermediate keystroke). The `standard` (MathLive) editor already commits live
+ * outside a transcript; inside one it holds the new value in `_raw` (so the field
+ * itself stays responsive) and reflects `pending` until `<notatio-in>`'s own
+ * `notatio-commit` -- MathLive's native `change`, on Enter or blur -- lands. The text
+ * editors (`input`/`full`/`wolfram`/`tex`) already commit only on Enter/blur outside
+ * a transcript too, so this only changes the `standard` editor's behavior inside one.
  */
 export class NotatioCell extends LitElement {
   static properties = {
@@ -119,6 +130,12 @@ export class NotatioCell extends LitElement {
     env: { type: String },
     /** Set once the reader has made an edit; reflected so a stylesheet can key on it. */
     dirty: { type: Boolean, reflect: true },
+    /**
+     * Set while an edit is held back waiting for commit (inside a transcript, the
+     * `standard` editor between a keystroke and the next Enter/blur); reflected so a
+     * stylesheet can dim the now-stale Out.
+     */
+    pending: { type: Boolean, reflect: true },
     /** Property only: forwarded to the In and Out `notatio-out`s' `resolveHead`. */
     resolveHead: { attribute: false },
     _editForm: { state: true },
@@ -138,6 +155,7 @@ export class NotatioCell extends LitElement {
   declare planned: boolean;
   declare env: string;
   declare dirty: boolean;
+  declare pending: boolean;
   declare resolveHead: ((head: string) => HeadInfo | undefined) | undefined;
   /** The editor currently shown -- starts at `inForm`, changed live via the In menu. */
   declare _editForm: EditForm;
@@ -153,6 +171,13 @@ export class NotatioCell extends LitElement {
   #token = 0;
   /** `slot="aside"` children, captured before our own render would otherwise wipe them. */
   #aside: Element[] = [];
+  /**
+   * True from the moment `_raw` changes until the next `#commit` actually runs --
+   * whichever editor is showing. A commit event (blur, or a synthetic one right after
+   * Enter) that finds this `false` is a no-op echo and is skipped, which is what keeps
+   * the text editors' Enter-then-blur from evaluating twice.
+   */
+  #uncommitted = false;
 
   constructor() {
     super();
@@ -166,6 +191,7 @@ export class NotatioCell extends LitElement {
     this.planned = false;
     this.env = "";
     this.dirty = false;
+    this.pending = false;
     this._editForm = "standard";
     this._raw = "";
     this._json = undefined;
@@ -214,6 +240,8 @@ export class NotatioCell extends LitElement {
   async #load(): Promise<void> {
     const token = ++this.#token;
     this.dirty = false;
+    this.pending = false;
+    this.#uncommitted = false;
     this._error = "";
     const format = this.format || "notatio";
     const editForm = this.inForm || "standard";
@@ -263,12 +291,20 @@ export class NotatioCell extends LitElement {
     const format = this.format || "notatio";
     this._raw =
       SYNTAX_OF[form] === format ? this.value : await textInSyntax(SYNTAX_OF[form], this._json);
+    // Switching editors re-renders the current value, not a new one -- nothing pending.
+    this.pending = false;
+    this.#uncommitted = false;
   }
 
-  /** An edit landed (live for `standard`, on commit for the text editors). */
+  /**
+   * An edit landed (live for `standard` outside a transcript, on commit -- Enter or
+   * blur -- for the text editors always, and for `standard` inside a transcript too).
+   */
   async #commit(form: EditForm, text: string): Promise<void> {
     const token = ++this.#token;
     this._raw = text;
+    this.pending = false;
+    this.#uncommitted = false;
     try {
       const json = await parseSyntax(SYNTAX_OF[form], text);
       if (token !== this.#token) return;
@@ -379,13 +415,34 @@ export class NotatioCell extends LitElement {
 
   // --- editors ---------------------------------------------------------------------
 
+  // Live, on every keystroke. Outside a transcript this both updates the field's own
+  // text and commits it, as today. Inside one, a keystroke only updates the field --
+  // `<notatio-out>` keeps showing the last committed value until `#onStandardCommit`
+  // (MathLive's own `change`, on Enter or blur) actually runs it.
   #onStandardChange = (event: Event): void => {
     event.stopPropagation(); // superseded by the cell's own notatio-change, below
+    const latex = (event as CustomEvent<{ latex: string }>).detail.latex;
+    this._raw = latex;
+    this.#uncommitted = true;
+    if (transcriptHostOf(this)) {
+      this.#markDirty();
+      this.pending = true;
+      return;
+    }
+    void this.#commit("standard", latex);
+  };
+
+  // MathLive's own commit (Enter, or blur with a real change). Outside a transcript
+  // the live path above already committed this text, so there is nothing to do here.
+  #onStandardCommit = (event: Event): void => {
+    event.stopPropagation();
+    if (!transcriptHostOf(this) || !this.#uncommitted) return;
     void this.#commit("standard", (event as CustomEvent<{ latex: string }>).detail.latex);
   };
 
   #onTextInput = (event: Event): void => {
     this._raw = (event.target as HTMLInputElement | HTMLTextAreaElement).value;
+    this.#uncommitted = true;
   };
 
   #onTextKeydown = (event: KeyboardEvent): void => {
@@ -396,7 +453,10 @@ export class NotatioCell extends LitElement {
     field.blur();
   };
 
+  // Also fires right after `#onTextKeydown`'s own `blur()` call -- `#commit` already
+  // cleared `#uncommitted` by then, so that echo is a no-op rather than a second run.
   #onTextCommit = (event: FocusEvent): void => {
+    if (!this.#uncommitted) return;
     void this.#commit(
       this._editForm,
       (event.target as HTMLInputElement | HTMLTextAreaElement).value,
@@ -408,6 +468,7 @@ export class NotatioCell extends LitElement {
       return html`<notatio-in
         .value=${this._raw}
         @notatio-change=${this.#onStandardChange}
+        @notatio-commit=${this.#onStandardCommit}
       ></notatio-in>`;
     }
     if (this._raw.includes("\n")) {
@@ -490,6 +551,11 @@ export class NotatioCell extends LitElement {
         </div>
         <div class="notatio-row">
           ${this.#output()}
+          ${
+            this.pending
+              ? html`<span class="notatio-uncommitted-hint">edited — ↵ to run</span>`
+              : ""
+          }
           <span class="notatio-aside" ?hidden=${this.dirty}></span>
         </div>
       </div>
