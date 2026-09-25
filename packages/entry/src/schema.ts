@@ -82,7 +82,6 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     role: EXAMPLE_ROLE,
     aspirational: { type: "boolean" },
     volatile: { type: "array", items: { type: "string" } },
-    hidden: { type: "boolean", description: "Deprecated: superseded by role: test." },
     group: {
       type: "string",
       description: "Cases of one example: those sharing a group show as one cycling card.",

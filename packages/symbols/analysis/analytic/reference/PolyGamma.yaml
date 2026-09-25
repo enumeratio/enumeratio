@@ -139,131 +139,131 @@ examples:
     expected: { num: "0.02142782819275507502194811" }
     category: Scope
     caption: To 25 significant digits, every one of them right
-  - hidden: true
+  - role: test
     id: n-polygamma-1-1
     expr: [N, [PolyGamma, 1, 1]]
     expected: { num: "1.64493406684822643647" }
-  - hidden: true
+  - role: test
     id: n-polygamma-1-2
     expr: [N, [PolyGamma, 1, 2]]
     expected: { num: "0.644934066848226436472" }
-  - hidden: true
+  - role: test
     id: n-polygamma-1-0p5
     expr: [N, [PolyGamma, 1, 0.5]]
     expected: { num: "4.93480220054467930942" }
-  - hidden: true
+  - role: test
     id: n-polygamma-1-1p3
     expr: [N, [PolyGamma, 1, 1.3]]
     expected: { num: "1.13425343499661935436" }
-  - hidden: true
+  - role: test
     id: n-polygamma-1-7-over-3
     expr: [N, [PolyGamma, 1, [Rational, 7, 3]]]
     expected: { num: "0.533097125427094081793" }
-  - hidden: true
+  - role: test
     id: n-polygamma-1-1-plus-i
     expr: [N, [PolyGamma, 1, [Complex, 1, 1]]]
     expected: [Complex, 0.46300009662276376, -0.794233542759319]
-  - hidden: true
+  - role: test
     id: n-polygamma-1-0p5-plus-0p3i
     expr: [N, [PolyGamma, 1, [Complex, 0.5, 0.3]]]
     expected: [Complex, 2.2590340759053333, -2.8289967861156966]
-  - hidden: true
+  - role: test
     id: n-polygamma-1-2-plus-neg-0p5-times-i
     expr: [N, [PolyGamma, 1, [Complex, 2, -0.5]]]
     expected: [Complex, 0.5881978909500615, 0.18504197243379086]
-  - hidden: true
+  - role: test
     id: n-polygamma-2-1
     expr: [N, [PolyGamma, 2, 1]]
     expected: { num: "-2.4041138063191885708" }
-  - hidden: true
+  - role: test
     id: n-polygamma-2-2
     expr: [N, [PolyGamma, 2, 2]]
     expected: { num: "-0.404113806319188570799" }
-  - hidden: true
+  - role: test
     id: n-polygamma-2-0p5
     expr: [N, [PolyGamma, 2, 0.5]]
     expected: { num: "-16.8287966442343199956" }
-  - hidden: true
+  - role: test
     id: n-polygamma-2-1p3
     expr: [N, [PolyGamma, 2, 1.3]]
     expected: { num: "-1.1984625146519565927" }
-  - hidden: true
+  - role: test
     id: n-polygamma-2-7-over-3
     expr: [N, [PolyGamma, 2, [Rational, 7, 3]]]
     expected: { num: "-0.278372399401607552457" }
-  - hidden: true
+  - role: test
     id: n-polygamma-2-1-plus-i
     expr: [N, [PolyGamma, 2, [Complex, 1, 1]]]
     expected: [Complex, 0.36855293158793523, 0.7666528503450666]
-  - hidden: true
+  - role: test
     id: n-polygamma-2-0p5-plus-0p3i
     expr: [N, [PolyGamma, 2, [Complex, 0.5, 0.3]]]
     expected: [Complex, -0.17725989989006555, 10.451822205943445]
-  - hidden: true
+  - role: test
     id: n-polygamma-2-2-plus-neg-0p5-times-i
     expr: [N, [PolyGamma, 2, [Complex, 2, -0.5]]]
     expected: [Complex, -0.3073872674606165, -0.20845269482746528]
-  - hidden: true
+  - role: test
     id: n-polygamma-3-1
     expr: [N, [PolyGamma, 3, 1]]
     expected: { num: "6.4939394022668291491" }
-  - hidden: true
+  - role: test
     id: n-polygamma-3-2
     expr: [N, [PolyGamma, 3, 2]]
     expected: { num: "0.493939402266829149096" }
-  - hidden: true
+  - role: test
     id: n-polygamma-3-0p5
     expr: [N, [PolyGamma, 3, 0.5]]
     expected: { num: "97.4090910340024372364" }
-  - hidden: true
+  - role: test
     id: n-polygamma-3-1p3
     expr: [N, [PolyGamma, 3, 1.3]]
     expected: { num: "2.40102391430892661856" }
-  - hidden: true
+  - role: test
     id: n-polygamma-3-7-over-3
     expr: [N, [PolyGamma, 3, [Rational, 7, 3]]]
     expected: { num: "0.285379043814241755772" }
-  - hidden: true
+  - role: test
     id: n-polygamma-3-1-plus-i
     expr: [N, [PolyGamma, 3, [Complex, 1, 1]]]
     expected: [Complex, -1.5228744489534964, -0.31728657866196086]
-  - hidden: true
+  - role: test
     id: n-polygamma-3-0p5-plus-0p3i
     expr: [N, [PolyGamma, 3, [Complex, 0.5, 0.3]]]
     expected: [Complex, -27.94427115784687, -43.96940883981447]
-  - hidden: true
+  - role: test
     id: n-polygamma-3-2-plus-neg-0p5-times-i
     expr: [N, [PolyGamma, 3, [Complex, 2, -0.5]]]
     expected: [Complex, 0.28033483085344774, 0.33648883590806505]
-  - hidden: true
+  - role: test
     id: n-polygamma-5-1
     expr: [N, [PolyGamma, 5, 1]]
     expected: { num: "122.081167438133896766" }
-  - hidden: true
+  - role: test
     id: n-polygamma-5-2
     expr: [N, [PolyGamma, 5, 2]]
     expected: { num: "2.08116743813389676574" }
-  - hidden: true
+  - role: test
     id: n-polygamma-5-0p5
     expr: [N, [PolyGamma, 5, 0.5]]
     expected: { num: "7691.11354860243549624" }
-  - hidden: true
+  - role: test
     id: n-polygamma-5-1p3
     expr: [N, [PolyGamma, 5, 1.3]]
     expected: { num: "25.7926012806130505379" }
-  - hidden: true
+  - role: test
     id: n-polygamma-5-7-over-3
     expr: [N, [PolyGamma, 5, [Rational, 7, 3]]]
     expected: { num: "0.857814321602379528571" }
-  - hidden: true
+  - role: test
     id: n-polygamma-5-1-plus-i
     expr: [N, [PolyGamma, 5, [Complex, 1, 1]]]
     expected: [Complex, -0.9330848362848718, 14.515852291904068]
-  - hidden: true
+  - role: test
     id: n-polygamma-5-0p5-plus-0p3i
     expr: [N, [PolyGamma, 5, [Complex, 0.5, 0.3]]]
     expected: [Complex, -3033.627950298733, 298.5885136366724]
-  - hidden: true
+  - role: test
     id: n-polygamma-5-2-plus-neg-0p5-times-i
     expr: [N, [PolyGamma, 5, [Complex, 2, -0.5]]]
     expected: [Complex, 0.27132469953315896, 1.7071964092847043]
