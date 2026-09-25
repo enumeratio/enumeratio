@@ -1,0 +1,14 @@
+distributes-a-list-of-functions-over-argument:
+  tex:
+    in: \mathrm{Through}(\bigl\lbrack f, g\bigr\rbrack\lhd x)
+    out: \bigl\lbrack f(x), g(x)\bigr\rbrack
+  fullform:
+    in: Through[List[f, g][x]]
+    back: Unreadable
+distributes-an-add-of-functions-evaluates-sum:
+  tex:
+    in: \mathrm{Through}(f+g\lhd x)
+    out: g(x)+f(x)
+  fullform:
+    in: Through[Plus[f, g][x]]
+    back: Unreadable

@@ -146,6 +146,20 @@ gamma-1-0-0728158-under-n:
     in: N[StieltjesGamma[1]]
   wolfram:
     in: N[StieltjesGamma[1]]
+gamma-2-0-00969036-under-n:
+  epsil:
+    in: N(StieltjesGamma(2))
+    out: -0.009_690_363_192_872_318_484_53
+  tex:
+    in: N(\mathrm{StieltjesGamma}(2))
+    out: -0.009\,690\,363\,192\,872\,318\,484\,53
+  traditional:
+    in: N(\gamma_{2})
+    out: -0.009\,690\,363\,192\,872\,318\,484\,53
+  fullform:
+    in: N[StieltjesGamma[2]]
+  wolfram:
+    in: N[StieltjesGamma[2]]
 complex-a:
   epsil:
     in: N(StieltjesGamma(2, 1 + i))

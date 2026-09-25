@@ -95,6 +95,11 @@ examples:
     expr: [Binomial, n, [Subtract, n, 1]]
     expected: n
     caption: $\binom{n}{n-1} = n$ for symbolic n
+  - role: test
+    id: binom-m-m-1-m-for-symbolic-m
+    expr: [Binomial, m, [Add, m, -1]]
+    expected: m
+    caption: $\binom{m}{m-1} = m$ for symbolic m, written as $m + (-1)$
   - id: real-arguments-evaluate-through-the-gamma
     expr: [Binomial, 8.5, -4.2]
     expected: { num: "0.0000604992484022834800676" }
@@ -120,6 +125,12 @@ examples:
     expected: 1
     category: Scope
     caption: $\binom{n}{n} = 1$ for symbolic n
+  - role: test
+    id: binom-m-m-1-for-symbolic-m
+    expr: [Binomial, m, m]
+    expected: 1
+    category: Scope
+    caption: $\binom{m}{m} = 1$ for symbolic m
   - id: a-gaussian-integer-n-binom-1-i-5-frac-1-i-12
     expr: [Binomial, [Complex, 1, 1], 5]
     expected: [Complex, [Rational, -1, 12], [Rational, -1, 12]]

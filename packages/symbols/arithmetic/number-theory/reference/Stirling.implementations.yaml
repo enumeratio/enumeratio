@@ -367,3 +367,25 @@ k-n-is-0:
     in: Combinatorics.stirlings2(3, 5)
   mathlib4:
     in: (Nat.stirlingSecond 3 5)
+stirling-0-1-is-also-0:
+  epsil:
+    in: Stirling(0, 1)
+    out: "0"
+  tex:
+    in: \mathrm{Stirling}(0, 1)
+    out: "0"
+  traditional:
+    in: \left\lbrace\begin{matrix}0\\1\end{matrix}\right\rbrace
+    out: "0"
+  fullform:
+    in: StirlingS2[0, 1]
+  wolfram:
+    in: StirlingS2[0, 1]
+  sympy:
+    in: stirling(0, 1)
+  sage:
+    in: stirling_number2(0, 1)
+  julia:
+    in: Combinatorics.stirlings2(0, 1)
+  mathlib4:
+    in: (Nat.stirlingSecond 0 1)

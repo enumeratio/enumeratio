@@ -185,6 +185,18 @@ examples:
     expected: 1
     role: test
     caption: KFreeIntegers(k) is a one-parameter operator agreeing with SquareFreeNumbers at k=2
+  - id: at-lazy-family-collection-element
+    expr: [At, [KSubsets, 5, 2], 1]
+    expected: [List, 1, 2]
+    role: test
+  - id: at-span-submatrix-two-levels
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]
+    expected: [List, [List, 4, 5], [List, 7, 8]]
+    role: test
+  - id: at-integer-without-span-unaffected
+    expr: [At, [List, a, b, c], 2]
+    expected: b
+    role: test
 seeAlso:
   - First
   - Last

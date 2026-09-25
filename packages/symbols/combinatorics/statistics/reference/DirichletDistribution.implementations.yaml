@@ -1,0 +1,33 @@
+dirichlet-mean:
+  epsil:
+    in: Mean(DirichletDistribution([1, 4, 5]))
+    out: "[1 / 10, 2 / 5]"
+  tex:
+    in: \mathrm{mean}(\mathrm{DirichletDistribution}(\bigl\lbrack1, 4, 5\bigr\rbrack))
+    out: \bigl\lbrack\frac{1}{10}, \frac{2}{5}\bigr\rbrack
+  fullform:
+    in: Mean[DirichletDistribution[List[1, 4, 5]]]
+  wolfram:
+    in: Mean[DirichletDistribution[List[1, 4, 5]]]
+dirichlet-variance:
+  epsil:
+    in: Variance(DirichletDistribution([1, 4, 5]))
+    out: "[9 / 1_100, 6 / 275]"
+  tex:
+    in: \mathrm{Variance}(\mathrm{DirichletDistribution}(\bigl\lbrack1, 4, 5\bigr\rbrack))
+    out: \bigl\lbrack\frac{9}{1\,100}, \frac{6}{275}\bigr\rbrack
+  fullform:
+    in: Variance[DirichletDistribution[List[1, 4, 5]]]
+  wolfram:
+    in: Variance[DirichletDistribution[List[1, 4, 5]]]
+dirichlet-pdf:
+  epsil:
+    in: PDF(DirichletDistribution([1, 4, 5]), [1 / 10, 2 / 5])
+    out: Gamma(10) / (250 * Gamma(1) * Gamma(4) * Gamma(5))
+  tex:
+    in: \operatorname{PDF}(\mathrm{DirichletDistribution}(\bigl\lbrack1, 4, 5\bigr\rbrack), \bigl\lbrack\frac{1}{10}, \frac{2}{5}\bigr\rbrack)
+    out: (\Gamma(10))(250\Gamma(1)\Gamma(4)\Gamma(5))^{-1}
+  fullform:
+    in: PDF[DirichletDistribution[List[1, 4, 5]], List[Rational[1, 10], Rational[2, 5]]]
+  wolfram:
+    in: PDF[DirichletDistribution[List[1, 4, 5]], List[Rational[1, 10], Rational[2, 5]]]

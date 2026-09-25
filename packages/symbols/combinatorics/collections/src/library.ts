@@ -1,5 +1,7 @@
 import type { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareArithHeads } from "./arith-heads.ts";
+import { declareControl } from "./control.ts";
+import { declareExpressionOps } from "./expression-ops.ts";
 import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
 import { declareGeneratingFunctions } from "./generating-functions.ts";
@@ -37,12 +39,14 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareListFrontier(ce);
   declareListFrontier2(ce);
   declareListFunctional(ce);
+  declareControl(ce);
   declareListOpsWolfram(ce);
   declareProducts(ce);
   declareInfiniteProducts(ce);
   declareListStats(ce);
   declareRoundingHeads(ce);
   declareArithHeads(ce);
+  declareExpressionOps(ce);
   declareStats(ce, options);
   declareGeneratingFunctions(ce);
   declareGraphs(ce);

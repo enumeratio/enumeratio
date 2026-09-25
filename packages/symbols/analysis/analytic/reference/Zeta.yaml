@@ -205,6 +205,36 @@ examples:
     expected: { num: "2.91666666666666666667" }
     category: Possible issues
     caption: $\zeta(-1, -2) = 35/12$ exactly, but at a negative $a$ this stays symbolic without N()
+  - role: test
+    id: zeta-symbolic-s-under-n-stays-symbolic
+    expr: [N, [Zeta, s]]
+    expected: [Zeta, s]
+  - role: test
+    id: zeta-half-stays-symbolic-until-n
+    expr: [Zeta, [Rational, 1, 2]]
+    expected: [Zeta, [Rational, 1, 2]]
+  - role: test
+    id: zeta-complex-argument-stays-symbolic-until-n
+    expr: [Zeta, [Complex, 2, 1]]
+    expected: [Zeta, [Complex, 2, 1]]
+  - role: test
+    id: n-zeta-complex-2-plus-i
+    expr: [N, [Zeta, [Complex, 2, 1]]]
+    expected: [Complex, 1.1503557032549028, -0.4375308659196079]
+  - role: test
+    id: zeta-threads-over-mixed-exact-and-inexact-list
+    expr: [Zeta, [List, 2, [Complex, 0.5, 14]]]
+    expected: [List, [Multiply, [Rational, 1, 6], [Power, Pi, 2]], [Complex, 0.02224114260999359, -0.10325812326645006]]
+  - role: test
+    id: zeta-3-0-drops-pole-term-like-s-2
+    expr: [Zeta, 3, 0]
+    expected: [Zeta, 3]
+    caption: $\zeta(3, 0) = \zeta(3)$ too — the dropped-pole convention holds at any $s$
+  - role: test
+    id: zeta-2-neg-2-stays-finite-unlike-hurwitzzeta
+    expr: [N, [Zeta, 2, -2]]
+    expected: { num: "2.89493406684822643647" }
+    caption: "Unaffected at the same $a$ where [[HurwitzZeta]] has a pole: it keeps the generalized-zeta convention"
 seeAlso:
   - HurwitzZeta
   - BernoulliB

@@ -1,0 +1,18 @@
+substitute-a-fixed-value:
+  epsil:
+    in: With([x == 3], x * x)
+    out: "9"
+  tex:
+    in: \mathrm{With}(\bigl\lbrack x=3\bigr\rbrack, xx)
+    out: "9"
+  fullform:
+    in: With[List[Equal[x, 3]], Times[x, x]]
+several-bindings-at-once:
+  epsil:
+    in: With([x == 2, y == 5], x + y)
+    out: "7"
+  tex:
+    in: \mathrm{With}(\begin{cases}x=2\\y=5\end{cases}, x+y)
+    out: "7"
+  fullform:
+    in: With[List[Equal[x, 2], Equal[y, 5]], Plus[x, y]]

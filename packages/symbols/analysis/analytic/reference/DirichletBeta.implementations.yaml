@@ -217,3 +217,31 @@ to-exactly-40-significant-digits-not-yet-85-come:
     in: N[DirichletBeta[2], 40]
   wolfram:
     in: N[DirichletBeta[2], 40]
+beta-neg-6-e-6-2:
+  epsil:
+    in: DirichletBeta(-6)
+    out: -61 / 2
+  tex:
+    in: \mathrm{DirichletBeta}(-6)
+    out: -\frac{61}{2}
+  traditional:
+    in: \beta(-6)
+    out: -\frac{61}{2}
+  fullform:
+    in: DirichletBeta[-6]
+  wolfram:
+    in: DirichletBeta[-6]
+n-dirichletbeta-4:
+  epsil:
+    in: N(DirichletBeta(4))
+    out: 0.988_944_551_741_105_336_109
+  tex:
+    in: N(\mathrm{DirichletBeta}(4))
+    out: 0.988\,944\,551\,741\,105\,336\,109
+  traditional:
+    in: N(\beta(4))
+    out: 0.988\,944\,551\,741\,105\,336\,109
+  fullform:
+    in: N[DirichletBeta[4]]
+  wolfram:
+    in: N[DirichletBeta[4]]

@@ -397,3 +397,12 @@ ten-bits-are-enough-to-number-1000-items-lceil:
     in: Ceiling[Log[2, 1000]]
   wolfram:
     in: Ceiling[Log[2, 1000]]
+idempotent-lceil-lceil-x-rceil-rceil:
+  epsil:
+    in: Ceil(Ceil(x))
+    out: Ceil(x)
+  tex:
+    in: \lceil\lceil x\rceil\rceil
+    out: \lceil x\rceil
+  fullform:
+    in: Ceiling[Ceiling[x]]

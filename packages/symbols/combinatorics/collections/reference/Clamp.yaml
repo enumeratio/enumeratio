@@ -84,6 +84,13 @@ examples:
   - id: replacement-values-leave-x-inside-the-range
     expr: [Clamp, 2, 0, 3, -1, 10]
     expected: 2
+  - id: clamp-below-range
+    expr: [Clamp, -5]
+    expected: -1
+    role: test
+  - id: clamp-within-range
+    expr: [Clamp, 0.5]
+    expected: 0.5
     role: test
 seeAlso:
   - Min

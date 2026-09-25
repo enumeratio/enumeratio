@@ -1,0 +1,24 @@
+name: With
+domain: Collections
+signature: With({x = x0, y = y0, ...}, body)
+summary: Substitutes fixed values into an expression before evaluating it.
+signatures:
+  - call: With({x = x0, y = y0, ...}, body)
+    description: $body$ with every $x$ replaced by its (already evaluated) $x0$, then evaluated.
+    library: enumeratio-collections
+details:
+  - The bindings are simultaneous, not sequential — a later binding's value expression cannot see an earlier one in the same $With$; each is computed against the surrounding context alone. Use nested $With$ for one binding to see the previous.
+  - "A binding list is $\\{x = x0, y = y0, ...\\}$: as MathJSON, $[List, [Equal, x, x0], ...]$ — `=` parses to $Equal$, not to compute-engine's own $Assign$."
+  - Unlike [[Module]], $With$ introduces no fresh variable — it is pure substitution, so a name used as an $x$ never shadows an outer binding beyond the substituted occurrences in $body$ itself.
+examples:
+  - id: substitute-a-fixed-value
+    expr: [With, [List, [Equal, x, 3]], [Multiply, x, x]]
+    expected: 9
+    caption: substitute a fixed value
+  - id: several-bindings-at-once
+    expr: [With, [List, [Equal, x, 2], [Equal, y, 5]], [Add, x, y]]
+    expected: 7
+    caption: several bindings at once
+    category: Scope
+seeAlso:
+  - Module

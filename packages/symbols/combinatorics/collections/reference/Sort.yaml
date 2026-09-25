@@ -87,5 +87,9 @@ examples:
     expected: [List]
     category: Possible issues
     caption: The empty list sorts to itself
+  - id: sort-association-orders-by-value
+    expr: [Sort, [Association, [Rule, a, 4], [Rule, b, 1], [Rule, c, 3]]]
+    expected: [Association, [Rule, b, 1], [Rule, c, 3], [Rule, a, 4]]
+    role: test
 seeAlso:
   - Ordering

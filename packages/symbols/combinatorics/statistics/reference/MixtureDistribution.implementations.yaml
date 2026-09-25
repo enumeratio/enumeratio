@@ -1,0 +1,45 @@
+mixture-mean:
+  epsil:
+    in: |-
+      Mean(MixtureDistribution([1, 1], [
+                                         NormalDistribution(0, 1),
+                                         NormalDistribution(10, 1),
+                                       ]))
+    out: "5"
+  tex:
+    in: \mathrm{mean}(\mathrm{MixtureDistribution}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(10, 1)\bigr\rbrack))
+    out: "5"
+  fullform:
+    in: Mean[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]]]
+  wolfram:
+    in: Mean[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]]]
+mixture-variance-total-law:
+  epsil:
+    in: |-
+      Variance(MixtureDistribution([1, 1], [
+                                             NormalDistribution(0, 1),
+                                             NormalDistribution(10, 1),
+                                           ]))
+    out: "26"
+  tex:
+    in: \mathrm{Variance}(\mathrm{MixtureDistribution}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(10, 1)\bigr\rbrack))
+    out: "26"
+  fullform:
+    in: Variance[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]]]
+  wolfram:
+    in: Variance[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]]]
+mixture-cdf-far-right:
+  epsil:
+    in: |-
+      N(CDF(MixtureDistribution([1, 1], [
+                                          NormalDistribution(0, 1),
+                                          NormalDistribution(10, 1),
+                                        ]), 100))
+    out: "1"
+  tex:
+    in: N(\operatorname{CDF}(\mathrm{MixtureDistribution}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack\operatorname{NormalDistribution}(0, 1), \operatorname{NormalDistribution}(10, 1)\bigr\rbrack), 100))
+    out: "1"
+  fullform:
+    in: N[CDF[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]], 100]]
+  wolfram:
+    in: N[CDF[MixtureDistribution[List[1, 1], List[NormalDistribution[0, 1], NormalDistribution[10, 1]]], 100]]
