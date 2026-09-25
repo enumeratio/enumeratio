@@ -1,0 +1,28 @@
+name: IsAcyclicGraph
+domain: Collections
+signature: IsAcyclicGraph(g)
+summary: Whether a [[Graph]] contains no cycle.
+signatures:
+  - call: IsAcyclicGraph(g)
+    description: true iff g has no cycle, respecting edge direction where g has directed edges.
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `AcyclicGraphQ`; this library uses the `Is…` spelling everywhere.
+  - A self-loop, and two vertices joined by directed edges in BOTH directions, both count as cycles. An undirected edge alone never does -- walking straight back over the SAME edge you just arrived by isn't a cycle, so a plain undirected tree reads acyclic (matches [[IsTreeGraph]]'s own edges = vertices - 1 check).
+examples:
+  - id: a-tree-is-acyclic
+    expr:
+      [
+        IsAcyclicGraph,
+        [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4]]],
+      ]
+    expected: True
+  - id: a-cycle-is-not-acyclic
+    expr: [IsAcyclicGraph, [CycleGraph, 4]]
+    expected: False
+  - id: a-directed-2-cycle-is-a-cycle
+    expr: [IsAcyclicGraph, [Graph, [List, 1, 2], [List, [DirectedEdge, 1, 2], [DirectedEdge, 2, 1]]]]
+    expected: False
+seeAlso:
+  - IsTreeGraph
+  - IsPathGraph
