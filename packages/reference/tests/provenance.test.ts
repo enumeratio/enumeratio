@@ -243,6 +243,7 @@ const OVERRIDDEN = [
   "GammaRegularized",
   "IntegerDigits",
   "IntegerString",
+  "Integrate",
   "Inverse",
   "IsOdd",
   "IsPerfect",
