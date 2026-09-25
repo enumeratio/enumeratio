@@ -266,7 +266,7 @@ negative-integers-are-poles-of-the-gamma:
     kind: undefined-form
     note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust gives panic: a non-negative integer.'
   sympy:
-    in: factorial(-1)
+    in: factorial((-1))
     out: zoo
 factorials-grow-fast-20-already-exceeds-2-times:
   wolfram:
@@ -297,3 +297,26 @@ frac-12-gamma-frac-12-sqrt-pi-returned-as-a:
   wolfram:
     in: Factorial[Rational[-1, 2]]
     note: Wolfram returns the exact Sqrt[Pi].
+  sympy:
+    in: factorial(Rational((-1), 2))
+    out: factorial(-1/2)
+real-arguments-evaluate-as-gamma-n-1:
+  sympy:
+    in: factorial(3.5)
+    out: "11.6317283965674"
+negative-non-integers-are-defined-too-2-5-gamma:
+  sympy:
+    in: factorial((-2.5))
+    out: "2.36327180120735"
+complex-arguments-1-i-gamma-2-i:
+  sympy:
+    in: factorial((1 + 1*I))
+    out: factorial(1 + I)
+n-gamma-n-1-see-gamma:
+  sympy:
+    in: enumeratio_equal(factorial(5), gamma(6))
+    out: True
+30-has-33-digits-and-ends-in-seven-zeros:
+  sympy:
+    in: factorial(30)
+    out: "265252859812191058636308480000000"

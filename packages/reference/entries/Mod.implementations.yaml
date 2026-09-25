@@ -71,7 +71,7 @@ the-result-takes-the-sign-of-the-modulus:
     in: mod_floor(n(-7), n(3))
     out: "2"
   sympy:
-    in: (-7 % 3)
+    in: ((-7) % 3)
     out: "2"
 threads-element-wise-over-a-list:
   wolfram:
@@ -198,12 +198,6 @@ gaussian-integers-the-quotient-rounds-so-each:
     tex:
       in: ((7+5 i) \bmod 3)
       out: 1-i
-  sympy:
-    in: ((7 + 5*I) % 3)
-    out: Mod(1 + 5*I, 3)
-    verdict: disagree
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   julia:
     in: mod(complex(7, 5), 3)
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
@@ -222,6 +216,12 @@ gaussian-integers-the-quotient-rounds-so-each:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sympy:
+    in: ((7 + 5*I) % 3)
+    out: Mod(1 + 5*I, 3)
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 a-gaussian-modulus-7-5i-2-i-4-i-i:
   wolfram:
     in: Mod[Complex[7, 5], Complex[2, 1]]
@@ -229,12 +229,6 @@ a-gaussian-modulus-7-5i-2-i-4-i-i:
     tex:
       in: ((7+5 i) \bmod (2+i))
       out: -i
-  sympy:
-    in: ((7 + 5*I) % (2 + 1*I))
-    out: Mod(7 + 5*I, 2 + I)
-    verdict: disagree
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   julia:
     in: mod(complex(7, 5), complex(2, 1))
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b"
@@ -253,6 +247,12 @@ a-gaussian-modulus-7-5i-2-i-4-i-i:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sympy:
+    in: ((7 + 5*I) % (2 + 1*I))
+    out: Mod(7 + 5*I, 2 + I)
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 exact-in-both-parts-past-2-53:
   wolfram:
     in: Mod[Complex[100000000000000000001, 9007199254740993], Complex[2, 1]]
@@ -260,12 +260,6 @@ exact-in-both-parts-past-2-53:
     tex:
       in: ((100000000000000000001+9007199254740993 i) \bmod (2+i))
       out: "0"
-  sympy:
-    in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
-    out: (2 + I)*(Mod((2 - I)*(100000000000000000001 + 9007199254740993*I)/5, (2 - I)*(2 + I)/5))
-    verdict: inconclusive
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   julia:
     in: mod(complex(100000000000000000001, 9007199254740993), complex(2, 1))
     out: "MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function `mod` exists, "
@@ -284,6 +278,12 @@ exact-in-both-parts-past-2-53:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sympy:
+    in: ((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))
+    out: (2 + I)*(Mod((2 - I)*(100000000000000000001 + 9007199254740993*I)/5, (2 - I)*(2 + I)/5))
+    verdict: inconclusive
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
 the-remainder-of-quotient:
   wolfram:
     in: (Mod[Complex[7, 5], Complex[2, 1]] == Subtract[Complex[7, 5], Times[Complex[2, 1], Quotient[Complex[7, 5], Complex[2, 1]]]])
@@ -298,12 +298,6 @@ rounding-ties-to-even-means-1-and-1-both-appear:
     tex:
       in: \{((1+2 i) \bmod 2),((3+2 i) \bmod 2)\}
       out: \{1,-1\}
-  sympy:
-    in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
-    out: "[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]"
-    verdict: disagree
-    kind: domain
-    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
   julia:
     in: "[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]"
     out: "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met"
@@ -322,3 +316,51 @@ rounding-ties-to-even-means-1-and-1-both-appear:
     verdict: error
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+  sympy:
+    in: "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]"
+    out: "[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]"
+    verdict: disagree
+    kind: domain
+    note: SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it.
+rationals-are-reduced-exactly:
+  sympy:
+    in: (Rational(5, 2) % 2)
+    out: 1/2
+3p14-mod-2:
+  sympy:
+    in: (3.14 % 2)
+    out: "1.1400000000000001"
+an-exact-irrational-reduces-exactly-to-2-sqrt-7:
+  sympy:
+    in: (sqrt(28) % 3)
+    out: -3 + 2*sqrt(7)
+a-symbolic-constant-reduces-exactly-to-pi-2:
+  sympy:
+    in: (pi % 2)
+    out: -2 + pi
+a-10-001-digit-dividend:
+  sympy:
+    in: ((10**10000) % 10007)
+    out: "6333"
+threads-over-a-list-of-moduli:
+  sympy:
+    in: "[(10 % 3), (10 % 4), (10 % 7)]"
+    out: "[1, 2, 3]"
+a-gaussian-integer-5-3i-2-2-2i:
+  sympy:
+    in: ((5 + 3*I) % 2)
+    out: "TypeError: Invalid comparison of non-real (1 - I)**2*(-2*I - (1 - I)**2)/2"
+    verdict: error
+    kind: domain
+    note: Python's % doesn't support a Gaussian-integer modulus; SymPy's Mod tries to compare a non-real quantity and raises. Ours implements Gaussian-integer division deliberately (see this head's Scope examples).
+1-i-divides-5-3i-1-i-4-i:
+  sympy:
+    in: ((5 + 3*I) % (1 + 1*I))
+    out: (1 + I)*(Mod((1 - I)*(5 + 3*I)/2, (1 - I)*(1 + I)/2))
+    verdict: inconclusive
+    kind: domain
+    note: Same underlying gap as the row above -- SymPy's Mod can't reduce a Gaussian-integer modulus, so it stays symbolic instead of reducing to 0.
+a-negative-modulus-gives-a-result-in-n-0:
+  sympy:
+    in: ((-5) % (-3))
+    out: "-2"

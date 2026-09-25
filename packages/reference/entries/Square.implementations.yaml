@@ -25,10 +25,10 @@ same-result-for-x-and-x:
     in: (-5)^2
     out: "25"
   mpmath:
-    in: (-5)**2
+    in: ((-5))**2
     out: "25"
   sympy:
-    in: (-5)**2
+    in: ((-5))**2
     out: "25"
 square-2-over-3:
   wolfram:
@@ -57,7 +57,7 @@ threads-element-wise-over-a-list:
     kind: threading
     note: compute-engine's Square is Listable and threads over the list; Sage's takes scalars only.
   sympy:
-    in: ([2, 3, -4])**2
+    in: ([2, 3, (-4)])**2
     out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"
     verdict: error
     kind: threading
@@ -73,10 +73,10 @@ even-function-x-2-x-2:
     in: bool((-5)^2 == (5)^2)
     out: True
   mpmath:
-    in: almosteq((-5)**2, (5)**2, 1e-20)
+    in: almosteq(((-5))**2, (5)**2, 1e-20)
     out: True
   sympy:
-    in: enumeratio_equal((-5)**2, (5)**2)
+    in: enumeratio_equal(((-5))**2, (5)**2)
     out: True
 1-i-2-2i-squaring-a-complex-number-needn-t-stay:
   wolfram:
@@ -85,14 +85,14 @@ even-function-x-2-x-2:
     tex:
       in: (1+i)^2=2 i
       out: \text{True}
+  sage:
+    in: bool(((1 + 1*I))^2 == (0 + 2*I))
+    out: True
   mpmath:
     in: almosteq((mpc(1, 1))**2, mpc(0, 2), 1e-20)
     out: True
   sympy:
     in: enumeratio_equal(((1 + 1*I))**2, (0 + 2*I))
-    out: True
-  sage:
-    in: bool(((1 + 1*I))^2 == (0 + 2*I))
     out: True
 the-area-of-a-3-3-square-tile:
   wolfram:

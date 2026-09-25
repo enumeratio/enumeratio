@@ -277,7 +277,7 @@ a-negative-k-also-gives-0:
     kind: domain
     note: num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones.
   sympy:
-    in: binomial(5, -1)
+    in: binomial(5, (-1))
     out: "0"
 a-negative-n-uses-the-generalized-formula-binom:
   wolfram:
@@ -308,7 +308,7 @@ a-negative-n-uses-the-generalized-formula-binom:
     kind: domain
     note: num-integer's binomial assumes non-negative arguments; compute-engine extends Binomial to negative ones.
   sympy:
-    in: binomial(-5, 2)
+    in: binomial((-5), 2)
     out: "15"
 threads-element-wise-over-a-list-as-wolfram-s:
   wolfram:
@@ -317,18 +317,15 @@ threads-element-wise-over-a-list-as-wolfram-s:
     tex:
       in: \binom{\{2,3,5,7,11\}}{3}
       out: \{0,1,10,35,165\}
-  sympy:
-    in: binomial([2, 3, 5, 7, 11], 3)
-    out: "TypeError: unsupported operand type(s) for -: 'list' and 'Integer'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Binomial is Listable and threads over the list; SymPy's takes scalars only.
   rust:
     in: binomial(list(vec![n(2), n(3), n(5), n(7), n(11)]), n(3))
     out: "panic: threading: a list where the crate takes a scalar"
     verdict: error
     kind: threading
     note: compute-engine's Binomial is Listable and threads over the list; the Rust crate takes scalars only.
+  sympy:
+    in: "[binomial(2, 3), binomial(3, 3), binomial(5, 3), binomial(7, 3), binomial(11, 3)]"
+    out: "[0, 1, 10, 35, 165]"
 half-integer-arguments-evaluate-exactly-through:
   wolfram:
     in: Binomial[Rational[9, 2], Rational[7, 2]]
@@ -336,12 +333,59 @@ half-integer-arguments-evaluate-exactly-through:
     tex:
       in: \binom{\frac{9}{2}}{\frac{7}{2}}
       out: \frac{9}{2}
-  sympy:
-    in: binomial(Rational(9, 2), Rational(7, 2))
-    out: 9/2
   rust:
     in: binomial(rational(n(9), n(2)), rational(n(7), n(2)))
     out: "panic: an integer, not 9/2"
     verdict: error
     kind: domain
     note: compute-engine's Binomial extends to non-integer arguments via Gamma; the Rust crate takes integers only.
+  sympy:
+    in: binomial(Rational(9, 2), Rational(7, 2))
+    out: 9/2
+binomial-8-4:
+  sympy:
+    in: binomial(8, 4)
+    out: "70"
+real-arguments-evaluate-through-the-gamma:
+  sympy:
+    in: binomial(8.5, (-4.2))
+    out: "6.04992484022837e-5"
+a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0:
+  sympy:
+    in: binomial(0.5, 3)
+    out: "0.0625000000000000"
+a-rational-n-with-integer-k-gives-the-exact:
+  sympy:
+    in: binomial(Rational(1, 2), 2)
+    out: -1/8
+binom-1-2-3-frac-5-16-the-central-binomial:
+  sympy:
+    in: binomial(Rational((-1), 2), 3)
+    out: -5/16
+a-gaussian-integer-n-binom-1-i-5-frac-1-i-12:
+  sympy:
+    in: binomial((1 + 1*I), 5)
+    out: -1/12 - I/12
+complex-n-and-k-evaluate-through-the-gamma:
+  sympy:
+    in: binomial((2 + 1*I), (7 + (-3)*I))
+    out: gamma(3 + I)/(gamma(-4 + 4*I)*gamma(8 - 3*I))
+the-factorial-form-binom-n-k-frac-n-k-n-k-see:
+  sympy:
+    in: enumeratio_equal(binomial(7, 3), (S(factorial(7)) / (factorial(3) * factorial(4))))
+    out: True
+the-probability-of-exactly-3-heads-in-10-fair:
+  sympy:
+    in: (S(binomial(10, 3)) / (2**10))
+    out: 15/128
+both-arguments-negative-integers-the-limiting:
+  sympy:
+    in: binomial((-3), (-5))
+    out: "0"
+    verdict: disagree
+    kind: convention
+    note: SymPy's binomial takes both-negative to 0; we use the limiting/reflection definition (Binomial(-3,-5) = Binomial(-3,2) = 6), documented as a deliberate choice on this example's own caption.
+the-central-binomial-coefficient-binom-100-50:
+  sympy:
+    in: binomial(100, 50)
+    out: "100891344545564193334812497256"

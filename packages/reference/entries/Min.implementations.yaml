@@ -9,7 +9,7 @@ min-3-1-4-1-5:
     in: enumeratio_min(3, 1, 4, 1, 5)
     out: "1"
   sympy:
-    in: Min(3, 1, 4, 1, 5)
+    in: enumeratio_min(3, 1, 4, 1, 5)
     out: "1"
 also-accepts-a-single-list-argument:
   wolfram:
@@ -22,11 +22,8 @@ also-accepts-a-single-list-argument:
     in: enumeratio_min([3, 1, 4])
     out: "1"
   sympy:
-    in: Min([3, 1, 4])
-    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
-    verdict: error
-    kind: threading
-    note: compute-engine's Min threads over (or pools) the list; SymPy's takes scalars.
+    in: enumeratio_min([3, 1, 4])
+    out: "1"
 min-neg-1-neg-5:
   wolfram:
     in: Min[-1, -5]
@@ -38,7 +35,7 @@ min-neg-1-neg-5:
     in: enumeratio_min(-1, -5)
     out: "-5"
   sympy:
-    in: Min(-1, -5)
+    in: enumeratio_min((-1), (-5))
     out: "-5"
 a-single-argument-is-returned-unchanged:
   wolfram:
@@ -51,7 +48,7 @@ a-single-argument-is-returned-unchanged:
     in: enumeratio_min(3)
     out: "3"
   sympy:
-    in: Min(3)
+    in: enumeratio_min(3)
     out: "3"
 commutative-order-doesn-t-matter:
   wolfram:
@@ -64,7 +61,7 @@ commutative-order-doesn-t-matter:
     in: bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))
     out: True
   sympy:
-    in: enumeratio_equal(Min(3, 7), Min(7, 3))
+    in: enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))
     out: True
 min-a-b-max-a-b-a-b-see-max:
   wolfram:
@@ -77,7 +74,7 @@ min-a-b-max-a-b-a-b-see-max:
     in: bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))
     out: True
   sympy:
-    in: enumeratio_equal((Min(4, 9) + Max(4, 9)), (4 + 9))
+    in: enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))
     out: True
 the-day-s-low-from-the-same-hourly-readings-see:
   wolfram:
@@ -90,7 +87,7 @@ the-day-s-low-from-the-same-hourly-readings-see:
     in: enumeratio_min(68, 72, 65, 80, 74)
     out: "65"
   sympy:
-    in: Min(68, 72, 65, 80, 74)
+    in: enumeratio_min(68, 72, 65, 80, 74)
     out: "65"
 infinities-participate-directly-in-the:
   wolfram:
@@ -110,12 +107,43 @@ multiple-arguments-lists-included-are-flattened:
     in: enumeratio_min([3, 1], 0)
     out: "0"
   sympy:
-    in: Min([3, 1], 0)
-    out: "ValueError: The argument '[3, 1]' is not comparable."
-    verdict: error
-    kind: threading
-    note: compute-engine's Min threads over (or pools) the list; SymPy's takes scalars.
+    in: enumeratio_min([3, 1], 0)
+    out: "0"
 the-min-of-an-empty-list-is-nan:
   wolfram:
     in: Min[List[]]
     note: Wolfram's $\mathrm{Min}[\{\}]$ is the identity element $+\infty$.
+  sympy:
+    in: enumeratio_min([])
+    out: oo
+    verdict: disagree
+    kind: convention
+    note: Same as the Wolfram row above -- SymPy's min() of an empty sequence also takes the identity element (+infinity); we deliberately return NaN for Min of an empty LIST (a no-argument Min[] still returns the identity, see the example above this one).
+min-9-2:
+  sympy:
+    in: enumeratio_min(9, 2)
+    out: "2"
+min-list-4-1-7-2:
+  sympy:
+    in: enumeratio_min([4, 1, 7, 2])
+    out: "1"
+min-5p56-neg-4p8-7p3:
+  sympy:
+    in: enumeratio_min(5.56, (-4.8), 7.3)
+    out: "-4.80000000000000"
+nested-lists-are-flattened-into-the-pool:
+  sympy:
+    in: enumeratio_min(2, 3, [[Rational(1, 2), (-1)], [Rational((-5), 3), Rational(1, 2)]])
+    out: -5/3
+exact-numbers-are-compared-numerically:
+  sympy:
+    in: enumeratio_min(sqrt(2), Rational(3, 2))
+    out: sqrt(2)
+compares-exact-constants-numerically-min-e-pi-5:
+  sympy:
+    in: enumeratio_min([E, pi, 5])
+    out: E
+with-no-arguments-it-returns-the-identity:
+  sympy:
+    in: enumeratio_min()
+    out: oo

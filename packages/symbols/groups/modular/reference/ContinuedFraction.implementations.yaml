@@ -15,7 +15,32 @@ negative-a-floor-for-a-0-then-positive-terms-3-1:
   wolfram:
     in: ContinuedFraction[Rational[-47, 17]]
     note: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
+  sympy:
+    in: list(continued_fraction(Rational((-47), 17)))
+    out: "[-3, 4, 4]"
 symbolic-terms-build-the-nested-fraction-left:
   wolfram:
     in:
     note: Wolfram's own FromContinuedFraction[{a,b,c}] combines it into the single ratio (a + (1+ab)c)/(1+bc); we leave the nested a + 1/(b + 1/c) form, matching what a reader would write down term by term.
+47-17-2-1-1-1-3-1-4:
+  sympy:
+    in: list(continued_fraction(Rational(47, 17)))
+    out: "[2, 1, 3, 4]"
+a-floating-point-number-read-as-the-rational-it:
+  sympy:
+    in: list(continued_fraction(3.245))
+    out: "ValueError: expecting a rational or quadratic irrational, not 3.24500000000000"
+    verdict: error
+    kind: domain
+    note: SymPy's continued_fraction refuses a plain float; ours reads it as the exact rational it prints as (see the caption).
+a-quadratic-irrational-s-exact-expansion-is:
+  sympy:
+    in: list(continued_fraction(sqrt(13)))
+    out: "[3, [1, 1, 1, 1, 6]]"
+varphi-1-overline-1-purely-periodic-so-the:
+  sympy:
+    in: list(continued_fraction((S((1 + sqrt(5))) / 2)))
+    out: "[[1]]"
+    verdict: disagree
+    kind: shape
+    note: Same period, split differently -- we write the leading term and the period separately ([1, [1]], matching [1; overline 1] as printed), SymPy folds the leading term into the period for a purely periodic value ([[1]]).

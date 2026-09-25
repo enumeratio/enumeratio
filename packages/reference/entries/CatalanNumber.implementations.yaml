@@ -185,6 +185,12 @@ catalannumber-neg-1-is-neg-1:
   wolfram:
     in: CatalanNumber[-1]
     note: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
+  sympy:
+    in: catalan((-1))
+    out: -1/2
+    verdict: disagree
+    kind: convention
+    note: SymPy's catalan(-1) takes the Gamma-ratio limit (-1/2); we follow the verified Wolfram kernel output (-1), same as the wolfram row above.
 they-grow-fast-c-15-already-passes-nine-million:
   wolfram:
     in: CatalanNumber[15]
@@ -227,3 +233,27 @@ half-integer-arguments-evaluate-exactly-through:
   sympy:
     in: catalan(Rational(5, 2))
     out: catalan(5/2)
+catalannumber-0-past-neg-1:
+  sympy:
+    in: catalan((-2))
+    out: "0"
+catalannumber-neg-5-is-also-0:
+  sympy:
+    in: catalan((-5))
+    out: "0"
+catalannumber-30:
+  sympy:
+    in: catalan(30)
+    out: "3814986502092304"
+real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
+  sympy:
+    in: catalan(2.3)
+    out: "2.59035215401932"
+complex-arguments-evaluate-through-the-same:
+  sympy:
+    in: catalan((1.2 + 1*I))
+    out: 0.730728624207284 + 0.569846406969343*I
+c-1-2-frac-8-3-pi-by-analytic-continuation:
+  sympy:
+    in: catalan(Rational(1, 2))
+    out: catalan(1/2)

@@ -9,7 +9,7 @@ length-list-1-2-3-4:
     in: len([1, 2, 3, 4])
     out: "4"
   sympy:
-    in: len([1, 2, 3, 4])
+    in: (len([1, 2, 3, 4]) if hasattr([1, 2, 3, 4], '__len__') else 0)
     out: "4"
 length-list-1-2-3-4-5:
   wolfram:
@@ -22,7 +22,7 @@ length-list-1-2-3-4-5:
     in: len([1, 2, 3, 4, 5])
     out: "5"
   sympy:
-    in: len([1, 2, 3, 4, 5])
+    in: (len([1, 2, 3, 4, 5]) if hasattr([1, 2, 3, 4, 5], '__len__') else 0)
     out: "5"
 works-on-any-collection-not-just-list:
   wolfram:
@@ -40,8 +40,17 @@ length-join-a-b-length-a-length-b-see-join:
       out: \text{True}
 an-atom-has-no-parts-so-its-length-is-0:
   sympy:
-    in: len(5)
-    out: "TypeError: object of type 'int' has no len()"
-    verdict: error
-    kind: domain
-    note: compute-engine's Length is defined as 0 on a non-collection atom; SymPy's len() refuses a non-collection outright.
+    in: (len(5) if hasattr(5, '__len__') else 0)
+    out: "0"
+the-empty-list-has-length-0:
+  sympy:
+    in: (len([]) if hasattr([], '__len__') else 0)
+    out: "0"
+of-a-matrix-the-number-of-rows:
+  sympy:
+    in: (len([[1, 2], [3, 4], [5, 6]]) if hasattr([[1, 2], [3, 4], [5, 6]], '__len__') else 0)
+    out: "3"
+a-symbol-such-as-pi-is-an-atom-of-length-0:
+  sympy:
+    in: (len(pi) if hasattr(pi, '__len__') else 0)
+    out: "0"

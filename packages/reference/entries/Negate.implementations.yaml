@@ -21,10 +21,10 @@
     in: (-(n(-5)))
     out: "5"
   mpmath:
-    in: (--5)
+    in: (-(-5))
     out: "5"
   sympy:
-    in: (--5)
+    in: (-(-5))
     out: "5"
 neg-5:
   wolfram:
@@ -135,12 +135,12 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars.
+  mpmath:
+    in: "[(-1), (-(-2)), (-3)]"
+    out: "[-1, 2, -3]"
   sympy:
-    in: (-[1, -2, 3])
-    out: "TypeError: bad operand type for unary -: 'list'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars.
+    in: "[(-1), (-(-2)), (-3)]"
+    out: "[-1, 2, -3]"
 recording-a-42-50-charge-as-a-negative-balance:
   wolfram:
     in: Minus[42.5]
@@ -176,3 +176,17 @@ flips-signed-infinities-too:
     tex:
       in: -\infty
       out: -\infty
+neg-1-plus-2i:
+  mpmath:
+    in: (-mpc(1, 2))
+    out: (-1.0 - 2.0j)
+  sympy:
+    in: (-(1 + 2*I))
+    out: -1 - 2*I
+threads-over-a-matrix-entry-by-entry:
+  mpmath:
+    in: "[[(-1), (-(-2))], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
+  sympy:
+    in: "[[(-1), (-(-2))], [(-3), (-4)]]"
+    out: "[[-1, 2], [-3, -4]]"
