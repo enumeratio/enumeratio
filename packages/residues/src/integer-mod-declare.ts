@@ -230,7 +230,11 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["ChineseRemainder", "x", "y"],
-    (ops) => ops.length === 3,
+    (ops) =>
+      ops.length === 3 &&
+      integers(ops[0]) !== undefined &&
+      integers(ops[1]) !== undefined &&
+      bigIntegerAt(ops[2]) !== undefined,
     (native) => (ops, options) => {
       const [ms, d] = [integers(ops[1]), bigIntegerAt(ops[2])];
       if (ms === undefined || d === undefined || !ms.every((m) => m >= 1n)) return undefined;
