@@ -8,7 +8,7 @@
 // The sieve/isPrime/nthMatchCache trio below is COPIED from numeric-sets.ts rather than
 // imported -- that file isn't meant to export its internals across the family boundary
 // (each family file owns its own kernel), so this is a deliberate, reported duplication.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // ---- copied from numeric-sets.ts: incremental sieve + trial-division primality. ----
 
@@ -131,7 +131,7 @@ const MAX_SAFE_BIG = BigInt(Number.MAX_SAFE_INTEGER);
 
 /** bigint -> plain number when exact there, else the bigint itself (still an exact integer,
  *  just not representable as an IEEE double without loss). Cast at the call site, since
- *  `FamilyKernel`'s scalar element type is `number`. Same idiom as numeric-closed-form.ts. */
+ *  `NumberKernel`'s scalar element type is `number`. Same idiom as numeric-closed-form.ts. */
 function narrow(x: bigint): number {
   return x <= MAX_SAFE_BIG ? Number(x) : (x as unknown as number);
 }
@@ -542,7 +542,7 @@ function fibonacciPrimesTable(): number[] {
   return fibonacciPrimesCache;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   {
     head: "HarshadNumbers",
     paramCount: 0,

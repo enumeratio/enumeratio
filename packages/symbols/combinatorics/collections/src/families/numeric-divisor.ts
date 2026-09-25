@@ -6,7 +6,7 @@
 // same reason numeric-sets.ts carries its own isPrime/sumProperDivisors rather than
 // importing them. isAbundant/sumProperDivisors below are literally copied from
 // numeric-sets.ts's AbundantNumbers helpers to share its predicate style, as asked.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 // ---- shared: memoised "nth n with predicate(n)" scan (copied from numeric-sets.ts). ----
 
@@ -307,7 +307,7 @@ const IDONEAL_NUMBERS = [
   385, 408, 462, 520, 760, 840, 1320, 1365, 1848,
 ];
 
-function tableEntry(table: readonly number[]): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
+function tableEntry(table: readonly number[]): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
   return {
     unrank: (_p, r) => (r < table.length ? table[r] : Number.NaN),
     valid: (element) => table.includes(Number(element)),
@@ -316,7 +316,7 @@ function tableEntry(table: readonly number[]): Pick<FamilyKernel, "unrank" | "va
 }
 
 /** A paramCount:0 scalar family driven by a plain predicate, via one shared nthMatchCache. */
-function predicateEntry(predicate: (n: number) => boolean): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
+function predicateEntry(predicate: (n: number) => boolean): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
   const cache = nthMatchCache(predicate);
   return {
     unrank: (_p, r) => cache.nth(r + 1),
@@ -328,7 +328,7 @@ function predicateEntry(predicate: (n: number) => boolean): Pick<FamilyKernel, "
 /** Same shape, for a family whose membership can only be answered by rank (record-setting
  *  scans like HighlyCompositeNumbers, where "valid" has no cheaper test than "is it a
  *  record" -- which the cache already computes when asked for the rank). */
-function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<FamilyKernel, "unrank" | "valid" | "rank"> {
+function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<NumberKernel, "unrank" | "valid" | "rank"> {
   return {
     unrank: (_p, r) => cache.nth(r + 1),
     valid: (element) => cache.rankOf(Number(element)) >= 0,
@@ -336,7 +336,7 @@ function cacheEntry(cache: ReturnType<typeof nthMatchCache>): Pick<FamilyKernel,
   };
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   {
     head: "DeficientNumbers",
     paramCount: 0,

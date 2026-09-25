@@ -21,7 +21,7 @@ import {
   FibonacciWordRank,
   IsFibonacciWord,
 } from "./kernels-extra.ts";
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -348,7 +348,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -358,7 +358,7 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   // BinaryWords(n): strings over {0,1}. Reuses the BinaryStrings kernel (same family, catalogued
   // under this name).
   ints(

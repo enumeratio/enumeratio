@@ -4,7 +4,7 @@
 // restrictions). Pure rank/unrank kernels over plain JS values — no compute-engine dependency,
 // same contract as core.ts (see ./types.ts). Kept in its own file (rather than folded into
 // kernels-extra.ts + core.ts) so parallel authoring on the same catalog sweep doesn't collide.
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 import { Factorial, PermutationUnrank, PermutationRank } from "./kernels.ts";
 import { Binomial, PartitionsP, IntegerPartitionUnrank, IntegerPartitionRank } from "./kernels-combinatorics.ts";
 import {
@@ -569,7 +569,7 @@ export function IsSytTwoRowOf(e: unknown, n: number): boolean {
   return true;
 }
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   {
     head: "PruferSequences",
     paramCount: 1,

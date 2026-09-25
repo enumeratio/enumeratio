@@ -36,7 +36,7 @@
 
 import type { FamilyKernel } from "../src/families/types.ts";
 /** Counts past this are sampled but never enumerated — property 5 would not finish. */
-const ENUMERATE_CAP = 2_000;
+const ENUMERATE_CAP = 2_000n;
 
 /** mulberry32 — tiny, deterministic, and good enough to find bugs. */
 export function random(seed: number): () => number {
@@ -58,11 +58,25 @@ export function streamFor(seed: number, key: string): () => number {
   return random(h >>> 0);
 }
 
+/** A uniform-enough bigint in [0, n): 32-bit chunks, reduced mod n. */
+export function randomBelow(draw: () => number, n: bigint): bigint {
+  if (n <= 1n) return 0n;
+  if (n <= BigInt(Number.MAX_SAFE_INTEGER)) return BigInt(Math.floor(draw() * Number(n)));
+  let r = 0n;
+  for (let bits = 0n; 1n << bits < n << 32n; bits += 32n) r = (r << 32n) | BigInt(Math.floor(draw() * 2 ** 32));
+  return r % n;
+}
+
+/** A kernel still in plain numbers declining past 2^53 (see `numberKernel`): not a failure. */
+export const needsBigint = (error: unknown): boolean =>
+  error instanceof RangeError && error.message.includes("not bigint yet");
+
 export interface Failure {
   readonly family: string;
   readonly property: string;
   readonly params: number[];
-  readonly rank: number;
+  /** -1n when the failure is about the family rather than one point. */
+  readonly rank: bigint;
   readonly detail: string;
 }
 
@@ -76,7 +90,7 @@ const key = (value: unknown): string =>
   JSON.stringify(value, (_k, v) => (typeof v === "bigint" ? `${v.toString()}n` : v));
 
 /** Every property, at one sampled point. Returns the first that fails. */
-export function check(entry: FamilyKernel, params: number[], rank: number): Failure | undefined {
+export function check(entry: FamilyKernel, params: number[], rank: bigint): Failure | undefined {
   const fail = (property: string, detail: string): Failure => ({
     family: entry.head,
     property,
@@ -94,7 +108,7 @@ export function check(entry: FamilyKernel, params: number[], rank: number): Fail
   if (element === undefined) return fail("unrank", "returned undefined inside the count");
 
   // 1. round trip — the one property every family must satisfy.
-  let back: number;
+  let back: bigint;
   try {
     back = entry.rank(element, params);
   } catch (error) {
@@ -122,16 +136,16 @@ export function checkFamily(entry: FamilyKernel, params: number[], draw: () => n
     family: entry.head,
     property,
     params,
-    rank: -1,
+    rank: -1n,
     detail,
   });
-  if (!Number.isFinite(total) || total < 0) return fail("count", `count = ${total}`);
+  if (typeof total !== "bigint" || total < 0n) return fail("count", `count = ${total}`);
 
   // 3. injectivity, over a sampled window rather than the whole family.
-  const window = Math.min(total, 64);
-  const seen = new Map<string, number>();
-  for (let i = 0; i < window; i++) {
-    const rank = window === total ? i : Math.floor(draw() * total);
+  const window = total < 64n ? total : 64n;
+  const seen = new Map<string, bigint>();
+  for (let i = 0n; i < window; i++) {
+    const rank = window === total ? i : randomBelow(draw, total);
     let element: unknown;
     try {
       element = entry.unrank(params, rank);
@@ -150,16 +164,16 @@ export function checkFamily(entry: FamilyKernel, params: number[], draw: () => n
   // injectivity window to cover entirely, a wrong count shows up as a duplicate first; this
   // only gets there first when the family is too large for that window but still cheap to
   // enumerate.
-  if (total > 0 && total <= ENUMERATE_CAP) {
+  if (total > 0n && total <= ENUMERATE_CAP) {
     const all = new Set<string>();
-    for (let r = 0; r < total; r++) {
+    for (let r = 0n; r < total; r++) {
       try {
         all.add(key(entry.unrank(params, r)));
       } catch {
         return fail("count", `unrank threw at ${r} of ${total}`);
       }
     }
-    if (all.size !== total) {
+    if (BigInt(all.size) !== total) {
       return fail("count", `count says ${total}, enumeration gives ${all.size} distinct`);
     }
   }
@@ -169,8 +183,8 @@ export function checkFamily(entry: FamilyKernel, params: number[], draw: () => n
 /** Walk a failure down toward the smallest point that still shows it. */
 export function shrink(entry: FamilyKernel, failure: Failure): Failure {
   let best = failure;
-  if (failure.rank >= 0) {
-    for (let rank = 0; rank < best.rank; rank++) {
+  if (failure.rank >= 0n) {
+    for (let rank = 0n; rank < best.rank; rank++) {
       const smaller = check(entry, best.params, rank);
       if (smaller?.property === best.property) {
         best = smaller;
@@ -186,12 +200,14 @@ export function shrink(entry: FamilyKernel, failure: Failure): Failure {
         try {
           return entry.count(params);
         } catch {
-          return 0;
+          return 0n;
         }
       })();
-      if (!Number.isFinite(total) || total <= 0) continue;
+      if (typeof total !== "bigint" || total <= 0n) continue;
       const smaller =
-        best.rank >= 0 ? check(entry, params, Math.min(best.rank, total - 1)) : checkFamily(entry, params, random(1));
+        best.rank >= 0n
+          ? check(entry, params, best.rank < total ? best.rank : total - 1n)
+          : checkFamily(entry, params, random(1));
       if (smaller?.property === best.property) {
         best = smaller;
         break;

@@ -4,7 +4,7 @@
 // words.ts's necklace/Lyndon/number-theory machinery locally rather than reaching into that
 // module (only its `entries` export is public). Pure rank/unrank kernels over plain JS
 // numbers/arrays, same contract as every other family (types.ts).
-import type { FamilyKernel } from "./types.ts";
+import type { NumberKernel } from "./types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -391,7 +391,7 @@ const ints = (
   unrank: (p: number[], r: number) => number[],
   valid: (e: number[], p: number[]) => boolean,
   rank: (e: number[], p: number[]) => number,
-): FamilyKernel => ({
+): NumberKernel => ({
   head,
   paramCount,
   kind: "ints",
@@ -401,7 +401,7 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
-export const entries: FamilyKernel[] = [
+export const entries: NumberKernel[] = [
   // BinaryBracelets(n): binary words up to rotation and reflection — Bracelets(n, 2), A000029.
   ints(
     "BinaryBracelets",

@@ -1,36 +1,37 @@
 import { expect, test } from "vite-plus/test";
 import { check, checkFamily, random, shrink } from "../scripts/properties.ts";
-import type { FamilyKernel } from "../src/families/types.ts";
+import { type FamilyKernel, type NumberKernel, numberKernel } from "../src/families/types.ts";
 
 /** A correct family: the k-element prefixes of [0, n), ranked lexicographically. */
-const words = (broken?: Partial<FamilyKernel>): FamilyKernel => ({
-  head: "Words",
-  paramCount: 2,
-  kind: "ints",
-  count: ([n, k]) => (n as number) ** (k as number),
-  unrank: ([n, k], r) => {
-    const digits: number[] = [];
-    let rest = r;
-    for (let i = 0; i < (k as number); i++) {
-      digits.unshift(rest % (n as number));
-      rest = Math.floor(rest / (n as number));
-    }
-    return digits;
-  },
-  rank: (element, [n]) => (element as number[]).reduce((acc, d) => acc * (n as number) + d, 0),
-  valid: (element, [n, k]) =>
-    Array.isArray(element) &&
-    element.length === (k as number) &&
-    (element as number[]).every((d) => d >= 0 && d < (n as number)),
-  ...broken,
-});
+const words = (broken?: Partial<NumberKernel>): FamilyKernel =>
+  numberKernel({
+    head: "Words",
+    paramCount: 2,
+    kind: "ints",
+    count: ([n, k]) => (n as number) ** (k as number),
+    unrank: ([n, k], r) => {
+      const digits: number[] = [];
+      let rest = r;
+      for (let i = 0; i < (k as number); i++) {
+        digits.unshift(rest % (n as number));
+        rest = Math.floor(rest / (n as number));
+      }
+      return digits;
+    },
+    rank: (element, [n]) => (element as number[]).reduce((acc, d) => acc * (n as number) + d, 0),
+    valid: (element, [n, k]) =>
+      Array.isArray(element) &&
+      element.length === (k as number) &&
+      (element as number[]).every((d) => d >= 0 && d < (n as number)),
+    ...broken,
+  });
 
 const draw = random(1);
 
 test("a correct family passes every property", () => {
   const entry = words();
   expect(checkFamily(entry, [3, 2], draw)).toBeUndefined();
-  for (let rank = 0; rank < 9; rank++) expect(check(entry, [3, 2], rank)).toBeUndefined();
+  for (let rank = 0n; rank < 9n; rank++) expect(check(entry, [3, 2], rank)).toBeUndefined();
 });
 
 test("a broken round trip is caught", () => {
@@ -39,7 +40,7 @@ test("a broken round trip is caught", () => {
   const entry = words({
     rank: (element, [n]) => (element as number[]).reduce((a, d) => a * (n as number) + d, 0) + 1,
   });
-  const failure = check(entry, [3, 2], 4);
+  const failure = check(entry, [3, 2], 4n);
   expect(failure?.property).toBe("round-trip");
   expect(failure?.detail).toContain("rank(unrank(4)) = 5");
 });
@@ -48,7 +49,7 @@ test("a family that rejects its own element is caught", () => {
   // The property that keeps finding real bugs on the enumeratio side, almost always at a
   // degenerate parameter rather than in the middle of the range.
   const entry = words({ valid: (element) => (element as number[])[0] !== 0 });
-  const failure = check(entry, [3, 2], 1);
+  const failure = check(entry, [3, 2], 1n);
   expect(failure?.property).toBe("validity");
   expect(failure?.detail).toContain("rejected its own element");
 });
@@ -75,13 +76,13 @@ test("a throwing kernel is a failure, not a crash", () => {
       throw new Error("boom");
     },
   });
-  expect(check(entry, [3, 2], 1)?.property).toBe("unrank");
+  expect(check(entry, [3, 2], 1n)?.property).toBe("unrank");
   const rankThrows = words({
     rank: () => {
       throw new Error("nope");
     },
   });
-  expect(check(rankThrows, [3, 2], 1)?.property).toBe("round-trip");
+  expect(check(rankThrows, [3, 2], 1n)?.property).toBe("round-trip");
 });
 
 // A scalar family whose elements are bigint past a safe-integer cutoff — the shape
@@ -89,21 +90,22 @@ test("a throwing kernel is a failure, not a crash", () => {
 // throws on a bigint rather than the NaN -> null collision that hid the original bug, so the
 // harness's key() needs its own bigint handling, exercised here rather than by re-testing
 // NarcissisticNumbers' own kernel, which the collections tests already cover).
-const bigScalars = (elements: readonly bigint[], broken?: Partial<FamilyKernel>): FamilyKernel => ({
-  head: "BigScalars",
-  paramCount: 0,
-  kind: "scalar",
-  count: () => elements.length,
-  unrank: (_p, r) => elements[r] as unknown as number,
-  rank: (element) => elements.indexOf(element as bigint),
-  valid: (element) => elements.includes(element as bigint),
-  ...broken,
-});
+const bigScalars = (elements: readonly bigint[], broken?: Partial<NumberKernel>): FamilyKernel =>
+  numberKernel({
+    head: "BigScalars",
+    paramCount: 0,
+    kind: "scalar",
+    count: () => elements.length,
+    unrank: (_p, r) => elements[r] as unknown as number,
+    rank: (element) => elements.indexOf(element as bigint),
+    valid: (element) => elements.includes(element as bigint),
+    ...broken,
+  });
 
 test("distinct bigint elements pass injectivity", () => {
   const entry = bigScalars([10n, 20n, 12345678901234567890n, 12345678901234567891n]);
   expect(checkFamily(entry, [], draw)).toBeUndefined();
-  for (let rank = 0; rank < 4; rank++) expect(check(entry, [], rank)).toBeUndefined();
+  for (let rank = 0n; rank < 4n; rank++) expect(check(entry, [], rank)).toBeUndefined();
 });
 
 test("two ranks giving the same bigint element is still caught", () => {
@@ -122,7 +124,22 @@ test("the shrinker walks a failure down toward something readable", () => {
       return value >= 3 ? value + 1 : value;
     },
   });
-  const failure = check(entry, [3, 2], 8);
+  const failure = check(entry, [3, 2], 8n);
   expect(failure?.property).toBe("round-trip");
-  expect(shrink(entry, failure as NonNullable<typeof failure>).rank).toBe(3);
+  expect(shrink(entry, failure as NonNullable<typeof failure>).rank).toBe(3n);
+});
+
+test("numberKernel refuses past 2^53 rather than rounding", () => {
+  const huge = numberKernel({
+    head: "Huge",
+    paramCount: 0,
+    kind: "scalar",
+    count: () => 2 ** 60,
+    unrank: (_p, r) => r,
+    rank: (element) => element as number,
+    valid: () => true,
+  });
+  expect(() => huge.count([])).toThrow(/not bigint yet/);
+  expect(() => huge.unrank([], 2n ** 60n)).toThrow(/not bigint yet/);
+  expect(huge.rank(-1, [])).toBe(-1n);
 });
