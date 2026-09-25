@@ -522,11 +522,13 @@ function evaluateLerch(
   // Past |z| = 1 the series stops converging: continue by the integral representation
   // (lerch-continuation.ts), with compute-engine's own upper incomplete Γ. Where that can't
   // be trusted to double precision, stay unevaluated rather than guess. On the rim itself
-  // (|z| = 1) the series only converges for Re(s) > 1 (real z = -1 excepted: the Euler
-  // transform in lerchPhi handles that ray at every s); short of that the direct sum below
-  // doesn't decay at all and returns noise, so route it through the same continuation.
+  // (|z| = 1, real z = −1 excepted: the Euler transform in lerchPhi handles that ray at
+  // every s) the direct sum below either diverges outright (Re(s) ≤ 1) or converges too
+  // slowly for double precision to matter (a term at n = 200,000 is still ~n^(1−Re(s)) —
+  // only ~1e-8 at Re(s) = 1.5), so the whole rim routes through the same continuation,
+  // which is accurate there to ~1e-14 at every Re(s) tried.
   const absZ = Math.hypot(z.re, z.im);
-  const onRim = z.im !== 0 && Math.abs(absZ - 1) < 1e-9 && s.re <= 1;
+  const onRim = z.im !== 0 && Math.abs(absZ - 1) < 1e-9;
   if (numeric && isFiniteNum(z) && isFiniteNum(s) && isFiniteNum(a) && (absZ > 1 || onRim)) {
     const upperGamma = (sigma: Cx, x: Cx): Cx | undefined => {
       const v = ce.box(["Gamma", ["Complex", sigma.re, sigma.im], ["Complex", x.re, x.im]]).N();

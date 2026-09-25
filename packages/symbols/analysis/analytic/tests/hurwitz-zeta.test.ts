@@ -453,3 +453,32 @@ test("LerchPhi on the |z|=1 rim continues past the series once Re(s) ≤ 1 (mpma
   expect(r.re).toBeCloseTo(-0.4674769533712983, 9);
   expect(r.im).toBeCloseTo(3.097452599486018, 9);
 });
+
+// The rim's own series converges too slowly to trust at Re(s) > 1 too — a term at
+// n = 200,000 is still ~n^(1−Re(s)), only ~1e-8 at Re(s) = 1.5 — so every Re(s) on the
+// rim routes through the continuation. Golden grid at e^(iθ), a = 1, against mpmath at
+// dps = 30 (`mp.lerchphi(mp.e**(1j*theta), s, 1)`).
+const LERCH_RIM_GOLDEN: readonly [number, number, number, number][] = [
+  // theta, s, expected re, expected im
+  [0.5, 0, 0.5, 1.9581586823229701],
+  [0.5, 0.5, 1.0765400158387588, 1.3129382534588525],
+  [0.5, 1, 1.250677974553631, 0.8217909021239179],
+  [0.5, 1.5, 1.259873771125738, 0.5000020016787661],
+  [1.7, 0, 0.5, 0.4392388922760059],
+  [1.7, 0.5, 0.6548235477912739, 0.3794314503888457],
+  [1.7, 1, 0.7672500762495273, 0.310906374833933],
+  [1.7, 1.5, 0.8457350392733506, 0.2454776862409962],
+  [2.4, 0, 0.5, 0.19438978468410248],
+  [2.4, 0.5, 0.6156643947703363, 0.17322669966779407],
+  [2.4, 1, 0.7096834824907786, 0.14723306313134564],
+  [2.4, 1.5, 0.7837313313575303, 0.12075792141283168],
+];
+
+test("LerchPhi on the |z|=1 rim: golden grid at every Re(s), accurate to ~1e-13 (mpmath dps=30)", () => {
+  for (const [theta, s, re, im] of LERCH_RIM_GOLDEN) {
+    const z: Expr = ["Complex", Math.cos(theta), Math.sin(theta)];
+    const r = ce.box(["N", ["LerchPhi", z, s, 1]] as Expr).N();
+    expect(r.re, `theta=${theta} s=${s} re`).toBeCloseTo(re, 12);
+    expect(r.im, `theta=${theta} s=${s} im`).toBeCloseTo(im, 12);
+  }
+});

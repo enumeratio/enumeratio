@@ -15,14 +15,12 @@ import { lerchPhi } from "./lerch.ts";
 // Polylogarithm Liₛ(z) = Σ_{n≥1} zⁿ/nˢ, as the Lerch transcendent at a = 1:
 // Liₛ(z) = z·Φ(z, s, 1). compute-engine has a native PolyLog(s, z), but it evaluates
 // only at integer order s; this fills in the non-integer and complex orders from the
-// Lerch series, which covers |z| ≤ 1 (the |z| = 1 rim included, via the Euler
-// transform in lerch.ts). Past the disk (and on the rim once Re(s) ≤ 1, where the
-// series does not converge) it goes through the same Hermite-integral continuation
-// LerchPhi uses (lerch-continuation.ts), so e.g. PolyLog(2.5, 2) evaluates rather
-// than staying symbolic.
-//
-// Accuracy note: only real z < 0 gets the Euler transform, so |z| = 1 elsewhere on
-// the rim (Li₂(i), say) is direct-summed and lands near 1e-11 rather than 1e-15.
+// Lerch series, which covers |z| < 1 strictly. Past the open disk — |z| > 1, and the
+// |z| = 1 rim itself (real z = −1 excepted: the Euler transform in lerch.ts covers that
+// ray directly) — it goes through the same Hermite-integral continuation LerchPhi uses
+// (lerch-continuation.ts), so e.g. PolyLog(2.5, 2) evaluates rather than staying
+// symbolic, and a rim value like Li₁.₅(0.6 + 0.8i) is accurate to ~1e-14 rather than the
+// ~1e-8 the rim's own (very slowly convergent, for 1 < Re(s) small) series would give.
 
 /** Liₛ(z) = z·Φ(z, s, 1) for complex s, z. NaN outside |z| ≤ 1 (no continuation). */
 export const polyLog = (s: Cx, z: Cx): Cx => mul(z, lerchPhi(z, s, { re: 1, im: 0 }));
@@ -59,9 +57,11 @@ export function evaluatePolyLog(
 
   if (numeric && isFiniteNum(s) && isFiniteNum(z)) {
     const absZ = Math.hypot(z.re, z.im);
-    const onRim = z.im !== 0 && Math.abs(absZ - 1) < 1e-9 && s.re <= 1;
-    // Past |z| = 1 (the rim included, once the series there wouldn't converge): the same
-    // integral continuation LerchPhi uses, scaled by z — Liₛ(z) = z·Φ(z, s, 1).
+    const onRim = z.im !== 0 && Math.abs(absZ - 1) < 1e-9;
+    // Past |z| = 1, and on the rim itself: the same integral continuation LerchPhi uses,
+    // scaled by z — Liₛ(z) = z·Φ(z, s, 1). The rim's own series either diverges (Re(s) ≤ 1)
+    // or converges too slowly to trust at double precision even where it does; the
+    // continuation is accurate there to ~1e-14 across the Re(s) range tried.
     if (absZ > 1 || onRim) {
       const upperGamma = (sigma: Cx, x: Cx): Cx | undefined => {
         const v = ce.box(["Gamma", ["Complex", sigma.re, sigma.im], ["Complex", x.re, x.im]]).N();
