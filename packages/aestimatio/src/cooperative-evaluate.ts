@@ -38,8 +38,16 @@ export function evaluateCooperatively(
 ): CooperativeResult {
   const boxed: BoxedExpression = ce.box(json as never);
   // A lazy collection (`Range`, `Tabulate`, …) stays lazy unless asked: its `.json` is
-  // then still the call, not the elements.
-  const run = (): BoxedExpression => boxed.evaluate({ materialization: materialize });
+  // then still the call, not the elements. Only the RESULT is materialized: compute-engine
+  // applies `materialization` to every argument on the way down too, and there `true` means
+  // the elided display form (five elements, a placeholder, five more), so
+  // `Length(Range(1, 20))` counted the eleven items of the display and gave 11.
+  const run = (): BoxedExpression => {
+    const result = boxed.evaluate();
+    return materialize && result.isLazyCollection
+      ? result.evaluate({ materialization: true })
+      : result;
+  };
   try {
     const result =
       timeMs === undefined
