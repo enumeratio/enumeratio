@@ -2,9 +2,25 @@
 // asserted node-side by the reference package's tests; this mirrors that check
 // live in the browser.
 
-/** Structural equality for MathJSON values (numbers, strings, arrays, objects). */
+/** A non-integer number, or `{num}` digits, as a float; undefined for anything else. */
+const float = (x: unknown): number | undefined =>
+  typeof x === "number" && !Number.isInteger(x)
+    ? x
+    : typeof x === "object" && x !== null && typeof (x as { num?: unknown }).num === "string"
+      ? Number((x as { num: string }).num)
+      : undefined;
+
+/**
+ * Structural equality for MathJSON values (numbers, strings, arrays, objects). Floats match
+ * within 1e-12 relative, as the reference tests allow: the last digits of a float differ
+ * between platforms (a browser's libm against Node's), which is not a change in behaviour.
+ */
 export function deepEqual(a: unknown, b: unknown): boolean {
   if (a === b) return true;
+  const [fa, fb] = [float(a), float(b)];
+  if (fa !== undefined && fb !== undefined && Number.isFinite(fa) && Number.isFinite(fb)) {
+    return Math.abs(fa - fb) <= 1e-12 * Math.max(1, Math.abs(fa), Math.abs(fb));
+  }
   if (Array.isArray(a) && Array.isArray(b)) {
     return a.length === b.length && a.every((x, i) => deepEqual(x, b[i]));
   }
