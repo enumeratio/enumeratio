@@ -63,8 +63,9 @@ compilation targets — they only apply to numeric/function expressions.
 Each line is numbered, and a committed line can be referenced from a later one, the way a
 Wolfram notebook does:
 
-- `Out(n)` is the **result** of line `n`, already evaluated; `%n` is its shorthand, `%` the
-  last and `%%` the one before. A negative index counts back, so `Out(-1)` is `%`.
+- `Out(n)` is the **result** of line `n`, already evaluated. A negative index counts back:
+  `Out(-1)` is the last result, `Out(-2)` the one before. (Wolfram's `%` / `%%` / `%n`
+  work in Wolfram syntax only — in notatio `%` is `Mod`.)
 - `In(n)` is the **input** of line `n`, **re-evaluated** where you ask for it. Wolfram gives
   `In[n]` a delayed value, so `In[1]` of a random draw draws again; ours re-evaluates the
   parsed input the same way.
@@ -89,7 +90,6 @@ left on screen becomes `Out[n]`, so a later line reading `Out[n]` gets the state
 at — the session is Wolfram-style, one committed cell at a time, not a sheet that keeps
 re-running (that is [notatio-notebook](/playground/notebook)).
 
-- `%` is the last result, `%%` the one before, `%n` the n-th `Out`.
 - `let name = <expr>` binds a variable the engine remembers; later lines resolve
   it, and `:vars` lists the bindings.
 
@@ -98,7 +98,7 @@ In[1]:= let n = 5
 Out[1]= n = 5
 In[2]:= Binomial(n, 2)
 Out[2]= 10
-In[3]:= % * 3
+In[3]:= Out(-1) * 3
 Out[3]= 30
 ```
 
@@ -243,7 +243,7 @@ Everything the interactive session accepts; `:help` prints the same list.
 | `<expr>`                                                | evaluate (Epsil by default)                                 |
 | `:wolfram` / `:mathjson` / `:latex` / `:epsil` `<expr>` | force an input syntax for one line                          |
 | `let <name> = <expr>`                                   | bind a variable                                             |
-| `%` · `%%` · `%n`                                       | last / 2nd-last / n-th result                               |
+| `%` · `%%` · `%n` (Wolfram syntax only)                 | last / 2nd-last / n-th result                               |
 | `Out(n)` · `In(n)` · `InString(n)`                      | n-th result · n-th input, re-evaluated · n-th line as typed |
 | `:form [name]`                                          | show or set the display form                                |
 | `:env [name]`                                           | reduce results for an environment                           |

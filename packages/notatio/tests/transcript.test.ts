@@ -3,14 +3,12 @@ import { expect, test } from "vite-plus/test";
 import { strOf } from "../src/symbols.ts";
 import { Transcript } from "../src/transcript.ts";
 
-// A transcript's own evaluate, outside any element: parse `latex` (after `%`
-// substitution) inside the transcript's scope, evaluate, and record it as the next
+// A transcript's own evaluate, outside any element: parse `latex` inside the transcript's scope, evaluate, and record it as the next
 // `In[n]`/`Out[n]` -- what `notatio-out` does for a cell inside a `<notatio-dynamic-module>`
 // whose `value` is LaTeX (the fast path a `<notatio-cell>` uses before it has parsed).
 function evaluate(t: Transcript, engine: ComputeEngine, latex: string) {
   return t.run(() => {
-    const text = t.substitute(latex);
-    const raw = engine.parse(text);
+    const raw = engine.parse(latex);
     const value = raw.evaluate();
     const n = t.record(latex, raw, value);
     return { n, value };
@@ -106,23 +104,6 @@ test("a re-evaluated cell gets a new, higher line number rather than overwriting
   expect(again.n).toBe(2);
   expect(t.history).toHaveLength(2);
   expect(evaluate(t, engine, "a").value.re).toBe(2); // the later assignment wins
-});
-
-test("% is the last Out and %% the one before it -- Wolfram's shorthand for Out(-1)/Out(-2)", () => {
-  const engine = new ComputeEngine();
-  const t = new Transcript(engine);
-  evaluate(t, engine, "5"); // line 1
-  evaluate(t, engine, "6"); // line 2
-  expect(evaluate(t, engine, "%").value.re).toBe(6); // line 3: Out(2)
-  expect(evaluate(t, engine, "%%").value.re).toBe(6); // line 4: Out(-2) of [5,6,6] is line 2
-});
-
-test("%n is Out(n)'s shorthand", () => {
-  const engine = new ComputeEngine();
-  const t = new Transcript(engine);
-  evaluate(t, engine, "5");
-  evaluate(t, engine, "6");
-  expect(evaluate(t, engine, "%1").value.re).toBe(5);
 });
 
 test("Out(n) with no such line is a diagnostic, not a silent Missing", () => {
