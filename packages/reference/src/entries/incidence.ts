@@ -26,23 +26,27 @@ export const incidence: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "30-2-cdot-3-cdot-5-is-squarefree-with-three",
         expr: ["MoebiusFunction", ["DivisorLattice", 30], 1, 30],
         expected: -1,
         caption: "$30 = 2\\cdot3\\cdot5$ is squarefree with three primes",
       },
       {
+        id: "4-divides-12-so-mu-vanishes",
         expr: ["MoebiusFunction", ["DivisorLattice", 12], 1, 12],
         expected: 0,
         caption: "4 divides 12, so $\\mu$ vanishes",
         category: "Properties",
       },
       {
+        id: "1-3-inclusion-exclusion",
         expr: ["MoebiusFunction", ["BooleanLattice", 3], L(), L(1, 2, 3)],
         expected: -1,
         caption: "$(-1)^3$ — inclusion–exclusion",
         category: "Properties",
       },
       {
+        id: "not-a-cover-so-zero",
         expr: ["MoebiusFunction", ["Chain", 5], 2, 4],
         expected: 0,
         caption: "not a cover, so zero",
@@ -76,16 +80,19 @@ export const incidence: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "partial-sums-along-the-chain",
         expr: ["PosetSumDown", ["Chain", 4], L(1, 2, 3, 4)],
         expected: L(1, 3, 6, 10),
         caption: "partial sums along the chain",
       },
       {
+        id: "and-back-again",
         expr: ["MoebiusInvert", ["Chain", 4], L(1, 3, 6, 10)],
         expected: L(1, 2, 3, 4),
         caption: "…and back again",
       },
       {
+        id: "inclusion-exclusion-round-tripped",
         expr: [
           "MoebiusInvert",
           ["BooleanLattice", 2],
@@ -117,9 +124,18 @@ export const incidence: readonly ReferenceEntry[] = [
       "`AlgebraDimension(IncidenceAlgebra(poset))` counts the intervals: $\\binom{n+1}{2}$ for a chain, $3^n$ for the Boolean lattice",
     ],
     examples: [
-      { expr: ["PosetElements", ["DivisorLattice", 12]], expected: L(1, 2, 3, 4, 6, 12) },
-      { expr: ["PosetElements", ["Chain", 4]], expected: L(1, 2, 3, 4) },
       {
+        id: "posetelements-divisorlattice-12",
+        expr: ["PosetElements", ["DivisorLattice", 12]],
+        expected: L(1, 2, 3, 4, 6, 12),
+      },
+      {
+        id: "posetelements-chain-4",
+        expr: ["PosetElements", ["Chain", 4]],
+        expected: L(1, 2, 3, 4),
+      },
+      {
+        id: "3-3-intervals",
         expr: ["AlgebraDimension", ["IncidenceAlgebra", ["BooleanLattice", 3]]],
         expected: 27,
         caption: "$3^3$ intervals",

@@ -399,12 +399,12 @@ export const HEADS: Record<string, string> = {
   Khinchin: "Khinchin",
   // Hyperfactorial — same name and meaning as Wolfram's.
   Hyperfactorial: "Hyperfactorial",
-  // The q-series heads (packages/analytic/src/q-series.ts): same names, same argument
+  // The q-series heads (packages/symbols/analysis/analytic/src/q-series.ts): same names, same argument
   // order as Wolfram's.
   QPochhammer: "QPochhammer",
   QFactorial: "QFactorial",
   QBinomial: "QBinomial",
-  // Riemann-Siegel (packages/analytic/src/riemann-siegel.ts): theta and Z keep Wolfram's
+  // Riemann-Siegel (packages/symbols/analysis/analytic/src/riemann-siegel.ts): theta and Z keep Wolfram's
   // names and single real argument. RiemannZetaZero is compute-engine/Fungrim's spelling
   // for what Wolfram calls ZetaZero — same single argument k, just a different name, so
   // a plain rename here (not SPECIAL) is enough.
@@ -597,7 +597,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   Scan: (a) =>
     a.length === 2 ? `FoldList[${toWolfram(a[1])}, ${toWolfram(a[0])}]` : call(`${CONTEXT}Scan`, a),
   // PositionalNumerals(b) is ordinary base b wrapped as a system value (see
-  // packages/numerals) — the same digits Wolfram's own bare integer base already gives in
+  // packages/symbols/arithmetic/numerals) — the same digits Wolfram's own bare integer base already gives in
   // IntegerDigits[n, b]/FromDigits[digits, b], so it unwraps to the plain number rather than
   // a head call. One-way: a bare Wolfram base comes back bare, not rewrapped as this.
   PositionalNumerals: (a) => toWolfram(a[0]),

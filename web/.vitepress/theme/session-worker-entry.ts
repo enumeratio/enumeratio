@@ -14,7 +14,7 @@
 // (`startSessionWorker`) and this site's own `configure` (`./worker-engine-setup.ts`,
 // the ~20-library declare list) statically, so Vite bundles the two together into one
 // self-contained worker chunk -- no runtime `import()` of a separate URL at all.
-import { startSessionWorker } from "../../../packages/aestimatio/src/session-worker-core.ts";
+import { startSessionWorker } from "../../../packages/symbols/evaluation/aestimatio/src/session-worker-core.ts";
 import { configure } from "./worker-engine-setup.ts";
 
 startSessionWorker(configure);

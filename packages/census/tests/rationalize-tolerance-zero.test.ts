@@ -1,5 +1,5 @@
-// #113: `Rationalize(x, 0)` (packages/collections/src/arith-heads.ts) and
-// `Rationalize(x, dx)` for a concrete positive dx (packages/analytic/src/precision-113.ts,
+// #113: `Rationalize(x, 0)` (packages/symbols/combinatorics/collections/src/arith-heads.ts) and
+// `Rationalize(x, dx)` for a concrete positive dx (packages/symbols/analysis/analytic/src/precision-113.ts,
 // PR #146) are two separate `wrapOperator` attachments on the same head, with disjoint
 // `applies` gates (dx === 0 vs dx > 0). `wrapOperator` chains by capture order -- whichever
 // attaches second sees the other as its `native` fallback -- so this checks both heads

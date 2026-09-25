@@ -13,250 +13,250 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 1415, disagree 71, inconclusive 0, error 3
+## wolfram — agree 1416, disagree 71, inconclusive 0, error 3
 
-| example                                 | kind           | ours                                                                                         | theirs                                                                                       |
-| --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `aestimatio/MemoryConstrained#1`        | unevaluated    | `["MemoryConstrained",["Add",1,2],1000000]`                                                  | `3`                                                                                          |
-| `aestimatio/VerificationTest#1`         | convention     | `["TestResultObject",["Tuple","'Outcome'","'Success'"],["Tuple","'Input'",5],["Tuple","'Exp` | `TestObject[</"Outcome" -> "Success", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldF` |
-| `aestimatio/VerificationTest#2`         | convention     | `["TestResultObject",["Tuple","'Outcome'","'Failure'"],["Tuple","'Input'",5],["Tuple","'Exp` | `TestObject[</"Outcome" -> "Failure", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldF` |
-| `analytic-special/BarnesG#7`            | unevaluated    | `["BarnesG",["Rational",5,2]]`                                                               | `(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))`                                              |
-| `analytic-special/DirichletBeta#6`      | unevaluated    | `["DirichletBeta",4]`                                                                        | `(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16`                                                     |
-| `analytic-special/DirichletEta#6`       | unevaluated    | `["DirichletEta",["Rational",1,2]]`                                                          | `(1 - Sqrt[2])*Zeta[1/2]`                                                                    |
-| `analytic-special/DirichletL#4`         | undefined-form | `ComplexInfinity`                                                                            | `DirichletL[12, 1, 1]`                                                                       |
-| `arithmetic/Max#8`                      | convention     | `NaN`                                                                                        | `-Infinity`                                                                                  |
-| `arithmetic/Root#3`                     | convention     | `-2`                                                                                         | `2*(-1)^(1/3)`                                                                               |
-| `arithmetic/Round#10`                   | rounding-mode  | `-3`                                                                                         | `-2`                                                                                         |
-| `arithmetic/Round#9`                    | rounding-mode  | `3`                                                                                          | `2`                                                                                          |
-| `collections/At#8`                      | undefined-form | `NaN`                                                                                        | `{1, 2, 3}[[10]]`                                                                            |
-| `collections/First#4`                   | undefined-form | `Missing`                                                                                    | `First[{}]`                                                                                  |
-| `collections/Intersection#6`            | shape          | `EmptySet`                                                                                   | `{}`                                                                                         |
-| `collections/SetMinus#5`                | shape          | `EmptySet`                                                                                   | `{}`                                                                                         |
-| `combinatorics/CatalanNumber#10`        | domain         | `["CatalanNumber",-1]`                                                                       | `-1`                                                                                         |
-| `combinatorics/Factorial2#7`            | undefined-form | `NaN`                                                                                        | `ComplexInfinity`                                                                            |
-| `elementary/Arctan#7`                   | domain         | `["Error","'unexpected-argument'","'1'",["ErrorTrace",["ErrorFrame","'Arctan'",2]]]`         | `Pi/4`                                                                                       |
-| `hypercomplex/NonCommutativeMultiply#4` | convention     | `6`                                                                                          | `2 (x) 3`                                                                                    |
-| `linear-algebra/MatrixRank#8`           | domain         | `1`                                                                                          | `MatrixRank[{1, 2, 3}]`                                                                      |
-| `lists/Scan#3`                          | convention     | `[11, 13, 16]`                                                                               | `enumeratio'Scan[{1, 2, 3}, Plus, 10]`                                                       |
-| `modular/ModularMatrix#4`               | domain         | `["ModularMatrix",1,1,1,2]`                                                                  | `"L" . "R"`                                                                                  |
-| `number-theory/ExtendedGCD#1`           | shape          | `["Tuple",1,-1,1]`                                                                           | `{1, {-1, 1}}`                                                                               |
-| `number-theory/ExtendedGCD#2`           | shape          | `["Tuple",6,-1,1]`                                                                           | `{6, {-1, 1}}`                                                                               |
-| `number-theory/ExtendedGCD#3`           | shape          | `["Tuple",1,4,-1]`                                                                           | `{1, {4, -1}}`                                                                               |
-| `number-theory/ExtendedGCD#4`           | shape          | `["Tuple",5,0,1]`                                                                            | `{5, {0, 1}}`                                                                                |
-| `number-theory/ExtendedGCD#7`           | shape          | `["Tuple",1,["Complex",-1,-2],["Complex",-2,2]]`                                             | `{1, {-1 - 2*I, -2 + 2*I}}`                                                                  |
-| `number-theory/GCD#8`                   | convention     | `2`                                                                                          | `{2, 4}`                                                                                     |
-| `number-theory/IsSquareFree#7`          | domain         | `[true, false, false]`                                                                       | `SquareFreeQ[{10, 4, 12}]`                                                                   |
-| `number-theory/MoebiusMu#6`             | domain         | `["MoebiusMu",0]`                                                                            | `0`                                                                                          |
-| `numerals/FromDigits#5`                 | domain         | `["FromDigits",["List"]]`                                                                    | `0`                                                                                          |
-| `numerals/IntegerString#5`              | convention     | `'-42'`                                                                                      | `"42"`                                                                                       |
-| `residues/PowerMod#11`                  | domain         | `3`                                                                                          | `PowerMod[2/3, 1, 7]`                                                                        |
-| `residues/PowerMod#14`                  | convention     | `{"re":-2,"im":-1}`                                                                          | `PowerMod[11 - 7*I, -4, 7 + 4*I]`                                                            |
-| `residues/PowerModList#22`              | undefined-form | `[]`                                                                                         | `PowerModList[2, -1, 4]`                                                                     |
-| `residues/PowerModList#24`              | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `{2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
-| `residues/PowerModList#26`              | domain         | `[[1, 3, 5, 7], [1, 4, 11, 14], [1, 8, 13, 20], [1, 5, 7, 11, 13, 17, 19, 23]]`              | `PowerModList[1, 1/2, {8, 15, 21, 24}]`                                                      |
-| `residues/PowerModList#27`              | domain         | `[{"re":-2,"im":-2}, {"re":2,"im":2}]`                                                       | `PowerModList[I, 1/2, 7]`                                                                    |
-| `residues/PowerModList#28`              | domain         | `[{"re":-2,"im":-1}, {"re":2,"im":1}]`                                                       | `PowerModList[3 + 4*I, 1/2, 100000000000000000039]`                                          |
-| `residues/PowerModList#7`               | domain         | `[4, 19]`                                                                                    | `PowerModList[2/3, 1/2, 23]`                                                                 |
-| `residues/PowerModList#8`               | domain         | `[[1, 4], [], [], [2, 3]]`                                                                   | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
-| `special-functions/BetaRegularized#8`   | domain         | `["BetaRegularized",2,2,3]`                                                                  | `8`                                                                                          |
-| `special-functions/GammaRegularized#6`  | domain         | `["GammaRegularized",2.5,-1]`                                                                | `0.9999999999999998 - 0.6280082302883814*I`                                                  |
-| `special-functions/LerchPhi#200`        | convention     | `{"re":38.71453865989224,"im":-4.269192996247894}`                                           | `104.02772384507739 - 4.269192996247893*I`                                                   |
-| `special-functions/LerchPhi#205`        | convention     | `{"re":-3.1630871058555616,"im":-19.965372508009548}`                                        | `4.75921583752595 - 12.043069564628038*I`                                                    |
-| `special-functions/LerchPhi#210`        | convention     | `{"re":332.0979843736517,"im":238.17654980358446}`                                           | `39.35281478642287 + 22.39721772102415*I`                                                    |
-| `special-functions/LerchPhi#220`        | convention     | `-91.97768434618699`                                                                         | `-29.034869531372177 - 1.1059478000009414*^-14*I`                                            |
-| `special-functions/LerchPhi#225`        | convention     | `{"re":-5.9455394562307005,"im":-4.656316619670605}`                                         | `-1.2892228365600795 + 1.9382590652050522*^-16*I`                                            |
-| `special-functions/LerchPhi#230`        | convention     | `{"re":248.07432901528844,"im":220.3438744855333}`                                           | `-8.501055789332833 - 10.961345717993117*I`                                                  |
-| `special-functions/LerchPhi#240`        | convention     | `{"re":169.03286920120505,"im":-29.553703980097676}`                                         | `314.9386469789826 - 29.553703980097694*I`                                                   |
-| `special-functions/LerchPhi#245`        | convention     | `{"re":-8.258987289448257,"im":-42.17050106856762}`                                          | `7.550880046726434 - 26.360633732392905*I`                                                   |
-| `special-functions/LerchPhi#250`        | convention     | `{"re":754.4393998220863,"im":554.5049540922392}`                                            | `112.02214251367533 + 59.66618957774957*I`                                                   |
-| `special-functions/LerchPhi#260`        | convention     | `{"re":11.051129504913542,"im":-0.7116312308983647}`                                         | `48.068018393802376 - 0.711631230898362*I`                                                   |
-| `special-functions/LerchPhi#265`        | convention     | `{"re":-1.5953666811753227,"im":-12.709728006201562}`                                        | `3.44381423758941 - 7.6705470874368356*I`                                                    |
-| `special-functions/LerchPhi#270`        | convention     | `{"re":188.05452580732162,"im":129.95094730887928}`                                          | `19.05095385185434 + 11.260195772958092*I`                                                   |
-| `special-functions/LerchPhi#280`        | convention     | `-43.44520529743256`                                                                         | `-8.206094186321462 - 5.108829761684327*^-15*I`                                              |
-| `special-functions/LerchPhi#285`        | convention     | `{"re":-2.794143032828476,"im":-2.589691175981552}`                                          | `-0.2044518568469269 - 3.827487258676203*^-17*I`                                             |
-| `special-functions/LerchPhi#290`        | convention     | `{"re":139.4440155178161,"im":127.21487477502689}`                                           | `-2.4322178506955483 - 3.1202928516189257*I`                                                 |
-| `special-functions/LerchPhi#300`        | convention     | `{"re":-63.14556851667916,"im":-55.70965503308343}`                                          | `-110.42497592408667 + 9.475530152101694*I`                                                  |
-| `special-functions/LerchPhi#305`        | convention     | `{"re":2.475463147093155,"im":-6.813575698374405}`                                           | `-7.608072838412566 - 2.3174168611844586*I`                                                  |
-| `special-functions/LerchPhi#310`        | convention     | `{"re":-457.91134140962885,"im":71.22772232965785}`                                          | `-46.142787156209735 - 42.90442114783229*I`                                                  |
-| `special-functions/LerchPhi#320`        | convention     | `{"re":-2.0910882737014767,"im":67.79138574742537}`                                          | `17.14802283740964 + 20.383978340017954*I`                                                   |
-| `special-functions/LerchPhi#325`        | convention     | `{"re":-3.574854956018253,"im":3.468728991325334}`                                           | `1.02676676378177 + 1.218062498742225*I`                                                     |
-| `special-functions/LerchPhi#330`        | convention     | `{"re":244.75788905917892,"im":-108.8372736947882}`                                          | `-2.6384307117707664 + 12.751078290666381*I`                                                 |
-| `special-functions/LerchPhi#340`        | convention     | `{"re":-11.007681973911316,"im":-4.132179140120582}`                                         | `-13.125607899837256 + 19.441154193212753*I`                                                 |
-| `special-functions/LerchPhi#345`        | convention     | `{"re":0.18135576554179678,"im":-1.4915088888884338}`                                        | `-1.5447221959379853 + 2.3250420549362065*I`                                                 |
-| `special-functions/LerchPhi#350`        | convention     | `{"re":-92.1275927724354,"im":93.92654608335769}`                                            | `-11.9430502347019 + 3.2226235505187835*I`                                                   |
-| `special-functions/LerchPhi#4`          | convention     | `-0.08333333333333333`                                                                       | `ComplexInfinity`                                                                            |
-| `special-functions/LerchPhi#7`          | precision      | `{"re":0.002025009957012008,"im":0.0033278975368131974}`                                     | `0.0020250151909632203 + 0.003327898913888968*I`                                             |
-| `special-functions/PolyLog#11`          | unevaluated    | `["PolyLog",2.5,2]`                                                                          | `2.789660332381895 - 1.3638037005377295*I`                                                   |
-| `special-functions/PolyLog#7`           | convention     | `-1.4603545088095868`                                                                        | `ComplexInfinity`                                                                            |
+| example                                                            | kind           | ours                                                                                         | theirs                                                                                       |
+| ------------------------------------------------------------------ | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `Arctan/compute-engine-s-arctan-takes-only-one-argument`           | domain         | `["Error","'unexpected-argument'","'1'",["ErrorTrace",["ErrorFrame","'Arctan'",2]]]`         | `Pi/4`                                                                                       |
+| `At/an-out-of-range-index-evaluates-to-nan-rather`                 | undefined-form | `NaN`                                                                                        | `{1, 2, 3}[[10]]`                                                                            |
+| `BarnesG/an-exact-non-integer-argument-stays-symbolic`             | unevaluated    | `["BarnesG",["Rational",5,2]]`                                                               | `(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))`                                              |
+| `BetaRegularized/an-x-outside-0-1-is-left-unevaluated-rather-than` | domain         | `["BetaRegularized",2,2,3]`                                                                  | `8`                                                                                          |
+| `CatalanNumber/a-negative-argument-is-left-unevaluated`            | domain         | `["CatalanNumber",-1]`                                                                       | `-1`                                                                                         |
+| `DirichletBeta/even-s-ge-4-has-no-closed-form-and-stays`           | unevaluated    | `["DirichletBeta",4]`                                                                        | `(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16`                                                     |
+| `DirichletEta/an-exact-non-integer-argument-stays-symbolic`        | unevaluated    | `["DirichletEta",["Rational",1,2]]`                                                          | `(1 - Sqrt[2])*Zeta[1/2]`                                                                    |
+| `DirichletL/and-keeps-zeta-s-pole-a-non-principal-l-is`            | undefined-form | `ComplexInfinity`                                                                            | `DirichletL[12, 1, 1]`                                                                       |
+| `ExtendedGCD/bezout-coefficients-when-a-0-0-times-0-5-times-1`     | shape          | `["Tuple",5,0,1]`                                                                            | `{5, {0, 1}}`                                                                                |
+| `ExtendedGCD/extendedgcd-12-18`                                    | shape          | `["Tuple",6,-1,1]`                                                                           | `{6, {-1, 1}}`                                                                               |
+| `ExtendedGCD/extendedgcd-2-3`                                      | shape          | `["Tuple",1,-1,1]`                                                                           | `{1, {-1, 1}}`                                                                               |
+| `ExtendedGCD/gaussian-integers-by-euclid-with-the-rounded`         | shape          | `["Tuple",1,["Complex",-1,-2],["Complex",-2,2]]`                                             | `{1, {-1 - 2*I, -2 + 2*I}}`                                                                  |
+| `ExtendedGCD/the-modular-inverse-of-3-mod-11-is-4-since-3`         | shape          | `["Tuple",1,4,-1]`                                                                           | `{1, {4, -1}}`                                                                               |
+| `Factorial2/negative-even-arguments-hit-a-pole-in-the`             | undefined-form | `NaN`                                                                                        | `ComplexInfinity`                                                                            |
+| `First/an-empty-collection-has-no-first-element-compute`           | undefined-form | `Missing`                                                                                    | `First[{}]`                                                                                  |
+| `FromDigits/an-empty-digit-list-is-left-unevaluated-rather`        | domain         | `["FromDigits",["List"]]`                                                                    | `0`                                                                                          |
+| `GammaRegularized/a-non-integer-order-combined-with-negative-z`    | domain         | `["GammaRegularized",2.5,-1]`                                                                | `0.9999999999999998 - 0.6280082302883814*I`                                                  |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`                   | convention     | `2`                                                                                          | `{2, 4}`                                                                                     |
+| `IntegerString/compute-engine-keeps-the-sign`                      | convention     | `'-42'`                                                                                      | `"42"`                                                                                       |
+| `Intersection/disjoint-collections-intersect-to-the-special`       | shape          | `EmptySet`                                                                                   | `{}`                                                                                         |
+| `IsSquareFree/threads-element-wise-over-a-list`                    | domain         | `[true, false, false]`                                                                       | `SquareFreeQ[{10, 4, 12}]`                                                                   |
+| `LerchPhi/n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5`                    | convention     | `{"re":0.18135576554179678,"im":-1.4915088888884338}`                                        | `-1.5447221959379853 + 2.3250420549362065*I`                                                 |
+| `LerchPhi/n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5`               | convention     | `{"re":-92.1275927724354,"im":93.92654608335769}`                                            | `-11.9430502347019 + 3.2226235505187835*I`                                                   |
+| `LerchPhi/n-lerchphi-0p8-plus-0p9i-3-neg-2p5`                      | convention     | `{"re":-11.007681973911316,"im":-4.132179140120582}`                                         | `-13.125607899837256 + 19.441154193212753*I`                                                 |
+| `LerchPhi/n-lerchphi-1-plus-2i-0p5-neg-2p5`                        | convention     | `{"re":2.475463147093155,"im":-6.813575698374405}`                                           | `-7.608072838412566 - 2.3174168611844586*I`                                                  |
+| `LerchPhi/n-lerchphi-1-plus-2i-2-plus-i-neg-2p5`                   | convention     | `{"re":-457.91134140962885,"im":71.22772232965785}`                                          | `-46.142787156209735 - 42.90442114783229*I`                                                  |
+| `LerchPhi/n-lerchphi-1-plus-2i-3-neg-2p5`                          | convention     | `{"re":-63.14556851667916,"im":-55.70965503308343}`                                          | `-110.42497592408667 + 9.475530152101694*I`                                                  |
+| `LerchPhi/n-lerchphi-1p5-0p5-neg-2p5`                              | convention     | `{"re":-1.5953666811753227,"im":-12.709728006201562}`                                        | `3.44381423758941 - 7.6705470874368356*I`                                                    |
+| `LerchPhi/n-lerchphi-1p5-2-plus-i-neg-2p5`                         | convention     | `{"re":188.05452580732162,"im":129.95094730887928}`                                          | `19.05095385185434 + 11.260195772958092*I`                                                   |
+| `LerchPhi/n-lerchphi-1p5-3-neg-2p5`                                | convention     | `{"re":11.051129504913542,"im":-0.7116312308983647}`                                         | `48.068018393802376 - 0.711631230898362*I`                                                   |
+| `LerchPhi/n-lerchphi-2-0p5-neg-2p5`                                | convention     | `{"re":-3.1630871058555616,"im":-19.965372508009548}`                                        | `4.75921583752595 - 12.043069564628038*I`                                                    |
+| `LerchPhi/n-lerchphi-2-2-plus-i-neg-2p5`                           | convention     | `{"re":332.0979843736517,"im":238.17654980358446}`                                           | `39.35281478642287 + 22.39721772102415*I`                                                    |
+| `LerchPhi/n-lerchphi-2-3-neg-2p5`                                  | convention     | `{"re":38.71453865989224,"im":-4.269192996247894}`                                           | `104.02772384507739 - 4.269192996247893*I`                                                   |
+| `LerchPhi/n-lerchphi-3-0p5-neg-2p5`                                | convention     | `{"re":-8.258987289448257,"im":-42.17050106856762}`                                          | `7.550880046726434 - 26.360633732392905*I`                                                   |
+| `LerchPhi/n-lerchphi-3-2-plus-i-neg-2p5`                           | convention     | `{"re":754.4393998220863,"im":554.5049540922392}`                                            | `112.02214251367533 + 59.66618957774957*I`                                                   |
+| `LerchPhi/n-lerchphi-3-3-neg-2p5`                                  | convention     | `{"re":169.03286920120505,"im":-29.553703980097676}`                                         | `314.9386469789826 - 29.553703980097694*I`                                                   |
+| `LerchPhi/n-lerchphi-neg-1p5-0p5-neg-2p5`                          | convention     | `{"re":-2.794143032828476,"im":-2.589691175981552}`                                          | `-0.2044518568469269 - 3.827487258676203*^-17*I`                                             |
+| `LerchPhi/n-lerchphi-neg-1p5-2-plus-i-neg-2p5`                     | convention     | `{"re":139.4440155178161,"im":127.21487477502689}`                                           | `-2.4322178506955483 - 3.1202928516189257*I`                                                 |
+| `LerchPhi/n-lerchphi-neg-1p5-3-neg-2p5`                            | convention     | `-43.44520529743256`                                                                         | `-8.206094186321462 - 5.108829761684327*^-15*I`                                              |
+| `LerchPhi/n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5`                   | convention     | `{"re":-3.574854956018253,"im":3.468728991325334}`                                           | `1.02676676378177 + 1.218062498742225*I`                                                     |
+| `LerchPhi/n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5`              | convention     | `{"re":244.75788905917892,"im":-108.8372736947882}`                                          | `-2.6384307117707664 + 12.751078290666381*I`                                                 |
+| `LerchPhi/n-lerchphi-neg-1p5-plus-i-3-neg-2p5`                     | convention     | `{"re":-2.0910882737014767,"im":67.79138574742537}`                                          | `17.14802283740964 + 20.383978340017954*I`                                                   |
+| `LerchPhi/n-lerchphi-neg-2-0p5-neg-2p5`                            | convention     | `{"re":-5.9455394562307005,"im":-4.656316619670605}`                                         | `-1.2892228365600795 + 1.9382590652050522*^-16*I`                                            |
+| `LerchPhi/n-lerchphi-neg-2-2-plus-i-neg-2p5`                       | convention     | `{"re":248.07432901528844,"im":220.3438744855333}`                                           | `-8.501055789332833 - 10.961345717993117*I`                                                  |
+| `LerchPhi/n-lerchphi-neg-2-3-neg-2p5`                              | convention     | `-91.97768434618699`                                                                         | `-29.034869531372177 - 1.1059478000009414*^-14*I`                                            |
+| `LerchPhi/past-the-unit-disk-by-the-integral`                      | precision      | `{"re":0.002025009957012008,"im":0.0033278975368131974}`                                     | `0.0020250151909632203 + 0.003327898913888968*I`                                             |
+| `LerchPhi/phi-1-1-1-zeta-1-1-12`                                   | convention     | `-0.08333333333333333`                                                                       | `ComplexInfinity`                                                                            |
+| `MatrixRank/a-vector-is-treated-as-a-1-n-matrix-wolfram`           | domain         | `1`                                                                                          | `MatrixRank[{1, 2, 3}]`                                                                      |
+| `Max/with-no-arguments-compute-engine-returns-nan`                 | convention     | `NaN`                                                                                        | `-Infinity`                                                                                  |
+| `MemoryConstrained/in-process-the-call-simply-does-not-reduce-see` | unevaluated    | `["MemoryConstrained",["Add",1,2],1000000]`                                                  | `3`                                                                                          |
+| `ModularMatrix/words-multiply-their-matrices`                      | domain         | `["ModularMatrix",1,1,1,2]`                                                                  | `"L" . "R"`                                                                                  |
+| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`       | domain         | `["MoebiusMu",0]`                                                                            | `0`                                                                                          |
+| `NonCommutativeMultiply/scalars-the-implied-identity-factor`       | convention     | `6`                                                                                          | `2 (x) 3`                                                                                    |
+| `PolyLog/a-non-integer-order-past-z-1-is-left-unevaluated`         | unevaluated    | `["PolyLog",2.5,2]`                                                                          | `2.789660332381895 - 1.3638037005377295*I`                                                   |
+| `PolyLog/li-1-2-1-zeta-1-2-a-non-integer-order-from`               | convention     | `-1.4603545088095868`                                                                        | `ComplexInfinity`                                                                            |
+| `PowerMod/11-7i-is-a-unit-mod-7-4i-so-it-has-negative`             | convention     | `{"re":-2,"im":-1}`                                                                          | `PowerMod[11 - 7*I, -4, 7 + 4*I]`                                                            |
+| `PowerMod/a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod`        | domain         | `3`                                                                                          | `PowerMod[2/3, 1, 7]`                                                                        |
+| `PowerModList/10-20-39-is-inert-so-its-residue-field-is-f-p-2`     | domain         | `[{"re":-2,"im":-1}, {"re":2,"im":1}]`                                                       | `PowerModList[3 + 4*I, 1/2, 100000000000000000039]`                                          |
+| `PowerModList/a-product-of-two-21-digit-primes-cannot-be`          | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `{2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
+| `PowerModList/a-rational-base-reads-as-2-cdot-3-1-in-z-23`         | domain         | `[4, 19]`                                                                                    | `PowerModList[2/3, 1/2, 23]`                                                                 |
+| `PowerModList/a-square-root-of-i-in-z-i-7-the-field-of-49`         | domain         | `[{"re":-2,"im":-2}, {"re":2,"im":2}]`                                                       | `PowerModList[I, 1/2, 7]`                                                                    |
+| `PowerModList/no-inverse-when-gcd-a-m-ne-1-so-the-list-is`         | undefined-form | `[]`                                                                                         | `PowerModList[2, -1, 4]`                                                                     |
+| `PowerModList/the-moduli-with-four-or-more-square-roots-of-1`      | domain         | `[[1, 3, 5, 7], [1, 4, 11, 14], [1, 8, 13, 20], [1, 5, 7, 11, 13, 17, 19, 23]]`              | `PowerModList[1, 1/2, {8, 15, 21, 24}]`                                                      |
+| `PowerModList/threads-over-lists-the-squares-mod-5-are-exactly`    | domain         | `[[1, 4], [], [], [2, 3]]`                                                                   | `PowerModList[{1, 2, 3, 4}, 1/2, 5]`                                                         |
+| `Root/odd-roots-of-a-negative-number-stay-real`                    | convention     | `-2`                                                                                         | `2*(-1)^(1/3)`                                                                               |
+| `Round/and-by-the-same-convention-2-5-rounds-to-3-not-2`           | rounding-mode  | `-3`                                                                                         | `-2`                                                                                         |
+| `Round/rounds-half-away-from-zero-not-banker-s-rounding`           | rounding-mode  | `3`                                                                                          | `2`                                                                                          |
+| `Scan/the-seeded-form-is-still-the-same-length-as-xs`              | convention     | `[11, 13, 16]`                                                                               | `enumeratio'Scan[{1, 2, 3}, Plus, 10]`                                                       |
+| `SetMinus/setminus-is-not-commutative-b-setminus-a-can`            | shape          | `EmptySet`                                                                                   | `{}`                                                                                         |
+| `VerificationTest/input-evaluates-but-does-not-match-expected`     | convention     | `["TestResultObject",["Tuple","'Outcome'","'Failure'"],["Tuple","'Input'",5],["Tuple","'Exp` | `TestObject[</"Outcome" -> "Failure", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldF` |
+| `VerificationTest/input-matches-expected`                          | convention     | `["TestResultObject",["Tuple","'Outcome'","'Success'"],["Tuple","'Input'",5],["Tuple","'Exp` | `TestObject[</"Outcome" -> "Success", "Input" -> HoldForm[2 + 3], "ExpectedOutput" -> HoldF` |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                           | message    |
-| --------------------------------- | ---------- |
-| `residues/MultiplicativeOrder#10` | `$Aborted` |
-| `residues/MultiplicativeOrder#8`  | `$Aborted` |
-| `residues/PowerModList#25`        | `$Aborted` |
+| example                                                            | message    |
+| ------------------------------------------------------------------ | ---------- |
+| `MultiplicativeOrder/a-discrete-log-mod-the-mersenne-prime-2-61-1` | `$Aborted` |
+| `MultiplicativeOrder/the-discrete-log-inverts-powermod`            | `$Aborted` |
+| `PowerModList/x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to`    | `$Aborted` |
 
 </details>
 
-## sympy — agree 826, disagree 10, inconclusive 4, error 40
+## sympy — agree 827, disagree 10, inconclusive 4, error 40
 
-| example                        | kind           | ours                | theirs                               |
-| ------------------------------ | -------------- | ------------------- | ------------------------------------ |
-| `arithmetic/Max#8`             | convention     | `NaN`               | `-oo`                                |
-| `elementary/Ln#3`              | undefined-form | `NegativeInfinity`  | `zoo`                                |
-| `number-theory/IsPrime#9`      | convention     | `true`              | `False`                              |
-| `number-theory/LCM#8`          | convention     | `{"re":3,"im":1}`   | `-1 + 3*I`                           |
-| `residues/Mod#12`              | domain         | `[1, -1]`           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]` |
-| `residues/Mod#8`               | domain         | `{"re":1,"im":-1}`  | `Mod(1 + 5*I, 3)`                    |
-| `residues/Mod#9`               | domain         | `{"re":0,"im":-1}`  | `Mod(7 + 5*I, 2 + I)`                |
-| `sequences/BernoulliB#2`       | convention     | `-0.5`              | `1/2`                                |
-| `sequences/BernoulliB#7`       | convention     | `30`                | `55`                                 |
-| `special-functions/PolyLog#11` | undefined-form | `["PolyLog",2.5,2]` | `polylog(2.5, 2)`                    |
+| example                                                    | kind           | ours                | theirs                               |
+| ---------------------------------------------------------- | -------------- | ------------------- | ------------------------------------ |
+| `BernoulliB/bernoullib-1`                                  | convention     | `-0.5`              | `1/2`                                |
+| `BernoulliB/faulhaber-s-formula-recovers-sum-k-0-4-k-2-30` | convention     | `30`                | `55`                                 |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s` | convention     | `true`              | `False`                              |
+| `LCM/1-3i-i-3-i-associates-share-their-multiples`          | convention     | `{"re":3,"im":1}`   | `-1 + 3*I`                           |
+| `Ln/ln-0`                                                  | undefined-form | `NegativeInfinity`  | `zoo`                                |
+| `Max/with-no-arguments-compute-engine-returns-nan`         | convention     | `NaN`               | `-oo`                                |
+| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                    | domain         | `{"re":0,"im":-1}`  | `Mod(7 + 5*I, 2 + I)`                |
+| `Mod/gaussian-integers-the-quotient-rounds-so-each`        | domain         | `{"re":1,"im":-1}`  | `Mod(1 + 5*I, 3)`                    |
+| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`      | domain         | `[1, -1]`           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]` |
+| `PolyLog/a-non-integer-order-past-z-1-is-left-unevaluated` | undefined-form | `["PolyLog",2.5,2]` | `polylog(2.5, 2)`                    |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                           | message                                                                    |
-| --------------------------------- | -------------------------------------------------------------------------- |
-| `arithmetic/Abs#6`                | `TypeError: Bad argument type for Abs(): <class 'list'>`                   |
-| `arithmetic/Ceil#4`               | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `arithmetic/Floor#4`              | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `arithmetic/Max#2`                | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
-| `arithmetic/Max#6`                | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
-| `arithmetic/Min#2`                | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
-| `arithmetic/Min#9`                | `ValueError: The argument '[3, 1]' is not comparable.`                     |
-| `arithmetic/Negate#5`             | `TypeError: bad operand type for unary -: 'list'`                          |
-| `arithmetic/Sign#6`               | `AttributeError: 'list' object has no attribute 'is_Mul'`                  |
-| `arithmetic/Square#5`             | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'` |
-| `collections/Length#5`            | `TypeError: object of type 'int' has no len()`                             |
-| `combinatorics/BellNumber#8`      | `ValueError: a non-negative integer expected`                              |
-| `combinatorics/BellNumber#9`      | `AttributeError: 'list' object has no attribute 'is_negative'`             |
-| `combinatorics/Binomial#13`       | `TypeError: unsupported operand type(s) for -: 'list' and 'Integer'`       |
-| `combinatorics/CatalanNumber#12`  | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
-| `combinatorics/Factorial#5`       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `elementary/Cos#9`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `elementary/Exp#6`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `elementary/Exp#7`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `elementary/Sin#10`               | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `elementary/Tan#8`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `number-theory/GCD#8`             | `AttributeError: 'int' object has no attribute 'is_commutative'`           |
-| `number-theory/IntegerExponent#3` | `ValueError: no such integer exists: multiplicity of 0 is not-defined`     |
-| `number-theory/IsPrime#10`        | `ValueError: 2 + I is not an integer`                                      |
-| `number-theory/IsPrime#8`         | `ValueError: [1, 2, 3, 4, 5, 6] is not an integer`                         |
-| `number-theory/MoebiusMu#6`       | `ValueError: n should be a positive integer`                               |
-| `number-theory/MoebiusMu#7`       | `AttributeError: 'list' object has no attribute 'is_integer'`              |
-| `number-theory/PrimePi#6`         | `AttributeError: 'list' object has no attribute 'is_real'`                 |
-| `number-theory/Totient#7`         | `ValueError: n should be a positive integer`                               |
-| `number-theory/Totient#8`         | `AttributeError: 'list' object has no attribute 'is_integer'`              |
-| `residues/Mod#4`                  | `TypeError: unsupported operand type(s) for %: 'list' and 'int'`           |
-| `residues/Mod#5`                  | `ZeroDivisionError: integer modulo by zero`                                |
-| `sequences/BernoulliB#10`         | `AttributeError: 'list' object has no attribute 'is_zero'`                 |
-| `sequences/Fibonacci#10`          | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
-| `sequences/LucasL#10`             | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
-| `special-functions/Gamma#10`      | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `special-functions/Gamma#3`       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
-| `special-functions/PolyGamma#8`   | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
-| `special-functions/PolyLog#10`    | `AttributeError: 'list' object has no attribute 'is_number'`               |
-| `special-functions/Zeta#4`        | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| example                                                       | message                                                                    |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| `Abs/threads-element-wise-over-a-list`                        | `TypeError: Bad argument type for Abs(): <class 'list'>`                   |
+| `BellNumber/a-negative-argument-is-left-unevaluated`          | `ValueError: a non-negative integer expected`                              |
+| `BellNumber/threads-element-wise-over-a-list-as-wolfram-s`    | `AttributeError: 'list' object has no attribute 'is_negative'`             |
+| `BernoulliB/threads-element-wise-over-a-list-as-wolfram-s`    | `AttributeError: 'list' object has no attribute 'is_zero'`                 |
+| `Binomial/threads-element-wise-over-a-list-as-wolfram-s`      | `TypeError: unsupported operand type(s) for -: 'list' and 'Integer'`       |
+| `CatalanNumber/threads-element-wise-over-a-list-as-wolfram-s` | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `Ceil/threads-element-wise-over-a-list`                       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Cos/threads-element-wise-over-a-list`                        | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Exp/broadcasts-element-wise-giving-begin-pmatrix-1-e`        | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Exp/threads-element-wise-over-a-list`                        | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Factorial/threads-element-wise-over-a-list`                  | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Fibonacci/threads-element-wise-over-a-list-as-wolfram-s`     | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `Floor/threads-element-wise-over-a-list`                      | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Gamma/threads-over-a-list-and-reduces-each-integer`          | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`      | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`              | `AttributeError: 'int' object has no attribute 'is_commutative'`           |
+| `IntegerExponent/integerexponent-0-5`                         | `ValueError: no such integer exists: multiplicity of 0 is not-defined`     |
+| `IsPrime/a-gaussian-prime-its-norm-5-is-prime`                | `ValueError: 2 + I is not an integer`                                      |
+| `IsPrime/threads-element-wise-over-a-list`                    | `ValueError: [1, 2, 3, 4, 5, 6] is not an integer`                         |
+| `Length/an-atom-has-no-parts-so-its-length-is-0`              | `TypeError: object of type 'int' has no len()`                             |
+| `LucasL/threads-element-wise-over-a-list-as-wolfram-s`        | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `Max/also-accepts-a-single-list-argument`                     | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
+| `Max/multiple-list-arguments-are-flattened-into-one`          | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
+| `Min/also-accepts-a-single-list-argument`                     | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
+| `Min/multiple-arguments-lists-included-are-flattened`         | `ValueError: The argument '[3, 1]' is not comparable.`                     |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`          | `ZeroDivisionError: integer modulo by zero`                                |
+| `Mod/threads-element-wise-over-a-list`                        | `TypeError: unsupported operand type(s) for %: 'list' and 'int'`           |
+| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute`  | `ValueError: n should be a positive integer`                               |
+| `MoebiusMu/threads-element-wise-over-a-list-as-wolfram-s`     | `AttributeError: 'list' object has no attribute 'is_integer'`              |
+| `Negate/threads-element-wise-over-a-list`                     | `TypeError: bad operand type for unary -: 'list'`                          |
+| `PolyGamma/threads-over-a-list-each-element-exact-so-each`    | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `PolyLog/threads-over-a-list-of-arguments`                    | `AttributeError: 'list' object has no attribute 'is_number'`               |
+| `PrimePi/threads-element-wise-over-a-list-as-wolfram-s`       | `AttributeError: 'list' object has no attribute 'is_real'`                 |
+| `Sign/threads-element-wise-over-a-list`                       | `AttributeError: 'list' object has no attribute 'is_Mul'`                  |
+| `Sin/threads-element-wise-over-a-list`                        | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Square/threads-element-wise-over-a-list`                     | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'` |
+| `Tan/threads-element-wise-over-a-list`                        | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `Totient/threads-element-wise-over-a-list-as-wolfram-s`       | `AttributeError: 'list' object has no attribute 'is_integer'`              |
+| `Totient/varphi-0-0-as-in-wolfram`                            | `ValueError: n should be a positive integer`                               |
+| `Zeta/threads-over-a-list-reducing-every-element-to`          | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
 
 </details>
 
-## mpmath — agree 534, disagree 2, inconclusive 0, error 4
+## mpmath — agree 535, disagree 2, inconclusive 0, error 4
 
-| example                           | kind           | ours                | theirs                                                                 |
-| --------------------------------- | -------------- | ------------------- | ---------------------------------------------------------------------- |
-| `special-functions/HurwitzZeta#5` | undefined-form | `ComplexInfinity`   | `+inf`                                                                 |
-| `special-functions/PolyLog#11`    | unevaluated    | `["PolyLog",2.5,2]` | `(2.78966033238277714404754430876 - 1.36380370053935279437171941141j)` |
+| example                                                    | kind           | ours                | theirs                                                                 |
+| ---------------------------------------------------------- | -------------- | ------------------- | ---------------------------------------------------------------------- |
+| `HurwitzZeta/pole-at-s-1-for-every-a`                      | undefined-form | `ComplexInfinity`   | `+inf`                                                                 |
+| `PolyLog/a-non-integer-order-past-z-1-is-left-unevaluated` | unevaluated    | `["PolyLog",2.5,2]` | `(2.78966033238277714404754430876 - 1.36380370053935279437171941141j)` |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                         | message                           |
-| ------------------------------- | --------------------------------- |
-| `special-functions/Gamma#1`     | `ValueError: gamma function pole` |
-| `special-functions/PolyGamma#6` | `ZeroDivisionError: `             |
-| `special-functions/Zeta#15`     | `ZeroDivisionError: `             |
-| `special-functions/Zeta#8`      | `ValueError: zeta(1) pole`        |
+| example                                                 | message                           |
+| ------------------------------------------------------- | --------------------------------- |
+| `Gamma/a-pole-of-gamma`                                 | `ValueError: gamma function pole` |
+| `PolyGamma/a-pole-of-gamma-still-a-pole-after`          | `ZeroDivisionError: `             |
+| `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges` | `ValueError: zeta(1) pole`        |
+| `Zeta/zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so`     | `ZeroDivisionError: `             |
 
 </details>
 
-## sage — agree 544, disagree 20, inconclusive 6, error 49
+## sage — agree 545, disagree 20, inconclusive 6, error 49
 
-| example                           | kind           | ours                                                                                         | theirs                                                                                       |
-| --------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `arithmetic/Sign#5`               | domain         | `{"re":0.6,"im":0.8}`                                                                        | `sgn(4*I + 3)`                                                                               |
-| `combinatorics/StirlingS1#1`      | convention     | `-50`                                                                                        | `50`                                                                                         |
-| `combinatorics/StirlingS1#8`      | convention     | `-362880`                                                                                    | `362880`                                                                                     |
-| `diagram/Diagram#4`               | domain         | `["Diagram",["List",["List",1,-1],["List",2]]]`                                              | `P{{-2}, {-1, 1}, {2}}`                                                                      |
-| `elementary/Ln#3`                 | shape          | `NegativeInfinity`                                                                           | `-Infinity`                                                                                  |
-| `elementary/Ln#5`                 | convention     | `true`                                                                                       | `False`                                                                                      |
-| `elementary/Tan#9`                | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `number-theory/Divisors#8`        | domain         | `[1, {"re":2,"im":1}, {"re":3,"im":4}]`                                                      | `[-4*I - 3, 2*I - 1, 1]`                                                                     |
-| `number-theory/FactorInteger#10`  | domain         | `[["Tuple",["Complex",2,1],2]]`                                                              | `[(2*I - 1, 2)]`                                                                             |
-| `number-theory/FactorInteger#11`  | domain         | `[["Tuple",["Complex",0,-1],1], ["Tuple",["Complex",1,1],1], ["Tuple",["Complex",99,34],1],` | `[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)` |
-| `number-theory/FactorInteger#5`   | shape          | `[["Tuple",1,1]]`                                                                            | `[]`                                                                                         |
-| `number-theory/FactorInteger#7`   | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                              | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
-| `residues/ModularInverse#2`       | domain         | `{"re":6,"im":4}`                                                                            | `-3*I - 1`                                                                                   |
-| `residues/PowerModList#24`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
-| `special-functions/Gamma#1`       | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
-| `special-functions/Gamma#6`       | convention     | `true`                                                                                       | `False`                                                                                      |
-| `special-functions/HurwitzZeta#5` | undefined-form | `ComplexInfinity`                                                                            | `hurwitz_zeta(1, 3)`                                                                         |
-| `special-functions/PolyLog#11`    | unevaluated    | `["PolyLog",2.5,2]`                                                                          | `2.78966033238278 - 1.36380370053935*I`                                                      |
-| `special-functions/PolyLog#6`     | convention     | `true`                                                                                       | `False`                                                                                      |
-| `special-functions/Zeta#8`        | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| example                                                          | kind           | ours                                                                                         | theirs                                                                                       |
+| ---------------------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `Diagram/malformed-the-point-2-is-missing-so-it-is-left`         | domain         | `["Diagram",["List",["List",1,-1],["List",2]]]`                                              | `P{{-2}, {-1, 1}, {2}}`                                                                      |
+| `Divisors/divisors-3-plus-4i`                                    | domain         | `[1, {"re":2,"im":1}, {"re":3,"im":4}]`                                                      | `[-4*I - 3, 2*I - 1, 1]`                                                                     |
+| `FactorInteger/3-4i-2-i-2`                                       | domain         | `[["Tuple",["Complex",2,1],2]]`                                                              | `[(2*I - 1, 2)]`                                                                             |
+| `FactorInteger/a-21-digit-gaussian-integer-through-its-norm`     | domain         | `[["Tuple",["Complex",0,-1],1], ["Tuple",["Complex",1,1],1], ["Tuple",["Complex",99,34],1],` | `[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)` |
+| `FactorInteger/compute-engine-returns-the-trivial-factor-1-1`    | shape          | `[["Tuple",1,1]]`                                                                            | `[]`                                                                                         |
+| `FactorInteger/negative-numbers-carry-an-explicit-1-unit-factor` | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                              | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
+| `Gamma/a-pole-of-gamma`                                          | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `Gamma/reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z`         | convention     | `true`                                                                                       | `False`                                                                                      |
+| `HurwitzZeta/pole-at-s-1-for-every-a`                            | undefined-form | `ComplexInfinity`                                                                            | `hurwitz_zeta(1, 3)`                                                                         |
+| `Ln/ln-0`                                                        | shape          | `NegativeInfinity`                                                                           | `-Infinity`                                                                                  |
+| `Ln/product-rule-ln-ab-ln-a-ln-b`                                | convention     | `true`                                                                                       | `False`                                                                                      |
+| `ModularInverse/2-i-6-4i-8-14i-equiv-1-pmod-7`                   | domain         | `{"re":6,"im":4}`                                                                            | `-3*I - 1`                                                                                   |
+| `PolyLog/a-non-integer-order-past-z-1-is-left-unevaluated`       | unevaluated    | `["PolyLog",2.5,2]`                                                                          | `2.78966033238278 - 1.36380370053935*I`                                                      |
+| `PolyLog/li-2-1-2-pi-2-12-ln-2-2-2`                              | convention     | `true`                                                                                       | `False`                                                                                      |
+| `PowerModList/a-product-of-two-21-digit-primes-cannot-be`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
+| `Sign/the-unit-complex-number-pointing-the-same`                 | domain         | `{"re":0.6,"im":0.8}`                                                                        | `sgn(4*I + 3)`                                                                               |
+| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9`                         | convention     | `-362880`                                                                                    | `362880`                                                                                     |
+| `StirlingS1/stirlings1-5-2`                                      | convention     | `-50`                                                                                        | `50`                                                                                         |
+| `Tan/a-pole-cos-pi-2-0-so-the-ratio-blows-up`                    | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `Zeta/pole-at-s-1-the-harmonic-series-sum-1-n-diverges`          | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                                  | message                                                                                      |
-| ---------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `arithmetic/Abs#6`                       | `TypeError: bad operand type for abs(): 'list'`                                              |
-| `arithmetic/Ceil#4`                      | `TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a ` |
-| `arithmetic/Floor#4`                     | `TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a ` |
-| `arithmetic/Max#8`                       | `ValueError: max() iterable argument is empty`                                               |
-| `arithmetic/Negate#5`                    | `TypeError: bad operand type for unary -: 'list'`                                            |
-| `arithmetic/Sign#6`                      | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `arithmetic/Square#5`                    | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'`                   |
-| `combinatorics/BellNumber#8`             | `ArithmeticError: Bell numbers not defined for negative indices`                             |
-| `combinatorics/Factorial#5`              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `combinatorics/Factorial#9`              | `ValueError: factorial only defined for nonnegative integers`                                |
-| `elementary/Cos#9`                       | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `elementary/Exp#6`                       | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `elementary/Sin#10`                      | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `elementary/Tan#8`                       | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `number-theory/FactorInteger#6`          | `ArithmeticError: factorization of 0 is not defined`                                         |
-| `number-theory/GCD#8`                    | `TypeError: unable to call gcd with [2, 4]`                                                  |
-| `number-theory/IsPrime#8`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `number-theory/RationalReconstruction#4` | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `number-theory/RationalReconstruction#6` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
-| `number-theory/RationalReconstruction#8` | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |
-| `residues/Mod#10`                        | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/Mod#12`                        | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/Mod#4`                         | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
-| `residues/Mod#5`                         | `ZeroDivisionError: Integer modulo by zero`                                                  |
-| `residues/Mod#8`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/Mod#9`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/ModularInverse#4`              | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
-| `residues/MultiplicativeOrder#5`         | `ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22`   |
-| `residues/PowerMod#10`                   | `TypeError: no conversion of this rational to integer`                                       |
-| `residues/PowerMod#12`                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/PowerMod#13`                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/PowerMod#14`                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
-| `residues/PowerMod#18`                   | `TypeError: no conversion of this rational to integer`                                       |
-| `residues/PowerMod#6`                    | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
-| `residues/PowerMod#7`                    | `TypeError: no conversion of this rational to integer`                                       |
-| `residues/PowerMod#8`                    | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `residues/PowerModList#22`               | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
-| `residues/PowerModList#25`               | `MemoryError: over 1024 MiB`                                                                 |
-| `residues/PowerModList#26`               | `TypeError: unhashable type: 'list'`                                                         |
-| `residues/PowerModList#27`               | `TypeError: Unable to coerce I to a rational`                                                |
-| `residues/PowerModList#28`               | `TypeError: Unable to coerce 4*I + 3 to a rational`                                          |
-| `residues/PowerModList#8`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
-| `sequences/BernoulliB#8`                 | `OverflowError: can't convert negative value to unsigned long`                               |
-| `special-functions/Gamma#3`              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `special-functions/PolyGamma#6`          | `ValueError: psi2_eval(): pole`                                                              |
-| `special-functions/PolyGamma#8`          | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `special-functions/PolyLog#10`           | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
-| `special-functions/Zeta#15`              | `ValueError: psi2_eval(): pole`                                                              |
-| `special-functions/Zeta#4`               | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| example                                                                   | message                                                                                      |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `Abs/threads-element-wise-over-a-list`                                    | `TypeError: bad operand type for abs(): 'list'`                                              |
+| `BellNumber/a-negative-argument-is-left-unevaluated`                      | `ArithmeticError: Bell numbers not defined for negative indices`                             |
+| `BernoulliB/bernoulli-numbers-are-only-defined-for-n-ge-0-a`              | `OverflowError: can't convert negative value to unsigned long`                               |
+| `Ceil/threads-element-wise-over-a-list`                                   | `TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a ` |
+| `Cos/threads-element-wise-over-a-list`                                    | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `Exp/threads-element-wise-over-a-list`                                    | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `Factorial/negative-integers-are-poles-of-the-gamma`                      | `ValueError: factorial only defined for nonnegative integers`                                |
+| `Factorial/threads-element-wise-over-a-list`                              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `FactorInteger/0-is-represented-as-0-1`                                   | `ArithmeticError: factorization of 0 is not defined`                                         |
+| `Floor/threads-element-wise-over-a-list`                                  | `TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a ` |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`                  | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`                          | `TypeError: unable to call gcd with [2, 4]`                                                  |
+| `IsPrime/threads-element-wise-over-a-list`                                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `Max/with-no-arguments-compute-engine-returns-nan`                        | `ValueError: max() iterable argument is empty`                                               |
+| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`                      | `ZeroDivisionError: Integer modulo by zero`                                                  |
+| `Mod/exact-in-both-parts-past-2-53`                                       | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `Mod/gaussian-integers-the-quotient-rounds-so-each`                       | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`                     | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `Mod/threads-element-wise-over-a-list`                                    | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
+| `ModularInverse/gcd-2-4-2-no-inverse`                                     | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `MultiplicativeOrder/no-order-exists-when-gcd-a-n-neq-1-here-gcd-10`      | `ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22`   |
+| `Negate/threads-element-wise-over-a-list`                                 | `TypeError: bad operand type for unary -: 'list'`                                            |
+| `PolyGamma/a-pole-of-gamma-still-a-pole-after`                            | `ValueError: psi2_eval(): pole`                                                              |
+| `PolyGamma/threads-over-a-list-each-element-exact-so-each`                | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `PolyLog/threads-over-a-list-of-arguments`                                | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `PowerMod/11-7i-is-a-unit-mod-7-4i-so-it-has-negative`                    | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `PowerMod/2-is-not-a-square-mod-5-so-there-is-no-root`                    | `TypeError: no conversion of this rational to integer`                                       |
+| `PowerMod/a-gaussian-modulus-and-an-exponent-of-10-30`                    | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `PowerMod/a-rational-exponent-is-a-modular-root-the-least`                | `TypeError: no conversion of this rational to integer`                                       |
+| `PowerMod/a-square-root-of-3-modulo-the-prime-10-30-57`                   | `TypeError: no conversion of this rational to integer`                                       |
+| `PowerMod/gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3`                    | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `PowerMod/no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2`                | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `PowerMod/threads-over-lists-the-period-is-the-order-of-2`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `PowerModList/10-20-39-is-inert-so-its-residue-field-is-f-p-2`            | `TypeError: Unable to coerce 4*I + 3 to a rational`                                          |
+| `PowerModList/a-square-root-of-i-in-z-i-7-the-field-of-49`                | `TypeError: Unable to coerce I to a rational`                                                |
+| `PowerModList/no-inverse-when-gcd-a-m-ne-1-so-the-list-is`                | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
+| `PowerModList/the-moduli-with-four-or-more-square-roots-of-1`             | `TypeError: unhashable type: 'list'`                                                         |
+| `PowerModList/threads-over-lists-the-squares-mod-5-are-exactly`           | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `PowerModList/x-2-equiv-0-pmod-3-40-has-3-20-roots-too-many-to`           | `MemoryError: over 1024 MiB`                                                                 |
+| `RationalReconstruction/mod-11-the-bounds-are-n-d-le-2-and-no-such`       | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |
+| `RationalReconstruction/one-word-size-prime-is-not-enough-for-h-20-2nd-m` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
+| `RationalReconstruction/rationalreconstruction-list-6-9-10-11`            | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
+| `Sign/threads-element-wise-over-a-list`                                   | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `Sin/threads-element-wise-over-a-list`                                    | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `Square/threads-element-wise-over-a-list`                                 | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'`                   |
+| `Tan/threads-element-wise-over-a-list`                                    | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `Zeta/threads-over-a-list-reducing-every-element-to`                      | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
+| `Zeta/zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so`                       | `ValueError: psi2_eval(): pole`                                                              |
 
 </details>
 
@@ -264,131 +264,131 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                      | message                                                                                      |
-| ---------------------------- | -------------------------------------------------------------------------------------------- |
-| `combinatorics/BellNumber#8` | `DomainError with -1: Argument must be non-negative`                                         |
-| `combinatorics/Factorial#5`  | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `combinatorics/Factorial#7`  | `AssertionError: denominator(x) == 1`                                                        |
-| `combinatorics/Factorial#9`  | `DomainError with -1: Argument must be non-negative`                                         |
-| `number-theory/GCD#12`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/GCD#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/IsPrime#10`   | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/IsPrime#8`    | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/LCM#8`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/MoebiusMu#6`  | `DomainError with 0: Argument must be positive`                                              |
-| `residues/Mod#10`            | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
-| `residues/Mod#12`            | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `residues/Mod#4`             | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
-| `residues/Mod#5`             | `DivideError: integer division error`                                                        |
-| `residues/Mod#8`             | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `residues/Mod#9`             | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| example                                                      | message                                                                                      |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `BellNumber/a-negative-argument-is-left-unevaluated`         | `DomainError with -1: Argument must be non-negative`                                         |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`   | `AssertionError: denominator(x) == 1`                                                        |
+| `Factorial/negative-integers-are-poles-of-the-gamma`         | `DomainError with -1: Argument must be non-negative`                                         |
+| `Factorial/threads-element-wise-over-a-list`                 | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `GCD/gaussian-integers-the-associate-in-the-first`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`             | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `IsPrime/a-gaussian-prime-its-norm-5-is-prime`               | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `IsPrime/threads-element-wise-over-a-list`                   | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `LCM/1-3i-i-3-i-associates-share-their-multiples`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                      | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`         | `DivideError: integer division error`                                                        |
+| `Mod/exact-in-both-parts-past-2-53`                          | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `Mod/gaussian-integers-the-quotient-rounds-so-each`          | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`        | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/threads-element-wise-over-a-list`                       | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
+| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute` | `DomainError with 0: Argument must be positive`                                              |
 
 </details>
 
 ## julia — agree 105, disagree 2, inconclusive 0, error 18
 
-| example                      | kind       | ours      | theirs   |
-| ---------------------------- | ---------- | --------- | -------- |
-| `combinatorics/StirlingS1#1` | convention | `-50`     | `50`     |
-| `combinatorics/StirlingS1#8` | convention | `-362880` | `362880` |
+| example                                  | kind       | ours      | theirs   |
+| ---------------------------------------- | ---------- | --------- | -------- |
+| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9` | convention | `-362880` | `362880` |
+| `StirlingS1/stirlings1-5-2`              | convention | `-50`     | `50`     |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                          | message                                                                                      |
-| -------------------------------- | -------------------------------------------------------------------------------------------- |
-| `combinatorics/BellNumber#8`     | `DomainError with -1: Argument must be non-negative`                                         |
-| `combinatorics/CatalanNumber#10` | `DomainError with -1: n must be nonnegative`                                                 |
-| `combinatorics/Factorial#5`      | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `combinatorics/Factorial#7`      | `AssertionError: denominator(x) == 1`                                                        |
-| `combinatorics/Factorial#9`      | `DomainError with -1: Argument must be non-negative`                                         |
-| `number-theory/GCD#12`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/GCD#8`            | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/IsPrime#10`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/IsPrime#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
-| `number-theory/LCM#8`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
-| `number-theory/MoebiusMu#6`      | `DomainError with 0: Argument must be positive`                                              |
-| `residues/Mod#10`                | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
-| `residues/Mod#12`                | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `residues/Mod#4`                 | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
-| `residues/Mod#5`                 | `DivideError: integer division error`                                                        |
-| `residues/Mod#8`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
-| `residues/Mod#9`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
-| `sequences/LucasL#8`             | `DomainError with -1: n must be nonnegative`                                                 |
+| example                                                      | message                                                                                      |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `BellNumber/a-negative-argument-is-left-unevaluated`         | `DomainError with -1: Argument must be non-negative`                                         |
+| `CatalanNumber/a-negative-argument-is-left-unevaluated`      | `DomainError with -1: n must be nonnegative`                                                 |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`   | `AssertionError: denominator(x) == 1`                                                        |
+| `Factorial/negative-integers-are-poles-of-the-gamma`         | `DomainError with -1: Argument must be non-negative`                                         |
+| `Factorial/threads-element-wise-over-a-list`                 | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `GCD/gaussian-integers-the-associate-in-the-first`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`             | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `IsPrime/a-gaussian-prime-its-norm-5-is-prime`               | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `IsPrime/threads-element-wise-over-a-list`                   | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `LCM/1-3i-i-3-i-associates-share-their-multiples`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `LucasL/negative-indices-are-supported-via-l-n-1-n-l-n`      | `DomainError with -1: n must be nonnegative`                                                 |
+| `Mod/a-gaussian-modulus-7-5i-2-i-4-i-i`                      | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`         | `DivideError: integer division error`                                                        |
+| `Mod/exact-in-both-parts-past-2-53`                          | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
+| `Mod/gaussian-integers-the-quotient-rounds-so-each`          | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/rounding-ties-to-even-means-1-and-1-both-appear`        | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `Mod/threads-element-wise-over-a-list`                       | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
+| `MoebiusMu/mu-is-only-defined-for-positive-integers-compute` | `DomainError with 0: Argument must be positive`                                              |
 
 </details>
 
 ## mathlib4 — agree 89, disagree 2, inconclusive 2, error 11
 
-| example                      | kind       | ours      | theirs   |
-| ---------------------------- | ---------- | --------- | -------- |
-| `combinatorics/StirlingS1#1` | convention | `-50`     | `50`     |
-| `combinatorics/StirlingS1#8` | convention | `-362880` | `362880` |
+| example                                  | kind       | ours      | theirs   |
+| ---------------------------------------- | ---------- | --------- | -------- |
+| `StirlingS1/s-n-1-1-n-1-n-1-so-s-10-1-9` | convention | `-362880` | `362880` |
+| `StirlingS1/stirlings1-5-2`              | convention | `-50`     | `50`     |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                          | message                                       |
-| -------------------------------- | --------------------------------------------- |
-| `combinatorics/Binomial#11`      | `failed to synthesize instance of type class` |
-| `combinatorics/Binomial#12`      | `failed to synthesize instance of type class` |
-| `combinatorics/CatalanNumber#10` | `failed to synthesize instance of type class` |
-| `combinatorics/Factorial#5`      | `Application type mismatch: The argument`     |
-| `combinatorics/Factorial#7`      | `Type mismatch`                               |
-| `combinatorics/Factorial#9`      | `failed to synthesize instance of type class` |
-| `number-theory/GCD#8`            | `Application type mismatch: The argument`     |
-| `number-theory/IsPrime#6`        | `failed to synthesize instance of type class` |
-| `number-theory/IsPrime#8`        | `Application type mismatch: The argument`     |
-| `residues/Mod#4`                 | `Type mismatch`                               |
-| `sequences/Fibonacci#8`          | `failed to synthesize instance of type class` |
+| example                                                      | message                                       |
+| ------------------------------------------------------------ | --------------------------------------------- |
+| `Binomial/a-negative-k-also-gives-0`                         | `failed to synthesize instance of type class` |
+| `Binomial/a-negative-n-uses-the-generalized-formula-binom`   | `failed to synthesize instance of type class` |
+| `CatalanNumber/a-negative-argument-is-left-unevaluated`      | `failed to synthesize instance of type class` |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`   | `Type mismatch`                               |
+| `Factorial/negative-integers-are-poles-of-the-gamma`         | `failed to synthesize instance of type class` |
+| `Factorial/threads-element-wise-over-a-list`                 | `Application type mismatch: The argument`     |
+| `Fibonacci/negative-indices-are-supported-via-f-n-1-n-1-f-n` | `failed to synthesize instance of type class` |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`             | `Application type mismatch: The argument`     |
+| `IsPrime/the-mersenne-prime-2-31-1`                          | `failed to synthesize instance of type class` |
+| `IsPrime/threads-element-wise-over-a-list`                   | `Application type mismatch: The argument`     |
+| `Mod/threads-element-wise-over-a-list`                       | `Type mismatch`                               |
 
 </details>
 
 ## rust — agree 133, disagree 7, inconclusive 1, error 32
 
-| example                     | kind           | ours                               | theirs             |
-| --------------------------- | -------------- | ---------------------------------- | ------------------ |
-| `arithmetic/Sqrt#10`        | domain         | `{"re":0,"im":0.6666666666666666}` | `NaN`              |
-| `arithmetic/Sqrt#5`         | domain         | `{"re":0,"im":2}`                  | `NaN`              |
-| `arithmetic/Sqrt#9`         | domain         | `{"re":0,"im":1.4142135623730951}` | `NaN`              |
-| `combinatorics/Binomial#11` | domain         | `0`                                | `1`                |
-| `combinatorics/Binomial#12` | domain         | `15`                               | `0`                |
-| `elementary/Ln#6`           | domain         | `{"re":0,"im":3.141592653589793}`  | `NaN`              |
-| `special-functions/Gamma#1` | undefined-form | `ComplexInfinity`                  | `PositiveInfinity` |
+| example                                                    | kind           | ours                               | theirs             |
+| ---------------------------------------------------------- | -------------- | ---------------------------------- | ------------------ |
+| `Binomial/a-negative-k-also-gives-0`                       | domain         | `0`                                | `1`                |
+| `Binomial/a-negative-n-uses-the-generalized-formula-binom` | domain         | `15`                               | `0`                |
+| `Gamma/a-pole-of-gamma`                                    | undefined-form | `ComplexInfinity`                  | `PositiveInfinity` |
+| `Ln/ln-1-i-pi-the-principal-value-past-the-branch`         | domain         | `{"re":0,"im":3.141592653589793}`  | `NaN`              |
+| `Sqrt/a-negative-rational-still-evaluates-exactly-when`    | domain         | `{"re":0,"im":0.6666666666666666}` | `NaN`              |
+| `Sqrt/a-perfect-square-radicand-evaluates-exactly-even`    | domain         | `{"re":0,"im":2}`                  | `NaN`              |
+| `Sqrt/negative-but-not-a-perfect-square-stays-symbolic`    | domain         | `{"re":0,"im":1.4142135623730951}` | `NaN`              |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
-| example                      | message                                                   |
-| ---------------------------- | --------------------------------------------------------- |
-| `arithmetic/Abs#6`           | `panic: threading: a list where the crate takes a scalar` |
-| `arithmetic/Ceil#4`          | `panic: threading: a list where the crate takes a scalar` |
-| `arithmetic/Floor#4`         | `panic: threading: a list where the crate takes a scalar` |
-| `arithmetic/Negate#5`        | `panic: negating [1, -2, 3]`                              |
-| `combinatorics/Binomial#13`  | `panic: threading: a list where the crate takes a scalar` |
-| `combinatorics/Binomial#14`  | `panic: an integer, not 9/2`                              |
-| `combinatorics/Factorial#5`  | `panic: threading: a list where the crate takes a scalar` |
-| `combinatorics/Factorial#7`  | `panic: an integer, not 1/2`                              |
-| `combinatorics/Factorial#9`  | `panic: a non-negative integer`                           |
-| `elementary/Cos#9`           | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Exp#6`           | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Exp#7`           | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Sin#10`          | `panic: threading: a list where the crate takes a scalar` |
-| `elementary/Tan#8`           | `panic: threading: a list where the crate takes a scalar` |
-| `number-theory/GCD#8`        | `panic: threading: a list where the crate takes a scalar` |
-| `number-theory/IsPrime#8`    | `panic: threading: a list where the crate takes a scalar` |
-| `number-theory/IsPrime#9`    | `panic: a non-negative integer`                           |
-| `number-theory/PrimePi#6`    | `panic: threading: a list where the crate takes a scalar` |
-| `numerals/AdicNumeral#1`     | `panic: the adic crate takes a prime base, not 10`        |
-| `numerals/AdicNumeral#2`     | `panic: the adic crate takes a prime base, not 10`        |
-| `numerals/AdicNumeral#5`     | `panic: the adic crate takes a prime base, not 10`        |
-| `residues/Mod#4`             | `panic: threading: a list where the crate takes a scalar` |
-| `residues/Mod#5`             | `panic: attempt to divide by zero`                        |
-| `residues/PowerMod#10`       | `panic: an integer, not 1/2`                              |
-| `residues/PowerMod#11`       | `panic: an integer, not 2/3`                              |
-| `residues/PowerMod#18`       | `panic: an integer, not 1/2`                              |
-| `residues/PowerMod#3`        | `panic: negative exponentiation is not supported!`        |
-| `residues/PowerMod#6`        | `panic: negative exponentiation is not supported!`        |
-| `residues/PowerMod#7`        | `panic: an integer, not 1/2`                              |
-| `residues/PowerMod#8`        | `panic: threading: a list where the crate takes a scalar` |
-| `special-functions/Gamma#10` | `panic: threading: a list where the crate takes a scalar` |
-| `special-functions/Gamma#3`  | `panic: threading: a list where the crate takes a scalar` |
+| example                                                      | message                                                   |
+| ------------------------------------------------------------ | --------------------------------------------------------- |
+| `Abs/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
+| `AdicNumeral/6667-3-1-1-3-is-a-10-adic-integer`              | `panic: the adic crate takes a prime base, not 10`        |
+| `AdicNumeral/999-1-0-carrying-forever`                       | `panic: the adic crate takes a prime base, not 10`        |
+| `AdicNumeral/composite-base-2-is-not-a-unit-of-z-10-so-this` | `panic: the adic crate takes a prime base, not 10`        |
+| `Binomial/half-integer-arguments-evaluate-exactly-through`   | `panic: an integer, not 9/2`                              |
+| `Binomial/threads-element-wise-over-a-list-as-wolfram-s`     | `panic: threading: a list where the crate takes a scalar` |
+| `Ceil/threads-element-wise-over-a-list`                      | `panic: threading: a list where the crate takes a scalar` |
+| `Cos/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
+| `Exp/broadcasts-element-wise-giving-begin-pmatrix-1-e`       | `panic: threading: a list where the crate takes a scalar` |
+| `Exp/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
+| `Factorial/extends-to-non-integers-via-the-gamma-function`   | `panic: an integer, not 1/2`                              |
+| `Factorial/negative-integers-are-poles-of-the-gamma`         | `panic: a non-negative integer`                           |
+| `Factorial/threads-element-wise-over-a-list`                 | `panic: threading: a list where the crate takes a scalar` |
+| `Floor/threads-element-wise-over-a-list`                     | `panic: threading: a list where the crate takes a scalar` |
+| `Gamma/threads-over-a-list-and-reduces-each-integer`         | `panic: threading: a list where the crate takes a scalar` |
+| `Gamma/threads-over-a-list-so-poles-evaluate-concretely`     | `panic: threading: a list where the crate takes a scalar` |
+| `GCD/lists-aren-t-threaded-element-wise-they-re`             | `panic: threading: a list where the crate takes a scalar` |
+| `IsPrime/7-is-prime-its-associate-7-is-matching-wolfram-s`   | `panic: a non-negative integer`                           |
+| `IsPrime/threads-element-wise-over-a-list`                   | `panic: threading: a list where the crate takes a scalar` |
+| `Mod/division-by-a-0-modulus-yields-nan-rather-than`         | `panic: attempt to divide by zero`                        |
+| `Mod/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
+| `Negate/threads-element-wise-over-a-list`                    | `panic: negating [1, -2, 3]`                              |
+| `PowerMod/2-is-not-a-square-mod-5-so-there-is-no-root`       | `panic: an integer, not 1/2`                              |
+| `PowerMod/a-negative-exponent-gives-the-modular-inverse`     | `panic: negative exponentiation is not supported!`        |
+| `PowerMod/a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod`  | `panic: an integer, not 2/3`                              |
+| `PowerMod/a-rational-exponent-is-a-modular-root-the-least`   | `panic: an integer, not 1/2`                              |
+| `PowerMod/a-square-root-of-3-modulo-the-prime-10-30-57`      | `panic: an integer, not 1/2`                              |
+| `PowerMod/no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2`   | `panic: negative exponentiation is not supported!`        |
+| `PowerMod/threads-over-lists-the-period-is-the-order-of-2`   | `panic: threading: a list where the crate takes a scalar` |
+| `PrimePi/threads-element-wise-over-a-list-as-wolfram-s`      | `panic: threading: a list where the crate takes a scalar` |
+| `Sin/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
+| `Tan/threads-element-wise-over-a-list`                       | `panic: threading: a list where the crate takes a scalar` |
 
 </details>

@@ -1,0 +1,214 @@
+{
+  "packageRoot": "/pkgroot",
+  "report": {
+    "testResults": [
+      {
+        "name": "/pkgroot/tests/boxed.test.ts",
+        "startTime": 1790351923307,
+        "endTime": 1790351923329.8005,
+        "assertionResults": [
+          {
+            "fullName": "operandsOf reads a function's arguments, and [] from anything else",
+            "title": "operandsOf reads a function's arguments, and [] from anything else",
+            "duration": 1.5454159999999888,
+            "status": "passed"
+          },
+          {
+            "fullName": "integerAt reads real integers in the safe range",
+            "title": "integerAt reads real integers in the safe range",
+            "duration": 0.2215840000000071,
+            "status": "passed"
+          },
+          {
+            "fullName": "integerAt rejects rather than truncates",
+            "title": "integerAt rejects rather than truncates",
+            "duration": 0.49054100000000744,
+            "status": "passed"
+          },
+          {
+            "fullName": "bigIntegerAt reads machine and bignum integers alike",
+            "title": "bigIntegerAt reads machine and bignum integers alike",
+            "duration": 0.22370900000004212,
+            "status": "passed"
+          },
+          {
+            "fullName": "bigIntegerAt rejects non-integers",
+            "title": "bigIntegerAt rejects non-integers",
+            "duration": 0.9054160000000024,
+            "status": "passed"
+          },
+          {
+            "fullName": "stringAt unwraps bare, String-wrapped and quoted spellings alike",
+            "title": "stringAt unwraps bare, String-wrapped and quoted spellings alike",
+            "duration": 1.4395420000000172,
+            "status": "passed"
+          },
+          {
+            "fullName": "wrapOperator with an arity skips calls of any other operand count",
+            "title": "wrapOperator with an arity skips calls of any other operand count",
+            "duration": 17.800625000000082,
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "name": "/pkgroot/tests/deadline.test.ts",
+        "startTime": 1790351923318,
+        "endTime": 1790351923320.1404,
+        "assertionResults": [
+          {
+            "fullName": "checkpoint is a no-op with no deadline armed",
+            "title": "checkpoint is a no-op with no deadline armed",
+            "duration": 1.313416999999987,
+            "status": "passed"
+          },
+          {
+            "fullName": "checkpoint throws once an already-expired deadline is armed",
+            "title": "checkpoint throws once an already-expired deadline is armed",
+            "duration": 0.19183400000000006,
+            "status": "passed"
+          },
+          {
+            "fullName": "checkpoint does not throw within a deadline that has not passed",
+            "title": "checkpoint does not throw within a deadline that has not passed",
+            "duration": 0.14758299999999736,
+            "status": "passed"
+          },
+          {
+            "fullName": "withDeadline restores the outer state once it returns",
+            "title": "withDeadline restores the outer state once it returns",
+            "duration": 0.14858300000000213,
+            "status": "passed"
+          },
+          {
+            "fullName": "nesting only shortens the effective deadline, never extends it",
+            "title": "nesting only shortens the effective deadline, never extends it",
+            "duration": 0.14041599999998766,
+            "status": "passed"
+          }
+        ]
+      },
+      {
+        "name": "/pkgroot/tests/messages.test.ts",
+        "startTime": 1790351923346,
+        "endTime": 1790351923361.9197,
+        "assertionResults": [
+          {
+            "fullName": "an emit splices its arguments into the head's template",
+            "title": "an emit splices its arguments into the head's template",
+            "duration": 1.8037500000000364,
+            "status": "passed"
+          },
+          {
+            "fullName": "a code with no template still reads, as its arguments",
+            "title": "a code with no template still reads, as its arguments",
+            "duration": 0.15750000000002728,
+            "status": "passed"
+          },
+          {
+            "fullName": "collection is per call: repeats fold, nesting reaches both, nothing leaks",
+            "title": "collection is per call: repeats fold, nesting reaches both, nothing leaks",
+            "duration": 0.26395899999999983,
+            "status": "passed"
+          },
+          {
+            "fullName": "templates are the engine's own",
+            "title": "templates are the engine's own",
+            "duration": 13.919667000000004,
+            "status": "passed"
+          }
+        ]
+      }
+    ]
+  },
+  "expected": {
+    "wallMs": 40.860595703125,
+    "files": {
+      "tests/boxed.test.ts": 22.800537109375,
+      "tests/deadline.test.ts": 2.140380859375,
+      "tests/messages.test.ts": 15.919677734375
+    },
+    "tests": [
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "operandsOf reads a function's arguments, and [] from anything else",
+        "durationMs": 1.5454159999999888
+      },
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "integerAt reads real integers in the safe range",
+        "durationMs": 0.2215840000000071
+      },
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "integerAt rejects rather than truncates",
+        "durationMs": 0.49054100000000744
+      },
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "bigIntegerAt reads machine and bignum integers alike",
+        "durationMs": 0.22370900000004212
+      },
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "bigIntegerAt rejects non-integers",
+        "durationMs": 0.9054160000000024
+      },
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "stringAt unwraps bare, String-wrapped and quoted spellings alike",
+        "durationMs": 1.4395420000000172
+      },
+      {
+        "file": "tests/boxed.test.ts",
+        "name": "wrapOperator with an arity skips calls of any other operand count",
+        "durationMs": 17.800625000000082
+      },
+      {
+        "file": "tests/deadline.test.ts",
+        "name": "checkpoint is a no-op with no deadline armed",
+        "durationMs": 1.313416999999987
+      },
+      {
+        "file": "tests/deadline.test.ts",
+        "name": "checkpoint throws once an already-expired deadline is armed",
+        "durationMs": 0.19183400000000006
+      },
+      {
+        "file": "tests/deadline.test.ts",
+        "name": "checkpoint does not throw within a deadline that has not passed",
+        "durationMs": 0.14758299999999736
+      },
+      {
+        "file": "tests/deadline.test.ts",
+        "name": "withDeadline restores the outer state once it returns",
+        "durationMs": 0.14858300000000213
+      },
+      {
+        "file": "tests/deadline.test.ts",
+        "name": "nesting only shortens the effective deadline, never extends it",
+        "durationMs": 0.14041599999998766
+      },
+      {
+        "file": "tests/messages.test.ts",
+        "name": "an emit splices its arguments into the head's template",
+        "durationMs": 1.8037500000000364
+      },
+      {
+        "file": "tests/messages.test.ts",
+        "name": "a code with no template still reads, as its arguments",
+        "durationMs": 0.15750000000002728
+      },
+      {
+        "file": "tests/messages.test.ts",
+        "name": "collection is per call: repeats fold, nesting reaches both, nothing leaks",
+        "durationMs": 0.26395899999999983
+      },
+      {
+        "file": "tests/messages.test.ts",
+        "name": "templates are the engine's own",
+        "durationMs": 13.919667000000004
+      }
+    ]
+  }
+}

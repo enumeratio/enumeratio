@@ -179,10 +179,10 @@ jobs:
           system: sage
       - name: adeles and adic goldens match
         run: |
-          sage -python packages/adeles/scripts/collect-golden.py > packages/adeles/tests/adeles.golden.json
-          (cd packages/numerals && node scripts/collect-adic-golden.ts)
-          pnpm exec vp fmt packages/adeles/tests packages/numerals/tests
-          git diff --exit-code --stat -- packages/adeles/tests packages/numerals/tests
+          sage -python packages/symbols/arithmetic/adeles/scripts/collect-golden.py > packages/symbols/arithmetic/adeles/tests/adeles.golden.json
+          (cd packages/symbols/arithmetic/numerals && node scripts/collect-adic-golden.ts)
+          pnpm exec vp fmt packages/symbols/arithmetic/adeles/tests packages/symbols/arithmetic/numerals/tests
+          git diff --exit-code --stat -- packages/symbols/arithmetic/adeles/tests packages/symbols/arithmetic/numerals/tests
 
   # Wolfram, weekly, from the official Wolfram Engine image on an on-demand license: billed per kernel-hour against
   # the repo secret WOLFRAMSCRIPT_ENTITLEMENTID (a LicenseEntitlementObject, renewed yearly). Skips without it.

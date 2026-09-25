@@ -20,14 +20,17 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "union-list-1-2-3-list-3-4",
         expr: ["Union", ["List", 1, 2, 3], ["List", 3, 4]],
         expected: ["Set", 1, 2, 3, 4],
       },
       {
+        id: "union-list-1-2-list-2-3-list-3-4",
         expr: ["Union", ["List", 1, 2], ["List", 2, 3], ["List", 3, 4]],
         expected: ["Set", 1, 2, 3, 4],
       },
       {
+        id: "union-is-commutative-argument-order-doesn-t",
         expr: [
           "Equal",
           ["Union", ["List", 1, 2, 3], ["List", 2, 3, 4]],
@@ -38,6 +41,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$Union$ is commutative: argument order doesn't matter",
       },
       {
+        id: "inclusion-exclusion-a-cup-b-a-b-a-cap-b-see",
         expr: [
           "Equal",
           ["Length", ["Union", ["List", 1, 2, 3], ["List", 2, 3, 4]]],
@@ -53,28 +57,33 @@ export const collections: readonly ReferenceEntry[] = [
           "Inclusion-exclusion: $|A \\cup B| = |A| + |B| - |A \\cap B|$. See [[Length]] and [[Intersection]]",
       },
       {
+        id: "combining-the-divisors-of-10-and-15-into-one-set",
         expr: ["Union", ["Divisors", 10], ["Divisors", 15]],
         expected: ["Set", 1, 2, 3, 5, 10, 15],
         category: "Applications",
         caption: "Combining the divisors of 10 and 15 into one set",
       },
       {
+        id: "combining-the-divisors-of-10-12-and-20-into-one",
         expr: ["Union", ["Divisors", 10], ["Divisors", 12], ["Divisors", 20]],
         expected: ["Set", 1, 2, 3, 4, 5, 6, 10, 12, 20],
         category: "Applications",
         caption: "Combining the divisors of 10, 12 and 20 into one sorted set",
       },
       {
+        id: "union-list-a-b-c-list-b-c-d",
         expr: ["Union", ["List", "a", "b", "c"], ["List", "b", "c", "d"]],
         expected: ["Set", "a", "b", "c", "d"],
       },
       {
+        id: "a-single-list-is-de-duplicated",
         expr: ["Union", ["List", 1, 2, 1, 3, 6, 2, 2]],
         expected: ["Set", 1, 2, 3, 6],
         category: "Scope",
         caption: "A single list is de-duplicated",
       },
       {
+        id: "symbolic-elements-merged-across-three-lists",
         expr: [
           "Union",
           ["List", "a", "b", "a", "c"],
@@ -86,6 +95,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Symbolic elements, merged across three lists",
       },
       {
+        id: "elements-can-themselves-be-lists-1-2-and-2-1",
         expr: [
           "Union",
           ["List", ["List", 1, 2], ["List", 1, 2, 3]],
@@ -101,6 +111,7 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "with-no-arguments-the-union-is-empty",
         expr: ["Union"],
         expected: "EmptySet",
         category: "Scope",
@@ -108,12 +119,14 @@ export const collections: readonly ReferenceEntry[] = [
         divergence: { wolfram: "Union[] is the empty list {} in Wolfram." },
       },
       {
+        id: "the-empty-set-is-the-identity-for-union-a-cup",
         expr: ["Union", ["Set", 1, 2], "EmptySet"],
         expected: ["Set", 1, 2],
         category: "Properties",
         caption: "The empty set is the identity for $Union$: $A \\cup \\varnothing = A$",
       },
       {
+        id: "counting-the-distinct-values-in-a-list-see",
         expr: ["Length", ["Union", ["List", 1, 2, 1, 3, 6, 2, 2]]],
         expected: 4,
         category: "Applications",
@@ -141,25 +154,30 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "intersection-list-1-2-3-list-2-3-4",
         expr: ["Intersection", ["List", 1, 2, 3], ["List", 2, 3, 4]],
         expected: ["Set", 2, 3],
       },
       {
+        id: "intersection-list-1-2-3-4-list-2-3-4-5",
         expr: ["Intersection", ["List", 1, 2, 3, 4], ["List", 2, 3, 4, 5]],
         expected: ["Set", 2, 3, 4],
       },
       {
+        id: "with-three-or-more-collections-only-elements",
         expr: ["Intersection", ["List", 1, 2, 3], ["List", 2, 3, 4], ["List", 2, 3, 5]],
         expected: ["Set", 2, 3],
         caption: "With three or more collections, only elements common to all of them survive",
       },
       {
+        id: "intersection-is-idempotent-a-cap-a-a",
         expr: ["Equal", ["Intersection", ["Set", 1, 2, 3], ["Set", 1, 2, 3]], ["Set", 1, 2, 3]],
         expected: "True",
         category: "Properties",
         caption: "$Intersection$ is idempotent: $A \\cap A = A$",
       },
       {
+        id: "the-same-inclusion-exclusion-count-rearranged-a",
         expr: [
           "Equal",
           ["Add", ["Length", ["List", 1, 2, 3]], ["Length", ["List", 2, 3, 4]]],
@@ -175,6 +193,7 @@ export const collections: readonly ReferenceEntry[] = [
           "The same inclusion-exclusion count, rearranged: $|A| + |B| = |A \\cup B| + |A \\cap B|$. See [[Union]]",
       },
       {
+        id: "disjoint-collections-intersect-to-the-special",
         expr: ["Intersection", ["List", 1, 2], ["List", 3, 4]],
         expected: "EmptySet",
         category: "Possible issues",
@@ -185,29 +204,34 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "the-divisors-common-to-45-and-78",
         expr: ["Intersection", ["Divisors", 45], ["Divisors", 78]],
         expected: ["Set", 1, 3],
         category: "Applications",
         caption: "The divisors common to 45 and 78",
       },
       {
+        id: "duplicates-are-dropped-as-well",
         expr: ["Intersection", ["List", 1, 1, 2, 3], ["List", 3, 1, 4], ["List", 4, 1, 3, 3]],
         expected: ["Set", 1, 3],
         caption: "Duplicates are dropped as well",
       },
       {
+        id: "symbolic-elements",
         expr: ["Intersection", ["List", "a", "b", "c"], ["List", "b", "c", "d"]],
         expected: ["Set", "b", "c"],
         category: "Scope",
         caption: "Symbolic elements",
       },
       {
+        id: "a-single-collection-comes-back-as-a-set",
         expr: ["Intersection", ["List", 1, 2, 3]],
         expected: ["Set", 1, 2, 3],
         category: "Scope",
         caption: "A single collection comes back as a set",
       },
       {
+        id: "intersecting-with-the-empty-set-gives-the-empty",
         expr: ["Intersection", ["List", 1, 2, 3], "EmptySet"],
         expected: "EmptySet",
         category: "Properties",
@@ -215,6 +239,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Intersecting with the empty set gives the empty set: $A \\cap \\varnothing = \\varnothing$",
       },
       {
+        id: "the-result-keeps-the-order-elements-were-met-in",
         expr: ["Intersection", ["List", "c", "b", "a"], ["List", "a", "b"]],
         expected: ["Set", "b", "a"],
         category: "Possible issues",
@@ -244,19 +269,23 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "setminus-1-2-3-2",
         expr: ["SetMinus", ["Set", 1, 2, 3], ["Set", 2]],
         expected: ["Set", 1, 3],
       },
       {
+        id: "setminus-1-2-3-4-2-4",
         expr: ["SetMinus", ["Set", 1, 2, 3, 4], ["Set", 2, 4]],
         expected: ["Set", 1, 3],
       },
       {
+        id: "removing-elements-that-aren-t-present-leaves-the",
         expr: ["SetMinus", ["Set", 1, 2, 3], ["Set", 9]],
         expected: ["Set", 1, 2, 3],
         caption: "Removing elements that aren't present leaves the set unchanged",
       },
       {
+        id: "a-setminus-a-setminus-b-a-cap-b-see-intersection",
         expr: [
           "Equal",
           ["SetMinus", ["Set", 1, 2, 3, 4], ["SetMinus", ["Set", 1, 2, 3, 4], ["Set", 2, 4]]],
@@ -267,6 +296,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$A \\setminus (A \\setminus B) = A \\cap B$. See [[Intersection]]",
       },
       {
+        id: "setminus-is-not-commutative-b-setminus-a-can",
         expr: ["SetMinus", ["Set", 2, 4], ["Set", 1, 2, 3, 4]],
         expected: "EmptySet",
         category: "Possible issues",
@@ -277,11 +307,13 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "several-sets-can-be-removed-at-once",
         expr: ["SetMinus", ["Set", "a", "b", "c", "d", "f"], ["Set", "a", "c"], ["Set", "d"]],
         expected: ["Set", "b", "f"],
         caption: "Several sets can be removed at once",
       },
       {
+        id: "lists-as-well-as-sets-as-wolfram-s-complement",
         expr: ["SetMinus", ["List", "a", "b", "c", "d", "f"], ["List", "a", "c"], ["List", "d"]],
         expected: ["Set", "b", "f"],
         aspirational: true,
@@ -290,6 +322,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Lists as well as sets, as Wolfram's $Complement$ takes; compute-engine's SetMinus rejects a $List$ — not yet",
       },
       {
+        id: "a-range-as-the-universe-to-remove-from-compute",
         expr: ["SetMinus", ["Range", 1, 10], ["Set", 2, 3]],
         expected: ["Set", 1, 4, 5, 6, 7, 8, 9, 10],
         aspirational: true,
@@ -298,18 +331,21 @@ export const collections: readonly ReferenceEntry[] = [
           "A [[Range]] as the universe to remove from; compute-engine wants an explicit $Set$ — not yet",
       },
       {
+        id: "removing-the-empty-set-changes-nothing-a",
         expr: ["SetMinus", ["Set", 1, 2, 3], "EmptySet"],
         expected: ["Set", 1, 2, 3],
         category: "Properties",
         caption: "Removing the empty set changes nothing: $A \\setminus \\varnothing = A$",
       },
       {
+        id: "a-setminus-a-varnothing",
         expr: ["SetMinus", ["Set", 1, 2, 3], ["Set", 1, 2, 3]],
         expected: "EmptySet",
         category: "Properties",
         caption: "$A \\setminus A = \\varnothing$",
       },
       {
+        id: "the-result-keeps-the-first-set-s-order-rather",
         expr: ["SetMinus", ["Set", 5, 4, 3, 2, 1], ["Set", 2]],
         expected: ["Set", 5, 4, 3, 1],
         category: "Possible issues",
@@ -348,15 +384,25 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
-      { expr: ["First", ["List", 1, 2, 3]], expected: 1 },
-      { expr: ["First", ["List", 10, 20, 30]], expected: 10 },
       {
+        id: "first-list-1-2-3",
+        expr: ["First", ["List", 1, 2, 3]],
+        expected: 1,
+      },
+      {
+        id: "first-list-10-20-30",
+        expr: ["First", ["List", 10, 20, 30]],
+        expected: 10,
+      },
+      {
+        id: "first-c-at-c-1-see-at",
         expr: ["Equal", ["First", ["List", 1, 2, 3]], ["At", ["List", 1, 2, 3], 1]],
         expected: "True",
         category: "Properties",
         caption: "$First(c) = At(c, 1)$. See [[At]]",
       },
       {
+        id: "an-empty-collection-has-no-first-element-compute",
         expr: ["First", ["List"]],
         expected: "Missing",
         category: "Possible issues",
@@ -368,31 +414,40 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "a-second-argument-supplies-a-default-for-an",
         expr: ["First", ["List"], 99],
         expected: 99,
         category: "Scope",
         caption: "A second argument supplies a default for an empty collection",
       },
-      { expr: ["First", ["List", "a", "b", "c"]], expected: "a" },
       {
+        id: "first-list-a-b-c",
+        expr: ["First", ["List", "a", "b", "c"]],
+        expected: "a",
+      },
+      {
+        id: "of-a-matrix-the-first-row",
         expr: ["First", ["List", ["List", "a", "b"], ["List", "c", "d"]]],
         expected: ["List", "a", "b"],
         category: "Scope",
         caption: "Of a matrix, the first row",
       },
       {
+        id: "a-lazy-range-works-too",
         expr: ["First", ["Range", 5, 10]],
         expected: 5,
         category: "Scope",
         caption: "A lazy [[Range]] works too",
       },
       {
+        id: "any-expression-not-just-a-list-the-first-term-of",
         expr: ["First", ["Add", ["Power", "a", 2], ["Power", "b", 2]]],
         expected: ["Power", "a", 2],
         category: "Scope",
         caption: "Any expression, not just a list: the first term of a sum",
       },
       {
+        id: "a-default-is-ignored-when-the-collection-has-a",
         expr: ["First", ["List", "a", "b"], "x"],
         expected: "a",
         category: "Scope",
@@ -427,46 +482,65 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
-      { expr: ["Last", ["List", 1, 2, 3]], expected: 3 },
-      { expr: ["Last", ["List", 10, 20, 30]], expected: 30 },
       {
+        id: "last-list-1-2-3",
+        expr: ["Last", ["List", 1, 2, 3]],
+        expected: 3,
+      },
+      {
+        id: "last-list-10-20-30",
+        expr: ["Last", ["List", 10, 20, 30]],
+        expected: 30,
+      },
+      {
+        id: "last-c-at-c-1-see-at",
         expr: ["Equal", ["Last", ["List", 1, 2, 3]], ["At", ["List", 1, 2, 3], -1]],
         expected: "True",
         category: "Properties",
         caption: "$Last(c) = At(c, -1)$. See [[At]]",
       },
       {
+        id: "a-second-argument-supplies-a-default-for-an",
         expr: ["Last", ["List"], 99],
         expected: 99,
         category: "Scope",
         caption: "A second argument supplies a default for an empty collection",
       },
-      { expr: ["Last", ["List", "a", "b", "c"]], expected: "c" },
       {
+        id: "last-list-a-b-c",
+        expr: ["Last", ["List", "a", "b", "c"]],
+        expected: "c",
+      },
+      {
+        id: "of-a-matrix-the-last-row",
         expr: ["Last", ["List", ["List", "a", "b"], ["List", "c", "d"], ["List", "f", "g"]]],
         expected: ["List", "f", "g"],
         category: "Scope",
         caption: "Of a matrix, the last row",
       },
       {
+        id: "a-lazy-range-works-too",
         expr: ["Last", ["Range", 5, 10]],
         expected: 10,
         category: "Scope",
         caption: "A lazy [[Range]] works too",
       },
       {
+        id: "any-expression-not-just-a-list-the-last-term-of",
         expr: ["Last", ["Add", ["Power", "a", 2], ["Power", "b", 2]]],
         expected: ["Power", "b", 2],
         category: "Scope",
         caption: "Any expression, not just a list: the last term of a sum",
       },
       {
+        id: "a-default-is-ignored-when-the-collection-has-a",
         expr: ["Last", ["List", "a", "b"], "x"],
         expected: "b",
         category: "Scope",
         caption: "A default is ignored when the collection has a last element",
       },
       {
+        id: "an-empty-collection-has-no-last-element-compute",
         expr: ["Last", ["List"]],
         expected: "Missing",
         category: "Possible issues",
@@ -527,13 +601,23 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's — Wolfram's Part reaches into any head.",
     ],
     examples: [
-      { expr: ["At", ["List", 1, 2, 3, 4], 2], expected: 2 },
-      { expr: ["At", ["List", 1, 2, 3, 4], -1], expected: 4 },
       {
+        id: "list-1-2-3-4-list-2",
+        expr: ["At", ["List", 1, 2, 3, 4], 2],
+        expected: 2,
+      },
+      {
+        id: "list-1-2-3-4-list-neg-1",
+        expr: ["At", ["List", 1, 2, 3, 4], -1],
+        expected: 4,
+      },
+      {
+        id: "list-a-b-c-d-list-neg-2",
         expr: ["At", ["List", "a", "b", "c", "d"], -2],
         expected: "c",
       },
       {
+        id: "chaining-at-reaches-into-nested-collections-like",
         expr: ["At", ["At", ["List", ["List", 1, 2], ["List", 3, 4]], 2], 1],
         expected: 3,
         category: "Applications",
@@ -541,24 +625,28 @@ export const collections: readonly ReferenceEntry[] = [
           "Chaining $At$ reaches into nested collections, like indexing a matrix row then column",
       },
       {
+        id: "a-list-of-indices-selects-several-elements-at",
         expr: ["At", ["List", "a", "b", "c", "d"], ["List", 1, 3]],
         expected: ["List", "a", "c"],
         category: "Scope",
         caption: "A list of indices selects several elements at once",
       },
       {
+        id: "a-range-also-works-as-an-index-list-extracting-a",
         expr: ["At", ["List", "a", "b", "c", "d", "e"], ["Range", 2, 4]],
         expected: ["List", "b", "c", "d"],
         category: "Scope",
         caption: "A [[Range]] also works as an index list, extracting a contiguous slice",
       },
       {
+        id: "index-0-is-the-collection-s-own-head-matching",
         expr: ["At", ["List", 1, 2, 3], 0],
         expected: "List",
         category: "Scope",
         caption: "Index 0 is the collection's own head, matching Wolfram's Part[c, 0]",
       },
       {
+        id: "an-out-of-range-index-evaluates-to-nan-rather",
         expr: ["At", ["List", 1, 2, 3], 10],
         expected: "NaN",
         category: "Possible issues",
@@ -568,44 +656,55 @@ export const collections: readonly ReferenceEntry[] = [
             "An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).",
         },
       },
-      { expr: ["At", ["List", "a", "b", "c", "d"], 3], expected: "c" },
       {
+        id: "list-a-b-c-d-list-3",
+        expr: ["At", ["List", "a", "b", "c", "d"], 3],
+        expected: "c",
+      },
+      {
+        id: "several-indices-reach-into-successive-levels-row",
         expr: ["At", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]], 2, 3],
         expected: 6,
         category: "Scope",
         caption: "Several indices reach into successive levels: row 2, column 3",
       },
       {
+        id: "negative-indices-work-at-every-level",
         expr: ["At", ["List", ["List", 1, 2], ["List", 3, 4]], -1, -1],
         expected: 4,
         category: "Scope",
         caption: "Negative indices work at every level",
       },
       {
+        id: "negative-indices-inside-an-index-list",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["List", -1, -2]],
         expected: ["List", "f", "d"],
         category: "Scope",
         caption: "Negative indices inside an index list",
       },
       {
+        id: "a-stepped-range-takes-every-other-element",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Range", 1, 5, 2]],
         expected: ["List", "a", "c", "f"],
         category: "Scope",
         caption: "A stepped [[Range]] takes every other element",
       },
       {
+        id: "negative-bounds-count-from-the-end-the-last",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Range", -3, -1]],
         expected: ["List", "c", "d", "f"],
         category: "Scope",
         caption: "Negative bounds count from the end: the last three elements",
       },
       {
+        id: "a-lazy-range-is-indexed-directly",
         expr: ["At", ["Range", 5, 10], 2],
         expected: 6,
         category: "Scope",
         caption: "A lazy [[Range]] is indexed directly",
       },
       {
+        id: "all-at-the-first-level-should-take-a-whole",
         expr: ["At", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]], "All", 2],
         expected: ["List", 2, 5],
         aspirational: true,
@@ -614,6 +713,7 @@ export const collections: readonly ReferenceEntry[] = [
           "$All$ at the first level should take a whole column; the bare symbol $All$ collides with compute-engine's own boolean-reducer head of the same name, which the engine tries to invoke while boxing this call, before our override ever sees it — not yet",
       },
       {
+        id: "index-lists-at-two-levels-extract-a-submatrix",
         expr: [
           "At",
           ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]],
@@ -625,30 +725,35 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Index lists at two levels extract a submatrix (rows 1 and 3, columns 2 and 3)",
       },
       {
+        id: "a-span-2-4-in-wolfram-takes-a-contiguous-slice",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]],
         expected: ["List", "b", "c", "d"],
         category: "Scope",
         caption: "A [[Span]] ($2;;4$ in Wolfram) takes a contiguous slice",
       },
       {
+        id: "a-stepped-span-1-1-2-takes-every-other-element",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]],
         expected: ["List", "a", "c", "f"],
         category: "Scope",
         caption: "A stepped [[Span]] ($1;;-1;;2$) takes every other element up to the end",
       },
       {
+        id: "a-negative-step-1-1-1-walks-backwards-reversing",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -1, 1, -1]],
         expected: ["List", "f", "d", "c", "b", "a"],
         category: "Scope",
         caption: "A negative step ($-1;;1;;-1$) walks backwards, reversing the list",
       },
       {
+        id: "negative-bounds-the-last-two-elements",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]],
         expected: ["List", "d", "f"],
         category: "Scope",
         caption: "Negative bounds: the last two elements",
       },
       {
+        id: "parts-of-any-expression-not-just-lists-the",
         expr: ["At", ["Add", "a", "b", "c"], 2],
         expected: "b",
         category: "Scope",
@@ -674,19 +779,26 @@ export const collections: readonly ReferenceEntry[] = [
       "Reports only the first occurrence, as a plain index. See [[Position]] for every occurrence.",
     ],
     examples: [
-      { expr: ["IndexOf", ["List", 1, 2, 3], 2], expected: 2 },
       {
+        id: "indexof-list-1-2-3-2",
+        expr: ["IndexOf", ["List", 1, 2, 3], 2],
+        expected: 2,
+      },
+      {
+        id: "0-signals-that-the-value-isn-t-present-since-0",
         expr: ["IndexOf", ["List", 1, 2, 3], 9],
         expected: 0,
         caption: "0 signals that the value isn't present, since 0 is never a valid position",
       },
       {
+        id: "at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at",
         expr: ["Equal", ["At", ["List", 10, 20, 30], ["IndexOf", ["List", 10, 20, 30], 20]], 20],
         expected: "True",
         category: "Properties",
         caption: "$At(c, IndexOf(c, v)) = v$ whenever v occurs in c. See [[At]]",
       },
       {
+        id: "indexof-reports-only-the-first-occurrence-see",
         expr: ["IndexOf", ["List", 1, 2, 3, 2], 2],
         expected: 2,
         category: "Possible issues",
@@ -697,17 +809,20 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "only-the-first-of-several-occurrences-is",
         expr: ["IndexOf", ["List", "a", "b", "a", "a", "b", "c", "b"], "b"],
         expected: 2,
         caption: "Only the first of several occurrences is reported",
       },
       {
+        id: "the-value-can-itself-be-a-list",
         expr: ["IndexOf", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", 3, 4]],
         expected: 2,
         category: "Scope",
         caption: "The value can itself be a list",
       },
       {
+        id: "indexof-stays-at-the-top-level-where-this-value",
         expr: [
           "IndexOf",
           ["List", ["List", "a", "a", "b"], ["List", "b", "a", "a"], ["List", "a", "b", "a"]],
@@ -743,6 +858,7 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-first-occurrence-of-b-nested-inside-the",
         expr: [
           "FirstPosition",
           ["List", ["List", "a", "a", "b"], ["List", "b", "a", "a"], ["List", "a", "b", "a"]],
@@ -752,11 +868,13 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "The first occurrence of $b$, nested inside the first sublist",
       },
       {
+        id: "the-empty-list-when-the-value-isn-t-found",
         expr: ["FirstPosition", ["List", "a", ["List", "a", "c"]], "b"],
         expected: ["List"],
         caption: "The empty list when the value isn't found anywhere",
       },
       {
+        id: "a-match-nested-inside-an-earlier-sublist-beats-a",
         expr: ["FirstPosition", ["List", "a", ["List", "a", "b"], "b"], "b"],
         expected: ["List", 2, 2],
         category: "Properties",
@@ -785,15 +903,18 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "position-list-1-2-3-2-2",
         expr: ["Position", ["List", 1, 2, 3, 2], 2],
         expected: ["List", ["List", 2], ["List", 4]],
       },
       {
+        id: "a-value-absent-from-the-collection-has-no",
         expr: ["Position", ["List", 1, 2, 3], 9],
         expected: ["List"],
         caption: "A value absent from the collection has no positions",
       },
       {
+        id: "position-s-first-entry-agrees-with-indexof",
         expr: ["At", ["Position", ["List", 1, 2, 3, 2], 2], 1],
         expected: ["List", 2],
         category: "Properties",
@@ -827,18 +948,25 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
-      { expr: ["Sort", ["List", 3, 1, 2]], expected: ["List", 1, 2, 3] },
       {
+        id: "sort-list-3-1-2",
+        expr: ["Sort", ["List", 3, 1, 2]],
+        expected: ["List", 1, 2, 3],
+      },
+      {
+        id: "sort-list-4-2-5-1-3",
         expr: ["Sort", ["List", 4, 2, 5, 1, 3]],
         expected: ["List", 1, 2, 3, 4, 5],
       },
       {
+        id: "sort-is-idempotent-sorting-an-already-sorted",
         expr: ["Equal", ["Sort", ["Sort", ["List", 3, 1, 2]]], ["Sort", ["List", 3, 1, 2]]],
         expected: "True",
         category: "Properties",
         caption: "$Sort$ is idempotent: sorting an already-sorted collection changes nothing",
       },
       {
+        id: "sort-c-at-c-ordering-c-see-ordering-and-at",
         expr: [
           "Equal",
           ["Sort", ["List", 3, 1, 2]],
@@ -849,29 +977,34 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$Sort(c) = At(c, Ordering(c))$. See [[Ordering]] and [[At]]",
       },
       {
+        id: "a-custom-comparator-sorts-in-a-different-order",
         expr: ["Sort", ["List", 3, 1, 2], ["Function", ["Greater", "_1", "_2"]]],
         expected: ["List", 3, 2, 1],
         category: "Scope",
         caption: "A custom comparator sorts in a different order, here descending",
       },
       {
+        id: "a-list-of-strings-sorts-lexicographically",
         expr: ["Sort", ["List", "banana", "apple", "cherry"]],
         expected: ["List", "apple", "banana", "cherry"],
         category: "Scope",
         caption: "A list of strings sorts lexicographically",
       },
       {
+        id: "symbols-sort-alphabetically",
         expr: ["Sort", ["List", "d", "b", "c", "a"]],
         expected: ["List", "a", "b", "c", "d"],
         caption: "Symbols sort alphabetically",
       },
       {
+        id: "integers-rationals-and-floats-together-sort-by",
         expr: ["Sort", ["List", ["Rational", 3, 2], 1, 0.5, -2]],
         expected: ["List", -2, 0.5, 1, ["Rational", 3, 2]],
         category: "Scope",
         caption: "Integers, rationals and floats together sort by value",
       },
       {
+        id: "exact-numeric-constants-sort-by-their-value",
         expr: ["Sort", ["List", "Pi", "ExponentialE", 2, 3, 1, ["Sqrt", 2]]],
         expected: ["List", 1, ["Sqrt", 2], 2, "ExponentialE", 3, "Pi"],
         category: "Scope",
@@ -882,18 +1015,21 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "less-as-the-ordering-function-sorts-by-numeric",
         expr: ["Sort", ["List", "Pi", "ExponentialE", 2, 3, 1, ["Sqrt", 2]], "Less"],
         expected: ["List", 1, ["Sqrt", 2], 2, "ExponentialE", 3, "Pi"],
         category: "Scope",
         caption: "$Less$ as the ordering function sorts by numeric value",
       },
       {
+        id: "a-named-ordering-function-greater-sorts-in",
         expr: ["Sort", ["List", 4, 1, 3, 2, 2], "Greater"],
         expected: ["List", 4, 3, 2, 2, 1],
         category: "Scope",
         caption: "A named ordering function: $Greater$ sorts in descending order",
       },
       {
+        id: "sorting-pairs-by-their-second-element-with-a",
         expr: [
           "Sort",
           ["List", ["List", "a", 2], ["List", "c", 1], ["List", "d", 3]],
@@ -904,18 +1040,21 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Sorting pairs by their second element with a custom comparator",
       },
       {
+        id: "sorts-the-arguments-of-any-head-not-just-a-list",
         expr: ["Sort", ["f", "b", "a", "c"]],
         expected: ["f", "a", "b", "c"],
         category: "Scope",
         caption: "Sorts the arguments of any head, not just a list",
       },
       {
+        id: "the-result-doesn-t-depend-on-the-input-order",
         expr: ["Equal", ["Sort", ["Reverse", ["List", 3, 1, 2]]], ["Sort", ["List", 3, 1, 2]]],
         expected: "True",
         category: "Properties",
         caption: "The result doesn't depend on the input order",
       },
       {
+        id: "the-empty-list-sorts-to-itself",
         expr: ["Sort", ["List"]],
         expected: ["List"],
         category: "Possible issues",
@@ -953,54 +1092,67 @@ export const collections: readonly ReferenceEntry[] = [
       "A second argument $n$ takes just the first $n$ indices of the full ordering; see the signatures above for the negative-count, $\\{m, n\\}$, and $UpTo$ forms.",
     ],
     examples: [
-      { expr: ["Ordering", ["List", 3, 1, 2]], expected: ["List", 2, 3, 1] },
       {
+        id: "ordering-list-3-1-2",
+        expr: ["Ordering", ["List", 3, 1, 2]],
+        expected: ["List", 2, 3, 1],
+      },
+      {
+        id: "ties-break-in-favor-of-the-earlier-position-both",
         expr: ["Ordering", ["List", 2, 1, 2, 1]],
         expected: ["List", 2, 4, 1, 3],
         category: "Scope",
         caption: "Ties break in favor of the earlier position: both 1s come before both 2s",
       },
       {
+        id: "a-second-argument-takes-just-the-first-n-indices",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3], 4],
         expected: ["List", 3, 5, 1, 6],
         category: "Scope",
         caption: "A second argument takes just the first n indices of the full ordering",
       },
       {
+        id: "ordering-list-2-6-1-9-1-2-3",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3]],
         expected: ["List", 3, 5, 1, 6, 7, 2, 4],
       },
       {
+        id: "symbols-order-alphabetically",
         expr: ["Ordering", ["List", "c", "a", "b"]],
         expected: ["List", 2, 3, 1],
         category: "Scope",
         caption: "Symbols order alphabetically",
       },
       {
+        id: "a-negative-count-gives-the-positions-of-the",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3], -1],
         expected: ["List", 4],
         category: "Scope",
         caption: "A negative count gives the positions of the largest elements",
       },
       {
+        id: "a-m-n-spec-takes-the-4th-through-the-last",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3], ["List", 4, -1]],
         expected: ["List", 6, 7, 2, 4],
         category: "Scope",
         caption: "A $\\{m, n\\}$ spec takes the 4th through the last entries of the ordering",
       },
       {
+        id: "a-third-argument-orders-by-a-custom-test-here",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 3], "All", "Greater"],
         expected: ["List", 4, 2, 5, 1, 3],
         category: "Scope",
         caption: "A third argument orders by a custom test, here descending",
       },
       {
+        id: "upto-6-asks-for-at-most-6-positions-so-a-5",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 2], ["UpTo", 6]],
         expected: ["List", 3, 1, 5, 2, 4],
         category: "Scope",
         caption: "[[UpTo]](6) asks for at most 6 positions, so a 5-element list gives all 5",
       },
       {
+        id: "on-a-permutation-ordering-is-the-inverse-so",
         expr: ["Ordering", ["Ordering", ["List", 3, 1, 2]]],
         expected: ["List", 3, 1, 2],
         category: "Properties",
@@ -1008,6 +1160,7 @@ export const collections: readonly ReferenceEntry[] = [
           "On a permutation, $Ordering$ is the inverse, so applying it twice recovers the permutation",
       },
       {
+        id: "the-position-of-the-smallest-element-see-first",
         expr: ["First", ["Ordering", ["List", 2, 6, 1, 9, 1, 2, 3]]],
         expected: 3,
         category: "Applications",
@@ -1037,14 +1190,24 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Count]] to count occurrences of a specific value instead of every element.",
     ],
     examples: [
-      { expr: ["Length", ["List", 1, 2, 3, 4]], expected: 4 },
-      { expr: ["Length", ["List", 1, 2, 3, 4, 5]], expected: 5 },
       {
+        id: "length-list-1-2-3-4",
+        expr: ["Length", ["List", 1, 2, 3, 4]],
+        expected: 4,
+      },
+      {
+        id: "length-list-1-2-3-4-5",
+        expr: ["Length", ["List", 1, 2, 3, 4, 5]],
+        expected: 5,
+      },
+      {
+        id: "works-on-any-collection-not-just-list",
         expr: ["Length", ["Set", 1, 2, 3]],
         expected: 3,
         caption: "Works on any collection, not just $List$",
       },
       {
+        id: "length-join-a-b-length-a-length-b-see-join",
         expr: [
           "Equal",
           ["Length", ["Join", ["List", 1, 2, 3], ["List", 4, 5]]],
@@ -1055,49 +1218,61 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]",
       },
       {
+        id: "an-atom-has-no-parts-so-its-length-is-0",
         expr: ["Length", 5],
         expected: 0,
         category: "Scope",
         caption: "An atom has no parts, so its length is 0",
       },
-      { expr: ["Length", ["List", "a", "b", "c", "d"]], expected: 4 },
       {
+        id: "length-list-a-b-c-d",
+        expr: ["Length", ["List", "a", "b", "c", "d"]],
+        expected: 4,
+      },
+      {
+        id: "the-empty-list-has-length-0",
         expr: ["Length", ["List"]],
         expected: 0,
         category: "Scope",
         caption: "The empty list has length 0",
       },
       {
+        id: "of-a-matrix-the-number-of-rows",
         expr: ["Length", ["List", ["List", 1, 2], ["List", 3, 4], ["List", 5, 6]]],
         expected: 3,
         category: "Scope",
         caption: "Of a matrix, the number of rows",
       },
       {
+        id: "a-set-holds-each-element-once-so-a-repeated",
         expr: ["Length", ["Set", 1, 1, 2]],
         expected: 2,
         category: "Scope",
         caption: "A $Set$ holds each element once, so a repeated element counts once",
       },
       {
+        id: "any-expression-the-number-of-terms-in-a-sum",
         expr: ["Length", ["Add", "a", "b", "c", "d"]],
         expected: 4,
         category: "Scope",
         caption: "Any expression: the number of terms in a sum",
       },
       {
+        id: "the-number-of-arguments-of-a-call-counting-only",
         expr: ["Length", ["f", ["g", "x", "y"], "z"]],
         expected: 2,
         category: "Scope",
         caption: "The number of arguments of a call, counting only the top level",
       },
       {
+        id: "a-symbol-such-as-pi-is-an-atom-of-length-0",
         expr: ["Length", "Pi"],
         expected: 0,
         category: "Scope",
         caption: "A symbol such as $\\pi$ is an atom, of length 0",
       },
       {
+        id: "a-lazy-range-is-counted-without-being",
         expr: ["Length", ["Range", 1, 20]],
         expected: 20,
         category: "Scope",
@@ -1127,14 +1302,24 @@ export const collections: readonly ReferenceEntry[] = [
       "A bare integer level spec counts matches at every level from 1 through it; $\\{level\\}$ counts that level only.",
     ],
     examples: [
-      { expr: ["Count", ["List", 1, 2, 2, 3, 2], 2], expected: 3 },
-      { expr: ["Count", ["List", 1, 2, 2, 3, 2, 4], 2], expected: 3 },
       {
+        id: "count-list-1-2-2-3-2-2",
+        expr: ["Count", ["List", 1, 2, 2, 3, 2], 2],
+        expected: 3,
+      },
+      {
+        id: "count-list-1-2-2-3-2-4-2",
+        expr: ["Count", ["List", 1, 2, 2, 3, 2, 4], 2],
+        expected: 3,
+      },
+      {
+        id: "a-value-absent-from-the-collection-counts-as-0",
         expr: ["Count", ["List", 1, 2, 3], 9],
         expected: 0,
         caption: "A value absent from the collection counts as 0",
       },
       {
+        id: "count-tests-exact-equality-a-typed-pattern-like",
         expr: ["Count", ["List", 1, "a", 2, "b"], "_Integer"],
         expected: 0,
         category: "Possible issues",
@@ -1143,14 +1328,20 @@ export const collections: readonly ReferenceEntry[] = [
           wolfram: "Wolfram's `_Integer` pattern counts every integer element, here 2 (1 and 2).",
         },
       },
-      { expr: ["Count", ["List", "a", "b", "a", "a", "b", "c", "b"], "b"], expected: 3 },
       {
+        id: "count-list-a-b-a-a-b-c-b-b",
+        expr: ["Count", ["List", "a", "b", "a", "a", "b", "c", "b"], "b"],
+        expected: 3,
+      },
+      {
+        id: "the-value-can-itself-be-a-list",
         expr: ["Count", ["List", ["List", 1, 2], ["List", 1, 2], 3], ["List", 1, 2]],
         expected: 2,
         category: "Scope",
         caption: "The value can itself be a list",
       },
       {
+        id: "a-predicate-counts-the-elements-satisfying-it",
         expr: ["Count", ["List", 1, 2, 3, 4], ["Function", ["Greater", "_1", 2]]],
         expected: 2,
         category: "Scope",
@@ -1158,18 +1349,21 @@ export const collections: readonly ReferenceEntry[] = [
           "A predicate counts the elements satisfying it, like Wolfram's pattern test $\\_?(\\# > 2 \\&)$",
       },
       {
+        id: "only-top-level-elements-are-compared-by-default",
         expr: ["Count", ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]], "b"],
         expected: 1,
         category: "Scope",
         caption: "Only top-level elements are compared by default",
       },
       {
+        id: "a-bare-level-spec-counts-matches-down-through",
         expr: ["Count", ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]], "b", 2],
         expected: 3,
         category: "Scope",
         caption: "A bare level spec counts matches down through level 2",
       },
       {
+        id: "2-counts-matches-at-level-2-only",
         expr: [
           "Count",
           ["List", ["List", "a", "a", "b"], "b", ["List", "a", "b", "a"]],
@@ -1181,6 +1375,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$\\{2\\}$ counts matches at level 2 only",
       },
       {
+        id: "count-tests-exact-equality-so-a-pattern-like",
         expr: ["Count", ["List", "a", 2, "a", "a", 1, "c", "b", 3, 3], "_Integer"],
         expected: 0,
         category: "Possible issues",
@@ -1191,6 +1386,7 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "the-counts-of-the-distinct-values-add-up-to-the",
         expr: [
           "Equal",
           [
@@ -1230,14 +1426,17 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "join-list-1-2-list-3-4",
         expr: ["Join", ["List", 1, 2], ["List", 3, 4]],
         expected: ["List", 1, 2, 3, 4],
       },
       {
+        id: "join-list-1-2-list-3-4-list-5",
         expr: ["Join", ["List", 1, 2], ["List", 3, 4], ["List", 5]],
         expected: ["List", 1, 2, 3, 4, 5],
       },
       {
+        id: "join-a-b-flatten-a-b-1-see-flatten",
         expr: [
           "Equal",
           ["Join", ["List", 1, 2], ["List", 3, 4]],
@@ -1248,6 +1447,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$Join(A, B) = Flatten(\\{A, B\\}, 1)$. See [[Flatten]]",
       },
       {
+        id: "a-trailing-integer-argument-joins-at-that-level",
         expr: [
           "Join",
           ["List", ["List", 1, 2], ["List", 3, 4]],
@@ -1259,10 +1459,12 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A trailing integer argument joins at that level rather than the top level",
       },
       {
+        id: "join-list-a-b-c-list-x-y-list-u-v-w",
         expr: ["Join", ["List", "a", "b", "c"], ["List", "x", "y"], ["List", "u", "v", "w"]],
         expected: ["List", "a", "b", "c", "x", "y", "u", "v", "w"],
       },
       {
+        id: "joining-matrices-stacks-their-rows",
         expr: [
           "Join",
           ["List", ["List", "a", "b"], ["List", "c", "d"]],
@@ -1273,24 +1475,28 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Joining matrices stacks their rows",
       },
       {
+        id: "sets-as-well-as-lists-as-long-as-all-arguments",
         expr: ["Join", ["Set", 1, 2], ["Set", 3]],
         expected: ["Set", 1, 2, 3],
         category: "Scope",
         caption: "Sets as well as lists, as long as all arguments share the head",
       },
       {
+        id: "a-lazy-range-is-spliced-in",
         expr: ["Join", ["List", 1, 2], ["Range", 3, 5]],
         expected: ["List", 1, 2, 3, 4, 5],
         category: "Scope",
         caption: "A lazy [[Range]] is spliced in",
       },
       {
+        id: "with-no-arguments-the-empty-list",
         expr: ["Join"],
         expected: ["List"],
         category: "Scope",
         caption: "With no arguments, the empty list",
       },
       {
+        id: "at-level-2-matrices-are-joined-side-by-side",
         expr: [
           "Join",
           ["List", ["List", "a", "b"], ["List", "c", "d"]],
@@ -1302,6 +1508,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "At level 2, matrices are joined side by side",
       },
       {
+        id: "ragged-rows-join-at-level-2-too",
         expr: [
           "Join",
           ["List", ["List", 1], ["List", 5, 6]],
@@ -1314,18 +1521,21 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Ragged rows join at level 2 too",
       },
       {
+        id: "a-row-missing-from-the-shorter-array-simply-isn",
         expr: ["Join", ["List", ["List", "x"]], ["List", ["List", 1, 2], ["List", 3, 4]], 2],
         expected: ["List", ["List", "x", 1, 2], ["List", 3, 4]],
         category: "Scope",
         caption: "A row missing from the shorter array simply isn't merged in",
       },
       {
+        id: "any-head-as-long-as-all-the-arguments-share-it",
         expr: ["Join", ["f", "a"], ["f", "b"]],
         expected: ["f", "a", "b"],
         category: "Scope",
         caption: "Any head, as long as all the arguments share it",
       },
       {
+        id: "join-is-associative",
         expr: [
           "Equal",
           ["Join", ["Join", ["List", "a", "b", "c"], ["List", "x", "y"]], ["List", "u", "v", "w"]],
@@ -1371,14 +1581,17 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "flatten-list-list-1-2-list-3-4",
         expr: ["Flatten", ["List", ["List", 1, 2], ["List", 3, 4]]],
         expected: ["List", 1, 2, 3, 4],
       },
       {
+        id: "flatten-list-list-1-list-2-3-list-4",
         expr: ["Flatten", ["List", ["List", 1, ["List", 2, 3]], ["List", 4]]],
         expected: ["List", 1, 2, 3, 4],
       },
       {
+        id: "a-depth-argument-limits-flattening-to-just-that",
         expr: ["Flatten", ["List", ["List", 1, 2], ["List", 3, ["List", 4]]], 1],
         expected: ["List", 1, 2, 3, ["List", 4]],
         category: "Scope",
@@ -1386,6 +1599,7 @@ export const collections: readonly ReferenceEntry[] = [
           "A depth argument limits flattening to just that many levels, leaving deeper nesting intact",
       },
       {
+        id: "flatten-undoes-partition-chunking-and-re",
         expr: [
           "Equal",
           ["Flatten", ["Partition", ["List", 1, 2, 3, 4, 5, 6], 2]],
@@ -1397,6 +1611,7 @@ export const collections: readonly ReferenceEntry[] = [
           "$Flatten$ undoes [[Partition]]: chunking and re-flattening recovers the original list",
       },
       {
+        id: "flatten-list-list-a-b-list-c-list-d-f-list-g",
         expr: [
           "Flatten",
           [
@@ -1409,6 +1624,7 @@ export const collections: readonly ReferenceEntry[] = [
         expected: ["List", "a", "b", "c", "d", "f", "g", "h", "k"],
       },
       {
+        id: "flatten-only-the-first-level",
         expr: [
           "Flatten",
           [
@@ -1424,6 +1640,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Flatten only the first level",
       },
       {
+        id: "depth-0-leaves-the-list-unchanged",
         expr: [
           "Flatten",
           [
@@ -1448,6 +1665,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Depth 0 leaves the list unchanged",
       },
       {
+        id: "depth-2-removes-two-levels-of-nesting",
         expr: [
           "Flatten",
           [
@@ -1465,6 +1683,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Depth 2 removes two levels of nesting",
       },
       {
+        id: "depth-3",
         expr: [
           "Flatten",
           [
@@ -1482,6 +1701,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Depth 3",
       },
       {
+        id: "depth-4-reaches-the-deepest-level",
         expr: [
           "Flatten",
           [
@@ -1499,6 +1719,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Depth 4 reaches the deepest level",
       },
       {
+        id: "an-explicit-infinite-depth-flattens-every-level",
         expr: [
           "Flatten",
           [
@@ -1516,6 +1737,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "An explicit infinite depth flattens every level, like the default",
       },
       {
+        id: "a-list-of-levels-regroups-the-dimensions-here",
         expr: [
           "Flatten",
           ["List", ["List", 1, 2], ["List", 3, 4]],
@@ -1526,18 +1748,21 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A list of levels regroups the dimensions, here into a transpose",
       },
       {
+        id: "nested-calls-of-any-one-head-flatten-not-just",
         expr: ["Flatten", ["f", "a", ["f", "b", ["f", "c"]]]],
         expected: ["f", "a", "b", "c"],
         category: "Scope",
         caption: "Nested calls of any one head flatten, not just lists",
       },
       {
+        id: "a-list-with-no-nesting-is-unchanged",
         expr: ["Flatten", ["List", 1, 2, 3]],
         expected: ["List", 1, 2, 3],
         category: "Properties",
         caption: "A list with no nesting is unchanged",
       },
       {
+        id: "flattening-an-m-times-n-matrix-gives-mn-elements",
         expr: ["Length", ["Flatten", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]]]],
         expected: 6,
         category: "Properties",
@@ -1569,16 +1794,19 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "append-list-1-2-3-4",
         expr: ["Append", ["List", 1, 2, 3], 4],
         expected: ["List", 1, 2, 3, 4],
       },
       {
+        id: "append-c-x-join-c-x-see-join",
         expr: ["Equal", ["Append", ["List", 1, 2, 3], 4], ["Join", ["List", 1, 2, 3], ["List", 4]]],
         expected: "True",
         category: "Properties",
         caption: "$Append(c, x) = Join(c, \\{x\\})$. See [[Join]]",
       },
       {
+        id: "appending-a-list-nests-it-as-a-single-element",
         expr: ["Append", ["List", 1, 2, 3], ["List", 9]],
         expected: ["List", 1, 2, 3, ["List", 9]],
         category: "Possible issues",
@@ -1586,40 +1814,47 @@ export const collections: readonly ReferenceEntry[] = [
           "Appending a list nests it as a single element rather than splicing its contents in",
       },
       {
+        id: "a-set-as-well-as-a-list",
         expr: ["Append", ["Set", 1, 2, 3], 4],
         expected: ["Set", 1, 2, 3, 4],
         category: "Scope",
         caption: "A set as well as a list",
       },
       {
+        id: "append-list-a-b-c-d-x",
         expr: ["Append", ["List", "a", "b", "c", "d"], "x"],
         expected: ["List", "a", "b", "c", "d", "x"],
       },
       {
+        id: "onto-the-empty-list",
         expr: ["Append", ["List"], "x"],
         expected: ["List", "x"],
         category: "Scope",
         caption: "Onto the empty list",
       },
       {
+        id: "a-lazy-range-is-materialised-first",
         expr: ["Append", ["Range", 1, 3], 4],
         expected: ["List", 1, 2, 3, 4],
         category: "Scope",
         caption: "A lazy [[Range]] is materialised first",
       },
       {
+        id: "any-head-not-just-a-list",
         expr: ["Append", ["f", "a", "b"], "c"],
         expected: ["f", "a", "b", "c"],
         category: "Scope",
         caption: "Any head, not just a list",
       },
       {
+        id: "adding-a-row-to-a-matrix",
         expr: ["Append", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", 5, 6]],
         expected: ["List", ["List", 1, 2], ["List", 3, 4], ["List", 5, 6]],
         category: "Applications",
         caption: "Adding a row to a matrix",
       },
       {
+        id: "appending-adds-exactly-one-element-see-length",
         expr: [
           "Equal",
           ["Length", ["Append", ["List", 1, 2, 3], 4]],
@@ -1656,10 +1891,12 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "prepend-list-a-b-c-d-x",
         expr: ["Prepend", ["List", "a", "b", "c", "d"], "x"],
         expected: ["List", "x", "a", "b", "c", "d"],
       },
       {
+        id: "prepend-c-x-join-x-c-see-join",
         expr: [
           "Equal",
           ["Prepend", ["List", 1, 2, 3], 0],
@@ -1670,12 +1907,14 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$Prepend(c, x) = Join(\\{x\\}, c)$. See [[Join]]",
       },
       {
+        id: "a-rule-inserted-at-the-front-of-an-association",
         expr: ["Prepend", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]], ["Rule", 3, "d"]],
         expected: ["Association", ["Rule", 3, "d"], ["Rule", 1, "a"], ["Rule", 2, "b"]],
         category: "Scope",
         caption: "A rule inserted at the front of an association",
       },
       {
+        id: "several-rules-prepended-at-once",
         expr: [
           "Prepend",
           ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]],
@@ -1730,10 +1969,12 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "partition-list-1-2-3-4-5-6-2",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 2],
         expected: ["List", ["List", 1, 2], ["List", 3, 4], ["List", 5, 6]],
       },
       {
+        id: "a-third-offset-argument-produces-overlapping",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1],
         expected: [
           "List",
@@ -1746,24 +1987,28 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A third, offset argument produces overlapping sliding windows",
       },
       {
+        id: "1-5-partitioned-by-2-drops-the-ragged-remainder",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5], 2],
         expected: ["List", ["List", 1, 2], ["List", 3, 4]],
         category: "Possible issues",
         caption: "$\\{1..5\\}$ partitioned by 2 drops the ragged remainder $\\{5\\}$",
       },
       {
+        id: "windows-of-3-with-offset-2-share-one-element",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6, 7], 3, 2],
         expected: ["List", ["List", 1, 2, 3], ["List", 3, 4, 5], ["List", 5, 6, 7]],
         category: "Scope",
         caption: "Windows of 3 with offset 2 share one element with their neighbour",
       },
       {
+        id: "an-offset-larger-than-the-size-skips-elements",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6, 7], 2, 3],
         expected: ["List", ["List", 1, 2], ["List", 4, 5]],
         category: "Scope",
         caption: "An offset larger than the size skips elements between chunks",
       },
       {
+        id: "a-list-of-sizes-cuts-a-matrix-into-overlapping-2",
         expr: [
           "Partition",
           ["List", ["List", 11, 12, 13], ["List", 21, 22, 23], ["List", 31, 32, 33]],
@@ -1787,12 +2032,14 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A list of sizes cuts a matrix into overlapping $2 \\times 2$ blocks",
       },
       {
+        id: "upto-4-allows-a-shorter-final-chunk-unlike-a",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
         expected: ["List", ["List", 1, 2, 3, 4], ["List", 5, 6]],
         category: "Scope",
         caption: "[[UpTo]](4) allows a shorter final chunk, unlike a plain integer count",
       },
       {
+        id: "overhangs-1-1-wrap-cyclically-until-the-last",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 5, 1, ["List", 1, 1]],
         expected: [
           "List",
@@ -1808,6 +2055,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Overhangs $\\{1, 1\\}$ wrap cyclically until the last window starts at the last element",
       },
       {
+        id: "overhangs-1-1-the-first-window-ends-at-the-first",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 5, 1, ["List", -1, 1]],
         expected: [
           "List",
@@ -1827,6 +2075,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Overhangs $\\{-1, 1\\}$: the first window ends at the first element, the last starts at the last",
       },
       {
+        id: "a-padding-element-fills-the-overhang-instead-of",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1, ["List", 1, 1], "x"],
         expected: [
           "List",
@@ -1841,6 +2090,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A padding element fills the overhang instead of wrapping around",
       },
       {
+        id: "padding-on-the-left-with-overhangs-1-1",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1, ["List", -1, -1], "x"],
         expected: [
           "List",
@@ -1855,6 +2105,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Padding on the left, with overhangs $\\{-1, -1\\}$",
       },
       {
+        id: "padding-on-both-sides-with-overhangs-1-1",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], 3, 1, ["List", -1, 1], "x"],
         expected: [
           "List",
@@ -1871,6 +2122,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Padding on both sides, with overhangs $\\{-1, 1\\}$",
       },
       {
+        id: "reshaping-a-list-of-9-into-a-3-times-3-matrix",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9], 3],
         expected: ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]],
         category: "Applications",
@@ -1899,9 +2151,18 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Mode]] for the most frequent value rather than the average.",
     ],
     examples: [
-      { expr: ["Mean", ["List", 1, 2, 3, 4]], expected: ["Rational", 5, 2] },
-      { expr: ["Mean", ["List", 2, 4, 4, 4, 5, 5, 7, 9]], expected: 5 },
       {
+        id: "mean-list-1-2-3-4",
+        expr: ["Mean", ["List", 1, 2, 3, 4]],
+        expected: ["Rational", 5, 2],
+      },
+      {
+        id: "mean-list-2-4-4-4-5-5-7-9",
+        expr: ["Mean", ["List", 2, 4, 4, 4, 5, 5, 7, 9]],
+        expected: 5,
+      },
+      {
+        id: "mean-is-total-divided-by-count-mean-c-frac-sum-c",
         expr: [
           "Equal",
           ["Mean", ["List", 1, 2, 3, 4]],
@@ -1913,6 +2174,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Mean is total divided by count: $Mean(c) = \\dfrac{\\sum c}{Length(c)}$. See [[Length]]",
       },
       {
+        id: "a-single-outlier-drags-the-mean-far-from-the",
         expr: ["Mean", ["List", -100, 1, 1, 1, 1, 20]],
         expected: ["Rational", -38, 3],
         category: "Possible issues",
@@ -1920,25 +2182,33 @@ export const collections: readonly ReferenceEntry[] = [
           "A single outlier drags the mean far from the rest of the data, here to $-\\frac{38}{3} \\approx -12.67$. See [[Median]] for a more robust alternative",
       },
       {
+        id: "given-a-matrix-mean-is-column-wise",
         expr: ["Mean", ["List", ["List", 1, 10], ["List", 2, 20], ["List", 3, 30]]],
         expected: ["List", 2, 20],
         category: "Scope",
         caption: "Given a matrix, Mean is column-wise",
       },
-      { expr: ["Mean", ["List", 1.21, 3.4, 2.15, 4, 1.55]], expected: 2.462 },
       {
+        id: "mean-list-1p21-3p4-2p15-4-1p55",
+        expr: ["Mean", ["List", 1.21, 3.4, 2.15, 4, 1.55]],
+        expected: 2.462,
+      },
+      {
+        id: "exact-rationals-give-an-exact-mean",
         expr: ["Mean", ["List", ["Rational", 1, 2], ["Rational", 1, 3], ["Rational", 1, 6]]],
         expected: ["Rational", 1, 3],
         category: "Scope",
         caption: "Exact rationals give an exact mean",
       },
       {
+        id: "symbolic-data-gives-an-exact-symbolic-mean-frac",
         expr: ["Mean", ["List", "a", "b", "c", "d"]],
         expected: ["Multiply", ["Rational", 1, 4], ["Add", "a", "b", "c", "d"]],
         category: "Scope",
         caption: "Symbolic data gives an exact symbolic mean: $\\frac{a+b+c+d}{4}$",
       },
       {
+        id: "exact-constants-give-an-exact-mean-frac-2-e-pi-3",
         expr: ["Mean", ["List", "Pi", "ExponentialE", 2]],
         expected: ["Multiply", ["Rational", 1, 3], ["Add", 2, "ExponentialE", "Pi"]],
         category: "Scope",
@@ -1946,6 +2216,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Exact constants give an exact mean $\\frac{2+e+\\pi}{3}$, not a numeric approximation",
       },
       {
+        id: "of-a-matrix-of-symbols-the-exact-mean-of-each",
         expr: ["Mean", ["List", ["List", "a", "u"], ["List", "b", "v"], ["List", "c", "w"]]],
         expected: [
           "List",
@@ -1956,12 +2227,14 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Of a matrix of symbols, the exact mean of each column",
       },
       {
+        id: "the-mean-of-a-lazy-range-exactly",
         expr: ["Mean", ["Range", 1, 100]],
         expected: ["Rational", 101, 2],
         category: "Scope",
         caption: "The mean of a lazy [[Range]], exactly",
       },
       {
+        id: "the-mean-of-no-data-is-nan",
         expr: ["Mean", ["List"]],
         expected: "NaN",
         category: "Possible issues",
@@ -1996,12 +2269,18 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Mode]] for the most frequent value.",
     ],
     examples: [
-      { expr: ["Median", ["List", 1, 2, 3, 4, 5]], expected: 3 },
       {
+        id: "median-list-1-2-3-4-5",
+        expr: ["Median", ["List", 1, 2, 3, 4, 5]],
+        expected: 3,
+      },
+      {
+        id: "median-list-1-2-3-4",
         expr: ["Median", ["List", 1, 2, 3, 4]],
         expected: ["Rational", 5, 2],
       },
       {
+        id: "for-an-odd-length-list-the-median-is-the-middle",
         expr: [
           "Equal",
           ["Median", ["List", 5, 3, 1, 4, 2]],
@@ -2013,6 +2292,7 @@ export const collections: readonly ReferenceEntry[] = [
           "For an odd-length list, the median is the middle element of the sorted list. See [[Sort]]",
       },
       {
+        id: "the-same-outlier-laden-data-as-in-mean-s-example",
         expr: ["Median", ["List", -100, 1, 1, 1, 1, 20]],
         expected: 1,
         category: "Applications",
@@ -2020,14 +2300,24 @@ export const collections: readonly ReferenceEntry[] = [
           "The same outlier-laden data as in [[Mean]]'s example: the median of 1 barely moves, unlike the mean's $-\\frac{38}{3}$",
       },
       {
+        id: "given-a-matrix-median-is-column-wise",
         expr: ["Median", ["List", ["List", 1, 11, 3], ["List", 4, 6, 7]]],
         expected: ["List", ["Rational", 5, 2], ["Rational", 17, 2], 5],
         category: "Scope",
         caption: "Given a matrix, Median is column-wise",
       },
-      { expr: ["Median", ["List", 1, 2, 3, 4, 5, 6, 7]], expected: 4 },
-      { expr: ["Median", ["List", 1, 2, 3, 4, 5, 6, 7, 8]], expected: ["Rational", 9, 2] },
       {
+        id: "median-list-1-2-3-4-5-6-7",
+        expr: ["Median", ["List", 1, 2, 3, 4, 5, 6, 7]],
+        expected: 4,
+      },
+      {
+        id: "median-list-1-2-3-4-5-6-7-8",
+        expr: ["Median", ["List", 1, 2, 3, 4, 5, 6, 7, 8]],
+        expected: ["Rational", 9, 2],
+      },
+      {
+        id: "unsorted-data-is-sorted-first-the-middle-pair-3",
         expr: ["Median", ["List", 3, 1, 4, 1, 5, 9, 2, 6]],
         expected: ["Rational", 7, 2],
         category: "Scope",
@@ -2035,18 +2325,21 @@ export const collections: readonly ReferenceEntry[] = [
           "Unsorted data is sorted first; the middle pair 3 and 4 averages to $\\frac{7}{2}$",
       },
       {
+        id: "exact-rationals",
         expr: ["Median", ["List", ["Rational", 1, 2], ["Rational", 1, 3], ["Rational", 1, 6]]],
         expected: ["Rational", 1, 3],
         category: "Scope",
         caption: "Exact rationals",
       },
       {
+        id: "exact-constants-are-ordered-by-value-putting-e",
         expr: ["Median", ["List", "Pi", "ExponentialE", 2]],
         expected: "ExponentialE",
         category: "Scope",
         caption: "Exact constants are ordered by value, putting $e$ in the middle",
       },
       {
+        id: "the-median-of-a-lazy-range-of-even-length-is-the",
         expr: ["Median", ["Range", 1, 100]],
         expected: ["Rational", 101, 2],
         category: "Scope",
@@ -2069,8 +2362,13 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Mean]] and [[Median]] for other measures of central tendency.",
     ],
     examples: [
-      { expr: ["Mode", ["List", 1, 2, 2, 3]], expected: 2 },
       {
+        id: "mode-list-1-2-2-3",
+        expr: ["Mode", ["List", 1, 2, 2, 3]],
+        expected: 2,
+      },
+      {
+        id: "the-mode-occurs-exactly-as-many-times-as-the",
         expr: ["Equal", ["Count", ["List", 1, 2, 2, 3], ["Mode", ["List", 1, 2, 2, 3]]], 2],
         expected: "True",
         category: "Properties",
@@ -2078,6 +2376,7 @@ export const collections: readonly ReferenceEntry[] = [
           "The mode occurs exactly as many times as the highest frequency in the collection. See [[Count]]",
       },
       {
+        id: "with-a-tie-for-most-frequent-mode-returns-just",
         expr: ["Mode", ["List", 1, 1, 2, 2, 3]],
         expected: 1,
         category: "Possible issues",
@@ -2087,14 +2386,20 @@ export const collections: readonly ReferenceEntry[] = [
           wolfram: "Wolfram's Commonest returns every tied mode, [1, 2], here.",
         },
       },
-      { expr: ["Mode", ["List", 1, 2, 3, 3, 2, 3]], expected: 3 },
       {
+        id: "mode-list-1-2-3-3-2-3",
+        expr: ["Mode", ["List", 1, 2, 3, 3, 2, 3]],
+        expected: 3,
+      },
+      {
+        id: "exact-rationals",
         expr: ["Mode", ["List", ["Rational", 1, 2], 1, ["Rational", 1, 2]]],
         expected: ["Rational", 1, 2],
         category: "Scope",
         caption: "Exact rationals",
       },
       {
+        id: "symbols-and-numbers-mixed-three-way-tie-wolfram",
         expr: ["Mode", ["List", "b", "a", "c", 2, "a", "b", 1, 2]],
         expected: ["List", "b", "a", 2],
         aspirational: true,
@@ -2103,6 +2408,7 @@ export const collections: readonly ReferenceEntry[] = [
           "Symbols and numbers mixed, three-way tie: Wolfram's $Commonest$ lists $b$, $a$, $2$ in order of first appearance; compute-engine's Mode needs numbers",
       },
       {
+        id: "empty-data-has-no-mode-compute-engine-returns",
         expr: ["Mode", ["List"]],
         expected: "NaN",
         category: "Possible issues",
@@ -2137,41 +2443,52 @@ export const collections: readonly ReferenceEntry[] = [
       "Every returned value occurs exactly as many times as the highest frequency in the collection. See [[Count]].",
     ],
     examples: [
-      { expr: ["Commonest", ["List", 1, 1, 2, 2, 3]], expected: ["List", 1, 2] },
       {
+        id: "commonest-list-1-1-2-2-3",
+        expr: ["Commonest", ["List", 1, 1, 2, 2, 3]],
+        expected: ["List", 1, 2],
+      },
+      {
+        id: "with-a-unique-mode-commonest-returns-a-single",
         expr: ["Commonest", ["List", 1, 2, 2, 3]],
         expected: ["List", 2],
         caption: "With a unique mode, Commonest returns a single-element list",
       },
       {
+        id: "with-a-unique-mode-commonest-c-mode-c-see-mode",
         expr: ["First", ["Commonest", ["List", 1, 2, 2, 3]]],
         expected: 2,
         category: "Properties",
         caption: "With a unique mode, $Commonest(c) = \\{Mode(c)\\}$. See [[Mode]]",
       },
       {
+        id: "every-element-tied-for-most-frequent-symbols-and",
         expr: ["Commonest", ["List", "b", "a", "c", 2, "a", "b", 1, 2]],
         expected: ["List", "b", "a", 2],
         caption: "Every element tied for most frequent, symbols and numbers alike",
       },
       {
+        id: "all-distinct-all-tie",
         expr: ["Commonest", ["List", 1, 2, 3]],
         expected: ["List", 1, 2, 3],
         category: "Scope",
         caption: "All distinct: all tie",
       },
       {
+        id: "a-single-most-frequent-element-still-comes-back",
         expr: ["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4]],
         expected: ["List", 3],
         caption: "A single most-frequent element still comes back in a list",
       },
       {
+        id: "the-n-commonest-most-frequent-first",
         expr: ["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4], 2],
         expected: ["List", 3, 2],
         category: "Scope",
         caption: "The $n$ commonest, most frequent first",
       },
       {
+        id: "without-a-tie-the-single-commonest-element-is",
         expr: [
           "Equal",
           ["First", ["Commonest", ["List", 1, 2, 2, 3, 3, 3, 4]]],
@@ -2182,6 +2499,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Without a tie, the single commonest element is the [[Mode]]",
       },
       {
+        id: "a-frequency-tie-between-4-and-1-is-broken-by",
         expr: ["Commonest", ["List", 4, 1, 1, 4], 1],
         expected: ["List", 4],
         category: "Properties",
@@ -2215,89 +2533,108 @@ export const collections: readonly ReferenceEntry[] = [
       "A symbolic bound closes in two general shapes: $\\prod i^m = (\\prod i)^m$ for $m$ free of the index (a factorial power), and $\\prod c^{f(i)} = c^{\\sum f(i)}$ for $c$ free of the index, the sum found by Faulhaber's formula for any polynomial $f$. A product with more than one `Tuple` clause reduces inner-first, so a triangular product (an inner limit depending on the outer index) closes too, once the inner reduction leaves a shape the outer sum recognises.",
     ],
     examples: [
-      { expr: ["Product", ["List", 1, 2, 3, 4]], expected: 24 },
       {
+        id: "product-list-1-2-3-4",
+        expr: ["Product", ["List", 1, 2, 3, 4]],
+        expected: 24,
+      },
+      {
+        id: "the-empty-product-is-1-by-convention-matching",
         expr: ["Product", ["List"]],
         expected: 1,
         caption: "The empty product is 1 by convention, matching [[Factorial]] of 0",
       },
       {
+        id: "the-product-of-1-through-n-is-n-see-factorial",
         expr: ["Equal", ["Product", ["List", 1, 2, 3, 4]], ["Factorial", 4]],
         expected: "True",
         category: "Properties",
         caption: "The product of $1$ through $n$ is $n!$. See [[Factorial]]",
       },
       {
+        id: "range-stays-lazy-on-its-own-but-product-forces",
         expr: ["Product", ["Range", 1, 6]],
         expected: 720,
         category: "Applications",
         caption: "[[Range]] stays lazy on its own, but Product forces it to compute $6!$",
       },
       {
+        id: "prod-i-1-6-i-2-6-2",
         expr: ["Product", ["Power", "i", 2], ["Tuple", "i", 1, 6]],
         expected: 518400,
         caption: "$\\prod_{i=1}^{6} i^2 = (6!)^2$",
       },
       {
+        id: "a-symbolic-upper-limit-prod-i-1-n-i-2-n-2",
         expr: ["Product", ["Power", "i", 2], ["Tuple", "i", 1, "n"]],
         expected: ["Power", ["Factorial", "n"], 2],
         caption: "A symbolic upper limit: $\\prod_{i=1}^{n} i^2 = (n!)^2$",
       },
       {
+        id: "a-symbolic-upper-limit-prod-k-1-n-k-n-see",
         expr: ["Product", "k", ["Tuple", "k", 1, "n"]],
         expected: ["Factorial", "n"],
         category: "Scope",
         caption: "A symbolic upper limit: $\\prod_{k=1}^{n} k = n!$. See [[Factorial]]",
       },
       {
+        id: "exponents-add-prod-k-1-n-x-k-x-n-n-1-2",
         expr: ["Product", ["Power", "x", "k"], ["Tuple", "k", 1, "n"]],
         expected: ["Power", "x", ["Multiply", ["Rational", 1, 2], "n", ["Add", "n", 1]]],
         category: "Scope",
         caption: "Exponents add: $\\prod_{k=1}^{n} x^k = x^{n(n+1)/2}$",
       },
       {
+        id: "a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1",
         expr: ["Product", ["Divide", ["Add", "k", 1], "k"], ["Tuple", "k", 1, "n"]],
         expected: ["Add", "n", 1],
         category: "Scope",
         caption: "A telescoping product: $\\prod_{k=1}^{n} \\frac{k+1}{k} = n+1$",
       },
       {
+        id: "an-undefined-function-expanded-term-by-term",
         expr: ["Product", ["f", "i"], ["Tuple", "i", 1, 4]],
         expected: ["Multiply", ["f", 1], ["f", 2], ["f", 3], ["f", 4]],
         category: "Scope",
         caption: "An undefined function, expanded term by term",
       },
       {
+        id: "a-step-of-2-takes-every-other-index",
         expr: ["Product", ["f", "i"], ["Tuple", "i", 1, 4, 2]],
         expected: ["Multiply", ["f", 1], ["f", 3]],
         category: "Scope",
         caption: "A step of 2 takes every other index",
       },
       {
+        id: "over-an-explicit-list-of-values",
         expr: ["Product", ["f", "i"], ["Element", "i", ["List", "a", "b", "c"]]],
         expected: ["Multiply", ["f", "a"], ["f", "b"], ["f", "c"]],
         category: "Scope",
         caption: "Over an explicit list of values",
       },
       {
+        id: "a-polynomial-with-roots-1-2-and-3",
         expr: ["Product", ["Subtract", "x", "k"], ["Tuple", "k", 1, 3]],
         expected: ["Multiply", ["Add", "x", -3], ["Add", "x", -2], ["Add", "x", -1]],
         category: "Scope",
         caption: "A polynomial with roots 1, 2 and 3",
       },
       {
+        id: "a-double-product-over-a-3-times-3-grid",
         expr: ["Product", ["Add", "i", "j"], ["Tuple", "i", 1, 3], ["Tuple", "j", 1, 3]],
         expected: 172800,
         category: "Scope",
         caption: "A double product over a $3 \\times 3$ grid",
       },
       {
+        id: "an-inner-limit-that-depends-on-the-outer-index-a",
         expr: ["Product", ["Add", "i", "j"], ["Tuple", "i", 1, 3], ["Tuple", "j", 1, "i"]],
         expected: 2880,
         category: "Scope",
         caption: "An inner limit that depends on the outer index, a triangular product",
       },
       {
+        id: "a-symbolic-triangular-product-prod-i-1-p-prod-j",
         expr: [
           "Product",
           ["Power", 2, ["Add", "i", "j"]],
@@ -2314,6 +2651,7 @@ export const collections: readonly ReferenceEntry[] = [
           "A symbolic triangular product: $\\prod_{i=1}^{p}\\prod_{j=1}^{i} 2^{i+j} = 2^{p(p+1)^2/2}$",
       },
       {
+        id: "an-infinite-product-with-a-closed-form-prod-k-1",
         expr: [
           "Product",
           ["Add", 1, ["Divide", 1, ["Power", "k", 2]]],
@@ -2325,6 +2663,7 @@ export const collections: readonly ReferenceEntry[] = [
           "An infinite product with a closed form: $\\prod_{k=1}^{\\infty} (1 + 1/k^2) = \\frac{\\sinh \\pi}{\\pi}$",
       },
       {
+        id: "an-infinite-telescoping-product-prod-k-2-infty-1",
         expr: [
           "Product",
           ["Subtract", 1, ["Divide", 1, ["Power", "k", 2]]],
@@ -2336,6 +2675,7 @@ export const collections: readonly ReferenceEntry[] = [
           "An infinite telescoping product: $\\prod_{k=2}^{\\infty} (1 - 1/k^2) = \\frac{1}{2}$",
       },
       {
+        id: "prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet",
         expr: [
           "Product",
           ["Subtract", 1, ["Divide", 1, ["Power", "i", 4]]],
@@ -2347,18 +2687,21 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "$\\prod_{i=2}^{\\infty} (1 - 1/i^4) = \\frac{\\sinh \\pi}{4\\pi}$; not yet",
       },
       {
+        id: "exact-rationals-in-a-collection",
         expr: ["Product", ["List", ["Rational", 1, 2], ["Rational", 2, 3], ["Rational", 3, 4]]],
         expected: ["Rational", 1, 4],
         category: "Scope",
         caption: "Exact rationals in a collection",
       },
       {
+        id: "symbolic-elements",
         expr: ["Product", ["List", "a", "b", "c"]],
         expected: ["Multiply", "a", "b", "c"],
         category: "Scope",
         caption: "Symbolic elements",
       },
       {
+        id: "the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2",
         expr: [
           "Product",
           [
@@ -2395,26 +2738,31 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "nest-f-x-3",
         expr: ["Nest", "f", "x", 3],
         expected: ["f", ["f", ["f", "x"]]],
       },
       {
+        id: "repeated-squaring-2-2-2-2",
         expr: ["Nest", ["Function", ["Power", "_1", 2]], 2, 3],
         expected: 256,
         caption: "Repeated squaring: $((2^2)^2)^2$",
       },
       {
+        id: "zero-applications-leave-x-alone",
         expr: ["Nest", "f", "x", 0],
         expected: "x",
         category: "Scope",
         caption: "Zero applications leave x alone",
       },
       {
+        id: "nest-function-2-times-1-1-10",
         expr: ["Nest", ["Function", ["Multiply", 2, "_1"]], 1, 10],
         expected: 1024,
         category: "Scope",
       },
       {
+        id: "three-newton-steps-toward-sqrt-2",
         expr: ["Nest", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1, 3],
         expected: ["Rational", 577, 408],
         category: "Applications",
@@ -2439,27 +2787,32 @@ export const collections: readonly ReferenceEntry[] = [
     details: ["See [[Nest]] for just the final value."],
     examples: [
       {
+        id: "nestlist-f-x-3",
         expr: ["NestList", "f", "x", 3],
         expected: ["List", "x", ["f", "x"], ["f", ["f", "x"]], ["f", ["f", ["f", "x"]]]],
       },
       {
+        id: "powers-of-2",
         expr: ["NestList", ["Function", ["Multiply", 2, "_1"]], 1, 5],
         expected: ["List", 1, 2, 4, 8, 16, 32],
         caption: "Powers of 2",
       },
       {
+        id: "3-is-a-primitive-root-mod-7-its-powers-visit",
         expr: ["NestList", ["Function", ["Mod", ["Multiply", 3, "_1"], 7]], 1, 6],
         expected: ["List", 1, 3, 2, 6, 4, 5, 1],
         category: "Applications",
         caption: "3 is a primitive root mod 7: its powers visit every nonzero residue",
       },
       {
+        id: "newton-iterates-converging-to-sqrt-2",
         expr: ["NestList", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1, 3],
         expected: ["List", 1, ["Rational", 3, 2], ["Rational", 17, 12], ["Rational", 577, 408]],
         category: "Applications",
         caption: "Newton iterates converging to $\\sqrt{2}$",
       },
       {
+        id: "zero-steps-just-the-seed",
         expr: ["NestList", "f", "x", 0],
         expected: ["List", "x"],
         category: "Scope",
@@ -2487,11 +2840,13 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "halving-and-flooring-until-nothing-changes",
         expr: ["FixedPoint", ["Function", ["Floor", ["Divide", "_1", 2]]], 100],
         expected: 0,
         caption: "Halving and flooring until nothing changes",
       },
       {
+        id: "the-dottie-number-the-fixed-point-of-cos",
         expr: ["FixedPoint", "Cos", 0.5],
         expected: { num: "0.739085133215160641658" },
         caption: "The Dottie number, the fixed point of cos",
@@ -2501,6 +2856,7 @@ export const collections: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "newton-s-method-for-sqrt-2-run-to-this-engine-s",
         expr: ["FixedPoint", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1.5],
         expected: { num: "1.4142135623730950488016875" },
         category: "Applications",
@@ -2531,11 +2887,13 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-outer-product-of-two-vectors-a-3-times-2",
         expr: ["Outer", "Multiply", ["List", 1, 2, 3], ["List", 1, 2]],
         expected: ["List", ["List", 1, 2], ["List", 2, 4], ["List", 3, 6]],
         caption: "The outer product of two vectors, a $3 \\times 2$ matrix",
       },
       {
+        id: "symbolic-entries",
         expr: ["Outer", "Multiply", ["List", 1, 2, 3], ["List", "x", "y"]],
         expected: [
           "List",
@@ -2546,18 +2904,21 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "Symbolic entries",
       },
       {
+        id: "any-binary-function-an-addition-table",
         expr: ["Outer", "Add", ["List", 1, 2], ["List", 10, 20]],
         expected: ["List", ["List", 11, 21], ["List", 12, 22]],
         category: "Scope",
         caption: "Any binary function: an addition table",
       },
       {
+        id: "a-table-of-powers",
         expr: ["Outer", "Power", ["List", 2, 3], ["List", 1, 2, 3]],
         expected: ["List", ["List", 2, 4, 8], ["List", 3, 9, 27]],
         category: "Scope",
         caption: "A table of powers",
       },
       {
+        id: "list-gives-every-pair-like-a-cartesian-product",
         expr: ["Outer", "List", ["List", "a", "b"], ["List", "x", "y"]],
         expected: [
           "List",
@@ -2596,35 +2957,41 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-fibonacci-numbers-a-n-a-n-1-a-n-2",
         expr: ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 10],
         expected: ["List", 1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
         caption: "the Fibonacci numbers, $a_n = a_{n-1} + a_{n-2}$",
       },
       {
+        id: "the-lucas-numbers-same-kernel-other-initial",
         expr: ["LinearRecurrence", ["List", 1, 1], ["List", 2, 1], 8],
         expected: ["List", 2, 1, 3, 4, 7, 11, 18, 29],
         category: "Scope",
         caption: "the Lucas numbers: same kernel, other initial values",
       },
       {
+        id: "a-n-2a-n-1-a-n-2-is-arithmetic",
         expr: ["LinearRecurrence", ["List", 2, -1], ["List", 1, 3], 5],
         expected: ["List", 1, 3, 5, 7, 9],
         category: "Scope",
         caption: "$a_n = 2a_{n-1} - a_{n-2}$ is arithmetic",
       },
       {
+        id: "tribonacci",
         expr: ["LinearRecurrence", ["List", 1, 1, 1], ["List", 0, 0, 1], 10],
         expected: ["List", 0, 0, 1, 1, 2, 4, 7, 13, 24, 44],
         category: "Scope",
         caption: "tribonacci",
       },
       {
+        id: "just-the-10th-term",
         expr: ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 10]],
         expected: ["List", 55],
         category: "Scope",
         caption: "just the 10th term",
       },
       {
+        id: "terms-5-through-8",
         expr: ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 5, 8]],
         expected: ["List", 5, 8, 13, 21],
         category: "Scope",
@@ -2654,6 +3021,7 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "a-geometric-sequence",
         expr: [
           "RecurrenceTable",
           [
@@ -2668,6 +3036,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "a geometric sequence",
       },
       {
+        id: "the-fibonacci-recurrence",
         expr: [
           "RecurrenceTable",
           [
@@ -2709,21 +3078,25 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "length-counts-the-key-value-pairs",
         expr: ["Length", ["Association", ["Rule", 1, 2], ["Rule", 3, 4]]],
         expected: 2,
         caption: "[[Length]] counts the key-value pairs",
       },
       {
+        id: "first-is-the-first-value-not-the-first-rule",
         expr: ["First", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]]],
         expected: "a",
         caption: "[[First]] is the first value, not the first rule",
       },
       {
+        id: "last-is-the-last-value",
         expr: ["Last", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]]],
         expected: "b",
         caption: "[[Last]] is the last value",
       },
       {
+        id: "join-merges-keys-a-later-value-for-a-repeated",
         expr: [
           "Join",
           ["Association", ["Rule", "a", "b"]],
@@ -2735,6 +3108,7 @@ export const collections: readonly ReferenceEntry[] = [
           "[[Join]] merges keys; a later value for a repeated key wins, in the key's original position",
       },
       {
+        id: "sort-orders-the-entries-by-value",
         expr: ["Sort", ["Association", ["Rule", "a", 4], ["Rule", "b", 1], ["Rule", "c", 3]]],
         expected: ["Association", ["Rule", "b", 1], ["Rule", "c", 3], ["Rule", "a", 4]],
         category: "Scope",
@@ -2758,28 +3132,33 @@ export const collections: readonly ReferenceEntry[] = [
     details: ["See [[HarmonicMean]] and [[Mean]] for the other Pythagorean means."],
     examples: [
       {
+        id: "sqrt-2-cdot-8-4",
         expr: ["GeometricMean", ["List", 2, 8]],
         expected: 4,
         caption: "$\\sqrt{2 \\cdot 8} = 4$",
       },
       {
+        id: "sqrt-3-1-cdot-2-cdot-4-2",
         expr: ["GeometricMean", ["List", 1, 2, 4]],
         expected: 2,
         caption: "$\\sqrt[3]{1 \\cdot 2 \\cdot 4} = 2$",
       },
       {
+        id: "an-exact-irrational-result",
         expr: ["GeometricMean", ["List", 2, 3]],
         expected: ["Sqrt", 6],
         category: "Scope",
         caption: "An exact irrational result",
       },
       {
+        id: "sqrt-3-6",
         expr: ["GeometricMean", ["List", 1, 2, 3]],
         expected: ["Root", 6, 3],
         category: "Scope",
         caption: "$\\sqrt[3]{6}$",
       },
       {
+        id: "symbolic-data",
         expr: ["GeometricMean", ["List", "a", "b"]],
         expected: ["Sqrt", ["Multiply", "a", "b"]],
         category: "Scope",
@@ -2803,22 +3182,26 @@ export const collections: readonly ReferenceEntry[] = [
     details: ["See [[GeometricMean]] and [[Mean]] for the other Pythagorean means."],
     examples: [
       {
+        id: "3-1-frac-12-frac-14-frac-12-7",
         expr: ["HarmonicMean", ["List", 1, 2, 4]],
         expected: ["Rational", 12, 7],
         caption: "$3 / (1 + \\frac12 + \\frac14) = \\frac{12}{7}$",
       },
       {
+        id: "frac-12-5",
         expr: ["HarmonicMean", ["List", 2, 3]],
         expected: ["Rational", 12, 5],
         caption: "$\\frac{12}{5}$",
       },
       {
+        id: "driving-equal-distances-at-40-and-60-averages-48",
         expr: ["HarmonicMean", ["List", 40, 60]],
         expected: 48,
         category: "Applications",
         caption: "Driving equal distances at 40 and 60 averages 48, not 50",
       },
       {
+        id: "equal-values-are-their-own-harmonic-mean",
         expr: ["HarmonicMean", ["List", 5, 5, 5]],
         expected: 5,
         category: "Properties",
@@ -2827,7 +3210,7 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["GeometricMean", "Mean"],
   },
-  // ── Wolfram-sweep list heads (packages/collections/src/list-ops-wolfram.ts) ──
+  // ── Wolfram-sweep list heads (packages/symbols/combinatorics/collections/src/list-ops-wolfram.ts) ──
   {
     name: "Span",
     domain: "Collections",
@@ -2848,28 +3231,33 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "positions-2-through-4-2-4-in-wolfram",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]],
         expected: ["List", "b", "c", "d"],
         caption: "Positions 2 through 4 ($2;;4$ in Wolfram)",
       },
       {
+        id: "every-other-element-through-the-last-1-1-2",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]],
         expected: ["List", "a", "c", "f"],
         caption: "Every other element through the last ($1;;-1;;2$)",
       },
       {
+        id: "a-negative-step-walks-backwards-1-1-1",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -1, 1, -1]],
         expected: ["List", "f", "d", "c", "b", "a"],
         category: "Scope",
         caption: "A negative step walks backwards ($-1;;1;;-1$)",
       },
       {
+        id: "negative-bounds-the-last-two-elements",
         expr: ["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]],
         expected: ["List", "d", "f"],
         category: "Scope",
         caption: "Negative bounds: the last two elements",
       },
       {
+        id: "spans-at-two-levels-cut-out-a-submatrix",
         expr: [
           "At",
           ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]],
@@ -2904,22 +3292,26 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "asking-for-up-to-5-of-3-elements-takes-all-3",
         expr: ["Take", ["List", 1, 2, 3], ["UpTo", 5]],
         expected: ["List", 1, 2, 3],
         caption: "Asking for up to 5 of 3 elements takes all 3, with no error",
       },
       {
+        id: "when-enough-elements-are-available-exactly-n-is",
         expr: ["Take", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 2]],
         expected: ["List", 1, 2],
         caption: "When enough elements are available, exactly n is taken",
       },
       {
+        id: "in-partition-a-shorter-final-chunk-is-allowed",
         expr: ["Partition", ["List", 1, 2, 3, 4, 5, 6], ["UpTo", 4]],
         expected: ["List", ["List", 1, 2, 3, 4], ["List", 5, 6]],
         category: "Scope",
         caption: "In [[Partition]], a shorter final chunk is allowed",
       },
       {
+        id: "in-ordering-at-most-6-positions-of-a-5-element",
         expr: ["Ordering", ["List", 2, 6, 1, 9, 2], ["UpTo", 6]],
         expected: ["List", 3, 1, 5, 2, 4],
         category: "Scope",
@@ -2948,28 +3340,33 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "x-between-consecutive-elements",
         expr: ["Riffle", ["List", "a", "b", "c"], "x"],
         expected: ["List", "a", "x", "b", "x", "c"],
         caption: "$x$ between consecutive elements",
       },
       {
+        id: "interleave-two-lists-of-the-same-length",
         expr: ["Riffle", ["List", "a", "b", "c"], ["List", "x", "y", "z"]],
         expected: ["List", "a", "x", "b", "y", "c", "z"],
         caption: "Interleave two lists of the same length",
       },
       {
+        id: "a-list-one-shorter-goes-strictly-between-the",
         expr: ["Riffle", ["List", "a", "b", "c"], ["List", "x", "y"]],
         expected: ["List", "a", "x", "b", "y", "c"],
         category: "Scope",
         caption: "A list one shorter goes strictly between the elements",
       },
       {
+        id: "every-3rd-element-of-the-result-is-x",
         expr: ["Riffle", ["List", 1, 2, 3, 4, 5, 6, 7], "x", 3],
         expected: ["List", 1, 2, "x", 3, 4, "x", 5, 6, "x", 7],
         category: "Scope",
         caption: "Every 3rd element of the result is x",
       },
       {
+        id: "a-single-element-has-nothing-to-separate",
         expr: ["Riffle", ["List", "a"], "x"],
         expected: ["List", "a"],
         category: "Scope",
@@ -3000,15 +3397,18 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "gather-list-1-7-3-7-2-3-9",
         expr: ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]],
         expected: ["List", ["List", 1], ["List", 7, 7], ["List", 3, 3], ["List", 2], ["List", 9]],
       },
       {
+        id: "symbolic-elements",
         expr: ["Gather", ["List", "a", "b", "a", "a", "c", "b"]],
         expected: ["List", ["List", "a", "a", "a"], ["List", "b", "b"], ["List", "c"]],
         caption: "Symbolic elements",
       },
       {
+        id: "a-test-decides-which-elements-belong-together",
         expr: [
           "Gather",
           ["List", 1, 2, 3, 4, 5, 6],
@@ -3019,6 +3419,7 @@ export const collections: readonly ReferenceEntry[] = [
         caption: "A test decides which elements belong together: here, same parity",
       },
       {
+        id: "the-group-sizes-are-the-multiplicities-of-the",
         expr: [
           "Equal",
           ["Map", "Length", ["Gather", ["List", 1, 7, 3, 7, 2, 3, 9]]],
@@ -3046,16 +3447,19 @@ export const collections: readonly ReferenceEntry[] = [
     details: ['[[Gather]] with the equivalence "same $f$ value" instead of plain equality.'],
     examples: [
       {
+        id: "grouped-by-residue-mod-3",
         expr: ["GatherBy", ["List", 1, 2, 3, 4, 5, 6, 7], ["Function", ["Mod", "_1", 3]]],
         expected: ["List", ["List", 1, 4, 7], ["List", 2, 5], ["List", 3, 6]],
         caption: "Grouped by residue mod 3",
       },
       {
+        id: "grouped-by-absolute-value",
         expr: ["GatherBy", ["List", -2, 1, 2, -1, 3], "Abs"],
         expected: ["List", ["List", -2, 2], ["List", 1, -1], ["List", 3]],
         caption: "Grouped by absolute value",
       },
       {
+        id: "pairs-grouped-by-their-last-element",
         expr: ["GatherBy", ["List", ["List", "a", 1], ["List", "b", 2], ["List", "c", 1]], "Last"],
         expected: [
           "List",
@@ -3090,22 +3494,26 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "runs-not-groups-the-two-runs-of-1-stay-apart",
         expr: ["Split", ["List", 1, 1, 2, 2, 2, 3, 1, 1]],
         expected: ["List", ["List", 1, 1], ["List", 2, 2, 2], ["List", 3], ["List", 1, 1]],
         caption: "Runs, not groups: the two runs of 1 stay apart",
       },
       {
+        id: "symbolic-elements",
         expr: ["Split", ["List", "a", "a", "b", "b", "b", "a"]],
         expected: ["List", ["List", "a", "a"], ["List", "b", "b", "b"], ["List", "a"]],
         caption: "Symbolic elements",
       },
       {
+        id: "a-test-between-neighbours-split-into-increasing",
         expr: ["Split", ["List", 1, 2, 3, 5, 4, 6], "Less"],
         expected: ["List", ["List", 1, 2, 3, 5], ["List", 4, 6]],
         category: "Scope",
         caption: "A test between neighbours: split into increasing runs",
       },
       {
+        id: "the-empty-list",
         expr: ["Split", ["List"]],
         expected: ["List"],
         category: "Scope",
@@ -3129,11 +3537,13 @@ export const collections: readonly ReferenceEntry[] = [
     details: ['[[Split]] with the adjacency test "same $f$ value" instead of plain equality.'],
     examples: [
       {
+        id: "runs-of-the-same-parity",
         expr: ["SplitBy", ["List", 1, 3, 5, 2, 4, 7, 9], ["Function", ["Mod", "_1", 2]]],
         expected: ["List", ["List", 1, 3, 5], ["List", 2, 4], ["List", 7, 9]],
         caption: "Runs of the same parity",
       },
       {
+        id: "runs-with-the-same-value-of-lfloor-x-4-rfloor",
         expr: [
           "SplitBy",
           ["List", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -3159,22 +3569,26 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "sorted-by-absolute-value",
         expr: ["SortBy", ["List", -3, 1, -2], "Abs"],
         expected: ["List", 1, -2, -3],
         caption: "Sorted by absolute value",
       },
       {
+        id: "pairs-sorted-by-their-last-element",
         expr: ["SortBy", ["List", ["List", "a", 2], ["List", "c", 1], ["List", "d", 3]], "Last"],
         expected: ["List", ["List", "c", 1], ["List", "a", 2], ["List", "d", 3]],
         caption: "Pairs sorted by their last element",
       },
       {
+        id: "sorted-by-the-square-of-each-element",
         expr: ["SortBy", ["List", 4, -5, 1, 3, -2], ["Function", ["Power", "_1", 2]]],
         expected: ["List", 1, -2, 3, 4, -5],
         category: "Scope",
         caption: "Sorted by the square of each element",
       },
       {
+        id: "sorting-by-x-gives-descending-order",
         expr: ["SortBy", ["List", 3, 1, 2], "Negate"],
         expected: ["List", 3, 2, 1],
         category: "Scope",
@@ -3203,22 +3617,26 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "padded-with-zeros-on-the-left",
         expr: ["PadLeft", ["List", 1, 2, 3], 5],
         expected: ["List", 0, 0, 1, 2, 3],
         caption: "Padded with zeros on the left",
       },
       {
+        id: "a-padding-element",
         expr: ["PadLeft", ["List", 1, 2, 3], 5, "x"],
         expected: ["List", "x", "x", 1, 2, 3],
         caption: "A padding element",
       },
       {
+        id: "a-shorter-length-drops-elements-from-the-left",
         expr: ["PadLeft", ["List", 1, 2, 3, 4, 5], 3],
         expected: ["List", 3, 4, 5],
         category: "Scope",
         caption: "A shorter length drops elements from the left",
       },
       {
+        id: "with-no-length-a-ragged-array-is-padded-to-a",
         expr: ["PadLeft", ["List", ["List", 1], ["List", 2, 3]]],
         expected: ["List", ["List", 0, 1], ["List", 2, 3]],
         category: "Scope",
@@ -3247,22 +3665,26 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "padded-with-zeros-on-the-right",
         expr: ["PadRight", ["List", 1, 2, 3], 5],
         expected: ["List", 1, 2, 3, 0, 0],
         caption: "Padded with zeros on the right",
       },
       {
+        id: "a-padding-element",
         expr: ["PadRight", ["List", 1, 2, 3], 5, "x"],
         expected: ["List", 1, 2, 3, "x", "x"],
         caption: "A padding element",
       },
       {
+        id: "a-shorter-length-drops-elements-from-the-right",
         expr: ["PadRight", ["List", 1, 2, 3, 4, 5], 3],
         expected: ["List", 1, 2, 3],
         category: "Scope",
         caption: "A shorter length drops elements from the right",
       },
       {
+        id: "with-no-length-a-ragged-array-is-padded-to-a",
         expr: ["PadRight", ["List", ["List", 1], ["List", 2, 3]]],
         expected: ["List", ["List", 1, 0], ["List", 2, 3]],
         category: "Scope",

@@ -36,6 +36,12 @@ export type MathJSON =
  * by the reference tests to catch capability regressions.
  */
 export interface ReferenceExample {
+  /**
+   * Stable within the head (across packages, when two document it): `^[a-z0-9]+(-[a-z0-9]+)*$`,
+   * at most 48 characters. Assigned once and kept when the caption or `expr` changes. The
+   * deep link is `#example/<id>`, tests are `<Head> example/<id>`, oracle rows key on it.
+   */
+  readonly id: string;
   readonly expr: MathJSON;
   readonly expected: MathJSON;
   readonly caption?: string;
@@ -67,20 +73,33 @@ export interface ReferenceExample {
   /**
    * Kept as data but not shown by default: an edge case or a grid point that the tests and
    * oracles run like any other example, too many or too minor to render. Hidden examples
-   * mostly live in an entry file's `<stem>.examples.json`. A deep link (`#example-N`) still
-   * shows one.
+   * mostly live in an entry file's `<stem>.examples.json`. A deep link (`#example/<id>`)
+   * still shows one.
+   *
+   * @deprecated Superseded by `role: "test"` (design/examples-as-data.md §5). Both are read
+   * during the migration; `hidden` goes away once every example carries a `role`.
    */
   readonly hidden?: boolean;
   /**
    * Cases of one example: examples sharing a `group` show as a single card, where the
    * first sits, cycling through the rest. Each case is still its own example -- its own
-   * test, oracle row and `#example-N`; the card is its first case's, and `#example-N=X`
-   * picks case X on it. For near-identical cases that demonstrate nothing over the first.
+   * test, oracle row and `#example/<id>`; the card carries its first case's anchor, and a
+   * link to any other case shows that case on it. For near-identical cases that demonstrate
+   * nothing over the first.
    */
   readonly group?: string;
+  /**
+   * What the example is FOR (design/examples-as-data.md §5). `demo` (the default) is shown
+   * on the reference page; `test` runs in the evaluation test and the scans like any other
+   * example but is skipped by the page, superseding `hidden`.
+   */
+  readonly role?: ExampleRole;
   /** Per-system oracle runs of this exact example, attached from the entry's `.oracle.json` sidecar. */
   readonly others?: Readonly<Record<string, OtherSystemRun>>;
 }
+
+/** What an example is for (design/examples-as-data.md §5) -- superseding `hidden`. */
+export type ExampleRole = "demo" | "test";
 
 /** One call signature the head accepts, with a short explanation. */
 export interface ReferenceSignature {
@@ -223,3 +242,66 @@ export interface ReferenceEntry {
    */
   readonly stub?: "engine" | "carrier";
 }
+
+// --- the implementations record (design/examples-as-data.md §2, §6) -----------------------
+//
+// `reference/<Head>.implementations.yaml` holds, per example id, every implementation's
+// rendering of it and, for other systems, their answer. Own forms ("epsil", "tex",
+// "traditional", "notatio") and external systems share this shape -- an own form simply has
+// no `verdict`, `messages`, or claim to answer with.
+
+/** One rendered form of an example: retypeable text going in, and what it prints as. */
+export interface RenderedForm {
+  readonly in: string;
+  readonly out: string;
+}
+
+/**
+ * One message an evaluation itself emitted for this example -- compute-engine's `Head::code`
+ * messages, or a kernel's own warnings and errors. Distinct from the hand classification
+ * below: this is what running it produced, not what a person concluded about the verdict.
+ */
+export interface EvaluationMessage {
+  readonly code: string;
+  readonly text: string;
+  readonly severity?: "warning" | "error";
+}
+
+/**
+ * One system's writing of one example and, unless it's one of our own forms, its answer.
+ *
+ * | Field                                          | Written by            | Meaning |
+ * | ----------------------------------------------- | --------------------- | ------- |
+ * | `in`                                            | `UPDATE_FORMS=1`      | what our transpiler emits for it |
+ * | `out`, `tex`, `verdict`                         | the scan's `--accept` | absent for an own form, or until scanned |
+ * | `kind`, `note`, `issue`, `tolerance`             | hand                  | the classification of a non-`agree` verdict, carried forward by the scan while it holds |
+ * | `messages`                                      | the scan               | what the evaluation itself emitted running it |
+ */
+export interface SystemImplementation {
+  readonly in: string;
+  readonly out?: string;
+  /** Wolfram (and any system that has one): its TeXForm of `in` and of `out`. */
+  readonly tex?: RenderedForm;
+  readonly verdict?: OtherSystemVerdict;
+  /** One of `DIVERGENCE_KINDS` (`@enumeratio/oracle`). Any verdict but `agree` needs one. */
+  readonly kind?: string;
+  readonly note?: string;
+  /** `ours` only: the GitHub issue tracking the gap. */
+  readonly issue?: number;
+  /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
+  readonly tolerance?: number;
+  readonly messages?: readonly EvaluationMessage[];
+}
+
+/**
+ * All implementations of one example, keyed by our own forms ("epsil", "tex", "traditional",
+ * "notatio") or an external system name (`CrosswalkSystem`) -- one value in
+ * `<Head>.implementations.yaml`, itself keyed by example id (see `HeadImplementations`).
+ */
+export type ExampleImplementations = Readonly<Record<string, SystemImplementation>>;
+
+/**
+ * The whole `<Head>.implementations.yaml` file: every example's implementations, keyed by
+ * the example's `id`. Nothing in it is keyed by expression text or array position.
+ */
+export type HeadImplementations = Readonly<Record<string, ExampleImplementations>>;

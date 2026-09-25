@@ -5,7 +5,7 @@
   },
   "examples": {
     "GCD": {
-      "[\"GCD\",12,18]": {
+      "gcd-12-18": {
         "wolfram": {
           "input": "GCD[12, 18]",
           "output": "6",
@@ -46,7 +46,7 @@
           "verdict": "agree"
         }
       },
-      "[\"GCD\",24,36]": {
+      "gcd-24-36": {
         "wolfram": {
           "input": "GCD[24, 36]",
           "output": "12",
@@ -87,7 +87,7 @@
           "verdict": "agree"
         }
       },
-      "[\"GCD\",20,30,45]": {
+      "gcd-is-variadic-it-accepts-any-number-of": {
         "wolfram": {
           "input": "GCD[20, 30, 45]",
           "output": "5",
@@ -98,7 +98,7 @@
           }
         }
       },
-      "[\"GCD\",4]": {
+      "a-single-argument-is-returned-unchanged": {
         "wolfram": {
           "input": "GCD[4]",
           "output": "4",
@@ -109,7 +109,7 @@
           }
         }
       },
-      "[\"GCD\"]": {
+      "with-no-arguments-compute-engine-returns-0-the": {
         "wolfram": {
           "input": "GCD[]",
           "output": "0",
@@ -120,7 +120,7 @@
           }
         }
       },
-      "[\"GCD\",0,5]": {
+      "0-is-absorbed-every-integer-divides-it-so-gcd-0": {
         "wolfram": {
           "input": "GCD[0, 5]",
           "output": "5",
@@ -161,7 +161,7 @@
           "verdict": "agree"
         }
       },
-      "[\"GCD\",-12,9,57]": {
+      "signs-are-discarded-before-computing-the-gcd": {
         "wolfram": {
           "input": "GCD[-12, 9, 57]",
           "output": "3",
@@ -172,7 +172,7 @@
           }
         }
       },
-      "[\"GCD\",[\"List\",2,4],[\"List\",6,8]]": {
+      "lists-aren-t-threaded-element-wise-they-re": {
         "wolfram": {
           "input": "GCD[List[2, 4], List[6, 8]]",
           "output": "{2, 4}",
@@ -227,7 +227,7 @@
           "note": "compute-engine's GCD threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Equal\",[\"GCD\",12,18],[\"GCD\",18,12]]": {
+      "commutative-gcd-a-b-gcd-b-a": {
         "wolfram": {
           "input": "(GCD[12, 18] == GCD[18, 12])",
           "output": "True",
@@ -268,7 +268,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Multiply\",[\"GCD\",12,18],[\"LCM\",12,18]],[\"Multiply\",12,18]]": {
+      "gcd-a-b-cdot-lcm-a-b-ab-see-lcm": {
         "wolfram": {
           "input": "(Times[GCD[12, 18], LCM[12, 18]] == Times[12, 18])",
           "output": "True",
@@ -309,7 +309,18 @@
           "verdict": "agree"
         }
       },
-      "[\"GCD\",[\"Complex\",3,1],[\"Complex\",1,3]]": {
+      "over-the-rationals-the-gcd-of-the-numerators": {
+        "wolfram": {
+          "input": "GCD[Rational[1, 3], Rational[2, 5], Rational[3, 7]]",
+          "output": "1/105",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd \\left(\\frac{1}{3},\\frac{2}{5},\\frac{3}{7}\\right)",
+            "output": "\\frac{1}{105}"
+          }
+        }
+      },
+      "gaussian-integers-the-associate-in-the-first": {
         "wolfram": {
           "input": "GCD[Complex[3, 1], Complex[1, 3]]",
           "output": "1 + I",
@@ -345,21 +356,10 @@
           "kind": "domain",
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
-      },
-      "[\"GCD\",[\"Rational\",1,3],[\"Rational\",2,5],[\"Rational\",3,7]]": {
-        "wolfram": {
-          "input": "GCD[Rational[1, 3], Rational[2, 5], Rational[3, 7]]",
-          "output": "1/105",
-          "verdict": "agree",
-          "tex": {
-            "input": "\\gcd \\left(\\frac{1}{3},\\frac{2}{5},\\frac{3}{7}\\right)",
-            "output": "\\frac{1}{105}"
-          }
-        }
       }
     },
     "LCM": {
-      "[\"LCM\",4,6]": {
+      "lcm-4-6": {
         "wolfram": {
           "input": "LCM[4, 6]",
           "output": "12",
@@ -400,7 +400,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LCM\",4,6,10]": {
+      "lcm-is-variadic-it-accepts-any-number-of": {
         "wolfram": {
           "input": "LCM[4, 6, 10]",
           "output": "60",
@@ -411,7 +411,7 @@
           }
         }
       },
-      "[\"LCM\",5]": {
+      "a-single-argument-is-returned-unchanged": {
         "wolfram": {
           "input": "LCM[5]",
           "output": "5",
@@ -422,7 +422,7 @@
           }
         }
       },
-      "[\"LCM\",0,5]": {
+      "0-absorbs-the-lcm-with-0-is-0": {
         "wolfram": {
           "input": "LCM[0, 5]",
           "output": "0",
@@ -463,7 +463,7 @@
           "verdict": "agree"
         }
       },
-      "[\"LCM\",-3,7]": {
+      "signs-are-discarded-before-computing-the-lcm": {
         "wolfram": {
           "input": "LCM[-3, 7]",
           "output": "21",
@@ -504,7 +504,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Multiply\",[\"GCD\",27,81],[\"LCM\",27,81]],[\"Multiply\",27,81]]": {
+      "gcd-a-b-cdot-lcm-a-b-ab-see-gcd": {
         "wolfram": {
           "input": "(Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])",
           "output": "True",
@@ -545,7 +545,18 @@
           "verdict": "agree"
         }
       },
-      "[\"LCM\",[\"Complex\",3,1],[\"Complex\",-1,3]]": {
+      "over-the-rationals-the-lcm-of-the-numerators": {
+        "wolfram": {
+          "input": "LCM[Rational[1, 3], Rational[2, 5], Rational[3, 7]]",
+          "output": "6",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}\\left(\\frac{1}{3},\\frac{2}{5},\\frac{3}{7}\\right)",
+            "output": "6"
+          }
+        }
+      },
+      "1-3i-i-3-i-associates-share-their-multiples": {
         "wolfram": {
           "input": "LCM[Complex[3, 1], Complex[-1, 3]]",
           "output": "3 + I",
@@ -583,21 +594,10 @@
           "kind": "domain",
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
-      },
-      "[\"LCM\",[\"Rational\",1,3],[\"Rational\",2,5],[\"Rational\",3,7]]": {
-        "wolfram": {
-          "input": "LCM[Rational[1, 3], Rational[2, 5], Rational[3, 7]]",
-          "output": "6",
-          "verdict": "agree",
-          "tex": {
-            "input": "\\text{lcm}\\left(\\frac{1}{3},\\frac{2}{5},\\frac{3}{7}\\right)",
-            "output": "6"
-          }
-        }
       }
     },
     "Totient": {
-      "[\"Totient\",12]": {
+      "totient-12": {
         "wolfram": {
           "input": "EulerPhi[12]",
           "output": "4",
@@ -633,7 +633,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Totient\",36]": {
+      "totient-36": {
         "wolfram": {
           "input": "EulerPhi[36]",
           "output": "12",
@@ -669,7 +669,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Totient\",1]": {
+      "totient-1": {
         "wolfram": {
           "input": "EulerPhi[1]",
           "output": "1",
@@ -705,7 +705,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Totient\",391]": {
+      "rsa-key-setup-varphi-17-times-23-16-times-22-352": {
         "wolfram": {
           "input": "EulerPhi[391]",
           "output": "352",
@@ -741,7 +741,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Add\",[\"Totient\",1],[\"Totient\",2],[\"Totient\",3],[\"Totient\",4],[\"Totient\",6],[\"Totient\",12]]": {
+      "sum-d-mid-n-varphi-d-n-checked-over-the-divisors": {
         "wolfram": {
           "input": "Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]",
           "output": "12",
@@ -777,7 +777,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Totient\",12],[\"Multiply\",[\"Totient\",4],[\"Totient\",3]]]": {
+      "multiplicative-varphi-mn-varphi-m-varphi-n-when": {
         "wolfram": {
           "input": "(EulerPhi[12] == Times[EulerPhi[4], EulerPhi[3]])",
           "output": "True",
@@ -813,7 +813,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Totient\",0]": {
+      "varphi-0-0-as-in-wolfram": {
         "wolfram": {
           "input": "EulerPhi[0]",
           "output": "0",
@@ -831,7 +831,7 @@
           "note": "compute-engine's Totient answers at 0; SymPy's totient() requires a positive integer and declines."
         }
       },
-      "[\"Totient\",[\"List\",2,4,6]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "EulerPhi[List[2, 4, 6]]",
           "output": "{1, 2, 2}",
@@ -851,7 +851,7 @@
       }
     },
     "NextPrime": {
-      "[\"NextPrime\",10]": {
+      "nextprime-10": {
         "wolfram": {
           "input": "NextPrime[10]",
           "output": "11",
@@ -862,7 +862,7 @@
           }
         }
       },
-      "[\"NextPrime\",100]": {
+      "nextprime-100": {
         "wolfram": {
           "input": "NextPrime[100]",
           "output": "101",
@@ -873,7 +873,7 @@
           }
         }
       },
-      "[\"NextPrime\",10,2]": {
+      "the-second-prime-after-10": {
         "wolfram": {
           "input": "NextPrime[10, 2]",
           "output": "13",
@@ -884,7 +884,7 @@
           }
         }
       },
-      "[\"NextPrime\",10,-1]": {
+      "a-negative-k-walks-backward-giving-the-prime": {
         "wolfram": {
           "input": "NextPrime[10, -1]",
           "output": "7",
@@ -895,7 +895,7 @@
           }
         }
       },
-      "[\"NextPrime\",[\"List\",1,5,10,15]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "NextPrime[List[1, 5, 10, 15]]",
           "output": "{2, 7, 11, 17}",
@@ -908,7 +908,7 @@
       }
     },
     "NthPrime": {
-      "[\"NthPrime\",1]": {
+      "the-first-prime-is-2": {
         "wolfram": {
           "input": "Prime[1]",
           "output": "2",
@@ -919,7 +919,7 @@
           }
         }
       },
-      "[\"NthPrime\",10]": {
+      "nthprime-10": {
         "wolfram": {
           "input": "Prime[10]",
           "output": "29",
@@ -930,7 +930,7 @@
           }
         }
       },
-      "[\"NthPrime\",100]": {
+      "nthprime-100": {
         "wolfram": {
           "input": "Prime[100]",
           "output": "541",
@@ -941,7 +941,7 @@
           }
         }
       },
-      "[\"NthPrime\",1000]": {
+      "the-1000th-prime": {
         "wolfram": {
           "input": "Prime[1000]",
           "output": "7919",
@@ -952,7 +952,7 @@
           }
         }
       },
-      "[\"Equal\",[\"PrimePi\",[\"NthPrime\",100]],100]": {
+      "primepi-and-nthprime-are-inverses-pi-p-n-n": {
         "wolfram": {
           "input": "(PrimePi[Prime[100]] == 100)",
           "output": "True",
@@ -963,7 +963,7 @@
           }
         }
       },
-      "[\"NthPrime\",0]": {
+      "n-must-be-a-positive-integer-compute-engine": {
         "wolfram": {
           "input": "Prime[0]",
           "output": "Prime[0]",
@@ -974,7 +974,7 @@
           }
         }
       },
-      "[\"NthPrime\",[\"List\",1,3,4,10]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "Prime[List[1, 3, 4, 10]]",
           "output": "{2, 5, 7, 29}",
@@ -987,7 +987,7 @@
       }
     },
     "PrimePi": {
-      "[\"PrimePi\",1]": {
+      "no-primes-are-1": {
         "wolfram": {
           "input": "PrimePi[1]",
           "output": "0",
@@ -1018,7 +1018,7 @@
           "verdict": "agree"
         }
       },
-      "[\"PrimePi\",2]": {
+      "primepi-2": {
         "wolfram": {
           "input": "PrimePi[2]",
           "output": "1",
@@ -1049,7 +1049,7 @@
           "verdict": "agree"
         }
       },
-      "[\"PrimePi\",15]": {
+      "primepi-15": {
         "wolfram": {
           "input": "PrimePi[15]",
           "output": "6",
@@ -1080,7 +1080,7 @@
           "verdict": "agree"
         }
       },
-      "[\"PrimePi\",100]": {
+      "primepi-100": {
         "wolfram": {
           "input": "PrimePi[100]",
           "output": "25",
@@ -1111,7 +1111,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"PrimePi\",[\"NthPrime\",50]],50]": {
+      "same-inverse-relation-viewed-from-primepi-s-side": {
         "wolfram": {
           "input": "(PrimePi[Prime[50]] == 50)",
           "output": "True",
@@ -1122,7 +1122,7 @@
           }
         }
       },
-      "[\"PrimePi\",[\"List\",10,100]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "PrimePi[List[10, 100]]",
           "output": "{4, 25}",
@@ -1149,7 +1149,7 @@
       }
     },
     "IsPrime": {
-      "[\"IsPrime\",1]": {
+      "1-is-not-prime-by-definition": {
         "wolfram": {
           "input": "PrimeQ[1]",
           "output": "False",
@@ -1190,7 +1190,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",2]": {
+      "2-is-the-only-even-prime": {
         "wolfram": {
           "input": "PrimeQ[2]",
           "output": "True",
@@ -1231,7 +1231,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",13]": {
+      "isprime-13": {
         "wolfram": {
           "input": "PrimeQ[13]",
           "output": "True",
@@ -1272,7 +1272,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",4]": {
+      "isprime-4": {
         "wolfram": {
           "input": "PrimeQ[4]",
           "output": "False",
@@ -1313,7 +1313,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",97]": {
+      "isprime-97": {
         "wolfram": {
           "input": "PrimeQ[97]",
           "output": "True",
@@ -1354,7 +1354,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",[\"Add\",[\"Power\",2,31],-1]]": {
+      "the-mersenne-prime-2-31-1": {
         "wolfram": {
           "input": "PrimeQ[Plus[Power[2, 31], -1]]",
           "output": "True",
@@ -1397,7 +1397,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",1000000007]": {
+      "a-common-choice-of-prime-modulus-for-hashing": {
         "wolfram": {
           "input": "PrimeQ[1000000007]",
           "output": "True",
@@ -1438,7 +1438,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IsPrime\",[\"List\",1,2,3,4,5,6]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "PrimeQ[List[1, 2, 3, 4, 5, 6]]",
           "output": "{False, True, True, False, True, False}",
@@ -1491,7 +1491,23 @@
           "note": "compute-engine's IsPrime threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"IsPrime\",[\"Complex\",2,1]]": {
+      "7-is-prime-its-associate-7-is-matching-wolfram-s": {
+        "sympy": {
+          "input": "isprime(-7)",
+          "output": "False",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes."
+        },
+        "rust": {
+          "input": "is_prime(n(-7))",
+          "output": "panic: a non-negative integer",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; the Rust crate requires a non-negative integer and declines."
+        }
+      },
+      "a-gaussian-prime-its-norm-5-is-prime": {
         "wolfram": {
           "input": "PrimeQ[Complex[2, 1]]",
           "output": "True",
@@ -1527,26 +1543,10 @@
           "output": "True",
           "verdict": "agree"
         }
-      },
-      "[\"IsPrime\",-7]": {
-        "sympy": {
-          "input": "isprime(-7)",
-          "output": "False",
-          "verdict": "disagree",
-          "kind": "convention",
-          "note": "compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; SymPy's isprime() only accepts positive primes."
-        },
-        "rust": {
-          "input": "is_prime(n(-7))",
-          "output": "panic: a non-negative integer",
-          "verdict": "error",
-          "kind": "domain",
-          "note": "compute-engine's IsPrime(-7) is True, per Wolfram's PrimeQ convention for associates; the Rust crate requires a non-negative integer and declines."
-        }
       }
     },
     "FactorInteger": {
-      "[\"FactorInteger\",360]": {
+      "factorinteger-360": {
         "wolfram": {
           "input": "FactorInteger[360]",
           "output": "{{2, 3}, {3, 2}, {5, 1}}",
@@ -1562,7 +1562,7 @@
           "verdict": "agree"
         }
       },
-      "[\"FactorInteger\",84]": {
+      "factorinteger-84": {
         "wolfram": {
           "input": "FactorInteger[84]",
           "output": "{{2, 2}, {3, 1}, {7, 1}}",
@@ -1578,7 +1578,7 @@
           "verdict": "agree"
         }
       },
-      "[\"FactorInteger\",1729]": {
+      "the-hardy-ramanujan-taxicab-number-7-times-13": {
         "wolfram": {
           "input": "FactorInteger[1729]",
           "output": "{{7, 1}, {13, 1}, {19, 1}}",
@@ -1594,7 +1594,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Multiply\",[\"Power\",2,3],[\"Power\",3,2],5],360]": {
+      "multiplying-the-p-e-factors-back-together": {
         "wolfram": {
           "input": "(Times[Power[2, 3], Power[3, 2], 5] == 360)",
           "output": "True",
@@ -1640,7 +1640,7 @@
           "verdict": "agree"
         }
       },
-      "[\"FactorInteger\",1]": {
+      "compute-engine-returns-the-trivial-factor-1-1": {
         "wolfram": {
           "input": "FactorInteger[1]",
           "output": "{{1, 1}}",
@@ -1658,7 +1658,7 @@
           "note": "Sage's factor() leaves out the unit — factor(1) is the empty product and factor(-60) has no (-1, 1) term — where FactorInteger lists it explicitly, as Wolfram does."
         }
       },
-      "[\"FactorInteger\",0]": {
+      "0-is-represented-as-0-1": {
         "wolfram": {
           "input": "FactorInteger[0]",
           "output": "{{0, 1}}",
@@ -1676,7 +1676,7 @@
           "note": "compute-engine factors 0 as {{0, 1}}, as Wolfram does; Sage declines to factor 0."
         }
       },
-      "[\"FactorInteger\",-60]": {
+      "negative-numbers-carry-an-explicit-1-unit-factor": {
         "wolfram": {
           "input": "FactorInteger[-60]",
           "output": "{{-1, 1}, {2, 2}, {3, 1}, {5, 1}}",
@@ -1694,7 +1694,18 @@
           "note": "Sage's factor() leaves out the unit — factor(1) is the empty product and factor(-60) has no (-1, 1) term — where FactorInteger lists it explicitly, as Wolfram does."
         }
       },
-      "[\"FactorInteger\",[\"Complex\",3,4]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
+        "wolfram": {
+          "input": "FactorInteger[List[12, 18]]",
+          "output": "{{{2, 2}, {3, 1}}, {{2, 1}, {3, 2}}}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[\\{12,18\\}]",
+            "output": "\\left( \\begin{array}{cc}  \\{2,2\\} & \\{3,1\\} \\\\  \\{2,1\\} & \\{3,2\\} \\\\ \\end{array} \\right)"
+          }
+        }
+      },
+      "3-4i-2-i-2": {
         "wolfram": {
           "input": "FactorInteger[Complex[3, 4]]",
           "output": "{{2 + I, 2}}",
@@ -1712,7 +1723,7 @@
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so FactorInteger over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
-      "[\"FactorInteger\",[\"Complex\",{\"num\":\"100000000000000000039\"},{\"num\":\"100000000000000000129\"}]]": {
+      "a-21-digit-gaussian-integer-through-its-norm": {
         "wolfram": {
           "input": "FactorInteger[Complex[100000000000000000039, 100000000000000000129]]",
           "output": "{{-I, 1}, {1 + I, 1}, {99 + 34*I, 1}, {1538 + 213*I, 1}, {277789996706096 + 549000467740335*I, 1}}",
@@ -1729,21 +1740,10 @@
           "kind": "domain",
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so FactorInteger over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
-      },
-      "[\"FactorInteger\",[\"List\",12,18]]": {
-        "wolfram": {
-          "input": "FactorInteger[List[12, 18]]",
-          "output": "{{{2, 2}, {3, 1}}, {{2, 1}, {3, 2}}}",
-          "verdict": "agree",
-          "tex": {
-            "input": "\\text{FactorInteger}[\\{12,18\\}]",
-            "output": "\\left( \\begin{array}{cc}  \\{2,2\\} & \\{3,1\\} \\\\  \\{2,1\\} & \\{3,2\\} \\\\ \\end{array} \\right)"
-          }
-        }
       }
     },
     "PrimeNu": {
-      "[\"PrimeNu\",24]": {
+      "primenu-24": {
         "wolfram": {
           "input": "PrimeNu[24]",
           "output": "2",
@@ -1754,7 +1754,7 @@
           }
         }
       },
-      "[\"PrimeNu\",360]": {
+      "primenu-360": {
         "wolfram": {
           "input": "PrimeNu[360]",
           "output": "3",
@@ -1765,7 +1765,7 @@
           }
         }
       },
-      "[\"PrimeNu\",32]": {
+      "32-2-5-has-just-one-distinct-prime-factor": {
         "wolfram": {
           "input": "PrimeNu[32]",
           "output": "1",
@@ -1776,7 +1776,7 @@
           }
         }
       },
-      "[\"PrimeNu\",1]": {
+      "1-has-no-prime-factors": {
         "wolfram": {
           "input": "PrimeNu[1]",
           "output": "0",
@@ -1787,7 +1787,7 @@
           }
         }
       },
-      "[\"Equal\",[\"PrimeNu\",50],[\"Length\",[\"FactorInteger\",50]]]": {
+      "primenu-n-is-the-length-of-factorinteger-n": {
         "wolfram": {
           "input": "(PrimeNu[50] == Length[FactorInteger[50]])",
           "output": "True",
@@ -1798,7 +1798,7 @@
           }
         }
       },
-      "[\"PrimeNu\",[\"List\",4,28,180]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "PrimeNu[List[4, 28, 180]]",
           "output": "{1, 2, 3}",
@@ -1811,7 +1811,7 @@
       }
     },
     "PrimeOmega": {
-      "[\"PrimeOmega\",30]": {
+      "primeomega-30": {
         "wolfram": {
           "input": "PrimeOmega[30]",
           "output": "3",
@@ -1822,7 +1822,7 @@
           }
         }
       },
-      "[\"PrimeOmega\",360]": {
+      "primeomega-360": {
         "wolfram": {
           "input": "PrimeOmega[360]",
           "output": "6",
@@ -1833,7 +1833,7 @@
           }
         }
       },
-      "[\"PrimeOmega\",1]": {
+      "1-has-no-prime-factors": {
         "wolfram": {
           "input": "PrimeOmega[1]",
           "output": "0",
@@ -1844,7 +1844,7 @@
           }
         }
       },
-      "[\"Equal\",[\"PrimeOmega\",[\"Multiply\",24,40]],[\"Add\",[\"PrimeOmega\",24],[\"PrimeOmega\",40]]]": {
+      "completely-additive-omega-mn-omega-m-omega-n-for": {
         "wolfram": {
           "input": "(PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])",
           "output": "True",
@@ -1855,7 +1855,7 @@
           }
         }
       },
-      "[\"GreaterEqual\",[\"PrimeOmega\",8],[\"PrimeNu\",8]]": {
+      "omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3": {
         "wolfram": {
           "input": "GreaterEqual[PrimeOmega[8], PrimeNu[8]]",
           "output": "True",
@@ -1866,7 +1866,7 @@
           }
         }
       },
-      "[\"PrimeOmega\",[\"List\",4,12,24]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "PrimeOmega[List[4, 12, 24]]",
           "output": "{2, 3, 4}",
@@ -1879,7 +1879,7 @@
       }
     },
     "Divisors": {
-      "[\"Divisors\",1729]": {
+      "divisors-1-729": {
         "wolfram": {
           "input": "Divisors[1729]",
           "output": "{1, 7, 13, 19, 91, 133, 247, 1729}",
@@ -1895,7 +1895,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divisors\",20]": {
+      "divisors-20": {
         "wolfram": {
           "input": "Divisors[20]",
           "output": "{1, 2, 4, 5, 10, 20}",
@@ -1911,7 +1911,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divisors\",1]": {
+      "1-has-exactly-one-divisor-itself": {
         "wolfram": {
           "input": "Divisors[1]",
           "output": "{1}",
@@ -1927,7 +1927,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divisors\",13]": {
+      "a-prime-s-only-divisors-are-1-and-itself": {
         "wolfram": {
           "input": "Divisors[13]",
           "output": "{1, 13}",
@@ -1943,7 +1943,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Divisors\",720]": {
+      "720-is-highly-composite-30-divisors-more-than": {
         "wolfram": {
           "input": "Divisors[720]",
           "output": "{1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720}",
@@ -1959,7 +1959,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Length\",[\"Divisors\",20]],[\"DivisorSigma\",0,20]]": {
+      "the-divisor-count-d-n-equals-sigma-0-n-see": {
         "wolfram": {
           "input": "(Length[Divisors[20]] == DivisorSigma[0, 20])",
           "output": "True",
@@ -1970,7 +1970,18 @@
           }
         }
       },
-      "[\"Divisors\",[\"Complex\",3,4]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
+        "wolfram": {
+          "input": "Divisors[List[4, 6]]",
+          "output": "{{1, 2, 4}, {1, 2, 3, 6}}",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[\\{4,6\\}]",
+            "output": "\\{\\{1,2,4\\},\\{1,2,3,6\\}\\}"
+          }
+        }
+      },
+      "divisors-3-plus-4i": {
         "wolfram": {
           "input": "Divisors[Complex[3, 4]]",
           "output": "{1, 2 + I, 3 + 4*I}",
@@ -1987,21 +1998,10 @@
           "kind": "domain",
           "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Divisors over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
-      },
-      "[\"Divisors\",[\"List\",4,6]]": {
-        "wolfram": {
-          "input": "Divisors[List[4, 6]]",
-          "output": "{{1, 2, 4}, {1, 2, 3, 6}}",
-          "verdict": "agree",
-          "tex": {
-            "input": "\\text{Divisors}[\\{4,6\\}]",
-            "output": "\\{\\{1,2,4\\},\\{1,2,3,6\\}\\}"
-          }
-        }
       }
     },
     "DivisorSigma": {
-      "[\"DivisorSigma\",0,20]": {
+      "k-0-gives-the-number-of-divisors": {
         "wolfram": {
           "input": "DivisorSigma[0, 20]",
           "output": "6",
@@ -2012,7 +2012,7 @@
           }
         }
       },
-      "[\"DivisorSigma\",1,20]": {
+      "k-1-gives-the-sum-of-divisors": {
         "wolfram": {
           "input": "DivisorSigma[1, 20]",
           "output": "42",
@@ -2023,7 +2023,7 @@
           }
         }
       },
-      "[\"DivisorSigma\",2,20]": {
+      "divisorsigma-2-20": {
         "wolfram": {
           "input": "DivisorSigma[2, 20]",
           "output": "546",
@@ -2034,7 +2034,7 @@
           }
         }
       },
-      "[\"DivisorSigma\",1,6]": {
+      "6-is-a-perfect-number-sigma-1-6-2-times-6": {
         "wolfram": {
           "input": "DivisorSigma[1, 6]",
           "output": "12",
@@ -2045,7 +2045,7 @@
           }
         }
       },
-      "[\"DivisorSigma\",1,28]": {
+      "28-is-the-next-perfect-number-sigma-1-28-2-times": {
         "wolfram": {
           "input": "DivisorSigma[1, 28]",
           "output": "56",
@@ -2056,7 +2056,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Multiply\",[\"DivisorSigma\",1,9],[\"DivisorSigma\",1,8]],[\"DivisorSigma\",1,72]]": {
+      "multiplicative-sigma-1-mn-sigma-1-m-sigma-1-n": {
         "wolfram": {
           "input": "(Times[DivisorSigma[1, 9], DivisorSigma[1, 8]] == DivisorSigma[1, 72])",
           "output": "True",
@@ -2067,7 +2067,7 @@
           }
         }
       },
-      "[\"DivisorSigma\",1,1]": {
+      "the-trivial-base-case": {
         "wolfram": {
           "input": "DivisorSigma[1, 1]",
           "output": "1",
@@ -2078,7 +2078,7 @@
           }
         }
       },
-      "[\"DivisorSigma\",-1,6]": {
+      "a-negative-order-sums-reciprocal-powers-sigma-1": {
         "wolfram": {
           "input": "DivisorSigma[-1, 6]",
           "output": "2",
@@ -2091,7 +2091,7 @@
       }
     },
     "MoebiusMu": {
-      "[\"MoebiusMu\",1]": {
+      "moebiusmu-1": {
         "wolfram": {
           "input": "MoebiusMu[1]",
           "output": "1",
@@ -2127,7 +2127,7 @@
           "verdict": "agree"
         }
       },
-      "[\"MoebiusMu\",11]": {
+      "moebiusmu-11": {
         "wolfram": {
           "input": "MoebiusMu[11]",
           "output": "-1",
@@ -2163,7 +2163,7 @@
           "verdict": "agree"
         }
       },
-      "[\"MoebiusMu\",12]": {
+      "12-22-3-is-not-squarefree": {
         "wolfram": {
           "input": "MoebiusMu[12]",
           "output": "0",
@@ -2199,7 +2199,7 @@
           "verdict": "agree"
         }
       },
-      "[\"MoebiusMu\",10]": {
+      "10-2-5-a-product-of-an-even-number-of-distinct": {
         "wolfram": {
           "input": "MoebiusMu[10]",
           "output": "1",
@@ -2235,7 +2235,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Add\",[\"MoebiusMu\",1],[\"MoebiusMu\",2],[\"MoebiusMu\",3],[\"MoebiusMu\",4],[\"MoebiusMu\",6],[\"MoebiusMu\",12]]": {
+      "sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind": {
         "wolfram": {
           "input": "Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]",
           "output": "0",
@@ -2271,7 +2271,7 @@
           "verdict": "agree"
         }
       },
-      "[\"MoebiusMu\",0]": {
+      "mu-is-only-defined-for-positive-integers-compute": {
         "wolfram": {
           "input": "MoebiusMu[0]",
           "output": "0",
@@ -2319,7 +2319,7 @@
           "note": "Both decline MoebiusMu here: compute-engine leaves it unevaluated, SymPy raises."
         }
       },
-      "[\"MoebiusMu\",[\"List\",1,2,3,4]]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "MoebiusMu[List[1, 2, 3, 4]]",
           "output": "{1, -1, -1, 0}",
@@ -2339,7 +2339,7 @@
       }
     },
     "IsSquareFree": {
-      "[\"IsSquareFree\",10]": {
+      "issquarefree-10": {
         "wolfram": {
           "input": "SquareFreeQ[10]",
           "output": "True",
@@ -2350,7 +2350,7 @@
           }
         }
       },
-      "[\"IsSquareFree\",4]": {
+      "issquarefree-4": {
         "wolfram": {
           "input": "SquareFreeQ[4]",
           "output": "False",
@@ -2361,7 +2361,7 @@
           }
         }
       },
-      "[\"IsSquareFree\",12]": {
+      "issquarefree-12": {
         "wolfram": {
           "input": "SquareFreeQ[12]",
           "output": "False",
@@ -2372,7 +2372,7 @@
           }
         }
       },
-      "[\"IsSquareFree\",17]": {
+      "every-prime-is-squarefree": {
         "wolfram": {
           "input": "SquareFreeQ[17]",
           "output": "True",
@@ -2383,7 +2383,7 @@
           }
         }
       },
-      "[\"IsSquareFree\",1]": {
+      "1-is-vacuously-squarefree-it-has-no-repeated": {
         "wolfram": {
           "input": "SquareFreeQ[1]",
           "output": "True",
@@ -2394,7 +2394,7 @@
           }
         }
       },
-      "[\"Equal\",[\"IsSquareFree\",10],[\"Not\",[\"Equal\",[\"MoebiusMu\",10],0]]]": {
+      "n-is-squarefree-exactly-when-mu-n-neq-0-see": {
         "wolfram": {
           "input": "(SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])",
           "output": "True",
@@ -2405,7 +2405,7 @@
           }
         }
       },
-      "[\"IsSquareFree\",[\"List\",10,4,12]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "SquareFreeQ[List[10, 4, 12]]",
           "output": "SquareFreeQ[{10, 4, 12}]",
@@ -2420,7 +2420,7 @@
       }
     },
     "JacobiSymbol": {
-      "[\"JacobiSymbol\",10,5]": {
+      "0-whenever-n-and-m-share-a-factor": {
         "wolfram": {
           "input": "JacobiSymbol[10, 5]",
           "output": "0",
@@ -2431,7 +2431,7 @@
           }
         }
       },
-      "[\"JacobiSymbol\",3,5]": {
+      "3-is-not-a-quadratic-residue-mod-5-the-residues": {
         "wolfram": {
           "input": "JacobiSymbol[3, 5]",
           "output": "-1",
@@ -2442,7 +2442,7 @@
           }
         }
       },
-      "[\"JacobiSymbol\",1001,9907]": {
+      "jacobisymbol-1-001-9-907": {
         "wolfram": {
           "input": "JacobiSymbol[1001, 9907]",
           "output": "-1",
@@ -2453,7 +2453,7 @@
           }
         }
       },
-      "[\"JacobiSymbol\",0,1]": {
+      "by-convention-the-symbol-is-1-whenever-m-1": {
         "wolfram": {
           "input": "JacobiSymbol[0, 1]",
           "output": "1",
@@ -2464,7 +2464,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Multiply\",[\"JacobiSymbol\",3,7],[\"JacobiSymbol\",5,7]],[\"JacobiSymbol\",[\"Multiply\",3,5],7]]": {
+      "completely-multiplicative-in-the-top-argument-a": {
         "wolfram": {
           "input": "(Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]] == JacobiSymbol[Times[3, 5], 7])",
           "output": "True",
@@ -2475,7 +2475,7 @@
           }
         }
       },
-      "[\"JacobiSymbol\",[\"List\",2,3,5,7,11],3]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "JacobiSymbol[List[2, 3, 5, 7, 11], 3]",
           "output": "{-1, 0, -1, 1, -1}",
@@ -2488,7 +2488,7 @@
       }
     },
     "ExtendedGCD": {
-      "[\"ExtendedGCD\",2,3]": {
+      "extendedgcd-2-3": {
         "wolfram": {
           "input": "ExtendedGCD[2, 3]",
           "output": "{1, {-1, 1}}",
@@ -2501,7 +2501,7 @@
           }
         }
       },
-      "[\"ExtendedGCD\",12,18]": {
+      "extendedgcd-12-18": {
         "wolfram": {
           "input": "ExtendedGCD[12, 18]",
           "output": "{6, {-1, 1}}",
@@ -2514,7 +2514,7 @@
           }
         }
       },
-      "[\"ExtendedGCD\",3,11]": {
+      "the-modular-inverse-of-3-mod-11-is-4-since-3": {
         "wolfram": {
           "input": "ExtendedGCD[3, 11]",
           "output": "{1, {4, -1}}",
@@ -2527,7 +2527,7 @@
           }
         }
       },
-      "[\"ExtendedGCD\",0,5]": {
+      "bezout-coefficients-when-a-0-0-times-0-5-times-1": {
         "wolfram": {
           "input": "ExtendedGCD[0, 5]",
           "output": "{5, {0, 1}}",
@@ -2540,7 +2540,7 @@
           }
         }
       },
-      "[\"Add\",[\"Multiply\",2,-1],[\"Multiply\",3,1]]": {
+      "confirms-the-coefficients-above-satisfy-2x-3y": {
         "wolfram": {
           "input": "Plus[Times[2, -1], Times[3, 1]]",
           "output": "1",
@@ -2586,7 +2586,7 @@
           "verdict": "agree"
         }
       },
-      "[\"ExtendedGCD\",[\"Complex\",7,2],[\"Complex\",3,-5]]": {
+      "gaussian-integers-by-euclid-with-the-rounded": {
         "wolfram": {
           "input": "ExtendedGCD[Complex[7, 2], Complex[3, -5]]",
           "output": "{1, {-1 - 2*I, -2 + 2*I}}",
@@ -2601,7 +2601,7 @@
       }
     },
     "Quotient": {
-      "[\"Quotient\",17,5]": {
+      "quotient-17-5": {
         "wolfram": {
           "input": "Quotient[17, 5]",
           "output": "3",
@@ -2612,7 +2612,7 @@
           }
         }
       },
-      "[\"Quotient\",-7,2]": {
+      "the-floor-not-truncation": {
         "wolfram": {
           "input": "Quotient[-7, 2]",
           "output": "-4",
@@ -2623,7 +2623,7 @@
           }
         }
       },
-      "[\"Quotient\",[\"Complex\",7,5],[\"Complex\",2,1]]": {
+      "7-5i-2-i-3-8-0-6i-rounded": {
         "wolfram": {
           "input": "Quotient[Complex[7, 5], Complex[2, 1]]",
           "output": "4 + I",
@@ -2634,7 +2634,7 @@
           }
         }
       },
-      "[\"Quotient\",[\"Complex\",5,5],2]": {
+      "2-5-2-5i-rounds-to-even-in-each-part": {
         "wolfram": {
           "input": "Quotient[Complex[5, 5], 2]",
           "output": "2 + 2*I",
@@ -2647,7 +2647,7 @@
       }
     },
     "LegendreSymbol": {
-      "[\"LegendreSymbol\",2,7]": {
+      "2-is-a-quadratic-residue-mod-7-32-2-mod-7": {
         "wolfram": {
           "input": "JacobiSymbol[2, 7]",
           "output": "1",
@@ -2658,7 +2658,7 @@
           }
         }
       },
-      "[\"LegendreSymbol\",3,7]": {
+      "3-is-not-a-quadratic-residue-mod-7": {
         "wolfram": {
           "input": "JacobiSymbol[3, 7]",
           "output": "-1",
@@ -2669,7 +2669,7 @@
           }
         }
       },
-      "[\"LegendreSymbol\",14,7]": {
+      "0-when-p-divides-n": {
         "wolfram": {
           "input": "JacobiSymbol[14, 7]",
           "output": "0",
@@ -2682,7 +2682,7 @@
       }
     },
     "KroneckerSymbol": {
-      "[\"KroneckerSymbol\",17,6]": {
+      "kroneckersymbol-17-6": {
         "wolfram": {
           "input": "KroneckerSymbol[17, 6]",
           "output": "-1",
@@ -2693,7 +2693,7 @@
           }
         }
       },
-      "[\"KroneckerSymbol\",10,13]": {
+      "kroneckersymbol-10-13": {
         "wolfram": {
           "input": "KroneckerSymbol[10, 13]",
           "output": "1",
@@ -2704,7 +2704,7 @@
           }
         }
       },
-      "[\"KroneckerSymbol\",5,0]": {
+      "0-whenever-a-1-and-n-0": {
         "wolfram": {
           "input": "KroneckerSymbol[5, 0]",
           "output": "0",
@@ -2715,7 +2715,7 @@
           }
         }
       },
-      "[\"KroneckerSymbol\",-3,-1]": {
+      "a-1-is-the-sign-of-a-here-a-0": {
         "wolfram": {
           "input": "KroneckerSymbol[-3, -1]",
           "output": "-1",
@@ -2726,7 +2726,7 @@
           }
         }
       },
-      "[\"KroneckerSymbol\",3,2]": {
+      "a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues": {
         "wolfram": {
           "input": "KroneckerSymbol[3, 2]",
           "output": "-1",
@@ -2737,7 +2737,7 @@
           }
         }
       },
-      "[\"Equal\",[\"KroneckerSymbol\",7,[\"Multiply\",3,5]],[\"Multiply\",[\"KroneckerSymbol\",7,3],[\"KroneckerSymbol\",7,5]]]": {
+      "completely-multiplicative-in-n": {
         "wolfram": {
           "input": "(KroneckerSymbol[7, Times[3, 5]] == Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]])",
           "output": "True",
@@ -2748,7 +2748,7 @@
           }
         }
       },
-      "[\"KroneckerSymbol\",[\"List\",2,3,5,7,11],6]": {
+      "threads-element-wise-over-a-list-as-wolfram-s": {
         "wolfram": {
           "input": "KroneckerSymbol[List[2, 3, 5, 7, 11], 6]",
           "output": "{0, 0, 1, 1, 1}",
@@ -2761,21 +2761,21 @@
       }
     },
     "RationalReconstruction": {
-      "[\"RationalReconstruction\",6,11]": {
+      "2-cdot-6-12-equiv-1-pmod-11": {
         "sage": {
           "input": "rational_reconstruction(6, 11)",
           "output": "1/2",
           "verdict": "agree"
         }
       },
-      "[\"RationalReconstruction\",[\"PowerMod\",[\"Rational\",22,7],1,1000003],1000003]": {
+      "a-round-trip-through-z-1000003": {
         "sage": {
           "input": "rational_reconstruction(power_mod((22/7), 1, 1000003), 1000003)",
           "output": "22/7",
           "verdict": "agree"
         }
       },
-      "[\"RationalReconstruction\",[\"List\",6,9,10],11]": {
+      "rationalreconstruction-list-6-9-10-11": {
         "sage": {
           "input": "rational_reconstruction([6, 9, 10], 11)",
           "output": "TypeError: unable to coerce <class 'list'> to an integer",
@@ -2784,14 +2784,14 @@
           "note": "compute-engine's RationalReconstruction is Listable and threads over the list; Sage's takes scalars only."
         }
       },
-      "[\"RationalReconstruction\",[\"PowerMod\",[\"Rational\",55835135,15519504],1,[\"Subtract\",[\"Power\",2,61],1]],[\"Subtract\",[\"Power\",2,61],1]]": {
+      "the-harmonic-number-h-20-back-from-its-image-mod": {
         "sage": {
           "input": "rational_reconstruction(power_mod((55835135/15519504), 1, ((2^61) - 1)), ((2^61) - 1))",
           "output": "55835135/15519504",
           "verdict": "agree"
         }
       },
-      "[\"RationalReconstruction\",[\"PowerMod\",[\"Rational\",55835135,15519504],1,1000000007],1000000007]": {
+      "one-word-size-prime-is-not-enough-for-h-20-2nd-m": {
         "sage": {
           "input": "rational_reconstruction(power_mod((55835135/15519504), 1, 1000000007), 1000000007)",
           "output": "ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist",
@@ -2800,7 +2800,7 @@
           "note": "Both decline: compute-engine answers [\"RationalReconstruction\", 301316272, 10 and Sage raises an error."
         }
       },
-      "[\"RationalReconstruction\",3,11]": {
+      "mod-11-the-bounds-are-n-d-le-2-and-no-such": {
         "sage": {
           "input": "rational_reconstruction(3, 11)",
           "output": "ArithmeticError: rational reconstruction of 3 (mod 11) does not exist",
@@ -2811,7 +2811,7 @@
       }
     },
     "IntegerExponent": {
-      "[\"IntegerExponent\",2000,5]": {
+      "2000-5-3-cdot-16": {
         "wolfram": {
           "input": "IntegerExponent[2000, 5]",
           "output": "3",
@@ -2827,7 +2827,7 @@
           "verdict": "agree"
         }
       },
-      "[\"IntegerExponent\",2000]": {
+      "base-10-by-default": {
         "wolfram": {
           "input": "IntegerExponent[2000]",
           "output": "3",
@@ -2838,7 +2838,7 @@
           }
         }
       },
-      "[\"IntegerExponent\",0,5]": {
+      "integerexponent-0-5": {
         "wolfram": {
           "input": "IntegerExponent[0, 5]",
           "output": "Infinity",
@@ -2858,7 +2858,7 @@
       }
     },
     "HermiteDecomposition": {
-      "[\"HermiteDecomposition\",[\"List\",[\"List\",0,-3],[\"List\",2,0]]]": {
+      "hermitedecomposition-list-list-0-neg-3-list-2-0": {
         "wolfram": {
           "input": "HermiteDecomposition[List[List[0, -3], List[2, 0]]]",
           "output": "{{{0, 1}, {-1, 0}}, {{2, 0}, {0, 3}}}",

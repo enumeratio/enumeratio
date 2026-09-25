@@ -1,6 +1,7 @@
 {
   "HurwitzZeta": [
     {
+      "id": "n-hurwitzzeta-2-1",
       "expr": ["N", ["HurwitzZeta", 2, 1]],
       "expected": {
         "num": "1.64493406684822643647"
@@ -8,6 +9,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-2",
       "expr": ["N", ["HurwitzZeta", 2, 2]],
       "expected": {
         "num": "0.64493406684822643647"
@@ -15,6 +17,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-3",
       "expr": ["N", ["HurwitzZeta", 2, 3]],
       "expected": {
         "num": "0.39493406684822643647"
@@ -22,6 +25,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-0p5",
       "expr": ["N", ["HurwitzZeta", 2, 0.5]],
       "expected": {
         "num": "4.93480220054467930942"
@@ -29,6 +33,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-0p25",
       "expr": ["N", ["HurwitzZeta", 2, 0.25]],
       "expected": {
         "num": "17.1973291545071107393"
@@ -36,6 +41,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-1p3",
       "expr": ["N", ["HurwitzZeta", 2, 1.3]],
       "expected": {
         "num": "1.13425343499661935436"
@@ -43,6 +49,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-7-over-3",
       "expr": ["N", ["HurwitzZeta", 2, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.533097125427094081793"
@@ -50,26 +57,31 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-1-plus-i",
       "expr": ["N", ["HurwitzZeta", 2, ["Complex", 1, 1]]],
       "expected": ["Complex", 0.46300009662276376, -0.794233542759319],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", 2, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.5881978909500615, 0.18504197243379086],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-neg-0p5",
       "expr": ["N", ["HurwitzZeta", 2, -0.5]],
       "expected": 8.934802200544679,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-neg-1p5",
       "expr": ["N", ["HurwitzZeta", 2, -1.5]],
       "expected": 9.379246644989124,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-1",
       "expr": ["N", ["HurwitzZeta", 3, 1]],
       "expected": {
         "num": "1.2020569031595942854"
@@ -77,6 +89,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-2",
       "expr": ["N", ["HurwitzZeta", 3, 2]],
       "expected": {
         "num": "0.2020569031595942854"
@@ -84,6 +97,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-3",
       "expr": ["N", ["HurwitzZeta", 3, 3]],
       "expected": {
         "num": "0.0770569031595942854"
@@ -91,6 +105,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-0p5",
       "expr": ["N", ["HurwitzZeta", 3, 0.5]],
       "expected": {
         "num": "8.4143983221171599978"
@@ -98,6 +113,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-0p25",
       "expr": ["N", ["HurwitzZeta", 3, 0.25]],
       "expected": {
         "num": "64.6638699687684601665"
@@ -105,6 +121,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-1p3",
       "expr": ["N", ["HurwitzZeta", 3, 1.3]],
       "expected": {
         "num": "0.59923125732597829635"
@@ -112,6 +129,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-7-over-3",
       "expr": ["N", ["HurwitzZeta", 3, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.139186199700803776228"
@@ -119,26 +137,31 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-1-plus-i",
       "expr": ["N", ["HurwitzZeta", 3, ["Complex", 1, 1]]],
       "expected": ["Complex", -0.18427646579396761, -0.3833264251725333],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", 3, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.15369363373030825, 0.10422634741373264],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-neg-0p5",
       "expr": ["N", ["HurwitzZeta", 3, -0.5]],
       "expected": 0.41439832211716,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-3-neg-1p5",
       "expr": ["N", ["HurwitzZeta", 3, -1.5]],
       "expected": 0.1181020258208637,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-1",
       "expr": ["N", ["HurwitzZeta", 5, 1]],
       "expected": {
         "num": "1.03692775514336992633"
@@ -146,6 +169,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-2",
       "expr": ["N", ["HurwitzZeta", 5, 2]],
       "expected": {
         "num": "0.03692775514336992633"
@@ -153,6 +177,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-3",
       "expr": ["N", ["HurwitzZeta", 5, 3]],
       "expected": {
         "num": "0.00567775514336992633"
@@ -160,6 +185,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-0p5",
       "expr": ["N", ["HurwitzZeta", 5, 0.5]],
       "expected": {
         "num": "32.1447604094444677163"
@@ -167,6 +193,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-0p25",
       "expr": ["N", ["HurwitzZeta", 5, 0.25]],
       "expected": {
         "num": "1024.34897452658057223"
@@ -174,6 +201,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-1p3",
       "expr": ["N", ["HurwitzZeta", 5, 1.3]],
       "expected": {
         "num": "0.28855606751852655952"
@@ -181,6 +209,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-7-over-3",
       "expr": ["N", ["HurwitzZeta", 5, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.0179852769188750622369"
@@ -188,26 +217,35 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-1-plus-i",
       "expr": ["N", ["HurwitzZeta", 5, ["Complex", 1, 1]]],
       "expected": ["Complex", -0.13664617371016874, 0.10752550214008197],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", 5, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.012993573083069943, 0.028877271795314092],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-neg-0p5",
       "expr": ["N", ["HurwitzZeta", 5, -0.5]],
-      "expected": { "num": "0.144760409444467716272" },
+      "expected": {
+        "num": "0.144760409444467716272"
+      },
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-5-neg-1p5",
       "expr": ["N", ["HurwitzZeta", 5, -1.5]],
-      "expected": { "num": "0.0130731666461138068073" },
+      "expected": {
+        "num": "0.0130731666461138068073"
+      },
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-1",
       "expr": ["N", ["HurwitzZeta", -1, 1]],
       "expected": {
         "num": "-0.0833333333333333333333"
@@ -215,6 +253,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-2",
       "expr": ["N", ["HurwitzZeta", -1, 2]],
       "expected": {
         "num": "-1.08333333333333333333"
@@ -222,6 +261,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-3",
       "expr": ["N", ["HurwitzZeta", -1, 3]],
       "expected": {
         "num": "-3.08333333333333333333"
@@ -229,6 +269,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-0p5",
       "expr": ["N", ["HurwitzZeta", -1, 0.5]],
       "expected": {
         "num": "0.0416666666666666666665"
@@ -236,6 +277,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-0p25",
       "expr": ["N", ["HurwitzZeta", -1, 0.25]],
       "expected": {
         "num": "0.0104166666666666666665"
@@ -243,6 +285,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-1p3",
       "expr": ["N", ["HurwitzZeta", -1, 1.3]],
       "expected": {
         "num": "-0.2783333333333333333335"
@@ -250,6 +293,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-7-over-3",
       "expr": ["N", ["HurwitzZeta", -1, ["Rational", 7, 3]]],
       "expected": {
         "num": "-1.6388888888888888888835"
@@ -257,6 +301,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-1-plus-i",
       "expr": ["N", ["HurwitzZeta", -1, ["Complex", 1, 1]]],
       "expected": [
         "Complex",
@@ -268,6 +313,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", -1, ["Complex", 2, -0.5]]],
       "expected": [
         "Complex",
@@ -279,6 +325,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-neg-0p5",
       "expr": ["N", ["HurwitzZeta", -1, -0.5]],
       "expected": {
         "num": "-0.4583333333333333333335"
@@ -286,6 +333,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-1-neg-1p5",
       "expr": ["N", ["HurwitzZeta", -1, -1.5]],
       "expected": {
         "num": "-1.9583333333333333333335"
@@ -293,26 +341,31 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-1",
       "expr": ["N", ["HurwitzZeta", -2, 1]],
       "expected": 0,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-2",
       "expr": ["N", ["HurwitzZeta", -2, 2]],
       "expected": -1,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-3",
       "expr": ["N", ["HurwitzZeta", -2, 3]],
       "expected": -5,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-0p5",
       "expr": ["N", ["HurwitzZeta", -2, 0.5]],
       "expected": 0,
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-0p25",
       "expr": ["N", ["HurwitzZeta", -2, 0.25]],
       "expected": {
         "num": "-0.015624999999999999999984375"
@@ -320,6 +373,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-1p3",
       "expr": ["N", ["HurwitzZeta", -2, 1.3]],
       "expected": {
         "num": "-0.103999999999999999999896"
@@ -327,6 +381,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-7-over-3",
       "expr": ["N", ["HurwitzZeta", -2, ["Rational", 7, 3]]],
       "expected": {
         "num": "-1.90123456790123456787143209876543209876546"
@@ -334,6 +389,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-1-plus-i",
       "expr": ["N", ["HurwitzZeta", -2, ["Complex", 1, 1]]],
       "expected": [
         "Complex",
@@ -345,6 +401,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", -2, ["Complex", 2, -0.5]]],
       "expected": [
         "Complex",
@@ -356,6 +413,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-neg-0p5",
       "expr": ["N", ["HurwitzZeta", -2, -0.5]],
       "expected": {
         "num": "0.24999999999999999999975"
@@ -363,6 +421,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-2-neg-1p5",
       "expr": ["N", ["HurwitzZeta", -2, -1.5]],
       "expected": {
         "num": "2.4999999999999999999975"
@@ -370,6 +429,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-1",
       "expr": ["N", ["HurwitzZeta", -3, 1]],
       "expected": {
         "num": "0.00833333333333333333333"
@@ -377,6 +437,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-2",
       "expr": ["N", ["HurwitzZeta", -3, 2]],
       "expected": {
         "num": "-0.991666666666666666667"
@@ -384,6 +445,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-3",
       "expr": ["N", ["HurwitzZeta", -3, 3]],
       "expected": {
         "num": "-8.99166666666666666667"
@@ -391,6 +453,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-0p5",
       "expr": ["N", ["HurwitzZeta", -3, 0.5]],
       "expected": {
         "num": "-0.007291666666666666666675"
@@ -398,6 +461,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-0p25",
       "expr": ["N", ["HurwitzZeta", -3, 0.25]],
       "expected": {
         "num": "-0.000455729166666666666675"
@@ -405,6 +469,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-1p3",
       "expr": ["N", ["HurwitzZeta", -3, 1.3]],
       "expected": {
         "num": "-0.029691666666666666666675"
@@ -412,6 +477,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-7-over-3",
       "expr": ["N", ["HurwitzZeta", -3, ["Rational", 7, 3]]],
       "expected": {
         "num": "-2.411419753086419753099175"
@@ -419,6 +485,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-1-plus-i",
       "expr": ["N", ["HurwitzZeta", -3, ["Complex", 1, 1]]],
       "expected": [
         "Complex",
@@ -430,6 +497,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", -3, ["Complex", 2, -0.5]]],
       "expected": [
         "Complex",
@@ -441,6 +509,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-neg-0p5",
       "expr": ["N", ["HurwitzZeta", -3, -0.5]],
       "expected": {
         "num": "-0.132291666666666666666675"
@@ -448,6 +517,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-3-neg-1p5",
       "expr": ["N", ["HurwitzZeta", -3, -1.5]],
       "expected": {
         "num": "-3.507291666666666666666675"
@@ -455,6 +525,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-1",
       "expr": ["N", ["HurwitzZeta", 0.5, 1]],
       "expected": {
         "num": "-1.46035450880958681289"
@@ -462,6 +533,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-2",
       "expr": ["N", ["HurwitzZeta", 0.5, 2]],
       "expected": {
         "num": "-2.46035450880958681289"
@@ -469,6 +541,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-3",
       "expr": ["N", ["HurwitzZeta", 0.5, 3]],
       "expected": {
         "num": "-3.167461289996134337291"
@@ -476,6 +549,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-0p5",
       "expr": ["N", ["HurwitzZeta", 0.5, 0.5]],
       "expected": {
         "num": "-0.60489864342163037025"
@@ -483,6 +557,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-0p25",
       "expr": ["N", ["HurwitzZeta", 0.5, 0.25]],
       "expected": {
         "num": "0.239963524495630955345"
@@ -490,6 +565,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-1p3",
       "expr": ["N", ["HurwitzZeta", 0.5, 1.3]],
       "expected": {
         "num": "-1.81458907804058390117"
@@ -497,6 +573,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-7-over-3",
       "expr": ["N", ["HurwitzZeta", 0.5, ["Rational", 7, 3]]],
       "expected": {
         "num": "-2.71615953928753765938"
@@ -504,26 +581,31 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-1-plus-i",
       "expr": ["N", ["HurwitzZeta", 0.5, ["Complex", 1, 1]]],
       "expected": ["Complex", -1.7988137444864851, -1.093576875721108],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", 0.5, ["Complex", 2, -0.5]]],
       "expected": ["Complex", -2.4914742352880097, 0.39832807868404924],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-neg-0p5",
       "expr": ["N", ["HurwitzZeta", 0.5, -0.5]],
       "expected": ["Complex", -0.6048986434216299, -1.414213562373095],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-neg-1p5",
       "expr": ["N", ["HurwitzZeta", 0.5, -1.5]],
       "expected": ["Complex", -0.6048986434216299, -2.230710143300821],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-1",
       "expr": ["N", ["HurwitzZeta", 1.5, 1]],
       "expected": {
         "num": "2.61237534868548834335"
@@ -531,6 +613,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-2",
       "expr": ["N", ["HurwitzZeta", 1.5, 2]],
       "expected": {
         "num": "1.61237534868548834335"
@@ -538,6 +621,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-3",
       "expr": ["N", ["HurwitzZeta", 1.5, 3]],
       "expected": {
         "num": "1.25882195809221458115"
@@ -545,6 +629,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-0p5",
       "expr": ["N", ["HurwitzZeta", 1.5, 0.5]],
       "expected": {
         "num": "4.77653794755483324857"
@@ -552,6 +637,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-0p25",
       "expr": ["N", ["HurwitzZeta", 1.5, 0.25]],
       "expected": {
         "num": "10.2130553604666007389"
@@ -559,6 +645,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-1p3",
       "expr": ["N", ["HurwitzZeta", 1.5, 1.3]],
       "expected": {
         "num": "2.15195547695787736469"
@@ -566,6 +653,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-7-over-3",
       "expr": ["N", ["HurwitzZeta", 1.5, ["Rational", 7, 3]]],
       "expected": {
         "num": "1.46425424919948810837"
@@ -573,26 +661,31 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-1-plus-i",
       "expr": ["N", ["HurwitzZeta", 1.5, ["Complex", 1, 1]]],
       "expected": ["Complex", 1.650934751949365, -0.9673570656987679],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", 1.5, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 1.5565957777657513, 0.2421063223251344],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-neg-0p5",
       "expr": ["N", ["HurwitzZeta", 1.5, -0.5]],
       "expected": ["Complex", 4.776537947554832, 2.82842712474619],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-1p5-neg-1p5",
       "expr": ["N", ["HurwitzZeta", 1.5, -1.5]],
       "expected": ["Complex", 4.776537947554832, 3.372758178698007],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-1",
       "expr": ["N", ["HurwitzZeta", 2.5, 1]],
       "expected": {
         "num": "1.34148725725091717976"
@@ -600,6 +693,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-2",
       "expr": ["N", ["HurwitzZeta", 2.5, 2]],
       "expected": {
         "num": "0.34148725725091717976"
@@ -607,6 +701,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-3",
       "expr": ["N", ["HurwitzZeta", 2.5, 3]],
       "expected": {
         "num": "0.16471056195428029866"
@@ -614,6 +709,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-0p5",
       "expr": ["N", ["HurwitzZeta", 2.5, 0.5]],
       "expected": {
         "num": "6.24711063456881148529"
@@ -621,6 +717,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-0p25",
       "expr": ["N", ["HurwitzZeta", 2.5, 0.25]],
       "expected": {
         "num": "32.8474519546976858627"
@@ -628,6 +725,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-1p3",
       "expr": ["N", ["HurwitzZeta", 2.5, 1.3]],
       "expected": {
         "num": "0.783218553908237343364"
@@ -635,6 +733,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-7-over-3",
       "expr": ["N", ["HurwitzZeta", 2.5, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.257447605150205592649"
@@ -642,26 +741,31 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-1-plus-i",
       "expr": ["N", ["HurwitzZeta", 2.5, ["Complex", 1, 1]]],
       "expected": ["Complex", 0.018739837095718206, -0.5895477083381613],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", 2.5, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.28782016436536645, 0.13969668439393565],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-neg-0p5",
       "expr": ["N", ["HurwitzZeta", 2.5, -0.5]],
       "expected": ["Complex", 6.2471106345688145, -5.65685424949238],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2p5-neg-1p5",
       "expr": ["N", ["HurwitzZeta", 2.5, -1.5]],
       "expected": ["Complex", 6.2471106345688145, -6.019741618793591],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-1",
       "expr": ["N", ["HurwitzZeta", -0.5, 1]],
       "expected": {
         "num": "-0.207886224977354566017"
@@ -669,6 +773,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-2",
       "expr": ["N", ["HurwitzZeta", -0.5, 2]],
       "expected": {
         "num": "-1.207886224977354566017"
@@ -676,6 +781,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-3",
       "expr": ["N", ["HurwitzZeta", -0.5, 3]],
       "expected": {
         "num": "-2.622099787350449614818689"
@@ -683,6 +789,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-0p5",
       "expr": ["N", ["HurwitzZeta", -0.5, 0.5]],
       "expected": {
         "num": "0.0608884655805949199988"
@@ -690,6 +797,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-0p25",
       "expr": ["N", ["HurwitzZeta", -0.5, 0.25]],
       "expected": {
         "num": "0.0903222587612462439787"
@@ -697,6 +805,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-1p3",
       "expr": ["N", ["HurwitzZeta", -0.5, 1.3]],
       "expected": {
         "num": "-0.454363742420250792944"
@@ -704,6 +813,7 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-7-over-3",
       "expr": ["N", ["HurwitzZeta", -0.5, ["Rational", 7, 3]]],
       "expected": {
         "num": "-1.63960452469900834952"
@@ -711,186 +821,223 @@
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-1-plus-i",
       "expr": ["N", ["HurwitzZeta", -0.5, ["Complex", 1, 1]]],
       "expected": ["Complex", 0.08784592782018656, -0.7951014135934058],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", -0.5, ["Complex", 2, -0.5]]],
       "expected": ["Complex", -1.1578011135273243, 0.6177112023106479],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-neg-0p5",
       "expr": ["N", ["HurwitzZeta", -0.5, -0.5]],
       "expected": ["Complex", 0.060888465580597545, 0.7071067811865475],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-neg-1p5",
       "expr": ["N", ["HurwitzZeta", -0.5, -1.5]],
       "expected": ["Complex", 0.060888465580597545, 1.9318516525781364],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-1",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.1503557032549026, -0.4375308659196079],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-2",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.1503557032549026, -0.4375308659196079],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-3",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 3]],
       "expected": ["Complex", -0.041954022086090365, -0.2777905468411992],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.50749884820183, 2.031398808933987],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-0p25",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 0.25]],
       "expected": ["Complex", 3.634220798824735, 15.19537018557054],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-1p3",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 1.3]],
       "expected": ["Complex", 0.6341786502688999, -0.5361103835392125],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-7-over-3",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], ["Rational", 7, 3]]],
       "expected": ["Complex", 0.05513338963679521, -0.3768626550483673],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-1-plus-i",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], ["Complex", 1, 1]]],
       "expected": ["Complex", -0.6353043434400117, -1.6588486436058945],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.18539348901299457, -0.27037369242287357],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-neg-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], -0.5]],
       "expected": ["Complex", 74.71038275876376, 61.175424806622686],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-2-plus-i-neg-1p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], -1.5]],
       "expected": ["Complex", 84.16123741505538, 57.11864335428585],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-1",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 1]],
       "expected": ["Complex", 0.5327366709742324, -0.07889651342583266],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-2",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 2]],
       "expected": ["Complex", -0.46726332902576745, -0.07889651342583266],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-3",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 3]],
       "expected": ["Complex", -0.12290627368216775, 0.5386941426199702],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 0.5]],
       "expected": ["Complex", -0.8021884345819367, 0.7912600357594943],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-0p25",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 0.25]],
       "expected": ["Complex", -0.8213159956117992, -2.117913546901069],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-1p3",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 1.3]],
       "expected": ["Complex", 0.15737017483099836, -0.4426402147700411],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-7-over-3",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], ["Rational", 7, 3]]],
       "expected": ["Complex", -0.45372702165717105, 0.20444019400309937],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-1-plus-i",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], ["Complex", 1, 1]]],
       "expected": ["Complex", -1.4173015059291294, -8.335643562213376],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], ["Complex", 2, -0.5]]],
       "expected": ["Complex", -0.18101636158511364, 0.009312340272338617],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-neg-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], -0.5]],
       "expected": ["Complex", 15305.129609925008, 8535.093960014086],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-0p5-plus-3i-neg-1p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], -1.5]],
       "expected": ["Complex", 5816.163167011819, 5023.948927089383],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-1",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 1]],
       "expected": ["Complex", -0.0008178931329526073, -0.2230716886977791],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-2",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 2]],
       "expected": ["Complex", -1.0008178931329526, -0.2230716886977791],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-3",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 3]],
       "expected": ["Complex", -2.0886859801468614, 0.6805560140961857],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 0.5]],
       "expected": ["Complex", 0.10115989202216885, 0.10136586762605052],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-0p25",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 0.25]],
       "expected": ["Complex", -0.10559971039019372, 0.17260556668191807],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-1p3",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 1.3]],
       "expected": ["Complex", -0.24331093868775658, -0.33044127825842945],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-7-over-3",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], ["Rational", 7, 3]]],
       "expected": ["Complex", -1.3821851440871353, -0.009056308250057337],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-1-plus-i",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], ["Complex", 1, 1]]],
       "expected": ["Complex", 1.0409575431185207, -1.7999104323368356],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], ["Complex", 2, -0.5]]],
       "expected": ["Complex", -0.7461533972576098, 0.24925781603306635],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-neg-0p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], -0.5]],
       "expected": ["Complex", -10.35412557038761, 12.688376380925272],
       "hidden": true
     },
     {
+      "id": "n-hurwitzzeta-neg-0p5-plus-i-neg-1p5",
       "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], -1.5]],
       "expected": ["Complex", 0.8250495553510385, 38.73186936468636],
       "hidden": true
@@ -898,926 +1045,1111 @@
   ],
   "LerchPhi": [
     {
+      "id": "n-lerchphi-0p5-2-1",
       "expr": ["N", ["LerchPhi", 0.5, 2, 1]],
       "expected": 1.164481052930025,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-2",
       "expr": ["N", ["LerchPhi", 0.5, 2, 2]],
       "expected": 0.32896210586004987,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-0p5",
       "expr": ["N", ["LerchPhi", 0.5, 2, 0.5]],
       "expected": 4.277145500580949,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-5-over-2",
       "expr": ["N", ["LerchPhi", 0.5, 2, ["Rational", 5, 2]]],
       "expected": 0.21969311343491027,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-3-1",
       "expr": ["N", ["LerchPhi", 0.5, 3, 1]],
       "expected": 1.0744263872160806,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-3-2",
       "expr": ["N", ["LerchPhi", 0.5, 3, 2]],
       "expected": 0.14885277443216077,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-3-0p5",
       "expr": ["N", ["LerchPhi", 0.5, 3, 0.5]],
       "expected": 8.168022726140352,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-3-5-over-2",
       "expr": ["N", ["LerchPhi", 0.5, 3, ["Rational", 5, 2]]],
       "expected": 0.07949831196880995,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-0p5-1",
       "expr": ["N", ["LerchPhi", 0.5, 0.5, 1]],
       "expected": 1.6122534460857043,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-0p5-2",
       "expr": ["N", ["LerchPhi", 0.5, 0.5, 2]],
       "expected": 1.224506892171409,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-0p5-0p5",
       "expr": ["N", ["LerchPhi", 0.5, 0.5, 0.5]],
       "expected": 2.1017124624893513,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", 0.5, 0.5, ["Rational", 5, 2]]],
       "expected": 1.1170024386095752,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-neg-1-1",
       "expr": ["N", ["LerchPhi", 0.5, -1, 1]],
       "expected": 3.9999999999999996,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-neg-1-2",
       "expr": ["N", ["LerchPhi", 0.5, -1, 2]],
       "expected": 5.999999999999999,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-neg-1-0p5",
       "expr": ["N", ["LerchPhi", 0.5, -1, 0.5]],
       "expected": 2.999999999999999,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", 0.5, -1, ["Rational", 5, 2]]],
       "expected": 7.000000000000001,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-plus-i-1",
       "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.109707090706641, -0.1160991235833943],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-plus-i-2",
       "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.21941418141328126, -0.23219824716678855],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.308545670420987, 2.422109611421262],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p5-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.10954333858083394, -0.18432313114256382],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-1",
       "expr": ["N", ["LerchPhi", -0.5, 2, 1]],
       "expected": 0.8968284138472924,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-2",
       "expr": ["N", ["LerchPhi", -0.5, 2, 2]],
       "expected": 0.20634317230541518,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-0p5",
       "expr": ["N", ["LerchPhi", -0.5, 2, 0.5]],
       "expected": 3.809896676518156,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-5-over-2",
       "expr": ["N", ["LerchPhi", -0.5, 2, ["Rational", 5, 2]]],
       "expected": 0.12847559496151303,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-3-1",
       "expr": ["N", ["LerchPhi", -0.5, 3, 1]],
       "expected": 0.9451956893177937,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-3-2",
       "expr": ["N", ["LerchPhi", -0.5, 3, 2]],
       "expected": 0.10960862136441252,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-3-0p5",
       "expr": ["N", ["LerchPhi", -0.5, 3, 0.5]],
       "expected": 7.86547751435338,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-3-5-over-2",
       "expr": ["N", ["LerchPhi", -0.5, 3, ["Rational", 5, 2]]],
       "expected": 0.05450265000611885,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-0p5-1",
       "expr": ["N", ["LerchPhi", -0.5, 0.5, 1]],
       "expected": 0.747504475961946,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-0p5-2",
       "expr": ["N", ["LerchPhi", -0.5, 0.5, 2]],
       "expected": 0.504991048076108,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-0p5-0p5",
       "expr": ["N", ["LerchPhi", -0.5, 0.5, 0.5]],
       "expected": 1.1175876689096338,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", -0.5, 0.5, ["Rational", 5, 2]]],
       "expected": 0.4464895880016085,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-neg-1-1",
       "expr": ["N", ["LerchPhi", -0.5, -1, 1]],
       "expected": 0.4444444444444444,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-neg-1-2",
       "expr": ["N", ["LerchPhi", -0.5, -1, 2]],
       "expected": 1.1111111111111112,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-neg-1-0p5",
       "expr": ["N", ["LerchPhi", -0.5, -1, 0.5]],
       "expected": 0.11111111111111112,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", -0.5, -1, ["Rational", 5, 2]]],
       "expected": 1.4444444444444444,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-plus-i-1",
       "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.9150630921511704, 0.06094203933961422],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-plus-i-2",
       "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.16987381569765908, -0.12188407867922844],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.8941852028913377, 2.619141408581271],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p5-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.085735311021356, -0.09743363088361238],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-1",
       "expr": ["N", ["LerchPhi", -0.9, 2, 1]],
       "expected": 0.8357368657969574,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-2",
       "expr": ["N", ["LerchPhi", -0.9, 2, 2]],
       "expected": 0.18251459355893632,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-0p5",
       "expr": ["N", ["LerchPhi", -0.9, 2, 0.5]],
       "expected": 3.6905224756933044,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-5-over-2",
       "expr": ["N", ["LerchPhi", -0.9, 2, ["Rational", 5, 2]]],
       "expected": 0.11175614283124172,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-3-1",
       "expr": ["N", ["LerchPhi", -0.9, 3, 1]],
       "expected": 0.9095980017159597,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-3-2",
       "expr": ["N", ["LerchPhi", -0.9, 3, 2]],
       "expected": 0.10044666476004464,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-3-0p5",
       "expr": ["N", ["LerchPhi", -0.9, 3, 0.5]],
       "expected": 7.773051219077413,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-3-5-over-2",
       "expr": ["N", ["LerchPhi", -0.9, 3, ["Rational", 5, 2]]],
       "expected": 0.04903442684454213,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-0p5-1",
       "expr": ["N", ["LerchPhi", -0.9, 0.5, 1]],
       "expected": 0.6283621649540584,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-0p5-2",
       "expr": ["N", ["LerchPhi", -0.9, 0.5, 2]],
       "expected": 0.4129309278288239,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-0p5-0p5",
       "expr": ["N", ["LerchPhi", -0.9, 0.5, 0.5]],
       "expected": 0.9731467834139055,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", -0.9, 0.5, ["Rational", 5, 2]]],
       "expected": 0.3626915356490913,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-neg-1-1",
       "expr": ["N", ["LerchPhi", -0.9, -1, 1]],
       "expected": 0.2770083102493077,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-neg-1-2",
       "expr": ["N", ["LerchPhi", -0.9, -1, 2]],
       "expected": 0.8033240997229912,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-neg-1-0p5",
       "expr": ["N", ["LerchPhi", -0.9, -1, 0.5]],
       "expected": 0.013850415512466406,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", -0.9, -1, ["Rational", 5, 2]]],
       "expected": 1.066481994459834,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-plus-i-1",
       "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.8600491653137049, 0.0920345747015262],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-plus-i-2",
       "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.15550092742921656, -0.10226063855725133],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.7726319509159323, 2.6469930917510727],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p9-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.07807896300721556, -0.08225986838173878],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-1",
       "expr": ["N", ["LerchPhi", -1, 2, 1]],
       "expected": 0.8224670334241132,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-2",
       "expr": ["N", ["LerchPhi", -1, 2, 2]],
       "expected": 0.1775329665758868,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-0p5",
       "expr": ["N", ["LerchPhi", -1, 2, 0.5]],
       "expected": 3.663862376708875,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-5-over-2",
       "expr": ["N", ["LerchPhi", -1, 2, ["Rational", 5, 2]]],
       "expected": 0.10830682115332053,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-3-1",
       "expr": ["N", ["LerchPhi", -1, 3, 1]],
       "expected": 0.9015426773696955,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-3-2",
       "expr": ["N", ["LerchPhi", -1, 3, 2]],
       "expected": 0.09845732263030428,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-3-0p5",
       "expr": ["N", ["LerchPhi", -1, 3, 0.5]],
       "expected": 7.751569170074954,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-3-5-over-2",
       "expr": ["N", ["LerchPhi", -1, 3, ["Rational", 5, 2]]],
       "expected": 0.047865466371251345,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-0p5-1",
       "expr": ["N", ["LerchPhi", -1, 0.5, 1]],
       "expected": 0.6048986434216302,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-0p5-2",
       "expr": ["N", ["LerchPhi", -1, 0.5, 2]],
       "expected": 0.3951013565783697,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-0p5-0p5",
       "expr": ["N", ["LerchPhi", -1, 0.5, 0.5]],
       "expected": 0.9442583142382002,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", -1, 0.5, ["Rational", 5, 2]]],
       "expected": 0.3465413327928312,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-neg-1-1",
       "expr": ["N", ["LerchPhi", -1, -1, 1]],
       "expected": 0.25,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-neg-1-2",
       "expr": ["N", ["LerchPhi", -1, -1, 2]],
       "expected": 0.75,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-neg-1-0p5",
       "expr": ["N", ["LerchPhi", -1, -1, 0.5]],
       "expected": 0,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", -1, -1, ["Rational", 5, 2]]],
       "expected": 1,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-plus-i-1",
       "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.847689164837414, 0.0982683895700162],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-plus-i-2",
       "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.15231083516258656, -0.0982683895700162],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.7449197230143425, 2.6519729447382763],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.07637257819822992, -0.07918158261153377],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-1",
       "expr": ["N", ["LerchPhi", 0.25, 2, 1]],
       "expected": 1.07061055633093,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-2",
       "expr": ["N", ["LerchPhi", 0.25, 2, 2]],
       "expected": 0.2824422253237217,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-0p5",
       "expr": ["N", ["LerchPhi", 0.25, 2, 0.5]],
       "expected": 4.122618933554635,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-5-over-2",
       "expr": ["N", ["LerchPhi", 0.25, 2, ["Rational", 5, 2]]],
       "expected": 0.18412515909637958,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-3-1",
       "expr": ["N", ["LerchPhi", 0.25, 3, 1]],
       "expected": 1.033845583186293,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-3-2",
       "expr": ["N", ["LerchPhi", 0.25, 3, 2]],
       "expected": 0.13538233274517286,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-3-0p5",
       "expr": ["N", ["LerchPhi", 0.25, 3, 0.5]],
       "expected": 8.078488306135496,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-3-5-over-2",
       "expr": ["N", ["LerchPhi", 0.25, 3, ["Rational", 5, 2]]],
       "expected": 0.07062771298276051,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-0p5-1",
       "expr": ["N", ["LerchPhi", 0.25, 0.5, 1]],
       "expected": 1.2229397215971856,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-0p5-2",
       "expr": ["N", ["LerchPhi", 0.25, 0.5, 2]],
       "expected": 0.8917588863887423,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-0p5-0p5",
       "expr": ["N", ["LerchPhi", 0.25, 0.5, 0.5]],
       "expected": 1.6686008286385703,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", 0.25, 0.5, ["Rational", 5, 2]]],
       "expected": 0.8042099365366978,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-neg-1-1",
       "expr": ["N", ["LerchPhi", 0.25, -1, 1]],
       "expected": 1.7777777777777777,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-neg-1-2",
       "expr": ["N", ["LerchPhi", 0.25, -1, 2]],
       "expected": 3.111111111111111,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-neg-1-0p5",
       "expr": ["N", ["LerchPhi", 0.25, -1, 0.5]],
       "expected": 1.111111111111111,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", 0.25, -1, ["Rational", 5, 2]]],
       "expected": 3.7777777777777777,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-plus-i-1",
       "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.051400732108945, -0.047267887677210255],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-plus-i-2",
       "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.20560292843577851, -0.18907155070884102],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.185550463844432, 2.502641530788986],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p25-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.10388389165758391, -0.15001950306775721],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-1",
       "expr": ["N", ["LerchPhi", 0.9, 2, 1]],
       "expected": 1.4441274700055085,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-2",
       "expr": ["N", ["LerchPhi", 0.9, 2, 2]],
       "expected": 0.4934749666727882,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-0p5",
       "expr": ["N", ["LerchPhi", 0.9, 2, 0.5]],
       "expected": 4.686783273082932,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-5-over-2",
       "expr": ["N", ["LerchPhi", 0.9, 2, ["Rational", 5, 2]]],
       "expected": 0.35405342355917346,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-3-1",
       "expr": ["N", ["LerchPhi", 0.9, 3, 1]],
       "expected": 1.166287722429376,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-3-2",
       "expr": ["N", ["LerchPhi", 0.9, 3, 2]],
       "expected": 0.18476413603264163,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-3-0p5",
       "expr": ["N", ["LerchPhi", 0.9, 3, 0.5]],
       "expected": 8.351549851360646,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-3-5-over-2",
       "expr": ["N", ["LerchPhi", 0.9, 3, ["Rational", 5, 2]]],
       "expected": 0.10479405517776089,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-0p5-1",
       "expr": ["N", ["LerchPhi", 0.9, 0.5, 1]],
       "expected": 4.468833808303737,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-0p5-2",
       "expr": ["N", ["LerchPhi", 0.9, 0.5, 2]],
       "expected": 3.8542597870041466,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-0p5-0p5",
       "expr": ["N", ["LerchPhi", 0.9, 0.5, 0.5]],
       "expected": 5.11163624496335,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", 0.9, 0.5, ["Rational", 5, 2]]],
       "expected": 3.6575009379695027,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-neg-1-1",
       "expr": ["N", ["LerchPhi", 0.9, -1, 1]],
       "expected": 100.00000000000001,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-neg-1-2",
       "expr": ["N", ["LerchPhi", 0.9, -1, 2]],
       "expected": 110.00000000000004,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-neg-1-0p5",
       "expr": ["N", ["LerchPhi", 0.9, -1, 0.5]],
       "expected": 94.99999999999994,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", 0.9, -1, ["Rational", 5, 2]]],
       "expected": 114.99999999999989,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-plus-i-1",
       "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.1929287758657432, -0.340556246338811],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-plus-i-2",
       "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.21436530651749217, -0.37839582926534593],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.516191661909127, 2.1522546812749304],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p9-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.08847955787338069, -0.30347153591834614],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-1",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, 1]],
       "expected": 1.0986396899311905,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, 2]],
       "expected": 0.29591906979357147,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-0p5",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, 0.5]],
       "expected": 4.1697385430143274,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-5-over-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, ["Rational", 5, 2]]],
       "expected": 0.19431355379560278,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-3-1",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, 1]],
       "expected": 1.0464835834645199,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-3-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, 2]],
       "expected": 0.1394507503935607,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-3-0p5",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, 0.5]],
       "expected": 8.106907002058708,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-3-5-over-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, ["Rational", 5, 2]]],
       "expected": 0.07327412963951402,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-0p5-1",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, 1]],
       "expected": 1.3263265058420264,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-0p5-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, 2]],
       "expected": 0.9789795175260793,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-0p5-0p5",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, 0.5]],
       "expected": 1.7848050437257632,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, ["Rational", 5, 2]]],
       "expected": 0.8858335893908359,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-neg-1-1",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, 1]],
       "expected": 2.2499999999999996,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-neg-1-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, 2]],
       "expected": 3.749999999999999,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-neg-1-0p5",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, 0.5]],
       "expected": 1.4999999999999993,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, ["Rational", 5, 2]]],
       "expected": 4.499999999999998,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-plus-i-1",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.0700836686021413, -0.06715638695388616],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-plus-i-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.21025100580642178, -0.20146916086165853],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.224867422277603, 2.4796489989745893],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-over-3-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.10598096947609492, -0.15983669023372948],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, 1]],
       "expected": ["Complex", 1.101836588740841, 0.10988045400413204],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, 2]],
       "expected": ["Complex", 0.2947950867903031, 0.05360481991760274],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, 0.5]],
       "expected": ["Complex", 4.181499243636333, 0.18243256267398936],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.19270908242970575, 0.04070070796466971],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-3-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, 1]],
       "expected": ["Complex", 1.0513066923524608, 0.04842457707035532],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-3-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, 2]],
       "expected": ["Complex", 0.14020020024836358, 0.015911292489615658],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-3-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, 0.5]],
       "expected": ["Complex", 8.121165761843056, 0.10727030391186324],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-3-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.073549546211705, 0.010421770459496018],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-0p5-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, 1]],
       "expected": ["Complex", 1.2614091369882543, 0.41542878530844146],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-0p5-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, 2]],
       "expected": ["Complex", 0.9167691615513381, 0.3509950921076001],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-0p5-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, 0.5]],
       "expected": ["Complex", 1.7197286399191298, 0.46600764369924813],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.8252517091723104, 0.3285465602796576],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-neg-1-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, 1]],
       "expected": ["Complex", 1.333333333333333, 1.777777777777778],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-neg-1-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, 2]],
       "expected": ["Complex", 2.6666666666666674, 2.4444444444444424],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-neg-1-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, 0.5]],
       "expected": ["Complex", 0.6666666666666666, 1.4444444444444442],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, ["Rational", 5, 2]]],
       "expected": ["Complex", 3.3333333333333357, 2.7777777777777777],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-plus-i-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.1600967534137019, 0.006328927692369448],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-plus-i-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.26374951869276536, -0.18198981978865053],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.339347509082892, 2.6332805602247045],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p4-plus-0p3i-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.1481488486383597, -0.15027197224093877],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-1",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, 1]],
       "expected": ["Complex", 0.9167986759971546, 0.09467911486749002],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, 2]],
       "expected": ["Complex", 0.2126469253958784, 0.03881449276816393],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, 0.5]],
       "expected": ["Complex", 3.853772051558024, 0.17804143862927913],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.13250323092790586, 0.027686339466071092],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-3-1",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, 1]],
       "expected": ["Complex", 0.9591056061308406, 0.05206380477361099],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-3-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, 2]],
       "expected": ["Complex", 0.11264770749280406, 0.014200163242636779],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-3-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, 0.5]],
       "expected": ["Complex", 7.904718153248676, 0.12990910279935847],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-3-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.05618154725455815, 0.008653632327637262],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-0p5-1",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, 1]],
       "expected": ["Complex", 0.7637974549105832, 0.20811582103519083],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-0p5-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, 2]],
       "expected": ["Complex", 0.514466688365942, 0.16372507715926807],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, 0.5]],
       "expected": ["Complex", 1.1415267933539475, 0.24801149986829354],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.45423083336681386, 0.14979712865953326],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-neg-1-1",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, 1]],
       "expected": ["Complex", 0.38261239239026473, 0.3454139653523225],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-neg-1-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, 2]],
       "expected": ["Complex", 1.052715485173771, 0.6031459241152096],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, 0.5]],
       "expected": ["Complex", 0.04756084599851221, 0.2165479859708789],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-neg-1-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, ["Rational", 5, 2]]],
       "expected": ["Complex", 1.3877670315655222, 0.7320119034966522],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-1",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.9897846074295557, 0.1356287740983361],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.20846766123618007, -0.10464981160081954],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.9969942562474174, 2.7925848156947644],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.11446511663271236, -0.08926367800980035],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-1",
       "expr": ["N", ["LerchPhi", 2, 2, 1]],
       "expected": ["Complex", 1.2337005501361697, -1.0887930451518009],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-2",
       "expr": ["N", ["LerchPhi", 2, 2, 2]],
       "expected": ["Complex", 0.11685027506808499, -0.5443965225759004],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-0p5",
       "expr": ["N", ["LerchPhi", 2, 2, 0.5]],
       "expected": ["Complex", 4.840291449348404, -1.5397858910711786],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-5-over-2",
       "expr": ["N", ["LerchPhi", 2, 2, ["Rational", 5, 2]]],
       "expected": ["Complex", -0.012149359885121095, -0.3849464727677946],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-neg-2p5",
       "expr": ["N", ["LerchPhi", 2, 2, -2.5]],
       "expected": ["Complex", 55.771220483676125, -12.318287128569425],
       "hidden": true,
@@ -1826,26 +2158,31 @@
       }
     },
     {
+      "id": "n-lerchphi-2-3-1",
       "expr": ["N", ["LerchPhi", 2, 3, 1]],
       "expected": ["Complex", 1.381035953114462, -0.37734691473012405],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-3-2",
       "expr": ["N", ["LerchPhi", 2, 3, 2]],
       "expected": ["Complex", 0.19051797655723104, -0.188673457365062],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-3-0p5",
       "expr": ["N", ["LerchPhi", 2, 3, 0.5]],
       "expected": ["Complex", 8.921391406560604, -0.5336491245309852],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-3-5-over-2",
       "expr": ["N", ["LerchPhi", 2, 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.08219970349200281, -0.13341228113274625],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-3-neg-2p5",
       "expr": ["N", ["LerchPhi", 2, 3, -2.5]],
       "expected": ["Complex", 38.71453865989224, -4.269192996247894],
       "hidden": true,
@@ -1854,26 +2191,31 @@
       }
     },
     {
+      "id": "n-lerchphi-2-0p5-1",
       "expr": ["N", ["LerchPhi", 2, 0.5, 1]],
       "expected": ["Complex", -0.8050307649337429, -1.064467019431226],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-0p5-2",
       "expr": ["N", ["LerchPhi", 2, 0.5, 2]],
       "expected": ["Complex", -0.9025153824668717, -0.5322335097156131],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-0p5-0p5",
       "expr": ["N", ["LerchPhi", 2, 0.5, 0.5]],
       "expected": ["Complex", -0.3953858882319452, -1.505383695578505],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", 2, 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", -0.8606481531151232, -0.3763459238946262],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", 2, 0.5, -2.5]],
       "expected": ["Complex", -3.1630871058555616, -19.965372508009548],
       "hidden": true,
@@ -1882,26 +2224,31 @@
       }
     },
     {
+      "id": "n-lerchphi-2-2-plus-i-1",
       "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.7821035196383173, -0.5898143877850942],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-plus-i-2",
       "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], 2]],
       "expected": ["Complex", -0.10894824018084143, -0.2949071938925471],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.2663465887755483, 1.5814239980763576],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", -0.15685648448997386, -0.15595056574690955],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-2-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", 2, ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", 332.0979843736517, 238.17654980358446],
       "hidden": true,
@@ -1910,26 +2257,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-2-2-1",
       "expr": ["N", ["LerchPhi", -2, 2, 1]],
       "expected": 0.7183731834418394,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-2",
       "expr": ["N", ["LerchPhi", -2, 2, 2]],
       "expected": 0.1408134082790773,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-0p5",
       "expr": ["N", ["LerchPhi", -2, 2, 0.5]],
       "expected": 3.444734229330254,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-5-over-2",
       "expr": ["N", ["LerchPhi", -2, 2, ["Rational", 5, 2]]],
       "expected": 0.08340577955479463,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-neg-2p5",
       "expr": ["N", ["LerchPhi", -2, 2, -2.5]],
       "expected": -12.286762723530918,
       "hidden": true,
@@ -1938,26 +2290,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-2-3-1",
       "expr": ["N", ["LerchPhi", -2, 3, 1]],
       "expected": 0.8341416819832855,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-3-2",
       "expr": ["N", ["LerchPhi", -2, 3, 2]],
       "expected": 0.0829291590083558,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-3-0p5",
       "expr": ["N", ["LerchPhi", -2, 3, 0.5]],
       "expected": 7.563284617347448,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-3-5-over-2",
       "expr": ["N", ["LerchPhi", -2, 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.038969302485020396, 1.1518563880485999e-14],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-3-neg-2p5",
       "expr": ["N", ["LerchPhi", -2, 3, -2.5]],
       "expected": -91.97768434618699,
       "hidden": true,
@@ -1966,26 +2323,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-2-0p5-1",
       "expr": ["N", ["LerchPhi", -2, 0.5, 1]],
       "expected": 0.4456443557760612,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-0p5-2",
       "expr": ["N", ["LerchPhi", -2, 0.5, 2]],
       "expected": 0.2771778221119692,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-0p5-0p5",
       "expr": ["N", ["LerchPhi", -2, 0.5, 0.5]],
       "expected": 0.7431924320288376,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", -2, 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.24049300787788896, 2.3564483697668948e-14],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", -2, 0.5, -2.5]],
       "expected": ["Complex", -5.9455394562307005, -4.656316619670605],
       "hidden": true,
@@ -1994,26 +2356,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-2-2-plus-i-1",
       "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.7462766702233421, 0.14040868638941306],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-plus-i-2",
       "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.12686166488833184, -0.07020434319469351],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.511183002874043, 2.6760511428484537],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.06276107967435696, -0.05760320164903357],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-2-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", -2, ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", 248.07432901528844, 220.3438744855333],
       "hidden": true,
@@ -2022,26 +2389,31 @@
       }
     },
     {
+      "id": "n-lerchphi-3-2-1",
       "expr": ["N", ["LerchPhi", 3, 2, 1]],
       "expected": ["Complex", 0.7733934744376991, -1.150464098407734],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-2",
       "expr": ["N", ["LerchPhi", 3, 2, 2]],
       "expected": ["Complex", -0.07553550852076699, -0.383488032802578],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-0p5",
       "expr": ["N", ["LerchPhi", 3, 2, 0.5]],
       "expected": ["Complex", 4.3083059100926135, -1.9926622707261163],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-5-over-2",
       "expr": ["N", ["LerchPhi", 3, 2, ["Rational", 5, 2]]],
       "expected": ["Complex", -0.11389193591563543, -0.22140691896956835],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-neg-2p5",
       "expr": ["N", ["LerchPhi", 3, 2, -2.5]],
       "expected": ["Complex", 153.81759290583392, -53.80188130960513],
       "hidden": true,
@@ -2050,26 +2422,31 @@
       }
     },
     {
+      "id": "n-lerchphi-3-3-1",
       "expr": ["N", ["LerchPhi", 3, 3, 1]],
       "expected": ["Complex", 1.2473741980802437, -0.6319569980911071],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-3-2",
       "expr": ["N", ["LerchPhi", 3, 3, 2]],
       "expected": ["Complex", 0.08245806602674785, -0.21065233269703562],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-3-0p5",
       "expr": ["N", ["LerchPhi", 3, 3, 0.5]],
       "expected": ["Complex", 8.962435484818293, -1.0945816288925054],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-3-5-over-2",
       "expr": ["N", ["LerchPhi", 3, 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.008171843992156041, -0.12162018098805609],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-3-neg-2p5",
       "expr": ["N", ["LerchPhi", 3, 3, -2.5]],
       "expected": ["Complex", 169.03286920120505, -29.553703980097676],
       "hidden": true,
@@ -2078,26 +2455,31 @@
       }
     },
     {
+      "id": "n-lerchphi-3-0p5-1",
       "expr": ["N", ["LerchPhi", 3, 0.5, 1]],
       "expected": ["Complex", -0.5673384497546599, -0.5636784807928212],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-0p5-2",
       "expr": ["N", ["LerchPhi", 3, 0.5, 2]],
       "expected": ["Complex", -0.5224461499182197, -0.1878928269309404],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-0p5-0p5",
       "expr": ["N", ["LerchPhi", 3, 0.5, 0.5]],
       "expected": ["Complex", -0.3058884181277133, -0.976319767866404],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", 3, 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", -0.4632879692537757, -0.10847997420737818],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", 3, 0.5, -2.5]],
       "expected": ["Complex", -8.258987289448257, -42.17050106856762],
       "hidden": true,
@@ -2106,26 +2488,31 @@
       }
     },
     {
+      "id": "n-lerchphi-3-2-plus-i-1",
       "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.6014155729908605, -0.5726915889959038],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-plus-i-2",
       "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], 2]],
       "expected": ["Complex", -0.1328614756697132, -0.19089719633196794],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.074330146279176, 1.3820906569318172],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", -0.1364278712328939, -0.07198068689298973],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-3-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", 3, ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", 754.4393998220863, 554.5049540922392],
       "hidden": true,
@@ -2134,26 +2521,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1p5-2-1",
       "expr": ["N", ["LerchPhi", 1.5, 2, 1]],
       "expected": ["Complex", 1.582930180181653, -0.8492041366130668],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-2",
       "expr": ["N", ["LerchPhi", 1.5, 2, 2]],
       "expected": ["Complex", 0.38862012012110225, -0.5661360910753779],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-0p5",
       "expr": ["N", ["LerchPhi", 1.5, 2, 0.5]],
       "expected": ["Complex", 5.118490668726073, -1.040058411081376],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-5-over-2",
       "expr": ["N", ["LerchPhi", 1.5, 2, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.20081066758195837, -0.46224818270283363],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-neg-2p5",
       "expr": ["N", ["LerchPhi", 1.5, 2, -2.5]],
       "expected": ["Complex", 27.101572673617163, -3.5101971373996417],
       "hidden": true,
@@ -2162,26 +2554,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1p5-3-1",
       "expr": ["N", ["LerchPhi", 1.5, 3, 1]],
       "expected": ["Complex", 1.37391833821352, -0.1721613235288588],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-3-2",
       "expr": ["N", ["LerchPhi", 1.5, 3, 2]],
       "expected": ["Complex", 0.249278892142347, -0.11477421568590583],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-3-0p5",
       "expr": ["N", ["LerchPhi", 1.5, 3, 0.5]],
       "expected": ["Complex", 8.758392281291254, -0.2108536980439579],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-3-5-over-2",
       "expr": ["N", ["LerchPhi", 1.5, 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.13953237193191523, -0.09371275468620348],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-3-neg-2p5",
       "expr": ["N", ["LerchPhi", 1.5, 3, -2.5]],
       "expected": ["Complex", 11.051129504913542, -0.7116312308983647],
       "hidden": true,
@@ -2190,26 +2587,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1p5-0p5-1",
       "expr": ["N", ["LerchPhi", 1.5, 0.5, 1]],
       "expected": ["Complex", -1.0310938016261064, -1.8556964357740158],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-0p5-2",
       "expr": ["N", ["LerchPhi", 1.5, 0.5, 2]],
       "expected": ["Complex", -1.354062534417405, -1.237130957182677],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-0p5-0p5",
       "expr": ["N", ["LerchPhi", 1.5, 0.5, 0.5]],
       "expected": ["Complex", -0.4727012388667624, -2.272754692573877],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", 1.5, 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", -1.382959854502865, -1.0101131966995007],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", 1.5, 0.5, -2.5]],
       "expected": ["Complex", -1.5953666811753227, -12.709728006201562],
       "hidden": true,
@@ -2218,26 +2620,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1p5-2-plus-i-1",
       "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.9288306730423472, -0.5652075721936586],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-plus-i-2",
       "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], 2]],
       "expected": ["Complex", -0.04744621797176859, -0.37680504812910587],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.383048389778828, 1.7479834843533375],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", -0.13623106961632314, -0.24217666122590845],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1p5-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", 1.5, ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", 188.05452580732162, 129.95094730887928],
       "hidden": true,
@@ -2246,26 +2653,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-1",
       "expr": ["N", ["LerchPhi", -1.5, 2, 1]],
       "expected": 0.7649204402503819,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-2",
       "expr": ["N", ["LerchPhi", -1.5, 2, 2]],
       "expected": 0.1567197064997453,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-0p5",
       "expr": ["N", ["LerchPhi", -1.5, 2, 0.5]],
       "expected": 3.54500455887494,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-5-over-2",
       "expr": ["N", ["LerchPhi", -1.5, 2, ["Rational", 5, 2]]],
       "expected": 0.09407610024072302,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-neg-2p5",
       "expr": ["N", ["LerchPhi", -1.5, 2, -2.5]],
       "expected": -3.4710570528695897,
       "hidden": true,
@@ -2274,26 +2686,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-3-1",
       "expr": ["N", ["LerchPhi", -1.5, 3, 1]],
       "expected": 0.8652249667708318,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-3-2",
       "expr": ["N", ["LerchPhi", -1.5, 3, 2]],
       "expected": 0.08985002215277751,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-3-0p5",
       "expr": ["N", ["LerchPhi", -1.5, 3, 0.5]],
       "expected": 7.6520443679635575,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-3-5-over-2",
       "expr": ["N", ["LerchPhi", -1.5, 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.042883916625780595, 1.6178031136959703e-14],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-3-neg-2p5",
       "expr": ["N", ["LerchPhi", -1.5, 3, -2.5]],
       "expected": -43.44520529743256,
       "hidden": true,
@@ -2302,26 +2719,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-0p5-1",
       "expr": ["N", ["LerchPhi", -1.5, 0.5, 1]],
       "expected": 0.5118021812475761,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-0p5-2",
       "expr": ["N", ["LerchPhi", -1.5, 0.5, 2]],
       "expected": 0.32546521250162286,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-0p5-0p5",
       "expr": ["N", ["LerchPhi", -1.5, 0.5, 0.5]],
       "expected": 0.827894231949178,
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", -1.5, 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.2837446848744865, -5.362377208939506e-14],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", -1.5, 0.5, -2.5]],
       "expected": ["Complex", -2.794143032828476, -2.589691175981552],
       "hidden": true,
@@ -2330,26 +2752,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-plus-i-1",
       "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.7925489657221488, 0.12307454646952756],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-plus-i-2",
       "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.1383006895185598, -0.08204969764636073],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.61930607559321, 2.668732631457893],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.0688725160431137, -0.06670071419538852],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", -1.5, ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", 139.4440155178161, 127.21487477502689],
       "hidden": true,
@@ -2358,26 +2785,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-1",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, 1]],
       "expected": ["Complex", 0.8171642289751408, 0.4383195138244752],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, 2]],
       "expected": ["Complex", 0.13876065132481796, 0.16079821117483864],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, 0.5]],
       "expected": ["Complex", 3.7921142608467866, 0.8560748069785533],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.07302936892606517, 0.10831051920486563],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 2, -2.5]],
       "expected": ["Complex", -51.39666281091311, -0.11216250956877438],
       "hidden": true,
@@ -2386,26 +2818,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1-plus-2i-3-1",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, 1]],
       "expected": ["Complex", 0.9605393291259245, 0.2620237606132513],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-3-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, 2]],
       "expected": ["Complex", 0.09691737007048522, 0.06818902047228032],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-3-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, 0.5]],
       "expected": ["Complex", 8.006976954441546, 0.6457371392370688],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-3-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.04322144848568627, 0.039913749099422996],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-3-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 3, -2.5]],
       "expected": ["Complex", -63.14556851667916, -55.70965503308343],
       "hidden": true,
@@ -2414,26 +2851,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1-plus-2i-0p5-1",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, 1]],
       "expected": ["Complex", 0.2518733705484473, 0.5942372440727618],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-0p5-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, 2]],
       "expected": ["Complex", 0.08806957173879393, 0.41809810059517377],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-0p5-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, 0.5]],
       "expected": ["Complex", 0.5773820436149282, 0.7684091077547665],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.060065923306197685, 0.368282582441825],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], 0.5, -2.5]],
       "expected": ["Complex", 2.475463147093155, -6.813575698374405],
       "hidden": true,
@@ -2442,26 +2884,31 @@
       }
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-plus-i-1",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.1260285363129376, 0.6413553659592582],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-plus-i-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.28174785364629107, 0.0778596586666771],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.192905834798345, 3.7884971130059952],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.17175237042929112, 0.031954991049997425],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-1-plus-2i-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", -457.91134140962885, 71.22772232965785],
       "hidden": true,
@@ -2470,26 +2917,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-1",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, 1]],
       "expected": ["Complex", 0.7446897666774631, 0.09767689334428908],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, 2]],
       "expected": ["Complex", 0.14788992102402837, 0.033475351786492316],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, 0.5]],
       "expected": ["Complex", 3.510343411490998, 0.20933833108241673],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.08772363908006542, 0.022451843102527576],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 2, -2.5]],
       "expected": ["Complex", 7.2387742675368125, 8.864424682985405],
       "hidden": true,
@@ -2498,26 +2950,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-3-1",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, 1]],
       "expected": ["Complex", 0.8553387457226991, 0.06489298901815407],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-3-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, 2]],
       "expected": ["Complex", 0.08673380628741796, 0.01456054484617424],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-3-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, 0.5]],
       "expected": ["Complex", 7.631459552290882, 0.18381299382141847],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-3-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.04093064173669238, 0.008246898188157391],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-3-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 3, -2.5]],
       "expected": ["Complex", -2.0910882737014767, 67.79138574742537],
       "hidden": true,
@@ -2526,26 +2983,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-0p5-1",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, 1]],
       "expected": ["Complex", 0.46553880567110584, 0.13821464441436376],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-0p5-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, 2]],
       "expected": ["Complex", 0.2892019802792986, 0.10065822390995441],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-0p5-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, 0.5]],
       "expected": ["Complex", 0.773036344755627, 0.17710899785683046],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.2506624678277473, 0.09007985632981672],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], 0.5, -2.5]],
       "expected": ["Complex", -3.574854956018253, 3.468728991325334],
       "hidden": true,
@@ -2554,26 +3016,31 @@
       }
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-plus-i-1",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], 1]],
       "expected": ["Complex", 0.8125648486721178, 0.23356370470540438],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-plus-i-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.15837428667606818, -0.050126278686223436],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 2.6030184823997615, 2.911418398487827],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.08535910853571303, -0.04777757995380055],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", -1.5, 1], ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", 244.75788905917892, -108.8372736947882],
       "hidden": true,
@@ -2582,26 +3049,31 @@
       }
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, 1]],
       "expected": ["Complex", 1.0512753535586392, 0.35234019825173524],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, 2]],
       "expected": ["Complex", 0.24698376639549866, 0.16256851061973257],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, 0.5]],
       "expected": ["Complex", 4.157406968302781, 0.5964288969053857],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.15055546795563676, 0.11982927618077492],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 2, -2.5]],
       "expected": ["Complex", -6.713683691062509, 9.459163380965968],
       "hidden": true,
@@ -2610,26 +3082,31 @@
       }
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-3-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, 1]],
       "expected": ["Complex", 1.0600183930694895, 0.16372732384786165],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-3-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, 2]],
       "expected": ["Complex", 0.13473745235770138, 0.05307952090741297],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-3-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, 0.5]],
       "expected": ["Complex", 8.176233084955843, 0.35863779701452814],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-3-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.06790730062055826, 0.034208132622012555],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-3-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 3, -2.5]],
       "expected": ["Complex", -11.007681973911316, -4.132179140120582],
       "hidden": true,
@@ -2638,26 +3115,31 @@
       }
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-0p5-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, 1]],
       "expected": ["Complex", 0.6468487828189053, 0.9042982627040883],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-0p5-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, 2]],
       "expected": ["Complex", 0.3664465259922781, 0.7181204866387976],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-0p5-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, 0.5]],
       "expected": ["Complex", 1.0703168525560947, 1.058323277527613],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-0p5-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, ["Rational", 5, 2]]],
       "expected": ["Complex", 0.3021697628691992, 0.6567535519940397],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], 0.5, -2.5]],
       "expected": ["Complex", 0.18135576554179678, -1.4915088888884338],
       "hidden": true,
@@ -2666,26 +3148,31 @@
       }
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-plus-i-1",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], 1]],
       "expected": ["Complex", 1.3623883910300945, 0.28623973226309374],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-plus-i-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], 2]],
       "expected": ["Complex", 0.3776044633523171, -0.06700535594248992],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 3.6223281025197807, 3.1374223913038595],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], ["Rational", 5, 2]]],
       "expected": ["Complex", 0.2377088936515321, -0.07033177818547647],
       "hidden": true
     },
     {
+      "id": "n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5",
       "expr": ["N", ["LerchPhi", ["Complex", 0.8, 0.9], ["Complex", 2, 1], -2.5]],
       "expected": ["Complex", -92.1275927724354, 93.92654608335769],
       "hidden": true,
@@ -2696,161 +3183,193 @@
   ],
   "PolyLog": [
     {
+      "id": "n-polylog-2-0p5",
       "expr": ["N", ["PolyLog", 2, 0.5]],
       "expected": 0.5822405264650125,
       "hidden": true
     },
     {
+      "id": "n-polylog-2-neg-0p5",
       "expr": ["N", ["PolyLog", 2, -0.5]],
       "expected": -0.44841420692364636,
       "hidden": true
     },
     {
+      "id": "n-polylog-2-0p25",
       "expr": ["N", ["PolyLog", 2, 0.25]],
       "expected": 0.2676526390827325,
       "hidden": true
     },
     {
+      "id": "n-polylog-2-0p9",
       "expr": ["N", ["PolyLog", 2, 0.9]],
       "expected": 1.2997147230049588,
       "hidden": true
     },
     {
+      "id": "n-polylog-2-1-over-3",
       "expr": ["N", ["PolyLog", 2, ["Rational", 1, 3]]],
       "expected": 0.3662132299770634,
       "hidden": true
     },
     {
+      "id": "n-polylog-2-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", 2, ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.40777049929509657, 0.374503158223905],
       "hidden": true
     },
     {
+      "id": "n-polylog-3-0p5",
       "expr": ["N", ["PolyLog", 3, 0.5]],
       "expected": 0.5372131936080403,
       "hidden": true
     },
     {
+      "id": "n-polylog-3-neg-0p5",
       "expr": ["N", ["PolyLog", 3, -0.5]],
       "expected": -0.47259784465889704,
       "hidden": true
     },
     {
+      "id": "n-polylog-3-0p25",
       "expr": ["N", ["PolyLog", 3, 0.25]],
       "expected": 0.25846139579657323,
       "hidden": true
     },
     {
+      "id": "n-polylog-3-0p9",
       "expr": ["N", ["PolyLog", 3, 0.9]],
       "expected": 1.0496589501864397,
       "hidden": true
     },
     {
+      "id": "n-polylog-3-1-over-3",
       "expr": ["N", ["PolyLog", 3, ["Rational", 1, 3]]],
       "expected": 0.34882786115484005,
       "hidden": true
     },
     {
+      "id": "n-polylog-3-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", 3, ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.40599530381987775, 0.33476183853388025],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-0p5",
       "expr": ["N", ["PolyLog", 0.5, 0.5]],
       "expected": 0.8061267230428522,
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-neg-0p5",
       "expr": ["N", ["PolyLog", 0.5, -0.5]],
       "expected": -0.373752237980973,
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-0p25",
       "expr": ["N", ["PolyLog", 0.5, 0.25]],
       "expected": 0.3057349303992964,
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-0p9",
       "expr": ["N", ["PolyLog", 0.5, 0.9]],
       "expected": 4.021950427473364,
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-1-over-3",
       "expr": ["N", ["PolyLog", 0.5, ["Rational", 1, 3]]],
       "expected": 0.44210883528067546,
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", 0.5, ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.3799350192027693, 0.5445942552198528],
       "hidden": true
     },
     {
+      "id": "n-polylog-1p5-0p5",
       "expr": ["N", ["PolyLog", 1.5, 0.5]],
       "expected": 0.624837020819914,
       "hidden": true
     },
     {
+      "id": "n-polylog-1p5-neg-0p5",
       "expr": ["N", ["PolyLog", 1.5, -0.5]],
       "expected": -0.42988732158057935,
       "hidden": true
     },
     {
+      "id": "n-polylog-1p5-0p25",
       "expr": ["N", ["PolyLog", 1.5, 0.25]],
       "expected": 0.2757005086448229,
       "hidden": true
     },
     {
+      "id": "n-polylog-1p5-0p9",
       "expr": ["N", ["PolyLog", 1.5, 0.9]],
       "expected": 1.614438528566339,
       "hidden": true
     },
     {
+      "id": "n-polylog-1p5-1-over-3",
       "expr": ["N", ["PolyLog", 1.5, ["Rational", 1, 3]]],
       "expected": 0.38178350786901616,
       "hidden": true
     },
     {
+      "id": "n-polylog-1p5-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", 1.5, ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.40619397959402637, 0.41007586834837495],
       "hidden": true
     },
     {
+      "id": "n-polylog-2p5-0p5",
       "expr": ["N", ["PolyLog", 2.5, 0.5]],
       "expected": 0.5549972787175124,
       "hidden": true
     },
     {
+      "id": "n-polylog-2p5-neg-0p5",
       "expr": ["N", ["PolyLog", 2.5, -0.5]],
       "expected": -0.46229778219006346,
       "hidden": true
     },
     {
+      "id": "n-polylog-2p5-0p25",
       "expr": ["N", ["PolyLog", 2.5, 0.25]],
       "expected": 0.2621937704285516,
       "hidden": true
     },
     {
+      "id": "n-polylog-2p5-0p9",
       "expr": ["N", ["PolyLog", 2.5, 0.9]],
       "expected": 1.1390030252021563,
       "hidden": true
     },
     {
+      "id": "n-polylog-2p5-1-over-3",
       "expr": ["N", ["PolyLog", 2.5, ["Rational", 1, 3]]],
       "expected": 0.35583074003232074,
       "hidden": true
     },
     {
+      "id": "n-polylog-2p5-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", 2.5, ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.4072217113246216, 0.3507424837631956],
       "hidden": true
     },
     {
+      "id": "n-polylog-neg-1-0p5",
       "expr": ["N", ["PolyLog", -1, 0.5]],
       "expected": 2,
       "hidden": true
     },
     {
+      "id": "n-polylog-neg-1-neg-0p5",
       "expr": ["N", ["PolyLog", -1, -0.5]],
       "expected": {
         "num": "-0.222222222222222222222"
@@ -2858,6 +3377,7 @@
       "hidden": true
     },
     {
+      "id": "n-polylog-neg-1-0p25",
       "expr": ["N", ["PolyLog", -1, 0.25]],
       "expected": {
         "num": "0.444444444444444444445"
@@ -2865,11 +3385,13 @@
       "hidden": true
     },
     {
+      "id": "n-polylog-neg-1-0p9",
       "expr": ["N", ["PolyLog", -1, 0.9]],
       "expected": 90,
       "hidden": true
     },
     {
+      "id": "n-polylog-neg-1-1-over-3",
       "expr": ["N", ["PolyLog", -1, ["Rational", 1, 3]]],
       "expected": {
         "num": "0.74999999999999999999925"
@@ -2877,66 +3399,79 @@
       "hidden": true
     },
     {
+      "id": "n-polylog-neg-1-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", -1, ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 1.9136e-16, 1.1111111111111114],
       "hidden": true
     },
     {
+      "id": "n-polylog-2-plus-i-0p5",
       "expr": ["N", ["PolyLog", ["Complex", 2, 1], 0.5]],
       "expected": ["Complex", 0.5548535453533205, -0.05804956179169715],
       "hidden": true
     },
     {
+      "id": "n-polylog-2-plus-i-neg-0p5",
       "expr": ["N", ["PolyLog", ["Complex", 2, 1], -0.5]],
       "expected": ["Complex", -0.4575315460755852, -0.03047101966980711],
       "hidden": true
     },
     {
+      "id": "n-polylog-2-plus-i-0p25",
       "expr": ["N", ["PolyLog", ["Complex", 2, 1], 0.25]],
       "expected": ["Complex", 0.26285018302723623, -0.011816971919302564],
       "hidden": true
     },
     {
+      "id": "n-polylog-2-plus-i-0p9",
       "expr": ["N", ["PolyLog", ["Complex", 2, 1], 0.9]],
       "expected": ["Complex", 1.073635898279169, -0.3065006217049299],
       "hidden": true
     },
     {
+      "id": "n-polylog-2-plus-i-1-over-3",
       "expr": ["N", ["PolyLog", ["Complex", 2, 1], ["Rational", 1, 3]]],
       "expected": ["Complex", 0.3566945562007138, -0.022385462317962054],
       "hidden": true
     },
     {
+      "id": "n-polylog-2-plus-i-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", ["Complex", 2, 1], ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.4621400230577699, 0.35056059710105836],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-plus-neg-1-times-i-0p5",
       "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], 0.5]],
       "expected": ["Complex", 0.6700397970761983, 0.23301926975771328],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-plus-neg-1-times-i-neg-0p5",
       "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], -0.5]],
       "expected": ["Complex", -0.3913103161117429, 0.06975146663327912],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-plus-neg-1-times-i-0p25",
       "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], 0.25]],
       "expected": ["Complex", 0.2884064661247059, 0.03875347060829805],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-plus-neg-1-times-i-0p9",
       "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], 0.9]],
       "expected": ["Complex", 0.580361076526937, 2.242263748000801],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-plus-neg-1-times-i-1-over-3",
       "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], ["Rational", 1, 3]]],
       "expected": ["Complex", 0.4043299322379448, 0.07792572456064256],
       "hidden": true
     },
     {
+      "id": "n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i",
       "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], ["Complex", 0.4, 0.3]]],
       "expected": ["Complex", 0.24654523479288867, 0.4321567364244429],
       "hidden": true
@@ -2944,6 +3479,7 @@
   ],
   "PolyGamma": [
     {
+      "id": "n-polygamma-1-1",
       "expr": ["N", ["PolyGamma", 1, 1]],
       "expected": {
         "num": "1.64493406684822643647"
@@ -2951,6 +3487,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-2",
       "expr": ["N", ["PolyGamma", 1, 2]],
       "expected": {
         "num": "0.644934066848226436472"
@@ -2958,6 +3495,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-0p5",
       "expr": ["N", ["PolyGamma", 1, 0.5]],
       "expected": {
         "num": "4.93480220054467930942"
@@ -2965,6 +3503,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-1p3",
       "expr": ["N", ["PolyGamma", 1, 1.3]],
       "expected": {
         "num": "1.13425343499661935436"
@@ -2972,6 +3511,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-7-over-3",
       "expr": ["N", ["PolyGamma", 1, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.533097125427094081793"
@@ -2979,21 +3519,25 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-1-plus-i",
       "expr": ["N", ["PolyGamma", 1, ["Complex", 1, 1]]],
       "expected": ["Complex", 0.46300009662276376, -0.794233542759319],
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-0p5-plus-0p3i",
       "expr": ["N", ["PolyGamma", 1, ["Complex", 0.5, 0.3]]],
       "expected": ["Complex", 2.2590340759053333, -2.8289967861156966],
       "hidden": true
     },
     {
+      "id": "n-polygamma-1-2-plus-neg-0p5-times-i",
       "expr": ["N", ["PolyGamma", 1, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.5881978909500615, 0.18504197243379086],
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-1",
       "expr": ["N", ["PolyGamma", 2, 1]],
       "expected": {
         "num": "-2.4041138063191885708"
@@ -3001,6 +3545,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-2",
       "expr": ["N", ["PolyGamma", 2, 2]],
       "expected": {
         "num": "-0.404113806319188570799"
@@ -3008,6 +3553,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-0p5",
       "expr": ["N", ["PolyGamma", 2, 0.5]],
       "expected": {
         "num": "-16.8287966442343199956"
@@ -3015,6 +3561,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-1p3",
       "expr": ["N", ["PolyGamma", 2, 1.3]],
       "expected": {
         "num": "-1.1984625146519565927"
@@ -3022,6 +3569,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-7-over-3",
       "expr": ["N", ["PolyGamma", 2, ["Rational", 7, 3]]],
       "expected": {
         "num": "-0.278372399401607552457"
@@ -3029,21 +3577,25 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-1-plus-i",
       "expr": ["N", ["PolyGamma", 2, ["Complex", 1, 1]]],
       "expected": ["Complex", 0.36855293158793523, 0.7666528503450666],
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-0p5-plus-0p3i",
       "expr": ["N", ["PolyGamma", 2, ["Complex", 0.5, 0.3]]],
       "expected": ["Complex", -0.17725989989006555, 10.451822205943445],
       "hidden": true
     },
     {
+      "id": "n-polygamma-2-2-plus-neg-0p5-times-i",
       "expr": ["N", ["PolyGamma", 2, ["Complex", 2, -0.5]]],
       "expected": ["Complex", -0.3073872674606165, -0.20845269482746528],
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-1",
       "expr": ["N", ["PolyGamma", 3, 1]],
       "expected": {
         "num": "6.4939394022668291491"
@@ -3051,6 +3603,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-2",
       "expr": ["N", ["PolyGamma", 3, 2]],
       "expected": {
         "num": "0.493939402266829149096"
@@ -3058,6 +3611,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-0p5",
       "expr": ["N", ["PolyGamma", 3, 0.5]],
       "expected": {
         "num": "97.4090910340024372364"
@@ -3065,6 +3619,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-1p3",
       "expr": ["N", ["PolyGamma", 3, 1.3]],
       "expected": {
         "num": "2.40102391430892661856"
@@ -3072,6 +3627,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-7-over-3",
       "expr": ["N", ["PolyGamma", 3, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.285379043814241755772"
@@ -3079,21 +3635,25 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-1-plus-i",
       "expr": ["N", ["PolyGamma", 3, ["Complex", 1, 1]]],
       "expected": ["Complex", -1.5228744489534964, -0.31728657866196086],
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-0p5-plus-0p3i",
       "expr": ["N", ["PolyGamma", 3, ["Complex", 0.5, 0.3]]],
       "expected": ["Complex", -27.94427115784687, -43.96940883981447],
       "hidden": true
     },
     {
+      "id": "n-polygamma-3-2-plus-neg-0p5-times-i",
       "expr": ["N", ["PolyGamma", 3, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.28033483085344774, 0.33648883590806505],
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-1",
       "expr": ["N", ["PolyGamma", 5, 1]],
       "expected": {
         "num": "122.081167438133896766"
@@ -3101,6 +3661,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-2",
       "expr": ["N", ["PolyGamma", 5, 2]],
       "expected": {
         "num": "2.08116743813389676574"
@@ -3108,6 +3669,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-0p5",
       "expr": ["N", ["PolyGamma", 5, 0.5]],
       "expected": {
         "num": "7691.11354860243549624"
@@ -3115,6 +3677,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-1p3",
       "expr": ["N", ["PolyGamma", 5, 1.3]],
       "expected": {
         "num": "25.7926012806130505379"
@@ -3122,6 +3685,7 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-7-over-3",
       "expr": ["N", ["PolyGamma", 5, ["Rational", 7, 3]]],
       "expected": {
         "num": "0.857814321602379528571"
@@ -3129,16 +3693,19 @@
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-1-plus-i",
       "expr": ["N", ["PolyGamma", 5, ["Complex", 1, 1]]],
       "expected": ["Complex", -0.9330848362848718, 14.515852291904068],
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-0p5-plus-0p3i",
       "expr": ["N", ["PolyGamma", 5, ["Complex", 0.5, 0.3]]],
       "expected": ["Complex", -3033.627950298733, 298.5885136366724],
       "hidden": true
     },
     {
+      "id": "n-polygamma-5-2-plus-neg-0p5-times-i",
       "expr": ["N", ["PolyGamma", 5, ["Complex", 2, -0.5]]],
       "expected": ["Complex", 0.27132469953315896, 1.7071964092847043],
       "hidden": true

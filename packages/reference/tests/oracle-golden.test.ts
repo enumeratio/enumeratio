@@ -16,7 +16,7 @@ for (const { stem, entries } of entryFiles) {
     const keys = new Set(
       entry.examples
         .filter((example) => example.aspirational !== true)
-        .map((example) => JSON.stringify(example.expr)),
+        .map((example) => example.id),
     );
     KEYS_BY_STEM_HEAD.set(`${stem}::${entry.name}`, keys);
   }
@@ -65,7 +65,7 @@ test("a Wolfram disagree row's example has divergence.wolfram prose, and a live 
       for (const example of entry.examples) {
         const row = example.others?.wolfram;
         if (row === undefined || row.verdict !== "disagree") continue;
-        const label = `${entry.name} ${JSON.stringify(example.expr)}`;
+        const label = `${entry.name} example/${example.id}`;
         expect(example.divergence?.wolfram, label).toBeTruthy();
         expect(emit(example.expr, "wolfram"), label).toEqual({ ok: true, source: row.input });
       }

@@ -41,22 +41,26 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "2-5-7-equiv-1",
         expr: ["GroupProduct", Z(6), G("2"), G("5")],
         expected: evaluated("1"),
         caption: "$2 + 5 = 7 \\equiv 1$",
       },
       {
+        id: "s-2-1",
         expr: ["GroupProduct", D(4), G("s0"), G("s0")],
         expected: evaluated("0"),
         caption: "$s^2 = 1$",
         category: "Properties",
       },
       {
+        id: "d-4-8",
         expr: ["AlgebraDimension", ["GroupAlgebra", D(4)]],
         expected: 8,
         caption: "$|D_4| = 8$",
       },
       {
+        id: "so-k-d-4-is-not-commutative-either",
         expr: ["GroupIsAbelian", D(4)],
         expected: "False",
         caption: "so $k[D_4]$ is not commutative either",
@@ -91,23 +95,27 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-identity-s-class-is-a-singleton",
         expr: ["ClassSum", D(3), 1],
         expected: evaluated("0"),
         caption: "the identity's class is a singleton",
       },
       {
+        id: "class-sums-are-central",
         expr: ["IsCentral", D(3), ["ClassSum", D(3), 2]],
         expected: "True",
         caption: "class sums are central",
         category: "Properties",
       },
       {
+        id: "a-lone-reflection-is-not",
         expr: ["IsCentral", D(3), G("s0")],
         expected: "False",
         caption: "a lone reflection is not",
         category: "Properties",
       },
       {
+        id: "in-an-abelian-group-everything-is-central",
         expr: ["IsCentral", Z(6), G("3")],
         expected: "True",
         caption: "in an abelian group everything is central",
@@ -142,22 +150,26 @@ export const groupAlgebras: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "abelian-one-class-per-element",
         expr: ["GroupCentreDimension", Z(6)],
         expected: 6,
         caption: "abelian: one class per element",
       },
       {
+        id: "d-3-cong-s-3",
         expr: ["GroupCentreDimension", D(3)],
         expected: 3,
         caption: "$D_3 \\cong S_3$",
       },
       {
+        id: "4-6-2",
         expr: ["GroupCentreDimension", D(4)],
         expected: 5,
         caption: "$(4+6)/2$",
         category: "Properties",
       },
       {
+        id: "direct-products-work-too",
         expr: ["GroupOrder", ["GroupDirectProduct", Z(2), Z(3)]],
         expected: 6,
         caption: "direct products work too",

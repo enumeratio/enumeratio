@@ -1,0 +1,10 @@
+zero-modulus:
+  epsil:
+    in: Mod(5, 0)
+    out: NaN
+  wolfram:
+    in: Mod[5, 0]
+    out: Indeterminate
+    tex:
+      in: (5 \bmod 0)
+      out: \text{Indeterminate}

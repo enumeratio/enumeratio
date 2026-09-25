@@ -269,6 +269,7 @@ export const MAPPINGS: readonly Mapping[] = [
       mathlib4: "(Nat.choose $1 $2)",
       rust: "binomial($1, $2)",
     },
+    note: "Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.",
   },
   {
     head: "Factorial",
@@ -612,7 +613,7 @@ export const MAPPINGS: readonly Mapping[] = [
   { head: "Length", arity: 1, emit: { wolfram: "Length[$1]", sympy: "len($1)", sage: "len($1)" } },
 
   // ── groups and group algebras: Oscar, through oscar/preamble.jl ──────────────
-  // A group comes back labelled as ours (packages/groupalgebra), so element-level heads can
+  // A group comes back labelled as ours (packages/symbols/algebras/groupalgebra), so element-level heads can
   // name elements the way our examples do.
   {
     head: "CyclicGroup",

@@ -1,6 +1,6 @@
 name: Quickcheck
 
-# Property-based sampling over the collection catalogue (packages/collections/scripts/quickcheck.ts): random
+# Property-based sampling over the collection catalogue (packages/symbols/combinatorics/collections/scripts/quickcheck.ts): random
 # (family, params, rank) points, checked for round trip, validity, injectivity and count. A fresh seed each run
 # means a red result is a finding to triage, not a broken build — so this is ADVISORY, never a required check.
 #   push / PR  — default budget, scoped to the kernels and the harness. The job stays green; a failure
@@ -11,10 +11,10 @@ on:
   push:
     branches: [main]
     paths:
-      - packages/collections/**
+      - packages/symbols/combinatorics/collections/**
   pull_request:
     paths:
-      - packages/collections/**
+      - packages/symbols/combinatorics/collections/**
   schedule:
     - cron: "41 4 * * *" # 04:41 UTC, after nightly.yml
   workflow_dispatch:
@@ -42,7 +42,7 @@ jobs:
           if [ "$GITHUB_EVENT_NAME" = "schedule" ]; then
             export QUICKCHECK_POINTS=100 QUICKCHECK_PARAM_CAP=9
           fi
-          node packages/collections/scripts/quickcheck.ts 2>&1 | tee quickcheck.log
+          node packages/symbols/combinatorics/collections/scripts/quickcheck.ts 2>&1 | tee quickcheck.log
 
       - name: open/reopen the tracking issue
         if: steps.run.outcome == 'failure'
@@ -64,7 +64,7 @@ jobs:
               ``,
               `Run: ${runUrl}`,
               ``,
-              `Each failure prints the exact replay command (\`node packages/collections/scripts/quickcheck.ts <family> <seed>\`). Findings collect here and are swept in batches rather than gating PRs. Tail of the output:`,
+              `Each failure prints the exact replay command (\`node packages/symbols/combinatorics/collections/scripts/quickcheck.ts <family> <seed>\`). Findings collect here and are swept in batches rather than gating PRs. Tail of the output:`,
               ``,
               '```',
               tail,
