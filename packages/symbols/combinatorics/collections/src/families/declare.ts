@@ -1,4 +1,5 @@
 import type { BoxedExpression, CollectionHandlers, ComputeEngine } from "@cortex-js/compute-engine";
+import { defineMessages, emit } from "@enumeratio/boxed";
 import { allEntries } from "./index.ts";
 import {
   asBlockList,
@@ -10,12 +11,17 @@ import {
   type FamilyKernel,
   intOf,
   listMJ,
+  needsBigint,
   nestMJ,
 } from "./types.ts";
 
 type BoxInput = Parameters<ComputeEngine["box"]>[0];
 
 const asBoxed = (c: BoxedExpression): Boxed => c as unknown as Boxed;
+
+/** Elements a kernel may generate to answer one call on the engine. Past it, a family whose
+ *  unrank or rank enumerates declines with `Head::toobig` rather than exhausting the heap. */
+export const ENUMERATION_LIMIT = 2_000_000n;
 
 // Collection type an operator call returns. paramCount-0 values are typed directly in declareFamilies.
 const collectionTypeOf = (kind: FamilyKernel["kind"]): string => {
@@ -54,19 +60,54 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
   };
   const element = (p: number[], rank: bigint): BoxedExpression =>
     ce.box(encode(family.unrank(p, rank) as never) as BoxInput);
+  // Whether reaching an element (or, for `count`, the count) would enumerate past the limit.
+  const cost = family.declared?.cost;
+  const tooBig = (p: number[], ops: readonly ("count" | "unrank")[]): boolean => {
+    const work = family.declared?.work;
+    if (cost === undefined || work === undefined || !ops.some((op) => cost[op] === "enumerative")) return false;
+    const w = work(p);
+    if (w <= ENUMERATION_LIMIT) return false;
+    emit(ce, family.head, "toobig", [
+      `${family.head}(${p.join(", ")})`,
+      w.toLocaleString("en-US"),
+      ENUMERATION_LIMIT.toLocaleString("en-US"),
+    ]);
+    return true;
+  };
+  // The count, or undefined where a kernel still in plain numbers can't carry it exactly.
+  const countAt = (p: number[]): bigint | number | undefined => {
+    try {
+      return family.count(p);
+    } catch (error) {
+      if (needsBigint(error)) return undefined;
+      throw error;
+    }
+  };
   return {
-    count: (c) => countNumber(family.count(params(c))),
+    count: (c) => {
+      const p = params(c);
+      if (tooBig(p, ["count"])) return undefined;
+      const total = countAt(p);
+      return total === undefined ? undefined : countNumber(total);
+    },
     // ∞ is known-infinite; NaN (an open problem, e.g. TwinPrimes) is unknown either way.
     isFinite: (c) => {
-      const total = family.count(params(c));
+      const total = countAt(params(c));
+      // Past 2^53 in a plain-number kernel: still finite, just not a count a double can carry.
+      if (total === undefined) return true;
       return typeof total === "bigint" ? true : Number.isNaN(total) ? undefined : false;
     },
     isLazy: () => true,
-    isEnumerable: () => true,
-    isEmpty: (c) => family.count(params(c)) === 0n,
+    isEnumerable: (c) => !tooBig(params(c), ["count", "unrank"]),
+    isEmpty: (c) => {
+      const p = params(c);
+      return tooBig(p, ["count"]) ? undefined : countAt(p) === 0n ? true : countAt(p) === undefined ? undefined : false;
+    },
     iterator: (c) => {
       const p = params(c);
-      const total = family.count(p);
+      if (tooBig(p, ["count", "unrank"])) return undefined;
+      const total = countAt(p);
+      if (total === undefined) return undefined;
       let i = 0n;
       // Only a finite count ends the iteration; ∞ and unknown (NaN) run on.
       return {
@@ -80,7 +121,9 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
     at: (c, index) => {
       if (typeof index !== "number" || !Number.isSafeInteger(index)) return undefined;
       const p = params(c);
-      const total = family.count(p);
+      if (tooBig(p, ["count", "unrank"])) return undefined;
+      const total = countAt(p);
+      if (total === undefined) return undefined;
       if (typeof total !== "bigint") {
         // No last element to count back from when the count is ∞ or unknown.
         return index < 1 ? undefined : element(p, BigInt(index - 1));
@@ -97,6 +140,9 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
 export function declareFamilies(ce: ComputeEngine): void {
   for (const family of allEntries) {
     const collection = handlersOf(ce, family);
+    if (family.declared?.work !== undefined) {
+      defineMessages(ce, family.head, { toobig: "`1` would enumerate about `2` elements; the limit is `3`." });
+    }
     if (family.paramCount === 0) {
       ce.declare(family.head, { type: "indexed_collection<integer>", collection });
     } else {
