@@ -50,6 +50,14 @@ export function random(seed: number): () => number {
   };
 }
 
+/** A stream of its own per family (FNV-1a of `seed/key`), so what one family draws never
+ *  depends on which families ran before it — filtering the run to one head replays it. */
+export function streamFor(seed: number, key: string): () => number {
+  let h = 2166136261;
+  for (const ch of `${seed}/${key}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return random(h >>> 0);
+}
+
 export interface Failure {
   readonly family: string;
   readonly property: string;
