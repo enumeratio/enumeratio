@@ -17,8 +17,8 @@ export interface CrosswalkRecord {
 
 export const crosswalk: readonly CrosswalkRecord[] = [
   {
-    "name": "AGM",
-    "fungrimEntries": [
+    name: "AGM",
+    fungrimEntries: [
       "08329d",
       "0d9352",
       "20828c",
@@ -45,12 +45,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ea1d58",
       "eb0661",
       "f9190b",
-      "fa6ff7"
-    ]
+      "fa6ff7",
+    ],
   },
   {
-    "name": "Abs",
-    "fungrimEntries": [
+    name: "Abs",
+    fungrimEntries: [
       "099b19",
       "0aac97",
       "0bb73e",
@@ -107,67 +107,67 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e722ca",
       "e74d86",
       "ed5222",
-      "fbe121"
+      "fbe121",
     ],
-    "wolfram": "Abs",
-    "oracle": [
+    wolfram: "Abs",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "Abs($1)",
-        "arity": 1
+        system: "sympy",
+        call: "Abs($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "fabs($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "fabs($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "abs($1)",
-        "arity": 1
+        system: "sage",
+        call: "abs($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "abs($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "abs($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Accumulate",
-    "wolfram": "Accumulate"
+    name: "Accumulate",
+    wolfram: "Accumulate",
   },
   {
-    "name": "Add",
-    "wolfram": "Plus"
+    name: "Add",
+    wolfram: "Plus",
   },
   {
-    "name": "AdicNumeral",
-    "oracle": [
+    name: "AdicNumeral",
+    oracle: [
       {
-        "system": "rust",
-        "call": "adic($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "rust",
+        call: "adic($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "AdicValuation",
-    "oracle": [
+    name: "AdicValuation",
+    oracle: [
       {
-        "system": "rust",
-        "call": "adic_valuation($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "adic_valuation($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "AdjacencyMatrix",
-    "wolfram": "AdjacencyMatrix"
+    name: "AdjacencyMatrix",
+    wolfram: "AdjacencyMatrix",
   },
   {
-    "name": "AiryAi",
-    "fungrimEntries": [
+    name: "AiryAi",
+    fungrimEntries: [
       "01bbb6",
       "20e530",
       "49d754",
@@ -179,104 +179,77 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "de9800",
       "e72e96",
       "eadca2",
-      "fda595"
-    ]
+      "fda595",
+    ],
   },
   {
-    "name": "AiryBi",
-    "fungrimEntries": [
-      "4d65e5",
-      "51b241",
-      "685892",
-      "70ec9f",
-      "bd319e",
-      "d39c46",
-      "de9800",
-      "e72e96",
-      "eadca2"
-    ]
+    name: "AiryBi",
+    fungrimEntries: ["4d65e5", "51b241", "685892", "70ec9f", "bd319e", "d39c46", "de9800", "e72e96", "eadca2"],
   },
   {
-    "name": "AlgebraDimension",
-    "oracle": [
+    name: "AlgebraDimension",
+    oracle: [
       {
-        "system": "oscar",
-        "call": "dim($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "All",
-    "wolfram": "AllTrue"
-  },
-  {
-    "name": "And",
-    "wolfram": "And"
-  },
-  {
-    "name": "Any",
-    "wolfram": "AnyTrue"
-  },
-  {
-    "name": "Append",
-    "wolfram": "Append"
-  },
-  {
-    "name": "Arccos",
-    "fungrimEntries": [
-      "33e034",
-      "718f3a",
-      "b8fdcd",
-      "ec7f2d",
-      "fda800"
+        system: "oscar",
+        call: "dim($1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "ArcCos"
   },
   {
-    "name": "Arccot",
-    "fungrimEntries": [
-      "c580f4"
-    ]
+    name: "All",
+    wolfram: "AllTrue",
   },
   {
-    "name": "Arccsc",
-    "wolfram": "ArcCsc"
+    name: "And",
+    wolfram: "And",
   },
   {
-    "name": "Arcosh",
-    "fungrimEntries": [
-      "2fc479",
-      "718f3a",
-      "d9765b"
-    ],
-    "wolfram": "ArcCosh"
+    name: "Any",
+    wolfram: "AnyTrue",
   },
   {
-    "name": "Arcoth",
-    "wolfram": "ArcCoth"
+    name: "Append",
+    wolfram: "Append",
   },
   {
-    "name": "Arcsch",
-    "wolfram": "ArcCsch"
+    name: "Arccos",
+    fungrimEntries: ["33e034", "718f3a", "b8fdcd", "ec7f2d", "fda800"],
+    wolfram: "ArcCos",
   },
   {
-    "name": "Arcsec",
-    "wolfram": "ArcSec"
+    name: "Arccot",
+    fungrimEntries: ["c580f4"],
   },
   {
-    "name": "Arcsin",
-    "fungrimEntries": [
-      "087a7c",
-      "584a61",
-      "7954ad",
-      "f0bcb5"
-    ],
-    "wolfram": "ArcSin"
+    name: "Arccsc",
+    wolfram: "ArcCsc",
   },
   {
-    "name": "Arctan",
-    "fungrimEntries": [
+    name: "Arcosh",
+    fungrimEntries: ["2fc479", "718f3a", "d9765b"],
+    wolfram: "ArcCosh",
+  },
+  {
+    name: "Arcoth",
+    wolfram: "ArcCoth",
+  },
+  {
+    name: "Arcsch",
+    wolfram: "ArcCsch",
+  },
+  {
+    name: "Arcsec",
+    wolfram: "ArcSec",
+  },
+  {
+    name: "Arcsin",
+    fungrimEntries: ["087a7c", "584a61", "7954ad", "f0bcb5"],
+    wolfram: "ArcSin",
+  },
+  {
+    name: "Arctan",
+    fungrimEntries: [
       "00e608",
       "072166",
       "0b829e",
@@ -322,40 +295,25 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "eb1d4f",
       "ec7f2d",
       "f516e3",
-      "f516e3:solve"
+      "f516e3:solve",
     ],
-    "wolfram": "ArcTan"
+    wolfram: "ArcTan",
   },
   {
-    "name": "Arctan2",
-    "fungrimEntries": [
-      "00e608",
-      "22fb4a",
-      "47331d",
-      "77e519",
-      "9dec3e",
-      "a6776b",
-      "b2a880",
-      "cf64b3",
-      "eca4ce"
-    ]
+    name: "Arctan2",
+    fungrimEntries: ["00e608", "22fb4a", "47331d", "77e519", "9dec3e", "a6776b", "b2a880", "cf64b3", "eca4ce"],
   },
   {
-    "name": "ArgMax",
-    "fungrimEntries": [
-      "c5bdcc"
-    ]
+    name: "ArgMax",
+    fungrimEntries: ["c5bdcc"],
   },
   {
-    "name": "ArgMin",
-    "fungrimEntries": [
-      "1e6344",
-      "ad04bd"
-    ]
+    name: "ArgMin",
+    fungrimEntries: ["1e6344", "ad04bd"],
   },
   {
-    "name": "Argument",
-    "fungrimEntries": [
+    name: "Argument",
+    fungrimEntries: [
       "089f85",
       "0aac97",
       "18873d",
@@ -373,56 +331,46 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "c43533",
       "caf8cf",
       "dcc1e5",
-      "fbfb81"
-    ]
-  },
-  {
-    "name": "Around",
-    "wolfram": "Around"
-  },
-  {
-    "name": "Array",
-    "wolfram": "Array"
-  },
-  {
-    "name": "Arsech",
-    "wolfram": "ArcSech"
-  },
-  {
-    "name": "Arsinh",
-    "fungrimEntries": [
-      "423b36"
+      "fbfb81",
     ],
-    "wolfram": "ArcSinh"
   },
   {
-    "name": "Artanh",
-    "fungrimEntries": [
-      "00cdb7",
-      "072166",
-      "2cdd2f",
-      "5ada5f",
-      "7348e3",
-      "8c9ba1",
-      "bc2f88"
-    ],
-    "wolfram": "ArcTanh"
+    name: "Around",
+    wolfram: "Around",
   },
   {
-    "name": "Association",
-    "wolfram": "Association"
+    name: "Array",
+    wolfram: "Array",
   },
   {
-    "name": "Assuming",
-    "wolfram": "Assuming"
+    name: "Arsech",
+    wolfram: "ArcSech",
   },
   {
-    "name": "At",
-    "wolfram": "Part"
+    name: "Arsinh",
+    fungrimEntries: ["423b36"],
+    wolfram: "ArcSinh",
   },
   {
-    "name": "BarnesG",
-    "fungrimEntries": [
+    name: "Artanh",
+    fungrimEntries: ["00cdb7", "072166", "2cdd2f", "5ada5f", "7348e3", "8c9ba1", "bc2f88"],
+    wolfram: "ArcTanh",
+  },
+  {
+    name: "Association",
+    wolfram: "Association",
+  },
+  {
+    name: "Assuming",
+    wolfram: "Assuming",
+  },
+  {
+    name: "At",
+    wolfram: "Part",
+  },
+  {
+    name: "BarnesG",
+    fungrimEntries: [
       "147db6",
       "33f13a",
       "541e2e",
@@ -434,57 +382,54 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ce66a9",
       "daef08",
       "dc507f",
-      "f50c74"
+      "f50c74",
     ],
-    "wolfram": "BarnesG"
+    wolfram: "BarnesG",
   },
   {
-    "name": "Basis",
-    "oracle": [
+    name: "Basis",
+    oracle: [
       {
-        "system": "sage",
-        "call": "list(($1).basis())",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "BellNumber",
-    "fungrimEntries": [
-      "60dc3e",
-      "f4e249"
+        system: "sage",
+        call: "list(($1).basis())",
+        arity: 1,
+      },
     ],
-    "wolfram": "BellB",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "bell($1)",
-        "arity": 1
-      },
-      {
-        "system": "sage",
-        "call": "bell_number($1)",
-        "arity": 1
-      },
-      {
-        "system": "oscar",
-        "call": "bell($1)",
-        "arity": 1
-      },
-      {
-        "system": "julia",
-        "call": "bell($1)",
-        "arity": 1
-      }
-    ]
   },
   {
-    "name": "BellY",
-    "wolfram": "BellY"
+    name: "BellNumber",
+    fungrimEntries: ["60dc3e", "f4e249"],
+    wolfram: "BellB",
+    oracle: [
+      {
+        system: "sympy",
+        call: "bell($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "bell_number($1)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "bell($1)",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "bell($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "BernoulliB",
-    "fungrimEntries": [
+    name: "BellY",
+    wolfram: "BellY",
+  },
+  {
+    name: "BernoulliB",
+    fungrimEntries: [
       "03ee0b",
       "14ecc4",
       "15b347",
@@ -501,25 +446,25 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "a1d2d7",
       "a98234",
       "b6111c",
-      "cf5355"
+      "cf5355",
     ],
-    "wolfram": "BernoulliB",
-    "oracle": [
+    wolfram: "BernoulliB",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "bernoulli($1)",
-        "arity": 1
+        system: "sympy",
+        call: "bernoulli($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "bernoulli($1)",
-        "arity": 1
-      }
-    ]
+        system: "sage",
+        call: "bernoulli($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "BesselI",
-    "fungrimEntries": [
+    name: "BesselI",
+    fungrimEntries: [
       "00dfd1",
       "15bbb1",
       "4fb391",
@@ -533,12 +478,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "afbd22",
       "c0247f",
       "e233b0",
-      "f303c9"
-    ]
+      "f303c9",
+    ],
   },
   {
-    "name": "BesselJ",
-    "fungrimEntries": [
+    name: "BesselJ",
+    fungrimEntries: [
       "0fbd15",
       "121b21",
       "127f05",
@@ -564,20 +509,17 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "d5b7e8",
       "e72e96",
       "ecd36f",
-      "f1afc0"
-    ]
-  },
-  {
-    "name": "BesselJZero",
-    "fungrimEntries": [
-      "1e6344",
-      "da7fb1"
+      "f1afc0",
     ],
-    "wolfram": "BesselJZero"
   },
   {
-    "name": "BesselK",
-    "fungrimEntries": [
+    name: "BesselJZero",
+    fungrimEntries: ["1e6344", "da7fb1"],
+    wolfram: "BesselJZero",
+  },
+  {
+    name: "BesselK",
+    fungrimEntries: [
       "0c09cc",
       "49d754",
       "7377c8",
@@ -591,12 +533,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "d1f5c5",
       "d5b7e8",
       "fd9add",
-      "fda595"
-    ]
+      "fda595",
+    ],
   },
   {
-    "name": "BesselY",
-    "fungrimEntries": [
+    name: "BesselY",
+    fungrimEntries: [
       "1dce21",
       "2a4195",
       "40aeb6",
@@ -609,12 +551,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "b049dc",
       "b6d600",
       "d5b7e8",
-      "e85dee"
-    ]
+      "e85dee",
+    ],
   },
   {
-    "name": "Beta",
-    "fungrimEntries": [
+    name: "Beta",
+    fungrimEntries: [
       "082a69",
       "3141e4",
       "72db94",
@@ -625,21 +567,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "c92da4",
       "cc2ebb",
       "e9f966",
-      "fd0e48"
+      "fd0e48",
     ],
-    "wolfram": "Beta"
+    wolfram: "Beta",
   },
   {
-    "name": "BetaRegularized",
-    "wolfram": "BetaRegularized"
+    name: "BetaRegularized",
+    wolfram: "BetaRegularized",
   },
   {
-    "name": "BigO",
-    "wolfram": "O"
+    name: "BigO",
+    wolfram: "O",
   },
   {
-    "name": "Binomial",
-    "fungrimEntries": [
+    name: "Binomial",
+    fungrimEntries: [
       "081188",
       "0d92f6",
       "1d5e92",
@@ -662,192 +604,190 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "a7dbf6",
       "bb4f41",
       "e87c43",
-      "f55f0a"
+      "f55f0a",
     ],
-    "wolfram": "Binomial",
-    "oracle": [
+    wolfram: "Binomial",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "binomial($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "binomial($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "binomial($1, $2)",
-        "arity": 2
+        system: "sage",
+        call: "binomial($1, $2)",
+        arity: 2,
       },
       {
-        "system": "oscar",
-        "call": "binomial(ZZ($1), ZZ($2))",
-        "arity": 2
+        system: "oscar",
+        call: "binomial(ZZ($1), ZZ($2))",
+        arity: 2,
       },
       {
-        "system": "julia",
-        "call": "binomial(ZZ($1), ZZ($2))",
-        "arity": 2
+        system: "julia",
+        call: "binomial(ZZ($1), ZZ($2))",
+        arity: 2,
       },
       {
-        "system": "rust",
-        "call": "binomial($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "BinomialDistribution",
-    "wolfram": "BinomialDistribution"
-  },
-  {
-    "name": "BrauerAlgebra",
-    "oracle": [
-      {
-        "system": "sage",
-        "call": "BrauerAlgebra($1, enumeratio_delta, enumeratio_ring)",
-        "arity": 1
+        system: "rust",
+        call: "binomial($1, $2)",
+        arity: 2,
       },
-      {
-        "system": "oscar",
-        "call": "EnumeratioDiagramAlgebra(:brauer, $1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "CDF",
-    "wolfram": "CDF"
-  },
-  {
-    "name": "CarmichaelLambda",
-    "wolfram": "CarmichaelLambda"
-  },
-  {
-    "name": "Cases",
-    "wolfram": "Cases"
-  },
-  {
-    "name": "CatalanConstant",
-    "wolfram": "Catalan"
-  },
-  {
-    "name": "CatalanNumber",
-    "wolfram": "CatalanNumber",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "catalan($1)",
-        "arity": 1
-      },
-      {
-        "system": "sage",
-        "call": "catalan_number($1)",
-        "arity": 1
-      },
-      {
-        "system": "julia",
-        "call": "Combinatorics.catalannum($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "Ceil",
-    "fungrimEntries": [
-      "a3a253"
     ],
-    "wolfram": "Ceiling",
-    "oracle": [
+  },
+  {
+    name: "BinomialDistribution",
+    wolfram: "BinomialDistribution",
+  },
+  {
+    name: "BrauerAlgebra",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "ceiling($1)",
-        "arity": 1
+        system: "sage",
+        call: "BrauerAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "ceil($1)",
-        "arity": 1
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:brauer, $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "CDF",
+    wolfram: "CDF",
+  },
+  {
+    name: "CarmichaelLambda",
+    wolfram: "CarmichaelLambda",
+  },
+  {
+    name: "Cases",
+    wolfram: "Cases",
+  },
+  {
+    name: "CatalanConstant",
+    wolfram: "Catalan",
+  },
+  {
+    name: "CatalanNumber",
+    wolfram: "CatalanNumber",
+    oracle: [
+      {
+        system: "sympy",
+        call: "catalan($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "ceil($1)",
-        "arity": 1
+        system: "sage",
+        call: "catalan_number($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "ceil($1)",
-        "arity": 1
-      }
-    ]
+        system: "julia",
+        call: "Combinatorics.catalannum($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "CellularAutomaton",
-    "wolfram": "CellularAutomaton"
-  },
-  {
-    "name": "CenteredInterval",
-    "wolfram": "CenteredInterval"
-  },
-  {
-    "name": "ChineseRemainder",
-    "wolfram": "ChineseRemainder"
-  },
-  {
-    "name": "Chop",
-    "wolfram": "Chop"
-  },
-  {
-    "name": "ClassSum",
-    "oracle": [
+    name: "Ceil",
+    fungrimEntries: ["a3a253"],
+    wolfram: "Ceiling",
+    oracle: [
       {
-        "system": "oscar",
-        "call": "enumeratio_class_sum($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "Commonest",
-    "wolfram": "Commonest"
-  },
-  {
-    "name": "CompleteGraph",
-    "wolfram": "CompleteGraph"
-  },
-  {
-    "name": "CompleteKaryTree",
-    "wolfram": "CompleteKaryTree"
-  },
-  {
-    "name": "Complex",
-    "wolfram": "Complex",
-    "oracle": [
-      {
-        "system": "mpmath",
-        "call": "mpc($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "ceiling($1)",
+        arity: 1,
       },
       {
-        "system": "julia",
-        "call": "complex($1, $2)",
-        "arity": 2
+        system: "mpmath",
+        call: "ceil($1)",
+        arity: 1,
       },
       {
-        "system": "oscar",
-        "call": "complex($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "sage",
+        call: "ceil($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "ceil($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "ComplexExpand",
-    "wolfram": "ComplexExpand"
+    name: "CellularAutomaton",
+    wolfram: "CellularAutomaton",
   },
   {
-    "name": "ComplexInfinity",
-    "wolfram": "ComplexInfinity"
+    name: "CenteredInterval",
+    wolfram: "CenteredInterval",
   },
   {
-    "name": "Conjugate",
-    "fungrimEntries": [
+    name: "ChineseRemainder",
+    wolfram: "ChineseRemainder",
+  },
+  {
+    name: "Chop",
+    wolfram: "Chop",
+  },
+  {
+    name: "ClassSum",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_class_sum($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "Commonest",
+    wolfram: "Commonest",
+  },
+  {
+    name: "CompleteGraph",
+    wolfram: "CompleteGraph",
+  },
+  {
+    name: "CompleteKaryTree",
+    wolfram: "CompleteKaryTree",
+  },
+  {
+    name: "Complex",
+    wolfram: "Complex",
+    oracle: [
+      {
+        system: "mpmath",
+        call: "mpc($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "complex($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "oscar",
+        call: "complex($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "ComplexExpand",
+    wolfram: "ComplexExpand",
+  },
+  {
+    name: "ComplexInfinity",
+    wolfram: "ComplexInfinity",
+  },
+  {
+    name: "Conjugate",
+    fungrimEntries: [
       "12b1d0",
       "13895b",
       "147db6",
@@ -877,48 +817,48 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "c58f46",
       "d7d2a0",
       "f1a29b",
-      "fe1b96"
-    ]
+      "fe1b96",
+    ],
   },
   {
-    "name": "ConnectedComponents",
-    "wolfram": "ConnectedComponents"
+    name: "ConnectedComponents",
+    wolfram: "ConnectedComponents",
   },
   {
-    "name": "Contains",
-    "wolfram": "MemberQ"
+    name: "Contains",
+    wolfram: "MemberQ",
   },
   {
-    "name": "ContinuedFraction",
-    "wolfram": "ContinuedFraction",
-    "oracle": [
+    name: "ContinuedFraction",
+    wolfram: "ContinuedFraction",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "list(continued_fraction($1))",
-        "arity": 1
+        system: "sympy",
+        call: "list(continued_fraction($1))",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "list(continued_fraction($1))",
-        "arity": 1
-      }
-    ]
+        system: "sage",
+        call: "list(continued_fraction($1))",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "ContinuedFractionK",
-    "wolfram": "ContinuedFractionK"
+    name: "ContinuedFractionK",
+    wolfram: "ContinuedFractionK",
   },
   {
-    "name": "Convergents",
-    "wolfram": "Convergents"
+    name: "Convergents",
+    wolfram: "Convergents",
   },
   {
-    "name": "Coproduct",
-    "wolfram": "Coproduct"
+    name: "Coproduct",
+    wolfram: "Coproduct",
   },
   {
-    "name": "Cos",
-    "fungrimEntries": [
+    name: "Cos",
+    fungrimEntries: [
       "012eba",
       "037a6e",
       "0aac97",
@@ -977,35 +917,35 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f6d0c6",
       "f7ab32",
       "f8cd8f",
-      "fda800"
+      "fda800",
     ],
-    "wolfram": "Cos",
-    "oracle": [
+    wolfram: "Cos",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "cos($1)",
-        "arity": 1
+        system: "sympy",
+        call: "cos($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "cos($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "cos($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "cos($1)",
-        "arity": 1
+        system: "sage",
+        call: "cos($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "cos($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "cos($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Cosh",
-    "fungrimEntries": [
+    name: "Cosh",
+    fungrimEntries: [
       "1568e1",
       "2fc479",
       "3b839c",
@@ -1015,59 +955,47 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "7ae3ed",
       "bceed4",
       "c7b921",
-      "fd732d"
+      "fd732d",
     ],
-    "wolfram": "Cosh"
+    wolfram: "Cosh",
   },
   {
-    "name": "Cot",
-    "fungrimEntries": [
-      "23ed69",
-      "361f61",
-      "3fe553",
-      "44ad09",
-      "adf5e2",
-      "b6017f",
-      "dfbddd"
-    ],
-    "wolfram": "Cot"
+    name: "Cot",
+    fungrimEntries: ["23ed69", "361f61", "3fe553", "44ad09", "adf5e2", "b6017f", "dfbddd"],
+    wolfram: "Cot",
   },
   {
-    "name": "Coth",
-    "fungrimEntries": [
-      "03e2a6",
-      "22a9cd",
-      "3ac0ce"
-    ],
-    "wolfram": "Coth"
+    name: "Coth",
+    fungrimEntries: ["03e2a6", "22a9cd", "3ac0ce"],
+    wolfram: "Coth",
   },
   {
-    "name": "Count",
-    "wolfram": "Count"
+    name: "Count",
+    wolfram: "Count",
   },
   {
-    "name": "Csc",
-    "wolfram": "Csc"
+    name: "Csc",
+    wolfram: "Csc",
   },
   {
-    "name": "Csch",
-    "wolfram": "Csch"
+    name: "Csch",
+    wolfram: "Csch",
   },
   {
-    "name": "CubeRoot",
-    "wolfram": "CubeRoot"
+    name: "CubeRoot",
+    wolfram: "CubeRoot",
   },
   {
-    "name": "CycleGraph",
-    "wolfram": "CycleGraph"
+    name: "CycleGraph",
+    wolfram: "CycleGraph",
   },
   {
-    "name": "Cycles",
-    "wolfram": "Cycles"
+    name: "Cycles",
+    wolfram: "Cycles",
   },
   {
-    "name": "DedekindEta",
-    "fungrimEntries": [
+    name: "DedekindEta",
+    fungrimEntries: [
       "02d14f",
       "033d39",
       "03ad5a",
@@ -1101,12 +1029,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "df5f38",
       "e3e4c5",
       "f0f53b",
-      "ff587a"
-    ]
+      "ff587a",
+    ],
   },
   {
-    "name": "Derivative",
-    "fungrimEntries": [
+    name: "Derivative",
+    fungrimEntries: [
       "01bbb6",
       "02d14f",
       "0373dc",
@@ -1226,30 +1154,30 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "fae9d3",
       "fcab61",
       "fd9add",
-      "ff5e82"
-    ]
+      "ff5e82",
+    ],
   },
   {
-    "name": "Determinant",
-    "wolfram": "Det"
+    name: "Determinant",
+    wolfram: "Det",
   },
   {
-    "name": "Diagram",
-    "oracle": [
+    name: "Diagram",
+    oracle: [
       {
-        "system": "sage",
-        "call": "enumeratio_diagram($1)",
-        "arity": 1
-      }
-    ]
+        system: "sage",
+        call: "enumeratio_diagram($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "DifferenceDelta",
-    "wolfram": "DifferenceDelta"
+    name: "DifferenceDelta",
+    wolfram: "DifferenceDelta",
   },
   {
-    "name": "Digamma",
-    "fungrimEntries": [
+    name: "Digamma",
+    fungrimEntries: [
       "00c02a",
       "03e2a6",
       "11dfd2",
@@ -1294,36 +1222,33 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ee3dc5",
       "eec21a",
       "f93bae",
-      "f946a5"
+      "f946a5",
     ],
-    "wolfram": "PolyGamma"
+    wolfram: "PolyGamma",
   },
   {
-    "name": "DigammaFunctionZero",
-    "fungrimEntries": [
-      "233814",
-      "3f15eb"
-    ]
+    name: "DigammaFunctionZero",
+    fungrimEntries: ["233814", "3f15eb"],
   },
   {
-    "name": "DigitCount",
-    "wolfram": "DigitCount"
+    name: "DigitCount",
+    wolfram: "DigitCount",
   },
   {
-    "name": "DigitSum",
-    "wolfram": "DigitSum"
+    name: "DigitSum",
+    wolfram: "DigitSum",
   },
   {
-    "name": "DirectedEdge",
-    "wolfram": "DirectedEdge"
+    name: "DirectedEdge",
+    wolfram: "DirectedEdge",
   },
   {
-    "name": "DirichletBeta",
-    "wolfram": "DirichletBeta"
+    name: "DirichletBeta",
+    wolfram: "DirichletBeta",
   },
   {
-    "name": "DirichletCharacter",
-    "fungrimEntries": [
+    name: "DirichletCharacter",
+    fungrimEntries: [
       "3b8c97",
       "47d430",
       "4cf4e4",
@@ -1334,87 +1259,72 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "d8c6d1",
       "d9a187",
       "fc4f6a",
-      "ff8254"
+      "ff8254",
     ],
-    "wolfram": "DirichletCharacter"
+    wolfram: "DirichletCharacter",
   },
   {
-    "name": "DirichletEta",
-    "wolfram": "DirichletEta"
+    name: "DirichletEta",
+    wolfram: "DirichletEta",
   },
   {
-    "name": "DirichletL",
-    "fungrimEntries": [
-      "3b8c97",
-      "a07d28",
-      "a9337b",
-      "c9d117",
-      "d83109",
-      "ff8254"
-    ],
-    "wolfram": "DirichletL"
+    name: "DirichletL",
+    fungrimEntries: ["3b8c97", "a07d28", "a9337b", "c9d117", "d83109", "ff8254"],
+    wolfram: "DirichletL",
   },
   {
-    "name": "DiscreteRatio",
-    "wolfram": "DiscreteRatio"
+    name: "DiscreteRatio",
+    wolfram: "DiscreteRatio",
   },
   {
-    "name": "Divide",
-    "wolfram": "Divide"
+    name: "Divide",
+    wolfram: "Divide",
   },
   {
-    "name": "Divides",
-    "fungrimEntries": [
-      "4ec333",
-      "805c7a",
-      "ed65c8"
-    ],
-    "wolfram": "Divisible"
+    name: "Divides",
+    fungrimEntries: ["4ec333", "805c7a", "ed65c8"],
+    wolfram: "Divisible",
   },
   {
-    "name": "DivisorSigma",
-    "fungrimEntries": [
-      "7c00e6"
-    ],
-    "wolfram": "DivisorSigma"
+    name: "DivisorSigma",
+    fungrimEntries: ["7c00e6"],
+    wolfram: "DivisorSigma",
   },
   {
-    "name": "DivisorSum",
-    "wolfram": "DivisorSum"
+    name: "DivisorSum",
+    wolfram: "DivisorSum",
   },
   {
-    "name": "Divisors",
-    "fungrimEntries": [
-      "08ff0b"
-    ],
-    "wolfram": "Divisors",
-    "oracle": [
+    name: "Divisors",
+    fungrimEntries: ["08ff0b"],
+    wolfram: "Divisors",
+    oracle: [
       {
-        "system": "sage",
-        "call": "divisors($1)",
-        "arity": 1
-      }
-    ]
+        system: "sage",
+        call: "divisors($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Dot",
-    "wolfram": "Dot"
+    name: "Dot",
+    wolfram: "Dot",
   },
   {
-    "name": "Drop",
-    "wolfram": "Drop"
+    name: "Drop",
+    wolfram: "Drop",
   },
   {
-    "name": "EdgeCount",
-    "wolfram": "EdgeCount"
+    name: "EdgeCount",
+    wolfram: "EdgeCount",
   },
   {
-    "name": "EdgeList",
-    "wolfram": "EdgeList"
+    name: "EdgeList",
+    wolfram: "EdgeList",
   },
   {
-    "name": "EisensteinE",
-    "fungrimEntries": [
+    name: "EisensteinE",
+    fungrimEntries: [
       "03ad5a",
       "044128",
       "0a2120",
@@ -1452,22 +1362,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "dc8251",
       "e60fd4",
       "f0f53b",
-      "feb95e"
-    ]
+      "feb95e",
+    ],
   },
   {
-    "name": "Element",
-    "oracle": [
+    name: "Element",
+    oracle: [
       {
-        "system": "sage",
-        "call": "enumeratio_element($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "sage",
+        call: "enumeratio_element($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "EllipticE",
-    "fungrimEntries": [
+    name: "EllipticE",
+    fungrimEntries: [
       "16d2e1",
       "1b881e",
       "1d62a7",
@@ -1495,12 +1405,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "a2e9dd",
       "c28288",
       "eba27c",
-      "f0bcb5"
-    ]
+      "f0bcb5",
+    ],
   },
   {
-    "name": "EllipticK",
-    "fungrimEntries": [
+    name: "EllipticK",
+    fungrimEntries: [
       "087a7c",
       "0abbe1",
       "0b8fd6",
@@ -1537,12 +1447,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "dd67fb",
       "e15f43",
       "eba27c",
-      "f0bcb5"
-    ]
+      "f0bcb5",
+    ],
   },
   {
-    "name": "EllipticPi",
-    "fungrimEntries": [
+    name: "EllipticPi",
+    fungrimEntries: [
       "061c49",
       "124d02",
       "18e226",
@@ -1555,82 +1465,64 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "9ccaef",
       "ce4df4",
       "dd67fb",
-      "e9c797"
-    ]
-  },
-  {
-    "name": "Equal",
-    "wolfram": "Equal",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "enumeratio_equal($1, $2)",
-        "arity": 2
-      },
-      {
-        "system": "mpmath",
-        "call": "almosteq($1, $2, 1e-20)",
-        "arity": 2
-      },
-      {
-        "system": "sage",
-        "call": "bool($1 == $2)",
-        "arity": 2
-      },
-      {
-        "system": "rust",
-        "call": "equal($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "Erf",
-    "fungrimEntries": [
-      "01440f",
-      "7f355d",
-      "94db18",
-      "98688d",
-      "abadc7",
-      "b5bd5d",
-      "bfc86e",
-      "cb93ea",
-      "fae9d3"
+      "e9c797",
     ],
-    "wolfram": "Erf"
   },
   {
-    "name": "ErfInv",
-    "wolfram": "InverseErf"
-  },
-  {
-    "name": "Erfc",
-    "fungrimEntries": [
-      "7f355d",
-      "ae3110",
-      "bfc86e",
-      "ec0205"
+    name: "Equal",
+    wolfram: "Equal",
+    oracle: [
+      {
+        system: "sympy",
+        call: "enumeratio_equal($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "mpmath",
+        call: "almosteq($1, $2, 1e-20)",
+        arity: 2,
+      },
+      {
+        system: "sage",
+        call: "bool($1 == $2)",
+        arity: 2,
+      },
+      {
+        system: "rust",
+        call: "equal($1, $2)",
+        arity: 2,
+      },
     ],
-    "wolfram": "Erfc"
   },
   {
-    "name": "Erfi",
-    "fungrimEntries": [
-      "01440f",
-      "603a49"
-    ]
+    name: "Erf",
+    fungrimEntries: ["01440f", "7f355d", "94db18", "98688d", "abadc7", "b5bd5d", "bfc86e", "cb93ea", "fae9d3"],
+    wolfram: "Erf",
   },
   {
-    "name": "EulerE",
-    "wolfram": "EulerE"
+    name: "ErfInv",
+    wolfram: "InverseErf",
   },
   {
-    "name": "EulerGamma",
-    "wolfram": "EulerGamma"
+    name: "Erfc",
+    fungrimEntries: ["7f355d", "ae3110", "bfc86e", "ec0205"],
+    wolfram: "Erfc",
   },
   {
-    "name": "Exp",
-    "fungrimEntries": [
+    name: "Erfi",
+    fungrimEntries: ["01440f", "603a49"],
+  },
+  {
+    name: "EulerE",
+    wolfram: "EulerE",
+  },
+  {
+    name: "EulerGamma",
+    wolfram: "EulerGamma",
+  },
+  {
+    name: "Exp",
+    fungrimEntries: [
       "06319a",
       "0650f8",
       "0878a4",
@@ -1774,66 +1666,66 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f946a5",
       "f9f31d",
       "fae9d3",
-      "ff587a"
+      "ff587a",
     ],
-    "wolfram": "Exp",
-    "oracle": [
+    wolfram: "Exp",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "exp($1)",
-        "arity": 1
+        system: "sympy",
+        call: "exp($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "exp($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "exp($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "exp($1)",
-        "arity": 1
+        system: "sage",
+        call: "exp($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "exp($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "exp($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "ExpIntegralE",
-    "wolfram": "ExpIntegralE"
+    name: "ExpIntegralE",
+    wolfram: "ExpIntegralE",
   },
   {
-    "name": "ExpToTrig",
-    "wolfram": "ExpToTrig"
+    name: "ExpToTrig",
+    wolfram: "ExpToTrig",
   },
   {
-    "name": "ExponentialE",
-    "wolfram": "E"
+    name: "ExponentialE",
+    wolfram: "E",
   },
   {
-    "name": "ExponentialGeneratingFunction",
-    "wolfram": "ExponentialGeneratingFunction"
+    name: "ExponentialGeneratingFunction",
+    wolfram: "ExponentialGeneratingFunction",
   },
   {
-    "name": "ExtendedGCD",
-    "wolfram": "ExtendedGCD"
+    name: "ExtendedGCD",
+    wolfram: "ExtendedGCD",
   },
   {
-    "name": "FactorInteger",
-    "wolfram": "FactorInteger",
-    "oracle": [
+    name: "FactorInteger",
+    wolfram: "FactorInteger",
+    oracle: [
       {
-        "system": "sage",
-        "call": "list(factor($1))",
-        "arity": 1
-      }
-    ]
+        system: "sage",
+        call: "list(factor($1))",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Factorial",
-    "fungrimEntries": [
+    name: "Factorial",
+    fungrimEntries: [
       "039051",
       "082a69",
       "0d92f6",
@@ -1875,56 +1767,53 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f1d31a",
       "f4e249",
       "fcab61",
-      "ff5e82"
+      "ff5e82",
     ],
-    "wolfram": "Factorial",
-    "oracle": [
+    wolfram: "Factorial",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "factorial($1)",
-        "arity": 1
+        system: "sympy",
+        call: "factorial($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "factorial($1)",
-        "arity": 1
+        system: "sage",
+        call: "factorial($1)",
+        arity: 1,
       },
       {
-        "system": "oscar",
-        "call": "factorial(ZZ($1))",
-        "arity": 1
+        system: "oscar",
+        call: "factorial(ZZ($1))",
+        arity: 1,
       },
       {
-        "system": "julia",
-        "call": "factorial(ZZ($1))",
-        "arity": 1
+        system: "julia",
+        call: "factorial(ZZ($1))",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "factorial($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "Factorial2",
-    "fungrimEntries": [
-      "a68f0e",
-      "b6b014"
+        system: "rust",
+        call: "factorial($1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "Factorial2"
   },
   {
-    "name": "FactorialPower",
-    "wolfram": "FactorialPower"
+    name: "Factorial2",
+    fungrimEntries: ["a68f0e", "b6b014"],
+    wolfram: "Factorial2",
   },
   {
-    "name": "False",
-    "wolfram": "False"
+    name: "FactorialPower",
+    wolfram: "FactorialPower",
   },
   {
-    "name": "Fibonacci",
-    "fungrimEntries": [
+    name: "False",
+    wolfram: "False",
+  },
+  {
+    name: "Fibonacci",
+    fungrimEntries: [
       "050fdb",
       "073466",
       "0e2425",
@@ -1964,35 +1853,35 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ce6dd0",
       "da45c0",
       "fc4fd1",
-      "fd732d"
+      "fd732d",
     ],
-    "wolfram": "Fibonacci",
-    "oracle": [
+    wolfram: "Fibonacci",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "fibonacci($1)",
-        "arity": 1
+        system: "sympy",
+        call: "fibonacci($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "fibonacci($1)",
-        "arity": 1
+        system: "sage",
+        call: "fibonacci($1)",
+        arity: 1,
       },
       {
-        "system": "oscar",
-        "call": "fibonacci($1)",
-        "arity": 1
+        system: "oscar",
+        call: "fibonacci($1)",
+        arity: 1,
       },
       {
-        "system": "julia",
-        "call": "fibonacci($1)",
-        "arity": 1
-      }
-    ]
+        system: "julia",
+        call: "fibonacci($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Filter",
-    "fungrimEntries": [
+    name: "Filter",
+    fungrimEntries: [
       "04427b",
       "47d430",
       "4b20ab",
@@ -2006,41 +1895,41 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "c98bad",
       "d1cf0c",
       "e4315f",
-      "ed65c8"
+      "ed65c8",
     ],
-    "wolfram": "Select"
+    wolfram: "Select",
   },
   {
-    "name": "FindInstance",
-    "wolfram": "FindInstance"
+    name: "FindInstance",
+    wolfram: "FindInstance",
   },
   {
-    "name": "FindSequenceFunction",
-    "wolfram": "FindSequenceFunction"
+    name: "FindSequenceFunction",
+    wolfram: "FindSequenceFunction",
   },
   {
-    "name": "FindShortestPath",
-    "wolfram": "FindShortestPath"
+    name: "FindShortestPath",
+    wolfram: "FindShortestPath",
   },
   {
-    "name": "First",
-    "wolfram": "First"
+    name: "First",
+    wolfram: "First",
   },
   {
-    "name": "FirstPosition",
-    "wolfram": "FirstPosition"
+    name: "FirstPosition",
+    wolfram: "FirstPosition",
   },
   {
-    "name": "FixedPoint",
-    "wolfram": "FixedPoint"
+    name: "FixedPoint",
+    wolfram: "FixedPoint",
   },
   {
-    "name": "Flatten",
-    "wolfram": "Flatten"
+    name: "Flatten",
+    wolfram: "Flatten",
   },
   {
-    "name": "Floor",
-    "fungrimEntries": [
+    name: "Floor",
+    fungrimEntries: [
       "050fdb",
       "1c3766",
       "2090c3",
@@ -2052,123 +1941,123 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "a044e1",
       "d1a0ec",
       "dd5f43",
-      "f35a37"
+      "f35a37",
     ],
-    "wolfram": "Floor",
-    "oracle": [
+    wolfram: "Floor",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "floor($1)",
-        "arity": 1
+        system: "sympy",
+        call: "floor($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "floor($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "floor($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "floor($1)",
-        "arity": 1
+        system: "sage",
+        call: "floor($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "floor($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "floor($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Fold",
-    "wolfram": "Fold"
+    name: "Fold",
+    wolfram: "Fold",
   },
   {
-    "name": "FoldList",
-    "wolfram": "FoldList"
+    name: "FoldList",
+    wolfram: "FoldList",
   },
   {
-    "name": "FourierTransform",
-    "wolfram": "FourierTransform"
+    name: "FourierTransform",
+    wolfram: "FourierTransform",
   },
   {
-    "name": "FractionalPart",
-    "wolfram": "FractionalPart"
+    name: "FractionalPart",
+    wolfram: "FractionalPart",
   },
   {
-    "name": "FrobeniusNumber",
-    "wolfram": "FrobeniusNumber"
+    name: "FrobeniusNumber",
+    wolfram: "FrobeniusNumber",
   },
   {
-    "name": "FrobeniusSolve",
-    "wolfram": "FrobeniusSolve"
+    name: "FrobeniusSolve",
+    wolfram: "FrobeniusSolve",
   },
   {
-    "name": "FromDigits",
-    "wolfram": "FromDigits"
+    name: "FromDigits",
+    wolfram: "FromDigits",
   },
   {
-    "name": "FullSimplify",
-    "wolfram": "FullSimplify"
+    name: "FullSimplify",
+    wolfram: "FullSimplify",
   },
   {
-    "name": "Function",
-    "wolfram": "Function"
+    name: "Function",
+    wolfram: "Function",
   },
   {
-    "name": "FunctionAnalytic",
-    "wolfram": "FunctionAnalytic"
+    name: "FunctionAnalytic",
+    wolfram: "FunctionAnalytic",
   },
   {
-    "name": "FunctionConvexity",
-    "wolfram": "FunctionConvexity"
+    name: "FunctionConvexity",
+    wolfram: "FunctionConvexity",
   },
   {
-    "name": "FunctionDiscontinuities",
-    "wolfram": "FunctionDiscontinuities"
+    name: "FunctionDiscontinuities",
+    wolfram: "FunctionDiscontinuities",
   },
   {
-    "name": "FunctionDomain",
-    "wolfram": "FunctionDomain"
+    name: "FunctionDomain",
+    wolfram: "FunctionDomain",
   },
   {
-    "name": "FunctionExpand",
-    "wolfram": "FunctionExpand"
+    name: "FunctionExpand",
+    wolfram: "FunctionExpand",
   },
   {
-    "name": "FunctionInjective",
-    "wolfram": "FunctionInjective"
+    name: "FunctionInjective",
+    wolfram: "FunctionInjective",
   },
   {
-    "name": "FunctionMeromorphic",
-    "wolfram": "FunctionMeromorphic"
+    name: "FunctionMeromorphic",
+    wolfram: "FunctionMeromorphic",
   },
   {
-    "name": "FunctionMonotonicity",
-    "wolfram": "FunctionMonotonicity"
+    name: "FunctionMonotonicity",
+    wolfram: "FunctionMonotonicity",
   },
   {
-    "name": "FunctionPeriod",
-    "wolfram": "FunctionPeriod"
+    name: "FunctionPeriod",
+    wolfram: "FunctionPeriod",
   },
   {
-    "name": "FunctionRange",
-    "wolfram": "FunctionRange"
+    name: "FunctionRange",
+    wolfram: "FunctionRange",
   },
   {
-    "name": "FunctionSign",
-    "wolfram": "FunctionSign"
+    name: "FunctionSign",
+    wolfram: "FunctionSign",
   },
   {
-    "name": "FunctionSingularities",
-    "wolfram": "FunctionSingularities"
+    name: "FunctionSingularities",
+    wolfram: "FunctionSingularities",
   },
   {
-    "name": "FunctionSurjective",
-    "wolfram": "FunctionSurjective"
+    name: "FunctionSurjective",
+    wolfram: "FunctionSurjective",
   },
   {
-    "name": "GCD",
-    "fungrimEntries": [
+    name: "GCD",
+    fungrimEntries: [
       "062423",
       "07ac4a",
       "0f26cc",
@@ -2204,40 +2093,40 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e65763",
       "ed65c8",
       "f1817f",
-      "fdae67"
+      "fdae67",
     ],
-    "wolfram": "GCD",
-    "oracle": [
+    wolfram: "GCD",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "gcd($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "gcd($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "gcd($1, $2)",
-        "arity": 2
+        system: "sage",
+        call: "gcd($1, $2)",
+        arity: 2,
       },
       {
-        "system": "oscar",
-        "call": "gcd(ZZ($1), ZZ($2))",
-        "arity": 2
+        system: "oscar",
+        call: "gcd(ZZ($1), ZZ($2))",
+        arity: 2,
       },
       {
-        "system": "julia",
-        "call": "gcd(ZZ($1), ZZ($2))",
-        "arity": 2
+        system: "julia",
+        call: "gcd(ZZ($1), ZZ($2))",
+        arity: 2,
       },
       {
-        "system": "rust",
-        "call": "gcd($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "rust",
+        call: "gcd($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "Gamma",
-    "fungrimEntries": [
+    name: "Gamma",
+    fungrimEntries: [
       "060366",
       "0abbe1",
       "0d9352",
@@ -2338,35 +2227,35 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f7f84e",
       "f826a6",
       "f9190b",
-      "fe6e74"
+      "fe6e74",
     ],
-    "wolfram": "Gamma",
-    "oracle": [
+    wolfram: "Gamma",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "gamma($1)",
-        "arity": 1
+        system: "sympy",
+        call: "gamma($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "gamma($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "gamma($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "gamma($1)",
-        "arity": 1
+        system: "sage",
+        call: "gamma($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "gamma($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "gamma($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "GammaLn",
-    "fungrimEntries": [
+    name: "GammaLn",
+    fungrimEntries: [
       "1976e1",
       "37a95a",
       "4a4739",
@@ -2382,110 +2271,107 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e05807",
       "ed2bf6",
       "f1e02b",
-      "f3b870"
+      "f3b870",
     ],
-    "wolfram": "LogGamma"
+    wolfram: "LogGamma",
   },
   {
-    "name": "GammaRegularized",
-    "wolfram": "GammaRegularized"
+    name: "GammaRegularized",
+    wolfram: "GammaRegularized",
   },
   {
-    "name": "Gather",
-    "wolfram": "Gather"
+    name: "Gather",
+    wolfram: "Gather",
   },
   {
-    "name": "GatherBy",
-    "wolfram": "GatherBy"
+    name: "GatherBy",
+    wolfram: "GatherBy",
   },
   {
-    "name": "GeneratingFunction",
-    "wolfram": "GeneratingFunction"
+    name: "GeneratingFunction",
+    wolfram: "GeneratingFunction",
   },
   {
-    "name": "GeometricMean",
-    "wolfram": "GeometricMean"
+    name: "GeometricMean",
+    wolfram: "GeometricMean",
   },
   {
-    "name": "GoldenRatio",
-    "wolfram": "GoldenRatio"
+    name: "GoldenRatio",
+    wolfram: "GoldenRatio",
   },
   {
-    "name": "Graph",
-    "wolfram": "Graph"
+    name: "Graph",
+    wolfram: "Graph",
   },
   {
-    "name": "GraphDistance",
-    "wolfram": "GraphDistance"
+    name: "GraphDistance",
+    wolfram: "GraphDistance",
   },
   {
-    "name": "Greater",
-    "wolfram": "Greater"
+    name: "Greater",
+    wolfram: "Greater",
   },
   {
-    "name": "GreaterEqual",
-    "wolfram": "GreaterEqual"
+    name: "GreaterEqual",
+    wolfram: "GreaterEqual",
   },
   {
-    "name": "GridGraph",
-    "wolfram": "GridGraph"
+    name: "GridGraph",
+    wolfram: "GridGraph",
   },
   {
-    "name": "GroupBasis",
-    "oracle": [
+    name: "GroupBasis",
+    oracle: [
       {
-        "system": "oscar",
-        "call": "EnumeratioBasis($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "GroupElements",
-    "wolfram": "GroupElements"
-  },
-  {
-    "name": "GroupGenerators",
-    "wolfram": "GroupGenerators"
-  },
-  {
-    "name": "GroupOrder",
-    "wolfram": "GroupOrder",
-    "oracle": [
-      {
-        "system": "oscar",
-        "call": "order(($1).G)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "Gudermannian",
-    "wolfram": "Gudermannian"
-  },
-  {
-    "name": "HankelMatrix",
-    "wolfram": "HankelMatrix"
-  },
-  {
-    "name": "HarmonicMean",
-    "wolfram": "HarmonicMean"
-  },
-  {
-    "name": "HarmonicNumber",
-    "fungrimEntries": [
-      "00c02a",
-      "f50c74"
+        system: "oscar",
+        call: "EnumeratioBasis($1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "HarmonicNumber"
   },
   {
-    "name": "HermiteDecomposition",
-    "wolfram": "HermiteDecomposition"
+    name: "GroupElements",
+    wolfram: "GroupElements",
   },
   {
-    "name": "HurwitzZeta",
-    "fungrimEntries": [
+    name: "GroupGenerators",
+    wolfram: "GroupGenerators",
+  },
+  {
+    name: "GroupOrder",
+    wolfram: "GroupOrder",
+    oracle: [
+      {
+        system: "oscar",
+        call: "order(($1).G)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "Gudermannian",
+    wolfram: "Gudermannian",
+  },
+  {
+    name: "HankelMatrix",
+    wolfram: "HankelMatrix",
+  },
+  {
+    name: "HarmonicMean",
+    wolfram: "HarmonicMean",
+  },
+  {
+    name: "HarmonicNumber",
+    fungrimEntries: ["00c02a", "f50c74"],
+    wolfram: "HarmonicNumber",
+  },
+  {
+    name: "HermiteDecomposition",
+    wolfram: "HermiteDecomposition",
+  },
+  {
+    name: "HurwitzZeta",
+    fungrimEntries: [
       "150b3e",
       "2d4828",
       "2fabeb",
@@ -2529,83 +2415,57 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "eda0f3",
       "edad97",
       "f3b870",
-      "fc6fe0"
+      "fc6fe0",
     ],
-    "wolfram": "HurwitzZeta",
-    "oracle": [
+    wolfram: "HurwitzZeta",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "zeta($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "zeta($1, $2)",
+        arity: 2,
       },
       {
-        "system": "mpmath",
-        "call": "zeta($1, $2)",
-        "arity": 2
+        system: "mpmath",
+        call: "zeta($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "hurwitz_zeta($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "HypercubeGraph",
-    "wolfram": "HypercubeGraph"
-  },
-  {
-    "name": "Hyperfactorial",
-    "wolfram": "Hyperfactorial"
-  },
-  {
-    "name": "Hypergeometric0F1",
-    "fungrimEntries": [
-      "01bbb6",
-      "20e530",
-      "2df3e3",
-      "4d65e5",
-      "50f72f",
-      "54daa9",
-      "bd319e",
-      "e2878f"
+        system: "sage",
+        call: "hurwitz_zeta($1, $2)",
+        arity: 2,
+      },
     ],
-    "wolfram": "Hypergeometric0F1"
   },
   {
-    "name": "Hypergeometric0F1Regularized",
-    "fungrimEntries": [
-      "00dfd1",
-      "325a0e",
-      "81eec6",
-      "98703d",
-      "b049dc",
-      "ecd36f"
-    ],
-    "wolfram": "Hypergeometric0F1Regularized"
+    name: "HypercubeGraph",
+    wolfram: "HypercubeGraph",
   },
   {
-    "name": "Hypergeometric1F1",
-    "fungrimEntries": [
-      "2df3e3",
-      "6cf802",
-      "98688d",
-      "9ad254",
-      "abadc7",
-      "be533c"
-    ]
+    name: "Hyperfactorial",
+    wolfram: "Hyperfactorial",
   },
   {
-    "name": "Hypergeometric1F1Regularized",
-    "fungrimEntries": [
-      "a047eb",
-      "f7f84e"
-    ],
-    "wolfram": "Hypergeometric1F1Regularized"
+    name: "Hypergeometric0F1",
+    fungrimEntries: ["01bbb6", "20e530", "2df3e3", "4d65e5", "50f72f", "54daa9", "bd319e", "e2878f"],
+    wolfram: "Hypergeometric0F1",
   },
   {
-    "name": "Hypergeometric2F1",
-    "fungrimEntries": [
+    name: "Hypergeometric0F1Regularized",
+    fungrimEntries: ["00dfd1", "325a0e", "81eec6", "98703d", "b049dc", "ecd36f"],
+    wolfram: "Hypergeometric0F1Regularized",
+  },
+  {
+    name: "Hypergeometric1F1",
+    fungrimEntries: ["2df3e3", "6cf802", "98688d", "9ad254", "abadc7", "be533c"],
+  },
+  {
+    name: "Hypergeometric1F1Regularized",
+    fungrimEntries: ["a047eb", "f7f84e"],
+    wolfram: "Hypergeometric1F1Regularized",
+  },
+  {
+    name: "Hypergeometric2F1",
+    fungrimEntries: [
       "0e0393",
       "157ebb",
       "16d2e1",
@@ -2637,47 +2497,30 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e98dd0",
       "f1bd89",
       "f55f0a",
-      "fe6e74"
-    ]
-  },
-  {
-    "name": "Hypergeometric2F1Regularized",
-    "fungrimEntries": [
-      "27bc34",
-      "504717",
-      "651a4a",
-      "65693e",
-      "90ac58",
-      "b25089",
-      "ca9123",
-      "db3eb9",
-      "fe6e74"
+      "fe6e74",
     ],
-    "wolfram": "Hypergeometric2F1Regularized"
   },
   {
-    "name": "Hypergeometric3F2Regularized",
-    "fungrimEntries": [
-      "6582c4",
-      "e1797b"
-    ]
+    name: "Hypergeometric2F1Regularized",
+    fungrimEntries: ["27bc34", "504717", "651a4a", "65693e", "90ac58", "b25089", "ca9123", "db3eb9", "fe6e74"],
+    wolfram: "Hypergeometric2F1Regularized",
   },
   {
-    "name": "HypergeometricPFQ",
-    "wolfram": "HypergeometricPFQ"
+    name: "Hypergeometric3F2Regularized",
+    fungrimEntries: ["6582c4", "e1797b"],
   },
   {
-    "name": "HypergeometricU",
-    "fungrimEntries": [
-      "6cf802",
-      "9d3147",
-      "c8fcc7"
-    ],
-    "wolfram": "HypergeometricU"
+    name: "HypergeometricPFQ",
+    wolfram: "HypergeometricPFQ",
   },
   {
-    "name": "HypergeometricUStar",
-    "fungrimEntries": [
+    name: "HypergeometricU",
+    fungrimEntries: ["6cf802", "9d3147", "c8fcc7"],
+    wolfram: "HypergeometricU",
+  },
+  {
+    name: "HypergeometricUStar",
+    fungrimEntries: [
       "127f05",
       "1976e1",
       "32e162",
@@ -2688,12 +2531,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "cb93ea",
       "d1b3b5",
       "e2efbf",
-      "f7f84e"
-    ]
+      "f7f84e",
+    ],
   },
   {
-    "name": "Imaginary",
-    "fungrimEntries": [
+    name: "Imaginary",
+    fungrimEntries: [
       "037a6e",
       "03e2a6",
       "18873d",
@@ -2724,68 +2567,64 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "eca4ce",
       "f1a29b",
       "f4e249",
-      "fbfb81"
-    ]
-  },
-  {
-    "name": "ImaginaryUnit",
-    "wolfram": "I"
-  },
-  {
-    "name": "IncidenceMatrix",
-    "wolfram": "IncidenceMatrix"
-  },
-  {
-    "name": "IncompleteEllipticPi",
-    "fungrimEntries": [
-      "255d81",
-      "5f84d9",
-      "8f4e31"
+      "fbfb81",
     ],
-    "wolfram": "EllipticPi"
   },
   {
-    "name": "Inequality",
-    "wolfram": "Inequality"
+    name: "ImaginaryUnit",
+    wolfram: "I",
   },
   {
-    "name": "IntegerDigits",
-    "wolfram": "IntegerDigits"
+    name: "IncidenceMatrix",
+    wolfram: "IncidenceMatrix",
   },
   {
-    "name": "IntegerExponent",
-    "wolfram": "IntegerExponent",
-    "oracle": [
+    name: "IncompleteEllipticPi",
+    fungrimEntries: ["255d81", "5f84d9", "8f4e31"],
+    wolfram: "EllipticPi",
+  },
+  {
+    name: "Inequality",
+    wolfram: "Inequality",
+  },
+  {
+    name: "IntegerDigits",
+    wolfram: "IntegerDigits",
+  },
+  {
+    name: "IntegerExponent",
+    wolfram: "IntegerExponent",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "multiplicity($2, $1)",
-        "arity": 2
-      }
-    ]
+        system: "sympy",
+        call: "multiplicity($2, $1)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "IntegerLength",
-    "wolfram": "IntegerLength"
+    name: "IntegerLength",
+    wolfram: "IntegerLength",
   },
   {
-    "name": "IntegerPart",
-    "wolfram": "IntegerPart"
+    name: "IntegerPart",
+    wolfram: "IntegerPart",
   },
   {
-    "name": "IntegerPartitions",
-    "wolfram": "IntegerPartitions"
+    name: "IntegerPartitions",
+    wolfram: "IntegerPartitions",
   },
   {
-    "name": "IntegerReverse",
-    "wolfram": "IntegerReverse"
+    name: "IntegerReverse",
+    wolfram: "IntegerReverse",
   },
   {
-    "name": "IntegerString",
-    "wolfram": "IntegerString"
+    name: "IntegerString",
+    wolfram: "IntegerString",
   },
   {
-    "name": "Integrate",
-    "fungrimEntries": [
+    name: "Integrate",
+    fungrimEntries: [
       "23ed69",
       "4f5575",
       "6395ee",
@@ -2800,141 +2639,129 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "cfb999",
       "d9c818",
       "f4e249",
-      "f946a5"
-    ]
-  },
-  {
-    "name": "Intersection",
-    "wolfram": "Intersection"
-  },
-  {
-    "name": "InverseBetaRegularized",
-    "wolfram": "InverseBetaRegularized"
-  },
-  {
-    "name": "InverseErfc",
-    "wolfram": "InverseErfc"
-  },
-  {
-    "name": "InverseFourierTransform",
-    "wolfram": "InverseFourierTransform"
-  },
-  {
-    "name": "InverseGammaRegularized",
-    "wolfram": "InverseGammaRegularized"
-  },
-  {
-    "name": "InverseLaplaceTransform",
-    "wolfram": "InverseLaplaceTransform"
-  },
-  {
-    "name": "InversePermutation",
-    "wolfram": "InversePermutation"
-  },
-  {
-    "name": "IsBipartiteGraph",
-    "wolfram": "BipartiteGraphQ"
-  },
-  {
-    "name": "IsComposite",
-    "wolfram": "CompositeQ"
-  },
-  {
-    "name": "IsConnectedGraph",
-    "wolfram": "ConnectedGraphQ"
-  },
-  {
-    "name": "IsCoprime",
-    "wolfram": "CoprimeQ"
-  },
-  {
-    "name": "IsEven",
-    "fungrimEntries": [
-      "1c3766",
-      "28b4c3",
-      "64f0a5",
-      "c0e088",
-      "fd732d"
+      "f946a5",
     ],
-    "wolfram": "EvenQ"
   },
   {
-    "name": "IsMachineNumber",
-    "wolfram": "MachineNumberQ"
+    name: "Intersection",
+    wolfram: "Intersection",
   },
   {
-    "name": "IsNumeric",
-    "wolfram": "NumericQ"
+    name: "InverseBetaRegularized",
+    wolfram: "InverseBetaRegularized",
   },
   {
-    "name": "IsOdd",
-    "fungrimEntries": [
-      "1c3766",
-      "28b4c3",
-      "64f0a5",
-      "c0e088",
-      "fd732d"
+    name: "InverseErfc",
+    wolfram: "InverseErfc",
+  },
+  {
+    name: "InverseFourierTransform",
+    wolfram: "InverseFourierTransform",
+  },
+  {
+    name: "InverseGammaRegularized",
+    wolfram: "InverseGammaRegularized",
+  },
+  {
+    name: "InverseLaplaceTransform",
+    wolfram: "InverseLaplaceTransform",
+  },
+  {
+    name: "InversePermutation",
+    wolfram: "InversePermutation",
+  },
+  {
+    name: "IsBipartiteGraph",
+    wolfram: "BipartiteGraphQ",
+  },
+  {
+    name: "IsComposite",
+    wolfram: "CompositeQ",
+  },
+  {
+    name: "IsConnectedGraph",
+    wolfram: "ConnectedGraphQ",
+  },
+  {
+    name: "IsCoprime",
+    wolfram: "CoprimeQ",
+  },
+  {
+    name: "IsEven",
+    fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
+    wolfram: "EvenQ",
+  },
+  {
+    name: "IsMachineNumber",
+    wolfram: "MachineNumberQ",
+  },
+  {
+    name: "IsNumeric",
+    wolfram: "NumericQ",
+  },
+  {
+    name: "IsOdd",
+    fungrimEntries: ["1c3766", "28b4c3", "64f0a5", "c0e088", "fd732d"],
+    wolfram: "OddQ",
+  },
+  {
+    name: "IsPerfect",
+    wolfram: "PerfectNumberQ",
+  },
+  {
+    name: "IsPrime",
+    wolfram: "PrimeQ",
+    oracle: [
+      {
+        system: "sympy",
+        call: "isprime($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "is_prime($1)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "is_prime(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "julia",
+        call: "is_prime(ZZ($1))",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "is_prime($1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "OddQ"
   },
   {
-    "name": "IsPerfect",
-    "wolfram": "PerfectNumberQ"
+    name: "IsPrimePower",
+    wolfram: "PrimePowerQ",
   },
   {
-    "name": "IsPrime",
-    "wolfram": "PrimeQ",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "isprime($1)",
-        "arity": 1
-      },
-      {
-        "system": "sage",
-        "call": "is_prime($1)",
-        "arity": 1
-      },
-      {
-        "system": "oscar",
-        "call": "is_prime(ZZ($1))",
-        "arity": 1
-      },
-      {
-        "system": "julia",
-        "call": "is_prime(ZZ($1))",
-        "arity": 1
-      },
-      {
-        "system": "rust",
-        "call": "is_prime($1)",
-        "arity": 1
-      }
-    ]
+    name: "IsQuadraticIrrational",
+    wolfram: "QuadraticIrrationalQ",
   },
   {
-    "name": "IsPrimePower",
-    "wolfram": "PrimePowerQ"
+    name: "IsSquareFree",
+    wolfram: "SquareFreeQ",
   },
   {
-    "name": "IsQuadraticIrrational",
-    "wolfram": "QuadraticIrrationalQ"
+    name: "IsTreeGraph",
+    wolfram: "TreeGraphQ",
   },
   {
-    "name": "IsSquareFree",
-    "wolfram": "SquareFreeQ"
+    name: "JacobiSymbol",
+    wolfram: "JacobiSymbol",
   },
   {
-    "name": "IsTreeGraph",
-    "wolfram": "TreeGraphQ"
-  },
-  {
-    "name": "JacobiSymbol",
-    "wolfram": "JacobiSymbol"
-  },
-  {
-    "name": "JacobiTheta",
-    "fungrimEntries": [
+    name: "JacobiTheta",
+    fungrimEntries: [
       "0096a8",
       "0207dc",
       "0373dc",
@@ -3154,36 +2981,32 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "fb4b1b",
       "fb55cb",
       "fc3c44",
-      "fe1b96"
-    ]
+      "fe1b96",
+    ],
   },
   {
-    "name": "Join",
-    "wolfram": "Join"
+    name: "Join",
+    wolfram: "Join",
   },
   {
-    "name": "KeiperLiLambda",
-    "fungrimEntries": [
-      "081205",
-      "d8d820",
-      "fcab61"
-    ]
+    name: "KeiperLiLambda",
+    fungrimEntries: ["081205", "d8d820", "fcab61"],
   },
   {
-    "name": "Khinchin",
-    "wolfram": "Khinchin"
+    name: "Khinchin",
+    wolfram: "Khinchin",
   },
   {
-    "name": "KleinInvariantJ",
-    "wolfram": "KleinInvariantJ"
+    name: "KleinInvariantJ",
+    wolfram: "KleinInvariantJ",
   },
   {
-    "name": "KroneckerSymbol",
-    "wolfram": "KroneckerSymbol"
+    name: "KroneckerSymbol",
+    wolfram: "KroneckerSymbol",
   },
   {
-    "name": "LCM",
-    "fungrimEntries": [
+    name: "LCM",
+    fungrimEntries: [
       "0a7aff",
       "14b96c",
       "157c33",
@@ -3209,40 +3032,40 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "dc0823",
       "e19e40",
       "e74d86",
-      "fbe121"
+      "fbe121",
     ],
-    "wolfram": "LCM",
-    "oracle": [
+    wolfram: "LCM",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "lcm($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "lcm($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "lcm($1, $2)",
-        "arity": 2
+        system: "sage",
+        call: "lcm($1, $2)",
+        arity: 2,
       },
       {
-        "system": "oscar",
-        "call": "lcm(ZZ($1), ZZ($2))",
-        "arity": 2
+        system: "oscar",
+        call: "lcm(ZZ($1), ZZ($2))",
+        arity: 2,
       },
       {
-        "system": "julia",
-        "call": "lcm(ZZ($1), ZZ($2))",
-        "arity": 2
+        system: "julia",
+        call: "lcm(ZZ($1), ZZ($2))",
+        arity: 2,
       },
       {
-        "system": "rust",
-        "call": "lcm($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "rust",
+        call: "lcm($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "LambertW",
-    "fungrimEntries": [
+    name: "LambertW",
+    fungrimEntries: [
       "0be17d",
       "30bd5b",
       "44ad09",
@@ -3262,84 +3085,80 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "lambertw-exp-bare-branch:solve",
       "lambertw-exp-bare:solve",
       "lambertw-linear-exp-branch:solve",
-      "lambertw-linear-exp:solve"
-    ]
-  },
-  {
-    "name": "LaplaceTransform",
-    "wolfram": "LaplaceTransform"
-  },
-  {
-    "name": "Last",
-    "wolfram": "Last"
-  },
-  {
-    "name": "Lb",
-    "wolfram": "Log2"
-  },
-  {
-    "name": "LegendreSymbol",
-    "wolfram": "JacobiSymbol"
-  },
-  {
-    "name": "Length",
-    "wolfram": "Length"
-  },
-  {
-    "name": "LerchPhi",
-    "fungrimEntries": [
-      "d6fbc8"
+      "lambertw-linear-exp:solve",
     ],
-    "wolfram": "LerchPhi",
-    "oracle": [
+  },
+  {
+    name: "LaplaceTransform",
+    wolfram: "LaplaceTransform",
+  },
+  {
+    name: "Last",
+    wolfram: "Last",
+  },
+  {
+    name: "Lb",
+    wolfram: "Log2",
+  },
+  {
+    name: "LegendreSymbol",
+    wolfram: "JacobiSymbol",
+  },
+  {
+    name: "Length",
+    wolfram: "Length",
+  },
+  {
+    name: "LerchPhi",
+    fungrimEntries: ["d6fbc8"],
+    wolfram: "LerchPhi",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "lerchphi($1, $2, $3)",
-        "arity": 3
+        system: "sympy",
+        call: "lerchphi($1, $2, $3)",
+        arity: 3,
       },
       {
-        "system": "mpmath",
-        "call": "lerchphi($1, $2, $3)",
-        "arity": 3
-      }
-    ]
-  },
-  {
-    "name": "Less",
-    "wolfram": "Less"
-  },
-  {
-    "name": "LessEqual",
-    "wolfram": "LessEqual"
-  },
-  {
-    "name": "LetterNumber",
-    "wolfram": "LetterNumber"
-  },
-  {
-    "name": "LinearRecurrence",
-    "wolfram": "LinearRecurrence"
-  },
-  {
-    "name": "LiouvilleLambda",
-    "fungrimEntries": [
-      "e4e707"
+        system: "mpmath",
+        call: "lerchphi($1, $2, $3)",
+        arity: 3,
+      },
     ],
-    "wolfram": "LiouvilleLambda"
   },
   {
-    "name": "List",
-    "wolfram": "List",
-    "oracle": [
+    name: "Less",
+    wolfram: "Less",
+  },
+  {
+    name: "LessEqual",
+    wolfram: "LessEqual",
+  },
+  {
+    name: "LetterNumber",
+    wolfram: "LetterNumber",
+  },
+  {
+    name: "LinearRecurrence",
+    wolfram: "LinearRecurrence",
+  },
+  {
+    name: "LiouvilleLambda",
+    fungrimEntries: ["e4e707"],
+    wolfram: "LiouvilleLambda",
+  },
+  {
+    name: "List",
+    wolfram: "List",
+    oracle: [
       {
-        "system": "rust",
-        "call": "list(vec![$*,])"
-      }
-    ]
+        system: "rust",
+        call: "list(vec![$*,])",
+      },
+    ],
   },
   {
-    "name": "Ln",
-    "fungrimEntries": [
+    name: "Ln",
+    fungrimEntries: [
       "099b19",
       "0aac97",
       "0ad263",
@@ -3433,43 +3252,43 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f93bae",
       "fbfb81",
       "fcab61",
-      "fd732d"
+      "fd732d",
     ],
-    "wolfram": "Log",
-    "oracle": [
+    wolfram: "Log",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "log($1)",
-        "arity": 1
+        system: "sympy",
+        call: "log($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "log($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "log($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "log($1)",
-        "arity": 1
+        system: "sage",
+        call: "log($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "ln($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "ln($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Log10",
-    "wolfram": "Log10"
+    name: "Log10",
+    wolfram: "Log10",
   },
   {
-    "name": "Log2",
-    "wolfram": "Log2"
+    name: "Log2",
+    wolfram: "Log2",
   },
   {
-    "name": "LogBarnesG",
-    "fungrimEntries": [
+    name: "LogBarnesG",
+    fungrimEntries: [
       "0ad263",
       "23ed69",
       "5261e3",
@@ -3487,42 +3306,42 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "b64782",
       "d1a0ec",
       "daef08",
-      "e05807"
+      "e05807",
     ],
-    "wolfram": "LogBarnesG"
+    wolfram: "LogBarnesG",
   },
   {
-    "name": "LogGamma",
-    "wolfram": "LogGamma"
+    name: "LogGamma",
+    wolfram: "LogGamma",
   },
   {
-    "name": "LucasL",
-    "wolfram": "LucasL",
-    "oracle": [
+    name: "LucasL",
+    wolfram: "LucasL",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "lucas($1)",
-        "arity": 1
+        system: "sympy",
+        call: "lucas($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "lucas_number2($1, 1, -1)",
-        "arity": 1
+        system: "sage",
+        call: "lucas_number2($1, 1, -1)",
+        arity: 1,
       },
       {
-        "system": "julia",
-        "call": "Combinatorics.lucasnum($1)",
-        "arity": 1
-      }
-    ]
+        system: "julia",
+        call: "Combinatorics.lucasnum($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "MangoldtLambda",
-    "wolfram": "MangoldtLambda"
+    name: "MangoldtLambda",
+    wolfram: "MangoldtLambda",
   },
   {
-    "name": "Map",
-    "fungrimEntries": [
+    name: "Map",
+    fungrimEntries: [
       "27766c",
       "40baa9",
       "44ad09",
@@ -3541,408 +3360,377 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "da7fb1",
       "dcc8b1",
       "e4315f",
-      "ee86fb"
-    ]
-  },
-  {
-    "name": "MapAt",
-    "wolfram": "MapAt"
-  },
-  {
-    "name": "MatrixExp",
-    "wolfram": "MatrixExp"
-  },
-  {
-    "name": "MatrixFunction",
-    "wolfram": "MatrixFunction"
-  },
-  {
-    "name": "MatrixRank",
-    "wolfram": "MatrixRank"
-  },
-  {
-    "name": "Max",
-    "fungrimEntries": [
-      "47d430",
-      "632d1c",
-      "bfe28b"
+      "ee86fb",
     ],
-    "wolfram": "Max",
-    "oracle": [
+  },
+  {
+    name: "MapAt",
+    wolfram: "MapAt",
+  },
+  {
+    name: "MatrixExp",
+    wolfram: "MatrixExp",
+  },
+  {
+    name: "MatrixFunction",
+    wolfram: "MatrixFunction",
+  },
+  {
+    name: "MatrixRank",
+    wolfram: "MatrixRank",
+  },
+  {
+    name: "Max",
+    fungrimEntries: ["47d430", "632d1c", "bfe28b"],
+    wolfram: "Max",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "enumeratio_max($*,)"
+        system: "sympy",
+        call: "enumeratio_max($*,)",
       },
       {
-        "system": "sage",
-        "call": "enumeratio_max($*,)"
-      }
-    ]
-  },
-  {
-    "name": "Mean",
-    "wolfram": "Mean"
-  },
-  {
-    "name": "Median",
-    "wolfram": "Median"
-  },
-  {
-    "name": "MeijerG",
-    "wolfram": "MeijerG"
-  },
-  {
-    "name": "MeijerGReduce",
-    "wolfram": "MeijerGReduce"
-  },
-  {
-    "name": "MemoryConstrained",
-    "wolfram": "MemoryConstrained"
-  },
-  {
-    "name": "MersennePrimeExponent",
-    "wolfram": "MersennePrimeExponent"
-  },
-  {
-    "name": "Min",
-    "fungrimEntries": [
-      "27766c",
-      "540931",
-      "737f2b",
-      "75231e",
-      "805c7a",
-      "da7fb1"
+        system: "sage",
+        call: "enumeratio_max($*,)",
+      },
     ],
-    "wolfram": "Min",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "enumeratio_min($*,)"
-      },
-      {
-        "system": "sage",
-        "call": "enumeratio_min($*,)"
-      }
-    ]
   },
   {
-    "name": "Mod",
-    "fungrimEntries": [
-      "540931",
-      "75231e",
-      "959a25"
+    name: "Mean",
+    wolfram: "Mean",
+  },
+  {
+    name: "Median",
+    wolfram: "Median",
+  },
+  {
+    name: "MeijerG",
+    wolfram: "MeijerG",
+  },
+  {
+    name: "MeijerGReduce",
+    wolfram: "MeijerGReduce",
+  },
+  {
+    name: "MemoryConstrained",
+    wolfram: "MemoryConstrained",
+  },
+  {
+    name: "MersennePrimeExponent",
+    wolfram: "MersennePrimeExponent",
+  },
+  {
+    name: "Min",
+    fungrimEntries: ["27766c", "540931", "737f2b", "75231e", "805c7a", "da7fb1"],
+    wolfram: "Min",
+    oracle: [
+      {
+        system: "sympy",
+        call: "enumeratio_min($*,)",
+      },
+      {
+        system: "sage",
+        call: "enumeratio_min($*,)",
+      },
     ],
-    "wolfram": "Mod",
-    "oracle": [
+  },
+  {
+    name: "Mod",
+    fungrimEntries: ["540931", "75231e", "959a25"],
+    wolfram: "Mod",
+    oracle: [
       {
-        "system": "oscar",
-        "call": "mod($1, $2)",
-        "arity": 2
+        system: "oscar",
+        call: "mod($1, $2)",
+        arity: 2,
       },
       {
-        "system": "julia",
-        "call": "mod($1, $2)",
-        "arity": 2
+        system: "julia",
+        call: "mod($1, $2)",
+        arity: 2,
       },
       {
-        "system": "rust",
-        "call": "mod_floor($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "rust",
+        call: "mod_floor($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "ModularInverse",
-    "wolfram": "ModularInverse",
-    "oracle": [
+    name: "ModularInverse",
+    wolfram: "ModularInverse",
+    oracle: [
       {
-        "system": "sage",
-        "call": "inverse_mod($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "sage",
+        call: "inverse_mod($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "MoebiusMu",
-    "wolfram": "MoebiusMu",
-    "oracle": [
+    name: "MoebiusMu",
+    wolfram: "MoebiusMu",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "mobius($1)",
-        "arity": 1
+        system: "sympy",
+        call: "mobius($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "moebius($1)",
-        "arity": 1
+        system: "sage",
+        call: "moebius($1)",
+        arity: 1,
       },
       {
-        "system": "oscar",
-        "call": "moebius_mu($1)",
-        "arity": 1
+        system: "oscar",
+        call: "moebius_mu($1)",
+        arity: 1,
       },
       {
-        "system": "julia",
-        "call": "moebius_mu($1)",
-        "arity": 1
-      }
-    ]
+        system: "julia",
+        call: "moebius_mu($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Most",
-    "wolfram": "Most"
+    name: "Most",
+    wolfram: "Most",
   },
   {
-    "name": "MotzkinAlgebra",
-    "oracle": [
+    name: "MotzkinAlgebra",
+    oracle: [
       {
-        "system": "oscar",
-        "call": "EnumeratioDiagramAlgebra(:motzkin, $1)",
-        "arity": 1
-      }
-    ]
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:motzkin, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "MovingMap",
-    "wolfram": "MovingMap"
+    name: "MovingMap",
+    wolfram: "MovingMap",
   },
   {
-    "name": "MultiZetaValue",
-    "fungrimEntries": [
-      "3a5167",
-      "62de01",
-      "856317",
-      "a5e52e",
-      "da71d3",
-      "ef2c71",
-      "ef8b17"
-    ]
+    name: "MultiZetaValue",
+    fungrimEntries: ["3a5167", "62de01", "856317", "a5e52e", "da71d3", "ef2c71", "ef8b17"],
   },
   {
-    "name": "Multinomial",
-    "wolfram": "Multinomial"
+    name: "Multinomial",
+    wolfram: "Multinomial",
   },
   {
-    "name": "MultiplicativeOrder",
-    "wolfram": "MultiplicativeOrder",
-    "oracle": [
+    name: "MultiplicativeOrder",
+    wolfram: "MultiplicativeOrder",
+    oracle: [
       {
-        "system": "sage",
-        "call": "Mod($1, $2).multiplicative_order()",
-        "arity": 2
-      }
-    ]
+        system: "sage",
+        call: "Mod($1, $2).multiplicative_order()",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "Multiply",
-    "wolfram": "Times"
+    name: "Multiply",
+    wolfram: "Times",
   },
   {
-    "name": "N",
-    "wolfram": "N",
-    "oracle": [
+    name: "N",
+    wolfram: "N",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "N($1, 30)",
-        "arity": 1
+        system: "sympy",
+        call: "N($1, 30)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "N($1)",
-        "arity": 1
+        system: "sage",
+        call: "N($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "nf($1)",
-        "arity": 1
+        system: "rust",
+        call: "nf($1)",
+        arity: 1,
       },
       {
-        "system": "sympy",
-        "call": "N($1, 30)",
-        "arity": 2
+        system: "sympy",
+        call: "N($1, 30)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "N($1)",
-        "arity": 2
+        system: "sage",
+        call: "N($1)",
+        arity: 2,
       },
       {
-        "system": "rust",
-        "call": "nf($1)",
-        "arity": 2
-      }
-    ]
+        system: "rust",
+        call: "nf($1)",
+        arity: 2,
+      },
+    ],
   },
   {
-    "name": "NPartition",
-    "fungrimEntries": [
-      "6018a4",
-      "7ef291",
-      "8eed2c",
-      "b2583f",
-      "cd3013",
-      "cebe1b",
-      "e84642"
-    ]
+    name: "NPartition",
+    fungrimEntries: ["6018a4", "7ef291", "8eed2c", "b2583f", "cd3013", "cebe1b", "e84642"],
   },
   {
-    "name": "NaN",
-    "wolfram": "Indeterminate"
+    name: "NaN",
+    wolfram: "Indeterminate",
   },
   {
-    "name": "Negate",
-    "wolfram": "Minus"
+    name: "Negate",
+    wolfram: "Minus",
   },
   {
-    "name": "NeighborhoodGraph",
-    "wolfram": "NeighborhoodGraph"
+    name: "NeighborhoodGraph",
+    wolfram: "NeighborhoodGraph",
   },
   {
-    "name": "Nest",
-    "wolfram": "Nest"
+    name: "Nest",
+    wolfram: "Nest",
   },
   {
-    "name": "NestList",
-    "wolfram": "NestList"
+    name: "NestList",
+    wolfram: "NestList",
   },
   {
-    "name": "NextPrime",
-    "wolfram": "NextPrime"
+    name: "NextPrime",
+    wolfram: "NextPrime",
   },
   {
-    "name": "NonCommutativeMultiply",
-    "wolfram": "NonCommutativeMultiply"
+    name: "NonCommutativeMultiply",
+    wolfram: "NonCommutativeMultiply",
   },
   {
-    "name": "NoneTrue",
-    "wolfram": "NoneTrue"
+    name: "NoneTrue",
+    wolfram: "NoneTrue",
   },
   {
-    "name": "NorlundB",
-    "wolfram": "NorlundB"
+    name: "NorlundB",
+    wolfram: "NorlundB",
   },
   {
-    "name": "NormalDistribution",
-    "wolfram": "NormalDistribution"
+    name: "NormalDistribution",
+    wolfram: "NormalDistribution",
   },
   {
-    "name": "Normalize",
-    "wolfram": "Normalize"
+    name: "Normalize",
+    wolfram: "Normalize",
   },
   {
-    "name": "Not",
-    "wolfram": "Not"
+    name: "Not",
+    wolfram: "Not",
   },
   {
-    "name": "NotEqual",
-    "wolfram": "Unequal"
+    name: "NotEqual",
+    wolfram: "Unequal",
   },
   {
-    "name": "Nothing",
-    "wolfram": "Null"
+    name: "Nothing",
+    wolfram: "Null",
   },
   {
-    "name": "NthPrime",
-    "wolfram": "Prime"
+    name: "NthPrime",
+    wolfram: "Prime",
   },
   {
-    "name": "NumberExpand",
-    "wolfram": "NumberExpand"
+    name: "NumberExpand",
+    wolfram: "NumberExpand",
   },
   {
-    "name": "Or",
-    "wolfram": "Or"
+    name: "Or",
+    wolfram: "Or",
   },
   {
-    "name": "Ordering",
-    "wolfram": "Ordering"
+    name: "Ordering",
+    wolfram: "Ordering",
   },
   {
-    "name": "Outer",
-    "wolfram": "Outer"
+    name: "Outer",
+    wolfram: "Outer",
   },
   {
-    "name": "PDF",
-    "wolfram": "PDF"
+    name: "PDF",
+    wolfram: "PDF",
   },
   {
-    "name": "PadLeft",
-    "wolfram": "PadLeft"
+    name: "PadLeft",
+    wolfram: "PadLeft",
   },
   {
-    "name": "PadRight",
-    "wolfram": "PadRight"
+    name: "PadRight",
+    wolfram: "PadRight",
   },
   {
-    "name": "Partition",
-    "wolfram": "Partition"
+    name: "Partition",
+    wolfram: "Partition",
   },
   {
-    "name": "PartitionAlgebra",
-    "oracle": [
+    name: "PartitionAlgebra",
+    oracle: [
       {
-        "system": "sage",
-        "call": "PartitionAlgebra($1, enumeratio_delta, enumeratio_ring)",
-        "arity": 1
+        system: "sage",
+        call: "PartitionAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
       },
       {
-        "system": "oscar",
-        "call": "EnumeratioDiagramAlgebra(:partition, $1)",
-        "arity": 1
-      }
-    ]
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:partition, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "PartitionsQ",
-    "wolfram": "PartitionsQ"
+    name: "PartitionsQ",
+    wolfram: "PartitionsQ",
   },
   {
-    "name": "PascalBinomial",
-    "wolfram": "PascalBinomial"
+    name: "PascalBinomial",
+    wolfram: "PascalBinomial",
   },
   {
-    "name": "PerfectNumber",
-    "wolfram": "PerfectNumber"
+    name: "PerfectNumber",
+    wolfram: "PerfectNumber",
   },
   {
-    "name": "PermutationCycles",
-    "wolfram": "PermutationCycles"
+    name: "PermutationCycles",
+    wolfram: "PermutationCycles",
   },
   {
-    "name": "PermutationGroup",
-    "wolfram": "PermutationGroup"
+    name: "PermutationGroup",
+    wolfram: "PermutationGroup",
   },
   {
-    "name": "Permute",
-    "wolfram": "Permute"
+    name: "Permute",
+    wolfram: "Permute",
   },
   {
-    "name": "PetersenGraph",
-    "wolfram": "PetersenGraph"
+    name: "PetersenGraph",
+    wolfram: "PetersenGraph",
   },
   {
-    "name": "Pi",
-    "wolfram": "Pi"
+    name: "Pi",
+    wolfram: "Pi",
   },
   {
-    "name": "Piecewise",
-    "wolfram": "Piecewise"
+    name: "Piecewise",
+    wolfram: "Piecewise",
   },
   {
-    "name": "PiecewiseExpand",
-    "wolfram": "PiecewiseExpand"
+    name: "PiecewiseExpand",
+    wolfram: "PiecewiseExpand",
   },
   {
-    "name": "Pochhammer",
-    "wolfram": "Pochhammer"
+    name: "Pochhammer",
+    wolfram: "Pochhammer",
   },
   {
-    "name": "PoissonDistribution",
-    "wolfram": "PoissonDistribution"
+    name: "PoissonDistribution",
+    wolfram: "PoissonDistribution",
   },
   {
-    "name": "PolyGamma",
-    "fungrimEntries": [
+    name: "PolyGamma",
+    fungrimEntries: [
       "039051",
       "03aca0",
       "21f4f9",
@@ -3970,273 +3758,258 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ddc7e1",
       "e83059",
       "f1e02b",
-      "fa0292"
+      "fa0292",
     ],
-    "wolfram": "PolyGamma",
-    "oracle": [
+    wolfram: "PolyGamma",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "polygamma($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "polygamma($1, $2)",
+        arity: 2,
       },
       {
-        "system": "mpmath",
-        "call": "psi($1, $2)",
-        "arity": 2
+        system: "mpmath",
+        call: "psi($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "psi($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "PolyLog",
-    "fungrimEntries": [
-      "208da7",
-      "52ea5f",
-      "541e2e",
-      "82b410",
-      "d1a0ec"
+        system: "sage",
+        call: "psi($1, $2)",
+        arity: 2,
+      },
     ],
-    "wolfram": "PolyLog",
-    "oracle": [
+  },
+  {
+    name: "PolyLog",
+    fungrimEntries: ["208da7", "52ea5f", "541e2e", "82b410", "d1a0ec"],
+    wolfram: "PolyLog",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "polylog($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "polylog($1, $2)",
+        arity: 2,
       },
       {
-        "system": "mpmath",
-        "call": "polylog($1, $2)",
-        "arity": 2
+        system: "mpmath",
+        call: "polylog($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "polylog($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "Position",
-    "wolfram": "Position"
-  },
-  {
-    "name": "PositiveInfinity",
-    "wolfram": "Infinity"
-  },
-  {
-    "name": "Power",
-    "wolfram": "Power",
-    "oracle": [
-      {
-        "system": "rust",
-        "call": "power($1, $2)",
-        "arity": 2
-      }
-    ]
-  },
-  {
-    "name": "PowerExpand",
-    "wolfram": "PowerExpand"
-  },
-  {
-    "name": "PowerMod",
-    "wolfram": "PowerMod",
-    "oracle": [
-      {
-        "system": "sage",
-        "call": "power_mod($1, $2, $3)",
-        "arity": 3
+        system: "sage",
+        call: "polylog($1, $2)",
+        arity: 2,
       },
-      {
-        "system": "rust",
-        "call": "powermod($1, $2, $3)",
-        "arity": 3
-      }
-    ]
-  },
-  {
-    "name": "PowerModList",
-    "wolfram": "PowerModList",
-    "oracle": [
-      {
-        "system": "sage",
-        "call": "enumeratio_power_mod_list($1, $2, $3)",
-        "arity": 3
-      }
-    ]
-  },
-  {
-    "name": "PowersRepresentations",
-    "wolfram": "PowersRepresentations"
-  },
-  {
-    "name": "Precision",
-    "wolfram": "Precision"
-  },
-  {
-    "name": "Prepend",
-    "wolfram": "Prepend"
-  },
-  {
-    "name": "Prime",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "prime($1)",
-        "arity": 1
-      },
-      {
-        "system": "sage",
-        "call": "nth_prime($1)",
-        "arity": 1
-      },
-      {
-        "system": "rust",
-        "call": "nth_prime($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "PrimeNu",
-    "wolfram": "PrimeNu"
-  },
-  {
-    "name": "PrimeNumber",
-    "fungrimEntries": [
-      "9d0839"
-    ]
-  },
-  {
-    "name": "PrimeOmega",
-    "wolfram": "PrimeOmega"
-  },
-  {
-    "name": "PrimePi",
-    "fungrimEntries": [
-      "04427b",
-      "4fa169"
     ],
-    "wolfram": "PrimePi",
-    "oracle": [
+  },
+  {
+    name: "Position",
+    wolfram: "Position",
+  },
+  {
+    name: "PositiveInfinity",
+    wolfram: "Infinity",
+  },
+  {
+    name: "Power",
+    wolfram: "Power",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "primepi($1)",
-        "arity": 1
+        system: "rust",
+        call: "power($1, $2)",
+        arity: 2,
       },
-      {
-        "system": "sage",
-        "call": "prime_pi($1)",
-        "arity": 1
-      },
-      {
-        "system": "rust",
-        "call": "prime_pi($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "PrimeZetaP",
-    "wolfram": "PrimeZetaP"
-  },
-  {
-    "name": "Primes",
-    "fungrimEntries": [
-      "04427b"
-    ]
-  },
-  {
-    "name": "PrimitiveRootList",
-    "wolfram": "PrimitiveRootList",
-    "oracle": [
-      {
-        "system": "sage",
-        "call": "enumeratio_primitive_root_list($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "Product",
-    "fungrimEntries": [
-      "33f13a"
     ],
-    "wolfram": "Product"
   },
   {
-    "name": "QBinomial",
-    "wolfram": "QBinomial"
+    name: "PowerExpand",
+    wolfram: "PowerExpand",
   },
   {
-    "name": "QFactorial",
-    "wolfram": "QFactorial"
-  },
-  {
-    "name": "QPochhammer",
-    "wolfram": "QPochhammer"
-  },
-  {
-    "name": "Quotient",
-    "wolfram": "Quotient"
-  },
-  {
-    "name": "RamanujanTau",
-    "wolfram": "RamanujanTau"
-  },
-  {
-    "name": "Random",
-    "wolfram": "RandomReal"
-  },
-  {
-    "name": "RandomInteger",
-    "wolfram": "RandomInteger"
-  },
-  {
-    "name": "Range",
-    "wolfram": "Range"
-  },
-  {
-    "name": "Rank",
-    "wolfram": "ArrayDepth"
-  },
-  {
-    "name": "Rational",
-    "wolfram": "Rational",
-    "oracle": [
+    name: "PowerMod",
+    wolfram: "PowerMod",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "Rational($1, $2)",
-        "arity": 2
+        system: "sage",
+        call: "power_mod($1, $2, $3)",
+        arity: 3,
       },
       {
-        "system": "rust",
-        "call": "rational($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "rust",
+        call: "powermod($1, $2, $3)",
+        arity: 3,
+      },
+    ],
   },
   {
-    "name": "RationalReconstruction",
-    "oracle": [
+    name: "PowerModList",
+    wolfram: "PowerModList",
+    oracle: [
       {
-        "system": "sage",
-        "call": "rational_reconstruction($1, $2)",
-        "arity": 2
-      }
-    ]
+        system: "sage",
+        call: "enumeratio_power_mod_list($1, $2, $3)",
+        arity: 3,
+      },
+    ],
   },
   {
-    "name": "Rationalize",
-    "wolfram": "Rationalize"
+    name: "PowersRepresentations",
+    wolfram: "PowersRepresentations",
   },
   {
-    "name": "Real",
-    "fungrimEntries": [
+    name: "Precision",
+    wolfram: "Precision",
+  },
+  {
+    name: "Prepend",
+    wolfram: "Prepend",
+  },
+  {
+    name: "Prime",
+    oracle: [
+      {
+        system: "sympy",
+        call: "prime($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "nth_prime($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "nth_prime($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "PrimeNu",
+    wolfram: "PrimeNu",
+  },
+  {
+    name: "PrimeNumber",
+    fungrimEntries: ["9d0839"],
+  },
+  {
+    name: "PrimeOmega",
+    wolfram: "PrimeOmega",
+  },
+  {
+    name: "PrimePi",
+    fungrimEntries: ["04427b", "4fa169"],
+    wolfram: "PrimePi",
+    oracle: [
+      {
+        system: "sympy",
+        call: "primepi($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "prime_pi($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "prime_pi($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "PrimeZetaP",
+    wolfram: "PrimeZetaP",
+  },
+  {
+    name: "Primes",
+    fungrimEntries: ["04427b"],
+  },
+  {
+    name: "PrimitiveRootList",
+    wolfram: "PrimitiveRootList",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_primitive_root_list($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
+    name: "Product",
+    fungrimEntries: ["33f13a"],
+    wolfram: "Product",
+  },
+  {
+    name: "QBinomial",
+    wolfram: "QBinomial",
+  },
+  {
+    name: "QFactorial",
+    wolfram: "QFactorial",
+  },
+  {
+    name: "QPochhammer",
+    wolfram: "QPochhammer",
+  },
+  {
+    name: "Quotient",
+    wolfram: "Quotient",
+  },
+  {
+    name: "RamanujanTau",
+    wolfram: "RamanujanTau",
+  },
+  {
+    name: "Random",
+    wolfram: "RandomReal",
+  },
+  {
+    name: "RandomInteger",
+    wolfram: "RandomInteger",
+  },
+  {
+    name: "Range",
+    wolfram: "Range",
+  },
+  {
+    name: "Rank",
+    wolfram: "ArrayDepth",
+  },
+  {
+    name: "Rational",
+    wolfram: "Rational",
+    oracle: [
+      {
+        system: "sympy",
+        call: "Rational($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "rust",
+        call: "rational($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "RationalReconstruction",
+    oracle: [
+      {
+        system: "sage",
+        call: "rational_reconstruction($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
+  {
+    name: "Rationalize",
+    wolfram: "Rationalize",
+  },
+  {
+    name: "Real",
+    fungrimEntries: [
       "099b19",
       "1b3014",
       "23ed69",
@@ -4260,99 +4033,97 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e54e61",
       "e722ca",
       "f35a37",
-      "fa6ff7"
-    ]
-  },
-  {
-    "name": "RealAbs",
-    "wolfram": "RealAbs"
-  },
-  {
-    "name": "RealDigits",
-    "wolfram": "RealDigits"
-  },
-  {
-    "name": "RealSign",
-    "wolfram": "RealSign"
-  },
-  {
-    "name": "RecurrenceTable",
-    "wolfram": "RecurrenceTable"
-  },
-  {
-    "name": "Refine",
-    "wolfram": "Refine"
-  },
-  {
-    "name": "Repeat",
-    "wolfram": "ConstantArray"
-  },
-  {
-    "name": "Rest",
-    "wolfram": "Rest"
-  },
-  {
-    "name": "Reverse",
-    "wolfram": "Reverse"
-  },
-  {
-    "name": "RiemannSiegelTheta",
-    "wolfram": "RiemannSiegelTheta"
-  },
-  {
-    "name": "RiemannSiegelZ",
-    "wolfram": "RiemannSiegelZ"
-  },
-  {
-    "name": "RiemannZetaZero",
-    "fungrimEntries": [
-      "60c2ec"
+      "fa6ff7",
     ],
-    "wolfram": "ZetaZero"
   },
   {
-    "name": "Riffle",
-    "wolfram": "Riffle"
+    name: "RealAbs",
+    wolfram: "RealAbs",
   },
   {
-    "name": "RomanNumeral",
-    "wolfram": "RomanNumeral"
+    name: "RealDigits",
+    wolfram: "RealDigits",
   },
   {
-    "name": "Round",
-    "wolfram": "Round"
+    name: "RealSign",
+    wolfram: "RealSign",
   },
   {
-    "name": "Rule",
-    "wolfram": "Rule"
+    name: "RecurrenceTable",
+    wolfram: "RecurrenceTable",
   },
   {
-    "name": "Sec",
-    "wolfram": "Sec"
+    name: "Refine",
+    wolfram: "Refine",
   },
   {
-    "name": "Sech",
-    "wolfram": "Sech"
+    name: "Repeat",
+    wolfram: "ConstantArray",
   },
   {
-    "name": "SeedRandom",
-    "wolfram": "SeedRandom"
+    name: "Rest",
+    wolfram: "Rest",
   },
   {
-    "name": "SeriesCoefficient",
-    "wolfram": "SeriesCoefficient"
+    name: "Reverse",
+    wolfram: "Reverse",
   },
   {
-    "name": "SetMinus",
-    "wolfram": "Complement"
+    name: "RiemannSiegelTheta",
+    wolfram: "RiemannSiegelTheta",
   },
   {
-    "name": "Shape",
-    "wolfram": "Dimensions"
+    name: "RiemannSiegelZ",
+    wolfram: "RiemannSiegelZ",
   },
   {
-    "name": "Sign",
-    "fungrimEntries": [
+    name: "RiemannZetaZero",
+    fungrimEntries: ["60c2ec"],
+    wolfram: "ZetaZero",
+  },
+  {
+    name: "Riffle",
+    wolfram: "Riffle",
+  },
+  {
+    name: "RomanNumeral",
+    wolfram: "RomanNumeral",
+  },
+  {
+    name: "Round",
+    wolfram: "Round",
+  },
+  {
+    name: "Rule",
+    wolfram: "Rule",
+  },
+  {
+    name: "Sec",
+    wolfram: "Sec",
+  },
+  {
+    name: "Sech",
+    wolfram: "Sech",
+  },
+  {
+    name: "SeedRandom",
+    wolfram: "SeedRandom",
+  },
+  {
+    name: "SeriesCoefficient",
+    wolfram: "SeriesCoefficient",
+  },
+  {
+    name: "SetMinus",
+    wolfram: "Complement",
+  },
+  {
+    name: "Shape",
+    wolfram: "Dimensions",
+  },
+  {
+    name: "Sign",
+    fungrimEntries: [
       "09c107",
       "0bb73e",
       "18d335",
@@ -4375,30 +4146,30 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e1a3cb",
       "e352ca",
       "e722ca",
-      "f07e9d"
+      "f07e9d",
     ],
-    "wolfram": "Sign",
-    "oracle": [
+    wolfram: "Sign",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "sign($1)",
-        "arity": 1
+        system: "sympy",
+        call: "sign($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "sign($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "sign($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "sign($1)",
-        "arity": 1
-      }
-    ]
+        system: "sage",
+        call: "sign($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Sin",
-    "fungrimEntries": [
+    name: "Sin",
+    fungrimEntries: [
       "012eba",
       "01422b",
       "037a6e",
@@ -4499,35 +4270,35 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f4e249",
       "f6d0c6",
       "f7ab32",
-      "fa9283"
+      "fa9283",
     ],
-    "wolfram": "Sin",
-    "oracle": [
+    wolfram: "Sin",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "sin($1)",
-        "arity": 1
+        system: "sympy",
+        call: "sin($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "sin($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "sin($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "sin($1)",
-        "arity": 1
+        system: "sage",
+        call: "sin($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "sin($1)",
-        "arity": 1
-      }
-    ]
+        system: "rust",
+        call: "sin($1)",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Sinc",
-    "fungrimEntries": [
+    name: "Sinc",
+    fungrimEntries: [
       "01422b",
       "19d7d9",
       "1c3766",
@@ -4552,12 +4323,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f19e0a",
       "fa9283",
       "fdc94c",
-      "ff5e82"
-    ]
+      "ff5e82",
+    ],
   },
   {
-    "name": "Sinh",
-    "fungrimEntries": [
+    name: "Sinh",
+    fungrimEntries: [
       "037a6e",
       "1568e1",
       "1976db",
@@ -4573,163 +4344,139 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "c4d78a",
       "cac83e",
       "cfc5c3",
-      "fd732d"
+      "fd732d",
     ],
-    "wolfram": "Sinh"
+    wolfram: "Sinh",
   },
   {
-    "name": "SloaneA",
-    "fungrimEntries": [
-      "373aa1",
-      "447541",
-      "4fa169",
-      "60dc3e",
-      "6af603",
-      "8eed2c",
-      "9d0839",
-      "b6111c",
-      "d12aa0"
-    ]
+    name: "SloaneA",
+    fungrimEntries: ["373aa1", "447541", "4fa169", "60dc3e", "6af603", "8eed2c", "9d0839", "b6111c", "d12aa0"],
   },
   {
-    "name": "Sort",
-    "wolfram": "Sort"
+    name: "Sort",
+    wolfram: "Sort",
   },
   {
-    "name": "SortBy",
-    "wolfram": "SortBy"
+    name: "SortBy",
+    wolfram: "SortBy",
   },
   {
-    "name": "Span",
-    "wolfram": "Span"
+    name: "Span",
+    wolfram: "Span",
   },
   {
-    "name": "SparseArray",
-    "wolfram": "SparseArray"
+    name: "SparseArray",
+    wolfram: "SparseArray",
   },
   {
-    "name": "Split",
-    "wolfram": "Split"
+    name: "Split",
+    wolfram: "Split",
   },
   {
-    "name": "SplitBy",
-    "wolfram": "SplitBy"
+    name: "SplitBy",
+    wolfram: "SplitBy",
   },
   {
-    "name": "Sqrt",
-    "wolfram": "Sqrt",
-    "oracle": [
+    name: "Sqrt",
+    wolfram: "Sqrt",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "sqrt($1)",
-        "arity": 1
+        system: "sympy",
+        call: "sqrt($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "sqrt($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "sqrt($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "sqrt($1)",
-        "arity": 1
+        system: "sage",
+        call: "sqrt($1)",
+        arity: 1,
       },
       {
-        "system": "rust",
-        "call": "sqrt($1)",
-        "arity": 1
-      }
-    ]
-  },
-  {
-    "name": "SquaresR",
-    "wolfram": "SquaresR"
-  },
-  {
-    "name": "StandardDeviation",
-    "wolfram": "StandardDeviation"
-  },
-  {
-    "name": "StarGraph",
-    "wolfram": "StarGraph"
-  },
-  {
-    "name": "StieltjesGamma",
-    "fungrimEntries": [
-      "51206a",
-      "60c6da",
-      "687b4d",
-      "70a705",
-      "8ae153",
-      "a6bdf5",
-      "b1a2e1",
-      "b6808d"
+        system: "rust",
+        call: "sqrt($1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "StieltjesGamma"
   },
   {
-    "name": "Stirling",
-    "fungrimEntries": [
-      "9fbe4f"
+    name: "SquaresR",
+    wolfram: "SquaresR",
+  },
+  {
+    name: "StandardDeviation",
+    wolfram: "StandardDeviation",
+  },
+  {
+    name: "StarGraph",
+    wolfram: "StarGraph",
+  },
+  {
+    name: "StieltjesGamma",
+    fungrimEntries: ["51206a", "60c6da", "687b4d", "70a705", "8ae153", "a6bdf5", "b1a2e1", "b6808d"],
+    wolfram: "StieltjesGamma",
+  },
+  {
+    name: "Stirling",
+    fungrimEntries: ["9fbe4f"],
+    wolfram: "StirlingS2",
+    oracle: [
+      {
+        system: "sympy",
+        call: "stirling($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "sage",
+        call: "stirling_number2($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "Combinatorics.stirlings2($1, $2)",
+        arity: 2,
+      },
     ],
-    "wolfram": "StirlingS2",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "stirling($1, $2)",
-        "arity": 2
-      },
-      {
-        "system": "sage",
-        "call": "stirling_number2($1, $2)",
-        "arity": 2
-      },
-      {
-        "system": "julia",
-        "call": "Combinatorics.stirlings2($1, $2)",
-        "arity": 2
-      }
-    ]
   },
   {
-    "name": "StirlingS1",
-    "fungrimEntries": [
-      "071a94",
-      "18ec99"
+    name: "StirlingS1",
+    fungrimEntries: ["071a94", "18ec99"],
+    wolfram: "StirlingS1",
+    oracle: [
+      {
+        system: "sage",
+        call: "stirling_number1($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "Combinatorics.stirlings1($1, $2)",
+        arity: 2,
+      },
     ],
-    "wolfram": "StirlingS1",
-    "oracle": [
-      {
-        "system": "sage",
-        "call": "stirling_number1($1, $2)",
-        "arity": 2
-      },
-      {
-        "system": "julia",
-        "call": "Combinatorics.stirlings1($1, $2)",
-        "arity": 2
-      }
-    ]
   },
   {
-    "name": "Subfactorial",
-    "wolfram": "Subfactorial"
+    name: "Subfactorial",
+    wolfram: "Subfactorial",
   },
   {
-    "name": "Subgraph",
-    "wolfram": "Subgraph"
+    name: "Subgraph",
+    wolfram: "Subgraph",
   },
   {
-    "name": "Subsets",
-    "wolfram": "Subsets"
+    name: "Subsets",
+    wolfram: "Subsets",
   },
   {
-    "name": "Subtract",
-    "wolfram": "Subtract"
+    name: "Subtract",
+    wolfram: "Subtract",
   },
   {
-    "name": "Sum",
-    "fungrimEntries": [
+    name: "Sum",
+    fungrimEntries: [
       "0650f8",
       "08ff0b",
       "0ad263",
@@ -4776,89 +4523,80 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e4e707",
       "eec21a",
       "f3e75c",
-      "f8cd8f"
+      "f8cd8f",
     ],
-    "wolfram": "Sum"
+    wolfram: "Sum",
   },
   {
-    "name": "Surd",
-    "wolfram": "Surd"
+    name: "Surd",
+    wolfram: "Surd",
   },
   {
-    "name": "SymmetricGroup",
-    "wolfram": "SymmetricGroup"
+    name: "SymmetricGroup",
+    wolfram: "SymmetricGroup",
   },
   {
-    "name": "Take",
-    "wolfram": "Take"
+    name: "Take",
+    wolfram: "Take",
   },
   {
-    "name": "Tan",
-    "fungrimEntries": [
-      "1f026d",
-      "1f026d:solve",
-      "c7f7a5",
-      "ee56b9",
-      "f516e3",
-      "f516e3:solve"
+    name: "Tan",
+    fungrimEntries: ["1f026d", "1f026d:solve", "c7f7a5", "ee56b9", "f516e3", "f516e3:solve"],
+    wolfram: "Tan",
+    oracle: [
+      {
+        system: "sympy",
+        call: "tan($1)",
+        arity: 1,
+      },
+      {
+        system: "mpmath",
+        call: "tan($1)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "tan($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "tan($1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "Tan",
-    "oracle": [
-      {
-        "system": "sympy",
-        "call": "tan($1)",
-        "arity": 1
-      },
-      {
-        "system": "mpmath",
-        "call": "tan($1)",
-        "arity": 1
-      },
-      {
-        "system": "sage",
-        "call": "tan($1)",
-        "arity": 1
-      },
-      {
-        "system": "rust",
-        "call": "tan($1)",
-        "arity": 1
-      }
-    ]
   },
   {
-    "name": "Tanh",
-    "fungrimEntries": [
-      "6f3fec"
+    name: "Tanh",
+    fungrimEntries: ["6f3fec"],
+    wolfram: "Tanh",
+  },
+  {
+    name: "TemperleyLiebAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "TemperleyLiebAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:temperley_lieb, $1)",
+        arity: 1,
+      },
     ],
-    "wolfram": "Tanh"
   },
   {
-    "name": "TemperleyLiebAlgebra",
-    "oracle": [
-      {
-        "system": "sage",
-        "call": "TemperleyLiebAlgebra($1, enumeratio_delta, enumeratio_ring)",
-        "arity": 1
-      },
-      {
-        "system": "oscar",
-        "call": "EnumeratioDiagramAlgebra(:temperley_lieb, $1)",
-        "arity": 1
-      }
-    ]
+    name: "Thread",
+    wolfram: "Thread",
   },
   {
-    "name": "Thread",
-    "wolfram": "Thread"
+    name: "TimeConstrained",
+    wolfram: "TimeConstrained",
   },
   {
-    "name": "TimeConstrained",
-    "wolfram": "TimeConstrained"
-  },
-  {
-    "name": "Totient",
-    "fungrimEntries": [
+    name: "Totient",
+    fungrimEntries: [
       "05e9ae",
       "081abd",
       "08ff0b",
@@ -4874,95 +4612,95 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "cb410e",
       "cd7877",
       "d1ea57",
-      "feb1a0"
+      "feb1a0",
     ],
-    "wolfram": "EulerPhi",
-    "oracle": [
+    wolfram: "EulerPhi",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "totient($1)",
-        "arity": 1
+        system: "sympy",
+        call: "totient($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "euler_phi($1)",
-        "arity": 1
+        system: "sage",
+        call: "euler_phi($1)",
+        arity: 1,
       },
       {
-        "system": "oscar",
-        "call": "euler_phi(ZZ($1))",
-        "arity": 1
+        system: "oscar",
+        call: "euler_phi(ZZ($1))",
+        arity: 1,
       },
       {
-        "system": "julia",
-        "call": "euler_phi(ZZ($1))",
-        "arity": 1
-      }
-    ]
+        system: "julia",
+        call: "euler_phi(ZZ($1))",
+        arity: 1,
+      },
+    ],
   },
   {
-    "name": "Transpose",
-    "wolfram": "Transpose"
+    name: "Transpose",
+    wolfram: "Transpose",
   },
   {
-    "name": "True",
-    "wolfram": "True"
+    name: "True",
+    wolfram: "True",
   },
   {
-    "name": "Tuple",
-    "wolfram": "List"
+    name: "Tuple",
+    wolfram: "List",
   },
   {
-    "name": "Tuples",
-    "wolfram": "Tuples"
+    name: "Tuples",
+    wolfram: "Tuples",
   },
   {
-    "name": "UndirectedEdge",
-    "wolfram": "UndirectedEdge"
+    name: "UndirectedEdge",
+    wolfram: "UndirectedEdge",
   },
   {
-    "name": "UniformDistribution",
-    "wolfram": "UniformDistribution"
+    name: "UniformDistribution",
+    wolfram: "UniformDistribution",
   },
   {
-    "name": "Union",
-    "wolfram": "Union"
+    name: "Union",
+    wolfram: "Union",
   },
   {
-    "name": "Unique",
-    "wolfram": "DeleteDuplicates"
+    name: "Unique",
+    wolfram: "DeleteDuplicates",
   },
   {
-    "name": "UnitStep",
-    "wolfram": "UnitStep"
+    name: "UnitStep",
+    wolfram: "UnitStep",
   },
   {
-    "name": "UpTo",
-    "wolfram": "UpTo"
+    name: "UpTo",
+    wolfram: "UpTo",
   },
   {
-    "name": "Variance",
-    "wolfram": "Variance"
+    name: "Variance",
+    wolfram: "Variance",
   },
   {
-    "name": "VerificationTest",
-    "wolfram": "VerificationTest"
+    name: "VerificationTest",
+    wolfram: "VerificationTest",
   },
   {
-    "name": "VertexCount",
-    "wolfram": "VertexCount"
+    name: "VertexCount",
+    wolfram: "VertexCount",
   },
   {
-    "name": "VertexDegree",
-    "wolfram": "VertexDegree"
+    name: "VertexDegree",
+    wolfram: "VertexDegree",
   },
   {
-    "name": "VertexList",
-    "wolfram": "VertexList"
+    name: "VertexList",
+    wolfram: "VertexList",
   },
   {
-    "name": "Zeta",
-    "fungrimEntries": [
+    name: "Zeta",
+    fungrimEntries: [
       "03aca0",
       "0a2120",
       "0ad263",
@@ -5012,40 +4750,40 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "ef8b17",
       "fc6fe0",
       "ff8254",
-      "zeta-trivial-zeros"
+      "zeta-trivial-zeros",
     ],
-    "wolfram": "Zeta",
-    "oracle": [
+    wolfram: "Zeta",
+    oracle: [
       {
-        "system": "sympy",
-        "call": "zeta($1)",
-        "arity": 1
+        system: "sympy",
+        call: "zeta($1)",
+        arity: 1,
       },
       {
-        "system": "mpmath",
-        "call": "zeta($1)",
-        "arity": 1
+        system: "mpmath",
+        call: "zeta($1)",
+        arity: 1,
       },
       {
-        "system": "sage",
-        "call": "zeta($1)",
-        "arity": 1
+        system: "sage",
+        call: "zeta($1)",
+        arity: 1,
       },
       {
-        "system": "sympy",
-        "call": "zeta($1, $2)",
-        "arity": 2
+        system: "sympy",
+        call: "zeta($1, $2)",
+        arity: 2,
       },
       {
-        "system": "mpmath",
-        "call": "zeta($1, $2)",
-        "arity": 2
+        system: "mpmath",
+        call: "zeta($1, $2)",
+        arity: 2,
       },
       {
-        "system": "sage",
-        "call": "hurwitz_zeta($1, $2)",
-        "arity": 2
-      }
-    ]
-  }
+        system: "sage",
+        call: "hurwitz_zeta($1, $2)",
+        arity: 2,
+      },
+    ],
+  },
 ];

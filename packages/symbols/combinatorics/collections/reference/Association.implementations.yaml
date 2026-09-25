@@ -7,6 +7,8 @@ length-counts-the-key-value-pairs:
     out: "2"
   fullform:
     in: Length[Association[Rule[1, 2], Rule[3, 4]]]
+  wolfram:
+    in: Length[Association[Rule[1, 2], Rule[3, 4]]]
 first-is-the-first-value-not-the-first-rule:
   epsil:
     in: First(Association(Rule(1, a), Rule(2, b)))

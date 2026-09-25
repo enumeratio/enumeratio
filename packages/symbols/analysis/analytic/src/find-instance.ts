@@ -241,7 +241,12 @@ function boundFromAtom(atom: Atom, varName: string): { lo?: number; hi?: number 
   const c = (lhsIsVar ? atom.rhs : atom.lhs).evaluate().N().re;
   if (!Number.isFinite(c)) return undefined;
   // Read every relation as "var <rel> c" -- flip it when `var` was the constant's side.
-  const FLIP: Record<string, string> = { Less: "Greater", Greater: "Less", LessEqual: "GreaterEqual", GreaterEqual: "LessEqual" };
+  const FLIP: Record<string, string> = {
+    Less: "Greater",
+    Greater: "Less",
+    LessEqual: "GreaterEqual",
+    GreaterEqual: "LessEqual",
+  };
   const rel = lhsIsVar ? atom.rel : (FLIP[atom.rel] ?? atom.rel);
   switch (rel) {
     case "Equal":
@@ -299,7 +304,7 @@ function tryBoundedIntegerSearch(
   const found: BoxedExpression[][] = [];
   for (let idx = 0; idx < total && found.length < n; idx++) {
     let rem = idx;
-    const values: number[] = new Array(vars.length);
+    const values: number[] = Array.from({ length: vars.length });
     for (let i = vars.length - 1; i >= 0; i--) {
       values[i] = los[i]! + (rem % sizes[i]!);
       rem = Math.floor(rem / sizes[i]!);
