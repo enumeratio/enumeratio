@@ -89,3 +89,23 @@ enumeratio_combination(x::EnumeratioBasis) = "combination:{\"GroupBasis($(x.labe
 
 show_oracle(x::GroupAlgebraElem) = enumeratio_combination(x)
 show_oracle(x::EnumeratioBasis) = enumeratio_combination(x)
+
+# Oscar has no diagram algebras. What it can check independently is their dimension, from
+# the closed form each is known by, a formula check, not a second implementation.
+struct EnumeratioDiagramAlgebra
+  kind::Symbol
+  k::Int
+end
+
+_enumeratio_catalan(n) = div(binomial(ZZ(2n), ZZ(n)), n + 1)
+
+function Oscar.dim(a::EnumeratioDiagramAlgebra)
+  k = a.k
+  a.kind === :partition && return bell(2k)                                   # B(2k)
+  a.kind === :planar && return _enumeratio_catalan(2k)                        # C(2k)
+  a.kind === :brauer && return prod(ZZ(j) for j in 1:2:2k-1; init = ZZ(1))    # (2k−1)!!
+  a.kind === :temperley_lieb && return _enumeratio_catalan(k)                 # C(k)
+  a.kind === :motzkin && return sum(binomial(ZZ(2k), ZZ(2i)) * _enumeratio_catalan(i) for i in 0:k)  # M(2k)
+  a.kind === :rook && return sum(binomial(ZZ(k), ZZ(j))^2 * factorial(ZZ(j)) for j in 0:k)
+  error("no dimension formula for $(a.kind)")
+end

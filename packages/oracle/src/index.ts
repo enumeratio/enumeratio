@@ -14,6 +14,7 @@ export {
   asNumber,
   compare,
   compareCombination,
+  compareCombinations,
   comparePythonStructured,
   linearCombination,
   normalise,

@@ -330,6 +330,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "BarnesG",
   },
   {
+    name: "Basis",
+    oracle: [
+      {
+        system: "sage",
+        call: "list(($1).basis())",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "BellNumber",
     fungrimEntries: ["60dc3e", "f4e249"],
     wolfram: "BellB",
@@ -547,6 +557,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         system: "julia",
         call: "binomial(ZZ($1), ZZ($2))",
         arity: 2,
+      },
+    ],
+  },
+  {
+    name: "BrauerAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "BrauerAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:brauer, $1)",
+        arity: 1,
       },
     ],
   },
@@ -967,6 +992,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Det",
   },
   {
+    name: "Diagram",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_diagram($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "Digamma",
     fungrimEntries: [
       "00c02a",
@@ -1133,6 +1168,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "e60fd4",
       "f0f53b",
       "feb95e",
+    ],
+  },
+  {
+    name: "Element",
+    oracle: [
+      {
+        system: "sage",
+        call: "enumeratio_element($1, $2)",
+        arity: 2,
+      },
     ],
   },
   {
@@ -2838,6 +2883,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Most",
   },
   {
+    name: "MotzkinAlgebra",
+    oracle: [
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:motzkin, $1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "Multinomial",
     wolfram: "Multinomial",
   },
@@ -2907,6 +2962,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Partition",
     wolfram: "Partition",
+  },
+  {
+    name: "PartitionAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "PartitionAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:partition, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "Pi",
@@ -3588,6 +3658,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "Tanh",
     fungrimEntries: ["6f3fec"],
     wolfram: "Tanh",
+  },
+  {
+    name: "TemperleyLiebAlgebra",
+    oracle: [
+      {
+        system: "sage",
+        call: "TemperleyLiebAlgebra($1, enumeratio_delta, enumeratio_ring)",
+        arity: 1,
+      },
+      {
+        system: "oscar",
+        call: "EnumeratioDiagramAlgebra(:temperley_lieb, $1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "TimeConstrained",

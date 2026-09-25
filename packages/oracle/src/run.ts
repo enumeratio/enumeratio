@@ -276,7 +276,9 @@ function collectWolfram(output: string, count: number): Result[] {
   return results;
 }
 
-// Sage helpers for emits with no one-liner. PowerModList(a, s/r, m): `Zmod(m)(a)` has no
+// Sage helpers for emits with no one-liner. The diagram algebras live over ZZ[delta], so a
+// product that closes a loop comes back with its power of delta, printed (like an Oscar
+// group-algebra element) as a basis → coefficient map for compareCombination. PowerModList(a, s/r, m): `Zmod(m)(a)` has no
 // fractional-power method, so the root and the power split by hand. PrimitiveRootList(n):
 // `primitive_root` gives one root, so walk its powers coprime to phi(n). And the value a
 // scan compares: a closed form (`1/2*sqrt(2)`, `pi^2/6`) as its number, exact rationals and
@@ -290,7 +292,58 @@ def enumeratio_primitive_root_list(n):
     phi = euler_phi(n)
     return sorted(int(power_mod(g, k, n)) for k in range(1, phi + 1) if gcd(k, phi) == 1)
 
+enumeratio_ring = PolynomialRing(ZZ, "delta")
+enumeratio_delta = enumeratio_ring.gen()
+
+def _enumeratio_is_element(x):
+    from sage.combinat.free_module import CombinatorialFreeModule
+    return hasattr(x, "parent") and isinstance(x.parent(), CombinatorialFreeModule)
+
+def _enumeratio_key(d):
+    try:
+        blocks = sorted(sorted(int(p) for p in b) for b in d)
+    except TypeError:
+        return str(d)
+    return "Diagram({" + ",".join("{" + ",".join(map(str, b)) + "}" for b in blocks) + "})"
+
+def _enumeratio_terms(x):
+    terms = {}
+    for d, c in x.monomial_coefficients().items():
+        c = enumeratio_ring(c)
+        for e, a in c.dict().items():
+            terms[_enumeratio_key(d) + ("*delta^%d" % e if e else "")] = int(a)
+    return terms
+
+def enumeratio_diagram(blocks):
+    k = max(abs(p) for b in blocks for p in b)
+    return PartitionAlgebra(k, enumeratio_delta, enumeratio_ring)(blocks)
+
+def enumeratio_element(x, A):
+    if not _enumeratio_is_element(x):
+        return x in A
+    (d,) = x.monomial_coefficients().keys()
+    keys = A.basis().keys()
+    if all(len(b) == 2 and min(b) < 0 < max(b) for b in d) and "Symmetric" in type(A).__name__:
+        top = {max(b): -min(b) for b in d}
+        return Permutation([top[i] for i in sorted(top)]) in keys
+    try:
+        return SetPartition(list(d)) in keys
+    except (TypeError, ValueError):
+        return False
+
+def enumeratio_partition_mobius(a, b):
+    (da,), (db,) = a.monomial_coefficients().keys(), b.monomial_coefficients().keys()
+    k = max(abs(p) for blk in da for p in blk)
+    point = lambda p: p if p > 0 else k - p
+    relabel = lambda d: SetPartition([[point(p) for p in blk] for blk in d])
+    return posets.SetPartitions(2 * k).moebius_function(relabel(da), relabel(db))
+
 def enumeratio_value(x):
+    import json
+    if isinstance(x, list) and x and all(_enumeratio_is_element(e) for e in x):
+        return "combinations:" + json.dumps([_enumeratio_terms(e) for e in x])
+    if _enumeratio_is_element(x):
+        return "combination:" + json.dumps(_enumeratio_terms(x))
     if isinstance(x, list):
         return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"
     if isinstance(x, (bool, int, tuple)):
