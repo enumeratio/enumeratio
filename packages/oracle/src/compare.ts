@@ -62,6 +62,17 @@ export function parsePython(text: string): Tree | undefined {
   };
   const parseValue = (): Tree | typeof FAIL => {
     skipSpace();
+    // A Python complex, `(1.5+2j)` or `2j`, as the {re, im} leaf ours reduces to.
+    const complex =
+      /^\(\s*([-+]?[\d.]+(?:e[-+]?\d+)?)\s*([-+])\s*([\d.]+(?:e[-+]?\d+)?)j\s*\)|^([-+]?[\d.]+(?:e[-+]?\d+)?)j/i.exec(
+        s.slice(i),
+      );
+    if (complex !== null) {
+      i += complex[0].length;
+      if (complex[4] !== undefined) return { re: 0, im: Number(complex[4]) };
+      const im = Number(complex[3]) * (complex[2] === "-" ? -1 : 1);
+      return { re: Number(complex[1]), im };
+    }
     const open = s[i];
     if (open === "[" || open === "(") {
       const close = open === "[" ? "]" : ")";

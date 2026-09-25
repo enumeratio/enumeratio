@@ -1,0 +1,2251 @@
+{
+  "HurwitzZeta": [
+    {
+      "expr": ["N", ["HurwitzZeta", 2, 1]],
+      "expected": {
+        "num": "1.64493406684822643647"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, 2]],
+      "expected": {
+        "num": "0.64493406684822643647"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, 3]],
+      "expected": {
+        "num": "0.39493406684822643647"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, 0.5]],
+      "expected": {
+        "num": "4.93480220054467930942"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, 0.25]],
+      "expected": {
+        "num": "17.1973291545071107393"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, 1.3]],
+      "expected": {
+        "num": "1.13425343499661935436"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.533097125427094081793"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, ["Complex", 1, 1]]],
+      "expected": ["Complex", 0.46300009662276376, -0.794233542759319],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.5881978909500615, 0.18504197243379086],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, -0.5]],
+      "expected": 8.934802200544675,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2, -1.5]],
+      "expected": 9.37924664498912,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, 1]],
+      "expected": {
+        "num": "1.2020569031595942854"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, 2]],
+      "expected": {
+        "num": "0.2020569031595942854"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, 3]],
+      "expected": {
+        "num": "0.0770569031595942854"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, 0.5]],
+      "expected": {
+        "num": "8.4143983221171599978"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, 0.25]],
+      "expected": {
+        "num": "64.6638699687684601665"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, 1.3]],
+      "expected": {
+        "num": "0.59923125732597829635"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.139186199700803776228"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, ["Complex", 1, 1]]],
+      "expected": ["Complex", -0.18427646579396761, -0.3833264251725333],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.15369363373030825, 0.10422634741373264],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, -0.5]],
+      "expected": 0.4143983221171617,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 3, -1.5]],
+      "expected": 0.1181020258208659,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, 1]],
+      "expected": {
+        "num": "1.03692775514336992633"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, 2]],
+      "expected": {
+        "num": "0.03692775514336992633"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, 3]],
+      "expected": {
+        "num": "0.00567775514336992633"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, 0.5]],
+      "expected": {
+        "num": "32.1447604094444677163"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, 0.25]],
+      "expected": {
+        "num": "1024.34897452658057223"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, 1.3]],
+      "expected": {
+        "num": "0.28855606751852655952"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.0179852769188750622369"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, ["Complex", 1, 1]]],
+      "expected": ["Complex", -0.13664617371016874, 0.10752550214008197],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.012993573083069943, 0.028877271795314092],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, -0.5]],
+      "expected": ["Complex", 0.14476040944446772, -1.9594348786357652e-14],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 5, -1.5]],
+      "expected": ["Complex", 0.013073166646110865, -1.9674983966548424e-14],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, 1]],
+      "expected": {
+        "num": "-0.0833333333333333333333"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, 2]],
+      "expected": {
+        "num": "-1.08333333333333333333"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, 3]],
+      "expected": {
+        "num": "-3.08333333333333333333"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, 0.5]],
+      "expected": {
+        "num": "0.0416666666666666666665"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, 0.25]],
+      "expected": {
+        "num": "0.0104166666666666666665"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, 1.3]],
+      "expected": {
+        "num": "-0.2783333333333333333335"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "-1.6388888888888888888835"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, ["Complex", 1, 1]]],
+      "expected": [
+        "Complex",
+        {
+          "num": "0.4166666666666666666665"
+        },
+        -0.5
+      ],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, ["Complex", 2, -0.5]]],
+      "expected": [
+        "Complex",
+        {
+          "num": "-0.95833333333333335"
+        },
+        0.75
+      ],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, -0.5]],
+      "expected": {
+        "num": "-0.4583333333333333333335"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -1, -1.5]],
+      "expected": {
+        "num": "-1.9583333333333333333335"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, 1]],
+      "expected": 0,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, 2]],
+      "expected": -1,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, 3]],
+      "expected": -5,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, 0.5]],
+      "expected": 0,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, 0.25]],
+      "expected": {
+        "num": "-0.015624999999999999999984375"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, 1.3]],
+      "expected": {
+        "num": "-0.103999999999999999999896"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "-1.90123456790123456787143209876543209876546"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, ["Complex", 1, 1]]],
+      "expected": [
+        "Complex",
+        {
+          "num": "0.4999999999999999999995"
+        },
+        0.16666666666666666
+      ],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, ["Complex", 2, -0.5]]],
+      "expected": [
+        "Complex",
+        {
+          "num": "-0.624999999999999999999375"
+        },
+        1.0416666666666663
+      ],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, -0.5]],
+      "expected": {
+        "num": "0.24999999999999999999975"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -2, -1.5]],
+      "expected": {
+        "num": "2.4999999999999999999975"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, 1]],
+      "expected": {
+        "num": "0.00833333333333333333333"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, 2]],
+      "expected": {
+        "num": "-0.991666666666666666667"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, 3]],
+      "expected": {
+        "num": "-8.99166666666666666667"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, 0.5]],
+      "expected": {
+        "num": "-0.007291666666666666666675"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, 0.25]],
+      "expected": {
+        "num": "-0.000455729166666666666675"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, 1.3]],
+      "expected": {
+        "num": "-0.029691666666666666666675"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "-2.411419753086419753099175"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, ["Complex", 1, 1]]],
+      "expected": [
+        "Complex",
+        {
+          "num": "0.008333333333333333333325"
+        },
+        0.5
+      ],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, ["Complex", 2, -0.5]]],
+      "expected": [
+        "Complex",
+        {
+          "num": "-0.194791666666666175"
+        },
+        1.3124999999999996
+      ],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, -0.5]],
+      "expected": {
+        "num": "-0.132291666666666666666675"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -3, -1.5]],
+      "expected": {
+        "num": "-3.507291666666666666666675"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, 1]],
+      "expected": {
+        "num": "-1.46035450880958681289"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, 2]],
+      "expected": {
+        "num": "-2.46035450880958681289"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, 3]],
+      "expected": {
+        "num": "-3.167461289996134337291"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, 0.5]],
+      "expected": {
+        "num": "-0.60489864342163037025"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, 0.25]],
+      "expected": {
+        "num": "0.239963524495630955345"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, 1.3]],
+      "expected": {
+        "num": "-1.81458907804058390117"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "-2.71615953928753765938"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, ["Complex", 1, 1]]],
+      "expected": ["Complex", -1.7988137444864851, -1.093576875721108],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", -2.4914742352880097, 0.39832807868404924],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, -0.5]],
+      "expected": ["Complex", -0.6048986434216299, -1.414213562373095],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 0.5, -1.5]],
+      "expected": ["Complex", -0.6048986434216299, -2.230710143300821],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, 1]],
+      "expected": {
+        "num": "2.61237534868548834335"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, 2]],
+      "expected": {
+        "num": "1.61237534868548834335"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, 3]],
+      "expected": {
+        "num": "1.25882195809221458115"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, 0.5]],
+      "expected": {
+        "num": "4.77653794755483324857"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, 0.25]],
+      "expected": {
+        "num": "10.2130553604666007389"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, 1.3]],
+      "expected": {
+        "num": "2.15195547695787736469"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "1.46425424919948810837"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, ["Complex", 1, 1]]],
+      "expected": ["Complex", 1.650934751949365, -0.9673570656987679],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 1.5565957777657513, 0.2421063223251344],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, -0.5]],
+      "expected": ["Complex", 4.776537947554832, 2.82842712474619],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 1.5, -1.5]],
+      "expected": ["Complex", 4.776537947554832, 3.372758178698007],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, 1]],
+      "expected": {
+        "num": "1.34148725725091717976"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, 2]],
+      "expected": {
+        "num": "0.34148725725091717976"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, 3]],
+      "expected": {
+        "num": "0.16471056195428029866"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, 0.5]],
+      "expected": {
+        "num": "6.24711063456881148529"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, 0.25]],
+      "expected": {
+        "num": "32.8474519546976858627"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, 1.3]],
+      "expected": {
+        "num": "0.783218553908237343364"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.257447605150205592649"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, ["Complex", 1, 1]]],
+      "expected": ["Complex", 0.018739837095718206, -0.5895477083381613],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.28782016436536645, 0.13969668439393565],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, -0.5]],
+      "expected": ["Complex", 6.2471106345688145, -5.65685424949238],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", 2.5, -1.5]],
+      "expected": ["Complex", 6.2471106345688145, -6.019741618793591],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, 1]],
+      "expected": {
+        "num": "-0.207886224977354566017"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, 2]],
+      "expected": {
+        "num": "-1.207886224977354566017"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, 3]],
+      "expected": {
+        "num": "-2.622099787350449614818689"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, 0.5]],
+      "expected": {
+        "num": "0.0608884655805949199988"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, 0.25]],
+      "expected": {
+        "num": "0.0903222587612462439787"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, 1.3]],
+      "expected": {
+        "num": "-0.454363742420250792944"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "-1.63960452469900834952"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, ["Complex", 1, 1]]],
+      "expected": ["Complex", 0.08784592782018656, -0.7951014135934058],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", -1.1578011135273243, 0.6177112023106479],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, -0.5]],
+      "expected": ["Complex", 0.060888465580597545, 0.7071067811865475],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", -0.5, -1.5]],
+      "expected": ["Complex", 0.060888465580597545, 1.9318516525781364],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.1503557032549026, -0.4375308659196079],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.1503557032549026, -0.4375308659196079],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 3]],
+      "expected": ["Complex", -0.041954022086090365, -0.2777905468411992],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.50749884820183, 2.031398808933987],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 0.25]],
+      "expected": ["Complex", 3.634220798824735, 15.19537018557054],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], 1.3]],
+      "expected": ["Complex", 0.6341786502688999, -0.5361103835392125],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], ["Rational", 7, 3]]],
+      "expected": ["Complex", 0.05513338963679521, -0.3768626550483673],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], ["Complex", 1, 1]]],
+      "expected": ["Complex", -0.6353043434400117, -1.6588486436058945],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.18539348901299457, -0.27037369242287357],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], -0.5]],
+      "expected": ["Complex", 74.71038275876376, 61.175424806622686],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 2, 1], -1.5]],
+      "expected": ["Complex", 84.16123741505538, 57.11864335428585],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 1]],
+      "expected": ["Complex", 0.5327366709742324, -0.07889651342583266],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 2]],
+      "expected": ["Complex", -0.46726332902576745, -0.07889651342583266],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 3]],
+      "expected": ["Complex", -0.12290627368216775, 0.5386941426199702],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 0.5]],
+      "expected": ["Complex", -0.8021884345819367, 0.7912600357594943],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 0.25]],
+      "expected": ["Complex", -0.8213159956117992, -2.117913546901069],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], 1.3]],
+      "expected": ["Complex", 0.15737017483099836, -0.4426402147700411],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], ["Rational", 7, 3]]],
+      "expected": ["Complex", -0.45372702165717105, 0.20444019400309937],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], ["Complex", 1, 1]]],
+      "expected": ["Complex", -1.4173015059291294, -8.335643562213376],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], ["Complex", 2, -0.5]]],
+      "expected": ["Complex", -0.18101636158511364, 0.009312340272338617],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], -0.5]],
+      "expected": ["Complex", 15305.129609925008, 8535.093960014086],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", 0.5, 3], -1.5]],
+      "expected": ["Complex", 5816.163167011819, 5023.948927089383],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 1]],
+      "expected": ["Complex", -0.0008178931329495371, -0.22307168869777091],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 2]],
+      "expected": ["Complex", -1.0008178931329497, -0.22307168869777091],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 3]],
+      "expected": ["Complex", -2.088685980146858, 0.6805560140961944],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 0.5]],
+      "expected": ["Complex", 0.10115989202216885, 0.10136586762605052],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 0.25]],
+      "expected": ["Complex", -0.10559971039019372, 0.17260556668191807],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], 1.3]],
+      "expected": ["Complex", -0.24331093868775658, -0.33044127825842945],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], ["Rational", 7, 3]]],
+      "expected": ["Complex", -1.3821851440871353, -0.009056308250057337],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], ["Complex", 1, 1]]],
+      "expected": ["Complex", 1.0409575431185207, -1.7999104323368356],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], ["Complex", 2, -0.5]]],
+      "expected": ["Complex", -0.7461533972576098, 0.24925781603306635],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], -0.5]],
+      "expected": ["Complex", -10.35412557038761, 12.688376380925272],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["HurwitzZeta", ["Complex", -0.5, 1], -1.5]],
+      "expected": ["Complex", 0.8250495553510385, 38.73186936468636],
+      "hidden": true
+    }
+  ],
+  "LerchPhi": [
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 2, 1]],
+      "expected": 1.164481052930025,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 2, 2]],
+      "expected": 0.32896210586004987,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 2, 0.5]],
+      "expected": 4.277145500580949,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 2, ["Rational", 5, 2]]],
+      "expected": 0.21969311343491027,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 3, 1]],
+      "expected": 1.0744263872160806,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 3, 2]],
+      "expected": 0.14885277443216077,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 3, 0.5]],
+      "expected": 8.168022726140352,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 3, ["Rational", 5, 2]]],
+      "expected": 0.07949831196880995,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 0.5, 1]],
+      "expected": 1.6122534460857043,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 0.5, 2]],
+      "expected": 1.224506892171409,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 0.5, 0.5]],
+      "expected": 2.1017124624893513,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, 0.5, ["Rational", 5, 2]]],
+      "expected": 1.1170024386095752,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, -1, 1]],
+      "expected": 3.9999999999999996,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, -1, 2]],
+      "expected": 5.999999999999999,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, -1, 0.5]],
+      "expected": 2.999999999999999,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, -1, ["Rational", 5, 2]]],
+      "expected": 7.000000000000001,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.109707090706641, -0.1160991235833943],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.21941418141328126, -0.23219824716678855],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.308545670420987, 2.422109611421262],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.10954333858083394, -0.18432313114256382],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 2, 1]],
+      "expected": 0.8968284138472924,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 2, 2]],
+      "expected": 0.20634317230541518,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 2, 0.5]],
+      "expected": 3.809896676518156,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 2, ["Rational", 5, 2]]],
+      "expected": 0.12847559496151303,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 3, 1]],
+      "expected": 0.9451956893177937,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 3, 2]],
+      "expected": 0.10960862136441252,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 3, 0.5]],
+      "expected": 7.86547751435338,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 3, ["Rational", 5, 2]]],
+      "expected": 0.05450265000611885,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 0.5, 1]],
+      "expected": 0.747504475961946,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 0.5, 2]],
+      "expected": 0.504991048076108,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 0.5, 0.5]],
+      "expected": 1.1175876689096338,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, 0.5, ["Rational", 5, 2]]],
+      "expected": 0.4464895880016085,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, -1, 1]],
+      "expected": 0.4444444444444444,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, -1, 2]],
+      "expected": 1.1111111111111112,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, -1, 0.5]],
+      "expected": 0.11111111111111112,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, -1, ["Rational", 5, 2]]],
+      "expected": 1.4444444444444444,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.9150630921511704, 0.06094203933961422],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.16987381569765908, -0.12188407867922844],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.8941852028913377, 2.619141408581271],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.5, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.085735311021356, -0.09743363088361238],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 2, 1]],
+      "expected": 0.8357368657969574,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 2, 2]],
+      "expected": 0.18251459355893632,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 2, 0.5]],
+      "expected": 3.6905224756933044,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 2, ["Rational", 5, 2]]],
+      "expected": 0.11175614283124172,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 3, 1]],
+      "expected": 0.9095980017159597,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 3, 2]],
+      "expected": 0.10044666476004464,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 3, 0.5]],
+      "expected": 7.773051219077413,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 3, ["Rational", 5, 2]]],
+      "expected": 0.04903442684454213,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 0.5, 1]],
+      "expected": 0.6283621649540584,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 0.5, 2]],
+      "expected": 0.4129309278288239,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 0.5, 0.5]],
+      "expected": 0.9731467834139055,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, 0.5, ["Rational", 5, 2]]],
+      "expected": 0.3626915356490913,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, -1, 1]],
+      "expected": 0.2770083102493077,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, -1, 2]],
+      "expected": 0.8033240997229912,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, -1, 0.5]],
+      "expected": 0.013850415512466406,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, -1, ["Rational", 5, 2]]],
+      "expected": 1.066481994459834,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.8600491653137049, 0.0920345747015262],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.15550092742921656, -0.10226063855725133],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.7726319509159323, 2.6469930917510727],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -0.9, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.07807896300721556, -0.08225986838173878],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 2, 1]],
+      "expected": 0.8224670334241132,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 2, 2]],
+      "expected": 0.1775329665758868,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 2, 0.5]],
+      "expected": 3.663862376708875,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 2, ["Rational", 5, 2]]],
+      "expected": 0.10830682115332053,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 3, 1]],
+      "expected": 0.9015426773696955,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 3, 2]],
+      "expected": 0.09845732263030428,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 3, 0.5]],
+      "expected": 7.751569170074954,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 3, ["Rational", 5, 2]]],
+      "expected": 0.047865466371251345,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 0.5, 1]],
+      "expected": 0.6048986434216302,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 0.5, 2]],
+      "expected": 0.3951013565783697,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 0.5, 0.5]],
+      "expected": 0.9442583142382002,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, 0.5, ["Rational", 5, 2]]],
+      "expected": 0.3465413327928312,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, -1, 1]],
+      "expected": 0.25,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, -1, 2]],
+      "expected": 0.75,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, -1, 0.5]],
+      "expected": 0,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, -1, ["Rational", 5, 2]]],
+      "expected": 1,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.847689164837414, 0.0982683895700162],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.15231083516258656, -0.0982683895700162],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.7449197230143425, 2.6519729447382763],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", -1, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.07637257819822992, -0.07918158261153377],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 2, 1]],
+      "expected": 1.07061055633093,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 2, 2]],
+      "expected": 0.2824422253237217,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 2, 0.5]],
+      "expected": 4.122618933554635,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 2, ["Rational", 5, 2]]],
+      "expected": 0.18412515909637958,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 3, 1]],
+      "expected": 1.033845583186293,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 3, 2]],
+      "expected": 0.13538233274517286,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 3, 0.5]],
+      "expected": 8.078488306135496,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 3, ["Rational", 5, 2]]],
+      "expected": 0.07062771298276051,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 0.5, 1]],
+      "expected": 1.2229397215971856,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 0.5, 2]],
+      "expected": 0.8917588863887423,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 0.5, 0.5]],
+      "expected": 1.6686008286385703,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, 0.5, ["Rational", 5, 2]]],
+      "expected": 0.8042099365366978,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, -1, 1]],
+      "expected": 1.7777777777777777,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, -1, 2]],
+      "expected": 3.111111111111111,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, -1, 0.5]],
+      "expected": 1.111111111111111,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, -1, ["Rational", 5, 2]]],
+      "expected": 3.7777777777777777,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.051400732108945, -0.047267887677210255],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.20560292843577851, -0.18907155070884102],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.185550463844432, 2.502641530788986],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.25, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.10388389165758391, -0.15001950306775721],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 2, 1]],
+      "expected": 1.4441274700055085,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 2, 2]],
+      "expected": 0.4934749666727882,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 2, 0.5]],
+      "expected": 4.686783273082932,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 2, ["Rational", 5, 2]]],
+      "expected": 0.35405342355917346,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 3, 1]],
+      "expected": 1.166287722429376,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 3, 2]],
+      "expected": 0.18476413603264163,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 3, 0.5]],
+      "expected": 8.351549851360646,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 3, ["Rational", 5, 2]]],
+      "expected": 0.10479405517776089,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 0.5, 1]],
+      "expected": 4.468833808303737,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 0.5, 2]],
+      "expected": 3.8542597870041466,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 0.5, 0.5]],
+      "expected": 5.11163624496335,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, 0.5, ["Rational", 5, 2]]],
+      "expected": 3.6575009379695027,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, -1, 1]],
+      "expected": 100.00000000000001,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, -1, 2]],
+      "expected": 110.00000000000004,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, -1, 0.5]],
+      "expected": 94.99999999999994,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, -1, ["Rational", 5, 2]]],
+      "expected": 114.99999999999989,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.1929287758657432, -0.340556246338811],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.21436530651749217, -0.37839582926534593],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.516191661909127, 2.1522546812749304],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", 0.9, ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.08847955787338069, -0.30347153591834614],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, 1]],
+      "expected": 1.0986396899311905,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, 2]],
+      "expected": 0.29591906979357147,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, 0.5]],
+      "expected": 4.1697385430143274,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 2, ["Rational", 5, 2]]],
+      "expected": 0.19431355379560278,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, 1]],
+      "expected": 1.0464835834645199,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, 2]],
+      "expected": 0.1394507503935607,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, 0.5]],
+      "expected": 8.106907002058708,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 3, ["Rational", 5, 2]]],
+      "expected": 0.07327412963951402,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, 1]],
+      "expected": 1.3263265058420264,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, 2]],
+      "expected": 0.9789795175260793,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, 0.5]],
+      "expected": 1.7848050437257632,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], 0.5, ["Rational", 5, 2]]],
+      "expected": 0.8858335893908359,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, 1]],
+      "expected": 2.2499999999999996,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, 2]],
+      "expected": 3.749999999999999,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, 0.5]],
+      "expected": 1.4999999999999993,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], -1, ["Rational", 5, 2]]],
+      "expected": 4.499999999999998,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.0700836686021413, -0.06715638695388616],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.21025100580642178, -0.20146916086165853],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.224867422277603, 2.4796489989745893],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Rational", 1, 3], ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.10598096947609492, -0.15983669023372948],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, 1]],
+      "expected": ["Complex", 1.101836588740841, 0.10988045400413204],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, 2]],
+      "expected": ["Complex", 0.2947950867903031, 0.05360481991760274],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, 0.5]],
+      "expected": ["Complex", 4.181499243636333, 0.18243256267398936],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.19270908242970575, 0.04070070796466971],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, 1]],
+      "expected": ["Complex", 1.0513066923524608, 0.04842457707035532],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, 2]],
+      "expected": ["Complex", 0.14020020024836358, 0.015911292489615658],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, 0.5]],
+      "expected": ["Complex", 8.121165761843056, 0.10727030391186324],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.073549546211705, 0.010421770459496018],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, 1]],
+      "expected": ["Complex", 1.2614091369882543, 0.41542878530844146],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, 2]],
+      "expected": ["Complex", 0.9167691615513381, 0.3509950921076001],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, 0.5]],
+      "expected": ["Complex", 1.7197286399191298, 0.46600764369924813],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.8252517091723104, 0.3285465602796576],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, 1]],
+      "expected": ["Complex", 1.333333333333333, 1.777777777777778],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, 2]],
+      "expected": ["Complex", 2.6666666666666674, 2.4444444444444424],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, 0.5]],
+      "expected": ["Complex", 0.6666666666666666, 1.4444444444444442],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], -1, ["Rational", 5, 2]]],
+      "expected": ["Complex", 3.3333333333333357, 2.7777777777777777],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 1.1600967534137019, 0.006328927692369448],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.26374951869276536, -0.18198981978865053],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 3.339347509082892, 2.6332805602247045],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", 0.4, 0.3], ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.1481488486383597, -0.15027197224093877],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, 1]],
+      "expected": ["Complex", 0.9167986759971546, 0.09467911486749002],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, 2]],
+      "expected": ["Complex", 0.2126469253958784, 0.03881449276816393],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, 0.5]],
+      "expected": ["Complex", 3.853772051558024, 0.17804143862927913],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 2, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.13250323092790586, 0.027686339466071092],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, 1]],
+      "expected": ["Complex", 0.9591056061308406, 0.05206380477361099],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, 2]],
+      "expected": ["Complex", 0.11264770749280406, 0.014200163242636779],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, 0.5]],
+      "expected": ["Complex", 7.904718153248676, 0.12990910279935847],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 3, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.05618154725455815, 0.008653632327637262],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, 1]],
+      "expected": ["Complex", 0.7637974549105832, 0.20811582103519083],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, 2]],
+      "expected": ["Complex", 0.514466688365942, 0.16372507715926807],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, 0.5]],
+      "expected": ["Complex", 1.1415267933539475, 0.24801149986829354],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], 0.5, ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.45423083336681386, 0.14979712865953326],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, 1]],
+      "expected": ["Complex", 0.38261239239026473, 0.3454139653523225],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, 2]],
+      "expected": ["Complex", 1.052715485173771, 0.6031459241152096],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, 0.5]],
+      "expected": ["Complex", 0.04756084599851221, 0.2165479859708789],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], -1, ["Rational", 5, 2]]],
+      "expected": ["Complex", 1.3877670315655222, 0.7320119034966522],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], 1]],
+      "expected": ["Complex", 0.9897846074295557, 0.1356287740983361],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], 2]],
+      "expected": ["Complex", 0.20846766123618007, -0.10464981160081954],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 2.9969942562474174, 2.7925848156947644],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["LerchPhi", ["Complex", -0.3, 0.5], ["Complex", 2, 1], ["Rational", 5, 2]]],
+      "expected": ["Complex", 0.11446511663271236, -0.08926367800980035],
+      "hidden": true
+    }
+  ],
+  "PolyLog": [
+    {
+      "expr": ["N", ["PolyLog", 2, 0.5]],
+      "expected": 0.5822405264650125,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2, -0.5]],
+      "expected": -0.44841420692364636,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2, 0.25]],
+      "expected": 0.2676526390827325,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2, 0.9]],
+      "expected": 1.2997147230049588,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2, ["Rational", 1, 3]]],
+      "expected": 0.3662132299770634,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2, ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.40777049929509657, 0.374503158223905],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 3, 0.5]],
+      "expected": 0.5372131936080403,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 3, -0.5]],
+      "expected": -0.47259784465889704,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 3, 0.25]],
+      "expected": 0.25846139579657323,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 3, 0.9]],
+      "expected": 1.0496589501864397,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 3, ["Rational", 1, 3]]],
+      "expected": 0.34882786115484005,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 3, ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.40599530381987775, 0.33476183853388025],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 0.5, 0.5]],
+      "expected": 0.8061267230428522,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 0.5, -0.5]],
+      "expected": -0.373752237980973,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 0.5, 0.25]],
+      "expected": 0.3057349303992964,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 0.5, 0.9]],
+      "expected": 4.021950427473364,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 0.5, ["Rational", 1, 3]]],
+      "expected": 0.44210883528067546,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 0.5, ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.3799350192027693, 0.5445942552198528],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 1.5, 0.5]],
+      "expected": 0.624837020819914,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 1.5, -0.5]],
+      "expected": -0.42988732158057935,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 1.5, 0.25]],
+      "expected": 0.2757005086448229,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 1.5, 0.9]],
+      "expected": 1.614438528566339,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 1.5, ["Rational", 1, 3]]],
+      "expected": 0.38178350786901616,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 1.5, ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.40619397959402637, 0.41007586834837495],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2.5, 0.5]],
+      "expected": 0.5549972787175124,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2.5, -0.5]],
+      "expected": -0.46229778219006346,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2.5, 0.25]],
+      "expected": 0.2621937704285516,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2.5, 0.9]],
+      "expected": 1.1390030252021563,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2.5, ["Rational", 1, 3]]],
+      "expected": 0.35583074003232074,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", 2.5, ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.4072217113246216, 0.3507424837631956],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", -1, 0.5]],
+      "expected": 2,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", -1, -0.5]],
+      "expected": {
+        "num": "-0.222222222222222222222"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", -1, 0.25]],
+      "expected": {
+        "num": "0.444444444444444444445"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", -1, 0.9]],
+      "expected": 90,
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", -1, ["Rational", 1, 3]]],
+      "expected": {
+        "num": "0.74999999999999999999925"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", -1, ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 1.9136e-16, 1.1111111111111114],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 2, 1], 0.5]],
+      "expected": ["Complex", 0.5548535453533205, -0.05804956179169715],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 2, 1], -0.5]],
+      "expected": ["Complex", -0.4575315460755852, -0.03047101966980711],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 2, 1], 0.25]],
+      "expected": ["Complex", 0.26285018302723623, -0.011816971919302564],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 2, 1], 0.9]],
+      "expected": ["Complex", 1.073635898279169, -0.3065006217049299],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 2, 1], ["Rational", 1, 3]]],
+      "expected": ["Complex", 0.3566945562007138, -0.022385462317962054],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 2, 1], ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.4621400230577699, 0.35056059710105836],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], 0.5]],
+      "expected": ["Complex", 0.6700397970761983, 0.23301926975771328],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], -0.5]],
+      "expected": ["Complex", -0.3913103161117429, 0.06975146663327912],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], 0.25]],
+      "expected": ["Complex", 0.2884064661247059, 0.03875347060829805],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], 0.9]],
+      "expected": ["Complex", 0.580361076526937, 2.242263748000801],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], ["Rational", 1, 3]]],
+      "expected": ["Complex", 0.4043299322379448, 0.07792572456064256],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyLog", ["Complex", 0.5, -1], ["Complex", 0.4, 0.3]]],
+      "expected": ["Complex", 0.24654523479288867, 0.4321567364244429],
+      "hidden": true
+    }
+  ],
+  "PolyGamma": [
+    {
+      "expr": ["N", ["PolyGamma", 1, 1]],
+      "expected": {
+        "num": "1.64493406684822643647"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, 2]],
+      "expected": {
+        "num": "0.644934066848226436472"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, 0.5]],
+      "expected": {
+        "num": "4.93480220054467930942"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, 1.3]],
+      "expected": {
+        "num": "1.13425343499661935436"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.533097125427094081793"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, ["Complex", 1, 1]]],
+      "expected": ["Complex", 0.46300009662276376, -0.794233542759319],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, ["Complex", 0.5, 0.3]]],
+      "expected": ["Complex", 2.2590340759053333, -2.8289967861156966],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 1, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.5881978909500615, 0.18504197243379086],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, 1]],
+      "expected": {
+        "num": "-2.4041138063191885708"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, 2]],
+      "expected": {
+        "num": "-0.404113806319188570799"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, 0.5]],
+      "expected": {
+        "num": "-16.8287966442343199956"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, 1.3]],
+      "expected": {
+        "num": "-1.1984625146519565927"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "-0.278372399401607552457"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, ["Complex", 1, 1]]],
+      "expected": ["Complex", 0.36855293158793523, 0.7666528503450666],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, ["Complex", 0.5, 0.3]]],
+      "expected": ["Complex", -0.17725989989006555, 10.451822205943445],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 2, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", -0.3073872674606165, -0.20845269482746528],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, 1]],
+      "expected": {
+        "num": "6.4939394022668291491"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, 2]],
+      "expected": {
+        "num": "0.493939402266829149096"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, 0.5]],
+      "expected": {
+        "num": "97.4090910340024372364"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, 1.3]],
+      "expected": {
+        "num": "2.40102391430892661856"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.285379043814241755772"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, ["Complex", 1, 1]]],
+      "expected": ["Complex", -1.5228744489534964, -0.31728657866196086],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, ["Complex", 0.5, 0.3]]],
+      "expected": ["Complex", -27.94427115784687, -43.96940883981447],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 3, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.28033483085344774, 0.33648883590806505],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, 1]],
+      "expected": {
+        "num": "122.081167438133896766"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, 2]],
+      "expected": {
+        "num": "2.08116743813389676574"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, 0.5]],
+      "expected": {
+        "num": "7691.11354860243549624"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, 1.3]],
+      "expected": {
+        "num": "25.7926012806130505379"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, ["Rational", 7, 3]]],
+      "expected": {
+        "num": "0.857814321602379528571"
+      },
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, ["Complex", 1, 1]]],
+      "expected": ["Complex", -0.9330848362848718, 14.515852291904068],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, ["Complex", 0.5, 0.3]]],
+      "expected": ["Complex", -3033.627950298733, 298.5885136366724],
+      "hidden": true
+    },
+    {
+      "expr": ["N", ["PolyGamma", 5, ["Complex", 2, -0.5]]],
+      "expected": ["Complex", 0.27132469953315896, 1.7071964092847043],
+      "hidden": true
+    }
+  ]
+}

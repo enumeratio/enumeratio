@@ -15,6 +15,11 @@
           "input": "list(continued_fraction((355/113)))",
           "output": "[3, 7, 16]",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "list(continued_fraction(Rational(355, 113)))",
+          "output": "[3, 7, 16]",
+          "verdict": "agree"
         }
       }
     },

@@ -20,6 +20,16 @@
           "input": "sin(n(0))",
           "output": "0.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sin(0)",
+          "output": "0.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin(0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",6]]": {
@@ -36,6 +46,11 @@
         "rust": {
           "input": "sin((x(std::f64::consts::PI) / n(6)))",
           "output": "0.49999999999999994",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin((S(pi) / 6))",
+          "output": "1/2",
           "verdict": "agree"
         }
       },
@@ -54,6 +69,11 @@
           "input": "sin((x(std::f64::consts::PI) / n(4)))",
           "output": "0.7071067811865475",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin((S(pi) / 4))",
+          "output": "sqrt(2)/2",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",3]]": {
@@ -70,6 +90,11 @@
         "rust": {
           "input": "sin((x(std::f64::consts::PI) / n(3)))",
           "output": "0.8660254037844386",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin((S(pi) / 3))",
+          "output": "sqrt(3)/2",
           "verdict": "agree"
         }
       },
@@ -88,6 +113,11 @@
           "input": "sin((x(std::f64::consts::PI) / n(2)))",
           "output": "1.0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin((S(pi) / 2))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",\"Pi\"]": {
@@ -104,6 +134,16 @@
         "rust": {
           "input": "sin(x(std::f64::consts::PI))",
           "output": "1.2246467991473532e-16",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sin(pi)",
+          "output": "1.69568553207377992879174029388e-31",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin(pi)",
+          "output": "0",
           "verdict": "agree"
         }
       },
@@ -122,6 +162,11 @@
           "input": "(power(sin((x(std::f64::consts::PI) / n(6))), n(2)) + power(cos((x(std::f64::consts::PI) / n(6))), n(2)))",
           "output": "1.0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((sin((S(pi) / 6))**2) + (cos((S(pi) / 6))**2))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Sin\",[\"Negate\",[\"Divide\",\"Pi\",6]]],[\"Negate\",[\"Sin\",[\"Divide\",\"Pi\",6]]]]": {
@@ -139,6 +184,11 @@
           "input": "equal(sin((-((x(std::f64::consts::PI) / n(6))))), (-(sin((x(std::f64::consts::PI) / n(6))))))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(sin((-(S(pi) / 6))), (-sin((S(pi) / 6))))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Add\",[\"Divide\",\"Pi\",6],[\"Multiply\",2,\"Pi\"]]]": {
@@ -155,6 +205,11 @@
         "rust": {
           "input": "sin(((x(std::f64::consts::PI) / n(6)) + (n(2) * x(std::f64::consts::PI))))",
           "output": "0.5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin(((S(pi) / 6) + (2 * pi)))",
+          "output": "1/2",
           "verdict": "agree"
         }
       },
@@ -177,6 +232,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Sin is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "sin([0, (S(pi) / 2), pi])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Sin threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Sin\",[\"Degrees\",30]]": {
@@ -201,6 +263,16 @@
           "input": "sin(n(1))",
           "output": "0.8414709848078965",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sin(1)",
+          "output": "0.84147098480789650665250232163",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin(1)",
+          "output": "sin(1)",
+          "verdict": "agree"
         }
       },
       "[\"Sin\",[\"Divide\",\"Pi\",5]]": {
@@ -217,6 +289,11 @@
         "rust": {
           "input": "sin((x(std::f64::consts::PI) / n(5)))",
           "output": "0.5877852522924731",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sin((S(pi) / 5))",
+          "output": "sqrt(5/8 - sqrt(5)/8)",
           "verdict": "agree"
         }
       }
@@ -237,6 +314,16 @@
           "input": "cos(n(0))",
           "output": "1.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "cos(0)",
+          "output": "1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos(0)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",6]]": {
@@ -253,6 +340,11 @@
         "rust": {
           "input": "cos((x(std::f64::consts::PI) / n(6)))",
           "output": "0.8660254037844387",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos((S(pi) / 6))",
+          "output": "sqrt(3)/2",
           "verdict": "agree"
         }
       },
@@ -271,6 +363,11 @@
           "input": "cos((x(std::f64::consts::PI) / n(4)))",
           "output": "0.7071067811865476",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos((S(pi) / 4))",
+          "output": "sqrt(2)/2",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",3]]": {
@@ -287,6 +384,11 @@
         "rust": {
           "input": "cos((x(std::f64::consts::PI) / n(3)))",
           "output": "0.5000000000000001",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos((S(pi) / 3))",
+          "output": "1/2",
           "verdict": "agree"
         }
       },
@@ -305,6 +407,11 @@
           "input": "cos((x(std::f64::consts::PI) / n(2)))",
           "output": "6.123233995736766e-17",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos((S(pi) / 2))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",\"Pi\"]": {
@@ -321,6 +428,16 @@
         "rust": {
           "input": "cos(x(std::f64::consts::PI))",
           "output": "-1.0",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "cos(pi)",
+          "output": "-1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos(pi)",
+          "output": "-1",
           "verdict": "agree"
         }
       },
@@ -339,6 +456,11 @@
           "input": "equal(cos((-((x(std::f64::consts::PI) / n(3))))), cos((x(std::f64::consts::PI) / n(3))))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(cos((-(S(pi) / 3))), cos((S(pi) / 3)))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Cos\",[\"Divide\",\"Pi\",6]],[\"Sin\",[\"Subtract\",[\"Divide\",\"Pi\",2],[\"Divide\",\"Pi\",6]]]]": {
@@ -355,6 +477,11 @@
         "rust": {
           "input": "equal(cos((x(std::f64::consts::PI) / n(6))), sin(((x(std::f64::consts::PI) / n(2)) - (x(std::f64::consts::PI) / n(6)))))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(cos((S(pi) / 6)), sin(((S(pi) / 2) - (S(pi) / 6))))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -377,6 +504,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Cos is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "cos([0, (S(pi) / 2), pi])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Cos threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Cos\",2]": {
@@ -394,6 +528,16 @@
           "input": "cos(n(2))",
           "output": "-0.4161468365471424",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "cos(2)",
+          "output": "-0.416146836547142386997568229501",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos(2)",
+          "output": "cos(2)",
+          "verdict": "agree"
         }
       },
       "[\"Cos\",[\"Divide\",\"Pi\",5]]": {
@@ -410,6 +554,11 @@
         "rust": {
           "input": "cos((x(std::f64::consts::PI) / n(5)))",
           "output": "0.8090169943749475",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "cos((S(pi) / 5))",
+          "output": "1/4 + sqrt(5)/4",
           "verdict": "agree"
         }
       }
@@ -430,6 +579,16 @@
           "input": "tan(n(0))",
           "output": "0.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "tan(0)",
+          "output": "0.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan(0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",6]]": {
@@ -446,6 +605,11 @@
         "rust": {
           "input": "tan((x(std::f64::consts::PI) / n(6)))",
           "output": "0.5773502691896256",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan((S(pi) / 6))",
+          "output": "sqrt(3)/3",
           "verdict": "agree"
         }
       },
@@ -464,6 +628,11 @@
           "input": "tan((x(std::f64::consts::PI) / n(4)))",
           "output": "0.9999999999999999",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan((S(pi) / 4))",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",3]]": {
@@ -480,6 +649,11 @@
         "rust": {
           "input": "tan((x(std::f64::consts::PI) / n(3)))",
           "output": "1.7320508075688767",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan((S(pi) / 3))",
+          "output": "sqrt(3)",
           "verdict": "agree"
         }
       },
@@ -498,6 +672,11 @@
           "input": "equal(tan((x(std::f64::consts::PI) / n(4))), (sin((x(std::f64::consts::PI) / n(4))) / cos((x(std::f64::consts::PI) / n(4)))))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(tan((S(pi) / 4)), (S(sin((S(pi) / 4))) / cos((S(pi) / 4))))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Negate\",[\"Divide\",\"Pi\",4]]]": {
@@ -515,6 +694,11 @@
           "input": "tan((-((x(std::f64::consts::PI) / n(4)))))",
           "output": "-0.9999999999999999",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan((-(S(pi) / 4)))",
+          "output": "-1",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",[\"Add\",[\"Divide\",\"Pi\",4],\"Pi\"]]": {
@@ -531,6 +715,11 @@
         "rust": {
           "input": "tan(((x(std::f64::consts::PI) / n(4)) + x(std::f64::consts::PI)))",
           "output": "0.9999999999999997",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan(((S(pi) / 4) + pi))",
+          "output": "1",
           "verdict": "agree"
         }
       },
@@ -553,6 +742,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Tan is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "tan([0, (S(pi) / 4)])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Tan threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Tan\",[\"Divide\",\"Pi\",2]]": {
@@ -574,6 +770,11 @@
           "verdict": "inconclusive",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers \"ComplexInfinity\", and Rust gives 1.633123935319537e16."
+        },
+        "sympy": {
+          "input": "tan((S(pi) / 2))",
+          "output": "zoo",
+          "verdict": "agree"
         }
       },
       "[\"Tan\",1]": {
@@ -590,6 +791,16 @@
         "rust": {
           "input": "tan(n(1))",
           "output": "1.557407724654902",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "tan(1)",
+          "output": "1.55740772465490223050697480746",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "tan(1)",
+          "output": "tan(1)",
           "verdict": "agree"
         }
       }
@@ -1001,6 +1212,16 @@
           "input": "exp(n(0))",
           "output": "1.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "exp(0)",
+          "output": "1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "exp(0)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Exp\",1]": {
@@ -1017,6 +1238,16 @@
         "rust": {
           "input": "exp(n(1))",
           "output": "2.718281828459045",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "exp(1)",
+          "output": "2.71828182845904523536028747135",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "exp(1)",
+          "output": "E",
           "verdict": "agree"
         }
       },
@@ -1035,6 +1266,16 @@
           "input": "equal(exp(ln(n(5))), n(5))",
           "output": "true",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq(exp(log(5)), 5, 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(exp(log(5)), 5)",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Multiply\",[\"Exp\",2],[\"Exp\",3]],[\"Exp\",5]]": {
@@ -1051,6 +1292,16 @@
         "rust": {
           "input": "equal((exp(n(2)) * exp(n(3))), exp(n(5)))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq((exp(2) * exp(3)), exp(5), 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((exp(2) * exp(3)), exp(5))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -1073,6 +1324,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Exp is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "exp([0, 1])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Exp threads over (or pools) the list; SymPy's takes scalars."
         }
       }
     },
@@ -1092,6 +1350,16 @@
           "input": "ln(n(1))",
           "output": "0.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "log(1)",
+          "output": "0.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "log(1)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Ln\",\"ExponentialE\"]": {
@@ -1108,6 +1376,16 @@
         "rust": {
           "input": "ln(x(std::f64::consts::E))",
           "output": "1.0",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "log(e)",
+          "output": "1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "log(E)",
+          "output": "1",
           "verdict": "agree"
         }
       },
@@ -1128,6 +1406,18 @@
           "input": "ln(n(0))",
           "output": "NegativeInfinity",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "log(0)",
+          "output": "-inf",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "log(0)",
+          "output": "zoo",
+          "verdict": "disagree",
+          "kind": "undefined-form",
+          "note": "A pole or undefined value: compute-engine answers NegativeInfinity, SymPy gives zoo."
         }
       },
       "[\"Equal\",[\"Ln\",[\"Exp\",5]],5]": {
@@ -1144,6 +1434,16 @@
         "rust": {
           "input": "equal(ln(exp(n(5))), n(5))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq(log(exp(5)), 5, 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(log(exp(5)), 5)",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -1164,6 +1464,16 @@
           "input": "equal((ln(n(2)) + ln(n(3))), ln(n(6)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq((log(2) + log(3)), log(6), 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((log(2) + log(3)), log(6))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Ln\",-1]": {
@@ -1175,9 +1485,7 @@
         "sage": {
           "input": "log(-1)",
           "output": "I*pi",
-          "verdict": "disagree",
-          "kind": "unevaluated",
-          "note": "A negative real stays symbolic under plain evaluation here (N() gives i*pi); Sage's log(-1) continues straight to the exact complex value I*pi."
+          "verdict": "agree"
         },
         "rust": {
           "input": "ln(n(-1))",
@@ -1185,6 +1493,16 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "Rust's f64 ln is real-only and gives NaN; compute-engine continues into the complex plane."
+        },
+        "mpmath": {
+          "input": "log(-1)",
+          "output": "(0.0 + 3.14159265358979323846264338328j)",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "log(-1)",
+          "output": "I*pi",
+          "verdict": "agree"
         }
       }
     },

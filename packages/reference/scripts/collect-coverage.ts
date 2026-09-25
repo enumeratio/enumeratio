@@ -19,8 +19,7 @@
 //
 // On numpy and Sage, since the question keeps coming up: numpy is a compile TARGET for
 // numeric evaluation, not an oracle — it has no zeta at all, and `scipy.special.zeta` is
-// the Hurwitz function restricted to real s > 1 (see `analytic/scripts/validate-mpmath.ts`,
-// which says the same). Sage bundles mpmath and SymPy, so a Sage lane would subsume both,
+// the Hurwitz function restricted to real s > 1. Sage bundles mpmath and SymPy, so a Sage lane would subsume both,
 // at the cost of a much heavier dependency for no extra coverage. We call mpmath directly.
 
 import { readFileSync, writeFileSync } from "node:fs";

@@ -51,6 +51,14 @@ fn normal(r: BigRational) -> V {
     }
 }
 
+/// `N`: an exact number as its float.
+pub fn nf(v: V) -> V {
+    match v {
+        Int(_) | Rat(_) => Float(v.f64()),
+        other => other,
+    }
+}
+
 // ── conversions the adapters use ──────────────────────────────────────────────
 
 impl V {

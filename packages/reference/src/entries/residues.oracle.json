@@ -35,6 +35,11 @@
           "input": "mod_floor(n(17), n(5))",
           "output": "2",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(17 % 5)",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",100,7]": {
@@ -67,6 +72,11 @@
           "input": "mod_floor(n(100), n(7))",
           "output": "2",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(100 % 7)",
+          "output": "2",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",-7,3]": {
@@ -97,6 +107,11 @@
         },
         "rust": {
           "input": "mod_floor(n(-7), n(3))",
+          "output": "2",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-7 % 3)",
           "output": "2",
           "verdict": "agree"
         }
@@ -141,6 +156,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Mod is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "([1, 2, 3, 4, 5] % 3)",
+          "output": "TypeError: unsupported operand type(s) for %: 'list' and 'int'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Mod threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Mod\",5,0]": {
@@ -183,6 +205,13 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers \"NaN\", and Rust gives panic: attempt to divide by zero."
+        },
+        "sympy": {
+          "input": "(5 % 0)",
+          "output": "ZeroDivisionError: integer modulo by zero",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "A pole or undefined value: compute-engine answers NaN, SymPy gives ZeroDivisionError: integer modulo by zer."
         }
       },
       "[\"Equal\",[\"Mod\",17,5],[\"Mod\",[\"Add\",17,[\"Multiply\",3,5]],5]]": {
@@ -215,6 +244,11 @@
           "input": "equal(mod_floor(n(17), n(5)), mod_floor((n(17) + (n(3) * n(5))), n(5)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((17 % 5), ((17 + (3 * 5)) % 5))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Mod\",[\"Complex\",7,5],3]": {
@@ -222,6 +256,34 @@
           "input": "Mod[Complex[7, 5], 3]",
           "output": "1 - I",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((7 + 5*I) % 3)",
+          "output": "Mod(1 + 5*I, 3)",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it."
+        },
+        "julia": {
+          "input": "mod(complex(7, 5), 3)",
+          "output": "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "mod(complex(7, 5), 3)",
+          "output": "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "((7 + 5*I) % 3)",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"Mod\",[\"Complex\",7,5],[\"Complex\",2,1]]": {
@@ -229,6 +291,34 @@
           "input": "Mod[Complex[7, 5], Complex[2, 1]]",
           "output": "-I",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((7 + 5*I) % (2 + 1*I))",
+          "output": "Mod(7 + 5*I, 2 + I)",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it."
+        },
+        "julia": {
+          "input": "mod(complex(7, 5), complex(2, 1))",
+          "output": "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "mod(complex(7, 5), complex(2, 1))",
+          "output": "MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function `mod` exists, b",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "((7 + 5*I) % (2 + 1*I))",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"Mod\",[\"Complex\",{\"num\":\"100000000000000000001\"},{\"num\":\"9007199254740993\"}],[\"Complex\",2,1]]": {
@@ -236,6 +326,34 @@
           "input": "Mod[Complex[100000000000000000001, 9007199254740993], Complex[2, 1]]",
           "output": "0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))",
+          "output": "(2 + I)*(Mod((2 - I)*(100000000000000000001 + 9007199254740993*I)/5, (2 - I)*(2 + I)/5))",
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it."
+        },
+        "julia": {
+          "input": "mod(complex(100000000000000000001, 9007199254740993), complex(2, 1))",
+          "output": "MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function `mod` exists, ",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "mod(complex(100000000000000000001, 9007199254740993), complex(2, 1))",
+          "output": "MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function `mod` exists, ",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "((100000000000000000001 + 9007199254740993*I) % (2 + 1*I))",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"Equal\",[\"Mod\",[\"Complex\",7,5],[\"Complex\",2,1]],[\"Subtract\",[\"Complex\",7,5],[\"Multiply\",[\"Complex\",2,1],[\"Quotient\",[\"Complex\",7,5],[\"Complex\",2,1]]]]]": {
@@ -250,6 +368,34 @@
           "input": "List[Mod[Complex[1, 2], 2], Mod[Complex[3, 2], 2]]",
           "output": "{1, -1}",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]",
+          "output": "[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "SymPy leaves a Gaussian-integer remainder unevaluated; compute-engine reduces it."
+        },
+        "julia": {
+          "input": "[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]",
+          "output": "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "[mod(complex(1, 2), 2), mod(complex(3, 2), 2)]",
+          "output": "MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function `mod` exists, but no met",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "[((1 + 2*I) % 2), ((3 + 2*I) % 2)]",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Mod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -535,6 +681,13 @@
           "input": "PowerMod[Complex[2, 1], 2, 3]",
           "output": "I",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "power_mod((2 + 1*I), 2, 3)",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"PowerMod\",[\"Complex\",1,2],[\"Power\",10,30],[\"Complex\",7,2]]": {
@@ -542,6 +695,13 @@
           "input": "PowerMod[Complex[1, 2], Power[10, 30], Complex[7, 2]]",
           "output": "1 + 2*I",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "power_mod((1 + 2*I), (10^30), (7 + 2*I))",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"PowerMod\",[\"Complex\",11,-7],-4,[\"Complex\",7,4]]": {
@@ -551,6 +711,13 @@
           "verdict": "disagree",
           "kind": "convention",
           "note": "Both support negative powers of a Gaussian unit; Wolfram's PowerMod asks for a unit modulo the integer norm of the Gaussian modulus rather than modulo the Gaussian integer itself -- a different definition of 'modulus' -- and declines this call."
+        },
+        "sage": {
+          "input": "power_mod((11 + -7*I), -4, (7 + 4*I))",
+          "output": "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -583,6 +750,11 @@
         },
         "rust": {
           "input": "mod_floor(((n(1) + n(4)) * (n(1) - n(4))), n(15))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(((1 + 4) * (1 - 4)) % 15)",
           "output": "0",
           "verdict": "agree"
         }
@@ -906,6 +1078,13 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "We extend PowerModList over the Gaussian integers; Wolfram's PowerModList takes integers only and leaves a Gaussian base unevaluated."
+        },
+        "sage": {
+          "input": "enumeratio_power_mod_list((0 + 1*I), (1/2), 7)",
+          "output": "TypeError: Unable to coerce I to a rational",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerModList over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"PowerModList\",[\"Complex\",3,4],[\"Rational\",1,2],[\"Add\",[\"Power\",10,20],39]]": {
@@ -915,6 +1094,13 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "Same Gaussian extension as the other row: Wolfram's PowerModList takes integers only and leaves the Gaussian base unevaluated."
+        },
+        "sage": {
+          "input": "enumeratio_power_mod_list((3 + 4*I), (1/2), ((10^20) + 39))",
+          "output": "TypeError: Unable to coerce 4*I + 3 to a rational",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerModList over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -950,6 +1136,13 @@
           "input": "ModularInverse[Complex[2, 1], 7]",
           "output": "6 + 4*I",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "inverse_mod((2 + 1*I), 7)",
+          "output": "-3*I - 1",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"ModularInverse\",[\"Complex\",11,-7],[\"Complex\",7,4]]": {
@@ -957,6 +1150,13 @@
           "input": "ModularInverse[Complex[11, -7], Complex[7, 4]]",
           "output": "-1 + 2*I",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "inverse_mod((11 + -7*I), (7 + 4*I))",
+          "output": "28",
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so ModularInverse over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },

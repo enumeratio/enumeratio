@@ -62,6 +62,12 @@ export interface ReferenceExample {
    * examples test masks them on both sides; the page doesn't assert the example.
    */
   readonly volatile?: readonly string[];
+  /**
+   * Kept as data but not shown by default: an edge case or a grid point that the tests and
+   * oracles run like any other example, too many or too minor to render. Hidden examples
+   * mostly live in an entry file's `<stem>.examples.json`.
+   */
+  readonly hidden?: boolean;
   /** Per-system oracle runs of this exact example, attached from the entry's `.oracle.json` sidecar. */
   readonly others?: Readonly<Record<string, OtherSystemRun>>;
 }

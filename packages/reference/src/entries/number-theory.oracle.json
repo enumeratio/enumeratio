@@ -35,6 +35,11 @@
           "input": "gcd(n(12), n(18))",
           "output": "6",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "gcd(12, 18)",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"GCD\",24,36]": {
@@ -65,6 +70,11 @@
         },
         "rust": {
           "input": "gcd(n(24), n(36))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "gcd(24, 36)",
           "output": "12",
           "verdict": "agree"
         }
@@ -120,6 +130,11 @@
           "input": "gcd(n(0), n(5))",
           "output": "5",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "gcd(0, 5)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"GCD\",-12,9,57]": {
@@ -171,6 +186,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's GCD is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "gcd([2, 4], [6, 8])",
+          "output": "AttributeError: 'int' object has no attribute 'is_commutative'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's GCD threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Equal\",[\"GCD\",12,18],[\"GCD\",18,12]]": {
@@ -202,6 +224,11 @@
         "rust": {
           "input": "equal(gcd(n(12), n(18)), gcd(n(18), n(12)))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(gcd(12, 18), gcd(18, 12))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -235,6 +262,11 @@
           "input": "equal((gcd(n(12), n(18)) * lcm(n(12), n(18))), (n(12) * n(18)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((gcd(12, 18) * lcm(12, 18)), (12 * 18))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"GCD\",[\"Complex\",3,1],[\"Complex\",1,3]]": {
@@ -242,6 +274,32 @@
           "input": "GCD[Complex[3, 1], Complex[1, 3]]",
           "output": "1 + I",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "gcd((3 + 1*I), (1 + 3*I))",
+          "output": "1 + I",
+          "verdict": "agree"
+        },
+        "julia": {
+          "input": "gcd(ZZ(complex(3, 1)), ZZ(complex(1, 3)))",
+          "output": "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "gcd(ZZ(complex(3, 1)), ZZ(complex(1, 3)))",
+          "output": "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "gcd((3 + 1*I), (1 + 3*I))",
+          "output": "1",
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so GCD over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -274,6 +332,11 @@
         },
         "rust": {
           "input": "lcm(n(4), n(6))",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lcm(4, 6)",
           "output": "12",
           "verdict": "agree"
         }
@@ -322,6 +385,11 @@
           "input": "lcm(n(0), n(5))",
           "output": "0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lcm(0, 5)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"LCM\",-3,7]": {
@@ -352,6 +420,11 @@
         },
         "rust": {
           "input": "lcm(n(-3), n(7))",
+          "output": "21",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lcm(-3, 7)",
           "output": "21",
           "verdict": "agree"
         }
@@ -386,6 +459,11 @@
           "input": "equal((gcd(n(27), n(81)) * lcm(n(27), n(81))), (n(27) * n(81)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((gcd(27, 81) * lcm(27, 81)), (27 * 81))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"LCM\",[\"Complex\",3,1],[\"Complex\",-1,3]]": {
@@ -393,6 +471,34 @@
           "input": "LCM[Complex[3, 1], Complex[-1, 3]]",
           "output": "3 + I",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "lcm((3 + 1*I), (-1 + 3*I))",
+          "output": "-1 + 3*I",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "Gaussian lcm is defined up to a unit; SymPy picks a different associate."
+        },
+        "julia": {
+          "input": "lcm(ZZ(complex(3, 1)), ZZ(complex(-1, 3)))",
+          "output": "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "lcm(ZZ(complex(3, 1)), ZZ(complex(-1, 3)))",
+          "output": "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "lcm((3 + 1*I), (-1 + 3*I))",
+          "output": "1",
+          "verdict": "inconclusive",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so LCM over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -422,6 +528,11 @@
           "input": "(Nat.totient 12)",
           "output": "4",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "totient(12)",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Totient\",36]": {
@@ -447,6 +558,11 @@
         },
         "mathlib4": {
           "input": "(Nat.totient 36)",
+          "output": "12",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "totient(36)",
           "output": "12",
           "verdict": "agree"
         }
@@ -476,6 +592,11 @@
           "input": "(Nat.totient 1)",
           "output": "1",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "totient(1)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Totient\",391]": {
@@ -501,6 +622,11 @@
         },
         "mathlib4": {
           "input": "(Nat.totient 391)",
+          "output": "352",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "totient(391)",
           "output": "352",
           "verdict": "agree"
         }
@@ -530,6 +656,11 @@
           "input": "((Nat.totient 1) + (Nat.totient 2) + (Nat.totient 3) + (Nat.totient 4) + (Nat.totient 6) + (Nat.totient 12))",
           "output": "12",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(totient(1) + totient(2) + totient(3) + totient(4) + totient(6) + totient(12))",
+          "output": "12",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Totient\",12],[\"Multiply\",[\"Totient\",4],[\"Totient\",3]]]": {
@@ -556,6 +687,11 @@
         "mathlib4": {
           "input": "(decide ((Nat.totient 12) = ((Nat.totient 4) * (Nat.totient 3))))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(totient(12), (totient(4) * totient(3)))",
+          "output": "True",
           "verdict": "agree"
         }
       }
@@ -655,6 +791,11 @@
           "input": "prime_pi(n(1))",
           "output": "0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "primepi(1)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"PrimePi\",2]": {
@@ -675,6 +816,11 @@
         },
         "rust": {
           "input": "prime_pi(n(2))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "primepi(2)",
           "output": "1",
           "verdict": "agree"
         }
@@ -699,6 +845,11 @@
           "input": "prime_pi(n(15))",
           "output": "6",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "primepi(15)",
+          "output": "6",
+          "verdict": "agree"
         }
       },
       "[\"PrimePi\",100]": {
@@ -719,6 +870,11 @@
         },
         "rust": {
           "input": "prime_pi(n(100))",
+          "output": "25",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "primepi(100)",
           "output": "25",
           "verdict": "agree"
         }
@@ -762,6 +918,11 @@
           "input": "is_prime(n(1))",
           "output": "false",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(1)",
+          "output": "False",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",2]": {
@@ -793,6 +954,11 @@
         "rust": {
           "input": "is_prime(n(2))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(2)",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -826,6 +992,11 @@
           "input": "is_prime(n(13))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(13)",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",4]": {
@@ -858,6 +1029,11 @@
           "input": "is_prime(n(4))",
           "output": "false",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(4)",
+          "output": "False",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",97]": {
@@ -889,6 +1065,11 @@
         "rust": {
           "input": "is_prime(n(97))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(97)",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -924,6 +1105,11 @@
           "input": "is_prime((power(n(2), n(31)) + n(-1)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(((2**31) + -1))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"IsPrime\",1000000007]": {
@@ -955,6 +1141,11 @@
         "rust": {
           "input": "is_prime(n(1000000007))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime(1000000007)",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -998,11 +1189,44 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's IsPrime is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "isprime([1, 2, 3, 4, 5, 6])",
+          "output": "ValueError: [1, 2, 3, 4, 5, 6] is not an integer",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's IsPrime threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"IsPrime\",[\"Complex\",2,1]]": {
         "wolfram": {
           "input": "PrimeQ[Complex[2, 1]]",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "isprime((2 + 1*I))",
+          "output": "ValueError: 2 + I is not an integer",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "SymPy's isprime takes rational integers only; compute-engine also answers Gaussian primality."
+        },
+        "julia": {
+          "input": "is_prime(ZZ(complex(2, 1)))",
+          "output": "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Julia (Nemo) mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so IsPrime over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "oscar": {
+          "input": "is_prime(ZZ(complex(2, 1)))",
+          "output": "MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type `ZZRing` exists, but",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to the Oscar mapping as a complex number in the Complex{Int} type, not an element of ℤ[i], so IsPrime over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
+        },
+        "sage": {
+          "input": "is_prime((2 + 1*I))",
           "output": "True",
           "verdict": "agree"
         }
@@ -1075,6 +1299,16 @@
           "input": "equal((power(n(2), n(3)) * power(n(3), n(2)) * n(5)), n(360))",
           "output": "true",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq(((2**3) * (3**2) * 5), 360, 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(((2**3) * (3**2) * 5), 360)",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"FactorInteger\",1]": {
@@ -1124,6 +1358,13 @@
           "input": "FactorInteger[Complex[3, 4]]",
           "output": "{{2 + I, 2}}",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "list(factor((3 + 4*I)))",
+          "output": "[(2*I - 1, 2)]",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so FactorInteger over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"FactorInteger\",[\"Complex\",{\"num\":\"100000000000000000039\"},{\"num\":\"100000000000000000129\"}]]": {
@@ -1131,6 +1372,13 @@
           "input": "FactorInteger[Complex[100000000000000000039, 100000000000000000129]]",
           "output": "{{-I, 1}, {1 + I, 1}, {99 + 34*I, 1}, {1538 + 213*I, 1}, {277789996706096 + 549000467740335*I, 1}}",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "list(factor((100000000000000000039 + 100000000000000000129*I)))",
+          "output": "[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)]",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so FactorInteger over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -1281,6 +1529,13 @@
           "input": "Divisors[Complex[3, 4]]",
           "output": "{1, 2 + I, 3 + 4*I}",
           "verdict": "agree"
+        },
+        "sage": {
+          "input": "divisors((3 + 4*I))",
+          "output": "[-4*I - 3, 2*I - 1, 1]",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Divisors over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       }
     },
@@ -1361,6 +1616,11 @@
           "input": "(ArithmeticFunction.moebius 1)",
           "output": "1",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "mobius(1)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"MoebiusMu\",11]": {
@@ -1386,6 +1646,11 @@
         },
         "mathlib4": {
           "input": "(ArithmeticFunction.moebius 11)",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "mobius(11)",
           "output": "-1",
           "verdict": "agree"
         }
@@ -1415,6 +1680,11 @@
           "input": "(ArithmeticFunction.moebius 12)",
           "output": "0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "mobius(12)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"MoebiusMu\",10]": {
@@ -1442,6 +1712,11 @@
           "input": "(ArithmeticFunction.moebius 10)",
           "output": "1",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "mobius(10)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Add\",[\"MoebiusMu\",1],[\"MoebiusMu\",2],[\"MoebiusMu\",3],[\"MoebiusMu\",4],[\"MoebiusMu\",6],[\"MoebiusMu\",12]]": {
@@ -1467,6 +1742,11 @@
         },
         "mathlib4": {
           "input": "((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(mobius(1) + mobius(2) + mobius(3) + mobius(4) + mobius(6) + mobius(12))",
           "output": "0",
           "verdict": "agree"
         }
@@ -1506,6 +1786,13 @@
           "verdict": "inconclusive",
           "kind": "domain",
           "note": "Mathlib defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated."
+        },
+        "sympy": {
+          "input": "mobius(0)",
+          "output": "ValueError: n should be a positive integer",
+          "verdict": "error",
+          "kind": "undefined-form",
+          "note": "Both decline MoebiusMu here: compute-engine leaves it unevaluated, SymPy raises."
         }
       }
     },
@@ -1655,6 +1942,16 @@
         },
         "rust": {
           "input": "((n(2) * n(-1)) + (n(3) * n(1)))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "((2 * -1) + (3 * 1))",
+          "output": "1",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "((2 * -1) + (3 * 1))",
           "output": "1",
           "verdict": "agree"
         }
@@ -1822,6 +2119,11 @@
           "input": "IntegerExponent[2000, 5]",
           "output": "3",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "multiplicity(5, 2000)",
+          "output": "3",
+          "verdict": "agree"
         }
       },
       "[\"IntegerExponent\",2000]": {
@@ -1836,6 +2138,13 @@
           "input": "IntegerExponent[0, 5]",
           "output": "Infinity",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "multiplicity(5, 0)",
+          "output": "ValueError: no such integer exists: multiplicity of 0 is not-defined",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine answers ∞ for the multiplicity of p in 0; SymPy's multiplicity declines."
         }
       }
     },

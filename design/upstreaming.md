@@ -449,8 +449,8 @@ On the systems themselves, since the question keeps coming up:
 
 - **numpy** is a compile target for numeric evaluation, not an oracle. It has no zeta;
   `scipy.special.zeta` is the Hurwitz function restricted to real $s > 1$.
-- **mpmath** is the arbitrary-precision numeric oracle, already wired in
-  `analytic/scripts/validate-mpmath.ts`, and it is _better_ than Wolfram on some branches —
+- **mpmath** is the arbitrary-precision numeric oracle, an oracle lane checked nightly
+  against every mapped example, and it is _better_ than Wolfram on some branches —
   it is correct at negative-integer $s$ where `N[HurwitzZeta[-n, a]]` is not.
 - **SymPy** is the symbolic/exact lane, and is a different question from mpmath rather than
   a superset of it.

@@ -13,7 +13,7 @@ the review:
 Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.
 Counts cover mapped examples only; unmapped ones have no row.
 
-## wolfram — agree 804, disagree 44, inconclusive 0, error 3
+## wolfram — agree 1206, disagree 44, inconclusive 0, error 3
 
 | example                                 | kind           | ours                                                                                         | theirs                                                                                       |
 | --------------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -72,29 +72,96 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 313, disagree 19, inconclusive 3, error 40
+## sympy — agree 662, disagree 9, inconclusive 4, error 27
 
-| example                           | kind           | ours                                                                                      | theirs                                                                                       |
-| --------------------------------- | -------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| `arithmetic/Sqrt#10`              | shape          | `{"re":0,"im":0.6666666666666666}`                                                        | `2/3*I`                                                                                      |
-| `arithmetic/Sqrt#5`               | shape          | `{"re":0,"im":2}`                                                                         | `2*I`                                                                                        |
-| `arithmetic/Sqrt#9`               | shape          | `{"re":0,"im":1.4142135623730951}`                                                        | `sqrt(-2)`                                                                                   |
-| `combinatorics/StirlingS1#1`      | convention     | `-50`                                                                                     | `50`                                                                                         |
-| `combinatorics/StirlingS1#8`      | convention     | `-362880`                                                                                 | `362880`                                                                                     |
-| `diagram/Diagram#4`               | domain         | `["Diagram",["List",["List",1,-1],["List",2]]]`                                           | `P{{-2}, {-1, 1}, {2}}`                                                                      |
-| `elementary/Ln#3`                 | shape          | `NegativeInfinity`                                                                        | `-Infinity`                                                                                  |
-| `elementary/Ln#5`                 | convention     | `true`                                                                                    | `False`                                                                                      |
-| `elementary/Ln#6`                 | unevaluated    | `{"re":0,"im":3.141592653589793}`                                                         | `I*pi`                                                                                       |
-| `elementary/Tan#9`                | undefined-form | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
-| `number-theory/FactorInteger#5`   | shape          | `[["Tuple",1,1]]`                                                                         | `[]`                                                                                         |
-| `number-theory/FactorInteger#7`   | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                           | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
-| `residues/PowerModList#24`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]` | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
-| `special-functions/Gamma#1`       | undefined-form | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
-| `special-functions/Gamma#6`       | convention     | `true`                                                                                    | `False`                                                                                      |
-| `special-functions/HurwitzZeta#5` | undefined-form | `ComplexInfinity`                                                                         | `hurwitz_zeta(1, 3)`                                                                         |
-| `special-functions/PolyLog#11`    | unevaluated    | `["PolyLog",2.5,2]`                                                                       | `2.78966033238278 - 1.36380370053935*I`                                                      |
-| `special-functions/PolyLog#6`     | convention     | `true`                                                                                    | `False`                                                                                      |
-| `special-functions/Zeta#8`        | undefined-form | `ComplexInfinity`                                                                         | `Infinity`                                                                                   |
+| example                        | kind           | ours                | theirs                               |
+| ------------------------------ | -------------- | ------------------- | ------------------------------------ |
+| `arithmetic/Max#8`             | convention     | `NaN`               | `-oo`                                |
+| `elementary/Ln#3`              | undefined-form | `NegativeInfinity`  | `zoo`                                |
+| `number-theory/LCM#7`          | convention     | `{"re":3,"im":1}`   | `-1 + 3*I`                           |
+| `residues/Mod#11`              | domain         | `[1, -1]`           | `[Mod(1 + 2*I, 2), Mod(1 + 2*I, 2)]` |
+| `residues/Mod#7`               | domain         | `{"re":1,"im":-1}`  | `Mod(1 + 5*I, 3)`                    |
+| `residues/Mod#8`               | domain         | `{"re":0,"im":-1}`  | `Mod(7 + 5*I, 2 + I)`                |
+| `sequences/BernoulliB#2`       | convention     | `-0.5`              | `1/2`                                |
+| `sequences/BernoulliB#7`       | convention     | `30`                | `55`                                 |
+| `special-functions/PolyLog#11` | undefined-form | `["PolyLog",2.5,2]` | `polylog(2.5, 2)`                    |
+
+<details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
+
+| example                           | message                                                                    |
+| --------------------------------- | -------------------------------------------------------------------------- |
+| `arithmetic/Abs#6`                | `TypeError: Bad argument type for Abs(): <class 'list'>`                   |
+| `arithmetic/Ceil#4`               | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `arithmetic/Floor#4`              | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `arithmetic/Max#2`                | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
+| `arithmetic/Max#6`                | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
+| `arithmetic/Min#2`                | `ValueError: The argument '[3, 1, 4]' is not comparable.`                  |
+| `arithmetic/Min#9`                | `ValueError: The argument '[3, 1]' is not comparable.`                     |
+| `arithmetic/Negate#5`             | `TypeError: bad operand type for unary -: 'list'`                          |
+| `arithmetic/Sign#6`               | `AttributeError: 'list' object has no attribute 'is_Mul'`                  |
+| `arithmetic/Square#5`             | `TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'` |
+| `combinatorics/BellNumber#8`      | `ValueError: a non-negative integer expected`                              |
+| `combinatorics/Factorial#5`       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `elementary/Cos#9`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `elementary/Exp#6`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `elementary/Sin#10`               | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `elementary/Tan#8`                | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `number-theory/GCD#8`             | `AttributeError: 'int' object has no attribute 'is_commutative'`           |
+| `number-theory/IntegerExponent#3` | `ValueError: no such integer exists: multiplicity of 0 is not-defined`     |
+| `number-theory/IsPrime#8`         | `ValueError: [1, 2, 3, 4, 5, 6] is not an integer`                         |
+| `number-theory/IsPrime#9`         | `ValueError: 2 + I is not an integer`                                      |
+| `number-theory/MoebiusMu#6`       | `ValueError: n should be a positive integer`                               |
+| `residues/Mod#4`                  | `TypeError: unsupported operand type(s) for %: 'list' and 'int'`           |
+| `residues/Mod#5`                  | `ZeroDivisionError: integer modulo by zero`                                |
+| `special-functions/Gamma#3`       | `AttributeError: 'list' object has no attribute 'is_Number'`               |
+| `special-functions/PolyGamma#8`   | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+| `special-functions/PolyLog#10`    | `AttributeError: 'list' object has no attribute 'is_number'`               |
+| `special-functions/Zeta#4`        | `AttributeError: 'list' object has no attribute 'is_Integer'`              |
+
+</details>
+
+## mpmath — agree 404, disagree 2, inconclusive 0, error 4
+
+| example                           | kind           | ours                | theirs                                                                 |
+| --------------------------------- | -------------- | ------------------- | ---------------------------------------------------------------------- |
+| `special-functions/HurwitzZeta#5` | undefined-form | `ComplexInfinity`   | `+inf`                                                                 |
+| `special-functions/PolyLog#11`    | unevaluated    | `["PolyLog",2.5,2]` | `(2.78966033238277714404754430876 - 1.36380370053935279437171941141j)` |
+
+<details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
+
+| example                         | message                           |
+| ------------------------------- | --------------------------------- |
+| `special-functions/Gamma#1`     | `ValueError: gamma function pole` |
+| `special-functions/PolyGamma#6` | `ZeroDivisionError: `             |
+| `special-functions/Zeta#14`     | `ZeroDivisionError: `             |
+| `special-functions/Zeta#8`      | `ValueError: zeta(1) pole`        |
+
+</details>
+
+## sage — agree 544, disagree 20, inconclusive 6, error 49
+
+| example                           | kind           | ours                                                                                         | theirs                                                                                       |
+| --------------------------------- | -------------- | -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| `arithmetic/Sign#5`               | domain         | `{"re":0.6,"im":0.8}`                                                                        | `sgn(4*I + 3)`                                                                               |
+| `combinatorics/StirlingS1#1`      | convention     | `-50`                                                                                        | `50`                                                                                         |
+| `combinatorics/StirlingS1#8`      | convention     | `-362880`                                                                                    | `362880`                                                                                     |
+| `diagram/Diagram#4`               | domain         | `["Diagram",["List",["List",1,-1],["List",2]]]`                                              | `P{{-2}, {-1, 1}, {2}}`                                                                      |
+| `elementary/Ln#3`                 | shape          | `NegativeInfinity`                                                                           | `-Infinity`                                                                                  |
+| `elementary/Ln#5`                 | convention     | `true`                                                                                       | `False`                                                                                      |
+| `elementary/Tan#9`                | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `number-theory/Divisors#7`        | domain         | `[1, {"re":2,"im":1}, {"re":3,"im":4}]`                                                      | `[-4*I - 3, 2*I - 1, 1]`                                                                     |
+| `number-theory/FactorInteger#10`  | domain         | `[["Tuple",["Complex",0,-1],1], ["Tuple",["Complex",1,1],1], ["Tuple",["Complex",99,34],1],` | `[(-34*I - 99, 1), (I - 1, 1), (213*I + 1538, 1), (-277789996706096*I + 549000467740335, 1)` |
+| `number-theory/FactorInteger#5`   | shape          | `[["Tuple",1,1]]`                                                                            | `[]`                                                                                         |
+| `number-theory/FactorInteger#7`   | shape          | `[["Tuple",-1,1], ["Tuple",2,2], ["Tuple",3,1], ["Tuple",5,1]]`                              | `[(2, 2), (3, 1), (5, 1)]`                                                                   |
+| `number-theory/FactorInteger#9`   | domain         | `[["Tuple",["Complex",2,1],2]]`                                                              | `[(2*I - 1, 2)]`                                                                             |
+| `residues/ModularInverse#2`       | domain         | `{"re":6,"im":4}`                                                                            | `-3*I - 1`                                                                                   |
+| `residues/PowerModList#24`        | domain         | `["PowerModList",4,["Rational",1,2],{"num":"10000000000000000016800000000000000005031"}]`    | `[2, 4888888888888888897106666666666666669130, 5111111111111111119693333333333333335901, 10` |
+| `special-functions/Gamma#1`       | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
+| `special-functions/Gamma#6`       | convention     | `true`                                                                                       | `False`                                                                                      |
+| `special-functions/HurwitzZeta#5` | undefined-form | `ComplexInfinity`                                                                            | `hurwitz_zeta(1, 3)`                                                                         |
+| `special-functions/PolyLog#11`    | unevaluated    | `["PolyLog",2.5,2]`                                                                          | `2.78966033238278 - 1.36380370053935*I`                                                      |
+| `special-functions/PolyLog#6`     | convention     | `true`                                                                                       | `False`                                                                                      |
+| `special-functions/Zeta#8`        | undefined-form | `ComplexInfinity`                                                                            | `Infinity`                                                                                   |
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -120,11 +187,18 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `number-theory/RationalReconstruction#4` | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `number-theory/RationalReconstruction#6` | `ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist`      |
 | `number-theory/RationalReconstruction#8` | `ArithmeticError: rational reconstruction of 3 (mod 11) does not exist`                      |
+| `residues/Mod#11`                        | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/Mod#4`                         | `TypeError: unsupported operand parent(s) for %: '<class 'list'>' and 'Integer Ring'`        |
 | `residues/Mod#5`                         | `ZeroDivisionError: Integer modulo by zero`                                                  |
+| `residues/Mod#7`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `residues/Mod#8`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `residues/Mod#9`                         | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/ModularInverse#4`              | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
 | `residues/MultiplicativeOrder#5`         | `ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22`   |
 | `residues/PowerMod#10`                   | `TypeError: no conversion of this rational to integer`                                       |
+| `residues/PowerMod#12`                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `residues/PowerMod#13`                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
+| `residues/PowerMod#14`                   | `TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomia` |
 | `residues/PowerMod#18`                   | `TypeError: no conversion of this rational to integer`                                       |
 | `residues/PowerMod#6`                    | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
 | `residues/PowerMod#7`                    | `TypeError: no conversion of this rational to integer`                                       |
@@ -132,6 +206,8 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `residues/PowerModList#22`               | `ZeroDivisionError: inverse of Mod(2, 4) does not exist`                                     |
 | `residues/PowerModList#25`               | `MemoryError: over 1024 MiB`                                                                 |
 | `residues/PowerModList#26`               | `TypeError: unhashable type: 'list'`                                                         |
+| `residues/PowerModList#27`               | `TypeError: Unable to coerce I to a rational`                                                |
+| `residues/PowerModList#28`               | `TypeError: Unable to coerce 4*I + 3 to a rational`                                          |
 | `residues/PowerModList#8`                | `TypeError: unable to coerce <class 'list'> to an integer`                                   |
 | `sequences/BernoulliB#8`                 | `OverflowError: can't convert negative value to unsigned long`                               |
 | `special-functions/Gamma#3`              | `TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic ` |
@@ -143,7 +219,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## oscar — agree 99, disagree 0, inconclusive 0, error 9
+## oscar — agree 99, disagree 0, inconclusive 0, error 16
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 
@@ -153,15 +229,22 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#5`  | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `combinatorics/Factorial#7`  | `AssertionError: denominator(x) == 1`                                                        |
 | `combinatorics/Factorial#9`  | `DomainError with -1: Argument must be non-negative`                                         |
+| `number-theory/GCD#11`       | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/GCD#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#8`    | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `number-theory/IsPrime#9`    | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `number-theory/LCM#7`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/MoebiusMu#6`  | `DomainError with 0: Argument must be positive`                                              |
+| `residues/Mod#11`            | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
 | `residues/Mod#4`             | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
 | `residues/Mod#5`             | `DivideError: integer division error`                                                        |
+| `residues/Mod#7`             | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `residues/Mod#8`             | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| `residues/Mod#9`             | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
 
 </details>
 
-## julia — agree 105, disagree 2, inconclusive 0, error 11
+## julia — agree 105, disagree 2, inconclusive 0, error 18
 
 | example                      | kind       | ours      | theirs   |
 | ---------------------------- | ---------- | --------- | -------- |
@@ -177,11 +260,18 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `combinatorics/Factorial#5`      | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `combinatorics/Factorial#7`      | `AssertionError: denominator(x) == 1`                                                        |
 | `combinatorics/Factorial#9`      | `DomainError with -1: Argument must be non-negative`                                         |
+| `number-theory/GCD#11`           | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/GCD#8`            | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
 | `number-theory/IsPrime#8`        | `MethodError: no method matching (::ZZRing)(::Vector{Int64}) The object of type 'ZZRing' ex` |
+| `number-theory/IsPrime#9`        | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
+| `number-theory/LCM#7`            | `MethodError: no method matching (::ZZRing)(::Complex{Int64}) The object of type 'ZZRing' e` |
 | `number-theory/MoebiusMu#6`      | `DomainError with 0: Argument must be positive`                                              |
+| `residues/Mod#11`                | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
 | `residues/Mod#4`                 | `MethodError: no method matching mod(::Vector{Int64}, ::Int64) The function 'mod' exists, b` |
 | `residues/Mod#5`                 | `DivideError: integer division error`                                                        |
+| `residues/Mod#7`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Int64) The function 'mod' exists, ` |
+| `residues/Mod#8`                 | `MethodError: no method matching mod(::Complex{Int64}, ::Complex{Int64}) The function 'mod'` |
+| `residues/Mod#9`                 | `MethodError: no method matching mod(::Complex{Int128}, ::Complex{Int64}) The function 'mod` |
 | `sequences/LucasL#8`             | `DomainError with -1: n must be nonnegative`                                                 |
 
 </details>

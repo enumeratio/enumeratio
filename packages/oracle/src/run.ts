@@ -332,6 +332,66 @@ function collectWolfram(output: string, count: number): Result[] {
   return results;
 }
 
+// SymPy helpers: `stirling` lives outside `from sympy import *`, and an identity is decided by
+// simplifying the difference, then numerically — `bool(Eq(…))` refuses anything it can't
+// settle syntactically.
+const SYMPY_PREAMBLE = `
+from sympy.functions.combinatorial.numbers import stirling
+
+def enumeratio_equal(a, b):
+    try:
+        d = a - b
+        if simplify(d) == 0:
+            return True
+        # What simplify can't prove, 30 digits can still settle for a numeric identity.
+        if d.is_number:
+            return bool(abs(N(d, 30)) < 1e-20)
+        return False
+    except (TypeError, ValueError, AttributeError):
+        return a == b
+`;
+
+// How SymPy and mpmath print a value for the scan: an exact integer or rational as it is, any
+// other number (a SymPy closed form, an mpf, an mpc) as a Python float or complex literal —
+// what parsePython reads — and anything else as the kernel prints it.
+const PY_VALUE = `
+def enumeratio_value(x):
+    if isinstance(x, list):
+        return "[" + ", ".join(enumeratio_value(e) for e in x) + "]"
+    if isinstance(x, (bool, int, str, tuple)) or x is None:
+        return str(x)
+    try:
+        import sympy
+        if isinstance(x, sympy.Basic):
+            if x.is_Rational:
+                return str(x)
+            if not x.is_number:
+                return str(x)
+            x = x.evalf(30)
+    except ImportError:
+        pass
+    try:
+        import sympy
+        named = {sympy.zoo: "ComplexInfinity", sympy.oo: "PositiveInfinity", -sympy.oo: "NegativeInfinity", sympy.nan: "NaN"}
+        if isinstance(x, sympy.Basic) and x in named:
+            return named[x]
+    except ImportError:
+        pass
+    try:
+        z = complex(x)
+    except (TypeError, ValueError, OverflowError):
+        return str(x)
+    import math
+    # Non-finite values by the names ours uses.
+    if math.isnan(z.real) or math.isnan(z.imag):
+        return "NaN"
+    if math.isinf(z.real) and z.imag == 0:
+        return "PositiveInfinity" if z.real > 0 else "NegativeInfinity"
+    if z.imag == 0:
+        return repr(z.real)
+    return "(" + repr(z.real) + ("+" if z.imag >= 0 else "-") + repr(abs(z.imag)) + "j)"
+`;
+
 // Sage helpers for emits with no one-liner. The diagram algebras live over ZZ[delta], so a
 // product that closes a loop comes back with its power of delta, printed (like an Oscar
 // group-algebra element) as a basis → coefficient map for compareCombination. PowerModList(a, s/r, m): `Zmod(m)(a)` has no
@@ -408,7 +468,11 @@ def enumeratio_value(x):
         if x in QQ:
             return str(x)
         z = CC(x)
-        return repr(float(z.real())) if z.imag() == 0 else str(x)
+        if z.imag() == 0:
+            return repr(float(z.real()))
+        # A complex as a Python literal, which parsePython reads (as for SymPy and mpmath).
+        re, im = float(z.real()), float(z.imag())
+        return "(" + repr(re) + ("+" if im >= 0 else "-") + repr(abs(im)) + "j)"
     except Exception:
         return str(x)
 
@@ -456,9 +520,23 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
     case "wolfram":
       return runWolfram(sources);
     case "sympy":
-      return runPython(sources, "python3", "from sympy import *");
+      return runPython(
+        sources,
+        "python3",
+        `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}`,
+        ["-c"],
+        undefined,
+        "enumeratio_value",
+      );
     case "mpmath":
-      return runPython(sources, "python3", "from mpmath import *\nmp.dps = 30");
+      return runPython(
+        sources,
+        "python3",
+        `from mpmath import *\nmp.dps = 30\n${PY_VALUE}`,
+        ["-c"],
+        undefined,
+        "enumeratio_value",
+      );
     case "sage":
       // `sage -c` takes one program string, like python3 -c. `locals=globals()` is what
       // lets `sage_eval` see SAGE_PREAMBLE's helpers — by default it only sees `sage.all`.

@@ -678,6 +678,23 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Complex",
     wolfram: "Complex",
+    oracle: [
+      {
+        system: "mpmath",
+        call: "mpc($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "julia",
+        call: "complex($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "oscar",
+        call: "complex($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "ComplexInfinity",
@@ -1129,13 +1146,6 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Divide",
     wolfram: "Divide",
-    oracle: [
-      {
-        system: "sympy",
-        call: "Rational($1, $2)",
-        arity: 2,
-      },
-    ],
   },
   {
     name: "Divides",
@@ -1319,7 +1329,12 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     oracle: [
       {
         system: "sympy",
-        call: "bool(Eq($1, $2))",
+        call: "enumeratio_equal($1, $2)",
+        arity: 2,
+      },
+      {
+        system: "mpmath",
+        call: "almosteq($1, $2, 1e-20)",
         arity: 2,
       },
       {
@@ -3010,6 +3025,23 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "N",
     wolfram: "N",
+    oracle: [
+      {
+        system: "sympy",
+        call: "N($1, 30)",
+        arity: 1,
+      },
+      {
+        system: "sage",
+        call: "N($1)",
+        arity: 1,
+      },
+      {
+        system: "rust",
+        call: "nf($1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "NPartition",

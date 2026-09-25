@@ -20,6 +20,16 @@
           "input": "abs(n(-5))",
           "output": "5",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "fabs(-5)",
+          "output": "5.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Abs(-5)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",5]": {
@@ -35,6 +45,16 @@
         },
         "rust": {
           "input": "abs(n(5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "fabs(5)",
+          "output": "5.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Abs(5)",
           "output": "5",
           "verdict": "agree"
         }
@@ -54,6 +74,16 @@
           "input": "abs(n(0))",
           "output": "0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "fabs(0)",
+          "output": "0.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Abs(0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",[\"Rational\",-7,2]]": {
@@ -71,11 +101,31 @@
           "input": "abs(rational(n(-7), n(2)))",
           "output": "7/2",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Abs(Rational(-7, 2))",
+          "output": "7/2",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",[\"Complex\",3,4]]": {
         "wolfram": {
           "input": "Abs[Complex[3, 4]]",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "fabs(mpc(3, 4))",
+          "output": "5.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Abs((3 + 4*I))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "abs((3 + 4*I))",
           "output": "5",
           "verdict": "agree"
         }
@@ -99,6 +149,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "Abs([-1, 2, -3])",
+          "output": "TypeError: Bad argument type for Abs(): <class 'list'>",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Abs threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Equal\",[\"Abs\",-8],[\"Abs\",8]]": {
@@ -115,6 +172,16 @@
         "rust": {
           "input": "equal(abs(n(-8)), abs(n(8)))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq(fabs(-8), fabs(8), 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(Abs(-8), Abs(8))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -140,6 +207,16 @@
           "input": "abs((n(70) - n(95)))",
           "output": "25",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "fabs((70 - 95))",
+          "output": "25.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Abs((70 - 95))",
+          "output": "25",
+          "verdict": "agree"
         }
       }
     },
@@ -151,6 +228,16 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "sign(-3)",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sign(-3)",
+          "output": "-1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "sign(-3)",
           "output": "-1",
           "verdict": "agree"
@@ -166,6 +253,16 @@
           "input": "sign(3)",
           "output": "1",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sign(3)",
+          "output": "1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sign(3)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Sign\",0]": {
@@ -175,6 +272,16 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "sign(0)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sign(0)",
+          "output": "0.0",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "sign(0)",
           "output": "0",
           "verdict": "agree"
@@ -190,6 +297,11 @@
           "input": "sign((-1/2))",
           "output": "-1",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sign(Rational(-1, 2))",
+          "output": "-1",
+          "verdict": "agree"
         }
       },
       "[\"Sign\",[\"Complex\",3,4]]": {
@@ -197,6 +309,23 @@
           "input": "Sign[Complex[3, 4]]",
           "output": "3/5 + (4*I)/5",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sign(mpc(3, 4))",
+          "output": "(0.6 + 0.8j)",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sign((3 + 4*I))",
+          "output": "sign(3 + 4*I)",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "sign((3 + 4*I))",
+          "output": "sgn(4*I + 3)",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up."
         }
       },
       "[\"Sign\",[\"List\",-3,0,7]]": {
@@ -211,11 +340,28 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "sympy": {
+          "input": "sign([-3, 0, 7])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Mul'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Equal\",[\"Sign\",[\"Complex\",3,4]],[\"Divide\",[\"Complex\",3,4],[\"Abs\",[\"Complex\",3,4]]]]": {
         "wolfram": {
           "input": "(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))",
           "output": "True",
           "verdict": "agree"
         }
@@ -230,6 +376,16 @@
           "input": "bool((-5 * sign(-5)) == abs(-5))",
           "output": "True",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq((-5 * sign(-5)), fabs(-5), 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((-5 * sign(-5)), Abs(-5))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Sign\",[\"Subtract\",70,95]]": {
@@ -239,6 +395,16 @@
           "verdict": "agree"
         },
         "sage": {
+          "input": "sign((70 - 95))",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sign((70 - 95))",
+          "output": "-1.0",
+          "verdict": "agree"
+        },
+        "sympy": {
           "input": "sign((70 - 95))",
           "output": "-1",
           "verdict": "agree"
@@ -283,6 +449,16 @@
           "input": "(-(n(5)))",
           "output": "-5",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(-5)",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-5)",
+          "output": "-5",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",-5]": {
@@ -313,6 +489,16 @@
         },
         "rust": {
           "input": "(-(n(-5)))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(--5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(--5)",
           "output": "5",
           "verdict": "agree"
         }
@@ -347,6 +533,16 @@
           "input": "(-(n(0)))",
           "output": "0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(-0)",
+          "output": "0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",[\"Rational\",3,4]]": {
@@ -377,6 +573,11 @@
         },
         "rust": {
           "input": "(-(rational(n(3), n(4))))",
+          "output": "-3/4",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-Rational(3, 4))",
           "output": "-3/4",
           "verdict": "agree"
         }
@@ -415,6 +616,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "(-[1, -2, 3])",
+          "output": "TypeError: bad operand type for unary -: 'list'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Negate\",42.5]": {
@@ -447,6 +655,16 @@
           "input": "(-(x(42.5)))",
           "output": "-42.5",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(-42.5)",
+          "output": "-42.5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-42.5)",
+          "output": "-42.5",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",\"PositiveInfinity\"]": {
@@ -468,6 +686,16 @@
           "input": "(5)^2",
           "output": "25",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(5)**2",
+          "output": "25",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(5)**2",
+          "output": "25",
+          "verdict": "agree"
         }
       },
       "[\"Square\",-5]": {
@@ -480,6 +708,16 @@
           "input": "(-5)^2",
           "output": "25",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(-5)**2",
+          "output": "25",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(-5)**2",
+          "output": "25",
+          "verdict": "agree"
         }
       },
       "[\"Square\",[\"Rational\",2,3]]": {
@@ -490,6 +728,11 @@
         },
         "sage": {
           "input": "((2/3))^2",
+          "output": "4/9",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(Rational(2, 3))**2",
           "output": "4/9",
           "verdict": "agree"
         }
@@ -506,6 +749,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Square is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "sympy": {
+          "input": "([2, 3, -4])**2",
+          "output": "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Square threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Equal\",[\"Square\",-5],[\"Square\",5]]": {
@@ -518,11 +768,36 @@
           "input": "bool((-5)^2 == (5)^2)",
           "output": "True",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq((-5)**2, (5)**2, 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((-5)**2, (5)**2)",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Square\",[\"Complex\",1,1]],[\"Complex\",0,2]]": {
         "wolfram": {
           "input": "((Complex[1, 1])^2 == Complex[0, 2])",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq((mpc(1, 1))**2, mpc(0, 2), 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(((1 + 1*I))**2, (0 + 2*I))",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sage": {
+          "input": "bool(((1 + 1*I))^2 == (0 + 2*I))",
           "output": "True",
           "verdict": "agree"
         }
@@ -535,6 +810,16 @@
         },
         "sage": {
           "input": "(3)^2",
+          "output": "9",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "(3)**2",
+          "output": "9",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "(3)**2",
           "output": "9",
           "verdict": "agree"
         }
@@ -563,6 +848,16 @@
           "input": "sqrt(n(16))",
           "output": "4.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sqrt(16)",
+          "output": "4.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(16)",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",2]": {
@@ -579,6 +874,16 @@
         "rust": {
           "input": "sqrt(n(2))",
           "output": "1.4142135623730951",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sqrt(2)",
+          "output": "1.41421356237309504880168872421",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(2)",
+          "output": "sqrt(2)",
           "verdict": "agree"
         }
       },
@@ -597,6 +902,11 @@
           "input": "sqrt(rational(n(4), n(9)))",
           "output": "0.6666666666666666",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(Rational(4, 9))",
+          "output": "2/3",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",0]": {
@@ -614,6 +924,16 @@
           "input": "sqrt(n(0))",
           "output": "0.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sqrt(0)",
+          "output": "0.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(0)",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",-4]": {
@@ -625,9 +945,7 @@
         "sage": {
           "input": "sqrt(-4)",
           "output": "2*I",
-          "verdict": "disagree",
-          "kind": "shape",
-          "note": "Same value 2i: the scan's N()-reduced complex leaf serializes to JSON for the text compare, which doesn't recognize Sage's '2*I' as the same number."
+          "verdict": "agree"
         },
         "rust": {
           "input": "sqrt(n(-4))",
@@ -635,6 +953,16 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
+        },
+        "mpmath": {
+          "input": "sqrt(-4)",
+          "output": "(0.0 + 2.0j)",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(-4)",
+          "output": "2*I",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Square\",[\"Sqrt\",16]],16]": {
@@ -645,6 +973,16 @@
         },
         "sage": {
           "input": "bool((sqrt(16))^2 == 16)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq((sqrt(16))**2, 16, 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((sqrt(16))**2, 16)",
           "output": "True",
           "verdict": "agree"
         }
@@ -664,6 +1002,11 @@
           "input": "equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(sqrt(16), (16**Rational(1, 2)))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",[\"Add\",[\"Square\",3],[\"Square\",4]]]": {
@@ -674,6 +1017,16 @@
         },
         "sage": {
           "input": "sqrt(((3)^2 + (4)^2))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "sqrt(((3)**2 + (4)**2))",
+          "output": "5.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(((3)**2 + (4)**2))",
           "output": "5",
           "verdict": "agree"
         }
@@ -687,9 +1040,7 @@
         "sage": {
           "input": "sqrt(-2)",
           "output": "sqrt(-2)",
-          "verdict": "disagree",
-          "kind": "shape",
-          "note": "Both stay symbolic; the scan's N() reduction turns our expected Sqrt(-2) into a complex float before the text compare, so it no longer matches Sage's literal 'sqrt(-2)' string."
+          "verdict": "agree"
         },
         "rust": {
           "input": "sqrt(n(-2))",
@@ -697,6 +1048,16 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
+        },
+        "mpmath": {
+          "input": "sqrt(-2)",
+          "output": "(0.0 + 1.41421356237309504880168872421j)",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "sqrt(-2)",
+          "output": "sqrt(2)*I",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",[\"Rational\",-4,9]]": {
@@ -708,9 +1069,7 @@
         "sage": {
           "input": "sqrt((-4/9))",
           "output": "2/3*I",
-          "verdict": "disagree",
-          "kind": "shape",
-          "note": "Same value 2i/3: the scan's N()-reduced complex leaf serializes to JSON, not the '2/3*I' notation Sage prints — a comparator spelling gap, not a numeric disagreement."
+          "verdict": "agree"
         },
         "rust": {
           "input": "sqrt(rational(n(-4), n(9)))",
@@ -718,6 +1077,11 @@
           "verdict": "disagree",
           "kind": "domain",
           "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
+        },
+        "sympy": {
+          "input": "sqrt(Rational(-4, 9))",
+          "output": "2*I/3",
+          "verdict": "agree"
         }
       }
     },
@@ -804,6 +1168,11 @@
           "input": "floor(rational(n(7), n(2)))",
           "output": "3",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "floor(Rational(7, 2))",
+          "output": "3",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",3.7]": {
@@ -821,6 +1190,16 @@
           "input": "floor(x(3.7))",
           "output": "3.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "floor(3.7)",
+          "output": "3.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "floor(3.7)",
+          "output": "3",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",5]": {
@@ -836,6 +1215,16 @@
         },
         "rust": {
           "input": "floor(n(5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "floor(5)",
+          "output": "5.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "floor(5)",
           "output": "5",
           "verdict": "agree"
         }
@@ -859,6 +1248,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Floor is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "floor([1.2, -1.2, 3.7])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Floor threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Equal\",[\"Add\",[\"Floor\",[\"Rational\",7,2]],1],[\"Ceil\",[\"Rational\",7,2]]]": {
@@ -875,6 +1271,11 @@
         "rust": {
           "input": "equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((floor(Rational(7, 2)) + 1), ceiling(Rational(7, 2)))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -893,6 +1294,11 @@
           "input": "equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))",
           "output": "true",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(floor(Rational(-7, 2)), (-ceiling(Rational(7, 2))))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",[\"Divide\",17,5]]": {
@@ -908,6 +1314,11 @@
         },
         "rust": {
           "input": "floor((n(17) / n(5)))",
+          "output": "3",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "floor((S(17) / 5))",
           "output": "3",
           "verdict": "agree"
         }
@@ -926,6 +1337,16 @@
         "rust": {
           "input": "floor(x(-3.2))",
           "output": "-4.0",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "floor(-3.2)",
+          "output": "-4.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "floor(-3.2)",
+          "output": "-4",
           "verdict": "agree"
         }
       },
@@ -953,6 +1374,11 @@
           "input": "ceil(rational(n(7), n(2)))",
           "output": "4",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "ceiling(Rational(7, 2))",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",3.2]": {
@@ -970,6 +1396,16 @@
           "input": "ceil(x(3.2))",
           "output": "4.0",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "ceil(3.2)",
+          "output": "4.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "ceiling(3.2)",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",5]": {
@@ -985,6 +1421,16 @@
         },
         "rust": {
           "input": "ceil(n(5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "ceil(5)",
+          "output": "5.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "ceiling(5)",
           "output": "5",
           "verdict": "agree"
         }
@@ -1008,6 +1454,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars."
+        },
+        "sympy": {
+          "input": "ceiling([1.2, -1.2, 3.7])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Equal\",[\"Ceil\",[\"Rational\",7,2]],[\"Add\",[\"Floor\",[\"Rational\",7,2]],1]]": {
@@ -1024,6 +1477,11 @@
         "rust": {
           "input": "equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))",
           "output": "true",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))",
+          "output": "True",
           "verdict": "agree"
         }
       },
@@ -1042,6 +1500,16 @@
           "input": "equal(ceil(n(5)), floor(n(5)))",
           "output": "true",
           "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "almosteq(ceil(5), floor(5), 1e-20)",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(ceiling(5), floor(5))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",[\"Divide\",17,5]]": {
@@ -1057,6 +1525,11 @@
         },
         "rust": {
           "input": "ceil((n(17) / n(5)))",
+          "output": "4",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "ceiling((S(17) / 5))",
           "output": "4",
           "verdict": "agree"
         }
@@ -1075,6 +1548,16 @@
         "rust": {
           "input": "ceil(x(-3.7))",
           "output": "-3.0",
+          "verdict": "agree"
+        },
+        "mpmath": {
+          "input": "ceil(-3.7)",
+          "output": "-3.0",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "ceiling(-3.7)",
+          "output": "-3",
           "verdict": "agree"
         }
       },
@@ -1333,6 +1816,11 @@
           "input": "enumeratio_max(3, 1, 4, 1, 5)",
           "output": "5",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Max(3, 1, 4, 1, 5)",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"Max\",[\"List\",3,1,4]]": {
@@ -1345,6 +1833,13 @@
           "input": "enumeratio_max([3, 1, 4])",
           "output": "4",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Max([3, 1, 4])",
+          "output": "ValueError: The argument '[3, 1, 4]' is not comparable.",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Max threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Max\",-1,-5]": {
@@ -1355,6 +1850,11 @@
         },
         "sage": {
           "input": "enumeratio_max(-1, -5)",
+          "output": "-1",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Max(-1, -5)",
           "output": "-1",
           "verdict": "agree"
         }
@@ -1369,6 +1869,11 @@
           "input": "enumeratio_max(3)",
           "output": "3",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Max(3)",
+          "output": "3",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Max\",3,7],[\"Max\",7,3]]": {
@@ -1379,6 +1884,11 @@
         },
         "sage": {
           "input": "bool(enumeratio_max(3, 7) == enumeratio_max(7, 3))",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(Max(3, 7), Max(7, 3))",
           "output": "True",
           "verdict": "agree"
         }
@@ -1393,6 +1903,13 @@
           "input": "bool(enumeratio_max([3, 1, 4], [9, 2]) == 9)",
           "output": "True",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(Max([3, 1, 4], [9, 2]), 9)",
+          "output": "ValueError: The argument '[3, 1, 4]' is not comparable.",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Max threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Max\",68,72,65,80,74]": {
@@ -1403,6 +1920,11 @@
         },
         "sage": {
           "input": "enumeratio_max(68, 72, 65, 80, 74)",
+          "output": "80",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Max(68, 72, 65, 80, 74)",
           "output": "80",
           "verdict": "agree"
         }
@@ -1421,6 +1943,13 @@
           "verdict": "error",
           "kind": "undefined-form",
           "note": "Both decline: compute-engine answers \"NaN\" and Sage raises an error."
+        },
+        "sympy": {
+          "input": "Max()",
+          "output": "-oo",
+          "verdict": "disagree",
+          "kind": "convention",
+          "note": "The maximum of nothing: SymPy answers −∞, compute-engine NaN."
         }
       },
       "[\"Max\",\"NaN\",3]": {
@@ -1442,6 +1971,11 @@
           "input": "enumeratio_min(3, 1, 4, 1, 5)",
           "output": "1",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Min(3, 1, 4, 1, 5)",
+          "output": "1",
+          "verdict": "agree"
         }
       },
       "[\"Min\",[\"List\",3,1,4]]": {
@@ -1454,6 +1988,13 @@
           "input": "enumeratio_min([3, 1, 4])",
           "output": "1",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Min([3, 1, 4])",
+          "output": "ValueError: The argument '[3, 1, 4]' is not comparable.",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Min threads over (or pools) the list; SymPy's takes scalars."
         }
       },
       "[\"Min\",-1,-5]": {
@@ -1464,6 +2005,11 @@
         },
         "sage": {
           "input": "enumeratio_min(-1, -5)",
+          "output": "-5",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Min(-1, -5)",
           "output": "-5",
           "verdict": "agree"
         }
@@ -1478,6 +2024,11 @@
           "input": "enumeratio_min(3)",
           "output": "3",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Min(3)",
+          "output": "3",
+          "verdict": "agree"
         }
       },
       "[\"Equal\",[\"Min\",3,7],[\"Min\",7,3]]": {
@@ -1488,6 +2039,11 @@
         },
         "sage": {
           "input": "bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))",
+          "output": "True",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal(Min(3, 7), Min(7, 3))",
           "output": "True",
           "verdict": "agree"
         }
@@ -1502,6 +2058,11 @@
           "input": "bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))",
           "output": "True",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "enumeratio_equal((Min(4, 9) + Max(4, 9)), (4 + 9))",
+          "output": "True",
+          "verdict": "agree"
         }
       },
       "[\"Min\",68,72,65,80,74]": {
@@ -1512,6 +2073,11 @@
         },
         "sage": {
           "input": "enumeratio_min(68, 72, 65, 80, 74)",
+          "output": "65",
+          "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Min(68, 72, 65, 80, 74)",
           "output": "65",
           "verdict": "agree"
         }
@@ -1533,6 +2099,13 @@
           "input": "enumeratio_min([3, 1], 0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "sympy": {
+          "input": "Min([3, 1], 0)",
+          "output": "ValueError: The argument '[3, 1]' is not comparable.",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Min threads over (or pools) the list; SymPy's takes scalars."
         }
       }
     }
