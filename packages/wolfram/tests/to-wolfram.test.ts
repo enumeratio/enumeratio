@@ -186,3 +186,12 @@ test("Contains(xs, v) renames to Wolfram's MemberQ[list, form], same argument or
 test("Unique(xs) renames to Wolfram's DeleteDuplicates[list]", () => {
   expect(toWolfram(["Unique", ["List", 1, 2, 2, 3]])).toBe("DeleteDuplicates[List[1, 2, 2, 3]]");
 });
+
+test("PositionalNumerals(b) unwraps to the bare base Wolfram's IntegerDigits/FromDigits take", () => {
+  expect(toWolfram(["IntegerDigits", 2147, ["PositionalNumerals", 2]])).toBe(
+    "IntegerDigits[2147, 2]",
+  );
+  expect(toWolfram(["FromDigits", ["List", 1, 0, 1], ["PositionalNumerals", 2]])).toBe(
+    "FromDigits[List[1, 0, 1], 2]",
+  );
+});

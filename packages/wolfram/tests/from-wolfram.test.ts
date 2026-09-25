@@ -250,3 +250,8 @@ test("DeleteDuplicates renames back to Unique", () => {
     ["List", 1, 2, 2, 3],
   ]);
 });
+
+test("a bare Wolfram base in IntegerDigits/FromDigits stays bare, not rewrapped as PositionalNumerals", () => {
+  expect(fromWolfram("IntegerDigits[2147, 2]")).toEqual(["IntegerDigits", 2147, 2]);
+  expect(fromWolfram("FromDigits[List[1, 0, 1], 2]")).toEqual(["FromDigits", ["List", 1, 0, 1], 2]);
+});

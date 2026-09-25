@@ -479,6 +479,11 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // since Wolfram's Scan is an unrelated side-effecting map.
   Scan: (a) =>
     a.length === 2 ? `FoldList[${toWolfram(a[1])}, ${toWolfram(a[0])}]` : call(`${CONTEXT}Scan`, a),
+  // PositionalNumerals(b) is ordinary base b wrapped as a system value (see
+  // packages/numerals) — the same digits Wolfram's own bare integer base already gives in
+  // IntegerDigits[n, b]/FromDigits[digits, b], so it unwraps to the plain number rather than
+  // a head call. One-way: a bare Wolfram base comes back bare, not rewrapped as this.
+  PositionalNumerals: (a) => toWolfram(a[0]),
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */
