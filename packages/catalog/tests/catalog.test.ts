@@ -49,9 +49,9 @@ test("a resource with a head evaluates; one without stays symbolic", () => {
   expect(ce.box(["Resource", "'Subsets'", 3]).evaluate().json).toEqual(
     ce.box(["Subsets", 3]).evaluate().json,
   );
-  // CarlitzCompositions is a real catalog name with no kernel here — declining is the
-  // honest answer, not an error.
-  const held = ce.box(["Resource", "'CarlitzCompositions'", 4]).evaluate();
+  // StepCompositions is a real catalog name with no kernel of its own (it's an aliasOf
+  // FibonacciCompositions, which does have one) — declining is the honest answer, not an error.
+  const held = ce.box(["Resource", "'StepCompositions'", 4]).evaluate();
   expect(held.operator).toBe("Resource");
   expect(ce.box(["Resource", "'Nonesuch'", 1]).evaluate().operator).toBe("Resource");
 });

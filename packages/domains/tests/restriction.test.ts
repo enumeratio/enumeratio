@@ -99,6 +99,41 @@ test("the specification agrees with the fast kernel — as a SET", () => {
   }
 });
 
+const COMPOSITION_RESTRICTION_NAMES = new Set([
+  "OddCompositions",
+  "ProperCompositions",
+  "DyadicCompositions",
+  "FibonacciCompositions",
+  "TriCompositions",
+  "TetraCompositions",
+  "TriangularComposition",
+  "PrimeCompositions",
+  "CarlitzCompositions",
+  "PalindromicCompositions",
+  "ZigzagComposition",
+]);
+
+test("composition restrictions agree with their kernels for n = 0..8", () => {
+  // Same recipe as the generic SET differential above, but out to n = 8 (composition counts
+  // grow like 2^n, so this stays cheap while covering more of each family's shape than n ≤ 5).
+  for (const restriction of RESTRICTIONS) {
+    if (!COMPOSITION_RESTRICTION_NAMES.has(restriction.name)) continue;
+    if (!ce.lookupDefinition(restriction.name)) continue;
+    for (let n = 0; n <= 8; n++) {
+      const specified = [
+        "Restricted",
+        [restriction.base, n],
+        ["Function", fillPredicate(restriction.predicate, "_e", "_e"), "_e"],
+      ];
+      const kernel = [restriction.name, n];
+      expect(count(specified), `${restriction.name}(${n}) count`).toBe(count(kernel));
+      expect(members(specified).sort(), `${restriction.name}(${n}) members`).toEqual(
+        members(kernel).sort(),
+      );
+    }
+  }
+});
+
 test("every restriction names a base collection and a carrier that exist", () => {
   for (const restriction of RESTRICTIONS) {
     expect(ce.lookupDefinition(restriction.base), restriction.base).toBeTruthy();

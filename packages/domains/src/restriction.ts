@@ -63,6 +63,135 @@ export const RESTRICTIONS: readonly Restriction[] = [
     predicate: ["Equal", ["IsSelfConjugate", "_x"], 1],
     summary: "Partitions equal to their own conjugate.",
   },
+
+  // ── compositions — a Composition is a plain list<integer>, so its predicates are ordinary
+  // list operations over `_raw` (no custom statistics declared for this carrier). Each `All`
+  // closes over a one-part predicate; the last three (Carlitz/Palindromic/Zigzag) instead
+  // compare a part against its neighbor, via `Partition(_raw, k, 1)` sliding windows.
+  {
+    name: "OddCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["All", "_raw", ["Function", ["Equal", ["Mod", "_", 2], 1], "_"]],
+    summary: "Compositions into odd parts.",
+  },
+  {
+    name: "ProperCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["All", "_raw", ["Function", ["GreaterEqual", "_", 2], "_"]],
+    summary: "Compositions into parts ≥ 2.",
+  },
+  {
+    name: "DyadicCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: [
+      "All",
+      "_raw",
+      ["Function", ["Equal", ["Log2", "_"], ["Floor", ["Log2", "_"]]], "_"],
+    ],
+    summary: "Compositions into powers of two.",
+  },
+  {
+    name: "FibonacciCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["All", "_raw", ["Function", ["Or", ["Equal", "_", 1], ["Equal", "_", 2]], "_"]],
+    summary: "Compositions into parts 1 and 2.",
+  },
+  {
+    name: "TriCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["All", "_raw", ["Function", ["LessEqual", "_", 3], "_"]],
+    summary: "Compositions into parts 1, 2, 3.",
+  },
+  {
+    name: "TetraCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["All", "_raw", ["Function", ["LessEqual", "_", 4], "_"]],
+    summary: "Compositions into parts 1, 2, 3, 4.",
+  },
+  {
+    name: "TriangularComposition",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: [
+      "All",
+      "_raw",
+      [
+        "Function",
+        [
+          "Equal",
+          ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]],
+          ["Floor", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]]],
+        ],
+        "_",
+      ],
+    ],
+    // 8s+1 is always odd, so an integer square root is automatically odd too — no extra check.
+    summary: "Compositions into triangular parts {1,3,6,10,…}.",
+  },
+  {
+    name: "PrimeCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["All", "_raw", ["Function", ["IsPrime", "_"], "_"]],
+    summary: "Compositions into prime parts.",
+  },
+  {
+    name: "CarlitzCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: [
+      "All",
+      ["Partition", "_raw", 2, 1],
+      ["Function", ["Not", ["Equal", ["At", "_", 1], ["At", "_", 2]]], "_"],
+    ],
+    summary: "Compositions with no two equal adjacent parts.",
+  },
+  {
+    name: "PalindromicCompositions",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: ["Equal", "_raw", ["Reverse", "_raw"]],
+    summary: "Compositions that read the same reversed.",
+  },
+  {
+    name: "ZigzagComposition",
+    base: "IntegerCompositions",
+    on: "composition",
+    predicate: [
+      "And",
+      [
+        "All",
+        ["Partition", "_raw", 2, 1],
+        ["Function", ["Not", ["Equal", ["At", "_", 1], ["At", "_", 2]]], "_"],
+      ],
+      [
+        "All",
+        ["Partition", "_raw", 3, 1],
+        [
+          "Function",
+          [
+            "Less",
+            [
+              "Multiply",
+              ["Subtract", ["At", "_", 2], ["At", "_", 1]],
+              ["Subtract", ["At", "_", 3], ["At", "_", 2]],
+            ],
+            0,
+          ],
+          "_",
+        ],
+      ],
+    ],
+    summary: "Alternating compositions (parts go up-down-up…).",
+  },
+  // KBoundedCompositions(n, k) is skipped — a Restriction is `(integer) -> collection`, one
+  // size parameter; k isn't expressible in that shape.
 ];
 
 /** Fill a predicate's wildcards BEFORE boxing.
