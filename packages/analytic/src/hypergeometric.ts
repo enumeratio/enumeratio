@@ -42,7 +42,7 @@ const mag = (z: Cx): number => Math.hypot(z.re, z.im);
  * already zero out — and when the series fails to settle inside `MAX_TERMS` (declines rather
  * than returning a number the tail hasn't converged to).
  */
-function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx | undefined {
+export function pfqSeries(upper: readonly Cx[], lower: readonly Cx[], z: Cx): Cx | undefined {
   let term = cx(1, 0);
   let sum = cx(1, 0);
   for (let k = 0; k < MAX_TERMS; k++) {

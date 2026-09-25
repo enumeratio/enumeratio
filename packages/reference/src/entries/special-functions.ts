@@ -1211,7 +1211,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption: "$\\zeta(s, 1) = \\zeta(s)$ for symbolic $s$",
       },
     ],
-    seeAlso: ["HurwitzZeta", "BernoulliB", "Gamma", "Digamma"],
+    seeAlso: ["HurwitzZeta", "BernoulliB", "Gamma", "Digamma", "RiemannSiegelZ", "RiemannZetaZero"],
   },
   {
     name: "HurwitzZeta",

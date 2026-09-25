@@ -321,11 +321,44 @@ export const HEADS: Record<string, string> = {
   Hypergeometric1F1Regularized: "Hypergeometric1F1Regularized",
   Hypergeometric2F1Regularized: "Hypergeometric2F1Regularized",
   HypergeometricU: "HypergeometricU",
+  HypergeometricPFQ: "HypergeometricPFQ",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
+  KleinInvariantJ: "KleinInvariantJ",
+  ExpIntegralE: "ExpIntegralE",
+  InverseErfc: "InverseErfc",
+  InverseGammaRegularized: "InverseGammaRegularized",
+  InverseBetaRegularized: "InverseBetaRegularized",
+  BellY: "BellY",
+  NorlundB: "NorlundB",
+  PrimeZetaP: "PrimeZetaP",
   // ConstGlaisher is our spelling; Wolfram's is Glaisher.
   ConstGlaisher: "Glaisher",
+  // The elementary heads `@enumeratio/analytic` adds under Wolfram's own names.
+  CubeRoot: "CubeRoot",
+  IntegerPart: "IntegerPart",
+  FractionalPart: "FractionalPart",
+  RealAbs: "RealAbs",
+  RealSign: "RealSign",
+  UnitStep: "UnitStep",
+  Gudermannian: "Gudermannian",
+  // Khinchin's constant — same name and meaning as Wolfram's.
+  Khinchin: "Khinchin",
+  // Hyperfactorial — same name and meaning as Wolfram's.
+  Hyperfactorial: "Hyperfactorial",
+  // The q-series heads (packages/analytic/src/q-series.ts): same names, same argument
+  // order as Wolfram's.
+  QPochhammer: "QPochhammer",
+  QFactorial: "QFactorial",
+  QBinomial: "QBinomial",
+  // Riemann-Siegel (packages/analytic/src/riemann-siegel.ts): theta and Z keep Wolfram's
+  // names and single real argument. RiemannZetaZero is compute-engine/Fungrim's spelling
+  // for what Wolfram calls ZetaZero — same single argument k, just a different name, so
+  // a plain rename here (not SPECIAL) is enough.
+  RiemannSiegelTheta: "RiemannSiegelTheta",
+  RiemannSiegelZ: "RiemannSiegelZ",
+  RiemannZetaZero: "ZetaZero",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 
@@ -441,6 +474,13 @@ export const FOREIGN: Record<string, string> = {
 
 /** Heads that need a bespoke emission rather than a plain rename. */
 const SPECIAL: Record<string, (args: MathJson[]) => string> = {
+  // LambertW(z) / LambertW(z, k) is compute-engine's own order (branch index second, checked
+  // directly: `LambertW(-0.14, -1)` is the k = -1 branch); Wolfram's `ProductLog` puts the
+  // branch first: `ProductLog[z]` / `ProductLog[k, z]`.
+  LambertW: (a) =>
+    a.length === 1
+      ? `ProductLog[${toWolfram(a[0])}]`
+      : `ProductLog[${toWolfram(a[1])}, ${toWolfram(a[0])}]`,
   // compute-engine `Log` is base-10 in the 1-arg form and value-first in the
   // 2-arg form (`Log(value, base)`); Wolfram's `Log` is natural and base-first
   // (`Log[base, value]`), so map and swap.
