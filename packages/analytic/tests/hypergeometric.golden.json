@@ -1,0 +1,368 @@
+[
+  {
+    "head": "Hypergeometric0F1",
+    "args": [2, 0.5],
+    "label": "0F1(2;0.5)",
+    "tol": 1e-9,
+    "mpmath": [1.2717234563121371, 0],
+    "wolfram": [1.271723456312137, 0]
+  },
+  {
+    "head": "Hypergeometric0F1",
+    "args": [1.5, -0.7],
+    "label": "0F1(1.5;-0.7)",
+    "tol": 1e-9,
+    "mpmath": [0.5944762586327997, 0],
+    "wolfram": [0.5944762586327997, 0]
+  },
+  {
+    "head": "Hypergeometric0F1",
+    "args": [["Rational", 7, 3], 2.5],
+    "label": "0F1(7/3;2.5)",
+    "tol": 1e-9,
+    "mpmath": [2.5602926939199744, 0],
+    "wolfram": [2.560292693919974, 0]
+  },
+  {
+    "head": "Hypergeometric0F1",
+    "args": [["Complex", 1, 1], 0.5],
+    "label": "0F1(1+1i;0.5)",
+    "tol": 1e-9,
+    "mpmath": [1.262484141307633, -0.28964574134091187],
+    "wolfram": [1.2624841413076329, -0.2896457413409118]
+  },
+  {
+    "head": "Hypergeometric0F1",
+    "args": [2, ["Complex", 0.5, 0.5]],
+    "label": "0F1(2;0.5+0.5i)",
+    "tol": 1e-9,
+    "mpmath": [1.248175636885929, 0.2934012962643341],
+    "wolfram": [1.2481756368859287, 0.2934012962643341]
+  },
+  {
+    "head": "Hypergeometric0F1",
+    "args": [-0.5, 0.3],
+    "label": "0F1(-0.5;0.3)",
+    "tol": 1e-9,
+    "mpmath": [0.2076337594625808, 0],
+    "wolfram": [0.20763375946258103, 0]
+  },
+  {
+    "head": "Hypergeometric0F1",
+    "args": [
+      ["Complex", -2.5, 1.5],
+      ["Complex", 1.2, -0.8]
+    ],
+    "label": "0F1(-2.5+1.5i;1.2-0.8i)",
+    "tol": 1e-9,
+    "mpmath": [0.6321864778017546, 0.02255319254721493],
+    "wolfram": [0.6321864778017544, 0.022553192547214943]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [2, 0.5],
+    "label": "0F1Reg(2;0.5)",
+    "tol": 1e-9,
+    "mpmath": [1.2717234563121371, 0],
+    "wolfram": [1.271723456312137, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [1.5, -0.7],
+    "label": "0F1Reg(1.5;-0.7)",
+    "tol": 1e-9,
+    "mpmath": [0.6707946255741352, 0],
+    "wolfram": [0.670794625574135, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [["Rational", 7, 3], 2.5],
+    "label": "0F1Reg(7/3;2.5)",
+    "tol": 1e-9,
+    "mpmath": [2.150351150907756, 0],
+    "wolfram": [2.1503511509077553, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [["Complex", 1, 1], 0.5],
+    "label": "0F1Reg(1+1i;0.5)",
+    "tol": 1e-9,
+    "mpmath": [2.476270194944867, 0.18885329562027878],
+    "wolfram": [2.4762701949448696, 0.1888532956202782]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [2, ["Complex", 0.5, 0.5]],
+    "label": "0F1Reg(2;0.5+0.5i)",
+    "tol": 1e-9,
+    "mpmath": [1.248175636885929, 0.2934012962643341],
+    "wolfram": [1.2481756368859287, 0.2934012962643341]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [-0.5, 0.3],
+    "label": "0F1Reg(-0.5;0.3)",
+    "tol": 1e-9,
+    "mpmath": [-0.05857240214082423, 0],
+    "wolfram": [-0.0585724021408243, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [
+      ["Complex", -2.5, 1.5],
+      ["Complex", 1.2, -0.8]
+    ],
+    "label": "0F1Reg(-2.5+1.5i;1.2-0.8i)",
+    "tol": 1e-9,
+    "mpmath": [2.7356652974870386, 25.894454183167475],
+    "wolfram": [2.73566529748704, 25.894454183167486]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [0, 0.5],
+    "label": "0F1Reg(0;0.5)",
+    "tol": 1e-9,
+    "mpmath": [0.6358617281560686, 0],
+    "wolfram": [0.6358617281560685, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [-1, 0.5],
+    "label": "0F1Reg(-1;0.5)",
+    "tol": 1e-9,
+    "mpmath": [0.1471797367221067, 0],
+    "wolfram": [0.1471797367221067, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [-2, 0.7],
+    "label": "0F1Reg(-2;0.7)",
+    "tol": 1e-9,
+    "mpmath": [0.06789905147462627, 0],
+    "wolfram": [0.06789905147462626, 0]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [0, ["Complex", 0.3, 0.4]],
+    "label": "0F1Reg(0;0.3+0.4i)",
+    "tol": 1e-9,
+    "mpmath": [0.25488334300581544, 0.5234223951841015],
+    "wolfram": [0.2548833430058154, 0.5234223951841014]
+  },
+  {
+    "head": "Hypergeometric0F1Regularized",
+    "args": [-1, ["Complex", -0.5, 0.2]],
+    "label": "0F1Reg(-1;-0.5+0.2i)",
+    "tol": 1e-9,
+    "mpmath": [0.09427166608970403, -0.07802491943203783],
+    "wolfram": [0.09427166608970398, -0.07802491943203788]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [1, 2, 0.5],
+    "label": "1F1Reg(1,2;0.5)",
+    "tol": 1e-8,
+    "mpmath": [1.2974425414002564, 0],
+    "wolfram": [1.2974425414002562, 0]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [0.5, 1.5, -1],
+    "label": "1F1Reg(0.5,1.5;-1)",
+    "tol": 1e-8,
+    "mpmath": [0.8427007929497149, 0],
+    "wolfram": [0.842700792949715, 0]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [["Complex", 1, 0.5], 2, 0.5],
+    "label": "1F1Reg(1+0.5i,2;0.5)",
+    "tol": 1e-8,
+    "mpmath": [1.2907217573451255, 0.1614805635582521],
+    "wolfram": [1.2907217573451253, 0.16148056355825205]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [1, 0, 0.5],
+    "label": "1F1Reg(1,0;0.5)",
+    "tol": 1e-8,
+    "mpmath": [0.8243606353500641, 0],
+    "wolfram": [0.8243606353500641, 0]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [1, -1, 0.7],
+    "label": "1F1Reg(1,-1;0.7)",
+    "tol": 1e-8,
+    "mpmath": [0.9867388266605335, 0],
+    "wolfram": [0.9867388266605335, 0]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [2, -2, 0.4],
+    "label": "1F1Reg(2,-2;0.4)",
+    "tol": 1e-8,
+    "mpmath": [0.4200978348557817, 0],
+    "wolfram": [0.4200978348557819, 0]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [1, 2, ["Complex", 0.5, 0.5]],
+    "label": "1F1Reg(1,2;0.5+0.5i)",
+    "tol": 1e-8,
+    "mpmath": [1.2373281197977841, 0.34355004662944577],
+    "wolfram": [1.237328119797784, 0.3435500466294457]
+  },
+  {
+    "head": "Hypergeometric1F1Regularized",
+    "args": [1, -1, ["Complex", 0.3, -0.4]],
+    "label": "1F1Reg(1,-1;0.3-0.4i)",
+    "tol": 1e-8,
+    "mpmath": [-0.2131895076621401, -0.2615963662728921],
+    "wolfram": [-0.21318950766214012, -0.2615963662728921]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [1, 1, 2, 0.5],
+    "label": "2F1Reg(1,1,2;0.5)",
+    "tol": 1e-8,
+    "mpmath": [1.3862943611198906, 0],
+    "wolfram": [1.38629436111989, 0]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [0.5, 1.5, 2.5, -0.6],
+    "label": "2F1Reg(0.5,1.5,2.5;-0.6)",
+    "tol": 1e-8,
+    "mpmath": [0.6484576614357429, 0],
+    "wolfram": [0.6484576614357433, 0]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [1, 1, 0, 0.5],
+    "label": "2F1Reg(1,1,0;0.5)",
+    "tol": 1e-8,
+    "mpmath": [2, 0],
+    "wolfram": [2, 0]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [1, 1, -1, 0.3],
+    "label": "2F1Reg(1,1,-1;0.3)",
+    "tol": 1e-8,
+    "mpmath": [0.5247813411078717, 0],
+    "wolfram": [0.5247813411078718, 0]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [1, 2, -2, 0.4],
+    "label": "2F1Reg(1,2,-2;0.4)",
+    "tol": 1e-8,
+    "mpmath": [19.753086419753085, 0],
+    "wolfram": [19.753086419753092, 0]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [1, 1, 2, ["Complex", 0.3, 0.3]],
+    "label": "2F1Reg(1,1,2;0.3+0.3i)",
+    "tol": 1e-8,
+    "mpmath": [1.1287589566765324, 0.22088033094041234],
+    "wolfram": [1.128758956676532, 0.2208803309404123]
+  },
+  {
+    "head": "Hypergeometric2F1Regularized",
+    "args": [1, 1, -1, ["Complex", 0.2, -0.1]],
+    "label": "2F1Reg(1,1,-1;0.2-0.1i)",
+    "tol": 1e-8,
+    "mpmath": [0.05097860719162494, -0.1838871187983614],
+    "wolfram": [0.050978607191624954, -0.1838871187983614]
+  },
+  {
+    "head": "Hypergeometric3F2Regularized",
+    "args": [1, 1, 1, 2, 3, 0.5],
+    "label": "3F2Reg(1,1,1,2,3;0.5)",
+    "tol": 1e-7,
+    "mpmath": [0.5507754140499156, 0],
+    "wolfram": [0.5507754140499156, 0]
+  },
+  {
+    "head": "Hypergeometric3F2Regularized",
+    "args": [0.5, 1, 1.5, 2, 2.5, -0.4],
+    "label": "3F2Reg(0.5,1,1.5,2,2.5;-0.4)",
+    "tol": 1e-7,
+    "mpmath": [0.7125415161247438, 0],
+    "wolfram": [0.7125415161247438, 0]
+  },
+  {
+    "head": "Hypergeometric3F2Regularized",
+    "args": [1, 1, 1, 0, 2, 0.3],
+    "label": "3F2Reg(1,1,1,0,2;0.3)",
+    "tol": 1e-7,
+    "mpmath": [0.23965494877565396, 0],
+    "wolfram": [0.23965494877565385, 0]
+  },
+  {
+    "head": "Hypergeometric3F2Regularized",
+    "args": [1, 1, 1, -1, 2, 0.3],
+    "label": "3F2Reg(1,1,1,-1,2;0.3)",
+    "tol": 1e-7,
+    "mpmath": [0.13293500040787573, 0],
+    "wolfram": [0.13293500040787565, 0]
+  },
+  {
+    "head": "Hypergeometric3F2Regularized",
+    "args": [1, 1, 1, 2, -1, 0.3],
+    "label": "3F2Reg(1,1,1,2,-1;0.3)",
+    "tol": 1e-7,
+    "mpmath": [0.13293500040787573, 0],
+    "wolfram": [0.13293500040787565, 0]
+  },
+  {
+    "head": "Hypergeometric3F2Regularized",
+    "args": [1, 1, 1, 2, 3, ["Complex", 0.3, 0.2]],
+    "label": "3F2Reg(1,1,1,2,3;0.3+0.2i)",
+    "tol": 1e-7,
+    "mpmath": [0.5261674816890403, 0.020656153732402715],
+    "wolfram": [0.5261674816890403, 0.020656153732402715]
+  },
+  {
+    "head": "HypergeometricU",
+    "args": [1, 2.5, 3],
+    "label": "U(1,2.5;3)",
+    "tol": 1e-9,
+    "mpmath": [0.38234066249038373, 0],
+    "wolfram": [0.38234066249038373, 0]
+  },
+  {
+    "head": "HypergeometricU",
+    "args": [0.5, 1.5, 2],
+    "label": "U(0.5,1.5;2)",
+    "tol": 1e-9,
+    "mpmath": [0.7071067811865476, 0],
+    "wolfram": [0.7071067811865476, 0]
+  },
+  {
+    "head": "HypergeometricU",
+    "args": [1, 2.5, ["Complex", 0.5, 0.5]],
+    "label": "U(1,2.5;0.5+0.5i)",
+    "tol": 1e-9,
+    "mpmath": [1.1187557119467137, -1.7171115370895238],
+    "wolfram": [1.1187557119467137, -1.7171115370895236]
+  },
+  {
+    "head": "HypergeometricU",
+    "args": [["Complex", 1, 0.5], 2.5, 1.5],
+    "label": "U(1+0.5i,2.5;1.5)",
+    "tol": 1e-9,
+    "mpmath": [0.8629494293536286, -0.33701732173686794],
+    "wolfram": [0.8629494293536286, -0.33701732173686794]
+  },
+  {
+    "head": "HypergeometricU",
+    "args": [2, -1.5, 0.8],
+    "label": "U(2,-1.5;0.8)",
+    "tol": 1e-9,
+    "mpmath": [0.05832383825616377, 0],
+    "wolfram": [0.05832383825616377, 0]
+  }
+]
