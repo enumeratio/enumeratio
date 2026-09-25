@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { ComputeEngine, LatexSyntax } from "@cortex-js/compute-engine";
 import { portableTeX } from "@enumeratio/formats/tex";
 import { entryFiles } from "@enumeratio/reference";
+import { fromWolframTeX } from "@enumeratio/wolfram";
 import { expect, test } from "vite-plus/test";
 import { conventionalLatexDictionary } from "../src/conventional-latex.ts";
 import { traditionalLatexOf } from "../src/traditional.ts";
@@ -10,7 +11,8 @@ import { traditionalLatexOf } from "../src/traditional.ts";
 // Our TeXForm beside Wolfram's, for every reference example the oracle ran through Wolfram
 // (its `TeXForm` rides on the sidecar row). Not an assertion that they agree -- a record of
 // where they do, so a change on either side shows up as a golden diff to review. Regenerate
-// with `UPDATE_TEXFORM=1 vp test`; Wolfram's side refreshes with the oracle scan.
+// with `UPDATE_TEXFORM=1 vp test`; Wolfram's side refreshes with the oracle scan. Wolfram's TeX
+// is recorded as it printed, and compared in notatio's spelling (`fromWolframTeX`).
 
 const ce = new ComputeEngine({
   latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
@@ -49,8 +51,8 @@ for (const { stem, entries } of entryFiles) {
         ours: mine,
         wolfram,
         same: {
-          input: normal(mine.input) === normal(wolfram.input),
-          output: normal(mine.output) === normal(wolfram.output),
+          input: normal(mine.input) === normal(fromWolframTeX(wolfram.input)),
+          output: normal(mine.output) === normal(fromWolframTeX(wolfram.output)),
         },
       };
     });

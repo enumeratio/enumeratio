@@ -730,6 +730,9 @@ importers:
       '@enumeratio/reference':
         specifier: workspace:*
         version: link:../reference
+      '@enumeratio/wolfram':
+        specifier: workspace:*
+        version: link:../wolfram
       '@types/node':
         specifier: 'catalog:'
         version: 24.13.4

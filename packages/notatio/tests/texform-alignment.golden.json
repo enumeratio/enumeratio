@@ -8073,7 +8073,7 @@
       "output": "\\text{True}"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": true
     }
   },
@@ -8115,7 +8115,7 @@
       "output": "0"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": true
     }
   },
@@ -8129,7 +8129,7 @@
       "output": "1"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": true
     }
   },
@@ -8143,7 +8143,7 @@
       "output": "-\\infty"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": true
     }
   },
@@ -8171,7 +8171,7 @@
       "output": "\\text{True}"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": true
     }
   },
@@ -8185,7 +8185,7 @@
       "output": "i \\pi"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": true
     }
   },
@@ -18097,7 +18097,7 @@
       "output": "\\gamma +2 \\log (2)+\\psi ^{(0)}\\left(\\frac{1}{2}\\right)=0"
     },
     "same": {
-      "input": false,
+      "input": true,
       "output": false
     }
   },
@@ -18490,7 +18490,7 @@
     },
     "same": {
       "input": false,
-      "output": false
+      "output": true
     }
   },
   "analytic-special/LogBarnesG#2": {
@@ -18546,7 +18546,7 @@
     },
     "same": {
       "input": false,
-      "output": false
+      "output": true
     }
   },
   "analytic-special/LogGamma#2": {
@@ -18574,7 +18574,7 @@
     },
     "same": {
       "input": false,
-      "output": false
+      "output": true
     }
   },
   "analytic-special/LogGamma#4": {
@@ -18630,7 +18630,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "analytic-special/DirichletEta#2": {
