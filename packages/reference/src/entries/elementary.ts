@@ -171,9 +171,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Interval", "NegativeInfinity", "PositiveInfinity"]],
         expected: ["Interval", -1, 1],
-        aspirational: true,
         category: "Scope",
-        caption: "The image of the whole real line is $[-1, 1]$; not yet",
+        caption: "The image of the whole real line is $[-1, 1]$",
       },
       {
         expr: ["Sin", "PositiveInfinity"],
@@ -186,10 +185,9 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Around", 2, 0.01]],
         expected: ["Around", 0.9092974268256817, 0.004161468365471424],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Uncertainty propagation: $\\sin(2 \\pm 0.01) \\approx 0.9093 \\pm 0.0042$ to first order; Around is not yet a head",
+          "Uncertainty propagation: $\\sin(2 \\pm 0.01) \\approx 0.9093 \\pm 0.0042$ to first order",
       },
       {
         expr: ["Sin", ["Multiply", "ImaginaryUnit", "x"]],
@@ -510,18 +508,14 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Cos", ["Interval", ["Divide", "Pi", 3], ["Divide", "Pi", 2]]],
         expected: ["Interval", 0, ["Rational", 1, 2]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Interval arithmetic: the image of $[\\pi/3, \\pi/2]$ is $[0, \\tfrac12]$; not yet",
+        caption: "Interval arithmetic: the image of $[\\pi/3, \\pi/2]$ is $[0, \\tfrac12]$",
       },
       {
         expr: ["Cos", ["Around", 2, 0.01]],
         expected: ["Around", -0.4161468365471424, 0.009092974268256816],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\cos(2 \\pm 0.01) \\approx -0.4161 \\pm 0.0091$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\cos(2 \\pm 0.01) \\approx -0.4161 \\pm 0.0091$",
       },
       {
         expr: ["Cos", "PositiveInfinity"],
@@ -774,17 +768,14 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Tan", ["Interval", 0, ["Divide", "Pi", 3]]],
         expected: ["Interval", 0, ["Sqrt", 3]],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: the image of $[0, \\pi/3]$ is $[0, \\sqrt3]$; not yet",
+        caption: "Interval arithmetic: the image of $[0, \\pi/3]$ is $[0, \\sqrt3]$",
       },
       {
         expr: ["Tan", ["Around", 2, 0.02]],
         expected: ["Around", -2.185039863261519, 0.11548798408083835],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\tan(2 \\pm 0.02) \\approx -2.185 \\pm 0.115$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\tan(2 \\pm 0.02) \\approx -2.185 \\pm 0.115$",
       },
       {
         expr: ["Tan", ["Multiply", "ImaginaryUnit", "x"]],
@@ -989,10 +980,9 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Cot", ["Around", 3, 0.01]],
         expected: ["Around", -7.015252551434534, 0.5021376836040873],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Uncertainty propagation near a pole grows fast: $\\cot(3 \\pm 0.01) \\approx -7.02 \\pm 0.50$; Around is not yet a head",
+          "Uncertainty propagation near a pole grows fast: $\\cot(3 \\pm 0.01) \\approx -7.02 \\pm 0.50$",
       },
       {
         expr: ["Cot", ["Negate", "x"]],
@@ -1113,18 +1103,15 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sec", ["Interval", ["Divide", "Pi", 6], ["Divide", "Pi", 3]]],
         expected: ["Interval", ["Multiply", ["Rational", 2, 3], ["Sqrt", 3]], 2],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: the image of $[\\pi/6, \\pi/3]$ is $[\\tfrac{2}{\\sqrt3}, 2]$; not yet",
+          "Interval arithmetic: the image of $[\\pi/6, \\pi/3]$ is $[\\tfrac{2}{\\sqrt3}, 2]$",
       },
       {
         expr: ["Sec", ["Around", 2, 0.01]],
         expected: ["Around", -2.402997961722381, 0.052506463376995806],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\sec(2 \\pm 0.01) \\approx -2.403 \\pm 0.053$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\sec(2 \\pm 0.01) \\approx -2.403 \\pm 0.053$",
       },
       {
         expr: ["Sec", ["Negate", "x"]],
@@ -1233,18 +1220,15 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Csc", ["Interval", ["Divide", "Pi", 6], ["Divide", "Pi", 3]]],
         expected: ["Interval", ["Multiply", ["Rational", 2, 3], ["Sqrt", 3]], 2],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: the image of $[\\pi/6, \\pi/3]$ is $[\\tfrac{2}{\\sqrt3}, 2]$; not yet",
+          "Interval arithmetic: the image of $[\\pi/6, \\pi/3]$ is $[\\tfrac{2}{\\sqrt3}, 2]$",
       },
       {
         expr: ["Csc", ["Around", 2, 0.01]],
         expected: ["Around", 1.0997501702946164, 0.00503308973344342],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\csc(2 \\pm 0.01) \\approx 1.0998 \\pm 0.0050$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\csc(2 \\pm 0.01) \\approx 1.0998 \\pm 0.0050$",
       },
       {
         expr: ["Csc", ["Negate", "x"]],
@@ -1387,21 +1371,22 @@ export const elementary: readonly ReferenceEntry[] = [
         expr: ["Arcsin", ["Interval", ["Rational", -1, 3], ["Rational", 1, 2]]],
         expected: [
           "Interval",
-          ["Negate", ["Arcsin", ["Rational", 1, 3]]],
+          ["Arcsin", ["Rational", -1, 3]],
           ["Multiply", ["Rational", 1, 6], "Pi"],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: $\\arcsin[-\\tfrac13, \\tfrac12] = [-\\arcsin\\tfrac13, \\tfrac{\\pi}{6}]$; not yet",
+          "Interval arithmetic: $\\arcsin[-\\tfrac13, \\tfrac12] = [\\arcsin(-\\tfrac13), \\tfrac{\\pi}{6}]$",
+        divergence: {
+          wolfram:
+            "Wolfram folds the odd argument to $-\\arcsin(1/3)$; compute-engine leaves $\\arcsin(-1/3)$ as is (oddness normalisation is a separate, still-aspirational rule).",
+        },
       },
       {
         expr: ["Arcsin", ["Around", 0.9, 0.1]],
         expected: ["Around", 1.1197695149986342, 0.2294157338705618],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\arcsin(0.9 \\pm 0.1) \\approx 1.120 \\pm 0.229$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\arcsin(0.9 \\pm 0.1) \\approx 1.120 \\pm 0.229$",
       },
       {
         expr: ["Arcsin", ["Negate", "x"]],
@@ -1565,18 +1550,15 @@ export const elementary: readonly ReferenceEntry[] = [
           ["Multiply", ["Rational", 1, 3], "Pi"],
           ["Arccos", ["Rational", 1, 3]],
         ],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Interval arithmetic: decreasing, so $\\arccos[\\tfrac13, \\tfrac12] = [\\tfrac{\\pi}{3}, \\arccos\\tfrac13]$; not yet",
+          "Interval arithmetic: decreasing, so $\\arccos[\\tfrac13, \\tfrac12] = [\\tfrac{\\pi}{3}, \\arccos\\tfrac13]$",
       },
       {
         expr: ["Arccos", ["Around", 0.9, 0.1]],
         expected: ["Around", 0.45102681179626236, 0.2294157338705618],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\arccos(0.9 \\pm 0.1) \\approx 0.451 \\pm 0.229$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\arccos(0.9 \\pm 0.1) \\approx 0.451 \\pm 0.229$",
       },
       {
         expr: ["D", ["Arccos", "x"], "x"],
@@ -1740,10 +1722,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arctan", ["Interval", -1, 3]],
         expected: ["Interval", ["Multiply", ["Rational", -1, 4], "Pi"], ["Arctan", 3]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Interval arithmetic: $\\arctan[-1, 3] = [-\\tfrac{\\pi}{4}, \\arctan 3]$; not yet",
+        caption: "Interval arithmetic: $\\arctan[-1, 3] = [-\\tfrac{\\pi}{4}, \\arctan 3]$",
       },
       {
         expr: ["Arctan", ["Negate", "x"]],
@@ -2109,18 +2089,16 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Sinh", ["Interval", 0, ["Ln", 3]]],
-        expected: ["Interval", 0, ["Rational", 4, 3]],
-        aspirational: true,
+        expected: ["Interval", ["Sinh", 0], ["Sinh", ["Ln", 3]]],
         category: "Scope",
-        caption: "Interval arithmetic: $\\sinh[0, \\ln 3] = [0, \\tfrac43]$; not yet",
+        caption:
+          "Interval arithmetic: $\\sinh$ is increasing, so $\\sinh[0, \\ln 3]$ is the interval of the endpoint values -- $\\sinh(0)$ and $\\sinh(\\ln 3) = \\tfrac43$ don't reduce further here, since neither is folded to an exact value on its own (see the special-value examples above)",
       },
       {
         expr: ["Sinh", ["Around", ["Divide", 2, ["Sqrt", 3]], 0.1]],
         expected: ["Around", 1.4289605814815758, 0.1744112480153778],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\sinh(2/\\sqrt3 \\pm 0.1) \\approx 1.429 \\pm 0.174$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\sinh(2/\\sqrt3 \\pm 0.1) \\approx 1.429 \\pm 0.174$",
       },
       { expr: ["Sinh", "PositiveInfinity"], expected: "PositiveInfinity", category: "Scope" },
       {
@@ -2377,18 +2355,16 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Tanh", ["Interval", 0, ["Ln", 2]]],
-        expected: ["Interval", 0, ["Rational", 3, 5]],
-        aspirational: true,
+        expected: ["Interval", ["Tanh", 0], ["Tanh", ["Ln", 2]]],
         category: "Scope",
-        caption: "Interval arithmetic: $\\tanh[0, \\ln 2] = [0, \\tfrac35]$; not yet",
+        caption:
+          "Interval arithmetic: $\\tanh$ is increasing, so $\\tanh[0, \\ln 2]$ is the interval of the endpoint values -- $\\tanh(0)$ and $\\tanh(\\ln 2) = \\tfrac35$ don't reduce further here on their own",
       },
       {
         expr: ["Tanh", ["Around", ["Divide", 2, ["Sqrt", 3]], 0.1]],
         expected: ["Around", 0.8193052900783008, 0.03287388416497115],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\tanh(2/\\sqrt3 \\pm 0.1) \\approx 0.819 \\pm 0.033$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\tanh(2/\\sqrt3 \\pm 0.1) \\approx 0.819 \\pm 0.033$",
       },
       {
         expr: ["Tanh", "PositiveInfinity"],
@@ -2722,9 +2698,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Exp", ["Interval", -1, ["Ln", 2]]],
         expected: ["Interval", ["Divide", 1, "ExponentialE"], 2],
-        aspirational: true,
         category: "Scope",
-        caption: "Interval arithmetic: $\\exp[-1, \\ln 2] = [e^{-1}, 2]$; not yet",
+        caption: "Interval arithmetic: $\\exp[-1, \\ln 2] = [e^{-1}, 2]$",
       },
       {
         expr: ["Exp", ["Around", 2, 0.01]],
@@ -2895,18 +2870,16 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Ln", ["Interval", ["Rational", 1, 3], "ExponentialE"]],
-        expected: ["Interval", ["Negate", ["Ln", 3]], 1],
-        aspirational: true,
+        expected: ["Interval", ["Ln", ["Rational", 1, 3]], 1],
         category: "Scope",
-        caption: "Interval arithmetic: $\\ln[\\tfrac13, e] = [-\\ln 3, 1]$; not yet",
+        caption:
+          "Interval arithmetic: $\\ln$ is increasing, so $\\ln[\\tfrac13, e]$ is the interval of the endpoint values -- $\\ln(1/3) = -\\ln 3$ isn't folded to the negated form on its own (see the unit-fraction example above)",
       },
       {
         expr: ["Ln", ["Around", 2, 0.01]],
         expected: ["Around", 0.6931471805599453, 0.005],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Uncertainty propagation: $\\ln(2 \\pm 0.01) \\approx 0.693 \\pm 0.005$; Around is not yet a head",
+        caption: "Uncertainty propagation: $\\ln(2 \\pm 0.01) \\approx 0.693 \\pm 0.005$",
       },
       { expr: ["Ln", ["Exp", "x"]], expected: "x", category: "Scope" },
       {

@@ -343,6 +343,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       if (digits.some((d) => Number.isNaN(d) || d >= base)) return undefined;
       return ce.number(digits.reduce((n, d) => n * BigInt(base) + BigInt(d), 0n));
     },
+    { min: 1, max: 2 },
   );
 
   // FromDigits(digits, x): a symbolic base gives the polynomial digits spell in x --
@@ -351,7 +352,6 @@ export function declareNumerals(ce: ComputeEngine): void {
     ce,
     ["FromDigits", ["List", 1, 2, 3], "x"],
     (ops) =>
-      ops.length === 2 &&
       integerList(ops[0]) !== undefined &&
       symbolNameOf(ops[1]) !== undefined &&
       // Not a numeral-system name (FactorialNumerals, ZeckendorfNumerals, ...) or one of
@@ -368,6 +368,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       );
       return ce.function("Add", terms).evaluate();
     },
+    2,
   );
 
   // FromDigits(digits, base): a negative base is just the same Horner reduction --
@@ -376,7 +377,6 @@ export function declareNumerals(ce: ComputeEngine): void {
     ce,
     ["FromDigits", ["List", 1, 1, 0], -2],
     (ops) => {
-      if (ops.length !== 2) return false;
       const base = bigIntegerAt(ops[1]);
       return integerList(ops[0]) !== undefined && base !== undefined && base <= -2n;
     },
@@ -386,18 +386,20 @@ export function declareNumerals(ce: ComputeEngine): void {
       const value = digits.reduce((acc, d) => acc * base + BigInt(d), 0n);
       return ce.number(value);
     },
+    2,
   );
 
   // Wolfram's "Roman" pseudo-base, the reverse of RomanNumeral: FromDigits("XVII", "Roman").
   wrapOperator(
     ce,
     ["FromDigits", "'XVII'", "'Roman'"],
-    (ops) => ops.length === 2 && stringAt(ops[1])?.toLowerCase() === "roman",
+    (ops) => stringAt(ops[1])?.toLowerCase() === "roman",
     () => (ops) => {
       const text = stringAt(ops[0]);
       const value = text === undefined ? undefined : integerOfRomanNumeral(text);
       return value === undefined ? undefined : ce.number(value);
     },
+    2,
   );
 
   // Wolfram's IntegerString[n, b] and IntegerString[n, b, len]: bigint arithmetic throughout,
@@ -413,7 +415,6 @@ export function declareNumerals(ce: ComputeEngine): void {
     ce,
     ["IntegerString", 5, 2],
     (ops) =>
-      (ops.length === 1 || ops.length === 2) &&
       bigIntegerAt(ops[0]) !== undefined &&
       (ops[1] === undefined || bigIntegerAt(ops[1]) !== undefined),
     () => (ops) => {
@@ -422,11 +423,12 @@ export function declareNumerals(ce: ComputeEngine): void {
       if (base < 2n || base > 36n) return undefined;
       return ce.string(bigIntToBaseString(n, base));
     },
+    { min: 1, max: 2 },
   );
   wrapOperator(
     ce,
     ["IntegerString", 5, 2, 4],
-    (ops) => ops.length === 3,
+    () => true,
     () => (ops) => {
       const width = integerAt(ops[2]);
       const n = bigIntegerAt(ops[0]);
@@ -446,17 +448,19 @@ export function declareNumerals(ce: ComputeEngine): void {
       const padded = digits.padStart(width, "0");
       return ce.string(padded.slice(padded.length - width));
     },
+    3,
   );
   // Wolfram's "Roman" pseudo-base, the forward direction: IntegerString(1988, "Roman").
   wrapOperator(
     ce,
     ["IntegerString", 1988, "'Roman'"],
-    (ops) => ops.length === 2 && stringAt(ops[1])?.toLowerCase() === "roman",
+    (ops) => stringAt(ops[1])?.toLowerCase() === "roman",
     () => (ops) => {
       const n = integerAt(ops[0]);
       const roman = n === undefined ? undefined : romanNumeralOf(n);
       return roman === undefined ? undefined : ce.string(roman);
     },
+    2,
   );
 
   // Wolfram's DigitSum[n, b, k]: the sum of the first k base-b digits (most significant
@@ -466,7 +470,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["DigitSum", 5, 2],
-    (ops) => ops.length === 3,
+    () => true,
     () => (ops) => {
       const n = bigIntegerAt(ops[0]);
       const base = bigIntegerAt(ops[1]);
@@ -478,6 +482,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       const slice = k >= 0 ? digits.slice(0, k) : digits.slice(digits.length + k);
       return ce.number(slice.reduce((sum, d) => sum + d, 0n));
     },
+    3,
   );
 
   // Wolfram's DigitCount[n, b, digit, len]: a 4th argument widens the digit list to `len`
@@ -486,7 +491,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["DigitCount", 5, 10, 0, 9],
-    (ops) => ops.length === 4,
+    () => true,
     () => (ops) => {
       const n = bigIntegerAt(ops[0]);
       const base = ops[1] === undefined ? 10n : bigIntegerAt(ops[1]);
@@ -513,6 +518,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       }
       return undefined;
     },
+    4,
   );
 
   /** The integers from `lo` to `hi` as a set, either end possibly unbounded. */

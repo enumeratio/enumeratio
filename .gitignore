@@ -34,6 +34,8 @@ _*.mjs
 
 # AI agent worktrees
 .claude/worktrees/
+# Personal, machine-local agent instructions (shared ones live in AGENTS.md)
+/CLAUDE.md
 !.vscode/
 !.vscode/settings.json
 !.vscode/extensions.json

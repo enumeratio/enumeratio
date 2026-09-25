@@ -5,6 +5,8 @@ import { declareListFunctional } from "./list-functional.ts";
 import { declareListHeads } from "./list-heads.ts";
 import { declareListOps } from "./list-ops.ts";
 import { declareListOpsWolfram } from "./list-ops-wolfram.ts";
+import { declareProducts } from "./products.ts";
+import { declareListStats } from "./list-stats.ts";
 import { declareRoundingHeads } from "./rounding-heads.ts";
 import { declareStats, type StatsOptions } from "./stats.ts";
 
@@ -25,6 +27,8 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareListHeads(ce);
   declareListFunctional(ce);
   declareListOpsWolfram(ce);
+  declareProducts(ce);
+  declareListStats(ce);
   declareRoundingHeads(ce);
   declareStats(ce, options);
 }

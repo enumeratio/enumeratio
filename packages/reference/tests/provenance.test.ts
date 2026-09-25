@@ -27,11 +27,14 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
-  // Trails the actual count: heads move to extension (or override) as we widen them --
-  // issue #113's elementary backlog (elementary-remaining.ts) just moved Cos/Tan/Cot/Sec/
-  // Csc/Arccos/Arctan/Arcoth/Arcsch/Arsech/Log2/Log10/Lb/TrigToExp there in one pass, so
-  // this floor dropped with it (38 -> 25 on this catalogue).
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(15);
+  // Trails the actual count: heads move to extension (or override) as we widen them.
+  // Interval/CenteredInterval/Around now genuinely diverge bare compute-engine's Sin, Cos,
+  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), and issue
+  // #113's elementary backlog (elementary-remaining.ts) separately moved Cos/Tan/Cot/Sec/
+  // Csc/Arccos/Arctan/Arcoth/Arcsch/Arsech/Log2/Log10/Lb/TrigToExp there too — the
+  // threshold tracks the combined drop, well below the current count so it still catches
+  // a real regression.
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(10);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -159,6 +162,16 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * exact rational power of the base below 1, in either direction (`Log2(1/8) = -3`) --
  * `Log` itself picks up the same fold for an explicit non-default base -- and for
  * `ComplexInfinity` going to `+Infinity`, the same convention `Ln` already had.
+ * The #113 list-stats sweep (`list-stats.ts`) adds `Tabulate` at three or more dimensions,
+ * or a literal 0 in any dimension (materialized directly rather than left truncated or
+ * unevaluated), and `Unique`'s second-argument sameness test — both additive, native for
+ * anything not ours. `Mean`/`Median` on symbolic or exact-constant data is the same sweep,
+ * already covered above since those heads were already overridden for their matrix form.
+ * `Take(xs, UpTo(n))` and `Fold`'s unseeded 2-argument form are ALSO from that sweep but
+ * don't appear here: a bare engine's own `.json` for the unmaterialized/rejected call is
+ * textually identical to (`Take`) or excluded from comparison by (`Fold`, whose malformed
+ * 2-argument call a bare engine's own canonical fails to validate) this ledger's plain,
+ * non-materializing comparison — see their own overrides' comments in `list-stats.ts`.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -206,6 +219,7 @@ const OVERRIDDEN = [
   "Erf",
   "ErfInv",
   "Erfc",
+  "Exp",
   "ExtendedGCD",
   "FactorInteger",
   "Factorial2",
@@ -264,14 +278,17 @@ const OVERRIDDEN = [
   "PrimeNu",
   "PrimeOmega",
   "PrimePi",
+  "Product",
   "QuotientRing",
   "Rank",
   "Rationalize",
   "Round",
   "Sec",
+  "Sign",
   "Sin",
   "Sinh",
   "Sort",
+  "Sqrt",
   "Stirling",
   "StirlingS1",
   "Subfactorial",
@@ -280,11 +297,13 @@ const OVERRIDDEN = [
   // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
   // expression's own outer head, the same reason Add is here.
   "Sum",
+  "Tabulate",
   "Tan",
   "Tanh",
   "Totient",
   "TrigToExp",
   "Union",
+  "Unique",
   "Zeta",
 ];
 

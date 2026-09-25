@@ -5,12 +5,6 @@ import { cx } from "./complex.ts";
 import { logGamma } from "./loggamma.ts";
 import { DOUBLE_DIGITS } from "./precise.ts";
 
-/** A wrapper's arity key doesn't filter calls; widened heads reach it with other arities. */
-const exactly =
-  (n: number, p: (ops: readonly BoxedExpression[]) => boolean) =>
-  (ops: readonly BoxedExpression[]): boolean =>
-    ops.length === n && p(ops);
-
 /**
  * Box a JS double as a float, not an exact bignum integer. `ce.number(x)` for a huge,
  * integer-VALUED double — which every double past 2^53 is, having no fractional bits
@@ -78,7 +72,7 @@ function declarePreciseLogGamma(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LogGamma", 1],
-    exactly(1, (ops) => ops[0] !== undefined),
+    (ops) => ops[0] !== undefined,
     (native) => (ops, options) => {
       const z = ops[0];
       const r = native?.(ops, options);
@@ -92,6 +86,7 @@ function declarePreciseLogGamma(ce: ComputeEngine): void {
       if (g.im === 0) return floatNumber(ce, g.re);
       return floatComplex(ce, g.re, g.im);
     },
+    1,
   );
 }
 
@@ -107,11 +102,12 @@ function declarePreciseHarmonicNumber(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HarmonicNumber", 2],
-    exactly(2, (ops) => bigIntegerAt(ops[1]) === 1n),
+    (ops) => bigIntegerAt(ops[1]) === 1n,
     () => (ops, options) => {
       const oneArg = ce.function("HarmonicNumber", [ops[0]]);
       return options.numericApproximation ? oneArg.N() : oneArg.evaluate();
     },
+    2,
   );
 }
 
@@ -150,7 +146,7 @@ function declarePreciseRationalize(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Rationalize", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const x = ops[0];
       const tol = ops[1];
       if (x === undefined || tol === undefined || !isFiniteNum(x) || !isFiniteNum(tol)) {
@@ -158,12 +154,13 @@ function declarePreciseRationalize(ce: ComputeEngine): void {
       }
       if (tol.re <= 0) return false; // a non-positive tolerance: leave to native
       return bigRationalAt(x) === undefined; // an already-exact x is returned unchanged
-    }),
+    },
     () => (ops, options) => {
       const [p, q] = rationalizeToTolerance(ops[0].N().re, ops[1].N().re);
       const expr = q === 1 ? ce.number(p) : ce.function("Rational", [p, q]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
+    2,
   );
 }
 

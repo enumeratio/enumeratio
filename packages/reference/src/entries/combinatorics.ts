@@ -134,9 +134,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Binomial", "n", "n"],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption: "$\\binom{n}{n} = 1$ for symbolic n; currently left unevaluated",
+        caption: "$\\binom{n}{n} = 1$ for symbolic n",
       },
       {
         expr: ["Binomial", ["Complex", 1, 1], 5],
@@ -153,10 +152,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Binomial", ["Rational", 1, 2], ["Interval", 0.5, 0.6]],
         expected: ["Interval", 0.9281455538507054, 1],
-        aspirational: true,
         category: "Scope",
         caption:
-          "An Interval argument should give an enclosing Interval; [[Binomial]] rejects an Interval with a type error",
+          "Interval arithmetic in $k$: $\\binom{1/2}{k}$ is decreasing here, so the endpoints swap",
       },
       {
         expr: [
@@ -337,10 +335,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Multinomial"],
         expected: 1,
-        aspirational: true,
         category: "Possible issues",
-        caption:
-          "With no arguments it should be the empty product, 1; compute-engine reports a missing argument",
+        caption: "With no arguments it is the empty product, 1",
       },
     ],
     seeAlso: ["Binomial", "Factorial"],
@@ -794,10 +790,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         expr: ["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]],
         expected: ["Divide", 2, ["Sqrt", "Pi"]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "A rational order should evaluate through Gamma: $\\left(\\frac32\\right)_{1/2} = \\frac{\\Gamma(2)}{\\Gamma(3/2)} = \\frac{2}{\\sqrt\\pi}$; currently left unevaluated",
+          "A rational order evaluates through Gamma, exactly: $\\left(\\frac32\\right)_{1/2} = \\frac{\\Gamma(2)}{\\Gamma(3/2)} = \\frac{2}{\\sqrt\\pi}$",
       },
       {
         expr: ["Pochhammer", ["Complex", 2, 5], ["Complex", 0, 8]],

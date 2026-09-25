@@ -19,12 +19,13 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, 226, 10],
-      (ops) => ops.length === 2,
+      () => true,
       () => (ops) => {
         const [x, step] = ops;
         const rounded = ce.function(head, [ce.function("Divide", [x, step])]).N();
         return ce.function("Multiply", [step, rounded]).evaluate();
       },
+      2,
     );
   }
 
@@ -34,7 +35,7 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Chop", 0.001, 0.01],
-    (ops) => ops.length === 2,
+    () => true,
     () => (ops) => {
       const [x, tolerance] = ops;
       const tol = tolerance.N().re;
@@ -56,6 +57,7 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
       }
       return chopPart(x);
     },
+    2,
   );
 
   // Clamp(x, lower, upper, vLower, vUpper): Wolfram's Clip[x, {lower, upper}, {vLower,
@@ -64,13 +66,14 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Clamp", 5, 0, 3, -1, 10],
-    (ops) => ops.length === 5,
+    () => true,
     () => (ops) => {
       const [x, lower, upper, vLower, vUpper] = ops;
       if (x.isLess(lower) === true) return vLower;
       if (x.isGreater(upper) === true) return vUpper;
       return x;
     },
+    5,
   );
 
   // Min() -> +∞, the identity element for Min under the pool it flattens; Max already
@@ -81,7 +84,8 @@ export function declareRoundingHeads(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Min"],
-    (ops) => ops.length === 0,
+    () => true,
     () => () => ce.symbol("PositiveInfinity"),
+    0,
   );
 }

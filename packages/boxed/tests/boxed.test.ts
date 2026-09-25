@@ -1,6 +1,6 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
-import { bigIntegerAt, integerAt, operandsOf, stringAt } from "../src/index.ts";
+import { bigIntegerAt, integerAt, operandsOf, stringAt, wrapOperator } from "../src/index.ts";
 
 const ce = new ComputeEngine();
 
@@ -47,4 +47,26 @@ test("stringAt unwraps bare, String-wrapped and quoted spellings alike", () => {
   expect(stringAt(ce.box(["String", ce.string("Subsets")]))).toBe("Subsets");
   expect(stringAt(ce.box(5))).toBeUndefined();
   expect(stringAt(undefined)).toBeUndefined();
+});
+
+test("wrapOperator with an arity skips calls of any other operand count", () => {
+  const engine = new ComputeEngine();
+  engine.declare("Probe", {
+    signature: "(value+) -> value",
+    evaluate: () => engine.symbol("Native"),
+  });
+  const seen: number[] = [];
+  wrapOperator(
+    engine,
+    ["Probe", 1, 1],
+    (ops) => {
+      seen.push(ops.length);
+      return true;
+    },
+    () => () => engine.symbol("Wrapped"),
+    2,
+  );
+  expect(engine.box(["Probe", 1, 2]).evaluate().json).toBe("Wrapped");
+  expect(engine.box(["Probe", 1, 2, 3]).evaluate().json).toBe("Native");
+  expect(seen).toEqual([2]);
 });

@@ -509,7 +509,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Sign",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Sign",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -530,7 +530,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Sqrt",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Sqrt",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -740,7 +740,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Exp",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Exp",
     elsewhere: ["wolfram", "sympy", "mpmath"],
@@ -1832,7 +1832,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Product",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Product",
     elsewhere: ["wolfram", "sympy"],
@@ -2000,7 +2000,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Tabulate",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: null,
     elsewhere: [],
@@ -2021,7 +2021,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Unique",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "DeleteDuplicates",
     elsewhere: [],

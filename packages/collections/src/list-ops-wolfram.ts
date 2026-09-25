@@ -198,8 +198,9 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["At", 1, 1],
-    (ops) => ops.length >= 2 && ops.slice(1).some((op) => op.operator === "Span"),
+    (ops) => ops.slice(1).some((op) => op.operator === "Span"),
     () => (ops) => partWithSpecs(ce, ops[0], ops.slice(1)),
+    { min: 2 },
   );
 
   // Take(c, UpTo(n)) is NOT handled here. Unlike every other head in this module, Take's
@@ -221,7 +222,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Partition", 1, 1],
-    (ops) => ops.length === 2 && ops[1].operator === "UpTo",
+    (ops) => ops[1].operator === "UpTo",
     () => (ops) => {
       const n = integerAt(operandsOf(ops[1])[0]);
       if (n === undefined || n <= 0) return undefined;
@@ -232,6 +233,7 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
       }
       return ce.box(["List", ...chunks]);
     },
+    2,
   );
 
   // Ordering(c, UpTo(n)): at most n positions of the full ordering — n clamped by `slice`
@@ -239,13 +241,14 @@ export function declareListOpsWolfram(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Ordering", 1, 1],
-    (ops) => ops.length === 2 && ops[1].operator === "UpTo",
+    (ops) => ops[1].operator === "UpTo",
     (native) => (ops, options) => {
       const n = integerAt(operandsOf(ops[1])[0]);
       if (n === undefined) return undefined;
       const full = native?.([ops[0]], options);
       return full === undefined ? undefined : ce.box(["List", ...operandsOf(full).slice(0, n)]);
     },
+    2,
   );
 
   // Riffle(list, x, n?): interleave a scalar separator or a second list between list's

@@ -144,7 +144,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["GroupOrder", ["SymmetricGroup", 1]],
-    (ops) => ops.length === 1 && ops[0]?.operator === "SymmetricGroup",
+    (ops) => ops[0]?.operator === "SymmetricGroup",
     () => (ops) => {
       const n = integerAt(operandsOf(ops[0]!)[0]);
       if (n === undefined) return undefined;
@@ -152,6 +152,7 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
       for (let i = 2; i <= n; i++) f *= i;
       return ce.number(f);
     },
+    1,
   );
   aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) =>
     ce.symbol(isAbelian(g) ? "True" : "False"),

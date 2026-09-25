@@ -195,13 +195,23 @@ export function declareAdeles(ce: ComputeEngine): void {
   wrapOperator(ce, ["Multiply", "x", "y"], onlyProfinite, () =>
     fold(profiniteOf, P.multiply, writeProfinite),
   );
-  wrapOperator(ce, ["Divide", "x", "y"], onlyProfinite, () =>
-    fold(profiniteOf, P.divide, writeProfinite),
+  wrapOperator(
+    ce,
+    ["Divide", "x", "y"],
+    onlyProfinite,
+    () => fold(profiniteOf, P.divide, writeProfinite),
+    2,
   );
-  wrapOperator(ce, ["Negate", "x"], onlyProfinite, () => (ops) => {
-    const x = profiniteOf(ops[0]);
-    return x === undefined ? undefined : writeProfinite(P.negate(x));
-  });
+  wrapOperator(
+    ce,
+    ["Negate", "x"],
+    onlyProfinite,
+    () => (ops) => {
+      const x = profiniteOf(ops[0]);
+      return x === undefined ? undefined : writeProfinite(P.negate(x));
+    },
+    1,
+  );
   wrapOperator(
     ce,
     ["Power", "x", "y"],
@@ -212,6 +222,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       const result = x === undefined || n === undefined ? undefined : P.power(x, n);
       return result === undefined ? undefined : writeProfinite(result);
     },
+    2,
   );
 
   // Adèles: componentwise; a rational beside an adèle is the diagonal adèle.
@@ -230,15 +241,25 @@ export function declareAdeles(ce: ComputeEngine): void {
   wrapOperator(ce, ["Multiply", "x", "y"], onAdele, () =>
     fold(adeleOf, adeleStep("Multiply", P.multiply), writeAdele),
   );
-  wrapOperator(ce, ["Divide", "x", "y"], onAdele, () =>
-    fold(adeleOf, adeleStep("Divide", P.divide), writeAdele),
+  wrapOperator(
+    ce,
+    ["Divide", "x", "y"],
+    onAdele,
+    () => fold(adeleOf, adeleStep("Divide", P.divide), writeAdele),
+    2,
   );
-  wrapOperator(ce, ["Negate", "x"], onAdele, () => (ops) => {
-    const x = ops[0] === undefined ? undefined : adeleOf(ops[0]);
-    return x === undefined
-      ? undefined
-      : writeAdele({ real: real("Negate", x.real), finite: P.negate(x.finite) });
-  });
+  wrapOperator(
+    ce,
+    ["Negate", "x"],
+    onAdele,
+    () => (ops) => {
+      const x = ops[0] === undefined ? undefined : adeleOf(ops[0]);
+      return x === undefined
+        ? undefined
+        : writeAdele({ real: real("Negate", x.real), finite: P.negate(x.finite) });
+    },
+    1,
+  );
   wrapOperator(
     ce,
     ["Power", "x", "y"],
@@ -251,6 +272,7 @@ export function declareAdeles(ce: ComputeEngine): void {
         ? undefined
         : writeAdele({ real: real("Power", x.real, ops[1]!), finite });
     },
+    2,
   );
 
   // Idèles form a group: multiplication, division, integer powers.
@@ -270,8 +292,12 @@ export function declareAdeles(ce: ComputeEngine): void {
   wrapOperator(ce, ["Multiply", "x", "y"], onIdele, () =>
     fold(ideleOf, ideleStep("Multiply", I.multiply), writeIdele),
   );
-  wrapOperator(ce, ["Divide", "x", "y"], onIdele, () =>
-    fold(ideleOf, ideleStep("Divide", ideleDivide), writeIdele),
+  wrapOperator(
+    ce,
+    ["Divide", "x", "y"],
+    onIdele,
+    () => fold(ideleOf, ideleStep("Divide", ideleDivide), writeIdele),
+    2,
   );
   wrapOperator(
     ce,
@@ -285,6 +311,7 @@ export function declareAdeles(ce: ComputeEngine): void {
         ? undefined
         : writeIdele({ real: real("Power", x.real, ops[1]!), finite });
     },
+    2,
   );
 
   // Hertogh's equality — the represented sets meet — for all three.
@@ -309,12 +336,18 @@ export function declareAdeles(ce: ComputeEngine): void {
     ["Equal", false],
     ["NotEqual", true],
   ] as const) {
-    wrapOperator(ce, [head, "x", "y"], onAny, () => (ops) => {
-      const [a, b] = ops;
-      if (a === undefined || b === undefined || ops.length !== 2) return undefined;
-      const answer = equalValues(a, b);
-      return answer === undefined ? undefined : ce.symbol(answer !== negate ? "True" : "False");
-    });
+    wrapOperator(
+      ce,
+      [head, "x", "y"],
+      onAny,
+      () => (ops) => {
+        const [a, b] = ops;
+        if (a === undefined || b === undefined) return undefined;
+        const answer = equalValues(a, b);
+        return answer === undefined ? undefined : ce.symbol(answer !== negate ? "True" : "False");
+      },
+      2,
+    );
   }
 
   // ── the constructors ──────────────────────────────────────────────────────────
@@ -373,6 +406,7 @@ export function declareAdeles(ce: ComputeEngine): void {
         const y = x === undefined ? undefined : kernel(x);
         return y === undefined ? undefined : writeProfinite(y);
       },
+      1,
     );
   };
   sequence("Fibonacci", P.fibonacci);
@@ -389,6 +423,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       const x = profiniteOf(ops[0]);
       return x === undefined ? undefined : writeProfinite(P.numerator(x));
     },
+    1,
   );
   widenSignature(ce, "Denominator", "(number | value) -> nothing | number | value", isNumber);
   wrapOperator(
@@ -399,6 +434,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       const x = profiniteOf(ops[0]);
       return x === undefined ? undefined : ce.number(P.denominator(x));
     },
+    1,
   );
 
   // AdicNumeral(p, z): the image of z in Q_p, known modulo p^{v_p(m)}.
@@ -419,6 +455,7 @@ export function declareAdeles(ce: ComputeEngine): void {
       if (prec !== undefined) args.push(ce.number(prec));
       return ce.function(ADIC, args).evaluate();
     },
+    { min: 2, max: 3 },
   );
 
   // ── the matrix factorisation ──────────────────────────────────────────────────

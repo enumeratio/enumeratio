@@ -76,29 +76,41 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     return gaussianPowerModList(a, exponent[0], exponent[1], m);
   };
 
-  wrapOperator(ce, ["PowerModList", "a", "b", "m"], inGaussian, () => (ops) => {
-    const found = gaussianRoots(ops);
-    return found === undefined
-      ? undefined
-      : ce.function(
-          "List",
-          found.map((z) => gaussianExpression(ce, z)),
-        );
-  });
+  wrapOperator(
+    ce,
+    ["PowerModList", "a", "b", "m"],
+    inGaussian,
+    () => (ops) => {
+      const found = gaussianRoots(ops);
+      return found === undefined
+        ? undefined
+        : ce.function(
+            "List",
+            found.map((z) => gaussianExpression(ce, z)),
+          );
+    },
+    3,
+  );
 
-  wrapOperator(ce, ["PowerMod", "a", "b", "m"], inGaussian, () => (ops) => {
-    const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
-    const exponent = bigRationalAt(ops[1]);
-    if (z === undefined || m === undefined || exponent === undefined) return undefined;
-    if (exponent[1] === 1n) {
-      const value = gaussianPowerMod(z, exponent[0], m);
-      return value === undefined ? undefined : gaussianExpression(ce, value);
-    }
-    const found = gaussianRoots(ops);
-    return found === undefined || found.length === 0
-      ? undefined
-      : gaussianExpression(ce, found[0]!);
-  });
+  wrapOperator(
+    ce,
+    ["PowerMod", "a", "b", "m"],
+    inGaussian,
+    () => (ops) => {
+      const [z, m] = [gaussianAt(ops[0]), gaussianAt(ops[2])];
+      const exponent = bigRationalAt(ops[1]);
+      if (z === undefined || m === undefined || exponent === undefined) return undefined;
+      if (exponent[1] === 1n) {
+        const value = gaussianPowerMod(z, exponent[0], m);
+        return value === undefined ? undefined : gaussianExpression(ce, value);
+      }
+      const found = gaussianRoots(ops);
+      return found === undefined || found.length === 0
+        ? undefined
+        : gaussianExpression(ce, found[0]!);
+    },
+    3,
+  );
 
   ce.declare("RationalReconstruction", {
     description:
@@ -203,11 +215,22 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Binomial", "n", ["Subtract", "n", 1]],
+    (ops) => integerAt(ops[0]) === undefined && sub(ops[0], ops[1]).evaluate().isSame(ce.number(1)),
+    () => (ops) => ops[0],
+    2,
+  );
+
+  // Binomial(n, n) -> 1 for symbolic n: choosing every one of n items is always 1 way,
+  // recognised the same way as Binomial(n, n-1) above -- by value, so it also fires once
+  // k arrives pre-simplified to something that just happens to equal n.
+  wrapOperator(
+    ce,
+    ["Binomial", "n", "n"],
     (ops) =>
       ops.length === 2 &&
       integerAt(ops[0]) === undefined &&
-      sub(ops[0], ops[1]).evaluate().isSame(ce.number(1)),
-    () => (ops) => ops[0],
+      sub(ops[0], ops[1]).evaluate().isSame(ce.Zero),
+    () => () => ce.One,
   );
 
   // Binomial, CatalanNumber, Pochhammer, Multinomial, Factorial2 and Subfactorial through
@@ -235,14 +258,22 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   widenSignature(ce, "CatalanNumber", "(any) -> any", isExact);
   widenSignature(ce, "Subfactorial", "(any) -> any", isExact);
   widenSignature(ce, "Factorial2", "(any) -> any", isExact);
-  // At least one argument, as the native declaration already requires -- Multinomial() with
-  // none stays unevaluated rather than fold to the empty product.
-  widenSignature(ce, "Multinomial", "(any, any*) -> any", isExact);
+  // Now zero-or-more arguments: Multinomial() is the empty product, 1, same convention as
+  // Factorial(0) -- see the wrapOperator right below, which answers that specific call.
+  widenSignature(ce, "Multinomial", "(any*) -> any", isExact);
+
+  // Multinomial() -- the empty product, by the same convention as Factorial(0) = 1.
+  wrapOperator(
+    ce,
+    ["Multinomial"],
+    (ops) => ops.length === 0,
+    () => () => ce.One,
+  );
 
   wrapOperator(
     ce,
     ["Binomial", ["Complex", 1, 1], 5],
-    (ops) => ops.length === 2 && (isNonReal(ops[0]) || isNonReal(ops[1])),
+    (ops) => isNonReal(ops[0]) || isNonReal(ops[1]),
     () => (ops) => {
       const [n, k] = ops;
       const kInt = integerAt(k);
@@ -253,25 +284,49 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       }
       return div(gamma(add(n, 1)), mul(gamma(add(k, 1)), gamma(add(sub(n, k), 1)))).N();
     },
+    2,
   );
 
   wrapOperator(
     ce,
     ["CatalanNumber", 2.3],
-    (ops) => ops.length === 1 && notExact(ops[0]),
+    (ops) => notExact(ops[0]),
     () => (ops) => {
       const n = ops[0];
       return div(gamma(add(mul(2, n), 1)), mul(gamma(add(n, 1)), gamma(add(n, 2)))).N();
     },
+    1,
   );
 
   wrapOperator(
     ce,
     ["Pochhammer", ["Complex", 2, 5], ["Complex", 0, 8]],
-    (ops) => ops.length === 2 && (isNonReal(ops[0]) || isNonReal(ops[1])),
+    (ops) => isNonReal(ops[0]) || isNonReal(ops[1]),
     () => (ops) => {
       const [a, n] = ops;
       return div(gamma(add(a, n)), gamma(a)).N();
+    },
+    2,
+  );
+
+  // Pochhammer with a rational (or otherwise exact, non-integer) real order: the same
+  // Gamma identity as the complex case above, but kept EXACT via `.evaluate()` rather
+  // than forced to `.N()` -- Gamma is already exact at the integers and half-integers,
+  // so (3/2)_(1/2) = Γ(2)/Γ(3/2) comes back as 2/√π rather than a decimal. A nonnegative
+  // integer order is excluded -- that's the falling-factorial product above, kept exact
+  // without going through Gamma at all.
+  wrapOperator(
+    ce,
+    ["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]],
+    (ops) => {
+      if (ops.length !== 2 || isNonReal(ops[0]) || isNonReal(ops[1])) return false;
+      const nInt = integerAt(ops[1]);
+      if (nInt !== undefined && nInt >= 0) return false;
+      return isExact(ops[0]) && isExact(ops[1]);
+    },
+    () => (ops) => {
+      const [a, n] = ops;
+      return div(gamma(add(a, n)), gamma(a)).evaluate();
     },
   );
 
@@ -281,7 +336,6 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     // Fires once some part is a real or complex non-integer; but not if another part is
     // an exact non-integer rational, which stays for whatever already handles that case.
     (ops) => {
-      if (ops.length === 0) return false;
       const exactRational = (op: BoxedExpression) =>
         integerAt(op) === undefined && bigRationalAt(op) !== undefined;
       return ops.some(notExact) && !ops.some(exactRational);
@@ -294,13 +348,14 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       );
       return div(gamma(add(total, 1)), denom).N();
     },
+    { min: 1 },
   );
 
   // Factorial2's analytic continuation: 2^{(1+2x-cos πx)/4} π^{(cos πx - 1)/4} Γ(1 + x/2).
   wrapOperator(
     ce,
     ["Factorial2", 2.5],
-    (ops) => ops.length === 1 && notExact(ops[0]) && !isNonReal(ops[0]),
+    (ops) => notExact(ops[0]) && !isNonReal(ops[0]),
     () => (ops) => {
       const x = ops[0];
       const pi = ce.symbol("Pi");
@@ -309,18 +364,20 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       const piPower = ce.function("Power", [pi, div(sub(cosTerm, 1), 4)]);
       return mul(twoPower, piPower, gamma(add(1, div(x, 2)))).N();
     },
+    1,
   );
 
   // Subfactorial's Gamma form: D_n = Γ(n+1, -1) / e, the incomplete Gamma at -1.
   wrapOperator(
     ce,
     ["Subfactorial", 4.5],
-    (ops) => ops.length === 1 && notExact(ops[0]),
+    (ops) => notExact(ops[0]),
     () => (ops) => {
       const n = ops[0];
       const incomplete = ce.function("Gamma", [add(n, 1), -1]);
       return div(incomplete, ce.symbol("ExponentialE")).N();
     },
+    1,
   );
 
   // StirlingS1(n, k) and Stirling(n, k) are 0 whenever k > n ≥ 0 -- both currently left
@@ -330,12 +387,12 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       ce,
       [head, 3, 5],
       (ops) => {
-        if (ops.length !== 2) return false;
         const n = integerAt(ops[0]);
         const k = integerAt(ops[1]);
         return n !== undefined && k !== undefined && n >= 0 && k > n;
       },
       () => () => ce.Zero,
+      2,
     );
   }
 
@@ -368,7 +425,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Fibonacci", 1.5],
-    (ops) => ops.length === 1 && notExact(ops[0]) && !isProfinite(ops[0]),
+    (ops) => notExact(ops[0]) && !isProfinite(ops[0]),
     () => (ops) => {
       const nu = ops[0];
       return div(
@@ -376,16 +433,18 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
         ce.function("Sqrt", [5]),
       ).N();
     },
+    1,
   );
 
   wrapOperator(
     ce,
     ["LucasL", 2.5],
-    (ops) => ops.length === 1 && notExact(ops[0]) && !isProfinite(ops[0]),
+    (ops) => notExact(ops[0]) && !isProfinite(ops[0]),
     () => (ops) => {
       const nu = ops[0];
       return add(ce.function("Power", [goldenRatio(), nu]), cosPiTerm(nu)).N();
     },
+    1,
   );
 
   // Fibonacci(n, x), LucasL(n, x) and BellNumber(n, x): the polynomial families, exact for
@@ -399,7 +458,7 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
     ce,
     ["Fibonacci", 7, "x"],
     (ops) => {
-      if (ops.length !== 2 || isProfinite(ops[0])) return false;
+      if (isProfinite(ops[0])) return false;
       const n = integerAt(ops[0]);
       return n !== undefined && n >= 0 && notMatrix(ops[1]);
     },
@@ -415,13 +474,40 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       }
       return n === 0 ? prev : curr;
     },
+    2,
+  );
+
+  // Fibonacci(nu, x) at a real (non-integer, or negative-integer) order nu: the
+  // two-variable Binet formula. t^2 - x*t - 1 = 0 has roots r, -1/r with
+  // r = (x + sqrt(x^2+4))/2; since (-1/r)^nu = cos(pi*nu) * r^-nu for real nu (the same
+  // branch choice the single-argument Fibonacci(nu) rule above makes),
+  // F_nu(x) = (r^nu - cos(pi*nu) * r^-nu) / sqrt(x^2+4). At x = 1 this is exactly the
+  // single-argument formula above (r = phi, sqrt(x^2+4) = sqrt(5)).
+  wrapOperator(
+    ce,
+    ["Fibonacci", 5.8, 3],
+    (ops) => {
+      if (ops.length !== 2 || isProfinite(ops[0]) || !notMatrix(ops[1])) return false;
+      const n = integerAt(ops[0]);
+      return n === undefined || n < 0;
+    },
+    () => (ops) => {
+      const [nu, x] = ops;
+      const discriminant = ce.function("Sqrt", [add(mul(x, x), 4)]);
+      const root = div(add(x, discriminant), 2);
+      const otherTerm = mul(
+        ce.function("Cos", [mul(ce.symbol("Pi"), nu)]),
+        ce.function("Power", [root, ce.function("Negate", [nu])]),
+      );
+      return div(sub(ce.function("Power", [root, nu]), otherTerm), discriminant).N();
+    },
   );
 
   wrapOperator(
     ce,
     ["LucasL", 7, "x"],
     (ops) => {
-      if (ops.length !== 2 || isProfinite(ops[0])) return false;
+      if (isProfinite(ops[0])) return false;
       const n = integerAt(ops[0]);
       return n !== undefined && n >= 0 && notMatrix(ops[1]);
     },
@@ -437,13 +523,13 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       }
       return n === 0 ? prev : curr;
     },
+    2,
   );
 
   wrapOperator(
     ce,
     ["BellNumber", 5, "x"],
     (ops) => {
-      if (ops.length !== 2) return false;
       const n = integerAt(ops[0]);
       return n !== undefined && n >= 0 && notMatrix(ops[1]);
     },
@@ -457,5 +543,6 @@ function declareCombinatoricsGamma113(ce: ComputeEngine): void {
       }
       return ce.function("Add", terms).evaluate();
     },
+    2,
   );
 }

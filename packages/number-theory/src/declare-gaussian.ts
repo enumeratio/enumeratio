@@ -82,6 +82,7 @@ export function declareGaussian(ce: ComputeEngine): void {
       const [z, m] = gaussianCall(ops)!;
       return g(mod(z!, m!));
     },
+    2,
   );
 
   // Wolfram's Quotient: ⌊m/n⌋ for integers — rational and real m, n included — with an
@@ -150,7 +151,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     // Exactly two: declare-widened.ts widens past that for plain integers, and a Gaussian
     // in a longer call falls through to it rather than have this handler silently drop
     // every operand past the second.
-    (ops) => ops.length === 2 && gaussianCall(ops) !== undefined,
+    (ops) => gaussianCall(ops) !== undefined,
     () => (ops) => {
       const [a, b] = gaussianCall(ops)!;
       return ce.function(
@@ -158,13 +159,14 @@ export function declareGaussian(ce: ComputeEngine): void {
         extendedGcd(a!, b!).map((z) => gaussianExpression(ce, z)),
       );
     },
+    2,
   );
 
   widenSignature(ce, "ModularInverse", "(value, value) -> value", mayBeInteger);
   wrapOperator(
     ce,
     ["ModularInverse", 1, 1],
-    (ops) => ops.length === 2 && ops.every((op) => gaussianAt(op) !== undefined),
+    (ops) => ops.every((op) => gaussianAt(op) !== undefined),
     () => (ops) => {
       const [a, m] = ops.map(gaussianAt) as [Gaussian, Gaussian];
       if (!isReal(a) || !isReal(m)) return g(inverseMod(a, m));
@@ -176,6 +178,7 @@ export function declareGaussian(ce: ComputeEngine): void {
         ? undefined
         : ce.number(m[0] < 0n && inverse !== 0n ? inverse - n : inverse);
     },
+    2,
   );
 
   // The option heads. A complex argument is read in ℤ[i] as it stands; a rational integer
@@ -339,11 +342,12 @@ export function declareIntegerExponentGaussian(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["IntegerExponent", 1, 1],
-    (ops) => ops.length === 2 && gaussianCall(ops) !== undefined,
+    (ops) => gaussianCall(ops) !== undefined,
     () => (ops) => {
       const [z, b] = gaussianCall(ops)!;
       const k = integerExponentGaussian(z!, b!);
       return k === undefined ? undefined : ce.number(k);
     },
+    2,
   );
 }

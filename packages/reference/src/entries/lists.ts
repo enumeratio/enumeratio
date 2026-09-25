@@ -178,6 +178,12 @@ export const lists: readonly ReferenceEntry[] = [
         description:
           "$f(\\ldots f(f(init, x_1), x_2)\\ldots, x_n)$ — $init$ combined with each element of $xs$ in turn.",
       },
+      {
+        call: "Fold(f, xs)",
+        description:
+          "the same fold with no seed, starting from $xs$'s own first element: $f(\\ldots f(x_1, x_2)\\ldots, x_n)$.",
+        library: "enumeratio-collections",
+      },
     ],
     examples: [
       {
@@ -209,10 +215,8 @@ export const lists: readonly ReferenceEntry[] = [
       {
         expr: ["Fold", "f", ["List", "a", "b", "c"]],
         expected: ["f", ["f", "a", "b"], "c"],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Without a seed it should start from the first element; the 2-argument form isn't supported yet",
+        caption: "Without a seed, folding starts from the first element",
       },
       {
         expr: ["Fold", "f", "x", ["List"]],
@@ -326,17 +330,14 @@ export const lists: readonly ReferenceEntry[] = [
             ["List", ["f", 2, 2, 1], ["f", 2, 2, 2]],
           ],
         ],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Three dimensions should give a 2×2×2 array; compute-engine drops the third dimension",
+        caption: "Three dimensions give a 2×2×2 array",
       },
       {
         expr: ["Tabulate", "f", 0],
         expected: ["List"],
-        aspirational: true,
         category: "Scope",
-        caption: "Length 0 should give the empty list; it stays unevaluated",
+        caption: "Length 0 gives the empty list",
       },
       {
         expr: ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 3, 3],
@@ -512,6 +513,12 @@ export const lists: readonly ReferenceEntry[] = [
         call: "Unique(xs)",
         description: "$xs$ with every repeat of an element dropped, keeping the first occurrence.",
       },
+      {
+        call: "Unique(xs, test)",
+        description:
+          "as above, but two elements count as duplicates when $test$ holds for them, not just when they're structurally equal.",
+        library: "enumeratio-collections",
+      },
     ],
     examples: [
       {
@@ -538,10 +545,9 @@ export const lists: readonly ReferenceEntry[] = [
           ["Function", ["Less", ["Abs", ["Subtract", "_1", "_2"]], 2]],
         ],
         expected: ["List", 1, 3, 5],
-        aspirational: true,
         category: "Scope",
         caption:
-          "A second argument should say when two elements count as duplicates -- here, when they differ by less than 2; not yet supported",
+          "A second argument says when two elements count as duplicates -- here, when they differ by less than 2",
       },
       {
         expr: ["Unique", ["Unique", ["List", 1, 1, 2]]],
