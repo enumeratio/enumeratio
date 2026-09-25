@@ -15,6 +15,11 @@
           "input": "abs(-5)",
           "output": "5",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "abs(n(-5))",
+          "output": "5",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",5]": {
@@ -25,6 +30,11 @@
         },
         "sage": {
           "input": "abs(5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "abs(n(5))",
           "output": "5",
           "verdict": "agree"
         }
@@ -39,6 +49,11 @@
           "input": "abs(0)",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "abs(n(0))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Abs\",[\"Rational\",-7,2]]": {
@@ -49,6 +64,11 @@
         },
         "sage": {
           "input": "abs((-7/2))",
+          "output": "7/2",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "abs(rational(n(-7), n(2)))",
           "output": "7/2",
           "verdict": "agree"
         }
@@ -72,6 +92,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Abs is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "abs(list(vec![n(-1), n(2), n(-3)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Abs\",-8],[\"Abs\",8]]": {
@@ -83,6 +110,11 @@
         "sage": {
           "input": "bool(abs(-8) == abs(8))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(abs(n(-8)), abs(n(8)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -101,6 +133,11 @@
         },
         "sage": {
           "input": "abs((70 - 95))",
+          "output": "25",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "abs((n(70) - n(95)))",
           "output": "25",
           "verdict": "agree"
         }
@@ -241,6 +278,11 @@
           "input": "(-(5))",
           "output": "-5",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(n(5)))",
+          "output": "-5",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",-5]": {
@@ -266,6 +308,11 @@
         },
         "oscar": {
           "input": "(-(-5))",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(n(-5)))",
           "output": "5",
           "verdict": "agree"
         }
@@ -295,6 +342,11 @@
           "input": "(-(0))",
           "output": "0",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(n(0)))",
+          "output": "0",
+          "verdict": "agree"
         }
       },
       "[\"Negate\",[\"Rational\",3,4]]": {
@@ -321,6 +373,11 @@
         "oscar": {
           "input": "(-((3 // 4)))",
           "output": "-0.75",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(rational(n(3), n(4))))",
+          "output": "-3/4",
           "verdict": "agree"
         }
       },
@@ -351,6 +408,13 @@
           "input": "(-([1, -2, 3]))",
           "output": "[-1, 2, -3]",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(list(vec![n(1), n(-2), n(3)])))",
+          "output": "panic: negating [1, -2, 3]",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Negate\",42.5]": {
@@ -376,6 +440,11 @@
         },
         "oscar": {
           "input": "(-(42.5))",
+          "output": "-42.5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "(-(x(42.5)))",
           "output": "-42.5",
           "verdict": "agree"
         }
@@ -489,6 +558,11 @@
           "input": "sqrt(16)",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "sqrt(n(16))",
+          "output": "4.0",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",2]": {
@@ -500,6 +574,11 @@
         "sage": {
           "input": "sqrt(2)",
           "output": "sqrt(2)",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "sqrt(n(2))",
+          "output": "1.4142135623730951",
           "verdict": "agree"
         }
       },
@@ -513,6 +592,11 @@
           "input": "sqrt((4/9))",
           "output": "2/3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "sqrt(rational(n(4), n(9)))",
+          "output": "0.6666666666666666",
+          "verdict": "agree"
         }
       },
       "[\"Sqrt\",0]": {
@@ -524,6 +608,11 @@
         "sage": {
           "input": "sqrt(0)",
           "output": "0",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "sqrt(n(0))",
+          "output": "0.0",
           "verdict": "agree"
         }
       },
@@ -539,6 +628,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Same value 2i: the scan's N()-reduced complex leaf serializes to JSON for the text compare, which doesn't recognize Sage's '2*I' as the same number."
+        },
+        "rust": {
+          "input": "sqrt(n(-4))",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       },
       "[\"Equal\",[\"Square\",[\"Sqrt\",16]],16]": {
@@ -562,6 +658,11 @@
         "sage": {
           "input": "bool(sqrt(16) == (16^(1/2)))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -589,6 +690,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Both stay symbolic; the scan's N() reduction turns our expected Sqrt(-2) into a complex float before the text compare, so it no longer matches Sage's literal 'sqrt(-2)' string."
+        },
+        "rust": {
+          "input": "sqrt(n(-2))",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       },
       "[\"Sqrt\",[\"Rational\",-4,9]]": {
@@ -603,6 +711,13 @@
           "verdict": "disagree",
           "kind": "shape",
           "note": "Same value 2i/3: the scan's N()-reduced complex leaf serializes to JSON, not the '2/3*I' notation Sage prints — a comparator spelling gap, not a numeric disagreement."
+        },
+        "rust": {
+          "input": "sqrt(rational(n(-4), n(9)))",
+          "output": "NaN",
+          "verdict": "disagree",
+          "kind": "domain",
+          "note": "Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane."
         }
       }
     },
@@ -684,6 +799,11 @@
           "input": "floor((7/2))",
           "output": "3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "floor(rational(n(7), n(2)))",
+          "output": "3",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",3.7]": {
@@ -696,6 +816,11 @@
           "input": "floor(3.7)",
           "output": "3",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "floor(x(3.7))",
+          "output": "3.0",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",5]": {
@@ -706,6 +831,11 @@
         },
         "sage": {
           "input": "floor(5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "floor(n(5))",
           "output": "5",
           "verdict": "agree"
         }
@@ -722,6 +852,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Floor is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "floor(list(vec![x(1.2), x(-1.2), x(3.7)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Floor is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Add\",[\"Floor\",[\"Rational\",7,2]],1],[\"Ceil\",[\"Rational\",7,2]]]": {
@@ -733,6 +870,11 @@
         "sage": {
           "input": "bool((floor((7/2)) + 1) == ceil((7/2)))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal((floor(rational(n(7), n(2))) + n(1)), ceil(rational(n(7), n(2))))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -746,6 +888,11 @@
           "input": "bool(floor((-7/2)) == (-ceil((7/2))))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(floor(rational(n(-7), n(2))), (-(ceil(rational(n(7), n(2))))))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Floor\",[\"Divide\",17,5]]": {
@@ -756,6 +903,11 @@
         },
         "sage": {
           "input": "floor((17 / 5))",
+          "output": "3",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "floor((n(17) / n(5)))",
           "output": "3",
           "verdict": "agree"
         }
@@ -769,6 +921,11 @@
         "sage": {
           "input": "floor(-3.2)",
           "output": "-4",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "floor(x(-3.2))",
+          "output": "-4.0",
           "verdict": "agree"
         }
       },
@@ -791,6 +948,11 @@
           "input": "ceil((7/2))",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "ceil(rational(n(7), n(2)))",
+          "output": "4",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",3.2]": {
@@ -803,6 +965,11 @@
           "input": "ceil(3.2)",
           "output": "4",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "ceil(x(3.2))",
+          "output": "4.0",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",5]": {
@@ -813,6 +980,11 @@
         },
         "sage": {
           "input": "ceil(5)",
+          "output": "5",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "ceil(n(5))",
           "output": "5",
           "verdict": "agree"
         }
@@ -829,6 +1001,13 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only."
+        },
+        "rust": {
+          "input": "ceil(list(vec![x(1.2), x(-1.2), x(3.7)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars."
         }
       },
       "[\"Equal\",[\"Ceil\",[\"Rational\",7,2]],[\"Add\",[\"Floor\",[\"Rational\",7,2]],1]]": {
@@ -840,6 +1019,11 @@
         "sage": {
           "input": "bool(ceil((7/2)) == (floor((7/2)) + 1))",
           "output": "True",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))",
+          "output": "true",
           "verdict": "agree"
         }
       },
@@ -853,6 +1037,11 @@
           "input": "bool(ceil(5) == floor(5))",
           "output": "True",
           "verdict": "agree"
+        },
+        "rust": {
+          "input": "equal(ceil(n(5)), floor(n(5)))",
+          "output": "true",
+          "verdict": "agree"
         }
       },
       "[\"Ceil\",[\"Divide\",17,5]]": {
@@ -863,6 +1052,11 @@
         },
         "sage": {
           "input": "ceil((17 / 5))",
+          "output": "4",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "ceil((n(17) / n(5)))",
           "output": "4",
           "verdict": "agree"
         }
@@ -876,6 +1070,11 @@
         "sage": {
           "input": "ceil(-3.7)",
           "output": "-3",
+          "verdict": "agree"
+        },
+        "rust": {
+          "input": "ceil(x(-3.7))",
+          "output": "-3.0",
           "verdict": "agree"
         }
       },

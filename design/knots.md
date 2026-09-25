@@ -61,4 +61,4 @@ routes through one head agree. That check got _better_, not worse: it now runs t
 the same public head rather than comparing two.
 
 `KnotData` (a lookup keyed by knot name, deliberately not built) and the remaining loose
-ends moved to speculative/knots.md.
+ends moved to design/speculative/knots.md.

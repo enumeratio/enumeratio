@@ -1,0 +1,16 @@
+name: Oracle drift
+description: Rescan one oracle lane and fail if what its rows say differs from the committed entry sidecars.
+
+inputs:
+  system:
+    description: The oracle system to rescan (packages/oracle/src/systems.ts)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: node packages/reference/scripts/oracle-scan.ts ${{ inputs.system }}
+      shell: bash
+    - name: ${{ inputs.system }} rows match the committed sidecars
+      shell: bash
+      run: node .github/scripts/oracle-drift.ts | tee -a "$GITHUB_STEP_SUMMARY"; exit "${PIPESTATUS[0]}"

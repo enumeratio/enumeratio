@@ -71,6 +71,7 @@ test("every system is declared, and the unwired ones are honest about it", () =>
     "oscar",
     "julia",
     "mathlib4",
+    "rust",
   ]);
   expect(wiredSystems()).toEqual([
     "wolfram",
@@ -80,6 +81,7 @@ test("every system is declared, and the unwired ones are honest about it", () =>
     "oscar",
     "julia",
     "mathlib4",
+    "rust",
   ]);
   // Naming an unwired system is the point: a scan then reports "unmapped" for it rather
   // than silently never asking.

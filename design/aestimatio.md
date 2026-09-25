@@ -107,4 +107,4 @@ suite or growing without bound), then one `vitest` `test` per example asserting 
 reference engine declares EXCEPT `@enumeratio/aestimatio` itself — the worker's own engine
 already has it (worker.ts), and redeclaring throws.
 
-Future work (`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to speculative/aestimatio.md.
+Future work (`AbsoluteTiming`/`CheckAbort`/evaluation history) moved to design/speculative/aestimatio.md.

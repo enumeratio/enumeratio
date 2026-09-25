@@ -7,11 +7,16 @@ name: Nightly
 on:
   schedule:
     - cron: "5 4 * * *" # daily 04:05 UTC
-    - cron: "17 3 * * 0" # weekly Sunday 03:17 UTC — the network-bound jobs
+    # Weekly, staggered so the heavy lanes don't pile onto one day (03:17 UTC):
+    - cron: "17 3 * * 0" # Sunday — crosswalk links
+    - cron: "17 3 * * 1" # Monday — Oscar
+    - cron: "17 3 * * 2" # Tuesday — Mathlib
+    - cron: "17 3 * * 3" # Wednesday — Sage
+    - cron: "17 3 * * 4" # Thursday — Wolfram
   workflow_dispatch:
     inputs:
       weekly:
-        description: Also run the weekly jobs
+        description: Also run every weekly job
         type: boolean
         default: false
 
@@ -24,9 +29,10 @@ concurrency:
 
 jobs:
   # The analytic heads (HurwitzZeta, LerchPhi, PolyLog, PolyGamma …) against mpmath, the one oracle that installs
-  # from pip. The Wolfram sweeps (packages/wolfram, packages/oracle) need a licensed kernel and stay manual.
+  # from pip. The heavier lanes (Oscar, Mathlib, Sage, Wolfram) run weekly below.
   mpmath-oracle:
     name: analytic ⟷ mpmath
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -41,9 +47,10 @@ jobs:
   # The combinatorial counts and FLINT number theory against Nemo + Combinatorics.jl, the Julia lane light enough
   # to install here. Rescans the committed julia rows in the entry sidecars and fails on any drift: a verdict that
   # moved, a new unclassified disagreement, an example added without a scan. Oscar and Mathlib need a multi-GB
-  # install and stay manual (packages/oracle/scripts/setup.ts).
+  # install, so they run weekly below.
   julia-oracle:
     name: reference ⟷ Julia (Nemo, Combinatorics.jl)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -54,14 +61,136 @@ jobs:
           version: "1.13" # packages/oracle/julia/Manifest.toml's julia_version
       - uses: julia-actions/cache@v2
       - run: node packages/oracle/scripts/setup.ts julia
-      - run: node packages/reference/scripts/oracle-scan.ts julia
-      - name: julia rows match the committed sidecars
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: julia
+
+  # The numeric and number-theory crates a Rust user would reach for (num, primal, statrs) and the adic crate,
+  # nightly: rustup takes the pinned toolchain from packages/oracle/rust/rust-toolchain.toml.
+  rust-oracle:
+    name: reference ⟷ Rust (num, primal, statrs, adic)
+    if: github.event_name != 'schedule' || github.event.schedule == '5 4 * * *'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: packages/oracle/rust
+      - run: node packages/oracle/scripts/setup.ts rust
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: rust
+
+  # The group and diagram algebras (and a few counts) against Oscar, weekly: a multi-GB install whose precompile
+  # julia-actions/cache keeps between runs. The kernel is 2-3 GB resident, so the watchdog cap is raised to fit
+  # a parallel precompile on the runner.
+  oscar-oracle:
+    name: reference ⟷ Oscar
+    if: github.event.schedule == '17 3 * * 1' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      ORACLE_MEMORY_MB: 12000
+      JULIA_NUM_PRECOMPILE_TASKS: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - uses: julia-actions/setup-julia@v2
+        with:
+          version: "1.13" # packages/oracle/oscar/Manifest.toml's julia_version
+      - uses: julia-actions/cache@v2
+      - run: node packages/oracle/scripts/setup.ts oscar
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: oscar
+
+  # The discrete heads against Lean 4 + Mathlib, weekly: the pinned toolchain from elan, and mathlib's prebuilt
+  # oleans (~5 GB) from its cache, kept between runs.
+  mathlib-oracle:
+    name: reference ⟷ Mathlib
+    if: github.event.schedule == '17 3 * * 2' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - name: elan
         run: |
-          if ! git diff --quiet -- packages/reference; then
-            { echo '```diff'; git diff -- packages/reference | head -200; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
-            git diff --stat -- packages/reference
-            exit 1
-          fi
+          curl -sSf https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - uses: actions/cache@v4
+        with:
+          # The compressed oleans only: the unpacked .lake doubles it past the repo's cache quota.
+          path: ~/.cache/mathlib
+          key: mathlib-${{ hashFiles('packages/oracle/lean/lake-manifest.json', 'packages/oracle/lean/lean-toolchain') }}
+      - run: node packages/oracle/scripts/setup.ts mathlib4
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: mathlib4
+
+  # Sage, weekly, from the official image plus Hertogh's adeles package (.github/sage/Dockerfile): the oracle scan,
+  # then the adeles and adic goldens re-collected and compared. `sage` on PATH is a docker wrapper whose --memory
+  # is the real ceiling here (the watchdog only sees the docker client).
+  sage-oracle:
+    name: reference ⟷ Sage
+    if: github.event.schedule == '17 3 * * 3' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup
+      - run: docker build -t enumeratio-sage .github/sage
+      - name: sage on PATH
+        run: |
+          sudo tee /usr/local/bin/sage >/dev/null <<'SH'
+          #!/bin/sh
+          exec docker run --rm -i --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -w "$PWD" --entrypoint sage enumeratio-sage "$@"
+          SH
+          sudo chmod +x /usr/local/bin/sage
+          sage --version
+      - uses: ./.github/actions/oracle-drift
+        with:
+          system: sage
+      - name: adeles and adic goldens match
+        run: |
+          sage -python packages/adeles/scripts/collect-golden.py > packages/adeles/tests/adeles.golden.json
+          (cd packages/numerals && node scripts/collect-adic-golden.ts)
+          pnpm exec vp fmt packages/adeles/tests packages/numerals/tests
+          git diff --exit-code --stat -- packages/adeles/tests packages/numerals/tests
+
+  # Wolfram, weekly, from the official Wolfram Engine image on an on-demand license: billed per kernel-hour against
+  # the repo secret WOLFRAMSCRIPT_ENTITLEMENTID (a LicenseEntitlementObject, renewed yearly). Skips without it.
+  wolfram-oracle:
+    name: reference ⟷ Wolfram
+    if: github.event.schedule == '17 3 * * 4' || inputs.weekly
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      WOLFRAMSCRIPT_ENTITLEMENTID: ${{ secrets.WOLFRAMSCRIPT_ENTITLEMENTID }}
+    steps:
+      - id: licensed
+        run: echo "yes=${{ env.WOLFRAMSCRIPT_ENTITLEMENTID != '' }}" >> "$GITHUB_OUTPUT"
+      - if: steps.licensed.outputs.yes != 'true'
+        run: echo "::notice::no WOLFRAMSCRIPT_ENTITLEMENTID secret; skipping the Wolfram lane"
+      - if: steps.licensed.outputs.yes == 'true'
+        uses: actions/checkout@v4
+      - if: steps.licensed.outputs.yes == 'true'
+        uses: ./.github/actions/setup
+      - if: steps.licensed.outputs.yes == 'true'
+        name: wolframscript on PATH
+        run: |
+          sudo tee /usr/local/bin/wolframscript >/dev/null <<'SH'
+          #!/bin/sh
+          exec docker run --rm -i -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -w "$PWD" --entrypoint wolframscript wolframresearch/wolframengine "$@"
+          SH
+          sudo chmod +x /usr/local/bin/wolframscript
+          wolframscript -code '$Version'
+      - if: steps.licensed.outputs.yes == 'true'
+        uses: ./.github/actions/oracle-drift
+        with:
+          system: wolfram
 
   # Follow every crosswalk link (Wikipedia, MathWorld, DLMF, Fungrim …) and report the ones that no longer answer.
   crosswalk-links:
