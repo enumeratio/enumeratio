@@ -4,7 +4,7 @@
 // words.ts's necklace/Lyndon/number-theory machinery locally rather than reaching into that
 // module (only its `entries` export is public). Pure rank/unrank kernels over plain JS
 // numbers/arrays, same contract as every other family (types.ts).
-import type { NumberKernel } from "./types.ts";
+import type { Declared, NumberKernel } from "./types.ts";
 
 const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
@@ -401,25 +401,45 @@ const ints = (
   rank: (e, p) => rank(e as number[], p),
 });
 
+/** Words up to rotation (or reflection): unrank and rank enumerate all base^size words. */
+const wordClass = (carrier: string, base?: number): Declared => ({
+  carrier,
+  params:
+    base === undefined
+      ? [
+          { name: "size", role: "axis", min: 0 },
+          { name: "base", role: "param", min: 1 },
+        ]
+      : [{ name: "n", role: "axis", min: 0 }],
+  cost: { count: "closed", unrank: "enumerative", rank: "enumerative", valid: "polynomial" },
+  work: ([n, k]) => BigInt(base ?? (k as number)) ** BigInt(n as number),
+});
+
 export const entries: NumberKernel[] = [
   // BinaryBracelets(n): binary words up to rotation and reflection — Bracelets(n, 2), A000029.
-  ints(
-    "BinaryBracelets",
-    1,
-    ([n]) => braceletCount(n, 2),
-    ([n], r) => braceletUnrank(n, 2, r),
-    (a, [n]) => braceletValid(a, n, 2),
-    (a, [n]) => braceletRank(a, n, 2),
-  ),
+  {
+    ...ints(
+      "BinaryBracelets",
+      1,
+      ([n]) => braceletCount(n, 2),
+      ([n], r) => braceletUnrank(n, 2, r),
+      (a, [n]) => braceletValid(a, n, 2),
+      (a, [n]) => braceletRank(a, n, 2),
+    ),
+    declared: wordClass("BinaryWord", 2),
+  },
   // KBracelets(size, base): base-letter words up to rotation and reflection.
-  ints(
-    "KBracelets",
-    2,
-    ([n, k]) => braceletCount(n, k),
-    ([n, k], r) => braceletUnrank(n, k, r),
-    (a, [n, k]) => braceletValid(a, n, k),
-    (a, [n, k]) => braceletRank(a, n, k),
-  ),
+  {
+    ...ints(
+      "KBracelets",
+      2,
+      ([n, k]) => braceletCount(n, k),
+      ([n, k], r) => braceletUnrank(n, k, r),
+      (a, [n, k]) => braceletValid(a, n, k),
+      (a, [n, k]) => braceletRank(a, n, k),
+    ),
+    declared: wordClass("Word"),
+  },
   // TriStrings(n): binary words with no 3 consecutive 1s.
   ints(
     "TriStrings",

@@ -23,7 +23,7 @@
 // toward their minimum, reporting the smallest point that still fails. Best-effort, not
 // exhaustive — the aim is a repro small enough to read.
 //
-// SEEDING: mulberry32, seeded from argv, the environment, or the clock, and PRINTED. Every
+// SEEDING: mulberry32 (@enumeratio/plausible), seeded from argv, the environment, or the clock, and PRINTED. Every
 // failure prints the exact command that replays it.
 //
 // Advisory, never a gate: a fresh seed each run means a red result is a finding to triage,
@@ -34,42 +34,13 @@
 //   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
 //   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
 
+import { random, randomBelow } from "@enumeratio/plausible";
 import type { FamilyKernel } from "../src/families/types.ts";
+
+export { needsBigint } from "./sampleable.ts";
+export { random, randomBelow, streamFor } from "@enumeratio/plausible";
 /** Counts past this are sampled but never enumerated — property 5 would not finish. */
 const ENUMERATE_CAP = 2_000n;
-
-/** mulberry32 — tiny, deterministic, and good enough to find bugs. */
-export function random(seed: number): () => number {
-  let state = seed >>> 0;
-  return () => {
-    state = (state + 0x6d2b79f5) >>> 0;
-    let t = state;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4_294_967_296;
-  };
-}
-
-/** A stream of its own per family (FNV-1a of `seed/key`), so what one family draws never
- *  depends on which families ran before it — filtering the run to one head replays it. */
-export function streamFor(seed: number, key: string): () => number {
-  let h = 2166136261;
-  for (const ch of `${seed}/${key}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
-  return random(h >>> 0);
-}
-
-/** A uniform-enough bigint in [0, n): 32-bit chunks, reduced mod n. */
-export function randomBelow(draw: () => number, n: bigint): bigint {
-  if (n <= 1n) return 0n;
-  if (n <= BigInt(Number.MAX_SAFE_INTEGER)) return BigInt(Math.floor(draw() * Number(n)));
-  let r = 0n;
-  for (let bits = 0n; 1n << bits < n << 32n; bits += 32n) r = (r << 32n) | BigInt(Math.floor(draw() * 2 ** 32));
-  return r % n;
-}
-
-/** A kernel still in plain numbers declining past 2^53 (see `numberKernel`): not a failure. */
-export const needsBigint = (error: unknown): boolean =>
-  error instanceof RangeError && error.message.includes("not bigint yet");
 
 export interface Failure {
   readonly family: string;
