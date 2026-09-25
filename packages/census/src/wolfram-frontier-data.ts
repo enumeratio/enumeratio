@@ -265,10 +265,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 15,
   },
   {
-    head: "DivisorSum",
-    uses: 15,
-  },
-  {
     head: "FourierSeries",
     uses: 15,
   },
@@ -633,10 +629,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "MangoldtLambda",
-    uses: 5,
-  },
-  {
     head: "MatrixQ",
     uses: 5,
   },
@@ -754,10 +746,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "JacobiCD",
-    uses: 4,
-  },
-  {
-    head: "LiouvilleLambda",
     uses: 4,
   },
   {
@@ -941,10 +929,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "MersennePrimeExponent",
-    uses: 3,
-  },
-  {
     head: "MersennePrimeExponentQ",
     uses: 3,
   },
@@ -969,10 +953,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "PowersRepresentations",
-    uses: 3,
-  },
-  {
     head: "RandomComplex",
     uses: 3,
   },
@@ -994,10 +974,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "SetSharedVariable",
-    uses: 3,
-  },
-  {
-    head: "SquaresR",
     uses: 3,
   },
   {

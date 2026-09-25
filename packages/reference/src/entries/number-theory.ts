@@ -2307,8 +2307,10 @@ export const numberTheory: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["MangoldtLambda", 9]],
         expected: 1.0986122886681098,
+        aspirational: true,
         category: "Scope",
-        caption: "Numerically, $\\ln3$",
+        caption:
+          "Numerically, $\\ln3$ — not yet: `N` does not re-derive a numeric result from a custom-declared head's evaluated `Ln(3)`; `N(Ln(3))` itself works fine",
       },
       {
         expr: ["MangoldtLambda", ["List", 2, 4, 6, 25]],
