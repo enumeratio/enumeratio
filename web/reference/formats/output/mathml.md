@@ -24,7 +24,7 @@ when the child binds looser than the slot it is going into.
 | Extension     | `.mml`                                                          |
 | Direction     | export only                                                     |
 
-`:mime application/mathml+xml` in the [CLI](/cli/) resolves to it, and `:formats` shows it
+`:mime application/mathml+xml` in the [CLI](/docs/cli/) resolves to it, and `:formats` shows it
 with `[export]` and no import.
 
 <Story

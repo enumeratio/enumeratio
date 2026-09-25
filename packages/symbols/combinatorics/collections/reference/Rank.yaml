@@ -1,7 +1,7 @@
 name: Rank
 domain: Linear algebra
 signature: Rank(x)
-summary: 'The number of dimensions of an array: 0 for a scalar, 1 for a vector, 2 for a matrix.'
+summary: "The number of dimensions of an array: 0 for a scalar, 1 for a vector, 2 for a matrix."
 signatures:
   - call: Rank(x)
     description: the length of the shape of `x`.
@@ -22,7 +22,15 @@ examples:
     expr: [Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]
     expected: 3
   - id: the-length-of-the-array-s-shape
-    expr: [Equal, [Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]], [Length, [Shape, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]]]]
+    expr:
+      [
+        Equal,
+        [Rank, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]],
+        [
+          Length,
+          [Shape, [List, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 5, 6], [List, 7, 8]]]],
+        ],
+      ]
     expected: True
     category: Properties
     caption: The length of the array's shape

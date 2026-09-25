@@ -1,7 +1,7 @@
 name: PrimePi
 domain: Number theory
 signature: PrimePi(n)
-summary: 'The prime-counting function: how many primes are ≤ n.'
+summary: "The prime-counting function: how many primes are ≤ n."
 signatures:
   - call: PrimePi(n)
     description: count of primes $\le n$.
@@ -38,7 +38,7 @@ examples:
     expr: [PrimePi, [Rational, 7, 2]]
     expected: 2
     category: Scope
-    caption: 'Rational arguments: the primes up to $7/2$ are 2 and 3'
+    caption: "Rational arguments: the primes up to $7/2$ are 2 and 3"
   - id: real-arguments
     expr: [PrimePi, 15.25]
     expected: 6
@@ -53,7 +53,7 @@ examples:
     expr: [PrimePi, [List, 3, 5, 17, 25]]
     expected: [List, 2, 3, 7, 9]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
   - id: no-primes-are-a-negative-number
     expr: [PrimePi, -1]
     expected: 0

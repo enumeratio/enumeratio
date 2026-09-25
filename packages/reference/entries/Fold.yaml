@@ -56,7 +56,7 @@ examples:
     expr: [Fold, [Function, [Add, [Multiply, 2, _1], _2]], 0, [List, 1, 0, 1, 1]]
     expected: 11
     category: Applications
-    caption: '...or from its binary digits: $1011_2 = 11$'
+    caption: "...or from its binary digits: $1011_2 = 11$"
   - id: horner-s-rule-for-ax-2-bx-c
     expr: [Fold, [Function, [Add, [Multiply, x, _1], _2]], 0, [List, a, b, c]]
     expected: [Add, [Multiply, x, [Add, [Multiply, a, x], b]], c]

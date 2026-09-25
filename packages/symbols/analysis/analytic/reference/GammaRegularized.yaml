@@ -7,10 +7,10 @@ signatures:
     description: the regularized upper incomplete gamma $Q(a, z) = \Gamma(a, z)/\Gamma(a)$.
   - call: GammaRegularized(a, z0, z1)
     description: the regularized difference $(\Gamma(a, z_0) - \Gamma(a, z_1))/\Gamma(a)$; at $z_0 = 0$ the LOWER regularized $P(a, z_1) = 1 - Q(a, z_1)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Complementary to the lower regularized $P(a, z) = 1 - Q(a, z)$, which is the three-argument $Q(a, 0, z)$ (`@enumeratio/analytic`) -- the Gamma-distribution CDF, and with $a = k/2$, $z = x/2$ the $\chi^2_k$ CDF.
-  - '$Q(a, 0) = 1$ for any $a > 0$: all the mass sits to the right of 0.'
+  - "$Q(a, 0) = 1$ for any $a > 0$: all the mass sits to the right of 0."
   - For a positive integer n it has a closed polynomial form, $Q(n, z) = e^{-z}\sum_{k=0}^{n-1} z^k/k!$, which compute-engine uses to evaluate exactly, even for negative z.
   - Gives the Poisson CDF tail and the Gamma-distribution survival function, so it shows up throughout reliability and queueing models. See [[Gamma]].
   - compute-engine leaves a non-integer a combined with negative z symbolic -- genuinely outside the real domain there -- rather than erroring or returning NaN.
@@ -27,7 +27,7 @@ examples:
     caption: $Q(1, z) = e^{-z}$, here at $z = 1$
   - id: floating-point-arguments-evaluate-directly-to-a
     expr: [GammaRegularized, 2.5, 1.5]
-    expected: {num: '0.6999858358786275091'}
+    expected: { num: "0.6999858358786275091" }
     caption: Floating-point arguments evaluate directly to a high-precision decimal
   - id: the-polynomial-closed-form-for-an-integer-order
     expr: [GammaRegularized, 5, -1]
@@ -63,22 +63,22 @@ examples:
     caption: Threads element-wise over a list, as Wolfram's Listable heads do
   - id: q-1-z-e-z-at-z-1-5
     expr: [GammaRegularized, 1, 1.5]
-    expected: {num: '0.223130160148429828933'}
+    expected: { num: "0.223130160148429828933" }
     caption: $Q(1, z) = e^{-z}$ at $z = 1.5$
   - id: q-2-3-3-4-3-e-3-3
     expr: [GammaRegularized, 2, 3.3]
-    expected: {num: '0.15859761982533202341608'}
+    expected: { num: "0.15859761982533202341608" }
     caption: $Q(2, 3.3) = 4.3\,e^{-3.3}$
   - id: complex-order-under-n
     expr: [N, [GammaRegularized, [Complex, 1, 1], 2.5]]
-    expected: [Complex, {num: '0.00794706062011918622237387002562211784'}, 0.15253677854101844]
+    expected: [Complex, { num: "0.00794706062011918622237387002562211784" }, 0.15253677854101844]
     category: Scope
     caption: Complex order, under N()
   - id: three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2
     expr: [GammaRegularized, 2.5, 0.5, 1.5]
     expected: 0.26257993736866897
     category: Scope
-    caption: 'Three arguments: $Q(a, z_0) - Q(a, z_1)$, the Gamma(5/2) mass between $1/2$ and $3/2$'
+    caption: "Three arguments: $Q(a, z_0) - Q(a, z_1)$, the Gamma(5/2) mass between $1/2$ and $3/2$"
   - id: which-at-an-integer-order-equally-evaluates-to
     expr: [GammaRegularized, 2, 0.5, 1.5]
     expected: 0.35197058919787555
@@ -93,15 +93,15 @@ examples:
     expr: [GammaRegularized, 2, [List, [List, 3.5, 0], [List, 0, 6.5]]]
     expected: [List, [List, 0.13588822540043324, 1], [List, 1, 0.011275793947331794]]
     category: Scope
-    caption: 'Listable: threads elementwise over a matrix'
+    caption: "Listable: threads elementwise over a matrix"
   - id: interval-arithmetic-q-is-decreasing-in-z
     expr: [GammaRegularized, [Rational, 2, 5], [Interval, 0.21, 0.22]]
     expected: [Interval, 0.42124489579195323, 0.4303906669405995]
     category: Scope
-    caption: 'Interval arithmetic: $Q$ is decreasing in $z$'
+    caption: "Interval arithmetic: $Q$ is decreasing in $z$"
   - id: the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar
     expr: [Subtract, 1, [GammaRegularized, 0.5, 1.9207294103470425]]
-    expected: {num: '0.9499999999999987786437'}
+    expected: { num: "0.9499999999999987786437" }
     category: Applications
     caption: 'The $\chi^2_1$ CDF, $P(1/2, x/2)$, at the familiar critical value $x = 3.8415$: 95%'
   - id: q-a-0-1-for-symbolic-a
@@ -131,12 +131,12 @@ examples:
     caption: $Q(1/2, x) = \operatorname{erfc}(\sqrt x)$. See [[Erfc]]
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [GammaRegularized, 2, 1], 30]
-    expected: {num: '0.735758882342884643191047540323'}
+    expected: { num: "0.735758882342884643191047540323" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
   - id: q-s-z-at-a-complex-order-s-beyond-what-the
     expr: [N, [GammaRegularized, [Complex, 2, 1], 1.5]]
-    expected: [Complex, {num: '0.6176522310450641336650331038297415246'}, 0.3334815406585523]
+    expected: [Complex, { num: "0.6176522310450641336650331038297415246" }, 0.3334815406585523]
     category: Scope
     caption: $Q(s, z)$ at a complex order $s$ — beyond what the native two-argument handler covers
 seeAlso:

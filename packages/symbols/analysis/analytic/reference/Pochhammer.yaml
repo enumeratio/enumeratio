@@ -47,7 +47,7 @@ examples:
     expr: [Pochhammer, -3, 4]
     expected: 0
     category: Possible issues
-    caption: 'If a is a non-positive integer with $|a| < n$, the product picks up a zero factor: $(-3)(-2)(-1)(0)$'
+    caption: "If a is a non-positive integer with $|a| < n$, the product picks up a zero factor: $(-3)(-2)(-1)(0)$"
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [Pochhammer, [List, 2, 3, 4], 2]
     expected: [List, 6, 12, 20]
@@ -66,14 +66,15 @@ examples:
       wolfram: Wolfram keeps Pochhammer[n, 5] unexpanded until FunctionExpand.
   - id: a-negative-order-expands-to-the-reciprocal
     expr: [Pochhammer, n, -5]
-    expected: [Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]
+    expected:
+      [Divide, 1, [Multiply, [Add, n, -1], [Add, n, -2], [Add, n, -3], [Add, n, -4], [Add, n, -5]]]
     category: Scope
     caption: A negative order expands to the reciprocal falling product
     divergence:
       wolfram: Wolfram keeps Pochhammer[n, -5] unexpanded until FunctionExpand.
   - id: real-base-and-order-evaluate-as-frac-gamma-a-n
     expr: [Pochhammer, 2.4, 8.5]
-    expected: {num: '2310224.67324070778057'}
+    expected: { num: "2310224.67324070778057" }
     category: Scope
     caption: Real base and order evaluate as $\frac{\Gamma(a+n)}{\Gamma(a)}$
   - id: a-zero-base-gives-0-for-any-positive-order
@@ -100,7 +101,7 @@ examples:
     expr: [Pochhammer, a, 0]
     expected: 1
     category: Properties
-    caption: 'Order 0 is the empty product: $(a)_0 = 1$'
+    caption: "Order 0 is the empty product: $(a)_0 = 1$"
   - id: a-1-a
     expr: [Pochhammer, a, 1]
     expected: a

@@ -1,0 +1,29 @@
+name: FunctionInjective
+domain: Elementary functions
+signature: FunctionInjective(f, x)
+summary: True if distinct x on f's domain always give distinct f(x), False otherwise.
+signatures:
+  - call: FunctionInjective(f, x)
+    description: whether f, as a function of the real variable x over its own domain, is one-to-one.
+    library: "@enumeratio/analytic"
+details:
+  - Unlike [[FunctionMonotonicity]], injectivity is asked about f's OWN domain, not all of R -- `1/x` is injective even though $x\ne0$.
+  - True for an affine function, an odd-power monomial, Exp, Ln, and a nonzero constant over an affine denominator (a Mobius map); False for an even-power monomial and for Tan (periodic, hence many-to-one on its full domain).
+  - Declines for a quadratic radicand or denominator (symmetric about a vertex in ways this file does not chase down in general) and wherever the domain itself declines.
+examples:
+  - id: a-reciprocal-is-injective-on-its-own-domain
+    expr: [FunctionInjective, [Divide, 1, x], x]
+    expected: True
+    caption: A reciprocal is injective on its own domain, even though that domain excludes 0
+  - id: a-cubic-is-injective
+    expr: [FunctionInjective, [Power, x, 3], x]
+    expected: True
+    caption: A cubic is injective (its derivative never goes negative)
+  - id: a-parabola-is-not-injective
+    expr: [FunctionInjective, [Power, x, 2], x]
+    expected: False
+    caption: A parabola gives the same value at x and -x
+  - id: an-affine-function-is-injective
+    expr: [FunctionInjective, [Add, [Multiply, 2, x], 1], x]
+    expected: True
+    caption: A nonzero-slope affine function is injective

@@ -1,7 +1,7 @@
 name: PowerMod
 domain: Modular arithmetic
 signature: PowerMod(a, b, m)
-summary: 'Modular exponentiation: a^b mod m, computed without forming a^b directly.'
+summary: "Modular exponentiation: a^b mod m, computed without forming a^b directly."
 signatures:
   - call: PowerMod(a, b, m)
     description: modular exponentiation, $a^b \bmod m$.
@@ -77,7 +77,7 @@ examples:
     expr: [PowerMod, 4, [Rational, 1, 2], 7]
     expected: 2
     category: Scope
-    caption: 'a rational exponent is a modular root: the least of $2, 5$'
+    caption: "a rational exponent is a modular root: the least of $2, 5$"
   - id: threads-over-lists-the-period-is-the-order-of-2
     expr: [PowerMod, 2, [List, 10, 11, 12, 13, 14], 5]
     expected: [List, 4, 3, 1, 2, 4]
@@ -90,7 +90,7 @@ examples:
     caption: a 301-digit base
   - id: a-square-root-of-3-modulo-the-prime-10-30-57
     expr: [PowerMod, 3, [Rational, 1, 2], [Add, [Power, 10, 30], 57]]
-    expected: {num: '492767688934650018614948489645'}
+    expected: { num: "492767688934650018614948489645" }
     category: Scope
     caption: a square root of 3 modulo the prime $10^{30} + 57$
   - id: a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod
@@ -128,7 +128,8 @@ examples:
     category: Applications
     caption: $341 = 11 \cdot 31$ passes Fermat's test to base 2 — the least pseudoprime
   - id: diffie-hellman-both-parties-reach-the-shared-key
-    expr: [Equal, [PowerMod, [PowerMod, 5, 6, 23], 15, 23], [PowerMod, [PowerMod, 5, 15, 23], 6, 23]]
+    expr:
+      [Equal, [PowerMod, [PowerMod, 5, 6, 23], 15, 23], [PowerMod, [PowerMod, 5, 15, 23], 6, 23]]
     expected: True
     category: Applications
     caption: 'Diffie–Hellman: both parties reach the shared key $5^{6 \cdot 15} \bmod 23$'

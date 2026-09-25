@@ -153,5 +153,5 @@ notatio --json "Manipulate(a^2, (a, 0, 1))"   # structured: the expression, whol
 ```
 
 Both live in the browser terminals too: the **Environments** group in the
-[REPL playground](/playground/repl) dropdown runs the `:env` demos, and the
-[command-line playground](/playground/cli) has the `--env` ones.
+[live REPL](/docs/cli/repl)'s dropdown runs the `:env` demos, and the
+[live command line](/docs/cli/command-line) has the `--env` ones.

@@ -31,7 +31,7 @@ examples:
     expr: [Scan, [List, 1, 2, 3, 4, 5], Multiply]
     expected: [List, 1, 2, 6, 24, 120]
     category: Scope
-    caption: 'Running products: the factorials'
+    caption: "Running products: the factorials"
   - id: running-sums-of-symbolic-elements-wolfram-s
     expr: [Scan, [List, a, b, c], Add]
     expected: [List, a, [Add, a, b], [Add, a, b, c]]

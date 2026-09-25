@@ -10,7 +10,7 @@ details:
   - Count is the subfactorial $!n$ (see [[Subfactorial]])
   - A sub-family of [[SymmetricGroup]]
 examples:
-  - id: '4'
+  - id: "4"
     expr: [Count, [Derangements, 4]]
     expected: 9
     caption: $!4$

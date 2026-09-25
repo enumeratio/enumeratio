@@ -1,7 +1,7 @@
 name: LegendreSymbol
 domain: Number theory
 signature: LegendreSymbol(n, p)
-summary: 'The Legendre symbol (n/p): whether n is a quadratic residue mod the odd prime p.'
+summary: "The Legendre symbol (n/p): whether n is a quadratic residue mod the odd prime p."
 signatures:
   - call: LegendreSymbol(n, p)
     description: the Legendre symbol $\left(\frac{n}{p}\right)$.
@@ -13,7 +13,7 @@ examples:
   - id: 2-is-a-quadratic-residue-mod-7-32-2-mod-7
     expr: [LegendreSymbol, 2, 7]
     expected: 1
-    caption: '2 is a quadratic residue mod 7: 3² ≡ 2 (mod 7)'
+    caption: "2 is a quadratic residue mod 7: 3² ≡ 2 (mod 7)"
   - id: 3-is-not-a-quadratic-residue-mod-7
     expr: [LegendreSymbol, 3, 7]
     expected: -1
@@ -36,7 +36,7 @@ examples:
     expr: [LegendreSymbol, [List, 1, 2, 3, 4, 5, 6], 7]
     expected: [List, 1, 1, -1, 1, -1, -1]
     category: Scope
-    caption: 'Listable in $n$: the residues mod 7 are 1, 2, 4'
+    caption: "Listable in $n$: the residues mod 7 are 1, 2, 4"
   - id: 9-is-not-prime-so-the-call-stays-symbolic-see
     expr: [LegendreSymbol, 2, 9]
     expected: [LegendreSymbol, 2, 9]

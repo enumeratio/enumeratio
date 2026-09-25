@@ -10,8 +10,8 @@ details:
   - 'Symmetric in its arguments: $\binom{n}{k} = \binom{n}{n-k}$.'
   - "Pascal's rule builds each row from the last: $\\binom{n}{k} = \\binom{n-1}{k-1} + \\binom{n-1}{k}$."
   - Row sums give $\sum_{k=0}^{n} \binom{n}{k} = 2^n$.
-  - 'compute-engine evaluates only integer n and k: k outside $[0, n]$ gives 0 for nonnegative n, while a negative n switches to the generalized falling-factorial formula rather than the Gamma form.'
-  - 'A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise.'
+  - "compute-engine evaluates only integer n and k: k outside $[0, n]$ gives 0 for nonnegative n, while a negative n switches to the generalized falling-factorial formula rather than the Gamma form."
+  - "A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise."
 examples:
   - id: binomial-5-2
     expr: [Binomial, 5, 2]
@@ -41,7 +41,19 @@ examples:
     category: Properties
     caption: "Pascal's rule: $\\binom{n-1}{k-1} + \\binom{n-1}{k} = \\binom{n}{k}$"
   - id: row-sums-give-sum-k-binom-n-k-2-n-here-at-n-4
-    expr: [Equal, [Add, [Binomial, 4, 0], [Binomial, 4, 1], [Binomial, 4, 2], [Binomial, 4, 3], [Binomial, 4, 4]], [Power, 2, 4]]
+    expr:
+      [
+        Equal,
+        [
+          Add,
+          [Binomial, 4, 0],
+          [Binomial, 4, 1],
+          [Binomial, 4, 2],
+          [Binomial, 4, 3],
+          [Binomial, 4, 4],
+        ],
+        [Power, 2, 4],
+      ]
     expected: True
     category: Properties
     caption: Row sums give $\sum_k \binom{n}{k} = 2^n$, here at $n = 4$
@@ -92,12 +104,12 @@ examples:
     caption: $\binom{n}{n-1} = n$ for symbolic n
   - id: real-arguments-evaluate-through-the-gamma
     expr: [Binomial, 8.5, -4.2]
-    expected: {num: '0.0000604992484022834800676'}
+    expected: { num: "0.0000604992484022834800676" }
     category: Scope
     caption: Real arguments evaluate through the Gamma function
   - id: a-real-n-with-integer-k-frac-0-5-0-5-1-5-3-0
     expr: [Binomial, 0.5, 3]
-    expected: {num: '0.0625000000000000000001'}
+    expected: { num: "0.0625000000000000000001" }
     category: Scope
     caption: 'A real n with integer k: $\frac{0.5\,(-0.5)(-1.5)}{3!} = 0.0625$, up to the last bignum digit'
   - id: a-rational-n-with-integer-k-gives-the-exact
@@ -136,7 +148,12 @@ examples:
     category: Properties
     caption: 'Sum of squares along a row: $\sum_k \binom{n}{k}^2 = \binom{2n}{n}$'
   - id: vandermonde-s-identity-sum-k-binom-m-k-binom-n-r
-    expr: [Equal, [Sum, [Multiply, [Binomial, 5, k], [Binomial, 4, [Subtract, 3, k]]], [Tuple, k, 0, 3]], [Binomial, 9, 3]]
+    expr:
+      [
+        Equal,
+        [Sum, [Multiply, [Binomial, 5, k], [Binomial, 4, [Subtract, 3, k]]], [Tuple, k, 0, 3]],
+        [Binomial, 9, 3],
+      ]
     expected: True
     category: Properties
     caption: "Vandermonde's identity: $\\sum_k \\binom{m}{k}\\binom{n}{r-k} = \\binom{m+n}{r}$"
@@ -146,7 +163,12 @@ examples:
     category: Properties
     caption: 'The alternating row sum vanishes: $\sum_k (-1)^k \binom{n}{k} = 0$ for $n > 0$'
   - id: the-factorial-form-binom-n-k-frac-n-k-n-k-see
-    expr: [Equal, [Binomial, 7, 3], [Divide, [Factorial, 7], [Multiply, [Factorial, 3], [Factorial, 4]]]]
+    expr:
+      [
+        Equal,
+        [Binomial, 7, 3],
+        [Divide, [Factorial, 7], [Multiply, [Factorial, 3], [Factorial, 4]]],
+      ]
     expected: True
     category: Properties
     caption: The factorial form $\binom{n}{k} = \frac{n!}{k!\,(n-k)!}$. See [[Factorial]]
@@ -162,7 +184,7 @@ examples:
     caption: 'Both arguments negative integers: the limiting definition gives $\binom{-3}{-5} = \binom{-3}{2} = 6$, not 0'
   - id: the-central-binomial-coefficient-binom-100-50
     expr: [Binomial, 100, 50]
-    expected: {num: '100891344545564193334812497256'}
+    expected: { num: "100891344545564193334812497256" }
     category: Neat examples
     caption: The central binomial coefficient $\binom{100}{50}$ has 30 digits
 seeAlso:

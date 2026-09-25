@@ -6,13 +6,13 @@ signatures:
   - call: Round(x)
     description: rounds x to the nearest integer, ties away from 0.
   - call: Round(x, n)
-    description: 'rounds to the nearest $10^{-n}$: n decimal places, or -- for negative n -- the nearest power of ten.'
+    description: "rounds to the nearest $10^{-n}$: n decimal places, or -- for negative n -- the nearest power of ten."
   - call: Round(z)
     description: for a complex $z$, the real and imaginary parts rounded separately.
     library: enumeratio-collections
 details:
   - 'Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.'
-  - 'A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten.'
+  - "A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten."
   - $\mathrm{Round}(x, 0)$ agrees with the 1-argument form.
   - Threads element-wise over a list.
   - The digits argument must be an integer; unlike [[Floor]] and [[Ceil]], which take no second argument at all, Round is the only one of the three with quantized rounding.
@@ -53,7 +53,7 @@ examples:
     expr: [Round, 19.995, 2]
     expected: 20
     category: Applications
-    caption: 'Rounding a price to the nearest cent: 19.995 rounds up to 20'
+    caption: "Rounding a price to the nearest cent: 19.995 rounds up to 20"
   - id: rounds-half-away-from-zero-not-banker-s-rounding
     expr: [Round, 2.5]
     expected: 3

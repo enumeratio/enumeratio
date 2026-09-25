@@ -5,7 +5,20 @@ implementations:
   - origin: reference
     form: notatio
     environment: engine
-    expr: [If, [Less, [Length, _p], 2], 0, [Sum, [Filter, [Range, 1, [Subtract, [Length, _p], 1]], [Function, [Greater, [At, _p, i], [At, _p, [Add, i, 1]]], i]]]]
+    expr:
+      [
+        If,
+        [Less, [Length, _p], 2],
+        0,
+        [
+          Sum,
+          [
+            Filter,
+            [Range, 1, [Subtract, [Length, _p], 1]],
+            [Function, [Greater, [At, _p, i], [At, _p, [Add, i, 1]]], i],
+          ],
+        ],
+      ]
     note: Checked against the implementation over every permutation of 1..6.
   - origin: native
     form: typescript

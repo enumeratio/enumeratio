@@ -4,29 +4,55 @@ signature: NumeralSystemShape(system)
 summary: "What a system's numerals look like, as a Dictionary: whether it is a bijection, which integers it spells, and with which digits."
 signatures:
   - call: NumeralSystemShape(system)
-    description: '`Bijective`, `Integers`, and when they apply `Digits` (one set, or one per place), `Width` and `Rule`'
+    description: "`Bijective`, `Integers`, and when they apply `Digits` (one set, or one per place), `Width` and `Rule`"
     library: enumeratio-numerals
 details:
-  - '`Digits` is one set when every place shares it, and a list — most significant first — when places differ, as in a mixed radix or a residue system'
+  - "`Digits` is one set when every place shares it, and a list — most significant first — when places differ, as in a mixed radix or a residue system"
   - "`Rule` names a constraint no per-place bound captures: Zeckendorf's no two adjacent ones, Ostrowski's ceiling rule"
   - 'A residue system whose moduli share a factor still spells every integer below $\prod m_i$, but not uniquely: `Bijective` is False'
 examples:
   - id: 4-and-6-share-a-factor-so-this-is-not-a
     expr: [NumeralSystemShape, [ResidueNumerals, [List, 4, 6]]]
-    expected: [Dictionary, [KeyValuePair, {str: Bijective}, False], [KeyValuePair, {str: Integers}, [Range, 0, 23]], [KeyValuePair, {str: Digits}, [List, [Range, 0, 3], [Range, 0, 5]]], [KeyValuePair, {str: Width}, 2]]
+    expected:
+      [
+        Dictionary,
+        [KeyValuePair, { str: Bijective }, False],
+        [KeyValuePair, { str: Integers }, [Range, 0, 23]],
+        [KeyValuePair, { str: Digits }, [List, [Range, 0, 3], [Range, 0, 5]]],
+        [KeyValuePair, { str: Width }, 2],
+      ]
     caption: 4 and 6 share a factor, so this is not a bijection
   - id: numeralsystemshape-zeckendorfnumerals
     expr: [NumeralSystemShape, ZeckendorfNumerals]
-    expected: [Dictionary, [KeyValuePair, {str: Bijective}, True], [KeyValuePair, {str: Integers}, NonNegativeIntegers], [KeyValuePair, {str: Digits}, [Range, 0, 1]], [KeyValuePair, {str: Rule}, "'no two adjacent ones'"]]
+    expected:
+      [
+        Dictionary,
+        [KeyValuePair, { str: Bijective }, True],
+        [KeyValuePair, { str: Integers }, NonNegativeIntegers],
+        [KeyValuePair, { str: Digits }, [Range, 0, 1]],
+        [KeyValuePair, { str: Rule }, "'no two adjacent ones'"],
+      ]
     category: Scope
   - id: ordinary-base-2-in-the-same-shape-every-other
     expr: [NumeralSystemShape, [PositionalNumerals, 2]]
-    expected: [Dictionary, [KeyValuePair, {str: Bijective}, True], [KeyValuePair, {str: Integers}, NonNegativeIntegers], [KeyValuePair, {str: Digits}, [Range, 0, 1]]]
+    expected:
+      [
+        Dictionary,
+        [KeyValuePair, { str: Bijective }, True],
+        [KeyValuePair, { str: Integers }, NonNegativeIntegers],
+        [KeyValuePair, { str: Digits }, [Range, 0, 1]],
+      ]
     caption: ordinary base 2, in the same shape every other system reports
     category: Scope
   - id: every-integer-negatives-included-with-no-sign
     expr: [NumeralSystemShape, [BalancedNumerals, 3]]
-    expected: [Dictionary, [KeyValuePair, {str: Bijective}, True], [KeyValuePair, {str: Integers}, Integers], [KeyValuePair, {str: Digits}, [Range, -1, 1]]]
+    expected:
+      [
+        Dictionary,
+        [KeyValuePair, { str: Bijective }, True],
+        [KeyValuePair, { str: Integers }, Integers],
+        [KeyValuePair, { str: Digits }, [Range, -1, 1]],
+      ]
     caption: every integer, negatives included, with no sign
     category: Scope
 seeAlso:

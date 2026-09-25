@@ -6,7 +6,7 @@ signatures:
   - call: First(collection)
     description: the first element of the collection.
   - call: First(collection, default)
-    description: '`default` when the collection is empty, instead of the first element.'
+    description: "`default` when the collection is empty, instead of the first element."
     library: enumeratio-collections
   - call: First(expr)
     description: the first operand of any expression, not just a collection.
@@ -58,7 +58,7 @@ examples:
     expr: [First, [Add, [Power, a, 2], [Power, b, 2]]]
     expected: [Power, a, 2]
     category: Scope
-    caption: 'Any expression, not just a list: the first term of a sum'
+    caption: "Any expression, not just a list: the first term of a sum"
   - id: a-default-is-ignored-when-the-collection-has-a
     expr: [First, [List, a, b], x]
     expected: a

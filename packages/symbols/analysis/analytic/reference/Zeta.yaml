@@ -31,7 +31,7 @@ signatures:
     description: the Riemann zeta function $\zeta(s)$.
   - call: Zeta(s, a)
     description: the two-argument generalized (Hurwitz-type) zeta $\zeta(s, a)$; see [[HurwitzZeta]] for the difference.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'Even positive integers have closed forms in powers of $\pi$: $\zeta(2) = \pi^2/6$ (the Basel problem), $\zeta(4) = \pi^4/90$, and so on.'
   - 'Trivial zeros at the negative even integers: $\zeta(-2n) = 0$.'
@@ -113,11 +113,11 @@ examples:
       wolfram: This matches Wolfram's $\mathrm{Zeta}[s, a]$; Wolfram's $\mathrm{HurwitzZeta}[s, 0]$ instead diverges (ComplexInfinity).
   - id: apery-s-constant-zeta-3-numerically
     expr: [N, [Zeta, 3]]
-    expected: {num: '1.2020569031595942854'}
+    expected: { num: "1.2020569031595942854" }
     caption: Apéry's constant $\zeta(3)$, numerically
   - id: a-machine-precision-argument
     expr: [Zeta, 1.5]
-    expected: {num: '2.61237534868548834335'}
+    expected: { num: "2.61237534868548834335" }
     caption: A machine-precision argument
   - id: zeta-8-pi-8-9450
     expr: [Zeta, 8]
@@ -129,12 +129,12 @@ examples:
     caption: $\zeta(-5) = -B_6/6 = -1/252$
   - id: arbitrary-real-arguments
     expr: [Zeta, 5.211111111111111]
-    expected: {num: '1.03139179693438499839'}
+    expected: { num: "1.03139179693438499839" }
     category: Scope
     caption: Arbitrary real arguments
   - id: left-of-the-critical-strip-via-the-functional
     expr: [Zeta, -4.5]
-    expected: {num: '-0.00309166924721583384482'}
+    expected: { num: "-0.00309166924721583384482" }
     category: Scope
     caption: Left of the critical strip, via the functional equation
   - id: complex-s-under-n
@@ -154,7 +154,7 @@ examples:
     caption: 'Two arguments at a nonpositive integer $s$: $\zeta(-1, 5) = -B_2(5)/2 = -121/12$'
   - id: two-arguments-inexact
     expr: [Zeta, -1.5, 5]
-    expected: {num: '-17.0500647493426550141295'}
+    expected: { num: "-17.0500647493426550141295" }
     category: Scope
     caption: Two arguments, inexact
   - id: two-complex-arguments-under-n-to-ten-digits
@@ -195,17 +195,17 @@ examples:
     caption: $\zeta(s, 1) = \zeta(s)$ for symbolic $s$
   - id: to-40-significant-digits-every-one-correctly
     expr: [N, [Zeta, 3], 40]
-    expected: {num: '1.202056903159594285399738161511449990765'}
+    expected: { num: "1.202056903159594285399738161511449990765" }
     category: Scope
     caption: To 40 significant digits, every one correctly rounded
   - id: zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s
     expr: [N, [Zeta, 3, [Rational, -1, 2]]]
-    expected: {num: '16.4143983221171599978'}
+    expected: { num: "16.4143983221171599978" }
     category: Possible issues
     caption: $\zeta(3, -1/2) = 8 + \zeta(3, 1/2)$ under Wolfram's generalized convention for $a \leq 0$ — differs from HurwitzZeta there
   - id: zeta-1-2-35-12-exactly-but-at-a-negative-a-this
     expr: [N, [Zeta, -1, -2]]
-    expected: {num: '2.91666666666666666667'}
+    expected: { num: "2.91666666666666666667" }
     category: Possible issues
     caption: $\zeta(-1, -2) = 35/12$ exactly, but at a negative $a$ this stays symbolic without N()
 seeAlso:

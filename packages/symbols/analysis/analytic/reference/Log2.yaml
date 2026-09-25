@@ -38,7 +38,7 @@ examples:
     expected: 10
   - id: a-machine-precision-argument-evaluates
     expr: [Log2, 1.4142]
-    expected: {num: '0.499986164421874256467'}
+    expected: { num: "0.499986164421874256467" }
     caption: A machine-precision argument evaluates numerically
   - id: a-symbolic-argument-becomes-the-two-argument-log
     expr: [Log2, x]
@@ -56,7 +56,7 @@ examples:
       wolfram: Wolfram's Log2[9] gives Log[9]/Log[2].
   - id: n-log2-9
     expr: [N, [Log2, 9]]
-    expected: {num: '3.16992500144231236291'}
+    expected: { num: "3.16992500144231236291" }
     category: Scope
   - id: log2-0
     expr: [Log2, 0]
@@ -91,7 +91,7 @@ examples:
     caption: 'Derivative: $\frac{1}{x\ln 2}$'
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Log2, 3], 30]
-    expected: {num: '1.58496250072115618145373894395'}
+    expected: { num: "1.58496250072115618145373894395" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

@@ -1,6 +1,6 @@
 # REPL
 
-A real terminal running the actual [`@enumeratio/cli`](/cli/) eval core in your
+A real terminal running the actual [`@enumeratio/cli`](/docs/cli/) eval core in your
 browser — not a recording. Pick an example from the dropdown, or type your own.
 Results are exact; `:help` lists every command.
 
@@ -19,5 +19,5 @@ Results are exact; `:help` lists every command.
 
 <notatio-terminal></notatio-terminal>
 
-See the [CLI reference](/cli/) for the full command list and the
-[command-line playground](/playground/cli) for scriptable `notatio` invocations.
+See the [CLI reference](/docs/cli/) for the full command list and the
+[live command line](/docs/cli/command-line) for scriptable `notatio` invocations.

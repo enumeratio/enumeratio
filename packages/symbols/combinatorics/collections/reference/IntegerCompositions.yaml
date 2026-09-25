@@ -1,7 +1,7 @@
 name: IntegerCompositions
 domain: Combinatorial collections
 signature: IntegerCompositions(n)
-summary: 'The compositions of $n$: ordered sequences of positive parts summing to $n$.'
+summary: "The compositions of $n$: ordered sequences of positive parts summing to $n$."
 signatures:
   - call: IntegerCompositions(n)
     description: the ordered compositions of $n$

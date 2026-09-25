@@ -9,7 +9,7 @@ signatures:
 details:
   - For a C-finite sequence of recurrence order at most 2 (Fibonacci-like sequences), the characteristic roots come straight out of the compute engine's own `Sqrt`/arithmetic, so an irrational discriminant stays exact rather than being hand-simplified -- e.g. Fibonacci's $\sqrt5$.
   - A small registry covers named factorial-growth sequences that are not C-finite at all -- $n!$, the derangement numbers, and the Bell numbers -- each with a textbook closed form.
-  - 'Higher-order C-finite sequences and other non-C-finite sequences stay symbolic: only order ≤ 2 is attempted here.'
+  - "Higher-order C-finite sequences and other non-C-finite sequences stay symbolic: only order ≤ 2 is attempted here."
 examples:
   - id: factorial
     expr: [ExponentialGeneratingFunction, [Factorial, n], n, x]
@@ -25,7 +25,20 @@ examples:
     caption: $e^{e^x-1}$ -- the exponential formula for set partitions
   - id: fibonacci
     expr: [ExponentialGeneratingFunction, [Fibonacci, n], n, x]
-    expected: [Add, [Multiply, [Negate, [Divide, [Sqrt, 5], 5]], [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Negate, [Sqrt, 5]]]]]], [Multiply, [Divide, [Sqrt, 5], 5], [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Sqrt, 5]]]]]]
+    expected:
+      [
+        Add,
+        [
+          Multiply,
+          [Negate, [Divide, [Sqrt, 5], 5]],
+          [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Negate, [Sqrt, 5]]]]],
+        ],
+        [
+          Multiply,
+          [Divide, [Sqrt, 5], 5],
+          [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Sqrt, 5]]]],
+        ],
+      ]
     caption: Binet's formula, exponentiated -- built from the order-2 recurrence's own roots $(1\pm\sqrt5)/2$
 seeAlso:
   - GeneratingFunction

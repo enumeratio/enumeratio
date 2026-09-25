@@ -87,3 +87,21 @@ test("GroupElements(PermutationGroup(...)), with and without a position selector
 test("GroupGenerators(PermutationGroup(...)) returns the given generators", () => {
   same(["GroupGenerators", ["PermutationGroup", L(C([1, 9, 6], [3, 7]))]], L(C([1, 9, 6], [3, 7])));
 });
+
+test("PermutationCycles still computes when another library declared the name first", () => {
+  // @enumeratio/domains' carrier constructor: held, no evaluate -- the page engine's order.
+  const shared = new ComputeEngine();
+  shared.declare("PermutationCycles", { signature: "(list<integer>) -> value" });
+  declareGroupAlgebra(shared);
+  expect(shared.box(["PermutationCycles", L(6, 3, 2, 5, 4, 1)]).evaluate().json).toEqual(
+    shared.box(C([1, 6], [2, 3], [4, 5])).evaluate().json,
+  );
+});
+
+test("a list that is not a permutation is left unevaluated, not crashed on", () => {
+  for (const head of ["PermutationCycles", "InversePermutation"]) {
+    same([head, L(1, 1, 2)], [head, L(1, 1, 2)]);
+    same([head, L(1, 4)], [head, L(1, 4)]);
+  }
+  same(["Permute", L(7, 8, 9), L(1, 1, 2)], ["Permute", L(7, 8, 9), L(1, 1, 2)]);
+});

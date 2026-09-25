@@ -5,7 +5,7 @@ summary: The Barnes G-function $G(z)$, the double-gamma function satisfying $G(z
 signatures:
   - call: BarnesG(z)
     description: the Barnes G-function $G(z)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Functional equation $G(z+1) = \Gamma(z)\,G(z)$, the analogue of $\Gamma(z+1) = z\,\Gamma(z)$ one level up; see [[Gamma]].
   - 'At positive integers $G(n) = 0!\,1!\,2!\cdots(n-2)!$ — the superfactorial: $G(1) = G(2) = G(3) = 1$, $G(4) = 2$, $G(5) = 12$, $G(6) = 288$, $G(7) = 34560$. Exact and arbitrarily large.'
@@ -84,7 +84,7 @@ examples:
     expr: [BarnesG, [Interval, 1.17, 1.18]]
     expected: [Interval, 1.0522163286861943, 1.054193606435691]
     category: Scope
-    caption: 'Interval arithmetic: $G$ is increasing on $[1.17, 1.18]$, so the image is the interval of the endpoint values'
+    caption: "Interval arithmetic: $G$ is increasing on $[1.17, 1.18]$, so the image is the interval of the endpoint values"
   - id: uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm
     expr: [BarnesG, [Around, 2.1, 0.01]]
     expected: [Around, 0.9847727243540465, 0.001449505695943639]
@@ -97,14 +97,33 @@ examples:
     caption: 'The hyperfactorial $H(n) = \Gamma(n+1)^n / G(n+1)$: here $120^5/288 = H(5)$'
   - id: to-30-significant-digits-not-yet-the-requested
     expr: [N, [BarnesG, [Rational, 1, 2]], 30]
-    expected: {num: '0.603244281209446206191429224535'}
+    expected: { num: "0.603244281209446206191429224535" }
     category: Scope
     caption: To 30 significant digits, past a double's reach
 implementations:
   - origin: reference
     form: notatio
     environment: engine
-    expr: [Exp, [Add, [Divide, [Multiply, [Subtract, _z, 1], [Ln, [Multiply, 2, Pi]]], 2], [Negate, [Divide, [Multiply, [Subtract, _z, 1], [Add, [Subtract, _z, 1], 1]], 2]], [Negate, [Divide, [Multiply, EulerGamma, [Power, [Subtract, _z, 1], 2]], 2]], [Sum, [Add, [Multiply, k, [Ln, [Add, 1, [Divide, [Subtract, _z, 1], k]]]], [Divide, [Power, [Subtract, _z, 1], 2], [Multiply, 2, k]], [Negate, [Subtract, _z, 1]]], [Triple, k, 1, Infinity]]]]
+    expr:
+      [
+        Exp,
+        [
+          Add,
+          [Divide, [Multiply, [Subtract, _z, 1], [Ln, [Multiply, 2, Pi]]], 2],
+          [Negate, [Divide, [Multiply, [Subtract, _z, 1], [Add, [Subtract, _z, 1], 1]], 2]],
+          [Negate, [Divide, [Multiply, EulerGamma, [Power, [Subtract, _z, 1], 2]], 2]],
+          [
+            Sum,
+            [
+              Add,
+              [Multiply, k, [Ln, [Add, 1, [Divide, [Subtract, _z, 1], k]]]],
+              [Divide, [Power, [Subtract, _z, 1], 2], [Multiply, 2, k]],
+              [Negate, [Subtract, _z, 1]],
+            ],
+            [Triple, k, 1, Infinity],
+          ],
+        ],
+      ]
     note: G = exp(ln G) over the Weierstrass series of [[LogBarnesG]]; see there for what it costs to evaluate.
   - origin: native
     form: typescript

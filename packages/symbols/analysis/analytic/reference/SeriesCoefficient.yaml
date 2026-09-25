@@ -1,0 +1,38 @@
+name: SeriesCoefficient
+domain: Analytic
+signature: SeriesCoefficient(f, {x, x0, n})
+summary: The coefficient of $(x-x_0)^n$ in the Taylor series of $f$ about $x_0$, via $\frac{f^{(n)}(x_0)}{n!}$. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: SeriesCoefficient(f, {x, x0, n})
+    description: the coefficient of $(x-x_0)^n$, for $n$ a nonnegative integer and $f$ analytic at $x_0$ (an ordinary point).
+    library: "@enumeratio/analytic"
+details:
+  - "Exact for the ordinary-point Taylor case: $n$ nonnegative integer, $f$ with no pole or branch point at $x_0$. Computed as $D^n(f)$ evaluated at $x_0$, divided by $n!$ — no series expansion is built, just repeated differentiation."
+  - "Declined on purpose: $n$ negative or non-integer (a Laurent or Puiseux coefficient — the derivative formula doesn't apply past an ordinary point) and $f$ singular exactly at $x_0$ even where the singularity is removable (e.g. $\\sin(x)/x$ at $0$) — the result is checked for a leftover free occurrence of the expansion variable or a non-finite value, and declined rather than trusted, whenever either shows up."
+examples:
+  - id: exp-about-a-nonzero-point
+    expr: [SeriesCoefficient, [Exp, x], [List, x, 1, 2]]
+    expected: [Multiply, [Rational, 1, 2], ExponentialE]
+    caption: $[x^2]\, e^x$ about $x_0=1$ is $e/2$
+  - id: sin-about-zero
+    expr: [SeriesCoefficient, [Sin, x], [List, x, 0, 5]]
+    expected: [Rational, 1, 120]
+    caption: $[x^5]\, \sin x = \frac{1}{120}$
+  - id: geometric-series
+    expr: [SeriesCoefficient, [Divide, 1, [Subtract, 1, x]], [List, x, 0, 10]]
+    expected: 1
+    caption: every coefficient of $\frac{1}{1-x}$ about $0$ is $1$
+  - id: log-series
+    expr: [SeriesCoefficient, [Ln, [Add, 1, x]], [List, x, 0, 4]]
+    expected: [Rational, -1, 4]
+    caption: $[x^4]\, \ln(1+x) = -\frac{1}{4}$
+  - id: a-negative-order-laurent-coefficient-declines
+    expr: [SeriesCoefficient, [Divide, 1, x], [List, x, 0, -1]]
+    expected: [SeriesCoefficient, [Divide, 1, x], [List, x, 0, -1]]
+    category: Possible issues
+    caption: the residue of $1/x$ at $0$ is a Laurent coefficient, past what the derivative formula covers — declined, not guessed
+  - id: a-removable-singularity-declines
+    expr: [SeriesCoefficient, [Divide, [Sin, x], x], [List, x, 0, 0]]
+    expected: [SeriesCoefficient, [Divide, [Sin, x], x], [List, x, 0, 0]]
+    category: Possible issues
+    caption: $\sin(x)/x$ is singular exactly at the expansion point (removably so) — declined rather than risk the wrong limit

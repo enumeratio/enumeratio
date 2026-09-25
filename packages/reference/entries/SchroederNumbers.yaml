@@ -7,8 +7,8 @@ signatures:
     description: $S_0 = 1$, $S_n = 2 s_n$ for $n \ge 1$ (twice the little Schröder numbers), an infinite indexed collection.
 details:
   - 'A lazy indexed collection: $Count(SchroederNumbers) = +\infty$, and $At(SchroederNumbers, k)$ unranks term $k-1$ by doubling [[LittleSchroderNumbers]] rather than re-deriving a recurrence -- $At(SchroederNumbers, 1) = S_0 = 1$.'
-  - 'OEIS A006318, starting exactly at its offset-0 term: $1, 2, 6, 22, 90, 394, 1806, …$; counts monotone lattice paths from $(0,0)$ to $(n,n)$ using steps $(1,0)$, $(0,1)$ and $(1,1)$ that never rise above the diagonal.'
-  - 'Membership goes through [[Element]]: $Element(22, SchroederNumbers)$ is true, $Element(10, SchroederNumbers)$ is false.'
+  - "OEIS A006318, starting exactly at its offset-0 term: $1, 2, 6, 22, 90, 394, 1806, …$; counts monotone lattice paths from $(0,0)$ to $(n,n)$ using steps $(1,0)$, $(0,1)$ and $(1,1)$ that never rise above the diagonal."
+  - "Membership goes through [[Element]]: $Element(22, SchroederNumbers)$ is true, $Element(10, SchroederNumbers)$ is false."
 examples: []
 enumerate:
   expr: Take(SchroederNumbers, 15)

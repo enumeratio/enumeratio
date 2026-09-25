@@ -75,6 +75,13 @@ import { declareClosedForms113 } from "./closed-forms-113.ts";
 import { declarePrecision113 } from "./precision-113.ts";
 import { declareLinearAlgebra113 } from "./linear-algebra-113.ts";
 import { declareSpecialFunctionsRemaining } from "./special-functions-remaining.ts";
+import { declareRefineAssuming } from "./refine-assuming.ts";
+import { declarePiecewise, declarePiecewiseExpand } from "./piecewise.ts";
+import { declareSeriesCoefficient } from "./series-coefficient.ts";
+import { declareFunctionProperties } from "./function-properties.ts";
+import { declareTransforms } from "./transforms.ts";
+import { declareMeijerG } from "./meijer-g.ts";
+import { declareMeijerGReduce } from "./meijer-g-reduce.ts";
 import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
@@ -755,5 +762,13 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declarePrecision113(ce);
   declareLinearAlgebra113(ce);
   declareSpecialFunctionsRemaining(ce);
+  declareRefineAssuming(ce);
+  declarePiecewise(ce);
+  declarePiecewiseExpand(ce);
+  declareSeriesCoefficient(ce);
+  declareFunctionProperties(ce);
+  declareTransforms(ce);
+  declareMeijerG(ce);
+  declareMeijerGReduce(ce);
   declareCorrectlyRoundedN(ce);
 }

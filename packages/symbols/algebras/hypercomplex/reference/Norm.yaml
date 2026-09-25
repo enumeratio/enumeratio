@@ -1,7 +1,7 @@
 name: Norm
 domain: Hypercomplex algebra
 signature: Norm(z)
-summary: 'The algebra norm of a hypercomplex element: the determinant of multiplication-by-$z$ on the $2^n$-dimensional space. Reduces to the Gaussian $a^2+b^2$ at one imaginary unit.'
+summary: "The algebra norm of a hypercomplex element: the determinant of multiplication-by-$z$ on the $2^n$-dimensional space. Reduces to the Gaussian $a^2+b^2$ at one imaginary unit."
 signatures:
   - call: Norm(z)
     description: the determinant of the multiplication-by-$z$ map

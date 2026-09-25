@@ -26,10 +26,10 @@ signatures:
     description: reads the single `{digits, exponent}` pair [[RealDigits]] itself returns, base 10.
     library: enumeratio-numerals
 details:
-  - 'A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies'
+  - "A digit string that denotes NO integer leaves the call standing: two adjacent Zeckendorf ones, an out-of-range mixed-radix digit, residues that no integer satisfies"
   - In a residue system with moduli that are not pairwise coprime the map is not a bijection, and an inconsistent string has no value
   - Zeckendorf is the clearest case of a system whose digits are constrained by a forbidden PATTERN rather than a per-place bound
-  - 'Reading a `ResidueNumerals` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back'
+  - "Reading a `ResidueNumerals` numeral IS the Chinese remainder theorem: the digits are the [[IntegerMod]] classes of $n$, and [[ChineseRemainder]] of those classes gives it back"
   - 'In a fixed base, the inverse of [[IntegerDigits]]: $\mathrm{FromDigits}(\mathrm{IntegerDigits}(n))=n$ for $n\ge0$.'
   - Digits need not be restricted to $0..\mathrm{base}-1$ -- a digit $\ge$ base simply carries into higher place values.
   - An empty digit list has no natural value; compute-engine leaves it unevaluated rather than returning 0.
@@ -77,7 +77,7 @@ examples:
     expr: [FromDigits, [List, 1, 4, 25, 41], [MixedRadix, [List, 24, 60, 60]]]
     expected: 102341
     category: Scope
-    caption: 'a mixed radix, spelled `MixedRadix`: 1d 4h 25m 41s back to seconds'
+    caption: "a mixed radix, spelled `MixedRadix`: 1d 4h 25m 41s back to seconds"
   - id: the-inverse-of-integerdigits-137-mixedradix-3-12
     expr: [FromDigits, [List, 3, 2, 5], [MixedRadix, [List, 3, 12]]]
     expected: 137

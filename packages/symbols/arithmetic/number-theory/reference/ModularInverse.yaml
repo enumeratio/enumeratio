@@ -27,21 +27,26 @@ examples:
     caption: 'a negative argument: $-3 \cdot 2 = -6 \equiv 1$'
   - id: a-21-digit-modulus
     expr: [ModularInverse, 3, [Add, [Power, 10, 20], 1]]
-    expected: {num: '33333333333333333334'}
+    expected: { num: "33333333333333333334" }
     category: Scope
     caption: a 21-digit modulus
   - id: listable-threads-over-a-list
     expr: [ModularInverse, [List, 2, 3, 4], 11]
     expected: [List, 6, 4, 3]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
   - id: the-same-as-powermod-with-exponent-1
     expr: [Equal, [ModularInverse, 3, 7], [PowerMod, 3, -1, 7]]
     expected: True
     category: Properties
     caption: the same as [[PowerMod]] with exponent $-1$
   - id: a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2
-    expr: [Mod, [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]], [Subtract, [Power, 2, 61], 1]]
+    expr:
+      [
+        Mod,
+        [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]],
+        [Subtract, [Power, 2, 61], 1],
+      ]
     expected: 1
     category: Properties
     caption: $a \cdot a^{-1} \equiv 1$, modulo the Mersenne prime $2^{61} - 1$

@@ -11,7 +11,7 @@ details:
   - On `DivisorLattice(n)`, $\mu([a,b])$ is the classical number-theoretic $\mu(b/a)$
   - On `BooleanLattice(n)`, $\mu([S,T]) = (-1)^{|T \setminus S|}$ — the signs of inclusion–exclusion
   - On a chain, $\mu$ is 1 on a point, $-1$ on a cover, and 0 on anything longer
-  - 'Posets: `Chain(n)`, `BooleanLattice(n)` (elements are subsets), `DivisorLattice(n)` (elements are divisors)'
+  - "Posets: `Chain(n)`, `BooleanLattice(n)` (elements are subsets), `DivisorLattice(n)` (elements are divisors)"
 examples:
   - id: 30-2-cdot-3-cdot-5-is-squarefree-with-three
     expr: [MoebiusFunction, [DivisorLattice, 30], 1, 30]

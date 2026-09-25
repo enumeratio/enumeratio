@@ -52,18 +52,18 @@ examples:
     expr: [Tan, 1]
     expected: [Tan, 1]
     category: Possible issues
-    caption: 'Same rule as [[Sin]] and [[Cos]]: a non-special numeric argument stays symbolic'
+    caption: "Same rule as [[Sin]] and [[Cos]]: a non-special numeric argument stays symbolic"
   - id: tan-30-circ-frac-sqrt-3-3-exactly
     expr: [Tan, [Degrees, 30]]
     expected: [Divide, [Sqrt, 3], 3]
     caption: $\tan 30^\circ = \frac{\sqrt3}{3}$, exactly
   - id: a-machine-precision-argument-evaluates
     expr: [Tan, 1.2]
-    expected: {num: '2.57215162212631893541'}
+    expected: { num: "2.57215162212631893541" }
     caption: A machine-precision argument evaluates numerically
   - id: n-of-an-exact-argument-gives-an-arbitrary
     expr: [N, [Tan, [Rational, 6, 5]]]
-    expected: {num: '2.57215162212631893541'}
+    expected: { num: "2.57215162212631893541" }
     category: Scope
     caption: N(...) of an exact argument gives an arbitrary-precision value
   - id: evaluates-at-a-complex-argument
@@ -72,7 +72,11 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr: [Tan, [List, [List, [Multiply, 5, [Divide, Pi, 6]], Pi], [List, [Divide, Pi, 3], [Negate, Pi]]]]
+    expr:
+      [
+        Tan,
+        [List, [List, [Multiply, 5, [Divide, Pi, 6]], Pi], [List, [Divide, Pi, 3], [Negate, Pi]]],
+      ]
     expected: [List, [List, [Negate, [Divide, [Sqrt, 3], 3]], 0], [List, [Sqrt, 3], 0]]
     category: Scope
     caption: Threads element-wise over a matrix
@@ -147,7 +151,15 @@ examples:
     caption: 'Antiderivative: $\ln|\sec x|$'
   - id: taylor-series-about-0
     expr: [Series, [Tan, x], x, 0, 7]
-    expected: [Add, [Multiply, [Rational, 17, 315], [Power, x, 7]], [Multiply, [Rational, 2, 15], [Power, x, 5]], [Multiply, [Rational, 1, 3], [Power, x, 3]], x, [BigO, [Power, x, 9]]]
+    expected:
+      [
+        Add,
+        [Multiply, [Rational, 17, 315], [Power, x, 7]],
+        [Multiply, [Rational, 2, 15], [Power, x, 5]],
+        [Multiply, [Rational, 1, 3], [Power, x, 3]],
+        x,
+        [BigO, [Power, x, 9]],
+      ]
     category: Scope
     caption: Taylor series about 0
     divergence:
@@ -160,12 +172,29 @@ examples:
     caption: $\sin x / \cos x$ should simplify to $\tan x$; Simplify leaves the quotient
   - id: rewritten-in-exponentials
     expr: [TrigToExp, [Tan, x]]
-    expected: [Multiply, [Complex, 0, -1], [Divide, [Add, [Negate, [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]], [Add, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]]
+    expected:
+      [
+        Multiply,
+        [Complex, 0, -1],
+        [
+          Divide,
+          [
+            Add,
+            [Negate, [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]],
+            [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]],
+          ],
+          [
+            Add,
+            [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]],
+            [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]],
+          ],
+        ],
+      ]
     category: Properties
     caption: Rewritten in exponentials
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Tan, 1], 30]
-    expected: {num: '1.55740772465490223050697480746'}
+    expected: { num: "1.55740772465490223050697480746" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

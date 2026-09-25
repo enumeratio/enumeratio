@@ -1,7 +1,7 @@
 name: MersennePrimes
 domain: Collections
 signature: MersennePrimes
-summary: 'The Mersenne primes $3, 7, 31, 127, 8191, …$: primes of the form $2^p - 1$.'
+summary: "The Mersenne primes $3, 7, 31, 127, 8191, …$: primes of the form $2^p - 1$."
 signatures:
   - call: MersennePrimes
     description: the primes $2^p-1$ for a prime exponent $p$, an indexed collection of open infinitude -- only finitely many are known at any time.

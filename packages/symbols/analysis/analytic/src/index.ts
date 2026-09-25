@@ -98,5 +98,18 @@ export { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
 export { declareGeneralizedSpecial } from "./generalized-special.ts";
 export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts";
 export { declareConstantRounding } from "./constant-rounding.ts";
+export {
+  declareFunctionProperties,
+  domainOf,
+  recognize,
+  type Recognized,
+  type Trend,
+} from "./function-properties.ts";
 export { declareTrigNormalisation } from "./trig-normalisation.ts";
 export { declareElementarySpecialValues } from "./elementary-special-values.ts";
+export { declareRefineAssuming } from "./refine-assuming.ts";
+export { declarePiecewise, declarePiecewiseExpand } from "./piecewise.ts";
+export { declareSeriesCoefficient } from "./series-coefficient.ts";
+export { declareTransforms, matchLaplace, matchFourier } from "./transforms.ts";
+export { declareMeijerG } from "./meijer-g.ts";
+export { declareMeijerGReduce } from "./meijer-g-reduce.ts";

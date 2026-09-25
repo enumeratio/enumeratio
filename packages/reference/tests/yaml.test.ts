@@ -1,10 +1,9 @@
-// Every reference record goes through the one writer (@enumeratio/entry's stringifyYaml), so
-// a file is exactly what that writer makes of its own data. The generated data the site and
+// Every reference record goes through the one writer (@enumeratio/entry/node's writeYaml:
+// stringifyYaml, then oxfmt), so a file is exactly what that writer makes of its own data. The generated data the site and
 // the crosswalk read stays in step with the records.
 
-import { readFileSync } from "node:fs";
 import { DEFINITIONS } from "@enumeratio/analytic/definitions";
-import { isCanonicalYaml } from "@enumeratio/entry";
+import { isWrittenYaml } from "@enumeratio/entry/node";
 import { expect, test } from "vite-plus/test";
 import AGREEMENTS from "../src/crosswalk/oracle-agreements.json" with { type: "json" };
 import { loadReferenceData, oracleAgreementsOf, PACKAGES, referenceData } from "../src/node.ts";
@@ -15,12 +14,11 @@ test("every record loads, validates, and has no id collisions", () => {
   expect(loaded.issues).toEqual([]);
 });
 
-test("every record is what the writer would write", () => {
-  const drift = loaded.heads
-    .map((h) => h.entryPath)
-    .filter((path) => !isCanonicalYaml(readFileSync(path, "utf8")))
-    .map((path) => path.slice(PACKAGES.length));
-  expect(drift, "re-serialise with stringifyYaml from @enumeratio/entry").toEqual([]);
+test("every record is what the writer would write", async () => {
+  const drift: string[] = [];
+  for (const { entryPath } of loaded.heads)
+    if (!(await isWrittenYaml(entryPath))) drift.push(entryPath.slice(PACKAGES.length));
+  expect(drift, "run `node packages/reference/scripts/format-records.ts`").toEqual([]);
 });
 
 // A reference implementation's defining expression is copied into the YAML; analytic declares
