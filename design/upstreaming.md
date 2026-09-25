@@ -284,8 +284,8 @@ their own function participate in arbitrary-precision numerics, and `UpValues` i
 contribute a derivative or a simplification for a head someone else declared.
 
 The absence shows up directly in our own tree. `@enumeratio/analytic` has to scatter one
-symbol across four files — `definitions.ts` (the formal definition), `precise.ts` (the
-finite precision-parameterized evaluator), `derivatives.ts` (the derivative table, attached
+symbol across four files — `definitions.ts` (the formal definition), `bigzeta.ts` (the
+arbitrary-precision kernel), `derivatives.ts` (the derivative table, attached
 by mutating `Derivative`'s definition in place), and `hurwitz-zeta.ts` (declare + evaluate +
 compile) — not because those are four different concerns worth separating, but because CE
 offers four different mechanisms and none of them is "here is everything this symbol is".

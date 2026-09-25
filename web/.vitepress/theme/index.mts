@@ -2,6 +2,8 @@ import type { EnhanceAppContext } from "vitepress";
 import { defineAsyncComponent } from "vue";
 import { registerNotatio } from "@enumeratio/notatio/vue";
 import DefaultTheme from "vitepress/theme";
+import { applyEngineLibraries } from "./engine-libraries.ts";
+import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
 // @enumeratio/notatio-lit (the whole element + compute-engine tree) via Playground, and
@@ -103,46 +105,33 @@ export default {
           import("@enumeratio/braid"),
           import("@enumeratio/aestimatio"),
         ]);
-        // Carriers first: everything below declares heads OVER these minted types, so they
-        // have to exist before a signature can name one.
-        const constructorFor = Object.fromEntries(DOMAINS.map((d) => [d.type, d.name]));
-        // SetPartition is held back: domains treats it as a restricted growth string while
-        // every set-partition definition works in blocks -- typing those heads over the
-        // carrier would be a wrong answer rather than a type error.
-        const domainTypes = Object.fromEntries(
-          DOMAINS.filter((d) => d.name !== "SetPartition").map((d) => [d.name, d.type]),
-        );
         // Notation has to be in before the engine is built: its dictionary is fixed then.
         configureLatex(RESIDUES_LATEX);
-        configureEngine(declareDomains);
-        // A combinatorial statistic is a function of a carrier, so that is what these heads
-        // take. The ones that are ALSO plain list functions accept a bare list too.
-        configureEngine((ce) => declareCollections(ce, { permutationType: "permutation" }));
-        // Collections already declares the fast permutation heads under the same names, so
-        // those are skipped here — one head, one owner.
-        configureEngine((ce) =>
-          declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes }),
-        );
-        configureEngine((ce) => declareMaps(ce, constructorFor));
-        configureEngine(declareAnalytic);
-        configureEngine(declareFractals);
-        configureEngine(declareGraphics);
-        configureEngine(declareHypercomplex);
-        // The geometric-algebra layer sits ON hypercomplex: its heads read the generators
-        // and the ordered product that library declares, so it has to come after.
-        configureEngine(declareGeometric);
-        configureEngine(declareDiagrams);
-        configureEngine(declareResidues);
-        configureEngine(declareNumerals);
-        configureEngine(declareHecke);
-        configureEngine(declareIncidence);
-        configureEngine(declareQuiver);
-        configureEngine(declareHopf);
-        configureEngine(declareGroupAlgebra);
-        configureEngine(declareModular);
-        configureEngine(declareNumberTheory);
-        configureEngine(declareAdeles);
-        configureEngine(declareBraid);
+        applyEngineLibraries(configureEngine, {
+          declareCollections,
+          declareStatistics,
+          ALL_STATISTICS,
+          declareDomains,
+          declareMaps,
+          DOMAINS,
+          declareAnalytic,
+          declareFractals,
+          declareGraphics,
+          declareHypercomplex,
+          declareGeometric,
+          declareDiagrams,
+          declareResidues,
+          declareNumerals,
+          declareHecke,
+          declareIncidence,
+          declareQuiver,
+          declareHopf,
+          declareGroupAlgebra,
+          declareModular,
+          declareNumberTheory,
+          declareAdeles,
+          declareBraid,
+        });
         configureEngine(declareAestimatio);
       };
       // The promise is assigned synchronously (any element's loadEngine awaits it), but
@@ -169,6 +158,22 @@ export default {
         "./worker-engine-setup.ts",
         import.meta.url,
       ).href;
+      // Hands an `Evaluator -> "Worker"` module the two worker factories
+      // `./worker-factories.ts` builds around a literal, Vite-bundleable
+      // `new Worker(new URL(...))` / `new SharedWorker(new URL(...))` -- without this,
+      // `openSession` falls back to computing the worker's URL itself, which a
+      // production build never emits as an asset (see that file's own comment).
+      (
+        globalThis as {
+          __notatioWorkerFactories?: {
+            createWorker: typeof createSessionWorker;
+            createSharedWorker: typeof createSessionSharedWorker;
+          };
+        }
+      ).__notatioWorkerFactories = {
+        createWorker: createSessionWorker,
+        createSharedWorker: createSessionSharedWorker,
+      };
     }
   },
 };

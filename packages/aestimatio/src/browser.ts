@@ -490,9 +490,26 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
   let dedicated = false; // true once started as (or poisoned into) the dedicated fallback
   let terminateCurrent: (() => void) | undefined; // undefined on a SharedWorker's port
 
+  // One persistent listener per port, dispatching to whichever in-flight call owns a
+  // message's `id` -- NOT `port.onmessage = onMessage` assigned fresh by each call
+  // (the previous approach), which only ever keeps ONE call's listener attached at a
+  // time: the moment a second call starts, it silently drops whatever response was
+  // still on its way to the first. Concurrent calls on one session (two cells
+  // evaluating around the same time, say) are the ordinary case, not an edge one, and
+  // `id`s are unique for the session's whole lifetime, so one shared map survives a
+  // `spawnDedicated()` port swap without needing per-port bookkeeping.
+  const dispatchers = new Map<number, (event: WorkerMessageEvent) => void>();
+  function attachDispatcher(p: MessagePortLike): void {
+    p.onmessage = (event) => {
+      const id = (event.data as { id?: number } | undefined)?.id;
+      if (id !== undefined) dispatchers.get(id)?.(event);
+    };
+  }
+
   function spawnDedicated(): void {
     const worker = getDedicatedFactory()(url, { type: "module" });
     port = worker as unknown as MessagePortLike;
+    attachDispatcher(port);
     terminateCurrent = () => worker.terminate();
     dedicated = true;
     port.postMessage({ setup });
@@ -501,6 +518,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
   if (sharedFactory !== undefined) {
     const shared = sharedFactory(url, { name, type: "module" });
     port = shared.port;
+    attachDispatcher(port);
     port.start?.();
     // Every connection (a SharedWorker's per-tab port, or a dedicated worker acting as
     // its own one) starts with a handshake message carrying `setup` -- see
@@ -539,7 +557,7 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         if (spawnTimer !== undefined) clearTimeout(spawnTimer);
         if (killTimer !== undefined) clearTimeout(killTimer);
         signal?.removeEventListener("abort", onAbort);
-        if (currentPort.onmessage === onMessage) currentPort.onmessage = null;
+        dispatchers.delete(id);
       };
       const onAbort = (): void => {
         if (settled) return;
@@ -589,14 +607,20 @@ export function openSession(options: BrowserSessionOptions = {}): BrowserSession
         resolve({ value: m.ok ? m.json : ABORTED, reset: false });
       };
 
-      currentPort.onmessage = onMessage;
+      dispatchers.set(id, onMessage);
       if (signal?.aborted) {
         onAbort();
         return;
       }
       signal?.addEventListener("abort", onAbort);
 
-      if (timeMs !== undefined) spawnTimer = setTimeout(kill, spawnTimeoutMs);
+      // Unconditional -- a worker/port that never reports "started" at all (a bad
+      // script, a SharedWorker whose module failed to load, ...) has to be caught
+      // whether or not the caller asked for a `timeMs` deadline on the computation
+      // itself; those are two different guards (see SPAWN_TIMEOUT_MS's own comment).
+      // Gating this behind `timeMs !== undefined` left a call with no deadline at all
+      // hanging forever against a session that never actually started.
+      spawnTimer = setTimeout(kill, spawnTimeoutMs);
 
       currentPort.postMessage({ id, json, timeMs });
     });

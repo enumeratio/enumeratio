@@ -306,10 +306,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Beta", ["Rational", 9, 2], ["Rational", 7, 2]],
         expected: ["Multiply", ["Rational", 5, 2048], "Pi"],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Half-integer arguments should evaluate to the exact closed form $\\frac{5\\pi}{2048}$ via Gamma; currently left unevaluated. Compare [[Binomial]]'s own half-integer gap",
+          "Half-integer arguments evaluate exactly through $\\Gamma(m + \\tfrac12) = \\frac{(2m)!}{4^m m!}\\sqrt{\\pi}$. Compare [[Binomial]] at half-integers",
       },
     ],
     seeAlso: ["Gamma", "Binomial", "BetaRegularized"],
@@ -376,10 +375,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erf", ["List", 0, 1]],
         expected: ["List", 0, ["Erf", 1]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's Erf rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Erfc", "ErfInv"],
@@ -442,10 +439,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erfc", ["List", 0, 1]],
         expected: ["List", 1, ["Erfc", 1]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's Erfc rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Erf"],
@@ -501,10 +496,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["ErfInv", ["List", 0, 1]],
         expected: ["List", 0, "PositiveInfinity"],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's InverseErf rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Erf", "Erfc"],
@@ -626,10 +619,10 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["N", ["Zeta", ["Complex", 0.5, 14]]],
-        expected: ["Complex", 0.022241142609992697, -0.10325812326645332],
+        expected: ["Complex", 0.02224114260999359, -0.10325812326645006],
         category: "Scope",
         caption:
-          "On the critical line, $\\zeta(1/2 + 14i) = 0.02224\\ldots - 0.10326\\ldots i$ — complex $s$, from `@enumeratio/analytic` (compute-engine's Zeta evaluates real $s$ only)",
+          "On the critical line, $\\zeta(1/2 + 14i) = 0.02224\\ldots - 0.10326\\ldots i$ — complex $s$, from @enumeratio/analytic (compute-engine's Zeta evaluates real $s$ only). Computed in arbitrary precision and rounded once, so each part is the nearest double in every JavaScript engine",
       },
       {
         expr: ["Zeta", 2, 1],
@@ -676,7 +669,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "Nonpositive integer $s$: $\\zeta(-n, a) = -B_{n+1}(a)/(n+1)$, a Bernoulli polynomial in $a$ -- so $\\zeta(0, a) = \\tfrac12 - a$ and $\\zeta(-1, a) = -\\tfrac{1}{12}(6a^2 - 6a + 1)$. See [[BernoulliB]].",
       "Pole at $s = 1$: $\\zeta(1, a) = \\text{ComplexInfinity}$ for every $a$.",
       "Poles at $a = 0, -1, -2, \\dots$: the $(n+a)=0$ term is singular. (The two-argument [[Zeta]] drops that term instead, staying finite there.)",
-      "Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\\mathrm{HurwitzZeta}[s, a]$.",
+      "Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\\mathrm{HurwitzZeta}[s, a]$. Left of $\\operatorname{Re}(s) = 0$, where those direct terms cancel, $a$ near the real axis goes through $\\zeta(s, 1+h) = \\sum_k \\binom{-s}{k} h^k \\zeta(s+k)$ instead, each $\\zeta(s+k)$ from the functional equation.",
     ],
     examples: [
       {
@@ -774,7 +767,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       "$\\Phi(z, 0, a) = 1/(1 - z)$ — the geometric series (and its continuation), independent of $a$, for all $z \\ne 1$.",
       "Convergence: the series converges for $|z| < 1$ (any $s$, $a$), and on $|z| = 1$ only for $\\operatorname{Re}(s) > 1$; elsewhere it is defined by analytic continuation in $z$.",
       "Poles at $a = 0, -1, -2, \\ldots$, from the singular $(n+a) = 0$ term, as for [[HurwitzZeta]].",
-      "Numeric evaluation sums the series directly for $|z| < 1$ (geometric convergence), routes $z = 1$ through the Euler–Maclaurin Hurwitz kernel, and sums real $z < 0$ (the $z = -1$ rim included) by a van Wijngaarden Euler transform, so the alternating $\\eta(s)$ and Catalan cases reach machine precision. $|z| > 1$ is left unevaluated except where a closed form applies (e.g. $s = 0$).",
+      "Numeric evaluation sums the series directly for $|z| < 1$ (geometric convergence), routes $z = 1$ through the Euler–Maclaurin Hurwitz kernel, and sums real $z < 0$ (the $z = -1$ rim included) by a van Wijngaarden Euler transform, so the alternating $\\eta(s)$ and Catalan cases reach machine precision. Past $|z| = 1$ it is continued by the Hermite-type integral representation, $\\Phi = \\tfrac{1}{2a^s} + z^{-a}(-\\ln z)^{s-1}\\Gamma(1-s, -a\\ln z) - 2\\int_0^\\infty \\frac{\\sin(t\\ln z - s\\arctan(t/a))}{(a^2+t^2)^{s/2}(e^{2\\pi t}-1)}\\,dt$, with other $a$ shifted by $\\Phi(z, s, a) = a^{-s} + z\\Phi(z, s, a+1)$; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do. Where the terms cancel below double precision, or the incomplete gamma can't be trusted (near the negative real axis past $|x| \\approx 20$), it stays unevaluated rather than guess.",
     ],
     examples: [
       {
@@ -814,6 +807,17 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expected: ["Divide", 1, ["Add", ["Negate", "z"], 1]],
         category: "Properties",
         caption: "$\\Phi(z, 0, a) = 1/(1 - z)$, independent of $a$",
+      },
+      {
+        expr: ["N", ["LerchPhi", ["Complex", 1, 2], ["Complex", 3, -1], ["Complex", 4, 2]]],
+        expected: ["Complex", 0.002025009957012008, 0.0033278975368131974],
+        category: "Scope",
+        caption:
+          "past the unit disk, by the integral representation (mpmath: 0.00202500995700991 + 0.00332789753681356i)",
+        divergence: {
+          wolfram:
+            "Wolfram's machine-precision N drifts from the sixth digit here (0.00202501519…); N[LerchPhi[1 + 2 I, 3 - I, 4 + 2 I], 30] agrees with this value, as do mpmath and SymPy.",
+        },
       },
       {
         expr: ["LerchPhi", 2, 0, 7],
@@ -1246,10 +1250,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", ["List", 1, 2], 1],
         expected: ["List", ["Divide", 1, "ExponentialE"], ["Divide", 2, "ExponentialE"]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's GammaRegularized rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Gamma", "BetaRegularized"],
@@ -1322,10 +1324,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["BetaRegularized", 0.5, ["List", 1, 2], 1],
         expected: ["List", 0.5, 0.25],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "compute-engine's BetaRegularized rejects a list argument outright with a type error (it does not thread over a list)",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["Beta", "GammaRegularized", "Binomial"],

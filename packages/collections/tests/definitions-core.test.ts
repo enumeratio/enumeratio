@@ -1,30 +1,15 @@
+// Shard of definitions.test.ts: the frontier invariant, the entries well-formedness check, and
+// a chunk of the reference-vs-implementation differential. See definitions-helpers.ts for
+// shared setup, and definitions-inversions.test.ts / definitions-rest.test.ts for the rest of
+// the differential.
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
-import { ComputeEngine } from "@cortex-js/compute-engine";
 import { checkImplementations } from "@enumeratio/entry";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/entries.ts";
-import { DEFINITIONS, PRIMITIVE } from "../src/definitions.ts";
-import { declareStats } from "../src/stats.ts";
+import { ce, DEFINITIONS, evaluate, permutations, PRIMITIVE } from "./definitions-helpers.ts";
 
-const ce = new ComputeEngine();
-declareStats(ce);
 const repoRoot = resolve(import.meta.dirname, "../../..");
-
-/** Every permutation of 1..n, as MathJSON lists. */
-function permutations(n: number): number[][] {
-  if (n === 0) return [[]];
-  const out: number[][] = [];
-  for (const rest of permutations(n - 1))
-    for (let i = 0; i <= rest.length; i++) out.push([...rest.slice(0, i), n, ...rest.slice(i)]);
-  return out;
-}
-
-const evaluate = (expr: unknown, p: number[]): number =>
-  ce
-    .box(expr as Parameters<ComputeEngine["box"]>[0])
-    .subs({ _p: ce.box(["List", ...p]) })
-    .evaluate().re;
 
 test("every declared statistic either reduces or is on the frontier", () => {
   // The rule that keeps the frontier honest: nothing is silently irreducible.
@@ -36,7 +21,9 @@ test("every declared statistic either reduces or is on the frontier", () => {
 // reason to write one down — and the reason a second implementation here cannot rot.
 // Each of these evaluates the definition over every permutation of 1..6 — seconds of work
 // under a parallel sweep, so the 5s default would be an arbitrary cliff.
-for (const [head, definition] of Object.entries(DEFINITIONS)) {
+const HEADS = ["Descents", "Records", "Excedances"] as const;
+for (const head of HEADS) {
+  const definition = DEFINITIONS[head];
   test(`${head}: the definition agrees with the implementation`, { timeout: 60_000 }, () => {
     for (let n = 0; n <= 6; n++) {
       for (const p of permutations(n)) {

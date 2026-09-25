@@ -7,12 +7,17 @@ import type { ComputeEngine } from "@cortex-js/compute-engine";
 import type { LatexDictionaryEntry } from "@cortex-js/compute-engine/latex-syntax";
 import { CONVENTIONAL_LATEX } from "./conventional-latex.ts";
 import { NOTATIO_LATEX } from "./latex.ts";
+import { TRADITIONAL_LATEX } from "./traditional.ts";
 
 let engine: ComputeEngine | undefined;
 let enginePromise: Promise<ComputeEngine> | undefined;
 
 const configurators: ((ce: ComputeEngine) => void)[] = [];
-const latexEntries: Partial<LatexDictionaryEntry>[] = [...NOTATIO_LATEX, ...CONVENTIONAL_LATEX];
+const latexEntries: Partial<LatexDictionaryEntry>[] = [
+  ...NOTATIO_LATEX,
+  ...CONVENTIONAL_LATEX,
+  ...TRADITIONAL_LATEX,
+];
 
 /**
  * Contribute LaTeX dictionary entries -- a library's notation, parsed and serialised --

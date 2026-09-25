@@ -11,8 +11,9 @@
 //     Im(s) is large, because each term carries exp(Im(s)·arg z) and f32 loses the
 //     small-vs-huge cancellation. Use the CPU/mpmath path for real accuracy.
 //   • Fewer Euler–Maclaurin pairs (8) — later pairs fall below f32 epsilon anyway.
-//   • Left of Re(s) = 0 at a small positive integer a, `hurwitz` reflects as the CPU does;
-//     at any other a there the direct sum still cancels, and far worse in f32.
+//   • Left of Re(s) = 0 `hurwitz` takes the CPU's Taylor series in a over reflected Riemann
+//     zetas, stopping at f32 epsilon; off the real axis (|Im a| past ~½) the direct sum
+//     still cancels there, and far worse in f32.
 //   • WGSL gotchas learned here: `target` is a reserved word; a dynamically indexed
 //     array must be a function `var`, not a module `const`.
 //
@@ -42,17 +43,57 @@ fn ccos(z: vec2f) -> vec2f { return vec2f(cos(z.x) * cosh(z.y), -sin(z.x) * sinh
 fn csinh(z: vec2f) -> vec2f { return vec2f(sinh(z.x) * cos(z.y), cosh(z.x) * sin(z.y)); }
 fn ccosh(z: vec2f) -> vec2f { return vec2f(cosh(z.x) * cos(z.y), sinh(z.x) * sin(z.y)); }
 
-// ζ(s, a). Euler–Maclaurin, except left of Re(s) = 0 at a small positive integer a, where
-// its direct terms cancel catastrophically: there ζ(s, m) = ζ(s) − Σ_{k<m} k^(−s), with ζ(s)
-// from the functional equation. Mirrors hurwitzZeta in hurwitz-zeta.ts. (n+a)=0 terms are
-// dropped (Wolfram HurwitzZeta).
+// ζ(s, a). Euler–Maclaurin, except left of Re(s) = 0 near the real axis short of where its
+// direct terms end, which there cancel catastrophically: a shifts by an integer to 1 + h and
+// ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k), with ζ(s + k) from the functional equation left of
+// the strip. Mirrors hurwitzZeta in hurwitz-zeta.ts. (n+a)=0 terms are dropped (Wolfram
+// HurwitzZeta).
 fn hurwitz(s: vec2f, a: vec2f) -> vec2f {
-  if (s.x >= 0.0 || a.y != 0.0 || a.x < 1.0 || a.x > 32.0 || fract(a.x) != 0.0) {
-    return hurwitzEM(s, a);
+  let m = floor(a.x - 0.5);
+  let h = vec2f(a.x - m - 1.0, a.y);
+  if (s.x >= 0.0 || a.x >= 4.0 * emEdge(s) || abs(m) > 96.0 || length(h) > 0.75) { return hurwitzEM(s, a); }
+  var z = zetaNearOne(s, h);
+  for (var j = 0; j < i32(abs(m)); j = j + 1) {
+    if (m > 0.0) {
+      z = z - cpow(vec2f(h.x + 1.0 + f32(j), a.y), -s);
+    } else {
+      let b = vec2f(a.x + f32(j), a.y);
+      if (!(b.x == 0.0 && b.y == 0.0)) { z = z + cpow(b, -s); }
+    }
   }
-  var z = reflectedZeta(s);
-  for (var k = 1; k < i32(a.x); k = k + 1) { z = z - cpow(vec2f(f32(k), 0.0), -s); }
   return z;
+}
+
+fn emEdge(s: vec2f) -> f32 { return max(10.0, ceil(abs(s.x) + abs(s.y)) + 5.0); }
+
+// ζ(s, 1 + h) = Σₖ C(−s, k) hᵏ ζ(s + k), |h| < 1; see hurwitzZeta in hurwitz-zeta.ts.
+fn zetaNearOne(s: vec2f, h: vec2f) -> vec2f {
+  var sum = riemannZeta(s);
+  var c = vec2f(1.0, 0.0);
+  var hk = vec2f(1.0, 0.0);
+  var largest = length(sum);
+  var small = 0;
+  for (var k = 1; k < 96; k = k + 1) {
+    hk = cmul(hk, h);
+    if (hk.x == 0.0 && hk.y == 0.0) { break; }
+    let f = vec2f(-s.x - f32(k) + 1.0, -s.y);
+    // s = 1 − k, an integer: C(−s, k)·ζ(s + k) → −C(−s, k−1)/k, and the series ends.
+    if (f.x == 0.0 && f.y == 0.0) { return sum - cmul(c, hk) / f32(k); }
+    c = cmul(c, f) / f32(k);
+    let t = cmul(cmul(c, hk), riemannZeta(vec2f(s.x + f32(k), s.y)));
+    sum = sum + t;
+    largest = max(largest, length(t));
+    if (length(t) <= 1e-8 * largest) {
+      small = small + 1;
+      if (small == 2) { break; }
+    } else { small = 0; }
+  }
+  return sum;
+}
+
+fn riemannZeta(s: vec2f) -> vec2f {
+  if (s.x < 0.0) { return reflectedZeta(s); }
+  return hurwitzEM(s, vec2f(1.0, 0.0));
 }
 
 // ζ(s) = 2ˢ πˢ⁻¹ sin(πs/2) Γ(1−s) ζ(1−s) for Re(s) < 0, the factors but ζ(1−s) summed as logs.
@@ -90,8 +131,7 @@ fn hurwitzEM(s: vec2f, a: vec2f) -> vec2f {
   var em = array<f32, 9>(
     0.0, 0.08333333, -0.0013888889, 0.000033068783, -0.00000082671958,
     0.000000020876757, -0.00000000052841901, 0.000000000013382537, -0.00000000000033896803);
-  let tgt = max(10.0, ceil(abs(s.x) + abs(s.y)) + 5.0);
-  let N = i32(clamp(ceil(tgt - a.x), 6.0, 96.0));
+  let N = i32(clamp(ceil(emEdge(s) - a.x), 6.0, 96.0));
   let negS = -s;
   var sum = vec2f(0.0);
   for (var k = 0; k < N; k = k + 1) {

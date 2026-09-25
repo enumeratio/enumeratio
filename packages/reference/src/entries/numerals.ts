@@ -41,7 +41,8 @@ export const numerals: readonly ReferenceEntry[] = [
       "In a fixed base the sign of n is discarded, so negative integers give the same digits as their absolute value.",
       "IntegerDigits(0) is $\\{0\\}$ -- there's always at least one digit.",
       "The 3-argument form keeps only the len least-significant digits, truncating or zero-padding as needed.",
-      "Systems: `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`",
+      "Systems: `PositionalNumerals(b)`, `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `Radix`, `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`",
+      "`PositionalNumerals(b)` is ordinary base-$b$ notation, $b\\ge2$ — the same digits an integer base already gives, wrapped as a system value so it can stand wherever the others do (`NumeralSystemShape`, a constant-radix `MixedRadixNumerals` comparison)",
       "`OstrowskiNumerals([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf",
       "`BalancedNumerals` and `NegativeNumerals` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead",
       "The factoradic digits of $n$ are the Lehmer code of the $n$-th permutation, so padding to the permutation's size makes the two line up",
@@ -76,9 +77,14 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["IntegerDigits", ["List", 6, 7, 2], 2],
         expected: ["List", ["List", 1, 1, 0], ["List", 1, 1, 1], ["List", 1, 0]],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+      },
+      {
+        expr: ["IntegerDigits", 2147, ["PositionalNumerals", 2]],
+        expected: ["List", 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+        caption: "ordinary base 2, as a system value — same digits as the native 2-argument form",
+        category: "Scope",
       },
       {
         expr: ["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]],
@@ -155,6 +161,11 @@ export const numerals: readonly ReferenceEntry[] = [
         description: "integer formed from a digit list in base 10.",
       },
       {
+        call: "FromDigits(string, base?)",
+        description: "integer formed from a digit string, 0-9 then a-z.",
+        library: "enumeratio-numerals",
+      },
+      {
         call: "FromDigits([d1, d2, …], base)",
         description: "integer formed from a digit list in the given base.",
       },
@@ -205,9 +216,14 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["FromDigits", "'1923'"],
         expected: 1923,
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine's FromDigits only takes a list of digits",
+        caption: "The digits can be given as a string, 0-9 then a-z",
+      },
+      {
+        expr: ["FromDigits", L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1), ["PositionalNumerals", 2]],
+        expected: 2147,
+        caption: "ordinary base 2 as a system value",
+        category: "Scope",
       },
       {
         expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadixNumerals", L(24, 60, 60)]],
@@ -237,7 +253,7 @@ export const numerals: readonly ReferenceEntry[] = [
   {
     name: "IntegerString",
     domain: DOMAIN,
-    signature: "IntegerString(n, base?)",
+    signature: "IntegerString(n, base?, length?)",
     summary: "The string representation of n in the given base (default 10).",
     signatures: [
       { call: "IntegerString(n)", description: "string form of $n$ in base 10." },
@@ -245,11 +261,17 @@ export const numerals: readonly ReferenceEntry[] = [
         call: "IntegerString(n, base)",
         description: "string form of $n$ in the given base, up to base 36.",
       },
+      {
+        call: "IntegerString(n, base, length)",
+        description:
+          "padded with leading zeros to exactly `length` digits, or cut to the last `length`.",
+        library: "enumeratio-numerals",
+      },
     ],
     details: [
       "Bases above 10 use letters a-z for digit values beyond 9, up to base 36.",
       "compute-engine keeps a leading minus sign for negative n",
-      "compute-engine only supports the 2-argument form.",
+      "A third argument pads with leading zeros to that length, or keeps only the last that many digits; with it, a negative n is left unevaluated (Wolfram drops the sign, compute-engine keeps it).",
       "compute-engine's second argument is always a numeric base.",
     ],
     examples: [
@@ -275,9 +297,9 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         expr: ["IntegerString", 5, 2, 8],
         expected: "'00000101'",
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine only supports the 2-argument form",
+        caption:
+          "A third argument pads with leading zeros to that length (or keeps only the last that many digits)",
       },
     ],
     seeAlso: ["IntegerDigits"],
@@ -330,9 +352,8 @@ export const numerals: readonly ReferenceEntry[] = [
           ["List", 0, 1, 1, 0, 0, 0, 0, 0, 0, 0],
           ["List", 0, 0, 0, 1, 1, 0, 0, 0, 0, 0],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "compute-engine does not",
+        caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
     ],
     seeAlso: ["IntegerDigits", "DigitSum"],
@@ -422,6 +443,17 @@ export const numerals: readonly ReferenceEntry[] = [
           ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
           ["KeyValuePair", { str: "Rule" }, "'no two adjacent ones'"],
         ],
+        category: "Scope",
+      },
+      {
+        expr: ["NumeralSystemShape", ["PositionalNumerals", 2]],
+        expected: [
+          "Dictionary",
+          ["KeyValuePair", { str: "Bijective" }, "True"],
+          ["KeyValuePair", { str: "Integers" }, "NonNegativeIntegers"],
+          ["KeyValuePair", { str: "Digits" }, ["Range", 0, 1]],
+        ],
+        caption: "ordinary base 2, in the same shape every other system reports",
         category: "Scope",
       },
       {

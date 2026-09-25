@@ -73,7 +73,8 @@ registerFormat({
   mimeTypes: ["application/x-tex", "text/x-tex"],
   extensions: ["tex"],
   binary: false,
-  encode: (v) => portableTeX(asExpr(v).latex),
+  // TeXForm is the TeX of TraditionalForm; heads with no traditional notation are unchanged.
+  encode: (v) => portableTeX(asExpr(v).toLatex({ traditional: true })),
   decode: (d, o) => engine(o).parse(text(d)).json,
 });
 

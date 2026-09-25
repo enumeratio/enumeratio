@@ -1377,6 +1377,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "4d1f6b",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "4d2c10",
     heads: ["CarlsonRD"],
     verdict: "agree",
@@ -1888,6 +1894,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 1,
   },
   {
+    entry: "69348a",
+    heads: ["Conjugate", "Zeta"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "699c83",
     heads: ["Ln"],
     verdict: "agree",
@@ -1942,6 +1954,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "6c3523",
+    heads: ["HurwitzZeta", "Sum", "Zeta"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "6c3ba9",
     heads: ["Cos", "Sin"],
     verdict: "agree",
@@ -1986,6 +2004,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
   {
     entry: "6dda7a",
     heads: ["CarlsonRD"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
+    entry: "6e69fc",
+    heads: ["HurwitzZeta", "Sum", "Zeta"],
     verdict: "agree",
     samples: 3,
   },
@@ -2420,6 +2444,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["CarlsonRF"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "8bbb6f",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "8be46c",
@@ -3088,10 +3118,22 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "af23f7",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "af512f",
     heads: ["LCM"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "af7d3d",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "afb22a",
@@ -3224,6 +3266,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["IncompleteEllipticE"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "b721b4",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "b760d1",
@@ -3494,6 +3542,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["Arctan"],
     verdict: "agree",
     samples: 1,
+  },
+  {
+    entry: "c6d6e2",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
   },
   {
     entry: "c70178",
@@ -4282,6 +4336,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "fc6fe0",
+    heads: ["HurwitzZeta", "Zeta"],
+    verdict: "agree",
+    samples: 3,
+  },
+  {
     entry: "fd732d",
     heads: ["Cosh", "Fibonacci", "IsEven", "IsOdd", "Ln", "Sinh"],
     verdict: "agree",
@@ -4590,11 +4650,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Zeta",
-    identities: 20,
-    declared: true,
-  },
-  {
     head: "Sinc",
     identities: 19,
     declared: true,
@@ -4650,11 +4705,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "HurwitzZeta",
-    identities: 11,
-    declared: true,
-  },
-  {
     head: "Abs",
     identities: 10,
     declared: true,
@@ -4666,6 +4716,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Sign",
+    identities: 10,
+    declared: true,
+  },
+  {
+    head: "Zeta",
     identities: 10,
     declared: true,
   },
@@ -4715,11 +4770,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Sum",
-    identities: 6,
-    declared: true,
-  },
-  {
     head: "CarlsonRD",
     identities: 5,
     declared: true,
@@ -4731,11 +4781,6 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "ChebyshevU",
-    identities: 5,
-    declared: true,
-  },
-  {
-    head: "Conjugate",
     identities: 5,
     declared: true,
   },
@@ -4765,6 +4810,11 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
+    head: "Conjugate",
+    identities: 4,
+    declared: true,
+  },
+  {
     head: "Gamma",
     identities: 4,
     declared: true,
@@ -4786,6 +4836,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "ModularLambda",
+    identities: 4,
+    declared: true,
+  },
+  {
+    head: "Sum",
     identities: 4,
     declared: true,
   },
@@ -4866,6 +4921,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "GCD",
+    identities: 2,
+    declared: true,
+  },
+  {
+    head: "HurwitzZeta",
     identities: 2,
     declared: true,
   },

@@ -36,6 +36,14 @@ const LOSSY = new Set([
   "IndexOf",
   "DigitSum",
   "Degrees",
+  // Wolfram has no LegendreSymbol; it lowers to JacobiSymbol (see to-wolfram.ts).
+  "LegendreSymbol",
+  // Range mismatch with Wolfram's ArcCot forces a Subtract/ArcTan expansion, one-way.
+  "Arccot",
+  // LogGamma is also what GammaLn lowers to, so the reverse map only recovers LogGamma.
+  "LogGamma",
+  // PositionalNumerals(b) lowers to the bare base b, a system value with no head to reverse.
+  "PositionalNumerals",
 ]);
 
 /** The head of the innermost call that came back different — the one whose lowering lost. */

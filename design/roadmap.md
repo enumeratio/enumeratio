@@ -6,7 +6,7 @@ lives in code or generated data, so it cannot say something the repo has stopped
 
 ## 1. The frontiers — ranked, generated, and honest about why
 
-Seven lists, all committed, all regenerable. Each says what we do not do and, where the
+Eight lists, all committed, all regenerable. Each says what we do not do and, where the
 answer is interesting, why not.
 
 | list                                                       | what it holds                                                                                                      |
@@ -18,6 +18,7 @@ answer is interesting, why not.
 | `reference/src/fungrim-verified-data.ts` `fungrimFrontier` | heads whose Fungrim identities our engine cannot evaluate, ranked by how many identities each holds up             |
 | `census/src/head-map-audit-data.ts` `HEAD_MAP_AUDIT`       | the `HarmonicNumber` shape, generalized: every mapped head the engine doesn't declare or doesn't actually evaluate |
 | `census/src/rename-queue.ts` `RENAME_QUEUE`                | heads still declared under a spelling we have decided against, with what blocks each                               |
+| `reference/src/entries/*.ts` `aspirational: true`          | examples we document but don't yet produce ("not yet implemented"), triaged in issue #92                           |
 
 The Wolfram frontier is the one to open first when the question is "what should this system
 be able to do that it can't". It is derived from ~10,000 documentation examples, so it is
@@ -93,6 +94,13 @@ Ideas with a shape but no plan, recorded where they came up rather than collecte
 - **Run our own test suites under aestimatio** — a notatio/aestimatio evaluation process,
   per-test `TimeConstraint`/`MemoryConstraint`, the way the oracle scans are already capped
   today (see design/speculative/aestimatio.md).
+- **A profiler job in CI** — an advisory nightly sweep, like `quickcheck.yml`. It runs each
+  package's suite with vitest's JSON reporter and records per-test and per-file durations plus
+  package wall time, keyed by commit, then files a rolling issue when a test drifts well past its
+  trailing median. The slowest few files also get a `--cpu-prof` capture as an artifact. The
+  exhaustive suites are CPU-bound and hosted runners vary about 2× from run to run, so compare
+  medians or ratios within a run, never single wall-clock numbers. Where the history lives (an
+  artifact, a data branch, or the docs site) is still open.
 
 ## 5. What this file is not
 

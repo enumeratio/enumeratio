@@ -9,12 +9,14 @@ import { toWolfram } from "@enumeratio/wolfram";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import "./notatio-code.ts";
+import { WorkerUnavailableError } from "./notatio-dynamic-module.ts";
 import { loadEngine, loadMarkup } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
 import { visualMarkup } from "./visual.ts";
 import {
   boundName,
   collectErrors,
+  debug,
   deepEqual,
   elideResult,
   type Environment,
@@ -92,6 +94,11 @@ function plotOf(engine: ComputeEngine, raw: BoxedExpression): PlotInfo | undefin
     return undefined;
   }
 }
+// `localStorage["notatio:debug"] = "out"` -- see @enumeratio/notatio's debug.ts. Used to
+// make an `Evaluator -> "Worker"` cell's routing visible: a Worker-mode cell that never
+// logs `worker-evaluate` is silently running locally instead (see the guard right after
+// the worker branch, below).
+const log = debug("out");
 
 type Format = "latex" | "mathjson" | "notatio";
 type Status = "" | "ok" | "mismatch" | "error";
@@ -350,6 +357,7 @@ export class NotatioOut extends LitElement {
     _markup: { state: true },
     _visual: { state: true },
     _traditional: { state: true },
+    _tex: { state: true },
     _matrix: { state: true },
     _canMatrix: { state: true },
     _latex: { state: true },
@@ -393,6 +401,8 @@ export class NotatioOut extends LitElement {
    */
   declare _visual: string;
   declare _traditional: string;
+  /** The TeXForm source: traditional notation, in commands a LaTeX document knows. */
+  declare _tex: string;
   declare _matrix: string;
   declare _canMatrix: boolean;
   declare _latex: string;
@@ -434,6 +444,7 @@ export class NotatioOut extends LitElement {
     this._markup = "";
     this._visual = "";
     this._traditional = "";
+    this._tex = "";
     this._matrix = "";
     this._canMatrix = false;
     this._latex = "";
@@ -531,21 +542,46 @@ export class NotatioOut extends LitElement {
     // touch the local scope. Messages (`collectMessages`) don't cross the worker
     // boundary yet -- deferred, see this package's PR description.
     if (transcript && this.evaluate && host?.evaluatorKind === "Worker" && host.evaluateRemote) {
+      log("worker-evaluate", this.value);
       const input =
         this.format === "latex" ? source : toInputForm(this.#json(engine) as MathJsonExpression);
       const boxed = transcript.run(() => parseText());
       this.#abort = new AbortController();
-      let resultJson: unknown;
       try {
-        ({ value: resultJson } = await host.evaluateRemote(boxed.json, {
-          signal: this.#abort.signal,
-        }));
-      } finally {
-        this.#abort = undefined;
+        let resultJson: unknown;
+        try {
+          ({ value: resultJson } = await host.evaluateRemote(boxed.json, {
+            signal: this.#abort.signal,
+          }));
+        } finally {
+          this.#abort = undefined;
+        }
+        const value = transcript.run(() => engine.box(resultJson as never));
+        this.#historyN = transcript.record(input, boxed, value);
+        return { latex: latexOf(engine, value), json: value.json, messages: [] };
+      } catch (err) {
+        // No worker could ever be started for this session (not a user "stop" --
+        // that resolves normally with `$Aborted` rather than throwing) --
+        // `host.evaluatorKind` has already flipped to `"Local"` for every cell after
+        // this one; fall through to the LOCAL path below for this one too, rather
+        // than showing `$Aborted` for a failure the reader never asked for.
+        if (!(err instanceof WorkerUnavailableError)) throw err;
+        log("worker-evaluate: no worker could start -- evaluating this cell locally", err);
       }
-      const value = transcript.run(() => engine.box(resultJson as never));
-      this.#historyN = transcript.record(input, boxed, value);
-      return { latex: latexOf(engine, value), json: value.json, messages: [] };
+    }
+    // A host in Worker mode but missing `evaluateRemote` would otherwise fall through to
+    // the LOCAL evaluation below without a trace -- exactly the failure mode that let
+    // `Notebook(cells, Evaluator -> Worker)` silently run every cell on the page's own
+    // thread (a `Notebook`-signature bug, since fixed in `@enumeratio/formats`; see
+    // `packages/notatio/tests/dynamic-module-evaluator.test.ts`). `evaluateRemote` is
+    // always defined on `NotatioDynamicModule`, so this only fires for a non-conforming
+    // host (e.g. a test double) -- loud on purpose.
+    if (transcript && this.evaluate && host?.evaluatorKind === "Worker") {
+      log("worker-evaluate: host has no evaluateRemote -- falling back to LOCAL", host);
+      console.error(
+        'notatio-out: Evaluator -> "Worker" host has no evaluateRemote(); evaluating locally instead',
+        host,
+      );
     }
 
     let parsed: BoxedExpression | undefined;
@@ -758,12 +794,16 @@ export class NotatioOut extends LitElement {
       this._input = json === undefined ? "" : toInputForm(json as MathJsonExpression);
       if (json === undefined) {
         this._traditional = this._markup;
+        this._tex = portableTeX(latex);
         this._matrix = this._markup;
         this._canMatrix = false;
       } else {
         const engine = await loadEngine();
         if (run !== this.#runs) return;
-        this._traditional = convert(toTraditionalLatex(json, engine));
+        const traditional = toTraditionalLatex(json, engine);
+        this._traditional = convert(traditional);
+        // TeXForm is the TeX of TraditionalForm, as in Wolfram.
+        this._tex = portableTeX(traditional);
         // MatrixForm: lay a List value out as a matrix via compute-engine's
         // Matrix head (which serialises to \begin{pmatrix}…), then typeset it.
         // Only a List has a matrix form; anything else falls back to standard.
@@ -784,6 +824,7 @@ export class NotatioOut extends LitElement {
       this._markup = "";
       this._visual = "";
       this._latex = "";
+      this._tex = "";
       this._json = "";
       this._messages = [];
       this._status = "error";
@@ -1224,7 +1265,7 @@ export class NotatioOut extends LitElement {
       case "full":
         return this.#code(this._json, FORM_LANG.full!);
       case "tex":
-        return this.#code(portableTeX(this._latex), FORM_LANG.tex!);
+        return this.#code(this._tex, FORM_LANG.tex!);
       case "asciimath":
         return this.#code(this._ascii, FORM_LANG.asciimath!);
       case "mathml":

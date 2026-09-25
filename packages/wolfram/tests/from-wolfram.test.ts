@@ -23,6 +23,15 @@ test("symbols, with the reverse of the SYMBOLS map", () => {
   expect(fromWolfram("Indeterminate")).toBe("NaN");
 });
 
+test("True/False round-trip as MathJSON symbol strings, not JS booleans", () => {
+  expect(fromWolfram("True")).toBe("True");
+  expect(fromWolfram("False")).toBe("False");
+  // An option value, as this codebase writes truth values elsewhere (see
+  // number-theory's GaussianIntegers option, e.g. IsPrime(5, GaussianIntegers -> True)).
+  const expr: MathJson = ["IsPrime", 5, ["KeyValuePair", "GaussianIntegers", "True"]];
+  expect(fromWolfram(toWolfram(expr))).toEqual(expr);
+});
+
 test("FullForm's DirectedInfinity spellings", () => {
   expect(fromWolfram("DirectedInfinity[1]")).toBe("PositiveInfinity");
   expect(fromWolfram("DirectedInfinity[-1]")).toBe("NegativeInfinity");
@@ -50,10 +59,13 @@ test("Head[args], with the reverse of the HEADS map", () => {
     "Determinant",
     ["List", ["List", 1, 2], ["List", 3, 4]],
   ]);
+  // EvenQ used to fall through unchanged here; now that IsEven: "EvenQ" is in HEADS, a
+  // head passed as a value reverses to its compute-engine name too (see the ArcCsc etc.
+  // and IsOdd/IsEven tests below).
   expect(fromWolfram("Select[List[1, 2, 3], EvenQ]")).toEqual([
     "Filter",
     ["List", 1, 2, 3],
-    "EvenQ",
+    "IsEven",
   ]);
   expect(fromWolfram("Dimensions[List[1, 2]]")).toEqual(["Shape", ["List", 1, 2]]);
   expect(fromWolfram("ConstantArray[5, 3]")).toEqual(["Repeat", 5, 3]);
@@ -221,4 +233,37 @@ test("iterator and interval shapes land in compute-engine's", () => {
     "Integrate[f[x], List[x, 0, 1]]",
   );
   expect(toWolfram(["Interval", 0, 1])).toBe("Interval[List[0, 1]]");
+});
+
+test("ArcCsc/ArcSec/ArcCoth/ArcCsch/ArcSech rename back to Arccsc/Arcsec/Arcoth/Arcsch/Arsech", () => {
+  expect(fromWolfram("ArcCsc[2]")).toEqual(["Arccsc", 2]);
+  expect(fromWolfram("ArcSec[2]")).toEqual(["Arcsec", 2]);
+  expect(fromWolfram("ArcCoth[2]")).toEqual(["Arcoth", 2]);
+  expect(fromWolfram("ArcCsch[2]")).toEqual(["Arcsch", 2]);
+  expect(fromWolfram("ArcSech[Rational[1, 2]]")).toEqual(["Arsech", ["Rational", 1, 2]]);
+});
+
+test("ArcCot does NOT rename back to Arccot — the principal ranges disagree, so it passes through", () => {
+  expect(fromWolfram("ArcCot[-1]")).toEqual(["ArcCot", -1]);
+});
+
+test("OddQ/EvenQ rename back to IsOdd/IsEven", () => {
+  expect(fromWolfram("OddQ[3]")).toEqual(["IsOdd", 3]);
+  expect(fromWolfram("EvenQ[4]")).toEqual(["IsEven", 4]);
+});
+
+test("MemberQ renames back to Contains, same argument order", () => {
+  expect(fromWolfram("MemberQ[List[1, 2, 3], 2]")).toEqual(["Contains", ["List", 1, 2, 3], 2]);
+});
+
+test("DeleteDuplicates renames back to Unique", () => {
+  expect(fromWolfram("DeleteDuplicates[List[1, 2, 2, 3]]")).toEqual([
+    "Unique",
+    ["List", 1, 2, 2, 3],
+  ]);
+});
+
+test("a bare Wolfram base in IntegerDigits/FromDigits stays bare, not rewrapped as PositionalNumerals", () => {
+  expect(fromWolfram("IntegerDigits[2147, 2]")).toEqual(["IntegerDigits", 2147, 2]);
+  expect(fromWolfram("FromDigits[List[1, 0, 1], 2]")).toEqual(["FromDigits", ["List", 1, 0, 1], 2]);
 });

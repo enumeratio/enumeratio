@@ -160,6 +160,19 @@ export const MAPPINGS: readonly Mapping[] = [
     note: "mpmath and the Julia libraries are numeric already; SymPy and Sage evaluate exactly unless asked.",
   },
   {
+    head: "N",
+    arity: 2,
+    emit: {
+      sympy: "N($1, 30)",
+      mpmath: "($1)",
+      sage: "N($1)",
+      julia: "($1)",
+      oscar: "($1)",
+      rust: "nf($1)",
+    },
+    note: "The digit count is dropped: lanes compare numbers to a relative tolerance, so the full-precision value is the better witness.",
+  },
+  {
     head: "Complex",
     arity: 2,
     emit: {
@@ -208,6 +221,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "lerchphi($1, $2, $3)",
       mpmath: "lerchphi($1, $2, $3)",
     },
+    note: "For a + k < 0, Wolfram sums ((a+k)²)^(−s/2), the generalized-zeta convention; mpmath, SymPy and ours take (a+k)^(−s), principal.",
   },
   {
     head: "PolyLog",

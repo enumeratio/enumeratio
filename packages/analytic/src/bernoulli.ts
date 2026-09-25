@@ -21,9 +21,6 @@ const normalize = ([n, d]: readonly [bigint, bigint]): Rat => {
   return [n / g, d / g];
 };
 
-const rAdd = (x: Rat, y: Rat): Rat => normalize([x[0] * y[1] + y[0] * x[1], x[1] * y[1]]);
-const rMul = (x: Rat, y: Rat): Rat => normalize([x[0] * y[0], x[1] * y[1]]);
-
 /** Binomial coefficient C(n, k) as a bigint. */
 const binom = (n: number, k: number): bigint => {
   if (k < 0 || k > n) return 0n;
@@ -37,18 +34,33 @@ const binom = (n: number, k: number): bigint => {
   return num / den;
 };
 
+// Tangent numbers T₁, T₂, … (1, 2, 16, 272, …), by Brent and Harvey's integer-only
+// recurrence. B₂ₖ = (−1)^{k−1} 2k Tₖ / (4ᵏ(4ᵏ − 1)), which is far cheaper than the
+// all-rational Bernoulli recurrence when the Euler–Maclaurin tail wants B₂₀₀ and beyond.
+let tangent: bigint[] = [];
+function tangentNumber(k: number): bigint {
+  if (k < tangent.length) return tangent[k];
+  const n = Math.max(k, 2 * (tangent.length - 1), 16);
+  const t: bigint[] = [0n, 1n];
+  for (let i = 2; i <= n; i++) t[i] = BigInt(i - 1) * t[i - 1];
+  for (let i = 2; i <= n; i++)
+    for (let j = i; j <= n; j++) t[j] = BigInt(j - i) * t[j - 1] + BigInt(j - i + 2) * t[j];
+  tangent = t;
+  return t[k];
+}
+
 const cache: Rat[] = [];
 
-/** Bernoulli number Bₘ as an exact reduced rational, via the standard recurrence. */
+/** Bernoulli number Bₘ as an exact reduced rational (B₁ = −1/2). */
 export function bernoulliRational(m: number): Rat {
   if (cache[m]) return cache[m];
   if (m === 0) return (cache[0] = [1n, 1n]);
-  // B_m = -1/(m+1) · Σ_{j=0}^{m-1} C(m+1, j) B_j
-  let sum: Rat = [0n, 1n];
-  for (let j = 0; j < m; j++) {
-    sum = rAdd(sum, rMul([binom(m + 1, j), 1n], bernoulliRational(j)));
-  }
-  return (cache[m] = normalize([-sum[0], sum[1] * BigInt(m + 1)]));
+  if (m === 1) return (cache[1] = [-1n, 2n]);
+  if (m % 2 === 1) return (cache[m] = [0n, 1n]);
+  const k = m / 2;
+  const four = 4n ** BigInt(k);
+  const num = BigInt(m) * tangentNumber(k);
+  return (cache[m] = normalize([k % 2 === 1 ? num : -num, four * (four - 1n)]));
 }
 
 /** Bernoulli number Bₘ as a double (for the Euler–Maclaurin coefficients). */
