@@ -25,7 +25,7 @@
     "check": "vp check"
   },
   "dependencies": {
-    "@cortex-js/compute-engine": "^0.128.0",
+    "@cortex-js/compute-engine": "^0.134.0",
     "@enumeratio/collections": "workspace:*",
     "@enumeratio/domains": "workspace:*",
     "@enumeratio/formats": "workspace:*",

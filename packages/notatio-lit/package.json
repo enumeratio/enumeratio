@@ -34,13 +34,13 @@
     "mathlive": "^0.110.0"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0",
+    "@cortex-js/compute-engine": "^0.134.0",
     "@webgpu/types": "^0.1.60",
     "typescript": "^7.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0"
+    "@cortex-js/compute-engine": "^0.134.0"
   }
 }

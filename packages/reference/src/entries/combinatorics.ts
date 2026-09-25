@@ -394,7 +394,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Factorial", 20],
-        expected: 2432902008176640000,
+        expected: { num: "2432902008176640000" },
         category: "Neat examples",
         caption: "Factorials grow fast: $20!$ already exceeds $2 \\times 10^{18}$",
       },

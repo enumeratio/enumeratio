@@ -34,7 +34,7 @@
     "@enumeratio/polytope": "workspace:*"
   },
   "devDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0",
+    "@cortex-js/compute-engine": "^0.134.0",
     "@enumeratio/braid": "workspace:*",
     "@enumeratio/reference": "workspace:*",
     "@enumeratio/wolfram": "workspace:*",
@@ -48,7 +48,7 @@
     "vue": "^3.5.42"
   },
   "peerDependencies": {
-    "@cortex-js/compute-engine": "^0.128.0",
+    "@cortex-js/compute-engine": "^0.134.0",
     "react": ">=18",
     "vue": "^3.5.0"
   },

@@ -119,10 +119,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Abs", ["Subtract", ["Sqrt", 2], 2]],
         expected: ["Add", 2, ["Negate", ["Sqrt", 2]]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Should decide the sign of an exact numeric expression and give $2-\\sqrt{2}$; not yet, it stays unevaluated",
+        caption: "Decides the sign of an exact numeric expression and gives $2-\\sqrt{2}$",
       },
       {
         expr: [
@@ -222,10 +220,10 @@ export const arithmetic: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Sign", ["Complex", 1, 1]],
-        expected: ["Complex", { num: "0.7071067811865475244008444" }, 0.7071067811865476],
+        expected: ["Complex", ["Divide", ["Sqrt", 2], 2], ["Divide", ["Sqrt", 2], 2]],
         category: "Scope",
-        caption: "An exact complex argument comes back numeric",
-        divergence: { wolfram: "Wolfram keeps it exact: $\\mathrm{Sign}[1+i] = (1+i)/\\sqrt{2}$." },
+        caption:
+          "An exact complex argument comes back exact: $\\mathrm{sign}(1+i) = (1+i)/\\sqrt{2}$",
       },
       {
         expr: [

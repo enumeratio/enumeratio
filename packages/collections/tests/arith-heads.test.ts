@@ -13,16 +13,15 @@ const run = (expr: unknown) => ce.box(expr as never).evaluate().json;
 test("Rationalize(x, 0) is the exact dyadic rational a double denotes", () => {
   for (const x of [0.1, 0.5, 2.5, -0.125, 1 / 3, Math.PI, 6.75]) {
     const json = run(["Rationalize", x, 0]);
-    let p: number;
-    let q: number;
-    if (Array.isArray(json) && json[0] === "Rational") {
-      [, p, q] = json as [string, number, number];
-    } else {
-      p = json as number;
-      q = 1;
-    }
-    expect(p / q).toBe(x);
-    expect((q & (q - 1)) === 0, `denominator ${q} should be a power of 2`).toBe(true);
+    // An integer past 2^53 serialises as {num: "…"}; read either form exactly.
+    const int = (j: unknown): bigint =>
+      BigInt(typeof j === "object" && j !== null ? (j as { num: string }).num : (j as number));
+    const [p, q] =
+      Array.isArray(json) && json[0] === "Rational"
+        ? [int(json[1]), int(json[2])]
+        : [int(json), 1n];
+    expect(Number(p) / Number(q)).toBe(x);
+    expect((q & (q - 1n)) === 0n, `denominator ${q} should be a power of 2`).toBe(true);
   }
 });
 

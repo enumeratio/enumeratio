@@ -575,11 +575,14 @@ above so it fails loudly when the catalog moves.
   has to be merged into a `LatexSyntax` at construction. That is §3.7 of upstreaming.md
   biting for real rather than in the abstract.
 
-- `prepare(ce, source, registry, install)` is §5.1 running: raw-parse, find candidates,
-  resolve, install, canonicalise. It takes LaTeX or MathJSON, and `install` may be async —
-  which is the whole point, since evaluation may not be. `rawParse` exists because the
-  public `ComputeEngine` type omits `canonical` from `parse`'s options even though the
-  implementation accepts it.
+- `prepare(ce, source, registry, install, parse?)` is §5.1 running: parse, find candidates,
+  resolve, install, box. It takes LaTeX or MathJSON, and `install` may be async — which is
+  the whole point, since evaluation may not be. Since compute-engine 0.131 an unknown name
+  applied to parentheses parses as an application, so the default parse stage is the
+  canonical one. The stage is pluggable: `rawParse` keeps the unresolved
+  `InvisibleOperator` reading for a front end that wants to decide application versus
+  product itself (e.g. keeping `a(b+c)` a product for names nobody claims), and the
+  candidate walk reads either tree.
 
 Registering all 280 collections declares nothing and costs one Map insert each — there is a
 test asserting exactly that. The lazy loop is tested end to end on a real catalog name:
