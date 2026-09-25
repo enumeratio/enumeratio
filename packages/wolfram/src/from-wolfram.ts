@@ -19,7 +19,7 @@ const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(
 /** Wolfram head → compute-engine head. Reverse of `HEADS`. Where two compute-engine
  * heads share a Wolfram spelling (`Log2`/`Lb` both → `Log2`, `List`/`Tuple`), the
  * first entry in `HEADS` wins, since object insertion order is preserved. */
-const REVERSE_HEADS: Record<string, string> = {};
+export const REVERSE_HEADS: Record<string, string> = {};
 for (const [ce, wl] of Object.entries(HEADS)) {
   if (!(wl in REVERSE_HEADS)) REVERSE_HEADS[wl] = ce;
 }
