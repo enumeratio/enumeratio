@@ -1,0 +1,36 @@
+selects-the-second-branch:
+  epsil:
+    in: Piecewise([[1, x < 0], [2, x >= 0]])
+    out: Piecewise([[1, x < 0], [2, 0 <= x]])
+  tex:
+    in: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, x\ge0\bigr\rbrack\bigr\rbrack)
+    out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, 0\le x\bigr\rbrack\bigr\rbrack)
+  fullform:
+    in: Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]]
+evaluated-at-a-concrete-point-below-zero:
+  epsil:
+    in: ReplaceAll(Piecewise([[1, x < 0], [2, x >= 0]]), Rule(x, -5))
+    out: "1"
+  tex:
+    in: \mathrm{ReplaceAll}(\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, x\ge0\bigr\rbrack\bigr\rbrack), \mathrm{Rule}(x, -5))
+    out: "1"
+  fullform:
+    in: ReplaceAll[Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]], Rule[x, -5]]
+evaluated-at-a-concrete-point-at-or-above-zero:
+  epsil:
+    in: ReplaceAll(Piecewise([[1, x < 0], [2, x >= 0]]), Rule(x, 5))
+    out: "2"
+  tex:
+    in: \mathrm{ReplaceAll}(\mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack1, x\lt0\bigr\rbrack, \bigl\lbrack2, x\ge0\bigr\rbrack\bigr\rbrack), \mathrm{Rule}(x, 5))
+    out: "2"
+  fullform:
+    in: ReplaceAll[Piecewise[List[List[1, Less[x, 0]], List[2, GreaterEqual[x, 0]]]], Rule[x, 5]]
+falls-through-to-the-explicit-default:
+  epsil:
+    in: Piecewise([[x ^ 2, x < 0]], 99)
+    out: Piecewise([[x ^ 2, x < 0]], 99)
+  tex:
+    in: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)
+    out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x^2, x\lt0\bigr\rbrack\bigr\rbrack, 99)
+  fullform:
+    in: Piecewise[List[List[Power[x, 2], Less[x, 0]]], 99]

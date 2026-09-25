@@ -1,0 +1,58 @@
+the-absolute-value-of-a-real-number:
+  epsil:
+    in: RealAbs(-2.5)
+    out: "2.5"
+  tex:
+    in: \mathrm{RealAbs}(-2.5)
+    out: "2.5"
+  fullform:
+    in: RealAbs[-2.5]
+  wolfram:
+    in: RealAbs[-2.5]
+realabs-neg-7-over-2:
+  epsil:
+    in: RealAbs(-7 / 2)
+    out: 7 / 2
+  tex:
+    in: \mathrm{RealAbs}(-\frac{7}{2})
+    out: \frac{7}{2}
+  fullform:
+    in: RealAbs[Rational[-7, 2]]
+  wolfram:
+    in: RealAbs[Rational[-7, 2]]
+threads-element-wise-over-a-list:
+  epsil:
+    in: RealAbs([-1, 2, -3])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{RealAbs}(\bigl\lbrack-1, 2, -3\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: RealAbs[List[-1, 2, -3]]
+  wolfram:
+    in: RealAbs[List[-1, 2, -3]]
+exact-numeric-arguments:
+  epsil:
+    in: RealAbs(-Pi)
+    out: Pi
+  tex:
+    in: \mathrm{RealAbs}(-\pi)
+    out: \pi
+  fullform:
+    in: RealAbs[Minus[Pi]]
+  wolfram:
+    in: RealAbs[Minus[Pi]]
+agrees-with-abs-on-the-reals:
+  epsil:
+    in: RealAbs(-5) == Abs(-5)
+    out: True
+  tex:
+    in: \mathrm{RealAbs}(-5)=\vert-5\vert
+    out: \top
+  traditional:
+    in: \mathrm{RealAbs}(-5)=\vert-5\vert
+    out: \mathrm{True}
+  fullform:
+    in: Equal[RealAbs[-5], Abs[-5]]
+  wolfram:
+    in: (RealAbs[-5] == Abs[-5])

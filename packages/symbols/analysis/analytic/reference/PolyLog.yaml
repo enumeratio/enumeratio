@@ -49,8 +49,6 @@ examples:
     expected: { num: "-1.46035450880958681289" }
     category: Applications
     caption: $\operatorname{Li}_{1/2}(1) = \zeta(1/2)$ — a non-integer order, from `@enumeratio/analytic`
-    divergence:
-      wolfram: "Li_{1/2}(1): compute-engine continues in s to ζ(1/2); Wolfram treats z = 1 as the branch point for s ≤ 1 and returns ComplexInfinity."
   - id: li-1-2-1-2-0-80612672-via-the-lerch-series
     expr: [PolyLog, 0.5, 0.5]
     expected: 0.8061267230428522
@@ -159,195 +157,195 @@ examples:
     expected: { num: "0.582240526465012505902656320160" }
     category: Scope
     caption: To 30 significant digits, past a double's reach
-  - hidden: true
+  - role: test
     id: n-polylog-2-0p5
     expr: [N, [PolyLog, 2, 0.5]]
     expected: 0.5822405264650125
-  - hidden: true
+  - role: test
     id: n-polylog-2-neg-0p5
     expr: [N, [PolyLog, 2, -0.5]]
     expected: -0.44841420692364636
-  - hidden: true
+  - role: test
     id: n-polylog-2-0p25
     expr: [N, [PolyLog, 2, 0.25]]
     expected: 0.2676526390827325
-  - hidden: true
+  - role: test
     id: n-polylog-2-0p9
     expr: [N, [PolyLog, 2, 0.9]]
     expected: 1.2997147230049588
-  - hidden: true
+  - role: test
     id: n-polylog-2-1-over-3
     expr: [N, [PolyLog, 2, [Rational, 1, 3]]]
     expected: 0.3662132299770634
-  - hidden: true
+  - role: test
     id: n-polylog-2-0p4-plus-0p3i
     expr: [N, [PolyLog, 2, [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.40777049929509657, 0.374503158223905]
-  - hidden: true
+  - role: test
     id: n-polylog-3-0p5
     expr: [N, [PolyLog, 3, 0.5]]
     expected: 0.5372131936080403
-  - hidden: true
+  - role: test
     id: n-polylog-3-neg-0p5
     expr: [N, [PolyLog, 3, -0.5]]
     expected: -0.47259784465889704
-  - hidden: true
+  - role: test
     id: n-polylog-3-0p25
     expr: [N, [PolyLog, 3, 0.25]]
     expected: 0.25846139579657323
-  - hidden: true
+  - role: test
     id: n-polylog-3-0p9
     expr: [N, [PolyLog, 3, 0.9]]
     expected: 1.0496589501864397
-  - hidden: true
+  - role: test
     id: n-polylog-3-1-over-3
     expr: [N, [PolyLog, 3, [Rational, 1, 3]]]
     expected: 0.34882786115484005
-  - hidden: true
+  - role: test
     id: n-polylog-3-0p4-plus-0p3i
     expr: [N, [PolyLog, 3, [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.40599530381987775, 0.33476183853388025]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-0p5
     expr: [N, [PolyLog, 0.5, 0.5]]
     expected: 0.8061267230428522
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-neg-0p5
     expr: [N, [PolyLog, 0.5, -0.5]]
     expected: -0.373752237980973
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-0p25
     expr: [N, [PolyLog, 0.5, 0.25]]
     expected: 0.3057349303992964
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-0p9
     expr: [N, [PolyLog, 0.5, 0.9]]
     expected: 4.021950427473364
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-1-over-3
     expr: [N, [PolyLog, 0.5, [Rational, 1, 3]]]
     expected: 0.44210883528067546
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-0p4-plus-0p3i
     expr: [N, [PolyLog, 0.5, [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.3799350192027693, 0.5445942552198528]
-  - hidden: true
+  - role: test
     id: n-polylog-1p5-0p5
     expr: [N, [PolyLog, 1.5, 0.5]]
     expected: 0.624837020819914
-  - hidden: true
+  - role: test
     id: n-polylog-1p5-neg-0p5
     expr: [N, [PolyLog, 1.5, -0.5]]
     expected: -0.42988732158057935
-  - hidden: true
+  - role: test
     id: n-polylog-1p5-0p25
     expr: [N, [PolyLog, 1.5, 0.25]]
     expected: 0.2757005086448229
-  - hidden: true
+  - role: test
     id: n-polylog-1p5-0p9
     expr: [N, [PolyLog, 1.5, 0.9]]
     expected: 1.614438528566339
-  - hidden: true
+  - role: test
     id: n-polylog-1p5-1-over-3
     expr: [N, [PolyLog, 1.5, [Rational, 1, 3]]]
     expected: 0.38178350786901616
-  - hidden: true
+  - role: test
     id: n-polylog-1p5-0p4-plus-0p3i
     expr: [N, [PolyLog, 1.5, [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.40619397959402637, 0.41007586834837495]
-  - hidden: true
+  - role: test
     id: n-polylog-2p5-0p5
     expr: [N, [PolyLog, 2.5, 0.5]]
     expected: 0.5549972787175124
-  - hidden: true
+  - role: test
     id: n-polylog-2p5-neg-0p5
     expr: [N, [PolyLog, 2.5, -0.5]]
     expected: -0.46229778219006346
-  - hidden: true
+  - role: test
     id: n-polylog-2p5-0p25
     expr: [N, [PolyLog, 2.5, 0.25]]
     expected: 0.2621937704285516
-  - hidden: true
+  - role: test
     id: n-polylog-2p5-0p9
     expr: [N, [PolyLog, 2.5, 0.9]]
     expected: 1.1390030252021563
-  - hidden: true
+  - role: test
     id: n-polylog-2p5-1-over-3
     expr: [N, [PolyLog, 2.5, [Rational, 1, 3]]]
     expected: 0.35583074003232074
-  - hidden: true
+  - role: test
     id: n-polylog-2p5-0p4-plus-0p3i
     expr: [N, [PolyLog, 2.5, [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.4072217113246216, 0.3507424837631956]
-  - hidden: true
+  - role: test
     id: n-polylog-neg-1-0p5
     expr: [N, [PolyLog, -1, 0.5]]
     expected: 2
-  - hidden: true
+  - role: test
     id: n-polylog-neg-1-neg-0p5
     expr: [N, [PolyLog, -1, -0.5]]
     expected: { num: "-0.222222222222222222222" }
-  - hidden: true
+  - role: test
     id: n-polylog-neg-1-0p25
     expr: [N, [PolyLog, -1, 0.25]]
     expected: { num: "0.444444444444444444445" }
-  - hidden: true
+  - role: test
     id: n-polylog-neg-1-0p9
     expr: [N, [PolyLog, -1, 0.9]]
     expected: 90
-  - hidden: true
+  - role: test
     id: n-polylog-neg-1-1-over-3
     expr: [N, [PolyLog, -1, [Rational, 1, 3]]]
     expected: { num: "0.74999999999999999999925" }
-  - hidden: true
+  - role: test
     id: n-polylog-neg-1-0p4-plus-0p3i
     expr: [N, [PolyLog, -1, [Complex, 0.4, 0.3]]]
     expected: [Complex, 1.9136e-16, 1.1111111111111114]
-  - hidden: true
+  - role: test
     id: n-polylog-2-plus-i-0p5
     expr: [N, [PolyLog, [Complex, 2, 1], 0.5]]
     expected: [Complex, 0.5548535453533205, -0.05804956179169715]
-  - hidden: true
+  - role: test
     id: n-polylog-2-plus-i-neg-0p5
     expr: [N, [PolyLog, [Complex, 2, 1], -0.5]]
     expected: [Complex, -0.4575315460755852, -0.03047101966980711]
-  - hidden: true
+  - role: test
     id: n-polylog-2-plus-i-0p25
     expr: [N, [PolyLog, [Complex, 2, 1], 0.25]]
     expected: [Complex, 0.26285018302723623, -0.011816971919302564]
-  - hidden: true
+  - role: test
     id: n-polylog-2-plus-i-0p9
     expr: [N, [PolyLog, [Complex, 2, 1], 0.9]]
     expected: [Complex, 1.073635898279169, -0.3065006217049299]
-  - hidden: true
+  - role: test
     id: n-polylog-2-plus-i-1-over-3
     expr: [N, [PolyLog, [Complex, 2, 1], [Rational, 1, 3]]]
     expected: [Complex, 0.3566945562007138, -0.022385462317962054]
-  - hidden: true
+  - role: test
     id: n-polylog-2-plus-i-0p4-plus-0p3i
     expr: [N, [PolyLog, [Complex, 2, 1], [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.4621400230577699, 0.35056059710105836]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-plus-neg-1-times-i-0p5
     expr: [N, [PolyLog, [Complex, 0.5, -1], 0.5]]
     expected: [Complex, 0.6700397970761983, 0.23301926975771328]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-plus-neg-1-times-i-neg-0p5
     expr: [N, [PolyLog, [Complex, 0.5, -1], -0.5]]
     expected: [Complex, -0.3913103161117429, 0.06975146663327912]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-plus-neg-1-times-i-0p25
     expr: [N, [PolyLog, [Complex, 0.5, -1], 0.25]]
     expected: [Complex, 0.2884064661247059, 0.03875347060829805]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-plus-neg-1-times-i-0p9
     expr: [N, [PolyLog, [Complex, 0.5, -1], 0.9]]
     expected: [Complex, 0.580361076526937, 2.242263748000801]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-plus-neg-1-times-i-1-over-3
     expr: [N, [PolyLog, [Complex, 0.5, -1], [Rational, 1, 3]]]
     expected: [Complex, 0.4043299322379448, 0.07792572456064256]
-  - hidden: true
+  - role: test
     id: n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i
     expr: [N, [PolyLog, [Complex, 0.5, -1], [Complex, 0.4, 0.3]]]
     expected: [Complex, 0.24654523479288867, 0.4321567364244429]

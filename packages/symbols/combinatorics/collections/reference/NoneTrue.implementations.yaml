@@ -1,0 +1,56 @@
+nonetrue-list-1-3-5-iseven:
+  epsil:
+    in: NoneTrue([1, 3, 5], IsEven)
+    out: True
+  tex:
+    in: \mathrm{NoneTrue}(\bigl\lbrack1, 3, 5\bigr\rbrack, \mathrm{IsEven})
+    out: \top
+  traditional:
+    in: \mathrm{NoneTrue}(\bigl\lbrack1, 3, 5\bigr\rbrack, \mathrm{IsEven})
+    out: \mathrm{True}
+  fullform:
+    in: NoneTrue[List[1, 3, 5], EvenQ]
+  wolfram:
+    in: NoneTrue[List[1, 3, 5], EvenQ]
+nonetrue-list-1-2-3-iseven:
+  epsil:
+    in: NoneTrue([1, 2, 3], IsEven)
+    out: False
+  tex:
+    in: \mathrm{NoneTrue}(\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{IsEven})
+    out: \bot
+  traditional:
+    in: \mathrm{NoneTrue}(\bigl\lbrack1, 2, 3\bigr\rbrack, \mathrm{IsEven})
+    out: \mathrm{False}
+  fullform:
+    in: NoneTrue[List[1, 2, 3], EvenQ]
+  wolfram:
+    in: NoneTrue[List[1, 2, 3], EvenQ]
+vacuously-true-on-an-empty-list:
+  epsil:
+    in: NoneTrue([], IsEven)
+    out: True
+  tex:
+    in: \mathrm{NoneTrue}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    out: \top
+  traditional:
+    in: \mathrm{NoneTrue}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
+    out: \mathrm{True}
+  fullform:
+    in: NoneTrue[List[], EvenQ]
+  wolfram:
+    in: NoneTrue[List[], EvenQ]
+the-negation-of-any:
+  epsil:
+    in: NoneTrue([4, 6, 9], IsPrime) == !Any([4, 6, 9], IsPrime)
+    out: True
+  tex:
+    in: \mathrm{NoneTrue}(\bigl\lbrack4, 6, 9\bigr\rbrack, \mathrm{IsPrime})=\lnot\mathrm{Any}(\bigl\lbrack4, 6, 9\bigr\rbrack, \mathrm{IsPrime})
+    out: \top
+  traditional:
+    in: \mathrm{NoneTrue}(\bigl\lbrack4, 6, 9\bigr\rbrack, \mathrm{IsPrime})=\lnot\mathrm{Any}(\bigl\lbrack4, 6, 9\bigr\rbrack, \mathrm{IsPrime})
+    out: \mathrm{True}
+  fullform:
+    in: Equal[NoneTrue[List[4, 6, 9], PrimeQ], Not[AnyTrue[List[4, 6, 9], PrimeQ]]]
+  wolfram:
+    in: (NoneTrue[List[4, 6, 9], PrimeQ] == Not[AnyTrue[List[4, 6, 9], PrimeQ]])

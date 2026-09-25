@@ -1,0 +1,22 @@
+a-generic-point-checked-against-mpmath-s-hyp0f1:
+  epsil:
+    in: Hypergeometric0F1(2, 0.5)
+    out: 1.271_723_456_312_137
+  tex:
+    in: \mathrm{Hypergeometric0F1}(2, 0.5)
+    out: 1.271\,723\,456\,312\,137
+  fullform:
+    in: Hypergeometric0F1[2, 0.5]
+  wolfram:
+    in: Hypergeometric0F1[2, 0.5]
+b-0-is-a-pole-stays-symbolic:
+  epsil:
+    in: Hypergeometric0F1(0, 0.5)
+    out: Hypergeometric0F1(0, 0.5)
+  tex:
+    in: \mathrm{Hypergeometric0F1}(0, 0.5)
+    out: \mathrm{Hypergeometric0F1}(0, 0.5)
+  fullform:
+    in: Hypergeometric0F1[0, 0.5]
+  wolfram:
+    in: Hypergeometric0F1[0, 0.5]

@@ -53,8 +53,6 @@ examples:
     expected: -1
     category: Scope
     caption: $C_{-1} = -1$, from $\binom{2n}{n} - \binom{2n}{n+1}$ at $n=-1$ ($\binom{-2}{-1} - \binom{-2}{0} = 0 - 1$)
-    divergence:
-      wolfram: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
   - id: catalannumber-0-past-neg-1
     expr: [CatalanNumber, -2]
     expected: 0

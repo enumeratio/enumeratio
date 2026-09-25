@@ -1,0 +1,201 @@
+the-cube-root-of-27:
+  epsil:
+    in: Root(27, 3)
+    out: "3"
+  tex:
+    in: \sqrt[3]{27}
+    out: "3"
+  fullform:
+    in: Power[27, Divide[1, 3]]
+    back: [Power, 27, [Divide, 1, 3]]
+  wolfram:
+    in: Power[27, Divide[1, 3]]
+    out: "3"
+    tex:
+      in: 27^{\frac{1}{3}}
+      out: "3"
+root-16-4:
+  epsil:
+    in: Root(16, 4)
+    out: "2"
+  tex:
+    in: \sqrt[4]{16}
+    out: "2"
+  fullform:
+    in: Power[16, Divide[1, 4]]
+    back: [Power, 16, [Divide, 1, 4]]
+  wolfram:
+    in: Power[16, Divide[1, 4]]
+    out: "2"
+    tex:
+      in: 16^{\frac{1}{4}}
+      out: "2"
+odd-roots-of-a-negative-number-stay-real:
+  epsil:
+    in: Root(-8, 3)
+    out: "-2"
+  tex:
+    in: \sqrt[3]{-8}
+    out: "-2"
+  fullform:
+    in: Power[-8, Divide[1, 3]]
+    back: [Power, -8, [Divide, 1, 3]]
+  wolfram:
+    in: Power[-8, Divide[1, 3]]
+    out: 2*(-1)^(1/3)
+    tex:
+      in: (-8)^{\frac{1}{3}}
+      out: 2 \sqrt[3]{-1}
+    verdict: disagree
+    kind: convention
+    note: Wolfram's $(-8)^{1/3}$ is the principal complex root, $1 + \sqrt{3}\,i$; its real root is $\mathrm{Surd}[-8, 3] = -2$.
+stays-symbolic-when-x-isn-t-a-perfect-power:
+  epsil:
+    in: Root(2, 3)
+    out: Root(2, 3)
+  tex:
+    in: \sqrt[3]{2}
+    out: \sqrt[3]{2}
+  fullform:
+    in: Power[2, Divide[1, 3]]
+    back: [Power, 2, [Divide, 1, 3]]
+  wolfram:
+    in: Power[2, Divide[1, 3]]
+    out: 2^(1/3)
+    tex:
+      in: 2^{\frac{1}{3}}
+      out: \sqrt[3]{2}
+a-negative-index-gives-the-reciprocal-root-x-1-n:
+  epsil:
+    in: Root(16, -2)
+    out: 1 / 4
+  tex:
+    in: \sqrt[-2]{16}
+    out: \frac{1}{4}
+  fullform:
+    in: Power[16, Divide[1, -2]]
+    back: [Power, 16, [Divide, 1, -2]]
+  wolfram:
+    in: Power[16, Divide[1, -2]]
+    out: 1/4
+    tex:
+      in: 16^{-\frac{1}{2}}
+      out: \frac{1}{4}
+sqrt-n-x-n-x-for-a-perfect-nth-power:
+  epsil:
+    in: Root(8, 3) ^ 3 == 8
+    out: True
+  tex:
+    in: \sqrt[3]{8}^3=8
+    out: \top
+  traditional:
+    in: \sqrt[3]{8}^3=8
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Power[Power[8, Divide[1, 3]], 3], 8]
+    back: [Equal, [Power, [Power, 8, [Divide, 1, 3]], 3], 8]
+  wolfram:
+    in: (Power[Power[8, Divide[1, 3]], 3] == 8)
+    out: True
+    tex:
+      in: \left(8^{\frac{1}{3}}\right)^3=8
+      out: \text{True}
+root-x-2-agrees-with-sqrt:
+  epsil:
+    in: Root(16, 2) == Sqrt(16)
+    out: True
+  tex:
+    in: \sqrt{16}=\sqrt{16}
+    out: \top
+  traditional:
+    in: \sqrt{16}=\sqrt{16}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Power[16, Divide[1, 2]], Sqrt[16]]
+    back: [Equal, [Power, 16, [Divide, 1, 2]], [Sqrt, 16]]
+  wolfram:
+    in: (Power[16, Divide[1, 2]] == Sqrt[16])
+    out: True
+    tex:
+      in: 16^{\frac{1}{2}}=\sqrt{16}
+      out: \text{True}
+the-edge-length-of-a-cube-with-volume-1000:
+  epsil:
+    in: Root(1_000, 3)
+    out: "10"
+  tex:
+    in: \sqrt[3]{1\,000}
+    out: "10"
+  fullform:
+    in: Power[1000, Divide[1, 3]]
+    back: [Power, 1000, [Divide, 1, 3]]
+  wolfram:
+    in: Power[1000, Divide[1, 3]]
+    out: "10"
+    tex:
+      in: 1000^{\frac{1}{3}}
+      out: "10"
+an-even-root-of-a-negative-non-perfect-power:
+  epsil:
+    in: Root(-8, 2)
+    out: Sqrt(-8)
+  tex:
+    in: \sqrt{-8}
+    out: \sqrt{-8}
+  fullform:
+    in: Power[-8, Divide[1, 2]]
+    back: [Power, -8, [Divide, 1, 2]]
+  wolfram:
+    in: Power[-8, Divide[1, 2]]
+    out: (2*I)*Sqrt[2]
+    tex:
+      in: (-8)^{\frac{1}{2}}
+      out: 2 i \sqrt{2}
+the-real-cube-root-wolfram-s-surd-27-3:
+  epsil:
+    in: Root(-27, 3)
+    out: "-3"
+  tex:
+    in: \sqrt[3]{-27}
+    out: "-3"
+  fullform:
+    in: Power[-27, Divide[1, 3]]
+    back: [Power, -27, [Divide, 1, 3]]
+  wolfram:
+    in: Power[-27, Divide[1, 3]]
+any-odd-root-of-a-negative-number-is-real:
+  epsil:
+    in: Root(-32, 5)
+    out: "-2"
+  tex:
+    in: \sqrt[5]{-32}
+    out: "-2"
+  fullform:
+    in: Power[-32, Divide[1, 5]]
+    back: [Power, -32, [Divide, 1, 5]]
+  wolfram:
+    in: Power[-32, Divide[1, 5]]
+approximate-negative-radicands-stay-real-too:
+  epsil:
+    in: Root(-3.5, 5)
+    out: -1.284_735_157_123_439_338_68
+  tex:
+    in: \sqrt[5]{-3.5}
+    out: -1.284\,735\,157\,123\,439\,338\,68
+  fullform:
+    in: Power[-3.5, Divide[1, 5]]
+    back: [Power, -3.5, [Divide, 1, 5]]
+  wolfram:
+    in: Power[-3.5, Divide[1, 5]]
+threads-element-wise-over-a-list:
+  epsil:
+    in: Root([-8, 27], 3)
+    out: "[-2, 3]"
+  tex:
+    in: \sqrt[3]{\bigl\lbrack-8, 27\bigr\rbrack}
+    out: \bigl\lbrack-2, 3\bigr\rbrack
+  fullform:
+    in: Power[List[-8, 27], Divide[1, 3]]
+    back: [Power, [List, -8, 27], [Divide, 1, 3]]
+  wolfram:
+    in: Power[List[-8, 27], Divide[1, 3]]

@@ -1,0 +1,36 @@
+zeta-2-2-frac-34-zeta-4:
+  epsil:
+    in: N(MultiZetaValue(2, 2))
+    out: 0.811_742_425_283_353_6
+  tex:
+    in: N(\mathrm{MultiZetaValue}(2, 2))
+    out: 0.811\,742\,425\,283\,353\,6
+  fullform:
+    in: N[MultiZetaValue[2, 2]]
+zeta-3-3-frac-12-zeta-3-2-zeta-6:
+  epsil:
+    in: N(MultiZetaValue(3, 3))
+    out: 0.213_798_868_224_592_5
+  tex:
+    in: N(\mathrm{MultiZetaValue}(3, 3))
+    out: 0.213\,798\,868\,224\,592\,5
+  fullform:
+    in: N[MultiZetaValue[3, 3]]
+s-1-2-stays-symbolic-outside-the-depth-2-both:
+  epsil:
+    in: MultiZetaValue(1, 2)
+    out: MultiZetaValue(1, 2)
+  tex:
+    in: \mathrm{MultiZetaValue}(1, 2)
+    out: \mathrm{MultiZetaValue}(1, 2)
+  fullform:
+    in: MultiZetaValue[1, 2]
+zeta-2-2-frac-34-zeta-4-one-of-fungrim-s-exact:
+  epsil:
+    in: Chop(N(MultiZetaValue(2, 2)) - 0.75 * N(Zeta(4)))
+    out: "0"
+  tex:
+    in: \mathrm{chop}(N(\mathrm{MultiZetaValue}(2, 2))-0.75N(\zeta(4)))
+    out: "0"
+  fullform:
+    in: Chop[Subtract[N[MultiZetaValue[2, 2]], Times[0.75, N[Zeta[4]]]]]

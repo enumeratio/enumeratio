@@ -334,6 +334,34 @@ export const HEADS: Record<string, string> = {
   BinomialDistribution: "BinomialDistribution",
   PDF: "PDF",
   CDF: "CDF",
+  // Second-wave distributions (@enumeratio/statistics/src/distributions-2.ts) and the
+  // property functions that read any distribution — identity here already.
+  GeometricDistribution: "GeometricDistribution",
+  BernoulliDistribution: "BernoulliDistribution",
+  DiscreteUniformDistribution: "DiscreteUniformDistribution",
+  TriangularDistribution: "TriangularDistribution",
+  ChiSquareDistribution: "ChiSquareDistribution",
+  LogNormalDistribution: "LogNormalDistribution",
+  NegativeBinomialDistribution: "NegativeBinomialDistribution",
+  CauchyDistribution: "CauchyDistribution",
+  StudentTDistribution: "StudentTDistribution",
+  WeibullDistribution: "WeibullDistribution",
+  LaplaceDistribution: "LaplaceDistribution",
+  HypergeometricDistribution: "HypergeometricDistribution",
+  RayleighDistribution: "RayleighDistribution",
+  ParetoDistribution: "ParetoDistribution",
+  LogisticDistribution: "LogisticDistribution",
+  ErlangDistribution: "ErlangDistribution",
+  ChiDistribution: "ChiDistribution",
+  HalfNormalDistribution: "HalfNormalDistribution",
+  MaxwellDistribution: "MaxwellDistribution",
+  SurvivalFunction: "SurvivalFunction",
+  HazardFunction: "HazardFunction",
+  Moment: "Moment",
+  CentralMoment: "CentralMoment",
+  FactorialMoment: "FactorialMoment",
+  Cumulant: "Cumulant",
+  InverseCDF: "InverseCDF",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
@@ -474,6 +502,21 @@ export const HEADS: Record<string, string> = {
   Assuming: "Assuming",
   Piecewise: "Piecewise",
   PiecewiseExpand: "PiecewiseExpand",
+  // The signal/piecewise-waveform family declared in signals.ts -- same names and meaning
+  // as Wolfram's, boundary values included.
+  UnitBox: "UnitBox",
+  UnitTriangle: "UnitTriangle",
+  HeavisideTheta: "HeavisideTheta",
+  HeavisideLambda: "HeavisideLambda",
+  HeavisidePi: "HeavisidePi",
+  Ramp: "Ramp",
+  SawtoothWave: "SawtoothWave",
+  TriangleWave: "TriangleWave",
+  SquareWave: "SquareWave",
+  Rescale: "Rescale",
+  DiracDelta: "DiracDelta",
+  DiscreteDelta: "DiscreteDelta",
+  DiscreteShift: "DiscreteShift",
   // SeriesCoefficient(f, {x, x0, n}) — the argument shape matches Wolfram's directly (see
   // series-coefficient.ts), so this is a plain rename, not a SPECIAL reordering.
   SeriesCoefficient: "SeriesCoefficient",
@@ -538,6 +581,34 @@ export const HEADS: Record<string, string> = {
   IsBipartiteGraph: "BipartiteGraphQ",
   NeighborhoodGraph: "NeighborhoodGraph",
   Subgraph: "Subgraph",
+
+  // Second wave (packages/symbols/combinatorics/collections/src/graphs-2.ts): distance
+  // measures, more `Is…`-for-`…Q` predicates, and a few more named/random constructors.
+  // Same plain-rename story as the block above -- every one of these is Wolfram's own name.
+  GraphDistanceMatrix: "GraphDistanceMatrix",
+  VertexEccentricity: "VertexEccentricity",
+  GraphRadius: "GraphRadius",
+  GraphDiameter: "GraphDiameter",
+  GraphCenter: "GraphCenter",
+  GraphPeriphery: "GraphPeriphery",
+  VertexIndex: "VertexIndex",
+  VertexInDegree: "VertexInDegree",
+  VertexOutDegree: "VertexOutDegree",
+  ClosenessCentrality: "ClosenessCentrality",
+  EigenvectorCentrality: "EigenvectorCentrality",
+  IsPathGraph: "PathGraphQ",
+  IsAcyclicGraph: "AcyclicGraphQ",
+  IsCompleteGraph: "CompleteGraphQ",
+  IsLoopFreeGraph: "LoopFreeGraphQ",
+  IsSimpleGraph: "SimpleGraphQ",
+  IsIsomorphicGraph: "IsomorphicGraphQ",
+  WheelGraph: "WheelGraph",
+  CirculantGraph: "CirculantGraph",
+  TuranGraph: "TuranGraph",
+  HararyGraph: "HararyGraph",
+  LineGraph: "LineGraph",
+  AdjacencyGraph: "AdjacencyGraph",
+  RandomGraph: "RandomGraph",
 
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //
@@ -609,6 +680,7 @@ export const HEADS: Record<string, string> = {
  *  the same way it excludes a plain rename. */
 export const STRUCTURAL: Record<string, string> = {
   Total: "Sum",
+  Clip: "Clamp",
 };
 
 /** The context our heads emit into when Wolfram has the name for something else.

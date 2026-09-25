@@ -1,0 +1,9 @@
+the-restricted-growth-string-of-1-3-mid-2-mid-4:
+  epsil:
+    in: ArcRepresentation(SetPartition([1, 2, 1, 3]))
+    out: Endofunction([3, 2, 3, 4])
+  tex:
+    in: \mathrm{ArcRepresentation}(\mathrm{SetPartition}(\bigl\lbrack1, 2, 1, 3\bigr\rbrack))
+    out: \mathrm{Endofunction}(\bigl\lbrack3, 2, 3, 4\bigr\rbrack)
+  fullform:
+    in: ArcRepresentation[SetPartition[List[1, 2, 1, 3]]]

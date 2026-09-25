@@ -15,12 +15,8 @@ examples:
     expr: [MemoryConstrained, [Add, 1, 2], 1000000]
     expected: [MemoryConstrained, [Add, 1, 2], 1000000]
     caption: In-process, the call simply does not reduce — see evaluateIsolated for the real cap
-    divergence:
-      wolfram: Wolfram enforces the cap in-kernel and evaluates to 3.
   - id: a-failexpr-does-not-change-that-in-process-there
     expr: [MemoryConstrained, [Add, 1, 2], 1000000, -1]
     expected: [MemoryConstrained, [Add, 1, 2], 1000000, -1]
     caption: "A failexpr does not change that: in-process there is no cap to exceed"
     category: Scope
-    divergence:
-      wolfram: Wolfram evaluates to 3, returning failexpr only if the cap is exceeded.

@@ -1,0 +1,36 @@
+by-a-cycle:
+  epsil:
+    in: Permute([a, b, c, d], Cycles([[1, 3, 2]]))
+    out: "[b, c, a, d]"
+  tex:
+    in: \mathrm{Permute}(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3, 2\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack b, c, a, d\bigr\rbrack
+  fullform:
+    in: Permute[List[a, b, c, d], Cycles[List[List[1, 3, 2]]]]
+by-disjoint-cycles:
+  epsil:
+    in: Permute([a, b, c, d], Cycles([[1, 3], [2, 4]]))
+    out: "[c, d, a, b]"
+  tex:
+    in: \mathrm{Permute}(\bigl\lbrack a, b, c, d\bigr\rbrack, \mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack c, d, a, b\bigr\rbrack
+  fullform:
+    in: Permute[List[a, b, c, d], Cycles[List[List[1, 3], List[2, 4]]]]
+by-a-one-line-word:
+  epsil:
+    in: Permute([a, b, c, d], [2, 3, 4, 1])
+    out: "[d, a, b, c]"
+  tex:
+    in: \mathrm{Permute}(\bigl\lbrack a, b, c, d\bigr\rbrack, \bigl\lbrack2, 3, 4, 1\bigr\rbrack)
+    out: \bigl\lbrack d, a, b, c\bigr\rbrack
+  fullform:
+    in: Permute[List[a, b, c, d], List[2, 3, 4, 1]]
+by-a-permutation-group:
+  epsil:
+    in: Permute([a, b, c], PermutationGroup([Cycles([[1, 2, 3]])]))
+    out: "[[a, b, c], [c, a, b], [b, c, a]]"
+  tex:
+    in: \mathrm{Permute}(\bigl\lbrack a, b, c\bigr\rbrack, \mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack\bigr\rbrack)\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack c, a, b\bigr\rbrack, \bigl\lbrack b, c, a\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Permute[List[a, b, c], PermutationGroup[List[Cycles[List[List[1, 2, 3]]]]]]

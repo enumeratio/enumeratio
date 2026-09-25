@@ -6,7 +6,7 @@ export type DivergenceSystem = "wolfram" | "numpy" | "sympy";
 /** How an external system's run of an example compared to ours. */
 export type OtherSystemVerdict = "agree" | "disagree" | "inconclusive" | "error";
 
-/** One system's exact run of one example — from the oracle sidecars (see `@enumeratio/oracle`). */
+/** One system's exact run of one example — from the implementations records (see `@enumeratio/oracle`). */
 export interface OtherSystemRun {
   readonly input: string;
   readonly output: string;
@@ -57,27 +57,16 @@ export interface ReferenceExample {
    */
   readonly aspirational?: boolean;
   /**
-   * Notes recording that compute-engine's result (which this example still
-   * grounds normally) is a known, deliberate divergence from another system's
-   * behaviour, keyed by system. The page shows a "differs from <system>" chip
-   * per key and the note. State what that system does instead.
+   * Derived by the loader, never written in a record: Wolfram's `note` from the head's
+   * implementations record, where our result deliberately differs from Wolfram's. The
+   * page shows a "differs from <system>" chip per key, and the note.
    */
-  readonly divergence?: Partial<Record<DivergenceSystem, string>>;
+  readonly divergence?: Readonly<Record<string, string>>;
   /**
    * Rule keys in the result whose values differ run to run (`AbsoluteTimeUsed`). The
    * examples test masks them on both sides; the page doesn't assert the example.
    */
   readonly volatile?: readonly string[];
-  /**
-   * Kept as data but not shown by default: an edge case or a grid point that the tests and
-   * oracles run like any other example, too many or too minor to render. Hidden examples
-   * mostly live in an entry file's `<stem>.examples.json`. A deep link (`#example/<id>`)
-   * still shows one.
-   *
-   * @deprecated Superseded by `role: "test"` (design/examples-as-data.md §5). Both are read
-   * during the migration; `hidden` goes away once every example carries a `role`.
-   */
-  readonly hidden?: boolean;
   /**
    * Cases of one example: examples sharing a `group` show as a single card, where the
    * first sits, cycling through the rest. Each case is still its own example -- its own
@@ -89,14 +78,15 @@ export interface ReferenceExample {
   /**
    * What the example is FOR (design/examples-as-data.md §5). `demo` (the default) is shown
    * on the reference page; `test` runs in the evaluation test and the scans like any other
-   * example but is skipped by the page, superseding `hidden`.
+   * example but is skipped by the page (a deep link still shows one): an edge case or a grid
+   * point, too many or too minor to render.
    */
   readonly role?: ExampleRole;
-  /** Per-system oracle runs of this exact example, attached from the entry's `.oracle.json` sidecar. */
+  /** Derived by the loader: each scanned system's run of this example, from the implementations record. */
   readonly others?: Readonly<Record<string, OtherSystemRun>>;
 }
 
-/** What an example is for (design/examples-as-data.md §5) -- superseding `hidden`. */
+/** What an example is for (design/examples-as-data.md §5). */
 export type ExampleRole = "demo" | "test";
 
 /** One call signature the head accepts, with a short explanation. */
@@ -292,6 +282,10 @@ export interface SystemImplementation {
   /** Relative tolerance for a numeric comparison, where 1e-9 is too strict for this row. */
   readonly tolerance?: number;
   readonly messages?: readonly EvaluationMessage[];
+  /** `fullform` only: what `in` reads back as through @enumeratio/wolfram, where the trip loses
+   * something (a head with no Wolfram of its own to reverse from). Absent when it reads back as
+   * the example's `expr`. */
+  readonly back?: MathJSON;
 }
 
 /**

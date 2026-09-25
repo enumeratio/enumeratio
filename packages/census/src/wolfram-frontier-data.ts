@@ -185,10 +185,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 32,
   },
   {
-    head: "GeometricDistribution",
-    uses: 32,
-  },
-  {
     head: "Lighter",
     uses: 32,
   },
@@ -205,20 +201,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 30,
   },
   {
-    head: "Moment",
-    uses: 30,
-  },
-  {
     head: "Reap",
     uses: 30,
   },
   {
     head: "Sow",
     uses: 30,
-  },
-  {
-    head: "HazardFunction",
-    uses: 28,
   },
   {
     head: "RegionPlot",
@@ -265,10 +253,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 25,
   },
   {
-    head: "SurvivalFunction",
-    uses: 25,
-  },
-  {
     head: "ToBoxes",
     uses: 25,
   },
@@ -289,14 +273,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 23,
   },
   {
-    head: "UnitBox",
-    uses: 23,
-  },
-  {
-    head: "CentralMoment",
-    uses: 22,
-  },
-  {
     head: "Do",
     uses: 22,
   },
@@ -306,10 +282,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Attributes",
-    uses: 21,
-  },
-  {
-    head: "ChiSquareDistribution",
     uses: 21,
   },
   {
@@ -337,10 +309,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 21,
   },
   {
-    head: "BernoulliDistribution",
-    uses: 20,
-  },
-  {
     head: "CellPrint",
     uses: 20,
   },
@@ -365,15 +333,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 20,
   },
   {
-    head: "TriangularDistribution",
-    uses: 20,
-  },
-  {
     head: "AbsoluteOptions",
-    uses: 19,
-  },
-  {
-    head: "Cumulant",
     uses: 19,
   },
   {
@@ -382,14 +342,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "DiscretePlot3D",
-    uses: 19,
-  },
-  {
-    head: "DiscreteUniformDistribution",
-    uses: 19,
-  },
-  {
-    head: "GraphDistanceMatrix",
     uses: 19,
   },
   {
@@ -406,10 +358,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Pause",
-    uses: 19,
-  },
-  {
-    head: "VertexIndex",
     uses: 19,
   },
   {
@@ -473,10 +421,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 16,
   },
   {
-    head: "GraphCenter",
-    uses: 16,
-  },
-  {
     head: "Multicolumn",
     uses: 16,
   },
@@ -497,10 +441,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 15,
   },
   {
-    head: "LogNormalDistribution",
-    uses: 15,
-  },
-  {
     head: "Offset",
     uses: 15,
   },
@@ -513,23 +453,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 15,
   },
   {
-    head: "SawtoothWave",
-    uses: 15,
-  },
-  {
     head: "SymmetrizedArray",
     uses: 15,
   },
   {
     head: "BarLegend",
-    uses: 14,
-  },
-  {
-    head: "DiracDelta",
-    uses: 14,
-  },
-  {
-    head: "FactorialMoment",
     uses: 14,
   },
   {
@@ -550,10 +478,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "OverVector",
-    uses: 14,
-  },
-  {
-    head: "TriangleWave",
     uses: 14,
   },
   {
@@ -581,10 +505,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 13,
   },
   {
-    head: "NegativeBinomialDistribution",
-    uses: 13,
-  },
-  {
     head: "Options",
     uses: 13,
   },
@@ -597,10 +517,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 13,
   },
   {
-    head: "SquareWave",
-    uses: 13,
-  },
-  {
     head: "TrigFactor",
     uses: 13,
   },
@@ -610,10 +526,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ByteCount",
-    uses: 12,
-  },
-  {
-    head: "CauchyDistribution",
     uses: 12,
   },
   {
@@ -641,19 +553,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 12,
   },
   {
-    head: "RandomGraph",
-    uses: 12,
-  },
-  {
     head: "SetAttributes",
     uses: 12,
   },
   {
     head: "SignedRegionDistance",
-    uses: 12,
-  },
-  {
-    head: "StudentTDistribution",
     uses: 12,
   },
   {
@@ -666,10 +570,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TimeObject",
-    uses: 12,
-  },
-  {
-    head: "WeibullDistribution",
     uses: 12,
   },
   {
@@ -689,10 +589,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "HeavisideLambda",
-    uses: 11,
-  },
-  {
     head: "ImplicitRegion",
     uses: 11,
   },
@@ -702,10 +598,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InterpretationBox",
-    uses: 11,
-  },
-  {
-    head: "LaplaceDistribution",
     uses: 11,
   },
   {
@@ -746,10 +638,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Extract",
-    uses: 10,
-  },
-  {
-    head: "HeavisideTheta",
     uses: 10,
   },
   {
@@ -797,10 +685,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "VertexEccentricity",
-    uses: 10,
-  },
-  {
     head: "AggregateRows",
     uses: 9,
   },
@@ -837,10 +721,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "HypergeometricDistribution",
-    uses: 9,
-  },
-  {
     head: "MathieuS",
     uses: 9,
   },
@@ -862,14 +742,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Parallelize",
-    uses: 9,
-  },
-  {
-    head: "Ramp",
-    uses: 9,
-  },
-  {
-    head: "Rescale",
     uses: 9,
   },
   {
@@ -897,10 +769,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "WheelGraph",
-    uses: 9,
-  },
-  {
     head: "While",
     uses: 9,
   },
@@ -910,10 +778,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "BlockRandom",
-    uses: 8,
-  },
-  {
-    head: "Clip",
     uses: 8,
   },
   {
@@ -937,27 +801,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "GraphDiameter",
-    uses: 8,
-  },
-  {
-    head: "GraphPeriphery",
-    uses: 8,
-  },
-  {
-    head: "GraphRadius",
-    uses: 8,
-  },
-  {
-    head: "InverseCDF",
-    uses: 8,
-  },
-  {
     head: "Item",
-    uses: 8,
-  },
-  {
-    head: "LineGraph",
     uses: 8,
   },
   {
@@ -1041,10 +885,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "ClosenessCentrality",
-    uses: 7,
-  },
-  {
     head: "ComplexListPlot",
     uses: 7,
   },
@@ -1053,23 +893,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "DiscreteDelta",
-    uses: 7,
-  },
-  {
-    head: "DiscreteShift",
-    uses: 7,
-  },
-  {
     head: "DistributionFitTest",
     uses: 7,
   },
   {
     head: "Eigensystem",
-    uses: 7,
-  },
-  {
-    head: "EigenvectorCentrality",
     uses: 7,
   },
   {
@@ -1133,19 +961,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "PathGraphQ",
-    uses: 7,
-  },
-  {
     head: "PermutationList",
     uses: 7,
   },
   {
     head: "PermutationReplace",
-    uses: 7,
-  },
-  {
-    head: "RayleighDistribution",
     uses: 7,
   },
   {
@@ -1242,10 +1062,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ParametricRegion",
-    uses: 6,
-  },
-  {
-    head: "ParetoDistribution",
     uses: 6,
   },
   {
@@ -1421,14 +1237,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 5,
   },
   {
-    head: "AcyclicGraphQ",
-    uses: 4,
-  },
-  {
-    head: "AdjacencyGraph",
-    uses: 4,
-  },
-  {
     head: "Antisymmetric",
     uses: 4,
   },
@@ -1473,10 +1281,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "ChiDistribution",
-    uses: 4,
-  },
-  {
     head: "Coefficient",
     uses: 4,
   },
@@ -1506,10 +1310,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "EntityProperty",
-    uses: 4,
-  },
-  {
-    head: "ErlangDistribution",
     uses: 4,
   },
   {
@@ -1549,14 +1349,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "HararyGraph",
-    uses: 4,
-  },
-  {
-    head: "HeavisidePi",
-    uses: 4,
-  },
-  {
     head: "InterpolatingPolynomial",
     uses: 4,
   },
@@ -1589,15 +1381,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "LogisticDistribution",
-    uses: 4,
-  },
-  {
     head: "Matrices",
-    uses: 4,
-  },
-  {
-    head: "MaxwellDistribution",
     uses: 4,
   },
   {
@@ -1697,18 +1481,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "UnitTriangle",
-    uses: 4,
-  },
-  {
-    head: "VertexInDegree",
-    uses: 4,
-  },
-  {
-    head: "VertexOutDegree",
-    uses: 4,
-  },
-  {
     head: "AbsoluteDashing",
     uses: 3,
   },
@@ -1741,10 +1513,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "CirculantGraph",
-    uses: 3,
-  },
-  {
     head: "ClearSystemCache",
     uses: 3,
   },
@@ -1754,10 +1522,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Compile",
-    uses: 3,
-  },
-  {
-    head: "CompleteGraphQ",
     uses: 3,
   },
   {
@@ -1841,10 +1605,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "HalfNormalDistribution",
-    uses: 3,
-  },
-  {
     head: "HankelH1",
     uses: 3,
   },
@@ -1858,10 +1618,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InverseJacobiNS",
-    uses: 3,
-  },
-  {
-    head: "IsomorphicGraphQ",
     uses: 3,
   },
   {
@@ -1898,10 +1654,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LocationEquivalenceTest",
-    uses: 3,
-  },
-  {
-    head: "LoopFreeGraphQ",
     uses: 3,
   },
   {
@@ -2001,10 +1753,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 3,
   },
   {
-    head: "SimpleGraphQ",
-    uses: 3,
-  },
-  {
     head: "Sound",
     uses: 3,
   },
@@ -2050,10 +1798,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TreeForm",
-    uses: 3,
-  },
-  {
-    head: "TuranGraph",
     uses: 3,
   },
   {

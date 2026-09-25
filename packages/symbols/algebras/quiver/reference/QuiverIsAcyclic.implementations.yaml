@@ -1,0 +1,36 @@
+quiverisacyclic-linearquiver-4:
+  epsil:
+    in: QuiverIsAcyclic(LinearQuiver(4))
+    out: True
+  tex:
+    in: \mathrm{QuiverIsAcyclic}(\mathrm{LinearQuiver}(4))
+    out: \top
+  traditional:
+    in: \mathrm{QuiverIsAcyclic}(\vec{A}_{4})
+    out: \mathrm{True}
+  fullform:
+    in: QuiverIsAcyclic[LinearQuiver[4]]
+a-loop-is-a-cycle:
+  epsil:
+    in: QuiverIsAcyclic(JordanQuiver)
+    out: False
+  tex:
+    in: \mathrm{QuiverIsAcyclic}(\mathrm{JordanQuiver})
+    out: \bot
+  traditional:
+    in: \mathrm{QuiverIsAcyclic}(\mathrm{JordanQuiver})
+    out: \mathrm{False}
+  fullform:
+    in: QuiverIsAcyclic[JordanQuiver]
+binom-7-2-the-same-as-incidencealgebra-chain-6:
+  epsil:
+    in: AlgebraDimension(PathAlgebra(LinearQuiver(6)))
+    out: "21"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{PathAlgebra}(\mathrm{LinearQuiver}(6)))
+    out: "21"
+  traditional:
+    in: \dim(k\vec{A}_{6})
+    out: "21"
+  fullform:
+    in: AlgebraDimension[PathAlgebra[LinearQuiver[6]]]

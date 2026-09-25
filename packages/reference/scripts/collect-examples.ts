@@ -3,7 +3,7 @@
 // continuations take — kept as reference examples, as data, at the end of each head's
 // reference YAML. Each is `N(head(args))` with our value as its
 // `expected`, so the reference tests pin it and every oracle lane (mpmath, SymPy, Sage,
-// Wolfram, Julia, Rust) checks it from the same MathJSON. They are `hidden`: too many to
+// Wolfram, Julia, Rust) checks it from the same MathJSON. They are `role: test`: too many to
 // render, but data like any other example.
 //
 // Regenerate after a change to the heads or the grids:
@@ -11,7 +11,9 @@
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "@enumeratio/analytic/src";
-import { dedupeId, type ReferenceExample } from "@enumeratio/entry";
+import { dirname, join } from "node:path";
+import { dedupeId, type ReferenceExample, type SystemImplementation } from "@enumeratio/entry";
+import { emit } from "@enumeratio/oracle/src";
 import { writeYaml } from "@enumeratio/entry/node";
 import { baseId } from "./migrate/ids.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
@@ -27,8 +29,9 @@ const toCE = (v: Val): unknown =>
 interface Example {
   expr: unknown;
   expected: unknown;
-  hidden: true;
-  divergence?: { wolfram: string };
+  role: "test";
+  /** Wolfram parts ways here: the note its implementations row carries. */
+  wolframNote?: string;
 }
 const byHead: Record<string, Example[]> = {};
 
@@ -45,8 +48,8 @@ const add = (call: unknown[], valueOnly = false): void => {
   (byHead[call[0] as string] ??= []).push({
     expr,
     expected,
-    hidden: true,
-    ...(negativeA ? { divergence: { wolfram: LERCH_NEGATIVE_A } } : {}),
+    role: "test",
+    ...(negativeA ? { wolframNote: LERCH_NEGATIVE_A } : {}),
   });
 };
 
@@ -98,13 +101,13 @@ for (const m of [1, 2, 3, 5] as Val[]) {
   }
 }
 
-// Each head's grid is the tail of its hidden `N(head(…))` examples. It's replaced wholesale,
+// Each head's grid is the tail of its `role: test` `N(head(…))` examples. It's replaced wholesale,
 // keeping the id of any point that survives so links and oracle rows stay put.
 const isGridPoint = (head: string, e: ReferenceExample): boolean =>
-  e.hidden === true && Array.isArray(e.expr) && e.expr[0] === "N" && Array.isArray(e.expr[1]) && e.expr[1][0] === head;
+  e.role === "test" && Array.isArray(e.expr) && e.expr[0] === "N" && Array.isArray(e.expr[1]) && e.expr[1][0] === head;
 const { heads } = loadReferenceData(PACKAGES);
 for (const [head, grid] of Object.entries(byHead)) {
-  const { entry, entryPath } = heads.find((h) => h.head === head)!;
+  const { entry, entryPath, implementations } = heads.find((h) => h.head === head)!;
   const kept = entry.examples.filter((e) => !isGridPoint(head, e));
   const idOf = new Map(entry.examples.filter((e) => isGridPoint(head, e)).map((e) => [JSON.stringify(e.expr), e.id]));
   const taken = new Set(kept.map((e) => e.id));
@@ -112,9 +115,29 @@ for (const [head, grid] of Object.entries(byHead)) {
     const old = idOf.get(JSON.stringify(e.expr));
     const id = old !== undefined && !taken.has(old) ? old : dedupeId(baseId(e), taken);
     taken.add(id);
-    return { id, ...e } as ReferenceExample;
+    const { wolframNote: _note, ...example } = e;
+    return { id, ...example } as ReferenceExample;
   });
   await writeYaml(entryPath, { ...entry, examples: [...kept, ...points] });
+  // A grid point's Wolfram note lives on its implementations row, beside the scan's answer.
+  const record: Record<string, Record<string, SystemImplementation>> = structuredClone(implementations ?? {});
+  grid.forEach((e, i) => {
+    const id = points[i]!.id;
+    const prior = record[id]?.wolfram;
+    if (e.wolframNote === undefined) {
+      if (prior?.note === LERCH_NEGATIVE_A) {
+        const { note: _stale, ...rest } = prior;
+        record[id] = { ...record[id], wolfram: rest };
+      }
+      return;
+    }
+    const emitted = emit(e.expr as never, "wolfram");
+    record[id] = {
+      ...record[id],
+      wolfram: { ...(prior ?? { in: emitted.ok ? emitted.source : "" }), note: e.wolframNote },
+    };
+  });
+  if (Object.keys(record).length > 0) await writeYaml(join(dirname(entryPath), `${head}.implementations.yaml`), record);
 }
 process.stderr.write(
   `${Object.entries(byHead)

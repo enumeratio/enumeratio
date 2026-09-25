@@ -1,0 +1,33 @@
+position-list-1-2-3-2-2:
+  epsil:
+    in: Position([1, 2, 3, 2], 2)
+    out: "[[2], [4]]"
+  tex:
+    in: \mathrm{Position}(\bigl\lbrack1, 2, 3, 2\bigr\rbrack, 2)
+    out: \bigl\lbrack\bigl\lbrack2\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Position[List[1, 2, 3, 2], 2]
+  wolfram:
+    in: Position[List[1, 2, 3, 2], 2]
+a-value-absent-from-the-collection-has-no:
+  epsil:
+    in: Position([1, 2, 3], 9)
+    out: "[]"
+  tex:
+    in: \mathrm{Position}(\bigl\lbrack1, 2, 3\bigr\rbrack, 9)
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: Position[List[1, 2, 3], 9]
+  wolfram:
+    in: Position[List[1, 2, 3], 9]
+position-s-first-entry-agrees-with-indexof:
+  epsil:
+    in: Position([1, 2, 3, 2], 2)[1]
+    out: "[2]"
+  tex:
+    in: \mathrm{Position}(\bigl\lbrack1, 2, 3, 2\bigr\rbrack, 2)[1]
+    out: \bigl\lbrack2\bigr\rbrack
+  fullform:
+    in: Part[Position[List[1, 2, 3, 2], 2], 1]
+  wolfram:
+    in: Part[Position[List[1, 2, 3, 2], 2], 1]

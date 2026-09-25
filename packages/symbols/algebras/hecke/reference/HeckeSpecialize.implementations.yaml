@@ -1,0 +1,36 @@
+q-t-e-q-1-t-s-at-q-1-is-just-t-e:
+  epsil:
+    in: HeckeSpecialize(NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([2, 1, 3])), 1)
+    out: HeckeT([1, 2, 3])
+  tex:
+    in: \mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)), 1)
+    out: \mathrm{HeckeT}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+  traditional:
+    in: \mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(T_{213}, T_{213}), 1)
+    out: T_{123}
+  fullform:
+    in: HeckeSpecialize[NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[2, 1, 3]]], 1]
+at-q-2-it-stays-spread-over-two-basis-elements:
+  epsil:
+    in: HeckeSpecialize(NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([2, 1, 3])), 2)
+    out: 2 * HeckeT([1, 2, 3]) + HeckeT([2, 1, 3])
+  tex:
+    in: \mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)), 2)
+    out: 2\mathrm{HeckeT}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)
+  traditional:
+    in: \mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(T_{213}, T_{213}), 2)
+    out: 2T_{123}+T_{213}
+  fullform:
+    in: HeckeSpecialize[NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[2, 1, 3]]], 2]
+the-ordinary-product-of-permutations:
+  epsil:
+    in: HeckeSpecialize(NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([1, 3, 2])), 1)
+    out: HeckeT([2, 3, 1])
+  tex:
+    in: \mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack)), 1)
+    out: \mathrm{HeckeT}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{HeckeSpecialize}(\mathrm{NonCommutativeMultiply}(T_{213}, T_{132}), 1)
+    out: T_{231}
+  fullform:
+    in: HeckeSpecialize[NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]]], 1]

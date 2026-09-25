@@ -1,0 +1,210 @@
+ln-g-4-ln-2:
+  epsil:
+    in: LogBarnesG(4)
+    out: Ln(2)
+  tex:
+    in: \mathrm{LogBarnesG}(4)
+    out: \ln(2)
+  traditional:
+    in: \log G(4)
+    out: \ln(2)
+  fullform:
+    in: LogBarnesG[4]
+  wolfram:
+    in: LogBarnesG[4]
+    out: Log[2]
+    tex:
+      in: \text{logG}(4)
+      out: \log (2)
+ln-g-3-ln-1-0:
+  epsil:
+    in: LogBarnesG(3)
+    out: "0"
+  tex:
+    in: \mathrm{LogBarnesG}(3)
+    out: "0"
+  traditional:
+    in: \log G(3)
+    out: "0"
+  fullform:
+    in: LogBarnesG[3]
+  wolfram:
+    in: LogBarnesG[3]
+    out: "0"
+    tex:
+      in: \text{logG}(3)
+      out: "0"
+g-0-0-so-its-logarithm-is-infty:
+  epsil:
+    in: LogBarnesG(0)
+    out: NegativeInfinity
+  tex:
+    in: \mathrm{LogBarnesG}(0)
+    out: -\infty
+  traditional:
+    in: \log G(0)
+    out: -\infty
+  fullform:
+    in: LogBarnesG[0]
+  wolfram:
+    in: LogBarnesG[0]
+    out: -Infinity
+    tex:
+      in: \text{logG}(0)
+      out: -\infty
+numeric-for-a-floating-point-argument:
+  epsil:
+    in: LogBarnesG(10.5)
+    out: 42.278_883_636_795_2
+  tex:
+    in: \mathrm{LogBarnesG}(10.5)
+    out: 42.278\,883\,636\,795\,2
+  traditional:
+    in: \log G(10.5)
+    out: 42.278\,883\,636\,795\,2
+  fullform:
+    in: LogBarnesG[10.5]
+  wolfram:
+    in: LogBarnesG[10.5]
+    out: "42.278883636795044"
+    tex:
+      in: \text{logG}(10.5)
+      out: "42.2789"
+ln-g-frac-12:
+  epsil:
+    in: LogBarnesG(0.5)
+    out: -0.505_433_054_489_458_3
+  tex:
+    in: \mathrm{LogBarnesG}(0.5)
+    out: -0.505\,433\,054\,489\,458\,3
+  traditional:
+    in: \log G(0.5)
+    out: -0.505\,433\,054\,489\,458\,3
+  fullform:
+    in: LogBarnesG[0.5]
+  wolfram:
+    in: LogBarnesG[0.5]
+ln-g-0-7-negative-since-g-1-on-0-1:
+  epsil:
+    in: LogBarnesG(0.7)
+    out: -0.214_589_897_075_086_36
+  tex:
+    in: \mathrm{LogBarnesG}(0.7)
+    out: -0.214\,589\,897\,075\,086\,36
+  traditional:
+    in: \log G(0.7)
+    out: -0.214\,589\,897\,075\,086\,36
+  fullform:
+    in: LogBarnesG[0.7]
+  wolfram:
+    in: LogBarnesG[0.7]
+complex-arguments:
+  epsil:
+    in: LogBarnesG(1.7 + i)
+    out: 0.121_378_662_628_899_29 + -0.313_561_761_336_856_65 * i
+  tex:
+    in: \mathrm{LogBarnesG}(1.7+i)
+    out: 0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i
+  traditional:
+    in: \log G(1.7+i)
+    out: 0.121\,378\,662\,628\,899\,29-0.313\,561\,761\,336\,856\,65i
+  fullform:
+    in: LogBarnesG[Complex[1.7, 1]]
+  wolfram:
+    in: LogBarnesG[Complex[1.7, 1]]
+threads-elementwise-over-an-array-infty-at-the:
+  epsil:
+    in: LogBarnesG([[4, -1], [0, 3]])
+    out: "[[Ln(2), NegativeInfinity], [NegativeInfinity, 0]]"
+  tex:
+    in: \mathrm{LogBarnesG}(\bigl\lbrack\bigl\lbrack4, -1\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\ln(2), -\infty\bigr\rbrack, \bigl\lbrack-\infty, 0\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: LogBarnesG[List[List[4, -1], List[0, 3]]]
+  wolfram:
+    in: LogBarnesG[List[List[4, -1], List[0, 3]]]
+exact-at-the-integers-ln-g-10-ln:
+  epsil:
+    in: LogBarnesG(10)
+    out: 2 * Ln(14) + 3 * Ln(10) + 9 * Ln(3) + 18 * Ln(2) + Ln(5)
+  tex:
+    in: \mathrm{LogBarnesG}(10)
+    out: 2\ln(14)+3\ln(10)+9\ln(3)+18\ln(2)+\ln(5)
+  traditional:
+    in: \log G(10)
+    out: 2\ln(14)+3\ln(10)+9\ln(3)+18\ln(2)+\ln(5)
+  fullform:
+    in: LogBarnesG[10]
+  wolfram:
+    in: LogBarnesG[10]
+    note: Wolfram keeps a single logarithm, Log[5056584744960000].
+the-continuation-not-ln-of-the-value-g-2-5-0-yet:
+  epsil:
+    in: LogBarnesG(-2.5)
+    out: -2.574_748_476_852_846_6 + 18.849_555_921_538_76i
+  tex:
+    in: \mathrm{LogBarnesG}(-2.5)
+    out: -2.574\,748\,476\,852\,846\,6+18.849\,555\,921\,538\,76i
+  traditional:
+    in: \log G(-2.5)
+    out: -2.574\,748\,476\,852\,846\,6+18.849\,555\,921\,538\,76i
+  fullform:
+    in: LogBarnesG[-2.5]
+  wolfram:
+    in: LogBarnesG[-2.5]
+huge-arguments-straight-from-the-asymptotic:
+  epsil:
+    in: N(LogBarnesG(10 ^ 1_000))
+    out: 115_054_254_649_702_284_201e1983
+  tex:
+    in: N(\mathrm{LogBarnesG}(10^{1\,000}))
+    out: 115\,054\,254\,649\,702\,284\,201\cdot10^{1983}
+  traditional:
+    in: N(\log G(10^{1\,000}))
+    out: 115\,054\,254\,649\,702\,284\,201\cdot10^{1983}
+  fullform:
+    in: N[LogBarnesG[Power[10, 1000]]]
+  wolfram:
+    in: N[LogBarnesG[Power[10, 1000]]]
+interval-arithmetic-over-an-increasing-stretch:
+  epsil:
+    in: LogBarnesG(Interval(0.111, 0.112))
+    out: Interval(-2.106_284_277_112_393, -2.096_646_198_881_469)
+  tex:
+    in: \mathrm{LogBarnesG}(\mathrm{Interval}(0.111, 0.112))
+    out: \mathrm{Interval}(-2.106\,284\,277\,112\,393, -2.096\,646\,198\,881\,469)
+  traditional:
+    in: \log G(\mathrm{Interval}(0.111, 0.112))
+    out: \mathrm{Interval}(-2.106\,284\,277\,112\,393, -2.096\,646\,198\,881\,469)
+  fullform:
+    in: LogBarnesG[Interval[List[0.111, 0.112]]]
+  wolfram:
+    in: LogBarnesG[Interval[List[0.111, 0.112]]]
+uncertainty-propagation-through-ln-g:
+  epsil:
+    in: LogBarnesG(Around(1.2, 0.01))
+    out: Around(0.056_208_855_599_105_68, 0.001_611_305_538_862_350_7)
+  tex:
+    in: \mathrm{LogBarnesG}(\mathrm{Around}(1.2, 0.01))
+    out: \mathrm{Around}(0.056\,208\,855\,599\,105\,68, 0.001\,611\,305\,538\,862\,350\,7)
+  traditional:
+    in: \log G(\mathrm{Around}(1.2, 0.01))
+    out: \mathrm{Around}(0.056\,208\,855\,599\,105\,68, 0.001\,611\,305\,538\,862\,350\,7)
+  fullform:
+    in: LogBarnesG[Around[1.2, 0.01]]
+  wolfram:
+    in: LogBarnesG[Around[1.2, 0.01]]
+ln-g-infty-infty:
+  epsil:
+    in: LogBarnesG(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{LogBarnesG}(\infty)
+    out: \infty
+  traditional:
+    in: \log G(\infty)
+    out: \infty
+  fullform:
+    in: LogBarnesG[Infinity]
+  wolfram:
+    in: LogBarnesG[Infinity]

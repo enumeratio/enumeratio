@@ -1,0 +1,44 @@
+halfnormal-pdf-exact:
+  epsil:
+    in: PDF(HalfNormalDistribution(1), 1)
+    out: Sqrt(2) / Sqrt(ExponentialE * Pi)
+  tex:
+    in: \operatorname{PDF}(\mathrm{HalfNormalDistribution}(1), 1)
+    out: \frac{\sqrt{2}}{\sqrt{e\pi}}
+  fullform:
+    in: PDF[HalfNormalDistribution[1], 1]
+  wolfram:
+    in: PDF[HalfNormalDistribution[1], 1]
+halfnormal-cdf-exact:
+  epsil:
+    in: CDF(HalfNormalDistribution(1), 1)
+    out: Erf(Sqrt(2) / 2)
+  tex:
+    in: \operatorname{CDF}(\mathrm{HalfNormalDistribution}(1), 1)
+    out: \operatorname{erf}(\frac{\sqrt{2}}{2})
+  fullform:
+    in: CDF[HalfNormalDistribution[1], 1]
+  wolfram:
+    in: CDF[HalfNormalDistribution[1], 1]
+halfnormal-mean-exact:
+  epsil:
+    in: Mean(HalfNormalDistribution(1))
+    out: Sqrt(2 / Pi)
+  tex:
+    in: \mathrm{mean}(\mathrm{HalfNormalDistribution}(1))
+    out: \sqrt{\frac{2}{\pi}}
+  fullform:
+    in: Mean[HalfNormalDistribution[1]]
+  wolfram:
+    in: Mean[HalfNormalDistribution[1]]
+halfnormal-variance-exact:
+  epsil:
+    in: Variance(HalfNormalDistribution(1))
+    out: (-2 + Pi) / Pi
+  tex:
+    in: \mathrm{Variance}(\mathrm{HalfNormalDistribution}(1))
+    out: \frac{\pi-2}{\pi}
+  fullform:
+    in: Variance[HalfNormalDistribution[1]]
+  wolfram:
+    in: Variance[HalfNormalDistribution[1]]

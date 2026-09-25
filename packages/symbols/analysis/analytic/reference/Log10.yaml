@@ -45,8 +45,6 @@ examples:
     expected: [Log, x]
     category: Scope
     caption: A symbolic argument becomes compute-engine's default-base [[Log]]
-    divergence:
-      wolfram: Wolfram rewrites Log10[x] to Log[x]/Log[10].
   - id: log10-5p5
     expr: [Log10, 5.5]
     expected: { num: "0.740362689494243845536" }
@@ -71,8 +69,6 @@ examples:
     expected: [Interval, [Log, [Rational, 1, 3], 10], [Log, 2, 10]]
     category: Scope
     caption: 'Interval arithmetic: $\log_{10}[\tfrac13, 2] = [\log_{10} \tfrac13, \log_{10} 2]$'
-    divergence:
-      wolfram: Wolfram writes the lower end as -Log[10, 3], the same value.
   - id: uncertainty-propagation-log-10-frac-1-101-pm-0
     expr: [Log10, [Around, [Rational, 1, 101], 0.01]]
     expected: [Around, -2.0043213737826426, 0.43863742672228434]

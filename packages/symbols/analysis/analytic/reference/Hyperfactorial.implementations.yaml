@@ -1,0 +1,55 @@
+1-1-2-2-3-3-4-4:
+  epsil:
+    in: Hyperfactorial(4)
+    out: 27_648
+  tex:
+    in: \mathrm{Hyperfactorial}(4)
+    out: 27\,648
+  fullform:
+    in: Hyperfactorial[4]
+  wolfram:
+    in: Hyperfactorial[4]
+the-empty-product:
+  epsil:
+    in: Hyperfactorial(0)
+    out: "1"
+  tex:
+    in: \mathrm{Hyperfactorial}(0)
+    out: "1"
+  fullform:
+    in: Hyperfactorial[0]
+  wolfram:
+    in: Hyperfactorial[0]
+listable:
+  epsil:
+    in: Hyperfactorial([1, 2, 3, 4, 5, 6])
+    out: "[1, 4, 108, 27_648, 86_400_000, 4_031_078_400_000]"
+  tex:
+    in: \mathrm{Hyperfactorial}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)
+    out: \bigl\lbrack1, 4, 108, 27\,648, 86\,400\,000, 4\,031\,078\,400\,000\bigr\rbrack
+  fullform:
+    in: Hyperfactorial[List[1, 2, 3, 4, 5, 6]]
+  wolfram:
+    in: Hyperfactorial[List[1, 2, 3, 4, 5, 6]]
+continued-off-the-integers:
+  epsil:
+    in: Hyperfactorial(0.5)
+    out: 0.880_449_235_173_423_4
+  tex:
+    in: \mathrm{Hyperfactorial}(0.5)
+    out: 0.880\,449\,235\,173\,423\,4
+  fullform:
+    in: Hyperfactorial[0.5]
+  wolfram:
+    in: Hyperfactorial[0.5]
+h-10-well-past-double-range-exact-bigint:
+  epsil:
+    in: Hyperfactorial(10)
+    out: 215_779_412_229_418_562_091_680_268_288_000_000_000_000_000
+  tex:
+    in: \mathrm{Hyperfactorial}(10)
+    out: 215\,779\,412\,229\,418\,562\,091\,680\,268\,288\,000\,000\,000\,000\,000
+  fullform:
+    in: Hyperfactorial[10]
+  wolfram:
+    in: Hyperfactorial[10]

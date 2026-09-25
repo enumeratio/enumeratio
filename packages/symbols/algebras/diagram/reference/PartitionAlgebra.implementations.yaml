@@ -1,0 +1,69 @@
+b-6:
+  epsil:
+    in: AlgebraDimension(PartitionAlgebra(3))
+    out: "203"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{PartitionAlgebra}(3))
+    out: "203"
+  traditional:
+    in: \dim(P_{3})
+    out: "203"
+  fullform:
+    in: AlgebraDimension[PartitionAlgebra[3]]
+  sage:
+    in: (PartitionAlgebra(3, enumeratio_delta, enumeratio_ring)).dimension()
+    out: "203"
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:partition, 3))
+    out: "203"
+b-8-the-closed-form-answers-past-any-useful:
+  epsil:
+    in: AlgebraDimension(PartitionAlgebra(4))
+    out: 4_140
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{PartitionAlgebra}(4))
+    out: 4\,140
+  traditional:
+    in: \dim(P_{4})
+    out: 4\,140
+  fullform:
+    in: AlgebraDimension[PartitionAlgebra[4]]
+  sage:
+    in: (PartitionAlgebra(4, enumeratio_delta, enumeratio_ring)).dimension()
+    out: "4140"
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:partition, 4))
+    out: "4140"
+c-6-planarity-cuts-203-down-to-132:
+  epsil:
+    in: AlgebraDimension(PlanarPartitionAlgebra(3))
+    out: "132"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{PlanarPartitionAlgebra}(3))
+    out: "132"
+  traditional:
+    in: \dim(PP_{3})
+    out: "132"
+  fullform:
+    in: AlgebraDimension[PlanarPartitionAlgebra[3]]
+  sage:
+    in: (PlanarAlgebra(3, enumeratio_delta, enumeratio_ring)).dimension()
+    out: "132"
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:planar, 3))
+    out: "132"
+a-block-of-three-is-a-partition-diagram-and:
+  epsil:
+    in: Diagram([[1, 2, -1], [3, -3], [-2]]) in PartitionAlgebra(3)
+    out: True
+  tex:
+    in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack, \bigl\lbrack-2\bigr\rbrack\bigr\rbrack)\in\mathrm{PartitionAlgebra}(3)
+    out: \top
+  traditional:
+    in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2, -1\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack, \bigl\lbrack-2\bigr\rbrack\bigr\rbrack)\in P_{3}
+    out: \mathrm{True}
+  fullform:
+    in: Element[Diagram[List[List[1, 2, -1], List[3, -3], List[-2]]], PartitionAlgebra[3]]
+  sage:
+    in: enumeratio_element(enumeratio_diagram([[1, 2, -1], [3, -3], [-2]]), PartitionAlgebra(3, enumeratio_delta, enumeratio_ring))
+    out: True

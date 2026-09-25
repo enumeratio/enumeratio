@@ -1,0 +1,18 @@
+the-principal-idele-7-at-every-place:
+  epsil:
+    in: Idele(7)
+    out: Idele(7, 7)
+  tex:
+    in: \mathrm{Idele}(7)
+    out: \mathrm{Idele}(7, 7)
+  fullform:
+    in: Idele[7]
+7-and-its-inverse-cancel-everywhere:
+  epsil:
+    in: Idele(7) * Idele(1 / 7)
+    out: Idele(1, 1)
+  tex:
+    in: \mathrm{Idele}(7)\mathrm{Idele}(\frac{1}{7})
+    out: \mathrm{Idele}(1, 1)
+  fullform:
+    in: Times[Idele[7], Idele[Rational[1, 7]]]

@@ -1,0 +1,686 @@
+zeta-2:
+  epsil:
+    in: Zeta(2)
+    out: 1 / 6 * Pi ^ 2
+  tex:
+    in: \zeta(2)
+    out: \frac{\pi^2}{6}
+  fullform:
+    in: Zeta[2]
+  wolfram:
+    in: Zeta[2]
+    out: Pi^2/6
+    tex:
+      in: \zeta (2)
+      out: \frac{\pi ^2}{6}
+  sympy:
+    in: zeta(2)
+    out: pi**2/6
+  mpmath:
+    in: zeta(2)
+    out: "1.64493406684822643647241516665"
+  sage:
+    in: zeta(2)
+    out: 1/6*pi^2
+zeta-4:
+  epsil:
+    in: Zeta(4)
+    out: 1 / 90 * Pi ^ 4
+  tex:
+    in: \zeta(4)
+    out: \frac{\pi^4}{90}
+  fullform:
+    in: Zeta[4]
+  wolfram:
+    in: Zeta[4]
+    out: Pi^4/90
+    tex:
+      in: \zeta (4)
+      out: \frac{\pi ^4}{90}
+  sympy:
+    in: zeta(4)
+    out: pi**4/90
+  mpmath:
+    in: zeta(4)
+    out: "1.08232323371113819151600369654"
+  sage:
+    in: zeta(4)
+    out: 1/90*pi^4
+zeta-6:
+  epsil:
+    in: Zeta(6)
+    out: 1 / 945 * Pi ^ 6
+  tex:
+    in: \zeta(6)
+    out: \frac{\pi^6}{945}
+  fullform:
+    in: Zeta[6]
+  wolfram:
+    in: Zeta[6]
+    out: Pi^6/945
+    tex:
+      in: \zeta (6)
+      out: \frac{\pi ^6}{945}
+  sympy:
+    in: zeta(6)
+    out: pi**6/945
+  mpmath:
+    in: zeta(6)
+    out: "1.01734306198444913971451792979"
+  sage:
+    in: zeta(6)
+    out: 1/945*pi^6
+threads-over-a-list-reducing-every-element-to:
+  epsil:
+    in: Zeta([-1, -2, -3])
+    out: "[-1 / 12, 0, 1 / 120]"
+  tex:
+    in: \zeta(\bigl\lbrack-1, -2, -3\bigr\rbrack)
+    out: \bigl\lbrack-\frac{1}{12}, 0, \frac{1}{120}\bigr\rbrack
+  fullform:
+    in: Zeta[List[-1, -2, -3]]
+  wolfram:
+    in: Zeta[List[-1, -2, -3]]
+    out: "{-1/12, 0, 1/120}"
+    tex:
+      in: \zeta (\{-1,-2,-3\})
+      out: \left\{-\frac{1}{12},0,\frac{1}{120}\right\}
+  sympy:
+    in: zeta([-1, -2, -3])
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: zeta([-1, -2, -3])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Zeta is Listable and threads over the list; Sage's takes scalars only.
+zeta-0-1-2:
+  epsil:
+    in: Zeta(0)
+    out: -1 / 2
+  tex:
+    in: \zeta(0)
+    out: -\frac{1}{2}
+  fullform:
+    in: Zeta[0]
+  wolfram:
+    in: Zeta[0]
+    out: -1/2
+    tex:
+      in: \zeta (0)
+      out: -\frac{1}{2}
+  sympy:
+    in: zeta(0)
+    out: -1/2
+  mpmath:
+    in: zeta(0)
+    out: "-0.5"
+  sage:
+    in: zeta(0)
+    out: -1/2
+trivial-zero-zeta-2n-0-for-positive-integer-n:
+  epsil:
+    in: Zeta(-2)
+    out: "0"
+  tex:
+    in: \zeta(-2)
+    out: "0"
+  fullform:
+    in: Zeta[-2]
+  wolfram:
+    in: Zeta[-2]
+    out: "0"
+    tex:
+      in: \zeta (-2)
+      out: "0"
+  sympy:
+    in: zeta(-2)
+    out: "0"
+  mpmath:
+    in: zeta(-2)
+    out: "0.0"
+  sage:
+    in: zeta(-2)
+    out: "0"
+zeta-3-b-4-4-1-120-via-the-bernoulli-number:
+  epsil:
+    in: Zeta(-3)
+    out: 1 / 120
+  tex:
+    in: \zeta(-3)
+    out: \frac{1}{120}
+  fullform:
+    in: Zeta[-3]
+  wolfram:
+    in: Zeta[-3]
+    out: 1/120
+    tex:
+      in: \zeta (-3)
+      out: \frac{1}{120}
+  sympy:
+    in: zeta(-3)
+    out: 1/120
+  mpmath:
+    in: zeta(-3)
+    out: "0.00833333333333333333333333333333"
+  sage:
+    in: zeta(-3)
+    out: 1/120
+pole-at-s-1-the-harmonic-series-sum-1-n-diverges:
+  epsil:
+    in: Zeta(1)
+    out: ComplexInfinity
+  tex:
+    in: \zeta(1)
+    out: \tilde\infty
+  fullform:
+    in: Zeta[1]
+  wolfram:
+    in: Zeta[1]
+    out: ComplexInfinity
+    tex:
+      in: \zeta (1)
+      out: \text{ComplexInfinity}
+  sympy:
+    in: zeta(1)
+    out: zoo
+  mpmath:
+    in: zeta(1)
+    out: "ValueError: zeta(1) pole"
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ValueError: zeta(1) pole."
+  sage:
+    in: zeta(1)
+    out: Infinity
+    verdict: disagree
+    kind: undefined-form
+    note: The pole is ComplexInfinity here; Sage's zeta(1) spells the same pole 'Infinity', a different notation for the same divergence.
+the-probability-that-two-random-positive:
+  epsil:
+    in: 1 / Zeta(2) == 6 / Pi ^ 2
+    out: True
+  tex:
+    in: \frac{1}{\zeta(2)}=\frac{6}{\pi^2}
+    out: \top
+  traditional:
+    in: \frac{1}{\zeta(2)}=\frac{6}{\pi^2}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Divide[1, Zeta[2]], Divide[6, Power[Pi, 2]]]
+  wolfram:
+    in: (Divide[1, Zeta[2]] == Divide[6, Power[Pi, 2]])
+    out: True
+    tex:
+      in: \frac{1}{\zeta (2)}=\frac{6}{\pi ^2}
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal((S(1) / zeta(2)), (S(6) / (pi**2)))
+    out: True
+  sage:
+    in: bool((1 / zeta(2)) == (6 / (pi^2)))
+    out: True
+odd-integers-geq-3-have-no-known-closed-form:
+  epsil:
+    in: Zeta(3)
+    out: Zeta(3)
+  tex:
+    in: \zeta(3)
+    out: \zeta(3)
+  fullform:
+    in: Zeta[3]
+  wolfram:
+    in: Zeta[3]
+    out: Zeta[3]
+    tex:
+      in: \zeta (3)
+      out: \zeta (3)
+  sympy:
+    in: zeta(3)
+    out: zeta(3)
+  mpmath:
+    in: zeta(3)
+    out: "1.20205690315959428539973816151"
+  sage:
+    in: zeta(3)
+    out: zeta(3)
+the-notorious-sum-of-all-positive-integers:
+  epsil:
+    in: Zeta(-1)
+    out: -1 / 12
+  tex:
+    in: \zeta(-1)
+    out: -\frac{1}{12}
+  fullform:
+    in: Zeta[-1]
+  wolfram:
+    in: Zeta[-1]
+    out: -1/12
+    tex:
+      in: \zeta (-1)
+      out: -\frac{1}{12}
+  sympy:
+    in: zeta(-1)
+    out: -1/12
+  mpmath:
+    in: zeta(-1)
+    out: "-0.0833333333333333333333333333333"
+  sage:
+    in: zeta(-1)
+    out: -1/12
+on-the-critical-line-zeta-1-2-14i-0-02224-0:
+  epsil:
+    in: N(Zeta(0.5 + 14i))
+    out: 0.022_241_142_609_993_59 + -0.103_258_123_266_450_06 * i
+  tex:
+    in: N(\zeta(0.5+14i))
+    out: 0.022\,241\,142\,609\,993\,59-0.103\,258\,123\,266\,450\,06i
+  fullform:
+    in: N[Zeta[Complex[0.5, 14]]]
+  wolfram:
+    in: N[Zeta[Complex[0.5, 14]]]
+    out: 0.022241142609994033 - 0.10325812326645277*I
+    tex:
+      in: N[\zeta (0.5\, +14 i)]
+      out: 0.0222411\, -0.103258 i
+  sympy:
+    in: N(zeta((0.5 + 14*I)), 30)
+    out: 0.0222411426099935888300862529832 - 0.103258123266450063670873760202*I
+  mpmath:
+    in: (zeta(mpc(0.5, 14)))
+    out: (0.022241142609993589246213199204 - 0.103258123266450057902363095553j)
+  sage:
+    in: N(zeta((0.5 + 14*I)))
+two-argument-zeta-s-a-via-enumeratio-analytic:
+  epsil:
+    in: Zeta(2, 1)
+    out: 1 / 6 * Pi ^ 2
+  tex:
+    in: \zeta(2, 1)
+    out: \frac{\pi^2}{6}
+  fullform:
+    in: Zeta[2, 1]
+  wolfram:
+    in: Zeta[2, 1]
+    out: Pi^2/6
+    tex:
+      in: \zeta (2,1)
+      out: \frac{\pi ^2}{6}
+  sympy:
+    in: zeta(2, 1)
+    out: pi**2/6
+  mpmath:
+    in: zeta(2, 1)
+    out: "1.64493406684822643647241516665"
+  sage:
+    in: hurwitz_zeta(2, 1)
+    out: 1/6*pi^2
+zeta-2-2-zeta-2-1-pi-2-6-1:
+  epsil:
+    in: Zeta(2, 2)
+    out: -1 + 1 / 6 * Pi ^ 2
+  tex:
+    in: \zeta(2, 2)
+    out: \frac{\pi^2}{6}-1
+  fullform:
+    in: Zeta[2, 2]
+  wolfram:
+    in: Zeta[2, 2]
+    out: -1 + Pi^2/6
+    tex:
+      in: \zeta (2,2)
+      out: \frac{\pi ^2}{6}-1
+  sympy:
+    in: zeta(2, 2)
+    out: -1 + pi**2/6
+  mpmath:
+    in: zeta(2, 2)
+    out: "0.644934066848226436472415166646"
+  sage:
+    in: hurwitz_zeta(2, 2)
+    out: 1/6*pi^2 - 1
+zeta-s-0-zeta-s-the-n-a-0-term-is-dropped-so:
+  epsil:
+    in: Zeta(2, 0)
+    out: 1 / 6 * Pi ^ 2
+  tex:
+    in: \zeta(2, 0)
+    out: \frac{\pi^2}{6}
+  fullform:
+    in: Zeta[2, 0]
+  wolfram:
+    in: Zeta[2, 0]
+    out: Pi^2/6
+    tex:
+      in: \zeta (2,0)
+      out: \frac{\pi ^2}{6}
+    note: This matches Wolfram's $\mathrm{Zeta}[s, a]$; Wolfram's $\mathrm{HurwitzZeta}[s, 0]$ instead diverges (ComplexInfinity).
+  sympy:
+    in: zeta(2, 0)
+    out: nan
+    verdict: inconclusive
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; SymPy's zeta(s, 0) is a pole.
+  mpmath:
+    in: zeta(2, 0)
+    out: "ZeroDivisionError: "
+    verdict: error
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; mpmath's zeta(s, 0) is a pole.
+  sage:
+    in: hurwitz_zeta(2, 0)
+    out: "ValueError: psi2_eval(): pole"
+    verdict: error
+    kind: convention
+    note: compute-engine's two-argument Zeta follows Wolfram's Zeta[s, a], which drops the a = 0 term; Sage's hurwitz_zeta(s, 0) is a pole.
+apery-s-constant-zeta-3-numerically:
+  epsil:
+    in: N(Zeta(3))
+    out: 1.202_056_903_159_594_285_4
+  tex:
+    in: N(\zeta(3))
+    out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[Zeta[3]]
+  wolfram:
+    in: N[Zeta[3]]
+  sympy:
+    in: N(zeta(3), 30)
+  mpmath:
+    in: (zeta(3))
+  sage:
+    in: N(zeta(3))
+a-machine-precision-argument:
+  epsil:
+    in: Zeta(1.5)
+    out: 2.612_375_348_685_488_343_35
+  tex:
+    in: \zeta(1.5)
+    out: 2.612\,375\,348\,685\,488\,343\,35
+  fullform:
+    in: Zeta[1.5]
+  wolfram:
+    in: Zeta[1.5]
+  sympy:
+    in: zeta(1.5)
+  mpmath:
+    in: zeta(1.5)
+  sage:
+    in: zeta(1.5)
+zeta-8-pi-8-9450:
+  epsil:
+    in: Zeta(8)
+    out: 1 / 9_450 * Pi ^ 8
+  tex:
+    in: \zeta(8)
+    out: \frac{\pi^8}{9\,450}
+  fullform:
+    in: Zeta[8]
+  wolfram:
+    in: Zeta[8]
+  sympy:
+    in: zeta(8)
+  mpmath:
+    in: zeta(8)
+  sage:
+    in: zeta(8)
+zeta-5-b-6-6-1-252:
+  epsil:
+    in: Zeta(-5)
+    out: -1 / 252
+  tex:
+    in: \zeta(-5)
+    out: -\frac{1}{252}
+  fullform:
+    in: Zeta[-5]
+  wolfram:
+    in: Zeta[-5]
+  sympy:
+    in: zeta(-5)
+  mpmath:
+    in: zeta(-5)
+  sage:
+    in: zeta(-5)
+arbitrary-real-arguments:
+  epsil:
+    in: Zeta(5.211_111_111_111_111)
+    out: 1.031_391_796_934_384_998_39
+  tex:
+    in: \zeta(5.211\,111\,111\,111\,111)
+    out: 1.031\,391\,796\,934\,384\,998\,39
+  fullform:
+    in: Zeta[5.211111111111111]
+  wolfram:
+    in: Zeta[5.211111111111111]
+  sympy:
+    in: zeta(5.211111111111111)
+  mpmath:
+    in: zeta(5.211111111111111)
+  sage:
+    in: zeta(5.211111111111111)
+left-of-the-critical-strip-via-the-functional:
+  epsil:
+    in: Zeta(-4.5)
+    out: -0.003_091_669_247_215_833_844_82
+  tex:
+    in: \zeta(-4.5)
+    out: -0.003\,091\,669\,247\,215\,833\,844\,82
+  fullform:
+    in: Zeta[-4.5]
+  wolfram:
+    in: Zeta[-4.5]
+  sympy:
+    in: zeta(-4.5)
+  mpmath:
+    in: zeta(-4.5)
+  sage:
+    in: zeta(-4.5)
+complex-s-under-n:
+  epsil:
+    in: N(Zeta(2 + -5 * i))
+    out: 0.850_962_943_624_262_8 + -0.098_996_946_134_831_25 * i
+  tex:
+    in: N(\zeta(2-5i))
+    out: 0.850\,962\,943\,624\,262\,8-0.098\,996\,946\,134\,831\,25i
+  fullform:
+    in: N[Zeta[Complex[2, -5]]]
+  wolfram:
+    in: N[Zeta[Complex[2, -5]]]
+  sympy:
+    in: N(zeta((2 + -5*I)), 30)
+  mpmath:
+    in: (zeta(mpc(2, -5)))
+  sage:
+    in: N(zeta((2 + -5*I)))
+zeta-infty-1-only-the-n-1-term-survives:
+  epsil:
+    in: Zeta(PositiveInfinity)
+    out: "1"
+  tex:
+    in: \zeta(\infty)
+    out: "1"
+  fullform:
+    in: Zeta[Infinity]
+  wolfram:
+    in: Zeta[Infinity]
+two-arguments-at-a-nonpositive-integer-s-zeta-1:
+  epsil:
+    in: Zeta(-1, 5)
+    out: -121 / 12
+  tex:
+    in: \zeta(-1, 5)
+    out: -\frac{121}{12}
+  fullform:
+    in: Zeta[-1, 5]
+  wolfram:
+    in: Zeta[-1, 5]
+  sympy:
+    in: zeta(-1, 5)
+  mpmath:
+    in: zeta(-1, 5)
+  sage:
+    in: hurwitz_zeta(-1, 5)
+two-arguments-inexact:
+  epsil:
+    in: Zeta(-1.5, 5)
+    out: -17.050_064_749_342_655_014_129_5
+  tex:
+    in: \zeta(-1.5, 5)
+    out: -17.050\,064\,749\,342\,655\,014\,1
+  fullform:
+    in: Zeta[-1.5, 5]
+  wolfram:
+    in: Zeta[-1.5, 5]
+  sympy:
+    in: zeta(-1.5, 5)
+  mpmath:
+    in: zeta(-1.5, 5)
+  sage:
+    in: hurwitz_zeta(-1.5, 5)
+two-complex-arguments-under-n-to-ten-digits:
+  epsil:
+    in: N(Zeta(-1.5 + i, 2.5 + -1 * i), 10)
+    out: 0.018_486_809_19 + 1.675_533_784i
+  tex:
+    in: N(\zeta(-1.5+i, 2.5-i), 10)
+    out: 0.018\,486\,809\,19+1.675\,533\,784i
+  fullform:
+    in: N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]
+  wolfram:
+    in: N[Zeta[Complex[-1.5, 1], Complex[2.5, -1]], 10]
+  sympy:
+    in: N(zeta((-1.5 + 1*I), (2.5 + -1*I)), 30)
+  mpmath:
+    in: (zeta(mpc(-1.5, 1), mpc(2.5, -1)))
+  sage:
+    in: N(hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I)))
+which-with-inexact-complex-arguments-should:
+  epsil:
+    in: Zeta(-1.5 + i, 2.5 + -1 * i)
+    out: 0.018_486_809_193_810_65 + 1.675_533_784_301_766i
+  tex:
+    in: \zeta(-1.5+i, 2.5-i)
+    out: 0.018\,486\,809\,193\,810\,65+1.675\,533\,784\,301\,766i
+  fullform:
+    in: Zeta[Complex[-1.5, 1], Complex[2.5, -1]]
+  wolfram:
+    in: Zeta[Complex[-1.5, 1], Complex[2.5, -1]]
+  sympy:
+    in: zeta((-1.5 + 1*I), (2.5 + -1*I))
+  mpmath:
+    in: zeta(mpc(-1.5, 1), mpc(2.5, -1))
+  sage:
+    in: hurwitz_zeta((-1.5 + 1*I), (2.5 + -1*I))
+zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of:
+  epsil:
+    in: Zeta(20, 1 / 2)
+    out: 221_930_581 / 1_856_156_927_625 * Pi ^ 20
+  tex:
+    in: \zeta(20, \frac{1}{2})
+    out: \frac{221\,930\,581\pi^{20}}{1\,856\,156\,927\,625}
+  fullform:
+    in: Zeta[20, Rational[1, 2]]
+  wolfram:
+    in: Zeta[20, Rational[1, 2]]
+  sympy:
+    in: zeta(20, Rational(1, 2))
+  sage:
+    in: hurwitz_zeta(20, (1/2))
+zeta-2-1-2-3-zeta-2-pi-2-2:
+  epsil:
+    in: Zeta(2, 1 / 2)
+    out: 1 / 2 * Pi ^ 2
+  tex:
+    in: \zeta(2, \frac{1}{2})
+    out: \frac{\pi^2}{2}
+  fullform:
+    in: Zeta[2, Rational[1, 2]]
+  wolfram:
+    in: Zeta[2, Rational[1, 2]]
+  sympy:
+    in: zeta(2, Rational(1, 2))
+  sage:
+    in: hurwitz_zeta(2, (1/2))
+interval-arithmetic-zeta-is-decreasing-on-1:
+  epsil:
+    in: Zeta(Interval(1.1, 1.2))
+    out: Interval(5.591_582_441_177_752, 10.584_448_464_950_801)
+  tex:
+    in: \zeta(\mathrm{Interval}(1.1, 1.2))
+    out: \mathrm{Interval}(5.591\,582\,441\,177\,752, 10.584\,448\,464\,950\,801)
+  fullform:
+    in: Zeta[Interval[List[1.1, 1.2]]]
+  wolfram:
+    in: Zeta[Interval[List[1.1, 1.2]]]
+uncertainty-in-a-propagated-with-partial-a-zeta:
+  epsil:
+    in: Zeta(1 / 2, Around(0.5, 0.01))
+    out: Around(-0.604_898_643_421_630_4, 0.023_882_689_737_774_167)
+  tex:
+    in: \zeta(\frac{1}{2}, \mathrm{Around}(0.5, 0.01))
+    out: \mathrm{Around}(-0.604\,898\,643\,421\,630\,4, 0.023\,882\,689\,737\,774\,167)
+  fullform:
+    in: Zeta[Rational[1, 2], Around[0.5, 0.01]]
+  wolfram:
+    in: Zeta[Rational[1, 2], Around[0.5, 0.01]]
+zeta-s-1-zeta-s-for-symbolic-s:
+  epsil:
+    in: Zeta(s, 1)
+    out: Zeta(s)
+  tex:
+    in: \zeta(s, 1)
+    out: \zeta(s)
+  fullform:
+    in: Zeta[s, 1]
+to-40-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Zeta(3), 40)
+    out: 1.202_056_903_159_594_285_399_738_161_511_449_990_765
+  tex:
+    in: N(\zeta(3), 40)
+    out: 1.202\,056\,903\,159\,594\,285\,4
+  fullform:
+    in: N[Zeta[3], 40]
+  wolfram:
+    in: N[Zeta[3], 40]
+  sympy:
+    in: N(zeta(3), 30)
+  mpmath:
+    in: (zeta(3))
+  sage:
+    in: N(zeta(3))
+zeta-3-1-2-8-zeta-3-1-2-under-wolfram-s:
+  epsil:
+    in: N(Zeta(3, -1 / 2))
+    out: 16.414_398_322_117_159_997_8
+  tex:
+    in: N(\zeta(3, -\frac{1}{2}))
+    out: 16.414\,398\,322\,117\,159\,997\,8
+  fullform:
+    in: N[Zeta[3, Rational[-1, 2]]]
+  wolfram:
+    in: N[Zeta[3, Rational[-1, 2]]]
+  sympy:
+    in: N(zeta(3, Rational(-1, 2)), 30)
+  sage:
+    in: N(hurwitz_zeta(3, (-1/2)))
+zeta-1-2-35-12-exactly-but-at-a-negative-a-this:
+  epsil:
+    in: N(Zeta(-1, -2))
+    out: 2.916_666_666_666_666_666_67
+  tex:
+    in: N(\zeta(-1, -2))
+    out: 2.91\overline{6}
+  fullform:
+    in: N[Zeta[-1, -2]]
+  wolfram:
+    in: N[Zeta[-1, -2]]
+  sympy:
+    in: N(zeta(-1, -2), 30)
+  mpmath:
+    in: (zeta(-1, -2))
+  sage:
+    in: N(hurwitz_zeta(-1, -2))

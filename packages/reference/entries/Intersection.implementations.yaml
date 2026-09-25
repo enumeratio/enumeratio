@@ -1,0 +1,172 @@
+intersection-list-1-2-3-list-2-3-4:
+  epsil:
+    in: Intersection([1, 2, 3], [2, 3, 4])
+    out: "{2, 3}"
+  tex:
+    in: \bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack
+    out: \lbrace2, 3\rbrace
+  fullform:
+    in: Intersection[List[1, 2, 3], List[2, 3, 4]]
+  wolfram:
+    in: Intersection[List[1, 2, 3], List[2, 3, 4]]
+    out: "{2, 3}"
+    tex:
+      in: \{1,2,3\}\cap \{2,3,4\}
+      out: \{2,3\}
+intersection-list-1-2-3-4-list-2-3-4-5:
+  epsil:
+    in: Intersection([1, 2, 3, 4], [2, 3, 4, 5])
+    out: "{2, 3, 4}"
+  tex:
+    in: \bigl\lbrack1, 2, 3, 4\bigr\rbrack\cap\bigl\lbrack2, 3, 4, 5\bigr\rbrack
+    out: \lbrace2, 3, 4\rbrace
+  fullform:
+    in: Intersection[List[1, 2, 3, 4], List[2, 3, 4, 5]]
+  wolfram:
+    in: Intersection[List[1, 2, 3, 4], List[2, 3, 4, 5]]
+    out: "{2, 3, 4}"
+    tex:
+      in: \{1,2,3,4\}\cap \{2,3,4,5\}
+      out: \{2,3,4\}
+with-three-or-more-collections-only-elements:
+  epsil:
+    in: Intersection([1, 2, 3], [2, 3, 4], [2, 3, 5])
+    out: "{2, 3}"
+  tex:
+    in: \bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack\cap\bigl\lbrack2, 3, 5\bigr\rbrack
+    out: \lbrace2, 3\rbrace
+  fullform:
+    in: Intersection[List[1, 2, 3], List[2, 3, 4], List[2, 3, 5]]
+  wolfram:
+    in: Intersection[List[1, 2, 3], List[2, 3, 4], List[2, 3, 5]]
+    out: "{2, 3}"
+    tex:
+      in: \{1,2,3\}\cap \{2,3,4\}\cap \{2,3,5\}
+      out: \{2,3\}
+intersection-is-idempotent-a-cap-a-a:
+  epsil:
+    in: Intersection({1, 2, 3}, {1, 2, 3}) == {1, 2, 3}
+    out: True
+  tex:
+    in: \lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace
+    out: \top
+  traditional:
+    in: \lbrace1, 2, 3\rbrace\cap\lbrace1, 2, 3\rbrace=\lbrace1, 2, 3\rbrace
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Intersection[Union[List[1, 2, 3]], Union[List[1, 2, 3]]], Union[List[1, 2, 3]]]
+    back: [Equal, [Intersection, [Union, [List, 1, 2, 3]], [Union, [List, 1, 2, 3]]], [Union, [List, 1, 2, 3]]]
+  wolfram:
+    in: (Intersection[Union[List[1, 2, 3]], Union[List[1, 2, 3]]] == Union[List[1, 2, 3]])
+    out: True
+    tex:
+      in: \text{Union}[\{1,2,3\}]\cap \text{Union}[\{1,2,3\}]=\text{Union}[\{1,2,3\}]
+      out: \text{True}
+the-same-inclusion-exclusion-count-rearranged-a:
+  epsil:
+    in: |-
+      Length([1, 2, 3]) + Length([2, 3, 4]) == Length(Union([1, 2, 3], [2, 3, 4])) +
+                                               Length(Intersection(
+                                                                    [1, 2, 3],
+                                                                    [2, 3, 4],
+                                                                  ))
+    out: True
+  tex:
+    in: \mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)
+    out: \top
+  traditional:
+    in: \mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack2, 3, 4\bigr\rbrack)=\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cup\bigl\lbrack2, 3, 4\bigr\rbrack)+\mathrm{Length}(\bigl\lbrack1, 2, 3\bigr\rbrack\cap\bigl\lbrack2, 3, 4\bigr\rbrack)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Plus[Length[Union[List[1, 2, 3], List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]]]
+  wolfram:
+    in: (Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]] == Plus[Length[Union[List[1, 2, 3], List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])
+    out: True
+    tex:
+      in: \text{Length}[\{1,2,3\}]+\text{Length}[\{2,3,4\}]=\text{Length}[\{1,2,3\}\cup \{2,3,4\}]+\text{Length}[\{1,2,3\}\cap \{2,3,4\}]
+      out: \text{True}
+disjoint-collections-intersect-to-the-special:
+  epsil:
+    in: Intersection([1, 2], [3, 4])
+    out: EmptySet
+  tex:
+    in: \operatorname{List}(1, 2)\cap\operatorname{List}(3, 4)
+    out: \emptyset
+  fullform:
+    in: Intersection[List[1, 2], List[3, 4]]
+  wolfram:
+    in: Intersection[List[1, 2], List[3, 4]]
+    out: "{}"
+    tex:
+      in: \{1,2\}\cap \{3,4\}
+      out: \{\}
+    verdict: disagree
+    kind: shape
+    note: An empty result is the symbol EmptySet here and the empty list {} in Wolfram.
+the-divisors-common-to-45-and-78:
+  epsil:
+    in: Intersection(Divisors(45), Divisors(78))
+    out: "{1, 3}"
+  tex:
+    in: \mathrm{Divisors}(45)\cap\mathrm{Divisors}(78)
+    out: \lbrace1, 3\rbrace
+  fullform:
+    in: Intersection[Divisors[45], Divisors[78]]
+  wolfram:
+    in: Intersection[Divisors[45], Divisors[78]]
+    out: "{1, 3}"
+    tex:
+      in: \text{Divisors}[45]\cap \text{Divisors}[78]
+      out: \{1,3\}
+duplicates-are-dropped-as-well:
+  epsil:
+    in: Intersection([1, 1, 2, 3], [3, 1, 4], [4, 1, 3, 3])
+    out: "{1, 3}"
+  tex:
+    in: \bigl\lbrack1, 1, 2, 3\bigr\rbrack\cap\bigl\lbrack3, 1, 4\bigr\rbrack\cap\bigl\lbrack4, 1, 3, 3\bigr\rbrack
+    out: \lbrace1, 3\rbrace
+  fullform:
+    in: Intersection[List[1, 1, 2, 3], List[3, 1, 4], List[4, 1, 3, 3]]
+  wolfram:
+    in: Intersection[List[1, 1, 2, 3], List[3, 1, 4], List[4, 1, 3, 3]]
+symbolic-elements:
+  epsil:
+    in: Intersection([a, b, c], [b, c, d])
+    out: "{b, c}"
+  tex:
+    in: \bigl\lbrack a, b, c\bigr\rbrack\cap\bigl\lbrack b, c, d\bigr\rbrack
+    out: \lbrace b, c\rbrace
+  fullform:
+    in: Intersection[List[a, b, c], List[b, c, d]]
+a-single-collection-comes-back-as-a-set:
+  epsil:
+    in: Intersection([1, 2, 3])
+    out: "{1, 2, 3}"
+  tex:
+    in: \mathrm{Intersection}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \lbrace1, 2, 3\rbrace
+  fullform:
+    in: Intersection[List[1, 2, 3]]
+  wolfram:
+    in: Intersection[List[1, 2, 3]]
+intersecting-with-the-empty-set-gives-the-empty:
+  epsil:
+    in: Intersection([1, 2, 3], EmptySet)
+    out: EmptySet
+  tex:
+    in: \bigl\lbrack1, 2, 3\bigr\rbrack\cap\emptyset
+    out: \emptyset
+  fullform:
+    in: Intersection[List[1, 2, 3], EmptySet]
+the-result-keeps-the-order-elements-were-met-in:
+  epsil:
+    in: Intersection([c, b, a], [a, b])
+    out: "{b, a}"
+  tex:
+    in: \bigl\lbrack c, b, a\bigr\rbrack\cap\operatorname{List}(a, b)
+    out: \lbrace b, a\rbrace
+  fullform:
+    in: Intersection[List[c, b, a], List[a, b]]
+  wolfram:
+    in:
+    note: "Wolfram sorts the result: Intersection[{c, b, a}, {a, b}] is {a, b}."

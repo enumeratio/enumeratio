@@ -1,0 +1,281 @@
+g-5-0-1-2-3-12:
+  epsil:
+    in: BarnesG(5)
+    out: "12"
+  tex:
+    in: \mathrm{BarnesG}(5)
+    out: "12"
+  traditional:
+    in: G(5)
+    out: "12"
+  fullform:
+    in: BarnesG[5]
+  wolfram:
+    in: BarnesG[5]
+    out: "12"
+    tex:
+      in: G(5)
+      out: "12"
+g-7-34560:
+  epsil:
+    in: BarnesG(7)
+    out: 34_560
+  tex:
+    in: \mathrm{BarnesG}(7)
+    out: 34\,560
+  traditional:
+    in: G(7)
+    out: 34\,560
+  fullform:
+    in: BarnesG[7]
+  wolfram:
+    in: BarnesG[7]
+    out: "34560"
+    tex:
+      in: G(7)
+      out: "34560"
+the-superfactorials-threaded-over-a-list:
+  epsil:
+    in: BarnesG([1, 2, 3, 4, 5, 6])
+    out: "[1, 1, 1, 2, 12, 288]"
+  tex:
+    in: \mathrm{BarnesG}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack)
+    out: \bigl\lbrack1, 1, 1, 2, 12, 288\bigr\rbrack
+  fullform:
+    in: BarnesG[List[1, 2, 3, 4, 5, 6]]
+  wolfram:
+    in: BarnesG[List[1, 2, 3, 4, 5, 6]]
+    out: "{1, 1, 1, 2, 12, 288}"
+    tex:
+      in: G(\{1,2,3,4,5,6\})
+      out: \{1,1,1,2,12,288\}
+g-vanishes-at-the-nonpositive-integers:
+  epsil:
+    in: BarnesG(0)
+    out: "0"
+  tex:
+    in: \mathrm{BarnesG}(0)
+    out: "0"
+  traditional:
+    in: G(0)
+    out: "0"
+  fullform:
+    in: BarnesG[0]
+  wolfram:
+    in: BarnesG[0]
+    out: "0"
+    tex:
+      in: G(0)
+      out: "0"
+all-of-them:
+  epsil:
+    in: BarnesG(-3)
+    out: "0"
+  tex:
+    in: \mathrm{BarnesG}(-3)
+    out: "0"
+  traditional:
+    in: G(-3)
+    out: "0"
+  fullform:
+    in: BarnesG[-3]
+  wolfram:
+    in: BarnesG[-3]
+    out: "0"
+    tex:
+      in: G(-3)
+      out: "0"
+a-floating-point-argument-evaluates-numerically:
+  epsil:
+    in: BarnesG(2.5)
+    out: 0.947_573_901_084_062_7
+  tex:
+    in: \mathrm{BarnesG}(2.5)
+    out: 0.947\,573\,901\,084\,062\,7
+  traditional:
+    in: G(2.5)
+    out: 0.947\,573\,901\,084\,062\,7
+  fullform:
+    in: BarnesG[2.5]
+  wolfram:
+    in: BarnesG[2.5]
+    out: "0.947573901083827"
+    tex:
+      in: G(2.5)
+      out: "0.947574"
+an-exact-non-integer-argument-stays-symbolic:
+  epsil:
+    in: BarnesG(5 / 2)
+    out: BarnesG(5 / 2)
+  tex:
+    in: \mathrm{BarnesG}(\frac{5}{2})
+    out: \mathrm{BarnesG}(\frac{5}{2})
+  traditional:
+    in: G(\frac{5}{2})
+    out: G(\frac{5}{2})
+  fullform:
+    in: BarnesG[Rational[5, 2]]
+  wolfram:
+    in: BarnesG[Rational[5, 2]]
+    out: (E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))
+    tex:
+      in: G\left(\frac{5}{2}\right)
+      out: \frac{\sqrt[8]{e} \pi ^{3/4}}{2^{23/24} A^{3/2}}
+    verdict: disagree
+    kind: unevaluated
+    note: An exact non-integer argument stays symbolic here; Wolfram continues to a closed form in Glaisher's constant.
+g-10-prod-k-0-8-k-exact:
+  epsil:
+    in: BarnesG(10)
+    out: 5_056_584_744_960_000
+  tex:
+    in: \mathrm{BarnesG}(10)
+    out: 5\,056\,584\,744\,960\,000
+  traditional:
+    in: G(10)
+    out: 5\,056\,584\,744\,960\,000
+  fullform:
+    in: BarnesG[10]
+  wolfram:
+    in: BarnesG[10]
+g-3-0-1-1:
+  epsil:
+    in: BarnesG(3)
+    out: "1"
+  tex:
+    in: \mathrm{BarnesG}(3)
+    out: "1"
+  traditional:
+    in: G(3)
+    out: "1"
+  fullform:
+    in: BarnesG[3]
+  wolfram:
+    in: BarnesG[3]
+g-frac-12-to-machine-precision:
+  epsil:
+    in: BarnesG(0.5)
+    out: 0.603_244_281_209_589_3
+  tex:
+    in: \mathrm{BarnesG}(0.5)
+    out: 0.603\,244\,281\,209\,589\,3
+  traditional:
+    in: G(0.5)
+    out: 0.603\,244\,281\,209\,589\,3
+  fullform:
+    in: BarnesG[0.5]
+  wolfram:
+    in: BarnesG[0.5]
+complex-arguments:
+  epsil:
+    in: BarnesG(1.3 + i)
+    out: 1.444_613_935_050_315_3 + -0.298_548_825_211_568_7 * i
+  tex:
+    in: \mathrm{BarnesG}(1.3+i)
+    out: 1.444\,613\,935\,050\,315\,3-0.298\,548\,825\,211\,568\,7i
+  traditional:
+    in: G(1.3+i)
+    out: 1.444\,613\,935\,050\,315\,3-0.298\,548\,825\,211\,568\,7i
+  fullform:
+    in: BarnesG[Complex[1.3, 1]]
+  wolfram:
+    in: BarnesG[Complex[1.3, 1]]
+negative-non-integer-arguments-between-the-zeros:
+  epsil:
+    in: BarnesG(-2.5)
+    out: 0.076_172_979_656_884_05
+  tex:
+    in: \mathrm{BarnesG}(-2.5)
+    out: 0.076\,172\,979\,656\,884\,05
+  traditional:
+    in: G(-2.5)
+    out: 0.076\,172\,979\,656\,884\,05
+  fullform:
+    in: BarnesG[-2.5]
+  wolfram:
+    in: BarnesG[-2.5]
+threads-elementwise-over-an-array:
+  epsil:
+    in: BarnesG([[1 / 2, 1], [1, 1 / 2]])
+    out: "[[BarnesG(1 / 2), 1], [1, BarnesG(1 / 2)]]"
+  tex:
+    in: \mathrm{BarnesG}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack1, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\mathrm{BarnesG}(\frac{1}{2}), 1\bigr\rbrack, \bigl\lbrack1, \mathrm{BarnesG}(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+  traditional:
+    in: \mathrm{BarnesG}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, 1\bigr\rbrack, \bigl\lbrack1, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack G(\frac{1}{2}), 1\bigr\rbrack, \bigl\lbrack1, G(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: BarnesG[List[List[Rational[1, 2], 1], List[1, Rational[1, 2]]]]
+  wolfram:
+    in: BarnesG[List[List[Rational[1, 2], 1], List[1, Rational[1, 2]]]]
+    note: Wolfram also threads, but writes $G(\tfrac12)$ as its closed form $2^{1/24} e^{1/8} \pi^{-1/4} A^{-3/2}$ in Glaisher's constant.
+g-infty-infty:
+  epsil:
+    in: BarnesG(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{BarnesG}(\infty)
+    out: \infty
+  traditional:
+    in: G(\infty)
+    out: \infty
+  fullform:
+    in: BarnesG[Infinity]
+  wolfram:
+    in: BarnesG[Infinity]
+interval-arithmetic-g-is-increasing-on-1-17-1-18:
+  epsil:
+    in: BarnesG(Interval(1.17, 1.18))
+    out: Interval(1.052_216_328_686_194_3, 1.054_193_606_435_691)
+  tex:
+    in: \mathrm{BarnesG}(\mathrm{Interval}(1.17, 1.18))
+    out: \mathrm{Interval}(1.052\,216\,328\,686\,194\,3, 1.054\,193\,606\,435\,691)
+  traditional:
+    in: G(\mathrm{Interval}(1.17, 1.18))
+    out: \mathrm{Interval}(1.052\,216\,328\,686\,194\,3, 1.054\,193\,606\,435\,691)
+  fullform:
+    in: BarnesG[Interval[List[1.17, 1.18]]]
+  wolfram:
+    in: BarnesG[Interval[List[1.17, 1.18]]]
+uncertainty-propagation-g-2-1-pm-0-01-0-98477-pm:
+  epsil:
+    in: BarnesG(Around(2.1, 0.01))
+    out: Around(0.984_772_724_354_046_5, 0.001_449_505_695_943_639)
+  tex:
+    in: \mathrm{BarnesG}(\mathrm{Around}(2.1, 0.01))
+    out: \mathrm{Around}(0.984\,772\,724\,354\,046\,5, 0.001\,449\,505\,695\,943\,639)
+  traditional:
+    in: G(\mathrm{Around}(2.1, 0.01))
+    out: \mathrm{Around}(0.984\,772\,724\,354\,046\,5, 0.001\,449\,505\,695\,943\,639)
+  fullform:
+    in: BarnesG[Around[2.1, 0.01]]
+  wolfram:
+    in: BarnesG[Around[2.1, 0.01]]
+the-hyperfactorial-h-n-gamma-n-1-n-g-n-1-here:
+  epsil:
+    in: Gamma(6) ^ 5 / BarnesG(6)
+    out: 86_400_000
+  tex:
+    in: \frac{\Gamma(6)^5}{\mathrm{BarnesG}(6)}
+    out: 86\,400\,000
+  traditional:
+    in: \frac{\Gamma(6)^5}{G(6)}
+    out: 86\,400\,000
+  fullform:
+    in: Divide[Power[Gamma[6], 5], BarnesG[6]]
+  wolfram:
+    in: Divide[Power[Gamma[6], 5], BarnesG[6]]
+to-30-significant-digits-not-yet-the-requested:
+  epsil:
+    in: N(BarnesG(1 / 2), 30)
+    out: 0.603_244_281_209_446_206_191_429_224_535
+  tex:
+    in: N(\mathrm{BarnesG}(\frac{1}{2}), 30)
+    out: 0.603\,244\,281\,209\,446\,206\,191
+  traditional:
+    in: N(G(\frac{1}{2}), 30)
+    out: 0.603\,244\,281\,209\,446\,206\,191
+  fullform:
+    in: N[BarnesG[Rational[1, 2]], 30]
+  wolfram:
+    in: N[BarnesG[Rational[1, 2]], 30]

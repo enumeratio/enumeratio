@@ -1,0 +1,9 @@
+the-partition-1-3-mid-2-as-a-plain-list:
+  epsil:
+    in: BlocksAtLeastTwo([[1, 3], [2]])
+    out: "1"
+  tex:
+    in: \mathrm{BlocksAtLeastTwo}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: BlocksAtLeastTwo[List[List[1, 3], List[2]]]

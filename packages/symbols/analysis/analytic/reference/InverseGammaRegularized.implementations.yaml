@@ -1,0 +1,60 @@
+q-1-z-e-z-so-the-inverse-at-1-2-is-ln-2:
+  epsil:
+    in: InverseGammaRegularized(1, 0.5)
+    out: 0.693_147_180_559_945_3
+  tex:
+    in: \mathrm{InverseGammaRegularized}(1, 0.5)
+    out: 0.693\,147\,180\,559\,945\,3
+  fullform:
+    in: InverseGammaRegularized[1, 0.5]
+  wolfram:
+    in: InverseGammaRegularized[1, 0.5]
+the-median-of-the-gamma-2-1-distribution:
+  epsil:
+    in: InverseGammaRegularized(2, 0.5)
+    out: 1.678_346_990_016_660_8
+  tex:
+    in: \mathrm{InverseGammaRegularized}(2, 0.5)
+    out: 1.678\,346\,990\,016\,660\,8
+  fullform:
+    in: InverseGammaRegularized[2, 0.5]
+  wolfram:
+    in: InverseGammaRegularized[2, 0.5]
+inversegammaregularized-2p5-0p3:
+  epsil:
+    in: InverseGammaRegularized(2.5, 0.3)
+    out: 3.032_214_992_077_453
+  tex:
+    in: \mathrm{InverseGammaRegularized}(2.5, 0.3)
+    out: 3.032\,214\,992\,077\,453
+  fullform:
+    in: InverseGammaRegularized[2.5, 0.3]
+  wolfram:
+    in: InverseGammaRegularized[2.5, 0.3]
+q-a-0-1:
+  epsil:
+    in: InverseGammaRegularized(a, 1)
+    out: "0"
+  tex:
+    in: \mathrm{InverseGammaRegularized}(a, 1)
+    out: "0"
+  fullform:
+    in: InverseGammaRegularized[a, 1]
+q-a-infty-0:
+  epsil:
+    in: InverseGammaRegularized(a, 0)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{InverseGammaRegularized}(a, 0)
+    out: \infty
+  fullform:
+    in: InverseGammaRegularized[a, 0]
+order-1-inverts-e-z:
+  epsil:
+    in: InverseGammaRegularized(1, s)
+    out: -Ln(s)
+  tex:
+    in: \mathrm{InverseGammaRegularized}(1, s)
+    out: -\ln(s)
+  fullform:
+    in: InverseGammaRegularized[1, s]

@@ -1,0 +1,27 @@
+one-descent-at-position-1:
+  epsil:
+    in: MajorIndex([3, 1, 2])
+    out: "1"
+  tex:
+    in: \mathrm{MajorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: MajorIndex[List[3, 1, 2]]
+descents-at-positions-1-and-2:
+  epsil:
+    in: MajorIndex([3, 2, 1])
+    out: "3"
+  tex:
+    in: \mathrm{MajorIndex}(\bigl\lbrack3, 2, 1\bigr\rbrack)
+    out: "3"
+  fullform:
+    in: MajorIndex[List[3, 2, 1]]
+no-descents:
+  epsil:
+    in: MajorIndex([1, 2, 3])
+    out: "0"
+  tex:
+    in: \mathrm{MajorIndex}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: MajorIndex[List[1, 2, 3]]

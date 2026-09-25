@@ -1,0 +1,38 @@
+euler-s-formula:
+  epsil:
+    in: ExpToTrig(Exp(ImaginaryUnit * x))
+    out: i * Sin(x) + Cos(x)
+  tex:
+    in: \mathrm{ExpToTrig}(\exp(i x))
+    out: i\sin(x)+\cos(x)
+  fullform:
+    in: ExpToTrig[Exp[Times[I, x]]]
+a-real-exponential-splits-into-hyperbolic-parts:
+  epsil:
+    in: ExpToTrig(Exp(x))
+    out: Sinh(x) + Cosh(x)
+  tex:
+    in: \mathrm{ExpToTrig}(e^{x})
+    out: \sinh(x)+\cosh(x)
+  fullform:
+    in: ExpToTrig[Exp[x]]
+recognizes-cosh:
+  epsil:
+    in: ExpToTrig((Exp(x) + Exp(-x)) / 2)
+    out: Cosh(x)
+  tex:
+    in: \mathrm{ExpToTrig}(\frac{1}{2}(e^{x}+\exp(-x)))
+    out: \cosh(x)
+  fullform:
+    in: ExpToTrig[Divide[Plus[Exp[x], Exp[Minus[x]]], 2]]
+recognizes-sin:
+  epsil:
+    in: |-
+      ExpToTrig((Exp(ImaginaryUnit * x) - Exp(-(ImaginaryUnit * x))) /
+                (2ImaginaryUnit))
+    out: Sin(x)
+  tex:
+    in: \mathrm{ExpToTrig}(\frac{\exp(i x)-\exp(-(i x))}{2i})
+    out: \sin(x)
+  fullform:
+    in: ExpToTrig[Divide[Subtract[Exp[Times[I, x]], Exp[Minus[Times[I, x]]]], Times[2, I]]]

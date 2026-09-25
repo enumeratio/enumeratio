@@ -1,0 +1,443 @@
+lucasl-0:
+  epsil:
+    in: LucasL(0)
+    out: "2"
+  tex:
+    in: \mathrm{LucasL}(0)
+    out: "2"
+  traditional:
+    in: L_{0}
+    out: "2"
+  fullform:
+    in: LucasL[0]
+  wolfram:
+    in: LucasL[0]
+    out: "2"
+    tex:
+      in: L_0
+      out: "2"
+  sympy:
+    in: lucas(0)
+    out: "2"
+  sage:
+    in: lucas_number2(0, 1, -1)
+    out: "2"
+  julia:
+    in: Combinatorics.lucasnum(0)
+    out: "2"
+lucasl-1:
+  epsil:
+    in: LucasL(1)
+    out: "1"
+  tex:
+    in: \mathrm{LucasL}(1)
+    out: "1"
+  traditional:
+    in: L_{1}
+    out: "1"
+  fullform:
+    in: LucasL[1]
+  wolfram:
+    in: LucasL[1]
+    out: "1"
+    tex:
+      in: L_1
+      out: "1"
+  sympy:
+    in: lucas(1)
+    out: "1"
+  sage:
+    in: lucas_number2(1, 1, -1)
+    out: "1"
+  julia:
+    in: Combinatorics.lucasnum(1)
+    out: "1"
+lucasl-5:
+  epsil:
+    in: LucasL(5)
+    out: "11"
+  tex:
+    in: \mathrm{LucasL}(5)
+    out: "11"
+  traditional:
+    in: L_{5}
+    out: "11"
+  fullform:
+    in: LucasL[5]
+  wolfram:
+    in: LucasL[5]
+    out: "11"
+    tex:
+      in: L_5
+      out: "11"
+  sympy:
+    in: lucas(5)
+    out: "11"
+  sage:
+    in: lucas_number2(5, 1, -1)
+    out: "11"
+  julia:
+    in: Combinatorics.lucasnum(5)
+    out: "11"
+lucasl-10:
+  epsil:
+    in: LucasL(10)
+    out: "123"
+  tex:
+    in: \mathrm{LucasL}(10)
+    out: "123"
+  traditional:
+    in: L_{10}
+    out: "123"
+  fullform:
+    in: LucasL[10]
+  wolfram:
+    in: LucasL[10]
+    out: "123"
+    tex:
+      in: L_{10}
+      out: "123"
+  sympy:
+    in: lucas(10)
+    out: "123"
+  sage:
+    in: lucas_number2(10, 1, -1)
+    out: "123"
+  julia:
+    in: Combinatorics.lucasnum(10)
+    out: "123"
+exact-at-any-size:
+  epsil:
+    in: LucasL(100)
+    out: 792_070_839_848_372_253_127
+  tex:
+    in: \mathrm{LucasL}(100)
+    out: 792\,070\,839\,848\,372\,253\,127
+  traditional:
+    in: L_{100}
+    out: 792\,070\,839\,848\,372\,253\,127
+  fullform:
+    in: LucasL[100]
+  wolfram:
+    in: LucasL[100]
+  sympy:
+    in: lucas(100)
+  sage:
+    in: lucas_number2(100, 1, -1)
+  julia:
+    in: Combinatorics.lucasnum(100)
+an-odd-negative-index-flips-the-sign-l-11-l-11:
+  epsil:
+    in: LucasL(-11)
+    out: "-199"
+  tex:
+    in: \mathrm{LucasL}(-11)
+    out: "-199"
+  traditional:
+    in: L_{-11}
+    out: "-199"
+  fullform:
+    in: LucasL[-11]
+  wolfram:
+    in: LucasL[-11]
+  sympy:
+    in: lucas(-11)
+  sage:
+    in: lucas_number2(-11, 1, -1)
+  julia:
+    in: Combinatorics.lucasnum(-11)
+a-real-index-uses-l-nu-varphi-nu-cos-pi-nu:
+  epsil:
+    in: LucasL(2.333_333_333_333_333_5)
+    out: 3.236_211_879_491_621_3
+  tex:
+    in: \mathrm{LucasL}(2.333\,333\,333\,333\,333\,5)
+    out: 3.236\,211\,879\,491\,621\,3
+  traditional:
+    in: L_{2.333\,333\,333\,333\,333\,5}
+    out: 3.236\,211\,879\,491\,621\,3
+  fullform:
+    in: LucasL[2.3333333333333335]
+  wolfram:
+    in: LucasL[2.3333333333333335]
+  sympy:
+    in: lucas(2.3333333333333335)
+  sage:
+    in: lucas_number2(2.3333333333333335, 1, -1)
+  julia:
+    in: Combinatorics.lucasnum(2.3333333333333335)
+the-two-argument-lucas-polynomial-l-7-x-from-l-n:
+  epsil:
+    in: LucasL(7, x)
+    out: x ^ 7 + 7 * x ^ 5 + 14 * x ^ 3 + 7x
+  tex:
+    in: \mathrm{LucasL}(7, x)
+    out: x^7+7x^5+14x^3+7x
+  traditional:
+    in: L_{7}(x)
+    out: x^7+7x^5+14x^3+7x
+  fullform:
+    in: LucasL[7, x]
+the-lucas-polynomial-at-x-1-is-the-lucas-number:
+  epsil:
+    in: LucasL(143, 1)
+    out: 767_772_505_664_398_093_937_756_525_279
+  tex:
+    in: \mathrm{LucasL}(143, 1)
+    out: 767\,772\,505\,664\,398\,093\,937\,756\,525\,279
+  traditional:
+    in: L_{143}(1)
+    out: 767\,772\,505\,664\,398\,093\,937\,756\,525\,279
+  fullform:
+    in: LucasL[143, 1]
+  wolfram:
+    in: LucasL[143, 1]
+special-value-of-the-lucas-polynomial-l-1-0-0:
+  epsil:
+    in: LucasL(1, 0)
+    out: "0"
+  tex:
+    in: \mathrm{LucasL}(1, 0)
+    out: "0"
+  traditional:
+    in: L_{1}(0)
+    out: "0"
+  fullform:
+    in: LucasL[1, 0]
+  wolfram:
+    in: LucasL[1, 0]
+special-value-of-the-lucas-polynomial-l-0-0-2:
+  epsil:
+    in: LucasL(0, 0)
+    out: "2"
+  tex:
+    in: \mathrm{LucasL}(0, 0)
+    out: "2"
+  traditional:
+    in: L_{0}(0)
+    out: "2"
+  fullform:
+    in: LucasL[0, 0]
+  wolfram:
+    in: LucasL[0, 0]
+l-2-x-x-2-2-threads-element-wise-over-a-matrix:
+  epsil:
+    in: LucasL(2, [[1 / 2, -1], [0, 1 / 2]])
+    out: "[[9 / 4, 3], [2, 9 / 4]]"
+  tex:
+    in: \mathrm{LucasL}(2, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{9}{4}, 3\bigr\rbrack, \bigl\lbrack2, \frac{9}{4}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: LucasL[2, List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
+  wolfram:
+    in: LucasL[2, List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
+l-n-2-5f-n-2-4-1-n-here-at-n-10-see-fibonacci:
+  epsil:
+    in: LucasL(10) ^ 2 - 5 * Fibonacci(10) ^ 2
+    out: "4"
+  tex:
+    in: \mathrm{LucasL}(10)^2-5\mathrm{Fibonacci}(10)^2
+    out: "4"
+  traditional:
+    in: L_{10}^2-5F_{10}^2
+    out: "4"
+  fullform:
+    in: Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]
+  wolfram:
+    in: Subtract[Power[LucasL[10], 2], Times[5, Power[Fibonacci[10], 2]]]
+  sympy:
+    in: ((lucas(10)**2) - (5 * (fibonacci(10)**2)))
+  sage:
+    in: ((lucas_number2(10, 1, -1)^2) - (5 * (fibonacci(10)^2)))
+  julia:
+    in: ((big(Combinatorics.lucasnum(10))^2) - (5 * (big(fibonacci(10))^2)))
+l-n-f-n-1-f-n-1-here-at-n-6:
+  epsil:
+    in: LucasL(6) == Fibonacci(5) + Fibonacci(7)
+    out: True
+  tex:
+    in: \mathrm{LucasL}(6)=\mathrm{Fibonacci}(5)+\mathrm{Fibonacci}(7)
+    out: \top
+  traditional:
+    in: L_{6}=F_{5}+F_{7}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[LucasL[6], Plus[Fibonacci[5], Fibonacci[7]]]
+  wolfram:
+    in: (LucasL[6] == Plus[Fibonacci[5], Fibonacci[7]])
+    out: True
+    tex:
+      in: L_6=F_5+F_7
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(lucas(6), (fibonacci(5) + fibonacci(7)))
+    out: True
+  sage:
+    in: bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))
+    out: True
+  julia:
+    in: (Combinatorics.lucasnum(6) == (fibonacci(5) + fibonacci(7)))
+    out: "true"
+conversely-f-n-frac-l-n-1-l-n-1-5:
+  epsil:
+    in: Fibonacci(6) == (LucasL(5) + LucasL(7)) / 5
+    out: True
+  tex:
+    in: \mathrm{Fibonacci}(6)=\frac{\mathrm{LucasL}(5)+\mathrm{LucasL}(7)}{5}
+    out: \top
+  traditional:
+    in: F_{6}=\frac{L_{5}+L_{7}}{5}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Fibonacci[6], Divide[Plus[LucasL[5], LucasL[7]], 5]]
+  wolfram:
+    in: (Fibonacci[6] == Divide[Plus[LucasL[5], LucasL[7]], 5])
+    out: True
+    tex:
+      in: F_6=\frac{L_5+L_7}{5}
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(fibonacci(6), (S((lucas(5) + lucas(7))) / 5))
+    out: True
+  sage:
+    in: bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))
+    out: True
+  julia:
+    in: (fibonacci(6) == ((Combinatorics.lucasnum(5) + Combinatorics.lucasnum(7)) // 5))
+    out: "true"
+a-cassini-style-identity-l-n-1-l-n-1-l-n-2-5-1-n:
+  epsil:
+    in: LucasL(4) * LucasL(6) - LucasL(5) ^ 2
+    out: "5"
+  tex:
+    in: \mathrm{LucasL}(4)\mathrm{LucasL}(6)-\mathrm{LucasL}(5)^2
+    out: "5"
+  traditional:
+    in: L_{4}L_{6}-L_{5}^2
+    out: "5"
+  fullform:
+    in: Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]
+  wolfram:
+    in: Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]
+    out: "5"
+    tex:
+      in: L_4 L_6-\left(L_5\right){}^2
+      out: "5"
+  sympy:
+    in: ((lucas(4) * lucas(6)) - (lucas(5)**2))
+    out: "5"
+  sage:
+    in: ((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))
+    out: "5"
+  julia:
+    in: ((Combinatorics.lucasnum(4) * Combinatorics.lucasnum(6)) - (big(Combinatorics.lucasnum(5))^2))
+    out: "5"
+negative-indices-are-supported-via-l-n-1-n-l-n:
+  epsil:
+    in: LucasL(-1)
+    out: "-1"
+  tex:
+    in: \mathrm{LucasL}(-1)
+    out: "-1"
+  traditional:
+    in: L_{-1}
+    out: "-1"
+  fullform:
+    in: LucasL[-1]
+  wolfram:
+    in: LucasL[-1]
+    out: "-1"
+    tex:
+      in: L_{-1}
+      out: "-1"
+  sympy:
+    in: lucas(-1)
+    out: "-1"
+  sage:
+    in: lucas_number2(-1, 1, -1)
+    out: "-1"
+  julia:
+    in: Combinatorics.lucasnum(-1)
+    out: "DomainError with -1: n must be nonnegative"
+    verdict: error
+    kind: domain
+    note: compute-engine extends LucasL to negative arguments; Nemo/Combinatorics.jl's takes non-negative integers only.
+consecutive-ratios-l-n-1-l-n-converge-to-the:
+  epsil:
+    in: LucasL(15) / LucasL(14)
+    out: 1_364 / 843
+  tex:
+    in: \frac{\mathrm{LucasL}(15)}{\mathrm{LucasL}(14)}
+    out: \frac{1\,364}{843}
+  traditional:
+    in: \frac{L_{15}}{L_{14}}
+    out: \frac{1\,364}{843}
+  fullform:
+    in: Divide[LucasL[15], LucasL[14]]
+  wolfram:
+    in: Divide[LucasL[15], LucasL[14]]
+    out: 1364/843
+    tex:
+      in: \frac{L_{15}}{L_{14}}
+      out: \frac{1364}{843}
+  sympy:
+    in: (S(lucas(15)) / lucas(14))
+    out: 1364/843
+  sage:
+    in: (lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))
+    out: 1364/843
+  julia:
+    in: (Combinatorics.lucasnum(15) // Combinatorics.lucasnum(14))
+    out: "1.6180308422301304"
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: LucasL([1, 2, 3, 4])
+    out: "[1, 3, 4, 7]"
+  tex:
+    in: \mathrm{LucasL}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, 3, 4, 7\bigr\rbrack
+  fullform:
+    in: LucasL[List[1, 2, 3, 4]]
+  wolfram:
+    in: LucasL[List[1, 2, 3, 4]]
+    out: "{1, 3, 4, 7}"
+    tex:
+      in: L_{\{1,2,3,4\}}
+      out: \{1,3,4,7\}
+  sympy:
+    in: "[lucas(1), lucas(2), lucas(3), lucas(4)]"
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's LucasL is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[lucas_number2(1, 1, -1), lucas_number2(2, 1, -1), lucas_number2(3, 1, -1), lucas_number2(4, 1, -1)]"
+  julia:
+    in: Combinatorics.lucasnum([1, 2, 3, 4])
+l-30-already-tops-1-8-million-growing-at-the:
+  epsil:
+    in: LucasL(30)
+    out: 1_860_498
+  tex:
+    in: \mathrm{LucasL}(30)
+    out: 1\,860\,498
+  traditional:
+    in: L_{30}
+    out: 1\,860\,498
+  fullform:
+    in: LucasL[30]
+  wolfram:
+    in: LucasL[30]
+    out: "1860498"
+    tex:
+      in: L_{30}
+      out: "1860498"
+  sympy:
+    in: lucas(30)
+    out: "1860498"
+  sage:
+    in: lucas_number2(30, 1, -1)
+    out: "1860498"
+  julia:
+    in: Combinatorics.lucasnum(30)
+    out: "1860498"

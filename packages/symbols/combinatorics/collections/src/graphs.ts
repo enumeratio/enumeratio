@@ -25,14 +25,14 @@ import { integerAt, operandsOf } from "@enumeratio/boxed";
 
 // ─── the model: vertices/edges over canonical string keys ─────────────────────────────────
 
-interface Edge {
+export interface Edge {
   readonly directed: boolean;
   readonly a: string; // canonical key
   readonly b: string;
   readonly expr: BoxedExpression; // original UndirectedEdge/DirectedEdge expression
 }
 
-interface GraphModel {
+export interface GraphModel {
   readonly order: readonly string[]; // vertex keys, first-appearance order
   readonly label: ReadonlyMap<string, BoxedExpression>; // key -> original vertex expression
   readonly edges: readonly Edge[];
@@ -41,7 +41,7 @@ interface GraphModel {
 /** A stable key for a vertex expression — canonical MathJSON, so `1` and `2` never
  *  collide and a repeated vertex (same key) is recognised as the same vertex regardless
  *  of which occurrence built the label. */
-const vertexKey = (expr: BoxedExpression): string => JSON.stringify(expr.json);
+export const vertexKey = (expr: BoxedExpression): string => JSON.stringify(expr.json);
 
 /** Read one `UndirectedEdge(u, v)` / `DirectedEdge(u, v)` expression, or `undefined` if
  *  `expr` is neither. */
@@ -55,7 +55,7 @@ function edgeOf(expr: BoxedExpression): { directed: boolean; a: BoxedExpression;
 /** Build a `GraphModel` from `Graph(edges)` or `Graph(vertices, edges)`. Vertices not
  *  named in an explicit vertex list but seen as an edge endpoint are appended, in
  *  first-appearance order — Wolfram accepts edges that mention a vertex the list omits. */
-function graphOf(expr: BoxedExpression): GraphModel | undefined {
+export function graphOf(expr: BoxedExpression): GraphModel | undefined {
   if (expr.operator !== "Graph") return undefined;
   const ops = operandsOf(expr);
   if (ops.length !== 1 && ops.length !== 2) return undefined;
@@ -97,7 +97,7 @@ function graphOf(expr: BoxedExpression): GraphModel | undefined {
 
 /** Neighbours reachable respecting edge direction: directed a->b gives b as an out-neighbour
  *  of a only; undirected edges go both ways. Used by FindShortestPath / GraphDistance. */
-function directedAdjacency(model: GraphModel): Map<string, string[]> {
+export function directedAdjacency(model: GraphModel): Map<string, string[]> {
   const adj = new Map<string, string[]>(model.order.map((v) => [v, []]));
   for (const e of model.edges) {
     adj.get(e.a)!.push(e.b);
@@ -109,7 +109,7 @@ function directedAdjacency(model: GraphModel): Map<string, string[]> {
 /** Neighbours ignoring direction entirely — the "underlying graph" `IsConnectedGraph`,
  *  `IsTreeGraph`, `IsBipartiteGraph` and `NeighborhoodGraph` operate on. (`ConnectedComponents`
  *  itself does NOT use this — see its own comment: it respects direction, kernel-verified.) */
-function underlyingAdjacency(model: GraphModel): Map<string, string[]> {
+export function underlyingAdjacency(model: GraphModel): Map<string, string[]> {
   const adj = new Map<string, string[]>(model.order.map((v) => [v, []]));
   for (const e of model.edges) {
     adj.get(e.a)!.push(e.b);
@@ -142,7 +142,7 @@ function isWeaklyConnected(model: GraphModel): boolean {
 
 /** Total degree of each vertex: every edge incident to it counts once per endpoint
  *  (a self-loop counts twice), regardless of direction — Wolfram's `VertexDegree`. */
-function degrees(model: GraphModel): Map<string, number> {
+export function degrees(model: GraphModel): Map<string, number> {
   const deg = new Map<string, number>(model.order.map((v) => [v, 0]));
   for (const e of model.edges) {
     deg.set(e.a, (deg.get(e.a) ?? 0) + 1);
@@ -154,7 +154,7 @@ function degrees(model: GraphModel): Map<string, number> {
 /** BFS shortest path from `source` to `target` over `adj` (unweighted, respects whatever
  *  adjacency it is given — directed or underlying). Returns the vertex-key path including
  *  both ends, or `[]` if unreachable (matching Wolfram's `FindShortestPath`). */
-function bfsPath(adj: ReadonlyMap<string, readonly string[]>, source: string, target: string): string[] {
+export function bfsPath(adj: ReadonlyMap<string, readonly string[]>, source: string, target: string): string[] {
   if (source === target) return [source];
   const prev = new Map<string, string>();
   const seen = new Set<string>([source]);
@@ -272,9 +272,10 @@ function bipartiteColoring(model: GraphModel): Map<string, 0 | 1> | undefined {
 
 // ─── encoders ────────────────────────────────────────────────────────────────────────────
 
-const listOf = (ce: ComputeEngine, items: readonly BoxedExpression[]): BoxedExpression => ce.function("List", items);
+export const listOf = (ce: ComputeEngine, items: readonly BoxedExpression[]): BoxedExpression =>
+  ce.function("List", items);
 
-const vertexListExpr = (ce: ComputeEngine, model: GraphModel): BoxedExpression =>
+export const vertexListExpr = (ce: ComputeEngine, model: GraphModel): BoxedExpression =>
   listOf(
     ce,
     model.order.map((k) => model.label.get(k)!),
@@ -282,12 +283,16 @@ const vertexListExpr = (ce: ComputeEngine, model: GraphModel): BoxedExpression =
 
 // ─── named families ─────────────────────────────────────────────────────────────────────
 
-const undirectedEdgeExpr = (ce: ComputeEngine, a: number, b: number): BoxedExpression =>
+export const undirectedEdgeExpr = (ce: ComputeEngine, a: number, b: number): BoxedExpression =>
   ce.function("UndirectedEdge", [ce.number(a), ce.number(b)]);
 
 /** `Graph(vertices 1..n, edges)` built from 1-based integer edges — every named family
  *  shares this shape, so they all decode through the same `graphOf`. */
-function integerGraph(ce: ComputeEngine, n: number, edges: readonly (readonly [number, number])[]): BoxedExpression {
+export function integerGraph(
+  ce: ComputeEngine,
+  n: number,
+  edges: readonly (readonly [number, number])[],
+): BoxedExpression {
   const vertices = listOf(
     ce,
     Array.from({ length: n }, (_, i) => ce.number(i + 1)),
@@ -725,7 +730,7 @@ export function declareGraphs(ce: ComputeEngine): void {
 
 /** The induced subgraph of `g` on the vertex keys in `keep`: those vertices, in `g`'s
  *  original order, and every edge with both endpoints kept. */
-function induced(ce: ComputeEngine, g: GraphModel, keep: ReadonlySet<string>): BoxedExpression {
+export function induced(ce: ComputeEngine, g: GraphModel, keep: ReadonlySet<string>): BoxedExpression {
   const vertices = listOf(
     ce,
     g.order.filter((k) => keep.has(k)).map((k) => g.label.get(k)!),

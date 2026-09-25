@@ -1,0 +1,178 @@
+flatten-list-list-1-2-list-3-4:
+  epsil:
+    in: Flatten([[1, 2], [3, 4]])
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Flatten[List[List[1, 2], List[3, 4]]]
+  wolfram:
+    in: Flatten[List[List[1, 2], List[3, 4]]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Flatten}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & 4 \\ \end{array} \right)\right]
+      out: \{1,2,3,4\}
+flatten-list-list-1-list-2-3-list-4:
+  epsil:
+    in: Flatten([[1, [2, 3]], [4]])
+    out: "[1, 2, 3, 4]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack, \bigl\lbrack4\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3, 4\bigr\rbrack
+  fullform:
+    in: Flatten[List[List[1, List[2, 3]], List[4]]]
+  wolfram:
+    in: Flatten[List[List[1, List[2, 3]], List[4]]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Flatten}[\{\{1,\{2,3\}\},\{4\}\}]
+      out: \{1,2,3,4\}
+a-depth-argument-limits-flattening-to-just-that:
+  epsil:
+    in: Flatten([[1, 2], [3, [4]]], 1)
+    out: "[1, 2, 3, [4]]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, \bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack, 1)
+    out: \bigl\lbrack1, 2, 3, \bigl\lbrack4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Flatten[List[List[1, 2], List[3, List[4]]], 1]
+  wolfram:
+    in: Flatten[List[List[1, 2], List[3, List[4]]], 1]
+    out: "{1, 2, 3, {4}}"
+    tex:
+      in: \text{Flatten}\left[\left( \begin{array}{cc}  1 & 2 \\  3 & \{4\} \\ \end{array} \right),1\right]
+      out: \{1,2,3,\{4\}\}
+flatten-undoes-partition-chunking-and-re:
+  epsil:
+    in: Flatten(Partition([1, 2, 3, 4, 5, 6], 2)) == [1, 2, 3, 4, 5, 6]
+    out: True
+  tex:
+    in: \mathrm{Flatten}(\mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 2))=\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack
+    out: \top
+  traditional:
+    in: \mathrm{Flatten}(\mathrm{Partition}(\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack, 2))=\bigl\lbrack1, 2, 3, 4, 5, 6\bigr\rbrack
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Flatten[Partition[List[1, 2, 3, 4, 5, 6], 2]], List[1, 2, 3, 4, 5, 6]]
+  wolfram:
+    in: (Flatten[Partition[List[1, 2, 3, 4, 5, 6], 2]] == List[1, 2, 3, 4, 5, 6])
+    out: True
+    tex:
+      in: \text{Flatten}[\text{Partition}[\{1,2,3,4,5,6\},2]]=\{1,2,3,4,5,6\}
+      out: \text{True}
+flatten-list-list-a-b-list-c-list-d-f-list-g:
+  epsil:
+    in: Flatten([[a, b], [c, [d], f], [g, [h, k]]])
+    out: "[a, b, c, d, f, g, h, k]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, \bigl\lbrack d\bigr\rbrack, f\bigr\rbrack, \bigl\lbrack g, \bigl\lbrack h, k\bigr\rbrack\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack a, b, c, d, f, g, h, k\bigr\rbrack
+  fullform:
+    in: Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]]]
+flatten-only-the-first-level:
+  epsil:
+    in: Flatten([[a, b], [c, [d], f], [g, [h, k]]], 1)
+    out: "[a, b, c, [d], f, g, [h, k]]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, \bigl\lbrack d\bigr\rbrack, f\bigr\rbrack, \bigl\lbrack g, \bigl\lbrack h, k\bigr\rbrack\bigr\rbrack\bigr\rbrack, 1)
+    out: \bigl\lbrack a, b, c, \bigl\lbrack d\bigr\rbrack, f, g, \bigl\lbrack h, k\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Flatten[List[List[a, b], List[c, List[d], f], List[g, List[h, k]]], 1]
+depth-0-leaves-the-list-unchanged:
+  epsil:
+    in: Flatten([0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]], 0)
+    out: "[0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack0, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, 0)
+    out: \bigl\lbrack0, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 0]
+  wolfram:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 0]
+depth-2-removes-two-levels-of-nesting:
+  epsil:
+    in: Flatten([0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]], 2)
+    out: "[0, 1, 2, -2, [3], [-3], [[4]]]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack0, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, 2)
+    out: \bigl\lbrack0, 1, 2, -2, \bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack, \bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 2]
+  wolfram:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 2]
+depth-3:
+  epsil:
+    in: Flatten([0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]], 3)
+    out: "[0, 1, 2, -2, 3, -3, [4]]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack0, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, 3)
+    out: \bigl\lbrack0, 1, 2, -2, 3, -3, \bigl\lbrack4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 3]
+  wolfram:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 3]
+depth-4-reaches-the-deepest-level:
+  epsil:
+    in: Flatten([0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]], 4)
+    out: "[0, 1, 2, -2, 3, -3, 4]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack0, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, 4)
+    out: \bigl\lbrack0, 1, 2, -2, 3, -3, 4\bigr\rbrack
+  fullform:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 4]
+  wolfram:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], 4]
+an-explicit-infinite-depth-flattens-every-level:
+  epsil:
+    in: Flatten([0, [1], [[2, -2]], [[[3], [-3]]], [[[[4]]]]], PositiveInfinity)
+    out: "[0, 1, 2, -2, 3, -3, 4]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack0, \bigl\lbrack1\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack3\bigr\rbrack, \bigl\lbrack-3\bigr\rbrack\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack\bigl\lbrack\bigl\lbrack4\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack\bigr\rbrack, \infty)
+    out: \bigl\lbrack0, 1, 2, -2, 3, -3, 4\bigr\rbrack
+  fullform:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], Infinity]
+  wolfram:
+    in: Flatten[List[0, List[1], List[List[2, -2]], List[List[List[3], List[-3]]], List[List[List[List[4]]]]], Infinity]
+a-list-of-levels-regroups-the-dimensions-here:
+  epsil:
+    in: Flatten([[1, 2], [3, 4]], [[2], [1]])
+    out: "[[1, 3], [2, 4]]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2\bigr\rbrack, \bigl\lbrack1\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Flatten[List[List[1, 2], List[3, 4]], List[List[2], List[1]]]
+  wolfram:
+    in: Flatten[List[List[1, 2], List[3, 4]], List[List[2], List[1]]]
+nested-calls-of-any-one-head-flatten-not-just:
+  epsil:
+    in: Flatten(f(a, f(b, f(c))))
+    out: f(a, b, c)
+  tex:
+    in: \mathrm{Flatten}(f(a, f(b, f(c))))
+    out: f(a, b, c)
+  fullform:
+    in: Flatten[f[a, f[b, f[c]]]]
+a-list-with-no-nesting-is-unchanged:
+  epsil:
+    in: Flatten([1, 2, 3])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{Flatten}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: Flatten[List[1, 2, 3]]
+  wolfram:
+    in: Flatten[List[1, 2, 3]]
+flattening-an-m-times-n-matrix-gives-mn-elements:
+  epsil:
+    in: Length(Flatten([[1, 2, 3], [4, 5, 6]]))
+    out: "6"
+  tex:
+    in: \mathrm{Length}(\mathrm{Flatten}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack))
+    out: "6"
+  fullform:
+    in: Length[Flatten[List[List[1, 2, 3], List[4, 5, 6]]]]
+  wolfram:
+    in: Length[Flatten[List[List[1, 2, 3], List[4, 5, 6]]]]

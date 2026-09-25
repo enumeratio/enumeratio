@@ -79,8 +79,6 @@ examples:
     expected: 1.7724538509055159
     category: Scope
     caption: $\left(-\frac12\right)! = \Gamma\!\left(\frac12\right) = \sqrt{\pi}$, returned as a float
-    divergence:
-      wolfram: Wolfram returns the exact Sqrt[Pi].
   - id: infty-infty
     expr: [Factorial, PositiveInfinity]
     expected: PositiveInfinity

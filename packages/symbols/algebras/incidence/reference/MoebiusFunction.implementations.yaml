@@ -1,0 +1,48 @@
+30-2-cdot-3-cdot-5-is-squarefree-with-three:
+  epsil:
+    in: MoebiusFunction(DivisorLattice(30), 1, 30)
+    out: "-1"
+  tex:
+    in: \mathrm{MoebiusFunction}(\mathrm{DivisorLattice}(30), 1, 30)
+    out: "-1"
+  traditional:
+    in: \mu_{D_{30}}(1, 30)
+    out: "-1"
+  fullform:
+    in: MoebiusFunction[DivisorLattice[30], 1, 30]
+4-divides-12-so-mu-vanishes:
+  epsil:
+    in: MoebiusFunction(DivisorLattice(12), 1, 12)
+    out: "0"
+  tex:
+    in: \mathrm{MoebiusFunction}(\mathrm{DivisorLattice}(12), 1, 12)
+    out: "0"
+  traditional:
+    in: \mu_{D_{12}}(1, 12)
+    out: "0"
+  fullform:
+    in: MoebiusFunction[DivisorLattice[12], 1, 12]
+1-3-inclusion-exclusion:
+  epsil:
+    in: MoebiusFunction(BooleanLattice(3), [], [1, 2, 3])
+    out: "-1"
+  tex:
+    in: \mathrm{MoebiusFunction}(\mathrm{BooleanLattice}(3), \bigl\lbrack \bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "-1"
+  traditional:
+    in: \mathrm{MoebiusFunction}(B_{3}, \bigl\lbrack \bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "-1"
+  fullform:
+    in: MoebiusFunction[BooleanLattice[3], List[], List[1, 2, 3]]
+not-a-cover-so-zero:
+  epsil:
+    in: MoebiusFunction(Chain(5), 2, 4)
+    out: "0"
+  tex:
+    in: \mathrm{MoebiusFunction}(\mathrm{Chain}(5), 2, 4)
+    out: "0"
+  traditional:
+    in: \mu_{C_{5}}(2, 4)
+    out: "0"
+  fullform:
+    in: MoebiusFunction[Chain[5], 2, 4]

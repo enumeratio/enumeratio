@@ -128,8 +128,6 @@ examples:
       ]
     category: Scope
     caption: Taylor series about 0
-    divergence:
-      wolfram: Wolfram's Series[Sinh[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).
   - id: the-definition-sinh-x-frac-e-x-e-x-2
     expr: [TrigToExp, [Sinh, x]]
     expected:

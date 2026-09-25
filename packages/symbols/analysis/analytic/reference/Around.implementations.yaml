@@ -1,0 +1,179 @@
+independent-uncertainties-add-in-quadrature:
+  epsil:
+    in: Around(1, 0.1) + Around(2, 0.2)
+    out: Around(3, 0.223_606_797_749_979)
+  tex:
+    in: \mathrm{Around}(1, 0.1)+\mathrm{Around}(2, 0.2)
+    out: \mathrm{Around}(3, 0.223\,606\,797\,749\,979)
+  fullform:
+    in: Plus[Around[1, 0.1], Around[2, 0.2]]
+  wolfram:
+    in: Plus[Around[1, 0.1], Around[2, 0.2]]
+scaling-scales-the-uncertainty:
+  epsil:
+    in: 3 * Around(2, 0.1)
+    out: Around(6, 0.3)
+  tex:
+    in: 3\mathrm{Around}(2, 0.1)
+    out: \mathrm{Around}(6, 0.3)
+  fullform:
+    in: Times[3, Around[2, 0.1]]
+  wolfram:
+    in: Times[3, Around[2, 0.1]]
+through-a-function-f-x-delta-x:
+  epsil:
+    in: Around(2, 0.1) ^ 2
+    out: Around(4, 0.4)
+  tex:
+    in: \mathrm{Around}(2, 0.1)^2
+    out: \mathrm{Around}(4, 0.4)
+  fullform:
+    in: Power[Around[2, 0.1], 2]
+  wolfram:
+    in: Power[Around[2, 0.1], 2]
+sqrt-around-4-0p4:
+  epsil:
+    in: Sqrt(Around(4, 0.4))
+    out: Around(2, 0.1)
+  tex:
+    in: \sqrt{\mathrm{Around}(4, 0.4)}
+    out: \mathrm{Around}(2, 0.1)
+  fullform:
+    in: Sqrt[Around[4, 0.4]]
+  wolfram:
+    in: Sqrt[Around[4, 0.4]]
+independent-uncertainties-add-in-quadrature-2:
+  epsil:
+    in: Around(2, 0.01) + Around(3, 0.02)
+    out: Around(5, 0.022_360_679_774_997_897)
+  tex:
+    in: \mathrm{Around}(2, 0.01)+\mathrm{Around}(3, 0.02)
+    out: \mathrm{Around}(5, 0.022\,360\,679\,774\,997\,897)
+  fullform:
+    in: Plus[Around[2, 0.01], Around[3, 0.02]]
+  wolfram:
+    in: Plus[Around[2, 0.01], Around[3, 0.02]]
+3-times-around-2-0p01:
+  epsil:
+    in: 3 * Around(2, 0.01)
+    out: Around(6, 0.03)
+  tex:
+    in: 3\mathrm{Around}(2, 0.01)
+    out: \mathrm{Around}(6, 0.03)
+  fullform:
+    in: Times[3, Around[2, 0.01]]
+  wolfram:
+    in: Times[3, Around[2, 0.01]]
+through-a-function-f-2-3-5-not-yet-multinomial:
+  epsil:
+    in: Multinomial(Around(2, 0.01), 2)
+    out: Around(6, 0.035)
+  tex:
+    in: \mathrm{Multinomial}(\mathrm{Around}(2, 0.01), 2)
+    out: \mathrm{Around}(6, 0.035)
+  traditional:
+    in: \binom{\mathrm{Around}(2, 0.01)+2}{\mathrm{Around}(2, 0.01),2}
+    out: \mathrm{Around}(6, 0.035)
+  fullform:
+    in: Multinomial[Around[2, 0.01], 2]
+  wolfram:
+    in: Multinomial[Around[2, 0.01], 2]
+independent-uncertainties-add-in-quadrature-sqrt:
+  epsil:
+    in: Around(5, 0.1) + Around(3, 0.2)
+    out: Around(8, 0.223_606_797_749_979)
+  tex:
+    in: \mathrm{Around}(5, 0.1)+\mathrm{Around}(3, 0.2)
+    out: \mathrm{Around}(8, 0.223\,606\,797\,749\,979)
+  fullform:
+    in: Plus[Around[5, 0.1], Around[3, 0.2]]
+  wolfram:
+    in: Plus[Around[5, 0.1], Around[3, 0.2]]
+relative-uncertainties-combine-6-sqrt-0-1-2-2-0:
+  epsil:
+    in: Around(2, 0.1) * Around(3, 0.2)
+    out: Around(6, 0.5)
+  tex:
+    in: \mathrm{Around}(2, 0.1)\mathrm{Around}(3, 0.2)
+    out: \mathrm{Around}(6, 0.5)
+  fullform:
+    in: Times[Around[2, 0.1], Around[3, 0.2]]
+  wolfram:
+    in: Times[Around[2, 0.1], Around[3, 0.2]]
+a-power-scales-the-uncertainty-by-the-derivative:
+  epsil:
+    in: Around(3, 0.1) ^ 2
+    out: Around(9, 0.600_000_000_000_000_1)
+  tex:
+    in: \mathrm{Around}(3, 0.1)^2
+    out: \mathrm{Around}(9, 0.600\,000\,000\,000\,000\,1)
+  fullform:
+    in: Power[Around[3, 0.1], 2]
+  wolfram:
+    in: Power[Around[3, 0.1], 2]
+frac-0-2-2-sqrt-4:
+  epsil:
+    in: Sqrt(Around(4, 0.2))
+    out: Around(2, 0.05)
+  tex:
+    in: \sqrt{\mathrm{Around}(4, 0.2)}
+    out: \mathrm{Around}(2, 0.05)
+  fullform:
+    in: Sqrt[Around[4, 0.2]]
+  wolfram:
+    in: Sqrt[Around[4, 0.2]]
+an-exact-factor-scales-the-uncertainty:
+  epsil:
+    in: 10 * Around(1.5, 0.02)
+    out: Around(15, 0.2)
+  tex:
+    in: 10\mathrm{Around}(1.5, 0.02)
+    out: \mathrm{Around}(15, 0.2)
+  fullform:
+    in: Times[10, Around[1.5, 0.02]]
+  wolfram:
+    in: Times[10, Around[1.5, 0.02]]
+through-an-elementary-function-delta-cdot-e-2:
+  epsil:
+    in: Exp(Around(2, 0.01))
+    out: Around(7.389_056_098_930_65, 0.073_890_560_989_306_5)
+  tex:
+    in: \exp(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(7.389\,056\,098\,930\,65, 0.073\,890\,560\,989\,306\,5)
+  fullform:
+    in: Exp[Around[2, 0.01]]
+  wolfram:
+    in: Exp[Around[2, 0.01]]
+through-a-special-function-with-its-derivative:
+  epsil:
+    in: Erf(Around(2, 0.01))
+    out: Around(0.995_322_265_018_952_7, 0.000_206_669_853_540_920_54)
+  tex:
+    in: \operatorname{erf}(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.995\,322\,265\,018\,952\,7, 0.000\,206\,669\,853\,540\,920\,54)
+  fullform:
+    in: Erf[Around[2, 0.01]]
+  wolfram:
+    in: Erf[Around[2, 0.01]]
+first-order-propagation-the-uncertainty-scales:
+  epsil:
+    in: N(Sin(Around(1, 0.1)))
+    out: Around(0.841_470_984_807_896_5, 0.054_030_230_586_813_98)
+  tex:
+    in: N(\sin(\mathrm{Around}(1, 0.1)))
+    out: \mathrm{Around}(0.841\,470\,984\,807\,896\,5, 0.054\,030\,230\,586\,813\,98)
+  fullform:
+    in: N[Sin[Around[1, 0.1]]]
+  wolfram:
+    in: N[Sin[Around[1, 0.1]]]
+ln-around-2-0p01:
+  epsil:
+    in: Ln(Around(2, 0.01))
+    out: Around(0.693_147_180_559_945_3, 0.005)
+  tex:
+    in: \ln(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.693\,147\,180\,559\,945\,3, 0.005)
+  fullform:
+    in: Log[Around[2, 0.01]]
+  wolfram:
+    in: Log[Around[2, 0.01]]

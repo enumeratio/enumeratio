@@ -1,0 +1,173 @@
+primeomega-30:
+  epsil:
+    in: PrimeOmega(30)
+    out: "3"
+  tex:
+    in: \mathrm{PrimeOmega}(30)
+    out: "3"
+  traditional:
+    in: \Omega(30)
+    out: "3"
+  fullform:
+    in: PrimeOmega[30]
+  wolfram:
+    in: PrimeOmega[30]
+    out: "3"
+    tex:
+      in: \Omega (30)
+      out: "3"
+primeomega-360:
+  epsil:
+    in: PrimeOmega(360)
+    out: "6"
+  tex:
+    in: \mathrm{PrimeOmega}(360)
+    out: "6"
+  traditional:
+    in: \Omega(360)
+    out: "6"
+  fullform:
+    in: PrimeOmega[360]
+  wolfram:
+    in: PrimeOmega[360]
+    out: "6"
+    tex:
+      in: \Omega (360)
+      out: "6"
+1-has-no-prime-factors:
+  epsil:
+    in: PrimeOmega(1)
+    out: "0"
+  tex:
+    in: \mathrm{PrimeOmega}(1)
+    out: "0"
+  traditional:
+    in: \Omega(1)
+    out: "0"
+  fullform:
+    in: PrimeOmega[1]
+  wolfram:
+    in: PrimeOmega[1]
+    out: "0"
+    tex:
+      in: \Omega (1)
+      out: "0"
+completely-additive-omega-mn-omega-m-omega-n-for:
+  epsil:
+    in: PrimeOmega(24 * 40) == PrimeOmega(24) + PrimeOmega(40)
+    out: True
+  tex:
+    in: \mathrm{PrimeOmega}(24\times40)=\mathrm{PrimeOmega}(24)+\mathrm{PrimeOmega}(40)
+    out: \top
+  traditional:
+    in: \Omega(24\times40)=\Omega(24)+\Omega(40)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[PrimeOmega[Times[24, 40]], Plus[PrimeOmega[24], PrimeOmega[40]]]
+  wolfram:
+    in: (PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])
+    out: True
+    tex:
+      in: \Omega (24\ 40)=\Omega (24)+\Omega (40)
+      out: \text{True}
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3:
+  epsil:
+    in: PrimeOmega(8) >= PrimeNu(8)
+    out: True
+  tex:
+    in: \mathrm{PrimeOmega}(8)\ge\mathrm{PrimeNu}(8)
+    out: \top
+  traditional:
+    in: \Omega(8)\ge\omega(8)
+    out: \mathrm{True}
+  fullform:
+    in: GreaterEqual[PrimeOmega[8], PrimeNu[8]]
+  wolfram:
+    in: GreaterEqual[PrimeOmega[8], PrimeNu[8]]
+    out: True
+    tex:
+      in: \Omega (8)\geq \nu (8)
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: PrimeOmega([4, 12, 24])
+    out: "[2, 3, 4]"
+  tex:
+    in: \mathrm{PrimeOmega}(\bigl\lbrack4, 12, 24\bigr\rbrack)
+    out: \bigl\lbrack2, 3, 4\bigr\rbrack
+  fullform:
+    in: PrimeOmega[List[4, 12, 24]]
+  wolfram:
+    in: PrimeOmega[List[4, 12, 24]]
+    out: "{2, 3, 4}"
+    tex:
+      in: \Omega (\{4,12,24\})
+      out: \{2,3,4\}
+primeomega-12:
+  epsil:
+    in: PrimeOmega(12)
+    out: "3"
+  tex:
+    in: \mathrm{PrimeOmega}(12)
+    out: "3"
+  traditional:
+    in: \Omega(12)
+    out: "3"
+  fullform:
+    in: PrimeOmega[12]
+  wolfram:
+    in: PrimeOmega[12]
+large-integers:
+  epsil:
+    in: PrimeOmega(30!)
+    out: "59"
+  tex:
+    in: \mathrm{PrimeOmega}(30!)
+    out: "59"
+  traditional:
+    in: \Omega(30!)
+    out: "59"
+  fullform:
+    in: PrimeOmega[Factorial[30]]
+  wolfram:
+    in: PrimeOmega[Factorial[30]]
+gaussian-integers-5-9i-has-norm-106-2-cdot-53-so:
+  epsil:
+    in: PrimeOmega(5 + 9i)
+    out: "2"
+  tex:
+    in: \mathrm{PrimeOmega}(5+9i)
+    out: "2"
+  traditional:
+    in: \Omega(5+9i)
+    out: "2"
+  fullform:
+    in: PrimeOmega[Complex[5, 9]]
+  wolfram:
+    in: PrimeOmega[Complex[5, 9]]
+gaussianintegers-true-12-1-i-4-cdot-3:
+  epsil:
+    in: PrimeOmega(12, GaussianIntegers -> True)
+    out: "5"
+  tex:
+    in: \mathrm{PrimeOmega}(12, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \top))
+    out: "5"
+  traditional:
+    in: \mathrm{PrimeOmega}(12, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
+    out: "5"
+  fullform:
+    in: PrimeOmega[12, KeyValuePair[GaussianIntegers, True]]
+listable-over-a-range:
+  epsil:
+    in: PrimeOmega(Range(20))
+    out: "[0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3]"
+  tex:
+    in: \mathrm{PrimeOmega}(1..20)
+    out: \bigl\lbrack0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3\bigr\rbrack
+  traditional:
+    in: \Omega(1..20)
+    out: \bigl\lbrack0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3\bigr\rbrack
+  fullform:
+    in: PrimeOmega[Range[20]]
+  wolfram:
+    in: PrimeOmega[Range[20]]

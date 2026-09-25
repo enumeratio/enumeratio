@@ -1,0 +1,27 @@
+3-at-position-2-tops-both-neighbors:
+  epsil:
+    in: Peaks([2, 3, 1])
+    out: "1"
+  tex:
+    in: \mathrm{Peaks}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: Peaks[List[2, 3, 1]]
+monotone-increasing-has-no-interior-peak:
+  epsil:
+    in: Peaks([1, 2, 3])
+    out: "0"
+  tex:
+    in: \mathrm{Peaks}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: Peaks[List[1, 2, 3]]
+the-lone-peak-at-position-2:
+  epsil:
+    in: Peaks([1, 3, 2, 4])
+    out: "1"
+  tex:
+    in: \mathrm{Peaks}(\bigl\lbrack1, 3, 2, 4\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: Peaks[List[1, 3, 2, 4]]

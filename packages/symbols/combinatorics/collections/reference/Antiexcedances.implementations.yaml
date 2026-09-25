@@ -1,0 +1,27 @@
+positions-2-and-3-1-2-and-2-3:
+  epsil:
+    in: Antiexcedances([3, 1, 2])
+    out: "2"
+  tex:
+    in: \mathrm{Antiexcedances}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: Antiexcedances[List[3, 1, 2]]
+the-identity-has-none:
+  epsil:
+    in: Antiexcedances([1, 2, 3])
+    out: "0"
+  tex:
+    in: \mathrm{Antiexcedances}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "0"
+  fullform:
+    in: Antiexcedances[List[1, 2, 3]]
+positions-3-and-4-2-3-and-1-4:
+  epsil:
+    in: Antiexcedances([4, 3, 2, 1])
+    out: "2"
+  tex:
+    in: \mathrm{Antiexcedances}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack)
+    out: "2"
+  fullform:
+    in: Antiexcedances[List[4, 3, 2, 1]]

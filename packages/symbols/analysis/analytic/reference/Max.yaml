@@ -48,8 +48,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: With no arguments, compute-engine returns NaN rather than $-\infty$, the true identity element
-    divergence:
-      wolfram: Max of nothing is NaN here; Wolfram returns the identity element -Infinity.
   - id: nan-poisons-the-result-overriding-every-other
     expr: [Max, NaN, 3]
     expected: NaN
@@ -103,8 +101,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: The max of an empty list is NaN too
-    divergence:
-      wolfram: Wolfram's $\mathrm{Max}[\{\}]$ is the identity element $-\infty$.
 seeAlso:
   - Min
   - Clamp

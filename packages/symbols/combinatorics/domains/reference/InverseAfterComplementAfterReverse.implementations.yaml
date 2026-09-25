@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: InverseAfterComplementAfterReverse(Permutation([2, 3, 1]))
+    out: Permutation([2, 3, 1])
+  tex:
+    in: \mathrm{InverseAfterComplementAfterReverse}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+  fullform:
+    in: InverseAfterComplementAfterReverse[Permutation[List[2, 3, 1]]]

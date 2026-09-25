@@ -1,0 +1,21 @@
+name: AdjacencyGraph
+domain: Collections
+signature: AdjacencyGraph(matrix)
+summary: A [[Graph]] built from an n x n 0/1 adjacency matrix.
+signatures:
+  - call: AdjacencyGraph(matrix)
+    description: vertices 1..n; a SYMMETRIC matrix gives an undirected graph (one edge per i < j with a nonzero entry), anything else gives a directed graph (one edge per nonzero (i, j), including self-loops).
+    library: enumeratio-collections
+  - call: AdjacencyGraph(vertices, matrix)
+    description: the same, with vertices labelled by the given list instead of 1..n.
+    library: enumeratio-collections
+examples:
+  - id: symmetric-matrix-is-undirected
+    expr: [EdgeList, [AdjacencyGraph, [List, [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 0]]]]
+    expected: [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 1, 3]]
+  - id: asymmetric-matrix-is-directed
+    expr: [EdgeList, [AdjacencyGraph, [List, [List, 0, 1], [List, 0, 0]]]]
+    expected: [List, [DirectedEdge, 1, 2]]
+seeAlso:
+  - AdjacencyMatrix
+  - Graph

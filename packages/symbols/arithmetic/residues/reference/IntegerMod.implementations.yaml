@@ -1,0 +1,81 @@
+integermod-10-7:
+  epsil:
+    in: IntegerMod(10, 7)
+    out: IntegerMod(3, 7)
+  tex:
+    in: \mathrm{IntegerMod}(10, 7)
+    out: \mathrm{IntegerMod}(3, 7)
+  fullform:
+    in: IntegerMod[10, 7]
+1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1:
+  epsil:
+    in: IntegerMod(1 / 3, 7)
+    out: IntegerMod(5, 7)
+  tex:
+    in: \mathrm{IntegerMod}(\frac{1}{3}, 7)
+    out: \mathrm{IntegerMod}(5, 7)
+  fullform:
+    in: IntegerMod[Rational[1, 3], 7]
+fermat-3-6-equiv-1-pmod-7:
+  epsil:
+    in: IntegerMod(3, 7) ^ 6
+    out: IntegerMod(1, 7)
+  tex:
+    in: \mathrm{IntegerMod}(3, 7)^6
+    out: \mathrm{IntegerMod}(1, 7)
+  fullform:
+    in: Power[IntegerMod[3, 7], 6]
+1-over-integermod-3-7:
+  epsil:
+    in: 1 / IntegerMod(3, 7)
+    out: IntegerMod(5, 7)
+  tex:
+    in: \frac{1}{\mathrm{IntegerMod}(3, 7)}
+    out: \mathrm{IntegerMod}(5, 7)
+  fullform:
+    in: Divide[1, IntegerMod[3, 7]]
+different-moduli-meet-in-z-gcd-4-6:
+  epsil:
+    in: IntegerMod(2, 4) + IntegerMod(1, 6)
+    out: IntegerMod(1, 2)
+  tex:
+    in: \mathrm{IntegerMod}(2, 4)+\mathrm{IntegerMod}(1, 6)
+    out: \mathrm{IntegerMod}(1, 2)
+  fullform:
+    in: Plus[IntegerMod[2, 4], IntegerMod[1, 6]]
+chineseremainder-integermod-2-3-integermod-3-5:
+  epsil:
+    in: ChineseRemainder(IntegerMod(2, 3), IntegerMod(3, 5))
+    out: IntegerMod(8, 15)
+  tex:
+    in: \mathrm{ChineseRemainder}(\mathrm{IntegerMod}(2, 3), \mathrm{IntegerMod}(3, 5))
+    out: \mathrm{IntegerMod}(8, 15)
+  fullform:
+    in: ChineseRemainder[IntegerMod[2, 3], IntegerMod[3, 5]]
+multiplicativeorder-integermod-2-7:
+  epsil:
+    in: MultiplicativeOrder(IntegerMod(2, 7))
+    out: "3"
+  tex:
+    in: \mathrm{MultiplicativeOrder}(\mathrm{IntegerMod}(2, 7))
+    out: "3"
+  fullform:
+    in: MultiplicativeOrder[IntegerMod[2, 7]]
+2-is-not-a-unit-mod-4-and-the-message-says-so:
+  epsil:
+    in: 1 / IntegerMod(2, 4)
+    out: 1 / IntegerMod(2, 4)
+  tex:
+    in: \frac{1}{\mathrm{IntegerMod}(2, 4)}
+    out: \frac{1}{\mathrm{IntegerMod}(2, 4)}
+  fullform:
+    in: Divide[1, IntegerMod[2, 4]]
+odd-mod-4-and-even-mod-6-at-once-no-such-class:
+  epsil:
+    in: ChineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))
+    out: ChineseRemainder(IntegerMod(1, 4), IntegerMod(2, 6))
+  tex:
+    in: \mathrm{ChineseRemainder}(\mathrm{IntegerMod}(1, 4), \mathrm{IntegerMod}(2, 6))
+    out: \mathrm{ChineseRemainder}(\mathrm{IntegerMod}(1, 4), \mathrm{IntegerMod}(2, 6))
+  fullform:
+    in: ChineseRemainder[IntegerMod[1, 4], IntegerMod[2, 6]]

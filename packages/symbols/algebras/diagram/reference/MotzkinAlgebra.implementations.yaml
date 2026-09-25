@@ -1,0 +1,63 @@
+"5":
+  epsil:
+    in: AlgebraDimension(SymmetricGroupAlgebra(5))
+    out: "120"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{SymmetricGroupAlgebra}(5))
+    out: "120"
+  traditional:
+    in: \dim(k[S_{5}])
+    out: "120"
+  fullform:
+    in: AlgebraDimension[SymmetricGroupAlgebra[5]]
+  sage:
+    in: (SymmetricGroupAlgebra(QQ, 5)).dimension()
+    out: "120"
+  oscar:
+    in: dim(group_algebra(QQ, symmetric_group(5)))
+    out: "120"
+m-6:
+  epsil:
+    in: AlgebraDimension(MotzkinAlgebra(3))
+    out: "51"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{MotzkinAlgebra}(3))
+    out: "51"
+  traditional:
+    in: \dim(M_{3})
+    out: "51"
+  fullform:
+    in: AlgebraDimension[MotzkinAlgebra[3]]
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:motzkin, 3))
+    out: "51"
+algebradimension-rookalgebra-3:
+  epsil:
+    in: AlgebraDimension(RookAlgebra(3))
+    out: "34"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{RookAlgebra}(3))
+    out: "34"
+  traditional:
+    in: \dim(R_{3})
+    out: "34"
+  fullform:
+    in: AlgebraDimension[RookAlgebra[3]]
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:rook, 3))
+    out: "34"
+a-cup-cap-is-not-a-permutation:
+  epsil:
+    in: Diagram([[1, 2], [-1, -2], [3, -3]]) in SymmetricGroupAlgebra(3)
+    out: False
+  tex:
+    in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{SymmetricGroupAlgebra}(3)
+    out: \bot
+  traditional:
+    in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in k[S_{3}]
+    out: \mathrm{False}
+  fullform:
+    in: Element[Diagram[List[List[1, 2], List[-1, -2], List[3, -3]]], SymmetricGroupAlgebra[3]]
+  sage:
+    in: enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), SymmetricGroupAlgebra(QQ, 3))
+    out: False

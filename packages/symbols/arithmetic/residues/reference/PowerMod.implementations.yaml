@@ -1,0 +1,573 @@
+powermod-2-10-3:
+  epsil:
+    in: PowerMod(2, 10, 3)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(2, 10, 3)
+    out: "1"
+  traditional:
+    in: \left(2^{10}\bmod 3\right)
+    out: "1"
+  fullform:
+    in: PowerMod[2, 10, 3]
+  wolfram:
+    in: PowerMod[2, 10, 3]
+    out: "1"
+    tex:
+      in: (2^{10} \bmod 3)
+      out: "1"
+  sage:
+    in: power_mod(2, 10, 3)
+    out: "1"
+  rust:
+    in: powermod(n(2), n(10), n(3))
+    out: "1"
+powermod-3-50-11:
+  epsil:
+    in: PowerMod(3, 50, 11)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(3, 50, 11)
+    out: "1"
+  traditional:
+    in: \left(3^{50}\bmod 11\right)
+    out: "1"
+  fullform:
+    in: PowerMod[3, 50, 11]
+  wolfram:
+    in: PowerMod[3, 50, 11]
+    out: "1"
+    tex:
+      in: (3^{50} \bmod 11)
+      out: "1"
+  sage:
+    in: power_mod(3, 50, 11)
+    out: "1"
+  rust:
+    in: powermod(n(3), n(50), n(11))
+    out: "1"
+powermod-3-2-7:
+  epsil:
+    in: PowerMod(3, 2, 7)
+    out: "2"
+  tex:
+    in: \mathrm{PowerMod}(3, 2, 7)
+    out: "2"
+  traditional:
+    in: \left(3^2\bmod 7\right)
+    out: "2"
+  fullform:
+    in: PowerMod[3, 2, 7]
+  wolfram:
+    in: PowerMod[3, 2, 7]
+  sage:
+    in: power_mod(3, 2, 7)
+  rust:
+    in: powermod(n(3), n(2), n(7))
+3-1-equiv-5-and-5-2-25-equiv-4:
+  epsil:
+    in: PowerMod(3, -2, 7)
+    out: "4"
+  tex:
+    in: \mathrm{PowerMod}(3, -2, 7)
+    out: "4"
+  traditional:
+    in: \left(\frac{1}{3^2}\bmod 7\right)
+    out: "4"
+  fullform:
+    in: PowerMod[3, -2, 7]
+  wolfram:
+    in: PowerMod[3, -2, 7]
+  sage:
+    in: power_mod(3, -2, 7)
+  rust:
+    in: powermod(n(3), n(-2), n(7))
+a-square-root-of-3-equiv-1-pmod-2:
+  epsil:
+    in: PowerMod(3, 1 / 2, 2)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(3, \frac{1}{2}, 2)
+    out: "1"
+  traditional:
+    in: \left(\sqrt{3}\bmod 2\right)
+    out: "1"
+  fullform:
+    in: PowerMod[3, Rational[1, 2], 2]
+  wolfram:
+    in: PowerMod[3, Rational[1, 2], 2]
+  sage:
+    in: power_mod(3, (1/2), 2)
+  rust:
+    in: powermod(n(3), rational(n(1), n(2)), n(2))
+threads-over-a-list-of-bases:
+  epsil:
+    in: PowerMod([2, 3, 4], 2, 5)
+    out: "[4, 4, 1]"
+  tex:
+    in: \mathrm{PowerMod}(\bigl\lbrack2, 3, 4\bigr\rbrack, 2, 5)
+    out: \bigl\lbrack4, 4, 1\bigr\rbrack
+  fullform:
+    in: PowerMod[List[2, 3, 4], 2, 5]
+  wolfram:
+    in: PowerMod[List[2, 3, 4], 2, 5]
+  sage:
+    in: power_mod([2, 3, 4], 2, 5)
+  rust:
+    in: powermod(list(vec![n(2), n(3), n(4)]), n(2), n(5))
+a-negative-exponent-gives-the-modular-inverse:
+  epsil:
+    in: PowerMod(2, -1, 7)
+    out: "4"
+  tex:
+    in: \mathrm{PowerMod}(2, -1, 7)
+    out: "4"
+  traditional:
+    in: \left(\frac{1}{2}\bmod 7\right)
+    out: "4"
+  fullform:
+    in: PowerMod[2, -1, 7]
+  wolfram:
+    in: PowerMod[2, -1, 7]
+    out: "4"
+    tex:
+      in: (2^{-1} \bmod 7)
+      out: "4"
+  sage:
+    in: power_mod(2, -1, 7)
+    out: "4"
+  rust:
+    in: powermod(n(2), n(-1), n(7))
+    out: "panic: negative exponentiation is not supported!"
+    verdict: error
+    kind: domain
+    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+one-step-of-rsa-style-modular-exponentiation-7:
+  epsil:
+    in: PowerMod(7, 13, 33)
+    out: "13"
+  tex:
+    in: \mathrm{PowerMod}(7, 13, 33)
+    out: "13"
+  traditional:
+    in: \left(7^{13}\bmod 33\right)
+    out: "13"
+  fullform:
+    in: PowerMod[7, 13, 33]
+  wolfram:
+    in: PowerMod[7, 13, 33]
+    out: "13"
+    tex:
+      in: (7^{13} \bmod 33)
+      out: "13"
+  sage:
+    in: power_mod(7, 13, 33)
+    out: "13"
+  rust:
+    in: powermod(n(7), n(13), n(33))
+    out: "13"
+by-definition-a-b-bmod-m-computed-without-ever:
+  epsil:
+    in: PowerMod(2, 10, 3) == 2 ^ 10 % 3
+    out: True
+  tex:
+    in: \mathrm{PowerMod}(2, 10, 3)=2^{10}\bmod3
+    out: \top
+  traditional:
+    in: \left(2^{10}\bmod 3\right)=2^{10}\bmod3
+    out: \mathrm{True}
+  fullform:
+    in: Equal[PowerMod[2, 10, 3], Mod[Power[2, 10], 3]]
+  wolfram:
+    in: (PowerMod[2, 10, 3] == Mod[Power[2, 10], 3])
+    out: True
+    tex:
+      in: (2^{10} \bmod 3)=(2^{10} \bmod 3)
+      out: \text{True}
+  sage:
+    in: bool(power_mod(2, 10, 3) == ((2^10) % 3))
+    out: True
+  rust:
+    in: equal(powermod(n(2), n(10), n(3)), mod_floor(power(n(2), n(10)), n(3)))
+    out: "true"
+no-inverse-exists-when-gcd-a-m-neq-1-here-gcd-2:
+  epsil:
+    in: PowerMod(2, -1, 4)
+    out: PowerMod(2, -1, 4)
+  tex:
+    in: \mathrm{PowerMod}(2, -1, 4)
+    out: \mathrm{PowerMod}(2, -1, 4)
+  traditional:
+    in: \left(\frac{1}{2}\bmod 4\right)
+    out: \left(\frac{1}{2}\bmod 4\right)
+  fullform:
+    in: PowerMod[2, -1, 4]
+  wolfram:
+    in: PowerMod[2, -1, 4]
+    out: PowerMod[2, -1, 4]
+    tex:
+      in: (2^{-1} \bmod 4)
+      out: (2^{-1} \bmod 4)
+  sage:
+    in: power_mod(2, -1, 4)
+    out: "ZeroDivisionError: inverse of Mod(2, 4) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["PowerMod", 2, -1, 4] and Sage raises an error.'
+  rust:
+    in: powermod(n(2), n(-1), n(4))
+    out: "panic: negative exponentiation is not supported!"
+    verdict: error
+    kind: domain
+    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+exponent-0-evaluates-even-at-a-negative-modulus:
+  epsil:
+    in: PowerMod(-2, 0, -14)
+    out: "-13"
+  tex:
+    in: \mathrm{PowerMod}(-2, 0, -14)
+    out: "-13"
+  traditional:
+    in: \left((-2)^0\bmod -14\right)
+    out: "-13"
+  fullform:
+    in: PowerMod[-2, 0, -14]
+  wolfram:
+    in: PowerMod[-2, 0, -14]
+  sage:
+    in: power_mod(-2, 0, -14)
+  rust:
+    in: powermod(n(-2), n(0), n(-14))
+a-nonzero-exponent-at-the-same-negative-modulus:
+  epsil:
+    in: PowerMod(-2, 3, -14)
+    out: PowerMod(-2, 3, -14)
+  tex:
+    in: \mathrm{PowerMod}(-2, 3, -14)
+    out: \mathrm{PowerMod}(-2, 3, -14)
+  traditional:
+    in: \left((-2)^3\bmod -14\right)
+    out: \left((-2)^3\bmod -14\right)
+  fullform:
+    in: PowerMod[-2, 3, -14]
+  wolfram:
+    in: PowerMod[-2, 3, -14]
+  sage:
+    in: power_mod(-2, 3, -14)
+  rust:
+    in: powermod(n(-2), n(3), n(-14))
+a-rational-exponent-is-a-modular-root-the-least:
+  epsil:
+    in: PowerMod(4, 1 / 2, 7)
+    out: "2"
+  tex:
+    in: \mathrm{PowerMod}(4, \frac{1}{2}, 7)
+    out: "2"
+  traditional:
+    in: \left(\sqrt{4}\bmod 7\right)
+    out: "2"
+  fullform:
+    in: PowerMod[4, Rational[1, 2], 7]
+  wolfram:
+    in: PowerMod[4, Rational[1, 2], 7]
+    out: "2"
+    tex:
+      in: (4^{\frac{1}{2}} \bmod 7)
+      out: "2"
+  sage:
+    in: power_mod(4, (1/2), 7)
+    out: "TypeError: no conversion of this rational to integer"
+    verdict: error
+    kind: domain
+    note: compute-engine's PowerMod takes a rational exponent as a modular root; Sage's power_mod takes integer exponents only.
+  rust:
+    in: powermod(n(4), rational(n(1), n(2)), n(7))
+    out: "panic: an integer, not 1/2"
+    verdict: error
+    kind: domain
+    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+threads-over-lists-the-period-is-the-order-of-2:
+  epsil:
+    in: PowerMod(2, [10, 11, 12, 13, 14], 5)
+    out: "[4, 3, 1, 2, 4]"
+  tex:
+    in: \mathrm{PowerMod}(2, \bigl\lbrack10, 11, 12, 13, 14\bigr\rbrack, 5)
+    out: \bigl\lbrack4, 3, 1, 2, 4\bigr\rbrack
+  fullform:
+    in: PowerMod[2, List[10, 11, 12, 13, 14], 5]
+  wolfram:
+    in: PowerMod[2, List[10, 11, 12, 13, 14], 5]
+    out: "{4, 3, 1, 2, 4}"
+    tex:
+      in: (2^{\{10,11,12,13,14\}} \bmod 5)
+      out: \{4,3,1,2,4\}
+  sage:
+    in: power_mod(2, [10, 11, 12, 13, 14], 5)
+    out: "TypeError: unable to coerce <class 'list'> to an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's PowerMod is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: powermod(n(2), list(vec![n(10), n(11), n(12), n(13), n(14)]), n(5))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's PowerMod is Listable and threads over the list; the Rust crates take scalars.
+a-301-digit-base:
+  epsil:
+    in: PowerMod(10 ^ 300 + 1, 7, 5)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(10^{300}+1, 7, 5)
+    out: "1"
+  traditional:
+    in: \left({(10^{300}+1)}^7\bmod 5\right)
+    out: "1"
+  fullform:
+    in: PowerMod[Plus[Power[10, 300], 1], 7, 5]
+  wolfram:
+    in: PowerMod[Plus[Power[10, 300], 1], 7, 5]
+    out: "1"
+    tex:
+      in: (\left(10^{300}+1\right)^7 \bmod 5)
+      out: "1"
+  sage:
+    in: power_mod(((10^300) + 1), 7, 5)
+    out: "1"
+  rust:
+    in: powermod((power(n(10), n(300)) + n(1)), n(7), n(5))
+    out: "1"
+a-square-root-of-3-modulo-the-prime-10-30-57:
+  epsil:
+    in: PowerMod(3, 1 / 2, 10 ^ 30 + 57)
+    out: 492_767_688_934_650_018_614_948_489_645
+  tex:
+    in: \mathrm{PowerMod}(3, \frac{1}{2}, 10^{30}+57)
+    out: 492\,767\,688\,934\,650\,018\,614\,948\,489\,645
+  traditional:
+    in: \left(\sqrt{3}\bmod 10^{30}+57\right)
+    out: 492\,767\,688\,934\,650\,018\,614\,948\,489\,645
+  fullform:
+    in: PowerMod[3, Rational[1, 2], Plus[Power[10, 30], 57]]
+  wolfram:
+    in: PowerMod[3, Rational[1, 2], Plus[Power[10, 30], 57]]
+    out: "492767688934650018614948489645"
+    tex:
+      in: (3^{\frac{1}{2}} \bmod \left(10^{30}+57\right))
+      out: "492767688934650018614948489645"
+  sage:
+    in: power_mod(3, (1/2), ((10^30) + 57))
+    out: "TypeError: no conversion of this rational to integer"
+    verdict: error
+    kind: domain
+    note: compute-engine's PowerMod takes a rational exponent as a modular root; Sage's power_mod takes integer exponents only.
+  rust:
+    in: powermod(n(3), rational(n(1), n(2)), (power(n(10), n(30)) + n(57)))
+    out: "panic: an integer, not 1/2"
+    verdict: error
+    kind: domain
+    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+a-rational-base-2-cdot-3-1-2-cdot-5-equiv-3-pmod:
+  epsil:
+    in: PowerMod(2 / 3, 1, 7)
+    out: "3"
+  tex:
+    in: \mathrm{PowerMod}(\frac{2}{3}, 1, 7)
+    out: "3"
+  traditional:
+    in: \left(\left(\frac{2}{3}\right)^1\bmod 7\right)
+    out: "3"
+  fullform:
+    in: PowerMod[Rational[2, 3], 1, 7]
+  wolfram:
+    in: PowerMod[Rational[2, 3], 1, 7]
+    out: PowerMod[2/3, 1, 7]
+    tex:
+      in: (\left(\frac{2}{3}\right)^1 \bmod 7)
+      out: (\left(\frac{2}{3}\right)^1 \bmod 7)
+    verdict: disagree
+    kind: domain
+    note: Wolfram's PowerMod takes integers (and Gaussian integers) only.
+  sage:
+    in: power_mod((2/3), 1, 7)
+    out: "3"
+  rust:
+    in: powermod(rational(n(2), n(3)), n(1), n(7))
+    out: "panic: an integer, not 2/3"
+    verdict: error
+    kind: domain
+    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).
+gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3:
+  epsil:
+    in: PowerMod(2 + i, 2, 3)
+    out: i
+  tex:
+    in: \mathrm{PowerMod}(2+i, 2, 3)
+    out: i
+  traditional:
+    in: \left(\left(2+i\right)^2\bmod 3\right)
+    out: i
+  fullform:
+    in: PowerMod[Complex[2, 1], 2, 3]
+  wolfram:
+    in: PowerMod[Complex[2, 1], 2, 3]
+    out: I
+    tex:
+      in: ((2+i)^2 \bmod 3)
+      out: i
+  sage:
+    in: power_mod((2 + 1*I), 2, 3)
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+a-gaussian-modulus-and-an-exponent-of-10-30:
+  epsil:
+    in: PowerMod(1 + 2i, 10 ^ 30, 7 + 2i)
+    out: 1 + 2i
+  tex:
+    in: \mathrm{PowerMod}(1+2i, 10^{30}, 7+2i)
+    out: 1+2i
+  traditional:
+    in: \left(\left(1+2i\right)^{10^{30}}\bmod 7+2i\right)
+    out: 1+2i
+  fullform:
+    in: PowerMod[Complex[1, 2], Power[10, 30], Complex[7, 2]]
+  wolfram:
+    in: PowerMod[Complex[1, 2], Power[10, 30], Complex[7, 2]]
+    out: 1 + 2*I
+    tex:
+      in: ((1+2 i)^{10^{30}} \bmod (7+2 i))
+      out: 1+2 i
+  sage:
+    in: power_mod((1 + 2*I), (10^30), (7 + 2*I))
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+11-7i-is-a-unit-mod-7-4i-so-it-has-negative:
+  epsil:
+    in: PowerMod(11 + -7 * i, -4, 7 + 4i)
+    out: -2 + -1 * i
+  tex:
+    in: \mathrm{PowerMod}(11-7i, -4, 7+4i)
+    out: -2-i
+  traditional:
+    in: \left(\frac{1}{\left(11-7i\right)^4}\bmod 7+4i\right)
+    out: -2-i
+  fullform:
+    in: PowerMod[Complex[11, -7], -4, Complex[7, 4]]
+  wolfram:
+    in: PowerMod[Complex[11, -7], -4, Complex[7, 4]]
+    out: PowerMod[11 - 7*I, -4, 7 + 4*I]
+    tex:
+      in: ((11-7 i)^{-4} \bmod (7+4 i))
+      out: ((11-7 i)^{-4} \bmod (7+4 i))
+    verdict: disagree
+    kind: convention
+    note: Wolfram asks for a unit modulo the norm 65 here, not modulo $7 + 4i$, and leaves this unevaluated.
+  sage:
+    in: power_mod((11 + -7*I), -4, (7 + 4*I))
+    out: "TypeError: unsupported operand parent(s) for %: 'Number Field in I with defining polynomial x^2 + 1 with I = 1*"
+    verdict: error
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so PowerMod over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+euler-s-theorem-a-varphi-m-equiv-1-for-a-coprime:
+  epsil:
+    in: PowerMod(7, Totient(19), 19)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(7, \mathrm{Totient}(19), 19)
+    out: "1"
+  traditional:
+    in: \left(7^{\varphi(19)}\bmod 19\right)
+    out: "1"
+  fullform:
+    in: PowerMod[7, EulerPhi[19], 19]
+  wolfram:
+    in: PowerMod[7, EulerPhi[19], 19]
+    out: "1"
+    tex:
+      in: (7^{\phi (19)} \bmod 19)
+      out: "1"
+  sage:
+    in: power_mod(7, euler_phi(19), 19)
+    out: "1"
+341-11-cdot-31-passes-fermat-s-test-to-base-2:
+  epsil:
+    in: PowerMod(2, 340, 341)
+    out: "1"
+  tex:
+    in: \mathrm{PowerMod}(2, 340, 341)
+    out: "1"
+  traditional:
+    in: \left(2^{340}\bmod 341\right)
+    out: "1"
+  fullform:
+    in: PowerMod[2, 340, 341]
+  wolfram:
+    in: PowerMod[2, 340, 341]
+    out: "1"
+    tex:
+      in: (2^{340} \bmod 341)
+      out: "1"
+  sage:
+    in: power_mod(2, 340, 341)
+    out: "1"
+  rust:
+    in: powermod(n(2), n(340), n(341))
+    out: "1"
+diffie-hellman-both-parties-reach-the-shared-key:
+  epsil:
+    in: PowerMod(PowerMod(5, 6, 23), 15, 23) == PowerMod(PowerMod(5, 15, 23), 6, 23)
+    out: True
+  tex:
+    in: \mathrm{PowerMod}(\mathrm{PowerMod}(5, 6, 23), 15, 23)=\mathrm{PowerMod}(\mathrm{PowerMod}(5, 15, 23), 6, 23)
+    out: \top
+  traditional:
+    in: \left({\left(5^6\bmod 23\right)}^{15}\bmod 23\right)=\left({\left(5^{15}\bmod 23\right)}^6\bmod 23\right)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[PowerMod[PowerMod[5, 6, 23], 15, 23], PowerMod[PowerMod[5, 15, 23], 6, 23]]
+  wolfram:
+    in: (PowerMod[PowerMod[5, 6, 23], 15, 23] == PowerMod[PowerMod[5, 15, 23], 6, 23])
+    out: True
+    tex:
+      in: ((5^6 \bmod 23)^{15} \bmod 23)=((5^{15} \bmod 23)^6 \bmod 23)
+      out: \text{True}
+  sage:
+    in: bool(power_mod(power_mod(5, 6, 23), 15, 23) == power_mod(power_mod(5, 15, 23), 6, 23))
+    out: True
+  rust:
+    in: equal(powermod(powermod(n(5), n(6), n(23)), n(15), n(23)), powermod(powermod(n(5), n(15), n(23)), n(6), n(23)))
+    out: "true"
+2-is-not-a-square-mod-5-so-there-is-no-root:
+  epsil:
+    in: PowerMod(2, 1 / 2, 5)
+    out: PowerMod(2, 1 / 2, 5)
+  tex:
+    in: \mathrm{PowerMod}(2, \frac{1}{2}, 5)
+    out: \mathrm{PowerMod}(2, \frac{1}{2}, 5)
+  traditional:
+    in: \left(\sqrt{2}\bmod 5\right)
+    out: \left(\sqrt{2}\bmod 5\right)
+  fullform:
+    in: PowerMod[2, Rational[1, 2], 5]
+  wolfram:
+    in: PowerMod[2, Rational[1, 2], 5]
+    out: PowerMod[2, 1/2, 5]
+    tex:
+      in: (2^{\frac{1}{2}} \bmod 5)
+      out: (2^{\frac{1}{2}} \bmod 5)
+  sage:
+    in: power_mod(2, (1/2), 5)
+    out: "TypeError: no conversion of this rational to integer"
+    verdict: error
+    kind: domain
+    note: compute-engine's PowerMod takes a rational exponent as a modular root; Sage's power_mod takes integer exponents only.
+  rust:
+    in: powermod(n(2), rational(n(1), n(2)), n(5))
+    out: "panic: an integer, not 1/2"
+    verdict: error
+    kind: domain
+    note: num-bigint's modpow takes a non-negative integer exponent; ours also takes a negative one (an inverse) and a rational one (a root).

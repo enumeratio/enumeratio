@@ -62,8 +62,6 @@ examples:
     expected: Missing
     category: Possible issues
     caption: An empty collection has no last element; compute-engine returns the symbol $Missing$
-    divergence:
-      wolfram: Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).
 seeAlso:
   - First
   - At

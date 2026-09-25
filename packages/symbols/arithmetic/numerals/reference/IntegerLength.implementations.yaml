@@ -1,0 +1,66 @@
+integerlength-12-345:
+  epsil:
+    in: IntegerLength(12_345)
+    out: "5"
+  tex:
+    in: \mathrm{IntegerLength}(12\,345)
+    out: "5"
+  fullform:
+    in: IntegerLength[12345]
+  wolfram:
+    in: IntegerLength[12345]
+integerlength-2-pow-100:
+  epsil:
+    in: IntegerLength(2 ^ 100)
+    out: "31"
+  tex:
+    in: \mathrm{IntegerLength}(2^{100})
+    out: "31"
+  fullform:
+    in: IntegerLength[Power[2, 100]]
+  wolfram:
+    in: IntegerLength[Power[2, 100]]
+255-ff-16:
+  epsil:
+    in: IntegerLength(255, 16)
+    out: "2"
+  tex:
+    in: \mathrm{IntegerLength}(255, 16)
+    out: "2"
+  fullform:
+    in: IntegerLength[255, 16]
+  wolfram:
+    in: IntegerLength[255, 16]
+the-sign-is-not-counted:
+  epsil:
+    in: IntegerLength(-123)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerLength}(-123)
+    out: "3"
+  fullform:
+    in: IntegerLength[-123]
+  wolfram:
+    in: IntegerLength[-123]
+0-has-length-0-unlike-its-one-element:
+  epsil:
+    in: IntegerLength(0)
+    out: "0"
+  tex:
+    in: \mathrm{IntegerLength}(0)
+    out: "0"
+  fullform:
+    in: IntegerLength[0]
+  wolfram:
+    in: IntegerLength[0]
+listable:
+  epsil:
+    in: IntegerLength([1, 10, 100])
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{IntegerLength}(\bigl\lbrack1, 10, 100\bigr\rbrack)
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  fullform:
+    in: IntegerLength[List[1, 10, 100]]
+  wolfram:
+    in: IntegerLength[List[1, 10, 100]]

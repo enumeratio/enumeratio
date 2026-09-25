@@ -1,0 +1,11 @@
+turan-6-3-is-k222:
+  epsil:
+    in: EdgeCount(TuranGraph(6, 3))
+    out: "12"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{TuranGraph}(6, 3))
+    out: "12"
+  fullform:
+    in: EdgeCount[TuranGraph[6, 3]]
+  wolfram:
+    in: EdgeCount[TuranGraph[6, 3]]

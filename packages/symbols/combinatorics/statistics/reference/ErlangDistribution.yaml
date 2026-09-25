@@ -1,0 +1,31 @@
+name: ErlangDistribution
+domain: Statistics
+signature: ErlangDistribution(n, lambda)
+summary: The Erlang distribution with shape $n$ and rate $\lambda$ — $GammaDistribution(n, 1/\lambda)$ under the hood.
+signatures:
+  - call: ErlangDistribution(n, lambda)
+    description: an inert distribution object — carries $n, \lambda$, unevaluated.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = \lambda^n x^{n-1}e^{-\lambda x}/\Gamma(n)$ for $x \geq 0$.
+  - $CDF(x) = P(n, \lambda x)$, the regularized lower incomplete gamma via [[GammaRegularized]] (same upper-tail-native convention as [[ChiSquareDistribution]]), clamped to $0$ below $x=0$.
+  - $Mean = n/\lambda$, $Variance = n/\lambda^2$, both exact.
+  - '[[RandomVariate]] samples via the same Marsaglia–Tsang [[GammaDistribution]] draw, shape $n$, scale $1/\lambda$.'
+examples:
+  - id: erlang-pdf-exact
+    expr: [PDF, [ErlangDistribution, 3, 2], 1]
+    expected: [Divide, 8, [Multiply, [Gamma, 3], [Power, ExponentialE, 2]]]
+  - id: erlang-cdf-exact
+    expr: [CDF, [ErlangDistribution, 3, 2], 1]
+    expected: [Add, 1, [Divide, -5, [Power, ExponentialE, 2]]]
+  - id: erlang-mean-exact
+    expr: [Mean, [ErlangDistribution, 3, 2]]
+    expected: [Rational, 3, 2]
+  - id: erlang-variance-exact
+    expr: [Variance, [ErlangDistribution, 3, 2]]
+    expected: [Rational, 3, 4]
+seeAlso:
+  - GammaDistribution
+  - ChiSquareDistribution
+  - PDF
+  - CDF

@@ -1,0 +1,47 @@
+chisquare-pdf-exact:
+  epsil:
+    in: PDF(ChiSquareDistribution(3), 2)
+    out: 1 / (2 * ExponentialE * Gamma(3 / 2))
+  tex:
+    in: \operatorname{PDF}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: (2e\Gamma(\frac{3}{2}))^{-1}
+  fullform:
+    in: PDF[ChiSquareDistribution[3], 2]
+  wolfram:
+    in: PDF[ChiSquareDistribution[3], 2]
+chisquare-cdf-exact:
+  epsil:
+    in: CDF(ChiSquareDistribution(3), 2)
+    out: 1 - GammaRegularized(3 / 2, 1)
+  tex:
+    in: \operatorname{CDF}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: 1-\operatorname{GammaRegularized}(\frac{3}{2}, 1)
+  traditional:
+    in: \operatorname{CDF}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: 1-Q(\frac{3}{2}, 1)
+  fullform:
+    in: CDF[ChiSquareDistribution[3], 2]
+  wolfram:
+    in: CDF[ChiSquareDistribution[3], 2]
+chisquare-mean-exact:
+  epsil:
+    in: Mean(ChiSquareDistribution(3))
+    out: "3"
+  tex:
+    in: \mathrm{mean}(\mathrm{ChiSquareDistribution}(3))
+    out: "3"
+  fullform:
+    in: Mean[ChiSquareDistribution[3]]
+  wolfram:
+    in: Mean[ChiSquareDistribution[3]]
+chisquare-variance-exact:
+  epsil:
+    in: Variance(ChiSquareDistribution(3))
+    out: "6"
+  tex:
+    in: \mathrm{Variance}(\mathrm{ChiSquareDistribution}(3))
+    out: "6"
+  fullform:
+    in: Variance[ChiSquareDistribution[3]]
+  wolfram:
+    in: Variance[ChiSquareDistribution[3]]

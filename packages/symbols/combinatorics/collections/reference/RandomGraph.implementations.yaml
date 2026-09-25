@@ -1,0 +1,11 @@
+vertex-and-edge-count:
+  epsil:
+    in: Last([SeedRandom(9), VertexCount(RandomGraph([6, 8]))])
+    out: "6"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(9), \mathrm{VertexCount}(\mathrm{RandomGraph}(\bigl\lbrack6, 8\bigr\rbrack))\bigr\rbrack)
+    out: "6"
+  fullform:
+    in: Last[List[SeedRandom[9], VertexCount[RandomGraph[List[6, 8]]]]]
+  wolfram:
+    in: Last[List[SeedRandom[9], VertexCount[RandomGraph[List[6, 8]]]]]

@@ -1,0 +1,354 @@
+stirlings1-5-2:
+  epsil:
+    in: StirlingS1(5, 2)
+    out: "-50"
+  tex:
+    in: \mathrm{StirlingS1}(5, 2)
+    out: "-50"
+  traditional:
+    in: s(5, 2)
+    out: "-50"
+  fullform:
+    in: StirlingS1[5, 2]
+  wolfram:
+    in: StirlingS1[5, 2]
+    out: "-50"
+    tex:
+      in: S_5^{(2)}
+      out: "-50"
+  sage:
+    in: stirling_number1(5, 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Signed here (s(5,2) = -50); Sage's stirling_number1 is unsigned by definition and returns 50 -- documented in mappings.ts, not a bug.
+  julia:
+    in: Combinatorics.stirlings1(5, 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+  mathlib4:
+    in: (Nat.stirlingFirst 5 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+stirlings1-4-2:
+  epsil:
+    in: StirlingS1(4, 2)
+    out: "11"
+  tex:
+    in: \mathrm{StirlingS1}(4, 2)
+    out: "11"
+  traditional:
+    in: s(4, 2)
+    out: "11"
+  fullform:
+    in: StirlingS1[4, 2]
+  wolfram:
+    in: StirlingS1[4, 2]
+    out: "11"
+    tex:
+      in: S_4^{(2)}
+      out: "11"
+  sage:
+    in: stirling_number1(4, 2)
+    out: "11"
+  julia:
+    in: Combinatorics.stirlings1(4, 2)
+    out: "11"
+  mathlib4:
+    in: (Nat.stirlingFirst 4 2)
+    out: "11"
+s-n-n-is-always-1:
+  epsil:
+    in: StirlingS1(3, 3)
+    out: "1"
+  tex:
+    in: \mathrm{StirlingS1}(3, 3)
+    out: "1"
+  traditional:
+    in: s(3, 3)
+    out: "1"
+  fullform:
+    in: StirlingS1[3, 3]
+  wolfram:
+    in: StirlingS1[3, 3]
+    out: "1"
+    tex:
+      in: S_3^{(3)}
+      out: "1"
+  sage:
+    in: stirling_number1(3, 3)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings1(3, 3)
+    out: "1"
+  mathlib4:
+    in: (Nat.stirlingFirst 3 3)
+    out: "1"
+s-n-0-is-0-for-n-0:
+  epsil:
+    in: StirlingS1(5, 0)
+    out: "0"
+  tex:
+    in: \mathrm{StirlingS1}(5, 0)
+    out: "0"
+  traditional:
+    in: s(5, 0)
+    out: "0"
+  fullform:
+    in: StirlingS1[5, 0]
+  wolfram:
+    in: StirlingS1[5, 0]
+    out: "0"
+    tex:
+      in: S_5^{(0)}
+      out: "0"
+  sage:
+    in: stirling_number1(5, 0)
+    out: "0"
+  julia:
+    in: Combinatorics.stirlings1(5, 0)
+    out: "0"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 0)
+    out: "0"
+the-unsigned-values-in-a-row-sum-to-n:
+  epsil:
+    in: Sum(Abs(StirlingS1(4, k)), (k, 0, 4)) == 4!
+    out: True
+  tex:
+    in: \sum_{k=0}^4\vert\mathrm{StirlingS1}(4, k)\vert=4!
+    out: \top
+  traditional:
+    in: \sum_{k=0}^4\vert s(4, k)\vert=4!
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]], Factorial[4]]
+  wolfram:
+    in: (Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]] == Factorial[4])
+    out: True
+    tex:
+      in: \sum _{k=0}^4 \left| S_4^{(k)}\right| =4!
+      out: \text{True}
+the-number-of-permutations-of-5-elements-with:
+  epsil:
+    in: StirlingS1(5, 3)
+    out: "35"
+  tex:
+    in: \mathrm{StirlingS1}(5, 3)
+    out: "35"
+  traditional:
+    in: s(5, 3)
+    out: "35"
+  fullform:
+    in: StirlingS1[5, 3]
+  wolfram:
+    in: StirlingS1[5, 3]
+    out: "35"
+    tex:
+      in: S_5^{(3)}
+      out: "35"
+  sage:
+    in: stirling_number1(5, 3)
+    out: "35"
+  julia:
+    in: Combinatorics.stirlings1(5, 3)
+    out: "35"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 3)
+    out: "35"
+the-empty-case-s-0-0-1-by-convention-distinct:
+  epsil:
+    in: StirlingS1(0, 0)
+    out: "1"
+  tex:
+    in: \mathrm{StirlingS1}(0, 0)
+    out: "1"
+  traditional:
+    in: s(0, 0)
+    out: "1"
+  fullform:
+    in: StirlingS1[0, 0]
+  wolfram:
+    in: StirlingS1[0, 0]
+    out: "1"
+    tex:
+      in: S_0^{(0)}
+      out: "1"
+  sage:
+    in: stirling_number1(0, 0)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings1(0, 0)
+    out: "1"
+  mathlib4:
+    in: (Nat.stirlingFirst 0 0)
+    out: "1"
+s-n-1-1-n-1-n-1-so-s-10-1-9:
+  epsil:
+    in: StirlingS1(10, 1)
+    out: -362_880
+  tex:
+    in: \mathrm{StirlingS1}(10, 1)
+    out: -362\,880
+  traditional:
+    in: s(10, 1)
+    out: -362\,880
+  fullform:
+    in: StirlingS1[10, 1]
+  wolfram:
+    in: StirlingS1[10, 1]
+    out: "-362880"
+    tex:
+      in: S_{10}^{(1)}
+      out: "-362880"
+  sage:
+    in: stirling_number1(10, 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: "Same unsigned-vs-signed convention: s(10,1) = -362880 here, Sage's unsigned stirling_number1 gives 362880."
+  julia:
+    in: Combinatorics.stirlings1(10, 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+  mathlib4:
+    in: (Nat.stirlingFirst 10 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: StirlingS1([2, 4, 6], 2)
+    out: "[1, 11, 274]"
+  tex:
+    in: \mathrm{StirlingS1}(\bigl\lbrack2, 4, 6\bigr\rbrack, 2)
+    out: \bigl\lbrack1, 11, 274\bigr\rbrack
+  fullform:
+    in: StirlingS1[List[2, 4, 6], 2]
+  wolfram:
+    in: StirlingS1[List[2, 4, 6], 2]
+    out: "{1, 11, 274}"
+    tex:
+      in: S_{\{2,4,6\}}^{(2)}
+      out: \{1,11,274\}
+  sage:
+    in: stirling_number1([2, 4, 6], 2)
+  julia:
+    in: Combinatorics.stirlings1([2, 4, 6], 2)
+  mathlib4:
+    in: (Nat.stirlingFirst [2, 4, 6] 2)
+stirlings1-20-10:
+  epsil:
+    in: StirlingS1(20, 10)
+    out: 381_922_055_502_195
+  tex:
+    in: \mathrm{StirlingS1}(20, 10)
+    out: 381\,922\,055\,502\,195
+  traditional:
+    in: s(20, 10)
+    out: 381\,922\,055\,502\,195
+  fullform:
+    in: StirlingS1[20, 10]
+  wolfram:
+    in: StirlingS1[20, 10]
+  sage:
+    in: stirling_number1(20, 10)
+  julia:
+    in: Combinatorics.stirlings1(20, 10)
+  mathlib4:
+    in: (Nat.stirlingFirst 20 10)
+exact-for-large-n:
+  epsil:
+    in: StirlingS1(50, 2)
+    out: 2_724_619_372_591_264_761_651_711_494_187_624_530_726_005_154_239_846_809_600_000_000
+  tex:
+    in: \mathrm{StirlingS1}(50, 2)
+    out: 2\,724\,619\,372\,591\,264\,761\,651\,711\,494\,187\,624\,530\,726\,005\,154\,239\,846\,809\,600\,000\,000
+  traditional:
+    in: s(50, 2)
+    out: 2\,724\,619\,372\,591\,264\,761\,651\,711\,494\,187\,624\,530\,726\,005\,154\,239\,846\,809\,600\,000\,000
+  fullform:
+    in: StirlingS1[50, 2]
+  wolfram:
+    in: StirlingS1[50, 2]
+  sage:
+    in: stirling_number1(50, 2)
+  julia:
+    in: Combinatorics.stirlings1(50, 2)
+  mathlib4:
+    in: (Nat.stirlingFirst 50 2)
+the-signed-row-sum-vanishes-for-n-ge-2:
+  epsil:
+    in: Sum(StirlingS1(6, k), (k, 0, 6))
+    out: "0"
+  tex:
+    in: \sum_{k=0}^6\mathrm{StirlingS1}(6, k)
+    out: "0"
+  traditional:
+    in: \sum_{k=0}^6s(6, k)
+    out: "0"
+  fullform:
+    in: Sum[StirlingS1[6, k], List[k, 0, 6]]
+  wolfram:
+    in: Sum[StirlingS1[6, k], List[k, 0, 6]]
+s-n-n-1-binom-n-2:
+  epsil:
+    in: StirlingS1(6, 5) == -Binomial(6, 2)
+    out: True
+  tex:
+    in: \mathrm{StirlingS1}(6, 5)=-\binom{6}{2}
+    out: \top
+  traditional:
+    in: s(6, 5)=-\binom{6}{2}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[StirlingS1[6, 5], Minus[Binomial[6, 2]]]
+  wolfram:
+    in: (StirlingS1[6, 5] == Minus[Binomial[6, 2]])
+  sage:
+    in: bool(stirling_number1(6, 5) == (-binomial(6, 2)))
+  julia:
+    in: (Combinatorics.stirlings1(6, 5) == (-(binomial(ZZ(6), ZZ(2)))))
+  mathlib4:
+    in: (decide ((Nat.stirlingFirst 6 5) = (-((Nat.choose 6 2)))))
+the-generating-property-sum-k-s-n-k-x-k-x-x-1-x:
+  epsil:
+    in: |-
+      Sum(StirlingS1(4, k) * x ^ k, (k, 0, 4)) == Expand(x * (x - 1) * (x - 2) * (x -
+                                                                                  3))
+    out: True
+  tex:
+    in: \sum_{k=0}^4\mathrm{StirlingS1}(4, k)x^{k}=\mathrm{Expand}(x\times(x-1)(x-2)(x-3))
+    out: \top
+  traditional:
+    in: \sum_{k=0}^4s(4, k)x^{k}=\mathrm{Expand}(x\times(x-1)(x-2)(x-3))
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Sum[Times[StirlingS1[4, k], Power[x, k]], List[k, 0, 4]], Expand[Times[x, Subtract[x, 1], Subtract[x, 2], Subtract[x, 3]]]]
+k-n-is-0:
+  epsil:
+    in: StirlingS1(5, 6)
+    out: "0"
+  tex:
+    in: \mathrm{StirlingS1}(5, 6)
+    out: "0"
+  traditional:
+    in: s(5, 6)
+    out: "0"
+  fullform:
+    in: StirlingS1[5, 6]
+  wolfram:
+    in: StirlingS1[5, 6]
+  sage:
+    in: stirling_number1(5, 6)
+  julia:
+    in: Combinatorics.stirlings1(5, 6)
+  mathlib4:
+    in: (Nat.stirlingFirst 5 6)

@@ -1,0 +1,9 @@
+count-simplepermutations-5-6-a111111:
+  epsil:
+    in: Count(SimplePermutations(5))
+    out: "6"
+  tex:
+    in: \mathrm{Count}(\mathrm{SimplePermutations}(5))
+    out: "6"
+  fullform:
+    in: Count[SimplePermutations[5]]

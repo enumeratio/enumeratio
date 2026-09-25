@@ -1,0 +1,292 @@
+ln-gamma-3-ln-2-ln-2:
+  epsil:
+    in: LogGamma(3)
+    out: Ln(2)
+  tex:
+    in: \mathrm{LogGamma}(3)
+    out: \ln(2)
+  traditional:
+    in: \log\Gamma(3)
+    out: \ln(2)
+  fullform:
+    in: LogGamma[3]
+    back: [GammaLn, 3]
+  wolfram:
+    in: LogGamma[3]
+    out: Log[2]
+    tex:
+      in: \text{log$\Gamma $}(3)
+      out: \log (2)
+ln-gamma-1-0:
+  epsil:
+    in: LogGamma(1)
+    out: "0"
+  tex:
+    in: \mathrm{LogGamma}(1)
+    out: "0"
+  traditional:
+    in: \log\Gamma(1)
+    out: "0"
+  fullform:
+    in: LogGamma[1]
+    back: [GammaLn, 1]
+  wolfram:
+    in: LogGamma[1]
+    out: "0"
+    tex:
+      in: \text{log$\Gamma $}(1)
+      out: "0"
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac:
+  epsil:
+    in: LogGamma(1 / 2)
+    out: 1 / 2 * Ln(Pi)
+  tex:
+    in: \mathrm{LogGamma}(\frac{1}{2})
+    out: \frac{\ln(\pi)}{2}
+  traditional:
+    in: \log\Gamma(\frac{1}{2})
+    out: \frac{\ln(\pi)}{2}
+  fullform:
+    in: LogGamma[Rational[1, 2]]
+    back: [GammaLn, [Rational, 1, 2]]
+  wolfram:
+    in: LogGamma[Rational[1, 2]]
+    out: Log[Pi]/2
+    tex:
+      in: \text{log$\Gamma $}\left(\frac{1}{2}\right)
+      out: \frac{\log (\pi )}{2}
+a-pole-of-gamma:
+  epsil:
+    in: LogGamma(0)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{LogGamma}(0)
+    out: \infty
+  traditional:
+    in: \log\Gamma(0)
+    out: \infty
+  fullform:
+    in: LogGamma[0]
+    back: [GammaLn, 0]
+  wolfram:
+    in: LogGamma[0]
+    out: Infinity
+    tex:
+      in: \text{log$\Gamma $}(0)
+      out: \infty
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working:
+  epsil:
+    in: LogGamma(2.5)
+    out: 0.284_682_870_472_919_159_632
+  tex:
+    in: \mathrm{LogGamma}(2.5)
+    out: 0.284\,682\,870\,472\,919\,159\,632
+  traditional:
+    in: \log\Gamma(2.5)
+    out: 0.284\,682\,870\,472\,919\,159\,632
+  fullform:
+    in: LogGamma[2.5]
+    back: [GammaLn, 2.5]
+  wolfram:
+    in: LogGamma[2.5]
+    out: "0.2846828704729192"
+    tex:
+      in: \text{log$\Gamma $}(2.5)
+      out: "0.284683"
+off-the-positive-axis-this-is-the-continuation:
+  epsil:
+    in: LogGamma(-2.5 + 1.5i)
+    out: -3.717_513_451_191_784_7 + -7.713_065_525_834_191 * i
+  tex:
+    in: \mathrm{LogGamma}(-2.5+1.5i)
+    out: -3.717\,513\,451\,191\,784\,7-7.713\,065\,525\,834\,191i
+  traditional:
+    in: \log\Gamma(-2.5+1.5i)
+    out: -3.717\,513\,451\,191\,784\,7-7.713\,065\,525\,834\,191i
+  fullform:
+    in: LogGamma[Complex[-2.5, 1.5]]
+    back: [GammaLn, [Complex, -2.5, 1.5]]
+  wolfram:
+    in: LogGamma[Complex[-2.5, 1.5]]
+    out: -3.7175134511917927 - 7.7130655258341925*I
+    tex:
+      in: \text{log$\Gamma $}(-2.5+1.5 i)
+      out: -3.71751-7.71307 i
+ln-gamma-5-ln-4-ln-24-split-into-prime:
+  epsil:
+    in: LogGamma(5)
+    out: 3 * Ln(2) + Ln(3)
+  tex:
+    in: \mathrm{LogGamma}(5)
+    out: 3\ln(2)+\ln(3)
+  traditional:
+    in: \log\Gamma(5)
+    out: 3\ln(2)+\ln(3)
+  fullform:
+    in: LogGamma[5]
+    back: [GammaLn, 5]
+  wolfram:
+    in: LogGamma[5]
+    note: Wolfram keeps a single logarithm, Log[24].
+to-the-engine-s-working-precision:
+  epsil:
+    in: LogGamma(2.2)
+    out: 0.096_947_466_790_638_776_492
+  tex:
+    in: \mathrm{LogGamma}(2.2)
+    out: 0.096\,947\,466\,790\,638\,776\,492
+  traditional:
+    in: \log\Gamma(2.2)
+    out: 0.096\,947\,466\,790\,638\,776\,492
+  fullform:
+    in: LogGamma[2.2]
+    back: [GammaLn, 2.2]
+  wolfram:
+    in: LogGamma[2.2]
+complex-arguments:
+  epsil:
+    in: LogGamma(2.5 + 3i)
+    out: -1.470_954_610_348_833_6 + 2.822_615_638_260_796i
+  tex:
+    in: \mathrm{LogGamma}(2.5+3i)
+    out: -1.470\,954\,610\,348\,833\,6+2.822\,615\,638\,260\,796i
+  traditional:
+    in: \log\Gamma(2.5+3i)
+    out: -1.470\,954\,610\,348\,833\,6+2.822\,615\,638\,260\,796i
+  fullform:
+    in: LogGamma[Complex[2.5, 3]]
+    back: [GammaLn, [Complex, 2.5, 3]]
+  wolfram:
+    in: LogGamma[Complex[2.5, 3]]
+threads-elementwise-over-an-array:
+  epsil:
+    in: LogGamma([[1 / 2, -1], [0, 1 / 2]])
+    out: "[[1 / 2 * Ln(Pi), PositiveInfinity], [PositiveInfinity, 1 / 2 * Ln(Pi)]]"
+  tex:
+    in: \mathrm{LogGamma}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\frac{\ln(\pi)}{2}, \infty\bigr\rbrack, \bigl\lbrack\infty, \frac{\ln(\pi)}{2}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: LogGamma[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
+    back: [GammaLn, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
+  wolfram:
+    in: LogGamma[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
+on-the-negative-axis-gamma-frac-32-frac-43-sqrt:
+  epsil:
+    in: LogGamma(-1.5)
+    out: 0.860_047_015_376_473_2 + -6.283_185_307_179_586 * i
+  tex:
+    in: \mathrm{LogGamma}(-1.5)
+    out: 0.860\,047\,015\,376\,473\,2-6.283\,185\,307\,179\,586i
+  traditional:
+    in: \log\Gamma(-1.5)
+    out: 0.860\,047\,015\,376\,473\,2-6.283\,185\,307\,179\,586i
+  fullform:
+    in: LogGamma[-1.5]
+    back: [GammaLn, -1.5]
+  wolfram:
+    in: LogGamma[-1.5]
+half-integers-past-frac-12-ln-gamma-frac-32-ln:
+  epsil:
+    in: LogGamma(3 / 2)
+    out: Ln(1 / 2 * Sqrt(Pi))
+  tex:
+    in: \mathrm{LogGamma}(\frac{3}{2})
+    out: \ln(\frac{\sqrt{\pi}}{2})
+  traditional:
+    in: \log\Gamma(\frac{3}{2})
+    out: \ln(\frac{\sqrt{\pi}}{2})
+  fullform:
+    in: LogGamma[Rational[3, 2]]
+    back: [GammaLn, [Rational, 3, 2]]
+  wolfram:
+    in: LogGamma[Rational[3, 2]]
+exact-negative-half-integers-ln-gamma-frac-32-ln:
+  epsil:
+    in: LogGamma(-3 / 2)
+    out: -2 * i * Pi + Ln(4 / 3 * Sqrt(Pi))
+  tex:
+    in: \mathrm{LogGamma}(-\frac{3}{2})
+    out: \ln(\frac{4\sqrt{\pi}}{3})-2i\pi
+  traditional:
+    in: \log\Gamma(-\frac{3}{2})
+    out: \ln(\frac{4\sqrt{\pi}}{3})-2i\pi
+  fullform:
+    in: LogGamma[Rational[-3, 2]]
+    back: [GammaLn, [Rational, -3, 2]]
+  wolfram:
+    in: LogGamma[Rational[-3, 2]]
+ln-gamma-infty-infty:
+  epsil:
+    in: LogGamma(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{LogGamma}(\infty)
+    out: \infty
+  traditional:
+    in: \log\Gamma(\infty)
+    out: \infty
+  fullform:
+    in: LogGamma[Infinity]
+    back: [GammaLn, PositiveInfinity]
+  wolfram:
+    in: LogGamma[Infinity]
+huge-arguments-ln-gamma-10-300-approx-6-898:
+  epsil:
+    in: N(LogGamma(10 ^ 300))
+    out: 6_897_755_278_982_137e287
+  tex:
+    in: N(\mathrm{LogGamma}(10^{300}))
+    out: 6\,897\,755\,278\,982\,137\cdot10^{287}
+  traditional:
+    in: N(\log\Gamma(10^{300}))
+    out: 6\,897\,755\,278\,982\,137\cdot10^{287}
+  fullform:
+    in: N[LogGamma[Power[10, 300]]]
+    back: [N, [GammaLn, [Power, 10, 300]]]
+  wolfram:
+    in: N[LogGamma[Power[10, 300]]]
+interval-arithmetic-decreasing-here-so-the:
+  epsil:
+    in: LogGamma(Interval(0.41, 0.42))
+    out: Interval(0.746_863_727_128_014_2, 0.771_422_463_394_746_8)
+  tex:
+    in: \mathrm{LogGamma}(\mathrm{Interval}(0.41, 0.42))
+    out: \mathrm{Interval}(0.746\,863\,727\,128\,014\,2, 0.771\,422\,463\,394\,746\,8)
+  traditional:
+    in: \log\Gamma(\mathrm{Interval}(0.41, 0.42))
+    out: \mathrm{Interval}(0.746\,863\,727\,128\,014\,2, 0.771\,422\,463\,394\,746\,8)
+  fullform:
+    in: LogGamma[Interval[List[0.41, 0.42]]]
+    back: [GammaLn, [Interval, 0.41, 0.42]]
+  wolfram:
+    in: LogGamma[Interval[List[0.41, 0.42]]]
+uncertainty-propagation-with-psi-1-2-as-the:
+  epsil:
+    in: LogGamma(Around(1.2, 0.01))
+    out: Around(-0.085_374_090_003_315_85, 0.002_890_398_965_921_883)
+  tex:
+    in: \mathrm{LogGamma}(\mathrm{Around}(1.2, 0.01))
+    out: \mathrm{Around}(-0.085\,374\,090\,003\,315\,85, 0.002\,890\,398\,965\,921\,883)
+  traditional:
+    in: \log\Gamma(\mathrm{Around}(1.2, 0.01))
+    out: \mathrm{Around}(-0.085\,374\,090\,003\,315\,85, 0.002\,890\,398\,965\,921\,883)
+  fullform:
+    in: LogGamma[Around[1.2, 0.01]]
+    back: [GammaLn, [Around, 1.2, 0.01]]
+  wolfram:
+    in: LogGamma[Around[1.2, 0.01]]
+to-30-significant-digits-not-yet-the-last-digit:
+  epsil:
+    in: N(LogGamma(1 / 3), 30)
+    out: 0.985_420_646_927_767_069_187_174_036_978
+  tex:
+    in: N(\mathrm{LogGamma}(\frac{1}{3}), 30)
+    out: 0.985\,420\,646\,927\,767\,069\,187
+  traditional:
+    in: N(\log\Gamma(\frac{1}{3}), 30)
+    out: 0.985\,420\,646\,927\,767\,069\,187
+  fullform:
+    in: N[LogGamma[Rational[1, 3]], 30]
+    back: [N, [GammaLn, [Rational, 1, 3]], 30]
+  wolfram:
+    in: N[LogGamma[Rational[1, 3]], 30]

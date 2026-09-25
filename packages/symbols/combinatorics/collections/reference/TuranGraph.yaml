@@ -1,0 +1,17 @@
+name: TuranGraph
+domain: Collections
+signature: TuranGraph(n, r)
+summary: The complete r-partite graph on n vertices with parts as equal in size as possible.
+signatures:
+  - call: TuranGraph(n, r)
+    description: n vertices split into r parts (sizes differ by at most 1), every pair in DIFFERENT parts joined.
+    library: enumeratio-collections
+details:
+  - The extremal K_(r+1)-free graph on n vertices with the most edges (Turán's theorem). r = n gives CompleteGraph(n); r = 1 gives the empty graph on n vertices.
+  - Vertex-to-part assignment order (which vertices land in the larger parts) is a labelling choice, kernel-unverified against Wolfram's own.
+examples:
+  - id: turan-6-3-is-k222
+    expr: [EdgeCount, [TuranGraph, 6, 3]]
+    expected: 12
+seeAlso:
+  - CompleteGraph

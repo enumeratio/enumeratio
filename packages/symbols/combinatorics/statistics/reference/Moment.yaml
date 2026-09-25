@@ -1,0 +1,30 @@
+name: Moment
+domain: Statistics
+signature: Moment(dist, r)
+summary: The raw moment $E[X^r]$.
+signatures:
+  - call: Moment(dist, r)
+    description: exact for $r=0,1,2$ via [[Mean]]/[[Variance]] ($E[X^2]=Variance+Mean^2$); $r\geq 3$ stays unevaluated — a distribution-specific formula this generic layer doesn't have, not an approximation.
+    library: enumeratio-statistics
+details:
+  - Generic over every distribution this package's [[Mean]]/[[Variance]] answer, old or new.
+examples:
+  - id: moment-order-0
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 0]
+    expected: 1
+  - id: moment-order-1-is-mean
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 1]
+    expected: 3
+  - id: moment-order-2
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 2]
+    expected: 21
+  - id: moment-order-3-unevaluated
+    expr: [Moment, [GeometricDistribution, [Rational, 1, 4]], 3]
+    expected: [Moment, [GeometricDistribution, [Rational, 1, 4]], 3]
+    category: Possible issues
+seeAlso:
+  - CentralMoment
+  - FactorialMoment
+  - Cumulant
+  - Mean
+  - Variance

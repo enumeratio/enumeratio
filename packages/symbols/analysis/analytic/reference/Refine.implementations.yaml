@@ -1,0 +1,54 @@
+sqrt-of-x-squared-under-x-greater-than-0:
+  epsil:
+    in: Refine(Sqrt(x ^ 2), x > 0)
+    out: x
+  tex:
+    in: \mathrm{Refine}(\sqrt{x^2}, x\gt0)
+    out: x
+  fullform:
+    in: Refine[Sqrt[Power[x, 2]], Greater[x, 0]]
+sqrt-of-x-squared-under-x-less-than-0:
+  epsil:
+    in: Refine(Sqrt(x ^ 2), x < 0)
+    out: -x
+  tex:
+    in: \mathrm{Refine}(\sqrt{x^2}, x\lt0)
+    out: -x
+  fullform:
+    in: Refine[Sqrt[Power[x, 2]], Less[x, 0]]
+abs-under-x-greater-than-0:
+  epsil:
+    in: Refine(Abs(x), x > 0)
+    out: x
+  tex:
+    in: \mathrm{Refine}(\vert x\vert, x\gt0)
+    out: x
+  fullform:
+    in: Refine[Abs[x], Greater[x, 0]]
+sign-under-x-greater-than-0:
+  epsil:
+    in: Refine(Sign(x), x > 0)
+    out: "1"
+  tex:
+    in: \mathrm{Refine}(\mathrm{sgn}(x), x\gt0)
+    out: "1"
+  fullform:
+    in: Refine[Sign[x], Greater[x, 0]]
+log-of-exp-under-x-real:
+  epsil:
+    in: Refine(Ln(Exp(x)), x in RealNumbers)
+    out: x
+  tex:
+    in: \mathrm{Refine}(\ln(e^{x}), x\in\mathbb{R})
+    out: x
+  fullform:
+    in: Refine[Log[Exp[x]], Element[x, RealNumbers]]
+an-undecidable-inequality-is-left-alone:
+  epsil:
+    in: Refine(x ^ 2 > 0)
+    out: 0 < x ^ 2
+  tex:
+    in: \mathrm{Refine}(x^2\gt0)
+    out: 0\lt x^2
+  fullform:
+    in: Refine[Greater[Power[x, 2], 0]]

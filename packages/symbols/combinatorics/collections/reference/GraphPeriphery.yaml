@@ -1,0 +1,24 @@
+name: GraphPeriphery
+domain: Collections
+signature: GraphPeriphery(g)
+summary: The vertices of a [[Graph]] whose eccentricity equals GraphDiameter(g).
+signatures:
+  - call: GraphPeriphery(g)
+    description: every vertex with the largest (finite) eccentricity, in VertexList(g) order.
+    library: enumeratio-collections
+examples:
+  - id: path-5-periphery-is-both-ends
+    expr:
+      [
+        GraphPeriphery,
+        [
+          Graph,
+          [List, 1, 2, 3, 4, 5],
+          [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 2, 3], [UndirectedEdge, 3, 4], [UndirectedEdge, 4, 5]],
+        ],
+      ]
+    expected: [List, 1, 5]
+seeAlso:
+  - GraphCenter
+  - GraphDiameter
+  - VertexEccentricity
