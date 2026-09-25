@@ -1,0 +1,37 @@
+name: Permute
+domain: Permutations
+signature: Permute(list, perm)
+summary: Move the item at position $i$ of `list` to position $\sigma(i)$, for a permutation `perm` given as [[Cycles]] or a one-line word. Given a [[PermutationGroup]] instead, returns `list` permuted by every element of the group.
+signatures:
+  - call: Permute(list, perm)
+    description: list with position $i$ moved to $\sigma(i)$
+    library: enumeratio-groupalgebra
+  - call: Permute(list, group)
+    description: one permuted copy of `list` per element of `group`
+    library: enumeratio-groupalgebra
+details:
+  - '`Permute` and [[PermutationCycles]]/[[InversePermutation]] all read $\sigma$ the same way: a one-line word `{v1, ..., vn}` means $\sigma(i) = v_i$'
+  - A cycle or one-line word longer than `list` leaves the call unevaluated — there is nowhere for the extra positions to go
+  - The `PermutationGroup` form orders its output the way [[GroupElements]] orders that group
+examples:
+  - id: by-a-cycle
+    expr: [Permute, [List, a, b, c, d], [Cycles, [List, [List, 1, 3, 2]]]]
+    expected: [List, b, c, a, d]
+  - id: by-disjoint-cycles
+    expr: [Permute, [List, a, b, c, d], [Cycles, [List, [List, 1, 3], [List, 2, 4]]]]
+    expected: [List, c, d, a, b]
+    category: Scope
+  - id: by-a-one-line-word
+    expr: [Permute, [List, a, b, c, d], [List, 2, 3, 4, 1]]
+    expected: [List, d, a, b, c]
+    category: Scope
+  - id: by-a-permutation-group
+    expr: [Permute, [List, a, b, c], [PermutationGroup, [List, [Cycles, [List, [List, 1, 2, 3]]]]]]
+    expected: [List, [List, a, b, c], [List, c, a, b], [List, b, c, a]]
+    caption: one permuted copy per element of the cyclic group of order 3
+    category: Applications
+seeAlso:
+  - Cycles
+  - PermutationCycles
+  - PermutationGroup
+  - GroupElements
