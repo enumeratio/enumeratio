@@ -709,6 +709,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "Commonest",
+    wolfram: "Commonest",
+  },
+  {
     name: "Complex",
     wolfram: "Complex",
     oracle: [
@@ -3272,6 +3276,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "Position",
+    wolfram: "Position",
   },
   {
     name: "PositiveInfinity",

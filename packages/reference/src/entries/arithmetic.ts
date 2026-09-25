@@ -564,10 +564,15 @@ export const arithmetic: readonly ReferenceEntry[] = [
         description:
           "x if it's already in $[\\mathrm{lower}, \\mathrm{upper}]$, else the nearer bound.",
       },
+      {
+        call: "Clamp(x)",
+        description: "x clamped to the default range $[-1, 1]$, Wolfram's Clip[x].",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "Constrains a value to $[\\mathrm{lower}, \\mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.",
-      "All three arguments are required; a 1-argument $\\mathrm{Clamp}(x)$ defaulting to the range $[0, 1]$ is not yet supported.",
+      "A 1-argument $\\mathrm{Clamp}(x)$ defaults to $[-1, 1]$, matching Wolfram's Clip[x].",
       "Idempotent: clamping an already-clamped value changes nothing.",
       "Doesn't validate that lower $\\le$ upper; with the bounds swapped it just falls through whichever comparison fires first.",
     ],
@@ -607,10 +612,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       {
         expr: ["Clamp", 1.5],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A 1-argument $\\mathrm{Clamp}(x)$ should clamp to the default range $[0, 1]$; not yet supported (explicit bounds are required)",
+        caption: "A 1-argument $\\mathrm{Clamp}(x)$ clamps to the default range $[-1, 1]$",
       },
     ],
     seeAlso: ["Min", "Max"],
