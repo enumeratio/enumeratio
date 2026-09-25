@@ -2085,7 +2085,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#11": {
+  "residues/PowerMod#13": {
     "ours": {
       "input": "\\left(\\sqrt{4}\\bmod 7\\right)",
       "output": "2"
@@ -2099,7 +2099,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#12": {
+  "residues/PowerMod#14": {
     "ours": {
       "input": "\\mathrm{PowerMod}(2, \\bigl\\lbrack10, 11, 12, 13, 14\\bigr\\rbrack, 5)",
       "output": "\\bigl\\lbrack4, 3, 1, 2, 4\\bigr\\rbrack"
@@ -2113,7 +2113,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#13": {
+  "residues/PowerMod#15": {
     "ours": {
       "input": "\\left({(10^{300}+1)}^7\\bmod 5\\right)",
       "output": "1"
@@ -2127,7 +2127,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#14": {
+  "residues/PowerMod#16": {
     "ours": {
       "input": "\\left(\\sqrt{3}\\bmod 10^{30}+57\\right)",
       "output": "492\\,767\\,688\\,934\\,650\\,018\\,614\\,948\\,489\\,645"
@@ -2141,7 +2141,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#15": {
+  "residues/PowerMod#17": {
     "ours": {
       "input": "\\left(\\left(\\frac{2}{3}\\right)^1\\bmod 7\\right)",
       "output": "3"
@@ -2155,7 +2155,7 @@
       "output": false
     }
   },
-  "residues/PowerMod#16": {
+  "residues/PowerMod#18": {
     "ours": {
       "input": "\\left(\\left(2+i\\right)^2\\bmod 3\\right)",
       "output": "i"
@@ -2169,7 +2169,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#17": {
+  "residues/PowerMod#19": {
     "ours": {
       "input": "\\left(\\left(1+2i\\right)^{10^{30}}\\bmod 7+2i\\right)",
       "output": "1+2i"
@@ -2183,7 +2183,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#18": {
+  "residues/PowerMod#20": {
     "ours": {
       "input": "\\left(\\frac{1}{\\left(11-7i\\right)^4}\\bmod 7+4i\\right)",
       "output": "-2-i"
@@ -2197,7 +2197,7 @@
       "output": false
     }
   },
-  "residues/PowerMod#19": {
+  "residues/PowerMod#21": {
     "ours": {
       "input": "\\left(7^{\\varphi(19)}\\bmod 19\\right)",
       "output": "1"
@@ -2211,7 +2211,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#20": {
+  "residues/PowerMod#22": {
     "ours": {
       "input": "\\left(2^{340}\\bmod 341\\right)",
       "output": "1"
@@ -2225,7 +2225,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#21": {
+  "residues/PowerMod#23": {
     "ours": {
       "input": "\\left({\\left(5^6\\bmod 23\\right)}^{15}\\bmod 23\\right)=\\left({\\left(5^{15}\\bmod 23\\right)}^6\\bmod 23\\right)",
       "output": "\\mathrm{True}"
@@ -2239,7 +2239,7 @@
       "output": true
     }
   },
-  "residues/PowerMod#22": {
+  "residues/PowerMod#24": {
     "ours": {
       "input": "\\left(\\sqrt{2}\\bmod 5\\right)",
       "output": "\\left(\\sqrt{2}\\bmod 5\\right)"
