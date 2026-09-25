@@ -6,9 +6,9 @@ an interactive terminal, a plain command line, and — thanks to a browser-safe 
 a **real terminal emulator in the browser**.
 
 ::: tip Try it live
-The [**REPL playground**](/playground/repl) is a real terminal running this exact
+The [**live REPL**](/docs/cli/repl) is a real terminal running this exact
 CLI logic in your browser — pick an example from the dropdown or type your own.
-The [**command-line playground**](/playground/cli) does the same for scriptable
+The [**live command line**](/docs/cli/command-line) does the same for scriptable
 `notatio` invocations.
 :::
 
@@ -88,7 +88,7 @@ Out[4]= 60
 A line with controls in it is committed the same way: **Enter** ends the strip and what you
 left on screen becomes `Out[n]`, so a later line reading `Out[n]` gets the state you stopped
 at — the session is Wolfram-style, one committed cell at a time, not a sheet that keeps
-re-running (that is [notatio-notebook](/playground/notebook)).
+re-running (that is a [worksheet](/worksheet/)).
 
 - `let name = <expr>` binds a variable the engine remembers; later lines resolve
   it, and `:vars` lists the bindings.
@@ -109,7 +109,7 @@ Out[3]= 30
 `composition`, `subset`, `dyck`). In the browser terminal the figure appears beside
 it; the Node CLI writes an SVG to a temp file (and shows it inline on iTerm2 /
 kitty). Try `:glyph partition [5,3,3,1]` or `:plot Sin(x)` in the
-[REPL playground](/playground/repl).
+[live REPL](/docs/cli/repl).
 
 ## Environments
 
@@ -149,7 +149,7 @@ grids: see [the Environments playground](/playground/environments) and
 
 Outside the browser, `notatio` is also a plain command: give it an expression and
 it prints the result and exits — ideal for scripts and pipes. Try it in the
-[command-line playground](/playground/cli).
+[live command line](/docs/cli/command-line).
 
 ```bash
 notatio "Binomial(10, 3)"        # 120
