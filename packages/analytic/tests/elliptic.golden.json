@@ -252,5 +252,87 @@
     "tol": 1e-11,
     "mpmath": [1.162667617124371, 0.33170361682905275],
     "wolfram": [1.1626676171243708, 0.33170361682905275]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.5, 0.4, 0.3],
+    "label": "Pi(0.5;0.4|0.3)",
+    "tol": 1e-11,
+    "mpmath": [0.4141517368244767, 0.0],
+    "wolfram": [0.4141517368244767, 0.0]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.5, -0.4, 0.3],
+    "label": "Pi(0.5;-0.4|0.3)",
+    "tol": 1e-11,
+    "mpmath": [-0.4141517368244767, 0.0]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.5, 1.9, 0.3],
+    "label": "Pi(0.5;1.9|0.3) phi>pi/2",
+    "tol": 1e-11,
+    "mpmath": [3.2165165370151176, 0.0],
+    "wolfram": [3.2165165370151176, 0.0]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [2.0, 0.4, 0.3],
+    "label": "Pi(2.0;0.4|0.3) n>1",
+    "tol": 1e-11,
+    "mpmath": [0.4550047490928081, 0.0],
+    "wolfram": [0.4550047490928081, 0.0]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.5, 3.5, 0.3],
+    "label": "Pi(0.5;3.5|0.3) phi>pi",
+    "tol": 1e-11,
+    "mpmath": [5.291058653963574, 0.0],
+    "wolfram": [5.291058653963574, 0.0]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.2, 2.0, 0.5],
+    "label": "Pi(0.2;2.0|0.5) real, wide phi",
+    "tol": 1e-11,
+    "mpmath": [2.8204255409214865, 0.0]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.5, 0.4, ["Complex", 0.7, 0.2]],
+    "label": "Pi(0.5;0.4|0.7+0.2i) complex m",
+    "tol": 1e-9,
+    "mpmath": [0.41877247265903567, 0.0023988666579402842]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [["Complex", 0.5, 0.2], 0.4, 0.3],
+    "label": "Pi(0.5+0.2i;0.4|0.3) complex n",
+    "tol": 1e-9,
+    "mpmath": [0.41406031980809593, 0.004608575942138296],
+    "wolfram": [0.4140603198080959, 0.004608575942138107]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.5, ["Complex", 0.4, 0.3], ["Complex", 0.6, 0.1]],
+    "label": "Pi(0.5;0.4+0.3i|0.6+0.1i) all complex",
+    "tol": 1e-9,
+    "mpmath": [0.38471135810732554, 0.3299967409718069]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.2, ["Complex", 1.2, 0.5], 0.3],
+    "label": "Pi(0.2;1.2+0.5i|0.3) complex phi (native NaN case)",
+    "tol": 1e-9,
+    "mpmath": [1.321415376117118, 0.7186657188751805]
+  },
+  {
+    "head": "IncompleteEllipticPi",
+    "args": [0.2, ["Complex", 2.0, 0.5], 0.3],
+    "label": "Pi(0.2;2.0+0.5i|0.3) complex phi, wide re",
+    "tol": 1e-9,
+    "mpmath": [2.615928301488492, 0.7015631769930667]
   }
 ]

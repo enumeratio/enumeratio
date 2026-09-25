@@ -137,6 +137,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "081205",
+    heads: ["KeiperLiLambda"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
     entry: "081abd",
     heads: ["Totient"],
     verdict: "agree",
@@ -712,6 +718,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     heads: ["CarlsonRC", "Ln"],
     verdict: "disagree",
     detail: "0.6232252401402307 vs 0.6232252401402305",
+  },
+  {
+    entry: "255d81",
+    heads: ["IncompleteEllipticPi"],
+    verdict: "agree",
+    samples: 2,
   },
   {
     entry: "2573ba",
@@ -1724,6 +1736,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     verdict: "disagree",
     detail:
       'at _n = 1, _x = ["Complex",0.5700000000000001,0.23]: 0.544 vs 0.0880000000000003 (relative gap 6.9e-1)',
+  },
+  {
+    entry: "5f84d9",
+    heads: ["EllipticPi", "IncompleteEllipticPi"],
+    verdict: "agree",
+    samples: 2,
   },
   {
     entry: "5fb5e2",
@@ -3934,6 +3952,12 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     samples: 3,
   },
   {
+    entry: "d8d820",
+    heads: ["KeiperLiLambda", "Ln"],
+    verdict: "agree",
+    samples: 1,
+  },
+  {
     entry: "d9765b",
     heads: ["Arcosh", "CarlsonRC"],
     verdict: "agree",
@@ -4526,11 +4550,6 @@ export const fungrimFrontier: readonly {
     declared: false,
   },
   {
-    head: "KeiperLiLambda",
-    identities: 3,
-    declared: false,
-  },
-  {
     head: "ModularLambdaFundamentalDomain",
     identities: 3,
     declared: false,
@@ -4552,11 +4571,6 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "HypergeometricU",
-    identities: 2,
-    declared: false,
-  },
-  {
-    head: "IncompleteEllipticPi",
     identities: 2,
     declared: false,
   },
@@ -4756,11 +4770,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "Ln",
-    identities: 12,
-    declared: true,
-  },
-  {
     head: "BesselY",
     identities: 11,
     declared: true,
@@ -4772,6 +4781,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Filter",
+    identities: 11,
+    declared: true,
+  },
+  {
+    head: "Ln",
     identities: 11,
     declared: true,
   },
@@ -4851,11 +4865,6 @@ export const fungrimFrontier: readonly {
     declared: true,
   },
   {
-    head: "EllipticPi",
-    identities: 5,
-    declared: true,
-  },
-  {
     head: "Fibonacci",
     identities: 5,
     declared: true,
@@ -4877,6 +4886,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "Conjugate",
+    identities: 4,
+    declared: true,
+  },
+  {
+    head: "EllipticPi",
     identities: 4,
     declared: true,
   },
@@ -5087,6 +5101,11 @@ export const fungrimFrontier: readonly {
   },
   {
     head: "IsOdd",
+    identities: 1,
+    declared: true,
+  },
+  {
+    head: "KeiperLiLambda",
     identities: 1,
     declared: true,
   },

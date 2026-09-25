@@ -788,6 +788,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: ["wolfram"],
   },
   {
+    name: "IncompleteEllipticPi",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "EllipticPi",
+    elsewhere: [],
+  },
+  {
+    name: "KeiperLiLambda",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
     name: "BarnesG",
     provenance: "extension",
     declared: "enumeratio-analytic",

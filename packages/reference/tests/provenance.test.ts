@@ -227,7 +227,9 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * own (see `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled
  * in by the external-kernel coverage script, which needs a Wolfram kernel this offline test
  * suite doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
- * BesselJZero (Wolfram, mpmath) waits on the same run.
+ * BesselJZero (Wolfram, mpmath) waits on the same run — as does IncompleteEllipticPi
+ * (Wolfram's own EllipticPi[n, φ, m], mpmath's ellippi); KeiperLiLambda has no known
+ * equivalent elsewhere and should stay novel even after a coverage run.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -242,6 +244,8 @@ const NOVEL = [
   "ProfiniteDecomposition",
   "ProfinitePlot",
   "MatrixExp",
+  "IncompleteEllipticPi",
+  "KeiperLiLambda",
   "ClausenCl",
   "BesselJZero",
   "DigammaFunctionZero",
