@@ -789,10 +789,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Erfc", ["Complex", 1.5, -1]],
         expected: ["Complex", -0.07839920749893345, -0.027963711238655847],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Complex arguments should evaluate, as they do for [[Erf]]: $\\operatorname{erfc}(z) = 1 - \\operatorname{erf}(z)$; left unevaluated today",
+          "Complex arguments evaluate, as they do for [[Erf]]: $\\operatorname{erfc}(z) = 1 - \\operatorname{erf}(z)$",
       },
       {
         expr: ["Erfc", ["List", "PositiveInfinity", "NegativeInfinity"]],
@@ -1218,6 +1217,20 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "To 40 significant digits, every one correctly rounded",
       },
+      {
+        expr: ["N", ["Zeta", 3, ["Rational", -1, 2]]],
+        expected: { num: "16.4143983221171599978" },
+        category: "Possible issues",
+        caption:
+          "$\\zeta(3, -1/2) = 8 + \\zeta(3, 1/2)$ under Wolfram's generalized convention for $a \\leq 0$ — differs from HurwitzZeta there",
+      },
+      {
+        expr: ["N", ["Zeta", -1, -2]],
+        expected: { num: "2.91666666666666666667" },
+        category: "Possible issues",
+        caption:
+          "$\\zeta(-1, -2) = 35/12$ exactly, but at a negative $a$ this stays symbolic without N()",
+      },
     ],
     seeAlso: ["HurwitzZeta", "BernoulliB", "Gamma", "Digamma", "RiemannSiegelZ", "RiemannZetaZero"],
   },
@@ -1379,6 +1392,38 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+      },
+      {
+        expr: ["N", ["HurwitzZeta", ["Rational", -41, 2], ["Rational", 3, 10]], 40],
+        expected: { num: "136.3619357918311441717750999363988614286" },
+        category: "Scope",
+        caption: "Far left of the strip, all 40 digits agree with mpmath",
+      },
+      {
+        expr: ["N", ["HurwitzZeta", -20, 0.7]],
+        expected: { num: "-80.0909738762535913363158842634494985634654608317388" },
+        category: "Scope",
+        caption: "Left of the strip at a non-integer $a$",
+        group: "left-of-strip",
+      },
+      {
+        expr: ["N", ["HurwitzZeta", -40.5, 0.4]],
+        expected: { num: "7724997484091588.75678" },
+        category: "Scope",
+        caption: "Left of the strip at a non-integer $a$ and $s$",
+        group: "left-of-strip",
+      },
+      {
+        expr: ["N", ["HurwitzZeta", 5, ["Rational", -1, 2]]],
+        expected: { num: "0.144760409444467716272" },
+        category: "Scope",
+        caption: "A negative $a$: $(-\\tfrac12)^{-5}$ is real, and so is the answer",
+      },
+      {
+        expr: ["HurwitzZeta", 4, 2],
+        expected: ["Add", -1, ["Multiply", ["Rational", 1, 90], ["Power", "Pi", 4]]],
+        category: "Properties",
+        caption: "$\\zeta(4, 2) = \\pi^4/90 - 1$",
       },
     ],
     implementations: [
@@ -1591,6 +1636,39 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption:
           "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
+      },
+      {
+        expr: ["LerchPhi", -1, 3, ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 4], ["Power", "Pi", 3]],
+        category: "Properties",
+        caption:
+          "$\\Phi(-1, 3, \\tfrac12) = 8\\beta(3) = \\pi^3/4$ — the Dirichlet beta at 3, in closed form",
+      },
+      {
+        expr: ["N", ["LerchPhi", 2.809, 2, 2]],
+        expected: ["Complex", -0.05658770197322309, -0.4112203779716625],
+        category: "Scope",
+        caption:
+          "Past $|z| = 1$ it is continued; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do",
+      },
+      {
+        expr: ["N", ["LerchPhi", 10, 10, 10]],
+        expected: ["LerchPhi", 10, 10, 10],
+        category: "Possible issues",
+        caption:
+          "Where the continuation's terms cancel below double precision it stays unevaluated rather than guess",
+      },
+      {
+        expr: ["N", ["LerchPhi", ["Rational", 1, 2], 2, 1]],
+        expected: 1.164481052930025,
+        category: "Applications",
+        caption: "$\\Phi(1/2, 2, 1) = 2\\operatorname{Li}_2(1/2)$",
+      },
+      {
+        expr: ["Equal", ["LerchPhi", -1, 3, 1], ["Multiply", ["Rational", 3, 4], ["Zeta", 3]]],
+        expected: "True",
+        category: "Properties",
+        caption: "$\\Phi(-1, 3, 1) = \\eta(3) = \\tfrac34\\zeta(3)$",
       },
     ],
     implementations: [
@@ -2208,6 +2286,27 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "To 30 significant digits, every one correctly rounded",
       },
+      {
+        expr: ["Digamma", 1],
+        expected: ["Negate", "EulerGamma"],
+        category: "Properties",
+        caption: "$\\psi(1) = -\\gamma$.",
+        group: "digamma-integer-recurrence",
+      },
+      {
+        expr: ["Digamma", 2],
+        expected: ["Add", 1, ["Negate", "EulerGamma"]],
+        category: "Properties",
+        caption: "$\\psi(2) = 1-\\gamma$, from $\\psi(n+1)=\\psi(n)+1/n$.",
+        group: "digamma-integer-recurrence",
+      },
+      {
+        expr: ["Digamma", 3],
+        expected: ["Add", ["Rational", 3, 2], ["Negate", "EulerGamma"]],
+        category: "Properties",
+        caption: "$\\psi(3) = \\tfrac{3}{2}-\\gamma$.",
+        group: "digamma-integer-recurrence",
+      },
     ],
     seeAlso: ["Gamma", "Zeta", "GammaLn"],
   },
@@ -2390,6 +2489,17 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         aspirational: true,
         category: "Scope",
         caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+      },
+      {
+        expr: ["N", ["GammaRegularized", ["Complex", 2, 1], 1.5]],
+        expected: [
+          "Complex",
+          { num: "0.6176522310450641336650331038297415246" },
+          0.3334815406585523,
+        ],
+        category: "Scope",
+        caption:
+          "$Q(s, z)$ at a complex order $s$ — beyond what the native two-argument handler covers",
       },
     ],
     seeAlso: ["Gamma", "BetaRegularized"],
@@ -2588,6 +2698,26 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "Symbolic arguments are left unevaluated rather than guessed at",
       },
+      {
+        expr: [
+          "N",
+          [
+            "IncompleteEllipticPi",
+            ["Complex", 1.17, 0.45],
+            ["Complex", 1.17, 0.45],
+            ["Complex", 1.17, 0.45],
+          ],
+        ],
+        expected: ["Complex", 0.34301406182773686, 1.0786856693549958],
+        category: "Scope",
+        caption: "All three arguments complex — matches mpmath's <code>ellippi</code>",
+      },
+      {
+        expr: ["N", ["IncompleteEllipticPi", 0.3, 1.1, 0.4]],
+        expected: 1.3238008150474936,
+        category: "Scope",
+        caption: "Characteristic $n > 1$",
+      },
     ],
     seeAlso: ["EllipticPi", "EllipticE", "EllipticF"],
   },
@@ -2644,6 +2774,26 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "Declines past n = 20 rather than returning a value that has quietly lost precision",
+      },
+      {
+        expr: [
+          "Chop",
+          [
+            "Subtract",
+            ["N", ["KeiperLiLambda", 1]],
+            [
+              "N",
+              [
+                "Subtract",
+                ["Add", 1, ["Divide", "EulerGamma", 2]],
+                ["Multiply", ["Rational", 1, 2], ["Ln", ["Multiply", 4, "Pi"]]],
+              ],
+            ],
+          ],
+        ],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\lambda_1 = 1 + \\gamma/2 - \\tfrac12\\ln(4\\pi)$, exactly",
       },
     ],
     seeAlso: ["Zeta"],

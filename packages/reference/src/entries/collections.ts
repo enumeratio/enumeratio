@@ -756,6 +756,13 @@ export const collections: readonly ReferenceEntry[] = [
         expected: ["List"],
         caption: "The empty list when the value isn't found anywhere",
       },
+      {
+        expr: ["FirstPosition", ["List", "a", ["List", "a", "b"], "b"], "b"],
+        expected: ["List", 2, 2],
+        category: "Properties",
+        caption:
+          "A match nested inside an earlier sublist beats a plain match later at the top level: depth-first, outer to inner, left to right",
+      },
     ],
     seeAlso: ["IndexOf", "Position", "At"],
   },
@@ -2173,6 +2180,12 @@ export const collections: readonly ReferenceEntry[] = [
         expected: "True",
         category: "Properties",
         caption: "Without a tie, the single commonest element is the [[Mode]]",
+      },
+      {
+        expr: ["Commonest", ["List", 4, 1, 1, 4], 1],
+        expected: ["List", 4],
+        category: "Properties",
+        caption: "A frequency tie between $4$ and $1$ is broken by first appearance in the list.",
       },
     ],
     seeAlso: ["Mode", "Mean", "Median"],

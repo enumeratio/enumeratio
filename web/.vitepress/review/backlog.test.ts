@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, test } from "vite-plus/test";
-import { applyItemPatch, parseBacklog } from "./backlog.ts";
+import { applyItemPatch, parseBacklog, serializeItem, upsertItem } from "./backlog.ts";
 
 // Golden-example data, not snapshots -- see packages/cli/tests/demos.test.ts and
 // packages/utils/tests/no-snapshots.test.ts. Regenerate with
@@ -155,6 +155,67 @@ describe("applyItemPatch", () => {
     expect(result.raw.length).toBe(crlf.length);
     // Every line in the untouched remainder still ends \r\n.
     expect(result.raw.includes("\r\n### [x] Second item")).toBe(true);
+  });
+});
+
+describe("serializeItem / upsertItem", () => {
+  test("serializes a full item back to the standard block shape", () => {
+    const item = parseBacklog(FIXTURE).items.find((i) => i.id === "pr86-numeric-sets-indexed")!;
+    check("serialize-with-feedback", serializeItem(item));
+  });
+
+  test("serializes an item with empty feedback (still gets the Feedback heading)", () => {
+    const item = parseBacklog(FIXTURE).items.find((i) => i.id === "second-id")!;
+    check("serialize-empty-feedback", serializeItem({ ...item, feedback: "" }));
+  });
+
+  test("upsertItem patches an existing id exactly like applyItemPatch", () => {
+    const viaUpsert = upsertItem(FIXTURE, {
+      id: "second-id",
+      title: "Second item",
+      status: "reviewed",
+      bullets: [],
+      feedback: "Nice work, ship it.",
+    });
+    const viaPatch = applyItemPatch(FIXTURE, "second-id", {
+      status: "reviewed",
+      feedback: "Nice work, ship it.",
+    })!;
+    expect(viaUpsert.raw).toBe(viaPatch.raw);
+  });
+
+  test("upsertItem appends a brand-new id without touching anything else", () => {
+    const item = {
+      id: "adhoc-new-item",
+      title: "Arccos · example-19",
+      status: "open" as const,
+      link: "https://enumeratio.dev/reference/symbol/Arccos#example-19",
+      bullets: [
+        { key: "link", value: "https://enumeratio.dev/reference/symbol/Arccos#example-19" },
+      ],
+      feedback: "",
+    };
+    const result = upsertItem(FIXTURE, item);
+    expect(result.raw.startsWith(FIXTURE)).toBe(true);
+    const reparsed = parseBacklog(result.raw);
+    expect(reparsed.items).toHaveLength(5);
+    const appended = reparsed.items.at(-1)!;
+    expect(appended.id).toBe("adhoc-new-item");
+    expect(appended.link).toBe("https://enumeratio.dev/reference/symbol/Arccos#example-19");
+    check("upsert-append", { raw: result.raw, item: result.item });
+  });
+
+  test("upsertItem into an empty file produces a parseable single-item backlog", () => {
+    const item = {
+      id: "adhoc-first",
+      title: "Guide · overview",
+      status: "open" as const,
+      bullets: [{ key: "link", value: "https://enumeratio.dev/guide/#overview" }],
+      feedback: "",
+    };
+    const result = upsertItem("", item);
+    const reparsed = parseBacklog(result.raw);
+    expect(reparsed.items.map((i) => i.id)).toEqual(["adhoc-first"]);
   });
 });
 

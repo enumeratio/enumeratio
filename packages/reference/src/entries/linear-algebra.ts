@@ -207,6 +207,16 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
         category: "Neat examples",
         caption: "Every matrix with entries $i + j$ has rank 2, whatever its size",
       },
+      {
+        expr: [
+          "MatrixRank",
+          ["List", ["List", "p", "q", "r"], ["List", "s", "t", "u"], ["List", "v", "w", "x"]],
+        ],
+        expected: 3,
+        category: "Scope",
+        caption:
+          "A $3\\times3$ matrix of pairwise-distinct symbols is full rank — the determinant, as a polynomial in independent indeterminates, can't be identically zero.",
+      },
     ],
   },
   {
@@ -316,6 +326,36 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
         expected: ["Error", "'expected-square-matrix'", "'[[1,2,3],[4,5,6]]'"],
         category: "Possible issues",
         caption: "Rejects a non-square argument",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 0, 1, 0], ["List", 0, 0, 1], ["List", 0, 0, 0]]],
+        expected: [
+          "List",
+          ["List", 1, 1, ["Rational", 1, 2]],
+          ["List", 0, 1, 1],
+          ["List", 0, 0, 1],
+        ],
+        category: "Scope",
+        caption:
+          "A $3\\times3$ nilpotent generator: the exponential series truncates exactly, past the $2\\times2$ case.",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 2, 1], ["List", 0, 2]]],
+        expected: [
+          "List",
+          ["List", ["Power", "ExponentialE", 2], ["Power", "ExponentialE", 2]],
+          ["List", 0, ["Power", "ExponentialE", 2]],
+        ],
+        category: "Scope",
+        caption:
+          "A Jordan block (repeated eigenvalue 2): $e^{2}(I+N)$, not a diagonal exponential.",
+      },
+      {
+        expr: ["MatrixExp", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 10]]],
+        expected: ["MatrixExp", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 10]]],
+        category: "Possible issues",
+        caption:
+          "A generic matrix with no closed form stays symbolic without `N()` — use `N(MatrixExp(...))` for a numeric answer.",
       },
     ],
     seeAlso: ["Exp", "MatrixPower", "Inverse", "Determinant"],
