@@ -255,10 +255,31 @@ test("the declared CarlsonRJ declines outside its verified argument regions, and
   ] as const) {
     expect(ce.box(["CarlsonRJ", ...args]).evaluate().json).toEqual(["CarlsonRJ", ...args]);
   }
-  // Two complex arguments both past the cut (Re < 0) -- the region 9ccaef's RJ(a,b,1,1)
-  // combo disagreed with mpmath's elliprj in, independent of any real-axis convention.
-  const risky = ["CarlsonRJ", ["Complex", -0.3, 0.2], ["Complex", -0.5, 0.1], 1, 1] as const;
+  // Two complex arguments both past the cut (Re < 0), p distinct from x, y, z -- the region
+  // 9ccaef's RJ(a,b,1,2) combo disagreed with mpmath's elliprj in, independent of any
+  // real-axis convention. (RJ(a,b,1,1) -- same a, b, but p = z -- is NOT declined: p equal
+  // to one of x,y,z degenerates to RD, which carries no such branch risk; see below.)
+  const risky = ["CarlsonRJ", ["Complex", -0.3, 0.2], ["Complex", -0.5, 0.1], 1, 2] as const;
   expect(ce.box(risky).evaluate().json).toEqual(risky);
+});
+
+test("CarlsonRJ does NOT decline when p equals x, y, or z, even with two arguments past the cut", () => {
+  // RJ(x,y,z,z) = RD(x,y,z) exactly (RJ symmetric in its first three arguments), so a p that
+  // coincides with one of x,y,z carries none of the branch risk the two-or-more-negative
+  // heuristic otherwise guards against -- confirmed against mpmath's elliprj/elliprd.
+  const c = ce.box(["CarlsonRJ", ["Complex", -0.3, 0.2], ["Complex", -0.5, 0.1], 1, 1]).N();
+  expect(c.re).toBeCloseTo(0.4389277630760966, 12);
+  expect(c.im).toBeCloseTo(-2.3710922279121984, 12);
+});
+
+test("RJ(0, 0.7, 1, p) at complex p with Re(p) < 0 — the 19.26.7 α/β sum's branch bug", () => {
+  // Regression: this call (found via IncompleteEllipticPi's Fungrim identity 5f84d9, at
+  // n = m = φ = 1.17 + 0.45i, k = 3) used to disagree with mpmath's elliprj by an order of
+  // magnitude under the old α² / β per-step formula, even though only p is off the positive
+  // real axis. The d_m/e_m (√p-based) formula fixes it. Pinned against mpmath.elliprj.
+  const v = carlsonRJ(cx(0), cx(0.7), cx(1), cx(-0.17, -0.45));
+  expect(v.re).toBeCloseTo(0.996149702888963152968278427468, 10);
+  expect(v.im).toBeCloseTo(5.09469837233177608274683435409, 10);
 });
 
 test("CarlsonRJ still evaluates numerically right next to a declined region", () => {
