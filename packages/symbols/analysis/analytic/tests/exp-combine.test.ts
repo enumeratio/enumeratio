@@ -11,11 +11,7 @@ declareAnalytic(ce);
 const evalJson = (expr: unknown) => ce.box(expr as never).evaluate().json;
 
 test("Multiply(Exp(x), Exp(y)) combines into a single power", () => {
-  expect(evalJson(["Multiply", ["Exp", "x"], ["Exp", "y"]])).toEqual([
-    "Power",
-    "ExponentialE",
-    ["Add", "x", "y"],
-  ]);
+  expect(evalJson(["Multiply", ["Exp", "x"], ["Exp", "y"]])).toEqual(["Power", "ExponentialE", ["Add", "x", "y"]]);
 });
 
 test("combines past two factors, and past extra non-exponential factors in the product", () => {
@@ -37,11 +33,7 @@ test("e^x * e^-x cancels to 1, past what compute-engine's own like-term merge ca
 });
 
 test("a lone Exp factor is untouched -- the gate needs at least two", () => {
-  expect(evalJson(["Multiply", ["Exp", "x"], "y"])).toEqual([
-    "Multiply",
-    "y",
-    ["Power", "ExponentialE", "x"],
-  ]);
+  expect(evalJson(["Multiply", ["Exp", "x"], "y"])).toEqual(["Multiply", "y", ["Power", "ExponentialE", "x"]]);
 });
 
 test("N() still decimalizes a combined product", () => {
@@ -50,9 +42,7 @@ test("N() still decimalizes a combined product", () => {
 });
 
 test("agrees numerically with the plain product at a complex point", () => {
-  const product = ce
-    .box(["Multiply", ["Exp", ["Complex", 1.3, 0.7]], ["Exp", ["Complex", -0.4, 2.1]]])
-    .N();
+  const product = ce.box(["Multiply", ["Exp", ["Complex", 1.3, 0.7]], ["Exp", ["Complex", -0.4, 2.1]]]).N();
   const direct = ce.box(["Exp", ["Complex", 0.9, 2.8]]).N();
   expect(product.re).toBeCloseTo(direct.re, 9);
   expect(product.im).toBeCloseTo(direct.im, 9);
