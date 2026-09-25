@@ -69,7 +69,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## sage — agree 294, disagree 18, inconclusive 3, error 40
+## sage — agree 313, disagree 19, inconclusive 3, error 40
 
 | example                           | kind           | ours                                                                                      | theirs                                                                                       |
 | --------------------------------- | -------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -78,6 +78,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `arithmetic/Sqrt#9`               | shape          | `{"re":0,"im":1.4142135623730951}`                                                        | `sqrt(-2)`                                                                                   |
 | `combinatorics/StirlingS1#1`      | convention     | `-50`                                                                                     | `50`                                                                                         |
 | `combinatorics/StirlingS1#8`      | convention     | `-362880`                                                                                 | `362880`                                                                                     |
+| `diagram/Diagram#4`               | domain         | `["Diagram",["List",["List",1,-1],["List",2]]]`                                           | `P{{-2}, {-1, 1}, {2}}`                                                                      |
 | `elementary/Ln#3`                 | shape          | `NegativeInfinity`                                                                        | `-Infinity`                                                                                  |
 | `elementary/Ln#5`                 | convention     | `true`                                                                                    | `False`                                                                                      |
 | `elementary/Ln#6`                 | unevaluated    | `{"re":0,"im":3.141592653589793}`                                                         | `I*pi`                                                                                       |
@@ -139,7 +140,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## oscar — agree 90, disagree 0, inconclusive 0, error 9
+## oscar — agree 99, disagree 0, inconclusive 0, error 9
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 

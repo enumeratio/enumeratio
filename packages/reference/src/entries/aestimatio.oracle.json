@@ -1,1 +1,6 @@
-{ "kernels": {}, "examples": {} }
+{
+  "kernels": {
+    "sage": "SageMath version 10.9, Release Date: 2026-05-04"
+  },
+  "examples": {}
+}

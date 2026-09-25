@@ -126,44 +126,83 @@ export function comparePythonStructured(
   return theirsTree === undefined ? undefined : compareTrees(ours, theirsTree, tolerance);
 }
 
-/** A basis label as MathJSON writes it: `'3'`, the evaluated `'"s0"'`, or `["String", "s0"]`. */
+/** A diagram's blocks, `["List", ["List", 1, 2], …]`, as `{{-2,-1},{1,2}}`: each block
+ * ascending, blocks in order — the form the Sage helpers print. */
+function blocksLabel(label: MathJSON): string | undefined {
+  if (!Array.isArray(label) || label[0] !== "List") return undefined;
+  const blocks: number[][] = [];
+  for (const block of label.slice(1) as MathJSON[]) {
+    if (!Array.isArray(block) || block[0] !== "List") return undefined;
+    const points = block.slice(1) as MathJSON[];
+    if (!points.every((p): p is number => typeof p === "number")) return undefined;
+    blocks.push([...points].sort((a, b) => a - b));
+  }
+  blocks.sort((a, b) => {
+    for (let i = 0; i < Math.min(a.length, b.length); i++) if (a[i] !== b[i]) return a[i]! - b[i]!;
+    return a.length - b.length;
+  });
+  return `{${blocks.map((b) => `{${b.join(",")}}`).join(",")}}`;
+}
+
+/** A basis label as MathJSON writes it: `'3'`, the evaluated `'"s0"'`, `["String", "s0"]`,
+ * or a diagram's list of blocks. */
 function basisLabel(label: MathJSON): string | undefined {
-  if (Array.isArray(label))
-    return label[0] === "String" && typeof label[1] === "string" ? label[1] : undefined;
+  if (Array.isArray(label)) {
+    if (label[0] === "String" && typeof label[1] === "string") return label[1] as string;
+    return blocksLabel(label);
+  }
   if (typeof label !== "string" || !/^'.*'$/s.test(label)) return undefined;
   const inner = label.slice(1, -1);
   return /^".*"$/s.test(inner) ? (JSON.parse(inner) as string) : inner;
 }
 
+/** A symbolic scalar factor — `delta`, `["Power", "delta", 2]` — as [symbol, exponent]. */
+function symbolPower(e: MathJSON): [string, number] | undefined {
+  if (typeof e === "string" && !/^'.*'$/s.test(e)) return [e, 1];
+  if (Array.isArray(e) && e[0] === "Power" && typeof e[1] === "string" && typeof e[2] === "number")
+    return [e[1], e[2]];
+  return undefined;
+}
+
+/** `*delta^2` for a coefficient's symbolic part, empty when it has none. */
+function monomialOf(powers: readonly [string, number][]): string {
+  const by = new Map<string, number>();
+  for (const [symbol, n] of powers) by.set(symbol, (by.get(symbol) ?? 0) + n);
+  return [...by]
+    .filter(([, n]) => n !== 0)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([symbol, n]) => `*${symbol}^${n}`)
+    .join("");
+}
+
 /**
- * An algebra element as `Head(label) → coefficient`, from sums, scalar multiples and
- * negations of one-argument basis calls (`["GroupBasis", "'1'"]`). `undefined` for anything
- * else — a sum over two different heads is fine, a basis element times a basis element is not.
+ * An algebra element as `Head(label)*symbol^k → coefficient`, from sums, scalar multiples
+ * (numbers, and symbols like the loop parameter `delta`) and negations of one-argument
+ * basis calls (`["GroupBasis", "'1'"]`, a `Diagram`). `undefined` for anything else — a
+ * basis element times a basis element, say.
  */
 export function linearCombination(expr: MathJSON): Map<string, number> | undefined {
   const out = new Map<string, number>();
-  const add = (e: MathJSON, factor: number): boolean => {
-    if (typeof e === "number") return false;
+  const add = (e: MathJSON, factor: number, monomial: readonly [string, number][]): boolean => {
     if (!Array.isArray(e) || typeof e[0] !== "string") return false;
     const [head, ...ops] = e as readonly MathJSON[];
-    if (head === "Add") return ops.every((op) => add(op, factor));
-    if (head === "Negate" && ops.length === 1) return add(ops[0] as MathJSON, -factor);
+    if (head === "Add") return ops.every((op) => add(op, factor, monomial));
+    if (head === "Negate" && ops.length === 1) return add(ops[0] as MathJSON, -factor, monomial);
     if (head === "Multiply") {
       const scalars = ops.filter((op): op is number => typeof op === "number");
-      const rest = ops.filter((op) => typeof op !== "number");
+      const powers = ops.map(symbolPower).filter((p) => p !== undefined);
+      const rest = ops.filter((op) => typeof op !== "number" && symbolPower(op) === undefined);
       if (rest.length !== 1) return false;
-      return add(
-        rest[0] as MathJSON,
-        scalars.reduce((a, b) => a * b, factor),
-      );
+      const product = scalars.reduce((a, b) => a * b, factor);
+      return add(rest[0] as MathJSON, product, [...monomial, ...powers]);
     }
     const label = ops.length === 1 ? basisLabel(ops[0] as MathJSON) : undefined;
     if (label === undefined) return false;
-    const key = `${head as string}(${label})`;
+    const key = `${head as string}(${label})${monomialOf(monomial)}`;
     out.set(key, (out.get(key) ?? 0) + factor);
     return true;
   };
-  if (!add(expr, 1)) return undefined;
+  if (!add(expr, 1, [])) return undefined;
   for (const [key, c] of out) if (c === 0) out.delete(key);
   return out;
 }
@@ -177,4 +216,23 @@ export function compareCombination(ours: MathJSON, theirs: string): Verdict {
   const keys = new Set([...mine.keys(), ...Object.keys(parsed)]);
   for (const key of keys) if ((mine.get(key) ?? 0) !== (parsed[key] ?? 0)) return "disagree";
   return "agree";
+}
+
+/** Ours, a `List` of elements, against `combinations:[{…}, …]` — compared as a set of
+ * elements, since a basis's order is a convention of each system. */
+export function compareCombinations(ours: MathJSON, theirs: string): Verdict {
+  if (!Array.isArray(ours) || ours[0] !== "List") return "inconclusive";
+  const mine = (ours.slice(1) as MathJSON[]).map(linearCombination);
+  if (mine.some((m) => m === undefined)) return "inconclusive";
+  const canon = (m: Record<string, number>): string =>
+    JSON.stringify(
+      Object.entries(m)
+        .filter(([, c]) => c !== 0)
+        .sort(([x], [y]) => x.localeCompare(y)),
+    );
+  const parsed = JSON.parse(theirs.slice("combinations:".length)) as Record<string, number>[];
+  const byText = (x: string, y: string): number => x.localeCompare(y);
+  const a = mine.map((m) => canon(Object.fromEntries(m!))).sort(byText);
+  const b = parsed.map(canon).sort(byText);
+  return JSON.stringify(a) === JSON.stringify(b) ? "agree" : "disagree";
 }
