@@ -36,27 +36,42 @@ test("a cooperative timeMs stop (compute-engine's own loop) keeps bindings: rese
   }
 });
 
-/** A fake `worker_threads.Worker` that never responds -- stands in for an uncooperative,
- * tight loop the cooperative deadline can't reach, so the hard-kill path is exercised
- * deterministically and fast rather than needing a real one to actually hang. */
-function fakeHangingWorker() {
-  const posted: unknown[] = [];
+/** A fake `worker_threads.Worker`. By default it reports `"started"` immediately (an
+ * already-warm worker) but never answers -- stands in for an uncooperative, tight loop
+ * the cooperative deadline can't reach, so the (small) post-start kill timer is exercised
+ * deterministically and fast. `autoStart: false` instead simulates a worker that never
+ * comes up at all, for the separate (much larger) spawn-timeout guard. */
+function fakeHangingWorker(options: { autoStart?: boolean } = {}) {
+  const autoStart = options.autoStart ?? true;
+  const listeners = new Map<string, Set<(...args: unknown[]) => void>>();
+  const posted: { id: number }[] = [];
   let terminated = 0;
+  const on = (event: string, listener: (...args: unknown[]) => void): void => {
+    let set = listeners.get(event);
+    if (set === undefined) listeners.set(event, (set = new Set()));
+    set.add(listener);
+  };
   const worker: NodeWorkerLike = {
-    postMessage: (message) => posted.push(message),
+    postMessage: (message) => {
+      const req = message as { id: number };
+      posted.push(req);
+      if (autoStart) {
+        for (const l of listeners.get("message") ?? []) l({ id: req.id, kind: "started" });
+      }
+    },
     terminate: () => {
       terminated++;
     },
     unref: () => {},
     ref: () => {},
-    on: () => {},
-    once: () => {},
-    off: () => {},
+    on,
+    once: on,
+    off: (event, listener) => listeners.get(event)?.delete(listener),
   };
   return { worker, posted, terminatedCount: () => terminated };
 }
 
-test("an uncooperative worker still gets the hard kill: reset: true, worker replaced", async () => {
+test("an uncooperative worker (started, then never answers) still gets the hard kill: reset: true, worker replaced", async () => {
   const spawned: ReturnType<typeof fakeHangingWorker>[] = [];
   const session = openSession({
     createWorker: () => {
@@ -70,6 +85,27 @@ test("an uncooperative worker still gets the hard kill: reset: true, worker repl
     expect(killed).toEqual({ value: "Aborted", reset: true });
     expect(spawned[0]!.terminatedCount()).toBe(1);
     expect(spawned).toHaveLength(2); // a fresh worker now backs the session
+  } finally {
+    session.close();
+  }
+});
+
+test("a worker that never reports started (spawn-timeout guard) also gets replaced: reset: true", async () => {
+  const spawned: ReturnType<typeof fakeHangingWorker>[] = [];
+  const session = openSession({
+    spawnTimeoutMs: 5, // small on purpose -- proving the guard fires, not timing production
+    createWorker: () => {
+      const fake = fakeHangingWorker({ autoStart: false });
+      spawned.push(fake);
+      return fake.worker;
+    },
+  });
+  try {
+    // A call needs `timeMs` for the spawn guard to matter -- see node.ts's own comment.
+    const killed = await session.evaluate(["Add", 1, 1], { timeMs: 1000 });
+    expect(killed).toEqual({ value: "Aborted", reset: true });
+    expect(spawned[0]!.terminatedCount()).toBe(1);
+    expect(spawned).toHaveLength(2); // the never-started worker was replaced
   } finally {
     session.close();
   }

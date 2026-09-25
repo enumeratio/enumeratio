@@ -15,7 +15,13 @@ interface WorkerRequest {
 }
 
 interface WorkerResponse {
-  readonly ok: boolean;
+  /** `"started"`: engine construction and `setup` import are done and
+   * `evaluateCooperatively` is about to run — the host arms its hard-kill timer from
+   * here, not from when it sent the request, so a slow spawn/import never eats into the
+   * deadline it wasn't given a chance to see (see browser.ts's own comment). `"result"`:
+   * the actual answer. */
+  readonly kind: "started" | "result";
+  readonly ok?: boolean;
   readonly json?: unknown;
   readonly error?: string;
 }
@@ -42,7 +48,11 @@ async function handle(request: WorkerRequest): Promise<void> {
     };
     mod.configure(ce);
   }
-  scope.postMessage(evaluateCooperatively(ce, json, timeMs));
+  scope.postMessage({ kind: "started" } satisfies WorkerResponse);
+  scope.postMessage({
+    kind: "result",
+    ...evaluateCooperatively(ce, json, timeMs),
+  } satisfies WorkerResponse);
 }
 
 scope.addEventListener("message", (event) => {
