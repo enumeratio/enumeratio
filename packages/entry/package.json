@@ -6,13 +6,15 @@
   "license": "WTFPL",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts"
   },
   "scripts": {
     "test": "vp test",
     "check": "vp check"
   },
   "dependencies": {
+    "ajv": "catalog:",
     "yaml": "2.9.0"
   },
   "devDependencies": {

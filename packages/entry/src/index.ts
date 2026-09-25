@@ -15,9 +15,3 @@ export {
 } from "./sources.ts";
 export { checkImplementations, type Exists, type Problem } from "./validate.ts";
 export { isCanonicalYaml, parseYaml, type StringifyOptions, stringifyYaml } from "./yaml.ts";
-export {
-  HEAD_IMPLEMENTATIONS_SCHEMA,
-  type JsonSchema,
-  REFERENCE_ENTRY_SCHEMA,
-  validateSchema,
-} from "./schema.ts";

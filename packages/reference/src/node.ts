@@ -10,14 +10,12 @@
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
+import { type HeadImplementations, parseYaml, type ReferenceEntry } from "@enumeratio/entry";
 import {
   HEAD_IMPLEMENTATIONS_SCHEMA,
-  type HeadImplementations,
-  parseYaml,
   REFERENCE_ENTRY_SCHEMA,
-  type ReferenceEntry,
   validateSchema,
-} from "@enumeratio/entry";
+} from "@enumeratio/entry/schema";
 
 export interface LoadedHead {
   /** The workspace package's directory name (`analytic`, `collections`, …). */

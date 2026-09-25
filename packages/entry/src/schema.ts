@@ -10,6 +10,8 @@
 // dependency. A JSON Schema author needs the *serialized* shape anyway, which for `expr` /
 // `expected` is "any JSON value", not the `MathJSON` union as TypeScript sees it.
 
+import { Ajv2020, type ErrorObject, type ValidateFunction } from "ajv/dist/2020.js";
+
 /** A minimal JSON Schema value -- just enough of draft 2020-12 for these two documents. */
 export interface JsonSchema {
   readonly $schema?: string;
@@ -251,115 +253,51 @@ export const HEAD_IMPLEMENTATIONS_SCHEMA: JsonSchema = {
 
 // --- validation -----------------------------------------------------------------------------
 //
-// Just enough of a JSON Schema validator to check a parsed YAML record against the schemas
-// above: no remote `$ref`s, no `$dynamicRef`, no format assertions. Good enough for a loader's
-// data-quality gate; not a general-purpose validator, and not meant to become one.
+// ajv (draft 2020-12) does the checking; this only turns its errors into one line each, in
+// the `$.examples[0].role: …` form the loader reports.
 
-function typeOf(value: unknown): string {
-  if (value === null) return "null";
-  if (Array.isArray(value)) return "array";
-  return typeof value;
-}
+const ajv = new Ajv2020({ allErrors: true, verbose: true, strict: false });
+const compiled = new WeakMap<JsonSchema, ValidateFunction>();
 
-function resolveRef(ref: string, root: JsonSchema): JsonSchema {
-  const match = /^#\/\$defs\/(.+)$/.exec(ref);
-  const def = match ? root.$defs?.[match[1] as string] : undefined;
-  if (def === undefined) throw new Error(`unresolvable $ref: ${ref}`);
-  return def;
-}
+/** `/examples/0/role` → `$.examples[0].role`. */
+const pathOf = (pointer: string): string =>
+  `$${pointer
+    .split("/")
+    .slice(1)
+    .map((part) => part.replace(/~1/g, "/").replace(/~0/g, "~"))
+    .map((part) => (/^\d+$/.test(part) ? `[${part}]` : `.${part}`))
+    .join("")}`;
+
+const describe = (error: ErrorObject): string => {
+  const params = error.params as Record<string, unknown>;
+  switch (error.keyword) {
+    case "required":
+      return `missing required property "${String(params.missingProperty)}"`;
+    case "additionalProperties":
+      return `unexpected property "${String(params.additionalProperty)}"`;
+    case "enum":
+      return `expected one of ${JSON.stringify(params.allowedValues)}, got ${JSON.stringify(error.data)}`;
+    case "anyOf":
+      return `matches none of ${(error.schema as unknown[]).length} allowed shapes`;
+    default:
+      return error.message ?? error.keyword;
+  }
+};
 
 /**
- * Check `value` against `schema` (a schema produced above, or one of its `$defs`, resolved
- * against `root`). Returns human-readable problems; an empty array is a pass.
+ * Check `value` against `schema` (one of the two above). Returns human-readable problems;
+ * an empty array is a pass. Inside a failed `anyOf`, only the `anyOf` itself is reported.
  */
-export function validateSchema(
-  schema: JsonSchema,
-  value: unknown,
-  root: JsonSchema = schema,
-  path = "$",
-): string[] {
-  if (schema.$ref !== undefined)
-    return validateSchema(resolveRef(schema.$ref, root), value, root, path);
-
-  const problems: string[] = [];
-  const fail = (message: string): void => void problems.push(`${path}: ${message}`);
-
-  if (schema.anyOf !== undefined) {
-    const results = schema.anyOf.map((branch) => validateSchema(branch, value, root, path));
-    if (!results.some((r) => r.length === 0))
-      fail(`matches none of ${schema.anyOf.length} allowed shapes`);
-    return problems;
+export function validateSchema(schema: JsonSchema, value: unknown): string[] {
+  let validate = compiled.get(schema);
+  if (validate === undefined) {
+    validate = ajv.compile(schema as object);
+    compiled.set(schema, validate);
   }
-
-  if (schema.const !== undefined && value !== schema.const)
-    fail(`expected ${JSON.stringify(schema.const)}, got ${JSON.stringify(value)}`);
-
-  if (schema.enum !== undefined && !schema.enum.includes(value))
-    fail(`expected one of ${JSON.stringify(schema.enum)}, got ${JSON.stringify(value)}`);
-
-  if (schema.type !== undefined) {
-    const types = Array.isArray(schema.type) ? schema.type : [schema.type];
-    const actual = typeOf(value);
-    const matches =
-      types.includes(actual) ||
-      (types.includes("integer") && actual === "number" && Number.isInteger(value));
-    if (!matches) fail(`expected type ${types.join(" | ")}, got ${actual}`);
-  }
-
-  if (
-    schema.pattern !== undefined &&
-    typeof value === "string" &&
-    !new RegExp(schema.pattern).test(value)
-  )
-    fail(`does not match /${schema.pattern}/`);
-
-  if (
-    schema.maxLength !== undefined &&
-    typeof value === "string" &&
-    value.length > schema.maxLength
-  )
-    fail(`longer than ${schema.maxLength} characters`);
-
-  if (schema.minimum !== undefined && typeof value === "number" && value < schema.minimum)
-    fail(`less than minimum ${schema.minimum}`);
-
-  if (schema.items !== undefined && Array.isArray(value)) {
-    value.forEach((item, i) =>
-      problems.push(...validateSchema(schema.items as JsonSchema, item, root, `${path}[${i}]`)),
-    );
-  }
-
-  if (
-    (schema.properties !== undefined ||
-      schema.patternProperties !== undefined ||
-      schema.additionalProperties !== undefined) &&
-    typeOf(value) === "object"
-  ) {
-    const object = value as Record<string, unknown>;
-
-    for (const key of schema.required ?? [])
-      if (!(key in object)) fail(`missing required property "${key}"`);
-
-    for (const [key, propValue] of Object.entries(object)) {
-      const propSchema = schema.properties?.[key];
-      if (propSchema !== undefined) {
-        problems.push(...validateSchema(propSchema, propValue, root, `${path}.${key}`));
-        continue;
-      }
-      const patternMatch = Object.entries(schema.patternProperties ?? {}).find(([pattern]) =>
-        new RegExp(pattern).test(key),
-      );
-      if (patternMatch !== undefined) {
-        problems.push(...validateSchema(patternMatch[1], propValue, root, `${path}.${key}`));
-        continue;
-      }
-      if (schema.additionalProperties === false) fail(`unexpected property "${key}"`);
-      else if (typeof schema.additionalProperties === "object")
-        problems.push(
-          ...validateSchema(schema.additionalProperties, propValue, root, `${path}.${key}`),
-        );
-    }
-  }
-
-  return problems;
+  if (validate(value)) return [];
+  const errors = validate.errors ?? [];
+  const anyOfs = errors.filter((e) => e.keyword === "anyOf").map((e) => e.schemaPath);
+  return errors
+    .filter((e) => e.keyword === "anyOf" || !anyOfs.some((p) => e.schemaPath.startsWith(`${p}/`)))
+    .map((e) => `${pathOf(e.instancePath)}: ${describe(e)}`);
 }
