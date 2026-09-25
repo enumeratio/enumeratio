@@ -9,7 +9,7 @@ import { declareCollections } from "@enumeratio/collections";
 import { declareDomains, declareMaps, DOMAINS } from "@enumeratio/domains";
 import { declareGraphics, exportTo, importFrom } from "@enumeratio/formats";
 import { conventionalLatexDictionary } from "@enumeratio/notatio/conventional-latex";
-import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics";
+import { ALL_STATISTICS, declareDistributions, declareStatistics } from "@enumeratio/statistics";
 
 export type Syntax = "latex" | "mathjson" | "wolfram" | "epsil";
 
@@ -211,6 +211,7 @@ export class Session {
     // Collections owns the fast permutation heads under the same names, so those are skipped
     // here -- one head, one owner.
     declareStatistics(this.ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: DOMAIN_TYPES });
+    declareDistributions(this.ce);
     declareMaps(this.ce, CONSTRUCTOR_FOR);
     // The heads that draw stay inert, so a `Plot` or a `Slider` survives evaluation as
     // the picture (or the control) it names, for a host that can show one.

@@ -53,10 +53,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 155,
   },
   {
-    head: "RandomVariate",
-    uses: 153,
-  },
-  {
     head: "Hue",
     uses: 132,
   },
@@ -135,10 +131,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "ToString",
     uses: 35,
-  },
-  {
-    head: "Distributed",
-    uses: 34,
   },
   {
     head: "SuperscriptBox",
@@ -283,10 +275,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Specularity",
     uses: 18,
-  },
-  {
-    head: "BetaDistribution",
-    uses: 17,
   },
   {
     head: "Control",
@@ -465,10 +453,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "EmpiricalDistribution",
-    uses: 11,
-  },
-  {
     head: "GridBox",
     uses: 11,
   },
@@ -494,10 +478,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "BezierCurve",
-    uses: 10,
-  },
-  {
-    head: "Expectation",
     uses: 10,
   },
   {
@@ -578,10 +558,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Extract",
-    uses: 9,
-  },
-  {
-    head: "GammaDistribution",
     uses: 9,
   },
   {
@@ -721,10 +697,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "BinormalDistribution",
-    uses: 7,
-  },
-  {
     head: "BSplineCurve",
     uses: 7,
   },
@@ -810,10 +782,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "PermutationReplace",
-    uses: 7,
-  },
-  {
-    head: "Probability",
     uses: 7,
   },
   {
