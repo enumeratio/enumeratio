@@ -158,8 +158,10 @@ export const entries: FamilyKernel[] = [
     head: "SmoothNumbers",
     paramCount: 1,
     kind: "scalar",
-    count: () => Number.POSITIVE_INFINITY,
-    unrank: ([k], r) => smoothCacheFor(k).nth(r + 1),
+    // Below k = 2 no prime qualifies, so the set is just {1}: finite, and a scan for its
+    // second element would never end.
+    count: ([k]) => (k < 2 ? 1 : Number.POSITIVE_INFINITY),
+    unrank: ([k], r) => (k < 2 ? (r === 0 ? 1 : Number.NaN) : smoothCacheFor(k).nth(r + 1)),
     valid: (element, [k]) => isKSmooth(Number(element), k),
     rank: (element, [k]) => smoothCacheFor(k).rankOf(Number(element)),
   },

@@ -122,3 +122,14 @@ test("SmoothNumbers(k) is a one-parameter operator", () => {
       .toString(),
   ).toBe(`[${SMOOTH_7.slice(0, 10).join(",")}]`);
 });
+
+test("SmoothNumbers(k) below 2 is just {1}, finite", () => {
+  const entry = byHead.get("SmoothNumbers");
+  if (!entry) throw new Error("SmoothNumbers missing");
+  for (const k of [0, 1]) {
+    expect(entry.count([k])).toBe(1);
+    expect(entry.unrank([k], 0)).toBe(1);
+    expect(entry.unrank([k], 1)).toBeNaN(); // declines rather than scanning forever
+  }
+  expect(ce.box(["Count", ["SmoothNumbers", 1]]).evaluate().re).toBe(1);
+});
