@@ -37,6 +37,13 @@ test("materialize expands a lazy collection into its elements; without it the ca
   expect(expanded?.value).toEqual(["List", 1, 2, 3]);
 });
 
+test("materialize expands only the result: an argument is counted whole, not as its display", async () => {
+  const [counted] = await runCases([{ id: "length", input: ["Length", ["Range", 1, 20]] }], {
+    materialize: true,
+  });
+  expect(counted?.value).toBe(20);
+});
+
 test("a per-case timeout stops only that case cooperatively, not the others in the batch", async () => {
   const results = await runCases(
     [

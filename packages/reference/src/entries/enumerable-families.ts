@@ -4,8 +4,10 @@ import type { ReferenceEntry } from "../types.ts";
 // Each has a closed-form `Count` and an `At` that unranks, so the page can enumerate it
 // with `<notatio-collection-table>` without ever materialising the whole family. The
 // families are provided by @enumeratio/collections, which the reference test does not
-// load (it would cycle: collections depends on the reference), so these entries assert
-// nothing in bare compute-engine and demonstrate through the live `enumerate` table.
+// load (it would cycle: collections depends on the reference), so these entries demonstrate
+// through the live `enumerate` table. Their `examples` hold only what the reference engine
+// can pin — counting identities in compute-engine heads — and the Wolfram call forms the
+// families do not take yet (list arguments, size and part restrictions), as gaps.
 export const enumerableFamilies: readonly ReferenceEntry[] = [
   {
     name: "Subsets",
@@ -13,15 +15,79 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signature: "Subsets(n)",
     summary: "The power set of $\\{1, …, n\\}$ — every subset, as a lazy indexed family of $2^n$.",
     signatures: [
-      { call: "Subsets(n)", description: "the $2^n$ subsets of $\\{1, …, n\\}$." },
-      { call: "Subsets(collection)", description: "the subsets of any finite collection." },
+      {
+        call: "Subsets(n)",
+        description: "the $2^n$ subsets of $\\{1, …, n\\}$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Subsets(collection)",
+        description: "the subsets of any finite collection.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built.",
       "The subsets carrying a fixed size $k$ number $\\binom{n}{k}$; summing over $k$ gives $2^n$. See [[Binomial]].",
       "Each element is the subset's list of members; [[Length]] is its size.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["Subsets", ["List", "a", "b", "c"]],
+        expected: [
+          "List",
+          ["List"],
+          ["List", "a"],
+          ["List", "b"],
+          ["List", "a", "b"],
+          ["List", "c"],
+          ["List", "a", "c"],
+          ["List", "b", "c"],
+          ["List", "a", "b", "c"],
+        ],
+        aspirational: true,
+        caption:
+          "The documented $Subsets(collection)$ form, listed in the family's binary-mask order; the family takes only an integer n today",
+        divergence: { wolfram: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …" },
+      },
+      {
+        expr: ["Count", ["Subsets", 4, 2]],
+        expected: 11,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$; the second argument is not yet taken",
+      },
+      {
+        expr: ["Count", ["Subsets", 4, ["List", 2]]],
+        expected: 6,
+        aspirational: true,
+        category: "Scope",
+        caption: "An exact size $\\{2\\}$: $\\binom{4}{2}$ subsets; not yet taken",
+      },
+      {
+        expr: ["Count", ["Subsets", 5, ["List", 0, 5, 2]]],
+        expected: 16,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A size range $\\{0, 5, 2\\}$, the even-size subsets, $2^{4}$ of them; not yet taken",
+      },
+      {
+        expr: ["Length", ["Subsets", ["Range", 1, 10]]],
+        expected: 1024,
+        aspirational: true,
+        category: "Properties",
+        caption: "A set of $n$ elements has $2^n$ subsets; a list argument is not yet taken",
+      },
+      {
+        expr: ["Sum", ["Binomial", 5, "k"], ["Tuple", "k", 0, 5]],
+        expected: 32,
+        category: "Properties",
+        caption:
+          "Counting by size: $\\sum_k \\binom{n}{k} = 2^n$ subsets of a 5-set. See [[Binomial]]",
+      },
+    ],
     enumerate: { expr: "Subsets(4)", columns: "Length, Sum", glyph: "subset" },
     seeAlso: ["Binomial", "Length", "Count", "At"],
   },
@@ -31,14 +97,40 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     signature: "SymmetricGroup(n)",
     summary: "The $n!$ permutations of $\\{1, …, n\\}$ as a lazy indexed family, in one-line form.",
     signatures: [
-      { call: "SymmetricGroup(n)", description: "the $n!$ permutations of $\\{1, …, n\\}$." },
+      {
+        call: "SymmetricGroup(n)",
+        description: "the $n!$ permutations of $\\{1, …, n\\}$.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection: $Count(SymmetricGroup(n)) = n!$ and $At$ unranks the $i$-th permutation, so $SymmetricGroup(20)$ — over $2 \\times 10^{18}$ rows — pages as cheaply as a small one.",
       "Each element is the image word $[\\pi(1), …, \\pi(n)]$; the classical statistics ([[Descents]], MajorIndex, Inversions, CycleCount, FixedPoints) are heads over that word.",
       "The derangements — permutations with no fixed point — number $Subfactorial(n)$. See [[Subfactorial]].",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["GroupOrder", ["SymmetricGroup", 5]],
+        expected: 120,
+        aspirational: true,
+        caption:
+          "The order of $S_5$ is $5!$; [[GroupOrder]] reads only CyclicGroup, DihedralGroup and GroupDirectProduct",
+      },
+      {
+        expr: ["GroupOrder", ["SymmetricGroup", 10]],
+        expected: 3628800,
+        aspirational: true,
+        category: "Scope",
+        caption: "$|S_{10}| = 10!$; not yet read by [[GroupOrder]]",
+      },
+      {
+        expr: ["Length", ["Permutations", ["List", 1, 2, 3]]],
+        expected: 6,
+        category: "Properties",
+        caption:
+          "The one-line words are compute-engine's Permutations of $1, …, n$, $n!$ of them. See [[Factorial]]",
+      },
+    ],
     enumerate: {
       expr: "SymmetricGroup(5)",
       columns: "Descents, MajorIndex, Inversions, CycleCount, FixedPoints",
@@ -55,6 +147,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         call: "IntegerPartitions(n)",
         description: "every way to write $n$ as a sum of positive parts, order-insensitive.",
+        library: "enumeratio-collections",
       },
     ],
     details: [
@@ -62,7 +155,78 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "Each element is the part list in weakly decreasing order; drawn as a Ferrers diagram, its statistics (Length, LargestPart, DurfeeSquare, …) live in $@enumeratio/statistics$.",
       "Conjugation (transposing the diagram) is an involution; the self-conjugate partitions of $n$ equal the partitions of $n$ into distinct odd parts.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["IntegerPartitions", 8, 3],
+        expected: [
+          "List",
+          ["List", 8],
+          ["List", 7, 1],
+          ["List", 6, 2],
+          ["List", 6, 1, 1],
+          ["List", 5, 3],
+          ["List", 5, 2, 1],
+          ["List", 4, 4],
+          ["List", 4, 3, 1],
+          ["List", 4, 2, 2],
+          ["List", 3, 3, 2],
+        ],
+        aspirational: true,
+        caption: "The partitions of 8 into at most 3 parts; the part-count bound is not yet taken",
+      },
+      {
+        expr: ["IntegerPartitions", 8, ["List", 3]],
+        expected: [
+          "List",
+          ["List", 6, 1, 1],
+          ["List", 5, 2, 1],
+          ["List", 4, 3, 1],
+          ["List", 4, 2, 2],
+          ["List", 3, 3, 2],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Exactly 3 parts; not yet taken",
+      },
+      {
+        expr: ["IntegerPartitions", 8, "All", ["List", 1, 2, 5]],
+        expected: [
+          "List",
+          ["List", 5, 2, 1],
+          ["List", 5, 1, 1, 1],
+          ["List", 2, 2, 2, 2],
+          ["List", 2, 2, 2, 1, 1],
+          ["List", 2, 2, 1, 1, 1, 1],
+          ["List", 2, 1, 1, 1, 1, 1, 1],
+          ["List", 1, 1, 1, 1, 1, 1, 1, 1],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Parts restricted to $\\{1, 2, 5\\}$; not yet taken",
+      },
+      {
+        expr: ["NPartition", 8],
+        expected: 22,
+        category: "Properties",
+        caption: "The family has $p(8) = 22$ members, compute-engine's NPartition",
+      },
+      {
+        expr: ["Count", ["IntegerPartitions", 100, "All", ["List", 1, 5, 10, 25, 50]]],
+        expected: 292,
+        aspirational: true,
+        category: "Applications",
+        caption:
+          "The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins; restricted parts are not yet taken",
+      },
+      {
+        expr: ["Count", ["IntegerPartitions", 10, "All", ["List", 1, 3, 5, 7, 9]]],
+        expected: 10,
+        aspirational: true,
+        category: "Neat examples",
+        caption:
+          "Euler: partitions into odd parts are as many as partitions into distinct parts, $q(10) = 10$; restricted parts are not yet taken",
+      },
+    ],
     enumerate: {
       expr: "IntegerPartitions(8)",
       columns: "Length, LargestPart, DistinctParts, DurfeeSquare",
@@ -102,6 +266,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         call: "SetPartitions(n)",
         description: "every way to split $\\{1, …, n\\}$ into disjoint non-empty blocks.",
+        library: "enumeratio-collections",
       },
     ],
     details: [
@@ -109,7 +274,52 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       "The partitions into exactly $k$ blocks number the Stirling numbers of the second kind $S(n, k)$; summing over $k$ gives $B_n$. See [[Stirling]].",
       "Each element is the block list; the $set$-$partition$ glyph draws it from its restricted-growth string.",
     ],
-    examples: [],
+    examples: [
+      {
+        expr: ["SetPartitions", ["List", "a", "b", "c"]],
+        expected: [
+          "List",
+          ["List", ["List", "a", "b", "c"]],
+          ["List", ["List", "a", "b"], ["List", "c"]],
+          ["List", ["List", "a", "c"], ["List", "b"]],
+          ["List", ["List", "a"], ["List", "b", "c"]],
+          ["List", ["List", "a"], ["List", "b"], ["List", "c"]],
+        ],
+        aspirational: true,
+        caption: "The set partitions of an explicit list; the family takes only an integer n today",
+      },
+      {
+        expr: ["SetPartitions", 3, 2],
+        expected: [
+          "List",
+          ["List", ["List", 1, 2], ["List", 3]],
+          ["List", ["List", 1, 3], ["List", 2]],
+          ["List", ["List", 1], ["List", 2, 3]],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Exactly 2 blocks; a block count is not yet taken",
+      },
+      {
+        expr: ["Count", ["SetPartitions", 4, 2]],
+        expected: 7,
+        aspirational: true,
+        category: "Scope",
+        caption: "The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$; not yet taken",
+      },
+      {
+        expr: ["BellNumber", 4],
+        expected: 15,
+        category: "Properties",
+        caption: "The family has $B_4 = 15$ members. See [[BellNumber]]",
+      },
+      {
+        expr: ["Stirling", 4, 2],
+        expected: 7,
+        category: "Properties",
+        caption: "Those with exactly 2 blocks number $S(4, 2) = 7$. See [[Stirling]]",
+      },
+    ],
     enumerate: {
       expr: "SetPartitions(4)",
       columns: "Length, Max(Map(Length, _))",

@@ -92,6 +92,136 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption:
           "Half-integer arguments evaluate exactly through the Gamma function: here $n - k = 1$, so the answer is just $n = \\frac{9}{2}$",
       },
+      { expr: ["Binomial", 8, 4], expected: 70 },
+      {
+        expr: ["Binomial", "n", 0],
+        expected: 1,
+        caption: "Symbolic n: $\\binom{n}{0} = 1$ for any n",
+      },
+      { expr: ["Binomial", "n", 1], expected: "n", caption: "Symbolic n: $\\binom{n}{1} = n$" },
+      {
+        expr: ["Binomial", "n", ["Subtract", "n", 1]],
+        expected: "n",
+        aspirational: true,
+        caption:
+          "$\\binom{n}{n-1}$ should reduce to $n$ for symbolic n; currently left unevaluated",
+      },
+      {
+        expr: ["Binomial", 8.5, -4.2],
+        expected: { num: "0.0000604992484022834800676" },
+        category: "Scope",
+        caption: "Real arguments evaluate through the Gamma function",
+      },
+      {
+        expr: ["Binomial", 0.5, 3],
+        expected: { num: "0.0625000000000000000001" },
+        category: "Scope",
+        caption:
+          "A real n with integer k: $\\frac{0.5\\,(-0.5)(-1.5)}{3!} = 0.0625$, up to the last bignum digit",
+      },
+      {
+        expr: ["Binomial", ["Rational", 1, 2], 2],
+        expected: ["Rational", -1, 8],
+        category: "Scope",
+        caption:
+          "A rational $n$ with integer $k$ gives the exact falling-factorial value $\\binom{1/2}{2} = -\\frac{1}{8}$",
+      },
+      {
+        expr: ["Binomial", ["Rational", -1, 2], 3],
+        expected: ["Rational", -5, 16],
+        category: "Scope",
+        caption: "$\\binom{-1/2}{3} = -\\frac{5}{16}$, the central-binomial series coefficient",
+      },
+      {
+        expr: ["Binomial", "n", "n"],
+        expected: 1,
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\binom{n}{n} = 1$ for symbolic n; currently left unevaluated",
+      },
+      {
+        expr: ["Binomial", ["Complex", 1, 1], 5],
+        expected: ["Complex", ["Rational", -1, 12], ["Rational", -1, 12]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A Gaussian-integer n: $\\binom{1+i}{5} = -\\frac{1+i}{12}$; complex arguments are left unevaluated",
+      },
+      {
+        expr: ["Binomial", ["Complex", 2, 1], ["Complex", 7, -3]],
+        expected: ["Complex", -75.46834738222304, 106.81526597079055],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex n and k should evaluate through the Gamma function; currently left unevaluated",
+      },
+      {
+        expr: ["Binomial", ["Rational", 1, 2], ["Interval", 0.5, 0.6]],
+        expected: ["Interval", 0.9281455538507054, 1],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An Interval argument should give an enclosing Interval; [[Binomial]] rejects an Interval with a type error",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Sum", ["Power", ["Binomial", 6, "k"], 2], ["Tuple", "k", 0, 6]],
+          ["Binomial", 12, 6],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Sum of squares along a row: $\\sum_k \\binom{n}{k}^2 = \\binom{2n}{n}$",
+      },
+      {
+        expr: [
+          "Equal",
+          [
+            "Sum",
+            ["Multiply", ["Binomial", 5, "k"], ["Binomial", 4, ["Subtract", 3, "k"]]],
+            ["Tuple", "k", 0, 3],
+          ],
+          ["Binomial", 9, 3],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Vandermonde's identity: $\\sum_k \\binom{m}{k}\\binom{n}{r-k} = \\binom{m+n}{r}$",
+      },
+      {
+        expr: ["Sum", ["Multiply", ["Power", -1, "k"], ["Binomial", 6, "k"]], ["Tuple", "k", 0, 6]],
+        expected: 0,
+        category: "Properties",
+        caption: "The alternating row sum vanishes: $\\sum_k (-1)^k \\binom{n}{k} = 0$ for $n > 0$",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Binomial", 7, 3],
+          ["Divide", ["Factorial", 7], ["Multiply", ["Factorial", 3], ["Factorial", 4]]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "The factorial form $\\binom{n}{k} = \\frac{n!}{k!\\,(n-k)!}$. See [[Factorial]]",
+      },
+      {
+        expr: ["Divide", ["Binomial", 10, 3], ["Power", 2, 10]],
+        expected: ["Rational", 15, 128],
+        category: "Applications",
+        caption: "The probability of exactly 3 heads in 10 fair coin tosses",
+      },
+      {
+        expr: ["Binomial", -3, -5],
+        expected: 6,
+        category: "Possible issues",
+        caption:
+          "Both arguments negative integers: the limiting definition gives $\\binom{-3}{-5} = \\binom{-3}{2} = 6$, not 0",
+      },
+      {
+        expr: ["Binomial", 100, 50],
+        expected: { num: "100891344545564193334812497256" },
+        category: "Neat examples",
+        caption: "The central binomial coefficient $\\binom{100}{50}$ has 30 digits",
+      },
     ],
     seeAlso: ["Factorial", "Multinomial", "Pochhammer"],
   },
@@ -154,6 +284,71 @@ export const combinatorics: readonly ReferenceEntry[] = [
         expected: ["List", 10, 20, 56],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+      },
+      {
+        expr: ["Multinomial", 0, 0, 1],
+        expected: 1,
+        category: "Scope",
+        caption: "Zero parts contribute $0! = 1$",
+      },
+      {
+        expr: ["Multinomial", 2, 0.2, 5],
+        expected: 34.31780351999995,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Real arguments should evaluate via the Gamma function, $\\frac{\\Gamma(8.2)}{2!\\,\\Gamma(1.2)\\,5!}$; compute-engine requires integers",
+      },
+      {
+        expr: ["Multinomial", ["Complex", 1, 1], 0.2, 4],
+        expected: ["Complex", 2.894060302449624, 9.104625875691285],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex arguments should evaluate via the Gamma function; compute-engine requires integers",
+      },
+      {
+        expr: ["Multinomial", ["Around", 2, 0.01], 2],
+        expected: ["Around", 6, 0.035],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An Around argument should propagate its uncertainty: $\\frac{(a+2)(a+1)}{2}$ at $a = 2 \\pm 0.01$ is $6 \\pm 0.035$; Around is not yet a head",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Multinomial", 3, 4, 5],
+          [
+            "Divide",
+            ["Factorial", 12],
+            ["Multiply", ["Factorial", 3], ["Factorial", 4], ["Factorial", 5]],
+          ],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption:
+          "The factorial form $\\frac{(k_1+k_2+k_3)!}{k_1!\\,k_2!\\,k_3!}$. See [[Factorial]]",
+      },
+      {
+        expr: ["Multinomial", 1, 1, 1, 1],
+        expected: 24,
+        category: "Properties",
+        caption: "All-ones parts give $n!$: every part is a single labelled item",
+      },
+      {
+        expr: ["Multinomial", 2, 3, 1],
+        expected: 60,
+        category: "Applications",
+        caption: "The coefficient of $a^2 b^3 c$ in $(a+b+c)^6$",
+      },
+      {
+        expr: ["Multinomial"],
+        expected: 1,
+        aspirational: true,
+        category: "Possible issues",
+        caption:
+          "With no arguments it should be the empty product, 1; compute-engine reports a missing argument",
       },
     ],
     seeAlso: ["Binomial", "Factorial"],
@@ -222,6 +417,56 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption:
           "$\\frac{n!}{(n-1)!}$ simplifies to $n$ under Simplify; plain evaluation leaves the ratio as it stands",
       },
+      {
+        expr: ["Factorial", 3.5],
+        expected: 11.631728396567457,
+        category: "Scope",
+        caption: "Real arguments evaluate as $\\Gamma(n+1)$",
+      },
+      {
+        expr: ["Factorial", -2.5],
+        expected: 2.363271801207353,
+        category: "Scope",
+        caption: "Negative non-integers are defined too: $(-2.5)! = \\Gamma(-1.5)$",
+      },
+      {
+        expr: ["Factorial", ["Complex", 1, 1]],
+        expected: ["Complex", 0.6529654964201674, 0.3430658398165463],
+        category: "Scope",
+        caption: "Complex arguments: $(1+i)! = \\Gamma(2+i)$",
+      },
+      {
+        expr: ["Factorial", ["Rational", -1, 2]],
+        expected: 1.7724538509055159,
+        category: "Scope",
+        caption:
+          "$\\left(-\\frac12\\right)! = \\Gamma\\!\\left(\\frac12\\right) = \\sqrt{\\pi}$, returned as a float",
+        divergence: { wolfram: "Wolfram returns the exact Sqrt[Pi]." },
+      },
+      {
+        expr: ["Factorial", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$\\infty! = \\infty$",
+      },
+      {
+        expr: ["Equal", ["Factorial", 5], ["Gamma", 6]],
+        expected: "True",
+        category: "Properties",
+        caption: "$n! = \\Gamma(n+1)$. See [[Gamma]]",
+      },
+      {
+        expr: ["Sum", ["Divide", 1, ["Factorial", "k"]], ["Tuple", "k", 0, "PositiveInfinity"]],
+        expected: "ExponentialE",
+        category: "Properties",
+        caption: "The reciprocals sum to $e$: $\\sum_{k \\ge 0} \\frac{1}{k!} = e$",
+      },
+      {
+        expr: ["Factorial", 30],
+        expected: { num: "26525285981219105863630848e+7" },
+        category: "Neat examples",
+        caption: "$30!$ has 33 digits and ends in seven zeros",
+      },
     ],
     seeAlso: ["Binomial", "Factorial2", "Subfactorial", "Pochhammer"],
   },
@@ -281,6 +526,49 @@ export const combinatorics: readonly ReferenceEntry[] = [
         category: "Scope",
         caption:
           "The recurrence $n!! = n \\cdot (n-2)!!$ run downwards extends it to negative odd integers: $(-1)!! = 1$, $(-3)!! = -1$, $(-5)!! = \\frac{1}{3}$",
+      },
+      { expr: ["Factorial2", 20], expected: 3715891200 },
+      {
+        expr: ["Factorial2", ["List", 1, 2, 3, 4, 5]],
+        expected: ["List", 1, 2, 3, 8, 15],
+        category: "Scope",
+        caption: "Threads element-wise over a list",
+      },
+      {
+        expr: ["Equal", ["Factorial2", 10], ["Multiply", ["Power", 2, 5], ["Factorial", 5]]],
+        expected: "True",
+        category: "Properties",
+        caption: "Even double factorials: $(2n)!! = 2^n\\,n!$",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Factorial2", 9],
+          ["Divide", ["Factorial", 10], ["Multiply", ["Power", 2, 5], ["Factorial", 5]]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Odd double factorials: $(2n-1)!! = \\frac{(2n)!}{2^n\\,n!}$",
+      },
+      {
+        expr: ["Factorial2", -3],
+        expected: -1,
+        category: "Scope",
+        caption: "Negative odd integers follow the recurrence backwards: $(-3)!! = -1$",
+      },
+      {
+        expr: ["Factorial2", -5],
+        expected: ["Rational", 1, 3],
+        category: "Scope",
+        caption: "$(-5)!! = \\frac{1}{3}$ by the backward recurrence",
+      },
+      {
+        expr: ["Factorial2", 2.5],
+        expected: 2.407069456116044,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Real arguments should use the analytic continuation $2^{(1+2x-\\cos\\pi x)/4}\\,\\pi^{(\\cos\\pi x-1)/4}\\,\\Gamma(1+\\frac{x}{2})$; currently left unevaluated",
       },
     ],
     seeAlso: ["Factorial"],
@@ -366,6 +654,50 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption:
           "Half-integer arguments evaluate exactly through $C_n = \\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$",
       },
+      { expr: ["CatalanNumber", 30], expected: 3814986502092304 },
+      {
+        expr: [
+          "Equal",
+          ["CatalanNumber", 4],
+          [
+            "Sum",
+            ["Multiply", ["CatalanNumber", "i"], ["CatalanNumber", ["Subtract", 3, "i"]]],
+            ["Tuple", "i", 0, 3],
+          ],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Segner's recurrence $C_{n+1} = \\sum_{i=0}^{n} C_i\\,C_{n-i}$, here at $n = 3$",
+      },
+      {
+        expr: ["CatalanNumber", 2.3],
+        expected: 2.5903521540193233,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Real arguments should evaluate as $\\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$; compute-engine requires an integer",
+      },
+      {
+        expr: ["CatalanNumber", ["Complex", 1.2, 1]],
+        expected: ["Complex", 0.7307286242072839, 0.5698464069693425],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex arguments should evaluate through the Gamma form; compute-engine requires an integer",
+      },
+      {
+        expr: ["CatalanNumber", ["Rational", 1, 2]],
+        expected: ["Divide", 8, ["Multiply", 3, "Pi"]],
+        category: "Scope",
+        caption: "$C_{1/2} = \\frac{8}{3\\pi}$ by analytic continuation",
+      },
+      {
+        expr: ["CatalanNumber", ["Interval", 0.5, 0.6]],
+        expected: ["Interval", 0.8488263631567751, 0.8625409688734523],
+        aspirational: true,
+        category: "Scope",
+        caption: "An Interval argument should give an enclosing Interval; currently a type error",
+      },
     ],
     seeAlso: ["Binomial", "BellNumber"],
   },
@@ -421,6 +753,96 @@ export const combinatorics: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
+      { expr: ["Pochhammer", 10, 6], expected: 3603600, caption: "10 × 11 × 12 × 13 × 14 × 15" },
+      {
+        expr: ["Pochhammer", "n", 5],
+        expected: [
+          "Multiply",
+          "n",
+          ["Add", "n", 1],
+          ["Add", "n", 2],
+          ["Add", "n", 3],
+          ["Add", "n", 4],
+        ],
+        category: "Scope",
+        caption: "A symbolic base with integer order expands to the product",
+        divergence: { wolfram: "Wolfram keeps Pochhammer[n, 5] unexpanded until FunctionExpand." },
+      },
+      {
+        expr: ["Pochhammer", "n", -5],
+        expected: [
+          "Divide",
+          1,
+          [
+            "Multiply",
+            ["Add", "n", -1],
+            ["Add", "n", -2],
+            ["Add", "n", -3],
+            ["Add", "n", -4],
+            ["Add", "n", -5],
+          ],
+        ],
+        category: "Scope",
+        caption: "A negative order expands to the reciprocal falling product",
+        divergence: { wolfram: "Wolfram keeps Pochhammer[n, -5] unexpanded until FunctionExpand." },
+      },
+      {
+        expr: ["Pochhammer", 2.4, 8.5],
+        expected: { num: "2310224.67324070778057" },
+        category: "Scope",
+        caption: "Real base and order evaluate as $\\frac{\\Gamma(a+n)}{\\Gamma(a)}$",
+      },
+      {
+        expr: ["Pochhammer", 0, 1285],
+        expected: 0,
+        category: "Scope",
+        caption: "A zero base gives 0 for any positive order",
+      },
+      {
+        expr: ["Pochhammer", ["Rational", 1, 2], 3],
+        expected: ["Rational", 15, 8],
+        category: "Scope",
+        caption: "A rational base: $\\frac12 \\cdot \\frac32 \\cdot \\frac52$",
+      },
+      {
+        expr: ["Pochhammer", ["Rational", 3, 2], ["Rational", 1, 2]],
+        expected: ["Divide", 2, ["Sqrt", "Pi"]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A rational order should evaluate through Gamma: $\\left(\\frac32\\right)_{1/2} = \\frac{\\Gamma(2)}{\\Gamma(3/2)} = \\frac{2}{\\sqrt\\pi}$; currently left unevaluated",
+      },
+      {
+        expr: ["Pochhammer", ["Complex", 2, 5], ["Complex", 0, 8]],
+        expected: ["Complex", 2.1386822918680963e-6, -1.4218737711709974e-5],
+        aspirational: true,
+        category: "Scope",
+        caption: "Complex base and order should evaluate through Gamma; currently left unevaluated",
+      },
+      {
+        expr: ["Pochhammer", "a", 0],
+        expected: 1,
+        category: "Properties",
+        caption: "Order 0 is the empty product: $(a)_0 = 1$",
+      },
+      {
+        expr: ["Pochhammer", "a", 1],
+        expected: "a",
+        category: "Properties",
+        caption: "$(a)_1 = a$",
+      },
+      {
+        expr: ["Equal", ["Pochhammer", 4, 3], ["Divide", ["Gamma", 7], ["Gamma", 4]]],
+        expected: "True",
+        category: "Properties",
+        caption: "The Gamma form $(a)_n = \\frac{\\Gamma(a+n)}{\\Gamma(a)}$. See [[Gamma]]",
+      },
+      {
+        expr: ["Equal", ["FallingFactorial", 5, 3], ["Multiply", -1, ["Pochhammer", -5, 3]]],
+        expected: "True",
+        category: "Properties",
+        caption: "Rising and falling factorials: $x^{\\underline{n}} = (-1)^n\\,(-x)_n$",
+      },
     ],
     seeAlso: ["Factorial", "Binomial"],
   },
@@ -473,6 +895,55 @@ export const combinatorics: readonly ReferenceEntry[] = [
         expected: ["List", 0, 1, 2, 9],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+      },
+      { expr: ["Subfactorial", 20], expected: { num: "895014631192902121" } },
+      {
+        expr: ["Subfactorial", 48],
+        expected: { num: "4566824330931624695767452273778667071025042534230906772538913" },
+        category: "Scope",
+        caption: "Exact for large n",
+      },
+      {
+        expr: ["Subfactorial", 4.5],
+        expected: ["Complex", 19.255831840742534, 0.15717912296461525],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Real arguments should evaluate as $\\frac{\\Gamma(n+1, -1)}{e}$ (complex off the integers); compute-engine requires an integer",
+      },
+      {
+        expr: ["Subfactorial", ["Complex", 1.6, 1]],
+        expected: ["Complex", 0.2968304581777118, 0.2842085472519699],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex arguments should evaluate as $\\frac{\\Gamma(n+1, -1)}{e}$; compute-engine requires an integer",
+      },
+      {
+        expr: ["Subfactorial", ["List", ["List", 2, 0], ["List", 0, 2]]],
+        expected: ["List", ["List", 1, 1], ["List", 1, 1]],
+        category: "Scope",
+        caption: "Threads over a matrix element-wise",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Subfactorial", 10],
+          ["Round", ["Divide", ["Factorial", 10], "ExponentialE"]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "$D_n$ is $\\frac{n!}{e}$ rounded to the nearest integer",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Subfactorial", 6],
+          ["Multiply", 5, ["Add", ["Subfactorial", 5], ["Subfactorial", 4]]],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Two-term recurrence: $D_{n+1} = n\\,(D_n + D_{n-1})$",
       },
     ],
     seeAlso: ["Factorial"],
@@ -538,6 +1009,45 @@ export const combinatorics: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
+      { expr: ["StirlingS1", 20, 10], expected: 381922055502195 },
+      {
+        expr: ["StirlingS1", 50, 2],
+        expected: { num: "27246193725912647616517114941876245307260051542398468096e+8" },
+        category: "Scope",
+        caption: "Exact for large n",
+      },
+      {
+        expr: ["Sum", ["StirlingS1", 6, "k"], ["Tuple", "k", 0, 6]],
+        expected: 0,
+        category: "Properties",
+        caption: "The signed row sum vanishes for $n \\ge 2$",
+      },
+      {
+        expr: ["Equal", ["StirlingS1", 6, 5], ["Negate", ["Binomial", 6, 2]]],
+        expected: "True",
+        category: "Properties",
+        caption: "$s(n, n-1) = -\\binom{n}{2}$",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Sum", ["Multiply", ["StirlingS1", 4, "k"], ["Power", "x", "k"]], ["Tuple", "k", 0, 4]],
+          [
+            "Expand",
+            ["Multiply", "x", ["Subtract", "x", 1], ["Subtract", "x", 2], ["Subtract", "x", 3]],
+          ],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "The generating property: $\\sum_k s(n, k)\\,x^k = x(x-1)\\cdots(x-n+1)$",
+      },
+      {
+        expr: ["StirlingS1", 5, 6],
+        expected: 0,
+        aspirational: true,
+        category: "Possible issues",
+        caption: "$k > n$ should give 0; currently left unevaluated",
+      },
     ],
     seeAlso: ["Binomial", "Stirling"],
   },
@@ -585,6 +1095,86 @@ export const combinatorics: readonly ReferenceEntry[] = [
         expected: 1,
         category: "Possible issues",
         caption: "The empty set has one partition (into no blocks)",
+      },
+      { expr: ["Stirling", 20, 10], expected: 5917584964655 },
+      {
+        expr: ["Stirling", 50, 2],
+        expected: 562949953421311,
+        category: "Scope",
+        caption: "Exact for large n",
+      },
+      {
+        expr: ["Stirling", ["List", 2, 4, 6], 2],
+        expected: ["List", 1, 7, 31],
+        aspirational: true,
+        category: "Scope",
+        caption: "Should thread over a list first argument; currently a type error",
+      },
+      {
+        expr: ["Equal", ["Stirling", 10, 2], ["Subtract", ["Power", 2, 9], 1]],
+        expected: "True",
+        category: "Properties",
+        caption: "Two blocks: $S(n, 2) = 2^{n-1} - 1$",
+      },
+      {
+        expr: ["Equal", ["Stirling", 6, 5], ["Binomial", 6, 2]],
+        expected: "True",
+        category: "Properties",
+        caption: "$S(n, n-1) = \\binom{n}{2}$: one block is a pair",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Stirling", 6, 3],
+          [
+            "Divide",
+            [
+              "Sum",
+              [
+                "Multiply",
+                ["Power", -1, ["Subtract", 3, "j"]],
+                ["Binomial", 3, "j"],
+                ["Power", "j", 6],
+              ],
+              ["Tuple", "j", 0, 3],
+            ],
+            ["Factorial", 3],
+          ],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption: "Explicit formula $S(n, k) = \\frac{1}{k!}\\sum_j (-1)^{k-j}\\binom{k}{j} j^n$",
+      },
+      {
+        expr: [
+          "Sum",
+          ["Multiply", ["StirlingS1", 4, "k"], ["Stirling", "k", 2]],
+          ["Tuple", "k", 0, 4],
+        ],
+        expected: 0,
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "Orthogonality with [[StirlingS1]]: $\\sum_k s(n, k)\\,S(k, m) = \\delta_{nm}$; stuck on $S(1, 2)$ staying unevaluated",
+      },
+      {
+        expr: ["Stirling", 10, 3],
+        expected: 9330,
+        category: "Applications",
+        caption: "The ways to split 10 distinct items among 3 identical non-empty boxes",
+      },
+      {
+        expr: ["Stirling", 5, 0],
+        expected: 0,
+        category: "Possible issues",
+        caption: "No blocks for a non-empty set: $S(n, 0) = 0$ for $n > 0$",
+      },
+      {
+        expr: ["Stirling", 3, 5],
+        expected: 0,
+        aspirational: true,
+        category: "Possible issues",
+        caption: "$k > n$ should give 0; currently left unevaluated",
       },
     ],
     seeAlso: ["StirlingS1", "BellNumber", "SetPartitions"],
@@ -648,6 +1238,69 @@ export const combinatorics: readonly ReferenceEntry[] = [
         expected: ["List", 1, 2, 5, 15],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+      },
+      {
+        expr: ["BellNumber", 30],
+        expected: { num: "846749014511809332450147" },
+        category: "Scope",
+        caption: "Exact for large n",
+      },
+      {
+        expr: ["BellNumber", 5, "x"],
+        expected: [
+          "Add",
+          ["Power", "x", 5],
+          ["Multiply", 10, ["Power", "x", 4]],
+          ["Multiply", 25, ["Power", "x", 3]],
+          ["Multiply", 15, ["Power", "x", 2]],
+          "x",
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "The two-argument form should give the Bell (Touchard) polynomial $\\sum_k S(n, k)\\,x^k$; currently an unexpected-argument error",
+      },
+      {
+        expr: ["BellNumber", 20, 0.5],
+        expected: 270190131940.15192,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "The Bell polynomial at a real point, $B_{20}(0.5)$; the two-argument form is not yet supported",
+      },
+      {
+        expr: ["BellNumber", 5, 1],
+        expected: 52,
+        aspirational: true,
+        category: "Properties",
+        caption: "The Bell polynomial at 1 is the Bell number: $B_n(1) = B_n$",
+      },
+      {
+        expr: [
+          "Divide",
+          [
+            "Sum",
+            ["Divide", ["Power", "k", 5], ["Factorial", "k"]],
+            ["Tuple", "k", 0, "PositiveInfinity"],
+          ],
+          "ExponentialE",
+        ],
+        expected: 52,
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "Dobinski's formula $B_n = \\frac{1}{e}\\sum_{k \\ge 0} \\frac{k^n}{k!}$; the infinite sum is left unevaluated",
+      },
+      {
+        expr: [
+          "Equal",
+          ["Mod", ["BellNumber", 9], 7],
+          ["Mod", ["Add", ["BellNumber", 2], ["BellNumber", 3]], 7],
+        ],
+        expected: "True",
+        category: "Properties",
+        caption:
+          "Touchard's congruence $B_{p+n} \\equiv B_n + B_{n+1} \\pmod p$, here $p = 7$, $n = 2$",
       },
     ],
     seeAlso: ["StirlingS1"],

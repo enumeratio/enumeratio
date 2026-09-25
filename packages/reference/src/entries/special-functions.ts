@@ -146,6 +146,141 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption:
           "A three-argument call whose two halves do not themselves reduce keeps its own form rather than showing the difference -- Wolfram leaves $\\mathrm{Gamma}[2, 0, z]$ the same way",
       },
+      {
+        expr: ["Gamma", 4.5],
+        expected: { num: "11.6317283965674489291" },
+        caption: "A machine-precision argument: $\\Gamma(4.5) = 11.6317\\ldots$",
+      },
+      {
+        expr: ["Gamma", 5],
+        expected: 24,
+        caption: "$\\Gamma(5) = 4! = 24$",
+      },
+      {
+        expr: ["Gamma", ["Complex", 2.3, 1]],
+        expected: ["Complex", 0.7191409365372811, 0.5406144679098487],
+        category: "Scope",
+        caption: "Complex arguments evaluate directly",
+      },
+      {
+        expr: ["Gamma", ["Rational", 7, 2]],
+        expected: ["Multiply", ["Rational", 15, 8], ["Sqrt", "Pi"]],
+        category: "Scope",
+        caption: "Half-integers have closed forms: $\\Gamma(7/2) = \\frac{15}{8}\\sqrt{\\pi}$",
+      },
+      {
+        expr: ["Gamma", ["Rational", -3, 2]],
+        expected: ["Multiply", ["Rational", 4, 3], ["Sqrt", "Pi"]],
+        category: "Scope",
+        caption: "...including negative half-integers: $\\Gamma(-3/2) = \\frac{4}{3}\\sqrt{\\pi}$",
+      },
+      {
+        expr: ["Gamma", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$\\Gamma(\\infty) = \\infty$",
+      },
+      {
+        expr: ["Gamma", 200.5],
+        expected: { num: "5.57316894480137913364e+373" },
+        category: "Scope",
+        caption:
+          "Values far past the double range: $\\Gamma(200.5) \\approx 5.57 \\times 10^{373}$",
+      },
+      {
+        expr: ["Gamma", 2.5, 1.5],
+        expected: 0.9305194427867931,
+        category: "Scope",
+        caption: "Two arguments: the upper incomplete gamma $\\Gamma(5/2, 3/2)$",
+      },
+      {
+        expr: ["Gamma", 2, "x"],
+        expected: ["Multiply", ["Add", "x", 1], ["Power", "ExponentialE", ["Negate", "x"]]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An integer order should reduce to a closed form, $\\Gamma(2, x) = (1 + x)e^{-x}$; only $s = 1$ does today",
+      },
+      {
+        expr: ["Gamma", 2, 1],
+        expected: ["Divide", 2, "ExponentialE"],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\Gamma(2, 1) = 2/e$; not yet -- exact arguments stay symbolic",
+      },
+      {
+        expr: [
+          "Gamma",
+          2,
+          ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]],
+        ],
+        expected: [
+          "List",
+          [
+            "List",
+            ["Multiply", ["Rational", 9, 2], ["Power", "ExponentialE", ["Rational", -7, 2]]],
+            1,
+          ],
+          [
+            "List",
+            1,
+            ["Multiply", ["Rational", 15, 2], ["Power", "ExponentialE", ["Rational", -13, 2]]],
+          ],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Listable: threads elementwise over a matrix, and each entry should reduce ($\\Gamma(2, 0) = 1$); today the threading happens but the entries stay symbolic",
+      },
+      {
+        expr: ["Gamma", ["Interval", 1.4, 1.5]],
+        expected: ["Interval", 0.8856031944108887, 0.8872638175030753],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Interval arithmetic: the image of $[1.4, 1.5]$, whose lower end is $\\Gamma$'s minimum at $x_0 = 1.4616\\ldots$; not yet",
+      },
+      {
+        expr: ["Gamma", ["Around", 2.5, 0.01]],
+        expected: ["Around", 1.329340388179137, 0.009347345216260856],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Uncertainty propagation: $\\Gamma(2.5 \\pm 0.01) = 1.3293 \\pm 0.0093$; `Around` is not declared",
+      },
+      {
+        expr: ["Gamma", "a", 0],
+        expected: ["Gamma", "a"],
+        category: "Properties",
+        caption: "$\\Gamma(a, 0) = \\Gamma(a)$: the incomplete gamma from zero is the complete one",
+      },
+      {
+        expr: ["Gamma", 0, 1.5],
+        expected: 0.10001958240663252,
+        category: "Properties",
+        caption: "$\\Gamma(0, z) = E_1(z)$, the exponential integral: $E_1(3/2) = 0.10002\\ldots$",
+      },
+      {
+        expr: ["Gamma", ["Rational", 1, 2], "x"],
+        expected: ["Multiply", ["Sqrt", "Pi"], ["Erfc", ["Sqrt", "x"]]],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\Gamma(1/2, x) = \\sqrt{\\pi}\\,\\operatorname{erfc}(\\sqrt{x})$. See [[Erfc]]; not yet",
+      },
+      {
+        expr: ["Divide", ["D", ["Gamma", "x"], "x"], ["Gamma", "x"]],
+        expected: ["Digamma", "x"],
+        category: "Properties",
+        caption:
+          "$\\Gamma'(x) = \\Gamma(x)\\,\\psi(x)$, so the logarithmic derivative is [[Digamma]]",
+      },
+      {
+        expr: ["N", ["Power", ["Abs", ["Gamma", "ImaginaryUnit"]], 2]],
+        expected: { num: "0.272029054982132823542" },
+        category: "Neat examples",
+        caption: "$|\\Gamma(i)|^2 = \\pi/\\sinh\\pi = 0.27203\\ldots$",
+      },
     ],
     seeAlso: ["Factorial", "GammaLn", "LogGamma", "GammaRegularized", "Digamma", "Beta"],
   },
@@ -242,6 +377,59 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption:
           "At a pole of Gamma, compute-engine gives the real log-magnitude's divergence, PositiveInfinity, rather than treating GammaLn as complex-analytic",
       },
+      {
+        expr: ["GammaLn", 100.5],
+        expected: { num: "361.435540467777621555" },
+        caption: "$\\ln\\Gamma(100.5)$, where $\\Gamma(100.5)$ itself is about $10^{157}$",
+      },
+      {
+        expr: ["GammaLn", ["Complex", 2.5, 3]],
+        expected: ["Complex", -1.4709546103488425, 2.8226156382608],
+        category: "Scope",
+        caption:
+          "Complex arguments; here the principal $\\ln\\Gamma(z)$ and Wolfram's $\\mathrm{LogGamma}$ agree, as the imaginary part stays inside $(-\\pi, \\pi]$",
+      },
+      {
+        expr: ["GammaLn", { num: "1e1000" }],
+        expected: { num: "2.30158509299404568402e+1003" },
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "A huge inexact argument should still evaluate (Stirling's series): $\\ln\\Gamma(10^{1000}) \\approx 2.3016 \\times 10^{1003}$; left unevaluated today",
+      },
+      {
+        expr: ["GammaLn", ["List", 1, 2, 3]],
+        expected: ["List", 0, 0, ["Ln", 2]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Threads over a list, and the integer points should reduce to $\\ln((n-1)!)$; today each element stays symbolic",
+      },
+      {
+        expr: ["GammaLn", ["Around", 1.2, 0.01]],
+        expected: ["Around", -0.08537409000331583, 0.002890398965921884],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Uncertainty propagation through $\\ln\\Gamma$, with slope $\\psi(1.2)$; `Around` is not declared",
+      },
+      {
+        expr: ["D", ["GammaLn", "x"], "x"],
+        expected: ["Digamma", "x"],
+        category: "Properties",
+        caption: "The derivative of $\\ln\\Gamma$ is the digamma function. See [[Digamma]]",
+      },
+      {
+        expr: ["GammaLn", -1.5],
+        expected: { num: "0.860047015376481014511" },
+        category: "Possible issues",
+        caption:
+          "Off the positive axis GammaLn is the principal $\\ln\\Gamma(z)$: at $z = -3/2$, where $\\Gamma > 0$, that is real. See [[LogGamma]] for the continuation",
+        divergence: {
+          wolfram:
+            "Wolfram's $\\mathrm{LogGamma}[-1.5] = 0.860047 - 6.28319\\,i$: its analytic continuation sits $-2\\pi i$ from the principal log here.",
+        },
+      },
     ],
     seeAlso: ["Gamma", "LogGamma", "Digamma"],
   },
@@ -304,6 +492,72 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption:
           "Half-integer arguments evaluate exactly through $\\Gamma(m + \\tfrac12) = \\frac{(2m)!}{4^m m!}\\sqrt{\\pi}$. Compare [[Binomial]] at half-integers",
+      },
+      {
+        expr: ["Beta", 5, 4],
+        expected: ["Rational", 1, 280],
+        caption: "$B(5, 4) = \\frac{4!\\,3!}{8!} = \\frac{1}{280}$",
+      },
+      {
+        expr: ["Beta", 2.3, 3.2],
+        expected: { num: "0.0540297917483572378154" },
+        caption: "Machine-precision arguments",
+      },
+      {
+        expr: ["Beta", ["Rational", 5, 2], ["Rational", 7, 2]],
+        expected: ["Multiply", ["Rational", 3, 256], "Pi"],
+        category: "Scope",
+        caption: "$B(5/2, 7/2) = \\frac{3\\pi}{256}$ from the half-integer gammas",
+      },
+      {
+        expr: ["Beta", ["Complex", 2.5, 1], ["Complex", 1, -1]],
+        expected: ["Complex", 0.08310778366991163, 0.14216394425587034],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex arguments should evaluate numerically; left unevaluated today, even under N()",
+      },
+      {
+        expr: ["Beta", ["Rational", 1, 2], 2, 3],
+        expected: ["Rational", 11, 192],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Three arguments: the incomplete beta $B_z(a, b) = \\int_0^z t^{a-1}(1-t)^{b-1}\\,dt$, here $B_{1/2}(2, 3) = 11/192$; the arity is not declared",
+      },
+      {
+        expr: ["Beta", ["Rational", 1, 4], ["Rational", 1, 2], 2, 3],
+        expected: ["Rational", 109, 3072],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Four arguments: the generalized incomplete beta $B_{z_1}(a, b) - B_{z_0}(a, b)$, here $\\int_{1/4}^{1/2} t(1-t)^2\\,dt = 109/3072$; not declared",
+      },
+      {
+        expr: ["Beta", "a", 1],
+        expected: ["Divide", 1, "a"],
+        aspirational: true,
+        category: "Properties",
+        caption: "$B(a, 1) = 1/a$ for symbolic $a$; not yet",
+      },
+      {
+        expr: ["Beta", 2, "b"],
+        expected: ["Divide", 1, ["Multiply", "b", ["Add", "b", 1]]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$B(2, b) = \\frac{1}{b(b+1)}$; not yet",
+      },
+      {
+        expr: ["D", ["Beta", "a", "b"], "a"],
+        expected: [
+          "Multiply",
+          ["Beta", "a", "b"],
+          ["Subtract", ["Digamma", "a"], ["Digamma", ["Add", "a", "b"]]],
+        ],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\partial_a B(a, b) = B(a, b)\\,(\\psi(a) - \\psi(a+b))$; today the derivative stays an unapplied `Derivative`",
       },
     ],
     seeAlso: ["Gamma", "Binomial", "BetaRegularized"],
@@ -373,6 +627,91 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
+      {
+        expr: ["Erf", 0.95],
+        expected: { num: "0.820890807273277941908" },
+        caption: "A machine-precision argument",
+      },
+      {
+        expr: ["Erf", ["Complex", 1.5, -1]],
+        expected: ["Complex", 1.0783992074989335, 0.027963711238655833],
+        category: "Scope",
+        caption: "Complex arguments evaluate directly",
+      },
+      {
+        expr: ["Erf", 0.5, 1.5],
+        expected: 0.4456052686622642,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Two arguments: the generalized $\\operatorname{erf}(z_0, z_1) = \\operatorname{erf}(z_1) - \\operatorname{erf}(z_0)$; the arity is not declared",
+      },
+      {
+        expr: ["Erf", 1, 2],
+        expected: ["Subtract", ["Erf", 2], ["Erf", 1]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...which with exact arguments is the difference $\\operatorname{erf}(2) - \\operatorname{erf}(1)$; not declared",
+      },
+      {
+        expr: ["Erf", ["Interval", -2.1, -1.9]],
+        expected: ["Interval", -0.997020533343667, -0.9927904292352575],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Interval arithmetic: Erf is increasing, so the image of an interval is the interval of the endpoint images; today a type error",
+      },
+      {
+        expr: ["Erf", ["Around", 2, 0.01]],
+        expected: ["Around", 0.9953222650189527, 0.00020666985354092054],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Uncertainty propagation, with slope $\\frac{2}{\\sqrt\\pi}e^{-4}$; `Around` is not declared",
+      },
+      {
+        expr: ["Multiply", 0.5, ["Add", 1, ["Erf", ["Divide", 1.96, ["Sqrt", 2]]]]],
+        expected: { num: "0.9750021048517795658635" },
+        category: "Applications",
+        caption:
+          "The standard normal CDF $\\Phi(x) = \\frac12(1 + \\operatorname{erf}(x/\\sqrt2))$ at $x = 1.96$: the familiar 97.5%",
+      },
+      {
+        expr: ["Erf", ["Negate", "x"]],
+        expected: ["Negate", ["Erf", "x"]],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "Oddness applied symbolically: $\\operatorname{erf}(-x) = -\\operatorname{erf}(x)$; not yet",
+      },
+      {
+        expr: ["Erf", ["ErfInv", "x"]],
+        expected: "x",
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\operatorname{erf}(\\operatorname{erfinv}(x)) = x$ symbolically. See [[ErfInv]]; not yet",
+      },
+      {
+        expr: ["Erf", "ImaginaryUnit"],
+        expected: ["Multiply", "ImaginaryUnit", ["Erfi", 1]],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "On the imaginary axis: $\\operatorname{erf}(i) = i\\,\\operatorname{erfi}(1)$; not yet",
+      },
+      {
+        expr: ["D", ["Erf", "x"], "x"],
+        expected: [
+          "Divide",
+          ["Multiply", 2, ["Power", "ExponentialE", ["Negate", ["Power", "x", 2]]]],
+          ["Sqrt", "Pi"],
+        ],
+        category: "Properties",
+        caption:
+          "$\\frac{d}{dx}\\operatorname{erf}(x) = \\frac{2}{\\sqrt\\pi}e^{-x^2}$, the Gaussian itself",
+      },
     ],
     seeAlso: ["Erfc", "ErfInv"],
   },
@@ -437,6 +776,71 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
+      {
+        expr: ["Erfc", 1.5],
+        expected: { num: "0.033894853524689272933" },
+        caption: "A machine-precision argument",
+      },
+      {
+        expr: ["Erfc", ["Complex", 1.5, -1]],
+        expected: ["Complex", -0.07839920749893345, -0.027963711238655847],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex arguments should evaluate, as they do for [[Erf]]: $\\operatorname{erfc}(z) = 1 - \\operatorname{erf}(z)$; left unevaluated today",
+      },
+      {
+        expr: ["Erfc", ["List", "PositiveInfinity", "NegativeInfinity"]],
+        expected: ["List", 0, 2],
+        category: "Scope",
+        caption: "Listable: threads over its limits at $\\pm\\infty$",
+      },
+      {
+        expr: ["Erfc", ["Interval", 0.2, 0.3]],
+        expected: ["Interval", 0.6713732405408726, 0.7772974107895215],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Interval arithmetic: Erfc is decreasing, so the endpoints swap; today a type error",
+      },
+      {
+        expr: ["Erfc", ["Around", 2, 0.01]],
+        expected: ["Around", 0.004677734981047266, 0.00020666985354092054],
+        aspirational: true,
+        category: "Scope",
+        caption: "Uncertainty propagation; `Around` is not declared",
+      },
+      {
+        expr: ["Erfc", ["Negate", "x"]],
+        expected: ["Subtract", 2, ["Erfc", "x"]],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\operatorname{erfc}(-x) = 2 - \\operatorname{erfc}(x)$ applied symbolically; not yet",
+      },
+      {
+        expr: ["D", ["Erfc", "x"], "x"],
+        expected: [
+          "Divide",
+          ["Multiply", -2, ["Power", "ExponentialE", ["Negate", ["Power", "x", 2]]]],
+          ["Sqrt", "Pi"],
+        ],
+        category: "Properties",
+        caption: "$\\frac{d}{dx}\\operatorname{erfc}(x) = -\\frac{2}{\\sqrt\\pi}e^{-x^2}$",
+      },
+      {
+        expr: ["Erfc", 9.5],
+        expected: { num: "3.76921448565487994168e-41" },
+        category: "Possible issues",
+        caption:
+          "Far in the tail Erfc keeps full relative precision: $\\operatorname{erfc}(9.5) \\approx 3.8\\times10^{-41}$...",
+      },
+      {
+        expr: ["Subtract", 1, ["Erf", 9.5]],
+        expected: 0,
+        category: "Possible issues",
+        caption: "...whereas $1 - \\operatorname{erf}(9.5)$ cancels to exactly 0 in floating point",
+      },
     ],
     seeAlso: ["Erf"],
   },
@@ -493,6 +897,62 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expected: ["List", 0, "PositiveInfinity"],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+      },
+      {
+        expr: ["ErfInv", 0.6],
+        expected: { num: "0.595116081449994850019" },
+        caption: "A machine-precision argument",
+      },
+      {
+        expr: ["ErfInv", 0.4, 0.2],
+        expected: 0.6317759030550063,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Two arguments: $\\operatorname{erfinv}(z_0, z)$ solves $z = \\operatorname{erf}(z_0, x) = \\operatorname{erf}(x) - \\operatorname{erf}(z_0)$; the arity is not declared",
+      },
+      {
+        expr: ["ErfInv", ["Interval", 0.5, 0.6]],
+        expected: ["Interval", 0.4769362762044699, 0.5951160814499948],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Interval arithmetic: the inverse is increasing, so endpoints map to endpoints; today a type error",
+      },
+      {
+        expr: ["ErfInv", ["Around", 0.5, 0.01]],
+        expected: ["Around", 0.4769362762044699, 0.011125848189719498],
+        aspirational: true,
+        category: "Scope",
+        caption: "Uncertainty propagation; `Around` is not declared",
+      },
+      {
+        expr: ["Multiply", ["Sqrt", 2], ["ErfInv", 0.95]],
+        expected: { num: "1.95996398454005423552746040017785193571357792" },
+        category: "Applications",
+        caption:
+          "The normal quantile $\\sqrt2\\,\\operatorname{erfinv}(2p - 1)$ at $p = 0.975$: the 1.96 of a 95% confidence interval",
+      },
+      {
+        expr: ["ErfInv", ["Negate", "x"]],
+        expected: ["Negate", ["ErfInv", "x"]],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "Odd: $\\operatorname{erfinv}(-x) = -\\operatorname{erfinv}(x)$ applied symbolically; not yet",
+      },
+      {
+        expr: ["D", ["ErfInv", "x"], "x"],
+        expected: [
+          "Multiply",
+          ["Rational", 1, 2],
+          ["Sqrt", "Pi"],
+          ["Power", "ExponentialE", ["Power", ["ErfInv", "x"], 2]],
+        ],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\frac{d}{dx}\\operatorname{erfinv}(x) = \\frac{\\sqrt\\pi}{2}e^{\\operatorname{erfinv}(x)^2}$; today the derivative stays an unapplied `Derivative`",
       },
     ],
     seeAlso: ["Erf", "Erfc"],
@@ -643,6 +1103,113 @@ export const specialFunctions: readonly ReferenceEntry[] = [
             "This matches Wolfram's $\\mathrm{Zeta}[s, a]$; Wolfram's $\\mathrm{HurwitzZeta}[s, 0]$ instead diverges (ComplexInfinity).",
         },
       },
+      {
+        expr: ["N", ["Zeta", 3]],
+        expected: { num: "1.2020569031595942854" },
+        caption: "Apéry's constant $\\zeta(3)$, numerically",
+      },
+      {
+        expr: ["Zeta", 1.5],
+        expected: { num: "2.61237534868548834335" },
+        caption: "A machine-precision argument",
+      },
+      {
+        expr: ["Zeta", 8],
+        expected: ["Multiply", ["Rational", 1, 9450], ["Power", "Pi", 8]],
+        caption: "$\\zeta(8) = \\pi^8/9450$",
+      },
+      {
+        expr: ["Zeta", -5],
+        expected: ["Rational", -1, 252],
+        caption: "$\\zeta(-5) = -B_6/6 = -1/252$",
+      },
+      {
+        expr: ["Zeta", 5.211111111111111],
+        expected: { num: "1.03139179693438499839" },
+        category: "Scope",
+        caption: "Arbitrary real arguments",
+      },
+      {
+        expr: ["Zeta", -4.5],
+        expected: { num: "-0.00309166924721583384482" },
+        category: "Scope",
+        caption: "Left of the critical strip, via the functional equation",
+      },
+      {
+        expr: ["N", ["Zeta", ["Complex", 2, -5]]],
+        expected: ["Complex", 0.8509629436242628, -0.09899694613483125],
+        category: "Scope",
+        caption: "Complex $s$ under N()",
+      },
+      {
+        expr: ["Zeta", "PositiveInfinity"],
+        expected: 1,
+        category: "Scope",
+        caption: "$\\zeta(\\infty) = 1$: only the $n = 1$ term survives",
+      },
+      {
+        expr: ["Zeta", -1, 5],
+        expected: ["Rational", -121, 12],
+        category: "Scope",
+        caption:
+          "Two arguments at a nonpositive integer $s$: $\\zeta(-1, 5) = -B_2(5)/2 = -121/12$",
+      },
+      {
+        expr: ["Zeta", -1.5, 5],
+        expected: { num: "-17.0500647493426550141295" },
+        category: "Scope",
+        caption: "Two arguments, inexact",
+      },
+      {
+        expr: ["N", ["Zeta", ["Complex", -1.5, 1], ["Complex", 2.5, -1]], 10],
+        expected: ["Complex", 0.01848680919, 1.675533784],
+        category: "Scope",
+        caption: "Two complex arguments under N(), to ten digits",
+      },
+      {
+        expr: ["Zeta", ["Complex", -1.5, 1], ["Complex", 2.5, -1]],
+        expected: ["Complex", 0.01848680919381065, 1.675533784301766],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...which with inexact complex arguments should evaluate without N(), as the real case does; left unevaluated today",
+      },
+      {
+        expr: ["Zeta", 20, ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 221930581, 1856156927625], ["Power", "Pi", 20]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$\\zeta(20, 1/2) = (2^{20} - 1)\\zeta(20)$, an exact multiple of $\\pi^{20}$; not yet",
+      },
+      {
+        expr: ["Zeta", 2, ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\zeta(2, 1/2) = 3\\zeta(2) = \\pi^2/2$; not yet",
+      },
+      {
+        expr: ["Zeta", ["Interval", 1.1, 1.2]],
+        expected: ["Interval", 5.591582441177752, 10.584448464950801],
+        aspirational: true,
+        category: "Scope",
+        caption: "Interval arithmetic: $\\zeta$ is decreasing on $(1, \\infty)$; not yet",
+      },
+      {
+        expr: ["Zeta", ["Rational", 1, 2], ["Around", 0.5, 0.01]],
+        expected: ["Around", -0.6048986434216304, 0.023882689737774167],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Uncertainty in $a$, propagated with $\\partial_a\\zeta(s, a) = -s\\,\\zeta(s+1, a)$; `Around` is not declared",
+      },
+      {
+        expr: ["Zeta", "s", 1],
+        expected: ["Zeta", "s"],
+        category: "Properties",
+        caption: "$\\zeta(s, 1) = \\zeta(s)$ for symbolic $s$",
+      },
     ],
     seeAlso: ["HurwitzZeta", "BernoulliB", "Gamma", "Digamma"],
   },
@@ -708,6 +1275,99 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           wolfram:
             "Wolfram's $\\mathrm{FunctionExpand}$ and machine-precision $N$ agree ($-7813/3240$), but its arbitrary-precision $N[\\mathrm{HurwitzZeta}[-3, 7/3], 30]$ is wrong by $1/120$ (a Wolfram numeric-evaluation quirk at nonpositive-integer $s$ with rational $a$); mpmath agrees with us.",
         },
+      },
+      {
+        expr: ["HurwitzZeta", 3, 0.2],
+        expected: 125.73901805721795,
+        aspirational: true,
+        caption:
+          "An inexact $a$ should evaluate numerically without N(), $\\zeta(3, 0.2) = 125.739\\ldots$; left unevaluated today",
+      },
+      {
+        expr: ["N", ["HurwitzZeta", 0.51, 0.87]],
+        expected: { num: "-1.32015502369495837551" },
+        caption: "Inside the critical strip, under N()",
+      },
+      {
+        expr: ["HurwitzZeta", 7, 5],
+        expected: ["Add", ["Rational", -36130315, 35831808], ["Zeta", 7]],
+        category: "Scope",
+        caption:
+          "A positive integer $a$ peels off the first terms: $\\zeta(7, 5) = \\zeta(7) - \\sum_{k=1}^{4} k^{-7}$",
+      },
+      {
+        expr: ["N", ["HurwitzZeta", 2.3, ["Complex", 8, 1]]],
+        expected: ["Complex", 0.05447008273213067, -0.009448515336470249],
+        category: "Scope",
+        caption: "Complex $a$",
+      },
+      {
+        expr: ["HurwitzZeta", ["List", 2, 3, 4], 0.5],
+        expected: ["List", 4.934802200544679, 8.41439832211716, 16.234848505667074],
+        aspirational: true,
+        category: "Scope",
+        caption: "Listable: threads over a list of orders; today a type error",
+      },
+      {
+        expr: ["HurwitzZeta", 2, ["Around", 0.5, 0.01]],
+        expected: ["Around", 4.934802200544679, 0.1682879664423432],
+        aspirational: true,
+        category: "Scope",
+        caption: "Uncertainty in $a$; `Around` is not declared",
+      },
+      {
+        expr: ["HurwitzZeta", 2, ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\zeta(2, 1/2) = \\pi^2/2$; not yet -- rational $a$ stays symbolic",
+      },
+      {
+        expr: ["HurwitzZeta", 2, ["Rational", 1, 4]],
+        expected: ["Add", ["Power", "Pi", 2], ["Multiply", 8, "Catalan"]],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\zeta(2, 1/4) = \\pi^2 + 8G$, with Catalan's constant $G$; not yet",
+      },
+      {
+        expr: ["HurwitzZeta", "s", ["Rational", 1, 2]],
+        expected: ["Multiply", ["Add", ["Power", 2, "s"], -1], ["Zeta", "s"]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\zeta(s, 1/2) = (2^s - 1)\\zeta(s)$ for symbolic $s$; not yet",
+      },
+      {
+        expr: ["HurwitzZeta", "s", 1],
+        expected: ["Zeta", "s"],
+        category: "Properties",
+        caption: "$\\zeta(s, 1) = \\zeta(s)$ for symbolic $s$",
+      },
+      {
+        expr: ["HurwitzZeta", 0, 0],
+        expected: ["Rational", 1, 2],
+        category: "Properties",
+        caption: "$\\zeta(0, a) = \\tfrac12 - a$ holds at $a = 0$ too",
+      },
+      {
+        expr: ["HurwitzZeta", -2, "a"],
+        expected: [
+          "Multiply",
+          ["Rational", -1, 3],
+          [
+            "Add",
+            ["Power", "a", 3],
+            ["Multiply", ["Rational", -3, 2], ["Power", "a", 2]],
+            ["Multiply", ["Rational", 1, 2], "a"],
+          ],
+        ],
+        category: "Properties",
+        caption: "$\\zeta(-2, a) = -B_3(a)/3$",
+      },
+      {
+        expr: ["D", ["HurwitzZeta", "s", "a"], "a"],
+        expected: ["Negate", ["Multiply", "s", ["HurwitzZeta", ["Add", "s", 1], "a"]]],
+        category: "Properties",
+        caption: "$\\partial_a\\zeta(s, a) = -s\\,\\zeta(s+1, a)$",
       },
     ],
     implementations: [
@@ -833,6 +1493,91 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Applications",
         caption:
           "$\\Phi(-1, 2, 1) = \\eta(2) = \\pi^2/12$ — the alternating rim, via the Euler transform",
+      },
+      {
+        expr: ["LerchPhi", 0.5, 2, 3.5],
+        expected: 0.11938622686982046,
+        aspirational: true,
+        caption:
+          "Inexact arguments should evaluate numerically without N(); left unevaluated today",
+      },
+      {
+        expr: ["LerchPhi", 49.5, 0, 2],
+        expected: { num: "-0.0206185567010309278351" },
+        category: "Scope",
+        caption: "$s = 0$ far outside the unit disk: $1/(1 - 49.5)$",
+      },
+      {
+        expr: ["LerchPhi", 7.5, 1, 2],
+        expected: ["Complex", -0.16660981647825052, -0.05585053606381855],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$|z| > 1$ by analytic continuation: $\\Phi(z, 1, 2) = (-\\ln(1-z) - z)/z^2$ at $z = 7.5$; left unevaluated today",
+      },
+      {
+        expr: ["LerchPhi", ["Around", 0.5, 0.01], 1, 2],
+        expected: ["Around", 0.7725887222397811, 0.00909645111040875],
+        aspirational: true,
+        category: "Scope",
+        caption: "Uncertainty in $z$; `Around` is not declared",
+      },
+      {
+        expr: ["LerchPhi", 0, "s", "a"],
+        expected: ["Power", "a", ["Negate", "s"]],
+        category: "Properties",
+        caption: "$\\Phi(0, s, a) = a^{-s}$: only the $n = 0$ term survives",
+      },
+      {
+        expr: ["LerchPhi", "z", "s", 1],
+        expected: ["Divide", ["PolyLog", "s", "z"], "z"],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\Phi(z, s, 1) = \\operatorname{Li}_s(z)/z$ symbolically. See [[PolyLog]]; not yet",
+      },
+      {
+        expr: ["LerchPhi", "z", 1, 1],
+        expected: ["Divide", ["Negate", ["Ln", ["Add", ["Negate", "z"], 1]]], "z"],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\Phi(z, 1, 1) = -\\ln(1-z)/z$; not yet",
+      },
+      {
+        expr: ["LerchPhi", 1, 2, ["Rational", 1, 4]],
+        expected: ["Add", ["Power", "Pi", 2], ["Multiply", 8, "Catalan"]],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\Phi(1, 2, 1/4) = \\zeta(2, 1/4) = \\pi^2 + 8G$; today it stops at the HurwitzZeta",
+      },
+      {
+        expr: ["LerchPhi", -1, 1, 1],
+        expected: ["Ln", 2],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\Phi(-1, 1, 1) = \\eta(1) = \\ln 2$, the alternating harmonic series; not yet in closed form",
+      },
+      {
+        expr: ["LerchPhi", ["Rational", 1, 2], 1, 1],
+        expected: ["Multiply", 2, ["Ln", 2]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\Phi(1/2, 1, 1) = 2\\ln 2$; not yet",
+      },
+      {
+        expr: ["LerchPhi", -1, 2, ["Rational", 1, 2]],
+        expected: ["Multiply", 4, "Catalan"],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\Phi(-1, 2, 1/2) = 4G$; not yet in closed form...",
+      },
+      {
+        expr: ["N", ["LerchPhi", -1, 2, ["Rational", 1, 2]]],
+        expected: 3.663862376708875,
+        category: "Properties",
+        caption: "...though N() gets $4G = 3.66386\\ldots$",
       },
     ],
     implementations: [
@@ -979,6 +1724,123 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption:
           "An exact argument stays symbolic under plain evaluation -- pair with N() or pass 0.5 instead",
       },
+      {
+        expr: ["PolyLog", 2, 0.9],
+        expected: 1.2997147230049588,
+        caption: "A machine-precision argument",
+      },
+      {
+        expr: ["PolyLog", 0, 5.5],
+        expected: { num: "-1.222222222222222222221" },
+        caption: "$\\operatorname{Li}_0(z) = z/(1-z)$, past the unit disk",
+      },
+      {
+        expr: ["PolyLog", 3, ["Rational", 1, 2]],
+        expected: [
+          "Add",
+          ["Multiply", ["Rational", 7, 8], ["Zeta", 3]],
+          ["Multiply", ["Rational", -1, 12], ["Power", "Pi", 2], ["Ln", 2]],
+          ["Multiply", ["Rational", 1, 6], ["Power", ["Ln", 2], 3]],
+        ],
+        aspirational: true,
+        caption:
+          "$\\operatorname{Li}_3(1/2) = \\frac78\\zeta(3) - \\frac{\\pi^2}{12}\\ln 2 + \\frac16\\ln^3 2$; not yet",
+      },
+      {
+        expr: ["PolyLog", ["Complex", 0.2, 1], ["Complex", 0.5, -0.5]],
+        expected: ["Complex", 0.07032652055051603, -0.5632932625398744],
+        category: "Scope",
+        caption: "Complex order and argument",
+      },
+      {
+        expr: ["PolyLog", 2, 2.5],
+        expected: ["Complex", 2.420790806565934, -2.878612231808261],
+        category: "Scope",
+        caption: "Past $z = 1$ the continuation is complex",
+      },
+      {
+        expr: ["PolyLog", 3, -1],
+        expected: ["Multiply", ["Rational", -3, 4], ["Zeta", 3]],
+        category: "Scope",
+        caption: "$\\operatorname{Li}_3(-1) = -\\eta(3) = -\\frac34\\zeta(3)$",
+      },
+      {
+        expr: ["PolyLog", 2, 2],
+        expected: [
+          "Subtract",
+          ["Multiply", ["Rational", 1, 4], ["Power", "Pi", 2]],
+          ["Multiply", "ImaginaryUnit", "Pi", ["Ln", 2]],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\operatorname{Li}_2(2) = \\pi^2/4 - i\\pi\\ln 2$ exactly; not yet",
+      },
+      {
+        expr: ["PolyLog", "n", -1],
+        expected: [
+          "Multiply",
+          ["Add", ["Power", 2, ["Add", ["Negate", "n"], 1]], -1],
+          ["Zeta", "n"],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\operatorname{Li}_n(-1) = -(1 - 2^{1-n})\\zeta(n)$ for symbolic $n$; not yet",
+      },
+      {
+        expr: ["PolyLog", -2, "z"],
+        expected: [
+          "Divide",
+          ["Multiply", "z", ["Add", "z", 1]],
+          ["Power", ["Add", ["Negate", "z"], 1], 3],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$\\operatorname{Li}_{-2}(z) = z(1+z)/(1-z)^3$; only orders $-1, 0, 1$ reduce today",
+      },
+      {
+        expr: ["PolyLog", 2, ["Interval", 0.7, 0.8]],
+        expected: ["Interval", 0.8893776242860387, 1.0747946000082484],
+        aspirational: true,
+        category: "Scope",
+        caption: "Interval arithmetic; not yet",
+      },
+      {
+        expr: ["PolyLog", 1, 2, 1],
+        expected: ["Zeta", 3],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Three arguments: the Nielsen generalized polylogarithm $S_{n,p}(z)$, with $S_{1,2}(1) = \\zeta(3)$; the arity is not declared",
+      },
+      {
+        expr: ["PolyLog", 2, 2, 1],
+        expected: ["Multiply", ["Rational", 1, 360], ["Power", "Pi", 4]],
+        aspirational: true,
+        category: "Scope",
+        caption: "$S_{2,2}(1) = \\pi^4/360$; not declared",
+      },
+      {
+        expr: ["PolyLog", 1, 2, 0.5],
+        expected: 0.0947530042301277,
+        aspirational: true,
+        category: "Scope",
+        caption: "$S_{1,2}(1/2) = \\zeta(3)/8 - \\ln^3 2/6$; not declared",
+      },
+      {
+        expr: ["PolyLog", "s", 1],
+        expected: ["Zeta", "s"],
+        category: "Properties",
+        caption: "$\\operatorname{Li}_s(1) = \\zeta(s)$ for symbolic $s$",
+      },
+      {
+        expr: ["D", ["PolyLog", "n", "x"], "x"],
+        expected: ["Divide", ["PolyLog", ["Subtract", "n", 1], "x"], "x"],
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "$\\frac{d}{dx}\\operatorname{Li}_n(x) = \\operatorname{Li}_{n-1}(x)/x$; today the derivative stays an unapplied `Derivative`",
+      },
     ],
     seeAlso: ["LerchPhi", "Zeta", "HurwitzZeta", "Ln"],
   },
@@ -1060,6 +1922,107 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "An exact integer argument is left unevaluated under plain evaluation -- pair with N() or use an inexact argument",
+      },
+      {
+        expr: ["PolyGamma", 5],
+        expected: ["Add", ["Rational", 25, 12], ["Negate", "EulerGamma"]],
+        aspirational: true,
+        caption:
+          "One argument is the digamma: $\\psi(5) = H_4 - \\gamma = \\frac{25}{12} - \\gamma$; the one-argument form is not declared (see [[Digamma]])",
+      },
+      {
+        expr: ["PolyGamma", 3, 5],
+        expected: [
+          "Add",
+          ["Rational", -22369, 3456],
+          ["Multiply", ["Rational", 1, 15], ["Power", "Pi", 4]],
+        ],
+        aspirational: true,
+        caption:
+          "$\\psi^{(3)}(5) = \\pi^4/15 - 22369/3456$; not yet -- exact arguments stay symbolic",
+      },
+      {
+        expr: ["N", ["PolyGamma", 3, 5]],
+        expected: { num: "0.0214278281927550750219" },
+        caption: "...numerically",
+      },
+      {
+        expr: ["PolyGamma", 2, 0.5],
+        expected: { num: "-16.8287966442343199956" },
+        caption: "$\\psi''(1/2) = -14\\zeta(3)$",
+      },
+      {
+        expr: ["PolyGamma", 100.5],
+        expected: 4.605174352581845,
+        aspirational: true,
+        category: "Scope",
+        caption: "One-argument digamma at a machine-precision point; not declared",
+      },
+      {
+        expr: ["PolyGamma", ["Complex", 2.5, 3]],
+        expected: ["Complex", 1.2812739190662314, 0.9798053153445596],
+        aspirational: true,
+        category: "Scope",
+        caption: "One-argument digamma at a complex point; not declared",
+      },
+      {
+        expr: ["PolyGamma", 1, ["Complex", 2.5, 3]],
+        expected: ["Complex", 0.15559788847194553, -0.2303795530823235],
+        category: "Scope",
+        caption: "Complex argument, integer order",
+      },
+      {
+        expr: ["PolyGamma", 1, -0.5],
+        expected: { num: "8.93480220054467930942" },
+        category: "Scope",
+        caption: "Between poles: $\\psi'(-1/2) = \\pi^2/2 + 4$",
+      },
+      {
+        expr: ["PolyGamma", 1, "PositiveInfinity"],
+        expected: 0,
+        category: "Scope",
+        caption: "$\\psi'(\\infty) = 0$",
+      },
+      {
+        expr: ["PolyGamma", 1, ["Interval", 3.45, 3.46]],
+        expected: ["Interval", 0.3347428975404412, 0.3358572806118117],
+        aspirational: true,
+        category: "Scope",
+        caption: "Interval arithmetic: the trigamma is decreasing; not yet",
+      },
+      {
+        expr: ["PolyGamma", 0, 1],
+        expected: ["Negate", "EulerGamma"],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\psi^{(0)}(1) = -\\gamma$; not yet",
+      },
+      {
+        expr: ["PolyGamma", 0, ["Rational", 1, 2]],
+        expected: ["Subtract", ["Negate", "EulerGamma"], ["Multiply", 2, ["Ln", 2]]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\psi(1/2) = -\\gamma - 2\\ln 2$; not yet",
+      },
+      {
+        expr: ["PolyGamma", 1, ["Rational", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\psi'(1/2) = \\pi^2/2$ in closed form; not yet",
+      },
+      {
+        expr: ["PolyGamma", 1, ["Rational", 1, 4]],
+        expected: ["Add", ["Power", "Pi", 2], ["Multiply", 8, "Catalan"]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$\\psi'(1/4) = \\pi^2 + 8G$; not yet",
+      },
+      {
+        expr: ["D", ["PolyGamma", "n", "x"], "x"],
+        expected: ["PolyGamma", ["Add", "n", 1], "x"],
+        category: "Properties",
+        caption: "$\\frac{d}{dx}\\psi^{(n)}(x) = \\psi^{(n+1)}(x)$",
       },
     ],
     seeAlso: ["Digamma", "Gamma", "HurwitzZeta", "Zeta"],
@@ -1154,6 +2117,78 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption:
           "Threads over a list, reducing each positive-integer element to its closed form in $\\gamma$",
       },
+      {
+        expr: ["Digamma", 100.5],
+        expected: { num: "4.60517435258184521187" },
+        caption: "A machine-precision argument",
+      },
+      {
+        expr: ["Digamma", 5],
+        expected: ["Add", ["Rational", 25, 12], ["Negate", "EulerGamma"]],
+        caption: "$\\psi(5) = H_4 - \\gamma = \\frac{25}{12} - \\gamma$",
+      },
+      {
+        expr: ["Digamma", ["Complex", 2.5, 3]],
+        expected: ["Complex", 1.2812739190662314, 0.9798053153445596],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Complex arguments should evaluate, as $\\psi^{(m)}$ does for $m \\geq 1$ (see [[PolyGamma]]); left unevaluated today",
+      },
+      {
+        expr: ["Digamma", "PositiveInfinity"],
+        expected: "PositiveInfinity",
+        category: "Scope",
+        caption: "$\\psi(\\infty) = \\infty$, growing like $\\ln z$",
+      },
+      {
+        expr: ["Digamma", ["Rational", 1, 4]],
+        expected: [
+          "Add",
+          ["Negate", "EulerGamma"],
+          ["Multiply", ["Rational", -1, 2], "Pi"],
+          ["Multiply", -3, ["Ln", 2]],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "Gauss's digamma theorem: $\\psi(1/4) = -\\gamma - \\pi/2 - 3\\ln 2$; not yet",
+      },
+      {
+        expr: ["Digamma", ["Rational", 1, 3]],
+        expected: [
+          "Add",
+          ["Negate", "EulerGamma"],
+          ["Negate", ["Divide", "Pi", ["Multiply", 2, ["Sqrt", 3]]]],
+          ["Multiply", ["Rational", -3, 2], ["Ln", 3]],
+        ],
+        aspirational: true,
+        category: "Scope",
+        caption: "$\\psi(1/3) = -\\gamma - \\frac{\\pi}{2\\sqrt3} - \\frac32\\ln 3$; not yet",
+      },
+      {
+        expr: ["Digamma", ["Interval", 1.23, 1.24]],
+        expected: ["Interval", -0.2516694306961001, -0.2394936791259368],
+        aspirational: true,
+        category: "Scope",
+        caption: "Interval arithmetic: $\\psi$ is increasing on $(0, \\infty)$; not yet",
+      },
+      {
+        expr: ["D", ["Digamma", "x"], "x"],
+        expected: ["Trigamma", "x"],
+        category: "Properties",
+        caption: "$\\psi'(x)$ is the trigamma, $\\psi^{(1)}(x)$",
+        divergence: {
+          wolfram:
+            "Wolfram writes the derivative as $\\mathrm{PolyGamma}[1, x]$; compute-engine names it `Trigamma`.",
+        },
+      },
+      {
+        expr: ["Subtract", ["Digamma", 0.7], ["Digamma", 0.3]],
+        expected: { num: "2.28250066850219837421" },
+        category: "Properties",
+        caption:
+          "Reflection: $\\psi(1-x) - \\psi(x) = \\pi\\cot(\\pi x)$, here $\\pi\\cot(0.3\\pi) = 2.2825\\ldots$",
+      },
     ],
     seeAlso: ["Gamma", "Zeta", "GammaLn"],
   },
@@ -1240,6 +2275,100 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
+      {
+        expr: ["GammaRegularized", 1, 1.5],
+        expected: { num: "0.223130160148429828933" },
+        caption: "$Q(1, z) = e^{-z}$ at $z = 1.5$",
+      },
+      {
+        expr: ["GammaRegularized", 2, 3.3],
+        expected: { num: "0.15859761982533202341608" },
+        caption: "$Q(2, 3.3) = 4.3\\,e^{-3.3}$",
+      },
+      {
+        expr: ["N", ["GammaRegularized", ["Complex", 1, 1], 2.5]],
+        expected: [
+          "Complex",
+          { num: "0.00794706062011918622237387002562211784" },
+          0.15253677854101844,
+        ],
+        category: "Scope",
+        caption: "Complex order, under N()",
+      },
+      {
+        expr: ["GammaRegularized", 2.5, 0.5, 1.5],
+        expected: 0.26257993736866897,
+        category: "Scope",
+        caption:
+          "Three arguments: $Q(a, z_0) - Q(a, z_1)$, the Gamma(5/2) mass between $1/2$ and $3/2$",
+      },
+      {
+        expr: ["GammaRegularized", 2, 0.5, 1.5],
+        expected: 0.35197058919787555,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "...which at an integer order should equally evaluate, to $\\frac32e^{-1/2} - \\frac52e^{-3/2}$; left unevaluated today",
+      },
+      {
+        expr: ["GammaRegularized", 1, ["List", "NegativeInfinity", "PositiveInfinity"]],
+        expected: ["List", "PositiveInfinity", 0],
+        category: "Scope",
+        caption: "Listable over its limits: $Q(1, -\\infty) = \\infty$, $Q(1, \\infty) = 0$",
+      },
+      {
+        expr: ["GammaRegularized", 2, ["List", ["List", 3.5, 0], ["List", 0, 6.5]]],
+        expected: ["List", ["List", 0.13588822540043324, 1], ["List", 1, 0.011275793947331794]],
+        aspirational: true,
+        category: "Scope",
+        caption: "Listable: threads elementwise over a matrix; today a type error",
+      },
+      {
+        expr: ["GammaRegularized", ["Rational", 2, 5], ["Interval", 0.21, 0.22]],
+        expected: ["Interval", 0.42124489579195323, 0.4303906669405995],
+        aspirational: true,
+        category: "Scope",
+        caption: "Interval arithmetic: $Q$ is decreasing in $z$; today a type error",
+      },
+      {
+        expr: ["Subtract", 1, ["GammaRegularized", 0.5, 1.9207294103470425]],
+        expected: { num: "0.9499999999999987786437" },
+        category: "Applications",
+        caption:
+          "The $\\chi^2_1$ CDF, $P(1/2, x/2)$, at the familiar critical value $x = 3.8415$: 95%",
+      },
+      {
+        expr: ["GammaRegularized", "a", 0],
+        expected: 1,
+        category: "Properties",
+        caption: "$Q(a, 0) = 1$ for symbolic $a$",
+      },
+      {
+        expr: ["GammaRegularized", "a", "PositiveInfinity"],
+        expected: 0,
+        category: "Properties",
+        caption: "$Q(a, \\infty) = 0$",
+      },
+      {
+        expr: ["GammaRegularized", 1, "x"],
+        expected: ["Power", "ExponentialE", ["Negate", "x"]],
+        category: "Properties",
+        caption: "$Q(1, x) = e^{-x}$ symbolically",
+      },
+      {
+        expr: ["GammaRegularized", 2, "x"],
+        expected: ["Multiply", ["Add", "x", 1], ["Power", "ExponentialE", ["Negate", "x"]]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$Q(2, x) = (1 + x)e^{-x}$; only order 1 reduces symbolically today",
+      },
+      {
+        expr: ["GammaRegularized", ["Rational", 1, 2], "x"],
+        expected: ["Erfc", ["Sqrt", "x"]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$Q(1/2, x) = \\operatorname{erfc}(\\sqrt x)$. See [[Erfc]]; not yet",
+      },
     ],
     seeAlso: ["Gamma", "BetaRegularized"],
   },
@@ -1313,6 +2442,80 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         expected: ["List", 0.5, 0.25],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
+      },
+      {
+        expr: ["BetaRegularized", 0.4, 2.5, 3.5],
+        expected: { num: "0.486904191526117355254" },
+        caption: "Non-integer parameters",
+      },
+      {
+        expr: ["BetaRegularized", ["Rational", 1, 2], 2, 3],
+        expected: ["Rational", 11, 16],
+        aspirational: true,
+        caption: "$I_{1/2}(2, 3) = 11/16$ exactly; not yet -- exact $x$ stays symbolic",
+      },
+      {
+        expr: ["BetaRegularized", 2, 0.5, 5],
+        expected: 1.1821941497962591,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "$x$ outside $[0, 1]$ by continuation: real here, as $b = 5$ makes the integrand a polynomial times $t^{-1/2}$; left unevaluated today",
+      },
+      {
+        expr: ["BetaRegularized", 0.2, 0.5, 2, 3],
+        expected: 0.5067,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Four arguments: the generalized $I_{z_1}(a, b) - I_{z_0}(a, b)$; the arity is not declared",
+      },
+      {
+        expr: ["BetaRegularized", ["Interval", 0.2, 0.3], 2, 1],
+        expected: ["Interval", 0.04, 0.09],
+        aspirational: true,
+        category: "Scope",
+        caption: "Interval arithmetic: $I_x(2, 1) = x^2$; today a type error",
+      },
+      {
+        expr: ["BetaRegularized", ["Around", 0.3, 0.01], 1, 2],
+        expected: ["Around", 0.51, 0.014],
+        aspirational: true,
+        category: "Scope",
+        caption: "Uncertainty propagation; `Around` is not declared",
+      },
+      {
+        expr: ["BetaRegularized", 0.2111111111111111, 5, 1],
+        expected: { num: "0.000419329539873664134599" },
+        category: "Properties",
+        caption: "$I_x(a, 1) = x^a$, here $0.2111\\ldots^5$",
+      },
+      {
+        expr: ["BetaRegularized", 0.5, ["Rational", 1, 2], ["Rational", 1, 2]],
+        expected: 0.5,
+        category: "Properties",
+        caption: "The arcsine distribution's median: $I_{1/2}(1/2, 1/2) = 1/2$",
+      },
+      {
+        expr: ["BetaRegularized", "x", 1, 1],
+        expected: "x",
+        aspirational: true,
+        category: "Properties",
+        caption: "$I_x(1, 1) = x$ symbolically; not yet",
+      },
+      {
+        expr: ["BetaRegularized", "x", "a", 1],
+        expected: ["Power", "x", "a"],
+        aspirational: true,
+        category: "Properties",
+        caption: "$I_x(a, 1) = x^a$ symbolically; not yet",
+      },
+      {
+        expr: ["BetaRegularized", "x", 1, "b"],
+        expected: ["Subtract", 1, ["Power", ["Subtract", 1, "x"], "b"]],
+        aspirational: true,
+        category: "Properties",
+        caption: "$I_x(1, b) = 1 - (1-x)^b$; not yet",
       },
     ],
     seeAlso: ["Beta", "GammaRegularized", "Binomial"],

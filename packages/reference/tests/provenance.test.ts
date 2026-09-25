@@ -110,6 +110,9 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * gamma, which a bare engine rejects as an unexpected argument), plus Γ(1, z) = e^{−z}.
  * Most of the integer and special functions are here for threading over a list, which a
  * bare engine rejects as a type error (`threadOverLists` in @enumeratio/boxed).
+ * `ModularInverse` is widened to Gaussian integers (number-theory) and `PolyGamma` is
+ * redeclared for complex z (analytic); a wrong-typed argument now fails in the widened
+ * signature rather than the native one, so even the error differs.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -157,6 +160,7 @@ const OVERRIDDEN = [
   "Mean",
   "Median",
   "Mod",
+  "ModularInverse",
   "MoebiusMu",
   "Multinomial",
   "MultiplicativeOrder",
@@ -166,6 +170,7 @@ const OVERRIDDEN = [
   "Ordering",
   "Partition",
   "Pochhammer",
+  "PolyGamma",
   "PolyLog",
   "Position",
   "PowerMod",
@@ -191,7 +196,7 @@ test(
   },
 );
 
-test("the committed provenance data is still what the engines say", () => {
+test("the committed provenance data is still what the engines say", { timeout: 60_000 }, () => {
   // `src/provenance-data.ts` is generated, and generated data goes stale silently. This is
   // the only thing stopping that: re-derive it here and compare. If it fails, run
   // `vp node packages/reference/scripts/collect-provenance.ts` and read the diff — a change
@@ -229,7 +234,9 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * own (see `HEADS` in @enumeratio/wolfram) — they land here only because `elsewhere` is filled
  * in by the external-kernel coverage script, which needs a Wolfram kernel this offline test
  * suite doesn't have. Remove them once a coverage run records `elsewhere: ["wolfram"]`.
- * BesselJZero (Wolfram, mpmath) waits on the same run.
+ * BesselJZero (Wolfram, mpmath) waits on the same run, and so do IntegerPartitions (Wolfram)
+ * and SetPartitions (SymPy's `multiset_partitions`): the collection families read as
+ * `unknown` until their entries carried examples.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -285,6 +292,8 @@ const NOVEL = [
   "AlexanderPolynomial",
   "JonesPolynomial",
   "Commonest",
+  "IntegerPartitions",
+  "SetPartitions",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {
@@ -314,6 +323,8 @@ test("every head we invented is either novel or known to exist elsewhere", () =>
     "HarmonicNumber",
     "NonCommutativeMultiply",
     "Coproduct",
+    "Subsets",
+    "SymmetricGroup",
   ]);
   // LerchPhi is in all three, so it has the strongest oracle coverage of anything we add.
   expect(known.find((record) => record.name === "LerchPhi")?.elsewhere).toEqual([

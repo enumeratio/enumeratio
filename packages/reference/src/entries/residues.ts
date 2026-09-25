@@ -69,6 +69,68 @@ export const residues: readonly ReferenceEntry[] = [
           "A third argument offsets the range: the result lies in $[d, d + n)$, here $[1, 6)$",
       },
       {
+        expr: ["Mod", 5, 3, 1],
+        expected: 2,
+        category: "Scope",
+        caption: "With offset 1 the residues run $1, 2, 3$ rather than $0, 1, 2$",
+      },
+      {
+        expr: ["Mod", ["Rational", 5, 2], 2],
+        expected: ["Rational", 1, 2],
+        category: "Scope",
+        caption: "Rationals are reduced exactly",
+      },
+      {
+        expr: ["Mod", 3.14, 2],
+        expected: 1.14,
+        category: "Scope",
+      },
+      {
+        expr: ["Mod", ["Sqrt", 28], 3],
+        expected: ["Add", -3, ["Multiply", 2, ["Sqrt", 7]]],
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "An exact irrational should reduce exactly to $2\\sqrt7 - 3$; compute-engine answers with a float",
+      },
+      {
+        expr: ["Mod", "Pi", 2],
+        expected: ["Add", -2, "Pi"],
+        aspirational: true,
+        category: "Scope",
+        caption: "A symbolic constant should reduce exactly to $\\pi - 2$; left unevaluated",
+      },
+      {
+        expr: ["Mod", ["Power", 10, 10000], 10007],
+        expected: 6333,
+        category: "Scope",
+        caption: "a 10 001-digit dividend",
+      },
+      {
+        expr: ["Mod", 10, ["List", 3, 4, 7]],
+        expected: ["List", 1, 2, 3],
+        category: "Scope",
+        caption: "Threads over a list of moduli",
+      },
+      {
+        expr: ["Mod", ["Complex", 5, 3], 2],
+        expected: ["Complex", 1, -1],
+        category: "Scope",
+        caption: "a Gaussian integer: $(5 + 3i) - 2(2 + 2i)$",
+      },
+      {
+        expr: ["Mod", ["Complex", 5, 3], ["Complex", 1, 1]],
+        expected: 0,
+        category: "Scope",
+        caption: "$1 + i$ divides $5 + 3i = (1 + i)(4 - i)$",
+      },
+      {
+        expr: ["Mod", -5, -3],
+        expected: -2,
+        category: "Properties",
+        caption: "A negative modulus gives a result in $(n, 0]$",
+      },
+      {
         expr: ["Mod", ["Complex", 7, 5], 3],
         expected: ["Complex", 1, -1],
         category: "Scope",
@@ -144,6 +206,25 @@ export const residues: readonly ReferenceEntry[] = [
     examples: [
       { expr: ["PowerMod", 2, 10, 3], expected: 1 },
       { expr: ["PowerMod", 3, 50, 11], expected: 1 },
+      { expr: ["PowerMod", 3, 2, 7], expected: 2 },
+      {
+        expr: ["PowerMod", 3, -2, 7],
+        expected: 4,
+        category: "Scope",
+        caption: "$3^{-1} \\equiv 5$, and $5^2 = 25 \\equiv 4$",
+      },
+      {
+        expr: ["PowerMod", 3, ["Rational", 1, 2], 2],
+        expected: 1,
+        category: "Scope",
+        caption: "a square root of $3 \\equiv 1 \\pmod 2$",
+      },
+      {
+        expr: ["PowerMod", ["List", 2, 3, 4], 2, 5],
+        expected: ["List", 4, 4, 1],
+        category: "Scope",
+        caption: "threads over a list of bases",
+      },
       {
         expr: ["PowerMod", 2, -1, 7],
         expected: 4,
@@ -292,6 +373,17 @@ export const residues: readonly ReferenceEntry[] = [
         expr: ["PowerModList", 3, ["Rational", 1, 2], 11],
         expected: ["List", 5, 6],
         caption: "the square roots of 3 modulo 11: $5^2 = 25$ and $6^2 = 36$ are both $\\equiv 3$",
+      },
+      {
+        expr: ["PowerModList", 1, ["Rational", 1, 3], 7],
+        expected: ["List", 1, 2, 4],
+        caption: "the cube roots of unity modulo 7, since $3 \\mid 6$",
+      },
+      {
+        expr: ["PowerModList", 2, ["Rational", 1, 3], 7],
+        expected: ["List"],
+        category: "Possible issues",
+        caption: "the cubes mod 7 are only $0, 1, 6$, so 2 has no cube root",
       },
       {
         expr: ["PowerModList", 2, 10, 1000],
@@ -580,6 +672,42 @@ export const residues: readonly ReferenceEntry[] = [
     ],
     examples: [
       { expr: ["ModularInverse", 3, 7], expected: 5, caption: "$3 \\cdot 5 = 15 \\equiv 1$" },
+      { expr: ["ModularInverse", 2, 11], expected: 6 },
+      {
+        expr: ["ModularInverse", -3, 7],
+        expected: 2,
+        category: "Scope",
+        caption: "a negative argument: $-3 \\cdot 2 = -6 \\equiv 1$",
+      },
+      {
+        expr: ["ModularInverse", 3, ["Add", ["Power", 10, 20], 1]],
+        expected: { num: "33333333333333333334" },
+        category: "Scope",
+        caption: "a 21-digit modulus",
+      },
+      {
+        expr: ["ModularInverse", ["List", 2, 3, 4], 11],
+        expected: ["List", 6, 4, 3],
+        aspirational: true,
+        category: "Scope",
+        caption: "Listable: should thread over a list; not yet",
+      },
+      {
+        expr: ["Equal", ["ModularInverse", 3, 7], ["PowerMod", 3, -1, 7]],
+        expected: "True",
+        category: "Properties",
+        caption: "the same as [[PowerMod]] with exponent $-1$",
+      },
+      {
+        expr: [
+          "Mod",
+          ["Multiply", 12345, ["ModularInverse", 12345, ["Subtract", ["Power", 2, 61], 1]]],
+          ["Subtract", ["Power", 2, 61], 1],
+        ],
+        expected: 1,
+        category: "Properties",
+        caption: "$a \\cdot a^{-1} \\equiv 1$, modulo the Mersenne prime $2^{61} - 1$",
+      },
       {
         expr: ["ModularInverse", ["Complex", 2, 1], 7],
         expected: ["Complex", 6, 4],
@@ -635,6 +763,32 @@ export const residues: readonly ReferenceEntry[] = [
       {
         expr: ["ChineseRemainder", ["List", 2, 3, 5], ["List", 3, 5, 7]],
         expected: 68,
+      },
+      {
+        expr: ["ChineseRemainder", ["List", 1, 2, 3, 4, 5], ["List", 7, 11, 13, 17, 19]],
+        expected: 180391,
+        category: "Scope",
+        caption:
+          "five congruences, unique modulo $7 \\cdot 11 \\cdot 13 \\cdot 17 \\cdot 19 = 323323$",
+      },
+      {
+        expr: ["ChineseRemainder", ["List", 1, 3], ["List", 4, 6]],
+        expected: 9,
+        category: "Scope",
+        caption:
+          "moduli sharing a factor, with remainders that agree on it: unique mod $\\operatorname{lcm} = 12$",
+      },
+      {
+        expr: ["ChineseRemainder", ["Mod", 123456, ["List", 7, 11, 13]], ["List", 7, 11, 13]],
+        expected: 333,
+        category: "Applications",
+        caption: "recover $123456 \\bmod 1001$ from its residues mod 7, 11 and 13. See [[Mod]]",
+      },
+      {
+        expr: ["ChineseRemainder", ["List", 1, 2, 3], ["List", 3, 5, 7], 200],
+        expected: 262,
+        category: "Scope",
+        caption: "the least solution $\\ge 200$: $52 + 2 \\cdot 105$",
       },
       {
         expr: [
@@ -702,6 +856,31 @@ export const residues: readonly ReferenceEntry[] = [
     examples: [
       { expr: ["MultiplicativeOrder", 5, 8], expected: 2 },
       { expr: ["MultiplicativeOrder", 3, 7], expected: 6 },
+      { expr: ["MultiplicativeOrder", 5, 7], expected: 6 },
+      {
+        expr: ["MultiplicativeOrder", -5, 7],
+        expected: 3,
+        category: "Scope",
+        caption: "a negative base: $-5 \\equiv 2 \\pmod 7$",
+      },
+      {
+        expr: ["MultiplicativeOrder", 5, 7, ["List", 3, 11]],
+        expected: 2,
+        category: "Scope",
+        caption: "the first power of 5 to reach 3 or $11 \\equiv 4$: $5^2 = 25 \\equiv 4$",
+      },
+      {
+        expr: ["MultiplicativeOrder", ["Power", 10, 10000], 7919],
+        expected: 3959,
+        category: "Scope",
+        caption: "a 10 001-digit base modulo the prime 7919",
+      },
+      {
+        expr: ["MultiplicativeOrder", 1, 7],
+        expected: 1,
+        category: "Properties",
+        caption: "1 is the only element of order 1",
+      },
       {
         expr: ["MultiplicativeOrder", 2, 7],
         expected: 3,
@@ -785,6 +964,36 @@ export const residues: readonly ReferenceEntry[] = [
     ],
     examples: [
       { expr: ["PrimitiveRootList", 7], expected: ["List", 3, 5] },
+      {
+        expr: ["PrimitiveRootList", 10],
+        expected: ["List", 3, 7],
+        category: "Scope",
+        caption: "$10 = 2 \\cdot 5$ is of the form $2p$",
+      },
+      {
+        expr: ["PrimitiveRootList", 25],
+        expected: ["List", 2, 3, 8, 12, 13, 17, 22, 23],
+        category: "Scope",
+        caption: "an odd prime power: $\\varphi(\\varphi(25)) = 8$ generators",
+      },
+      {
+        expr: ["PrimitiveRootList", 4],
+        expected: ["List", 3],
+        category: "Scope",
+        caption: "$n = 4$ is one of the small cyclic cases",
+      },
+      {
+        expr: ["PrimitiveRootList", ["List", 9, 11]],
+        expected: ["List", ["List", 2, 5], ["List", 2, 6, 7, 8]],
+        category: "Scope",
+        caption: "threads over a list",
+      },
+      {
+        expr: ["PrimitiveRootList", 12],
+        expected: ["List"],
+        category: "Possible issues",
+        caption: "$(\\mathbb{Z}/12)^\\times \\cong C_2 \\times C_2$ is not cyclic either",
+      },
       {
         expr: ["PrimitiveRootList", 18],
         expected: ["List", 5, 11],
