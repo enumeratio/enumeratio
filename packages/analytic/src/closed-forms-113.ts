@@ -10,12 +10,6 @@ import { declined, type EvalOptions } from "./box.ts";
 import { characterExponent } from "./dirichlet-l.ts";
 import { gammaExactValue, type Rational } from "./widened.ts";
 
-/** A wrapper's arity key doesn't filter calls; widened heads reach it with other arities. */
-const exactly =
-  (n: number, p: (ops: readonly BoxedExpression[]) => boolean) =>
-  (ops: readonly BoxedExpression[]): boolean =>
-    ops.length === n && p(ops);
-
 /**
  * Every wrapper below is a pre-check ahead of an existing numeric kernel, and several
  * of those kernels reach the exact same operator recursively while computing their OWN
@@ -61,14 +55,15 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["GammaLn", 1],
-    exactly(1, (ops) => {
+    (ops) => {
       const n = bigIntegerAt(ops[0]);
       return n !== undefined && n >= 1n;
-    }),
+    },
     () => (ops, options) => {
       const n = bigIntegerAt(ops[0])!;
       return finish(ce.function("Ln", [ce.function("Factorial", [intNode(ce, n - 1n)])]), options);
     },
+    1,
   );
 
   // ζ(s, ½) = (2ˢ − 1)ζ(s), true for every s (split the Dirichlet series into even
@@ -79,7 +74,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const a = bigRationalAt(ops[1]);
       return (
         ops[0] !== undefined &&
@@ -88,7 +83,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         a[0] === 1n &&
         a[1] === 2n
       );
-    }),
+    },
     () => (ops, options) => {
       const s = ops[0];
       return finish(
@@ -99,14 +94,15 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
+    2,
   );
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const a = bigRationalAt(ops[1]);
       return bigIntegerAt(ops[0]) === 2n && a !== undefined && a[0] === 1n && a[1] === 4n;
-    }),
+    },
     () => (_ops, options) =>
       finish(
         ce.function("Add", [
@@ -115,6 +111,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    2,
   );
 
   // Li₃(½) = (7/8)ζ(3) − (π²ln2)/12 + (ln³2)/6 and Li₂(2) = π²/4 − iπln2 — both
@@ -124,13 +121,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    exactly(
-      2,
-      (ops) =>
-        bigIntegerAt(ops[0]) === 3n &&
-        bigRationalAt(ops[1])?.[0] === 1n &&
-        bigRationalAt(ops[1])?.[1] === 2n,
-    ),
+    (ops) =>
+      bigIntegerAt(ops[0]) === 3n &&
+      bigRationalAt(ops[1])?.[0] === 1n &&
+      bigRationalAt(ops[1])?.[1] === 2n,
     () => (_ops, options) =>
       finish(
         ce.function("Add", [
@@ -149,11 +143,12 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    2,
   );
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    exactly(2, (ops) => bigIntegerAt(ops[0]) === 2n && bigIntegerAt(ops[1]) === 2n),
+    (ops) => bigIntegerAt(ops[0]) === 2n && bigIntegerAt(ops[1]) === 2n,
     () => (_ops, options) =>
       finish(
         ce.function("Subtract", [
@@ -165,6 +160,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         ]),
         options,
       ),
+    2,
   );
 
   // Gauss's digamma theorem at the two required denominators. ψ(1/4) and ψ(1/3) are
@@ -174,10 +170,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Digamma", 1],
-    exactly(1, (ops) => {
+    (ops) => {
       const q = bigRationalAt(ops[0]);
       return q !== undefined && (q[1] === 3n || q[1] === 4n) && q[0] > 0n && q[0] < q[1];
-    }),
+    },
     () => (ops, options) => {
       const [p, q] = bigRationalAt(ops[0])!;
       const ln = (n: number) => ce.function("Ln", [n]);
@@ -201,6 +197,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const sign = p === 1n ? -1 : 1;
       return finish(ce.function("Add", [base, ce.function("Multiply", [sign, cotTerm])]), options);
     },
+    1,
   );
 
   // ψ'(1/4) = π² + 8G and ψ'(3/4) = π² − 8G (Catalan's constant G), from the trigamma
@@ -210,7 +207,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyGamma", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const q = bigRationalAt(ops[1]);
       return (
         bigIntegerAt(ops[0]) === 1n &&
@@ -218,7 +215,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         q[1] === 4n &&
         (q[0] === 1n || q[0] === 3n)
       );
-    }),
+    },
     () => (ops, options) => {
       const [p] = bigRationalAt(ops[1])!;
       const sign = p === 1n ? 1 : -1;
@@ -230,6 +227,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
+    2,
   );
 
   // PolyGamma(0, z) IS Digamma(z) — the same function under compute-engine's own
@@ -250,12 +248,13 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyGamma", 2],
-    exactly(2, (ops) => bigIntegerAt(ops[0]) === 0n),
+    (ops) => bigIntegerAt(ops[0]) === 0n,
     (native) => (ops, options) => {
       const reduced = ce.function("Digamma", [ops[1]]).evaluate();
       if (declined(reduced, "Digamma")) return native?.(ops, options);
       return finish(reduced, options);
     },
+    2,
   );
 
   // γₙ(1) = γₙ (Wolfram: StieltjesGamma[3,1] prints as StieltjesGamma[3]) — the
@@ -263,8 +262,9 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["StieltjesGamma", 2],
-    exactly(2, (ops) => bigIntegerAt(ops[1]) === 1n),
+    (ops) => bigIntegerAt(ops[1]) === 1n,
     () => (ops, options) => finish(ce.function("StieltjesGamma", [ops[0]]), options),
+    2,
   );
 
   // I_x(a, b) = Σ_{j=a}^{a+b−1} C(a+b−1, j) xʲ(1−x)^{a+b−1−j} at a rational x and
@@ -273,7 +273,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
-    exactly(3, (ops) => {
+    (ops) => {
       const x = bigRationalAt(ops[0]);
       const a = bigIntegerAt(ops[1]);
       const b = bigIntegerAt(ops[2]);
@@ -288,7 +288,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         b >= 1n &&
         b <= 200n
       );
-    }),
+    },
     () => (ops, options) => {
       const [p, q] = bigRationalAt(ops[0])!;
       const a = bigIntegerAt(ops[1])!;
@@ -307,6 +307,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const g = gcd(numSum, denom) || 1n;
       return finish(ratNode(ce, [numSum / g, denom / g]), options);
     },
+    3,
   );
 
   // Γ(n, x) = (n−1)! e⁻ˣ Σ_{k<n} xᵏ/k! and its regularized form Q(n, x) = e⁻ˣ Σ_{k<n} xᵏ/k!,
@@ -323,7 +324,6 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       ce,
       [head, 2],
       (ops) => {
-        if (ops.length !== 2) return false;
         const n = bigIntegerAt(ops[0]);
         return n !== undefined && n >= 1n && n <= 64n;
       },
@@ -356,6 +356,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
           options,
         );
       },
+      2,
     );
   }
 
@@ -368,7 +369,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LogGamma", 1],
-    exactly(1, (ops) => bigRationalAt(ops[0])?.[1] === 2n),
+    (ops) => bigRationalAt(ops[0])?.[1] === 2n,
     () => (ops, options) => {
       const q = bigRationalAt(ops[0])!;
       const g = gammaExactValue(ce, q);
@@ -383,6 +384,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
+    1,
   );
 
   // H_{1/2} = 2 − 2ln2 and H_{1/4} = 4 − π/2 − 3ln2, from H_z = ψ(z+1) + γ combined
@@ -394,10 +396,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HarmonicNumber", 1],
-    exactly(1, (ops) => {
+    (ops) => {
       const q = bigRationalAt(ops[0]);
       return q !== undefined && q[0] === 1n && (q[1] === 2n || q[1] === 4n);
-    }),
+    },
     () => (ops, options) => {
       const q = bigRationalAt(ops[0])!;
       const ln2 = ce.function("Ln", [2]);
@@ -411,6 +413,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         options,
       );
     },
+    1,
   );
 
   // FromContinuedFraction of plain symbols: [a; b, c] = a + 1/(b + 1/c), the nested
@@ -423,7 +426,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["FromContinuedFraction", 1],
-    exactly(1, (ops) => {
+    (ops) => {
       const list = ops[0];
       if (list?.operator !== "List") return false;
       const terms = operandsOf(list);
@@ -432,7 +435,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       return (
         terms.length > 0 && terms.every(plain) && terms.some((t) => symbolNameOf(t) !== undefined)
       );
-    }),
+    },
     () => (ops, options) => {
       const terms = operandsOf(ops[0]);
       let acc = terms[terms.length - 1];
@@ -441,6 +444,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       }
       return finish(acc, options);
     },
+    1,
   );
 
   // Mod(x, m) for an exact irrational x (an algebraic number like √28, not a float)
@@ -452,7 +456,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Mod", 2],
-    exactly(2, (ops) => {
+    (ops) => {
       const x = ops[0];
       const m = ops[1];
       if (x === undefined || m === undefined) return false;
@@ -465,7 +469,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (!Number.isFinite(xNum)) return false;
       const ratio = xNum / mNum;
       return Math.abs(ratio - Math.round(ratio)) > 1e-6; // margin from a boundary case
-    }),
+    },
     () => (ops, options) => {
       const [x, m] = ops;
       const k = Math.floor(x.re / m.re);
@@ -475,6 +479,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       ]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
+    2,
   );
 
   // L(1, χ) for a REAL (quadratic) odd primitive character mod k: derived from the
@@ -488,7 +493,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["DirichletL", 3],
-    exactly(3, (ops) => {
+    (ops) => {
       const k = bigIntegerAt(ops[0]);
       const j = bigIntegerAt(ops[1]);
       const s = bigIntegerAt(ops[2]);
@@ -506,7 +511,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         if (!(num === 0 || 2 * num === den)) return false;
       }
       return true;
-    }),
+    },
     (native) => (ops, options) => {
       const k = bigIntegerAt(ops[0])!;
       const j = bigIntegerAt(ops[1])!;
@@ -537,5 +542,6 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (Math.abs(exact.N().re - numeric.re) > 1e-9) return undefined;
       return options.numericApproximation ? exact.N() : exact;
     },
+    3,
   );
 }

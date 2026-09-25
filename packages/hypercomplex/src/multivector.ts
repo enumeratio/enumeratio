@@ -305,6 +305,34 @@ export function containsGenerator(expr: BoxedExpression): boolean {
   return operandsOf(expr).some(containsGenerator);
 }
 
+/** The heads `toMultivector` reads through; a generator under any other is opaque to it. */
+const ARITHMETIC = new Set([
+  "Add",
+  "Multiply",
+  "NonCommutativeMultiply",
+  "GeometricProduct",
+  "CircleTimes",
+  "Negate",
+  "Subtract",
+  "Power",
+  "Divide",
+]);
+
+/**
+ * Could `toMultivector` find a generator here? Descends only through `ARITHMETIC` (and
+ * only a Power's base), so the check on Add and Multiply — which runs on every call — stops
+ * at the first non-arithmetic head instead of walking into it.
+ */
+export function reachesGenerator(expr: BoxedExpression): boolean {
+  if (generatorOf(symbolNameOf(expr)) !== undefined) return true;
+  const operator = expr.operator;
+  if (!ARITHMETIC.has(operator)) return false;
+  const ops = operandsOf(expr);
+  return operator === "Power"
+    ? ops[0] !== undefined && reachesGenerator(ops[0])
+    : ops.some(reachesGenerator);
+}
+
 /** The distinct ANTICOMMUTING generators in an expression (Clifford `e_k`). */
 export function anticommutingGenerators(expr: BoxedExpression): Generator[] {
   const found: Generator[] = [];

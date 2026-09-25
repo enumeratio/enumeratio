@@ -2,12 +2,6 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { operandsOf, threadOverLists, widenSignature, wrapOperator } from "@enumeratio/boxed";
 import type { EvalOptions, NativeEval } from "./box.ts";
 
-/** A wrapper's arity key doesn't filter calls; widened heads reach it with other arities. */
-const exactly =
-  (n: number, p: (ops: readonly BoxedExpression[]) => boolean) =>
-  (ops: readonly BoxedExpression[]): boolean =>
-    ops.length === n && p(ops);
-
 /** No free variable anywhere in `expr` — a plain number, `Pi`/`ExponentialE`, or a closed
  * call over them (`Exp(Sqrt(2))`) all qualify, even though `evaluate()` alone leaves the
  * last one exactly as symbolic as `Add(1.2, Multiply(6.7, x))` does. */
@@ -78,16 +72,14 @@ export function declareThreading113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
-    exactly(
-      2,
-      (ops) =>
-        !ops.some((o) => o === undefined) &&
-        ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false),
-    ),
+    (ops) =>
+      !ops.some((o) => o === undefined) &&
+      ops.some((o) => (o as Partial<{ isExact: boolean }>).isExact === false),
     (native) => (ops, options) =>
       options.numericApproximation
         ? native?.(ops, options)
         : native?.(ops, { ...options, numericApproximation: true }),
+    2,
   );
 
   // Rationalize(list) and Rationalize(expression-with-floats-inside): compute-engine's
@@ -103,7 +95,8 @@ export function declareThreading113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Rationalize", 1],
-    exactly(1, (ops) => ops[0] !== undefined && (ops[0].operator === "List" || !isClosed(ops[0]))),
+    (ops) => ops[0] !== undefined && (ops[0].operator === "List" || !isClosed(ops[0])),
     (native) => (ops, options) => rationalizeDeep(ce, native, ops[0], ops[1], options),
+    1,
   );
 }

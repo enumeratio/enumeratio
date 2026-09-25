@@ -45,8 +45,9 @@ function declareHyperbolicAtImaginary(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, 1],
-      (ops) => ops.length === 1 && ops[0] !== undefined && hasImaginaryFactor(ops[0]),
+      (ops) => ops[0] !== undefined && hasImaginaryFactor(ops[0]),
       () => (ops, options) => finish(rewrite(realPartOf(ce, ops[0]!)), options),
+      1,
     );
   }
 }
@@ -57,16 +58,13 @@ function declareLnImaginaryUnit(ce: ComputeEngine): void {
     ce,
     ["Ln", 1],
     (ops) =>
-      ops.length === 1 &&
-      ops[0] !== undefined &&
-      ops[0].operator === "Complex" &&
-      ops[0].re === 0 &&
-      ops[0].im === 1,
+      ops[0] !== undefined && ops[0].operator === "Complex" && ops[0].re === 0 && ops[0].im === 1,
     () => (_ops, options) =>
       finish(
         ce.function("Multiply", [ce.function("Complex", [0, ce.number([1, 2])]), "Pi"]),
         options,
       ),
+    1,
   );
 }
 
@@ -87,7 +85,7 @@ function declareArccotTable(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Arccot", 1],
-    (ops) => ops.length === 1,
+    () => true,
     (native) => (ops, options) => {
       const nativeResult = native?.(ops, options);
       if (nativeResult !== undefined && nativeResult.operator !== "Arccot") return nativeResult;
@@ -98,6 +96,7 @@ function declareArccotTable(ce: ComputeEngine): void {
         options,
       );
     },
+    1,
   );
 }
 
@@ -109,8 +108,9 @@ function declareReciprocalInversePoles(ce: ComputeEngine): void {
     wrapOperator(
       ce,
       [head, 1],
-      (ops) => ops.length === 1 && ops[0]?.is(0) === true,
+      (ops) => ops[0]?.is(0) === true,
       () => () => ce.symbol("ComplexInfinity"),
+      1,
     );
   }
 }

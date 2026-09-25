@@ -41,5 +41,6 @@ export function declareInverseErfc(ce: ComputeEngine): void {
     ["Erfc", 1],
     (ops) => ops[0]?.operator === "InverseErfc",
     () => (ops) => operandsOf(ops[0])[0],
+    1,
   );
 }
