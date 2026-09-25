@@ -24,6 +24,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup
       - run: pnpm exec vp check
+      - run: pnpm --filter @enumeratio/web run test
       - run: pnpm --filter @enumeratio/web run build
       - uses: actions/upload-artifact@v4
         with:
@@ -31,12 +32,36 @@ jobs:
           path: web/.vitepress/dist
           retention-days: 3
 
+  # Whether a PR touches anything the package suites can see: they read nothing under `web/`
+  # or `design/`, so a PR confined to those (and root docs) skips the shards. Pushes to main
+  # and manual runs always test.
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      packages: ${{ github.event_name != 'pull_request' || steps.filter.outputs.packages == 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: filter
+        if: github.event_name == 'pull_request'
+        uses: dorny/paths-filter@v3
+        with:
+          predicate-quantifier: every
+          filters: |
+            packages:
+              - '**'
+              - '!design/**'
+              - '!web/**'
+              - '!*.md'
+
   # A handful of suites (statistics, domains, collections) are CPU-bound and saturate a 4-vCPU
   # runner on their own, so splitting them across separate runners buys real wall-clock time —
   # unlike unordered-but-single-runner, which just makes them contend for the same 4 cores.
   # Rebalance by moving a package between the shards below (or adding one) as suites grow.
   test_shard:
     name: tests (${{ matrix.shard }})
+    needs: changes
+    if: needs.changes.outputs.packages == 'true'
     strategy:
       fail-fast: false
       matrix:
@@ -59,19 +84,29 @@ jobs:
       - run: pnpm -r ${{ matrix.filter }} run test
 
   # Branch protection names the required check `tests`, but that name has to stay off the matrix
-  # job above (each shard would collide on it). This fans back in and fails if any shard did.
+  # job above (each shard would collide on it). This fans back in and fails if any shard did;
+  # shards skipped by `changes` pass, but only when `changes` itself succeeded.
   tests:
     name: tests
-    needs: test_shard
+    needs: [changes, test_shard]
     if: always()
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - run: |
-          if [ "${{ needs.test_shard.result }}" != "success" ]; then
-            echo "one or more test shards failed: ${{ needs.test_shard.result }}"
+      - env:
+          CHANGES: ${{ needs.changes.result }}
+          SHARDS: ${{ needs.test_shard.result }}
+        run: |
+          if [ "$CHANGES" != "success" ]; then
+            echo "change detection failed: $CHANGES"
             exit 1
           fi
+          if [ "$SHARDS" != "success" ] && [ "$SHARDS" != "skipped" ]; then
+            echo "one or more test shards failed: $SHARDS"
+            exit 1
+          fi
+          [ "$SHARDS" = "skipped" ] && echo "::notice::no package changes — test shards skipped"
+          exit 0
 
   # Every build of every commit goes up as a Cloudflare Pages preview at <sha7>.enumeratio.pages.dev — PR pushes
   # and main alike (production is GitHub Pages, pages.yml). Direct upload of the artifact `build` made: no second
