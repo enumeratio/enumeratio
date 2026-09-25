@@ -41,6 +41,7 @@ import {
   type System,
   type Tree,
   type Verdict,
+  valuesOnly,
   wiredSystems,
 } from "@enumeratio/oracle/src";
 import { fromWolfram } from "@enumeratio/wolfram/src";
@@ -133,10 +134,10 @@ type Outcome = {
 const report: Record<string, Outcome[]> = {};
 const missingBySystem: Record<string, Record<string, number>> = {};
 
-/** Wolfram's answer, parsed and reduced; `undefined` when it cannot be read. */
-const theirTree = (fullForm: string): Tree | undefined => {
+/** Wolfram's answer, parsed and reduced by `evaluate`; `undefined` when it cannot be read. */
+const theirTree = (fullForm: string, evaluate: (expr: MathJSON) => Leaf): Tree | undefined => {
   try {
-    return reduce(fromWolfram(fullForm) as MathJSON, leaf);
+    return reduce(fromWolfram(fullForm) as MathJSON, evaluate);
   } catch {
     return undefined;
   }
@@ -174,7 +175,12 @@ for (const system of systems) {
   }
   runnable.forEach((row, index) => {
     const source = sources[index] as string;
-    const result = results[index] as { value?: string; display?: string; error?: string };
+    const result = results[index] as {
+      value?: string;
+      display?: string;
+      numeric?: string;
+      error?: string;
+    };
     if (result.error !== undefined) {
       outcomes.push({
         id: row.item.id,
@@ -189,11 +195,22 @@ for (const system of systems) {
     const tolerance = toleranceOf(row.item, system);
     let verdict: Verdict;
     if (system === "wolfram") {
-      const tree = theirTree(theirs);
+      // Wolfram's answer is never evaluated by our engine on its behalf, or a call it
+      // declined (`MatrixRank[{1, 2, 3}]`) comes back as our own answer and agrees. So its
+      // exact form is compared as text — an unevaluated form we pinned too — and its
+      // numbers are Wolfram's own `N`, of which only numeric values are read as numbers.
+      const ours = reduce(row.item.expected, leaf);
+      const trees = [
+        theirTree(theirs, symbolic),
+        result.numeric === undefined ? undefined : theirTree(result.numeric, valuesOnly(leaf)),
+      ].filter((tree) => tree !== undefined);
+      const verdicts = trees.map((tree) => compareTrees(ours, tree, tolerance));
       verdict =
-        tree === undefined
+        verdicts.length === 0
           ? "inconclusive"
-          : compareTrees(reduce(row.item.expected, leaf), tree, tolerance);
+          : verdicts.includes("agree")
+            ? "agree"
+            : (verdicts[0] as Verdict);
     } else {
       verdict = compare(show(row.item.expected), theirs, tolerance);
       if (verdict === "disagree") {

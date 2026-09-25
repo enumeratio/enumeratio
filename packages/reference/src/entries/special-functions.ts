@@ -711,7 +711,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption: "$\\zeta(-3, 7/3) = -B_4(7/3)/4 = -7813/3240$, exact via the Bernoulli polynomial",
         divergence: {
           wolfram:
-            "Wolfram's symbolic $\\mathrm{FunctionExpand}[\\mathrm{HurwitzZeta}[-3, 7/3]]$ agrees ($-7813/3240$), but its numeric $N[\\mathrm{HurwitzZeta}[-3, 7/3]]$ is wrong by $1/120$ (a Wolfram numeric-evaluation quirk at nonpositive-integer $s$ with rational $a$); mpmath agrees with us.",
+            "Wolfram's $\\mathrm{FunctionExpand}$ and machine-precision $N$ agree ($-7813/3240$), but its arbitrary-precision $N[\\mathrm{HurwitzZeta}[-3, 7/3], 30]$ is wrong by $1/120$ (a Wolfram numeric-evaluation quirk at nonpositive-integer $s$ with rational $a$); mpmath agrees with us.",
         },
       },
     ],

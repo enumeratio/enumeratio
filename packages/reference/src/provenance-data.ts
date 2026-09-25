@@ -315,7 +315,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "LegendreSymbol",
     provenance: "compute-engine",
     declared: null,
-    wolframAlias: "LegendreSymbol",
+    wolframAlias: "JacobiSymbol",
     elsewhere: ["sympy"],
   },
   {

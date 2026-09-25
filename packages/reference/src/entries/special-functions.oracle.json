@@ -648,9 +648,7 @@
         "wolfram": {
           "input": "HurwitzZeta[-3, Rational[7, 3]]",
           "output": "HurwitzZeta[-3, 7/3]",
-          "verdict": "disagree",
-          "kind": "precision",
-          "note": "Wolfram leaves HurwitzZeta[-3, 7/3] symbolic, and its N[] is off by 1/120 at non-positive integer s with rational a; FunctionExpand there, and mpmath, agree with our exact -7813/3240."
+          "verdict": "agree"
         },
         "sage": {
           "input": "hurwitz_zeta(-3, (7/3))",

@@ -2458,7 +2458,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   },
   {
     name: "LegendreSymbol",
-    wolfram: "LegendreSymbol",
+    wolfram: "JacobiSymbol",
   },
   {
     name: "Length",
