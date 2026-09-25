@@ -67,8 +67,14 @@ const hasDictionary = (node: unknown): boolean =>
   isDict(node) || (Array.isArray(node) && node.some(hasDictionary));
 
 /** `expr.latex`, except that a dictionary anywhere inside is written rather than dropped. */
-export function latexOf(ce: ComputeEngine, expr: BoxedExpression): string {
+export function latexOf(
+  ce: ComputeEngine,
+  expr: BoxedExpression,
+  options?: Record<string, unknown>,
+): string {
   const json = expr.json;
-  if (!hasDictionary(json) || ce.latexSyntax === undefined) return expr.latex;
-  return ce.latexSyntax.serialize(expandDictionaries(json) as MathJsonExpression);
+  if (!hasDictionary(json) || ce.latexSyntax === undefined) {
+    return options === undefined ? expr.latex : expr.toLatex(options);
+  }
+  return ce.latexSyntax.serialize(expandDictionaries(json) as MathJsonExpression, options);
 }

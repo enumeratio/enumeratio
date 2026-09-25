@@ -272,6 +272,7 @@ export class NotatioOut extends LitElement {
     _markup: { state: true },
     _visual: { state: true },
     _traditional: { state: true },
+    _tex: { state: true },
     _matrix: { state: true },
     _canMatrix: { state: true },
     _latex: { state: true },
@@ -313,6 +314,8 @@ export class NotatioOut extends LitElement {
    */
   declare _visual: string;
   declare _traditional: string;
+  /** The TeXForm source: traditional notation, in commands a LaTeX document knows. */
+  declare _tex: string;
   declare _matrix: string;
   declare _canMatrix: boolean;
   declare _latex: string;
@@ -352,6 +355,7 @@ export class NotatioOut extends LitElement {
     this._markup = "";
     this._visual = "";
     this._traditional = "";
+    this._tex = "";
     this._matrix = "";
     this._canMatrix = false;
     this._latex = "";
@@ -659,12 +663,16 @@ export class NotatioOut extends LitElement {
       this._input = json === undefined ? "" : toInputForm(json as MathJsonExpression);
       if (json === undefined) {
         this._traditional = this._markup;
+        this._tex = portableTeX(latex);
         this._matrix = this._markup;
         this._canMatrix = false;
       } else {
         const engine = await loadEngine();
         if (run !== this.#runs) return;
-        this._traditional = convert(toTraditionalLatex(json, engine));
+        const traditional = toTraditionalLatex(json, engine);
+        this._traditional = convert(traditional);
+        // TeXForm is the TeX of TraditionalForm, as in Wolfram.
+        this._tex = portableTeX(traditional);
         // MatrixForm: lay a List value out as a matrix via compute-engine's
         // Matrix head (which serialises to \begin{pmatrix}…), then typeset it.
         // Only a List has a matrix form; anything else falls back to standard.
@@ -685,6 +693,7 @@ export class NotatioOut extends LitElement {
       this._markup = "";
       this._visual = "";
       this._latex = "";
+      this._tex = "";
       this._json = "";
       this._messages = [];
       this._status = "error";
@@ -1111,7 +1120,7 @@ export class NotatioOut extends LitElement {
       case "full":
         return this.#code(this._json, FORM_LANG.full!);
       case "tex":
-        return this.#code(portableTeX(this._latex), FORM_LANG.tex!);
+        return this.#code(this._tex, FORM_LANG.tex!);
       case "asciimath":
         return this.#code(this._ascii, FORM_LANG.asciimath!);
       case "mathml":
