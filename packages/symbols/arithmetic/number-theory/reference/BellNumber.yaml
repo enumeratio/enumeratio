@@ -99,9 +99,8 @@ examples:
         ExponentialE,
       ]
     expected: 52
-    aspirational: true
     category: Properties
-    caption: Dobinski's formula $B_n = \frac{1}{e}\sum_{k \ge 0} \frac{k^n}{k!}$; the infinite sum is left unevaluated
+    caption: Dobinski's formula $B_n = \frac{1}{e}\sum_{k \ge 0} \frac{k^n}{k!}$
   - id: touchard-s-congruence-b-p-n-equiv-b-n-b-n-1-pmod
     expr: [Equal, [Mod, [BellNumber, 9], 7], [Mod, [Add, [BellNumber, 2], [BellNumber, 3]], 7]]
     expected: True

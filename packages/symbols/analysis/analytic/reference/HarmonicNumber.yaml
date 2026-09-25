@@ -85,12 +85,11 @@ examples:
     expected:
       [
         List,
-        [List, [Add, 1, [Divide, 1, [Sqrt, 2]]], [Rational, 5, 4]],
-        [List, [Rational, 5, 4], [Add, 1, [Divide, 1, [Sqrt, 2]]]],
+        [List, [Add, 1, [Divide, [Sqrt, 2], 2]], [Rational, 5, 4]],
+        [List, [Rational, 5, 4], [Add, 1, [Divide, [Sqrt, 2], 2]]],
       ]
     category: Scope
-    caption: Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\sqrt2$ is a finite sum; not yet
-    aspirational: true
+    caption: Threads elementwise over an array of orders, and $H_2^{(1/2)} = 1 + 1/\sqrt2$ is a finite sum
   - id: h-1-2-2-2-ln-2-exact-at-rational-arguments-by
     expr: [HarmonicNumber, [Rational, 1, 2]]
     expected: [Add, 2, [Multiply, -2, [Ln, 2]]]
@@ -103,10 +102,9 @@ examples:
     caption: $H_{1/4} = 4 - \tfrac{\pi}{2} - 3\ln 2$
   - id: symbolic-n-h-n-1-n-n-1-2-a-faulhaber-sum-stays
     expr: [HarmonicNumber, n, -1]
-    expected: [Multiply, [Rational, 1, 2], n, [Add, n, 1]]
+    expected: [Add, [Multiply, [Rational, 1, 2], [Power, n, 2]], [Multiply, [Rational, 1, 2], n]]
     category: Properties
-    caption: "Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum; stays symbolic"
-    aspirational: true
+    caption: "Symbolic $n$: $H_n^{(-1)} = n(n+1)/2$, a Faulhaber sum, expanded as Wolfram does"
   - id: the-harmonic-series-diverges
     expr: [HarmonicNumber, PositiveInfinity]
     expected: PositiveInfinity

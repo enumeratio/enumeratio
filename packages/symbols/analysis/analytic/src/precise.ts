@@ -27,6 +27,26 @@ export function atEnginePrecision(
 }
 
 /**
+ * `compute()` run with `guard` extra digits of working precision, its result rounded back
+ * to the caller's — for a formula whose own arithmetic loses the last few.
+ */
+export function withGuardDigits(
+  ce: ComputeEngine,
+  compute: () => BoxedExpression,
+  guard = 10,
+): BoxedExpression {
+  const precision = ce.precision;
+  ce.precision = precision + guard;
+  let value: BoxedExpression;
+  try {
+    value = compute();
+  } finally {
+    ce.precision = precision;
+  }
+  return atEnginePrecision(ce, value) ?? value;
+}
+
+/**
  * A real operand as a decimal to the engine's precision, for an arbitrary-precision kernel --
  * or undefined when the engine asks for no more than a double (the double kernel is then the
  * better trade) or `x` is not a finite real number.

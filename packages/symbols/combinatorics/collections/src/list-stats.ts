@@ -103,6 +103,19 @@ export function declareListStats(ce: ComputeEngine): void {
     },
   );
 
+  // Mode(c) over data that is not all numbers: the commonest value, ties to the first to
+  // appear -- Commonest(c)'s first. Native Mode takes numbers only (ties to the smallest).
+  wrapOperator(
+    ce,
+    ["Mode", 1],
+    (ops) => ops[0]?.operator === "List" && !operandsOf(ops[0]).every(isNumberLiteral),
+    () => (ops) => {
+      const commonest = ce.function("Commonest", [ops[0]!]).evaluate();
+      return commonest.operator === "List" ? operandsOf(commonest)[0] : undefined;
+    },
+    1,
+  );
+
   // Sort({}): the empty list sorts to itself — compute-engine leaves it unevaluated instead
   // of answering trivially.
   wrapOperator(

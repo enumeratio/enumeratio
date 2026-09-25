@@ -46,15 +46,13 @@ examples:
   - id: lists-as-well-as-sets-as-wolfram-s-complement
     expr: [SetMinus, [List, a, b, c, d, f], [List, a, c], [List, d]]
     expected: [Set, b, f]
-    aspirational: true
     category: Scope
-    caption: Lists as well as sets, as Wolfram's $Complement$ takes; compute-engine's SetMinus rejects a $List$ — not yet
+    caption: Lists as well as sets, as Wolfram's $Complement$ takes
   - id: a-range-as-the-universe-to-remove-from-compute
     expr: [SetMinus, [Range, 1, 10], [Set, 2, 3]]
     expected: [Set, 1, 4, 5, 6, 7, 8, 9, 10]
-    aspirational: true
     category: Scope
-    caption: A [[Range]] as the universe to remove from; compute-engine wants an explicit $Set$ — not yet
+    caption: A [[Range]] as the universe to remove from
   - id: removing-the-empty-set-changes-nothing-a
     expr: [SetMinus, [Set, 1, 2, 3], EmptySet]
     expected: [Set, 1, 2, 3]

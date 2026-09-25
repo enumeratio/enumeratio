@@ -165,9 +165,8 @@ examples:
   - id: which-with-inexact-complex-arguments-should
     expr: [Zeta, [Complex, -1.5, 1], [Complex, 2.5, -1]]
     expected: [Complex, 0.01848680919381065, 1.675533784301766]
-    aspirational: true
     category: Scope
-    caption: ...which with inexact complex arguments should evaluate without N(), as the real case does; left unevaluated today
+    caption: ...and with inexact complex arguments, without N(), as the real case does
   - id: zeta-20-1-2-2-20-1-zeta-20-an-exact-multiple-of
     expr: [Zeta, 20, [Rational, 1, 2]]
     expected: [Multiply, [Rational, 221930581, 1856156927625], [Power, Pi, 20]]

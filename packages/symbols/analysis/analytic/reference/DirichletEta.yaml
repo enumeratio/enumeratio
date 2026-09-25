@@ -83,10 +83,9 @@ examples:
     caption: 'Uncertainty propagation: $\eta(2 \pm 0.01) = 0.82247 \pm 0.00101$'
   - id: rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s
     expr: [FunctionExpand, [DirichletEta, s]]
-    expected: [Multiply, [Subtract, 1, [Power, 2, [Subtract, 1, s]]], [Zeta, s]]
+    expected: [Multiply, [Add, [Negate, [Power, 2, [Add, [Negate, s], 1]]], 1], [Zeta, s]]
     category: Properties
-    caption: 'Rewriting in terms of [[Zeta]]: $\eta(s) = (1 - 2^{1-s})\zeta(s)$ — needs a `FunctionExpand` head'
-    aspirational: true
+    caption: 'Rewriting in terms of [[Zeta]] with [[FunctionExpand]]: $\eta(s) = (1 - 2^{1-s})\zeta(s)$'
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [DirichletEta, [Rational, 1, 2]], 30]
     expected: { num: "0.604898643421630370247265914236" }

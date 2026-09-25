@@ -5560,7 +5560,7 @@
   "Cosh/stays-symbolic-even-at-0-same-as-sinh-wrap-in-n": {
     "ours": {
       "input": "\\cosh(0)",
-      "output": "\\cosh(0)"
+      "output": "1"
     },
     "wolfram": {
       "input": "\\cosh (0)",
@@ -5568,7 +5568,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "Cot/cot-pi-over-6": {
@@ -6582,7 +6582,7 @@
   "Sinh/stays-symbolic-even-at-0-compute-engine-doesn-t": {
     "ours": {
       "input": "\\sinh(0)",
-      "output": "\\sinh(0)"
+      "output": "0"
     },
     "wolfram": {
       "input": "\\sinh (0)",
@@ -6590,7 +6590,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "Tan/tan-0": {
@@ -6778,7 +6778,7 @@
   "Tanh/stays-symbolic-even-at-0-same-as-sinh-and-cosh": {
     "ours": {
       "input": "\\tanh(0)",
-      "output": "\\tanh(0)"
+      "output": "0"
     },
     "wolfram": {
       "input": "\\tanh (0)",
@@ -6786,7 +6786,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "NonCommutativeMultiply/scalars-the-implied-identity-factor": {

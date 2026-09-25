@@ -19,6 +19,13 @@ import { lerchPhi } from "./lerch.ts";
 import { lerchContinued } from "./lerch-continuation.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 import { declareWidened } from "./widened.ts";
+import { declareBetaContinuation } from "./beta-continuation.ts";
+import { declareComplexArguments } from "./complex-arguments.ts";
+import { declareDobinski } from "./dobinski.ts";
+import { declareHugeArguments } from "./huge-arguments.ts";
+import { declareHyperbolicExact } from "./hyperbolic-exact.ts";
+import { declareSimplifyIdentities } from "./simplify-identities.ts";
+import { declareTrigInfinity } from "./trig-infinity.ts";
 import { evaluatePolygamma } from "./polygamma.ts";
 import { evaluatePolyLog } from "./polylog.ts";
 import { atEnginePrecision, bigRealOperand, bigResult, DOUBLE_DIGITS } from "./precise.ts";
@@ -621,7 +628,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
     signature: "(number, number) -> number",
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateHurwitz(ce, ops, options.numericApproximation ?? false),
+      evaluateHurwitz(ce, ops, wantsNumber(ops, options)),
     compile: realCompile(2, { js: "__hz", wgsl: "hurwitz" }),
   });
 
@@ -636,7 +643,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
     signature: "(number, number?) -> number",
     broadcastable: true, // preserve native threading over a list of s
     evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
-      if (ops.length >= 2) return evaluateZeta(ce, ops, options.numericApproximation ?? false);
+      if (ops.length >= 2) return evaluateZeta(ce, ops, wantsNumber(ops, options));
       const r = nativeZeta?.(ops, options);
       const s = ops[0];
       if (!declined(r, "Zeta") || s === undefined || !isFiniteNum(s) || s.im === 0) return r;
@@ -770,5 +777,12 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareTransforms(ce);
   declareMeijerG(ce);
   declareMeijerGReduce(ce);
+  declareHyperbolicExact(ce);
+  declareComplexArguments(ce);
+  declareBetaContinuation(ce);
+  declareSimplifyIdentities(ce);
+  declareTrigInfinity(ce);
+  declareDobinski(ce);
+  declareHugeArguments(ce);
   declareCorrectlyRoundedN(ce);
 }
