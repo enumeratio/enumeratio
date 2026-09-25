@@ -507,6 +507,7 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "BesselJZero",
     fungrimEntries: ["1e6344", "da7fb1"],
+    wolfram: "BesselJZero",
   },
   {
     name: "BesselK",

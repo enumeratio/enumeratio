@@ -854,7 +854,7 @@ export const provenance: readonly HeadRecord[] = [
     name: "BesselJZero",
     provenance: "extension",
     declared: "enumeratio-analytic",
-    wolframAlias: null,
+    wolframAlias: "BesselJZero",
     elsewhere: [],
   },
   {
