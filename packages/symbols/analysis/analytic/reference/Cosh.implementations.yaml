@@ -1,0 +1,35 @@
+n-forces-the-numeric-result-that-plain:
+  wolfram:
+    in: N[Cosh[0]]
+    out: 1.
+    tex:
+      in: N[\cosh (0)]
+      out: 1.
+n-cosh-1:
+  wolfram:
+    in: N[Cosh[1]]
+    out: "1.5430806348152437"
+    tex:
+      in: N[\cosh (1)]
+      out: "1.54308"
+even-function-cosh-x-cosh-x:
+  wolfram:
+    in: (Cosh[Minus[1]] == Cosh[1])
+    out: True
+    tex:
+      in: \cosh (-1)=\cosh (1)
+      out: \text{True}
+hyperbolic-pythagorean-identity-cosh-2-x-sinh-2:
+  wolfram:
+    in: (Subtract[Power[Cosh[1], 2], Power[Sinh[1], 2]] == 1)
+    out: True
+    tex:
+      in: \cosh ^2(1)-\sinh ^2(1)=1
+      out: \text{True}
+stays-symbolic-even-at-0-same-as-sinh-wrap-in-n:
+  wolfram:
+    in: Cosh[0]
+    out: "1"
+    tex:
+      in: \cosh (0)
+      out: "1"

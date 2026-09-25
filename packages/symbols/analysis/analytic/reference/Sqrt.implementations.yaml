@@ -1,0 +1,184 @@
+sqrt-16:
+  wolfram:
+    in: Sqrt[16]
+    out: "4"
+    tex:
+      in: \sqrt{16}
+      out: "4"
+  sage:
+    in: sqrt(16)
+    out: "4"
+  rust:
+    in: sqrt(n(16))
+    out: "4.0"
+  mpmath:
+    in: sqrt(16)
+    out: "4.0"
+  sympy:
+    in: sqrt(16)
+    out: "4"
+stays-symbolic-when-the-radicand-isn-t-a-perfect:
+  wolfram:
+    in: Sqrt[2]
+    out: Sqrt[2]
+    tex:
+      in: \sqrt{2}
+      out: \sqrt{2}
+  sage:
+    in: sqrt(2)
+    out: sqrt(2)
+  rust:
+    in: sqrt(n(2))
+    out: "1.4142135623730951"
+  mpmath:
+    in: sqrt(2)
+    out: "1.41421356237309504880168872421"
+  sympy:
+    in: sqrt(2)
+    out: sqrt(2)
+sqrt-4-over-9:
+  wolfram:
+    in: Sqrt[Rational[4, 9]]
+    out: 2/3
+    tex:
+      in: \sqrt{\frac{4}{9}}
+      out: \frac{2}{3}
+  sage:
+    in: sqrt((4/9))
+    out: 2/3
+  rust:
+    in: sqrt(rational(n(4), n(9)))
+    out: "0.6666666666666666"
+  sympy:
+    in: sqrt(Rational(4, 9))
+    out: 2/3
+sqrt-0:
+  wolfram:
+    in: Sqrt[0]
+    out: "0"
+    tex:
+      in: \sqrt{0}
+      out: "0"
+  sage:
+    in: sqrt(0)
+    out: "0"
+  rust:
+    in: sqrt(n(0))
+    out: "0.0"
+  mpmath:
+    in: sqrt(0)
+    out: "0.0"
+  sympy:
+    in: sqrt(0)
+    out: "0"
+a-perfect-square-radicand-evaluates-exactly-even:
+  wolfram:
+    in: Sqrt[-4]
+    out: 2*I
+    tex:
+      in: \sqrt{-4}
+      out: 2 i
+  sage:
+    in: sqrt(-4)
+    out: 2*I
+  rust:
+    in: sqrt(n(-4))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+  mpmath:
+    in: sqrt(-4)
+    out: (0.0 + 2.0j)
+  sympy:
+    in: sqrt(-4)
+    out: 2*I
+sqrt-x-2-x-for-a-perfect-square-see-square:
+  wolfram:
+    in: ((Sqrt[16])^2 == 16)
+    out: True
+    tex:
+      in: \sqrt{16}^2=16
+      out: \text{True}
+  sage:
+    in: bool((sqrt(16))^2 == 16)
+    out: True
+  mpmath:
+    in: almosteq((sqrt(16))**2, 16, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal((sqrt(16))**2, 16)
+    out: True
+sqrt-x-x-1-2:
+  wolfram:
+    in: (Sqrt[16] == Power[16, Rational[1, 2]])
+    out: True
+    tex:
+      in: \sqrt{16}=16^{\frac{1}{2}}
+      out: \text{True}
+  sage:
+    in: bool(sqrt(16) == (16^(1/2)))
+    out: True
+  rust:
+    in: equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(sqrt(16), (16**Rational(1, 2)))
+    out: True
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle:
+  wolfram:
+    in: Sqrt[Plus[(3)^2, (4)^2]]
+    out: "5"
+    tex:
+      in: \sqrt{3^2+4^2}
+      out: "5"
+  sage:
+    in: sqrt(((3)^2 + (4)^2))
+    out: "5"
+  mpmath:
+    in: sqrt(((3)**2 + (4)**2))
+    out: "5.0"
+  sympy:
+    in: sqrt(((3)**2 + (4)**2))
+    out: "5"
+negative-but-not-a-perfect-square-stays-symbolic:
+  wolfram:
+    in: Sqrt[-2]
+    out: I*Sqrt[2]
+    tex:
+      in: \sqrt{-2}
+      out: i \sqrt{2}
+  sage:
+    in: sqrt(-2)
+    out: sqrt(-2)
+  rust:
+    in: sqrt(n(-2))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+  mpmath:
+    in: sqrt(-2)
+    out: (0.0 + 1.41421356237309504880168872421j)
+  sympy:
+    in: sqrt(-2)
+    out: sqrt(2)*I
+a-negative-rational-still-evaluates-exactly-when:
+  wolfram:
+    in: Sqrt[Rational[-4, 9]]
+    out: (2*I)/3
+    tex:
+      in: \sqrt{-\frac{4}{9}}
+      out: \frac{2 i}{3}
+  sage:
+    in: sqrt((-4/9))
+    out: 2/3*I
+  rust:
+    in: sqrt(rational(n(-4), n(9)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+  sympy:
+    in: sqrt(Rational(-4, 9))
+    out: 2*I/3

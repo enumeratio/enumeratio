@@ -34,8 +34,6 @@ examples:
     expected: Missing
     category: Possible issues
     caption: An empty collection has no first element; compute-engine returns the symbol $Missing$
-    divergence:
-      wolfram: First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message).
   - id: a-second-argument-supplies-a-default-for-an
     expr: [First, [List], 99]
     expected: 99

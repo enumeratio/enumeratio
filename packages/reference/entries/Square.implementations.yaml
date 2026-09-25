@@ -1,0 +1,119 @@
+square-5:
+  wolfram:
+    in: (5)^2
+    out: "25"
+    tex:
+      in: 5^2
+      out: "25"
+  sage:
+    in: (5)^2
+    out: "25"
+  mpmath:
+    in: (5)**2
+    out: "25"
+  sympy:
+    in: (5)**2
+    out: "25"
+same-result-for-x-and-x:
+  wolfram:
+    in: (-5)^2
+    out: "25"
+    tex:
+      in: (-5)^2
+      out: "25"
+  sage:
+    in: (-5)^2
+    out: "25"
+  mpmath:
+    in: (-5)**2
+    out: "25"
+  sympy:
+    in: (-5)**2
+    out: "25"
+square-2-over-3:
+  wolfram:
+    in: (Rational[2, 3])^2
+    out: 4/9
+    tex:
+      in: \left(\frac{2}{3}\right)^2
+      out: \frac{4}{9}
+  sage:
+    in: ((2/3))^2
+    out: 4/9
+  sympy:
+    in: (Rational(2, 3))**2
+    out: 4/9
+threads-element-wise-over-a-list:
+  wolfram:
+    in: (List[2, 3, -4])^2
+    out: "{4, 9, 16}"
+    tex:
+      in: \{2,3,-4\}^2
+      out: \{4,9,16\}
+  sage:
+    in: ([2, 3, -4])^2
+    out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Square is Listable and threads over the list; Sage's takes scalars only.
+  sympy:
+    in: ([2, 3, -4])**2
+    out: "TypeError: unsupported operand type(s) for ** or pow(): 'list' and 'int'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Square threads over (or pools) the list; SymPy's takes scalars.
+even-function-x-2-x-2:
+  wolfram:
+    in: ((-5)^2 == (5)^2)
+    out: True
+    tex:
+      in: (-5)^2=5^2
+      out: \text{True}
+  sage:
+    in: bool((-5)^2 == (5)^2)
+    out: True
+  mpmath:
+    in: almosteq((-5)**2, (5)**2, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal((-5)**2, (5)**2)
+    out: True
+1-i-2-2i-squaring-a-complex-number-needn-t-stay:
+  wolfram:
+    in: ((Complex[1, 1])^2 == Complex[0, 2])
+    out: True
+    tex:
+      in: (1+i)^2=2 i
+      out: \text{True}
+  mpmath:
+    in: almosteq((mpc(1, 1))**2, mpc(0, 2), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(((1 + 1*I))**2, (0 + 2*I))
+    out: True
+  sage:
+    in: bool(((1 + 1*I))^2 == (0 + 2*I))
+    out: True
+the-area-of-a-3-3-square-tile:
+  wolfram:
+    in: (3)^2
+    out: "9"
+    tex:
+      in: 3^2
+      out: "9"
+  sage:
+    in: (3)^2
+    out: "9"
+  mpmath:
+    in: (3)**2
+    out: "9"
+  sympy:
+    in: (3)**2
+    out: "9"
+infinity-squared-stays-infinite-rather-than:
+  wolfram:
+    in: (Infinity)^2
+    out: Infinity
+    tex:
+      in: \infty ^2
+      out: \infty

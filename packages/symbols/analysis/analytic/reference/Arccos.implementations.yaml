@@ -1,0 +1,42 @@
+arccos-1:
+  wolfram:
+    in: ArcCos[1]
+    out: "0"
+    tex:
+      in: \cos ^{-1}(1)
+      out: "0"
+arccos-1-over-2:
+  wolfram:
+    in: ArcCos[Rational[1, 2]]
+    out: Pi/3
+    tex:
+      in: \cos ^{-1}\left(\frac{1}{2}\right)
+      out: \frac{\pi }{3}
+arccos-0:
+  wolfram:
+    in: ArcCos[0]
+    out: Pi/2
+    tex:
+      in: \cos ^{-1}(0)
+      out: \frac{\pi }{2}
+the-top-of-the-principal-range:
+  wolfram:
+    in: ArcCos[-1]
+    out: Pi
+    tex:
+      in: \cos ^{-1}(-1)
+      out: \pi
+cos-arccos-x-x-on-the-principal-branch:
+  wolfram:
+    in: (Cos[ArcCos[Rational[1, 2]]] == Rational[1, 2])
+    out: True
+    tex:
+      in: \cos \left(\cos ^{-1}\left(\frac{1}{2}\right)\right)=\frac{1}{2}
+      out: \text{True}
+outside-1-1-this-stays-symbolic-same-as-arcsin-n:
+  wolfram:
+    in: ArcCos[2]
+    out: ArcCos[2]
+    tex:
+      in: \cos ^{-1}(2)
+      out: \cos ^{-1}(2)

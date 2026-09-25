@@ -53,8 +53,6 @@ examples:
     expected: [CatalanNumber, -1]
     category: Possible issues
     caption: A negative argument is left unevaluated
-    divergence:
-      wolfram: A negative index is left unevaluated here; Wolfram extends CatalanNumber through Gamma and gives C(-1) = -1.
   - id: they-grow-fast-c-15-already-passes-nine-million
     expr: [CatalanNumber, 15]
     expected: 9694845

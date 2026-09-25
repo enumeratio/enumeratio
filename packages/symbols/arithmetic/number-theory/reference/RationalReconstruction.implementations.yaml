@@ -1,0 +1,33 @@
+2-cdot-6-12-equiv-1-pmod-11:
+  sage:
+    in: rational_reconstruction(6, 11)
+    out: 1/2
+a-round-trip-through-z-1000003:
+  sage:
+    in: rational_reconstruction(power_mod((22/7), 1, 1000003), 1000003)
+    out: 22/7
+rationalreconstruction-list-6-9-10-11:
+  sage:
+    in: rational_reconstruction([6, 9, 10], 11)
+    out: "TypeError: unable to coerce <class 'list'> to an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's RationalReconstruction is Listable and threads over the list; Sage's takes scalars only.
+the-harmonic-number-h-20-back-from-its-image-mod:
+  sage:
+    in: rational_reconstruction(power_mod((55835135/15519504), 1, ((2^61) - 1)), ((2^61) - 1))
+    out: 55835135/15519504
+one-word-size-prime-is-not-enough-for-h-20-2nd-m:
+  sage:
+    in: rational_reconstruction(power_mod((55835135/15519504), 1, 1000000007), 1000000007)
+    out: "ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["RationalReconstruction", 301316272, 10 and Sage raises an error.'
+mod-11-the-bounds-are-n-d-le-2-and-no-such:
+  sage:
+    in: rational_reconstruction(3, 11)
+    out: "ArithmeticError: rational reconstruction of 3 (mod 11) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["RationalReconstruction", 3, 11] and Sage raises an error.'

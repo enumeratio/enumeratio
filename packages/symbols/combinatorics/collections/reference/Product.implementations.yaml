@@ -1,0 +1,28 @@
+product-list-1-2-3-4:
+  wolfram:
+    in: Apply[Times, List[1, 2, 3, 4]]
+    out: "24"
+    tex:
+      in: \text{Times}\text{@@}\{1,2,3,4\}
+      out: "24"
+the-empty-product-is-1-by-convention-matching:
+  wolfram:
+    in: Apply[Times, List[]]
+    out: "1"
+    tex:
+      in: \text{Times}\text{@@}\{\}
+      out: "1"
+the-product-of-1-through-n-is-n-see-factorial:
+  wolfram:
+    in: (Apply[Times, List[1, 2, 3, 4]] == Factorial[4])
+    out: True
+    tex:
+      in: \text{Times}\text{@@}\{1,2,3,4\}=4!
+      out: \text{True}
+range-stays-lazy-on-its-own-but-product-forces:
+  wolfram:
+    in: Apply[Times, Range[1, 6]]
+    out: "720"
+    tex:
+      in: \text{Times}\text{@@}\text{Range}[1,6]
+      out: "720"

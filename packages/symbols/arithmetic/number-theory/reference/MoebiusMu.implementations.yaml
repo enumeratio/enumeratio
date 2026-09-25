@@ -1,0 +1,163 @@
+moebiusmu-1:
+  wolfram:
+    in: MoebiusMu[1]
+    out: "1"
+    tex:
+      in: \mu (1)
+      out: "1"
+  sage:
+    in: moebius(1)
+    out: "1"
+  julia:
+    in: moebius_mu(1)
+    out: "1"
+  oscar:
+    in: moebius_mu(1)
+    out: "1"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 1)
+    out: "1"
+  sympy:
+    in: mobius(1)
+    out: "1"
+moebiusmu-11:
+  wolfram:
+    in: MoebiusMu[11]
+    out: "-1"
+    tex:
+      in: \mu (11)
+      out: "-1"
+  sage:
+    in: moebius(11)
+    out: "-1"
+  julia:
+    in: moebius_mu(11)
+    out: "-1"
+  oscar:
+    in: moebius_mu(11)
+    out: "-1"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 11)
+    out: "-1"
+  sympy:
+    in: mobius(11)
+    out: "-1"
+12-22-3-is-not-squarefree:
+  wolfram:
+    in: MoebiusMu[12]
+    out: "0"
+    tex:
+      in: \mu (12)
+      out: "0"
+  sage:
+    in: moebius(12)
+    out: "0"
+  julia:
+    in: moebius_mu(12)
+    out: "0"
+  oscar:
+    in: moebius_mu(12)
+    out: "0"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 12)
+    out: "0"
+  sympy:
+    in: mobius(12)
+    out: "0"
+10-2-5-a-product-of-an-even-number-of-distinct:
+  wolfram:
+    in: MoebiusMu[10]
+    out: "1"
+    tex:
+      in: \mu (10)
+      out: "1"
+  sage:
+    in: moebius(10)
+    out: "1"
+  julia:
+    in: moebius_mu(10)
+    out: "1"
+  oscar:
+    in: moebius_mu(10)
+    out: "1"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 10)
+    out: "1"
+  sympy:
+    in: mobius(10)
+    out: "1"
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind:
+  wolfram:
+    in: Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]
+    out: "0"
+    tex:
+      in: \mu (1)+\mu (2)+\mu (3)+\mu (4)+\mu (6)+\mu (12)
+      out: "0"
+  sage:
+    in: (moebius(1) + moebius(2) + moebius(3) + moebius(4) + moebius(6) + moebius(12))
+    out: "0"
+  julia:
+    in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
+    out: "0"
+  oscar:
+    in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
+    out: "0"
+  mathlib4:
+    in: ((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))
+    out: "0"
+  sympy:
+    in: (mobius(1) + mobius(2) + mobius(3) + mobius(4) + mobius(6) + mobius(12))
+    out: "0"
+mu-is-only-defined-for-positive-integers-compute:
+  wolfram:
+    in: MoebiusMu[0]
+    out: "0"
+    tex:
+      in: \mu (0)
+      out: "0"
+    verdict: disagree
+    kind: domain
+    note: μ(0) is left unevaluated here; Wolfram defines it as 0.
+  sage:
+    in: moebius(0)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: Sage defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.
+  julia:
+    in: moebius_mu(0)
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Nemo/Combinatorics.jl raises an error.'
+  oscar:
+    in: moebius_mu(0)
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Oscar raises an error.'
+  mathlib4:
+    in: (ArithmeticFunction.moebius 0)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: Mathlib defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.
+  sympy:
+    in: mobius(0)
+    out: "ValueError: n should be a positive integer"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline MoebiusMu here: compute-engine leaves it unevaluated, SymPy raises."
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: MoebiusMu[List[1, 2, 3, 4]]
+    out: "{1, -1, -1, 0}"
+    tex:
+      in: \mu (\{1,2,3,4\})
+      out: \{1,-1,-1,0\}
+  sympy:
+    in: mobius([1, 2, 3, 4])
+    out: "AttributeError: 'list' object has no attribute 'is_integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's MoebiusMu is Listable and threads over the list; SymPy's takes scalars only.

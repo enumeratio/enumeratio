@@ -1,0 +1,52 @@
+issquarefree-10:
+  wolfram:
+    in: SquareFreeQ[10]
+    out: True
+    tex:
+      in: \text{SquareFreeQ}[10]
+      out: \text{True}
+issquarefree-4:
+  wolfram:
+    in: SquareFreeQ[4]
+    out: False
+    tex:
+      in: \text{SquareFreeQ}[4]
+      out: \text{False}
+issquarefree-12:
+  wolfram:
+    in: SquareFreeQ[12]
+    out: False
+    tex:
+      in: \text{SquareFreeQ}[12]
+      out: \text{False}
+every-prime-is-squarefree:
+  wolfram:
+    in: SquareFreeQ[17]
+    out: True
+    tex:
+      in: \text{SquareFreeQ}[17]
+      out: \text{True}
+1-is-vacuously-squarefree-it-has-no-repeated:
+  wolfram:
+    in: SquareFreeQ[1]
+    out: True
+    tex:
+      in: \text{SquareFreeQ}[1]
+      out: \text{True}
+n-is-squarefree-exactly-when-mu-n-neq-0-see:
+  wolfram:
+    in: (SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])
+    out: True
+    tex:
+      in: \text{SquareFreeQ}[10]=(\neg \mu (10)=0)
+      out: \text{True}
+threads-element-wise-over-a-list:
+  wolfram:
+    in: SquareFreeQ[List[10, 4, 12]]
+    out: SquareFreeQ[{10, 4, 12}]
+    tex:
+      in: \text{SquareFreeQ}[\{10,4,12\}]
+      out: \text{SquareFreeQ}[\{10,4,12\}]
+    verdict: disagree
+    kind: domain
+    note: We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.

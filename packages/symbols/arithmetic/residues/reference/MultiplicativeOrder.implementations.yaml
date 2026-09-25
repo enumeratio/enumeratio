@@ -1,0 +1,98 @@
+multiplicativeorder-5-8:
+  wolfram:
+    in: MultiplicativeOrder[5, 8]
+    out: "2"
+    tex:
+      in: \text{ord}_8(5)
+      out: "2"
+  sage:
+    in: Mod(5, 8).multiplicative_order()
+    out: "2"
+multiplicativeorder-3-7:
+  wolfram:
+    in: MultiplicativeOrder[3, 7]
+    out: "6"
+    tex:
+      in: \text{ord}_7(3)
+      out: "6"
+  sage:
+    in: Mod(3, 7).multiplicative_order()
+    out: "6"
+2-3-8-equiv-1-pmod-7-and-no-smaller-power-works:
+  wolfram:
+    in: MultiplicativeOrder[2, 7]
+    out: "3"
+    tex:
+      in: \text{ord}_7(2)
+      out: "3"
+  sage:
+    in: Mod(2, 7).multiplicative_order()
+    out: "3"
+the-multiplicative-order-always-divides-varphi-n:
+  wolfram:
+    in: (Mod[EulerPhi[7], MultiplicativeOrder[3, 7]] == 0)
+    out: True
+    tex:
+      in: (\phi (7) \bmod \text{ord}_7(3))=0
+      out: \text{True}
+  sage:
+    in: bool((euler_phi(7) % Mod(3, 7).multiplicative_order()) == 0)
+    out: True
+no-order-exists-when-gcd-a-n-neq-1-here-gcd-10:
+  wolfram:
+    in: MultiplicativeOrder[10, 22]
+    out: MultiplicativeOrder[10, 22]
+    tex:
+      in: \text{ord}_{22}(10)
+      out: \text{ord}_{22}(10)
+  sage:
+    in: Mod(10, 22).multiplicative_order()
+    out: "ArithmeticError: multiplicative order of 10 not defined since it is not a unit modulo 22"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["MultiplicativeOrder", 10, 22] and Sage raises an error.'
+the-first-power-of-3-to-reach-pm-1-3-3-27-equiv:
+  wolfram:
+    in: MultiplicativeOrder[3, 7, List[-1, 1]]
+    out: "3"
+    tex:
+      in: \text{MultiplicativeOrder}[3,7,\{-1,1\}]
+      out: "3"
+5-2-25-equiv-4:
+  wolfram:
+    in: MultiplicativeOrder[5, 7, List[2, 3, 4]]
+    out: "2"
+    tex:
+      in: \text{MultiplicativeOrder}[5,7,\{2,3,4\}]
+      out: "2"
+a-discrete-log-mod-the-mersenne-prime-2-61-1:
+  wolfram:
+    in: MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]]
+    out: $Aborted
+    verdict: error
+    kind: resource
+    note: Wolfram hit the scan's per-item time or memory cap on this input; we answer it.
+3-has-order-p-1-3-modulo-2-127-1:
+  sage:
+    in: Mod(3, ((2^127) - 1)).multiplicative_order()
+    out: "56713727820156410577229101238628035242"
+  wolfram:
+    in: MultiplicativeOrder[3, Subtract[Power[2, 127], 1]]
+    out: "56713727820156410577229101238628035242"
+    tex:
+      in: \text{ord}_{2^{127}-1}(3)
+      out: "56713727820156410577229101238628035242"
+the-discrete-log-inverts-powermod:
+  wolfram:
+    in: PowerMod[3, MultiplicativeOrder[3, Subtract[Power[2, 61], 1], List[2]], Subtract[Power[2, 61], 1]]
+    out: $Aborted
+    verdict: error
+    kind: resource
+    note: Wolfram hit the scan's per-item time or memory cap on this input; we answer it.
+3-is-not-a-power-of-2-mod-7-the-powers-are-1-2-4:
+  wolfram:
+    in: MultiplicativeOrder[2, 7, List[3]]
+    out: MultiplicativeOrder[2, 7, {3}]
+    tex:
+      in: \text{MultiplicativeOrder}[2,7,\{3\}]
+      out: \text{MultiplicativeOrder}[2,7,\{3\}]

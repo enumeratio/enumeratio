@@ -1,0 +1,52 @@
+beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15:
+  wolfram:
+    in: DirichletBeta[1]
+    out: Pi/4
+    tex:
+      in: \beta (1)
+      out: \frac{\pi }{4}
+beta-2-g-catalan-s-constant:
+  wolfram:
+    in: DirichletBeta[2]
+    out: Catalan
+    tex:
+      in: \beta (2)
+      out: C
+beta-3-pi-3-32:
+  wolfram:
+    in: DirichletBeta[3]
+    out: Pi^3/32
+    tex:
+      in: \beta (3)
+      out: \frac{\pi ^3}{32}
+beta-7-61-pi-7-184320-the-61-is-the-euler-number:
+  wolfram:
+    in: DirichletBeta[7]
+    out: (61*Pi^7)/184320
+    tex:
+      in: \beta (7)
+      out: \frac{61 \pi ^7}{184320}
+beta-2k-e-2k-2-and-beta-2k-1-0:
+  wolfram:
+    in: DirichletBeta[List[0, -1, -2, -3, -4]]
+    out: "{1/2, 0, -1/2, 0, 5/2}"
+    tex:
+      in: \beta (\{0,-1,-2,-3,-4\})
+      out: \left\{\frac{1}{2},0,-\frac{1}{2},0,\frac{5}{2}\right\}
+even-s-ge-4-has-no-closed-form-and-stays:
+  wolfram:
+    in: DirichletBeta[4]
+    out: (Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16
+    tex:
+      in: \beta (4)
+      out: \frac{1}{16} \left(\frac{\zeta \left(4,\frac{1}{4}\right)}{16}-\frac{\zeta \left(4,\frac{3}{4}\right)}{16}\right)
+    verdict: disagree
+    kind: unevaluated
+    note: Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.
+numeric-for-a-floating-point-argument-through-4:
+  wolfram:
+    in: DirichletBeta[2.5]
+    out: "0.948622174037055"
+    tex:
+      in: \beta (2.5)
+      out: "0.948622"

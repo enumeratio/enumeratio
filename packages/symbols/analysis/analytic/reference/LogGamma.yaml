@@ -43,8 +43,6 @@ examples:
     expr: [LogGamma, 5]
     expected: [Add, [Multiply, 3, [Ln, 2]], [Ln, 3]]
     caption: $\ln\Gamma(5) = \ln 4! = \ln 24$, split into prime logarithms
-    divergence:
-      wolfram: Wolfram keeps a single logarithm, Log[24].
   - id: to-the-engine-s-working-precision
     expr: [LogGamma, 2.2]
     expected: { num: "0.096947466790638776492" }

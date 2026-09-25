@@ -23,8 +23,6 @@ examples:
     expected: 1
     category: Possible issues
     caption: With a tie for most frequent, Mode returns just one; see [[Commonest]] for every tied value
-    divergence:
-      wolfram: Wolfram's Commonest returns every tied mode, [1, 2], here.
   - id: mode-list-1-2-3-3-2-3
     expr: [Mode, [List, 1, 2, 3, 3, 2, 3]]
     expected: 3
@@ -43,8 +41,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: Empty data has no mode; compute-engine returns $NaN$
-    divergence:
-      wolfram: Wolfram's Commonest[{}] is the empty list {}.
 seeAlso:
   - Mean
   - Median

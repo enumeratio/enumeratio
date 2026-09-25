@@ -1,0 +1,43 @@
+union-list-1-2-3-list-3-4:
+  wolfram:
+    in: Union[List[1, 2, 3], List[3, 4]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \{1,2,3\}\cup \{3,4\}
+      out: \{1,2,3,4\}
+union-list-1-2-list-2-3-list-3-4:
+  wolfram:
+    in: Union[List[1, 2], List[2, 3], List[3, 4]]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \{1,2\}\cup \{2,3\}\cup \{3,4\}
+      out: \{1,2,3,4\}
+union-is-commutative-argument-order-doesn-t:
+  wolfram:
+    in: (Union[List[1, 2, 3], List[2, 3, 4]] == Union[List[2, 3, 4], List[1, 2, 3]])
+    out: True
+    tex:
+      in: \{1,2,3\}\cup \{2,3,4\}=\{2,3,4\}\cup \{1,2,3\}
+      out: \text{True}
+inclusion-exclusion-a-cup-b-a-b-a-cap-b-see:
+  wolfram:
+    in: (Length[Union[List[1, 2, 3], List[2, 3, 4]]] == Subtract[Plus[Length[List[1, 2, 3]], Length[List[2, 3, 4]]], Length[Intersection[List[1, 2, 3], List[2, 3, 4]]]])
+    out: True
+    tex:
+      in: \text{Length}[\{1,2,3\}\cup \{2,3,4\}]=(\text{Length}[\{1,2,3\}]+\text{Length}[\{2,3,4\}])-\text{Length}[\{1,2,3\}\cap \{2,3,4\}]
+      out: \text{True}
+combining-the-divisors-of-10-and-15-into-one-set:
+  wolfram:
+    in: Union[Divisors[10], Divisors[15]]
+    out: "{1, 2, 3, 5, 10, 15}"
+    tex:
+      in: \text{Divisors}[10]\cup \text{Divisors}[15]
+      out: \{1,2,3,5,10,15\}
+elements-can-themselves-be-lists-1-2-and-2-1:
+  wolfram:
+    in: Union[List[List[1, 2], List[1, 2, 3]], List[List[2, 1], List[1, 2]], List[List[3, 2, 1], List[1, 2, 3]]]
+    note: "Wolfram sorts the result into canonical order, shorter lists first: {{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}."
+with-no-arguments-the-union-is-empty:
+  wolfram:
+    in: Union[]
+    note: Union[] is the empty list {} in Wolfram.

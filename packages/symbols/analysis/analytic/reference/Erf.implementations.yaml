@@ -1,0 +1,63 @@
+erf-0:
+  wolfram:
+    in: Erf[0]
+    out: "0"
+    tex:
+      in: \text{erf}(0)
+      out: "0"
+erf-negativeinfinity:
+  wolfram:
+    in: Erf[-Infinity]
+    out: "-1"
+    tex:
+      in: \text{erf}(-\infty )
+      out: "-1"
+a-floating-point-argument-evaluates-directly-to:
+  wolfram:
+    in: Erf[0.5]
+    out: "0.5204998778130465"
+    tex:
+      in: \text{erf}(0.5)
+      out: "0.5205"
+odd-function-erf-z-erf-z-here-at-z-2:
+  wolfram:
+    in: (Plus[Erf[2], Erf[-2]] == 0)
+    out: True
+    tex:
+      in: \text{erf}(2)+\text{erf}(-2)=0
+      out: \text{True}
+complementary-with-erfc-erf-z-erfc-z-1-see-erfc:
+  wolfram:
+    in: (Plus[Erf[2], Erfc[2]] == 1)
+    out: Erf[2] + Erfc[2] == 1
+    tex:
+      in: \text{erf}(2)+\text{erfc}(2)=1
+      out: \text{erf}(2)+\text{erfc}(2)=1
+erf-1-sqrt-2-approx-0-6827-the-68-in-the:
+  wolfram:
+    in: Erf[0.7071067811865476]
+    out: "0.6826894921370861"
+    tex:
+      in: \text{erf}(0.707107)
+      out: "0.682689"
+an-exact-integer-argument-is-left-unevaluated:
+  wolfram:
+    in: Erf[1]
+    out: Erf[1]
+    tex:
+      in: \text{erf}(1)
+      out: \text{erf}(1)
+by-z-3-5-erf-is-already-within-10-6-of-its-limit:
+  wolfram:
+    in: Erf[3.5]
+    out: "0.9999992569016276"
+    tex:
+      in: \text{erf}(3.5)
+      out: "0.999999"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: Erf[List[0, 1]]
+    out: "{0, Erf[1]}"
+    tex:
+      in: \text{erf}(\{0,1\})
+      out: \{0,\text{erf}(1)\}

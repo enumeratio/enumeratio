@@ -1,0 +1,7 @@
+n-arsech-1-over-2:
+  wolfram:
+    in: N[ArcSech[Rational[1, 2]]]
+    out: "1.3169578969248166"
+    tex:
+      in: N\left[\text{sech}^{-1}\left(\frac{1}{2}\right)\right]
+      out: "1.31696"

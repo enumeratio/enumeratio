@@ -1,0 +1,28 @@
+append-list-1-2-3-4:
+  wolfram:
+    in: Append[List[1, 2, 3], 4]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Append}[\{1,2,3\},4]
+      out: \{1,2,3,4\}
+append-c-x-join-c-x-see-join:
+  wolfram:
+    in: (Append[List[1, 2, 3], 4] == Join[List[1, 2, 3], List[4]])
+    out: True
+    tex:
+      in: \text{Append}[\{1,2,3\},4]=\text{Join}[\{1,2,3\},\{4\}]
+      out: \text{True}
+appending-a-list-nests-it-as-a-single-element:
+  wolfram:
+    in: Append[List[1, 2, 3], List[9]]
+    out: "{1, 2, 3, {9}}"
+    tex:
+      in: \text{Append}[\{1,2,3\},\{9\}]
+      out: \{1,2,3,\{9\}\}
+a-set-as-well-as-a-list:
+  wolfram:
+    in: Append[Union[List[1, 2, 3]], 4]
+    out: "{1, 2, 3, 4}"
+    tex:
+      in: \text{Append}[\text{Union}[\{1,2,3\}],4]
+      out: \{1,2,3,4\}

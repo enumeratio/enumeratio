@@ -1,0 +1,35 @@
+digitcount-2-147:
+  wolfram:
+    in: DigitCount[2147]
+    out: "{1, 1, 0, 1, 0, 0, 1, 0, 0, 0}"
+    tex:
+      in: \text{DigitCount}[2147]
+      out: \{1,1,0,1,0,0,1,0,0,0\}
+in-base-2-counts-of-digit-1-then-digit-0:
+  wolfram:
+    in: DigitCount[2147, 2]
+    out: "{5, 7}"
+    tex:
+      in: \text{DigitCount}[2147,2]
+      out: \{5,7\}
+the-3-argument-form-isolates-a-single-digit-s:
+  wolfram:
+    in: DigitCount[2147, 10, 1]
+    out: "1"
+    tex:
+      in: \text{DigitCount}[2147,10,1]
+      out: "1"
+three-trailing-zeros-not-four-122000-has-digits:
+  wolfram:
+    in: DigitCount[122000, 10, 0]
+    out: "3"
+    tex:
+      in: \text{DigitCount}[122000,10,0]
+      out: "3"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: DigitCount[List[23, 45]]
+    out: "{{0, 1, 1, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 1, 1, 0, 0, 0, 0, 0}}"
+    tex:
+      in: \text{DigitCount}[\{23,45\}]
+      out: \left( \begin{array}{cccccccccc}  0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\  0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\ \end{array} \right)

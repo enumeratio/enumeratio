@@ -1,0 +1,49 @@
+kroneckersymbol-17-6:
+  wolfram:
+    in: KroneckerSymbol[17, 6]
+    out: "-1"
+    tex:
+      in: \left(\frac{17}{6}\right)
+      out: "-1"
+kroneckersymbol-10-13:
+  wolfram:
+    in: KroneckerSymbol[10, 13]
+    out: "1"
+    tex:
+      in: \left(\frac{10}{13}\right)
+      out: "1"
+0-whenever-a-1-and-n-0:
+  wolfram:
+    in: KroneckerSymbol[5, 0]
+    out: "0"
+    tex:
+      in: \left(\frac{5}{0}\right)
+      out: "0"
+a-1-is-the-sign-of-a-here-a-0:
+  wolfram:
+    in: KroneckerSymbol[-3, -1]
+    out: "-1"
+    tex:
+      in: \left(\frac{-3}{-1}\right)
+      out: "-1"
+a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues:
+  wolfram:
+    in: KroneckerSymbol[3, 2]
+    out: "-1"
+    tex:
+      in: \left(\frac{3}{2}\right)
+      out: "-1"
+completely-multiplicative-in-n:
+  wolfram:
+    in: (KroneckerSymbol[7, Times[3, 5]] == Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]])
+    out: True
+    tex:
+      in: \left(\frac{7}{3\ 5}\right)=\left(\frac{7}{3}\right) \left(\frac{7}{5}\right)
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: KroneckerSymbol[List[2, 3, 5, 7, 11], 6]
+    out: "{0, 0, 1, 1, 1}"
+    tex:
+      in: \left(\frac{\{2,3,5,7,11\}}{6}\right)
+      out: \{0,0,1,1,1\}

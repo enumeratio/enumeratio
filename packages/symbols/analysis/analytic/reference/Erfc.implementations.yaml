@@ -1,0 +1,56 @@
+erfc-0:
+  wolfram:
+    in: Erfc[0]
+    out: "1"
+    tex:
+      in: \text{erfc}(0)
+      out: "1"
+erfc-negativeinfinity:
+  wolfram:
+    in: Erfc[-Infinity]
+    out: "2"
+    tex:
+      in: \text{erfc}(-\infty )
+      out: "2"
+a-floating-point-argument-evaluates-directly-to:
+  wolfram:
+    in: Erfc[0.5]
+    out: "0.4795001221869535"
+    tex:
+      in: \text{erfc}(0.5)
+      out: "0.4795"
+erfc-z-2-erfc-z-here-at-z-1:
+  wolfram:
+    in: (Plus[Erfc[-1], Erfc[1]] == 2)
+    out: Erfc[-1] + Erfc[1] == 2
+    tex:
+      in: \text{erfc}(-1)+\text{erfc}(1)=2
+      out: \text{erfc}(-1)+\text{erfc}(1)=2
+definition-erf-z-erfc-z-1-see-erf:
+  wolfram:
+    in: (Plus[Erf[2], Erfc[2]] == 1)
+    out: Erf[2] + Erfc[2] == 1
+    tex:
+      in: \text{erf}(2)+\text{erfc}(2)=1
+      out: \text{erf}(2)+\text{erfc}(2)=1
+an-exact-integer-argument-is-left-unevaluated:
+  wolfram:
+    in: Erfc[1]
+    out: Erfc[1]
+    tex:
+      in: \text{erfc}(1)
+      out: \text{erfc}(1)
+the-gaussian-tail-shrinks-fast-only-about-7:
+  wolfram:
+    in: Erfc[3.5]
+    out: 7.43098372341413*^-7
+    tex:
+      in: \text{erfc}(3.5)
+      out: \text{7.43098372341413$\grave{ }$*${}^{\wedge}$-7}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: Erfc[List[0, 1]]
+    out: "{1, Erfc[1]}"
+    tex:
+      in: \text{erfc}(\{0,1\})
+      out: \{1,\text{erfc}(1)\}

@@ -42,8 +42,6 @@ examples:
     expected: [Rational, -7813, 3240]
     category: Possible issues
     caption: $\zeta(-3, 7/3) = -B_4(7/3)/4 = -7813/3240$, exact via the Bernoulli polynomial
-    divergence:
-      wolfram: Wolfram's $\mathrm{FunctionExpand}$ and machine-precision $N$ agree ($-7813/3240$), but its arbitrary-precision $N[\mathrm{HurwitzZeta}[-3, 7/3], 30]$ is wrong by $1/120$ (a Wolfram numeric-evaluation quirk at nonpositive-integer $s$ with rational $a$); mpmath agrees with us.
   - id: an-inexact-a-evaluates-numerically-without-n
     expr: [HurwitzZeta, 3, 0.2]
     expected: 125.73901805721795

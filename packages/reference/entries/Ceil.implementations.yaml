@@ -1,0 +1,156 @@
+ceil-7-over-2:
+  wolfram:
+    in: Ceiling[Rational[7, 2]]
+    out: "4"
+    tex:
+      in: \left\lceil \frac{7}{2}\right\rceil
+      out: "4"
+  sage:
+    in: ceil((7/2))
+    out: "4"
+  rust:
+    in: ceil(rational(n(7), n(2)))
+    out: "4"
+  sympy:
+    in: ceiling(Rational(7, 2))
+    out: "4"
+ceil-3p2:
+  wolfram:
+    in: Ceiling[3.2]
+    out: "4"
+    tex:
+      in: \lceil 3.2\rceil
+      out: "4"
+  sage:
+    in: ceil(3.2)
+    out: "4"
+  rust:
+    in: ceil(x(3.2))
+    out: "4.0"
+  mpmath:
+    in: ceil(3.2)
+    out: "4.0"
+  sympy:
+    in: ceiling(3.2)
+    out: "4"
+integers-pass-through-unchanged:
+  wolfram:
+    in: Ceiling[5]
+    out: "5"
+    tex:
+      in: \lceil 5\rceil
+      out: "5"
+  sage:
+    in: ceil(5)
+    out: "5"
+  rust:
+    in: ceil(n(5))
+    out: "5"
+  mpmath:
+    in: ceil(5)
+    out: "5.0"
+  sympy:
+    in: ceiling(5)
+    out: "5"
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Ceiling[List[1.2, -1.2, 3.7]]
+    out: "{2, -1, 4}"
+    tex:
+      in: \lceil \{1.2,-1.2,3.7\}\rceil
+      out: \{2,-1,4\}
+  sage:
+    in: ceil([1.2, -1.2, 3.7])
+    out: "TypeError: unable to convert [1.20000000000000, -1.20000000000000, 3.70000000000000] to a symbolic expression"
+    verdict: error
+    kind: threading
+    note: compute-engine's Ceil is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: ceil(list(vec![x(1.2), x(-1.2), x(3.7)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Ceil is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: ceiling([1.2, -1.2, 3.7])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Ceil threads over (or pools) the list; SymPy's takes scalars.
+lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer:
+  wolfram:
+    in: (Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])
+    out: True
+    tex:
+      in: \left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1
+      out: \text{True}
+  sage:
+    in: bool(ceil((7/2)) == (floor((7/2)) + 1))
+    out: True
+  rust:
+    in: equal(ceil(rational(n(7), n(2))), (floor(rational(n(7), n(2))) + n(1)))
+    out: "true"
+  sympy:
+    in: enumeratio_equal(ceiling(Rational(7, 2)), (floor(Rational(7, 2)) + 1))
+    out: True
+floor-and-ceil-agree-exactly-on-integers:
+  wolfram:
+    in: (Ceiling[5] == Floor[5])
+    out: True
+    tex:
+      in: \lceil 5\rceil =\lfloor 5\rfloor
+      out: \text{True}
+  sage:
+    in: bool(ceil(5) == floor(5))
+    out: True
+  rust:
+    in: equal(ceil(n(5)), floor(n(5)))
+    out: "true"
+  mpmath:
+    in: almosteq(ceil(5), floor(5), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(ceiling(5), floor(5))
+    out: True
+how-many-5-seat-vans-are-needed-to-carry-17:
+  wolfram:
+    in: Ceiling[Divide[17, 5]]
+    out: "4"
+    tex:
+      in: \left\lceil \frac{17}{5}\right\rceil
+      out: "4"
+  sage:
+    in: ceil((17 / 5))
+    out: "4"
+  rust:
+    in: ceil((n(17) / n(5)))
+    out: "4"
+  sympy:
+    in: ceiling((S(17) / 5))
+    out: "4"
+rounds-toward-infty-not-toward-0-ceil-3-7-is-3:
+  wolfram:
+    in: Ceiling[-3.7]
+    out: "-3"
+    tex:
+      in: \lceil -3.7\rceil
+      out: "-3"
+  sage:
+    in: ceil(-3.7)
+    out: "-3"
+  rust:
+    in: ceil(x(-3.7))
+    out: "-3.0"
+  mpmath:
+    in: ceil(-3.7)
+    out: "-3.0"
+  sympy:
+    in: ceiling(-3.7)
+    out: "-3"
+nan-propagates-rather-than-erroring:
+  wolfram:
+    in: Ceiling[Indeterminate]
+    out: Indeterminate
+    tex:
+      in: \lceil \text{Indeterminate}\rceil
+      out: \text{Indeterminate}

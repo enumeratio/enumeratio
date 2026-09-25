@@ -1,0 +1,46 @@
+ln-gamma-3-ln-2-ln-2:
+  wolfram:
+    in: LogGamma[3]
+    out: Log[2]
+    tex:
+      in: \text{log$\Gamma $}(3)
+      out: \log (2)
+ln-gamma-1-0:
+  wolfram:
+    in: LogGamma[1]
+    out: "0"
+    tex:
+      in: \text{log$\Gamma $}(1)
+      out: "0"
+ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac:
+  wolfram:
+    in: LogGamma[Rational[1, 2]]
+    out: Log[Pi]/2
+    tex:
+      in: \text{log$\Gamma $}\left(\frac{1}{2}\right)
+      out: \frac{\log (\pi )}{2}
+a-pole-of-gamma:
+  wolfram:
+    in: LogGamma[0]
+    out: Infinity
+    tex:
+      in: \text{log$\Gamma $}(0)
+      out: \infty
+ln-gamma-2-5-ln-1-3293-to-the-engine-s-working:
+  wolfram:
+    in: LogGamma[2.5]
+    out: "0.2846828704729192"
+    tex:
+      in: \text{log$\Gamma $}(2.5)
+      out: "0.284683"
+off-the-positive-axis-this-is-the-continuation:
+  wolfram:
+    in: LogGamma[Complex[-2.5, 1.5]]
+    out: -3.7175134511917927 - 7.7130655258341925*I
+    tex:
+      in: \text{log$\Gamma $}(-2.5+1.5 i)
+      out: -3.71751-7.71307 i
+ln-gamma-5-ln-4-ln-24-split-into-prime:
+  wolfram:
+    in: LogGamma[5]
+    note: Wolfram keeps a single logarithm, Log[24].

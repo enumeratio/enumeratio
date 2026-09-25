@@ -1,0 +1,16 @@
+the-identity-s-class-is-a-singleton:
+  oscar:
+    in: enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 1)
+    out: combination:{"GroupBasis(0)":1}
+class-sums-are-central:
+  oscar:
+    in: enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), enumeratio_class_sum(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), 2))
+    out: "true"
+a-lone-reflection-is-not:
+  oscar:
+    in: enumeratio_is_central(enumeratio_dihedral(dihedral_group(PermGroup, 2 * 3), 3), EnumeratioBasis("s0"))
+    out: "false"
+in-an-abelian-group-everything-is-central:
+  oscar:
+    in: enumeratio_is_central(enumeratio_cyclic(cyclic_group(PermGroup, 6), 6), EnumeratioBasis("3"))
+    out: "true"

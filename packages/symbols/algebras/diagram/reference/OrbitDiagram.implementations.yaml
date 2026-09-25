@@ -1,0 +1,8 @@
+merging-four-points-into-one-block-1-3-3:
+  sage:
+    in: enumeratio_partition_mobius(enumeratio_diagram([[1], [2], [-1], [-2]]), enumeratio_diagram([[1, 2, -1, -2]]))
+    out: "-6"
+the-interval-of-length-zero:
+  sage:
+    in: enumeratio_partition_mobius(enumeratio_diagram([[1, -1]]), enumeratio_diagram([[1, -1]]))
+    out: "1"

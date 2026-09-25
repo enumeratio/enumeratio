@@ -1,0 +1,130 @@
+max-3-1-4-1-5:
+  wolfram:
+    in: Max[3, 1, 4, 1, 5]
+    out: "5"
+    tex:
+      in: \max (3,1,4,1,5)
+      out: "5"
+  sage:
+    in: enumeratio_max(3, 1, 4, 1, 5)
+    out: "5"
+  sympy:
+    in: Max(3, 1, 4, 1, 5)
+    out: "5"
+also-accepts-a-single-list-argument:
+  wolfram:
+    in: Max[List[3, 1, 4]]
+    out: "4"
+    tex:
+      in: \max (\{3,1,4\})
+      out: "4"
+  sage:
+    in: enumeratio_max([3, 1, 4])
+    out: "4"
+  sympy:
+    in: Max([3, 1, 4])
+    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
+    verdict: error
+    kind: threading
+    note: compute-engine's Max threads over (or pools) the list; SymPy's takes scalars.
+max-neg-1-neg-5:
+  wolfram:
+    in: Max[-1, -5]
+    out: "-1"
+    tex:
+      in: \max (-1,-5)
+      out: "-1"
+  sage:
+    in: enumeratio_max(-1, -5)
+    out: "-1"
+  sympy:
+    in: Max(-1, -5)
+    out: "-1"
+a-single-argument-is-returned-unchanged:
+  wolfram:
+    in: Max[3]
+    out: "3"
+    tex:
+      in: \max (3)
+      out: "3"
+  sage:
+    in: enumeratio_max(3)
+    out: "3"
+  sympy:
+    in: Max(3)
+    out: "3"
+commutative-order-doesn-t-matter:
+  wolfram:
+    in: (Max[3, 7] == Max[7, 3])
+    out: True
+    tex:
+      in: \max (3,7)=\max (7,3)
+      out: \text{True}
+  sage:
+    in: bool(enumeratio_max(3, 7) == enumeratio_max(7, 3))
+    out: True
+  sympy:
+    in: enumeratio_equal(Max(3, 7), Max(7, 3))
+    out: True
+multiple-list-arguments-are-flattened-into-one:
+  wolfram:
+    in: (Max[List[3, 1, 4], List[9, 2]] == 9)
+    out: True
+    tex:
+      in: \max (\{3,1,4\},\{9,2\})=9
+      out: \text{True}
+  sage:
+    in: bool(enumeratio_max([3, 1, 4], [9, 2]) == 9)
+    out: True
+  sympy:
+    in: enumeratio_equal(Max([3, 1, 4], [9, 2]), 9)
+    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
+    verdict: error
+    kind: threading
+    note: compute-engine's Max threads over (or pools) the list; SymPy's takes scalars.
+the-day-s-high-from-a-handful-of-hourly-readings:
+  wolfram:
+    in: Max[68, 72, 65, 80, 74]
+    out: "80"
+    tex:
+      in: \max (68,72,65,80,74)
+      out: "80"
+  sage:
+    in: enumeratio_max(68, 72, 65, 80, 74)
+    out: "80"
+  sympy:
+    in: Max(68, 72, 65, 80, 74)
+    out: "80"
+with-no-arguments-compute-engine-returns-nan:
+  wolfram:
+    in: Max[]
+    out: -Infinity
+    tex:
+      in: \max ()
+      out: -\infty
+    verdict: disagree
+    kind: convention
+    note: Max of nothing is NaN here; Wolfram returns the identity element -Infinity.
+  sage:
+    in: enumeratio_max()
+    out: "ValueError: max() iterable argument is empty"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" and Sage raises an error.'
+  sympy:
+    in: Max()
+    out: -oo
+    verdict: disagree
+    kind: convention
+    note: "The maximum of nothing: SymPy answers −∞, compute-engine NaN."
+nan-poisons-the-result-overriding-every-other:
+  wolfram:
+    in: Max[Indeterminate, 3]
+    out: Indeterminate
+    tex:
+      in: \max (\text{Indeterminate},3)
+      out: \text{Indeterminate}
+the-max-of-an-empty-list-is-nan-too:
+  wolfram:
+    in: Max[List[]]
+    note: Wolfram's $\mathrm{Max}[\{\}]$ is the identity element $-\infty$.

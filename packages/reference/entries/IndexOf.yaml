@@ -27,8 +27,6 @@ examples:
     expected: 2
     category: Possible issues
     caption: IndexOf reports only the first occurrence; see [[Position]] for every one
-    divergence:
-      wolfram: Wolfram's Position gives every occurrence, [[2], [4]]; IndexOf keeps only the first.
   - id: only-the-first-of-several-occurrences-is
     expr: [IndexOf, [List, a, b, a, a, b, c, b], b]
     expected: 2
@@ -43,8 +41,6 @@ examples:
     expected: 0
     category: Possible issues
     caption: IndexOf stays at the top level, where this value doesn't occur at all
-    divergence:
-      wolfram: Wolfram's $FirstPosition$ searches every level and gives $\{1, 3\}$; see [[FirstPosition]].
 seeAlso:
   - At
   - Count

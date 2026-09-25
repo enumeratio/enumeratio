@@ -27,8 +27,6 @@ examples:
     expr: [Subsets, [List, a, b, c]]
     expected: [List, [List], [List, a], [List, b], [List, a, b], [List, c], [List, a, c], [List, b, c], [List, a, b, c]]
     caption: The documented $Subsets(collection)$ form, listed in the family's binary-mask order
-    divergence:
-      wolfram: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …"
   - id: a-size-bound-the-subsets-with-at-most-2-elements
     expr: [Count, [Subsets, 4, 2]]
     expected: 11

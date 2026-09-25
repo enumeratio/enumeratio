@@ -1,0 +1,56 @@
+multinomial-1-2-1:
+  wolfram:
+    in: Multinomial[1, 2, 1]
+    out: "12"
+    tex:
+      in: (4;1,2,1)
+      out: "12"
+multinomial-2-3-4:
+  wolfram:
+    in: Multinomial[2, 3, 4]
+    out: "1260"
+    tex:
+      in: (9;2,3,4)
+      out: "1260"
+with-two-arguments-it-reduces-to-binomial-binom:
+  wolfram:
+    in: (Multinomial[7, 3] == Binomial[10, 3])
+    out: True
+    tex:
+      in: (10;7,3)=\binom{10}{3}
+      out: \text{True}
+orderless-permuting-the-arguments-doesn-t-change:
+  wolfram:
+    in: (Multinomial[1, 2, 3] == Multinomial[3, 1, 2])
+    out: True
+    tex:
+      in: (6;1,2,3)=(6;3,1,2)
+      out: \text{True}
+the-number-of-distinct-letter-arrangements-of:
+  wolfram:
+    in: Multinomial[1, 4, 4, 2]
+    out: "34650"
+    tex:
+      in: (11;1,4,4,2)
+      out: "34650"
+all-zero-arguments-still-give-the-empty-product:
+  wolfram:
+    in: Multinomial[0, 0, 0]
+    out: "1"
+    tex:
+      in: (0;0,0,0)
+      out: "1"
+a-single-argument-is-always-1-there-s-only-one:
+  wolfram:
+    in: Multinomial[5]
+    out: "1"
+    tex:
+      in: (5;5)
+      out: "1"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: Multinomial[List[2, 3, 5], 3]
+    out: "{10, 20, 56}"
+    tex:
+      in: (\{2,3,5\}+3;\{2,3,5\},3)
+      out: \{10,20,56\}

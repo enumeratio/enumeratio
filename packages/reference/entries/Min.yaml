@@ -106,8 +106,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: The min of an empty list is NaN
-    divergence:
-      wolfram: Wolfram's $\mathrm{Min}[\{\}]$ is the identity element $+\infty$.
 seeAlso:
   - Max
   - Clamp

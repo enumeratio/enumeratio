@@ -1,0 +1,29 @@
+iseven-4:
+  wolfram:
+    in: EvenQ[4]
+    out: True
+    tex:
+      in: \text{EvenQ}[4]
+      out: \text{True}
+iseven-3:
+  wolfram:
+    in: EvenQ[3]
+    out: False
+    tex:
+      in: \text{EvenQ}[3]
+      out: \text{False}
+zero-is-even:
+  wolfram:
+    in: EvenQ[0]
+    out: True
+    tex:
+      in: \text{EvenQ}[0]
+      out: \text{True}
+threads-element-wise-over-a-list:
+  wolfram:
+    in: EvenQ[List[1, 2, 3]]
+    note: 'EvenQ tests its argument as a whole: $\mathrm{EvenQ}[\{1, 2, 3\}]$ is False.'
+a-symbol-stays-undecided-rather-than-false:
+  wolfram:
+    in:
+    note: '$\mathrm{EvenQ}[x]$ is False: EvenQ tests the literal form, not what x might be.'

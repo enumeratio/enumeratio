@@ -1,0 +1,12 @@
+adicvaluation-adicnumeral-5-75:
+  rust:
+    in: adic_valuation(adic(n(5), n(75)))
+    out: "2"
+adicnorm-adicnumeral-5-75:
+  rust:
+    in: adic_norm(adic(n(5), n(75)))
+    out: 1/25
+negative-in-q-5:
+  rust:
+    in: adic_valuation(adic(n(5), rational(n(3), n(25))))
+    out: "-2"

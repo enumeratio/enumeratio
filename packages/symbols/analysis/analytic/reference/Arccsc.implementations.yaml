@@ -1,0 +1,25 @@
+arccsc-1:
+  wolfram:
+    in: ArcCsc[1]
+    out: Pi/2
+    tex:
+      in: \csc ^{-1}(1)
+      out: \frac{\pi }{2}
+arccsc-2:
+  wolfram:
+    in: ArcCsc[2]
+    out: Pi/6
+    tex:
+      in: \csc ^{-1}(2)
+      out: \frac{\pi }{6}
+undoes-csc-csc-arccsc-x-x:
+  wolfram:
+    in: (Csc[ArcCsc[2]] == 2)
+    out: True
+    tex:
+      in: \csc \left(\csc ^{-1}(2)\right)=2
+      out: \text{True}
+derivative-for-real-x-1:
+  wolfram:
+    in:
+    note: Wolfram writes it as -1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.

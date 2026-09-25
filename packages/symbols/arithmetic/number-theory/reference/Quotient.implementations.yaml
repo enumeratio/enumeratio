@@ -1,0 +1,28 @@
+quotient-17-5:
+  wolfram:
+    in: Quotient[17, 5]
+    out: "3"
+    tex:
+      in: \text{Quotient}[17,5]
+      out: "3"
+the-floor-not-truncation:
+  wolfram:
+    in: Quotient[-7, 2]
+    out: "-4"
+    tex:
+      in: \text{Quotient}[-7,2]
+      out: "-4"
+7-5i-2-i-3-8-0-6i-rounded:
+  wolfram:
+    in: Quotient[Complex[7, 5], Complex[2, 1]]
+    out: 4 + I
+    tex:
+      in: \text{Quotient}[7+5 i,2+i]
+      out: 4+i
+2-5-2-5i-rounds-to-even-in-each-part:
+  wolfram:
+    in: Quotient[Complex[5, 5], 2]
+    out: 2 + 2*I
+    tex:
+      in: \text{Quotient}[5+5 i,2]
+      out: 2+2 i

@@ -1,0 +1,159 @@
+abs-neg-5:
+  wolfram:
+    in: Abs[-5]
+    out: "5"
+    tex:
+      in: "| -5|"
+      out: "5"
+  sage:
+    in: abs(-5)
+    out: "5"
+  rust:
+    in: abs(n(-5))
+    out: "5"
+  mpmath:
+    in: fabs(-5)
+    out: "5.0"
+  sympy:
+    in: Abs(-5)
+    out: "5"
+abs-5:
+  wolfram:
+    in: Abs[5]
+    out: "5"
+    tex:
+      in: "| 5|"
+      out: "5"
+  sage:
+    in: abs(5)
+    out: "5"
+  rust:
+    in: abs(n(5))
+    out: "5"
+  mpmath:
+    in: fabs(5)
+    out: "5.0"
+  sympy:
+    in: Abs(5)
+    out: "5"
+0-is-the-only-value-with-x-0:
+  wolfram:
+    in: Abs[0]
+    out: "0"
+    tex:
+      in: "| 0|"
+      out: "0"
+  sage:
+    in: abs(0)
+    out: "0"
+  rust:
+    in: abs(n(0))
+    out: "0"
+  mpmath:
+    in: fabs(0)
+    out: "0.0"
+  sympy:
+    in: Abs(0)
+    out: "0"
+abs-neg-7-over-2:
+  wolfram:
+    in: Abs[Rational[-7, 2]]
+    out: 7/2
+    tex:
+      in: \left| -\frac{7}{2}\right|
+      out: \frac{7}{2}
+  sage:
+    in: abs((-7/2))
+    out: 7/2
+  rust:
+    in: abs(rational(n(-7), n(2)))
+    out: 7/2
+  sympy:
+    in: Abs(Rational(-7, 2))
+    out: 7/2
+the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4:
+  wolfram:
+    in: Abs[Complex[3, 4]]
+    out: "5"
+    tex:
+      in: "| 3+4 i|"
+      out: "5"
+  mpmath:
+    in: fabs(mpc(3, 4))
+    out: "5.0"
+  sympy:
+    in: Abs((3 + 4*I))
+    out: "5"
+  sage:
+    in: abs((3 + 4*I))
+    out: "5"
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Abs[List[-1, 2, -3]]
+    out: "{1, 2, 3}"
+    tex:
+      in: '| \{-1,2,-3\}|'
+      out: \{1,2,3\}
+  sage:
+    in: abs([-1, 2, -3])
+    out: "TypeError: bad operand type for abs(): 'list'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Abs is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: abs(list(vec![n(-1), n(2), n(-3)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Abs is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: Abs([-1, 2, -3])
+    out: "TypeError: Bad argument type for Abs(): <class 'list'>"
+    verdict: error
+    kind: threading
+    note: compute-engine's Abs threads over (or pools) the list; SymPy's takes scalars.
+even-function-x-x:
+  wolfram:
+    in: (Abs[-8] == Abs[8])
+    out: True
+    tex:
+      in: "| -8| =| 8|"
+      out: \text{True}
+  sage:
+    in: bool(abs(-8) == abs(8))
+    out: True
+  rust:
+    in: equal(abs(n(-8)), abs(n(8)))
+    out: "true"
+  mpmath:
+    in: almosteq(fabs(-8), fabs(8), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(Abs(-8), Abs(8))
+    out: True
+triangle-inequality-a-b-le-a-b:
+  wolfram:
+    in: LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]
+    out: True
+    tex:
+      in: '| 3-8| \leq | 3| +| -8|'
+      out: \text{True}
+the-gap-between-two-temperatures-70-and-95:
+  wolfram:
+    in: Abs[Subtract[70, 95]]
+    out: "25"
+    tex:
+      in: "| 70-95|"
+      out: "25"
+  sage:
+    in: abs((70 - 95))
+    out: "25"
+  rust:
+    in: abs((n(70) - n(95)))
+    out: "25"
+  mpmath:
+    in: fabs((70 - 95))
+    out: "25.0"
+  sympy:
+    in: Abs((70 - 95))
+    out: "25"

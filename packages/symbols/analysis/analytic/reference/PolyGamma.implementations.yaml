@@ -1,0 +1,650 @@
+psi-1-zeta-2-pi-2-6:
+  wolfram:
+    in: (PolyGamma[1, 1] == Zeta[2])
+    out: True
+    tex:
+      in: \psi ^{(1)}(1)=\zeta (2)
+      out: \text{True}
+  sage:
+    in: bool(psi(1, 1) == zeta(2))
+    out: True
+  mpmath:
+    in: almosteq(psi(1, 1), zeta(2), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(polygamma(1, 1), zeta(2))
+    out: True
+psi-1-2-zeta-3-apery-s-constant-doubled-and:
+  wolfram:
+    in: (PolyGamma[2, 1] == Times[-2, Zeta[3]])
+    out: PolyGamma[2, 1] == -2*Zeta[3]
+    tex:
+      in: \psi ^{(2)}(1)=-2 \zeta (3)
+      out: \psi ^{(2)}(1)=-2 \zeta (3)
+  sage:
+    in: bool(psi(2, 1) == (-2 * zeta(3)))
+    out: True
+  mpmath:
+    in: almosteq(psi(2, 1), (-2 * zeta(3)), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(polygamma(2, 1), (-2 * zeta(3)))
+    out: True
+psi-1-2-pi-2-2:
+  wolfram:
+    in: (PolyGamma[1, Rational[1, 2]] == Divide[Power[Pi, 2], 2])
+    out: True
+    tex:
+      in: \psi ^{(1)}\left(\frac{1}{2}\right)=\frac{\pi ^2}{2}
+      out: \text{True}
+  sage:
+    in: bool(psi(1, (1/2)) == ((pi^2) / 2))
+    out: True
+  sympy:
+    in: enumeratio_equal(polygamma(1, Rational(1, 2)), (S((pi**2)) / 2))
+    out: True
+recurrence-at-m-1-z-1-psi-z-psi-z-1-z-2:
+  wolfram:
+    in: (Subtract[PolyGamma[1, 1], PolyGamma[1, 2]] == 1)
+    out: True
+    tex:
+      in: \psi ^{(1)}(1)-\psi ^{(1)}(2)=1
+      out: \text{True}
+  sage:
+    in: bool((psi(1, 1) - psi(1, 2)) == 1)
+    out: True
+  mpmath:
+    in: almosteq((psi(1, 1) - psi(1, 2)), 1, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal((polygamma(1, 1) - polygamma(1, 2)), 1)
+    out: True
+an-inexact-argument-evaluates-to-a-decimal-psi-1:
+  wolfram:
+    in: PolyGamma[1, 0.5]
+    out: "4.934802200544679"
+    tex:
+      in: \psi ^{(1)}(0.5)
+      out: "4.9348"
+  sage:
+    in: psi(1, 0.5)
+    out: psi(1, 0.500000000000000)
+  mpmath:
+    in: psi(1, 0.5)
+    out: "4.93480220054467930941724549994"
+  sympy:
+    in: polygamma(1, 0.5)
+    out: polygamma(1, 0.5)
+a-pole-of-gamma-still-a-pole-after:
+  wolfram:
+    in: PolyGamma[1, 0]
+    out: ComplexInfinity
+    tex:
+      in: \psi ^{(1)}(0)
+      out: \text{ComplexInfinity}
+  sage:
+    in: psi(1, 0)
+    out: "ValueError: psi2_eval(): pole"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "ComplexInfinity" and Sage raises an error.'
+  mpmath:
+    in: psi(1, 0)
+    out: "ZeroDivisionError: "
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ZeroDivisionError: ."
+  sympy:
+    in: polygamma(1, 0)
+    out: zoo
+psi-1-i-0-46300-0-79423-i-complex-argument-from:
+  wolfram:
+    in: N[PolyGamma[1, Complex[1, 1]]]
+    out: 0.46300009662276376 - 0.7942335427593189*I
+    tex:
+      in: N[\psi ^{(1)}(1+i)]
+      out: 0.463\, -0.794234 i
+  mpmath:
+    in: (psi(1, mpc(1, 1)))
+    out: (0.463000096622763786298326518184 - 0.794233542759318865583013617157j)
+  sympy:
+    in: N(polygamma(1, (1 + 1*I)), 30)
+    out: 0.463000096622763786298326518184 - 0.794233542759318865583013617157*I
+  sage:
+    in: N(psi(1, (1 + 1*I)))
+    out: 0.463000096622764 - 0.794233542759319*I
+threads-over-a-list-each-element-exact-so-each:
+  wolfram:
+    in: PolyGamma[1, List[1, 2]]
+    out: "{Pi^2/6, -1 + Pi^2/6}"
+    tex:
+      in: \psi ^{(1)}(\{1,2\})
+      out: \left\{\frac{\pi ^2}{6},\frac{\pi ^2}{6}-1\right\}
+  sage:
+    in: psi(1, [1, 2])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's PolyGamma is Listable and threads over the list; Sage's takes scalars only.
+  sympy:
+    in: polygamma(1, [1, 2])
+    out: "AttributeError: 'list' object has no attribute 'is_Integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's PolyGamma threads over (or pools) the list; SymPy's takes scalars.
+an-exact-integer-argument-is-left-unevaluated:
+  wolfram:
+    in: PolyGamma[1, 1]
+    out: Pi^2/6
+    tex:
+      in: \psi ^{(1)}(1)
+      out: \frac{\pi ^2}{6}
+  sage:
+    in: psi(1, 1)
+    out: 1/6*pi^2
+  mpmath:
+    in: psi(1, 1)
+    out: "1.64493406684822643647241516665"
+  sympy:
+    in: polygamma(1, 1)
+    out: pi**2/6
+n-polygamma-1-1:
+  mpmath:
+    in: (psi(1, 1))
+    out: "1.64493406684822643647241516665"
+  sympy:
+    in: N(polygamma(1, 1), 30)
+    out: "1.64493406684822643647241516665"
+  sage:
+    in: N(psi(1, 1))
+    out: "1.64493406684823"
+  wolfram:
+    in: N[PolyGamma[1, 1]]
+    out: "1.6449340668482262"
+    tex:
+      in: N[\psi ^{(1)}(1)]
+      out: "1.64493"
+n-polygamma-1-2:
+  mpmath:
+    in: (psi(1, 2))
+    out: "0.644934066848226436472415166646"
+  sympy:
+    in: N(polygamma(1, 2), 30)
+    out: "0.644934066848226436472415166646"
+  sage:
+    in: N(psi(1, 2))
+    out: "0.644934066848226"
+  wolfram:
+    in: N[PolyGamma[1, 2]]
+    out: "0.6449340668482262"
+    tex:
+      in: N[\psi ^{(1)}(2)]
+      out: "0.644934"
+n-polygamma-1-0p5:
+  mpmath:
+    in: (psi(1, 0.5))
+    out: "4.93480220054467930941724549994"
+  sympy:
+    in: N(polygamma(1, 0.5), 30)
+    out: "4.93480220054467930941724549994"
+  sage:
+    in: N(psi(1, 0.5))
+    out: "4.93480220054468"
+  wolfram:
+    in: N[PolyGamma[1, 0.5]]
+    out: "4.934802200544679"
+    tex:
+      in: N[\psi ^{(1)}(0.5)]
+      out: "4.9348"
+n-polygamma-1-1p3:
+  mpmath:
+    in: (psi(1, 1.3))
+    out: "1.13425343499661930114006530531"
+  sympy:
+    in: N(polygamma(1, 1.3), 30)
+    out: "1.13425343499661930114006530531"
+  sage:
+    in: N(psi(1, 1.3))
+    out: "1.13425343499662"
+  wolfram:
+    in: N[PolyGamma[1, 1.3]]
+    out: "1.1342534349966191"
+    tex:
+      in: N[\psi ^{(1)}(1.3)]
+      out: "1.13425"
+n-polygamma-1-7-over-3:
+  sympy:
+    in: N(polygamma(1, Rational(7, 3)), 30)
+    out: "0.533097125427094081792004099893"
+  sage:
+    in: N(psi(1, (7/3)))
+    out: "0.533097125427094"
+  wolfram:
+    in: N[PolyGamma[1, Rational[7, 3]]]
+    out: "0.5330971254270943"
+    tex:
+      in: N\left[\psi ^{(1)}\left(\frac{7}{3}\right)\right]
+      out: "0.533097"
+n-polygamma-1-1-plus-i:
+  wolfram:
+    in: N[PolyGamma[1, Complex[1, 1]]]
+    out: 0.46300009662276376 - 0.7942335427593189*I
+    tex:
+      in: N[\psi ^{(1)}(1+i)]
+      out: 0.463\, -0.794234 i
+  mpmath:
+    in: (psi(1, mpc(1, 1)))
+    out: (0.463000096622763786298326518184 - 0.794233542759318865583013617157j)
+  sympy:
+    in: N(polygamma(1, (1 + 1*I)), 30)
+    out: 0.463000096622763786298326518184 - 0.794233542759318865583013617157*I
+  sage:
+    in: N(psi(1, (1 + 1*I)))
+    out: 0.463000096622764 - 0.794233542759319*I
+n-polygamma-1-0p5-plus-0p3i:
+  mpmath:
+    in: (psi(1, mpc(0.5, 0.3)))
+    out: (2.25903407590533419602507657946 - 2.8289967861156957108273387588j)
+  sympy:
+    in: N(polygamma(1, (0.5 + 0.3*I)), 30)
+    out: 2.25903407590533419602507657946 - 2.8289967861156957108273387588*I
+  sage:
+    in: N(psi(1, (0.5 + 0.3*I)))
+    out: 2.25903407590533 - 2.82899678611570*I
+  wolfram:
+    in: N[PolyGamma[1, Complex[0.5, 0.3]]]
+    out: 2.259034075905334 - 2.8289967861156957*I
+    tex:
+      in: N[\psi ^{(1)}(0.5\, +0.3 i)]
+      out: 2.25903\, -2.829 i
+n-polygamma-1-2-plus-neg-0p5-times-i:
+  mpmath:
+    in: (psi(1, mpc(2, -0.5)))
+    out: (0.588197890950061371189124653327 + 0.18504197243379084853372529811j)
+  sympy:
+    in: N(polygamma(1, (2 + -0.5*I)), 30)
+    out: 0.588197890950061371189124653327 + 0.18504197243379084853372529811*I
+  sage:
+    in: N(psi(1, (2 + -0.5*I)))
+    out: 0.588197890950061 + 0.185041972433791*I
+  wolfram:
+    in: N[PolyGamma[1, Complex[2, -0.5]]]
+    out: 0.5881978909500614 + 0.18504197243379084*I
+    tex:
+      in: N[\psi ^{(1)}(2-0.5 i)]
+      out: 0.588198\, +0.185042 i
+n-polygamma-2-1:
+  mpmath:
+    in: (psi(2, 1))
+    out: "-2.40411380631918857079947632302"
+  sympy:
+    in: N(polygamma(2, 1), 30)
+    out: "-2.40411380631918857079947632302"
+  sage:
+    in: N(psi(2, 1))
+    out: "-2.40411380631919"
+  wolfram:
+    in: N[PolyGamma[2, 1]]
+    out: "-2.4041138063191885"
+    tex:
+      in: N[\psi ^{(2)}(1)]
+      out: "-2.40411"
+n-polygamma-2-2:
+  mpmath:
+    in: (psi(2, 2))
+    out: "-0.404113806319188570799476323023"
+  sympy:
+    in: N(polygamma(2, 2), 30)
+    out: "-0.404113806319188570799476323023"
+  sage:
+    in: N(psi(2, 2))
+    out: "-0.404113806319188"
+  wolfram:
+    in: N[PolyGamma[2, 2]]
+    out: "-0.4041138063191886"
+    tex:
+      in: N[\psi ^{(2)}(2)]
+      out: "-0.404114"
+n-polygamma-2-0p5:
+  mpmath:
+    in: (psi(2, 0.5))
+    out: "-16.8287966442343199955963342612"
+  sympy:
+    in: N(polygamma(2, 0.5), 30)
+    out: "-16.8287966442343199955963342612"
+  sage:
+    in: N(psi(2, 0.5))
+    out: "-16.8287966442343"
+  wolfram:
+    in: N[PolyGamma[2, 0.5]]
+    out: "-16.82879664423432"
+    tex:
+      in: N[\psi ^{(2)}(0.5)]
+      out: "-16.8288"
+n-polygamma-2-1p3:
+  mpmath:
+    in: (psi(2, 1.3))
+    out: "-1.19846251465195648606837514726"
+  sympy:
+    in: N(polygamma(2, 1.3), 30)
+    out: "-1.19846251465195648606837514726"
+  sage:
+    in: N(psi(2, 1.3))
+    out: "-1.19846251465196"
+  wolfram:
+    in: N[PolyGamma[2, 1.3]]
+    out: "-1.198462514651957"
+    tex:
+      in: N[\psi ^{(2)}(1.3)]
+      out: "-1.19846"
+n-polygamma-2-7-over-3:
+  sympy:
+    in: N(polygamma(2, Rational(7, 3)), 30)
+    out: "-0.278372399401607552455755954815"
+  sage:
+    in: N(psi(2, (7/3)))
+    out: "-0.278372399401608"
+  wolfram:
+    in: N[PolyGamma[2, Rational[7, 3]]]
+    out: "-0.2783723994016073"
+    tex:
+      in: N\left[\psi ^{(2)}\left(\frac{7}{3}\right)\right]
+      out: "-0.278372"
+n-polygamma-2-1-plus-i:
+  mpmath:
+    in: (psi(2, mpc(1, 1)))
+    out: (0.368552931587935171736634542981 + 0.766652850345066212402695377631j)
+  sympy:
+    in: N(polygamma(2, (1 + 1*I)), 30)
+    out: 0.368552931587935171736634542981 + 0.766652850345066212402695377631*I
+  sage:
+    in: N(psi(2, (1 + 1*I)))
+    out: 0.368552931587935 + 0.766652850345066*I
+  wolfram:
+    in: N[PolyGamma[2, Complex[1, 1]]]
+    out: 0.3685529315879352 + 0.7666528503450661*I
+    tex:
+      in: N[\psi ^{(2)}(1+i)]
+      out: 0.368553\, +0.766653 i
+n-polygamma-2-0p5-plus-0p3i:
+  mpmath:
+    in: (psi(2, mpc(0.5, 0.3)))
+    out: (-0.17725989989006736288088272544 + 10.4518222059434492215078057411j)
+  sympy:
+    in: N(polygamma(2, (0.5 + 0.3*I)), 30)
+    out: -0.17725989989006736288088272544 + 10.4518222059434492215078057411*I
+  sage:
+    in: N(psi(2, (0.5 + 0.3*I)))
+    out: -0.177259899890067 + 10.4518222059434*I
+  wolfram:
+    in: N[PolyGamma[2, Complex[0.5, 0.3]]]
+    out: -0.17725989989006735 + 10.45182220594345*I
+    tex:
+      in: N[\psi ^{(2)}(0.5\, +0.3 i)]
+      out: -0.17726+10.4518 i
+n-polygamma-2-2-plus-neg-0p5-times-i:
+  mpmath:
+    in: (psi(2, mpc(2, -0.5)))
+    out: (-0.307387267460616483328379811124 - 0.20845269482746524965089103656j)
+  sympy:
+    in: N(polygamma(2, (2 + -0.5*I)), 30)
+    out: -0.307387267460616483328379811124 - 0.20845269482746524965089103656*I
+  sage:
+    in: N(psi(2, (2 + -0.5*I)))
+    out: -0.307387267460617 - 0.208452694827465*I
+  wolfram:
+    in: N[PolyGamma[2, Complex[2, -0.5]]]
+    out: -0.30738726746061645 - 0.20845269482746526*I
+    tex:
+      in: N[\psi ^{(2)}(2-0.5 i)]
+      out: -0.307387-0.208453 i
+n-polygamma-3-1:
+  mpmath:
+    in: (psi(3, 1))
+    out: "6.49393940226682914909602217925"
+  sympy:
+    in: N(polygamma(3, 1), 30)
+    out: "6.49393940226682914909602217925"
+  sage:
+    in: N(psi(3, 1))
+    out: "6.49393940226683"
+  wolfram:
+    in: N[PolyGamma[3, 1]]
+    out: "6.493939402266829"
+    tex:
+      in: N[\psi ^{(3)}(1)]
+      out: "6.49394"
+n-polygamma-3-2:
+  mpmath:
+    in: (psi(3, 2))
+    out: "0.493939402266829149096022179247"
+  sympy:
+    in: N(polygamma(3, 2), 30)
+    out: "0.493939402266829149096022179247"
+  sage:
+    in: N(psi(3, 2))
+    out: "0.493939402266828"
+  wolfram:
+    in: N[PolyGamma[3, 2]]
+    out: "0.49393940226682886"
+    tex:
+      in: N[\psi ^{(3)}(2)]
+      out: "0.493939"
+n-polygamma-3-0p5:
+  mpmath:
+    in: (psi(3, 0.5))
+    out: "97.4090910340024372364403326887"
+  sympy:
+    in: N(polygamma(3, 0.5), 30)
+    out: "97.4090910340024372364403326887"
+  sage:
+    in: N(psi(3, 0.5))
+    out: "97.4090910340024"
+  wolfram:
+    in: N[PolyGamma[3, 0.5]]
+    out: "97.40909103400247"
+    tex:
+      in: N[\psi ^{(3)}(0.5)]
+      out: "97.4091"
+n-polygamma-3-1p3:
+  mpmath:
+    in: (psi(3, 1.3))
+    out: "2.40102391430892631101667744748"
+  sympy:
+    in: N(polygamma(3, 1.3), 30)
+    out: "2.40102391430892631101667744748"
+  sage:
+    in: N(psi(3, 1.3))
+    out: "2.40102391430893"
+  wolfram:
+    in: N[PolyGamma[3, 1.3]]
+    out: "2.401023914308922"
+    tex:
+      in: N[\psi ^{(3)}(1.3)]
+      out: "2.40102"
+n-polygamma-3-7-over-3:
+  sympy:
+    in: N(polygamma(3, Rational(7, 3)), 30)
+    out: "0.285379043814241755770762322106"
+  sage:
+    in: N(psi(3, (7/3)))
+    out: "0.285379043814242"
+  wolfram:
+    in: N[PolyGamma[3, Rational[7, 3]]]
+    out: "0.2853790438142423"
+    tex:
+      in: N\left[\psi ^{(3)}\left(\frac{7}{3}\right)\right]
+      out: "0.285379"
+n-polygamma-3-1-plus-i:
+  mpmath:
+    in: (psi(3, mpc(1, 1)))
+    out: (-1.52287444895349597781348333741 - 0.317286578661960658418792663034j)
+  sympy:
+    in: N(polygamma(3, (1 + 1*I)), 30)
+    out: -1.52287444895349597781348333741 - 0.317286578661960658418792663034*I
+  sage:
+    in: N(psi(3, (1 + 1*I)))
+    out: -1.52287444895350 - 0.317286578661961*I
+  wolfram:
+    in: N[PolyGamma[3, Complex[1, 1]]]
+    out: -1.522874448953496 - 0.31728657866196064*I
+    tex:
+      in: N[\psi ^{(3)}(1+i)]
+      out: -1.52287-0.317287 i
+n-polygamma-3-0p5-plus-0p3i:
+  mpmath:
+    in: (psi(3, mpc(0.5, 0.3)))
+    out: (-27.9442711578468677577147543119 - 43.9694088398144822474723552853j)
+  sympy:
+    in: N(polygamma(3, (0.5 + 0.3*I)), 30)
+    out: -27.9442711578468677577147543119 - 43.9694088398144822474723552853*I
+  sage:
+    in: N(psi(3, (0.5 + 0.3*I)))
+    out: -27.9442711578469 - 43.9694088398145*I
+  wolfram:
+    in: N[PolyGamma[3, Complex[0.5, 0.3]]]
+    out: -27.944271157846867 - 43.96940883981448*I
+    tex:
+      in: N[\psi ^{(3)}(0.5\, +0.3 i)]
+      out: -27.9443-43.9694 i
+n-polygamma-3-2-plus-neg-0p5-times-i:
+  mpmath:
+    in: (psi(3, mpc(2, -0.5)))
+    out: (0.280334830853447720280885846587 + 0.336488835908064957308793587582j)
+  sympy:
+    in: N(polygamma(3, (2 + -0.5*I)), 30)
+    out: 0.280334830853447720280885846587 + 0.336488835908064957308793587582*I
+  sage:
+    in: N(psi(3, (2 + -0.5*I)))
+    out: 0.280334830853448 + 0.336488835908065*I
+  wolfram:
+    in: N[PolyGamma[3, Complex[2, -0.5]]]
+    out: 0.28033483085344774 + 0.3364888359080649*I
+    tex:
+      in: N[\psi ^{(3)}(2-0.5 i)]
+      out: 0.280335\, +0.336489 i
+n-polygamma-5-1:
+  mpmath:
+    in: (psi(5, 1))
+    out: "122.081167438133896765742151575"
+  sympy:
+    in: N(polygamma(5, 1), 30)
+    out: "122.081167438133896765742151575"
+  sage:
+    in: N(psi(5, 1))
+    out: "122.081167438134"
+  wolfram:
+    in: N[PolyGamma[5, 1]]
+    out: "122.08116743813385"
+    tex:
+      in: N[\psi ^{(5)}(1)]
+      out: "122.081"
+n-polygamma-5-2:
+  mpmath:
+    in: (psi(5, 2))
+    out: "2.08116743813389676574215157491"
+  sympy:
+    in: N(polygamma(5, 2), 30)
+    out: "2.08116743813389676574215157491"
+  sage:
+    in: N(psi(5, 2))
+    out: "2.08116743813387"
+  wolfram:
+    in: N[PolyGamma[5, 2]]
+    out: "2.081167438133855"
+    tex:
+      in: N[\psi ^{(5)}(2)]
+      out: "2.08117"
+n-polygamma-5-0p5:
+  mpmath:
+    in: (psi(5, 0.5))
+    out: "7691.11354860243549624175554922"
+  sympy:
+    in: N(polygamma(5, 0.5), 30)
+    out: "7691.11354860243549624175554922"
+  sage:
+    in: N(psi(5, 0.5))
+    out: "7691.11354860244"
+  wolfram:
+    in: N[PolyGamma[5, 0.5]]
+    out: "7691.113548602435"
+    tex:
+      in: N[\psi ^{(5)}(0.5)]
+      out: "7691.11"
+n-polygamma-5-1p3:
+  mpmath:
+    in: (psi(5, 1.3))
+    out: "25.792601280613045339212697114"
+  sympy:
+    in: N(polygamma(5, 1.3), 30)
+    out: "25.7926012806130453392126971140"
+  sage:
+    in: N(psi(5, 1.3))
+    out: "25.7926012806130"
+  wolfram:
+    in: N[PolyGamma[5, 1.3]]
+    out: "25.792601280612967"
+    tex:
+      in: N[\psi ^{(5)}(1.3)]
+      out: "25.7926"
+n-polygamma-5-7-over-3:
+  sympy:
+    in: N(polygamma(5, Rational(7, 3)), 30)
+    out: "0.857814321602379528563847169274"
+  sage:
+    in: N(psi(5, (7/3)))
+    out: "0.857814321602379"
+  wolfram:
+    in: N[PolyGamma[5, Rational[7, 3]]]
+    out: "0.857814321602382"
+    tex:
+      in: N\left[\psi ^{(5)}\left(\frac{7}{3}\right)\right]
+      out: "0.857814"
+n-polygamma-5-1-plus-i:
+  mpmath:
+    in: (psi(5, mpc(1, 1)))
+    out: (-0.933084836284868920898048765212 + 14.515852291904066066211428636j)
+  sympy:
+    in: N(polygamma(5, (1 + 1*I)), 30)
+    out: -0.933084836284868920898048765212 + 14.515852291904066066211428636*I
+  sage:
+    in: N(psi(5, (1 + 1*I)))
+    out: -0.933084836284869 + 14.5158522919041*I
+  wolfram:
+    in: N[PolyGamma[5, Complex[1, 1]]]
+    out: -0.9330848362848687 + 14.515852291904064*I
+    tex:
+      in: N[\psi ^{(5)}(1+i)]
+      out: -0.933085+14.5159 i
+n-polygamma-5-0p5-plus-0p3i:
+  mpmath:
+    in: (psi(5, mpc(0.5, 0.3)))
+    out: (-3033.62795029873501679932133732 + 298.588513636671356149875252466j)
+  sympy:
+    in: N(polygamma(5, (0.5 + 0.3*I)), 30)
+    out: -3033.62795029873501679932133732 + 298.588513636671356149875252466*I
+  sage:
+    in: N(psi(5, (0.5 + 0.3*I)))
+    out: -3033.62795029873 + 298.588513636671*I
+  wolfram:
+    in: N[PolyGamma[5, Complex[0.5, 0.3]]]
+    out: -3033.6279502987354 + 298.58851363667134*I
+    tex:
+      in: N[\psi ^{(5)}(0.5\, +0.3 i)]
+      out: -3033.63+298.589 i
+n-polygamma-5-2-plus-neg-0p5-times-i:
+  mpmath:
+    in: (psi(5, mpc(2, -0.5)))
+    out: (0.271324699533158936912870828505 + 1.70719640928470369719442082809j)
+  sympy:
+    in: N(polygamma(5, (2 + -0.5*I)), 30)
+    out: 0.271324699533158936912870828505 + 1.70719640928470369719442082809*I
+  sage:
+    in: N(psi(5, (2 + -0.5*I)))
+    out: 0.271324699533159 + 1.70719640928470*I
+  wolfram:
+    in: N[PolyGamma[5, Complex[2, -0.5]]]
+    out: 0.27132469953315896 + 1.7071964092847038*I
+    tex:
+      in: N[\psi ^{(5)}(2-0.5 i)]
+      out: 0.271325\, +1.7072 i

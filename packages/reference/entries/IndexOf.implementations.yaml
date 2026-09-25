@@ -1,0 +1,29 @@
+indexof-list-1-2-3-2:
+  wolfram:
+    in: First[FirstPosition[List[1, 2, 3], 2, List[0]]]
+    out: "2"
+    tex:
+      in: \text{First}[\text{FirstPosition}[\{1,2,3\},2,\{0\}]]
+      out: "2"
+0-signals-that-the-value-isn-t-present-since-0:
+  wolfram:
+    in: First[FirstPosition[List[1, 2, 3], 9, List[0]]]
+    out: "0"
+    tex:
+      in: \text{First}[\text{FirstPosition}[\{1,2,3\},9,\{0\}]]
+      out: "0"
+at-c-indexof-c-v-v-whenever-v-occurs-in-c-see-at:
+  wolfram:
+    in: (Part[List[10, 20, 30], First[FirstPosition[List[10, 20, 30], 20, List[0]]]] == 20)
+    out: True
+    tex:
+      in: \{10,20,30\}[[\text{First}[\text{FirstPosition}[\{10,20,30\},20,\{0\}]]]]=20
+      out: \text{True}
+indexof-reports-only-the-first-occurrence-see:
+  wolfram:
+    in: First[FirstPosition[List[1, 2, 3, 2], 2, List[0]]]
+    note: Wolfram's Position gives every occurrence, [[2], [4]]; IndexOf keeps only the first.
+indexof-stays-at-the-top-level-where-this-value:
+  wolfram:
+    in:
+    note: Wolfram's $FirstPosition$ searches every level and gives $\{1, 3\}$; see [[FirstPosition]].

@@ -1,0 +1,66 @@
+betaregularized-0-2-3:
+  wolfram:
+    in: BetaRegularized[0, 2, 3]
+    out: "0"
+    tex:
+      in: I_0(2,3)
+      out: "0"
+betaregularized-1-2-3:
+  wolfram:
+    in: BetaRegularized[1, 2, 3]
+    out: "1"
+    tex:
+      in: I_1(2,3)
+      out: "1"
+a-floating-point-x-evaluates-directly-to-a:
+  wolfram:
+    in: BetaRegularized[0.5, 2, 3]
+    out: "0.6875000000000003"
+    tex:
+      in: I_{0.5}(2,3)
+      out: "0.6875"
+i-x-1-1-x-the-uniform-distribution-s-own-cdf:
+  wolfram:
+    in: BetaRegularized[0.5, 1, 1]
+    out: "0.5"
+    tex:
+      in: I_{0.5}(1,1)
+      out: "0.5"
+symmetry-i-x-a-b-i-1-x-b-a-1:
+  wolfram:
+    in: (Plus[BetaRegularized[0.3, 2, 3], BetaRegularized[0.7, 3, 2]] == 1)
+    out: True
+    tex:
+      in: I_{0.3}(2,3)+I_{0.7}(3,2)=1
+      out: \text{True}
+i-1-2-a-a-1-2-for-any-a-here-at-a-10:
+  wolfram:
+    in: BetaRegularized[0.5, 10, 10]
+    out: "0.49999999999999906"
+    tex:
+      in: I_{0.5}(10,10)
+      out: "0.5"
+binomial-cdf-via-the-regularized-beta-for-x-sim:
+  wolfram:
+    in: (BetaRegularized[0.7, 3, 2] == Plus[Power[0.7, 4], Times[4, 0.3, Power[0.7, 3]]])
+    out: True
+    tex:
+      in: I_{0.7}(3,2)=0.7^4+4 0.3 0.7^3
+      out: \text{True}
+an-x-outside-0-1-is-left-unevaluated-rather-than:
+  wolfram:
+    in: BetaRegularized[2, 2, 3]
+    out: "8"
+    tex:
+      in: I_2(2,3)
+      out: "8"
+    verdict: disagree
+    kind: domain
+    note: x outside [0, 1] is left unevaluated here; Wolfram continues the regularised incomplete beta function and gets 8.
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: BetaRegularized[0.5, List[1, 2], 1]
+    out: "{0.5, 0.25}"
+    tex:
+      in: I_{0.5}(\{1,2\},1)
+      out: \{0.5,0.25\}

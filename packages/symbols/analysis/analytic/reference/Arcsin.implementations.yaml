@@ -1,0 +1,58 @@
+arcsin-0:
+  wolfram:
+    in: ArcSin[0]
+    out: "0"
+    tex:
+      in: \sin ^{-1}(0)
+      out: "0"
+arcsin-1-over-2:
+  wolfram:
+    in: ArcSin[Rational[1, 2]]
+    out: Pi/6
+    tex:
+      in: \sin ^{-1}\left(\frac{1}{2}\right)
+      out: \frac{\pi }{6}
+the-top-of-the-principal-range:
+  wolfram:
+    in: ArcSin[1]
+    out: Pi/2
+    tex:
+      in: \sin ^{-1}(1)
+      out: \frac{\pi }{2}
+arcsin-neg-1:
+  wolfram:
+    in: ArcSin[-1]
+    out: -1/2*Pi
+    tex:
+      in: \sin ^{-1}(-1)
+      out: -\frac{\pi }{2}
+sin-arcsin-x-x-on-the-principal-branch:
+  wolfram:
+    in: (Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])
+    out: True
+    tex:
+      in: \sin \left(\sin ^{-1}\left(\frac{1}{2}\right)\right)=\frac{1}{2}
+      out: \text{True}
+co-function-identity-arcsin-x-arccos-x-pi-2:
+  wolfram:
+    in: (Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])
+    out: True
+    tex:
+      in: \sin ^{-1}\left(\frac{1}{2}\right)+\cos ^{-1}\left(\frac{1}{2}\right)=\frac{\pi }{2}
+      out: \text{True}
+outside-1-1-reduces-to-the-exact-closed-form:
+  wolfram:
+    in: ArcSin[2]
+    out: ArcSin[2]
+    tex:
+      in: \sin ^{-1}(2)
+      out: \sin ^{-1}(2)
+    note: Wolfram leaves ArcSin[2] unevaluated; its N[ArcSin[2]] is the same principal value, 1.5708 - 1.31696 I, since ArcSin[z] = -I Log[I z + Sqrt[1 - z^2]].
+interval-arithmetic-arcsin-frac-13-frac-12:
+  wolfram:
+    in: ArcSin[Interval[List[Rational[-1, 3], Rational[1, 2]]]]
+    note: Wolfram folds the odd argument to $-\arcsin(1/3)$; compute-engine leaves $\arcsin(-1/3)$ as is (oddness normalisation is a separate, still-aspirational rule).
+taylor-series-about-0:
+  wolfram:
+    in:
+    note: Wolfram's Series[ArcSin[x], {x, 0, 5}] ends with O[x]^6; compute-engine skips the vanishing even term and reports O(x^7).

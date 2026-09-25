@@ -1,0 +1,45 @@
+integerstring-42:
+  wolfram:
+    in: IntegerString[42]
+    out: '"42"'
+    tex:
+      in: \text{IntegerString}[42]
+      out: "42"
+integerstring-17-651-2:
+  wolfram:
+    in: IntegerString[17651, 2]
+    out: '"100010011110011"'
+    tex:
+      in: \text{IntegerString}[17651,2]
+      out: "100010011110011"
+bases-above-10-use-letters-a-z:
+  wolfram:
+    in: IntegerString[255, 16]
+    out: '"ff"'
+    tex:
+      in: \text{IntegerString}[255,16]
+      out: \text{ff}
+integerstring-0:
+  wolfram:
+    in: IntegerString[0]
+    out: '"0"'
+    tex:
+      in: \text{IntegerString}[0]
+      out: "0"
+compute-engine-keeps-the-sign:
+  wolfram:
+    in: IntegerString[-42]
+    out: '"42"'
+    tex:
+      in: \text{IntegerString}[-42]
+      out: "42"
+    verdict: disagree
+    kind: convention
+    note: compute-engine keeps the sign; Wolfram's IntegerString drops it.
+a-third-argument-pads-with-leading-zeros-to-that:
+  wolfram:
+    in: IntegerString[5, 2, 8]
+    out: '"00000101"'
+    tex:
+      in: \text{IntegerString}[5,2,8]
+      out: 00000101

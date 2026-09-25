@@ -1,0 +1,19 @@
+"5":
+  sage:
+    in: (SymmetricGroupAlgebra(QQ, 5)).dimension()
+    out: "120"
+  oscar:
+    in: dim(group_algebra(QQ, symmetric_group(5)))
+    out: "120"
+m-6:
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:motzkin, 3))
+    out: "51"
+algebradimension-rookalgebra-3:
+  oscar:
+    in: dim(EnumeratioDiagramAlgebra(:rook, 3))
+    out: "34"
+a-cup-cap-is-not-a-permutation:
+  sage:
+    in: enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), SymmetricGroupAlgebra(QQ, 3))
+    out: False

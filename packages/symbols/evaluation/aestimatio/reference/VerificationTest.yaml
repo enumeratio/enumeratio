@@ -32,8 +32,6 @@ examples:
     caption: input matches expected
     volatile:
       - AbsoluteTimeUsed
-    divergence:
-      wolfram: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
   - id: input-evaluates-but-does-not-match-expected
     expr: [VerificationTest, [Add, 2, 3], 6]
     expected:
@@ -48,8 +46,6 @@ examples:
     caption: input evaluates but does not match expected
     volatile:
       - AbsoluteTimeUsed
-    divergence:
-      wolfram: Wolfram returns a TestObject over an Association with Input held unevaluated; ours is a TestResultObject of rules with Input evaluated. The Outcome is the same.
   - id: memoryconstraint-in-process-is-an-error-not-a
     expr: [VerificationTest, [Add, 2, 3], 5, [KeyValuePair, MemoryConstraint, 1000000]]
     expected:
@@ -94,8 +90,6 @@ examples:
     category: Possible issues
     volatile:
       - AbsoluteTimeUsed
-    divergence:
-      wolfram: Wolfram's one-argument form tests that input evaluates to True, so VerificationTest[1 + 1] is a Failure there.
   - id: a-symbolic-computation-checked-against-its
     expr: [VerificationTest, [Expand, [Power, [Add, x, 1], 2]], [Add, [Power, x, 2], [Multiply, 2, x], 1]]
     expected:

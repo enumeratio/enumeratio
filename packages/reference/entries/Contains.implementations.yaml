@@ -1,0 +1,18 @@
+contains-list-1-2-3-2:
+  wolfram:
+    in: MemberQ[List[1, 2, 3], 2]
+    out: True
+    tex:
+      in: \text{MemberQ}[\{1,2,3\},2]
+      out: \text{True}
+contains-list-1-2-3-5:
+  wolfram:
+    in: MemberQ[List[1, 2, 3], 5]
+    out: False
+    tex:
+      in: \text{MemberQ}[\{1,2,3\},5]
+      out: \text{False}
+an-exact-and-an-approximate-number-with-the-same:
+  wolfram:
+    in: MemberQ[List[Rational[1, 2]], 0.5]
+    note: 'MemberQ compares structurally: $\mathrm{MemberQ}[\{1/2\}, 0.5]$ is False.'

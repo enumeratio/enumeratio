@@ -1,0 +1,121 @@
+exp-0:
+  wolfram:
+    in: Exp[0]
+    out: "1"
+    tex:
+      in: \exp (0)
+      out: "1"
+  sage:
+    in: exp(0)
+    out: "1"
+  rust:
+    in: exp(n(0))
+    out: "1.0"
+  mpmath:
+    in: exp(0)
+    out: "1.0"
+  sympy:
+    in: exp(0)
+    out: "1"
+stays-the-exact-constant-rather-than:
+  wolfram:
+    in: Exp[1]
+    out: E
+    tex:
+      in: \exp (1)
+      out: e
+  sage:
+    in: exp(1)
+    out: e
+  rust:
+    in: exp(n(1))
+    out: "2.718281828459045"
+  mpmath:
+    in: exp(1)
+    out: "2.71828182845904523536028747135"
+  sympy:
+    in: exp(1)
+    out: E
+inverse-of-ln-e-ln-x-x:
+  wolfram:
+    in: (Exp[Log[5]] == 5)
+    out: True
+    tex:
+      in: \exp (\log (5))=5
+      out: \text{True}
+  sage:
+    in: bool(exp(log(5)) == 5)
+    out: True
+  rust:
+    in: equal(exp(ln(n(5))), n(5))
+    out: "true"
+  mpmath:
+    in: almosteq(exp(log(5)), 5, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(exp(log(5)), 5)
+    out: True
+e-a-e-b-e-a-b:
+  wolfram:
+    in: (Times[Exp[2], Exp[3]] == Exp[5])
+    out: True
+    tex:
+      in: \exp (2) \exp (3)=\exp (5)
+      out: \text{True}
+  sage:
+    in: bool((exp(2) * exp(3)) == exp(5))
+    out: True
+  rust:
+    in: equal((exp(n(2)) * exp(n(3))), exp(n(5)))
+    out: "true"
+  mpmath:
+    in: almosteq((exp(2) * exp(3)), exp(5), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal((exp(2) * exp(3)), exp(5))
+    out: True
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Exp[List[0, 1]]
+    out: "{1, E}"
+    tex:
+      in: \exp (\{0,1\})
+      out: \{1,e\}
+  sage:
+    in: exp([0, 1])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp is Listable and threads over the list; Sage's takes scalars only.
+  rust:
+    in: exp(list(vec![n(0), n(1)]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp is Listable and threads over the list; the Rust crates take scalars.
+  sympy:
+    in: exp([0, 1])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp threads over (or pools) the list; SymPy's takes scalars.
+broadcasts-element-wise-giving-begin-pmatrix-1-e:
+  sympy:
+    in: exp([[0, 1], [1, 0]])
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp of a matrix stays element-wise, threading over the nested list; SymPy's exp() takes scalars only.
+  rust:
+    in: exp(list(vec![list(vec![n(0), n(1)]), list(vec![n(1), n(0)])]))
+    out: "panic: threading: a list where the crate takes a scalar"
+    verdict: error
+    kind: threading
+    note: compute-engine's Exp of a matrix stays element-wise, threading over the nested list; the Rust crate takes scalars only.
+  wolfram:
+    in: Exp[List[List[0, 1], List[1, 0]]]
+    note: Wolfram's Exp also maps element-wise over a matrix; it names the matrix exponential MatrixExp, which this library provides too.
+a-special-imaginary-argument-folds-through-e-i:
+  wolfram:
+    in: Exp[Times[I, Divide[Pi, 5]]]
+    note: Wolfram keeps E^(I Pi/5) as is; ExpToTrig or ComplexExpand gives this radical form.

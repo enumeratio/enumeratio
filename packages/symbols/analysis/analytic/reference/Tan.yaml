@@ -158,8 +158,6 @@ examples:
       ]
     category: Scope
     caption: Taylor series about 0
-    divergence:
-      wolfram: Wolfram's Series[Tan[x], {x, 0, 7}] ends with O[x]^8; compute-engine skips the vanishing even term and reports O(x^9).
   - id: sin-x-cos-x-should-simplify-to-tan-x-simplify
     expr: [Simplify, [Divide, [Sin, x], [Cos, x]]]
     expected: [Tan, x]

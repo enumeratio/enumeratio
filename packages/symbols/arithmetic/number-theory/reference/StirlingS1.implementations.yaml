@@ -1,0 +1,144 @@
+stirlings1-5-2:
+  wolfram:
+    in: StirlingS1[5, 2]
+    out: "-50"
+    tex:
+      in: S_5^{(2)}
+      out: "-50"
+  sage:
+    in: stirling_number1(5, 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Signed here (s(5,2) = -50); Sage's stirling_number1 is unsigned by definition and returns 50 -- documented in mappings.ts, not a bug.
+  julia:
+    in: Combinatorics.stirlings1(5, 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+  mathlib4:
+    in: (Nat.stirlingFirst 5 2)
+    out: "50"
+    verdict: disagree
+    kind: convention
+    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+stirlings1-4-2:
+  wolfram:
+    in: StirlingS1[4, 2]
+    out: "11"
+    tex:
+      in: S_4^{(2)}
+      out: "11"
+  sage:
+    in: stirling_number1(4, 2)
+    out: "11"
+  julia:
+    in: Combinatorics.stirlings1(4, 2)
+    out: "11"
+  mathlib4:
+    in: (Nat.stirlingFirst 4 2)
+    out: "11"
+s-n-n-is-always-1:
+  wolfram:
+    in: StirlingS1[3, 3]
+    out: "1"
+    tex:
+      in: S_3^{(3)}
+      out: "1"
+  sage:
+    in: stirling_number1(3, 3)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings1(3, 3)
+    out: "1"
+  mathlib4:
+    in: (Nat.stirlingFirst 3 3)
+    out: "1"
+s-n-0-is-0-for-n-0:
+  wolfram:
+    in: StirlingS1[5, 0]
+    out: "0"
+    tex:
+      in: S_5^{(0)}
+      out: "0"
+  sage:
+    in: stirling_number1(5, 0)
+    out: "0"
+  julia:
+    in: Combinatorics.stirlings1(5, 0)
+    out: "0"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 0)
+    out: "0"
+the-unsigned-values-in-a-row-sum-to-n:
+  wolfram:
+    in: (Sum[Abs[StirlingS1[4, k]], List[k, 0, 4]] == Factorial[4])
+    out: True
+    tex:
+      in: \sum _{k=0}^4 \left| S_4^{(k)}\right| =4!
+      out: \text{True}
+the-number-of-permutations-of-5-elements-with:
+  wolfram:
+    in: StirlingS1[5, 3]
+    out: "35"
+    tex:
+      in: S_5^{(3)}
+      out: "35"
+  sage:
+    in: stirling_number1(5, 3)
+    out: "35"
+  julia:
+    in: Combinatorics.stirlings1(5, 3)
+    out: "35"
+  mathlib4:
+    in: (Nat.stirlingFirst 5 3)
+    out: "35"
+the-empty-case-s-0-0-1-by-convention-distinct:
+  wolfram:
+    in: StirlingS1[0, 0]
+    out: "1"
+    tex:
+      in: S_0^{(0)}
+      out: "1"
+  sage:
+    in: stirling_number1(0, 0)
+    out: "1"
+  julia:
+    in: Combinatorics.stirlings1(0, 0)
+    out: "1"
+  mathlib4:
+    in: (Nat.stirlingFirst 0 0)
+    out: "1"
+s-n-1-1-n-1-n-1-so-s-10-1-9:
+  wolfram:
+    in: StirlingS1[10, 1]
+    out: "-362880"
+    tex:
+      in: S_{10}^{(1)}
+      out: "-362880"
+  sage:
+    in: stirling_number1(10, 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: "Same unsigned-vs-signed convention: s(10,1) = -362880 here, Sage's unsigned stirling_number1 gives 362880."
+  julia:
+    in: Combinatorics.stirlings1(10, 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: Combinatorics.jl's stirlings1 is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+  mathlib4:
+    in: (Nat.stirlingFirst 10 1)
+    out: "362880"
+    verdict: disagree
+    kind: convention
+    note: Mathlib's Nat.stirlingFirst is the unsigned Stirling number of the first kind; compute-engine's StirlingS1 is signed, as in Wolfram.
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: StirlingS1[List[2, 4, 6], 2]
+    out: "{1, 11, 274}"
+    tex:
+      in: S_{\{2,4,6\}}^{(2)}
+      out: \{1,11,274\}

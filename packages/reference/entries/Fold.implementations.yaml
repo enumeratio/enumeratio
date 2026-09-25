@@ -1,0 +1,14 @@
+fold-add-0-list-1-2-3-4:
+  wolfram:
+    in: Fold[Plus, 0, List[1, 2, 3, 4]]
+    out: "10"
+    tex:
+      in: \text{Fold}[\text{Plus},0,\{1,2,3,4\}]
+      out: "10"
+fold-multiply-1-list-1-2-3-4:
+  wolfram:
+    in: Fold[Times, 1, List[1, 2, 3, 4]]
+    out: "24"
+    tex:
+      in: \text{Fold}[\text{Times},1,\{1,2,3,4\}]
+      out: "24"

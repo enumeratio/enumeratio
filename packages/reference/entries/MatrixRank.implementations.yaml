@@ -1,0 +1,52 @@
+matrixrank-list-list-1-0-list-0-1:
+  wolfram:
+    in: MatrixRank[List[List[1, 0], List[0, 1]]]
+    out: "2"
+    tex:
+      in: \text{MatrixRank}\left[\left( \begin{array}{cc}  1 & 0 \\  0 & 1 \\ \end{array} \right)\right]
+      out: "2"
+matrixrank-list-list-1-2-list-2-4:
+  wolfram:
+    in: MatrixRank[List[List[1, 2], List[2, 4]]]
+    out: "1"
+    tex:
+      in: \text{MatrixRank}\left[\left( \begin{array}{cc}  1 & 2 \\  2 & 4 \\ \end{array} \right)\right]
+      out: "1"
+matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9:
+  wolfram:
+    in: MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]
+    out: "2"
+    tex:
+      in: \text{MatrixRank}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)\right]
+      out: "2"
+non-square-matrices-too:
+  wolfram:
+    in: MatrixRank[List[List[1, 2, 3], List[2, 4, 6]]]
+    out: "1"
+    tex:
+      in: \text{MatrixRank}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  2 & 4 & 6 \\ \end{array} \right)\right]
+      out: "1"
+matrixrank-list-list-0-0-list-0-0:
+  wolfram:
+    in: MatrixRank[List[List[0, 0], List[0, 0]]]
+    out: "0"
+    tex:
+      in: \text{MatrixRank}\left[\left( \begin{array}{cc}  0 & 0 \\  0 & 0 \\ \end{array} \right)\right]
+      out: "0"
+row-rank-equals-column-rank:
+  wolfram:
+    in: (MatrixRank[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]] == MatrixRank[Transpose[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]]]])
+    out: True
+    tex:
+      in: \text{MatrixRank}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)\right]=\text{MatrixRank}\left[\left( \begin{array}{ccc}  1 & 2 & 3 \\  4 & 5 & 6 \\  7 & 8 & 9 \\ \end{array} \right)^T\right]
+      out: \text{True}
+a-vector-is-treated-as-a-1-n-matrix-wolfram:
+  wolfram:
+    in: MatrixRank[List[1, 2, 3]]
+    out: MatrixRank[{1, 2, 3}]
+    tex:
+      in: \text{MatrixRank}[\{1,2,3\}]
+      out: \text{MatrixRank}[\{1,2,3\}]
+    verdict: disagree
+    kind: domain
+    note: "Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix."

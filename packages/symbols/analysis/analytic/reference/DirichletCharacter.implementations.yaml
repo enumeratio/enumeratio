@@ -1,0 +1,42 @@
+the-nontrivial-character-mod-4-chi-2-3-1-this-is:
+  wolfram:
+    in: DirichletCharacter[4, 2, 3]
+    out: "-1"
+    tex:
+      in: \chi _{4,2}(3)
+      out: "-1"
+chi-2-2-i-mod-5-2-is-a-primitive-root-so-it:
+  wolfram:
+    in: DirichletCharacter[5, 2, 2]
+    out: I
+    tex:
+      in: \chi _{5,2}(2)
+      out: i
+a-character-vanishes-where-gcd-n-k-1:
+  wolfram:
+    in: DirichletCharacter[5, 2, 5]
+    out: "0"
+    tex:
+      in: \chi _{5,2}(5)
+      out: "0"
+chi-3-mod-5-is-the-quadratic-character-its:
+  wolfram:
+    in: DirichletCharacter[5, 3, 2]
+    out: "-1"
+    tex:
+      in: \chi _{5,3}(2)
+      out: "-1"
+the-trivial-character-mod-1-is-1-everywhere-its:
+  wolfram:
+    in: DirichletCharacter[1, 1, 7]
+    out: "1"
+    tex:
+      in: \chi _{1,1}(7)
+      out: "1"
+j-must-be-at-most-varphi-k-4-out-of-range-names:
+  wolfram:
+    in: DirichletCharacter[5, 9, 2]
+    out: DirichletCharacter[5, 9, 2]
+    tex:
+      in: \chi _{5,9}(2)
+      out: \chi _{5,9}(2)

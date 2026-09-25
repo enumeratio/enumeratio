@@ -1,0 +1,130 @@
+ln-1:
+  wolfram:
+    in: Log[1]
+    out: "0"
+    tex:
+      in: \log (1)
+      out: "0"
+  sage:
+    in: log(1)
+    out: "0"
+  rust:
+    in: ln(n(1))
+    out: "0.0"
+  mpmath:
+    in: log(1)
+    out: "0.0"
+  sympy:
+    in: log(1)
+    out: "0"
+ln-exponentiale:
+  wolfram:
+    in: Log[E]
+    out: "1"
+    tex:
+      in: \log (e)
+      out: "1"
+  sage:
+    in: log(e)
+    out: "1"
+  rust:
+    in: ln(x(std::f64::consts::E))
+    out: "1.0"
+  mpmath:
+    in: log(e)
+    out: "1.0"
+  sympy:
+    in: log(E)
+    out: "1"
+ln-0:
+  wolfram:
+    in: Log[0]
+    out: -Infinity
+    tex:
+      in: \log (0)
+      out: -\infty
+  sage:
+    in: log(0)
+    out: -Infinity
+    verdict: disagree
+    kind: shape
+    note: Both mean the same signed infinity; our symbol prints as 'NegativeInfinity', Sage's log(0) prints as '-Infinity' -- a spelling mismatch the text comparator can't bridge.
+  rust:
+    in: ln(n(0))
+    out: NegativeInfinity
+  mpmath:
+    in: log(0)
+    out: -inf
+  sympy:
+    in: log(0)
+    out: zoo
+    verdict: disagree
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers NegativeInfinity, SymPy gives zoo."
+inverse-of-exp-ln-e-x-x:
+  wolfram:
+    in: (Log[Exp[5]] == 5)
+    out: True
+    tex:
+      in: \log (\exp (5))=5
+      out: \text{True}
+  sage:
+    in: bool(log(exp(5)) == 5)
+    out: True
+  rust:
+    in: equal(ln(exp(n(5))), n(5))
+    out: "true"
+  mpmath:
+    in: almosteq(log(exp(5)), 5, 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal(log(exp(5)), 5)
+    out: True
+product-rule-ln-ab-ln-a-ln-b:
+  wolfram:
+    in: (Plus[Log[2], Log[3]] == Log[6])
+    out: True
+    tex:
+      in: \log (2)+\log (3)=\log (6)
+      out: \text{True}
+  sage:
+    in: bool((log(2) + log(3)) == log(6))
+    out: False
+    verdict: disagree
+    kind: convention
+    note: True mathematically; Sage's bool(a==b) on unevaluated symbolic logs doesn't invoke a log-identity simplification by default and reports False rather than attempting the proof.
+  rust:
+    in: equal((ln(n(2)) + ln(n(3))), ln(n(6)))
+    out: "true"
+  mpmath:
+    in: almosteq((log(2) + log(3)), log(6), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal((log(2) + log(3)), log(6))
+    out: True
+ln-1-i-pi-the-principal-value-past-the-branch:
+  wolfram:
+    in: Log[-1]
+    out: I*Pi
+    tex:
+      in: \log (-1)
+      out: i \pi
+  sage:
+    in: log(-1)
+    out: I*pi
+  rust:
+    in: ln(n(-1))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 ln is real-only and gives NaN; compute-engine continues into the complex plane.
+  mpmath:
+    in: log(-1)
+    out: (0.0 + 3.14159265358979323846264338328j)
+  sympy:
+    in: log(-1)
+    out: I*pi
+an-integer-power-is-pulled-out-ln-1000-3-ln-10:
+  wolfram:
+    in: Log[1000]
+    note: Wolfram leaves Log[1000] as is.

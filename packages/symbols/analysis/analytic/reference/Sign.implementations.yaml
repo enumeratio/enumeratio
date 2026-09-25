@@ -1,0 +1,151 @@
+sign-neg-3:
+  wolfram:
+    in: Sign[-3]
+    out: "-1"
+    tex:
+      in: \text{sgn}(-3)
+      out: "-1"
+  sage:
+    in: sign(-3)
+    out: "-1"
+  mpmath:
+    in: sign(-3)
+    out: "-1.0"
+  sympy:
+    in: sign(-3)
+    out: "-1"
+sign-3:
+  wolfram:
+    in: Sign[3]
+    out: "1"
+    tex:
+      in: \text{sgn}(3)
+      out: "1"
+  sage:
+    in: sign(3)
+    out: "1"
+  mpmath:
+    in: sign(3)
+    out: "1.0"
+  sympy:
+    in: sign(3)
+    out: "1"
+zero-is-its-own-sign:
+  wolfram:
+    in: Sign[0]
+    out: "0"
+    tex:
+      in: \text{sgn}(0)
+      out: "0"
+  sage:
+    in: sign(0)
+    out: "0"
+  mpmath:
+    in: sign(0)
+    out: "0.0"
+  sympy:
+    in: sign(0)
+    out: "0"
+sign-neg-1-over-2:
+  wolfram:
+    in: Sign[Rational[-1, 2]]
+    out: "-1"
+    tex:
+      in: \text{sgn}\left(-\frac{1}{2}\right)
+      out: "-1"
+  sage:
+    in: sign((-1/2))
+    out: "-1"
+  sympy:
+    in: sign(Rational(-1, 2))
+    out: "-1"
+the-unit-complex-number-pointing-the-same:
+  wolfram:
+    in: Sign[Complex[3, 4]]
+    out: 3/5 + (4*I)/5
+    tex:
+      in: \text{sgn}(3+4 i)
+      out: \frac{3}{5}+\frac{4 i}{5}
+  mpmath:
+    in: sign(mpc(3, 4))
+    out: (0.6 + 0.8j)
+  sympy:
+    in: sign((3 + 4*I))
+    out: sign(3 + 4*I)
+  sage:
+    in: sign((3 + 4*I))
+    out: sgn(4*I + 3)
+    verdict: disagree
+    kind: domain
+    note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
+threads-element-wise-over-a-list:
+  wolfram:
+    in: Sign[List[-3, 0, 7]]
+    out: "{-1, 0, 1}"
+    tex:
+      in: \text{sgn}(\{-3,0,7\})
+      out: \{-1,0,1\}
+  sage:
+    in: sign([-3, 0, 7])
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only.
+  sympy:
+    in: sign([-3, 0, 7])
+    out: "AttributeError: 'list' object has no attribute 'is_Mul'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars.
+sign-z-z-z-see-abs:
+  wolfram:
+    in: (Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])
+    out: True
+    tex:
+      in: \text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))
+    out: True
+  sage:
+    in: bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))
+    out: True
+x-cdot-sign-x-x-here-at-x-5:
+  wolfram:
+    in: (Times[-5, Sign[-5]] == Abs[-5])
+    out: True
+    tex:
+      in: -5 \text{sgn}(-5)=| -5|
+      out: \text{True}
+  sage:
+    in: bool((-5 * sign(-5)) == abs(-5))
+    out: True
+  mpmath:
+    in: almosteq((-5 * sign(-5)), fabs(-5), 1e-20)
+    out: True
+  sympy:
+    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
+    out: True
+tells-you-the-temperature-dropped-but-not-by-how:
+  wolfram:
+    in: Sign[Subtract[70, 95]]
+    out: "-1"
+    tex:
+      in: \text{sgn}(70-95)
+      out: "-1"
+  sage:
+    in: sign((70 - 95))
+    out: "-1"
+  mpmath:
+    in: sign((70 - 95))
+    out: "-1.0"
+  sympy:
+    in: sign((70 - 95))
+    out: "-1"
+nan-propagates-rather-than-being-treated-as-0:
+  wolfram:
+    in: Sign[Indeterminate]
+    out: Indeterminate
+    tex:
+      in: \text{sgn}(\text{Indeterminate})
+      out: \text{Indeterminate}

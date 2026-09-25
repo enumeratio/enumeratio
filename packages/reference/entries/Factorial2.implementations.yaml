@@ -1,0 +1,66 @@
+7-5-3-1:
+  wolfram:
+    in: Factorial2[7]
+    out: "105"
+    tex:
+      in: 7\text{!!}
+      out: "105"
+8-6-4-2:
+  wolfram:
+    in: Factorial2[8]
+    out: "384"
+    tex:
+      in: 8\text{!!}
+      out: "384"
+factorial2-10:
+  wolfram:
+    in: Factorial2[10]
+    out: "3840"
+    tex:
+      in: 10\text{!!}
+      out: "3840"
+factorial2-0:
+  wolfram:
+    in: Factorial2[0]
+    out: "1"
+    tex:
+      in: 0\text{!!}
+      out: "1"
+splits-an-ordinary-factorial-into-even-and-odd:
+  wolfram:
+    in: (Factorial[8] == Times[Factorial2[8], Factorial2[7]])
+    out: True
+    tex:
+      in: 8!=8\text{!!} 7\text{!!}
+      out: \text{True}
+the-number-of-ways-to-pair-up-10-people-into-5:
+  wolfram:
+    in: Factorial2[9]
+    out: "945"
+    tex:
+      in: 9\text{!!}
+      out: "945"
+negative-even-arguments-hit-a-pole-in-the:
+  wolfram:
+    in: Factorial2[-2]
+    out: ComplexInfinity
+    tex:
+      in: (-2)\text{!!}
+      out: \text{ComplexInfinity}
+    verdict: disagree
+    kind: undefined-form
+    note: The pole at a negative even argument is NaN here and ComplexInfinity in Wolfram.
+15-2-027-025-already-past-two-million-despite:
+  wolfram:
+    in: Factorial2[15]
+    out: "2027025"
+    tex:
+      in: 15\text{!!}
+      out: "2027025"
+the-recurrence-n-n-cdot-n-2-run-downwards:
+  wolfram:
+    in: Factorial2[-1]
+    out: "1"
+    tex:
+      in: (-1)\text{!!}
+      out: "1"

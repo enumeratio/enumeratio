@@ -29,8 +29,6 @@ examples:
     expected: 0
     category: Possible issues
     caption: Count tests exact equality; a typed pattern like `_Integer` matches nothing
-    divergence:
-      wolfram: Wolfram's `_Integer` pattern counts every integer element, here 2 (1 and 2).
   - id: count-list-a-b-a-a-b-c-b-b
     expr: [Count, [List, a, b, a, a, b, c, b], b]
     expected: 3
@@ -64,8 +62,6 @@ examples:
     expected: 0
     category: Possible issues
     caption: Count tests exact equality, so a pattern like $\_Integer$ matches nothing
-    divergence:
-      wolfram: Wolfram's `_Integer` pattern counts every integer element, here 4 (2, 1, 3, 3).
   - id: the-counts-of-the-distinct-values-add-up-to-the
     expr:
       [

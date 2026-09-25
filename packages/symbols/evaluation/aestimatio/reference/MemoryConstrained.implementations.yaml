@@ -1,0 +1,14 @@
+in-process-the-call-simply-does-not-reduce-see:
+  wolfram:
+    in: MemoryConstrained[Plus[1, 2], 1000000]
+    out: "3"
+    tex:
+      in: \text{MemoryConstrained}[1+2,1000000]
+      out: "3"
+    verdict: disagree
+    kind: unevaluated
+    note: Wolfram enforces the cap in-kernel and evaluates to 3.
+a-failexpr-does-not-change-that-in-process-there:
+  wolfram:
+    in: MemoryConstrained[Plus[1, 2], 1000000, -1]
+    note: Wolfram evaluates to 3, returning failexpr only if the cap is exceeded.

@@ -1,0 +1,42 @@
+primeomega-30:
+  wolfram:
+    in: PrimeOmega[30]
+    out: "3"
+    tex:
+      in: \Omega (30)
+      out: "3"
+primeomega-360:
+  wolfram:
+    in: PrimeOmega[360]
+    out: "6"
+    tex:
+      in: \Omega (360)
+      out: "6"
+1-has-no-prime-factors:
+  wolfram:
+    in: PrimeOmega[1]
+    out: "0"
+    tex:
+      in: \Omega (1)
+      out: "0"
+completely-additive-omega-mn-omega-m-omega-n-for:
+  wolfram:
+    in: (PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])
+    out: True
+    tex:
+      in: \Omega (24\ 40)=\Omega (24)+\Omega (40)
+      out: \text{True}
+omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3:
+  wolfram:
+    in: GreaterEqual[PrimeOmega[8], PrimeNu[8]]
+    out: True
+    tex:
+      in: \Omega (8)\geq \nu (8)
+      out: \text{True}
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: PrimeOmega[List[4, 12, 24]]
+    out: "{2, 3, 4}"
+    tex:
+      in: \Omega (\{4,12,24\})
+      out: \{2,3,4\}

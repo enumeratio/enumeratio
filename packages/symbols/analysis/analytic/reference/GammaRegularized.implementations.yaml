@@ -1,0 +1,66 @@
+q-a-0-1-for-any-a:
+  wolfram:
+    in: GammaRegularized[1, 0]
+    out: "1"
+    tex:
+      in: Q(1,0)
+      out: "1"
+q-1-z-e-z-here-at-z-1:
+  wolfram:
+    in: GammaRegularized[1, 1]
+    out: E^(-1)
+    tex:
+      in: Q(1,1)
+      out: \frac{1}{e}
+floating-point-arguments-evaluate-directly-to-a:
+  wolfram:
+    in: GammaRegularized[2.5, 1.5]
+    out: "0.6999858358786275"
+    tex:
+      in: Q(2.5,1.5)
+      out: "0.699986"
+the-polynomial-closed-form-for-an-integer-order:
+  wolfram:
+    in: GammaRegularized[5, -1]
+    out: (3*E)/8
+    tex:
+      in: Q(5,-1)
+      out: \frac{3 e}{8}
+the-cdf-of-a-poisson-lambda-2-random-variable-at:
+  wolfram:
+    in: GammaRegularized[3, 2]
+    out: 5/E^2
+    tex:
+      in: Q(3,2)
+      out: \frac{5}{e^2}
+a-non-integer-order-combined-with-negative-z:
+  wolfram:
+    in: GammaRegularized[2.5, -1]
+    out: 0.9999999999999998 - 0.6280082302883814*I
+    tex:
+      in: Q(2.5,-1)
+      out: 1.\, -0.628008 i
+    verdict: disagree
+    kind: domain
+    note: A non-integer order with negative z is left symbolic here (real domain only); Wolfram continues into the complex plane.
+three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma:
+  wolfram:
+    in: GammaRegularized[2.5, 0, 1.5]
+    out: "0.30001416412137244"
+    tex:
+      in: Q(2.5,0,1.5)
+      out: "0.300014"
+q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma:
+  wolfram:
+    in: GammaRegularized[-1.5, 0, 1.5]
+    out: "0.985260074360347"
+    tex:
+      in: Q(-1.5,0,1.5)
+      out: "0.98526"
+threads-element-wise-over-a-list-as-wolfram-s:
+  wolfram:
+    in: GammaRegularized[List[1, 2], 1]
+    out: "{E^(-1), 2/E}"
+    tex:
+      in: Q(\{1,2\},1)
+      out: \left\{\frac{1}{e},\frac{2}{e}\right\}
