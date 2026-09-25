@@ -157,6 +157,7 @@ const OVERRIDDEN = [
   "Ceil",
   "ChineseRemainder",
   "Clamp",
+  "ContinuedFraction",
   "Cosh",
   "Digamma",
   "DigitCount",

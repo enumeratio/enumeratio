@@ -1496,7 +1496,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "ContinuedFraction",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "ContinuedFraction",
     elsewhere: ["wolfram", "sympy"],
