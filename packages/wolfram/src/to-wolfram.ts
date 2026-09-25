@@ -213,6 +213,20 @@ export const HEADS: Record<string, string> = {
   Zeta: "Zeta", // one argument is Riemann, two is Hurwitz — in both systems
   HurwitzZeta: "HurwitzZeta",
   LerchPhi: "LerchPhi",
+  // Function* real-analysis properties (function-properties.ts) — same argument
+  // order as ours in every case, so a plain rename is enough.
+  FunctionDomain: "FunctionDomain",
+  FunctionRange: "FunctionRange",
+  FunctionMonotonicity: "FunctionMonotonicity",
+  FunctionConvexity: "FunctionConvexity",
+  FunctionSign: "FunctionSign",
+  FunctionInjective: "FunctionInjective",
+  FunctionSurjective: "FunctionSurjective",
+  FunctionSingularities: "FunctionSingularities",
+  FunctionDiscontinuities: "FunctionDiscontinuities",
+  FunctionAnalytic: "FunctionAnalytic",
+  FunctionMeromorphic: "FunctionMeromorphic",
+  FunctionPeriod: "FunctionPeriod",
   PolyLog: "PolyLog",
   Digamma: "PolyGamma",
   PolyGamma: "PolyGamma",

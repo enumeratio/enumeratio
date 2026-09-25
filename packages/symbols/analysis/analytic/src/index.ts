@@ -97,5 +97,12 @@ export { declareIncompleteSymbolic } from "./incomplete-symbolic.ts";
 export { declareGeneralizedSpecial } from "./generalized-special.ts";
 export { type ComplexWGSL, emitComplexWGSL, MAX_SLOTS } from "./wgsl-complex.ts";
 export { declareConstantRounding } from "./constant-rounding.ts";
+export {
+  declareFunctionProperties,
+  domainOf,
+  recognize,
+  type Recognized,
+  type Trend,
+} from "./function-properties.ts";
 export { declareTrigNormalisation } from "./trig-normalisation.ts";
 export { declareElementarySpecialValues } from "./elementary-special-values.ts";

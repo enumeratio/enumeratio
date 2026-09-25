@@ -1930,8 +1930,56 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Function",
   },
   {
+    name: "FunctionAnalytic",
+    wolfram: "FunctionAnalytic",
+  },
+  {
+    name: "FunctionConvexity",
+    wolfram: "FunctionConvexity",
+  },
+  {
+    name: "FunctionDiscontinuities",
+    wolfram: "FunctionDiscontinuities",
+  },
+  {
+    name: "FunctionDomain",
+    wolfram: "FunctionDomain",
+  },
+  {
     name: "FunctionExpand",
     wolfram: "FunctionExpand",
+  },
+  {
+    name: "FunctionInjective",
+    wolfram: "FunctionInjective",
+  },
+  {
+    name: "FunctionMeromorphic",
+    wolfram: "FunctionMeromorphic",
+  },
+  {
+    name: "FunctionMonotonicity",
+    wolfram: "FunctionMonotonicity",
+  },
+  {
+    name: "FunctionPeriod",
+    wolfram: "FunctionPeriod",
+  },
+  {
+    name: "FunctionRange",
+    wolfram: "FunctionRange",
+  },
+  {
+    name: "FunctionSign",
+    wolfram: "FunctionSign",
+  },
+  {
+    name: "FunctionSingularities",
+    wolfram: "FunctionSingularities",
+  },
+  {
+    name: "FunctionSurjective",
+    wolfram: "FunctionSurjective",
   },
   {
     name: "GCD",

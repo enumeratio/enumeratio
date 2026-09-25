@@ -449,6 +449,21 @@ const NOVEL = [
   "RealSign",
   "UnitStep",
   "Gudermannian",
+  // The Function* real-analysis property family (function-properties.ts) — genuine Wolfram
+  // heads (see to-wolfram.ts HEADS), but not yet run through the oracle sweep, so `elsewhere`
+  // is still empty here (see collect-provenance.ts's docstring on how it's carried forward).
+  "FunctionDomain",
+  "FunctionRange",
+  "FunctionMonotonicity",
+  "FunctionConvexity",
+  "FunctionSign",
+  "FunctionInjective",
+  "FunctionSurjective",
+  "FunctionSingularities",
+  "FunctionDiscontinuities",
+  "FunctionAnalytic",
+  "FunctionMeromorphic",
+  "FunctionPeriod",
   "Basis",
   "AlgebraSignature",
   "AlgebraDimension",
