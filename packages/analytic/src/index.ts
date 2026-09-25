@@ -58,6 +58,17 @@ export { declareHypergeometric } from "./hypergeometric.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";
+export { declareLambertW } from "./lambert-w.ts";
+export { declareInverseErfc } from "./inverse-erfc.ts";
+export {
+  declareInverseGammaRegularized,
+  declareInverseBetaRegularized,
+} from "./inverse-regularized.ts";
+export { declareNorlundB } from "./norlund.ts";
+export { declarePrimeZetaP } from "./prime-zeta.ts";
+export { declareExpIntegralE } from "./exp-integral-e.ts";
+export { declareHypergeometricPFQ } from "./hypergeometric-pfq.ts";
+export { declareBellY } from "./bell-y.ts";
 export { declareMatrixExp, evaluateMatrixExp } from "./matrix-exp.ts";
 export { logGamma, logGammaReal } from "./loggamma.ts";
 export { multiZetaValue } from "./multizeta.ts";

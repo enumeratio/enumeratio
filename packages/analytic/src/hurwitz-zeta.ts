@@ -32,6 +32,17 @@ import { declareBesselJZero } from "./bessel-zeros.ts";
 import { declareDigammaFunctionZero } from "./digamma-zero.ts";
 import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeometric-ustar.ts";
 import { declareHypergeometric } from "./hypergeometric.ts";
+import { declareLambertW } from "./lambert-w.ts";
+import { declareInverseErfc } from "./inverse-erfc.ts";
+import {
+  declareInverseGammaRegularized,
+  declareInverseBetaRegularized,
+} from "./inverse-regularized.ts";
+import { declareNorlundB } from "./norlund.ts";
+import { declarePrimeZetaP } from "./prime-zeta.ts";
+import { declareExpIntegralE } from "./exp-integral-e.ts";
+import { declareHypergeometricPFQ } from "./hypergeometric-pfq.ts";
+import { declareBellY } from "./bell-y.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
 
@@ -639,4 +650,13 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHypergeometricU(ce);
   declareHypergeometric(ce);
   declareMatrixExp(ce);
+  declareLambertW(ce);
+  declareInverseErfc(ce);
+  declareInverseGammaRegularized(ce);
+  declareInverseBetaRegularized(ce);
+  declareNorlundB(ce);
+  declarePrimeZetaP(ce);
+  declareExpIntegralE(ce);
+  declareHypergeometricPFQ(ce);
+  declareBellY(ce);
 }
