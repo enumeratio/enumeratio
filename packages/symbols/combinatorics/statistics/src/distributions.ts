@@ -25,8 +25,13 @@ import { type EvaluateOptions, integerAt, operandsOf, symbolNameOf } from "@enum
 
 // --- shared numeric helpers -----------------------------------------------------------------
 
-const finish = (expr: BoxedExpression, options: EvaluateOptions | undefined): BoxedExpression =>
-  options?.numericApproximation ? expr.N() : expr.evaluate();
+/** Exported for `distributions-2.ts`, which extends the same PDF/CDF/Mean/Variance/
+ *  RandomVariate operators for a second wave of distribution kinds and reuses this file's
+ *  numeric core rather than duplicating it. */
+export const finish = (
+  expr: BoxedExpression,
+  options: EvaluateOptions | undefined,
+): BoxedExpression => (options?.numericApproximation ? expr.N() : expr.evaluate());
 
 /** Whether `expr`'s JSON mentions the symbol `name` — the same substring test
  *  `generalized-special.ts`'s `stillMentions` uses for a head, applied to a bound variable. */
@@ -35,7 +40,7 @@ const mentions = (expr: BoxedExpression, name: string): boolean =>
 
 const isConstantOf = (expr: BoxedExpression, varName: string): boolean => !mentions(expr, varName);
 
-const list2 = (
+export const list2 = (
   ce: ComputeEngine,
   expr: BoxedExpression,
 ): [BoxedExpression, BoxedExpression] | undefined => {
@@ -682,7 +687,7 @@ const rngFor = (ce: ComputeEngine): (() => number) => {
   return entry.next;
 };
 
-const uniform01 = (ce: ComputeEngine): number => rngFor(ce)();
+export const uniform01 = (ce: ComputeEngine): number => rngFor(ce)();
 
 /** Reseed this file's own RNG stream. Wired into `SeedRandom` — declaring it fresh if nothing
  *  else has (the common case today), or, once collections' own seeded `RandomInteger` lands,
@@ -710,7 +715,7 @@ function wireSeedRandom(ce: ComputeEngine): void {
   };
 }
 
-const normal01 = (ce: ComputeEngine): number => {
+export const normal01 = (ce: ComputeEngine): number => {
   // Box-Muller.
   const u1 = Math.max(uniform01(ce), Number.EPSILON);
   const u2 = uniform01(ce);
@@ -741,7 +746,7 @@ const binomialSample = (ce: ComputeEngine, n: number, p: number): number => {
 
 /** Marsaglia–Tsang, `shape >= 1`; `shape < 1` boosts via `Gamma(shape+1)` scaled by `U^(1/shape)`
  *  (the standard trick — see Marsaglia & Tsang 2000, §"shape < 1"). */
-const gammaSample = (ce: ComputeEngine, shape: number, scale: number): number => {
+export const gammaSample = (ce: ComputeEngine, shape: number, scale: number): number => {
   if (shape < 1) {
     const boosted = gammaSample(ce, shape + 1, 1);
     return boosted * uniform01(ce) ** (1 / shape) * scale;
@@ -782,7 +787,7 @@ const binormalSample = (
   return [x1, x2];
 };
 
-const numAt = (expr: BoxedExpression): number => expr.N().re;
+export const numAt = (expr: BoxedExpression): number => expr.N().re;
 
 /** One draw from `dist`, or `undefined` if its shape/kind isn't one this file (or
  *  compute-engine's own Normal/Uniform/Poisson/Binomial params) samples. */

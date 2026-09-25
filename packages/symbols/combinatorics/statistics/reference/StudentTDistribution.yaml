@@ -1,0 +1,34 @@
+name: StudentTDistribution
+domain: Statistics
+signature: StudentTDistribution(nu)
+summary: The Student-t distribution with $\nu$ degrees of freedom.
+signatures:
+  - call: StudentTDistribution(nu)
+    description: an inert distribution object — carries $\nu$, unevaluated. Only the single-parameter (not the location-scale 3-argument Wolfram) form is implemented — a documented scope limit.
+    library: enumeratio-statistics
+details:
+  - $PDF(x) = \dfrac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)}\left(1+\dfrac{x^2}{\nu}\right)^{-(\nu+1)/2}$, exact.
+  - $CDF$ has no coded closed form — left unevaluated (see [[CauchyDistribution]] for the three-distribution list this applies to).
+  - $Mean = 0$ unconditionally — exact only for $\nu>1$; a documented divergence for $\nu \leq 1$, where the mean is actually undefined.
+  - $Variance = \nu/(\nu-2)$ unconditionally — exact only for $\nu>2$; same divergence policy for $\nu \leq 2$.
+  - '[[RandomVariate]] samples $Z/\sqrt{V/\nu}$ for a standard normal $Z$ and an independent [[ChiSquareDistribution]]($\nu$) draw $V$.'
+examples:
+  - id: studentt-pdf-exact
+    expr: [PDF, [StudentTDistribution, 5], 0]
+    expected:
+      [
+        Divide,
+        [Multiply, [Sqrt, 5], [Gamma, 3]],
+        [Multiply, 5, [Gamma, [Rational, 5, 2]], [Sqrt, Pi]],
+      ]
+  - id: studentt-mean-exact
+    expr: [Mean, [StudentTDistribution, 5]]
+    expected: 0
+  - id: studentt-variance-exact
+    expr: [Variance, [StudentTDistribution, 5]]
+    expected: [Rational, 5, 3]
+    caption: Cross-checked against wolframscript's N[Variance[StudentTDistribution[5]]] = 1.66666...
+seeAlso:
+  - CauchyDistribution
+  - ChiSquareDistribution
+  - PDF
