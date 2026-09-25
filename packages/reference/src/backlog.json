@@ -116,46 +116,6 @@
       }
     ]
   },
-  "Association": {
-    "wolfram": "Association",
-    "summary": "A keyed collection of rules key -> value; compute-engine's Dictionary is the nearest head, and the list heads would need to accept it.",
-    "signature": "Association(k1 -> v1, …)",
-    "home": "collections",
-    "neededBy": ["Append", "Count", "First", "Join", "Last", "Length", "Ordering", "Sort"],
-    "examples": [
-      {
-        "expr": ["Length", ["Association", ["Rule", 1, 2], ["Rule", 3, 4]]],
-        "expected": 2,
-        "caption": "[[Length]] counts the key-value pairs"
-      },
-      {
-        "expr": ["First", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]]],
-        "expected": "a",
-        "caption": "[[First]] is the first value, not the first rule"
-      },
-      {
-        "expr": ["Last", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]]],
-        "expected": "b",
-        "caption": "[[Last]] is the last value"
-      },
-      {
-        "expr": [
-          "Join",
-          ["Association", ["Rule", "a", "b"]],
-          ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]]
-        ],
-        "expected": ["Association", ["Rule", "a", "f"], ["Rule", "c", "d"]],
-        "category": "Scope",
-        "caption": "[[Join]] merges keys; a later value for a repeated key wins, in the key's original position"
-      },
-      {
-        "expr": ["Sort", ["Association", ["Rule", "a", 4], ["Rule", "b", 1], ["Rule", "c", 3]]],
-        "expected": ["Association", ["Rule", "b", 1], ["Rule", "c", 3], ["Rule", "a", 4]],
-        "category": "Scope",
-        "caption": "[[Sort]] orders the entries by value"
-      }
-    ]
-  },
   "BellY": {
     "wolfram": "BellY",
     "summary": "The partial Bell polynomial B_{n,k}(x_1, x_2, ...).",
@@ -396,40 +356,6 @@
       }
     ]
   },
-  "CubeRoot": {
-    "wolfram": "CubeRoot",
-    "summary": "The real cube root of x.",
-    "signature": "CubeRoot(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["CubeRoot", 8],
-        "expected": 2
-      },
-      {
-        "expr": ["CubeRoot", -27],
-        "expected": -3,
-        "caption": "The real root of a negative number"
-      },
-      {
-        "expr": ["CubeRoot", 2.0],
-        "expected": 1.2599210498948732
-      },
-      {
-        "expr": ["CubeRoot", ["List", -8, 27]],
-        "expected": ["List", -2, 3],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["Equal", ["CubeRoot", -64], ["Root", -64, 3]],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "The same as [[Root]] with index 3"
-      }
-    ]
-  },
   "DivisorSum": {
     "wolfram": "DivisorSum",
     "summary": "The sum of f(d) over the positive divisors d of n, optionally only those satisfying a condition.",
@@ -589,75 +515,6 @@
         "expected": ["Sin", "x"],
         "category": "Scope",
         "caption": "Recognizes [[Sin]]"
-      }
-    ]
-  },
-  "FixedPoint": {
-    "wolfram": "FixedPoint",
-    "summary": "Iterates f from x until the result no longer changes.",
-    "signature": "FixedPoint(f, x)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["FixedPoint", ["Function", ["Floor", ["Divide", "_1", 2]]], 100],
-        "expected": 0,
-        "caption": "Halving and flooring until nothing changes"
-      },
-      {
-        "expr": ["FixedPoint", "Cos", 0.5],
-        "expected": 0.7390851332151607,
-        "caption": "The Dottie number, the fixed point of cos"
-      },
-      {
-        "expr": [
-          "FixedPoint",
-          ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]],
-          1.5
-        ],
-        "expected": 1.414213562373095,
-        "category": "Applications",
-        "caption": "Newton's method for $\\sqrt{2}$, run to machine precision"
-      }
-    ]
-  },
-  "FractionalPart": {
-    "wolfram": "FractionalPart",
-    "summary": "The fractional part of x, with the sign of x: x minus its integer part.",
-    "signature": "FractionalPart(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["FractionalPart", 2.5],
-        "expected": 0.5
-      },
-      {
-        "expr": ["FractionalPart", ["Rational", 7, 2]],
-        "expected": ["Rational", 1, 2]
-      },
-      {
-        "expr": ["FractionalPart", ["Rational", -7, 2]],
-        "expected": ["Rational", -1, 2],
-        "caption": "Keeps the sign of x, unlike compute-engine's Fract"
-      },
-      {
-        "expr": ["FractionalPart", "Pi"],
-        "expected": ["Add", -3, "Pi"],
-        "category": "Scope",
-        "caption": "Exact numeric arguments stay exact"
-      },
-      {
-        "expr": ["FractionalPart", ["List", ["Rational", 7, 2], ["Rational", -1, 3]]],
-        "expected": ["List", ["Rational", 1, 2], ["Rational", -1, 3]],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["FractionalPart", 5],
-        "expected": 0,
-        "category": "Properties",
-        "caption": "Zero exactly on the integers"
       }
     ]
   },
@@ -930,141 +787,6 @@
       }
     ]
   },
-  "GeometricMean": {
-    "wolfram": "GeometricMean",
-    "summary": "The n-th root of the product of n values.",
-    "signature": "GeometricMean(collection)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["GeometricMean", ["List", 2, 8]],
-        "expected": 4,
-        "caption": "$\\sqrt{2 \\cdot 8} = 4$"
-      },
-      {
-        "expr": ["GeometricMean", ["List", 1, 2, 4]],
-        "expected": 2,
-        "caption": "$\\sqrt[3]{1 \\cdot 2 \\cdot 4} = 2$"
-      },
-      {
-        "expr": ["GeometricMean", ["List", 2, 3]],
-        "expected": ["Sqrt", 6],
-        "category": "Scope",
-        "caption": "An exact irrational result"
-      },
-      {
-        "expr": ["GeometricMean", ["List", 1, 2, 3]],
-        "expected": ["Root", 6, 3],
-        "category": "Scope",
-        "caption": "$\\sqrt[3]{6}$"
-      },
-      {
-        "expr": ["GeometricMean", ["List", "a", "b"]],
-        "expected": ["Sqrt", ["Multiply", "a", "b"]],
-        "category": "Scope",
-        "caption": "Symbolic data"
-      }
-    ]
-  },
-  "Gudermannian": {
-    "wolfram": "Gudermannian",
-    "summary": "The Gudermannian function $\\operatorname{gd}(x) = 2\\arctan(\\tanh(x/2))$, linking circular and hyperbolic functions without complex numbers.",
-    "signature": "Gudermannian(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Gudermannian", 0],
-        "expected": 0
-      },
-      {
-        "expr": ["Gudermannian", 1.5],
-        "expected": 1.1317283452505091,
-        "caption": "At a machine-precision argument"
-      },
-      {
-        "expr": ["Gudermannian", "PositiveInfinity"],
-        "expected": ["Multiply", ["Rational", 1, 2], "Pi"],
-        "category": "Scope",
-        "caption": "Horizontal asymptote $\\pi/2$"
-      },
-      {
-        "expr": ["D", ["Gudermannian", "x"], "x"],
-        "expected": ["Sech", "x"],
-        "category": "Scope",
-        "caption": "$\\operatorname{gd}'(x) = \\operatorname{sech} x$"
-      },
-      {
-        "expr": ["Gudermannian", ["Negate", "x"]],
-        "expected": ["Negate", ["Gudermannian", "x"]],
-        "category": "Properties",
-        "caption": "An odd function"
-      }
-    ]
-  },
-  "HarmonicMean": {
-    "wolfram": "HarmonicMean",
-    "summary": "The reciprocal of the mean of the reciprocals.",
-    "signature": "HarmonicMean(collection)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["HarmonicMean", ["List", 1, 2, 4]],
-        "expected": ["Rational", 12, 7],
-        "caption": "$3 / (1 + \\frac12 + \\frac14) = \\frac{12}{7}$"
-      },
-      {
-        "expr": ["HarmonicMean", ["List", 2, 3]],
-        "expected": ["Rational", 12, 5],
-        "caption": "$\\frac{12}{5}$"
-      },
-      {
-        "expr": ["HarmonicMean", ["List", 40, 60]],
-        "expected": 48,
-        "category": "Applications",
-        "caption": "Driving equal distances at 40 and 60 averages 48, not 50"
-      },
-      {
-        "expr": ["HarmonicMean", ["List", 5, 5, 5]],
-        "expected": 5,
-        "category": "Properties",
-        "caption": "Equal values are their own harmonic mean"
-      }
-    ]
-  },
-  "Hyperfactorial": {
-    "wolfram": "Hyperfactorial",
-    "summary": "The hyperfactorial H(n) = prod_{k=1}^n k^k, continued to complex arguments; Gamma(n+1)^n / BarnesG(n+1).",
-    "signature": "Hyperfactorial(n)",
-    "home": "analytic",
-    "neededBy": ["BarnesG"],
-    "examples": [
-      {
-        "expr": ["Hyperfactorial", 4],
-        "expected": 27648,
-        "caption": "$1^1\\,2^2\\,3^3\\,4^4$"
-      },
-      {
-        "expr": ["Hyperfactorial", 0],
-        "expected": 1,
-        "caption": "The empty product"
-      },
-      {
-        "expr": ["Hyperfactorial", ["List", 1, 2, 3, 4, 5, 6]],
-        "expected": ["List", 1, 4, 108, 27648, 86400000, 4031078400000],
-        "category": "Scope",
-        "caption": "Listable"
-      },
-      {
-        "expr": ["Hyperfactorial", 0.5],
-        "expected": 0.8804492351734234,
-        "category": "Scope",
-        "caption": "Continued off the integers"
-      }
-    ]
-  },
   "HypergeometricPFQ": {
     "wolfram": "HypergeometricPFQ",
     "summary": "The generalized hypergeometric function ${}_pF_q(a; b; z)$.",
@@ -1141,60 +863,6 @@
         "expected": ["List", 1, 2, 3],
         "category": "Scope",
         "caption": "Listable"
-      }
-    ]
-  },
-  "IntegerPart": {
-    "wolfram": "IntegerPart",
-    "summary": "The integer part of x: x truncated toward 0.",
-    "signature": "IntegerPart(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["IntegerPart", 2.4],
-        "expected": 2
-      },
-      {
-        "expr": ["IntegerPart", -2.4],
-        "expected": -2,
-        "caption": "Truncates toward 0, unlike [[Floor]]"
-      },
-      {
-        "expr": ["IntegerPart", ["Rational", 7, 2]],
-        "expected": 3
-      },
-      {
-        "expr": ["IntegerPart", ["Rational", -7, 2]],
-        "expected": -3
-      },
-      {
-        "expr": ["IntegerPart", "Pi"],
-        "expected": 3,
-        "category": "Scope",
-        "caption": "Exact numeric arguments"
-      },
-      {
-        "expr": ["IntegerPart", ["List", 2.5, -2.5]],
-        "expected": ["List", 2, -2],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["IntegerPart", ["Complex", 2.5, 3.7]],
-        "expected": ["Complex", 2, 3],
-        "category": "Scope",
-        "caption": "Complex numbers: real and imaginary parts separately"
-      },
-      {
-        "expr": [
-          "Equal",
-          ["Add", ["IntegerPart", ["Rational", -7, 2]], ["FractionalPart", ["Rational", -7, 2]]],
-          ["Rational", -7, 2]
-        ],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "$x = \\mathrm{IntegerPart}(x) + \\mathrm{FractionalPart}(x)$"
       }
     ]
   },
@@ -1599,20 +1267,6 @@
       }
     ]
   },
-  "Khinchin": {
-    "wolfram": "Khinchin",
-    "summary": "Khinchin's constant $K_0 = 2.68545\\ldots$, the almost-sure geometric mean of continued-fraction terms.",
-    "signature": "Khinchin",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["N", "Khinchin"],
-        "expected": 2.6854520010653062,
-        "caption": "Khinchin's constant"
-      }
-    ]
-  },
   "KleinInvariantJ": {
     "wolfram": "KleinInvariantJ",
     "summary": "Klein's absolute invariant J(tau) = j(tau)/1728, normalised so J(i) = 1 and J(e^{2 pi i/3}) = 0. We have ModularJ (unnormalised j) already.",
@@ -1671,50 +1325,6 @@
         "expected": ["Negate", ["Ln", 2]],
         "category": "Scope",
         "caption": "$-\\ln 2 \\cdot e^{-\\ln 2} = -\\tfrac{\\ln 2}{2}$"
-      }
-    ]
-  },
-  "LinearRecurrence": {
-    "wolfram": "LinearRecurrence",
-    "summary": "The sequence of a linear recurrence with constant coefficients, from its kernel and initial values.",
-    "signature": "LinearRecurrence(kernel, init, n)",
-    "home": "collections",
-    "neededBy": ["Fibonacci", "LucasL"],
-    "examples": [
-      {
-        "expr": ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 10],
-        "expected": ["List", 1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
-        "caption": "the Fibonacci numbers, $a_n = a_{n-1} + a_{n-2}$"
-      },
-      {
-        "expr": ["LinearRecurrence", ["List", 1, 1], ["List", 2, 1], 8],
-        "expected": ["List", 2, 1, 3, 4, 7, 11, 18, 29],
-        "category": "Scope",
-        "caption": "the Lucas numbers: same kernel, other initial values"
-      },
-      {
-        "expr": ["LinearRecurrence", ["List", 2, -1], ["List", 1, 3], 5],
-        "expected": ["List", 1, 3, 5, 7, 9],
-        "category": "Scope",
-        "caption": "$a_n = 2a_{n-1} - a_{n-2}$ is arithmetic"
-      },
-      {
-        "expr": ["LinearRecurrence", ["List", 1, 1, 1], ["List", 0, 0, 1], 10],
-        "expected": ["List", 0, 0, 1, 1, 2, 4, 7, 13, 24, 44],
-        "category": "Scope",
-        "caption": "tribonacci"
-      },
-      {
-        "expr": ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 10]],
-        "expected": ["List", 55],
-        "category": "Scope",
-        "caption": "just the 10th term"
-      },
-      {
-        "expr": ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 5, 8]],
-        "expected": ["List", 5, 8, 13, 21],
-        "category": "Scope",
-        "caption": "terms 5 through 8"
       }
     ]
   },
@@ -1860,77 +1470,6 @@
       }
     ]
   },
-  "Nest": {
-    "wolfram": "Nest",
-    "summary": "f applied n times to x.",
-    "signature": "Nest(f, x, n)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Nest", "f", "x", 3],
-        "expected": ["f", ["f", ["f", "x"]]]
-      },
-      {
-        "expr": ["Nest", ["Function", ["Power", "_1", 2]], 2, 3],
-        "expected": 256,
-        "caption": "Repeated squaring: $((2^2)^2)^2$"
-      },
-      {
-        "expr": ["Nest", "f", "x", 0],
-        "expected": "x",
-        "category": "Scope",
-        "caption": "Zero applications leave x alone"
-      },
-      {
-        "expr": ["Nest", ["Function", ["Multiply", 2, "_1"]], 1, 10],
-        "expected": 1024,
-        "category": "Scope"
-      },
-      {
-        "expr": ["Nest", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1, 3],
-        "expected": ["Rational", 577, 408],
-        "category": "Applications",
-        "caption": "Three Newton steps toward $\\sqrt{2}$"
-      }
-    ]
-  },
-  "NestList": {
-    "wolfram": "NestList",
-    "summary": "The list of x, f(x), f(f(x)), ... up to n applications of f.",
-    "signature": "NestList(f, x, n)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["NestList", "f", "x", 3],
-        "expected": ["List", "x", ["f", "x"], ["f", ["f", "x"]], ["f", ["f", ["f", "x"]]]]
-      },
-      {
-        "expr": ["NestList", ["Function", ["Multiply", 2, "_1"]], 1, 5],
-        "expected": ["List", 1, 2, 4, 8, 16, 32],
-        "caption": "Powers of 2"
-      },
-      {
-        "expr": ["NestList", ["Function", ["Mod", ["Multiply", 3, "_1"], 7]], 1, 6],
-        "expected": ["List", 1, 3, 2, 6, 4, 5, 1],
-        "category": "Applications",
-        "caption": "3 is a primitive root mod 7: its powers visit every nonzero residue"
-      },
-      {
-        "expr": ["NestList", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1, 3],
-        "expected": ["List", 1, ["Rational", 3, 2], ["Rational", 17, 12], ["Rational", 577, 408]],
-        "category": "Applications",
-        "caption": "Newton iterates converging to $\\sqrt{2}$"
-      },
-      {
-        "expr": ["NestList", "f", "x", 0],
-        "expected": ["List", "x"],
-        "category": "Scope",
-        "caption": "Zero steps: just the seed"
-      }
-    ]
-  },
   "NoneTrue": {
     "wolfram": "NoneTrue",
     "summary": "Whether no element of a collection satisfies a predicate.",
@@ -2018,52 +1557,6 @@
         "expected": ["List", -100, -20, -3],
         "category": "Scope",
         "caption": "every term carries the sign"
-      }
-    ]
-  },
-  "Outer": {
-    "wolfram": "Outer",
-    "summary": "The generalized outer product: f applied to every pair drawn from two lists.",
-    "signature": "Outer(f, list1, list2)",
-    "home": "collections",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Outer", "Multiply", ["List", 1, 2, 3], ["List", 1, 2]],
-        "expected": ["List", ["List", 1, 2], ["List", 2, 4], ["List", 3, 6]],
-        "caption": "The outer product of two vectors, a $3 \\times 2$ matrix"
-      },
-      {
-        "expr": ["Outer", "Multiply", ["List", 1, 2, 3], ["List", "x", "y"]],
-        "expected": [
-          "List",
-          ["List", "x", "y"],
-          ["List", ["Multiply", 2, "x"], ["Multiply", 2, "y"]],
-          ["List", ["Multiply", 3, "x"], ["Multiply", 3, "y"]]
-        ],
-        "caption": "Symbolic entries"
-      },
-      {
-        "expr": ["Outer", "Add", ["List", 1, 2], ["List", 10, 20]],
-        "expected": ["List", ["List", 11, 21], ["List", 12, 22]],
-        "category": "Scope",
-        "caption": "Any binary function: an addition table"
-      },
-      {
-        "expr": ["Outer", "Power", ["List", 2, 3], ["List", 1, 2, 3]],
-        "expected": ["List", ["List", 2, 4, 8], ["List", 3, 9, 27]],
-        "category": "Scope",
-        "caption": "A table of powers"
-      },
-      {
-        "expr": ["Outer", "List", ["List", "a", "b"], ["List", "x", "y"]],
-        "expected": [
-          "List",
-          ["List", ["List", "a", "x"], ["List", "a", "y"]],
-          ["List", ["List", "b", "x"], ["List", "b", "y"]]
-        ],
-        "category": "Scope",
-        "caption": "$List$ gives every pair, like a Cartesian product"
       }
     ]
   },
@@ -2325,42 +1818,6 @@
       }
     ]
   },
-  "RealAbs": {
-    "wolfram": "RealAbs",
-    "summary": "The absolute value of a real number x, as a function defined only on the reals.",
-    "signature": "RealAbs(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["RealAbs", -2.5],
-        "expected": 2.5,
-        "caption": "The absolute value of a real number"
-      },
-      {
-        "expr": ["RealAbs", ["Rational", -7, 2]],
-        "expected": ["Rational", 7, 2]
-      },
-      {
-        "expr": ["RealAbs", ["List", -1, 2, -3]],
-        "expected": ["List", 1, 2, 3],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["RealAbs", ["Negate", "Pi"]],
-        "expected": "Pi",
-        "category": "Scope",
-        "caption": "Exact numeric arguments"
-      },
-      {
-        "expr": ["Equal", ["RealAbs", -5], ["Abs", -5]],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "Agrees with [[Abs]] on the reals"
-      }
-    ]
-  },
   "RealDigits": {
     "wolfram": "RealDigits",
     "summary": "The digits of a real number and the position of its decimal point, with the repeating block of a rational marked as a sublist.",
@@ -2411,82 +1868,6 @@
         "expected": ["List", ["List", 1, 2, 3, 4, 5, 6], 6],
         "category": "Scope",
         "caption": "an integer: six digits before the point"
-      }
-    ]
-  },
-  "RealSign": {
-    "wolfram": "RealSign",
-    "summary": "The sign of a real number x: -1, 0 or 1, as a function defined only on the reals.",
-    "signature": "RealSign(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["RealSign", -3],
-        "expected": -1
-      },
-      {
-        "expr": ["RealSign", 0],
-        "expected": 0
-      },
-      {
-        "expr": ["RealSign", 2.5],
-        "expected": 1
-      },
-      {
-        "expr": ["RealSign", ["List", -2, 0, 5]],
-        "expected": ["List", -1, 0, 1],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["RealSign", ["Subtract", ["Sqrt", 2], 2]],
-        "expected": -1,
-        "category": "Scope",
-        "caption": "Decides the sign of an exact numeric expression"
-      }
-    ]
-  },
-  "RecurrenceTable": {
-    "wolfram": "RecurrenceTable",
-    "summary": "A table of the values of a sequence defined by a recurrence equation and initial conditions.",
-    "signature": "RecurrenceTable(eqns, a, [n, nmin, nmax])",
-    "home": "collections",
-    "neededBy": ["Fibonacci"],
-    "examples": [
-      {
-        "expr": [
-          "RecurrenceTable",
-          [
-            "List",
-            ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]],
-            ["Equal", ["a", 1], 7]
-          ],
-          "a",
-          ["List", "n", 1, 5]
-        ],
-        "expected": ["List", 7, 21, 63, 189, 567],
-        "caption": "a geometric sequence"
-      },
-      {
-        "expr": [
-          "RecurrenceTable",
-          [
-            "List",
-            [
-              "Equal",
-              ["a", "n"],
-              ["Add", ["a", ["Subtract", "n", 1]], ["a", ["Subtract", "n", 2]]]
-            ],
-            ["Equal", ["a", 1], 1],
-            ["Equal", ["a", 2], 1]
-          ],
-          "a",
-          ["List", "n", 1, 10]
-        ],
-        "expected": ["List", 1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
-        "category": "Scope",
-        "caption": "the Fibonacci recurrence"
       }
     ]
   },
@@ -2725,52 +2106,6 @@
         "expr": ["SquaresR", 8, 3],
         "expected": 448,
         "category": "Scope"
-      }
-    ]
-  },
-  "UnitStep": {
-    "wolfram": "UnitStep",
-    "summary": "The unit step function: 0 for x < 0 and 1 for x >= 0.",
-    "signature": "UnitStep(x1, x2, ...)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["UnitStep", -1],
-        "expected": 0
-      },
-      {
-        "expr": ["UnitStep", 0],
-        "expected": 1,
-        "caption": "1 at 0, unlike Heaviside's 1/2"
-      },
-      {
-        "expr": ["UnitStep", 2.5],
-        "expected": 1
-      },
-      {
-        "expr": ["UnitStep", ["List", -1, 0, 1]],
-        "expected": ["List", 0, 1, 1],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["UnitStep", 1, 2],
-        "expected": 1,
-        "category": "Scope",
-        "caption": "Several arguments: the product of their unit steps"
-      },
-      {
-        "expr": ["UnitStep", 1, -1],
-        "expected": 0,
-        "category": "Scope",
-        "caption": "Zero as soon as any argument is negative"
-      },
-      {
-        "expr": ["UnitStep", ["Subtract", "Pi", 3]],
-        "expected": 1,
-        "category": "Scope",
-        "caption": "Exact numeric arguments"
       }
     ]
   },

@@ -34,6 +34,14 @@ import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeome
 import { declareHypergeometric } from "./hypergeometric.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
+import { declareCubeRoot } from "./cube-root.ts";
+import { declareIntegerFractionalPart } from "./integer-fractional-part.ts";
+import { declareRealAbsSign } from "./real-abs-sign.ts";
+import { declareUnitStep } from "./unit-step.ts";
+import { declareGudermannian } from "./gudermannian.ts";
+import { declareKhinchin } from "./khinchin.ts";
+import { declareHyperfactorial } from "./hyperfactorial.ts";
+import { declareKeiperLi } from "./keiper-li.ts";
 import { declareQSeries } from "./q-series.ts";
 import { declareRiemannSiegel } from "./riemann-siegel.ts";
 
@@ -534,6 +542,10 @@ function evaluateLerch(
  * `Hypergeometric2F1Regularized` and `Hypergeometric3F2Regularized` in
  * hypergeometric.ts; and, in matrix-exp.ts, `MatrixExp`.
  *
+ * Also declares, each in its own file: `CubeRoot` (cube-root.ts); `IntegerPart` and
+ * `FractionalPart` (integer-fractional-part.ts); `RealAbs` and `RealSign`
+ * (real-abs-sign.ts); `UnitStep` (unit-step.ts); `Gudermannian` (gudermannian.ts); the
+ * `Khinchin` constant (khinchin.ts); and `Hyperfactorial` (hyperfactorial.ts).
  * Also, in q-series.ts, the q-analogues `QPochhammer`, `QFactorial`, `QBinomial`;
  * and, in riemann-siegel.ts, `RiemannSiegelTheta`, `RiemannSiegelZ`, `RiemannZetaZero`.
  */
@@ -644,6 +656,14 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHypergeometricU(ce);
   declareHypergeometric(ce);
   declareMatrixExp(ce);
+  declareCubeRoot(ce);
+  declareIntegerFractionalPart(ce);
+  declareRealAbsSign(ce);
+  declareUnitStep(ce);
+  declareGudermannian(ce);
+  declareKhinchin(ce);
+  declareHyperfactorial(ce);
+  declareKeiperLi(ce);
   declareQSeries(ce);
   declareRiemannSiegel(ce);
 }

@@ -93,10 +93,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 56,
   },
   {
-    head: "Association",
-    uses: 56,
-  },
-  {
     head: "With",
     uses: 55,
   },
@@ -134,10 +130,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ComplexExpand",
-    uses: 35,
-  },
-  {
-    head: "NestList",
     uses: 35,
   },
   {
@@ -229,10 +221,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 19,
   },
   {
-    head: "Nest",
-    uses: 19,
-  },
-  {
     head: "ParametricPlot3D",
     uses: 19,
   },
@@ -270,10 +258,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MeijerGReduce",
-    uses: 17,
-  },
-  {
-    head: "Outer",
     uses: 17,
   },
   {
@@ -354,10 +338,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "NestWhile",
-    uses: 13,
-  },
-  {
-    head: "UnitStep",
     uses: 13,
   },
   {
@@ -522,10 +502,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Expectation",
-    uses: 7,
-  },
-  {
-    head: "FractionalPart",
     uses: 7,
   },
   {
@@ -734,10 +710,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ProbabilityDistribution",
-    uses: 5,
-  },
-  {
-    head: "RealAbs",
     uses: 5,
   },
   {
