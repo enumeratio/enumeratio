@@ -38,8 +38,14 @@ export const createSessionWorker: WorkerFactory = () =>
     { type: "module" },
   ) as unknown as WorkerLike;
 
-export const createSessionSharedWorker: SharedWorkerFactory = (_url, options) =>
+// Vite's worker plugin requires the WHOLE options object at the call site to be a
+// static literal, not just the URL -- `{ name: options.name, type: "module" }` fails
+// the same way a computed URL does ("Vite is unable to parse the worker options as the
+// value is not static"). This drops `name` (multi-tab session sharing) rather than
+// working around it: `notatio-dynamic-module.ts` never passes one today (each module
+// gets its own private session, per its own comment), so there is nothing to preserve.
+export const createSessionSharedWorker: SharedWorkerFactory = () =>
   new SharedWorker(
     new URL("../../../packages/aestimatio/src/browser-session-worker.ts", import.meta.url),
-    { name: options.name, type: "module" },
+    { type: "module" },
   ) as unknown as ReturnType<SharedWorkerFactory>;
