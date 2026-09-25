@@ -594,6 +594,35 @@ const NOVEL = [
   "RandomInteger",
   "SeedRandom",
   "SparseArray",
+  // Graphs (packages/symbols/combinatorics/collections/src/graphs.ts): every one of these
+  // is genuinely Wolfram's own (see HEADS in @enumeratio/wolfram), but same story as
+  // FirstPosition/Prepend above -- this offline suite has no kernel to confirm it.
+  "UndirectedEdge",
+  "DirectedEdge",
+  "Graph",
+  "VertexList",
+  "EdgeList",
+  "VertexCount",
+  "EdgeCount",
+  "VertexDegree",
+  "AdjacencyMatrix",
+  "IncidenceMatrix",
+  "CompleteGraph",
+  "PathGraph",
+  "CycleGraph",
+  "StarGraph",
+  "GridGraph",
+  "HypercubeGraph",
+  "CompleteKaryTree",
+  "PetersenGraph",
+  "ConnectedComponents",
+  "IsConnectedGraph",
+  "FindShortestPath",
+  "GraphDistance",
+  "IsTreeGraph",
+  "IsBipartiteGraph",
+  "NeighborhoodGraph",
+  "Subgraph",
 ];
 
 test("every head we invented is either novel or known to exist elsewhere", () => {

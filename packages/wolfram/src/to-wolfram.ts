@@ -433,6 +433,38 @@ export const HEADS: Record<string, string> = {
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 
+  // Graphs (packages/symbols/combinatorics/collections/src/graphs.ts). Wolfram's InputForm
+  // prints UndirectedEdge/DirectedEdge infix (`1 <-> 2`, `1 -> 2`); `Head[args]` call form
+  // is equivalent WL syntax and evaluates identically, so a plain rename is enough here —
+  // no SPECIAL entry needed. `ConnectedGraphQ`/`TreeGraphQ`/`BipartiteGraphQ` are Wolfram's
+  // names for what we spell `Is…` (same convention as `IsPrime: "PrimeQ"` above).
+  UndirectedEdge: "UndirectedEdge",
+  DirectedEdge: "DirectedEdge",
+  Graph: "Graph",
+  VertexList: "VertexList",
+  EdgeList: "EdgeList",
+  VertexCount: "VertexCount",
+  EdgeCount: "EdgeCount",
+  VertexDegree: "VertexDegree",
+  AdjacencyMatrix: "AdjacencyMatrix",
+  IncidenceMatrix: "IncidenceMatrix",
+  CompleteGraph: "CompleteGraph",
+  PathGraph: "PathGraph",
+  CycleGraph: "CycleGraph",
+  StarGraph: "StarGraph",
+  GridGraph: "GridGraph",
+  HypercubeGraph: "HypercubeGraph",
+  CompleteKaryTree: "CompleteKaryTree",
+  PetersenGraph: "PetersenGraph",
+  ConnectedComponents: "ConnectedComponents",
+  IsConnectedGraph: "ConnectedGraphQ",
+  FindShortestPath: "FindShortestPath",
+  GraphDistance: "GraphDistance",
+  IsTreeGraph: "TreeGraphQ",
+  IsBipartiteGraph: "BipartiteGraphQ",
+  NeighborhoodGraph: "NeighborhoodGraph",
+  Subgraph: "Subgraph",
+
   // ── notatio's graphics and control heads (`@enumeratio/formats/src/graphics.ts`) ──
   //
   // Deliberately Wolfram-named: "Wolfram's `Plot`, `Histogram`, `Manipulate` print as

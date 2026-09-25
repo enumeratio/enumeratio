@@ -1,0 +1,17 @@
+name: VertexList
+domain: Collections
+signature: VertexList(g)
+summary: The vertices of a [[Graph]], in first-appearance order.
+signatures:
+  - call: VertexList(g)
+    description: every vertex of $g$, in the order [[Graph]]'s doc describes.
+    library: enumeratio-collections
+examples:
+  - id: vertices-of-a-path
+    expr: [VertexList, [Graph, [List, [UndirectedEdge, 3, 1], [UndirectedEdge, 1, 2]]]]
+    expected: [List, 3, 1, 2]
+    caption: Vertices of a path, in first-appearance order
+seeAlso:
+  - Graph
+  - EdgeList
+  - VertexCount

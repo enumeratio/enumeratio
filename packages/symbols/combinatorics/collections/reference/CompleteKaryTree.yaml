@@ -1,0 +1,24 @@
+name: CompleteKaryTree
+domain: Collections
+signature: CompleteKaryTree(n, k)
+summary: The complete $k$-ary tree with $n$ vertices, filled level by level (a heap layout).
+signatures:
+  - call: CompleteKaryTree(n)
+    description: binary ($k = 2$); vertex $i$'s children are $2i, 2i+1$, whichever are $\leq n$.
+    library: enumeratio-collections
+  - call: CompleteKaryTree(n, k)
+    description: vertex $i$'s children are $k(i-1)+2, \dots, k(i-1)+k+1$, whichever are $\leq n$.
+    library: enumeratio-collections
+    arity: 2
+examples:
+  - id: a-10-vertex-binary-tree-is-a-tree
+    expr: [IsTreeGraph, [CompleteKaryTree, 10]]
+    expected: True
+    caption: A complete k-ary tree is always a tree ($n - 1$ edges, connected)
+  - id: root-degree-of-a-ternary-tree
+    expr: [VertexDegree, [CompleteKaryTree, 10, 3], 1]
+    expected: 3
+    caption: The root of a 10-vertex ternary tree has 3 children
+seeAlso:
+  - StarGraph
+  - IsTreeGraph

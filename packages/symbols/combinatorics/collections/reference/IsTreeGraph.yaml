@@ -1,0 +1,30 @@
+name: IsTreeGraph
+domain: Collections
+signature: IsTreeGraph(g)
+summary: Whether a [[Graph]] is a tree — connected, with exactly $|V| - 1$ edges.
+signatures:
+  - call: IsTreeGraph(g)
+    description: true iff $g$ is connected (underlying, direction ignored) and has exactly
+      $|V(g)| - 1$ edges — the standard connected-plus-edge-count tree test.
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `TreeGraphQ`; this library uses the `Is…` spelling everywhere.
+examples:
+  - id: a-star-is-a-tree
+    expr: [IsTreeGraph, [StarGraph, 5]]
+    expected: True
+  - id: a-cycle-is-not-a-tree
+    expr: [IsTreeGraph, [CycleGraph, 4]]
+    expected: False
+    caption: One too many edges to be a tree
+  - id: a-disconnected-forest-is-not-a-tree
+    expr:
+      [
+        IsTreeGraph,
+        [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]],
+      ]
+    expected: False
+    caption: Right edge count, but two components
+seeAlso:
+  - IsConnectedGraph
+  - CompleteKaryTree

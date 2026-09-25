@@ -1,0 +1,25 @@
+name: IsConnectedGraph
+domain: Collections
+signature: IsConnectedGraph(g)
+summary: Whether a [[Graph]] is connected — a single component, ignoring edge direction.
+signatures:
+  - call: IsConnectedGraph(g)
+    description: true iff [[ConnectedComponents]] has exactly one component (false for a graph
+      with no vertices).
+    library: enumeratio-collections
+details:
+  - Wolfram calls this `ConnectedGraphQ`; this library uses the `Is…` spelling everywhere.
+examples:
+  - id: petersen-is-connected
+    expr: [IsConnectedGraph, [PetersenGraph]]
+    expected: True
+  - id: two-disjoint-edges-are-not-connected
+    expr:
+      [
+        IsConnectedGraph,
+        [Graph, [List, 1, 2, 3, 4], [List, [UndirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]],
+      ]
+    expected: False
+seeAlso:
+  - ConnectedComponents
+  - IsTreeGraph

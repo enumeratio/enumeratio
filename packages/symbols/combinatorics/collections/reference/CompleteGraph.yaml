@@ -1,0 +1,17 @@
+name: CompleteGraph
+domain: Collections
+signature: CompleteGraph(n)
+summary: The complete graph $K_n$ — every pair of the $n$ vertices joined by an edge.
+signatures:
+  - call: CompleteGraph(n)
+    description: $K_n$, with vertices $1, \dots, n$.
+    library: enumeratio-collections
+examples:
+  - id: k4
+    expr: [EdgeCount, [CompleteGraph, 4]]
+    expected: 6
+    caption: "$K_4$ has $\\binom{4}{2} = 6$ edges"
+seeAlso:
+  - PathGraph
+  - CycleGraph
+  - StarGraph

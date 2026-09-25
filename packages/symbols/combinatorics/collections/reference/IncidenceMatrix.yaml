@@ -1,0 +1,24 @@
+name: IncidenceMatrix
+domain: Collections
+signature: IncidenceMatrix(g)
+summary: The vertex-by-edge incidence matrix of a [[Graph]].
+signatures:
+  - call: IncidenceMatrix(g)
+    description: row = vertex (in [[VertexList]] order), column = edge (in [[EdgeList]] order).
+      An undirected edge puts 1 in both its endpoints' rows; a directed edge puts -1 at its
+      source and 1 at its target.
+    library: enumeratio-collections
+details:
+  - Returned as a plain matrix (a list of lists), same convention as [[AdjacencyMatrix]].
+examples:
+  - id: incidence-matrix-of-a-mixed-graph
+    expr:
+      [
+        IncidenceMatrix,
+        [Graph, [List, 1, 2, 3], [List, [UndirectedEdge, 1, 2], [DirectedEdge, 2, 3]]],
+      ]
+    expected: [List, [List, 1, 0], [List, 1, -1], [List, 0, 1]]
+    caption: One undirected edge, one directed edge
+seeAlso:
+  - AdjacencyMatrix
+  - EdgeList

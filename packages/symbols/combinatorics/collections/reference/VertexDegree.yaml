@@ -1,0 +1,28 @@
+name: VertexDegree
+domain: Collections
+signature: VertexDegree(g, v)
+summary: How many edge-ends meet a vertex — direction-blind (a self-loop counts twice).
+signatures:
+  - call: VertexDegree(g)
+    description: the degree of every vertex of $g$, as a list in [[VertexList]] order.
+    library: enumeratio-collections
+  - call: VertexDegree(g, v)
+    description: the degree of $v$ alone.
+    library: enumeratio-collections
+    arity: 2
+details:
+  - Total degree, in and out combined — a directed edge counts once at each endpoint,
+    same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check
+    against an independently-computed sum on random graphs.
+examples:
+  - id: degrees-around-a-path
+    expr: [VertexDegree, [PathGraph, 5]]
+    expected: [List, 1, 2, 2, 2, 1]
+    caption: A 5-vertex path — the two ends have degree 1, the rest degree 2
+  - id: the-degree-of-one-vertex
+    expr: [VertexDegree, [StarGraph, 6], 1]
+    expected: 5
+    caption: The centre of a 6-vertex star has degree 5
+seeAlso:
+  - AdjacencyMatrix
+  - Graph
