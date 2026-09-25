@@ -193,10 +193,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 31,
   },
   {
-    head: "Inequality",
-    uses: 30,
-  },
-  {
     head: "Reap",
     uses: 30,
   },
@@ -274,10 +270,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Attributes",
-    uses: 21,
-  },
-  {
-    head: "FindInstance",
     uses: 21,
   },
   {
@@ -399,10 +391,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "WienerProcess",
     uses: 17,
-  },
-  {
-    head: "CharacteristicFunction",
-    uses: 16,
   },
   {
     head: "Cylinder",
@@ -1322,10 +1310,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Matrices",
-    uses: 4,
-  },
-  {
-    head: "MomentGeneratingFunction",
     uses: 4,
   },
   {

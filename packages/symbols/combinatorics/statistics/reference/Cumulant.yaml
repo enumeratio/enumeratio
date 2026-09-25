@@ -4,10 +4,11 @@ signature: Cumulant(dist, r)
 summary: The cumulant $\kappa_r$.
 signatures:
   - call: Cumulant(dist, r)
-    description: exact for $r=1$ (=[[Mean]]) and $r=2$ (=[[Variance]]) — the only two orders with a formula that doesn't need higher raw moments this generic layer doesn't have. $r=0$ and $r\geq 3$ stay unevaluated.
+    description: exact for $r=1$ (=[[Mean]]) and $r=2$ (=[[Variance]]) for every distribution — the only two orders with a formula that doesn't need higher raw moments this generic layer doesn't have. $r=0$ and $r\geq 3$ stay unevaluated EXCEPT [[PoissonDistribution]], whose every cumulant equals its rate.
     library: enumeratio-statistics
 details:
   - Generic over every distribution this package's [[Mean]]/[[Variance]] answer, old or new.
+  - '[[PoissonDistribution]]($\lambda$): $\log E[e^{tX}] = \lambda(e^t-1)$, whose Taylor coefficients are all $\lambda$ — so $Cumulant(\lambda, r) = \lambda$ at every order $r\geq1$, not just $r\leq2$.'
 examples:
   - id: cumulant-order-1-is-mean
     expr: [Cumulant, [ChiSquareDistribution, 3], 1]
@@ -15,6 +16,9 @@ examples:
   - id: cumulant-order-2-is-variance
     expr: [Cumulant, [ChiSquareDistribution, 3], 2]
     expected: 6
+  - id: cumulant-poisson-order-5
+    expr: [Cumulant, [PoissonDistribution, 3], 5]
+    expected: 3
 seeAlso:
   - Moment
   - CentralMoment
