@@ -11,7 +11,7 @@ import {
   realCompile,
   wantsNumber,
 } from "./box.ts";
-import { add, cexp, cpow, cx, type Cx, mul, scale } from "./complex.ts";
+import { add, cexp, clog, cpow, cx, type Cx, mul, scale } from "./complex.ts";
 import { logGamma } from "./loggamma.ts";
 import { lerchPhi } from "./lerch.ts";
 import { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
@@ -69,16 +69,13 @@ function cpowInto(zr: number, zi: number, wr: number, wi: number): void {
 }
 
 /**
- * Numeric ζ(s, a) for complex s, a via Euler–Maclaurin. Terms where (n+a)=0 (a a
- * nonpositive integer) are dropped, matching Wolfram's `HurwitzZeta`, which omits
- * the singular term rather than diverging there. Returns a non-finite part at the
- * s=1 pole.
+ * Euler–Maclaurin for ζ(s, a); see `hurwitzZeta`, which calls it.
  *
  * Hot path: all complex arithmetic is inlined on primitive locals (no per-term
  * object allocation). The math is identical to the `Cx`-helper form; see
  * `zetaGeneralized` for the readable version of the same operations.
  */
-export function hurwitzZeta(s: Cx, a: Cx): Cx {
+function hurwitzEM(s: Cx, a: Cx): Cx {
   const sRe = s.re;
   const sIm = s.im;
   const aRe = a.re;
@@ -141,24 +138,54 @@ export function hurwitzZeta(s: Cx, a: Cx): Cx {
   return { re: sumR, im: sumI };
 }
 
+/** Below this a, a positive integer, Re(s) < 0 reflects rather than direct-summing. */
+const REFLECT_MAX_A = 32;
+
 /**
- * Numeric Riemann ζ(s) = ζ(s, 1) for complex s. Left of Re(s) = 0 the Euler–Maclaurin
- * direct terms grow like N^(−Re s) and cancel down to an O(1) result, so there it takes the
- * functional equation ζ(s) = 2ˢ πˢ⁻¹ sin(πs/2) Γ(1−s) ζ(1−s) instead, with the 2ˢπˢ⁻¹Γ(1−s)
- * magnitudes combined as logs.
+ * Numeric ζ(s, a) for complex s, a. Terms where (n+a)=0 (a a nonpositive integer) are
+ * dropped, matching Wolfram's `HurwitzZeta`, which omits the singular term rather than
+ * diverging there. Returns a non-finite part at the s=1 pole.
+ *
+ * Euler–Maclaurin (`hurwitzEM`), except left of Re(s) = 0 at a small positive integer a:
+ * there the direct terms grow like N^(−Re s) and cancel down to an O(1) result, so
+ * ζ(s, m) = ζ(s) − Σ_{k<m} k^(−s) takes ζ(s) from the functional equation instead.
  */
-export function riemannZeta(s: Cx): Cx {
-  const one = cx(1, 0);
-  if (s.re >= 0) return hurwitzZeta(s, one);
-  const reflected = cx(1 - s.re, -s.im);
-  const logFactor = add(
+export function hurwitzZeta(s: Cx, a: Cx): Cx {
+  if (s.re >= 0 || a.im !== 0 || !Number.isInteger(a.re) || a.re < 1 || a.re > REFLECT_MAX_A)
+    return hurwitzEM(s, a);
+  let z = reflectedZeta(s);
+  for (let k = 1; k < a.re; k++) {
+    cpowInto(k, 0, -s.re, -s.im);
+    z = cx(z.re - _pr, z.im - _pi);
+  }
+  return z;
+}
+
+/**
+ * ζ(s) = 2ˢ πˢ⁻¹ sin(πs/2) Γ(1−s) ζ(1−s), for Re(s) < 0. Every factor but ζ(1−s) is taken
+ * as a log and summed, so the huge Γ and sin at large |s| never meet outside exp.
+ */
+function reflectedZeta(s: Cx): Cx {
+  const r = cx(1 - s.re, -s.im);
+  const log = add(
     add(scale(s, Math.LN2), scale(cx(s.re - 1, s.im), Math.log(Math.PI))),
-    logGamma(reflected),
+    add(logGamma(r), logSin(scale(s, Math.PI / 2))),
   );
-  const x = (Math.PI / 2) * s.re;
-  const y = (Math.PI / 2) * s.im;
-  const sinHalf = cx(Math.sin(x) * Math.cosh(y), Math.cos(x) * Math.sinh(y));
-  return mul(mul(cexp(logFactor), sinHalf), hurwitzZeta(reflected, one));
+  return mul(cexp(log), hurwitzEM(r, cx(1, 0)));
+}
+
+/**
+ * ln sin w, up to 2πi. For Im w ≥ 0, sin w = (i/2)·e^(−iw)·(1 − e^(2iw)) with |e^(2iw)| ≤ 1,
+ * so nothing overflows however large Im w is; below the axis, sin w̄ = conj(sin w).
+ */
+function logSin(w: Cx): Cx {
+  if (w.im < 0) {
+    const c = logSin(cx(w.re, -w.im));
+    return cx(c.re, -c.im);
+  }
+  const u = cexp(cx(-2 * w.im, 2 * w.re)); // e^(2iw)
+  const l = clog(cx(1 - u.re, -u.im));
+  return cx(w.im + l.re - Math.LN2, -w.re + l.im + Math.PI / 2);
 }
 
 /**
@@ -251,9 +278,7 @@ function evaluateHurwitz(
 
   // Numeric Euler–Maclaurin for everything else — only when a number is asked for.
   if (numeric && isFiniteNum(s) && isFiniteNum(a)) {
-    const sc = { re: s.re, im: s.im };
-    const ac = { re: a.re, im: a.im };
-    return numberResult(ce, ac.re === 1 && ac.im === 0 ? riemannZeta(sc) : hurwitzZeta(sc, ac));
+    return numberResult(ce, hurwitzZeta({ re: s.re, im: s.im }, { re: a.re, im: a.im }));
   }
 
   return undefined; // stay symbolic
