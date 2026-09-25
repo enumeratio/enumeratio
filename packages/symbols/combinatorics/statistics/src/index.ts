@@ -1,6 +1,7 @@
 export { applyDefinition, type DeclareOptions, declareStatistics } from "./declare.ts";
 export { declareDistributions } from "./distributions.ts";
 export { declareDistributions2 } from "./distributions-2.ts";
+export { declareDistributions3 } from "./distributions-3.ts";
 export { blessedName, RENAMED } from "./naming.ts";
 export { CARDINALITIES, type Cardinality } from "./cardinalities.ts";
 export { core, cycles, headUsage, tower } from "./core.ts";

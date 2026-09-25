@@ -20,3 +20,14 @@ cumulant-order-2-is-variance:
     in: Cumulant[ChiSquareDistribution[3], 2]
   wolfram:
     in: Cumulant[ChiSquareDistribution[3], 2]
+cumulant-poisson-order-5:
+  epsil:
+    in: Cumulant(PoissonDistribution(3), 5)
+    out: "3"
+  tex:
+    in: \mathrm{Cumulant}(\operatorname{PoissonDistribution}(3), 5)
+    out: "3"
+  fullform:
+    in: Cumulant[PoissonDistribution[3], 5]
+  wolfram:
+    in: Cumulant[PoissonDistribution[3], 5]

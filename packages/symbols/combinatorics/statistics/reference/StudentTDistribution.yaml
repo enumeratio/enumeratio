@@ -8,7 +8,7 @@ signatures:
     library: enumeratio-statistics
 details:
   - $PDF(x) = \dfrac{\Gamma((\nu+1)/2)}{\sqrt{\nu\pi}\,\Gamma(\nu/2)}\left(1+\dfrac{x^2}{\nu}\right)^{-(\nu+1)/2}$, exact.
-  - $CDF$ has no coded closed form — left unevaluated (see [[CauchyDistribution]] for the three-distribution list this applies to).
+  - $CDF(x) = \tfrac12 I_z(\nu/2, 1/2)$ for $x<0$, $1 - \tfrac12 I_z(\nu/2, 1/2)$ for $x\geq0$, where $z=\nu/(\nu+x^2)$ and $I$ is [[BetaRegularized]] — exact (Abramowitz & Stegun 26.7.1).
   - $Mean = 0$ unconditionally — exact only for $\nu>1$; a documented divergence for $\nu \leq 1$, where the mean is actually undefined.
   - $Variance = \nu/(\nu-2)$ unconditionally — exact only for $\nu>2$; same divergence policy for $\nu \leq 2$.
   - '[[RandomVariate]] samples $Z/\sqrt{V/\nu}$ for a standard normal $Z$ and an independent [[ChiSquareDistribution]]($\nu$) draw $V$.'
@@ -16,6 +16,9 @@ examples:
   - id: studentt-pdf-exact
     expr: [PDF, [StudentTDistribution, 5], 0]
     expected: [Divide, [Multiply, [Sqrt, 5], [Gamma, 3]], [Multiply, 5, [Gamma, [Rational, 5, 2]], [Sqrt, Pi]]]
+  - id: studentt-cdf-symmetric
+    expr: [CDF, [StudentTDistribution, 5], 0]
+    expected: [Rational, 1, 2]
   - id: studentt-mean-exact
     expr: [Mean, [StudentTDistribution, 5]]
     expected: 0

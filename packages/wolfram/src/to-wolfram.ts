@@ -371,6 +371,10 @@ export const HEADS: Record<string, string> = {
   FactorialMoment: "FactorialMoment",
   Cumulant: "Cumulant",
   InverseCDF: "InverseCDF",
+  // Third-wave distribution heads (@enumeratio/statistics/src/distributions-3.ts) —
+  // identity here already.
+  CharacteristicFunction: "CharacteristicFunction",
+  MomentGeneratingFunction: "MomentGeneratingFunction",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",
