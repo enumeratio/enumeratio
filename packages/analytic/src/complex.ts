@@ -30,8 +30,11 @@ export const abs = (x: Cx): number => Math.hypot(x.re, x.im);
 export const isReal = (x: Cx, eps = 0): boolean => Math.abs(x.im) <= eps;
 
 /** Principal-branch complex logarithm: ln|z| + i·arg z, branch cut on (-∞, 0]. */
+// #113: LogGamma(10^300) — `Math.hypot`, not `sqrt(re² + im²)` by hand, since squaring
+// either component first overflows a double (and 1e300² does, long before ln|z| itself,
+// ~690, needs to) whenever |z| is bigger than about 1e154.
 export const clog = (z: Cx): Cx => ({
-  re: 0.5 * Math.log(z.re * z.re + z.im * z.im),
+  re: Math.log(Math.hypot(z.re, z.im)),
   im: Math.atan2(z.im, z.re),
 });
 
