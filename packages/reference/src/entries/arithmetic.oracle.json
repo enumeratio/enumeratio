@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "Abs[-5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| -5|",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "abs(-5)",
@@ -36,7 +40,11 @@
         "wolfram": {
           "input": "Abs[5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| 5|",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "abs(5)",
@@ -63,7 +71,11 @@
         "wolfram": {
           "input": "Abs[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| 0|",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "abs(0)",
@@ -90,7 +102,11 @@
         "wolfram": {
           "input": "Abs[Rational[-7, 2]]",
           "output": "7/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left| -\\frac{7}{2}\\right|",
+            "output": "\\frac{7}{2}"
+          }
         },
         "sage": {
           "input": "abs((-7/2))",
@@ -112,7 +128,11 @@
         "wolfram": {
           "input": "Abs[Complex[3, 4]]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| 3+4 i|",
+            "output": "5"
+          }
         },
         "mpmath": {
           "input": "fabs(mpc(3, 4))",
@@ -134,7 +154,11 @@
         "wolfram": {
           "input": "Abs[List[-1, 2, -3]]",
           "output": "{1, 2, 3}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| \\{-1,2,-3\\}|",
+            "output": "\\{1,2,3\\}"
+          }
         },
         "sage": {
           "input": "abs([-1, 2, -3])",
@@ -162,7 +186,11 @@
         "wolfram": {
           "input": "(Abs[-8] == Abs[8])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| -8| =| 8|",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(abs(-8) == abs(8))",
@@ -189,14 +217,22 @@
         "wolfram": {
           "input": "LessEqual[Abs[Plus[3, -8]], Plus[Abs[3], Abs[-8]]]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| 3-8| \\leq | 3| +| -8|",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Abs\",[\"Subtract\",70,95]]": {
         "wolfram": {
           "input": "Abs[Subtract[70, 95]]",
           "output": "25",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "| 70-95|",
+            "output": "25"
+          }
         },
         "sage": {
           "input": "abs((70 - 95))",
@@ -225,7 +261,11 @@
         "wolfram": {
           "input": "Sign[-3]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(-3)",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "sign(-3)",
@@ -247,7 +287,11 @@
         "wolfram": {
           "input": "Sign[3]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(3)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "sign(3)",
@@ -269,7 +313,11 @@
         "wolfram": {
           "input": "Sign[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(0)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "sign(0)",
@@ -291,7 +339,11 @@
         "wolfram": {
           "input": "Sign[Rational[-1, 2]]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}\\left(-\\frac{1}{2}\\right)",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "sign((-1/2))",
@@ -308,7 +360,11 @@
         "wolfram": {
           "input": "Sign[Complex[3, 4]]",
           "output": "3/5 + (4*I)/5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(3+4 i)",
+            "output": "\\frac{3}{5}+\\frac{4 i}{5}"
+          }
         },
         "mpmath": {
           "input": "sign(mpc(3, 4))",
@@ -332,7 +388,11 @@
         "wolfram": {
           "input": "Sign[List[-3, 0, 7]]",
           "output": "{-1, 0, 1}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(\\{-3,0,7\\})",
+            "output": "\\{-1,0,1\\}"
+          }
         },
         "sage": {
           "input": "sign([-3, 0, 7])",
@@ -353,7 +413,11 @@
         "wolfram": {
           "input": "(Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(3+4 i)=\\frac{3+4 i}{| 3+4 i| }",
+            "output": "\\text{True}"
+          }
         },
         "sympy": {
           "input": "enumeratio_equal(sign((3 + 4*I)), (S((3 + 4*I)) / Abs((3 + 4*I))))",
@@ -370,7 +434,11 @@
         "wolfram": {
           "input": "(Times[-5, Sign[-5]] == Abs[-5])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-5 \\text{sgn}(-5)=| -5|",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((-5 * sign(-5)) == abs(-5))",
@@ -392,7 +460,11 @@
         "wolfram": {
           "input": "Sign[Subtract[70, 95]]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(70-95)",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "sign((70 - 95))",
@@ -414,7 +486,11 @@
         "wolfram": {
           "input": "Sign[Indeterminate]",
           "output": "Indeterminate",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{sgn}(\\text{Indeterminate})",
+            "output": "\\text{Indeterminate}"
+          }
         }
       }
     },
@@ -423,7 +499,11 @@
         "wolfram": {
           "input": "Minus[5]",
           "output": "-5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-5",
+            "output": "-5"
+          }
         },
         "sage": {
           "input": "(-5)",
@@ -465,7 +545,11 @@
         "wolfram": {
           "input": "Minus[-5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-(-5)",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "(--5)",
@@ -507,7 +591,11 @@
         "wolfram": {
           "input": "Minus[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-0",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "(-0)",
@@ -549,7 +637,11 @@
         "wolfram": {
           "input": "Minus[Rational[3, 4]]",
           "output": "-3/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-\\frac{3}{4}",
+            "output": "-\\frac{3}{4}"
+          }
         },
         "sage": {
           "input": "(-(3/4))",
@@ -586,7 +678,11 @@
         "wolfram": {
           "input": "Minus[List[1, -2, 3]]",
           "output": "{-1, 2, -3}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-\\{1,-2,3\\}",
+            "output": "\\{-1,2,-3\\}"
+          }
         },
         "sage": {
           "input": "(-[1, -2, 3])",
@@ -629,7 +725,11 @@
         "wolfram": {
           "input": "Minus[42.5]",
           "output": "-42.5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-42.5",
+            "output": "-42.5"
+          }
         },
         "sage": {
           "input": "(-42.5)",
@@ -671,7 +771,11 @@
         "wolfram": {
           "input": "Minus[Infinity]",
           "output": "-Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "-\\infty",
+            "output": "-\\infty"
+          }
         }
       }
     },
@@ -680,7 +784,11 @@
         "wolfram": {
           "input": "(5)^2",
           "output": "25",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "5^2",
+            "output": "25"
+          }
         },
         "sage": {
           "input": "(5)^2",
@@ -702,7 +810,11 @@
         "wolfram": {
           "input": "(-5)^2",
           "output": "25",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(-5)^2",
+            "output": "25"
+          }
         },
         "sage": {
           "input": "(-5)^2",
@@ -724,7 +836,11 @@
         "wolfram": {
           "input": "(Rational[2, 3])^2",
           "output": "4/9",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{2}{3}\\right)^2",
+            "output": "\\frac{4}{9}"
+          }
         },
         "sage": {
           "input": "((2/3))^2",
@@ -741,7 +857,11 @@
         "wolfram": {
           "input": "(List[2, 3, -4])^2",
           "output": "{4, 9, 16}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\{2,3,-4\\}^2",
+            "output": "\\{4,9,16\\}"
+          }
         },
         "sage": {
           "input": "([2, 3, -4])^2",
@@ -762,7 +882,11 @@
         "wolfram": {
           "input": "((-5)^2 == (5)^2)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(-5)^2=5^2",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((-5)^2 == (5)^2)",
@@ -784,7 +908,11 @@
         "wolfram": {
           "input": "((Complex[1, 1])^2 == Complex[0, 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(1+i)^2=2 i",
+            "output": "\\text{True}"
+          }
         },
         "mpmath": {
           "input": "almosteq((mpc(1, 1))**2, mpc(0, 2), 1e-20)",
@@ -806,7 +934,11 @@
         "wolfram": {
           "input": "(3)^2",
           "output": "9",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "3^2",
+            "output": "9"
+          }
         },
         "sage": {
           "input": "(3)^2",
@@ -828,7 +960,11 @@
         "wolfram": {
           "input": "(Infinity)^2",
           "output": "Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\infty ^2",
+            "output": "\\infty"
+          }
         }
       }
     },
@@ -837,7 +973,11 @@
         "wolfram": {
           "input": "Sqrt[16]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{16}",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "sqrt(16)",
@@ -864,7 +1004,11 @@
         "wolfram": {
           "input": "Sqrt[2]",
           "output": "Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{2}",
+            "output": "\\sqrt{2}"
+          }
         },
         "sage": {
           "input": "sqrt(2)",
@@ -891,7 +1035,11 @@
         "wolfram": {
           "input": "Sqrt[Rational[4, 9]]",
           "output": "2/3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{\\frac{4}{9}}",
+            "output": "\\frac{2}{3}"
+          }
         },
         "sage": {
           "input": "sqrt((4/9))",
@@ -913,7 +1061,11 @@
         "wolfram": {
           "input": "Sqrt[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{0}",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "sqrt(0)",
@@ -940,7 +1092,11 @@
         "wolfram": {
           "input": "Sqrt[-4]",
           "output": "2*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{-4}",
+            "output": "2 i"
+          }
         },
         "sage": {
           "input": "sqrt(-4)",
@@ -969,7 +1125,11 @@
         "wolfram": {
           "input": "((Sqrt[16])^2 == 16)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{16}^2=16",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((sqrt(16))^2 == 16)",
@@ -991,7 +1151,11 @@
         "wolfram": {
           "input": "(Sqrt[16] == Power[16, Rational[1, 2]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{16}=16^{\\frac{1}{2}}",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(sqrt(16) == (16^(1/2)))",
@@ -1013,7 +1177,11 @@
         "wolfram": {
           "input": "Sqrt[Plus[(3)^2, (4)^2]]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{3^2+4^2}",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "sqrt(((3)^2 + (4)^2))",
@@ -1035,7 +1203,11 @@
         "wolfram": {
           "input": "Sqrt[-2]",
           "output": "I*Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{-2}",
+            "output": "i \\sqrt{2}"
+          }
         },
         "sage": {
           "input": "sqrt(-2)",
@@ -1064,7 +1236,11 @@
         "wolfram": {
           "input": "Sqrt[Rational[-4, 9]]",
           "output": "(2*I)/3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sqrt{-\\frac{4}{9}}",
+            "output": "\\frac{2 i}{3}"
+          }
         },
         "sage": {
           "input": "sqrt((-4/9))",
@@ -1090,14 +1266,22 @@
         "wolfram": {
           "input": "Power[27, Divide[1, 3]]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "27^{\\frac{1}{3}}",
+            "output": "3"
+          }
         }
       },
       "[\"Root\",16,4]": {
         "wolfram": {
           "input": "Power[16, Divide[1, 4]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "16^{\\frac{1}{4}}",
+            "output": "2"
+          }
         }
       },
       "[\"Root\",-8,3]": {
@@ -1106,49 +1290,77 @@
           "output": "2*(-1)^(1/3)",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Root(x, n) here is the real n-th root, so an odd root of a negative number stays real (-2); the transpiled Power[-8, 1/3] is Wolfram's principal complex root, 2(-1)^(1/3) = 1 + 1.732i. Wolfram's real root is Surd[-8, 3] = -2."
+          "note": "Root(x, n) here is the real n-th root, so an odd root of a negative number stays real (-2); the transpiled Power[-8, 1/3] is Wolfram's principal complex root, 2(-1)^(1/3) = 1 + 1.732i. Wolfram's real root is Surd[-8, 3] = -2.",
+          "tex": {
+            "input": "(-8)^{\\frac{1}{3}}",
+            "output": "2 \\sqrt[3]{-1}"
+          }
         }
       },
       "[\"Root\",2,3]": {
         "wolfram": {
           "input": "Power[2, Divide[1, 3]]",
           "output": "2^(1/3)",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "2^{\\frac{1}{3}}",
+            "output": "\\sqrt[3]{2}"
+          }
         }
       },
       "[\"Root\",16,-2]": {
         "wolfram": {
           "input": "Power[16, Divide[1, -2]]",
           "output": "1/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "16^{-\\frac{1}{2}}",
+            "output": "\\frac{1}{4}"
+          }
         }
       },
       "[\"Equal\",[\"Power\",[\"Root\",8,3],3],8]": {
         "wolfram": {
           "input": "(Power[Power[8, Divide[1, 3]], 3] == 8)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(8^{\\frac{1}{3}}\\right)^3=8",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Root\",16,2],[\"Sqrt\",16]]": {
         "wolfram": {
           "input": "(Power[16, Divide[1, 2]] == Sqrt[16])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "16^{\\frac{1}{2}}=\\sqrt{16}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Root\",1000,3]": {
         "wolfram": {
           "input": "Power[1000, Divide[1, 3]]",
           "output": "10",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "1000^{\\frac{1}{3}}",
+            "output": "10"
+          }
         }
       },
       "[\"Root\",-8,2]": {
         "wolfram": {
           "input": "Power[-8, Divide[1, 2]]",
           "output": "(2*I)*Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "(-8)^{\\frac{1}{2}}",
+            "output": "2 i \\sqrt{2}"
+          }
         }
       }
     },
@@ -1157,7 +1369,11 @@
         "wolfram": {
           "input": "Floor[Rational[7, 2]]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lfloor \\frac{7}{2}\\right\\rfloor",
+            "output": "3"
+          }
         },
         "sage": {
           "input": "floor((7/2))",
@@ -1179,7 +1395,11 @@
         "wolfram": {
           "input": "Floor[3.7]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lfloor 3.7\\rfloor",
+            "output": "3"
+          }
         },
         "sage": {
           "input": "floor(3.7)",
@@ -1206,7 +1426,11 @@
         "wolfram": {
           "input": "Floor[5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lfloor 5\\rfloor",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "floor(5)",
@@ -1233,7 +1457,11 @@
         "wolfram": {
           "input": "Floor[List[1.2, -1.2, 3.7]]",
           "output": "{1, -2, 3}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lfloor \\{1.2,-1.2,3.7\\}\\rfloor",
+            "output": "\\{1,-2,3\\}"
+          }
         },
         "sage": {
           "input": "floor([1.2, -1.2, 3.7])",
@@ -1261,7 +1489,11 @@
         "wolfram": {
           "input": "(Plus[Floor[Rational[7, 2]], 1] == Ceiling[Rational[7, 2]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lfloor \\frac{7}{2}\\right\\rfloor +1=\\left\\lceil \\frac{7}{2}\\right\\rceil",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((floor((7/2)) + 1) == ceil((7/2)))",
@@ -1283,7 +1515,11 @@
         "wolfram": {
           "input": "(Floor[Rational[-7, 2]] == Minus[Ceiling[Rational[7, 2]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lfloor -\\frac{7}{2}\\right\\rfloor =-\\left\\lceil \\frac{7}{2}\\right\\rceil",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(floor((-7/2)) == (-ceil((7/2))))",
@@ -1305,7 +1541,11 @@
         "wolfram": {
           "input": "Floor[Divide[17, 5]]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lfloor \\frac{17}{5}\\right\\rfloor",
+            "output": "3"
+          }
         },
         "sage": {
           "input": "floor((17 / 5))",
@@ -1327,7 +1567,11 @@
         "wolfram": {
           "input": "Floor[-3.2]",
           "output": "-4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lfloor -3.2\\rfloor",
+            "output": "-4"
+          }
         },
         "sage": {
           "input": "floor(-3.2)",
@@ -1354,7 +1598,11 @@
         "wolfram": {
           "input": "Floor[-Infinity]",
           "output": "-Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lfloor -\\infty \\rfloor",
+            "output": "-\\infty"
+          }
         }
       }
     },
@@ -1363,7 +1611,11 @@
         "wolfram": {
           "input": "Ceiling[Rational[7, 2]]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lceil \\frac{7}{2}\\right\\rceil",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "ceil((7/2))",
@@ -1385,7 +1637,11 @@
         "wolfram": {
           "input": "Ceiling[3.2]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lceil 3.2\\rceil",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "ceil(3.2)",
@@ -1412,7 +1668,11 @@
         "wolfram": {
           "input": "Ceiling[5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lceil 5\\rceil",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "ceil(5)",
@@ -1439,7 +1699,11 @@
         "wolfram": {
           "input": "Ceiling[List[1.2, -1.2, 3.7]]",
           "output": "{2, -1, 4}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lceil \\{1.2,-1.2,3.7\\}\\rceil",
+            "output": "\\{2,-1,4\\}"
+          }
         },
         "sage": {
           "input": "ceil([1.2, -1.2, 3.7])",
@@ -1467,7 +1731,11 @@
         "wolfram": {
           "input": "(Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lceil \\frac{7}{2}\\right\\rceil =\\left\\lfloor \\frac{7}{2}\\right\\rfloor +1",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(ceil((7/2)) == (floor((7/2)) + 1))",
@@ -1489,7 +1757,11 @@
         "wolfram": {
           "input": "(Ceiling[5] == Floor[5])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lceil 5\\rceil =\\lfloor 5\\rfloor",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(ceil(5) == floor(5))",
@@ -1516,7 +1788,11 @@
         "wolfram": {
           "input": "Ceiling[Divide[17, 5]]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left\\lceil \\frac{17}{5}\\right\\rceil",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "ceil((17 / 5))",
@@ -1538,7 +1814,11 @@
         "wolfram": {
           "input": "Ceiling[-3.7]",
           "output": "-3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lceil -3.7\\rceil",
+            "output": "-3"
+          }
         },
         "sage": {
           "input": "ceil(-3.7)",
@@ -1565,7 +1845,11 @@
         "wolfram": {
           "input": "Ceiling[Indeterminate]",
           "output": "Indeterminate",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\lceil \\text{Indeterminate}\\rceil",
+            "output": "\\text{Indeterminate}"
+          }
         }
       }
     },
@@ -1574,56 +1858,88 @@
         "wolfram": {
           "input": "Round[Rational[7, 2]]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}\\left[\\frac{7}{2}\\right]",
+            "output": "4"
+          }
         }
       },
       "[\"Round\",3.5]": {
         "wolfram": {
           "input": "Round[3.5]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}[3.5]",
+            "output": "4"
+          }
         }
       },
       "[\"Round\",5]": {
         "wolfram": {
           "input": "Round[5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}[5]",
+            "output": "5"
+          }
         }
       },
       "[\"Round\",3.14159,2]": {
         "wolfram": {
           "input": "Round[3.14159, Power[10, Minus[2]]]",
           "output": "157/50",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}\\left[3.14159,10^{-2}\\right]",
+            "output": "\\frac{157}{50}"
+          }
         }
       },
       "[\"Round\",[\"List\",1.5,-1.5,2.4]]": {
         "wolfram": {
           "input": "Round[List[1.5, -1.5, 2.4]]",
           "output": "{2, -2, 2}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}[\\{1.5,-1.5,2.4\\}]",
+            "output": "\\{2,-2,2\\}"
+          }
         }
       },
       "[\"Equal\",[\"Round\",1234,-2],1200]": {
         "wolfram": {
           "input": "(Round[1234, Power[10, Minus[-2]]] == 1200)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}\\left[1234,10^{-(-2)}\\right]=1200",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Round\",3.14159,0],[\"Round\",3.14159]]": {
         "wolfram": {
           "input": "(Round[3.14159, Power[10, Minus[0]]] == Round[3.14159])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}\\left[3.14159,10^{-0}\\right]=\\text{Round}[3.14159]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Round\",19.995,2]": {
         "wolfram": {
           "input": "Round[19.995, Power[10, Minus[2]]]",
           "output": "20",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Round}\\left[19.995,10^{-2}\\right]",
+            "output": "20"
+          }
         }
       },
       "[\"Round\",2.5]": {
@@ -1632,7 +1948,11 @@
           "output": "2",
           "verdict": "disagree",
           "kind": "rounding-mode",
-          "note": "Ties round away from zero here (2.5 → 3); Wolfram rounds half to even (2.5 → 2)."
+          "note": "Ties round away from zero here (2.5 → 3); Wolfram rounds half to even (2.5 → 2).",
+          "tex": {
+            "input": "\\text{Round}[2.5]",
+            "output": "2"
+          }
         }
       },
       "[\"Round\",-2.5]": {
@@ -1641,7 +1961,11 @@
           "output": "-2",
           "verdict": "disagree",
           "kind": "rounding-mode",
-          "note": "Ties round away from zero here (-2.5 → -3); Wolfram rounds half to even (-2.5 → -2)."
+          "note": "Ties round away from zero here (-2.5 → -3); Wolfram rounds half to even (-2.5 → -2).",
+          "tex": {
+            "input": "\\text{Round}[-2.5]",
+            "output": "-2"
+          }
         }
       }
     },
@@ -1650,42 +1974,66 @@
         "wolfram": {
           "input": "Clip[5, List[0, 3]]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Clip}[5,\\{0,3\\}]",
+            "output": "3"
+          }
         }
       },
       "[\"Clamp\",-1,0,3]": {
         "wolfram": {
           "input": "Clip[-1, List[0, 3]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Clip}[-1,\\{0,3\\}]",
+            "output": "0"
+          }
         }
       },
       "[\"Clamp\",2,0,3]": {
         "wolfram": {
           "input": "Clip[2, List[0, 3]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Clip}[2,\\{0,3\\}]",
+            "output": "2"
+          }
         }
       },
       "[\"Equal\",[\"Clamp\",[\"Clamp\",5,0,3],0,3],[\"Clamp\",5,0,3]]": {
         "wolfram": {
           "input": "(Clip[Clip[5, List[0, 3]], List[0, 3]] == Clip[5, List[0, 3]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Clip}[\\text{Clip}[5,\\{0,3\\}],\\{0,3\\}]=\\text{Clip}[5,\\{0,3\\}]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Clamp\",112,0,100]": {
         "wolfram": {
           "input": "Clip[112, List[0, 100]]",
           "output": "100",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Clip}[112,\\{0,100\\}]",
+            "output": "100"
+          }
         }
       },
       "[\"Clamp\",5,3,0]": {
         "wolfram": {
           "input": "Clip[5, List[3, 0]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Clip}[5,\\{3,0\\}]",
+            "output": "0"
+          }
         }
       }
     },
@@ -1694,49 +2042,77 @@
         "wolfram": {
           "input": "Chop[1.2]",
           "output": "1.2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}[1.2]",
+            "output": "1.2"
+          }
         }
       },
       "[\"Chop\",1e-11]": {
         "wolfram": {
           "input": "Chop[1*^-11]",
           "output": "1/100000000000",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}\\left[\\frac{1}{100000000000}\\right]",
+            "output": "\\frac{1}{100000000000}"
+          }
         }
       },
       "[\"Chop\",-1e-11]": {
         "wolfram": {
           "input": "Chop[-1*^-11]",
           "output": "-1/100000000000",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}\\left[-\\frac{1}{100000000000}\\right]",
+            "output": "-\\frac{1}{100000000000}"
+          }
         }
       },
       "[\"Chop\",[\"Complex\",1e-12,3]]": {
         "wolfram": {
           "input": "Chop[Complex[1*^-12, 3]]",
           "output": "1/1000000000000 + 3*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}\\left[\\frac{1}{1000000000000}+3 i\\right]",
+            "output": "\\frac{1}{1000000000000}+3 i"
+          }
         }
       },
       "[\"Chop\",[\"Subtract\",[\"Multiply\",3,[\"N\",[\"Divide\",1,3]]],1]]": {
         "wolfram": {
           "input": "Chop[Subtract[Times[3, N[Divide[1, 3]]], 1]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}\\left[3 N\\left[\\frac{1}{3}\\right]-1\\right]",
+            "output": "0"
+          }
         }
       },
       "[\"Chop\",[\"Add\",1,1e-12]]": {
         "wolfram": {
           "input": "Chop[Plus[1, 1*^-12]]",
           "output": "1000000000001/1000000000000",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}\\left[1+\\frac{1}{1000000000000}\\right]",
+            "output": "\\frac{1000000000001}{1000000000000}"
+          }
         }
       },
       "[\"Chop\",1.0000000001e-10]": {
         "wolfram": {
           "input": "Chop[1.0000000001*^-10]",
           "output": "1.0000000001*^-10",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Chop}[\\text{1.0000000001$\\grave{ }$*${}^{\\wedge}$-10}]",
+            "output": "\\text{1.0000000001$\\grave{ }$*${}^{\\wedge}$-10}"
+          }
         }
       }
     },
@@ -1745,63 +2121,99 @@
         "wolfram": {
           "input": "Rationalize[0.1]",
           "output": "1/10",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[0.1]",
+            "output": "\\frac{1}{10}"
+          }
         }
       },
       "[\"Rationalize\",2]": {
         "wolfram": {
           "input": "Rationalize[2]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[2]",
+            "output": "2"
+          }
         }
       },
       "[\"Rationalize\",2.5]": {
         "wolfram": {
           "input": "Rationalize[2.5]",
           "output": "5/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[2.5]",
+            "output": "\\frac{5}{2}"
+          }
         }
       },
       "[\"Rationalize\",0.3333333333333333]": {
         "wolfram": {
           "input": "Rationalize[0.3333333333333333]",
           "output": "1/3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[0.333333]",
+            "output": "\\frac{1}{3}"
+          }
         }
       },
       "[\"Equal\",[\"Rationalize\",\"Pi\",0.01],[\"Rational\",22,7]]": {
         "wolfram": {
           "input": "(Rationalize[Pi, 0.01] == Rational[22, 7])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[\\pi ,0.01]=\\frac{22}{7}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Rationalize\",\"Pi\",0.000001]": {
         "wolfram": {
           "input": "Rationalize[Pi, 0.000001]",
           "output": "355/113",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[\\pi ,\\text{1.$\\grave{ }$*${}^{\\wedge}$-6}]",
+            "output": "\\frac{355}{113}"
+          }
         }
       },
       "[\"Rationalize\",0.75]": {
         "wolfram": {
           "input": "Rationalize[0.75]",
           "output": "3/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[0.75]",
+            "output": "\\frac{3}{4}"
+          }
         }
       },
       "[\"Rationalize\",0.333333]": {
         "wolfram": {
           "input": "Rationalize[0.333333]",
           "output": "0.333333",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[0.333333]",
+            "output": "0.333333"
+          }
         }
       },
       "[\"Rationalize\",0.1,0.5]": {
         "wolfram": {
           "input": "Rationalize[0.1, 0.5]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Rationalize}[0.1,0.5]",
+            "output": "0"
+          }
         }
       }
     },
@@ -1810,7 +2222,11 @@
         "wolfram": {
           "input": "Max[3, 1, 4, 1, 5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (3,1,4,1,5)",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "enumeratio_max(3, 1, 4, 1, 5)",
@@ -1827,7 +2243,11 @@
         "wolfram": {
           "input": "Max[List[3, 1, 4]]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (\\{3,1,4\\})",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "enumeratio_max([3, 1, 4])",
@@ -1846,7 +2266,11 @@
         "wolfram": {
           "input": "Max[-1, -5]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (-1,-5)",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "enumeratio_max(-1, -5)",
@@ -1863,7 +2287,11 @@
         "wolfram": {
           "input": "Max[3]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (3)",
+            "output": "3"
+          }
         },
         "sage": {
           "input": "enumeratio_max(3)",
@@ -1880,7 +2308,11 @@
         "wolfram": {
           "input": "(Max[3, 7] == Max[7, 3])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (3,7)=\\max (7,3)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(enumeratio_max(3, 7) == enumeratio_max(7, 3))",
@@ -1897,7 +2329,11 @@
         "wolfram": {
           "input": "(Max[List[3, 1, 4], List[9, 2]] == 9)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (\\{3,1,4\\},\\{9,2\\})=9",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(enumeratio_max([3, 1, 4], [9, 2]) == 9)",
@@ -1916,7 +2352,11 @@
         "wolfram": {
           "input": "Max[68, 72, 65, 80, 74]",
           "output": "80",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (68,72,65,80,74)",
+            "output": "80"
+          }
         },
         "sage": {
           "input": "enumeratio_max(68, 72, 65, 80, 74)",
@@ -1935,7 +2375,11 @@
           "output": "-Infinity",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Max of nothing is NaN here; Wolfram returns the identity element -Infinity."
+          "note": "Max of nothing is NaN here; Wolfram returns the identity element -Infinity.",
+          "tex": {
+            "input": "\\max ()",
+            "output": "-\\infty"
+          }
         },
         "sage": {
           "input": "enumeratio_max()",
@@ -1956,7 +2400,11 @@
         "wolfram": {
           "input": "Max[Indeterminate, 3]",
           "output": "Indeterminate",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\max (\\text{Indeterminate},3)",
+            "output": "\\text{Indeterminate}"
+          }
         }
       }
     },
@@ -1965,7 +2413,11 @@
         "wolfram": {
           "input": "Min[3, 1, 4, 1, 5]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (3,1,4,1,5)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "enumeratio_min(3, 1, 4, 1, 5)",
@@ -1982,7 +2434,11 @@
         "wolfram": {
           "input": "Min[List[3, 1, 4]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (\\{3,1,4\\})",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "enumeratio_min([3, 1, 4])",
@@ -2001,7 +2457,11 @@
         "wolfram": {
           "input": "Min[-1, -5]",
           "output": "-5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (-1,-5)",
+            "output": "-5"
+          }
         },
         "sage": {
           "input": "enumeratio_min(-1, -5)",
@@ -2018,7 +2478,11 @@
         "wolfram": {
           "input": "Min[3]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (3)",
+            "output": "3"
+          }
         },
         "sage": {
           "input": "enumeratio_min(3)",
@@ -2035,7 +2499,11 @@
         "wolfram": {
           "input": "(Min[3, 7] == Min[7, 3])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (3,7)=\\min (7,3)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))",
@@ -2052,7 +2520,11 @@
         "wolfram": {
           "input": "(Plus[Min[4, 9], Max[4, 9]] == Plus[4, 9])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (4,9)+\\max (4,9)=4+9",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))",
@@ -2069,7 +2541,11 @@
         "wolfram": {
           "input": "Min[68, 72, 65, 80, 74]",
           "output": "65",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (68,72,65,80,74)",
+            "output": "65"
+          }
         },
         "sage": {
           "input": "enumeratio_min(68, 72, 65, 80, 74)",
@@ -2086,14 +2562,22 @@
         "wolfram": {
           "input": "Min[-Infinity, 3]",
           "output": "-Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (-\\infty ,3)",
+            "output": "-\\infty"
+          }
         }
       },
       "[\"Min\",[\"List\",3,1],0]": {
         "wolfram": {
           "input": "Min[List[3, 1], 0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\min (\\{3,1\\},0)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "enumeratio_min([3, 1], 0)",
@@ -2106,6 +2590,76 @@
           "verdict": "error",
           "kind": "threading",
           "note": "compute-engine's Min threads over (or pools) the list; SymPy's takes scalars."
+        }
+      }
+    },
+    "IsOdd": {
+      "[\"IsOdd\",3]": {
+        "wolfram": {
+          "input": "OddQ[3]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{OddQ}[3]",
+            "output": "\\text{True}"
+          }
+        }
+      },
+      "[\"IsOdd\",4]": {
+        "wolfram": {
+          "input": "OddQ[4]",
+          "output": "False",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{OddQ}[4]",
+            "output": "\\text{False}"
+          }
+        }
+      },
+      "[\"IsOdd\",-7]": {
+        "wolfram": {
+          "input": "OddQ[-7]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{OddQ}[-7]",
+            "output": "\\text{True}"
+          }
+        }
+      }
+    },
+    "IsEven": {
+      "[\"IsEven\",4]": {
+        "wolfram": {
+          "input": "EvenQ[4]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{EvenQ}[4]",
+            "output": "\\text{True}"
+          }
+        }
+      },
+      "[\"IsEven\",3]": {
+        "wolfram": {
+          "input": "EvenQ[3]",
+          "output": "False",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{EvenQ}[3]",
+            "output": "\\text{False}"
+          }
+        }
+      },
+      "[\"IsEven\",0]": {
+        "wolfram": {
+          "input": "EvenQ[0]",
+          "output": "True",
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{EvenQ}[0]",
+            "output": "\\text{True}"
+          }
         }
       }
     }

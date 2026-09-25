@@ -89,6 +89,10 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
     return expr[0] === "Set" ? [...items].sort(byValue) : items;
   }
   if (typeof expr === "boolean") return expr;
+  // Truth values are the symbols on both sides (fromWolfram reads `True` as "True"); an
+  // evaluator that only reads values (`symbolic`, `valuesOnly`) would leave them as text.
+  if (expr === "True") return true;
+  if (expr === "False") return false;
   return evaluate(expr);
 }
 

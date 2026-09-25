@@ -18,6 +18,8 @@ export interface OtherSystemRun {
   readonly tolerance?: number;
   /** `ours` only: the GitHub issue tracking the gap. */
   readonly issue?: number;
+  /** Wolfram only: its `TeXForm` of the input as written and of the value. */
+  readonly tex?: { readonly input: string; readonly output: string };
 }
 
 /** A MathJSON expression (form-agnostic compute-engine input/output). */

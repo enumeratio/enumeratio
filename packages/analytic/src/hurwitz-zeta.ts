@@ -28,6 +28,11 @@ import { declareElliptic } from "./elliptic.ts";
 import { declareModular } from "./modular.ts";
 import { declareMatrixExp } from "./matrix-exp.ts";
 import { declareSpecialFunctions } from "./special-functions.ts";
+import { declareBesselJZero } from "./bessel-zeros.ts";
+import { declareDigammaFunctionZero } from "./digamma-zero.ts";
+import { declareHypergeometricUStar } from "./hypergeometric-ustar.ts";
+import { declareMultiZetaValue } from "./multizeta.ts";
+import { declareSloaneA } from "./sloane-a.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -518,8 +523,10 @@ function evaluateLerch(
  * integrals in carlson.ts: `CarlsonRF`, `CarlsonRC`, `CarlsonRD`, `CarlsonRJ`, `CarlsonRG`
  * — and, in elliptic.ts, `IncompleteEllipticF`/`IncompleteEllipticE` plus an in-place
  * precision fix for native `EllipticE` at complex modulus; the modular heads in
- * modular.ts: `ModularJ`, `ModularLambda`, `EisensteinG`; and, in matrix-exp.ts, the new
- * head `MatrixExp`.
+ * modular.ts: `ModularJ`, `ModularLambda`, `EisensteinG`; the Fungrim-frontier
+ * heads `BesselJZero`, `DigammaFunctionZero`, `MultiZetaValue`, `SloaneA` and
+ * `HypergeometricUStar` (bessel-zeros.ts, digamma-zero.ts, multizeta.ts,
+ * sloane-a.ts, hypergeometric-ustar.ts); and, in matrix-exp.ts, `MatrixExp`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -620,5 +627,10 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareElliptic(ce);
   declareModular(ce);
   declareDerivatives(ce);
+  declareBesselJZero(ce);
+  declareDigammaFunctionZero(ce);
+  declareMultiZetaValue(ce);
+  declareSloaneA(ce);
+  declareHypergeometricUStar(ce);
   declareMatrixExp(ce);
 }

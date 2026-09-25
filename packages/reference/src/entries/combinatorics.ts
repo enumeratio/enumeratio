@@ -216,12 +216,11 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption: "Factorials grow fast: $20!$ already exceeds $2 \\times 10^{18}$",
       },
       {
-        expr: ["Divide", ["Factorial", "n"], ["Factorial", ["Subtract", "n", 1]]],
+        expr: ["Simplify", ["Divide", ["Factorial", "n"], ["Factorial", ["Subtract", "n", 1]]]],
         expected: "n",
-        aspirational: true,
         category: "Scope",
         caption:
-          "$\\frac{n!}{(n-1)!}$ should symbolically simplify to $n$; currently the ratio is left unevaluated",
+          "$\\frac{n!}{(n-1)!}$ simplifies to $n$ under Simplify; plain evaluation leaves the ratio as it stands",
       },
     ],
     seeAlso: ["Binomial", "Factorial2", "Subfactorial", "Pochhammer"],

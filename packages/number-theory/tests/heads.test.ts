@@ -77,3 +77,50 @@ test("Gaussian results stay exact past a double", () => {
   expect(run(["Mod", big, ["Complex", 2, 1]])).toBe(0);
   expect(run(["GCD", big, ["Complex", 0, { num: "9007199254740993" }]])).toBeDefined();
 });
+
+test("ExtendedGCD past two arguments folds the two-argument case pairwise", () => {
+  expect(run(["ExtendedGCD", 6, 15, 30])).toEqual(["Tuple", 3, -2, 1, 0]);
+  // Still gated to plain integers: a Gaussian third argument (declare-gaussian.ts's own
+  // ExtendedGCD only widens to two) is left unevaluated, and so is a non-integer.
+  expect(run(["ExtendedGCD", ["Complex", 3, 1], 5, 2])).toEqual([
+    "ExtendedGCD",
+    ["Complex", 3, 1],
+    5,
+    2,
+  ]);
+  expect(run(["ExtendedGCD", 2.5, 3, 4])).toEqual(["ExtendedGCD", 2.5, 3, 4]);
+
+  // Brute force: every result's coefficients must actually satisfy Σ aᵢxᵢ = gcd.
+  const rng = (seed: number) => {
+    let s = seed;
+    return () => (s = (s * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+  };
+  const next = rng(42);
+  for (let trial = 0; trial < 50; trial++) {
+    const count = 3 + Math.floor(next() * 3); // 3..5 arguments
+    const values = Array.from({ length: count }, () => Math.floor(next() * 200) - 100 || 1);
+    const result = operandsOf(ce.box(["ExtendedGCD", ...values]).evaluate()).map(bigIntegerAt);
+    const [g, ...coefficients] = result as bigint[];
+    expect(g).toBeDefined();
+    const sum = coefficients.reduce((acc, c, i) => acc + c * BigInt(values[i]!), 0n);
+    expect(sum).toBe(g);
+    // g must be the actual GCD of the arguments.
+    const gcdAll = values
+      .map((v) => BigInt(Math.abs(v)))
+      .reduce((a, b) => {
+        let [x, y] = [a, b];
+        while (y !== 0n) [x, y] = [y, x % y];
+        return x;
+      });
+    expect(g).toBe(gcdAll);
+  }
+});
+
+test("IsPrime(-n) matches Wolfram's PrimeQ: True for a negative prime's associate", () => {
+  expect(run(["IsPrime", -7])).toBe("True");
+  expect(run(["IsPrime", -1])).toBe("False");
+  expect(run(["IsPrime", -4])).toBe("False");
+  expect(run(["IsPrime", -2])).toBe("True");
+  // Positive n is untouched.
+  expect(run(["IsPrime", 7])).toBe("True");
+});

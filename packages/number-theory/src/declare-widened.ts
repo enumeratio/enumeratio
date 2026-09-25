@@ -1,10 +1,11 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { extendedGcd } from "@enumeratio/residues";
 
 // compute-engine's integer functions, widened to the arguments Wolfram also answers and the
 // native handler leaves unevaluated or rejects: φ(0), σ of a negative order, the GCD and LCM
-// of rationals, and Mod's offset. Each wrapper applies only to what the native handler does
-// not answer, so no result compute-engine already gives changes.
+// of rationals, Mod's offset, and ExtendedGCD past two arguments. Each wrapper applies only
+// to what the native handler does not answer, so no result compute-engine already gives changes.
 
 type Ops = readonly BoxedExpression[];
 
@@ -80,6 +81,33 @@ export function declareWidened(ce: ComputeEngine): void {
       if (m === undefined || n === undefined || d === undefined || n === 0n) return undefined;
       const r = (m - d) % n;
       return ce.number(d + (r !== 0n && r < 0n !== n < 0n ? r + n : r));
+    },
+  );
+
+  // Wolfram's ExtendedGCD accepts any number of arguments: {g, {x₁, …, xₙ}} with
+  // g = Σ xᵢaᵢ = gcd(a₁, …, aₙ). Folds the two-argument case pairwise — after each step the
+  // gcd-so-far's own coefficient distributes back over every earlier argument's — which is
+  // ours' flat `Tuple(g, x₁, …, xₙ)` shape, the same divergence from Wolfram's nested one the
+  // two-argument case already documents. Gaussian integers stay declare-gaussian.ts's: this
+  // only fires when every operand reads as a plain bigint.
+  widenSignature(ce, "ExtendedGCD", "(number, number, number*) -> tuple");
+  wrapOperator(
+    ce,
+    ["ExtendedGCD", 1, 1, 1],
+    (ops) => ops.length > 2 && ops.every((op) => bigIntegerAt(op) !== undefined),
+    () => (ops) => {
+      const values = ops.map((op) => bigIntegerAt(op)!);
+      let g = values[0]!;
+      let coefficients = [1n];
+      for (const value of values.slice(1)) {
+        const [nextG, p, q] = extendedGcd(g, value);
+        coefficients = [...coefficients.map((c) => c * p), q];
+        g = nextG;
+      }
+      return ce.function(
+        "Tuple",
+        [g, ...coefficients].map((n) => ce.number(n)),
+      );
     },
   );
 }
