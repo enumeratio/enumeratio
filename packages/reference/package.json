@@ -6,7 +6,8 @@
   "license": "WTFPL",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./node": "./src/node.ts"
   },
   "scripts": {
     "test": "vp test",
