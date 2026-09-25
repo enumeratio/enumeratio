@@ -102,7 +102,7 @@ interface Param {
 type Cost =
   | "closed" // arithmetic in params and rank (Lehmer unrank, closed-form count)
   | "polynomial" // DP tables polynomial in the params
-  | "enumerative" // time and memory ∝ count(p): enumerate, cache, index
+  | "enumerative" // time and memory ∝ the elements generated: enumerate, cache, index
   | "scan"; // ∝ the element's value: nth-match scans of an infinite sequence
 ```
 
@@ -113,12 +113,16 @@ cost. The declaration sits where the behaviour is, so it can't drift from it.
 
 Feasibility:
 
-- The runner checks `count(p) ≤ budget`, compared as bigint, whenever count is closed or
-  polynomial.
-- **Only a family whose count itself enumerates** declares a cheap upper bound, `sizeBound(p)`.
-  The type forces it.
+- **What an enumeration generates isn't always the count.** Filtering the permutations of n
+  generates n! to find Baxter(10)'s 326 240. Necklaces and bracelets generate every one of the
+  base^size words. So wherever a cost is `enumerative`, the declaration carries a `work(p)`
+  bound, and the helper that enumerates supplies it: `indexedFamily` its count, the
+  permutation-class filter n!, the word classes base^size. A family whose count itself
+  enumerates gives a cheap upper bound that the contract test checks wherever the count is
+  cheap (`SkewPartitions`: 4ⁿ).
+- The runner discards a draw whose work exceeds the budget. It compares as bigint.
 - `scan` bounds the rank by size, optionally through `sized(p, size)`, since only the family
-  knows how fast its values grow.
+  knows how fast its values grow (`SmoothNumbers(2)` is the powers of 2).
 - An infeasible draw is a discard, not a failure.
 
 ### 3.4 Counts and positions
@@ -141,31 +145,42 @@ We keep the archived enumeratio's vocabulary:
 - **Migration adapter.** `numberKernel({…})` wraps a number-arithmetic kernel into the bigint
   contract. Instead of rounding it throws `RangeError`, which Plausible reports as "needs
   bigint". Those kernels then move to real bigint one at a time, heaviest first.
-- **Each count class samples differently.** A finite family draws rank from `[0, count)`, biased
-  toward both ends. An infinite one draws from `[0, size]`. An open-problem family (`NaN`) needs
-  `known(p)`, draws inside that prefix, and must decline (never hang) past it. CE's `isFinite`
-  follows the count class.
+- **Each count class samples differently.**
+  - A finite family draws its rank from `[0, count)`, biased toward both ends.
+  - An infinite one draws from `[0, size]`.
+  - An open problem (`NaN`) is either scanned, like infinite (TwinPrimes produces as many as you
+    ask for), or backed by a table. A table declares `known(p)`, draws inside it, and must
+    decline (never hang) past its end.
+
+  CE's `isFinite` follows the count class.
+
+- **A repeating sequence declares `repeats`.** Fibonacci's 1, 1 means `rank` finds the first
+  occurrence, so the round trip becomes `unrank(rank(x)) = x` with `rank(x) ≤ r`, and
+  injectivity doesn't apply. The recurrence helper works this out itself from the sequence's
+  first terms.
 
 ### 3.5 Shape
 
 ```ts
-type Costs =
-  | { count: "closed" | "polynomial"; unrank: Cost; rank: Cost; valid: Cost }
-  | { count: "enumerative"; unrank: Cost; rank: Cost; valid: Cost; sizeBound: (p: number[]) => bigint };
+interface Declared {
+  readonly carrier: string; // the domain its elements inhabit (§4.2)
+  readonly params: readonly Param[];
+  readonly cost: { count: Cost; unrank: Cost; rank: Cost; valid: Cost };
+  readonly work?: (p: number[]) => bigint; // required when any cost is enumerative
+  readonly sized?: (p: number[], size: number) => bigint; // scan: largest cheap rank at this size
+  readonly repeats?: boolean; // a sequence whose terms repeat
+  readonly known?: (p: number[]) => bigint; // a table-backed open problem's reach
+  // later: sample?: { gen: (p: number[]) => Gen<Element>; distribution: "uniform" | string }
+}
 
 interface FamilyKernel {
   readonly head: string;
   readonly kind: "ints" | "blocks" | "nested" | "scalar";
-  readonly carrier: string; // the domain its elements inhabit (§4.2)
-  readonly params: readonly Param[];
-  readonly cost: Costs;
+  readonly declared?: Declared; // required once the ratchet is empty
   readonly count: (p: number[]) => bigint | number; // number only for Infinity / NaN
   readonly unrank: (p: number[], r: bigint) => Element;
   readonly rank: (element: unknown, p: number[]) => bigint;
   readonly valid: (element: unknown, p: number[]) => boolean;
-  readonly known?: (p: number[]) => bigint; // required when count is NaN
-  readonly sized?: (p: number[], size: number) => bigint; // scan: largest rank at this size
-  readonly sample?: { gen: (p: number[]) => Gen<Element>; distribution: "uniform" | string };
 }
 
 function sampleable(f: FamilyKernel): Sampleable<Address, Element> | { untestable: string };
@@ -178,12 +193,12 @@ function sampleable(f: FamilyKernel): Sampleable<Address, Element> | { untestabl
 | Applies when        | Property                                                                         |
 | ------------------- | -------------------------------------------------------------------------------- |
 | always              | a sampled element is a member (Sage `_test_some_elements`)                       |
-| rank                | `rank(unrank(r)) = r` (`_test_rank`)                                             |
+| rank                | `rank(unrank(r)) = r` (`_test_rank`); with `repeats`, `unrank(rank(x)) = x`      |
 | finite count        | injectivity over a sampled window                                                |
 | finite, count ≤ cap | count = distinct enumeration                                                     |
 | rank and valid      | **non-members**: mutate a member; `valid(y) ⇔ rank(y) ≥ 0 ∧ unrank(rank(y)) = y` |
 | scalar, infinite    | ascending                                                                        |
-| `NaN` count         | answers inside `known`, declines past it                                         |
+| `NaN` count, table  | answers inside `known`, declines past it                                         |
 | cost                | honesty: measured time and heap fit the declared class (nightly finding only)    |
 | CE handlers         | `Count`, `At`, `Element` agree with the kernel                                   |
 
@@ -212,19 +227,22 @@ instances of every family on that carrier.
   first.
 - **Discards.** An infeasible or empty draw is redrawn up to `retries` times. Mostly-discarded
   families are reported: their declared parameter space is too wide for their cost.
-- **Isolation.** Each family runs in a worker with `resourceLimits` and a time cap, so a wrong
-  declaration becomes a finding instead of a dead run.
+- **Isolation.** Families run one at a time in a worker with `resourceLimits` and a per-family
+  time cap. The worker is replaced only when a family kills it, so a wrong declaration becomes a
+  finding instead of a dead run.
+- **Undeclared families** (while the ratchet exists) are sampled conservatively: every param an
+  axis from 0, size at most 4, and assumed to enumerate.
 - **Output.** Findings print the shrunk address as the replay line.
 
 ## 6. Enforcement
 
-1. **Types.** `params`, `cost` and `carrier` are required, and `sizeBound` is forced by `Costs`.
-   An undeclared family doesn't compile.
+1. **Types.** `declared` becomes required once the ratchet is empty, and then an undeclared
+   family doesn't compile. Until then the contract test holds the line.
 2. **Guard test** (fast). For every family:
    - `sampleable` is an instance;
    - the element at the smallest nonempty params is valid and round-trips;
-   - `NaN` count ⇒ `known`; ∞ count ⇒ not `enumerative`;
-   - CE's `isFinite` matches the count.
+   - `work` covers the count wherever the count is cheap;
+   - `NaN` count ⇒ `known` or a scan; ∞ count ⇒ not `enumerative`.
 
    Exemptions carry a reason, and a stale exemption fails.
 
@@ -257,11 +275,13 @@ Sage, Wolfram and the rest, at the edges of documented examples.
 
 1. Small fixes (replay seeds, `SmoothNumbers(k<2)`, `isFinite` from count). Landed #229.
 2. Rename: quickcheck becomes Plausible across scripts, workflows, actions, issue titles and
-   docs.
+   docs. Landed #233.
 3. Bigint count and rank, through `numberKernel`.
 4. `@enumeratio/plausible` (leaf) with `Gen` and seeding, plus the contract (optional fields),
    the helpers self-declaring, and the guard with a ratchet.
-5. The capability-driven runner, with the lists deleted.
+5. The capability-driven runner, with the lists deleted. Once it sampled the infinite families,
+   it found degenerate-parameter hangs (`KFreeIntegers(k<2)`, `KAlmostPrimes(0)`, odd-gap
+   `PrimePairs`) and the repeating sequences.
 6. Families declare, file by file, and the ratchet shrinks.
 7. Carrier laws. CE handlers honour cost (`At`/`RandomChoice` decline past the budget). The
    oracle uses param specs.

@@ -412,6 +412,10 @@ const sophieGermainCache = nthMatchCache(isSophieGermainPrime);
 const safePrimeCache = nthMatchCache(isSafePrime);
 
 const primePairCaches = new Map<number, ReturnType<typeof nthMatchCache>>();
+/** The lesser primes p with p + gap prime, for an odd gap: p = 2 or p + gap = 2. */
+const oddGapPairs = (gap: number): number[] =>
+  [...new Set([2, 2 - gap])].filter((p) => isPrime(p) && isPrime(p + gap)).sort((a, b) => a - b);
+
 function primePairCacheFor(gap: number): ReturnType<typeof nthMatchCache> {
   let cache = primePairCaches.get(gap);
   if (!cache) {
@@ -670,11 +674,18 @@ export const entries: NumberKernel[] = [
     rank: (element) => primePowerCache.rankOf(Number(element)),
   },
   {
+    declared: {
+      carrier: "Numeric",
+      params: [{ name: "k", role: "param", min: 0 }],
+      cost: { count: "closed", unrank: "scan", rank: "scan", valid: "polynomial" },
+    },
     head: "KAlmostPrimes",
     paramCount: 1,
     kind: "scalar",
-    count: () => Number.POSITIVE_INFINITY,
-    unrank: ([k], r) => kAlmostCacheFor(k).nth(r + 1),
+    // Ω(n) = 0 only for n = 1, and never below: {1} and {}, finite, where a scan for more
+    // would never end.
+    count: ([k]) => (k < 0 ? 0 : k === 0 ? 1 : Number.POSITIVE_INFINITY),
+    unrank: ([k], r) => (k <= 0 ? (k === 0 && r === 0 ? 1 : Number.NaN) : kAlmostCacheFor(k).nth(r + 1)),
     valid: (element, [k]) => omega(Number(element)) === k,
     rank: (element, [k]) => kAlmostCacheFor(k).rankOf(Number(element)),
   },
@@ -733,13 +744,21 @@ export const entries: NumberKernel[] = [
     rank: (element) => safePrimeCache.rankOf(Number(element)),
   },
   {
+    declared: {
+      carrier: "Numeric",
+      params: [{ name: "gap", role: "param", min: 1 }],
+      cost: { count: "closed", unrank: "scan", rank: "scan", valid: "polynomial" },
+    },
     head: "PrimePairs",
     paramCount: 1,
     kind: "scalar",
-    count: () => Number.NaN,
-    unrank: ([gap], r) => primePairCacheFor(gap).nth(r + 1),
+    // An odd gap pairs an odd prime with an even number, so one of the pair is 2: at most
+    // {2} (or {2 − gap}), finite, where a scan for more would never end. Even gaps are open.
+    count: ([gap]) => (gap % 2 !== 0 ? oddGapPairs(gap).length : Number.NaN),
+    unrank: ([gap], r) => (gap % 2 !== 0 ? (oddGapPairs(gap)[r] ?? Number.NaN) : primePairCacheFor(gap).nth(r + 1)),
     valid: (element, [gap]) => isPrime(Number(element)) && isPrime(Number(element) + gap),
-    rank: (element, [gap]) => primePairCacheFor(gap).rankOf(Number(element)),
+    rank: (element, [gap]) =>
+      gap % 2 !== 0 ? oddGapPairs(gap).indexOf(Number(element)) : primePairCacheFor(gap).rankOf(Number(element)),
   },
   {
     head: "PalindromicPrimes",

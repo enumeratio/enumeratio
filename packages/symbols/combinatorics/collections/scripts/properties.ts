@@ -1,40 +1,18 @@
-// Property-based sampling over the collection catalogue — a port of enumeratio's
-// `quickcheck.mts`, which the notatio side makes considerably easier.
+// The properties Plausible checks at a sampled address (design/plausible.md §4.1). Which ones
+// apply is decided by what the family declares; the sampling, shrinking and supervision live in
+// sampleable.ts, run-family.ts and plausible.ts.
 //
-// There, every property costs a pglite round trip, so the harness needs a worker channel, a
-// SIGKILL watchdog and a per-collection budget. Here a `FamilyKernel` is a pure kernel over
-// plain JS values — count, unrank, rank, valid, with no engine anywhere near it — so the
-// sampling is a plain loop and the whole catalogue runs in under a second. What ports is
-// the IDEA: draw random points and check properties that must hold at EVERY point, rather
-// than the first N that an example suite happens to pin.
-//
-// THE PROPERTIES (skipped, never failed, when a family cannot answer):
-//   1. round trip     rank(unrank(p, r), p) === r          — the universal one
+//   1. round trip     rank(unrank(p, r), p) === r — or, for a declared repeating sequence,
+//                     unrank(rank(x)) = x with rank(x) ≤ r
 //   2. validity       valid(unrank(p, r), p)               — membership of its own element
 //   3. injectivity    distinct ranks give distinct elements, over a sampled window
 //   4. count          the count agrees with an actual enumeration, on small parameters
 //
 // NOT a property: what `unrank` does past the end. `FamilyKernel.unrank` returns `Element`,
-// not `Element | undefined` — range-checking is the adapter's job in library.ts, and the
-// kernels never promised to decline. Asserting it anyway reported all 41 families as
-// failing on the first run, which is the harness being wrong rather than the catalogue.
-//
-// THE SHRINKER: on a failure, walk the rank down toward 0 and then the parameters down
-// toward their minimum, reporting the smallest point that still fails. Best-effort, not
-// exhaustive — the aim is a repro small enough to read.
-//
-// SEEDING: mulberry32 (@enumeratio/plausible), seeded from argv, the environment, or the clock, and PRINTED. Every
-// failure prints the exact command that replays it.
-//
-// Advisory, never a gate: a fresh seed each run means a red result is a finding to triage,
-// not a broken build.
-//
-//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts             # everything, fresh seed
-//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm        # families matching "perm"
-//   vp node packages/symbols/combinatorics/collections/scripts/plausible.ts perm 123456 # replay exactly
-//   PLAUSIBLE_POINTS=20 vp node …/plausible.ts                   # more points per family
+// not `Element | undefined` — range-checking is the adapter's job in declare.ts, and the
+// kernels never promised to decline.
 
-import { random, randomBelow } from "@enumeratio/plausible";
+import { randomBelow } from "@enumeratio/plausible";
 import type { FamilyKernel } from "../src/families/types.ts";
 
 export { needsBigint } from "./sampleable.ts";
@@ -85,7 +63,13 @@ export function check(entry: FamilyKernel, params: number[], rank: bigint): Fail
   } catch (error) {
     return fail("round-trip", `rank threw on its own element: ${String(error).slice(0, 120)}`);
   }
-  if (back !== rank) return fail("round-trip", `rank(unrank(${rank})) = ${back}`);
+  if (entry.declared?.repeats) {
+    // A repeating sequence: rank finds the first occurrence, at or before this one.
+    if (back < 0n || back > rank) return fail("round-trip", `rank(unrank(${rank})) = ${back}`);
+    if (back !== rank && key(entry.unrank(params, back)) !== key(element)) {
+      return fail("round-trip", `unrank(rank(unrank(${rank}))) ≠ unrank(${rank})`);
+    }
+  } else if (back !== rank) return fail("round-trip", `rank(unrank(${rank})) = ${back}`);
 
   // 2. validity — a family's own element must be a member. This is the property that keeps
   // finding bugs on the enumeratio side, almost always at a degenerate parameter.
@@ -111,6 +95,8 @@ export function checkFamily(entry: FamilyKernel, params: number[], draw: () => n
     detail,
   });
   if (typeof total !== "bigint" || total < 0n) return fail("count", `count = ${total}`);
+
+  if (entry.declared?.repeats) return undefined; // a sequence, not a set: no injectivity, no distinct count
 
   // 3. injectivity, over a sampled window rather than the whole family.
   const window = total < 64n ? total : 64n;
@@ -149,41 +135,4 @@ export function checkFamily(entry: FamilyKernel, params: number[], draw: () => n
     }
   }
   return undefined;
-}
-
-/** Walk a failure down toward the smallest point that still shows it. */
-export function shrink(entry: FamilyKernel, failure: Failure): Failure {
-  let best = failure;
-  if (failure.rank >= 0n) {
-    for (let rank = 0n; rank < best.rank; rank++) {
-      const smaller = check(entry, best.params, rank);
-      if (smaller?.property === best.property) {
-        best = smaller;
-        break;
-      }
-    }
-  }
-  for (let index = 0; index < best.params.length; index++) {
-    for (let value = 0; value < (best.params[index] as number); value++) {
-      const params = [...best.params];
-      params[index] = value;
-      const total = (() => {
-        try {
-          return entry.count(params);
-        } catch {
-          return 0n;
-        }
-      })();
-      if (typeof total !== "bigint" || total <= 0n) continue;
-      const smaller =
-        best.rank >= 0n
-          ? check(entry, params, best.rank < total ? best.rank : total - 1n)
-          : checkFamily(entry, params, random(1));
-      if (smaller?.property === best.property) {
-        best = smaller;
-        break;
-      }
-    }
-  }
-  return best;
 }

@@ -382,3 +382,13 @@ for (const entry of numericDivisor) {
 afterAll(() => {
   if (updating) writeFileSync(GOLDEN, `${JSON.stringify(fresh, null, 2)}\n`);
 });
+
+test("KFreeIntegers(k) below 2 is just {1}, finite", () => {
+  const entry = byHead.get("KFreeIntegers");
+  if (!entry) throw new Error("KFreeIntegers missing");
+  for (const k of [0, 1]) {
+    expect(entry.count([k])).toBe(1);
+    expect(entry.unrank([k], 0)).toBe(1);
+    expect(entry.unrank([k], 1)).toBeNaN(); // declines rather than scanning forever
+  }
+});
