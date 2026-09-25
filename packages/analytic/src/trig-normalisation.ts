@@ -132,8 +132,9 @@ export function declareTrigNormalisation(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Sin", 1],
-    (ops) => ops.length === 1 && ops[0] !== undefined && looksNormalisable(ops[0]),
+    (ops) => ops[0] !== undefined && looksNormalisable(ops[0]),
     () => (ops, options) => evaluateSin(ce, ops[0]!, options),
+    1,
   );
 
   // Arcsin(Sin(y)), for a real number literal y already in (-pi, pi]: Wolfram's
@@ -143,7 +144,7 @@ export function declareTrigNormalisation(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Arcsin", 1],
-    (ops) => ops.length === 1 && ops[0]?.operator === "Sin",
+    (ops) => ops[0]?.operator === "Sin",
     () => (ops, options) => {
       const y = operandsOf(ops[0]!)[0];
       // A free variable's re/im are both NaN, so this also excludes a symbolic argument.
@@ -155,5 +156,6 @@ export function declareTrigNormalisation(ce: ComputeEngine): void {
       if (value > pi / 2) return finish(ce.function("Subtract", ["Pi", y]), options);
       return finish(ce.function("Subtract", [ce.function("Negate", ["Pi"]), y]), options);
     },
+    1,
   );
 }

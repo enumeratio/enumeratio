@@ -106,12 +106,18 @@ export function declareAdic(ce: ComputeEngine): void {
 
   wrapOperator(ce, ["Add", "x", "y"], anyAdic, () => fold(adic.add));
   wrapOperator(ce, ["Multiply", "x", "y"], anyAdic, () => fold(adic.multiply));
-  wrapOperator(ce, ["Divide", "x", "y"], anyAdic, () => fold(adic.divide));
-  wrapOperator(ce, ["Negate", "x"], anyAdic, () => (ops) => {
-    const [x] = lift(ops) ?? [];
-    const result = x === undefined ? undefined : adic.negate(x);
-    return result === undefined ? undefined : toExpression(ce, result);
-  });
+  wrapOperator(ce, ["Divide", "x", "y"], anyAdic, () => fold(adic.divide), 2);
+  wrapOperator(
+    ce,
+    ["Negate", "x"],
+    anyAdic,
+    () => (ops) => {
+      const [x] = lift(ops) ?? [];
+      const result = x === undefined ? undefined : adic.negate(x);
+      return result === undefined ? undefined : toExpression(ce, result);
+    },
+    1,
+  );
   wrapOperator(
     ce,
     ["Power", "x", "y"],
@@ -124,6 +130,7 @@ export function declareAdic(ce: ComputeEngine): void {
       const result = adic.power(x, e);
       return result === undefined ? undefined : toExpression(ce, result);
     },
+    2,
   );
 
   const unary = (

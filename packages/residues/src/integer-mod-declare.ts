@@ -142,6 +142,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
       symbolNameOf(ops[0]) === "Integers" &&
       (bigIntegerAt(ops[1]) ?? 0n) >= 1n,
     () => (ops) => ce.function(INTEGER_MOD_RING, [ops[1]!]),
+    2,
   );
 
   /** Every operand as an element of the ring the IntegerMod operands meet in. */
@@ -171,16 +172,27 @@ export function declareIntegerMod(ce: ComputeEngine): void {
 
   wrapOperator(ce, ["Add", "x", "y"], anyIntegerMod, () => fold(Z.add));
   wrapOperator(ce, ["Multiply", "x", "y"], anyIntegerMod, () => fold(Z.multiply));
-  wrapOperator(ce, ["Divide", "x", "y"], anyIntegerMod, () =>
-    fold((x, y) => {
-      const q = Z.divide(x, y);
-      return q ?? notUnit(y.residue, gcd(x.modulus, y.modulus));
-    }),
+  wrapOperator(
+    ce,
+    ["Divide", "x", "y"],
+    anyIntegerMod,
+    () =>
+      fold((x, y) => {
+        const q = Z.divide(x, y);
+        return q ?? notUnit(y.residue, gcd(x.modulus, y.modulus));
+      }),
+    2,
   );
-  wrapOperator(ce, ["Negate", "x"], anyIntegerMod, () => (ops) => {
-    const x = integerModOf(ops[0]);
-    return write(x === undefined ? undefined : Z.negate(x));
-  });
+  wrapOperator(
+    ce,
+    ["Negate", "x"],
+    anyIntegerMod,
+    () => (ops) => {
+      const x = integerModOf(ops[0]);
+      return write(x === undefined ? undefined : Z.negate(x));
+    },
+    1,
+  );
   wrapOperator(
     ce,
     ["Power", "x", "y"],
@@ -191,6 +203,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
       if (x === undefined || e === undefined) return undefined;
       return write(Z.power(x, e) ?? notUnit(x.residue, x.modulus));
     },
+    2,
   );
 
   // ChineseRemainder(IntegerMod(r₁, m₁), …): the class mod lcm(mᵢ) reducing to each — the
@@ -217,7 +230,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["ChineseRemainder", "x", "y"],
-    (ops) => ops.length === 2 && integers(ops[0]) !== undefined && integers(ops[1]) !== undefined,
+    (ops) => integers(ops[0]) !== undefined && integers(ops[1]) !== undefined,
     (native) => (ops, options) => {
       const answer = native?.(ops, options);
       if (answer !== undefined) return answer;
@@ -226,6 +239,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
         ? inconsistent(rs.map((r, i) => [r, ms[i]!]))
         : undefined;
     },
+    2,
   );
   // Wolfram's ChineseRemainder[rs, ms, d]: the smallest solution x ≥ d, rather than the least
   // non-negative one. Solutions repeat with period lcm(ms).
@@ -233,7 +247,6 @@ export function declareIntegerMod(ce: ComputeEngine): void {
     ce,
     ["ChineseRemainder", "x", "y"],
     (ops) =>
-      ops.length === 3 &&
       integers(ops[0]) !== undefined &&
       integers(ops[1]) !== undefined &&
       bigIntegerAt(ops[2]) !== undefined,
@@ -247,5 +260,6 @@ export function declareIntegerMod(ce: ComputeEngine): void {
       const steps = gap >= 0n ? (gap + period - 1n) / period : -(-gap / period); // ⌈gap/period⌉
       return ce.number(x + steps * period);
     },
+    3,
   );
 }
