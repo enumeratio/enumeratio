@@ -74,7 +74,7 @@ const shown = computed(() =>
       <p v-if="active && notes?.[active]" class="alt-note">{{ notes[active] }}</p>
       <p v-if="shown.kind === 'ours' && shown.issue" class="alt-note">
         A gap on our side, tracked in
-        <a :href="`https://github.com/enumeratio/enumeratio.dev/issues/${shown.issue}`"
+        <a :href="`https://github.com/enumeratio/enumeratio/issues/${shown.issue}`"
           >#{{ shown.issue }}</a
         >.
       </p>

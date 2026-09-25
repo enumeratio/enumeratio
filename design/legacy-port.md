@@ -1,7 +1,7 @@
 # Design: what is left in the old repo
 
-Status: **backlog** (2026-09-24). An audit of `github.com/enumeratio/enumeratio` — the
-Postgres-era predecessor — for features that have not come across. The Postgres/pglite
+Status: **backlog** (2026-09-24). An audit of the old `enumeratio/enumeratio` repo — the
+Postgres-era predecessor, since deleted; this repo now holds the name — for features that have not come across. The Postgres/pglite
 plumbing (query engine, service worker, providers, pgdata profiles) is out of scope; what
 is listed here is mathematics, presentation and UX worth rebuilding in this architecture.
 
