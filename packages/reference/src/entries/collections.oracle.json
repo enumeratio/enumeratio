@@ -512,6 +512,15 @@
             "output": "\\text{True}"
           }
         }
+      },
+      "[\"Length\",5]": {
+        "sympy": {
+          "input": "len(5)",
+          "output": "TypeError: object of type 'int' has no len()",
+          "verdict": "error",
+          "kind": "domain",
+          "note": "compute-engine's Length is defined as 0 on a non-collection atom; SymPy's len() refuses a non-collection outright."
+        }
       }
     },
     "Count": {

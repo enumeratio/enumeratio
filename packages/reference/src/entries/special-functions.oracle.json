@@ -315,6 +315,22 @@
             "output": "0.52345"
           }
         }
+      },
+      "[\"Gamma\",[\"List\",1,2,3,4,5]]": {
+        "sympy": {
+          "input": "gamma([1, 2, 3, 4, 5])",
+          "output": "AttributeError: 'list' object has no attribute 'is_Number'",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Gamma is Listable and threads over the list; SymPy's takes scalars only."
+        },
+        "rust": {
+          "input": "gamma(list(vec![n(1), n(2), n(3), n(4), n(5)]))",
+          "output": "panic: threading: a list where the crate takes a scalar",
+          "verdict": "error",
+          "kind": "threading",
+          "note": "compute-engine's Gamma is Listable and threads over the list; the Rust crate takes scalars only."
+        }
       }
     },
     "GammaLn": {
