@@ -41,12 +41,16 @@ export function evaluateCooperatively(
   // then still the call, not the elements. Only the RESULT is materialized: compute-engine
   // applies `materialization` to every argument on the way down too, and there `true` means
   // the elided display form (five elements, a placeholder, five more), so
-  // `Length(Range(1, 20))` counted the eleven items of the display and gave 11.
+  // `Length(Range(1, 20))` counted the eleven items of the display and gave 11. On the
+  // result, too, `true` elides past ten elements (`Range(1, 20)` comes back as five, a
+  // `ContinuationPlaceholder`, five), so a known count is passed as the element budget.
   const run = (): BoxedExpression => {
     const result = boxed.evaluate();
-    return materialize && result.isLazyCollection
-      ? result.evaluate({ materialization: true })
-      : result;
+    if (!materialize || !result.isLazyCollection) return result;
+    const count = result.count;
+    return result.evaluate({
+      materialization: count !== undefined && Number.isFinite(count) ? Math.max(count, 1) : true,
+    });
   };
   // compute-engine's `N(x, d)` leaves `ce.precision` at `d` once it returns, so every later
   // evaluation on the same engine -- the next case in a pooled worker, the next notebook

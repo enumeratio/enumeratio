@@ -74,9 +74,12 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
       const p = params(c);
       const total = family.count(p);
       let i = 0;
+      // An unknown count (NaN, e.g. TwinPrimes) never ends the iteration.
       return {
         next: () =>
-          i < total ? { value: element(p, i++), done: false } : { value: undefined, done: true },
+          Number.isNaN(total) || i < total
+            ? { value: element(p, i++), done: false }
+            : { value: undefined, done: true },
       };
     },
     at: (c, index) => {
