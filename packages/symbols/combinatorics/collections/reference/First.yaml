@@ -62,6 +62,22 @@ examples:
     expected: a
     category: Scope
     caption: A default is ignored when the collection has a first element
+  - id: first-default-ignored-when-nonempty
+    expr: [First, [List, 1, 2, 3], 99]
+    expected: 1
+    role: test
+  - id: first-of-association-is-first-value
+    expr: [First, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]
+    expected: a
+    role: test
+  - id: first-of-empty-association-falls-through
+    expr: [First, [Association], 99]
+    expected: 99
+    role: test
+  - id: first-of-nonempty-association-ignores-default
+    expr: [First, [Association, [Rule, 1, a], [Rule, 2, b]], 99]
+    expected: a
+    role: test
 seeAlso:
   - Last
   - At

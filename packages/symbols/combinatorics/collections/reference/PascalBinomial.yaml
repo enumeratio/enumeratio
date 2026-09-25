@@ -19,3 +19,7 @@ examples:
     expected: -1
     category: Scope
     caption: C(-1, k) = (-1)^k, the standard identity for a negative upper index
+  - id: pascalbinomial-negative-n-case-2
+    expr: [PascalBinomial, -1, 4]
+    expected: 1
+    role: test

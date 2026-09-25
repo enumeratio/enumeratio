@@ -49,3 +49,14 @@ list-gives-every-pair-like-a-cartesian-product:
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack a, y\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack\bigr\rbrack\bigr\rbrack
   fullform:
     in: Outer[List, List[a, b], List[x, y]]
+outer-matrix-of-right-shape:
+  epsil:
+    in: Outer(Add, [1, 2], [10, 20, 30])
+    out: "[[11, 21, 31], [12, 22, 32]]"
+  tex:
+    in: \mathrm{Outer}(\mathrm{Add}, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack10, 20, 30\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack11, 21, 31\bigr\rbrack, \bigl\lbrack12, 22, 32\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Outer[Plus, List[1, 2], List[10, 20, 30]]
+  wolfram:
+    in: Outer[Plus, List[1, 2], List[10, 20, 30]]
