@@ -46,14 +46,13 @@ type CanonicalHandler = OperatorDefinition["canonical"];
  */
 function foldInverseComposition(ce: ComputeEngine, head: string, inverse: string): void {
   const definition = ce.lookupDefinition(head);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native: CanonicalHandler = operator.canonical;
   operator.canonical = (ops, options) => {
     const arg = ops.length === 1 && ops[0]?.operator === inverse ? ops[0] : undefined;
     const inner = arg !== undefined ? operandsOf(arg) : [];
-    if (inner.length === 1) return inner[0]!;
+    if (inner.length === 1) return inner[0]!.canonical;
     return native ? native(ops, options) : null;
   };
 }
