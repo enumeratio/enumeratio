@@ -395,6 +395,22 @@ export const HEADS: Record<string, string> = {
   RealSign: "RealSign",
   UnitStep: "UnitStep",
   Gudermannian: "Gudermannian",
+  // Refine/Assuming/Piecewise/PiecewiseExpand — same name and meaning as Wolfram's; see
+  // packages/symbols/analysis/analytic/src/refine-assuming.ts and piecewise.ts for the (scoped)
+  // subset of Wolfram's semantics each one covers.
+  Refine: "Refine",
+  Assuming: "Assuming",
+  Piecewise: "Piecewise",
+  PiecewiseExpand: "PiecewiseExpand",
+  // SeriesCoefficient(f, {x, x0, n}) — the argument shape matches Wolfram's directly (see
+  // series-coefficient.ts), so this is a plain rename, not a SPECIAL reordering.
+  SeriesCoefficient: "SeriesCoefficient",
+  // compute-engine's native `BigO(g)` (the Landau remainder term `Series` emits) is
+  // Wolfram's `O` — but the exponent is spelled differently (`BigO(x^7)` vs. `O[x]^7`,
+  // a `Power` wrapping the `O[...]` object rather than sitting inside it), so the
+  // restructuring goes through SPECIAL below; this entry only exists so `REVERSE_HEADS`
+  // (built from HEADS) has an entry for Wolfram's bare `O`.
+  BigO: "O",
   // Khinchin's constant — same name and meaning as Wolfram's.
   Khinchin: "Khinchin",
   // Hyperfactorial — same name and meaning as Wolfram's.
@@ -610,6 +626,16 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Hypergeometric3F2Regularized(a1,a2,a3,b1,b2,z) has no dedicated Wolfram head — it is the
   // 3,2 case of the generic HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z], which takes
   // its upper and lower parameters as lists rather than flat arguments.
+  // BigO(x^n) is Wolfram's `O[x]^n` — the exponent sits OUTSIDE `O[...]` there, not
+  // inside it, so this is a restructuring, not a rename. `BigO(x)` alone (n = 1) is the
+  // bare `O[x]`, since `Power[O[x], 1]` is how Wolfram would print it anyway.
+  BigO: (a) => {
+    const arg = a[0];
+    if (Array.isArray(arg) && arg[0] === "Power") {
+      return `Power[O[${toWolfram(arg[1])}], ${toWolfram(arg[2])}]`;
+    }
+    return `O[${toWolfram(arg)}]`;
+  },
   Hypergeometric3F2Regularized: (a) =>
     `HypergeometricPFQRegularized[List[${a
       .slice(0, 3)

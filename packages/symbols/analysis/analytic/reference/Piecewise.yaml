@@ -1,0 +1,32 @@
+name: Piecewise
+domain: Analytic
+signature: Piecewise(pairs, default)
+summary: 'A conditional value: `List` of `{value, condition}` pairs, tried in order, plus a $default$ (0 when omitted) for when none holds. Provided by `@enumeratio/analytic`.'
+signatures:
+  - call: Piecewise(pairs)
+    description: pairs is a `List` of two-element `List`s `{value, condition}`; the default is 0.
+    library: '@enumeratio/analytic'
+  - call: Piecewise(pairs, default)
+    description: same, with an explicit fallback value.
+    library: '@enumeratio/analytic'
+details:
+  - Conditions are tried in list order via `ce.verify` (a three-valued check against the current assumptions). The first one known `True` wins, PROVIDED every condition before it is known `False` — a `Piecewise` with an undecided earlier condition stays symbolic rather than guessing which branch is really first.
+  - A condition known `False` is dropped; if every condition is eliminated this way, the result is $default$.
+  - '[[PiecewiseExpand]] produces this head from [[Abs]], [[Sign]], [[UnitStep]], [[Clip]], and 2-argument [[Max]]/[[Min]].'
+examples:
+  - id: selects-the-second-branch
+    expr: [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]]
+    expected: [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [LessEqual, 0, x]]]]
+    caption: with $x$ still symbolic, both branches are undecided and the call stays as-is
+  - id: evaluated-at-a-concrete-point-below-zero
+    expr: [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [Rule, x, -5]]
+    expected: 1
+    caption: at $x = -5$ the first condition is `True`
+  - id: evaluated-at-a-concrete-point-at-or-above-zero
+    expr: [ReplaceAll, [Piecewise, [List, [List, 1, [Less, x, 0]], [List, 2, [GreaterEqual, x, 0]]]], [Rule, x, 5]]
+    expected: 2
+    caption: at $x = 5$ the second condition is `True`
+  - id: falls-through-to-the-explicit-default
+    expr: [Piecewise, [List, [List, [Power, x, 2], [Less, x, 0]]], 99]
+    expected: [Piecewise, [List, [List, [Power, x, 2], [Less, x, 0]]], 99]
+    caption: symbolic $x$ again stays undecided, default kept as given

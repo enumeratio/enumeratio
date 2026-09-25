@@ -53,6 +53,11 @@ export const sources: readonly string[] = [
   "packages/reference/entries/Interval.yaml",
   "packages/symbols/analysis/analytic/reference/CenteredInterval.yaml",
   "packages/symbols/analysis/analytic/reference/Around.yaml",
+  "packages/symbols/analysis/analytic/reference/Refine.yaml",
+  "packages/symbols/analysis/analytic/reference/Assuming.yaml",
+  "packages/symbols/analysis/analytic/reference/Piecewise.yaml",
+  "packages/symbols/analysis/analytic/reference/PiecewiseExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/SeriesCoefficient.yaml",
 ];
 
 export const analyticSpecial: readonly ReferenceEntry[] = [
@@ -4274,5 +4279,319 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["Interval", "CenteredInterval"],
+  },
+  {
+    name: "Refine",
+    domain: "Analytic",
+    signature: "Refine(expr, cond)",
+    summary:
+      "Simplify $expr$ using $cond$ (or, with no $cond$, whatever is already assumed) as a fact — the same fact-driven simplification [[Assuming]] scopes for a whole subcomputation, but applied once. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Refine(expr, cond)",
+        description:
+          "simplify $expr$ under $cond$ (a single condition, a `List`, or an `And`), then forget it.",
+        library: "@enumeratio/analytic",
+      },
+      {
+        call: "Refine(expr)",
+        description:
+          "simplify $expr$ under whatever is already assumed (e.g. inside an enclosing [[Assuming]]).",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Delegates entirely to compute-engine's own `simplify()` under a scoped assumption (see [[Assuming]] for the scoping mechanism) — this covers exactly the sign/domain reasoning `simplify()` already does: $\\sqrt{x^2} \\to x$ under $x>0$ (and $\\to -x$ under $x<0$), $|x| \\to x$, $\\ln(e^x) \\to x$, $\\operatorname{sign}(x) \\to 1$.",
+      "A condition that `simplify()` has no rule for is left alone, same as Wolfram's `Refine` declines a fact it can't use — this is not a general decision procedure for arbitrary predicates.",
+    ],
+    examples: [
+      {
+        id: "sqrt-of-x-squared-under-x-greater-than-0",
+        expr: ["Refine", ["Sqrt", ["Power", "x", 2]], ["Greater", "x", 0]],
+        expected: "x",
+        caption: "$\\sqrt{x^2} \\to x$ under $x > 0$",
+      },
+      {
+        id: "sqrt-of-x-squared-under-x-less-than-0",
+        expr: ["Refine", ["Sqrt", ["Power", "x", 2]], ["Less", "x", 0]],
+        expected: ["Negate", "x"],
+        caption: "$\\sqrt{x^2} \\to -x$ under $x < 0$",
+      },
+      {
+        id: "abs-under-x-greater-than-0",
+        expr: ["Refine", ["Abs", "x"], ["Greater", "x", 0]],
+        expected: "x",
+        caption: "$|x| \\to x$ under $x > 0$",
+      },
+      {
+        id: "sign-under-x-greater-than-0",
+        expr: ["Refine", ["Sign", "x"], ["Greater", "x", 0]],
+        expected: 1,
+        caption: "$\\operatorname{sign}(x) \\to 1$ under $x > 0$",
+      },
+      {
+        id: "log-of-exp-under-x-real",
+        expr: ["Refine", ["Ln", ["Exp", "x"]], ["Element", "x", "RealNumbers"]],
+        expected: "x",
+        caption: "$\\ln(e^x) \\to x$ once $x$ is known real",
+      },
+      {
+        id: "an-undecidable-inequality-is-left-alone",
+        expr: ["Refine", ["Greater", ["Power", "x", 2], 0]],
+        expected: ["Less", 0, ["Power", "x", 2]],
+        category: "Possible issues",
+        caption: "$x^2 > 0$ is left alone with no assumption — it fails exactly at $x=0$",
+      },
+    ],
+  },
+  {
+    name: "Assuming",
+    domain: "Analytic",
+    signature: "Assuming(cond, expr)",
+    summary:
+      "Evaluate $expr$ with $cond$ assumed for the duration of the call, then forget it. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Assuming(cond, expr)",
+        description:
+          "evaluate $expr$ under a single assumed condition, a `List` of them (an implicit conjunction), or an `And` of them.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Built on compute-engine's own assumption store: the condition is pushed in a fresh scope (`ce.pushScope`/`ce.assume`), $expr$ is evaluated, and the scope is popped — compute-engine documents assumptions as scoped, so popping restores exactly what was in force before, even nested and even mid-evaluation (unlike `ce.checkpoint`, which refuses there).",
+      "No leakage: an assumption made here is gone once the call returns, whatever $expr$ does — verified by asking about the assumed symbol immediately after.",
+      "What resolves under the assumption is whatever compute-engine's own `evaluate()` already consults assumptions for — [[Abs]], [[Sign]], and $\\ln \\circ \\exp$ among them. This is more eager than bare Wolfram evaluation for those heads (Wolfram leaves `Abs(x)` alone until `Refine`/`Simplify` names it explicitly); it is not a general Simplify.",
+    ],
+    examples: [
+      {
+        id: "abs-resolves-once-the-sign-is-known",
+        expr: ["Assuming", ["Greater", "x", 0], ["Abs", "x"]],
+        expected: "x",
+        caption: "$|x| = x$ once $x > 0$ is assumed",
+      },
+      {
+        id: "sign-of-x-plus-sign-of-y-under-opposite-signs",
+        expr: [
+          "Assuming",
+          ["List", ["Greater", "x", 0], ["Less", "y", 0]],
+          ["Add", ["Sign", "x"], ["Sign", "y"]],
+        ],
+        expected: 0,
+        caption:
+          "a `List` of conditions is an implicit conjunction: $\\operatorname{sign}(x) + \\operatorname{sign}(y) = 0$ under $x>0 \\wedge y<0$",
+      },
+      {
+        id: "the-assumption-does-not-leak",
+        expr: ["List", ["Assuming", ["Greater", "z", 0], ["Sign", "z"]], ["Sign", "z"]],
+        expected: ["List", 1, ["Sign", "z"]],
+        category: "Properties",
+        caption:
+          "the assumption on $z$ is gone as soon as `Assuming` returns — the second $\\operatorname{sign}(z)$ stays symbolic",
+      },
+    ],
+  },
+  {
+    name: "Piecewise",
+    domain: "Analytic",
+    signature: "Piecewise(pairs, default)",
+    summary:
+      "A conditional value: `List` of `{value, condition}` pairs, tried in order, plus a $default$ (0 when omitted) for when none holds. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "Piecewise(pairs)",
+        description:
+          "pairs is a `List` of two-element `List`s `{value, condition}`; the default is 0.",
+        library: "@enumeratio/analytic",
+      },
+      {
+        call: "Piecewise(pairs, default)",
+        description: "same, with an explicit fallback value.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Conditions are tried in list order via `ce.verify` (a three-valued check against the current assumptions). The first one known `True` wins, PROVIDED every condition before it is known `False` — a `Piecewise` with an undecided earlier condition stays symbolic rather than guessing which branch is really first.",
+      "A condition known `False` is dropped; if every condition is eliminated this way, the result is $default$.",
+      "[[PiecewiseExpand]] produces this head from [[Abs]], [[Sign]], [[UnitStep]], [[Clip]], and 2-argument [[Max]]/[[Min]].",
+    ],
+    examples: [
+      {
+        id: "selects-the-second-branch",
+        expr: [
+          "Piecewise",
+          ["List", ["List", 1, ["Less", "x", 0]], ["List", 2, ["GreaterEqual", "x", 0]]],
+        ],
+        expected: [
+          "Piecewise",
+          ["List", ["List", 1, ["Less", "x", 0]], ["List", 2, ["LessEqual", 0, "x"]]],
+        ],
+        caption: "with $x$ still symbolic, both branches are undecided and the call stays as-is",
+      },
+      {
+        id: "evaluated-at-a-concrete-point-below-zero",
+        expr: [
+          "ReplaceAll",
+          [
+            "Piecewise",
+            ["List", ["List", 1, ["Less", "x", 0]], ["List", 2, ["GreaterEqual", "x", 0]]],
+          ],
+          ["Rule", "x", -5],
+        ],
+        expected: 1,
+        caption: "at $x = -5$ the first condition is `True`",
+      },
+      {
+        id: "evaluated-at-a-concrete-point-at-or-above-zero",
+        expr: [
+          "ReplaceAll",
+          [
+            "Piecewise",
+            ["List", ["List", 1, ["Less", "x", 0]], ["List", 2, ["GreaterEqual", "x", 0]]],
+          ],
+          ["Rule", "x", 5],
+        ],
+        expected: 2,
+        caption: "at $x = 5$ the second condition is `True`",
+      },
+      {
+        id: "falls-through-to-the-explicit-default",
+        expr: ["Piecewise", ["List", ["List", ["Power", "x", 2], ["Less", "x", 0]]], 99],
+        expected: ["Piecewise", ["List", ["List", ["Power", "x", 2], ["Less", "x", 0]]], 99],
+        caption: "symbolic $x$ again stays undecided, default kept as given",
+      },
+    ],
+  },
+  {
+    name: "PiecewiseExpand",
+    domain: "Analytic",
+    signature: "PiecewiseExpand(expr, assumptions)",
+    summary:
+      "Rewrite [[Abs]], [[Sign]], [[UnitStep]], [[Clip]], and 2-argument [[Max]]/[[Min]] inside $expr$ into [[Piecewise]], recursively. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "PiecewiseExpand(expr)",
+        description:
+          "rewrite using whatever is already assumed real (e.g. inside an enclosing [[Assuming]]).",
+        library: "@enumeratio/analytic",
+      },
+      {
+        call: "PiecewiseExpand(expr, assumptions)",
+        description:
+          "assume $assumptions$ (scoped, as in [[Assuming]]) for the rewrite, then forget it.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Each rewrite fires only once its argument(s) are known real — `Abs`/`Sign`/`UnitStep`/`Clip` on a genuinely complex value are not piecewise-comparable, so (matching Wolfram's own `PiecewiseExpand`) an argument whose realness isn't established is left untouched rather than guessed at.",
+      "Rewrites recurse into subexpressions, so `PiecewiseExpand(Abs(x) + 1, …)` rewrites the `Abs` inside the sum.",
+      "2-argument `Max`/`Min` only — no general n-ary rewrite.",
+    ],
+    examples: [
+      {
+        id: "abs-of-a-real-variable",
+        expr: ["PiecewiseExpand", ["Abs", "x"], ["Element", "x", "RealNumbers"]],
+        expected: ["Piecewise", ["List", ["List", ["Negate", "x"], ["Less", "x", 0]]], "x"],
+        caption: "$|x| \\to$ a two-branch [[Piecewise]], once $x$ is known real",
+      },
+      {
+        id: "sign-of-a-real-variable",
+        expr: ["PiecewiseExpand", ["Sign", "x"], ["Element", "x", "RealNumbers"]],
+        expected: [
+          "Piecewise",
+          ["List", ["List", -1, ["Less", "x", 0]], ["List", 1, ["Less", 0, "x"]]],
+          0,
+        ],
+        caption: "$\\operatorname{sign}(x)$ expanded into its three branches",
+      },
+      {
+        id: "clip-of-a-real-variable",
+        expr: ["PiecewiseExpand", ["Clip", "x", ["List", -1, 1]], ["Element", "x", "RealNumbers"]],
+        expected: [
+          "Piecewise",
+          ["List", ["List", -1, ["Less", "x", -1]], ["List", 1, ["Less", 1, "x"]]],
+          "x",
+        ],
+        caption: "$\\operatorname{Clip}(x,\\{-1,1\\})$ expanded into its three branches",
+      },
+      {
+        id: "without-a-realness-assumption-it-declines",
+        expr: ["PiecewiseExpand", ["Abs", "x"]],
+        expected: ["Abs", "x"],
+        category: "Possible issues",
+        caption: "with no assumption that $x$ is real, `Abs` is left alone — same as Wolfram",
+      },
+      {
+        id: "max-of-two-real-variables",
+        expr: [
+          "PiecewiseExpand",
+          ["Max", "x", "y"],
+          ["And", ["Element", "x", "RealNumbers"], ["Element", "y", "RealNumbers"]],
+        ],
+        expected: ["Piecewise", ["List", ["List", "x", ["LessEqual", "y", "x"]]], "y"],
+        caption: "$\\max(x,y)$ expanded, once both are known real",
+      },
+    ],
+  },
+  {
+    name: "SeriesCoefficient",
+    domain: "Analytic",
+    signature: "SeriesCoefficient(f, {x, x0, n})",
+    summary:
+      "The coefficient of $(x-x_0)^n$ in the Taylor series of $f$ about $x_0$, via $\\frac{f^{(n)}(x_0)}{n!}$. Provided by `@enumeratio/analytic`.",
+    signatures: [
+      {
+        call: "SeriesCoefficient(f, {x, x0, n})",
+        description:
+          "the coefficient of $(x-x_0)^n$, for $n$ a nonnegative integer and $f$ analytic at $x_0$ (an ordinary point).",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "Exact for the ordinary-point Taylor case: $n$ nonnegative integer, $f$ with no pole or branch point at $x_0$. Computed as $D^n(f)$ evaluated at $x_0$, divided by $n!$ — no series expansion is built, just repeated differentiation.",
+      "Declined on purpose: $n$ negative or non-integer (a Laurent or Puiseux coefficient — the derivative formula doesn't apply past an ordinary point) and $f$ singular exactly at $x_0$ even where the singularity is removable (e.g. $\\sin(x)/x$ at $0$) — the result is checked for a leftover free occurrence of the expansion variable or a non-finite value, and declined rather than trusted, whenever either shows up.",
+    ],
+    examples: [
+      {
+        id: "exp-about-a-nonzero-point",
+        expr: ["SeriesCoefficient", ["Exp", "x"], ["List", "x", 1, 2]],
+        expected: ["Multiply", ["Rational", 1, 2], "ExponentialE"],
+        caption: "$[x^2]\\, e^x$ about $x_0=1$ is $e/2$",
+      },
+      {
+        id: "sin-about-zero",
+        expr: ["SeriesCoefficient", ["Sin", "x"], ["List", "x", 0, 5]],
+        expected: ["Rational", 1, 120],
+        caption: "$[x^5]\\, \\sin x = \\frac{1}{120}$",
+      },
+      {
+        id: "geometric-series",
+        expr: ["SeriesCoefficient", ["Divide", 1, ["Subtract", 1, "x"]], ["List", "x", 0, 10]],
+        expected: 1,
+        caption: "every coefficient of $\\frac{1}{1-x}$ about $0$ is $1$",
+      },
+      {
+        id: "log-series",
+        expr: ["SeriesCoefficient", ["Ln", ["Add", 1, "x"]], ["List", "x", 0, 4]],
+        expected: ["Rational", -1, 4],
+        caption: "$[x^4]\\, \\ln(1+x) = -\\frac{1}{4}$",
+      },
+      {
+        id: "a-negative-order-laurent-coefficient-declines",
+        expr: ["SeriesCoefficient", ["Divide", 1, "x"], ["List", "x", 0, -1]],
+        expected: ["SeriesCoefficient", ["Divide", 1, "x"], ["List", "x", 0, -1]],
+        category: "Possible issues",
+        caption:
+          "the residue of $1/x$ at $0$ is a Laurent coefficient, past what the derivative formula covers — declined, not guessed",
+      },
+      {
+        id: "a-removable-singularity-declines",
+        expr: ["SeriesCoefficient", ["Divide", ["Sin", "x"], "x"], ["List", "x", 0, 0]],
+        expected: ["SeriesCoefficient", ["Divide", ["Sin", "x"], "x"], ["List", "x", 0, 0]],
+        category: "Possible issues",
+        caption:
+          "$\\sin(x)/x$ is singular exactly at the expansion point (removably so) — declined rather than risk the wrong limit",
+      },
+    ],
   },
 ];

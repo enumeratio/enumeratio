@@ -93,24 +93,12 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 47,
   },
   {
-    head: "Refine",
-    uses: 46,
-  },
-  {
     head: "FullForm",
     uses: 44,
   },
   {
-    head: "SeriesCoefficient",
-    uses: 42,
-  },
-  {
     head: "FunctionMeromorphic",
     uses: 40,
-  },
-  {
-    head: "O",
-    uses: 37,
   },
   {
     head: "Accumulate",
@@ -133,10 +121,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 26,
   },
   {
-    head: "Assuming",
-    uses: 25,
-  },
-  {
     head: "Cases",
     uses: 25,
   },
@@ -150,10 +134,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "LaplaceTransform",
-    uses: 23,
-  },
-  {
-    head: "PiecewiseExpand",
     uses: 23,
   },
   {
@@ -650,10 +630,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Parallelize",
-    uses: 5,
-  },
-  {
-    head: "Piecewise",
     uses: 5,
   },
   {
