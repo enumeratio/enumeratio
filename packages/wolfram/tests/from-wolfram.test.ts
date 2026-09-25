@@ -68,6 +68,33 @@ test("Divisible(n, m) swaps to our Divides(a, b)", () => {
   expect(fromWolfram("Divisible[4, 2]")).toEqual(["Divides", 2, 4]);
 });
 
+test("AllTrue/AnyTrue rename back to All/Any", () => {
+  expect(fromWolfram("AllTrue[{1, 2, 3}, Positive]")).toEqual([
+    "All",
+    ["List", 1, 2, 3],
+    "Positive",
+  ]);
+  expect(fromWolfram("AnyTrue[{1, 2, 3}, Negative]")).toEqual([
+    "Any",
+    ["List", 1, 2, 3],
+    "Negative",
+  ]);
+});
+
+test("Fold keeps the same (f, init, xs) order", () => {
+  expect(fromWolfram("Fold[Plus, 0, {1, 2, 3}]")).toEqual(["Fold", "Add", 0, ["List", 1, 2, 3]]);
+});
+
+test("Array is our Tabulate; multi-dim spreads the {n, m} list into separate args", () => {
+  expect(fromWolfram("Array[f, 3]")).toEqual(["Tabulate", "f", 3]);
+  expect(fromWolfram("Array[f, {2, 3}]")).toEqual(["Tabulate", "f", 2, 3]);
+});
+
+test("FoldList (no seed) is our Scan, reordered; Accumulate is Scan with Add", () => {
+  expect(fromWolfram("FoldList[Plus, {1, 2, 3}]")).toEqual(["Scan", ["List", 1, 2, 3], "Add"]);
+  expect(fromWolfram("Accumulate[{1, 2, 3}]")).toEqual(["Scan", ["List", 1, 2, 3], "Add"]);
+});
+
 test("nested expressions", () => {
   expect(fromWolfram("Equal[Binomial[10, 3], Binomial[10, 7]]")).toEqual([
     "Equal",

@@ -117,7 +117,7 @@ function parseSymbolOrCall(): MathJson {
   }
   if (name === "True") return true;
   if (name === "False") return false;
-  return REVERSE_SYMBOLS[name] ?? unqualify(name);
+  return REVERSE_SYMBOLS[name] ?? REVERSE_HEADS[name] ?? unqualify(name);
 }
 
 function parseArgs(closer: string): MathJson[] {
@@ -168,6 +168,17 @@ function applyHead(name: string, args: MathJson[]): MathJson {
       : ["Clamp", ...args];
   }
   if (name === "Total" && args.length === 1) return ["Sum", args[0]];
+  // Array[f, n] is our Tabulate(f, n); Array[f, {n1, n2, ...}] spreads the dims into
+  // separate Tabulate args (see the Tabulate case in SPECIAL).
+  if (name === "Array" && args.length === 2) {
+    const dims = args[1];
+    return isList(dims) ? ["Tabulate", args[0], ...dims.slice(1)] : ["Tabulate", ...args];
+  }
+  // FoldList[f, list] (no seed) is our Scan(list, f) reordered; the seeded
+  // FoldList[f, x, list] is length+1 and has no Scan equivalent, so it's left unmapped.
+  if (name === "FoldList" && args.length === 2) return ["Scan", args[1], args[0]];
+  // Accumulate[list] = FoldList[Plus, list] — our Scan(list, Add).
+  if (name === "Accumulate" && args.length === 1) return ["Scan", args[0], "Add"];
   // An iterator `{k, a, b}` is a Tuple on the compute-engine side, not a List.
   if ((name === "Sum" || name === "Product") && args.length >= 2) {
     return [
@@ -176,7 +187,7 @@ function applyHead(name: string, args: MathJson[]): MathJson {
       ...args.slice(1).map((it) => (isList(it) ? ["Tuple", ...it.slice(1)] : it)),
     ];
   }
-  if (name === "Apply" && args.length === 2 && args[0] === "Times") return ["Product", args[1]];
+  if (name === "Apply" && args.length === 2 && args[0] === "Multiply") return ["Product", args[1]];
   // `FullForm` spells the infinities as `DirectedInfinity[±1]` and `DirectedInfinity[]`.
   if (name === "DirectedInfinity") {
     if (args.length === 0) return "ComplexInfinity";
