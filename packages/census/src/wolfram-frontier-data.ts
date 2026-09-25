@@ -45,10 +45,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 209,
   },
   {
-    head: "FunctionDomain",
-    uses: 194,
-  },
-  {
     head: "NumericArray",
     uses: 157,
   },
@@ -69,18 +65,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 130,
   },
   {
-    head: "FunctionRange",
-    uses: 124,
-  },
-  {
-    head: "FunctionMonotonicity",
-    uses: 121,
-  },
-  {
-    head: "FunctionAnalytic",
-    uses: 116,
-  },
-  {
     head: "Graphics3D",
     uses: 110,
   },
@@ -89,32 +73,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 107,
   },
   {
-    head: "FunctionConvexity",
-    uses: 107,
-  },
-  {
-    head: "FunctionSign",
-    uses: 107,
-  },
-  {
-    head: "FunctionInjective",
-    uses: 103,
-  },
-  {
-    head: "FunctionSingularities",
-    uses: 99,
-  },
-  {
-    head: "FunctionSurjective",
-    uses: 97,
-  },
-  {
     head: "Opacity",
     uses: 97,
-  },
-  {
-    head: "FunctionDiscontinuities",
-    uses: 95,
   },
   {
     head: "RGBColor",
@@ -133,24 +93,8 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 69,
   },
   {
-    head: "SeriesCoefficient",
-    uses: 66,
-  },
-  {
     head: "Module",
     uses: 62,
-  },
-  {
-    head: "O",
-    uses: 60,
-  },
-  {
-    head: "Refine",
-    uses: 58,
-  },
-  {
-    head: "FunctionMeromorphic",
-    uses: 55,
   },
   {
     head: "ParametricPlot",
@@ -181,14 +125,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 43,
   },
   {
-    head: "PiecewiseExpand",
-    uses: 43,
-  },
-  {
-    head: "Assuming",
-    uses: 36,
-  },
-  {
     head: "DifferentialRootReduce",
     uses: 36,
   },
@@ -213,10 +149,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 33,
   },
   {
-    head: "LaplaceTransform",
-    uses: 33,
-  },
-  {
     head: "Arrowheads",
     uses: 32,
   },
@@ -231,10 +163,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Thread",
     uses: 31,
-  },
-  {
-    head: "MeijerGReduce",
-    uses: 30,
   },
   {
     head: "Reap",
@@ -255,10 +183,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "Echo",
     uses: 27,
-  },
-  {
-    head: "FourierTransform",
-    uses: 26,
   },
   {
     head: "TagBox",
@@ -286,10 +210,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Button",
-    uses: 21,
-  },
-  {
-    head: "MeijerG",
     uses: 21,
   },
   {
@@ -569,10 +489,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "Piecewise",
-    uses: 11,
-  },
-  {
     head: "RegionNearest",
     uses: 11,
   },
@@ -586,10 +502,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "FaceForm",
-    uses: 10,
-  },
-  {
-    head: "FunctionPeriod",
     uses: 10,
   },
   {
