@@ -148,3 +148,48 @@ the-counts-of-the-distinct-values-add-up-to-the:
     in: Equal[Plus[Count[List[1, 2, 2, 3, 3, 3], 1], Count[List[1, 2, 2, 3, 3, 3], 2], Count[List[1, 2, 2, 3, 3, 3], 3]], Length[List[1, 2, 2, 3, 3, 3]]]
   wolfram:
     in: (Plus[Count[List[1, 2, 2, 3, 3, 3], 1], Count[List[1, 2, 2, 3, 3, 3], 2], Count[List[1, 2, 2, 3, 3, 3], 3]] == Length[List[1, 2, 2, 3, 3, 3]])
+count-of-an-infinite-collection:
+  epsil:
+    in: Count(FactorialNumbers)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{Count}(\mathrm{FactorialNumbers})
+    out: \infty
+  fullform:
+    in: Count[FactorialNumbers]
+count-of-twinprimes-is-nan:
+  epsil:
+    in: Count(TwinPrimes)
+    out: "`NaN`"
+  tex:
+    in: \mathrm{Count}(\mathrm{TwinPrimes})
+    out: \operatorname{NaN}
+  fullform:
+    in: Count[TwinPrimes]
+count-of-narcissisticnumbers-is-the-exact-88:
+  epsil:
+    in: Count(NarcissisticNumbers)
+    out: "88"
+  tex:
+    in: \mathrm{Count}(\mathrm{NarcissisticNumbers})
+    out: "88"
+  fullform:
+    in: Count[NarcissisticNumbers]
+count-of-squarefreenumbers-is-infinite:
+  epsil:
+    in: Count(SquareFreeNumbers)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{Count}(\mathrm{SquareFreeNumbers})
+    out: \infty
+  fullform:
+    in: Count[SquareFreeNumbers]
+count-of-perfectnumbers-is-nan:
+  epsil:
+    in: Count(PerfectNumbers)
+    out: "`NaN`"
+  tex:
+    in: \mathrm{Count}(\mathrm{PerfectNumbers})
+    out: \operatorname{NaN}
+  fullform:
+    in: Count[PerfectNumbers]

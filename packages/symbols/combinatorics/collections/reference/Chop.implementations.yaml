@@ -179,3 +179,36 @@ an-exact-small-number-is-chopped-too:
   wolfram:
     in: Chop[Power[10, -20]]
     note: "Wolfram's Chop only touches approximate numbers: $\\mathrm{Chop}[10^{-20}]$ stays $1/10^{20}$."
+chop-0p001-0p0001-keeps-a-value-inside-the:
+  epsil:
+    in: Chop(0.001, 0.000_1)
+    out: "0.001"
+  tex:
+    in: \mathrm{chop}(0.001, 0.000\,1)
+    out: "0.001"
+  fullform:
+    in: Chop[0.001, 0.0001]
+  wolfram:
+    in: Chop[0.001, 0.0001]
+chop-1e-15-with-the-default-tolerance:
+  epsil:
+    in: Chop(e-15)
+    out: "0"
+  tex:
+    in: \mathrm{chop}(10^{-15})
+    out: "0"
+  fullform:
+    in: Chop[1*^-15]
+  wolfram:
+    in: Chop[1*^-15]
+chops-parts-independently-with-a-tolerance:
+  epsil:
+    in: Chop(0.005 + 3i, 0.01)
+    out: 3i
+  tex:
+    in: \mathrm{chop}(0.005+3i, 0.01)
+    out: 3i
+  fullform:
+    in: Chop[Complex[0.005, 3], 0.01]
+  wolfram:
+    in: Chop[Complex[0.005, 3], 0.01]

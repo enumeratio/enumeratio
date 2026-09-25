@@ -235,6 +235,114 @@ parts-of-any-expression-not-just-lists-the:
     out: b
   fullform:
     in: Part[Plus[a, b, c], 2]
+indexes-into-a-named-integer-collection:
+  epsil:
+    in: TriangularNumbers[5]
+    out: "15"
+  tex:
+    in: \mathrm{TriangularNumbers}[5]
+    out: "15"
+  fullform:
+    in: Part[TriangularNumbers, 5]
+indexes-into-a-parameterized-collection:
+  epsil:
+    in: PolygonalNumbers(5)[3]
+    out: "12"
+  tex:
+    in: \mathrm{PolygonalNumbers}(5)[3]
+    out: "12"
+  fullform:
+    in: Part[PolygonalNumbers[5], 3]
+first-term-of-fibonaccinumbers-is-0:
+  epsil:
+    in: FibonacciNumbers[1]
+    out: "0"
+  tex:
+    in: \mathrm{FibonacciNumbers}[1]
+    out: "0"
+  fullform:
+    in: Part[FibonacciNumbers, 1]
+at-bellnumbers-5-is-bell-4-15:
+  epsil:
+    in: BellNumbers[5]
+    out: "15"
+  tex:
+    in: \mathrm{BellNumbers}[5]
+    out: "15"
+  fullform:
+    in: Part[BellNumbers, 5]
+twinprimes-3rd-lesser-twin-prime:
+  epsil:
+    in: TwinPrimes[3]
+    out: "11"
+  tex:
+    in: \mathrm{TwinPrimes}[3]
+    out: "11"
+  fullform:
+    in: Part[TwinPrimes, 3]
+kalmostprimes-3-first-term-is-8:
+  epsil:
+    in: KAlmostPrimes(3)[1]
+    out: "8"
+  tex:
+    in: \mathrm{KAlmostPrimes}(3)[1]
+    out: "8"
+  fullform:
+    in: Part[KAlmostPrimes[3], 1]
+roughnumbers-5-first-term-is-1:
+  epsil:
+    in: RoughNumbers(5)[1]
+    out: "1"
+  tex:
+    in: \mathrm{RoughNumbers}(5)[1]
+    out: "1"
+  fullform:
+    in: Part[RoughNumbers[5], 1]
+primepairs-gap-2-first-term-is-3:
+  epsil:
+    in: PrimePairs(2)[1]
+    out: "3"
+  tex:
+    in: \mathrm{PrimePairs}(2)[1]
+    out: "3"
+  fullform:
+    in: Part[PrimePairs[2], 1]
+primepairs-gap-4-first-term-is-3:
+  epsil:
+    in: PrimePairs(4)[1]
+    out: "3"
+  tex:
+    in: \mathrm{PrimePairs}(4)[1]
+    out: "3"
+  fullform:
+    in: Part[PrimePairs[4], 1]
+primepairs-gap-6-first-term-is-5:
+  epsil:
+    in: PrimePairs(6)[1]
+    out: "5"
+  tex:
+    in: \mathrm{PrimePairs}(6)[1]
+    out: "5"
+  fullform:
+    in: Part[PrimePairs[6], 1]
+deficientnumbers-6th-term-is-7:
+  epsil:
+    in: DeficientNumbers[6]
+    out: "7"
+  tex:
+    in: \mathrm{DeficientNumbers}[6]
+    out: "7"
+  fullform:
+    in: Part[DeficientNumbers, 6]
+kfreeintegers-2-first-term-is-1:
+  epsil:
+    in: KFreeIntegers(2)[1]
+    out: "1"
+  tex:
+    in: \mathrm{KFreeIntegers}(2)[1]
+    out: "1"
+  fullform:
+    in: Part[KFreeIntegers[2], 1]
 at-lazy-family-collection-element:
   epsil:
     in: KSubsets(5, 2)[1]
