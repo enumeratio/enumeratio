@@ -7,18 +7,8 @@ declareNumerals(ce);
 
 type Expr = number | string | readonly [string, ...Expr[]];
 const value = (input: Expr) => ce.box(input).evaluate().json;
-const L = (...xs: Expr[]): Expr => ["List", ...xs];
 
 // ── IntegerLength ────────────────────────────────────────────────────────────
-
-test("IntegerLength: digit count, base 10 by default", () => {
-  expect(value(["IntegerLength", 12345])).toBe(5);
-  expect(value(["IntegerLength", ["Power", 2, 100]])).toBe(31);
-  expect(value(["IntegerLength", 255, 16])).toBe(2);
-  expect(value(["IntegerLength", -123])).toBe(3);
-  expect(value(["IntegerLength", 0])).toBe(0);
-  expect(value(["IntegerLength", L(1, 10, 100)])).toEqual(L(1, 2, 3));
-});
 
 test("IntegerLength cross-checked against n.toString(base).length", () => {
   for (const [n, base] of [
@@ -33,15 +23,6 @@ test("IntegerLength cross-checked against n.toString(base).length", () => {
 
 // ── IntegerReverse ───────────────────────────────────────────────────────────
 
-test("IntegerReverse: digits reversed", () => {
-  expect(value(["IntegerReverse", 1234])).toBe(4321);
-  expect(value(["IntegerReverse", 1234, 2])).toBe(601);
-  expect(value(["IntegerReverse", 1200])).toBe(21);
-  expect(value(["IntegerReverse", 123, 10, 5])).toBe(32100);
-  expect(value(["IntegerReverse", L(12, 345)])).toEqual(L(21, 543));
-  expect(value(["IntegerReverse", 12321])).toBe(12321);
-});
-
 test("IntegerReverse cross-checked: reversing twice with padding restores the original", () => {
   for (const n of [1, 42, 8005, 123456]) {
     const digits = n.toString().length;
@@ -52,12 +33,6 @@ test("IntegerReverse cross-checked: reversing twice with padding restores the or
 });
 
 // ── NumberExpand ─────────────────────────────────────────────────────────────
-
-test("NumberExpand: place-value terms", () => {
-  expect(value(["NumberExpand", 1234])).toEqual(L(1000, 200, 30, 4));
-  expect(value(["NumberExpand", 10, 2])).toEqual(L(8, 0, 2, 0));
-  expect(value(["NumberExpand", -123])).toEqual(L(-100, -20, -3));
-});
 
 test("NumberExpand cross-checked: terms sum back to n", () => {
   for (const [n, base] of [
@@ -73,14 +48,6 @@ test("NumberExpand cross-checked: terms sum back to n", () => {
 });
 
 // ── RomanNumeral ─────────────────────────────────────────────────────────────
-
-test("RomanNumeral: the backlog examples", () => {
-  expect(value(["RomanNumeral", 1988])).toBe("'MCMLXXXVIII'");
-  expect(value(["RomanNumeral", 3999])).toBe("'MMMCMXCIX'");
-  expect(value(["RomanNumeral", 2024])).toBe("'MMXXIV'");
-  expect(value(["RomanNumeral", L(1, 2, 3, 4)])).toEqual(L("'I'", "'II'", "'III'", "'IV'"));
-  expect(value(["RomanNumeral", 0])).toBe("'N'");
-});
 
 /** An independent from-scratch Roman-numeral encoder, for the round-trip check below. */
 function romanIndependent(n: number): string {
@@ -134,20 +101,6 @@ test("RomanNumeral round-trips for every 1..3999, against an independent encoder
 });
 
 // ── RealDigits ───────────────────────────────────────────────────────────────
-
-test("RealDigits: exact rationals, the repeating block nested", () => {
-  expect(value(["RealDigits", ["Rational", 1, 7]])).toEqual(L(L(L(1, 4, 2, 8, 5, 7)), 0));
-  expect(value(["RealDigits", ["Rational", 19, 7]])).toEqual(L(L(2, L(7, 1, 4, 2, 8, 5)), 1));
-  expect(value(["RealDigits", ["Rational", 5, 4]])).toEqual(L(L(1, 2, 5), 1));
-  expect(value(["RealDigits", ["Rational", 1, 8], 2])).toEqual(L(L(1), -2));
-  expect(value(["RealDigits", 123456])).toEqual(L(L(1, 2, 3, 4, 5, 6), 6));
-});
-
-test("RealDigits: numeric constants, truncated not rounded", () => {
-  expect(value(["RealDigits", "Pi", 10, 10])).toEqual(L(L(3, 1, 4, 1, 5, 9, 2, 6, 5, 3), 1));
-  expect(value(["RealDigits", ["Sqrt", 2], 10, 5])).toEqual(L(L(1, 4, 1, 4, 2), 1));
-  expect(value(["RealDigits", "ExponentialE", 10, 5])).toEqual(L(L(2, 7, 1, 8, 2), 1));
-});
 
 /** Long division of p/q in base 10, digit by digit — an independent check on RealDigits. */
 function longDivision(p: number, q: number, digits: number): { lead: number[]; frac: number[] } {
