@@ -173,7 +173,9 @@ for i, src in enumerate(sources):
 }
 
 /** A Julia environment next to this package: `oscar/` for Oscar, `julia/` for Nemo +
- * Combinatorics.jl. Rationals print as floats so they compare numerically, as ours do. */
+ * Combinatorics.jl. Rationals print as floats so they compare numerically, as ours do; a
+ * complex value prints in Python's `(a+bj)` spelling so compare.ts's existing Python-complex
+ * parser (parsePython) reads it too, instead of Julia's own `a + bim`, which it does not. */
 async function runJulia(
   sources: readonly string[],
   project: string,
@@ -202,6 +204,7 @@ show_oracle(x) = string(x)
 show_oracle(x::Rational) = string(Float64(x))
 show_oracle(x::QQFieldElem) = string(Float64(x))
 show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
+show_oracle(x::Complex) = "(" * string(real(x)) * (imag(x) < 0 ? "-" : "+") * string(abs(imag(x))) * "j)"
 ${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}`;
 
 /** Single-threaded, with the GC told to stay under three quarters of the cap. */
