@@ -133,6 +133,27 @@ function eisensteinG(ce: ComputeEngine, k: number, tau0: Cx): Cx {
 }
 
 /**
+ * J(τ) = j(τ)/1728, Klein's absolute invariant — Wolfram's normalisation of `ModularJ`
+ * so J(i) = 1 and J(ρ) = 0 at the elliptic points (ρ = e^{2πi/3}). A thin wrapper: all the
+ * analytic work (fundamental-domain reduction, the η²⁴ discriminant) is `modularJ`'s.
+ * τ = i is returned exactly — j(i) = 1728 is a textbook identity, not something worth
+ * spending a numeric evaluation on — even under plain `evaluate()`, not just `N()`.
+ */
+function declareKleinInvariantJ(ce: ComputeEngine): void {
+  if (ce.lookupDefinition("KleinInvariantJ") !== undefined) return;
+  ce.declare("KleinInvariantJ", {
+    signature: "(number) -> number",
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => {
+      const [tau] = ops;
+      if (tau === undefined || !isFiniteNum(tau)) return undefined;
+      if (tau.re === 0 && tau.im === 1) return ce.One; // j(i) = 1728 exactly
+      if (!wantsNumber(ops, options)) return undefined;
+      return numberResult(ce, scale(modularJ(ce, cx(tau.re, tau.im)), 1 / 1728));
+    },
+  });
+}
+
+/**
  * Declare `ModularJ`, `ModularLambda`, `EisensteinG`. Numeric only — like Carlson's
  * heads, none of the three has a widely useful closed form to reduce to symbolically
  * beyond what the native q-series kernels already cover, so a non-numeric call is left
@@ -158,6 +179,8 @@ export function declareModular(ce: ComputeEngine): void {
       return numberResult(ce, modularLambda(ce, cx(tau.re, tau.im)));
     },
   });
+
+  declareKleinInvariantJ(ce);
 
   ce.declare("EisensteinG", {
     signature: "(integer, number) -> number",
