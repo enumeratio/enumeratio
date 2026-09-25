@@ -1,0 +1,7 @@
+count-alternatingsignmatrices-4-42-the-asm:
+  epsil:
+    in: Count(AlternatingSignMatrices(4))
+    out: "42"
+  tex:
+    in: \mathrm{Count}(\mathrm{AlternatingSignMatrices}(4))
+    out: "42"

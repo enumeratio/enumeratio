@@ -1,0 +1,43 @@
+factorial:
+  epsil:
+    in: ExponentialGeneratingFunction(n!, n, x)
+    out: 1 / (-x + 1)
+  tex:
+    in: \mathrm{ExponentialGeneratingFunction}(n!, n, x)
+    out: \frac{1}{1-x}
+derangements:
+  epsil:
+    in: ExponentialGeneratingFunction(Subfactorial(n), n, x)
+    out: ExponentialE ^ (-x) / (-x + 1)
+  tex:
+    in: \mathrm{ExponentialGeneratingFunction}(\mathrm{Subfactorial}(n), n, x)
+    out: \frac{\exp(-x)}{1-x}
+  traditional:
+    in: \mathrm{ExponentialGeneratingFunction}({!}n, n, x)
+    out: \frac{\exp(-x)}{1-x}
+bell-numbers:
+  epsil:
+    in: ExponentialGeneratingFunction(BellNumber(n), n, x)
+    out: ExponentialE ^ (ExponentialE ^ x - 1)
+  tex:
+    in: \mathrm{ExponentialGeneratingFunction}(\mathrm{BellNumber}(n), n, x)
+    out: e^{e^{x}-1}
+  traditional:
+    in: \mathrm{ExponentialGeneratingFunction}(B_{n}, n, x)
+    out: e^{e^{x}-1}
+fibonacci:
+  epsil:
+    in: ExponentialGeneratingFunction(Fibonacci(n), n, x)
+    out: |-
+      -(Sqrt(5) / 5) * ExponentialE ^ (1 / 2 * x * (1 - Sqrt(5))) + Sqrt(5) / 5 * ExponentialE ^
+                                                                                  (1 /
+                                                                                   2 *
+                                                                                   x *
+                                                                                   (1 +
+                                                                                    Sqrt(5)))
+  tex:
+    in: \mathrm{ExponentialGeneratingFunction}(\mathrm{Fibonacci}(n), n, x)
+    out: \frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1-5^{1/2}))))
+  traditional:
+    in: \mathrm{ExponentialGeneratingFunction}(F_{n}, n, x)
+    out: \frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1+\sqrt{5}))))-\frac{1}{5}(\sqrt{5}\exp(\frac{1}{2}(x\times(1-5^{1/2}))))

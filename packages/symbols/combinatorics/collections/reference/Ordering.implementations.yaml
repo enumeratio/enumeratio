@@ -1,0 +1,105 @@
+ordering-list-3-1-2:
+  epsil:
+    in: Ordering([3, 1, 2])
+    out: "[2, 3, 1]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: \bigl\lbrack2, 3, 1\bigr\rbrack
+  wolfram:
+    in: Ordering[List[3, 1, 2]]
+    out: "{2, 3, 1}"
+    tex:
+      in: \text{Ordering}[\{3,1,2\}]
+      out: \{2,3,1\}
+ties-break-in-favor-of-the-earlier-position-both:
+  epsil:
+    in: Ordering([2, 1, 2, 1])
+    out: "[2, 4, 1, 3]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 1, 2, 1\bigr\rbrack)
+    out: \bigl\lbrack2, 4, 1, 3\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 1, 2, 1]]
+    out: "{2, 4, 1, 3}"
+    tex:
+      in: \text{Ordering}[\{2,1,2,1\}]
+      out: \{2,4,1,3\}
+a-second-argument-takes-just-the-first-n-indices:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 1, 2, 3], 4)
+    out: "[3, 5, 1, 6]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 1, 2, 3\bigr\rbrack, 4)
+    out: \bigl\lbrack3, 5, 1, 6\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 1, 2, 3], 4]
+ordering-list-2-6-1-9-1-2-3:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 1, 2, 3])
+    out: "[3, 5, 1, 6, 7, 2, 4]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack3, 5, 1, 6, 7, 2, 4\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 1, 2, 3]]
+symbols-order-alphabetically:
+  epsil:
+    in: Ordering([c, a, b])
+    out: "[2, 3, 1]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack c, a, b\bigr\rbrack)
+    out: \bigl\lbrack2, 3, 1\bigr\rbrack
+a-negative-count-gives-the-positions-of-the:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 1, 2, 3], -1)
+    out: "[4]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 1, 2, 3\bigr\rbrack, -1)
+    out: \bigl\lbrack4\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 1, 2, 3], -1]
+a-m-n-spec-takes-the-4th-through-the-last:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 1, 2, 3], [4, -1])
+    out: "[6, 7, 2, 4]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 1, 2, 3\bigr\rbrack, \bigl\lbrack4, -1\bigr\rbrack)
+    out: \bigl\lbrack6, 7, 2, 4\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 1, 2, 3], List[4, -1]]
+a-third-argument-orders-by-a-custom-test-here:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 3], All, Greater)
+    out: "[4, 2, 5, 1, 3]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 3\bigr\rbrack, \mathrm{All}, \mathrm{Greater})
+    out: \bigl\lbrack4, 2, 5, 1, 3\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 3], AllTrue, Greater]
+upto-6-asks-for-at-most-6-positions-so-a-5:
+  epsil:
+    in: Ordering([2, 6, 1, 9, 2], UpTo(6))
+    out: "[3, 1, 5, 2, 4]"
+  tex:
+    in: \mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 2\bigr\rbrack, \mathrm{UpTo}(6))
+    out: \bigl\lbrack3, 1, 5, 2, 4\bigr\rbrack
+  wolfram:
+    in: Ordering[List[2, 6, 1, 9, 2], UpTo[6]]
+on-a-permutation-ordering-is-the-inverse-so:
+  epsil:
+    in: Ordering(Ordering([3, 1, 2]))
+    out: "[3, 1, 2]"
+  tex:
+    in: \mathrm{Ordering}(\mathrm{Ordering}(\bigl\lbrack3, 1, 2\bigr\rbrack))
+    out: \bigl\lbrack3, 1, 2\bigr\rbrack
+  wolfram:
+    in: Ordering[Ordering[List[3, 1, 2]]]
+the-position-of-the-smallest-element-see-first:
+  epsil:
+    in: First(Ordering([2, 6, 1, 9, 1, 2, 3]))
+    out: "3"
+  tex:
+    in: \mathrm{First}(\mathrm{Ordering}(\bigl\lbrack2, 6, 1, 9, 1, 2, 3\bigr\rbrack))
+    out: "3"
+  wolfram:
+    in: First[Ordering[List[2, 6, 1, 9, 1, 2, 3]]]

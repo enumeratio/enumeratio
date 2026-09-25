@@ -1,0 +1,36 @@
+laplace-pdf-exact:
+  epsil:
+    in: PDF(LaplaceDistribution(0, 1 / 2), 0)
+    out: "1"
+  tex:
+    in: \operatorname{PDF}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}), 0)
+    out: "1"
+  wolfram:
+    in: PDF[LaplaceDistribution[0, Rational[1, 2]], 0]
+laplace-cdf-exact:
+  epsil:
+    in: CDF(LaplaceDistribution(0, 1 / 2), 0)
+    out: 1 / 2
+  tex:
+    in: \operatorname{CDF}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}), 0)
+    out: \frac{1}{2}
+  wolfram:
+    in: CDF[LaplaceDistribution[0, Rational[1, 2]], 0]
+laplace-mean-exact:
+  epsil:
+    in: Mean(LaplaceDistribution(0, 1 / 2))
+    out: "0"
+  tex:
+    in: \mathrm{mean}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}))
+    out: "0"
+  wolfram:
+    in: Mean[LaplaceDistribution[0, Rational[1, 2]]]
+laplace-variance-exact:
+  epsil:
+    in: Variance(LaplaceDistribution(0, 1 / 2))
+    out: 1 / 2
+  tex:
+    in: \mathrm{Variance}(\mathrm{LaplaceDistribution}(0, \frac{1}{2}))
+    out: \frac{1}{2}
+  wolfram:
+    in: Variance[LaplaceDistribution[0, Rational[1, 2]]]

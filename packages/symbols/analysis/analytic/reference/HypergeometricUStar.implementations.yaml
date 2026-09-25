@@ -1,0 +1,21 @@
+u-frac-12-frac-32-2-1:
+  epsil:
+    in: Chop(N(HypergeometricUStar(1 / 2, 3 / 2, 2)) - 1)
+    out: "0"
+  tex:
+    in: \mathrm{chop}(N(\mathrm{HypergeometricUStar}(1/2, 3/2, 2))-1)
+    out: "0"
+a-generic-point-checked-against-mpmath-s-hyperu:
+  epsil:
+    in: HypergeometricUStar(1.3, 2.7, 4)
+    out: 1.113_705_290_586_790_6
+  tex:
+    in: \mathrm{HypergeometricUStar}(1.3, 2.7, 4)
+    out: 1.113\,705\,290\,586\,790\,6
+integer-b-stays-symbolic-the-connection-formula:
+  epsil:
+    in: HypergeometricUStar(1, 2, 3)
+    out: HypergeometricUStar(1, 2, 3)
+  tex:
+    in: \mathrm{HypergeometricUStar}(1, 2, 3)
+    out: \mathrm{HypergeometricUStar}(1, 2, 3)

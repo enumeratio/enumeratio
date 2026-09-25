@@ -1,0 +1,28 @@
+a-3-cycle:
+  epsil:
+    in: GraphDistanceMatrix(CycleGraph(3))
+    out: "[[0, 1, 1], [1, 0, 1], [1, 1, 0]]"
+  tex:
+    in: \mathrm{GraphDistanceMatrix}(\mathrm{CycleGraph}(3))
+    out: \bigl\lbrack\bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 1\bigr\rbrack, \bigl\lbrack1, 1, 0\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: GraphDistanceMatrix[CycleGraph[3]]
+unreachable-pair-is-infinite:
+  epsil:
+    in: |-
+      GraphDistanceMatrix(Graph([1, 2, 3, 4], [
+                                                UndirectedEdge(1, 2),
+                                                UndirectedEdge(3, 4),
+                                              ]))
+    out: |-
+      [
+        [0, 1, PositiveInfinity, PositiveInfinity],
+        [1, 0, PositiveInfinity, PositiveInfinity],
+        [PositiveInfinity, PositiveInfinity, 0, 1],
+        [PositiveInfinity, PositiveInfinity, 1, 0],
+      ]
+  tex:
+    in: \mathrm{GraphDistanceMatrix}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack0, 1, \infty, \infty\bigr\rbrack, \bigl\lbrack1, 0, \infty, \infty\bigr\rbrack, \bigl\lbrack\infty, \infty, 0, 1\bigr\rbrack, \bigl\lbrack\infty, \infty, 1, 0\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: GraphDistanceMatrix[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[3, 4]]]]

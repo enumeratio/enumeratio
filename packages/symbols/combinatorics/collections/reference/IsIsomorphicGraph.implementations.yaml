@@ -1,0 +1,30 @@
+relabelled-cycle-is-isomorphic-to-itself:
+  epsil:
+    in: |-
+      IsIsomorphicGraph(CycleGraph(4), Graph([3, 1, 4, 2], [
+                                                             UndirectedEdge(3, 1),
+                                                             UndirectedEdge(1, 4),
+                                                             UndirectedEdge(4, 2),
+                                                             UndirectedEdge(2, 3),
+                                                           ]))
+    out: True
+  tex:
+    in: \mathrm{IsIsomorphicGraph}(\mathrm{CycleGraph}(4), \mathrm{Graph}(\bigl\lbrack3, 1, 4, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(4, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack))
+    out: \top
+  traditional:
+    in: \mathrm{IsIsomorphicGraph}(\mathrm{CycleGraph}(4), \mathrm{Graph}(\bigl\lbrack3, 1, 4, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(4, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack))
+    out: \mathrm{True}
+  wolfram:
+    in: IsomorphicGraphQ[CycleGraph[4], Graph[List[3, 1, 4, 2], List[UndirectedEdge[3, 1], UndirectedEdge[1, 4], UndirectedEdge[4, 2], UndirectedEdge[2, 3]]]]
+same-vertex-count-different-structure:
+  epsil:
+    in: IsIsomorphicGraph(CycleGraph(4), StarGraph(4))
+    out: False
+  tex:
+    in: \mathrm{IsIsomorphicGraph}(\mathrm{CycleGraph}(4), \mathrm{StarGraph}(4))
+    out: \bot
+  traditional:
+    in: \mathrm{IsIsomorphicGraph}(\mathrm{CycleGraph}(4), \mathrm{StarGraph}(4))
+    out: \mathrm{False}
+  wolfram:
+    in: IsomorphicGraphQ[CycleGraph[4], StarGraph[4]]

@@ -1251,6 +1251,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DigitSum",
   },
   {
+    name: "DiracDelta",
+    wolfram: "DiracDelta",
+  },
+  {
     name: "DirectedEdge",
     wolfram: "DirectedEdge",
   },
@@ -1285,8 +1289,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DirichletL",
   },
   {
+    name: "DiscreteDelta",
+    wolfram: "DiscreteDelta",
+  },
+  {
     name: "DiscreteRatio",
     wolfram: "DiscreteRatio",
+  },
+  {
+    name: "DiscreteShift",
+    wolfram: "DiscreteShift",
   },
   {
     name: "Divide",
@@ -2400,6 +2412,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "HarmonicNumber",
     fungrimEntries: ["00c02a", "f50c74"],
     wolfram: "HarmonicNumber",
+  },
+  {
+    name: "HeavisideLambda",
+    wolfram: "HeavisideLambda",
+  },
+  {
+    name: "HeavisidePi",
+    wolfram: "HeavisidePi",
+  },
+  {
+    name: "HeavisideTheta",
+    wolfram: "HeavisideTheta",
   },
   {
     name: "HermiteDecomposition",
@@ -4022,6 +4046,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RamanujanTau",
   },
   {
+    name: "Ramp",
+    wolfram: "Ramp",
+  },
+  {
     name: "Random",
     wolfram: "RandomReal",
   },
@@ -4125,6 +4153,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ConstantArray",
   },
   {
+    name: "Rescale",
+    wolfram: "Rescale",
+  },
+  {
     name: "Rest",
     wolfram: "Rest",
   },
@@ -4156,6 +4188,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Round",
     wolfram: "Round",
+  },
+  {
+    name: "SawtoothWave",
+    wolfram: "SawtoothWave",
   },
   {
     name: "Sec",
@@ -4463,6 +4499,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "SquareWave",
+    wolfram: "SquareWave",
+  },
+  {
     name: "SquaresR",
     wolfram: "SquaresR",
   },
@@ -4703,6 +4743,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Transpose",
   },
   {
+    name: "TriangleWave",
+    wolfram: "TriangleWave",
+  },
+  {
     name: "True",
     wolfram: "True",
   },
@@ -4735,8 +4779,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DeleteDuplicates",
   },
   {
+    name: "UnitBox",
+    wolfram: "UnitBox",
+  },
+  {
     name: "UnitStep",
     wolfram: "UnitStep",
+  },
+  {
+    name: "UnitTriangle",
+    wolfram: "UnitTriangle",
   },
   {
     name: "UpTo",

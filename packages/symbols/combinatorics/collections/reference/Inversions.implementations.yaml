@@ -1,0 +1,35 @@
+3-1-and-3-2:
+  epsil:
+    in: Inversions([3, 1, 2])
+    out: "2"
+  tex:
+    in: \mathrm{Inversions}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "2"
+the-identity-has-none:
+  epsil:
+    in: Inversions([1, 2, 3])
+    out: "0"
+  tex:
+    in: \mathrm{Inversions}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "0"
+the-reversal-attains-the-maximum-binom-4-2:
+  epsil:
+    in: Inversions([4, 3, 2, 1])
+    out: "6"
+  tex:
+    in: \mathrm{Inversions}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack)
+    out: "6"
+the-inversion-distribution-over-s-3-mapped:
+  epsil:
+    in: ListFrom(Map(Function(Inversions(p), p), SymmetricGroup(3)))
+    out: "[0, 1, 1, 2, 2, 3]"
+  tex:
+    in: \mathrm{ListFrom}(\mathrm{Map}(p\mapsto\mathrm{Inversions}(p), \mathrm{SymmetricGroup}(3)))
+    out: \bigl\lbrack0, 1, 1, 2, 2, 3\bigr\rbrack
+total-inversions-over-all-of-s-4-folded-with-sum:
+  epsil:
+    in: Sum(Map(Function(Inversions(p), p), SymmetricGroup(4)))
+    out: "72"
+  tex:
+    in: \sum\mathrm{Map}(p\mapsto\mathrm{Inversions}(p), \mathrm{SymmetricGroup}(4))
+    out: "72"

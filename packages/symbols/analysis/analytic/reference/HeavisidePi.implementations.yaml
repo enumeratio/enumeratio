@@ -1,0 +1,36 @@
+heavisidepi-inside:
+  epsil:
+    in: HeavisidePi(0)
+    out: "1"
+  tex:
+    in: \mathrm{HeavisidePi}(0)
+    out: "1"
+  wolfram:
+    in: HeavisidePi[0]
+heavisidepi-boundary-unevaluated:
+  epsil:
+    in: HeavisidePi(1 / 2)
+    out: HeavisidePi(1 / 2)
+  tex:
+    in: \mathrm{HeavisidePi}(\frac{1}{2})
+    out: \mathrm{HeavisidePi}(\frac{1}{2})
+  wolfram:
+    in: HeavisidePi[Rational[1, 2]]
+heavisidepi-neg-boundary-unevaluated:
+  epsil:
+    in: HeavisidePi(-1 / 2)
+    out: HeavisidePi(-1 / 2)
+  tex:
+    in: \mathrm{HeavisidePi}(-\frac{1}{2})
+    out: \mathrm{HeavisidePi}(-\frac{1}{2})
+  wolfram:
+    in: HeavisidePi[Rational[-1, 2]]
+heavisidepi-outside:
+  epsil:
+    in: HeavisidePi(1)
+    out: "0"
+  tex:
+    in: \mathrm{HeavisidePi}(1)
+    out: "0"
+  wolfram:
+    in: HeavisidePi[1]

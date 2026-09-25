@@ -1,0 +1,18 @@
+a-generic-point-checked-against-mpmath-s-hyperu:
+  epsil:
+    in: HypergeometricU(1, 2.5, 3)
+    out: 0.382_340_662_490_315_6
+  tex:
+    in: \mathrm{HypergeometricU}(1, 2.5, 3)
+    out: 0.382\,340\,662\,490\,315\,6
+  wolfram:
+    in: HypergeometricU[1, 2.5, 3]
+integer-b-stays-symbolic-the-connection-formula:
+  epsil:
+    in: HypergeometricU(1, 2, 3)
+    out: HypergeometricU(1, 2, 3)
+  tex:
+    in: \mathrm{HypergeometricU}(1, 2, 3)
+    out: \mathrm{HypergeometricU}(1, 2, 3)
+  wolfram:
+    in: HypergeometricU[1, 2, 3]

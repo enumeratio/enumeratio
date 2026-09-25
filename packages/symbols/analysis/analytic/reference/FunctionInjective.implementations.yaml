@@ -1,0 +1,40 @@
+a-reciprocal-is-injective-on-its-own-domain:
+  epsil:
+    in: FunctionInjective(1 / x, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionInjective}(\frac{1}{x}, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionInjective}(\frac{1}{x}, x)
+    out: \mathrm{True}
+a-cubic-is-injective:
+  epsil:
+    in: FunctionInjective(x ^ 3, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionInjective}(x^3, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionInjective}(x^3, x)
+    out: \mathrm{True}
+a-parabola-is-not-injective:
+  epsil:
+    in: FunctionInjective(x ^ 2, x)
+    out: False
+  tex:
+    in: \mathrm{FunctionInjective}(x^2, x)
+    out: \bot
+  traditional:
+    in: \mathrm{FunctionInjective}(x^2, x)
+    out: \mathrm{False}
+an-affine-function-is-injective:
+  epsil:
+    in: FunctionInjective(2x + 1, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionInjective}(2x+1, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionInjective}(2x+1, x)
+    out: \mathrm{True}

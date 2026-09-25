@@ -2,13 +2,13 @@
 //
 // `@enumeratio/oracle` already does the hard part: emit every documented example into
 // another system's syntax, run it in that system's kernel, and compare the answers. The
-// result is attached to each example as `others` (entries.ts, from the per-entry-file
-// `<stem>.oracle.json` sidecars) — exactly the evidence a crosswalk chip wants: "this is
-// the same function over there" is a claim, and the sidecar is a check of it. So the chip
+// result is each head's implementations record — exactly the evidence a crosswalk chip
+// wants: "this is the same function over there" is a claim, and the record is a check of
+// it. So the chip
 // carries the count, and a head whose examples DISAGREE says that instead.
 //
 // The scan needs a kernel, so it is not a gate; a head with no scanned example simply gets
-// no mark. The classification of each disagreement lives on its row in the sidecar.
+// no mark. The classification of each disagreement lives on its row in the record.
 
 import AGREEMENTS from "./oracle-agreements.json" with { type: "json" };
 import type { CrosswalkSystem } from "./sources.ts";
@@ -23,7 +23,7 @@ export interface OracleAgreement {
 }
 
 /** Every system that has run this head's examples, with how they came out. Tallied from the
- * sidecars by `oracleAgreementsOf` (node.ts) into oracle-agreements.json, which the scan
+ * records by `oracleAgreementsOf` (node.ts) into oracle-agreements.json, which the scan
  * rewrites and a test keeps fresh -- so the browser never loads the examples to count them. */
 export const oracleAgreements = (head: string): OracleAgreement[] =>
   ((AGREEMENTS as Record<string, OracleAgreement[]>)[head] ?? []).slice();

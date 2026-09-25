@@ -1,0 +1,27 @@
+centralmoment-order-0:
+  epsil:
+    in: CentralMoment(ChiSquareDistribution(3), 0)
+    out: "1"
+  tex:
+    in: \mathrm{CentralMoment}(\mathrm{ChiSquareDistribution}(3), 0)
+    out: "1"
+  wolfram:
+    in: CentralMoment[ChiSquareDistribution[3], 0]
+centralmoment-order-1:
+  epsil:
+    in: CentralMoment(ChiSquareDistribution(3), 1)
+    out: "0"
+  tex:
+    in: \mathrm{CentralMoment}(\mathrm{ChiSquareDistribution}(3), 1)
+    out: "0"
+  wolfram:
+    in: CentralMoment[ChiSquareDistribution[3], 1]
+centralmoment-order-2-is-variance:
+  epsil:
+    in: CentralMoment(ChiSquareDistribution(3), 2)
+    out: "6"
+  tex:
+    in: \mathrm{CentralMoment}(\mathrm{ChiSquareDistribution}(3), 2)
+    out: "6"
+  wolfram:
+    in: CentralMoment[ChiSquareDistribution[3], 2]

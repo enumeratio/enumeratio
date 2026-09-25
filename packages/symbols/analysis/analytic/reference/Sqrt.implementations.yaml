@@ -1,0 +1,515 @@
+sqrt-16:
+  epsil:
+    in: Sqrt(16)
+    out: "4"
+  tex:
+    in: \sqrt{16}
+    out: "4"
+  wolfram:
+    in: Sqrt[16]
+    out: "4"
+    tex:
+      in: \sqrt{16}
+      out: "4"
+  sympy:
+    in: sqrt(16)
+    out: "4"
+  mpmath:
+    in: sqrt(16)
+    out: "4.0"
+  sage:
+    in: sqrt(16)
+    out: "4"
+  rust:
+    in: sqrt(n(16))
+    out: "4.0"
+stays-symbolic-when-the-radicand-isn-t-a-perfect:
+  epsil:
+    in: Sqrt(2)
+    out: Sqrt(2)
+  tex:
+    in: \sqrt{2}
+    out: \sqrt{2}
+  wolfram:
+    in: Sqrt[2]
+    out: Sqrt[2]
+    tex:
+      in: \sqrt{2}
+      out: \sqrt{2}
+  sympy:
+    in: sqrt(2)
+    out: sqrt(2)
+  mpmath:
+    in: sqrt(2)
+    out: "1.41421356237309504880168872421"
+  sage:
+    in: sqrt(2)
+    out: sqrt(2)
+  rust:
+    in: sqrt(n(2))
+    out: "1.4142135623730951"
+sqrt-4-over-9:
+  epsil:
+    in: Sqrt(4 / 9)
+    out: 2 / 3
+  tex:
+    in: \sqrt{\frac{4}{9}}
+    out: \frac{2}{3}
+  wolfram:
+    in: Sqrt[Rational[4, 9]]
+    out: 2/3
+    tex:
+      in: \sqrt{\frac{4}{9}}
+      out: \frac{2}{3}
+  sympy:
+    in: sqrt(Rational(4, 9))
+    out: 2/3
+  sage:
+    in: sqrt((4/9))
+    out: 2/3
+  rust:
+    in: sqrt(rational(n(4), n(9)))
+    out: "0.6666666666666666"
+sqrt-0:
+  epsil:
+    in: Sqrt(0)
+    out: "0"
+  tex:
+    in: \sqrt{0}
+    out: "0"
+  wolfram:
+    in: Sqrt[0]
+    out: "0"
+    tex:
+      in: \sqrt{0}
+      out: "0"
+  sympy:
+    in: sqrt(0)
+    out: "0"
+  mpmath:
+    in: sqrt(0)
+    out: "0.0"
+  sage:
+    in: sqrt(0)
+    out: "0"
+  rust:
+    in: sqrt(n(0))
+    out: "0.0"
+a-perfect-square-radicand-evaluates-exactly-even:
+  epsil:
+    in: Sqrt(-4)
+    out: 2i
+  tex:
+    in: \sqrt{-4}
+    out: 2i
+  wolfram:
+    in: Sqrt[-4]
+    out: 2*I
+    tex:
+      in: \sqrt{-4}
+      out: 2 i
+  sympy:
+    in: sqrt(-4)
+    out: 2*I
+  mpmath:
+    in: sqrt(-4)
+    out: (0.0 + 2.0j)
+  sage:
+    in: sqrt(-4)
+    out: 2*I
+  rust:
+    in: sqrt(n(-4))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+sqrt-x-2-x-for-a-perfect-square-see-square:
+  epsil:
+    in: Square(Sqrt(16)) == 16
+    out: True
+  tex:
+    in: \sqrt{16}^2=16
+    out: \top
+  traditional:
+    in: \sqrt{16}^2=16
+    out: \mathrm{True}
+  wolfram:
+    in: ((Sqrt[16])^2 == 16)
+    back: Unreadable
+    out: True
+    tex:
+      in: \sqrt{16}^2=16
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal((sqrt(16))**2, 16)
+    out: True
+  mpmath:
+    in: almosteq((sqrt(16))**2, 16, 1e-20)
+    out: True
+  sage:
+    in: bool((sqrt(16))^2 == 16)
+    out: True
+sqrt-x-x-1-2:
+  epsil:
+    in: Sqrt(16) == 16 ^ (1 / 2)
+    out: True
+  tex:
+    in: \sqrt{16}=\sqrt{16}
+    out: \top
+  traditional:
+    in: \sqrt{16}=\sqrt{16}
+    out: \mathrm{True}
+  wolfram:
+    in: (Sqrt[16] == Power[16, Rational[1, 2]])
+    back: Unreadable
+    out: True
+    tex:
+      in: \sqrt{16}=16^{\frac{1}{2}}
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(sqrt(16), (16**Rational(1, 2)))
+    out: True
+  sage:
+    in: bool(sqrt(16) == (16^(1/2)))
+    out: True
+  rust:
+    in: equal(sqrt(n(16)), power(n(16), rational(n(1), n(2))))
+    out: "true"
+the-pythagorean-hypotenuse-of-a-3-4-5-triangle:
+  epsil:
+    in: Sqrt(Square(3) + Square(4))
+    out: "5"
+  tex:
+    in: \sqrt{3^2+4^2}
+    out: "5"
+  wolfram:
+    in: Sqrt[Plus[(3)^2, (4)^2]]
+    back: Unreadable
+    out: "5"
+    tex:
+      in: \sqrt{3^2+4^2}
+      out: "5"
+  sympy:
+    in: sqrt(((3)**2 + (4)**2))
+    out: "5"
+  mpmath:
+    in: sqrt(((3)**2 + (4)**2))
+    out: "5.0"
+  sage:
+    in: sqrt(((3)^2 + (4)^2))
+    out: "5"
+negative-but-not-a-perfect-square-stays-symbolic:
+  epsil:
+    in: Sqrt(-2)
+    out: Sqrt(-2)
+  tex:
+    in: \sqrt{-2}
+    out: \sqrt{-2}
+  wolfram:
+    in: Sqrt[-2]
+    out: I*Sqrt[2]
+    tex:
+      in: \sqrt{-2}
+      out: i \sqrt{2}
+  sympy:
+    in: sqrt(-2)
+    out: sqrt(2)*I
+  mpmath:
+    in: sqrt(-2)
+    out: (0.0 + 1.41421356237309504880168872421j)
+  sage:
+    in: sqrt(-2)
+    out: sqrt(-2)
+  rust:
+    in: sqrt(n(-2))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+a-negative-rational-still-evaluates-exactly-when:
+  epsil:
+    in: Sqrt(-4 / 9)
+    out: 2 / 3 * i
+  tex:
+    in: \sqrt{-\frac{4}{9}}
+    out: \frac{2}{3}i
+  wolfram:
+    in: Sqrt[Rational[-4, 9]]
+    out: (2*I)/3
+    tex:
+      in: \sqrt{-\frac{4}{9}}
+      out: \frac{2 i}{3}
+  sympy:
+    in: sqrt(Rational(-4, 9))
+    out: 2*I/3
+  sage:
+    in: sqrt((-4/9))
+    out: 2/3*I
+  rust:
+    in: sqrt(rational(n(-4), n(9)))
+    out: NaN
+    verdict: disagree
+    kind: domain
+    note: Rust's f64 sqrt is real-only and gives NaN; compute-engine continues into the complex plane.
+an-approximate-number-gives-an-approximate-root:
+  epsil:
+    in: Sqrt(3.5)
+    out: 1.870_828_693_386_970_692_79
+  tex:
+    in: \sqrt{3.5}
+    out: 1.870\,828\,693\,386\,970\,692\,79
+  wolfram:
+    in: Sqrt[3.5]
+  sympy:
+    in: sqrt(3.5)
+  mpmath:
+    in: sqrt(3.5)
+  sage:
+    in: sqrt(3.5)
+  rust:
+    in: sqrt(x(3.5))
+pulls-perfect-square-factors-out-of-the-radical:
+  epsil:
+    in: Sqrt(200)
+    out: 10 * Sqrt(2)
+  tex:
+    in: \sqrt{200}
+    out: 10\sqrt{2}
+  wolfram:
+    in: Sqrt[200]
+  sympy:
+    in: sqrt(200)
+  mpmath:
+    in: sqrt(200)
+  sage:
+    in: sqrt(200)
+  rust:
+    in: sqrt(n(200))
+sqrt-neg-25:
+  epsil:
+    in: Sqrt(-25)
+    out: 5i
+  tex:
+    in: \sqrt{-25}
+    out: 5i
+  wolfram:
+    in: Sqrt[-25]
+  sympy:
+    in: sqrt(-25)
+  mpmath:
+    in: sqrt(-25)
+  sage:
+    in: sqrt(-25)
+  rust:
+    in: sqrt(n(-25))
+sqrt-8:
+  epsil:
+    in: Sqrt(8)
+    out: 2 * Sqrt(2)
+  tex:
+    in: \sqrt{8}
+    out: 2\sqrt{2}
+  wolfram:
+    in: Sqrt[8]
+  sympy:
+    in: sqrt(8)
+  mpmath:
+    in: sqrt(8)
+  sage:
+    in: sqrt(8)
+  rust:
+    in: sqrt(n(8))
+rationalizes-the-denominator:
+  epsil:
+    in: Sqrt(1 / 2)
+    out: Sqrt(2) / 2
+  tex:
+    in: \sqrt{\frac{1}{2}}
+    out: \frac{\sqrt{2}}{2}
+  wolfram:
+    in: Sqrt[Rational[1, 2]]
+  sympy:
+    in: sqrt(Rational(1, 2))
+  sage:
+    in: sqrt((1/2))
+  rust:
+    in: sqrt(rational(n(1), n(2)))
+sqrt-12-over-5:
+  epsil:
+    in: Sqrt(12 / 5)
+    out: 2 / 5 * Sqrt(15)
+  tex:
+    in: \sqrt{\frac{12}{5}}
+    out: \frac{2\sqrt{15}}{5}
+  wolfram:
+    in: Sqrt[Rational[12, 5]]
+  sympy:
+    in: sqrt(Rational(12, 5))
+  sage:
+    in: sqrt((12/5))
+  rust:
+    in: sqrt(rational(n(12), n(5)))
+sqrt-neg-2p5:
+  epsil:
+    in: Sqrt(-2.5)
+    out: 1.581_138_830_084_189_8i
+  tex:
+    in: \sqrt{-2.5}
+    out: 1.581\,138\,830\,084\,189\,8i
+  wolfram:
+    in: Sqrt[-2.5]
+  sympy:
+    in: sqrt(-2.5)
+  mpmath:
+    in: sqrt(-2.5)
+  sage:
+    in: sqrt(-2.5)
+  rust:
+    in: sqrt(x(-2.5))
+an-exact-complex-square-2-i-2-3-4i:
+  epsil:
+    in: Sqrt(3 + 4i)
+    out: 2 + i
+  tex:
+    in: \sqrt{3+4i}
+    out: 2+i
+  wolfram:
+    in: Sqrt[Complex[3, 4]]
+  sympy:
+    in: sqrt((3 + 4*I))
+  mpmath:
+    in: sqrt(mpc(3, 4))
+  sage:
+    in: sqrt((3 + 4*I))
+sqrt-positiveinfinity:
+  epsil:
+    in: Sqrt(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \sqrt{\infty}
+    out: \infty
+  wolfram:
+    in: Sqrt[Infinity]
+threads-element-wise-over-a-list:
+  epsil:
+    in: Sqrt([1, 4, 9])
+    out: "[1, 2, 3]"
+  tex:
+    in: \sqrt{\bigl\lbrack1, 4, 9\bigr\rbrack}
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  wolfram:
+    in: Sqrt[List[1, 4, 9]]
+  sympy:
+    in: "[sqrt(1), sqrt(4), sqrt(9)]"
+  mpmath:
+    in: "[sqrt(1), sqrt(4), sqrt(9)]"
+  sage:
+    in: "[sqrt(1), sqrt(4), sqrt(9)]"
+  rust:
+    in: sqrt(list(vec![n(1), n(4), n(9)]))
+threads-over-a-matrix-entry-by-entry-this-is-not:
+  epsil:
+    in: Sqrt([[1 / 2, -1], [0, 1 / 2]])
+    out: "[[Sqrt(2) / 2, i], [0, Sqrt(2) / 2]]"
+  tex:
+    in: \sqrt{\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack}
+    out: \bigl\lbrack\bigl\lbrack\frac{\sqrt{2}}{2}, i\bigr\rbrack, \bigl\lbrack0, \frac{\sqrt{2}}{2}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Sqrt[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
+  sympy:
+    in: "[[sqrt(Rational(1, 2)), sqrt(-1)], [sqrt(0), sqrt(Rational(1, 2))]]"
+  sage:
+    in: "[[sqrt((1/2)), sqrt(-1)], [sqrt(0), sqrt((1/2))]]"
+  rust:
+    in: sqrt(list(vec![list(vec![rational(n(1), n(2)), n(-1)]), list(vec![n(0), rational(n(1), n(2))])]))
+interval-arithmetic-sqrt-is-increasing-so-sqrt-1:
+  epsil:
+    in: Sqrt(Interval(1, 8))
+    out: Interval(1, 2 * Sqrt(2))
+  tex:
+    in: \sqrt{\mathrm{Interval}(1, 8)}
+    out: \mathrm{Interval}(1, 2\sqrt{2})
+  wolfram:
+    in: Sqrt[Interval[List[1, 8]]]
+sqrt-x-2-x-for-every-x:
+  epsil:
+    in: Sqrt(x) ^ 2
+    out: x
+  tex:
+    in: \sqrt{x}^2
+    out: x
+sqrt-x-2-is-not-simplified-to-x-which-would-be:
+  epsil:
+    in: Sqrt(x ^ 2)
+    out: Sqrt(x ^ 2)
+  tex:
+    in: \sqrt{x^2}
+    out: \sqrt{x^2}
+at-x-1-sqrt-x-2-1-not-1:
+  epsil:
+    in: Sqrt((-1) ^ 2)
+    out: "1"
+  tex:
+    in: \sqrt{(-1)^2}
+    out: "1"
+  wolfram:
+    in: Sqrt[Power[-1, 2]]
+  sympy:
+    in: sqrt((-1**2))
+  mpmath:
+    in: sqrt((-1**2))
+  sage:
+    in: sqrt((-1^2))
+  rust:
+    in: sqrt(power(n(-1), n(2)))
+sqrt-a-sqrt-b-sqrt-ab-fails-for-negative-a-and-b:
+  epsil:
+    in: Sqrt(-1) * Sqrt(-1)
+    out: "-1"
+  tex:
+    in: \sqrt{-1}\sqrt{-1}
+    out: "-1"
+  wolfram:
+    in: Times[Sqrt[-1], Sqrt[-1]]
+  sympy:
+    in: (sqrt(-1) * sqrt(-1))
+  mpmath:
+    in: (sqrt(-1) * sqrt(-1))
+  sage:
+    in: (sqrt(-1) * sqrt(-1))
+  rust:
+    in: (sqrt(n(-1)) * sqrt(n(-1)))
+while-sqrt-1-1-1:
+  epsil:
+    in: Sqrt(1)
+    out: "1"
+  tex:
+    in: \sqrt{1}
+    out: "1"
+  wolfram:
+    in: Sqrt[Times[-1, -1]]
+  sympy:
+    in: sqrt((-1 * -1))
+  mpmath:
+    in: sqrt((-1 * -1))
+  sage:
+    in: sqrt((-1 * -1))
+  rust:
+    in: sqrt((n(-1) * n(-1)))
+to-45-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Sqrt(2), 45)
+    out: 1.414_213_562_373_095_048_801_688_724_209_698_078_569_671_88
+  tex:
+    in: N(\sqrt{2}, 45)
+    out: 1.414\,213\,562\,373\,095\,048\,8
+  wolfram:
+    in: N[Sqrt[2], 45]
+  sympy:
+    in: N(sqrt(2), 30)
+  mpmath:
+    in: (sqrt(2))
+  sage:
+    in: N(sqrt(2))
+  rust:
+    in: nf(sqrt(n(2)))

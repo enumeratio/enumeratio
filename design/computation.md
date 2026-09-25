@@ -1,31 +1,31 @@
 # Computation
 
-How enumeratio computes an expression, and what bounds it. There are two questions:
+How enumeratio computes an expression, and what bounds it. A computation goes through up to
+three stages:
 
-- **What is computed.** A _symbolic_ result is exact: the expression rewritten into its
-  canonical, reduced form (`Binomial(5, 2)` is `10`; `Zeta(2)` is `Pi^2/6`; a head with no
-  closed form stays as written). A _numeric_ result is an approximation at a stated precision
-  (`N(Zeta(3), 30)`).
-- **How it runs.** _Interpreted_: compute-engine walks the boxed expression tree, calling each
-  head's handler. _Compiled_: the tree is lowered once to code (JavaScript, GLSL, WGSL) and that
-  code runs, often many times.
+- **Interpretation**: reading what the input means. Text (notatio, or LaTeX) is parsed into
+  MathJSON, then boxed and canonicalised by compute-engine. The result is an expression, not
+  yet an answer.
+- **Evaluation**: pushing that expression down to compute-engine and our handlers and kernels
+  for a result. Either _symbolic_, which is exact (`Binomial(5, 2)` is `10`, `Zeta(2)` is
+  `Pi^2/6`, and a head with no closed form stays as written), or _numeric_, an approximation
+  at a stated precision (`N(Zeta(3), 30)`).
+- **Compilation**: instead of evaluating, lowering the expression once to code (JavaScript,
+  GLSL, WGSL) and running that, typically many times.
 
-|          | interpreted        | compiled          |
-| -------- | ------------------ | ----------------- |
-| symbolic | `.evaluate()` (§2) | —                 |
-| numeric  | `.N()` (§3)        | `ce.compile` (§4) |
+```
+text ──interpretation──▶ boxed expression ──evaluation──▶ result   (.evaluate(), .N())
+                                          └─compilation─▶ function (ce.compile)
+```
 
-Symbolic work is only ever interpreted. Numeric work can go either way: `N` is the general
-path, and compilation is the fast one for what it covers.
-
-The vocabulary follows the code. compute-engine and `AGENTS.md` say "evaluate" for the symbolic
-step (`.evaluate()`, "evaluates to") and `N` for the numeric one, so this doc does too:
-_symbolic evaluation_, _numeric evaluation_, _compilation_. Candidate Latin names for these
-live in `design/branding.md`.
+Symbolic results only come from evaluation. Numeric ones come from either: `N` is the general
+path, and compilation is the fast one for what it covers. This matches the code's own words:
+`.evaluate()` and `N` are both evaluation, and "evaluates to" is the symbolic result. Candidate
+Latin names for the stages live in `design/branding.md`.
 
 ## 1. Where the code is
 
-compute-engine does the interpreting and ships the compiler. We extend it, head by head:
+compute-engine parses, evaluates and compiles. We extend it, head by head:
 
 - **Handlers.** A head we declare carries an `evaluate` handler (symbolic, and `N` where the
   head is numeric), and optionally a `compile` handler. A head compute-engine already has is
@@ -38,9 +38,27 @@ compute-engine does the interpreting and ships the compiler. We extend it, head 
 - **Bounds.** `@enumeratio/aestimatio` (§5): cancellation, deadlines, isolated evaluators,
   sessions and `VerificationTest`.
 
-## 2. Symbolic evaluation
+## 2. Interpretation
 
-Interpreted. `.evaluate()` canonicalises, then calls each head's handler bottom-up. A handler
+Parsing and canonicalisation. notatio is read by `parseNotatio` (a cell also allows one `:=`
+binding), LaTeX by compute-engine's parser, and either way the result is MathJSON. `ce.box`
+then canonicalises it: flattening, ordering operands, folding what is structurally trivial,
+and leaving held heads alone. Nothing is computed yet.
+
+- Canonical form is compute-engine's, and not extensible for `Multiply`; `InvisibleOperator`
+  is where we can step in.
+- InputForm is interpretation run backwards: a printer from the boxed form to notatio you can
+  retype, with the round trip enforced.
+- Interpretation happens once per input, evaluation perhaps many times, so the benchmarks box
+  each case once and keep interpretation out of the timing.
+
+## 3. Evaluation
+
+Pushing the boxed expression down to compute-engine and our handlers and kernels.
+
+### 3.1 Symbolic
+
+`.evaluate()` calls each head's handler bottom-up. A handler
 returns a result or declines (`undefined`), and a declined head stays symbolic. That's the
 right answer for a special function without a closed form at that argument, and it's how
 a wrapped native head falls through to compute-engine's own handler.
@@ -55,9 +73,9 @@ Things that decide the cost here:
 - A lazy head (`Add`, `Multiply`) sees its operands unevaluated; a wrapper that needs values
   pays for evaluating them.
 
-## 3. Numeric evaluation
+### 3.2 Numeric
 
-Interpreted. `.N()` evaluates to a number at the engine's precision: `"machine"` (doubles) or a
+`.N()` evaluates to a number at the engine's precision: `"machine"` (doubles) or a
 digit count (`ce.precision = 30`), which applies to every engine in the process.
 
 - Not every native head honours a digit precision: some compute in doubles whatever the
@@ -98,7 +116,7 @@ without a kernel) goes through §3.
 
 `@enumeratio/aestimatio` decides **when** a computation runs, **how long** and **how much
 memory** it may take, **whether it is cancelled**, and **whether its answer checks out**. It
-applies to the interpreted paths (§2, §3). A compiled function (§4) is plain code with no
+applies to evaluation (§3). A compiled function (§4) is plain code with no
 checkpoints, so only an isolated evaluator's hard kill (§5.3) can stop it. It exists so a page,
 a notebook or a test run can put bounds on arbitrary input.
 
@@ -214,8 +232,8 @@ already keep one engine (and its bindings) on purpose.
 ## 6. Benchmarking
 
 `design/benchmarking.md` times these paths against the same questions in other systems. Today
-the benchmarks time symbolic evaluation (exact cases) and numeric evaluation (machine and digit
-precision), both interpreted, each boxed once so that parsing stays out of the timing.
+the benchmarks time evaluation, symbolic (exact cases) and numeric (machine and digit
+precision), with each case boxed once so that interpretation stays out of the timing.
 Compiled cases are the natural next addition: the same expression timed as a compiled
 function against `N`, and against the other systems' compiled paths (Julia, Rust), for the
 functions the plotters and portraits compile.

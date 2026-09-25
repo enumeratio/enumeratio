@@ -1,0 +1,312 @@
+max-3-1-4-1-5:
+  epsil:
+    in: Max(3, 1, 4, 1, 5)
+    out: "5"
+  tex:
+    in: \max(3, 1, 4, 1, 5)
+    out: "5"
+  wolfram:
+    in: Max[3, 1, 4, 1, 5]
+    out: "5"
+    tex:
+      in: \max (3,1,4,1,5)
+      out: "5"
+  sympy:
+    in: enumeratio_max(3, 1, 4, 1, 5)
+    out: "5"
+  sage:
+    in: enumeratio_max(3, 1, 4, 1, 5)
+    out: "5"
+also-accepts-a-single-list-argument:
+  epsil:
+    in: Max([3, 1, 4])
+    out: "4"
+  tex:
+    in: \max(\bigl\lbrack3, 1, 4\bigr\rbrack)
+    out: "4"
+  wolfram:
+    in: Max[List[3, 1, 4]]
+    out: "4"
+    tex:
+      in: \max (\{3,1,4\})
+      out: "4"
+  sympy:
+    in: enumeratio_max([3, 1, 4])
+    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
+    verdict: error
+    kind: threading
+    note: compute-engine's Max threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: enumeratio_max([3, 1, 4])
+    out: "4"
+max-neg-1-neg-5:
+  epsil:
+    in: Max(-1, -5)
+    out: "-1"
+  tex:
+    in: \max(-1, -5)
+    out: "-1"
+  wolfram:
+    in: Max[-1, -5]
+    out: "-1"
+    tex:
+      in: \max (-1,-5)
+      out: "-1"
+  sympy:
+    in: enumeratio_max(-1, -5)
+    out: "-1"
+  sage:
+    in: enumeratio_max(-1, -5)
+    out: "-1"
+a-single-argument-is-returned-unchanged:
+  epsil:
+    in: Max(3)
+    out: "3"
+  tex:
+    in: \max(3)
+    out: "3"
+  wolfram:
+    in: Max[3]
+    out: "3"
+    tex:
+      in: \max (3)
+      out: "3"
+  sympy:
+    in: enumeratio_max(3)
+    out: "3"
+  sage:
+    in: enumeratio_max(3)
+    out: "3"
+commutative-order-doesn-t-matter:
+  epsil:
+    in: Max(3, 7) == Max(7, 3)
+    out: True
+  tex:
+    in: \max(3, 7)=\max(7, 3)
+    out: \top
+  traditional:
+    in: \max(3, 7)=\max(7, 3)
+    out: \mathrm{True}
+  wolfram:
+    in: (Max[3, 7] == Max[7, 3])
+    back: Unreadable
+    out: True
+    tex:
+      in: \max (3,7)=\max (7,3)
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(enumeratio_max(3, 7), enumeratio_max(7, 3))
+    out: True
+  sage:
+    in: bool(enumeratio_max(3, 7) == enumeratio_max(7, 3))
+    out: True
+multiple-list-arguments-are-flattened-into-one:
+  epsil:
+    in: Max([3, 1, 4], [9, 2]) == 9
+    out: True
+  tex:
+    in: \max(\bigl\lbrack3, 1, 4\bigr\rbrack, \bigl\lbrack9, 2\bigr\rbrack)=9
+    out: \top
+  traditional:
+    in: \max(\bigl\lbrack3, 1, 4\bigr\rbrack, \bigl\lbrack9, 2\bigr\rbrack)=9
+    out: \mathrm{True}
+  wolfram:
+    in: (Max[List[3, 1, 4], List[9, 2]] == 9)
+    back: Unreadable
+    out: True
+    tex:
+      in: \max (\{3,1,4\},\{9,2\})=9
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(enumeratio_max([3, 1, 4], [9, 2]), 9)
+    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
+    verdict: error
+    kind: threading
+    note: compute-engine's Max threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: bool(enumeratio_max([3, 1, 4], [9, 2]) == 9)
+    out: True
+the-day-s-high-from-a-handful-of-hourly-readings:
+  epsil:
+    in: Max(68, 72, 65, 80, 74)
+    out: "80"
+  tex:
+    in: \max(68, 72, 65, 80, 74)
+    out: "80"
+  wolfram:
+    in: Max[68, 72, 65, 80, 74]
+    out: "80"
+    tex:
+      in: \max (68,72,65,80,74)
+      out: "80"
+  sympy:
+    in: enumeratio_max(68, 72, 65, 80, 74)
+    out: "80"
+  sage:
+    in: enumeratio_max(68, 72, 65, 80, 74)
+    out: "80"
+with-no-arguments-compute-engine-returns-nan:
+  epsil:
+    in: Max()
+    out: "`NaN`"
+  tex:
+    in: \max()
+    out: \operatorname{NaN}
+  wolfram:
+    in: Max[]
+    out: -Infinity
+    tex:
+      in: \max ()
+      out: -\infty
+    verdict: disagree
+    kind: convention
+    note: Max of nothing is NaN here; Wolfram returns the identity element -Infinity.
+  sympy:
+    in: enumeratio_max()
+    out: -oo
+    verdict: disagree
+    kind: convention
+    note: "The maximum of nothing: SymPy answers −∞, compute-engine NaN."
+  sage:
+    in: enumeratio_max()
+    out: "ValueError: max() iterable argument is empty"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers "NaN" and Sage raises an error.'
+nan-poisons-the-result-overriding-every-other:
+  epsil:
+    in: Max(`NaN`, 3)
+    out: "`NaN`"
+  tex:
+    in: \max(\operatorname{NaN}, 3)
+    out: \operatorname{NaN}
+  wolfram:
+    in: Max[Indeterminate, 3]
+    out: Indeterminate
+    tex:
+      in: \max (\text{Indeterminate},3)
+      out: \text{Indeterminate}
+max-9-2:
+  epsil:
+    in: Max(9, 2)
+    out: "9"
+  tex:
+    in: \max(9, 2)
+    out: "9"
+  wolfram:
+    in: Max[9, 2]
+  sympy:
+    in: enumeratio_max(9, 2)
+  sage:
+    in: enumeratio_max(9, 2)
+max-list-4-1-7-2:
+  epsil:
+    in: Max([4, 1, 7, 2])
+    out: "7"
+  tex:
+    in: \max(\bigl\lbrack4, 1, 7, 2\bigr\rbrack)
+    out: "7"
+  wolfram:
+    in: Max[List[4, 1, 7, 2]]
+  sympy:
+    in: enumeratio_max([4, 1, 7, 2])
+  sage:
+    in: enumeratio_max([4, 1, 7, 2])
+max-5p56-neg-4p8-7p3:
+  epsil:
+    in: Max(5.56, -4.8, 7.3)
+    out: "7.3"
+  tex:
+    in: \max(5.56, -4.8, 7.3)
+    out: "7.3"
+  wolfram:
+    in: Max[5.56, -4.8, 7.3]
+  sympy:
+    in: enumeratio_max(5.56, -4.8, 7.3)
+  sage:
+    in: enumeratio_max(5.56, -4.8, 7.3)
+nested-lists-are-flattened-into-the-pool:
+  epsil:
+    in: Max(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])
+    out: "3"
+  tex:
+    in: \max(2, 3, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: "3"
+  wolfram:
+    in: Max[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  sympy:
+    in: enumeratio_max(2, 3, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])
+  sage:
+    in: enumeratio_max(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])
+exact-numbers-are-compared-numerically:
+  epsil:
+    in: Max(Sqrt(2), 3 / 2)
+    out: 3 / 2
+  tex:
+    in: \max(\sqrt{2}, \frac{3}{2})
+    out: \frac{3}{2}
+  wolfram:
+    in: Max[Sqrt[2], Rational[3, 2]]
+  sympy:
+    in: enumeratio_max(sqrt(2), Rational(3, 2))
+  sage:
+    in: enumeratio_max(sqrt(2), (3/2))
+max-1-positiveinfinity:
+  epsil:
+    in: Max(1, PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \max(1, \infty)
+    out: \infty
+  wolfram:
+    in: Max[1, Infinity]
+the-numeric-arguments-collapse-to-their-maximum:
+  epsil:
+    in: Max(3, x, 5)
+    out: Max(5, x)
+  tex:
+    in: \max(3, x, 5)
+    out: \max(5, x)
+compares-exact-constants-numerically-max-e-pi-2:
+  epsil:
+    in: Max([ExponentialE, Pi, 2])
+    out: Pi
+  tex:
+    in: \max(\bigl\lbracke, \pi, 2\bigr\rbrack)
+    out: \pi
+  wolfram:
+    in: Max[List[E, Pi, 2]]
+  sympy:
+    in: enumeratio_max([E, pi, 2])
+  sage:
+    in: enumeratio_max([e, pi, 2])
+the-max-of-two-intervals-is-the-interval-of:
+  epsil:
+    in: Max(Interval(1, 3), Interval(-3, 5))
+    out: Interval(1, 5)
+  tex:
+    in: \max(\mathrm{Interval}(1, 3), \mathrm{Interval}(-3, 5))
+    out: \mathrm{Interval}(1, 5)
+  wolfram:
+    in: Max[Interval[List[1, 3]], Interval[List[-3, 5]]]
+idempotent-max-x-x-x:
+  epsil:
+    in: Max(x, x)
+    out: x
+  tex:
+    in: \max(x, x)
+    out: x
+the-max-of-an-empty-list-is-nan-too:
+  epsil:
+    in: Max([])
+    out: "`NaN`"
+  tex:
+    in: \max(\bigl\lbrack \bigr\rbrack)
+    out: \operatorname{NaN}
+  wolfram:
+    in: Max[List[]]
+    note: Wolfram's $\mathrm{Max}[\{\}]$ is the identity element $-\infty$.
+  sympy:
+    in: enumeratio_max([])
+  sage:
+    in: enumeratio_max([])

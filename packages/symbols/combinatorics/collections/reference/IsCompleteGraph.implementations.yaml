@@ -1,0 +1,36 @@
+completegraph-n-is-complete:
+  epsil:
+    in: IsCompleteGraph(CompleteGraph(5))
+    out: True
+  tex:
+    in: \mathrm{IsCompleteGraph}(\mathrm{CompleteGraph}(5))
+    out: \top
+  traditional:
+    in: \mathrm{IsCompleteGraph}(\mathrm{CompleteGraph}(5))
+    out: \mathrm{True}
+  wolfram:
+    in: CompleteGraphQ[CompleteGraph[5]]
+a-path-is-not-complete:
+  epsil:
+    in: IsCompleteGraph(Graph([1, 2, 3], [UndirectedEdge(1, 2), UndirectedEdge(2, 3)]))
+    out: False
+  tex:
+    in: \mathrm{IsCompleteGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack))
+    out: \bot
+  traditional:
+    in: \mathrm{IsCompleteGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack))
+    out: \mathrm{False}
+  wolfram:
+    in: CompleteGraphQ[Graph[List[1, 2, 3], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3]]]]
+a-directed-2-cycle-is-complete:
+  epsil:
+    in: IsCompleteGraph(Graph([1, 2], [DirectedEdge(1, 2), DirectedEdge(2, 1)]))
+    out: True
+  tex:
+    in: \mathrm{IsCompleteGraph}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1)\bigr\rbrack))
+    out: \top
+  traditional:
+    in: \mathrm{IsCompleteGraph}(\mathrm{Graph}(\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(2, 1)\bigr\rbrack))
+    out: \mathrm{True}
+  wolfram:
+    in: CompleteGraphQ[Graph[List[1, 2], List[DirectedEdge[1, 2], DirectedEdge[2, 1]]]]

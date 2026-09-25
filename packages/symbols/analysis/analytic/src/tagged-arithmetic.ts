@@ -55,18 +55,32 @@ export type Resolver = (
   raw: readonly BoxedExpression[],
 ) => BoxedExpression | undefined;
 
+/** A cheap, allocation-free structural test over the raw (pre-evaluate) operands: does this
+ * call look worth the full evaluate-and-resolve path? Every head gets `hasTaggedOperand` for
+ * free; a head can add more (e.g. Multiply's e^a·e^b combiner in exp-combine.ts) so a second
+ * unrelated reason to fire doesn't need its own `wrapOperator` and its own extra evaluate
+ * pass over every operand (see this file's top comment for why that's expensive). */
+export type Gate = (ops: readonly BoxedExpression[]) => boolean;
+
 /**
- * Register a single evaluate hook for `head` that tries each resolver in turn once an
- * operand is structurally tagged, and otherwise defers to the native handler untouched.
+ * Register a single evaluate hook for `head` that tries each resolver in turn once one of
+ * its gates fires (a tagged operand, or an extra per-head gate), and otherwise defers to the
+ * native handler untouched.
  */
-export function registerTaggedHead(ce: ComputeEngine, head: string, resolvers: readonly Resolver[]): void {
+export function registerTaggedHead(
+  ce: ComputeEngine,
+  head: string,
+  resolvers: readonly Resolver[],
+  extraGates: readonly Gate[] = [],
+): void {
   if (resolvers.length === 0) return;
   const definition = ce.lookupDefinition(head);
   const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native = operator.evaluate;
+  const gates: readonly Gate[] = [hasTaggedOperand, ...extraGates];
   operator.evaluate = (ops, options) => {
-    if (!hasTaggedOperand(ops)) return native?.(ops, options);
+    if (!gates.some((gate) => gate(ops))) return native?.(ops, options);
     const values = ops.map((op) => op.evaluate());
     // `operandsOf`, not `.expression.ops` directly: `.ops` lives on compute-engine's narrowed
     // FunctionInterface, which the `Expression` union type doesn't expose a typed route to
@@ -82,14 +96,18 @@ export function registerTaggedHead(ce: ComputeEngine, head: string, resolvers: r
 }
 
 /** Merge several `{head: Resolver}` maps and register each head once, in the order given —
- * the order resolvers are tried when more than one map handles the same head. */
+ * the order resolvers are tried when more than one map handles the same head. `extraGates`
+ * adds a head-specific gate (e.g. Multiply's exp-combine check) on top of the shared
+ * tagged-operand gate every head already gets. */
 export function registerTaggedHeads(
   ce: ComputeEngine,
   heads: readonly string[],
+  extraGates: Readonly<Record<string, Gate | undefined>>,
   ...resolverMaps: readonly Readonly<Record<string, Resolver | undefined>>[]
 ): void {
   for (const head of heads) {
     const resolvers = resolverMaps.map((map) => map[head]).filter((r): r is Resolver => r !== undefined);
-    registerTaggedHead(ce, head, resolvers);
+    const gate = extraGates[head];
+    registerTaggedHead(ce, head, resolvers, gate ? [gate] : []);
   }
 }

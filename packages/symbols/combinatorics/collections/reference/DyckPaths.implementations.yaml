@@ -1,0 +1,14 @@
+c-3:
+  epsil:
+    in: Count(DyckPaths(3))
+    out: "5"
+  tex:
+    in: \mathrm{Count}(\mathrm{DyckPaths}(3))
+    out: "5"
+three-ups-then-three-downs:
+  epsil:
+    in: DyckPaths(3)[1]
+    out: "[1, 1, 1, 0, 0, 0]"
+  tex:
+    in: \mathrm{DyckPaths}(3)[1]
+    out: \bigl\lbrack1, 1, 1, 0, 0, 0\bigr\rbrack

@@ -1,0 +1,23 @@
+directed-edge-counts-once-at-the-tail:
+  epsil:
+    in: VertexOutDegree(Graph([1, 2, 3], [DirectedEdge(1, 2), DirectedEdge(1, 3)]), 1)
+    out: "2"
+  tex:
+    in: \mathrm{VertexOutDegree}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{DirectedEdge}(1, 3)\bigr\rbrack), 1)
+    out: "2"
+  wolfram:
+    in: VertexOutDegree[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], DirectedEdge[1, 3]]], 1]
+undirected-edge-ignored-on-a-mixed-graph:
+  epsil:
+    in: |-
+      VertexOutDegree(Graph([1, 2, 3], [
+                                         DirectedEdge(1, 2),
+                                         UndirectedEdge(2, 3),
+                                         DirectedEdge(3, 1),
+                                       ]))
+    out: "[1, 0, 1]"
+  tex:
+    in: \mathrm{VertexOutDegree}(\mathrm{Graph}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack\mathrm{DirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{DirectedEdge}(3, 1)\bigr\rbrack))
+    out: \bigl\lbrack1, 0, 1\bigr\rbrack
+  wolfram:
+    in: VertexOutDegree[Graph[List[1, 2, 3], List[DirectedEdge[1, 2], UndirectedEdge[2, 3], DirectedEdge[3, 1]]]]

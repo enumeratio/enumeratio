@@ -1,0 +1,34 @@
+padded-with-zeros-on-the-left:
+  epsil:
+    in: PadLeft([1, 2, 3], 5)
+    out: "[0, 0, 1, 2, 3]"
+  tex:
+    in: \mathrm{PadLeft}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5)
+    out: \bigl\lbrack0, 0, 1, 2, 3\bigr\rbrack
+  wolfram:
+    in: PadLeft[List[1, 2, 3], 5]
+a-padding-element:
+  epsil:
+    in: PadLeft([1, 2, 3], 5, x)
+    out: "[x, x, 1, 2, 3]"
+  tex:
+    in: \mathrm{PadLeft}(\bigl\lbrack1, 2, 3\bigr\rbrack, 5, x)
+    out: \bigl\lbrack x, x, 1, 2, 3\bigr\rbrack
+a-shorter-length-drops-elements-from-the-left:
+  epsil:
+    in: PadLeft([1, 2, 3, 4, 5], 3)
+    out: "[3, 4, 5]"
+  tex:
+    in: \mathrm{PadLeft}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, 3)
+    out: \bigl\lbrack3, 4, 5\bigr\rbrack
+  wolfram:
+    in: PadLeft[List[1, 2, 3, 4, 5], 3]
+with-no-length-a-ragged-array-is-padded-to-a:
+  epsil:
+    in: PadLeft([[1], [2, 3]])
+    out: "[[0, 1], [2, 3]]"
+  tex:
+    in: \mathrm{PadLeft}(\bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: PadLeft[List[List[1], List[2, 3]]]

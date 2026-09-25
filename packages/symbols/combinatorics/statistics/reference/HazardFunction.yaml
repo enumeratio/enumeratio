@@ -1,0 +1,19 @@
+name: HazardFunction
+domain: Statistics
+signature: HazardFunction(dist, x)
+summary: The hazard function $PDF(dist, x) / SurvivalFunction(dist, x)$.
+signatures:
+  - call: HazardFunction(dist, x)
+    description: generic over every distribution this package's [[PDF]] and [[CDF]] answer, old or new.
+    library: enumeratio-statistics
+details:
+  - Exact wherever [[PDF]] and [[CDF]] are both exact for `dist`; unevaluated otherwise.
+  - For [[RayleighDistribution]]($\sigma$), this reduces to the well-known linear hazard $x/\sigma^2$.
+examples:
+  - id: hazardfunction-rayleigh
+    expr: [HazardFunction, [RayleighDistribution, 3], 2]
+    expected: [Rational, 2, 9]
+seeAlso:
+  - PDF
+  - CDF
+  - SurvivalFunction

@@ -135,6 +135,36 @@ export function declareWidened(ce: ComputeEngine): void {
     );
   }
 
+  // CatalanNumber(n) at a negative integer. NOT the smooth Γ(2n+1)/(Γ(n+1)Γ(n+2)) limit --
+  // that ratio has a pole on both sides at n = −1 (Γ(−1) over Γ(0)), and taking it as a limit
+  // gives −1/2, which is what SymPy's and Sage's own `catalan`/`catalan_number` return (see
+  // this repo's own oracle sidecar, combinatorics.oracle.json, which records exactly this
+  // "inconclusive" divergence against Wolfram for both). But an actual Wolfram kernel run
+  // (same sidecar, "wolfram" row, kernel 15.0.0) gives CatalanNumber[−1] = −1, not −1/2 --
+  // because Wolfram's own CatalanNumber evidently follows the DISCRETE identity
+  // C_n = Binomial(2n, n) − Binomial(2n, n+1) (this file's own reference example
+  // "equivalently-c-n-binom-2n-n-binom-2n-n-1"), together with Wolfram's Binomial[n, k]
+  // convention of 0 for a negative integer k, rather than the Gamma-ratio's smooth
+  // continuation. Reproduced independently here (not just copied from the sidecar): with
+  // that Binomial convention, n = −1 has 2n = −2 and n+1 = 0, so Binomial(−2, −1) = 0 and
+  // Binomial(−2, 0) = 1, giving C_{−1} = 0 − 1 = −1; for every n ≤ −2, both n and n+1 are
+  // negative, so both terms are 0 and C_n = 0. This package follows the verified Wolfram
+  // kernel output (−1), not the Gamma-limit's −1/2 -- flagged for a second Wolfram check.
+  // Additive either way: native compute-engine leaves this whole domain unevaluated.
+  wrapOperator(
+    ce,
+    ["CatalanNumber", 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n < 0n;
+    },
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0]!)!;
+      return n === -1n ? ce.number(-1) : ce.Zero;
+    },
+    1,
+  );
+
   // (−2k − 1)!! = (−1)ᵏ / (2k − 1)!!, running the recurrence n!! = n·(n − 2)!! downwards.
   wrapOperator(
     ce,

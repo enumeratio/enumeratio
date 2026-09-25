@@ -40,15 +40,11 @@ examples:
     expected: True
     category: Properties
     caption: A negative second argument rounds to the nearest power of ten instead -- here, the nearest hundred
-    divergence:
-      wolfram: Wolfram reads the second argument as a step to round to a multiple of, so $\mathrm{Round}[1234, -2] = 1234$.
   - id: rounding-to-0-decimal-places-matches-the-1
     expr: [Equal, [Round, 3.14159, 0], [Round, 3.14159]]
     expected: True
     category: Properties
     caption: Rounding to 0 decimal places matches the 1-argument form
-    divergence:
-      wolfram: Wolfram treats the step literally, so $\mathrm{Round}[3.14159, 0]$ is $\mathrm{Indeterminate}$.
   - id: rounding-a-price-to-the-nearest-cent-19-995
     expr: [Round, 19.995, 2]
     expected: 20
@@ -59,15 +55,11 @@ examples:
     expected: 3
     category: Possible issues
     caption: "Rounds half away from zero, not banker's rounding: 2.5 rounds to 3, not 2"
-    divergence:
-      wolfram: Wolfram uses round-half-to-even (banker's rounding), so $\mathrm{Round}[2.5] = 2$.
   - id: and-by-the-same-convention-2-5-rounds-to-3-not-2
     expr: [Round, -2.5]
     expected: -3
     category: Possible issues
     caption: ...and by the same convention, -2.5 rounds to -3, not -2
-    divergence:
-      wolfram: Wolfram's half-to-even gives $\mathrm{Round}[-2.5] = -2$.
   - id: round-2p4
     expr: [Round, 2.4]
     expected: 2
@@ -90,8 +82,6 @@ examples:
     expected: 230
     category: Scope
     caption: To the nearest ten
-    divergence:
-      wolfram: "Wolfram's second argument is the step itself: $\\mathrm{Round}[226, 10] = 230$."
   - id: an-exact-argument-rounds-to-an-exact-rational
     expr: [Round, [Sqrt, 2], 4]
     expected: [Rational, 7071, 5000]
@@ -117,8 +107,6 @@ examples:
     expected: 1
     category: Possible issues
     caption: An exact half rounds away from zero as well
-    divergence:
-      wolfram: 'Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.'
 seeAlso:
   - Floor
   - Ceil

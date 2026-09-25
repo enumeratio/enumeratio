@@ -1,4 +1,4 @@
-// Run every documented example through every wired system, and write the oracle sidecars.
+// Run every documented example through every wired system, and write its implementations record.
 //
 // The report is a work queue, not a verdict. Five outcomes per (example, system):
 //
@@ -17,15 +17,16 @@
 // otherwise call a false disagreement.
 //
 // Nothing here is a gate: it needs external kernels. Run it, read it, classify any new
-// `unclassified` rows the sidecars pick up, commit the sidecars.
+// `unclassified` rows the records pick up, commit the records.
 //
-//   vp node packages/reference/scripts/oracle-scan.ts                    # everything wired
+//   vp node packages/reference/scripts/oracle-scan.ts --accept           # everything wired, written
 //   vp node packages/reference/scripts/oracle-scan.ts wolfram sage       # some systems
 //   vp node packages/reference/scripts/oracle-scan.ts --head PowerModList  # one head, fast iteration
 //   vp node packages/reference/scripts/oracle-scan.ts --digest            # rebuild the digest only
 
 import { execFileSync } from "node:child_process";
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import {
@@ -38,14 +39,15 @@ import {
   type Verdict,
   wiredSystems,
 } from "@enumeratio/oracle/src";
-import { entryFiles as filesOf } from "../src/node.ts";
+import type { HeadImplementations, SystemImplementation } from "@enumeratio/entry";
+import { writeYaml } from "@enumeratio/entry/node";
+import { referenceData, referenceEntries } from "../src/node.ts";
 import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
 
-const entryFiles = filesOf();
+const data = referenceData();
 
 interface Case {
   readonly id: string;
-  readonly stem: string;
   readonly head: string;
   readonly key: string;
   readonly expr: MathJSON;
@@ -59,24 +61,24 @@ const args = process.argv.slice(2);
 const headIndex = args.indexOf("--head");
 const headFilter = headIndex >= 0 ? args[headIndex + 1] : undefined;
 const requested = args.filter((argument, index) => !argument.startsWith("-") && args[index - 1] !== "--head");
-// `--digest` scans nothing: it rebuilds `disagreements.md` from the committed sidecars.
+// `--digest` scans nothing: it rebuilds `disagreements.md` from the committed records.
 const digestOnly = args.includes("--digest");
+// Without `--accept` a scan only reports (report.json, stderr); with it, what the kernels said
+// goes into the records, and the digest follows. The explicit write is what a fixup PR carries.
+const accept = args.includes("--accept");
 const systems = (digestOnly ? [] : requested.length > 0 ? requested : wiredSystems()) as System[];
 
-const cases: Case[] = entryFiles.flatMap(({ stem, entries }) =>
-  entries.flatMap((entry) =>
-    entry.examples
-      .filter((example) => example.aspirational !== true)
-      .map((example) => ({
-        id: `${entry.name}/${example.id}`,
-        stem,
-        head: entry.name,
-        key: example.id,
-        expr: example.expr as MathJSON,
-        expected: example.expected as MathJSON,
-      }))
-      .filter((item) => headFilter === undefined || item.head === headFilter),
-  ),
+const cases: Case[] = referenceEntries(data).flatMap((entry) =>
+  entry.examples
+    .filter((example) => example.aspirational !== true)
+    .map((example) => ({
+      id: `${entry.name}/${example.id}`,
+      head: entry.name,
+      key: example.id,
+      expr: example.expr as MathJSON,
+      expected: example.expected as MathJSON,
+    }))
+    .filter((item) => headFilter === undefined || item.head === headFilter),
 );
 
 type Outcome = {
@@ -95,17 +97,24 @@ type Outcome = {
 const report: Record<string, Outcome[]> = {};
 const missingBySystem: Record<string, Record<string, number>> = {};
 
-/** A committed row's `tolerance`, read before the sidecars are loaded for rewriting. */
-const toleranceOf = (() => {
-  const cache = new Map<string, Record<string, Record<string, Record<string, { tolerance?: number }>>>>();
-  return (item: Case, system: string): number | undefined => {
-    if (!cache.has(item.stem)) {
-      const url = new URL(`../src/entries/${item.stem}.oracle.json`, import.meta.url);
-      cache.set(item.stem, existsSync(url) ? JSON.parse(readFileSync(url, "utf8")).examples : {});
-    }
-    return cache.get(item.stem)?.[item.head]?.[item.key]?.[system]?.tolerance;
-  };
-})();
+// ── the implementations records ─────────────────────────────────────────────────
+//
+// One `<Head>.implementations.yaml` beside each `<Head>.yaml`, keyed by example id then
+// system. A scan of a system rewrites only that system's rows (`in`, `out`, `tex`, `shown`,
+// `verdict`) for the heads touched this run, keeps every other system's, carries the hand
+// classification (`kind`, `note`, `issue`, `tolerance`) forward while the verdict holds, and
+// drops rows for examples that no longer exist. A row with only a note (prose about a system
+// the scan can't reach) stays until someone removes it.
+
+type Record_ = Record<string, Record<string, SystemImplementation>>;
+const recordPathOf = new Map<string, string>();
+const records = new Map<string, Record_>();
+for (const h of data.heads) {
+  if (data.packageOf.get(h.head) !== h.package) continue;
+  recordPathOf.set(h.head, h.implementationsPath ?? join(dirname(h.entryPath), `${h.head}.implementations.yaml`));
+  records.set(h.head, structuredClone((h.implementations ?? {}) as Record_));
+}
+const loaded = new Map([...records].map(([head, record]) => [head, structuredClone(record)]));
 
 for (const system of systems) {
   const emitted = cases.map((item) => ({ item, out: emit(item.expr, system) }));
@@ -143,7 +152,7 @@ for (const system of systems) {
       return;
     }
     const theirs = result.value ?? "";
-    const tolerance = toleranceOf(row.item, system);
+    const tolerance = records.get(row.item.head)?.[row.item.key]?.[system]?.tolerance;
     const verdict = verdictOf(system, row.item.expected, result, tolerance, asksForDigits(row.item.expr));
     outcomes.push({
       id: row.item.id,
@@ -178,40 +187,6 @@ if (!digestOnly)
     `${JSON.stringify({ generated: new Date().toISOString(), systems, report, queue }, null, 2)}\n`,
   );
 
-// ── the per-entry-file sidecars ──────────────────────────────────────────────────
-//
-// One `<stem>.oracle.json` beside each entries/<stem>.ts, keyed by head then by the
-// example's `id` — the shape `entries.ts` reads back and the page looks
-// examples up by. Scanning a system replaces only that system's rows for the heads touched
-// this run (every head, unless `--head` narrowed it), keeping every other system's rows and
-// dropping stale rows for examples that no longer exist.
-
-interface OtherRow {
-  readonly input: string;
-  readonly output: string;
-  readonly verdict: Verdict | "error";
-  readonly kind?: string;
-  readonly note?: string;
-  readonly tolerance?: number;
-  readonly issue?: number;
-  readonly shown?: string;
-  readonly tex?: { readonly input: string; readonly output: string };
-}
-type Sidecar = {
-  kernels: Record<string, string>;
-  examples: Record<string, Record<string, Record<string, OtherRow>>>;
-};
-
-const sidecarUrl = (stem: string): URL => new URL(`../src/entries/${stem}.oracle.json`, import.meta.url);
-const loadSidecar = (stem: string): Sidecar => {
-  const url = sidecarUrl(stem);
-  if (!existsSync(url)) return { kernels: {}, examples: {} };
-  return JSON.parse(readFileSync(url, "utf8")) as Sidecar;
-};
-
-const touchedStems = new Set(cases.map((c) => c.stem));
-const sidecars = new Map(entryFiles.map((f) => [f.stem, loadSidecar(f.stem)]));
-
 const kernelOf: Partial<Record<System, string>> = {};
 if (systems.includes("wolfram")) {
   kernelOf.wolfram = (await runKernel("wolframscript", ["-code", "$Version"])).trim();
@@ -220,127 +195,117 @@ if (systems.includes("sage")) {
   kernelOf.sage = (await runKernel("sage", ["-c", "print(version())"])).trim();
 }
 
-for (const system of systems) {
-  const outcomes = report[system] ?? [];
-  // Every head touched this run, so a head with zero rows for `system` (all unmapped) still
-  // gets its stale rows for that system cleared out below.
-  const headsThisRun = new Set(cases.map((c) => c.head));
-  const outcomeByCaseId = new Map(outcomes.map((o) => [o.id, o]));
+const KERNELS = new URL("../../oracle/kernels.json", import.meta.url);
+const kernels: Record<string, string> = { ...data.kernels };
+for (const [system, version] of Object.entries(kernelOf)) kernels[system] = version as string;
 
-  for (const stem of touchedStems) {
-    const sidecar = sidecars.get(stem) as Sidecar;
-    if (kernelOf[system] !== undefined) sidecar.kernels[system] = kernelOf[system] as string;
-    const stemHeads = new Set(cases.filter((c) => c.stem === stem && headsThisRun.has(c.head)).map((c) => c.head));
-    for (const head of stemHeads) {
-      const ofHead = cases.filter((c) => c.stem === stem && c.head === head);
-      const currentKeys = new Set(ofHead.map((c) => c.key));
-      const existingForHead = sidecar.examples[head] ?? {};
-      // Drop this system's row for a key that no longer names a current example.
-      for (const key of Object.keys(existingForHead)) {
-        if (currentKeys.has(key)) continue;
-        const row = existingForHead[key] as Record<string, OtherRow>;
-        if (!(system in row)) continue;
-        const { [system]: _dropped, ...rest } = row;
-        if (Object.keys(rest).length === 0) delete existingForHead[key];
-        else existingForHead[key] = rest;
+const headsThisRun = new Set(cases.map((c) => c.head));
+for (const system of systems) {
+  const outcomeByCaseId = new Map((report[system] ?? []).map((o) => [o.id, o]));
+  for (const head of headsThisRun) {
+    const record = records.get(head) ?? {};
+    const ofHead = cases.filter((c) => c.head === head);
+    const current = new Set(ofHead.map((c) => c.key));
+    const put = (id: string, row: SystemImplementation | undefined): void => {
+      const { [system]: _old, ...rest } = record[id] ?? {};
+      const next = row === undefined ? rest : { ...rest, [system]: row };
+      if (Object.keys(next).length === 0) delete record[id];
+      else record[id] = next;
+    };
+    // A row for an example that's gone, or aspirational now, goes.
+    for (const id of Object.keys(record)) if (!current.has(id) && record[id]?.[system]) put(id, undefined);
+    for (const item of ofHead) {
+      const outcome = outcomeByCaseId.get(item.id);
+      const prior = record[item.key]?.[system];
+      if (outcome === undefined || outcome.verdict === "unmapped") {
+        // Unmapped this run: the scanned part goes; a hand note stays.
+        put(item.key, prior?.note ? { in: prior.in, note: prior.note } : undefined);
+        continue;
       }
-      for (const item of ofHead) {
-        const outcome = outcomeByCaseId.get(item.id);
-        const prior = existingForHead[item.key]?.[system];
-        if (outcome === undefined || outcome.verdict === "unmapped") {
-          // Unmapped this run: clear a stale row for this system, keep the others.
-          if (prior === undefined) continue;
-          const { [system]: _dropped, ...rest } = existingForHead[item.key] as Record<string, OtherRow>;
-          if (Object.keys(rest).length === 0) delete existingForHead[item.key];
-          else existingForHead[item.key] = rest;
-          continue;
-        }
-        // Anything but agreement needs a classification; one carries forward while the
-        // verdict holds, and a verdict that moves is reviewed afresh. A tolerance is a
-        // property of the example, so it carries forward regardless.
-        const same = prior?.verdict === outcome.verdict;
-        const row: OtherRow = {
-          input: outcome.source,
-          output: outcome.display,
-          verdict: outcome.verdict,
-          ...(outcome.verdict === "agree"
-            ? {}
-            : {
-                kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
-                note: same ? (prior?.note ?? "") : "",
-                ...(same && prior?.issue !== undefined ? { issue: prior.issue } : {}),
-              }),
-          ...(prior?.tolerance === undefined ? {} : { tolerance: prior.tolerance, note: prior.note ?? "" }),
-          ...(outcome.shown === undefined ? {} : { shown: outcome.shown }),
-          ...(outcome.tex === undefined ? {} : { tex: outcome.tex }),
-        };
-        existingForHead[item.key] = { ...existingForHead[item.key], [system]: row };
-      }
-      // A head with no rows stays out, so a rescan leaves an untouched file identical.
-      if (Object.keys(existingForHead).length > 0) sidecar.examples[head] = existingForHead;
-      else delete sidecar.examples[head];
+      // Anything but agreement needs a classification: one carries forward while the verdict
+      // holds, and a verdict that moves is reviewed afresh. A tolerance is a property of the
+      // example, so it carries forward regardless.
+      const verdict = outcome.verdict;
+      const same = prior?.out !== undefined && (prior.verdict ?? "agree") === verdict;
+      put(item.key, {
+        in: outcome.source,
+        out: outcome.display,
+        ...(outcome.shown === undefined ? {} : { shown: outcome.shown }),
+        ...(outcome.tex === undefined ? {} : { tex: { in: outcome.tex.input, out: outcome.tex.output } }),
+        ...(verdict === "agree" ? {} : { verdict }),
+        ...(verdict === "agree"
+          ? same && prior?.note
+            ? { note: prior.note }
+            : {}
+          : {
+              kind: same ? (prior?.kind ?? "unclassified") : "unclassified",
+              note: same ? (prior?.note ?? "") : "",
+              ...(same && prior?.issue !== undefined ? { issue: prior.issue } : {}),
+            }),
+        ...(prior?.tolerance === undefined ? {} : { tolerance: prior.tolerance, note: prior.note ?? "" }),
+      });
     }
+    records.set(head, record);
   }
 }
 
-// An unchanged sidecar is left as it is on disk, however it happens to be formatted, so a
-// rescan that finds nothing new leaves the tree clean (the nightly lanes fail on drift).
-// Whatever is written goes through the repo formatter at the end, so it lands as committed.
+// An unchanged record is left as it is on disk, so a rescan that finds nothing new leaves the
+// tree clean (the nightly lanes fail on drift).
 const written: string[] = [];
-for (const { stem } of entryFiles) {
-  const sidecar = sidecars.get(stem) as Sidecar;
-  const url = sidecarUrl(stem);
-  if (existsSync(url) && isDeepStrictEqual(JSON.parse(readFileSync(url, "utf8")), sidecar)) continue;
-  writeFileSync(url, `${JSON.stringify(sidecar, null, 2)}\n`);
-  written.push(fileURLToPath(url));
-}
+if (accept)
+  for (const [head, record] of records) {
+    if (isDeepStrictEqual(record, loaded.get(head))) continue;
+    const path = recordPathOf.get(head)!;
+    if (Object.keys(record).length === 0) {
+      if (existsSync(path)) rmSync(path);
+    } else await writeYaml(path, record as HeadImplementations);
+  }
+if (accept && !isDeepStrictEqual(kernels, data.kernels))
+  writeFileSync(KERNELS, `${JSON.stringify(Object.fromEntries(Object.entries(kernels).sort()), null, 2)}\n`);
 
-const fresh = [...sidecars.values()].flatMap((sidecar) =>
-  Object.entries(sidecar.examples).flatMap(([head, byKey]) =>
-    Object.entries(byKey).flatMap(([, bySystem]) =>
-      Object.entries(bySystem)
-        .filter(([, row]) => row.kind === "unclassified")
-        .map(([system]) => `${head} (${system})`),
-    ),
+const fresh = [...records].flatMap(([head, record]) =>
+  Object.values(record).flatMap((bySystem) =>
+    Object.entries(bySystem)
+      .filter(([, row]) => row.kind === "unclassified")
+      .map(([system]) => `${head} (${system})`),
   ),
 );
 if (fresh.length > 0) {
   process.stderr.write(`\nunclassified divergences: ${[...new Set(fresh)].join(", ")}\n`);
 }
 
-// A readable digest of the disagreements, COMMITTED — the sidecars are regenerated per
+// A readable digest of the disagreements, COMMITTED — the records are regenerated per
 // kernel version and are not worth diffing wholesale, but the disagreements are exactly the
-// thing to review and to watch move over time. Built from every sidecar rather than this
+// thing to review and to watch move over time. Built from every record rather than this
 // run, so it covers every system scanned so far and a rescan that changes nothing leaves it
 // identical — which is what lets the nightly lanes fail on drift.
 const exampleAt = new Map(
-  entryFiles.flatMap(({ stem, entries }) =>
-    entries.flatMap((entry) =>
-      entry.examples
-        .filter((example) => example.aspirational !== true)
-        .map((example) => [
-          `${stem}\0${entry.name}\0${example.id}`,
-          { id: `${entry.name}/${example.id}`, expected: example.expected as MathJSON },
-        ]),
-    ),
+  referenceEntries(data).flatMap((entry) =>
+    entry.examples
+      .filter((example) => example.aspirational !== true)
+      .map((example) => [
+        `${entry.name}\0${example.id}`,
+        { id: `${entry.name}/${example.id}`, expected: example.expected as MathJSON },
+      ]),
   ),
 );
-interface DigestRow extends OtherRow {
+interface DigestRow {
   readonly id: string;
   readonly expected: MathJSON;
+  readonly verdict: string;
+  readonly kind?: string;
+  readonly output: string;
 }
 const rowsBySystem = new Map<string, DigestRow[]>();
-for (const { stem } of entryFiles) {
-  const sidecar = sidecars.get(stem) as Sidecar;
-  for (const [head, byKey] of Object.entries(sidecar.examples)) {
-    for (const [key, bySystem] of Object.entries(byKey)) {
-      const example = exampleAt.get(`${stem}\0${head}\0${key}`);
-      if (example === undefined) continue;
-      for (const [system, row] of Object.entries(bySystem)) {
-        const rows = rowsBySystem.get(system) ?? [];
-        rows.push({ ...row, ...example });
-        rowsBySystem.set(system, rows);
-      }
+for (const [head, record] of records) {
+  for (const [id, bySystem] of Object.entries(record)) {
+    const example = exampleAt.get(`${head}\0${id}`);
+    if (example === undefined) continue;
+    for (const [system, row] of Object.entries(bySystem)) {
+      if (row.out === undefined) continue;
+      const rows = rowsBySystem.get(system) ?? [];
+      rows.push({ ...example, verdict: row.verdict ?? "agree", kind: row.kind, output: row.out });
+      rowsBySystem.set(system, rows);
     }
   }
 }
@@ -349,7 +314,7 @@ const scanned = SYSTEMS.map((spec) => spec.name).filter((name) => rowsBySystem.h
 const lines: string[] = [
   "# Oracle disagreements",
   "",
-  "Generated by `vp node packages/reference/scripts/oracle-scan.ts` from the entry sidecars. Each",
+  "Generated by `vp node packages/reference/scripts/oracle-scan.ts` from the implementations records. Each",
   "row is an example where an external system returned something other than our pinned",
   "`expected`. A row is NOT a bug report — it is one of three things, and telling them apart is",
   "the review:",
@@ -359,7 +324,7 @@ const lines: string[] = [
   "  branch cut, signed versus unsigned Stirling numbers of the first kind)",
   "- **our bug** — the interesting case, and the reason this exists",
   "",
-  "Classifications live in each entry's `<stem>.oracle.json` sidecar, on the disagreeing row.",
+  "Classifications live in each head's `<Head>.implementations.yaml`, on the disagreeing row.",
   "Counts cover mapped examples only; unmapped ones have no row.",
   "",
 ];
@@ -387,9 +352,13 @@ for (const system of scanned) {
   }
 }
 const digestUrl = new URL("../golden/oracle/disagreements.md", import.meta.url);
-writeFileSync(digestUrl, `${lines.join("\n")}\n`);
-written.push(fileURLToPath(digestUrl));
-execFileSync("pnpm", ["exec", "vp", "fmt", ...written], { stdio: "inherit" });
+if (accept || digestOnly) {
+  writeFileSync(digestUrl, `${lines.join("\n")}\n`);
+  written.push(fileURLToPath(digestUrl));
+  execFileSync("pnpm", ["exec", "vp", "fmt", ...written], { stdio: "inherit" });
+} else if (systems.length > 0) {
+  process.stderr.write("\nreport only: rerun with --accept to write the records\n");
+}
 
 process.stderr.write(`\nmost-wanted mappings:\n`);
 for (const [head, count] of queue.slice(0, 12)) {

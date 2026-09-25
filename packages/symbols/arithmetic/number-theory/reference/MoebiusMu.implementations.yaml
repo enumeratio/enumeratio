@@ -1,0 +1,284 @@
+moebiusmu-1:
+  epsil:
+    in: MoebiusMu(1)
+    out: "1"
+  tex:
+    in: \mathrm{MoebiusMu}(1)
+    out: "1"
+  traditional:
+    in: \mu(1)
+    out: "1"
+  wolfram:
+    in: MoebiusMu[1]
+    out: "1"
+    tex:
+      in: \mu (1)
+      out: "1"
+  sympy:
+    in: mobius(1)
+    out: "1"
+  sage:
+    in: moebius(1)
+    out: "1"
+  oscar:
+    in: moebius_mu(1)
+    out: "1"
+  julia:
+    in: moebius_mu(1)
+    out: "1"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 1)
+    out: "1"
+moebiusmu-11:
+  epsil:
+    in: MoebiusMu(11)
+    out: "-1"
+  tex:
+    in: \mathrm{MoebiusMu}(11)
+    out: "-1"
+  traditional:
+    in: \mu(11)
+    out: "-1"
+  wolfram:
+    in: MoebiusMu[11]
+    out: "-1"
+    tex:
+      in: \mu (11)
+      out: "-1"
+  sympy:
+    in: mobius(11)
+    out: "-1"
+  sage:
+    in: moebius(11)
+    out: "-1"
+  oscar:
+    in: moebius_mu(11)
+    out: "-1"
+  julia:
+    in: moebius_mu(11)
+    out: "-1"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 11)
+    out: "-1"
+12-22-3-is-not-squarefree:
+  epsil:
+    in: MoebiusMu(12)
+    out: "0"
+  tex:
+    in: \mathrm{MoebiusMu}(12)
+    out: "0"
+  traditional:
+    in: \mu(12)
+    out: "0"
+  wolfram:
+    in: MoebiusMu[12]
+    out: "0"
+    tex:
+      in: \mu (12)
+      out: "0"
+  sympy:
+    in: mobius(12)
+    out: "0"
+  sage:
+    in: moebius(12)
+    out: "0"
+  oscar:
+    in: moebius_mu(12)
+    out: "0"
+  julia:
+    in: moebius_mu(12)
+    out: "0"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 12)
+    out: "0"
+10-2-5-a-product-of-an-even-number-of-distinct:
+  epsil:
+    in: MoebiusMu(10)
+    out: "1"
+  tex:
+    in: \mathrm{MoebiusMu}(10)
+    out: "1"
+  traditional:
+    in: \mu(10)
+    out: "1"
+  wolfram:
+    in: MoebiusMu[10]
+    out: "1"
+    tex:
+      in: \mu (10)
+      out: "1"
+  sympy:
+    in: mobius(10)
+    out: "1"
+  sage:
+    in: moebius(10)
+    out: "1"
+  oscar:
+    in: moebius_mu(10)
+    out: "1"
+  julia:
+    in: moebius_mu(10)
+    out: "1"
+  mathlib4:
+    in: (ArithmeticFunction.moebius 10)
+    out: "1"
+sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind:
+  epsil:
+    in: |-
+      MoebiusMu(1) + MoebiusMu(2) + MoebiusMu(3) + MoebiusMu(4) + MoebiusMu(6) +
+      MoebiusMu(12)
+    out: "0"
+  tex:
+    in: \mathrm{MoebiusMu}(1)+\mathrm{MoebiusMu}(2)+\mathrm{MoebiusMu}(3)+\mathrm{MoebiusMu}(4)+\mathrm{MoebiusMu}(6)+\mathrm{MoebiusMu}(12)
+    out: "0"
+  traditional:
+    in: \mu(1)+\mu(2)+\mu(3)+\mu(4)+\mu(6)+\mu(12)
+    out: "0"
+  wolfram:
+    in: Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]
+    out: "0"
+    tex:
+      in: \mu (1)+\mu (2)+\mu (3)+\mu (4)+\mu (6)+\mu (12)
+      out: "0"
+  sympy:
+    in: (mobius(1) + mobius(2) + mobius(3) + mobius(4) + mobius(6) + mobius(12))
+    out: "0"
+  sage:
+    in: (moebius(1) + moebius(2) + moebius(3) + moebius(4) + moebius(6) + moebius(12))
+    out: "0"
+  oscar:
+    in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
+    out: "0"
+  julia:
+    in: (moebius_mu(1) + moebius_mu(2) + moebius_mu(3) + moebius_mu(4) + moebius_mu(6) + moebius_mu(12))
+    out: "0"
+  mathlib4:
+    in: ((ArithmeticFunction.moebius 1) + (ArithmeticFunction.moebius 2) + (ArithmeticFunction.moebius 3) + (ArithmeticFunction.moebius 4) + (ArithmeticFunction.moebius 6) + (ArithmeticFunction.moebius 12))
+    out: "0"
+mu-is-only-defined-for-positive-integers-compute:
+  epsil:
+    in: MoebiusMu(0)
+    out: MoebiusMu(0)
+  tex:
+    in: \mathrm{MoebiusMu}(0)
+    out: \mathrm{MoebiusMu}(0)
+  traditional:
+    in: \mu(0)
+    out: \mu(0)
+  wolfram:
+    in: MoebiusMu[0]
+    out: "0"
+    tex:
+      in: \mu (0)
+      out: "0"
+    verdict: disagree
+    kind: domain
+    note: μ(0) is left unevaluated here; Wolfram defines it as 0.
+  sympy:
+    in: mobius(0)
+    out: "ValueError: n should be a positive integer"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline MoebiusMu here: compute-engine leaves it unevaluated, SymPy raises."
+  sage:
+    in: moebius(0)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: Sage defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.
+  oscar:
+    in: moebius_mu(0)
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Oscar raises an error.'
+  julia:
+    in: moebius_mu(0)
+    out: "DomainError with 0: Argument must be positive"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["MoebiusMu", 0] and Nemo/Combinatorics.jl raises an error.'
+  mathlib4:
+    in: (ArithmeticFunction.moebius 0)
+    out: "0"
+    verdict: inconclusive
+    kind: domain
+    note: Mathlib defines μ(0) = 0; compute-engine's MoebiusMu requires a positive integer and stays unevaluated.
+threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: MoebiusMu([1, 2, 3, 4])
+    out: "[1, -1, -1, 0]"
+  tex:
+    in: \mathrm{MoebiusMu}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack1, -1, -1, 0\bigr\rbrack
+  wolfram:
+    in: MoebiusMu[List[1, 2, 3, 4]]
+    out: "{1, -1, -1, 0}"
+    tex:
+      in: \mu (\{1,2,3,4\})
+      out: \{1,-1,-1,0\}
+  sympy:
+    in: "[mobius(1), mobius(2), mobius(3), mobius(4)]"
+    out: "AttributeError: 'list' object has no attribute 'is_integer'"
+    verdict: error
+    kind: threading
+    note: compute-engine's MoebiusMu is Listable and threads over the list; SymPy's takes scalars only.
+  sage:
+    in: "[moebius(1), moebius(2), moebius(3), moebius(4)]"
+  oscar:
+    in: moebius_mu([1, 2, 3, 4])
+  julia:
+    in: moebius_mu([1, 2, 3, 4])
+  mathlib4:
+    in: (ArithmeticFunction.moebius [1, 2, 3, 4])
+gaussian-integers-5-6i-is-a-gaussian-prime-norm:
+  epsil:
+    in: MoebiusMu(5 + 6i)
+    out: "-1"
+  tex:
+    in: \mathrm{MoebiusMu}(5+6i)
+    out: "-1"
+  traditional:
+    in: \mu(5+6i)
+    out: "-1"
+  wolfram:
+    in: MoebiusMu[Complex[5, 6]]
+  sympy:
+    in: mobius((5 + 6*I))
+  sage:
+    in: moebius((5 + 6*I))
+  oscar:
+    in: moebius_mu(complex(5, 6))
+  julia:
+    in: moebius_mu(complex(5, 6))
+listable-threads-over-a-list:
+  epsil:
+    in: MoebiusMu([4, 10, 17, 20])
+    out: "[0, 1, -1, 0]"
+  tex:
+    in: \mathrm{MoebiusMu}(\bigl\lbrack4, 10, 17, 20\bigr\rbrack)
+    out: \bigl\lbrack0, 1, -1, 0\bigr\rbrack
+  wolfram:
+    in: MoebiusMu[List[4, 10, 17, 20]]
+  sympy:
+    in: "[mobius(4), mobius(10), mobius(17), mobius(20)]"
+  sage:
+    in: "[moebius(4), moebius(10), moebius(17), moebius(20)]"
+  oscar:
+    in: moebius_mu([4, 10, 17, 20])
+  julia:
+    in: moebius_mu([4, 10, 17, 20])
+  mathlib4:
+    in: (ArithmeticFunction.moebius [4, 10, 17, 20])
+listable-over-a-range:
+  epsil:
+    in: MoebiusMu(Range(20))
+    out: "[1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0]"
+  tex:
+    in: \mathrm{MoebiusMu}(1..20)
+    out: \bigl\lbrack1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0\bigr\rbrack
+  traditional:
+    in: \mu(1..20)
+    out: \bigl\lbrack1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0\bigr\rbrack
+  wolfram:
+    in: MoebiusMu[Range[20]]

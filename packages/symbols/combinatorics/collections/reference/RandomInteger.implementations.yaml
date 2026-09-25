@@ -1,0 +1,36 @@
+randominteger-default-seed-is-reproducible:
+  epsil:
+    in: Last([SeedRandom(42), RandomInteger(100)])
+    out: "60"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(42), \mathrm{RandomInteger}(100)\bigr\rbrack)
+    out: "60"
+  wolfram:
+    in: Last[List[SeedRandom[42], RandomInteger[100]]]
+randominteger-range-scope:
+  epsil:
+    in: Last([SeedRandom(1), RandomInteger([10, 20])])
+    out: "16"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomInteger}(\bigl\lbrack10, 20\bigr\rbrack)\bigr\rbrack)
+    out: "16"
+  wolfram:
+    in: Last[List[SeedRandom[1], RandomInteger[List[10, 20]]]]
+randominteger-list-of-draws:
+  epsil:
+    in: Length(Last([SeedRandom(2), RandomInteger(6, 10)]))
+    out: "10"
+  tex:
+    in: \mathrm{Length}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(2), \mathrm{RandomInteger}(6, 10)\bigr\rbrack))
+    out: "10"
+  wolfram:
+    in: Length[Last[List[SeedRandom[2], RandomInteger[6, 10]]]]
+randominteger-array-shape:
+  epsil:
+    in: Shape(Last([SeedRandom(3), RandomInteger(1, [2, 3])]))
+    out: (2, 3)
+  tex:
+    in: \mathrm{Shape}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(3), \mathrm{RandomInteger}(1, \bigl\lbrack2, 3\bigr\rbrack)\bigr\rbrack))
+    out: (2,3)
+  wolfram:
+    in: Dimensions[Last[List[SeedRandom[3], RandomInteger[1, List[2, 3]]]]]

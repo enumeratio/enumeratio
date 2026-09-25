@@ -1,0 +1,41 @@
+the-outer-product-of-two-vectors-a-3-times-2:
+  epsil:
+    in: Outer(Multiply, [1, 2, 3], [1, 2])
+    out: "[[1, 2], [2, 4], [3, 6]]"
+  tex:
+    in: \mathrm{Outer}(\mathrm{Multiply}, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack1, 2\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack, \bigl\lbrack3, 6\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Outer[Times, List[1, 2, 3], List[1, 2]]
+symbolic-entries:
+  epsil:
+    in: Outer(Multiply, [1, 2, 3], [x, y])
+    out: "[[x, y], [2x, 2y], [3x, 3y]]"
+  tex:
+    in: \mathrm{Outer}(\mathrm{Multiply}, \bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack x, y\bigr\rbrack, \bigl\lbrack2x, 2y\bigr\rbrack, \bigl\lbrack3x, 3y\bigr\rbrack\bigr\rbrack
+any-binary-function-an-addition-table:
+  epsil:
+    in: Outer(Add, [1, 2], [10, 20])
+    out: "[[11, 21], [12, 22]]"
+  tex:
+    in: \mathrm{Outer}(\mathrm{Add}, \bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack10, 20\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack11, 21\bigr\rbrack, \bigl\lbrack12, 22\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Outer[Plus, List[1, 2], List[10, 20]]
+a-table-of-powers:
+  epsil:
+    in: Outer(Power, [2, 3], [1, 2, 3])
+    out: "[[2, 4, 8], [3, 9, 27]]"
+  tex:
+    in: \mathrm{Outer}(\mathrm{Power}, \bigl\lbrack2, 3\bigr\rbrack, \bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack2, 4, 8\bigr\rbrack, \bigl\lbrack3, 9, 27\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: Outer[Power, List[2, 3], List[1, 2, 3]]
+list-gives-every-pair-like-a-cartesian-product:
+  epsil:
+    in: Outer(List, [a, b], [x, y])
+    out: "[[[a, x], [a, y]], [[b, x], [b, y]]]"
+  tex:
+    in: \mathrm{Outer}(\mathrm{List}, \bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack x, y\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, x\bigr\rbrack, \bigl\lbrack a, y\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack b, x\bigr\rbrack, \bigl\lbrack b, y\bigr\rbrack\bigr\rbrack\bigr\rbrack

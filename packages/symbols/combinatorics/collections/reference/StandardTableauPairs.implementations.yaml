@@ -1,0 +1,7 @@
+count-standardtableaupairs-4-4-24-rsk-is-a:
+  epsil:
+    in: Count(StandardTableauPairs(4))
+    out: "24"
+  tex:
+    in: \mathrm{Count}(\mathrm{StandardTableauPairs}(4))
+    out: "24"

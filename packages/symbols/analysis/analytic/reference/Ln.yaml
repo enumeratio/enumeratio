@@ -75,8 +75,6 @@ examples:
     expected: [Multiply, 3, [Ln, 10]]
     category: Scope
     caption: 'An integer power is pulled out: $\ln 1000 = 3\ln 10$'
-    divergence:
-      wolfram: Wolfram leaves Log[1000] as is.
   - id: ln-exponentiale-pow-3
     expr: [Ln, [Power, ExponentialE, 3]]
     expected: 3

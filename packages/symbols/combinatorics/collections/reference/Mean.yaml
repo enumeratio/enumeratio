@@ -68,8 +68,6 @@ examples:
     expected: NaN
     category: Possible issues
     caption: The mean of no data is $NaN$
-    divergence:
-      wolfram: Wolfram leaves Mean[{}] unevaluated (with a Mean::rectn message).
 seeAlso:
   - Median
   - Mode

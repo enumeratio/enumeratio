@@ -46,8 +46,6 @@ examples:
     expected: [BetaRegularized, 2, 2, 3]
     category: Possible issues
     caption: An x outside $[0, 1]$ is left unevaluated rather than erroring or returning NaN
-    divergence:
-      wolfram: x outside [0, 1] is left unevaluated here; Wolfram continues the regularised incomplete beta function and gets 8.
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [BetaRegularized, 0.5, [List, 1, 2], 1]
     expected: [List, 0.5, 0.25]

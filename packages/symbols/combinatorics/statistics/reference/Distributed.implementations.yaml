@@ -1,0 +1,14 @@
+distributed-stays-itself:
+  epsil:
+    in: Distributed(x, NormalDistribution(0, 1))
+    out: Distributed(x, NormalDistribution(0, 1))
+  tex:
+    in: \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))
+    out: \mathrm{Distributed}(x, \operatorname{NormalDistribution}(0, 1))
+distributed-reached-through-expectation:
+  epsil:
+    in: Expectation(x, Distributed(x, NormalDistribution(2, 3)))
+    out: "2"
+  tex:
+    in: \mathrm{Expectation}(x, \mathrm{Distributed}(x, \operatorname{NormalDistribution}(2, 3)))
+    out: "2"

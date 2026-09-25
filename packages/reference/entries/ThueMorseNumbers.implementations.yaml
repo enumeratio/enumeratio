@@ -1,0 +1,7 @@
+the-first-20-terms-oeis-a010060:
+  epsil:
+    in: Take(ThueMorseNumbers, 20)
+    out: "[0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1]"
+  tex:
+    in: \mathrm{Take}(\mathrm{ThueMorseNumbers}, 20)
+    out: \bigl\lbrack0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1\bigr\rbrack

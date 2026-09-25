@@ -1,0 +1,41 @@
+2f-1-1-1-2-z-ln-1-z-z-here-2-ln-2:
+  epsil:
+    in: HypergeometricPFQ([1, 1], [2], 0.5)
+    out: 1.386_294_361_119_890_6
+  tex:
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, 0.5)
+    out: 1.386\,294\,361\,119\,890\,6
+  wolfram:
+    in: HypergeometricPFQ[List[1, 1], List[2], 0.5]
+1f-1-1-2-z-e-z-1-z:
+  epsil:
+    in: HypergeometricPFQ([1], [2], 0.5)
+    out: 1.297_442_541_400_256_4
+  tex:
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2\bigr\rbrack, 0.5)
+    out: 1.297\,442\,541\,400\,256\,4
+  wolfram:
+    in: HypergeometricPFQ[List[1], List[2], 0.5]
+3f-2:
+  epsil:
+    in: HypergeometricPFQ([1, 2, 3], [4, 5], 0.5)
+    out: 1.189_874_754_256_423
+  tex:
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5\bigr\rbrack, 0.5)
+    out: 1.189\,874\,754\,256\,423
+  wolfram:
+    in: HypergeometricPFQ[List[1, 2, 3], List[4, 5], 0.5]
+0f-0-z-e-z:
+  epsil:
+    in: HypergeometricPFQ([], [], z)
+    out: ExponentialE ^ z
+  tex:
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack \bigr\rbrack, \bigl\lbrack \bigr\rbrack, z)
+    out: e^{z}
+1f-0-a-z-1-z-a:
+  epsil:
+    in: HypergeometricPFQ([a], [], z)
+    out: (-z + 1) ^ (-a)
+  tex:
+    in: \mathrm{HypergeometricPFQ}(\bigl\lbrack a\bigr\rbrack, \bigl\lbrack \bigr\rbrack, z)
+    out: (1-z)^{-a}

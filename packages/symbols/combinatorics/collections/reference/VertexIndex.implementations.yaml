@@ -1,0 +1,9 @@
+matches-vertexlist-position:
+  epsil:
+    in: VertexIndex(Graph([5, 1, 2], [UndirectedEdge(1, 2)]), 1)
+    out: "2"
+  tex:
+    in: \mathrm{VertexIndex}(\mathrm{Graph}(\bigl\lbrack5, 1, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack), 1)
+    out: "2"
+  wolfram:
+    in: VertexIndex[Graph[List[5, 1, 2], List[UndirectedEdge[1, 2]]], 1]

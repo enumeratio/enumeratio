@@ -1,0 +1,307 @@
+min-3-1-4-1-5:
+  epsil:
+    in: Min(3, 1, 4, 1, 5)
+    out: "1"
+  tex:
+    in: \min(3, 1, 4, 1, 5)
+    out: "1"
+  wolfram:
+    in: Min[3, 1, 4, 1, 5]
+    out: "1"
+    tex:
+      in: \min (3,1,4,1,5)
+      out: "1"
+  sympy:
+    in: enumeratio_min(3, 1, 4, 1, 5)
+    out: "1"
+  sage:
+    in: enumeratio_min(3, 1, 4, 1, 5)
+    out: "1"
+also-accepts-a-single-list-argument:
+  epsil:
+    in: Min([3, 1, 4])
+    out: "1"
+  tex:
+    in: \min(\bigl\lbrack3, 1, 4\bigr\rbrack)
+    out: "1"
+  wolfram:
+    in: Min[List[3, 1, 4]]
+    out: "1"
+    tex:
+      in: \min (\{3,1,4\})
+      out: "1"
+  sympy:
+    in: enumeratio_min([3, 1, 4])
+    out: "ValueError: The argument '[3, 1, 4]' is not comparable."
+    verdict: error
+    kind: threading
+    note: compute-engine's Min threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: enumeratio_min([3, 1, 4])
+    out: "1"
+min-neg-1-neg-5:
+  epsil:
+    in: Min(-1, -5)
+    out: "-5"
+  tex:
+    in: \min(-1, -5)
+    out: "-5"
+  wolfram:
+    in: Min[-1, -5]
+    out: "-5"
+    tex:
+      in: \min (-1,-5)
+      out: "-5"
+  sympy:
+    in: enumeratio_min(-1, -5)
+    out: "-5"
+  sage:
+    in: enumeratio_min(-1, -5)
+    out: "-5"
+a-single-argument-is-returned-unchanged:
+  epsil:
+    in: Min(3)
+    out: "3"
+  tex:
+    in: \min(3)
+    out: "3"
+  wolfram:
+    in: Min[3]
+    out: "3"
+    tex:
+      in: \min (3)
+      out: "3"
+  sympy:
+    in: enumeratio_min(3)
+    out: "3"
+  sage:
+    in: enumeratio_min(3)
+    out: "3"
+commutative-order-doesn-t-matter:
+  epsil:
+    in: Min(3, 7) == Min(7, 3)
+    out: True
+  tex:
+    in: \min(3, 7)=\min(7, 3)
+    out: \top
+  traditional:
+    in: \min(3, 7)=\min(7, 3)
+    out: \mathrm{True}
+  wolfram:
+    in: (Min[3, 7] == Min[7, 3])
+    back: Unreadable
+    out: True
+    tex:
+      in: \min (3,7)=\min (7,3)
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal(enumeratio_min(3, 7), enumeratio_min(7, 3))
+    out: True
+  sage:
+    in: bool(enumeratio_min(3, 7) == enumeratio_min(7, 3))
+    out: True
+min-a-b-max-a-b-a-b-see-max:
+  epsil:
+    in: Min(4, 9) + Max(4, 9) == 4 + 9
+    out: True
+  tex:
+    in: \min(4, 9)+\max(4, 9)=4+9
+    out: \top
+  traditional:
+    in: \min(4, 9)+\max(4, 9)=4+9
+    out: \mathrm{True}
+  wolfram:
+    in: (Plus[Min[4, 9], Max[4, 9]] == Plus[4, 9])
+    back: Unreadable
+    out: True
+    tex:
+      in: \min (4,9)+\max (4,9)=4+9
+      out: \text{True}
+  sympy:
+    in: enumeratio_equal((enumeratio_min(4, 9) + enumeratio_max(4, 9)), (4 + 9))
+    out: True
+  sage:
+    in: bool((enumeratio_min(4, 9) + enumeratio_max(4, 9)) == (4 + 9))
+    out: True
+the-day-s-low-from-the-same-hourly-readings-see:
+  epsil:
+    in: Min(68, 72, 65, 80, 74)
+    out: "65"
+  tex:
+    in: \min(68, 72, 65, 80, 74)
+    out: "65"
+  wolfram:
+    in: Min[68, 72, 65, 80, 74]
+    out: "65"
+    tex:
+      in: \min (68,72,65,80,74)
+      out: "65"
+  sympy:
+    in: enumeratio_min(68, 72, 65, 80, 74)
+    out: "65"
+  sage:
+    in: enumeratio_min(68, 72, 65, 80, 74)
+    out: "65"
+infinities-participate-directly-in-the:
+  epsil:
+    in: Min(NegativeInfinity, 3)
+    out: NegativeInfinity
+  tex:
+    in: \min(-\infty, 3)
+    out: -\infty
+  wolfram:
+    in: Min[-Infinity, 3]
+    out: -Infinity
+    tex:
+      in: \min (-\infty ,3)
+      out: -\infty
+multiple-arguments-lists-included-are-flattened:
+  epsil:
+    in: Min([3, 1], 0)
+    out: "0"
+  tex:
+    in: \min(\bigl\lbrack3, 1\bigr\rbrack, 0)
+    out: "0"
+  wolfram:
+    in: Min[List[3, 1], 0]
+    out: "0"
+    tex:
+      in: \min (\{3,1\},0)
+      out: "0"
+  sympy:
+    in: enumeratio_min([3, 1], 0)
+    out: "ValueError: The argument '[3, 1]' is not comparable."
+    verdict: error
+    kind: threading
+    note: compute-engine's Min threads over (or pools) the list; SymPy's takes scalars.
+  sage:
+    in: enumeratio_min([3, 1], 0)
+    out: "0"
+min-9-2:
+  epsil:
+    in: Min(9, 2)
+    out: "2"
+  tex:
+    in: \min(9, 2)
+    out: "2"
+  wolfram:
+    in: Min[9, 2]
+  sympy:
+    in: enumeratio_min(9, 2)
+  sage:
+    in: enumeratio_min(9, 2)
+min-list-4-1-7-2:
+  epsil:
+    in: Min([4, 1, 7, 2])
+    out: "1"
+  tex:
+    in: \min(\bigl\lbrack4, 1, 7, 2\bigr\rbrack)
+    out: "1"
+  wolfram:
+    in: Min[List[4, 1, 7, 2]]
+  sympy:
+    in: enumeratio_min([4, 1, 7, 2])
+  sage:
+    in: enumeratio_min([4, 1, 7, 2])
+min-5p56-neg-4p8-7p3:
+  epsil:
+    in: Min(5.56, -4.8, 7.3)
+    out: "-4.8"
+  tex:
+    in: \min(5.56, -4.8, 7.3)
+    out: "-4.8"
+  wolfram:
+    in: Min[5.56, -4.8, 7.3]
+  sympy:
+    in: enumeratio_min(5.56, -4.8, 7.3)
+  sage:
+    in: enumeratio_min(5.56, -4.8, 7.3)
+nested-lists-are-flattened-into-the-pool:
+  epsil:
+    in: Min(2, 3, [[1 / 2, -1], [-5 / 3, 1 / 2]])
+    out: -5 / 3
+  tex:
+    in: \min(2, 3, \bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: -\frac{5}{3}
+  wolfram:
+    in: Min[2, 3, List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  sympy:
+    in: enumeratio_min(2, 3, [[Rational(1, 2), -1], [Rational(-5, 3), Rational(1, 2)]])
+  sage:
+    in: enumeratio_min(2, 3, [[(1/2), -1], [(-5/3), (1/2)]])
+exact-numbers-are-compared-numerically:
+  epsil:
+    in: Min(Sqrt(2), 3 / 2)
+    out: Sqrt(2)
+  tex:
+    in: \min(\sqrt{2}, \frac{3}{2})
+    out: \sqrt{2}
+  wolfram:
+    in: Min[Sqrt[2], Rational[3, 2]]
+  sympy:
+    in: enumeratio_min(sqrt(2), Rational(3, 2))
+  sage:
+    in: enumeratio_min(sqrt(2), (3/2))
+the-numeric-arguments-collapse-to-their-minimum:
+  epsil:
+    in: Min(3, x, 5)
+    out: Min(3, x)
+  tex:
+    in: \min(3, x, 5)
+    out: \min(3, x)
+compares-exact-constants-numerically-min-e-pi-5:
+  epsil:
+    in: Min([ExponentialE, Pi, 5])
+    out: ExponentialE
+  tex:
+    in: \min(\bigl\lbracke, \pi, 5\bigr\rbrack)
+    out: e
+  wolfram:
+    in: Min[List[E, Pi, 5]]
+  sympy:
+    in: enumeratio_min([E, pi, 5])
+  sage:
+    in: enumeratio_min([e, pi, 5])
+the-min-of-two-intervals-is-the-interval-of:
+  epsil:
+    in: Min(Interval(1, 3), Interval(-3, 5))
+    out: Interval(-3, 3)
+  tex:
+    in: \min(\mathrm{Interval}(1, 3), \mathrm{Interval}(-3, 5))
+    out: \mathrm{Interval}(-3, 3)
+  wolfram:
+    in: Min[Interval[List[1, 3]], Interval[List[-3, 5]]]
+idempotent-min-x-x-x:
+  epsil:
+    in: Min(x, x)
+    out: x
+  tex:
+    in: \min(x, x)
+    out: x
+with-no-arguments-it-returns-the-identity:
+  epsil:
+    in: Min()
+    out: PositiveInfinity
+  tex:
+    in: \min()
+    out: \infty
+  wolfram:
+    in: Min[]
+  sympy:
+    in: enumeratio_min()
+  sage:
+    in: enumeratio_min()
+the-min-of-an-empty-list-is-nan:
+  epsil:
+    in: Min([])
+    out: "`NaN`"
+  tex:
+    in: \min(\bigl\lbrack \bigr\rbrack)
+    out: \operatorname{NaN}
+  wolfram:
+    in: Min[List[]]
+    note: Wolfram's $\mathrm{Min}[\{\}]$ is the identity element $+\infty$.
+  sympy:
+    in: enumeratio_min([])
+  sage:
+    in: enumeratio_min([])

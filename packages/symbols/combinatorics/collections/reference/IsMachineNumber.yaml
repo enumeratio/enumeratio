@@ -23,8 +23,6 @@ examples:
     expected: False
     category: Possible issues
     caption: A literal with more digits than a double can hold rounds to about 16 — over the machine-precision cutoff
-    divergence:
-      wolfram: Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.
 seeAlso:
   - IsNumeric
   - Precision

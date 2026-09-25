@@ -56,8 +56,6 @@ examples:
     expected: [FromDigits, [List]]
     category: Possible issues
     caption: An empty digit list is left unevaluated rather than treated as 0
-    divergence:
-      wolfram: An empty digit list is left unevaluated here; Wolfram reads it as 0.
   - id: the-digits-can-be-given-as-a-string-0-9-then-a-z
     expr: [FromDigits, "'1923'"]
     expected: 1923

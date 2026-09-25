@@ -1,0 +1,48 @@
+fibonacci:
+  epsil:
+    in: GeneratingFunction(Fibonacci(n), n, x)
+    out: x / (-x ^ 2 - x + 1)
+  tex:
+    in: \mathrm{GeneratingFunction}(\mathrm{Fibonacci}(n), n, x)
+    out: (x)(-x^2-x+1)^{-1}
+  traditional:
+    in: \mathrm{GeneratingFunction}(F_{n}, n, x)
+    out: (x)(-x^2-x+1)^{-1}
+catalan-numbers:
+  epsil:
+    in: GeneratingFunction(CatalanNumber(n), n, x)
+    out: (-Sqrt(-4 * x + 1) + 1) / (2x)
+  tex:
+    in: \mathrm{GeneratingFunction}(\mathrm{CatalanNumber}(n), n, x)
+    out: \frac{1-\sqrt{1-4x}}{2x}
+  traditional:
+    in: \mathrm{GeneratingFunction}(C_{n}, n, x)
+    out: \frac{1-\sqrt{1-4x}}{2x}
+dyck-paths-via-count:
+  epsil:
+    in: GeneratingFunction(Count(DyckPaths(n)), n, x)
+    out: (-Sqrt(-4 * x + 1) + 1) / (2x)
+  tex:
+    in: \mathrm{GeneratingFunction}(\mathrm{Count}(\mathrm{DyckPaths}(n)), n, x)
+    out: \frac{1-\sqrt{1-4x}}{2x}
+fixed-k-binomial:
+  epsil:
+    in: GeneratingFunction(Binomial(n, 3), n, x)
+    out: x ^ 3 / (x ^ 4 - 4 * x ^ 3 + 6 * x ^ 2 - 4x + 1)
+  tex:
+    in: \mathrm{GeneratingFunction}(\binom{n}{3}, n, x)
+    out: \frac{x^3}{x^4-4x^3+6x^2-4x+1}
+geometric:
+  epsil:
+    in: GeneratingFunction(2 ^ n, n, x)
+    out: 1 / (-2 * x + 1)
+  tex:
+    in: \mathrm{GeneratingFunction}(2^{n}, n, x)
+    out: \frac{1}{1-2x}
+no-closed-form:
+  epsil:
+    in: GeneratingFunction(n!, n, x)
+    out: GeneratingFunction(n!, n, x)
+  tex:
+    in: \mathrm{GeneratingFunction}(n!, n, x)
+    out: \mathrm{GeneratingFunction}(n!, n, x)

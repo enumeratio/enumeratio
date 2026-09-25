@@ -10,6 +10,7 @@ export {
 export { type BigCx, bigCx, hurwitzZetaBig, zetaGeneralizedBig } from "./bigzeta.ts";
 export { declareThreading113 } from "./threading-113.ts";
 export { declareClosedForms113 } from "./closed-forms-113.ts";
+export { declareInverseCompositions } from "./inverse-compositions.ts";
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
 export { besselJZero } from "./bessel-zeros.ts";
 export { declareCorrectlyRoundedN, refinementOf } from "./correctly-rounded.ts";
@@ -86,3 +87,4 @@ export { declareSeriesCoefficient } from "./series-coefficient.ts";
 export { declareTransforms, matchLaplace, matchFourier } from "./transforms.ts";
 export { declareMeijerG } from "./meijer-g.ts";
 export { declareMeijerGReduce } from "./meijer-g-reduce.ts";
+export { declareSignals } from "./signals.ts";

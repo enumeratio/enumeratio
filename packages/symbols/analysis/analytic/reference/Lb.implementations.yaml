@@ -1,0 +1,123 @@
+lb-8:
+  epsil:
+    in: Lb(8)
+    out: "3"
+  tex:
+    in: \log_{2}(8)
+    out: "3"
+  wolfram:
+    in: Log2[8]
+    back: [Log2, 8]
+    out: "3"
+    tex:
+      in: \log _2(8)
+      out: "3"
+lb-1:
+  epsil:
+    in: Lb(1)
+    out: "0"
+  tex:
+    in: \log_{2}(1)
+    out: "0"
+  wolfram:
+    in: Log2[1]
+    back: [Log2, 1]
+    out: "0"
+    tex:
+      in: \log _2(1)
+      out: "0"
+lb-1-024:
+  epsil:
+    in: Lb(1_024)
+    out: "10"
+  tex:
+    in: \log_{2}(1\,024)
+    out: "10"
+  wolfram:
+    in: Log2[1024]
+    back: [Log2, 1024]
+    out: "10"
+    tex:
+      in: \log _2(1024)
+      out: "10"
+identical-to-log2:
+  epsil:
+    in: Lb(64) == Log2(64)
+    out: True
+  tex:
+    in: \log_{2}(64)=\log_{2}(64)
+    out: \top
+  traditional:
+    in: \log_{2}(64)=\log_{2}(64)
+    out: \mathrm{True}
+  wolfram:
+    in: (Log2[64] == Log2[64])
+    back: Unreadable
+    out: True
+    tex:
+      in: \log _2(64)=\log _2(64)
+      out: \text{True}
+same-exact-negative-power-fold-as-log2-lb-frac:
+  epsil:
+    in: Lb(1 / 8)
+    out: "-3"
+  tex:
+    in: \log_{2}(\frac{1}{8})
+    out: "-3"
+  wolfram:
+    in: Log2[Rational[1, 8]]
+    back: [Log2, [Rational, 1, 8]]
+    out: "-3"
+    tex:
+      in: \log _2\left(\frac{1}{8}\right)
+      out: "-3"
+a-machine-precision-argument-evaluates:
+  epsil:
+    in: Lb(1.414_2)
+    out: 0.499_986_164_421_874_256_467
+  tex:
+    in: \log_{2}(1.414\,2)
+    out: 0.499\,986\,164\,421\,874\,256\,467
+  wolfram:
+    in: Log2[1.4142]
+    back: [Log2, 1.4142]
+lb-2-pow-10:
+  epsil:
+    in: Lb(2 ^ 10)
+    out: "10"
+  tex:
+    in: \log_{2}(2^{10})
+    out: "10"
+  wolfram:
+    in: Log2[Power[2, 10]]
+    back: [Log2, [Power, 2, 10]]
+lb-0:
+  epsil:
+    in: Lb(0)
+    out: NegativeInfinity
+  tex:
+    in: \log_{2}(0)
+    out: -\infty
+  wolfram:
+    in: Log2[0]
+    back: [Log2, 0]
+threads-element-wise-over-a-list:
+  epsil:
+    in: Lb([1, 2, 4, 8])
+    out: "[0, 1, 2, 3]"
+  tex:
+    in: \log_{2}(\bigl\lbrack1, 2, 4, 8\bigr\rbrack)
+    out: \bigl\lbrack0, 1, 2, 3\bigr\rbrack
+  wolfram:
+    in: Log2[List[1, 2, 4, 8]]
+    back: [Log2, [List, 1, 2, 4, 8]]
+same-as-log2-the-logarithm-of-complex-infinity:
+  epsil:
+    in: Lb(ComplexInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \log_{2}(\tilde\infty)
+    out: \infty
+  wolfram:
+    in: Log2[ComplexInfinity]
+    back: [Log2, ComplexInfinity]

@@ -27,8 +27,6 @@ examples:
     expected: True
     category: Scope
     caption: Without a predicate, tests the elements themselves
-    divergence:
-      wolfram: AnyTrue needs a test; $\mathrm{AnyTrue}[\{False, True\}]$ stays unevaluated.
   - id: a-level-argument-tests-the-elements-at-depth-2
     expr: [Any, [List, [List, 1, 2], [List, 3, -4]], [Function, [Less, _1, 0]], 2]
     expected: True

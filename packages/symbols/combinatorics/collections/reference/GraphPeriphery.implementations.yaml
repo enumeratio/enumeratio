@@ -1,0 +1,15 @@
+path-5-periphery-is-both-ends:
+  epsil:
+    in: |-
+      GraphPeriphery(Graph([1, 2, 3, 4, 5], [
+                                              UndirectedEdge(1, 2),
+                                              UndirectedEdge(2, 3),
+                                              UndirectedEdge(3, 4),
+                                              UndirectedEdge(4, 5),
+                                            ]))
+    out: "[1, 5]"
+  tex:
+    in: \mathrm{GraphPeriphery}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(4, 5)\bigr\rbrack))
+    out: \bigl\lbrack1, 5\bigr\rbrack
+  wolfram:
+    in: GraphPeriphery[Graph[List[1, 2, 3, 4, 5], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[4, 5]]]]

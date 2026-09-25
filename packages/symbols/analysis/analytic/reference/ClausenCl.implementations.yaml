@@ -1,0 +1,70 @@
+cl-2-pi-2-g-catalan-s-constant:
+  epsil:
+    in: ClausenCl(2, Pi / 2)
+    out: Catalan
+  tex:
+    in: \mathrm{ClausenCl}(2, \frac{\pi}{2})
+    out: \mathrm{Catalan}
+  traditional:
+    in: \operatorname{Cl}_{2}(\frac{\pi}{2})
+    out: \mathrm{Catalan}
+odd-orders-are-cosine-series-cl-3-0-zeta-3:
+  epsil:
+    in: ClausenCl(3, 0)
+    out: Zeta(3)
+  tex:
+    in: \mathrm{ClausenCl}(3, 0)
+    out: \zeta(3)
+  traditional:
+    in: \operatorname{Cl}_{3}(0)
+    out: \zeta(3)
+cl-2-pi-0-the-sine-series-vanishes-at-multiples:
+  epsil:
+    in: ClausenCl(2, Pi)
+    out: "0"
+  tex:
+    in: \mathrm{ClausenCl}(2, \pi)
+    out: "0"
+  traditional:
+    in: \operatorname{Cl}_{2}(\pi)
+    out: "0"
+cl-3-pi-eta-3-frac-34-zeta-3:
+  epsil:
+    in: ClausenCl(3, Pi)
+    out: -3 / 4 * Zeta(3)
+  tex:
+    in: \mathrm{ClausenCl}(3, \pi)
+    out: -\frac{3\zeta(3)}{4}
+  traditional:
+    in: \operatorname{Cl}_{3}(\pi)
+    out: -\frac{3\zeta(3)}{4}
+cl-4-pi-2-beta-4-which-has-no-closed-form-of-its:
+  epsil:
+    in: ClausenCl(4, Pi / 2)
+    out: DirichletBeta(4)
+  tex:
+    in: \mathrm{ClausenCl}(4, \frac{\pi}{2})
+    out: \mathrm{DirichletBeta}(4)
+  traditional:
+    in: \operatorname{Cl}_{4}(\frac{\pi}{2})
+    out: \beta(4)
+cl-2-pi-3-1-01494-the-maximum-of-cl-2:
+  epsil:
+    in: ClausenCl(2, 1.047_197_551_196_597_6)
+    out: 1.014_941_606_409_653_3
+  tex:
+    in: \mathrm{ClausenCl}(2, 1.047\,197\,551\,196\,597\,6)
+    out: 1.014\,941\,606\,409\,653\,3
+  traditional:
+    in: \operatorname{Cl}_{2}(1.047\,197\,551\,196\,597\,6)
+    out: 1.014\,941\,606\,409\,653\,3
+cl-1-theta-ln-2-sin-theta-2-diverges-at-theta-0:
+  epsil:
+    in: ClausenCl(1, 0)
+    out: PositiveInfinity
+  tex:
+    in: \mathrm{ClausenCl}(1, 0)
+    out: \infty
+  traditional:
+    in: \operatorname{Cl}_{1}(0)
+    out: \infty

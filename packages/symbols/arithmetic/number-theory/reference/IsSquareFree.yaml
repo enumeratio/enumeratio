@@ -45,8 +45,6 @@ examples:
     expected: [List, True, False, False]
     category: Scope
     caption: Threads element-wise over a list
-    divergence:
-      wolfram: We thread over a List; Wolfram's SquareFreeQ takes a single number and leaves a list unevaluated.
   - id: issquarefree-20
     expr: [IsSquareFree, 20]
     expected: False

@@ -1,0 +1,9 @@
+wheel-6-edge-count:
+  epsil:
+    in: EdgeCount(WheelGraph(6))
+    out: "10"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{WheelGraph}(6))
+    out: "10"
+  wolfram:
+    in: EdgeCount[WheelGraph[6]]

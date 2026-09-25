@@ -1,0 +1,118 @@
+2-cdot-6-12-equiv-1-pmod-11:
+  epsil:
+    in: RationalReconstruction(6, 11)
+    out: 1 / 2
+  tex:
+    in: \mathrm{RationalReconstruction}(6, 11)
+    out: \frac{1}{2}
+  sage:
+    in: rational_reconstruction(6, 11)
+    out: 1/2
+a-round-trip-through-z-1000003:
+  epsil:
+    in: RationalReconstruction(PowerMod(22 / 7, 1, 1_000_003), 1_000_003)
+    out: 22 / 7
+  tex:
+    in: \mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{22}{7}, 1, 1\,000\,003), 1\,000\,003)
+    out: \frac{22}{7}
+  traditional:
+    in: \mathrm{RationalReconstruction}(\left(\left(\frac{22}{7}\right)^1\bmod 1\,000\,003\right), 1\,000\,003)
+    out: \frac{22}{7}
+  sage:
+    in: rational_reconstruction(power_mod((22/7), 1, 1000003), 1000003)
+    out: 22/7
+explicit-bounds-denominators-of-1-only:
+  epsil:
+    in: RationalReconstruction(5, 11, 5, 1)
+    out: "5"
+  tex:
+    in: \mathrm{RationalReconstruction}(5, 11, 5, 1)
+    out: "5"
+rationalreconstruction-list-6-9-10-11:
+  epsil:
+    in: RationalReconstruction([6, 9, 10], 11)
+    out: "[1 / 2, -2, -1]"
+  tex:
+    in: \mathrm{RationalReconstruction}(\bigl\lbrack6, 9, 10\bigr\rbrack, 11)
+    out: \bigl\lbrack\frac{1}{2}, -2, -1\bigr\rbrack
+  sage:
+    in: rational_reconstruction([6, 9, 10], 11)
+    out: "TypeError: unable to coerce <class 'list'> to an integer"
+    verdict: error
+    kind: threading
+    note: compute-engine's RationalReconstruction is Listable and threads over the list; Sage's takes scalars only.
+the-harmonic-number-h-20-back-from-its-image-mod:
+  epsil:
+    in: |-
+      RationalReconstruction(
+                              PowerMod(55_835_135 / 15_519_504, 1, 2 ^ 61 - 1),
+                              2 ^ 61 - 1,
+                            )
+    out: 55_835_135 / 15_519_504
+  tex:
+    in: \mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{55\,835\,135}{15\,519\,504}, 1, 2^{61}-1), 2^{61}-1)
+    out: \frac{55\,835\,135}{15\,519\,504}
+  traditional:
+    in: \mathrm{RationalReconstruction}(\left(\left(\frac{55\,835\,135}{15\,519\,504}\right)^1\bmod 2^{61}-1\right), 2^{61}-1)
+    out: \frac{55\,835\,135}{15\,519\,504}
+  sage:
+    in: rational_reconstruction(power_mod((55835135/15519504), 1, ((2^61) - 1)), ((2^61) - 1))
+    out: 55835135/15519504
+one-word-size-prime-is-not-enough-for-h-20-2nd-m:
+  epsil:
+    in: |-
+      RationalReconstruction(
+                              PowerMod(55_835_135 / 15_519_504, 1, 1_000_000_007),
+                              1_000_000_007,
+                            )
+    out: RationalReconstruction(301_316_272, 1_000_000_007)
+  tex:
+    in: \mathrm{RationalReconstruction}(\mathrm{PowerMod}(\frac{55\,835\,135}{15\,519\,504}, 1, 1\,000\,000\,007), 1\,000\,000\,007)
+    out: \mathrm{RationalReconstruction}(301\,316\,272, 1\,000\,000\,007)
+  traditional:
+    in: \mathrm{RationalReconstruction}(\left(\left(\frac{55\,835\,135}{15\,519\,504}\right)^1\bmod 1\,000\,000\,007\right), 1\,000\,000\,007)
+    out: \mathrm{RationalReconstruction}(301\,316\,272, 1\,000\,000\,007)
+  sage:
+    in: rational_reconstruction(power_mod((55835135/15519504), 1, 1000000007), 1000000007)
+    out: "ArithmeticError: rational reconstruction of 301316272 (mod 1000000007) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["RationalReconstruction", 301316272, 10 and Sage raises an error.'
+multi-modular-arithmetic-glue-two-images-with:
+  epsil:
+    in: |-
+      RationalReconstruction(
+                              ChineseRemainder([
+                                                 PowerMod(
+                                                           55_835_135 / 15_519_504,
+                                                           1,
+                                                           1_000_000_007,
+                                                         ),
+                                                 PowerMod(
+                                                           55_835_135 / 15_519_504,
+                                                           1,
+                                                           1_000_000_009,
+                                                         ),
+                                               ], [1_000_000_007, 1_000_000_009]),
+                              1_000_000_007 * 1_000_000_009,
+                            )
+    out: 55_835_135 / 15_519_504
+  tex:
+    in: \mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\mathrm{PowerMod}(55\,835\,135/15\,519\,504, 1, 1\,000\,000\,007), \mathrm{PowerMod}(55\,835\,135/15\,519\,504, 1, 1\,000\,000\,009)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)
+    out: \frac{55\,835\,135}{15\,519\,504}
+  traditional:
+    in: \mathrm{RationalReconstruction}(\mathrm{ChineseRemainder}(\bigl\lbrack\left(\left(55\,835\,135/15\,519\,504\right)^1\bmod 1\,000\,000\,007\right), \left(\left(55\,835\,135/15\,519\,504\right)^1\bmod 1\,000\,000\,009\right)\bigr\rbrack, \bigl\lbrack1\,000\,000\,007, 1\,000\,000\,009\bigr\rbrack), 1\,000\,000\,007\times1\,000\,000\,009)
+    out: \frac{55\,835\,135}{15\,519\,504}
+mod-11-the-bounds-are-n-d-le-2-and-no-such:
+  epsil:
+    in: RationalReconstruction(3, 11)
+    out: RationalReconstruction(3, 11)
+  tex:
+    in: \mathrm{RationalReconstruction}(3, 11)
+    out: \mathrm{RationalReconstruction}(3, 11)
+  sage:
+    in: rational_reconstruction(3, 11)
+    out: "ArithmeticError: rational reconstruction of 3 (mod 11) does not exist"
+    verdict: error
+    kind: undefined-form
+    note: 'Both decline: compute-engine answers ["RationalReconstruction", 3, 11] and Sage raises an error.'

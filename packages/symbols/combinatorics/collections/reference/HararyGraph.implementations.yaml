@@ -1,0 +1,31 @@
+harary-4-7-edge-count-and-min-degree:
+  epsil:
+    in: EdgeCount(HararyGraph(4, 7))
+    out: "14"
+  tex:
+    in: \mathrm{EdgeCount}(\mathrm{HararyGraph}(4, 7))
+    out: "14"
+  wolfram:
+    in: EdgeCount[HararyGraph[4, 7]]
+harary-3-7-exact-edges:
+  epsil:
+    in: EdgeList(HararyGraph(3, 7))
+    out: |-
+      [
+        UndirectedEdge(1, 2),
+        UndirectedEdge(2, 3),
+        UndirectedEdge(3, 4),
+        UndirectedEdge(4, 5),
+        UndirectedEdge(5, 6),
+        UndirectedEdge(6, 7),
+        UndirectedEdge(7, 1),
+        UndirectedEdge(1, 4),
+        UndirectedEdge(1, 5),
+        UndirectedEdge(2, 6),
+        UndirectedEdge(3, 7),
+      ]
+  tex:
+    in: \mathrm{EdgeList}(\mathrm{HararyGraph}(3, 7))
+    out: \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(4, 5), \mathrm{UndirectedEdge}(5, 6), \mathrm{UndirectedEdge}(6, 7), \mathrm{UndirectedEdge}(7, 1), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(1, 5), \mathrm{UndirectedEdge}(2, 6), \mathrm{UndirectedEdge}(3, 7)\bigr\rbrack
+  wolfram:
+    in: EdgeList[HararyGraph[3, 7]]

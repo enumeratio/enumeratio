@@ -1,0 +1,214 @@
+fromdigits-list-5-1-2-8:
+  epsil:
+    in: FromDigits([5, 1, 2, 8])
+    out: 5_128
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack5, 1, 2, 8\bigr\rbrack)
+    out: 5\,128
+  wolfram:
+    in: FromDigits[List[5, 1, 2, 8]]
+    out: "5128"
+    tex:
+      in: \text{FromDigits}[\{5,1,2,8\}]
+      out: "5128"
+fromdigits-list-1-0-1-1-0-1-1-2:
+  epsil:
+    in: FromDigits([1, 0, 1, 1, 0, 1, 1], 2)
+    out: "91"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 0, 1, 1, 0, 1, 1\bigr\rbrack, 2)
+    out: "91"
+  wolfram:
+    in: FromDigits[List[1, 0, 1, 1, 0, 1, 1], 2]
+    out: "91"
+    tex:
+      in: \text{FromDigits}[\{1,0,1,1,0,1,1\},2]
+      out: "91"
+fromdigits-inverts-integerdigits:
+  epsil:
+    in: FromDigits(IntegerDigits(58_127)) == 58_127
+    out: True
+  tex:
+    in: \mathrm{FromDigits}(\mathrm{IntegerDigits}(58\,127))=58\,127
+    out: \top
+  traditional:
+    in: \mathrm{FromDigits}(\mathrm{IntegerDigits}(58\,127))=58\,127
+    out: \mathrm{True}
+  wolfram:
+    in: (FromDigits[IntegerDigits[58127]] == 58127)
+    back: Unreadable
+    out: True
+    tex:
+      in: \text{FromDigits}[\text{IntegerDigits}[58127]]=58127
+      out: \text{True}
+digits-the-base-carry-into-higher-place-values-7:
+  epsil:
+    in: FromDigits([7, 11, 0, 0, 0, 122])
+    out: 810_122
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack7, 11, 0, 0, 0, 122\bigr\rbrack)
+    out: 810\,122
+  wolfram:
+    in: FromDigits[List[7, 11, 0, 0, 0, 122]]
+    out: "810122"
+    tex:
+      in: \text{FromDigits}[\{7,11,0,0,0,122\}]
+      out: "810122"
+an-empty-digit-list-is-left-unevaluated-rather:
+  epsil:
+    in: FromDigits([])
+    out: FromDigits([])
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack \bigr\rbrack)
+    out: \mathrm{FromDigits}(\bigl\lbrack \bigr\rbrack)
+  wolfram:
+    in: FromDigits[List[]]
+    out: "0"
+    tex:
+      in: \text{FromDigits}[\{\}]
+      out: "0"
+    verdict: disagree
+    kind: domain
+    note: An empty digit list is left unevaluated here; Wolfram reads it as 0.
+the-digits-can-be-given-as-a-string-0-9-then-a-z:
+  epsil:
+    in: FromDigits("1923")
+    out: 1_923
+  tex:
+    in: \mathrm{FromDigits}(\text{1923})
+    out: 1\,923
+  wolfram:
+    in: FromDigits["1923"]
+    out: "1923"
+    tex:
+      in: \text{FromDigits}[1923]
+      out: "1923"
+a-digit-string-in-a-given-base:
+  epsil:
+    in: FromDigits("1011011", 2)
+    out: "91"
+  tex:
+    in: \mathrm{FromDigits}(\text{1011011}, 2)
+    out: "91"
+  wolfram:
+    in: FromDigits["1011011", 2]
+roman-numerals-with-the-base-roman:
+  epsil:
+    in: FromDigits("XVII", "Roman")
+    out: "17"
+  tex:
+    in: \mathrm{FromDigits}(\text{XVII}, \text{Roman})
+    out: "17"
+  wolfram:
+    in: FromDigits["XVII", "Roman"]
+a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s:
+  epsil:
+    in: FromDigits([1, 4, 25, 41], MixedRadix([24, 60, 60]))
+    out: 102_341
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 4, 25, 41\bigr\rbrack, \mathrm{MixedRadix}(\bigl\lbrack24, 60, 60\bigr\rbrack))
+    out: 102\,341
+  wolfram:
+    in: FromDigits[List[1, 4, 25, 41], MixedRadix[List[24, 60, 60]]]
+    back: [FromDigits, [List, 1, 4, 25, 41], [MixedRadixNumerals, [List, 24, 60, 60]]]
+the-inverse-of-integerdigits-137-mixedradix-3-12:
+  epsil:
+    in: FromDigits([3, 2, 5], MixedRadix([3, 12]))
+    out: "137"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack3, 2, 5\bigr\rbrack, \mathrm{MixedRadix}(\bigl\lbrack3, 12\bigr\rbrack))
+    out: "137"
+  wolfram:
+    in: FromDigits[List[3, 2, 5], MixedRadix[List[3, 12]]]
+    back: [FromDigits, [List, 3, 2, 5], [MixedRadixNumerals, [List, 3, 12]]]
+digits-past-9-are-plain-integers-1-cdot-16-15:
+  epsil:
+    in: FromDigits([1, 15], 16)
+    out: "31"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 15\bigr\rbrack, 16)
+    out: "31"
+  wolfram:
+    in: FromDigits[List[1, 15], 16]
+a-symbolic-base-gives-the-polynomial-x-2-2x-3:
+  epsil:
+    in: FromDigits([1, 2, 3], x)
+    out: x ^ 2 + 2x + 3
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 2, 3\bigr\rbrack, x)
+    out: x^2+2x+3
+a-negative-base-1-cdot-4-1-cdot-2-0-2:
+  epsil:
+    in: FromDigits([1, 1, 0], -2)
+    out: "2"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 1, 0\bigr\rbrack, -2)
+    out: "2"
+  wolfram:
+    in: FromDigits[List[1, 1, 0], -2]
+a-digits-exponent-pair-the-shape-realdigits:
+  epsil:
+    in: FromDigits([[1, 4, 1, 5], 1])
+    out: 283 / 200
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack\bigl\lbrack1, 4, 1, 5\bigr\rbrack, 1\bigr\rbrack)
+    out: \frac{283}{200}
+  wolfram:
+    in: FromDigits[List[List[1, 4, 1, 5], 1]]
+the-round-trip-holds-in-any-base:
+  epsil:
+    in: FromDigits(IntegerDigits(58_127, 2), 2)
+    out: 58_127
+  tex:
+    in: \mathrm{FromDigits}(\mathrm{IntegerDigits}(58\,127, 2), 2)
+    out: 58\,127
+  wolfram:
+    in: FromDigits[IntegerDigits[58127, 2], 2]
+ordinary-base-2-as-a-system-value:
+  epsil:
+    in: FromDigits([1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1], PositionalNumerals(2))
+    out: 2_147
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1\bigr\rbrack, \mathrm{PositionalNumerals}(2))
+    out: 2\,147
+  wolfram:
+    in: FromDigits[List[1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1], 2]
+    back: [FromDigits, [List, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1], 2]
+    out: "2147"
+    tex:
+      in: \text{FromDigits}[\{1,0,0,0,0,1,1,0,0,0,1,1\},2]
+      out: "2147"
+1d-2h-3m-4s-back-to-seconds:
+  epsil:
+    in: FromDigits([1, 2, 3, 4], MixedRadixNumerals([24, 60, 60]))
+    out: 93_784
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \mathrm{MixedRadixNumerals}(\bigl\lbrack24, 60, 60\bigr\rbrack))
+    out: 93\,784
+  wolfram:
+    in: FromDigits[List[1, 2, 3, 4], MixedRadix[List[24, 60, 60]]]
+    out: "93784"
+    tex:
+      in: \text{FromDigits}[\{1,2,3,4\},\text{MixedRadix}[\{24,60,60\}]]
+      out: "93784"
+a-lehmer-code-back-to-its-rank:
+  epsil:
+    in: FromDigits([0, 2, 1, 0], FactorialNumerals)
+    out: "5"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack0, 2, 1, 0\bigr\rbrack, \mathrm{FactorialNumerals})
+    out: "5"
+crt-reconstruction:
+  epsil:
+    in: FromDigits([2, 3, 2], ResidueNumerals([3, 5, 7]))
+    out: "23"
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack2, 3, 2\bigr\rbrack, \mathrm{ResidueNumerals}(\bigl\lbrack3, 5, 7\bigr\rbrack))
+    out: "23"
+two-adjacent-ones-is-not-a-numeral-so-it-denotes:
+  epsil:
+    in: FromDigits([1, 1], ZeckendorfNumerals)
+    out: FromDigits([1, 1], ZeckendorfNumerals)
+  tex:
+    in: \mathrm{FromDigits}(\bigl\lbrack1, 1\bigr\rbrack, \mathrm{ZeckendorfNumerals})
+    out: \mathrm{FromDigits}(\bigl\lbrack1, 1\bigr\rbrack, \mathrm{ZeckendorfNumerals})

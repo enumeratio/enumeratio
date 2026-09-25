@@ -1,0 +1,35 @@
+abs-of-a-real-variable:
+  epsil:
+    in: PiecewiseExpand(Abs(x), x in RealNumbers)
+    out: Piecewise([[-x, x < 0]], x)
+  tex:
+    in: \mathrm{PiecewiseExpand}(\vert x\vert, x\in\mathbb{R})
+    out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-x, x\lt0\bigr\rbrack\bigr\rbrack, x)
+sign-of-a-real-variable:
+  epsil:
+    in: PiecewiseExpand(Sign(x), x in RealNumbers)
+    out: Piecewise([[-1, x < 0], [1, 0 < x]], 0)
+  tex:
+    in: \mathrm{PiecewiseExpand}(\mathrm{sgn}(x), x\in\mathbb{R})
+    out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-1, x\lt0\bigr\rbrack, \bigl\lbrack1, 0\lt x\bigr\rbrack\bigr\rbrack, 0)
+clip-of-a-real-variable:
+  epsil:
+    in: PiecewiseExpand(Clip(x, [-1, 1]), x in RealNumbers)
+    out: Piecewise([[-1, x < -1], [1, 1 < x]], x)
+  tex:
+    in: \mathrm{PiecewiseExpand}(\mathrm{Clip}(x, \bigl\lbrack-1, 1\bigr\rbrack), x\in\mathbb{R})
+    out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack-1, x\lt-1\bigr\rbrack, \bigl\lbrack1, 1\lt x\bigr\rbrack\bigr\rbrack, x)
+without-a-realness-assumption-it-declines:
+  epsil:
+    in: PiecewiseExpand(Abs(x))
+    out: Abs(x)
+  tex:
+    in: \mathrm{PiecewiseExpand}(\vert x\vert)
+    out: \vert x\vert
+max-of-two-real-variables:
+  epsil:
+    in: PiecewiseExpand(Max(x, y), x in RealNumbers && y in RealNumbers)
+    out: Piecewise([[x, y <= x]], y)
+  tex:
+    in: \mathrm{PiecewiseExpand}(\max(x, y), x\in\mathbb{R}\land y\in\mathbb{R})
+    out: \mathrm{Piecewise}(\bigl\lbrack\bigl\lbrack x, y\le x\bigr\rbrack\bigr\rbrack, y)

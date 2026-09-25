@@ -1,0 +1,58 @@
+trianglewave-zero:
+  epsil:
+    in: TriangleWave(0)
+    out: "0"
+  tex:
+    in: \mathrm{TriangleWave}(0)
+    out: "0"
+  wolfram:
+    in: TriangleWave[0]
+trianglewave-quarter-peak:
+  epsil:
+    in: TriangleWave(1 / 4)
+    out: "1"
+  tex:
+    in: \mathrm{TriangleWave}(\frac{1}{4})
+    out: "1"
+  wolfram:
+    in: TriangleWave[Rational[1, 4]]
+trianglewave-half:
+  epsil:
+    in: TriangleWave(1 / 2)
+    out: "0"
+  tex:
+    in: \mathrm{TriangleWave}(\frac{1}{2})
+    out: "0"
+  wolfram:
+    in: TriangleWave[Rational[1, 2]]
+trianglewave-three-quarters-trough:
+  epsil:
+    in: TriangleWave(3 / 4)
+    out: "-1"
+  tex:
+    in: \mathrm{TriangleWave}(\frac{3}{4})
+    out: "-1"
+  wolfram:
+    in: TriangleWave[Rational[3, 4]]
+trianglewave-periodic:
+  epsil:
+    in: TriangleWave(1 / 4) == TriangleWave(1 / 4 + 3)
+    out: True
+  tex:
+    in: \mathrm{TriangleWave}(\frac{1}{4})=\mathrm{TriangleWave}(3\frac{1}{4})
+    out: \top
+  traditional:
+    in: \mathrm{TriangleWave}(\frac{1}{4})=\mathrm{TriangleWave}(3\frac{1}{4})
+    out: \mathrm{True}
+  wolfram:
+    in: (TriangleWave[Rational[1, 4]] == TriangleWave[Plus[Rational[1, 4], 3]])
+    back: Unreadable
+trianglewave-ranged:
+  epsil:
+    in: TriangleWave([0, 10], 1 / 2)
+    out: "5"
+  tex:
+    in: \mathrm{TriangleWave}(\bigl\lbrack0, 10\bigr\rbrack, \frac{1}{2})
+    out: "5"
+  wolfram:
+    in: TriangleWave[List[0, 10], Rational[1, 2]]

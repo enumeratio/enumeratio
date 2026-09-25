@@ -40,8 +40,6 @@ examples:
     expected: [DirichletBeta, 4]
     category: Possible issues
     caption: Even $s \ge 4$ has no closed form and stays symbolic; N() gives $0.98894\ldots$
-    divergence:
-      wolfram: Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.
   - id: numeric-for-a-floating-point-argument-through-4
     expr: [DirichletBeta, 2.5]
     expected: { num: "0.948622174037054707445" }

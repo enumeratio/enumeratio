@@ -1,0 +1,37 @@
+ismachinenumber-ordinary-float:
+  epsil:
+    in: IsMachineNumber(2.5)
+    out: True
+  tex:
+    in: \mathrm{IsMachineNumber}(2.5)
+    out: \top
+  traditional:
+    in: \mathrm{IsMachineNumber}(2.5)
+    out: \mathrm{True}
+  wolfram:
+    in: MachineNumberQ[2.5]
+ismachinenumber-exact-integer:
+  epsil:
+    in: IsMachineNumber(2)
+    out: False
+  tex:
+    in: \mathrm{IsMachineNumber}(2)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMachineNumber}(2)
+    out: \mathrm{False}
+  wolfram:
+    in: MachineNumberQ[2]
+ismachinenumber-extended-precision:
+  epsil:
+    in: IsMachineNumber(3.141_592_653_589_793)
+    out: False
+  tex:
+    in: \mathrm{IsMachineNumber}(3.141\,592\,653\,589\,793)
+    out: \bot
+  traditional:
+    in: \mathrm{IsMachineNumber}(3.141\,592\,653\,589\,793)
+    out: \mathrm{False}
+  wolfram:
+    in: MachineNumberQ[3.141592653589793]
+    note: Wolfram's MachineNumberQ agrees here, but tracks precision as a tag rather than counting written digits.

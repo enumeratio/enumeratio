@@ -1,0 +1,27 @@
+ijk-1:
+  epsil:
+    in: NonCommutativeMultiply(f_1, f_2, f_1 * f_2)
+    out: "-1"
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(f_1, f_2, f_1f_2)
+    out: "-1"
+k-in-h:
+  epsil:
+    in: f_1 * f_2 in Quaternions
+    out: True
+  tex:
+    in: f_1f_2\in\mathrm{Quaternions}
+    out: \top
+  traditional:
+    in: f_1f_2\in\mathrm{Quaternions}
+    out: \mathrm{True}
+a-multicomplex-unit-is-not-a-quaternion:
+  epsil:
+    in: i_1 in Quaternions
+    out: False
+  tex:
+    in: i_1\in\mathrm{Quaternions}
+    out: \bot
+  traditional:
+    in: i_1\in\mathrm{Quaternions}
+    out: \mathrm{False}

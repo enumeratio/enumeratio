@@ -137,21 +137,6 @@
         "aspirational": {
           "type": "boolean"
         },
-        "divergence": {
-          "type": "object",
-          "properties": {
-            "wolfram": {
-              "type": "string"
-            },
-            "numpy": {
-              "type": "string"
-            },
-            "sympy": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
         "volatile": {
           "type": "array",
           "items": {

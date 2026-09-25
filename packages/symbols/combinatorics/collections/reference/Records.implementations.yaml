@@ -1,0 +1,28 @@
+3-alone-nothing-after-tops-it:
+  epsil:
+    in: Records([3, 1, 2])
+    out: "1"
+  tex:
+    in: \mathrm{Records}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "1"
+the-identity-sets-a-new-record-everywhere:
+  epsil:
+    in: Records([1, 2, 3])
+    out: "3"
+  tex:
+    in: \mathrm{Records}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "3"
+2-then-3:
+  epsil:
+    in: Records([2, 3, 1])
+    out: "2"
+  tex:
+    in: \mathrm{Records}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+    out: "2"
+the-reversal-attains-the-minimum-1:
+  epsil:
+    in: Records([4, 3, 2, 1])
+    out: "1"
+  tex:
+    in: \mathrm{Records}(\bigl\lbrack4, 3, 2, 1\bigr\rbrack)
+    out: "1"

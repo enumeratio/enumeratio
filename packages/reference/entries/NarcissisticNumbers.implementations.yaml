@@ -1,0 +1,14 @@
+narcissistic-armstrong-numbers-are-proven-finite:
+  epsil:
+    in: Count(NarcissisticNumbers)
+    out: "88"
+  tex:
+    in: \mathrm{Count}(\mathrm{NarcissisticNumbers})
+    out: "88"
+the-88th-and-largest-term-is-exact:
+  epsil:
+    in: NarcissisticNumbers[88]
+    out: 115_132_219_018_763_992_565_095_597_973_971_522_401
+  tex:
+    in: \mathrm{NarcissisticNumbers}[88]
+    out: 115\,132\,219\,018\,763\,992\,565\,095\,597\,973\,971\,522\,401

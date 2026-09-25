@@ -1,0 +1,31 @@
+the-lone-ascent-at-position-2:
+  epsil:
+    in: MinorIndex([3, 1, 2])
+    out: "2"
+  tex:
+    in: \mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)
+    out: "2"
+ascents-at-both-positions-1-2:
+  epsil:
+    in: MinorIndex([1, 2, 3])
+    out: "3"
+  tex:
+    in: \mathrm{MinorIndex}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "3"
+no-ascents:
+  epsil:
+    in: MinorIndex([3, 2, 1])
+    out: "0"
+  tex:
+    in: \mathrm{MinorIndex}(\bigl\lbrack3, 2, 1\bigr\rbrack)
+    out: "0"
+major-and-minor-index-split-binom-n-2:
+  epsil:
+    in: MajorIndex([3, 1, 2]) + MinorIndex([3, 1, 2]) == Binomial(3, 2)
+    out: True
+  tex:
+    in: \mathrm{MajorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\binom{3}{2}
+    out: \top
+  traditional:
+    in: \mathrm{MajorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\binom{3}{2}
+    out: \mathrm{True}

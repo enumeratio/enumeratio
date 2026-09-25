@@ -1,0 +1,24 @@
+a-plain-triangle-is-simple:
+  epsil:
+    in: IsSimpleGraph(CompleteGraph(3))
+    out: True
+  tex:
+    in: \mathrm{IsSimpleGraph}(\mathrm{CompleteGraph}(3))
+    out: \top
+  traditional:
+    in: \mathrm{IsSimpleGraph}(\mathrm{CompleteGraph}(3))
+    out: \mathrm{True}
+  wolfram:
+    in: SimpleGraphQ[CompleteGraph[3]]
+a-repeated-undirected-edge-is-not-simple:
+  epsil:
+    in: IsSimpleGraph(Graph([UndirectedEdge(1, 2), UndirectedEdge(2, 1)]))
+    out: False
+  tex:
+    in: \mathrm{IsSimpleGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 1)\bigr\rbrack))
+    out: \bot
+  traditional:
+    in: \mathrm{IsSimpleGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 1)\bigr\rbrack))
+    out: \mathrm{False}
+  wolfram:
+    in: SimpleGraphQ[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 1]]]]

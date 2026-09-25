@@ -88,8 +88,6 @@ examples:
     expected: [IsPrime, x]
     category: Possible issues
     caption: A symbol stays unevaluated
-    divergence:
-      wolfram: "PrimeQ[x] is False: anything not explicitly a prime integer is not prime."
 seeAlso:
   - FactorInteger
   - NextPrime

@@ -1,0 +1,7 @@
+count-noncrossingtrees-5-273-binom-15-5-11:
+  epsil:
+    in: Count(NonCrossingTrees(5))
+    out: "273"
+  tex:
+    in: \mathrm{Count}(\mathrm{NonCrossingTrees}(5))
+    out: "273"

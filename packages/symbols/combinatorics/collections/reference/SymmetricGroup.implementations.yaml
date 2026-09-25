@@ -1,0 +1,18 @@
+"4":
+  epsil:
+    in: Count(SymmetricGroup(4))
+    out: "24"
+  tex:
+    in: \mathrm{Count}(\mathrm{SymmetricGroup}(4))
+    out: "24"
+  wolfram:
+    in: Count[SymmetricGroup[4]]
+the-identity:
+  epsil:
+    in: SymmetricGroup(3)[1]
+    out: "[1, 2, 3]"
+  tex:
+    in: \mathrm{SymmetricGroup}(3)[1]
+    out: \bigl\lbrack1, 2, 3\bigr\rbrack
+  wolfram:
+    in: Part[SymmetricGroup[3], 1]

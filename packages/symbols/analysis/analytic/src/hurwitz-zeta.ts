@@ -23,6 +23,7 @@ import { declareBetaContinuation } from "./beta-continuation.ts";
 import { declareComplexArguments } from "./complex-arguments.ts";
 import { declareDobinski } from "./dobinski.ts";
 import { declareHugeArguments } from "./huge-arguments.ts";
+import { declareInverseCompositions } from "./inverse-compositions.ts";
 import { declareHyperbolicExact } from "./hyperbolic-exact.ts";
 import { declareSimplifyIdentities } from "./simplify-identities.ts";
 import { declareTrigInfinity } from "./trig-infinity.ts";
@@ -88,6 +89,7 @@ import { declareTransforms } from "./transforms.ts";
 import { declareMeijerG } from "./meijer-g.ts";
 import { declareMeijerGReduce } from "./meijer-g-reduce.ts";
 import { declareCorrectlyRoundedN } from "./correctly-rounded.ts";
+import { declareSignals } from "./signals.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -766,5 +768,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareDobinski(ce);
   declareTrigPowerIntegrals(ce);
   declareHugeArguments(ce);
+  declareInverseCompositions(ce);
   declareCorrectlyRoundedN(ce);
+  declareSignals(ce);
 }

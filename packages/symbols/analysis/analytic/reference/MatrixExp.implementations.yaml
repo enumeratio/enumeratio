@@ -1,0 +1,131 @@
+the-2-2-closed-form-exact-not-decimalized:
+  epsil:
+    in: MatrixExp([[0, 1], [1, 0]])
+    out: "[[Cosh(1), Sinh(1)], [Sinh(1), Cosh(1)]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\cosh(1), \sinh(1)\bigr\rbrack, \bigl\lbrack\sinh(1), \cosh(1)\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, 1], List[1, 0]]]
+a-nilpotent-matrix-i-a-since-a-2-0:
+  epsil:
+    in: MatrixExp([[0, 1], [0, 0]])
+    out: "[[1, 1], [0, 1]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, 1], List[0, 0]]]
+a-diagonal-matrix-exp-of-each-diagonal-entry:
+  epsil:
+    in: MatrixExp([[1, 0, 0], [0, 2, 0], [0, 0, 3]])
+    out: "[[ExponentialE, 0, 0], [0, ExponentialE ^ 2, 0], [0, 0, ExponentialE ^ 3]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack0, 2, 0\bigr\rbrack, \bigl\lbrack0, 0, 3\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbracke, 0, 0\bigr\rbrack, \bigl\lbrack0, e^{2}, 0\bigr\rbrack, \bigl\lbrack0, 0, e^{3}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[1, 0, 0], List[0, 2, 0], List[0, 0, 3]]]
+a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2:
+  epsil:
+    in: N(MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]]))
+    out: |-
+      [
+        [1_892_793.801_966_466_5, 2_319_804.348_433_83, 2_921_688.794_284_903_4],
+        [4_267_596.877_957_099, 5_230_361.132_647_167, 6_587_401.226_390_927],
+        [7_065_281.732_605_146, 8_659_197.695_551_049, 10_905_868.064_094_879],
+      ]
+  tex:
+    in: N(\mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 10\bigr\rbrack\bigr\rbrack))
+    out: \bigl\lbrack\bigl\lbrack1\,892\,793.801\,966\,466\,5, 2\,319\,804.348\,433\,83, 2\,921\,688.794\,284\,903\,4\bigr\rbrack, \bigl\lbrack4\,267\,596.877\,957\,099, 5\,230\,361.132\,647\,167, 6\,587\,401.226\,390\,927\bigr\rbrack, \bigl\lbrack7\,065\,281.732\,605\,146, 8\,659\,197.695\,551\,049, 10\,905\,868.064\,094\,879\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: N[MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]]
+the-exponential-of-the-zero-matrix-is-the:
+  epsil:
+    in: MatrixExp([[0, 0], [0, 0]])
+    out: "[[1, 0], [0, 1]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, 0], List[0, 0]]]
+a-diagonal-matrix-exponentiates-entry-by-entry:
+  epsil:
+    in: MatrixExp([[1, 0], [0, 2]])
+    out: "[[ExponentialE, 0], [0, ExponentialE ^ 2]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbracke, 0\bigr\rbrack, \bigl\lbrack0, e^{2}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[1, 0], List[0, 2]]]
+a-jordan-block-e-i-n-e-i-n:
+  epsil:
+    in: MatrixExp([[1, 1], [0, 1]])
+    out: "[[ExponentialE, ExponentialE], [0, ExponentialE]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbracke, e\bigr\rbrack, \bigl\lbrack0, e\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[1, 1], List[0, 1]]]
+a-skew-symmetric-generator-gives-a-rotation:
+  epsil:
+    in: MatrixExp([[0, 1], [-1, 0]])
+    out: "[[Cos(1), Sin(1)], [-Sin(1), Cos(1)]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack-1, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\cos(1), \sin(1)\bigr\rbrack, \bigl\lbrack-\sin(1), \cos(1)\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, 1], List[-1, 0]]]
+euler-s-identity-for-matrices-rotation-by-pi-is:
+  epsil:
+    in: MatrixExp([[0, -Pi], [Pi, 0]])
+    out: "[[-1, 0], [0, -1]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, -\pi\bigr\rbrack, \bigl\lbrack\pi, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack-1, 0\bigr\rbrack, \bigl\lbrack0, -1\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, Minus[Pi]], List[Pi, 0]]]
+applied-to-a-vector-e-a-v-computed-as-e-a-via:
+  epsil:
+    in: MatrixExp([[0, 1], [0, 0]], [1, 1])
+    out: "[2, 1]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack)
+    out: \bigl\lbrack2, 1\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, 1], List[0, 0]], List[1, 1]]
+rejects-a-non-square-argument:
+  epsil:
+    in: MatrixExp([[1, 2, 3], [4, 5, 6]])
+    out: Error("expected-square-matrix", "[[1,2,3],[4,5,6]]")
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack\bigr\rbrack)
+    out: '{\text{[[1,2,3],[4,5,6]]}}'
+  wolfram:
+    in: MatrixExp[List[List[1, 2, 3], List[4, 5, 6]]]
+a-3-times-3-nilpotent-generator-the-exponential:
+  epsil:
+    in: MatrixExp([[0, 1, 0], [0, 0, 1], [0, 0, 0]])
+    out: "[[1, 1, 1 / 2], [0, 1, 1], [0, 0, 1]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack0, 1, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, \bigl\lbrack0, 0, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 1, \frac{1}{2}\bigr\rbrack, \bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[0, 1, 0], List[0, 0, 1], List[0, 0, 0]]]
+a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not:
+  epsil:
+    in: MatrixExp([[2, 1], [0, 2]])
+    out: "[[ExponentialE ^ 2, ExponentialE ^ 2], [0, ExponentialE ^ 2]]"
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack2, 1\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbracke^{2}, e^{2}\bigr\rbrack, \bigl\lbrack0, e^{2}\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: MatrixExp[List[List[2, 1], List[0, 2]]]
+a-generic-matrix-with-no-closed-form-stays:
+  epsil:
+    in: MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]])
+    out: MatrixExp([[1, 2, 3], [4, 5, 6], [7, 8, 10]])
+  tex:
+    in: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 10\bigr\rbrack\bigr\rbrack)
+    out: \mathrm{MatrixExp}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 10\bigr\rbrack\bigr\rbrack)
+  wolfram:
+    in: MatrixExp[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]

@@ -38,8 +38,6 @@ examples:
     expected: "'-42'"
     category: Possible issues
     caption: compute-engine keeps the sign
-    divergence:
-      wolfram: compute-engine keeps the sign; Wolfram's IntegerString drops it.
   - id: base-36-is-the-largest-with-digit-values-up-to-z
     expr: [IntegerString, 35, 36]
     expected: "'z'"

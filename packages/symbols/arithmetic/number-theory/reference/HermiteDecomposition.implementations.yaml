@@ -1,0 +1,49 @@
+hermitedecomposition-list-list-0-neg-3-list-2-0:
+  epsil:
+    in: HermiteDecomposition([[0, -3], [2, 0]])
+    out: "[[[0, 1], [-1, 0]], [[2, 0], [0, 3]]]"
+  tex:
+    in: \mathrm{HermiteDecomposition}(\bigl\lbrack\bigl\lbrack0, -3\bigr\rbrack, \bigl\lbrack2, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack-1, 0\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: HermiteDecomposition[List[List[0, -3], List[2, 0]]]
+    out: "{{{0, 1}, {-1, 0}}, {{2, 0}, {0, 3}}}"
+    tex:
+      in: \text{HermiteDecomposition}\left[\left( \begin{array}{cc}  0 & -3 \\  2 & 0 \\ \end{array} \right)\right]
+      out: \left( \begin{array}{cc}  \{0,1\} & \{-1,0\} \\  \{2,0\} & \{0,3\} \\ \end{array} \right)
+hermitedecomposition-list-list-1-2-list-3-4:
+  epsil:
+    in: HermiteDecomposition([[1, 2], [3, 4]])
+    out: "[[[-2, 1], [3, -1]], [[1, 0], [0, 2]]]"
+  tex:
+    in: \mathrm{HermiteDecomposition}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack-2, 1\bigr\rbrack, \bigl\lbrack3, -1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: HermiteDecomposition[List[List[1, 2], List[3, 4]]]
+3-times-3-det-u-1:
+  epsil:
+    in: HermiteDecomposition([[1, 2, 3], [4, 5, 6], [7, 8, 10]])
+    out: "[[[-2, 6, -3], [-2, 11, -6], [1, -2, 1]], [[1, 2, 0], [0, 3, 0], [0, 0, 1]]]"
+  tex:
+    in: \mathrm{HermiteDecomposition}(\bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 10\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack-2, 6, -3\bigr\rbrack, \bigl\lbrack-2, 11, -6\bigr\rbrack, \bigl\lbrack1, -2, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2, 0\bigr\rbrack, \bigl\lbrack0, 3, 0\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: HermiteDecomposition[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 10]]]
+rectangular-the-column-without-a-pivot-is-left:
+  epsil:
+    in: HermiteDecomposition([[2, 3, 5], [7, 11, 13]])
+    out: "[[[11, -3], [-7, 2]], [[1, 0, 16], [0, 1, -9]]]"
+  tex:
+    in: \mathrm{HermiteDecomposition}(\bigl\lbrack\bigl\lbrack2, 3, 5\bigr\rbrack, \bigl\lbrack7, 11, 13\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack11, -3\bigr\rbrack, \bigl\lbrack-7, 2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 0, 16\bigr\rbrack, \bigl\lbrack0, 1, -9\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: HermiteDecomposition[List[List[2, 3, 5], List[7, 11, 13]]]
+singular-h-gains-a-zero-row-and-u-is-no-longer:
+  epsil:
+    in: HermiteDecomposition([[1, 2], [2, 4]])
+    out: "[[[1, 0], [-2, 1]], [[1, 2], [0, 0]]]"
+  tex:
+    in: \mathrm{HermiteDecomposition}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack2, 4\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack-2, 1\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  wolfram:
+    in: HermiteDecomposition[List[List[1, 2], List[2, 4]]]

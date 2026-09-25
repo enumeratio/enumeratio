@@ -1,0 +1,18 @@
+2-3:
+  epsil:
+    in: Count(Tuples(2, 3))
+    out: "8"
+  tex:
+    in: \mathrm{Count}(\mathrm{Tuples}(2, 3))
+    out: "8"
+  wolfram:
+    in: Count[Tuples[2, 3]]
+tuples-2-3-list-1:
+  epsil:
+    in: Tuples(2, 3)[1]
+    out: "[1, 1, 1]"
+  tex:
+    in: \mathrm{Tuples}(2, 3)[1]
+    out: \bigl\lbrack1, 1, 1\bigr\rbrack
+  wolfram:
+    in: Part[Tuples[2, 3], 1]
