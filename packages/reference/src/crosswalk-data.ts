@@ -3053,6 +3053,21 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         call: "nf($1)",
         arity: 1,
       },
+      {
+        system: "sympy",
+        call: "N($1, 30)",
+        arity: 2,
+      },
+      {
+        system: "sage",
+        call: "N($1)",
+        arity: 2,
+      },
+      {
+        system: "rust",
+        call: "nf($1)",
+        arity: 2,
+      },
     ],
   },
   {

@@ -37,17 +37,17 @@
       }
     },
     "Tabulate": {
-      "[\"Equal\",[\"Tabulate\",[\"Function\",[\"Power\",\"_1\",2]],5],[\"List\",1,4,9,16,25]]": {
+      "[\"Tabulate\",[\"Function\",[\"Power\",\"_1\",2]],5]": {
         "wolfram": {
-          "input": "(Array[Function[Power[Slot[1], 2]], 5] == List[1, 4, 9, 16, 25])",
-          "output": "True",
+          "input": "Array[Function[Power[Slot[1], 2]], 5]",
+          "output": "{1, 4, 9, 16, 25}",
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Tabulate\",[\"Function\",[\"Multiply\",\"_1\",\"_2\"]],2,2],[\"List\",[\"List\",1,2],[\"List\",2,4]]]": {
+      "[\"Tabulate\",[\"Function\",[\"Multiply\",\"_1\",\"_2\"]],2,2]": {
         "wolfram": {
-          "input": "(Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]] == List[List[1, 2], List[2, 4]])",
-          "output": "True",
+          "input": "Array[Function[Times[Slot[1], Slot[2]]], List[2, 2]]",
+          "output": "{{1, 2}, {2, 4}}",
           "verdict": "agree"
         }
       }
@@ -69,24 +69,24 @@
       }
     },
     "Scan": {
-      "[\"Equal\",[\"Scan\",[\"List\",1,2,3,4],\"Add\"],[\"List\",1,3,6,10]]": {
+      "[\"Scan\",[\"List\",1,2,3,4],\"Add\"]": {
         "wolfram": {
-          "input": "(FoldList[Plus, List[1, 2, 3, 4]] == List[1, 3, 6, 10])",
-          "output": "True",
+          "input": "FoldList[Plus, List[1, 2, 3, 4]]",
+          "output": "{1, 3, 6, 10}",
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Scan\",[\"List\",1,2,3,4],\"Max\"],[\"List\",1,2,3,4]]": {
+      "[\"Scan\",[\"List\",1,2,3,4],\"Max\"]": {
         "wolfram": {
-          "input": "(FoldList[Max, List[1, 2, 3, 4]] == List[1, 2, 3, 4])",
-          "output": "True",
+          "input": "FoldList[Max, List[1, 2, 3, 4]]",
+          "output": "{1, 2, 3, 4}",
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Scan\",[\"List\",1,2,3],\"Add\",10],[\"List\",11,13,16]]": {
+      "[\"Scan\",[\"List\",1,2,3],\"Add\",10]": {
         "wolfram": {
-          "input": "(enumeratio`Scan[List[1, 2, 3], Plus, 10] == List[11, 13, 16])",
-          "output": "enumeratio`Scan[{1, 2, 3}, Plus, 10] == {11, 13, 16}",
+          "input": "enumeratio`Scan[List[1, 2, 3], Plus, 10]",
+          "output": "enumeratio`Scan[{1, 2, 3}, Plus, 10]",
           "verdict": "disagree",
           "kind": "convention",
           "note": "Wolfram's seeded FoldList keeps the seed (length+1), so the seeded Scan has no Wolfram form."

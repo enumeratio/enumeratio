@@ -188,6 +188,20 @@ function applyHead(name: string, args: MathJson[]): MathJson {
       ...args.slice(1).map((it) => (isList(it) ? ["Tuple", ...it.slice(1)] : it)),
     ];
   }
+  if (name === "Integrate" && args.length >= 2) {
+    return [
+      name,
+      args[0],
+      ...args.slice(1).map((it) => (isList(it) ? ["Limits", ...it.slice(1)] : it)),
+    ];
+  }
+  if (name === "Interval" && args.length === 1 && isList(args[0]) && args[0].length === 3) {
+    return ["Interval", args[0][1], args[0][2]];
+  }
+  // Mod[a, n, d] is the residue in [d, d + n): d + Mod(a - d, n).
+  if (name === "Mod" && args.length === 3) {
+    return ["Add", args[2], ["Mod", ["Subtract", args[0], args[2]], args[1]]];
+  }
   if (name === "Apply" && args.length === 2 && args[0] === "Multiply") return ["Product", args[1]];
   // `FullForm` spells the infinities as `DirectedInfinity[±1]` and `DirectedInfinity[]`.
   if (name === "DirectedInfinity") {

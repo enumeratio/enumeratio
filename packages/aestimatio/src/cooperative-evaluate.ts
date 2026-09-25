@@ -34,14 +34,18 @@ export function evaluateCooperatively(
   ce: ComputeEngine,
   json: unknown,
   timeMs: number | undefined,
+  materialize = false,
 ): CooperativeResult {
   const boxed: BoxedExpression = ce.box(json as never);
+  // A lazy collection (`Range`, `Tabulate`, …) stays lazy unless asked: its `.json` is
+  // then still the call, not the elements.
+  const run = (): BoxedExpression => boxed.evaluate({ materialization: materialize });
   try {
     const result =
       timeMs === undefined
-        ? boxed.evaluate()
+        ? run()
         : withDeadline(timeMs, () =>
-            ce.withTimeLimit({ ms: timeMs, label: "evaluateIsolated" }, () => boxed.evaluate()),
+            ce.withTimeLimit({ ms: timeMs, label: "evaluateIsolated" }, run),
           );
     return { ok: true, json: result.json };
   } catch (e) {

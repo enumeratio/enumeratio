@@ -10,6 +10,7 @@ import { fromWolfram, toWolfram } from "@enumeratio/wolfram";
 import { toInputForm } from "./inputform.ts";
 import { type MathMLOptions, toMathML } from "./mathml.ts";
 import { parseNotatio } from "./notatio.ts";
+import { portableTeX } from "./tex.ts";
 import { type FormatOptions, type ImageValue, registerFormat } from "./registry.ts";
 
 const asExpr = (v: unknown): BoxedExpression => v as BoxedExpression;
@@ -72,7 +73,7 @@ registerFormat({
   mimeTypes: ["application/x-tex", "text/x-tex"],
   extensions: ["tex"],
   binary: false,
-  encode: (v) => asExpr(v).latex,
+  encode: (v) => portableTeX(asExpr(v).latex),
   decode: (d, o) => engine(o).parse(text(d)).json,
 });
 

@@ -27,13 +27,16 @@ export function configureLatex(entries: readonly Partial<LatexDictionaryEntry>[]
   latexEntries.push(...entries);
 }
 
-/** `base` then `extra`, a named entry in `extra` replacing the one `base` has by that name. */
+/** `base` then `extra`, a named entry replacing any earlier one by that name -- in `base`
+ *  or earlier in `extra` (two libraries may both redefine `Power`). */
 export function mergeLatex<T extends { readonly name?: string }>(
   base: readonly T[],
   extra: readonly T[],
 ): T[] {
-  const renamed = new Set(extra.map((e) => e.name).filter((n) => n !== undefined));
-  return [...base.filter((e) => e.name === undefined || !renamed.has(e.name)), ...extra];
+  const last = new Map<string, number>();
+  extra.forEach((e, i) => e.name !== undefined && last.set(e.name, i));
+  const kept = extra.filter((e, i) => e.name === undefined || last.get(e.name) === i);
+  return [...base.filter((e) => e.name === undefined || !last.has(e.name)), ...kept];
 }
 
 /**

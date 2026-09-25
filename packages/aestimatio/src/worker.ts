@@ -28,6 +28,7 @@ interface WorkerRequest {
    * doesn't stop the call in time, and only starting once it sees this call's `"started"`
    * (node.ts's own comment on why). */
   readonly timeMs?: number;
+  readonly materialize?: boolean;
 }
 
 interface WorkerResponse {
@@ -62,7 +63,7 @@ async function engineFor(setup: string | undefined): Promise<ComputeEngine> {
 }
 
 async function handle(request: WorkerRequest): Promise<void> {
-  const { id, json, setup, timeMs } = request;
+  const { id, json, setup, timeMs, materialize } = request;
   const ce = await engineFor(setup);
   parentPort?.postMessage({ id, kind: "started" } satisfies WorkerResponse);
   // A fresh scope for THIS call only: any `:=`/`Assign` (or other binding) it makes lands
@@ -74,7 +75,7 @@ async function handle(request: WorkerRequest): Promise<void> {
     parentPort?.postMessage({
       id,
       kind: "result",
-      ...evaluateCooperatively(ce, json, timeMs),
+      ...evaluateCooperatively(ce, json, timeMs, materialize),
     } satisfies WorkerResponse);
   } finally {
     ce.popScope();

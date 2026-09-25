@@ -207,3 +207,18 @@ test("a context-qualified name comes back as the bare head", () => {
   ]);
   expect(fromWolfram("enumeratio`Order")).toBe("Order");
 });
+
+test("iterator and interval shapes land in compute-engine's", () => {
+  expect(fromWolfram("Integrate[f[x], {x, 0, 1}]")).toEqual([
+    "Integrate",
+    ["f", "x"],
+    ["Limits", "x", 0, 1],
+  ]);
+  expect(fromWolfram("Integrate[f[x], x]")).toEqual(["Integrate", ["f", "x"], "x"]);
+  expect(fromWolfram("Interval[{0, 1}]")).toEqual(["Interval", 0, 1]);
+  expect(fromWolfram("Mod[a, n, 1]")).toEqual(["Add", 1, ["Mod", ["Subtract", "a", 1], "n"]]);
+  expect(toWolfram(["Integrate", ["f", "x"], ["Limits", "x", 0, 1]])).toBe(
+    "Integrate[f[x], List[x, 0, 1]]",
+  );
+  expect(toWolfram(["Interval", 0, 1])).toBe("Interval[List[0, 1]]");
+});

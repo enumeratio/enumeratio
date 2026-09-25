@@ -54,6 +54,18 @@ const cleanDoc = (block: string): string =>
     .join("\n")
     .trim();
 
+/**
+ * The JSDoc block that ends right before `at`, with only whitespace between, or "".
+ * Found by walking back from `at` rather than by one regex, which would start at the
+ * file's first `/**` and swallow every line of code down to the class.
+ */
+function docBefore(text: string, at: number): string {
+  const head = text.slice(0, at).trimEnd();
+  if (!head.endsWith("*/")) return "";
+  const open = head.lastIndexOf("/**");
+  return open === -1 ? "" : head.slice(open);
+}
+
 /** The `{ … }` body that starts at `open`, honouring nesting. */
 function balanced(text: string, open: number): string {
   let depth = 0;
@@ -100,9 +112,10 @@ function classesIn(text: string): ClassDoc[] {
 function attributesIn(text: string, body: string): AttributeDoc[] {
   const attributes: AttributeDoc[] = [];
   // Each entry is `name: { … },`, optionally preceded by its own JSDoc block.
-  const entry = /(\/\*\*[\s\S]*?\*\/)?\s*(\w+)\s*:\s*\{([^}]*)\}/g;
+  const entry = /(\w+)\s*:\s*\{([^}]*)\}/g;
   for (const m of body.matchAll(entry)) {
-    const [, doc, property, options] = m;
+    const [, property, options] = m;
+    const doc = docBefore(body, m.index ?? 0);
     if (property.startsWith("_")) continue; // reactive state, not public surface
     const named = options.match(/attribute\s*:\s*"([^"]+)"/);
     const declared = text.match(new RegExp(`declare ${property}\\s*:\\s*([^;]+);`));
@@ -151,15 +164,16 @@ function parse(
 
   // A tag is defined directly or through `defineControl`, which also registers it.
   const define = text.match(/(?:customElements\.define|defineControl)\(\s*"([^"]+)"/);
-  const cls = text.match(/(\/\*\*[\s\S]*?\*\/)?\s*export class (\w+) extends (\w+)/);
+  const cls = text.match(/export class (\w+) extends \w+/);
   if (!define || !cls) return undefined;
+  const doc = docBefore(text, cls.index ?? 0);
 
   return {
     tag: define[1],
-    className: cls[2],
+    className: cls[1],
     source: `packages/notatio-lit/src/${file}`,
-    summary: cls[1] ? cleanDoc(cls[1]) : "",
-    attributes: inherited(cls[2], table),
+    summary: doc ? cleanDoc(doc) : "",
+    attributes: inherited(cls[1], table),
   };
 }
 
