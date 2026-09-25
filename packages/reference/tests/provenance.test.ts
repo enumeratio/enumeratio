@@ -127,6 +127,7 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * on; a name disappearing means an override that has silently stopped taking effect.
  */
 const OVERRIDDEN = [
+  "Abs",
   // Not itself overridden -- two Floor examples are wrapped in a bare `Add` (Legendre's
   // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
   // outer head even though the divergence is Floor's.
@@ -148,6 +149,7 @@ const OVERRIDDEN = [
   "Digamma",
   "DigitCount",
   "DigitSum",
+  "Divide",
   "DivisorSigma",
   "Divisors",
   "Dot",
@@ -188,6 +190,7 @@ const OVERRIDDEN = [
   "MoebiusMu",
   "Multinomial",
   "MultiplicativeOrder",
+  "Multiply",
   "NextPrime",
   "Norm",
   "NthPrime",
@@ -197,6 +200,7 @@ const OVERRIDDEN = [
   "PolyGamma",
   "PolyLog",
   "Position",
+  "Power",
   "PowerMod",
   "PrimeNu",
   "PrimeOmega",
@@ -208,6 +212,7 @@ const OVERRIDDEN = [
   "Sort",
   "StirlingS1",
   "Subfactorial",
+  "Subtract",
   "Tanh",
   "Totient",
   "Union",
@@ -316,6 +321,14 @@ const NOVEL = [
   "PrimeZetaP",
   "HypergeometricPFQ",
   "KleinInvariantJ",
+  "ComplexExpand",
+  "ExpToTrig",
+  "FunctionExpand",
+  "PowerExpand",
+  "FullSimplify",
+  "MatrixFunction",
+  "CenteredInterval",
+  "Around",
   "CubeRoot",
   "IntegerPart",
   "FractionalPart",

@@ -19,15 +19,16 @@ import { type EvalOptions, wantsNumber } from "./box.ts";
 // a power of two until its (∞-)norm is small, Taylor-sum the scaled matrix (which converges
 // fast there), then square the result back up.
 
-type BMatrix = readonly (readonly BoxedExpression[])[];
+export type BMatrix = readonly (readonly BoxedExpression[])[];
 
-/** Read `m` as a rectangular matrix of (already-evaluated) entries. */
-function rowsOf(expr: BoxedExpression): BMatrix {
+/** Read `m` as a rectangular matrix of (already-evaluated) entries. Shared with
+ * matrix-function.ts, which needs the same reading of a boxed matrix. */
+export function rowsOf(expr: BoxedExpression): BMatrix {
   return operandsOf(expr).map((row) => operandsOf(row));
 }
 
 /** compute-engine's own convention for a non-square operand — see native Inverse/Eigenvalues/…. */
-function squareMatrixError(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
+export function squareMatrixError(ce: ComputeEngine, expr: BoxedExpression): BoxedExpression {
   return ce.error("expected-square-matrix", expr.toString());
 }
 
@@ -37,7 +38,7 @@ const isZero = (e: BoxedExpression): boolean => e.isSame(0);
 const mayBeExact = (e: BoxedExpression): boolean =>
   (e as Partial<{ isExact: boolean }>).isExact !== false;
 
-function isDiagonal(rows: BMatrix, n: number): boolean {
+export function isDiagonal(rows: BMatrix, n: number): boolean {
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < n; j++) {
       if (i !== j && !isZero(rows[i][j])) return false;
@@ -46,7 +47,10 @@ function isDiagonal(rows: BMatrix, n: number): boolean {
   return true;
 }
 
-function listOf(ce: ComputeEngine, rows: readonly (readonly BoxedExpression[])[]): BoxedExpression {
+export function listOf(
+  ce: ComputeEngine,
+  rows: readonly (readonly BoxedExpression[])[],
+): BoxedExpression {
   return ce.function(
     "List",
     rows.map((row) => ce.function("List", [...row])),
