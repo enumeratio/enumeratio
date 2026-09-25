@@ -4,19 +4,25 @@ signature: ComplexExpand(expr)
 summary: Split `expr` into real and imaginary parts, treating every free symbol as real. Provided by `@enumeratio/analytic`.
 signatures:
   - call: ComplexExpand(expr)
-    description: '`expr`, rewritten as `Re + i·Im` with its symbols assumed real.'
-    library: '@enumeratio/analytic'
+    description: "`expr`, rewritten as `Re + i·Im` with its symbols assumed real."
+    library: "@enumeratio/analytic"
 details:
   - Covers Add, Multiply, Negate, a nonnegative-integer Power, Sin, Exp and Abs of a complex argument -- the heads the reference examples reach for. Cos, the hyperbolic functions and a non-integer power of a complex argument have no rule and fall through to "assumed real", which is wrong for them specifically.
-  - 'A concrete numeric argument with no free symbols needs none of this: plain evaluation already gives the same split (see the last example), so this is a no-op there.'
+  - "A concrete numeric argument with no free symbols needs none of this: plain evaluation already gives the same split (see the last example), so this is a no-op there."
 examples:
   - id: sin-x-iy-sin-x-cosh-y-i-cos-x-sinh-y
     expr: [ComplexExpand, [Sin, [Add, x, [Multiply, ImaginaryUnit, y]]]]
-    expected: [Add, [Multiply, [Complex, 0, 1], [Cos, x], [Sinh, y]], [Multiply, [Sin, x], [Cosh, y]]]
+    expected:
+      [Add, [Multiply, [Complex, 0, 1], [Cos, x], [Sinh, y]], [Multiply, [Sin, x], [Cosh, y]]]
     caption: $\sin(x + iy) = \sin x\cosh y + i\cos x\sinh y$
   - id: polar-form-of-a-complex-exponential
     expr: [ComplexExpand, [Exp, [Add, x, [Multiply, ImaginaryUnit, y]]]]
-    expected: [Add, [Multiply, [Complex, 0, 1], [Sin, y], [Power, ExponentialE, x]], [Multiply, [Cos, y], [Power, ExponentialE, x]]]
+    expected:
+      [
+        Add,
+        [Multiply, [Complex, 0, 1], [Sin, y], [Power, ExponentialE, x]],
+        [Multiply, [Cos, y], [Power, ExponentialE, x]],
+      ]
     caption: Polar form of a complex exponential
   - id: complexexpand-x-plus-imaginaryunit-times-y-pow-2
     expr: [ComplexExpand, [Power, [Add, x, [Multiply, ImaginaryUnit, y]], 2]]
@@ -28,7 +34,13 @@ examples:
     category: Scope
   - id: wolfram-leaves-e-i-pi-5-alone-until-asked-this
     expr: [ComplexExpand, [Exp, [Multiply, ImaginaryUnit, [Divide, Pi, 5]]]]
-    expected: [Add, [Rational, 1, 4], [Divide, [Sqrt, 5], 4], [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]]]
+    expected:
+      [
+        Add,
+        [Rational, 1, 4],
+        [Divide, [Sqrt, 5], 4],
+        [Multiply, [Complex, 0, [Divide, [Sqrt, 2], 4]], [Sqrt, [Add, 5, [Negate, [Sqrt, 5]]]]],
+      ]
     category: Scope
     caption: Wolfram leaves $e^{i\pi/5}$ alone until asked; this is the radical form compute-engine's Exp already produces
 seeAlso:

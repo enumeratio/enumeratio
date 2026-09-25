@@ -27,7 +27,16 @@ examples:
     category: Properties
     caption: '$Intersection$ is idempotent: $A \cap A = A$'
   - id: the-same-inclusion-exclusion-count-rearranged-a
-    expr: [Equal, [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]], [Add, [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]], [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]]]]
+    expr:
+      [
+        Equal,
+        [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]],
+        [
+          Add,
+          [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]],
+          [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]],
+        ],
+      ]
     expected: True
     category: Properties
     caption: 'The same inclusion-exclusion count, rearranged: $|A| + |B| = |A \cup B| + |A \cap B|$. See [[Union]]'
@@ -68,7 +77,7 @@ examples:
     category: Possible issues
     caption: The result keeps the order elements were met in the first collection, not sorted order
     divergence:
-      wolfram: 'Wolfram sorts the result: Intersection[{c, b, a}, {a, b}] is {a, b}.'
+      wolfram: "Wolfram sorts the result: Intersection[{c, b, a}, {a, b}] is {a, b}."
 seeAlso:
   - Union
   - SetMinus

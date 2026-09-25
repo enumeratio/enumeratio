@@ -9,6 +9,7 @@ catalogMode: prefer
 catalog:
   "@types/node": ^24
   ajv: ^8.20.0
+  oxfmt: 0.66.0 # the version vite-plus pins, so records match `vp fmt`
   ts-morph: ^28.0.0
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@0.3.1

@@ -57,7 +57,7 @@ examples:
     expected: 381922055502195
   - id: exact-for-large-n
     expr: [StirlingS1, 50, 2]
-    expected: {num: '27246193725912647616517114941876245307260051542398468096e+8'}
+    expected: { num: "27246193725912647616517114941876245307260051542398468096e+8" }
     category: Scope
     caption: Exact for large n
   - id: the-signed-row-sum-vanishes-for-n-ge-2
@@ -71,7 +71,12 @@ examples:
     category: Properties
     caption: $s(n, n-1) = -\binom{n}{2}$
   - id: the-generating-property-sum-k-s-n-k-x-k-x-x-1-x
-    expr: [Equal, [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]], [Expand, [Multiply, x, [Subtract, x, 1], [Subtract, x, 2], [Subtract, x, 3]]]]
+    expr:
+      [
+        Equal,
+        [Sum, [Multiply, [StirlingS1, 4, k], [Power, x, k]], [Tuple, k, 0, 4]],
+        [Expand, [Multiply, x, [Subtract, x, 1], [Subtract, x, 2], [Subtract, x, 3]]],
+      ]
     expected: True
     category: Properties
     caption: 'The generating property: $\sum_k s(n, k)\,x^k = x(x-1)\cdots(x-n+1)$'

@@ -8,11 +8,11 @@ signatures:
     library: enumeratio-diagram
 details:
   - Dimension $(2n-1)!!$ = 1, 3, 15, 105 — the perfect matchings of $2n$ points
-  - 'Contains the symmetric group: a permutation diagram is a matching whose every block joins a top point to a bottom one'
+  - "Contains the symmetric group: a permutation diagram is a matching whose every block joins a top point to a bottom one"
   - The generators satisfy $s_i^2 = 1$, the braid relation, and $s_ie_i = e_i$
   - Restricting further to the PLANAR matchings gives [[TemperleyLiebAlgebra]]
 examples:
-  - id: '5'
+  - id: "5"
     expr: [AlgebraDimension, [BrauerAlgebra, 3]]
     expected: 15
     caption: $5!!$
@@ -20,12 +20,18 @@ examples:
     expr: [AlgebraDimension, [BrauerAlgebra, 4]]
     expected: 105
   - id: a-crossing-is-a-brauer-diagram
-    expr: [Element, [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]], [BrauerAlgebra, 3]]
+    expr:
+      [Element, [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]], [BrauerAlgebra, 3]]
     expected: True
     caption: a crossing is a Brauer diagram…
     category: Properties
   - id: but-not-a-planar-one
-    expr: [Element, [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]], [TemperleyLiebAlgebra, 3]]
+    expr:
+      [
+        Element,
+        [Diagram, [List, [List, 1, -2], [List, 2, -1], [List, 3, -3]]],
+        [TemperleyLiebAlgebra, 3],
+      ]
     expected: False
     caption: …but not a planar one
     category: Properties

@@ -1,7 +1,7 @@
 name: Outer
 domain: Collections
 signature: Outer(f, list1, list2)
-summary: 'The generalized outer product: f applied to every pair drawn from two lists.'
+summary: "The generalized outer product: f applied to every pair drawn from two lists."
 signatures:
   - call: Outer(f, list1, list2)
     description: the matrix whose $(i, j)$ entry is $f$ applied to $list1$'s $i$-th and $list2$'s $j$-th element.
@@ -15,13 +15,19 @@ examples:
     caption: The outer product of two vectors, a $3 \times 2$ matrix
   - id: symbolic-entries
     expr: [Outer, Multiply, [List, 1, 2, 3], [List, x, y]]
-    expected: [List, [List, x, y], [List, [Multiply, 2, x], [Multiply, 2, y]], [List, [Multiply, 3, x], [Multiply, 3, y]]]
+    expected:
+      [
+        List,
+        [List, x, y],
+        [List, [Multiply, 2, x], [Multiply, 2, y]],
+        [List, [Multiply, 3, x], [Multiply, 3, y]],
+      ]
     caption: Symbolic entries
   - id: any-binary-function-an-addition-table
     expr: [Outer, Add, [List, 1, 2], [List, 10, 20]]
     expected: [List, [List, 11, 21], [List, 12, 22]]
     category: Scope
-    caption: 'Any binary function: an addition table'
+    caption: "Any binary function: an addition table"
   - id: a-table-of-powers
     expr: [Outer, Power, [List, 2, 3], [List, 1, 2, 3]]
     expected: [List, [List, 2, 4, 8], [List, 3, 9, 27]]

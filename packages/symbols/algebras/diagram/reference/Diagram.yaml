@@ -14,11 +14,22 @@ details:
   - Every point $\pm 1 … \pm n$ must appear exactly once; a diagram missing one is malformed and is left as written
 examples:
   - id: the-cup-cap-squared-closes-one-loop-e-1-2-delta
-    expr: [NonCommutativeMultiply, [Diagram, [List, [List, 1, 2], [List, -1, -2]]], [Diagram, [List, [List, 1, 2], [List, -1, -2]]]]
+    expr:
+      [
+        NonCommutativeMultiply,
+        [Diagram, [List, [List, 1, 2], [List, -1, -2]]],
+        [Diagram, [List, [List, 1, 2], [List, -1, -2]]],
+      ]
     expected: [Multiply, delta, [Diagram, [List, [List, 1, 2], [List, -1, -2]]]]
     caption: 'the cup-cap squared closes one loop: $e_1^2 = \delta e_1$'
   - id: e-1e-2e-1-e-1-with-no-loop-closed
-    expr: [NonCommutativeMultiply, [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]], [Diagram, [List, [List, 2, 3], [List, -2, -3], [List, 1, -1]]], [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]]]
+    expr:
+      [
+        NonCommutativeMultiply,
+        [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]],
+        [Diagram, [List, [List, 2, 3], [List, -2, -3], [List, 1, -1]]],
+        [Diagram, [List, [List, 1, 2], [List, -1, -2], [List, 3, -3]]],
+      ]
     expected: [Diagram, [List, [List, 1, 2], [List, 3, -3], [List, -1, -2]]]
     caption: $e_1e_2e_1 = e_1$, with no loop closed
     category: Properties

@@ -9,7 +9,7 @@ signatures:
 details:
   - A lazy indexed collection; the count is the hook-content formula $s_\lambda(1^k) = \prod_{(r,c) \in \lambda} \frac{k + c - r}{hook(r,c)}$, summed over every shape $\lambda \vdash n$ — exact and closed-form.
   - "Each element is the filling's rows: weakly increasing left to right, strictly increasing top to bottom — semistandard, not standard, so entries may repeat within a row (unlike a standard Young tableau)."
-  - 'Unranked in shape-then-entries order: by row-length shape first, then the flattened filling.'
+  - "Unranked in shape-then-entries order: by row-length shape first, then the flattened filling."
 examples:
   - id: count-semistandardtableaux-4-3-39-every-ssyt-of
     expr: [Count, [SemistandardTableaux, 4, 3]]

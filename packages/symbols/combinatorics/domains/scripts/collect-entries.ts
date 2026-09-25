@@ -135,5 +135,5 @@ const js = moduleBody.replace(/: readonly ReferenceEntry\[\]/, "");
 const { entries } = (await import(`data:text/javascript,${encodeURIComponent(js)}`)) as {
   entries: ReferenceEntry[];
 };
-writeEntries(new URL("../reference/", import.meta.url), entries);
+await writeEntries(new URL("../reference/", import.meta.url), entries);
 process.stdout.write(`wrote ${MAPS.length + UNDEFINED_MAPS.length} entries\n`);

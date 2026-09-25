@@ -19,21 +19,32 @@ signatures:
     description: the subsets of $\{1, …, n\}$ with size in $kmin, kmin+dn, …$ up to $kmax$; $dn$ defaults to $1$.
     library: enumeratio-collections
 details:
-  - 'A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built.'
+  - "A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built."
   - The subsets carrying a fixed size $k$ number $\binom{n}{k}$; summing over $k$ gives $2^n$. See [[Binomial]].
   - Each element is the subset's list of members; [[Length]] is its size.
 examples:
   - id: the-documented-subsets-collection-form-listed-in
     expr: [Subsets, [List, a, b, c]]
-    expected: [List, [List], [List, a], [List, b], [List, a, b], [List, c], [List, a, c], [List, b, c], [List, a, b, c]]
+    expected:
+      [
+        List,
+        [List],
+        [List, a],
+        [List, b],
+        [List, a, b],
+        [List, c],
+        [List, a, c],
+        [List, b, c],
+        [List, a, b, c],
+      ]
     caption: The documented $Subsets(collection)$ form, listed in the family's binary-mask order
     divergence:
-      wolfram: 'Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …'
+      wolfram: "Wolfram lists the subsets by size: {}, {a}, {b}, {c}, {a, b}, …"
   - id: a-size-bound-the-subsets-with-at-most-2-elements
     expr: [Count, [Subsets, 4, 2]]
     expected: 11
     category: Scope
-    caption: 'A size bound: the subsets with at most 2 elements, $1 + 4 + 6$'
+    caption: "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$"
   - id: an-exact-size-2-binom-4-2-subsets
     expr: [Count, [Subsets, 4, [List, 2]]]
     expected: 6
@@ -48,7 +59,7 @@ examples:
     expr: [Length, [Subsets, [Range, 1, 10]]]
     expected: 1024
     category: Properties
-    caption: 'A set of $n$ elements has $2^n$ subsets: $Count(Subsets(list)) = 2^n$'
+    caption: "A set of $n$ elements has $2^n$ subsets: $Count(Subsets(list)) = 2^n$"
   - id: counting-by-size-sum-k-binom-n-k-2-n-subsets-of
     expr: [Sum, [Binomial, 5, k], [Tuple, k, 0, 5]]
     expected: 32

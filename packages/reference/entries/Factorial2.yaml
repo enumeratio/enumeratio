@@ -35,7 +35,7 @@ examples:
     expr: [Factorial2, 9]
     expected: 945
     category: Applications
-    caption: 'The number of ways to pair up 10 people into 5 couples: $(2n-1)!!$ counts perfect matchings of $2n$ objects'
+    caption: "The number of ways to pair up 10 people into 5 couples: $(2n-1)!!$ counts perfect matchings of $2n$ objects"
   - id: negative-even-arguments-hit-a-pole-in-the
     expr: [Factorial2, -2]
     expected: NaN
@@ -67,7 +67,8 @@ examples:
     category: Properties
     caption: 'Even double factorials: $(2n)!! = 2^n\,n!$'
   - id: odd-double-factorials-2n-1-frac-2n-2-n-n
-    expr: [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
+    expr:
+      [Equal, [Factorial2, 9], [Divide, [Factorial, 10], [Multiply, [Power, 2, 5], [Factorial, 5]]]]
     expected: True
     category: Properties
     caption: 'Odd double factorials: $(2n-1)!! = \frac{(2n)!}{2^n\,n!}$'
@@ -75,7 +76,7 @@ examples:
     expr: [Factorial2, -3]
     expected: -1
     category: Scope
-    caption: 'Negative odd integers follow the recurrence backwards: $(-3)!! = -1$'
+    caption: "Negative odd integers follow the recurrence backwards: $(-3)!! = -1$"
   - id: 5-frac-1-3-by-the-backward-recurrence
     expr: [Factorial2, -5]
     expected: [Rational, 1, 3]

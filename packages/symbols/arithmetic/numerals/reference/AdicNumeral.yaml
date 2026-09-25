@@ -4,7 +4,7 @@ signature: AdicNumeral(b, x, prec?)
 summary: 'A $b$-adic number: the rational $x$ read in $\mathbb{Z}_b$ (or $\mathbb{Q}_p$ for prime $b$), exact when built from a rational, $+ O(b^{prec})$ when capped. The ring operations work on it.'
 signatures:
   - call: AdicNumeral(b, x)
-    description: 'exact: $x$ any rational whose denominator $b$ can invert'
+    description: "exact: $x$ any rational whose denominator $b$ can invert"
     library: enumeratio-numerals
   - call: AdicNumeral(b, x, prec)
     description: $x$ known modulo $b^{prec}$, normalised to its representative
@@ -14,13 +14,13 @@ details:
   - 'Prime $b$ gives the field $\mathbb{Q}_p$: any non-zero divisor works and the result may have negative valuation (digits past the point). Composite $b$ gives the ring $\mathbb{Z}_b$ — no field, zero divisors, and division only by units (coprime to $b$)'
   - A rational the base cannot expand — $1/2$ in $\mathbb{Z}_{10}$ — leaves the call standing
   - A rational operand beside an adic one is read in the same base, so `AdicNumeral(10, 1/3) * 3` is `AdicNumeral(10, 1)`. Adics of different bases never combine
-  - 'Not a compute-engine number type: the value is a function expression, and `Add`, `Multiply`, `Negate`, `Divide`, `Power` are wrapped to recognise it (`Subtract` reaches them by canonicalisation)'
+  - "Not a compute-engine number type: the value is a function expression, and `Add`, `Multiply`, `Negate`, `Divide`, `Power` are wrapped to recognise it (`Subtract` reaches them by canonicalisation)"
   - Default precision for anything unbounded — Hensel lifting, `AdicSqrt` — is 20 digits
 examples:
   - id: 6667-3-1-1-3-is-a-10-adic-integer
     expr: [Multiply, [AdicNumeral, 10, [Rational, 1, 3]], 3]
     expected: [AdicNumeral, 10, 1]
-    caption: '$…6667 × 3 = 1$: $1/3$ is a 10-adic integer'
+    caption: "$…6667 × 3 = 1$: $1/3$ is a 10-adic integer"
   - id: 999-1-0-carrying-forever
     expr: [Add, [AdicNumeral, 10, -1], 1]
     expected: [AdicNumeral, 10, 0]
@@ -28,7 +28,7 @@ examples:
   - id: capped-the-representative-modulo-10-8
     expr: [AdicNumeral, 10, [Rational, 1, 3], 8]
     expected: [AdicNumeral, 10, 66666667, 8]
-    caption: 'capped: the representative modulo $10^8$'
+    caption: "capped: the representative modulo $10^8$"
     category: Scope
   - id: prime-base-q-5-is-a-field-so-the-point-moves
     expr: [Divide, [AdicNumeral, 5, 3], 5]

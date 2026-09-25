@@ -28,7 +28,10 @@ function run(name: string): object {
   const boxed = cell.sources.map((source) => ce.box(JSON.parse(source)));
   const numeric = c.precision !== "exact";
   const once = (i: number): unknown => (numeric ? boxed[i]!.N() : boxed[i]!.evaluate());
-  const value = answerText((once(0) as { json: unknown }).json);
+  const first = once(0) as { json: unknown; isSame: (other: unknown) => boolean };
+  // An expression left as it was is no answer; timing it would only time the lookup.
+  if (first.isSame(boxed[0])) return { error: "stays unevaluated" };
+  const value = answerText(first.json);
   let next = 0;
   const timed = measure(() => once(next++ % boxed.length), { budgetMs: c.budget * 1000 });
   return { value, ...timed };

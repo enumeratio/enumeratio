@@ -34,7 +34,7 @@ examples:
     expr: [DigitCount, 122000, 10, 0]
     expected: 3
     category: Possible issues
-    caption: 'Three trailing zeros, not four: $122000$ has digits $1,2,2,0,0,0$'
+    caption: "Three trailing zeros, not four: $122000$ has digits $1,2,2,0,0,0$"
   - id: 2147-100001100011-2-has-five-1-bits
     expr: [DigitCount, 2147, 2, 1]
     expected: 5
@@ -56,7 +56,7 @@ examples:
     expr: [DigitCount, 122000, 10, 0, 9]
     expected: 6
     category: Scope
-    caption: 'a width counts padding zeros too: $000122000$ has six'
+    caption: "a width counts padding zeros too: $000122000$ has six"
   - id: a-list-of-digit-values-gives-one-count-each
     expr: [DigitCount, 242442422, 3, [List, 1, 2]]
     expected: [List, 6, 7]

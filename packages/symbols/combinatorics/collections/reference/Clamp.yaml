@@ -14,7 +14,7 @@ signatures:
 details:
   - 'Constrains a value to $[\mathrm{lower}, \mathrm{upper}]$: below lower it returns lower, above upper it returns upper, otherwise x unchanged.'
   - A 1-argument $\mathrm{Clamp}(x)$ defaults to $[-1, 1]$, matching Wolfram's Clip[x].
-  - 'Idempotent: clamping an already-clamped value changes nothing.'
+  - "Idempotent: clamping an already-clamped value changes nothing."
   - Doesn't validate that lower $\le$ upper; with the bounds swapped it just falls through whichever comparison fires first.
 examples:
   - id: clamp-5-0-3
@@ -31,7 +31,7 @@ examples:
     expr: [Equal, [Clamp, [Clamp, 5, 0, 3], 0, 3], [Clamp, 5, 0, 3]]
     expected: True
     category: Properties
-    caption: 'Idempotent: clamping an already-clamped value changes nothing'
+    caption: "Idempotent: clamping an already-clamped value changes nothing"
   - id: capping-a-percentage-like-value-at-100
     expr: [Clamp, 112, 0, 100]
     expected: 100

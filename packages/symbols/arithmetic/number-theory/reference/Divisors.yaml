@@ -25,16 +25,49 @@ examples:
     expr: [Divisors, 1]
     expected: [List, 1]
     category: Possible issues
-    caption: '1 has exactly one divisor: itself'
+    caption: "1 has exactly one divisor: itself"
   - id: a-prime-s-only-divisors-are-1-and-itself
     expr: [Divisors, 13]
     expected: [List, 1, 13]
     caption: A prime's only divisors are 1 and itself
   - id: 720-is-highly-composite-30-divisors-more-than
     expr: [Divisors, 720]
-    expected: [List, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720]
+    expected:
+      [
+        List,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        15,
+        16,
+        18,
+        20,
+        24,
+        30,
+        36,
+        40,
+        45,
+        48,
+        60,
+        72,
+        80,
+        90,
+        120,
+        144,
+        180,
+        240,
+        360,
+        720,
+      ]
     category: Neat examples
-    caption: '720 is highly composite: 30 divisors, more than any smaller number'
+    caption: "720 is highly composite: 30 divisors, more than any smaller number"
   - id: the-divisor-count-d-n-equals-sigma-0-n-see
     expr: [Equal, [Length, [Divisors, 20]], [DivisorSigma, 0, 20]]
     expected: True
@@ -64,9 +97,15 @@ examples:
     caption: $6+4i=-i(1+i)^2(3+2i)$
   - id: listable-threads-over-a-list
     expr: [Divisors, [List, 605, 871, 824]]
-    expected: [List, [List, 1, 5, 11, 55, 121, 605], [List, 1, 13, 67, 871], [List, 1, 2, 4, 8, 103, 206, 412, 824]]
+    expected:
+      [
+        List,
+        [List, 1, 5, 11, 55, 121, 605],
+        [List, 1, 13, 67, 871],
+        [List, 1, 2, 4, 8, 103, 206, 412, 824],
+      ]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
   - id: only-positive-divisors-even-for-negative-n
     expr: [Divisors, -6]
     expected: [List, 1, 2, 3, 6]

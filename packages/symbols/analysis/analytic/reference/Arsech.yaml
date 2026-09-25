@@ -8,7 +8,7 @@ signatures:
 examples:
   - id: n-arsech-1-over-2
     expr: [N, [Arsech, [Rational, 1, 2]]]
-    expected: {num: '1.31695789692481670863'}
+    expected: { num: "1.31695789692481670863" }
   - id: arsech-1-0-exactly
     expr: [Arsech, 1]
     expected: 0
@@ -21,7 +21,7 @@ examples:
     caption: A logarithmic singularity at 0
   - id: a-float-argument-evaluates-directly
     expr: [Arsech, 0.25]
-    expected: {num: '2.06343706889556054673'}
+    expected: { num: "2.06343706889556054673" }
     category: Scope
     caption: A float argument evaluates directly
   - id: past-1-the-value-is-imaginary-arsech-2-arcosh

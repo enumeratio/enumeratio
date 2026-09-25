@@ -24,7 +24,7 @@ examples:
     expr: [Ordering, [List, 2, 1, 2, 1]]
     expected: [List, 2, 4, 1, 3]
     category: Scope
-    caption: 'Ties break in favor of the earlier position: both 1s come before both 2s'
+    caption: "Ties break in favor of the earlier position: both 1s come before both 2s"
   - id: a-second-argument-takes-just-the-first-n-indices
     expr: [Ordering, [List, 2, 6, 1, 9, 1, 2, 3], 4]
     expected: [List, 3, 5, 1, 6]
@@ -57,7 +57,7 @@ examples:
     expr: [Ordering, [List, 2, 6, 1, 9, 2], [UpTo, 6]]
     expected: [List, 3, 1, 5, 2, 4]
     category: Scope
-    caption: '[[UpTo]](6) asks for at most 6 positions, so a 5-element list gives all 5'
+    caption: "[[UpTo]](6) asks for at most 6 positions, so a 5-element list gives all 5"
   - id: on-a-permutation-ordering-is-the-inverse-so
     expr: [Ordering, [Ordering, [List, 3, 1, 2]]]
     expected: [List, 3, 1, 2]

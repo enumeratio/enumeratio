@@ -1,7 +1,7 @@
 name: MatrixRank
 domain: Linear algebra
 signature: MatrixRank(A)
-summary: 'The rank of a matrix: the number of linearly independent rows (equivalently, columns).'
+summary: "The rank of a matrix: the number of linearly independent rows (equivalently, columns)."
 signatures:
   - call: MatrixRank(A)
     description: the rank of the matrix `A`.
@@ -27,7 +27,12 @@ examples:
     expr: [MatrixRank, [List, [List, 0, 0], [List, 0, 0]]]
     expected: 0
   - id: row-rank-equals-column-rank
-    expr: [Equal, [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]], [MatrixRank, [Transpose, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]]]
+    expr:
+      [
+        Equal,
+        [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]],
+        [MatrixRank, [Transpose, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]],
+      ]
     expected: True
     category: Properties
     caption: Row rank equals column rank
@@ -42,7 +47,7 @@ examples:
     category: Possible issues
     caption: A vector is treated as a 1×n matrix (Wolfram rejects it)
     divergence:
-      wolfram: 'Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix.'
+      wolfram: "Wolfram leaves `MatrixRank[{1, 2, 3}]` unevaluated: a vector is not a matrix."
   - id: a-matrix-of-pairwise-distinct-symbols-has-full
     expr: [MatrixRank, [List, [List, a, b], [List, c, d]]]
     expected: 2
@@ -56,9 +61,13 @@ examples:
     expr: [MatrixRank, [List, [List, 1, ImaginaryUnit], [List, ImaginaryUnit, -1]]]
     expected: 1
     category: Scope
-    caption: 'Complex entries: the second row is $i$ times the first'
+    caption: "Complex entries: the second row is $i$ times the first"
   - id: exact-numeric-entries
-    expr: [MatrixRank, [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]]]
+    expr:
+      [
+        MatrixRank,
+        [List, [List, Pi, ExponentialE], [List, [Multiply, 2, Pi], [Multiply, 2, ExponentialE]]],
+      ]
     expected: 1
     category: Scope
     caption: Exact numeric entries
@@ -77,10 +86,15 @@ examples:
     expected: 5
     category: Scope
   - id: rank-nullity-the-rank-plus-the-dimension-of-the
-    expr: [Add, [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]], [Length, [Kernel, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]]]
+    expr:
+      [
+        Add,
+        [MatrixRank, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]],
+        [Length, [Kernel, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]]]],
+      ]
     expected: 3
     category: Properties
-    caption: 'Rank–nullity: the rank plus the dimension of the null space is the number of columns'
+    caption: "Rank–nullity: the rank plus the dimension of the null space is the number of columns"
   - id: an-outer-product-u-v-top-has-rank-1-a-lazy
     expr: [MatrixRank, [Tabulate, Multiply, 4, 4]]
     expected: 1

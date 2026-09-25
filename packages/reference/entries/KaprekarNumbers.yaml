@@ -1,7 +1,7 @@
 name: KaprekarNumbers
 domain: Collections
 signature: KaprekarNumbers
-summary: 'The Kaprekar numbers $1, 9, 45, 55, 99, 297, …$: $n$ whose square splits into a left and a (nonzero) right part that sum back to $n$.'
+summary: "The Kaprekar numbers $1, 9, 45, 55, 99, 297, …$: $n$ whose square splits into a left and a (nonzero) right part that sum back to $n$."
 signatures:
   - call: KaprekarNumbers
     description: the $n$ for which some split of $n^2$'s decimal digits sums back to $n$, an infinite indexed collection.

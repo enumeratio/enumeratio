@@ -8,7 +8,7 @@ signatures:
     library: enumeratio-hypercomplex
 details:
   - An algebra is an ordered list of generators; the families already carry the squares and the commutation rules
-  - 'Constructors: `CliffordAlgebra(p, q)`, `MulticomplexAlgebra(n)`, `SplitAlgebra(n)`, `DualAlgebra(n)`, `GrassmannAlgebra(n)`'
+  - "Constructors: `CliffordAlgebra(p, q)`, `MulticomplexAlgebra(n)`, `SplitAlgebra(n)`, `DualAlgebra(n)`, `GrassmannAlgebra(n)`"
   - 'Named: [[Quaternions]] (also $\mathbb{H}$), `BicomplexNumbers`, `TricomplexNumbers`, `SplitComplexNumbers`, `DualNumbers`'
   - No element constructor is needed — `Dot` threads a tuple of scalars over the basis
 examples:

@@ -7,7 +7,7 @@ signatures:
     description: the nth Bernoulli number $B_n$.
   - call: BernoulliB(n, x)
     description: the Bernoulli polynomial $B_n(x)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Defined by the generating function $\dfrac{t}{e^t-1} = \sum_{n=0}^{\infty} B_n \dfrac{t^n}{n!}$.
   - $B_n = 0$ for every odd $n > 1$; $B_1 = -\frac12$ under this (the "$B_n^-$") convention.
@@ -35,14 +35,14 @@ examples:
     expected: [Rational, 5, 66]
   - id: exact-rationals-at-any-index
     expr: [BernoulliB, 60]
-    expected: [Rational, {num: '-1215233140483755572040304994079820246041491'}, 56786730]
+    expected: [Rational, { num: "-1215233140483755572040304994079820246041491" }, 56786730]
     category: Scope
     caption: Exact rationals at any index
   - id: listable-b-n-threads-over-a-list-of-indices
     expr: [BernoulliB, [List, 2, 4, 6]]
     expected: [List, [Rational, 1, 6], [Rational, -1, 30], [Rational, 1, 42]]
     category: Scope
-    caption: 'Listable: $B_n$ threads over a list of indices'
+    caption: "Listable: $B_n$ threads over a list of indices"
   - id: the-bernoulli-polynomial-b-4-x-x-4-2x-3-x-2-frac
     expr: [BernoulliB, 4, x]
     expected: [Add, [Power, x, 4], [Multiply, -2, [Power, x, 3]], [Power, x, 2], [Rational, -1, 30]]
@@ -69,7 +69,15 @@ examples:
     category: Properties
     caption: $\zeta(-n) = -\frac{B_{n+1}}{n+1}$, here $\zeta(-3) = \frac{1}{120}$. See [[Zeta]]
   - id: the-recurrence-sum-k-0-n-1-binom-n-k-b-k-0-here
-    expr: [Add, [Multiply, [Binomial, 5, 0], [BernoulliB, 0]], [Multiply, [Binomial, 5, 1], [BernoulliB, 1]], [Multiply, [Binomial, 5, 2], [BernoulliB, 2]], [Multiply, [Binomial, 5, 3], [BernoulliB, 3]], [Multiply, [Binomial, 5, 4], [BernoulliB, 4]]]
+    expr:
+      [
+        Add,
+        [Multiply, [Binomial, 5, 0], [BernoulliB, 0]],
+        [Multiply, [Binomial, 5, 1], [BernoulliB, 1]],
+        [Multiply, [Binomial, 5, 2], [BernoulliB, 2]],
+        [Multiply, [Binomial, 5, 3], [BernoulliB, 3]],
+        [Multiply, [Binomial, 5, 4], [BernoulliB, 4]],
+      ]
     expected: 0
     category: Properties
     caption: The recurrence $\sum_{k=0}^{n-1} \binom{n}{k} B_k = 0$, here at $n = 5$
@@ -79,7 +87,17 @@ examples:
     category: Properties
     caption: $B_n = 0$ for every odd $n > 1$
   - id: faulhaber-s-formula-recovers-sum-k-0-4-k-2-30
-    expr: [Divide, [Add, [Multiply, [Binomial, 3, 0], [BernoulliB, 0], [Power, 5, 3]], [Multiply, [Binomial, 3, 1], [BernoulliB, 1], [Power, 5, 2]], [Multiply, [Binomial, 3, 2], [BernoulliB, 2], [Power, 5, 1]]], 3]
+    expr:
+      [
+        Divide,
+        [
+          Add,
+          [Multiply, [Binomial, 3, 0], [BernoulliB, 0], [Power, 5, 3]],
+          [Multiply, [Binomial, 3, 1], [BernoulliB, 1], [Power, 5, 2]],
+          [Multiply, [Binomial, 3, 2], [BernoulliB, 2], [Power, 5, 1]],
+        ],
+        3,
+      ]
     expected: 30
     category: Applications
     caption: Faulhaber's formula recovers $\sum_{k=0}^{4} k^2 = 30$ from $B_0, B_1, B_2$ weighted by $\binom{3}{j}$. See [[Binomial]]
