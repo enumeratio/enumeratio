@@ -7492,7 +7492,7 @@
   "elementary/Arcsin#7": {
     "ours": {
       "input": "\\arcsin(2)",
-      "output": "\\frac{\\pi}{2}+(-i)\\ln(2+\\sqrt{3})"
+      "output": "\\frac{\\pi}{2}-i\\ln(2+\\sqrt{3})"
     },
     "wolfram": {
       "input": "\\sin ^{-1}(2)",
@@ -8178,7 +8178,7 @@
   "elementary/Ln#6": {
     "ours": {
       "input": "\\ln(-1)",
-      "output": "(i)\\pi"
+      "output": "i\\pi"
     },
     "wolfram": {
       "input": "\\log (-1)",
@@ -8186,7 +8186,7 @@
     },
     "same": {
       "input": false,
-      "output": false
+      "output": true
     }
   },
   "elementary/Log#1": {
