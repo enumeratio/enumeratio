@@ -1928,6 +1928,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Select",
   },
   {
+    name: "FindInstance",
+    wolfram: "FindInstance",
+  },
+  {
     name: "FindSequenceFunction",
     wolfram: "FindSequenceFunction",
   },
@@ -2654,6 +2658,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "IncompleteEllipticPi",
     fungrimEntries: ["255d81", "5f84d9", "8f4e31"],
     wolfram: "EllipticPi",
+  },
+  {
+    name: "Inequality",
+    wolfram: "Inequality",
   },
   {
     name: "IntegerDigits",
@@ -4204,6 +4212,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Round",
     wolfram: "Round",
+  },
+  {
+    name: "Rule",
+    wolfram: "Rule",
   },
   {
     name: "SawtoothWave",

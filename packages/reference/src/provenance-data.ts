@@ -3287,6 +3287,20 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "FindInstance",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "FindInstance",
+    elsewhere: [],
+  },
+  {
+    name: "Inequality",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "Inequality",
+    elsewhere: [],
+  },
+  {
     name: "BernoulliB",
     provenance: "override",
     declared: null,

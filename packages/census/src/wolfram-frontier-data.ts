@@ -197,10 +197,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 31,
   },
   {
-    head: "Inequality",
-    uses: 30,
-  },
-  {
     head: "Reap",
     uses: 30,
   },
@@ -278,10 +274,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Attributes",
-    uses: 21,
-  },
-  {
-    head: "FindInstance",
     uses: 21,
   },
   {

@@ -89,4 +89,6 @@ export { declareMeijerG } from "./meijer-g.ts";
 export { declareMeijerGReduce } from "./meijer-g-reduce.ts";
 export { declareFourierTransform } from "./fourier-transform.ts";
 export { declareFourierSeries } from "./fourier-series.ts";
+export { declareInequality } from "./inequality.ts";
+export { declareFindInstance } from "./find-instance.ts";
 export { declareSignals } from "./signals.ts";
