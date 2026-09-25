@@ -30,6 +30,11 @@ examples:
         ],
       ]
     caption: "the identity function: an anti-diagonal of filled cells"
+  - id: k-capped-at-6-a-larger-precision-refuses
+    expr: [ProfinitePlot, x, x, 9]
+    expected: [ProfinitePlot, x, x, 9]
+    caption: $k$ is capped at 6 to keep the plot tractable; asking for more leaves the call standing
+    category: Possible issues
 seeAlso:
   - ProfiniteNumber
   - ArrayPlot

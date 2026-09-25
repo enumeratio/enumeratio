@@ -37,3 +37,33 @@ integermod-3-5-in-integermodring-5:
     out: \mathrm{True}
   fullform:
     in: Element[IntegerMod[3, 5], IntegerModRing[5]]
+z-5-z:
+  epsil:
+    in: QuotientRing(Integers, 5)
+    out: IntegerModRing(5)
+  tex:
+    in: \mathbb{Z}_{5}
+    out: \mathrm{IntegerModRing}(5)
+  fullform:
+    in: QuotientRing[Integers, 5]
+count-integermodring-5:
+  epsil:
+    in: Count(IntegerModRing(5))
+    out: "5"
+  tex:
+    in: \mathrm{Count}(\mathrm{IntegerModRing}(5))
+    out: "5"
+  fullform:
+    in: Count[IntegerModRing[5]]
+integermod-3-7-not-in-integermodring-5:
+  epsil:
+    in: IntegerMod(3, 7) in IntegerModRing(5)
+    out: False
+  tex:
+    in: \mathrm{IntegerMod}(3, 7)\in\mathrm{IntegerModRing}(5)
+    out: \bot
+  traditional:
+    in: \mathrm{IntegerMod}(3, 7)\in\mathrm{IntegerModRing}(5)
+    out: \mathrm{False}
+  fullform:
+    in: Element[IntegerMod[3, 7], IntegerModRing[5]]

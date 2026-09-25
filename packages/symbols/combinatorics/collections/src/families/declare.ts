@@ -54,7 +54,11 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
     ce.box(encode(family.unrank(p, rank0) as never) as BoxInput);
   return {
     count: (c) => family.count(params(c)),
-    isFinite: () => true,
+    // ∞ is known-infinite; NaN (an open problem, e.g. TwinPrimes) is unknown either way.
+    isFinite: (c) => {
+      const total = family.count(params(c));
+      return Number.isNaN(total) ? undefined : Number.isFinite(total);
+    },
     isLazy: () => true,
     isEnumerable: () => true,
     isEmpty: (c) => family.count(params(c)) === 0,

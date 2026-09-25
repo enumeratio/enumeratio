@@ -9,6 +9,17 @@ hypergeometric-pdf-exact:
     in: PDF[HypergeometricDistribution[20, 50, 100], 10]
   wolfram:
     in: PDF[HypergeometricDistribution[20, 50, 100], 10]
+hypergeometric-cdf-exact-sum:
+  epsil:
+    in: CDF(HypergeometricDistribution(3, 5, 10), 2)
+    out: 11 / 12
+  tex:
+    in: \operatorname{CDF}(\mathrm{HypergeometricDistribution}(3, 5, 10), 2)
+    out: \frac{11}{12}
+  fullform:
+    in: CDF[HypergeometricDistribution[3, 5, 10], 2]
+  wolfram:
+    in: CDF[HypergeometricDistribution[3, 5, 10], 2]
 hypergeometric-mean-exact:
   epsil:
     in: Mean(HypergeometricDistribution(20, 50, 100))

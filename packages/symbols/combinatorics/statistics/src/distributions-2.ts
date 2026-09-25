@@ -27,15 +27,15 @@ import { finish, gammaSample, list2, normal01, numAt, uniform01 } from "./distri
 
 // --- shared helpers --------------------------------------------------------------------------
 
-const If = (ce: ComputeEngine, cond: BoxedExpression, a: BoxedExpression, b: BoxedExpression) =>
+export const If = (ce: ComputeEngine, cond: BoxedExpression, a: BoxedExpression, b: BoxedExpression) =>
   ce.function("If", [cond, a, b]);
 
-const lt = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Less", [a, b]);
+export const lt = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Less", [a, b]);
 
 /** Clamp a CDF branch to 0 below `lower` — the same pre-`finish`-the-branch idiom
  *  `distributions.ts`'s Beta/Gamma CDF use: `If` is lazy, so the in-range branch has to
  *  already be numeric before `N()` on the whole `If` can pick it. */
-const clampBelow = (
+export const clampBelow = (
   ce: ComputeEngine,
   x: BoxedExpression,
   lower: BoxedExpression,
@@ -43,31 +43,31 @@ const clampBelow = (
   options: EvaluateOptions,
 ): BoxedExpression => finish(If(ce, lt(ce, x, lower), ce.Zero, finish(inRange, options)), options);
 
-const mul = (ce: ComputeEngine, ...xs: BoxedExpression[]) => ce.function("Multiply", xs);
-const add = (ce: ComputeEngine, ...xs: BoxedExpression[]) => ce.function("Add", xs);
-const sub = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Subtract", [a, b]);
-const div = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Divide", [a, b]);
-const pow = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Power", [a, b]);
-const neg = (ce: ComputeEngine, a: BoxedExpression) => ce.function("Negate", [a]);
-const exp = (ce: ComputeEngine, a: BoxedExpression) => ce.function("Exp", [a]);
+export const mul = (ce: ComputeEngine, ...xs: BoxedExpression[]) => ce.function("Multiply", xs);
+export const add = (ce: ComputeEngine, ...xs: BoxedExpression[]) => ce.function("Add", xs);
+export const sub = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Subtract", [a, b]);
+export const div = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Divide", [a, b]);
+export const pow = (ce: ComputeEngine, a: BoxedExpression, b: BoxedExpression) => ce.function("Power", [a, b]);
+export const neg = (ce: ComputeEngine, a: BoxedExpression) => ce.function("Negate", [a]);
+export const exp = (ce: ComputeEngine, a: BoxedExpression) => ce.function("Exp", [a]);
 
 /** `1 - GammaRegularized(a, z)` — compute-engine's native (two-argument) `GammaRegularized`
  *  is the UPPER tail Q(a, z) (confirmed empirically, same convention `distributions.ts`'s
  *  `GammaDistribution` CDF relies on), so this is the lower tail P(a, z). */
-const gammaP = (ce: ComputeEngine, a: BoxedExpression, z: BoxedExpression) =>
+export const gammaP = (ce: ComputeEngine, a: BoxedExpression, z: BoxedExpression) =>
   sub(ce, ce.One, ce.function("GammaRegularized", [a, z]));
 
 // --- parameter extraction ----------------------------------------------------------------------
 
-const one = (dist: BoxedExpression): [BoxedExpression] | undefined => {
+export const one = (dist: BoxedExpression): [BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   return ops.length === 1 ? [ops[0]] : undefined;
 };
-const two = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
+export const two = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   return ops.length === 2 ? [ops[0], ops[1]] : undefined;
 };
-const three = (dist: BoxedExpression): [BoxedExpression, BoxedExpression, BoxedExpression] | undefined => {
+export const three = (dist: BoxedExpression): [BoxedExpression, BoxedExpression, BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   return ops.length === 3 ? [ops[0], ops[1], ops[2]] : undefined;
 };
@@ -100,7 +100,7 @@ const triangularParams = (ce: ComputeEngine, dist: BoxedExpression): Triangular 
 
 // --- PDF -----------------------------------------------------------------------------------
 
-const pdfOf2 = (
+export const pdfOf2 = (
   ce: ComputeEngine,
   dist: BoxedExpression,
   x: BoxedExpression,
@@ -331,7 +331,7 @@ const pdfOf2 = (
 
 // --- CDF -----------------------------------------------------------------------------------
 
-const cdfOf2 = (
+export const cdfOf2 = (
   ce: ComputeEngine,
   dist: BoxedExpression,
   x: BoxedExpression,
@@ -493,7 +493,7 @@ const cdfOf2 = (
 
 // --- Mean / Variance -------------------------------------------------------------------------
 
-const meanOf2 = (
+export const meanOf2 = (
   ce: ComputeEngine,
   dist: BoxedExpression,
   options: EvaluateOptions | undefined,
@@ -623,7 +623,7 @@ const meanOf2 = (
   }
 };
 
-const varianceOf2 = (
+export const varianceOf2 = (
   ce: ComputeEngine,
   dist: BoxedExpression,
   options: EvaluateOptions | undefined,

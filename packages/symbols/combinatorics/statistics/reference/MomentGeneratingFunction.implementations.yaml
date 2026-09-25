@@ -1,0 +1,31 @@
+momentgeneratingfunction-gamma:
+  epsil:
+    in: MomentGeneratingFunction(GammaDistribution(2, 1), t)
+    out: (-t + 1) ^ -2
+  tex:
+    in: \mathrm{MomentGeneratingFunction}(\mathrm{GammaDistribution}(2, 1), t)
+    out: \frac{1}{(1-t)^2}
+  fullform:
+    in: MomentGeneratingFunction[GammaDistribution[2, 1], t]
+momentgeneratingfunction-poisson-at-zero:
+  epsil:
+    in: MomentGeneratingFunction(PoissonDistribution(2), 0)
+    out: "1"
+  tex:
+    in: \mathrm{MomentGeneratingFunction}(\operatorname{PoissonDistribution}(2), 0)
+    out: "1"
+  fullform:
+    in: MomentGeneratingFunction[PoissonDistribution[2], 0]
+  wolfram:
+    in: MomentGeneratingFunction[PoissonDistribution[2], 0]
+momentgeneratingfunction-cauchy-undeclared:
+  epsil:
+    in: MomentGeneratingFunction(CauchyDistribution(0, 1), 1)
+    out: MomentGeneratingFunction(CauchyDistribution(0, 1), 1)
+  tex:
+    in: \mathrm{MomentGeneratingFunction}(\mathrm{CauchyDistribution}(0, 1), 1)
+    out: \mathrm{MomentGeneratingFunction}(\mathrm{CauchyDistribution}(0, 1), 1)
+  fullform:
+    in: MomentGeneratingFunction[CauchyDistribution[0, 1], 1]
+  wolfram:
+    in: MomentGeneratingFunction[CauchyDistribution[0, 1], 1]

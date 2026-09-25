@@ -1,0 +1,96 @@
+a-quadratic-with-two-real-roots:
+  epsil:
+    in: FindInstance(x ^ 2 == 4, x, Reals)
+    out: "[[Rule(x, 2)]]"
+  tex:
+    in: \mathrm{FindInstance}(x^2=4, x, \mathrm{Reals})
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FindInstance[Equal[Power[x, 2], 4], x, Reals]
+both-roots-with-an-explicit-count:
+  epsil:
+    in: FindInstance(x ^ 2 == 4, x, Reals, 2)
+    out: "[[Rule(x, 2)], [Rule(x, -2)]]"
+  tex:
+    in: \mathrm{FindInstance}(x^2=4, x, \mathrm{Reals}, 2)
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, -2)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FindInstance[Equal[Power[x, 2], 4], x, Reals, 2]
+an-irrational-root-is-exact:
+  epsil:
+    in: FindInstance(x ^ 2 == 2, x, Reals)
+    out: "[[Rule(x, Sqrt(2))]]"
+  tex:
+    in: \mathrm{FindInstance}(x^2=2, x, \mathrm{Reals})
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, \sqrt{2})\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FindInstance[Equal[Power[x, 2], 2], x, Reals]
+a-linear-equation:
+  epsil:
+    in: FindInstance(2x + 3 == 7, x, Reals)
+    out: "[[Rule(x, 2)]]"
+  tex:
+    in: \mathrm{FindInstance}(2x+3=7, x, \mathrm{Reals})
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FindInstance[Equal[Plus[Times[2, x], 3], 7], x, Reals]
+no-real-root-is-a-proven-empty-result:
+  epsil:
+    in: FindInstance(x ^ 2 == -1, x, Reals)
+    out: "[]"
+  tex:
+    in: \mathrm{FindInstance}(x^2=-1, x, \mathrm{Reals})
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: FindInstance[Equal[Power[x, 2], -1], x, Reals]
+a-non-integer-root-is-also-proven-empty:
+  epsil:
+    in: FindInstance(x ^ 2 == 2, x, Integers)
+    out: "[]"
+  tex:
+    in: \mathrm{FindInstance}(x^2=2, x, \mathbb{Z})
+    out: \bigl\lbrack \bigr\rbrack
+  fullform:
+    in: FindInstance[Equal[Power[x, 2], 2], x, Integers]
+a-bounded-integer-search:
+  epsil:
+    in: FindInstance(x > 0 && x < 10, x, Integers, 3)
+    out: "[[Rule(x, 1)], [Rule(x, 2)], [Rule(x, 3)]]"
+  tex:
+    in: \mathrm{FindInstance}(x\gt0\land x\lt10, x, \mathbb{Z}, 3)
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 1)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 2)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 3)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FindInstance[And[Greater[x, 0], Less[x, 10]], x, Integers, 3]
+a-multivariate-bounded-integer-search:
+  epsil:
+    in: |-
+      FindInstance(
+                    x + y == 5 && x > 0 && x < 10 && y > 0 && y < 10,
+                    [x, y],
+                    Integers,
+                    3,
+                  )
+    out: "[[Rule(x, 1), Rule(y, 4)], [Rule(x, 2), Rule(y, 3)], [Rule(x, 3), Rule(y, 2)]]"
+  tex:
+    in: \mathrm{FindInstance}(x+y=5\land x\gt0\land x\lt10\land y\gt0\land y\lt10, \bigl\lbrack x, y\bigr\rbrack, \mathbb{Z}, 3)
+    out: \bigl\lbrack\bigl\lbrack\mathrm{Rule}(x, 1), \mathrm{Rule}(y, 4)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 2), \mathrm{Rule}(y, 3)\bigr\rbrack, \bigl\lbrack\mathrm{Rule}(x, 3), \mathrm{Rule}(y, 2)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: FindInstance[And[Equal[Plus[x, y], 5], Greater[x, 0], Less[x, 10], Greater[y, 0], Less[y, 10]], List[x, y], Integers, 3]
+declines-without-an-explicit-domain:
+  epsil:
+    in: FindInstance(x > 0, x)
+    out: FindInstance(x > 0, x)
+  tex:
+    in: \mathrm{FindInstance}(x\gt0, x)
+    out: \mathrm{FindInstance}(x\gt0, x)
+  fullform:
+    in: FindInstance[Greater[x, 0], x]
+declines-on-a-pure-inequality-over-reals:
+  epsil:
+    in: FindInstance(x > 0, x, Reals)
+    out: FindInstance(x > 0, x, Reals)
+  tex:
+    in: \mathrm{FindInstance}(x\gt0, x, \mathrm{Reals})
+    out: \mathrm{FindInstance}(x\gt0, x, \mathrm{Reals})
+  fullform:
+    in: FindInstance[Greater[x, 0], x, Reals]

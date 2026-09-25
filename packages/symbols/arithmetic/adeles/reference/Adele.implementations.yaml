@@ -25,3 +25,45 @@ the-adele-underlying-an-idele:
     out: \mathrm{Adele}(1, \mathrm{ProfiniteNumber}(11, 18))
   fullform:
     in: Adele[Idele[1, 1, List[AdicNumeral[3, 2, 2]]]]
+adding-a-principal-adele-and-one-carrying-pi:
+  epsil:
+    in: Adele(5) + Adele(Pi, ProfiniteNumber(1, 6))
+    out: Adele(5 + Pi, ProfiniteNumber(0, 6))
+  tex:
+    in: \mathrm{Adele}(5)+\mathrm{Adele}(\pi, \mathrm{ProfiniteNumber}(1, 6))
+    out: \mathrm{Adele}(5+\pi, \mathrm{ProfiniteNumber}(0, 6))
+  fullform:
+    in: Plus[Adele[5], Adele[Pi, ProfiniteNumber[1, 6]]]
+equal-adeles-need-not-share-a-modulus:
+  epsil:
+    in: Adele(1, ProfiniteNumber(2, 6)) == Adele(1, ProfiniteNumber(5, 9))
+    out: True
+  tex:
+    in: \mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))
+    out: \top
+  traditional:
+    in: \mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Adele[1, ProfiniteNumber[2, 6]], Adele[1, ProfiniteNumber[5, 9]]]
+unequal-real-parts-are-not-equal:
+  epsil:
+    in: Adele(2, ProfiniteNumber(2, 6)) == Adele(1, ProfiniteNumber(5, 9))
+    out: False
+  tex:
+    in: \mathrm{Adele}(2, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))
+    out: \bot
+  traditional:
+    in: \mathrm{Adele}(2, \mathrm{ProfiniteNumber}(2, 6))=\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(5, 9))
+    out: \mathrm{False}
+  fullform:
+    in: Equal[Adele[2, ProfiniteNumber[2, 6]], Adele[1, ProfiniteNumber[5, 9]]]
+an-adele-and-a-bare-profinite-don-t-combine:
+  epsil:
+    in: Adele(1, ProfiniteNumber(2, 6)) + ProfiniteNumber(1, 6)
+    out: ProfiniteNumber(1, 6) + Adele(1, ProfiniteNumber(2, 6))
+  tex:
+    in: \mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))+\mathrm{ProfiniteNumber}(1, 6)
+    out: \mathrm{ProfiniteNumber}(1, 6)+\mathrm{Adele}(1, \mathrm{ProfiniteNumber}(2, 6))
+  fullform:
+    in: Plus[Adele[1, ProfiniteNumber[2, 6]], ProfiniteNumber[1, 6]]

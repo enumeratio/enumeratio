@@ -1,0 +1,80 @@
+a-numeric-chain-that-holds:
+  epsil:
+    in: Inequality(0, LessEqual, 2, Less, 5)
+    out: True
+  tex:
+    in: \mathrm{Inequality}(0, \mathrm{LessEqual}, 2, \mathrm{Less}, 5)
+    out: \top
+  traditional:
+    in: \mathrm{Inequality}(0, \mathrm{LessEqual}, 2, \mathrm{Less}, 5)
+    out: \mathrm{True}
+  fullform:
+    in: Inequality[0, LessEqual, 2, Less, 5]
+  wolfram:
+    in: Inequality[0, LessEqual, 2, Less, 5]
+a-numeric-chain-that-fails:
+  epsil:
+    in: Inequality(0, LessEqual, 5, Less, 5)
+    out: False
+  tex:
+    in: \mathrm{Inequality}(0, \mathrm{LessEqual}, 5, \mathrm{Less}, 5)
+    out: \bot
+  traditional:
+    in: \mathrm{Inequality}(0, \mathrm{LessEqual}, 5, \mathrm{Less}, 5)
+    out: \mathrm{False}
+  fullform:
+    in: Inequality[0, LessEqual, 5, Less, 5]
+  wolfram:
+    in: Inequality[0, LessEqual, 5, Less, 5]
+a-symbolic-mixed-chain-partially-simplifies:
+  epsil:
+    in: Inequality(0, LessEqual, x, Less, 5)
+    out: 0 <= x && x < 5
+  tex:
+    in: \mathrm{Inequality}(0, \mathrm{LessEqual}, x, \mathrm{Less}, 5)
+    out: 0\le x\land x\lt5
+  fullform:
+    in: Inequality[0, LessEqual, x, Less, 5]
+a-three-link-chain:
+  epsil:
+    in: Inequality(1, Less, 2, LessEqual, 2, Less, 10)
+    out: True
+  tex:
+    in: \mathrm{Inequality}(1, \mathrm{Less}, 2, \mathrm{LessEqual}, 2, \mathrm{Less}, 10)
+    out: \top
+  traditional:
+    in: \mathrm{Inequality}(1, \mathrm{Less}, 2, \mathrm{LessEqual}, 2, \mathrm{Less}, 10)
+    out: \mathrm{True}
+  fullform:
+    in: Inequality[1, Less, 2, LessEqual, 2, Less, 10]
+  wolfram:
+    in: Inequality[1, Less, 2, LessEqual, 2, Less, 10]
+equal-and-notequal-are-valid-links-too:
+  epsil:
+    in: Inequality(0, Less, x, NotEqual, 3)
+    out: 0 < x && x != 3
+  tex:
+    in: \mathrm{Inequality}(0, \mathrm{Less}, x, \mathrm{NotEqual}, 3)
+    out: 0\lt x\land x\ne3
+  fullform:
+    in: Inequality[0, Less, x, Unequal, 3]
+a-homogeneous-chain-still-goes-through-and:
+  epsil:
+    in: Inequality(0, Less, x, Less, 5)
+    out: 0 < x && x < 5
+  tex:
+    in: \mathrm{Inequality}(0, \mathrm{Less}, x, \mathrm{Less}, 5)
+    out: 0\lt x\land x\lt5
+  fullform:
+    in: Inequality[0, Less, x, Less, 5]
+declines-on-a-non-relation-link:
+  epsil:
+    in: Inequality(0, Add, 5)
+    out: Inequality(0, Add, 5)
+  tex:
+    in: \mathrm{Inequality}(0, \mathrm{Add}, 5)
+    out: \mathrm{Inequality}(0, \mathrm{Add}, 5)
+  fullform:
+    in: Inequality[0, Plus, 5]
+  wolfram:
+    in: Inequality[0, Plus, 5]
