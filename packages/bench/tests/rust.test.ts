@@ -78,11 +78,11 @@ test("an unknown case name and a case-not-found are both handled, not left to cr
   expect(main).toContain('"no case {name}"');
 });
 
-test("harness command builds the crate, then execs the committed binary", () => {
+test("the crate is built before the run, and the binary runs directly", () => {
   const command = harnessRust();
   expect(command.cwd).toContain("generated/rust");
-  expect(command.args.join(" ")).toContain("cargo build --release --quiet");
-  expect(command.args.join(" ")).toContain("./target/release/bench");
+  expect(command.prepare).toEqual({ command: "cargo", args: ["build", "--release", "--quiet"] });
+  expect(command.command).toMatch(/generated\/rust\/target\/release\/bench$/);
 });
 
 describe("regenerating is deterministic", () => {
