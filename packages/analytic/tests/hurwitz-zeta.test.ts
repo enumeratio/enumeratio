@@ -427,3 +427,29 @@ test("LerchPhi continues past |z| = 1 (values from mpmath)", () => {
 test("Φ(0, s, a) = a^(−s)", () => {
   sameExact(["LerchPhi", 0, 2, 3], ["Rational", 1, 9]);
 });
+
+test("HurwitzZeta(s,a) is the pole at a nonpositive integer and Re(s) > 0", () => {
+  // The (n+a)=0 term is 0^(−s) with Re(s) > 0: a genuine singularity (mpmath and SymPy both
+  // raise here), unlike the generalized Zeta(s,a), which drops that term and stays finite.
+  expect(ce.box(["N", ["HurwitzZeta", 2, -2]]).evaluate().json).toEqual("ComplexInfinity");
+  expect(ce.box(["N", ["HurwitzZeta", 0.158, -1]]).evaluate().json).toEqual("ComplexInfinity");
+  expect(ce.box(["N", ["HurwitzZeta", 3, 0]]).evaluate().json).toEqual("ComplexInfinity");
+  // Zeta(s,a) at the same a is unaffected: it keeps the generalized-zeta convention.
+  expect(num(["Zeta", 2, -2])).toBeCloseTo(2.89493406684822643647, 12);
+});
+
+test("HurwitzZeta(s,a) stays finite at a nonpositive integer when Re(s) < 0", () => {
+  // 0^(−s) for Re(s) < 0 is 0, not a pole, so no guard is needed there (mpmath agrees).
+  const z = hurwitzZeta({ re: -1.5, im: 0 }, { re: -2, im: 0 });
+  expect(z.re).toBeCloseTo(-0.025485201889833036, 12);
+  expect(z.im).toBeCloseTo(-3.8284271247461903, 12);
+});
+
+test("LerchPhi on the |z|=1 rim continues past the series once Re(s) ≤ 1 (mpmath/Wolfram)", () => {
+  // z on the unit circle, off the real axis: the direct series never decays there once
+  // Re(s) ≤ 1, and used to return noise instead of routing to the continuation.
+  const z: Expr = ["Complex", Math.cos(0.5), Math.sin(0.5)];
+  const r = ce.box(["N", ["LerchPhi", z, -0.5, 2]] as Expr).N();
+  expect(r.re).toBeCloseTo(-0.4674769533712983, 9);
+  expect(r.im).toBeCloseTo(3.097452599486018, 9);
+});
