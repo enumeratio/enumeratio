@@ -217,15 +217,41 @@ test("HypercubeGraph(k): 2^k vertices, k*2^(k-1) edges, every degree k", () => {
   }
 });
 
-test("CompleteKaryTree(n) [binary]: n-1 edges (a tree), root degree <= 2", () => {
-  for (const n of [1, 2, 7, 10]) {
-    expect(run(["VertexCount", ["CompleteKaryTree", n]])).toBe(n);
-    expect(run(["EdgeCount", ["CompleteKaryTree", n]])).toBe(n - 1);
+// CompleteKaryTree's first argument is a LEVEL count, not a vertex count (kernel-verified:
+// CompleteKaryTree[3, 2] has 7 vertices, CompleteKaryTree[1, 2] has 1) -- every level is
+// completely filled, so vertex count = (k^levels - 1)/(k - 1).
+test("CompleteKaryTree(levels, k): exact vertex/edge counts from the geometric series", () => {
+  expect(run(["VertexCount", ["CompleteKaryTree", 1, 2]])).toBe(1);
+  expect(run(["VertexCount", ["CompleteKaryTree", 3, 2]])).toBe(7); // 1 + 2 + 4
+  expect(run(["VertexCount", ["CompleteKaryTree", 3, 3]])).toBe(13); // 1 + 3 + 9
+  for (const [levels, k] of [
+    [1, 2],
+    [3, 2],
+    [4, 3],
+    [1, 5],
+  ]) {
+    const n = run(["VertexCount", ["CompleteKaryTree", levels, k]]) as number;
+    expect(run(["EdgeCount", ["CompleteKaryTree", levels, k]])).toBe(n - 1); // a tree
   }
 });
 
-test("CompleteKaryTree(n, k): root has min(k, n-1) children", () => {
-  expect(run(["VertexDegree", ["CompleteKaryTree", 10, 3], 1])).toBe(3);
+test("CompleteKaryTree(3, 2) matches the kernel-verified edge list exactly", () => {
+  expect(run(["EdgeList", ["CompleteKaryTree", 3, 2]])).toEqual([
+    "List",
+    ["UndirectedEdge", 1, 2],
+    ["UndirectedEdge", 1, 3],
+    ["UndirectedEdge", 2, 4],
+    ["UndirectedEdge", 2, 5],
+    ["UndirectedEdge", 3, 6],
+    ["UndirectedEdge", 3, 7],
+  ]);
+});
+
+test("CompleteKaryTree(levels) [binary default]: same as CompleteKaryTree(levels, 2)", () => {
+  expect(run(["VertexCount", ["CompleteKaryTree", 4]])).toBe(15); // 1+2+4+8
+  expect(run(["EdgeList", ["CompleteKaryTree", 4]])).toEqual(
+    run(["EdgeList", ["CompleteKaryTree", 4, 2]]),
+  );
 });
 
 test("PetersenGraph(): 10 vertices, 15 edges, 3-regular, girth 5 (not bipartite)", () => {
@@ -238,8 +264,29 @@ test("PetersenGraph(): 10 vertices, 15 edges, 3-regular, girth 5 (not bipartite)
 });
 
 // ─── ConnectedComponents / IsConnectedGraph, cross-checked against union-find ───────────
+//
+// ConnectedComponents gives STRONGLY connected components, respecting edge direction
+// (kernel-verified: Graph[{1->2,2->1,2->3}] -> {{3},{1,2}}). IsConnectedGraph/IsTreeGraph
+// mean weak connectivity instead (a directed tree is never strongly connected) -- see
+// isWeaklyConnected's own comment in graphs.ts. On a purely undirected graph the two
+// notions coincide, which is what the union-find cross-check below exercises.
 
-test("ConnectedComponents matches an independent union-find, on random small graphs", () => {
+test("ConnectedComponents on a directed graph gives strongly connected components (kernel-verified)", () => {
+  // Graph[{1->2,2->1,2->3}] -> {{3},{1,2}}: 1<->2 form a 2-cycle (one SCC), 3 is only
+  // reachable, never reached from, so it is its own SCC despite the graph being one
+  // weakly-connected piece.
+  const g = graphV([1, 2, 3], [D(1, 2), D(2, 1), D(2, 3)]);
+  const components = run(["ConnectedComponents", g]) as unknown as unknown[];
+  const asSets = components
+    .slice(1)
+    .map((c) => new Set((c as unknown as [string, ...number[]]).slice(1)));
+  expect(asSets).toEqual([new Set([1, 2]), new Set([3])]);
+  // The whole graph is weakly connected (one piece), so IsConnectedGraph disagrees with
+  // "one strongly-connected component" -- that's the point of keeping them independent.
+  expect(run(["IsConnectedGraph", g])).toEqual("True");
+});
+
+test("ConnectedComponents matches an independent union-find, on random small (undirected) graphs", () => {
   let seed = 12345;
   const rand = () => {
     seed = (seed * 1103515245 + 12345) & 0x7fffffff;
@@ -322,7 +369,7 @@ test("FindShortestPath returns a path whose length matches GraphDistance, or {} 
 test("IsTreeGraph: true for PathGraph/StarGraph/CompleteKaryTree, false for CycleGraph/CompleteGraph(n>2)", () => {
   expect(run(["IsTreeGraph", ["PathGraph", 5]])).toEqual("True");
   expect(run(["IsTreeGraph", ["StarGraph", 5]])).toEqual("True");
-  expect(run(["IsTreeGraph", ["CompleteKaryTree", 10, 3]])).toEqual("True");
+  expect(run(["IsTreeGraph", ["CompleteKaryTree", 3, 3]])).toEqual("True");
   expect(run(["IsTreeGraph", ["CycleGraph", 4]])).toEqual("False");
   expect(run(["IsTreeGraph", ["CompleteGraph", 4]])).toEqual("False");
   // disconnected forest is not a tree

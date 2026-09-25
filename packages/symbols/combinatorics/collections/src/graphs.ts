@@ -108,9 +108,9 @@ function directedAdjacency(model: GraphModel): Map<string, string[]> {
   return adj;
 }
 
-/** Neighbours ignoring direction entirely — the "underlying graph" Wolfram's
- *  ConnectedComponents / ConnectedGraphQ / TreeGraphQ / BipartiteGraphQ / NeighborhoodGraph
- *  operate on. */
+/** Neighbours ignoring direction entirely — the "underlying graph" `IsConnectedGraph`,
+ *  `IsTreeGraph`, `IsBipartiteGraph` and `NeighborhoodGraph` operate on. (`ConnectedComponents`
+ *  itself does NOT use this — see its own comment: it respects direction, kernel-verified.) */
 function underlyingAdjacency(model: GraphModel): Map<string, string[]> {
   const adj = new Map<string, string[]>(model.order.map((v) => [v, []]));
   for (const e of model.edges) {
@@ -118,6 +118,28 @@ function underlyingAdjacency(model: GraphModel): Map<string, string[]> {
     adj.get(e.b)!.push(e.a);
   }
   return adj;
+}
+
+/** Whether the underlying (direction-blind) graph is a single connected piece —
+ *  `IsConnectedGraph` and `IsTreeGraph` both mean THIS notion of connected, not
+ *  `ConnectedComponents`' strong connectivity: a directed tree (edges pointing away from
+ *  a root) is weakly connected but never strongly connected, and Wolfram's `ConnectedGraphQ`
+ *  is understood to test weak connectivity regardless of direction (unverified against a
+ *  kernel this session — see the report). */
+function isWeaklyConnected(model: GraphModel): boolean {
+  if (model.order.length === 0) return false;
+  const adj = underlyingAdjacency(model);
+  const seen = new Set<string>([model.order[0]!]);
+  const queue = [model.order[0]!];
+  for (let i = 0; i < queue.length; i++) {
+    for (const v of adj.get(queue[i]!) ?? []) {
+      if (!seen.has(v)) {
+        seen.add(v);
+        queue.push(v);
+      }
+    }
+  }
+  return seen.size === model.order.length;
 }
 
 /** Total degree of each vertex: every edge incident to it counts once per endpoint
@@ -164,37 +186,68 @@ function bfsPath(
   return [];
 }
 
-/** Every vertex's weakly-connected component (underlying graph), grouped by union-find and
- *  returned as arrays of vertex keys — ordered by descending size, ties by the order the
- *  component's first vertex appears in `model.order` (Wolfram groups the largest component
- *  first). */
+/** `ConnectedComponents`: Wolfram's kernel gives STRONGLY connected components respecting
+ *  edge direction (`Graph[{1->2,2->1,2->3}]` -> `{{3},{1,2}}`, verified against a live
+ *  kernel) — not weakly-connected components. `directedAdjacency` already treats an
+ *  undirected edge as bidirectional, so running Kosaraju over it gives ordinary
+ *  (weakly-connected-equivalent) components for a purely undirected graph "for free", and
+ *  the stronger notion for anything with a directed edge.
+ *
+ *  Components come back largest-first (kernel-verified). Vertex order WITHIN a component
+ *  is Kosaraju's own finishing-order traversal — NOT claimed to match Wolfram's (which is
+ *  visibly traversal-dependent too, e.g. `{4,3,5}` for a component seen in vertex order
+ *  1..6): callers that care about a specific order should compare as a set, or sort. */
 function connectedComponents(model: GraphModel): string[][] {
-  const parent = new Map<string, string>(model.order.map((v) => [v, v]));
-  const find = (v: string): string => {
-    let root = v;
-    while (parent.get(root) !== root) root = parent.get(root)!;
-    let cur = v;
-    while (parent.get(cur) !== root) {
-      const next = parent.get(cur)!;
-      parent.set(cur, root);
-      cur = next;
-    }
-    return root;
-  };
-  const union = (a: string, b: string): void => {
-    const ra = find(a);
-    const rb = find(b);
-    if (ra !== rb) parent.set(ra, rb);
-  };
-  for (const e of model.edges) union(e.a, e.b);
+  const adj = directedAdjacency(model);
+  const reverse = new Map<string, string[]>(model.order.map((v) => [v, []]));
+  for (const [u, outs] of adj) for (const v of outs) reverse.get(v)?.push(u);
 
-  const groups = new Map<string, string[]>();
-  for (const v of model.order) {
-    const root = find(v);
-    if (!groups.has(root)) groups.set(root, []);
-    groups.get(root)!.push(v);
+  // Pass 1: iterative DFS over the forward graph, recording finish order.
+  const visited = new Set<string>();
+  const finishOrder: string[] = [];
+  for (const start of model.order) {
+    if (visited.has(start)) continue;
+    const stack: { v: string; i: number }[] = [{ v: start, i: 0 }];
+    visited.add(start);
+    while (stack.length > 0) {
+      const frame = stack[stack.length - 1]!;
+      const neighbours = adj.get(frame.v) ?? [];
+      if (frame.i < neighbours.length) {
+        const next = neighbours[frame.i]!;
+        frame.i++;
+        if (!visited.has(next)) {
+          visited.add(next);
+          stack.push({ v: next, i: 0 });
+        }
+      } else {
+        finishOrder.push(frame.v);
+        stack.pop();
+      }
+    }
   }
-  return [...groups.values()].sort((x, y) => y.length - x.length);
+
+  // Pass 2: DFS over the reverse graph in decreasing finish order; each tree is one SCC.
+  const assigned = new Set<string>();
+  const components: string[][] = [];
+  for (let i = finishOrder.length - 1; i >= 0; i--) {
+    const start = finishOrder[i]!;
+    if (assigned.has(start)) continue;
+    const component: string[] = [];
+    const stack = [start];
+    assigned.add(start);
+    while (stack.length > 0) {
+      const v = stack.pop()!;
+      component.push(v);
+      for (const u of reverse.get(v) ?? []) {
+        if (!assigned.has(u)) {
+          assigned.add(u);
+          stack.push(u);
+        }
+      }
+    }
+    components.push(component);
+  }
+  return components.sort((x, y) => y.length - x.length);
 }
 
 /** Two-colouring of the underlying graph via BFS; `undefined` if no valid colouring exists
@@ -264,8 +317,10 @@ function completeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefine
   return integerGraph(ce, n, edges);
 }
 
-/** `PathGraph(n)` (our convenience: the path 1-2-…-n) or `PathGraph(vertexList)` (Wolfram's
- *  actual form: a path along the given vertices, in order). */
+/** `PathGraph(vertexList)` (Wolfram's actual — and only — form: a path along the given
+ *  vertices, in order) or `PathGraph(n)` — our own convenience extension, the path
+ *  1-2-…-n; `PathGraph[3]` is an ERROR in real Wolfram (kernel-verified), so this integer
+ *  form has no `to-wolfram` mapping — see `to-wolfram.ts`. */
 function pathGraph(ce: ComputeEngine, spec: BoxedExpression): BoxedExpression | undefined {
   const n = integerAt(spec);
   if (n !== undefined) {
@@ -354,11 +409,26 @@ function hypercubeGraph(ce: ComputeEngine, n: number): BoxedExpression | undefin
   return integerGraph(ce, count, edges);
 }
 
-/** `CompleteKaryTree(n)` (binary, `k = 2`) or `CompleteKaryTree(n, k)`: `n` vertices,
- *  1-indexed heap layout — vertex `i`'s children are `k(i-1)+2 .. k(i-1)+k+1`, whichever of
- *  those are `<= n`. */
-function completeKaryTree(ce: ComputeEngine, n: number, k: number): BoxedExpression | undefined {
-  if (!Number.isSafeInteger(n) || n < 1 || !Number.isSafeInteger(k) || k < 2) return undefined;
+/** `CompleteKaryTree(levels)` (binary, `k = 2`) or `CompleteKaryTree(levels, k)`: the FULL
+ *  (perfect) `k`-ary tree of the given depth — `levels` is a LEVEL count, not a vertex
+ *  count (kernel-verified: `CompleteKaryTree[3, 2]` has 7 vertices, `CompleteKaryTree[1, 2]`
+ *  has 1). Every level is completely filled, so `n = (k^levels - 1)/(k - 1)` vertices,
+ *  1-indexed heap layout — vertex `i`'s children are `k(i-1)+2 .. k(i-1)+k+1`. */
+function completeKaryTree(
+  ce: ComputeEngine,
+  levels: number,
+  k: number,
+): BoxedExpression | undefined {
+  if (!Number.isSafeInteger(levels) || levels < 1 || !Number.isSafeInteger(k) || k < 2) {
+    return undefined;
+  }
+  let n = 0;
+  let term = 1;
+  for (let level = 0; level < levels; level++) {
+    n += term;
+    term *= k;
+    if (n > 1_000_000) return undefined; // sane cap
+  }
   const edges: [number, number][] = [];
   for (let i = 1; i <= n; i++) {
     for (let c = 0; c < k; c++) {
@@ -516,9 +586,7 @@ export function declareGraphs(ce: ComputeEngine): void {
     signature: "(value) -> boolean",
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
-      if (g === undefined) return undefined;
-      if (g.order.length === 0) return ce.False;
-      return connectedComponents(g).length === 1 ? ce.True : ce.False;
+      return g === undefined ? undefined : isWeaklyConnected(g) ? ce.True : ce.False;
     },
   });
 
@@ -556,9 +624,7 @@ export function declareGraphs(ce: ComputeEngine): void {
     evaluate: (ops) => {
       const g = ops[0] === undefined ? undefined : graphOf(ops[0]);
       if (g === undefined) return undefined;
-      if (g.order.length === 0) return ce.False;
-      const connected = connectedComponents(g).length === 1;
-      return connected && g.edges.length === g.order.length - 1 ? ce.True : ce.False;
+      return isWeaklyConnected(g) && g.edges.length === g.order.length - 1 ? ce.True : ce.False;
     },
   });
 
@@ -661,9 +727,9 @@ export function declareGraphs(ce: ComputeEngine): void {
   ce.declare("CompleteKaryTree", {
     signature: "(integer, integer?) -> value",
     evaluate: (ops) => {
-      const n = ops[0] === undefined ? undefined : integerAt(ops[0]);
+      const levels = ops[0] === undefined ? undefined : integerAt(ops[0]);
       const k = ops[1] === undefined ? 2 : integerAt(ops[1]);
-      return n === undefined || k === undefined ? undefined : completeKaryTree(ce, n, k);
+      return levels === undefined || k === undefined ? undefined : completeKaryTree(ce, levels, k);
     },
   });
 

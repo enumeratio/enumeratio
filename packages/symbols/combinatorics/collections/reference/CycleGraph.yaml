@@ -4,8 +4,7 @@ signature: CycleGraph(n)
 summary: The cycle graph $C_n$ — $n$ vertices joined in a ring.
 signatures:
   - call: CycleGraph(n)
-    description: $C_n$ ($n \geq 3$), vertices $1, \dots, n$, each joined to its neighbours
-      around the ring.
+    description: $C_n$ ($n \geq 3$), vertices $1, \dots, n$, each joined to its neighbours around the ring.
     library: enumeratio-collections
 examples:
   - id: c5-is-not-bipartite

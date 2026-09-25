@@ -10,7 +10,7 @@ examples:
   - id: vertex-count-of-k4
     expr: [VertexCount, [CompleteGraph, 4]]
     expected: 4
-    caption: "$K_4$ has 4 vertices"
+    caption: $K_4$ has 4 vertices
 seeAlso:
   - VertexList
   - EdgeCount

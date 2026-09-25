@@ -4,21 +4,14 @@ signature: GraphDistance(g, u, v)
 summary: The length of a shortest u to v path, respecting edge direction.
 signatures:
   - call: GraphDistance(g, u, v)
-    description: the number of edges on a shortest $u \to v$ path, or $+\infty$ if $v$ is
-      unreachable from $u$.
+    description: the number of edges on a shortest $u \to v$ path, or $+\infty$ if $v$ is unreachable from $u$.
     library: enumeratio-collections
 examples:
   - id: distance-along-a-path-graph
     expr: [GraphDistance, [PathGraph, 5], 1, 5]
     expected: 4
   - id: unreachable-is-infinite
-    expr:
-      [
-        GraphDistance,
-        [Graph, [List, 1, 2, 3, 4], [List, [DirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]],
-        4,
-        1,
-      ]
+    expr: [GraphDistance, [Graph, [List, 1, 2, 3, 4], [List, [DirectedEdge, 1, 2], [UndirectedEdge, 3, 4]]], 4, 1]
     expected: PositiveInfinity
     caption: No directed path back, so the distance is infinite
 seeAlso:

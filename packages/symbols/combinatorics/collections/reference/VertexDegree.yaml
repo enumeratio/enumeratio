@@ -11,9 +11,7 @@ signatures:
     library: enumeratio-collections
     arity: 2
 details:
-  - Total degree, in and out combined — a directed edge counts once at each endpoint,
-    same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check
-    against an independently-computed sum on random graphs.
+  - Total degree, in and out combined — a directed edge counts once at each endpoint, same as an undirected one. Sums to $2|E|$ (the handshake lemma), which the tests check against an independently-computed sum on random graphs.
 examples:
   - id: degrees-around-a-path
     expr: [VertexDegree, [PathGraph, 5]]

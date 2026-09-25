@@ -162,6 +162,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "AdjacencyMatrix",
+    wolfram: "AdjacencyMatrix",
+  },
+  {
     name: "AiryAi",
     fungrimEntries: [
       "01bbb6",
@@ -745,6 +749,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Commonest",
   },
   {
+    name: "CompleteGraph",
+    wolfram: "CompleteGraph",
+  },
+  {
+    name: "CompleteKaryTree",
+    wolfram: "CompleteKaryTree",
+  },
+  {
     name: "Complex",
     wolfram: "Complex",
     oracle: [
@@ -807,6 +819,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f1a29b",
       "fe1b96",
     ],
+  },
+  {
+    name: "ConnectedComponents",
+    wolfram: "ConnectedComponents",
   },
   {
     name: "Contains",
@@ -968,6 +984,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "CubeRoot",
     wolfram: "CubeRoot",
+  },
+  {
+    name: "CycleGraph",
+    wolfram: "CycleGraph",
   },
   {
     name: "Cycles",
@@ -1215,6 +1235,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "DigitSum",
   },
   {
+    name: "DirectedEdge",
+    wolfram: "DirectedEdge",
+  },
+  {
     name: "DirichletBeta",
     wolfram: "DirichletBeta",
   },
@@ -1285,6 +1309,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Drop",
     wolfram: "Drop",
+  },
+  {
+    name: "EdgeCount",
+    wolfram: "EdgeCount",
+  },
+  {
+    name: "EdgeList",
+    wolfram: "EdgeList",
   },
   {
     name: "EisensteinE",
@@ -1874,6 +1906,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FindSequenceFunction",
   },
   {
+    name: "FindShortestPath",
+    wolfram: "FindShortestPath",
+  },
+  {
     name: "First",
     wolfram: "First",
   },
@@ -2210,12 +2246,24 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "GoldenRatio",
   },
   {
+    name: "Graph",
+    wolfram: "Graph",
+  },
+  {
+    name: "GraphDistance",
+    wolfram: "GraphDistance",
+  },
+  {
     name: "Greater",
     wolfram: "Greater",
   },
   {
     name: "GreaterEqual",
     wolfram: "GreaterEqual",
+  },
+  {
+    name: "GridGraph",
+    wolfram: "GridGraph",
   },
   {
     name: "GroupBasis",
@@ -2329,6 +2377,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 2,
       },
     ],
+  },
+  {
+    name: "HypercubeGraph",
+    wolfram: "HypercubeGraph",
   },
   {
     name: "Hyperfactorial",
@@ -2484,6 +2536,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "I",
   },
   {
+    name: "IncidenceMatrix",
+    wolfram: "IncidenceMatrix",
+  },
+  {
     name: "IncompleteEllipticPi",
     fungrimEntries: ["255d81", "5f84d9", "8f4e31"],
     wolfram: "EllipticPi",
@@ -2564,8 +2620,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "InversePermutation",
   },
   {
+    name: "IsBipartiteGraph",
+    wolfram: "BipartiteGraphQ",
+  },
+  {
     name: "IsComposite",
     wolfram: "CompositeQ",
+  },
+  {
+    name: "IsConnectedGraph",
+    wolfram: "ConnectedGraphQ",
   },
   {
     name: "IsCoprime",
@@ -2635,6 +2699,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "IsSquareFree",
     wolfram: "SquareFreeQ",
+  },
+  {
+    name: "IsTreeGraph",
+    wolfram: "TreeGraphQ",
   },
   {
     name: "JacobiSymbol",
@@ -3439,6 +3507,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Minus",
   },
   {
+    name: "NeighborhoodGraph",
+    wolfram: "NeighborhoodGraph",
+  },
+  {
     name: "Nest",
     wolfram: "Nest",
   },
@@ -3540,6 +3612,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Permute",
     wolfram: "Permute",
+  },
+  {
+    name: "PetersenGraph",
+    wolfram: "PetersenGraph",
   },
   {
     name: "Pi",
@@ -4230,6 +4306,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "StandardDeviation",
   },
   {
+    name: "StarGraph",
+    wolfram: "StarGraph",
+  },
+  {
     name: "StieltjesGamma",
     fungrimEntries: [
       "51206a",
@@ -4285,6 +4365,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Subfactorial",
     wolfram: "Subfactorial",
+  },
+  {
+    name: "Subgraph",
+    wolfram: "Subgraph",
   },
   {
     name: "Subsets",
@@ -4467,6 +4551,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Tuples",
   },
   {
+    name: "UndirectedEdge",
+    wolfram: "UndirectedEdge",
+  },
+  {
     name: "Union",
     wolfram: "Union",
   },
@@ -4489,6 +4577,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "VerificationTest",
     wolfram: "VerificationTest",
+  },
+  {
+    name: "VertexCount",
+    wolfram: "VertexCount",
+  },
+  {
+    name: "VertexDegree",
+    wolfram: "VertexDegree",
+  },
+  {
+    name: "VertexList",
+    wolfram: "VertexList",
   },
   {
     name: "Zeta",
