@@ -513,7 +513,7 @@ Still genuinely open:
 
 ## 8. Ready to send
 
-Three findings that need no design, only a pull request — kept here until they go, so the
+Findings that need no design, only a pull request — kept here until they go, so the
 evidence is in one place.
 
 **The `wikidata` field is mostly wrong.** `packages/reference/scripts/audit-wikidata.ts`
@@ -522,12 +522,12 @@ ids, 3 do not resolve and 38 resolve to something unrelated: `PlanckConstant` is
 (Mount Vesuvius), `AiryAi` is Q403629 (Mustafa al-Nahhas), `EllipticK` is Q1080993 (a
 Donna Summer album), `Beta` is Q189062 (states with nuclear weapons). The corrected ids,
 each looked up by name and confirmed against the item, are `WIKIDATA_FIXES` in
-`packages/reference/src/crosswalk/curated.ts` — forty-one `name: "Q…"` pairs, which is the
-whole patch. The ids that look wrong to the heuristic but are right (`Divide` → "division",
+`packages/reference/src/crosswalk/curated.ts` — its `name: "Q…"` pairs are the whole
+patch. The ids that look wrong to the heuristic but are right (`Divide` → "division",
 `Nand` → "Sheffer stroke") are `WIKIDATA_CONFIRMED`, and are not part of it.
 
-**`EllipticE` is four digits accurate at complex modulus.** At m = 0.57 + 0.23i the engine
-gives 1.3249212925969696 − 0.11971669991852416i; mpmath gives 1.32480777269705 −
+**`EllipticE` is about two digits accurate at complex modulus.** At m = 0.57 + 0.23i the
+engine (0.128 through 0.134) gives 1.3175424991022906 − 0.12054516008271643i; mpmath gives 1.32480777269705 −
 0.119729445459512i, as does the engine's own `Hypergeometric2F1` on E(m) = (π/2)·₂F₁(−½, ½;
 1; m). The two-argument `EllipticE(π/2, m)` is right, so only the one-argument reduction is
 wrong — and native `EllipticE(φ, m)` for φ outside [−π/2, π/2] inherits it through its
@@ -537,13 +537,16 @@ quasi-periodic reduction (DLMF 19.2.10). Patched in place locally
 **`Hypergeometric2F1` is off by 5.2e-6 relative at complex argument** — Fungrim 16d2e1 at
 m = 1.17 + 0.45i, against mpmath's `hyp2f1`.
 
-**Three compiled Fungrim rules in `identities` are wrong** (checked against mpmath):
+**Three Fungrim Chebyshev entries are wrong at the source**, and compute-engine's
+`data/fungrim/corpus/chebyshev.json` transcribes them faithfully — so the fix is a Fungrim
+erratum (`pygrim/formulas/chebyshev.py`), which the corpus then picks up. Correct forms,
+checked against mpmath:
 
-- `42eb01`: Fungrim's `1 − x²` became `x² − 1`, so the rule asserts
-  `(x²−1)U_{n−1}² + T_n² = 1`; at n = 1, x = 2 the left side is 7.
-- `4c7aeb`: off by one — `sin(x)·U_n(cos x) = sin((n+1)x)`, not `sin(n·x)`.
-- `5f09f4`: the replace side `ChebyshevU(2n, x)` does not equal
-  `U_{n−1}(2x²−1) + T_n(2x²−1)`; another index error.
+- `42eb01`: `T_n² − (x²−1)U_{n−1}² = 1`. The entry adds instead of subtracting; at n = 1,
+  x = 2 its left side is 7.
+- `4c7aeb`: `U_{n−1}(cos x)·sin x = sin(n·x)`. The entry is off by one index.
+- `5f09f4`: `U_{2n}(x) = U_n(2x²−1) + U_{n−1}(2x²−1)`. The entry has `T_n` where `U_n`
+  belongs.
 
 **`Zeta` serializes as `\Zeta`.** `ce.box(["Zeta", 3]).latex` is `\Zeta(3)` — an uppercase
 command that is not LaTeX's (the Riemann zeta is `\zeta`; there is no `\Zeta`, since
