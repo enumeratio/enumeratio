@@ -1223,4 +1223,361 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "Take(AllOnes, 20)" },
     seeAlso: ["Count", "At", "Element"],
   },
+  {
+    name: "FibonacciNumbers",
+    domain: "Collections",
+    signature: "FibonacciNumbers",
+    summary: "The Fibonacci numbers $0, 1, 1, 2, 3, 5, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "FibonacciNumbers",
+        description:
+          "$F_n = F_{n-1} + F_{n-2}$, $F_0 = 0$, $F_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(FibonacciNumbers) = +\\infty$, and $At(FibonacciNumbers, k)$ unranks the term via a memoised linear recurrence -- $At(FibonacciNumbers, 1) = F_0 = 0$ (`At` is 1-indexed; rank 0 is $F_0$).",
+      "OEIS A000045, starting exactly at its offset-0 term: $0, 1, 1, 2, 3, 5, 8, …$.",
+      "Membership goes through [[Element]]: $Element(21, FibonacciNumbers)$ is true, $Element(10, FibonacciNumbers)$ is false. $F_1 = F_2 = 1$ repeats, so the sequence is non-decreasing rather than strictly increasing.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(FibonacciNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "LucasNumbers", "PellNumbers", "TribonacciNumbers"],
+  },
+  {
+    name: "LucasNumbers",
+    domain: "Collections",
+    signature: "LucasNumbers",
+    summary: "The Lucas numbers $2, 1, 3, 4, 7, 11, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "LucasNumbers",
+        description:
+          "$L_n = L_{n-1} + L_{n-2}$, $L_0 = 2$, $L_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(LucasNumbers) = +\\infty$, and $At(LucasNumbers, 1) = L_0 = 2$.",
+      "OEIS A000032, starting exactly at its offset-0 term: $2, 1, 3, 4, 7, 11, 18, …$. The sequence dips once ($L_0 = 2 > L_1 = 1$) before climbing forever from $L_1$ on.",
+      "Membership goes through [[Element]]: $Element(1, LucasNumbers)$ is true, $Element(5, LucasNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(LucasNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "FibonacciNumbers"],
+  },
+  {
+    name: "JacobsthalNumbers",
+    domain: "Collections",
+    signature: "JacobsthalNumbers",
+    summary: "The Jacobsthal numbers $0, 1, 1, 3, 5, 11, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "JacobsthalNumbers",
+        description:
+          "$J_n = J_{n-1} + 2J_{n-2}$, $J_0 = 0$, $J_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(JacobsthalNumbers) = +\\infty$, and $At(JacobsthalNumbers, 1) = J_0 = 0$.",
+      "OEIS A001045, starting exactly at its offset-0 term: $0, 1, 1, 3, 5, 11, 21, …$.",
+      "Membership goes through [[Element]]: $Element(21, JacobsthalNumbers)$ is true, $Element(4, JacobsthalNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(JacobsthalNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "PellNumbers"],
+  },
+  {
+    name: "PellNumbers",
+    domain: "Collections",
+    signature: "PellNumbers",
+    summary: "The Pell numbers $0, 1, 2, 5, 12, 29, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PellNumbers",
+        description:
+          "$P_n = 2P_{n-1} + P_{n-2}$, $P_0 = 0$, $P_1 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PellNumbers) = +\\infty$, and $At(PellNumbers, 1) = P_0 = 0$.",
+      "OEIS A000129, starting exactly at its offset-0 term: $0, 1, 2, 5, 12, 29, 70, …$; strictly increasing from the start.",
+      "Membership goes through [[Element]]: $Element(12, PellNumbers)$ is true, $Element(7, PellNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PellNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "JacobsthalNumbers", "CentralDelannoyNumbers"],
+  },
+  {
+    name: "TribonacciNumbers",
+    domain: "Collections",
+    signature: "TribonacciNumbers",
+    summary: "The tribonacci numbers $0, 0, 1, 1, 2, 4, 7, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "TribonacciNumbers",
+        description:
+          "$T_n = T_{n-1} + T_{n-2} + T_{n-3}$, $T_0 = 0$, $T_1 = 0$, $T_2 = 1$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(TribonacciNumbers) = +\\infty$, and $At(TribonacciNumbers, 1) = T_0 = 0$.",
+      "OEIS A000073, starting exactly at its offset-0 term: $0, 0, 1, 1, 2, 4, 7, 13, …$.",
+      "Membership goes through [[Element]]: $Element(24, TribonacciNumbers)$ is true, $Element(6, TribonacciNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(TribonacciNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "FibonacciNumbers"],
+  },
+  {
+    name: "PadovanSequence",
+    domain: "Collections",
+    signature: "PadovanSequence",
+    summary: "The Padovan sequence $1, 0, 0, 1, 0, 1, 1, 1, 2, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PadovanSequence",
+        description:
+          "$a_n = a_{n-2} + a_{n-3}$, $a_0 = 1$, $a_1 = a_2 = 0$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PadovanSequence) = +\\infty$, and $At(PadovanSequence, 1) = a_0 = 1$.",
+      "OEIS A000931, starting exactly at its offset-0 term: $1, 0, 0, 1, 0, 1, 1, 1, 2, 2, 3, …$. The sequence dips through index 4 before climbing forever from $a_4 = 0$ on.",
+      "Membership goes through [[Element]]: $Element(9, PadovanSequence)$ is true (it's $a_{16}$, following $…,7,9,12,…$), $Element(6, PadovanSequence)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PadovanSequence, 20)" },
+    seeAlso: ["Count", "At", "Element", "PerrinSequence"],
+  },
+  {
+    name: "PerrinSequence",
+    domain: "Collections",
+    signature: "PerrinSequence",
+    summary: "The Perrin sequence $3, 0, 2, 3, 2, 5, 5, 7, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PerrinSequence",
+        description:
+          "$P_n = P_{n-2} + P_{n-3}$, $P_0 = 3$, $P_1 = 0$, $P_2 = 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PerrinSequence) = +\\infty$, and $At(PerrinSequence, 1) = P_0 = 3$.",
+      "OEIS A001608, starting exactly at its offset-0 term: $3, 0, 2, 3, 2, 5, 5, 7, 10, 12, …$. The sequence dips through index 4 before climbing forever from $P_4 = 2$ on.",
+      "Membership goes through [[Element]]: $Element(10, PerrinSequence)$ is true, $Element(4, PerrinSequence)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PerrinSequence, 20)" },
+    seeAlso: ["Count", "At", "Element", "PadovanSequence"],
+  },
+  {
+    name: "SternDiatomicSequence",
+    domain: "Collections",
+    signature: "SternDiatomicSequence",
+    summary:
+      "Stern's diatomic sequence (the fusc function) $0, 1, 1, 2, 1, 3, 2, 3, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SternDiatomicSequence",
+        description:
+          "$s(0) = 0$, $s(1) = 1$, $s(2n) = s(n)$, $s(2n+1) = s(n) + s(n+1)$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SternDiatomicSequence) = +\\infty$, and $At(SternDiatomicSequence, 1) = s(0) = 0$; unranking is $O(\\log k)$ via the bit-doubling pair $(s(n), s(n+1))$, not a growing cache.",
+      "OEIS A002487, starting exactly at its offset-0 term: $0, 1, 1, 2, 1, 3, 2, 3, 1, 4, …$.",
+      "Not monotone, so membership is not 'is this term $\\le$ some bound': every non-negative integer is a term ($0$ appears exactly once, at $n = 0$; every positive integer appears infinitely often). $Element(0, SternDiatomicSequence)$ and $Element(42, SternDiatomicSequence)$ are both true; only a negative or non-integer value is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SternDiatomicSequence, 20)" },
+    seeAlso: ["Count", "At", "Element", "ThueMorseNumbers"],
+  },
+  {
+    name: "ThueMorseNumbers",
+    domain: "Collections",
+    signature: "ThueMorseNumbers",
+    summary: "The Thue–Morse sequence $0, 1, 1, 0, 1, 0, 0, 1, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "ThueMorseNumbers",
+        description: "$t(n) = popcount(n) \\bmod 2$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(ThueMorseNumbers) = +\\infty$, and $At(ThueMorseNumbers, 1) = t(0) = 0$.",
+      "OEIS A010060, starting exactly at its offset-0 term: $0, 1, 1, 0, 1, 0, 0, 1, 1, 0, …$.",
+      "Not monotone; every term is $0$ or $1$, so membership is exactly $\\{0, 1\\}$ -- $Element(0, ThueMorseNumbers)$ and $Element(1, ThueMorseNumbers)$ are true, everything else (including $2$) is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(ThueMorseNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "SternDiatomicSequence"],
+  },
+  {
+    name: "CatalanNumbers",
+    domain: "Collections",
+    signature: "CatalanNumbers",
+    summary: "The Catalan numbers $1, 1, 2, 5, 14, 42, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "CatalanNumbers",
+        description: "$C_n = \\binom{2n}{n}/(n+1)$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CatalanNumbers) = +\\infty$, and $At(CatalanNumbers, k)$ unranks $C_{k-1}$ exactly (bigint arithmetic; $C_{30}$ already exceeds $2^{53}$) -- $At(CatalanNumbers, 1) = C_0 = 1$.",
+      "OEIS A000108, starting exactly at its offset-0 term: $1, 1, 2, 5, 14, 42, 132, …$; counts balanced parenthesizations, binary trees, Dyck paths and more.",
+      "Membership goes through [[Element]]: $Element(14, CatalanNumbers)$ is true, $Element(10, CatalanNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CatalanNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "MotzkinNumbers", "SymmetricGroup"],
+  },
+  {
+    name: "BellNumbers",
+    domain: "Collections",
+    signature: "BellNumbers",
+    summary: "The Bell numbers $1, 1, 2, 5, 15, 52, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "BellNumbers",
+        description: "The number of set partitions of an $n$-set, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(BellNumbers) = +\\infty$, and $At(BellNumbers, k)$ unranks $B_{k-1}$ exactly via a memoised Bell (Aitken's) triangle, bigint throughout -- $At(BellNumbers, 5) = B_4 = 15$.",
+      "OEIS A000110, starting exactly at its offset-0 term: $1, 1, 2, 5, 15, 52, 203, …$; $B_{25}$ already exceeds $2^{53}$.",
+      "Membership goes through [[Element]]: $Element(15, BellNumbers)$ is true, $Element(10, BellNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(BellNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "FubiniNumbers", "PartitionNumbers"],
+  },
+  {
+    name: "FubiniNumbers",
+    domain: "Collections",
+    signature: "FubiniNumbers",
+    summary:
+      "The Fubini numbers (ordered Bell numbers) $1, 1, 3, 13, 75, 541, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "FubiniNumbers",
+        description:
+          "The number of ordered set partitions (rankings with ties allowed) of an $n$-set, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(FubiniNumbers) = +\\infty$, and $At(FubiniNumbers, k)$ unranks term $k-1$ via $a(n) = \\sum_{j=1}^{n} \\binom{n}{j} a(n-j)$, bigint throughout -- $At(FubiniNumbers, 1) = a(0) = 1$.",
+      "OEIS A000670, starting exactly at its offset-0 term: $1, 1, 3, 13, 75, 541, 4683, …$.",
+      "Membership goes through [[Element]]: $Element(75, FubiniNumbers)$ is true, $Element(20, FubiniNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(FubiniNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "BellNumbers"],
+  },
+  {
+    name: "MotzkinNumbers",
+    domain: "Collections",
+    signature: "MotzkinNumbers",
+    summary: "The Motzkin numbers $1, 1, 2, 4, 9, 21, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "MotzkinNumbers",
+        description: "The number of Motzkin paths of length $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(MotzkinNumbers) = +\\infty$, and $At(MotzkinNumbers, k)$ unranks term $k-1$ via $M(n) = \\left((2n+1)M(n-1) + 3(n-1)M(n-2)\\right)/(n+2)$, bigint throughout -- $At(MotzkinNumbers, 1) = M_0 = 1$.",
+      "OEIS A001006, starting exactly at its offset-0 term: $1, 1, 2, 4, 9, 21, 51, …$.",
+      "Membership goes through [[Element]]: $Element(9, MotzkinNumbers)$ is true, $Element(6, MotzkinNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(MotzkinNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "CatalanNumbers"],
+  },
+  {
+    name: "PartitionNumbers",
+    domain: "Collections",
+    signature: "PartitionNumbers",
+    summary:
+      "The integer partition counts $p(n) = 1, 1, 2, 3, 5, 7, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "PartitionNumbers",
+        description:
+          "$p(n)$, the number of integer partitions of $n$, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(PartitionNumbers) = +\\infty$, and $At(PartitionNumbers, k)$ unranks $p(k-1)$ via Euler's pentagonal-number recurrence, bigint throughout -- $At(PartitionNumbers, 1) = p(0) = 1$.",
+      "OEIS A000041, starting exactly at its offset-0 term: $1, 1, 2, 3, 5, 7, 11, 15, …$.",
+      "Membership goes through [[Element]]: $Element(11, PartitionNumbers)$ is true, $Element(9, PartitionNumbers)$ is false. See [[IntegerPartitions]] for the partitions themselves, not just their count.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(PartitionNumbers, 20)" },
+    seeAlso: ["Count", "At", "Element", "IntegerPartitions", "BellNumbers"],
+  },
+  {
+    name: "CentralDelannoyNumbers",
+    domain: "Collections",
+    signature: "CentralDelannoyNumbers",
+    summary: "The central Delannoy numbers $1, 3, 13, 63, 321, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "CentralDelannoyNumbers",
+        description:
+          "The count of king-move lattice paths across an $n \\times n$ grid, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(CentralDelannoyNumbers) = +\\infty$, and $At(CentralDelannoyNumbers, k)$ unranks term $k-1$ via $n D(n) = 3(2n-1)D(n-1) - (n-1)D(n-2)$, $D_0 = 1$, $D_1 = 3$, bigint throughout -- $At(CentralDelannoyNumbers, 1) = D_0 = 1$.",
+      "OEIS A001850, starting exactly at its offset-0 term: $1, 3, 13, 63, 321, 1683, …$; strictly increasing.",
+      "Membership goes through [[Element]]: $Element(13, CentralDelannoyNumbers)$ is true, $Element(10, CentralDelannoyNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(CentralDelannoyNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "SchroederNumbers", "PellNumbers"],
+  },
+  {
+    name: "LittleSchroderNumbers",
+    domain: "Collections",
+    signature: "LittleSchroderNumbers",
+    summary:
+      "The little Schröder numbers (super-Catalan numbers) $1, 1, 3, 11, 45, 197, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "LittleSchroderNumbers",
+        description:
+          "$s_n$, counting dissections of a convex polygon, an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(LittleSchroderNumbers) = +\\infty$, and $At(LittleSchroderNumbers, k)$ unranks term $k-1$ via $(n+1)s(n) = (6n-3)s(n-1) - (n-2)s(n-2)$, $s_0 = s_1 = 1$, bigint throughout -- $At(LittleSchroderNumbers, 1) = s_0 = 1$.",
+      "OEIS A001003, starting exactly at its offset-0 term: $1, 1, 3, 11, 45, 197, 903, …$.",
+      "Membership goes through [[Element]]: $Element(11, LittleSchroderNumbers)$ is true, $Element(6, LittleSchroderNumbers)$ is false. See [[SchroederNumbers]] -- $s_n$ is exactly half $SchroederNumbers$'s term for $n \\ge 1$.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(LittleSchroderNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "SchroederNumbers", "CatalanNumbers"],
+  },
+  {
+    name: "SchroederNumbers",
+    domain: "Collections",
+    signature: "SchroederNumbers",
+    summary: "The (large) Schröder numbers $1, 2, 6, 22, 90, 394, …$ as a lazy indexed collection.",
+    signatures: [
+      {
+        call: "SchroederNumbers",
+        description:
+          "$S_0 = 1$, $S_n = 2 s_n$ for $n \\ge 1$ (twice the little Schröder numbers), an infinite indexed collection.",
+      },
+    ],
+    details: [
+      "A lazy indexed collection: $Count(SchroederNumbers) = +\\infty$, and $At(SchroederNumbers, k)$ unranks term $k-1$ by doubling [[LittleSchroderNumbers]] rather than re-deriving a recurrence -- $At(SchroederNumbers, 1) = S_0 = 1$.",
+      "OEIS A006318, starting exactly at its offset-0 term: $1, 2, 6, 22, 90, 394, 1806, …$; counts monotone lattice paths from $(0,0)$ to $(n,n)$ using steps $(1,0)$, $(0,1)$ and $(1,1)$ that never rise above the diagonal.",
+      "Membership goes through [[Element]]: $Element(22, SchroederNumbers)$ is true, $Element(10, SchroederNumbers)$ is false.",
+    ],
+    examples: [],
+    enumerate: { expr: "Take(SchroederNumbers, 15)" },
+    seeAlso: ["Count", "At", "Element", "LittleSchroderNumbers", "CentralDelannoyNumbers"],
+  },
 ];
