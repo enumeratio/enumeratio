@@ -3,6 +3,7 @@ import { defineAsyncComponent } from "vue";
 import { registerNotatio } from "@enumeratio/notatio/vue";
 import DefaultTheme from "vitepress/theme";
 import { applyEngineLibraries } from "./engine-libraries.ts";
+import { createSessionSharedWorker, createSessionWorker } from "./worker-factories.ts";
 
 // Every custom theme component is loaded lazily. They pull the heavy graphs —
 // @enumeratio/notatio-lit (the whole element + compute-engine tree) via Playground, and
@@ -157,6 +158,22 @@ export default {
         "./worker-engine-setup.ts",
         import.meta.url,
       ).href;
+      // Hands an `Evaluator -> "Worker"` module the two worker factories
+      // `./worker-factories.ts` builds around a literal, Vite-bundleable
+      // `new Worker(new URL(...))` / `new SharedWorker(new URL(...))` -- without this,
+      // `openSession` falls back to computing the worker's URL itself, which a
+      // production build never emits as an asset (see that file's own comment).
+      (
+        globalThis as {
+          __notatioWorkerFactories?: {
+            createWorker: typeof createSessionWorker;
+            createSharedWorker: typeof createSessionSharedWorker;
+          };
+        }
+      ).__notatioWorkerFactories = {
+        createWorker: createSessionWorker,
+        createSharedWorker: createSessionSharedWorker,
+      };
     }
   },
 };
