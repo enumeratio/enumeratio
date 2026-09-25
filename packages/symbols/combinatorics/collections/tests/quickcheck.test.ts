@@ -84,6 +84,34 @@ test("a throwing kernel is a failure, not a crash", () => {
   expect(check(rankThrows, [3, 2], 1)?.property).toBe("round-trip");
 });
 
+// A scalar family whose elements are bigint past a safe-integer cutoff — the shape
+// NarcissisticNumbers/FactorialNumbers-style families take (issue #90: plain JSON.stringify
+// throws on a bigint rather than the NaN -> null collision that hid the original bug, so the
+// harness's key() needs its own bigint handling, exercised here rather than by re-testing
+// NarcissisticNumbers' own kernel, which the collections tests already cover).
+const bigScalars = (elements: readonly bigint[], broken?: Partial<FamilyKernel>): FamilyKernel => ({
+  head: "BigScalars",
+  paramCount: 0,
+  kind: "scalar",
+  count: () => elements.length,
+  unrank: (_p, r) => elements[r] as unknown as number,
+  rank: (element) => elements.indexOf(element as bigint),
+  valid: (element) => elements.includes(element as bigint),
+  ...broken,
+});
+
+test("distinct bigint elements pass injectivity", () => {
+  const entry = bigScalars([10n, 20n, 12345678901234567890n, 12345678901234567891n]);
+  expect(checkFamily(entry, [], draw)).toBeUndefined();
+  for (let rank = 0; rank < 4; rank++) expect(check(entry, [], rank)).toBeUndefined();
+});
+
+test("two ranks giving the same bigint element is still caught", () => {
+  const entry = bigScalars([10n, 20n, 30n], { unrank: () => 20n as unknown as number });
+  const failure = checkFamily(entry, [], draw);
+  expect(failure?.property).toBe("injectivity");
+});
+
 test("the shrinker walks a failure down toward something readable", () => {
   // Broken only at the top of the range, so a naive report would name a large rank; the
   // shrinker should still hand back the smallest rank that reproduces it.

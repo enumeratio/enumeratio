@@ -217,11 +217,48 @@ test("NarcissisticNumbers matches an independent digit-power-sum predicate for i
   expect(got).toEqual(expected);
 });
 
-test("NarcissisticNumbers.unrank answers NaN past the safe-integer-representable prefix (43 terms)", () => {
+test("NarcissisticNumbers.unrank returns exact bigint past the safe-integer prefix, never NaN (issue #90)", () => {
+  // Past the 43rd term, unrank used to answer NaN -- a known value the `number` element
+  // couldn't carry, but one that made every large pair collide under quickcheck's
+  // JSON.stringify-keyed injectivity check (NaN -> "null" for all of them). Now it returns
+  // the exact bigint instead, so every rank stays distinct.
   const entry = byHead.get("NarcissisticNumbers");
   expect(entry?.unrank([], 42)).toBe(4338281769391371); // the 43rd term, still safe
-  expect(entry?.unrank([], 43)).toBeNaN(); // the 44th term is a 17-digit value, unsafe
-  expect(entry?.unrank([], 87)).toBeNaN(); // the 88th (largest) term, far unsafe
+  expect(entry?.unrank([], 43)).toBe(21897142587612075n); // the 44th, first unsafe term
+  expect(entry?.unrank([], 87)).toBe(115132219018763992565095597973971522401n); // the 88th (largest)
+});
+
+test("NarcissisticNumbers: every one of the 88 terms satisfies the digit-power-sum definition exactly (BigInt)", () => {
+  // Independent of NARCISSISTIC_NUMBERS / isNarcissisticBig in src -- this recomputes the
+  // definition from scratch over BigInt for every term, safe or not, per the task's
+  // requirement to verify EVERY OEIS A005188 value rather than trust the transcription.
+  const entry = byHead.get("NarcissisticNumbers");
+  expect(entry).toBeDefined();
+  if (!entry) return;
+  const isNarcissisticIndepBig = (n: bigint): boolean => {
+    const digits = n.toString().split("");
+    const d = BigInt(digits.length);
+    const sum = digits.reduce((s, c) => s + BigInt(c) ** d, 0n);
+    return sum === n;
+  };
+  for (let r = 0; r < 88; r++) {
+    const element = entry.unrank([], r);
+    const asBig = typeof element === "bigint" ? element : BigInt(element as number);
+    expect(isNarcissisticIndepBig(asBig)).toBe(true);
+  }
+});
+
+test("NarcissisticNumbers: rank/unrank round-trip over all 88 terms, including the bigint ones", () => {
+  const entry = byHead.get("NarcissisticNumbers");
+  expect(entry).toBeDefined();
+  if (!entry) return;
+  for (let r = 0; r < 88; r++) {
+    const element = entry.unrank([], r);
+    expect(entry.rank(element, [])).toBe(r);
+    expect(entry.valid(element, [])).toBe(true);
+  }
+  expect(entry.unrank([], 88)).toBeNaN(); // one past the proven-finite 88 terms
+  expect(entry.rank(0n, [])).toBe(-1); // not a member (0 is the excluded trivial term)
 });
 
 // ─── MersennePrimes / FibonacciPrimes: only a handful of known terms; `unrank` must not hang
