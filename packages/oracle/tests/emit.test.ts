@@ -32,7 +32,7 @@ test("emitting fills positional and variadic templates", () => {
   expect(emit(["Sin", "Pi"], "mpmath")).toEqual({ ok: true, source: "sin(pi)" });
 });
 
-// Found by the oracle quickcheck: a Listable head (compute-engine threads it over a List
+// Found by the oracle Plausible: a Listable head (compute-engine threads it over a List
 // natively, as Wolfram does) handed its raw list to SymPy's or mpmath's scalar function,
 // which does not auto-thread — sympy's `primepi([10, 2])` raised `AttributeError: 'list'
 // object has no attribute 'is_real'` instead of comparing elementwise.

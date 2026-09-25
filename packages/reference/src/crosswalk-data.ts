@@ -1928,6 +1928,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Select",
   },
   {
+    name: "FindInstance",
+    wolfram: "FindInstance",
+  },
+  {
     name: "FindSequenceFunction",
     wolfram: "FindSequenceFunction",
   },
@@ -1998,6 +2002,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "FoldList",
     wolfram: "FoldList",
+  },
+  {
+    name: "Fourier",
+    wolfram: "Fourier",
+  },
+  {
+    name: "FourierCoefficient",
+    wolfram: "FourierCoefficient",
+  },
+  {
+    name: "FourierSeries",
+    wolfram: "FourierSeries",
   },
   {
     name: "FourierTransform",
@@ -2644,6 +2660,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "EllipticPi",
   },
   {
+    name: "Inequality",
+    wolfram: "Inequality",
+  },
+  {
     name: "IntegerDigits",
     wolfram: "IntegerDigits",
   },
@@ -2709,6 +2729,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "InverseErfc",
     wolfram: "InverseErfc",
+  },
+  {
+    name: "InverseFourier",
+    wolfram: "InverseFourier",
   },
   {
     name: "InverseFourierTransform",
@@ -4188,6 +4212,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Round",
     wolfram: "Round",
+  },
+  {
+    name: "Rule",
+    wolfram: "Rule",
   },
   {
     name: "SawtoothWave",

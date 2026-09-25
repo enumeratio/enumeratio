@@ -39,11 +39,11 @@ for (const [head, p] of Object.entries(PARAMS)) {
   });
 }
 
-// The quickcheck properties (round trip, validity, injectivity, count) at a second,
+// The Plausible properties (round trip, validity, injectivity, count) at a second,
 // independent set of parameters — a backstop against a bug that happens to be invisible at the
-// PARAMS above (mirrors tests/quickcheck.test.ts's use of scripts/properties.ts).
+// PARAMS above (mirrors tests/plausible.test.ts's use of scripts/properties.ts).
 const draw = random(20260924);
-const QUICKCHECK_PARAMS: Record<string, number[]> = {
+const PLAUSIBLE_PARAMS: Record<string, number[]> = {
   RestrictedGrowthStrings: [5],
   NonCrossingPartitions: [5],
   NonNestingPartitions: [5],
@@ -58,9 +58,9 @@ const QUICKCHECK_PARAMS: Record<string, number[]> = {
   DyckPathsByHeight: [5, 2],
   MotzkinPathsByPeaks: [6, 1],
 };
-for (const [head, p] of Object.entries(QUICKCHECK_PARAMS)) {
+for (const [head, p] of Object.entries(PLAUSIBLE_PARAMS)) {
   const entry = byHead.get(head);
-  test(`${head}(${p.join(", ")}) passes the quickcheck properties`, () => {
+  test(`${head}(${p.join(", ")}) passes the Plausible properties`, () => {
     expect(entry).toBeDefined();
     if (!entry) return;
     expect(checkFamily(entry, p, draw)).toBeUndefined();

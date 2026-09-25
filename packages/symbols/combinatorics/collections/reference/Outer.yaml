@@ -33,3 +33,7 @@ examples:
     expected: [List, [List, [List, a, x], [List, a, y]], [List, [List, b, x], [List, b, y]]]
     category: Scope
     caption: $List$ gives every pair, like a Cartesian product
+  - id: outer-matrix-of-right-shape
+    expr: [Outer, Add, [List, 1, 2], [List, 10, 20, 30]]
+    expected: [List, [List, 11, 21, 31], [List, 12, 22, 32]]
+    role: test

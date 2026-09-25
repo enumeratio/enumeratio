@@ -194,3 +194,49 @@ base-1-has-no-well-defined-p-adic-valuation-so:
     in: IntegerExponent[10, 1]
   sympy:
     in: multiplicity(1, 10)
+integerexponent-1000-base-10:
+  epsil:
+    in: IntegerExponent(1_000)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerExponent}(1\,000)
+    out: "3"
+  traditional:
+    in: v_{10}(1\,000)
+    out: "3"
+  fullform:
+    in: IntegerExponent[1000]
+  wolfram:
+    in: IntegerExponent[1000]
+negative-integers-base-2:
+  epsil:
+    in: IntegerExponent(-24, 2)
+    out: "3"
+  tex:
+    in: \mathrm{IntegerExponent}(-24, 2)
+    out: "3"
+  traditional:
+    in: v_{2}(-24)
+    out: "3"
+  fullform:
+    in: IntegerExponent[-24, 2]
+  wolfram:
+    in: IntegerExponent[-24, 2]
+  sympy:
+    in: multiplicity(2, -24)
+integerexponent-1024-base-4:
+  epsil:
+    in: IntegerExponent(1_024, 4)
+    out: "5"
+  tex:
+    in: \mathrm{IntegerExponent}(1\,024, 4)
+    out: "5"
+  traditional:
+    in: v_{4}(1\,024)
+    out: "5"
+  fullform:
+    in: IntegerExponent[1024, 4]
+  wolfram:
+    in: IntegerExponent[1024, 4]
+  sympy:
+    in: multiplicity(4, 1024)

@@ -39,3 +39,36 @@ several-rules-prepended-at-once:
     out: \mathrm{Association}(\mathrm{Rule}(3, d), \mathrm{Rule}(4, e), \mathrm{Rule}(1, a), \mathrm{Rule}(2, b))
   fullform:
     in: Prepend[Association[Rule[1, a], Rule[2, b]], List[Rule[3, d], Rule[4, e]]]
+prepend-front-of-list:
+  epsil:
+    in: Prepend([1, 2, 3], 0)
+    out: "[0, 1, 2, 3]"
+  tex:
+    in: \mathrm{Prepend}(\bigl\lbrack1, 2, 3\bigr\rbrack, 0)
+    out: \bigl\lbrack0, 1, 2, 3\bigr\rbrack
+  fullform:
+    in: Prepend[List[1, 2, 3], 0]
+  wolfram:
+    in: Prepend[List[1, 2, 3], 0]
+prepend-single-element-list:
+  epsil:
+    in: Prepend([5], 10)
+    out: "[10, 5]"
+  tex:
+    in: \mathrm{Prepend}(\bigl\lbrack5\bigr\rbrack, 10)
+    out: \bigl\lbrack10, 5\bigr\rbrack
+  fullform:
+    in: Prepend[List[5], 10]
+  wolfram:
+    in: Prepend[List[5], 10]
+prepend-empty-list:
+  epsil:
+    in: Prepend([], 42)
+    out: "[42]"
+  tex:
+    in: \mathrm{Prepend}(\bigl\lbrack \bigr\rbrack, 42)
+    out: \bigl\lbrack42\bigr\rbrack
+  fullform:
+    in: Prepend[List[], 42]
+  wolfram:
+    in: Prepend[List[], 42]

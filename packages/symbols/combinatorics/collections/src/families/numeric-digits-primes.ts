@@ -120,7 +120,7 @@ const happyCache = nthMatchCache(isHappy);
 // (the `narrow()` idiom from numeric-closed-form.ts, inlined here rather than imported -- see
 // this file's own note at the top about families not sharing kernels across the boundary).
 // `unrank` used to answer NaN past the safe prefix -- a known value, just not one `number` can
-// carry, and worse, a value that collapses every large pair to the same NaN under quickcheck's
+// carry, and worse, a value that collapses every large pair to the same NaN under Plausible's
 // JSON.stringify-based comparison (issue #90). Returning the bigint instead keeps every rank
 // exact and distinct. `valid` needs no table at all -- it checks the definition directly via
 // BigInt digit-power sums, exact for any representable input. Values from OEIS A005188

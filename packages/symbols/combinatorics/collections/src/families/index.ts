@@ -19,7 +19,7 @@ import type { FamilyKernel } from "./types.ts";
 
 export * from "./types.ts";
 
-// Every family. declare.ts declares them all; the quickcheck and OEIS scripts read them too.
+// Every family. declare.ts declares them all; the Plausible and OEIS scripts read them too.
 export const allEntries: readonly FamilyKernel[] = [
   ...core,
   ...subsets,

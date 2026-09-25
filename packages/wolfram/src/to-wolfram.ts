@@ -72,6 +72,15 @@ export const HEADS: Record<string, string> = {
   Greater: "Greater",
   LessEqual: "LessEqual",
   GreaterEqual: "GreaterEqual",
+  // Wolfram's chained-comparison form -- our `Inequality` takes the identical
+  // value/operator/value/... shape, operator names included (they go through this same
+  // map, since `symbolToWolfram` falls back to `HEADS`), so a straight rename round-trips.
+  Inequality: "Inequality",
+  // `x -> 1`: also how `FindInstance`'s `{{x -> 1}}` is built (a `List` of `List`s of
+  // `Rule`s) -- see @enumeratio/analytic's find-instance.ts.
+  Rule: "Rule",
+  // Same argument order both sides: expr, vars, [domain], [n].
+  FindInstance: "FindInstance",
   And: "And",
   Or: "Or",
   Not: "Not",
@@ -481,6 +490,15 @@ export const HEADS: Record<string, string> = {
   // FourierParameters -> {0, 1}, which is all this transpiler's own heads implement.
   FourierTransform: "FourierTransform",
   InverseFourierTransform: "InverseFourierTransform",
+  // Fourier[list] / InverseFourier[list]: same argument order, same default
+  // FourierParameters -> {0, 1}, and an optional trailing FourierParameters rule both
+  // sides read the same way.
+  Fourier: "Fourier",
+  InverseFourier: "InverseFourier",
+  // FourierSeries[f, x, n] / FourierCoefficient[f, x, n]: same order, both always on
+  // [-Pi, Pi] (no period argument on either side).
+  FourierSeries: "FourierSeries",
+  FourierCoefficient: "FourierCoefficient",
   // MeijerG[{{a..},{a..}}, {{b..},{b..}}, z] — same nested-list shape and argument order.
   MeijerG: "MeijerG",
   // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized

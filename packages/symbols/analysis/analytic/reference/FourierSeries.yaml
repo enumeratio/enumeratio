@@ -1,0 +1,63 @@
+name: FourierSeries
+domain: Transforms
+signature: FourierSeries(f, x, n)
+summary: The order-$n$ complex exponential Fourier series of $f$ on $[-\pi, \pi]$, $\sum_{k=-n}^{n} c_k\, e^{ikx}$, each $c_k$ from [[FourierCoefficient]].
+signatures:
+  - call: FourierSeries(f, x, n)
+    description: the order-$n$ Fourier series of $f(x)$ on $[-\pi, \pi]$, for a nonnegative integer $n$.
+    library: "@enumeratio/analytic"
+details:
+  - Built entirely from closed forms, not a call through compute-engine's own `Integrate` — probing found `Integrate` both too weak to reach most of these forms (it declines `x^2 * Cos(2x)` outright) and, worse, silently wrong on one it does answer (`Integrate(Abs(x) * Exp(-ix), {x, -pi, pi})` comes back exactly half of what an independent numeric quadrature gives). See [[FourierCoefficient]] for exactly what's covered.
+  - Always period $2\pi$ on $[-\pi, \pi]$, matching Wolfram's own default — there's no period argument here.
+examples:
+  - id: order-2-series-of-x
+    expr: [FourierSeries, x, x, 2]
+    expected:
+      [
+        Add,
+        [Multiply, [Complex, 0, -1], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]],
+        [Multiply, [Complex, 0, [Rational, -1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, -2], x]]],
+        [Multiply, [Complex, 0, [Rational, 1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, 2], x]]],
+        [Multiply, [Complex, 0, 1], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]],
+      ]
+    caption: The order-2 series of the sawtooth $x$ — every $c_k$ nonzero, none of it collapses
+  - id: order-3-series-of-sin-is-itself
+    expr: [FourierSeries, [Sin, x], x, 3]
+    expected:
+      [
+        Add,
+        [Multiply, [Complex, 0, [Rational, -1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]],
+        [Multiply, [Complex, 0, [Rational, 1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]],
+      ]
+    category: Scope
+    caption: $\sin(x)$ is already band-limited to $k = \pm1$, so raising the order past 1 adds nothing
+  - id: cos-squared-a-sin-cos-polynomial
+    expr: [FourierSeries, [Power, [Cos, x], 2], x, 2]
+    expected:
+      [
+        Add,
+        [Multiply, [Rational, 1, 4], [Power, ExponentialE, [Multiply, [Complex, 0, -2], x]]],
+        [Multiply, [Rational, 1, 4], [Power, ExponentialE, [Multiply, [Complex, 0, 2], x]]],
+        [Rational, 1, 2],
+      ]
+    category: Scope
+    caption: $\cos^2(x) = \tfrac12 + \tfrac14 e^{2ix} + \tfrac14 e^{-2ix}$, via the binomial expansion, not integration
+  - id: order-0-series-of-x-squared-is-its-average
+    expr: [FourierSeries, [Power, x, 2], x, 0]
+    expected: [Multiply, [Rational, 1, 3], [Power, Pi, 2]]
+    category: Scope
+    caption: Order 0 is just $c_0$, the average value $\pi^2/3$
+  - id: declines-a-mixed-polynomial-trig-product
+    expr: [FourierSeries, [Multiply, x, [Cos, x]], x, 1]
+    expected: [FourierSeries, [Multiply, x, [Cos, x]], x, 1]
+    category: Possible issues
+    caption: Declines a polynomial-times-trig product like $x\cos(x)$ -- Wolfram has a closed form here, but it falls outside the atoms this covers (see [[FourierCoefficient]])
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/fourier-series.ts
+seeAlso:
+  - FourierCoefficient
+  - Fourier

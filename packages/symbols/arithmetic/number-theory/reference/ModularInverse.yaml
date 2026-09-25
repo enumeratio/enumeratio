@@ -60,6 +60,12 @@ examples:
     expected: [ModularInverse, 2, 4]
     category: Possible issues
     caption: '$\gcd(2, 4) = 2$: no inverse'
+  - role: test
+    id: a-gaussian-base-and-a-gaussian-modulus
+    expr: [ModularInverse, [Complex, 3, -1], [Complex, 5, 2]]
+    expected: [Complex, -1, -1]
+    category: Scope
+    caption: A Gaussian base and a Gaussian modulus
 seeAlso:
   - PowerMod
   - ExtendedGCD
