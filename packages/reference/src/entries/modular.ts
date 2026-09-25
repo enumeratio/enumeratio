@@ -155,12 +155,24 @@ export const modular: readonly ReferenceEntry[] = [
         description: "the partial quotients of a rational — compute-engine's own head",
       },
       {
+        call: "ContinuedFraction(x)",
+        description:
+          "for a quadratic irrational, the exact eventually-periodic expansion $[a_0, \\overline{a_1,\\dots,a_k}]$, the period written as a nested list",
+        library: "enumeratio-modular",
+      },
+      {
         call: "ContinuedFraction(x, n)",
-        description: "the first $n$ terms, for an irrational — also compute-engine's",
+        description:
+          "the first $n$ terms — exact for a quadratic irrational, certified-precision otherwise (compute-engine's own signature, extended)",
       },
       {
         call: "FromContinuedFraction(list)",
         description: "back to the rational — compute-engine's own",
+      },
+      {
+        call: "FromContinuedFraction([a0, [period]])",
+        description: "back to the quadratic irrational, from its periodic-tail shape",
+        library: "enumeratio-modular",
       },
       {
         call: "SternBrocotPath(p, q)",
@@ -174,7 +186,8 @@ export const modular: readonly ReferenceEntry[] = [
       },
     ],
     details: [
-      '`ContinuedFraction` and `FromContinuedFraction` are compute-engine\'s, not ours — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"',
+      '`ContinuedFraction` and `FromContinuedFraction` are compute-engine\'s heads, extended in place rather than redeclared — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"',
+      "For a quadratic irrational $(a+b\\sqrt d)/c$, the one-argument form runs the exact PQa algorithm over bigints and returns the eventually-periodic expansion; the two-argument form truncates it. Anything else irrational — $\\pi$, $e$, a cube root, a sum of surds, the named `GoldenRatio` — goes through a BigDecimal extraction certified by agreement across two working precisions, so it isn't limited to double precision",
       "The expansion is made unique by never ending in $1$: $[\\ldots, k, 1]$ is rewritten $[\\ldots, k+1]$",
       "The path is $R^{a_0}L^{a_1}R^{a_2}\\cdots$ with the LAST exponent one short — the final step is the arrival, not a turn",
       "Consecutive Farey fractions satisfy $ps - qr = -1$, which is a determinant, which is a group element",
@@ -249,57 +262,51 @@ export const modular: readonly ReferenceEntry[] = [
       {
         expr: ["ContinuedFraction", "Pi", 20],
         expected: ["List", 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2],
-        caption: "20 terms of $\\pi$ need more than double precision; only 13 come back today",
-        aspirational: true,
+        caption:
+          "20 terms of $\\pi$, past the 13-term double-precision wall — certified BigDecimal",
       },
       {
         expr: ["ContinuedFraction", ["Sqrt", 13]],
         expected: ["List", 3, ["List", 1, 1, 1, 1, 6]],
         caption:
-          "a quadratic irrational's exact expansion is eventually periodic, written with the period as a nested list; today it is truncated to 20 terms",
-        aspirational: true,
+          "a quadratic irrational's exact expansion is eventually periodic, written with the period as a nested list",
       },
       {
         expr: ["ContinuedFraction", ["Divide", ["Add", 1, ["Sqrt", 5]], 2]],
         expected: ["List", 1, ["List", 1]],
-        caption: "$\\varphi = [1; \\overline{1}]$; stays unevaluated",
+        caption: "$\\varphi = [1; \\overline{1}]$ — purely periodic, so the period is all there is",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["ContinuedFraction", "GoldenRatio", 10],
         expected: ["List", 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        caption: "the named constant; stays unevaluated",
+        caption: "the named constant, unfolded to $(1+\\sqrt5)/2$ first",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["ContinuedFraction", ["Add", 1, ["Sqrt", 2]], 5],
         expected: ["List", 2, 2, 2, 2, 2],
-        caption: "a sum of surds; stays unevaluated (a bare $\\sqrt2$ works)",
+        caption: "a sum of surds — still a quadratic irrational, exact via PQa",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["ContinuedFraction", ["Power", 2, ["Rational", 1, 3]], 10],
         expected: ["List", 1, 3, 1, 5, 1, 1, 4, 1, 1, 8],
-        caption: "a cube root, which is not periodic; stays unevaluated",
+        caption:
+          "a cube root, algebraic degree 3 — not periodic, so a certified BigDecimal expansion",
         category: "Scope",
-        aspirational: true,
       },
       {
         expr: ["FromContinuedFraction", ["List", 3, ["List", 1, 1, 1, 1, 6]]],
         expected: ["Sqrt", 13],
-        caption: "a periodic tail rebuilds the quadratic irrational; stays unevaluated",
+        caption: "a periodic tail rebuilds the quadratic irrational",
         category: "Properties",
-        aspirational: true,
       },
       {
         expr: ["FromContinuedFraction", ["List", 1, ["List", 2]]],
         expected: ["Sqrt", 2],
-        caption: "$[1; \\overline{2}] = \\sqrt2$; stays unevaluated",
+        caption: "$[1; \\overline{2}] = \\sqrt2$",
         category: "Properties",
-        aspirational: true,
       },
       {
         expr: ["FromContinuedFraction", ["List", "a", "b", "c"]],

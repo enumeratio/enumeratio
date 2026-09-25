@@ -689,6 +689,9 @@ importers:
       '@enumeratio/boxed':
         specifier: workspace:*
         version: link:../boxed
+      '@enumeratio/residues':
+        specifier: workspace:*
+        version: link:../residues
     devDependencies:
       '@cortex-js/compute-engine':
         specifier: ^0.128.0
