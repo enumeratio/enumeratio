@@ -5,3 +5,5 @@ c-4:
   tex:
     in: \mathrm{Count}(\mathrm{BinaryTrees}(4))
     out: "14"
+  fullform:
+    in: Count[BinaryTrees[4]]

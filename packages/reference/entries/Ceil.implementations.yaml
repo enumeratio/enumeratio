@@ -5,6 +5,8 @@ ceil-7-over-2:
   tex:
     in: \lceil\frac{7}{2}\rceil
     out: "4"
+  fullform:
+    in: Ceiling[Rational[7, 2]]
   wolfram:
     in: Ceiling[Rational[7, 2]]
     out: "4"
@@ -27,6 +29,8 @@ ceil-3p2:
   tex:
     in: \lceil3.2\rceil
     out: "4"
+  fullform:
+    in: Ceiling[3.2]
   wolfram:
     in: Ceiling[3.2]
     out: "4"
@@ -52,6 +56,8 @@ integers-pass-through-unchanged:
   tex:
     in: \lceil5\rceil
     out: "5"
+  fullform:
+    in: Ceiling[5]
   wolfram:
     in: Ceiling[5]
     out: "5"
@@ -77,6 +83,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \lceil\bigl\lbrack1.2, -1.2, 3.7\bigr\rbrack\rceil
     out: \bigl\lbrack2, -1, 4\bigr\rbrack
+  fullform:
+    in: Ceiling[List[1.2, -1.2, 3.7]]
   wolfram:
     in: Ceiling[List[1.2, -1.2, 3.7]]
     out: "{2, -1, 4}"
@@ -111,9 +119,10 @@ lceil-x-rceil-lfloor-x-rfloor-1-for-non-integer:
   traditional:
     in: \lceil\frac{7}{2}\rceil=\lfloor\frac{7}{2}\rfloor+1
     out: \mathrm{True}
+  fullform:
+    in: Equal[Ceiling[Rational[7, 2]], Plus[Floor[Rational[7, 2]], 1]]
   wolfram:
     in: (Ceiling[Rational[7, 2]] == Plus[Floor[Rational[7, 2]], 1])
-    back: Unreadable
     out: True
     tex:
       in: \left\lceil \frac{7}{2}\right\rceil =\left\lfloor \frac{7}{2}\right\rfloor +1
@@ -137,9 +146,10 @@ floor-and-ceil-agree-exactly-on-integers:
   traditional:
     in: \lceil5\rceil=\lfloor5\rfloor
     out: \mathrm{True}
+  fullform:
+    in: Equal[Ceiling[5], Floor[5]]
   wolfram:
     in: (Ceiling[5] == Floor[5])
-    back: Unreadable
     out: True
     tex:
       in: \lceil 5\rceil =\lfloor 5\rfloor
@@ -163,6 +173,8 @@ how-many-5-seat-vans-are-needed-to-carry-17:
   tex:
     in: \lceil\frac{17}{5}\rceil
     out: "4"
+  fullform:
+    in: Ceiling[Divide[17, 5]]
   wolfram:
     in: Ceiling[Divide[17, 5]]
     out: "4"
@@ -185,6 +197,8 @@ rounds-toward-infty-not-toward-0-ceil-3-7-is-3:
   tex:
     in: \lceil-3.7\rceil
     out: "-3"
+  fullform:
+    in: Ceiling[-3.7]
   wolfram:
     in: Ceiling[-3.7]
     out: "-3"
@@ -210,6 +224,8 @@ nan-propagates-rather-than-erroring:
   tex:
     in: \lceil\operatorname{NaN}\rceil
     out: \operatorname{NaN}
+  fullform:
+    in: Ceiling[Indeterminate]
   wolfram:
     in: Ceiling[Indeterminate]
     out: Indeterminate
@@ -223,6 +239,8 @@ ceil-2p4:
   tex:
     in: \lceil2.4\rceil
     out: "3"
+  fullform:
+    in: Ceiling[2.4]
   wolfram:
     in: Ceiling[2.4]
   sympy:
@@ -240,6 +258,8 @@ ceil-2p6:
   tex:
     in: \lceil2.6\rceil
     out: "3"
+  fullform:
+    in: Ceiling[2.6]
   wolfram:
     in: Ceiling[2.6]
   sympy:
@@ -257,6 +277,8 @@ stays-symbolic:
   tex:
     in: \lceil x\rceil
     out: \lceil x\rceil
+  fullform:
+    in: Ceiling[x]
 exact-radicals-are-decided-numerically:
   epsil:
     in: Ceil(Sqrt(50))
@@ -264,6 +286,8 @@ exact-radicals-are-decided-numerically:
   tex:
     in: \lceil\sqrt{50}\rceil
     out: "8"
+  fullform:
+    in: Ceiling[Sqrt[50]]
   wolfram:
     in: Ceiling[Sqrt[50]]
   sympy:
@@ -281,6 +305,8 @@ evaluates-at-an-exact-constant-lceil-pi-rceil-4:
   tex:
     in: \lceil\pi\rceil
     out: "4"
+  fullform:
+    in: Ceiling[Pi]
   wolfram:
     in: Ceiling[Pi]
   sympy:
@@ -298,6 +324,8 @@ a-second-argument-rounds-up-to-a-multiple-of-it:
   tex:
     in: \lceil226\rceil
     out: "230"
+  fullform:
+    in: Ceiling[226, 10]
   wolfram:
     in: Ceiling[226, 10]
 the-step-needn-t-be-an-integer-3-5-cdot-lceil-10:
@@ -307,6 +335,8 @@ the-step-needn-t-be-an-integer-3-5-cdot-lceil-10:
   tex:
     in: \lceil-10.3\rceil
     out: "-7"
+  fullform:
+    in: Ceiling[-10.3, 3.5]
   wolfram:
     in: Ceiling[-10.3, 3.5]
 nor-rational-2-pi-e-approx-3-57-rounds-up-to-the:
@@ -316,6 +346,8 @@ nor-rational-2-pi-e-approx-3-57-rounds-up-to-the:
   tex:
     in: \lceil2\pi-e\rceil
     out: \frac{15}{4}
+  fullform:
+    in: Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]
   wolfram:
     in: Ceiling[Subtract[Times[2, Pi], E], Rational[5, 4]]
 rounds-the-real-and-imaginary-parts-up:
@@ -325,6 +357,8 @@ rounds-the-real-and-imaginary-parts-up:
   tex:
     in: \lceil5.37-1.3i\rceil
     out: 6-i
+  fullform:
+    in: Ceiling[Complex[5.37, -1.3]]
   wolfram:
     in: Ceiling[Complex[5.37, -1.3]]
   sympy:
@@ -340,5 +374,7 @@ ten-bits-are-enough-to-number-1000-items-lceil:
   tex:
     in: \lceil\log_{2}(1\,000)\rceil
     out: "10"
+  fullform:
+    in: Ceiling[Log[2, 1000]]
   wolfram:
     in: Ceiling[Log[2, 1000]]

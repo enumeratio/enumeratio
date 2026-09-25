@@ -5,3 +5,5 @@ count-tristrings-6-44-binary-strings-of-length-6:
   tex:
     in: \mathrm{Count}(\mathrm{TriStrings}(6))
     out: "44"
+  fullform:
+    in: Count[TriStrings[6]]

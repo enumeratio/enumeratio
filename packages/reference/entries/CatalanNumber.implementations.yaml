@@ -8,6 +8,8 @@ catalannumber-0:
   traditional:
     in: C_{0}
     out: "1"
+  fullform:
+    in: CatalanNumber[0]
   wolfram:
     in: CatalanNumber[0]
     out: "1"
@@ -36,6 +38,8 @@ catalannumber-1:
   traditional:
     in: C_{1}
     out: "1"
+  fullform:
+    in: CatalanNumber[1]
   wolfram:
     in: CatalanNumber[1]
     out: "1"
@@ -64,6 +68,8 @@ catalannumber-5:
   traditional:
     in: C_{5}
     out: "42"
+  fullform:
+    in: CatalanNumber[5]
   wolfram:
     in: CatalanNumber[5]
     out: "42"
@@ -92,6 +98,8 @@ catalannumber-10:
   traditional:
     in: C_{10}
     out: 16\,796
+  fullform:
+    in: CatalanNumber[10]
   wolfram:
     in: CatalanNumber[10]
     out: "16796"
@@ -117,6 +125,8 @@ closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n:
   tex:
     in: \frac{\binom{2\times5}{5}}{5+1}
     out: "42"
+  fullform:
+    in: Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]
   wolfram:
     in: Divide[Binomial[Times[2, 5], 5], Plus[5, 1]]
     out: "42"
@@ -148,6 +158,8 @@ equivalently-c-n-binom-2n-n-binom-2n-n-1:
   tex:
     in: \binom{10}{5}-\binom{10}{6}
     out: "42"
+  fullform:
+    in: Subtract[Binomial[10, 5], Binomial[10, 6]]
   wolfram:
     in: Subtract[Binomial[10, 5], Binomial[10, 6]]
     out: "42"
@@ -182,6 +194,8 @@ the-consecutive-ratio-is-frac-c-n-1-c-n-frac-2:
   traditional:
     in: \frac{C_{6}}{C_{5}}
     out: \frac{22}{7}
+  fullform:
+    in: Divide[CatalanNumber[6], CatalanNumber[5]]
   wolfram:
     in: Divide[CatalanNumber[6], CatalanNumber[5]]
     out: 22/7
@@ -210,6 +224,8 @@ the-5-ways-to-balance-3-pairs-of-parentheses:
   traditional:
     in: C_{3}
     out: "5"
+  fullform:
+    in: CatalanNumber[3]
   wolfram:
     in: CatalanNumber[3]
     out: "5"
@@ -238,6 +254,8 @@ the-14-triangulations-of-a-hexagon-and-the-14:
   traditional:
     in: C_{4}
     out: "14"
+  fullform:
+    in: CatalanNumber[4]
   wolfram:
     in: CatalanNumber[4]
     out: "14"
@@ -266,6 +284,8 @@ catalannumber-neg-1-is-neg-1:
   traditional:
     in: C_{-1}
     out: "-1"
+  fullform:
+    in: CatalanNumber[-1]
   wolfram:
     in: CatalanNumber[-1]
     note: Checked against an actual Wolfram kernel (see combinatorics.oracle.json) -- CatalanNumber[-1] = -1. The alternative Gamma-ratio limit Gamma(2n+1)/(Gamma(n+1) Gamma(n+2)) -- what SymPy's and Sage's own catalan/catalan_number give -- disagrees, at -1/2; this entry follows the verified Wolfram kernel output.
@@ -287,6 +307,8 @@ catalannumber-0-past-neg-1:
   traditional:
     in: C_{-2}
     out: "0"
+  fullform:
+    in: CatalanNumber[-2]
   wolfram:
     in: CatalanNumber[-2]
   sympy:
@@ -307,6 +329,8 @@ catalannumber-neg-5-is-also-0:
   traditional:
     in: C_{-5}
     out: "0"
+  fullform:
+    in: CatalanNumber[-5]
   wolfram:
     in: CatalanNumber[-5]
   sympy:
@@ -327,6 +351,8 @@ they-grow-fast-c-15-already-passes-nine-million:
   traditional:
     in: C_{15}
     out: 9\,694\,845
+  fullform:
+    in: CatalanNumber[15]
   wolfram:
     in: CatalanNumber[15]
     out: "9694845"
@@ -352,6 +378,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{CatalanNumber}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
     out: \bigl\lbrack1, 2, 5, 14\bigr\rbrack
+  fullform:
+    in: CatalanNumber[List[1, 2, 3, 4]]
   wolfram:
     in: CatalanNumber[List[1, 2, 3, 4]]
     out: "{1, 2, 5, 14}"
@@ -380,6 +408,8 @@ half-integer-arguments-evaluate-exactly-through:
   traditional:
     in: C_{\frac{5}{2}}
     out: \frac{1\,024}{105\pi}
+  fullform:
+    in: CatalanNumber[Rational[5, 2]]
   wolfram:
     in: CatalanNumber[Rational[5, 2]]
     out: 1024/(105*Pi)
@@ -405,6 +435,8 @@ catalannumber-30:
   traditional:
     in: C_{30}
     out: 3\,814\,986\,502\,092\,304
+  fullform:
+    in: CatalanNumber[30]
   wolfram:
     in: CatalanNumber[30]
   sympy:
@@ -425,9 +457,10 @@ segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i:
   traditional:
     in: C_{4}=\sum_{i=0}^3C_{i}C_{3-i}
     out: \mathrm{True}
+  fullform:
+    in: Equal[CatalanNumber[4], Sum[Times[CatalanNumber[i], CatalanNumber[Subtract[3, i]]], List[i, 0, 3]]]
   wolfram:
     in: (CatalanNumber[4] == Sum[Times[CatalanNumber[i], CatalanNumber[Subtract[3, i]]], List[i, 0, 3]])
-    back: Unreadable
 real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
   epsil:
     in: CatalanNumber(2.3)
@@ -438,6 +471,8 @@ real-arguments-evaluate-as-frac-gamma-2n-1-gamma:
   traditional:
     in: C_{2.3}
     out: 2.590\,352\,154\,019\,323\,3
+  fullform:
+    in: CatalanNumber[2.3]
   wolfram:
     in: CatalanNumber[2.3]
   sympy:
@@ -458,6 +493,8 @@ complex-arguments-evaluate-through-the-same:
   traditional:
     in: C_{1.2+i}
     out: 0.730\,728\,624\,207\,283\,9+0.569\,846\,406\,969\,342\,5i
+  fullform:
+    in: CatalanNumber[Complex[1.2, 1]]
   wolfram:
     in: CatalanNumber[Complex[1.2, 1]]
   sympy:
@@ -476,6 +513,8 @@ c-1-2-frac-8-3-pi-by-analytic-continuation:
   traditional:
     in: C_{\frac{1}{2}}
     out: \frac{8}{3\pi}
+  fullform:
+    in: CatalanNumber[Rational[1, 2]]
   wolfram:
     in: CatalanNumber[Rational[1, 2]]
   sympy:
@@ -496,5 +535,7 @@ an-interval-argument-should-give-an-enclosing:
   traditional:
     in: C_{\mathrm{Interval}(0.5, 0.6)}
     out: \mathrm{Interval}(0.848\,826\,363\,156\,775\,1, 0.862\,540\,968\,873\,452\,3)
+  fullform:
+    in: CatalanNumber[Interval[List[0.5, 0.6]]]
   wolfram:
     in: CatalanNumber[Interval[List[0.5, 0.6]]]

@@ -5,3 +5,5 @@ the-one-line-word-231:
   tex:
     in: \mathrm{ConjugateAfterCycleType}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
     out: \mathrm{IntegerPartition}(\bigl\lbrack1, 1, 1\bigr\rbrack)
+  fullform:
+    in: ConjugateAfterCycleType[Permutation[List[2, 3, 1]]]

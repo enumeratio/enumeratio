@@ -8,6 +8,8 @@ r-1-1-h-1-1-h-2:
   traditional:
     in: \mathrm{InCompleteBasis}(R_{(1,1)})
     out: H_{(1,1)}-H_{(2)}
+  fullform:
+    in: InCompleteBasis[NSymR[List[1, 1]]]
 the-fundamental-basis-sums-over-refinements:
   epsil:
     in: InMonomialBasis(QSymF([2]))
@@ -18,6 +20,8 @@ the-fundamental-basis-sums-over-refinements:
   traditional:
     in: \mathrm{InMonomialBasis}(F_{(2)})
     out: M_{(2)}+M_{(1,1)}
+  fullform:
+    in: InMonomialBasis[QSymF[List[2]]]
 one-signed-term:
   epsil:
     in: Antipode(NSymR([3]))
@@ -28,6 +32,8 @@ one-signed-term:
   traditional:
     in: S(R_{(3)})
     out: -R_{(1,1,1)}
+  fullform:
+    in: Antipode[NSymR[List[3]]]
 self-conjugate-the-convention-is-settled-by-the:
   epsil:
     in: ConjugateComposition([2, 1])
@@ -35,3 +41,5 @@ self-conjugate-the-convention-is-settled-by-the:
   tex:
     in: \mathrm{ConjugateComposition}(\bigl\lbrack2, 1\bigr\rbrack)
     out: \bigl\lbrack2, 1\bigr\rbrack
+  fullform:
+    in: ConjugateComposition[List[2, 1]]

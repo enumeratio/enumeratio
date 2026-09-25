@@ -5,5 +5,7 @@ q3-has-8-vertices-12-edges:
   tex:
     in: \bigl\lbrack\mathrm{VertexCount}(\mathrm{HypercubeGraph}(3)), \mathrm{EdgeCount}(\mathrm{HypercubeGraph}(3))\bigr\rbrack
     out: \bigl\lbrack8, 12\bigr\rbrack
+  fullform:
+    in: List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]
   wolfram:
     in: List[VertexCount[HypercubeGraph[3]], EdgeCount[HypercubeGraph[3]]]

@@ -5,3 +5,5 @@ the-partition-1-3-mid-2-as-a-plain-list:
   tex:
     in: \mathrm{Crossings}(\bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack)
     out: "0"
+  fullform:
+    in: Crossings[List[List[1, 3], List[2]]]

@@ -5,6 +5,8 @@ adicexpansion-adicnumeral-10-1-over-3-8:
   tex:
     in: \mathrm{AdicExpansion}(\mathrm{AdicNumeral}(10, \frac{1}{3}), 8)
     out: \text{…66666667}
+  fullform:
+    in: AdicExpansion[AdicNumeral[10, Rational[1, 3]], 8]
 the-same-1-3-2-adically:
   epsil:
     in: AdicExpansion(AdicNumeral(2, 1 / 3), 8)
@@ -12,6 +14,8 @@ the-same-1-3-2-adically:
   tex:
     in: \mathrm{AdicExpansion}(\mathrm{AdicNumeral}(2, \frac{1}{3}), 8)
     out: \text{…10101011}
+  fullform:
+    in: AdicExpansion[AdicNumeral[2, Rational[1, 3]], 8]
 7-25-2-5-2-1-5-1:
   epsil:
     in: AdicExpansion(AdicNumeral(5, 7 / 25), 8)
@@ -19,6 +23,8 @@ the-same-1-3-2-adically:
   tex:
     in: \mathrm{AdicExpansion}(\mathrm{AdicNumeral}(5, \frac{7}{25}), 8)
     out: \text{0.12}
+  fullform:
+    in: AdicExpansion[AdicNumeral[5, Rational[7, 25]], 8]
 as-a-list-least-significant-first:
   epsil:
     in: AdicDigits(AdicNumeral(10, 1 / 3), 6)
@@ -26,6 +32,8 @@ as-a-list-least-significant-first:
   tex:
     in: \mathrm{AdicDigits}(\mathrm{AdicNumeral}(10, \frac{1}{3}), 6)
     out: \bigl\lbrack7, 6, 6, 6, 6, 6\bigr\rbrack
+  fullform:
+    in: AdicDigits[AdicNumeral[10, Rational[1, 3]], 6]
 a-plain-non-negative-integer-terminates-with-no:
   epsil:
     in: AdicExpansion(AdicNumeral(10, 42))
@@ -33,6 +41,8 @@ a-plain-non-negative-integer-terminates-with-no:
   tex:
     in: \mathrm{AdicExpansion}(\mathrm{AdicNumeral}(10, 42))
     out: \text{42}
+  fullform:
+    in: AdicExpansion[AdicNumeral[10, 42]]
 1-is-the-all-9s-repeating-tail-since-1-999-in-z:
   epsil:
     in: AdicExpansion(AdicNumeral(10, -1), 6)
@@ -40,6 +50,8 @@ a-plain-non-negative-integer-terminates-with-no:
   tex:
     in: \mathrm{AdicExpansion}(\mathrm{AdicNumeral}(10, -1), 6)
     out: \text{…999999}
+  fullform:
+    in: AdicExpansion[AdicNumeral[10, -1], 6]
 digits-at-or-above-10-print-bracketed-as-in-15:
   epsil:
     in: AdicExpansion(AdicNumeral(16, -1), 3)
@@ -47,6 +59,8 @@ digits-at-or-above-10-print-bracketed-as-in-15:
   tex:
     in: \mathrm{AdicExpansion}(\mathrm{AdicNumeral}(16, -1), 3)
     out: \text{…[15][15][15]}
+  fullform:
+    in: AdicExpansion[AdicNumeral[16, -1], 3]
 digits-run-least-significant-first-1-s-first:
   epsil:
     in: AdicDigits(AdicNumeral(10, -1), 4)
@@ -54,3 +68,5 @@ digits-run-least-significant-first-1-s-first:
   tex:
     in: \mathrm{AdicDigits}(\mathrm{AdicNumeral}(10, -1), 4)
     out: \bigl\lbrack9, 9, 9, 9\bigr\rbrack
+  fullform:
+    in: AdicDigits[AdicNumeral[10, -1], 4]

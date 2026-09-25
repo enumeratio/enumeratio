@@ -14,6 +14,8 @@ relabelled-cycle-is-isomorphic-to-itself:
   traditional:
     in: \mathrm{IsIsomorphicGraph}(\mathrm{CycleGraph}(4), \mathrm{Graph}(\bigl\lbrack3, 1, 4, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(3, 1), \mathrm{UndirectedEdge}(1, 4), \mathrm{UndirectedEdge}(4, 2), \mathrm{UndirectedEdge}(2, 3)\bigr\rbrack))
     out: \mathrm{True}
+  fullform:
+    in: IsomorphicGraphQ[CycleGraph[4], Graph[List[3, 1, 4, 2], List[UndirectedEdge[3, 1], UndirectedEdge[1, 4], UndirectedEdge[4, 2], UndirectedEdge[2, 3]]]]
   wolfram:
     in: IsomorphicGraphQ[CycleGraph[4], Graph[List[3, 1, 4, 2], List[UndirectedEdge[3, 1], UndirectedEdge[1, 4], UndirectedEdge[4, 2], UndirectedEdge[2, 3]]]]
 same-vertex-count-different-structure:
@@ -26,5 +28,7 @@ same-vertex-count-different-structure:
   traditional:
     in: \mathrm{IsIsomorphicGraph}(\mathrm{CycleGraph}(4), \mathrm{StarGraph}(4))
     out: \mathrm{False}
+  fullform:
+    in: IsomorphicGraphQ[CycleGraph[4], StarGraph[4]]
   wolfram:
     in: IsomorphicGraphQ[CycleGraph[4], StarGraph[4]]

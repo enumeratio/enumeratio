@@ -5,6 +5,8 @@ the-lone-ascent-at-position-2:
   tex:
     in: \mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)
     out: "2"
+  fullform:
+    in: MinorIndex[List[3, 1, 2]]
 ascents-at-both-positions-1-2:
   epsil:
     in: MinorIndex([1, 2, 3])
@@ -12,6 +14,8 @@ ascents-at-both-positions-1-2:
   tex:
     in: \mathrm{MinorIndex}(\bigl\lbrack1, 2, 3\bigr\rbrack)
     out: "3"
+  fullform:
+    in: MinorIndex[List[1, 2, 3]]
 no-ascents:
   epsil:
     in: MinorIndex([3, 2, 1])
@@ -19,6 +23,8 @@ no-ascents:
   tex:
     in: \mathrm{MinorIndex}(\bigl\lbrack3, 2, 1\bigr\rbrack)
     out: "0"
+  fullform:
+    in: MinorIndex[List[3, 2, 1]]
 major-and-minor-index-split-binom-n-2:
   epsil:
     in: MajorIndex([3, 1, 2]) + MinorIndex([3, 1, 2]) == Binomial(3, 2)
@@ -29,3 +35,5 @@ major-and-minor-index-split-binom-n-2:
   traditional:
     in: \mathrm{MajorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)+\mathrm{MinorIndex}(\bigl\lbrack3, 1, 2\bigr\rbrack)=\binom{3}{2}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[MajorIndex[List[3, 1, 2]], MinorIndex[List[3, 1, 2]]], Binomial[3, 2]]

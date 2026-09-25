@@ -16,6 +16,8 @@ path-4-matches-wolfram:
   tex:
     in: \mathrm{EigenvectorCentrality}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
     out: \bigl\lbrack0.190\,983\,005\,625\,053, 0.309\,016\,994\,374\,947, 0.309\,016\,994\,374\,947, 0.190\,983\,005\,625\,053\bigr\rbrack
+  fullform:
+    in: EigenvectorCentrality[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
   wolfram:
     in: EigenvectorCentrality[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
 star-4-hub-is-most-central:
@@ -31,5 +33,7 @@ star-4-hub-is-most-central:
   tex:
     in: \mathrm{EigenvectorCentrality}(\mathrm{StarGraph}(4))
     out: \bigl\lbrack0.366\,025\,403\,784\,439, 0.211\,324\,865\,405\,187, 0.211\,324\,865\,405\,187, 0.211\,324\,865\,405\,187\bigr\rbrack
+  fullform:
+    in: EigenvectorCentrality[StarGraph[4]]
   wolfram:
     in: EigenvectorCentrality[StarGraph[4]]

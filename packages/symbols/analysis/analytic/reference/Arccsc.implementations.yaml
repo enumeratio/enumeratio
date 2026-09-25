@@ -5,6 +5,8 @@ arccsc-1:
   tex:
     in: \mathrm{arccsc}(1)
     out: \frac{\pi}{2}
+  fullform:
+    in: ArcCsc[1]
   wolfram:
     in: ArcCsc[1]
     out: Pi/2
@@ -18,6 +20,8 @@ arccsc-2:
   tex:
     in: \mathrm{arccsc}(2)
     out: \frac{\pi}{6}
+  fullform:
+    in: ArcCsc[2]
   wolfram:
     in: ArcCsc[2]
     out: Pi/6
@@ -34,9 +38,10 @@ undoes-csc-csc-arccsc-x-x:
   traditional:
     in: \csc(\mathrm{arccsc}(2))=2
     out: \mathrm{True}
+  fullform:
+    in: Equal[Csc[ArcCsc[2]], 2]
   wolfram:
     in: (Csc[ArcCsc[2]] == 2)
-    back: Unreadable
     out: True
     tex:
       in: \csc \left(\csc ^{-1}(2)\right)=2
@@ -48,6 +53,8 @@ arccsc-sqrt-2-pi-4:
   tex:
     in: \mathrm{arccsc}(\sqrt{2})
     out: \frac{\pi}{4}
+  fullform:
+    in: ArcCsc[Sqrt[2]]
   wolfram:
     in: ArcCsc[Sqrt[2]]
 an-odd-function:
@@ -57,6 +64,8 @@ an-odd-function:
   tex:
     in: \mathrm{arccsc}(-2)
     out: -\frac{\pi}{6}
+  fullform:
+    in: ArcCsc[-2]
   wolfram:
     in: ArcCsc[-2]
 inside-1-1-the-value-is-complex:
@@ -66,6 +75,8 @@ inside-1-1-the-value-is-complex:
   tex:
     in: \mathrm{arccsc}(0.5)
     out: 1.570\,796\,326\,794\,896\,6-1.316\,957\,896\,924\,816\,6i
+  fullform:
+    in: ArcCsc[0.5]
   wolfram:
     in: ArcCsc[0.5]
 arccsc-positiveinfinity:
@@ -75,6 +86,8 @@ arccsc-positiveinfinity:
   tex:
     in: \mathrm{arccsc}(\infty)
     out: "0"
+  fullform:
+    in: ArcCsc[Infinity]
   wolfram:
     in: ArcCsc[Infinity]
 a-pole-arccsc-0-is-complex-infinity:
@@ -84,6 +97,8 @@ a-pole-arccsc-0-is-complex-infinity:
   tex:
     in: \mathrm{arccsc}(0)
     out: \tilde\infty
+  fullform:
+    in: ArcCsc[0]
   wolfram:
     in: ArcCsc[0]
 derivative-for-real-x-1:
@@ -93,6 +108,8 @@ derivative-for-real-x-1:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\mathrm{arccsc}(x)
     out: -(\vert x\vert\sqrt{x^2-1})^{-1}
+  fullform:
+    in: D[ArcCsc[x], x]
   wolfram:
     in:
     note: Wolfram writes it as -1/(x^2 Sqrt[1 - 1/x^2]), valid for complex x too.

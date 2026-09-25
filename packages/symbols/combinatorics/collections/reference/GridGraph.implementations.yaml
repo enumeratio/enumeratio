@@ -5,6 +5,8 @@ a-3-by-4-grid:
   tex:
     in: \mathrm{VertexCount}(\mathrm{GridGraph}(\bigl\lbrack3, 4\bigr\rbrack))
     out: "12"
+  fullform:
+    in: VertexCount[GridGraph[List[3, 4]]]
   wolfram:
     in: VertexCount[GridGraph[List[3, 4]]]
 edge-count-of-a-3-by-4-grid:
@@ -14,5 +16,7 @@ edge-count-of-a-3-by-4-grid:
   tex:
     in: \mathrm{EdgeCount}(\mathrm{GridGraph}(\bigl\lbrack3, 4\bigr\rbrack))
     out: "17"
+  fullform:
+    in: EdgeCount[GridGraph[List[3, 4]]]
   wolfram:
     in: EdgeCount[GridGraph[List[3, 4]]]

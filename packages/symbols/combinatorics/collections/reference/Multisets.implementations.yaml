@@ -5,3 +5,5 @@ binom-4-2:
   tex:
     in: \mathrm{Count}(\mathrm{Multisets}(3, 2))
     out: "6"
+  fullform:
+    in: Count[Multisets[3, 2]]

@@ -5,6 +5,8 @@ product-list-1-2-3-4:
   tex:
     in: \prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack
     out: "24"
+  fullform:
+    in: Apply[Times, List[1, 2, 3, 4]]
   wolfram:
     in: Apply[Times, List[1, 2, 3, 4]]
     out: "24"
@@ -18,6 +20,8 @@ the-empty-product-is-1-by-convention-matching:
   tex:
     in: \prod\bigl\lbrack \bigr\rbrack
     out: "1"
+  fullform:
+    in: Apply[Times, List[]]
   wolfram:
     in: Apply[Times, List[]]
     out: "1"
@@ -34,9 +38,10 @@ the-product-of-1-through-n-is-n-see-factorial:
   traditional:
     in: \prod\bigl\lbrack1, 2, 3, 4\bigr\rbrack=4!
     out: \mathrm{True}
+  fullform:
+    in: Equal[Apply[Times, List[1, 2, 3, 4]], Factorial[4]]
   wolfram:
     in: (Apply[Times, List[1, 2, 3, 4]] == Factorial[4])
-    back: Unreadable
     out: True
     tex:
       in: \text{Times}\text{@@}\{1,2,3,4\}=4!
@@ -48,6 +53,8 @@ range-stays-lazy-on-its-own-but-product-forces:
   tex:
     in: \prod(1..6)
     out: "720"
+  fullform:
+    in: Apply[Times, Range[1, 6]]
   wolfram:
     in: Apply[Times, Range[1, 6]]
     out: "720"
@@ -61,6 +68,8 @@ prod-i-1-6-i-2-6-2:
   tex:
     in: \prod_{i=1}^6i^2
     out: 518\,400
+  fullform:
+    in: Product[Power[i, 2], List[i, 1, 6]]
   wolfram:
     in: Product[Power[i, 2], List[i, 1, 6]]
 a-symbolic-upper-limit-prod-i-1-n-i-2-n-2:
@@ -70,6 +79,8 @@ a-symbolic-upper-limit-prod-i-1-n-i-2-n-2:
   tex:
     in: \prod_{i=1}^{n}i^2
     out: \left(n!\right)^2
+  fullform:
+    in: Product[Power[i, 2], List[i, 1, n]]
 a-symbolic-upper-limit-prod-k-1-n-k-n-see:
   epsil:
     in: Product(k, (k, 1, n))
@@ -77,6 +88,8 @@ a-symbolic-upper-limit-prod-k-1-n-k-n-see:
   tex:
     in: \prod_{k=1}^{n}k
     out: n!
+  fullform:
+    in: Product[k, List[k, 1, n]]
 exponents-add-prod-k-1-n-x-k-x-n-n-1-2:
   epsil:
     in: Product(x ^ k, (k, 1, n))
@@ -84,6 +97,8 @@ exponents-add-prod-k-1-n-x-k-x-n-n-1-2:
   tex:
     in: \prod_{k=1}^{n}x^{k}
     out: \sqrt{x}^{n\times(n+1)}
+  fullform:
+    in: Product[Power[x, k], List[k, 1, n]]
 a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1:
   epsil:
     in: Product((k + 1) / k, (k, 1, n))
@@ -91,6 +106,8 @@ a-telescoping-product-prod-k-1-n-frac-k-1-k-n-1:
   tex:
     in: \prod_{k=1}^{n}\frac{k+1}{k}
     out: n+1
+  fullform:
+    in: Product[Divide[Plus[k, 1], k], List[k, 1, n]]
 an-undefined-function-expanded-term-by-term:
   epsil:
     in: Product(f(i), (i, 1, 4))
@@ -98,6 +115,8 @@ an-undefined-function-expanded-term-by-term:
   tex:
     in: \prod_{i=1}^4f(i)
     out: f(1)f(2)f(3)f(4)
+  fullform:
+    in: Product[f[i], List[i, 1, 4]]
 a-step-of-2-takes-every-other-index:
   epsil:
     in: Product(f(i), (i, 1, 4, 2))
@@ -105,6 +124,8 @@ a-step-of-2-takes-every-other-index:
   tex:
     in: \prod_{i=1}^4f(i)
     out: f(1)f(3)
+  fullform:
+    in: Product[f[i], List[i, 1, 4, 2]]
 over-an-explicit-list-of-values:
   epsil:
     in: Product(f(i), i in [a, b, c])
@@ -112,6 +133,8 @@ over-an-explicit-list-of-values:
   tex:
     in: \prod_{i\in \bigl\lbrack a, b, c\bigr\rbrack}f(i)
     out: f(a)f(b)f(c)
+  fullform:
+    in: Product[f[i], Element[i, List[a, b, c]]]
 a-polynomial-with-roots-1-2-and-3:
   epsil:
     in: Product(x - k, (k, 1, 3))
@@ -119,6 +142,8 @@ a-polynomial-with-roots-1-2-and-3:
   tex:
     in: \prod_{k=1}^3(x-k)
     out: (x-3)(x-2)(x-1)
+  fullform:
+    in: Product[Subtract[x, k], List[k, 1, 3]]
 a-double-product-over-a-3-times-3-grid:
   epsil:
     in: Product(i + j, (i, 1, 3), (j, 1, 3))
@@ -126,6 +151,8 @@ a-double-product-over-a-3-times-3-grid:
   tex:
     in: \prod_{i=1, j=1}^{3, 3}(i+j)
     out: 172\,800
+  fullform:
+    in: Product[Plus[i, j], List[i, 1, 3], List[j, 1, 3]]
   wolfram:
     in: Product[Plus[i, j], List[i, 1, 3], List[j, 1, 3]]
 an-inner-limit-that-depends-on-the-outer-index-a:
@@ -135,6 +162,8 @@ an-inner-limit-that-depends-on-the-outer-index-a:
   tex:
     in: \prod_{i=1, j=1}^{3, i}(i+j)
     out: 2\,880
+  fullform:
+    in: Product[Plus[i, j], List[i, 1, 3], List[j, 1, i]]
   wolfram:
     in: Product[Plus[i, j], List[i, 1, 3], List[j, 1, i]]
 a-symbolic-triangular-product-prod-i-1-p-prod-j:
@@ -144,6 +173,8 @@ a-symbolic-triangular-product-prod-i-1-p-prod-j:
   tex:
     in: \prod_{i=1, j=1}^{p, i}2^{i+j}
     out: \sqrt{2}^{p\times(p+1)^2}
+  fullform:
+    in: Product[Power[2, Plus[i, j]], List[i, 1, p], List[j, 1, i]]
 an-infinite-product-with-a-closed-form-prod-k-1:
   epsil:
     in: Product(1 + 1 / k ^ 2, (k, 1, PositiveInfinity))
@@ -151,6 +182,8 @@ an-infinite-product-with-a-closed-form-prod-k-1:
   tex:
     in: \prod_{k=1}^{\infty}(1+\frac{1}{k^2})
     out: \frac{\sinh(\pi)}{\pi}
+  fullform:
+    in: Product[Plus[1, Divide[1, Power[k, 2]]], List[k, 1, Infinity]]
   wolfram:
     in: Product[Plus[1, Divide[1, Power[k, 2]]], List[k, 1, Infinity]]
 an-infinite-telescoping-product-prod-k-2-infty-1:
@@ -160,6 +193,8 @@ an-infinite-telescoping-product-prod-k-2-infty-1:
   tex:
     in: \prod_{k=2}^{\infty}(1-\frac{1}{k^2})
     out: \frac{1}{2}
+  fullform:
+    in: Product[Subtract[1, Divide[1, Power[k, 2]]], List[k, 2, Infinity]]
   wolfram:
     in: Product[Subtract[1, Divide[1, Power[k, 2]]], List[k, 2, Infinity]]
 prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet:
@@ -169,6 +204,8 @@ prod-i-2-infty-1-1-i-4-frac-sinh-pi-4-pi-not-yet:
   tex:
     in: \prod_{i=2}^{\infty}(1-\frac{1}{i^4})
     out: \frac{\sinh(\pi)}{4\pi}
+  fullform:
+    in: Product[Subtract[1, Divide[1, Power[i, 4]]], List[i, 2, Infinity]]
   wolfram:
     in: Product[Subtract[1, Divide[1, Power[i, 4]]], List[i, 2, Infinity]]
 exact-rationals-in-a-collection:
@@ -178,6 +215,8 @@ exact-rationals-in-a-collection:
   tex:
     in: \prod\bigl\lbrack\frac{1}{2}, \frac{2}{3}, \frac{3}{4}\bigr\rbrack
     out: \frac{1}{4}
+  fullform:
+    in: Apply[Times, List[Rational[1, 2], Rational[2, 3], Rational[3, 4]]]
   wolfram:
     in: Apply[Times, List[Rational[1, 2], Rational[2, 3], Rational[3, 4]]]
 symbolic-elements:
@@ -187,6 +226,8 @@ symbolic-elements:
   tex:
     in: \prod\bigl\lbrack a, b, c\bigr\rbrack
     out: abc
+  fullform:
+    in: Apply[Times, List[a, b, c]]
 the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2:
   epsil:
     in: Product(4 * k ^ 2 / (4 * k ^ 2 - 1), (k, 1, PositiveInfinity))
@@ -194,6 +235,8 @@ the-wallis-product-prod-k-1-infty-frac-4k-2-4k-2:
   tex:
     in: \prod_{k=1}^{\infty}\frac{4k^2}{4k^2-1}
     out: \frac{\pi}{2}
+  fullform:
+    in: Product[Divide[Times[4, Power[k, 2]], Subtract[Times[4, Power[k, 2]], 1]], List[k, 1, Infinity]]
   wolfram:
     in: Product[Divide[Times[4, Power[k, 2]], Subtract[Times[4, Power[k, 2]], 1]], List[k, 1, Infinity]]
 an-asymmetric-infinite-product-n-n-3-n-1-n-2:
@@ -203,5 +246,7 @@ an-asymmetric-infinite-product-n-n-3-n-1-n-2:
   tex:
     in: \prod_{n=1}^{\infty}\frac{n\times(n+3)}{(n+1)(n+2)}
     out: \frac{1}{3}
+  fullform:
+    in: Product[Divide[Times[n, Plus[n, 3]], Times[Plus[n, 1], Plus[n, 2]]], List[n, 1, Infinity]]
   wolfram:
     in: Product[Divide[Times[n, Plus[n, 3]], Times[Plus[n, 1], Plus[n, 2]]], List[n, 1, Infinity]]

@@ -5,6 +5,8 @@ logistic-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{LogisticDistribution}(0, 1), 0)
     out: \frac{1}{4}
+  fullform:
+    in: PDF[LogisticDistribution[0, 1], 0]
   wolfram:
     in: PDF[LogisticDistribution[0, 1], 0]
 logistic-cdf-exact:
@@ -14,6 +16,8 @@ logistic-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{LogisticDistribution}(0, 1), 0)
     out: \frac{1}{2}
+  fullform:
+    in: CDF[LogisticDistribution[0, 1], 0]
   wolfram:
     in: CDF[LogisticDistribution[0, 1], 0]
 logistic-mean-exact:
@@ -23,6 +27,8 @@ logistic-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{LogisticDistribution}(0, 1))
     out: "0"
+  fullform:
+    in: Mean[LogisticDistribution[0, 1]]
   wolfram:
     in: Mean[LogisticDistribution[0, 1]]
 logistic-variance-exact:
@@ -32,5 +38,7 @@ logistic-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{LogisticDistribution}(0, 1))
     out: \frac{\pi^2}{3}
+  fullform:
+    in: Variance[LogisticDistribution[0, 1]]
   wolfram:
     in: Variance[LogisticDistribution[0, 1]]

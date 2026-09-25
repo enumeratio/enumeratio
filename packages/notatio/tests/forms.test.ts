@@ -1,7 +1,7 @@
 // Every reference example's forms, as the printers and transpilers make them today, are the
 // ones its implementations record pins (design/examples-as-data.md §2): our `epsil`, `tex`
-// and `traditional`, each other system's `in`, and Wolfram's `back` wherever `in` doesn't
-// read back as the example. A printer or transpiler change shows up here as a data diff to
+// and `traditional`, each other system's `in`, and `fullform` with its `back` wherever
+// @enumeratio/wolfram's FullForm doesn't read back as the example. A printer or transpiler change shows up here as a data diff to
 // commit, in the same PR. No kernel needed.
 
 import { isDeepStrictEqual } from "node:util";
@@ -18,13 +18,13 @@ test("every record pins the forms the printers and transpilers make", () => {
     .filter((h) => !isDeepStrictEqual(recordWithForms(h.entry.examples, h.implementations), h.implementations ?? {}))
     .map((h) => h.head);
   expect(stale, FIX).toEqual([]);
-});
+}, 60_000); // prints and transpiles every example: past the 5 s default on CI runners
 
 // A transpiler that stopped emitting, or a reader that stopped reading, would show here first.
 test("most examples make the trip to Wolfram and back exactly", () => {
   let exact = 0;
   for (const { implementations } of heads)
     for (const rows of Object.values(implementations ?? {}))
-      if (rows["wolfram"]?.in && rows["wolfram"].back === undefined) exact++;
-  expect(exact).toBeGreaterThan(2500);
+      if (rows["fullform"]?.in && rows["fullform"].back === undefined) exact++;
+  expect(exact).toBeGreaterThan(3500);
 });

@@ -8,6 +8,8 @@ adicvaluation-adicnumeral-5-75:
   traditional:
     in: v_{5}(75)
     out: "2"
+  fullform:
+    in: AdicValuation[AdicNumeral[5, 75]]
   rust:
     in: adic_valuation(adic(n(5), n(75)))
     out: "2"
@@ -21,6 +23,8 @@ adicnorm-adicnumeral-5-75:
   traditional:
     in: \left|75\right|_{5}
     out: \frac{1}{25}
+  fullform:
+    in: AdicNorm[AdicNumeral[5, 75]]
   rust:
     in: adic_norm(adic(n(5), n(75)))
     out: 1/25
@@ -31,6 +35,8 @@ adicunitpart-adicnumeral-5-75:
   tex:
     in: \mathrm{AdicUnitPart}(\mathrm{AdicNumeral}(5, 75))
     out: \mathrm{AdicNumeral}(5, 3)
+  fullform:
+    in: AdicUnitPart[AdicNumeral[5, 75]]
 negative-in-q-5:
   epsil:
     in: AdicValuation(AdicNumeral(5, 3 / 25))
@@ -41,6 +47,8 @@ negative-in-q-5:
   traditional:
     in: v_{5}(\frac{3}{25})
     out: "-2"
+  fullform:
+    in: AdicValuation[AdicNumeral[5, Rational[3, 25]]]
   rust:
     in: adic_valuation(adic(n(5), rational(n(3), n(25))))
     out: "-2"

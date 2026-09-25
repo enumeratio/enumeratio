@@ -8,6 +8,8 @@ sigma1sigma2-cycles-the-three-strands:
   traditional:
     in: \mathrm{BraidPermutation}(\sigma_{1}\sigma_{2})
     out: \bigl\lbrack2, 3, 1\bigr\rbrack
+  fullform:
+    in: BraidPermutation[Braid[3, List[1, 2]]]
 the-hopf-link:
   epsil:
     in: BraidComponents(Braid(2, [1, 1]))
@@ -18,6 +20,8 @@ the-hopf-link:
   traditional:
     in: \mathrm{BraidComponents}(\sigma_{1}^{2})
     out: "2"
+  fullform:
+    in: BraidComponents[Braid[2, List[1, 1]]]
 t-2-q-is-a-knot-for-odd-q:
   epsil:
     in: BraidIsKnot(TorusBraid(2, 5))
@@ -28,6 +32,8 @@ t-2-q-is-a-knot-for-odd-q:
   traditional:
     in: \mathrm{BraidIsKnot}(T_{2,5})
     out: \mathrm{True}
+  fullform:
+    in: BraidIsKnot[TorusBraid[2, 5]]
 two-positive-crossings-and-one-negative:
   epsil:
     in: BraidWrithe(Braid(3, [1, -2, 1]))
@@ -38,3 +44,5 @@ two-positive-crossings-and-one-negative:
   traditional:
     in: w(\sigma_{1}\sigma_{2}^{-1}\sigma_{1})
     out: "1"
+  fullform:
+    in: BraidWrithe[Braid[3, List[1, -2, 1]]]

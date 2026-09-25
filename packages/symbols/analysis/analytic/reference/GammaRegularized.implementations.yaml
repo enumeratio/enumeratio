@@ -8,6 +8,8 @@ q-a-0-1-for-any-a:
   traditional:
     in: Q(1, 0)
     out: "1"
+  fullform:
+    in: GammaRegularized[1, 0]
   wolfram:
     in: GammaRegularized[1, 0]
     out: "1"
@@ -24,6 +26,8 @@ q-1-z-e-z-here-at-z-1:
   traditional:
     in: Q(1, 1)
     out: \frac{1}{e}
+  fullform:
+    in: GammaRegularized[1, 1]
   wolfram:
     in: GammaRegularized[1, 1]
     out: E^(-1)
@@ -40,6 +44,8 @@ floating-point-arguments-evaluate-directly-to-a:
   traditional:
     in: Q(2.5, 1.5)
     out: 0.699\,985\,835\,878\,627\,509\,1
+  fullform:
+    in: GammaRegularized[2.5, 1.5]
   wolfram:
     in: GammaRegularized[2.5, 1.5]
     out: "0.6999858358786275"
@@ -56,6 +62,8 @@ the-polynomial-closed-form-for-an-integer-order:
   traditional:
     in: Q(5, -1)
     out: \frac{3e}{8}
+  fullform:
+    in: GammaRegularized[5, -1]
   wolfram:
     in: GammaRegularized[5, -1]
     out: (3*E)/8
@@ -72,6 +80,8 @@ the-cdf-of-a-poisson-lambda-2-random-variable-at:
   traditional:
     in: Q(3, 2)
     out: \frac{5}{e^{2}}
+  fullform:
+    in: GammaRegularized[3, 2]
   wolfram:
     in: GammaRegularized[3, 2]
     out: 5/E^2
@@ -88,6 +98,8 @@ a-non-integer-order-combined-with-negative-z:
   traditional:
     in: Q(2.5, -1)
     out: Q(2.5, -1)
+  fullform:
+    in: GammaRegularized[2.5, -1]
   wolfram:
     in: GammaRegularized[2.5, -1]
     out: 0.9999999999999998 - 0.6280082302883814*I
@@ -104,6 +116,8 @@ three-arguments-p-5-2-3-2-q-5-2-0-3-2-the-gamma:
   tex:
     in: \operatorname{GammaRegularized}(2.5, 0, 1.5)
     out: 0.300\,014\,164\,121\,371\,94
+  fullform:
+    in: GammaRegularized[2.5, 0, 1.5]
   wolfram:
     in: GammaRegularized[2.5, 0, 1.5]
     out: "0.30001416412137244"
@@ -117,6 +131,8 @@ q-a-0-z-1-q-a-z-even-for-negative-a-where-gamma:
   tex:
     in: \operatorname{GammaRegularized}(-1.5, 0, 1.5)
     out: 0.985\,260\,074\,360\,347\,2
+  fullform:
+    in: GammaRegularized[-1.5, 0, 1.5]
   wolfram:
     in: GammaRegularized[-1.5, 0, 1.5]
     out: "0.985260074360347"
@@ -130,6 +146,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \operatorname{GammaRegularized}(\bigl\lbrack1, 2\bigr\rbrack, 1)
     out: \bigl\lbrack\frac{1}{e}, \frac{2}{e}\bigr\rbrack
+  fullform:
+    in: GammaRegularized[List[1, 2], 1]
   wolfram:
     in: GammaRegularized[List[1, 2], 1]
     out: "{E^(-1), 2/E}"
@@ -146,6 +164,8 @@ q-1-z-e-z-at-z-1-5:
   traditional:
     in: Q(1, 1.5)
     out: 0.223\,130\,160\,148\,429\,828\,933
+  fullform:
+    in: GammaRegularized[1, 1.5]
   wolfram:
     in: GammaRegularized[1, 1.5]
 q-2-3-3-4-3-e-3-3:
@@ -158,6 +178,8 @@ q-2-3-3-4-3-e-3-3:
   traditional:
     in: Q(2, 3.3)
     out: 0.158\,597\,619\,825\,332\,023\,416
+  fullform:
+    in: GammaRegularized[2, 3.3]
   wolfram:
     in: GammaRegularized[2, 3.3]
 complex-order-under-n:
@@ -170,6 +192,8 @@ complex-order-under-n:
   traditional:
     in: N(Q(1+i, 2.5))
     out: 0.007\,947\,060\,620\,119\,186\,222\,37+0.152\,536\,778\,541\,018\,44i
+  fullform:
+    in: N[GammaRegularized[Complex[1, 1], 2.5]]
   wolfram:
     in: N[GammaRegularized[Complex[1, 1], 2.5]]
 three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2:
@@ -179,6 +203,8 @@ three-arguments-q-a-z-0-q-a-z-1-the-gamma-5-2:
   tex:
     in: \operatorname{GammaRegularized}(2.5, 0.5, 1.5)
     out: 0.262\,579\,937\,368\,668\,97
+  fullform:
+    in: GammaRegularized[2.5, 0.5, 1.5]
   wolfram:
     in: GammaRegularized[2.5, 0.5, 1.5]
 which-at-an-integer-order-equally-evaluates-to:
@@ -188,6 +214,8 @@ which-at-an-integer-order-equally-evaluates-to:
   tex:
     in: \operatorname{GammaRegularized}(2, 0.5, 1.5)
     out: 0.351\,970\,589\,197\,875\,55
+  fullform:
+    in: GammaRegularized[2, 0.5, 1.5]
   wolfram:
     in: GammaRegularized[2, 0.5, 1.5]
 listable-over-its-limits-q-1-infty-infty-q-1:
@@ -197,6 +225,8 @@ listable-over-its-limits-q-1-infty-infty-q-1:
   tex:
     in: \operatorname{GammaRegularized}(1, \bigl\lbrack-\infty, \infty\bigr\rbrack)
     out: \bigl\lbrack\infty, 0\bigr\rbrack
+  fullform:
+    in: GammaRegularized[1, List[-Infinity, Infinity]]
   wolfram:
     in: GammaRegularized[1, List[-Infinity, Infinity]]
 listable-threads-elementwise-over-a-matrix:
@@ -206,6 +236,8 @@ listable-threads-elementwise-over-a-matrix:
   tex:
     in: \operatorname{GammaRegularized}(2, \bigl\lbrack\bigl\lbrack3.5, 0\bigr\rbrack, \bigl\lbrack0, 6.5\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack0.135\,888\,225\,400\,433\,24, 1\bigr\rbrack, \bigl\lbrack1, 0.011\,275\,793\,947\,331\,794\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: GammaRegularized[2, List[List[3.5, 0], List[0, 6.5]]]
   wolfram:
     in: GammaRegularized[2, List[List[3.5, 0], List[0, 6.5]]]
 interval-arithmetic-q-is-decreasing-in-z:
@@ -218,6 +250,8 @@ interval-arithmetic-q-is-decreasing-in-z:
   traditional:
     in: Q(\frac{2}{5}, \mathrm{Interval}(0.21, 0.22))
     out: \mathrm{Interval}(0.421\,244\,895\,791\,953\,23, 0.430\,390\,666\,940\,599\,5)
+  fullform:
+    in: GammaRegularized[Rational[2, 5], Interval[List[0.21, 0.22]]]
   wolfram:
     in: GammaRegularized[Rational[2, 5], Interval[List[0.21, 0.22]]]
 the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar:
@@ -230,6 +264,8 @@ the-chi-2-1-cdf-p-1-2-x-2-at-the-familiar:
   traditional:
     in: 1-Q(0.5, 1.920\,729\,410\,347\,042\,5)
     out: 0.949\,999\,999\,999\,998\,778\,644
+  fullform:
+    in: Subtract[1, GammaRegularized[0.5, 1.9207294103470425]]
   wolfram:
     in: Subtract[1, GammaRegularized[0.5, 1.9207294103470425]]
 q-a-0-1-for-symbolic-a:
@@ -242,6 +278,8 @@ q-a-0-1-for-symbolic-a:
   traditional:
     in: Q(a, 0)
     out: "1"
+  fullform:
+    in: GammaRegularized[a, 0]
 q-a-infty-0:
   epsil:
     in: GammaRegularized(a, PositiveInfinity)
@@ -252,6 +290,8 @@ q-a-infty-0:
   traditional:
     in: Q(a, \infty)
     out: "0"
+  fullform:
+    in: GammaRegularized[a, Infinity]
 q-1-x-e-x-symbolically:
   epsil:
     in: GammaRegularized(1, x)
@@ -262,6 +302,8 @@ q-1-x-e-x-symbolically:
   traditional:
     in: Q(1, x)
     out: e^{-x}
+  fullform:
+    in: GammaRegularized[1, x]
 q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s:
   epsil:
     in: GammaRegularized(2, x)
@@ -272,6 +314,8 @@ q-2-x-1-x-e-x-through-q-s-x-gamma-s-x-gamma-s:
   traditional:
     in: Q(2, x)
     out: (x+1)\exp(-x)
+  fullform:
+    in: GammaRegularized[2, x]
 q-1-2-x-erfc-sqrt-x-see-erfc:
   epsil:
     in: GammaRegularized(1 / 2, x)
@@ -282,6 +326,8 @@ q-1-2-x-erfc-sqrt-x-see-erfc:
   traditional:
     in: Q(\frac{1}{2}, x)
     out: \operatorname{erfc}(\sqrt{x})
+  fullform:
+    in: GammaRegularized[Rational[1, 2], x]
 to-30-significant-digits-not-yet-the-last-digit:
   epsil:
     in: N(GammaRegularized(2, 1), 30)
@@ -292,6 +338,8 @@ to-30-significant-digits-not-yet-the-last-digit:
   traditional:
     in: N(Q(2, 1), 30)
     out: 0.735\,758\,882\,342\,884\,643\,191
+  fullform:
+    in: N[GammaRegularized[2, 1], 30]
   wolfram:
     in: N[GammaRegularized[2, 1], 30]
 q-s-z-at-a-complex-order-s-beyond-what-the:
@@ -304,5 +352,7 @@ q-s-z-at-a-complex-order-s-beyond-what-the:
   traditional:
     in: N(Q(2+i, 1.5))
     out: 0.617\,652\,231\,045\,064\,133\,665+0.333\,481\,540\,658\,552\,3i
+  fullform:
+    in: N[GammaRegularized[Complex[2, 1], 1.5]]
   wolfram:
     in: N[GammaRegularized[Complex[2, 1], 1.5]]

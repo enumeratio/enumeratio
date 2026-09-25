@@ -5,6 +5,8 @@ li-2-1-zeta-2-pi-2-6:
   tex:
     in: \operatorname{Li}_{2}(1)
     out: \frac{\pi^2}{6}
+  fullform:
+    in: PolyLog[2, 1]
   wolfram:
     in: PolyLog[2, 1]
     out: Pi^2/6
@@ -27,6 +29,8 @@ li-2-1-eta-2-pi-2-12:
   tex:
     in: \operatorname{Li}_{2}(-1)
     out: -\frac{\pi^2}{12}
+  fullform:
+    in: PolyLog[2, -1]
   wolfram:
     in: PolyLog[2, -1]
     out: -1/12*Pi^2
@@ -49,6 +53,8 @@ li-4-1-zeta-4-pi-4-90:
   tex:
     in: \operatorname{Li}_{4}(1)
     out: \frac{\pi^4}{90}
+  fullform:
+    in: PolyLog[4, 1]
   wolfram:
     in: PolyLog[4, 1]
     out: Pi^4/90
@@ -71,6 +77,8 @@ li-1-z-ln-1-z-symbolically:
   tex:
     in: \operatorname{Li}_{1}(z)
     out: -\ln(1-z)
+  fullform:
+    in: PolyLog[1, z]
 li-1-z-z-1-z-2-negative-orders-are-rational:
   epsil:
     in: PolyLog(-1, z)
@@ -78,6 +86,8 @@ li-1-z-z-1-z-2-negative-orders-are-rational:
   tex:
     in: \operatorname{Li}_{-1}(z)
     out: \frac{z}{(1-z)^2}
+  fullform:
+    in: PolyLog[-1, z]
 li-2-1-2-pi-2-12-ln-2-2-2:
   epsil:
     in: PolyLog(2, 0.5) + 0.5 * Ln(2) ^ 2 == Pi ^ 2 / 12
@@ -88,9 +98,10 @@ li-2-1-2-pi-2-12-ln-2-2-2:
   traditional:
     in: \operatorname{Li}_{2}(0.5)+0.5\ln(2)^2=\frac{\pi^2}{12}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[PolyLog[2, 0.5], Times[0.5, Power[Log[2], 2]]], Divide[Power[Pi, 2], 12]]
   wolfram:
     in: (Plus[PolyLog[2, 0.5], Times[0.5, Power[Log[2], 2]]] == Divide[Power[Pi, 2], 12])
-    back: Unreadable
     out: True
     tex:
       in: \text{Li}_2(0.5)+0.5 \log ^2(2)=\frac{\pi ^2}{12}
@@ -111,6 +122,8 @@ li-1-2-1-zeta-1-2-a-non-integer-order-from:
   tex:
     in: \operatorname{Li}_{0.5}(1)
     out: -1.460\,354\,508\,809\,586\,812\,89
+  fullform:
+    in: PolyLog[0.5, 1]
   wolfram:
     in: PolyLog[0.5, 1]
     out: ComplexInfinity
@@ -139,6 +152,8 @@ li-1-2-1-2-0-80612672-via-the-lerch-series:
   tex:
     in: \operatorname{Li}_{0.5}(0.5)
     out: 0.806\,126\,723\,042\,852\,2
+  fullform:
+    in: PolyLog[0.5, 0.5]
   wolfram:
     in: PolyLog[0.5, 0.5]
     out: "0.8061267230428522"
@@ -161,6 +176,8 @@ li-5-2-1-2-0-46229778-the-alternating-side-euler:
   tex:
     in: \operatorname{Li}_{2.5}(-0.5)
     out: -0.462\,297\,782\,190\,063\,46
+  fullform:
+    in: PolyLog[2.5, -0.5]
   wolfram:
     in: PolyLog[2.5, -0.5]
     out: "-0.4622977821900634"
@@ -183,6 +200,8 @@ threads-over-a-list-of-arguments:
   tex:
     in: \operatorname{Li}_{2}(\bigl\lbrack0.5, 0.25\bigr\rbrack)
     out: \bigl\lbrack0.582\,240\,526\,465\,012\,5, 0.267\,652\,639\,082\,732\,5\bigr\rbrack
+  fullform:
+    in: PolyLog[2, List[0.5, 0.25]]
   wolfram:
     in: PolyLog[2, List[0.5, 0.25]]
     out: "{0.5822405264650127, 0.2676526390827326}"
@@ -208,6 +227,8 @@ a-non-integer-order-past-z-1-is-left-unevaluated:
   tex:
     in: \operatorname{Li}_{2.5}(2)
     out: 2.789\,660\,332\,382\,777\,8-1.363\,803\,700\,539\,351i
+  fullform:
+    in: PolyLog[2.5, 2]
   wolfram:
     in: PolyLog[2.5, 2]
     out: 2.789660332381895 - 1.3638037005377295*I
@@ -233,6 +254,8 @@ an-exact-argument-stays-symbolic-under-plain:
   tex:
     in: \operatorname{Li}_{2}(\frac{1}{2})
     out: \operatorname{Li}_{2}(\frac{1}{2})
+  fullform:
+    in: PolyLog[2, Rational[1, 2]]
   wolfram:
     in: PolyLog[2, Rational[1, 2]]
     out: Pi^2/12 - Log[2]^2/2
@@ -252,6 +275,8 @@ a-machine-precision-argument:
   tex:
     in: \operatorname{Li}_{2}(0.9)
     out: 1.299\,714\,723\,004\,958\,8
+  fullform:
+    in: PolyLog[2, 0.9]
   wolfram:
     in: PolyLog[2, 0.9]
   sympy:
@@ -267,6 +292,8 @@ li-0-z-z-1-z-past-the-unit-disk:
   tex:
     in: \operatorname{Li}_{0}(5.5)
     out: -1.\overline{2}
+  fullform:
+    in: PolyLog[0, 5.5]
   wolfram:
     in: PolyLog[0, 5.5]
   sympy:
@@ -282,6 +309,8 @@ li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac:
   tex:
     in: \operatorname{Li}_{3}(\frac{1}{2})
     out: -\frac{1}{12}(\ln(2)\pi^2)+\frac{\ln(2)^3}{6}+\frac{7\zeta(3)}{8}
+  fullform:
+    in: PolyLog[3, Rational[1, 2]]
   wolfram:
     in: PolyLog[3, Rational[1, 2]]
   sympy:
@@ -295,6 +324,8 @@ complex-order-and-argument:
   tex:
     in: \operatorname{Li}_{0.2+i}(0.5-0.5i)
     out: 0.070\,326\,520\,550\,516\,03-0.563\,293\,262\,539\,874\,4i
+  fullform:
+    in: PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]
   wolfram:
     in: PolyLog[Complex[0.2, 1], Complex[0.5, -0.5]]
   sympy:
@@ -310,6 +341,8 @@ past-z-1-the-continuation-is-complex:
   tex:
     in: \operatorname{Li}_{2}(2.5)
     out: 2.420\,790\,806\,565\,934-2.878\,612\,231\,808\,261i
+  fullform:
+    in: PolyLog[2, 2.5]
   wolfram:
     in: PolyLog[2, 2.5]
   sympy:
@@ -325,6 +358,8 @@ li-3-1-eta-3-frac-34-zeta-3:
   tex:
     in: \operatorname{Li}_{3}(-1)
     out: -\frac{3\zeta(3)}{4}
+  fullform:
+    in: PolyLog[3, -1]
   wolfram:
     in: PolyLog[3, -1]
   sympy:
@@ -340,6 +375,8 @@ li-2-2-pi-2-4-i-pi-ln-2-exactly:
   tex:
     in: \operatorname{Li}_{2}(2)
     out: \frac{\pi^2}{4}-i\pi\ln(2)
+  fullform:
+    in: PolyLog[2, 2]
   wolfram:
     in: PolyLog[2, 2]
   sympy:
@@ -355,6 +392,8 @@ li-n-1-1-2-1-n-zeta-n-for-symbolic-n:
   tex:
     in: \operatorname{Li}_{n}(-1)
     out: (2^{1-n}-1)\zeta(n)
+  fullform:
+    in: PolyLog[n, -1]
 li-2-z-z-1-z-1-z-3:
   epsil:
     in: PolyLog(-2, z)
@@ -362,6 +401,8 @@ li-2-z-z-1-z-1-z-3:
   tex:
     in: \operatorname{Li}_{-2}(z)
     out: \frac{z\times(z+1)}{(1-z)^3}
+  fullform:
+    in: PolyLog[-2, z]
 interval-arithmetic:
   epsil:
     in: PolyLog(2, Interval(0.7, 0.8))
@@ -369,6 +410,8 @@ interval-arithmetic:
   tex:
     in: \operatorname{Li}_{2}(\mathrm{Interval}(0.7, 0.8))
     out: \mathrm{Interval}(0.889\,377\,624\,286\,038\,7, 1.074\,794\,600\,008\,248\,4)
+  fullform:
+    in: PolyLog[2, Interval[List[0.7, 0.8]]]
   wolfram:
     in: PolyLog[2, Interval[List[0.7, 0.8]]]
 three-arguments-the-nielsen-generalized:
@@ -378,6 +421,8 @@ three-arguments-the-nielsen-generalized:
   tex:
     in: \operatorname{Li}_{1}(2)
     out: \zeta(3)
+  fullform:
+    in: PolyLog[1, 2, 1]
   wolfram:
     in: PolyLog[1, 2, 1]
 s-2-2-1-pi-4-360:
@@ -387,6 +432,8 @@ s-2-2-1-pi-4-360:
   tex:
     in: \operatorname{Li}_{2}(2)
     out: \frac{\pi^4}{360}
+  fullform:
+    in: PolyLog[2, 2, 1]
   wolfram:
     in: PolyLog[2, 2, 1]
 s-1-2-1-2-zeta-3-8-ln-3-2-6:
@@ -396,6 +443,8 @@ s-1-2-1-2-zeta-3-8-ln-3-2-6:
   tex:
     in: \operatorname{Li}_{1}(2)
     out: 0.094\,753\,004\,230\,127\,7
+  fullform:
+    in: PolyLog[1, 2, 0.5]
   wolfram:
     in: PolyLog[1, 2, 0.5]
 li-s-1-zeta-s-for-symbolic-s:
@@ -405,6 +454,8 @@ li-s-1-zeta-s-for-symbolic-s:
   tex:
     in: \operatorname{Li}_{s}(1)
     out: \zeta(s)
+  fullform:
+    in: PolyLog[s, 1]
 frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
   epsil:
     in: D(PolyLog(n, x), x)
@@ -412,6 +463,8 @@ frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative:
   tex:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\operatorname{Li}_{n}(x)
     out: \frac{\operatorname{Li}_{n-1}(x)}{x}
+  fullform:
+    in: D[PolyLog[n, x], x]
 to-30-significant-digits-not-yet-the-requested:
   epsil:
     in: N(PolyLog(2, 1 / 2), 30)
@@ -419,6 +472,8 @@ to-30-significant-digits-not-yet-the-requested:
   tex:
     in: N(\operatorname{Li}_{2}(\frac{1}{2}), 30)
     out: 0.582\,240\,526\,465\,012\,505\,903
+  fullform:
+    in: N[PolyLog[2, Rational[1, 2]], 30]
   wolfram:
     in: N[PolyLog[2, Rational[1, 2]], 30]
   sympy:
@@ -432,6 +487,8 @@ n-polylog-2-0p5:
   tex:
     in: N(\operatorname{Li}_{2}(0.5))
     out: 0.582\,240\,526\,465\,012\,5
+  fullform:
+    in: N[PolyLog[2, 0.5]]
   wolfram:
     in: N[PolyLog[2, 0.5]]
     out: "0.5822405264650127"
@@ -454,6 +511,8 @@ n-polylog-2-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{2}(-0.5))
     out: -0.448\,414\,206\,923\,646\,36
+  fullform:
+    in: N[PolyLog[2, -0.5]]
   wolfram:
     in: N[PolyLog[2, -0.5]]
     out: "-0.4484142069236462"
@@ -476,6 +535,8 @@ n-polylog-2-0p25:
   tex:
     in: N(\operatorname{Li}_{2}(0.25))
     out: 0.267\,652\,639\,082\,732\,5
+  fullform:
+    in: N[PolyLog[2, 0.25]]
   wolfram:
     in: N[PolyLog[2, 0.25]]
     out: "0.2676526390827326"
@@ -498,6 +559,8 @@ n-polylog-2-0p9:
   tex:
     in: N(\operatorname{Li}_{2}(0.9))
     out: 1.299\,714\,723\,004\,958\,8
+  fullform:
+    in: N[PolyLog[2, 0.9]]
   wolfram:
     in: N[PolyLog[2, 0.9]]
     out: "1.2997147230049588"
@@ -520,6 +583,8 @@ n-polylog-2-1-over-3:
   tex:
     in: N(\operatorname{Li}_{2}(\frac{1}{3}))
     out: 0.366\,213\,229\,977\,063\,4
+  fullform:
+    in: N[PolyLog[2, Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[2, Rational[1, 3]]]
     out: "0.36621322997706346"
@@ -539,6 +604,8 @@ n-polylog-2-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{2}(0.4+0.3i))
     out: 0.407\,770\,499\,295\,096\,57+0.374\,503\,158\,223\,905i
+  fullform:
+    in: N[PolyLog[2, Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[2, Complex[0.4, 0.3]]]
     out: 0.40777049929509657 + 0.3745031582239049*I
@@ -561,6 +628,8 @@ n-polylog-3-0p5:
   tex:
     in: N(\operatorname{Li}_{3}(0.5))
     out: 0.537\,213\,193\,608\,040\,3
+  fullform:
+    in: N[PolyLog[3, 0.5]]
   wolfram:
     in: N[PolyLog[3, 0.5]]
     out: "0.5372131936080403"
@@ -583,6 +652,8 @@ n-polylog-3-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{3}(-0.5))
     out: -0.472\,597\,844\,658\,897\,04
+  fullform:
+    in: N[PolyLog[3, -0.5]]
   wolfram:
     in: N[PolyLog[3, -0.5]]
     out: "-0.47259784465889687"
@@ -605,6 +676,8 @@ n-polylog-3-0p25:
   tex:
     in: N(\operatorname{Li}_{3}(0.25))
     out: 0.258\,461\,395\,796\,573\,23
+  fullform:
+    in: N[PolyLog[3, 0.25]]
   wolfram:
     in: N[PolyLog[3, 0.25]]
     out: "0.2584613957965733"
@@ -627,6 +700,8 @@ n-polylog-3-0p9:
   tex:
     in: N(\operatorname{Li}_{3}(0.9))
     out: 1.049\,658\,950\,186\,439\,7
+  fullform:
+    in: N[PolyLog[3, 0.9]]
   wolfram:
     in: N[PolyLog[3, 0.9]]
     out: "1.04965895018644"
@@ -649,6 +724,8 @@ n-polylog-3-1-over-3:
   tex:
     in: N(\operatorname{Li}_{3}(\frac{1}{3}))
     out: 0.348\,827\,861\,154\,840\,05
+  fullform:
+    in: N[PolyLog[3, Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[3, Rational[1, 3]]]
     out: "0.34882786115484005"
@@ -668,6 +745,8 @@ n-polylog-3-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{3}(0.4+0.3i))
     out: 0.405\,995\,303\,819\,877\,75+0.334\,761\,838\,533\,880\,25i
+  fullform:
+    in: N[PolyLog[3, Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[3, Complex[0.4, 0.3]]]
     out: 0.4059953038198777 + 0.3347618385338803*I
@@ -690,6 +769,8 @@ n-polylog-0p5-0p5:
   tex:
     in: N(\operatorname{Li}_{0.5}(0.5))
     out: 0.806\,126\,723\,042\,852\,2
+  fullform:
+    in: N[PolyLog[0.5, 0.5]]
   wolfram:
     in: N[PolyLog[0.5, 0.5]]
     out: "0.8061267230428522"
@@ -712,6 +793,8 @@ n-polylog-0p5-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{0.5}(-0.5))
     out: -0.373\,752\,237\,980\,973
+  fullform:
+    in: N[PolyLog[0.5, -0.5]]
   wolfram:
     in: N[PolyLog[0.5, -0.5]]
     out: "-0.37375223798097307"
@@ -734,6 +817,8 @@ n-polylog-0p5-0p25:
   tex:
     in: N(\operatorname{Li}_{0.5}(0.25))
     out: 0.305\,734\,930\,399\,296\,4
+  fullform:
+    in: N[PolyLog[0.5, 0.25]]
   wolfram:
     in: N[PolyLog[0.5, 0.25]]
     out: "0.3057349303992964"
@@ -756,6 +841,8 @@ n-polylog-0p5-0p9:
   tex:
     in: N(\operatorname{Li}_{0.5}(0.9))
     out: 4.021\,950\,427\,473\,364
+  fullform:
+    in: N[PolyLog[0.5, 0.9]]
   wolfram:
     in: N[PolyLog[0.5, 0.9]]
     out: 4.021950427473362 - 4.440892098500626*^-16*I
@@ -778,6 +865,8 @@ n-polylog-0p5-1-over-3:
   tex:
     in: N(\operatorname{Li}_{0.5}(\frac{1}{3}))
     out: 0.442\,108\,835\,280\,675\,46
+  fullform:
+    in: N[PolyLog[0.5, Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[0.5, Rational[1, 3]]]
     out: "0.4421088352806754"
@@ -797,6 +886,8 @@ n-polylog-0p5-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{0.5}(0.4+0.3i))
     out: 0.379\,935\,019\,202\,769\,3+0.544\,594\,255\,219\,852\,8i
+  fullform:
+    in: N[PolyLog[0.5, Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[0.5, Complex[0.4, 0.3]]]
     out: 0.3799350192027696 + 0.544594255219853*I
@@ -819,6 +910,8 @@ n-polylog-1p5-0p5:
   tex:
     in: N(\operatorname{Li}_{1.5}(0.5))
     out: 0.624\,837\,020\,819\,914
+  fullform:
+    in: N[PolyLog[1.5, 0.5]]
   wolfram:
     in: N[PolyLog[1.5, 0.5]]
     out: "0.6248370208199139"
@@ -841,6 +934,8 @@ n-polylog-1p5-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{1.5}(-0.5))
     out: -0.429\,887\,321\,580\,579\,35
+  fullform:
+    in: N[PolyLog[1.5, -0.5]]
   wolfram:
     in: N[PolyLog[1.5, -0.5]]
     out: "-0.4298873215805793"
@@ -863,6 +958,8 @@ n-polylog-1p5-0p25:
   tex:
     in: N(\operatorname{Li}_{1.5}(0.25))
     out: 0.275\,700\,508\,644\,822\,9
+  fullform:
+    in: N[PolyLog[1.5, 0.25]]
   wolfram:
     in: N[PolyLog[1.5, 0.25]]
     out: "0.2757005086448228"
@@ -885,6 +982,8 @@ n-polylog-1p5-0p9:
   tex:
     in: N(\operatorname{Li}_{1.5}(0.9))
     out: 1.614\,438\,528\,566\,339
+  fullform:
+    in: N[PolyLog[1.5, 0.9]]
   wolfram:
     in: N[PolyLog[1.5, 0.9]]
     out: "1.614438528566554"
@@ -907,6 +1006,8 @@ n-polylog-1p5-1-over-3:
   tex:
     in: N(\operatorname{Li}_{1.5}(\frac{1}{3}))
     out: 0.381\,783\,507\,869\,016\,16
+  fullform:
+    in: N[PolyLog[1.5, Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[1.5, Rational[1, 3]]]
     out: "0.38178350786901616"
@@ -926,6 +1027,8 @@ n-polylog-1p5-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{1.5}(0.4+0.3i))
     out: 0.406\,193\,979\,594\,026\,37+0.410\,075\,868\,348\,374\,95i
+  fullform:
+    in: N[PolyLog[1.5, Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[1.5, Complex[0.4, 0.3]]]
     out: 0.4061939795940264 + 0.410075868348375*I
@@ -948,6 +1051,8 @@ n-polylog-2p5-0p5:
   tex:
     in: N(\operatorname{Li}_{2.5}(0.5))
     out: 0.554\,997\,278\,717\,512\,4
+  fullform:
+    in: N[PolyLog[2.5, 0.5]]
   wolfram:
     in: N[PolyLog[2.5, 0.5]]
     out: "0.5549972787175124"
@@ -970,6 +1075,8 @@ n-polylog-2p5-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{2.5}(-0.5))
     out: -0.462\,297\,782\,190\,063\,46
+  fullform:
+    in: N[PolyLog[2.5, -0.5]]
   wolfram:
     in: N[PolyLog[2.5, -0.5]]
     out: "-0.4622977821900634"
@@ -992,6 +1099,8 @@ n-polylog-2p5-0p25:
   tex:
     in: N(\operatorname{Li}_{2.5}(0.25))
     out: 0.262\,193\,770\,428\,551\,6
+  fullform:
+    in: N[PolyLog[2.5, 0.25]]
   wolfram:
     in: N[PolyLog[2.5, 0.25]]
     out: "0.2621937704285515"
@@ -1014,6 +1123,8 @@ n-polylog-2p5-0p9:
   tex:
     in: N(\operatorname{Li}_{2.5}(0.9))
     out: 1.139\,003\,025\,202\,156\,3
+  fullform:
+    in: N[PolyLog[2.5, 0.9]]
   wolfram:
     in: N[PolyLog[2.5, 0.9]]
     out: "1.1390030252388494"
@@ -1036,6 +1147,8 @@ n-polylog-2p5-1-over-3:
   tex:
     in: N(\operatorname{Li}_{2.5}(\frac{1}{3}))
     out: 0.355\,830\,740\,032\,320\,74
+  fullform:
+    in: N[PolyLog[2.5, Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[2.5, Rational[1, 3]]]
     out: "0.3558307400323208"
@@ -1055,6 +1168,8 @@ n-polylog-2p5-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{2.5}(0.4+0.3i))
     out: 0.407\,221\,711\,324\,621\,6+0.350\,742\,483\,763\,195\,6i
+  fullform:
+    in: N[PolyLog[2.5, Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[2.5, Complex[0.4, 0.3]]]
     out: 0.40722171132462165 + 0.3507424837631957*I
@@ -1077,6 +1192,8 @@ n-polylog-neg-1-0p5:
   tex:
     in: N(\operatorname{Li}_{-1}(0.5))
     out: "2"
+  fullform:
+    in: N[PolyLog[-1, 0.5]]
   wolfram:
     in: N[PolyLog[-1, 0.5]]
     out: 2.
@@ -1099,6 +1216,8 @@ n-polylog-neg-1-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{-1}(-0.5))
     out: -0.\overline{2}
+  fullform:
+    in: N[PolyLog[-1, -0.5]]
   wolfram:
     in: N[PolyLog[-1, -0.5]]
     out: "-0.2222222222222222"
@@ -1121,6 +1240,8 @@ n-polylog-neg-1-0p25:
   tex:
     in: N(\operatorname{Li}_{-1}(0.25))
     out: 0.\overline{4}
+  fullform:
+    in: N[PolyLog[-1, 0.25]]
   wolfram:
     in: N[PolyLog[-1, 0.25]]
     out: "0.4444444444444444"
@@ -1143,6 +1264,8 @@ n-polylog-neg-1-0p9:
   tex:
     in: N(\operatorname{Li}_{-1}(0.9))
     out: "90"
+  fullform:
+    in: N[PolyLog[-1, 0.9]]
   wolfram:
     in: N[PolyLog[-1, 0.9]]
     out: "90.00000000000004"
@@ -1165,6 +1288,8 @@ n-polylog-neg-1-1-over-3:
   tex:
     in: N(\operatorname{Li}_{-1}(\frac{1}{3}))
     out: 0.74\overline{9}
+  fullform:
+    in: N[PolyLog[-1, Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[-1, Rational[1, 3]]]
     out: "0.75"
@@ -1184,6 +1309,8 @@ n-polylog-neg-1-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{-1}(0.4+0.3i))
     out: 19\,136\cdot10^{-20}+1.111\,111\,111\,111\,111\,4i
+  fullform:
+    in: N[PolyLog[-1, Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[-1, Complex[0.4, 0.3]]]
     out: 7.07253186057507*^-17 + 1.111111111111111*I
@@ -1206,6 +1333,8 @@ n-polylog-2-plus-i-0p5:
   tex:
     in: N(\operatorname{Li}_{2+i}(0.5))
     out: 0.554\,853\,545\,353\,320\,5-0.058\,049\,561\,791\,697\,15i
+  fullform:
+    in: N[PolyLog[Complex[2, 1], 0.5]]
   wolfram:
     in: N[PolyLog[Complex[2, 1], 0.5]]
     out: 0.5548535453533203 - 0.05804956179169715*I
@@ -1228,6 +1357,8 @@ n-polylog-2-plus-i-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{2+i}(-0.5))
     out: -0.457\,531\,546\,075\,585\,2-0.030\,471\,019\,669\,807\,11i
+  fullform:
+    in: N[PolyLog[Complex[2, 1], -0.5]]
   wolfram:
     in: N[PolyLog[Complex[2, 1], -0.5]]
     out: -0.45753154607558516 - 0.03047101966980711*I
@@ -1250,6 +1381,8 @@ n-polylog-2-plus-i-0p25:
   tex:
     in: N(\operatorname{Li}_{2+i}(0.25))
     out: 0.262\,850\,183\,027\,236\,23-0.011\,816\,971\,919\,302\,564i
+  fullform:
+    in: N[PolyLog[Complex[2, 1], 0.25]]
   wolfram:
     in: N[PolyLog[Complex[2, 1], 0.25]]
     out: 0.2628501830272362 - 0.01181697191930256*I
@@ -1272,6 +1405,8 @@ n-polylog-2-plus-i-0p9:
   tex:
     in: N(\operatorname{Li}_{2+i}(0.9))
     out: 1.073\,635\,898\,279\,169-0.306\,500\,621\,704\,929\,9i
+  fullform:
+    in: N[PolyLog[Complex[2, 1], 0.9]]
   wolfram:
     in: N[PolyLog[Complex[2, 1], 0.9]]
     out: 1.073635898279267 - 0.30650062170701076*I
@@ -1294,6 +1429,8 @@ n-polylog-2-plus-i-1-over-3:
   tex:
     in: N(\operatorname{Li}_{2+i}(\frac{1}{3}))
     out: 0.356\,694\,556\,200\,713\,8-0.022\,385\,462\,317\,962\,054i
+  fullform:
+    in: N[PolyLog[Complex[2, 1], Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[Complex[2, 1], Rational[1, 3]]]
     out: 0.3566945562007135 - 0.022385462317962058*I
@@ -1313,6 +1450,8 @@ n-polylog-2-plus-i-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{2+i}(0.4+0.3i))
     out: 0.462\,140\,023\,057\,769\,9+0.350\,560\,597\,101\,058\,36i
+  fullform:
+    in: N[PolyLog[Complex[2, 1], Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[Complex[2, 1], Complex[0.4, 0.3]]]
     out: 0.4621400230577697 + 0.35056059710105814*I
@@ -1335,6 +1474,8 @@ n-polylog-0p5-plus-neg-1-times-i-0p5:
   tex:
     in: N(\operatorname{Li}_{0.5-i}(0.5))
     out: 0.670\,039\,797\,076\,198\,3+0.233\,019\,269\,757\,713\,28i
+  fullform:
+    in: N[PolyLog[Complex[0.5, -1], 0.5]]
   wolfram:
     in: N[PolyLog[Complex[0.5, -1], 0.5]]
     out: 0.6700397970761985 + 0.2330192697577132*I
@@ -1357,6 +1498,8 @@ n-polylog-0p5-plus-neg-1-times-i-neg-0p5:
   tex:
     in: N(\operatorname{Li}_{0.5-i}(-0.5))
     out: -0.391\,310\,316\,111\,742\,9+0.069\,751\,466\,633\,279\,12i
+  fullform:
+    in: N[PolyLog[Complex[0.5, -1], -0.5]]
   wolfram:
     in: N[PolyLog[Complex[0.5, -1], -0.5]]
     out: -0.39131031611174283 + 0.06975146663327912*I
@@ -1379,6 +1522,8 @@ n-polylog-0p5-plus-neg-1-times-i-0p25:
   tex:
     in: N(\operatorname{Li}_{0.5-i}(0.25))
     out: 0.288\,406\,466\,124\,705\,9+0.038\,753\,470\,608\,298\,05i
+  fullform:
+    in: N[PolyLog[Complex[0.5, -1], 0.25]]
   wolfram:
     in: N[PolyLog[Complex[0.5, -1], 0.25]]
     out: 0.28840646612470583 + 0.03875347060829805*I
@@ -1401,6 +1546,8 @@ n-polylog-0p5-plus-neg-1-times-i-0p9:
   tex:
     in: N(\operatorname{Li}_{0.5-i}(0.9))
     out: 0.580\,361\,076\,526\,937+2.242\,263\,748\,000\,801i
+  fullform:
+    in: N[PolyLog[Complex[0.5, -1], 0.9]]
   wolfram:
     in: N[PolyLog[Complex[0.5, -1], 0.9]]
     out: 0.5803610765269382 + 2.2422637480008047*I
@@ -1423,6 +1570,8 @@ n-polylog-0p5-plus-neg-1-times-i-1-over-3:
   tex:
     in: N(\operatorname{Li}_{0.5-i}(\frac{1}{3}))
     out: 0.404\,329\,932\,237\,944\,8+0.077\,925\,724\,560\,642\,56i
+  fullform:
+    in: N[PolyLog[Complex[0.5, -1], Rational[1, 3]]]
   wolfram:
     in: N[PolyLog[Complex[0.5, -1], Rational[1, 3]]]
     out: 0.40432993223794483 + 0.07792572456064258*I
@@ -1442,6 +1591,8 @@ n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i:
   tex:
     in: N(\operatorname{Li}_{0.5-i}(0.4+0.3i))
     out: 0.246\,545\,234\,792\,888\,67+0.432\,156\,736\,424\,442\,9i
+  fullform:
+    in: N[PolyLog[Complex[0.5, -1], Complex[0.4, 0.3]]]
   wolfram:
     in: N[PolyLog[Complex[0.5, -1], Complex[0.4, 0.3]]]
     out: 0.2465452347928887 + 0.4321567364244431*I

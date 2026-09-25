@@ -162,9 +162,9 @@ const targetedExample = computed((): number =>
     ? (entry.value?.examples ?? []).findIndex((ex) => anchorOf(ex) === targeted.value)
     : -1,
 );
-const shown = (ex: { hidden?: boolean }, i: number): boolean =>
+const shown = (ex: { role?: string }, i: number): boolean =>
   // Kept as data, not rendered -- unless a deep link asks for it.
-  !ex.hidden || i === targetedExample.value;
+  ex.role !== "test" || i === targetedExample.value;
 const casesOf = (key: string): number[] => membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
 const cycle = (key: string, cases: readonly number[], step: number): void => {
   const was = entry.value!.examples[cases[activeCase[key] ?? 0]!]!;
@@ -210,7 +210,7 @@ const grouped = computed(() => {
     .map(([category, items]) => ({ category, items }));
 });
 // Examples kept as data (grid points, edge cases) that the page leaves out.
-const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.hidden).length);
+const testCount = computed(() => (entry.value?.examples ?? []).filter((ex) => ex.role === "test").length);
 </script>
 
 <template>
@@ -266,8 +266,8 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 
     <div v-if="grouped.length" class="ref-examples-head">
       <h2>Examples</h2>
-      <span v-if="hiddenCount" class="ref-hidden-count"
-        >{{ hiddenCount }} more kept as data, checked against the oracles</span
+      <span v-if="testCount" class="ref-hidden-count"
+        >{{ testCount }} more kept as data, checked against the oracles</span
       >
       <span class="ref-view">
         <button v-if="grouped.length > 1" @click="sectionsOpen = !sectionsOpen">

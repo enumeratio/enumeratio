@@ -8,6 +8,8 @@ a-pole-of-gamma-shared-by-its-log-derivative:
   traditional:
     in: \psi(0)
     out: \tilde\infty
+  fullform:
+    in: PolyGamma[0]
   wolfram:
     in: PolyGamma[0]
     out: ComplexInfinity
@@ -24,6 +26,8 @@ digamma-neg-1:
   traditional:
     in: \psi(-1)
     out: \tilde\infty
+  fullform:
+    in: PolyGamma[-1]
   wolfram:
     in: PolyGamma[-1]
     out: ComplexInfinity
@@ -40,6 +44,8 @@ a-floating-point-argument-evaluates-directly-to:
   traditional:
     in: \psi(0.5)
     out: -1.963\,510\,026\,021\,423\,479\,44
+  fullform:
+    in: PolyGamma[0.5]
   wolfram:
     in: PolyGamma[0.5]
     out: "-1.9635100260214235"
@@ -56,9 +62,10 @@ psi-1-gamma:
   traditional:
     in: \psi(1)+\gamma=0
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[PolyGamma[1], EulerGamma], 0]
   wolfram:
     in: (Plus[PolyGamma[1], EulerGamma] == 0)
-    back: Unreadable
     out: True
     tex:
       in: \psi (1)+\gamma =0
@@ -73,9 +80,10 @@ recurrence-psi-z-1-psi-z-1-z-here-at-z-1:
   traditional:
     in: \psi(2)=\psi(1)+1
     out: \mathrm{True}
+  fullform:
+    in: Equal[PolyGamma[2], Plus[PolyGamma[1], 1]]
   wolfram:
     in: (PolyGamma[2] == Plus[PolyGamma[1], 1])
-    back: Unreadable
     out: True
     tex:
       in: \psi (2)=\psi (1)+1
@@ -90,9 +98,10 @@ psi-1-2-gamma-2-ln-2:
   traditional:
     in: \psi(\frac{1}{2})+\gamma+2\ln(2)=0
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]], 0]
   wolfram:
     in: (Plus[PolyGamma[Rational[1, 2]], EulerGamma, Times[2, Log[2]]] == 0)
-    back: Unreadable
     out: EulerGamma + 2*Log[2] + PolyGamma[0, 1/2] == 0
     tex:
       in: \psi \left(\frac{1}{2}\right)+\gamma +2 \log (2)=0
@@ -107,9 +116,10 @@ harmonic-numbers-via-digamma-psi-n-1-gamma-h-n:
   traditional:
     in: \psi(6)+\gamma=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Plus[PolyGamma[6], EulerGamma], Plus[1, Rational[1, 2], Rational[1, 3], Rational[1, 4], Rational[1, 5]]]
   wolfram:
     in: (Plus[PolyGamma[6], EulerGamma] == Plus[1, Rational[1, 2], Rational[1, 3], Rational[1, 4], Rational[1, 5]])
-    back: Unreadable
     out: True
     tex:
       in: \psi (6)+\gamma =1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}
@@ -124,6 +134,8 @@ between-the-poles-at-0-and-1-psi-is-still-finite:
   traditional:
     in: \psi(-0.5)
     out: 0.036\,489\,973\,978\,576\,520\,559
+  fullform:
+    in: PolyGamma[-0.5]
   wolfram:
     in: PolyGamma[-0.5]
     out: "0.03648997397857645"
@@ -137,6 +149,8 @@ threads-over-a-list-reducing-each-positive:
   tex:
     in: \mathrm{Digamma}(\bigl\lbrack1, 2, 3\bigr\rbrack)
     out: \bigl\lbrack-\gamma, 1-\gamma, \frac{3}{2}-\gamma\bigr\rbrack
+  fullform:
+    in: PolyGamma[List[1, 2, 3]]
   wolfram:
     in: PolyGamma[List[1, 2, 3]]
 a-machine-precision-argument:
@@ -149,6 +163,8 @@ a-machine-precision-argument:
   traditional:
     in: \psi(100.5)
     out: 4.605\,174\,352\,581\,845\,211\,87
+  fullform:
+    in: PolyGamma[100.5]
   wolfram:
     in: PolyGamma[100.5]
 psi-5-h-4-gamma-frac-25-12-gamma:
@@ -161,6 +177,8 @@ psi-5-h-4-gamma-frac-25-12-gamma:
   traditional:
     in: \psi(5)
     out: \frac{25}{12}-\gamma
+  fullform:
+    in: PolyGamma[5]
   wolfram:
     in: PolyGamma[5]
 complex-arguments-should-evaluate-as-psi-m-does:
@@ -173,6 +191,8 @@ complex-arguments-should-evaluate-as-psi-m-does:
   traditional:
     in: \psi(2.5+3i)
     out: 1.281\,273\,919\,066\,231\,4+0.979\,805\,315\,344\,559\,6i
+  fullform:
+    in: PolyGamma[Complex[2.5, 3]]
   wolfram:
     in: PolyGamma[Complex[2.5, 3]]
 psi-infty-infty-growing-like-ln-z:
@@ -185,6 +205,8 @@ psi-infty-infty-growing-like-ln-z:
   traditional:
     in: \psi(\infty)
     out: \infty
+  fullform:
+    in: PolyGamma[Infinity]
   wolfram:
     in: PolyGamma[Infinity]
 gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln:
@@ -197,6 +219,8 @@ gauss-s-digamma-theorem-psi-1-4-gamma-pi-2-3-ln:
   traditional:
     in: \psi(\frac{1}{4})
     out: -3\ln(2)-\frac{\pi}{2}-\gamma
+  fullform:
+    in: PolyGamma[Rational[1, 4]]
   wolfram:
     in: PolyGamma[Rational[1, 4]]
 psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3:
@@ -209,6 +233,8 @@ psi-1-3-gamma-frac-pi-2-sqrt-3-frac-32-ln-3:
   traditional:
     in: \psi(\frac{1}{3})
     out: -\frac{3\ln(3)}{2}-\frac{\sqrt{3}\pi}{6}-\gamma
+  fullform:
+    in: PolyGamma[Rational[1, 3]]
   wolfram:
     in: PolyGamma[Rational[1, 3]]
 interval-arithmetic-psi-is-increasing-on-0-infty:
@@ -221,6 +247,8 @@ interval-arithmetic-psi-is-increasing-on-0-infty:
   traditional:
     in: \psi(\mathrm{Interval}(1.23, 1.24))
     out: \mathrm{Interval}(-0.251\,669\,430\,696\,100\,1, -0.239\,493\,679\,125\,936\,8)
+  fullform:
+    in: PolyGamma[Interval[List[1.23, 1.24]]]
   wolfram:
     in: PolyGamma[Interval[List[1.23, 1.24]]]
 psi-x-is-the-trigamma-psi-1-x:
@@ -233,6 +261,8 @@ psi-x-is-the-trigamma-psi-1-x:
   traditional:
     in: \frac{\mathrm{d}}{\mathrm{d}x}\psi(x)
     out: \mathrm{Trigamma}(x)
+  fullform:
+    in: D[PolyGamma[x], x]
   wolfram:
     in:
     note: Wolfram writes the derivative as $\mathrm{PolyGamma}[1, x]$; compute-engine names it `Trigamma`.
@@ -246,6 +276,8 @@ reflection-psi-1-x-psi-x-pi-cot-pi-x-here-pi-cot:
   traditional:
     in: \psi(0.7)-\psi(0.3)
     out: 2.282\,500\,668\,502\,198\,374\,21
+  fullform:
+    in: Subtract[PolyGamma[0.7], PolyGamma[0.3]]
   wolfram:
     in: Subtract[PolyGamma[0.7], PolyGamma[0.3]]
 to-30-significant-digits-every-one-correctly:
@@ -258,6 +290,8 @@ to-30-significant-digits-every-one-correctly:
   traditional:
     in: N(\psi(\frac{1}{3}), 30)
     out: -3.132\,033\,780\,020\,806\,323
+  fullform:
+    in: N[PolyGamma[Rational[1, 3]], 30]
   wolfram:
     in: N[PolyGamma[Rational[1, 3]], 30]
 psi-1-gamma-2:
@@ -270,6 +304,8 @@ psi-1-gamma-2:
   traditional:
     in: \psi(1)
     out: -\gamma
+  fullform:
+    in: PolyGamma[1]
   wolfram:
     in: PolyGamma[1]
 psi-2-1-gamma-from-psi-n-1-psi-n-1-n:
@@ -282,6 +318,8 @@ psi-2-1-gamma-from-psi-n-1-psi-n-1-n:
   traditional:
     in: \psi(2)
     out: 1-\gamma
+  fullform:
+    in: PolyGamma[2]
   wolfram:
     in: PolyGamma[2]
 psi-3-frac-3-2-gamma:
@@ -294,5 +332,7 @@ psi-3-frac-3-2-gamma:
   traditional:
     in: \psi(3)
     out: \frac{3}{2}-\gamma
+  fullform:
+    in: PolyGamma[3]
   wolfram:
     in: PolyGamma[3]

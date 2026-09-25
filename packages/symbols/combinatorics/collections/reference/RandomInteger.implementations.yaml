@@ -5,6 +5,8 @@ randominteger-default-seed-is-reproducible:
   tex:
     in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(42), \mathrm{RandomInteger}(100)\bigr\rbrack)
     out: "60"
+  fullform:
+    in: Last[List[SeedRandom[42], RandomInteger[100]]]
   wolfram:
     in: Last[List[SeedRandom[42], RandomInteger[100]]]
 randominteger-range-scope:
@@ -14,6 +16,8 @@ randominteger-range-scope:
   tex:
     in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(1), \mathrm{RandomInteger}(\bigl\lbrack10, 20\bigr\rbrack)\bigr\rbrack)
     out: "16"
+  fullform:
+    in: Last[List[SeedRandom[1], RandomInteger[List[10, 20]]]]
   wolfram:
     in: Last[List[SeedRandom[1], RandomInteger[List[10, 20]]]]
 randominteger-list-of-draws:
@@ -23,6 +27,8 @@ randominteger-list-of-draws:
   tex:
     in: \mathrm{Length}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(2), \mathrm{RandomInteger}(6, 10)\bigr\rbrack))
     out: "10"
+  fullform:
+    in: Length[Last[List[SeedRandom[2], RandomInteger[6, 10]]]]
   wolfram:
     in: Length[Last[List[SeedRandom[2], RandomInteger[6, 10]]]]
 randominteger-array-shape:
@@ -32,5 +38,7 @@ randominteger-array-shape:
   tex:
     in: \mathrm{Shape}(\mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(3), \mathrm{RandomInteger}(1, \bigl\lbrack2, 3\bigr\rbrack)\bigr\rbrack))
     out: (2,3)
+  fullform:
+    in: Dimensions[Last[List[SeedRandom[3], RandomInteger[1, List[2, 3]]]]]
   wolfram:
     in: Dimensions[Last[List[SeedRandom[3], RandomInteger[1, List[2, 3]]]]]

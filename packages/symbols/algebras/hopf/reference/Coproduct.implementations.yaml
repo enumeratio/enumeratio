@@ -10,6 +10,8 @@ deconcatenation-cut-at-each-gap:
   traditional:
     in: \Delta(M_{(1,2)})
     out: M_{\varnothing}\otimes M_{(1,2)}+M_{(1,2)}\otimes M_{\varnothing}+M_{(1)}\otimes M_{(2)}
+  fullform:
+    in: Coproduct[QSymM[List[1, 2]]]
 delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes:
   epsil:
     in: Coproduct(NSymH([2]))
@@ -22,6 +24,8 @@ delta-h-2-1-otimes-h-2-h-1-otimes-h-1-h-2-otimes:
   traditional:
     in: \Delta(H_{(2)})
     out: H_{\varnothing}\otimes H_{(2)}+H_{(2)}\otimes H_{\varnothing}+H_{(1)}\otimes H_{(1)}
+  fullform:
+    in: Coproduct[NSymH[List[2]]]
 the-counit-picks-out-the-constant-term:
   epsil:
     in: Counit(NSymH([]))
@@ -32,3 +36,5 @@ the-counit-picks-out-the-constant-term:
   traditional:
     in: \varepsilon(H_{\varnothing})
     out: "1"
+  fullform:
+    in: Counit[NSymH[List[]]]

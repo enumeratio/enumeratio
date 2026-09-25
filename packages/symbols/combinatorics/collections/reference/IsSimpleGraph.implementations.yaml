@@ -8,6 +8,8 @@ a-plain-triangle-is-simple:
   traditional:
     in: \mathrm{IsSimpleGraph}(\mathrm{CompleteGraph}(3))
     out: \mathrm{True}
+  fullform:
+    in: SimpleGraphQ[CompleteGraph[3]]
   wolfram:
     in: SimpleGraphQ[CompleteGraph[3]]
 a-repeated-undirected-edge-is-not-simple:
@@ -20,5 +22,7 @@ a-repeated-undirected-edge-is-not-simple:
   traditional:
     in: \mathrm{IsSimpleGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 1)\bigr\rbrack))
     out: \mathrm{False}
+  fullform:
+    in: SimpleGraphQ[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 1]]]]
   wolfram:
     in: SimpleGraphQ[Graph[List[UndirectedEdge[1, 2], UndirectedEdge[2, 1]]]]

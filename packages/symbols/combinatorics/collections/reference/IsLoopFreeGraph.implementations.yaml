@@ -8,6 +8,8 @@ no-self-loop:
   traditional:
     in: \mathrm{IsLoopFreeGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack))
     out: \mathrm{True}
+  fullform:
+    in: LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 2]]]]
   wolfram:
     in: LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 2]]]]
 a-self-loop:
@@ -20,5 +22,7 @@ a-self-loop:
   traditional:
     in: \mathrm{IsLoopFreeGraph}(\mathrm{Graph}(\bigl\lbrack\mathrm{UndirectedEdge}(1, 1)\bigr\rbrack))
     out: \mathrm{False}
+  fullform:
+    in: LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 1]]]]
   wolfram:
     in: LoopFreeGraphQ[Graph[List[UndirectedEdge[1, 1]]]]

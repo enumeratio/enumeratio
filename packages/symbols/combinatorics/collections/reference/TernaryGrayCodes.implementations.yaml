@@ -5,3 +5,5 @@ count-ternarygraycodes-4-3-4-81:
   tex:
     in: \mathrm{Count}(\mathrm{TernaryGrayCodes}(4))
     out: "81"
+  fullform:
+    in: Count[TernaryGrayCodes[4]]

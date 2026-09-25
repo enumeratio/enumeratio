@@ -5,6 +5,8 @@ sine-s-period-is-2-pi:
   tex:
     in: \mathrm{FunctionPeriod}(\sin(x), x)
     out: 2\pi
+  fullform:
+    in: FunctionPeriod[Sin[x], x]
 tangent-s-period-is-pi:
   epsil:
     in: FunctionPeriod(Tan(x), x)
@@ -12,6 +14,8 @@ tangent-s-period-is-pi:
   tex:
     in: \mathrm{FunctionPeriod}(\tan(x), x)
     out: \pi
+  fullform:
+    in: FunctionPeriod[Tan[x], x]
 scaling-the-argument-scales-the-period:
   epsil:
     in: FunctionPeriod(Sin(2x), x)
@@ -19,6 +23,8 @@ scaling-the-argument-scales-the-period:
   tex:
     in: \mathrm{FunctionPeriod}(\sin(2x), x)
     out: \pi
+  fullform:
+    in: FunctionPeriod[Sin[Times[2, x]], x]
 exp-is-not-periodic:
   epsil:
     in: FunctionPeriod(Exp(x), x)
@@ -26,3 +32,5 @@ exp-is-not-periodic:
   tex:
     in: \mathrm{FunctionPeriod}(e^{x}, x)
     out: "0"
+  fullform:
+    in: FunctionPeriod[Exp[x], x]

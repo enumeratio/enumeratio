@@ -8,6 +8,8 @@ issquarefree-10:
   traditional:
     in: \mathrm{IsSquareFree}(10)
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[10]
   wolfram:
     in: SquareFreeQ[10]
     out: True
@@ -24,6 +26,8 @@ issquarefree-4:
   traditional:
     in: \mathrm{IsSquareFree}(4)
     out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[4]
   wolfram:
     in: SquareFreeQ[4]
     out: False
@@ -40,6 +44,8 @@ issquarefree-12:
   traditional:
     in: \mathrm{IsSquareFree}(12)
     out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[12]
   wolfram:
     in: SquareFreeQ[12]
     out: False
@@ -56,6 +62,8 @@ every-prime-is-squarefree:
   traditional:
     in: \mathrm{IsSquareFree}(17)
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[17]
   wolfram:
     in: SquareFreeQ[17]
     out: True
@@ -72,6 +80,8 @@ every-prime-is-squarefree:
   traditional:
     in: \mathrm{IsSquareFree}(1)
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[1]
   wolfram:
     in: SquareFreeQ[1]
     out: True
@@ -88,9 +98,10 @@ n-is-squarefree-exactly-when-mu-n-neq-0-see:
   traditional:
     in: \mathrm{IsSquareFree}(10)=\lnot(\mu(10)=0)
     out: \mathrm{True}
+  fullform:
+    in: Equal[SquareFreeQ[10], Not[Equal[MoebiusMu[10], 0]]]
   wolfram:
     in: (SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])
-    back: Unreadable
     out: True
     tex:
       in: \text{SquareFreeQ}[10]=(\neg \mu (10)=0)
@@ -105,6 +116,8 @@ threads-element-wise-over-a-list:
   traditional:
     in: \mathrm{IsSquareFree}(\bigl\lbrack10, 4, 12\bigr\rbrack)
     out: \bigl\lbrack\mathrm{True}, \mathrm{False}, \mathrm{False}\bigr\rbrack
+  fullform:
+    in: SquareFreeQ[List[10, 4, 12]]
   wolfram:
     in: SquareFreeQ[List[10, 4, 12]]
     out: SquareFreeQ[{10, 4, 12}]
@@ -124,6 +137,8 @@ issquarefree-20:
   traditional:
     in: \mathrm{IsSquareFree}(20)
     out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[20]
   wolfram:
     in: SquareFreeQ[20]
 gaussian-integers-3-2i-is-a-gaussian-prime:
@@ -136,6 +151,8 @@ gaussian-integers-3-2i-is-a-gaussian-prime:
   traditional:
     in: \mathrm{IsSquareFree}(3+2i)
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[Complex[3, 2]]
   wolfram:
     in: SquareFreeQ[Complex[3, 2]]
 gaussianintegers-true-2-i-1-i-2:
@@ -148,6 +165,8 @@ gaussianintegers-true-2-i-1-i-2:
   traditional:
     in: \mathrm{IsSquareFree}(2, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[2, KeyValuePair[GaussianIntegers, True]]
 rationals-numerator-and-denominator-are-both:
   epsil:
     in: IsSquareFree(2 / 3)
@@ -158,6 +177,8 @@ rationals-numerator-and-denominator-are-both:
   traditional:
     in: \mathrm{IsSquareFree}(\frac{2}{3})
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[Rational[2, 3]]
   wolfram:
     in: SquareFreeQ[Rational[2, 3]]
 polynomials-x-2-6x-6-has-no-repeated-factor:
@@ -170,6 +191,8 @@ polynomials-x-2-6x-6-has-no-repeated-factor:
   traditional:
     in: \mathrm{IsSquareFree}(x^2+6x+6)
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[Plus[Power[x, 2], Times[6, x], 6]]
 multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor:
   epsil:
     in: IsSquareFree(x ^ 3 - x ^ 2 * y)
@@ -180,6 +203,8 @@ multivariate-x-3-x-2y-x-2-x-y-a-repeated-factor:
   traditional:
     in: \mathrm{IsSquareFree}(x^3-x^2y)
     out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[Subtract[Power[x, 3], Times[Power[x, 2], y]]]
 squarefree-as-a-polynomial-in-x-alone-y-is-just:
   epsil:
     in: IsSquareFree(x * y ^ 2, x)
@@ -190,6 +215,8 @@ squarefree-as-a-polynomial-in-x-alone-y-is-just:
   traditional:
     in: \mathrm{IsSquareFree}(xy^2, x)
     out: \mathrm{True}
+  fullform:
+    in: SquareFreeQ[Times[x, Power[y, 2]], x]
 but-not-in-y-alone-y-appears-squared:
   epsil:
     in: IsSquareFree(x * y ^ 2, y)
@@ -200,3 +227,5 @@ but-not-in-y-alone-y-appears-squared:
   traditional:
     in: \mathrm{IsSquareFree}(xy^2, y)
     out: \mathrm{False}
+  fullform:
+    in: SquareFreeQ[Times[x, Power[y, 2]], y]

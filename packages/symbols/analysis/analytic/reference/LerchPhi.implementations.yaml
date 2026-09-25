@@ -8,6 +8,8 @@ phi-1-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary:
   traditional:
     in: \Phi(1, 2, 1)
     out: \frac{\pi^2}{6}
+  fullform:
+    in: LerchPhi[1, 2, 1]
   wolfram:
     in: LerchPhi[1, 2, 1]
     out: Pi^2/6
@@ -30,6 +32,8 @@ phi-1-2-2-zeta-2-2-pi-2-6-1:
   traditional:
     in: \Phi(1, 2, 2)
     out: \frac{\pi^2}{6}-1
+  fullform:
+    in: LerchPhi[1, 2, 2]
   wolfram:
     in: LerchPhi[1, 2, 2]
     out: -1 + Pi^2/6
@@ -52,6 +56,8 @@ phi-1-4-1-zeta-4-pi-4-90:
   traditional:
     in: \Phi(1, 4, 1)
     out: \frac{\pi^4}{90}
+  fullform:
+    in: LerchPhi[1, 4, 1]
   wolfram:
     in: LerchPhi[1, 4, 1]
     out: Pi^4/90
@@ -74,6 +80,8 @@ phi-1-1-1-zeta-1-1-12:
   traditional:
     in: \Phi(1, -1, 1)
     out: -\frac{1}{12}
+  fullform:
+    in: LerchPhi[1, -1, 1]
   wolfram:
     in: LerchPhi[1, -1, 1]
     out: ComplexInfinity
@@ -99,6 +107,8 @@ phi-1-s-a-zeta-s-a-for-symbolic-s-a:
   traditional:
     in: \Phi(1, s, a)
     out: \zeta(s, a)
+  fullform:
+    in: LerchPhi[1, s, a]
 phi-z-0-a-1-1-z-independent-of-a:
   epsil:
     in: LerchPhi(z, 0, a)
@@ -109,6 +119,8 @@ phi-z-0-a-1-1-z-independent-of-a:
   traditional:
     in: \Phi(z, 0, a)
     out: \frac{1}{1-z}
+  fullform:
+    in: LerchPhi[z, 0, a]
 past-the-unit-disk-by-the-integral:
   epsil:
     in: N(LerchPhi(1 + 2i, 3 + -1 * i, 4 + 2i))
@@ -119,6 +131,8 @@ past-the-unit-disk-by-the-integral:
   traditional:
     in: N(\Phi(1+2i, 3-i, 4+2i))
     out: 0.002\,025\,009\,957\,012\,008+0.003\,327\,897\,536\,813\,197\,4i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], Complex[3, -1], Complex[4, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], Complex[3, -1], Complex[4, 2]]]
     out: 0.0020250151909632203 + 0.003327898913888968*I
@@ -144,6 +158,8 @@ phi-2-0-7-1-1-2-1-the-s-0-closed-form-holds-past:
   traditional:
     in: \Phi(2, 0, 7)
     out: "-1"
+  fullform:
+    in: LerchPhi[2, 0, 7]
   wolfram:
     in: LerchPhi[2, 0, 7]
     out: "-1"
@@ -166,9 +182,10 @@ phi-1-3-1-zeta-3-apery-s-constant:
   traditional:
     in: \Phi(1, 3, 1)=\zeta(3)
     out: \mathrm{True}
+  fullform:
+    in: Equal[LerchPhi[1, 3, 1], Zeta[3]]
   wolfram:
     in: (LerchPhi[1, 3, 1] == Zeta[3])
-    back: Unreadable
     out: True
     tex:
       in: \Phi (1,3,1)=\zeta (3)
@@ -189,9 +206,10 @@ phi-1-2-1-eta-2-pi-2-12-the-alternating-rim-via:
   traditional:
     in: \Phi(-1, 2, 1)=\frac{\pi^2}{12}
     out: \mathrm{True}
+  fullform:
+    in: Equal[LerchPhi[-1, 2, 1], Divide[Power[Pi, 2], 12]]
   wolfram:
     in: (LerchPhi[-1, 2, 1] == Divide[Power[Pi, 2], 12])
-    back: Unreadable
     out: True
     tex:
       in: \Phi (-1,2,1)=\frac{\pi ^2}{12}
@@ -209,6 +227,8 @@ inexact-arguments-should-evaluate-numerically:
   traditional:
     in: \Phi(0.5, 2, 3.5)
     out: 0.119\,386\,226\,869\,820\,48
+  fullform:
+    in: LerchPhi[0.5, 2, 3.5]
   wolfram:
     in: LerchPhi[0.5, 2, 3.5]
   sympy:
@@ -225,6 +245,8 @@ s-0-far-outside-the-unit-disk-1-1-49-5:
   traditional:
     in: \Phi(49.5, 0, 2)
     out: -0.020\,618\,556\,701\,030\,927\,835\,1
+  fullform:
+    in: LerchPhi[49.5, 0, 2]
   wolfram:
     in: LerchPhi[49.5, 0, 2]
   sympy:
@@ -241,6 +263,8 @@ z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z:
   traditional:
     in: \Phi(7.5, 1, 2)
     out: -0.166\,609\,816\,478\,250\,52-0.055\,850\,536\,063\,818\,55i
+  fullform:
+    in: LerchPhi[7.5, 1, 2]
   wolfram:
     in: LerchPhi[7.5, 1, 2]
   sympy:
@@ -257,6 +281,8 @@ uncertainty-in-z:
   traditional:
     in: \Phi(\mathrm{Around}(0.5, 0.01), 1, 2)
     out: \mathrm{Around}(0.772\,588\,722\,239\,781\,1, 0.009\,096\,451\,110\,408\,75)
+  fullform:
+    in: LerchPhi[Around[0.5, 0.01], 1, 2]
   wolfram:
     in: LerchPhi[Around[0.5, 0.01], 1, 2]
 phi-0-s-a-a-s-only-the-n-0-term-survives:
@@ -269,6 +295,8 @@ phi-0-s-a-a-s-only-the-n-0-term-survives:
   traditional:
     in: \Phi(0, s, a)
     out: a^{-s}
+  fullform:
+    in: LerchPhi[0, s, a]
 phi-z-s-1-li-s-z-z-symbolically-see-polylog:
   epsil:
     in: LerchPhi(z, s, 1)
@@ -279,6 +307,8 @@ phi-z-s-1-li-s-z-z-symbolically-see-polylog:
   traditional:
     in: \Phi(z, s, 1)
     out: \frac{\operatorname{Li}_{s}(z)}{z}
+  fullform:
+    in: LerchPhi[z, s, 1]
 phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1:
   epsil:
     in: LerchPhi(z, 1, 1)
@@ -289,6 +319,8 @@ phi-z-1-1-ln-1-z-z-the-s-1-instance-through-li-1:
   traditional:
     in: \Phi(z, 1, 1)
     out: -\frac{\ln(1-z)}{z}
+  fullform:
+    in: LerchPhi[z, 1, 1]
 phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through:
   epsil:
     in: LerchPhi(1, 2, 1 / 4)
@@ -299,6 +331,8 @@ phi-1-2-1-4-zeta-2-1-4-pi-2-8g-through:
   traditional:
     in: \Phi(1, 2, \frac{1}{4})
     out: 8\mathrm{Catalan}+\pi^2
+  fullform:
+    in: LerchPhi[1, 2, Rational[1, 4]]
   wolfram:
     in: LerchPhi[1, 2, Rational[1, 4]]
   sympy:
@@ -313,6 +347,8 @@ phi-1-1-1-eta-1-ln-2-the-alternating-harmonic:
   traditional:
     in: \Phi(-1, 1, 1)
     out: \ln(2)
+  fullform:
+    in: LerchPhi[-1, 1, 1]
   wolfram:
     in: LerchPhi[-1, 1, 1]
   sympy:
@@ -329,6 +365,8 @@ phi-1-2-1-1-2-ln-2:
   traditional:
     in: \Phi(\frac{1}{2}, 1, 1)
     out: 2\ln(2)
+  fullform:
+    in: LerchPhi[Rational[1, 2], 1, 1]
   wolfram:
     in: LerchPhi[Rational[1, 2], 1, 1]
   sympy:
@@ -343,6 +381,8 @@ phi-1-2-1-2-4g-via-phi-1-s-1-2-2-s-beta-s-and:
   traditional:
     in: \Phi(-1, 2, \frac{1}{2})
     out: 4\mathrm{Catalan}
+  fullform:
+    in: LerchPhi[-1, 2, Rational[1, 2]]
   wolfram:
     in: LerchPhi[-1, 2, Rational[1, 2]]
   sympy:
@@ -357,6 +397,8 @@ though-n-gets-4g-3-66386:
   traditional:
     in: N(\Phi(-1, 2, \frac{1}{2}))
     out: 3.663\,862\,376\,708\,875
+  fullform:
+    in: N[LerchPhi[-1, 2, Rational[1, 2]]]
   wolfram:
     in: N[LerchPhi[-1, 2, Rational[1, 2]]]
   sympy:
@@ -371,6 +413,8 @@ to-30-significant-digits-not-yet-the-requested:
   traditional:
     in: N(\Phi(\frac{1}{2}, 2, \frac{1}{3}), 30)
     out: 9.343\,474\,659\,375\,939\,518\,56
+  fullform:
+    in: N[LerchPhi[Rational[1, 2], 2, Rational[1, 3]], 30]
   wolfram:
     in: N[LerchPhi[Rational[1, 2], 2, Rational[1, 3]], 30]
   sympy:
@@ -385,6 +429,8 @@ phi-1-3-frac-12-8-beta-3-pi-3-4-the-dirichlet:
   traditional:
     in: \Phi(-1, 3, \frac{1}{2})
     out: \frac{\pi^3}{4}
+  fullform:
+    in: LerchPhi[-1, 3, Rational[1, 2]]
   wolfram:
     in: LerchPhi[-1, 3, Rational[1, 2]]
   sympy:
@@ -399,6 +445,8 @@ past-z-1-it-is-continued-on-the-cut-real-z-1-it:
   traditional:
     in: N(\Phi(2.809, 2, 2))
     out: -0.056\,587\,701\,973\,223\,09-0.411\,220\,377\,971\,662\,5i
+  fullform:
+    in: N[LerchPhi[2.809, 2, 2]]
   wolfram:
     in: N[LerchPhi[2.809, 2, 2]]
   sympy:
@@ -415,6 +463,8 @@ where-the-continuation-s-terms-cancel-below:
   traditional:
     in: N(\Phi(10, 10, 10))
     out: \Phi(10, 10, 10)
+  fullform:
+    in: N[LerchPhi[10, 10, 10]]
   wolfram:
     in: N[LerchPhi[10, 10, 10]]
   sympy:
@@ -431,6 +481,8 @@ phi-1-2-2-1-2-li-2-1-2:
   traditional:
     in: N(\Phi(\frac{1}{2}, 2, 1))
     out: 1.164\,481\,052\,930\,025
+  fullform:
+    in: N[LerchPhi[Rational[1, 2], 2, 1]]
   wolfram:
     in: N[LerchPhi[Rational[1, 2], 2, 1]]
   sympy:
@@ -445,9 +497,10 @@ phi-1-3-1-eta-3-frac-34-zeta-3:
   traditional:
     in: \Phi(-1, 3, 1)=\frac{3\zeta(3)}{4}
     out: \mathrm{True}
+  fullform:
+    in: Equal[LerchPhi[-1, 3, 1], Times[Rational[3, 4], Zeta[3]]]
   wolfram:
     in: (LerchPhi[-1, 3, 1] == Times[Rational[3, 4], Zeta[3]])
-    back: Unreadable
   sympy:
     in: enumeratio_equal(lerchphi(-1, 3, 1), (Rational(3, 4) * zeta(3)))
 n-lerchphi-0p5-2-1:
@@ -460,6 +513,8 @@ n-lerchphi-0p5-2-1:
   traditional:
     in: N(\Phi(0.5, 2, 1))
     out: 1.164\,481\,052\,930\,025
+  fullform:
+    in: N[LerchPhi[0.5, 2, 1]]
   wolfram:
     in: N[LerchPhi[0.5, 2, 1]]
     out: "1.1644810529300254"
@@ -482,6 +537,8 @@ n-lerchphi-0p5-2-2:
   traditional:
     in: N(\Phi(0.5, 2, 2))
     out: 0.328\,962\,105\,860\,049\,87
+  fullform:
+    in: N[LerchPhi[0.5, 2, 2]]
   wolfram:
     in: N[LerchPhi[0.5, 2, 2]]
     out: "0.32896210586005004"
@@ -504,6 +561,8 @@ n-lerchphi-0p5-2-0p5:
   traditional:
     in: N(\Phi(0.5, 2, 0.5))
     out: 4.277\,145\,500\,580\,949
+  fullform:
+    in: N[LerchPhi[0.5, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[0.5, 2, 0.5]]
     out: "4.27714550058095"
@@ -526,6 +585,8 @@ n-lerchphi-0p5-2-5-over-2:
   traditional:
     in: N(\Phi(0.5, 2, \frac{5}{2}))
     out: 0.219\,693\,113\,434\,910\,27
+  fullform:
+    in: N[LerchPhi[0.5, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.5, 2, Rational[5, 2]]]
     out: "0.21969311343491024"
@@ -545,6 +606,8 @@ n-lerchphi-0p5-3-1:
   traditional:
     in: N(\Phi(0.5, 3, 1))
     out: 1.074\,426\,387\,216\,080\,6
+  fullform:
+    in: N[LerchPhi[0.5, 3, 1]]
   wolfram:
     in: N[LerchPhi[0.5, 3, 1]]
     out: "1.0744263872160806"
@@ -567,6 +630,8 @@ n-lerchphi-0p5-3-2:
   traditional:
     in: N(\Phi(0.5, 3, 2))
     out: 0.148\,852\,774\,432\,160\,77
+  fullform:
+    in: N[LerchPhi[0.5, 3, 2]]
   wolfram:
     in: N[LerchPhi[0.5, 3, 2]]
     out: "0.1488527744321608"
@@ -589,6 +654,8 @@ n-lerchphi-0p5-3-0p5:
   traditional:
     in: N(\Phi(0.5, 3, 0.5))
     out: 8.168\,022\,726\,140\,352
+  fullform:
+    in: N[LerchPhi[0.5, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[0.5, 3, 0.5]]
     out: "8.16802272614035"
@@ -611,6 +678,8 @@ n-lerchphi-0p5-3-5-over-2:
   traditional:
     in: N(\Phi(0.5, 3, \frac{5}{2}))
     out: 0.079\,498\,311\,968\,809\,95
+  fullform:
+    in: N[LerchPhi[0.5, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.5, 3, Rational[5, 2]]]
     out: "0.07949831196880994"
@@ -630,6 +699,8 @@ n-lerchphi-0p5-0p5-1:
   traditional:
     in: N(\Phi(0.5, 0.5, 1))
     out: 1.612\,253\,446\,085\,704\,3
+  fullform:
+    in: N[LerchPhi[0.5, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[0.5, 0.5, 1]]
     out: "1.6122534460857043"
@@ -652,6 +723,8 @@ n-lerchphi-0p5-0p5-2:
   traditional:
     in: N(\Phi(0.5, 0.5, 2))
     out: 1.224\,506\,892\,171\,409
+  fullform:
+    in: N[LerchPhi[0.5, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[0.5, 0.5, 2]]
     out: "1.224506892171409"
@@ -674,6 +747,8 @@ n-lerchphi-0p5-0p5-0p5:
   traditional:
     in: N(\Phi(0.5, 0.5, 0.5))
     out: 2.101\,712\,462\,489\,351\,3
+  fullform:
+    in: N[LerchPhi[0.5, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[0.5, 0.5, 0.5]]
     out: "2.1017124624893517"
@@ -696,6 +771,8 @@ n-lerchphi-0p5-0p5-5-over-2:
   traditional:
     in: N(\Phi(0.5, 0.5, \frac{5}{2}))
     out: 1.117\,002\,438\,609\,575\,2
+  fullform:
+    in: N[LerchPhi[0.5, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.5, 0.5, Rational[5, 2]]]
     out: "1.1170024386095745"
@@ -715,6 +792,8 @@ n-lerchphi-0p5-neg-1-1:
   traditional:
     in: N(\Phi(0.5, -1, 1))
     out: "4"
+  fullform:
+    in: N[LerchPhi[0.5, -1, 1]]
   wolfram:
     in: N[LerchPhi[0.5, -1, 1]]
     out: 4.
@@ -737,6 +816,8 @@ n-lerchphi-0p5-neg-1-2:
   traditional:
     in: N(\Phi(0.5, -1, 2))
     out: "6"
+  fullform:
+    in: N[LerchPhi[0.5, -1, 2]]
   wolfram:
     in: N[LerchPhi[0.5, -1, 2]]
     out: 6.
@@ -759,6 +840,8 @@ n-lerchphi-0p5-neg-1-0p5:
   traditional:
     in: N(\Phi(0.5, -1, 0.5))
     out: "3"
+  fullform:
+    in: N[LerchPhi[0.5, -1, 0.5]]
   wolfram:
     in: N[LerchPhi[0.5, -1, 0.5]]
     out: 3.
@@ -781,6 +864,8 @@ n-lerchphi-0p5-neg-1-5-over-2:
   traditional:
     in: N(\Phi(0.5, -1, \frac{5}{2}))
     out: "7"
+  fullform:
+    in: N[LerchPhi[0.5, -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.5, -1, Rational[5, 2]]]
     out: 7.
@@ -800,6 +885,8 @@ n-lerchphi-0p5-2-plus-i-1:
   traditional:
     in: N(\Phi(0.5, 2+i, 1))
     out: 1.109\,707\,090\,706\,641-0.116\,099\,123\,583\,394\,3i
+  fullform:
+    in: N[LerchPhi[0.5, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[0.5, Complex[2, 1], 1]]
     out: 1.1097070907066406 - 0.1160991235833943*I
@@ -822,6 +909,8 @@ n-lerchphi-0p5-2-plus-i-2:
   traditional:
     in: N(\Phi(0.5, 2+i, 2))
     out: 0.219\,414\,181\,413\,281\,26-0.232\,198\,247\,166\,788\,55i
+  fullform:
+    in: N[LerchPhi[0.5, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[0.5, Complex[2, 1], 2]]
     out: 0.21941418141328128 - 0.2321982471667886*I
@@ -844,6 +933,8 @@ n-lerchphi-0p5-2-plus-i-0p5:
   traditional:
     in: N(\Phi(0.5, 2+i, 0.5))
     out: 3.308\,545\,670\,420\,987+2.422\,109\,611\,421\,262i
+  fullform:
+    in: N[LerchPhi[0.5, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[0.5, Complex[2, 1], 0.5]]
     out: 3.308545670420986 + 2.4221096114212624*I
@@ -866,6 +957,8 @@ n-lerchphi-0p5-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(0.5, 2+i, \frac{5}{2}))
     out: 0.109\,543\,338\,580\,833\,94-0.184\,323\,131\,142\,563\,82i
+  fullform:
+    in: N[LerchPhi[0.5, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.5, Complex[2, 1], Rational[5, 2]]]
     out: 0.1095433385808339 - 0.18432313114256374*I
@@ -885,6 +978,8 @@ n-lerchphi-neg-0p5-2-1:
   traditional:
     in: N(\Phi(-0.5, 2, 1))
     out: 0.896\,828\,413\,847\,292\,4
+  fullform:
+    in: N[LerchPhi[-0.5, 2, 1]]
   wolfram:
     in: N[LerchPhi[-0.5, 2, 1]]
     out: "0.8968284138472924"
@@ -907,6 +1002,8 @@ n-lerchphi-neg-0p5-2-2:
   traditional:
     in: N(\Phi(-0.5, 2, 2))
     out: 0.206\,343\,172\,305\,415\,18
+  fullform:
+    in: N[LerchPhi[-0.5, 2, 2]]
   wolfram:
     in: N[LerchPhi[-0.5, 2, 2]]
     out: "0.2063431723054152"
@@ -929,6 +1026,8 @@ n-lerchphi-neg-0p5-2-0p5:
   traditional:
     in: N(\Phi(-0.5, 2, 0.5))
     out: 3.809\,896\,676\,518\,156
+  fullform:
+    in: N[LerchPhi[-0.5, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.5, 2, 0.5]]
     out: "3.809896676518156"
@@ -951,6 +1050,8 @@ n-lerchphi-neg-0p5-2-5-over-2:
   traditional:
     in: N(\Phi(-0.5, 2, \frac{5}{2}))
     out: 0.128\,475\,594\,961\,513\,03
+  fullform:
+    in: N[LerchPhi[-0.5, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.5, 2, Rational[5, 2]]]
     out: "0.1284755949615131"
@@ -970,6 +1071,8 @@ n-lerchphi-neg-0p5-3-1:
   traditional:
     in: N(\Phi(-0.5, 3, 1))
     out: 0.945\,195\,689\,317\,793\,7
+  fullform:
+    in: N[LerchPhi[-0.5, 3, 1]]
   wolfram:
     in: N[LerchPhi[-0.5, 3, 1]]
     out: "0.9451956893177937"
@@ -992,6 +1095,8 @@ n-lerchphi-neg-0p5-3-2:
   traditional:
     in: N(\Phi(-0.5, 3, 2))
     out: 0.109\,608\,621\,364\,412\,52
+  fullform:
+    in: N[LerchPhi[-0.5, 3, 2]]
   wolfram:
     in: N[LerchPhi[-0.5, 3, 2]]
     out: "0.1096086213644125"
@@ -1014,6 +1119,8 @@ n-lerchphi-neg-0p5-3-0p5:
   traditional:
     in: N(\Phi(-0.5, 3, 0.5))
     out: 7.865\,477\,514\,353\,38
+  fullform:
+    in: N[LerchPhi[-0.5, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.5, 3, 0.5]]
     out: "7.8654775143533815"
@@ -1036,6 +1143,8 @@ n-lerchphi-neg-0p5-3-5-over-2:
   traditional:
     in: N(\Phi(-0.5, 3, \frac{5}{2}))
     out: 0.054\,502\,650\,006\,118\,85
+  fullform:
+    in: N[LerchPhi[-0.5, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.5, 3, Rational[5, 2]]]
     out: "0.05450265000611884"
@@ -1055,6 +1164,8 @@ n-lerchphi-neg-0p5-0p5-1:
   traditional:
     in: N(\Phi(-0.5, 0.5, 1))
     out: 0.747\,504\,475\,961\,946
+  fullform:
+    in: N[LerchPhi[-0.5, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[-0.5, 0.5, 1]]
     out: "0.7475044759619461"
@@ -1077,6 +1188,8 @@ n-lerchphi-neg-0p5-0p5-2:
   traditional:
     in: N(\Phi(-0.5, 0.5, 2))
     out: 0.504\,991\,048\,076\,108
+  fullform:
+    in: N[LerchPhi[-0.5, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[-0.5, 0.5, 2]]
     out: "0.5049910480761078"
@@ -1099,6 +1212,8 @@ n-lerchphi-neg-0p5-0p5-0p5:
   traditional:
     in: N(\Phi(-0.5, 0.5, 0.5))
     out: 1.117\,587\,668\,909\,633\,8
+  fullform:
+    in: N[LerchPhi[-0.5, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.5, 0.5, 0.5]]
     out: "1.1175876689096342"
@@ -1121,6 +1236,8 @@ n-lerchphi-neg-0p5-0p5-5-over-2:
   traditional:
     in: N(\Phi(-0.5, 0.5, \frac{5}{2}))
     out: 0.446\,489\,588\,001\,608\,5
+  fullform:
+    in: N[LerchPhi[-0.5, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.5, 0.5, Rational[5, 2]]]
     out: "0.44648958800160854"
@@ -1140,6 +1257,8 @@ n-lerchphi-neg-0p5-neg-1-1:
   traditional:
     in: N(\Phi(-0.5, -1, 1))
     out: 0.444\,444\,444\,444\,444\,4
+  fullform:
+    in: N[LerchPhi[-0.5, -1, 1]]
   wolfram:
     in: N[LerchPhi[-0.5, -1, 1]]
     out: "0.4444444444444444"
@@ -1162,6 +1281,8 @@ n-lerchphi-neg-0p5-neg-1-2:
   traditional:
     in: N(\Phi(-0.5, -1, 2))
     out: 1.111\,111\,111\,111\,111\,2
+  fullform:
+    in: N[LerchPhi[-0.5, -1, 2]]
   wolfram:
     in: N[LerchPhi[-0.5, -1, 2]]
     out: "1.1111111111111112"
@@ -1184,6 +1305,8 @@ n-lerchphi-neg-0p5-neg-1-0p5:
   traditional:
     in: N(\Phi(-0.5, -1, 0.5))
     out: 0.\overline{1}
+  fullform:
+    in: N[LerchPhi[-0.5, -1, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.5, -1, 0.5]]
     out: "0.1111111111111111"
@@ -1206,6 +1329,8 @@ n-lerchphi-neg-0p5-neg-1-5-over-2:
   traditional:
     in: N(\Phi(-0.5, -1, \frac{5}{2}))
     out: 1.444\,444\,444\,444\,444\,4
+  fullform:
+    in: N[LerchPhi[-0.5, -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.5, -1, Rational[5, 2]]]
     out: "1.4444444444444444"
@@ -1225,6 +1350,8 @@ n-lerchphi-neg-0p5-2-plus-i-1:
   traditional:
     in: N(\Phi(-0.5, 2+i, 1))
     out: 0.915\,063\,092\,151\,170\,4+0.060\,942\,039\,339\,614\,22i
+  fullform:
+    in: N[LerchPhi[-0.5, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[-0.5, Complex[2, 1], 1]]
     out: 0.9150630921511703 + 0.06094203933961422*I
@@ -1247,6 +1374,8 @@ n-lerchphi-neg-0p5-2-plus-i-2:
   traditional:
     in: N(\Phi(-0.5, 2+i, 2))
     out: 0.169\,873\,815\,697\,659\,08-0.121\,884\,078\,679\,228\,44i
+  fullform:
+    in: N[LerchPhi[-0.5, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[-0.5, Complex[2, 1], 2]]
     out: 0.16987381569765908 - 0.12188407867922846*I
@@ -1269,6 +1398,8 @@ n-lerchphi-neg-0p5-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-0.5, 2+i, 0.5))
     out: 2.894\,185\,202\,891\,337\,7+2.619\,141\,408\,581\,271i
+  fullform:
+    in: N[LerchPhi[-0.5, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[-0.5, Complex[2, 1], 0.5]]
     out: 2.8941852028913386 + 2.6191414085812714*I
@@ -1291,6 +1422,8 @@ n-lerchphi-neg-0p5-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-0.5, 2+i, \frac{5}{2}))
     out: 0.085\,735\,311\,021\,356-0.097\,433\,630\,883\,612\,38i
+  fullform:
+    in: N[LerchPhi[-0.5, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.5, Complex[2, 1], Rational[5, 2]]]
     out: 0.085735311021356 - 0.0974336308836124*I
@@ -1310,6 +1443,8 @@ n-lerchphi-neg-0p9-2-1:
   traditional:
     in: N(\Phi(-0.9, 2, 1))
     out: 0.835\,736\,865\,796\,957\,4
+  fullform:
+    in: N[LerchPhi[-0.9, 2, 1]]
   wolfram:
     in: N[LerchPhi[-0.9, 2, 1]]
     out: "0.8357368657969576"
@@ -1332,6 +1467,8 @@ n-lerchphi-neg-0p9-2-2:
   traditional:
     in: N(\Phi(-0.9, 2, 2))
     out: 0.182\,514\,593\,558\,936\,32
+  fullform:
+    in: N[LerchPhi[-0.9, 2, 2]]
   wolfram:
     in: N[LerchPhi[-0.9, 2, 2]]
     out: "0.1825145935589363"
@@ -1354,6 +1491,8 @@ n-lerchphi-neg-0p9-2-0p5:
   traditional:
     in: N(\Phi(-0.9, 2, 0.5))
     out: 3.690\,522\,475\,693\,304\,4
+  fullform:
+    in: N[LerchPhi[-0.9, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.9, 2, 0.5]]
     out: "3.6905224756933057"
@@ -1376,6 +1515,8 @@ n-lerchphi-neg-0p9-2-5-over-2:
   traditional:
     in: N(\Phi(-0.9, 2, \frac{5}{2}))
     out: 0.111\,756\,142\,831\,241\,72
+  fullform:
+    in: N[LerchPhi[-0.9, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.9, 2, Rational[5, 2]]]
     out: "0.11175614283124169"
@@ -1395,6 +1536,8 @@ n-lerchphi-neg-0p9-3-1:
   traditional:
     in: N(\Phi(-0.9, 3, 1))
     out: 0.909\,598\,001\,715\,959\,7
+  fullform:
+    in: N[LerchPhi[-0.9, 3, 1]]
   wolfram:
     in: N[LerchPhi[-0.9, 3, 1]]
     out: "0.9095980017159598"
@@ -1417,6 +1560,8 @@ n-lerchphi-neg-0p9-3-2:
   traditional:
     in: N(\Phi(-0.9, 3, 2))
     out: 0.100\,446\,664\,760\,044\,64
+  fullform:
+    in: N[LerchPhi[-0.9, 3, 2]]
   wolfram:
     in: N[LerchPhi[-0.9, 3, 2]]
     out: "0.10044666476004464"
@@ -1439,6 +1584,8 @@ n-lerchphi-neg-0p9-3-0p5:
   traditional:
     in: N(\Phi(-0.9, 3, 0.5))
     out: 7.773\,051\,219\,077\,413
+  fullform:
+    in: N[LerchPhi[-0.9, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.9, 3, 0.5]]
     out: "7.773051219077413"
@@ -1461,6 +1608,8 @@ n-lerchphi-neg-0p9-3-5-over-2:
   traditional:
     in: N(\Phi(-0.9, 3, \frac{5}{2}))
     out: 0.049\,034\,426\,844\,542\,13
+  fullform:
+    in: N[LerchPhi[-0.9, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.9, 3, Rational[5, 2]]]
     out: "0.04903442684454213"
@@ -1480,6 +1629,8 @@ n-lerchphi-neg-0p9-0p5-1:
   traditional:
     in: N(\Phi(-0.9, 0.5, 1))
     out: 0.628\,362\,164\,954\,058\,4
+  fullform:
+    in: N[LerchPhi[-0.9, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[-0.9, 0.5, 1]]
     out: 0.628362164954058 - 6.167905692361981*^-17*I
@@ -1502,6 +1653,8 @@ n-lerchphi-neg-0p9-0p5-2:
   traditional:
     in: N(\Phi(-0.9, 0.5, 2))
     out: 0.412\,930\,927\,828\,823\,9
+  fullform:
+    in: N[LerchPhi[-0.9, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[-0.9, 0.5, 2]]
     out: "0.41293092782882385"
@@ -1524,6 +1677,8 @@ n-lerchphi-neg-0p9-0p5-0p5:
   traditional:
     in: N(\Phi(-0.9, 0.5, 0.5))
     out: 0.973\,146\,783\,413\,905\,5
+  fullform:
+    in: N[LerchPhi[-0.9, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.9, 0.5, 0.5]]
     out: "0.9731467834139054"
@@ -1546,6 +1701,8 @@ n-lerchphi-neg-0p9-0p5-5-over-2:
   traditional:
     in: N(\Phi(-0.9, 0.5, \frac{5}{2}))
     out: 0.362\,691\,535\,649\,091\,3
+  fullform:
+    in: N[LerchPhi[-0.9, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.9, 0.5, Rational[5, 2]]]
     out: "0.362691535649091"
@@ -1565,6 +1722,8 @@ n-lerchphi-neg-0p9-neg-1-1:
   traditional:
     in: N(\Phi(-0.9, -1, 1))
     out: 0.277\,008\,310\,249\,307\,7
+  fullform:
+    in: N[LerchPhi[-0.9, -1, 1]]
   wolfram:
     in: N[LerchPhi[-0.9, -1, 1]]
     out: "0.2770083102493075"
@@ -1587,6 +1746,8 @@ n-lerchphi-neg-0p9-neg-1-2:
   traditional:
     in: N(\Phi(-0.9, -1, 2))
     out: 0.803\,324\,099\,722\,991\,2
+  fullform:
+    in: N[LerchPhi[-0.9, -1, 2]]
   wolfram:
     in: N[LerchPhi[-0.9, -1, 2]]
     out: "0.8033240997229917"
@@ -1609,6 +1770,8 @@ n-lerchphi-neg-0p9-neg-1-0p5:
   traditional:
     in: N(\Phi(-0.9, -1, 0.5))
     out: 0.013\,850\,415\,512\,466\,406
+  fullform:
+    in: N[LerchPhi[-0.9, -1, 0.5]]
   wolfram:
     in: N[LerchPhi[-0.9, -1, 0.5]]
     out: "0.01385041551246563"
@@ -1631,6 +1794,8 @@ n-lerchphi-neg-0p9-neg-1-5-over-2:
   traditional:
     in: N(\Phi(-0.9, -1, \frac{5}{2}))
     out: 1.066\,481\,994\,459\,834
+  fullform:
+    in: N[LerchPhi[-0.9, -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.9, -1, Rational[5, 2]]]
     out: "1.0664819944598336"
@@ -1650,6 +1815,8 @@ n-lerchphi-neg-0p9-2-plus-i-1:
   traditional:
     in: N(\Phi(-0.9, 2+i, 1))
     out: 0.860\,049\,165\,313\,704\,9+0.092\,034\,574\,701\,526\,2i
+  fullform:
+    in: N[LerchPhi[-0.9, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[-0.9, Complex[2, 1], 1]]
     out: 0.8600491653125407 + 0.09203457470000208*I
@@ -1672,6 +1839,8 @@ n-lerchphi-neg-0p9-2-plus-i-2:
   traditional:
     in: N(\Phi(-0.9, 2+i, 2))
     out: 0.155\,500\,927\,429\,216\,56-0.102\,260\,638\,557\,251\,33i
+  fullform:
+    in: N[LerchPhi[-0.9, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[-0.9, Complex[2, 1], 2]]
     out: 0.15550092742921662 - 0.10226063855725132*I
@@ -1694,6 +1863,8 @@ n-lerchphi-neg-0p9-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-0.9, 2+i, 0.5))
     out: 2.772\,631\,950\,915\,932\,3+2.646\,993\,091\,751\,072\,7i
+  fullform:
+    in: N[LerchPhi[-0.9, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[-0.9, Complex[2, 1], 0.5]]
     out: 2.772631950915933 + 2.646993091751075*I
@@ -1716,6 +1887,8 @@ n-lerchphi-neg-0p9-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-0.9, 2+i, \frac{5}{2}))
     out: 0.078\,078\,963\,007\,215\,56-0.082\,259\,868\,381\,738\,78i
+  fullform:
+    in: N[LerchPhi[-0.9, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-0.9, Complex[2, 1], Rational[5, 2]]]
     out: 0.07807896300721556 - 0.08225986838173877*I
@@ -1735,6 +1908,8 @@ n-lerchphi-neg-1-2-1:
   traditional:
     in: N(\Phi(-1, 2, 1))
     out: 0.822\,467\,033\,424\,113\,2
+  fullform:
+    in: N[LerchPhi[-1, 2, 1]]
   wolfram:
     in: N[LerchPhi[-1, 2, 1]]
     out: "0.8224670334241131"
@@ -1757,6 +1932,8 @@ n-lerchphi-neg-1-2-2:
   traditional:
     in: N(\Phi(-1, 2, 2))
     out: 0.177\,532\,966\,575\,886\,8
+  fullform:
+    in: N[LerchPhi[-1, 2, 2]]
   wolfram:
     in: N[LerchPhi[-1, 2, 2]]
     out: "0.1775329665758869"
@@ -1779,6 +1956,8 @@ n-lerchphi-neg-1-2-0p5:
   traditional:
     in: N(\Phi(-1, 2, 0.5))
     out: 3.663\,862\,376\,708\,875
+  fullform:
+    in: N[LerchPhi[-1, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[-1, 2, 0.5]]
     out: "3.6638623767088756"
@@ -1801,6 +1980,8 @@ n-lerchphi-neg-1-2-5-over-2:
   traditional:
     in: N(\Phi(-1, 2, \frac{5}{2}))
     out: 0.108\,306\,821\,153\,320\,53
+  fullform:
+    in: N[LerchPhi[-1, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1, 2, Rational[5, 2]]]
     out: "0.1083068211533206"
@@ -1820,6 +2001,8 @@ n-lerchphi-neg-1-3-1:
   traditional:
     in: N(\Phi(-1, 3, 1))
     out: 0.901\,542\,677\,369\,695\,5
+  fullform:
+    in: N[LerchPhi[-1, 3, 1]]
   wolfram:
     in: N[LerchPhi[-1, 3, 1]]
     out: "0.9015426773696957"
@@ -1842,6 +2025,8 @@ n-lerchphi-neg-1-3-2:
   traditional:
     in: N(\Phi(-1, 3, 2))
     out: 0.098\,457\,322\,630\,304\,28
+  fullform:
+    in: N[LerchPhi[-1, 3, 2]]
   wolfram:
     in: N[LerchPhi[-1, 3, 2]]
     out: "0.09845732263030427"
@@ -1864,6 +2049,8 @@ n-lerchphi-neg-1-3-0p5:
   traditional:
     in: N(\Phi(-1, 3, 0.5))
     out: 7.751\,569\,170\,074\,954
+  fullform:
+    in: N[LerchPhi[-1, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[-1, 3, 0.5]]
     out: "7.751569170074954"
@@ -1886,6 +2073,8 @@ n-lerchphi-neg-1-3-5-over-2:
   traditional:
     in: N(\Phi(-1, 3, \frac{5}{2}))
     out: 0.047\,865\,466\,371\,251\,345
+  fullform:
+    in: N[LerchPhi[-1, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1, 3, Rational[5, 2]]]
     out: "0.047865466371250776"
@@ -1905,6 +2094,8 @@ n-lerchphi-neg-1-0p5-1:
   traditional:
     in: N(\Phi(-1, 0.5, 1))
     out: 0.604\,898\,643\,421\,630\,2
+  fullform:
+    in: N[LerchPhi[-1, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[-1, 0.5, 1]]
     out: "0.604898643421631"
@@ -1927,6 +2118,8 @@ n-lerchphi-neg-1-0p5-2:
   traditional:
     in: N(\Phi(-1, 0.5, 2))
     out: 0.395\,101\,356\,578\,369\,7
+  fullform:
+    in: N[LerchPhi[-1, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[-1, 0.5, 2]]
     out: "0.3951013565783689"
@@ -1949,6 +2142,8 @@ n-lerchphi-neg-1-0p5-0p5:
   traditional:
     in: N(\Phi(-1, 0.5, 0.5))
     out: 0.944\,258\,314\,238\,200\,2
+  fullform:
+    in: N[LerchPhi[-1, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[-1, 0.5, 0.5]]
     out: "0.9442583142382012"
@@ -1971,6 +2166,8 @@ n-lerchphi-neg-1-0p5-5-over-2:
   traditional:
     in: N(\Phi(-1, 0.5, \frac{5}{2}))
     out: 0.346\,541\,332\,792\,831\,2
+  fullform:
+    in: N[LerchPhi[-1, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1, 0.5, Rational[5, 2]]]
     out: "0.34654133279283267"
@@ -1990,6 +2187,8 @@ n-lerchphi-neg-1-neg-1-1:
   traditional:
     in: N(\Phi(-1, -1, 1))
     out: "0.25"
+  fullform:
+    in: N[LerchPhi[-1, -1, 1]]
   wolfram:
     in: N[LerchPhi[-1, -1, 1]]
     out: "0.25"
@@ -2012,6 +2211,8 @@ n-lerchphi-neg-1-neg-1-2:
   traditional:
     in: N(\Phi(-1, -1, 2))
     out: "0.75"
+  fullform:
+    in: N[LerchPhi[-1, -1, 2]]
   wolfram:
     in: N[LerchPhi[-1, -1, 2]]
     out: "0.75"
@@ -2034,6 +2235,8 @@ n-lerchphi-neg-1-neg-1-0p5:
   traditional:
     in: N(\Phi(-1, -1, 0.5))
     out: "0"
+  fullform:
+    in: N[LerchPhi[-1, -1, 0.5]]
   wolfram:
     in: N[LerchPhi[-1, -1, 0.5]]
     out: 0.
@@ -2056,6 +2259,8 @@ n-lerchphi-neg-1-neg-1-5-over-2:
   traditional:
     in: N(\Phi(-1, -1, \frac{5}{2}))
     out: "1"
+  fullform:
+    in: N[LerchPhi[-1, -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1, -1, Rational[5, 2]]]
     out: 1.
@@ -2075,6 +2280,8 @@ n-lerchphi-neg-1-2-plus-i-1:
   traditional:
     in: N(\Phi(-1, 2+i, 1))
     out: 0.847\,689\,164\,837\,414+0.098\,268\,389\,570\,016\,2i
+  fullform:
+    in: N[LerchPhi[-1, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[-1, Complex[2, 1], 1]]
     out: 0.8476891648374136 + 0.09826838957001616*I
@@ -2097,6 +2304,8 @@ n-lerchphi-neg-1-2-plus-i-2:
   traditional:
     in: N(\Phi(-1, 2+i, 2))
     out: 0.152\,310\,835\,162\,586\,56-0.098\,268\,389\,570\,016\,2i
+  fullform:
+    in: N[LerchPhi[-1, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[-1, Complex[2, 1], 2]]
     out: 0.15231083516258653 - 0.09826838957001621*I
@@ -2119,6 +2328,8 @@ n-lerchphi-neg-1-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-1, 2+i, 0.5))
     out: 2.744\,919\,723\,014\,342\,5+2.651\,972\,944\,738\,276\,3i
+  fullform:
+    in: N[LerchPhi[-1, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[-1, Complex[2, 1], 0.5]]
     out: 2.7449197230143407 + 2.6519729447382767*I
@@ -2141,6 +2352,8 @@ n-lerchphi-neg-1-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-1, 2+i, \frac{5}{2}))
     out: 0.076\,372\,578\,198\,229\,92-0.079\,181\,582\,611\,533\,77i
+  fullform:
+    in: N[LerchPhi[-1, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1, Complex[2, 1], Rational[5, 2]]]
     out: 0.07637257819822993 - 0.07918158261153377*I
@@ -2160,6 +2373,8 @@ n-lerchphi-0p25-2-1:
   traditional:
     in: N(\Phi(0.25, 2, 1))
     out: 1.070\,610\,556\,330\,93
+  fullform:
+    in: N[LerchPhi[0.25, 2, 1]]
   wolfram:
     in: N[LerchPhi[0.25, 2, 1]]
     out: "1.0706105563309305"
@@ -2182,6 +2397,8 @@ n-lerchphi-0p25-2-2:
   traditional:
     in: N(\Phi(0.25, 2, 2))
     out: 0.282\,442\,225\,323\,721\,7
+  fullform:
+    in: N[LerchPhi[0.25, 2, 2]]
   wolfram:
     in: N[LerchPhi[0.25, 2, 2]]
     out: "0.2824422253237217"
@@ -2204,6 +2421,8 @@ n-lerchphi-0p25-2-0p5:
   traditional:
     in: N(\Phi(0.25, 2, 0.5))
     out: 4.122\,618\,933\,554\,635
+  fullform:
+    in: N[LerchPhi[0.25, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[0.25, 2, 0.5]]
     out: "4.122618933554635"
@@ -2226,6 +2445,8 @@ n-lerchphi-0p25-2-5-over-2:
   traditional:
     in: N(\Phi(0.25, 2, \frac{5}{2}))
     out: 0.184\,125\,159\,096\,379\,58
+  fullform:
+    in: N[LerchPhi[0.25, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.25, 2, Rational[5, 2]]]
     out: "0.18412515909637955"
@@ -2245,6 +2466,8 @@ n-lerchphi-0p25-3-1:
   traditional:
     in: N(\Phi(0.25, 3, 1))
     out: 1.033\,845\,583\,186\,293
+  fullform:
+    in: N[LerchPhi[0.25, 3, 1]]
   wolfram:
     in: N[LerchPhi[0.25, 3, 1]]
     out: "1.0338455831862932"
@@ -2267,6 +2490,8 @@ n-lerchphi-0p25-3-2:
   traditional:
     in: N(\Phi(0.25, 3, 2))
     out: 0.135\,382\,332\,745\,172\,86
+  fullform:
+    in: N[LerchPhi[0.25, 3, 2]]
   wolfram:
     in: N[LerchPhi[0.25, 3, 2]]
     out: "0.1353823327451729"
@@ -2289,6 +2514,8 @@ n-lerchphi-0p25-3-0p5:
   traditional:
     in: N(\Phi(0.25, 3, 0.5))
     out: 8.078\,488\,306\,135\,496
+  fullform:
+    in: N[LerchPhi[0.25, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[0.25, 3, 0.5]]
     out: "8.078488306135496"
@@ -2311,6 +2538,8 @@ n-lerchphi-0p25-3-5-over-2:
   traditional:
     in: N(\Phi(0.25, 3, \frac{5}{2}))
     out: 0.070\,627\,712\,982\,760\,51
+  fullform:
+    in: N[LerchPhi[0.25, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.25, 3, Rational[5, 2]]]
     out: "0.0706277129827605"
@@ -2330,6 +2559,8 @@ n-lerchphi-0p25-0p5-1:
   traditional:
     in: N(\Phi(0.25, 0.5, 1))
     out: 1.222\,939\,721\,597\,185\,6
+  fullform:
+    in: N[LerchPhi[0.25, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[0.25, 0.5, 1]]
     out: "1.2229397215971856"
@@ -2352,6 +2583,8 @@ n-lerchphi-0p25-0p5-2:
   traditional:
     in: N(\Phi(0.25, 0.5, 2))
     out: 0.891\,758\,886\,388\,742\,3
+  fullform:
+    in: N[LerchPhi[0.25, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[0.25, 0.5, 2]]
     out: "0.8917588863887421"
@@ -2374,6 +2607,8 @@ n-lerchphi-0p25-0p5-0p5:
   traditional:
     in: N(\Phi(0.25, 0.5, 0.5))
     out: 1.668\,600\,828\,638\,570\,3
+  fullform:
+    in: N[LerchPhi[0.25, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[0.25, 0.5, 0.5]]
     out: "1.6686008286385703"
@@ -2396,6 +2631,8 @@ n-lerchphi-0p25-0p5-5-over-2:
   traditional:
     in: N(\Phi(0.25, 0.5, \frac{5}{2}))
     out: 0.804\,209\,936\,536\,697\,8
+  fullform:
+    in: N[LerchPhi[0.25, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.25, 0.5, Rational[5, 2]]]
     out: "0.8042099365366978"
@@ -2415,6 +2652,8 @@ n-lerchphi-0p25-neg-1-1:
   traditional:
     in: N(\Phi(0.25, -1, 1))
     out: 1.777\,777\,777\,777\,777\,7
+  fullform:
+    in: N[LerchPhi[0.25, -1, 1]]
   wolfram:
     in: N[LerchPhi[0.25, -1, 1]]
     out: "1.7777777777777777"
@@ -2437,6 +2676,8 @@ n-lerchphi-0p25-neg-1-2:
   traditional:
     in: N(\Phi(0.25, -1, 2))
     out: 3.111\,111\,111\,111\,111
+  fullform:
+    in: N[LerchPhi[0.25, -1, 2]]
   wolfram:
     in: N[LerchPhi[0.25, -1, 2]]
     out: "3.1111111111111107"
@@ -2459,6 +2700,8 @@ n-lerchphi-0p25-neg-1-0p5:
   traditional:
     in: N(\Phi(0.25, -1, 0.5))
     out: 1.111\,111\,111\,111\,111
+  fullform:
+    in: N[LerchPhi[0.25, -1, 0.5]]
   wolfram:
     in: N[LerchPhi[0.25, -1, 0.5]]
     out: "1.1111111111111112"
@@ -2481,6 +2724,8 @@ n-lerchphi-0p25-neg-1-5-over-2:
   traditional:
     in: N(\Phi(0.25, -1, \frac{5}{2}))
     out: 3.777\,777\,777\,777\,777\,7
+  fullform:
+    in: N[LerchPhi[0.25, -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.25, -1, Rational[5, 2]]]
     out: "3.7777777777777777"
@@ -2500,6 +2745,8 @@ n-lerchphi-0p25-2-plus-i-1:
   traditional:
     in: N(\Phi(0.25, 2+i, 1))
     out: 1.051\,400\,732\,108\,945-0.047\,267\,887\,677\,210\,255i
+  fullform:
+    in: N[LerchPhi[0.25, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[0.25, Complex[2, 1], 1]]
     out: 1.0514007321089447 - 0.04726788767721024*I
@@ -2522,6 +2769,8 @@ n-lerchphi-0p25-2-plus-i-2:
   traditional:
     in: N(\Phi(0.25, 2+i, 2))
     out: 0.205\,602\,928\,435\,778\,51-0.189\,071\,550\,708\,841\,02i
+  fullform:
+    in: N[LerchPhi[0.25, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[0.25, Complex[2, 1], 2]]
     out: 0.2056029284357786 - 0.18907155070884096*I
@@ -2544,6 +2793,8 @@ n-lerchphi-0p25-2-plus-i-0p5:
   traditional:
     in: N(\Phi(0.25, 2+i, 0.5))
     out: 3.185\,550\,463\,844\,432+2.502\,641\,530\,788\,986i
+  fullform:
+    in: N[LerchPhi[0.25, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[0.25, Complex[2, 1], 0.5]]
     out: 3.185550463844432 + 2.502641530788986*I
@@ -2566,6 +2817,8 @@ n-lerchphi-0p25-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(0.25, 2+i, \frac{5}{2}))
     out: 0.103\,883\,891\,657\,583\,91-0.150\,019\,503\,067\,757\,21i
+  fullform:
+    in: N[LerchPhi[0.25, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.25, Complex[2, 1], Rational[5, 2]]]
     out: 0.10388389165758394 - 0.15001950306775727*I
@@ -2585,6 +2838,8 @@ n-lerchphi-0p9-2-1:
   traditional:
     in: N(\Phi(0.9, 2, 1))
     out: 1.444\,127\,470\,005\,508\,5
+  fullform:
+    in: N[LerchPhi[0.9, 2, 1]]
   wolfram:
     in: N[LerchPhi[0.9, 2, 1]]
     out: "1.4441274700055098"
@@ -2607,6 +2862,8 @@ n-lerchphi-0p9-2-2:
   traditional:
     in: N(\Phi(0.9, 2, 2))
     out: 0.493\,474\,966\,672\,788\,2
+  fullform:
+    in: N[LerchPhi[0.9, 2, 2]]
   wolfram:
     in: N[LerchPhi[0.9, 2, 2]]
     out: "0.49347496667278856"
@@ -2629,6 +2886,8 @@ n-lerchphi-0p9-2-0p5:
   traditional:
     in: N(\Phi(0.9, 2, 0.5))
     out: 4.686\,783\,273\,082\,932
+  fullform:
+    in: N[LerchPhi[0.9, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[0.9, 2, 0.5]]
     out: "4.686783273082931"
@@ -2651,6 +2910,8 @@ n-lerchphi-0p9-2-5-over-2:
   traditional:
     in: N(\Phi(0.9, 2, \frac{5}{2}))
     out: 0.354\,053\,423\,559\,173\,46
+  fullform:
+    in: N[LerchPhi[0.9, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.9, 2, Rational[5, 2]]]
     out: "0.35405342355917346"
@@ -2670,6 +2931,8 @@ n-lerchphi-0p9-3-1:
   traditional:
     in: N(\Phi(0.9, 3, 1))
     out: 1.166\,287\,722\,429\,376
+  fullform:
+    in: N[LerchPhi[0.9, 3, 1]]
   wolfram:
     in: N[LerchPhi[0.9, 3, 1]]
     out: "1.1662877224293777"
@@ -2692,6 +2955,8 @@ n-lerchphi-0p9-3-2:
   traditional:
     in: N(\Phi(0.9, 3, 2))
     out: 0.184\,764\,136\,032\,641\,63
+  fullform:
+    in: N[LerchPhi[0.9, 3, 2]]
   wolfram:
     in: N[LerchPhi[0.9, 3, 2]]
     out: "0.1847641360326418"
@@ -2714,6 +2979,8 @@ n-lerchphi-0p9-3-0p5:
   traditional:
     in: N(\Phi(0.9, 3, 0.5))
     out: 8.351\,549\,851\,360\,646
+  fullform:
+    in: N[LerchPhi[0.9, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[0.9, 3, 0.5]]
     out: "8.351549851360653"
@@ -2736,6 +3003,8 @@ n-lerchphi-0p9-3-5-over-2:
   traditional:
     in: N(\Phi(0.9, 3, \frac{5}{2}))
     out: 0.104\,794\,055\,177\,760\,89
+  fullform:
+    in: N[LerchPhi[0.9, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.9, 3, Rational[5, 2]]]
     out: "0.1047940551777609"
@@ -2755,6 +3024,8 @@ n-lerchphi-0p9-0p5-1:
   traditional:
     in: N(\Phi(0.9, 0.5, 1))
     out: 4.468\,833\,808\,303\,737
+  fullform:
+    in: N[LerchPhi[0.9, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[0.9, 0.5, 1]]
     out: 4.468833808303736 - 4.934324553889585*^-16*I
@@ -2777,6 +3048,8 @@ n-lerchphi-0p9-0p5-2:
   traditional:
     in: N(\Phi(0.9, 0.5, 2))
     out: 3.854\,259\,787\,004\,146\,6
+  fullform:
+    in: N[LerchPhi[0.9, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[0.9, 0.5, 2]]
     out: "3.8542597870041493"
@@ -2799,6 +3072,8 @@ n-lerchphi-0p9-0p5-0p5:
   traditional:
     in: N(\Phi(0.9, 0.5, 0.5))
     out: 5.111\,636\,244\,963\,35
+  fullform:
+    in: N[LerchPhi[0.9, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[0.9, 0.5, 0.5]]
     out: "5.11163624496335"
@@ -2821,6 +3096,8 @@ n-lerchphi-0p9-0p5-5-over-2:
   traditional:
     in: N(\Phi(0.9, 0.5, \frac{5}{2}))
     out: 3.657\,500\,937\,969\,502\,7
+  fullform:
+    in: N[LerchPhi[0.9, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.9, 0.5, Rational[5, 2]]]
     out: "3.657500937969508"
@@ -2840,6 +3117,8 @@ n-lerchphi-0p9-neg-1-1:
   traditional:
     in: N(\Phi(0.9, -1, 1))
     out: "100"
+  fullform:
+    in: N[LerchPhi[0.9, -1, 1]]
   wolfram:
     in: N[LerchPhi[0.9, -1, 1]]
     out: "100.00000000000006"
@@ -2862,6 +3141,8 @@ n-lerchphi-0p9-neg-1-2:
   traditional:
     in: N(\Phi(0.9, -1, 2))
     out: "110"
+  fullform:
+    in: N[LerchPhi[0.9, -1, 2]]
   wolfram:
     in: N[LerchPhi[0.9, -1, 2]]
     out: "110.00000000000006"
@@ -2884,6 +3165,8 @@ n-lerchphi-0p9-neg-1-0p5:
   traditional:
     in: N(\Phi(0.9, -1, 0.5))
     out: "95"
+  fullform:
+    in: N[LerchPhi[0.9, -1, 0.5]]
   wolfram:
     in: N[LerchPhi[0.9, -1, 0.5]]
     out: "95.00000000000006"
@@ -2906,6 +3189,8 @@ n-lerchphi-0p9-neg-1-5-over-2:
   traditional:
     in: N(\Phi(0.9, -1, \frac{5}{2}))
     out: "115"
+  fullform:
+    in: N[LerchPhi[0.9, -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.9, -1, Rational[5, 2]]]
     out: "115.00000000000006"
@@ -2925,6 +3210,8 @@ n-lerchphi-0p9-2-plus-i-1:
   traditional:
     in: N(\Phi(0.9, 2+i, 1))
     out: 1.192\,928\,775\,865\,743\,2-0.340\,556\,246\,338\,811i
+  fullform:
+    in: N[LerchPhi[0.9, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[0.9, Complex[2, 1], 1]]
     out: 1.1929287758658524 - 0.3405562463411231*I
@@ -2947,6 +3234,8 @@ n-lerchphi-0p9-2-plus-i-2:
   traditional:
     in: N(\Phi(0.9, 2+i, 2))
     out: 0.214\,365\,306\,517\,492\,17-0.378\,395\,829\,265\,345\,93i
+  fullform:
+    in: N[LerchPhi[0.9, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[0.9, Complex[2, 1], 2]]
     out: 0.2143653065174925 - 0.37839582926534543*I
@@ -2969,6 +3258,8 @@ n-lerchphi-0p9-2-plus-i-0p5:
   traditional:
     in: N(\Phi(0.9, 2+i, 0.5))
     out: 3.516\,191\,661\,909\,127+2.152\,254\,681\,274\,930\,4i
+  fullform:
+    in: N[LerchPhi[0.9, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[0.9, Complex[2, 1], 0.5]]
     out: 3.5161916619091267 + 2.1522546812749344*I
@@ -2991,6 +3282,8 @@ n-lerchphi-0p9-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(0.9, 2+i, \frac{5}{2}))
     out: 0.088\,479\,557\,873\,380\,69-0.303\,471\,535\,918\,346\,14i
+  fullform:
+    in: N[LerchPhi[0.9, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[0.9, Complex[2, 1], Rational[5, 2]]]
     out: 0.08847955787338081 - 0.3034715359183458*I
@@ -3010,6 +3303,8 @@ n-lerchphi-1-over-3-2-1:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2, 1))
     out: 1.098\,639\,689\,931\,190\,5
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 2, 1]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 2, 1]]
     out: "1.0986396899311903"
@@ -3029,6 +3324,8 @@ n-lerchphi-1-over-3-2-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2, 2))
     out: 0.295\,919\,069\,793\,571\,47
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 2, 2]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 2, 2]]
     out: "0.29591906979357097"
@@ -3048,6 +3345,8 @@ n-lerchphi-1-over-3-2-0p5:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2, 0.5))
     out: 4.169\,738\,543\,014\,327\,4
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 2, 0.5]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 2, 0.5]]
     out: "4.169738543014327"
@@ -3067,6 +3366,8 @@ n-lerchphi-1-over-3-2-5-over-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2, \frac{5}{2}))
     out: 0.194\,313\,553\,795\,602\,78
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 2, Rational[5, 2]]]
     out: "0.19431355379560272"
@@ -3086,6 +3387,8 @@ n-lerchphi-1-over-3-3-1:
   traditional:
     in: N(\Phi(\frac{1}{3}, 3, 1))
     out: 1.046\,483\,583\,464\,519\,9
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 3, 1]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 3, 1]]
     out: "1.04648358346452"
@@ -3105,6 +3408,8 @@ n-lerchphi-1-over-3-3-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 3, 2))
     out: 0.139\,450\,750\,393\,560\,7
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 3, 2]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 3, 2]]
     out: "0.13945075039356025"
@@ -3124,6 +3429,8 @@ n-lerchphi-1-over-3-3-0p5:
   traditional:
     in: N(\Phi(\frac{1}{3}, 3, 0.5))
     out: 8.106\,907\,002\,058\,708
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 3, 0.5]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 3, 0.5]]
     out: "8.106907002058712"
@@ -3143,6 +3450,8 @@ n-lerchphi-1-over-3-3-5-over-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 3, \frac{5}{2}))
     out: 0.073\,274\,129\,639\,514\,02
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 3, Rational[5, 2]]]
     out: "0.07327412963951406"
@@ -3162,6 +3471,8 @@ n-lerchphi-1-over-3-0p5-1:
   traditional:
     in: N(\Phi(\frac{1}{3}, 0.5, 1))
     out: 1.326\,326\,505\,842\,026\,4
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 0.5, 1]]
     out: "1.3263265058420262"
@@ -3181,6 +3492,8 @@ n-lerchphi-1-over-3-0p5-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 0.5, 2))
     out: 0.978\,979\,517\,526\,079\,3
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 0.5, 2]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 0.5, 2]]
     out: "0.978979517526079"
@@ -3200,6 +3513,8 @@ n-lerchphi-1-over-3-0p5-0p5:
   traditional:
     in: N(\Phi(\frac{1}{3}, 0.5, 0.5))
     out: 1.784\,805\,043\,725\,763\,2
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 0.5, 0.5]]
     out: "1.7848050437257634"
@@ -3219,6 +3534,8 @@ n-lerchphi-1-over-3-0p5-5-over-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 0.5, \frac{5}{2}))
     out: 0.885\,833\,589\,390\,835\,9
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], 0.5, Rational[5, 2]]]
     out: "0.8858335893908362"
@@ -3238,6 +3555,8 @@ n-lerchphi-1-over-3-neg-1-1:
   traditional:
     in: N(\Phi(\frac{1}{3}, -1, 1))
     out: 2.249\,999\,999\,999\,999\,6
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], -1, 1]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], -1, 1]]
     out: "2.25"
@@ -3257,6 +3576,8 @@ n-lerchphi-1-over-3-neg-1-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, -1, 2))
     out: 3.749\,999\,999\,999\,999
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], -1, 2]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], -1, 2]]
     out: "3.75"
@@ -3276,6 +3597,8 @@ n-lerchphi-1-over-3-neg-1-0p5:
   traditional:
     in: N(\Phi(\frac{1}{3}, -1, 0.5))
     out: 1.499\,999\,999\,999\,999\,3
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], -1, 0.5]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], -1, 0.5]]
     out: "1.5"
@@ -3295,6 +3618,8 @@ n-lerchphi-1-over-3-neg-1-5-over-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, -1, \frac{5}{2}))
     out: 4.499\,999\,999\,999\,998
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], -1, Rational[5, 2]]]
     out: "4.5"
@@ -3314,6 +3639,8 @@ n-lerchphi-1-over-3-2-plus-i-1:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2+i, 1))
     out: 1.070\,083\,668\,602\,141\,3-0.067\,156\,386\,953\,886\,16i
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], Complex[2, 1], 1]]
     out: 1.0700836686021404 - 0.06715638695388618*I
@@ -3333,6 +3660,8 @@ n-lerchphi-1-over-3-2-plus-i-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2+i, 2))
     out: 0.210\,251\,005\,806\,421\,78-0.201\,469\,160\,861\,658\,53i
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], Complex[2, 1], 2]]
     out: 0.21025100580642175 - 0.20146916086165853*I
@@ -3352,6 +3681,8 @@ n-lerchphi-1-over-3-2-plus-i-0p5:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2+i, 0.5))
     out: 3.224\,867\,422\,277\,603+2.479\,648\,998\,974\,589\,3i
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], Complex[2, 1], 0.5]]
     out: 3.224867422277603 + 2.47964899897459*I
@@ -3371,6 +3702,8 @@ n-lerchphi-1-over-3-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(\frac{1}{3}, 2+i, \frac{5}{2}))
     out: 0.105\,980\,969\,476\,094\,92-0.159\,836\,690\,233\,729\,48i
+  fullform:
+    in: N[LerchPhi[Rational[1, 3], Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Rational[1, 3], Complex[2, 1], Rational[5, 2]]]
     out: 0.10598096947609492 - 0.15983669023372948*I
@@ -3390,6 +3723,8 @@ n-lerchphi-0p4-plus-0p3i-2-1:
   traditional:
     in: N(\Phi(0.4+0.3i, 2, 1))
     out: 1.101\,836\,588\,740\,841+0.109\,880\,454\,004\,132\,04i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 2, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 2, 1]]
     out: 1.1018365887408403 + 0.10988045400413204*I
@@ -3412,6 +3747,8 @@ n-lerchphi-0p4-plus-0p3i-2-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 2, 2))
     out: 0.294\,795\,086\,790\,303\,1+0.053\,604\,819\,917\,602\,74i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 2, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 2, 2]]
     out: 0.2947950867903031 + 0.053604819917602735*I
@@ -3434,6 +3771,8 @@ n-lerchphi-0p4-plus-0p3i-2-0p5:
   traditional:
     in: N(\Phi(0.4+0.3i, 2, 0.5))
     out: 4.181\,499\,243\,636\,333+0.182\,432\,562\,673\,989\,36i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 2, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 2, 0.5]]
     out: 4.1814992436363365 + 0.18243256267398955*I
@@ -3456,6 +3795,8 @@ n-lerchphi-0p4-plus-0p3i-2-5-over-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 2, \frac{5}{2}))
     out: 0.192\,709\,082\,429\,705\,75+0.040\,700\,707\,964\,669\,71i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 2, Rational[5, 2]]]
     out: 0.1927090824297056 + 0.04070070796466971*I
@@ -3475,6 +3816,8 @@ n-lerchphi-0p4-plus-0p3i-3-1:
   traditional:
     in: N(\Phi(0.4+0.3i, 3, 1))
     out: 1.051\,306\,692\,352\,460\,8+0.048\,424\,577\,070\,355\,32i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 3, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 3, 1]]
     out: 1.0513066923524605 + 0.0484245770703553*I
@@ -3497,6 +3840,8 @@ n-lerchphi-0p4-plus-0p3i-3-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 3, 2))
     out: 0.140\,200\,200\,248\,363\,58+0.015\,911\,292\,489\,615\,658i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 3, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 3, 2]]
     out: 0.1402002002483636 + 0.01591129248961566*I
@@ -3519,6 +3864,8 @@ n-lerchphi-0p4-plus-0p3i-3-0p5:
   traditional:
     in: N(\Phi(0.4+0.3i, 3, 0.5))
     out: 8.121\,165\,761\,843\,056+0.107\,270\,303\,911\,863\,24i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 3, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 3, 0.5]]
     out: 8.12116576184306 + 0.10727030391186279*I
@@ -3541,6 +3888,8 @@ n-lerchphi-0p4-plus-0p3i-3-5-over-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 3, \frac{5}{2}))
     out: 0.073\,549\,546\,211\,705+0.010\,421\,770\,459\,496\,018i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 3, Rational[5, 2]]]
     out: 0.07354954621170498 + 0.010421770459496023*I
@@ -3560,6 +3909,8 @@ n-lerchphi-0p4-plus-0p3i-0p5-1:
   traditional:
     in: N(\Phi(0.4+0.3i, 0.5, 1))
     out: 1.261\,409\,136\,988\,254\,3+0.415\,428\,785\,308\,441\,46i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 0.5, 1]]
     out: 1.261409136988255 + 0.4154287853084414*I
@@ -3582,6 +3933,8 @@ n-lerchphi-0p4-plus-0p3i-0p5-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 0.5, 2))
     out: 0.916\,769\,161\,551\,338\,1+0.350\,995\,092\,107\,600\,1i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 0.5, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 0.5, 2]]
     out: 0.9167691615513378 + 0.3509950921076002*I
@@ -3604,6 +3957,8 @@ n-lerchphi-0p4-plus-0p3i-0p5-0p5:
   traditional:
     in: N(\Phi(0.4+0.3i, 0.5, 0.5))
     out: 1.719\,728\,639\,919\,129\,8+0.466\,007\,643\,699\,248\,13i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 0.5, 0.5]]
     out: 1.7197286399191294 + 0.4660076436992483*I
@@ -3626,6 +3981,8 @@ n-lerchphi-0p4-plus-0p3i-0p5-5-over-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 0.5, \frac{5}{2}))
     out: 0.825\,251\,709\,172\,310\,4+0.328\,546\,560\,279\,657\,6i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], 0.5, Rational[5, 2]]]
     out: 0.8252517091723102 + 0.3285465602796579*I
@@ -3645,6 +4002,8 @@ n-lerchphi-0p4-plus-0p3i-neg-1-1:
   traditional:
     in: N(\Phi(0.4+0.3i, -1, 1))
     out: 1.333\,333\,333\,333\,333+1.777\,777\,777\,777\,778i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], -1, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], -1, 1]]
     out: 1.3333333333333333 + 1.7777777777777777*I
@@ -3667,6 +4026,8 @@ n-lerchphi-0p4-plus-0p3i-neg-1-2:
   traditional:
     in: N(\Phi(0.4+0.3i, -1, 2))
     out: 2.666\,666\,666\,666\,667\,4+2.444\,444\,444\,444\,442\,4i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], -1, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], -1, 2]]
     out: 2.666666666666666 + 2.444444444444444*I
@@ -3689,6 +4050,8 @@ n-lerchphi-0p4-plus-0p3i-neg-1-0p5:
   traditional:
     in: N(\Phi(0.4+0.3i, -1, 0.5))
     out: 0.666\,666\,666\,666\,666\,6+1.444\,444\,444\,444\,444\,2i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], -1, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], -1, 0.5]]
     out: 0.6666666666666669 + 1.4444444444444446*I
@@ -3711,6 +4074,8 @@ n-lerchphi-0p4-plus-0p3i-neg-1-5-over-2:
   traditional:
     in: N(\Phi(0.4+0.3i, -1, \frac{5}{2}))
     out: 3.333\,333\,333\,333\,335\,7+2.777\,777\,777\,777\,777\,7i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], -1, Rational[5, 2]]]
     out: 3.3333333333333335 + 2.7777777777777777*I
@@ -3730,6 +4095,8 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-1:
   traditional:
     in: N(\Phi(0.4+0.3i, 2+i, 1))
     out: 1.160\,096\,753\,413\,701\,9+0.006\,328\,927\,692\,369\,448i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 1]]
     out: 1.1600967534137012 + 0.006328927692369479*I
@@ -3752,6 +4119,8 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 2+i, 2))
     out: 0.263\,749\,518\,692\,765\,36-0.181\,989\,819\,788\,650\,53i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 2]]
     out: 0.26374951869276547 - 0.1819898197886505*I
@@ -3774,6 +4143,8 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-0p5:
   traditional:
     in: N(\Phi(0.4+0.3i, 2+i, 0.5))
     out: 3.339\,347\,509\,082\,892+2.633\,280\,560\,224\,704\,5i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], 0.5]]
     out: 3.3393475090828915 + 2.6332805602247045*I
@@ -3796,6 +4167,8 @@ n-lerchphi-0p4-plus-0p3i-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(0.4+0.3i, 2+i, \frac{5}{2}))
     out: 0.148\,148\,848\,638\,359\,7-0.150\,271\,972\,240\,938\,77i
+  fullform:
+    in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.4, 0.3], Complex[2, 1], Rational[5, 2]]]
     out: 0.14814884863835964 - 0.15027197224093874*I
@@ -3815,6 +4188,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-1:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2, 1))
     out: 0.916\,798\,675\,997\,154\,6+0.094\,679\,114\,867\,490\,02i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 2, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 2, 1]]
     out: 0.9167986759971547 + 0.09467911486749003*I
@@ -3837,6 +4212,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2, 2))
     out: 0.212\,646\,925\,395\,878\,4+0.038\,814\,492\,768\,163\,93i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 2, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 2, 2]]
     out: 0.2126469253958784 + 0.03881449276816393*I
@@ -3859,6 +4236,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-0p5:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2, 0.5))
     out: 3.853\,772\,051\,558\,024+0.178\,041\,438\,629\,279\,13i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 2, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 2, 0.5]]
     out: 3.853772051558023 + 0.1780414386292791*I
@@ -3881,6 +4260,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-5-over-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2, \frac{5}{2}))
     out: 0.132\,503\,230\,927\,905\,86+0.027\,686\,339\,466\,071\,092i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 2, Rational[5, 2]]]
     out: 0.1325032309279059 + 0.027686339466071092*I
@@ -3900,6 +4281,8 @@ n-lerchphi-neg-0p3-plus-0p5i-3-1:
   traditional:
     in: N(\Phi(-0.3+0.5i, 3, 1))
     out: 0.959\,105\,606\,130\,840\,6+0.052\,063\,804\,773\,610\,99i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 3, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 3, 1]]
     out: 0.9591056061308405 + 0.052063804773611055*I
@@ -3922,6 +4305,8 @@ n-lerchphi-neg-0p3-plus-0p5i-3-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 3, 2))
     out: 0.112\,647\,707\,492\,804\,06+0.014\,200\,163\,242\,636\,779i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 3, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 3, 2]]
     out: 0.1126477074928041 + 0.014200163242636777*I
@@ -3944,6 +4329,8 @@ n-lerchphi-neg-0p3-plus-0p5i-3-0p5:
   traditional:
     in: N(\Phi(-0.3+0.5i, 3, 0.5))
     out: 7.904\,718\,153\,248\,676+0.129\,909\,102\,799\,358\,47i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 3, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 3, 0.5]]
     out: 7.904718153248673 + 0.12990910279935874*I
@@ -3966,6 +4353,8 @@ n-lerchphi-neg-0p3-plus-0p5i-3-5-over-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 3, \frac{5}{2}))
     out: 0.056\,181\,547\,254\,558\,15+0.008\,653\,632\,327\,637\,262i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 3, Rational[5, 2]]]
     out: 0.05618154725455815 + 0.008653632327637262*I
@@ -3985,6 +4374,8 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-1:
   traditional:
     in: N(\Phi(-0.3+0.5i, 0.5, 1))
     out: 0.763\,797\,454\,910\,583\,2+0.208\,115\,821\,035\,190\,83i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, 1]]
     out: 0.7637974549105835 + 0.20811582103519072*I
@@ -4007,6 +4398,8 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 0.5, 2))
     out: 0.514\,466\,688\,365\,942+0.163\,725\,077\,159\,268\,07i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, 2]]
     out: 0.5144666883659423 + 0.16372507715926804*I
@@ -4029,6 +4422,8 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-0p5:
   traditional:
     in: N(\Phi(-0.3+0.5i, 0.5, 0.5))
     out: 1.141\,526\,793\,353\,947\,5+0.248\,011\,499\,868\,293\,54i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, 0.5]]
     out: 1.141526793353947 + 0.24801149986829357*I
@@ -4051,6 +4446,8 @@ n-lerchphi-neg-0p3-plus-0p5i-0p5-5-over-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 0.5, \frac{5}{2}))
     out: 0.454\,230\,833\,366\,813\,86+0.149\,797\,128\,659\,533\,26i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], 0.5, Rational[5, 2]]]
     out: 0.4542308333668138 + 0.14979712865953318*I
@@ -4070,6 +4467,8 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-1:
   traditional:
     in: N(\Phi(-0.3+0.5i, -1, 1))
     out: 0.382\,612\,392\,390\,264\,73+0.345\,413\,965\,352\,322\,5i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], -1, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], -1, 1]]
     out: 0.3826123923902647 + 0.3454139653523222*I
@@ -4092,6 +4491,8 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, -1, 2))
     out: 1.052\,715\,485\,173\,771+0.603\,145\,924\,115\,209\,6i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], -1, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], -1, 2]]
     out: 1.0527154851737697 + 0.6031459241152088*I
@@ -4114,6 +4515,8 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-0p5:
   traditional:
     in: N(\Phi(-0.3+0.5i, -1, 0.5))
     out: 0.047\,560\,845\,998\,512\,21+0.216\,547\,985\,970\,878\,9i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], -1, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], -1, 0.5]]
     out: 0.047560845998512125 + 0.21654798597087893*I
@@ -4136,6 +4539,8 @@ n-lerchphi-neg-0p3-plus-0p5i-neg-1-5-over-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, -1, \frac{5}{2}))
     out: 1.387\,767\,031\,565\,522\,2+0.732\,011\,903\,496\,652\,2i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], -1, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], -1, Rational[5, 2]]]
     out: 1.3877670315655224 + 0.7320119034966522*I
@@ -4155,6 +4560,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-1:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2+i, 1))
     out: 0.989\,784\,607\,429\,555\,7+0.135\,628\,774\,098\,336\,1i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 1]]
     out: 0.989784607429556 + 0.13562877409833596*I
@@ -4177,6 +4584,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2+i, 2))
     out: 0.208\,467\,661\,236\,180\,07-0.104\,649\,811\,600\,819\,54i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 2]]
     out: 0.20846766123618016 - 0.10464981160081954*I
@@ -4199,6 +4608,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2+i, 0.5))
     out: 2.996\,994\,256\,247\,417\,4+2.792\,584\,815\,694\,764\,4i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], 0.5]]
     out: 2.996994256247417 + 2.7925848156947635*I
@@ -4221,6 +4632,8 @@ n-lerchphi-neg-0p3-plus-0p5i-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-0.3+0.5i, 2+i, \frac{5}{2}))
     out: 0.114\,465\,116\,632\,712\,36-0.089\,263\,678\,009\,800\,35i
+  fullform:
+    in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-0.3, 0.5], Complex[2, 1], Rational[5, 2]]]
     out: 0.1144651166327124 - 0.08926367800980031*I
@@ -4240,6 +4653,8 @@ n-lerchphi-2-2-1:
   traditional:
     in: N(\Phi(2, 2, 1))
     out: 1.233\,700\,550\,136\,169\,7-1.088\,793\,045\,151\,800\,9i
+  fullform:
+    in: N[LerchPhi[2, 2, 1]]
   wolfram:
     in: N[LerchPhi[2, 2, 1]]
     out: 1.2337005501361697 - 1.088793045151801*I
@@ -4262,6 +4677,8 @@ n-lerchphi-2-2-2:
   traditional:
     in: N(\Phi(2, 2, 2))
     out: 0.116\,850\,275\,068\,084\,99-0.544\,396\,522\,575\,900\,4i
+  fullform:
+    in: N[LerchPhi[2, 2, 2]]
   wolfram:
     in: N[LerchPhi[2, 2, 2]]
     out: 0.11685027506808487 - 0.5443965225759005*I
@@ -4284,6 +4701,8 @@ n-lerchphi-2-2-0p5:
   traditional:
     in: N(\Phi(2, 2, 0.5))
     out: 4.840\,291\,449\,348\,404-1.539\,785\,891\,071\,178\,6i
+  fullform:
+    in: N[LerchPhi[2, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[2, 2, 0.5]]
     out: 4.840291449348403 - 1.5397858910711801*I
@@ -4306,6 +4725,8 @@ n-lerchphi-2-2-5-over-2:
   traditional:
     in: N(\Phi(2, 2, \frac{5}{2}))
     out: -0.012\,149\,359\,885\,121\,095-0.384\,946\,472\,767\,794\,6i
+  fullform:
+    in: N[LerchPhi[2, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[2, 2, Rational[5, 2]]]
     out: -0.012149359885121669 - 0.38494647276779503*I
@@ -4325,6 +4746,8 @@ n-lerchphi-2-2-neg-2p5:
   traditional:
     in: N(\Phi(2, 2, -2.5))
     out: 55.771\,220\,483\,676\,125-12.318\,287\,128\,569\,425i
+  fullform:
+    in: N[LerchPhi[2, 2, -2.5]]
   wolfram:
     in: N[LerchPhi[2, 2, -2.5]]
     out: 55.77122048367611 - 12.318287128569441*I
@@ -4348,6 +4771,8 @@ n-lerchphi-2-3-1:
   traditional:
     in: N(\Phi(2, 3, 1))
     out: 1.381\,035\,953\,114\,462-0.377\,346\,914\,730\,124\,05i
+  fullform:
+    in: N[LerchPhi[2, 3, 1]]
   wolfram:
     in: N[LerchPhi[2, 3, 1]]
     out: 1.3810359531144623 - 0.3773469147301234*I
@@ -4370,6 +4795,8 @@ n-lerchphi-2-3-2:
   traditional:
     in: N(\Phi(2, 3, 2))
     out: 0.190\,517\,976\,557\,231\,04-0.188\,673\,457\,365\,062i
+  fullform:
+    in: N[LerchPhi[2, 3, 2]]
   wolfram:
     in: N[LerchPhi[2, 3, 2]]
     out: 0.19051797655723113 - 0.1886734573650617*I
@@ -4392,6 +4819,8 @@ n-lerchphi-2-3-0p5:
   traditional:
     in: N(\Phi(2, 3, 0.5))
     out: 8.921\,391\,406\,560\,604-0.533\,649\,124\,530\,985\,2i
+  fullform:
+    in: N[LerchPhi[2, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[2, 3, 0.5]]
     out: 8.921391406560598 - 0.5336491245309867*I
@@ -4414,6 +4843,8 @@ n-lerchphi-2-3-5-over-2:
   traditional:
     in: N(\Phi(2, 3, \frac{5}{2}))
     out: 0.082\,199\,703\,492\,002\,81-0.133\,412\,281\,132\,746\,25i
+  fullform:
+    in: N[LerchPhi[2, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[2, 3, Rational[5, 2]]]
     out: 0.08219970349200167 - 0.13341228113274667*I
@@ -4433,6 +4864,8 @@ n-lerchphi-2-3-neg-2p5:
   traditional:
     in: N(\Phi(2, 3, -2.5))
     out: 38.714\,538\,659\,892\,24-4.269\,192\,996\,247\,894i
+  fullform:
+    in: N[LerchPhi[2, 3, -2.5]]
   wolfram:
     in: N[LerchPhi[2, 3, -2.5]]
     out: 104.02772384507739 - 4.269192996247893*I
@@ -4458,6 +4891,8 @@ n-lerchphi-2-0p5-1:
   traditional:
     in: N(\Phi(2, 0.5, 1))
     out: -0.805\,030\,764\,933\,742\,9-1.064\,467\,019\,431\,226i
+  fullform:
+    in: N[LerchPhi[2, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[2, 0.5, 1]]
     out: -0.8050307649337431 - 1.0644670194312265*I
@@ -4480,6 +4915,8 @@ n-lerchphi-2-0p5-2:
   traditional:
     in: N(\Phi(2, 0.5, 2))
     out: -0.902\,515\,382\,466\,871\,7-0.532\,233\,509\,715\,613\,1i
+  fullform:
+    in: N[LerchPhi[2, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[2, 0.5, 2]]
     out: -0.9025153824668711 - 0.532233509715613*I
@@ -4502,6 +4939,8 @@ n-lerchphi-2-0p5-0p5:
   traditional:
     in: N(\Phi(2, 0.5, 0.5))
     out: -0.395\,385\,888\,231\,945\,2-1.505\,383\,695\,578\,505i
+  fullform:
+    in: N[LerchPhi[2, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[2, 0.5, 0.5]]
     out: -0.39538588823194476 - 1.5053836955785047*I
@@ -4524,6 +4963,8 @@ n-lerchphi-2-0p5-5-over-2:
   traditional:
     in: N(\Phi(2, 0.5, \frac{5}{2}))
     out: -0.860\,648\,153\,115\,123\,2-0.376\,345\,923\,894\,626\,2i
+  fullform:
+    in: N[LerchPhi[2, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[2, 0.5, Rational[5, 2]]]
     out: -0.8606481531151231 - 0.3763459238946262*I
@@ -4543,6 +4984,8 @@ n-lerchphi-2-0p5-neg-2p5:
   traditional:
     in: N(\Phi(2, 0.5, -2.5))
     out: -3.163\,087\,105\,855\,561\,6-19.965\,372\,508\,009\,548i
+  fullform:
+    in: N[LerchPhi[2, 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[2, 0.5, -2.5]]
     out: 4.75921583752595 - 12.043069564628038*I
@@ -4568,6 +5011,8 @@ n-lerchphi-2-2-plus-i-1:
   traditional:
     in: N(\Phi(2, 2+i, 1))
     out: 0.782\,103\,519\,638\,317\,3-0.589\,814\,387\,785\,094\,2i
+  fullform:
+    in: N[LerchPhi[2, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[2, Complex[2, 1], 1]]
     out: 0.7821035196370021 - 0.5898143877849428*I
@@ -4590,6 +5035,8 @@ n-lerchphi-2-2-plus-i-2:
   traditional:
     in: N(\Phi(2, 2+i, 2))
     out: -0.108\,948\,240\,180\,841\,43-0.294\,907\,193\,892\,547\,1i
+  fullform:
+    in: N[LerchPhi[2, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[2, Complex[2, 1], 2]]
     out: -0.10894824018083943 - 0.2949071938925386*I
@@ -4612,6 +5059,8 @@ n-lerchphi-2-2-plus-i-0p5:
   traditional:
     in: N(\Phi(2, 2+i, 0.5))
     out: 3.266\,346\,588\,775\,548\,3+1.581\,423\,998\,076\,357\,6i
+  fullform:
+    in: N[LerchPhi[2, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[2, Complex[2, 1], 0.5]]
     out: 3.2663465887755443 + 1.5814239980763367*I
@@ -4634,6 +5083,8 @@ n-lerchphi-2-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(2, 2+i, \frac{5}{2}))
     out: -0.156\,856\,484\,489\,973\,86-0.155\,950\,565\,746\,909\,55i
+  fullform:
+    in: N[LerchPhi[2, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[2, Complex[2, 1], Rational[5, 2]]]
     out: -0.1568564844899748 - 0.1559505657469148*I
@@ -4653,6 +5104,8 @@ n-lerchphi-2-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(2, 2+i, -2.5))
     out: 332.097\,984\,373\,651\,7+238.176\,549\,803\,584\,46i
+  fullform:
+    in: N[LerchPhi[2, Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[2, Complex[2, 1], -2.5]]
     out: 39.35281478642287 + 22.39721772102415*I
@@ -4678,6 +5131,8 @@ n-lerchphi-neg-2-2-1:
   traditional:
     in: N(\Phi(-2, 2, 1))
     out: 0.718\,373\,183\,441\,839\,4
+  fullform:
+    in: N[LerchPhi[-2, 2, 1]]
   wolfram:
     in: N[LerchPhi[-2, 2, 1]]
     out: "0.7183731834418405"
@@ -4700,6 +5155,8 @@ n-lerchphi-neg-2-2-2:
   traditional:
     in: N(\Phi(-2, 2, 2))
     out: 0.140\,813\,408\,279\,077\,3
+  fullform:
+    in: N[LerchPhi[-2, 2, 2]]
   wolfram:
     in: N[LerchPhi[-2, 2, 2]]
     out: "0.14081340827907973"
@@ -4722,6 +5179,8 @@ n-lerchphi-neg-2-2-0p5:
   traditional:
     in: N(\Phi(-2, 2, 0.5))
     out: 3.444\,734\,229\,330\,254
+  fullform:
+    in: N[LerchPhi[-2, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[-2, 2, 0.5]]
     out: 3.4447342293302547 - 2.0380094546286109*^-16*I
@@ -4744,6 +5203,8 @@ n-lerchphi-neg-2-2-5-over-2:
   traditional:
     in: N(\Phi(-2, 2, \frac{5}{2}))
     out: 0.083\,405\,779\,554\,794\,63
+  fullform:
+    in: N[LerchPhi[-2, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-2, 2, Rational[5, 2]]]
     out: 0.0834057795547859 - 5.095023636571527*^-17*I
@@ -4763,6 +5224,8 @@ n-lerchphi-neg-2-2-neg-2p5:
   traditional:
     in: N(\Phi(-2, 2, -2.5))
     out: -12.286\,762\,723\,530\,918
+  fullform:
+    in: N[LerchPhi[-2, 2, -2.5]]
   wolfram:
     in: N[LerchPhi[-2, 2, -2.5]]
     out: -12.286762723530927 + 1.6304075637028887*^-15*I
@@ -4786,6 +5249,8 @@ n-lerchphi-neg-2-3-1:
   traditional:
     in: N(\Phi(-2, 3, 1))
     out: 0.834\,141\,681\,983\,285\,5
+  fullform:
+    in: N[LerchPhi[-2, 3, 1]]
   wolfram:
     in: N[LerchPhi[-2, 3, 1]]
     out: "0.8341416819832856"
@@ -4808,6 +5273,8 @@ n-lerchphi-neg-2-3-2:
   traditional:
     in: N(\Phi(-2, 3, 2))
     out: 0.082\,929\,159\,008\,355\,8
+  fullform:
+    in: N[LerchPhi[-2, 3, 2]]
   wolfram:
     in: N[LerchPhi[-2, 3, 2]]
     out: "0.08292915900835718"
@@ -4830,6 +5297,8 @@ n-lerchphi-neg-2-3-0p5:
   traditional:
     in: N(\Phi(-2, 3, 0.5))
     out: 7.563\,284\,617\,347\,448
+  fullform:
+    in: N[LerchPhi[-2, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[-2, 3, 0.5]]
     out: 7.563284617347448 + 1.3824347500011768*^-15*I
@@ -4852,6 +5321,8 @@ n-lerchphi-neg-2-3-5-over-2:
   traditional:
     in: N(\Phi(-2, 3, \frac{5}{2}))
     out: 0.038\,969\,302\,485\,020\,396+11\,518\,563\,880\,485\,999\cdot10^{-30}i
+  fullform:
+    in: N[LerchPhi[-2, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-2, 3, Rational[5, 2]]]
     out: 0.03896930248501018 + 3.456086875002942*^-16*I
@@ -4871,6 +5342,8 @@ n-lerchphi-neg-2-3-neg-2p5:
   traditional:
     in: N(\Phi(-2, 3, -2.5))
     out: -91.977\,684\,346\,186\,99
+  fullform:
+    in: N[LerchPhi[-2, 3, -2.5]]
   wolfram:
     in: N[LerchPhi[-2, 3, -2.5]]
     out: -29.034869531372177 - 1.1059478000009414*^-14*I
@@ -4896,6 +5369,8 @@ n-lerchphi-neg-2-0p5-1:
   traditional:
     in: N(\Phi(-2, 0.5, 1))
     out: 0.445\,644\,355\,776\,061\,2
+  fullform:
+    in: N[LerchPhi[-2, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[-2, 0.5, 1]]
     out: 0.4456443557760621 - 4.163336342344337*^-17*I
@@ -4918,6 +5393,8 @@ n-lerchphi-neg-2-0p5-2:
   traditional:
     in: N(\Phi(-2, 0.5, 2))
     out: 0.277\,177\,822\,111\,969\,2
+  fullform:
+    in: N[LerchPhi[-2, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[-2, 0.5, 2]]
     out: 0.2771778221119691 + 5.68356755158503*^-18*I
@@ -4940,6 +5417,8 @@ n-lerchphi-neg-2-0p5-0p5:
   traditional:
     in: N(\Phi(-2, 0.5, 0.5))
     out: 0.743\,192\,432\,028\,837\,6
+  fullform:
+    in: N[LerchPhi[-2, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[-2, 0.5, 0.5]]
     out: 0.7431924320288356 - 2.4228238315063152*^-17*I
@@ -4962,6 +5441,8 @@ n-lerchphi-neg-2-0p5-5-over-2:
   traditional:
     in: N(\Phi(-2, 0.5, \frac{5}{2}))
     out: 0.240\,493\,007\,877\,888\,96+23\,564\,483\,697\,668\,948\cdot10^{-30}i
+  fullform:
+    in: N[LerchPhi[-2, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-2, 0.5, Rational[5, 2]]]
     out: 0.24049300787779812 - 6.057059578765788*^-18*I
@@ -4981,6 +5462,8 @@ n-lerchphi-neg-2-0p5-neg-2p5:
   traditional:
     in: N(\Phi(-2, 0.5, -2.5))
     out: -5.945\,539\,456\,230\,700\,5-4.656\,316\,619\,670\,605i
+  fullform:
+    in: N[LerchPhi[-2, 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[-2, 0.5, -2.5]]
     out: -1.2892228365600795 + 1.9382590652050522*^-16*I
@@ -5006,6 +5489,8 @@ n-lerchphi-neg-2-2-plus-i-1:
   traditional:
     in: N(\Phi(-2, 2+i, 1))
     out: 0.746\,276\,670\,223\,342\,1+0.140\,408\,686\,389\,413\,06i
+  fullform:
+    in: N[LerchPhi[-2, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[-2, Complex[2, 1], 1]]
     out: 0.7462766702242207 + 0.14040868638886603*I
@@ -5028,6 +5513,8 @@ n-lerchphi-neg-2-2-plus-i-2:
   traditional:
     in: N(\Phi(-2, 2+i, 2))
     out: 0.126\,861\,664\,888\,331\,84-0.070\,204\,343\,194\,693\,51i
+  fullform:
+    in: N[LerchPhi[-2, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[-2, Complex[2, 1], 2]]
     out: 0.1268616648883305 - 0.0702043431947064*I
@@ -5050,6 +5537,8 @@ n-lerchphi-neg-2-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-2, 2+i, 0.5))
     out: 2.511\,183\,002\,874\,043+2.676\,051\,142\,848\,453\,7i
+  fullform:
+    in: N[LerchPhi[-2, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[-2, Complex[2, 1], 0.5]]
     out: 2.51118300287403 + 2.6760511428484572*I
@@ -5072,6 +5561,8 @@ n-lerchphi-neg-2-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-2, 2+i, \frac{5}{2}))
     out: 0.062\,761\,079\,674\,356\,96-0.057\,603\,201\,649\,033\,57i
+  fullform:
+    in: N[LerchPhi[-2, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-2, Complex[2, 1], Rational[5, 2]]]
     out: 0.06276107967442413 - 0.05760320164915622*I
@@ -5091,6 +5582,8 @@ n-lerchphi-neg-2-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(-2, 2+i, -2.5))
     out: 248.074\,329\,015\,288\,44+220.343\,874\,485\,533\,3i
+  fullform:
+    in: N[LerchPhi[-2, Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[-2, Complex[2, 1], -2.5]]
     out: -8.501055789332833 - 10.961345717993117*I
@@ -5116,6 +5609,8 @@ n-lerchphi-3-2-1:
   traditional:
     in: N(\Phi(3, 2, 1))
     out: 0.773\,393\,474\,437\,699\,1-1.150\,464\,098\,407\,734i
+  fullform:
+    in: N[LerchPhi[3, 2, 1]]
   wolfram:
     in: N[LerchPhi[3, 2, 1]]
     out: 0.7733934744376993 - 1.1504640984077343*I
@@ -5138,6 +5633,8 @@ n-lerchphi-3-2-2:
   traditional:
     in: N(\Phi(3, 2, 2))
     out: -0.075\,535\,508\,520\,766\,99-0.383\,488\,032\,802\,578i
+  fullform:
+    in: N[LerchPhi[3, 2, 2]]
   wolfram:
     in: N[LerchPhi[3, 2, 2]]
     out: -0.07553550852076688 - 0.3834880328025781*I
@@ -5160,6 +5657,8 @@ n-lerchphi-3-2-0p5:
   traditional:
     in: N(\Phi(3, 2, 0.5))
     out: 4.308\,305\,910\,092\,613\,5-1.992\,662\,270\,726\,116\,3i
+  fullform:
+    in: N[LerchPhi[3, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[3, 2, 0.5]]
     out: 4.308305910092614 - 1.9926622707261177*I
@@ -5182,6 +5681,8 @@ n-lerchphi-3-2-5-over-2:
   traditional:
     in: N(\Phi(3, 2, \frac{5}{2}))
     out: -0.113\,891\,935\,915\,635\,43-0.221\,406\,918\,969\,568\,35i
+  fullform:
+    in: N[LerchPhi[3, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[3, 2, Rational[5, 2]]]
     out: -0.1138919359156354 - 0.22140691896956863*I
@@ -5201,6 +5702,8 @@ n-lerchphi-3-2-neg-2p5:
   traditional:
     in: N(\Phi(3, 2, -2.5))
     out: 153.817\,592\,905\,833\,92-53.801\,881\,309\,605\,13i
+  fullform:
+    in: N[LerchPhi[3, 2, -2.5]]
   wolfram:
     in: N[LerchPhi[3, 2, -2.5]]
     out: 153.81759290583392 - 53.80188130960518*I
@@ -5224,6 +5727,8 @@ n-lerchphi-3-3-1:
   traditional:
     in: N(\Phi(3, 3, 1))
     out: 1.247\,374\,198\,080\,243\,7-0.631\,956\,998\,091\,107\,1i
+  fullform:
+    in: N[LerchPhi[3, 3, 1]]
   wolfram:
     in: N[LerchPhi[3, 3, 1]]
     out: 1.2473741980802437 - 0.6319569980911073*I
@@ -5246,6 +5751,8 @@ n-lerchphi-3-3-2:
   traditional:
     in: N(\Phi(3, 3, 2))
     out: 0.082\,458\,066\,026\,747\,85-0.210\,652\,332\,697\,035\,62i
+  fullform:
+    in: N[LerchPhi[3, 3, 2]]
   wolfram:
     in: N[LerchPhi[3, 3, 2]]
     out: 0.0824580660267479 - 0.21065233269703576*I
@@ -5268,6 +5775,8 @@ n-lerchphi-3-3-0p5:
   traditional:
     in: N(\Phi(3, 3, 0.5))
     out: 8.962\,435\,484\,818\,293-1.094\,581\,628\,892\,505\,4i
+  fullform:
+    in: N[LerchPhi[3, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[3, 3, 0.5]]
     out: 8.962435484818286 - 1.0945816288925072*I
@@ -5290,6 +5799,8 @@ n-lerchphi-3-3-5-over-2:
   traditional:
     in: N(\Phi(3, 3, \frac{5}{2}))
     out: 0.008\,171\,843\,992\,156\,041-0.121\,620\,180\,988\,056\,09i
+  fullform:
+    in: N[LerchPhi[3, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[3, 3, Rational[5, 2]]]
     out: 0.008171843992155203 - 0.12162018098805635*I
@@ -5309,6 +5820,8 @@ n-lerchphi-3-3-neg-2p5:
   traditional:
     in: N(\Phi(3, 3, -2.5))
     out: 169.032\,869\,201\,205\,05-29.553\,703\,980\,097\,676i
+  fullform:
+    in: N[LerchPhi[3, 3, -2.5]]
   wolfram:
     in: N[LerchPhi[3, 3, -2.5]]
     out: 314.9386469789826 - 29.553703980097694*I
@@ -5334,6 +5847,8 @@ n-lerchphi-3-0p5-1:
   traditional:
     in: N(\Phi(3, 0.5, 1))
     out: -0.567\,338\,449\,754\,659\,9-0.563\,678\,480\,792\,821\,2i
+  fullform:
+    in: N[LerchPhi[3, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[3, 0.5, 1]]
     out: -0.5673384497546596 - 0.5636784807928212*I
@@ -5356,6 +5871,8 @@ n-lerchphi-3-0p5-2:
   traditional:
     in: N(\Phi(3, 0.5, 2))
     out: -0.522\,446\,149\,918\,219\,7-0.187\,892\,826\,930\,940\,4i
+  fullform:
+    in: N[LerchPhi[3, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[3, 0.5, 2]]
     out: -0.5224461499182197 - 0.18789282693094045*I
@@ -5378,6 +5895,8 @@ n-lerchphi-3-0p5-0p5:
   traditional:
     in: N(\Phi(3, 0.5, 0.5))
     out: -0.305\,888\,418\,127\,713\,3-0.976\,319\,767\,866\,404i
+  fullform:
+    in: N[LerchPhi[3, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[3, 0.5, 0.5]]
     out: -0.305888418127714 - 0.976319767866404*I
@@ -5400,6 +5919,8 @@ n-lerchphi-3-0p5-5-over-2:
   traditional:
     in: N(\Phi(3, 0.5, \frac{5}{2}))
     out: -0.463\,287\,969\,253\,775\,7-0.108\,479\,974\,207\,378\,18i
+  fullform:
+    in: N[LerchPhi[3, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[3, 0.5, Rational[5, 2]]]
     out: -0.4632879692537763 - 0.1084799742073782*I
@@ -5419,6 +5940,8 @@ n-lerchphi-3-0p5-neg-2p5:
   traditional:
     in: N(\Phi(3, 0.5, -2.5))
     out: -8.258\,987\,289\,448\,257-42.170\,501\,068\,567\,62i
+  fullform:
+    in: N[LerchPhi[3, 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[3, 0.5, -2.5]]
     out: 7.550880046726434 - 26.360633732392905*I
@@ -5444,6 +5967,8 @@ n-lerchphi-3-2-plus-i-1:
   traditional:
     in: N(\Phi(3, 2+i, 1))
     out: 0.601\,415\,572\,990\,860\,5-0.572\,691\,588\,995\,903\,8i
+  fullform:
+    in: N[LerchPhi[3, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[3, Complex[2, 1], 1]]
     out: 0.6014155729902452 - 0.5726915889959069*I
@@ -5466,6 +5991,8 @@ n-lerchphi-3-2-plus-i-2:
   traditional:
     in: N(\Phi(3, 2+i, 2))
     out: -0.132\,861\,475\,669\,713\,2-0.190\,897\,196\,331\,967\,94i
+  fullform:
+    in: N[LerchPhi[3, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[3, Complex[2, 1], 2]]
     out: -0.13286147566971163 - 0.1908971963319649*I
@@ -5488,6 +6015,8 @@ n-lerchphi-3-2-plus-i-0p5:
   traditional:
     in: N(\Phi(3, 2+i, 0.5))
     out: 3.074\,330\,146\,279\,176+1.382\,090\,656\,931\,817\,2i
+  fullform:
+    in: N[LerchPhi[3, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[3, Complex[2, 1], 0.5]]
     out: 3.07433014627917 + 1.3820906569318034*I
@@ -5510,6 +6039,8 @@ n-lerchphi-3-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(3, 2+i, \frac{5}{2}))
     out: -0.136\,427\,871\,232\,893\,9-0.071\,980\,686\,892\,989\,73i
+  fullform:
+    in: N[LerchPhi[3, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[3, Complex[2, 1], Rational[5, 2]]]
     out: -0.13642787123289463 - 0.07198068689299125*I
@@ -5529,6 +6060,8 @@ n-lerchphi-3-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(3, 2+i, -2.5))
     out: 754.439\,399\,822\,086\,3+554.504\,954\,092\,239\,2i
+  fullform:
+    in: N[LerchPhi[3, Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[3, Complex[2, 1], -2.5]]
     out: 112.02214251367533 + 59.66618957774957*I
@@ -5554,6 +6087,8 @@ n-lerchphi-1p5-2-1:
   traditional:
     in: N(\Phi(1.5, 2, 1))
     out: 1.582\,930\,180\,181\,653-0.849\,204\,136\,613\,066\,8i
+  fullform:
+    in: N[LerchPhi[1.5, 2, 1]]
   wolfram:
     in: N[LerchPhi[1.5, 2, 1]]
     out: 1.582930180181653 - 0.8492041366130669*I
@@ -5576,6 +6111,8 @@ n-lerchphi-1p5-2-2:
   traditional:
     in: N(\Phi(1.5, 2, 2))
     out: 0.388\,620\,120\,121\,102\,25-0.566\,136\,091\,075\,377\,9i
+  fullform:
+    in: N[LerchPhi[1.5, 2, 2]]
   wolfram:
     in: N[LerchPhi[1.5, 2, 2]]
     out: 0.38862012012110325 - 0.5661360910753768*I
@@ -5598,6 +6135,8 @@ n-lerchphi-1p5-2-0p5:
   traditional:
     in: N(\Phi(1.5, 2, 0.5))
     out: 5.118\,490\,668\,726\,073-1.040\,058\,411\,081\,376i
+  fullform:
+    in: N[LerchPhi[1.5, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[1.5, 2, 0.5]]
     out: 5.118490668726073 - 1.040058411081378*I
@@ -5620,6 +6159,8 @@ n-lerchphi-1p5-2-5-over-2:
   traditional:
     in: N(\Phi(1.5, 2, \frac{5}{2}))
     out: 0.200\,810\,667\,581\,958\,37-0.462\,248\,182\,702\,833\,63i
+  fullform:
+    in: N[LerchPhi[1.5, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[1.5, 2, Rational[5, 2]]]
     out: 0.2008106675819583 - 0.46224818270283463*I
@@ -5639,6 +6180,8 @@ n-lerchphi-1p5-2-neg-2p5:
   traditional:
     in: N(\Phi(1.5, 2, -2.5))
     out: 27.101\,572\,673\,617\,163-3.510\,197\,137\,399\,641\,7i
+  fullform:
+    in: N[LerchPhi[1.5, 2, -2.5]]
   wolfram:
     in: N[LerchPhi[1.5, 2, -2.5]]
     out: 27.101572673617163 - 3.5101971373996506*I
@@ -5662,6 +6205,8 @@ n-lerchphi-1p5-3-1:
   traditional:
     in: N(\Phi(1.5, 3, 1))
     out: 1.373\,918\,338\,213\,52-0.172\,161\,323\,528\,858\,8i
+  fullform:
+    in: N[LerchPhi[1.5, 3, 1]]
   wolfram:
     in: N[LerchPhi[1.5, 3, 1]]
     out: 1.3739183382135203 - 0.17216132352885852*I
@@ -5684,6 +6229,8 @@ n-lerchphi-1p5-3-2:
   traditional:
     in: N(\Phi(1.5, 3, 2))
     out: 0.249\,278\,892\,142\,347-0.114\,774\,215\,685\,905\,83i
+  fullform:
+    in: N[LerchPhi[1.5, 3, 2]]
   wolfram:
     in: N[LerchPhi[1.5, 3, 2]]
     out: 0.24927889214235632 - 0.11477421568590564*I
@@ -5706,6 +6253,8 @@ n-lerchphi-1p5-3-0p5:
   traditional:
     in: N(\Phi(1.5, 3, 0.5))
     out: 8.758\,392\,281\,291\,254-0.210\,853\,698\,043\,957\,9i
+  fullform:
+    in: N[LerchPhi[1.5, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[1.5, 3, 0.5]]
     out: 8.75839228129124 - 0.21085369804395912*I
@@ -5728,6 +6277,8 @@ n-lerchphi-1p5-3-5-over-2:
   traditional:
     in: N(\Phi(1.5, 3, \frac{5}{2}))
     out: 0.139\,532\,371\,931\,915\,23-0.093\,712\,754\,686\,203\,48i
+  fullform:
+    in: N[LerchPhi[1.5, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[1.5, 3, Rational[5, 2]]]
     out: 0.13953237193190896 - 0.09371275468620405*I
@@ -5747,6 +6298,8 @@ n-lerchphi-1p5-3-neg-2p5:
   traditional:
     in: N(\Phi(1.5, 3, -2.5))
     out: 11.051\,129\,504\,913\,542-0.711\,631\,230\,898\,364\,7i
+  fullform:
+    in: N[LerchPhi[1.5, 3, -2.5]]
   wolfram:
     in: N[LerchPhi[1.5, 3, -2.5]]
     out: 48.068018393802376 - 0.711631230898362*I
@@ -5772,6 +6325,8 @@ n-lerchphi-1p5-0p5-1:
   traditional:
     in: N(\Phi(1.5, 0.5, 1))
     out: -1.031\,093\,801\,626\,106\,4-1.855\,696\,435\,774\,015\,8i
+  fullform:
+    in: N[LerchPhi[1.5, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[1.5, 0.5, 1]]
     out: -1.0310938016261078 - 1.8556964357740162*I
@@ -5794,6 +6349,8 @@ n-lerchphi-1p5-0p5-2:
   traditional:
     in: N(\Phi(1.5, 0.5, 2))
     out: -1.354\,062\,534\,417\,405-1.237\,130\,957\,182\,677i
+  fullform:
+    in: N[LerchPhi[1.5, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[1.5, 0.5, 2]]
     out: -1.3540625344174047 - 1.2371309571826772*I
@@ -5816,6 +6373,8 @@ n-lerchphi-1p5-0p5-0p5:
   traditional:
     in: N(\Phi(1.5, 0.5, 0.5))
     out: -0.472\,701\,238\,866\,762\,4-2.272\,754\,692\,573\,877i
+  fullform:
+    in: N[LerchPhi[1.5, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[1.5, 0.5, 0.5]]
     out: -0.4727012388667613 - 2.2727546925738773*I
@@ -5838,6 +6397,8 @@ n-lerchphi-1p5-0p5-5-over-2:
   traditional:
     in: N(\Phi(1.5, 0.5, \frac{5}{2}))
     out: -1.382\,959\,854\,502\,865-1.010\,113\,196\,699\,500\,7i
+  fullform:
+    in: N[LerchPhi[1.5, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[1.5, 0.5, Rational[5, 2]]]
     out: -1.3829598545028647 - 1.010113196699501*I
@@ -5857,6 +6418,8 @@ n-lerchphi-1p5-0p5-neg-2p5:
   traditional:
     in: N(\Phi(1.5, 0.5, -2.5))
     out: -1.595\,366\,681\,175\,322\,7-12.709\,728\,006\,201\,562i
+  fullform:
+    in: N[LerchPhi[1.5, 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[1.5, 0.5, -2.5]]
     out: 3.44381423758941 - 7.6705470874368356*I
@@ -5882,6 +6445,8 @@ n-lerchphi-1p5-2-plus-i-1:
   traditional:
     in: N(\Phi(1.5, 2+i, 1))
     out: 0.928\,830\,673\,042\,347\,2-0.565\,207\,572\,193\,658\,6i
+  fullform:
+    in: N[LerchPhi[1.5, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[1.5, Complex[2, 1], 1]]
     out: 0.9288306730428874 - 0.5652075721952401*I
@@ -5904,6 +6469,8 @@ n-lerchphi-1p5-2-plus-i-2:
   traditional:
     in: N(\Phi(1.5, 2+i, 2))
     out: -0.047\,446\,217\,971\,768\,59-0.376\,805\,048\,129\,105\,87i
+  fullform:
+    in: N[LerchPhi[1.5, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[1.5, Complex[2, 1], 2]]
     out: -0.04744621797176318 - 0.37680504812909255*I
@@ -5926,6 +6493,8 @@ n-lerchphi-1p5-2-plus-i-0p5:
   traditional:
     in: N(\Phi(1.5, 2+i, 0.5))
     out: 3.383\,048\,389\,778\,828+1.747\,983\,484\,353\,337\,5i
+  fullform:
+    in: N[LerchPhi[1.5, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[1.5, Complex[2, 1], 0.5]]
     out: 3.3830483897788204 + 1.7479834843533162*I
@@ -5948,6 +6517,8 @@ n-lerchphi-1p5-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(1.5, 2+i, \frac{5}{2}))
     out: -0.136\,231\,069\,616\,323\,14-0.242\,176\,661\,225\,908\,45i
+  fullform:
+    in: N[LerchPhi[1.5, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[1.5, Complex[2, 1], Rational[5, 2]]]
     out: -0.13623106961632636 - 0.24217666122591808*I
@@ -5967,6 +6538,8 @@ n-lerchphi-1p5-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(1.5, 2+i, -2.5))
     out: 188.054\,525\,807\,321\,62+129.950\,947\,308\,879\,28i
+  fullform:
+    in: N[LerchPhi[1.5, Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[1.5, Complex[2, 1], -2.5]]
     out: 19.05095385185434 + 11.260195772958092*I
@@ -5992,6 +6565,8 @@ n-lerchphi-neg-1p5-2-1:
   traditional:
     in: N(\Phi(-1.5, 2, 1))
     out: 0.764\,920\,440\,250\,381\,9
+  fullform:
+    in: N[LerchPhi[-1.5, 2, 1]]
   wolfram:
     in: N[LerchPhi[-1.5, 2, 1]]
     out: "0.7649204402503804"
@@ -6014,6 +6589,8 @@ n-lerchphi-neg-1p5-2-2:
   traditional:
     in: N(\Phi(-1.5, 2, 2))
     out: 0.156\,719\,706\,499\,745\,3
+  fullform:
+    in: N[LerchPhi[-1.5, 2, 2]]
   wolfram:
     in: N[LerchPhi[-1.5, 2, 2]]
     out: 0.1567197064997469 + 5.721258238267586*^-16*I
@@ -6036,6 +6613,8 @@ n-lerchphi-neg-1p5-2-0p5:
   traditional:
     in: N(\Phi(-1.5, 2, 0.5))
     out: 3.545\,004\,558\,874\,94
+  fullform:
+    in: N[LerchPhi[-1.5, 2, 0.5]]
   wolfram:
     in: N[LerchPhi[-1.5, 2, 0.5]]
     out: 3.545004558874938 - 5.748616730151821*^-17*I
@@ -6058,6 +6637,8 @@ n-lerchphi-neg-1p5-2-5-over-2:
   traditional:
     in: N(\Phi(-1.5, 2, \frac{5}{2}))
     out: 0.094\,076\,100\,240\,723\,02
+  fullform:
+    in: N[LerchPhi[-1.5, 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1.5, 2, Rational[5, 2]]]
     out: 0.09407610024071308 - 2.5549407689563645*^-17*I
@@ -6077,6 +6658,8 @@ n-lerchphi-neg-1p5-2-neg-2p5:
   traditional:
     in: N(\Phi(-1.5, 2, -2.5))
     out: -3.471\,057\,052\,869\,589\,7
+  fullform:
+    in: N[LerchPhi[-1.5, 2, -2.5]]
   wolfram:
     in: N[LerchPhi[-1.5, 2, -2.5]]
     out: -3.4710570528695808 + 1.9401581464262396*^-16*I
@@ -6100,6 +6683,8 @@ n-lerchphi-neg-1p5-3-1:
   traditional:
     in: N(\Phi(-1.5, 3, 1))
     out: 0.865\,224\,966\,770\,831\,8
+  fullform:
+    in: N[LerchPhi[-1.5, 3, 1]]
   wolfram:
     in: N[LerchPhi[-1.5, 3, 1]]
     out: "0.8652249667708333"
@@ -6122,6 +6707,8 @@ n-lerchphi-neg-1p5-3-2:
   traditional:
     in: N(\Phi(-1.5, 3, 2))
     out: 0.089\,850\,022\,152\,777\,51
+  fullform:
+    in: N[LerchPhi[-1.5, 3, 2]]
   wolfram:
     in: N[LerchPhi[-1.5, 3, 2]]
     out: 0.0898500221527776 + 2.6738770253614813*^-16*I
@@ -6144,6 +6731,8 @@ n-lerchphi-neg-1p5-3-0p5:
   traditional:
     in: N(\Phi(-1.5, 3, 0.5))
     out: 7.652\,044\,367\,963\,557\,5
+  fullform:
+    in: N[LerchPhi[-1.5, 3, 0.5]]
   wolfram:
     in: N[LerchPhi[-1.5, 3, 0.5]]
     out: 7.652044367963561 + 1.513727336795356*^-15*I
@@ -6166,6 +6755,8 @@ n-lerchphi-neg-1p5-3-5-over-2:
   traditional:
     in: N(\Phi(-1.5, 3, \frac{5}{2}))
     out: 0.042\,883\,916\,625\,780\,595+16\,178\,031\,136\,959\,703\cdot10^{-30}i
+  fullform:
+    in: N[LerchPhi[-1.5, 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1.5, 3, Rational[5, 2]]]
     out: 0.04288391662578029 + 6.727677052423805*^-16*I
@@ -6185,6 +6776,8 @@ n-lerchphi-neg-1p5-3-neg-2p5:
   traditional:
     in: N(\Phi(-1.5, 3, -2.5))
     out: -43.445\,205\,297\,432\,56
+  fullform:
+    in: N[LerchPhi[-1.5, 3, -2.5]]
   wolfram:
     in: N[LerchPhi[-1.5, 3, -2.5]]
     out: -8.206094186321462 - 5.108829761684327*^-15*I
@@ -6210,6 +6803,8 @@ n-lerchphi-neg-1p5-0p5-1:
   traditional:
     in: N(\Phi(-1.5, 0.5, 1))
     out: 0.511\,802\,181\,247\,576\,1
+  fullform:
+    in: N[LerchPhi[-1.5, 0.5, 1]]
   wolfram:
     in: N[LerchPhi[-1.5, 0.5, 1]]
     out: 0.5118021812475765 - 3.700743415417188*^-17*I
@@ -6232,6 +6827,8 @@ n-lerchphi-neg-1p5-0p5-2:
   traditional:
     in: N(\Phi(-1.5, 0.5, 2))
     out: 0.325\,465\,212\,501\,622\,86
+  fullform:
+    in: N[LerchPhi[-1.5, 0.5, 2]]
   wolfram:
     in: N[LerchPhi[-1.5, 0.5, 2]]
     out: 0.3254652125016162 + 1.9987578825705452*^-18*I
@@ -6254,6 +6851,8 @@ n-lerchphi-neg-1p5-0p5-0p5:
   traditional:
     in: N(\Phi(-1.5, 0.5, 0.5))
     out: 0.827\,894\,231\,949\,178
+  fullform:
+    in: N[LerchPhi[-1.5, 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[-1.5, 0.5, 0.5]]
     out: 0.8278942319491788 + 1.134070298867023*^-17*I
@@ -6276,6 +6875,8 @@ n-lerchphi-neg-1p5-0p5-5-over-2:
   traditional:
     in: N(\Phi(-1.5, 0.5, \frac{5}{2}))
     out: 0.283\,744\,684\,874\,486\,5-5\,362\,377\,208\,939\,506\cdot10^{-29}i
+  fullform:
+    in: N[LerchPhi[-1.5, 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1.5, 0.5, Rational[5, 2]]]
     out: 0.28374468487452115 + 5.040312439408991*^-18*I
@@ -6295,6 +6896,8 @@ n-lerchphi-neg-1p5-0p5-neg-2p5:
   traditional:
     in: N(\Phi(-1.5, 0.5, -2.5))
     out: -2.794\,143\,032\,828\,476-2.589\,691\,175\,981\,552i
+  fullform:
+    in: N[LerchPhi[-1.5, 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[-1.5, 0.5, -2.5]]
     out: -0.2044518568469269 - 3.827487258676203*^-17*I
@@ -6320,6 +6923,8 @@ n-lerchphi-neg-1p5-2-plus-i-1:
   traditional:
     in: N(\Phi(-1.5, 2+i, 1))
     out: 0.792\,548\,965\,722\,148\,8+0.123\,074\,546\,469\,527\,56i
+  fullform:
+    in: N[LerchPhi[-1.5, Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[-1.5, Complex[2, 1], 1]]
     out: 0.7925489657208953 + 0.1230745464694305*I
@@ -6342,6 +6947,8 @@ n-lerchphi-neg-1p5-2-plus-i-2:
   traditional:
     in: N(\Phi(-1.5, 2+i, 2))
     out: 0.138\,300\,689\,518\,559\,8-0.082\,049\,697\,646\,360\,73i
+  fullform:
+    in: N[LerchPhi[-1.5, Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[-1.5, Complex[2, 1], 2]]
     out: 0.13830068951857172 - 0.08204969764635209*I
@@ -6364,6 +6971,8 @@ n-lerchphi-neg-1p5-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-1.5, 2+i, 0.5))
     out: 2.619\,306\,075\,593\,21+2.668\,732\,631\,457\,893i
+  fullform:
+    in: N[LerchPhi[-1.5, Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[-1.5, Complex[2, 1], 0.5]]
     out: 2.619306075593197 + 2.6687326314578925*I
@@ -6386,6 +6995,8 @@ n-lerchphi-neg-1p5-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-1.5, 2+i, \frac{5}{2}))
     out: 0.068\,872\,516\,043\,113\,7-0.066\,700\,714\,195\,388\,52i
+  fullform:
+    in: N[LerchPhi[-1.5, Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[-1.5, Complex[2, 1], Rational[5, 2]]]
     out: 0.06887251604309992 - 0.06670071419535716*I
@@ -6405,6 +7016,8 @@ n-lerchphi-neg-1p5-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(-1.5, 2+i, -2.5))
     out: 139.444\,015\,517\,816\,1+127.214\,874\,775\,026\,89i
+  fullform:
+    in: N[LerchPhi[-1.5, Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[-1.5, Complex[2, 1], -2.5]]
     out: -2.4322178506955483 - 3.1202928516189257*I
@@ -6430,6 +7043,8 @@ n-lerchphi-1-plus-2i-2-1:
   traditional:
     in: N(\Phi(1+2i, 2, 1))
     out: 0.817\,164\,228\,975\,140\,8+0.438\,319\,513\,824\,475\,2i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 2, 1]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 2, 1]]
     out: 0.8171642289751408 + 0.4383195138244753*I
@@ -6452,6 +7067,8 @@ n-lerchphi-1-plus-2i-2-2:
   traditional:
     in: N(\Phi(1+2i, 2, 2))
     out: 0.138\,760\,651\,324\,817\,96+0.160\,798\,211\,174\,838\,64i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 2, 2]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 2, 2]]
     out: 0.1387606513248183 + 0.16079821117483872*I
@@ -6474,6 +7091,8 @@ n-lerchphi-1-plus-2i-2-0p5:
   traditional:
     in: N(\Phi(1+2i, 2, 0.5))
     out: 3.792\,114\,260\,846\,786\,6+0.856\,074\,806\,978\,553\,3i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 2, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 2, 0.5]]
     out: 3.7921142608467884 + 0.8560748069785487*I
@@ -6496,6 +7115,8 @@ n-lerchphi-1-plus-2i-2-5-over-2:
   traditional:
     in: N(\Phi(1+2i, 2, \frac{5}{2}))
     out: 0.073\,029\,368\,926\,065\,17+0.108\,310\,519\,204\,865\,63i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 2, Rational[5, 2]]]
     out: 0.07302936892606432 + 0.10831051920486583*I
@@ -6515,6 +7136,8 @@ n-lerchphi-1-plus-2i-2-neg-2p5:
   traditional:
     in: N(\Phi(1+2i, 2, -2.5))
     out: -51.396\,662\,810\,913\,11-0.112\,162\,509\,568\,774\,38i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 2, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 2, -2.5]]
     out: -51.39666281091313 - 0.11216250956872287*I
@@ -6538,6 +7161,8 @@ n-lerchphi-1-plus-2i-3-1:
   traditional:
     in: N(\Phi(1+2i, 3, 1))
     out: 0.960\,539\,329\,125\,924\,5+0.262\,023\,760\,613\,251\,3i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 3, 1]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 3, 1]]
     out: 0.9605393291259242 + 0.26202376061325094*I
@@ -6560,6 +7185,8 @@ n-lerchphi-1-plus-2i-3-2:
   traditional:
     in: N(\Phi(1+2i, 3, 2))
     out: 0.096\,917\,370\,070\,485\,22+0.068\,189\,020\,472\,280\,32i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 3, 2]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 3, 2]]
     out: 0.09691737007048523 + 0.06818902047228051*I
@@ -6582,6 +7209,8 @@ n-lerchphi-1-plus-2i-3-0p5:
   traditional:
     in: N(\Phi(1+2i, 3, 0.5))
     out: 8.006\,976\,954\,441\,546+0.645\,737\,139\,237\,068\,8i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 3, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 3, 0.5]]
     out: 8.006976954441555 + 0.6457371392370719*I
@@ -6604,6 +7233,8 @@ n-lerchphi-1-plus-2i-3-5-over-2:
   traditional:
     in: N(\Phi(1+2i, 3, \frac{5}{2}))
     out: 0.043\,221\,448\,485\,686\,27+0.039\,913\,749\,099\,422\,996i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 3, Rational[5, 2]]]
     out: 0.04322144848568559 + 0.03991374909942102*I
@@ -6623,6 +7254,8 @@ n-lerchphi-1-plus-2i-3-neg-2p5:
   traditional:
     in: N(\Phi(1+2i, 3, -2.5))
     out: -63.145\,568\,516\,679\,16-55.709\,655\,033\,083\,43i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 3, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 3, -2.5]]
     out: -110.42497592408667 + 9.475530152101694*I
@@ -6648,6 +7281,8 @@ n-lerchphi-1-plus-2i-0p5-1:
   traditional:
     in: N(\Phi(1+2i, 0.5, 1))
     out: 0.251\,873\,370\,548\,447\,3+0.594\,237\,244\,072\,761\,8i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 0.5, 1]]
     out: 0.2518733705484466 + 0.5942372440727623*I
@@ -6670,6 +7305,8 @@ n-lerchphi-1-plus-2i-0p5-2:
   traditional:
     in: N(\Phi(1+2i, 0.5, 2))
     out: 0.088\,069\,571\,738\,793\,93+0.418\,098\,100\,595\,173\,77i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 0.5, 2]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 0.5, 2]]
     out: 0.0880695717387942 + 0.41809810059517355*I
@@ -6692,6 +7329,8 @@ n-lerchphi-1-plus-2i-0p5-0p5:
   traditional:
     in: N(\Phi(1+2i, 0.5, 0.5))
     out: 0.577\,382\,043\,614\,928\,2+0.768\,409\,107\,754\,766\,5i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 0.5, 0.5]]
     out: 0.5773820436149286 + 0.7684091077547667*I
@@ -6714,6 +7353,8 @@ n-lerchphi-1-plus-2i-0p5-5-over-2:
   traditional:
     in: N(\Phi(1+2i, 0.5, \frac{5}{2}))
     out: 0.060\,065\,923\,306\,197\,685+0.368\,282\,582\,441\,825i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 0.5, Rational[5, 2]]]
     out: 0.06006592330619742 + 0.36828258244182505*I
@@ -6733,6 +7374,8 @@ n-lerchphi-1-plus-2i-0p5-neg-2p5:
   traditional:
     in: N(\Phi(1+2i, 0.5, -2.5))
     out: 2.475\,463\,147\,093\,155-6.813\,575\,698\,374\,405i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], 0.5, -2.5]]
     out: -7.608072838412566 - 2.3174168611844586*I
@@ -6758,6 +7401,8 @@ n-lerchphi-1-plus-2i-2-plus-i-1:
   traditional:
     in: N(\Phi(1+2i, 2+i, 1))
     out: 1.126\,028\,536\,312\,937\,6+0.641\,355\,365\,959\,258\,2i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], Complex[2, 1], 1]]
     out: 1.1260285363141571 + 0.6413553659598815*I
@@ -6780,6 +7425,8 @@ n-lerchphi-1-plus-2i-2-plus-i-2:
   traditional:
     in: N(\Phi(1+2i, 2+i, 2))
     out: 0.281\,747\,853\,646\,291\,07+0.077\,859\,658\,666\,677\,1i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], Complex[2, 1], 2]]
     out: 0.2817478536462949 + 0.07785965866667141*I
@@ -6802,6 +7449,8 @@ n-lerchphi-1-plus-2i-2-plus-i-0p5:
   traditional:
     in: N(\Phi(1+2i, 2+i, 0.5))
     out: 3.192\,905\,834\,798\,345+3.788\,497\,113\,005\,995\,2i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], Complex[2, 1], 0.5]]
     out: 3.1929058347983257 + 3.7884971130059726*I
@@ -6824,6 +7473,8 @@ n-lerchphi-1-plus-2i-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(1+2i, 2+i, \frac{5}{2}))
     out: 0.171\,752\,370\,429\,291\,12+0.031\,954\,991\,049\,997\,425i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], Complex[2, 1], Rational[5, 2]]]
     out: 0.1717523704292899 + 0.03195499105000332*I
@@ -6843,6 +7494,8 @@ n-lerchphi-1-plus-2i-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(1+2i, 2+i, -2.5))
     out: -457.911\,341\,409\,628\,85+71.227\,722\,329\,657\,85i
+  fullform:
+    in: N[LerchPhi[Complex[1, 2], Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[1, 2], Complex[2, 1], -2.5]]
     out: -46.142787156209735 - 42.90442114783229*I
@@ -6868,6 +7521,8 @@ n-lerchphi-neg-1p5-plus-i-2-1:
   traditional:
     in: N(\Phi(-1.5+i, 2, 1))
     out: 0.744\,689\,766\,677\,463\,1+0.097\,676\,893\,344\,289\,08i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 2, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 2, 1]]
     out: 0.744689766677463 + 0.09767689334428953*I
@@ -6890,6 +7545,8 @@ n-lerchphi-neg-1p5-plus-i-2-2:
   traditional:
     in: N(\Phi(-1.5+i, 2, 2))
     out: 0.147\,889\,921\,024\,028\,37+0.033\,475\,351\,786\,492\,316i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 2, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 2, 2]]
     out: 0.14788992102403 + 0.03347535178649232*I
@@ -6912,6 +7569,8 @@ n-lerchphi-neg-1p5-plus-i-2-0p5:
   traditional:
     in: N(\Phi(-1.5+i, 2, 0.5))
     out: 3.510\,343\,411\,490\,998+0.209\,338\,331\,082\,416\,73i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 2, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 2, 0.5]]
     out: 3.510343411491001 + 0.20933833108241506*I
@@ -6934,6 +7593,8 @@ n-lerchphi-neg-1p5-plus-i-2-5-over-2:
   traditional:
     in: N(\Phi(-1.5+i, 2, \frac{5}{2}))
     out: 0.087\,723\,639\,080\,065\,42+0.022\,451\,843\,102\,527\,576i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 2, Rational[5, 2]]]
     out: 0.08772363908006367 + 0.022451843102529324*I
@@ -6953,6 +7614,8 @@ n-lerchphi-neg-1p5-plus-i-2-neg-2p5:
   traditional:
     in: N(\Phi(-1.5+i, 2, -2.5))
     out: 7.238\,774\,267\,536\,812\,5+8.864\,424\,682\,985\,405i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 2, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 2, -2.5]]
     out: 7.238774267536822 + 8.864424682985417*I
@@ -6976,6 +7639,8 @@ n-lerchphi-neg-1p5-plus-i-3-1:
   traditional:
     in: N(\Phi(-1.5+i, 3, 1))
     out: 0.855\,338\,745\,722\,699\,1+0.064\,892\,989\,018\,154\,07i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 3, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 3, 1]]
     out: 0.8553387457226986 + 0.0648929890181541*I
@@ -6998,6 +7663,8 @@ n-lerchphi-neg-1p5-plus-i-3-2:
   traditional:
     in: N(\Phi(-1.5+i, 3, 2))
     out: 0.086\,733\,806\,287\,417\,96+0.014\,560\,544\,846\,174\,24i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 3, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 3, 2]]
     out: 0.08673380628741625 + 0.014560544846175878*I
@@ -7020,6 +7687,8 @@ n-lerchphi-neg-1p5-plus-i-3-0p5:
   traditional:
     in: N(\Phi(-1.5+i, 3, 0.5))
     out: 7.631\,459\,552\,290\,882+0.183\,812\,993\,821\,418\,47i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 3, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 3, 0.5]]
     out: 7.631459552290881 + 0.1838129938214179*I
@@ -7042,6 +7711,8 @@ n-lerchphi-neg-1p5-plus-i-3-5-over-2:
   traditional:
     in: N(\Phi(-1.5+i, 3, \frac{5}{2}))
     out: 0.040\,930\,641\,736\,692\,38+0.008\,246\,898\,188\,157\,391i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 3, Rational[5, 2]]]
     out: 0.04093064173669038 + 0.008246898188154227*I
@@ -7061,6 +7732,8 @@ n-lerchphi-neg-1p5-plus-i-3-neg-2p5:
   traditional:
     in: N(\Phi(-1.5+i, 3, -2.5))
     out: -2.091\,088\,273\,701\,476\,7+67.791\,385\,747\,425\,37i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 3, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 3, -2.5]]
     out: 17.14802283740964 + 20.383978340017954*I
@@ -7086,6 +7759,8 @@ n-lerchphi-neg-1p5-plus-i-0p5-1:
   traditional:
     in: N(\Phi(-1.5+i, 0.5, 1))
     out: 0.465\,538\,805\,671\,105\,84+0.138\,214\,644\,414\,363\,76i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 0.5, 1]]
     out: 0.4655388056711063 + 0.13821464441436465*I
@@ -7108,6 +7783,8 @@ n-lerchphi-neg-1p5-plus-i-0p5-2:
   traditional:
     in: N(\Phi(-1.5+i, 0.5, 2))
     out: 0.289\,201\,980\,279\,298\,6+0.100\,658\,223\,909\,954\,41i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 0.5, 2]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 0.5, 2]]
     out: 0.2892019802792936 + 0.1006582239099534*I
@@ -7130,6 +7807,8 @@ n-lerchphi-neg-1p5-plus-i-0p5-0p5:
   traditional:
     in: N(\Phi(-1.5+i, 0.5, 0.5))
     out: 0.773\,036\,344\,755\,627+0.177\,108\,997\,856\,830\,46i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 0.5, 0.5]]
     out: 0.7730363447556265 + 0.17710899785682885*I
@@ -7152,6 +7831,8 @@ n-lerchphi-neg-1p5-plus-i-0p5-5-over-2:
   traditional:
     in: N(\Phi(-1.5+i, 0.5, \frac{5}{2}))
     out: 0.250\,662\,467\,827\,747\,3+0.090\,079\,856\,329\,816\,72i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 0.5, Rational[5, 2]]]
     out: 0.2506624678277247 + 0.09007985632982152*I
@@ -7171,6 +7852,8 @@ n-lerchphi-neg-1p5-plus-i-0p5-neg-2p5:
   traditional:
     in: N(\Phi(-1.5+i, 0.5, -2.5))
     out: -3.574\,854\,956\,018\,253+3.468\,728\,991\,325\,334i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], 0.5, -2.5]]
     out: 1.02676676378177 + 1.218062498742225*I
@@ -7196,6 +7879,8 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-1:
   traditional:
     in: N(\Phi(-1.5+i, 2+i, 1))
     out: 0.812\,564\,848\,672\,117\,8+0.233\,563\,704\,705\,404\,38i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 1]]
     out: 0.8125648486732331 + 0.2335637047053423*I
@@ -7218,6 +7903,8 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-2:
   traditional:
     in: N(\Phi(-1.5+i, 2+i, 2))
     out: 0.158\,374\,286\,676\,068\,18-0.050\,126\,278\,686\,223\,436i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 2]]
     out: 0.15837428667606762 - 0.05012627868621951*I
@@ -7240,6 +7927,8 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-0p5:
   traditional:
     in: N(\Phi(-1.5+i, 2+i, 0.5))
     out: 2.603\,018\,482\,399\,761\,5+2.911\,418\,398\,487\,827i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], 0.5]]
     out: 2.6030184823997473 + 2.9114183984878212*I
@@ -7262,6 +7951,8 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(-1.5+i, 2+i, \frac{5}{2}))
     out: 0.085\,359\,108\,535\,713\,03-0.047\,777\,579\,953\,800\,55i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], Rational[5, 2]]]
     out: 0.08535910853571833 - 0.047777579953797944*I
@@ -7281,6 +7972,8 @@ n-lerchphi-neg-1p5-plus-i-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(-1.5+i, 2+i, -2.5))
     out: 244.757\,889\,059\,178\,92-108.837\,273\,694\,788\,2i
+  fullform:
+    in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[-1.5, 1], Complex[2, 1], -2.5]]
     out: -2.6384307117707664 + 12.751078290666381*I
@@ -7306,6 +7999,8 @@ n-lerchphi-0p8-plus-0p9i-2-1:
   traditional:
     in: N(\Phi(0.8+0.9i, 2, 1))
     out: 1.051\,275\,353\,558\,639\,2+0.352\,340\,198\,251\,735\,24i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 2, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 2, 1]]
     out: 1.0512753535586397 + 0.3523401982517351*I
@@ -7328,6 +8023,8 @@ n-lerchphi-0p8-plus-0p9i-2-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 2, 2))
     out: 0.246\,983\,766\,395\,498\,66+0.162\,568\,510\,619\,732\,57i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 2, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 2, 2]]
     out: 0.24698376639549652 + 0.16256851061973213*I
@@ -7350,6 +8047,8 @@ n-lerchphi-0p8-plus-0p9i-2-0p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 2, 0.5))
     out: 4.157\,406\,968\,302\,781+0.596\,428\,896\,905\,385\,7i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 2, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 2, 0.5]]
     out: 4.15740696830278 + 0.5964288969053877*I
@@ -7372,6 +8071,8 @@ n-lerchphi-0p8-plus-0p9i-2-5-over-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 2, \frac{5}{2}))
     out: 0.150\,555\,467\,955\,636\,76+0.119\,829\,276\,180\,774\,92i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 2, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 2, Rational[5, 2]]]
     out: 0.15055546795563854 + 0.11982927618077534*I
@@ -7391,6 +8092,8 @@ n-lerchphi-0p8-plus-0p9i-2-neg-2p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 2, -2.5))
     out: -6.713\,683\,691\,062\,509+9.459\,163\,380\,965\,968i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 2, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 2, -2.5]]
     out: -6.713683691062508 + 9.459163380965965*I
@@ -7414,6 +8117,8 @@ n-lerchphi-0p8-plus-0p9i-3-1:
   traditional:
     in: N(\Phi(0.8+0.9i, 3, 1))
     out: 1.060\,018\,393\,069\,489\,5+0.163\,727\,323\,847\,861\,65i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 3, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 3, 1]]
     out: 1.0600183930694893 + 0.16372732384786187*I
@@ -7436,6 +8141,8 @@ n-lerchphi-0p8-plus-0p9i-3-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 3, 2))
     out: 0.134\,737\,452\,357\,701\,38+0.053\,079\,520\,907\,412\,97i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 3, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 3, 2]]
     out: 0.13473745235769796 + 0.053079520907414544*I
@@ -7458,6 +8165,8 @@ n-lerchphi-0p8-plus-0p9i-3-0p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 3, 0.5))
     out: 8.176\,233\,084\,955\,843+0.358\,637\,797\,014\,528\,14i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 3, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 3, 0.5]]
     out: 8.176233084955848 + 0.358637797014532*I
@@ -7480,6 +8189,8 @@ n-lerchphi-0p8-plus-0p9i-3-5-over-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 3, \frac{5}{2}))
     out: 0.067\,907\,300\,620\,558\,26+0.034\,208\,132\,622\,012\,555i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 3, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 3, Rational[5, 2]]]
     out: 0.06790730062056038 + 0.034208132622009495*I
@@ -7499,6 +8210,8 @@ n-lerchphi-0p8-plus-0p9i-3-neg-2p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 3, -2.5))
     out: -11.007\,681\,973\,911\,316-4.132\,179\,140\,120\,582i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 3, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 3, -2.5]]
     out: -13.125607899837256 + 19.441154193212753*I
@@ -7524,6 +8237,8 @@ n-lerchphi-0p8-plus-0p9i-0p5-1:
   traditional:
     in: N(\Phi(0.8+0.9i, 0.5, 1))
     out: 0.646\,848\,782\,818\,905\,3+0.904\,298\,262\,704\,088\,3i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 0.5, 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 0.5, 1]]
     out: 0.6468487828189047 + 0.9042982627040894*I
@@ -7546,6 +8261,8 @@ n-lerchphi-0p8-plus-0p9i-0p5-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 0.5, 2))
     out: 0.366\,446\,525\,992\,278\,1+0.718\,120\,486\,638\,797\,6i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 0.5, 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 0.5, 2]]
     out: 0.36644652599227817 + 0.7181204866387976*I
@@ -7568,6 +8285,8 @@ n-lerchphi-0p8-plus-0p9i-0p5-0p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 0.5, 0.5))
     out: 1.070\,316\,852\,556\,094\,7+1.058\,323\,277\,527\,613i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 0.5, 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 0.5, 0.5]]
     out: 1.0703168525560955 + 1.0583232775276143*I
@@ -7590,6 +8309,8 @@ n-lerchphi-0p8-plus-0p9i-0p5-5-over-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 0.5, \frac{5}{2}))
     out: 0.302\,169\,762\,869\,199\,2+0.656\,753\,551\,994\,039\,7i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 0.5, Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 0.5, Rational[5, 2]]]
     out: 0.3021697628691996 + 0.6567535519940392*I
@@ -7609,6 +8330,8 @@ n-lerchphi-0p8-plus-0p9i-0p5-neg-2p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 0.5, -2.5))
     out: 0.181\,355\,765\,541\,796\,78-1.491\,508\,888\,888\,433\,8i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], 0.5, -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], 0.5, -2.5]]
     out: -1.5447221959379853 + 2.3250420549362065*I
@@ -7634,6 +8357,8 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-1:
   traditional:
     in: N(\Phi(0.8+0.9i, 2+i, 1))
     out: 1.362\,388\,391\,030\,094\,5+0.286\,239\,732\,263\,093\,74i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 1]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 1]]
     out: 1.362388391030724 + 0.2862397322626977*I
@@ -7656,6 +8381,8 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 2+i, 2))
     out: 0.377\,604\,463\,352\,317\,1-0.067\,005\,355\,942\,489\,92i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 2]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 2]]
     out: 0.3776044633523324 - 0.06700535594249588*I
@@ -7678,6 +8405,8 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-0p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 2+i, 0.5))
     out: 3.622\,328\,102\,519\,780\,7+3.137\,422\,391\,303\,859\,5i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 0.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], 0.5]]
     out: 3.6223281025197647 + 3.1374223913038373*I
@@ -7700,6 +8429,8 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-5-over-2:
   traditional:
     in: N(\Phi(0.8+0.9i, 2+i, \frac{5}{2}))
     out: 0.237\,708\,893\,651\,532\,1-0.070\,331\,778\,185\,476\,47i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], Rational[5, 2]]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], Rational[5, 2]]]
     out: 0.2377088936515187 - 0.07033177818546382*I
@@ -7719,6 +8450,8 @@ n-lerchphi-0p8-plus-0p9i-2-plus-i-neg-2p5:
   traditional:
     in: N(\Phi(0.8+0.9i, 2+i, -2.5))
     out: -92.127\,592\,772\,435\,4+93.926\,546\,083\,357\,69i
+  fullform:
+    in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], -2.5]]
   wolfram:
     in: N[LerchPhi[Complex[0.8, 0.9], Complex[2, 1], -2.5]]
     out: -11.9430502347019 + 3.2226235505187835*I

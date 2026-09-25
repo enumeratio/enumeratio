@@ -5,6 +5,8 @@ discreteuniform-pdf-exact:
   tex:
     in: \operatorname{PDF}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack), 3)
     out: \frac{1}{6}
+  fullform:
+    in: PDF[DiscreteUniformDistribution[List[1, 6]], 3]
   wolfram:
     in: PDF[DiscreteUniformDistribution[List[1, 6]], 3]
 discreteuniform-cdf-exact:
@@ -14,6 +16,8 @@ discreteuniform-cdf-exact:
   tex:
     in: \operatorname{CDF}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack), 3)
     out: \frac{1}{2}
+  fullform:
+    in: CDF[DiscreteUniformDistribution[List[1, 6]], 3]
   wolfram:
     in: CDF[DiscreteUniformDistribution[List[1, 6]], 3]
 discreteuniform-mean-exact:
@@ -23,6 +27,8 @@ discreteuniform-mean-exact:
   tex:
     in: \mathrm{mean}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack))
     out: \frac{7}{2}
+  fullform:
+    in: Mean[DiscreteUniformDistribution[List[1, 6]]]
   wolfram:
     in: Mean[DiscreteUniformDistribution[List[1, 6]]]
 discreteuniform-variance-exact:
@@ -32,5 +38,7 @@ discreteuniform-variance-exact:
   tex:
     in: \mathrm{Variance}(\mathrm{DiscreteUniformDistribution}(\bigl\lbrack1, 6\bigr\rbrack))
     out: \frac{35}{12}
+  fullform:
+    in: Variance[DiscreteUniformDistribution[List[1, 6]]]
   wolfram:
     in: Variance[DiscreteUniformDistribution[List[1, 6]]]

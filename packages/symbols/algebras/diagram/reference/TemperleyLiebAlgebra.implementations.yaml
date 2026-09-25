@@ -8,6 +8,8 @@ c-4:
   traditional:
     in: \dim(\mathrm{TL}_{4})
     out: "14"
+  fullform:
+    in: AlgebraDimension[TemperleyLiebAlgebra[4]]
   sage:
     in: (TemperleyLiebAlgebra(4, enumeratio_delta, enumeratio_ring)).dimension()
     out: "14"
@@ -24,6 +26,8 @@ the-cup-cap-is-planar-so-it-belongs:
   traditional:
     in: \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack, \bigl\lbrack3, -3\bigr\rbrack\bigr\rbrack)\in\mathrm{TL}_{3}
     out: \mathrm{True}
+  fullform:
+    in: Element[Diagram[List[List[1, 2], List[-1, -2], List[3, -3]]], TemperleyLiebAlgebra[3]]
   sage:
     in: enumeratio_element(enumeratio_diagram([[1, 2], [-1, -2], [3, -3]]), TemperleyLiebAlgebra(3, enumeratio_delta, enumeratio_ring))
     out: True
@@ -34,6 +38,8 @@ e-1-2-delta-e-1:
   tex:
     in: \mathrm{NonCommutativeMultiply}(\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack))
     out: \delta\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack)
+  fullform:
+    in: NonCommutativeMultiply[Diagram[List[List[1, 2], List[-1, -2]]], Diagram[List[List[1, 2], List[-1, -2]]]]
   sage:
     in: (enumeratio_diagram([[1, 2], [-1, -2]]) * enumeratio_diagram([[1, 2], [-1, -2]]))
     out: delta*P{{-2, -1}, {1, 2}}
@@ -47,6 +53,8 @@ the-cup-cap-and-the-identity-all-of-tl-2:
   traditional:
     in: \mathrm{Basis}(\mathrm{TL}_{2})
     out: \bigl\lbrack\mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack-1, -2\bigr\rbrack\bigr\rbrack), \mathrm{Diagram}(\bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack2, -2\bigr\rbrack\bigr\rbrack)\bigr\rbrack
+  fullform:
+    in: Basis[TemperleyLiebAlgebra[2]]
   sage:
     in: list((TemperleyLiebAlgebra(2, enumeratio_delta, enumeratio_ring)).basis())
     out: "[T{{-2, -1}, {1, 2}}, T{{-2, 2}, {-1, 1}}]"

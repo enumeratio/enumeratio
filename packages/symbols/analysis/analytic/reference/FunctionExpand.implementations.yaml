@@ -8,6 +8,8 @@ eta-s-1-2-1-s-zeta-s:
   traditional:
     in: \mathrm{FunctionExpand}(\eta(s))
     out: (1-2^{1-s})\zeta(s)
+  fullform:
+    in: FunctionExpand[DirichletEta[s]]
 beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
   epsil:
     in: FunctionExpand(DirichletBeta(s))
@@ -18,6 +20,8 @@ beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34:
   traditional:
     in: \mathrm{FunctionExpand}(\beta(s))
     out: \frac{\zeta(s, \frac{1}{4})-\zeta(s, \frac{3}{4})}{4^{s}}
+  fullform:
+    in: FunctionExpand[DirichletBeta[s]]
 g-frac-12-in-glaisher-s-constant:
   epsil:
     in: FunctionExpand(BarnesG(1 / 2))
@@ -28,6 +32,8 @@ g-frac-12-in-glaisher-s-constant:
   traditional:
     in: \mathrm{FunctionExpand}(G(\frac{1}{2}))
     out: \frac{\sqrt[24]{2}\sqrt{\mathrm{ConstGlaisher}}^{-3}\sqrt[8]{e}}{\sqrt[4]{\pi}}
+  fullform:
+    in: FunctionExpand[BarnesG[Rational[1, 2]]]
   wolfram:
     in: FunctionExpand[BarnesG[Rational[1, 2]]]
 radicals-past-the-automatic-special-angle-table:
@@ -37,6 +43,8 @@ radicals-past-the-automatic-special-angle-table:
   tex:
     in: \mathrm{FunctionExpand}(\sin(\frac{\pi}{15}))
     out: \frac{1}{8}(-\sqrt{15}+\sqrt{3}+\sqrt{10+2\sqrt{5}})
+  fullform:
+    in: FunctionExpand[Sin[Divide[Pi, 15]]]
   wolfram:
     in: FunctionExpand[Sin[Divide[Pi, 15]]]
 half-angle-radicals-cos-frac-pi-24-frac-12-sqrt:
@@ -46,6 +54,8 @@ half-angle-radicals-cos-frac-pi-24-frac-12-sqrt:
   tex:
     in: \mathrm{FunctionExpand}(\cos(\frac{\pi}{24}))
     out: \frac{1}{4}(\sqrt{2}\sqrt{4+\sqrt{2}+\sqrt{6}})
+  fullform:
+    in: FunctionExpand[Cos[Divide[Pi, 24]]]
   wolfram:
     in: FunctionExpand[Cos[Divide[Pi, 24]]]
 a-rising-factorial-with-an-integer-length:
@@ -58,6 +68,8 @@ a-rising-factorial-with-an-integer-length:
   traditional:
     in: \mathrm{FunctionExpand}(\left(x\right)_{3})
     out: x\times(x+1)(x+2)
+  fullform:
+    in: FunctionExpand[Pochhammer[x, 3]]
 binom-n2-frac-n-n-1-2:
   epsil:
     in: FunctionExpand(Binomial(n, 2))
@@ -65,3 +77,5 @@ binom-n2-frac-n-n-1-2:
   tex:
     in: \mathrm{FunctionExpand}(\binom{n}{2})
     out: \frac{n\times(n-1)}{2}
+  fullform:
+    in: FunctionExpand[Binomial[n, 2]]

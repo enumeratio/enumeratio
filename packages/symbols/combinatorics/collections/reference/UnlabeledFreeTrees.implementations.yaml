@@ -5,3 +5,5 @@ count-unlabeledfreetrees-7-11-a000055:
   tex:
     in: \mathrm{Count}(\mathrm{UnlabeledFreeTrees}(7))
     out: "11"
+  fullform:
+    in: Count[UnlabeledFreeTrees[7]]

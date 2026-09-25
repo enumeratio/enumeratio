@@ -8,9 +8,10 @@ all-list-2-4-6-function-1-mod-2-eq-0:
   traditional:
     in: \mathrm{All}(\bigl\lbrack2, 4, 6\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)
     out: \mathrm{True}
+  fullform:
+    in: AllTrue[List[2, 4, 6], Function[Equal[Mod[Slot[1], 2], 0]]]
   wolfram:
     in: AllTrue[List[2, 4, 6], Function[(Mod[Slot[1], 2] == 0)]]
-    back: Unreadable
     out: True
     tex:
       in: \text{AllTrue}[\{2,4,6\},(\text{$\#$1} \bmod 2)=0\&]
@@ -25,9 +26,10 @@ all-list-2-4-5-function-1-mod-2-eq-0:
   traditional:
     in: \mathrm{All}(\bigl\lbrack2, 4, 5\bigr\rbrack, ()\mapsto\operatorname{\_1}\bmod2=0)
     out: \mathrm{False}
+  fullform:
+    in: AllTrue[List[2, 4, 5], Function[Equal[Mod[Slot[1], 2], 0]]]
   wolfram:
     in: AllTrue[List[2, 4, 5], Function[(Mod[Slot[1], 2] == 0)]]
-    back: Unreadable
     out: False
     tex:
       in: \text{AllTrue}[\{2,4,5\},(\text{$\#$1} \bmod 2)=0\&]
@@ -42,6 +44,8 @@ a-named-predicate:
   traditional:
     in: \mathrm{All}(\bigl\lbrack2, 3, 5, 7\bigr\rbrack, \mathrm{IsPrime})
     out: \mathrm{True}
+  fullform:
+    in: AllTrue[List[2, 3, 5, 7], PrimeQ]
   wolfram:
     in: AllTrue[List[2, 3, 5, 7], PrimeQ]
 all-list-1-2-3-function-1-gt-0:
@@ -54,6 +58,8 @@ all-list-1-2-3-function-1-gt-0:
   traditional:
     in: \mathrm{All}(\bigl\lbrack1, 2, 3\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0)
     out: \mathrm{True}
+  fullform:
+    in: AllTrue[List[1, 2, 3], Function[Greater[Slot[1], 0]]]
   wolfram:
     in: AllTrue[List[1, 2, 3], Function[Greater[Slot[1], 0]]]
 one-definite-failure-decides-the-answer-even:
@@ -66,6 +72,8 @@ one-definite-failure-decides-the-answer-even:
   traditional:
     in: \mathrm{All}(\bigl\lbrack1, x\bigr\rbrack, \mathrm{IsEven})
     out: \mathrm{False}
+  fullform:
+    in: AllTrue[List[1, x], EvenQ]
 without-a-predicate-tests-the-elements:
   epsil:
     in: All([True, True])
@@ -76,6 +84,8 @@ without-a-predicate-tests-the-elements:
   traditional:
     in: \mathrm{All}(\bigl\lbrack\mathrm{True}, \mathrm{True}\bigr\rbrack)
     out: \mathrm{True}
+  fullform:
+    in: AllTrue[List[True, True]]
   wolfram:
     in: AllTrue[List[True, True]]
     note: AllTrue needs a test; $\mathrm{AllTrue}[\{True, True\}]$ stays unevaluated.
@@ -89,6 +99,8 @@ a-level-argument-tests-the-elements-at-depth-2:
   traditional:
     in: \mathrm{All}(\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack, ()\mapsto\operatorname{\_1}\gt0, 2)
     out: \mathrm{True}
+  fullform:
+    in: AllTrue[List[List[1, 2], List[3, 4]], Function[Greater[Slot[1], 0]], 2]
   wolfram:
     in: AllTrue[List[List[1, 2], List[3, 4]], Function[Greater[Slot[1], 0]], 2]
 vacuously-true-on-an-empty-list:
@@ -101,5 +113,7 @@ vacuously-true-on-an-empty-list:
   traditional:
     in: \mathrm{All}(\bigl\lbrack \bigr\rbrack, \mathrm{IsEven})
     out: \mathrm{True}
+  fullform:
+    in: AllTrue[List[], EvenQ]
   wolfram:
     in: AllTrue[List[], EvenQ]

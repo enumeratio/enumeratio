@@ -142,575 +142,575 @@ examples:
     expected: [Add, -1, [Multiply, [Rational, 1, 90], [Power, Pi, 4]]]
     category: Properties
     caption: $\zeta(4, 2) = \pi^4/90 - 1$
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-1
     expr: [N, [HurwitzZeta, 2, 1]]
     expected: { num: "1.64493406684822643647" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-2
     expr: [N, [HurwitzZeta, 2, 2]]
     expected: { num: "0.64493406684822643647" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-3
     expr: [N, [HurwitzZeta, 2, 3]]
     expected: { num: "0.39493406684822643647" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-0p5
     expr: [N, [HurwitzZeta, 2, 0.5]]
     expected: { num: "4.93480220054467930942" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-0p25
     expr: [N, [HurwitzZeta, 2, 0.25]]
     expected: { num: "17.1973291545071107393" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-1p3
     expr: [N, [HurwitzZeta, 2, 1.3]]
     expected: { num: "1.13425343499661935436" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-7-over-3
     expr: [N, [HurwitzZeta, 2, [Rational, 7, 3]]]
     expected: { num: "0.533097125427094081793" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-1-plus-i
     expr: [N, [HurwitzZeta, 2, [Complex, 1, 1]]]
     expected: [Complex, 0.46300009662276376, -0.794233542759319]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, 2, [Complex, 2, -0.5]]]
     expected: [Complex, 0.5881978909500615, 0.18504197243379086]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-neg-0p5
     expr: [N, [HurwitzZeta, 2, -0.5]]
     expected: 8.934802200544679
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-neg-1p5
     expr: [N, [HurwitzZeta, 2, -1.5]]
     expected: 9.379246644989124
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-1
     expr: [N, [HurwitzZeta, 3, 1]]
     expected: { num: "1.2020569031595942854" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-2
     expr: [N, [HurwitzZeta, 3, 2]]
     expected: { num: "0.2020569031595942854" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-3
     expr: [N, [HurwitzZeta, 3, 3]]
     expected: { num: "0.0770569031595942854" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-0p5
     expr: [N, [HurwitzZeta, 3, 0.5]]
     expected: { num: "8.4143983221171599978" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-0p25
     expr: [N, [HurwitzZeta, 3, 0.25]]
     expected: { num: "64.6638699687684601665" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-1p3
     expr: [N, [HurwitzZeta, 3, 1.3]]
     expected: { num: "0.59923125732597829635" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-7-over-3
     expr: [N, [HurwitzZeta, 3, [Rational, 7, 3]]]
     expected: { num: "0.139186199700803776228" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-1-plus-i
     expr: [N, [HurwitzZeta, 3, [Complex, 1, 1]]]
     expected: [Complex, -0.18427646579396761, -0.3833264251725333]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, 3, [Complex, 2, -0.5]]]
     expected: [Complex, 0.15369363373030825, 0.10422634741373264]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-neg-0p5
     expr: [N, [HurwitzZeta, 3, -0.5]]
     expected: 0.41439832211716
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-3-neg-1p5
     expr: [N, [HurwitzZeta, 3, -1.5]]
     expected: 0.1181020258208637
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-1
     expr: [N, [HurwitzZeta, 5, 1]]
     expected: { num: "1.03692775514336992633" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-2
     expr: [N, [HurwitzZeta, 5, 2]]
     expected: { num: "0.03692775514336992633" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-3
     expr: [N, [HurwitzZeta, 5, 3]]
     expected: { num: "0.00567775514336992633" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-0p5
     expr: [N, [HurwitzZeta, 5, 0.5]]
     expected: { num: "32.1447604094444677163" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-0p25
     expr: [N, [HurwitzZeta, 5, 0.25]]
     expected: { num: "1024.34897452658057223" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-1p3
     expr: [N, [HurwitzZeta, 5, 1.3]]
     expected: { num: "0.28855606751852655952" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-7-over-3
     expr: [N, [HurwitzZeta, 5, [Rational, 7, 3]]]
     expected: { num: "0.0179852769188750622369" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-1-plus-i
     expr: [N, [HurwitzZeta, 5, [Complex, 1, 1]]]
     expected: [Complex, -0.13664617371016874, 0.10752550214008197]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, 5, [Complex, 2, -0.5]]]
     expected: [Complex, 0.012993573083069943, 0.028877271795314092]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-neg-0p5
     expr: [N, [HurwitzZeta, 5, -0.5]]
     expected: { num: "0.144760409444467716272" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-5-neg-1p5
     expr: [N, [HurwitzZeta, 5, -1.5]]
     expected: { num: "0.0130731666461138068073" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-1
     expr: [N, [HurwitzZeta, -1, 1]]
     expected: { num: "-0.0833333333333333333333" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-2
     expr: [N, [HurwitzZeta, -1, 2]]
     expected: { num: "-1.08333333333333333333" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-3
     expr: [N, [HurwitzZeta, -1, 3]]
     expected: { num: "-3.08333333333333333333" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-0p5
     expr: [N, [HurwitzZeta, -1, 0.5]]
     expected: { num: "0.0416666666666666666665" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-0p25
     expr: [N, [HurwitzZeta, -1, 0.25]]
     expected: { num: "0.0104166666666666666665" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-1p3
     expr: [N, [HurwitzZeta, -1, 1.3]]
     expected: { num: "-0.2783333333333333333335" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-7-over-3
     expr: [N, [HurwitzZeta, -1, [Rational, 7, 3]]]
     expected: { num: "-1.6388888888888888888835" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-1-plus-i
     expr: [N, [HurwitzZeta, -1, [Complex, 1, 1]]]
     expected: [Complex, { num: "0.4166666666666666666665" }, -0.5]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -1, [Complex, 2, -0.5]]]
     expected: [Complex, { num: "-0.95833333333333335" }, 0.75]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-neg-0p5
     expr: [N, [HurwitzZeta, -1, -0.5]]
     expected: { num: "-0.4583333333333333333335" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-1-neg-1p5
     expr: [N, [HurwitzZeta, -1, -1.5]]
     expected: { num: "-1.9583333333333333333335" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-1
     expr: [N, [HurwitzZeta, -2, 1]]
     expected: 0
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-2
     expr: [N, [HurwitzZeta, -2, 2]]
     expected: -1
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-3
     expr: [N, [HurwitzZeta, -2, 3]]
     expected: -5
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-0p5
     expr: [N, [HurwitzZeta, -2, 0.5]]
     expected: 0
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-0p25
     expr: [N, [HurwitzZeta, -2, 0.25]]
     expected: { num: "-0.015624999999999999999984375" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-1p3
     expr: [N, [HurwitzZeta, -2, 1.3]]
     expected: { num: "-0.103999999999999999999896" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-7-over-3
     expr: [N, [HurwitzZeta, -2, [Rational, 7, 3]]]
     expected: { num: "-1.90123456790123456787143209876543209876546" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-1-plus-i
     expr: [N, [HurwitzZeta, -2, [Complex, 1, 1]]]
     expected: [Complex, { num: "0.4999999999999999999995" }, 0.16666666666666666]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -2, [Complex, 2, -0.5]]]
     expected: [Complex, { num: "-0.624999999999999999999375" }, 1.0416666666666663]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-neg-0p5
     expr: [N, [HurwitzZeta, -2, -0.5]]
     expected: { num: "0.24999999999999999999975" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-2-neg-1p5
     expr: [N, [HurwitzZeta, -2, -1.5]]
     expected: { num: "2.4999999999999999999975" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-1
     expr: [N, [HurwitzZeta, -3, 1]]
     expected: { num: "0.00833333333333333333333" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-2
     expr: [N, [HurwitzZeta, -3, 2]]
     expected: { num: "-0.991666666666666666667" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-3
     expr: [N, [HurwitzZeta, -3, 3]]
     expected: { num: "-8.99166666666666666667" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-0p5
     expr: [N, [HurwitzZeta, -3, 0.5]]
     expected: { num: "-0.007291666666666666666675" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-0p25
     expr: [N, [HurwitzZeta, -3, 0.25]]
     expected: { num: "-0.000455729166666666666675" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-1p3
     expr: [N, [HurwitzZeta, -3, 1.3]]
     expected: { num: "-0.029691666666666666666675" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-7-over-3
     expr: [N, [HurwitzZeta, -3, [Rational, 7, 3]]]
     expected: { num: "-2.411419753086419753099175" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-1-plus-i
     expr: [N, [HurwitzZeta, -3, [Complex, 1, 1]]]
     expected: [Complex, { num: "0.008333333333333333333325" }, 0.5]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -3, [Complex, 2, -0.5]]]
     expected: [Complex, { num: "-0.194791666666666175" }, 1.3124999999999996]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-neg-0p5
     expr: [N, [HurwitzZeta, -3, -0.5]]
     expected: { num: "-0.132291666666666666666675" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-3-neg-1p5
     expr: [N, [HurwitzZeta, -3, -1.5]]
     expected: { num: "-3.507291666666666666666675" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-1
     expr: [N, [HurwitzZeta, 0.5, 1]]
     expected: { num: "-1.46035450880958681289" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-2
     expr: [N, [HurwitzZeta, 0.5, 2]]
     expected: { num: "-2.46035450880958681289" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-3
     expr: [N, [HurwitzZeta, 0.5, 3]]
     expected: { num: "-3.167461289996134337291" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-0p5
     expr: [N, [HurwitzZeta, 0.5, 0.5]]
     expected: { num: "-0.60489864342163037025" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-0p25
     expr: [N, [HurwitzZeta, 0.5, 0.25]]
     expected: { num: "0.239963524495630955345" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-1p3
     expr: [N, [HurwitzZeta, 0.5, 1.3]]
     expected: { num: "-1.81458907804058390117" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-7-over-3
     expr: [N, [HurwitzZeta, 0.5, [Rational, 7, 3]]]
     expected: { num: "-2.71615953928753765938" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-1-plus-i
     expr: [N, [HurwitzZeta, 0.5, [Complex, 1, 1]]]
     expected: [Complex, -1.7988137444864851, -1.093576875721108]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, 0.5, [Complex, 2, -0.5]]]
     expected: [Complex, -2.4914742352880097, 0.39832807868404924]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-neg-0p5
     expr: [N, [HurwitzZeta, 0.5, -0.5]]
     expected: [Complex, -0.6048986434216299, -1.414213562373095]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-neg-1p5
     expr: [N, [HurwitzZeta, 0.5, -1.5]]
     expected: [Complex, -0.6048986434216299, -2.230710143300821]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-1
     expr: [N, [HurwitzZeta, 1.5, 1]]
     expected: { num: "2.61237534868548834335" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-2
     expr: [N, [HurwitzZeta, 1.5, 2]]
     expected: { num: "1.61237534868548834335" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-3
     expr: [N, [HurwitzZeta, 1.5, 3]]
     expected: { num: "1.25882195809221458115" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-0p5
     expr: [N, [HurwitzZeta, 1.5, 0.5]]
     expected: { num: "4.77653794755483324857" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-0p25
     expr: [N, [HurwitzZeta, 1.5, 0.25]]
     expected: { num: "10.2130553604666007389" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-1p3
     expr: [N, [HurwitzZeta, 1.5, 1.3]]
     expected: { num: "2.15195547695787736469" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-7-over-3
     expr: [N, [HurwitzZeta, 1.5, [Rational, 7, 3]]]
     expected: { num: "1.46425424919948810837" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-1-plus-i
     expr: [N, [HurwitzZeta, 1.5, [Complex, 1, 1]]]
     expected: [Complex, 1.650934751949365, -0.9673570656987679]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, 1.5, [Complex, 2, -0.5]]]
     expected: [Complex, 1.5565957777657513, 0.2421063223251344]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-neg-0p5
     expr: [N, [HurwitzZeta, 1.5, -0.5]]
     expected: [Complex, 4.776537947554832, 2.82842712474619]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-1p5-neg-1p5
     expr: [N, [HurwitzZeta, 1.5, -1.5]]
     expected: [Complex, 4.776537947554832, 3.372758178698007]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-1
     expr: [N, [HurwitzZeta, 2.5, 1]]
     expected: { num: "1.34148725725091717976" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-2
     expr: [N, [HurwitzZeta, 2.5, 2]]
     expected: { num: "0.34148725725091717976" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-3
     expr: [N, [HurwitzZeta, 2.5, 3]]
     expected: { num: "0.16471056195428029866" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-0p5
     expr: [N, [HurwitzZeta, 2.5, 0.5]]
     expected: { num: "6.24711063456881148529" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-0p25
     expr: [N, [HurwitzZeta, 2.5, 0.25]]
     expected: { num: "32.8474519546976858627" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-1p3
     expr: [N, [HurwitzZeta, 2.5, 1.3]]
     expected: { num: "0.783218553908237343364" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-7-over-3
     expr: [N, [HurwitzZeta, 2.5, [Rational, 7, 3]]]
     expected: { num: "0.257447605150205592649" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-1-plus-i
     expr: [N, [HurwitzZeta, 2.5, [Complex, 1, 1]]]
     expected: [Complex, 0.018739837095718206, -0.5895477083381613]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, 2.5, [Complex, 2, -0.5]]]
     expected: [Complex, 0.28782016436536645, 0.13969668439393565]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-neg-0p5
     expr: [N, [HurwitzZeta, 2.5, -0.5]]
     expected: [Complex, 6.2471106345688145, -5.65685424949238]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2p5-neg-1p5
     expr: [N, [HurwitzZeta, 2.5, -1.5]]
     expected: [Complex, 6.2471106345688145, -6.019741618793591]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-1
     expr: [N, [HurwitzZeta, -0.5, 1]]
     expected: { num: "-0.207886224977354566017" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-2
     expr: [N, [HurwitzZeta, -0.5, 2]]
     expected: { num: "-1.207886224977354566017" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-3
     expr: [N, [HurwitzZeta, -0.5, 3]]
     expected: { num: "-2.622099787350449614818689" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-0p5
     expr: [N, [HurwitzZeta, -0.5, 0.5]]
     expected: { num: "0.0608884655805949199988" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-0p25
     expr: [N, [HurwitzZeta, -0.5, 0.25]]
     expected: { num: "0.0903222587612462439787" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-1p3
     expr: [N, [HurwitzZeta, -0.5, 1.3]]
     expected: { num: "-0.454363742420250792944" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-7-over-3
     expr: [N, [HurwitzZeta, -0.5, [Rational, 7, 3]]]
     expected: { num: "-1.63960452469900834952" }
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-1-plus-i
     expr: [N, [HurwitzZeta, -0.5, [Complex, 1, 1]]]
     expected: [Complex, 0.08784592782018656, -0.7951014135934058]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -0.5, [Complex, 2, -0.5]]]
     expected: [Complex, -1.1578011135273243, 0.6177112023106479]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-neg-0p5
     expr: [N, [HurwitzZeta, -0.5, -0.5]]
     expected: [Complex, 0.060888465580597545, 0.7071067811865475]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-neg-1p5
     expr: [N, [HurwitzZeta, -0.5, -1.5]]
     expected: [Complex, 0.060888465580597545, 1.9318516525781364]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-1
     expr: [N, [HurwitzZeta, [Complex, 2, 1], 1]]
     expected: [Complex, 1.1503557032549026, -0.4375308659196079]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-2
     expr: [N, [HurwitzZeta, [Complex, 2, 1], 2]]
     expected: [Complex, 0.1503557032549026, -0.4375308659196079]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-3
     expr: [N, [HurwitzZeta, [Complex, 2, 1], 3]]
     expected: [Complex, -0.041954022086090365, -0.2777905468411992]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-0p5
     expr: [N, [HurwitzZeta, [Complex, 2, 1], 0.5]]
     expected: [Complex, 3.50749884820183, 2.031398808933987]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-0p25
     expr: [N, [HurwitzZeta, [Complex, 2, 1], 0.25]]
     expected: [Complex, 3.634220798824735, 15.19537018557054]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-1p3
     expr: [N, [HurwitzZeta, [Complex, 2, 1], 1.3]]
     expected: [Complex, 0.6341786502688999, -0.5361103835392125]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-7-over-3
     expr: [N, [HurwitzZeta, [Complex, 2, 1], [Rational, 7, 3]]]
     expected: [Complex, 0.05513338963679521, -0.3768626550483673]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-1-plus-i
     expr: [N, [HurwitzZeta, [Complex, 2, 1], [Complex, 1, 1]]]
     expected: [Complex, -0.6353043434400117, -1.6588486436058945]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, [Complex, 2, 1], [Complex, 2, -0.5]]]
     expected: [Complex, 0.18539348901299457, -0.27037369242287357]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-neg-0p5
     expr: [N, [HurwitzZeta, [Complex, 2, 1], -0.5]]
     expected: [Complex, 74.71038275876376, 61.175424806622686]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-2-plus-i-neg-1p5
     expr: [N, [HurwitzZeta, [Complex, 2, 1], -1.5]]
     expected: [Complex, 84.16123741505538, 57.11864335428585]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-1
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], 1]]
     expected: [Complex, 0.5327366709742324, -0.07889651342583266]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-2
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], 2]]
     expected: [Complex, -0.46726332902576745, -0.07889651342583266]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-3
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], 3]]
     expected: [Complex, -0.12290627368216775, 0.5386941426199702]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-0p5
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], 0.5]]
     expected: [Complex, -0.8021884345819367, 0.7912600357594943]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-0p25
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], 0.25]]
     expected: [Complex, -0.8213159956117992, -2.117913546901069]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-1p3
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], 1.3]]
     expected: [Complex, 0.15737017483099836, -0.4426402147700411]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-7-over-3
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], [Rational, 7, 3]]]
     expected: [Complex, -0.45372702165717105, 0.20444019400309937]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-1-plus-i
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], [Complex, 1, 1]]]
     expected: [Complex, -1.4173015059291294, -8.335643562213376]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], [Complex, 2, -0.5]]]
     expected: [Complex, -0.18101636158511364, 0.009312340272338617]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-neg-0p5
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], -0.5]]
     expected: [Complex, 15305.129609925008, 8535.093960014086]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-0p5-plus-3i-neg-1p5
     expr: [N, [HurwitzZeta, [Complex, 0.5, 3], -1.5]]
     expected: [Complex, 5816.163167011819, 5023.948927089383]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-1
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], 1]]
     expected: [Complex, -0.0008178931329526073, -0.2230716886977791]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-2
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], 2]]
     expected: [Complex, -1.0008178931329526, -0.2230716886977791]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-3
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], 3]]
     expected: [Complex, -2.0886859801468614, 0.6805560140961857]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-0p5
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], 0.5]]
     expected: [Complex, 0.10115989202216885, 0.10136586762605052]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-0p25
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], 0.25]]
     expected: [Complex, -0.10559971039019372, 0.17260556668191807]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-1p3
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], 1.3]]
     expected: [Complex, -0.24331093868775658, -0.33044127825842945]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-7-over-3
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], [Rational, 7, 3]]]
     expected: [Complex, -1.3821851440871353, -0.009056308250057337]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-1-plus-i
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], [Complex, 1, 1]]]
     expected: [Complex, 1.0409575431185207, -1.7999104323368356]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-2-plus-neg-0p5
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], [Complex, 2, -0.5]]]
     expected: [Complex, -0.7461533972576098, 0.24925781603306635]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-neg-0p5
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], -0.5]]
     expected: [Complex, -10.35412557038761, 12.688376380925272]
-  - hidden: true
+  - role: test
     id: n-hurwitzzeta-neg-0p5-plus-i-neg-1p5
     expr: [N, [HurwitzZeta, [Complex, -0.5, 1], -1.5]]
     expected: [Complex, 0.8250495553510385, 38.73186936468636]

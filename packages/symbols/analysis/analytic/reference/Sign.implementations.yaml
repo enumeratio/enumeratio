@@ -5,6 +5,8 @@ sign-neg-3:
   tex:
     in: \mathrm{sgn}(-3)
     out: "-1"
+  fullform:
+    in: Sign[-3]
   wolfram:
     in: Sign[-3]
     out: "-1"
@@ -27,6 +29,8 @@ sign-3:
   tex:
     in: \mathrm{sgn}(3)
     out: "1"
+  fullform:
+    in: Sign[3]
   wolfram:
     in: Sign[3]
     out: "1"
@@ -49,6 +53,8 @@ zero-is-its-own-sign:
   tex:
     in: \mathrm{sgn}(0)
     out: "0"
+  fullform:
+    in: Sign[0]
   wolfram:
     in: Sign[0]
     out: "0"
@@ -71,6 +77,8 @@ sign-neg-1-over-2:
   tex:
     in: \mathrm{sgn}(-\frac{1}{2})
     out: "-1"
+  fullform:
+    in: Sign[Rational[-1, 2]]
   wolfram:
     in: Sign[Rational[-1, 2]]
     out: "-1"
@@ -90,6 +98,8 @@ the-unit-complex-number-pointing-the-same:
   tex:
     in: \mathrm{sgn}(3+4i)
     out: \frac{3}{5}+\frac{4}{5}i
+  fullform:
+    in: Sign[Complex[3, 4]]
   wolfram:
     in: Sign[Complex[3, 4]]
     out: 3/5 + (4*I)/5
@@ -115,6 +125,8 @@ threads-element-wise-over-a-list:
   tex:
     in: \mathrm{sgn}(\bigl\lbrack-3, 0, 7\bigr\rbrack)
     out: \bigl\lbrack-1, 0, 1\bigr\rbrack
+  fullform:
+    in: Sign[List[-3, 0, 7]]
   wolfram:
     in: Sign[List[-3, 0, 7]]
     out: "{-1, 0, 1}"
@@ -145,9 +157,10 @@ sign-z-z-z-see-abs:
   traditional:
     in: \mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}
     out: \mathrm{True}
+  fullform:
+    in: Equal[Sign[Complex[3, 4]], Divide[Complex[3, 4], Abs[Complex[3, 4]]]]
   wolfram:
     in: (Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])
-    back: Unreadable
     out: True
     tex:
       in: \text{sgn}(3+4 i)=\frac{3+4 i}{| 3+4 i| }
@@ -168,9 +181,10 @@ x-cdot-sign-x-x-here-at-x-5:
   traditional:
     in: -5\mathrm{sgn}(-5)=\vert-5\vert
     out: \mathrm{True}
+  fullform:
+    in: Equal[Times[-5, Sign[-5]], Abs[-5]]
   wolfram:
     in: (Times[-5, Sign[-5]] == Abs[-5])
-    back: Unreadable
     out: True
     tex:
       in: -5 \text{sgn}(-5)=| -5|
@@ -191,6 +205,8 @@ tells-you-the-temperature-dropped-but-not-by-how:
   tex:
     in: \mathrm{sgn}(70-95)
     out: "-1"
+  fullform:
+    in: Sign[Subtract[70, 95]]
   wolfram:
     in: Sign[Subtract[70, 95]]
     out: "-1"
@@ -213,6 +229,8 @@ nan-propagates-rather-than-being-treated-as-0:
   tex:
     in: \mathrm{sgn}(\operatorname{NaN})
     out: \operatorname{NaN}
+  fullform:
+    in: Sign[Indeterminate]
   wolfram:
     in: Sign[Indeterminate]
     out: Indeterminate
@@ -226,6 +244,8 @@ sign-neg-2p5:
   tex:
     in: \mathrm{sgn}(-2.5)
     out: "-1"
+  fullform:
+    in: Sign[-2.5]
   wolfram:
     in: Sign[-2.5]
   sympy:
@@ -241,6 +261,8 @@ sign-3p14:
   tex:
     in: \mathrm{sgn}(3.14)
     out: "1"
+  fullform:
+    in: Sign[3.14]
   wolfram:
     in: Sign[3.14]
   sympy:
@@ -256,6 +278,8 @@ a-complex-number-with-approximate-parts:
   tex:
     in: \mathrm{sgn}(1.4+2.3i)
     out: 0.519\,946\,946\,895\,745\,216\,81+0.854\,198\,555\,614\,438\,5i
+  fullform:
+    in: Sign[Complex[1.4, 2.3]]
   wolfram:
     in: Sign[Complex[1.4, 2.3]]
   sympy:
@@ -271,6 +295,8 @@ an-exact-complex-argument-comes-back-exact-sign:
   tex:
     in: \mathrm{sgn}(1+i)
     out: \frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i
+  fullform:
+    in: Sign[Complex[1, 1]]
   wolfram:
     in: Sign[Complex[1, 1]]
   sympy:
@@ -286,6 +312,8 @@ threads-over-a-matrix-entry-by-entry:
   tex:
     in: \mathrm{sgn}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack-1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   wolfram:
     in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
   sympy:
@@ -299,6 +327,8 @@ exact-numeric-constants:
   tex:
     in: \mathrm{sgn}(\pi)
     out: "1"
+  fullform:
+    in: Sign[Pi]
   wolfram:
     in: Sign[Pi]
   sympy:
@@ -314,6 +344,8 @@ sign-neg-exponentiale:
   tex:
     in: \mathrm{sgn}(-e)
     out: "-1"
+  fullform:
+    in: Sign[Minus[E]]
   wolfram:
     in: Sign[Minus[E]]
   sympy:
@@ -329,6 +361,8 @@ sign-imaginaryunit:
   tex:
     in: \mathrm{sgn}(i)
     out: i
+  fullform:
+    in: Sign[I]
   wolfram:
     in: Sign[I]
   sympy:
@@ -344,6 +378,8 @@ sign-positiveinfinity:
   tex:
     in: \mathrm{sgn}(\infty)
     out: "1"
+  fullform:
+    in: Sign[Infinity]
   wolfram:
     in: Sign[Infinity]
 an-interval-entirely-above-0-has-sign-1:
@@ -353,6 +389,8 @@ an-interval-entirely-above-0-has-sign-1:
   tex:
     in: \mathrm{sgn}(\mathrm{Interval}(1, 3))
     out: "1"
+  fullform:
+    in: Sign[Interval[List[1, 3]]]
   wolfram:
     in: Sign[Interval[List[1, 3]]]
 decides-the-sign-of-the-exact-number-sqrt-2-2-by:
@@ -362,6 +400,8 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
   tex:
     in: \mathrm{sgn}(\sqrt{2}-2)
     out: "-1"
+  fullform:
+    in: Sign[Subtract[Sqrt[2], 2]]
   wolfram:
     in: Sign[Subtract[Sqrt[2], 2]]
   sympy:
@@ -377,6 +417,8 @@ decides-the-sign-of-the-exact-number-sqrt-2-2-by:
   tex:
     in: \mathrm{sgn}(2-\sqrt{2})
     out: "1"
+  fullform:
+    in: Sign[Subtract[2, Sqrt[2]]]
   wolfram:
     in: Sign[Subtract[2, Sqrt[2]]]
   sympy:
@@ -395,9 +437,10 @@ the-sign-of-a-nonzero-complex-number-lies-on-the:
   traditional:
     in: \vert\mathrm{sgn}(3+4i)\vert=1
     out: \mathrm{True}
+  fullform:
+    in: Equal[Abs[Sign[Complex[3, 4]]], 1]
   wolfram:
     in: (Abs[Sign[Complex[3, 4]]] == 1)
-    back: Unreadable
   sympy:
     in: enumeratio_equal(Abs(sign((3 + 4*I))), 1)
   mpmath:

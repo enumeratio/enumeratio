@@ -5,6 +5,8 @@ the-set-partitions-of-an-explicit-list-in-the:
   tex:
     in: \mathrm{SetPartitions}(\bigl\lbrack a, b, c\bigr\rbrack)
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack a, b, c\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a, c\bigr\rbrack, \bigl\lbrack b\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a\bigr\rbrack, \bigl\lbrack b, c\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack a\bigr\rbrack, \bigl\lbrack b\bigr\rbrack, \bigl\lbrack c\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: SetPartitions[List[a, b, c]]
 exactly-2-blocks:
   epsil:
     in: SetPartitions(3, 2)
@@ -12,6 +14,8 @@ exactly-2-blocks:
   tex:
     in: \mathrm{SetPartitions}(3, 2)
     out: \bigl\lbrack\bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1, 3\bigr\rbrack, \bigl\lbrack2\bigr\rbrack\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack2, 3\bigr\rbrack\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: SetPartitions[3, 2]
 the-partitions-of-a-4-set-into-2-blocks-number-s:
   epsil:
     in: Count(SetPartitions(4, 2))
@@ -19,6 +23,8 @@ the-partitions-of-a-4-set-into-2-blocks-number-s:
   tex:
     in: \mathrm{Count}(\mathrm{SetPartitions}(4, 2))
     out: "7"
+  fullform:
+    in: Count[SetPartitions[4, 2]]
 the-family-has-b-4-15-members-see-bellnumber:
   epsil:
     in: BellNumber(4)
@@ -29,6 +35,8 @@ the-family-has-b-4-15-members-see-bellnumber:
   traditional:
     in: B_{4}
     out: "15"
+  fullform:
+    in: BellB[4]
   wolfram:
     in: BellB[4]
   sympy:
@@ -49,6 +57,8 @@ those-with-exactly-2-blocks-number-s-4-2-7-see:
   traditional:
     in: \left\lbrace\begin{matrix}4\\2\end{matrix}\right\rbrace
     out: "7"
+  fullform:
+    in: StirlingS2[4, 2]
   wolfram:
     in: StirlingS2[4, 2]
   sympy:

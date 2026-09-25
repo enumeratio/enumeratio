@@ -8,6 +8,8 @@ the-group-product:
   traditional:
     in: \mathrm{Dot}(\begin{pmatrix}1&1\\0&1\end{pmatrix}, \begin{pmatrix}1&0\\1&1\end{pmatrix})
     out: \begin{pmatrix}2&1\\1&1\end{pmatrix}
+  fullform:
+    in: Dot[ModularMatrix[1, 1, 0, 1], ModularMatrix[1, 0, 1, 1]]
 no-division-needed-at-determinant-1:
   epsil:
     in: Inverse(ModularMatrix(1, 1, 0, 1))
@@ -18,6 +20,8 @@ no-division-needed-at-determinant-1:
   traditional:
     in: \begin{pmatrix}1&1\\0&1\end{pmatrix}^{-1}
     out: \begin{pmatrix}1&-1\\0&1\end{pmatrix}
+  fullform:
+    in: Inverse[ModularMatrix[1, 1, 0, 1]]
 t-5:
   epsil:
     in: MatrixPower(ModularMatrix(1, 1, 0, 1), 5)
@@ -28,6 +32,8 @@ t-5:
   traditional:
     in: \mathrm{MatrixPower}(\begin{pmatrix}1&1\\0&1\end{pmatrix}, 5)
     out: \begin{pmatrix}1&5\\0&1\end{pmatrix}
+  fullform:
+    in: MatrixPower[ModularMatrix[1, 1, 0, 1], 5]
 words-multiply-their-matrices:
   epsil:
     in: Dot("L", "R")
@@ -38,6 +44,8 @@ words-multiply-their-matrices:
   traditional:
     in: \mathrm{Dot}(\text{L}, \text{R})
     out: \begin{pmatrix}1&1\\1&2\end{pmatrix}
+  fullform:
+    in: Dot["L", "R"]
   wolfram:
     in: Dot["L", "R"]
     out: '"L" . "R"'
@@ -57,6 +65,8 @@ the-inverse-of-a-word:
   traditional:
     in: \text{L}^{-1}
     out: \begin{pmatrix}1&0\\-1&1\end{pmatrix}
+  fullform:
+    in: Inverse["L"]
 r-3:
   epsil:
     in: MatrixPower("R", 3)
@@ -67,6 +77,8 @@ r-3:
   traditional:
     in: \mathrm{MatrixPower}(\text{R}, 3)
     out: \begin{pmatrix}1&3\\0&1\end{pmatrix}
+  fullform:
+    in: MatrixPower["R", 3]
 negative-powers-are-powers-of-the-inverse:
   epsil:
     in: MatrixPower(ModularMatrix(1, 1, 1, 2), -2)
@@ -77,6 +89,8 @@ negative-powers-are-powers-of-the-inverse:
   traditional:
     in: \mathrm{MatrixPower}(\begin{pmatrix}1&1\\1&2\end{pmatrix}, -2)
     out: \begin{pmatrix}5&-3\\-3&2\end{pmatrix}
+  fullform:
+    in: MatrixPower[ModularMatrix[1, 1, 1, 2], -2]
 the-zeroth-power-is-the-identity:
   epsil:
     in: MatrixPower(ModularMatrix(1, 1, 0, 1), 0)
@@ -87,6 +101,8 @@ the-zeroth-power-is-the-identity:
   traditional:
     in: \mathrm{MatrixPower}(\begin{pmatrix}1&1\\0&1\end{pmatrix}, 0)
     out: \begin{pmatrix}1&0\\0&1\end{pmatrix}
+  fullform:
+    in: MatrixPower[ModularMatrix[1, 1, 0, 1], 0]
 a-plain-integer-matrix-goes-to-compute-engine-s:
   epsil:
     in: MatrixPower([[1, 1], [1, 0]], 10)
@@ -94,3 +110,5 @@ a-plain-integer-matrix-goes-to-compute-engine-s:
   tex:
     in: \mathrm{MatrixPower}(\bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 0\bigr\rbrack\bigr\rbrack, 10)
     out: \bigl\lbrack\bigl\lbrack89, 55\bigr\rbrack, \bigl\lbrack55, 34\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: MatrixPower[List[List[1, 1], List[1, 0]], 10]

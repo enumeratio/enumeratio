@@ -5,6 +5,8 @@ endpoints-add:
   tex:
     in: \mathrm{Interval}(1, 2)+\mathrm{Interval}(3, 4)
     out: \mathrm{Interval}(4, 6)
+  fullform:
+    in: Plus[Interval[List[1, 2]], Interval[List[3, 4]]]
   wolfram:
     in: Plus[Interval[List[1, 2]], Interval[List[3, 4]]]
 decimal-arithmetic-is-exact-so-nothing-needs:
@@ -14,6 +16,8 @@ decimal-arithmetic-is-exact-so-nothing-needs:
   tex:
     in: \mathrm{Interval}(1.4, 1.5)+1
     out: \mathrm{Interval}(2.4, 2.5)
+  fullform:
+    in: Plus[Interval[List[1.4, 1.5]], 1]
   wolfram:
     in: Plus[Interval[List[1.4, 1.5]], 1]
 at-an-inexact-endpoint-the-value-is-rounded:
@@ -23,6 +27,8 @@ at-an-inexact-endpoint-the-value-is-rounded:
   tex:
     in: \sin(\mathrm{Interval}(1.4, 1.5))
     out: \mathrm{Interval}(0.985\,449\,729\,988\,46, 0.997\,494\,986\,604\,054\,6)
+  fullform:
+    in: Sin[Interval[List[1.4, 1.5]]]
   wolfram:
     in: Sin[Interval[List[1.4, 1.5]]]
 gamma-s-minimum-at-1-4616-lies-inside-so-it-is:
@@ -32,6 +38,8 @@ gamma-s-minimum-at-1-4616-lies-inside-so-it-is:
   tex:
     in: \Gamma(\mathrm{Interval}(1, 2))
     out: \mathrm{Interval}(0.885\,603\,194\,410\,888\,6, 1)
+  fullform:
+    in: Gamma[Interval[List[1, 2]]]
   wolfram:
     in: Gamma[Interval[List[1, 2]]]
 across-the-pole-at-pi-2-the-two-pieces-cover:
@@ -41,6 +49,8 @@ across-the-pole-at-pi-2-the-two-pieces-cover:
   tex:
     in: \tan(\mathrm{Interval}(0, \pi))
     out: \mathrm{Interval}(-\infty, \infty)
+  fullform:
+    in: Tan[Interval[List[0, Pi]]]
   wolfram:
     in: Tan[Interval[List[0, Pi]]]
 a-product-takes-the-extreme-endpoint-products:
@@ -50,6 +60,8 @@ a-product-takes-the-extreme-endpoint-products:
   tex:
     in: \mathrm{Interval}(1, 2)\mathrm{Interval}(-1, 3)
     out: \mathrm{Interval}(-2, 6)
+  fullform:
+    in: Times[Interval[List[1, 2]], Interval[List[-1, 3]]]
   wolfram:
     in: Times[Interval[List[1, 2]], Interval[List[-1, 3]]]
 reciprocal-of-an-interval-not-containing-0:
@@ -59,6 +71,8 @@ reciprocal-of-an-interval-not-containing-0:
   tex:
     in: \frac{1}{\mathrm{Interval}(2, 4)}
     out: \mathrm{Interval}(\frac{1}{4}, \frac{1}{2})
+  fullform:
+    in: Divide[1, Interval[List[2, 4]]]
   wolfram:
     in: Divide[1, Interval[List[2, 4]]]
 an-even-power-of-an-interval-straddling-0-starts:
@@ -68,6 +82,8 @@ an-even-power-of-an-interval-straddling-0-starts:
   tex:
     in: \mathrm{Interval}(-1, 2)^2
     out: \mathrm{Interval}(0, 4)
+  fullform:
+    in: Power[Interval[List[-1, 2]], 2]
   wolfram:
     in: Power[Interval[List[-1, 2]], 2]
 the-dependency-problem-interval-arithmetic-doesn:
@@ -77,6 +93,8 @@ the-dependency-problem-interval-arithmetic-doesn:
   tex:
     in: \mathrm{Interval}(1, 2)-\mathrm{Interval}(1, 2)
     out: \mathrm{Interval}(-1, 1)
+  fullform:
+    in: Subtract[Interval[List[1, 2]], Interval[List[1, 2]]]
   wolfram:
     in: Subtract[Interval[List[1, 2]], Interval[List[1, 2]]]
 through-an-elementary-function:
@@ -86,6 +104,8 @@ through-an-elementary-function:
   tex:
     in: \sin(\mathrm{Interval}(-\frac{\pi}{6}, \frac{\pi}{6}))
     out: \mathrm{Interval}(-\frac{1}{2}, \frac{1}{2})
+  fullform:
+    in: Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]
   wolfram:
     in: Sin[Interval[List[Minus[Divide[Pi, 6]], Divide[Pi, 6]]]]
 the-absolute-value-of-an-interval-straddling-0:
@@ -95,6 +115,8 @@ the-absolute-value-of-an-interval-straddling-0:
   tex:
     in: \vert\mathrm{Interval}(-3, 2)\vert
     out: \mathrm{Interval}(0, 3)
+  fullform:
+    in: Abs[Interval[List[-3, 2]]]
   wolfram:
     in: Abs[Interval[List[-3, 2]]]
 a-periodic-head-over-an-interval-that-contains-a:
@@ -104,6 +126,8 @@ a-periodic-head-over-an-interval-that-contains-a:
   tex:
     in: \cos(\mathrm{Interval}(-1, 4))
     out: \mathrm{Interval}(-1, 1)
+  fullform:
+    in: Cos[Interval[List[-1, 4]]]
   wolfram:
     in: Cos[Interval[List[-1, 4]]]
 an-interior-maximum-at-pi-2-becomes-the-upper:
@@ -113,6 +137,8 @@ an-interior-maximum-at-pi-2-becomes-the-upper:
   tex:
     in: \sin(\mathrm{Interval}(1, 2))
     out: \mathrm{Interval}(\sin(1), 1)
+  fullform:
+    in: Sin[Interval[List[1, 2]]]
   wolfram:
     in: Sin[Interval[List[1, 2]]]
 gamma-dips-to-its-minimum-0-8856-inside-0-5-3:
@@ -122,6 +148,8 @@ gamma-dips-to-its-minimum-0-8856-inside-0-5-3:
   tex:
     in: N(\Gamma(\mathrm{Interval}(0.5, 3)))
     out: \mathrm{Interval}(0.885\,603\,194\,410\,888\,805\,432, 2)
+  fullform:
+    in: N[Gamma[Interval[List[0.5, 3]]]]
   wolfram:
     in: N[Gamma[Interval[List[0.5, 3]]]]
 zeta-is-decreasing-on-2-3-so-the-ends-swap:
@@ -131,6 +159,8 @@ zeta-is-decreasing-on-2-3-so-the-ends-swap:
   tex:
     in: \zeta(\mathrm{Interval}(2, 3))
     out: \mathrm{Interval}(\zeta(3), \frac{\pi^2}{6})
+  fullform:
+    in: Zeta[Interval[List[2, 3]]]
   wolfram:
     in: Zeta[Interval[List[2, 3]]]
 arctan-interval-neg-1-3:
@@ -140,6 +170,8 @@ arctan-interval-neg-1-3:
   tex:
     in: \arctan(\mathrm{Interval}(-1, 3))
     out: \mathrm{Interval}(-\frac{\pi}{4}, \arctan(3))
+  fullform:
+    in: ArcTan[Interval[List[-1, 3]]]
   wolfram:
     in: ArcTan[Interval[List[-1, 3]]]
 exp-interval-neg-1-ln-2:
@@ -149,6 +181,8 @@ exp-interval-neg-1-ln-2:
   tex:
     in: \exp(\mathrm{Interval}(-1, \ln(2)))
     out: \mathrm{Interval}(\frac{1}{e}, 2)
+  fullform:
+    in: Exp[Interval[List[-1, Log[2]]]]
   wolfram:
     in: Exp[Interval[List[-1, Log[2]]]]
 max-interval-1-3-interval-neg-3-5:
@@ -158,5 +192,7 @@ max-interval-1-3-interval-neg-3-5:
   tex:
     in: \max(\mathrm{Interval}(1, 3), \mathrm{Interval}(-3, 5))
     out: \mathrm{Interval}(1, 5)
+  fullform:
+    in: Max[Interval[List[1, 3]], Interval[List[-3, 5]]]
   wolfram:
     in: Max[Interval[List[1, 3]], Interval[List[-3, 5]]]

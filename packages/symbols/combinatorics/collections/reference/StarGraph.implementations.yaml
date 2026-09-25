@@ -5,5 +5,7 @@ centre-degree-of-a-6-vertex-star:
   tex:
     in: \mathrm{VertexDegree}(\mathrm{StarGraph}(6), 1)
     out: "5"
+  fullform:
+    in: VertexDegree[StarGraph[6], 1]
   wolfram:
     in: VertexDegree[StarGraph[6], 1]

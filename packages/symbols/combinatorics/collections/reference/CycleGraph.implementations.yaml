@@ -8,6 +8,8 @@ c5-is-not-bipartite:
   traditional:
     in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(5))
     out: \mathrm{False}
+  fullform:
+    in: BipartiteGraphQ[CycleGraph[5]]
   wolfram:
     in: BipartiteGraphQ[CycleGraph[5]]
 c6-is-bipartite:
@@ -20,5 +22,7 @@ c6-is-bipartite:
   traditional:
     in: \mathrm{IsBipartiteGraph}(\mathrm{CycleGraph}(6))
     out: \mathrm{True}
+  fullform:
+    in: BipartiteGraphQ[CycleGraph[6]]
   wolfram:
     in: BipartiteGraphQ[CycleGraph[6]]

@@ -5,6 +5,8 @@ seedrandom-returns-nothing:
   tex:
     in: \mathrm{SeedRandom}(7)
     out: \mathrm{Nothing}
+  fullform:
+    in: SeedRandom[7]
   wolfram:
     in: SeedRandom[7]
 seedrandom-pins-the-next-draw:
@@ -14,5 +16,7 @@ seedrandom-pins-the-next-draw:
   tex:
     in: \mathrm{Last}(\bigl\lbrack\mathrm{SeedRandom}(7), \mathrm{RandomInteger}(100)\bigr\rbrack)
     out: "1"
+  fullform:
+    in: Last[List[SeedRandom[7], RandomInteger[100]]]
   wolfram:
     in: Last[List[SeedRandom[7], RandomInteger[100]]]

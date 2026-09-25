@@ -11,5 +11,7 @@ path-5-center-is-the-middle-vertex:
   tex:
     in: \mathrm{GraphCenter}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4), \mathrm{UndirectedEdge}(4, 5)\bigr\rbrack))
     out: \bigl\lbrack3\bigr\rbrack
+  fullform:
+    in: GraphCenter[Graph[List[1, 2, 3, 4, 5], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[4, 5]]]]
   wolfram:
     in: GraphCenter[Graph[List[1, 2, 3, 4, 5], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4], UndirectedEdge[4, 5]]]]

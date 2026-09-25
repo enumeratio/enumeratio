@@ -5,5 +5,7 @@ matches-vertexlist-position:
   tex:
     in: \mathrm{VertexIndex}(\mathrm{Graph}(\bigl\lbrack5, 1, 2\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2)\bigr\rbrack), 1)
     out: "2"
+  fullform:
+    in: VertexIndex[Graph[List[5, 1, 2], List[UndirectedEdge[1, 2]]], 1]
   wolfram:
     in: VertexIndex[Graph[List[5, 1, 2], List[UndirectedEdge[1, 2]]], 1]

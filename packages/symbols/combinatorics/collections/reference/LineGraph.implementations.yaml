@@ -5,5 +5,7 @@ line-graph-of-a-triangle-is-a-triangle:
   tex:
     in: \mathrm{EdgeCount}(\mathrm{LineGraph}(\mathrm{CompleteGraph}(3)))
     out: "3"
+  fullform:
+    in: EdgeCount[LineGraph[CompleteGraph[3]]]
   wolfram:
     in: EdgeCount[LineGraph[CompleteGraph[3]]]

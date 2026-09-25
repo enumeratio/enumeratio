@@ -5,6 +5,8 @@ frac-2-4-1-2-3-1-2-2-1-2-1-35:
   tex:
     in: \mathrm{QBinomial}(4, 2, 2)
     out: "35"
+  fullform:
+    in: QBinomial[4, 2, 2]
   wolfram:
     in: QBinomial[4, 2, 2]
 a-polynomial-in-q-whose-coefficients-count:
@@ -14,6 +16,8 @@ a-polynomial-in-q-whose-coefficients-count:
   tex:
     in: \mathrm{Expand}(\mathrm{QBinomial}(4, 2, q))
     out: q^4+q^3+2q^2+q+1
+  fullform:
+    in: Expand[QBinomial[4, 2, q]]
 at-q-1-it-is-binomial-6-3:
   epsil:
     in: QBinomial(6, 3, 1)
@@ -21,6 +25,8 @@ at-q-1-it-is-binomial-6-3:
   tex:
     in: \mathrm{QBinomial}(6, 3, 1)
     out: "20"
+  fullform:
+    in: QBinomial[6, 3, 1]
   wolfram:
     in: QBinomial[6, 3, 1]
 the-number-of-2-dimensional-subspaces-of-f-3-5:
@@ -30,5 +36,7 @@ the-number-of-2-dimensional-subspaces-of-f-3-5:
   tex:
     in: \mathrm{QBinomial}(5, 2, 3)
     out: 1\,210
+  fullform:
+    in: QBinomial[5, 2, 3]
   wolfram:
     in: QBinomial[5, 2, 3]

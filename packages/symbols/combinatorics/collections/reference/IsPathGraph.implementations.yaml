@@ -13,6 +13,8 @@ an-actual-path-is-a-path:
   traditional:
     in: \mathrm{IsPathGraph}(\mathrm{Graph}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack, \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(2, 3), \mathrm{UndirectedEdge}(3, 4)\bigr\rbrack))
     out: \mathrm{True}
+  fullform:
+    in: PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
   wolfram:
     in: PathGraphQ[Graph[List[1, 2, 3, 4], List[UndirectedEdge[1, 2], UndirectedEdge[2, 3], UndirectedEdge[3, 4]]]]
 a-cycle-is-not-a-path:
@@ -25,5 +27,7 @@ a-cycle-is-not-a-path:
   traditional:
     in: \mathrm{IsPathGraph}(\mathrm{CycleGraph}(4))
     out: \mathrm{False}
+  fullform:
+    in: PathGraphQ[CycleGraph[4]]
   wolfram:
     in: PathGraphQ[CycleGraph[4]]

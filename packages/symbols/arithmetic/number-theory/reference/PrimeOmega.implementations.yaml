@@ -8,6 +8,8 @@ primeomega-30:
   traditional:
     in: \Omega(30)
     out: "3"
+  fullform:
+    in: PrimeOmega[30]
   wolfram:
     in: PrimeOmega[30]
     out: "3"
@@ -24,6 +26,8 @@ primeomega-360:
   traditional:
     in: \Omega(360)
     out: "6"
+  fullform:
+    in: PrimeOmega[360]
   wolfram:
     in: PrimeOmega[360]
     out: "6"
@@ -40,6 +44,8 @@ primeomega-360:
   traditional:
     in: \Omega(1)
     out: "0"
+  fullform:
+    in: PrimeOmega[1]
   wolfram:
     in: PrimeOmega[1]
     out: "0"
@@ -56,9 +62,10 @@ completely-additive-omega-mn-omega-m-omega-n-for:
   traditional:
     in: \Omega(24\times40)=\Omega(24)+\Omega(40)
     out: \mathrm{True}
+  fullform:
+    in: Equal[PrimeOmega[Times[24, 40]], Plus[PrimeOmega[24], PrimeOmega[40]]]
   wolfram:
     in: (PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])
-    back: Unreadable
     out: True
     tex:
       in: \Omega (24\ 40)=\Omega (24)+\Omega (40)
@@ -73,6 +80,8 @@ omega-n-ge-nu-n-always-here-8-2-3-gives-omega-3:
   traditional:
     in: \Omega(8)\ge\omega(8)
     out: \mathrm{True}
+  fullform:
+    in: GreaterEqual[PrimeOmega[8], PrimeNu[8]]
   wolfram:
     in: GreaterEqual[PrimeOmega[8], PrimeNu[8]]
     out: True
@@ -86,6 +95,8 @@ threads-element-wise-over-a-list-as-wolfram-s:
   tex:
     in: \mathrm{PrimeOmega}(\bigl\lbrack4, 12, 24\bigr\rbrack)
     out: \bigl\lbrack2, 3, 4\bigr\rbrack
+  fullform:
+    in: PrimeOmega[List[4, 12, 24]]
   wolfram:
     in: PrimeOmega[List[4, 12, 24]]
     out: "{2, 3, 4}"
@@ -102,6 +113,8 @@ primeomega-12:
   traditional:
     in: \Omega(12)
     out: "3"
+  fullform:
+    in: PrimeOmega[12]
   wolfram:
     in: PrimeOmega[12]
 large-integers:
@@ -114,6 +127,8 @@ large-integers:
   traditional:
     in: \Omega(30!)
     out: "59"
+  fullform:
+    in: PrimeOmega[Factorial[30]]
   wolfram:
     in: PrimeOmega[Factorial[30]]
 gaussian-integers-5-9i-has-norm-106-2-cdot-53-so:
@@ -126,6 +141,8 @@ gaussian-integers-5-9i-has-norm-106-2-cdot-53-so:
   traditional:
     in: \Omega(5+9i)
     out: "2"
+  fullform:
+    in: PrimeOmega[Complex[5, 9]]
   wolfram:
     in: PrimeOmega[Complex[5, 9]]
 gaussianintegers-true-12-1-i-4-cdot-3:
@@ -138,6 +155,8 @@ gaussianintegers-true-12-1-i-4-cdot-3:
   traditional:
     in: \mathrm{PrimeOmega}(12, \mathrm{KeyValuePair}(\mathrm{GaussianIntegers}, \mathrm{True}))
     out: "5"
+  fullform:
+    in: PrimeOmega[12, KeyValuePair[GaussianIntegers, True]]
 listable-over-a-range:
   epsil:
     in: PrimeOmega(Range(20))
@@ -148,5 +167,7 @@ listable-over-a-range:
   traditional:
     in: \Omega(1..20)
     out: \bigl\lbrack0, 1, 1, 2, 1, 2, 1, 3, 2, 2, 1, 3, 1, 2, 2, 4, 1, 3, 1, 3\bigr\rbrack
+  fullform:
+    in: PrimeOmega[Range[20]]
   wolfram:
     in: PrimeOmega[Range[20]]

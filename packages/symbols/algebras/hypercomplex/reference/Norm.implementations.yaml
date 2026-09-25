@@ -5,6 +5,8 @@
   tex:
     in: \left\Vert 3+4i_1\right\Vert
     out: "25"
+  fullform:
+    in: Norm[Plus[3, Times[4, Subscript[i, 1]]]]
 the-4-times-4-multiplication-determinant:
   epsil:
     in: Norm(1 + 2i_1 + 3 * i_1 * i_2)
@@ -12,6 +14,8 @@ the-4-times-4-multiplication-determinant:
   tex:
     in: \left\Vert 1+2i_1+3i_1i_2\right\Vert
     out: "160"
+  fullform:
+    in: Norm[Plus[1, Times[2, Subscript[i, 1]], Times[3, Subscript[i, 1], Subscript[i, 2]]]]
 split-units-give-a-2-b-2-which-is-indefinite:
   epsil:
     in: Norm(3 + 4j_1)
@@ -19,6 +23,8 @@ split-units-give-a-2-b-2-which-is-indefinite:
   tex:
     in: \left\Vert 3+4j_1\right\Vert
     out: "-7"
+  fullform:
+    in: Norm[Plus[3, Times[4, Subscript[j, 1]]]]
 a-zero-divisor:
   epsil:
     in: Norm(1 + i_1 * i_2)
@@ -26,6 +32,8 @@ a-zero-divisor:
   tex:
     in: \left\Vert 1+i_1i_2\right\Vert
     out: "0"
+  fullform:
+    in: Norm[Plus[1, Times[Subscript[i, 1], Subscript[i, 2]]]]
 each-factor-has-norm-2-over-c-1-but-4-over-c-2:
   epsil:
     in: Norm((1 + i_1) * (1 + i_2))
@@ -33,3 +41,5 @@ each-factor-has-norm-2-over-c-1-but-4-over-c-2:
   tex:
     in: \left\Vert (1+i_1)(1+i_2)\right\Vert
     out: "16"
+  fullform:
+    in: Norm[Times[Plus[1, Subscript[i, 1]], Plus[1, Subscript[i, 2]]]]

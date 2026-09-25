@@ -5,5 +5,7 @@ wheel-6-edge-count:
   tex:
     in: \mathrm{EdgeCount}(\mathrm{WheelGraph}(6))
     out: "10"
+  fullform:
+    in: EdgeCount[WheelGraph[6]]
   wolfram:
     in: EdgeCount[WheelGraph[6]]

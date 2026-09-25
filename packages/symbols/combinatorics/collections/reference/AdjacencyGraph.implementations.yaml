@@ -5,6 +5,8 @@ symmetric-matrix-is-undirected:
   tex:
     in: \mathrm{EdgeList}(\mathrm{AdjacencyGraph}(\bigl\lbrack\bigl\lbrack0, 1, 1\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack, \bigl\lbrack1, 0, 0\bigr\rbrack\bigr\rbrack))
     out: \bigl\lbrack\mathrm{UndirectedEdge}(1, 2), \mathrm{UndirectedEdge}(1, 3)\bigr\rbrack
+  fullform:
+    in: EdgeList[AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 0], List[1, 0, 0]]]]
   wolfram:
     in: EdgeList[AdjacencyGraph[List[List[0, 1, 1], List[1, 0, 0], List[1, 0, 0]]]]
 asymmetric-matrix-is-directed:
@@ -14,5 +16,7 @@ asymmetric-matrix-is-directed:
   tex:
     in: \mathrm{EdgeList}(\mathrm{AdjacencyGraph}(\bigl\lbrack\bigl\lbrack0, 1\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack))
     out: \bigl\lbrack\mathrm{DirectedEdge}(1, 2)\bigr\rbrack
+  fullform:
+    in: EdgeList[AdjacencyGraph[List[List[0, 1], List[0, 0]]]]
   wolfram:
     in: EdgeList[AdjacencyGraph[List[List[0, 1], List[0, 0]]]]

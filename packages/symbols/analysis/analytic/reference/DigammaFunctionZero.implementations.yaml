@@ -5,6 +5,8 @@ the-digamma-function-s-positive-real-zero:
   tex:
     in: N(\mathrm{DigammaFunctionZero}(0))
     out: 1.461\,632\,144\,968\,362\,2
+  fullform:
+    in: N[DigammaFunctionZero[0]]
 the-zero-in-1-0:
   epsil:
     in: N(DigammaFunctionZero(1))
@@ -12,6 +14,8 @@ the-zero-in-1-0:
   tex:
     in: N(\mathrm{DigammaFunctionZero}(1))
     out: -0.504\,083\,008\,264\,455\,4
+  fullform:
+    in: N[DigammaFunctionZero[1]]
 psi-vanishes-exactly-there-by-construction:
   epsil:
     in: Chop(N(Digamma(DigammaFunctionZero(2))))
@@ -22,6 +26,8 @@ psi-vanishes-exactly-there-by-construction:
   traditional:
     in: \mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(2))))
     out: "0"
+  fullform:
+    in: Chop[N[PolyGamma[DigammaFunctionZero[2]]]]
 psi-x-n-0-exactly-at-digamma-s-own-claimed-zero:
   epsil:
     in: Chop(N(Digamma(DigammaFunctionZero(0))))
@@ -32,6 +38,8 @@ psi-x-n-0-exactly-at-digamma-s-own-claimed-zero:
   traditional:
     in: \mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(0))))
     out: "0"
+  fullform:
+    in: Chop[N[PolyGamma[DigammaFunctionZero[0]]]]
 psi-x-n-0-at-n-1:
   epsil:
     in: Chop(N(Digamma(DigammaFunctionZero(1))))
@@ -42,6 +50,8 @@ psi-x-n-0-at-n-1:
   traditional:
     in: \mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(1))))
     out: "0"
+  fullform:
+    in: Chop[N[PolyGamma[DigammaFunctionZero[1]]]]
 psi-x-n-0-at-n-3:
   epsil:
     in: Chop(N(Digamma(DigammaFunctionZero(3))))
@@ -52,6 +62,8 @@ psi-x-n-0-at-n-3:
   traditional:
     in: \mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(3))))
     out: "0"
+  fullform:
+    in: Chop[N[PolyGamma[DigammaFunctionZero[3]]]]
 psi-x-n-0-at-n-4:
   epsil:
     in: Chop(N(Digamma(DigammaFunctionZero(4))))
@@ -62,3 +74,5 @@ psi-x-n-0-at-n-4:
   traditional:
     in: \mathrm{chop}(N(\psi(\mathrm{DigammaFunctionZero}(4))))
     out: "0"
+  fullform:
+    in: Chop[N[PolyGamma[DigammaFunctionZero[4]]]]

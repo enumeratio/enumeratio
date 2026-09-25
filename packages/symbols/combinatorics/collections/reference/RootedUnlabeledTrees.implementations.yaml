@@ -5,3 +5,5 @@ count-rootedunlabeledtrees-6-20-a000081:
   tex:
     in: \mathrm{Count}(\mathrm{RootedUnlabeledTrees}(6))
     out: "20"
+  fullform:
+    in: Count[RootedUnlabeledTrees[6]]

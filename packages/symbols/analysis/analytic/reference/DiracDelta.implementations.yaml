@@ -5,6 +5,8 @@ diracdelta-zero-unevaluated:
   tex:
     in: \mathrm{DiracDelta}(0)
     out: \mathrm{DiracDelta}(0)
+  fullform:
+    in: DiracDelta[0]
   wolfram:
     in: DiracDelta[0]
 diracdelta-nonzero:
@@ -14,6 +16,8 @@ diracdelta-nonzero:
   tex:
     in: \mathrm{DiracDelta}(2)
     out: "0"
+  fullform:
+    in: DiracDelta[2]
   wolfram:
     in: DiracDelta[2]
 diracdelta-negative:
@@ -23,6 +27,8 @@ diracdelta-negative:
   tex:
     in: \mathrm{DiracDelta}(-3)
     out: "0"
+  fullform:
+    in: DiracDelta[-3]
   wolfram:
     in: DiracDelta[-3]
 diracdelta-multivariate-one-nonzero:
@@ -32,5 +38,7 @@ diracdelta-multivariate-one-nonzero:
   tex:
     in: \mathrm{DiracDelta}(0, 1)
     out: "0"
+  fullform:
+    in: DiracDelta[0, 1]
   wolfram:
     in: DiracDelta[0, 1]

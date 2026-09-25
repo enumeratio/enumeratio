@@ -8,6 +8,8 @@ a-dihedral-group:
   traditional:
     in: \left|D_{100}\right|
     out: "200"
+  fullform:
+    in: GroupOrder[DihedralGroup[100]]
   wolfram:
     in: GroupOrder[DihedralGroup[100]]
   oscar:
@@ -22,6 +24,8 @@ a-permutation-group:
   traditional:
     in: \left|\mathrm{PermutationGroup}(\bigl\lbrack\mathrm{Cycles}(\bigl\lbrack\bigl\lbrack1, 9, 6\bigr\rbrack, \bigl\lbrack3, 7\bigr\rbrack\bigr\rbrack)\bigr\rbrack)\right|
     out: "6"
+  fullform:
+    in: GroupOrder[PermutationGroup[List[Cycles[List[List[1, 9, 6], List[3, 7]]]]]]
   wolfram:
     in: GroupOrder[PermutationGroup[List[Cycles[List[List[1, 9, 6], List[3, 7]]]]]]
 the-symmetric-group:
@@ -34,5 +38,7 @@ the-symmetric-group:
   traditional:
     in: \left|\mathrm{SymmetricGroup}(4)\right|
     out: "24"
+  fullform:
+    in: GroupOrder[SymmetricGroup[4]]
   wolfram:
     in: GroupOrder[SymmetricGroup[4]]

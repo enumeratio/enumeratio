@@ -5,5 +5,7 @@ star-hub-is-maximally-close:
   tex:
     in: \mathrm{ClosenessCentrality}(\mathrm{StarGraph}(5), 1)
     out: "1"
+  fullform:
+    in: ClosenessCentrality[StarGraph[5], 1]
   wolfram:
     in: ClosenessCentrality[StarGraph[5], 1]
