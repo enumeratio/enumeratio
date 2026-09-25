@@ -44,8 +44,7 @@ interface ValueElement extends Element {
  * downstream cell's reactivity on initial load. The property is read first; the
  * attribute stays as a fallback for a cell that only ever sets `value=` as markup.
  */
-const valueOf = (el: Element): string =>
-  (el as ValueElement).value ?? el.getAttribute("value") ?? "";
+const valueOf = (el: Element): string => (el as ValueElement).value ?? el.getAttribute("value") ?? "";
 
 /** The `Evaluator` half of `notatio-dynamic-module.ts`'s host -- read off `register`'s
  * own `root` (which IS the module element; see `register`'s own comment) by duck

@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  integerAt,
-  operandsOf,
-  symbolNameOf,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
 
 // Heads that take or build with a FUNCTION argument (Nest, NestList, FixedPoint, Outer,
 // RecurrenceTable), two heads that generate exact recurrence sequences (LinearRecurrence,
@@ -21,29 +15,16 @@ import {
  *  single list: `Apply(f, a, b)` is `f(a, b)`, not `f @@ {a, b}`. Works for an undeclared
  *  symbol `f` too (stays an unevaluated call), a `Function` literal, or anything else
  *  `Apply` already knows how to invoke. */
-const applyFn = (
-  ce: ComputeEngine,
-  fn: BoxedExpression,
-  args: readonly BoxedExpression[],
-): BoxedExpression => ce.function("Apply", [fn, ...args]).evaluate();
+const applyFn = (ce: ComputeEngine, fn: BoxedExpression, args: readonly BoxedExpression[]): BoxedExpression =>
+  ce.function("Apply", [fn, ...args]).evaluate();
 
-function nestValue(
-  ce: ComputeEngine,
-  fn: BoxedExpression,
-  x: BoxedExpression,
-  n: number,
-): BoxedExpression {
+function nestValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n: number): BoxedExpression {
   let current = x;
   for (let i = 0; i < n; i++) current = applyFn(ce, fn, [current]);
   return current;
 }
 
-function nestListValues(
-  ce: ComputeEngine,
-  fn: BoxedExpression,
-  x: BoxedExpression,
-  n: number,
-): BoxedExpression {
+function nestListValues(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression, n: number): BoxedExpression {
   const items: BoxedExpression[] = [x];
   let current = x;
   for (let i = 0; i < n; i++) {
@@ -70,11 +51,7 @@ const FIXED_POINT_MAX_ITERATIONS = 10_000;
  * fixed point produce — comes back `true` no matter which is actually larger. `BigDecimal`'s
  * own `.cmp` has no such fuzz.
  */
-function withinWorkingPrecision(
-  ce: ComputeEngine,
-  next: BoxedExpression,
-  current: BoxedExpression,
-): boolean {
+function withinWorkingPrecision(ce: ComputeEngine, next: BoxedExpression, current: BoxedExpression): boolean {
   const nextBig = next.bignumRe;
   const currentBig = current.bignumRe;
   if (nextBig === undefined || currentBig === undefined) return false;
@@ -84,11 +61,7 @@ function withinWorkingPrecision(
   return delta.cmp(tolerance) <= 0;
 }
 
-function fixedPointValue(
-  ce: ComputeEngine,
-  fn: BoxedExpression,
-  x: BoxedExpression,
-): BoxedExpression {
+function fixedPointValue(ce: ComputeEngine, fn: BoxedExpression, x: BoxedExpression): BoxedExpression {
   let current = x;
   for (let i = 0; i < FIXED_POINT_MAX_ITERATIONS; i++) {
     const next = applyFn(ce, fn, [current]);
@@ -210,9 +183,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
       const [fn, list1, list2] = ops;
       if (fn === undefined || list1 === undefined || list2 === undefined) return undefined;
       const rows2 = operandsOf(list2);
-      const rows = operandsOf(list1).map((a) =>
-        ce.box(["List", ...rows2.map((b) => applyFn(ce, fn, [a, b]))]),
-      );
+      const rows = operandsOf(list1).map((a) => ce.box(["List", ...rows2.map((b) => applyFn(ce, fn, [a, b]))]));
       return ce.box(["List", ...rows]);
     },
   });
@@ -327,8 +298,7 @@ export function declareListFunctional(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression => ce.box(["Association", ...ops]),
   });
 
-  const isAssociation = (ops: readonly BoxedExpression[]): boolean =>
-    ops[0]?.operator === "Association";
+  const isAssociation = (ops: readonly BoxedExpression[]): boolean => ops[0]?.operator === "Association";
 
   wrapOperator(
     ce,

@@ -7,8 +7,7 @@ const ce = new ComputeEngine();
 declareAnalytic(ce);
 
 /** Canonical MathJSON for a boxed expression, the emitter's input shape. */
-const canon = (expr: unknown): Json =>
-  ce.box(expr as Parameters<ComputeEngine["box"]>[0]).json as unknown as Json;
+const canon = (expr: unknown): Json => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).json as unknown as Json;
 
 const emit = (expr: unknown) => emitComplexWGSL(canon(expr));
 
@@ -25,9 +24,7 @@ test("a complex literal takes one slot, carrying both parts", () => {
 });
 
 test("arithmetic lowers to the complex helpers, not the scalar operators", () => {
-  expect(emit(["Divide", ["Add", "z", -1], ["Add", "z", 1]])?.code).toBe(
-    "cdiv((z + prm.p[0].xy), (z + prm.p[1].xy))",
-  );
+  expect(emit(["Divide", ["Add", "z", -1], ["Add", "z", 1]])?.code).toBe("cdiv((z + prm.p[0].xy), (z + prm.p[1].xy))");
   expect(emit(["Multiply", "z", "z", "z"])?.code).toBe("cmul(cmul(z, z), z)");
   expect(emit(["Sqrt", "z"])?.code).toBe("csqrt(z)");
 });
@@ -115,14 +112,10 @@ test("the closed forms a slider actually lands on all lower", () => {
 test("a lowercase head from the notatio round trip still resolves", () => {
   // `PolyLog(1, z)` evaluates to -ln(1 - z), and the round trip through notatio hands
   // back `ln`, not `Ln`.
-  expect(emitComplexWGSL(["Negate", ["ln", ["Subtract", 1, "z"]]] as Json)?.code).toBe(
-    "cneg(clog((prm.p[0].xy - z)))",
-  );
+  expect(emitComplexWGSL(["Negate", ["ln", ["Subtract", 1, "z"]]] as Json)?.code).toBe("cneg(clog((prm.p[0].xy - z)))");
   expect(emitComplexWGSL(["sin", "z"] as Json)?.code).toBe("csin(z)");
 });
 
 test("digit separators in a number literal are read, not rejected", () => {
-  expect(emitComplexWGSL(["Multiply", { num: "1_000.5" }, "z"] as Json)?.literals).toEqual([
-    [1000.5, 0],
-  ]);
+  expect(emitComplexWGSL(["Multiply", { num: "1_000.5" }, "z"] as Json)?.literals).toEqual([[1000.5, 0]]);
 });

@@ -1,12 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  integerAt,
-  operandsOf,
-  stringAt,
-  symbolNameOf,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
 
 // The core list/statistics heads compute-engine ships but doesn't fully answer yet —
 // widened arities (First/Last's empty-collection default, Ordering's take-n, Clamp's
@@ -120,12 +113,8 @@ const threadOverColumns =
   (ce: ComputeEngine, head: string) =>
   (matrix: BoxedExpression): BoxedExpression | undefined => {
     const columns = columnsOf(operandsOf(matrix));
-    const results = columns.map((column) =>
-      ce.function(head, [ce.box(["List", ...column])]).evaluate(),
-    );
-    return results.some((r) => r === undefined)
-      ? undefined
-      : ce.box(["List", ...(results as BoxedExpression[])]);
+    const results = columns.map((column) => ce.function(head, [ce.box(["List", ...column])]).evaluate());
+    return results.some((r) => r === undefined) ? undefined : ce.box(["List", ...(results as BoxedExpression[])]);
   };
 
 /** Wolfram's `ArrayDepth`: how many levels of `expr` are a uniform (rectangular) array —
@@ -159,10 +148,7 @@ const apply2 = (ce: ComputeEngine, fn: BoxedExpression, i: number, j: number): B
 /** A lazy `Tabulate(f, m, n)` read into an actual `m`×`n` matrix by calling `f(i, j)` at
  *  every 1-based position — `undefined` for any other `Tabulate` arity, or a non-integer
  *  dimension. */
-const materializeTabulate = (
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-): BoxedExpression | undefined => {
+const materializeTabulate = (ce: ComputeEngine, expr: BoxedExpression): BoxedExpression | undefined => {
   const [fn, mOp, nOp] = operandsOf(expr);
   const m = integerAt(mOp);
   const n = integerAt(nOp);
@@ -179,19 +165,13 @@ const materializeTabulate = (
 /** `Join` at a level `n > 1`: recursively join corresponding sublists n-1 levels down. A
  *  row missing from a shorter array (the outer lists don't all have the same length) is
  *  simply skipped rather than treated as empty — `length` is the longest, not the first. */
-const joinAtLevel = (
-  ce: ComputeEngine,
-  lists: readonly BoxedExpression[],
-  level: number,
-): BoxedExpression => {
+const joinAtLevel = (ce: ComputeEngine, lists: readonly BoxedExpression[], level: number): BoxedExpression => {
   if (level <= 1) return ce.box(["List", ...lists.flatMap((list) => operandsOf(list))]);
   const rows = lists.map((list) => operandsOf(list));
   const length = Math.max(0, ...rows.map((row) => row.length));
   const merged: BoxedExpression[] = [];
   for (let i = 0; i < length; i++) {
-    const slice = rows
-      .map((row) => row[i])
-      .filter((cell): cell is BoxedExpression => cell !== undefined);
+    const slice = rows.map((row) => row[i]).filter((cell): cell is BoxedExpression => cell !== undefined);
     merged.push(joinAtLevel(ce, slice, level - 1));
   }
   return ce.box(["List", ...merged]);
@@ -206,8 +186,7 @@ export function declareListHeads(ce: ComputeEngine): void {
     ce,
     ["First", 1, 1],
     () => true,
-    (native) => (ops, options) =>
-      operandsOf(ops[0]).length === 0 ? ops[1] : native?.([ops[0]], options),
+    (native) => (ops, options) => (operandsOf(ops[0]).length === 0 ? ops[1] : native?.([ops[0]], options)),
     2,
   );
   widenSignature(ce, "Last", "(any, any?) -> any");
@@ -215,8 +194,7 @@ export function declareListHeads(ce: ComputeEngine): void {
     ce,
     ["Last", 1, 1],
     () => true,
-    (native) => (ops, options) =>
-      operandsOf(ops[0]).length === 0 ? ops[1] : native?.([ops[0]], options),
+    (native) => (ops, options) => (operandsOf(ops[0]).length === 0 ? ops[1] : native?.([ops[0]], options)),
     2,
   );
 
@@ -359,9 +337,7 @@ export function declareListHeads(ce: ComputeEngine): void {
     () => true,
     (native) => (ops, options) => {
       const result = native?.(ops, options);
-      return result === undefined || result.operator === "Error"
-        ? ce.number(operandsOf(ops[0]).length)
-        : result;
+      return result === undefined || result.operator === "Error" ? ce.number(operandsOf(ops[0]).length) : result;
     },
     1,
   );
@@ -417,9 +393,7 @@ export function declareListHeads(ce: ComputeEngine): void {
           ? operandsOf(ops[0])
           : operandsOf(native?.([ops[0], ops[1]], options) ?? ce.box(["List"]));
       const results = rows.map((row) => native?.([row, ops[2]], options));
-      return results.some((r) => r === undefined)
-        ? undefined
-        : ce.box(["List", ...(results as BoxedExpression[])]);
+      return results.some((r) => r === undefined) ? undefined : ce.box(["List", ...(results as BoxedExpression[])]);
     },
     3,
   );
@@ -490,10 +464,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
               };
             }
           ).operator
@@ -530,10 +501,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         else tally.push({ value: item, count: 1 });
       }
       const highest = tally.reduce((max, entry) => Math.max(max, entry.count), 0);
-      return ce.box([
-        "List",
-        ...tally.filter((entry) => entry.count === highest).map((entry) => entry.value),
-      ]);
+      return ce.box(["List", ...tally.filter((entry) => entry.count === highest).map((entry) => entry.value)]);
     },
   });
 
@@ -608,10 +576,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
               };
             }
           ).operator
@@ -641,10 +606,7 @@ export function declareListHeads(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined;
               };
             }
           ).operator
@@ -654,15 +616,13 @@ export function declareListHeads(ce: ComputeEngine): void {
       if (c.operator === "List") return ce.function("Set", [...operandsOf(c)]);
       if (c.operator === "Range" && c.isFiniteCollection === true) {
         const count = c.count;
-        if (count !== undefined && count <= SET_MINUS_RANGE_MAX)
-          return ce.function("Set", [...c.each()]);
+        if (count !== undefined && count <= SET_MINUS_RANGE_MAX) return ce.function("Set", [...c.each()]);
       }
       return c;
     };
     if (operator !== undefined) {
       const nativeCanonical = operator.canonical;
-      operator.canonical = (ops, options) =>
-        nativeCanonical?.call(operator, ops.map(asSet), options);
+      operator.canonical = (ops, options) => nativeCanonical?.call(operator, ops.map(asSet), options);
     }
   }
 }

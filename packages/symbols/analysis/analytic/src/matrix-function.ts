@@ -58,9 +58,7 @@ function twoByTwoViaEigen(
 ): BoxedExpression {
   const [[a, b], [c, d]] = rows;
   const trace = ce.function("Add", [a, d]).evaluate();
-  const det = ce
-    .function("Subtract", [ce.function("Multiply", [a, d]), ce.function("Multiply", [b, c])])
-    .evaluate();
+  const det = ce.function("Subtract", [ce.function("Multiply", [a, d]), ce.function("Multiply", [b, c])]).evaluate();
   const discSq = ce
     .function("Subtract", [ce.function("Power", [trace, 2]), ce.function("Multiply", [4, det])])
     .evaluate();
@@ -71,14 +69,9 @@ function twoByTwoViaEigen(
     const fPrime = derivativeOfFAt(ce, f, lambda.N().re);
     const entry = (i: number, j: number): BoxedExpression => {
       const iij = i === j ? 1 : 0;
-      const mMinusLambdaI = ce
-        .function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda])])
-        .evaluate();
+      const mMinusLambdaI = ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda])]).evaluate();
       return ce
-        .function("Add", [
-          ce.function("Multiply", [iij, fLambda]),
-          ce.function("Multiply", [fPrime, mMinusLambdaI]),
-        ])
+        .function("Add", [ce.function("Multiply", [iij, fLambda]), ce.function("Multiply", [fPrime, mMinusLambdaI])])
         .evaluate();
     };
     return listOf(ce, [
@@ -96,19 +89,13 @@ function twoByTwoViaEigen(
     const iij = i === j ? 1 : 0;
     const term1 = ce
       .function("Divide", [
-        ce.function("Multiply", [
-          f1,
-          ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda2])]),
-        ]),
+        ce.function("Multiply", [f1, ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda2])])]),
         ce.function("Subtract", [lambda1, lambda2]),
       ])
       .evaluate();
     const term2 = ce
       .function("Divide", [
-        ce.function("Multiply", [
-          f2,
-          ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda1])]),
-        ]),
+        ce.function("Multiply", [f2, ce.function("Subtract", [rows[i][j], ce.function("Multiply", [iij, lambda1])])]),
         ce.function("Subtract", [lambda2, lambda1]),
       ])
       .evaluate();
@@ -144,7 +131,6 @@ export function evaluateMatrixFunction(
 export function declareMatrixFunction(ce: ComputeEngine): void {
   ce.declare("MatrixFunction", {
     signature: "(function, matrix) -> matrix",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateMatrixFunction(ce, ops, options),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateMatrixFunction(ce, ops, options),
   });
 }

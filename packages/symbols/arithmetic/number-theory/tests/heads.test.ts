@@ -7,8 +7,7 @@ import { declareNumberTheory } from "../src/declare.ts";
 const ce = new ComputeEngine();
 declareResidues(ce);
 declareNumberTheory(ce);
-const run = (expr: unknown): unknown =>
-  ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
+const run = (expr: unknown): unknown => ce.box(expr as Parameters<ComputeEngine["box"]>[0]).evaluate().json;
 
 test("RationalReconstruction", () => {
   expect(run(["RationalReconstruction", 6, 11])).toEqual(["Rational", 1, 2]);
@@ -38,11 +37,7 @@ test("Gaussian integers reach the integer heads, as in Wolfram", () => {
     ["Tuple", c(2, 1), 1],
   ]);
   expect(run(["Divisors", 5, gaussian])).toEqual(["List", 1, c(1, 2), c(2, 1), 5]);
-  expect(run(["PowerModList", c(2, 1), ["Rational", 1, 2], 5])).toEqual([
-    "List",
-    c(-1, 2),
-    c(1, -2),
-  ]);
+  expect(run(["PowerModList", c(2, 1), ["Rational", 1, 2], 5])).toEqual(["List", c(-1, 2), c(1, -2)]);
 });
 
 test("GCD and LCM of Gaussian rationals: gcd(p1,p2)/lcm(q1,q2), lcm(p1,p2)/gcd(q1,q2) (#113)", () => {
@@ -68,12 +63,7 @@ test("GCD and LCM of Gaussian rationals: gcd(p1,p2)/lcm(q1,q2), lcm(p1,p2)/gcd(q
 });
 
 test("FactorInteger and Divisors over the integers, as in Wolfram", () => {
-  expect(run(["FactorInteger", -12])).toEqual([
-    "List",
-    ["Tuple", -1, 1],
-    ["Tuple", 2, 2],
-    ["Tuple", 3, 1],
-  ]);
+  expect(run(["FactorInteger", -12])).toEqual(["List", ["Tuple", -1, 1], ["Tuple", 2, 2], ["Tuple", 3, 1]]);
   expect(run(["FactorInteger", 1])).toEqual(["List", ["Tuple", 1, 1]]);
   expect(run(["FactorInteger", 0])).toEqual(["List", ["Tuple", 0, 1]]);
   expect(run(["Divisors", -12])).toEqual(["List", 1, 2, 3, 4, 6, 12]);
@@ -104,12 +94,7 @@ test("ExtendedGCD past two arguments folds the two-argument case pairwise", () =
   expect(run(["ExtendedGCD", 6, 15, 30])).toEqual(["Tuple", 3, -2, 1, 0]);
   // Still gated to plain integers: a Gaussian third argument (declare-gaussian.ts's own
   // ExtendedGCD only widens to two) is left unevaluated, and so is a non-integer.
-  expect(run(["ExtendedGCD", ["Complex", 3, 1], 5, 2])).toEqual([
-    "ExtendedGCD",
-    ["Complex", 3, 1],
-    5,
-    2,
-  ]);
+  expect(run(["ExtendedGCD", ["Complex", 3, 1], 5, 2])).toEqual(["ExtendedGCD", ["Complex", 3, 1], 5, 2]);
   expect(run(["ExtendedGCD", 2.5, 3, 4])).toEqual(["ExtendedGCD", 2.5, 3, 4]);
 
   // Brute force: every result's coefficients must actually satisfy Σ aᵢxᵢ = gcd.
@@ -152,14 +137,13 @@ test("GCD and LCM stay exact past a double (#113 §7)", () => {
   // came back 163840000 and LCM a float, instead of the exact bigint answer.
   const twentyFactorial = 2432902008176640000n;
   const big = 10n ** 100n + 3n;
-  const gcdAll = (a: bigint, b: bigint): bigint =>
-    b === 0n ? (a < 0n ? -a : a) : gcdAll(b, a % b);
-  expect(
-    bigIntegerAt(ce.box(["GCD", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]]).evaluate()),
-  ).toBe(gcdAll(twentyFactorial, big));
-  expect(
-    bigIntegerAt(ce.box(["LCM", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]]).evaluate()),
-  ).toBe((twentyFactorial * big) / gcdAll(twentyFactorial, big));
+  const gcdAll = (a: bigint, b: bigint): bigint => (b === 0n ? (a < 0n ? -a : a) : gcdAll(b, a % b));
+  expect(bigIntegerAt(ce.box(["GCD", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]]).evaluate())).toBe(
+    gcdAll(twentyFactorial, big),
+  );
+  expect(bigIntegerAt(ce.box(["LCM", ["Factorial", 20], ["Add", ["Power", 10, 100], 3]]).evaluate())).toBe(
+    (twentyFactorial * big) / gcdAll(twentyFactorial, big),
+  );
 
   // Brute force against a plain bigint Euclid, at a scale a double can't carry exactly.
   const rng = (seed: number) => {
@@ -171,9 +155,7 @@ test("GCD and LCM stay exact past a double (#113 §7)", () => {
     const a = BigInt(Math.floor(next() * 1e15)) * 10n ** 30n + BigInt(Math.floor(next() * 1e15));
     const b = BigInt(Math.floor(next() * 1e15)) * 10n ** 30n + BigInt(Math.floor(next() * 1e15));
     const g = gcdAll(a, b);
-    expect(bigIntegerAt(ce.box(["GCD", { num: String(a) }, { num: String(b) }]).evaluate())).toBe(
-      g,
-    );
+    expect(bigIntegerAt(ce.box(["GCD", { num: String(a) }, { num: String(b) }]).evaluate())).toBe(g);
     expect(bigIntegerAt(ce.box(["LCM", { num: String(a) }, { num: String(b) }]).evaluate())).toBe(
       g === 0n ? 0n : (a * b) / g < 0n ? -((a * b) / g) : (a * b) / g,
     );
@@ -221,9 +203,7 @@ test("IsSquareFree of a polynomial: gcd(f, f') via D and PolynomialGCD (#113)", 
   expect(run(["IsSquareFree", ["Add", ["Power", "x", 2], ["Multiply", -2, "x"], 1]])).toBe("False");
 
   // Multivariate: x^3 - x^2*y = x^2*(x - y), a repeated factor of x.
-  expect(
-    run(["IsSquareFree", ["Subtract", ["Power", "x", 3], ["Multiply", ["Power", "x", 2], "y"]]]),
-  ).toBe("False");
+  expect(run(["IsSquareFree", ["Subtract", ["Power", "x", 3], ["Multiply", ["Power", "x", 2], "y"]]])).toBe("False");
   // x^3 - y^3 = (x-y)(x^2+xy+y^2), no repeated factor.
   expect(run(["IsSquareFree", ["Subtract", ["Power", "x", 3], ["Power", "y", 3]]])).toBe("True");
 
@@ -234,11 +214,7 @@ test("IsSquareFree of a polynomial: gcd(f, f') via D and PolynomialGCD (#113)", 
 });
 
 test("FactorInteger of a rational (#113 §6)", () => {
-  expect(run(["FactorInteger", ["Rational", 3, 8]])).toEqual([
-    "List",
-    ["Tuple", 2, -3],
-    ["Tuple", 3, 1],
-  ]);
+  expect(run(["FactorInteger", ["Rational", 3, 8]])).toEqual(["List", ["Tuple", 2, -3], ["Tuple", 3, 1]]);
   expect(run(["FactorInteger", ["Rational", -3, 8]])).toEqual([
     "List",
     ["Tuple", -1, 1],
@@ -285,20 +261,8 @@ test("DivisorSigma with a non-integer rational k: exact radical sum (#113)", () 
 
 test("threads over a list: DivisorSigma (in n), LegendreSymbol, ExtendedGCD, ModularInverse (#113 §1)", () => {
   expect(run(["DivisorSigma", 2, ["List", 1, 2, 3, 4, 5]])).toEqual(["List", 1, 5, 10, 21, 26]);
-  expect(run(["LegendreSymbol", ["List", 1, 2, 3, 4, 5, 6], 7])).toEqual([
-    "List",
-    1,
-    1,
-    -1,
-    1,
-    -1,
-    -1,
-  ]);
-  expect(run(["ExtendedGCD", 3, ["List", 5, 15]])).toEqual([
-    "List",
-    ["Tuple", 1, 2, -1],
-    ["Tuple", 3, 1, 0],
-  ]);
+  expect(run(["LegendreSymbol", ["List", 1, 2, 3, 4, 5, 6], 7])).toEqual(["List", 1, 1, -1, 1, -1, -1]);
+  expect(run(["ExtendedGCD", 3, ["List", 5, 15]])).toEqual(["List", ["Tuple", 1, 2, -1], ["Tuple", 3, 1, 0]]);
   expect(run(["ModularInverse", ["List", 2, 3, 4], 11])).toEqual(["List", 6, 4, 3]);
 });
 

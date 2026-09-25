@@ -16,11 +16,7 @@ export interface Mounted {
  * Show `panel` under `anchor`. Focus returns to the anchor on close; `onClose` fires
  * once, however the panel went away -- a pick, Escape, a click elsewhere.
  */
-export function mountPopover(
-  anchor: HTMLElement,
-  panel: HTMLElement,
-  onClose?: () => void,
-): Mounted {
+export function mountPopover(anchor: HTMLElement, panel: HTMLElement, onClose?: () => void): Mounted {
   const native = "popover" in HTMLElement.prototype;
   if (native) panel.setAttribute("popover", "auto");
 

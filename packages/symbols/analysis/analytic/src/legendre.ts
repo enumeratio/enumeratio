@@ -61,12 +61,9 @@ function coeffs(n: number): Rat[] {
 }
 
 const intNode = (v: bigint): Json =>
-  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER)
-    ? Number(v)
-    : { num: v.toString() };
+  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER) ? Number(v) : { num: v.toString() };
 
-const ratNode = ([n, d]: Rat): Json =>
-  d === 1n ? intNode(n) : ["Rational", intNode(n), intNode(d)];
+const ratNode = ([n, d]: Rat): Json => (d === 1n ? intNode(n) : ["Rational", intNode(n), intNode(d)]);
 
 /** The coefficient vector as a MathJSON polynomial in `x`. */
 function coeffsExpr(cs: readonly Rat[], x: Json): Json {

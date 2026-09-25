@@ -72,11 +72,7 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr:
-      [
-        Tan,
-        [List, [List, [Multiply, 5, [Divide, Pi, 6]], Pi], [List, [Divide, Pi, 3], [Negate, Pi]]],
-      ]
+    expr: [Tan, [List, [List, [Multiply, 5, [Divide, Pi, 6]], Pi], [List, [Divide, Pi, 3], [Negate, Pi]]]]
     expected: [List, [List, [Negate, [Divide, [Sqrt, 3], 3]], 0], [List, [Sqrt, 3], 0]]
     category: Scope
     caption: Threads element-wise over a matrix

@@ -29,12 +29,9 @@ const normalize = ([n, d]: Rat): Rat => {
 const rAdd = (x: Rat, y: Rat): Rat => normalize([x[0] * y[1] + y[0] * x[1], x[1] * y[1]]);
 
 const intNode = (v: bigint): Json =>
-  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER)
-    ? Number(v)
-    : { num: v.toString() };
+  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER) ? Number(v) : { num: v.toString() };
 
-const ratNode = ([n, d]: Rat): Json =>
-  d === 1n ? intNode(n) : ["Rational", intNode(n), intNode(d)];
+const ratNode = ([n, d]: Rat): Json => (d === 1n ? intNode(n) : ["Rational", intNode(n), intNode(d)]);
 
 /** base^e for a bigint base and a non-negative integer exponent e. */
 const ipow = (base: bigint, e: number): bigint => {
@@ -62,8 +59,7 @@ const FINITE_SUM_MAX = 4;
 /** Largest k for which H_z^(−k) expands to its Faulhaber polynomial. */
 const FAULHABER_MAX = 20;
 
-const isExactRational = (x: BoxedExpression): boolean =>
-  isNumber(x) && x.isExact && x.im === 0 && !isRealInt(x);
+const isExactRational = (x: BoxedExpression): boolean => isNumber(x) && x.isExact && x.im === 0 && !isRealInt(x);
 
 const binomial = (n: number, k: number): bigint => {
   let r = 1n;

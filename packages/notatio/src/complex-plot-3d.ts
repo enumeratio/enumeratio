@@ -7,12 +7,7 @@ import {
   polyLog,
   zetaGeneralized,
 } from "@enumeratio/analytic/src";
-import {
-  type Surface3dOptions,
-  type SurfaceScene,
-  surfaceScene,
-  surfaceSceneSvg,
-} from "./plot3d.ts";
+import { type Surface3dOptions, type SurfaceScene, surfaceScene, surfaceSceneSvg } from "./plot3d.ts";
 
 // Wolfram's `ComplexPlot3D`: |f(z)| as a surface over the complex plane, each face
 // coloured by arg f(z) -- the same hue wheel `notatio-complex-plot` paints, lifted into
@@ -33,10 +28,7 @@ type Json = number | string | boolean | { [k: string]: unknown } | Json[];
 
 const add = (a: Complex, b: Complex): Complex => [a[0] + b[0], a[1] + b[1]];
 const sub = (a: Complex, b: Complex): Complex => [a[0] - b[0], a[1] - b[1]];
-const mul = (a: Complex, b: Complex): Complex => [
-  a[0] * b[0] - a[1] * b[1],
-  a[0] * b[1] + a[1] * b[0],
-];
+const mul = (a: Complex, b: Complex): Complex => [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]];
 const div = (a: Complex, b: Complex): Complex => {
   const d = b[0] * b[0] + b[1] * b[1];
   // A pole hit exactly: infinite, with no argument -- not the 0/0 NaN that would read
@@ -54,22 +46,10 @@ const pow = (z: Complex, w: Complex): Complex => {
   if (z[0] === 0 && z[1] === 0) return w[0] > 0 ? [0, 0] : [Number.NaN, Number.NaN];
   return exp(mul(w, log(z)));
 };
-const sin = (z: Complex): Complex => [
-  Math.sin(z[0]) * Math.cosh(z[1]),
-  Math.cos(z[0]) * Math.sinh(z[1]),
-];
-const cos = (z: Complex): Complex => [
-  Math.cos(z[0]) * Math.cosh(z[1]),
-  -Math.sin(z[0]) * Math.sinh(z[1]),
-];
-const sinh = (z: Complex): Complex => [
-  Math.sinh(z[0]) * Math.cos(z[1]),
-  Math.cosh(z[0]) * Math.sin(z[1]),
-];
-const cosh = (z: Complex): Complex => [
-  Math.cosh(z[0]) * Math.cos(z[1]),
-  Math.sinh(z[0]) * Math.sin(z[1]),
-];
+const sin = (z: Complex): Complex => [Math.sin(z[0]) * Math.cosh(z[1]), Math.cos(z[0]) * Math.sinh(z[1])];
+const cos = (z: Complex): Complex => [Math.cos(z[0]) * Math.cosh(z[1]), -Math.sin(z[0]) * Math.sinh(z[1])];
+const sinh = (z: Complex): Complex => [Math.sinh(z[0]) * Math.cos(z[1]), Math.cosh(z[0]) * Math.sin(z[1])];
+const cosh = (z: Complex): Complex => [Math.cosh(z[0]) * Math.cos(z[1]), Math.sinh(z[0]) * Math.sin(z[1])];
 const sqrt = (z: Complex): Complex => pow(z, [0.5, 0]);
 
 type Cx = { re: number; im: number };
@@ -203,16 +183,13 @@ function compile(j: Json, variable: string): ComplexFunction {
       if (fs.length === 2) return (z) => ofCx(polyLog(toCx(f(0)(z)), toCx(f(1)(z))));
       break;
     case "LerchPhi":
-      if (fs.length === 3)
-        return (z) => ofCx(lerchPhi(toCx(f(0)(z)), toCx(f(1)(z)), toCx(f(2)(z))));
+      if (fs.length === 3) return (z) => ofCx(lerchPhi(toCx(f(0)(z)), toCx(f(1)(z)), toCx(f(2)(z))));
       break;
     case "PolyGamma": {
       // The order is a literal integer: the kernel is ζ(m+1, z) scaled, not analytic in m.
       const m = numberOf(args[0]);
       if (fs.length === 2 && m !== undefined && Number.isInteger(m) && m >= 0) {
-        return m === 0
-          ? (z) => ofCx(digamma(toCx(f(1)(z))))
-          : (z) => ofCx(polygamma(m, toCx(f(1)(z))));
+        return m === 0 ? (z) => ofCx(digamma(toCx(f(1)(z)))) : (z) => ofCx(polygamma(m, toCx(f(1)(z))));
       }
       break;
     }
@@ -308,8 +285,7 @@ export function complexSurfaceOf(
     const cRow: number[] = [];
     for (let i = 0; i < nx; i++) {
       const k = j * nx + i;
-      const w: Complex =
-        values instanceof Float32Array ? [values[k * 2], values[k * 2 + 1]] : values[k];
+      const w: Complex = values instanceof Float32Array ? [values[k * 2], values[k * 2 + 1]] : values[k];
       const r = Math.hypot(w[0], w[1]);
       // A pole is a real feature: keep the height, clipped, so the surface rises to the
       // ceiling around it rather than tearing a hole.
@@ -323,10 +299,7 @@ export function complexSurfaceOf(
 }
 
 /** Sample |f| and arg f over the domain. Never throws: a sample that blows up is NaN. */
-export function sampleComplexSurface(
-  f: ComplexFunction,
-  opts: ComplexSurfaceOptions = {},
-): ComplexSurface {
+export function sampleComplexSurface(f: ComplexFunction, opts: ComplexSurfaceOptions = {}): ComplexSurface {
   const { xs, ys } = complexGrid(opts);
   const values: Complex[] = [];
   for (const y of ys) {
@@ -373,10 +346,7 @@ export function faceHue(corners: readonly number[]): number {
   return t < 0 ? t + 1 : t;
 }
 
-export interface ComplexSurfaceSvgOptions extends Omit<
-  Surface3dOptions,
-  "xs" | "ys" | "colorLegend" | "zScale"
-> {}
+export interface ComplexSurfaceSvgOptions extends Omit<Surface3dOptions, "xs" | "ys" | "colorLegend" | "zScale"> {}
 
 /**
  * Above this many samples a side the surface is painted on a canvas rather than
@@ -385,10 +355,7 @@ export interface ComplexSurfaceSvgOptions extends Omit<
 export const CANVAS_THRESHOLD = 80;
 
 /** The surface as a scene: heights from the grid, each face coloured by its corners' hues. */
-export function complexSurfaceScene(
-  surface: ComplexSurface,
-  opts: ComplexSurfaceSvgOptions = {},
-): SurfaceScene {
+export function complexSurfaceScene(surface: ComplexSurface, opts: ComplexSurfaceSvgOptions = {}): SurfaceScene {
   const { heights, hues, xs, ys } = surface;
   const nx = xs.length;
   // The circular mean of the corners' hues, per face, with the unit vectors taken once
@@ -425,9 +392,6 @@ export function complexSurfaceScene(
 }
 
 /** The surface as SVG. */
-export function complexSurfaceSvg(
-  surface: ComplexSurface,
-  opts: ComplexSurfaceSvgOptions = {},
-): string {
+export function complexSurfaceSvg(surface: ComplexSurface, opts: ComplexSurfaceSvgOptions = {}): string {
   return surfaceSceneSvg(complexSurfaceScene(surface, opts));
 }

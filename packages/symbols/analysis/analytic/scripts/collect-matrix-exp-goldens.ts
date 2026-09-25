@@ -156,9 +156,7 @@ const parseWlLines = (out: string): Map<number, number[][]> => {
   }
   return got;
 };
-const wl = parseWlLines(
-  await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }),
-);
+const wl = parseWlLines(await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }));
 
 // --- Compare, report, write ----------------------------------------------------------
 const relErr = (ours: number[][], ref: number[][]): number => {
@@ -182,9 +180,7 @@ for (const [k, c] of cases.entries()) {
   const w = wl.get(k);
   if (m) g.mpmath = m;
   if (w) g.wolfram = w;
-  const r = ce
-    .box(["MatrixExp", ["List", ...c.matrix.map((row) => ["List", ...row])]] as never)
-    .N();
+  const r = ce.box(["MatrixExp", ["List", ...c.matrix.map((row) => ["List", ...row])]] as never).N();
   const ours: number[][] = operandsOf(r).map((row) => operandsOf(row).map((e) => e.re));
   for (const [name, ref] of [
     ["mpmath", g.mpmath],
@@ -193,16 +189,12 @@ for (const [k, c] of cases.entries()) {
     if (!ref) continue;
     compared++;
     const err = relErr(ours, ref);
-    if (!(err <= g.tol))
-      disagree.push(`${g.label} vs ${name}: relerr=${err.toExponential(2)} tol=${g.tol}`);
+    if (!(err <= g.tol)) disagree.push(`${g.label} vs ${name}: relerr=${err.toExponential(2)} tol=${g.tol}`);
   }
   goldens.push(g);
 }
 
-writeFileSync(
-  new URL("../tests/matrix-exp.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/matrix-exp.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 
 console.log(
   `cases ${goldens.length}  |  oracle comparisons ${compared}  |  agree ${compared - disagree.length}  disagree ${disagree.length}`,

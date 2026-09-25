@@ -27,10 +27,7 @@ const CATALAN = 0.915965594177219015;
 
 test("Li₂ closed forms: Li₂(1) = π²/6, Li₂(1/2) = π²/12 − (ln2)²/2, Li₂(−1) = −π²/12", () => {
   sameExact(["PolyLog", 2, 1], ["Zeta", 2]);
-  expect(num(["PolyLog", 2, ["Rational", 1, 2]])).toBeCloseTo(
-    Math.PI ** 2 / 12 - Math.log(2) ** 2 / 2,
-    13,
-  );
+  expect(num(["PolyLog", 2, ["Rational", 1, 2]])).toBeCloseTo(Math.PI ** 2 / 12 - Math.log(2) ** 2 / 2, 13);
   expect(num(["PolyLog", 2, -1])).toBeCloseTo(-(Math.PI ** 2) / 12, 13);
 });
 

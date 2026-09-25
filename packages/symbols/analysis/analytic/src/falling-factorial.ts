@@ -11,19 +11,11 @@ export function evaluateFallingFactorial(
   numeric: boolean,
 ): BoxedExpression | undefined {
   if (isRealInt(n)) {
-    const r = ce.box([
-      "Multiply",
-      ["Power", -1, n.json],
-      ["Pochhammer", ["Negate", x.json], n.json],
-    ] as never);
+    const r = ce.box(["Multiply", ["Power", -1, n.json], ["Pochhammer", ["Negate", x.json], n.json]] as never);
     return numeric ? r.N() : r.evaluate();
   }
   if (!numeric) return undefined;
   return ce
-    .box([
-      "Divide",
-      ["Gamma", ["Add", x.json, 1]],
-      ["Gamma", ["Subtract", ["Add", x.json, 1], n.json]],
-    ] as never)
+    .box(["Divide", ["Gamma", ["Add", x.json, 1]], ["Gamma", ["Subtract", ["Add", x.json, 1], n.json]]] as never)
     .N();
 }

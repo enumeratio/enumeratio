@@ -227,12 +227,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
   PowerSet: [wp("Power set"), mw("PowerSet"), rc("Power set")],
 
   // ── sequences ──────────────────────────────────────────────────────────────
-  Fibonacci: [
-    wp("Fibonacci sequence"),
-    mw("FibonacciNumber"),
-    oeis("A000045"),
-    rc("Fibonacci sequence"),
-  ],
+  Fibonacci: [wp("Fibonacci sequence"), mw("FibonacciNumber"), oeis("A000045"), rc("Fibonacci sequence")],
   LucasL: [wp("Lucas number"), mw("LucasNumber"), oeis("A000032")],
   BernoulliB: [wp("Bernoulli number"), mw("BernoulliNumber"), dlmf("24.2"), oeis("A027641")],
 
@@ -244,12 +239,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
   Totient: [wp("Euler's totient function"), mw("TotientFunction"), dlmf("27.2"), oeis("A000010")],
   NextPrime: [wp("Prime number"), mw("NextPrime")],
   NthPrime: [wp("Prime number"), oeis("A000040")],
-  PrimePi: [
-    wp("Prime-counting function"),
-    mw("PrimeCountingFunction"),
-    dlmf("27.12"),
-    oeis("A000720"),
-  ],
+  PrimePi: [wp("Prime-counting function"), mw("PrimeCountingFunction"), dlmf("27.12"), oeis("A000720")],
   IsPrime: [wp("Primality test"), mw("PrimalityTest"), rc("Primality by trial division")],
   FactorInteger: [wp("Integer factorization"), mw("PrimeFactorization"), rc("Prime decomposition")],
   PrimeNu: [wp("Prime omega function"), mw("DistinctPrimeFactors"), oeis("A001221")],
@@ -260,11 +250,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
   IsSquareFree: [wp("Square-free integer"), mw("Squarefree"), oeis("A005117")],
   JacobiSymbol: [wp("Jacobi symbol"), mw("JacobiSymbol"), rc("Jacobi symbol")],
   LegendreSymbol: [wp("Legendre symbol"), mw("LegendreSymbol")],
-  ChineseRemainder: [
-    wp("Chinese remainder theorem"),
-    mw("ChineseRemainderTheorem"),
-    rc("Chinese remainder theorem"),
-  ],
+  ChineseRemainder: [wp("Chinese remainder theorem"), mw("ChineseRemainderTheorem"), rc("Chinese remainder theorem")],
   ExtendedGCD: [wp("Extended Euclidean algorithm"), rc("Modular inverse")],
   MultiplicativeOrder: [wp("Multiplicative order"), mw("MultiplicativeOrder")],
   IntegerDigits: [wp("Numerical digit"), rc("Sum digits of an integer")],
@@ -376,10 +362,7 @@ export const CURATED: Readonly<Record<string, readonly Reference[]>> = {
   FixedPoints: [wp("Fixed point (mathematics)"), mw("FixedPoint")],
   Cycles: [wp("Cyclic permutation"), mw("PermutationCycle")],
   Runs: [wp("Permutation#Ascents, descents, runs, exceedances"), mw("PermutationRun")],
-  LongestIncreasingSubsequence: [
-    wp("Longest increasing subsequence"),
-    rc("Longest increasing subsequence"),
-  ],
+  LongestIncreasingSubsequence: [wp("Longest increasing subsequence"), rc("Longest increasing subsequence")],
   LongestDecreasingSubsequence: [wp("Longest increasing subsequence")],
   DurfeeSquare: [wp("Durfee square"), mw("DurfeeSquare")],
   Crank: [wp("Crank of a partition")],

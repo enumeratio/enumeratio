@@ -1,14 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import {
-  IDENTITY,
-  type Matrix,
-  multiply,
-  positiveWord,
-  power,
-  S,
-  T,
-  wordToMatrix,
-} from "../src/psl2z.ts";
+import { IDENTITY, type Matrix, multiply, positiveWord, power, S, T, wordToMatrix } from "../src/psl2z.ts";
 import {
   dedekindSum,
   linkingWithTrefoil,
@@ -21,8 +12,7 @@ import {
   wordTrace,
 } from "../src/rademacher.ts";
 
-const add = (x: Rational, y: Rational): Rational =>
-  rational(x[0] * y[1] + y[0] * x[1], x[1] * y[1])!;
+const add = (x: Rational, y: Rational): Rational => rational(x[0] * y[1] + y[0] * x[1], x[1] * y[1])!;
 const same = (x: Rational, y: Rational): boolean => x[0] === y[0] && x[1] === y[1];
 
 const mixedWords = (length: number): string[] => {
@@ -84,9 +74,7 @@ test("the symbol is a class function; Rademacher's Φ is not", () => {
   for (const word of allMixed) {
     if (word.length < 2) continue;
     const rotated = word.slice(1) + word[0];
-    expect(rademacherSymbol(wordToMatrix(rotated)!), word).toBe(
-      rademacherSymbol(wordToMatrix(word)!),
-    );
+    expect(rademacherSymbol(wordToMatrix(rotated)!), word).toBe(rademacherSymbol(wordToMatrix(word)!));
   }
   // Φ alone is only a quasimorphism — conjugation moves it, which is exactly why the
   // −3·sign(c(a+d)) correction is needed to get an invariant of the closed geodesic.

@@ -58,10 +58,7 @@ test("the realized tree lowers a component's arguments into props, and typesets 
 });
 
 test("toVNode hands the tree to any h, text as a lone child", () => {
-  const v = toVNode(
-    { tag: "notatio-row", attributes: {}, children: [{ tag: "span", attributes: {}, text: "so" }] },
-    h,
-  );
+  const v = toVNode({ tag: "notatio-row", attributes: {}, children: [{ tag: "span", attributes: {}, text: "so" }] }, h);
   expect(v).toEqual({
     tag: "notatio-row",
     props: {},

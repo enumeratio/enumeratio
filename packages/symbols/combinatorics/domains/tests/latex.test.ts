@@ -51,12 +51,8 @@ test("the engine's own serialisation keeps a trigger, and round-trips", () => {
 test("display forms are for reading, and are reached through Render", () => {
   expect(text(["Render", perm(2, 3, 1), "'oneline'", "'latex'"])).toBe("'2\\,3\\,1'");
   expect(text(["Render", perm(2, 3, 1), "'cycle'", "'latex'"])).toBe("'(1\\,2\\,3)'");
-  expect(
-    text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'", "'latex'"]),
-  ).toBe("'3^{2}\\,1'");
-  expect(text(["Render", ["IntegerPartition", ["List", 3, 1]], "'young'", "'latex'"])).toBe(
-    "'\\lambda = (3, 1)'",
-  );
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'", "'latex'"])).toBe("'3^{2}\\,1'");
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 1]], "'young'", "'latex'"])).toBe("'\\lambda = (3, 1)'");
 });
 
 test("ascii stays the default medium", () => {
@@ -74,9 +70,7 @@ test("every latex representation is display-only, and says so by having no parse
 test("each carrier and medium has exactly one canonical representation", () => {
   for (const carrier of [...new Set(ALL_REPRESENTATIONS.map((r) => r.on))])
     for (const medium of ["ascii", "latex"] as const) {
-      const canonical = representationsFor(carrier).filter(
-        (r) => r.medium === medium && r.canonical === true,
-      );
+      const canonical = representationsFor(carrier).filter((r) => r.medium === medium && r.canonical === true);
       expect(canonical.length, `${carrier}/${medium}`).toBe(1);
     }
 });

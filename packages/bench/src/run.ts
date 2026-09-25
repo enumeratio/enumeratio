@@ -197,8 +197,7 @@ export function judge(
     return { name, status: "wrong", value, reason: `expected ${expected}` };
   const samplesNs = reply.samplesNs ?? [];
   const summary = summarise(samplesNs);
-  const status =
-    reply.timedOut === true ? "timeout" : summary.median < PROTOCOL.tooFastNs ? "too-fast" : "ok";
+  const status = reply.timedOut === true ? "timeout" : summary.median < PROTOCOL.tooFastNs ? "too-fast" : "ok";
   return { name, status, k: reply.k, samplesNs, ...summary, value };
 }
 
@@ -233,11 +232,7 @@ export async function runPlan(
   options: RunOptions = {},
 ): Promise<Map<BenchSystem, CaseResult[]>> {
   const results = new Map<BenchSystem, CaseResult[]>(systems.map((s) => [s, []]));
-  const one = async (
-    system: BenchSystem,
-    harness: Harness | undefined,
-    c: Plan["cases"][number],
-  ): Promise<void> => {
+  const one = async (system: BenchSystem, harness: Harness | undefined, c: Plan["cases"][number]): Promise<void> => {
     let result = excluded(c.name, harness === undefined ? undefined : c.systems[system]);
     if (result === undefined) {
       const reply = await harness!.ask(c.name, c.budget * 4 + GRACE_SECONDS);
@@ -260,9 +255,7 @@ export async function runPlan(
     return results;
   }
 
-  const harnesses = new Map<BenchSystem, Harness | undefined>(
-    systems.map((s) => [s, startHarness(s)]),
-  );
+  const harnesses = new Map<BenchSystem, Harness | undefined>(systems.map((s) => [s, startHarness(s)]));
   try {
     for (const [index, c] of plan.cases.entries()) {
       // Rotate the order so no system always runs first after another's case.

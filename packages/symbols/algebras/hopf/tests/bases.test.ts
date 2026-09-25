@@ -28,8 +28,7 @@ import {
 } from "../src/hopf.ts";
 
 const show = (e: Element) => [...e].filter(([, c]) => c !== 0).sort(([a], [b]) => (a < b ? -1 : 1));
-const same = (a: Element, b: Element) =>
-  expect(JSON.stringify(show(a))).toBe(JSON.stringify(show(b)));
+const same = (a: Element, b: Element) => expect(JSON.stringify(show(a))).toBe(JSON.stringify(show(b)));
 
 test("a composition is a subset, and the correspondence round-trips", () => {
   for (let n = 0; n <= 7; n++) {
@@ -92,9 +91,7 @@ test("the ribbon product has two terms, and agrees with the product in H", () =>
     for (let n = 1; n <= 4; n++) {
       for (const a of compositions(m)) {
         for (const b of compositions(n)) {
-          const viaComplete = completeToRibbon(
-            nsymProduct(ribbonToComplete(basis(a)), ribbonToComplete(basis(b))),
-          );
+          const viaComplete = completeToRibbon(nsymProduct(ribbonToComplete(basis(a)), ribbonToComplete(basis(b))));
           same(viaComplete, ribbonProduct(a, b));
         }
       }
@@ -140,16 +137,10 @@ test("the antipode on a ribbon is a single signed term", () => {
 });
 
 test("the small fundamental expansions are the textbook ones", () => {
-  const asComposition = (key: string): Composition =>
-    key === "" ? [] : key.split(",").map(Number);
+  const asComposition = (key: string): Composition => (key === "" ? [] : key.split(",").map(Number));
   // F_(1,1) = M_(1,1) and F_(2) = M_(2) + M_(1,1): the fundamental basis refines.
-  expect(show(fundamentalToMonomial(basis([1, 1]))).map(([k]) => asComposition(k))).toEqual([
-    [1, 1],
-  ]);
-  expect(show(fundamentalToMonomial(basis([2]))).map(([k]) => asComposition(k))).toEqual([
-    [1, 1],
-    [2],
-  ]);
+  expect(show(fundamentalToMonomial(basis([1, 1]))).map(([k]) => asComposition(k))).toEqual([[1, 1]]);
+  expect(show(fundamentalToMonomial(basis([2]))).map(([k]) => asComposition(k))).toEqual([[1, 1], [2]]);
   // The other way round in NSym: R_(2) = H_(2) is the "row" ribbon, and the signed one is
   // R_(1,1) = H_(1,1) − H_(2), because (1,1) is the finer composition and has more
   // coarsenings to subtract.

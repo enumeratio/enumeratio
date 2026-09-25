@@ -97,13 +97,7 @@ examples:
     caption: $6+4i=-i(1+i)^2(3+2i)$
   - id: listable-threads-over-a-list
     expr: [Divisors, [List, 605, 871, 824]]
-    expected:
-      [
-        List,
-        [List, 1, 5, 11, 55, 121, 605],
-        [List, 1, 13, 67, 871],
-        [List, 1, 2, 4, 8, 103, 206, 412, 824],
-      ]
+    expected: [List, [List, 1, 5, 11, 55, 121, 605], [List, 1, 13, 67, 871], [List, 1, 2, 4, 8, 103, 206, 412, 824]]
     category: Scope
     caption: "Listable: threads over a list"
   - id: only-positive-divisors-even-for-negative-n

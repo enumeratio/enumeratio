@@ -90,11 +90,7 @@ export function optionsOf(expr: Json): Split {
 }
 
 /** `head(ops…, name -> value, …)`: the application with its options as trailing rules. */
-export function withOptions(
-  head: string,
-  ops: readonly Json[],
-  options: Readonly<Record<string, Json>>,
-): Json {
+export function withOptions(head: string, ops: readonly Json[], options: Readonly<Record<string, Json>>): Json {
   const rules = Object.entries(options).map(([name, value]) => ["KeyValuePair", name, value]);
   return [head, ...ops, ...rules] as unknown as Json;
 }

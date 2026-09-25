@@ -56,10 +56,7 @@ function evaluateIterate(
     return numberResult(ce, mandelbrot({ re: first.re, im: first.im }, steps));
   }
   if (!second || !isFiniteNum(first) || !isFiniteNum(second)) return undefined;
-  return numberResult(
-    ce,
-    julia({ re: first.re, im: first.im }, { re: second.re, im: second.im }, steps),
-  );
+  return numberResult(ce, julia({ re: first.re, im: first.im }, { re: second.re, im: second.im }, steps));
 }
 
 /**

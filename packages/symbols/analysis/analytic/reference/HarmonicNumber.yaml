@@ -70,14 +70,7 @@ examples:
   - id: listable-threads-over-a-list
     expr: [HarmonicNumber, [List, 2, 3, 5, 7, 11]]
     expected:
-      [
-        List,
-        [Rational, 3, 2],
-        [Rational, 11, 6],
-        [Rational, 137, 60],
-        [Rational, 363, 140],
-        [Rational, 83711, 27720],
-      ]
+      [List, [Rational, 3, 2], [Rational, 11, 6], [Rational, 137, 60], [Rational, 363, 140], [Rational, 83711, 27720]]
     category: Scope
     caption: "Listable: threads over a list"
   - id: threads-elementwise-over-an-array-of-orders-and

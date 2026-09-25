@@ -13,10 +13,7 @@ import { atEnginePrecision } from "./precise.ts";
 // Attached to Integrate directly rather than through `wrapOperator`: Integrate is lazy, and
 // its integrand must not be evaluated ahead of it.
 
-type Evaluate = (
-  ops: ReadonlyArray<BoxedExpression>,
-  options: EvalOptions,
-) => BoxedExpression | undefined;
+type Evaluate = (ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => BoxedExpression | undefined;
 
 /** Largest exponent expanded; the polynomial has about half this many terms. */
 const EXPONENT_MAX = 40n;
@@ -86,10 +83,7 @@ function antiderivative(ce: ComputeEngine, u: BoxedExpression, m: number, n: num
     const e = other + 2 * j + 1;
     const sign = (j % 2 === 0 ? 1 : -1) * (sineOdd ? -1 : 1);
     terms.push(
-      ce.function("Multiply", [
-        ce.number([sign * binomial(k, j), e]),
-        ce.function("Power", [fn, ce.number(e)]),
-      ]),
+      ce.function("Multiply", [ce.number([sign * binomial(k, j), e]), ce.function("Power", [fn, ce.number(e)])]),
     );
   }
   return ce.function("Add", terms);
@@ -97,8 +91,7 @@ function antiderivative(ce: ComputeEngine, u: BoxedExpression, m: number, n: num
 
 export function declareTrigPowerIntegrals(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Integrate");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
   operator.evaluate = ((ops: ReadonlyArray<BoxedExpression>, options: EvalOptions) => {
@@ -123,9 +116,7 @@ export function declareTrigPowerIntegrals(ce: ComputeEngine): void {
     const inner = antiderivative(ce, t.u, t.m, t.n);
     const F = ce.function("Divide", [ce.function("Multiply", [t.coefficient, inner]), a]);
     const definite = symbolNameOf(lo!) !== "Nothing" && symbolNameOf(hi!) !== "Nothing";
-    const result = definite
-      ? ce.function("Subtract", [F.subs({ [x]: hi! }), F.subs({ [x]: lo! })])
-      : F;
+    const result = definite ? ce.function("Subtract", [F.subs({ [x]: hi! }), F.subs({ [x]: lo! })]) : F;
     if (!options.numericApproximation) return result.evaluate();
     const value = result.N();
     return atEnginePrecision(ce, value) ?? value;

@@ -69,16 +69,12 @@ test("BinaryWords count = 2^n (A000079)", () => {
 
 test("FibStrings count = F(n+2) (A000045 shifted)", () => {
   const entry = byHead.get("FibStrings")!;
-  expect([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => entry.count([n]))).toEqual([
-    1, 2, 3, 5, 8, 13, 21, 34, 55,
-  ]);
+  expect([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => entry.count([n]))).toEqual([1, 2, 3, 5, 8, 13, 21, 34, 55]);
 });
 
 test("LucasStrings count = Lucas numbers, n=0 special-cased to 1 (A000032)", () => {
   const entry = byHead.get("LucasStrings")!;
-  expect([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => entry.count([n]))).toEqual([
-    1, 1, 3, 4, 7, 11, 18, 29, 47,
-  ]);
+  expect([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => entry.count([n]))).toEqual([1, 1, 3, 4, 7, 11, 18, 29, 47]);
 });
 
 test("GrayCodes count = 2^n", () => {
@@ -93,9 +89,7 @@ test("BinaryPalindromes count = 2^ceil(n/2)", () => {
 
 test("BinaryNecklaces count (A000031)", () => {
   const entry = byHead.get("BinaryNecklaces")!;
-  expect([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => entry.count([n]))).toEqual([
-    1, 2, 3, 4, 6, 8, 14, 20, 36,
-  ]);
+  expect([0, 1, 2, 3, 4, 5, 6, 7, 8].map((n) => entry.count([n]))).toEqual([1, 2, 3, 4, 6, 8, 14, 20, 36]);
 });
 
 test("LyndonWords count (A001037), n=1..8", () => {

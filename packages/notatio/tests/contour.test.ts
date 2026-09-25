@@ -13,11 +13,7 @@ function rampGrid(n: number): { grid: number[][]; xs: number[]; ys: number[] } {
 }
 
 /** f = x^2 + y^2 on a small grid, for a curved (circular) contour. */
-function radialGrid(
-  lo: number,
-  hi: number,
-  n: number,
-): { grid: number[][]; xs: number[]; ys: number[] } {
+function radialGrid(lo: number, hi: number, n: number): { grid: number[][]; xs: number[]; ys: number[] } {
   const xs = Array.from({ length: n }, (_, i) => lo + ((hi - lo) * i) / (n - 1));
   const ys = xs.slice();
   const grid = ys.map((y) => xs.map((x) => x * x + y * y));

@@ -37,11 +37,7 @@ export const CROSS_POLYTOPE: Polytope = polytope({
   enumerate: (n) => (n === 0 ? [] : signedSubsets(n)),
   dimension: (signs) => (support(signs) === 0 ? signs.length : support(signs) - 1),
   // Mean of the signed unit vectors it spans; the body sits at the origin either way.
-  point: (signs) =>
-    signs.map((sign) =>
-      support(signs) === 0 ? 0 : (sign * factorial(signs.length)) / support(signs),
-    ),
-  hasVertex: (big, vertex) =>
-    support(big) === 0 || vertex.every((sign, i) => sign === 0 || big[i] === sign),
+  point: (signs) => signs.map((sign) => (support(signs) === 0 ? 0 : (sign * factorial(signs.length)) / support(signs))),
+  hasVertex: (big, vertex) => support(big) === 0 || vertex.every((sign, i) => sign === 0 || big[i] === sign),
   dimensionAt: (n) => n,
 });

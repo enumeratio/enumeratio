@@ -22,11 +22,7 @@ test("Gamma(2, z) = (1+z)e^-z, and Gamma(1/2, z) = sqrt(pi)*Erfc(sqrt(z))", () =
     ["Power", "ExponentialE", ["Negate", "x"]],
   ]);
   expect(evalJson(["Gamma", 2, 1])).toEqual(["Divide", 2, "ExponentialE"]);
-  expect(evalJson(["Gamma", ["Rational", 1, 2], "x"])).toEqual([
-    "Multiply",
-    ["Erfc", ["Sqrt", "x"]],
-    ["Sqrt", "Pi"],
-  ]);
+  expect(evalJson(["Gamma", ["Rational", 1, 2], "x"])).toEqual(["Multiply", ["Erfc", ["Sqrt", "x"]], ["Sqrt", "Pi"]]);
   // The three-argument difference now reduces too, through the same closed form.
   expect(evalJson(["Gamma", 2, 0, "z"])).toEqual([
     "Add",
@@ -38,19 +34,11 @@ test("Gamma(2, z) = (1+z)e^-z, and Gamma(1/2, z) = sqrt(pi)*Erfc(sqrt(z))", () =
 test("Beta: B(a,1) = 1/a, and the incomplete/generalized-incomplete arities", () => {
   expect(evalJson(["Beta", "a", 1])).toEqual(["Divide", 1, "a"]);
   expect(evalJson(["Beta", ["Rational", 1, 2], 2, 3])).toEqual(["Rational", 11, 192]);
-  expect(evalJson(["Beta", ["Rational", 1, 4], ["Rational", 1, 2], 2, 3])).toEqual([
-    "Rational",
-    109,
-    3072,
-  ]);
+  expect(evalJson(["Beta", ["Rational", 1, 4], ["Rational", 1, 2], 2, 3])).toEqual(["Rational", 109, 3072]);
   // The four-argument generalized form, at floats: B_{0.5}(2,3) - B_{0.2}(2,3).
   expect(numAt(["Beta", 0.2, 0.5, 2, 3])).toBeCloseTo(0.04222500000000001, 12);
   // Still threads over a list, unaffected by the widened arity.
-  expect(evalJson(["Beta", ["List", 1, 2], 2])).toEqual([
-    "List",
-    ["Rational", 1, 2],
-    ["Rational", 1, 6],
-  ]);
+  expect(evalJson(["Beta", ["List", 1, 2], 2])).toEqual(["List", ["Rational", 1, 2], ["Rational", 1, 6]]);
 });
 
 test("BetaRegularized: the four-argument generalized form", () => {
@@ -93,20 +81,12 @@ test("HurwitzZeta(s, 1/2) = (2^s - 1) Zeta(s)", () => {
 
 test("LerchPhi(z, s, 1) = PolyLog(s, z) / z", () => {
   expect(evalJson(["LerchPhi", "z", "s", 1])).toEqual(["Divide", ["PolyLog", "s", "z"], "z"]);
-  expect(evalJson(["LerchPhi", "z", 1, 1])).toEqual([
-    "Divide",
-    ["Negate", ["Ln", ["Add", ["Negate", "z"], 1]]],
-    "z",
-  ]);
+  expect(evalJson(["LerchPhi", "z", 1, 1])).toEqual(["Divide", ["Negate", ["Ln", ["Add", ["Negate", "z"], 1]]], "z"]);
   expect(evalJson(["LerchPhi", -1, 1, 1])).toEqual(["Ln", 2]);
 });
 
 test("PolyGamma(z): the one-argument digamma", () => {
-  expect(evalJson(["PolyGamma", 5])).toEqual([
-    "Add",
-    ["Rational", 25, 12],
-    ["Negate", "EulerGamma"],
-  ]);
+  expect(evalJson(["PolyGamma", 5])).toEqual(["Add", ["Rational", 25, 12], ["Negate", "EulerGamma"]]);
   expect(numAt(["PolyGamma", 100.5])).toBeCloseTo(4.605174352581845, 12);
   const c = ce.box(["PolyGamma", ["Complex", 2.5, 3]]).evaluate();
   expect(c.re).toBeCloseTo(1.2812739190662314, 9);
@@ -122,14 +102,8 @@ test("PolyGamma(z): the one-argument digamma", () => {
 
 test("PolyLog(n, p, z): the Nielsen generalized polylogarithm", () => {
   expect(evalJson(["PolyLog", 1, 2, 1])).toEqual(["Zeta", 3]);
-  expect(evalJson(["PolyLog", 2, 2, 1])).toEqual([
-    "Multiply",
-    ["Rational", 1, 360],
-    ["Power", "Pi", 4],
-  ]);
+  expect(evalJson(["PolyLog", 2, 2, 1])).toEqual(["Multiply", ["Rational", 1, 360], ["Power", "Pi", 4]]);
   expect(numAt(["PolyLog", 1, 2, 0.5])).toBeCloseTo(0.09475300423012771, 12);
   // S_{n,1}(z) = Li_{n+1}(z), the general p = 1 identity, at a non-special z.
-  expect(evalJson(["PolyLog", 3, 1, ["Rational", 1, 2]])).toEqual(
-    evalJson(["PolyLog", 4, ["Rational", 1, 2]]),
-  );
+  expect(evalJson(["PolyLog", 3, 1, ["Rational", 1, 2]])).toEqual(evalJson(["PolyLog", 4, ["Rational", 1, 2]]));
 });

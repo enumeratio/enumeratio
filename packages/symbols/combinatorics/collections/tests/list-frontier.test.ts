@@ -8,14 +8,7 @@ const run = (expr: unknown) => ce.box(expr as never).evaluate().json;
 
 // Array(f, n) / Array(f, {n1, n2}) / Array(f, n, r) / Array(f, n, r, h)
 test("Array(f, n) applies f over 1..n", () => {
-  expect(run(["Array", "f", 5])).toEqual([
-    "List",
-    ["f", 1],
-    ["f", 2],
-    ["f", 3],
-    ["f", 4],
-    ["f", 5],
-  ]);
+  expect(run(["Array", "f", 5])).toEqual(["List", ["f", 1], ["f", 2], ["f", 3], ["f", 4], ["f", 5]]);
 });
 test("Array(f, {n1, n2}) builds a 2-dimensional array", () => {
   expect(run(["Array", "f", ["List", 2, 2]])).toEqual([
@@ -64,18 +57,14 @@ test("Cases(list, f(_a)) keeps elements matching that structure", () => {
 
 // SparseArray(rules, dims?, default?): densifies immediately.
 test("SparseArray(rules, n) builds a dense vector, default 0 elsewhere", () => {
-  expect(run(["SparseArray", ["List", ["Rule", 1, "x"], ["Rule", 3, "y"]], 4])).toEqual([
-    "List",
-    "x",
-    0,
-    "y",
-    0,
-  ]);
+  expect(run(["SparseArray", ["List", ["Rule", 1, "x"], ["Rule", 3, "y"]], 4])).toEqual(["List", "x", 0, "y", 0]);
 });
 test("SparseArray(rules) infers dims from the largest index per axis", () => {
-  expect(
-    run(["SparseArray", ["List", ["Rule", ["List", 1, 1], 5], ["Rule", ["List", 2, 2], 7]]]),
-  ).toEqual(["List", ["List", 5, 0], ["List", 0, 7]]);
+  expect(run(["SparseArray", ["List", ["Rule", ["List", 1, 1], 5], ["Rule", ["List", 2, 2], 7]]])).toEqual([
+    "List",
+    ["List", 5, 0],
+    ["List", 0, 7],
+  ]);
 });
 test("SparseArray(rules, n, default) fills gaps with the given default", () => {
   expect(run(["SparseArray", ["List", ["Rule", 2, 9]], 3, -1])).toEqual(["List", -1, 9, -1]);

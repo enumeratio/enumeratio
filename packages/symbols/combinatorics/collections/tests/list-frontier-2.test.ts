@@ -24,11 +24,7 @@ test("Thread broadcasts a scalar operand", () => {
   ]);
 });
 test("Thread(expr, h) threads only over h-headed operands", () => {
-  expect(run(["Thread", ["f", ["g", 1, 2], ["g", 3, 4]], "g"])).toEqual([
-    "g",
-    ["f", 1, 3],
-    ["f", 2, 4],
-  ]);
+  expect(run(["Thread", ["f", ["g", 1, 2], ["g", 3, 4]], "g"])).toEqual(["g", ["f", 1, 3], ["f", 2, 4]]);
 });
 
 // MapAt(f, expr, n) / MapAt(f, expr, {{n1}, {n2}})
@@ -49,11 +45,7 @@ test("MapAt applies f at several positions at once", () => {
 
 // Normalize(v) / Normalize(v, f)
 test("Normalize divides by the Euclidean norm", () => {
-  expect(run(["Normalize", ["List", 3, 4]])).toEqual([
-    "List",
-    ["Rational", 3, 5],
-    ["Rational", 4, 5],
-  ]);
+  expect(run(["Normalize", ["List", 3, 4]])).toEqual(["List", ["Rational", 3, 5], ["Rational", 4, 5]]);
 });
 test("Normalize leaves the zero vector unchanged", () => {
   expect(run(["Normalize", ["List", 0, 0]])).toEqual(["List", 0, 0]);

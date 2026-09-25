@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  bigIntegerAt,
-  bigRationalAt,
-  operandsOf,
-  symbolNameOf,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
 import type { EvalOptions } from "./box.ts";
 
 /** A concrete +oo operand -- `PositiveInfinity` boxes as an infinite NUMBER in
@@ -101,11 +95,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     (ops) => {
       const z = bigRationalAt(ops[0]);
       return (
-        z !== undefined &&
-        z[0] === 1n &&
-        z[1] === 2n &&
-        bigIntegerAt(ops[1]) === 1n &&
-        bigIntegerAt(ops[2]) === 1n
+        z !== undefined && z[0] === 1n && z[1] === 2n && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) === 1n
       );
     },
     () => (_ops, options) => finish(ce.function("Multiply", [2, ce.function("Ln", [2])]), options),
@@ -127,10 +117,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     },
     () => (ops, options) =>
       finish(
-        ce.function("Multiply", [
-          ce.function("Power", [2, ops[1]]),
-          ce.function("DirichletBeta", [ops[1]]),
-        ]),
+        ce.function("Multiply", [ce.function("Power", [2, ops[1]]), ce.function("DirichletBeta", [ops[1]])]),
         options,
       ),
     3,
@@ -148,10 +135,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const n = ops[0];
       return finish(
         ce.function("Multiply", [
-          ce.function("Add", [
-            ce.function("Power", [2, ce.function("Add", [ce.function("Negate", [n]), 1])]),
-            -1,
-          ]),
+          ce.function("Add", [ce.function("Power", [2, ce.function("Add", [ce.function("Negate", [n]), 1])]), -1]),
           ce.function("Zeta", [n]),
         ]),
         options,
@@ -186,8 +170,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     ce,
     ["Erf", 1],
     (ops) => isImaginaryUnit(ops[0]),
-    () => (_ops, options) =>
-      finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Erfi", [1])]), options),
+    () => (_ops, options) => finish(ce.function("Multiply", ["ImaginaryUnit", ce.function("Erfi", [1])]), options),
     1,
   );
 
@@ -233,10 +216,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
     (ops) => plainX(ops[0]) && bigIntegerAt(ops[1]) === 1n && bigIntegerAt(ops[2]) !== 1n,
     () => (ops, options) =>
       finish(
-        ce.function("Subtract", [
-          1,
-          ce.function("Power", [ce.function("Subtract", [1, ops[0]]), ops[2]]),
-        ]),
+        ce.function("Subtract", [1, ce.function("Power", [ce.function("Subtract", [1, ops[0]]), ops[2]])]),
         options,
       ),
     3,
@@ -276,10 +256,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       return bigIntegerAt(ops[0]) === 1n && q !== undefined && q[0] === 1n && q[1] === 2n;
     },
     () => (_ops, options) =>
-      finish(
-        ce.function("Multiply", [ce.function("Rational", [1, 2]), ce.function("Power", ["Pi", 2])]),
-        options,
-      ),
+      finish(ce.function("Multiply", [ce.function("Rational", [1, 2]), ce.function("Power", ["Pi", 2])]), options),
     2,
   );
 
@@ -308,9 +285,7 @@ export function declareSpecialFunctionsRemaining(ce: ComputeEngine): void {
       const sign = m % 2n === 0n ? -1 : 1;
       const terms: BoxedExpression[] = [ce.function("Zeta", [ce.number(m + 1n)])];
       for (let k = 1n; k < n; k++) {
-        terms.push(
-          ce.function("Negate", [ce.function("Power", [ce.number(k), ce.number(-(m + 1n))])]),
-        );
+        terms.push(ce.function("Negate", [ce.function("Power", [ce.number(k), ce.number(-(m + 1n))])]));
       }
       const bracket = terms.length === 1 ? terms[0] : ce.function("Add", terms);
       return finish(ce.function("Multiply", [sign, mFactorial, bracket]), options);

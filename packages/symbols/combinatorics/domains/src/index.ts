@@ -1,12 +1,6 @@
 export { contentsOf, declareDomains } from "./declare.ts";
 export { applyComposition, declareCompose } from "./compose.ts";
-export {
-  type Extension,
-  extendBuiltin,
-  PRIVATE_SUFFIX,
-  privateNameFor,
-  publicName,
-} from "./extend.ts";
+export { type Extension, extendBuiltin, PRIVATE_SUFFIX, privateNameFor, publicName } from "./extend.ts";
 export { type CombinatorialMap, declareMaps, MAPS } from "./map.ts";
 export { UNDEFINED_MAPS, type UndefinedMap } from "./frontier-maps.ts";
 export { carrierLatex, type LatexEntry, triggerFor } from "./latex.ts";
@@ -20,13 +14,7 @@ export {
   REPRESENTATIONS,
   representationsFor,
 } from "./representation.ts";
-export {
-  afterInserting,
-  bumpedFrom,
-  insertionShape,
-  insertionTableau,
-  rowAfterInserting,
-} from "./tableau.ts";
+export { afterInserting, bumpedFrom, insertionShape, insertionTableau, rowAfterInserting } from "./tableau.ts";
 export {
   declareRestricted,
   declareRestrictions,

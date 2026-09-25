@@ -23,9 +23,7 @@ test("no head-map entry is undeclared unless the allowlist says so", () => {
 test("the allowlist has no stale entries", () => {
   // The other half of the guard: an entry that stopped being undeclared should be deleted,
   // not left to quietly stop meaning anything.
-  const undeclared = new Set(
-    HEAD_MAP_AUDIT.filter((e) => e.category === "undeclared").map((e) => e.head),
-  );
+  const undeclared = new Set(HEAD_MAP_AUDIT.filter((e) => e.category === "undeclared").map((e) => e.head));
   const stale = Object.keys(ALLOWED_UNDECLARED).filter((head) => !undeclared.has(head));
   expect(stale).toEqual([]);
 });

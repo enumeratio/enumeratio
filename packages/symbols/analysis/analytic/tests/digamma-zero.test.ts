@@ -18,9 +18,7 @@ interface GoldenCase {
   mpmath: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./digamma-zero.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./digamma-zero.golden.json", import.meta.url), "utf8"));
 
 test("DigammaFunctionZero matches mpmath.findroot(digamma, ...)", () => {
   const off: string[] = [];

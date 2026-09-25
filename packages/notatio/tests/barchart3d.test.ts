@@ -2,8 +2,7 @@ import { expect, test } from "vite-plus/test";
 import { barChart3dSvg, barShade } from "../src/barchart3d.ts";
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
-const polys = (s: string): string[] =>
-  [...s.matchAll(/<polygon points="([^"]+)"/g)].map(([, p]) => p);
+const polys = (s: string): string[] => [...s.matchAll(/<polygon points="([^"]+)"/g)].map(([, p]) => p);
 
 /** The straight-on view (azimuth 0, elevation 0): x = 0 → 74, x = 1 → 286,
  * z = 0 → 236, z = 1 → 24, depth = y − ½. See project3d.test.ts. */
@@ -148,9 +147,7 @@ test("a title renders centred above the figure", () => {
 });
 
 test("determinism: the same matrix renders byte-identical SVG twice", () => {
-  const m = Array.from({ length: 6 }, (_, j) =>
-    Array.from({ length: 6 }, (_, i) => (i + 1) * (j + 2)),
-  );
+  const m = Array.from({ length: 6 }, (_, j) => Array.from({ length: 6 }, (_, i) => (i + 1) * (j + 2)));
   const opts = { azimuth: 35, elevation: 22, colLabels: ["a", "b", "c"], title: "grid" };
   expect(barChart3dSvg(m, opts)).toBe(barChart3dSvg(m, opts));
 });

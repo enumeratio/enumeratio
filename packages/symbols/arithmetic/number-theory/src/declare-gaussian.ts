@@ -140,12 +140,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     );
   }
 
-  widenSignature(
-    ce,
-    "ExtendedGCD",
-    "(number, number) -> tuple<number, number, number>",
-    mayBeInteger,
-  );
+  widenSignature(ce, "ExtendedGCD", "(number, number) -> tuple<number, number, number>", mayBeInteger);
   wrapOperator(
     ce,
     ["ExtendedGCD", 1, 1],
@@ -175,9 +170,7 @@ export function declareGaussian(ce: ComputeEngine): void {
       const n = m[0] < 0n ? -m[0] : m[0];
       const inverse = invMod(a[0], n);
       // Wolfram's sign convention: the inverse takes the sign of the modulus.
-      return inverse === undefined
-        ? undefined
-        : ce.number(m[0] < 0n && inverse !== 0n ? inverse - n : inverse);
+      return inverse === undefined ? undefined : ce.number(m[0] < 0n && inverse !== 0n ? inverse - n : inverse);
     },
     2,
   );
@@ -195,8 +188,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   ): void => {
     widenSignature(ce, head, signature, native);
     const definition = ce.lookupDefinition(head);
-    const operator =
-      definition !== undefined && "operator" in definition ? definition.operator : undefined;
+    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
     if (operator === undefined) return;
     // A rule canonicalises to a Tuple, which a broadcastable head would thread over.
     const flags = operator as { broadcastExemptions: readonly string[] };
@@ -213,10 +205,7 @@ export function declareGaussian(ce: ComputeEngine): void {
       }
       const z = gaussianAt(ops[0]);
       if (z !== undefined && (z[1] !== 0n || option.value === true)) return answer(z);
-      return (
-        (z !== undefined ? integer?.(z[0]) : undefined) ??
-        nativeEvaluate?.(ops.slice(0, 1), options)
-      );
+      return (z !== undefined ? integer?.(z[0]) : undefined) ?? nativeEvaluate?.(ops.slice(0, 1), options);
     };
     operator.evaluate = evaluate;
   };
@@ -233,8 +222,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     (n) => (n < 0n ? ce.symbol(isPrime(-n) ? "True" : "False") : undefined),
   );
   // 0 and ±1 have no prime factorisation; the native handler spells them as Wolfram does.
-  const factorsOf = (n: bigint): [bigint, number][] | undefined =>
-    n > 1n || n < -1n ? factorInteger(n) : undefined;
+  const factorsOf = (n: bigint): [bigint, number][] | undefined => (n > 1n || n < -1n ? factorInteger(n) : undefined);
   const pairs = (factors: readonly (readonly [BoxedExpression, number])[]): BoxedExpression =>
     list(factors.map(([p, e]) => ce.function("Tuple", [p, ce.number(e)])));
 
@@ -244,9 +232,7 @@ export function declareGaussian(ce: ComputeEngine): void {
     mayBeInteger,
     (z) => {
       const factors = factorGaussian(z);
-      return factors === undefined
-        ? undefined
-        : pairs(factors.map(([p, e]) => [gaussianExpression(ce, p), e]));
+      return factors === undefined ? undefined : pairs(factors.map(([p, e]) => [gaussianExpression(ce, p), e]));
     },
     (n) => {
       const factors = factorsOf(n);
@@ -261,18 +247,14 @@ export function declareGaussian(ce: ComputeEngine): void {
     mayBeInteger,
     (z) => {
       const divisors = divisorsGaussian(z);
-      return divisors === undefined
-        ? undefined
-        : list(divisors.map((d) => gaussianExpression(ce, d)));
+      return divisors === undefined ? undefined : list(divisors.map((d) => gaussianExpression(ce, d)));
     },
     (n) => {
       const factors = factorsOf(n);
       if (factors === undefined) return undefined;
       let divisors = [1n];
       for (const [p, e] of factors) {
-        divisors = divisors.flatMap((d) =>
-          Array.from({ length: e + 1 }, (_, k) => d * p ** BigInt(k)),
-        );
+        divisors = divisors.flatMap((d) => Array.from({ length: e + 1 }, (_, k) => d * p ** BigInt(k)));
       }
       divisors.sort((a, b) => (a < b ? -1 : a > b ? 1 : 0));
       return list(divisors.map((d) => ce.number(d)));
@@ -307,9 +289,7 @@ export function declareGaussian(ce: ComputeEngine): void {
   widenSignature(ce, "DivisorSigma", "(number, number, any*) -> number");
   const nativeDivisorSigma = ce.lookupDefinition("DivisorSigma");
   const divisorSigmaOperator =
-    nativeDivisorSigma !== undefined && "operator" in nativeDivisorSigma
-      ? nativeDivisorSigma.operator
-      : undefined;
+    nativeDivisorSigma !== undefined && "operator" in nativeDivisorSigma ? nativeDivisorSigma.operator : undefined;
   if (divisorSigmaOperator !== undefined) {
     // declare.ts marks DivisorSigma broadcastable, for the list-in-n case; without this a
     // rule canonicalising to a Tuple (the GaussianIntegers option) gets threaded over too.
@@ -375,10 +355,7 @@ interface GaussianRational {
 
 /** `a+bi` (a, b ∈ ℚ) as a numerator/denominator pair, or `undefined` if either part isn't
  *  an exact rational (a float, a free variable, an irrational constant, …). */
-function numeratorDenominator(
-  ce: ComputeEngine,
-  expr: BoxedExpression | undefined,
-): GaussianRational | undefined {
+function numeratorDenominator(ce: ComputeEngine, expr: BoxedExpression | undefined): GaussianRational | undefined {
   if (expr === undefined) return undefined;
   let reRat = bigRationalAt(expr);
   let imRat: readonly [bigint, bigint] | undefined = [0n, 1n];
@@ -396,8 +373,7 @@ function numeratorDenominator(
 }
 
 function declareGaussianRationalGcdLcm(ce: ComputeEngine): void {
-  const parse = (expr: BoxedExpression): GaussianRational | undefined =>
-    numeratorDenominator(ce, expr);
+  const parse = (expr: BoxedExpression): GaussianRational | undefined => numeratorDenominator(ce, expr);
   const applies = (ops: readonly BoxedExpression[]): boolean => {
     if (ops.length < 2) return false;
     const parsed = ops.map(parse);

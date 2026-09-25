@@ -51,9 +51,7 @@ export function refines(finer: Diagram, coarser: Diagram): boolean {
   coarser.blocks.forEach((block, id) => {
     for (const label of block) home.set(label, id);
   });
-  return finer.blocks.every((block) =>
-    block.every((label) => home.get(label) === home.get(block[0] as number)),
-  );
+  return finer.blocks.every((block) => block.every((label) => home.get(label) === home.get(block[0] as number)));
 }
 
 /** Every set partition of a k-element set, as an assignment of block ids. */
@@ -77,9 +75,7 @@ function setPartitions(k: number): number[][] {
  */
 export function coarsenings(d: Diagram): Diagram[] {
   const rgs = toRgs(d);
-  return setPartitions(d.blocks.length).map((assignment) =>
-    fromRgs(rgs.map((id) => assignment[id] as number)),
-  );
+  return setPartitions(d.blocks.length).map((assignment) => fromRgs(rgs.map((id) => assignment[id] as number)));
 }
 
 const factorial = (n: number): number => {

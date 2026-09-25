@@ -13,30 +13,7 @@ details:
 examples:
   - id: the-first-20-lesser-cousin-primes-oeis-a023200
     expr: [Take, CousinPrimes, 20]
-    expected:
-      [
-        List,
-        3,
-        7,
-        13,
-        19,
-        37,
-        43,
-        67,
-        79,
-        97,
-        103,
-        109,
-        127,
-        163,
-        193,
-        223,
-        229,
-        277,
-        307,
-        313,
-        349,
-      ]
+    expected: [List, 3, 7, 13, 19, 37, 43, 67, 79, 97, 103, 109, 127, 163, 193, 223, 229, 277, 307, 313, 349]
     caption: The first 20 lesser cousin primes, OEIS A023200
 enumerate:
   expr: Take(CousinPrimes, 20)

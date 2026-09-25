@@ -30,15 +30,11 @@ const finish = (expr: BoxedExpression, options: EvaluateOptions | undefined): Bo
 
 /** Whether `expr`'s JSON mentions the symbol `name` — the same substring test
  *  `generalized-special.ts`'s `stillMentions` uses for a head, applied to a bound variable. */
-const mentions = (expr: BoxedExpression, name: string): boolean =>
-  JSON.stringify(expr.json).includes(`"${name}"`);
+const mentions = (expr: BoxedExpression, name: string): boolean => JSON.stringify(expr.json).includes(`"${name}"`);
 
 const isConstantOf = (expr: BoxedExpression, varName: string): boolean => !mentions(expr, varName);
 
-const list2 = (
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-): [BoxedExpression, BoxedExpression] | undefined => {
+const list2 = (ce: ComputeEngine, expr: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
   if (expr.operator !== "List") return undefined;
   const ops = operandsOf(expr);
   return ops.length === 2 ? [ops[0], ops[1]] : undefined;
@@ -46,11 +42,7 @@ const list2 = (
 
 // --- distribution kinds ----------------------------------------------------------------------
 
-const DISCRETE_KINDS = new Set([
-  "PoissonDistribution",
-  "BinomialDistribution",
-  "EmpiricalDistribution",
-]);
+const DISCRETE_KINDS = new Set(["PoissonDistribution", "BinomialDistribution", "EmpiricalDistribution"]);
 
 const isDistribution = (expr: BoxedExpression | undefined): boolean =>
   expr !== undefined &&
@@ -68,12 +60,7 @@ const isDistribution = (expr: BoxedExpression | undefined): boolean =>
 // Only the kinds this file itself adds go through the `wrapOperator` branches below — Normal/
 // Uniform/Poisson/Binomial are answered by compute-engine's own native handlers (after
 // `extendUniformDistribution` below fixes its call-shape gap).
-const OWN_KINDS = new Set([
-  "BetaDistribution",
-  "GammaDistribution",
-  "BinormalDistribution",
-  "EmpiricalDistribution",
-]);
+const OWN_KINDS = new Set(["BetaDistribution", "GammaDistribution", "BinormalDistribution", "EmpiricalDistribution"]);
 
 // --- parameter extraction ---------------------------------------------------------------------
 
@@ -83,10 +70,7 @@ const betaParams = (dist: BoxedExpression): [BoxedExpression, BoxedExpression] |
 };
 
 /** GammaDistribution(shape) defaults scale to 1; GammaDistribution(shape, scale) both given. */
-const gammaParams = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-): [BoxedExpression, BoxedExpression] | undefined => {
+const gammaParams = (ce: ComputeEngine, dist: BoxedExpression): [BoxedExpression, BoxedExpression] | undefined => {
   const ops = operandsOf(dist);
   if (ops.length === 1) return [ops[0], ce.One];
   if (ops.length === 2) return [ops[0], ops[1]];
@@ -140,8 +124,7 @@ const empiricalData = (dist: BoxedExpression): readonly BoxedExpression[] | unde
  */
 function extendUniformDistribution(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("UniformDistribution");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   (operator as { signature: unknown }).signature = ce.type(
     "((list<real> | real)?, real?) -> expression<UniformDistribution>",
@@ -151,18 +134,12 @@ function extendUniformDistribution(ce: ComputeEngine): void {
   // fix there, and here, is `canonical`, which DOES get called for every construction.
   const nativeCanonical = (
     operator as {
-      canonical?: (
-        ops: readonly BoxedExpression[],
-        options: unknown,
-      ) => BoxedExpression | undefined | null;
+      canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined | null;
     }
   ).canonical;
   const nativeOperator = Object.create(operator) as typeof operator;
   (nativeOperator as { canonical?: unknown }).canonical = nativeCanonical;
-  (operator as { canonical?: unknown }).canonical = (
-    ops: readonly BoxedExpression[],
-    options: unknown,
-  ) => {
+  (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[], options: unknown) => {
     if (ops.length === 0) return ce.function("UniformDistribution", [ce.Zero, ce.One]).canonical;
     if (ops.length === 1 && ops[0].operator === "List") {
       const bounds = list2(ce, ops[0]);
@@ -191,10 +168,7 @@ const pdfOf = (
       const expr = ce.function("Divide", [
         ce.function("Multiply", [
           ce.function("Power", [x, ce.function("Subtract", [a, ce.One])]),
-          ce.function("Power", [
-            ce.function("Subtract", [ce.One, x]),
-            ce.function("Subtract", [b, ce.One]),
-          ]),
+          ce.function("Power", [ce.function("Subtract", [ce.One, x]), ce.function("Subtract", [b, ce.One])]),
         ]),
         ce.function("Beta", [a, b]),
       ]);
@@ -222,15 +196,9 @@ const pdfOf = (
       const [x1, x2] = point;
       const dx1 = ce.function("Divide", [ce.function("Subtract", [x1, mu1]), sigma1]);
       const dx2 = ce.function("Divide", [ce.function("Subtract", [x2, mu2]), sigma2]);
-      const oneMinusRho2 = ce.function("Subtract", [
-        ce.One,
-        ce.function("Power", [rho, ce.number(2)]),
-      ]);
+      const oneMinusRho2 = ce.function("Subtract", [ce.One, ce.function("Power", [rho, ce.number(2)])]);
       const quadratic = ce.function("Subtract", [
-        ce.function("Add", [
-          ce.function("Power", [dx1, ce.number(2)]),
-          ce.function("Power", [dx2, ce.number(2)]),
-        ]),
+        ce.function("Add", [ce.function("Power", [dx1, ce.number(2)]), ce.function("Power", [dx2, ce.number(2)])]),
         ce.function("Multiply", [ce.number(2), rho, dx1, dx2]),
       ]);
       const exponent = ce.function("Negate", [
@@ -294,10 +262,7 @@ const cdfOf = (
       // package having been declared. Clamped below x = 0 (same pre-`finish`-the-branch
       // reasoning as `BetaDistribution` above).
       const inRange = finish(
-        ce.function("Subtract", [
-          ce.One,
-          ce.function("GammaRegularized", [k, ce.function("Divide", [x, theta])]),
-        ]),
+        ce.function("Subtract", [ce.One, ce.function("GammaRegularized", [k, ce.function("Divide", [x, theta])])]),
         options,
       );
       const expr = ce.function("If", [ce.function("Less", [x, ce.Zero]), ce.Zero, inRange]);
@@ -318,11 +283,7 @@ const cdfOf = (
 
 // --- Mean / Variance -------------------------------------------------------------------------
 
-const meanOf = (
-  ce: ComputeEngine,
-  dist: BoxedExpression,
-  options?: EvaluateOptions,
-): BoxedExpression | undefined => {
+const meanOf = (ce: ComputeEngine, dist: BoxedExpression, options?: EvaluateOptions): BoxedExpression | undefined => {
   switch (dist.operator) {
     case "BetaDistribution": {
       const params = betaParams(dist);
@@ -364,10 +325,7 @@ const varianceOf = (
       const sum = ce.function("Add", [a, b]);
       const expr = ce.function("Divide", [
         ce.function("Multiply", [a, b]),
-        ce.function("Multiply", [
-          ce.function("Power", [sum, ce.number(2)]),
-          ce.function("Add", [sum, ce.One]),
-        ]),
+        ce.function("Multiply", [ce.function("Power", [sum, ce.number(2)]), ce.function("Add", [sum, ce.One])]),
       ]);
       return finish(expr, options);
     }
@@ -375,10 +333,7 @@ const varianceOf = (
       const params = gammaParams(ce, dist);
       if (params === undefined) return undefined;
       const [k, theta] = params;
-      return finish(
-        ce.function("Multiply", [k, ce.function("Power", [theta, ce.number(2)])]),
-        options,
-      );
+      return finish(ce.function("Multiply", [k, ce.function("Power", [theta, ce.number(2)])]), options);
     }
     case "BinormalDistribution": {
       const params = binormalParams(ce, dist);
@@ -409,20 +364,15 @@ const varianceOf = (
 function extendDistributionStats(ce: ComputeEngine): void {
   const attach = (
     name: "PDF" | "CDF" | "Mean" | "Variance",
-    handler: (
-      ops: readonly BoxedExpression[],
-      options: EvaluateOptions,
-    ) => BoxedExpression | undefined,
+    handler: (ops: readonly BoxedExpression[], options: EvaluateOptions) => BoxedExpression | undefined,
     arity: number,
   ): void => {
     const definition = ce.lookupDefinition(name);
-    const operator =
-      definition !== undefined && "operator" in definition ? definition.operator : undefined;
+    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
     if (operator === undefined) return;
     const native = operator.evaluate;
     operator.evaluate = (ops: readonly BoxedExpression[], options: EvaluateOptions) => {
-      if (ops.length !== arity || !OWN_KINDS.has(ops[0]?.operator ?? ""))
-        return native?.(ops, options);
+      if (ops.length !== arity || !OWN_KINDS.has(ops[0]?.operator ?? "")) return native?.(ops, options);
       return handler(ops, options) ?? native?.(ops, options);
     };
   };
@@ -432,8 +382,7 @@ function extendDistributionStats(ce: ComputeEngine): void {
   // distribution is univariate.
   for (const name of ["PDF", "CDF"] as const) {
     const definition = ce.lookupDefinition(name);
-    const operator =
-      definition !== undefined && "operator" in definition ? definition.operator : undefined;
+    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
     if (operator === undefined) continue;
     const returnType = name === "PDF" ? "nan | real<0..>" : "nan | real<0..1>";
     (operator as { signature: unknown }).signature = ce.type(
@@ -482,8 +431,7 @@ const expectationOf = (
     const [base, exp] = operandsOf(f);
     if (symbolNameOf(base) === varName && integerAt(exp) === 2) {
       const mean = meanOf(ce, dist, options) ?? finish(ce.function("Mean", [dist]), options);
-      const variance =
-        varianceOf(ce, dist, options) ?? finish(ce.function("Variance", [dist]), options);
+      const variance = varianceOf(ce, dist, options) ?? finish(ce.function("Variance", [dist]), options);
       if (mean === undefined || variance === undefined) return undefined;
       const expr = ce.function("Add", [variance, ce.function("Power", [mean, ce.number(2)])]);
       return finish(expr, options);
@@ -525,10 +473,8 @@ const probabilityOf = (
   options: EvaluateOptions,
 ): BoxedExpression | undefined => {
   const discrete = DISCRETE_KINDS.has(dist.operator) || OWN_KINDS.has(dist.operator);
-  const cdf = (k: BoxedExpression) =>
-    cdfOf(ce, dist, k, options) ?? finish(ce.function("CDF", [dist, k]), options);
-  const pdf = (k: BoxedExpression) =>
-    pdfOf(ce, dist, k, options) ?? finish(ce.function("PDF", [dist, k]), options);
+  const cdf = (k: BoxedExpression) => cdfOf(ce, dist, k, options) ?? finish(ce.function("CDF", [dist, k]), options);
+  const pdf = (k: BoxedExpression) => pdfOf(ce, dist, k, options) ?? finish(ce.function("PDF", [dist, k]), options);
 
   // P(X <= k)
   const le = (k: BoxedExpression): BoxedExpression | undefined => cdf(k);
@@ -541,29 +487,20 @@ const probabilityOf = (
     return p === undefined ? undefined : finish(ce.function("Subtract", [F, p]), options);
   };
 
-  const asBound = (
-    a: BoxedExpression,
-    b: BoxedExpression,
-  ): { k: BoxedExpression; varOnLeft: boolean } | undefined => {
+  const asBound = (a: BoxedExpression, b: BoxedExpression): { k: BoxedExpression; varOnLeft: boolean } | undefined => {
     if (symbolNameOf(a) === varName && isConstantOf(b, varName)) return { k: b, varOnLeft: true };
     if (symbolNameOf(b) === varName && isConstantOf(a, varName)) return { k: a, varOnLeft: false };
     return undefined;
   };
 
-  const simple = (
-    op: "Less" | "LessEqual",
-    a: BoxedExpression,
-    b: BoxedExpression,
-  ): BoxedExpression | undefined => {
+  const simple = (op: "Less" | "LessEqual", a: BoxedExpression, b: BoxedExpression): BoxedExpression | undefined => {
     const bound = asBound(a, b);
     if (bound === undefined) return undefined;
     const { k, varOnLeft } = bound;
     if (varOnLeft) return op === "LessEqual" ? le(k) : lt(k);
     // k REL x: complement of "x REL' k" — P(k <= x) = 1 - P(x < k); P(k < x) = 1 - P(x <= k).
     const comp = op === "LessEqual" ? lt(k) : le(k);
-    return comp === undefined
-      ? undefined
-      : finish(ce.function("Subtract", [ce.One, comp]), options);
+    return comp === undefined ? undefined : finish(ce.function("Subtract", [ce.One, comp]), options);
   };
 
   switch (cond.operator) {
@@ -579,11 +516,7 @@ const probabilityOf = (
       if (ops.length === 2) return simple(cond.operator, ops[0], ops[1]);
       if (ops.length === 3) {
         const [a, xVar, b] = ops;
-        if (
-          symbolNameOf(xVar) !== varName ||
-          !isConstantOf(a, varName) ||
-          !isConstantOf(b, varName)
-        ) {
+        if (symbolNameOf(xVar) !== varName || !isConstantOf(a, varName) || !isConstantOf(b, varName)) {
           return undefined;
         }
         const upper = cond.operator === "LessEqual" ? le(b) : lt(b);
@@ -609,8 +542,7 @@ const probabilityOf = (
       const hiOps = operandsOf(hi);
       const a = loOps[0];
       const b = hiOps[1];
-      if (symbolNameOf(loOps[1]) !== varName || symbolNameOf(hiOps[0]) !== varName)
-        return undefined;
+      if (symbolNameOf(loOps[1]) !== varName || symbolNameOf(hiOps[0]) !== varName) return undefined;
       const upper = hi.operator === "LessEqual" ? le(b) : lt(b);
       const excludedLower = lo.operator === "LessEqual" ? lt(a) : le(a);
       if (upper === undefined || excludedLower === undefined) return undefined;
@@ -691,8 +623,7 @@ const uniform01 = (ce: ComputeEngine): number => rngFor(ce)();
 function wireSeedRandom(ce: ComputeEngine): void {
   const reseed = (seed: number) => rngState.set(ce, { next: mulberry32(seed) });
   const definition = ce.lookupDefinition("SeedRandom");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) {
     ce.declare("SeedRandom", {
       signature: "(integer?) -> any",
@@ -717,8 +648,7 @@ const normal01 = (ce: ComputeEngine): number => {
   return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
 };
 
-const uniformSample = (ce: ComputeEngine, min: number, max: number): number =>
-  min + (max - min) * uniform01(ce);
+const uniformSample = (ce: ComputeEngine, min: number, max: number): number => min + (max - min) * uniform01(ce);
 
 const poissonSample = (ce: ComputeEngine, lambda: number): number => {
   // Knuth's algorithm — a standard inverse-transform-flavored method, fine at the (small to
@@ -887,8 +817,7 @@ function declareDistributionConstructors(ce: ComputeEngine): void {
   // this just built.
   {
     const definition = ce.lookupDefinition("GammaDistribution");
-    const operator =
-      definition !== undefined && "operator" in definition ? definition.operator : undefined;
+    const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
     if (operator !== undefined) {
       (operator as { canonical?: unknown }).canonical = (ops: readonly BoxedExpression[]) =>
         ops.length === 1 ? ce.function("GammaDistribution", [ops[0], ce.One]) : undefined;

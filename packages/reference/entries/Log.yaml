@@ -66,12 +66,7 @@ examples:
   - id: threads-over-a-list-of-bases
     expr: [Log, 2.5, [List, 2, ExponentialE, 10]]
     expected:
-      [
-        List,
-        { num: "1.32192809488736234787" },
-        { num: "0.91629073187415514452" },
-        { num: "0.397940008672037609573" },
-      ]
+      [List, { num: "1.32192809488736234787" }, { num: "0.91629073187415514452" }, { num: "0.397940008672037609573" }]
     category: Scope
     caption: Threads over a list of bases
   - id: derivative-in-base-3-frac-1-x-ln-3

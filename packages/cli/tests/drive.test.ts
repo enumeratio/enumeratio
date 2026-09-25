@@ -16,8 +16,7 @@ describe("driver", () => {
       columns: () => 80,
     })!;
     d.draw();
-    for (const chunk of ["\x1b[C", "\x1b[C", "\t", "\x1b[D"])
-      for (const k of keysOf(chunk)) d.key(k);
+    for (const chunk of ["\x1b[C", "\x1b[C", "\t", "\x1b[D"]) for (const k of keysOf(chunk)) d.key(k);
     expect(screen).toContain("a = 0.2");
     expect(screen).toContain("b = 1");
     expect(keysOf("\r").some((k) => d.key(k))).toBe(true);

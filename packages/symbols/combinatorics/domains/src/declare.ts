@@ -19,10 +19,7 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
   const named = new Set(domains.map((d) => d.type));
   const refersToCarrier = (d: Domain): boolean =>
     [...named].some((other) => other !== d.type && d.shape.includes(other));
-  const ordered = [
-    ...domains.filter((d) => !refersToCarrier(d)),
-    ...domains.filter(refersToCarrier),
-  ];
+  const ordered = [...domains.filter((d) => !refersToCarrier(d)), ...domains.filter(refersToCarrier)];
 
   for (const domain of ordered) ce.declareType(domain.type, domain.shape, { mint: true });
   for (const domain of ordered) declareConstructor(ce, domain);
@@ -51,8 +48,7 @@ export function declareDomains(ce: ComputeEngine, domains: readonly Domain[] = D
 function declareConstructor(ce: ComputeEngine, domain: Domain): void {
   const clause = `(${domain.shape}) -> ${domain.type}`;
   const definition = ce.lookupDefinition(domain.name);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
 
   if (operator === undefined) {
     ce.declare(domain.name, { signature: clause });
@@ -61,13 +57,9 @@ function declareConstructor(ce: ComputeEngine, domain: Domain): void {
 
   const existingEvaluate = operator.evaluate;
   const existingSignature = operator.signature;
-  (operator as { signature: unknown }).signature = ce.type(
-    `(${String(existingSignature)}) & (${clause})`,
-  );
-  operator.evaluate = (ops: readonly BoxedExpression[], options) =>
-    existingEvaluate?.(ops, options);
+  (operator as { signature: unknown }).signature = ce.type(`(${String(existingSignature)}) & (${clause})`);
+  operator.evaluate = (ops: readonly BoxedExpression[], options) => existingEvaluate?.(ops, options);
 }
 
 /** The value inside a constructed carrier — what a statistic reaches for. */
-export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression | undefined =>
-  operandsOf(value)[0];
+export const contentsOf = (value: BoxedExpression | undefined): BoxedExpression | undefined => operandsOf(value)[0];

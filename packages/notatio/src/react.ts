@@ -10,12 +10,7 @@
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { createElement, type ReactElement, useEffect, useState } from "react";
 import { loadEngine } from "./engine.ts";
-import {
-  type Environment,
-  environmentNamed,
-  pageEnvironment,
-  watchPageEnvironment,
-} from "./environment.ts";
+import { type Environment, environmentNamed, pageEnvironment, watchPageEnvironment } from "./environment.ts";
 import { reduce } from "./reduce.ts";
 import type { Rendering } from "./symbols.ts";
 import { structuralOf, toVNode } from "./vdom.ts";

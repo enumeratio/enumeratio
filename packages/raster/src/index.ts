@@ -41,9 +41,7 @@ export interface RasterizeOptions extends FlattenOptions {
 export function rasterize(svg: string, opts: RasterizeOptions = {}): Uint8Array {
   const resvg = new Resvg(flattenCss(svg, opts), {
     background: opts.background ?? "#ffffff",
-    fitTo: opts.width
-      ? { mode: "width", value: opts.width }
-      : { mode: "zoom", value: opts.scale ?? 2 },
+    fitTo: opts.width ? { mode: "width", value: opts.width } : { mode: "zoom", value: opts.scale ?? 2 },
   });
   return resvg.render().asPng();
 }

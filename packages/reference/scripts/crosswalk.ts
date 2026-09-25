@@ -42,9 +42,7 @@ export function engineSymbols(ce: ComputeEngine): EngineSymbol[] {
   const out: EngineSymbol[] = [];
   for (const name of bindings(ce).sort()) {
     if (!/^[A-Z][A-Za-z0-9]*$/.test(name)) continue;
-    const found = ce.lookupDefinition(name) as
-      | { operator?: Definition; value?: Definition }
-      | undefined;
+    const found = ce.lookupDefinition(name) as { operator?: Definition; value?: Definition } | undefined;
     const definition = found?.operator ?? found?.value;
     if (!definition) continue;
     // Signatures and types are boxed objects that print as their type string.

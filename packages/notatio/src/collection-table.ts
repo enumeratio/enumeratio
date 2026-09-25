@@ -42,10 +42,7 @@ export function columnLabel(text: string): string {
 }
 
 /** Replace every `_` symbol in a MathJSON tree with the row's expression. */
-export function substituteRow(
-  json: MathJsonExpression,
-  row: MathJsonExpression,
-): MathJsonExpression {
+export function substituteRow(json: MathJsonExpression, row: MathJsonExpression): MathJsonExpression {
   const walk = (node: unknown): unknown => {
     if (typeof node === "string") return node === ROW ? row : node;
     if (Array.isArray(node)) return node.map(walk);
@@ -113,9 +110,7 @@ export function compareCells(a: CellValue, b: CellValue): number {
 export function flatInts(json: MathJsonExpression): number[] | undefined {
   if (!Array.isArray(json) || json[0] !== "List") return undefined;
   const items: unknown[] = (json as readonly unknown[]).slice(1);
-  return items.every((x) => typeof x === "number" && Number.isInteger(x))
-    ? (items as number[])
-    : undefined;
+  return items.every((x) => typeof x === "number" && Number.isInteger(x)) ? (items as number[]) : undefined;
 }
 
 /** A list of integer lists (set-partition blocks), or undefined. */

@@ -21,11 +21,7 @@ const toCE = (v: Val): unknown =>
   typeof v === "number" ? v : "rat" in v ? ["Rational", ...v.rat] : ["Complex", ...v.c];
 
 const toWL = (v: Val): string =>
-  typeof v === "number"
-    ? String(v)
-    : "rat" in v
-      ? `${v.rat[0]}/${v.rat[1]}`
-      : `(${v.c[0]} + (${v.c[1]})*I)`;
+  typeof v === "number" ? String(v) : "rat" in v ? `${v.rat[0]}/${v.rat[1]}` : `(${v.c[0]} + (${v.c[1]})*I)`;
 
 const label = (v: Val): string =>
   typeof v === "number"
@@ -106,10 +102,7 @@ for (const head of heads) {
 }
 
 const code = cases
-  .map(
-    (c, k) =>
-      `With[{v=${c.wl}},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]`,
-  )
+  .map((c, k) => `With[{v=${c.wl}},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]`)
   .join(";\n");
 
 const out = await runKernel("wolframscript", ["-code", code], { timeoutMs: 300_000 });
@@ -137,15 +130,10 @@ for (const [k, c] of cases.entries()) {
   const err = Math.max(Math.abs(c.re - wr), Math.abs(c.im - wi)) / scale;
   worst = Math.max(worst, err);
   if (err <= 1e-10) agree++;
-  else
-    disagree.push(
-      `${c.label}: CE=(${c.re}, ${c.im})  WL=(${wr}, ${wi})  relerr=${err.toExponential(2)}`,
-    );
+  else disagree.push(`${c.label}: CE=(${c.re}, ${c.im})  WL=(${wr}, ${wi})  relerr=${err.toExponential(2)}`);
 }
 
-console.log(
-  `\nCOMPARED ${cases.length}  |  agree ${agree}  disagree ${disagree.length}  missing ${missing.length}`,
-);
+console.log(`\nCOMPARED ${cases.length}  |  agree ${agree}  disagree ${disagree.length}  missing ${missing.length}`);
 console.log(`worst relative error among matched: ${worst.toExponential(3)}`);
 if (disagree.length) {
   console.log("\n--- DISAGREEMENTS (> 1e-10) ---");

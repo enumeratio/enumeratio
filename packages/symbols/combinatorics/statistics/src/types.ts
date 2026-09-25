@@ -14,12 +14,7 @@
  * its reference entries out of the runtime build). A definitions package should not depend
  * on the documentation package for a JSON shape anyway.
  */
-export type MathJSON =
-  | string
-  | number
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+export type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 /** The wildcard every definition binds its argument to. */
 export const SUBJECT = "_x";
@@ -45,8 +40,7 @@ export interface Definition {
 }
 
 /** `head` at `carrier`, the key a signature-addressed lookup uses. */
-export const signatureOf = (definition: Definition): string =>
-  `${definition.head}@${definition.on}`;
+export const signatureOf = (definition: Definition): string => `${definition.head}@${definition.on}`;
 
 /** Index definitions by signature. Two definitions of one signature is a bug, not an overload. */
 export function bySignature(definitions: readonly Definition[]): Map<string, Definition> {

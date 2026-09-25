@@ -51,8 +51,7 @@ function inverseGammaRegularized(ce: ComputeEngine, a: number, s: number): numbe
   const logGammaA = logGammaReal(a);
   let hi = 1;
   while (forwardGammaRegularized(ce, a, hi) > s) hi *= 2;
-  const density = (z: number): number =>
-    z <= 0 ? 0 : Math.exp((a - 1) * Math.log(z) - z - logGammaA);
+  const density = (z: number): number => (z <= 0 ? 0 : Math.exp((a - 1) * Math.log(z) - z - logGammaA));
   return safeguardedSolve(
     (z) => forwardGammaRegularized(ce, a, z),
     density,
@@ -117,8 +116,7 @@ export function declareInverseBetaRegularized(ce: ComputeEngine): void {
         const expr = ce.function("Power", [s, ce.function("Divide", [ce.One, a])]);
         return wantsNumber(ops, options) ? expr.N() : expr.evaluate();
       }
-      if (!wantsNumber(ops, options) || !isFiniteNum(s) || !isFiniteNum(a) || !isFiniteNum(b))
-        return undefined;
+      if (!wantsNumber(ops, options) || !isFiniteNum(s) || !isFiniteNum(a) || !isFiniteNum(b)) return undefined;
       if (a.im !== 0 || b.im !== 0 || s.im !== 0 || a.re <= 0 || b.re <= 0) return undefined;
       if (s.re < 0 || s.re > 1) return undefined;
       return ce.number(inverseBetaRegularized(ce, a.re, b.re, s.re));

@@ -26,12 +26,13 @@ import {
 } from "./vocabulary.ts";
 
 const on = "SetPartition";
-const stat = (
-  head: string,
-  summary: string,
-  expr: Definition["expr"],
-  note?: string,
-): Definition => ({ head, on, summary, expr, ...(note ? { note } : {}) });
+const stat = (head: string, summary: string, expr: Definition["expr"], note?: string): Definition => ({
+  head,
+  on,
+  summary,
+  expr,
+  ...(note ? { note } : {}),
+});
 
 /** The size of each block. */
 const sizes: MathJSON = forEach(positions, ["Length", at("i")]);
@@ -61,11 +62,7 @@ const arcsOfBlockAt = (i: MathJSON): MathJSON => [
   "If",
   less(blockLen(i), 2),
   ["List"],
-  forEach(
-    upTo(subtract(blockLen(i), 1)),
-    ["List", at("k", blockAt(i)), at(add("k", 1), blockAt(i))],
-    "k",
-  ),
+  forEach(upTo(subtract(blockLen(i), 1)), ["List", at("k", blockAt(i)), at(add("k", 1), blockAt(i))], "k"),
 ];
 
 /** Every arc, in block order. Order does not matter below: crossing and nesting are read off
@@ -114,23 +111,11 @@ const bothFlagsAt = (i: MathJSON, j: MathJSON): MathJSON =>
 const hasArcPair = (body: MathJSON): MathJSON => ["If", less(arcCount, 2), 0, body];
 const laterArcs: MathJSON = ["Range", add("i", 1), arcCount];
 
-const crossingPairs: MathJSON = sumOver(
-  upTo(arcCount),
-  count(laterArcs, isCrossing("i", "j"), "j"),
-  "i",
-);
-const nestingPairs: MathJSON = sumOver(
-  upTo(arcCount),
-  count(laterArcs, isNesting("i", "j"), "j"),
-  "i",
-);
+const crossingPairs: MathJSON = sumOver(upTo(arcCount), count(laterArcs, isCrossing("i", "j"), "j"), "i");
+const nestingPairs: MathJSON = sumOver(upTo(arcCount), count(laterArcs, isNesting("i", "j"), "j"), "i");
 // Crossing and nesting are mutually exclusive per pair, so the total is how many pairs are
 // either — one pass with bothFlagsAt, rather than the crossing and nesting loops separately.
-const crossingOrNestingPairs: MathJSON = sumOver(
-  upTo(arcCount),
-  sumOver(laterArcs, bothFlagsAt("i", "j"), "j"),
-  "i",
-);
+const crossingOrNestingPairs: MathJSON = sumOver(upTo(arcCount), sumOver(laterArcs, bothFlagsAt("i", "j"), "j"), "i");
 const crossings: MathJSON = withArcs(hasArcPair(crossingPairs));
 const nestings: MathJSON = withArcs(hasArcPair(nestingPairs));
 const crossingsAndNestings: MathJSON = withArcs(hasArcPair(crossingOrNestingPairs));
@@ -139,26 +124,14 @@ export const SET_PARTITION_STATISTICS: readonly Definition[] = [
   stat("Blocks", "The number of blocks.", ["Length", "_x"]),
   stat("LargestBlock", "The size of the largest block.", nonEmpty(["Max", sizes])),
   stat("SmallestBlock", "The size of the smallest block.", nonEmpty(["Min", sizes])),
-  stat(
-    "BlockSizeSpan",
-    "Largest block size minus smallest.",
-    nonEmpty(subtract(["Max", sizes], ["Min", sizes])),
-  ),
-  stat(
-    "SingletonBlocks",
-    "Blocks containing exactly one element.",
-    nonEmpty(count(positions, equals(sizeHere, 1))),
-  ),
+  stat("BlockSizeSpan", "Largest block size minus smallest.", nonEmpty(subtract(["Max", sizes], ["Min", sizes]))),
+  stat("SingletonBlocks", "Blocks containing exactly one element.", nonEmpty(count(positions, equals(sizeHere, 1)))),
   stat(
     "BlocksAtLeastTwo",
     "Blocks containing at least two elements.",
     nonEmpty(count(positions, atLeastValue(sizeHere, 2))),
   ),
-  stat(
-    "BlocksSizeTwo",
-    "Blocks containing exactly two elements.",
-    nonEmpty(count(positions, equals(sizeHere, 2))),
-  ),
+  stat("BlocksSizeTwo", "Blocks containing exactly two elements.", nonEmpty(count(positions, equals(sizeHere, 2)))),
   stat("LastBlockSize", "The size of the final block.", nonEmpty(["Length", at(length())])),
   stat(
     "Crossings",

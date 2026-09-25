@@ -62,12 +62,7 @@ const LOSSY = new Set([
 
 /** The head of the innermost call that came back different — the one whose lowering lost. */
 const divergingHead = (expr: MathJson, back: MathJson, parent: string): string => {
-  if (
-    Array.isArray(expr) &&
-    Array.isArray(back) &&
-    expr[0] === back[0] &&
-    expr.length === back.length
-  ) {
+  if (Array.isArray(expr) && Array.isArray(back) && expr[0] === back[0] && expr.length === back.length) {
     for (let i = 1; i < expr.length; i++) {
       if (JSON.stringify(expr[i]) !== JSON.stringify(back[i])) {
         return divergingHead(expr[i], back[i], typeof expr[0] === "string" ? expr[0] : parent);

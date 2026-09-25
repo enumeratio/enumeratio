@@ -22,29 +22,10 @@ test("Riffle(list, list-of-same-length) interleaves, including a trailing elemen
   ]);
 });
 test("Riffle(list, shorter list) stops once the separator list runs out", () => {
-  expect(run(["Riffle", ["List", "a", "b", "c"], ["List", "x", "y"]])).toEqual([
-    "List",
-    "a",
-    "x",
-    "b",
-    "y",
-    "c",
-  ]);
+  expect(run(["Riffle", ["List", "a", "b", "c"], ["List", "x", "y"]])).toEqual(["List", "a", "x", "b", "y", "c"]);
 });
 test("Riffle(list, x, n) places a separator every n elements", () => {
-  expect(run(["Riffle", ["List", 1, 2, 3, 4, 5, 6, 7], "x", 3])).toEqual([
-    "List",
-    1,
-    2,
-    "x",
-    3,
-    4,
-    "x",
-    5,
-    6,
-    "x",
-    7,
-  ]);
+  expect(run(["Riffle", ["List", 1, 2, 3, 4, 5, 6, 7], "x", 3])).toEqual(["List", 1, 2, "x", 3, 4, "x", 5, 6, "x", 7]);
 });
 test("Riffle(singleton, x) has nothing to separate", () => {
   expect(run(["Riffle", ["List", "a"], "x"])).toEqual(["List", "a"]);
@@ -52,20 +33,10 @@ test("Riffle(singleton, x) has nothing to separate", () => {
 
 // Span, via At
 test("At(list, Span(i, j)) selects positions i through j", () => {
-  expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]])).toEqual([
-    "List",
-    "b",
-    "c",
-    "d",
-  ]);
+  expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", 2, 4]])).toEqual(["List", "b", "c", "d"]);
 });
 test("At(list, Span(i, j, step)) strides through positions", () => {
-  expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]])).toEqual([
-    "List",
-    "a",
-    "c",
-    "f",
-  ]);
+  expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", 1, -1, 2]])).toEqual(["List", "a", "c", "f"]);
 });
 test("At(list, Span(i, j, negative step)) walks backwards", () => {
   expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", -1, 1, -1]])).toEqual([
@@ -78,19 +49,11 @@ test("At(list, Span(i, j, negative step)) walks backwards", () => {
   ]);
 });
 test("At(list, Span(-2, -1)) counts from the end", () => {
-  expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]])).toEqual([
-    "List",
-    "d",
-    "f",
-  ]);
+  expect(run(["At", ["List", "a", "b", "c", "d", "f"], ["Span", -2, -1]])).toEqual(["List", "d", "f"]);
 });
 test("At(matrix, Span, Span) cuts a submatrix at two levels", () => {
   const matrix = ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]];
-  expect(run(["At", matrix, ["Span", 2, 3], ["Span", 1, 2]])).toEqual([
-    "List",
-    ["List", 4, 5],
-    ["List", 7, 8],
-  ]);
+  expect(run(["At", matrix, ["Span", 2, 3], ["Span", 1, 2]])).toEqual(["List", ["List", 4, 5], ["List", 7, 8]]);
 });
 test("At(list, integer) without a Span is unaffected", () => {
   expect(run(["At", ["List", "a", "b", "c"], 2])).toEqual("b");
@@ -125,11 +88,7 @@ test("Gather groups identical elements in first-appearance order", () => {
 });
 test("Gather(list, test) groups by a custom equivalence", () => {
   expect(
-    run([
-      "Gather",
-      ["List", 1, 2, 3, 4, 5, 6],
-      ["Function", ["Equal", ["Mod", "_1", 2], ["Mod", "_2", 2]]],
-    ]),
+    run(["Gather", ["List", 1, 2, 3, 4, 5, 6], ["Function", ["Equal", ["Mod", "_1", 2], ["Mod", "_2", 2]]]]),
   ).toEqual(["List", ["List", 1, 3, 5], ["List", 2, 4, 6]]);
 });
 test("GatherBy groups by a function's value", () => {
@@ -152,11 +111,7 @@ test("Split breaks a list into runs of adjacent identical elements", () => {
   ]);
 });
 test("Split(list, test) breaks runs on a custom adjacency test", () => {
-  expect(run(["Split", ["List", 1, 2, 3, 5, 4, 6], "Less"])).toEqual([
-    "List",
-    ["List", 1, 2, 3, 5],
-    ["List", 4, 6],
-  ]);
+  expect(run(["Split", ["List", 1, 2, 3, 5, 4, 6], "Less"])).toEqual(["List", ["List", 1, 2, 3, 5], ["List", 4, 6]]);
 });
 test("Split of the empty list is empty", () => {
   expect(run(["Split", ["List"]])).toEqual(["List"]);
@@ -176,12 +131,7 @@ test("SortBy sorts by a function's value", () => {
 });
 test("SortBy is stable on ties", () => {
   const pairs = ["List", ["List", "a", 2], ["List", "c", 1], ["List", "d", 3]];
-  expect(run(["SortBy", pairs, "Last"])).toEqual([
-    "List",
-    ["List", "c", 1],
-    ["List", "a", 2],
-    ["List", "d", 3],
-  ]);
+  expect(run(["SortBy", pairs, "Last"])).toEqual(["List", ["List", "c", 1], ["List", "a", 2], ["List", "d", 3]]);
 });
 
 // PadLeft / PadRight
@@ -195,11 +145,7 @@ test("PadLeft(list, n) with n shorter than list drops elements from the left", (
   expect(run(["PadLeft", ["List", 1, 2, 3, 4, 5], 3])).toEqual(["List", 3, 4, 5]);
 });
 test("PadLeft(ragged) pads every row to the widest row's length", () => {
-  expect(run(["PadLeft", ["List", ["List", 1], ["List", 2, 3]]])).toEqual([
-    "List",
-    ["List", 0, 1],
-    ["List", 2, 3],
-  ]);
+  expect(run(["PadLeft", ["List", ["List", 1], ["List", 2, 3]]])).toEqual(["List", ["List", 0, 1], ["List", 2, 3]]);
 });
 test("PadRight pads with zeros on the right", () => {
   expect(run(["PadRight", ["List", 1, 2, 3], 5])).toEqual(["List", 1, 2, 3, 0, 0]);
@@ -208,11 +154,7 @@ test("PadRight(list, n) with n shorter than list drops elements from the right",
   expect(run(["PadRight", ["List", 1, 2, 3, 4, 5], 3])).toEqual(["List", 1, 2, 3]);
 });
 test("PadRight(ragged) pads every row to the widest row's length", () => {
-  expect(run(["PadRight", ["List", ["List", 1], ["List", 2, 3]]])).toEqual([
-    "List",
-    ["List", 1, 0],
-    ["List", 2, 3],
-  ]);
+  expect(run(["PadRight", ["List", ["List", 1], ["List", 2, 3]]])).toEqual(["List", ["List", 1, 0], ["List", 2, 3]]);
 });
 
 // NoneTrue

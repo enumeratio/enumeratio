@@ -22,10 +22,7 @@ test("ContinuedFraction: quadratic irrationals, the nested [a0, [period]] shape"
 });
 
 test("ContinuedFraction: still exact and flat for the two-arg truncated form", () => {
-  same(
-    ["ContinuedFraction", ["Sqrt", 13], 20],
-    L(3, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1),
-  );
+  same(["ContinuedFraction", ["Sqrt", 13], 20], L(3, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1));
   same(["ContinuedFraction", ["Add", 1, ["Sqrt", 2]], 5], L(2, 2, 2, 2, 2));
 });
 
@@ -61,10 +58,7 @@ test("FromContinuedFraction: a periodic tail rebuilds the quadratic irrational",
 });
 
 test("FromContinuedFraction: a plain finite list still inverts ContinuedFraction", () => {
-  same(
-    ["FromContinuedFraction", ["ContinuedFraction", ["Rational", 47, 17]]],
-    ["Rational", 47, 17],
-  );
+  same(["FromContinuedFraction", ["ContinuedFraction", ["Rational", 47, 17]]], ["Rational", 47, 17]);
 });
 
 test("FromContinuedFraction: a multi-term pre-period folds too (not just a bare a0)", () => {

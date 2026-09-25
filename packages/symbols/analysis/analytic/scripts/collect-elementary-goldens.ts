@@ -66,9 +66,7 @@ const parseLines = (out: string): Map<number, number> => {
 const mp = parseLines(await runKernel("python3", ["-c", py], { timeoutMs: 120_000 }));
 
 // --- Wolfram ---------------------------------------------------------------------------
-const wlCode = cases
-  .map((c, k) => `Print[${k},"|",ToString[N[${c.head}[${c.arg}],20],InputForm]]`)
-  .join(";\n");
+const wlCode = cases.map((c, k) => `Print[${k},"|",ToString[N[${c.head}[${c.arg}],20],InputForm]]`).join(";\n");
 const wlClean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
 const parseWlLines = (out: string): Map<number, number> => {
   const got = new Map<number, number>();
@@ -79,9 +77,7 @@ const parseWlLines = (out: string): Map<number, number> => {
   }
   return got;
 };
-const wl = parseWlLines(
-  await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 120_000 }),
-);
+const wl = parseWlLines(await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 120_000 }));
 
 // --- Compare, report, write ------------------------------------------------------------
 const goldens: GoldenCase[] = [];
@@ -101,16 +97,12 @@ for (const [k, c] of cases.entries()) {
     if (ref === undefined) continue;
     compared++;
     const err = Math.abs(ours - ref) / Math.max(1, Math.abs(ref));
-    if (!(err <= g.tol))
-      disagree.push(`${g.label} vs ${name}: relerr=${err.toExponential(2)} tol=${g.tol}`);
+    if (!(err <= g.tol)) disagree.push(`${g.label} vs ${name}: relerr=${err.toExponential(2)} tol=${g.tol}`);
   }
   goldens.push(g);
 }
 
-writeFileSync(
-  new URL("../tests/elementary.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/elementary.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 
 console.log(
   `cases ${goldens.length}  |  oracle comparisons ${compared}  |  agree ${compared - disagree.length}  disagree ${disagree.length}`,

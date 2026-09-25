@@ -31,8 +31,6 @@ function prependToAssociation(
 ): BoxedExpression {
   const newRules = addition.operator === "List" ? operandsOf(addition) : [addition];
   const newKeys = new Set(newRules.map((rule) => JSON.stringify(operandsOf(rule)[0]?.json)));
-  const kept = operandsOf(association).filter(
-    (rule) => !newKeys.has(JSON.stringify(operandsOf(rule)[0]?.json)),
-  );
+  const kept = operandsOf(association).filter((rule) => !newKeys.has(JSON.stringify(operandsOf(rule)[0]?.json)));
   return ce.box(["Association", ...newRules, ...kept]);
 }

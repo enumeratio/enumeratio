@@ -19,12 +19,7 @@ const MAX_TERMS = 20_000;
 
 /** Φ(z, s, a) to `digits` significant digits, or undefined outside 0 < |z| < 1, a > 0, or
  * when the series would take more than `MAX_TERMS` terms. */
-export function lerchPhiBig(
-  z: BigDecimal,
-  s: BigDecimal,
-  a: BigDecimal,
-  digits: number,
-): BigDecimal | undefined {
+export function lerchPhiBig(z: BigDecimal, s: BigDecimal, a: BigDecimal, digits: number): BigDecimal | undefined {
   if (z.isZero() || z.abs().gte(1) || !a.isPositive()) return undefined;
   const zd = Math.abs(z.toNumber());
   const sd = s.toNumber();
@@ -47,8 +42,7 @@ export function lerchPhiBig(
 }
 
 /** log10 |x|, or −∞ for 0. */
-const log10Abs = (x: BigDecimal): number =>
-  x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber()));
+const log10Abs = (x: BigDecimal): number => (x.isZero() ? -Infinity : Math.log10(Math.abs(x.toNumber())));
 
 /** The series at the working precision, with log10 of its largest term. */
 function series(

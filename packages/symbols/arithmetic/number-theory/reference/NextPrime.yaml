@@ -47,9 +47,7 @@ examples:
   - id: large-integers-the-first-prime-past-a-googol-is
     expr: [NextPrime, [Power, 10, 100]]
     expected:
-      {
-        num: "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267",
-      }
+      { num: "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267" }
     category: Scope
     caption: "Large integers: the first prime past a googol is $10^{100}+267$"
   - id: rational-n-the-next-prime-above-7-2

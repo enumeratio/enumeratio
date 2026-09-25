@@ -10,10 +10,7 @@ import { visualMarkup } from "../src/visual.ts";
 // sampled, not drawn live and unmovable. Each source is a Cell's operand, which is what
 // its Out evaluates to: the graphics heads are held. Golden JSON compared with `toEqual`
 // (AGENTS.md); regenerate with `UPDATE_VISUAL=1 vp test`.
-const OUTS = [
-  "Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])",
-  "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))",
-];
+const OUTS = ["Row([Slider((k, 2), (0, 5)), Dynamic(k^2)])", "Manipulate(Plot(Sin(a * x), (x, 0, 10)), (a, 1, 5))"];
 
 const GOLDEN = fileURLToPath(new URL("./visual.golden.json", import.meta.url));
 const updating = process.env.UPDATE_VISUAL === "1";

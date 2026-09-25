@@ -6,8 +6,7 @@ const ce = fullEngine();
 
 test("every queued rename is still pending: the old head is declared, the new one is not", () => {
   const stale = RENAME_QUEUE.filter(
-    ({ from, to }) =>
-      ce.lookupDefinition(from) === undefined || ce.lookupDefinition(to) !== undefined,
+    ({ from, to }) => ce.lookupDefinition(from) === undefined || ce.lookupDefinition(to) !== undefined,
   ).map(({ from, to }) => `${from} → ${to}`);
   // A row here has landed (or its head was dropped): remove it from the queue.
   expect(stale).toEqual([]);

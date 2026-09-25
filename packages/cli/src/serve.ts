@@ -61,8 +61,7 @@ function queryParam(rawQuery: string, key: string): string | undefined {
     if (!pair) continue;
     const eq = pair.indexOf("=");
     const k = eq === -1 ? pair : pair.slice(0, eq);
-    if (decodeURIComponent(k) === key)
-      return decodeURIComponent(eq === -1 ? "" : pair.slice(eq + 1));
+    if (decodeURIComponent(k) === key) return decodeURIComponent(eq === -1 ? "" : pair.slice(eq + 1));
   }
   return undefined;
 }
@@ -71,12 +70,7 @@ function queryParam(rawQuery: string, key: string): string | undefined {
  * Route one request to a JSON reply. Pure (no sockets) so it is unit-testable;
  * `runServe` wraps it in an HTTP server.
  */
-export function handleRequest(
-  method: string,
-  path: string,
-  query: string,
-  body: Record<string, unknown>,
-): Reply {
+export function handleRequest(method: string, path: string, query: string, body: Record<string, unknown>): Reply {
   if (method === "GET" && (path === "/" || path === "/health"))
     return {
       status: 200,

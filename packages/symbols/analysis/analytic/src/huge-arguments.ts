@@ -9,11 +9,7 @@ import { withGuardDigits } from "./precise.ts";
 // terms carry every digit the engine asks for, in its own decimal arithmetic.
 
 const isHuge = (op: BoxedExpression | undefined): boolean =>
-  op !== undefined &&
-  isNumber(op) &&
-  op.im === 0 &&
-  op.re === Infinity &&
-  op.bignumRe?.isFinite() === true;
+  op !== undefined && isNumber(op) && op.im === 0 && op.re === Infinity && op.bignumRe?.isFinite() === true;
 
 /** lnΓ(x) = (x − ½)ln x − x + ½ln 2π + 1/(12x) − 1/(360x³) + 1/(1260x⁵). */
 const logGammaSeries = (x: Json): Json => [

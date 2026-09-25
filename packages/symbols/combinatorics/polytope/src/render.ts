@@ -9,15 +9,7 @@
 // different faces, and selection has to survive that.
 
 import type { Face, Polytope } from "./face.ts";
-import {
-  centredOn,
-  orientedTo,
-  type Point3,
-  scene,
-  type ScenePoint,
-  skeleton,
-  stratum,
-} from "./scene.ts";
+import { centredOn, orientedTo, type Point3, scene, type ScenePoint, skeleton, stratum } from "./scene.ts";
 
 /** A projected point: page coordinates plus view depth (larger = nearer). */
 export interface Projected {
@@ -31,8 +23,7 @@ export interface Projected {
 export type Project = (point: Point3) => Projected;
 
 /** Two faces are the same when their DATA is. */
-export const sameFace = (a: Face, b: Face): boolean =>
-  a.length === b.length && a.every((value, i) => value === b[i]);
+export const sameFace = (a: Face, b: Face): boolean => a.length === b.length && a.every((value, i) => value === b[i]);
 
 /**
  * Scale a scene into the unit cube, which is what a camera expects.
@@ -47,10 +38,7 @@ export const sameFace = (a: Face, b: Face): boolean =>
  * figure's size independent of which way it is facing: a bounding box grows and shrinks as the
  * solid turns, and a figure that breathed while being dragged would be unusable.
  */
-export function toUnitCube(
-  points: readonly ScenePoint[],
-  origin: Point3 = [0, 0, 0],
-): ScenePoint[] {
+export function toUnitCube(points: readonly ScenePoint[], origin: Point3 = [0, 0, 0]): ScenePoint[] {
   if (points.length === 0) return [];
   const radius = Math.max(
     ...points.map((p) => Math.hypot(p.at[0] - origin[0], p.at[1] - origin[1], p.at[2] - origin[2])),
@@ -80,10 +68,7 @@ export function ring(
   return vertices
     .filter((vertex) => polytope.hasVertex(face.face, vertex.face))
     .map((vertex) => project(vertex.at))
-    .sort(
-      (a, b) =>
-        Math.atan2(a.y - centre.y, a.x - centre.x) - Math.atan2(b.y - centre.y, b.x - centre.x),
-    );
+    .sort((a, b) => Math.atan2(a.y - centre.y, a.x - centre.x) - Math.atan2(b.y - centre.y, b.x - centre.x));
 }
 
 export interface DrawOptions {
@@ -119,12 +104,7 @@ export interface Drawn {
 }
 
 /** Everything to draw, with the shaded faces sorted back to front. */
-export function drawn(
-  polytope: Polytope,
-  n: number,
-  project: Project,
-  options: DrawOptions = {},
-): Drawn {
+export function drawn(polytope: Polytope, n: number, project: Project, options: DrawOptions = {}): Drawn {
   const chosen = options.selected ?? [];
   const isChosen = (face: Face): boolean => chosen.some((other) => sameFace(other, face));
 
@@ -132,10 +112,7 @@ export function drawn(
   // put the origin, so reorienting before recentring keeps the figure from swinging out of frame.
   const placed = scene(polytope, n);
   const chosenPoints = placed.filter((p) => isChosen(p.face));
-  const turned =
-    options.reorient === undefined
-      ? placed
-      : orientedTo(polytope, placed, chosenPoints, options.reorient);
+  const turned = options.reorient === undefined ? placed : orientedTo(polytope, placed, chosenPoints, options.reorient);
   const centred =
     options.recentre === true
       ? centredOn(

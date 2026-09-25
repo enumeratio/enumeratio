@@ -138,8 +138,7 @@ agreement.
   role: bench
   expr: [PowerMod, $a, $e, $m]
   bench:
-    sample:
-      { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
+    sample: { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
 ```
 
 - The seed is part of the record. Every run draws the same 16 inputs, in every system, so runs

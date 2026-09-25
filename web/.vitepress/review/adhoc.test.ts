@@ -57,9 +57,7 @@ describe("buildAdhocItem", () => {
     expect(item.feedback).toBe("");
     expect(item.title).toBe("Arccos · example-19");
     expect(item.link).toBe("https://enumeratio.dev/reference/symbol/Arccos#example-19");
-    expect(item.bullets).toEqual([
-      { key: "link", value: "https://enumeratio.dev/reference/symbol/Arccos#example-19" },
-    ]);
+    expect(item.bullets).toEqual([{ key: "link", value: "https://enumeratio.dev/reference/symbol/Arccos#example-19" }]);
     expect(item.id).toBe(adhocId("/reference/symbol/Arccos", "example-19"));
   });
 });

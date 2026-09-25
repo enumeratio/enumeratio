@@ -1,12 +1,7 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import {
-  hurwitzZetaReal,
-  lerchPhiReal,
-  polyLogReal,
-  zetaGeneralizedReal,
-} from "@enumeratio/analytic/src";
+import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { parseNotatio } from "@enumeratio/formats/notatio";
 import { html, LitElement, type PropertyValues } from "lit";
 
@@ -263,9 +258,7 @@ export class NotatioPlot extends LitElement {
       const parsed = engine.box(json);
       // Bind the Manipulate parameters first (each control `a` fills the wildcard
       // slot `_a`); the plot variable is then whatever free symbol remains.
-      const paramSubs = Object.fromEntries(
-        this._controls.map((c) => [`_${c.name}`, engine.number(c.value)]),
-      );
+      const paramSubs = Object.fromEntries(this._controls.map((c) => [`_${c.name}`, engine.number(c.value)]));
       const expr = this._controls.length > 0 ? parsed.subs(paramSubs) : parsed;
       const variable = this.var || expr.unknowns[0] || "x";
       const [lo, hi] = this.#range();
@@ -341,9 +334,7 @@ export class NotatioPlot extends LitElement {
         this.#series = items.map((e) => {
           const en = compiledNum(e);
           return {
-            points: useAdaptive
-              ? adaptiveSample(en, lo, hi, { init: count })
-              : ts.map((t) => ({ x: t, y: en(t) })),
+            points: useAdaptive ? adaptiveSample(en, lo, hi, { init: count }) : ts.map((t) => ({ x: t, y: en(t) })),
             style,
             label: items.length > 1 ? e.toString() : undefined,
           };
@@ -432,10 +423,7 @@ export class NotatioPlot extends LitElement {
   }
 
   protected override render(): unknown {
-    return html`<span
-        class="notatio-plot-box"
-        @pointermove=${this.#onPointerMove}
-        @pointerleave=${this.#onPointerLeave}
+    return html`<span class="notatio-plot-box" @pointermove=${this.#onPointerMove} @pointerleave=${this.#onPointerLeave}
         >${unsafeHTML(this._svg)}</span
       >${this.#controlsView()}`;
   }

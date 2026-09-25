@@ -46,18 +46,7 @@ const ATOMS: Record<string, (text: string) => MathJsonExpression> = {
 };
 
 /** Attributes that are the element's own, never an option. */
-const OWN = new Set([
-  "value",
-  "evaluate",
-  "class",
-  "style",
-  "id",
-  "slot",
-  "hidden",
-  "title",
-  "role",
-  "tabindex",
-]);
+const OWN = new Set(["value", "evaluate", "class", "style", "id", "slot", "hidden", "title", "role", "tabindex"]);
 
 /** `plot-range` -> `PlotRange`: an attribute's option name. */
 export const optionNameOf = (attr: string): string =>
@@ -132,8 +121,7 @@ export class NotatioGeneric extends LitElement {
       // its list) already holds Lit's markers and its own typeset output.
       const own = [...this.childNodes].filter(
         (n) =>
-          n.nodeType !== Node.COMMENT_NODE &&
-          !(n instanceof Element && n.classList.contains("notatio-generic-out")),
+          n.nodeType !== Node.COMMENT_NODE && !(n instanceof Element && n.classList.contains("notatio-generic-out")),
       );
       holder.append(...own);
       this.prepend(holder);
@@ -194,8 +182,7 @@ export class NotatioGeneric extends LitElement {
   /** The arguments spelled as attributes, when this head's parameters are named and given. */
   #namedArguments(): MathJsonExpression[] | undefined {
     const params = PARAMS[this.head];
-    if (params === undefined || !params.some((p) => this.hasAttribute(p.toLowerCase())))
-      return undefined;
+    if (params === undefined || !params.some((p) => this.hasAttribute(p.toLowerCase()))) return undefined;
     const args: MathJsonExpression[] = [];
     for (const p of params) {
       const raw = this.getAttribute(p.toLowerCase());
@@ -212,8 +199,7 @@ export class NotatioGeneric extends LitElement {
     const params = new Set((PARAMS[this.head] ?? []).map((p) => p.toLowerCase()));
     const options: Record<string, MathJsonExpression> = {};
     for (const { name, value } of this.attributes) {
-      if (OWN.has(name) || params.has(name) || name.startsWith("data-") || name.startsWith("aria-"))
-        continue;
+      if (OWN.has(name) || params.has(name) || name.startsWith("data-") || name.startsWith("aria-")) continue;
       const { json, errors } = parseNotatio(value === "" || value === "true" ? "True" : value);
       if (!errors.length) options[optionNameOf(name)] = json as MathJsonExpression;
     }
@@ -268,8 +254,7 @@ export class NotatioGeneric extends LitElement {
         const { json, errors } = parseNotatio(`(${text})`);
         if (errors.length) continue;
         const fn = (json as { fn?: unknown[] }).fn;
-        if (Array.isArray(fn) && fn[0] === "Tuple")
-          args.push(...(fn.slice(1) as MathJsonExpression[]));
+        if (Array.isArray(fn) && fn[0] === "Tuple") args.push(...(fn.slice(1) as MathJsonExpression[]));
         else args.push(json as MathJsonExpression);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         const el = node as Element;

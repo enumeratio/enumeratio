@@ -8,8 +8,7 @@ import { type EvalOptions, isFiniteNum, wantsNumber } from "./box.ts";
 // `-Gudermannian(x)` symbolically, same as `Arcsin`/`Ln` do in widened.ts. Otherwise
 // numeric only, real domain (no reference example calls for a complex argument).
 
-const HALF_PI = (ce: ComputeEngine): BoxedExpression =>
-  ce.function("Multiply", [ce.number([1, 2]), ce.Pi]).evaluate();
+const HALF_PI = (ce: ComputeEngine): BoxedExpression => ce.function("Multiply", [ce.number([1, 2]), ce.Pi]).evaluate();
 
 function evaluateGudermannian(
   ce: ComputeEngine,
@@ -37,7 +36,6 @@ function evaluateGudermannian(
 export function declareGudermannian(ce: ComputeEngine): void {
   ce.declare("Gudermannian", {
     signature: "(number) -> number",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateGudermannian(ce, ops, options),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateGudermannian(ce, ops, options),
   });
 }

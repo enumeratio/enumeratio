@@ -128,8 +128,7 @@ examples:
     category: Applications
     caption: $341 = 11 \cdot 31$ passes Fermat's test to base 2 — the least pseudoprime
   - id: diffie-hellman-both-parties-reach-the-shared-key
-    expr:
-      [Equal, [PowerMod, [PowerMod, 5, 6, 23], 15, 23], [PowerMod, [PowerMod, 5, 15, 23], 6, 23]]
+    expr: [Equal, [PowerMod, [PowerMod, 5, 6, 23], 15, 23], [PowerMod, [PowerMod, 5, 15, 23], 6, 23]]
     expected: True
     category: Applications
     caption: 'Diffie–Hellman: both parties reach the shared key $5^{6 \cdot 15} \bmod 23$'

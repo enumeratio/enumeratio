@@ -1,11 +1,6 @@
 import type { BoxedExpression } from "@cortex-js/compute-engine";
 import { JavaScriptTarget } from "@cortex-js/compute-engine/compile";
-import {
-  hurwitzZetaReal,
-  lerchPhiReal,
-  polyLogReal,
-  zetaGeneralizedReal,
-} from "@enumeratio/analytic/src";
+import { hurwitzZetaReal, lerchPhiReal, polyLogReal, zetaGeneralizedReal } from "@enumeratio/analytic/src";
 import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
@@ -187,9 +182,7 @@ export class NotatioPolarPlot extends LitElement {
           const r = new JavaScriptTarget().compile(e) as { success?: boolean; code?: string };
           if (r?.success && r.code) {
             // oxlint-disable-next-line no-implied-eval -- running compute-engine-compiled source is the point
-            const g = new Function("_", `"use strict"; return (${r.code});`) as (
-              s: Record<string, unknown>,
-            ) => unknown;
+            const g = new Function("_", `"use strict"; return (${r.code});`) as (s: Record<string, unknown>) => unknown;
             const scope: Record<string, unknown> = { ...RUNTIME };
             return (t) => {
               scope[vt] = t;

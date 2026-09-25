@@ -64,12 +64,7 @@ function faulhaberSum(ce: ComputeEngine, N: BoxedExpression, d: number): BoxedEx
 }
 
 /** Σ_{k=lo}^{hi} k^d = faulhaberSum(hi, d) − faulhaberSum(lo − 1, d). */
-function polynomialPowerSum(
-  ce: ComputeEngine,
-  lo: BoxedExpression,
-  hi: BoxedExpression,
-  d: number,
-): BoxedExpression {
+function polynomialPowerSum(ce: ComputeEngine, lo: BoxedExpression, hi: BoxedExpression, d: number): BoxedExpression {
   const upper = faulhaberSum(ce, hi, d);
   const lower = faulhaberSum(ce, ce.function("Subtract", [lo, 1]).evaluate(), d);
   return ce.function("Subtract", [upper, lower]).evaluate();
@@ -135,9 +130,7 @@ function sumOverIndex(
     const d = monomialDegree(term, idxName);
     if (d === undefined) return undefined;
     const coefficient =
-      d === 0
-        ? term
-        : ce.function("Divide", [term, ce.function("Power", [ce.symbol(idxName), d])]).evaluate();
+      d === 0 ? term : ce.function("Divide", [term, ce.function("Power", [ce.symbol(idxName), d])]).evaluate();
     if (dependsOn(coefficient, idxName)) return undefined;
     contributions.push(ce.function("Multiply", [coefficient, polynomialPowerSum(ce, lo, hi, d)]));
   }
@@ -174,8 +167,7 @@ export function declareProducts(ce: ComputeEngine): void {
     () => (ops) => {
       const [body, ...limits] = ops;
       let nested = body!;
-      for (let k = limits.length - 1; k >= 0; k--)
-        nested = ce.function("Product", [nested, limits[k]!]);
+      for (let k = limits.length - 1; k >= 0; k--) nested = ce.function("Product", [nested, limits[k]!]);
       return nested.evaluate();
     },
   );
@@ -192,10 +184,8 @@ export function declareProducts(ce: ComputeEngine): void {
       // Index as the exponent's base (i^m, m free of the index): a factorial power.
       // Index as the base of the outer power isn't this rule's business when the
       // exponent ALSO depends on the index (i^i) -- leave that unevaluated.
-      const baseIsIndex =
-        symbolNameOf(base!) === limits.index && !dependsOn(exponent!, limits.index);
-      const exponentDependsOnIndex =
-        dependsOn(exponent!, limits.index) && !dependsOn(base!, limits.index);
+      const baseIsIndex = symbolNameOf(base!) === limits.index && !dependsOn(exponent!, limits.index);
+      const exponentDependsOnIndex = dependsOn(exponent!, limits.index) && !dependsOn(base!, limits.index);
       return baseIsIndex || exponentDependsOnIndex;
     },
     () => (ops) => {

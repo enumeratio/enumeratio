@@ -29,8 +29,7 @@ export const polyLog = (s: Cx, z: Cx): Cx => mul(z, lerchPhi(z, s, { re: 1, im: 
 
 /** Real-valued Liₛ(z) for real s, z — the real-scalar shape the compiled
  * (JS/GPU) plotting pipeline consumes. */
-export const polyLogReal = (s: number, z: number): number =>
-  polyLog({ re: s, im: 0 }, { re: z, im: 0 }).re;
+export const polyLogReal = (s: number, z: number): number => polyLog({ re: s, im: 0 }, { re: z, im: 0 }).re;
 
 /**
  * Evaluate PolyLog(s, z), deferring to compute-engine's native handler first and
@@ -77,12 +76,7 @@ export function evaluatePolyLog(
         const v = ce.box(["Gamma", ["Complex", sigma.re, sigma.im], ["Complex", x.re, x.im]]).N();
         return isFiniteNum(v) ? { re: v.re, im: v.im } : undefined;
       };
-      const phi = lerchContinued(
-        { re: z.re, im: z.im },
-        { re: s.re, im: s.im },
-        { re: 1, im: 0 },
-        upperGamma,
-      );
+      const phi = lerchContinued({ re: z.re, im: z.im }, { re: s.re, im: s.im }, { re: 1, im: 0 }, upperGamma);
       return phi === undefined ? r : numberResult(ce, mul({ re: z.re, im: z.im }, phi));
     }
     // Inside its disk of convergence, the Lerch series directly.

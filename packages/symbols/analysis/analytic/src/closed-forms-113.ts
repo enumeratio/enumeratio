@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  bigIntegerAt,
-  bigRationalAt,
-  operandsOf,
-  symbolNameOf,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
 import { declined, type EvalOptions } from "./box.ts";
 import { characterExponent } from "./dirichlet-l.ts";
 import { gammaExactValue, type Rational } from "./widened.ts";
@@ -43,8 +37,7 @@ const factorial = (n: bigint): bigint => {
 const intNode = (ce: ComputeEngine, v: bigint): BoxedExpression => ce.number(v);
 
 /** An exact [numerator, denominator] bigint pair as a boxed rational (or integer, at d = 1). */
-const ratNode = (ce: ComputeEngine, [n, d]: Rational): BoxedExpression =>
-  d === 1n ? ce.number(n) : ce.number([n, d]);
+const ratNode = (ce: ComputeEngine, [n, d]: Rational): BoxedExpression => (d === 1n ? ce.number(n) : ce.number([n, d]));
 
 export function declareClosedForms113(ce: ComputeEngine): void {
   // GammaLn(n) = ln((n−1)!) at a positive integer n, matching Wolfram's bare
@@ -88,10 +81,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     () => (ops, options) => {
       const s = ops[0];
       return finish(
-        ce.function("Multiply", [
-          ce.function("Subtract", [ce.function("Power", [2, s]), 1]),
-          ce.function("Zeta", [s]),
-        ]),
+        ce.function("Multiply", [ce.function("Subtract", [ce.function("Power", [2, s]), 1]), ce.function("Zeta", [s])]),
         options,
       );
     },
@@ -105,13 +95,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       return bigIntegerAt(ops[0]) === 2n && a !== undefined && a[0] === 1n && a[1] === 4n;
     },
     () => (_ops, options) =>
-      finish(
-        ce.function("Add", [
-          ce.function("Power", ["Pi", 2]),
-          ce.function("Multiply", [8, "Catalan"]),
-        ]),
-        options,
-      ),
+      finish(ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [8, "Catalan"])]), options),
     2,
   );
 
@@ -122,10 +106,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    (ops) =>
-      bigIntegerAt(ops[0]) === 3n &&
-      bigRationalAt(ops[1])?.[0] === 1n &&
-      bigRationalAt(ops[1])?.[1] === 2n,
+    (ops) => bigIntegerAt(ops[0]) === 3n && bigRationalAt(ops[1])?.[0] === 1n && bigRationalAt(ops[1])?.[1] === 2n,
     () => (_ops, options) =>
       finish(
         ce.function("Add", [
@@ -137,10 +118,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
               ce.function("Ln", [2]),
             ]),
           ]),
-          ce.function("Multiply", [
-            ce.function("Rational", [1, 6]),
-            ce.function("Power", [ce.function("Ln", [2]), 3]),
-          ]),
+          ce.function("Multiply", [ce.function("Rational", [1, 6]), ce.function("Power", [ce.function("Ln", [2]), 3])]),
         ]),
         options,
       ),
@@ -153,10 +131,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     () => (_ops, options) =>
       finish(
         ce.function("Subtract", [
-          ce.function("Multiply", [
-            ce.function("Rational", [1, 4]),
-            ce.function("Power", ["Pi", 2]),
-          ]),
+          ce.function("Multiply", [ce.function("Rational", [1, 4]), ce.function("Power", ["Pi", 2])]),
           ce.function("Multiply", ["ImaginaryUnit", "Pi", ce.function("Ln", [2])]),
         ]),
         options,
@@ -180,10 +155,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const ln = (n: number) => ce.function("Ln", [n]);
       const base =
         q === 4n
-          ? ce.function("Add", [
-              ce.function("Negate", ["EulerGamma"]),
-              ce.function("Multiply", [-3, ln(2)]),
-            ])
+          ? ce.function("Add", [ce.function("Negate", ["EulerGamma"]), ce.function("Multiply", [-3, ln(2)])])
           : ce.function("Add", [
               ce.function("Negate", ["EulerGamma"]),
               ce.function("Multiply", [ce.function("Rational", [-3, 2]), ln(3)]),
@@ -210,21 +182,13 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     ["PolyGamma", 2],
     (ops) => {
       const q = bigRationalAt(ops[1]);
-      return (
-        bigIntegerAt(ops[0]) === 1n &&
-        q !== undefined &&
-        q[1] === 4n &&
-        (q[0] === 1n || q[0] === 3n)
-      );
+      return bigIntegerAt(ops[0]) === 1n && q !== undefined && q[1] === 4n && (q[0] === 1n || q[0] === 3n);
     },
     () => (ops, options) => {
       const [p] = bigRationalAt(ops[1])!;
       const sign = p === 1n ? 1 : -1;
       return finish(
-        ce.function("Add", [
-          ce.function("Power", ["Pi", 2]),
-          ce.function("Multiply", [sign * 8, "Catalan"]),
-        ]),
+        ce.function("Add", [ce.function("Power", ["Pi", 2]), ce.function("Multiply", [sign * 8, "Catalan"])]),
         options,
       );
     },
@@ -338,22 +302,16 @@ export function declareClosedForms113(ce: ComputeEngine): void {
           // itself, treats as indeterminate) since it won't assert x^0 = 1 without knowing
           // x ≠ 0. Every other term evaluates on its own for the same reason Add doesn't
           // re-simplify an already-built Power node once it's inside the sum.
-          const xk =
-            k === 0n ? intNode(ce, 1n) : ce.function("Power", [x, intNode(ce, k)]).evaluate();
+          const xk = k === 0n ? intNode(ce, 1n) : ce.function("Power", [x, intNode(ce, k)]).evaluate();
           terms.push(ce.function("Divide", [xk, intNode(ce, factorial(k))]).evaluate());
         }
         const sum = ce.function("Add", terms);
-        const scaled = regularized
-          ? sum
-          : ce.function("Multiply", [intNode(ce, factorial(n - 1n)), sum]);
+        const scaled = regularized ? sum : ce.function("Multiply", [intNode(ce, factorial(n - 1n)), sum]);
         // This same 2-argument operator is what a 3-argument Gamma(s, z0, z1) call
         // reduces to internally (Γ(s,z0) − Γ(s,z1)), often under N() -- `finish` is what
         // keeps that recursive call a plain number instead of a stuck exact expression.
         return finish(
-          ce.function("Multiply", [
-            scaled,
-            ce.function("Power", ["ExponentialE", ce.function("Negate", [x])]),
-          ]),
+          ce.function("Multiply", [scaled, ce.function("Power", ["ExponentialE", ce.function("Negate", [x])])]),
           options,
         );
       },
@@ -404,8 +362,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     () => (ops, options) => {
       const q = bigRationalAt(ops[0])!;
       const ln2 = ce.function("Ln", [2]);
-      if (q[1] === 2n)
-        return finish(ce.function("Subtract", [2, ce.function("Multiply", [2, ln2])]), options);
+      if (q[1] === 2n) return finish(ce.function("Subtract", [2, ce.function("Multiply", [2, ln2])]), options);
       return finish(
         ce.function("Subtract", [
           ce.function("Subtract", [4, ce.function("Divide", ["Pi", 2])]),
@@ -433,9 +390,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       const terms = operandsOf(list);
       const plain = (t: BoxedExpression) =>
         symbolNameOf(t) !== undefined || (t.isInteger === true && operandsOf(t).length === 0);
-      return (
-        terms.length > 0 && terms.every(plain) && terms.some((t) => symbolNameOf(t) !== undefined)
-      );
+      return terms.length > 0 && terms.every(plain) && terms.some((t) => symbolNameOf(t) !== undefined);
     },
     () => (ops, options) => {
       const terms = operandsOf(ops[0]);
@@ -474,10 +429,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
     () => (ops, options) => {
       const [x, m] = ops;
       const k = Math.floor(x.re / m.re);
-      const expr = ce.function("Subtract", [
-        x,
-        ce.function("Multiply", [intNode(ce, BigInt(k)), m]),
-      ]);
+      const expr = ce.function("Subtract", [x, ce.function("Multiply", [intNode(ce, BigInt(k)), m])]);
       return options.numericApproximation ? expr.N() : expr.evaluate();
     },
     2,

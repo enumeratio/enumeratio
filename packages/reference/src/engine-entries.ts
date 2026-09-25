@@ -15,8 +15,7 @@ export function engineEntries(documented: ReadonlySet<string>): ReferenceEntry[]
     .map((symbol) => ({
       name: symbol.name,
       domain: ENGINE_DOMAIN,
-      signature:
-        symbol.kind === "operator" ? `${symbol.name}${symbol.signature ?? ""}` : symbol.name,
+      signature: symbol.kind === "operator" ? `${symbol.name}${symbol.signature ?? ""}` : symbol.name,
       summary: symbol.description ?? "",
       examples: [],
       ...(symbol.signature

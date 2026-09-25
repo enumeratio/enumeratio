@@ -142,12 +142,7 @@ describe("applyItemPatch", () => {
   test("CRLF files parse and patch without corrupting line endings", () => {
     const crlf = FIXTURE.replace(/\n/g, "\r\n");
     const items = parseBacklog(crlf).items;
-    expect(items.map((i) => i.id)).toEqual([
-      "pr86-numeric-sets-indexed",
-      "second-id",
-      "third-id",
-      "fourth-id",
-    ]);
+    expect(items.map((i) => i.id)).toEqual(["pr86-numeric-sets-indexed", "second-id", "third-id", "fourth-id"]);
     const pr86 = items.find((i) => i.id === "pr86-numeric-sets-indexed")!;
     expect(pr86.feedback).toBe("Looks solid overall.\r\n\r\nSecond paragraph of feedback.");
 
@@ -190,9 +185,7 @@ describe("serializeItem / upsertItem", () => {
       title: "Arccos · example-19",
       status: "open" as const,
       link: "https://enumeratio.dev/reference/symbol/Arccos#example-19",
-      bullets: [
-        { key: "link", value: "https://enumeratio.dev/reference/symbol/Arccos#example-19" },
-      ],
+      bullets: [{ key: "link", value: "https://enumeratio.dev/reference/symbol/Arccos#example-19" }],
       feedback: "",
     };
     const result = upsertItem(FIXTURE, item);

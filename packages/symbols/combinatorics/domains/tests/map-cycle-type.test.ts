@@ -20,11 +20,8 @@ test("CycleType crosses carriers and partitions n", () => {
     }
     return lengths.sort((a, b) => b - a);
   };
-  expect(String(ce.box(["CycleType", perm(2, 3, 1)] as never).evaluate().type)).toBe(
-    "integer_partition",
-  );
-  for (const p of ALL)
-    expect(result(["CycleType", perm(...p)]), `[${p}]`).toEqual(["List", ...cycleLengths(p)]);
+  expect(String(ce.box(["CycleType", perm(2, 3, 1)] as never).evaluate().type)).toBe("integer_partition");
+  for (const p of ALL) expect(result(["CycleType", perm(...p)]), `[${p}]`).toEqual(["List", ...cycleLengths(p)]);
 });
 
 test("CyclePartition labels each position with its cycle's rank", () => {
@@ -46,6 +43,5 @@ test("CyclePartition labels each position with its cycle's rank", () => {
     }
     return labels;
   };
-  for (const p of ALL)
-    expect(result(["CyclePartition", perm(...p)]), `[${p}]`).toEqual(["List", ...rgs(p)]);
+  for (const p of ALL) expect(result(["CyclePartition", perm(...p)]), `[${p}]`).toEqual(["List", ...rgs(p)]);
 });

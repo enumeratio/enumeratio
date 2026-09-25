@@ -13,14 +13,7 @@ import { operandsOf, symbolNameOf, wrapOperator } from "@enumeratio/boxed";
 // (Pi, say) as is -- honoring `options.numericApproximation` there too, so N(Max(Pi, Pi))
 // comes back as a decimal rather than the exact Pi evaluate() alone would give.
 
-const KNOWN_CONSTANTS = new Set([
-  "Pi",
-  "ExponentialE",
-  "EulerGamma",
-  "GoldenRatio",
-  "Catalan",
-  "MachineEpsilon",
-]);
+const KNOWN_CONSTANTS = new Set(["Pi", "ExponentialE", "EulerGamma", "GoldenRatio", "Catalan", "MachineEpsilon"]);
 
 // Operators an exact-constant expression can be built from. Compute-engine has already
 // evaluated every purely-numeric subexpression by the time a wrapped operator's `evaluate`
@@ -29,16 +22,7 @@ const KNOWN_CONSTANTS = new Set([
 // (operator, and for a bare symbol its name) can't tell those apart; the handler settles
 // it with a single N() and declines (returns undefined, same as the native handler would)
 // when that isn't finite.
-const CONSTANT_HEADS = new Set([
-  "Negate",
-  "Add",
-  "Subtract",
-  "Multiply",
-  "Divide",
-  "Power",
-  "Sqrt",
-  "Log",
-]);
+const CONSTANT_HEADS = new Set(["Negate", "Add", "Subtract", "Multiply", "Divide", "Power", "Sqrt", "Log"]);
 
 /** O(1): reads only `operator`, and for a bare symbol its `symbol` name. */
 function looksConstant(op: BoxedExpression): boolean {
@@ -46,11 +30,7 @@ function looksConstant(op: BoxedExpression): boolean {
   return CONSTANT_HEADS.has(op.operator ?? "");
 }
 
-function declareRoundingHead(
-  ce: ComputeEngine,
-  name: "Floor" | "Ceil" | "Round",
-  round: (x: number) => number,
-): void {
+function declareRoundingHead(ce: ComputeEngine, name: "Floor" | "Ceil" | "Round", round: (x: number) => number): void {
   // Idempotent: Floor(Floor(x)) = Floor(x), for whatever x -- the inner value is
   // already an integer (or stays symbolic, in which case nothing changes either way).
   wrapOperator(
@@ -82,11 +62,7 @@ function pool(ops: readonly BoxedExpression[]): readonly BoxedExpression[] {
   return ops.length === 1 && ops[0]?.operator === "List" ? operandsOf(ops[0]) : ops;
 }
 
-function declareExtremum(
-  ce: ComputeEngine,
-  name: "Max" | "Min",
-  better: (a: number, b: number) => boolean,
-): void {
+function declareExtremum(ce: ComputeEngine, name: "Max" | "Min", better: (a: number, b: number) => boolean): void {
   // Idempotent: repeated identical arguments collapse to one, e.g. Max(x, x) = x.
   // `isSame` is a structural (non-evaluating) compare, cheap on the common case of
   // two distinct numbers or symbols.

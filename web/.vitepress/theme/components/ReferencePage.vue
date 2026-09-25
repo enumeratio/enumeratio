@@ -39,8 +39,7 @@ const linkify = (text?: string): string =>
   (text ?? "")
     .replace(
       /\$([^$]+)\$/g,
-      (_match, tex: string) =>
-        `<notatio-out inline format="latex" value="${escapeAttr(tex)}"></notatio-out>`,
+      (_match, tex: string) => `<notatio-out inline format="latex" value="${escapeAttr(tex)}"></notatio-out>`,
     )
     .replace(/\[\[([A-Za-z0-9]+)\]\]/g, (_match, name: string) =>
       getEntry(name) ? `<a class="ref-link" href="/reference/symbol/${name}">${name}</a>` : name,
@@ -48,8 +47,7 @@ const linkify = (text?: string): string =>
 
 // What each implementation row is, for the badge tooltip and the pointer it shows.
 const ORIGIN_TITLE: Record<string, string> = {
-  reference:
-    "the defining expression, in notatio — the specification the others are checked against",
+  reference: "the defining expression, in notatio — the specification the others are checked against",
   native: "the TypeScript that actually runs",
   compiled: "produced by a compute-engine compile target",
   component: "bottoms out in a web component — the rendered element is the value",
@@ -83,9 +81,7 @@ const onAssert = (i: number, event: Event): void => {
 
 // Known-divergence chips, one per system the example diverges from.
 const SYSTEM_LABEL: Record<string, string> = { wolfram: "Wolfram", numpy: "NumPy", sympy: "SymPy" };
-const divergences = (ex: {
-  divergence?: Record<string, string>;
-}): { system: string; label: string; note: string }[] =>
+const divergences = (ex: { divergence?: Record<string, string> }): { system: string; label: string; note: string }[] =>
   Object.entries(ex.divergence ?? {}).map(([system, note]) => ({
     system,
     label: SYSTEM_LABEL[system] ?? system,
@@ -103,9 +99,7 @@ const onDirty = (i: number, event: Event): void => {
 
 // Other systems' runs of each example, attached by entries.ts from the entry's
 // `<stem>.oracle.json` sidecar (see `@enumeratio/oracle`).
-const alternativesOf = (ex: {
-  others?: Record<string, Alternative>;
-}): Record<string, Alternative> | undefined =>
+const alternativesOf = (ex: { others?: Record<string, Alternative> }): Record<string, Alternative> | undefined =>
   ex.others && Object.keys(ex.others).length > 0 ? ex.others : undefined;
 // A row's own note, preferring the entry's authored `divergence` prose over the scan's.
 const notesOf = (ex: {
@@ -180,14 +174,7 @@ onBeforeUnmount(() => window.removeEventListener("hashchange", followHash));
 
 // Examples grouped into categories, keeping each example's original index so
 // assertion status stays addressable.
-const CATEGORY_ORDER = [
-  "Basic",
-  "Scope",
-  "Applications",
-  "Properties",
-  "Possible issues",
-  "Neat examples",
-];
+const CATEGORY_ORDER = ["Basic", "Scope", "Applications", "Properties", "Possible issues", "Neat examples"];
 // Examples sharing a `group` are cases of one example: a single card, where the first
 // member sits, cycling through them. `activeCase` is the shown case's position per group.
 const activeCase = reactive<Record<string, number>>({});
@@ -204,8 +191,7 @@ const targetedExample = computed((): number =>
 const shown = (ex: { hidden?: boolean }, i: number): boolean =>
   // Kept as data, not rendered -- unless a deep link asks for it.
   !ex.hidden || i === targetedExample.value;
-const casesOf = (key: string): number[] =>
-  membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
+const casesOf = (key: string): number[] => membersOf(key).filter((i) => shown(entry.value!.examples[i]!, i));
 const cycle = (key: string, cases: readonly number[], step: number): void => {
   activeCase[key] = ((activeCase[key] ?? 0) + step + cases.length) % cases.length;
 };
@@ -251,13 +237,12 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
 <template>
   <div v-if="entry" class="reference-entry">
     <p v-if="entry.stub === 'engine'" class="ref-stub">
-      Generated from the engine's own definition: compute-engine's symbol, which we neither extend
-      nor document by hand. No examples yet — the crosswalk is the reason it has a page.
+      Generated from the engine's own definition: compute-engine's symbol, which we neither extend nor document by hand.
+      No examples yet — the crosswalk is the reason it has a page.
     </p>
     <p v-else-if="entry.stub === 'carrier'" class="ref-stub">
-      A carrier domain from <a href="/reference/domains/">the domains catalogue</a>; the signature
-      is its storage shape. What is known about it elsewhere is mostly recorded against the
-      collections that enumerate it, and says so.
+      A carrier domain from <a href="/reference/domains/">the domains catalogue</a>; the signature is its storage shape.
+      What is known about it elsewhere is mostly recorded against the collections that enumerate it, and says so.
     </p>
     <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
     <p v-html="linkify(entry.summary)"></p>
@@ -318,20 +303,11 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         class="ref-section"
         :class="{ 'is-bare': grouped.length <= 1 }"
         :id="sectionId(group.category)"
-        :open="
-          sectionsOpen ||
-          sectionId(group.category) === targeted ||
-          openSections.has(sectionId(group.category))
-        "
+        :open="sectionsOpen || sectionId(group.category) === targeted || openSections.has(sectionId(group.category))"
       >
         <summary class="ref-category">
           {{ group.category }}
-          <a
-            class="ref-anchor"
-            :href="`#${sectionId(group.category)}`"
-            :aria-label="`Link to ${group.category}`"
-            >#</a
-          >
+          <a class="ref-anchor" :href="`#${sectionId(group.category)}`" :aria-label="`Link to ${group.category}`">#</a>
         </summary>
         <div
           v-for="{ ex, i, first, key, cases } in group.items"
@@ -365,22 +341,14 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
             @notatio-dirty="onDirty(i, $event)"
             @notatio-assert="onAssert(i, $event)"
           >
-            <span v-if="ex.aspirational" slot="aside" class="ref-planned-badge"
-              >not yet implemented</span
-            >
+            <span v-if="ex.aspirational" slot="aside" class="ref-planned-badge">not yet implemented</span>
             <ExampleAlternatives
               v-else-if="alternativesOf(ex)"
               slot="aside"
               :alternatives="alternativesOf(ex)!"
               :notes="notesOf(ex)"
             />
-            <span
-              v-for="d in divergences(ex)"
-              v-else
-              :key="d.system"
-              slot="aside"
-              class="ref-divergent-badge"
-            >
+            <span v-for="d in divergences(ex)" v-else :key="d.system" slot="aside" class="ref-divergent-badge">
               differs from {{ d.label }}
             </span>
           </notatio-cell>
@@ -400,21 +368,12 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         <span class="ref-badge is-primitive">primitive · {{ entry.primitive }}</span>
         <span class="ref-primitive-reason">{{ PRIMITIVE_REASON[entry.primitive] }}</span>
       </p>
-      <div
-        v-for="(impl, i) in entry.implementations ?? []"
-        :key="i"
-        class="ref-impl"
-        :data-origin="impl.origin"
-      >
+      <div v-for="(impl, i) in entry.implementations ?? []" :key="i" class="ref-impl" :data-origin="impl.origin">
         <div class="ref-impl-head">
           <span class="ref-badge ref-origin" :title="ORIGIN_TITLE[impl.origin]">
             {{ impl.origin }}
           </span>
-          <span
-            v-if="impl.environment"
-            class="ref-badge ref-env"
-            :title="ENVIRONMENT_TITLE[impl.environment]"
-          >
+          <span v-if="impl.environment" class="ref-badge ref-env" :title="ENVIRONMENT_TITLE[impl.environment]">
             {{ impl.environment }}
           </span>
           <code class="ref-impl-form">{{ impl.form }}</code>
@@ -433,11 +392,7 @@ const hiddenCount = computed(() => (entry.value?.examples ?? []).filter((ex) => 
         </ClientOnly>
         <notatio-code v-if="impl.code" :language="impl.form" :value="impl.code" />
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
-        <p
-          v-if="impl.produces"
-          class="ref-impl-note"
-          v-html="`Produces ${linkify(impl.produces)}.`"
-        ></p>
+        <p v-if="impl.produces" class="ref-impl-note" v-html="`Produces ${linkify(impl.produces)}.`"></p>
         <!-- eslint-disable-next-line vue/no-v-html -- prose is trusted local data -->
         <p v-if="impl.note" class="ref-impl-note" v-html="linkify(impl.note)"></p>
       </div>

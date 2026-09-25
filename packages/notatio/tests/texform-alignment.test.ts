@@ -20,8 +20,7 @@ const ce = new ComputeEngine({
   latexSyntax: new LatexSyntax({ dictionary: conventionalLatexDictionary() as never[] }),
 });
 
-const ours = (json: unknown): string =>
-  portableTeX(traditionalLatexOf(ce, ce.box(json as never, { form: "raw" })));
+const ours = (json: unknown): string => portableTeX(traditionalLatexOf(ce, ce.box(json as never, { form: "raw" })));
 
 /** Spacing, sizing and upright-text markup aside, the same TeX. */
 const normal = (tex: string): string =>
@@ -53,10 +52,7 @@ const shown = (tex: string): string =>
  *  `\text{Round}[x]` reads as our `\mathrm{round}(x)`. */
 const heads = new Map(
   [...new Set([...Object.keys(HEADS), ...entryFiles.flatMap((f) => f.entries.map((e) => e.name))])]
-    .map((name) => [
-      name,
-      /^(\\(?:mathrm|operatorname)\{[^{}]+\})\(x\)$/.exec(ours([name, "x"]))?.[1],
-    ])
+    .map((name) => [name, /^(\\(?:mathrm|operatorname)\{[^{}]+\})\(x\)$/.exec(ours([name, "x"]))?.[1]])
     .filter((entry): entry is [string, string] => entry[1] !== undefined),
 );
 

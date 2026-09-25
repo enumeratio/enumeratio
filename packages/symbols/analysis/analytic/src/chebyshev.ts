@@ -18,9 +18,7 @@ import { cx, mul, scale, sub, type Cx } from "./complex.ts";
 // MathJSON for a value that is going to be N()'d anyway.
 
 const bigIntNode = (v: bigint): Json =>
-  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER)
-    ? Number(v)
-    : { num: v.toString() };
+  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER) ? Number(v) : { num: v.toString() };
 
 /** Coefficient vector (index = power of x) for T_n or U_n, n ≥ 0. */
 function coeffs(n: number, kind: "T" | "U"): bigint[] {
@@ -70,10 +68,7 @@ function chebyshevAt(n: number, x: Cx, kind: "T" | "U"): Cx {
 }
 
 /** Fold a negative order into Wolfram's nonnegative-order identity, or a literal zero. */
-function normalizeOrder(
-  n: number,
-  kind: "T" | "U",
-): { index: number; negate: boolean; zero: boolean } {
+function normalizeOrder(n: number, kind: "T" | "U"): { index: number; negate: boolean; zero: boolean } {
   if (n >= 0) return { index: n, negate: false, zero: false };
   const m = -n;
   if (kind === "T") return { index: m, negate: false, zero: false }; // T_{−n} = T_n

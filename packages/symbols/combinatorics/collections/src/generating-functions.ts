@@ -60,12 +60,7 @@ const fracToExpr = (ce: ComputeEngine, f: Frac): BoxedExpression => ce.number([f
 
 /** `expr` with `varName` bound to the integer `k`, evaluated to an exact rational — or
  *  `undefined` if it isn't one (irrational, unevaluated, non-numeric, …). */
-function sampleAt(
-  ce: ComputeEngine,
-  expr: BoxedExpression,
-  varName: string,
-  k: number,
-): Frac | undefined {
+function sampleAt(ce: ComputeEngine, expr: BoxedExpression, varName: string, k: number): Frac | undefined {
   const value = expr.subs({ [varName]: ce.number(k) }).evaluate();
   const r = bigRationalAt(value);
   return r === undefined ? undefined : frac(r[0], r[1]);
@@ -169,9 +164,7 @@ function polyExpr(ce: ComputeEngine, coeffs: readonly Frac[], x: BoxedExpression
     const c = coeffs[i]!;
     if (fIsZero(c)) continue;
     const power = i === 0 ? undefined : i === 1 ? x : ce.function("Power", [x, ce.number(i)]);
-    terms.push(
-      power === undefined ? fracToExpr(ce, c) : ce.function("Multiply", [fracToExpr(ce, c), power]),
-    );
+    terms.push(power === undefined ? fracToExpr(ce, c) : ce.function("Multiply", [fracToExpr(ce, c), power]));
   }
   return terms.length === 0 ? ce.Zero : ce.function("Add", terms);
 }
@@ -221,10 +214,7 @@ function egfOrder2(
   const c0x = fracToExpr(ce, c0);
   const c1x = fracToExpr(ce, c1);
   const disc = ce
-    .function("Add", [
-      ce.function("Power", [c0x, ce.number(2)]),
-      ce.function("Multiply", [ce.number(4), c1x]),
-    ])
+    .function("Add", [ce.function("Power", [c0x, ce.number(2)]), ce.function("Multiply", [ce.number(4), c1x])])
     .evaluate();
   const sqrtDisc = ce.function("Sqrt", [disc]).evaluate();
   const two = ce.number(2);
@@ -250,14 +240,8 @@ function egfOrder2(
     .function("Divide", [ce.function("Subtract", [a1x, ce.function("Multiply", [a0x, r2])]), denom])
     .evaluate();
   const A2 = ce.function("Subtract", [a0x, A1]).evaluate();
-  const term1 = ce.function("Multiply", [
-    A1,
-    ce.function("Exp", [ce.function("Multiply", [r1, x])]),
-  ]);
-  const term2 = ce.function("Multiply", [
-    A2,
-    ce.function("Exp", [ce.function("Multiply", [r2, x])]),
-  ]);
+  const term1 = ce.function("Multiply", [A1, ce.function("Exp", [ce.function("Multiply", [r1, x])])]);
+  const term2 = ce.function("Multiply", [A2, ce.function("Exp", [ce.function("Multiply", [r2, x])])]);
   return ce.function("Add", [term1, term2]).evaluate().simplify();
 }
 
@@ -281,9 +265,7 @@ const NAMED_SEQUENCES: readonly NamedSequence[] = [
         .function("Divide", [
           ce.function("Subtract", [
             ce.One,
-            ce.function("Sqrt", [
-              ce.function("Subtract", [ce.One, ce.function("Multiply", [ce.number(4), x])]),
-            ]),
+            ce.function("Sqrt", [ce.function("Subtract", [ce.One, ce.function("Multiply", [ce.number(4), x])])]),
           ]),
           ce.function("Multiply", [ce.number(2), x]),
         ])
@@ -292,25 +274,20 @@ const NAMED_SEQUENCES: readonly NamedSequence[] = [
   {
     // n! has no elementary OGF (only an asymptotic/divergent series) but a simple EGF.
     nativeHead: "Factorial",
-    egf: (ce, x) =>
-      ce.function("Divide", [ce.One, ce.function("Subtract", [ce.One, x])]).evaluate(),
+    egf: (ce, x) => ce.function("Divide", [ce.One, ce.function("Subtract", [ce.One, x])]).evaluate(),
   },
   {
     // Derangements: EGF = exp(-x)/(1-x).
     nativeHead: "Subfactorial",
     egf: (ce, x) =>
       ce
-        .function("Divide", [
-          ce.function("Exp", [ce.function("Negate", [x])]),
-          ce.function("Subtract", [ce.One, x]),
-        ])
+        .function("Divide", [ce.function("Exp", [ce.function("Negate", [x])]), ce.function("Subtract", [ce.One, x])])
         .evaluate(),
   },
   {
     // Bell numbers: EGF = exp(exp(x) - 1) — the classic exponential formula for set partitions.
     nativeHead: "BellNumber",
-    egf: (ce, x) =>
-      ce.function("Exp", [ce.function("Subtract", [ce.function("Exp", [x]), ce.One])]).evaluate(),
+    egf: (ce, x) => ce.function("Exp", [ce.function("Subtract", [ce.function("Exp", [x]), ce.One])]).evaluate(),
   },
 ];
 
@@ -381,10 +358,7 @@ function declareExponentialGeneratingFunction(ce: ComputeEngine): void {
 
 // ─── DiscreteRatio ──────────────────────────────────────────────────────────────────────────
 
-function evaluateDiscreteRatio(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+function evaluateDiscreteRatio(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   const [f, nExpr] = ops;
   if (f === undefined || nExpr === undefined) return undefined;
   const varName = symbolNameOf(nExpr);
@@ -407,10 +381,7 @@ function declareDiscreteRatio(ce: ComputeEngine): void {
 // Same shape as DiscreteRatio (Wolfram frontier), subtraction instead of division: the
 // forward-difference operator Δf(n) = f(n+1) - f(n).
 
-function evaluateDifferenceDelta(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+function evaluateDifferenceDelta(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   const [f, nExpr] = ops;
   if (f === undefined || nExpr === undefined) return undefined;
   const varName = symbolNameOf(nExpr);
@@ -448,12 +419,7 @@ function listTerms(ce: ComputeEngine, list: BoxedExpression): Frac[] | undefined
 /** The degree-`d` polynomial in `n` interpolating `(0, terms[0]), …, (d, terms[d])`
  *  (Lagrange, exact), given the `(d+1)`-th finite difference of `terms` is (numerically)
  *  zero — i.e. `terms` really is a polynomial sequence of degree `d`. */
-function lagrangePoly(
-  ce: ComputeEngine,
-  terms: readonly Frac[],
-  degree: number,
-  n: BoxedExpression,
-): BoxedExpression {
+function lagrangePoly(ce: ComputeEngine, terms: readonly Frac[], degree: number, n: BoxedExpression): BoxedExpression {
   // Newton's forward-difference form: p(n) = Σ_{k=0}^{d} Δ^k[0] · C(n, k), which stays exact
   // over ℚ and needs only the first `degree + 1` samples.
   const diffs: Frac[][] = [terms.slice(0, degree + 1)];
@@ -468,9 +434,7 @@ function lagrangePoly(
     if (fIsZero(coeff)) continue;
     // C(n, k) = n(n-1)…(n-k+1) / k!
     const binom = k === 0 ? ce.One : ce.function("Binomial", [n, ce.number(k)]);
-    terms_.push(
-      k === 0 ? fracToExpr(ce, coeff) : ce.function("Multiply", [fracToExpr(ce, coeff), binom]),
-    );
+    terms_.push(k === 0 ? fracToExpr(ce, coeff) : ce.function("Multiply", [fracToExpr(ce, coeff), binom]));
   }
   return (terms_.length === 0 ? ce.Zero : ce.function("Add", terms_)).evaluate().simplify();
 }
@@ -487,10 +451,7 @@ function polynomialDegree(terms: readonly Frac[]): number | undefined {
   return undefined;
 }
 
-function findSequenceFunctionCore(
-  ce: ComputeEngine,
-  ops: readonly BoxedExpression[],
-): BoxedExpression | undefined {
+function findSequenceFunctionCore(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
   const [listExpr, nExpr] = ops;
   if (listExpr === undefined || nExpr === undefined) return undefined;
   const n = nExpr.evaluate();
@@ -510,9 +471,7 @@ function findSequenceFunctionCore(
       const r = fracToExpr(ce, recurrence[0]!);
       const a0 = fracToExpr(ce, terms[0]!);
       const power = ce.function("Power", [r, n]);
-      return (
-        terms[0]![0] === 1n && terms[0]![1] === 1n ? power : ce.function("Multiply", [a0, power])
-      )
+      return (terms[0]![0] === 1n && terms[0]![1] === 1n ? power : ce.function("Multiply", [a0, power]))
         .evaluate()
         .simplify();
     }
@@ -522,26 +481,18 @@ function findSequenceFunctionCore(
       const c0x = fracToExpr(ce, c0);
       const c1x = fracToExpr(ce, c1);
       const disc = ce
-        .function("Add", [
-          ce.function("Power", [c0x, ce.number(2)]),
-          ce.function("Multiply", [ce.number(4), c1x]),
-        ])
+        .function("Add", [ce.function("Power", [c0x, ce.number(2)]), ce.function("Multiply", [ce.number(4), c1x])])
         .evaluate();
       const sqrtDisc = ce.function("Sqrt", [disc]).evaluate();
       const two = ce.number(2);
       if (sqrtDisc.is(0) !== true) {
         const r1 = ce.function("Divide", [ce.function("Add", [c0x, sqrtDisc]), two]).evaluate();
-        const r2 = ce
-          .function("Divide", [ce.function("Subtract", [c0x, sqrtDisc]), two])
-          .evaluate();
+        const r2 = ce.function("Divide", [ce.function("Subtract", [c0x, sqrtDisc]), two]).evaluate();
         const denom = ce.function("Subtract", [r1, r2]).evaluate();
         const a0x = fracToExpr(ce, a0);
         const a1x = fracToExpr(ce, a1);
         const A1 = ce
-          .function("Divide", [
-            ce.function("Subtract", [a1x, ce.function("Multiply", [a0x, r2])]),
-            denom,
-          ])
+          .function("Divide", [ce.function("Subtract", [a1x, ce.function("Multiply", [a0x, r2])]), denom])
           .evaluate();
         const A2 = ce.function("Subtract", [a0x, A1]).evaluate();
         const term1 = ce.function("Multiply", [A1, ce.function("Power", [r1, n])]);

@@ -61,42 +61,24 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
   Beta: {
     "1,0": {
       params: ["a", "b"],
-      body: [
-        "Multiply",
-        ["Beta", "a", "b"],
-        ["Subtract", ["Digamma", "a"], ["Digamma", ["Add", "a", "b"]]],
-      ],
+      body: ["Multiply", ["Beta", "a", "b"], ["Subtract", ["Digamma", "a"], ["Digamma", ["Add", "a", "b"]]]],
     },
     "0,1": {
       params: ["a", "b"],
-      body: [
-        "Multiply",
-        ["Beta", "a", "b"],
-        ["Subtract", ["Digamma", "b"], ["Digamma", ["Add", "a", "b"]]],
-      ],
+      body: ["Multiply", ["Beta", "a", "b"], ["Subtract", ["Digamma", "b"], ["Digamma", ["Add", "a", "b"]]]],
     },
   },
   // The inverse-function rule on erf′(y) = (2/√π)e^(−y²).
   ErfInv: {
     "1": {
       params: ["x"],
-      body: [
-        "Multiply",
-        ["Rational", 1, 2],
-        ["Sqrt", "Pi"],
-        ["Exp", ["Power", ["ErfInv", "x"], 2]],
-      ],
+      body: ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"], ["Exp", ["Power", ["ErfInv", "x"], 2]]],
     },
   },
   ErfcInv: {
     "1": {
       params: ["x"],
-      body: [
-        "Multiply",
-        ["Rational", -1, 2],
-        ["Sqrt", "Pi"],
-        ["Exp", ["Power", ["ErfcInv", "x"], 2]],
-      ],
+      body: ["Multiply", ["Rational", -1, 2], ["Sqrt", "Pi"], ["Exp", ["Power", ["ErfcInv", "x"], 2]]],
     },
   },
   // Li_s′(z) = Li_{s−1}(z)/z, termwise on the series; ∂ₛ has no closed form.
@@ -141,10 +123,7 @@ export function declareDerivatives(ce: ComputeEngine): void {
   const derivative = operatorOf(ce, "Derivative");
   if (derivative !== undefined) {
     const native: NativeEval = derivative.evaluate;
-    derivative.evaluate = (
-      ops: readonly BoxedExpression[],
-      options: EvalOptions,
-    ): BoxedExpression | undefined => {
+    derivative.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
       const f = ops[0];
       const table = f !== undefined && isSymbol(f) ? DERIVATIVES[f.symbol] : undefined;
       const partial =
@@ -164,10 +143,7 @@ export function declareDerivatives(ce: ComputeEngine): void {
   const d = operatorOf(ce, "D");
   if (d !== undefined) {
     const native: NativeEval = d.evaluate;
-    d.evaluate = (
-      ops: readonly BoxedExpression[],
-      options: EvalOptions,
-    ): BoxedExpression | undefined => {
+    d.evaluate = (ops: readonly BoxedExpression[], options: EvalOptions): BoxedExpression | undefined => {
       const result = native?.(ops, options);
       if (result === undefined) return undefined;
       const again = result.evaluate(options);

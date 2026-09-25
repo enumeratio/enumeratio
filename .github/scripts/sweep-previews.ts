@@ -71,11 +71,7 @@ function closedAt(prs: Iterable<string>): Map<string, number> {
   const closed = new Map<string, number>();
   for (const pr of prs) {
     try {
-      const at = gh(
-        `repos/${process.env.GITHUB_REPOSITORY}/pulls/${pr}`,
-        "--jq",
-        ".closed_at",
-      ).trim();
+      const at = gh(`repos/${process.env.GITHUB_REPOSITORY}/pulls/${pr}`, "--jq", ".closed_at").trim();
       if (at && at !== "null") closed.set(pr, Date.parse(at));
     } catch {
       console.error(`warn: could not look up PR #${pr}; keeping its previews`);
@@ -98,9 +94,7 @@ function select(deployments: Deployment[]): Deployment[] {
     const closed = closedAt(new Set(previews.map(prOf).filter((pr) => pr !== undefined)));
     const doomed = previews.filter((d) => {
       const at = closed.get(prOf(d) ?? "");
-      return (
-        at !== undefined && at < cutoff && !isTagged(d.deployment_trigger.metadata.commit_hash)
-      );
+      return at !== undefined && at < cutoff && !isTagged(d.deployment_trigger.metadata.commit_hash);
     });
     swept = new Set(doomed.map(prOf).filter((pr) => pr !== undefined));
     return doomed;
@@ -156,20 +150,10 @@ for (const pr of dryRun ? [] : swept) {
       .split("\n")
       .at(-1);
     if (!id) continue;
-    const body = gh(
-      `repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${id}`,
-      "--jq",
-      ".body",
-    );
+    const body = gh(`repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${id}`, "--jq", ".body");
     const lines = body.replace(/\n$/, "").split("\n");
     lines[1] = "Preview deployments removed (PR closed).";
-    gh(
-      `repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${id}`,
-      "-X",
-      "PATCH",
-      "-f",
-      `body=${lines.join("\n")}`,
-    );
+    gh(`repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${id}`, "-X", "PATCH", "-f", `body=${lines.join("\n")}`);
   } catch {
     console.error(`warn: could not note the teardown on PR #${pr}`);
   }

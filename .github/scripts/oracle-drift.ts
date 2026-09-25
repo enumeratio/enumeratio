@@ -24,8 +24,7 @@ const rows = (sidecar: Sidecar): Map<string, Row> => {
   const out = new Map<string, Row>();
   for (const [head, byKey] of Object.entries(sidecar.examples ?? {}))
     for (const [key, bySystem] of Object.entries(byKey))
-      for (const [system, row] of Object.entries(bySystem))
-        out.set(`${head} ${key} (${system})`, row);
+      for (const [system, row] of Object.entries(bySystem)) out.set(`${head} ${key} (${system})`, row);
   return out;
 };
 

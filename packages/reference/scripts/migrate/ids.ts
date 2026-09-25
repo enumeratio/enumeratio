@@ -31,6 +31,4 @@ const inputFormId = (expr: unknown): string => {
 };
 
 export const baseId = (example: { caption?: string; expr: unknown }): string =>
-  (example.caption !== undefined && captionId(example.caption)) ||
-  inputFormId(example.expr) ||
-  "example";
+  (example.caption !== undefined && captionId(example.caption)) || inputFormId(example.expr) || "example";

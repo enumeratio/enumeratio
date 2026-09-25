@@ -8,8 +8,7 @@ import type { Plugin, ViteDevServer } from "vite";
 
 const ID = "virtual:reference-entries";
 const RESOLVED = `\0${ID}`;
-const WATCHED =
-  /\/packages\/.*(\/reference\/[^/]+\.yaml|\/reference\/entries\/[^/]+\.yaml|\.oracle\.json)$/;
+const WATCHED = /\/packages\/.*(\/reference\/[^/]+\.yaml|\/reference\/entries\/[^/]+\.yaml|\.oracle\.json)$/;
 
 export function referenceDataPlugin(): Plugin {
   return {
@@ -24,10 +23,7 @@ export function referenceDataPlugin(): Plugin {
       const packages = `${resolve(server.config.root, "../packages")}/`;
       // Every directory the loader read a record from, and the sidecars'.
       const { heads } = referenceData();
-      server.watcher.add([
-        ...new Set(heads.map((h) => dirname(h.entryPath))),
-        `${packages}reference/src/entries`,
-      ]);
+      server.watcher.add([...new Set(heads.map((h) => dirname(h.entryPath))), `${packages}reference/src/entries`]);
       const refresh = (file: string): void => {
         if (!WATCHED.test(file)) return;
         const mod = server.moduleGraph.getModuleById(RESOLVED);

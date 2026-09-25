@@ -26,9 +26,7 @@ const SymbolRef = defineAsyncComponent(() => import("./components/Symbol.vue"));
 const ComponentIndex = defineAsyncComponent(() => import("./components/ComponentIndex.vue"));
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
 const BenchViewer = defineAsyncComponent(() => import("./components/bench/BenchViewer.vue"));
-const EnvironmentPreview = defineAsyncComponent(
-  () => import("./components/EnvironmentPreview.vue"),
-);
+const EnvironmentPreview = defineAsyncComponent(() => import("./components/EnvironmentPreview.vue"));
 // The symbols as Vue components -- `<Plot>`, `<Histogram>`, `<Cell>`, `<Notatio>`, … --
 // from @enumeratio/notatio/vue, generated there from the element sources.
 
@@ -142,8 +140,8 @@ export default {
       // The promise is assigned synchronously (any element's loadEngine awaits it), but
       // the heavy 15-package source import is deferred to browser idle, so the initial
       // page shell paints before ~all of the monorepo source is transformed.
-      (globalThis as { __notatioEngineReady?: Promise<unknown> }).__notatioEngineReady =
-        new Promise<void>((resolve, reject) => {
+      (globalThis as { __notatioEngineReady?: Promise<unknown> }).__notatioEngineReady = new Promise<void>(
+        (resolve, reject) => {
           const kick = (): void => void startEngine().then(resolve, reject);
           const ric = (
             globalThis as {
@@ -152,7 +150,8 @@ export default {
           ).requestIdleCallback;
           if (ric) ric(kick, { timeout: 2000 });
           else setTimeout(kick, 0);
-        });
+        },
+      );
       // Points an `Evaluator -> "Worker"` `<notatio-dynamic-module>` at the module
       // whose `configure(ce)` declares this page's own libraries into its
       // `@enumeratio/aestimatio/browser` session -- `notatio-dynamic-module.ts`'s own

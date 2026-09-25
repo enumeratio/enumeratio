@@ -28,12 +28,7 @@ examples:
   - id: a-diagonal-matrix-exp-of-each-diagonal-entry
     expr: [MatrixExp, [List, [List, 1, 0, 0], [List, 0, 2, 0], [List, 0, 0, 3]]]
     expected:
-      [
-        List,
-        [List, ExponentialE, 0, 0],
-        [List, 0, [Power, ExponentialE, 2], 0],
-        [List, 0, 0, [Power, ExponentialE, 3]],
-      ]
+      [List, [List, ExponentialE, 0, 0], [List, 0, [Power, ExponentialE, 2], 0], [List, 0, 0, [Power, ExponentialE, 3]]]
     category: Scope
     caption: "A diagonal matrix: exp of each diagonal entry"
   - id: a-3-3-matrix-with-no-diagonal-nilpotent-or-2-2
@@ -87,12 +82,7 @@ examples:
     caption: 'A $3\times3$ nilpotent generator: the exponential series truncates exactly, past the $2\times2$ case.'
   - id: a-jordan-block-repeated-eigenvalue-2-e-2-i-n-not
     expr: [MatrixExp, [List, [List, 2, 1], [List, 0, 2]]]
-    expected:
-      [
-        List,
-        [List, [Power, ExponentialE, 2], [Power, ExponentialE, 2]],
-        [List, 0, [Power, ExponentialE, 2]],
-      ]
+    expected: [List, [List, [Power, ExponentialE, 2], [Power, ExponentialE, 2]], [List, 0, [Power, ExponentialE, 2]]]
     category: Scope
     caption: "A Jordan block (repeated eigenvalue 2): $e^{2}(I+N)$, not a diagonal exponential."
   - id: a-generic-matrix-with-no-closed-form-stays

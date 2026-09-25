@@ -1,12 +1,6 @@
 export { type Algebra, algebraOf, basisBlades, NAMED_ALGEBRAS } from "./algebra.ts";
 export { declareHypercomplex } from "./declare.ts";
-export {
-  distinctPrimeCount,
-  factorize,
-  imaginaryUnitsMod,
-  splitUnitCountMod,
-  splitUnitsMod,
-} from "./modular.ts";
+export { distinctPrimeCount, factorize, imaginaryUnitsMod, splitUnitCountMod, splitUnitsMod } from "./modular.ts";
 export {
   addMultivectors,
   conjugateMultivector,

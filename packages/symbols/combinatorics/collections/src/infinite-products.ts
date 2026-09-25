@@ -98,9 +98,7 @@ function polynomialCoefficients(
   for (const term of terms) {
     const m = monomial(ce, term, sym);
     if (m === undefined || m.degree > maxDegree) return undefined;
-    coefficients[m.degree] = ce
-      .function("Add", [coefficients[m.degree]!, m.coefficient])
-      .evaluate();
+    coefficients[m.degree] = ce.function("Add", [coefficients[m.degree]!, m.coefficient]).evaluate();
   }
   return coefficients;
 }
@@ -145,25 +143,13 @@ function rootsOf(
       // the pairing step below then declines rather than treat as closed-form.
       const [c0, c1, c2] = coefficients;
       const discriminant = ce
-        .function("Subtract", [
-          ce.function("Power", [c1!, 2]),
-          ce.function("Multiply", [4, c2!, c0!]),
-        ])
+        .function("Subtract", [ce.function("Power", [c1!, 2]), ce.function("Multiply", [4, c2!, c0!])])
         .evaluate();
       const root = ce.function("Sqrt", [discriminant]).evaluate();
       const twiceA = ce.function("Multiply", [2, c2!]).evaluate();
+      roots.push(ce.function("Divide", [ce.function("Add", [ce.function("Negate", [c1!]), root]), twiceA]).evaluate());
       roots.push(
-        ce
-          .function("Divide", [ce.function("Add", [ce.function("Negate", [c1!]), root]), twiceA])
-          .evaluate(),
-      );
-      roots.push(
-        ce
-          .function("Divide", [
-            ce.function("Subtract", [ce.function("Negate", [c1!]), root]),
-            twiceA,
-          ])
-          .evaluate(),
+        ce.function("Divide", [ce.function("Subtract", [ce.function("Negate", [c1!]), root]), twiceA]).evaluate(),
       );
     }
   }
@@ -172,10 +158,7 @@ function rootsOf(
 
 /** `roots` grouped into `{r, −r}` pairs (one representative per pair) -- `undefined`
  * when some root has no partner, the only shape the Gamma-ratio step below closes. */
-function pairByNegation(
-  ce: ComputeEngine,
-  roots: readonly BoxedExpression[],
-): BoxedExpression[] | undefined {
+function pairByNegation(ce: ComputeEngine, roots: readonly BoxedExpression[]): BoxedExpression[] | undefined {
   const remaining = [...roots];
   const representatives: BoxedExpression[] = [];
   while (remaining.length > 0) {
@@ -193,18 +176,12 @@ function pairByNegation(
  * argument non-negative (parity applied by hand) -- compute-engine doesn't fold e.g.
  * `Sinh(-Pi)` back to `-Sinh(Pi)` once it sits inside a larger sum, so built the naive
  * way the final answer stays an unsimplified tangle of negated hyperbolics. */
-function signedPiTrig(
-  ce: ComputeEngine,
-  kind: "Sin" | "Cos" | "Sinh" | "Cosh",
-  x: BoxedExpression,
-): BoxedExpression {
+function signedPiTrig(ce: ComputeEngine, kind: "Sin" | "Cos" | "Sinh" | "Cosh", x: BoxedExpression): BoxedExpression {
   if (isZero(x)) return kind === "Cos" || kind === "Cosh" ? ce.One : ce.Zero;
   const negative = x.N().re < 0;
   const magnitude = negative ? ce.function("Negate", [x]).evaluate() : x;
   const odd = kind === "Sin" || kind === "Sinh";
-  const value = ce
-    .function(kind, [ce.function("Multiply", [ce.symbol("Pi"), magnitude])])
-    .evaluate();
+  const value = ce.function(kind, [ce.function("Multiply", [ce.symbol("Pi"), magnitude])]).evaluate();
   return negative && odd ? ce.function("Negate", [value]).evaluate() : value;
 }
 
@@ -214,26 +191,16 @@ function signedPiTrig(
 function sinOfPiTimes(ce: ComputeEngine, u: BoxedExpression): BoxedExpression {
   const p = ce.function("Re", [u]).evaluate();
   const q = ce.function("Im", [u]).evaluate();
-  const real = ce
-    .function("Multiply", [signedPiTrig(ce, "Sin", p), signedPiTrig(ce, "Cosh", q)])
-    .evaluate();
-  const imaginary = ce
-    .function("Multiply", [signedPiTrig(ce, "Cos", p), signedPiTrig(ce, "Sinh", q)])
-    .evaluate();
-  return ce
-    .function("Add", [real, ce.function("Multiply", [ce.I, imaginary]).evaluate()])
-    .evaluate();
+  const real = ce.function("Multiply", [signedPiTrig(ce, "Sin", p), signedPiTrig(ce, "Cosh", q)]).evaluate();
+  const imaginary = ce.function("Multiply", [signedPiTrig(ce, "Cos", p), signedPiTrig(ce, "Sinh", q)]).evaluate();
+  return ce.function("Add", [real, ce.function("Multiply", [ce.I, imaginary]).evaluate()]).evaluate();
 }
 
 /** Γ(k0−r1)·Γ(k0−r2) in closed form, for `k0` a positive integer and `{r1, r2}` a
  * `{r, −r}` pair whose Gamma arguments are NOT individually integers (those are
  * resolved directly by `gammaProductOfRoots`, below, without pairing) -- `undefined`
  * when the reflection step's `Sqrt`/`Sin` left a discriminant or angle unresolved. */
-function gammaReflectedPair(
-  ce: ComputeEngine,
-  k0: number,
-  r: BoxedExpression,
-): BoxedExpression | undefined {
+function gammaReflectedPair(ce: ComputeEngine, k0: number, r: BoxedExpression): BoxedExpression | undefined {
   const u = ce.function("Subtract", [k0, r]).evaluate();
   // Γ(k0+r) = Γ(1−u + (2k0−1))·… -- recursion down to Γ(1−u), then reflection:
   // Γ(1−u) = Γ(k0+r)/∏_{t=1}^{2k0−1}(t−u), and Γ(u)Γ(1−u) = π/sin(πu), so
@@ -268,9 +235,7 @@ function gammaProductOfRoots(
       continue;
     }
     if (argument < 1) return undefined; // a pole in [k0, ∞)
-    product = ce
-      .function("Multiply", [product, ce.function("Factorial", [argument - 1])])
-      .evaluate();
+    product = ce.function("Multiply", [product, ce.function("Factorial", [argument - 1])]).evaluate();
   }
   const pairs = pairByNegation(ce, remaining);
   if (pairs === undefined) return undefined;
@@ -295,8 +260,7 @@ function closedFormInfiniteProduct(
   if (k0 === undefined || k0 < 1) return undefined;
 
   const together = ce.function("Together", [body]).evaluate();
-  const [numerator, denominator] =
-    together.operator === "Divide" ? operandsOf(together) : [together, ce.One];
+  const [numerator, denominator] = together.operator === "Divide" ? operandsOf(together) : [together, ce.One];
 
   const numeratorRoots = rootsOf(ce, numerator!, idxName);
   const denominatorRoots = rootsOf(ce, denominator!, idxName);
@@ -322,8 +286,7 @@ function closedFormInfiniteProduct(
 
 export function declareInfiniteProducts(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Product");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   if (operator === undefined) return;
   const native = operator.evaluate;
   operator.evaluate = (ops, options) => {

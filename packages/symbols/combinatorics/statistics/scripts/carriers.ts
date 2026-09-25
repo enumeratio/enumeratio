@@ -39,8 +39,7 @@ const SHAPES: Readonly<Record<string, string>> = {
 
 /** Mint the carrier types and their held constructors, the way `declareDomains` does. */
 export function declareCarriers(ce: ComputeEngine): void {
-  for (const type of Object.values(ALL_CARRIERS))
-    ce.declareType(type, SHAPES[type]!, { mint: true });
+  for (const type of Object.values(ALL_CARRIERS)) ce.declareType(type, SHAPES[type]!, { mint: true });
   for (const [name, type] of Object.entries(ALL_CARRIERS))
     ce.declare(name, { signature: `(${SHAPES[type]!}) -> ${type}` });
 }

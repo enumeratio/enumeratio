@@ -49,11 +49,4 @@ export { type DriveScreen, type Driver, drivable, driver, type Key, keysOf } fro
 export { textOf } from "./textual.ts";
 export { type Presented, present, resumeHint } from "./present.ts";
 export { blue, bold, cyan, dim, green, magenta, red, stripAnsi, yellow } from "./ansi.ts";
-export {
-  CLI_DEMOS,
-  cliDemosByCategory,
-  type Demo,
-  DEMOS,
-  demosByCategory,
-  HIGHLIGHTED,
-} from "./demos.ts";
+export { CLI_DEMOS, cliDemosByCategory, type Demo, DEMOS, demosByCategory, HIGHLIGHTED } from "./demos.ts";

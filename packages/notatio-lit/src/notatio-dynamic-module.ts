@@ -184,8 +184,7 @@ export class NotatioDynamicModule extends LitElement {
   }
 
   #openSession(): BrowserSession {
-    const setup =
-      this.workerSetup || (globalThis as WorkerSetupGate).__notatioWorkerSetup || undefined;
+    const setup = this.workerSetup || (globalThis as WorkerSetupGate).__notatioWorkerSetup || undefined;
     const factories = (globalThis as WorkerFactoriesGate).__notatioWorkerFactories;
     // Not `name`d: each module instance gets its own private session rather than
     // joining a page-wide `SharedWorker` -- two `Evaluator -> "Worker"` modules on
@@ -212,16 +211,12 @@ export class NotatioDynamicModule extends LitElement {
    * the session is hard-killed and respawned, same outcome (and notice) as a
    * `TimeConstraint` deadline's own hard kill.
    */
-  evaluateRemote(
-    json: unknown,
-    options: { signal?: AbortSignal } = {},
-  ): Promise<{ value: unknown; reset: boolean }> {
+  evaluateRemote(json: unknown, options: { signal?: AbortSignal } = {}): Promise<{ value: unknown; reset: boolean }> {
     const session = (this.#session ??= this.#openSession());
     // Wolfram's own unit (`TimeConstraint`, `VerificationTest`) is seconds; aestimatio's
     // session API wants ms.
     const timeMs = this.timeConstraint > 0 ? this.timeConstraint * 1000 : undefined;
-    const attempt = (): Promise<{ value: unknown; reset: boolean }> =>
-      session.evaluate(json, { timeMs });
+    const attempt = (): Promise<{ value: unknown; reset: boolean }> => session.evaluate(json, { timeMs });
 
     // `reset: true` here is never a user-requested stop (that path is the `signal`
     // branch below, which resolves its own `Aborted` directly) -- it's the session's

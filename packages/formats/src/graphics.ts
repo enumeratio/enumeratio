@@ -40,8 +40,7 @@ function toBase64(bytes: Uint8Array): string {
 }
 
 /** A `data:` URI for `bytes` of the given media type. */
-export const dataUri = (bytes: Uint8Array, mimeType: string): string =>
-  `data:${mimeType};base64,${toBase64(bytes)}`;
+export const dataUri = (bytes: Uint8Array, mimeType: string): string => `data:${mimeType};base64,${toBase64(bytes)}`;
 
 /** An SVG document as a `data:` URI — no decoding, so it works anywhere. */
 export const svgDataUri = (svg: string): string =>
@@ -61,8 +60,7 @@ export function imageUri(expr: BoxedExpression | undefined): string | undefined 
 }
 
 /** MathJSON keeps a string literal in quotes; a URI should not carry them. */
-const stripQuotes = (s: string): string =>
-  s.length >= 2 && s.startsWith("'") && s.endsWith("'") ? s.slice(1, -1) : s;
+const stripQuotes = (s: string): string => (s.length >= 2 && s.startsWith("'") && s.endsWith("'") ? s.slice(1, -1) : s);
 
 /** The SVG source a value carries, if it carries one. */
 function svgOf(expr: BoxedExpression): string | undefined {

@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  type Algebra,
-  algebraOf,
-  type Multivector,
-  toExpression,
-  toMultivector,
-} from "@enumeratio/hypercomplex";
+import { type Algebra, algebraOf, type Multivector, toExpression, toMultivector } from "@enumeratio/hypercomplex";
 import { gradePart, gradesOf } from "./blades.ts";
 import { poincareDual, pseudoscalar, sandwich, vee } from "./dual.ts";
 import {
@@ -64,10 +58,7 @@ const readAlgebra = (op: BoxedExpression | undefined): Algebra | undefined =>
  * - `Sandwich(a, b)` — `a b ā`, how a versor acts.
  */
 export function declareGeometric(ce: ComputeEngine): void {
-  const binary = (
-    name: string,
-    op: (ce: ComputeEngine, a: Multivector, b: Multivector) => Multivector,
-  ): void => {
+  const binary = (name: string, op: (ce: ComputeEngine, a: Multivector, b: Multivector) => Multivector): void => {
     ce.declare(name, {
       signature: "(number, number) -> number",
       commutative: false,
@@ -79,10 +70,7 @@ export function declareGeometric(ce: ComputeEngine): void {
     });
   };
 
-  const involution = (
-    name: string,
-    op: (ce: ComputeEngine, mv: Multivector) => Multivector,
-  ): void => {
+  const involution = (name: string, op: (ce: ComputeEngine, mv: Multivector) => Multivector): void => {
     ce.declare(name, {
       signature: "(number) -> number",
       evaluate: (ops: readonly BoxedExpression[]) => {
@@ -145,9 +133,7 @@ export function declareGeometric(ce: ComputeEngine): void {
     signature: "(any) -> number",
     evaluate: (ops: readonly BoxedExpression[]) => {
       const algebra = readAlgebra(ops[0]);
-      return algebra === undefined
-        ? undefined
-        : toExpression(ce, pseudoscalar(ce, algebra.generators));
+      return algebra === undefined ? undefined : toExpression(ce, pseudoscalar(ce, algebra.generators));
     },
   });
 

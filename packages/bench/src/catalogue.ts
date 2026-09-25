@@ -41,8 +41,7 @@ function validate(c: BenchCase): string | undefined {
   if (c.expr === undefined) return "no expr";
   if (c.bench === undefined) return "no bench block";
   const p = c.bench.precision;
-  if (p !== "exact" && p !== "machine" && !(Number.isInteger(p) && p > 0))
-    return `bad precision ${JSON.stringify(p)}`;
+  if (p !== "exact" && p !== "machine" && !(Number.isInteger(p) && p > 0)) return `bad precision ${JSON.stringify(p)}`;
   if (c.bench.sample === undefined && c.expected === undefined) return "no expected";
   return undefined;
 }
@@ -50,8 +49,6 @@ function validate(c: BenchCase): string | undefined {
 /** Substitute each case's seeded draws, giving the concrete inputs every system runs. */
 export function concretise(c: BenchCase): ConcreteCase {
   const inputs: MathJSON[] =
-    c.bench.sample === undefined
-      ? [c.expr]
-      : drawSample(c.bench.sample).map((binding) => substitute(c.expr, binding));
+    c.bench.sample === undefined ? [c.expr] : drawSample(c.bench.sample).map((binding) => substitute(c.expr, binding));
   return { name: `${c.head}/${c.id}`, case: c, inputs };
 }

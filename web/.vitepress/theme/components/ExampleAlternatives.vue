@@ -20,8 +20,7 @@ const props = defineProps<{
 
 // Tabs are narrow: the short name where the crosswalk's label is long.
 const SHORT: Record<string, string> = { wolfram: "Wolfram", sage: "Sage" };
-const label = (system: string): string =>
-  SHORT[system] ?? (isCrosswalkSystem(system) ? SOURCES[system].label : system);
+const label = (system: string): string => SHORT[system] ?? (isCrosswalkSystem(system) ? SOURCES[system].label : system);
 const MARK: Record<Alternative["verdict"], string> = {
   agree: "",
   disagree: "≠",
@@ -40,9 +39,7 @@ const active = ref<string | undefined>();
 const toggle = (system: string): void => {
   active.value = active.value === system ? undefined : system;
 };
-const shown = computed(() =>
-  active.value === undefined ? undefined : props.alternatives[active.value],
-);
+const shown = computed(() => (active.value === undefined ? undefined : props.alternatives[active.value]));
 </script>
 
 <template>
@@ -74,8 +71,7 @@ const shown = computed(() =>
       <p v-if="active && notes?.[active]" class="alt-note">{{ notes[active] }}</p>
       <p v-if="shown.kind === 'ours' && shown.issue" class="alt-note">
         A gap on our side, tracked in
-        <a :href="`https://github.com/enumeratio/enumeratio/issues/${shown.issue}`"
-          >#{{ shown.issue }}</a
+        <a :href="`https://github.com/enumeratio/enumeratio/issues/${shown.issue}`">#{{ shown.issue }}</a
         >.
       </p>
     </div>

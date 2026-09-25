@@ -97,9 +97,7 @@ const bad: { url: string; status: number | string; who: string[] }[] = [];
 const BATCH = 4;
 for (let i = 0; i < urls.length; i += BATCH) {
   const slice = urls.slice(i, i + BATCH);
-  const statuses = await Promise.all(
-    slice.map((url) => probe(url).catch((error: Error) => error.message)),
-  );
+  const statuses = await Promise.all(slice.map((url) => probe(url).catch((error: Error) => error.message)));
   slice.forEach((url, j) => {
     const status = statuses[j]!;
     if (typeof status === "number" && status >= 200 && status < 300) return;

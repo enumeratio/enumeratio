@@ -67,10 +67,7 @@ const fibonacci = recurrenceCache([0n, 1n], (t) => t[t.length - 1] + t[t.length 
 const lucas = recurrenceCache([2n, 1n], (t) => t[t.length - 1] + t[t.length - 2]);
 const jacobsthal = recurrenceCache([0n, 1n], (t) => t[t.length - 1] + 2n * t[t.length - 2]);
 const pell = recurrenceCache([0n, 1n], (t) => 2n * t[t.length - 1] + t[t.length - 2]);
-const tribonacci = recurrenceCache(
-  [0n, 0n, 1n],
-  (t) => t[t.length - 1] + t[t.length - 2] + t[t.length - 3],
-);
+const tribonacci = recurrenceCache([0n, 0n, 1n], (t) => t[t.length - 1] + t[t.length - 2] + t[t.length - 3]);
 // Pₙ = Pₙ₋₂ + Pₙ₋₃, base case a(0)=1, a(1)=a(2)=0 (A000931). Dips through index 4 (1,0,0,1,0)
 // before climbing forever from index 4 (0,1,1,1,2,2,3,...).
 const padovan = recurrenceCache([1n, 0n, 0n], (t) => t[t.length - 2] + t[t.length - 3]);

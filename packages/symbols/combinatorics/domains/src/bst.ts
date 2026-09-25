@@ -16,23 +16,17 @@
 // structure at depth — the accumulator is one flat array, updated at one index per insertion,
 // which is what makes it fit the "iterate over a RANGE and index" rule (tableau.ts) at all.
 
-type MathJSON =
-  | string
-  | number
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 const at = (list: MathJSON, index: MathJSON): MathJSON => ["At", list, index];
 const count = (list: MathJSON): MathJSON => ["Count", list];
 
-const overRange = (
-  n: MathJSON,
-  initial: MathJSON,
-  step: MathJSON,
-  accumulator: string,
-  variable: string,
-): MathJSON => ["Fold", ["Function", step, accumulator, variable], initial, ["Range", 1, n]];
+const overRange = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: string, variable: string): MathJSON => [
+  "Fold",
+  ["Function", step, accumulator, variable],
+  initial,
+  ["Range", 1, n],
+];
 
 const WORD: MathJSON = "_raw";
 const SIZE: MathJSON = count(WORD);
@@ -69,12 +63,7 @@ const descendStep = (parents: MathJSON, x: MathJSON): MathJSON => [
   "If",
   ["Equal", DS_DONE, 1],
   "ds",
-  [
-    "If",
-    ["Equal", childOf(parents, DS_CUR, x), 0],
-    ["List", DS_CUR, 1],
-    ["List", childOf(parents, DS_CUR, x), 0],
-  ],
+  ["If", ["Equal", childOf(parents, DS_CUR, x), 0], ["List", DS_CUR, 1], ["List", childOf(parents, DS_CUR, x), 0]],
 ];
 
 /** Where `x` attaches under `parents`, starting from the root — found within `SIZE` steps,

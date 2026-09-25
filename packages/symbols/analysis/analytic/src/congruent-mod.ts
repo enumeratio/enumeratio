@@ -11,9 +11,6 @@ export function evaluateCongruentMod(
   m: BoxedExpression,
 ): BoxedExpression | undefined {
   if (!isRealInt(a) || !isRealInt(b) || !isRealInt(m)) return undefined;
-  const test =
-    m.re === 0
-      ? ["Equal", a.json, b.json]
-      : ["Equal", ["Mod", ["Subtract", a.json, b.json], m.json], 0];
+  const test = m.re === 0 ? ["Equal", a.json, b.json] : ["Equal", ["Mod", ["Subtract", a.json, b.json], m.json], 0];
   return ce.box(test as never).evaluate();
 }

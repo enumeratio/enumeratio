@@ -11,9 +11,7 @@ import {
 } from "../src/manipulate.ts";
 
 test("a bare slider tuple defaults its value to the min (Manipulate default)", () => {
-  expect(parseControls("{a, 0, 5}")).toEqual([
-    { kind: "slider", name: "a", value: 0, min: 0, max: 5, step: 0.05 },
-  ]);
+  expect(parseControls("{a, 0, 5}")).toEqual([{ kind: "slider", name: "a", value: 0, min: 0, max: 5, step: 0.05 }]);
 });
 
 test("explicit initial value and step are honoured", () => {
@@ -27,9 +25,7 @@ test("initial value is clamped into range", () => {
 });
 
 test("a brace list is a discrete choice setter, starting at the first choice", () => {
-  expect(parseControls("{k, {2, 3, 5, 7}}")).toEqual([
-    { kind: "choice", name: "k", value: 2, choices: [2, 3, 5, 7] },
-  ]);
+  expect(parseControls("{k, {2, 3, 5, 7}}")).toEqual([{ kind: "choice", name: "k", value: 2, choices: [2, 3, 5, 7] }]);
   // An explicit initial value that is one of the choices is honoured.
   expect(parseControls("{{k, 5}, {2, 3, 5, 7}}")[0].value).toBe(5);
 });
@@ -129,15 +125,11 @@ test("',' between tuples separates too, rather than parsing as one mangled contr
 
 test("a single control is untouched by the comma handling", () => {
   // Its own commas separate fields, not controls.
-  expect(parseControls("{a, 0, 5, 0.5}")).toEqual([
-    { kind: "slider", name: "a", value: 0, min: 0, max: 5, step: 0.5 },
-  ]);
+  expect(parseControls("{a, 0, 5, 0.5}")).toEqual([{ kind: "slider", name: "a", value: 0, min: 0, max: 5, step: 0.5 }]);
   expect(parseControls("{ {A, 1}, 0, 2}")).toEqual([
     { kind: "slider", name: "A", value: 1, min: 0, max: 2, step: 0.02 },
   ]);
-  expect(parseControls("{k, {2, 3, 5, 7}}")).toEqual([
-    { kind: "choice", name: "k", value: 2, choices: [2, 3, 5, 7] },
-  ]);
+  expect(parseControls("{k, {2, 3, 5, 7}}")).toEqual([{ kind: "choice", name: "k", value: 2, choices: [2, 3, 5, 7] }]);
 });
 
 test("mixed separators, and a choice setter alongside a slider", () => {

@@ -18,10 +18,7 @@ test("MatrixRank: a 3x3 of distinct symbols is full rank, 3 (#113)", () => {
   // Avoid `e` and `i` -- compute-engine reads those as ExponentialE / ImaginaryUnit,
   // not plain symbols, so they're not "distinct symbols" in the sense this rule needs.
   const r = ce
-    .box([
-      "MatrixRank",
-      ["List", ["List", "p", "q", "r"], ["List", "s", "t", "u"], ["List", "v", "w", "x"]],
-    ])
+    .box(["MatrixRank", ["List", ["List", "p", "q", "r"], ["List", "s", "t", "u"], ["List", "v", "w", "x"]]])
     .evaluate();
   expect(r.toString()).toBe("3");
 });
@@ -32,9 +29,7 @@ test("MatrixRank: a repeated symbol does NOT qualify -- stays unevaluated (#113)
 });
 
 test("MatrixRank: a non-square matrix of distinct symbols does NOT qualify (#113)", () => {
-  const r = ce
-    .box(["MatrixRank", ["List", ["List", "a", "b", "c"], ["List", "d", "e", "f"]]])
-    .evaluate();
+  const r = ce.box(["MatrixRank", ["List", ["List", "a", "b", "c"], ["List", "d", "e", "f"]]]).evaluate();
   expect(r.operator).toBe("MatrixRank");
 });
 

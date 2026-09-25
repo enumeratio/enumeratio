@@ -56,8 +56,7 @@ function fakeNodeWorker(options: { autoStart?: boolean } = {}) {
     respond: (payload: { ok: boolean; json?: unknown; error?: string }) => {
       const last = posted.at(-1);
       if (last === undefined) throw new Error("fakeNodeWorker: nothing was posted yet");
-      for (const l of listeners.get("message") ?? [])
-        l({ id: last.id, kind: "result", ...payload });
+      for (const l of listeners.get("message") ?? []) l({ id: last.id, kind: "result", ...payload });
     },
     fail: () => {
       for (const l of listeners.get("error") ?? []) l();

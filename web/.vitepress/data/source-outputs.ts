@@ -98,8 +98,7 @@ const wolfram: readonly SourceRow[] = [
   {
     expr: ["Union", ["List", 3, 1, 2], ["List", 2, 4]],
     label: "set union",
-    divergence:
-      "Wolfram returns a sorted list {1, 2, 3, 4} rather than preserving encounter order.",
+    divergence: "Wolfram returns a sorted list {1, 2, 3, 4} rather than preserving encounter order.",
   },
 ];
 

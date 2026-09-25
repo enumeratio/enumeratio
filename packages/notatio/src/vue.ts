@@ -8,23 +8,9 @@
 // module only names them.
 
 import { parseNotatio } from "@enumeratio/formats/notatio";
-import {
-  type App,
-  defineComponent,
-  h,
-  onMounted,
-  onUnmounted,
-  ref,
-  type VNode,
-  watchEffect,
-} from "vue";
+import { type App, defineComponent, h, onMounted, onUnmounted, ref, type VNode, watchEffect } from "vue";
 import { loadEngine } from "./engine.ts";
-import {
-  type Environment,
-  environmentNamed,
-  pageEnvironment,
-  watchPageEnvironment,
-} from "./environment.ts";
+import { type Environment, environmentNamed, pageEnvironment, watchPageEnvironment } from "./environment.ts";
 import { reduce } from "./reduce.ts";
 import type { Rendering } from "./symbols.ts";
 import { structuralOf, toVNode } from "./vdom.ts";
@@ -71,9 +57,7 @@ export const Notatio = defineComponent({
     });
     return () => {
       if (tree.value === undefined) return h("span", { class: "notatio-pending" });
-      const node = toVNode<VNode>(tree.value, (tag, attrs, children) =>
-        h(tag, { ...attrs }, [...children]),
-      );
+      const node = toVNode<VNode>(tree.value, (tag, attrs, children) => h(tag, { ...attrs }, [...children]));
       // A forced environment is ambient context, not part of the expression, so it rides
       // on a wrapper the elements find with `closest("[env]")` rather than on the root --
       // an attribute there would be read as an option by a generic element.

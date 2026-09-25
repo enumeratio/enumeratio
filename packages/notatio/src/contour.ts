@@ -26,8 +26,7 @@ function fnv1a(s: string): string {
   return (h >>> 0).toString(36);
 }
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function label(x: number): string {
   if (!Number.isFinite(x)) return "";
@@ -46,13 +45,7 @@ export type ContourSegment = readonly [ContourPoint, ContourPoint];
 type Grid = readonly (readonly number[])[];
 
 /** Linear interpolation of the level crossing between two corner samples. */
-function crossing(
-  level: number,
-  pa: ContourPoint,
-  va: number,
-  pb: ContourPoint,
-  vb: number,
-): ContourPoint {
+function crossing(level: number, pa: ContourPoint, va: number, pb: ContourPoint, vb: number): ContourPoint {
   const t = va === vb ? 0.5 : (level - va) / (vb - va);
   return { x: pa.x + t * (pb.x - pa.x), y: pa.y + t * (pb.y - pa.y) };
 }
@@ -231,8 +224,7 @@ export function contourSvg(
 
   const ny = grid.length;
   const nx = ny > 0 ? grid[0].length : 0;
-  if (nx < 2 || ny < 2 || xs.length < nx || ys.length < ny)
-    return frame(W, H, titleSvg(W, opts.title));
+  if (nx < 2 || ny < 2 || xs.length < nx || ys.length < ny) return frame(W, H, titleSvg(W, opts.title));
 
   const flat = grid.flat().filter(Number.isFinite);
   if (flat.length === 0) return frame(W, H, titleSvg(W, opts.title));
@@ -282,9 +274,7 @@ export function contourSvg(
     for (const lv of levels) {
       const segs = marchingSquares(grid, xs.slice(0, nx), ys.slice(0, ny), lv);
       if (segs.length === 0) continue;
-      const d = segs
-        .map(([a, b]) => `M${n2(sx(a.x))},${n2(syT(a.y))} L${n2(sx(b.x))},${n2(syT(b.y))}`)
-        .join(" ");
+      const d = segs.map(([a, b]) => `M${n2(sx(a.x))},${n2(syT(a.y))} L${n2(sx(b.x))},${n2(syT(b.y))}`).join(" ");
       lines += `<path d="${d}" fill="none" stroke="${ACCENT}" stroke-width="1.3" stroke-linecap="round" opacity="0.85"/>`;
     }
   }

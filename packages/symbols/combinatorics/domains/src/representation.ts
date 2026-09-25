@@ -111,8 +111,7 @@ export const REPRESENTATIONS: readonly Representation[] = [
       const size = Math.max(...groups.flat());
       const image = new Array<number>(size).fill(0);
       for (const cycle of groups)
-        for (const [index, entry] of cycle.entries())
-          image[entry - 1] = cycle[(index + 1) % cycle.length]!;
+        for (const [index, entry] of cycle.entries()) image[entry - 1] = cycle[(index + 1) % cycle.length]!;
       return image.every((v) => v >= 1) ? image : undefined;
     },
   },
@@ -236,9 +235,7 @@ export const LATEX_REPRESENTATIONS: readonly Representation[] = [
         if (last && last[0] === part) last[1]++;
         else runs.push([part, 1]);
       }
-      return runs
-        .map(([part, count]) => (count === 1 ? `${part}` : `${part}^{${count}}`))
-        .join(TIMES);
+      return runs.map(([part, count]) => (count === 1 ? `${part}` : `${part}^{${count}}`)).join(TIMES);
     },
   },
   {
@@ -259,7 +256,4 @@ export const LATEX_REPRESENTATIONS: readonly Representation[] = [
 ];
 
 /** Every representation, ascii and latex. */
-export const ALL_REPRESENTATIONS: readonly Representation[] = [
-  ...REPRESENTATIONS,
-  ...LATEX_REPRESENTATIONS,
-];
+export const ALL_REPRESENTATIONS: readonly Representation[] = [...REPRESENTATIONS, ...LATEX_REPRESENTATIONS];

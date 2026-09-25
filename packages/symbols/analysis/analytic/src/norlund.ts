@@ -66,8 +66,7 @@ function computeUpTo(N: number): void {
       const coeff = rscale(g[k], BigInt(k)); // k·g_k, a plain rational
       if (coeff[0] === 0n) continue;
       const shifted = h[n - k]; // multiplying by "a" bumps every coefficient's degree by 1
-      for (let i = 0; i < shifted.length; i++)
-        acc[i + 1] = rplus(acc[i + 1], rtimes(coeff, shifted[i]));
+      for (let i = 0; i < shifted.length; i++) acc[i + 1] = rplus(acc[i + 1], rtimes(coeff, shifted[i]));
     }
     h[n] = acc.map((c) => rdiv(c, [BigInt(n), 1n]));
   }

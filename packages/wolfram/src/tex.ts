@@ -30,8 +30,7 @@ import { isSystemName } from "./system-names.ts";
 import { HEADS } from "./to-wolfram.ts";
 
 /** A Wolfram head's compute-engine name, which notatio writes for a head without notation. */
-const ceName = (name: string | undefined): string =>
-  name === undefined ? "" : (REVERSE_HEADS[name] ?? name);
+const ceName = (name: string | undefined): string => (name === undefined ? "" : (REVERSE_HEADS[name] ?? name));
 
 type Rule = readonly [RegExp, string | ((...match: string[]) => string)];
 
@@ -152,13 +151,11 @@ function splitTop(text: string, separator: string): string[] {
 
 /** Wolfram's number marks: `1.5$\grave{ }$20.` (a precision) and `…*${}^{\wedge}$-7`
  *  (an exponent) inside `\text{…}`, and `ctx$\grave{ }$Name` (a context). */
-const MARKED_NUMBER =
-  /\\text\{(-?\d+\.\d*)\$\\grave\{ ?\}\$(?:\d+\.?\d*)?(?:\*\$\{\}\^\{\\wedge ?\}\$(-?\d+))?\}/g;
+const MARKED_NUMBER = /\\text\{(-?\d+\.\d*)\$\\grave\{ ?\}\$(?:\d+\.?\d*)?(?:\*\$\{\}\^\{\\wedge ?\}\$(-?\d+))?\}/g;
 const CONTEXT = /\\text\{[A-Za-z][A-Za-z0-9]*\$\\grave\{ ?\}\$([A-Za-z][A-Za-z0-9]*)\}/g;
 
 /** A matrix: Wolfram writes a rectangular list of lists as an array. */
-const ARRAY =
-  /\\left\(\s*\\begin\{array\}\{c+\}((?:(?!\\begin\{array\}).)*?)\\end\{array\}\s*\\right\)/gs;
+const ARRAY = /\\left\(\s*\\begin\{array\}\{c+\}((?:(?!\\begin\{array\}).)*?)\\end\{array\}\s*\\right\)/gs;
 const toRows = (_: string, body: string): string => {
   const rows = body.split("\\\\").filter((row) => row.trim() !== "");
   const list = (cells: string[]): string => `\\lbrack ${cells.join(", ")}\\rbrack `;
@@ -196,10 +193,7 @@ export function fromWolframTeX(tex: string, options: TeXOptions = {}): string {
       new RegExp(String.raw`${BASE}\^\{-(\d+)\}`, "g"),
       (_, b, n) => (n === "1" ? `\\frac{1}{${bare(b)}}` : `\\frac{1}{${b}^{${n}}}`),
     ],
-    [
-      MARKED_NUMBER,
-      (_, m, e) => (e === undefined ? m : `${m}\\cdot10^{${e}}`).replace(/\.(?=\\|$)/, ""),
-    ],
+    [MARKED_NUMBER, (_, m, e) => (e === undefined ? m : `${m}\\cdot10^{${e}}`).replace(/\.(?=\\|$)/, "")],
     [CONTEXT, "\\text{$1}"],
     [ARRAY, toRows],
     ...INVERSES.map(([w, ours]): Rule => [new RegExp(`${word(w)}\\s*\\^\\{-1\\}`, "g"), ours]),
@@ -209,9 +203,7 @@ export function fromWolframTeX(tex: string, options: TeXOptions = {}): string {
   );
   // notatio writes `e^{x}` for a number or a symbol, `\exp(…)` for anything longer.
   out = withGroup(out, /\\exp(?![a-zA-Z])\s*/, (_, o, x) =>
-    o.endsWith("(") && /^\s*(?:-?\d+(?:\.\d+)?|[a-zA-Z]|\\[a-zA-Z]+)\s*$/.test(x)
-      ? `e^{${x.trim()}}`
-      : undefined,
+    o.endsWith("(") && /^\s*(?:-?\d+(?:\.\d+)?|[a-zA-Z]|\\[a-zA-Z]+)\s*$/.test(x) ? `e^{${x.trim()}}` : undefined,
   );
   // A set, as `toWolfram` writes one, before its list is taken for a list.
   out = withGroup(out, /\\text\{Union\}\s*/, (_, o, x) => {
@@ -230,9 +222,7 @@ export function fromWolframTeX(tex: string, options: TeXOptions = {}): string {
   // Multinomial's `(n;a,b)`: a bare parenthesis, not a call's.
   out = withGroup(out, /(?<![\\a-zA-Z}_^])(?=(?:\\left)?\()/, (_, o, x) => {
     const multinomial = /^([^;]+);(.*)$/s.exec(x);
-    return o.endsWith("(") && multinomial
-      ? `\\binom{${multinomial[1]}}{${multinomial[2]}}`
-      : undefined;
+    return o.endsWith("(") && multinomial ? `\\binom{${multinomial[1]}}{${multinomial[2]}}` : undefined;
   });
   return apply(out, [
     [/\\\{/g, "\\lbrack "],
@@ -243,8 +233,7 @@ export function fromWolframTeX(tex: string, options: TeXOptions = {}): string {
     [/(?<=\d)(?:\s*\\ \s*|\s+)(?=\d)/g, "\\times "],
     [
       new RegExp(`\\\\mathcal\\{S\\}_(${SCRIPT})\\^\\{\\(([^{}()]*)\\)\\}`, "g"),
-      (_, n, k) =>
-        `\\left\\lbrace\\begin{matrix}${unbrace(n as string)}\\\\${k}\\end{matrix}\\right\\rbrace`,
+      (_, n, k) => `\\left\\lbrace\\begin{matrix}${unbrace(n as string)}\\\\${k}\\end{matrix}\\right\\rbrace`,
     ],
     [
       new RegExp(`(?<![\\\\a-zA-Z])S_(${SCRIPT})\\^\\{\\(([^{}()]*)\\)\\}`, "g"),
@@ -260,10 +249,7 @@ export function toWolframTeX(tex: string, options: TeXOptions = {}): string {
     [/(?<=(?:\\rbrack|\])\s*)\[([^[\]]*)\]/g, "[[$1]]"],
     [/\\ln(?![a-zA-Z])/g, "\\log"],
     [/(?<=\d)\\,(?=\d)/g, ""],
-    [
-      /(-?\d+\.\d*)\\cdot10\^\{(-?\d+)\}/g,
-      (_, m, e) => `\\text{${m}$\\grave{ }$*\${}^{\\wedge }$${e}}`,
-    ],
+    [/(-?\d+\.\d*)\\cdot10\^\{(-?\d+)\}/g, (_, m, e) => `\\text{${m}$\\grave{ }$*\${}^{\\wedge }$${e}}`],
     ...INVERSES.map(([w, ours]): Rule => [new RegExp(word(ours), "g"), `${w}^{-1}`]),
   ]);
   // A list of equal-length lists is a matrix.
@@ -271,9 +257,7 @@ export function toWolframTeX(tex: string, options: TeXOptions = {}): string {
     if (!o.endsWith("\\lbrack")) return undefined;
     const cells = splitTop(x, ",").map((text) => {
       const row = bracketed(text.trim(), 0);
-      return row?.[0].endsWith("\\lbrack") && row[3] === text.trim().length
-        ? splitTop(row[1], ",")
-        : undefined;
+      return row?.[0].endsWith("\\lbrack") && row[3] === text.trim().length ? splitTop(row[1], ",") : undefined;
     });
     const width = cells[0]?.length ?? 0;
     if (width === 0 || cells.some((row) => row?.length !== width)) return undefined;
@@ -285,10 +269,7 @@ export function toWolframTeX(tex: string, options: TeXOptions = {}): string {
     (_, f, arg, p) => `${f}^${unbrace(p).length === 1 ? unbrace(p) : p}${arg}`,
   );
   out = apply(out, [
-    [
-      /\\left\\lbrace\\begin\{matrix\}([^\\]*)\\\\([^\\]*)\\end\{matrix\}\\right\\rbrace/g,
-      "\\mathcal{S}_{$1}^{($2)}",
-    ],
+    [/\\left\\lbrace\\begin\{matrix\}([^\\]*)\\\\([^\\]*)\\end\{matrix\}\\right\\rbrace/g, "\\mathcal{S}_{$1}^{($2)}"],
     [/(?<![\\a-zA-Z])s\(([^,()]+),\s*([^,()]+)\)/g, "S_{$1}^{($2)}"],
     [/\\binom\{([^{}]*)\}\{([^{},]*,[^{}]*)\}/g, "($1;$2)"],
   ]);
@@ -296,8 +277,7 @@ export function toWolframTeX(tex: string, options: TeXOptions = {}): string {
   out = withGroup(out, /(\\(?:operatorname|mathrm)\{([A-Za-z][A-Za-z0-9]*)\})\s*/, (m, o, x, c) => {
     const bareName = m[2] as string;
     const name =
-      names.get(m[1] as string) ??
-      (/^[A-Z]./.test(bareName) || isSystemName(bareName) ? bareName : undefined);
+      names.get(m[1] as string) ?? (/^[A-Z]./.test(bareName) || isSystemName(bareName) ? bareName : undefined);
     return o.endsWith("(") && name !== undefined
       ? `\\text{${HEADS[name] ?? name}}${size(o)}[${x}${sizeClose(c)}]`
       : undefined;
