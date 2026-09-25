@@ -2036,4 +2036,651 @@ export const numberTheory: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["ProfiniteDecomposition", "ExtendedGCD"],
   },
+  // ── the Wolfram-sweep backlog (design/symbols.md §4, issue #113) — heads carried here from
+  // packages/reference/src/backlog.json, each verified against a brute-force cross-check
+  // (packages/number-theory/tests/backlog.test.ts) rather than just the worked examples below.
+  {
+    name: "CarmichaelLambda",
+    domain: "Number theory",
+    signature: "CarmichaelLambda(n)",
+    summary:
+      "The Carmichael function $\\lambda(n)$: the exponent of the multiplicative group mod $n$ — the least $m$ with $a^m\\equiv1\\pmod n$ for every $a$ coprime to $n$.",
+    signatures: [
+      { call: "CarmichaelLambda(n)", description: "the exponent of $(\\mathbb{Z}/n)^\\times$" },
+    ],
+    details: [
+      "compute-engine has this natively; the gap closed here is Wolfram's $\\lambda(-n)=\\lambda(n)$ and threading over a list, which the native handler left unevaluated.",
+      "$\\lambda(n) \\mid \\varphi(n)$ always, and the two agree exactly when $(\\mathbb{Z}/n)^\\times$ is cyclic. See [[Totient]].",
+    ],
+    examples: [
+      {
+        expr: ["CarmichaelLambda", ["List", 8, 15]],
+        expected: ["List", 2, 4],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["CarmichaelLambda", -100],
+        expected: 20,
+        category: "Scope",
+        caption: "Negative n: $\\lambda(-n)=\\lambda(n)$",
+      },
+      {
+        expr: ["CarmichaelLambda", ["Range", 10]],
+        expected: ["List", 1, 1, 2, 2, 4, 2, 6, 2, 6, 4],
+        category: "Scope",
+        caption: "Listable over a Range",
+      },
+    ],
+    seeAlso: ["Totient", "MultiplicativeOrder"],
+  },
+  {
+    name: "DivisorSum",
+    domain: "Number theory",
+    signature: "DivisorSum(n, f, cond?)",
+    summary:
+      "The sum of $f(d)$ over the positive divisors $d$ of $n$, optionally only those where $\\mathrm{cond}(d)$ holds.",
+    signatures: [
+      {
+        call: "DivisorSum(n, f)",
+        description: "$\\sum_{d\\mid n} f(d)$",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "DivisorSum(n, f, cond)",
+        description: "$\\sum_{d\\mid n,\\ \\mathrm{cond}(d)} f(d)$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "$f$ and $\\mathrm{cond}$ are `Function` literals over the divisor.",
+      "DivisorSigma, MoebiusMu's divisor-sum identity and Totient's are all instances: see [[DivisorSigma]], [[MoebiusMu]], [[Totient]].",
+    ],
+    examples: [
+      {
+        expr: ["DivisorSum", 20, ["Function", ["Power", "d", 2], "d"]],
+        expected: 546,
+        caption: "$\\sigma_2(20)$. See [[DivisorSigma]]",
+      },
+      {
+        expr: ["DivisorSum", 30, ["Function", "d", "d"], ["Function", ["IsOdd", "d"], "d"]],
+        expected: 24,
+        caption: "Only the odd divisors: $1+3+5+15$",
+      },
+      {
+        expr: ["DivisorSum", 12, ["Function", ["MoebiusMu", "d"], "d"]],
+        expected: 0,
+        category: "Properties",
+        caption: "$\\sum_{d\\mid n}\\mu(d)=0$ for $n>1$",
+      },
+      {
+        expr: ["DivisorSum", 36, ["Function", ["Totient", "d"], "d"]],
+        expected: 36,
+        category: "Properties",
+        caption: "$\\sum_{d\\mid n}\\varphi(d)=n$",
+      },
+      {
+        expr: ["DivisorSum", 1, ["Function", "d", "d"]],
+        expected: 1,
+        category: "Possible issues",
+        caption: "1 has one divisor",
+      },
+    ],
+    seeAlso: ["Divisors", "DivisorSigma", "MoebiusMu", "Totient"],
+  },
+  {
+    name: "IsCoprime",
+    domain: "Number theory",
+    signature: "IsCoprime(a, b, …)",
+    summary: "Tests whether the arguments are pairwise relatively prime.",
+    signatures: [
+      {
+        call: "IsCoprime(a, b, …)",
+        description: "true when every pair of arguments is coprime",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Pairwise, not collectively: $\\gcd$ of the whole set being 1 is not enough — every pair must itself be coprime.",
+      "Extends to Gaussian integers, over the same [[GCD]] this widens.",
+      "Wolfram's `CoprimeQ`.",
+    ],
+    examples: [
+      { expr: ["IsCoprime", 4, 9], expected: "True" },
+      { expr: ["IsCoprime", 6, 9], expected: "False", caption: "Both are divisible by 3" },
+      {
+        expr: ["IsCoprime", 2, 3, 5],
+        expected: "True",
+        caption: "Several arguments: every pair must be coprime",
+      },
+      {
+        expr: ["IsCoprime", 6, 10, 15],
+        expected: "False",
+        category: "Possible issues",
+        caption: "Pairwise, not collectively: $\\gcd(6,10,15)=1$ yet no pair is coprime",
+      },
+      {
+        expr: ["IsCoprime", ["Complex", 2, 1], ["Complex", 2, -1]],
+        expected: "True",
+        category: "Scope",
+        caption: "Gaussian integers: $2+i$ and $2-i$ are non-associate primes",
+      },
+      {
+        expr: ["IsCoprime", 3, ["List", 4, 6]],
+        expected: ["List", "True", "False"],
+        category: "Scope",
+        caption: "Listable",
+      },
+    ],
+    seeAlso: ["GCD", "IsPrime"],
+  },
+  {
+    name: "IsPerfect",
+    domain: "Number theory",
+    signature: "IsPerfect(n)",
+    summary: "Tests whether $n$ equals the sum of its proper divisors.",
+    signatures: [{ call: "IsPerfect(n)", description: "$n = \\sigma_1(n) - n$" }],
+    details: [
+      "compute-engine has this natively; the gap closed here is negative $n$ (never perfect) and threading over a list.",
+      "The even perfect numbers are exactly $2^{p-1}(2^p-1)$ for a Mersenne prime exponent $p$ — see [[PerfectNumber]] and [[MersennePrimeExponent]]. Whether an odd perfect number exists is open.",
+      "Wolfram's `PerfectNumberQ`.",
+    ],
+    examples: [
+      {
+        expr: ["IsPerfect", ["List", 6, 28, 12]],
+        expected: ["List", "True", "True", "False"],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["IsPerfect", -6],
+        expected: "False",
+        category: "Possible issues",
+        caption: "Negative numbers are not perfect",
+      },
+    ],
+    seeAlso: ["PerfectNumber", "MersennePrimeExponent", "DivisorSigma"],
+  },
+  {
+    name: "IsPrimePower",
+    domain: "Number theory",
+    signature: "IsPrimePower(n)",
+    summary: "Tests whether $n$ is a positive integer power of a single prime.",
+    signatures: [
+      {
+        call: "IsPrimePower(n)",
+        description: "$n = p^k$ for a prime $p$, $k \\ge 1$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: ["$1=p^0$ does not count: it has no prime base.", "Wolfram's `PrimePowerQ`."],
+    examples: [
+      { expr: ["IsPrimePower", 8], expected: "True", caption: "$8=2^3$" },
+      {
+        expr: ["IsPrimePower", 12],
+        expected: "False",
+        caption: "$12=2^2\\cdot3$ has two distinct primes",
+      },
+      { expr: ["IsPrimePower", 7], expected: "True", caption: "A prime is its own first power" },
+      {
+        expr: ["IsPrimePower", 1],
+        expected: "False",
+        category: "Possible issues",
+        caption: "1 is $p^0$, which does not count",
+      },
+      {
+        expr: ["IsPrimePower", ["List", 2, 4, 6, 9, 10, 16]],
+        expected: ["List", "True", "True", "False", "True", "False", "True"],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["IsPrimePower", ["Power", 3, 40]],
+        expected: "True",
+        category: "Scope",
+        caption: "Large integers",
+      },
+    ],
+    seeAlso: ["IsPrime", "FactorInteger"],
+  },
+  {
+    name: "LiouvilleLambda",
+    domain: "Number theory",
+    signature: "LiouvilleLambda(n)",
+    summary: "The Liouville function $\\lambda(n)=(-1)^{\\Omega(n)}$.",
+    signatures: [
+      {
+        call: "LiouvilleLambda(n)",
+        description: "$(-1)^{\\Omega(n)}$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Completely multiplicative: $\\lambda(mn)=\\lambda(m)\\lambda(n)$ for every $m,n$, not just coprime ones — unlike [[MoebiusMu]].",
+      "$\\sum_{d\\mid n}\\lambda(d)$ is 1 when $n$ is a perfect square and 0 otherwise.",
+    ],
+    examples: [
+      { expr: ["LiouvilleLambda", 12], expected: -1, caption: "$\\Omega(12)=3$" },
+      { expr: ["LiouvilleLambda", 10], expected: 1 },
+      { expr: ["LiouvilleLambda", 1], expected: 1 },
+      {
+        expr: ["LiouvilleLambda", ["Range", 10]],
+        expected: ["List", 1, -1, -1, 1, -1, 1, -1, -1, 1, 1],
+        category: "Scope",
+        caption: "Listable",
+      },
+      {
+        expr: ["Equal", ["LiouvilleLambda", 360], ["Power", -1, ["PrimeOmega", 360]]],
+        expected: "True",
+        category: "Properties",
+        caption: "$\\lambda(n)=(-1)^{\\Omega(n)}$. See [[PrimeOmega]]",
+      },
+    ],
+    seeAlso: ["MoebiusMu", "PrimeOmega"],
+  },
+  {
+    name: "MangoldtLambda",
+    domain: "Number theory",
+    signature: "MangoldtLambda(n)",
+    summary: "The von Mangoldt function: $\\ln p$ if $n$ is a power of the prime $p$, else 0.",
+    signatures: [
+      {
+        call: "MangoldtLambda(n)",
+        description: "$\\ln p$ for $n=p^k$, else 0",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Exact: the result is a symbolic $\\ln p$, not a numeric approximation — wrap in [[N]] to get one.",
+      "$\\sum_{d\\mid n}\\Lambda(d)=\\ln n$; central to the prime-counting proofs (Chebyshev's $\\psi$ and $\\theta$ functions).",
+    ],
+    examples: [
+      { expr: ["MangoldtLambda", 8], expected: ["Ln", 2], caption: "$8=2^3$" },
+      { expr: ["MangoldtLambda", 6], expected: 0, caption: "6 is not a prime power" },
+      { expr: ["MangoldtLambda", 7], expected: ["Ln", 7] },
+      {
+        expr: ["MangoldtLambda", 1],
+        expected: 0,
+        category: "Possible issues",
+        caption: "$\\Lambda(1)=0$",
+      },
+      {
+        expr: ["N", ["MangoldtLambda", 9]],
+        expected: 1.0986122886681098,
+        aspirational: true,
+        category: "Scope",
+        caption:
+          "Numerically, $\\ln3$ — not yet: `N` does not re-derive a numeric result from a custom-declared head's evaluated `Ln(3)`; `N(Ln(3))` itself works fine",
+      },
+      {
+        expr: ["MangoldtLambda", ["List", 2, 4, 6, 25]],
+        expected: ["List", ["Ln", 2], ["Ln", 2], 0, ["Ln", 5]],
+        category: "Scope",
+        caption: "Listable",
+      },
+    ],
+    seeAlso: ["IsPrimePower", "FactorInteger"],
+  },
+  {
+    name: "MersennePrimeExponent",
+    domain: "Number theory",
+    signature: "MersennePrimeExponent(n)",
+    summary: "The exponent $p$ of the $n$th Mersenne prime $2^p-1$.",
+    signatures: [
+      {
+        call: "MersennePrimeExponent(n)",
+        description: "the $n$th known Mersenne prime's exponent",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "From a fixed table of the first 20 known Mersenne prime exponents, proven complete this far since the 1950s — well short of GIMPS's ongoing search. Past the table the call stays unevaluated rather than searching.",
+      "Feeds [[PerfectNumber]]: the $n$th even perfect number is $2^{p-1}(2^p-1)$.",
+    ],
+    examples: [
+      { expr: ["MersennePrimeExponent", 1], expected: 2 },
+      { expr: ["MersennePrimeExponent", 5], expected: 13 },
+      { expr: ["MersennePrimeExponent", 10], expected: 89 },
+      {
+        expr: ["MersennePrimeExponent", ["List", 1, 2, 3, 4, 5, 6]],
+        expected: ["List", 2, 3, 5, 7, 13, 17],
+        category: "Scope",
+        caption: "Listable",
+      },
+    ],
+    seeAlso: ["PerfectNumber", "IsPrime"],
+  },
+  {
+    name: "PartitionsQ",
+    domain: "Number theory",
+    signature: "PartitionsQ(n)",
+    summary: "The number $q(n)$ of partitions of $n$ into distinct parts.",
+    signatures: [
+      {
+        call: "PartitionsQ(n)",
+        description: "$q(n)$, distinct-part partitions of $n$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "By Euler's theorem, $q(n)$ also counts the partitions of $n$ into odd parts — see [[IntegerPartitions]].",
+      "Counts the [[DistinctPartitions]] family.",
+    ],
+    examples: [
+      {
+        expr: ["PartitionsQ", 10],
+        expected: 10,
+        caption: "The partitions of 10 into distinct parts",
+      },
+      { expr: ["PartitionsQ", 0], expected: 1, caption: "The empty partition" },
+      {
+        expr: ["PartitionsQ", 100],
+        expected: 444793,
+        category: "Scope",
+        caption: "Exact for large n",
+      },
+      {
+        expr: ["PartitionsQ", ["List", 1, 2, 3, 4, 5, 6, 7, 8]],
+        expected: ["List", 1, 1, 2, 2, 3, 4, 5, 6],
+        category: "Scope",
+        caption: "Threads over a list",
+      },
+      {
+        expr: ["Equal", ["PartitionsQ", 10], ["Count", ["DistinctPartitions", 10]]],
+        expected: "True",
+        category: "Properties",
+        caption: "Counts the DistinctPartitions family",
+      },
+      {
+        expr: [
+          "Equal",
+          ["PartitionsQ", 12],
+          ["Count", ["IntegerPartitions", 12, "All", ["List", 1, 3, 5, 7, 9, 11]]],
+        ],
+        expected: "True",
+        aspirational: true,
+        category: "Properties",
+        caption:
+          "Euler: as many partitions into odd parts as into distinct parts; not yet, since [[IntegerPartitions]] does not take a part-restriction argument",
+      },
+    ],
+    seeAlso: ["DistinctPartitions", "IntegerPartitions"],
+  },
+  {
+    name: "PerfectNumber",
+    domain: "Number theory",
+    signature: "PerfectNumber(n)",
+    summary: "The $n$th perfect number.",
+    signatures: [
+      {
+        call: "PerfectNumber(n)",
+        description: "$2^{p-1}(2^p-1)$ for the $n$th known Mersenne prime exponent $p$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Every even perfect number has this form (Euclid–Euler); whether an odd one exists is open. From the same table as [[MersennePrimeExponent]], so it stays unevaluated past it.",
+    ],
+    examples: [
+      { expr: ["PerfectNumber", 1], expected: 6 },
+      { expr: ["PerfectNumber", 3], expected: 496 },
+      { expr: ["PerfectNumber", 5], expected: 33550336 },
+      {
+        expr: ["PerfectNumber", ["List", 1, 2, 3, 4]],
+        expected: ["List", 6, 28, 496, 8128],
+        category: "Scope",
+        caption: "Listable",
+      },
+    ],
+    seeAlso: ["MersennePrimeExponent", "IsPerfect"],
+  },
+  {
+    name: "PowersRepresentations",
+    domain: "Number theory",
+    signature: "PowersRepresentations(n, k, p)",
+    summary:
+      "The ways to write $n$ as a sum of $k$ non-negative $p$th powers, as non-decreasing lists.",
+    signatures: [
+      {
+        call: "PowersRepresentations(n, k, p)",
+        description: "every non-decreasing $(x_1 \\le \\dots \\le x_k)$ with $\\sum x_i^p = n$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: ["Lexicographic order. See [[SquaresR]] for just the count, at $p=2$."],
+    examples: [
+      {
+        expr: ["PowersRepresentations", 25, 2, 2],
+        expected: ["List", ["List", 0, 5], ["List", 3, 4]],
+      },
+      {
+        expr: ["PowersRepresentations", 50, 2, 2],
+        expected: ["List", ["List", 1, 7], ["List", 5, 5]],
+        caption: "The smallest number that is a sum of two positive squares in two ways",
+      },
+      {
+        expr: ["PowersRepresentations", 100, 3, 2],
+        expected: ["List", ["List", 0, 0, 10], ["List", 0, 6, 8]],
+        category: "Scope",
+      },
+      {
+        expr: ["PowersRepresentations", 1729, 2, 3],
+        expected: ["List", ["List", 1, 12], ["List", 9, 10]],
+        category: "Neat examples",
+        caption: "The taxicab number $1729=1^3+12^3=9^3+10^3$",
+      },
+    ],
+    seeAlso: ["SquaresR"],
+  },
+  {
+    name: "RamanujanTau",
+    domain: "Number theory",
+    signature: "RamanujanTau(n)",
+    summary:
+      "Ramanujan's tau function: the coefficients of the discriminant modular form $\\Delta(q) = q\\prod_{k\\ge1}(1-q^k)^{24}$.",
+    signatures: [
+      {
+        call: "RamanujanTau(n)",
+        description: "the coefficient of $q^n$ in $\\Delta(q)$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Multiplicative: $\\tau(mn)=\\tau(m)\\tau(n)$ for coprime $m,n$.",
+      "Computed by truncated power-series multiplication of $\\prod(1-q^k)^{24}$, exactly, not from a closed form.",
+    ],
+    examples: [
+      { expr: ["RamanujanTau", 2], expected: -24 },
+      { expr: ["RamanujanTau", 5], expected: 4830 },
+      {
+        expr: ["RamanujanTau", ["List", 1, 2, 3, 4, 5, 6]],
+        expected: ["List", 1, -24, 252, -1472, 4830, -6048],
+        category: "Scope",
+        caption: "Listable",
+      },
+      { expr: ["RamanujanTau", 12], expected: -370944, category: "Scope" },
+      {
+        expr: ["Multiply", ["RamanujanTau", 2], ["RamanujanTau", 3]],
+        expected: -6048,
+        category: "Properties",
+        caption: "Multiplicative: $\\tau(6) = \\tau(2)\\tau(3)$",
+      },
+    ],
+    seeAlso: ["PartitionsQ"],
+  },
+  {
+    name: "SquaresR",
+    domain: "Number theory",
+    signature: "SquaresR(d, n)",
+    summary: "The number of ways to write $n$ as a sum of $d$ squares, counting signs and order.",
+    signatures: [
+      {
+        call: "SquaresR(d, n)",
+        description: "$r_d(n)$: ordered, signed $d$-tuples summing to $n$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "By brute-force lattice-point enumeration, so signs and order are counted directly rather than adjusted for after the fact.",
+      "Jacobi's four-square theorem: $r_4(n)=8\\sigma_1(n)$ when $4 \\nmid n$. See [[DivisorSigma]].",
+    ],
+    examples: [
+      {
+        expr: ["SquaresR", 2, 5],
+        expected: 8,
+        caption: "$(\\pm1)^2+(\\pm2)^2$ in either order",
+      },
+      { expr: ["SquaresR", 2, 25], expected: 12 },
+      {
+        expr: ["SquaresR", 2, 3],
+        expected: 0,
+        caption: "No $n\\equiv3\\pmod4$ is a sum of two squares",
+      },
+      { expr: ["SquaresR", 3, 6], expected: 24, category: "Scope" },
+      {
+        expr: ["SquaresR", 4, 10],
+        expected: 144,
+        category: "Properties",
+        caption: "Jacobi: $r_4(n)=8\\sigma_1(n)$ for $4\\nmid n$",
+      },
+      { expr: ["SquaresR", 8, 3], expected: 448, category: "Scope" },
+    ],
+    seeAlso: ["PowersRepresentations", "DivisorSigma"],
+  },
+  {
+    name: "EulerE",
+    domain: "Number theory",
+    signature: "EulerE(n, x?)",
+    summary: "The Euler numbers $E_n$ and Euler polynomials $E_n(x)$.",
+    signatures: [
+      {
+        call: "EulerE(n)",
+        description: "the $n$th Euler number",
+        library: "enumeratio-number-theory",
+      },
+      {
+        call: "EulerE(n, x)",
+        description: "the $n$th Euler polynomial, evaluated at $x$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "Odd-indexed Euler numbers past $E_0$ are 0; the even ones come from $\\sum_{k=0}^{n/2}\\binom{n}{2k}E_{2k}=0$.",
+      "$E_n = 2^n E_n(\\frac12)$ ties the numbers to the polynomials.",
+      "Not to be confused with [[BernoulliB]] or [[EulerGamma]].",
+    ],
+    examples: [
+      { expr: ["EulerE", 10], expected: -50521 },
+      { expr: ["EulerE", 8], expected: 1385 },
+      {
+        expr: ["EulerE", ["List", 0, 1, 2, 3, 4]],
+        expected: ["List", 1, 0, -1, 0, 5],
+        category: "Scope",
+        caption: "Listable; odd indices vanish",
+      },
+      {
+        expr: ["EulerE", 2, "x"],
+        expected: ["Add", ["Power", "x", 2], ["Negate", "x"]],
+        category: "Scope",
+        caption: "the Euler polynomial $E_2(x) = x^2 - x$",
+      },
+      {
+        expr: ["EulerE", 4, "x"],
+        expected: ["Add", ["Power", "x", 4], ["Multiply", -2, ["Power", "x", 3]], "x"],
+        category: "Scope",
+        caption: "$E_4(x) = x^4 - 2x^3 + x$",
+      },
+      {
+        expr: ["EulerE", 3, ["Rational", 1, 2]],
+        expected: 0,
+        category: "Properties",
+        caption: "$E_n = 2^n E_n(\\frac12)$, and $E_3 = 0$",
+      },
+    ],
+    seeAlso: ["BernoulliB"],
+  },
+  {
+    name: "FrobeniusSolve",
+    domain: "Number theory",
+    signature: "FrobeniusSolve(a, b)",
+    summary: "All non-negative integer solutions $x$ of $a\\cdot x = b$, lexicographically.",
+    signatures: [
+      {
+        call: "FrobeniusSolve(a, b)",
+        description: "every $x \\ge 0$ with $\\sum a_i x_i = b$",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "The search behind [[FrobeniusNumber]], for the caller who wants the solutions themselves.",
+    ],
+    examples: [
+      {
+        expr: ["FrobeniusSolve", ["List", 2, 3], 7],
+        expected: ["List", ["List", 2, 1]],
+      },
+      {
+        expr: ["FrobeniusSolve", ["List", 2, 3, 5], 10],
+        expected: [
+          "List",
+          ["List", 0, 0, 2],
+          ["List", 1, 1, 1],
+          ["List", 2, 2, 0],
+          ["List", 5, 0, 0],
+        ],
+      },
+      {
+        expr: ["FrobeniusSolve", ["List", 12, 16, 20, 27], 117],
+        expected: ["List", ["List", 0, 1, 1, 3], ["List", 3, 0, 0, 3]],
+        category: "Scope",
+      },
+      {
+        expr: ["FrobeniusSolve", ["List", 6, 9, 20], 43],
+        expected: ["List"],
+        category: "Properties",
+        caption: "43 is the Frobenius number of $\\{6,9,20\\}$, so it has no solutions",
+      },
+    ],
+    seeAlso: ["FrobeniusNumber"],
+  },
+  {
+    name: "FrobeniusNumber",
+    domain: "Number theory",
+    signature: "FrobeniusNumber(list)",
+    summary:
+      "The largest integer that is not a non-negative integer combination of the given positive integers.",
+    signatures: [
+      {
+        call: "FrobeniusNumber(list)",
+        description: "the coin problem's answer for these denominations",
+        library: "enumeratio-number-theory",
+      },
+    ],
+    details: [
+      "By the round-robin shortest-path algorithm over $\\mathbb{Z}/a_0$ for the smallest generator $a_0$, not by searching [[FrobeniusSolve]] upward.",
+      "Requires the generators' $\\gcd$ to be 1 — otherwise every multiple of that gcd past it is still unreachable, so the answer is $+\\infty$.",
+    ],
+    examples: [
+      {
+        expr: ["FrobeniusNumber", ["List", 6, 9, 20]],
+        expected: 43,
+        caption: "The McNugget number",
+      },
+      { expr: ["FrobeniusNumber", ["List", 3, 5]], expected: 7 },
+      {
+        expr: ["FrobeniusNumber", ["List", 4, 7]],
+        expected: 17,
+        category: "Properties",
+        caption: "Two generators: $ab-a-b$",
+      },
+      { expr: ["FrobeniusNumber", ["List", 12, 16, 20, 27]], expected: 89, category: "Scope" },
+      {
+        expr: ["FrobeniusNumber", ["List", 2, 4]],
+        expected: "PositiveInfinity",
+        category: "Possible issues",
+        caption: "Not coprime: infinitely many numbers are unreachable",
+      },
+    ],
+    seeAlso: ["FrobeniusSolve", "GCD"],
+  },
 ];

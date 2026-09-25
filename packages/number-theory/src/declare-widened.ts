@@ -84,6 +84,28 @@ export function declareWidened(ce: ComputeEngine): void {
     },
   );
 
+  // compute-engine already has CarmichaelLambda and IsPerfect, undocumented here — the gaps
+  // are Wolfram's λ(-n)=λ(n) and PerfectNumberQ's "no negative number is perfect", both of
+  // which the native handlers currently leave unevaluated.
+  wrapOperator(
+    ce,
+    ["CarmichaelLambda", 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n < 0n;
+    },
+    (native) => (ops, options) => native?.([ce.number(-bigIntegerAt(ops[0])!)], options),
+  );
+  wrapOperator(
+    ce,
+    ["IsPerfect", 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n < 0n;
+    },
+    () => () => ce.symbol("False"),
+  );
+
   // Wolfram's ExtendedGCD accepts any number of arguments: {g, {x₁, …, xₙ}} with
   // g = Σ xᵢaᵢ = gcd(a₁, …, aₙ). Folds the two-argument case pairwise — after each step the
   // gcd-so-far's own coefficient distributes back over every earlier argument's — which is
