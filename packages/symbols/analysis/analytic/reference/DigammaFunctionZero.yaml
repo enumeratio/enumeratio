@@ -1,0 +1,61 @@
+name: DigammaFunctionZero
+domain: Special functions
+signature: DigammaFunctionZero(n)
+summary: 'The $n$-th real zero of the digamma function $\psi$: $n=0$ names the zero on $(0,\infty)$ ($x_0 \approx 1.4616$), $n \ge 1$ the zero on $(-n, -n+1)$. Provided by `@enumeratio/analytic`.'
+signatures:
+  - call: DigammaFunctionZero(n)
+    description: the $n$-th real zero of $\psi$, $n \ge 0$.
+    library: '@enumeratio/analytic'
+details:
+  - $\psi$ is real, meromorphic, with simple poles at $0, -1, -2, \dots$ and strictly increasing between consecutive poles ($\psi' = $ trigamma $> 0$), so each interval carries exactly one zero — bisection on the native [[PolyGamma]]/[[Digamma]] finds it without a separate digamma implementation.
+  - $\psi(x_0) = 0$ at $x_0 \approx 1.4616321449683623$, sometimes called the digamma's positive real zero.
+examples:
+  - id: the-digamma-function-s-positive-real-zero
+    expr: [N, [DigammaFunctionZero, 0]]
+    expected: 1.4616321449683622
+    caption: the digamma function's positive real zero
+  - id: the-zero-in-1-0
+    expr: [N, [DigammaFunctionZero, 1]]
+    expected: -0.5040830082644554
+    caption: the zero in $(-1, 0)$
+  - id: psi-vanishes-exactly-there-by-construction
+    expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 2]]]]
+    expected: 0
+    category: Properties
+    caption: $\psi$ vanishes exactly there, by construction
+  - id: psi-x-n-0-exactly-at-digamma-s-own-claimed-zero
+    expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 0]]]]
+    expected: 0
+    category: Properties
+    caption: $\psi(x_n) = 0$ exactly at digamma's own claimed zero, $n = 0$
+    group: digamma-vanishes
+  - id: psi-x-n-0-at-n-1
+    expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 1]]]]
+    expected: 0
+    category: Properties
+    caption: $\psi(x_n) = 0$ at $n = 1$
+    group: digamma-vanishes
+  - id: psi-x-n-0-at-n-3
+    expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 3]]]]
+    expected: 0
+    category: Properties
+    caption: $\psi(x_n) = 0$ at $n = 3$
+    group: digamma-vanishes
+  - id: psi-x-n-0-at-n-4
+    expr: [Chop, [N, [Digamma, [DigammaFunctionZero, 4]]]]
+    expected: 0
+    category: Properties
+    caption: $\psi(x_n) = 0$ at $n = 4$
+    group: digamma-vanishes
+primitive: numeric
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/digamma-zero.ts
+  - origin: mapped
+    form: mpmath
+    environment: external
+    note: findroot(digamma, ...) at the appropriate bracket — Wolfram has no direct equivalent head.
+seeAlso:
+  - PolyGamma

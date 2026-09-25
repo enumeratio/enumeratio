@@ -1,15 +1,25 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Reference entries for @enumeratio/residues: arithmetic in ℤ/m. `Mod`, `PowerMod`,
-// `ModularInverse`, `ChineseRemainder` and `MultiplicativeOrder` are compute-engine's own
-// heads; the library widens some and adds the rest.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const DOMAIN = "Modular arithmetic";
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/reference/entries/Mod.yaml",
+  "packages/symbols/arithmetic/residues/reference/PowerMod.yaml",
+  "packages/symbols/arithmetic/residues/reference/PowerModList.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/ModularInverse.yaml",
+  "packages/symbols/arithmetic/residues/reference/ChineseRemainder.yaml",
+  "packages/symbols/arithmetic/residues/reference/MultiplicativeOrder.yaml",
+  "packages/symbols/arithmetic/residues/reference/PrimitiveRootList.yaml",
+  "packages/symbols/arithmetic/residues/reference/IntegerMod.yaml",
+  "packages/symbols/arithmetic/residues/reference/IntegerModRing.yaml",
+];
 
 export const residues: readonly ReferenceEntry[] = [
   {
     name: "Mod",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "Mod(a, b, d?)",
     summary: "The remainder of a on division by b.",
     signatures: [
@@ -37,16 +47,8 @@ export const residues: readonly ReferenceEntry[] = [
       "A third argument $d$ offsets the range to $[d, d+b)$, as Wolfram's Mod[a, b, d] does.",
     ],
     examples: [
-      {
-        id: "17-mod-5",
-        expr: ["Mod", 17, 5],
-        expected: 2,
-      },
-      {
-        id: "100-mod-7",
-        expr: ["Mod", 100, 7],
-        expected: 2,
-      },
+      { id: "17-mod-5", expr: ["Mod", 17, 5], expected: 2 },
+      { id: "100-mod-7", expr: ["Mod", 100, 7], expected: 2 },
       {
         id: "the-result-takes-the-sign-of-the-modulus",
         expr: ["Mod", -7, 3],
@@ -95,12 +97,7 @@ export const residues: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Rationals are reduced exactly",
       },
-      {
-        id: "3p14-mod-2",
-        expr: ["Mod", 3.14, 2],
-        expected: 1.14,
-        category: "Scope",
-      },
+      { id: "3p14-mod-2", expr: ["Mod", 3.14, 2], expected: 1.14, category: "Scope" },
       {
         id: "an-exact-irrational-reduces-exactly-to-2-sqrt-7",
         expr: ["Mod", ["Sqrt", 28], 3],
@@ -202,7 +199,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "PowerMod",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "PowerMod(a, b, m)",
     summary: "Modular exponentiation: a^b mod m, computed without forming a^b directly.",
     signatures: [
@@ -229,21 +226,9 @@ export const residues: readonly ReferenceEntry[] = [
       "Gaussian integers are reduced as [[Mod]] reduces them; a rational-integer modulus must be positive, and a result that comes out real is reported in $[0, m)$.",
     ],
     examples: [
-      {
-        id: "powermod-2-10-3",
-        expr: ["PowerMod", 2, 10, 3],
-        expected: 1,
-      },
-      {
-        id: "powermod-3-50-11",
-        expr: ["PowerMod", 3, 50, 11],
-        expected: 1,
-      },
-      {
-        id: "powermod-3-2-7",
-        expr: ["PowerMod", 3, 2, 7],
-        expected: 2,
-      },
+      { id: "powermod-2-10-3", expr: ["PowerMod", 2, 10, 3], expected: 1 },
+      { id: "powermod-3-50-11", expr: ["PowerMod", 3, 50, 11], expected: 1 },
+      { id: "powermod-3-2-7", expr: ["PowerMod", 3, 2, 7], expected: 2 },
       {
         id: "3-1-equiv-5-and-5-2-25-equiv-4",
         expr: ["PowerMod", 3, -2, 7],
@@ -327,9 +312,7 @@ export const residues: readonly ReferenceEntry[] = [
         expected: 3,
         category: "Scope",
         caption: "a rational base: $2 \\cdot 3^{-1} = 2 \\cdot 5 \\equiv 3 \\pmod 7$",
-        divergence: {
-          wolfram: "Wolfram's PowerMod takes integers (and Gaussian integers) only.",
-        },
+        divergence: { wolfram: "Wolfram's PowerMod takes integers (and Gaussian integers) only." },
       },
       {
         id: "gaussian-integers-2-i-2-3-4i-equiv-i-pmod-3",
@@ -393,7 +376,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "PowerModList",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "PowerModList(a, s/r, m)",
     summary:
       "Every $x$ in $[0, m)$ with $x^r \\equiv a^s \\pmod m$ — all the values $a^{s/r}$ can take modulo $m$.",
@@ -740,7 +723,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "ModularInverse",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "ModularInverse(a, m)",
     summary: "The $x$ with $a x \\equiv 1 \\pmod m$, when $a$ is a unit mod $m$.",
     signatures: [
@@ -763,11 +746,7 @@ export const residues: readonly ReferenceEntry[] = [
         expected: 5,
         caption: "$3 \\cdot 5 = 15 \\equiv 1$",
       },
-      {
-        id: "modularinverse-2-11",
-        expr: ["ModularInverse", 2, 11],
-        expected: 6,
-      },
+      { id: "modularinverse-2-11", expr: ["ModularInverse", 2, 11], expected: 6 },
       {
         id: "a-negative-argument-3-cdot-2-6-equiv-1",
         expr: ["ModularInverse", -3, 7],
@@ -832,7 +811,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "ChineseRemainder",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "ChineseRemainder([r1, r2, …], [m1, m2, …])",
     summary: "The smallest non-negative integer congruent to each ri modulo the corresponding mi.",
     signatures: [
@@ -943,7 +922,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "MultiplicativeOrder",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "MultiplicativeOrder(a, n)",
     summary: "The smallest positive k such that a^k ≡ 1 (mod n).",
     signatures: [
@@ -966,21 +945,9 @@ export const residues: readonly ReferenceEntry[] = [
       "The three-argument form is a discrete logarithm, by Pohlig–Hellman over the order of $a$ and baby-step giant-step within each prime: the cost is $\\sqrt q$ for the largest prime $q$ dividing that order — instant for a smooth order, hopeless for a safe prime.",
     ],
     examples: [
-      {
-        id: "multiplicativeorder-5-8",
-        expr: ["MultiplicativeOrder", 5, 8],
-        expected: 2,
-      },
-      {
-        id: "multiplicativeorder-3-7",
-        expr: ["MultiplicativeOrder", 3, 7],
-        expected: 6,
-      },
-      {
-        id: "multiplicativeorder-5-7",
-        expr: ["MultiplicativeOrder", 5, 7],
-        expected: 6,
-      },
+      { id: "multiplicativeorder-5-8", expr: ["MultiplicativeOrder", 5, 8], expected: 2 },
+      { id: "multiplicativeorder-3-7", expr: ["MultiplicativeOrder", 3, 7], expected: 6 },
+      { id: "multiplicativeorder-5-7", expr: ["MultiplicativeOrder", 5, 7], expected: 6 },
       {
         id: "a-negative-base-5-equiv-2-pmod-7",
         expr: ["MultiplicativeOrder", -5, 7],
@@ -1082,7 +1049,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "PrimitiveRootList",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "PrimitiveRootList(n)",
     summary:
       "Every primitive root of $n$ — every generator of $(\\mathbb{Z}/n)^\\times$ — ascending.",
@@ -1100,11 +1067,7 @@ export const residues: readonly ReferenceEntry[] = [
       "At most 100 000 roots are listed; past that the call stays unevaluated. [[PrimitiveRoot]] gives the least one at any size.",
     ],
     examples: [
-      {
-        id: "primitiverootlist-7",
-        expr: ["PrimitiveRootList", 7],
-        expected: ["List", 3, 5],
-      },
+      { id: "primitiverootlist-7", expr: ["PrimitiveRootList", 7], expected: ["List", 3, 5] },
       {
         id: "10-2-cdot-5-is-of-the-form-2p",
         expr: ["PrimitiveRootList", 10],
@@ -1187,7 +1150,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "IntegerMod",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "IntegerMod(a, m)",
     summary:
       "$a \\bmod m$ as a VALUE — an element of $\\mathbb{Z}/m$ that arithmetic stays inside, after Sage's `Mod(a, m)`.",
@@ -1213,11 +1176,7 @@ export const residues: readonly ReferenceEntry[] = [
       "A call that declines — dividing by a non-unit — stays unevaluated with an `IntegerMod::ninv` message, after Wolfram's `PowerMod::ninv`",
     ],
     examples: [
-      {
-        id: "integermod-10-7",
-        expr: ["IntegerMod", 10, 7],
-        expected: ["IntegerMod", 3, 7],
-      },
+      { id: "integermod-10-7", expr: ["IntegerMod", 10, 7], expected: ["IntegerMod", 3, 7] },
       {
         id: "1-3-is-the-inverse-of-3-3-cdot-5-15-equiv-1",
         expr: ["IntegerMod", ["Rational", 1, 3], 7],
@@ -1274,7 +1233,7 @@ export const residues: readonly ReferenceEntry[] = [
   },
   {
     name: "IntegerModRing",
-    domain: DOMAIN,
+    domain: "Modular arithmetic",
     signature: "IntegerModRing(m)",
     summary:
       "The ring $\\mathbb{Z}/m$, as the finite collection of its $m$ [[IntegerMod]] classes.",
@@ -1296,11 +1255,7 @@ export const residues: readonly ReferenceEntry[] = [
         expr: ["ListFrom", ["IntegerModRing", 3]],
         expected: ["List", ["IntegerMod", 0, 3], ["IntegerMod", 1, 3], ["IntegerMod", 2, 3]],
       },
-      {
-        id: "count-integermodring-12",
-        expr: ["Count", ["IntegerModRing", 12]],
-        expected: 12,
-      },
+      { id: "count-integermodring-12", expr: ["Count", ["IntegerModRing", 12]], expected: 12 },
       {
         id: "z-12-z",
         expr: ["QuotientRing", "Integers", 12],

@@ -1,0 +1,55 @@
+name: AdicExpansion
+domain: Numeral systems
+signature: AdicExpansion(x, count?)
+summary: 'The digits of a $b$-adic number, written with the infinite end on the left: $\ldots 6667$ for $1/3$ in $\mathbb{Z}_{10}$, $0.12$ for $7/25$ in $\mathbb{Q}_5$, $+ O(b^n)$ when capped.'
+signatures:
+  - call: AdicExpansion(x, count?)
+    description: the first `count` digits (default 20) as a string
+    library: enumeratio-numerals
+  - call: AdicDigits(x, count?)
+    description: the same digits as a list, LEAST significant first — the only order that lists something with no left end
+    library: enumeratio-numerals
+details:
+  - 'The ellipsis marks the infinite left end and is dropped only when nothing hides there: an exact non-negative integer (times $b^v$)'
+  - Digits past the point are the negative-valuation places, prime bases only
+  - Digits $\ge 10$ are bracketed, so base 16 reads `…[15][15][15]`
+examples:
+  - id: adicexpansion-adicnumeral-10-1-over-3-8
+    expr: [AdicExpansion, [AdicNumeral, 10, [Rational, 1, 3]], 8]
+    expected: "'…66666667'"
+  - id: the-same-1-3-2-adically
+    expr: [AdicExpansion, [AdicNumeral, 2, [Rational, 1, 3]], 8]
+    expected: "'…10101011'"
+    caption: the same $1/3$, 2-adically
+  - id: 7-25-2-5-2-1-5-1
+    expr: [AdicExpansion, [AdicNumeral, 5, [Rational, 7, 25]], 8]
+    expected: "'0.12'"
+    caption: $7/25 = 2·5^{-2} + 1·5^{-1}$
+    category: Scope
+  - id: as-a-list-least-significant-first
+    expr: [AdicDigits, [AdicNumeral, 10, [Rational, 1, 3]], 6]
+    expected: [List, 7, 6, 6, 6, 6, 6]
+    caption: as a list, least significant first
+  - id: a-plain-non-negative-integer-terminates-with-no
+    expr: [AdicExpansion, [AdicNumeral, 10, 42]]
+    expected: "'42'"
+    category: Scope
+    caption: A plain non-negative integer terminates with no infinite tail
+  - id: 1-is-the-all-9s-repeating-tail-since-1-999-in-z
+    expr: [AdicExpansion, [AdicNumeral, 10, -1], 6]
+    expected: "'…999999'"
+    category: Scope
+    caption: $-1$ is the all-9s repeating tail, since $-1=\dots999$ in $\mathbf{Z}_{10}$
+  - id: digits-at-or-above-10-print-bracketed-as-in-15
+    expr: [AdicExpansion, [AdicNumeral, 16, -1], 3]
+    expected: "'…[15][15][15]'"
+    category: Scope
+    caption: Digits at or above 10 print bracketed, as in $[15]$ for hexadecimal $-1$'s repeating digit
+  - id: digits-run-least-significant-first-1-s-first
+    expr: [AdicDigits, [AdicNumeral, 10, -1], 4]
+    expected: [List, 9, 9, 9, 9]
+    category: Scope
+    caption: "Digits run least-significant first: $-1$'s first four 10-adic digits are all 9"
+seeAlso:
+  - AdicNumeral
+  - IntegerDigits

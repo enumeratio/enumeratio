@@ -1,15 +1,25 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "The modular group";
-/** A MathJSON string literal — also the form these heads hand back. */
-const W = (word: string): MathJSON => `'${word}'`;
-const M = (a: number, b: number, c: number, d: number): MathJSON => ["ModularMatrix", a, b, c, d];
-const F = (a: number, b: number, c: number): MathJSON => ["QuadraticForm", a, b, c];
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/groups/modular/reference/ModularMatrix.yaml",
+  "packages/symbols/groups/modular/reference/ModularWord.yaml",
+  "packages/symbols/groups/modular/reference/ContinuedFraction.yaml",
+  "packages/symbols/groups/modular/reference/Convergents.yaml",
+  "packages/symbols/groups/modular/reference/ContinuedFractionK.yaml",
+  "packages/symbols/groups/modular/reference/IsQuadraticIrrational.yaml",
+  "packages/symbols/groups/modular/reference/ModularClasses.yaml",
+  "packages/symbols/groups/modular/reference/RademacherSymbol.yaml",
+  "packages/symbols/groups/modular/reference/FormClassNumber.yaml",
+];
 
 export const modular: readonly ReferenceEntry[] = [
   {
     name: "ModularMatrix",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ModularMatrix(a, b, c, d)",
     summary:
       "An element of $\\mathrm{PSL}(2,\\mathbb{Z})$ — or an $LR$ word standing for one. Wolfram has no dedicated modular-group heads: elements multiply, invert and raise to a power exactly like any other integer matrix, via `Dot`, `Inverse` and `MatrixPower` — which is why those are widened in place to recognise a `ModularMatrix` or a word, rather than declared afresh.",
@@ -34,26 +44,26 @@ export const modular: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "the-group-product",
-        expr: ["Dot", M(1, 1, 0, 1), M(1, 0, 1, 1)],
-        expected: M(2, 1, 1, 1),
+        expr: ["Dot", ["ModularMatrix", 1, 1, 0, 1], ["ModularMatrix", 1, 0, 1, 1]],
+        expected: ["ModularMatrix", 2, 1, 1, 1],
         caption: "the group product",
       },
       {
         id: "no-division-needed-at-determinant-1",
-        expr: ["Inverse", M(1, 1, 0, 1)],
-        expected: M(1, -1, 0, 1),
+        expr: ["Inverse", ["ModularMatrix", 1, 1, 0, 1]],
+        expected: ["ModularMatrix", 1, -1, 0, 1],
         caption: "no division needed at determinant 1",
       },
       {
         id: "t-5",
-        expr: ["MatrixPower", M(1, 1, 0, 1), 5],
-        expected: M(1, 5, 0, 1),
+        expr: ["MatrixPower", ["ModularMatrix", 1, 1, 0, 1], 5],
+        expected: ["ModularMatrix", 1, 5, 0, 1],
         caption: "$T^5$",
       },
       {
         id: "words-multiply-their-matrices",
-        expr: ["Dot", W("L"), W("R")],
-        expected: M(1, 1, 1, 2),
+        expr: ["Dot", "'L'", "'R'"],
+        expected: ["ModularMatrix", 1, 1, 1, 2],
         caption: "words multiply their matrices",
         category: "Scope",
         divergence: {
@@ -63,29 +73,29 @@ export const modular: readonly ReferenceEntry[] = [
       },
       {
         id: "the-inverse-of-a-word",
-        expr: ["Inverse", W("L")],
-        expected: M(1, 0, -1, 1),
+        expr: ["Inverse", "'L'"],
+        expected: ["ModularMatrix", 1, 0, -1, 1],
         caption: "the inverse of a word",
         category: "Scope",
       },
       {
         id: "r-3",
-        expr: ["MatrixPower", W("R"), 3],
-        expected: M(1, 3, 0, 1),
+        expr: ["MatrixPower", "'R'", 3],
+        expected: ["ModularMatrix", 1, 3, 0, 1],
         caption: "$R^3$",
         category: "Scope",
       },
       {
         id: "negative-powers-are-powers-of-the-inverse",
-        expr: ["MatrixPower", M(1, 1, 1, 2), -2],
-        expected: M(5, -3, -3, 2),
+        expr: ["MatrixPower", ["ModularMatrix", 1, 1, 1, 2], -2],
+        expected: ["ModularMatrix", 5, -3, -3, 2],
         caption: "negative powers are powers of the inverse",
         category: "Scope",
       },
       {
         id: "the-zeroth-power-is-the-identity",
-        expr: ["MatrixPower", M(1, 1, 0, 1), 0],
-        expected: M(1, 0, 0, 1),
+        expr: ["MatrixPower", ["ModularMatrix", 1, 1, 0, 1], 0],
+        expected: ["ModularMatrix", 1, 0, 0, 1],
         caption: "the zeroth power is the identity",
         category: "Properties",
       },
@@ -102,7 +112,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ModularWord",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ModularWord(matrix)",
     summary:
       "The unique positive word in $L$ and $R$ of a matrix in $\\mathrm{PSL}(2,\\mathbb{Z})$ with non-negative entries — which is also its path down the Stern–Brocot tree.",
@@ -133,26 +143,26 @@ export const modular: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "the-shortest-geodesic",
-        expr: ["ModularWord", M(1, 1, 1, 2)],
-        expected: W("LR"),
+        expr: ["ModularWord", ["ModularMatrix", 1, 1, 1, 2]],
+        expected: "'LR'",
         caption: "the shortest geodesic",
       },
       {
         id: "a-word-evaluates-as-its-matrix",
-        expr: ["ModularTrace", W("LRLR")],
+        expr: ["ModularTrace", "'LRLR'"],
         expected: 7,
         caption: "a word evaluates as its matrix",
       },
       {
         id: "t-5-fixes-a-cusp",
-        expr: ["ModularKind", M(1, 5, 0, 1)],
-        expected: W("Parabolic"),
+        expr: ["ModularKind", ["ModularMatrix", 1, 5, 0, 1]],
+        expected: "'Parabolic'",
         caption: "$T^5$ fixes a cusp",
         category: "Properties",
       },
       {
         id: "the-s-t-exponents-are-a-continued-fraction",
-        expr: ["ModularSTWord", M(1, 5, 0, 1)],
+        expr: ["ModularSTWord", ["ModularMatrix", 1, 5, 0, 1]],
         expected: ["List", 5],
         caption: "the $S$/$T$ exponents are a continued fraction",
         category: "Scope",
@@ -162,7 +172,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ContinuedFraction",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ContinuedFraction(x)",
     summary:
       "The regular continued fraction $[a_0; a_1, a_2, \\dots]$ of $p/q$. Its partial quotients are the run lengths of the rational's Stern–Brocot path, and the $T$-exponents of its matrix — one object under three names.",
@@ -220,12 +230,12 @@ export const modular: readonly ReferenceEntry[] = [
       {
         id: "5-3-1-1-2",
         expr: ["SternBrocotPath", 5, 3],
-        expected: W("RLR"),
+        expected: "'RLR'",
         caption: "$5/3 = [1; 1, 2]$",
       },
       {
         id: "and-back-again",
-        expr: ["FromSternBrocotPath", W("RLR")],
+        expr: ["FromSternBrocotPath", "'RLR'"],
         expected: ["Rational", 5, 3],
         caption: "and back again",
         category: "Properties",
@@ -276,9 +286,7 @@ export const modular: readonly ReferenceEntry[] = [
         expected: ["List", -3, 4, 4],
         caption: "negative: a floor for $a_0$, then positive terms — $-3 + 1/(4 + 1/4)$",
         category: "Possible issues",
-        divergence: {
-          wolfram: "Wolfram negates every term instead, giving {-2, -1, -3, -4}.",
-        },
+        divergence: { wolfram: "Wolfram negates every term instead, giving {-2, -1, -3, -4}." },
       },
       {
         id: "fromcontinuedfraction-inverts-it",
@@ -360,7 +368,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "Convergents",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "Convergents(list) / Convergents(x, n)",
     summary:
       "The successive convergents $p_k/q_k$ of a continued fraction, given as its list of terms or as the number itself.",
@@ -432,7 +440,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ContinuedFractionK",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ContinuedFractionK(f, g, (i, imin, imax))",
     summary:
       "The continued fraction $f_1/(g_1 + f_2/(g_2 + \\cdots))$ over an index range, finite or infinite.",
@@ -472,7 +480,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "IsQuadraticIrrational",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "IsQuadraticIrrational(x)",
     summary:
       "True when $x$ is an irrational root of a quadratic with integer coefficients — exactly the numbers with an eventually periodic continued fraction.",
@@ -526,7 +534,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "ModularClasses",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "ModularClasses(length, primitive?)",
     summary:
       "Every hyperbolic conjugacy class whose $LR$ word has the given length — equivalently, every closed geodesic of that symbolic period on the modular surface. Conjugation rotates the word, so the classes are binary NECKLACES.",
@@ -557,26 +565,26 @@ export const modular: readonly ReferenceEntry[] = [
       {
         id: "four-closed-geodesics-of-symbolic-length-4",
         expr: ["ModularClasses", 4],
-        expected: ["List", W("LLLR"), W("LLRR"), W("LRLR"), W("LRRR")],
+        expected: ["List", "'LLLR'", "'LLRR'", "'LRLR'", "'LRRR'"],
         caption: "four closed geodesics of symbolic length 4",
       },
       {
         id: "the-same-geodesic-entered-elsewhere",
-        expr: ["ModularClass", W("LRL")],
-        expected: W("LLR"),
+        expr: ["ModularClass", "'LRL'"],
+        expected: "'LLR'",
         caption: "the same geodesic, entered elsewhere",
         category: "Properties",
       },
       {
         id: "lrlr-is-lr-traversed-twice",
-        expr: ["IsPrimitiveClass", W("LRLR")],
+        expr: ["IsPrimitiveClass", "'LRLR'"],
         expected: "False",
         caption: "$LRLR$ is $LR$ traversed twice",
         category: "Properties",
       },
       {
         id: "same-word-length-as-lllr-different-geodesic",
-        expr: ["ModularTrace", W("LRLR")],
+        expr: ["ModularTrace", "'LRLR'"],
         expected: 7,
         caption: "same word length as $LLLR$, different geodesic length",
         category: "Scope",
@@ -586,7 +594,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "RademacherSymbol",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "RademacherSymbol(matrix)",
     summary:
       "The Rademacher symbol $\\Psi$ of a hyperbolic element. By Ghys's theorem it is the linking number of the element's modular knot with the trefoil — and it is also just the number of $R$'s minus the number of $L$'s in its word.",
@@ -622,13 +630,13 @@ export const modular: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "four-rights-one-left",
-        expr: ["RademacherSymbol", W("LRRRR")],
+        expr: ["RademacherSymbol", "'LRRRR'"],
         expected: 3,
         caption: "four rights, one left",
       },
       {
         id: "turning-equally-both-ways-gives-linking-number",
-        expr: ["LinkingWithTrefoil", W("LLRR")],
+        expr: ["LinkingWithTrefoil", "'LLRR'"],
         expected: 0,
         caption: "turning equally both ways gives linking number zero",
         category: "Properties",
@@ -642,7 +650,7 @@ export const modular: readonly ReferenceEntry[] = [
       },
       {
         id: "phi-on-t-n-just-counts",
-        expr: ["RademacherPhi", M(1, 7, 0, 1)],
+        expr: ["RademacherPhi", ["ModularMatrix", 1, 7, 0, 1]],
         expected: 7,
         caption: "$\\Phi$ on $T^n$ just counts",
         category: "Scope",
@@ -652,7 +660,7 @@ export const modular: readonly ReferenceEntry[] = [
   },
   {
     name: "FormClassNumber",
-    domain: DOMAIN,
+    domain: "The modular group",
     signature: "FormClassNumber(discriminant)",
     summary:
       "How many classes of indefinite binary quadratic forms a discriminant has. A class is not one reduced form but a CYCLE of them, and that cycle is a periodic continued fraction — which is to say, a closed geodesic.",
@@ -700,7 +708,10 @@ export const modular: readonly ReferenceEntry[] = [
       },
       {
         id: "the-action-preserves-the-discriminant",
-        expr: ["FormDiscriminant", ["FormAction", F(1, 1, -1), M(1, 1, 0, 1)]],
+        expr: [
+          "FormDiscriminant",
+          ["FormAction", ["QuadraticForm", 1, 1, -1], ["ModularMatrix", 1, 1, 0, 1]],
+        ],
         expected: 5,
         caption: "the action preserves the discriminant",
         category: "Properties",
@@ -714,8 +725,8 @@ export const modular: readonly ReferenceEntry[] = [
       },
       {
         id: "the-class-read-back-as-a-geodesic",
-        expr: ["ModularWord", ["FormAutomorph", F(1, 1, -1)]],
-        expected: W("LR"),
+        expr: ["ModularWord", ["FormAutomorph", ["QuadraticForm", 1, 1, -1]]],
+        expected: "'LR'",
         caption: "the class, read back as a geodesic",
         category: "Applications",
       },

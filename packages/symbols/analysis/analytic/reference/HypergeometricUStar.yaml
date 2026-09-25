@@ -1,0 +1,38 @@
+name: HypergeometricUStar
+domain: Special functions
+signature: HypergeometricUStar(a, b, z)
+summary: The regularized Tricomi confluent hypergeometric function $U^*(a,b,z) = z^a\,U(a,b,z)$, for $b$ not an integer. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: HypergeometricUStar(a, b, z)
+    description: $z^a$ times Tricomi's confluent hypergeometric $U(a,b,z)$.
+    library: '@enumeratio/analytic'
+details:
+  - "compute-engine declares `HypergeometricU` but does not evaluate it numerically (a symbolic stub only), so $U$ itself is supplied here via Kummer's connection formula in terms of the entire confluent hypergeometric $M = {}_1F_1$: $U(a,b,z) = \\tfrac{\\Gamma(1-b)}{\\Gamma(a-b+1)}M(a,b,z) + \\tfrac{\\Gamma(b-1)}{\\Gamma(a)}z^{1-b}M(a-b+1,2-b,z)$."
+  - $1/\Gamma$ is taken directly (zero at the nonpositive integers) rather than as a raw division, so the formula stays finite exactly where $a-b+1$ or $a$ lands on one of $\Gamma$'s poles — not an edge case Fungrim's own identities avoid.
+  - '$b$ at (or very near) an integer is declined: both $\Gamma(1-b)$ and $\Gamma(b-1)$ blow up there, and the log-case limit that resolves it is not implemented.'
+  - $z^{1-b}$ and the closing $z^a$ take the principal branch, matching mpmath's `hyperu` and Wolfram's `HypergeometricU`.
+examples:
+  - id: u-frac-12-frac-32-2-1
+    expr: [Chop, [Subtract, [N, [HypergeometricUStar, [Rational, 1, 2], [Rational, 3, 2], 2]], 1]]
+    expected: 0
+    caption: $U^*(\tfrac12,\tfrac32,2) = 1$
+  - id: a-generic-point-checked-against-mpmath-s-hyperu
+    expr: [HypergeometricUStar, 1.3, 2.7, 4]
+    expected: 1.1137052905867906
+    caption: a generic point, checked against mpmath's `hyperu`
+  - id: integer-b-stays-symbolic-the-connection-formula
+    expr: [HypergeometricUStar, 1, 2, 3]
+    expected: [HypergeometricUStar, 1, 2, 3]
+    category: Possible issues
+    caption: integer $b$ stays symbolic — the connection formula's log-case limit is not implemented
+primitive: numeric
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/hypergeometric-ustar.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: z^a HypergeometricU[a,b,z]; z**a * mpmath.hyperu(a,b,z).
+seeAlso: []

@@ -1,17 +1,19 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "Path algebras";
-const A4: MathJSON = ["LinearQuiver", 4];
-const P = (start: number, ...arrows: number[]): MathJSON => [
-  "QuiverPath",
-  start,
-  ["List", ...arrows],
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/quiver/reference/QuiverPath.yaml",
+  "packages/symbols/algebras/quiver/reference/QuiverCompose.yaml",
+  "packages/symbols/algebras/quiver/reference/QuiverIsAcyclic.yaml",
 ];
 
 export const quiverAlgebras: readonly ReferenceEntry[] = [
   {
     name: "QuiverPath",
-    domain: DOMAIN,
+    domain: "Path algebras",
     signature: "QuiverPath(start, arrows)",
     summary:
       "A directed path in a quiver: where it starts, and the arrow indices it follows. The basis of the path algebra $kQ$, with one trivial path per vertex.",
@@ -36,13 +38,13 @@ export const quiverAlgebras: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "from-vertex-1-along-two-arrows",
-        expr: ["QuiverPathEnd", A4, P(1, 0, 1)],
+        expr: ["QuiverPathEnd", ["LinearQuiver", 4], ["QuiverPath", 1, ["List", 0, 1]]],
         expected: 3,
         caption: "from vertex 1 along two arrows",
       },
       {
         id: "arrow-1-starts-at-vertex-2-so-this-is-not-a-path",
-        expr: ["Element", P(1, 1), ["PathAlgebra", A4]],
+        expr: ["Element", ["QuiverPath", 1, ["List", 1]], ["PathAlgebra", ["LinearQuiver", 4]]],
         expected: "False",
         caption: "arrow 1 starts at vertex 2, so this is not a path",
         category: "Possible issues",
@@ -62,7 +64,7 @@ export const quiverAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "QuiverCompose",
-    domain: DOMAIN,
+    domain: "Path algebras",
     signature: "QuiverCompose(quiver, p, q)",
     summary:
       "Concatenate two paths — or zero, when $q$ does not start where $p$ ends. Most products in a path algebra are zero, and that is the structure rather than a failure.",
@@ -81,21 +83,36 @@ export const quiverAlgebras: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "1-to-2-then-2-to-3",
-        expr: ["QuiverCompose", A4, P(1, 0), P(2, 1)],
-        expected: P(1, 0, 1),
+        expr: [
+          "QuiverCompose",
+          ["LinearQuiver", 4],
+          ["QuiverPath", 1, ["List", 0]],
+          ["QuiverPath", 2, ["List", 1]],
+        ],
+        expected: ["QuiverPath", 1, ["List", 0, 1]],
         caption: "$1\\to2$ then $2\\to3$",
       },
       {
         id: "the-ends-do-not-meet",
-        expr: ["QuiverCompose", A4, P(2, 1), P(1, 0)],
+        expr: [
+          "QuiverCompose",
+          ["LinearQuiver", 4],
+          ["QuiverPath", 2, ["List", 1]],
+          ["QuiverPath", 1, ["List", 0]],
+        ],
         expected: 0,
         caption: "the ends do not meet",
         category: "Properties",
       },
       {
         id: "a-trivial-path-is-a-local-identity",
-        expr: ["QuiverCompose", A4, P(1), P(1, 0)],
-        expected: P(1, 0),
+        expr: [
+          "QuiverCompose",
+          ["LinearQuiver", 4],
+          ["QuiverPath", 1, ["List"]],
+          ["QuiverPath", 1, ["List", 0]],
+        ],
+        expected: ["QuiverPath", 1, ["List", 0]],
         caption: "a trivial path is a local identity",
         category: "Properties",
       },
@@ -104,7 +121,7 @@ export const quiverAlgebras: readonly ReferenceEntry[] = [
   },
   {
     name: "QuiverIsAcyclic",
-    domain: DOMAIN,
+    domain: "Path algebras",
     signature: "QuiverIsAcyclic(quiver)",
     summary:
       "Whether the quiver has no directed cycle — equivalently, whether its path algebra is finite-dimensional at all.",
@@ -123,7 +140,7 @@ export const quiverAlgebras: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "quiverisacyclic-linearquiver-4",
-        expr: ["QuiverIsAcyclic", A4],
+        expr: ["QuiverIsAcyclic", ["LinearQuiver", 4]],
         expected: "True",
       },
       {

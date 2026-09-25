@@ -1,4 +1,4 @@
-// Generate `src/entries.ts` — one reference entry per declared statistic, plus one per
+// Generate `reference/*.yaml` (and its shim, `src/entries.ts`) — one reference entry per declared statistic, plus one per
 // frontier signature. The definitions already carry a head, a carrier and a summary; what
 // they cannot carry is a worked example, so this script evaluates each definition against a
 // couple of fixed inputs per carrier and writes the results out inline.
@@ -8,8 +8,8 @@
 //
 //   vp node packages/symbols/combinatorics/statistics/scripts/collect-entries.ts
 
-import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { writeGeneratedEntries } from "../../../../reference/scripts/migrate/shims.ts";
 import { captionId, dedupeId } from "@enumeratio/entry";
 import { declareCollections } from "@enumeratio/collections/src";
 import { ALL_STATISTICS } from "../src/all.ts";
@@ -211,5 +211,6 @@ ${body}
 ];
 `;
 
-writeFileSync(new URL("../src/entries.ts", import.meta.url), file);
+// The module text is evaluated into one YAML per entry, and src/entries.ts is its shim.
+await writeGeneratedEntries("packages/symbols/combinatorics/statistics", file);
 process.stdout.write(`wrote ${owner.size + FRONTIER.length} entries\n`);

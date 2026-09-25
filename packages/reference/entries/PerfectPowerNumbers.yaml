@@ -1,0 +1,20 @@
+name: PerfectPowerNumbers
+domain: Collections
+signature: PerfectPowerNumbers
+summary: The perfect powers $4, 8, 9, 16, 25, …$ -- integers $a^k$ with $a \ge 2, k \ge 2$ -- as a lazy indexed collection.
+signatures:
+  - call: PerfectPowerNumbers
+    description: the $a^k$ for integers $a \ge 2, k \ge 2$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(PerfectPowerNumbers) = +\infty$, and $At$ unranks the $k$-th by scanning forward, testing each candidate by binary search over exponents.'
+  - OEIS A075109 -- the $a \ge 2$ convention excludes $1$, unlike A001597's $m > 0$.
+  - 'Membership goes through [[Element]]: $Element(16, PerfectPowerNumbers)$ is true ($16 = 2^4 = 4^2$), $Element(1, PerfectPowerNumbers)$ is false under this convention (needs $a \ge 2$).'
+examples: []
+enumerate:
+  expr: Take(PerfectPowerNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - PowerfulNumbers
+  - SquareNumbers

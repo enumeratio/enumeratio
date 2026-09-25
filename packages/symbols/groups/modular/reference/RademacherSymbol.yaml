@@ -1,0 +1,46 @@
+name: RademacherSymbol
+domain: The modular group
+signature: RademacherSymbol(matrix)
+summary: The Rademacher symbol $\Psi$ of a hyperbolic element. By Ghys's theorem it is the linking number of the element's modular knot with the trefoil — and it is also just the number of $R$'s minus the number of $L$'s in its word.
+signatures:
+  - call: RademacherSymbol(matrix)
+    description: $\Psi(M) = \Phi(M) - 3\,\mathrm{sign}(c(a+d))$, via Dedekind sums
+    library: enumeratio-modular
+  - call: WordSymbol(word)
+    description: the same number by counting letters
+    library: enumeratio-modular
+  - call: LinkingWithTrefoil(matrix)
+    description: the same number again, named for what it measures
+    library: enumeratio-modular
+  - call: DedekindSum(h, k)
+    description: $s(h,k)$, exactly
+    library: enumeratio-modular
+details:
+  - $\mathrm{SL}(2,\mathbb{Z})\backslash\mathrm{SL}(2,\mathbb{R})$ is the complement of a trefoil in $S^3$, so a closed orbit of the modular flow is a knot in that complement
+  - 'Ghys: the modular knots are exactly the LORENZ knots, and $\mathrm{lk}(k_\gamma,\text{trefoil}) = \Psi(\gamma)$'
+  - $\Phi(M) = (a+d)/c - 12\,\mathrm{sign}(c)\,s(d,|c|)$ is a quasimorphism, NOT a class function; only the corrected $\Psi$ is
+  - Dedekind sums are checked against reciprocity, $s(h,k)+s(k,h) = -\frac14 + \frac{1}{12}(h/k + k/h + 1/hk)$
+  - $\Psi$ is undefined on elliptic and parabolic elements — they have no closed geodesic
+examples:
+  - id: four-rights-one-left
+    expr: [RademacherSymbol, "'LRRRR'"]
+    expected: 3
+    caption: four rights, one left
+  - id: turning-equally-both-ways-gives-linking-number
+    expr: [LinkingWithTrefoil, "'LLRR'"]
+    expected: 0
+    caption: turning equally both ways gives linking number zero
+    category: Properties
+  - id: the-arithmetic-side
+    expr: [DedekindSum, 4, 3]
+    expected: [Rational, 1, 18]
+    caption: the arithmetic side
+    category: Scope
+  - id: phi-on-t-n-just-counts
+    expr: [RademacherPhi, [ModularMatrix, 1, 7, 0, 1]]
+    expected: 7
+    caption: $\Phi$ on $T^n$ just counts
+    category: Scope
+seeAlso:
+  - ModularClasses
+  - ModularWord

@@ -1,21 +1,19 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Reference entries for @enumeratio/aestimatio: controlling evaluation — deadlines
-// (TimeConstrained), memory bounds (MemoryConstrained, real only in the isolated
-// evaluator), and self-checking (VerificationTest). All three are Wolfram's own concepts,
-// named identically — see design/aestimatio.md.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const DOMAIN = "Controlling evaluation";
-
-// Two ~15-digit primes, far enough apart in magnitude that a small trial-division sieve
-// never finds them, so FactorInteger reaches its own Pollard-rho loop — the same loop a
-// TimeConstrained deadline has to interrupt mid-flight for the timeout example below.
-const SEMIPRIME = (1_000_000_000_000_037n * 1_001_000_000_000_003n).toString();
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/evaluation/aestimatio/reference/TimeConstrained.yaml",
+  "packages/symbols/evaluation/aestimatio/reference/MemoryConstrained.yaml",
+  "packages/symbols/evaluation/aestimatio/reference/VerificationTest.yaml",
+];
 
 export const aestimatio: readonly ReferenceEntry[] = [
   {
     name: "TimeConstrained",
-    domain: DOMAIN,
+    domain: "Controlling evaluation",
     signature: "TimeConstrained(expr, t, failexpr)",
     summary: "Evaluates expr, but aborts after t seconds and returns failexpr.",
     signatures: [
@@ -44,14 +42,14 @@ export const aestimatio: readonly ReferenceEntry[] = [
       },
       {
         id: "factoring-a-30-digit-semiprime-outruns-a-50-ms",
-        expr: ["TimeConstrained", ["FactorInteger", SEMIPRIME], 0.05],
+        expr: ["TimeConstrained", ["FactorInteger", "1001000000000040037000000000111"], 0.05],
         expected: "Aborted",
         caption:
           "Factoring a 30-digit semiprime outruns a 50 ms deadline — compute-engine's own rho loop checks it and gives up",
       },
       {
         id: "a-custom-failexpr-replaces-the-default-aborted",
-        expr: ["TimeConstrained", ["FactorInteger", SEMIPRIME], 0.05, -1],
+        expr: ["TimeConstrained", ["FactorInteger", "1001000000000040037000000000111"], 0.05, -1],
         expected: -1,
         caption: "A custom failexpr replaces the default $Aborted",
       },
@@ -73,7 +71,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
   },
   {
     name: "MemoryConstrained",
-    domain: DOMAIN,
+    domain: "Controlling evaluation",
     signature: "MemoryConstrained(expr, bytes, failexpr)",
     summary: "Evaluates expr under a memory cap of bytes — real only in the isolated evaluator.",
     signatures: [
@@ -91,16 +89,16 @@ export const aestimatio: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "in-process-the-call-simply-does-not-reduce-see",
-        expr: ["MemoryConstrained", ["Add", 1, 2], 1_000_000],
-        expected: ["MemoryConstrained", ["Add", 1, 2], 1_000_000],
+        expr: ["MemoryConstrained", ["Add", 1, 2], 1000000],
+        expected: ["MemoryConstrained", ["Add", 1, 2], 1000000],
         caption:
           "In-process, the call simply does not reduce — see evaluateIsolated for the real cap",
         divergence: { wolfram: "Wolfram enforces the cap in-kernel and evaluates to 3." },
       },
       {
         id: "a-failexpr-does-not-change-that-in-process-there",
-        expr: ["MemoryConstrained", ["Add", 1, 2], 1_000_000, -1],
-        expected: ["MemoryConstrained", ["Add", 1, 2], 1_000_000, -1],
+        expr: ["MemoryConstrained", ["Add", 1, 2], 1000000, -1],
+        expected: ["MemoryConstrained", ["Add", 1, 2], 1000000, -1],
         caption: "A failexpr does not change that: in-process there is no cap to exceed",
         category: "Scope",
         divergence: {
@@ -111,7 +109,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
   },
   {
     name: "VerificationTest",
-    domain: DOMAIN,
+    domain: "Controlling evaluation",
     signature: "VerificationTest(input, expected)",
     summary: "Evaluates input and compares it with expected, returning a TestResultObject.",
     signatures: [
@@ -176,12 +174,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
       },
       {
         id: "memoryconstraint-in-process-is-an-error-not-a",
-        expr: [
-          "VerificationTest",
-          ["Add", 2, 3],
-          5,
-          ["KeyValuePair", "MemoryConstraint", 1_000_000],
-        ],
+        expr: ["VerificationTest", ["Add", 2, 3], 5, ["KeyValuePair", "MemoryConstraint", 1000000]],
         expected: [
           "TestResultObject",
           ["Tuple", "'Outcome'", "'Error'"],

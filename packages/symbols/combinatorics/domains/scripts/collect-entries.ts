@@ -1,12 +1,12 @@
-// Generate `src/entries.ts` — one reference entry per combinatorial map, plus one per
+// Generate `reference/*.yaml` (and its shim, `src/entries.ts`) — one reference entry per combinatorial map, plus one per
 // undefined map on the frontier. Same shape and the same reason as the statistics
 // generator next door: the map data carries a signature and a summary but no worked
 // example, so this evaluates each map at a fixed subject and writes the answer out inline.
 //
 //   vp node packages/symbols/combinatorics/domains/scripts/collect-entries.ts
 
-import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
+import { writeGeneratedEntries } from "../../../../reference/scripts/migrate/shims.ts";
 import { captionId, dedupeId } from "@enumeratio/entry";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDomains } from "../src/declare.ts";
@@ -127,5 +127,6 @@ ${[...MAPS.map(entryFor), ...UNDEFINED_MAPS.map(frontierEntryFor)].join("\n")}
 ];
 `;
 
-writeFileSync(new URL("../src/entries.ts", import.meta.url), file);
+// The module text is evaluated into one YAML per entry, and src/entries.ts is its shim.
+await writeGeneratedEntries("packages/symbols/combinatorics/domains", file);
 process.stdout.write(`wrote ${MAPS.length + UNDEFINED_MAPS.length} entries\n`);

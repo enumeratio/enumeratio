@@ -1,0 +1,125 @@
+name: Round
+domain: Arithmetic
+signature: Round(x, n?)
+summary: Rounds x to the nearest integer, or to n decimal places.
+signatures:
+  - call: Round(x)
+    description: rounds x to the nearest integer, ties away from 0.
+  - call: Round(x, n)
+    description: 'rounds to the nearest $10^{-n}$: n decimal places, or -- for negative n -- the nearest power of ten.'
+  - call: Round(z)
+    description: for a complex $z$, the real and imaginary parts rounded separately.
+    library: enumeratio-collections
+details:
+  - 'Rounds to the nearest integer, with ties (an exact .5) breaking away from 0: $\mathrm{Round}(2.5) = 3$ and $\mathrm{Round}(-2.5) = -3$.'
+  - 'A second, integer argument n rounds to the nearest $10^{-n}$ instead: positive n gives n decimal places, negative n rounds to the nearest power of ten.'
+  - $\mathrm{Round}(x, 0)$ agrees with the 1-argument form.
+  - Threads element-wise over a list.
+  - The digits argument must be an integer; unlike [[Floor]] and [[Ceil]], which take no second argument at all, Round is the only one of the three with quantized rounding.
+examples:
+  - id: round-7-over-2
+    expr: [Round, [Rational, 7, 2]]
+    expected: 4
+  - id: round-3p5
+    expr: [Round, 3.5]
+    expected: 4
+  - id: integers-pass-through-unchanged
+    expr: [Round, 5]
+    expected: 5
+    caption: Integers pass through unchanged
+  - id: a-second-argument-rounds-to-that-many-decimal
+    expr: [Round, 3.14159, 2]
+    expected: [Rational, 157, 50]
+    caption: A second argument rounds to that many decimal places
+  - id: threads-element-wise-over-a-list
+    expr: [Round, [List, 1.5, -1.5, 2.4]]
+    expected: [List, 2, -2, 2]
+    caption: Threads element-wise over a list
+  - id: a-negative-second-argument-rounds-to-the-nearest
+    expr: [Equal, [Round, 1234, -2], 1200]
+    expected: True
+    category: Properties
+    caption: A negative second argument rounds to the nearest power of ten instead -- here, the nearest hundred
+    divergence:
+      wolfram: Wolfram reads the second argument as a step to round to a multiple of, so $\mathrm{Round}[1234, -2] = 1234$.
+  - id: rounding-to-0-decimal-places-matches-the-1
+    expr: [Equal, [Round, 3.14159, 0], [Round, 3.14159]]
+    expected: True
+    category: Properties
+    caption: Rounding to 0 decimal places matches the 1-argument form
+    divergence:
+      wolfram: Wolfram treats the step literally, so $\mathrm{Round}[3.14159, 0]$ is $\mathrm{Indeterminate}$.
+  - id: rounding-a-price-to-the-nearest-cent-19-995
+    expr: [Round, 19.995, 2]
+    expected: 20
+    category: Applications
+    caption: 'Rounding a price to the nearest cent: 19.995 rounds up to 20'
+  - id: rounds-half-away-from-zero-not-banker-s-rounding
+    expr: [Round, 2.5]
+    expected: 3
+    category: Possible issues
+    caption: "Rounds half away from zero, not banker's rounding: 2.5 rounds to 3, not 2"
+    divergence:
+      wolfram: Wolfram uses round-half-to-even (banker's rounding), so $\mathrm{Round}[2.5] = 2$.
+  - id: and-by-the-same-convention-2-5-rounds-to-3-not-2
+    expr: [Round, -2.5]
+    expected: -3
+    category: Possible issues
+    caption: ...and by the same convention, -2.5 rounds to -3, not -2
+    divergence:
+      wolfram: Wolfram's half-to-even gives $\mathrm{Round}[-2.5] = -2$.
+  - id: round-2p4
+    expr: [Round, 2.4]
+    expected: 2
+  - id: round-2p6
+    expr: [Round, 2.6]
+    expected: 3
+  - id: round-5p37
+    expr: [Round, 5.37]
+    expected: 5
+  - id: round-neg-3p7
+    expr: [Round, -3.7]
+    expected: -4
+  - id: stays-symbolic
+    expr: [Round, x]
+    expected: [Round, x]
+    category: Scope
+    caption: Stays symbolic
+  - id: to-the-nearest-ten
+    expr: [Round, 226, -1]
+    expected: 230
+    category: Scope
+    caption: To the nearest ten
+    divergence:
+      wolfram: "Wolfram's second argument is the step itself: $\\mathrm{Round}[226, 10] = 230$."
+  - id: an-exact-argument-rounds-to-an-exact-rational
+    expr: [Round, [Sqrt, 2], 4]
+    expected: [Rational, 7071, 5000]
+    category: Scope
+    caption: An exact argument rounds to an exact rational
+  - id: evaluates-at-an-exact-constant-round-pi-3
+    expr: [Round, Pi]
+    expected: 3
+    category: Scope
+    caption: 'Evaluates at an exact constant: $\mathrm{Round}(\pi) = 3$'
+  - id: 100e-approx-271-83-rounds-to-272
+    expr: [Round, [Multiply, 100, ExponentialE]]
+    expected: 272
+    category: Scope
+    caption: $100e \approx 271.83$ rounds to 272
+  - id: rounds-the-real-and-imaginary-parts-separately
+    expr: [Round, [Complex, 5.37, -1.3]]
+    expected: [Complex, 5, -1]
+    category: Scope
+    caption: Rounds the real and imaginary parts separately
+  - id: an-exact-half-rounds-away-from-zero-as-well
+    expr: [Round, [Rational, 1, 2]]
+    expected: 1
+    category: Possible issues
+    caption: An exact half rounds away from zero as well
+    divergence:
+      wolfram: 'Wolfram rounds half to even: $\mathrm{Round}[1/2] = 0$.'
+seeAlso:
+  - Floor
+  - Ceil
+  - Clamp

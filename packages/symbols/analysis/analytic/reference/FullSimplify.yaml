@@ -1,0 +1,44 @@
+name: FullSimplify
+domain: Transformations
+signature: FullSimplify(expr)
+summary: Simplify `expr` harder than Simplify, trying a wider set of transformations including special-function identities. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: FullSimplify(expr)
+    description: compute-engine's own `simplify()`, plus a few extra targeted passes.
+    library: '@enumeratio/analytic'
+details:
+  - Starts from compute-engine's native `simplify()`, which already folds the Pythagorean identity and a double-angle product on its own.
+  - "Adds exactly four passes: the Gamma functional equation Γ(a)/Γ(b) for a concrete integer a−b; the hyperbolic Pythagorean identity cosh²(u) − sinh²(u) = 1; denesting Sqrt(a + 2·Sqrt(b)) for concrete rational a, b with a rational discriminant; and ExpToTrig everywhere in the tree (which is how a (e^x − e^(−x))/2 shows up as Sinh(x), with no separate 'looks like a hyperbolic definition' rule needed)."
+  - 'NOT a general simplifier: no broader special-function identity table beyond the one Gamma shift above, no general nested-radical denesting past the one quadratic form, and no trigonometric identities beyond what `simplify()` already has. An expression needing more than this list is left exactly as `simplify()` leaves it.'
+examples:
+  - id: the-pythagorean-identity
+    expr: [FullSimplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]
+    expected: 1
+    caption: The Pythagorean identity
+  - id: recognizes-the-definition-of-sinh
+    expr: [FullSimplify, [Divide, [Subtract, [Exp, x], [Exp, [Negate, x]]], 2]]
+    expected: [Sinh, x]
+    caption: Recognizes the definition of [[Sinh]]
+  - id: folds-the-double-angle-product
+    expr: [FullSimplify, [Multiply, 2, [Sin, x], [Cos, x]]]
+    expected: [Sin, [Multiply, 2, x]]
+    category: Scope
+    caption: Folds the double-angle product
+  - id: the-functional-equation-of-gamma
+    expr: [FullSimplify, [Divide, [Gamma, [Add, x, 1]], [Gamma, x]]]
+    expected: x
+    category: Scope
+    caption: The functional equation of [[Gamma]]
+  - id: denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3
+    expr: [FullSimplify, [Subtract, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]]]
+    expected: 0
+    category: Scope
+    caption: Denests $\sqrt{5 + 2\sqrt6} = \sqrt2 + \sqrt3$
+  - id: the-hyperbolic-pythagorean-identity
+    expr: [FullSimplify, [Subtract, [Power, [Cosh, x], 2], [Power, [Sinh, x], 2]]]
+    expected: 1
+    category: Scope
+    caption: The hyperbolic Pythagorean identity
+seeAlso:
+  - FunctionExpand
+  - ExpToTrig

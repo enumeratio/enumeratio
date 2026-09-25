@@ -1,0 +1,25 @@
+name: StandardTableauPairs
+domain: Collections
+signature: StandardTableauPairs(size)
+summary: Pairs $(P, Q)$ of same-shape standard Young tableaux with $n$ cells — the RSK codomain — as a lazy indexed family of $n!$.
+signatures:
+  - call: StandardTableauPairs(size)
+    library: enumeratio-collections
+    description: the $(P, Q)$ pairs of size `size`, in bijection with the permutations of `size` via RSK.
+details:
+  - 'A lazy indexed collection: $Count(StandardTableauPairs(n)) = n!$, exact and closed-form, since Robinson–Schensted–Knuth is a bijection $S_n \leftrightarrow \{(P, Q)\}$. See [[Factorial]].'
+  - Each element is `[P, Q]`, two standard Young tableaux of the same shape; unranking goes through [[SymmetricGroup]]'s permutation unrank, then forward RSK insertion.
+  - Ranking inverts RSK back to a permutation and reads off [[SymmetricGroup]]'s rank — so the two families share one underlying order.
+examples:
+  - id: count-standardtableaupairs-4-4-24-rsk-is-a
+    expr: [Count, [StandardTableauPairs, 4]]
+    expected: 24
+    category: Basic
+    caption: '$Count(StandardTableauPairs(4)) = 4! = 24$: RSK is a bijection with permutations'
+enumerate:
+  expr: StandardTableauPairs(4)
+seeAlso:
+  - SymmetricGroup
+  - Factorial
+  - Count
+  - At

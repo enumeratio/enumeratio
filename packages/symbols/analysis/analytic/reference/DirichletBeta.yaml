@@ -1,0 +1,101 @@
+name: DirichletBeta
+domain: Special functions
+signature: DirichletBeta(s)
+summary: The Dirichlet beta function $\beta(s) = \sum_{n\ge0} (-1)^n (2n+1)^{-s}$, the L-function of the nontrivial character mod 4 — entire, with $\beta(1) = \pi/4$ and $\beta(2) = G$ (Catalan). Provided by `@enumeratio/analytic`.
+signatures:
+  - call: DirichletBeta(s)
+    description: the Dirichlet beta function $\beta(s)$.
+    library: '@enumeratio/analytic'
+details:
+  - $\beta(s) = 4^{-s}\left(\zeta(s, \tfrac14) - \zeta(s, \tfrac34)\right)$ in terms of [[HurwitzZeta]], which is how it is evaluated numerically (complex $s$ included).
+  - 'Odd positive integers have closed forms in $\pi$ and the Euler numbers: $\beta(2k+1) = (-1)^k E_{2k}\,\pi^{2k+1} / (4^{k+1}(2k)!)$ — $\beta(1) = \pi/4$ (Leibniz), $\beta(3) = \pi^3/32$, $\beta(5) = 5\pi^5/1536$.'
+  - "Even positive integers do not: $\\beta(2) = G = 0.9159\\ldots$ is Catalan's constant, and $\\beta(4), \\beta(6), \\dots$ stay symbolic."
+  - 'Nonpositive integers are Euler numbers: $\beta(-2k) = E_{2k}/2$ ($\beta(0) = \tfrac12$, $\beta(-2) = -\tfrac12$, $\beta(-4) = \tfrac52$), and $\beta(-(2k+1)) = 0$.'
+  - Functional equation $\beta(1-s) = (\pi/2)^{-s} \sin(\pi s/2)\,\Gamma(s)\,\beta(s)$; entire, no poles.
+examples:
+  - id: beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15
+    expr: [DirichletBeta, 1]
+    expected: [Multiply, [Rational, 1, 4], Pi]
+    caption: "$\\beta(1) = \\pi/4$: Leibniz's series $1 - \\tfrac13 + \\tfrac15 - \\cdots$"
+  - id: beta-2-g-catalan-s-constant
+    expr: [DirichletBeta, 2]
+    expected: Catalan
+    caption: $\beta(2) = G$, Catalan's constant
+  - id: beta-3-pi-3-32
+    expr: [DirichletBeta, 3]
+    expected: [Multiply, [Rational, 1, 32], [Power, Pi, 3]]
+    caption: $\beta(3) = \pi^3/32$
+  - id: beta-7-61-pi-7-184320-the-61-is-the-euler-number
+    expr: [DirichletBeta, 7]
+    expected: [Multiply, [Rational, 61, 184320], [Power, Pi, 7]]
+    category: Properties
+    caption: $\beta(7) = 61\pi^7/184320$ — the $61$ is the Euler number $|E_6|$
+  - id: beta-2k-e-2k-2-and-beta-2k-1-0
+    expr: [DirichletBeta, [List, 0, -1, -2, -3, -4]]
+    expected: [List, [Rational, 1, 2], 0, [Rational, -1, 2], 0, [Rational, 5, 2]]
+    category: Properties
+    caption: $\beta(-2k) = E_{2k}/2$ and $\beta(-(2k+1)) = 0$
+  - id: even-s-ge-4-has-no-closed-form-and-stays
+    expr: [DirichletBeta, 4]
+    expected: [DirichletBeta, 4]
+    category: Possible issues
+    caption: Even $s \ge 4$ has no closed form and stays symbolic; N() gives $0.98894\ldots$
+    divergence:
+      wolfram: Stays symbolic here; Wolfram rewrites it via $\zeta(4, 1/4)$ and $\zeta(4, 3/4)$ instead of a further-reduced number.
+  - id: numeric-for-a-floating-point-argument-through-4
+    expr: [DirichletBeta, 2.5]
+    expected: {num: '0.948622174037054707445'}
+    caption: Numeric for a floating-point argument — through $4^{-s}(\zeta(s,\tfrac14) - \zeta(s,\tfrac34))$, so it answers to the engine's working precision rather than a double's
+  - id: a-symbolic-argument-stays-symbolic
+    expr: [DirichletBeta, s]
+    expected: [DirichletBeta, s]
+    caption: A symbolic argument stays symbolic
+  - id: beta-5-5-pi-5-1536
+    expr: [DirichletBeta, 5]
+    expected: [Multiply, [Rational, 5, 1536], [Power, Pi, 5]]
+    category: Properties
+    caption: $\beta(5) = 5\pi^5/1536$
+  - id: complex-arguments-here-on-the-critical-line
+    expr: [DirichletBeta, [Complex, 0.5, 14]]
+    expected: [Complex, 1.537115438440316, 1.3434514268677573]
+    category: Scope
+    caption: Complex arguments, here on the critical line
+  - id: threads-elementwise-over-an-array
+    expr: [DirichletBeta, [List, [List, 1, -1], [List, -1, 1]]]
+    expected: [List, [List, [Multiply, [Rational, 1, 4], Pi], 0], [List, 0, [Multiply, [Rational, 1, 4], Pi]]]
+    category: Scope
+    caption: Threads elementwise over an array
+  - id: beta-s-to-1-as-s-to-infty
+    expr: [DirichletBeta, PositiveInfinity]
+    expected: 1
+    category: Scope
+    caption: $\beta(s) \to 1$ as $s \to \infty$
+  - id: uncertainty-propagation-beta-2-pm-0-01-g-pm-0
+    expr: [DirichletBeta, [Around, 2, 0.01]]
+    expected: [Around, 0.915965594177219, 0.000815807361165928]
+    category: Scope
+    caption: 'Uncertainty propagation: $\beta(2 \pm 0.01) = G \pm 0.00082$'
+  - id: to-exactly-40-significant-digits-not-yet-85-come
+    expr: [N, [DirichletBeta, 2], 40]
+    expected: {num: '0.9159655941772190150546035149323841107741'}
+    aspirational: true
+    category: Scope
+    caption: To exactly 40 significant digits; not yet -- 85 come back (the first 40 right)
+implementations:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Multiply, [Power, 4, [Negate, _s]], [Subtract, [HurwitzZeta, _s, [Rational, 1, 4]], [HurwitzZeta, _s, [Rational, 3, 4]]]]
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/dirichlet.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: DirichletBeta[s]; mpmath.dirichlet(s, [0, 1, 0, -1]).
+seeAlso:
+  - DirichletEta
+  - HurwitzZeta
+  - ClausenCl
+  - Zeta

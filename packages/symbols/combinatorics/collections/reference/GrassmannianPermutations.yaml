@@ -1,0 +1,32 @@
+name: GrassmannianPermutations
+domain: Collections
+signature: GrassmannianPermutations(n)
+summary: The permutations of $\{1, …, n\}$ with at most one descent, as a lazy indexed family.
+signatures:
+  - call: GrassmannianPermutations(n)
+    library: enumeratio-collections
+    description: the permutations of $\{1, …, n\}$ with at most one descent.
+details:
+  - A lazy indexed collection; the count is $2^n - n$, A000325.
+  - A permutation with at most one descent is the sorted-ascending concatenation of a value-subset $A$ (the "first block") with its sorted-ascending complement, split at the descent; every subset gives such a permutation except that the $n+1$ prefix subsets $\{1, …, k\}$ all collapse to the identity.
+  - $At$ fixes the identity at rank $0$ and, for increasing block size $k = 1, …, n-1$, unranks $A$ from the size-$k$ subsets in colex order ([[Binomial]]-many minus the one prefix subset already spoken for).
+examples:
+  - id: count-grassmannianpermutations-5-2-5-5-27
+    expr: [Count, [GrassmannianPermutations, 5]]
+    expected: 27
+    category: Basic
+    caption: $Count(GrassmannianPermutations(5)) = 2^5 - 5 = 27$, A000325
+  - id: grassmannian-and-cograssmannian-permutations
+    expr: [Equal, [Count, [GrassmannianPermutations, 5]], [Count, [CograssmannianPermutations, 5]]]
+    expected: True
+    category: Properties
+    caption: Grassmannian and Cograssmannian permutations share the same count, $2^n - n$, since value-complementing swaps descents for ascents
+enumerate:
+  expr: GrassmannianPermutations(4)
+  columns: Descents, Inversions
+  glyph: permutation
+seeAlso:
+  - CograssmannianPermutations
+  - Binomial
+  - Count
+  - At

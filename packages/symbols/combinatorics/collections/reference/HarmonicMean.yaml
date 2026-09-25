@@ -1,0 +1,32 @@
+name: HarmonicMean
+domain: Collections
+signature: HarmonicMean(collection)
+summary: The reciprocal of the mean of the reciprocals.
+signatures:
+  - call: HarmonicMean(collection)
+    description: $n \big/ \sum_{i} 1/x_i$ for the $n$ elements of $collection$.
+    library: enumeratio-collections
+details:
+  - See [[GeometricMean]] and [[Mean]] for the other Pythagorean means.
+examples:
+  - id: 3-1-frac-12-frac-14-frac-12-7
+    expr: [HarmonicMean, [List, 1, 2, 4]]
+    expected: [Rational, 12, 7]
+    caption: $3 / (1 + \frac12 + \frac14) = \frac{12}{7}$
+  - id: frac-12-5
+    expr: [HarmonicMean, [List, 2, 3]]
+    expected: [Rational, 12, 5]
+    caption: $\frac{12}{5}$
+  - id: driving-equal-distances-at-40-and-60-averages-48
+    expr: [HarmonicMean, [List, 40, 60]]
+    expected: 48
+    category: Applications
+    caption: Driving equal distances at 40 and 60 averages 48, not 50
+  - id: equal-values-are-their-own-harmonic-mean
+    expr: [HarmonicMean, [List, 5, 5, 5]]
+    expected: 5
+    category: Properties
+    caption: Equal values are their own harmonic mean
+seeAlso:
+  - GeometricMean
+  - Mean

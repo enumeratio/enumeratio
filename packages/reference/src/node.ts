@@ -5,8 +5,7 @@
 //
 // Node-only (`node:fs`), so this lives on the `/node` subpath, never the package's `.` entry:
 // `ExampleAlternatives.vue` imports `@enumeratio/reference` in the browser, and a filesystem
-// loader on the main export would break the site build. No data lives under `reference/` yet
-// -- the data flip is step 4 -- so an empty scan is the expected result today.
+// loader on the main export would break the site build.
 
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -45,8 +44,35 @@ function headName(fileName: string): string {
   return fileName.slice(0, -ENTRY_SUFFIX.length);
 }
 
+/** Where the YAML lives under `packages/`: `<package>/reference/`, a symbol package's
+ * `symbols/<group>/<package>/reference/`, and reference's own `entries/` (the engine's heads). */
+function dataDirs(packagesRoot: string): { package: string; dir: string }[] {
+  const subdirs = (dir: string): string[] =>
+    existsSync(dir)
+      ? readdirSync(dir, { withFileTypes: true })
+          .filter((e) => e.isDirectory())
+          .map((e) => e.name)
+          .sort()
+      : [];
+  const packages = [
+    ...subdirs(packagesRoot).map((pkg) => ({ pkg, dir: join(packagesRoot, pkg) })),
+    ...subdirs(join(packagesRoot, "symbols")).flatMap((group) =>
+      subdirs(join(packagesRoot, "symbols", group)).map((pkg) => ({
+        pkg,
+        dir: join(packagesRoot, "symbols", group, pkg),
+      })),
+    ),
+  ];
+  return packages
+    .map(({ pkg, dir }) => ({
+      package: pkg,
+      dir: join(dir, pkg === "reference" ? "entries" : "reference"),
+    }))
+    .filter(({ dir }) => existsSync(dir));
+}
+
 /**
- * Scan every `<packagesRoot>/<package>/reference/` directory for `<Head>.yaml` files, parse
+ * Scan every package's YAML directory (see `dataDirs`) for `<Head>.yaml` files, parse
  * and validate each one (and its `.implementations.yaml`, if present), and check that no two
  * packages assign the same id to the same head (design/examples-as-data.md §3, §9).
  *
@@ -59,15 +85,7 @@ export function loadReferenceData(packagesRoot: string): LoadResult {
   // "<Head>/<id>" -> the file that first declared it, so a repeat can name where it collides.
   const seenIds = new Map<string, string>();
 
-  const packageDirs = readdirSync(packagesRoot, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
-    .map((e) => e.name)
-    .sort();
-
-  for (const pkg of packageDirs) {
-    const referenceDir = join(packagesRoot, pkg, "reference");
-    if (!existsSync(referenceDir)) continue;
-
+  for (const { package: pkg, dir: referenceDir } of dataDirs(packagesRoot)) {
     const files = readdirSync(referenceDir).filter(
       (f) => f.endsWith(ENTRY_SUFFIX) && !f.endsWith(IMPLEMENTATIONS_SUFFIX),
     );

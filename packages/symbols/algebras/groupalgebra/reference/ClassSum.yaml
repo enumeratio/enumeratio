@@ -1,0 +1,39 @@
+name: ClassSum
+domain: Group algebras
+signature: ClassSum(group, k)
+summary: 'The $k$-th class sum: add up one conjugacy class. Class sums are the basis of the CENTRE of $k[G]$ — a commutative subalgebra of a usually non-commutative algebra.'
+signatures:
+  - call: ClassSum(group, k)
+    description: the sum of the $k$-th conjugacy class (1-indexed)
+    library: enumeratio-groupalgebra
+  - call: IsCentral(group, element)
+    description: whether an element commutes with everything
+    library: enumeratio-groupalgebra
+details:
+  - A single non-central element is not central, but the class sum containing it always is — that is the point
+  - Class sums have disjoint supports, so they are linearly independent and form a basis of the centre
+  - The first class is always the identity alone
+  - $\dim Z(k[G])$ is the number of conjugacy classes, which is also the number of irreducible characters of $G$
+examples:
+  - id: the-identity-s-class-is-a-singleton
+    expr: [ClassSum, [DihedralGroup, 3], 1]
+    expected: [GroupBasis, "'0'"]
+    caption: the identity's class is a singleton
+  - id: class-sums-are-central
+    expr: [IsCentral, [DihedralGroup, 3], [ClassSum, [DihedralGroup, 3], 2]]
+    expected: True
+    caption: class sums are central
+    category: Properties
+  - id: a-lone-reflection-is-not
+    expr: [IsCentral, [DihedralGroup, 3], [GroupBasis, [String, s0]]]
+    expected: False
+    caption: a lone reflection is not
+    category: Properties
+  - id: in-an-abelian-group-everything-is-central
+    expr: [IsCentral, [CyclicGroup, 6], [GroupBasis, [String, '3']]]
+    expected: True
+    caption: in an abelian group everything is central
+    category: Scope
+seeAlso:
+  - ConjugacyClasses
+  - GroupBasis

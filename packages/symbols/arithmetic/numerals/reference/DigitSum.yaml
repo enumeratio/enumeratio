@@ -1,0 +1,65 @@
+name: DigitSum
+domain: Numeral systems
+signature: DigitSum(n, base?, k?)
+summary: The sum of the digits of n in the given base (default 10).
+signatures:
+  - call: DigitSum(n)
+    description: sum of the digits of $n$, base 10.
+  - call: DigitSum(n, base)
+    description: sum of the digits of $n$ in the given base.
+  - call: DigitSum(n, base, k)
+    description: sum of just the first $k$ digits (most significant first); a negative $k$ sums the last $|k|$ instead (least significant first).
+    library: enumeratio-numerals
+details:
+  - Equivalent to summing [[IntegerDigits]](n, base).
+  - In base 2, the digit sum is the number of set bits (population count).
+  - $n\equiv\mathrm{DigitSum}(n)\pmod9$ in base 10 -- the basis of the classic divisibility-by-9 check and digital root.
+  - The sign of n is discarded before summing.
+examples:
+  - id: digitsum-58-127
+    expr: [DigitSum, 58127]
+    expected: 23
+  - id: in-base-2-this-is-the-number-of-set-bits
+    expr: [DigitSum, 58127, 2]
+    expected: 9
+    caption: In base 2 this is the number of set bits
+  - id: digitsum-0
+    expr: [DigitSum, 0]
+    expected: 0
+    category: Possible issues
+  - id: digit-sum-n-mod-9-the-basis-of-the-classic
+    expr: [Equal, [Mod, [DigitSum, 58127], 9], [Mod, 58127, 9]]
+    expected: True
+    category: Properties
+    caption: 'Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root'
+  - id: 255-ff-16-15-15
+    expr: [DigitSum, 255, 16]
+    expected: 30
+    category: Scope
+    caption: '$255 = \mathrm{ff}_{16}$: $15 + 15$'
+  - id: the-sign-is-discarded
+    expr: [DigitSum, -123]
+    expected: 6
+    category: Possible issues
+    caption: The sign is discarded
+  - id: threads-element-wise-over-a-list-as-wolfram-s
+    expr: [DigitSum, [List, 12, 345]]
+    expected: [List, 3, 12]
+    category: Scope
+    caption: Threads element-wise over a list, as Wolfram's Listable heads do
+  - id: digitsum-100-factorial
+    expr: [DigitSum, [Factorial, 100]]
+    expected: 648
+    category: Neat examples
+  - id: the-digit-sum-of-2-1000
+    expr: [DigitSum, [Power, 2, 1000]]
+    expected: 1366
+    category: Neat examples
+    caption: The digit sum of $2^{1000}$
+  - id: just-the-first-4-digits-6-3-4-5-18-not-the-full
+    expr: [DigitSum, 6345354, 10, 4]
+    expected: 18
+    category: Scope
+    caption: Just the first 4 digits, $6+3+4+5=18$, not the full digit sum (30)
+seeAlso:
+  - DigitCount

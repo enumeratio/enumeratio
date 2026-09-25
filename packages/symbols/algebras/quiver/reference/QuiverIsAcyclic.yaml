@@ -1,0 +1,30 @@
+name: QuiverIsAcyclic
+domain: Path algebras
+signature: QuiverIsAcyclic(quiver)
+summary: Whether the quiver has no directed cycle — equivalently, whether its path algebra is finite-dimensional at all.
+signatures:
+  - call: QuiverIsAcyclic(quiver)
+    description: true when $kQ$ has a finite basis
+    library: enumeratio-quiver
+details:
+  - $kQ$ is finite-dimensional exactly when $Q$ is acyclic; one loop gives the paths $e, a, a^2, \dots$ and the Jordan quiver's path algebra is $k[x]$
+  - For a cyclic quiver, `Basis` and `AlgebraDimension` have no answer and leave the call standing rather than enumerating forever
+  - '$kA_n$ is the incidence algebra of a chain: its paths are the pairs $i \le j$, so both have dimension $\binom{n+1}{2}$'
+examples:
+  - id: quiverisacyclic-linearquiver-4
+    expr: [QuiverIsAcyclic, [LinearQuiver, 4]]
+    expected: True
+  - id: a-loop-is-a-cycle
+    expr: [QuiverIsAcyclic, JordanQuiver]
+    expected: False
+    caption: a loop is a cycle
+    category: Properties
+  - id: binom-7-2-the-same-as-incidencealgebra-chain-6
+    expr: [AlgebraDimension, [PathAlgebra, [LinearQuiver, 6]]]
+    expected: 21
+    caption: $\binom{7}{2}$ — the same as `IncidenceAlgebra(Chain(6))`
+    category: Properties
+seeAlso:
+  - QuiverPath
+  - QuiverCompose
+  - MoebiusFunction

@@ -1,0 +1,26 @@
+name: SeparablePermutations
+domain: Collections
+signature: SeparablePermutations(n)
+summary: The permutations of $\{1, …, n\}$ avoiding the patterns $2413$ and $3142$, as a lazy indexed family.
+signatures:
+  - call: SeparablePermutations(n)
+    library: enumeratio-collections
+    description: the permutations of $\{1, …, n\}$ built up by direct and skew sums.
+details:
+  - A lazy indexed collection; the count is the large Schröder numbers, A006318 — $1, 2, 6, 22, 90, …$
+  - Each element is the one-line word; $At$ enumerates all $n!$ permutations in lexicographic order and indexes into those avoiding $2413$ and $3142$ — there is no closed-form unrank of the permutation itself.
+  - Separable permutations are exactly those avoiding every non-trivial [[SimplePermutations]] pattern beyond length $2$ — every one decomposes recursively as a direct or skew sum.
+examples:
+  - id: count-separablepermutations-5-90-the-large
+    expr: [Count, [SeparablePermutations, 5]]
+    expected: 90
+    category: Basic
+    caption: $Count(SeparablePermutations(5)) = 90$, the large Schröder numbers A006318
+enumerate:
+  expr: SeparablePermutations(4)
+  columns: Descents, Inversions
+  glyph: permutation
+seeAlso:
+  - SimplePermutations
+  - Count
+  - At

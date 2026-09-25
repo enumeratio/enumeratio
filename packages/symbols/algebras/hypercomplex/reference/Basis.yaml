@@ -1,0 +1,31 @@
+name: Basis
+domain: Hypercomplex algebra
+signature: Basis(algebra)
+summary: The $2^n$ basis blades of a named algebra, ordered by grade then by generator — so $\mathbb{H}$ comes back as $(1, i, j, k)$.
+signatures:
+  - call: Basis(algebra)
+    description: the basis blades, as a list
+    library: enumeratio-hypercomplex
+details:
+  - An algebra is an ordered list of generators; the families already carry the squares and the commutation rules
+  - 'Constructors: `CliffordAlgebra(p, q)`, `MulticomplexAlgebra(n)`, `SplitAlgebra(n)`, `DualAlgebra(n)`, `GrassmannAlgebra(n)`'
+  - 'Named: [[Quaternions]] (also $\mathbb{H}$), `BicomplexNumbers`, `TricomplexNumbers`, `SplitComplexNumbers`, `DualNumbers`'
+  - No element constructor is needed — `Dot` threads a tuple of scalars over the basis
+examples:
+  - id: 1-i-j-k
+    expr: [Basis, Quaternions]
+    expected: [List, 1, f_1, f_2, [Multiply, f_1, f_2]]
+    caption: $(1, i, j, k)$
+  - id: the-bicomplex-basis
+    expr: [Basis, [MulticomplexAlgebra, 2]]
+    expected: [List, 1, i_1, i_2, [Multiply, i_1, i_2]]
+    caption: the bicomplex basis
+  - id: an-element-from-a-coefficient-tuple
+    expr: [Dot, [List, 1, 2, 3, 4], [Basis, Quaternions]]
+    expected: [Add, [Multiply, 4, f_1, f_2], [Multiply, 2, f_1], [Multiply, 3, f_2], 1]
+    caption: an element from a coefficient tuple
+    category: Applications
+seeAlso:
+  - Quaternions
+  - AlgebraDimension
+  - AlgebraSignature

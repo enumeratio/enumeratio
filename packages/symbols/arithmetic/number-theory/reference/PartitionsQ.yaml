@@ -1,0 +1,43 @@
+name: PartitionsQ
+domain: Number theory
+signature: PartitionsQ(n)
+summary: The number $q(n)$ of partitions of $n$ into distinct parts.
+signatures:
+  - call: PartitionsQ(n)
+    description: $q(n)$, distinct-part partitions of $n$
+    library: enumeratio-number-theory
+details:
+  - By Euler's theorem, $q(n)$ also counts the partitions of $n$ into odd parts — see [[IntegerPartitions]].
+  - Counts the [[DistinctPartitions]] family.
+examples:
+  - id: the-partitions-of-10-into-distinct-parts
+    expr: [PartitionsQ, 10]
+    expected: 10
+    caption: The partitions of 10 into distinct parts
+  - id: the-empty-partition
+    expr: [PartitionsQ, 0]
+    expected: 1
+    caption: The empty partition
+  - id: exact-for-large-n
+    expr: [PartitionsQ, 100]
+    expected: 444793
+    category: Scope
+    caption: Exact for large n
+  - id: threads-over-a-list
+    expr: [PartitionsQ, [List, 1, 2, 3, 4, 5, 6, 7, 8]]
+    expected: [List, 1, 1, 2, 2, 3, 4, 5, 6]
+    category: Scope
+    caption: Threads over a list
+  - id: counts-the-distinctpartitions-family
+    expr: [Equal, [PartitionsQ, 10], [Count, [DistinctPartitions, 10]]]
+    expected: True
+    category: Properties
+    caption: Counts the DistinctPartitions family
+  - id: euler-as-many-partitions-into-odd-parts-as-into
+    expr: [Equal, [PartitionsQ, 12], [Count, [IntegerPartitions, 12, All, [List, 1, 3, 5, 7, 9, 11]]]]
+    expected: True
+    category: Properties
+    caption: "Euler: as many partitions into odd parts as into distinct parts, counted with [[IntegerPartitions]]' part restriction"
+seeAlso:
+  - DistinctPartitions
+  - IntegerPartitions

@@ -1,0 +1,26 @@
+name: BinaryBracelets
+domain: Collections
+signature: BinaryBracelets(n)
+summary: Binary strings of length $n$ up to rotation AND reflection — the dihedral-group orbits of $\{0,1\}^n$, a lazy indexed family.
+signatures:
+  - call: BinaryBracelets(n)
+    library: enumeratio-collections
+    description: the bracelets of $n$ black-or-white beads on a necklace that can flip.
+details:
+  - A lazy indexed collection; the count follows Burnside's lemma over the dihedral group $D_n$ — a rotation sum shared with binary necklaces, plus a reflection sum that splits on the parity of $n$ (OEIS A000029). See [[Totient]], used in the rotation sum.
+  - Each element is the lexicographically-least word in its rotation-and-reflection orbit; that canonical word's 1-count is an invariant of the whole orbit.
+  - $At$ unranks over these canonical words in ascending lexicographic order.
+examples:
+  - id: count-binarybracelets-6-13-a000029
+    expr: [Count, [BinaryBracelets, 6]]
+    expected: 13
+    category: Basic
+    caption: $Count(BinaryBracelets(6)) = 13$, A000029
+enumerate:
+  expr: BinaryBracelets(6)
+  columns: Descents, Ascents
+seeAlso:
+  - KBracelets
+  - Totient
+  - Count
+  - At

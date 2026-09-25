@@ -1,0 +1,24 @@
+name: ShiftedStandardTableaux
+domain: Collections
+signature: ShiftedStandardTableaux(size)
+summary: Standard tableaux on shifted diagrams of strict partitions of $n$ — row $i$ starting one column right of row $i-1$ — as a lazy indexed family.
+signatures:
+  - call: ShiftedStandardTableaux(size)
+    library: enumeratio-collections
+    description: the standard fillings of every shifted diagram of a strict partition of `size`, entries $1..n$ increasing along rows and down columns.
+details:
+  - A lazy indexed collection; the count is exact but not a simple closed form — computed by recursive corner removal, the same identity the shifted hook-length formula gives; $1, 1, 1, 2, 3, 6, 12, …$ for $n = 0, 1, 2, …$.
+  - Each element is the diagram's rows; row $i$ (0-indexed) occupies columns $i..i{+}shape[i]{-}1$, so a cell shares a column with the cell one row up and one entry over.
+  - Unranked by shape (strict partitions of $n$, in distinct-parts order), then by recursive corner-removal order within a shape — the value $n$ always sits at a removable corner.
+examples:
+  - id: count-shiftedstandardtableaux-5-6-standard
+    expr: [Count, [ShiftedStandardTableaux, 5]]
+    expected: 6
+    category: Basic
+    caption: '$Count(ShiftedStandardTableaux(5)) = 6$: standard fillings of every shifted shape of a strict partition of 5'
+enumerate:
+  expr: ShiftedStandardTableaux(6)
+  columns: Length
+seeAlso:
+  - Count
+  - At

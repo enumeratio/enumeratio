@@ -1,7 +1,7 @@
 // Grid points for the analytic special functions — HurwitzZeta, LerchPhi, PolyLog and
 // PolyGamma over real, rational and complex arguments, across the branches their
-// continuations take — kept as reference examples, as data, in
-// src/entries/special-functions.examples.json. Each is `N(head(args))` with our value as its
+// continuations take — kept as reference examples, as data, at the end of each head's
+// reference YAML. Each is `N(head(args))` with our value as its
 // `expected`, so the reference tests pin it and every oracle lane (mpmath, SymPy, Sage,
 // Wolfram, Julia, Rust) checks it from the same MathJSON. They are `hidden`: too many to
 // render, but data like any other example.
@@ -12,6 +12,9 @@
 import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "@enumeratio/analytic/src";
+import { dedupeId, type ReferenceExample, stringifyYaml } from "@enumeratio/entry";
+import { baseId } from "./migrate/ids.ts";
+import { readEntry, ROOT, SHIMS, sourcesOf, writeShims } from "./migrate/shims.ts";
 
 const ce = new ComputeEngine();
 declareAnalytic(ce);
@@ -149,10 +152,32 @@ for (const m of [1, 2, 3, 5] as Val[]) {
   }
 }
 
-writeFileSync(
-  new URL("../src/entries/special-functions.examples.json", import.meta.url),
-  `${JSON.stringify(byHead, null, 2)}\n`,
-);
+// Each head's grid is the tail of its hidden `N(head(…))` examples. It's replaced wholesale,
+// keeping the id of any point that survives so links and oracle rows stay put.
+const isGridPoint = (head: string, e: ReferenceExample): boolean =>
+  e.hidden === true &&
+  Array.isArray(e.expr) &&
+  e.expr[0] === "N" &&
+  Array.isArray(e.expr[1]) &&
+  e.expr[1][0] === head;
+const shim = SHIMS.find((s) => s.path.endsWith("/special-functions.ts"))!;
+for (const [head, grid] of Object.entries(byHead)) {
+  const source = sourcesOf(shim.path).find((path) => path.endsWith(`/${head}.yaml`))!;
+  const entry = readEntry(source);
+  const kept = entry.examples.filter((e) => !isGridPoint(head, e));
+  const idOf = new Map(
+    entry.examples.filter((e) => isGridPoint(head, e)).map((e) => [JSON.stringify(e.expr), e.id]),
+  );
+  const taken = new Set(kept.map((e) => e.id));
+  const points = grid.map((e) => {
+    const old = idOf.get(JSON.stringify(e.expr));
+    const id = old !== undefined && !taken.has(old) ? old : dedupeId(baseId(e), taken);
+    taken.add(id);
+    return { id, ...e } as ReferenceExample;
+  });
+  writeFileSync(`${ROOT}${source}`, stringifyYaml({ ...entry, examples: [...kept, ...points] }));
+}
+writeShims([{ ...shim, sources: sourcesOf(shim.path) }]);
 process.stderr.write(
   `${Object.entries(byHead)
     .map(([head, rows]) => `${head} ${rows.length}`)

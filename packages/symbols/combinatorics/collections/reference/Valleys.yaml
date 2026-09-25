@@ -1,0 +1,28 @@
+name: Valleys
+domain: Permutation statistics
+signature: Valleys(p)
+summary: 'The number of valleys of $p$: interior positions $i$ with $p_{i-1} > p_i < p_{i+1}$.'
+signatures:
+  - call: Valleys(p)
+    description: the valley count of a one-line permutation $p$
+    library: enumeratio-collections
+details:
+  - Only interior positions count ($1 < i < n$), so $\mathrm{Valleys}(p) = 0$ whenever $n \leq 2$
+  - The local minima, complementary in shape to the local maxima counted by [[Peaks]]
+examples:
+  - id: 1-dips-below-both-neighbors
+    expr: [Valleys, [List, 3, 1, 2]]
+    expected: 1
+    caption: $1$ dips below both neighbors
+  - id: monotone-increasing-has-no-interior-valley
+    expr: [Valleys, [List, 1, 2, 3]]
+    expected: 0
+    caption: monotone increasing has no interior valley
+  - id: the-lone-valley-at-position-3
+    expr: [Valleys, [List, 1, 3, 2, 4]]
+    expected: 1
+    caption: the lone valley at position 3
+seeAlso:
+  - Peaks
+  - Ascents
+  - SymmetricGroup

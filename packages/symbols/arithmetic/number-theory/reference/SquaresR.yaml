@@ -1,0 +1,39 @@
+name: SquaresR
+domain: Number theory
+signature: SquaresR(d, n)
+summary: The number of ways to write $n$ as a sum of $d$ squares, counting signs and order.
+signatures:
+  - call: SquaresR(d, n)
+    description: '$r_d(n)$: ordered, signed $d$-tuples summing to $n$'
+    library: enumeratio-number-theory
+details:
+  - By brute-force lattice-point enumeration, so signs and order are counted directly rather than adjusted for after the fact.
+  - "Jacobi's four-square theorem: $r_4(n)=8\\sigma_1(n)$ when $4 \\nmid n$. See [[DivisorSigma]]."
+examples:
+  - id: pm-1-2-pm-2-2-in-either-order
+    expr: [SquaresR, 2, 5]
+    expected: 8
+    caption: $(\pm1)^2+(\pm2)^2$ in either order
+  - id: squaresr-2-25
+    expr: [SquaresR, 2, 25]
+    expected: 12
+  - id: no-n-equiv-3-pmod-4-is-a-sum-of-two-squares
+    expr: [SquaresR, 2, 3]
+    expected: 0
+    caption: No $n\equiv3\pmod4$ is a sum of two squares
+  - id: squaresr-3-6
+    expr: [SquaresR, 3, 6]
+    expected: 24
+    category: Scope
+  - id: jacobi-r-4-n-8-sigma-1-n-for-4-nmid-n
+    expr: [SquaresR, 4, 10]
+    expected: 144
+    category: Properties
+    caption: 'Jacobi: $r_4(n)=8\sigma_1(n)$ for $4\nmid n$'
+  - id: squaresr-8-3
+    expr: [SquaresR, 8, 3]
+    expected: 448
+    category: Scope
+seeAlso:
+  - PowersRepresentations
+  - DivisorSigma

@@ -1,13 +1,130 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// The enumerable combinatorial families: heads that name a finite indexed collection.
-// Each has a closed-form `Count` and an `At` that unranks, so the page can enumerate it
-// with `<notatio-collection-table>` without ever materialising the whole family. The
-// families are provided by @enumeratio/collections, which the reference test does not
-// load (it would cycle: collections depends on the reference), so these entries demonstrate
-// through the live `enumerate` table. Their `examples` hold only what the reference engine
-// can pin — counting identities in compute-engine heads — and the Wolfram call forms the
-// families do not take yet (list arguments, size and part restrictions), as gaps.
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/reference/entries/Subsets.yaml",
+  "packages/reference/entries/SymmetricGroup.yaml",
+  "packages/reference/entries/IntegerPartitions.yaml",
+  "packages/reference/entries/DyckPaths.yaml",
+  "packages/reference/entries/SetPartitions.yaml",
+  "packages/reference/entries/Primes.yaml",
+  "packages/reference/entries/SquareNumbers.yaml",
+  "packages/reference/entries/AbundantNumbers.yaml",
+  "packages/reference/entries/SmoothNumbers.yaml",
+  "packages/symbols/combinatorics/collections/reference/RootedUnlabeledTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/UnlabeledFreeTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/PhylogeneticTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/NonCrossingTrees.yaml",
+  "packages/symbols/combinatorics/collections/reference/BinaryBracelets.yaml",
+  "packages/symbols/combinatorics/collections/reference/KBracelets.yaml",
+  "packages/symbols/combinatorics/collections/reference/TriStrings.yaml",
+  "packages/symbols/combinatorics/collections/reference/PrimitiveBinaryStrings.yaml",
+  "packages/symbols/combinatorics/collections/reference/TernaryGrayCodes.yaml",
+  "packages/symbols/combinatorics/collections/reference/StirlingPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/BaxterPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/BooleanPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/GrassmannianPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/CograssmannianPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/NonCrossingPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SeparablePermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SimplePermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SmoothPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/VexillaryPermutations.yaml",
+  "packages/symbols/combinatorics/collections/reference/SemistandardTableaux.yaml",
+  "packages/symbols/combinatorics/collections/reference/GelfandTsetlin.yaml",
+  "packages/symbols/combinatorics/collections/reference/AlternatingSignMatrices.yaml",
+  "packages/symbols/combinatorics/collections/reference/SkewPartitions.yaml",
+  "packages/symbols/combinatorics/collections/reference/SkewStandardTableaux.yaml",
+  "packages/symbols/combinatorics/collections/reference/ShiftedStandardTableaux.yaml",
+  "packages/symbols/combinatorics/collections/reference/StandardTableauPairs.yaml",
+  "packages/symbols/combinatorics/collections/reference/PlanePartitions.yaml",
+  "packages/symbols/combinatorics/collections/reference/BoxedPlanePartitions.yaml",
+  "packages/reference/entries/TriangularNumbers.yaml",
+  "packages/reference/entries/PentagonalNumbers.yaml",
+  "packages/reference/entries/HexagonalNumbers.yaml",
+  "packages/reference/entries/HeptagonalNumbers.yaml",
+  "packages/reference/entries/OctagonalNumbers.yaml",
+  "packages/reference/entries/PolygonalNumbers.yaml",
+  "packages/reference/entries/CenteredTriangularNumbers.yaml",
+  "packages/reference/entries/CenteredSquareNumbers.yaml",
+  "packages/reference/entries/CenteredHexagonalNumbers.yaml",
+  "packages/reference/entries/StarNumbers.yaml",
+  "packages/reference/entries/PronicNumbers.yaml",
+  "packages/reference/entries/CubeNumbers.yaml",
+  "packages/reference/entries/TetrahedralNumbers.yaml",
+  "packages/reference/entries/PentatopeNumbers.yaml",
+  "packages/reference/entries/SquarePyramidalNumbers.yaml",
+  "packages/reference/entries/PowersOfTwo.yaml",
+  "packages/reference/entries/FactorialNumbers.yaml",
+  "packages/reference/entries/DoubleFactorialNumbers.yaml",
+  "packages/reference/entries/PrimorialNumbers.yaml",
+  "packages/reference/entries/AllOnes.yaml",
+  "packages/reference/entries/FibonacciNumbers.yaml",
+  "packages/reference/entries/LucasNumbers.yaml",
+  "packages/reference/entries/JacobsthalNumbers.yaml",
+  "packages/reference/entries/PellNumbers.yaml",
+  "packages/reference/entries/TribonacciNumbers.yaml",
+  "packages/reference/entries/PadovanSequence.yaml",
+  "packages/reference/entries/PerrinSequence.yaml",
+  "packages/reference/entries/SternDiatomicSequence.yaml",
+  "packages/reference/entries/ThueMorseNumbers.yaml",
+  "packages/reference/entries/CatalanNumbers.yaml",
+  "packages/reference/entries/BellNumbers.yaml",
+  "packages/reference/entries/FubiniNumbers.yaml",
+  "packages/reference/entries/MotzkinNumbers.yaml",
+  "packages/reference/entries/PartitionNumbers.yaml",
+  "packages/reference/entries/CentralDelannoyNumbers.yaml",
+  "packages/reference/entries/LittleSchroderNumbers.yaml",
+  "packages/reference/entries/SchroederNumbers.yaml",
+  "packages/reference/entries/DeficientNumbers.yaml",
+  "packages/reference/entries/PerfectNumbers.yaml",
+  "packages/reference/entries/SemiperfectNumbers.yaml",
+  "packages/reference/entries/WeirdNumbers.yaml",
+  "packages/reference/entries/PracticalNumbers.yaml",
+  "packages/reference/entries/HighlyCompositeNumbers.yaml",
+  "packages/reference/entries/SuperabundantNumbers.yaml",
+  "packages/reference/entries/ArithmeticNumbers.yaml",
+  "packages/reference/entries/UntouchableNumbers.yaml",
+  "packages/reference/entries/AchillesNumbers.yaml",
+  "packages/reference/entries/PowerfulNumbers.yaml",
+  "packages/reference/entries/PerfectPowerNumbers.yaml",
+  "packages/reference/entries/SquareFreeNumbers.yaml",
+  "packages/reference/entries/KFreeIntegers.yaml",
+  "packages/reference/entries/CarmichaelNumbers.yaml",
+  "packages/reference/entries/GiugaNumbers.yaml",
+  "packages/reference/entries/IdonealNumbers.yaml",
+  "packages/reference/entries/LuckyNumbers.yaml",
+  "packages/reference/entries/HarshadNumbers.yaml",
+  "packages/reference/entries/HappyNumbers.yaml",
+  "packages/reference/entries/NarcissisticNumbers.yaml",
+  "packages/reference/entries/AutomorphicNumbers.yaml",
+  "packages/reference/entries/KaprekarNumbers.yaml",
+  "packages/reference/entries/EvilNumbers.yaml",
+  "packages/reference/entries/OdiousNumbers.yaml",
+  "packages/reference/entries/PerniciousNumbers.yaml",
+  "packages/reference/entries/SmithNumbers.yaml",
+  "packages/reference/entries/SemiprimeNumbers.yaml",
+  "packages/reference/entries/SquarefreeSemiprimes.yaml",
+  "packages/reference/entries/SphenicNumbers.yaml",
+  "packages/reference/entries/PrimePowerNumbers.yaml",
+  "packages/reference/entries/KAlmostPrimes.yaml",
+  "packages/reference/entries/RoughNumbers.yaml",
+  "packages/reference/entries/TwinPrimes.yaml",
+  "packages/reference/entries/CousinPrimes.yaml",
+  "packages/reference/entries/SexyPrimes.yaml",
+  "packages/reference/entries/SophieGermainPrimes.yaml",
+  "packages/reference/entries/SafePrimes.yaml",
+  "packages/reference/entries/PrimePairs.yaml",
+  "packages/reference/entries/PalindromicPrimes.yaml",
+  "packages/reference/entries/CircularPrimes.yaml",
+  "packages/reference/entries/EmirpPrimes.yaml",
+  "packages/reference/entries/MersennePrimes.yaml",
+  "packages/reference/entries/FibonacciPrimes.yaml",
+];
+
 export const enumerableFamilies: readonly ReferenceEntry[] = [
   {
     name: "Subsets",
@@ -369,11 +486,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     },
     seeAlso: ["BellNumber", "Stirling", "Count", "At"],
   },
-  // ---- numeric-set prototypes (@enumeratio/collections numeric-sets.ts spike): bare
-  // integers, not lists, so no glyph fits and Count is genuinely infinite -- see each
-  // entry's details. `enumerate` needs a finite collection (`<notatio-collection-table>`
-  // rejects an infinite `Count`), so these page a `Take(...)` prefix instead of the family
-  // itself.
   {
     name: "Primes",
     domain: "Collections",
@@ -1406,11 +1518,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "BoxedPlanePartitions(2, 2, 2)" },
     seeAlso: ["PlanePartitions", "Count", "At"],
   },
-  // ---- closed-form numeric sets (@enumeratio/collections numeric-closed-form.ts): every
-  // element is f(n) for a fixed polynomial or product formula, n = 1, 2, 3, ... -- bare
-  // integers like the numeric-set prototypes above, so Count is +oo and `enumerate` pages a
-  // `Take(...)` prefix rather than the family itself. See each entry for the OEIS number and
-  // where its offset differs from ours (we always start `At(S, 1)` at n=1).
   {
     name: "TriangularNumbers",
     domain: "Collections",
@@ -1687,10 +1794,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     summary:
       "The square pyramidal numbers $1, 5, 14, 30, …$ — $n(n+1)(2n+1)/6$ — stacked squares, partial sums of the square numbers.",
     signatures: [
-      {
-        call: "SquarePyramidalNumbers",
-        description: "$n(n+1)(2n+1)/6$ for $n = 1, 2, 3, …$.",
-      },
+      { call: "SquarePyramidalNumbers", description: "$n(n+1)(2n+1)/6$ for $n = 1, 2, 3, …$." },
     ],
     details: [
       "A lazy indexed collection: $Count(SquarePyramidalNumbers) = +\\infty$, and $At(SquarePyramidalNumbers, k) = k(k+1)(2k+1)/6$ unranks in closed form -- $At(SquarePyramidalNumbers, 5) = 55$.",
@@ -2146,11 +2250,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "Take(SchroederNumbers, 15)" },
     seeAlso: ["Count", "At", "Element", "LittleSchroderNumbers", "CentralDelannoyNumbers"],
   },
-  // ---- divisor and multiplicative-structure numeric sets (@enumeratio/collections
-  // numeric-divisor.ts): bare integers like the numeric-set prototypes above, so `enumerate`
-  // pages a Take(...) prefix rather than the (usually infinite) family itself. Three sets --
-  // PerfectNumbers, GiugaNumbers, IdonealNumbers -- have Count = NaN: whether more members
-  // exist past the known ones is an open problem, not something a scan could resolve.
   {
     name: "DeficientNumbers",
     domain: "Collections",
@@ -2543,12 +2642,6 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
     enumerate: { expr: "Take(LuckyNumbers, 20)" },
     seeAlso: ["Count", "At", "Element", "Primes"],
   },
-  // ---- digit-structure, bit-structure and prime-structure numeric sets
-  // (@enumeratio/collections numeric-digits-primes.ts): the numeric-set-prototype pattern
-  // above, extended. Count is +oo for every set here known infinite by an elementary
-  // argument, NaN where infinitude itself is an open conjecture (the twin-prime conjecture
-  // and its kin), and the proven-exact 88 for NarcissisticNumbers -- the one set here that's
-  // PROVEN finite. ----
   {
     name: "HarshadNumbers",
     domain: "Collections",

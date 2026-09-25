@@ -1,0 +1,23 @@
+name: ProfinitePlot
+domain: Adèles and idèles
+signature: ProfinitePlot(f, x, k?)
+summary: "The graph of $f: \\hat{\\mathbb{Z}} \\to \\hat{\\mathbb{Z}}$ in the variable $x$, at precision $k$ (default 5) — Lenstra's picture of a profinite function, drawn as an [[ArrayPlot]]."
+signatures:
+  - call: ProfinitePlot(f, x, k)
+    description: residue classes mod $k!$ laid out by their factorial digits
+    library: enumeratio-adeles
+  - call: ProfinitePlot(f, x)
+    description: default precision $k = 5$
+    library: enumeratio-adeles
+details:
+  - Each cell is a pair of residue classes mod $k!$; a cell is filled when $f$ maps its column class into its row class, evaluating $f$ on `ProfiniteNumber(a, k!)` for every $a$.
+  - $k$ is capped at 6 ($6! = 720$ cells a side) to keep the plot tractable.
+  - The result is an [[ArrayPlot]] of 0/1 cells, as in Hertogh's `ProfiniteGraph`.
+examples:
+  - id: the-identity-function-an-anti-diagonal-of-filled
+    expr: [ProfinitePlot, x, x, 3]
+    expected: [ArrayPlot, [List, [List, 0, 0, 0, 0, 0, 1], [List, 0, 0, 0, 0, 1, 0], [List, 0, 0, 0, 1, 0, 0], [List, 0, 0, 1, 0, 0, 0], [List, 0, 1, 0, 0, 0, 0], [List, 1, 0, 0, 0, 0, 0]]]
+    caption: 'the identity function: an anti-diagonal of filled cells'
+seeAlso:
+  - ProfiniteNumber
+  - ArrayPlot

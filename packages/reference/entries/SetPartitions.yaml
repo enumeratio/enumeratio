@@ -1,0 +1,52 @@
+name: SetPartitions
+domain: Collections
+signature: SetPartitions(n)
+summary: The partitions of the set $\{1, …, n\}$ into non-empty blocks, a lazy indexed family.
+signatures:
+  - call: SetPartitions(n)
+    description: every way to split $\{1, …, n\}$ into disjoint non-empty blocks.
+    library: enumeratio-collections
+  - call: SetPartitions(n, k)
+    description: the set partitions of $\{1, …, n\}$ into exactly $k$ blocks.
+    library: enumeratio-collections
+  - call: SetPartitions(collection)
+    description: the set partitions of any finite collection.
+    library: enumeratio-collections
+details:
+  - A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].
+  - The partitions into exactly $k$ blocks number the Stirling numbers of the second kind $S(n, k)$; summing over $k$ gives $B_n$. See [[Stirling]].
+  - Each element is the block list; the $set$-$partition$ glyph draws it from its restricted-growth string.
+examples:
+  - id: the-set-partitions-of-an-explicit-list-in-the
+    expr: [SetPartitions, [List, a, b, c]]
+    expected: [List, [List, [List, a, b, c]], [List, [List, a, b], [List, c]], [List, [List, a, c], [List, b]], [List, [List, a], [List, b, c]], [List, [List, a], [List, b], [List, c]]]
+    caption: The set partitions of an explicit list, in the family's own RGS order
+  - id: exactly-2-blocks
+    expr: [SetPartitions, 3, 2]
+    expected: [List, [List, [List, 1, 2], [List, 3]], [List, [List, 1, 3], [List, 2]], [List, [List, 1], [List, 2, 3]]]
+    category: Scope
+    caption: Exactly 2 blocks
+  - id: the-partitions-of-a-4-set-into-2-blocks-number-s
+    expr: [Count, [SetPartitions, 4, 2]]
+    expected: 7
+    category: Scope
+    caption: The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$
+  - id: the-family-has-b-4-15-members-see-bellnumber
+    expr: [BellNumber, 4]
+    expected: 15
+    category: Properties
+    caption: The family has $B_4 = 15$ members. See [[BellNumber]]
+  - id: those-with-exactly-2-blocks-number-s-4-2-7-see
+    expr: [Stirling, 4, 2]
+    expected: 7
+    category: Properties
+    caption: Those with exactly 2 blocks number $S(4, 2) = 7$. See [[Stirling]]
+enumerate:
+  expr: SetPartitions(4)
+  columns: Length, Max(Map(Length, _))
+  glyph: set-partition
+seeAlso:
+  - BellNumber
+  - Stirling
+  - Count
+  - At

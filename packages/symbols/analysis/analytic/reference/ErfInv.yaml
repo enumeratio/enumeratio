@@ -1,0 +1,90 @@
+name: ErfInv
+domain: Special functions
+signature: ErfInv(x)
+summary: 'The inverse error function: $\operatorname{erfinv}(x)$ solves $\operatorname{erf}(y) = x$ for $-1 < x < 1$.'
+signatures:
+  - call: ErfInv(x)
+    description: the inverse error function, solving $\operatorname{erf}(y) = x$.
+details:
+  - 'Inverse of [[Erf]]: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$.'
+  - $\operatorname{erfinv}(0) = 0$, and $\operatorname{erfinv}(x) \to \pm\infty$ as $x \to \pm 1$, the limits where Erf itself saturates.
+  - Computed by Newton's method on Erf itself, refining an initial approximation to full machine precision.
+  - 'Intrinsically ill-conditioned near $x = \pm1$: a tiny change in x there produces a large change in the result.'
+  - compute-engine leaves a call outside $[-1, 1]$ unevaluated rather than erroring or returning NaN.
+examples:
+  - id: erfinv-0
+    expr: [ErfInv, 0]
+    expected: 0
+  - id: erfinv-1
+    expr: [ErfInv, 1]
+    expected: PositiveInfinity
+  - id: erfinv-neg-1
+    expr: [ErfInv, -1]
+    expected: NegativeInfinity
+  - id: a-floating-point-argument-evaluates-directly-to
+    expr: [ErfInv, 0.5]
+    expected: {num: '0.476936276204469873381'}
+    caption: A floating-point argument evaluates directly to a high-precision decimal
+  - id: inverse-of-erf-erf-erfinv-x-x-see-erf
+    expr: [Equal, [Erf, [ErfInv, 0.5]], 0.5]
+    expected: True
+    category: Properties
+    caption: 'Inverse of Erf: $\operatorname{erf}(\operatorname{erfinv}(x)) = x$. See [[Erf]]'
+  - id: outside-its-real-domain-1-1-compute-engine
+    expr: [ErfInv, 2]
+    expected: [ErfInv, 2]
+    category: Possible issues
+    caption: Outside its real domain $[-1, 1]$, compute-engine leaves the call unevaluated rather than returning NaN or a complex value
+  - id: blows-up-near-the-boundary-erfinv-0-9999-is
+    expr: [ErfInv, 0.9999]
+    expected: {num: '2.75106390571206079615'}
+    category: Neat examples
+    caption: 'Blows up near the boundary: $\operatorname{erfinv}(0.9999)$ is already past 2.7'
+  - id: threads-element-wise-over-a-list-as-wolfram-s
+    expr: [ErfInv, [List, 0, 1]]
+    expected: [List, 0, PositiveInfinity]
+    category: Scope
+    caption: Threads element-wise over a list, as Wolfram's Listable heads do
+  - id: a-machine-precision-argument
+    expr: [ErfInv, 0.6]
+    expected: {num: '0.595116081449994850019'}
+    caption: A machine-precision argument
+  - id: two-arguments-erfinv-z-0-z-solves-z-erf-z-0-x
+    expr: [ErfInv, 0.4, 0.2]
+    expected: 0.6317759030550063
+    category: Scope
+    caption: 'Two arguments: $\operatorname{erfinv}(z_0, z)$ solves $z = \operatorname{erf}(z_0, x) = \operatorname{erf}(x) - \operatorname{erf}(z_0)$'
+  - id: interval-arithmetic-the-inverse-is-increasing-so
+    expr: [ErfInv, [Interval, 0.5, 0.6]]
+    expected: [Interval, 0.4769362762044699, 0.5951160814499948]
+    category: Scope
+    caption: 'Interval arithmetic: the inverse is increasing, so endpoints map to endpoints'
+  - id: uncertainty-propagation
+    expr: [ErfInv, [Around, 0.5, 0.01]]
+    expected: [Around, 0.4769362762044699, 0.011125848189719498]
+    category: Scope
+    caption: Uncertainty propagation
+  - id: the-normal-quantile-sqrt-2-erfinv-2p-1-at-p-0
+    expr: [Multiply, [Sqrt, 2], [ErfInv, 0.95]]
+    expected: {num: '1.95996398454005423552746040017785193571357792'}
+    category: Applications
+    caption: 'The normal quantile $\sqrt2\,\operatorname{erfinv}(2p - 1)$ at $p = 0.975$: the 1.96 of a 95% confidence interval'
+  - id: odd-erfinv-x-erfinv-x-applied-symbolically
+    expr: [ErfInv, [Negate, x]]
+    expected: [Negate, [ErfInv, x]]
+    category: Properties
+    caption: 'Odd: $\operatorname{erfinv}(-x) = -\operatorname{erfinv}(x)$ applied symbolically'
+  - id: frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2
+    expr: [D, [ErfInv, x], x]
+    expected: [Multiply, [Rational, 1, 2], [Sqrt, Pi], [Power, ExponentialE, [Power, [ErfInv, x], 2]]]
+    aspirational: true
+    category: Properties
+    caption: $\frac{d}{dx}\operatorname{erfinv}(x) = \frac{\sqrt\pi}{2}e^{\operatorname{erfinv}(x)^2}$; today the derivative stays an unapplied `Derivative`
+  - id: to-30-significant-digits-every-one-correctly
+    expr: [N, [ErfInv, [Rational, 1, 2]], 30]
+    expected: {num: '0.476936276204469873381418353643'}
+    category: Scope
+    caption: To 30 significant digits, every one correctly rounded
+seeAlso:
+  - Erf
+  - Erfc

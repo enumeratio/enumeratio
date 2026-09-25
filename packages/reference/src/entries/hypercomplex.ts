@@ -1,18 +1,22 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Reference entries for the heads @enumeratio/hypercomplex adds. The unit
-// GENERATORS need no entry of their own -- they are ordinary subscripted symbols
-// (`i_1`, `f_2`, `\theta_1`), documented under the heads that act on them and in
-// /guide/hypercomplex. What is documented here is the algebra: the ordered
-// product, the norm, the algebra constructors and their accessors, and the two
-// modular-arithmetic heads that say where these units already live.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const DOMAIN = "Hypercomplex algebra";
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/hypercomplex/reference/NonCommutativeMultiply.yaml",
+  "packages/symbols/algebras/hypercomplex/reference/Norm.yaml",
+  "packages/symbols/algebras/hypercomplex/reference/Basis.yaml",
+  "packages/symbols/algebras/hypercomplex/reference/AlgebraSignature.yaml",
+  "packages/symbols/algebras/hypercomplex/reference/AlgebraDimension.yaml",
+  "packages/symbols/algebras/hypercomplex/reference/Quaternions.yaml",
+];
 
 export const hypercomplex: readonly ReferenceEntry[] = [
   {
     name: "NonCommutativeMultiply",
-    domain: DOMAIN,
+    domain: "Hypercomplex algebra",
     signature: "NonCommutativeMultiply(a, b, …)",
     summary:
       "The ordered product, for units that anticommute. $\\times$ cannot host one: `Multiply` is declared commutative, so canonicalisation sorts its operands before any handler runs and the sign is lost.",
@@ -132,7 +136,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
   },
   {
     name: "Norm",
-    domain: DOMAIN,
+    domain: "Hypercomplex algebra",
     signature: "Norm(z)",
     summary:
       "The algebra norm of a hypercomplex element: the determinant of multiplication-by-$z$ on the $2^n$-dimensional space. Reduces to the Gaussian $a^2+b^2$ at one imaginary unit.",
@@ -189,7 +193,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
   },
   {
     name: "Basis",
-    domain: DOMAIN,
+    domain: "Hypercomplex algebra",
     signature: "Basis(algebra)",
     summary:
       "The $2^n$ basis blades of a named algebra, ordered by grade then by generator — so $\\mathbb{H}$ comes back as $(1, i, j, k)$.",
@@ -237,7 +241,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
   },
   {
     name: "AlgebraSignature",
-    domain: DOMAIN,
+    domain: "Hypercomplex algebra",
     signature: "AlgebraSignature(algebra)",
     summary:
       "The signature vector: what each of the algebra's generators squares to, in order — $-1$, $+1$ or $0$.",
@@ -277,7 +281,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
   },
   {
     name: "AlgebraDimension",
-    domain: DOMAIN,
+    domain: "Hypercomplex algebra",
     signature: "AlgebraDimension(algebra)",
     summary: "The dimension $2^n$ of an algebra on $n$ generators — the number of basis blades.",
     signatures: [
@@ -313,7 +317,7 @@ export const hypercomplex: readonly ReferenceEntry[] = [
   },
   {
     name: "Quaternions",
-    domain: DOMAIN,
+    domain: "Hypercomplex algebra",
     signature: "Quaternions",
     summary:
       "$\\mathbb{H}$, the quaternions — which IS $\\mathrm{Cl}(0,2)$: two anticommuting generators squaring to $-1$, with $k = f_1f_2$ as the third unit.",

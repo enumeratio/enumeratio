@@ -1,7 +1,28 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Every `expected` was produced by evaluating `expr` with compute-engine 0.128.0
-// (the reference tests re-evaluate and pin it). See sibling domain files.
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/analysis/analytic/reference/Abs.yaml",
+  "packages/symbols/analysis/analytic/reference/Sign.yaml",
+  "packages/reference/entries/Negate.yaml",
+  "packages/reference/entries/Square.yaml",
+  "packages/symbols/analysis/analytic/reference/Sqrt.yaml",
+  "packages/reference/entries/Root.yaml",
+  "packages/reference/entries/Floor.yaml",
+  "packages/reference/entries/Ceil.yaml",
+  "packages/symbols/analysis/analytic/reference/Round.yaml",
+  "packages/symbols/combinatorics/collections/reference/Clamp.yaml",
+  "packages/symbols/combinatorics/collections/reference/Chop.yaml",
+  "packages/reference/entries/Rationalize.yaml",
+  "packages/symbols/analysis/analytic/reference/Max.yaml",
+  "packages/reference/entries/Min.yaml",
+  "packages/symbols/analysis/analytic/reference/IsOdd.yaml",
+  "packages/reference/entries/IsEven.yaml",
+];
+
 export const arithmetic: readonly ReferenceEntry[] = [
   {
     name: "Abs",
@@ -22,27 +43,15 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "compute-engine doesn't factor constants out of a symbolic argument -- $|-3x|$ stays as written rather than simplifying to $3|x|$.",
     ],
     examples: [
-      {
-        id: "abs-neg-5",
-        expr: ["Abs", -5],
-        expected: 5,
-      },
-      {
-        id: "abs-5",
-        expr: ["Abs", 5],
-        expected: 5,
-      },
+      { id: "abs-neg-5", expr: ["Abs", -5], expected: 5 },
+      { id: "abs-5", expr: ["Abs", 5], expected: 5 },
       {
         id: "0-is-the-only-value-with-x-0",
         expr: ["Abs", 0],
         expected: 0,
         caption: "0 is the only value with $|x| = 0$",
       },
-      {
-        id: "abs-neg-7-over-2",
-        expr: ["Abs", ["Rational", -7, 2]],
-        expected: ["Rational", 7, 2],
-      },
+      { id: "abs-neg-7-over-2", expr: ["Abs", ["Rational", -7, 2]], expected: ["Rational", 7, 2] },
       {
         id: "the-modulus-of-a-complex-number-3-4i-sqrt-3-2-4",
         expr: ["Abs", ["Complex", 3, 4]],
@@ -84,11 +93,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
         caption:
           "Doesn't factor constants out of a symbolic argument: $|-3x|$ stays as written rather than reducing to $3|x|$",
       },
-      {
-        id: "abs-neg-2p5",
-        expr: ["Abs", -2.5],
-        expected: 2.5,
-      },
+      { id: "abs-neg-2p5", expr: ["Abs", -2.5], expected: 2.5 },
       {
         id: "the-modulus-of-a-complex-number-with-approximate",
         expr: ["Abs", ["Complex", 1.4, 2.3]],
@@ -127,12 +132,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "An exact complex number gives an exact radical",
       },
-      {
-        id: "abs-imaginaryunit",
-        expr: ["Abs", "ImaginaryUnit"],
-        expected: 1,
-        category: "Scope",
-      },
+      { id: "abs-imaginaryunit", expr: ["Abs", "ImaginaryUnit"], expected: 1, category: "Scope" },
       {
         id: "e-i-pi-3-lies-on-the-unit-circle",
         expr: ["Abs", ["Exp", ["Multiply", "ImaginaryUnit", ["Divide", "Pi", 3]]]],
@@ -217,27 +217,15 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "$\\operatorname{sign}(\\pm\\infty) = \\pm 1$, but $\\operatorname{sign}(\\mathrm{NaN})$ propagates as NaN rather than 0.",
     ],
     examples: [
-      {
-        id: "sign-neg-3",
-        expr: ["Sign", -3],
-        expected: -1,
-      },
-      {
-        id: "sign-3",
-        expr: ["Sign", 3],
-        expected: 1,
-      },
+      { id: "sign-neg-3", expr: ["Sign", -3], expected: -1 },
+      { id: "sign-3", expr: ["Sign", 3], expected: 1 },
       {
         id: "zero-is-its-own-sign",
         expr: ["Sign", 0],
         expected: 0,
         caption: "Zero is its own sign",
       },
-      {
-        id: "sign-neg-1-over-2",
-        expr: ["Sign", ["Rational", -1, 2]],
-        expected: -1,
-      },
+      { id: "sign-neg-1-over-2", expr: ["Sign", ["Rational", -1, 2]], expected: -1 },
       {
         id: "the-unit-complex-number-pointing-the-same",
         expr: ["Sign", ["Complex", 3, 4]],
@@ -282,16 +270,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "NaN propagates rather than being treated as 0",
       },
-      {
-        id: "sign-neg-2p5",
-        expr: ["Sign", -2.5],
-        expected: -1,
-      },
-      {
-        id: "sign-3p14",
-        expr: ["Sign", 3.14],
-        expected: 1,
-      },
+      { id: "sign-neg-2p5", expr: ["Sign", -2.5], expected: -1 },
+      { id: "sign-3p14", expr: ["Sign", 3.14], expected: 1 },
       {
         id: "a-complex-number-with-approximate-parts",
         expr: ["Sign", ["Complex", 1.4, 2.3]],
@@ -391,27 +371,10 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "compute-engine keeps Negate as its own head rather than rewriting to $\\mathrm{Multiply}(-1, x)$.",
     ],
     examples: [
-      {
-        id: "neg-5",
-        expr: ["Negate", 5],
-        expected: -5,
-      },
-      {
-        id: "5",
-        expr: ["Negate", -5],
-        expected: 5,
-      },
-      {
-        id: "its-own-negation",
-        expr: ["Negate", 0],
-        expected: 0,
-        caption: "Its own negation",
-      },
-      {
-        id: "neg-3-over-4",
-        expr: ["Negate", ["Rational", 3, 4]],
-        expected: ["Rational", -3, 4],
-      },
+      { id: "neg-5", expr: ["Negate", 5], expected: -5 },
+      { id: "5", expr: ["Negate", -5], expected: 5 },
+      { id: "its-own-negation", expr: ["Negate", 0], expected: 0, caption: "Its own negation" },
+      { id: "neg-3-over-4", expr: ["Negate", ["Rational", 3, 4]], expected: ["Rational", -3, 4] },
       {
         id: "threads-element-wise-over-a-list",
         expr: ["Negate", ["List", 1, -2, 3]],
@@ -503,22 +466,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "Square is purely a convenience head: it canonicalizes away to $x^2$ (Power).",
     ],
     examples: [
-      {
-        id: "square-5",
-        expr: ["Square", 5],
-        expected: 25,
-      },
+      { id: "square-5", expr: ["Square", 5], expected: 25 },
       {
         id: "same-result-for-x-and-x",
         expr: ["Square", -5],
         expected: 25,
         caption: "Same result for x and -x",
       },
-      {
-        id: "square-2-over-3",
-        expr: ["Square", ["Rational", 2, 3]],
-        expected: ["Rational", 4, 9],
-      },
+      { id: "square-2-over-3", expr: ["Square", ["Rational", 2, 3]], expected: ["Rational", 4, 9] },
       {
         id: "canonicalizes-to-x-2",
         expr: ["Square", "x"],
@@ -578,27 +533,15 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "compute-engine's Sqrt is a special case of the more general [[Root]]: $\\mathrm{Root}(x, 2)$ canonicalizes to $\\mathrm{Sqrt}(x)$.",
     ],
     examples: [
-      {
-        id: "sqrt-16",
-        expr: ["Sqrt", 16],
-        expected: 4,
-      },
+      { id: "sqrt-16", expr: ["Sqrt", 16], expected: 4 },
       {
         id: "stays-symbolic-when-the-radicand-isn-t-a-perfect",
         expr: ["Sqrt", 2],
         expected: ["Sqrt", 2],
         caption: "Stays symbolic when the radicand isn't a perfect square",
       },
-      {
-        id: "sqrt-4-over-9",
-        expr: ["Sqrt", ["Rational", 4, 9]],
-        expected: ["Rational", 2, 3],
-      },
-      {
-        id: "sqrt-0",
-        expr: ["Sqrt", 0],
-        expected: 0,
-      },
+      { id: "sqrt-4-over-9", expr: ["Sqrt", ["Rational", 4, 9]], expected: ["Rational", 2, 3] },
+      { id: "sqrt-0", expr: ["Sqrt", 0], expected: 0 },
       {
         id: "a-perfect-square-radicand-evaluates-exactly-even",
         expr: ["Sqrt", -4],
@@ -654,11 +597,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
         expected: ["Multiply", 10, ["Sqrt", 2]],
         caption: "Pulls perfect-square factors out of the radical",
       },
-      {
-        id: "sqrt-neg-25",
-        expr: ["Sqrt", -25],
-        expected: ["Complex", 0, 5],
-      },
+      { id: "sqrt-neg-25", expr: ["Sqrt", -25], expected: ["Complex", 0, 5] },
       {
         id: "sqrt-8",
         expr: ["Sqrt", 8],
@@ -789,11 +728,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
         expected: 3,
         caption: "The cube root of 27",
       },
-      {
-        id: "root-16-4",
-        expr: ["Root", 16, 4],
-        expected: 2,
-      },
+      { id: "root-16-4", expr: ["Root", 16, 4], expected: 2 },
       {
         id: "odd-roots-of-a-negative-number-stay-real",
         expr: ["Root", -8, 3],
@@ -904,16 +839,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "A second argument floors to the nearest multiple of it -- the step needn't be an integer.",
     ],
     examples: [
-      {
-        id: "floor-7-over-2",
-        expr: ["Floor", ["Rational", 7, 2]],
-        expected: 3,
-      },
-      {
-        id: "floor-3p7",
-        expr: ["Floor", 3.7],
-        expected: 3,
-      },
+      { id: "floor-7-over-2", expr: ["Floor", ["Rational", 7, 2]], expected: 3 },
+      { id: "floor-3p7", expr: ["Floor", 3.7], expected: 3 },
       {
         id: "integers-pass-through-unchanged",
         expr: ["Floor", 5],
@@ -961,16 +888,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "Infinities pass through unchanged",
       },
-      {
-        id: "floor-2p4",
-        expr: ["Floor", 2.4],
-        expected: 2,
-      },
-      {
-        id: "floor-2p6",
-        expr: ["Floor", 2.6],
-        expected: 2,
-      },
+      { id: "floor-2p4", expr: ["Floor", 2.4], expected: 2 },
+      { id: "floor-2p6", expr: ["Floor", 2.6], expected: 2 },
       {
         id: "stays-symbolic",
         expr: ["Floor", "x"],
@@ -1090,16 +1009,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "A second argument rounds up to the nearest multiple of it -- the step needn't be an integer.",
     ],
     examples: [
-      {
-        id: "ceil-7-over-2",
-        expr: ["Ceil", ["Rational", 7, 2]],
-        expected: 4,
-      },
-      {
-        id: "ceil-3p2",
-        expr: ["Ceil", 3.2],
-        expected: 4,
-      },
+      { id: "ceil-7-over-2", expr: ["Ceil", ["Rational", 7, 2]], expected: 4 },
+      { id: "ceil-3p2", expr: ["Ceil", 3.2], expected: 4 },
       {
         id: "integers-pass-through-unchanged",
         expr: ["Ceil", 5],
@@ -1147,16 +1058,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "NaN propagates rather than erroring",
       },
-      {
-        id: "ceil-2p4",
-        expr: ["Ceil", 2.4],
-        expected: 3,
-      },
-      {
-        id: "ceil-2p6",
-        expr: ["Ceil", 2.6],
-        expected: 3,
-      },
+      { id: "ceil-2p4", expr: ["Ceil", 2.4], expected: 3 },
+      { id: "ceil-2p6", expr: ["Ceil", 2.6], expected: 3 },
       {
         id: "stays-symbolic",
         expr: ["Ceil", "x"],
@@ -1244,16 +1147,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "The digits argument must be an integer; unlike [[Floor]] and [[Ceil]], which take no second argument at all, Round is the only one of the three with quantized rounding.",
     ],
     examples: [
-      {
-        id: "round-7-over-2",
-        expr: ["Round", ["Rational", 7, 2]],
-        expected: 4,
-      },
-      {
-        id: "round-3p5",
-        expr: ["Round", 3.5],
-        expected: 4,
-      },
+      { id: "round-7-over-2", expr: ["Round", ["Rational", 7, 2]], expected: 4 },
+      { id: "round-3p5", expr: ["Round", 3.5], expected: 4 },
       {
         id: "integers-pass-through-unchanged",
         expr: ["Round", 5],
@@ -1319,30 +1214,12 @@ export const arithmetic: readonly ReferenceEntry[] = [
         expected: -3,
         category: "Possible issues",
         caption: "...and by the same convention, -2.5 rounds to -3, not -2",
-        divergence: {
-          wolfram: "Wolfram's half-to-even gives $\\mathrm{Round}[-2.5] = -2$.",
-        },
+        divergence: { wolfram: "Wolfram's half-to-even gives $\\mathrm{Round}[-2.5] = -2$." },
       },
-      {
-        id: "round-2p4",
-        expr: ["Round", 2.4],
-        expected: 2,
-      },
-      {
-        id: "round-2p6",
-        expr: ["Round", 2.6],
-        expected: 3,
-      },
-      {
-        id: "round-5p37",
-        expr: ["Round", 5.37],
-        expected: 5,
-      },
-      {
-        id: "round-neg-3p7",
-        expr: ["Round", -3.7],
-        expected: -4,
-      },
+      { id: "round-2p4", expr: ["Round", 2.4], expected: 2 },
+      { id: "round-2p6", expr: ["Round", 2.6], expected: 3 },
+      { id: "round-5p37", expr: ["Round", 5.37], expected: 5 },
+      { id: "round-neg-3p7", expr: ["Round", -3.7], expected: -4 },
       {
         id: "stays-symbolic",
         expr: ["Round", "x"],
@@ -1430,16 +1307,8 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "Doesn't validate that lower $\\le$ upper; with the bounds swapped it just falls through whichever comparison fires first.",
     ],
     examples: [
-      {
-        id: "clamp-5-0-3",
-        expr: ["Clamp", 5, 0, 3],
-        expected: 3,
-      },
-      {
-        id: "clamp-neg-1-0-3",
-        expr: ["Clamp", -1, 0, 3],
-        expected: 0,
-      },
+      { id: "clamp-5-0-3", expr: ["Clamp", 5, 0, 3], expected: 3 },
+      { id: "clamp-neg-1-0-3", expr: ["Clamp", -1, 0, 3], expected: 0 },
       {
         id: "values-already-inside-the-range-pass-through",
         expr: ["Clamp", 2, 0, 3],
@@ -1669,22 +1538,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "Builds the approximation via continued fractions, the same technique behind classic approximations like $\\pi \\approx 355/113$.",
     ],
     examples: [
-      {
-        id: "rationalize-0p1",
-        expr: ["Rationalize", 0.1],
-        expected: ["Rational", 1, 10],
-      },
+      { id: "rationalize-0p1", expr: ["Rationalize", 0.1], expected: ["Rational", 1, 10] },
       {
         id: "an-exact-integer-is-returned-unchanged",
         expr: ["Rationalize", 2],
         expected: 2,
         caption: "An exact integer is returned unchanged",
       },
-      {
-        id: "rationalize-2p5",
-        expr: ["Rationalize", 2.5],
-        expected: ["Rational", 5, 2],
-      },
+      { id: "rationalize-2p5", expr: ["Rationalize", 2.5], expected: ["Rational", 5, 2] },
       {
         id: "recognizes-a-float-that-is-to-machine-precision",
         expr: ["Rationalize", 0.3333333333333333],
@@ -1729,11 +1590,7 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "A loose tolerance can snap to something far simpler -- 0 is within 0.5 of 0.1",
       },
-      {
-        id: "rationalize-6p75",
-        expr: ["Rationalize", 6.75],
-        expected: ["Rational", 27, 4],
-      },
+      { id: "rationalize-6p75", expr: ["Rationalize", 6.75], expected: ["Rational", 27, 4] },
       {
         id: "a-second-argument-sets-the-tolerance",
         expr: ["Rationalize", "Pi", 0.01],
@@ -1830,22 +1687,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "With no arguments, compute-engine returns NaN rather than $-\\infty$, the true identity element.",
     ],
     examples: [
-      {
-        id: "max-3-1-4-1-5",
-        expr: ["Max", 3, 1, 4, 1, 5],
-        expected: 5,
-      },
+      { id: "max-3-1-4-1-5", expr: ["Max", 3, 1, 4, 1, 5], expected: 5 },
       {
         id: "also-accepts-a-single-list-argument",
         expr: ["Max", ["List", 3, 1, 4]],
         expected: 4,
         caption: "Also accepts a single list argument",
       },
-      {
-        id: "max-neg-1-neg-5",
-        expr: ["Max", -1, -5],
-        expected: -1,
-      },
+      { id: "max-neg-1-neg-5", expr: ["Max", -1, -5], expected: -1 },
       {
         id: "a-single-argument-is-returned-unchanged",
         expr: ["Max", 3],
@@ -1892,21 +1741,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "NaN poisons the result, overriding every other argument",
       },
-      {
-        id: "max-9-2",
-        expr: ["Max", 9, 2],
-        expected: 9,
-      },
-      {
-        id: "max-list-4-1-7-2",
-        expr: ["Max", ["List", 4, 1, 7, 2]],
-        expected: 7,
-      },
-      {
-        id: "max-5p56-neg-4p8-7p3",
-        expr: ["Max", 5.56, -4.8, 7.3],
-        expected: 7.3,
-      },
+      { id: "max-9-2", expr: ["Max", 9, 2], expected: 9 },
+      { id: "max-list-4-1-7-2", expr: ["Max", ["List", 4, 1, 7, 2]], expected: 7 },
+      { id: "max-5p56-neg-4p8-7p3", expr: ["Max", 5.56, -4.8, 7.3], expected: 7.3 },
       {
         id: "nested-lists-are-flattened-into-the-pool",
         expr: [
@@ -2000,22 +1837,14 @@ export const arithmetic: readonly ReferenceEntry[] = [
       "With no arguments at all, returns the identity element $+\\infty$.",
     ],
     examples: [
-      {
-        id: "min-3-1-4-1-5",
-        expr: ["Min", 3, 1, 4, 1, 5],
-        expected: 1,
-      },
+      { id: "min-3-1-4-1-5", expr: ["Min", 3, 1, 4, 1, 5], expected: 1 },
       {
         id: "also-accepts-a-single-list-argument",
         expr: ["Min", ["List", 3, 1, 4]],
         expected: 1,
         caption: "Also accepts a single list argument",
       },
-      {
-        id: "min-neg-1-neg-5",
-        expr: ["Min", -1, -5],
-        expected: -5,
-      },
+      { id: "min-neg-1-neg-5", expr: ["Min", -1, -5], expected: -5 },
       {
         id: "a-single-argument-is-returned-unchanged",
         expr: ["Min", 3],
@@ -2058,21 +1887,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
         caption:
           "Multiple arguments -- lists included -- are flattened into one pool rather than compared list-by-list. See [[Max]]",
       },
-      {
-        id: "min-9-2",
-        expr: ["Min", 9, 2],
-        expected: 2,
-      },
-      {
-        id: "min-list-4-1-7-2",
-        expr: ["Min", ["List", 4, 1, 7, 2]],
-        expected: 1,
-      },
-      {
-        id: "min-5p56-neg-4p8-7p3",
-        expr: ["Min", 5.56, -4.8, 7.3],
-        expected: -4.8,
-      },
+      { id: "min-9-2", expr: ["Min", 9, 2], expected: 2 },
+      { id: "min-list-4-1-7-2", expr: ["Min", ["List", 4, 1, 7, 2]], expected: 1 },
+      { id: "min-5p56-neg-4p8-7p3", expr: ["Min", 5.56, -4.8, 7.3], expected: -4.8 },
       {
         id: "nested-lists-are-flattened-into-the-pool",
         expr: [
@@ -2154,27 +1971,15 @@ export const arithmetic: readonly ReferenceEntry[] = [
       { call: "IsOdd(n)", description: "$True$ if $n$ is an odd integer, else $False$." },
     ],
     examples: [
-      {
-        id: "isodd-3",
-        expr: ["IsOdd", 3],
-        expected: "True",
-      },
-      {
-        id: "isodd-4",
-        expr: ["IsOdd", 4],
-        expected: "False",
-      },
+      { id: "isodd-3", expr: ["IsOdd", 3], expected: "True" },
+      { id: "isodd-4", expr: ["IsOdd", 4], expected: "False" },
       {
         id: "negative-integers-count-too",
         expr: ["IsOdd", -7],
         expected: "True",
         caption: "Negative integers count too",
       },
-      {
-        id: "isodd-0",
-        expr: ["IsOdd", 0],
-        expected: "False",
-      },
+      { id: "isodd-0", expr: ["IsOdd", 0], expected: "False" },
       {
         id: "a-non-integer-is-not-odd",
         expr: ["IsOdd", 3.5],
@@ -2249,22 +2054,9 @@ export const arithmetic: readonly ReferenceEntry[] = [
       { call: "IsEven(n)", description: "$True$ if $n$ is an even integer, else $False$." },
     ],
     examples: [
-      {
-        id: "iseven-4",
-        expr: ["IsEven", 4],
-        expected: "True",
-      },
-      {
-        id: "iseven-3",
-        expr: ["IsEven", 3],
-        expected: "False",
-      },
-      {
-        id: "zero-is-even",
-        expr: ["IsEven", 0],
-        expected: "True",
-        caption: "Zero is even",
-      },
+      { id: "iseven-4", expr: ["IsEven", 4], expected: "True" },
+      { id: "iseven-3", expr: ["IsEven", 3], expected: "False" },
+      { id: "zero-is-even", expr: ["IsEven", 0], expected: "True", caption: "Zero is even" },
       {
         id: "negative-integers-count-too",
         expr: ["IsEven", -4],

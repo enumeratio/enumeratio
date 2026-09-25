@@ -1,0 +1,65 @@
+name: ModularInverse
+domain: Modular arithmetic
+signature: ModularInverse(a, m)
+summary: The $x$ with $a x \equiv 1 \pmod m$, when $a$ is a unit mod $m$.
+signatures:
+  - call: ModularInverse(a, m)
+    description: the inverse of $a$ modulo $m$, in $[0, m)$
+  - call: ModularInverse(z, m)
+    description: over the Gaussian integers
+    library: enumeratio-number-theory
+details:
+  - Exists exactly when $\gcd(a, m)$ is a unit; the call is otherwise left unevaluated.
+  - Read off the Bézout coefficient of [[ExtendedGCD]].
+  - For Gaussian integers, Wolfram reduces the inverse into $[0, m)$ part by part for a positive rational-integer $m$, and as [[Mod]] does otherwise.
+examples:
+  - id: 3-cdot-5-15-equiv-1
+    expr: [ModularInverse, 3, 7]
+    expected: 5
+    caption: $3 \cdot 5 = 15 \equiv 1$
+  - id: modularinverse-2-11
+    expr: [ModularInverse, 2, 11]
+    expected: 6
+  - id: a-negative-argument-3-cdot-2-6-equiv-1
+    expr: [ModularInverse, -3, 7]
+    expected: 2
+    category: Scope
+    caption: 'a negative argument: $-3 \cdot 2 = -6 \equiv 1$'
+  - id: a-21-digit-modulus
+    expr: [ModularInverse, 3, [Add, [Power, 10, 20], 1]]
+    expected: {num: '33333333333333333334'}
+    category: Scope
+    caption: a 21-digit modulus
+  - id: listable-threads-over-a-list
+    expr: [ModularInverse, [List, 2, 3, 4], 11]
+    expected: [List, 6, 4, 3]
+    category: Scope
+    caption: 'Listable: threads over a list'
+  - id: the-same-as-powermod-with-exponent-1
+    expr: [Equal, [ModularInverse, 3, 7], [PowerMod, 3, -1, 7]]
+    expected: True
+    category: Properties
+    caption: the same as [[PowerMod]] with exponent $-1$
+  - id: a-cdot-a-1-equiv-1-modulo-the-mersenne-prime-2
+    expr: [Mod, [Multiply, 12345, [ModularInverse, 12345, [Subtract, [Power, 2, 61], 1]]], [Subtract, [Power, 2, 61], 1]]
+    expected: 1
+    category: Properties
+    caption: $a \cdot a^{-1} \equiv 1$, modulo the Mersenne prime $2^{61} - 1$
+  - id: 2-i-6-4i-8-14i-equiv-1-pmod-7
+    expr: [ModularInverse, [Complex, 2, 1], 7]
+    expected: [Complex, 6, 4]
+    category: Scope
+    caption: $(2 + i)(6 + 4i) = 8 + 14i \equiv 1 \pmod 7$
+  - id: modularinverse-11-plus-neg-7-times-i-7-plus-4i
+    expr: [ModularInverse, [Complex, 11, -7], [Complex, 7, 4]]
+    expected: [Complex, -1, 2]
+    category: Scope
+  - id: gcd-2-4-2-no-inverse
+    expr: [ModularInverse, 2, 4]
+    expected: [ModularInverse, 2, 4]
+    category: Possible issues
+    caption: '$\gcd(2, 4) = 2$: no inverse'
+seeAlso:
+  - PowerMod
+  - ExtendedGCD
+  - PowerModList

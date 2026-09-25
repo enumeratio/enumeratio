@@ -1,0 +1,27 @@
+name: BaxterPermutations
+domain: Collections
+signature: BaxterPermutations(n)
+summary: The permutations of $\{1, …, n\}$ avoiding the vincular patterns $2\text{-}41\text{-}3$ and $3\text{-}14\text{-}2$ — the "41"/"14" descent or ascent must sit at adjacent positions — as a lazy indexed family.
+signatures:
+  - call: BaxterPermutations(n)
+    library: enumeratio-collections
+    description: the Baxter permutations of $\{1, …, n\}$.
+details:
+  - 'A lazy indexed collection; the count follows the Chung–Graham–Hoggatt–Kleiman rational formula $\sum_k \binom{n+1}{k}\binom{n+1}{k+1}\binom{n+1}{k+2} \big/ \binom{n+1}{1}\binom{n+1}{2}$ — A001181: $1, 1, 2, 6, 22, 92, …$'
+  - Each element is the one-line word $[\pi(1), …, \pi(n)]$, as in [[SymmetricGroup]].
+  - $At$ enumerates all $n!$ permutations in lexicographic (factorial-number-system) order and indexes into those satisfying the avoidance, so the family stays a filtered slice of [[SymmetricGroup]]'s own order.
+examples:
+  - id: count-baxterpermutations-4-22-a001181
+    expr: [Count, [BaxterPermutations, 4]]
+    expected: 22
+    category: Basic
+    caption: $Count(BaxterPermutations(4)) = 22$, A001181
+enumerate:
+  expr: BaxterPermutations(4)
+  columns: Descents, Inversions
+  glyph: permutation
+seeAlso:
+  - SymmetricGroup
+  - Binomial
+  - Count
+  - At

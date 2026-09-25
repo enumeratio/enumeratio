@@ -1,0 +1,40 @@
+name: KleinInvariantJ
+domain: Special functions
+signature: KleinInvariantJ(tau)
+summary: Klein's absolute invariant $J(\tau) = j(\tau)/1728$, normalised so $J(i) = 1$ and $J(\rho) = 0$ at the elliptic points. A thin wrapper over this package's own [[ModularJ]] (the un-normalised $j$).
+signatures:
+  - call: KleinInvariantJ(tau)
+    description: $J(\tau) = j(\tau)/1728$.
+    library: '@enumeratio/analytic'
+details:
+  - All the analytic work — fundamental-domain reduction, the $\eta^{24}$ discriminant — is [[ModularJ]]'s; this only rescales.
+  - '$\tau = i$ is returned exactly (1): $j(i) = 1728$ is a textbook identity, kept exact even under plain `evaluate()`, not just `N()`.'
+examples:
+  - id: j-i-1
+    expr: [N, [KleinInvariantJ, [Complex, 0, 1]]]
+    expected: 1
+    caption: $J(i) = 1$
+  - id: j-2i-66-3-1728-1331-8
+    expr: [N, [KleinInvariantJ, [Complex, 0, 2]]]
+    expected: 166.375
+    caption: $J(2i) = 66^3/1728 = 1331/8$
+  - id: exact-at-the-elliptic-point-i
+    expr: [KleinInvariantJ, [Complex, 0, 1]]
+    expected: 1
+    category: Scope
+    caption: Exact at the elliptic point $i$
+  - id: heegner-number-163-j-bigl-frac-1-i-sqrt-163-2
+    expr: [N, [KleinInvariantJ, [Multiply, [Rational, 1, 2], [Add, 1, [Complex, 0, [Sqrt, 163]]]]]]
+    expected: -151931373055998.97
+    category: Neat examples
+    caption: 'Heegner number 163: $J\bigl(\tfrac{1+i\sqrt{163}}2\bigr) = -640320^3/1728$, to double precision'
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/modular.ts
+    note: j(τ)/1728, delegating entirely to ModularJ.
+seeAlso:
+  - ModularJ
+  - ModularLambda

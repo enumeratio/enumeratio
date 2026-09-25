@@ -30,7 +30,7 @@ concurrency:
 
 jobs:
   # The Python ecosystem: every example with an mpmath or SymPy mapping, rescanned against the committed
-  # sidecars, including the special-function grid kept as data (special-functions.examples.json). Each
+  # sidecars, including the special-function grid kept as hidden examples in its heads' YAML. Each
   # ecosystem is its own nightly job: they share nothing to install. The heavier lanes run weekly below.
   python-oracle:
     name: reference ⟷ Python (mpmath, SymPy)

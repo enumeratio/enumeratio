@@ -1,0 +1,38 @@
+name: TimeConstrained
+domain: Controlling evaluation
+signature: TimeConstrained(expr, t, failexpr)
+summary: Evaluates expr, but aborts after t seconds and returns failexpr.
+signatures:
+  - call: TimeConstrained(expr, t)
+    description: aborts to $Aborted past $t$ seconds.
+    library: enumeratio-aestimatio
+  - call: TimeConstrained(expr, t, failexpr)
+    description: aborts to $\mathit{failexpr}$ instead.
+    library: enumeratio-aestimatio
+details:
+  - "A deadline only interrupts code that LOOKS at it: compute-engine's own loops (Sum, Pollard's rho inside FactorInteger, …) cooperate, so a computation built entirely from them can actually be cut off mid-flight."
+  - 'Held: expr and failexpr are not evaluated until it is known which one is wanted.'
+  - "There is also an evaluateAsync route, used automatically inside an async evaluation (e.g. a notebook cell): the caller's own AbortSignal and the timeout race each other, and only the timeout converts to failexpr — the caller's own cancellation propagates."
+examples:
+  - id: finishes-well-inside-the-deadline-so-the-value
+    expr: [TimeConstrained, [Sum, k, [Tuple, k, 1, 10]], 1]
+    expected: 55
+    caption: Finishes well inside the deadline, so the value passes through unchanged
+  - id: factoring-a-30-digit-semiprime-outruns-a-50-ms
+    expr: [TimeConstrained, [FactorInteger, '1001000000000040037000000000111'], 0.05]
+    expected: Aborted
+    caption: Factoring a 30-digit semiprime outruns a 50 ms deadline — compute-engine's own rho loop checks it and gives up
+  - id: a-custom-failexpr-replaces-the-default-aborted
+    expr: [TimeConstrained, [FactorInteger, '1001000000000040037000000000111'], 0.05, -1]
+    expected: -1
+    caption: A custom failexpr replaces the default $Aborted
+  - id: an-infinite-time-limit-imposes-no-constraint
+    expr: [TimeConstrained, [Add, 1, 2], PositiveInfinity]
+    expected: 3
+    caption: An infinite time limit imposes no constraint
+    category: Scope
+  - id: failexpr-is-held-it-is-never-evaluated-when-expr
+    expr: [TimeConstrained, [Add, 2, 3], 1, [Divide, 1, 0]]
+    expected: 5
+    caption: 'failexpr is held: it is never evaluated when expr finishes in time'
+    category: Properties
