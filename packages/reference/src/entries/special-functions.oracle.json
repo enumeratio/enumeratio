@@ -14417,17 +14417,6 @@
           }
         }
       },
-      "[\"Digamma\",1]": {
-        "wolfram": {
-          "input": "PolyGamma[1]",
-          "output": "-EulerGamma",
-          "verdict": "agree",
-          "tex": {
-            "input": "\\psi (1)",
-            "output": "-\\gamma"
-          }
-        }
-      },
       "[\"Digamma\",-0.5]": {
         "wolfram": {
           "input": "PolyGamma[-0.5]",

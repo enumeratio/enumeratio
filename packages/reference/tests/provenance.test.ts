@@ -65,7 +65,6 @@ const VANILLA: MathJSON[] = [
   ["Zeta", -1],
   ["PolyLog", 2, 1],
   ["PolyGamma", 0, 1],
-  ["Gamma", 5],
   // Digits, whose base slot we widen.
   ["IntegerDigits", 255, 16],
   ["IntegerDigits", 10, 2],
@@ -116,6 +115,7 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * on; a name disappearing means an override that has silently stopped taking effect.
  */
 const OVERRIDDEN = [
+  "Arcsin",
   "At",
   "BellNumber",
   "BernoulliB",
@@ -124,6 +124,7 @@ const OVERRIDDEN = [
   "CatalanNumber",
   "ChineseRemainder",
   "Clamp",
+  "Digamma",
   "DigitCount",
   "DigitSum",
   "DivisorSigma",
@@ -150,6 +151,7 @@ const OVERRIDDEN = [
   "Join",
   "Last",
   "Length",
+  "Ln",
   "LucasL",
   "MatrixPower",
   "Mean",

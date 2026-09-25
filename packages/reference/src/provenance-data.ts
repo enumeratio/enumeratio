@@ -544,7 +544,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Arcsin",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "ArcSin",
     elsewhere: [],
@@ -635,7 +635,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Ln",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "Log",
     elsewhere: ["sympy", "mpmath"],
@@ -768,7 +768,7 @@ export const provenance: readonly HeadRecord[] = [
   },
   {
     name: "Digamma",
-    provenance: "compute-engine",
+    provenance: "override",
     declared: null,
     wolframAlias: "PolyGamma",
     elsewhere: ["sympy", "mpmath"],

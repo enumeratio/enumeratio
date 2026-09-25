@@ -7492,21 +7492,7 @@
   "elementary/Arcsin#7": {
     "ours": {
       "input": "\\arcsin(2)",
-      "output": "\\arcsin(2)"
-    },
-    "wolfram": {
-      "input": "\\sin ^{-1}(2)",
-      "output": "\\sin ^{-1}(2)"
-    },
-    "same": {
-      "input": false,
-      "output": false
-    }
-  },
-  "elementary/Arcsin#8": {
-    "ours": {
-      "input": "\\arcsin(2)",
-      "output": "\\frac{\\pi}{2}-i\\ln(2+\\sqrt{3})"
+      "output": "\\frac{\\pi}{2}+(-i)\\ln(2+\\sqrt{3})"
     },
     "wolfram": {
       "input": "\\sin ^{-1}(2)",
@@ -8192,7 +8178,7 @@
   "elementary/Ln#6": {
     "ours": {
       "input": "\\ln(-1)",
-      "output": "\\ln(-1)"
+      "output": "(i)\\pi"
     },
     "wolfram": {
       "input": "\\log (-1)",
@@ -8201,20 +8187,6 @@
     "same": {
       "input": false,
       "output": false
-    }
-  },
-  "elementary/Ln#7": {
-    "ours": {
-      "input": "\\ln(-1)",
-      "output": "i\\pi"
-    },
-    "wolfram": {
-      "input": "\\log (-1)",
-      "output": "i \\pi"
-    },
-    "same": {
-      "input": false,
-      "output": true
     }
   },
   "elementary/Log#1": {
@@ -8863,20 +8835,6 @@
   },
   "special-functions/Gamma#9": {
     "ours": {
-      "input": "\\Gamma(\\frac{5}{2})",
-      "output": "\\Gamma(\\frac{5}{2})"
-    },
-    "wolfram": {
-      "input": "\\Gamma \\left(\\frac{5}{2}\\right)",
-      "output": "\\frac{3 \\sqrt{\\pi }}{4}"
-    },
-    "same": {
-      "input": true,
-      "output": false
-    }
-  },
-  "special-functions/Gamma#10": {
-    "ours": {
       "input": "\\Gamma(1/2)^2=\\pi",
       "output": "\\mathrm{True}"
     },
@@ -8889,7 +8847,7 @@
       "output": true
     }
   },
-  "special-functions/Gamma#12": {
+  "special-functions/Gamma#11": {
     "ours": {
       "input": "\\Gamma(\\frac{5}{2})",
       "output": "\\frac{3\\sqrt{\\pi}}{4}"
@@ -8903,7 +8861,7 @@
       "output": true
     }
   },
-  "special-functions/Gamma#13": {
+  "special-functions/Gamma#12": {
     "ours": {
       "input": "\\Gamma(2.5, 0, 1.5)",
       "output": "0.398\\,820\\,945\\,392\\,343\\,9"
@@ -8917,7 +8875,7 @@
       "output": false
     }
   },
-  "special-functions/Gamma#14": {
+  "special-functions/Gamma#13": {
     "ours": {
       "input": "\\Gamma(2.5, 1.5, 3)",
       "output": "0.523\\,450\\,266\\,915\\,488\\,6"
@@ -18158,20 +18116,6 @@
     }
   },
   "special-functions/Digamma#8": {
-    "ours": {
-      "input": "\\psi(1)",
-      "output": "\\psi(1)"
-    },
-    "wolfram": {
-      "input": "\\psi (1)",
-      "output": "-\\gamma"
-    },
-    "same": {
-      "input": true,
-      "output": false
-    }
-  },
-  "special-functions/Digamma#9": {
     "ours": {
       "input": "\\psi(-0.5)",
       "output": "0.036\\,489\\,973\\,978\\,576\\,520\\,559"
