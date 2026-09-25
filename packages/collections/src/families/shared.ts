@@ -1,5 +1,5 @@
 // Small exact-integer helpers shared by the family kernels (multiply-before-divide).
-// Collection-specific DP tables stay in their own pack; only generic helpers live here.
+// Collection-specific DP tables stay in their own module; only generic helpers live here.
 
 /** C(n, k), exact, 0 outside 0 ≤ k ≤ n. */
 export function binomial(n: number, k: number): number {

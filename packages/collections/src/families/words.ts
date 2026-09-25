@@ -1,7 +1,7 @@
 // Words: binary/base-b word families catalogued but previously kernel-less — plain words, weight
 // classes, Fibonacci/Lucas-restricted words, reflected Gray code, palindromes, and necklaces/Lyndon
 // words (binary and k-ary). Pure rank/unrank kernels over plain JS numbers/arrays, same contract as
-// every other pack (types.ts). A few reuse kernels already certified elsewhere (BinaryStrings,
+// every other family (types.ts). A few reuse kernels already certified elsewhere (BinaryStrings,
 // FibonacciWords, Tuples, k-subsets); the rest (Lucas strings, Gray code, palindromes, necklaces,
 // Lyndon words) are new, several adapted from the archived enumeratio.dev's compute-engine
 // packs/words.ts (Necklaces/LyndonWords there are exactly KNecklaces/KLyndonWords here).

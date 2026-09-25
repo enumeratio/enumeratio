@@ -3,8 +3,7 @@ import { integerAt } from "@enumeratio/boxed";
 
 // The one collection contract, shared by every family. A FamilyKernel is a pure kernel
 // (count / unrank / rank / valid) over plain JS values, with NO compute-engine
-// dependency. The engine wiring (MathJSON boxing, CE CollectionHandlers) lives in
-// ../library.ts via `adaptEntry` + `gradedHandlers`.
+// dependency. The engine wiring (MathJSON boxing, CE collection handlers) is declare.ts.
 //
 // element shape (`kind`):
 //   "ints"   -> number[]     (words, parts, subsets, step sequences)
@@ -33,17 +32,8 @@ export interface FamilyKernel {
   readonly valid: (element: unknown, p: number[]) => boolean;
 }
 
-/** A CE-facing family: count, `elt` (index -> MathJSON), and membership-gated rank. */
-export interface FamilySpec {
-  readonly paramCount: 1 | 2;
-  readonly signature: string;
-  readonly count: (p: number[]) => number;
-  readonly elt: (p: number[], rank0: number) => unknown;
-  readonly rank: (target: Boxed, p: number[]) => number | undefined;
-}
-
 /** Boxed integer -> JS number, `NaN` when the expression is not one.
- *  The decoders below are total, and `NaN` is an invalid element every pack's
+ *  The decoders below are total, and `NaN` is an invalid element every family's
  *  `valid()` already rejects — which is why this rejects rather than truncates. */
 export const intOf = (x: Boxed | undefined): number =>
   integerAt(x as unknown as BoxedExpression | undefined) ?? Number.NaN;
@@ -60,27 +50,3 @@ export const asBlockList = (t: Boxed): number[][] =>
   (t.ops ?? []).map((b) => (b.ops ?? []).map(intOf));
 export const denest = (x: Boxed): NestedTree =>
   x.ops ? (x.ops.map(denest) as NestedTree[]) : intOf(x);
-
-const signatureFor = (kind: FamilyKernel["kind"], pc: 1 | 2): string => {
-  if (kind === "nested") {
-    return pc === 1 ? "(integer) -> collection" : "(integer, integer) -> collection";
-  }
-  const inner = kind === "ints" ? "list<list<integer>>" : "list<list<list<integer>>>";
-  return pc === 1 ? `(integer) -> ${inner}` : `(integer, integer) -> ${inner}`;
-};
-
-/** Adapt a pure FamilyKernel into a CE-facing FamilySpec (boxing + membership-gated rank). */
-export function adaptEntry(e: FamilyKernel): FamilySpec {
-  const encode = e.kind === "ints" ? listMJ : e.kind === "blocks" ? blocksMJ : nestMJ;
-  const decode = e.kind === "ints" ? asIntList : e.kind === "blocks" ? asBlockList : denest;
-  return {
-    paramCount: e.paramCount,
-    signature: signatureFor(e.kind, e.paramCount),
-    count: e.count,
-    elt: (p, r) => encode(e.unrank(p, r) as never),
-    rank: (t, p) => {
-      const element = decode(t);
-      return e.valid(element, p) ? e.rank(element, p) : undefined;
-    },
-  };
-}

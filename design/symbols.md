@@ -116,4 +116,4 @@ they are what the people who built the function thought worth showing, and there
 of them to rank. [roadmap.md](./roadmap.md) is where that lands as work to pick up, next to
 the statistics and maps frontiers, which are the same discipline at a smaller scale.
 
-Open questions moved to speculative/symbols.md.
+Open questions moved to design/speculative/symbols.md.

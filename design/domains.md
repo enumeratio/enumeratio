@@ -431,7 +431,7 @@ reconciled — which is more evidence for §4's framing that a restriction is a 
    really does differ, and nothing here needs one yet.
 
 Item 5 of this list — typing the maps by carrier — is still in progress (not yet built in
-full); its current state moved to speculative/domains.md. What building the first maps
+full); its current state moved to design/speculative/domains.md. What building the first maps
 turned up (§5.1 below) is kept here since it documents what has already landed.
 
 ### 5.1 What building the first maps turned up
@@ -552,4 +552,4 @@ The three maps are _extended_ rather than renamed, per §5.2. The remaining two 
 handling by hand, and the audit is worth re-running whenever a batch of names lands — a
 carrier minted over a built-in replaces it with no warning at all.
 
-Open questions, and item 5's in-progress state, moved to speculative/domains.md.
+Open questions, and item 5's in-progress state, moved to design/speculative/domains.md.
