@@ -86,7 +86,7 @@ function kSubsetRank(e0: number[]): number {
   return r;
 }
 
-function subsetsAtMostKCount(p: number[]): number {
+export function subsetsAtMostKCount(p: number[]): number {
   const [n, k] = p;
   if (n < 0 || k < 0) return 0;
   let total = 0;
@@ -94,7 +94,7 @@ function subsetsAtMostKCount(p: number[]): number {
   return total;
 }
 
-function subsetsAtMostKUnrank(p: number[], r: number): number[] {
+export function subsetsAtMostKUnrank(p: number[], r: number): number[] {
   const [n, k] = p;
   let rr = normRank(r, subsetsAtMostKCount(p));
   for (let size = 0; size <= k; size++) {
@@ -113,7 +113,7 @@ function subsetsAtMostKRank(e: unknown, p: number[]): number {
   return offset + kSubsetRank(es.map((x) => x - 1));
 }
 
-function subsetsAtMostKValid(e: unknown, p: number[]): boolean {
+export function subsetsAtMostKValid(e: unknown, p: number[]): boolean {
   const [n, k] = p;
   if (!Array.isArray(e) || e.length > k) return false;
   for (let i = 0; i < e.length; i++) {

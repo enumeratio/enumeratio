@@ -1,6 +1,6 @@
 import { registerAlgebra } from "@enumeratio/algebra";
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { integerAt, operandsOf, stringAt } from "@enumeratio/boxed";
+import { integerAt, operandsOf, stringAt, wrapOperator } from "@enumeratio/boxed";
 import {
   basisElement,
   classSum,
@@ -135,6 +135,24 @@ export function declareGroupAlgebra(ce: ComputeEngine): void {
   };
 
   aboutGroup("GroupOrder", "(value) -> integer", (g) => ce.number(order(g)));
+  // GroupOrder(SymmetricGroup(n)) -> n!. SymmetricGroup is @enumeratio/collections' own
+  // lazy indexed family (n! one-line words) rather than a Group this package builds a
+  // Cayley table for -- n! elements would make that table, not the answer, the expensive
+  // part. Attached right here (not from collections, which declares SymmetricGroup) so it
+  // works regardless of which of the two packages happens to declare first; wrapOperator
+  // only needs GroupOrder's OWN definition to exist yet, which it now does.
+  wrapOperator(
+    ce,
+    ["GroupOrder", ["SymmetricGroup", 1]],
+    (ops) => ops.length === 1 && ops[0]?.operator === "SymmetricGroup",
+    () => (ops) => {
+      const n = integerAt(operandsOf(ops[0]!)[0]);
+      if (n === undefined) return undefined;
+      let f = 1;
+      for (let i = 2; i <= n; i++) f *= i;
+      return ce.number(f);
+    },
+  );
   aboutGroup("GroupIsAbelian", "(value) -> boolean", (g) =>
     ce.symbol(isAbelian(g) ? "True" : "False"),
   );

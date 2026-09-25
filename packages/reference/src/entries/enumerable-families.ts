@@ -25,6 +25,22 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         description: "the subsets of any finite collection.",
         library: "enumeratio-collections",
       },
+      {
+        call: "Subsets(n, k)",
+        description: "the subsets of $\\{1, …, n\\}$ of size at most $k$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Subsets(n, {k})",
+        description: "the subsets of $\\{1, …, n\\}$ of size exactly $k$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "Subsets(n, {kmin, kmax, dn})",
+        description:
+          "the subsets of $\\{1, …, n\\}$ with size in $kmin, kmin+dn, …$ up to $kmax$; $dn$ defaults to $1$.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection: $Count(Subsets(n)) = 2^n$ in closed form and $At(Subsets(n), i)$ unranks the $i$-th subset, so no subset beyond the page in view is built.",
@@ -53,25 +69,20 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         expr: ["Count", ["Subsets", 4, 2]],
         expected: 11,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$; the second argument is not yet taken",
+        caption: "A size bound: the subsets with at most 2 elements, $1 + 4 + 6$",
       },
       {
         expr: ["Count", ["Subsets", 4, ["List", 2]]],
         expected: 6,
-        aspirational: true,
         category: "Scope",
-        caption: "An exact size $\\{2\\}$: $\\binom{4}{2}$ subsets; not yet taken",
+        caption: "An exact size $\\{2\\}$: $\\binom{4}{2}$ subsets",
       },
       {
         expr: ["Count", ["Subsets", 5, ["List", 0, 5, 2]]],
         expected: 16,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A size range $\\{0, 5, 2\\}$, the even-size subsets, $2^{4}$ of them; not yet taken",
+        caption: "A size range $\\{0, 5, 2\\}$, the even-size subsets, $2^{4}$ of them",
       },
       {
         expr: ["Length", ["Subsets", ["Range", 1, 10]]],
@@ -112,16 +123,13 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         expr: ["GroupOrder", ["SymmetricGroup", 5]],
         expected: 120,
-        aspirational: true,
-        caption:
-          "The order of $S_5$ is $5!$; [[GroupOrder]] reads only CyclicGroup, DihedralGroup and GroupDirectProduct",
+        caption: "The order of $S_5$ is $5!$",
       },
       {
         expr: ["GroupOrder", ["SymmetricGroup", 10]],
         expected: 3628800,
-        aspirational: true,
         category: "Scope",
-        caption: "$|S_{10}| = 10!$; not yet read by [[GroupOrder]]",
+        caption: "$|S_{10}| = 10!$",
       },
       {
         expr: ["Length", ["Permutations", ["List", 1, 2, 3]]],
@@ -149,6 +157,21 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         description: "every way to write $n$ as a sum of positive parts, order-insensitive.",
         library: "enumeratio-collections",
       },
+      {
+        call: "IntegerPartitions(n, k)",
+        description: "the partitions of $n$ into at most $k$ parts.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "IntegerPartitions(n, {k})",
+        description: "the partitions of $n$ into exactly $k$ parts.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "IntegerPartitions(n, All, parts)",
+        description: "the partitions of $n$ using only parts drawn from the given list.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection, unranked in reverse-lexicographic order; the count is the partition number $p(n)$ — $p(8) = 22$ — with no elementary closed form.",
@@ -171,8 +194,7 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           ["List", 4, 2, 2],
           ["List", 3, 3, 2],
         ],
-        aspirational: true,
-        caption: "The partitions of 8 into at most 3 parts; the part-count bound is not yet taken",
+        caption: "The partitions of 8 into at most 3 parts",
       },
       {
         expr: ["IntegerPartitions", 8, ["List", 3]],
@@ -184,9 +206,8 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           ["List", 4, 2, 2],
           ["List", 3, 3, 2],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Exactly 3 parts; not yet taken",
+        caption: "Exactly 3 parts",
       },
       {
         expr: ["IntegerPartitions", 8, "All", ["List", 1, 2, 5]],
@@ -200,9 +221,8 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           ["List", 2, 1, 1, 1, 1, 1, 1],
           ["List", 1, 1, 1, 1, 1, 1, 1, 1],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Parts restricted to $\\{1, 2, 5\\}$; not yet taken",
+        caption: "Parts restricted to $\\{1, 2, 5\\}$",
       },
       {
         expr: ["NPartition", 8],
@@ -213,18 +233,15 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
       {
         expr: ["Count", ["IntegerPartitions", 100, "All", ["List", 1, 5, 10, 25, 50]]],
         expected: 292,
-        aspirational: true,
         category: "Applications",
-        caption:
-          "The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins; restricted parts are not yet taken",
+        caption: "The ways to make change for a dollar from 1, 5, 10, 25 and 50 cent coins",
       },
       {
         expr: ["Count", ["IntegerPartitions", 10, "All", ["List", 1, 3, 5, 7, 9]]],
         expected: 10,
-        aspirational: true,
         category: "Neat examples",
         caption:
-          "Euler: partitions into odd parts are as many as partitions into distinct parts, $q(10) = 10$; restricted parts are not yet taken",
+          "Euler: partitions into odd parts are as many as partitions into distinct parts, $q(10) = 10$. See [[DistinctPartitions]]",
       },
     ],
     enumerate: {
@@ -268,6 +285,11 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
         description: "every way to split $\\{1, …, n\\}$ into disjoint non-empty blocks.",
         library: "enumeratio-collections",
       },
+      {
+        call: "SetPartitions(n, k)",
+        description: "the set partitions of $\\{1, …, n\\}$ into exactly $k$ blocks.",
+        library: "enumeratio-collections",
+      },
     ],
     details: [
       "A lazy indexed collection; the count is the Bell number $B_n$ — $B_4 = 15$. See [[BellNumber]].",
@@ -296,16 +318,14 @@ export const enumerableFamilies: readonly ReferenceEntry[] = [
           ["List", ["List", 1, 3], ["List", 2]],
           ["List", ["List", 1], ["List", 2, 3]],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "Exactly 2 blocks; a block count is not yet taken",
+        caption: "Exactly 2 blocks",
       },
       {
         expr: ["Count", ["SetPartitions", 4, 2]],
         expected: 7,
-        aspirational: true,
         category: "Scope",
-        caption: "The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$; not yet taken",
+        caption: "The partitions of a 4-set into 2 blocks number $S(4, 2) = 7$",
       },
       {
         expr: ["BellNumber", 4],
