@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "Fibonacci[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_0",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "fibonacci(0)",
@@ -41,7 +45,11 @@
         "wolfram": {
           "input": "Fibonacci[1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_1",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "fibonacci(1)",
@@ -73,7 +81,11 @@
         "wolfram": {
           "input": "Fibonacci[10]",
           "output": "55",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{10}",
+            "output": "55"
+          }
         },
         "sage": {
           "input": "fibonacci(10)",
@@ -105,7 +117,11 @@
         "wolfram": {
           "input": "Fibonacci[20]",
           "output": "6765",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{20}",
+            "output": "6765"
+          }
         },
         "sage": {
           "input": "fibonacci(20)",
@@ -137,7 +153,11 @@
         "wolfram": {
           "input": "(Fibonacci[10] == Plus[Fibonacci[9], Fibonacci[8]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{10}=F_9+F_8",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(fibonacci(10) == (fibonacci(9) + fibonacci(8)))",
@@ -169,7 +189,11 @@
         "wolfram": {
           "input": "Subtract[Times[Fibonacci[5], Fibonacci[7]], Power[Fibonacci[6], 2]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_5 F_7-\\left(F_6\\right){}^2",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "((fibonacci(5) * fibonacci(7)) - (fibonacci(6)^2))",
@@ -201,7 +225,11 @@
         "wolfram": {
           "input": "(GCD[Fibonacci[12], Fibonacci[18]] == Fibonacci[GCD[12, 18]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd \\left(F_{12},F_{18}\\right)=F_{\\gcd (12,18)}",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(gcd(fibonacci(12), fibonacci(18)) == fibonacci(gcd(12, 18)))",
@@ -233,7 +261,11 @@
         "wolfram": {
           "input": "Fibonacci[-5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{-5}",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "fibonacci(-5)",
@@ -267,7 +299,11 @@
         "wolfram": {
           "input": "Divide[Fibonacci[20], Fibonacci[19]]",
           "output": "6765/4181",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\frac{F_{20}}{F_{19}}",
+            "output": "\\frac{6765}{4181}"
+          }
         },
         "sage": {
           "input": "(fibonacci(20) / fibonacci(19))",
@@ -299,7 +335,11 @@
         "wolfram": {
           "input": "Fibonacci[50]",
           "output": "12586269025",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_{50}",
+            "output": "12586269025"
+          }
         },
         "sage": {
           "input": "fibonacci(50)",
@@ -333,7 +373,11 @@
         "wolfram": {
           "input": "LucasL[0]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_0",
+            "output": "2"
+          }
         },
         "sage": {
           "input": "lucas_number2(0, 1, -1)",
@@ -355,7 +399,11 @@
         "wolfram": {
           "input": "LucasL[1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_1",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "lucas_number2(1, 1, -1)",
@@ -377,7 +425,11 @@
         "wolfram": {
           "input": "LucasL[5]",
           "output": "11",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_5",
+            "output": "11"
+          }
         },
         "sage": {
           "input": "lucas_number2(5, 1, -1)",
@@ -399,7 +451,11 @@
         "wolfram": {
           "input": "LucasL[10]",
           "output": "123",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{10}",
+            "output": "123"
+          }
         },
         "sage": {
           "input": "lucas_number2(10, 1, -1)",
@@ -421,7 +477,11 @@
         "wolfram": {
           "input": "(LucasL[6] == Plus[Fibonacci[5], Fibonacci[7]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_6=F_5+F_7",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(lucas_number2(6, 1, -1) == (fibonacci(5) + fibonacci(7)))",
@@ -443,7 +503,11 @@
         "wolfram": {
           "input": "(Fibonacci[6] == Divide[Plus[LucasL[5], LucasL[7]], 5])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "F_6=\\frac{L_5+L_7}{5}",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(fibonacci(6) == ((lucas_number2(5, 1, -1) + lucas_number2(7, 1, -1)) / 5))",
@@ -465,7 +529,11 @@
         "wolfram": {
           "input": "Subtract[Times[LucasL[4], LucasL[6]], Power[LucasL[5], 2]]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_4 L_6-\\left(L_5\\right){}^2",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "((lucas_number2(4, 1, -1) * lucas_number2(6, 1, -1)) - (lucas_number2(5, 1, -1)^2))",
@@ -487,7 +555,11 @@
         "wolfram": {
           "input": "LucasL[-1]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{-1}",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "lucas_number2(-1, 1, -1)",
@@ -511,7 +583,11 @@
         "wolfram": {
           "input": "Divide[LucasL[15], LucasL[14]]",
           "output": "1364/843",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\frac{L_{15}}{L_{14}}",
+            "output": "\\frac{1364}{843}"
+          }
         },
         "sage": {
           "input": "(lucas_number2(15, 1, -1) / lucas_number2(14, 1, -1))",
@@ -533,7 +609,11 @@
         "wolfram": {
           "input": "LucasL[30]",
           "output": "1860498",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "L_{30}",
+            "output": "1860498"
+          }
         },
         "sage": {
           "input": "lucas_number2(30, 1, -1)",
@@ -557,7 +637,11 @@
         "wolfram": {
           "input": "BernoulliB[0]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_0",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "bernoulli(0)",
@@ -574,7 +658,11 @@
         "wolfram": {
           "input": "BernoulliB[1]",
           "output": "-1/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_1",
+            "output": "-\\frac{1}{2}"
+          }
         },
         "sage": {
           "input": "bernoulli(1)",
@@ -593,7 +681,11 @@
         "wolfram": {
           "input": "BernoulliB[2]",
           "output": "1/6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_2",
+            "output": "\\frac{1}{6}"
+          }
         },
         "sage": {
           "input": "bernoulli(2)",
@@ -610,7 +702,11 @@
         "wolfram": {
           "input": "BernoulliB[4]",
           "output": "-1/30",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_4",
+            "output": "-\\frac{1}{30}"
+          }
         },
         "sage": {
           "input": "bernoulli(4)",
@@ -627,7 +723,11 @@
         "wolfram": {
           "input": "BernoulliB[12]",
           "output": "-691/2730",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_{12}",
+            "output": "-\\frac{691}{2730}"
+          }
         },
         "sage": {
           "input": "bernoulli(12)",
@@ -644,7 +744,11 @@
         "wolfram": {
           "input": "(BernoulliB[5] == 0)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_5=0",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(bernoulli(5) == 0)",
@@ -661,7 +765,11 @@
         "wolfram": {
           "input": "Divide[Plus[Times[Binomial[3, 0], BernoulliB[0], Power[5, 3]], Times[Binomial[3, 1], BernoulliB[1], Power[5, 2]], Times[Binomial[3, 2], BernoulliB[2], Power[5, 1]]], 3]",
           "output": "30",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\frac{\\binom{3}{0} B_0 5^3+\\binom{3}{1} B_1 5^2+\\binom{3}{2} B_2 5^1}{3}",
+            "output": "30"
+          }
         },
         "sage": {
           "input": "(((binomial(3, 0) * bernoulli(0) * (5^3)) + (binomial(3, 1) * bernoulli(1) * (5^2)) + (binomial(3, 2) * bernoulli(2) * (5^1))) / 3)",
@@ -680,7 +788,11 @@
         "wolfram": {
           "input": "BernoulliB[-1]",
           "output": "BernoulliB[-1]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_{-1}",
+            "output": "B_{-1}"
+          }
         },
         "sage": {
           "input": "bernoulli(-1)",
@@ -701,7 +813,11 @@
         "wolfram": {
           "input": "BernoulliB[20]",
           "output": "-174611/330",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "B_{20}",
+            "output": "-\\frac{174611}{330}"
+          }
         },
         "sage": {
           "input": "bernoulli(20)",

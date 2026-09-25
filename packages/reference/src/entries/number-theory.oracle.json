@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "GCD[12, 18]",
           "output": "6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (12,18)",
+            "output": "6"
+          }
         },
         "sage": {
           "input": "gcd(12, 18)",
@@ -46,7 +50,11 @@
         "wolfram": {
           "input": "GCD[24, 36]",
           "output": "12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (24,36)",
+            "output": "12"
+          }
         },
         "sage": {
           "input": "gcd(24, 36)",
@@ -83,28 +91,44 @@
         "wolfram": {
           "input": "GCD[20, 30, 45]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (20,30,45)",
+            "output": "5"
+          }
         }
       },
       "[\"GCD\",4]": {
         "wolfram": {
           "input": "GCD[4]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (4)",
+            "output": "4"
+          }
         }
       },
       "[\"GCD\"]": {
         "wolfram": {
           "input": "GCD[]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd ()",
+            "output": "0"
+          }
         }
       },
       "[\"GCD\",0,5]": {
         "wolfram": {
           "input": "GCD[0, 5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (0,5)",
+            "output": "5"
+          }
         },
         "sage": {
           "input": "gcd(0, 5)",
@@ -141,7 +165,11 @@
         "wolfram": {
           "input": "GCD[-12, 9, 57]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (-12,9,57)",
+            "output": "3"
+          }
         }
       },
       "[\"GCD\",[\"List\",2,4],[\"List\",6,8]]": {
@@ -150,7 +178,11 @@
           "output": "{2, 4}",
           "verdict": "disagree",
           "kind": "convention",
-          "note": "Wolfram's GCD is Listable and threads element-wise ({gcd(2,6), gcd(4,8)}); compute-engine flattens the lists into arguments, gcd(2,4,6,8)."
+          "note": "Wolfram's GCD is Listable and threads element-wise ({gcd(2,6), gcd(4,8)}); compute-engine flattens the lists into arguments, gcd(2,4,6,8).",
+          "tex": {
+            "input": "\\gcd (\\{2,4\\},\\{6,8\\})",
+            "output": "\\{2,4\\}"
+          }
         },
         "sage": {
           "input": "gcd([2, 4], [6, 8])",
@@ -199,7 +231,11 @@
         "wolfram": {
           "input": "(GCD[12, 18] == GCD[18, 12])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (12,18)=\\gcd (18,12)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(gcd(12, 18) == gcd(18, 12))",
@@ -236,7 +272,11 @@
         "wolfram": {
           "input": "(Times[GCD[12, 18], LCM[12, 18]] == Times[12, 18])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (12,18) \\text{lcm}(12,18)=12\\ 18",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((gcd(12, 18) * lcm(12, 18)) == (12 * 18))",
@@ -273,7 +313,11 @@
         "wolfram": {
           "input": "GCD[Complex[3, 1], Complex[1, 3]]",
           "output": "1 + I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (3+i,1+3 i)",
+            "output": "1+i"
+          }
         },
         "sympy": {
           "input": "gcd((3 + 1*I), (1 + 3*I))",
@@ -308,7 +352,11 @@
         "wolfram": {
           "input": "LCM[4, 6]",
           "output": "12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}(4,6)",
+            "output": "12"
+          }
         },
         "sage": {
           "input": "lcm(4, 6)",
@@ -345,21 +393,33 @@
         "wolfram": {
           "input": "LCM[4, 6, 10]",
           "output": "60",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}(4,6,10)",
+            "output": "60"
+          }
         }
       },
       "[\"LCM\",5]": {
         "wolfram": {
           "input": "LCM[5]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}(5)",
+            "output": "5"
+          }
         }
       },
       "[\"LCM\",0,5]": {
         "wolfram": {
           "input": "LCM[0, 5]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}(0,5)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "lcm(0, 5)",
@@ -396,7 +456,11 @@
         "wolfram": {
           "input": "LCM[-3, 7]",
           "output": "21",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}(-3,7)",
+            "output": "21"
+          }
         },
         "sage": {
           "input": "lcm(-3, 7)",
@@ -433,7 +497,11 @@
         "wolfram": {
           "input": "(Times[GCD[27, 81], LCM[27, 81]] == Times[27, 81])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\gcd (27,81) \\text{lcm}(27,81)=27\\ 81",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((gcd(27, 81) * lcm(27, 81)) == (27 * 81))",
@@ -470,7 +538,11 @@
         "wolfram": {
           "input": "LCM[Complex[3, 1], Complex[-1, 3]]",
           "output": "3 + I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{lcm}(3+i,-1+3 i)",
+            "output": "3+i"
+          }
         },
         "sympy": {
           "input": "lcm((3 + 1*I), (-1 + 3*I))",
@@ -507,7 +579,11 @@
         "wolfram": {
           "input": "EulerPhi[12]",
           "output": "4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\phi (12)",
+            "output": "4"
+          }
         },
         "sage": {
           "input": "euler_phi(12)",
@@ -539,7 +615,11 @@
         "wolfram": {
           "input": "EulerPhi[36]",
           "output": "12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\phi (36)",
+            "output": "12"
+          }
         },
         "sage": {
           "input": "euler_phi(36)",
@@ -571,7 +651,11 @@
         "wolfram": {
           "input": "EulerPhi[1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\phi (1)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "euler_phi(1)",
@@ -603,7 +687,11 @@
         "wolfram": {
           "input": "EulerPhi[391]",
           "output": "352",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\phi (391)",
+            "output": "352"
+          }
         },
         "sage": {
           "input": "euler_phi(391)",
@@ -635,7 +723,11 @@
         "wolfram": {
           "input": "Plus[EulerPhi[1], EulerPhi[2], EulerPhi[3], EulerPhi[4], EulerPhi[6], EulerPhi[12]]",
           "output": "12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\phi (1)+\\phi (2)+\\phi (3)+\\phi (4)+\\phi (6)+\\phi (12)",
+            "output": "12"
+          }
         },
         "sage": {
           "input": "(euler_phi(1) + euler_phi(2) + euler_phi(3) + euler_phi(4) + euler_phi(6) + euler_phi(12))",
@@ -667,7 +759,11 @@
         "wolfram": {
           "input": "(EulerPhi[12] == Times[EulerPhi[4], EulerPhi[3]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\phi (12)=\\phi (4) \\phi (3)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(euler_phi(12) == (euler_phi(4) * euler_phi(3)))",
@@ -701,28 +797,44 @@
         "wolfram": {
           "input": "NextPrime[10]",
           "output": "11",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{NextPrime}[10]",
+            "output": "11"
+          }
         }
       },
       "[\"NextPrime\",100]": {
         "wolfram": {
           "input": "NextPrime[100]",
           "output": "101",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{NextPrime}[100]",
+            "output": "101"
+          }
         }
       },
       "[\"NextPrime\",10,2]": {
         "wolfram": {
           "input": "NextPrime[10, 2]",
           "output": "13",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{NextPrime}[10,2]",
+            "output": "13"
+          }
         }
       },
       "[\"NextPrime\",10,-1]": {
         "wolfram": {
           "input": "NextPrime[10, -1]",
           "output": "7",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{NextPrime}[10,-1]",
+            "output": "7"
+          }
         }
       }
     },
@@ -731,42 +843,66 @@
         "wolfram": {
           "input": "Prime[1]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "p_1",
+            "output": "2"
+          }
         }
       },
       "[\"NthPrime\",10]": {
         "wolfram": {
           "input": "Prime[10]",
           "output": "29",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "p_{10}",
+            "output": "29"
+          }
         }
       },
       "[\"NthPrime\",100]": {
         "wolfram": {
           "input": "Prime[100]",
           "output": "541",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "p_{100}",
+            "output": "541"
+          }
         }
       },
       "[\"NthPrime\",1000]": {
         "wolfram": {
           "input": "Prime[1000]",
           "output": "7919",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "p_{1000}",
+            "output": "7919"
+          }
         }
       },
       "[\"Equal\",[\"PrimePi\",[\"NthPrime\",100]],100]": {
         "wolfram": {
           "input": "(PrimePi[Prime[100]] == 100)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\pi \\left(p_{100}\\right)=100",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"NthPrime\",0]": {
         "wolfram": {
           "input": "Prime[0]",
           "output": "Prime[0]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "p_0",
+            "output": "p_0"
+          }
         }
       }
     },
@@ -775,7 +911,11 @@
         "wolfram": {
           "input": "PrimePi[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\pi (1)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "prime_pi(1)",
@@ -802,7 +942,11 @@
         "wolfram": {
           "input": "PrimePi[2]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\pi (2)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "prime_pi(2)",
@@ -829,7 +973,11 @@
         "wolfram": {
           "input": "PrimePi[15]",
           "output": "6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\pi (15)",
+            "output": "6"
+          }
         },
         "sage": {
           "input": "prime_pi(15)",
@@ -856,7 +1004,11 @@
         "wolfram": {
           "input": "PrimePi[100]",
           "output": "25",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\pi (100)",
+            "output": "25"
+          }
         },
         "sage": {
           "input": "prime_pi(100)",
@@ -883,7 +1035,11 @@
         "wolfram": {
           "input": "(PrimePi[Prime[50]] == 50)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\pi \\left(p_{50}\\right)=50",
+            "output": "\\text{True}"
+          }
         }
       }
     },
@@ -892,7 +1048,11 @@
         "wolfram": {
           "input": "PrimeQ[1]",
           "output": "False",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[1]",
+            "output": "\\text{False}"
+          }
         },
         "sage": {
           "input": "is_prime(1)",
@@ -929,7 +1089,11 @@
         "wolfram": {
           "input": "PrimeQ[2]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[2]",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "is_prime(2)",
@@ -966,7 +1130,11 @@
         "wolfram": {
           "input": "PrimeQ[13]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[13]",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "is_prime(13)",
@@ -1003,7 +1171,11 @@
         "wolfram": {
           "input": "PrimeQ[4]",
           "output": "False",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[4]",
+            "output": "\\text{False}"
+          }
         },
         "sage": {
           "input": "is_prime(4)",
@@ -1040,7 +1212,11 @@
         "wolfram": {
           "input": "PrimeQ[97]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[97]",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "is_prime(97)",
@@ -1077,7 +1253,11 @@
         "wolfram": {
           "input": "PrimeQ[Plus[Power[2, 31], -1]]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}\\left[2^{31}-1\\right]",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "is_prime(((2^31) + -1))",
@@ -1116,7 +1296,11 @@
         "wolfram": {
           "input": "PrimeQ[1000000007]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[1000000007]",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "is_prime(1000000007)",
@@ -1153,7 +1337,11 @@
         "wolfram": {
           "input": "PrimeQ[List[1, 2, 3, 4, 5, 6]]",
           "output": "{False, True, True, False, True, False}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[\\{1,2,3,4,5,6\\}]",
+            "output": "\\{\\text{False},\\text{True},\\text{True},\\text{False},\\text{True},\\text{False}\\}"
+          }
         },
         "sage": {
           "input": "is_prime([1, 2, 3, 4, 5, 6])",
@@ -1202,7 +1390,11 @@
         "wolfram": {
           "input": "PrimeQ[Complex[2, 1]]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{PrimeQ}[2+i]",
+            "output": "\\text{True}"
+          }
         },
         "sympy": {
           "input": "isprime((2 + 1*I))",
@@ -1237,7 +1429,11 @@
         "wolfram": {
           "input": "FactorInteger[360]",
           "output": "{{2, 3}, {3, 2}, {5, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[360]",
+            "output": "\\left( \\begin{array}{cc}  2 & 3 \\\\  3 & 2 \\\\  5 & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor(360))",
@@ -1249,7 +1445,11 @@
         "wolfram": {
           "input": "FactorInteger[84]",
           "output": "{{2, 2}, {3, 1}, {7, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[84]",
+            "output": "\\left( \\begin{array}{cc}  2 & 2 \\\\  3 & 1 \\\\  7 & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor(84))",
@@ -1261,7 +1461,11 @@
         "wolfram": {
           "input": "FactorInteger[1729]",
           "output": "{{7, 1}, {13, 1}, {19, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[1729]",
+            "output": "\\left( \\begin{array}{cc}  7 & 1 \\\\  13 & 1 \\\\  19 & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor(1729))",
@@ -1273,7 +1477,11 @@
         "wolfram": {
           "input": "(Times[Power[2, 3], Power[3, 2], 5] == 360)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "2^3 3^2 5=360",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(((2^3) * (3^2) * 5) == 360)",
@@ -1315,7 +1523,11 @@
         "wolfram": {
           "input": "FactorInteger[1]",
           "output": "{{1, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[1]",
+            "output": "\\left( \\begin{array}{cc}  1 & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor(1))",
@@ -1329,7 +1541,11 @@
         "wolfram": {
           "input": "FactorInteger[0]",
           "output": "{{0, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[0]",
+            "output": "\\left( \\begin{array}{cc}  0 & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor(0))",
@@ -1343,7 +1559,11 @@
         "wolfram": {
           "input": "FactorInteger[-60]",
           "output": "{{-1, 1}, {2, 2}, {3, 1}, {5, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[-60]",
+            "output": "\\left( \\begin{array}{cc}  -1 & 1 \\\\  2 & 2 \\\\  3 & 1 \\\\  5 & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor(-60))",
@@ -1357,7 +1577,11 @@
         "wolfram": {
           "input": "FactorInteger[Complex[3, 4]]",
           "output": "{{2 + I, 2}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[3+4 i]",
+            "output": "\\left( \\begin{array}{cc}  2+i & 2 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor((3 + 4*I)))",
@@ -1371,7 +1595,11 @@
         "wolfram": {
           "input": "FactorInteger[Complex[100000000000000000039, 100000000000000000129]]",
           "output": "{{-I, 1}, {1 + I, 1}, {99 + 34*I, 1}, {1538 + 213*I, 1}, {277789996706096 + 549000467740335*I, 1}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{FactorInteger}[100000000000000000039+100000000000000000129 i]",
+            "output": "\\left( \\begin{array}{cc}  -i & 1 \\\\  1+i & 1 \\\\  99+34 i & 1 \\\\  1538+213 i & 1 \\\\  277789996706096+549000467740335 i & 1 \\\\ \\end{array} \\right)"
+          }
         },
         "sage": {
           "input": "list(factor((100000000000000000039 + 100000000000000000129*I)))",
@@ -1387,35 +1615,55 @@
         "wolfram": {
           "input": "PrimeNu[24]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\nu (24)",
+            "output": "2"
+          }
         }
       },
       "[\"PrimeNu\",360]": {
         "wolfram": {
           "input": "PrimeNu[360]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\nu (360)",
+            "output": "3"
+          }
         }
       },
       "[\"PrimeNu\",32]": {
         "wolfram": {
           "input": "PrimeNu[32]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\nu (32)",
+            "output": "1"
+          }
         }
       },
       "[\"PrimeNu\",1]": {
         "wolfram": {
           "input": "PrimeNu[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\nu (1)",
+            "output": "0"
+          }
         }
       },
       "[\"Equal\",[\"PrimeNu\",50],[\"Length\",[\"FactorInteger\",50]]]": {
         "wolfram": {
           "input": "(PrimeNu[50] == Length[FactorInteger[50]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\nu (50)=\\text{Length}[\\text{FactorInteger}[50]]",
+            "output": "\\text{True}"
+          }
         }
       }
     },
@@ -1424,35 +1672,55 @@
         "wolfram": {
           "input": "PrimeOmega[30]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\Omega (30)",
+            "output": "3"
+          }
         }
       },
       "[\"PrimeOmega\",360]": {
         "wolfram": {
           "input": "PrimeOmega[360]",
           "output": "6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\Omega (360)",
+            "output": "6"
+          }
         }
       },
       "[\"PrimeOmega\",1]": {
         "wolfram": {
           "input": "PrimeOmega[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\Omega (1)",
+            "output": "0"
+          }
         }
       },
       "[\"Equal\",[\"PrimeOmega\",[\"Multiply\",24,40]],[\"Add\",[\"PrimeOmega\",24],[\"PrimeOmega\",40]]]": {
         "wolfram": {
           "input": "(PrimeOmega[Times[24, 40]] == Plus[PrimeOmega[24], PrimeOmega[40]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\Omega (24\\ 40)=\\Omega (24)+\\Omega (40)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"GreaterEqual\",[\"PrimeOmega\",8],[\"PrimeNu\",8]]": {
         "wolfram": {
           "input": "GreaterEqual[PrimeOmega[8], PrimeNu[8]]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\Omega (8)\\geq \\nu (8)",
+            "output": "\\text{True}"
+          }
         }
       }
     },
@@ -1461,7 +1729,11 @@
         "wolfram": {
           "input": "Divisors[1729]",
           "output": "{1, 7, 13, 19, 91, 133, 247, 1729}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[1729]",
+            "output": "\\{1,7,13,19,91,133,247,1729\\}"
+          }
         },
         "sage": {
           "input": "divisors(1729)",
@@ -1473,7 +1745,11 @@
         "wolfram": {
           "input": "Divisors[20]",
           "output": "{1, 2, 4, 5, 10, 20}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[20]",
+            "output": "\\{1,2,4,5,10,20\\}"
+          }
         },
         "sage": {
           "input": "divisors(20)",
@@ -1485,7 +1761,11 @@
         "wolfram": {
           "input": "Divisors[1]",
           "output": "{1}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[1]",
+            "output": "\\{1\\}"
+          }
         },
         "sage": {
           "input": "divisors(1)",
@@ -1497,7 +1777,11 @@
         "wolfram": {
           "input": "Divisors[13]",
           "output": "{1, 13}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[13]",
+            "output": "\\{1,13\\}"
+          }
         },
         "sage": {
           "input": "divisors(13)",
@@ -1509,7 +1793,11 @@
         "wolfram": {
           "input": "Divisors[720]",
           "output": "{1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 30, 36, 40, 45, 48, 60, 72, 80, 90, 120, 144, 180, 240, 360, 720}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[720]",
+            "output": "\\{1,2,3,4,5,6,8,9,10,12,15,16,18,20,24,30,36,40,45,48,60,72,80,90,120,144,180,240,360,720\\}"
+          }
         },
         "sage": {
           "input": "divisors(720)",
@@ -1521,14 +1809,22 @@
         "wolfram": {
           "input": "(Length[Divisors[20]] == DivisorSigma[0, 20])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Length}[\\text{Divisors}[20]]=\\sigma _0(20)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Divisors\",[\"Complex\",3,4]]": {
         "wolfram": {
           "input": "Divisors[Complex[3, 4]]",
           "output": "{1, 2 + I, 3 + 4*I}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Divisors}[3+4 i]",
+            "output": "\\{1,2+i,3+4 i\\}"
+          }
         },
         "sage": {
           "input": "divisors((3 + 4*I))",
@@ -1544,49 +1840,77 @@
         "wolfram": {
           "input": "DivisorSigma[0, 20]",
           "output": "6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _0(20)",
+            "output": "6"
+          }
         }
       },
       "[\"DivisorSigma\",1,20]": {
         "wolfram": {
           "input": "DivisorSigma[1, 20]",
           "output": "42",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _1(20)",
+            "output": "42"
+          }
         }
       },
       "[\"DivisorSigma\",2,20]": {
         "wolfram": {
           "input": "DivisorSigma[2, 20]",
           "output": "546",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _2(20)",
+            "output": "546"
+          }
         }
       },
       "[\"DivisorSigma\",1,6]": {
         "wolfram": {
           "input": "DivisorSigma[1, 6]",
           "output": "12",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _1(6)",
+            "output": "12"
+          }
         }
       },
       "[\"DivisorSigma\",1,28]": {
         "wolfram": {
           "input": "DivisorSigma[1, 28]",
           "output": "56",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _1(28)",
+            "output": "56"
+          }
         }
       },
       "[\"Equal\",[\"Multiply\",[\"DivisorSigma\",1,9],[\"DivisorSigma\",1,8]],[\"DivisorSigma\",1,72]]": {
         "wolfram": {
           "input": "(Times[DivisorSigma[1, 9], DivisorSigma[1, 8]] == DivisorSigma[1, 72])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _1(9) \\sigma _1(8)=\\sigma _1(72)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"DivisorSigma\",1,1]": {
         "wolfram": {
           "input": "DivisorSigma[1, 1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sigma _1(1)",
+            "output": "1"
+          }
         }
       }
     },
@@ -1595,7 +1919,11 @@
         "wolfram": {
           "input": "MoebiusMu[1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\mu (1)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "moebius(1)",
@@ -1627,7 +1955,11 @@
         "wolfram": {
           "input": "MoebiusMu[11]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\mu (11)",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "moebius(11)",
@@ -1659,7 +1991,11 @@
         "wolfram": {
           "input": "MoebiusMu[12]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\mu (12)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "moebius(12)",
@@ -1691,7 +2027,11 @@
         "wolfram": {
           "input": "MoebiusMu[10]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\mu (10)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "moebius(10)",
@@ -1723,7 +2063,11 @@
         "wolfram": {
           "input": "Plus[MoebiusMu[1], MoebiusMu[2], MoebiusMu[3], MoebiusMu[4], MoebiusMu[6], MoebiusMu[12]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\mu (1)+\\mu (2)+\\mu (3)+\\mu (4)+\\mu (6)+\\mu (12)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "(moebius(1) + moebius(2) + moebius(3) + moebius(4) + moebius(6) + moebius(12))",
@@ -1757,7 +2101,11 @@
           "output": "0",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "μ(0) is left unevaluated here; Wolfram defines it as 0."
+          "note": "μ(0) is left unevaluated here; Wolfram defines it as 0.",
+          "tex": {
+            "input": "\\mu (0)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "moebius(0)",
@@ -1801,42 +2149,66 @@
         "wolfram": {
           "input": "SquareFreeQ[10]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{SquareFreeQ}[10]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"IsSquareFree\",4]": {
         "wolfram": {
           "input": "SquareFreeQ[4]",
           "output": "False",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{SquareFreeQ}[4]",
+            "output": "\\text{False}"
+          }
         }
       },
       "[\"IsSquareFree\",12]": {
         "wolfram": {
           "input": "SquareFreeQ[12]",
           "output": "False",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{SquareFreeQ}[12]",
+            "output": "\\text{False}"
+          }
         }
       },
       "[\"IsSquareFree\",17]": {
         "wolfram": {
           "input": "SquareFreeQ[17]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{SquareFreeQ}[17]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"IsSquareFree\",1]": {
         "wolfram": {
           "input": "SquareFreeQ[1]",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{SquareFreeQ}[1]",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"IsSquareFree\",10],[\"Not\",[\"Equal\",[\"MoebiusMu\",10],0]]]": {
         "wolfram": {
           "input": "(SquareFreeQ[10] == Not[(MoebiusMu[10] == 0)])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{SquareFreeQ}[10]=(\\neg \\mu (10)=0)",
+            "output": "\\text{True}"
+          }
         }
       }
     },
@@ -1845,35 +2217,55 @@
         "wolfram": {
           "input": "JacobiSymbol[10, 5]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{10}{5}\\right)",
+            "output": "0"
+          }
         }
       },
       "[\"JacobiSymbol\",3,5]": {
         "wolfram": {
           "input": "JacobiSymbol[3, 5]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{3}{5}\\right)",
+            "output": "-1"
+          }
         }
       },
       "[\"JacobiSymbol\",1001,9907]": {
         "wolfram": {
           "input": "JacobiSymbol[1001, 9907]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{1001}{9907}\\right)",
+            "output": "-1"
+          }
         }
       },
       "[\"JacobiSymbol\",0,1]": {
         "wolfram": {
           "input": "JacobiSymbol[0, 1]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{0}{1}\\right)",
+            "output": "1"
+          }
         }
       },
       "[\"Equal\",[\"Multiply\",[\"JacobiSymbol\",3,7],[\"JacobiSymbol\",5,7]],[\"JacobiSymbol\",[\"Multiply\",3,5],7]]": {
         "wolfram": {
           "input": "(Times[JacobiSymbol[3, 7], JacobiSymbol[5, 7]] == JacobiSymbol[Times[3, 5], 7])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{3}{7}\\right) \\left(\\frac{5}{7}\\right)=\\left(\\frac{3\\ 5}{7}\\right)",
+            "output": "\\text{True}"
+          }
         }
       }
     },
@@ -1884,7 +2276,11 @@
           "output": "{1, {-1, 1}}",
           "verdict": "disagree",
           "kind": "shape",
-          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}.",
+          "tex": {
+            "input": "\\text{ExtendedGCD}[2,3]",
+            "output": "\\{1,\\{-1,1\\}\\}"
+          }
         }
       },
       "[\"ExtendedGCD\",12,18]": {
@@ -1893,7 +2289,11 @@
           "output": "{6, {-1, 1}}",
           "verdict": "disagree",
           "kind": "shape",
-          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}.",
+          "tex": {
+            "input": "\\text{ExtendedGCD}[12,18]",
+            "output": "\\{6,\\{-1,1\\}\\}"
+          }
         }
       },
       "[\"ExtendedGCD\",3,11]": {
@@ -1902,7 +2302,11 @@
           "output": "{1, {4, -1}}",
           "verdict": "disagree",
           "kind": "shape",
-          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}.",
+          "tex": {
+            "input": "\\text{ExtendedGCD}[3,11]",
+            "output": "\\{1,\\{4,-1\\}\\}"
+          }
         }
       },
       "[\"ExtendedGCD\",0,5]": {
@@ -1911,14 +2315,22 @@
           "output": "{5, {0, 1}}",
           "verdict": "disagree",
           "kind": "shape",
-          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
+          "note": "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}.",
+          "tex": {
+            "input": "\\text{ExtendedGCD}[0,5]",
+            "output": "\\{5,\\{0,1\\}\\}"
+          }
         }
       },
       "[\"Add\",[\"Multiply\",2,-1],[\"Multiply\",3,1]]": {
         "wolfram": {
           "input": "Plus[Times[2, -1], Times[3, 1]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "2 (-1)+3\\ 1",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "((2 * -1) + (3 * 1))",
@@ -1962,7 +2374,11 @@
           "output": "{1, {-1 - 2*I, -2 + 2*I}}",
           "verdict": "disagree",
           "kind": "shape",
-          "note": "Same Bezout pair (-1-2i, -2+2i) this run; ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}} -- the same nesting difference as the integer ExtendedGCD rows."
+          "note": "Same Bezout pair (-1-2i, -2+2i) this run; ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}} -- the same nesting difference as the integer ExtendedGCD rows.",
+          "tex": {
+            "input": "\\text{ExtendedGCD}[7+2 i,3-5 i]",
+            "output": "\\{1,\\{-1-2 i,-2+2 i\\}\\}"
+          }
         }
       }
     },
@@ -1971,28 +2387,44 @@
         "wolfram": {
           "input": "Quotient[17, 5]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Quotient}[17,5]",
+            "output": "3"
+          }
         }
       },
       "[\"Quotient\",-7,2]": {
         "wolfram": {
           "input": "Quotient[-7, 2]",
           "output": "-4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Quotient}[-7,2]",
+            "output": "-4"
+          }
         }
       },
       "[\"Quotient\",[\"Complex\",7,5],[\"Complex\",2,1]]": {
         "wolfram": {
           "input": "Quotient[Complex[7, 5], Complex[2, 1]]",
           "output": "4 + I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Quotient}[7+5 i,2+i]",
+            "output": "4+i"
+          }
         }
       },
       "[\"Quotient\",[\"Complex\",5,5],2]": {
         "wolfram": {
           "input": "Quotient[Complex[5, 5], 2]",
           "output": "2 + 2*I",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{Quotient}[5+5 i,2]",
+            "output": "2+2 i"
+          }
         }
       }
     },
@@ -2001,21 +2433,33 @@
         "wolfram": {
           "input": "JacobiSymbol[2, 7]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{2}{7}\\right)",
+            "output": "1"
+          }
         }
       },
       "[\"LegendreSymbol\",3,7]": {
         "wolfram": {
           "input": "JacobiSymbol[3, 7]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{3}{7}\\right)",
+            "output": "-1"
+          }
         }
       },
       "[\"LegendreSymbol\",14,7]": {
         "wolfram": {
           "input": "JacobiSymbol[14, 7]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{14}{7}\\right)",
+            "output": "0"
+          }
         }
       }
     },
@@ -2024,42 +2468,66 @@
         "wolfram": {
           "input": "KroneckerSymbol[17, 6]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{17}{6}\\right)",
+            "output": "-1"
+          }
         }
       },
       "[\"KroneckerSymbol\",10,13]": {
         "wolfram": {
           "input": "KroneckerSymbol[10, 13]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{10}{13}\\right)",
+            "output": "1"
+          }
         }
       },
       "[\"KroneckerSymbol\",5,0]": {
         "wolfram": {
           "input": "KroneckerSymbol[5, 0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{5}{0}\\right)",
+            "output": "0"
+          }
         }
       },
       "[\"KroneckerSymbol\",-3,-1]": {
         "wolfram": {
           "input": "KroneckerSymbol[-3, -1]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{-3}{-1}\\right)",
+            "output": "-1"
+          }
         }
       },
       "[\"KroneckerSymbol\",3,2]": {
         "wolfram": {
           "input": "KroneckerSymbol[3, 2]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{3}{2}\\right)",
+            "output": "-1"
+          }
         }
       },
       "[\"Equal\",[\"KroneckerSymbol\",7,[\"Multiply\",3,5]],[\"Multiply\",[\"KroneckerSymbol\",7,3],[\"KroneckerSymbol\",7,5]]]": {
         "wolfram": {
           "input": "(KroneckerSymbol[7, Times[3, 5]] == Times[KroneckerSymbol[7, 3], KroneckerSymbol[7, 5]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\left(\\frac{7}{3\\ 5}\\right)=\\left(\\frac{7}{3}\\right) \\left(\\frac{7}{5}\\right)",
+            "output": "\\text{True}"
+          }
         }
       }
     },
@@ -2118,7 +2586,11 @@
         "wolfram": {
           "input": "IntegerExponent[2000, 5]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerExponent}[2000,5]",
+            "output": "3"
+          }
         },
         "sympy": {
           "input": "multiplicity(5, 2000)",
@@ -2130,14 +2602,22 @@
         "wolfram": {
           "input": "IntegerExponent[2000]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerExponent}[2000]",
+            "output": "3"
+          }
         }
       },
       "[\"IntegerExponent\",0,5]": {
         "wolfram": {
           "input": "IntegerExponent[0, 5]",
           "output": "Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{IntegerExponent}[0,5]",
+            "output": "\\infty"
+          }
         },
         "sympy": {
           "input": "multiplicity(5, 0)",
@@ -2153,7 +2633,11 @@
         "wolfram": {
           "input": "HermiteDecomposition[List[List[0, -3], List[2, 0]]]",
           "output": "{{{0, 1}, {-1, 0}}, {{2, 0}, {0, 3}}}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\text{HermiteDecomposition}\\left[\\left( \\begin{array}{cc}  0 & -3 \\\\  2 & 0 \\\\ \\end{array} \\right)\\right]",
+            "output": "\\left( \\begin{array}{cc}  \\{0,1\\} & \\{-1,0\\} \\\\  \\{2,0\\} & \\{0,3\\} \\\\ \\end{array} \\right)"
+          }
         }
       }
     }

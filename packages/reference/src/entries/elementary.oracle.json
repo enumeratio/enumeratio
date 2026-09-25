@@ -9,7 +9,11 @@
         "wolfram": {
           "input": "Sin[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin (0)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "sin(0)",
@@ -36,7 +40,11 @@
         "wolfram": {
           "input": "Sin[Divide[Pi, 6]]",
           "output": "1/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\frac{1}{2}"
+          }
         },
         "sage": {
           "input": "sin((pi / 6))",
@@ -58,7 +66,11 @@
         "wolfram": {
           "input": "Sin[Divide[Pi, 4]]",
           "output": "1/Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\frac{\\pi }{4}\\right)",
+            "output": "\\frac{1}{\\sqrt{2}}"
+          }
         },
         "sage": {
           "input": "sin((pi / 4))",
@@ -80,7 +92,11 @@
         "wolfram": {
           "input": "Sin[Divide[Pi, 3]]",
           "output": "Sqrt[3]/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\frac{\\pi }{3}\\right)",
+            "output": "\\frac{\\sqrt{3}}{2}"
+          }
         },
         "sage": {
           "input": "sin((pi / 3))",
@@ -102,7 +118,11 @@
         "wolfram": {
           "input": "Sin[Divide[Pi, 2]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\frac{\\pi }{2}\\right)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "sin((pi / 2))",
@@ -124,7 +144,11 @@
         "wolfram": {
           "input": "Sin[Pi]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin (\\pi )",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "sin(pi)",
@@ -151,7 +175,11 @@
         "wolfram": {
           "input": "Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^2\\left(\\frac{\\pi }{6}\\right)+\\cos ^2\\left(\\frac{\\pi }{6}\\right)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "((sin((pi / 6))^2) + (cos((pi / 6))^2))",
@@ -173,7 +201,11 @@
         "wolfram": {
           "input": "(Sin[Minus[Divide[Pi, 6]]] == Minus[Sin[Divide[Pi, 6]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(-\\frac{\\pi }{6}\\right)=-\\sin \\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(sin((-(pi / 6))) == (-sin((pi / 6))))",
@@ -195,7 +227,11 @@
         "wolfram": {
           "input": "Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]",
           "output": "1/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\frac{\\pi }{6}+2 \\pi \\right)",
+            "output": "\\frac{1}{2}"
+          }
         },
         "sage": {
           "input": "sin(((pi / 6) + (2 * pi)))",
@@ -217,7 +253,11 @@
         "wolfram": {
           "input": "Sin[List[0, Divide[Pi, 2], Pi]]",
           "output": "{0, 1, 0}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\left\\{0,\\frac{\\pi }{2},\\pi \\right\\}\\right)",
+            "output": "\\{0,1,0\\}"
+          }
         },
         "sage": {
           "input": "sin([0, (pi / 2), pi])",
@@ -245,14 +285,22 @@
         "wolfram": {
           "input": "Sin[Times[30, Degree]]",
           "output": "1/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin (30 {}^{\\circ})",
+            "output": "\\frac{1}{2}"
+          }
         }
       },
       "[\"Sin\",1]": {
         "wolfram": {
           "input": "Sin[1]",
           "output": "Sin[1]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin (1)",
+            "output": "\\sin (1)"
+          }
         },
         "sage": {
           "input": "sin(1)",
@@ -279,7 +327,11 @@
         "wolfram": {
           "input": "Sin[Divide[Pi, 5]]",
           "output": "Sqrt[5/8 - Sqrt[5]/8]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\frac{\\pi }{5}\\right)",
+            "output": "\\sqrt{\\frac{5}{8}-\\frac{\\sqrt{5}}{8}}"
+          }
         },
         "sage": {
           "input": "sin((pi / 5))",
@@ -303,7 +355,11 @@
         "wolfram": {
           "input": "Cos[0]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos (0)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "cos(0)",
@@ -330,7 +386,11 @@
         "wolfram": {
           "input": "Cos[Divide[Pi, 6]]",
           "output": "Sqrt[3]/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\frac{\\sqrt{3}}{2}"
+          }
         },
         "sage": {
           "input": "cos((pi / 6))",
@@ -352,7 +412,11 @@
         "wolfram": {
           "input": "Cos[Divide[Pi, 4]]",
           "output": "1/Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\frac{\\pi }{4}\\right)",
+            "output": "\\frac{1}{\\sqrt{2}}"
+          }
         },
         "sage": {
           "input": "cos((pi / 4))",
@@ -374,7 +438,11 @@
         "wolfram": {
           "input": "Cos[Divide[Pi, 3]]",
           "output": "1/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\frac{\\pi }{3}\\right)",
+            "output": "\\frac{1}{2}"
+          }
         },
         "sage": {
           "input": "cos((pi / 3))",
@@ -396,7 +464,11 @@
         "wolfram": {
           "input": "Cos[Divide[Pi, 2]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\frac{\\pi }{2}\\right)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "cos((pi / 2))",
@@ -418,7 +490,11 @@
         "wolfram": {
           "input": "Cos[Pi]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos (\\pi )",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "cos(pi)",
@@ -445,7 +521,11 @@
         "wolfram": {
           "input": "(Cos[Minus[Divide[Pi, 3]]] == Cos[Divide[Pi, 3]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(-\\frac{\\pi }{3}\\right)=\\cos \\left(\\frac{\\pi }{3}\\right)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(cos((-(pi / 3))) == cos((pi / 3)))",
@@ -467,7 +547,11 @@
         "wolfram": {
           "input": "(Cos[Divide[Pi, 6]] == Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\frac{\\pi }{6}\\right)=\\sin \\left(\\frac{\\pi }{2}-\\frac{\\pi }{6}\\right)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(cos((pi / 6)) == sin(((pi / 2) - (pi / 6))))",
@@ -489,7 +573,11 @@
         "wolfram": {
           "input": "Cos[List[0, Divide[Pi, 2], Pi]]",
           "output": "{1, 0, -1}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\left\\{0,\\frac{\\pi }{2},\\pi \\right\\}\\right)",
+            "output": "\\{1,0,-1\\}"
+          }
         },
         "sage": {
           "input": "cos([0, (pi / 2), pi])",
@@ -517,7 +605,11 @@
         "wolfram": {
           "input": "Cos[2]",
           "output": "Cos[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos (2)",
+            "output": "\\cos (2)"
+          }
         },
         "sage": {
           "input": "cos(2)",
@@ -544,7 +636,11 @@
         "wolfram": {
           "input": "Cos[Divide[Pi, 5]]",
           "output": "(1 + Sqrt[5])/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\frac{\\pi }{5}\\right)",
+            "output": "\\frac{1}{4} \\left(1+\\sqrt{5}\\right)"
+          }
         },
         "sage": {
           "input": "cos((pi / 5))",
@@ -568,7 +664,11 @@
         "wolfram": {
           "input": "Tan[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan (0)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "tan(0)",
@@ -595,7 +695,11 @@
         "wolfram": {
           "input": "Tan[Divide[Pi, 6]]",
           "output": "1/Sqrt[3]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\frac{1}{\\sqrt{3}}"
+          }
         },
         "sage": {
           "input": "tan((pi / 6))",
@@ -617,7 +721,11 @@
         "wolfram": {
           "input": "Tan[Divide[Pi, 4]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\frac{\\pi }{4}\\right)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "tan((pi / 4))",
@@ -639,7 +747,11 @@
         "wolfram": {
           "input": "Tan[Divide[Pi, 3]]",
           "output": "Sqrt[3]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\frac{\\pi }{3}\\right)",
+            "output": "\\sqrt{3}"
+          }
         },
         "sage": {
           "input": "tan((pi / 3))",
@@ -661,7 +773,11 @@
         "wolfram": {
           "input": "(Tan[Divide[Pi, 4]] == Divide[Sin[Divide[Pi, 4]], Cos[Divide[Pi, 4]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\frac{\\pi }{4}\\right)=\\frac{\\sin \\left(\\frac{\\pi }{4}\\right)}{\\cos \\left(\\frac{\\pi }{4}\\right)}",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(tan((pi / 4)) == (sin((pi / 4)) / cos((pi / 4))))",
@@ -683,7 +799,11 @@
         "wolfram": {
           "input": "Tan[Minus[Divide[Pi, 4]]]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(-\\frac{\\pi }{4}\\right)",
+            "output": "-1"
+          }
         },
         "sage": {
           "input": "tan((-(pi / 4)))",
@@ -705,7 +825,11 @@
         "wolfram": {
           "input": "Tan[Plus[Divide[Pi, 4], Pi]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\frac{\\pi }{4}+\\pi \\right)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "tan(((pi / 4) + pi))",
@@ -727,7 +851,11 @@
         "wolfram": {
           "input": "Tan[List[0, Divide[Pi, 4]]]",
           "output": "{0, 1}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\left\\{0,\\frac{\\pi }{4}\\right\\}\\right)",
+            "output": "\\{0,1\\}"
+          }
         },
         "sage": {
           "input": "tan([0, (pi / 4)])",
@@ -755,7 +883,11 @@
         "wolfram": {
           "input": "Tan[Divide[Pi, 2]]",
           "output": "ComplexInfinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\frac{\\pi }{2}\\right)",
+            "output": "\\text{ComplexInfinity}"
+          }
         },
         "sage": {
           "input": "tan((pi / 2))",
@@ -781,7 +913,11 @@
         "wolfram": {
           "input": "Tan[1]",
           "output": "Tan[1]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan (1)",
+            "output": "\\tan (1)"
+          }
         },
         "sage": {
           "input": "tan(1)",
@@ -810,49 +946,77 @@
         "wolfram": {
           "input": "Cot[Divide[Pi, 6]]",
           "output": "Sqrt[3]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot \\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\sqrt{3}"
+          }
         }
       },
       "[\"Cot\",[\"Divide\",\"Pi\",4]]": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 4]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot \\left(\\frac{\\pi }{4}\\right)",
+            "output": "1"
+          }
         }
       },
       "[\"Cot\",[\"Divide\",\"Pi\",3]]": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 3]]",
           "output": "1/Sqrt[3]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot \\left(\\frac{\\pi }{3}\\right)",
+            "output": "\\frac{1}{\\sqrt{3}}"
+          }
         }
       },
       "[\"Equal\",[\"Cot\",[\"Divide\",\"Pi\",4]],[\"Divide\",1,[\"Tan\",[\"Divide\",\"Pi\",4]]]]": {
         "wolfram": {
           "input": "(Cot[Divide[Pi, 4]] == Divide[1, Tan[Divide[Pi, 4]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot \\left(\\frac{\\pi }{4}\\right)=\\frac{1}{\\tan \\left(\\frac{\\pi }{4}\\right)}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Add\",1,[\"Power\",[\"Cot\",[\"Divide\",\"Pi\",6]],2]],[\"Power\",[\"Csc\",[\"Divide\",\"Pi\",6]],2]]": {
         "wolfram": {
           "input": "(Plus[1, Power[Cot[Divide[Pi, 6]], 2]] == Power[Csc[Divide[Pi, 6]], 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "1+\\cot ^2\\left(\\frac{\\pi }{6}\\right)=\\csc ^2\\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Cot\",0]": {
         "wolfram": {
           "input": "Cot[0]",
           "output": "ComplexInfinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot (0)",
+            "output": "\\text{ComplexInfinity}"
+          }
         }
       },
       "[\"Cot\",[\"Divide\",\"Pi\",2]]": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 2]]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cot \\left(\\frac{\\pi }{2}\\right)",
+            "output": "0"
+          }
         }
       }
     },
@@ -861,49 +1025,77 @@
         "wolfram": {
           "input": "Sec[0]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec (0)",
+            "output": "1"
+          }
         }
       },
       "[\"Sec\",[\"Divide\",\"Pi\",4]]": {
         "wolfram": {
           "input": "Sec[Divide[Pi, 4]]",
           "output": "Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec \\left(\\frac{\\pi }{4}\\right)",
+            "output": "\\sqrt{2}"
+          }
         }
       },
       "[\"Sec\",[\"Divide\",\"Pi\",3]]": {
         "wolfram": {
           "input": "Sec[Divide[Pi, 3]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec \\left(\\frac{\\pi }{3}\\right)",
+            "output": "2"
+          }
         }
       },
       "[\"Sec\",\"Pi\"]": {
         "wolfram": {
           "input": "Sec[Pi]",
           "output": "-1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec (\\pi )",
+            "output": "-1"
+          }
         }
       },
       "[\"Equal\",[\"Sec\",[\"Divide\",\"Pi\",3]],[\"Divide\",1,[\"Cos\",[\"Divide\",\"Pi\",3]]]]": {
         "wolfram": {
           "input": "(Sec[Divide[Pi, 3]] == Divide[1, Cos[Divide[Pi, 3]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec \\left(\\frac{\\pi }{3}\\right)=\\frac{1}{\\cos \\left(\\frac{\\pi }{3}\\right)}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Add\",1,[\"Power\",[\"Tan\",[\"Divide\",\"Pi\",6]],2]],[\"Power\",[\"Sec\",[\"Divide\",\"Pi\",6]],2]]": {
         "wolfram": {
           "input": "(Plus[1, Power[Tan[Divide[Pi, 6]], 2]] == Power[Sec[Divide[Pi, 6]], 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "1+\\tan ^2\\left(\\frac{\\pi }{6}\\right)=\\sec ^2\\left(\\frac{\\pi }{6}\\right)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Sec\",[\"Divide\",\"Pi\",2]]": {
         "wolfram": {
           "input": "Sec[Divide[Pi, 2]]",
           "output": "ComplexInfinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sec \\left(\\frac{\\pi }{2}\\right)",
+            "output": "\\text{ComplexInfinity}"
+          }
         }
       }
     },
@@ -912,35 +1104,55 @@
         "wolfram": {
           "input": "Csc[Divide[Pi, 6]]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc \\left(\\frac{\\pi }{6}\\right)",
+            "output": "2"
+          }
         }
       },
       "[\"Csc\",[\"Divide\",\"Pi\",4]]": {
         "wolfram": {
           "input": "Csc[Divide[Pi, 4]]",
           "output": "Sqrt[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc \\left(\\frac{\\pi }{4}\\right)",
+            "output": "\\sqrt{2}"
+          }
         }
       },
       "[\"Csc\",[\"Divide\",\"Pi\",2]]": {
         "wolfram": {
           "input": "Csc[Divide[Pi, 2]]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc \\left(\\frac{\\pi }{2}\\right)",
+            "output": "1"
+          }
         }
       },
       "[\"Equal\",[\"Csc\",[\"Divide\",\"Pi\",6]],[\"Divide\",1,[\"Sin\",[\"Divide\",\"Pi\",6]]]]": {
         "wolfram": {
           "input": "(Csc[Divide[Pi, 6]] == Divide[1, Sin[Divide[Pi, 6]]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc \\left(\\frac{\\pi }{6}\\right)=\\frac{1}{\\sin \\left(\\frac{\\pi }{6}\\right)}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Csc\",0]": {
         "wolfram": {
           "input": "Csc[0]",
           "output": "ComplexInfinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\csc (0)",
+            "output": "\\text{ComplexInfinity}"
+          }
         }
       }
     },
@@ -949,49 +1161,77 @@
         "wolfram": {
           "input": "ArcSin[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^{-1}(0)",
+            "output": "0"
+          }
         }
       },
       "[\"Arcsin\",[\"Rational\",1,2]]": {
         "wolfram": {
           "input": "ArcSin[Rational[1, 2]]",
           "output": "Pi/6",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^{-1}\\left(\\frac{1}{2}\\right)",
+            "output": "\\frac{\\pi }{6}"
+          }
         }
       },
       "[\"Arcsin\",1]": {
         "wolfram": {
           "input": "ArcSin[1]",
           "output": "Pi/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^{-1}(1)",
+            "output": "\\frac{\\pi }{2}"
+          }
         }
       },
       "[\"Arcsin\",-1]": {
         "wolfram": {
           "input": "ArcSin[-1]",
           "output": "-1/2*Pi",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^{-1}(-1)",
+            "output": "-\\frac{\\pi }{2}"
+          }
         }
       },
       "[\"Equal\",[\"Sin\",[\"Arcsin\",[\"Rational\",1,2]]],[\"Rational\",1,2]]": {
         "wolfram": {
           "input": "(Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin \\left(\\sin ^{-1}\\left(\\frac{1}{2}\\right)\\right)=\\frac{1}{2}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Add\",[\"Arcsin\",[\"Rational\",1,2]],[\"Arccos\",[\"Rational\",1,2]]],[\"Divide\",\"Pi\",2]]": {
         "wolfram": {
           "input": "(Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^{-1}\\left(\\frac{1}{2}\\right)+\\cos ^{-1}\\left(\\frac{1}{2}\\right)=\\frac{\\pi }{2}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Arcsin\",2]": {
         "wolfram": {
           "input": "ArcSin[2]",
           "output": "ArcSin[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sin ^{-1}(2)",
+            "output": "\\sin ^{-1}(2)"
+          }
         }
       }
     },
@@ -1000,42 +1240,66 @@
         "wolfram": {
           "input": "ArcCos[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos ^{-1}(1)",
+            "output": "0"
+          }
         }
       },
       "[\"Arccos\",[\"Rational\",1,2]]": {
         "wolfram": {
           "input": "ArcCos[Rational[1, 2]]",
           "output": "Pi/3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos ^{-1}\\left(\\frac{1}{2}\\right)",
+            "output": "\\frac{\\pi }{3}"
+          }
         }
       },
       "[\"Arccos\",0]": {
         "wolfram": {
           "input": "ArcCos[0]",
           "output": "Pi/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos ^{-1}(0)",
+            "output": "\\frac{\\pi }{2}"
+          }
         }
       },
       "[\"Arccos\",-1]": {
         "wolfram": {
           "input": "ArcCos[-1]",
           "output": "Pi",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos ^{-1}(-1)",
+            "output": "\\pi"
+          }
         }
       },
       "[\"Equal\",[\"Cos\",[\"Arccos\",[\"Rational\",1,2]]],[\"Rational\",1,2]]": {
         "wolfram": {
           "input": "(Cos[ArcCos[Rational[1, 2]]] == Rational[1, 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos \\left(\\cos ^{-1}\\left(\\frac{1}{2}\\right)\\right)=\\frac{1}{2}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Arccos\",2]": {
         "wolfram": {
           "input": "ArcCos[2]",
           "output": "ArcCos[2]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cos ^{-1}(2)",
+            "output": "\\cos ^{-1}(2)"
+          }
         }
       }
     },
@@ -1044,42 +1308,66 @@
         "wolfram": {
           "input": "ArcTan[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan ^{-1}(0)",
+            "output": "0"
+          }
         }
       },
       "[\"Arctan\",1]": {
         "wolfram": {
           "input": "ArcTan[1]",
           "output": "Pi/4",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan ^{-1}(1)",
+            "output": "\\frac{\\pi }{4}"
+          }
         }
       },
       "[\"Arctan\",[\"Sqrt\",3]]": {
         "wolfram": {
           "input": "ArcTan[Sqrt[3]]",
           "output": "Pi/3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan ^{-1}\\left(\\sqrt{3}\\right)",
+            "output": "\\frac{\\pi }{3}"
+          }
         }
       },
       "[\"Equal\",[\"Tan\",[\"Arctan\",1]],1]": {
         "wolfram": {
           "input": "(Tan[ArcTan[1]] == 1)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan \\left(\\tan ^{-1}(1)\\right)=1",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Arctan\",\"PositiveInfinity\"]": {
         "wolfram": {
           "input": "ArcTan[Infinity]",
           "output": "Pi/2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan ^{-1}(\\infty )",
+            "output": "\\frac{\\pi }{2}"
+          }
         }
       },
       "[\"Arctan\",\"NegativeInfinity\"]": {
         "wolfram": {
           "input": "ArcTan[-Infinity]",
           "output": "-1/2*Pi",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tan ^{-1}(-\\infty )",
+            "output": "-\\frac{\\pi }{2}"
+          }
         }
       },
       "[\"Arctan\",1,1]": {
@@ -1088,7 +1376,11 @@
           "output": "Pi/4",
           "verdict": "disagree",
           "kind": "domain",
-          "note": "compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4."
+          "note": "compute-engine's Arctan takes one argument and rejects a second; Wolfram's ArcTan[x, y] is the two-argument arctangent (atan2), here π/4.",
+          "tex": {
+            "input": "\\tan ^{-1}(1,1)",
+            "output": "\\frac{\\pi }{4}"
+          }
         }
       }
     },
@@ -1097,35 +1389,55 @@
         "wolfram": {
           "input": "N[Sinh[0]]",
           "output": "0.",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\sinh (0)]",
+            "output": "0."
+          }
         }
       },
       "[\"N\",[\"Sinh\",1]]": {
         "wolfram": {
           "input": "N[Sinh[1]]",
           "output": "1.1752011936438014",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\sinh (1)]",
+            "output": "1.1752"
+          }
         }
       },
       "[\"Equal\",[\"Sinh\",[\"Negate\",1]],[\"Negate\",[\"Sinh\",1]]]": {
         "wolfram": {
           "input": "(Sinh[Minus[1]] == Minus[Sinh[1]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sinh (-1)=-\\sinh (1)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Sinh\",1],[\"Divide\",[\"Subtract\",[\"Exp\",1],[\"Exp\",[\"Negate\",1]]],2]]": {
         "wolfram": {
           "input": "(Sinh[1] == Divide[Subtract[Exp[1], Exp[Minus[1]]], 2])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sinh (1)=\\frac{\\exp (1)-\\exp (-1)}{2}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Sinh\",0]": {
         "wolfram": {
           "input": "Sinh[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\sinh (0)",
+            "output": "0"
+          }
         }
       }
     },
@@ -1134,35 +1446,55 @@
         "wolfram": {
           "input": "N[Cosh[0]]",
           "output": "1.",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\cosh (0)]",
+            "output": "1."
+          }
         }
       },
       "[\"N\",[\"Cosh\",1]]": {
         "wolfram": {
           "input": "N[Cosh[1]]",
           "output": "1.5430806348152437",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\cosh (1)]",
+            "output": "1.54308"
+          }
         }
       },
       "[\"Equal\",[\"Cosh\",[\"Negate\",1]],[\"Cosh\",1]]": {
         "wolfram": {
           "input": "(Cosh[Minus[1]] == Cosh[1])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cosh (-1)=\\cosh (1)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Subtract\",[\"Power\",[\"Cosh\",1],2],[\"Power\",[\"Sinh\",1],2]],1]": {
         "wolfram": {
           "input": "(Subtract[Power[Cosh[1], 2], Power[Sinh[1], 2]] == 1)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cosh ^2(1)-\\sinh ^2(1)=1",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Cosh\",0]": {
         "wolfram": {
           "input": "Cosh[0]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\cosh (0)",
+            "output": "1"
+          }
         }
       }
     },
@@ -1171,28 +1503,44 @@
         "wolfram": {
           "input": "N[Tanh[0]]",
           "output": "0.",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\tanh (0)]",
+            "output": "0."
+          }
         }
       },
       "[\"N\",[\"Tanh\",1]]": {
         "wolfram": {
           "input": "N[Tanh[1]]",
           "output": "0.7615941559557649",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "N[\\tanh (1)]",
+            "output": "0.761594"
+          }
         }
       },
       "[\"Equal\",[\"Tanh\",1],[\"Divide\",[\"Sinh\",1],[\"Cosh\",1]]]": {
         "wolfram": {
           "input": "(Tanh[1] == Divide[Sinh[1], Cosh[1]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tanh (1)=\\frac{\\sinh (1)}{\\cosh (1)}",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Tanh\",0]": {
         "wolfram": {
           "input": "Tanh[0]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\tanh (0)",
+            "output": "0"
+          }
         }
       }
     },
@@ -1201,7 +1549,11 @@
         "wolfram": {
           "input": "Exp[0]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\exp (0)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "exp(0)",
@@ -1228,7 +1580,11 @@
         "wolfram": {
           "input": "Exp[1]",
           "output": "E",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\exp (1)",
+            "output": "e"
+          }
         },
         "sage": {
           "input": "exp(1)",
@@ -1255,7 +1611,11 @@
         "wolfram": {
           "input": "(Exp[Log[5]] == 5)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\exp (\\log (5))=5",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(exp(log(5)) == 5)",
@@ -1282,7 +1642,11 @@
         "wolfram": {
           "input": "(Times[Exp[2], Exp[3]] == Exp[5])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\exp (2) \\exp (3)=\\exp (5)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((exp(2) * exp(3)) == exp(5))",
@@ -1309,7 +1673,11 @@
         "wolfram": {
           "input": "Exp[List[0, 1]]",
           "output": "{1, E}",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\exp (\\{0,1\\})",
+            "output": "\\{1,e\\}"
+          }
         },
         "sage": {
           "input": "exp([0, 1])",
@@ -1339,7 +1707,11 @@
         "wolfram": {
           "input": "Log[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log (1)",
+            "output": "0"
+          }
         },
         "sage": {
           "input": "log(1)",
@@ -1366,7 +1738,11 @@
         "wolfram": {
           "input": "Log[E]",
           "output": "1",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log (e)",
+            "output": "1"
+          }
         },
         "sage": {
           "input": "log(e)",
@@ -1393,7 +1769,11 @@
         "wolfram": {
           "input": "Log[0]",
           "output": "-Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log (0)",
+            "output": "-\\infty"
+          }
         },
         "sage": {
           "input": "log(0)",
@@ -1424,7 +1804,11 @@
         "wolfram": {
           "input": "(Log[Exp[5]] == 5)",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log (\\exp (5))=5",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool(log(exp(5)) == 5)",
@@ -1451,7 +1835,11 @@
         "wolfram": {
           "input": "(Plus[Log[2], Log[3]] == Log[6])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log (2)+\\log (3)=\\log (6)",
+            "output": "\\text{True}"
+          }
         },
         "sage": {
           "input": "bool((log(2) + log(3)) == log(6))",
@@ -1480,7 +1868,11 @@
         "wolfram": {
           "input": "Log[-1]",
           "output": "I*Pi",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log (-1)",
+            "output": "i \\pi"
+          }
         },
         "sage": {
           "input": "log(-1)",
@@ -1511,56 +1903,88 @@
         "wolfram": {
           "input": "Log[10, 100]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(100)",
+            "output": "2"
+          }
         }
       },
       "[\"Log\",100,10]": {
         "wolfram": {
           "input": "Log[10, 100]",
           "output": "2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(100)",
+            "output": "2"
+          }
         }
       },
       "[\"Log\",8,2]": {
         "wolfram": {
           "input": "Log[2, 8]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(8)",
+            "output": "3"
+          }
         }
       },
       "[\"Equal\",[\"Log\",100],[\"Log\",100,10]]": {
         "wolfram": {
           "input": "(Log[10, 100] == Log[10, 100])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(100)=\\log _{10}(100)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Log\",[\"Multiply\",8,4],2],[\"Add\",[\"Log\",8,2],[\"Log\",4,2]]]": {
         "wolfram": {
           "input": "(Log[2, Times[8, 4]] == Plus[Log[2, 8], Log[2, 4]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(8\\ 4)=\\log _2(8)+\\log _2(4)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Equal\",[\"Log\",[\"Power\",2,5],2],[\"Multiply\",5,[\"Log\",2,2]]]": {
         "wolfram": {
           "input": "(Log[2, Power[2, 5]] == Times[5, Log[2, 2]])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2\\left(2^5\\right)=5 \\log _2(2)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Log\",0]": {
         "wolfram": {
           "input": "Log[10, 0]",
           "output": "-Infinity",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(0)",
+            "output": "-\\infty"
+          }
         }
       },
       "[\"Log\",-5]": {
         "wolfram": {
           "input": "Log[10, -5]",
           "output": "(I*Pi + Log[5])/Log[10]",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(-5)",
+            "output": "\\frac{\\log (5)+i \\pi }{\\log (10)}"
+          }
         }
       }
     },
@@ -1569,42 +1993,66 @@
         "wolfram": {
           "input": "Log2[8]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(8)",
+            "output": "3"
+          }
         }
       },
       "[\"Log2\",1]": {
         "wolfram": {
           "input": "Log2[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(1)",
+            "output": "0"
+          }
         }
       },
       "[\"Log2\",1024]": {
         "wolfram": {
           "input": "Log2[1024]",
           "output": "10",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(1024)",
+            "output": "10"
+          }
         }
       },
       "[\"Equal\",[\"Log2\",8],[\"Log\",8,2]]": {
         "wolfram": {
           "input": "(Log2[8] == Log[2, 8])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(8)=\\log _2(8)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Log2\",0.5]": {
         "wolfram": {
           "input": "Log2[0.5]",
           "output": "-1.",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(0.5)",
+            "output": "-1."
+          }
         }
       },
       "[\"Log2\",[\"Rational\",1,8]]": {
         "wolfram": {
           "input": "Log2[Rational[1, 8]]",
           "output": "-3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2\\left(\\frac{1}{8}\\right)",
+            "output": "-3"
+          }
         }
       }
     },
@@ -1613,42 +2061,66 @@
         "wolfram": {
           "input": "Log10[1000]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(1000)",
+            "output": "3"
+          }
         }
       },
       "[\"Log10\",1]": {
         "wolfram": {
           "input": "Log10[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(1)",
+            "output": "0"
+          }
         }
       },
       "[\"Log10\",100000]": {
         "wolfram": {
           "input": "Log10[100000]",
           "output": "5",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(100000)",
+            "output": "5"
+          }
         }
       },
       "[\"Equal\",[\"Log10\",1000],[\"Log\",1000]]": {
         "wolfram": {
           "input": "(Log10[1000] == Log[10, 1000])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(1000)=\\log _{10}(1000)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Log10\",0.001]": {
         "wolfram": {
           "input": "Log10[0.001]",
           "output": "-3.",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}(0.001)",
+            "output": "-3."
+          }
         }
       },
       "[\"Log10\",[\"Rational\",1,100]]": {
         "wolfram": {
           "input": "Log10[Rational[1, 100]]",
           "output": "-2",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _{10}\\left(\\frac{1}{100}\\right)",
+            "output": "-2"
+          }
         }
       }
     },
@@ -1657,35 +2129,55 @@
         "wolfram": {
           "input": "Log2[8]",
           "output": "3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(8)",
+            "output": "3"
+          }
         }
       },
       "[\"Lb\",1]": {
         "wolfram": {
           "input": "Log2[1]",
           "output": "0",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(1)",
+            "output": "0"
+          }
         }
       },
       "[\"Lb\",1024]": {
         "wolfram": {
           "input": "Log2[1024]",
           "output": "10",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(1024)",
+            "output": "10"
+          }
         }
       },
       "[\"Equal\",[\"Lb\",64],[\"Log2\",64]]": {
         "wolfram": {
           "input": "(Log2[64] == Log2[64])",
           "output": "True",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2(64)=\\log _2(64)",
+            "output": "\\text{True}"
+          }
         }
       },
       "[\"Lb\",[\"Rational\",1,8]]": {
         "wolfram": {
           "input": "Log2[Rational[1, 8]]",
           "output": "-3",
-          "verdict": "agree"
+          "verdict": "agree",
+          "tex": {
+            "input": "\\log _2\\left(\\frac{1}{8}\\right)",
+            "output": "-3"
+          }
         }
       }
     }

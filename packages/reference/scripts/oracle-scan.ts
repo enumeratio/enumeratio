@@ -83,6 +83,8 @@ type Outcome = {
   readonly theirs: string;
   /** A reader-facing form of `theirs` — Wolfram's InputForm, or the Python `str(...)`. */
   readonly display: string;
+  /** Wolfram's `TeXForm` of the input as written and of its value. */
+  readonly tex?: { readonly input: string; readonly output: string };
 };
 
 const report: Record<string, Outcome[]> = {};
@@ -124,6 +126,7 @@ for (const system of systems) {
       value?: string;
       display?: string;
       numeric?: string;
+      tex?: { input: string; output: string };
       error?: string;
     };
     if (result.error !== undefined) {
@@ -139,7 +142,14 @@ for (const system of systems) {
     const theirs = result.value ?? "";
     const tolerance = toleranceOf(row.item, system);
     const verdict = verdictOf(system, row.item.expected, result, tolerance);
-    outcomes.push({ id: row.item.id, source, verdict, theirs, display: result.display ?? theirs });
+    outcomes.push({
+      id: row.item.id,
+      source,
+      verdict,
+      theirs,
+      display: result.display ?? theirs,
+      ...(result.tex === undefined ? {} : { tex: result.tex }),
+    });
   });
   report[system] = outcomes;
   missingBySystem[system] = missing;
@@ -181,6 +191,7 @@ interface OtherRow {
   readonly note?: string;
   readonly tolerance?: number;
   readonly issue?: number;
+  readonly tex?: { readonly input: string; readonly output: string };
 }
 type Sidecar = {
   kernels: Record<string, string>;
@@ -264,6 +275,7 @@ for (const system of systems) {
           ...(prior?.tolerance === undefined
             ? {}
             : { tolerance: prior.tolerance, note: prior.note ?? "" }),
+          ...(outcome.tex === undefined ? {} : { tex: outcome.tex }),
         };
         existingForHead[item.key] = { ...existingForHead[item.key], [system]: row };
       }
