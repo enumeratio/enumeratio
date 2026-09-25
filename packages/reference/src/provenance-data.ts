@@ -3819,10 +3819,38 @@ export const provenance: readonly HeadRecord[] = [
     elsewhere: [],
   },
   {
+    name: "Fourier",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "Fourier",
+    elsewhere: [],
+  },
+  {
+    name: "FourierCoefficient",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "FourierCoefficient",
+    elsewhere: [],
+  },
+  {
+    name: "FourierSeries",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "FourierSeries",
+    elsewhere: [],
+  },
+  {
     name: "FourierTransform",
     provenance: "extension",
     declared: "enumeratio-analytic",
     wolframAlias: "FourierTransform",
+    elsewhere: [],
+  },
+  {
+    name: "InverseFourier",
+    provenance: "extension",
+    declared: "enumeratio-analytic",
+    wolframAlias: "InverseFourier",
     elsewhere: [],
   },
   {

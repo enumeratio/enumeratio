@@ -2004,6 +2004,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FoldList",
   },
   {
+    name: "Fourier",
+    wolfram: "Fourier",
+  },
+  {
+    name: "FourierCoefficient",
+    wolfram: "FourierCoefficient",
+  },
+  {
+    name: "FourierSeries",
+    wolfram: "FourierSeries",
+  },
+  {
     name: "FourierTransform",
     wolfram: "FourierTransform",
   },
@@ -2717,6 +2729,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "InverseErfc",
     wolfram: "InverseErfc",
+  },
+  {
+    name: "InverseFourier",
+    wolfram: "InverseFourier",
   },
   {
     name: "InverseFourierTransform",
