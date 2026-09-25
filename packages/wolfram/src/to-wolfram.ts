@@ -305,6 +305,18 @@ export const HEADS: Record<string, string> = {
   ModularLambda: "ModularLambda",
   // ConstGlaisher is our spelling; Wolfram's is Glaisher.
   ConstGlaisher: "Glaisher",
+  // The q-series heads (packages/analytic/src/q-series.ts): same names, same argument
+  // order as Wolfram's.
+  QPochhammer: "QPochhammer",
+  QFactorial: "QFactorial",
+  QBinomial: "QBinomial",
+  // Riemann-Siegel (packages/analytic/src/riemann-siegel.ts): theta and Z keep Wolfram's
+  // names and single real argument. RiemannZetaZero is compute-engine/Fungrim's spelling
+  // for what Wolfram calls ZetaZero — same single argument k, just a different name, so
+  // a plain rename here (not SPECIAL) is enough.
+  RiemannSiegelTheta: "RiemannSiegelTheta",
+  RiemannSiegelZ: "RiemannSiegelZ",
+  RiemannZetaZero: "ZetaZero",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 
