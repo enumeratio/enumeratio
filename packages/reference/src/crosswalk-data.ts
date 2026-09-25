@@ -361,6 +361,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ArcTanh",
   },
   {
+    name: "Association",
+    wolfram: "Association",
+  },
+  {
     name: "At",
     wolfram: "Part",
   },
@@ -1794,6 +1798,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "First",
   },
   {
+    name: "FixedPoint",
+    wolfram: "FixedPoint",
+  },
+  {
     name: "Flatten",
     wolfram: "Flatten",
   },
@@ -2074,6 +2082,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "GammaRegularized",
   },
   {
+    name: "GeometricMean",
+    wolfram: "GeometricMean",
+  },
+  {
     name: "GoldenRatio",
     wolfram: "GoldenRatio",
   },
@@ -2094,6 +2106,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "HarmonicMean",
+    wolfram: "HarmonicMean",
   },
   {
     name: "HarmonicNumber",
@@ -2787,6 +2803,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LessEqual",
   },
   {
+    name: "LinearRecurrence",
+    wolfram: "LinearRecurrence",
+  },
+  {
     name: "List",
     wolfram: "List",
     oracle: [
@@ -3194,6 +3214,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Minus",
   },
   {
+    name: "Nest",
+    wolfram: "Nest",
+  },
+  {
+    name: "NestList",
+    wolfram: "NestList",
+  },
+  {
     name: "NextPrime",
     wolfram: "NextPrime",
   },
@@ -3224,6 +3252,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Ordering",
     wolfram: "Ordering",
+  },
+  {
+    name: "Outer",
+    wolfram: "Outer",
   },
   {
     name: "Partition",
@@ -3519,6 +3551,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
       "f35a37",
       "fa6ff7",
     ],
+  },
+  {
+    name: "RecurrenceTable",
+    wolfram: "RecurrenceTable",
   },
   {
     name: "Repeat",
