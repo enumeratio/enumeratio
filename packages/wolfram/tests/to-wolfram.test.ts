@@ -94,6 +94,7 @@ test("special forms: anonymous functions use slots", () => {
   expect(toWolfram(["Sort", ["List", 3, 1, 2], ["Function", ["Greater", "_1", "_2"]]])).toBe(
     "Sort[List[3, 1, 2], Function[Greater[Slot[1], Slot[2]]]]",
   );
+  expect(toWolfram(["Function", ["Power", "_", 2]])).toBe("Function[Power[Slot[1], 2]]");
 });
 
 test("special forms lowered to a Wolfram expression with no head of its own", () => {
