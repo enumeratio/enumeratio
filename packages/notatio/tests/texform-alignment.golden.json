@@ -8990,7 +8990,7 @@
   "special-functions/GammaLn#8": {
     "ours": {
       "input": "\\log\\Gamma(5)",
-      "output": "\\log\\Gamma(5)"
+      "output": "3\\ln(2)+\\ln(3)"
     },
     "wolfram": {
       "input": "\\text{log$\\Gamma $}(5)",

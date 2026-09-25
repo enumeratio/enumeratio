@@ -64,7 +64,10 @@ const VANILLA: MathJSON[] = [
   ["Zeta", 4],
   ["Zeta", -1],
   ["PolyLog", 2, 1],
-  ["PolyGamma", 0, 1],
+  // PolyGamma(0, 1) used to sit here too, but #113 routes PolyGamma's order-0 case
+  // through Digamma (closed-forms-113.ts) whenever Digamma has something to add, and a
+  // positive integer is exactly the first such case (PolyGamma(0, 1) = -γ) — no longer
+  // a vanilla, unaffected call.
   // Digits, whose base slot we widen.
   ["IntegerDigits", 255, 16],
   ["IntegerDigits", 10, 2],
@@ -125,6 +128,11 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `Arcsec` are here for symbolic normalisations (parity, a pi-multiple shift, an imaginary
  * argument, an inverse composition) and special values a bare engine leaves standing —
  * every one additive, never overriding a value the native handler already gave.
+ * #113 also adds `GammaLn` (an exact
+ * positive-integer argument now reduces, `threading-113.ts`/`closed-forms-113.ts`),
+ * `Rationalize` (threads over a list or a symbolic expression, `threading-113.ts`) and
+ * `FromContinuedFraction` (a list of plain symbols builds the nested fraction,
+ * `closed-forms-113.ts`) — each additive the same way, native for anything not exact.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -168,8 +176,10 @@ const OVERRIDDEN = [
   "First",
   "FixedPoint",
   "Floor",
+  "FromContinuedFraction",
   "FromDigits",
   "Gamma",
+  "GammaLn",
   "GammaRegularized",
   "IntegerDigits",
   "IntegerString",
@@ -210,6 +220,7 @@ const OVERRIDDEN = [
   "PrimeOmega",
   "PrimePi",
   "QuotientRing",
+  "Rationalize",
   "Round",
   "Sin",
   "Sinh",

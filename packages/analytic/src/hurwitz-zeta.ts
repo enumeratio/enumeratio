@@ -67,6 +67,8 @@ import { declareGeneralizedSpecial } from "./generalized-special.ts";
 import { declareConstantRounding } from "./constant-rounding.ts";
 import { declareTrigNormalisation } from "./trig-normalisation.ts";
 import { declareElementarySpecialValues } from "./elementary-special-values.ts";
+import { declareThreading113 } from "./threading-113.ts";
+import { declareClosedForms113 } from "./closed-forms-113.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -715,4 +717,6 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareConstantRounding(ce);
   declareTrigNormalisation(ce);
   declareElementarySpecialValues(ce);
+  declareThreading113(ce);
+  declareClosedForms113(ce);
 }
