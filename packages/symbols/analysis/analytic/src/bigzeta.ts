@@ -32,19 +32,19 @@ const LN_2PI = Math.log(2 * Math.PI);
 
 // BigDecimal's `add`, `sub` and `mul` are exact, so a loop that doesn't round grows its
 // significands every step. Every op below rounds to the working precision.
-const round = (x: BigDecimal): BigDecimal => x.toPrecision(BigDecimal.precision);
+export const round = (x: BigDecimal): BigDecimal => x.toPrecision(BigDecimal.precision);
 
-const add = (x: BigCx, y: BigCx): BigCx => ({
+export const add = (x: BigCx, y: BigCx): BigCx => ({
   re: round(x.re.add(y.re)),
   im: round(x.im.add(y.im)),
 });
 
-const mul = (x: BigCx, y: BigCx): BigCx => ({
+export const mul = (x: BigCx, y: BigCx): BigCx => ({
   re: round(x.re.mul(y.re).sub(x.im.mul(y.im))),
   im: round(x.re.mul(y.im).add(x.im.mul(y.re))),
 });
 
-const div = (x: BigCx, y: BigCx): BigCx => {
+export const div = (x: BigCx, y: BigCx): BigCx => {
   const d = y.re.mul(y.re).add(y.im.mul(y.im));
   return {
     re: x.re.mul(y.re).add(x.im.mul(y.im)).div(d),
@@ -52,19 +52,19 @@ const div = (x: BigCx, y: BigCx): BigCx => {
   };
 };
 
-const scale = (x: BigCx, k: BigDecimal): BigCx => ({
+export const scale = (x: BigCx, k: BigDecimal): BigCx => ({
   re: round(x.re.mul(k)),
   im: round(x.im.mul(k)),
 });
 
-const exp = (z: BigCx): BigCx => {
+export const exp = (z: BigCx): BigCx => {
   const m = z.re.exp();
   if (z.im.isZero()) return { re: m, im: BigDecimal.ZERO };
   return { re: round(m.mul(z.im.cos())), im: round(m.mul(z.im.sin())) };
 };
 
 /** Principal log, branch cut on (−∞, 0]. */
-const log = (z: BigCx): BigCx => ({
+export const log = (z: BigCx): BigCx => ({
   re: z.re.mul(z.re).add(z.im.mul(z.im)).ln().div(2),
   im: BigDecimal.atan2(z.im, z.re),
 });
@@ -73,7 +73,7 @@ const log = (z: BigCx): BigCx => ({
  * Principal z^w. A positive real base with a real exponent stays real, and so does a negative
  * one with an integer exponent — e^(iπw) would leave rounding noise in the imaginary part.
  */
-const pow = (z: BigCx, w: BigCx): BigCx => {
+export const pow = (z: BigCx, w: BigCx): BigCx => {
   if (!z.im.isZero() || z.re.isZero()) return exp(mul(w, log(z)));
   if (z.re.isNegative()) {
     if (!w.im.isZero() || !w.re.isInteger()) return exp(mul(w, log(z)));
