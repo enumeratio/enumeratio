@@ -127,6 +127,10 @@ export const HEADS: Record<string, string> = {
   HarmonicNumber: "HarmonicNumber",
   Stirling: "StirlingS2", // compute-engine `Stirling` is the second kind
   StirlingS1: "StirlingS1",
+  GeneratingFunction: "GeneratingFunction",
+  ExponentialGeneratingFunction: "ExponentialGeneratingFunction",
+  FindSequenceFunction: "FindSequenceFunction",
+  DiscreteRatio: "DiscreteRatio",
   Pochhammer: "Pochhammer",
   // Fungrim's name for the same head — see @enumeratio/analytic's rising-factorial.ts.
   RisingFactorial: "Pochhammer",

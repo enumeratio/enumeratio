@@ -161,14 +161,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 22,
   },
   {
-    head: "ExponentialGeneratingFunction",
-    uses: 21,
-  },
-  {
-    head: "GeneratingFunction",
-    uses: 21,
-  },
-  {
     head: "Module",
     uses: 21,
   },
@@ -183,10 +175,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "ParametricPlot3D",
     uses: 19,
-  },
-  {
-    head: "FindSequenceFunction",
-    uses: 18,
   },
   {
     head: "Fourier",
@@ -206,10 +194,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "AllTrue",
-    uses: 17,
-  },
-  {
-    head: "DiscreteRatio",
     uses: 17,
   },
   {
