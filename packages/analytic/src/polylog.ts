@@ -1,4 +1,4 @@
-import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { BigDecimal, type BoxedExpression, type ComputeEngine } from "@cortex-js/compute-engine";
 import {
   type BoxInput,
   declined,
@@ -10,6 +10,8 @@ import {
 } from "./box.ts";
 import { type Cx, mul } from "./complex.ts";
 import { lerchPhi } from "./lerch.ts";
+import { lerchPhiBig } from "./lerch-big.ts";
+import { bigRealOperand, bigResult } from "./precise.ts";
 
 // Polylogarithm Liₛ(z) = Σ_{n≥1} zⁿ/nˢ, as the Lerch transcendent at a = 1:
 // Liₛ(z) = z·Φ(z, s, 1). compute-engine has a native PolyLog(s, z), but it evaluates
@@ -40,6 +42,14 @@ export function evaluatePolyLog(
   ops: readonly BoxedExpression[],
   options: EvalOptions,
 ): BoxedExpression | undefined {
+  // Real s and z past a double's digits, ahead of the native handler, which answers integer
+  // orders in doubles: Liₛ(z) = z·Φ(z, s, 1) on the arbitrary-precision series (lerch-big.ts).
+  if (wantsNumber(ops, options) && ops[0] !== undefined && ops[1] !== undefined) {
+    const s = bigRealOperand(ce, ops[0]);
+    const z = bigRealOperand(ce, ops[1]);
+    const phi = s && z ? lerchPhiBig(z, s, BigDecimal.ONE, ce.precision) : undefined;
+    if (phi !== undefined) return bigResult(ce, z!.mul(phi));
+  }
   const r = native?.(ops, options);
   if (!declined(r, "PolyLog")) return r;
 

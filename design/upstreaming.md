@@ -539,9 +539,13 @@ quasi-periodic reduction (DLMF 19.2.10). Patched in place locally
 afterwards runs at 30 digits — `1 - Erf(9.5)` stops cancelling to 0, `Gamma(200.5)` grows
 digits. It is §3.9's ambient precision leaking: `N` implements its precision argument by
 setting the engine's, and never restores it. Wolfram's `N[x, d]` leaves `$MachinePrecision`
-alone. The fix is a save and restore around the `N` handler; until then
-`packages/aestimatio/src/cooperative-evaluate.ts` restores it after each evaluation, which is
-what made the reference tests order-independent again (seen in 0.134).
+alone. The fix is a save and restore around the `N` handler, which
+`packages/analytic/src/correctly-rounded.ts` now does for every engine that declares
+`@enumeratio/analytic`; `packages/aestimatio/src/cooperative-evaluate.ts` still restores it after
+each evaluation, as a backstop (seen in 0.134). The same handler evaluates at exactly `d` digits
+and returns them as they come, so the last digit can be off by one and some heads return more
+digits than asked for; the correctly-rounded replacement evaluates twice, at more digits, and
+rounds (Ziv's loop).
 
 **The interval kernel's Γ is not rigorous.** `@cortex-js/compute-engine/interval` promises
 outward-rounded enclosures, and two of its Γ functions break that. `gamma({lo: 2.5, hi: 2.5})`

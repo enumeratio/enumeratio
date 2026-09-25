@@ -136,10 +136,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["BarnesG", ["Rational", 1, 2]], 30],
         expected: { num: "0.603244281209446206191429224535" },
-        aspirational: true,
         category: "Scope",
-        caption:
-          "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
+        caption: "To 30 significant digits, past a double's reach",
       },
     ],
     implementations: [
@@ -427,9 +425,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["LogGamma", ["Rational", 1, 3]], 30],
         expected: { num: "0.985420646927767069187174036978" },
-        aspirational: true,
         category: "Scope",
-        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+        caption: "To 30 significant digits, the last one correctly rounded",
       },
     ],
     implementations: [
@@ -660,9 +657,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["DirichletEta", ["Rational", 1, 2]], 30],
         expected: { num: "0.604898643421630370247265914236" },
-        aspirational: true,
         category: "Scope",
-        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+        caption: "To 30 significant digits, the last one correctly rounded",
       },
     ],
     implementations: [
@@ -795,9 +791,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["DirichletBeta", 2], 40],
         expected: { num: "0.9159655941772190150546035149323841107741" },
-        aspirational: true,
         category: "Scope",
-        caption: "To exactly 40 significant digits; not yet -- 85 come back (the first 40 right)",
+        caption: "To exactly 40 significant digits, as many as asked for",
       },
     ],
     implementations: [
@@ -940,10 +935,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["StieltjesGamma", 1], 30],
         expected: { num: "-0.0728158454836767248605863758749" },
-        aspirational: true,
         category: "Scope",
-        caption:
-          "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
+        caption: "To 30 significant digits, past a double's reach",
       },
       {
         expr: ["StieltjesGamma", 3, 1],
@@ -1387,10 +1380,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["HarmonicNumber", ["Rational", 1, 2]], 30],
         expected: { num: "0.613705638880109381165535757084" },
-        aspirational: true,
         category: "Scope",
-        caption:
-          "To exactly 30 significant digits; not yet -- 31 come back, and the last of the first 30 is not correctly rounded",
+        caption: "To exactly 30 significant digits, the last one correctly rounded",
       },
       {
         expr: ["N", ["HarmonicNumber", 2.5, 1]],

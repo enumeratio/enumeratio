@@ -1,4 +1,9 @@
-import { type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
+import {
+  type BigDecimal,
+  type BoxedExpression,
+  type ComputeEngine,
+  isNumber,
+} from "@cortex-js/compute-engine";
 
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
 export const DOUBLE_DIGITS = 15;
@@ -20,3 +25,17 @@ export function atEnginePrecision(
   const big = value.bignumRe;
   return big === undefined ? value : ce.number(big.toPrecision(ce.precision));
 }
+
+/**
+ * A real operand as a decimal to the engine's precision, for an arbitrary-precision kernel --
+ * or undefined when the engine asks for no more than a double (the double kernel is then the
+ * better trade) or `x` is not a finite real number.
+ */
+export function bigRealOperand(ce: ComputeEngine, x: BoxedExpression): BigDecimal | undefined {
+  if (ce.precision <= DOUBLE_DIGITS || x.im !== 0 || !Number.isFinite(x.re)) return undefined;
+  return x.bignumRe ?? ce.bignum(x.re);
+}
+
+/** An arbitrary-precision kernel's value, boxed at the engine's precision. */
+export const bigResult = (ce: ComputeEngine, value: BigDecimal): BoxedExpression =>
+  ce.number(value.toPrecision(ce.precision));

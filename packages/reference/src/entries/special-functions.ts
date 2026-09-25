@@ -431,9 +431,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["GammaLn", ["Rational", 1, 3]], 30],
         expected: { num: "0.985420646927767069187174036978" },
-        aspirational: true,
         category: "Scope",
-        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+        caption: "To 30 significant digits, the last one correctly rounded",
       },
     ],
     seeAlso: ["Gamma", "LogGamma", "Digamma"],
@@ -1389,9 +1388,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["HurwitzZeta", 3, ["Rational", 1, 3]], 30],
         expected: { num: "27.5610611997008037762278779774" },
-        aspirational: true,
         category: "Scope",
-        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+        caption: "To 30 significant digits, the last one correctly rounded",
       },
       {
         expr: ["N", ["HurwitzZeta", ["Rational", -41, 2], ["Rational", 3, 10]], 40],
@@ -1632,10 +1630,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["LerchPhi", ["Rational", 1, 2], 2, ["Rational", 1, 3]], 30],
         expected: { num: "9.34347465937593951855554965804" },
-        aspirational: true,
         category: "Scope",
-        caption:
-          "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
+        caption: "To 30 significant digits, past a double's reach",
       },
       {
         expr: ["LerchPhi", -1, 3, ["Rational", 1, 2]],
@@ -1926,10 +1922,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["PolyLog", 2, ["Rational", 1, 2]], 30],
         expected: { num: "0.582240526465012505902656320160" },
-        aspirational: true,
         category: "Scope",
-        caption:
-          "To 30 significant digits; not yet -- the requested precision is ignored and a double comes back",
+        caption: "To 30 significant digits, past a double's reach",
       },
     ],
     seeAlso: ["LerchPhi", "Zeta", "HurwitzZeta", "Ln"],
@@ -2114,9 +2108,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["PolyGamma", 3, 5], 25],
         expected: { num: "0.02142782819275507502194811" },
-        aspirational: true,
         category: "Scope",
-        caption: "To 25 significant digits; not yet -- only the first 20 are right",
+        caption: "To 25 significant digits, every one of them right",
       },
     ],
     seeAlso: ["Digamma", "Gamma", "HurwitzZeta", "Zeta"],
@@ -2486,9 +2479,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["N", ["GammaRegularized", 2, 1], 30],
         expected: { num: "0.735758882342884643191047540323" },
-        aspirational: true,
         category: "Scope",
-        caption: "To 30 significant digits; not yet -- the last digit is not correctly rounded",
+        caption: "To 30 significant digits, the last one correctly rounded",
       },
       {
         expr: ["N", ["GammaRegularized", ["Complex", 2, 1], 1.5]],

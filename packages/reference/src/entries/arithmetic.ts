@@ -907,6 +907,53 @@ export const arithmetic: readonly ReferenceEntry[] = [
     seeAlso: ["Floor", "Round"],
   },
   {
+    name: "N",
+    domain: "Arithmetic",
+    signature: "N(x, d?)",
+    summary: "A numeric value of x -- to d significant digits, every one of them right.",
+    signatures: [
+      { call: "N(x)", description: "x at the engine's working precision." },
+      {
+        call: "N(x, d)",
+        description: "x to exactly d significant digits, the last one correctly rounded.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "$\\mathrm{N}(x, d)$ evaluates x at $d + 10$ digits and again at $d + 20$, rounds both to d, and answers when they agree; when they don't, the value lies near a rounding boundary, and the guard doubles until they do (Ziv's loop). Agreement across precisions is strong evidence rather than a proof.",
+      "The answer carries exactly d significant digits, never more, and the working precision is left as it was: a later evaluation runs at the precision it would have anyway.",
+      "A value exactly halfway between two d-digit answers -- only a terminating decimal, like $1/8$ -- rounds to the even one.",
+      "A list, or a symbolic result, is rounded number by number; integers in it are left alone.",
+      "A head that computes in machine doubles, whatever precision is asked of it, can't be measured more finely: its value comes back as that double, with the digits it has rather than the d asked for.",
+    ],
+    examples: [
+      { expr: ["N", "Pi", 30], expected: { num: "3.14159265358979323846264338328" } },
+      {
+        expr: ["N", ["Sinh", 1], 30],
+        expected: { num: "1.17520119364380145688238185060" },
+        caption: "The last digit correctly rounded: computing at 30 digits alone gives …059",
+      },
+      {
+        expr: ["N", ["List", "Pi", "ExponentialE", ["Sqrt", 2]], 5],
+        expected: ["List", 3.1416, 2.7183, 1.4142],
+        caption: "A list, number by number",
+      },
+      {
+        expr: ["N", ["Rational", 1, 8], 2],
+        expected: 0.12,
+        category: "Possible issues",
+        caption: "An exact tie rounds to the even digit: 0.125 to 0.12",
+      },
+      {
+        expr: ["N", ["Rational", 3, 8], 2],
+        expected: 0.38,
+        category: "Possible issues",
+        caption: "...and 0.375 to 0.38",
+      },
+    ],
+    seeAlso: ["Round", "Interval"],
+  },
+  {
     name: "Round",
     domain: "Arithmetic",
     signature: "Round(x, n?)",
