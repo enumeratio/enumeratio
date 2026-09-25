@@ -1,5 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/packs/words.ts";
+import { entries } from "../src/families/words.ts";
 import golden from "./words.golden.json" with { type: "json" };
 
 // Self-cert every words.ts family, mirroring core.test.ts: for every rank r in [0, count),
