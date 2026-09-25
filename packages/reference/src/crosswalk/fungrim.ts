@@ -11,13 +11,13 @@ import { fungrimVerified } from "../fungrim-verified-data.ts";
  * Why an identity disagrees, where we have looked into it. Most cases are OUR evaluation
  * rather than Fungrim's mathematics (a real bug, or a branch convention we chose
  * differently than Fungrim's compiled rule) -- the corpus is a test of the engine as much
- * as the engine is a reader of the corpus. A few are compute-engine's own compiled rule
- * (a sign or index error unrelated to any head we declare), caught by cross-checking both
- * sides against mpmath independently.
+ * as the engine is a reader of the corpus. A few are errata in Fungrim's own source (a sign
+ * or index error unrelated to any head we declare), inherited by compute-engine's corpus
+ * and caught by cross-checking both sides against mpmath independently.
  */
 export const KNOWN_CAUSES: Readonly<Record<string, string>> = {
   "16d2e1":
-    "compute-engine's EllipticE is imprecise at complex modulus — at m = 0.57 + 0.23i it gives 1.32492…, where mpmath and the identity's own hypergeometric side both give 1.324807…; the identity is right",
+    "compute-engine's EllipticE is imprecise at complex modulus — at m = 0.57 + 0.23i it gives 1.31754…, where mpmath and the identity's own hypergeometric side both give 1.324807…; the identity is right",
   "48333c":
     "the same EllipticE imprecision at complex modulus, reached through this CarlsonRG identity",
 
@@ -29,11 +29,11 @@ export const KNOWN_CAUSES: Readonly<Record<string, string>> = {
     "the same CarlsonRC principal-value-vs-approached-from-above convention difference, folded into a Conjugate identity",
 
   "42eb01":
-    "compute-engine's compiled Fungrim rule has a sign error: the correct identity is T_n(x)^2 - (x^2-1)*U_{n-1}(x)^2 = 1 (DLMF 18.9.14 / the Pell-like Chebyshev identity, confirmed with mpmath's chebyt/chebyu), but the compiled rule adds instead of subtracting; our ChebyshevT/U match mpmath exactly at the tested points, the compiled replace side does not",
+    "Fungrim erratum, inherited by compute-engine's corpus: the entry adds where it should subtract — the correct identity is T_n(x)^2 - (x^2-1)*U_{n-1}(x)^2 = 1 (confirmed with mpmath's chebyt/chebyu); our ChebyshevT/U match mpmath exactly at the tested points",
   "4c7aeb":
-    "compute-engine's compiled Fungrim rule is off by one index: sin(x)*U_n(cos x) = sin((n+1)x), not sin(n*x) (confirmed with mpmath's chebyu/sin); our ChebyshevU matches mpmath's sin(2x) at n=1 exactly, the compiled replace side computes sin(x) instead",
+    "Fungrim erratum, inherited by compute-engine's corpus: the entry is off by one index — the correct identity is U_{n-1}(cos x)*sin(x) = sin(n*x) (confirmed with mpmath's chebyu/sin); our ChebyshevU matches mpmath exactly",
   "5f09f4":
-    "compute-engine's compiled Fungrim rule's replace side (ChebyshevU(2n, x)) does not match U_{n-1}(2x^2-1) + T_n(2x^2-1) at n=1 against mpmath either — our ChebyshevT/U agree with mpmath's chebyt/chebyu on the match side; the compiled rule itself is wrong, independent of our heads",
+    "Fungrim erratum, inherited by compute-engine's corpus: the entry has T_n where U_n belongs — the correct identity is U_{2n}(x) = U_n(2x^2-1) + U_{n-1}(2x^2-1) (confirmed with mpmath's chebyu); our ChebyshevT/U agree with mpmath's chebyt/chebyu",
 
   b468f3:
     "CarlsonRJ(0,1,1,-1): falls inside our documented p < 0, x,y,z ≥ 0 Cauchy-principal-value branch (DLMF 19.20.14), which is deliberately real — same convention as Wolfram's CarlsonRJ there, confirmed — while Fungrim's expected value is complex, Fungrim's analytic continuation approached from one side of the cut rather than the principal value; the real part agrees with mpmath's elliprj exactly, only the (conventionally dropped) imaginary part differs",

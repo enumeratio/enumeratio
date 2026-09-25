@@ -455,13 +455,14 @@ function applyHead(head: MathJson, args: MathJson[]): string {
 }
 
 /** A bare MathJSON string is a symbol, a `'quoted'` one a string literal, and
- * `_n` the n-th anonymous-function parameter, which Wolfram spells `Slot[n]`. An
+ * `_n` the n-th anonymous-function parameter, which Wolfram spells `Slot[n]` (bare
+ * `_` is compute-engine's shorthand for `_1`). An
  * underscore is a pattern in Wolfram, never part of a name, so a subscripted
  * symbol like `e_1` becomes `Subscript[e, 1]`. */
 function symbolToWolfram(s: string): string {
   if (s.length >= 2 && s.startsWith("'") && s.endsWith("'")) return JSON.stringify(s.slice(1, -1));
-  const slot = /^_(\d+)$/.exec(s);
-  if (slot) return `Slot[${slot[1]}]`;
+  const slot = /^_(\d*)$/.exec(s);
+  if (slot) return `Slot[${slot[1] || 1}]`;
   const subscript = /^([A-Za-z][A-Za-z0-9]*)_([A-Za-z0-9]+)$/.exec(s);
   if (subscript) return `Subscript[${subscript[1]}, ${subscript[2]}]`;
   return SYMBOLS[s] ?? s;
