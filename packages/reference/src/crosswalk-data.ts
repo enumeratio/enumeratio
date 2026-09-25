@@ -3606,6 +3606,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "PowersRepresentations",
   },
   {
+    name: "Prepend",
+    wolfram: "Prepend",
+  },
+  {
     name: "Prime",
     oracle: [
       {

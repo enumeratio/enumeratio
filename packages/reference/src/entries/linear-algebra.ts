@@ -58,39 +58,33 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       {
         expr: ["Rank", ["List", ["List", 1, 2], ["List", 3]]],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A ragged list should have depth 1 -- only its outer level is a full array; compute-engine answers 0",
+        caption: "A ragged list has depth 1 -- only its outer level is a full array",
       },
       {
         expr: ["Rank", ["List", 1, ["List", 2, 3]]],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption: "...likewise a list mixing scalars and lists; compute-engine answers 0",
+        caption: "...likewise a list mixing scalars and lists",
       },
       {
         expr: ["Rank", ["List"]],
         expected: 1,
-        aspirational: true,
         category: "Scope",
-        caption: "The empty list is still a vector, of length 0; compute-engine answers 0",
+        caption: "The empty list is still a vector, of length 0",
       },
       {
         expr: ["Rank", ["List", ["List"]]],
         expected: 2,
-        aspirational: true,
         category: "Scope",
-        caption: "...and $\\{\\{\\}\\}$ a 1×0 matrix; compute-engine answers 0",
+        caption: "...and $\\{\\{\\}\\}$ a 1×0 matrix",
       },
       {
         expr: ["Rank", ["Tabulate", "f", 2, 3]],
         expected: 2,
-        aspirational: true,
         category: "Scope",
         caption:
-          "A 2×3 grid of unevaluated calls should still be a matrix; compute-engine answers 0",
+          "A 2×3 grid of unevaluated calls still reads as a matrix, from its dimensions alone",
       },
     ],
   },
@@ -195,10 +189,9 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       {
         expr: ["MatrixRank", ["Tabulate", "Multiply", 4, 4]],
         expected: 1,
-        aspirational: true,
         category: "Properties",
         caption:
-          "An outer product $u v^\\top$ has rank 1; a lazy [[Tabulate]] matrix is left unevaluated, not yet read as a matrix",
+          "An outer product $u v^\\top$ has rank 1; a lazy [[Tabulate]] matrix is read as the matrix it describes",
       },
       {
         expr: [
@@ -206,18 +199,14 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
           ["Tabulate", ["Function", ["Divide", 1, ["Subtract", ["Add", "_1", "_2"], 1]]], 4, 4],
         ],
         expected: 4,
-        aspirational: true,
         category: "Applications",
-        caption:
-          "The 4×4 Hilbert matrix is badly conditioned but invertible; not yet, as a lazy [[Tabulate]] argument is not read as a matrix",
+        caption: "The 4×4 Hilbert matrix is badly conditioned but invertible",
       },
       {
         expr: ["MatrixRank", ["Tabulate", "Add", 4, 4]],
         expected: 2,
-        aspirational: true,
         category: "Neat examples",
-        caption:
-          "Every matrix with entries $i + j$ has rank 2, whatever its size; not yet, as a lazy [[Tabulate]] argument is not read as a matrix",
+        caption: "Every matrix with entries $i + j$ has rank 2, whatever its size",
       },
     ],
   },

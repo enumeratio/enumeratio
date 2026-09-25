@@ -291,11 +291,9 @@ export const aestimatio: readonly ReferenceEntry[] = [
           ["Tuple", "'ActualOutput'", ["Rational", 22, 7]],
           ["Tuple", "'AbsoluteTimeUsed'", 0],
         ],
-        caption:
-          "a SameTest with a tolerance: $|22/7 - 3.14| < 0.01$ should pass — the function is applied to the list [actual, expected] as ONE argument, so it never returns True",
+        caption: "a SameTest with a tolerance: $|22/7 - 3.14| < 0.01$ passes",
         category: "Scope",
         volatile: ["AbsoluteTimeUsed"],
-        aspirational: true,
       },
     ],
   },
