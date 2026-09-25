@@ -115,3 +115,13 @@ test("IsQuadraticIrrational: scope — more surd shapes", () => {
   same(["IsQuadraticIrrational", ["Multiply", 3, ["Sqrt", 2]]], "True");
   same(["IsQuadraticIrrational", ["Subtract", 1, ["Sqrt", 3]]], "True");
 });
+
+// ── wrapOperator arity guards ────────────────────────────────────────────────
+// `wrapOperator`'s `applies` sees every call to the widened native head, whatever its
+// arity — a short or empty operand list must not read past the end of `ops` and throw.
+
+test("MatrixPower and Inverse widened for ModularMatrix don't crash below their arity", () => {
+  expect(() => ce.box(["MatrixPower"]).evaluate()).not.toThrow();
+  expect(() => ce.box(["MatrixPower", ["ModularMatrix", 1, 1, 0, 1]]).evaluate()).not.toThrow();
+  expect(() => ce.box(["Inverse"]).evaluate()).not.toThrow();
+});

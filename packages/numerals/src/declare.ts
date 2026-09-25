@@ -507,6 +507,7 @@ export function declareNumerals(ce: ComputeEngine): void {
   ce.declare("RealDigits", {
     signature: "(value, integer?, integer?) -> list",
     evaluate: (ops: readonly BoxedExpression[]) => {
+      if (ops[0] === undefined) return undefined;
       const base = baseArg(ops[1]);
       const len = ops[2] === undefined ? undefined : integerAt(ops[2]);
       if (base < 2n) return undefined;

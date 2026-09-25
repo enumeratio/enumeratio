@@ -181,7 +181,10 @@ export function declareModular(ce: ComputeEngine): void {
     ce,
     ["MatrixPower", 1, 1],
     (ops) =>
-      isModularOperand(ops[0]) && matrixOf(ops[0]) !== undefined && integerAt(ops[1]) !== undefined,
+      ops.length === 2 &&
+      isModularOperand(ops[0]!) &&
+      matrixOf(ops[0]) !== undefined &&
+      integerAt(ops[1]) !== undefined,
     () => (ops) => {
       const m = matrixOf(ops[0])!;
       const k = integerAt(ops[1])!;
@@ -194,7 +197,7 @@ export function declareModular(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Inverse", 1],
-    (ops) => isModularOperand(ops[0]) && matrixOf(ops[0]) !== undefined,
+    (ops) => ops.length === 1 && isModularOperand(ops[0]!) && matrixOf(ops[0]) !== undefined,
     () => (ops) => {
       const inverse = invert(matrixOf(ops[0])!);
       return inverse === undefined ? undefined : matrixExpression(inverse);
