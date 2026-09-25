@@ -145,6 +145,18 @@ export function declareListStats(ce: ComputeEngine): void {
                 (value as (...args: unknown[]) => unknown)(rewriteUpTo(expr), ...rest)
             : value;
       }
+      // A source of unknown size (`Count(TwinPrimes) = NaN`) leaves compute-engine's count at
+      // Min(n, NaN) = NaN, and materializing a collection of unknown count stops after five
+      // elements. The first n exist exactly when the n-th does.
+      const count = wrapped.count as ((expr: BoxedExpression) => number | undefined) | undefined;
+      wrapped.count = (expr: BoxedExpression) => {
+        const total = count?.(expr);
+        if (total === undefined || !Number.isNaN(total)) return total;
+        const [source, spec] = operandsOf(rewriteUpTo(expr));
+        const n = spec?.re;
+        if (source === undefined || n === undefined || !Number.isInteger(n) || n < 0) return total;
+        return n === 0 || source.evaluate().at(n) !== undefined ? n : total;
+      };
       operator.collection = wrapped;
     }
   }
