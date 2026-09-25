@@ -813,6 +813,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "ContinuedFractionK",
+    wolfram: "ContinuedFractionK",
+  },
+  {
+    name: "Convergents",
+    wolfram: "Convergents",
+  },
+  {
     name: "Coproduct",
     wolfram: "Coproduct",
   },
@@ -2405,12 +2413,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "IntegerLength",
+    wolfram: "IntegerLength",
+  },
+  {
     name: "IntegerPart",
     wolfram: "IntegerPart",
   },
   {
     name: "IntegerPartitions",
     wolfram: "IntegerPartitions",
+  },
+  {
+    name: "IntegerReverse",
+    wolfram: "IntegerReverse",
   },
   {
     name: "IntegerString",
@@ -2496,6 +2512,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "IsQuadraticIrrational",
+    wolfram: "QuadraticIrrationalQ",
   },
   {
     name: "IsSquareFree",
@@ -3339,6 +3359,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Prime",
   },
   {
+    name: "NumberExpand",
+    wolfram: "NumberExpand",
+  },
+  {
     name: "Or",
     wolfram: "Or",
   },
@@ -3670,6 +3694,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "RealAbs",
   },
   {
+    name: "RealDigits",
+    wolfram: "RealDigits",
+  },
+  {
     name: "RealSign",
     wolfram: "RealSign",
   },
@@ -3701,6 +3729,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     name: "RiemannZetaZero",
     fungrimEntries: ["60c2ec"],
     wolfram: "ZetaZero",
+  },
+  {
+    name: "RomanNumeral",
+    wolfram: "RomanNumeral",
   },
   {
     name: "Round",

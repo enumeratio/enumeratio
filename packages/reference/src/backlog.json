@@ -26,77 +26,6 @@
       }
     ]
   },
-  "ContinuedFractionK": {
-    "wolfram": "ContinuedFractionK",
-    "summary": "The continued fraction f_1/(g_1 + f_2/(g_2 + ...)) over an index range, finite or infinite.",
-    "signature": "ContinuedFractionK(f, g, (i, imin, imax))",
-    "home": "modular",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["ContinuedFractionK", 1, "k", ["Tuple", "k", 1, 5]],
-        "expected": ["Rational", 157, 225],
-        "caption": "$\\cfrac{1}{1 + \\cfrac{1}{2 + \\cfrac{1}{3 + \\cfrac{1}{4 + \\cfrac15}}}}$"
-      },
-      {
-        "expr": ["ContinuedFractionK", 1, 1, ["Tuple", "k", 1, "PositiveInfinity"]],
-        "expected": ["Divide", ["Subtract", ["Sqrt", 5], 1], 2],
-        "category": "Scope",
-        "caption": "The infinite all-ones fraction is $1/\\varphi$"
-      }
-    ]
-  },
-  "Convergents": {
-    "wolfram": "Convergents",
-    "summary": "The successive convergents p_k/q_k of a continued fraction, given as its list of terms or as the number itself.",
-    "signature": "Convergents(list) / Convergents(x, n)",
-    "home": "modular",
-    "neededBy": ["ContinuedFraction"],
-    "examples": [
-      {
-        "expr": ["Convergents", ["List", 3, 7, 15, 1]],
-        "expected": [
-          "List",
-          3,
-          ["Rational", 22, 7],
-          ["Rational", 333, 106],
-          ["Rational", 355, 113]
-        ],
-        "caption": "From a list of terms"
-      },
-      {
-        "expr": ["Convergents", "Pi", 5],
-        "expected": [
-          "List",
-          3,
-          ["Rational", 22, 7],
-          ["Rational", 333, 106],
-          ["Rational", 355, 113],
-          ["Rational", 103993, 33102]
-        ],
-        "caption": "The first five convergents of $\\pi$"
-      },
-      {
-        "expr": ["Convergents", ["Rational", 47, 17]],
-        "expected": ["List", 2, 3, ["Rational", 11, 4], ["Rational", 47, 17]],
-        "category": "Scope",
-        "caption": "A rational: the last convergent is the number itself"
-      },
-      {
-        "expr": ["Convergents", ["Sqrt", 2], 5],
-        "expected": [
-          "List",
-          1,
-          ["Rational", 3, 2],
-          ["Rational", 7, 5],
-          ["Rational", 17, 12],
-          ["Rational", 41, 29]
-        ],
-        "category": "Applications",
-        "caption": "Convergents of $\\sqrt2$ solve Pell's equations $p^2 - 2q^2 = \\pm1$"
-      }
-    ]
-  },
   "DivisorSum": {
     "wolfram": "DivisorSum",
     "summary": "The sum of f(d) over the positive divisors d of n, optionally only those satisfying a condition.",
@@ -212,7 +141,7 @@
   },
   "FrobeniusSolve": {
     "wolfram": "FrobeniusSolve",
-    "summary": "All non-negative integer solutions x of a·x = b, lexicographically.",
+    "summary": "All non-negative integer solutions x of a\u00b7x = b, lexicographically.",
     "signature": "FrobeniusSolve(a, b)",
     "home": "number-theory",
     "neededBy": ["FrobeniusNumber"],
@@ -315,96 +244,10 @@
       }
     ]
   },
-  "IntegerLength": {
-    "wolfram": "IntegerLength",
-    "summary": "The number of digits of n in the given base (default 10).",
-    "signature": "IntegerLength(n, base?)",
-    "home": "numerals",
-    "neededBy": ["IntegerDigits"],
-    "examples": [
-      {
-        "expr": ["IntegerLength", 12345],
-        "expected": 5
-      },
-      {
-        "expr": ["IntegerLength", ["Power", 2, 100]],
-        "expected": 31,
-        "category": "Scope"
-      },
-      {
-        "expr": ["IntegerLength", 255, 16],
-        "expected": 2,
-        "category": "Scope",
-        "caption": "$255 = \\mathrm{ff}_{16}$"
-      },
-      {
-        "expr": ["IntegerLength", -123],
-        "expected": 3,
-        "category": "Possible issues",
-        "caption": "the sign is not counted"
-      },
-      {
-        "expr": ["IntegerLength", 0],
-        "expected": 0,
-        "category": "Possible issues",
-        "caption": "0 has length 0, unlike its one-element [[IntegerDigits]]"
-      },
-      {
-        "expr": ["IntegerLength", ["List", 1, 10, 100]],
-        "expected": ["List", 1, 2, 3],
-        "category": "Scope",
-        "caption": "Listable"
-      }
-    ]
-  },
-  "IntegerReverse": {
-    "wolfram": "IntegerReverse",
-    "summary": "The integer whose digits are those of n in reverse order.",
-    "signature": "IntegerReverse(n, base?, len?)",
-    "home": "numerals",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["IntegerReverse", 1234],
-        "expected": 4321,
-        "caption": "the base-10 digits reversed"
-      },
-      {
-        "expr": ["IntegerReverse", 1234, 2],
-        "expected": 601,
-        "category": "Scope",
-        "caption": "$1234 = 10011010010_2$ reversed is $1001011001_2 = 601$"
-      },
-      {
-        "expr": ["IntegerReverse", 1200],
-        "expected": 21,
-        "category": "Possible issues",
-        "caption": "trailing zeros become leading zeros and vanish"
-      },
-      {
-        "expr": ["IntegerReverse", 123, 10, 5],
-        "expected": 32100,
-        "category": "Scope",
-        "caption": "padded to 5 digits first: $00123$ reversed"
-      },
-      {
-        "expr": ["IntegerReverse", ["List", 12, 345]],
-        "expected": ["List", 21, 543],
-        "category": "Scope",
-        "caption": "Listable"
-      },
-      {
-        "expr": ["IntegerReverse", 12321],
-        "expected": 12321,
-        "category": "Applications",
-        "caption": "a palindrome is its own reversal"
-      }
-    ]
-  },
   "IsCoprime": {
     "wolfram": "CoprimeQ",
     "summary": "Tests whether integers are pairwise relatively prime.",
-    "signature": "IsCoprime(a, b, …)",
+    "signature": "IsCoprime(a, b, \u2026)",
     "home": "number-theory",
     "neededBy": ["GCD"],
     "examples": [
@@ -502,41 +345,6 @@
         "expected": "True",
         "category": "Scope",
         "caption": "Large integers"
-      }
-    ]
-  },
-  "IsQuadraticIrrational": {
-    "wolfram": "QuadraticIrrationalQ",
-    "summary": "True when x is an irrational root of a quadratic with integer coefficients — exactly the numbers with an eventually periodic continued fraction.",
-    "signature": "IsQuadraticIrrational(x)",
-    "home": "modular",
-    "neededBy": ["ContinuedFraction"],
-    "examples": [
-      {
-        "expr": ["IsQuadraticIrrational", ["Sqrt", 2]],
-        "expected": "True"
-      },
-      {
-        "expr": ["IsQuadraticIrrational", ["Divide", ["Add", 1, ["Sqrt", 5]], 2]],
-        "expected": "True",
-        "caption": "The golden ratio"
-      },
-      {
-        "expr": ["IsQuadraticIrrational", ["Power", 2, ["Rational", 1, 3]]],
-        "expected": "False",
-        "caption": "A cube root is algebraic of degree 3"
-      },
-      {
-        "expr": ["IsQuadraticIrrational", ["Rational", 3, 4]],
-        "expected": "False",
-        "category": "Possible issues",
-        "caption": "A rational is not irrational"
-      },
-      {
-        "expr": ["IsQuadraticIrrational", "Pi"],
-        "expected": "False",
-        "category": "Scope",
-        "caption": "Transcendental"
       }
     ]
   },
@@ -672,31 +480,6 @@
         "expected": "True",
         "category": "Properties",
         "caption": "The negation of [[Any]]"
-      }
-    ]
-  },
-  "NumberExpand": {
-    "wolfram": "NumberExpand",
-    "summary": "The place-value terms of n: each digit times its power of the base.",
-    "signature": "NumberExpand(n, base?, len?)",
-    "home": "numerals",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["NumberExpand", 1234],
-        "expected": ["List", 1000, 200, 30, 4]
-      },
-      {
-        "expr": ["NumberExpand", 10, 2],
-        "expected": ["List", 8, 0, 2, 0],
-        "category": "Scope",
-        "caption": "base 2, zero terms kept"
-      },
-      {
-        "expr": ["NumberExpand", -123],
-        "expected": ["List", -100, -20, -3],
-        "category": "Scope",
-        "caption": "every term carries the sign"
       }
     ]
   },
@@ -899,59 +682,6 @@
       }
     ]
   },
-  "RealDigits": {
-    "wolfram": "RealDigits",
-    "summary": "The digits of a real number and the position of its decimal point, with the repeating block of a rational marked as a sublist.",
-    "signature": "RealDigits(x, base?, len?)",
-    "home": "numerals",
-    "neededBy": ["FromDigits"],
-    "examples": [
-      {
-        "expr": ["RealDigits", ["Rational", 1, 7]],
-        "expected": ["List", ["List", ["List", 1, 4, 2, 8, 5, 7]], 0],
-        "caption": "the repeating block of $1/7 = 0.\\overline{142857}$"
-      },
-      {
-        "expr": ["RealDigits", ["Rational", 19, 7]],
-        "expected": ["List", ["List", 2, ["List", 7, 1, 4, 2, 8, 5]], 1],
-        "category": "Scope",
-        "caption": "$19/7 = 2.\\overline{714285}$, one digit before the point"
-      },
-      {
-        "expr": ["RealDigits", ["Rational", 5, 4]],
-        "expected": ["List", ["List", 1, 2, 5], 1],
-        "category": "Scope",
-        "caption": "a terminating rational"
-      },
-      {
-        "expr": ["RealDigits", ["Rational", 1, 8], 2],
-        "expected": ["List", ["List", 1], -2],
-        "category": "Scope",
-        "caption": "$1/8 = 0.001_2$"
-      },
-      {
-        "expr": ["RealDigits", "Pi", 10, 10],
-        "expected": ["List", ["List", 3, 1, 4, 1, 5, 9, 2, 6, 5, 3], 1],
-        "caption": "the first 10 digits of $\\pi$ (truncated, not rounded)"
-      },
-      {
-        "expr": ["RealDigits", ["Sqrt", 2], 10, 5],
-        "expected": ["List", ["List", 1, 4, 1, 4, 2], 1],
-        "category": "Scope"
-      },
-      {
-        "expr": ["RealDigits", "ExponentialE", 10, 5],
-        "expected": ["List", ["List", 2, 7, 1, 8, 2], 1],
-        "category": "Scope"
-      },
-      {
-        "expr": ["RealDigits", 123456],
-        "expected": ["List", ["List", 1, 2, 3, 4, 5, 6], 6],
-        "category": "Scope",
-        "caption": "an integer: six digits before the point"
-      }
-    ]
-  },
   "Riffle": {
     "wolfram": "Riffle",
     "summary": "Interleave a separator (or a second list) between the elements of a list.",
@@ -986,41 +716,6 @@
         "expected": ["List", "a"],
         "category": "Scope",
         "caption": "A single element has nothing to separate"
-      }
-    ]
-  },
-  "RomanNumeral": {
-    "wolfram": "RomanNumeral",
-    "summary": "The Roman numeral for a non-negative integer, as a string.",
-    "signature": "RomanNumeral(n)",
-    "home": "numerals",
-    "neededBy": ["FromDigits", "IntegerString"],
-    "examples": [
-      {
-        "expr": ["RomanNumeral", 1988],
-        "expected": "'MCMLXXXVIII'"
-      },
-      {
-        "expr": ["RomanNumeral", 3999],
-        "expected": "'MMMCMXCIX'",
-        "category": "Scope",
-        "caption": "the largest with standard symbols"
-      },
-      {
-        "expr": ["RomanNumeral", 2024],
-        "expected": "'MMXXIV'"
-      },
-      {
-        "expr": ["RomanNumeral", ["List", 1, 2, 3, 4]],
-        "expected": ["List", "'I'", "'II'", "'III'", "'IV'"],
-        "category": "Scope",
-        "caption": "Listable; 4 is written subtractively"
-      },
-      {
-        "expr": ["RomanNumeral", 0],
-        "expected": "'N'",
-        "category": "Possible issues",
-        "caption": "zero is written N, for nulla"
       }
     ]
   },
