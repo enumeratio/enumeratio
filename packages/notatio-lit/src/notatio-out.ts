@@ -396,11 +396,8 @@ export class NotatioOut extends LitElement {
     const form = this.raw && !this.evaluate ? { form: "raw" as const } : undefined;
     const host = transcriptHostOf(this);
     const transcript = host?.transcriptFor(engine);
-    // `%` / `%%` / `%n` mean nothing outside a transcript's history; only rewrite the
-    // LaTeX source when one is actually in scope.
-    const text = transcript && this.format === "latex" ? transcript.substitute(source) : source;
     const parseText = (): BoxedExpression =>
-      this.format === "latex" ? engine.parse(text, form) : engine.box(this.#json(engine), form);
+      this.format === "latex" ? engine.parse(source, form) : engine.box(this.#json(engine), form);
     const { value: result, messages } = collectMessages(engine, () => {
       if (transcript && this.evaluate) {
         // `InString(n)` reads back what the reader typed. Read the JSON *before* boxing:

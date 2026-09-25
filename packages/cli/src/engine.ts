@@ -345,8 +345,12 @@ export class Session {
     }
   }
 
-  /** Replace `%`, `%%`, `%n` with a prior result serialized in `syntax`. */
+  /**
+   * Replace `%`, `%%`, `%n` with a prior result -- in Wolfram syntax only, where they are
+   * Wolfram's own. In notatio (Epsil) `%` is `Mod` and in LaTeX a comment; there, `Out(n)`.
+   */
   private substitute(body: string, syntax: Syntax): string {
+    if (syntax !== "wolfram") return body;
     return body.replace(/%(\d+)|%+/g, (tok) => {
       const numbered = /^%(\d+)$/.exec(tok);
       const ref = numbered
