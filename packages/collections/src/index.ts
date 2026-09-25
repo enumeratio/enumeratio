@@ -1,6 +1,6 @@
 export { declareCollections } from "./library.ts";
-export { allEntries } from "./packs/index.ts";
-export type { FamilySpec, PackEntry } from "./packs/types.ts";
+export { allEntries } from "./families/index.ts";
+export type { FamilySpec, FamilyKernel } from "./families/types.ts";
 export { declareStats, type StatsOptions } from "./stats.ts";
 
 // Reference entries live at the buildless `@enumeratio/collections/reference`

@@ -9,7 +9,7 @@
 //   vp node packages/collections/scripts/quickcheck.ts perm 123456 # replay exactly
 //   QUICKCHECK_POINTS=20 vp node …/quickcheck.ts                   # more points per family
 
-import { allEntries } from "../src/packs/index.ts";
+import { allEntries } from "../src/families/index.ts";
 import { check, checkFamily, type Failure, random, shrink } from "./properties.ts";
 
 const POINTS = Number(process.env.QUICKCHECK_POINTS ?? 8);

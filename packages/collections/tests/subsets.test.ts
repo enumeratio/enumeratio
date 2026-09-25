@@ -1,7 +1,7 @@
 import { expect, test } from "vite-plus/test";
-import { entries as allEntries } from "../src/packs/subsets.ts";
+import { entries as allEntries } from "../src/families/subsets.ts";
 
-// Certify every pack kernel: rank(unrank(p, r), p) === r across the whole family,
+// Certify every family kernel: rank(unrank(p, r), p) === r across the whole family,
 // count matches the enumeration, and unranked elements are valid members.
 const PARAMS: Record<string, number[][]> = {
   SubsetsWithoutConsecutive: [[0], [1], [4], [6]],

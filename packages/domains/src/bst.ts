@@ -3,7 +3,7 @@
 //
 // REPRESENTATION. `binary_tree`'s declared shape (domain-data.ts) is `list<integer>`, flat —
 // not the nested `leaf 0 / [L, R]` shape the collections package uses to GENERATE
-// `BinaryTrees(n)` (packages/collections/src/packs/kernels-extra.ts). Nothing in the repo yet
+// `BinaryTrees(n)` (packages/collections/src/families/kernels-extra.ts). Nothing in the repo yet
 // constructs a `binary_tree` value, so there is no existing decoder to match; the flat shape
 // is the constraint, and it also matches the worked example already staged for this carrier
 // in scripts/collect-entries.ts's `SAMPLES` (`binary_tree: { contents: ["List", 1, 2, 3] }`).

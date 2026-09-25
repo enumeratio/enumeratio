@@ -1,5 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { type Boxed, intOf } from "./packs/types.ts";
+import { type Boxed, intOf } from "./families/types.ts";
 
 // Permutation statistics over a one-line word (a List of 1..n). Pure functions,
 // lifted from the sibling @enumeratio library, declared as compute-engine heads

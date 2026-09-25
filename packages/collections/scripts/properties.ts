@@ -2,7 +2,7 @@
 // `quickcheck.mts`, which the notatio side makes considerably easier.
 //
 // There, every property costs a pglite round trip, so the harness needs a worker channel, a
-// SIGKILL watchdog and a per-collection budget. Here a `PackEntry` is a pure kernel over
+// SIGKILL watchdog and a per-collection budget. Here a `FamilyKernel` is a pure kernel over
 // plain JS values — count, unrank, rank, valid, with no engine anywhere near it — so the
 // sampling is a plain loop and the whole catalogue runs in under a second. What ports is
 // the IDEA: draw random points and check properties that must hold at EVERY point, rather
@@ -14,7 +14,7 @@
 //   3. injectivity    distinct ranks give distinct elements, over a sampled window
 //   4. count          the count agrees with an actual enumeration, on small parameters
 //
-// NOT a property: what `unrank` does past the end. `PackEntry.unrank` returns `Element`,
+// NOT a property: what `unrank` does past the end. `FamilyKernel.unrank` returns `Element`,
 // not `Element | undefined` — range-checking is the adapter's job in library.ts, and the
 // kernels never promised to decline. Asserting it anyway reported all 41 families as
 // failing on the first run, which is the harness being wrong rather than the catalogue.
@@ -34,7 +34,7 @@
 //   vp node packages/collections/scripts/quickcheck.ts perm 123456 # replay exactly
 //   QUICKCHECK_POINTS=20 vp node …/quickcheck.ts                   # more points per family
 
-import type { PackEntry } from "../src/packs/types.ts";
+import type { FamilyKernel } from "../src/families/types.ts";
 /** Counts past this are sampled but never enumerated — property 5 would not finish. */
 const ENUMERATE_CAP = 2_000;
 
@@ -61,7 +61,7 @@ export interface Failure {
 const key = (value: unknown): string => JSON.stringify(value);
 
 /** Every property, at one sampled point. Returns the first that fails. */
-export function check(entry: PackEntry, params: number[], rank: number): Failure | undefined {
+export function check(entry: FamilyKernel, params: number[], rank: number): Failure | undefined {
   const fail = (property: string, detail: string): Failure => ({
     family: entry.head,
     property,
@@ -102,7 +102,7 @@ export function check(entry: PackEntry, params: number[], rank: number): Failure
 
 /** Bounds and injectivity, which are about the family rather than one point. */
 export function checkFamily(
-  entry: PackEntry,
+  entry: FamilyKernel,
   params: number[],
   draw: () => number,
 ): Failure | undefined {
@@ -156,7 +156,7 @@ export function checkFamily(
 }
 
 /** Walk a failure down toward the smallest point that still shows it. */
-export function shrink(entry: PackEntry, failure: Failure): Failure {
+export function shrink(entry: FamilyKernel, failure: Failure): Failure {
   let best = failure;
   if (failure.rank >= 0) {
     for (let rank = 0; rank < best.rank; rank++) {

@@ -3,7 +3,7 @@
 // other pack: rank(unrank(p, r), p) === r, valid(unrank(p, r), p) === true for all r in
 // [0, count(p)). Kept in its own file (registered via install.ts) so parallel roadmap batches
 // don't collide with core.ts.
-import type { PackEntry } from "./types.ts";
+import type { FamilyKernel } from "./types.ts";
 import { BellB, RgsRank, RgsUnrank } from "./kernels-combinatorics.ts";
 import {
   CatalanNumber,
@@ -722,7 +722,7 @@ function isMotzkinPathsByPeaksOf(e: unknown, n: number, k: number): boolean {
   return h === 0 && peaks === k;
 }
 
-export const entries: PackEntry[] = [
+export const entries: FamilyKernel[] = [
   {
     head: "RestrictedGrowthStrings",
     paramCount: 1,
