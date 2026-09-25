@@ -4,7 +4,7 @@ import { parseNotatio } from "@enumeratio/formats/notatio";
 import { expect, test } from "vite-plus/test";
 import { renderingOf } from "../src/symbols.ts";
 
-// `Evaluator -> "Worker"` (notatio-lit's off-thread session, design/aestimatio.md) only
+// `Evaluator -> "Worker"` (notatio-lit's off-thread session, design/computation.md) only
 // ever reaches the page as the `evaluator="worker"` attribute `renderingOf` lowers it to
 // -- and that lowering only survives a REAL engine's canonicalisation. `symbols.test.ts`'s
 // own golden corpus renders straight off `parseNotatio`'s tree, never through

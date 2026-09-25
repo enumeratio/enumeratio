@@ -5,7 +5,7 @@
 import { expect, test } from "vite-plus/test";
 import { createEvaluatorPool, runCases, type NodeWorkerLike } from "../src/node.ts";
 
-// One of compute-engine's own cooperative loops (design/aestimatio.md §2): it checks a
+// One of compute-engine's own cooperative loops (design/computation.md §5.2): it checks a
 // `timeMs` deadline itself and answers `"Aborted"` as an ordinary VALUE well inside the
 // worker's cooperative window, long before any hard kill. So this reliably produces
 // `{ outcome: "Evaluated", value: "Aborted" }`, not the `"Aborted"` OUTCOME — that one is

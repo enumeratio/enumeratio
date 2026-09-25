@@ -1,6 +1,6 @@
 // Host-side logic of `evaluateInWorker`, exercised without a real browser: a fake
 // `Worker` stands in (`createWorker`), so this never spawns anything and runs anywhere
-// `vp test` does. See design/aestimatio.md §3 and ./browser.ts's own comments.
+// `vp test` does. See design/computation.md §5.3 and ./browser.ts's own comments.
 import { expect, test } from "vite-plus/test";
 import { evaluateInWorker, type WorkerLike } from "../src/browser.ts";
 
