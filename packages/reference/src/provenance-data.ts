@@ -1326,4 +1326,32 @@ export const provenance: readonly HeadRecord[] = [
     wolframAlias: null,
     elsewhere: [],
   },
+  {
+    name: "Primes",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "SquareNumbers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "AbundantNumbers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
+  {
+    name: "SmoothNumbers",
+    provenance: "unknown",
+    declared: null,
+    wolframAlias: null,
+    elsewhere: [],
+  },
 ];
