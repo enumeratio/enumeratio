@@ -69,7 +69,7 @@ test("complex argument — the case the native handler declines (mpmath values)"
   expect(b.im).toBeCloseTo(10.451822205943449, 11);
 });
 
-// --- Found by the oracle quickcheck: PolyGamma(-1, z) was unevaluated ------------
+// --- Found by the oracle Plausible: PolyGamma(-1, z) was unevaluated ------------
 
 test("ψ⁽⁻¹⁾(z) = LogGamma(z), matching Wolfram's PolyGamma[-1, z] (mpmath has no negative order)", () => {
   expect(num(["PolyGamma", -1, 2])).toBeCloseTo(0, 13); // LogGamma(2) = log(1!) = 0
