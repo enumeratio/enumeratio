@@ -24,9 +24,7 @@ test("roots agree with a scan for every b, r ≤ 6, m ≤ 120", () => {
   for (let m = 1; m <= 120; m++) {
     for (let r = 1; r <= 6; r++) {
       for (let b = 0; b < m; b++) {
-        expect(powerModRoots(BigInt(b), BigInt(r), BigInt(m)), `x^${r} ≡ ${b} (mod ${m})`).toEqual(
-          scan(b, r, m),
-        );
+        expect(powerModRoots(BigInt(b), BigInt(r), BigInt(m)), `x^${r} ≡ ${b} (mod ${m})`).toEqual(scan(b, r, m));
       }
     }
   }
@@ -37,9 +35,7 @@ test("roots agree with a scan for large primes past the scanning threshold", () 
   for (const p of [241, 601, 1201, 2161]) {
     for (const r of [2, 3, 4, 5, 6, 8, 12, 15]) {
       for (const b of [1, 2, 3, 7, 10, p - 1]) {
-        expect(powerModRoots(BigInt(b), BigInt(r), BigInt(p)), `x^${r} ≡ ${b} (mod ${p})`).toEqual(
-          scan(b, r, p),
-        );
+        expect(powerModRoots(BigInt(b), BigInt(r), BigInt(p)), `x^${r} ≡ ${b} (mod ${p})`).toEqual(scan(b, r, p));
       }
     }
   }
@@ -50,9 +46,7 @@ test("roots agree with a scan for large primes past the scanning threshold", () 
     [67, 2, 67 ** 3],
     [5, 67, 67 ** 2],
   ] as const) {
-    expect(powerModRoots(BigInt(b), BigInt(r), BigInt(m)), `x^${r} ≡ ${b} (mod ${m})`).toEqual(
-      scan(b, r, m),
-    );
+    expect(powerModRoots(BigInt(b), BigInt(r), BigInt(m)), `x^${r} ≡ ${b} (mod ${m})`).toEqual(scan(b, r, m));
   }
 });
 
@@ -127,16 +121,14 @@ test("crtSolve agrees with a scan, coprime or not", () => {
     for (let a = 0n; a < m; a++) {
       for (let b = 0n; b < n; b++) {
         let found: bigint | undefined;
-        for (let x = 0n; x < m * n && found === undefined; x++)
-          if (x % m === a && x % n === b) found = x;
+        for (let x = 0n; x < m * n && found === undefined; x++) if (x % m === a && x % n === b) found = x;
         const solved = crtSolve([
           [a, m],
           [b, n],
         ]);
         expect(solved?.[0]).toBe(found);
         // The answer is modulo lcm(m, n): both divide it, and it divides m·n.
-        if (solved !== undefined)
-          expect([solved[1] % m, solved[1] % n, (m * n) % solved[1]]).toEqual([0n, 0n, 0n]);
+        if (solved !== undefined) expect([solved[1] % m, solved[1] % n, (m * n) % solved[1]]).toEqual([0n, 0n, 0n]);
       }
     }
   }

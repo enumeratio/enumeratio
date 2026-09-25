@@ -156,18 +156,15 @@ test("1-arg Zeta still works after the head is extended", () => {
   sameExact(["Zeta", -2], 0);
   expect(ce.box(["Zeta", 1]).evaluate().json).toEqual("ComplexInfinity");
   // native threading over a list of s
-  sameExact(
-    ["Zeta", ["List", -1, -2, -3]],
-    ["List", ["Rational", -1, 12], 0, ["Rational", 1, 120]],
-  );
+  sameExact(["Zeta", ["List", -1, -2, -3]], ["List", ["Rational", -1, 12], 0, ["Rational", 1, 120]]);
 });
 
 test("Zeta(s,a) = HurwitzZeta(s,a) for Re(a) > 0", () => {
   sameExact(["Zeta", 2, 2], ["HurwitzZeta", 2, 2]); // both π²/6 − 1
   sameExact(["Zeta", "s", 1], ["Zeta", "s"]); // Zeta(s,1) = ζ(s)
-  expect(
-    Math.abs(num(["Zeta", ["Rational", 1, 2], 2]) - num(["HurwitzZeta", ["Rational", 1, 2], 2])),
-  ).toBeLessThan(1e-13);
+  expect(Math.abs(num(["Zeta", ["Rational", 1, 2], 2]) - num(["HurwitzZeta", ["Rational", 1, 2], 2]))).toBeLessThan(
+    1e-13,
+  );
 });
 
 test("Zeta(s,0) = ζ(s) (dropped pole term, unlike HurwitzZeta)", () => {
@@ -232,20 +229,13 @@ interface ZetaGolden {
   mpmath: [number, number];
   mpmath40: [string, string];
 }
-const zetaGoldens: ZetaGolden[] = JSON.parse(
-  readFileSync(new URL("./zeta.golden.json", import.meta.url), "utf8"),
-);
+const zetaGoldens: ZetaGolden[] = JSON.parse(readFileSync(new URL("./zeta.golden.json", import.meta.url), "utf8"));
 
-const offBy = (
-  rows: ZetaGolden[],
-  value: (g: ZetaGolden) => { re: number; im: number },
-): string[] =>
+const offBy = (rows: ZetaGolden[], value: (g: ZetaGolden) => { re: number; im: number }): string[] =>
   rows.flatMap((g) => {
     const r = value(g);
     const ref = g.mpmath;
-    const err =
-      Math.max(Math.abs(r.re - ref[0]), Math.abs(r.im - ref[1])) /
-      Math.max(1, Math.hypot(ref[0], ref[1]));
+    const err = Math.max(Math.abs(r.re - ref[0]), Math.abs(r.im - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
     return err <= g.tol ? [] : [`${g.label}: relerr ${err.toExponential(2)}`];
   });
 
@@ -288,9 +278,7 @@ const parts = (x: { re: number; im: number }): [number, number] => [x.re, x.im];
 
 test("Zeta(s) at complex s is mpmath's value correctly rounded, on and off the critical line", () => {
   for (const head of [["Zeta"], ["Zeta", 1], ["HurwitzZeta", 1]])
-    expect(complexRiemann.map((g) => parts(viaN(ce, head)(g)))).toEqual(
-      complexRiemann.map((g) => g.mpmath),
-    );
+    expect(complexRiemann.map((g) => parts(viaN(ce, head)(g)))).toEqual(complexRiemann.map((g) => g.mpmath));
 });
 
 test("Zeta(s) at complex s is correctly rounded with the engine at 40 digits, and at machine", () => {
@@ -300,9 +288,7 @@ test("Zeta(s) at complex s is correctly rounded with the engine at 40 digits, an
     const engine = new ComputeEngine();
     declareAnalytic(engine);
     engine.precision = precision;
-    expect(complexRiemann.map((g) => parts(viaN(engine, ["Zeta"])(g)))).toEqual(
-      complexRiemann.map((g) => g.mpmath),
-    );
+    expect(complexRiemann.map((g) => parts(viaN(engine, ["Zeta"])(g)))).toEqual(complexRiemann.map((g) => g.mpmath));
   }
 });
 
@@ -328,10 +314,7 @@ test("Zeta(s) keeps the native behaviour wherever native evaluates", () => {
   sameExact(["Zeta", 2], ["Multiply", ["Rational", 1, 6], ["Power", "Pi", 2]]);
   expect(ce.box(["Zeta", 1]).evaluate().json).toBe("ComplexInfinity");
   expect(ce.box(["Zeta", "s"]).N().json).toEqual(["Zeta", "s"]);
-  expect(ce.box(["Zeta", ["Rational", 1, 2]]).evaluate().json).toEqual([
-    "Zeta",
-    ["Rational", 1, 2],
-  ]);
+  expect(ce.box(["Zeta", ["Rational", 1, 2]]).evaluate().json).toEqual(["Zeta", ["Rational", 1, 2]]);
   // An exact complex stays symbolic under evaluate(), as an exact real does; N() gives a number.
   expect(ce.box(["Zeta", ["Complex", 2, 1]]).evaluate().json).toEqual(["Zeta", ["Complex", 2, 1]]);
   expect(ce.box(["Zeta", ["Complex", 2, 1]]).N().im).toBeCloseTo(-0.4375308659196079, 13);

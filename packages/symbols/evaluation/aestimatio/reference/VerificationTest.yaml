@@ -97,12 +97,7 @@ examples:
     divergence:
       wolfram: Wolfram's one-argument form tests that input evaluates to True, so VerificationTest[1 + 1] is a Failure there.
   - id: a-symbolic-computation-checked-against-its
-    expr:
-      [
-        VerificationTest,
-        [Expand, [Power, [Add, x, 1], 2]],
-        [Add, [Power, x, 2], [Multiply, 2, x], 1],
-      ]
+    expr: [VerificationTest, [Expand, [Power, [Add, x, 1], 2]], [Add, [Power, x, 2], [Multiply, 2, x], 1]]
     expected:
       [
         TestResultObject,

@@ -315,9 +315,7 @@ export class NotatioCollectionTable extends LitElement {
       value = { text: "⚠" };
     } else {
       try {
-        const result = this.#engine!
-          .box(substituteRow(col.json, this.#subject(elt)) as BoxInput)
-          .evaluate();
+        const result = this.#engine!.box(substituteRow(col.json, this.#subject(elt)) as BoxInput).evaluate();
         if (result.operator === "Error") {
           value = { text: "⚠" };
         } else if (Number.isFinite(result.re) && result.im === 0) {
@@ -539,9 +537,7 @@ export class NotatioCollectionTable extends LitElement {
     const total = formatCount(this._total);
     if (!this._matches) {
       return html`<span class="nct-count">${total} rows</span>${
-          this._predicate.error
-            ? html`<span class="nct-error">filter: ${this._predicate.error}</span>`
-            : nothing
+          this._predicate.error ? html`<span class="nct-error">filter: ${this._predicate.error}</span>` : nothing
         }`;
     }
     const matched = formatCount(this._matches.length);
@@ -550,8 +546,8 @@ export class NotatioCollectionTable extends LitElement {
       return html`<span class="nct-count">${matched} of ${total} match</span>`;
     }
     return html`<span class="nct-count"
-        >${matched} match${this._matches.length === 1 ? "" : "es"} in the first
-        ${formatCount(this._scanned)} of ${total}</span
+        >${matched} match${this._matches.length === 1 ? "" : "es"} in the first ${formatCount(this._scanned)} of
+        ${total}</span
       >${
         this._scanning
           ? html`<span class="nct-note">scanning…</span>`
@@ -571,8 +567,8 @@ export class NotatioCollectionTable extends LitElement {
       sorted by <code>${col.label}</code>${this.descending ? " ↓" : " ↑"}
       ${
         bounded
-          ? html`over the first ${formatCount(ordered)} of ${formatCount(view)} rows — sorting
-            materialises the column, so it is bounded:`
+          ? html`over the first ${formatCount(ordered)} of ${formatCount(view)} rows — sorting materialises the column,
+            so it is bounded:`
           : html`over all ${formatCount(ordered)} rows ·`
       }
       <select
@@ -583,10 +579,7 @@ export class NotatioCollectionTable extends LitElement {
         }}
       >
         ${SORT_LIMITS.map(
-          (n) =>
-            html`<option value=${n} ?selected=${n === this.sortLimit}>
-              up to ${formatCount(n)}
-            </option>`,
+          (n) => html`<option value=${n} ?selected=${n === this.sortLimit}>up to ${formatCount(n)}</option>`,
         )}
       </select>
     </div>`;
@@ -619,11 +612,7 @@ export class NotatioCollectionTable extends LitElement {
             this.page = 1;
           })}
         />
-        ${
-          this._predicate.error
-            ? html`<span class="nct-error">${this._predicate.error}</span>`
-            : nothing
-        }
+        ${this._predicate.error ? html`<span class="nct-error">${this._predicate.error}</span>` : nothing}
       </label>
       <label class="nct-field">
         <span>columns</span>
@@ -700,20 +689,8 @@ export class NotatioCollectionTable extends LitElement {
   #pager(): unknown {
     const pages = pageCount(this.#viewCount(), this.pageSize);
     return html`<div class="nct-pager">
-      <button
-        type="button"
-        class="nct-btn"
-        ?disabled=${this.page <= 1}
-        @click=${() => this.#goto(1)}
-      >
-        «
-      </button>
-      <button
-        type="button"
-        class="nct-btn"
-        ?disabled=${this.page <= 1}
-        @click=${() => this.#goto(this.page - 1)}
-      >
+      <button type="button" class="nct-btn" ?disabled=${this.page <= 1} @click=${() => this.#goto(1)}>«</button>
+      <button type="button" class="nct-btn" ?disabled=${this.page <= 1} @click=${() => this.#goto(this.page - 1)}>
         ‹
       </button>
       <span class="nct-pageno"
@@ -729,22 +706,10 @@ export class NotatioCollectionTable extends LitElement {
         />
         of ${formatCount(pages)}</span
       >
-      <button
-        type="button"
-        class="nct-btn"
-        ?disabled=${this.page >= pages}
-        @click=${() => this.#goto(this.page + 1)}
-      >
+      <button type="button" class="nct-btn" ?disabled=${this.page >= pages} @click=${() => this.#goto(this.page + 1)}>
         ›
       </button>
-      <button
-        type="button"
-        class="nct-btn"
-        ?disabled=${this.page >= pages}
-        @click=${() => this.#goto(pages)}
-      >
-        »
-      </button>
+      <button type="button" class="nct-btn" ?disabled=${this.page >= pages} @click=${() => this.#goto(pages)}>»</button>
       <select
         class="nct-select"
         aria-label="rows per page"
@@ -753,9 +718,7 @@ export class NotatioCollectionTable extends LitElement {
           this.page = 1;
         }}
       >
-        ${PAGE_SIZES.map(
-          (n) => html`<option value=${n} ?selected=${n === this.pageSize}>${n} / page</option>`,
-        )}
+        ${PAGE_SIZES.map((n) => html`<option value=${n} ?selected=${n === this.pageSize}>${n} / page</option>`)}
       </select>
     </div>`;
   }
@@ -766,8 +729,7 @@ export class NotatioCollectionTable extends LitElement {
         <code class="nct-title">${this.expr}</code>
         ${this._error ? html`<span class="nct-error">${this._error}</span>` : this.#summary()}
       </div>
-      ${this.#editors()}
-      ${this._error ? nothing : html`${this.#sortNote()}${this.#table()}${this.#pager()}`}
+      ${this.#editors()} ${this._error ? nothing : html`${this.#sortNote()}${this.#table()}${this.#pager()}`}
     </div>`;
   }
 }

@@ -74,11 +74,7 @@ const STEPS = 256;
 /** λ₁ = 1 + γ/2 − ½ln(4π) (Fungrim fungrim:d8d820) — computed symbolically, not numerically. */
 function lambda1(ce: ComputeEngine, options: EvalOptions): BoxedExpression {
   return ce
-    .box([
-      "Subtract",
-      ["Add", ["Divide", "EulerGamma", 2], 1],
-      ["Divide", ["Ln", ["Multiply", 4, "Pi"]], 2],
-    ])
+    .box(["Subtract", ["Add", ["Divide", "EulerGamma", 2], 1], ["Divide", ["Ln", ["Multiply", 4, "Pi"]], 2]])
     .evaluate(options);
 }
 

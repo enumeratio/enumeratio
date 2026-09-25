@@ -16,10 +16,7 @@ test("Rationalize(x, 0) is the exact dyadic rational a double denotes", () => {
     // An integer past 2^53 serialises as {num: "…"}; read either form exactly.
     const int = (j: unknown): bigint =>
       BigInt(typeof j === "object" && j !== null ? (j as { num: string }).num : (j as number));
-    const [p, q] =
-      Array.isArray(json) && json[0] === "Rational"
-        ? [int(json[1]), int(json[2])]
-        : [int(json), 1n];
+    const [p, q] = Array.isArray(json) && json[0] === "Rational" ? [int(json[1]), int(json[2])] : [int(json), 1n];
     expect(Number(p) / Number(q)).toBe(x);
     expect((q & (q - 1n)) === 0n, `denominator ${q} should be a power of 2`).toBe(true);
   }

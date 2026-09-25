@@ -108,8 +108,7 @@ test("containment is an order on every polytope, with the body on top", () => {
     }
     for (const a of faces)
       for (const b of faces)
-        if (P.contains(a, b, 3))
-          expect(P.dimension(a), `${P.name} monotone`).toBeGreaterThanOrEqual(P.dimension(b));
+        if (P.contains(a, b, 3)) expect(P.dimension(a), `${P.name} monotone`).toBeGreaterThanOrEqual(P.dimension(b));
   }
 });
 
@@ -134,9 +133,7 @@ test("a face's normal points out of the body, and the body has none", () => {
   // A triangle of the octahedron is a plane, so its normal is orthogonal to all three edges.
   const triangle = stratum(points, 2)[0]!;
   const normal = faceNormal(CROSS_POLYTOPE, points, triangle)!;
-  for (const vertex of stratum(points, 0).filter((v) =>
-    CROSS_POLYTOPE.hasVertex(triangle.face, v.face),
-  ))
+  for (const vertex of stratum(points, 0).filter((v) => CROSS_POLYTOPE.hasVertex(triangle.face, v.face)))
     expect(
       normal.reduce((sum, v, i) => sum + v * (vertex.at[i]! - triangle.at[i]!), 0),
       "in the face's plane",
@@ -156,9 +153,10 @@ test("reorienting turns the chosen face towards the viewer, rigidly", () => {
   // Rigid: every pairwise distance is unchanged, so it is a rotation and not a distortion.
   for (const [i, a] of points.entries())
     for (const b of points.slice(i + 1, i + 4))
-      expect(
-        Math.hypot(...[0, 1, 2].map((k) => turned[i]!.at[k]! - turned[points.indexOf(b)]!.at[k]!)),
-      ).toBeCloseTo(Math.hypot(...[0, 1, 2].map((k) => a.at[k]! - b.at[k]!)), 9);
+      expect(Math.hypot(...[0, 1, 2].map((k) => turned[i]!.at[k]! - turned[points.indexOf(b)]!.at[k]!))).toBeCloseTo(
+        Math.hypot(...[0, 1, 2].map((k) => a.at[k]! - b.at[k]!)),
+        9,
+      );
 });
 
 test("an exactly opposed turn still works", () => {

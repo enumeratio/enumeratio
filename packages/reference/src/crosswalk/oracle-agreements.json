@@ -196,7 +196,7 @@
       "system": "wolfram",
       "kernel": "15.0.0 for Mac OS X ARM (64-bit) (May 26, 2026)",
       "agree": 12,
-      "disagree": 1
+      "disagree": 0
     },
     {
       "system": "sage",

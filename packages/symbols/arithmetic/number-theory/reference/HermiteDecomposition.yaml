@@ -29,8 +29,7 @@ examples:
     caption: $3\times3$, $\det u=-1$
   - id: rectangular-the-column-without-a-pivot-is-left
     expr: [HermiteDecomposition, [List, [List, 2, 3, 5], [List, 7, 11, 13]]]
-    expected:
-      [List, [List, [List, 11, -3], [List, -7, 2]], [List, [List, 1, 0, 16], [List, 0, 1, -9]]]
+    expected: [List, [List, [List, 11, -3], [List, -7, 2]], [List, [List, 1, 0, 16], [List, 0, 1, -9]]]
     category: Scope
     caption: "Rectangular: the column without a pivot is left unreduced"
   - id: singular-h-gains-a-zero-row-and-u-is-no-longer

@@ -12,8 +12,7 @@ const RAMP_LO = "var(--notatio-series-2, #2f7ed8)";
 
 const n2 = (x: number): string => String(Math.round(x * 100) / 100);
 
-const esc = (s: string): string =>
-  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const esc = (s: string): string => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 function label(x: number): string {
   if (!Number.isFinite(x)) return "";
@@ -104,8 +103,7 @@ export function arrowPath(x1: number, y1: number, x2: number, y2: number, head =
   const rx = x2 + (bx * c + by * s);
   const ry = y2 + (-bx * s + by * c);
   return (
-    `M${n2(x1)},${n2(y1)} L${n2(x2)},${n2(y2)}` +
-    ` M${n2(lx)},${n2(ly)} L${n2(x2)},${n2(y2)} L${n2(rx)},${n2(ry)}`
+    `M${n2(x1)},${n2(y1)} L${n2(x2)},${n2(y2)}` + ` M${n2(lx)},${n2(ly)} L${n2(x2)},${n2(y2)} L${n2(rx)},${n2(ry)}`
   );
 }
 
@@ -244,8 +242,7 @@ export function vectorPlotSvg(
   const plotW = W - mL - mR;
   const plotH = H - mT - mB;
 
-  if (!(x1 > x0) || !(y1 > y0) || plotW <= 0 || plotH <= 0)
-    return frame(W, H, kind, titleSvg(W, opts.title));
+  if (!(x1 > x0) || !(y1 > y0) || plotW <= 0 || plotH <= 0) return frame(W, H, kind, titleSvg(W, opts.title));
 
   const sx = (x: number): number => mL + ((x - x0) / (x1 - x0)) * plotW;
   const sy = (y: number): number => mT + ((y1 - y) / (y1 - y0)) * plotH;
@@ -318,10 +315,5 @@ export function vectorPlotSvg(
 
   const clipId = `nvector-${fnv1a(`${kind}:${n}:${x0},${x1},${y0},${y1}:${W}x${H}:${n2(maxMag)}:${samples.length}`)}`;
   const clip = `<clipPath id="${clipId}"><rect x="${n2(mL)}" y="${n2(mT)}" width="${n2(plotW)}" height="${n2(plotH)}"/></clipPath>`;
-  return frame(
-    W,
-    H,
-    kind,
-    `${clip}<g clip-path="url(#${clipId})">${body}</g>${chrome}${titleSvg(W, opts.title)}`,
-  );
+  return frame(W, H, kind, `${clip}<g clip-path="url(#${clipId})">${body}</g>${chrome}${titleSvg(W, opts.title)}`);
 }

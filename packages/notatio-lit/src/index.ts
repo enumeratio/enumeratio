@@ -158,13 +158,7 @@ export { NotatioTerminal } from "./notatio-terminal.ts";
 export { NotatioTestResultObject } from "./notatio-test-result-object.ts";
 
 // The MathLive/compute-engine integration, so hosts depend on this package alone.
-export {
-  configureEngine,
-  configureLatex,
-  ensureMathliveAssets,
-  loadEngine,
-  loadMarkup,
-} from "./mathlive.ts";
+export { configureEngine, configureLatex, ensureMathliveAssets, loadEngine, loadMarkup } from "./mathlive.ts";
 export type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 
 declare global {
@@ -220,13 +214,7 @@ declare global {
 // Every other head the engine knows gets a generic element at its tag, now that the
 // hand-written ones are defined and can keep theirs.
 import { defineGenerics } from "./generic.ts";
-export {
-  defineGeneric,
-  defineGenerics,
-  expressionOf,
-  isExpressive,
-  NotatioGeneric,
-} from "./generic.ts";
+export { defineGeneric, defineGenerics, expressionOf, isExpressive, NotatioGeneric } from "./generic.ts";
 if (typeof customElements !== "undefined") defineGenerics();
 
 // A built component written structurally -- its arguments as children, its options as

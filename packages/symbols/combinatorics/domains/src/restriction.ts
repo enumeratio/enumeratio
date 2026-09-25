@@ -86,11 +86,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
     name: "DyadicCompositions",
     base: "IntegerCompositions",
     on: "composition",
-    predicate: [
-      "All",
-      "_raw",
-      ["Function", ["Equal", ["Log2", "_"], ["Floor", ["Log2", "_"]]], "_"],
-    ],
+    predicate: ["All", "_raw", ["Function", ["Equal", ["Log2", "_"], ["Floor", ["Log2", "_"]]], "_"]],
     summary: "Compositions into powers of two.",
   },
   {
@@ -123,11 +119,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
       "_raw",
       [
         "Function",
-        [
-          "Equal",
-          ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]],
-          ["Floor", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]]],
-        ],
+        ["Equal", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]], ["Floor", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]]]],
         "_",
       ],
     ],
@@ -165,11 +157,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
     on: "composition",
     predicate: [
       "And",
-      [
-        "All",
-        ["Partition", "_raw", 2, 1],
-        ["Function", ["Not", ["Equal", ["At", "_", 1], ["At", "_", 2]]], "_"],
-      ],
+      ["All", ["Partition", "_raw", 2, 1], ["Function", ["Not", ["Equal", ["At", "_", 1], ["At", "_", 2]]], "_"]],
       [
         "All",
         ["Partition", "_raw", 3, 1],
@@ -177,11 +165,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
           "Function",
           [
             "Less",
-            [
-              "Multiply",
-              ["Subtract", ["At", "_", 2], ["At", "_", 1]],
-              ["Subtract", ["At", "_", 3], ["At", "_", 2]],
-            ],
+            ["Multiply", ["Subtract", ["At", "_", 2], ["At", "_", 1]], ["Subtract", ["At", "_", 3], ["At", "_", 2]]],
             0,
           ],
           "_",
@@ -214,11 +198,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
     name: "SquarePartitions",
     base: "IntegerPartitions",
     on: "integer_partition",
-    predicate: [
-      "All",
-      "_raw",
-      ["Function", ["Equal", ["Sqrt", "_"], ["Floor", ["Sqrt", "_"]]], "_"],
-    ],
+    predicate: ["All", "_raw", ["Function", ["Equal", ["Sqrt", "_"], ["Floor", ["Sqrt", "_"]]], "_"]],
     summary: "Partitions into perfect-square parts.",
   },
   {
@@ -230,11 +210,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
       "_raw",
       [
         "Function",
-        [
-          "Equal",
-          ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]],
-          ["Floor", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]]],
-        ],
+        ["Equal", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]], ["Floor", ["Sqrt", ["Add", ["Multiply", 8, "_"], 1]]]],
         "_",
       ],
     ],
@@ -255,9 +231,7 @@ export const RESTRICTIONS: readonly Restriction[] = [
 export function fillPredicate(node: unknown, subject: unknown, contents: unknown): unknown {
   if (node === "_x") return subject;
   if (node === "_raw") return contents;
-  return Array.isArray(node)
-    ? node.map((operand) => fillPredicate(operand, subject, contents))
-    : node;
+  return Array.isArray(node) ? node.map((operand) => fillPredicate(operand, subject, contents)) : node;
 }
 
 /**

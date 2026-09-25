@@ -34,20 +34,13 @@ function qFactorialExpr(ce: ComputeEngine, n: number, q: BoxedExpression): Boxed
 }
 
 /** The Gaussian binomial, via the Pascal-like recurrence described above. */
-function qBinomialExpr(
-  ce: ComputeEngine,
-  n: number,
-  k: number,
-  q: BoxedExpression,
-): BoxedExpression {
+function qBinomialExpr(ce: ComputeEngine, n: number, k: number, q: BoxedExpression): BoxedExpression {
   if (k < 0 || k > n) return ce.Zero;
   let row: BoxedExpression[] = [ce.One];
   for (let i = 1; i <= n; i++) {
     const next: BoxedExpression[] = [ce.One];
     for (let j = 1; j < i; j++) {
-      const term2 = ce
-        .function("Multiply", [ce.function("Power", [q, ce.number(j)]), row[j]])
-        .evaluate();
+      const term2 = ce.function("Multiply", [ce.function("Power", [q, ce.number(j)]), row[j]]).evaluate();
       next.push(ce.function("Add", [row[j - 1], term2]).evaluate());
     }
     next.push(ce.One);
@@ -57,12 +50,7 @@ function qBinomialExpr(
 }
 
 /** (a; q)_n = product_{k=0}^{n-1} (1 - a q^k), n ≥ 0 (empty product at n = 0). */
-function qPochhammerFinite(
-  ce: ComputeEngine,
-  a: BoxedExpression,
-  q: BoxedExpression,
-  n: number,
-): BoxedExpression {
+function qPochhammerFinite(ce: ComputeEngine, a: BoxedExpression, q: BoxedExpression, n: number): BoxedExpression {
   let r: BoxedExpression = ce.One;
   for (let k = 0; k < n; k++) {
     const qPowK = k === 0 ? ce.One : ce.function("Power", [q, ce.number(k)]);
@@ -110,10 +98,7 @@ export function declareQSeries(ce: ComputeEngine): void {
       if (n.isInfinity && n.re > 0) {
         if (!wantsNumber(ops, options) || !isFiniteNum(a) || !isFiniteNum(q)) return undefined;
         if (Math.hypot(q.re, q.im) >= 1) return undefined; // diverges; stay symbolic
-        return numberResult(
-          ce,
-          qPochhammerInfinite({ re: a.re, im: a.im }, { re: q.re, im: q.im }),
-        );
+        return numberResult(ce, qPochhammerInfinite({ re: a.re, im: a.im }, { re: q.re, im: q.im }));
       }
       return undefined; // negative or symbolic n: not implemented, stays symbolic
     },

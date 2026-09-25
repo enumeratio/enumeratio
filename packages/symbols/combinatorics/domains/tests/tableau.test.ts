@@ -121,9 +121,7 @@ test("the RSK pair is a composite carrier, and both halves share a shape", () =>
     expect(String(pair.type), `[${p}]`).toBe("standard_tableau_pair");
 
     const { insertion, recording } = rskTableaux(p);
-    expect(JSON.stringify(pair.json), `[${p}]`).toContain(
-      JSON.stringify(insertion.flat()).slice(1, -1),
-    );
+    expect(JSON.stringify(pair.json), `[${p}]`).toContain(JSON.stringify(insertion.flat()).slice(1, -1));
     // Same shape is the content of the correspondence: Q is P's shape filled with positions.
     expect(insertion.map((row) => row.length)).toEqual(recording.map((row) => row.length));
   }
@@ -134,11 +132,8 @@ test("the recording tableau is standard", () => {
   // bijection onto PAIRS of standard tableaux rather than merely a map into them.
   for (const p of ALL) {
     const { recording } = rskTableaux(p);
-    expect(recording.flat().sort((a, b) => a - b)).toEqual(
-      Array.from({ length: p.length }, (_, i) => i + 1),
-    );
-    for (const row of recording)
-      for (let i = 1; i < row.length; i++) expect(row[i]!).toBeGreaterThan(row[i - 1]!);
+    expect(recording.flat().sort((a, b) => a - b)).toEqual(Array.from({ length: p.length }, (_, i) => i + 1));
+    for (const row of recording) for (let i = 1; i < row.length; i++) expect(row[i]!).toBeGreaterThan(row[i - 1]!);
     for (let r = 1; r < recording.length; r++)
       for (const [c, entry] of recording[r]!.entries())
         expect(entry, `[${p}] column ${c}`).toBeGreaterThan(recording[r - 1]![c]!);

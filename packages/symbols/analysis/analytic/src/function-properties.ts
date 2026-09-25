@@ -42,8 +42,7 @@ function addPoly(a: readonly number[], b: readonly number[]): number[] {
 
 function mulPoly(a: readonly number[], b: readonly number[]): number[] {
   const out: number[] = Array.from({ length: a.length + b.length - 1 }, () => 0);
-  for (let i = 0; i < a.length; i++)
-    for (let j = 0; j < b.length; j++) out[i + j]! += a[i]! * b[j]!;
+  for (let i = 0; i < a.length; i++) for (let j = 0; j < b.length; j++) out[i + j]! += a[i]! * b[j]!;
   return trim(out);
 }
 
@@ -198,8 +197,7 @@ export function recognize(expr: BoxedExpression, x: string): Recognized | undefi
   if (op === "Divide" && ops.length === 2) {
     const num = polyOf(ops[0]!, x);
     const den = polyOf(ops[1]!, x);
-    if (num !== undefined && den !== undefined && degreeOf(den) >= 1)
-      return { tag: "rational", num, den };
+    if (num !== undefined && den !== undefined && degreeOf(den) >= 1) return { tag: "rational", num, den };
     return undefined;
   }
   if (op === "Power" && ops.length === 2) {
@@ -223,8 +221,7 @@ export function recognize(expr: BoxedExpression, x: string): Recognized | undefi
   }
   if (op === "Sqrt" && ops.length === 1) {
     const radicand = polyOf(ops[0]!, x);
-    if (radicand !== undefined && degreeOf(radicand) >= 1 && degreeOf(radicand) <= 2)
-      return { tag: "sqrt", radicand };
+    if (radicand !== undefined && degreeOf(radicand) >= 1 && degreeOf(radicand) <= 2) return { tag: "sqrt", radicand };
     return undefined;
   }
   if ((op === "Ln" || op === "Log") && ops.length === 1) {
@@ -239,8 +236,7 @@ export function recognize(expr: BoxedExpression, x: string): Recognized | undefi
   }
   if ((op === "Sin" || op === "Cos" || op === "Tan") && ops.length === 1) {
     const arg = polyOf(ops[0]!, x);
-    if (arg !== undefined && degreeOf(arg) === 1)
-      return { tag: "trig", fn: op, a: arg[1]!, b: arg[0]! };
+    if (arg !== undefined && degreeOf(arg) === 1) return { tag: "trig", fn: op, a: arg[1]!, b: arg[0]! };
     return undefined;
   }
   return undefined;
@@ -395,11 +391,7 @@ export function domainOf(
 
 // ---- range --------------------------------------------------------------------------
 
-export function rangeOf(
-  ce: ComputeEngine,
-  rec: Recognized,
-  y: string,
-): BoxedExpression | undefined {
+export function rangeOf(ce: ComputeEngine, rec: Recognized, y: string): BoxedExpression | undefined {
   switch (rec.tag) {
     case "poly": {
       const d = degreeOf(rec.coeffs);
@@ -416,8 +408,7 @@ export function rangeOf(
       if (degreeOf(rec.num) !== 0) return undefined; // only a constant numerator
       const k = rec.num[0]!;
       if (k === 0) return undefined;
-      if (degreeOf(rec.den) === 1)
-        return ce.function("Or", [ce.function("Less", [y, 0]), ce.function("Less", [0, y])]);
+      if (degreeOf(rec.den) === 1) return ce.function("Or", [ce.function("Less", [y, 0]), ce.function("Less", [0, y])]);
       return undefined; // a quadratic denominator's range needs its vertex value too
     }
     case "sqrt": {
@@ -430,9 +421,7 @@ export function rangeOf(
       if (shape.zeros.length === 2) {
         // Two real roots: a > 0 gives two unbounded rays (range [0, ∞)); a < 0 gives
         // a bounded interval between them, peaking at the vertex (range [0, sqrt(v)]).
-        return a > 0
-          ? ce.function("LessEqual", [0, y])
-          : ce.function("LessEqual", [0, y, ce.function("Sqrt", [v])]);
+        return a > 0 ? ce.function("LessEqual", [0, y]) : ce.function("LessEqual", [0, y, ce.function("Sqrt", [v])]);
       }
       // No real roots (disc < 0): defined on all of R, a > 0 forced (else nowhere
       // real), minimum at the vertex.
@@ -546,9 +535,7 @@ export function injectiveOf(rec: Recognized): boolean | undefined {
       return degreeOf(rec.radicand) === 1 ? true : undefined; // quadratic radicand: decline
     case "rational":
       // c / (a x + b): a Möbius-type map, injective wherever it's defined.
-      return degreeOf(rec.num) === 0 && rec.num[0] !== 0 && degreeOf(rec.den) === 1
-        ? true
-        : undefined;
+      return degreeOf(rec.num) === 0 && rec.num[0] !== 0 && degreeOf(rec.den) === 1 ? true : undefined;
     case "trig":
       return false; // periodic: many-to-one over the whole domain
   }
@@ -582,11 +569,7 @@ export function surjectiveOntoRealsOf(rec: Recognized): boolean | undefined {
 
 /** Where the expression fails to be (finitely) defined, as a condition in `x` —
  * `undefined` when this file can't characterise it. */
-export function singularitiesOf(
-  ce: ComputeEngine,
-  rec: Recognized,
-  x: string,
-): BoxedExpression | undefined {
+export function singularitiesOf(ce: ComputeEngine, rec: Recognized, x: string): BoxedExpression | undefined {
   switch (rec.tag) {
     case "poly":
     case "exp":
@@ -666,8 +649,7 @@ export function periodOf(ce: ComputeEngine, rec: Recognized): BoxedExpression | 
       return ce.number(0); // monotonic-or-unbounded: a periodic function can't be
     case "trig": {
       // Exact: `Pi` (or `2*Pi`) over `|a|`, not a floating-point multiple of it.
-      const basePi: BoxedExpression =
-        rec.fn === "Tan" ? ce.symbol("Pi") : ce.function("Multiply", [2, "Pi"]);
+      const basePi: BoxedExpression = rec.fn === "Tan" ? ce.symbol("Pi") : ce.function("Multiply", [2, "Pi"]);
       return ce.function("Divide", [basePi, Math.abs(rec.a)]);
     }
   }
@@ -743,8 +725,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
       if (expr === undefined || x === undefined) return undefined;
       // Only "onto the reals" is supported — the codomain the frontier examples use.
       const codomainName = codomain === undefined ? undefined : symbolNameOf(codomain);
-      if (codomain !== undefined && codomainName !== "Reals" && codomainName !== "RealNumbers")
-        return undefined;
+      if (codomain !== undefined && codomainName !== "Reals" && codomainName !== "RealNumbers") return undefined;
       const rec = recognize(expr, x);
       if (rec === undefined) return undefined;
       const b = surjectiveOntoRealsOf(rec);
@@ -754,11 +735,7 @@ export function declareFunctionProperties(ce: ComputeEngine): void {
 
   declareUnary(ce, "FunctionSingularities", (ce_, rec, x) => singularitiesOf(ce_, rec, x));
   declareUnary(ce, "FunctionDiscontinuities", (ce_, rec, x) => discontinuitiesOf(ce_, rec, x));
-  declareUnary(ce, "FunctionAnalytic", (ce_, rec) =>
-    ce_.symbol(analyticOf(rec) ? "True" : "False"),
-  );
-  declareUnary(ce, "FunctionMeromorphic", (ce_, rec) =>
-    ce_.symbol(meromorphicOf(rec) ? "True" : "False"),
-  );
+  declareUnary(ce, "FunctionAnalytic", (ce_, rec) => ce_.symbol(analyticOf(rec) ? "True" : "False"));
+  declareUnary(ce, "FunctionMeromorphic", (ce_, rec) => ce_.symbol(meromorphicOf(rec) ? "True" : "False"));
   declareUnary(ce, "FunctionPeriod", (ce_, rec) => periodOf(ce_, rec));
 }

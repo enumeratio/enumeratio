@@ -61,9 +61,7 @@ test("the view rotates: azimuth changes the projection, elevation 90 flattens to
 test("zoom scales the projection about the frame centre", () => {
   const g = grid(3, 3, () => 0);
   const xs = (s: string): number[] =>
-    [...s.matchAll(/points="([^"]+)"/g)].flatMap((m) =>
-      m[1].split(" ").map((p) => Number(p.split(",")[0])),
-    );
+    [...s.matchAll(/points="([^"]+)"/g)].flatMap((m) => m[1].split(" ").map((p) => Number(p.split(",")[0])));
   const a = xs(surfaceSvg(g, { axes: false }));
   const b = xs(surfaceSvg(g, { axes: false, zoom: 2 }));
   const spread = (v: number[]): number => Math.max(...v) - Math.min(...v);

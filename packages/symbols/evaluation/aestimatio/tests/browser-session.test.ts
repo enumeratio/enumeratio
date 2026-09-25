@@ -1,12 +1,7 @@
 // Browser session host logic, exercised without a real browser: fake Worker/SharedWorker
 // constructors stand in, same approach as ./browser.test.ts and ./browser-pool.test.ts.
 import { expect, test } from "vite-plus/test";
-import {
-  openSession,
-  type MessagePortLike,
-  type SharedWorkerLike,
-  type WorkerLike,
-} from "../src/browser.ts";
+import { openSession, type MessagePortLike, type SharedWorkerLike, type WorkerLike } from "../src/browser.ts";
 
 /** A message has an `id` exactly when it's an `evaluate` call (the `{ setup }` handshake
  * doesn't) -- used below to auto-fire `"started"` only for those, immediately, simulating

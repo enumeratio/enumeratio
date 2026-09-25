@@ -40,11 +40,7 @@ test("Ordering(c) with no n is unaffected", () => {
 
 // Mean / Median: column-wise over a matrix.
 test("Mean(matrix) is column-wise", () => {
-  expect(run(["Mean", ["List", ["List", 1, 10], ["List", 2, 20], ["List", 3, 30]]])).toEqual([
-    "List",
-    2,
-    20,
-  ]);
+  expect(run(["Mean", ["List", ["List", 1, 10], ["List", 2, 20], ["List", 3, 30]]])).toEqual(["List", 2, 20]);
 });
 test("Mean(flat list) is unaffected", () => {
   expect(run(["Mean", ["List", 1, 2, 3, 4]])).toEqual(["Rational", 5, 2]);
@@ -81,23 +77,13 @@ test("Clamp(x) boxes without a type error", () => {
 
 // Sort: strings sort lexicographically; numeric and comparator forms are unaffected.
 test("Sort(strings) sorts lexicographically", () => {
-  expect(run(["Sort", ["List", "banana", "apple", "cherry"]])).toEqual([
-    "List",
-    "apple",
-    "banana",
-    "cherry",
-  ]);
+  expect(run(["Sort", ["List", "banana", "apple", "cherry"]])).toEqual(["List", "apple", "banana", "cherry"]);
 });
 test("Sort(numbers) is unaffected", () => {
   expect(run(["Sort", ["List", 3, 1, 2]])).toEqual(["List", 1, 2, 3]);
 });
 test("Sort(list, comparator) is unaffected", () => {
-  expect(run(["Sort", ["List", 3, 1, 2], ["Function", ["Greater", "_1", "_2"]]])).toEqual([
-    "List",
-    3,
-    2,
-    1,
-  ]);
+  expect(run(["Sort", ["List", 3, 1, 2], ["Function", ["Greater", "_1", "_2"]]])).toEqual(["List", 3, 2, 1]);
 });
 
 // Length(atom): 0, since an atom has no parts.
@@ -145,11 +131,7 @@ test("Union(...) is still de-duplicated", () => {
 // Partition(c, n): the ragged tail is dropped, matching Wolfram; the sliding-window
 // form, Partition(c, n, d), is untouched.
 test("Partition(c, n) drops a ragged tail", () => {
-  expect(run(["Partition", ["List", 1, 2, 3, 4, 5], 2])).toEqual([
-    "List",
-    ["List", 1, 2],
-    ["List", 3, 4],
-  ]);
+  expect(run(["Partition", ["List", 1, 2, 3, 4, 5], 2])).toEqual(["List", ["List", 1, 2], ["List", 3, 4]]);
 });
 test("Partition(c, n) with no ragged tail is unaffected", () => {
   expect(run(["Partition", ["List", 1, 2, 3, 4, 5, 6], 2])).toEqual([
@@ -171,14 +153,11 @@ test("Partition(c, n, d) sliding windows are unaffected", () => {
 
 // Join(a, b, …, n): a trailing integer n >= 2 joins at that level.
 test("Join(a, b, n) joins at level n", () => {
-  expect(
-    run([
-      "Join",
-      ["List", ["List", 1, 2], ["List", 3, 4]],
-      ["List", ["List", 5, 6], ["List", 7, 8]],
-      2,
-    ]),
-  ).toEqual(["List", ["List", 1, 2, 5, 6], ["List", 3, 4, 7, 8]]);
+  expect(run(["Join", ["List", ["List", 1, 2], ["List", 3, 4]], ["List", ["List", 5, 6], ["List", 7, 8]], 2])).toEqual([
+    "List",
+    ["List", 1, 2, 5, 6],
+    ["List", 3, 4, 7, 8],
+  ]);
 });
 test("Join(a, b) with no level argument is unaffected", () => {
   expect(run(["Join", ["List", 1, 2], ["List", 3, 4]])).toEqual(["List", 1, 2, 3, 4]);

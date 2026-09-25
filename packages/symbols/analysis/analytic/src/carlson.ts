@@ -160,22 +160,10 @@ export function carlsonRD(x0: Cx, y0: Cx, z0: Cx): Cx {
  * expected of a principal value).
  */
 export function carlsonRJ(x0: Cx, y0: Cx, z0: Cx, p0: Cx): Cx {
-  if (
-    [x0, y0, z0, p0].every((v) => v.im === 0 && v.re <= 0) &&
-    [x0, y0, z0, p0].some((v) => v.re < 0)
-  ) {
+  if ([x0, y0, z0, p0].every((v) => v.im === 0 && v.re <= 0) && [x0, y0, z0, p0].some((v) => v.re < 0)) {
     return mul(cx(0, 1), carlsonRJ(cx(-x0.re), cx(-y0.re), cx(-z0.re), cx(-p0.re)));
   }
-  if (
-    p0.im === 0 &&
-    p0.re < 0 &&
-    x0.im === 0 &&
-    x0.re >= 0 &&
-    y0.im === 0 &&
-    y0.re >= 0 &&
-    z0.im === 0 &&
-    z0.re >= 0
-  ) {
+  if (p0.im === 0 && p0.re < 0 && x0.im === 0 && x0.re >= 0 && y0.im === 0 && y0.re >= 0 && z0.im === 0 && z0.re >= 0) {
     const [x, y, z] = [x0.re, y0.re, z0.re].sort((a, b) => a - b);
     if ([x, y, z].filter((v) => v === 0).length <= 1) {
       const q = -p0.re;
@@ -293,8 +281,7 @@ export function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
     if (args.every((v) => v.re >= 0)) return false; // no cut in reach
     if (args.every((v) => v.re <= 0) && args.some((v) => v.re !== 0)) return false; // reflection
     const [xr, yr, zr] = [x.re, y.re, z.re].sort((a, b) => a - b);
-    const cpv =
-      p.re < 0 && xr >= 0 && yr >= 0 && zr >= 0 && [xr, yr, zr].filter((v) => v === 0).length <= 1;
+    const cpv = p.re < 0 && xr >= 0 && yr >= 0 && zr >= 0 && [xr, yr, zr].filter((v) => v === 0).length <= 1;
     return !cpv;
   }
   return args.filter((v) => v.re < 0).length >= 2;
@@ -302,15 +289,12 @@ export function carlsonRJDeclines(x: Cx, y: Cx, z: Cx, p: Cx): boolean {
 
 // --- Real-scalar wrappers, for the plotting/compiled pipeline (see box.ts's realCompile) --
 
-export const carlsonRFReal = (x: number, y: number, z: number): number =>
-  carlsonRF(cx(x), cx(y), cx(z)).re;
+export const carlsonRFReal = (x: number, y: number, z: number): number => carlsonRF(cx(x), cx(y), cx(z)).re;
 export const carlsonRCReal = (x: number, y: number): number => carlsonRC(cx(x), cx(y)).re;
-export const carlsonRDReal = (x: number, y: number, z: number): number =>
-  carlsonRD(cx(x), cx(y), cx(z)).re;
+export const carlsonRDReal = (x: number, y: number, z: number): number => carlsonRD(cx(x), cx(y), cx(z)).re;
 export const carlsonRJReal = (x: number, y: number, z: number, p: number): number =>
   carlsonRJ(cx(x), cx(y), cx(z), cx(p)).re;
-export const carlsonRGReal = (x: number, y: number, z: number): number =>
-  carlsonRG(cx(x), cx(y), cx(z)).re;
+export const carlsonRGReal = (x: number, y: number, z: number): number => carlsonRG(cx(x), cx(y), cx(z)).re;
 
 // --- compute-engine declarations -----------------------------------------------------
 
@@ -362,15 +346,8 @@ export function declareCarlson(ce: ComputeEngine): void {
     signature: "(number, number, number, number) -> number",
     evaluate: (ops, options) => {
       const [x, y, z, p] = ops;
-      if (x === undefined || y === undefined || z === undefined || p === undefined)
-        return undefined;
-      if (
-        !wantsNumber(ops, options) ||
-        !isFiniteNum(x) ||
-        !isFiniteNum(y) ||
-        !isFiniteNum(z) ||
-        !isFiniteNum(p)
-      ) {
+      if (x === undefined || y === undefined || z === undefined || p === undefined) return undefined;
+      if (!wantsNumber(ops, options) || !isFiniteNum(x) || !isFiniteNum(y) || !isFiniteNum(z) || !isFiniteNum(p)) {
         return undefined;
       }
       const [xc, yc, zc, pc] = [cx(x.re, x.im), cx(y.re, y.im), cx(z.re, z.im), cx(p.re, p.im)];

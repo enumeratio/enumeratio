@@ -28,14 +28,7 @@ test("vertices are the permutations, doubled", () => {
   const vertices = P.enumerate(3)
     .filter((f) => P.dimension(f) === 0)
     .map((f) => P.point(f));
-  expect(vertices.map((v) => v.join(","))).toEqual([
-    "2,4,6",
-    "2,6,4",
-    "4,2,6",
-    "4,6,2",
-    "6,2,4",
-    "6,4,2",
-  ]);
+  expect(vertices.map((v) => v.join(","))).toEqual(["2,4,6", "2,6,4", "4,2,6", "4,6,2", "6,2,4", "6,4,2"]);
 });
 
 test("every face's barycentre lies in the same hyperplane", () => {
@@ -58,15 +51,12 @@ test("vertex incidence is the primitive, and the poset order is derived from it"
   for (const big of faces)
     for (const small of faces)
       if (P.contains(big, small, 3))
-        expect(P.dimension(big), "a container is at least as big").toBeGreaterThanOrEqual(
-          P.dimension(small),
-        );
+        expect(P.dimension(big), "a container is at least as big").toBeGreaterThanOrEqual(P.dimension(small));
   // Transitive, which vertex incidence on its own would not give.
   for (const a of faces)
     for (const b of faces)
       for (const c of faces)
-        if (P.contains(a, b, 3) && P.contains(b, c, 3))
-          expect(P.contains(a, c, 3), "transitive").toBe(true);
+        if (P.contains(a, b, 3) && P.contains(b, c, 3)) expect(P.contains(a, c, 3), "transitive").toBe(true);
 });
 
 test("the body contains every face, and a vertex contains only itself", () => {

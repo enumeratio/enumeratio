@@ -18,9 +18,7 @@ import { type Definition, headsOf, signatureOf } from "./types.ts";
 const STRUCTURAL = new Set(["Function", "Apply", "Delimiter", "Sequence", "Hold"]);
 
 /** Every head appearing in any definition, with how many definitions use it. */
-export function headUsage(
-  definitions: readonly Definition[] = ALL_STATISTICS,
-): Map<string, number> {
+export function headUsage(definitions: readonly Definition[] = ALL_STATISTICS): Map<string, number> {
   const usage = new Map<string, number>();
   for (const definition of definitions)
     for (const head of headsOf(definition.expr)) {

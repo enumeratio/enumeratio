@@ -70,8 +70,7 @@ examples:
       wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: big-integers-the-coefficients-stay-minimal-x-b
     expr: [ExtendedGCD, [Power, 2, 100], [Power, 3, 50]]
-    expected:
-      [Tuple, 1, { num: "208475958620489751737959" }, { num: "-368122879029235364752383564167" }]
+    expected: [Tuple, 1, { num: "208475958620489751737959" }, { num: "-368122879029235364752383564167" }]
     category: Scope
     caption: Big integers; the coefficients stay minimal, $|x|<b$ and $|y|<a$
     divergence:

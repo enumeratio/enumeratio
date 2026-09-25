@@ -24,8 +24,7 @@ const numOf = (x: unknown): string | undefined =>
     : undefined;
 
 /** A number's decimal digits, whether it came as a `{num}` literal or a plain double. */
-const decimalOf = (x: unknown): string | undefined =>
-  typeof x === "number" ? String(x) : numOf(x);
+const decimalOf = (x: unknown): string | undefined => (typeof x === "number" ? String(x) : numOf(x));
 
 /** A decimal string reduced to sign, significant digits and exponent, so that `"0.50"`,
  * `"5e-1"` and `".5"` compare equal while any difference in a significant digit does not. */
@@ -43,8 +42,7 @@ const canonicalDecimal = (num: string): string => {
 
 /** An example that asks for digits: `N(x, d)`. Its answer is a promise about every digit it
  * shows, so it is compared digit for digit (see `settled`). */
-const asksForDigits = (expr: unknown): boolean =>
-  Array.isArray(expr) && expr[0] === "N" && expr.length === 3;
+const asksForDigits = (expr: unknown): boolean => Array.isArray(expr) && expr[0] === "N" && expr.length === 3;
 
 /**
  * `output` with each number that matches `expected`'s replaced by it.
@@ -65,11 +63,7 @@ const settled = (output: unknown, expected: unknown, exact: boolean): unknown =>
     }
   } else {
     const float = (x: unknown): number | undefined =>
-      typeof x === "number" && !Number.isInteger(x)
-        ? x
-        : numOf(x) === undefined
-          ? undefined
-          : Number(numOf(x));
+      typeof x === "number" && !Number.isInteger(x) ? x : numOf(x) === undefined ? undefined : Number(numOf(x));
     const [a, b] = [float(output), float(expected)];
     if (a !== undefined && b !== undefined && Number.isFinite(a) && Number.isFinite(b)) {
       return Math.abs(a - b) <= 1e-12 * Math.max(1, Math.abs(a), Math.abs(b)) ? expected : output;
@@ -98,7 +92,7 @@ const setup = new URL("../scripts/engines.ts", import.meta.url).href;
 
 /** Per-example caps: generous for a real reference example, tight enough that a runaway
  * one fails fast instead of hanging the suite or eating the machine's memory (this box
- * OOM'd once already — see design/aestimatio.md §3). */
+ * OOM'd once already — see design/computation.md §5.3). */
 const TIME_MS = 10_000;
 const MEMORY_BYTES = 512 * 1024 * 1024;
 // Modest on purpose: several examples can still exceed their own cap independently
@@ -136,9 +130,7 @@ for (const entry of entries) {
         throw new Error(`evaluation raised: ${result.reason}`);
       }
       if (result.outcome === "Aborted") {
-        throw new Error(
-          `exceeded the ${TIME_MS}ms/${MEMORY_BYTES}-byte cap — tighten the example or raise the cap`,
-        );
+        throw new Error(`exceeded the ${TIME_MS}ms/${MEMORY_BYTES}-byte cap — tighten the example or raise the cap`);
       }
 
       const volatile = new Set(example.volatile ?? []);

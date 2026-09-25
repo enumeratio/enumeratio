@@ -111,13 +111,8 @@ test("sampling stays on the step grid, and caps at n", () => {
 
 test("detectors: a pipe, a plain tty, a kitty; print, a phone, the web", () => {
   expect(nodeEnvironment({ isTTY: false, env: {} }).name).toBe("pipe");
-  expect(nodeEnvironment({ isTTY: true, env: { TERM: "xterm-256color" } }).surface).toEqual([
-    "text",
-  ]);
-  expect(nodeEnvironment({ isTTY: true, env: { TERM: "xterm-kitty" } }).surface).toEqual([
-    "raster",
-    "text",
-  ]);
+  expect(nodeEnvironment({ isTTY: true, env: { TERM: "xterm-256color" } }).surface).toEqual(["text"]);
+  expect(nodeEnvironment({ isTTY: true, env: { TERM: "xterm-kitty" } }).surface).toEqual(["raster", "text"]);
   expect(browserEnvironment({ print: true }).name).toBe("print");
   expect(browserEnvironment({ coarse: true, hover: false }).name).toBe("compact");
   expect(browserEnvironment({ hover: true, dark: true })).toMatchObject({
@@ -132,7 +127,5 @@ test("a static host evaluates each readout under the pins", () => {
   const seen: string[] = [];
   const out = evaluateReadouts(pinned, (e) => (seen.push(serializeNotatio(e)), 4));
   expect(seen).toEqual(["2 ^ 2"]);
-  expect(serializeNotatio(out)).toBe(
-    'Labeled(Row(["squared is", 4]), "k = 2 (0 ≤ k ≤ 5)", Bottom)',
-  );
+  expect(serializeNotatio(out)).toBe('Labeled(Row(["squared is", 4]), "k = 2 (0 ≤ k ≤ 5)", Bottom)');
 });

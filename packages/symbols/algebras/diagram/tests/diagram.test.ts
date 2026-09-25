@@ -129,9 +129,7 @@ test("Temperley–Lieb: eᵢ² = δeᵢ, eᵢeᵢ₊₁eᵢ = eᵢ, and distant 
 test("Brauer: sᵢ² = 1, the braid relation, and sᵢeᵢ = eᵢ", () => {
   const n = 4;
   for (let i = 1; i < n; i++) {
-    expect(diagramKey(composeDiagrams(s(n, i), s(n, i)).result)).toBe(
-      diagramKey(identityDiagram(n)),
-    );
+    expect(diagramKey(composeDiagrams(s(n, i), s(n, i)).result)).toBe(diagramKey(identityDiagram(n)));
     expect(diagramKey(composeDiagrams(s(n, i), e(n, i)).result)).toBe(diagramKey(e(n, i)));
     expect(diagramKey(composeDiagrams(e(n, i), s(n, i)).result)).toBe(diagramKey(e(n, i)));
   }

@@ -15,12 +15,7 @@ import {
   WIKIDATA_FIXES,
 } from "../src/crosswalk/curated.ts";
 import { dlmfNotations, normaliseName } from "../src/crosswalk/dlmf.ts";
-import {
-  crosswalkFor,
-  crosswalkForCollection,
-  crosswalkForStatistic,
-  hrefOf,
-} from "../src/crosswalk/index.ts";
+import { crosswalkFor, crosswalkForCollection, crosswalkForStatistic, hrefOf } from "../src/crosswalk/index.ts";
 import { inventoryEntry } from "../src/crosswalk/inventory.ts";
 import { SOURCES } from "../src/crosswalk/sources.ts";
 import { engineEntries } from "../src/engine-entries.ts";
@@ -44,9 +39,7 @@ test("the generated engine-symbol and crosswalk data are what the collector deri
   const symbols = engineSymbols(new ComputeEngine());
   expect(symbols).toEqual(engineData);
   const names = [...new Set([...symbols.map((s) => s.name), ...entries.map((e) => e.name)])].sort();
-  expect(crosswalk(names, FUNGRIM_CORE.rules, { ...SYMBOLS, ...HEADS }, MAPPINGS)).toEqual(
-    derivedData,
-  );
+  expect(crosswalk(names, FUNGRIM_CORE.rules, { ...SYMBOLS, ...HEADS }, MAPPINGS)).toEqual(derivedData);
 });
 
 /** Every name a curated row may be keyed by: a documented head, the engine's, a catalog name. */
@@ -108,14 +101,7 @@ test("a carrier inherits what the catalog knows about its collections", () => {
 test("a head's crosswalk draws on every origin", () => {
   const binomial = crosswalkFor("Binomial");
   const origins = new Set(binomial.map((r) => r.origin));
-  expect([...origins].sort()).toEqual([
-    "curated",
-    "engine",
-    "fungrim",
-    "oracle",
-    "wikidata",
-    "wolfram",
-  ]);
+  expect([...origins].sort()).toEqual(["curated", "engine", "fungrim", "oracle", "wikidata", "wolfram"]);
   const wikidata = binomial.find((r) => r.system === "wikidata");
   expect(wikidata?.identity).toBe("Q209875");
   expect(wikidata?.href).toBe("https://www.wikidata.org/wiki/Q209875");
@@ -139,24 +125,22 @@ test("Zeta is Riemann's at one argument and Hurwitz's at two", () => {
 });
 
 test("a statistic links to its FindStat number on the carrier it is recorded for", () => {
-  const findstat = crosswalkForStatistic("Descents", "Permutation").filter(
-    (r) => r.system === "findstat",
-  );
+  const findstat = crosswalkForStatistic("Descents", "Permutation").filter((r) => r.system === "findstat");
   expect(findstat.map((r) => r.identity)).toEqual(["St000021"]);
   expect(findstat[0]?.href).toBe("https://www.findstat.org/St000021");
   // On the head's own page the same row says which carrier it was recorded against.
-  expect(
-    crosswalkFor("Descents").find((r) => r.system === "findstat" && r.identity === "St000021")?.via,
-  ).toBe("Permutation");
+  expect(crosswalkFor("Descents").find((r) => r.system === "findstat" && r.identity === "St000021")?.via).toBe(
+    "Permutation",
+  );
 });
 
 test("engine stubs cover exactly the symbols nothing documents", () => {
   const documented = new Set(entries.map((e) => e.name));
   const stubs = engineEntries(documented);
   expect(stubs.every((s) => s.stub === "engine" && !documented.has(s.name))).toBe(true);
-  expect(
-    stubs.length + [...documented].filter((n) => engineData.some((s) => s.name === n)).length,
-  ).toBe(engineData.length);
+  expect(stubs.length + [...documented].filter((n) => engineData.some((s) => s.name === n)).length).toBe(
+    engineData.length,
+  );
   const csch = stubs.find((s) => s.name === "Csch");
   expect(csch?.summary).toMatch(/cosecant/i);
 });
@@ -171,13 +155,9 @@ test("Python references resolve to their documentation anchors", () => {
     "sage.combinat.set_partition_ordered.OrderedSetPartitions",
   );
   // Sage documents symbolic functions as the class behind them.
-  expect(inventoryEntry("sage", "zeta($1)")?.name).toBe(
-    "sage.functions.transcendental.Function_zeta",
-  );
+  expect(inventoryEntry("sage", "zeta($1)")?.name).toBe("sage.functions.transcendental.Function_zeta");
   // A class member of the same bare name is not the function.
-  expect(inventoryEntry("sage", "psi($1, $2)")?.name ?? "none").not.toContain(
-    "QuasiSymmetricFunctions",
-  );
+  expect(inventoryEntry("sage", "psi($1, $2)")?.name ?? "none").not.toContain("QuasiSymmetricFunctions");
   // The catalog's module-page URL is upgraded to the anchored one on the same page.
   const sage = crosswalkFor("SetCompositions").find((r) => r.system === "sage");
   expect(sage?.href).toContain("#sage.combinat.set_partition_ordered.OrderedSetPartitions");
@@ -192,22 +172,16 @@ test("a Wikidata item answers for the encyclopaedias at once", () => {
     "nlab",
     "britannica",
   ]);
-  expect(gamma.find((r) => r.system === "nlab")?.href).toBe(
-    "https://ncatlab.org/nlab/show/Gamma+function",
-  );
+  expect(gamma.find((r) => r.system === "nlab")?.href).toBe("https://ncatlab.org/nlab/show/Gamma+function");
   // Reached from a curated Wikipedia title: the item supplies the Q-id itself.
   const partition = crosswalkFor("SetPartition");
   expect(partition.find((r) => r.system === "wikidata")?.origin).toBe("wikidata");
   // The curated MathWorld row and Wikidata's agree on one pointer, shown once.
-  expect(partition.filter((r) => r.system === "mathworld").map((r) => r.identity)).toEqual([
-    "SetPartition",
-  ]);
+  expect(partition.filter((r) => r.system === "mathworld").map((r) => r.identity)).toEqual(["SetPartition"]);
 });
 
 test("the DLMF is reached by name, down to the defining equation", () => {
-  expect(normaliseName("Stirling numbers of the first kind")).toBe(
-    normaliseName("Stirling number of the first kind"),
-  );
+  expect(normaliseName("Stirling numbers of the first kind")).toBe(normaliseName("Stirling number of the first kind"));
   expect(normaliseName("Lambert W function")).toBe(normaliseName("Lambert W-function"));
   // Every DLMF wording we wrote down is one the handbook uses.
   expect(Object.entries(DLMF_NAMES).filter(([, n]) => !dlmfNotations(n).length)).toEqual([]);
@@ -243,9 +217,7 @@ test("what the finder established by value agrees with what the catalog recorded
   // And the rows show up on the statistic, marked as found by value; a contradicted
   // catalog id does not.
   const descents = crosswalkForStatistic("Descents", "Permutation");
-  expect(descents.filter((r) => r.system === "findstat").map((r) => r.identity)).toEqual([
-    "St000021",
-  ]);
+  expect(descents.filter((r) => r.system === "findstat").map((r) => r.identity)).toEqual(["St000021"]);
   const crank = crosswalkForStatistic("Crank", "IntegerPartition");
   expect(crank.filter((r) => r.system === "findstat").map((r) => r.identity)).toEqual(["St000474"]);
 });
@@ -279,9 +251,9 @@ test("what the OEIS established by count agrees with what the catalog recorded",
     const rows = oeis.filter((m) => m.head === head);
     if (rows.some((m) => m.triangle)) return [];
     const found = rows.map((m) => m.oeis);
-    return REFERENCES.filter(
-      (r) => r.system === "oeis" && r.subject === head && !found.includes(r.identity),
-    ).map((r) => `${head}: catalog ${r.identity}, counts ${found.join("/")}`);
+    return REFERENCES.filter((r) => r.system === "oeis" && r.subject === head && !found.includes(r.identity)).map(
+      (r) => `${head}: catalog ${r.identity}, counts ${found.join("/")}`,
+    );
   });
   expect(disagreements).toEqual(KNOWN);
   // The recorded A-number leads and carries its verification; the rest coincide.
@@ -291,18 +263,14 @@ test("what the OEIS established by count agrees with what the catalog recorded",
   expect(dyck[0]?.origin).toBe("catalog");
   expect(dyck.slice(1).every((r) => r.relation === "aggregate")).toBe(true);
   // A family the catalog never counted is counted now.
-  expect(
-    crosswalkForCollection("IntegerPartitions").find((r) => r.system === "oeis")?.identity,
-  ).toBe("A000041");
+  expect(crosswalkForCollection("IntegerPartitions").find((r) => r.system === "oeis")?.identity).toBe("A000041");
   // The empty-object convention is recorded on the row, not hidden.
   const trees = crosswalkForCollection("LabeledTrees").find((r) => r.identity === "A000272");
   expect(trees?.note).toContain("except the empty object: 0 here, 1 there");
 });
 
 test("a value-verified pointer keeps the row that recorded it and gains the mark", () => {
-  const descents = crosswalkForStatistic("Descents", "Permutation").find(
-    (r) => r.system === "findstat",
-  );
+  const descents = crosswalkForStatistic("Descents", "Permutation").find((r) => r.system === "findstat");
   expect(descents?.origin).toBe("catalog");
   expect(descents?.verified).toEqual({ by: "values", count: 153 });
 });

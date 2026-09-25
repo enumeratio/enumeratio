@@ -36,10 +36,7 @@ export function determinant(m: Matrix<Rational>): Rational {
 
 export function inverse(m: Matrix<Rational>): Matrix<Rational> | undefined {
   const n = m.length;
-  const a = m.map((row, i) => [
-    ...row,
-    ...Array.from({ length: n }, (_, j): Rational => (i === j ? Q.ONE : Q.ZERO)),
-  ]);
+  const a = m.map((row, i) => [...row, ...Array.from({ length: n }, (_, j): Rational => (i === j ? Q.ONE : Q.ZERO))]);
   for (let c = 0; c < n; c++) {
     const r = a.findIndex((row, i) => i >= c && !Q.isZero(row[c]!));
     if (r < 0) return undefined;
@@ -58,9 +55,7 @@ export function inverse(m: Matrix<Rational>): Matrix<Rational> | undefined {
 /** M·R for a profinite M and a rational R. */
 export function multiplyRational(m: Matrix<Profinite>, r: Matrix<Rational>): Matrix<Profinite> {
   return m.map((row) =>
-    r[0]!.map((_, j) =>
-      row.reduce((acc, x, k) => P.add(acc, P.multiply(x, P.exact(r[k]![j]!))), P.exact(Q.ZERO)),
-    ),
+    r[0]!.map((_, j) => row.reduce((acc, x, k) => P.add(acc, P.multiply(x, P.exact(r[k]![j]!))), P.exact(Q.ZERO))),
   );
 }
 
@@ -94,9 +89,7 @@ export function profiniteDecomposition(
   if (values.flat().some((x) => !Q.isInteger(x))) return undefined;
   const stacked = [
     ...values.map((row) => row.map((x) => x[0])),
-    ...Array.from({ length: n }, (_, i) =>
-      Array.from({ length: n }, (_, j) => (i === j ? detMD[0] : 0n)),
-    ),
+    ...Array.from({ length: n }, (_, i) => Array.from({ length: n }, (_, j) => (i === j ? detMD[0] : 0n))),
   ];
   const a0 = hermiteDecomposition(stacked).h.slice(0, n);
 

@@ -680,14 +680,11 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // directly: `LambertW(-0.14, -1)` is the k = -1 branch); Wolfram's `ProductLog` puts the
   // branch first: `ProductLog[z]` / `ProductLog[k, z]`.
   LambertW: (a) =>
-    a.length === 1
-      ? `ProductLog[${toWolfram(a[0])}]`
-      : `ProductLog[${toWolfram(a[1])}, ${toWolfram(a[0])}]`,
+    a.length === 1 ? `ProductLog[${toWolfram(a[0])}]` : `ProductLog[${toWolfram(a[1])}, ${toWolfram(a[0])}]`,
   // compute-engine `Log` is base-10 in the 1-arg form and value-first in the
   // 2-arg form (`Log(value, base)`); Wolfram's `Log` is natural and base-first
   // (`Log[base, value]`), so map and swap.
-  Log: (a) =>
-    a.length === 1 ? `Log[10, ${toWolfram(a[0])}]` : `Log[${toWolfram(a[1])}, ${toWolfram(a[0])}]`,
+  Log: (a) => (a.length === 1 ? `Log[10, ${toWolfram(a[0])}]` : `Log[${toWolfram(a[1])}, ${toWolfram(a[0])}]`),
   // Root(x, n) is the n-th root; Wolfram `Root` means a polynomial root object.
   Root: (a) => `Power[${toWolfram(a[0])}, Divide[1, ${toWolfram(a[1])}]]`,
   // Wolfram has no `Square`; it is x^2.
@@ -706,9 +703,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   Set: (a) => `Union[${call("List", a)}]`,
   // Clamp(x, lo, hi) is Clip[x, {lo, hi}]; the 1-arg form clips to [-1, 1] in both.
   Clamp: (a) =>
-    a.length === 3
-      ? `Clip[${toWolfram(a[0])}, List[${toWolfram(a[1])}, ${toWolfram(a[2])}]]`
-      : call("Clip", a),
+    a.length === 3 ? `Clip[${toWolfram(a[0])}, List[${toWolfram(a[1])}, ${toWolfram(a[2])}]]` : call("Clip", a),
   // Wolfram's Sum/Product only take an iterator; the 1-arg list form is Total /
   // Times-apply. With an iterator the names agree and `Tuple` becomes `{k, a, b}`.
   Sum: (a) => (a.length === 1 ? `Total[${toWolfram(a[0])}]` : call("Sum", a)),
@@ -744,8 +739,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // the args reordered. Scan(xs, f, init) is ALSO same-length while FoldList[f, x, list]
   // is length+1, so only the 2-arg form maps; the seeded form goes out in our context,
   // since Wolfram's Scan is an unrelated side-effecting map.
-  Scan: (a) =>
-    a.length === 2 ? `FoldList[${toWolfram(a[1])}, ${toWolfram(a[0])}]` : call(`${CONTEXT}Scan`, a),
+  Scan: (a) => (a.length === 2 ? `FoldList[${toWolfram(a[1])}, ${toWolfram(a[0])}]` : call(`${CONTEXT}Scan`, a)),
   // PositionalNumerals(b) is ordinary base b wrapped as a system value (see
   // packages/symbols/arithmetic/numerals) — the same digits Wolfram's own bare integer base already gives in
   // IntegerDigits[n, b]/FromDigits[digits, b], so it unwraps to the plain number rather than
@@ -783,8 +777,7 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */
 export const isWolframHead = (head: string): boolean => head in HEADS || head in SPECIAL;
 
-const call = (head: string, args: MathJson[]): string =>
-  `${head}[${args.map((a) => toWolfram(a)).join(", ")}]`;
+const call = (head: string, args: MathJson[]): string => `${head}[${args.map((a) => toWolfram(a)).join(", ")}]`;
 
 /** Serialise a MathJSON value to a Wolfram Language expression string. */
 export function toWolfram(node: MathJson): string {

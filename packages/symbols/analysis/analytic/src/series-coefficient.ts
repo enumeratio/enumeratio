@@ -51,8 +51,7 @@ function seriesCoefficient(
     if (d.operator === "D") return undefined; // compute-engine's own D declined
   }
   const atPoint = d.subs({ [xName]: x0.json as never }).evaluate();
-  const coeff =
-    n === 0 ? atPoint : ce.box(["Divide", atPoint.json, ["Factorial", n]] as never).evaluate();
+  const coeff = n === 0 ? atPoint : ce.box(["Divide", atPoint.json, ["Factorial", n]] as never).evaluate();
   if (isDeclinedResult(coeff, xName)) return undefined;
   return coeff;
 }

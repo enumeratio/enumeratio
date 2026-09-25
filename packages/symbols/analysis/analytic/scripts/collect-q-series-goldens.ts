@@ -43,12 +43,10 @@ const cases: Omit<GoldenCase, "mpmath" | "wolfram">[] = [
   { label: "QBinomial(8,3,2)", head: "QBinomial", args: [8, 3, 2], tol: 1e-3 },
 ];
 
-const argExpr = (a: number | [number, number]): unknown =>
-  Array.isArray(a) ? ["Rational", a[0], a[1]] : a;
+const argExpr = (a: number | [number, number]): unknown => (Array.isArray(a) ? ["Rational", a[0], a[1]] : a);
 const pyLit = (a: number | [number, number]): string =>
   Array.isArray(a) ? `(mp.mpf(${a[0]})/mp.mpf(${a[1]}))` : String(a);
-const wlLit = (a: number | [number, number]): string =>
-  Array.isArray(a) ? `(${a[0]}/${a[1]})` : String(a);
+const wlLit = (a: number | [number, number]): string => (Array.isArray(a) ? `(${a[0]}/${a[1]})` : String(a));
 
 // --- our own evaluation ---------------------------------------------------------------
 const ours = cases.map((c) => ce.box([c.head, ...c.args.map(argExpr)] as never).N().re as number);
@@ -128,10 +126,7 @@ for (const [i, c] of cases.entries()) {
   }
 }
 
-writeFileSync(
-  new URL("../tests/q-series.golden.json", import.meta.url),
-  JSON.stringify(goldens, null, 2) + "\n",
-);
+writeFileSync(new URL("../tests/q-series.golden.json", import.meta.url), JSON.stringify(goldens, null, 2) + "\n");
 
 console.log(
   `cases ${goldens.length}  |  oracle comparisons ${compared}  |  agree ${compared - disagree.length}  disagree ${disagree.length}`,

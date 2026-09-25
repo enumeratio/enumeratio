@@ -101,9 +101,7 @@ test("HenselLift needs a simple root: x³ − x from 1 in Z_2 has f′(1) = 2, n
     2,
     6,
   ]);
-  expect(value(["HenselLift", ["Subtract", ["Power", "x", 2], 2], 3, 7, 6])).toEqual(
-    value(["AdicSqrt", A(7, 2), 6]),
-  );
+  expect(value(["HenselLift", ["Subtract", ["Power", "x", 2], 2], 3, 7, 6])).toEqual(value(["AdicSqrt", A(7, 2), 6]));
 });
 
 test("arithmetic through the engine: exact stays exact, capped caps at the weakest operand", () => {
@@ -160,17 +158,13 @@ test("AdicNumerals in the base slot: non-negatives are plain radix, negatives ar
 test("where the systems agree and differ on the same integers", () => {
   // ℕ: adic digits ARE the positional digits, behind the leading zeros of the fixed width.
   for (const n of [0, 1, 9, 10, 255, 1000]) {
-    expect(value(["IntegerDigits", n, ["AdicNumerals", 10, 6]])).toEqual(
-      value(["IntegerDigits", n, 10, 6]),
-    );
+    expect(value(["IntegerDigits", n, ["AdicNumerals", 10, 6]])).toEqual(value(["IntegerDigits", n, 10, 6]));
   }
   // A residue system with moduli p^k is the b-adic truncation read mod each p^k: for
   // 10^4 = 2^4 · 5^4, the last four adic digits of n determine (n mod 16, n mod 625).
   for (const n of [3, 42, 1234, 4999]) {
     const digits = value(["IntegerDigits", n, ["AdicNumerals", 10, 4]]) as Expr;
     const truncated = value(["FromDigits", digits, 10]) as number;
-    expect(value(["IntegerDigits", n, ["ResidueNumerals", L(16, 625)]])).toEqual(
-      L(truncated % 16, truncated % 625),
-    );
+    expect(value(["IntegerDigits", n, ["ResidueNumerals", L(16, 625)]])).toEqual(L(truncated % 16, truncated % 625));
   }
 });

@@ -198,20 +198,13 @@ function parseLines(text: string, convert: (s: string) => number): Map<number, P
 }
 
 const wlCode = pending
-  .map(
-    (p, k) =>
-      `With[{v=N[${p.wl}, 25]},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]`,
-  )
+  .map((p, k) => `With[{v=N[${p.wl}, 25]},Print[${k},"|",ToString[Re[v],InputForm],"|",ToString[Im[v],InputForm]]]`)
   .join(";\n");
 const wlClean = (s: string): number => Number(s.replace(/`[\d.]+/g, "").replace(/\*\^/g, "e"));
-const wl = parseLines(
-  await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }),
-  wlClean,
-);
+const wl = parseLines(await runKernel("wolframscript", ["-code", wlCode], { timeoutMs: 300_000 }), wlClean);
 
 const relErr = (ours: Pair, ref: Pair): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 const goldens: GoldenCase[] = [];
 const disagree: string[] = [];
@@ -233,10 +226,7 @@ for (const [k, p] of pending.entries()) {
   goldens.push(g);
 }
 
-writeFileSync(
-  new URL("../tests/backlog-heads.golden.json", import.meta.url),
-  `${JSON.stringify(goldens, null, 2)}\n`,
-);
+writeFileSync(new URL("../tests/backlog-heads.golden.json", import.meta.url), `${JSON.stringify(goldens, null, 2)}\n`);
 
 process.stdout.write(`${goldens.length} cases, ${compared} compared against wolfram\n`);
 if (disagree.length > 0) {

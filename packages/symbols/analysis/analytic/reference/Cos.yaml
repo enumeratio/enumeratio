@@ -145,6 +145,11 @@ examples:
     expected: x
     category: Scope
     caption: $\cos(\arccos x) = x$ for every $x$
+  - id: cos-arccos-2-2-past-the-real-domain
+    expr: [Cos, [Arccos, 2]]
+    expected: 2
+    category: Scope
+    caption: $\cos(\arccos(2)) = 2$, even past $[-1, 1]$
   - id: cos-arcsin-x-sqrt-1-x-2
     expr: [Cos, [Arcsin, x]]
     expected: [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]

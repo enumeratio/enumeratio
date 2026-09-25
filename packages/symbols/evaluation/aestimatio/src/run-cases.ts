@@ -1,5 +1,5 @@
-// Batch evaluation of many independent cases through the isolated evaluator (design/
-// aestimatio.md roadmap: "running our own test suites under aestimatio"). One case's
+// Batch evaluation of many independent cases through the isolated evaluator
+// (design/computation.md §5.5). One case's
 // crash or timeout never touches another's — that's the whole point of running each on
 // a pooled worker rather than in-process. Node-only, so this lives beside ./node.ts's
 // own worker machinery and is re-exported from there, never from ./index.ts.
@@ -56,10 +56,7 @@ export interface RunCasesOptions {
  * `"Aborted"`, one whose evaluation raises comes back `"Error"` with `reason`, and every
  * other case in the batch is unaffected.
  */
-export function runCases(
-  cases: readonly Case[],
-  options: RunCasesOptions = {},
-): Promise<CaseResult[]> {
+export function runCases(cases: readonly Case[], options: RunCasesOptions = {}): Promise<CaseResult[]> {
   const { setup, timeMs, memoryBytes, materialize, concurrency, pool: givenPool } = options;
   const pool = givenPool ?? createEvaluatorPool({ size: concurrency });
   const ownsPool = givenPool === undefined;

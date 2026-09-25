@@ -2,11 +2,7 @@
 // anything (see packages/reference/tests/implementations.test.ts for the same principle).
 
 import { expect, test } from "vite-plus/test";
-import {
-  HEAD_IMPLEMENTATIONS_SCHEMA,
-  REFERENCE_ENTRY_SCHEMA,
-  validateSchema,
-} from "../src/schema.ts";
+import { HEAD_IMPLEMENTATIONS_SCHEMA, REFERENCE_ENTRY_SCHEMA, validateSchema } from "../src/schema.ts";
 
 const MINIMAL_ENTRY = {
   name: "Mod",
@@ -31,9 +27,7 @@ test("a well-formed entry with id and role passes", () => {
 
 test("rejects a missing required field", () => {
   const { summary: _summary, ...withoutSummary } = MINIMAL_ENTRY;
-  expect(validateSchema(REFERENCE_ENTRY_SCHEMA, withoutSummary)).toEqual([
-    '$: missing required property "summary"',
-  ]);
+  expect(validateSchema(REFERENCE_ENTRY_SCHEMA, withoutSummary)).toEqual(['$: missing required property "summary"']);
 });
 
 test("rejects an unknown property (typo guard)", () => {

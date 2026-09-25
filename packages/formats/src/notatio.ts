@@ -11,11 +11,7 @@
 // hook via `ce`); inside an island implicit multiplication works, so a product of
 // symbols needs an explicit `*` only in the Epsil (non-island) text.
 
-import {
-  type MathJsonExpression,
-  parseEpsil,
-  serializeEpsil,
-} from "@cortex-js/compute-engine/epsil";
+import { type MathJsonExpression, parseEpsil, serializeEpsil } from "@cortex-js/compute-engine/epsil";
 
 /** Heads that make an input a statement/effect rather than a plain expression. */
 const STATEMENT_HEADS = new Set([
@@ -53,8 +49,7 @@ export interface NotatioResult {
 }
 
 /** Flatten an Epsil diagnostic message (a string or a `[code, ...args]` tuple). */
-const diagText = (m: unknown): string =>
-  Array.isArray(m) ? m.join(" ") : typeof m === "string" ? m : String(m);
+const diagText = (m: unknown): string => (Array.isArray(m) ? m.join(" ") : typeof m === "string" ? m : String(m));
 
 /** The function head of a MathJSON node, or undefined if it is not a function. */
 const headOf = (node: unknown): string | undefined => {

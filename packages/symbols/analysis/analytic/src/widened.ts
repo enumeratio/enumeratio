@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  bigIntegerAt,
-  bigRationalAt,
-  mayBeInteger,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { bigIntegerAt, bigRationalAt, mayBeInteger, widenSignature, wrapOperator } from "@enumeratio/boxed";
 
 // compute-engine's Gamma-built combinatorial heads, widened to the exact values Wolfram gives
 // and the native handler leaves unevaluated or rejects: Binomial, Beta and CatalanNumber at
@@ -23,8 +17,7 @@ const reduced = ([p, q]: Rational): Rational => {
 };
 const times = (a: Rational, b: Rational): Rational => reduced([a[0] * b[0], a[1] * b[1]]);
 const over = (a: Rational, b: Rational): Rational => reduced([a[0] * b[1], a[1] * b[0]]);
-const plus = (a: Rational, b: Rational): Rational =>
-  reduced([a[0] * b[1] + b[0] * a[1], a[1] * b[1]]);
+const plus = (a: Rational, b: Rational): Rational => reduced([a[0] * b[1] + b[0] * a[1], a[1] * b[1]]);
 const minus = (a: Rational, b: Rational): Rational => plus(a, [-b[0], b[1]]);
 
 const factorial = (n: bigint): bigint => (n <= 1n ? 1n : n * factorial(n - 1n));
@@ -69,10 +62,7 @@ function gammaRatio(
     }
   }
   return ce
-    .function("Multiply", [
-      ce.number([c[0], c[1]]),
-      ce.function("Power", [ce.Pi, ce.number([h, 2])]),
-    ])
+    .function("Multiply", [ce.number([c[0], c[1]]), ce.function("Power", [ce.Pi, ce.number([h, 2])])])
     .evaluate();
 }
 
@@ -125,10 +115,7 @@ export function gammaExactValue(ce: ComputeEngine, x: Rational): BoxedExpression
   if (g === undefined) return undefined;
   if (g === "pole") return ce.symbol("ComplexInfinity");
   return ce
-    .function("Multiply", [
-      ce.number([g.c[0], g.c[1]]),
-      ce.function("Power", [ce.Pi, ce.number([g.h, 2])]),
-    ])
+    .function("Multiply", [ce.number([g.c[0], g.c[1]]), ce.function("Power", [ce.Pi, ce.number([g.h, 2])])])
     .evaluate();
 }
 
@@ -147,6 +134,36 @@ export function declareWidened(ce: ComputeEngine): void {
       GAMMA_ARITY[head],
     );
   }
+
+  // CatalanNumber(n) at a negative integer. NOT the smooth Γ(2n+1)/(Γ(n+1)Γ(n+2)) limit --
+  // that ratio has a pole on both sides at n = −1 (Γ(−1) over Γ(0)), and taking it as a limit
+  // gives −1/2, which is what SymPy's and Sage's own `catalan`/`catalan_number` return (see
+  // this repo's own oracle sidecar, combinatorics.oracle.json, which records exactly this
+  // "inconclusive" divergence against Wolfram for both). But an actual Wolfram kernel run
+  // (same sidecar, "wolfram" row, kernel 15.0.0) gives CatalanNumber[−1] = −1, not −1/2 --
+  // because Wolfram's own CatalanNumber evidently follows the DISCRETE identity
+  // C_n = Binomial(2n, n) − Binomial(2n, n+1) (this file's own reference example
+  // "equivalently-c-n-binom-2n-n-binom-2n-n-1"), together with Wolfram's Binomial[n, k]
+  // convention of 0 for a negative integer k, rather than the Gamma-ratio's smooth
+  // continuation. Reproduced independently here (not just copied from the sidecar): with
+  // that Binomial convention, n = −1 has 2n = −2 and n+1 = 0, so Binomial(−2, −1) = 0 and
+  // Binomial(−2, 0) = 1, giving C_{−1} = 0 − 1 = −1; for every n ≤ −2, both n and n+1 are
+  // negative, so both terms are 0 and C_n = 0. This package follows the verified Wolfram
+  // kernel output (−1), not the Gamma-limit's −1/2 -- flagged for a second Wolfram check.
+  // Additive either way: native compute-engine leaves this whole domain unevaluated.
+  wrapOperator(
+    ce,
+    ["CatalanNumber", 1],
+    (ops) => {
+      const n = bigIntegerAt(ops[0]);
+      return n !== undefined && n < 0n;
+    },
+    () => (ops) => {
+      const n = bigIntegerAt(ops[0]!)!;
+      return n === -1n ? ce.number(-1) : ce.Zero;
+    },
+    1,
+  );
 
   // (−2k − 1)!! = (−1)ᵏ / (2k − 1)!!, running the recurrence n!! = n·(n − 2)!! downwards.
   wrapOperator(

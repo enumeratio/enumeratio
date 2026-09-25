@@ -21,24 +21,19 @@ function quotients(json: unknown): unknown {
     const [num, den] = children;
     if (Array.isArray(num) && Array.isArray(den) && num.length === 2 && den.length === 2) {
       const to = QUOTIENTS[num[0] as string]?.[den[0] as string];
-      if (to !== undefined && JSON.stringify(num[1]) === JSON.stringify(den[1]))
-        return [to, num[1]];
+      if (to !== undefined && JSON.stringify(num[1]) === JSON.stringify(den[1])) return [to, num[1]];
     }
   }
   return [head, ...children];
 }
 
-type Evaluate = (
-  ops: ReadonlyArray<BoxedExpression>,
-  options: never,
-) => BoxedExpression | undefined;
+type Evaluate = (ops: ReadonlyArray<BoxedExpression>, options: never) => BoxedExpression | undefined;
 
 // Attached directly rather than through `wrapOperator`: Simplify is lazy, and the wrapper
 // would evaluate its argument in full before every call.
 export function declareSimplifyIdentities(ce: ComputeEngine): void {
   const definition = ce.lookupDefinition("Simplify");
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   const native = operator?.evaluate as Evaluate | undefined;
   if (operator === undefined || native === undefined) return;
   operator.evaluate = ((ops: ReadonlyArray<BoxedExpression>, options: never) => {
@@ -46,10 +41,7 @@ export function declareSimplifyIdentities(ce: ComputeEngine): void {
     if (simplified === undefined || ops.length !== 1) return simplified;
     const json = simplified.json;
     const folded = quotients(json);
-    const rewritten =
-      JSON.stringify(folded) === JSON.stringify(json)
-        ? simplified
-        : ce.box(folded as never).evaluate();
+    const rewritten = JSON.stringify(folded) === JSON.stringify(json) ? simplified : ce.box(folded as never).evaluate();
     return hyperbolicPythagoras(rewritten, ce);
   }) as typeof operator.evaluate;
 }

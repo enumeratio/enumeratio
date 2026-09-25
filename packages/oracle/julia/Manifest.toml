@@ -106,13 +106,7 @@ uuid = "2edaba10-b0f1-5616-af89-8c11ac63239a"
 version = "0.56.1"
 
 [[deps.OpenBLAS32_jll]]
-deps = [
-  "Artifacts",
-  "CompilerSupportLibraries_jll",
-  "JLLWrappers",
-  "Libdl",
-  "libblastrampoline_jll",
-]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "libblastrampoline_jll"]
 git-tree-sha1 = "30870d0f2dc0b2dba76b10df1c58c7f018413e56"
 registries = "General"
 uuid = "656ef2d0-ae68-5445-9ca0-591084a874a2"

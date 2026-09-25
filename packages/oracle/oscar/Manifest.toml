@@ -332,16 +332,7 @@ uuid = "d6652ff9-bdf9-5f19-9e6f-c10727807222"
 version = "101.1600.1+0"
 
 [[deps.GAP_pkg_float_jll]]
-deps = [
-  "Artifacts",
-  "GAP_jll",
-  "GMP_jll",
-  "JLLWrappers",
-  "Libdl",
-  "MPC_jll",
-  "MPFI_jll",
-  "MPFR_jll",
-]
+deps = ["Artifacts", "GAP_jll", "GMP_jll", "JLLWrappers", "Libdl", "MPC_jll", "MPFI_jll", "MPFR_jll"]
 git-tree-sha1 = "0e3c92d490134ff526e20ffe25f69a22f3c7285b"
 registries = "General"
 uuid = "b73cfdca-4c14-50a3-9408-5dcda5b8fad2"
@@ -591,15 +582,7 @@ uuid = "76f85450-5226-5b5a-8eaa-529ad045b433"
 version = "1.11.0"
 
 [[deps.LibGit2_jll]]
-deps = [
-  "Artifacts",
-  "CompilerSupportLibraries_jll",
-  "LibSSH2_jll",
-  "Libdl",
-  "OpenSSL_jll",
-  "PCRE2_jll",
-  "Zlib_jll",
-]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "LibSSH2_jll", "Libdl", "OpenSSL_jll", "PCRE2_jll", "Zlib_jll"]
 uuid = "e37daf67-58a4-590a-8e99-b0245dd2ffc5"
 version = "1.9.1+0"
 
@@ -672,14 +655,7 @@ uuid = "3a97d323-0669-5f0c-9066-3539efd106a3"
 version = "4.2.2+0"
 
 [[deps.MUMPS_seq_jll]]
-deps = [
-  "Artifacts",
-  "CompilerSupportLibraries_jll",
-  "JLLWrappers",
-  "Libdl",
-  "METIS_jll",
-  "libblastrampoline_jll",
-]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "METIS_jll", "libblastrampoline_jll"]
 git-tree-sha1 = "fc1daa0ab5a0d7a0a34d5168a711cbf02b2cb0cc"
 registries = "General"
 uuid = "d7ed1dd3-d0ae-5e8e-bfb4-87a502085b8d"
@@ -744,13 +720,7 @@ uuid = "76642167-d241-5cee-8c94-7a494e8cb7b7"
 version = "1.13.1+0"
 
 [[deps.OpenBLAS32_jll]]
-deps = [
-  "Artifacts",
-  "CompilerSupportLibraries_jll",
-  "JLLWrappers",
-  "Libdl",
-  "libblastrampoline_jll",
-]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "Libdl", "libblastrampoline_jll"]
 git-tree-sha1 = "30870d0f2dc0b2dba76b10df1c58c7f018413e56"
 registries = "General"
 uuid = "656ef2d0-ae68-5445-9ca0-591084a874a2"

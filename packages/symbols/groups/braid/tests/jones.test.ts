@@ -1,13 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import {
-  alexanderPolynomial,
-  braid,
-  braidPower,
-  components,
-  invert,
-  torusBraid,
-  writhe,
-} from "../src/braid.ts";
+import { alexanderPolynomial, braid, braidPower, components, invert, torusBraid, writhe } from "../src/braid.ts";
 import {
   bracketInvariant,
   closureLoops,
@@ -122,9 +114,7 @@ test("the invariant does not depend on the braid word chosen", () => {
   expect(format(jonesPolynomial(base)!)).toBe(format(jonesPolynomial(stabilised)!));
   expect(format(jonesPolynomial(base)!)).toBe(format(jonesPolynomial(sigma(2, 1, 1, 1))!));
   // A braid and its reverse word close to the same knot.
-  expect(format(jonesPolynomial(sigma(2, 1, 1, 1))!)).toBe(
-    format(jonesPolynomial(invert(invert(sigma(2, 1, 1, 1))))!),
-  );
+  expect(format(jonesPolynomial(sigma(2, 1, 1, 1))!)).toBe(format(jonesPolynomial(invert(invert(sigma(2, 1, 1, 1))))!));
   expect(writhe(base)).toBe(4);
 });
 

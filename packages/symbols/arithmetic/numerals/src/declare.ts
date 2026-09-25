@@ -277,53 +277,43 @@ export function declareNumerals(ce: ComputeEngine): void {
     });
   };
 
-  extend(
-    "IntegerDigits",
-    ["IntegerDigits", 10, 2],
-    "(integer, any?, integer?) -> list<integer>",
-    (ops, system) => {
-      const n = integerAt(ops[0]);
-      if (n === undefined) return undefined;
-      const digits = system.toDigits(n);
-      // No numeral for this integer in this system — decline, and say which ones have one.
-      if (digits === undefined) {
-        const hint = `${formatArgument(ops[1])} spells ${rangeText(system.shape.range)}.`;
-        emit(ce, "IntegerDigits", "nonum", [n, ops[1]], hint);
-        return undefined;
-      }
-      // The third operand pads on the left, as it does natively. It is what makes the
-      // factoradic digits of n line up with the Lehmer code of the n-th permutation of
-      // a FIXED size: the code needs one digit per position, leading zeros included.
-      const width = integerAt(ops[2]);
-      const padded =
-        width === undefined || width <= digits.length
-          ? digits
-          : [...Array.from({ length: width - digits.length }, () => 0), ...digits];
-      return ce.function(
-        "List",
-        padded.map((d) => ce.number(d)),
-      );
-    },
-  );
+  extend("IntegerDigits", ["IntegerDigits", 10, 2], "(integer, any?, integer?) -> list<integer>", (ops, system) => {
+    const n = integerAt(ops[0]);
+    if (n === undefined) return undefined;
+    const digits = system.toDigits(n);
+    // No numeral for this integer in this system — decline, and say which ones have one.
+    if (digits === undefined) {
+      const hint = `${formatArgument(ops[1])} spells ${rangeText(system.shape.range)}.`;
+      emit(ce, "IntegerDigits", "nonum", [n, ops[1]], hint);
+      return undefined;
+    }
+    // The third operand pads on the left, as it does natively. It is what makes the
+    // factoradic digits of n line up with the Lehmer code of the n-th permutation of
+    // a FIXED size: the code needs one digit per position, leading zeros included.
+    const width = integerAt(ops[2]);
+    const padded =
+      width === undefined || width <= digits.length
+        ? digits
+        : [...Array.from({ length: width - digits.length }, () => 0), ...digits];
+    return ce.function(
+      "List",
+      padded.map((d) => ce.number(d)),
+    );
+  });
 
-  extend(
-    "FromDigits",
-    ["FromDigits", ["List", 1, 0], 2],
-    "(collection<any>, any?) -> integer",
-    (ops, system) => {
-      const digits = integerList(ops[0]);
-      if (digits === undefined) return undefined;
-      const value = system.fromDigits(digits);
-      // An invalid digit string — two adjacent Zeckendorf ones, an out-of-range mixed
-      // radix digit, inconsistent residues — denotes no integer at all.
-      if (value === undefined) {
-        const hint = `In ${formatArgument(ops[1])}: ${numeralText(system.shape)}.`;
-        emit(ce, "FromDigits", "nonum", [ops[0], ops[1]], hint);
-        return undefined;
-      }
-      return ce.number(value);
-    },
-  );
+  extend("FromDigits", ["FromDigits", ["List", 1, 0], 2], "(collection<any>, any?) -> integer", (ops, system) => {
+    const digits = integerList(ops[0]);
+    if (digits === undefined) return undefined;
+    const value = system.fromDigits(digits);
+    // An invalid digit string — two adjacent Zeckendorf ones, an out-of-range mixed
+    // radix digit, inconsistent residues — denotes no integer at all.
+    if (value === undefined) {
+      const hint = `In ${formatArgument(ops[1])}: ${numeralText(system.shape)}.`;
+      emit(ce, "FromDigits", "nonum", [ops[0], ops[1]], hint);
+      return undefined;
+    }
+    return ce.number(value);
+  });
 
   // After the redeclarations above, which would drop the flag. Thread over a list of n, as Wolfram's do: IntegerDigits([6, 7], 2) is [[1, 1, 0], [1, 1, 1]].
   // A system in the base slot is a head, never a bare list, so it is not threaded over.
@@ -361,10 +351,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       const digits = integerList(ops[0])!;
       const n = digits.length;
       const terms = digits.map((d, i) =>
-        ce.function("Multiply", [
-          ce.number(d),
-          ce.function("Power", [ops[1], ce.number(n - 1 - i)]),
-        ]),
+        ce.function("Multiply", [ce.number(d), ce.function("Power", [ops[1], ce.number(n - 1 - i)])]),
       );
       return ce.function("Add", terms).evaluate();
     },
@@ -402,11 +389,7 @@ export function declareNumerals(ce: ComputeEngine): void {
     (ops) => {
       if (ops.length !== 1 || ops[0]?.operator !== "List") return false;
       const parts = operandsOf(ops[0]);
-      return (
-        parts.length === 2 &&
-        integerList(parts[0]) !== undefined &&
-        integerAt(parts[1]) !== undefined
-      );
+      return parts.length === 2 && integerList(parts[0]) !== undefined && integerAt(parts[1]) !== undefined;
     },
     () => (ops) => {
       const [digitsExpr, exponentExpr] = operandsOf(ops[0]!);
@@ -417,9 +400,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       const shift = exponent - digits.length;
       return shift >= 0
         ? ce.number(mantissa * base ** BigInt(shift))
-        : ce
-            .function("Rational", [ce.number(mantissa), ce.number(base ** BigInt(-shift))])
-            .evaluate();
+        : ce.function("Rational", [ce.number(mantissa), ce.number(base ** BigInt(-shift))]).evaluate();
     },
   );
 
@@ -439,18 +420,11 @@ export function declareNumerals(ce: ComputeEngine): void {
   // Wolfram's IntegerString[n, b] and IntegerString[n, b, len]: bigint arithmetic throughout,
   // since the native handler goes through a double and drifts past about 15-16 significant
   // digits (IntegerString(50!, 16) is wrong after ~13 hex digits).
-  widenSignature(
-    ce,
-    "IntegerString",
-    "(integer, any?, integer?) -> string",
-    (op) => bigIntegerAt(op) !== undefined,
-  );
+  widenSignature(ce, "IntegerString", "(integer, any?, integer?) -> string", (op) => bigIntegerAt(op) !== undefined);
   wrapOperator(
     ce,
     ["IntegerString", 5, 2],
-    (ops) =>
-      bigIntegerAt(ops[0]) !== undefined &&
-      (ops[1] === undefined || bigIntegerAt(ops[1]) !== undefined),
+    (ops) => bigIntegerAt(ops[0]) !== undefined && (ops[1] === undefined || bigIntegerAt(ops[1]) !== undefined),
     () => (ops) => {
       const n = bigIntegerAt(ops[0])!;
       const base = ops[1] === undefined ? 10n : bigIntegerAt(ops[1])!;
@@ -566,8 +540,7 @@ export function declareNumerals(ce: ComputeEngine): void {
     return ce.function("Range", [end(lo, "NegativeInfinity"), end(hi, "PositiveInfinity")]);
   };
   const digitSet = ([lo, hi]: DigitBound) => integers(lo, hi);
-  const isBound = (digits: Shape["digits"]): digits is DigitBound =>
-    typeof digits?.[0] === "number";
+  const isBound = (digits: Shape["digits"]): digits is DigitBound => typeof digits?.[0] === "number";
 
   /** What a system's numerals look like, as a Dictionary — for discovery. */
   ce.declare("NumeralSystemShape", {
@@ -583,9 +556,7 @@ export function declareNumerals(ce: ComputeEngine): void {
       if (digits !== undefined) {
         fields.push([
           "Digits",
-          isBound(digits)
-            ? digitSet(digits)
-            : ce.function("List", (digits as readonly DigitBound[]).map(digitSet)),
+          isBound(digits) ? digitSet(digits) : ce.function("List", (digits as readonly DigitBound[]).map(digitSet)),
         ]);
       }
       if (width !== undefined) fields.push(["Width", ce.number(width)]);

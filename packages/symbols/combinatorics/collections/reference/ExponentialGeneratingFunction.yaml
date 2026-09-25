@@ -33,11 +33,7 @@ examples:
           [Negate, [Divide, [Sqrt, 5], 5]],
           [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Negate, [Sqrt, 5]]]]],
         ],
-        [
-          Multiply,
-          [Divide, [Sqrt, 5], 5],
-          [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Sqrt, 5]]]],
-        ],
+        [Multiply, [Divide, [Sqrt, 5], 5], [Power, ExponentialE, [Multiply, [Rational, 1, 2], x, [Add, 1, [Sqrt, 5]]]]],
       ]
     caption: Binet's formula, exponentiated -- built from the order-2 recurrence's own roots $(1\pm\sqrt5)/2$
 seeAlso:

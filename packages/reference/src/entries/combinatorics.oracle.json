@@ -1489,47 +1489,6 @@
           "verdict": "agree"
         }
       },
-      "a-negative-argument-is-left-unevaluated": {
-        "wolfram": {
-          "input": "CatalanNumber[-1]",
-          "output": "-1",
-          "verdict": "disagree",
-          "kind": "domain",
-          "note": "A negative index is left unevaluated here; Wolfram extends CatalanNumber through Gamma and gives C(-1) = -1.",
-          "tex": {
-            "input": "C_{-1}",
-            "output": "-1"
-          }
-        },
-        "sage": {
-          "input": "catalan_number(-1)",
-          "output": "-1/2",
-          "verdict": "inconclusive",
-          "kind": "domain",
-          "note": "Sage continues Catalan numbers through the Gamma function (C(-1) = -1/2); compute-engine's stays unevaluated off the naturals."
-        },
-        "julia": {
-          "input": "Combinatorics.catalannum(-1)",
-          "output": "DomainError with -1: n must be nonnegative",
-          "verdict": "error",
-          "kind": "undefined-form",
-          "note": "Both decline: compute-engine answers [\"CatalanNumber\", -1] and Nemo/Combinatorics.jl raises an error."
-        },
-        "mathlib4": {
-          "input": "(catalan (-1))",
-          "output": "failed to synthesize instance of type class",
-          "verdict": "error",
-          "kind": "domain",
-          "note": "The Mathlib mapping is over Nat, which has no negative numbers; compute-engine extends CatalanNumber to this argument."
-        },
-        "sympy": {
-          "input": "catalan(-1)",
-          "output": "-1/2",
-          "verdict": "inconclusive",
-          "kind": "domain",
-          "note": "SymPy extends CatalanNumber here (-1/2); compute-engine leaves it unevaluated."
-        }
-      },
       "they-grow-fast-c-15-already-passes-nine-million": {
         "wolfram": {
           "input": "CatalanNumber[15]",

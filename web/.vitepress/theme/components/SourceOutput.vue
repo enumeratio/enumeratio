@@ -19,23 +19,12 @@ const toJson = (expr: unknown): string => JSON.stringify(expr);
         <p class="so-try-label">Try it — edit the input, watch the {{ meta.title }} source:</p>
         <notatio-cell :value="meta.sample" :out-form="meta.form" box />
       </div>
-      <div
-        v-for="(row, i) in rows"
-        :key="i"
-        class="so-row"
-        :class="{ 'is-divergent': row.divergence }"
-      >
+      <div v-for="(row, i) in rows" :key="i" class="so-row" :class="{ 'is-divergent': row.divergence }">
         <p v-if="row.label" class="so-label">{{ row.label }}</p>
         <div class="so-io">
           <notatio-out label="In" :value="toJson(row.expr)" format="mathjson" />
           <span class="so-arrow">→</span>
-          <notatio-out
-            label="Out"
-            :value="toJson(row.expr)"
-            format="mathjson"
-            :form="meta.form"
-            box
-          />
+          <notatio-out label="Out" :value="toJson(row.expr)" format="mathjson" :form="meta.form" box />
         </div>
         <p v-if="row.note" class="so-note">{{ row.note }}</p>
         <p v-if="row.divergence" class="so-div">

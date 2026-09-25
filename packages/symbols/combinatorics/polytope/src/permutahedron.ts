@@ -57,10 +57,7 @@ export const PERMUTAHEDRON: Polytope = polytope({
   dimension: (labels) => labels.length - blockCount(labels),
   point: (labels) =>
     labels.map(
-      (_, x) =>
-        2 * labels.filter((l) => l < labels[x]!).length +
-        labels.filter((l) => l === labels[x]!).length +
-        1,
+      (_, x) => 2 * labels.filter((l) => l < labels[x]!).length + labels.filter((l) => l === labels[x]!).length + 1,
     ),
   hasVertex,
   dimensionAt: (n) => Math.max(n - 1, 0),

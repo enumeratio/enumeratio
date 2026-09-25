@@ -43,10 +43,7 @@ test("specialising q to 1 collapses to the symmetric group algebra", () => {
   same(["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 1], T(1, 2, 3));
   same(["HeckeSpecialize", times(T(2, 1, 3), T(1, 3, 2)), 1], T(2, 3, 1));
   // At q = 2 it does not collapse.
-  same(
-    ["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 2],
-    ["Add", ["Multiply", 2, T(1, 2, 3)], T(2, 1, 3)],
-  );
+  same(["HeckeSpecialize", times(T(2, 1, 3), T(2, 1, 3)), 2], ["Add", ["Multiply", 2, T(1, 2, 3)], T(2, 1, 3)]);
 });
 
 test("sums read back in, so products compose", () => {

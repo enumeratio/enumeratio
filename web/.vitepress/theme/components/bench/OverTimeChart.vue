@@ -45,12 +45,7 @@ function yOf(v: number): number {
 const ticks = computed(() => logTicks(yMin.value, yMax.value));
 
 const fingerprints = computed(() => [...new Set(sorted.value.map((p) => p.fingerprint))]);
-const palette = [
-  "var(--vp-c-brand-1)",
-  "var(--vp-c-green-1)",
-  "var(--vp-c-red-1)",
-  "var(--vp-c-yellow-1)",
-];
+const palette = ["var(--vp-c-brand-1)", "var(--vp-c-green-1)", "var(--vp-c-red-1)", "var(--vp-c-yellow-1)"];
 const shapes = ["circle", "square", "triangle", "diamond"] as const;
 function colorFor(fp: string): string {
   return palette[fingerprints.value.indexOf(fp) % palette.length];
@@ -60,17 +55,13 @@ function shapeFor(fp: string): (typeof shapes)[number] {
 }
 
 const linePath = computed(() =>
-  sorted.value
-    .map((p, i) => `${i === 0 ? "M" : "L"}${xOf(new Date(p.date).getTime())},${yOf(p.median)}`)
-    .join(" "),
+  sorted.value.map((p, i) => `${i === 0 ? "M" : "L"}${xOf(new Date(p.date).getTime())},${yOf(p.median)}`).join(" "),
 );
 
 const bandPath = computed(() => {
   if (sorted.value.length === 0) return "";
   const top = sorted.value.map((p) => `${xOf(new Date(p.date).getTime())},${yOf(p.q3)}`);
-  const bottom = [...sorted.value]
-    .reverse()
-    .map((p) => `${xOf(new Date(p.date).getTime())},${yOf(p.q1)}`);
+  const bottom = [...sorted.value].reverse().map((p) => `${xOf(new Date(p.date).getTime())},${yOf(p.q1)}`);
   return `M${top.join(" L")} L${bottom.join(" L")} Z`;
 });
 
@@ -96,13 +87,7 @@ function commitUrl(p: TimePoint): string {
       <!-- y gridlines + ticks (log scale) -->
       <g v-for="t in ticks" :key="t">
         <line :x1="PAD_L" :x2="W - PAD_R" :y1="yOf(t)" :y2="yOf(t)" class="bench-gridline" />
-        <text
-          :x="PAD_L - 6"
-          :y="yOf(t)"
-          class="bench-axis-label"
-          text-anchor="end"
-          dominant-baseline="middle"
-        >
+        <text :x="PAD_L - 6" :y="yOf(t)" class="bench-axis-label" text-anchor="end" dominant-baseline="middle">
           {{
             t >= 1e9
               ? `${(t / 1e9).toFixed(0)}s`
@@ -119,11 +104,7 @@ function commitUrl(p: TimePoint): string {
         {{ sorted[0] ? new Date(sorted[0].date).toLocaleDateString() : "" }}
       </text>
       <text :x="W - PAD_R" :y="H - 8" class="bench-axis-label" text-anchor="end">
-        {{
-          sorted[sorted.length - 1]
-            ? new Date(sorted[sorted.length - 1].date).toLocaleDateString()
-            : ""
-        }}
+        {{ sorted[sorted.length - 1] ? new Date(sorted[sorted.length - 1].date).toLocaleDateString() : "" }}
       </text>
 
       <path :d="bandPath" class="bench-iqr-band" />
@@ -141,8 +122,7 @@ function commitUrl(p: TimePoint): string {
         @mouseleave="hovered = null"
       >
         <title>
-          {{ new Date(p.date).toLocaleDateString() }} · {{ shortSha(p.sha) }} · median
-          {{ p.median.toFixed(0) }}ns
+          {{ new Date(p.date).toLocaleDateString() }} · {{ shortSha(p.sha) }} · median {{ p.median.toFixed(0) }}ns
         </title>
         <circle
           v-if="shapeFor(p.fingerprint) === 'circle'"
@@ -172,11 +152,7 @@ function commitUrl(p: TimePoint): string {
       </a>
     </svg>
 
-    <div
-      v-if="hovered"
-      class="bench-tooltip"
-      :style="{ left: `${hoveredPos.x}px`, top: `${hoveredPos.y}px` }"
-    >
+    <div v-if="hovered" class="bench-tooltip" :style="{ left: `${hoveredPos.x}px`, top: `${hoveredPos.y}px` }">
       <div>{{ new Date(hovered.date).toLocaleString() }}</div>
       <div>
         <a :href="commitUrl(hovered)" target="_blank" rel="noopener">{{ shortSha(hovered.sha) }}</a>

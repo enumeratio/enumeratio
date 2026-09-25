@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  integerAt,
-  operandsOf,
-  symbolNameOf,
-  widenSignature,
-  wrapOperator,
-} from "@enumeratio/boxed";
+import { integerAt, operandsOf, symbolNameOf, widenSignature, wrapOperator } from "@enumeratio/boxed";
 import { isMatrixLike } from "./list-heads.ts";
 
 // The remaining #113 list/statistics gaps: Mean/Median on data compute-engine's own
@@ -33,9 +27,7 @@ const compareByValue = (a: BoxedExpression, b: BoxedExpression): number => {
 /** $\frac{1}{n}\sum xs$, built and evaluated symbolically rather than reduced to a float —
  *  what carries a plain symbol or an exact constant like `Pi` through exactly. */
 const symbolicMean = (ce: ComputeEngine, xs: readonly BoxedExpression[]): BoxedExpression =>
-  ce
-    .function("Multiply", [ce.function("Rational", [1, xs.length]), ce.function("Add", [...xs])])
-    .evaluate();
+  ce.function("Multiply", [ce.function("Rational", [1, xs.length]), ce.function("Add", [...xs])]).evaluate();
 
 /** Declare the Mean/Median/Commonest/Sort/Take/Fold/Tabulate/Unique overrides. */
 export function declareListStats(ce: ComputeEngine): void {
@@ -74,9 +66,7 @@ export function declareListStats(ce: ComputeEngine): void {
     () => (ops) => {
       const sorted = [...operandsOf(ops[0])].sort(compareByValue);
       const mid = Math.floor(sorted.length / 2);
-      return sorted.length % 2 === 1
-        ? sorted[mid]
-        : symbolicMean(ce, [sorted[mid - 1], sorted[mid]]);
+      return sorted.length % 2 === 1 ? sorted[mid] : symbolicMean(ce, [sorted[mid - 1], sorted[mid]]);
     },
   );
 
@@ -187,10 +177,7 @@ export function declareListStats(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined | null;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined | null;
               };
             }
           ).operator
@@ -226,10 +213,7 @@ export function declareListStats(ce: ComputeEngine): void {
         ? (
             definition as {
               operator: {
-                canonical?: (
-                  ops: readonly BoxedExpression[],
-                  options: unknown,
-                ) => BoxedExpression | undefined | null;
+                canonical?: (ops: readonly BoxedExpression[], options: unknown) => BoxedExpression | undefined | null;
               };
             }
           ).operator
@@ -247,10 +231,7 @@ export function declareListStats(ce: ComputeEngine): void {
       ): BoxedExpression => {
         if (dims.length === 0) return applyAt(fn, prefix);
         const [d, ...rest] = dims;
-        return ce.box([
-          "List",
-          ...Array.from({ length: d }, (_, i) => materialize(fn, rest, [...prefix, i + 1])),
-        ]);
+        return ce.box(["List", ...Array.from({ length: d }, (_, i) => materialize(fn, rest, [...prefix, i + 1]))]);
       };
       operator.canonical = (ops, options) => {
         const fn = ops[0];
@@ -282,9 +263,7 @@ export function declareListStats(ce: ComputeEngine): void {
       const items = operandsOf(ops[0]);
       const kept: BoxedExpression[] = [];
       for (const item of items) {
-        const isDuplicate = kept.some(
-          (k) => symbolNameOf(ce.function("Apply", [test, k, item]).evaluate()) === "True",
-        );
+        const isDuplicate = kept.some((k) => symbolNameOf(ce.function("Apply", [test, k, item]).evaluate()) === "True");
         if (!isDuplicate) kept.push(item);
       }
       return ce.box(["List", ...kept]);

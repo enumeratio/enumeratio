@@ -1,10 +1,4 @@
-import {
-  ASSOCIAHEDRON,
-  CROSS_POLYTOPE,
-  HYPERCUBE,
-  PERMUTAHEDRON as P,
-  SIMPLEX,
-} from "@enumeratio/polytope";
+import { ASSOCIAHEDRON, CROSS_POLYTOPE, HYPERCUBE, PERMUTAHEDRON as P, SIMPLEX } from "@enumeratio/polytope";
 import { expect, test } from "vite-plus/test";
 import {
   parseFaces,
@@ -23,16 +17,11 @@ const faceLabels = (svg: string): string[] =>
 
 /** Where a face's polygon sits on the page, to the nearest viewBox unit. */
 const centreOf = (svg: string, face: readonly number[]): [number, number] => {
-  const match = new RegExp(`<polygon [^>]*data-face="${face.join(",")}"[^>]*points="([^"]*)"`).exec(
-    svg,
-  );
+  const match = new RegExp(`<polygon [^>]*data-face="${face.join(",")}"[^>]*points="([^"]*)"`).exec(svg);
   const points = (match?.[1] ?? "").split(" ").map((p) => p.split(",").map(Number));
   const xs = points.map((p) => p[0]!);
   const ys = points.map((p) => p[1]!);
-  return [
-    Math.round((Math.max(...xs) + Math.min(...xs)) / 2),
-    Math.round((Math.max(...ys) + Math.min(...ys)) / 2),
-  ];
+  return [Math.round((Math.max(...xs) + Math.min(...xs)) / 2), Math.round((Math.max(...ys) + Math.min(...ys)) / 2)];
 };
 
 test("every mark on the picture is a face", () => {
@@ -208,9 +197,7 @@ test("a clicked mark names the face that drew it", () => {
 
 test("labels are keyed by cell dimension, the way MeshCellLabel is", () => {
   const texts = (svg: string): string[] =>
-    [...svg.matchAll(/<text [^>]*>([^<]*)<\/text>/g)]
-      .map((m) => m[1]!)
-      .filter((t) => t !== "Permutahedron");
+    [...svg.matchAll(/<text [^>]*>([^<]*)<\/text>/g)].map((m) => m[1]!).filter((t) => t !== "Permutahedron");
 
   // The resting default labels the selection only: 45 labels at once is not a picture.
   expect(texts(polytope3dSvg(P, 4))).toEqual([]);
@@ -223,8 +210,7 @@ test("labels are keyed by cell dimension, the way MeshCellLabel is", () => {
 });
 
 test("a label can say what the face IS, or merely count it", () => {
-  const texts = (options: Parameters<typeof polytope3dSvg>[2]): string[] =>
-    faceLabels(polytope3dSvg(P, 3, options));
+  const texts = (options: Parameters<typeof polytope3dSvg>[2]): string[] => faceLabels(polytope3dSvg(P, 3, options));
 
   // `data` is the face's own carrier element — the thing it is, not a name given to it.
   expect(texts({ labels: [0], labelForm: "data" })).toContain("1,2,3");

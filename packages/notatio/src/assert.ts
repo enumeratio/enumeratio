@@ -29,16 +29,13 @@ export function deepEqual(a: unknown, b: unknown): boolean {
     const kb = Object.keys(b);
     return (
       ka.length === kb.length &&
-      ka.every((k) =>
-        deepEqual((a as Record<string, unknown>)[k], (b as Record<string, unknown>)[k]),
-      )
+      ka.every((k) => deepEqual((a as Record<string, unknown>)[k], (b as Record<string, unknown>)[k]))
     );
   }
   return false;
 }
 
-const unquote = (s: unknown): string =>
-  typeof s === "string" ? s.replace(/^'|'$/g, "") : JSON.stringify(s);
+const unquote = (s: unknown): string => (typeof s === "string" ? s.replace(/^'|'$/g, "") : JSON.stringify(s));
 
 /** Turn an `["Error", …]` atom into a readable one-line message. */
 export function formatError(atom: unknown): string {

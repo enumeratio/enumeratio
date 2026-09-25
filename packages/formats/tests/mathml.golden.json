@@ -496,14 +496,7 @@
     "mathml": "<mrow><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd><mtd><mn>4</mn></mtd></mtr></mtable></mrow>"
   },
   "matrix of expressions": {
-    "json": [
-      "Matrix",
-      [
-        "List",
-        ["List", ["Divide", 1, 2], ["Negate", "x"]],
-        ["List", ["Power", "x", 2], ["Sqrt", 2]]
-      ]
-    ],
+    "json": ["Matrix", ["List", ["List", ["Divide", 1, 2], ["Negate", "x"]], ["List", ["Power", "x", 2], ["Sqrt", 2]]]],
     "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mfrac><mn>1</mn><mn>2</mn></mfrac></mtd><mtd><mrow><mo>−</mo><mi>x</mi></mrow></mtd></mtr><mtr><mtd><msup><mi>x</mi><mn>2</mn></msup></mtd><mtd><msqrt><mn>2</mn></msqrt></mtd></mtr></mtable><mo>)</mo></mrow>"
   },
   "column vector": {
@@ -511,10 +504,7 @@
     "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd></mtr><mtr><mtd><mn>2</mn></mtd></mtr><mtr><mtd><mn>3</mn></mtd></mtr></mtable><mo>)</mo></mrow>"
   },
   "nested matrices": {
-    "json": [
-      "Matrix",
-      ["List", ["List", ["Matrix", ["List", ["List", 1, 0], ["List", 0, 1]]], 0], ["List", 0, 1]]
-    ],
+    "json": ["Matrix", ["List", ["List", ["Matrix", ["List", ["List", 1, 0], ["List", 0, 1]]], 0], ["List", 0, 1]]],
     "mathml": "<mrow><mo>(</mo><mtable><mtr><mtd><mrow><mo>(</mo><mtable><mtr><mtd><mn>1</mn></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow></mtd><mtd><mn>0</mn></mtd></mtr><mtr><mtd><mn>0</mn></mtd><mtd><mn>1</mn></mtd></mtr></mtable><mo>)</mo></mrow>"
   },
   "delimiter": {

@@ -29,10 +29,7 @@ test("the commuting constructors name their own families", () => {
   same(["AlgebraSignature", ["DualAlgebra", 2]], ["List", 0, 0]);
   same(["AlgebraSignature", ["GrassmannAlgebra", 2]], ["List", 0, 0]);
   same(["AlgebraDimension", ["MulticomplexAlgebra", 4]], 16);
-  same(
-    ["Basis", ["MulticomplexAlgebra", 2]],
-    ["List", 1, "i_1", "i_2", ["Multiply", "i_1", "i_2"]],
-  );
+  same(["Basis", ["MulticomplexAlgebra", 2]], ["List", 1, "i_1", "i_2", ["Multiply", "i_1", "i_2"]]);
 });
 
 test("an element is Dot(coefficients, Basis(algebra))", () => {
@@ -68,10 +65,7 @@ test("⊗ is total, not Clifford-only: it works on scalars and commuting units",
   same(["CircleTimes", "a", "b"], ["Multiply", "a", "b"]);
   same(["CircleTimes", "i_1", "i_2"], ["Multiply", "i_1", "i_2"]);
   same(["CircleTimes", "i_2", "i_1"], ["Multiply", "i_1", "i_2"]);
-  same(
-    ["CircleTimes", ["Add", 1, "i_1"], ["Add", 1, "i_2"]],
-    ["Multiply", ["Add", 1, "i_1"], ["Add", 1, "i_2"]],
-  );
+  same(["CircleTimes", ["Add", 1, "i_1"], ["Add", 1, "i_2"]], ["Multiply", ["Add", 1, "i_1"], ["Add", 1, "i_2"]]);
 });
 
 test("the named algebras are the literature's names for fixed sizes", () => {

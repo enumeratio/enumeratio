@@ -92,8 +92,7 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
       signature,
       evaluate: (ops: readonly BoxedExpression[], options): BoxedExpression | undefined => {
         const subject = ops[0];
-        if (subject !== undefined && String(subject.type) === extension.on)
-          return extension.handle(subject, ce);
+        if (subject !== undefined && String(subject.type) === extension.on) return extension.handle(subject, ce);
         return operator.evaluate?.(ops, options);
       },
     });
@@ -120,8 +119,7 @@ export function extendBuiltin(ce: ComputeEngine, extension: Extension): boolean 
     signature,
     evaluate: (ops: readonly BoxedExpression[]): BoxedExpression | undefined => {
       const subject = ops[0];
-      if (subject !== undefined && String(subject.type) === extension.on)
-        return extension.handle(subject, ce);
+      if (subject !== undefined && String(subject.type) === extension.on) return extension.handle(subject, ce);
       return ce.function(primitive, ops).evaluate();
     },
   });

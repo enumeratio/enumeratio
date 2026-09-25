@@ -77,14 +77,10 @@ export class NotatioClock extends LitElement {
 
   /** The attributes are the page clock's settings; write them through as they change. */
   protected override willUpdate(changed: PropertyValues): void {
-    if (
-      changed.has("loop") &&
-      (this.loop === "cycle" || this.loop === "reflect" || this.loop === "none")
-    ) {
+    if (changed.has("loop") && (this.loop === "cycle" || this.loop === "reflect" || this.loop === "none")) {
       this.#clock.loop = this.loop;
     }
-    if (changed.has("rate") && Number.isFinite(this.rate) && this.rate > 0)
-      this.#clock.rate = this.rate;
+    if (changed.has("rate") && Number.isFinite(this.rate) && this.rate > 0) this.#clock.rate = this.rate;
   }
 
   override connectedCallback(): void {

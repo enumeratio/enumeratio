@@ -42,7 +42,5 @@ export const qualify = (context: string, name: string): string => `${context}${S
 /** Split a spelling into context and name; context is undefined when unqualified. */
 export function unqualify(spelling: string): { context?: string; name: string } {
   const i = spelling.lastIndexOf(SEPARATOR);
-  return i < 0
-    ? { name: spelling }
-    : { context: spelling.slice(0, i), name: spelling.slice(i + 1) };
+  return i < 0 ? { name: spelling } : { context: spelling.slice(0, i), name: spelling.slice(i + 1) };
 }

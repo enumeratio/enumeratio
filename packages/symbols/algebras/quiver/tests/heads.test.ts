@@ -19,9 +19,7 @@ test("acyclic quivers have a dimension; cyclic ones do not", () => {
   same(["QuiverIsAcyclic", A4], "True");
   same(["QuiverIsAcyclic", "JordanQuiver"], "False");
   // A loop means infinitely many paths, so there is no dimension and no basis.
-  expect(ce.box(["AlgebraDimension", ["PathAlgebra", "JordanQuiver"]]).evaluate().operator).toBe(
-    "AlgebraDimension",
-  );
+  expect(ce.box(["AlgebraDimension", ["PathAlgebra", "JordanQuiver"]]).evaluate().operator).toBe("AlgebraDimension");
   expect(ce.box(["Basis", ["PathAlgebra", "JordanQuiver"]]).evaluate().operator).toBe("Basis");
 });
 
@@ -49,16 +47,13 @@ test("containment tests whether a path is a path of this quiver", () => {
 });
 
 test("the basis lists the paths", () => {
-  const basis = ce.box(["Basis", ["PathAlgebra", ["LinearQuiver", 3]]]).evaluate()
-    .json as unknown as unknown[];
+  const basis = ce.box(["Basis", ["PathAlgebra", ["LinearQuiver", 3]]]).evaluate().json as unknown as unknown[];
   expect(basis.length - 1).toBe(6);
 });
 
 test("a malformed quiver leaves the call alone", () => {
-  expect(
-    ce.box(["AlgebraDimension", ["PathAlgebra", ["Quiver", 2, L(L(1, 5))]]]).evaluate().operator,
-  ).toBe("AlgebraDimension");
-  expect(ce.box(["QuiverIsAcyclic", ["LinearQuiver", 0]]).evaluate().operator).toBe(
-    "QuiverIsAcyclic",
+  expect(ce.box(["AlgebraDimension", ["PathAlgebra", ["Quiver", 2, L(L(1, 5))]]]).evaluate().operator).toBe(
+    "AlgebraDimension",
   );
+  expect(ce.box(["QuiverIsAcyclic", ["LinearQuiver", 0]]).evaluate().operator).toBe("QuiverIsAcyclic");
 });

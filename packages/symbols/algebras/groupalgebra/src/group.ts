@@ -27,11 +27,7 @@ export interface Group {
 }
 
 /** Build a group from labels and a multiplication on labels. Identity must come first. */
-function build(
-  name: string,
-  labels: readonly string[],
-  product: (a: string, b: string) => string,
-): Group | undefined {
+function build(name: string, labels: readonly string[], product: (a: string, b: string) => string): Group | undefined {
   const index = new Map(labels.map((label, i) => [label, i]));
   const table = labels.map((a) => labels.map((b) => index.get(product(a, b))));
   if (table.some((row) => row.some((entry) => entry === undefined))) return undefined;
@@ -58,14 +54,9 @@ export const cyclicGroup = (n: number): Group | undefined =>
  */
 export const dihedralGroup = (n: number): Group | undefined => {
   if (!Number.isSafeInteger(n) || n < 1 || n > 128) return undefined;
-  const labels = [
-    ...Array.from({ length: n }, (_, k) => `${k}`),
-    ...Array.from({ length: n }, (_, k) => `s${k}`),
-  ];
+  const labels = [...Array.from({ length: n }, (_, k) => `${k}`), ...Array.from({ length: n }, (_, k) => `s${k}`)];
   const parse = (label: string): { flip: boolean; turn: number } =>
-    label.startsWith("s")
-      ? { flip: true, turn: Number(label.slice(1)) }
-      : { flip: false, turn: Number(label) };
+    label.startsWith("s") ? { flip: true, turn: Number(label.slice(1)) } : { flip: false, turn: Number(label) };
   const show = (flip: boolean, turn: number) => `${flip ? "s" : ""}${((turn % n) + n) % n}`;
   return build(`DihedralGroup(${n})`, labels, (a, b) => {
     const x = parse(a);
@@ -160,8 +151,7 @@ export function multiplyElements(g: Group, a: Element, b: Element): Element {
 }
 
 /** The class sum of a conjugacy class — a basis element of the centre. */
-export const classSum = (members: readonly number[]): Element =>
-  new Map(members.map((i) => [i, 1]));
+export const classSum = (members: readonly number[]): Element => new Map(members.map((i) => [i, 1]));
 
 /** Whether an element commutes with every basis element — i.e. lies in the centre. */
 export function isCentral(g: Group, element: Element): boolean {

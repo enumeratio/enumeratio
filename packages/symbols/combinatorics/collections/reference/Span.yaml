@@ -30,8 +30,7 @@ examples:
     category: Scope
     caption: "Negative bounds: the last two elements"
   - id: spans-at-two-levels-cut-out-a-submatrix
-    expr:
-      [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]
+    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]
     expected: [List, [List, 4, 5], [List, 7, 8]]
     category: Scope
     caption: Spans at two levels cut out a submatrix

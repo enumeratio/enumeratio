@@ -39,8 +39,7 @@ examples:
     caption: The partitions of 8 into at most 3 parts
   - id: exactly-3-parts
     expr: [IntegerPartitions, 8, [List, 3]]
-    expected:
-      [List, [List, 6, 1, 1], [List, 5, 2, 1], [List, 4, 3, 1], [List, 4, 2, 2], [List, 3, 3, 2]]
+    expected: [List, [List, 6, 1, 1], [List, 5, 2, 1], [List, 4, 3, 1], [List, 4, 2, 2], [List, 3, 3, 2]]
     category: Scope
     caption: Exactly 3 parts
   - id: parts-restricted-to-1-2-5

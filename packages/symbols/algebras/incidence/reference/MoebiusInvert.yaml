@@ -23,8 +23,7 @@ examples:
     expected: [List, 1, 2, 3, 4]
     caption: …and back again
   - id: inclusion-exclusion-round-tripped
-    expr:
-      [MoebiusInvert, [BooleanLattice, 2], [PosetSumDown, [BooleanLattice, 2], [List, 5, 1, 2, 7]]]
+    expr: [MoebiusInvert, [BooleanLattice, 2], [PosetSumDown, [BooleanLattice, 2], [List, 5, 1, 2, 7]]]
     expected: [List, 5, 1, 2, 7]
     caption: inclusion–exclusion, round-tripped
     category: Properties

@@ -1,11 +1,5 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import {
-  compareGenerators,
-  type Generator,
-  generatorOf,
-  generatorSymbol,
-  sameGenerator,
-} from "./units.ts";
+import { compareGenerators, type Generator, generatorOf, generatorSymbol, sameGenerator } from "./units.ts";
 import { operandsOf, symbolNameOf } from "@enumeratio/boxed";
 
 // A hypercomplex element in normal form: a coefficient per BLADE, where a blade is
@@ -63,8 +57,7 @@ function fromTerms(ce: ComputeEngine, raw: readonly Term[]): Multivector {
 export const scalarMultivector = (ce: ComputeEngine, c: BoxedExpression): Multivector =>
   fromTerms(ce, [{ blade: [], coefficient: c }]);
 
-export const isScalar = (mv: Multivector): boolean =>
-  [...mv.terms.values()].every((t) => t.blade.length === 0);
+export const isScalar = (mv: Multivector): boolean => [...mv.terms.values()].every((t) => t.blade.length === 0);
 
 /** The generators occurring anywhere in `mv`, in canonical order. */
 export function generatorsOf(mv: Multivector): Generator[] {
@@ -130,11 +123,7 @@ export function addMultivectors(ce: ComputeEngine, parts: readonly Multivector[]
   return fromTerms(ce, raw);
 }
 
-export function scaleMultivector(
-  ce: ComputeEngine,
-  mv: Multivector,
-  factor: BoxedExpression,
-): Multivector {
+export function scaleMultivector(ce: ComputeEngine, mv: Multivector, factor: BoxedExpression): Multivector {
   return fromTerms(
     ce,
     [...mv.terms.values()].map((t) => ({
@@ -144,11 +133,7 @@ export function scaleMultivector(
   );
 }
 
-export function multiplyMultivectors(
-  ce: ComputeEngine,
-  a: Multivector,
-  b: Multivector,
-): Multivector {
+export function multiplyMultivectors(ce: ComputeEngine, a: Multivector, b: Multivector): Multivector {
   const raw: Term[] = [];
   for (const x of a.terms.values()) {
     for (const y of b.terms.values()) {
@@ -162,11 +147,7 @@ export function multiplyMultivectors(
   return fromTerms(ce, raw);
 }
 
-export function powerMultivector(
-  ce: ComputeEngine,
-  mv: Multivector,
-  exponent: number,
-): Multivector | undefined {
+export function powerMultivector(ce: ComputeEngine, mv: Multivector, exponent: number): Multivector | undefined {
   if (!Number.isInteger(exponent)) return undefined;
   if (exponent < 0) {
     const inverse = invertMultivector(ce, mv);
@@ -191,10 +172,7 @@ export function conjugateMultivector(ce: ComputeEngine, mv: Multivector): Multiv
     ce,
     [...mv.terms.values()].map((t) => ({
       blade: t.blade,
-      coefficient:
-        t.blade.length % 2 === 0
-          ? t.coefficient
-          : productCoefficients(ce, [ce.number(-1), t.coefficient]),
+      coefficient: t.blade.length % 2 === 0 ? t.coefficient : productCoefficients(ce, [ce.number(-1), t.coefficient]),
     })),
   );
 }
@@ -213,15 +191,10 @@ export function conjugateMultivector(ce: ComputeEngine, mv: Multivector): Multiv
 // The anticommuting family is left alone: Cl_n is not commutative, its norm is a
 // different object, and guessing one would be worse than declining.
 
-const hasAnticommuting = (mv: Multivector): boolean =>
-  generatorsOf(mv).some((g) => g.family.anticommutes);
+const hasAnticommuting = (mv: Multivector): boolean => generatorsOf(mv).some((g) => g.family.anticommutes);
 
 /** Split `mv` at generator `x` into u (blades without x) and v (blades with x removed). */
-function splitAt(
-  ce: ComputeEngine,
-  mv: Multivector,
-  x: Generator,
-): { u: Multivector; v: Multivector } {
+function splitAt(ce: ComputeEngine, mv: Multivector, x: Generator): { u: Multivector; v: Multivector } {
   const low: Term[] = [];
   const high: Term[] = [];
   for (const term of mv.terms.values()) {
@@ -236,12 +209,7 @@ function splitAt(
 }
 
 /** u² − ε·v², the norm of z = u + x·v relative to the next algebra down. */
-function relativeNorm(
-  ce: ComputeEngine,
-  u: Multivector,
-  v: Multivector,
-  square: -1 | 0 | 1,
-): Multivector {
+function relativeNorm(ce: ComputeEngine, u: Multivector, v: Multivector, square: -1 | 0 | 1): Multivector {
   const uu = multiplyMultivectors(ce, u, u);
   if (square === 0) return uu;
   const vv = multiplyMultivectors(ce, v, v);
@@ -285,10 +253,7 @@ export function invertMultivector(ce: ComputeEngine, mv: Multivector): Multivect
   const inverseNorm = invertMultivector(ce, relativeNorm(ce, u, v, x.family.square));
   if (inverseNorm === undefined) return undefined;
   // (u − x·v) · (u² − ε·v²)⁻¹ — the x-conjugate over the relative norm.
-  const xConjugate = addMultivectors(ce, [
-    u,
-    scaleMultivector(ce, embedAt(ce, v, x), ce.number(-1)),
-  ]);
+  const xConjugate = addMultivectors(ce, [u, scaleMultivector(ce, embedAt(ce, v, x), ce.number(-1))]);
   return multiplyMultivectors(ce, xConjugate, inverseNorm);
 }
 
@@ -328,9 +293,7 @@ export function reachesGenerator(expr: BoxedExpression): boolean {
   const operator = expr.operator;
   if (!ARITHMETIC.has(operator)) return false;
   const ops = operandsOf(expr);
-  return operator === "Power"
-    ? ops[0] !== undefined && reachesGenerator(ops[0])
-    : ops.some(reachesGenerator);
+  return operator === "Power" ? ops[0] !== undefined && reachesGenerator(ops[0]) : ops.some(reachesGenerator);
 }
 
 /** The distinct ANTICOMMUTING generators in an expression (Clifford `e_k`). */

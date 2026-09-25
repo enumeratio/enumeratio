@@ -31,9 +31,7 @@ function floorPQ(P: bigint, Q: bigint, D: bigint, sqrtD: bigint): bigint {
   const holds = (candidate: bigint): boolean => {
     const L = candidate * Q - P;
     const R = (candidate + 1n) * Q - P;
-    return Q > 0n
-      ? cmpToSqrt(L, D) <= 0 && cmpToSqrt(R, D) > 0
-      : cmpToSqrt(L, D) >= 0 && cmpToSqrt(R, D) < 0;
+    return Q > 0n ? cmpToSqrt(L, D) <= 0 && cmpToSqrt(R, D) > 0 : cmpToSqrt(L, D) >= 0 && cmpToSqrt(R, D) < 0;
   };
   for (let guard = 0; guard < 64 && !holds(a); guard++) {
     const L = a * Q - P;

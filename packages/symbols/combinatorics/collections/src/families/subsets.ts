@@ -5,8 +5,7 @@
 import { binomial } from "./shared.ts";
 import type { FamilyKernel } from "./types.ts";
 
-const normRank = (r: number, total: number): number =>
-  total > 0 ? ((Math.trunc(r) % total) + total) % total : 0;
+const normRank = (r: number, total: number): number => (total > 0 ? ((Math.trunc(r) % total) + total) % total : 0);
 
 // SubsetsWithoutConsecutive(n): subsets of {1,...,n} with no two consecutive
 // integers. Count is the Fibonacci number a(n) = F(n+2). unrank puts the

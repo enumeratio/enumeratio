@@ -8,13 +8,10 @@
 import { CONTEXT, HEADS, type MathJson, SYMBOLS } from "./to-wolfram.ts";
 
 /** Strip the context off a name `toWolfram` qualified to keep it out of `System``. */
-const unqualify = (name: string): string =>
-  name.startsWith(CONTEXT) ? name.slice(CONTEXT.length) : name;
+const unqualify = (name: string): string => (name.startsWith(CONTEXT) ? name.slice(CONTEXT.length) : name);
 
 /** Wolfram spelling → compute-engine symbol constant. Reverse of `SYMBOLS`. */
-const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(
-  Object.entries(SYMBOLS).map(([ce, wl]) => [wl, ce]),
-);
+const REVERSE_SYMBOLS: Record<string, string> = Object.fromEntries(Object.entries(SYMBOLS).map(([ce, wl]) => [wl, ce]));
 
 /** Wolfram head → compute-engine head. Reverse of `HEADS`. Where two compute-engine
  * heads share a Wolfram spelling (`Log2`/`Lb` both → `Log2`, `List`/`Tuple`), the
@@ -36,9 +33,7 @@ export function fromWolfram(input: string): MathJson {
   const result = parseExpr();
   skipWs();
   if (pos < src.length) {
-    throw new Error(
-      `fromWolfram: unexpected trailing input at ${pos}: ${JSON.stringify(src.slice(pos))}`,
-    );
+    throw new Error(`fromWolfram: unexpected trailing input at ${pos}: ${JSON.stringify(src.slice(pos))}`);
   }
   return result;
 }
@@ -53,10 +48,7 @@ function parseExpr(): MathJson {
   if (/[0-9]/.test(ch)) return parseNumber();
   // `toWolfram` emits `NegativeInfinity` as the raw text "-Infinity" rather than
   // a proper expression; recognise it as a single token so it round-trips.
-  if (
-    src.startsWith("-Infinity", pos) &&
-    !/[A-Za-z0-9$]/.test(src[pos + "-Infinity".length] ?? "")
-  ) {
+  if (src.startsWith("-Infinity", pos) && !/[A-Za-z0-9$]/.test(src[pos + "-Infinity".length] ?? "")) {
     pos += "-Infinity".length;
     return "NegativeInfinity";
   }
@@ -185,18 +177,10 @@ function applyHead(name: string, args: MathJson[]): MathJson {
   if (name === "Total" && args.length === 1) return ["Sum", args[0]];
   // An iterator `{k, a, b}` is a Tuple on the compute-engine side, not a List.
   if ((name === "Sum" || name === "Product") && args.length >= 2) {
-    return [
-      name,
-      args[0],
-      ...args.slice(1).map((it) => (isList(it) ? ["Tuple", ...it.slice(1)] : it)),
-    ];
+    return [name, args[0], ...args.slice(1).map((it) => (isList(it) ? ["Tuple", ...it.slice(1)] : it))];
   }
   if (name === "Integrate" && args.length >= 2) {
-    return [
-      name,
-      args[0],
-      ...args.slice(1).map((it) => (isList(it) ? ["Limits", ...it.slice(1)] : it)),
-    ];
+    return [name, args[0], ...args.slice(1).map((it) => (isList(it) ? ["Limits", ...it.slice(1)] : it))];
   }
   if (name === "Interval" && args.length === 1 && isList(args[0]) && args[0].length === 3) {
     return ["Interval", args[0][1], args[0][2]];
@@ -225,9 +209,7 @@ function skipWs(): void {
 
 function expect(ch: string): void {
   if (src[pos] !== ch) {
-    throw new Error(
-      `fromWolfram: expected "${ch}" at ${pos}, got ${JSON.stringify(src.slice(pos, pos + 10))}`,
-    );
+    throw new Error(`fromWolfram: expected "${ch}" at ${pos}, got ${JSON.stringify(src.slice(pos, pos + 10))}`);
   }
   pos++;
 }

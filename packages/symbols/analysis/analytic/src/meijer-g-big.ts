@@ -37,8 +37,7 @@ const MAX_TERMS = 20_000;
 const bneg = (x: BigCx): BigCx => ({ re: x.re.neg(), im: x.im.neg() });
 const bmag = (x: BigCx): number => Math.hypot(x.re.toNumber(), x.im.toNumber());
 
-const isNonPosIntBig = (z: BigCx): boolean =>
-  z.im.isZero() && !z.re.isPositive() && z.re.isInteger();
+const isNonPosIntBig = (z: BigCx): boolean => z.im.isZero() && !z.re.isPositive() && z.re.isInteger();
 
 /** Γ(z) in BigDecimal, `undefined` at the poles (matching `gammaC` in meijer-g.ts). */
 function gammaBig(z: BigCx, digits: number): BigCx | undefined {
@@ -50,11 +49,7 @@ function gammaBig(z: BigCx, digits: number): BigCx | undefined {
  * pFq(upper; lower; z) in BigDecimal — the same series as `pfqSeries` (hypergeometric.ts),
  * stopped once a term is provably below the working precision rather than a fixed `1e-16`.
  */
-function pfqSeriesBig(
-  upper: readonly BigCx[],
-  lower: readonly BigCx[],
-  z: BigCx,
-): BigCx | undefined {
+function pfqSeriesBig(upper: readonly BigCx[], lower: readonly BigCx[], z: BigCx): BigCx | undefined {
   const tol = 10 ** -(BigDecimal.precision - 2);
   let term: BigCx = bigCx(1);
   let sum: BigCx = bigCx(1);
@@ -91,13 +86,7 @@ function pfqSeriesBig(
  * non-congruent bₕ) before calling this, so this only needs to decline on a Γ pole or a pFq
  * that doesn't converge.
  */
-export function meijerGSeriesBig(
-  a: readonly Cx[],
-  b: readonly Cx[],
-  m: number,
-  n: number,
-  z: Cx,
-): Cx | undefined {
+export function meijerGSeriesBig(a: readonly Cx[], b: readonly Cx[], m: number, n: number, z: Cx): Cx | undefined {
   const p = a.length;
   const q = b.length;
   const sign = (p - m - n) % 2 === 0 ? 1 : -1;
@@ -138,8 +127,7 @@ export function meijerGSeriesBig(
       const argZ = sign > 0 ? bz : bneg(bz);
       const series = pfqSeriesBig(upper, lower, argZ);
       if (series === undefined) return undefined;
-      const zPow =
-        z.re === 0 && z.im === 0 && bh.re.isZero() && bh.im.isZero() ? bigCx(1) : bpow(bz, bh);
+      const zPow = z.re === 0 && z.im === 0 && bh.re.isZero() && bh.im.isZero() ? bigCx(1) : bpow(bz, bh);
       const term = bmul(bmul(pref, zPow), series);
       total = badd(total, term);
     }

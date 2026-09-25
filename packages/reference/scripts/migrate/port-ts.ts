@@ -61,10 +61,8 @@ export const dataDir = (packageDir: string): string =>
   packageDir === "packages/reference" ? "packages/reference/entries" : `${packageDir}/reference`;
 
 const PACKAGE_DIRS: Readonly<Record<string, string>> = {
-  "packages/symbols/combinatorics/collections/src/entries.ts":
-    "packages/symbols/combinatorics/collections",
-  "packages/symbols/combinatorics/statistics/src/entries.ts":
-    "packages/symbols/combinatorics/statistics",
+  "packages/symbols/combinatorics/collections/src/entries.ts": "packages/symbols/combinatorics/collections",
+  "packages/symbols/combinatorics/statistics/src/entries.ts": "packages/symbols/combinatorics/statistics",
   "packages/symbols/combinatorics/domains/src/entries.ts": "packages/symbols/combinatorics/domains",
 };
 const EXAMPLES_JSON = "packages/reference/src/entries/special-functions.examples.json";
@@ -76,9 +74,7 @@ const stemOf = (path: string): string | undefined =>
 function yamlPath(path: string, head: string): string {
   const stem = stemOf(path);
   const dir =
-    stem === undefined
-      ? PACKAGE_DIRS[path]
-      : (routes as Record<string, { dir: string }>)[`${stem}/${head}`]?.dir;
+    stem === undefined ? PACKAGE_DIRS[path] : (routes as Record<string, { dir: string }>)[`${stem}/${head}`]?.dir;
   if (dir === undefined) throw new Error(`${path} ${head}: unrouted`);
   return `${dataDir(dir)}/${head}.yaml`;
 }
@@ -91,11 +87,7 @@ function plain(entry: ReferenceEntry, where: string): ReferenceEntry {
 }
 
 /** A module's entries, from a file (at a git revision, when given). */
-async function entriesAt(
-  path: string,
-  name: string,
-  rev?: string,
-): Promise<readonly ReferenceEntry[]> {
+async function entriesAt(path: string, name: string, rev?: string): Promise<readonly ReferenceEntry[]> {
   let file = `${ROOT}${path}`;
   if (rev !== undefined) {
     // Next to the original, so its relative imports still resolve.
@@ -114,11 +106,7 @@ async function entriesAt(
 }
 
 /** special-functions.ts's heads carry more examples in its `.examples.json`, hidden by default. */
-function withJsonExamples(
-  path: string,
-  entries: readonly ReferenceEntry[],
-  rev?: string,
-): readonly ReferenceEntry[] {
+function withJsonExamples(path: string, entries: readonly ReferenceEntry[], rev?: string): readonly ReferenceEntry[] {
   if (stemOf(path) !== "special-functions") return entries;
   let text: string;
   try {
@@ -159,8 +147,7 @@ if (args[0] === "--replay" && args.length === 3) {
   let replayed = 0;
   for (const shim of SHIMS) {
     const touched =
-      changed.includes(shim.path) ||
-      (stemOf(shim.path) === "special-functions" && changed.includes(EXAMPLES_JSON));
+      changed.includes(shim.path) || (stemOf(shim.path) === "special-functions" && changed.includes(EXAMPLES_JSON));
     if (!touched) continue;
     const before = new Map((await entriesAt(shim.path, shim.name, base)).map((e) => [e.name, e]));
     for (const entry of await entriesAt(shim.path, shim.name, lane)) {

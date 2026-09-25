@@ -28,8 +28,7 @@ examples:
     category: Scope
     caption: Converts an [[Interval]] to center-radius form
   - id: radii-add-under-subtraction-too
-    expr:
-      [Subtract, [CenteredInterval, 5, [Rational, 1, 4]], [CenteredInterval, 1, [Rational, 1, 4]]]
+    expr: [Subtract, [CenteredInterval, 5, [Rational, 1, 4]], [CenteredInterval, 1, [Rational, 1, 4]]]
     expected: [CenteredInterval, 4, [Rational, 1, 2]]
     category: Scope
     caption: Radii add under subtraction too

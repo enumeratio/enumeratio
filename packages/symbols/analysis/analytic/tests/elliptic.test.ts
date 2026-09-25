@@ -24,13 +24,10 @@ interface GoldenCase {
   wolfram?: [number, number];
 }
 
-const goldens: GoldenCase[] = JSON.parse(
-  readFileSync(new URL("./elliptic.golden.json", import.meta.url), "utf8"),
-);
+const goldens: GoldenCase[] = JSON.parse(readFileSync(new URL("./elliptic.golden.json", import.meta.url), "utf8"));
 
 const relErr = (ours: [number, number], ref: [number, number]): number =>
-  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) /
-  Math.max(1, Math.hypot(ref[0], ref[1]));
+  Math.max(Math.abs(ours[0] - ref[0]), Math.abs(ours[1] - ref[1])) / Math.max(1, Math.hypot(ref[0], ref[1]));
 
 const byHead = new Map<string, GoldenCase[]>();
 for (const g of goldens) byHead.set(g.head, [...(byHead.get(g.head) ?? []), g]);
@@ -79,15 +76,8 @@ test("IncompleteEllipticF(0, m) = 0 and IncompleteEllipticE(0, m) = 0", () => {
 });
 
 test("stays symbolic under plain evaluate; a float argument evaluates numerically", () => {
-  expect(ce.box(["IncompleteEllipticF", "x", "y"]).evaluate().json).toEqual([
-    "IncompleteEllipticF",
-    "x",
-    "y",
-  ]);
-  expect(ce.box(["IncompleteEllipticF", 0.5, 0.3]).evaluate().re).toBeCloseTo(
-    0.5061402119623554,
-    12,
-  );
+  expect(ce.box(["IncompleteEllipticF", "x", "y"]).evaluate().json).toEqual(["IncompleteEllipticF", "x", "y"]);
+  expect(ce.box(["IncompleteEllipticF", 0.5, 0.3]).evaluate().re).toBeCloseTo(0.5061402119623554, 12);
 });
 
 test("IncompleteEllipticE reduces φ outside [-π/2, π/2] itself, rather than trusting native EllipticE there at complex m (Fungrim c28288)", () => {
@@ -136,10 +126,7 @@ test("IncompleteEllipticPi stays symbolic under plain evaluate; a float argument
     "phi",
     "m",
   ]);
-  expect(ce.box(["IncompleteEllipticPi", 0.5, 0.4, 0.3]).evaluate().re).toBeCloseTo(
-    0.4141517368244767,
-    12,
-  );
+  expect(ce.box(["IncompleteEllipticPi", 0.5, 0.4, 0.3]).evaluate().re).toBeCloseTo(0.4141517368244767, 12);
 });
 
 test("IncompleteEllipticPi computes complex φ directly via Carlson, where native EllipticPi returns NaN", () => {

@@ -13,9 +13,7 @@ const main = files["src/main.rs"] as string;
 const cases = planned(plan, "rust");
 
 test("emits the crate's project files, and only those", () => {
-  expect(Object.keys(files).sort()).toEqual(
-    [".gitignore", "Cargo.toml", "rust-toolchain.toml", "src/main.rs"].sort(),
-  );
+  expect(Object.keys(files).sort()).toEqual([".gitignore", "Cargo.toml", "rust-toolchain.toml", "src/main.rs"].sort());
   expect(main.length).toBeGreaterThan(0);
 });
 
@@ -34,10 +32,7 @@ test("every case planned for rust is present, by name", () => {
 test("the PROTOCOL numbers are embedded, not hard-coded", () => {
   for (const [key, value] of Object.entries(PROTOCOL)) {
     if (key === "version" || key === "tooFastNs") continue;
-    expect(
-      main.includes(`PROTOCOL_${key.replace(/[A-Z]/g, (c) => `_${c}`).toUpperCase()}`),
-      key,
-    ).toBe(true);
+    expect(main.includes(`PROTOCOL_${key.replace(/[A-Z]/g, (c) => `_${c}`).toUpperCase()}`), key).toBe(true);
     expect(main.includes(String(value)), key).toBe(true);
   }
 });

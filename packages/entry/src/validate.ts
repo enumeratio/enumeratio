@@ -12,8 +12,7 @@ export interface Problem {
   readonly message: string;
 }
 
-const rows = (entry: ReferenceEntry): readonly ReferenceImplementation[] =>
-  entry.implementations ?? [];
+const rows = (entry: ReferenceEntry): readonly ReferenceImplementation[] => entry.implementations ?? [];
 
 /**
  * Check every entry's implementation rows. Returns the problems; an empty array is a pass.
@@ -21,10 +20,7 @@ const rows = (entry: ReferenceEntry): readonly ReferenceImplementation[] =>
  * `exists` is optional: omit it to skip the source-pointer check (for a caller with no
  * filesystem, such as the browser).
  */
-export function checkImplementations(
-  entries: readonly ReferenceEntry[],
-  exists?: Exists,
-): Problem[] {
+export function checkImplementations(entries: readonly ReferenceEntry[], exists?: Exists): Problem[] {
   const problems: Problem[] = [];
   const fail = (entry: string, message: string): void => void problems.push({ entry, message });
 
@@ -46,8 +42,7 @@ export function checkImplementations(
       // A component's meaning IS the rendered element, so it has to say where and what.
       if (row.origin === "component") {
         if (row.environment !== "browser") fail(entry.name, "a component row runs in the browser");
-        if (row.produces === undefined)
-          fail(entry.name, "a component row must say what it produces");
+        if (row.produces === undefined) fail(entry.name, "a component row must say what it produces");
       }
 
       // A pointer only helps if it points somewhere; a copy of the source would rot.

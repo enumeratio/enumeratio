@@ -138,8 +138,7 @@ agreement.
   role: bench
   expr: [PowerMod, $a, $e, $m]
   bench:
-    sample:
-      { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
+    sample: { seed: 20260925, count: 16, draw: { a: [bits, 2048], e: [bits, 2048], m: [odd-bits, 2048] } }
 ```
 
 - The seed is part of the record. Every run draws the same 16 inputs, in every system, so runs
@@ -310,7 +309,7 @@ holds:
 - **Trends over time** compare TS runs from the nightly job only, with `tools/perf`'s drift
   rule (≥1.5× and a floor, against the trailing median of at least 5 runs), and file a rolling
   `bench drift` issue labelled `nightly-fixup`. That rule already tolerates hosted-runner
-  noise. If it proves too loose, the fix is a stable machine (a self-hosted runner, or Dean's
+  noise. If it proves too loose, the fix is a stable machine (a self-hosted runner, or a maintainer's
   Mac on a schedule), not more statistics. Reports carry the fingerprint, so the viewer can
   split series by machine.
 - **Locally:** `node packages/bench/scripts/bench.ts` runs any subset on the current machine

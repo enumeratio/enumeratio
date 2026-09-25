@@ -31,8 +31,7 @@ const strip = (markup: string): string =>
 /** Each `<dt>` is one notation: its LaTeX `alttext`; the `<dd>` names it and links its home. */
 function parse(page: string): DlmfNotation[] {
   const out: DlmfNotation[] = [];
-  const entry =
-    /<dt id="[^"]+" class="ltx_glossaryentry[^"]*">([\s\S]*?)<\/dt>\s*<dd>([\s\S]*?)<\/dd>/g;
+  const entry = /<dt id="[^"]+" class="ltx_glossaryentry[^"]*">([\s\S]*?)<\/dt>\s*<dd>([\s\S]*?)<\/dd>/g;
   for (const [, dt, dd] of page.matchAll(entry)) {
     const notation = unescape(/alttext="([^"]*)"/.exec(dt!)?.[1] ?? "");
     const description = strip(dd!);

@@ -23,23 +23,13 @@ const SEQUENCE_HEADS = new Set(["List", "Tuple", "Set"]);
 
 /** Numbers by value, everything else by its text — a stable order for a Set. */
 const byValue = (a: Tree, b: Tree): number =>
-  typeof a === "number" && typeof b === "number"
-    ? a - b
-    : JSON.stringify(a).localeCompare(JSON.stringify(b));
+  typeof a === "number" && typeof b === "number" ? a - b : JSON.stringify(a).localeCompare(JSON.stringify(b));
 
 /** The canonical text for something that did not reduce to a value. */
-export const symbolic = (expr: MathJSON): string =>
-  typeof expr === "string" ? expr : JSON.stringify(expr);
+export const symbolic = (expr: MathJSON): string => (typeof expr === "string" ? expr : JSON.stringify(expr));
 
 /** Named constants a numeric value may mention, as `fromWolfram` spells them. */
-const CONSTANTS = new Set([
-  "Pi",
-  "ExponentialE",
-  "ImaginaryUnit",
-  "GoldenRatio",
-  "EulerGamma",
-  "CatalanConstant",
-]);
+const CONSTANTS = new Set(["Pi", "ExponentialE", "ImaginaryUnit", "GoldenRatio", "EulerGamma", "CatalanConstant"]);
 
 /** Heads that only build a number from numbers. */
 const ARITHMETIC = new Set([
@@ -97,12 +87,9 @@ export function reduce(expr: MathJSON, evaluate: (expr: MathJSON) => Leaf): Tree
 }
 
 const close = (a: number, b: number, tolerance: number): boolean =>
-  Number.isNaN(a) && Number.isNaN(b)
-    ? true
-    : Math.abs(a - b) <= tolerance * Math.max(1, Math.abs(a), Math.abs(b));
+  Number.isNaN(a) && Number.isNaN(b) ? true : Math.abs(a - b) <= tolerance * Math.max(1, Math.abs(a), Math.abs(b));
 
-const isComplex = (leaf: Leaf): leaf is { re: number; im: number } =>
-  typeof leaf === "object" && leaf !== null;
+const isComplex = (leaf: Leaf): leaf is { re: number; im: number } => typeof leaf === "object" && leaf !== null;
 
 /** Compare two reduced trees: element-wise, numerically within `tolerance`, textually
  * last. Never `inconclusive`: a parsed answer is always either the same or different. */

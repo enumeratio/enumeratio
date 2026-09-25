@@ -27,22 +27,8 @@ function onCopy(event: ClipboardEvent): void {
 }
 
 // Chrome (menus, In/Out labels, diagnostics) that shouldn't end up in the copy.
-const SKIP =
-  "notatio-menu notatio-io-label notatio-assert-fail notatio-assert-diag notatio-code-lang";
-const BLOCK = new Set([
-  "P",
-  "DIV",
-  "LI",
-  "H1",
-  "H2",
-  "H3",
-  "H4",
-  "H5",
-  "H6",
-  "SECTION",
-  "TR",
-  "PRE",
-]);
+const SKIP = "notatio-menu notatio-io-label notatio-assert-fail notatio-assert-diag notatio-code-lang";
+const BLOCK = new Set(["P", "DIV", "LI", "H1", "H2", "H3", "H4", "H5", "H6", "SECTION", "TR", "PRE"]);
 
 function serialize(node: Node): string {
   if (node.nodeType === Node.TEXT_NODE) return node.nodeValue ?? "";

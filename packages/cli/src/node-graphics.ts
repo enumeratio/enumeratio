@@ -35,11 +35,7 @@ function detectProtocol(): ImageProtocol | null {
   if (!process.stdout.isTTY) return null;
   const env = process.env;
   if (env.TERM?.includes("kitty") || env.KITTY_WINDOW_ID) return "kitty";
-  if (
-    env.TERM_PROGRAM === "iTerm.app" ||
-    env.TERM_PROGRAM === "WezTerm" ||
-    env.LC_TERMINAL === "iTerm2"
-  )
+  if (env.TERM_PROGRAM === "iTerm.app" || env.TERM_PROGRAM === "WezTerm" || env.LC_TERMINAL === "iTerm2")
     return "iterm";
   return null;
 }

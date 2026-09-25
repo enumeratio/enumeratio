@@ -18,9 +18,7 @@ const PARAMS: Record<string, number[][]> = {
   PrimePartition: Array.from({ length: 16 }, (_, n) => [n]),
   SquarePartitions: Array.from({ length: 16 }, (_, n) => [n]),
   TriangularPartitions: Array.from({ length: 16 }, (_, n) => [n]),
-  LargestPartPartitions: Array.from({ length: 9 }, (_, n) =>
-    Array.from({ length: n + 1 }, (_, m) => [n, m]),
-  ).flat(),
+  LargestPartPartitions: Array.from({ length: 9 }, (_, n) => Array.from({ length: n + 1 }, (_, m) => [n, m])).flat(),
 };
 
 for (const entry of entries) {
@@ -85,10 +83,7 @@ for (let n = 0; n <= 20; n++) {
     test(`${head}(${n}) matches an independent brute-force predicate`, () => {
       const entry = byHead[head];
       const total = entry.count([n]);
-      const kernelElements = Array.from(
-        { length: total },
-        (_, r) => entry.unrank([n], r) as number[],
-      );
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n], r) as number[]);
       expect(asSet(kernelElements)).toEqual(asSet(all.filter(pred)));
       expect(kernelElements.length).toBe(total); // no duplicates snuck in
     });
@@ -97,10 +92,7 @@ for (let n = 0; n <= 20; n++) {
     test(`LargestPartPartitions(${n}, ${m}) matches an independent brute-force predicate`, () => {
       const entry = byHead.LargestPartPartitions;
       const total = entry.count([n, m]);
-      const kernelElements = Array.from(
-        { length: total },
-        (_, r) => entry.unrank([n, m], r) as number[],
-      );
+      const kernelElements = Array.from({ length: total }, (_, r) => entry.unrank([n, m], r) as number[]);
       const expected = all.filter((p) => p.length > 0 && p[0] === m);
       expect(asSet(kernelElements)).toEqual(asSet(expected));
       expect(kernelElements.length).toBe(total);
@@ -131,8 +123,7 @@ for (let a = 0; a <= 5; a++) {
       const maxSum = a * b;
       const expected: number[][] = [];
       for (let n = 0; n <= maxSum; n++) {
-        for (const p of allPartitions(n))
-          if (p.length <= a && p.every((x) => x <= b)) expected.push(p);
+        for (const p of allPartitions(n)) if (p.length <= a && p.every((x) => x <= b)) expected.push(p);
       }
       const total = PartitionsInBoxCount(a, b);
       const elements = Array.from({ length: total }, (_, r) => PartitionsInBoxUnrank(a, b, r));
@@ -148,9 +139,7 @@ const range = (n: number) => Array.from({ length: n }, (_, i) => [i]);
 
 test("OddPartitions count = A000009, and equals DistinctPartitions (Euler)", () => {
   const oddCounts = countsOf("OddPartitions", range(21));
-  expect(oddCounts).toEqual([
-    1, 1, 1, 2, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 22, 27, 32, 38, 46, 54, 64,
-  ]);
+  expect(oddCounts).toEqual([1, 1, 1, 2, 2, 3, 4, 5, 6, 8, 10, 12, 15, 18, 22, 27, 32, 38, 46, 54, 64]);
   const distinctPartitions = coreEntries.find((e) => e.head === "DistinctPartitions");
   expect(distinctPartitions).toBeDefined();
   expect(oddCounts).toEqual(range(21).map((p) => distinctPartitions?.count(p)));

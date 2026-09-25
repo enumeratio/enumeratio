@@ -46,7 +46,5 @@ export function toPackageRun(report: VitestJsonReport, packageRoot: string): Pac
 
 function relativize(absolutePath: string, root: string): string {
   const normalizedRoot = root.endsWith("/") ? root : `${root}/`;
-  return absolutePath.startsWith(normalizedRoot)
-    ? absolutePath.slice(normalizedRoot.length)
-    : absolutePath;
+  return absolutePath.startsWith(normalizedRoot) ? absolutePath.slice(normalizedRoot.length) : absolutePath;
 }

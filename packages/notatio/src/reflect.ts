@@ -99,9 +99,7 @@ function classesIn(text: string): ClassDoc[] {
     const at = text.indexOf("static", from);
     const next = text.indexOf("export class", from + 1);
     const own =
-      at !== -1 &&
-      (next === -1 || at < next) &&
-      /static (?:override )?properties/.test(text.slice(at, at + 40));
+      at !== -1 && (next === -1 || at < next) && /static (?:override )?properties/.test(text.slice(at, at + 40));
     const open = own ? text.indexOf("{", text.indexOf("properties", at)) : -1;
     const body = open === -1 ? "" : balanced(text, open);
     out.push({ className: m[1], parent: m[2], attributes: attributesIn(text, body) });
@@ -155,11 +153,7 @@ function inherited(className: string, table: Map<string, ClassDoc>): AttributeDo
   return [...out.values()];
 }
 
-function parse(
-  srcDir: string,
-  file: string,
-  table: Map<string, ClassDoc>,
-): ComponentDoc | undefined {
+function parse(srcDir: string, file: string, table: Map<string, ClassDoc>): ComponentDoc | undefined {
   const text = readFileSync(join(srcDir, file), "utf8");
 
   // A tag is defined directly or through `defineControl`, which also registers it.

@@ -1,13 +1,7 @@
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { expect, test } from "vite-plus/test";
 import { declareHypercomplex } from "../src/declare.ts";
-import {
-  distinctPrimeCount,
-  factorize,
-  imaginaryUnitsMod,
-  splitUnitCountMod,
-  splitUnitsMod,
-} from "../src/modular.ts";
+import { distinctPrimeCount, factorize, imaginaryUnitsMod, splitUnitCountMod, splitUnitsMod } from "../src/modular.ts";
 
 const ce = new ComputeEngine();
 declareHypercomplex(ce);
@@ -50,8 +44,7 @@ test("the closed-form count matches the enumeration everywhere", () => {
 });
 
 test("√−1 exists mod m iff every odd prime factor is ≡ 1 (mod 4) and 4 ∤ m", () => {
-  const shouldExist = (m: number): boolean =>
-    factorize(m).every(([p, a]) => (p === 2 ? a === 1 : p % 4 === 1));
+  const shouldExist = (m: number): boolean => factorize(m).every(([p, a]) => (p === 2 ? a === 1 : p % 4 === 1));
   for (let m = 1; m <= 300; m++) {
     expect(imaginaryUnitsMod(m).length > 0, `mod ${m}`).toBe(shouldExist(m));
   }
@@ -78,9 +71,7 @@ test("a split unit of ℤ/m realises j_1 — the identities transport", () => {
   // therefore hold in ℤ/15: (1+4)(1−4) = −15 ≡ 0.
   expect(splitUnitsMod(15)).toEqual([1, 4, 11, 14]);
   expect(ce.parse("(1+j_1)(1-j_1)").evaluate().json).toBe(0);
-  expect(ce.box(["Mod", ["Multiply", ["Add", 1, 4], ["Subtract", 1, 4]], 15]).evaluate().json).toBe(
-    0,
-  );
+  expect(ce.box(["Mod", ["Multiply", ["Add", 1, 4], ["Subtract", 1, 4]], 15]).evaluate().json).toBe(0);
   // And the idempotent (1+j_1)/2 lands on an idempotent residue: (1+4)/2 = 5·8 = 40 ≡ 10,
   // and 10² = 100 ≡ 10 (mod 15).
   expect(ce.box(["Mod", ["Multiply", 10, 10], 15]).evaluate().json).toBe(10);

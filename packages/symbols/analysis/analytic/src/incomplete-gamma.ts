@@ -20,8 +20,7 @@ import { gammaExactValue } from "./widened.ts";
 // half-integers via `gammaExactValue` — the same kernel Binomial/Beta/CatalanNumber reuse.
 
 /** Does this result still mention the head it was supposed to reduce away? */
-const unreduced = (r: BoxedExpression, head: string): boolean =>
-  JSON.stringify(r.json).includes(`"${head}"`);
+const unreduced = (r: BoxedExpression, head: string): boolean => JSON.stringify(r.json).includes(`"${head}"`);
 
 /**
  * The three-argument form as an expression in the two-argument one. Both are differences of
@@ -37,9 +36,7 @@ const rewrite = (
 ): BoxedExpression => {
   const [s, z0, z1] = ops.map((o) => o.json as unknown as BoxInput);
   const difference: BoxInput = ["Subtract", ["Gamma", s, z0], ["Gamma", s, z1]] as BoxInput;
-  const expr = ce.box(
-    head === "Gamma" ? difference : (["Divide", difference, ["Gamma", s]] as BoxInput),
-  );
+  const expr = ce.box(head === "Gamma" ? difference : (["Divide", difference, ["Gamma", s]] as BoxInput));
   return numeric ? expr.N() : expr.evaluate();
 };
 

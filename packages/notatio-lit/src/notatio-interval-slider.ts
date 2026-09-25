@@ -1,15 +1,7 @@
 import type { MathJsonExpression } from "@cortex-js/compute-engine/epsil";
 import { html, LitElement, nothing, type PropertyValues } from "lit";
 import { ensureStyles } from "./styles.ts";
-import {
-  clamp,
-  gearing,
-  holdMultiplier,
-  isIntegerKnob,
-  iterate,
-  modifierGear,
-  numberLatex,
-} from "@enumeratio/notatio";
+import { clamp, gearing, holdMultiplier, isIntegerKnob, iterate, modifierGear, numberLatex } from "@enumeratio/notatio";
 import { defineControl, emitControl } from "./define.ts";
 
 /**
@@ -68,12 +60,7 @@ export class NotatioIntervalSlider extends LitElement {
   get range(): { min: number; max: number; step: number } {
     const min = Number.isFinite(this.min) ? this.min : 0;
     const max = Number.isFinite(this.max) && this.max > min ? this.max : min + 1;
-    const step =
-      Number.isFinite(this.step) && this.step > 0
-        ? this.step
-        : this.integer
-          ? 1
-          : (max - min) / 100;
+    const step = Number.isFinite(this.step) && this.step > 0 ? this.step : this.integer ? 1 : (max - min) / 100;
     return { min, max, step };
   }
 
@@ -109,10 +96,7 @@ export class NotatioIntervalSlider extends LitElement {
     if (!forward && !back) return;
     event.preventDefault();
     this.#repeats = event.repeat ? this.#repeats + 1 : 0;
-    const gear =
-      event.key === "PageUp" || event.key === "PageDown"
-        ? "coarse"
-        : (modifierGear(event) ?? "normal");
+    const gear = event.key === "PageUp" || event.key === "PageDown" ? "coarse" : (modifierGear(event) ?? "normal");
     const { step } = gearing(this.range.step, 1, gear, this.integer);
     const steps = holdMultiplier(this.#repeats) * (forward ? 1 : -1);
     const span = { ...this.range, step };
@@ -144,10 +128,7 @@ export class NotatioIntervalSlider extends LitElement {
       />`;
     return html`<span class="notatio-interval-slider">
       <span class="notatio-interval-track">
-        <span
-          class="notatio-interval-fill"
-          style=${`left:${pct(this._lo)}%;right:${100 - pct(this._hi)}%`}
-        ></span>
+        <span class="notatio-interval-fill" style=${`left:${pct(this._lo)}%;right:${100 - pct(this._hi)}%`}></span>
         ${thumb("lo", this._lo)}${thumb("hi", this._hi)} </span
       >${
         this.readout

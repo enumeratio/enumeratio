@@ -244,8 +244,7 @@ export class NotatioComplexPlot extends LitElement {
     canvas.setPointerCapture(e.pointerId);
     const move = (m: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
-      this.#view.center[0] -=
-        ((m.clientX - px) / r.width) * this.#view.extent * (this.#w / this.#h);
+      this.#view.center[0] -= ((m.clientX - px) / r.width) * this.#view.extent * (this.#w / this.#h);
       this.#view.center[1] += ((m.clientY - py) / r.height) * this.#view.extent;
       px = m.clientX;
       py = m.clientY;
@@ -294,16 +293,9 @@ export class NotatioComplexPlot extends LitElement {
         this.bare
           ? ""
           : html`<div class="notatio-complex-plot-foot">
-              <span
-                >hue = arg · brightness = |value| · poles white, zeros black · drag to pan · scroll
-                to zoom</span
-              >
+              <span>hue = arg · brightness = |value| · poles white, zeros black · drag to pan · scroll to zoom</span>
               <button type="button" @click=${this.resetView}>⟲ reset</button>
-              ${
-                this.fps && this._fps
-                  ? html`<span class="notatio-complex-plot-fps">${this._fps} fps</span>`
-                  : null
-              }
+              ${this.fps && this._fps ? html`<span class="notatio-complex-plot-fps">${this._fps} fps</span>` : null}
             </div>`
       }
     </div>`;

@@ -47,8 +47,7 @@ export const INVENTORIES: Readonly<Record<InventorySystem, InventorySource>> = {
   },
 };
 
-export const isInventorySystem = (system: string): system is InventorySystem =>
-  system in INVENTORIES;
+export const isInventorySystem = (system: string): system is InventorySystem => system in INVENTORIES;
 
 /** The name an identity is documented under: no call, no module path, no trailing note. */
 export const bareName = (identity: string): string =>
@@ -95,11 +94,7 @@ export function inventoryEntry(
   }
   const bare = bareName(identity);
   const candidates = inventory.filter(
-    (e) =>
-      e.system === system &&
-      OBJECT_ROLES.has(e.role) &&
-      !isMember(e.name) &&
-      documents(e.name, bare),
+    (e) => e.system === system && OBJECT_ROLES.has(e.role) && !isMember(e.name) && documents(e.name, bare),
   );
   if (!candidates.length) return undefined;
   // The exact spelling anywhere beats a case variant (`Subsets` the class over `subsets` the

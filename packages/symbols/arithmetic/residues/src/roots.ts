@@ -119,12 +119,7 @@ export function powerModRoots(b: bigint, r: bigint, m: bigint): bigint[] | undef
  * a non-unit raised to a negative power, or a denominator sharing a factor with m — there
  * is no such x, and the answer is empty, as for Wolfram's `PowerModList[a, -1, m]`.
  */
-export function powerModList(
-  a: readonly [bigint, bigint],
-  s: bigint,
-  r: bigint,
-  m: bigint,
-): bigint[] | undefined {
+export function powerModList(a: readonly [bigint, bigint], s: bigint, r: bigint, m: bigint): bigint[] | undefined {
   if (r < 1n || m < 1n) return undefined;
   const [numerator, denominator] = a;
   const denominatorInverse = invMod(denominator, m);

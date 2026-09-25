@@ -42,8 +42,7 @@ export function squareMatrixError(ce: ComputeEngine, expr: BoxedExpression): Box
 const isZero = (e: BoxedExpression): boolean => e.isSame(0);
 
 /** `.isExact` lives on compute-engine's boxed-number interface, not the general one. */
-const mayBeExact = (e: BoxedExpression): boolean =>
-  (e as Partial<{ isExact: boolean }>).isExact !== false;
+const mayBeExact = (e: BoxedExpression): boolean => (e as Partial<{ isExact: boolean }>).isExact !== false;
 
 export function isDiagonal(rows: BMatrix, n: number): boolean {
   for (let i = 0; i < n; i++) {
@@ -54,10 +53,7 @@ export function isDiagonal(rows: BMatrix, n: number): boolean {
   return true;
 }
 
-export function listOf(
-  ce: ComputeEngine,
-  rows: readonly (readonly BoxedExpression[])[],
-): BoxedExpression {
+export function listOf(ce: ComputeEngine, rows: readonly (readonly BoxedExpression[])[]): BoxedExpression {
   return ce.function(
     "List",
     rows.map((row) => ce.function("List", [...row])),
@@ -83,9 +79,7 @@ function expDiagonal(ce: ComputeEngine, rows: BMatrix, n: number): BoxedExpressi
 function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
   const [[a, b], [c, d]] = rows;
   const trace = ce.function("Add", [a, d]).evaluate();
-  const det = ce
-    .function("Subtract", [ce.function("Multiply", [a, d]), ce.function("Multiply", [b, c])])
-    .evaluate();
+  const det = ce.function("Subtract", [ce.function("Multiply", [a, d]), ce.function("Multiply", [b, c])]).evaluate();
   const discSq = ce
     .function("Subtract", [ce.function("Power", [trace, 2]), ce.function("Multiply", [4, det])])
     .evaluate();
@@ -97,9 +91,7 @@ function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
   // they don't. cosh(i·w/2) = cos(w/2); sinh(i·w/2)/(i·w) = sin(w/2)/w.
   const rotation = !degenerate && discSq.isNegative === true;
   const halfW = rotation
-    ? ce
-        .function("Divide", [ce.function("Sqrt", [ce.function("Negate", [discSq])]).simplify(), 2])
-        .evaluate()
+    ? ce.function("Divide", [ce.function("Sqrt", [ce.function("Negate", [discSq])]).simplify(), 2]).evaluate()
     : undefined;
   const cosh = degenerate
     ? ce.One
@@ -110,10 +102,7 @@ function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
     ? ce.box(["Rational", 1, 2])
     : rotation && halfW !== undefined
       ? ce
-          .function("Divide", [
-            ce.function("Sin", [halfW]).evaluate(),
-            ce.function("Multiply", [2, halfW]).evaluate(),
-          ])
+          .function("Divide", [ce.function("Sin", [halfW]).evaluate(), ce.function("Multiply", [2, halfW]).evaluate()])
           .evaluate()
       : ce
           .function("Divide", [
@@ -127,16 +116,10 @@ function expTwoByTwo(ce: ComputeEngine, rows: BMatrix): BoxedExpression {
     const iij = i === j ? 1 : 0;
     // (2·a_ij − tr·I_ij), the "2M − tr·I" entry.
     const twoMMinusTraceI = ce
-      .function("Subtract", [
-        ce.function("Multiply", [2, aij]),
-        ce.function("Multiply", [iij, trace]),
-      ])
+      .function("Subtract", [ce.function("Multiply", [2, aij]), ce.function("Multiply", [iij, trace])])
       .evaluate();
     const inner = ce
-      .function("Add", [
-        ce.function("Multiply", [iij, cosh]),
-        ce.function("Multiply", [coeff, twoMMinusTraceI]),
-      ])
+      .function("Add", [ce.function("Multiply", [iij, cosh]), ce.function("Multiply", [coeff, twoMMinusTraceI])])
       .evaluate();
     return ce.function("Multiply", [expHalfTrace, inner]).evaluate();
   };
@@ -179,11 +162,7 @@ function isZeroMatrix(m: BMatrix, n: number): boolean {
  * where Nᵏ = 0 terminates it (k ≤ n for an n×n matrix). Returns undefined if N turns out not
  * to be nilpotent after all (Nⁿ ≠ 0), so the caller can fall back to the numeric path.
  */
-function expNilpotentExact(
-  ce: ComputeEngine,
-  rows: BMatrix,
-  n: number,
-): BoxedExpression | undefined {
+function expNilpotentExact(ce: ComputeEngine, rows: BMatrix, n: number): BoxedExpression | undefined {
   let power: BoxedExpression[][] = identityExact(ce, n);
   let sum: BoxedExpression[][] = identityExact(ce, n);
   let factorial = 1;
@@ -285,8 +264,7 @@ function nMatrixToExpr(ce: ComputeEngine, m: NMatrix, n: number): BoxedExpressio
     rows[i] = [];
     for (let j = 0; j < n; j++) {
       const { re, im } = m[i][j];
-      rows[i][j] =
-        Math.abs(im) < 1e-13 * (1 + Math.abs(re)) ? ce.number(re) : ce.number(ce.complex(re, im));
+      rows[i][j] = Math.abs(im) < 1e-13 * (1 + Math.abs(re)) ? ce.number(re) : ce.number(ce.complex(re, im));
     }
   }
   return listOf(ce, rows);
@@ -358,7 +336,6 @@ export function evaluateMatrixExp(
 export function declareMatrixExp(ce: ComputeEngine): void {
   ce.declare("MatrixExp", {
     signature: "(matrix, list<number>?) -> matrix | list<number>",
-    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) =>
-      evaluateMatrixExp(ce, ops, options),
+    evaluate: (ops: readonly BoxedExpression[], options: EvalOptions) => evaluateMatrixExp(ce, ops, options),
   });
 }

@@ -29,8 +29,7 @@ const opsOf = (node: unknown): unknown[] => {
 
 /** A negative literal, as a number — `-2`, `{num: "-2"}` — else undefined. */
 function negativeLiteral(node: unknown): number | undefined {
-  const value =
-    typeof node === "number" ? node : Number((node as { num?: string })?.num ?? Number.NaN);
+  const value = typeof node === "number" ? node : Number((node as { num?: string })?.num ?? Number.NaN);
   return Number.isFinite(value) && value < 0 ? value : undefined;
 }
 
@@ -44,9 +43,7 @@ function subtracted(node: unknown): MathJsonExpression | undefined {
     const [first, ...rest] = opsOf(node);
     const negative = negativeLiteral(first);
     if (negative === undefined || rest.length === 0) return undefined;
-    return (
-      negative === -1 && rest.length === 1 ? rest[0] : ["Multiply", -negative, ...rest]
-    ) as MathJsonExpression;
+    return (negative === -1 && rest.length === 1 ? rest[0] : ["Multiply", -negative, ...rest]) as MathJsonExpression;
   }
   return undefined;
 }
@@ -86,9 +83,7 @@ function rewrite(node: unknown): MathJsonExpression {
     case "Limit": {
       const [first, ...rest] = ops;
       const body = headOf(first) === "Function" ? rewrite(opsOf(first)[0]) : first;
-      const bounds = rest.map((r) =>
-        headOf(r) === "Limits" ? (["Tuple", ...opsOf(r)] as MathJsonExpression) : r,
-      );
+      const bounds = rest.map((r) => (headOf(r) === "Limits" ? (["Tuple", ...opsOf(r)] as MathJsonExpression) : r));
       return [head, body, ...bounds];
     }
 

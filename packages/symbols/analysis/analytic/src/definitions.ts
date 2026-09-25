@@ -21,10 +21,7 @@ import type { Json } from "./bernoulli.ts";
 const seriesOverN = (summand: Json): Json => ["Sum", summand, ["Triple", "n", 0, "Infinity"]];
 
 /** (n + a)^{-s}, on the principal branch, with `_s` introduced before `_a`. */
-const term = (s: Json, a: Json): Json => [
-  "Exp",
-  ["Multiply", ["Negate", s], ["Ln", ["Add", "n", a]]],
-];
+const term = (s: Json, a: Json): Json => ["Exp", ["Multiply", ["Negate", s], ["Ln", ["Add", "n", a]]]];
 
 /** Li_ν(e^{iθ}) — the polylogarithm on the unit circle, which the Clausen functions cut in two. */
 const polyLogOnCircle: Json = ["PolyLog", "_n", ["Exp", ["Multiply", "ImaginaryUnit", "_theta"]]];
@@ -79,11 +76,7 @@ export const DEFINITIONS: Readonly<Record<string, Json>> = {
   DirichletBeta: [
     "Multiply",
     ["Power", 4, ["Negate", "_s"]],
-    [
-      "Subtract",
-      ["HurwitzZeta", "_s", ["Rational", 1, 4]],
-      ["HurwitzZeta", "_s", ["Rational", 3, 4]],
-    ],
+    ["Subtract", ["HurwitzZeta", "_s", ["Rational", 1, 4]], ["HurwitzZeta", "_s", ["Rational", 3, 4]]],
   ],
 
   /**
@@ -94,11 +87,7 @@ export const DEFINITIONS: Readonly<Record<string, Json>> = {
     "Multiply",
     [
       "Sum",
-      [
-        "Multiply",
-        ["DirichletCharacter", "_k", "_j", "r"],
-        ["HurwitzZeta", "_s", ["Divide", "r", "_k"]],
-      ],
+      ["Multiply", ["DirichletCharacter", "_k", "_j", "r"], ["HurwitzZeta", "_s", ["Divide", "r", "_k"]]],
       ["Triple", "r", 1, "_k"],
     ],
     ["Power", "_k", ["Negate", "_s"]],

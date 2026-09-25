@@ -1,9 +1,4 @@
-import {
-  type BigDecimal,
-  type BoxedExpression,
-  type ComputeEngine,
-  isNumber,
-} from "@cortex-js/compute-engine";
+import { type BigDecimal, type BoxedExpression, type ComputeEngine, isNumber } from "@cortex-js/compute-engine";
 
 /** Above this many digits a double is no longer the limiting factor — and neither should we be. */
 export const DOUBLE_DIGITS = 15;
@@ -17,10 +12,7 @@ export const DOUBLE_DIGITS = 15;
  * truncation error rather than merely unwarranted. A head should hand back the precision it
  * claims and no more, so every routed result goes through here.
  */
-export function atEnginePrecision(
-  ce: ComputeEngine,
-  value: BoxedExpression,
-): BoxedExpression | undefined {
+export function atEnginePrecision(ce: ComputeEngine, value: BoxedExpression): BoxedExpression | undefined {
   if (!isNumber(value)) return undefined;
   const big = value.bignumRe;
   return big === undefined ? value : ce.number(big.toPrecision(ce.precision));
@@ -30,11 +22,7 @@ export function atEnginePrecision(
  * `compute()` run with `guard` extra digits of working precision, its result rounded back
  * to the caller's — for a formula whose own arithmetic loses the last few.
  */
-export function withGuardDigits(
-  ce: ComputeEngine,
-  compute: () => BoxedExpression,
-  guard = 10,
-): BoxedExpression {
+export function withGuardDigits(ce: ComputeEngine, compute: () => BoxedExpression, guard = 10): BoxedExpression {
   const precision = ce.precision;
   ce.precision = precision + guard;
   let value: BoxedExpression;

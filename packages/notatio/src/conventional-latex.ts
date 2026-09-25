@@ -171,8 +171,7 @@ const multiply: Entry = {
 const add: Entry = {
   ...native("Add"),
   name: "Add",
-  serialize: (serializer, expr) =>
-    native("Add").serialize(serializer, ["Add", ...operands(expr).map(unitFactors)]),
+  serialize: (serializer, expr) => native("Add").serialize(serializer, ["Add", ...operands(expr).map(unitFactors)]),
 };
 
 /** Euler's constant as `\\gamma`, which it already parses from, not `\\operatorname{EulerGamma}`. */

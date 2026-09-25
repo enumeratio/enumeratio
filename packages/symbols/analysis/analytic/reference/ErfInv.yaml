@@ -76,8 +76,7 @@ examples:
     caption: 'Odd: $\operatorname{erfinv}(-x) = -\operatorname{erfinv}(x)$ applied symbolically'
   - id: frac-d-dx-erfinv-x-frac-sqrt-pi-2-e-erfinv-x-2
     expr: [D, [ErfInv, x], x]
-    expected:
-      [Multiply, [Rational, 1, 2], [Power, ExponentialE, [Power, [ErfInv, x], 2]], [Sqrt, Pi]]
+    expected: [Multiply, [Rational, 1, 2], [Power, ExponentialE, [Power, [ErfInv, x], 2]], [Sqrt, Pi]]
     category: Properties
     caption: $\frac{d}{dx}\operatorname{erfinv}(x) = \frac{\sqrt\pi}{2}e^{\operatorname{erfinv}(x)^2}$
   - id: to-30-significant-digits-every-one-correctly

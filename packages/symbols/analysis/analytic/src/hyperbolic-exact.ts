@@ -15,16 +15,13 @@ const finish = (expr: BoxedExpression, options: EvalOptions): BoxedExpression =>
 
 type Rational = (q: BoxedExpression, inverse: BoxedExpression) => BoxedExpression;
 
-const half = (ce: ComputeEngine, x: BoxedExpression): BoxedExpression =>
-  ce.function("Divide", [x, ce.number(2)]);
+const half = (ce: ComputeEngine, x: BoxedExpression): BoxedExpression => ce.function("Divide", [x, ce.number(2)]);
 
 const RULES: Readonly<Record<string, (ce: ComputeEngine) => Rational>> = {
   Sinh: (ce) => (q, p) => half(ce, ce.function("Subtract", [q, p])),
   Cosh: (ce) => (q, p) => half(ce, ce.function("Add", [q, p])),
-  Tanh: (ce) => (q, p) =>
-    ce.function("Divide", [ce.function("Subtract", [q, p]), ce.function("Add", [q, p])]),
-  Coth: (ce) => (q, p) =>
-    ce.function("Divide", [ce.function("Add", [q, p]), ce.function("Subtract", [q, p])]),
+  Tanh: (ce) => (q, p) => ce.function("Divide", [ce.function("Subtract", [q, p]), ce.function("Add", [q, p])]),
+  Coth: (ce) => (q, p) => ce.function("Divide", [ce.function("Add", [q, p]), ce.function("Subtract", [q, p])]),
   Sech: (ce) => (q, p) => ce.function("Divide", [ce.number(2), ce.function("Add", [q, p])]),
   Csch: (ce) => (q, p) => ce.function("Divide", [ce.number(2), ce.function("Subtract", [q, p])]),
 };
@@ -38,18 +35,17 @@ function logArgument(op: BoxedExpression | undefined): readonly [bigint, bigint]
 }
 
 /** f(x0) for the exact x0 at which each head has a plain value. */
-const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => BoxedExpression]>> =
-  {
-    Sinh: [0, (ce) => ce.Zero],
-    Cosh: [0, (ce) => ce.One],
-    Tanh: [0, (ce) => ce.Zero],
-    Sech: [0, (ce) => ce.One],
-    Csch: [0, (ce) => ce.ComplexInfinity],
-    Coth: [0, (ce) => ce.ComplexInfinity],
-    Arsinh: [0, (ce) => ce.Zero],
-    Artanh: [0, (ce) => ce.Zero],
-    Arcosh: [1, (ce) => ce.Zero],
-  };
+const SPECIAL: Readonly<Record<string, readonly [number, (ce: ComputeEngine) => BoxedExpression]>> = {
+  Sinh: [0, (ce) => ce.Zero],
+  Cosh: [0, (ce) => ce.One],
+  Tanh: [0, (ce) => ce.Zero],
+  Sech: [0, (ce) => ce.One],
+  Csch: [0, (ce) => ce.ComplexInfinity],
+  Coth: [0, (ce) => ce.ComplexInfinity],
+  Arsinh: [0, (ce) => ce.Zero],
+  Artanh: [0, (ce) => ce.Zero],
+  Arcosh: [1, (ce) => ce.Zero],
+};
 
 export function declareHyperbolicExact(ce: ComputeEngine): void {
   for (const [head, [at, value]] of Object.entries(SPECIAL)) {

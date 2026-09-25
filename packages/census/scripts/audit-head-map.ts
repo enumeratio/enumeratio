@@ -117,12 +117,7 @@ const PROBES: Readonly<Record<string, { call: MathJSON; expected: MathJSON }>> =
   Union: { call: ["Union", S(1, 2), S(2, 3)], expected: S(1, 2, 3) },
   // In 2D PGA, two lines through e_2 meet there.
   Vee: {
-    call: [
-      "Vee",
-      ["Multiply", "e_1", "e_2"],
-      ["Multiply", "e_2", "theta_1"],
-      ["CliffordAlgebra", 2, 0, 1],
-    ],
+    call: ["Vee", ["Multiply", "e_1", "e_2"], ["Multiply", "e_2", "theta_1"], ["CliffordAlgebra", 2, 0, 1]],
     expected: "e_2",
   },
   Variance: { call: ["Variance", L(1, 2, 3, 4)], expected: ["Rational", 5, 3] },
@@ -306,11 +301,9 @@ type ReturnKind = "numeric" | "collection" | "boolean";
  *  so both checks are offered and either satisfies it. */
 function returnKinds(returnType: string): ReturnKind[] {
   const kinds: ReturnKind[] = [];
-  if (/\b(list|set|tuple|indexed_collection|collection)\b/.test(returnType))
-    kinds.push("collection");
+  if (/\b(list|set|tuple|indexed_collection|collection)\b/.test(returnType)) kinds.push("collection");
   if (/\bboolean\b/.test(returnType)) kinds.push("boolean");
-  if (/\b(number|integer|complex|real|rational|finite_number)\b/.test(returnType))
-    kinds.push("numeric");
+  if (/\b(number|integer|complex|real|rational|finite_number)\b/.test(returnType)) kinds.push("numeric");
   return kinds;
 }
 
@@ -319,12 +312,7 @@ function returnKinds(returnType: string): ReturnKind[] {
  *  `BoxedExpression` is an alias for compute-engine's `Expression` union, and `.symbol`
  *  lives only on its narrowed symbol member — same story as `@enumeratio/boxed`'s
  *  `symbolNameOf`, not reused here to avoid a new cross-package dependency for one line. */
-function producedAnswer(
-  ce: ComputeEngine,
-  head: string,
-  args: unknown[],
-  kind: ReturnKind,
-): boolean {
+function producedAnswer(ce: ComputeEngine, head: string, args: unknown[], kind: ReturnKind): boolean {
   const boxed = ce.box([head, ...args] as never);
   switch (kind) {
     case "numeric": {
@@ -432,10 +420,7 @@ export function auditHeadMap(): AuditEntry[] {
       // twice.
       .filter(
         (c, i, all) =>
-          i ===
-          all.findIndex(
-            (o) => o.kind === c.kind && JSON.stringify(o.args) === JSON.stringify(c.args),
-          ),
+          i === all.findIndex((o) => o.kind === c.kind && JSON.stringify(o.args) === JSON.stringify(c.args)),
       ) as { arm: Arm; kind: ReturnKind; args: unknown[] }[];
 
     if (candidates.length === 0) {

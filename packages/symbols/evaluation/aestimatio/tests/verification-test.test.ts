@@ -28,12 +28,7 @@ test("VerificationTest reports Failure when the value does not match", () => {
 
 test("VerificationTest reports Aborted when its TimeConstraint fires", () => {
   const slow = ["Sum", ["Mod", "k", 97], ["Tuple", "k", 1, 500_000_000]];
-  const result = box([
-    "VerificationTest",
-    slow,
-    0,
-    ["KeyValuePair", "TimeConstraint", 0.02],
-  ]).evaluate();
+  const result = box(["VerificationTest", slow, 0, ["KeyValuePair", "TimeConstraint", 0.02]]).evaluate();
   expect(outcomeOf(result)).toBe("Aborted");
 });
 

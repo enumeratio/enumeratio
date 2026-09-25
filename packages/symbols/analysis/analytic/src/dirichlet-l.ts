@@ -223,14 +223,11 @@ export function dirichletL(k: number, j: number, s: Cx): Cx {
       const chi = values[r - 1];
       if (chi.re === 0 && chi.im === 0) continue;
       const z =
-        negInt === undefined
-          ? hurwitzZeta(s, cx(r / k))
-          : cx(-bernoulliPolyAt(negInt + 1, r / k) / (negInt + 1));
+        negInt === undefined ? hurwitzZeta(s, cx(r / k)) : cx(-bernoulliPolyAt(negInt + 1, r / k) / (negInt + 1));
       sum = add(sum, mul(chi, z));
     }
   }
   return mul(kPow, sum);
 }
 
-export const dirichletLReal = (k: number, j: number, s: number): number =>
-  dirichletL(k, j, cx(s)).re;
+export const dirichletLReal = (k: number, j: number, s: number): number => dirichletL(k, j, cx(s)).re;

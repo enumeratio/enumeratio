@@ -37,21 +37,9 @@ const signatureOf = ({ kind, paramCount }: FamilyKernel): string => {
 
 // element codecs (element -> boxed MathJSON encoder, boxed -> element decoder).
 const encoderFor = (kind: FamilyKernel["kind"]) =>
-  kind === "ints"
-    ? listMJ
-    : kind === "blocks"
-      ? blocksMJ
-      : kind === "scalar"
-        ? (n: unknown) => n
-        : nestMJ;
+  kind === "ints" ? listMJ : kind === "blocks" ? blocksMJ : kind === "scalar" ? (n: unknown) => n : nestMJ;
 const decoderFor = (kind: FamilyKernel["kind"]) =>
-  kind === "ints"
-    ? asIntList
-    : kind === "blocks"
-      ? asBlockList
-      : kind === "scalar"
-        ? intOf
-        : denest;
+  kind === "ints" ? asIntList : kind === "blocks" ? asBlockList : kind === "scalar" ? intOf : denest;
 
 /** A family's kernel as compute-engine collection handlers: Count, At and iteration by
  *  unranking, membership by `valid`. */
@@ -77,9 +65,7 @@ function handlersOf(ce: ComputeEngine, family: FamilyKernel): CollectionHandlers
       // An unknown count (NaN, e.g. TwinPrimes) never ends the iteration.
       return {
         next: () =>
-          Number.isNaN(total) || i < total
-            ? { value: element(p, i++), done: false }
-            : { value: undefined, done: true },
+          Number.isNaN(total) || i < total ? { value: element(p, i++), done: false } : { value: undefined, done: true },
       };
     },
     at: (c, index) => {

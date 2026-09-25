@@ -31,15 +31,11 @@ test("dollar islands are typeset and braces inside them are not holes", () => {
 });
 
 test("nested braces in a readout stay whole, and unbalanced ones stay text", () => {
-  expect(parseProse("{At({1,2,3}, _k)}", NAMES)).toEqual([
-    { kind: "dynamic", value: "At({1,2,3}, _k)", options: {} },
-  ]);
+  expect(parseProse("{At({1,2,3}, _k)}", NAMES)).toEqual([{ kind: "dynamic", value: "At({1,2,3}, _k)", options: {} }]);
   expect(parseProse("a { b", NAMES)).toEqual([{ kind: "text", text: "a { b" }]);
   expect(parseProse("costs $5", NAMES)).toEqual([{ kind: "text", text: "costs $5" }]);
 });
 
 test("a backslash escapes a brace or a dollar", () => {
-  expect(parseProse("set \\{1\\} costs \\$5", NAMES)).toEqual([
-    { kind: "text", text: "set {1} costs $5" },
-  ]);
+  expect(parseProse("set \\{1\\} costs \\$5", NAMES)).toEqual([{ kind: "text", text: "set {1} costs $5" }]);
 });

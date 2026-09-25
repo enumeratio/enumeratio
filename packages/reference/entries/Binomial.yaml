@@ -44,14 +44,7 @@ examples:
     expr:
       [
         Equal,
-        [
-          Add,
-          [Binomial, 4, 0],
-          [Binomial, 4, 1],
-          [Binomial, 4, 2],
-          [Binomial, 4, 3],
-          [Binomial, 4, 4],
-        ],
+        [Add, [Binomial, 4, 0], [Binomial, 4, 1], [Binomial, 4, 2], [Binomial, 4, 3], [Binomial, 4, 4]],
         [Power, 2, 4],
       ]
     expected: True
@@ -149,11 +142,7 @@ examples:
     caption: 'Sum of squares along a row: $\sum_k \binom{n}{k}^2 = \binom{2n}{n}$'
   - id: vandermonde-s-identity-sum-k-binom-m-k-binom-n-r
     expr:
-      [
-        Equal,
-        [Sum, [Multiply, [Binomial, 5, k], [Binomial, 4, [Subtract, 3, k]]], [Tuple, k, 0, 3]],
-        [Binomial, 9, 3],
-      ]
+      [Equal, [Sum, [Multiply, [Binomial, 5, k], [Binomial, 4, [Subtract, 3, k]]], [Tuple, k, 0, 3]], [Binomial, 9, 3]]
     expected: True
     category: Properties
     caption: "Vandermonde's identity: $\\sum_k \\binom{m}{k}\\binom{n}{r-k} = \\binom{m+n}{r}$"
@@ -163,12 +152,7 @@ examples:
     category: Properties
     caption: 'The alternating row sum vanishes: $\sum_k (-1)^k \binom{n}{k} = 0$ for $n > 0$'
   - id: the-factorial-form-binom-n-k-frac-n-k-n-k-see
-    expr:
-      [
-        Equal,
-        [Binomial, 7, 3],
-        [Divide, [Factorial, 7], [Multiply, [Factorial, 3], [Factorial, 4]]],
-      ]
+    expr: [Equal, [Binomial, 7, 3], [Divide, [Factorial, 7], [Multiply, [Factorial, 3], [Factorial, 4]]]]
     expected: True
     category: Properties
     caption: The factorial form $\binom{n}{k} = \frac{n!}{k!\,(n-k)!}$. See [[Factorial]]

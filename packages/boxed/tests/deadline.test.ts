@@ -22,7 +22,5 @@ test("withDeadline restores the outer state once it returns", () => {
 
 test("nesting only shortens the effective deadline, never extends it", () => {
   // The outer span is already expired; a looser inner one must not un-expire it.
-  expect(() => withDeadline(-1, () => withDeadline(10_000, checkpoint))).toThrow(
-    DeadlineExceededError,
-  );
+  expect(() => withDeadline(-1, () => withDeadline(10_000, checkpoint))).toThrow(DeadlineExceededError);
 });

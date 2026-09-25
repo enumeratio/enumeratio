@@ -98,8 +98,7 @@ examples:
     caption: Threads element-wise over a list
   - id: threads-over-a-matrix-entry-by-entry-this-is-not
     expr: [Sqrt, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
-    expected:
-      [List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]
+    expected: [List, [List, [Divide, [Sqrt, 2], 2], [Complex, 0, 1]], [List, 0, [Divide, [Sqrt, 2], 2]]]
     category: Scope
     caption: Threads over a matrix entry by entry -- this is not the matrix square root
   - id: interval-arithmetic-sqrt-is-increasing-so-sqrt-1

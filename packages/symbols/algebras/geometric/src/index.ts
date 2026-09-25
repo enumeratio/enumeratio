@@ -1,14 +1,4 @@
-export {
-  bladeKey,
-  bySign,
-  gradedProduct,
-  gradePart,
-  gradesOf,
-  inBlade,
-  same,
-  term,
-  zero,
-} from "./blades.ts";
+export { bladeKey, bySign, gradedProduct, gradePart, gradesOf, inBlade, same, term, zero } from "./blades.ts";
 export { declareGeometric } from "./declare.ts";
 export { poincareDual, pseudoscalar, sandwich, vee } from "./dual.ts";
 export {

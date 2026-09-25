@@ -32,9 +32,7 @@ export function integerModOf(expr: BoxedExpression | undefined): IntegerMod | un
   const [a, m] = operandsOf(expr);
   const value = bigRationalAt(a);
   const modulus = bigIntegerAt(m);
-  return value === undefined || modulus === undefined
-    ? undefined
-    : Z.integerMod(value[0], value[1], modulus);
+  return value === undefined || modulus === undefined ? undefined : Z.integerMod(value[0], value[1], modulus);
 }
 
 const modulusOf = (expr: BoxedExpression | undefined): bigint | undefined => {
@@ -137,10 +135,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["QuotientRing", "Integers", 2],
-    (ops) =>
-      ops[0] !== undefined &&
-      symbolNameOf(ops[0]) === "Integers" &&
-      (bigIntegerAt(ops[1]) ?? 0n) >= 1n,
+    (ops) => ops[0] !== undefined && symbolNameOf(ops[0]) === "Integers" && (bigIntegerAt(ops[1]) ?? 0n) >= 1n,
     () => (ops) => ce.function(INTEGER_MOD_RING, [ops[1]!]),
     2,
   );
@@ -246,10 +241,7 @@ export function declareIntegerMod(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["ChineseRemainder", "x", "y"],
-    (ops) =>
-      integers(ops[0]) !== undefined &&
-      integers(ops[1]) !== undefined &&
-      bigIntegerAt(ops[2]) !== undefined,
+    (ops) => integers(ops[0]) !== undefined && integers(ops[1]) !== undefined && bigIntegerAt(ops[2]) !== undefined,
     (native) => (ops, options) => {
       const [ms, d] = [integers(ops[1]), bigIntegerAt(ops[2])];
       if (ms === undefined || d === undefined || !ms.every((m) => m >= 1n)) return undefined;

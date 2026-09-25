@@ -37,8 +37,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "00cdb7",
     heads: ["Artanh", "CarlsonRC"],
     verdict: "disagree",
-    detail:
-      "at _x = 1.17, _y = 1.17: 0.5761719383305023 vs 0.5761719383305024 (relative gap 1.0e+0)",
+    detail: "at _x = 1.17, _y = 1.17: 0.5761719383305023 vs 0.5761719383305024 (relative gap 1.0e+0)",
   },
   {
     entry: "00e608",
@@ -434,8 +433,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "16d2e1",
     heads: ["EllipticE", "Hypergeometric2F1"],
     verdict: "disagree",
-    detail:
-      'at _m = ["Complex",1.17,0.45]: 1.065255561244247 vs 1.065252873109726 (relative gap 5.2e-6)',
+    detail: 'at _m = ["Complex",1.17,0.45]: 1.065255561244247 vs 1.065252873109726 (relative gap 5.2e-6)',
   },
   {
     entry: "175b7a",
@@ -1251,8 +1249,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "42eb01",
     heads: ["ChebyshevT", "ChebyshevU"],
     verdict: "disagree",
-    detail:
-      'at _x = ["Complex",0.5700000000000001,0.23], _n = 1: -0.456 vs 1 (relative gap 1.5e+0)',
+    detail: 'at _x = ["Complex",0.5700000000000001,0.23], _n = 1: -0.456 vs 1 (relative gap 1.5e+0)',
   },
   {
     entry: "4366b2",
@@ -1758,8 +1755,7 @@ export const fungrimVerified: readonly FungrimVerdict[] = [
     entry: "5f09f4",
     heads: ["ChebyshevT", "ChebyshevU"],
     verdict: "disagree",
-    detail:
-      'at _n = 1, _x = ["Complex",0.5700000000000001,0.23]: 0.544 vs 0.0880000000000003 (relative gap 6.9e-1)',
+    detail: 'at _n = 1, _x = ["Complex",0.5700000000000001,0.23]: 0.544 vs 0.0880000000000003 (relative gap 6.9e-1)',
   },
   {
     entry: "5f84d9",

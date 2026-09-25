@@ -53,8 +53,7 @@ const MINUS = "−";
 const atom = (ml: string, extra: Partial<Emitted> = {}): Emitted => ({ ml, prec: ATOM, ...extra });
 const paren = (e: Emitted, min: number): string => (e.prec < min ? fenced("(", e.ml, ")") : e.ml);
 /** Like `paren`, but a leading minus also gets fenced: `a − (−b)`, not `a − −b`. */
-const operand = (e: Emitted, min: number): string =>
-  e.negative ? fenced("(", e.ml, ")") : paren(e, min);
+const operand = (e: Emitted, min: number): string => (e.negative ? fenced("(", e.ml, ")") : paren(e, min));
 const list = (items: Emitted[], sep = ","): string => items.map((e) => e.ml).join(mo(sep));
 
 const SYMBOLS: Record<string, string> = {
@@ -277,8 +276,7 @@ function emitNumber(text: string): Emitted {
 }
 
 function emitSymbol(name: string): Emitted {
-  if (name === "NegativeInfinity")
-    return { ml: mrow(mo(MINUS), mi("∞")), prec: MULTIPLY, negative: true };
+  if (name === "NegativeInfinity") return { ml: mrow(mo(MINUS), mi("∞")), prec: MULTIPLY, negative: true };
   if (name === "Half") return { ml: `<mfrac>${mn("1")}${mn("2")}</mfrac>`, prec: MULTIPLY };
   const mapped = SYMBOLS[name];
   if (mapped !== undefined) return atom(mi(mapped));
@@ -420,9 +418,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
     case "Log": {
       if (ops.length < 2) return emitCall("log", ops);
       const [x, base] = ops.map(emit);
-      return atom(
-        mrow(`<msub>${mi("log")}${base.ml}</msub>`, APPLY_FUNCTION, fenced("(", x.ml, ")")),
-      );
+      return atom(mrow(`<msub>${mi("log")}${base.ml}</msub>`, APPLY_FUNCTION, fenced("(", x.ml, ")")));
     }
 
     case "Binomial": {
@@ -436,10 +432,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
       const one = (v: unknown) => numberOf(v) === "1";
       if (zero(re) && one(im)) return emitSymbol("ImaginaryUnit");
       if (zero(re)) return emitFunction("Multiply", [im, "ImaginaryUnit"]);
-      return emitFunction("Add", [
-        re,
-        one(im) ? "ImaginaryUnit" : ["Multiply", im, "ImaginaryUnit"],
-      ]);
+      return emitFunction("Add", [re, one(im) ? "ImaginaryUnit" : ["Multiply", im, "ImaginaryUnit"]]);
     }
 
     case "List":
@@ -458,8 +451,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
     case "Delimiter": {
       const [open, close] = DELIMITERS[stringOf(ops[1]) ?? "()"] ?? ["(", ")"];
       const sep = stringOf(ops[2]) ?? ",";
-      const body =
-        headOf(ops[0]) === "Sequence" ? list(opsOf(ops[0]).map(emit), sep) : emit(ops[0]).ml;
+      const body = headOf(ops[0]) === "Sequence" ? list(opsOf(ops[0]).map(emit), sep) : emit(ops[0]).ml;
       return atom(fenced(open, body, close));
     }
 
@@ -480,8 +472,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
       const rows: string[] = [];
       for (let i = 0; i + 1 < ops.length; i += 2) {
         const value = emit(ops[i + 1]).ml;
-        const condition =
-          symbolOf(ops[i]) === "True" ? mtext("otherwise") : mrow(mtext("if "), emit(ops[i]).ml);
+        const condition = symbolOf(ops[i]) === "True" ? mtext("otherwise") : mrow(mtext("if "), emit(ops[i]).ml);
         rows.push(`<mtr><mtd>${value}</mtd><mtd>${condition}</mtd></mtr>`);
       }
       return atom(mrow(mo("{"), `<mtable>${rows.join("")}</mtable>`));
@@ -490,9 +481,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
     case "Matrix": {
       const rows = opsOf(ops[0]).map((row) => opsOf(row).map(emit));
       const [open, close] = DELIMITERS[stringOf(ops[1]) ?? "()"] ?? ["(", ")"];
-      const table = rows
-        .map((row) => `<mtr>${row.map((cell) => `<mtd>${cell.ml}</mtd>`).join("")}</mtr>`)
-        .join("");
+      const table = rows.map((row) => `<mtr>${row.map((cell) => `<mtd>${cell.ml}</mtd>`).join("")}</mtr>`).join("");
       return atom(fenced(open, `<mtable>${table}</mtable>`, close));
     }
 
@@ -520,8 +509,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
     case "Limit": {
       const [fn, to] = ops;
       const variable = headOf(fn) === "Function" ? opsOf(fn)[1] : undefined;
-      const approach =
-        variable === undefined ? emit(to).ml : mrow(emit(variable).ml, mo("→"), emit(to).ml);
+      const approach = variable === undefined ? emit(to).ml : mrow(emit(variable).ml, mo("→"), emit(to).ml);
       const op = `<munder>${mi("lim")}${approach}</munder>`;
       return { ml: mrow(op, paren(emit(body(fn)), ADD + 1)), prec: MULTIPLY };
     }
@@ -550,9 +538,7 @@ function emitFunction(head: string, ops: unknown[]): Emitted {
     // `Apply(fn, x, …)` -- an already-boxed function called on its arguments.
     case "Apply": {
       const [fn, ...args] = ops;
-      return atom(
-        mrow(paren(emit(fn), ATOM), APPLY_FUNCTION, fenced("(", list(args.map(emit)), ")")),
-      );
+      return atom(mrow(paren(emit(fn), ATOM), APPLY_FUNCTION, fenced("(", list(args.map(emit)), ")")));
     }
 
     // `Wedge(a, b, …)` -- the outer product from `@enumeratio/geometric`; associative

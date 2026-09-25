@@ -2,13 +2,7 @@ import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
 import { bigIntegerAt, bigRationalAt, operandsOf, type EvaluateOptions } from "@enumeratio/boxed";
 import { declareIntegerMod, integerModOf } from "./integer-mod-declare.ts";
 import { declareModExactConstant } from "./mod-exact-constant.ts";
-import {
-  discreteLog,
-  multiplicativeOrder,
-  primitiveRootCount,
-  primitiveRootList,
-  primitiveRoots,
-} from "./logs.ts";
+import { discreteLog, multiplicativeOrder, primitiveRootCount, primitiveRootList, primitiveRoots } from "./logs.ts";
 import { powerModList } from "./roots.ts";
 
 // Wiring ℤ/m to compute-engine. Every head answers over bigints and stays unevaluated —
@@ -23,8 +17,7 @@ type Native = ((ops: readonly BoxedExpression[], options: EvaluateOptions) => un
 
 const nativeEvaluate = (ce: ComputeEngine, name: string): Native => {
   const definition = ce.lookupDefinition(name);
-  const operator =
-    definition !== undefined && "operator" in definition ? definition.operator : undefined;
+  const operator = definition !== undefined && "operator" in definition ? definition.operator : undefined;
   return operator?.evaluate as Native;
 };
 
@@ -46,8 +39,7 @@ export function declareResidues(ce: ComputeEngine): void {
 
   // Wolfram's PowerModList[a, s/r, m]. Threads over lists, as Wolfram's does.
   ce.declare("PowerModList", {
-    description:
-      "Every x in [0, m) with x^r ≡ a^s (mod m), for an exponent s/r; a rational a = u/v reads as u·v⁻¹.",
+    description: "Every x in [0, m) with x^r ≡ a^s (mod m), for an exponent s/r; a rational a = u/v reads as u·v⁻¹.",
     signature: "(number, number, number) -> list<number>",
     broadcastable: true,
     evaluate: (ops: readonly BoxedExpression[]) => {
@@ -116,9 +108,7 @@ export function declareResidues(ce: ComputeEngine): void {
       count: (c) => {
         const n = bigIntegerAt(operandsOf(c)[0]);
         const count = n === undefined ? undefined : primitiveRootCount(n);
-        return count === undefined || count > BigInt(Number.MAX_SAFE_INTEGER)
-          ? undefined
-          : Number(count);
+        return count === undefined || count > BigInt(Number.MAX_SAFE_INTEGER) ? undefined : Number(count);
       },
       isFinite: () => true,
       isLazy: () => true,

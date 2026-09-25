@@ -180,8 +180,7 @@ export class Clock {
   }
 
   #stop(): void {
-    if (this.#frame !== undefined && typeof cancelAnimationFrame === "function")
-      cancelAnimationFrame(this.#frame);
+    if (this.#frame !== undefined && typeof cancelAnimationFrame === "function") cancelAnimationFrame(this.#frame);
     this.#frame = undefined;
     this.#last = undefined;
   }
@@ -197,8 +196,7 @@ export class Clock {
 export function pageClock(): Clock {
   if (!WINDOW.__notatioClock) {
     const clock = new Clock();
-    const reduced =
-      typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) clock.pause();
     WINDOW.__notatioClock = clock;
   }

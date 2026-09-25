@@ -72,11 +72,7 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr:
-      [
-        Tan,
-        [List, [List, [Multiply, 5, [Divide, Pi, 6]], Pi], [List, [Divide, Pi, 3], [Negate, Pi]]],
-      ]
+    expr: [Tan, [List, [List, [Multiply, 5, [Divide, Pi, 6]], Pi], [List, [Divide, Pi, 3], [Negate, Pi]]]]
     expected: [List, [List, [Negate, [Divide, [Sqrt, 3], 3]], 0], [List, [Sqrt, 3], 0]]
     category: Scope
     caption: Threads element-wise over a matrix
@@ -134,6 +130,11 @@ examples:
     expected: x
     category: Scope
     caption: $\tan(\arctan x) = x$ for every $x$
+  - id: tan-arctan-2-2-for-every-x
+    expr: [Tan, [Arctan, 2]]
+    expected: 2
+    category: Scope
+    caption: $\tan(\arctan(2)) = 2$
   - id: tan-arcsin-x-frac-x-sqrt-1-x-2
     expr: [Tan, [Arcsin, x]]
     expected: [Divide, x, [Sqrt, [Add, [Negate, [Power, x, 2]], 1]]]

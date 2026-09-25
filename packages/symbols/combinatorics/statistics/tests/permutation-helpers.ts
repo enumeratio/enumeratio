@@ -112,8 +112,7 @@ export function longestRun(p: number[]): number {
 export function triples(p: number[], holds: (a: number, b: number, c: number) => boolean): number {
   let c = 0;
   for (let i = 0; i < p.length; i++)
-    for (let j = i + 1; j < p.length; j++)
-      for (let k = j + 1; k < p.length; k++) if (holds(p[i], p[j], p[k])) c++;
+    for (let j = i + 1; j < p.length; j++) for (let k = j + 1; k < p.length; k++) if (holds(p[i], p[j], p[k])) c++;
   return c;
 }
 
@@ -132,26 +131,17 @@ export const EXPECTED: Record<string, (p: number[]) => number> = {
   Excedances: (p) => positionsWhere(p, (i) => p[i - 1] > i).length,
   WeakExceedances: (p) => positionsWhere(p, (i) => p[i - 1] >= i).length,
   Antiexcedances: (p) => positionsWhere(p, (i) => p[i - 1] < i).length,
-  Peaks: (p) =>
-    positionsWhere(p, (i) => i > 1 && i < p.length && p[i - 2] < p[i - 1] && p[i - 1] > p[i])
-      .length,
-  Valleys: (p) =>
-    positionsWhere(p, (i) => i > 1 && i < p.length && p[i - 2] > p[i - 1] && p[i - 1] < p[i])
-      .length,
-  LeftToRightMaxima: (p) =>
-    positionsWhere(p, (i) => p.slice(0, i).every((v) => v <= p[i - 1])).length,
-  LeftToRightMinima: (p) =>
-    positionsWhere(p, (i) => p.slice(0, i).every((v) => v >= p[i - 1])).length,
-  RightToLeftMaxima: (p) =>
-    positionsWhere(p, (i) => p.slice(i - 1).every((v) => v <= p[i - 1])).length,
-  RightToLeftMinima: (p) =>
-    positionsWhere(p, (i) => p.slice(i - 1).every((v) => v >= p[i - 1])).length,
+  Peaks: (p) => positionsWhere(p, (i) => i > 1 && i < p.length && p[i - 2] < p[i - 1] && p[i - 1] > p[i]).length,
+  Valleys: (p) => positionsWhere(p, (i) => i > 1 && i < p.length && p[i - 2] > p[i - 1] && p[i - 1] < p[i]).length,
+  LeftToRightMaxima: (p) => positionsWhere(p, (i) => p.slice(0, i).every((v) => v <= p[i - 1])).length,
+  LeftToRightMinima: (p) => positionsWhere(p, (i) => p.slice(0, i).every((v) => v >= p[i - 1])).length,
+  RightToLeftMaxima: (p) => positionsWhere(p, (i) => p.slice(i - 1).every((v) => v <= p[i - 1])).length,
+  RightToLeftMinima: (p) => positionsWhere(p, (i) => p.slice(i - 1).every((v) => v >= p[i - 1])).length,
   FirstDescent: (p) => pairs(p, (i) => p[i - 1] > p[i])[0] ?? 0,
   LastDescent: (p) => pairs(p, (i) => p[i - 1] > p[i]).at(-1) ?? 0,
   Runs: (p) => (p.length === 0 ? 0 : pairs(p, (i) => p[i - 1] > p[i]).length + 1),
   Depth: (p) => positionsWhere(p, () => true).reduce((a, i) => a + Math.abs(p[i - 1] - i), 0) / 2,
-  CyclicDescents: (p) =>
-    p.length < 2 ? 0 : pairs(p, (i) => p[i - 1] > p[i]).length + (p.at(-1)! > p[0] ? 1 : 0),
+  CyclicDescents: (p) => (p.length < 2 ? 0 : pairs(p, (i) => p[i - 1] > p[i]).length + (p.at(-1)! > p[0] ? 1 : 0)),
   OccurrencesOf123: (p) => triples(p, (a, b, c) => a < b && b < c),
   OccurrencesOf132: (p) => triples(p, (a, b, c) => a < c && c < b),
   OccurrencesOf213: (p) => triples(p, (a, b, c) => b < a && a < c),

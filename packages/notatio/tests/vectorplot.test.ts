@@ -1,11 +1,5 @@
 import { expect, test } from "vite-plus/test";
-import {
-  arrowPath,
-  type Field2d,
-  sampleField,
-  streamline,
-  vectorPlotSvg,
-} from "../src/vectorplot.ts";
+import { arrowPath, type Field2d, sampleField, streamline, vectorPlotSvg } from "../src/vectorplot.ts";
 
 const count = (s: string, tag: string): number => s.split(`<${tag}`).length - 1;
 
@@ -191,14 +185,10 @@ test("axis labels are escaped, not injected", () => {
 
 test("determinism: the same field renders byte-identical SVG twice", () => {
   const opts = { n: 6, title: "F" } as const;
-  expect(vectorPlotSvg(rotation, -2, 2, -2, 2, opts)).toBe(
-    vectorPlotSvg(rotation, -2, 2, -2, 2, opts),
-  );
+  expect(vectorPlotSvg(rotation, -2, 2, -2, 2, opts)).toBe(vectorPlotSvg(rotation, -2, 2, -2, 2, opts));
 });
 
 test("determinism holds for streamlines too", () => {
   const opts = { type: "stream", n: 5, steps: 30 } as const;
-  expect(vectorPlotSvg(rotation, -2, 2, -2, 2, opts)).toBe(
-    vectorPlotSvg(rotation, -2, 2, -2, 2, opts),
-  );
+  expect(vectorPlotSvg(rotation, -2, 2, -2, 2, opts)).toBe(vectorPlotSvg(rotation, -2, 2, -2, 2, opts));
 });

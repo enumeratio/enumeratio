@@ -29,12 +29,7 @@ examples:
     category: Possible issues
     caption: By convention the symbol is 1 whenever $m=1$
   - id: completely-multiplicative-in-the-top-argument-a
-    expr:
-      [
-        Equal,
-        [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 5, 7]],
-        [JacobiSymbol, [Multiply, 3, 5], 7],
-      ]
+    expr: [Equal, [Multiply, [JacobiSymbol, 3, 7], [JacobiSymbol, 5, 7]], [JacobiSymbol, [Multiply, 3, 5], 7]]
     expected: True
     category: Properties
     caption: "Completely multiplicative in the top argument: $(a/m)(b/m)=(ab/m)$"

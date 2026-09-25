@@ -17,8 +17,7 @@ type Write = (s: Serializer, args: Args) => string | undefined;
 type Serialize = (serializer: Serializer, expr: MathJsonExpression) => string;
 
 const TRADITIONAL = "traditional";
-const wanted = (s: Serializer): boolean =>
-  (s.options as unknown as Record<string, unknown>)[TRADITIONAL] === true;
+const wanted = (s: Serializer): boolean => (s.options as unknown as Record<string, unknown>)[TRADITIONAL] === true;
 
 const operands = (expr: MathJsonExpression): MathJsonExpression[] =>
   Array.isArray(expr) ? (expr.slice(1) as MathJsonExpression[]) : [];
@@ -37,8 +36,7 @@ function head(name: string, write: Write, listArgument = false): Entry {
     name,
     serialize: (s, expr) => {
       const args = operands(expr);
-      const written =
-        wanted(s) && (listArgument || !args.some(isList)) ? write(s, args) : undefined;
+      const written = wanted(s) && (listArgument || !args.some(isList)) ? write(s, args) : undefined;
       return written ?? fallback?.(s, expr) ?? s.serializeFunction(expr);
     },
   };
@@ -73,9 +71,7 @@ const indexed =
 const subscripted =
   (symbol: string, arity: number): Write =>
   (s, [k, ...args]) =>
-    k === undefined || args.length !== arity - 1
-      ? undefined
-      : `${symbol}_{${tex(s, k)}}${call(s, args)}`;
+    k === undefined || args.length !== arity - 1 ? undefined : `${symbol}_{${tex(s, k)}}${call(s, args)}`;
 
 const legendre: Write = (s, args) =>
   args.length === 2 ? `\\left(\\frac{${tex(s, args[0])}}{${tex(s, args[1])}}\\right)` : undefined;
@@ -131,9 +127,7 @@ const algebra =
       : `${symbol}_{${tex(s, n)}}${parameter === undefined ? "" : `(${tex(s, parameter)})`}`;
 
 /** A literal `AdicNumeral(p, x, …)` as its prime and value: `v_p(x)` names the prime once. */
-const adic = (
-  x: MathJsonExpression | undefined,
-): { p: number; value: MathJsonExpression } | undefined =>
+const adic = (x: MathJsonExpression | undefined): { p: number; value: MathJsonExpression } | undefined =>
   Array.isArray(x) && x[0] === "AdicNumeral" && typeof x[1] === "number" && x[2] !== undefined
     ? { p: x[1], value: x[2] as MathJsonExpression }
     : undefined;
@@ -154,9 +148,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("NthPrime", indexed("p")),
   head("StieltjesGamma", indexed("\\gamma")),
   head("HarmonicNumber", (s, [n, r, ...rest]) =>
-    n === undefined || rest.length > 0
-      ? undefined
-      : `H_{${tex(s, n)}}${r === undefined ? "" : `^{(${tex(s, r)})}`}`,
+    n === undefined || rest.length > 0 ? undefined : `H_{${tex(s, n)}}${r === undefined ? "" : `^{(${tex(s, r)})}`}`,
   ),
   // Arithmetic functions.
   head("MoebiusMu", fn("\\mu", 1)),
@@ -187,9 +179,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   // Special functions.
   head("Digamma", fn("\\psi", 1)),
   head("PolyGamma", (s, [n, z, ...rest]) =>
-    n === undefined || z === undefined || rest.length > 0
-      ? undefined
-      : `\\psi^{(${tex(s, n)})}(${tex(s, z)})`,
+    n === undefined || z === undefined || rest.length > 0 ? undefined : `\\psi^{(${tex(s, n)})}(${tex(s, z)})`,
   ),
   head("GammaLn", fn("\\log\\Gamma", 1)),
   head("LogGamma", fn("\\log\\Gamma", 1)),
@@ -216,19 +206,13 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("ClausenCl", subscripted("\\operatorname{Cl}", 2)),
   // Combinatorial.
   head("Pochhammer", (s, [a, n, ...rest]) =>
-    a === undefined || n === undefined || rest.length > 0
-      ? undefined
-      : `\\left(${tex(s, a)}\\right)_{${tex(s, n)}}`,
+    a === undefined || n === undefined || rest.length > 0 ? undefined : `\\left(${tex(s, a)}\\right)_{${tex(s, n)}}`,
   ),
   head("RisingFactorial", (s, [x, n, ...rest]) =>
-    x === undefined || n === undefined || rest.length > 0
-      ? undefined
-      : `${s.wrapShort(x)}^{\\overline{${tex(s, n)}}}`,
+    x === undefined || n === undefined || rest.length > 0 ? undefined : `${s.wrapShort(x)}^{\\overline{${tex(s, n)}}}`,
   ),
   head("FallingFactorial", (s, [x, n, ...rest]) =>
-    x === undefined || n === undefined || rest.length > 0
-      ? undefined
-      : `${s.wrapShort(x)}^{\\underline{${tex(s, n)}}}`,
+    x === undefined || n === undefined || rest.length > 0 ? undefined : `${s.wrapShort(x)}^{\\underline{${tex(s, n)}}}`,
   ),
   head("Multinomial", (s, args) => {
     if (args.length < 2) return undefined;
@@ -240,15 +224,11 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("Stirling", stacked("\\lbrace", "\\rbrace")),
   // Signed, as Wolfram's StirlingS1: lowercase s, not Knuth's unsigned brackets.
   head("StirlingS1", fn("s", 2)),
-  head("Subfactorial", (s, [n, ...rest]) =>
-    n === undefined || rest.length > 0 ? undefined : `{!}${s.wrapShort(n)}`,
-  ),
+  head("Subfactorial", (s, [n, ...rest]) => (n === undefined || rest.length > 0 ? undefined : `{!}${s.wrapShort(n)}`)),
   // enumeratio's own heads, where the mathematics has a settled notation.
   // Valuations and norms, p taken from a literal numeral.
   head("IntegerExponent", (s, [n, b, ...rest]) =>
-    n === undefined || rest.length > 0
-      ? undefined
-      : `v_{${b === undefined ? "10" : tex(s, b)}}(${tex(s, n)})`,
+    n === undefined || rest.length > 0 ? undefined : `v_{${b === undefined ? "10" : tex(s, b)}}(${tex(s, n)})`,
   ),
   head("AdicValuation", (s, [x, ...rest]) => {
     const a = adic(x);
@@ -256,9 +236,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   }),
   head("AdicNorm", (s, [x, ...rest]) => {
     const a = adic(x);
-    return a === undefined || rest.length > 0
-      ? undefined
-      : `\\left|${tex(s, a.value)}\\right|_{${a.p}}`;
+    return a === undefined || rest.length > 0 ? undefined : `\\left|${tex(s, a.value)}\\right|_{${a.p}}`;
   }),
   // Algebras and their bases.
   head("CliffordAlgebra", (s, [p, q, ...rest]) =>
@@ -277,9 +255,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("SymmetricGroupAlgebra", (s, [n, ...rest]) =>
     n === undefined || rest.length > 0 ? undefined : `k[S_{${tex(s, n)}}]`,
   ),
-  head("HeckeAlgebra", (s, [n, ...rest]) =>
-    n === undefined || rest.length > 0 ? undefined : `H_{${tex(s, n)}}(q)`,
-  ),
+  head("HeckeAlgebra", (s, [n, ...rest]) => (n === undefined || rest.length > 0 ? undefined : `H_{${tex(s, n)}}(q)`)),
   head(
     "HeckeT",
     (_, [w, ...rest]) => {
@@ -295,9 +271,7 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("Coproduct", fn("\\Delta", 1)),
   head("Counit", fn("\\varepsilon", 1)),
   head("Antipode", fn("S", 1)),
-  head("HopfTensor", (s, args) =>
-    args.length < 2 ? undefined : args.map((a) => s.wrap(a, 390)).join("\\otimes "),
-  ),
+  head("HopfTensor", (s, args) => (args.length < 2 ? undefined : args.map((a) => s.wrap(a, 390)).join("\\otimes "))),
   // Posets and their incidence algebras.
   head("DivisorLattice", indexed("D")),
   head("BooleanLattice", indexed("B")),
@@ -312,18 +286,12 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
   head("LinearQuiver", (s, [n, ...rest]) =>
     n === undefined || rest.length > 0 ? undefined : `\\vec{A}_{${tex(s, n)}}`,
   ),
-  head("PathAlgebra", (s, [q, ...rest]) =>
-    q === undefined || rest.length > 0 ? undefined : `k${tex(s, q)}`,
-  ),
+  head("PathAlgebra", (s, [q, ...rest]) => (q === undefined || rest.length > 0 ? undefined : `k${tex(s, q)}`)),
   // Groups.
   head("CyclicGroup", indexed("C")),
   head("DihedralGroup", indexed("D")),
-  head("GroupDirectProduct", (s, args) =>
-    args.length < 2 ? undefined : args.map((a) => tex(s, a)).join("\\times "),
-  ),
-  head("GroupAlgebra", (s, [g, ...rest]) =>
-    g === undefined || rest.length > 0 ? undefined : `k[${tex(s, g)}]`,
-  ),
+  head("GroupDirectProduct", (s, args) => (args.length < 2 ? undefined : args.map((a) => tex(s, a)).join("\\times "))),
+  head("GroupAlgebra", (s, [g, ...rest]) => (g === undefined || rest.length > 0 ? undefined : `k[${tex(s, g)}]`)),
   head("GroupOrder", (s, [g, ...rest]) =>
     g === undefined || rest.length > 0 ? undefined : `\\left|${tex(s, g)}\\right|`,
   ),
@@ -361,14 +329,10 @@ export const TRADITIONAL_LATEX: readonly Entry[] = [
     true,
   ),
   head("BraidPower", (s, [b, k, ...rest]) =>
-    b === undefined || k === undefined || rest.length > 0
-      ? undefined
-      : `\\left(${tex(s, b)}\\right)^{${tex(s, k)}}`,
+    b === undefined || k === undefined || rest.length > 0 ? undefined : `\\left(${tex(s, b)}\\right)^{${tex(s, k)}}`,
   ),
   head("TorusBraid", (s, [p, q, ...rest]) =>
-    p === undefined || q === undefined || rest.length > 0
-      ? undefined
-      : `T_{${tex(s, p)},${tex(s, q)}}`,
+    p === undefined || q === undefined || rest.length > 0 ? undefined : `T_{${tex(s, p)},${tex(s, q)}}`,
   ),
   head("PretzelKnot", (s, args) => (args.length < 1 ? undefined : `P${call(s, args)}`)),
   head("AlexanderPolynomial", invariant("\\Delta")),

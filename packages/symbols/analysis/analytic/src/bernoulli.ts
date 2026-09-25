@@ -43,8 +43,7 @@ function tangentNumber(k: number): bigint {
   const n = Math.max(k, 2 * (tangent.length - 1), 16);
   const t: bigint[] = [0n, 1n];
   for (let i = 2; i <= n; i++) t[i] = BigInt(i - 1) * t[i - 1];
-  for (let i = 2; i <= n; i++)
-    for (let j = i; j <= n; j++) t[j] = BigInt(j - i) * t[j - 1] + BigInt(j - i + 2) * t[j];
+  for (let i = 2; i <= n; i++) for (let j = i; j <= n; j++) t[j] = BigInt(j - i) * t[j - 1] + BigInt(j - i + 2) * t[j];
   tangent = t;
   return t[k];
 }
@@ -70,12 +69,9 @@ export const bernoulliNumber = (m: number): number => {
 };
 
 const intNode = (v: bigint): Json =>
-  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER)
-    ? Number(v)
-    : { num: v.toString() };
+  v <= BigInt(Number.MAX_SAFE_INTEGER) && v >= BigInt(Number.MIN_SAFE_INTEGER) ? Number(v) : { num: v.toString() };
 
-const ratNode = ([n, d]: Rat): Json =>
-  d === 1n ? intNode(n) : ["Rational", intNode(n), intNode(d)];
+const ratNode = ([n, d]: Rat): Json => (d === 1n ? intNode(n) : ["Rational", intNode(n), intNode(d)]);
 
 /**
  * The Bernoulli polynomial Bₘ(a) as a double, from the exact rational coefficients.

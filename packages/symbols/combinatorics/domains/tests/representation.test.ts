@@ -42,9 +42,7 @@ test("every representation round-trips", () => {
           : [[], [1, 0], [1, 1, 0, 0], [1, 0, 1, 0]];
     for (const sample of samples) {
       const written = representation.render(sample);
-      expect(representation.parse(written), `${representation.name} on [${sample}]`).toEqual(
-        sample,
-      );
+      expect(representation.parse(written), `${representation.name} on [${sample}]`).toEqual(sample);
     }
   }
 });
@@ -64,9 +62,7 @@ test("Render reads the carrier off the value, and refuses a name from another ca
   // of a permutation finds nothing rather than producing nonsense.
   expect(text(["Render", perm(2, 1), "'parts'"])).not.toBe("'2 + 1'");
   expect(text(["Render", ["IntegerPartition", ["List", 3, 1]], "'parts'"])).toBe("'3 + 1'");
-  expect(text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'"])).toBe(
-    "'3^2 1'",
-  );
+  expect(text(["Render", ["IntegerPartition", ["List", 3, 3, 1]], "'exponential'"])).toBe("'3^2 1'");
 });
 
 test("a bare Render uses the canonical representation", () => {
@@ -79,9 +75,7 @@ test("exactly one representation per carrier and medium is canonical", () => {
   for (const carrier of carriers) {
     const mediums = [...new Set(representationsFor(carrier).map((r) => r.medium))];
     for (const medium of mediums) {
-      const canonical = representationsFor(carrier).filter(
-        (r) => r.medium === medium && r.canonical === true,
-      );
+      const canonical = representationsFor(carrier).filter((r) => r.medium === medium && r.canonical === true);
       expect(canonical.length, `${carrier}/${medium}`).toBe(1);
       expect(canonicalFor(carrier, medium)?.name, `${carrier}/${medium}`).toBe(canonical[0]?.name);
     }

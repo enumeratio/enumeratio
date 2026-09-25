@@ -113,9 +113,7 @@ test("a cell holding an ordinal reference is rejected out of a reactive schedule
   ];
   const sched = schedule(cells);
   expect(sched.order).toEqual([1]);
-  expect(sched.diagnostics).toEqual([
-    { cellId: 2, message: expect.stringContaining("cell-number references") },
-  ]);
+  expect(sched.diagnostics).toEqual([{ cellId: 2, message: expect.stringContaining("cell-number references") }]);
 });
 
 const GOLDEN = fileURLToPath(new URL("./tracked-symbols.golden.json", import.meta.url));

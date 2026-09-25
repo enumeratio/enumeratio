@@ -28,8 +28,7 @@ const radius = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
 export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const add = (a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
   const neg = (a: BoxedExpression) => ce.function("Negate", [a]).evaluate();
-  const mul = (a: BoxedExpression, b: BoxedExpression) =>
-    ce.function("Multiply", [a, b]).evaluate();
+  const mul = (a: BoxedExpression, b: BoxedExpression) => ce.function("Multiply", [a, b]).evaluate();
   const abs = (a: BoxedExpression) => ce.function("Abs", [a]).evaluate();
   const centeredInterval = (c: BoxedExpression | number, r: BoxedExpression | number) =>
     ce.function("CenteredInterval", [c, r]).evaluate();
@@ -62,8 +61,7 @@ export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<st
 
   return {
     Negate: ([a]) => (a !== undefined && isCenteredInterval(a) ? centeredNegate(a) : undefined),
-    Add: (ops) =>
-      ops.some(isCenteredInterval) ? ops.reduce((acc, e) => centeredAdd(acc, e)) : undefined,
+    Add: (ops) => (ops.some(isCenteredInterval) ? ops.reduce((acc, e) => centeredAdd(acc, e)) : undefined),
     Multiply: (ops) => (ops.some(isCenteredInterval) ? centeredScale(ops) : undefined),
   };
 }

@@ -9,11 +9,7 @@ const run = (expr: unknown) => ce.box(expr as never).evaluate().json;
 const U = (a: number, b: number) => ["UndirectedEdge", a, b];
 const D = (a: number, b: number) => ["DirectedEdge", a, b];
 const graph = (edges: unknown[]) => ["Graph", ["List", ...edges]];
-const graphV = (vertices: unknown[], edges: unknown[]) => [
-  "Graph",
-  ["List", ...vertices],
-  ["List", ...edges],
-];
+const graphV = (vertices: unknown[], edges: unknown[]) => ["Graph", ["List", ...vertices], ["List", ...edges]];
 
 // ─── independent brute-force reference implementations ─────────────────────────────────
 //
@@ -27,9 +23,7 @@ interface Ref {
 
 function floydWarshallDistances(ref: Ref): number[][] {
   const INF = Infinity;
-  const dist = Array.from({ length: ref.n + 1 }, () =>
-    Array.from({ length: ref.n + 1 }, () => INF),
-  );
+  const dist = Array.from({ length: ref.n + 1 }, () => Array.from({ length: ref.n + 1 }, () => INF));
   for (let i = 1; i <= ref.n; i++) dist[i]![i] = 0;
   for (const e of ref.edges) {
     dist[e.a]![e.b] = Math.min(dist[e.a]![e.b]!, 1);
@@ -67,8 +61,7 @@ function pathRef(n: number): Ref {
 
 function completeRef(n: number): Ref {
   const edges = [];
-  for (let i = 1; i <= n; i++)
-    for (let j = i + 1; j <= n; j++) edges.push({ a: i, b: j, directed: false });
+  for (let i = 1; i <= n; i++) for (let j = i + 1; j <= n; j++) edges.push({ a: i, b: j, directed: false });
   return { n, edges };
 }
 
@@ -141,21 +134,12 @@ test("AdjacencyMatrix is symmetric for an undirected graph and matches CompleteG
 });
 
 test("AdjacencyMatrix on a directed edge is asymmetric", () => {
-  expect(run(["AdjacencyMatrix", graphV([1, 2], [D(1, 2)])])).toEqual([
-    "List",
-    ["List", 0, 1],
-    ["List", 0, 0],
-  ]);
+  expect(run(["AdjacencyMatrix", graphV([1, 2], [D(1, 2)])])).toEqual(["List", ["List", 0, 1], ["List", 0, 0]]);
 });
 
 test("IncidenceMatrix: each undirected-edge column sums to 2, each directed column sums to 0 (-1 + 1)", () => {
   const g = graphV([1, 2, 3], [U(1, 2), D(2, 3)]);
-  expect(run(["IncidenceMatrix", g])).toEqual([
-    "List",
-    ["List", 1, 0],
-    ["List", 1, -1],
-    ["List", 0, 1],
-  ]);
+  expect(run(["IncidenceMatrix", g])).toEqual(["List", ["List", 1, 0], ["List", 1, -1], ["List", 0, 1]]);
 });
 
 // ─── named families: sizes and structure cross-checked against independent formulas ────
@@ -249,9 +233,7 @@ test("CompleteKaryTree(3, 2) matches the kernel-verified edge list exactly", () 
 
 test("CompleteKaryTree(levels) [binary default]: same as CompleteKaryTree(levels, 2)", () => {
   expect(run(["VertexCount", ["CompleteKaryTree", 4]])).toBe(15); // 1+2+4+8
-  expect(run(["EdgeList", ["CompleteKaryTree", 4]])).toEqual(
-    run(["EdgeList", ["CompleteKaryTree", 4, 2]]),
-  );
+  expect(run(["EdgeList", ["CompleteKaryTree", 4]])).toEqual(run(["EdgeList", ["CompleteKaryTree", 4, 2]]));
 });
 
 test("PetersenGraph(): 10 vertices, 15 edges, 3-regular, girth 5 (not bipartite)", () => {
@@ -277,9 +259,7 @@ test("ConnectedComponents on a directed graph gives strongly connected component
   // weakly-connected piece.
   const g = graphV([1, 2, 3], [D(1, 2), D(2, 1), D(2, 3)]);
   const components = run(["ConnectedComponents", g]) as unknown as unknown[];
-  const asSets = components
-    .slice(1)
-    .map((c) => new Set((c as unknown as [string, ...number[]]).slice(1)));
+  const asSets = components.slice(1).map((c) => new Set((c as unknown as [string, ...number[]]).slice(1)));
   expect(asSets).toEqual([new Set([1, 2]), new Set([3])]);
   // The whole graph is weakly connected (one piece), so IsConnectedGraph disagrees with
   // "one strongly-connected component" -- that's the point of keeping them independent.
@@ -311,9 +291,7 @@ test("ConnectedComponents matches an independent union-find, on random small (un
     );
     const componentCount = (run(["ConnectedComponents", g]) as unknown as unknown[]).length - 1;
     expect(componentCount).toBe(unionFindComponentCount(ref));
-    expect(run(["IsConnectedGraph", g])).toEqual(
-      unionFindComponentCount(ref) === 1 ? "True" : "False",
-    );
+    expect(run(["IsConnectedGraph", g])).toEqual(unionFindComponentCount(ref) === 1 ? "True" : "False");
   }
 });
 

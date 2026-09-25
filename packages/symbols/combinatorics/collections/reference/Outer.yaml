@@ -16,12 +16,7 @@ examples:
   - id: symbolic-entries
     expr: [Outer, Multiply, [List, 1, 2, 3], [List, x, y]]
     expected:
-      [
-        List,
-        [List, x, y],
-        [List, [Multiply, 2, x], [Multiply, 2, y]],
-        [List, [Multiply, 3, x], [Multiply, 3, y]],
-      ]
+      [List, [List, x, y], [List, [Multiply, 2, x], [Multiply, 2, y]], [List, [Multiply, 3, x], [Multiply, 3, y]]]
     caption: Symbolic entries
   - id: any-binary-function-an-addition-table
     expr: [Outer, Add, [List, 1, 2], [List, 10, 20]]

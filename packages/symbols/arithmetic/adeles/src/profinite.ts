@@ -93,9 +93,7 @@ export function toPadic(x: Profinite, p: bigint): { value: Rational; prec?: numb
  * The profinite number that is `value` mod p^prec at each listed prime and merely
  * integral everywhere else — the CRT of the p-adic components. Primes must be distinct.
  */
-export function fromPadics(
-  components: readonly { p: bigint; value: Rational; prec: number }[],
-): Profinite | undefined {
+export function fromPadics(components: readonly { p: bigint; value: Rational; prec: number }[]): Profinite | undefined {
   const primes = new Set(components.map((c) => c.p));
   if (primes.size !== components.length) return undefined;
   // Clear every p-power denominator first, so each component is a p-adic integer.

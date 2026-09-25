@@ -48,7 +48,6 @@ export const RESIDUES_LATEX: readonly Partial<LatexDictionaryEntry>[] = [
   POWER_LATEX,
   {
     name: INTEGER_MOD_RING,
-    serialize: (serializer, expr) =>
-      `\\mathbb{Z}/${serializer.wrapShort(operand(expr, 1))}\\mathbb{Z}`,
+    serialize: (serializer, expr) => `\\mathbb{Z}/${serializer.wrapShort(operand(expr, 1))}\\mathbb{Z}`,
   },
 ];

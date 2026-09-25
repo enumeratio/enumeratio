@@ -11,11 +11,4 @@ export { PARTITION_STATISTICS } from "./partition.ts";
 export { SET_PARTITION_STATISTICS } from "./setpartition.ts";
 export { PERMUTATION_STATISTICS } from "./permutation.ts";
 export { ALL_STATISTICS } from "./all.ts";
-export {
-  bySignature,
-  type Definition,
-  headsOf,
-  type MathJSON,
-  signatureOf,
-  SUBJECT,
-} from "./types.ts";
+export { bySignature, type Definition, headsOf, type MathJSON, signatureOf, SUBJECT } from "./types.ts";

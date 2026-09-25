@@ -35,14 +35,7 @@ test("threading: StieltjesGamma over a list of orders (in n)", () => {
 });
 
 test("threading: DirichletCharacter over a list of n", () => {
-  expect(evalOf(["DirichletCharacter", 3, 2, ["List", 1, 2, 3, 4, 5]])).toEqual([
-    "List",
-    1,
-    -1,
-    0,
-    1,
-    -1,
-  ]);
+  expect(evalOf(["DirichletCharacter", 3, 2, ["List", 1, 2, 3, 4, 5]])).toEqual(["List", 1, -1, 0, 1, -1]);
 });
 
 test("threading: DirichletL over a list of s (in s)", () => {
@@ -83,13 +76,7 @@ test("threading: Rationalize over a list, and inside an expression", () => {
 });
 
 test("threading: Gamma and GammaRegularized thread over a matrix, and every entry reduces", () => {
-  expect(
-    evalOf([
-      "Gamma",
-      2,
-      ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]],
-    ]),
-  ).toEqual([
+  expect(evalOf(["Gamma", 2, ["List", ["List", ["Rational", 7, 2], 0], ["List", 0, ["Rational", 13, 2]]]])).toEqual([
     "List",
     ["List", ["Divide", 9, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 7, 2]]]], 1],
     ["List", 1, ["Divide", 15, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 13, 2]]]]],
@@ -103,11 +90,7 @@ test("threading: Gamma and GammaRegularized thread over a matrix, and every entr
 });
 
 test("closed form: HurwitzZeta(2, 1/2) = π²/2 and HurwitzZeta(2, 1/4) = π² + 8G", () => {
-  expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 2]])).toEqual([
-    "Multiply",
-    ["Rational", 1, 2],
-    ["Power", "Pi", 2],
-  ]);
+  expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 2]])).toEqual(["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]]);
   expect(evalOf(["HurwitzZeta", 2, ["Rational", 1, 4]])).toEqual([
     "Add",
     ["Multiply", 8, "Catalan"],
@@ -158,10 +141,7 @@ test("closed form: I_1/2(2,3) = 11/16 via BetaRegularized", () => {
 });
 
 test("closed form: LogGamma at exact half-integers, positive and negative", () => {
-  expect(evalOf(["LogGamma", ["Rational", 3, 2]])).toEqual([
-    "Ln",
-    ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]],
-  ]);
+  expect(evalOf(["LogGamma", ["Rational", 3, 2]])).toEqual(["Ln", ["Multiply", ["Rational", 1, 2], ["Sqrt", "Pi"]]]);
   expect(evalOf(["LogGamma", ["Rational", -3, 2]])).toEqual([
     "Add",
     ["Multiply", ["Complex", 0, -2], "Pi"],
@@ -181,11 +161,7 @@ test("closed form: DirichletL(3, 2, 1) = π/(3√3)", () => {
 });
 
 test("closed form: HarmonicNumber(1/2) and HarmonicNumber(1/4)", () => {
-  expect(evalOf(["HarmonicNumber", ["Rational", 1, 2]])).toEqual([
-    "Add",
-    2,
-    ["Multiply", -2, ["Ln", 2]],
-  ]);
+  expect(evalOf(["HarmonicNumber", ["Rational", 1, 2]])).toEqual(["Add", 2, ["Multiply", -2, ["Ln", 2]]]);
   expect(evalOf(["HarmonicNumber", ["Rational", 1, 4]])).toEqual([
     "Add",
     4,

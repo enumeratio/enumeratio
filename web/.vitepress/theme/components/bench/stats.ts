@@ -43,9 +43,7 @@ export function okIntersection(
   bySystem: ReadonlyMap<BenchSystem, ReadonlyMap<string, CaseResult>>,
   systems: readonly BenchSystem[],
 ): string[] {
-  return allNames.filter((name) =>
-    systems.every((sys) => bySystem.get(sys)?.get(name)?.status === "ok"),
-  );
+  return allNames.filter((name) => systems.every((sys) => bySystem.get(sys)?.get(name)?.status === "ok"));
 }
 
 /** Direct ratio: `system`'s median over `baseline`'s median, same run. */

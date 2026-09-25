@@ -25,8 +25,7 @@ export interface CatalogRow {
 
 // A row links to its symbol page when one exists; a name with no page is left plain rather
 // than sent somewhere dead.
-const symbol = (name: string): string | undefined =>
-  getEntry(name) ? `/reference/symbol/${name}` : undefined;
+const symbol = (name: string): string | undefined => (getEntry(name) ? `/reference/symbol/${name}` : undefined);
 
 const byName = (a: CatalogRow, b: CatalogRow): number =>
   a.name.localeCompare(b.name) || (a.badges?.[0] ?? "").localeCompare(b.badges?.[0] ?? "");

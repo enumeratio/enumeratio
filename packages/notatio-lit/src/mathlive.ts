@@ -22,9 +22,7 @@ export function ensureMathliveAssets(): Promise<void> {
   assetsPromise ??= (async () => {
     await Promise.all([import("mathlive/fonts.css"), import("mathlive/static.css")]);
     const m = await import("mathlive");
-    (
-      m as unknown as { MathfieldElement: { fontsDirectory: string | null } }
-    ).MathfieldElement.fontsDirectory = null;
+    (m as unknown as { MathfieldElement: { fontsDirectory: string | null } }).MathfieldElement.fontsDirectory = null;
   })();
   return assetsPromise;
 }

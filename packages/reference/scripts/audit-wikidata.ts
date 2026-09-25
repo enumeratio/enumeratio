@@ -102,9 +102,7 @@ for (const { symbol, id, fixed } of claimed) {
   suspects.push({ name: symbol.name, id, label });
 }
 
-process.stdout.write(
-  `\n${claimed.length} ids checked — ${missing} dead, ${suspects.length} about something else\n\n`,
-);
+process.stdout.write(`\n${claimed.length} ids checked — ${missing} dead, ${suspects.length} about something else\n\n`);
 
 for (const suspect of suspects) {
   const query = encodeURIComponent(spaced(suspect.name).toLowerCase());

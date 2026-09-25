@@ -15,18 +15,8 @@ import { operandsOf } from "@enumeratio/boxed";
 import { bstParents } from "./bst.ts";
 import { applyComposition } from "./compose.ts";
 import { extendBuiltin } from "./extend.ts";
-import {
-  fromPermutationLeftChild,
-  fromPermutationRightChild,
-  fromPermutationRoot,
-} from "./increasing-binary-tree.ts";
-import {
-  insertionReadingWord,
-  insertionRowWord,
-  insertionShape,
-  recordingRowWord,
-  rskRowWords,
-} from "./tableau.ts";
+import { fromPermutationLeftChild, fromPermutationRightChild, fromPermutationRoot } from "./increasing-binary-tree.ts";
+import { insertionReadingWord, insertionRowWord, insertionShape, recordingRowWord, rskRowWords } from "./tableau.ts";
 
 export interface CombinatorialMap {
   readonly name: string;
@@ -67,44 +57,30 @@ const forEach = (over: MathJSON, body: MathJSON, variable = "i"): MathJSON => [
 
 /** A MathJSON expression, structurally — declared locally so this package stays packable
  *  (a bundled package cannot import types from the src-only reference package). */
-type MathJSON =
-  | string
-  | number
-  | boolean
-  | readonly MathJSON[]
-  | { readonly [key: string]: unknown };
+type MathJSON = string | number | boolean | readonly MathJSON[] | { readonly [key: string]: unknown };
 
 const size: MathJSON = ["Count", "_raw"];
 
 /** The smallest later position sharing i's label in the restricted growth string, or i
  *  itself when none does — i.e. i's successor within its own block. */
 const nextInBlock = (i: MathJSON): MathJSON => {
-  const later: MathJSON = [
-    "Filter",
-    ["Range", ["Add", i, 1], size],
-    ["Function", ["Equal", at("k"), at(i)], "k"],
-  ];
+  const later: MathJSON = ["Filter", ["Range", ["Add", i, 1], size], ["Function", ["Equal", at("k"), at(i)], "k"]];
   return ["If", ["Greater", ["Length", later], 0], ["Min", later], i];
 };
 
 /** `body` with `name` bound to `value` — a `let`, as a lambda applied to its argument. The
  *  block structure a map reads at every position (`parts`, the leaders) is computed once
  *  here rather than once per position per read; see tableau.ts for the rule. */
-const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => [
-  "Apply",
-  ["Function", body, name],
-  value,
-];
+const bind = (name: string, value: MathJSON, body: MathJSON): MathJSON => ["Apply", ["Function", body, name], value];
 
 /** A fold over `1 .. n`, indexing rather than iterating a structure — the rule from
  *  tableau.ts, which is what makes these evaluate at all. */
-const byIndex = (
-  n: MathJSON,
-  initial: MathJSON,
-  step: MathJSON,
-  accumulator: string,
-  variable: string,
-): MathJSON => ["Fold", ["Function", step, accumulator, variable], initial, ["Range", 1, n]];
+const byIndex = (n: MathJSON, initial: MathJSON, step: MathJSON, accumulator: string, variable: string): MathJSON => [
+  "Fold",
+  ["Function", step, accumulator, variable],
+  initial,
+  ["Range", 1, n],
+];
 
 /** The least element of i's orbit — its cycle's representative. */
 const orbitLeast = (i: MathJSON): MathJSON =>
@@ -124,11 +100,7 @@ const leadersUpTo = (bound: MathJSON): MathJSON =>
 const cycleLengths: MathJSON = [
   "Map",
   ["Function", ["Length", ["Union", forEach(positions, iterate("i", "k"), "k")]], "i"],
-  [
-    "Filter",
-    positions,
-    ["Function", ["Equal", "i", ["Min", forEach(positions, iterate("i", "k"), "k")]], "i"],
-  ],
+  ["Filter", positions, ["Function", ["Equal", "i", ["Min", forEach(positions, iterate("i", "k"), "k")]], "i"]],
 ];
 
 /** Count of cycle LEADERS (one check per position, `orbitLeast`-style — not a `Filter` over
@@ -186,14 +158,7 @@ const cumulative = (list: MathJSON): MathJSON =>
     [
       "Join",
       "cacc",
-      [
-        "List",
-        [
-          "Add",
-          ["If", ["Equal", "c", 1], 0, ["At", "cacc", ["Subtract", "c", 1]]],
-          ["At", list, "c"],
-        ],
-      ],
+      ["List", ["Add", ["If", ["Equal", "c", 1], 0, ["At", "cacc", ["Subtract", "c", 1]]], ["At", list, "c"]]],
     ],
     "cacc",
     "c",
@@ -203,13 +168,7 @@ const cumulative = (list: MathJSON): MathJSON =>
  *  one more than the number of ends before it. A `Range`-fold with `At`, per the rule. */
 const blockIndexAt = (ends: MathJSON, p: MathJSON): MathJSON => [
   "Add",
-  byIndex(
-    ["Count", ends],
-    0,
-    ["Add", "bacc", ["If", ["Less", ["At", ends, "bi"], p], 1, 0]],
-    "bacc",
-    "bi",
-  ),
+  byIndex(["Count", ends], 0, ["Add", "bacc", ["If", ["Less", ["At", ends, "bi"], p], 1, 0]], "bacc", "bi"),
   1,
 ];
 /** Where block `blk` starts, given the cumulative `ends`. */
@@ -245,11 +204,7 @@ const conjugacyClassRepresentative: MathJSON = bind(
 // MAXIMUM rather than decreasing length, and each block's value is read off the permutation
 // itself (via `iterate`) rather than renumbered.
 const foataWord: MathJSON = (() => {
-  const maximaAscending: MathJSON = [
-    "Filter",
-    positions,
-    ["Function", ["Equal", "i", orbitMax("i")], "i"],
-  ];
+  const maximaAscending: MathJSON = ["Filter", positions, ["Function", ["Equal", "i", orbitMax("i")], "i"]];
   const lengthsByLeader: MathJSON = [
     "Map",
     ["Function", ["Length", ["Union", forEach(positions, iterate("m", "k"), "k")]], "m"],
@@ -265,12 +220,7 @@ const foataWord: MathJSON = (() => {
       cumulative(lengthsByLeader),
       forEach(
         positions,
-        bind("blk", blockIndexAt("ends", "i"), [
-          "If",
-          ["Equal", offset, 0],
-          leader,
-          iterate(leader, offset),
-        ]),
+        bind("blk", blockIndexAt("ends", "i"), ["If", ["Equal", offset, 0], leader, iterate(leader, offset)]),
       ),
     ),
   );
@@ -372,11 +322,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "subexcedant_seq",
     body: forEach(positions, [
       "Count",
-      [
-        "Filter",
-        ["Range", ["Add", "i", 1], ["Length", "_raw"]],
-        ["Function", ["Greater", at("i"), at("j")], "j"],
-      ],
+      ["Filter", ["Range", ["Add", "i", 1], ["Length", "_raw"]], ["Function", ["Greater", at("i"), at("j")], "j"]],
     ]),
     summary: "Entry i counts the later entries smaller than p(i).",
     note: "Its total is the inversion count, which is the Lehmer code's whole point.",
@@ -424,11 +370,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "permutation",
     body: forEach(
       positions,
-      at([
-        "Add",
-        ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]],
-        1,
-      ]),
+      at(["Add", ["Mod", ["Add", ["Subtract", "i", 2], ["Length", "_raw"]], ["Length", "_raw"]], 1]),
     ),
     summary: "Rotate the word one place to the right.",
   },
@@ -442,11 +384,7 @@ export const MAPS: readonly CombinatorialMap[] = [
       ["Range", 2, ["Subtract", ["Length", "_raw"], 1]],
       [
         "Function",
-        [
-          "And",
-          ["Less", at(["Subtract", "i", 1]), at("i")],
-          ["Greater", at("i"), at(["Add", "i", 1])],
-        ],
+        ["And", ["Less", at(["Subtract", "i", 1]), at("i")], ["Greater", at("i"), at(["Add", "i", 1])]],
         "i",
       ],
     ],
@@ -491,13 +429,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     to: "set_partition",
     // Each position labelled with the rank of its cycle's least element — which is exactly a
     // restricted growth string, and therefore exactly what a set_partition IS.
-    body: byIndex(
-      size,
-      ["List"],
-      ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]],
-      "cacc",
-      "i",
-    ),
+    body: byIndex(size, ["List"], ["Join", "cacc", ["List", leadersUpTo(orbitLeast("i"))]], "cacc", "i"),
     summary: "The orbits, as a set partition of the positions.",
     note: "Removed once for giving every position the same label. The cause was the laziness rule in tableau.ts — folding over a list taken out of the accumulator instead of indexing a range. Written by index it is right first time.",
   },
@@ -532,8 +464,7 @@ export const MAPS: readonly CombinatorialMap[] = [
     from: "permutation",
     to: "permutation",
     body: insertionReadingWord,
-    summary:
-      "The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.",
+    summary: "The row reading word of σ's RSK insertion tableau — the canonical word of its Knuth (plactic) class.",
     note: "Two permutations are Knuth-equivalent exactly when they share an insertion tableau (Schensted), so reading that tableau back out — bottom row to top, left to right — picks one fixed representative per class. Idempotent: the representative's own insertion tableau is the same P, so applying this again changes nothing.",
   },
   {
@@ -589,11 +520,7 @@ export const MAPS: readonly CombinatorialMap[] = [
 function descending(list: MathJSON): MathJSON {
   const sorted = ["Sort", list];
   const size = ["Count", sorted];
-  return [
-    "Map",
-    ["Function", ["At", sorted, ["Subtract", ["Add", size, 1], "i"]], "i"],
-    ["Range", 1, size],
-  ];
+  return ["Map", ["Function", ["At", sorted, ["Subtract", ["Add", size, 1], "i"]], "i"], ["Range", 1, size]];
 }
 
 /** p^k(i): apply the permutation k times, as a fold. */
@@ -624,13 +551,10 @@ export function declareMaps(
         const guard = fill(fill(map.guard, contents.json), main.json, "_image");
         if (ce.box(guard as never).evaluate().json !== "True") return undefined;
       }
-      const extra = (map.extra ?? []).map((argument) =>
-        ce.box(fill(argument, contents.json) as never).evaluate(),
-      );
+      const extra = (map.extra ?? []).map((argument) => ce.box(fill(argument, contents.json) as never).evaluate());
       // A tuple-shaped carrier takes ONE argument that is a Tuple, not several arguments —
       // `finset` is `(members, n)`, so a map into it hands over a single Tuple.
-      const argument =
-        extra.length === 0 ? main : ce.function("Tuple", [main, ...extra]).evaluate();
+      const argument = extra.length === 0 ? main : ce.function("Tuple", [main, ...extra]).evaluate();
       return ce.function(wrap, [argument]).evaluate();
     };
 

@@ -3,8 +3,7 @@ import { join } from "node:path";
 import { expect, test } from "vite-plus/test";
 import { NodeHost } from "../src/index.ts";
 
-const tmp = (ext: string) =>
-  join(tmpdir(), `notatio-test-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`);
+const tmp = (ext: string) => join(tmpdir(), `notatio-test-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`);
 
 test("a glyph writes an SVG and reports its path", () => {
   const host = new NodeHost(false);

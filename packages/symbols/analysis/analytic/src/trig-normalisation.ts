@@ -43,8 +43,7 @@ function piMultiple(op: BoxedExpression): bigint | undefined {
 // Multiply(ImaginaryUnit, Divide(Pi, 2)) boxes to Multiply(Complex(0, 1/2), Pi), not
 // Multiply(Complex(0, 1), Multiply(1/2, Pi)) -- so "is this Multiply(i, t)" has to allow
 // any nonzero purely-imaginary numeric factor, not just literal i.
-const isImaginaryLiteral = (op: BoxedExpression): boolean =>
-  op.operator === "Complex" && op.re === 0 && op.im !== 0;
+const isImaginaryLiteral = (op: BoxedExpression): boolean => op.operator === "Complex" && op.re === 0 && op.im !== 0;
 
 /** Cheap (O(operands), no allocation): does this Multiply carry a purely-imaginary factor? */
 const hasImaginaryFactor = (op: BoxedExpression): boolean =>
@@ -57,11 +56,7 @@ function imaginaryFactor(ce: ComputeEngine, op: BoxedExpression): BoxedExpressio
   return ce.function("Divide", [op, "ImaginaryUnit"]).evaluate();
 }
 
-function evaluateSin(
-  ce: ComputeEngine,
-  op: BoxedExpression,
-  options: EvalOptions,
-): BoxedExpression | undefined {
+function evaluateSin(ce: ComputeEngine, op: BoxedExpression, options: EvalOptions): BoxedExpression | undefined {
   const k = piMultiple(op);
   if (k !== undefined) return ce.Zero; // sin(k*pi) = 0 for any integer k
 
@@ -96,9 +91,7 @@ function evaluateSin(
     if (x === undefined) return undefined;
     // sin(arccos(x)) = sqrt(1 - x^2)
     return finish(
-      ce.function("Sqrt", [
-        ce.function("Add", [1, ce.function("Negate", [ce.function("Power", [x, 2])])]),
-      ]),
+      ce.function("Sqrt", [ce.function("Add", [1, ce.function("Negate", [ce.function("Power", [x, 2])])])]),
       options,
     );
   }

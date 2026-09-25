@@ -4,15 +4,7 @@ import { html, LitElement, type PropertyValues } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { loadEngine } from "./mathlive.ts";
 import { ensureStyles } from "./styles.ts";
-import {
-  type Clock,
-  curve3dSvg,
-  Orbit,
-  ORBIT_HINT,
-  type OrbitView,
-  pageClock,
-  type Triple,
-} from "@enumeratio/notatio";
+import { type Clock, curve3dSvg, Orbit, ORBIT_HINT, type OrbitView, pageClock, type Triple } from "@enumeratio/notatio";
 
 /**
  * `<notatio-curve-3d value="KnotCurve(TorusKnot(2, 3))">` -- a curve in space, from an
@@ -218,9 +210,7 @@ export class NotatioCurve3D extends LitElement {
     const [major, minor] = String(this.torus)
       .split(",")
       .map((t) => Number(t.trim()));
-    return Number.isFinite(major) && Number.isFinite(minor) && major > 0 && minor > 0
-      ? { major, minor }
-      : undefined;
+    return Number.isFinite(major) && Number.isFinite(minor) && major > 0 && minor > 0 ? { major, minor } : undefined;
   }
 
   protected override render(): unknown {
@@ -234,11 +224,7 @@ export class NotatioCurve3D extends LitElement {
         @pointercancel=${this.#orbit.onPointerUp}
         @wheel=${this.#orbit.onWheel}
         @dblclick=${this.#orbit.onDblClick}
-        >${
-          this._error
-            ? html`<span class="notatio-error">${this._error}</span>`
-            : unsafeHTML(this._svg)
-        }</span
+        >${this._error ? html`<span class="notatio-error">${this._error}</span>` : unsafeHTML(this._svg)}</span
       >
       ${this.label ? html`<figcaption>${this.label}</figcaption>` : ""}
     </figure>`;

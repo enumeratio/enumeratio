@@ -62,9 +62,8 @@ export function verificationTest(ce: ComputeEngine, opts: VerificationTestOption
       timeConstraintSeconds === undefined
         ? held.evaluate()
         : withDeadline(Math.max(0, timeConstraintSeconds * 1000), () =>
-            ce.withTimeLimit(
-              { ms: Math.max(0, timeConstraintSeconds * 1000), label: "VerificationTest" },
-              () => held.evaluate(),
+            ce.withTimeLimit({ ms: Math.max(0, timeConstraintSeconds * 1000), label: "VerificationTest" }, () =>
+              held.evaluate(),
             ),
           );
   } catch (e) {
