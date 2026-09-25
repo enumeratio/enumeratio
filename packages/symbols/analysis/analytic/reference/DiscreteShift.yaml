@@ -1,24 +1,25 @@
 name: DiscreteShift
 domain: Elementary functions
-signature: DiscreteShift(f, n, h)
+signature: DiscreteShift(f, n)
 summary: "The forward-shift operator: DiscreteShift(f, n) is f with every free n replaced by n + 1."
 signatures:
   - call: DiscreteShift(f, n)
     description: f with every free occurrence of the symbol n replaced by n + 1.
     library: "@enumeratio/analytic"
-  - call: DiscreteShift(f, n, h)
-    description: f with every free occurrence of n replaced by n + h -- an h-step shift.
+  - call: DiscreteShift(f, {n, h})
+    description: f with every free occurrence of n replaced by n + h -- an h-step shift, given as the {n, h} pair.
     library: "@enumeratio/analytic"
-    arity: 3
+    arity: 2
 details:
   - A substitution, not an arithmetic evaluation -- f need not itself be a declared function; DiscreteShift(a(n), n) is a(n + 1) even though a has no definition.
+  - The h-step form takes n and h together as the second argument, {n, h} -- not a third argument.
 examples:
   - id: discreteshift-one-step
     expr: [DiscreteShift, [a, n], n]
     expected: [a, [Add, n, 1]]
     caption: One-step forward shift
   - id: discreteshift-h-step
-    expr: [DiscreteShift, [a, n], n, 2]
+    expr: [DiscreteShift, [a, n], [List, n, 2]]
     expected: [a, [Add, n, 2]]
     category: Scope
-    caption: The h-step form
+    caption: The h-step form -- {n, h}, not a third argument

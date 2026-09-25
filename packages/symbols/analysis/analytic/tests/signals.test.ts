@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import type { BoxedExpression } from "@cortex-js/compute-engine";
+import { symbolNameOf } from "@enumeratio/boxed";
 import { expect, test } from "vite-plus/test";
 import { declareAnalytic } from "../src/hurwitz-zeta.ts";
 
@@ -109,8 +110,8 @@ test("cross-check: Clip (compute-engine's Clamp) is idempotent", () => {
   expect(twice.isSame(once)).toBe(true);
 });
 
-test("DiscreteShift: two-step shift equals shifting twice", () => {
-  const twoStep = ce.box(["DiscreteShift", ["a", "n"], "n", 2] as never).evaluate();
+test("DiscreteShift: the {n, 2} step form equals shifting twice by one step", () => {
+  const twoStep = ce.box(["DiscreteShift", ["a", "n"], ["List", "n", 2]] as never).evaluate();
   const twice = ce.box(["DiscreteShift", ["DiscreteShift", ["a", "n"], "n"], "n"] as never).evaluate();
   expect(twoStep.isSame(twice)).toBe(true);
 });
@@ -120,19 +121,20 @@ test("D(HeavisideTheta(x)) = DiracDelta(x)", () => {
   expect(d.json).toEqual(["DiracDelta", "x"]);
 });
 
-test("D(Ramp(x)) = UnitStep(x)", () => {
-  const d = ce.box(["D", ["Ramp", "x"], "x"] as never).evaluate();
-  expect(d.json).toEqual(["UnitStep", "x"]);
+// Ramp and UnitBox's derivatives are Piecewise forms whose conditions only resolve once a
+// concrete point is substituted in for x -- `D(...)` itself stays symbolic (matching Wolfram,
+// which also leaves these as literal Piecewise for a generic x), so these are checked by
+// substituting a value rather than comparing the symbolic form structurally.
+test("D(Ramp(x)) is 0 below 0, 1 above 0, undefined at 0", () => {
+  const d = ce.box(["D", ["Ramp", "x"], "x"] as never).evaluate() as BoxedExpression;
+  expect(d.subs({ x: 3 }).evaluate().isSame(1)).toBe(true);
+  expect(d.subs({ x: -3 }).evaluate().isSame(0)).toBe(true);
+  expect(symbolNameOf(d.subs({ x: 0 }).evaluate())).toBe("Indeterminate");
 });
 
-test("D(UnitBox(x)) is DiracDelta(x + 1/2) - DiracDelta(x - 1/2)", () => {
-  const d = ce.box(["D", ["UnitBox", "x"], "x"] as never).evaluate();
-  const expected = ce
-    .box([
-      "Subtract",
-      ["DiracDelta", ["Add", "x", ["Rational", 1, 2]]],
-      ["DiracDelta", ["Subtract", "x", ["Rational", 1, 2]]],
-    ] as never)
-    .evaluate();
-  expect((d as BoxedExpression).isSame(expected)).toBe(true);
+test("D(UnitBox(x)) is 0 away from the boundary, undefined exactly at x = ±1/2", () => {
+  const d = ce.box(["D", ["UnitBox", "x"], "x"] as never).evaluate() as BoxedExpression;
+  expect(d.subs({ x: 3 }).evaluate().isSame(0)).toBe(true);
+  expect(symbolNameOf(d.subs({ x: ce.box(["Rational", 1, 2]) }).evaluate())).toBe("Indeterminate");
+  expect(symbolNameOf(d.subs({ x: ce.box(["Rational", -1, 2]) }).evaluate())).toBe("Indeterminate");
 });

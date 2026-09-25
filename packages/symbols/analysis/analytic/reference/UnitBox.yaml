@@ -1,18 +1,18 @@
 name: UnitBox
 domain: Elementary functions
 signature: UnitBox(x1, x2, …)
-summary: "The unit box function: 1 inside (-1/2, 1/2), 1/2 exactly at the boundary, 0 outside."
+summary: "The unit box function: 1 on the closed [-1/2, 1/2], 0 outside."
 signatures:
   - call: UnitBox(x)
-    description: 1 for -1/2 < x < 1/2, 1/2 at x = ±1/2, 0 otherwise.
+    description: 1 for -1/2 <= x <= 1/2, 0 otherwise.
     library: "@enumeratio/analytic"
   - call: UnitBox(x1, x2, …)
     description: the product of the unit boxes -- 0 as soon as any argument is outside its own [-1/2, 1/2].
     library: "@enumeratio/analytic"
     arity: 2
 details:
-  - Defined everywhere, including the boundary -- unlike [[HeavisidePi]], the same rectangular pulse shape but left unevaluated at x = ±1/2 rather than given the value 1/2.
-  - D(UnitBox(x), x) = DiracDelta(x + 1/2) - DiracDelta(x - 1/2), since UnitBox(x) = HeavisideTheta(x + 1/2) - HeavisideTheta(x - 1/2).
+  - Defined everywhere, including the boundary -- unlike [[HeavisidePi]], the same rectangular pulse shape but left unevaluated at x = ±1/2 instead of closed there. UnitBox and HeavisidePi differ exactly at the boundary.
+  - D(UnitBox(x), x) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 away from the jump, undefined exactly at the two points where UnitBox is discontinuous.
 examples:
   - id: unitbox-inside-the-box
     expr: [UnitBox, 0]
@@ -20,12 +20,12 @@ examples:
     caption: Inside the box
   - id: unitbox-boundary-1-2
     expr: [UnitBox, [Rational, 1, 2]]
-    expected: [Rational, 1, 2]
-    caption: 1/2 exactly at the boundary
+    expected: 1
+    caption: The boundary is closed
   - id: unitbox-boundary-neg-1-2
     expr: [UnitBox, [Rational, -1, 2]]
-    expected: [Rational, 1, 2]
-    caption: 1/2 exactly at the boundary
+    expected: 1
+    caption: The boundary is closed
   - id: unitbox-outside-the-box
     expr: [UnitBox, 1]
     expected: 0
@@ -36,8 +36,9 @@ examples:
     expected: 1
     category: Scope
     caption: Two arguments -- the product of their unit boxes
-  - id: unitbox-derivative
+  - id: unitbox-derivative-away-from-the-jump
     expr: [D, [UnitBox, x], x]
-    expected: [Add, [Negate, [DiracDelta, [Add, x, [Rational, -1, 2]]]], [DiracDelta, [Add, x, [Rational, 1, 2]]]]
+    expected:
+      [Piecewise, [List, [List, Indeterminate, [Or, [Equal, x, [Rational, 1, 2]], [Equal, x, [Rational, -1, 2]]]]], 0]
     category: Properties
-    caption: Derivative in terms of [[DiracDelta]]
+    caption: 0 away from the jump, undefined exactly at the boundary

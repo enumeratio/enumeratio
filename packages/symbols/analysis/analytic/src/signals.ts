@@ -16,8 +16,9 @@ import { isFiniteNum } from "./box.ts";
 // convention as `unit-step.ts`'s `unitStepOf`.
 //
 // Boundary values follow Wolfram exactly and are NOT uniform across this family:
-//   UnitBox(±1/2)      = 1/2   (defined)
-//   HeavisidePi(±1/2)  unevaluated (the same rectangle, but the boundary is left open)
+//   UnitBox(±1/2)      = 1     (closed: [-1/2, 1/2] is the box's own defined range)
+//   HeavisidePi(±1/2)  unevaluated (the same rectangle, but the boundary is left open --
+//                       this is exactly where UnitBox and HeavisidePi differ)
 //   HeavisideTheta(0)  unevaluated (unlike compute-engine's own native `Heaviside`, which
 //                       this package deliberately does not touch or extend: `Heaviside(0) = 0`
 //                       there, a different convention this package must not inherit)
@@ -58,8 +59,9 @@ type Real = { readonly frac: Frac } | { readonly num: number };
 const R = (n: number, d = 1): Real => ({ frac: [BigInt(n), BigInt(d)] });
 const ZERO = R(0);
 const ONE = R(1);
+const NEG_ONE = R(-1);
 const TWO = R(2);
-const HALF = R(1, 2);
+const FOUR = R(4);
 
 const isConcretelyComplex = (x: BoxedExpression): boolean => Number.isFinite(x.im) && x.im !== 0;
 
@@ -127,11 +129,10 @@ function box(ce: ComputeEngine, r: Real): BoxedExpression {
 // ---------------------------------------------------------------------------------------------
 // Per-head math, in terms of `Real` only — evaluate handlers below just box the result.
 
-/** UnitBox(v): 1 inside (-1/2, 1/2), 1/2 exactly at the boundary, 0 outside. Defined everywhere. */
+/** UnitBox(v): 1 on the closed [-1/2, 1/2], 0 outside. Defined everywhere; unlike
+ *  [[HeavisidePi]] the boundary is included, not left open. */
 function unitBoxValue(v: Real): Real {
-  if (cmp(v, R(-1, 2)) < 0 || cmp(v, R(1, 2)) > 0) return ZERO;
-  if (cmp(v, R(-1, 2)) === 0 || cmp(v, R(1, 2)) === 0) return HALF;
-  return ONE;
+  return cmp(v, R(-1, 2)) < 0 || cmp(v, R(1, 2)) > 0 ? ZERO : ONE;
 }
 
 /** The tent Max(1 - |v|, 0) — shared by UnitTriangle and HeavisideLambda (same function,
@@ -148,20 +149,29 @@ const rampValue = (v: Real): Real => (isNeg(v) ? ZERO : v);
  *  unlike `FractionalPart` (declared in integer-fractional-part.ts), which keeps v's sign. */
 const fracPart = (v: Real): Real => sub(v, floorOf(v));
 
+/** SawtoothWave's own natural range: [0, 1). */
 const sawtoothBase = (v: Real): Real => fracPart(v);
+const SAWTOOTH_RANGE: readonly [Real, Real] = [ZERO, ONE];
 
-/** Triangle wave base, period 1, range [0, 1]: 2f for f <= 1/2, 2 - 2f for f > 1/2 (f = fracPart). */
+/**
+ * TriangleWave's own natural range: [-1, 1], sine-like phase (rising through 0 at f = 0,
+ * peak 1 at f = 1/4, falling through 0 at f = 1/2, trough -1 at f = 3/4) — NOT the plain tent
+ * [0, 1] shape [[UnitTriangle]]/[[HeavisideLambda]] use.
+ */
 function triangleBase(v: Real): Real {
-  const f = fracPart(v);
-  const twoF = mul(TWO, f);
-  return cmp(twoF, ONE) <= 0 ? twoF : sub(TWO, twoF);
+  const f = fracPart(v); // in [0, 1)
+  if (cmp(f, R(1, 4)) <= 0) return mul(FOUR, f); // [0, 1/4]: 0 -> 1
+  if (cmp(f, R(3, 4)) <= 0) return sub(TWO, mul(FOUR, f)); // [1/4, 3/4]: 1 -> -1
+  return sub(mul(FOUR, f), FOUR); // [3/4, 1): -1 -> 0
 }
+const TRIANGLE_RANGE: readonly [Real, Real] = [NEG_ONE, ONE];
 
-/** Square wave base, period 1, range {0, 1}: 1 on [0, 1/2), 0 on [1/2, 1) — SquareWave(0) = 1. */
+/** SquareWave's own natural range: {-1, 1} — 1 on [0, 1/2), -1 on [1/2, 1); SquareWave(0) = 1. */
 function squareBase(v: Real): Real {
   const f = fracPart(v);
-  return cmp(mul(TWO, f), ONE) < 0 ? ONE : ZERO;
+  return cmp(mul(TWO, f), ONE) < 0 ? ONE : NEG_ONE;
 }
+const SQUARE_RANGE: readonly [Real, Real] = [NEG_ONE, ONE];
 
 // ---------------------------------------------------------------------------------------------
 // Evaluate handlers.
@@ -265,6 +275,7 @@ function evaluateWave(
   ce: ComputeEngine,
   ops: readonly BoxedExpression[],
   base: (v: Real) => Real,
+  natural: readonly [Real, Real],
 ): BoxedExpression | undefined {
   const parsed = parseWaveArgs(ops);
   if (parsed === undefined) return undefined;
@@ -275,7 +286,12 @@ function evaluateWave(
   const lo = realOf(parsed.range[0]);
   const hi = realOf(parsed.range[1]);
   if (lo === undefined || hi === undefined) return undefined;
-  return box(ce, add(lo, mul(sub(hi, lo), b)));
+  // Affine map from the wave's own natural range onto the requested {min, max} -- the period
+  // stays 1 either way, only the amplitude/offset changes.
+  const [natLo, natHi] = natural;
+  const t = div(sub(b, natLo), sub(natHi, natLo));
+  if (t === undefined) return undefined;
+  return box(ce, add(lo, mul(sub(hi, lo), t)));
 }
 
 /**
@@ -338,8 +354,9 @@ function evaluateRescale(ce: ComputeEngine, ops: readonly BoxedExpression[]): Bo
   return box(ce, add(yminV, mul(sub(ymaxV, yminV), t)));
 }
 
-/** DiscreteShift(f, n) = f with every free `n` replaced by n + 1; DiscreteShift(f, n, h)
- *  shifts by `h` steps instead. A pure substitution, not an arithmetic evaluation, so it
+/** DiscreteShift(f, n) = f with every free `n` replaced by n + 1; DiscreteShift(f, {n, h})
+ *  shifts by `h` steps instead -- Wolfram's own step form is the `{n, h}` PAIR as the second
+ *  argument, not a third argument. A pure substitution, not an arithmetic evaluation, so it
  *  works on `f` as a literal expression (e.g. `a(n)`) rather than requiring `f` itself to
  *  be declared. */
 function substitute(
@@ -355,11 +372,19 @@ function substitute(
 }
 
 function evaluateDiscreteShift(ce: ComputeEngine, ops: readonly BoxedExpression[]): BoxedExpression | undefined {
-  const [f, n, h] = ops;
-  if (f === undefined || n === undefined || !isSymbol(n)) return undefined;
-  const step = h ?? ce.number(1);
-  const shifted = ce.function("Add", [n, step]);
-  return substitute(ce, f, n.symbol, shifted).evaluate();
+  const [f, second] = ops;
+  if (f === undefined || second === undefined) return undefined;
+  if (isSymbol(second)) {
+    const shifted = ce.function("Add", [second, ce.number(1)]);
+    return substitute(ce, f, second.symbol, shifted).evaluate();
+  }
+  if (second.operator === "List") {
+    const [n, h] = operandsOf(second);
+    if (n === undefined || h === undefined || !isSymbol(n)) return undefined;
+    const shifted = ce.function("Add", [n, h]);
+    return substitute(ce, f, n.symbol, shifted).evaluate();
+  }
+  return undefined;
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -376,14 +401,29 @@ const HALF_JSON: Json = ["Rational", 1, 2];
 const SIGNAL_DERIVATIVES: Readonly<Record<string, Readonly<Record<string, SignalPartial>>>> = {
   // D(HeavisideTheta(x)) = DiracDelta(x).
   HeavisideTheta: { "1": { params: ["x"], body: ["DiracDelta", "x"] } },
-  // Ramp(x) = x * UnitStep(x); by the product rule its derivative is UnitStep(x) (the
-  // x * DiracDelta(x) term Ramp's own second half would contribute is 0 everywhere).
-  Ramp: { "1": { params: ["x"], body: ["UnitStep", "x"] } },
-  // UnitBox(x) = HeavisideTheta(x + 1/2) - HeavisideTheta(x - 1/2).
+  // D(Ramp(x)) = Piecewise({{0, x < 0}, {1, x > 0}}, Indeterminate) -- Wolfram's own answer;
+  // NOT UnitStep(x), which would be a different (defined-at-0) function. The bound parameter
+  // is named "u", not "x" -- applying a `Function(body, "x")` to the literal symbol `x` (the
+  // common case, `D(Ramp(x), x)`) hits a compute-engine substitution quirk where an Equal/
+  // Less/Greater condition on the same-named bound variable spuriously resolves to a
+  // definite boolean instead of staying undecided; a distinct bound name sidesteps it.
+  Ramp: {
+    "1": {
+      params: ["u"],
+      body: ["Piecewise", ["List", ["List", 0, ["Less", "u", 0]], ["List", 1, ["Greater", "u", 0]]], "Indeterminate"],
+    },
+  },
+  // D(UnitBox(x)) = Piecewise({{Indeterminate, x == 1/2 || x == -1/2}}, 0) -- 0 on the open
+  // interior and exterior alike (UnitBox is locally constant away from the boundary),
+  // undefined exactly at the two points where it jumps. Bound parameter "u", see Ramp above.
   UnitBox: {
     "1": {
-      params: ["x"],
-      body: ["Subtract", ["DiracDelta", ["Add", "x", HALF_JSON]], ["DiracDelta", ["Subtract", "x", HALF_JSON]]],
+      params: ["u"],
+      body: [
+        "Piecewise",
+        ["List", ["List", "Indeterminate", ["Or", ["Equal", "u", HALF_JSON], ["Equal", "u", ["Negate", HALF_JSON]]]]],
+        0,
+      ],
     },
   },
 };
@@ -443,15 +483,15 @@ export function declareSignals(ce: ComputeEngine): void {
   });
   ce.declare("SawtoothWave", {
     signature: "(value, value?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, sawtoothBase),
+    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, sawtoothBase, SAWTOOTH_RANGE),
   });
   ce.declare("TriangleWave", {
     signature: "(value, value?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, triangleBase),
+    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, triangleBase, TRIANGLE_RANGE),
   });
   ce.declare("SquareWave", {
     signature: "(value, value?) -> number",
-    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, squareBase),
+    evaluate: (ops: readonly BoxedExpression[]) => evaluateWave(ce, ops, squareBase, SQUARE_RANGE),
   });
   ce.declare("Rescale", {
     signature: "(value, value?, value?) -> value",
@@ -466,7 +506,7 @@ export function declareSignals(ce: ComputeEngine): void {
     evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteDelta(ce, ops),
   });
   ce.declare("DiscreteShift", {
-    signature: "(value, value, value?) -> value",
+    signature: "(value, value) -> value",
     evaluate: (ops: readonly BoxedExpression[]) => evaluateDiscreteShift(ce, ops),
   });
 

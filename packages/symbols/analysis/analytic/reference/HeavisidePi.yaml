@@ -7,7 +7,7 @@ signatures:
     description: 1 inside (-1/2, 1/2), 0 outside [-1/2, 1/2], and unevaluated (stays symbolic) exactly at x = ±1/2.
     library: "@enumeratio/analytic"
 details:
-  - The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than given the value 1/2 -- the two heads exist for the two conventions.
+  - The same rectangular pulse as [[UnitBox]], but the boundary is left open rather than closed -- [[UnitBox]](±1/2) = 1, HeavisidePi(±1/2) unevaluated. The two heads exist for the two conventions.
 examples:
   - id: heavisidepi-inside
     expr: [HeavisidePi, 0]
