@@ -165,14 +165,13 @@ interface Sample {
   readonly expr: MathJSON;
 }
 
-const templates: Template[] = entryFiles.flatMap(({ stem, entries }) =>
+const templates: Template[] = entryFiles.flatMap(({ entries }) =>
   entries.flatMap((entry) =>
     entry.examples
-      .map((example, index) => ({ example, index }))
-      .filter(({ example }) => example.aspirational !== true && example.volatile === undefined)
-      .filter(({ example }) => systems.some((system) => emit(example.expr as MathJSON, system).ok))
-      .map(({ example, index }) => ({
-        id: `${stem}/${entry.name}#${index + 1}`,
+      .filter((example) => example.aspirational !== true && example.volatile === undefined)
+      .filter((example) => systems.some((system) => emit(example.expr as MathJSON, system).ok))
+      .map((example) => ({
+        id: `${entry.name}/${example.id}`,
         expr: example.expr as MathJSON,
         others: (example.others ?? {}) as Template["others"],
       })),

@@ -27,25 +27,34 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "A concretely complex argument is outside CubeRoot's real domain and is left unevaluated.",
     ],
     examples: [
-      { expr: ["CubeRoot", 8], expected: 2, caption: "The cube root of a perfect cube" },
       {
+        id: "the-cube-root-of-a-perfect-cube",
+        expr: ["CubeRoot", 8],
+        expected: 2,
+        caption: "The cube root of a perfect cube",
+      },
+      {
+        id: "the-real-root-of-a-negative-number-not-a-complex",
         expr: ["CubeRoot", -27],
         expected: -3,
         caption: "The real root of a negative number, not a complex one",
       },
       {
+        id: "at-a-non-perfect-cube-n-forces-the-numeric",
         expr: ["N", ["CubeRoot", 2]],
         expected: 1.2599210498948732,
         caption:
           "At a non-perfect cube, N() forces the numeric branch (plain evaluation stays exact and symbolic)",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["CubeRoot", ["List", -8, 27]],
         expected: ["List", -2, 3],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "the-same-as-root-with-index-3",
         expr: ["Equal", ["CubeRoot", -64], ["Root", -64, 3]],
         expected: "True",
         category: "Properties",
@@ -68,33 +77,50 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "$x = \\mathrm{IntegerPart}(x) + \\mathrm{FractionalPart}(x)$ always -- see [[FractionalPart]].",
     ],
     examples: [
-      { expr: ["IntegerPart", 2.4], expected: 2 },
       {
+        id: "integerpart-2p4",
+        expr: ["IntegerPart", 2.4],
+        expected: 2,
+      },
+      {
+        id: "truncates-toward-0-unlike-floor",
         expr: ["IntegerPart", -2.4],
         expected: -2,
         caption: "Truncates toward 0, unlike [[Floor]]",
       },
-      { expr: ["IntegerPart", ["Rational", 7, 2]], expected: 3 },
-      { expr: ["IntegerPart", ["Rational", -7, 2]], expected: -3 },
       {
+        id: "integerpart-7-over-2",
+        expr: ["IntegerPart", ["Rational", 7, 2]],
+        expected: 3,
+      },
+      {
+        id: "integerpart-neg-7-over-2",
+        expr: ["IntegerPart", ["Rational", -7, 2]],
+        expected: -3,
+      },
+      {
+        id: "exact-numeric-arguments-stay-exact",
         expr: ["IntegerPart", "Pi"],
         expected: 3,
         category: "Scope",
         caption: "Exact numeric arguments stay exact",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["IntegerPart", ["List", 2.5, -2.5]],
         expected: ["List", 2, -2],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "complex-numbers-real-and-imaginary-parts",
         expr: ["IntegerPart", ["Complex", 2.5, 3.7]],
         expected: ["Complex", 2, 3],
         category: "Scope",
         caption: "Complex numbers: real and imaginary parts truncated separately",
       },
       {
+        id: "x-integerpart-x-fractionalpart-x",
         expr: [
           "Equal",
           ["Add", ["IntegerPart", ["Rational", -7, 2]], ["FractionalPart", ["Rational", -7, 2]]],
@@ -125,26 +151,38 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "Real domain -- a concretely complex argument is left unevaluated.",
     ],
     examples: [
-      { expr: ["FractionalPart", 2.5], expected: 0.5 },
-      { expr: ["FractionalPart", ["Rational", 7, 2]], expected: ["Rational", 1, 2] },
       {
+        id: "fractionalpart-2p5",
+        expr: ["FractionalPart", 2.5],
+        expected: 0.5,
+      },
+      {
+        id: "fractionalpart-7-over-2",
+        expr: ["FractionalPart", ["Rational", 7, 2]],
+        expected: ["Rational", 1, 2],
+      },
+      {
+        id: "keeps-the-sign-of-x-unlike-compute-engine-s",
         expr: ["FractionalPart", ["Rational", -7, 2]],
         expected: ["Rational", -1, 2],
         caption: "Keeps the sign of x, unlike compute-engine's [[Fract]]",
       },
       {
+        id: "exact-numeric-arguments-stay-exact",
         expr: ["FractionalPart", "Pi"],
         expected: ["Add", -3, "Pi"],
         category: "Scope",
         caption: "Exact numeric arguments stay exact",
       },
       {
+        id: "threads-element-wise-over-a-list",
         expr: ["FractionalPart", ["List", ["Rational", 7, 2], ["Rational", -1, 3]]],
         expected: ["List", ["Rational", 1, 2], ["Rational", -1, 3]],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "zero-exactly-on-the-integers",
         expr: ["FractionalPart", 5],
         expected: 0,
         category: "Properties",
@@ -170,24 +208,32 @@ export const analyticElementary: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-absolute-value-of-a-real-number",
         expr: ["RealAbs", -2.5],
         expected: 2.5,
         caption: "The absolute value of a real number",
       },
-      { expr: ["RealAbs", ["Rational", -7, 2]], expected: ["Rational", 7, 2] },
       {
+        id: "realabs-neg-7-over-2",
+        expr: ["RealAbs", ["Rational", -7, 2]],
+        expected: ["Rational", 7, 2],
+      },
+      {
+        id: "threads-element-wise-over-a-list",
         expr: ["RealAbs", ["List", -1, 2, -3]],
         expected: ["List", 1, 2, 3],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "exact-numeric-arguments",
         expr: ["RealAbs", ["Negate", "Pi"]],
         expected: "Pi",
         category: "Scope",
         caption: "Exact numeric arguments",
       },
       {
+        id: "agrees-with-abs-on-the-reals",
         expr: ["Equal", ["RealAbs", -5], ["Abs", -5]],
         expected: "True",
         category: "Properties",
@@ -212,16 +258,30 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "A concretely complex argument is outside RealSign's domain and is left unevaluated.",
     ],
     examples: [
-      { expr: ["RealSign", -3], expected: -1 },
-      { expr: ["RealSign", 0], expected: 0 },
-      { expr: ["RealSign", 2.5], expected: 1 },
       {
+        id: "realsign-neg-3",
+        expr: ["RealSign", -3],
+        expected: -1,
+      },
+      {
+        id: "realsign-0",
+        expr: ["RealSign", 0],
+        expected: 0,
+      },
+      {
+        id: "realsign-2p5",
+        expr: ["RealSign", 2.5],
+        expected: 1,
+      },
+      {
+        id: "threads-element-wise-over-a-list",
         expr: ["RealSign", ["List", -2, 0, 5]],
         expected: ["List", -1, 0, 1],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "decides-the-sign-of-an-exact-numeric-expression",
         expr: ["RealSign", ["Subtract", ["Sqrt", 2], 2]],
         expected: -1,
         category: "Scope",
@@ -253,28 +313,45 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "A single list argument threads element-wise; several scalar arguments combine as above -- the two call forms are not the same shape.",
     ],
     examples: [
-      { expr: ["UnitStep", -1], expected: 0 },
-      { expr: ["UnitStep", 0], expected: 1, caption: "1 at 0, unlike Heaviside's 1/2" },
-      { expr: ["UnitStep", 2.5], expected: 1 },
       {
+        id: "unitstep-neg-1",
+        expr: ["UnitStep", -1],
+        expected: 0,
+      },
+      {
+        id: "1-at-0-unlike-heaviside-s-1-2",
+        expr: ["UnitStep", 0],
+        expected: 1,
+        caption: "1 at 0, unlike Heaviside's 1/2",
+      },
+      {
+        id: "unitstep-2p5",
+        expr: ["UnitStep", 2.5],
+        expected: 1,
+      },
+      {
+        id: "threads-element-wise-over-a-list",
         expr: ["UnitStep", ["List", -1, 0, 1]],
         expected: ["List", 0, 1, 1],
         category: "Scope",
         caption: "Threads element-wise over a list",
       },
       {
+        id: "several-arguments-the-product-of-their-unit",
         expr: ["UnitStep", 1, 2],
         expected: 1,
         category: "Scope",
         caption: "Several arguments: the product of their unit steps",
       },
       {
+        id: "zero-as-soon-as-any-argument-is-negative",
         expr: ["UnitStep", 1, -1],
         expected: 0,
         category: "Scope",
         caption: "Zero as soon as any argument is negative",
       },
       {
+        id: "exact-numeric-arguments",
         expr: ["UnitStep", ["Subtract", "Pi", 3]],
         expected: 1,
         category: "Scope",
@@ -302,25 +379,33 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "Numeric only past the special values above, and real domain -- no reference example calls for a complex argument.",
     ],
     examples: [
-      { expr: ["Gudermannian", 0], expected: 0 },
       {
+        id: "gudermannian-0",
+        expr: ["Gudermannian", 0],
+        expected: 0,
+      },
+      {
+        id: "at-a-machine-precision-argument",
         expr: ["Gudermannian", 1.5],
         expected: 1.1317283452505091,
         caption: "At a machine-precision argument",
       },
       {
+        id: "horizontal-asymptote-pi-2",
         expr: ["Gudermannian", "PositiveInfinity"],
         expected: ["Multiply", ["Rational", 1, 2], "Pi"],
         category: "Scope",
         caption: "Horizontal asymptote $\\pi/2$",
       },
       {
+        id: "gd-x-sech-x",
         expr: ["D", ["Gudermannian", "x"], "x"],
         expected: ["Sech", "x"],
         category: "Scope",
         caption: "$\\operatorname{gd}'(x) = \\operatorname{sech} x$",
       },
       {
+        id: "an-odd-function",
         expr: ["Gudermannian", ["Negate", "x"]],
         expected: ["Negate", ["Gudermannian", "x"]],
         category: "Properties",

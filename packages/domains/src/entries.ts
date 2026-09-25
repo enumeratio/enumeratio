@@ -18,6 +18,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["Reverse", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 1, 3, 2]],
         caption: "the one-line word $231$",
@@ -34,6 +35,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["Complement", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 2, 1, 3]],
         caption: "the one-line word $231$",
@@ -50,6 +52,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["Inverse", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 3, 1, 2]],
         caption: "the one-line word $231$",
@@ -67,6 +70,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["DescentSet", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Finset", ["Tuple", ["List", 2], 3]],
         caption: "the one-line word $231$",
@@ -84,6 +88,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["ToLehmerCode", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["SubexcedantSeq", ["List", 1, 1, 0]],
         caption: "the one-line word $231$",
@@ -101,6 +106,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["CycleType", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["IntegerPartition", ["List", 3]],
         caption: "the one-line word $231$",
@@ -119,6 +125,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["ReverseComplement", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 3, 1, 2]],
         caption: "the one-line word $231$",
@@ -138,6 +145,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["InverseAfterComplementAfterReverse", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 2, 3, 1]],
         caption: "the one-line word $231$",
@@ -155,6 +163,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["CyclicShift", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 3, 1, 2]],
         caption: "the one-line word $231$",
@@ -171,6 +180,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["InverseCyclicShift", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 1, 2, 3]],
         caption: "the one-line word $231$",
@@ -188,6 +198,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["PeakSet", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Finset", ["Tuple", ["List", 2], 3]],
         caption: "the one-line word $231$",
@@ -205,6 +216,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["RskInsertion", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["StandardTableau", ["List", 1, 3, 2]],
         caption: "the one-line word $231$",
@@ -222,6 +234,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["RskShape", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["IntegerPartition", ["List", 2, 1]],
         caption: "the one-line word $231$",
@@ -239,6 +252,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["RskRecording", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["StandardTableau", ["List", 1, 2, 3]],
         caption: "the one-line word $231$",
@@ -256,6 +270,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["Rsk", ["Permutation", ["List", 2, 3, 1]]],
         expected: [
           "StandardTableauPair",
@@ -276,6 +291,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["CyclePartition", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["SetPartition", ["List", 1, 1, 1]],
         caption: "the one-line word $231$",
@@ -293,6 +309,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["DescentComposition", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Composition", ["List", 2, 1]],
         caption: "the one-line word $231$",
@@ -310,6 +327,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["BinarySearchTree", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["BinaryTree", ["List", 2, 0, 2]],
         caption: "the one-line word $231$",
@@ -328,6 +346,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["FromPermutation", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["IncreasingBinaryTree", ["Tuple", 1, ["List", 2, 0, 0], ["List", 0, 3, 0]]],
         caption: "the one-line word $231$",
@@ -346,6 +365,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["KnuthClassRepresentative", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 2, 1, 3]],
         caption: "the one-line word $231$",
@@ -363,6 +383,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["KrewerasComplement", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 1, 2, 3]],
         caption: "the one-line word $231$",
@@ -380,6 +401,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["ConjugateAfterCycleType", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["IntegerPartition", ["List", 1, 1, 1]],
         caption: "the one-line word $231$",
@@ -397,6 +419,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["ConjugacyClassRepresentative", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 2, 3, 1]],
         caption: "the one-line word $231$",
@@ -415,6 +438,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231",
         expr: ["Foata", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["Permutation", ["List", 3, 1, 2]],
         caption: "the one-line word $231$",
@@ -432,6 +456,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-restricted-growth-string-of-1-3-mid-2-mid-4",
         expr: ["ArcRepresentation", ["SetPartition", ["List", 1, 2, 1, 3]]],
         expected: ["Endofunction", ["List", 3, 2, 3, 4]],
         caption: "the restricted growth string of $\\{1,3\\} \\mid \\{2\\} \\mid \\{4\\}$",
@@ -451,6 +476,7 @@ export const entries: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-one-line-word-231-once-there-is-a-definition",
         expr: ["PermutahedronVertex", ["Permutation", ["List", 2, 3, 1]]],
         expected: ["List"],
         caption: "the one-line word $231$ — once there is a definition to evaluate",

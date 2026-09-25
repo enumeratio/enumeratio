@@ -40,26 +40,31 @@ export const adeles: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "12-hat-z-8-hat-z-4-hat-z",
         expr: ["Add", ["ProfiniteNumber", 3, 12], ["ProfiniteNumber", 5, 8]],
         expected: ["ProfiniteNumber", 0, 4],
         caption: "$12\\hat{\\mathbb{Z}} + 8\\hat{\\mathbb{Z}} = 4\\hat{\\mathbb{Z}}$",
       },
       {
+        id: "profinitenumber-3-12-times-profinitenumber-5-8",
         expr: ["Multiply", ["ProfiniteNumber", 3, 12], ["ProfiniteNumber", 5, 8]],
         expected: ["ProfiniteNumber", 3, 12],
       },
       {
+        id: "equal-cosets-need-not-share-a-modulus",
         expr: ["Equal", ["ProfiniteNumber", 6, 20], ["ProfiniteNumber", 6, 40]],
         expected: "True",
         caption: "equal cosets need not share a modulus",
       },
       {
+        id: "crt-glued-from-its-2-adic-and-3-adic-images",
         expr: ["ProfiniteNumber", ["List", ["AdicNumeral", 2, 20, 5], ["AdicNumeral", 3, 7, 2]]],
         expected: ["ProfiniteNumber", 52, 288],
         caption: "CRT: glued from its 2-adic and 3-adic images",
         category: "Scope",
       },
       {
+        id: "a-rational-value-and-a-rational-modulus",
         expr: [
           "Add",
           ["ProfiniteNumber", ["Rational", 1, 2], ["Rational", 97, 5]],
@@ -70,20 +75,24 @@ export const adeles: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "numerator-profinitenumber-2-over-3-5",
         expr: ["Numerator", ["ProfiniteNumber", ["Rational", 2, 3], 5]],
         expected: ["ProfiniteNumber", 2, 15],
       },
       {
+        id: "denominator-profinitenumber-2-over-3-5",
         expr: ["Denominator", ["ProfiniteNumber", ["Rational", 2, 3], 5]],
         expected: 3,
       },
       {
+        id: "lenstra-s-profinite-fibonacci-numbers",
         expr: ["Fibonacci", ["ProfiniteNumber", 3, 10]],
         expected: ["ProfiniteNumber", 2, 11],
         caption: "Lenstra's profinite Fibonacci numbers",
         category: "Applications",
       },
       {
+        id: "projecting-to-q-2",
         expr: ["AdicNumeral", 2, ["ProfiniteNumber", 100, 24]],
         expected: ["AdicNumeral", 2, 4, 3],
         caption: "projecting to $\\mathbb{Q}_2$",
@@ -122,15 +131,18 @@ export const adeles: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-principal-adele-5-at-every-place",
         expr: ["Adele", 5],
         expected: ["Adele", 5, 5],
         caption: "the principal adèle: 5 at every place",
       },
       {
+        id: "adele-2-profinitenumber-1-6-times-3",
         expr: ["Multiply", ["Adele", 2, ["ProfiniteNumber", 1, 6]], 3],
         expected: ["Adele", 6, ["ProfiniteNumber", 3, 18]],
       },
       {
+        id: "the-adele-underlying-an-idele",
         expr: ["Adele", ["Idele", 1, 1, ["List", ["AdicNumeral", 3, 2, 2]]]],
         expected: ["Adele", 1, ["ProfiniteNumber", 11, 18]],
         caption: "the adèle underlying an idèle",
@@ -164,11 +176,13 @@ export const adeles: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-principal-idele-7-at-every-place",
         expr: ["Idele", 7],
         expected: ["Idele", 7, 7],
         caption: "the principal idèle: 7 at every place",
       },
       {
+        id: "7-and-its-inverse-cancel-everywhere",
         expr: ["Multiply", ["Idele", 7], ["Idele", ["Rational", 1, 7]]],
         expected: ["Idele", 1, 1],
         caption: "7 and its inverse cancel everywhere",
@@ -202,6 +216,7 @@ export const adeles: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "already-in-gl-n-q-upper-triangular-form-b-is-the",
         expr: ["ProfiniteDecomposition", ["List", ["List", 2, 1], ["List", 0, 3]]],
         expected: [
           "List",
@@ -238,6 +253,7 @@ export const adeles: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-identity-function-an-anti-diagonal-of-filled",
         expr: ["ProfinitePlot", "x", "x", 3],
         expected: [
           "ArrayPlot",

@@ -37,28 +37,33 @@ export const aestimatio: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "finishes-well-inside-the-deadline-so-the-value",
         expr: ["TimeConstrained", ["Sum", "k", ["Tuple", "k", 1, 10]], 1],
         expected: 55,
         caption: "Finishes well inside the deadline, so the value passes through unchanged",
       },
       {
+        id: "factoring-a-30-digit-semiprime-outruns-a-50-ms",
         expr: ["TimeConstrained", ["FactorInteger", SEMIPRIME], 0.05],
         expected: "Aborted",
         caption:
           "Factoring a 30-digit semiprime outruns a 50 ms deadline — compute-engine's own rho loop checks it and gives up",
       },
       {
+        id: "a-custom-failexpr-replaces-the-default-aborted",
         expr: ["TimeConstrained", ["FactorInteger", SEMIPRIME], 0.05, -1],
         expected: -1,
         caption: "A custom failexpr replaces the default $Aborted",
       },
       {
+        id: "an-infinite-time-limit-imposes-no-constraint",
         expr: ["TimeConstrained", ["Add", 1, 2], "PositiveInfinity"],
         expected: 3,
         caption: "An infinite time limit imposes no constraint",
         category: "Scope",
       },
       {
+        id: "failexpr-is-held-it-is-never-evaluated-when-expr",
         expr: ["TimeConstrained", ["Add", 2, 3], 1, ["Divide", 1, 0]],
         expected: 5,
         caption: "failexpr is held: it is never evaluated when expr finishes in time",
@@ -85,6 +90,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "in-process-the-call-simply-does-not-reduce-see",
         expr: ["MemoryConstrained", ["Add", 1, 2], 1_000_000],
         expected: ["MemoryConstrained", ["Add", 1, 2], 1_000_000],
         caption:
@@ -92,6 +98,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         divergence: { wolfram: "Wolfram enforces the cap in-kernel and evaluates to 3." },
       },
       {
+        id: "a-failexpr-does-not-change-that-in-process-there",
         expr: ["MemoryConstrained", ["Add", 1, 2], 1_000_000, -1],
         expected: ["MemoryConstrained", ["Add", 1, 2], 1_000_000, -1],
         caption: "A failexpr does not change that: in-process there is no cap to exceed",
@@ -132,6 +139,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "input-matches-expected",
         expr: ["VerificationTest", ["Add", 2, 3], 5],
         expected: [
           "TestResultObject",
@@ -149,6 +157,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "input-evaluates-but-does-not-match-expected",
         expr: ["VerificationTest", ["Add", 2, 3], 6],
         expected: [
           "TestResultObject",
@@ -166,6 +175,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "memoryconstraint-in-process-is-an-error-not-a",
         expr: [
           "VerificationTest",
           ["Add", 2, 3],
@@ -185,6 +195,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
       },
       {
+        id: "one-argument-a-predicate-that-evaluates-to-true",
         expr: ["VerificationTest", ["Greater", 2, 1]],
         expected: [
           "TestResultObject",
@@ -198,6 +209,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
       },
       {
+        id: "one-argument-succeeds-whenever-input-evaluates",
         expr: ["VerificationTest", ["Add", 1, 1]],
         expected: [
           "TestResultObject",
@@ -216,6 +228,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "a-symbolic-computation-checked-against-its",
         expr: [
           "VerificationTest",
           ["Expand", ["Power", ["Add", "x", 1], 2]],
@@ -234,6 +247,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
       },
       {
+        id: "a-testid-is-carried-into-the-result",
         expr: [
           "VerificationTest",
           ["Divide", 1, 0],
@@ -254,6 +268,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
       },
       {
+        id: "the-default-comparison-is-structural",
         expr: [
           "VerificationTest",
           ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 1],
@@ -273,6 +288,7 @@ export const aestimatio: readonly ReferenceEntry[] = [
         volatile: ["AbsoluteTimeUsed"],
       },
       {
+        id: "a-sametest-with-a-tolerance-22-7-3-14-0-01",
         expr: [
           "VerificationTest",
           ["Divide", 22, 7],

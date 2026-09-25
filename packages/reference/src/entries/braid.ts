@@ -60,23 +60,27 @@ export const braids: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "sigma1sigma2-cycles-the-three-strands",
         expr: ["BraidPermutation", B(3, 1, 2)],
         expected: ["List", 2, 3, 1],
         caption: "σ₁σ₂ cycles the three strands",
       },
       {
+        id: "the-hopf-link",
         expr: ["BraidComponents", B(2, 1, 1)],
         expected: 2,
         caption: "the Hopf link",
         category: "Properties",
       },
       {
+        id: "t-2-q-is-a-knot-for-odd-q",
         expr: ["BraidIsKnot", ["TorusBraid", 2, 5]],
         expected: "True",
         caption: "$T(2,q)$ is a knot for odd $q$",
         category: "Properties",
       },
       {
+        id: "two-positive-crossings-and-one-negative",
         expr: ["BraidWrithe", B(3, 1, -2, 1)],
         expected: 1,
         caption: "two positive crossings and one negative",
@@ -142,52 +146,61 @@ export const braids: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-trefoil",
         expr: ["AlexanderPolynomial", B(2, 1, 1, 1)],
         expected: TREFOIL,
         caption: "the trefoil",
       },
       {
+        id: "the-figure-eight-knot",
         expr: ["AlexanderPolynomial", ["BraidPower", B(3, 1, -2), 2]],
         expected: FIGURE_EIGHT,
         caption: "the figure-eight knot",
       },
       {
+        id: "and-under-its-own-name-twistknot-1",
         expr: ["AlexanderPolynomial", ["FigureEightKnot"]],
         expected: FIGURE_EIGHT,
         caption: "…and under its own name, TwistKnot(1)",
         category: "Scope",
       },
       {
+        id: "the-stevedore-knot-61-two-half-twists",
         expr: ["AlexanderPolynomial", ["TwistKnot", 2]],
         expected: STEVEDORE,
         caption: "the Stevedore knot, 6₁ — two half-twists",
         category: "Scope",
       },
       {
+        id: "p-1-1-1-is-the-unknot",
         expr: ["AlexanderPolynomial", ["PretzelKnot", 1, 1, -1]],
         expected: 1,
         caption: "P(1,1,-1) is the unknot",
         category: "Scope",
       },
       {
+        id: "3-1-4-1-2",
         expr: ["SeifertGenus", ["TorusBraid", 3, 4]],
         expected: 3,
         caption: "$(3-1)(4-1)/2$",
         category: "Properties",
       },
       {
+        id: "a-twist-knot-s-genus-does-not-grow-with-the",
         expr: ["SeifertGenus", ["TwistKnot", 5]],
         expected: 1,
         caption: "a twist knot's genus does not grow with the twist count",
         category: "Properties",
       },
       {
+        id: "a-mixed-braid-has-no-bennequin-genus-so-the-call",
         expr: ["SeifertGenus", B(3, 1, -2)],
         expected: ["SeifertGenus", B(3, 1, -2)],
         caption: "a mixed braid has no Bennequin genus, so the call is left alone",
         category: "Possible issues",
       },
       {
+        id: "an-even-band-is-not-this-family-so-the-call-is",
         expr: ["SeifertGenus", ["PretzelKnot", 2, 1, 1]],
         expected: ["SeifertGenus", ["PretzelKnot", 2, 1, 1]],
         caption: "an even band is not this family, so the call is left alone",
@@ -229,23 +242,27 @@ export const braids: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-shortest-knotted-geodesic-draws-a-trefoil",
         expr: ["AlexanderPolynomial", W("LLRLR")],
         expected: TREFOIL,
         caption: "the shortest knotted geodesic draws a trefoil",
       },
       {
+        id: "braid-index-2",
         expr: ["TripNumber", W("LLRLR")],
         expected: 2,
         caption: "braid index 2",
         category: "Properties",
       },
       {
+        id: "one-hump-each-way-is-unknotted-however-long",
         expr: ["AlexanderPolynomial", W("LLLRRRR")],
         expected: 1,
         caption: "one hump each way is unknotted, however long",
         category: "Properties",
       },
       {
+        id: "a-rotation-by-2-on-5-points-hence-t-2-3",
         expr: ["LorenzPermutation", W("LLRLR")],
         expected: ["List", 3, 4, 5, 1, 2],
         caption: "a rotation by 2 on 5 points — hence $T(2,3)$",
@@ -297,29 +314,34 @@ export const braids: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-right-handed-trefoil",
         expr: ["JonesPolynomial", B(2, 1, 1, 1)],
         expected: TREFOIL_JONES,
         caption: "the right-handed trefoil",
       },
       {
+        id: "not-yet-an-invariant",
         expr: ["KauffmanBracket", B(2, 1)],
         expected: ["Negate", ["Power", "A", 3]],
         caption: "not yet an invariant",
         category: "Properties",
       },
       {
+        id: "and-the-writhe-correction-fixes-it",
         expr: ["BracketInvariant", B(2, 1)],
         expected: 1,
         caption: "…and the writhe correction fixes it",
         category: "Properties",
       },
       {
+        id: "the-shortest-knotted-modular-geodesic-by-yet",
         expr: ["JonesPolynomial", W("LLRLR")],
         expected: TREFOIL_JONES,
         caption: "the shortest knotted modular geodesic, by yet another route",
         category: "Applications",
       },
       {
+        id: "the-figure-eight-through-the-braid-it-carries-as",
         expr: ["JonesPolynomial", ["FigureEightKnot"]],
         expected: FIGURE_EIGHT_JONES,
         caption: "the figure-eight, through the braid it carries as TwistKnot(1)",

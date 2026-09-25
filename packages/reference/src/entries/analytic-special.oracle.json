@@ -5,7 +5,7 @@
   },
   "examples": {
     "BarnesG": {
-      "[\"BarnesG\",5]": {
+      "g-5-0-1-2-3-12": {
         "wolfram": {
           "input": "BarnesG[5]",
           "output": "12",
@@ -16,7 +16,7 @@
           }
         }
       },
-      "[\"BarnesG\",7]": {
+      "g-7-34560": {
         "wolfram": {
           "input": "BarnesG[7]",
           "output": "34560",
@@ -27,7 +27,7 @@
           }
         }
       },
-      "[\"BarnesG\",[\"List\",1,2,3,4,5,6]]": {
+      "the-superfactorials-threaded-over-a-list": {
         "wolfram": {
           "input": "BarnesG[List[1, 2, 3, 4, 5, 6]]",
           "output": "{1, 1, 1, 2, 12, 288}",
@@ -38,7 +38,7 @@
           }
         }
       },
-      "[\"BarnesG\",0]": {
+      "g-vanishes-at-the-nonpositive-integers": {
         "wolfram": {
           "input": "BarnesG[0]",
           "output": "0",
@@ -49,7 +49,7 @@
           }
         }
       },
-      "[\"BarnesG\",-3]": {
+      "all-of-them": {
         "wolfram": {
           "input": "BarnesG[-3]",
           "output": "0",
@@ -60,7 +60,7 @@
           }
         }
       },
-      "[\"BarnesG\",2.5]": {
+      "a-floating-point-argument-evaluates-numerically": {
         "wolfram": {
           "input": "BarnesG[2.5]",
           "output": "0.947573901083827",
@@ -71,7 +71,7 @@
           }
         }
       },
-      "[\"BarnesG\",[\"Rational\",5,2]]": {
+      "an-exact-non-integer-argument-stays-symbolic": {
         "wolfram": {
           "input": "BarnesG[Rational[5, 2]]",
           "output": "(E^(1/8)*Pi^(3/4))/(2^(23/24)*Glaisher^(3/2))",
@@ -86,7 +86,7 @@
       }
     },
     "LogBarnesG": {
-      "[\"LogBarnesG\",4]": {
+      "ln-g-4-ln-2": {
         "wolfram": {
           "input": "LogBarnesG[4]",
           "output": "Log[2]",
@@ -97,7 +97,7 @@
           }
         }
       },
-      "[\"LogBarnesG\",3]": {
+      "ln-g-3-ln-1-0": {
         "wolfram": {
           "input": "LogBarnesG[3]",
           "output": "0",
@@ -108,7 +108,7 @@
           }
         }
       },
-      "[\"LogBarnesG\",0]": {
+      "g-0-0-so-its-logarithm-is-infty": {
         "wolfram": {
           "input": "LogBarnesG[0]",
           "output": "-Infinity",
@@ -119,7 +119,7 @@
           }
         }
       },
-      "[\"LogBarnesG\",10.5]": {
+      "numeric-for-a-floating-point-argument": {
         "wolfram": {
           "input": "LogBarnesG[10.5]",
           "output": "42.278883636795044",
@@ -132,7 +132,7 @@
       }
     },
     "LogGamma": {
-      "[\"LogGamma\",3]": {
+      "ln-gamma-3-ln-2-ln-2": {
         "wolfram": {
           "input": "LogGamma[3]",
           "output": "Log[2]",
@@ -143,7 +143,7 @@
           }
         }
       },
-      "[\"LogGamma\",1]": {
+      "ln-gamma-1-0": {
         "wolfram": {
           "input": "LogGamma[1]",
           "output": "0",
@@ -154,7 +154,7 @@
           }
         }
       },
-      "[\"LogGamma\",[\"Rational\",1,2]]": {
+      "ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac": {
         "wolfram": {
           "input": "LogGamma[Rational[1, 2]]",
           "output": "Log[Pi]/2",
@@ -165,7 +165,7 @@
           }
         }
       },
-      "[\"LogGamma\",0]": {
+      "a-pole-of-gamma": {
         "wolfram": {
           "input": "LogGamma[0]",
           "output": "Infinity",
@@ -176,7 +176,7 @@
           }
         }
       },
-      "[\"LogGamma\",2.5]": {
+      "ln-gamma-2-5-ln-1-3293-to-the-engine-s-working": {
         "wolfram": {
           "input": "LogGamma[2.5]",
           "output": "0.2846828704729192",
@@ -187,7 +187,7 @@
           }
         }
       },
-      "[\"LogGamma\",[\"Complex\",-2.5,1.5]]": {
+      "off-the-positive-axis-this-is-the-continuation": {
         "wolfram": {
           "input": "LogGamma[Complex[-2.5, 1.5]]",
           "output": "-3.7175134511917927 - 7.7130655258341925*I",
@@ -200,7 +200,7 @@
       }
     },
     "DirichletEta": {
-      "[\"DirichletEta\",1]": {
+      "eta-1-ln-2-the-alternating-harmonic-series": {
         "wolfram": {
           "input": "DirichletEta[1]",
           "output": "Log[2]",
@@ -211,7 +211,7 @@
           }
         }
       },
-      "[\"DirichletEta\",2]": {
+      "eta-2-pi-2-12": {
         "wolfram": {
           "input": "DirichletEta[2]",
           "output": "Pi^2/12",
@@ -222,7 +222,7 @@
           }
         }
       },
-      "[\"DirichletEta\",3]": {
+      "eta-3-frac-34-zeta-3-no-closed-form-beyond-apery": {
         "wolfram": {
           "input": "DirichletEta[3]",
           "output": "(3*Zeta[3])/4",
@@ -233,7 +233,7 @@
           }
         }
       },
-      "[\"DirichletEta\",[\"List\",0,-1,-2,-3]]": {
+      "nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1": {
         "wolfram": {
           "input": "DirichletEta[List[0, -1, -2, -3]]",
           "output": "{1/2, 1/4, 0, -1/8}",
@@ -244,7 +244,7 @@
           }
         }
       },
-      "[\"DirichletEta\",0.5]": {
+      "on-the-critical-line-through-1-2-1-s-zeta-s-so": {
         "wolfram": {
           "input": "DirichletEta[0.5]",
           "output": "0.604898643421631",
@@ -255,7 +255,7 @@
           }
         }
       },
-      "[\"DirichletEta\",[\"Rational\",1,2]]": {
+      "an-exact-non-integer-argument-stays-symbolic": {
         "wolfram": {
           "input": "DirichletEta[Rational[1, 2]]",
           "output": "(1 - Sqrt[2])*Zeta[1/2]",
@@ -270,7 +270,7 @@
       }
     },
     "DirichletBeta": {
-      "[\"DirichletBeta\",1]": {
+      "beta-1-pi-4-leibniz-s-series-1-frac-13-frac-15": {
         "wolfram": {
           "input": "DirichletBeta[1]",
           "output": "Pi/4",
@@ -281,7 +281,7 @@
           }
         }
       },
-      "[\"DirichletBeta\",2]": {
+      "beta-2-g-catalan-s-constant": {
         "wolfram": {
           "input": "DirichletBeta[2]",
           "output": "Catalan",
@@ -292,7 +292,7 @@
           }
         }
       },
-      "[\"DirichletBeta\",3]": {
+      "beta-3-pi-3-32": {
         "wolfram": {
           "input": "DirichletBeta[3]",
           "output": "Pi^3/32",
@@ -303,7 +303,7 @@
           }
         }
       },
-      "[\"DirichletBeta\",7]": {
+      "beta-7-61-pi-7-184320-the-61-is-the-euler-number": {
         "wolfram": {
           "input": "DirichletBeta[7]",
           "output": "(61*Pi^7)/184320",
@@ -314,7 +314,7 @@
           }
         }
       },
-      "[\"DirichletBeta\",[\"List\",0,-1,-2,-3,-4]]": {
+      "beta-2k-e-2k-2-and-beta-2k-1-0": {
         "wolfram": {
           "input": "DirichletBeta[List[0, -1, -2, -3, -4]]",
           "output": "{1/2, 0, -1/2, 0, 5/2}",
@@ -325,7 +325,7 @@
           }
         }
       },
-      "[\"DirichletBeta\",4]": {
+      "even-s-ge-4-has-no-closed-form-and-stays": {
         "wolfram": {
           "input": "DirichletBeta[4]",
           "output": "(Zeta[4, 1/4]/16 - Zeta[4, 3/4]/16)/16",
@@ -338,7 +338,7 @@
           }
         }
       },
-      "[\"DirichletBeta\",2.5]": {
+      "numeric-for-a-floating-point-argument-through-4": {
         "wolfram": {
           "input": "DirichletBeta[2.5]",
           "output": "0.948622174037055",
@@ -351,7 +351,7 @@
       }
     },
     "StieltjesGamma": {
-      "[\"StieltjesGamma\",0]": {
+      "gamma-0-gamma-euler-s-constant": {
         "wolfram": {
           "input": "StieltjesGamma[0]",
           "output": "EulerGamma",
@@ -362,7 +362,7 @@
           }
         }
       },
-      "[\"StieltjesGamma\",1]": {
+      "no-closed-form-past-gamma-0-stays-symbolic-until": {
         "wolfram": {
           "input": "StieltjesGamma[1]",
           "output": "StieltjesGamma[1]",
@@ -373,7 +373,7 @@
           }
         }
       },
-      "[\"StieltjesGamma\",1,1.5]": {
+      "gamma-1-frac-32-numerically-a-floating-point": {
         "wolfram": {
           "input": "StieltjesGamma[1, 1.5]",
           "output": "0.0328346803149491",
@@ -384,7 +384,7 @@
           }
         }
       },
-      "[\"StieltjesGamma\",3,0.5]": {
+      "gamma-3-frac-12-0-66742": {
         "wolfram": {
           "input": "StieltjesGamma[3, 0.5]",
           "output": "-0.6674242737113807",
@@ -395,7 +395,7 @@
           }
         }
       },
-      "[\"StieltjesGamma\",2,-1]": {
+      "gamma-n-a-has-poles-at-the-nonpositive-integers": {
         "wolfram": {
           "input": "StieltjesGamma[2, -1]",
           "output": "ComplexInfinity",
@@ -406,7 +406,7 @@
           }
         }
       },
-      "[\"StieltjesGamma\",40]": {
+      "orders-past-30-stay-unevaluated-even-under-n-the": {
         "wolfram": {
           "input": "StieltjesGamma[40]",
           "output": "StieltjesGamma[40]",
@@ -419,7 +419,7 @@
       }
     },
     "DirichletCharacter": {
-      "[\"DirichletCharacter\",4,2,3]": {
+      "the-nontrivial-character-mod-4-chi-2-3-1-this-is": {
         "wolfram": {
           "input": "DirichletCharacter[4, 2, 3]",
           "output": "-1",
@@ -430,7 +430,7 @@
           }
         }
       },
-      "[\"DirichletCharacter\",5,2,2]": {
+      "chi-2-2-i-mod-5-2-is-a-primitive-root-so-it": {
         "wolfram": {
           "input": "DirichletCharacter[5, 2, 2]",
           "output": "I",
@@ -441,7 +441,7 @@
           }
         }
       },
-      "[\"DirichletCharacter\",5,2,5]": {
+      "a-character-vanishes-where-gcd-n-k-1": {
         "wolfram": {
           "input": "DirichletCharacter[5, 2, 5]",
           "output": "0",
@@ -452,7 +452,7 @@
           }
         }
       },
-      "[\"DirichletCharacter\",5,3,2]": {
+      "chi-3-mod-5-is-the-quadratic-character-its": {
         "wolfram": {
           "input": "DirichletCharacter[5, 3, 2]",
           "output": "-1",
@@ -463,7 +463,7 @@
           }
         }
       },
-      "[\"DirichletCharacter\",1,1,7]": {
+      "the-trivial-character-mod-1-is-1-everywhere-its": {
         "wolfram": {
           "input": "DirichletCharacter[1, 1, 7]",
           "output": "1",
@@ -474,7 +474,7 @@
           }
         }
       },
-      "[\"DirichletCharacter\",5,9,2]": {
+      "j-must-be-at-most-varphi-k-4-out-of-range-names": {
         "wolfram": {
           "input": "DirichletCharacter[5, 9, 2]",
           "output": "DirichletCharacter[5, 9, 2]",
@@ -487,7 +487,7 @@
       }
     },
     "DirichletL": {
-      "[\"DirichletL\",4,2,1]": {
+      "l-1-chi-2-bmod-4-beta-1-pi-4-leibniz-s-series": {
         "wolfram": {
           "input": "DirichletL[4, 2, 1]",
           "output": "Pi/4",
@@ -498,7 +498,7 @@
           }
         }
       },
-      "[\"DirichletL\",12,1,1]": {
+      "and-keeps-zeta-s-pole-a-non-principal-l-is": {
         "wolfram": {
           "input": "DirichletL[12, 1, 1]",
           "output": "DirichletL[12, 1, 1]",
@@ -511,7 +511,7 @@
           }
         }
       },
-      "[\"DirichletL\",5,2,0]": {
+      "l-0-chi-frac-35-frac-15-i-exact-from-the": {
         "wolfram": {
           "input": "DirichletL[5, 2, 0]",
           "output": "3/5 + I/5",
@@ -522,7 +522,7 @@
           }
         }
       },
-      "[\"DirichletL\",8,2,-3]": {
+      "l-3-chi-2-bmod-8-11": {
         "wolfram": {
           "input": "DirichletL[8, 2, -3]",
           "output": "11",
@@ -533,7 +533,7 @@
           }
         }
       },
-      "[\"DirichletL\",5,2,2]": {
+      "no-closed-form-at-positive-integer-s-in-general": {
         "wolfram": {
           "input": "DirichletL[5, 2, 2]",
           "output": "DirichletL[5, 2, 2]",
@@ -546,7 +546,7 @@
       }
     },
     "HarmonicNumber": {
-      "[\"HarmonicNumber\",10]": {
+      "h-10-frac-7381-2520": {
         "wolfram": {
           "input": "HarmonicNumber[10]",
           "output": "7381/2520",
@@ -557,7 +557,7 @@
           }
         }
       },
-      "[\"HarmonicNumber\",0]": {
+      "h-0-0-the-empty-sum": {
         "wolfram": {
           "input": "HarmonicNumber[0]",
           "output": "0",
@@ -568,7 +568,7 @@
           }
         }
       },
-      "[\"HarmonicNumber\",5,-1]": {
+      "h-5-1-sum-k-1-5-k-15-a-negative-order-is-still": {
         "wolfram": {
           "input": "HarmonicNumber[5, -1]",
           "output": "15",
@@ -579,7 +579,7 @@
           }
         }
       },
-      "[\"HarmonicNumber\",2.5]": {
+      "a-floating-point-argument-evaluates-via-psi-z-1": {
         "wolfram": {
           "input": "HarmonicNumber[2.5]",
           "output": "1.680372305546776",
@@ -590,7 +590,7 @@
           }
         }
       },
-      "[\"HarmonicNumber\",-3]": {
+      "no-sum-below-n-0": {
         "wolfram": {
           "input": "HarmonicNumber[-3]",
           "output": "ComplexInfinity",
@@ -601,7 +601,7 @@
           }
         }
       },
-      "[\"HarmonicNumber\",5,[\"Rational\",1,2]]": {
+      "a-non-integer-order-stays-symbolic-under-plain": {
         "wolfram": {
           "input": "HarmonicNumber[5, Rational[1, 2]]",
           "output": "HarmonicNumber[5, 1/2]",

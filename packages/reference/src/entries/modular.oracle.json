@@ -5,7 +5,7 @@
   },
   "examples": {
     "ContinuedFraction": {
-      "[\"ContinuedFraction\",[\"Rational\",355,113]]": {
+      "pi-s-famous-convergent": {
         "wolfram": {
           "input": "ContinuedFraction[Rational[355, 113]]",
           "output": "{3, 7, 16}",
@@ -28,7 +28,7 @@
       }
     },
     "ModularMatrix": {
-      "[\"Dot\",\"'L'\",\"'R'\"]": {
+      "words-multiply-their-matrices": {
         "wolfram": {
           "input": "Dot[\"L\", \"R\"]",
           "output": "\"L\" . \"R\"",

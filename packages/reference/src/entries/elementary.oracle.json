@@ -5,7 +5,7 @@
   },
   "examples": {
     "Sin": {
-      "[\"Sin\",0]": {
+      "sin-0": {
         "wolfram": {
           "input": "Sin[0]",
           "output": "0",
@@ -36,7 +36,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"Divide\",\"Pi\",6]]": {
+      "exact-value-at-a-special-angle": {
         "wolfram": {
           "input": "Sin[Divide[Pi, 6]]",
           "output": "1/2",
@@ -62,7 +62,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"Divide\",\"Pi\",4]]": {
+      "sin-pi-over-4": {
         "wolfram": {
           "input": "Sin[Divide[Pi, 4]]",
           "output": "1/Sqrt[2]",
@@ -88,7 +88,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"Divide\",\"Pi\",3]]": {
+      "sin-pi-over-3": {
         "wolfram": {
           "input": "Sin[Divide[Pi, 3]]",
           "output": "Sqrt[3]/2",
@@ -114,7 +114,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"Divide\",\"Pi\",2]]": {
+      "sin-pi-over-2": {
         "wolfram": {
           "input": "Sin[Divide[Pi, 2]]",
           "output": "1",
@@ -140,7 +140,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",\"Pi\"]": {
+      "sin-pi": {
         "wolfram": {
           "input": "Sin[Pi]",
           "output": "0",
@@ -171,7 +171,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Add\",[\"Power\",[\"Sin\",[\"Divide\",\"Pi\",6]],2],[\"Power\",[\"Cos\",[\"Divide\",\"Pi\",6]],2]]": {
+      "pythagorean-identity-sin-2-x-cos-2-x-1-here-at-x": {
         "wolfram": {
           "input": "Plus[Power[Sin[Divide[Pi, 6]], 2], Power[Cos[Divide[Pi, 6]], 2]]",
           "output": "1",
@@ -197,7 +197,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Sin\",[\"Negate\",[\"Divide\",\"Pi\",6]]],[\"Negate\",[\"Sin\",[\"Divide\",\"Pi\",6]]]]": {
+      "odd-function-sin-x-sin-x": {
         "wolfram": {
           "input": "(Sin[Minus[Divide[Pi, 6]]] == Minus[Sin[Divide[Pi, 6]]])",
           "output": "True",
@@ -223,7 +223,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"Add\",[\"Divide\",\"Pi\",6],[\"Multiply\",2,\"Pi\"]]]": {
+      "period-2-pi-adding-a-full-turn-doesn-t-change": {
         "wolfram": {
           "input": "Sin[Plus[Divide[Pi, 6], Times[2, Pi]]]",
           "output": "1/2",
@@ -249,7 +249,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"List\",0,[\"Divide\",\"Pi\",2],\"Pi\"]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Sin[List[0, Divide[Pi, 2], Pi]]",
           "output": "{0, 1, 0}",
@@ -281,7 +281,7 @@
           "note": "compute-engine's Sin threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Sin\",[\"Degrees\",30]]": {
+      "degrees-d-converts-a-degree-measure-to-radians": {
         "wolfram": {
           "input": "Sin[Times[30, Degree]]",
           "output": "1/2",
@@ -292,7 +292,7 @@
           }
         }
       },
-      "[\"Sin\",1]": {
+      "1-radian-isn-t-a-recognized-special-angle-so": {
         "wolfram": {
           "input": "Sin[1]",
           "output": "Sin[1]",
@@ -323,7 +323,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Sin\",[\"Divide\",\"Pi\",5]]": {
+      "the-special-angle-table-reaches-past-30-45-60": {
         "wolfram": {
           "input": "Sin[Divide[Pi, 5]]",
           "output": "Sqrt[5/8 - Sqrt[5]/8]",
@@ -351,7 +351,7 @@
       }
     },
     "Cos": {
-      "[\"Cos\",0]": {
+      "cos-0": {
         "wolfram": {
           "input": "Cos[0]",
           "output": "1",
@@ -382,7 +382,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",[\"Divide\",\"Pi\",6]]": {
+      "cos-pi-over-6": {
         "wolfram": {
           "input": "Cos[Divide[Pi, 6]]",
           "output": "Sqrt[3]/2",
@@ -408,7 +408,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",[\"Divide\",\"Pi\",4]]": {
+      "cos-pi-over-4": {
         "wolfram": {
           "input": "Cos[Divide[Pi, 4]]",
           "output": "1/Sqrt[2]",
@@ -434,7 +434,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",[\"Divide\",\"Pi\",3]]": {
+      "cos-pi-over-3": {
         "wolfram": {
           "input": "Cos[Divide[Pi, 3]]",
           "output": "1/2",
@@ -460,7 +460,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",[\"Divide\",\"Pi\",2]]": {
+      "cos-pi-over-2": {
         "wolfram": {
           "input": "Cos[Divide[Pi, 2]]",
           "output": "0",
@@ -486,7 +486,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",\"Pi\"]": {
+      "cos-pi": {
         "wolfram": {
           "input": "Cos[Pi]",
           "output": "-1",
@@ -517,7 +517,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Cos\",[\"Negate\",[\"Divide\",\"Pi\",3]]],[\"Cos\",[\"Divide\",\"Pi\",3]]]": {
+      "even-function-cos-x-cos-x": {
         "wolfram": {
           "input": "(Cos[Minus[Divide[Pi, 3]]] == Cos[Divide[Pi, 3]])",
           "output": "True",
@@ -543,7 +543,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Cos\",[\"Divide\",\"Pi\",6]],[\"Sin\",[\"Subtract\",[\"Divide\",\"Pi\",2],[\"Divide\",\"Pi\",6]]]]": {
+      "co-function-identity-cos-x-sin-pi-2-x": {
         "wolfram": {
           "input": "(Cos[Divide[Pi, 6]] == Sin[Subtract[Divide[Pi, 2], Divide[Pi, 6]]])",
           "output": "True",
@@ -569,7 +569,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",[\"List\",0,[\"Divide\",\"Pi\",2],\"Pi\"]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Cos[List[0, Divide[Pi, 2], Pi]]",
           "output": "{1, 0, -1}",
@@ -601,7 +601,7 @@
           "note": "compute-engine's Cos threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Cos\",2]": {
+      "as-with-sin-a-non-special-numeric-argument-stays": {
         "wolfram": {
           "input": "Cos[2]",
           "output": "Cos[2]",
@@ -632,7 +632,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Cos\",[\"Divide\",\"Pi\",5]]": {
+      "cos-pi-5-frac-1-sqrt-5-4-related-to-the-golden": {
         "wolfram": {
           "input": "Cos[Divide[Pi, 5]]",
           "output": "(1 + Sqrt[5])/4",
@@ -660,7 +660,7 @@
       }
     },
     "Tan": {
-      "[\"Tan\",0]": {
+      "tan-0": {
         "wolfram": {
           "input": "Tan[0]",
           "output": "0",
@@ -691,7 +691,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",[\"Divide\",\"Pi\",6]]": {
+      "tan-pi-over-6": {
         "wolfram": {
           "input": "Tan[Divide[Pi, 6]]",
           "output": "1/Sqrt[3]",
@@ -717,7 +717,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",[\"Divide\",\"Pi\",4]]": {
+      "tan-pi-over-4": {
         "wolfram": {
           "input": "Tan[Divide[Pi, 4]]",
           "output": "1",
@@ -743,7 +743,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",[\"Divide\",\"Pi\",3]]": {
+      "tan-pi-over-3": {
         "wolfram": {
           "input": "Tan[Divide[Pi, 3]]",
           "output": "Sqrt[3]",
@@ -769,7 +769,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Tan\",[\"Divide\",\"Pi\",4]],[\"Divide\",[\"Sin\",[\"Divide\",\"Pi\",4]],[\"Cos\",[\"Divide\",\"Pi\",4]]]]": {
+      "tan-x-frac-sin-x-cos-x": {
         "wolfram": {
           "input": "(Tan[Divide[Pi, 4]] == Divide[Sin[Divide[Pi, 4]], Cos[Divide[Pi, 4]]])",
           "output": "True",
@@ -795,7 +795,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",[\"Negate\",[\"Divide\",\"Pi\",4]]]": {
+      "odd-function-tan-x-tan-x": {
         "wolfram": {
           "input": "Tan[Minus[Divide[Pi, 4]]]",
           "output": "-1",
@@ -821,7 +821,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",[\"Add\",[\"Divide\",\"Pi\",4],\"Pi\"]]": {
+      "period-pi-not-2-pi-adding-a-half-turn-doesn-t": {
         "wolfram": {
           "input": "Tan[Plus[Divide[Pi, 4], Pi]]",
           "output": "1",
@@ -847,7 +847,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",[\"List\",0,[\"Divide\",\"Pi\",4]]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Tan[List[0, Divide[Pi, 4]]]",
           "output": "{0, 1}",
@@ -879,7 +879,7 @@
           "note": "compute-engine's Tan threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Tan\",[\"Divide\",\"Pi\",2]]": {
+      "a-pole-cos-pi-2-0-so-the-ratio-blows-up": {
         "wolfram": {
           "input": "Tan[Divide[Pi, 2]]",
           "output": "ComplexInfinity",
@@ -909,7 +909,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Tan\",1]": {
+      "same-rule-as-sin-and-cos-a-non-special-numeric": {
         "wolfram": {
           "input": "Tan[1]",
           "output": "Tan[1]",
@@ -942,7 +942,7 @@
       }
     },
     "Cot": {
-      "[\"Cot\",[\"Divide\",\"Pi\",6]]": {
+      "cot-pi-over-6": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 6]]",
           "output": "Sqrt[3]",
@@ -953,7 +953,7 @@
           }
         }
       },
-      "[\"Cot\",[\"Divide\",\"Pi\",4]]": {
+      "cot-pi-over-4": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 4]]",
           "output": "1",
@@ -964,7 +964,7 @@
           }
         }
       },
-      "[\"Cot\",[\"Divide\",\"Pi\",3]]": {
+      "cot-pi-over-3": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 3]]",
           "output": "1/Sqrt[3]",
@@ -975,7 +975,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Cot\",[\"Divide\",\"Pi\",4]],[\"Divide\",1,[\"Tan\",[\"Divide\",\"Pi\",4]]]]": {
+      "reciprocal-of-tan-cot-x-frac-1-tan-x": {
         "wolfram": {
           "input": "(Cot[Divide[Pi, 4]] == Divide[1, Tan[Divide[Pi, 4]]])",
           "output": "True",
@@ -986,7 +986,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Add\",1,[\"Power\",[\"Cot\",[\"Divide\",\"Pi\",6]],2]],[\"Power\",[\"Csc\",[\"Divide\",\"Pi\",6]],2]]": {
+      "pythagorean-identity-1-cot-2-x-csc-2-x": {
         "wolfram": {
           "input": "(Plus[1, Power[Cot[Divide[Pi, 6]], 2]] == Power[Csc[Divide[Pi, 6]], 2])",
           "output": "True",
@@ -997,7 +997,7 @@
           }
         }
       },
-      "[\"Cot\",0]": {
+      "a-pole-sin-0-0": {
         "wolfram": {
           "input": "Cot[0]",
           "output": "ComplexInfinity",
@@ -1008,7 +1008,7 @@
           }
         }
       },
-      "[\"Cot\",[\"Divide\",\"Pi\",2]]": {
+      "not-a-pole-here-tan-s-pole-at-pi-2-is-cot-s-zero": {
         "wolfram": {
           "input": "Cot[Divide[Pi, 2]]",
           "output": "0",
@@ -1021,7 +1021,7 @@
       }
     },
     "Sec": {
-      "[\"Sec\",0]": {
+      "sec-0": {
         "wolfram": {
           "input": "Sec[0]",
           "output": "1",
@@ -1032,7 +1032,7 @@
           }
         }
       },
-      "[\"Sec\",[\"Divide\",\"Pi\",4]]": {
+      "sec-pi-over-4": {
         "wolfram": {
           "input": "Sec[Divide[Pi, 4]]",
           "output": "Sqrt[2]",
@@ -1043,7 +1043,7 @@
           }
         }
       },
-      "[\"Sec\",[\"Divide\",\"Pi\",3]]": {
+      "sec-pi-over-3": {
         "wolfram": {
           "input": "Sec[Divide[Pi, 3]]",
           "output": "2",
@@ -1054,7 +1054,7 @@
           }
         }
       },
-      "[\"Sec\",\"Pi\"]": {
+      "sec-pi": {
         "wolfram": {
           "input": "Sec[Pi]",
           "output": "-1",
@@ -1065,7 +1065,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Sec\",[\"Divide\",\"Pi\",3]],[\"Divide\",1,[\"Cos\",[\"Divide\",\"Pi\",3]]]]": {
+      "reciprocal-of-cos-sec-x-frac-1-cos-x": {
         "wolfram": {
           "input": "(Sec[Divide[Pi, 3]] == Divide[1, Cos[Divide[Pi, 3]]])",
           "output": "True",
@@ -1076,7 +1076,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Add\",1,[\"Power\",[\"Tan\",[\"Divide\",\"Pi\",6]],2]],[\"Power\",[\"Sec\",[\"Divide\",\"Pi\",6]],2]]": {
+      "pythagorean-identity-1-tan-2-x-sec-2-x": {
         "wolfram": {
           "input": "(Plus[1, Power[Tan[Divide[Pi, 6]], 2]] == Power[Sec[Divide[Pi, 6]], 2])",
           "output": "True",
@@ -1087,7 +1087,7 @@
           }
         }
       },
-      "[\"Sec\",[\"Divide\",\"Pi\",2]]": {
+      "a-pole-cos-pi-2-0": {
         "wolfram": {
           "input": "Sec[Divide[Pi, 2]]",
           "output": "ComplexInfinity",
@@ -1100,7 +1100,7 @@
       }
     },
     "Csc": {
-      "[\"Csc\",[\"Divide\",\"Pi\",6]]": {
+      "csc-pi-over-6": {
         "wolfram": {
           "input": "Csc[Divide[Pi, 6]]",
           "output": "2",
@@ -1111,7 +1111,7 @@
           }
         }
       },
-      "[\"Csc\",[\"Divide\",\"Pi\",4]]": {
+      "csc-pi-over-4": {
         "wolfram": {
           "input": "Csc[Divide[Pi, 4]]",
           "output": "Sqrt[2]",
@@ -1122,7 +1122,7 @@
           }
         }
       },
-      "[\"Csc\",[\"Divide\",\"Pi\",2]]": {
+      "csc-pi-over-2": {
         "wolfram": {
           "input": "Csc[Divide[Pi, 2]]",
           "output": "1",
@@ -1133,7 +1133,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Csc\",[\"Divide\",\"Pi\",6]],[\"Divide\",1,[\"Sin\",[\"Divide\",\"Pi\",6]]]]": {
+      "reciprocal-of-sin-csc-x-frac-1-sin-x": {
         "wolfram": {
           "input": "(Csc[Divide[Pi, 6]] == Divide[1, Sin[Divide[Pi, 6]]])",
           "output": "True",
@@ -1144,7 +1144,7 @@
           }
         }
       },
-      "[\"Csc\",0]": {
+      "a-pole-sin-0-0": {
         "wolfram": {
           "input": "Csc[0]",
           "output": "ComplexInfinity",
@@ -1157,7 +1157,7 @@
       }
     },
     "Arcsin": {
-      "[\"Arcsin\",0]": {
+      "arcsin-0": {
         "wolfram": {
           "input": "ArcSin[0]",
           "output": "0",
@@ -1168,7 +1168,7 @@
           }
         }
       },
-      "[\"Arcsin\",[\"Rational\",1,2]]": {
+      "arcsin-1-over-2": {
         "wolfram": {
           "input": "ArcSin[Rational[1, 2]]",
           "output": "Pi/6",
@@ -1179,7 +1179,7 @@
           }
         }
       },
-      "[\"Arcsin\",1]": {
+      "the-top-of-the-principal-range": {
         "wolfram": {
           "input": "ArcSin[1]",
           "output": "Pi/2",
@@ -1190,7 +1190,7 @@
           }
         }
       },
-      "[\"Arcsin\",-1]": {
+      "arcsin-neg-1": {
         "wolfram": {
           "input": "ArcSin[-1]",
           "output": "-1/2*Pi",
@@ -1201,7 +1201,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Sin\",[\"Arcsin\",[\"Rational\",1,2]]],[\"Rational\",1,2]]": {
+      "sin-arcsin-x-x-on-the-principal-branch": {
         "wolfram": {
           "input": "(Sin[ArcSin[Rational[1, 2]]] == Rational[1, 2])",
           "output": "True",
@@ -1212,7 +1212,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Add\",[\"Arcsin\",[\"Rational\",1,2]],[\"Arccos\",[\"Rational\",1,2]]],[\"Divide\",\"Pi\",2]]": {
+      "co-function-identity-arcsin-x-arccos-x-pi-2": {
         "wolfram": {
           "input": "(Plus[ArcSin[Rational[1, 2]], ArcCos[Rational[1, 2]]] == Divide[Pi, 2])",
           "output": "True",
@@ -1223,7 +1223,7 @@
           }
         }
       },
-      "[\"Arcsin\",2]": {
+      "outside-1-1-reduces-to-the-exact-closed-form": {
         "wolfram": {
           "input": "ArcSin[2]",
           "output": "ArcSin[2]",
@@ -1236,7 +1236,7 @@
       }
     },
     "Arccos": {
-      "[\"Arccos\",1]": {
+      "arccos-1": {
         "wolfram": {
           "input": "ArcCos[1]",
           "output": "0",
@@ -1247,7 +1247,7 @@
           }
         }
       },
-      "[\"Arccos\",[\"Rational\",1,2]]": {
+      "arccos-1-over-2": {
         "wolfram": {
           "input": "ArcCos[Rational[1, 2]]",
           "output": "Pi/3",
@@ -1258,7 +1258,7 @@
           }
         }
       },
-      "[\"Arccos\",0]": {
+      "arccos-0": {
         "wolfram": {
           "input": "ArcCos[0]",
           "output": "Pi/2",
@@ -1269,7 +1269,7 @@
           }
         }
       },
-      "[\"Arccos\",-1]": {
+      "the-top-of-the-principal-range": {
         "wolfram": {
           "input": "ArcCos[-1]",
           "output": "Pi",
@@ -1280,7 +1280,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Cos\",[\"Arccos\",[\"Rational\",1,2]]],[\"Rational\",1,2]]": {
+      "cos-arccos-x-x-on-the-principal-branch": {
         "wolfram": {
           "input": "(Cos[ArcCos[Rational[1, 2]]] == Rational[1, 2])",
           "output": "True",
@@ -1291,7 +1291,7 @@
           }
         }
       },
-      "[\"Arccos\",2]": {
+      "outside-1-1-this-stays-symbolic-same-as-arcsin-n": {
         "wolfram": {
           "input": "ArcCos[2]",
           "output": "ArcCos[2]",
@@ -1304,7 +1304,7 @@
       }
     },
     "Arctan": {
-      "[\"Arctan\",0]": {
+      "arctan-0": {
         "wolfram": {
           "input": "ArcTan[0]",
           "output": "0",
@@ -1315,7 +1315,7 @@
           }
         }
       },
-      "[\"Arctan\",1]": {
+      "arctan-1": {
         "wolfram": {
           "input": "ArcTan[1]",
           "output": "Pi/4",
@@ -1326,7 +1326,7 @@
           }
         }
       },
-      "[\"Arctan\",[\"Sqrt\",3]]": {
+      "arctan-sqrt-3": {
         "wolfram": {
           "input": "ArcTan[Sqrt[3]]",
           "output": "Pi/3",
@@ -1337,7 +1337,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Tan\",[\"Arctan\",1]],1]": {
+      "tan-arctan-x-x": {
         "wolfram": {
           "input": "(Tan[ArcTan[1]] == 1)",
           "output": "True",
@@ -1348,7 +1348,7 @@
           }
         }
       },
-      "[\"Arctan\",\"PositiveInfinity\"]": {
+      "the-horizontal-asymptote-as-x-to-infty": {
         "wolfram": {
           "input": "ArcTan[Infinity]",
           "output": "Pi/2",
@@ -1359,7 +1359,7 @@
           }
         }
       },
-      "[\"Arctan\",\"NegativeInfinity\"]": {
+      "and-as-x-to-infty": {
         "wolfram": {
           "input": "ArcTan[-Infinity]",
           "output": "-1/2*Pi",
@@ -1370,7 +1370,7 @@
           }
         }
       },
-      "[\"Arctan\",1,1]": {
+      "compute-engine-s-arctan-takes-only-one-argument": {
         "wolfram": {
           "input": "ArcTan[1, 1]",
           "output": "Pi/4",
@@ -1385,7 +1385,7 @@
       }
     },
     "Sinh": {
-      "[\"N\",[\"Sinh\",0]]": {
+      "n-forces-the-numeric-result-that-plain": {
         "wolfram": {
           "input": "N[Sinh[0]]",
           "output": "0.",
@@ -1396,7 +1396,7 @@
           }
         }
       },
-      "[\"N\",[\"Sinh\",1]]": {
+      "n-sinh-1": {
         "wolfram": {
           "input": "N[Sinh[1]]",
           "output": "1.1752011936438014",
@@ -1407,7 +1407,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Sinh\",[\"Negate\",1]],[\"Negate\",[\"Sinh\",1]]]": {
+      "odd-function-sinh-x-sinh-x": {
         "wolfram": {
           "input": "(Sinh[Minus[1]] == Minus[Sinh[1]])",
           "output": "True",
@@ -1418,7 +1418,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Sinh\",1],[\"Divide\",[\"Subtract\",[\"Exp\",1],[\"Exp\",[\"Negate\",1]]],2]]": {
+      "definition-in-terms-of-exp-sinh-x-frac-e-x-e-x-2": {
         "wolfram": {
           "input": "(Sinh[1] == Divide[Subtract[Exp[1], Exp[Minus[1]]], 2])",
           "output": "True",
@@ -1429,7 +1429,7 @@
           }
         }
       },
-      "[\"Sinh\",0]": {
+      "stays-symbolic-even-at-0-compute-engine-doesn-t": {
         "wolfram": {
           "input": "Sinh[0]",
           "output": "0",
@@ -1442,7 +1442,7 @@
       }
     },
     "Cosh": {
-      "[\"N\",[\"Cosh\",0]]": {
+      "n-forces-the-numeric-result-that-plain": {
         "wolfram": {
           "input": "N[Cosh[0]]",
           "output": "1.",
@@ -1453,7 +1453,7 @@
           }
         }
       },
-      "[\"N\",[\"Cosh\",1]]": {
+      "n-cosh-1": {
         "wolfram": {
           "input": "N[Cosh[1]]",
           "output": "1.5430806348152437",
@@ -1464,7 +1464,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Cosh\",[\"Negate\",1]],[\"Cosh\",1]]": {
+      "even-function-cosh-x-cosh-x": {
         "wolfram": {
           "input": "(Cosh[Minus[1]] == Cosh[1])",
           "output": "True",
@@ -1475,7 +1475,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Subtract\",[\"Power\",[\"Cosh\",1],2],[\"Power\",[\"Sinh\",1],2]],1]": {
+      "hyperbolic-pythagorean-identity-cosh-2-x-sinh-2": {
         "wolfram": {
           "input": "(Subtract[Power[Cosh[1], 2], Power[Sinh[1], 2]] == 1)",
           "output": "True",
@@ -1486,7 +1486,7 @@
           }
         }
       },
-      "[\"Cosh\",0]": {
+      "stays-symbolic-even-at-0-same-as-sinh-wrap-in-n": {
         "wolfram": {
           "input": "Cosh[0]",
           "output": "1",
@@ -1499,7 +1499,7 @@
       }
     },
     "Tanh": {
-      "[\"N\",[\"Tanh\",0]]": {
+      "n-forces-the-numeric-result-that-plain": {
         "wolfram": {
           "input": "N[Tanh[0]]",
           "output": "0.",
@@ -1510,7 +1510,7 @@
           }
         }
       },
-      "[\"N\",[\"Tanh\",1]]": {
+      "n-tanh-1": {
         "wolfram": {
           "input": "N[Tanh[1]]",
           "output": "0.7615941559557649",
@@ -1521,7 +1521,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Tanh\",1],[\"Divide\",[\"Sinh\",1],[\"Cosh\",1]]]": {
+      "tanh-x-frac-sinh-x-cosh-x": {
         "wolfram": {
           "input": "(Tanh[1] == Divide[Sinh[1], Cosh[1]])",
           "output": "True",
@@ -1532,7 +1532,7 @@
           }
         }
       },
-      "[\"Tanh\",0]": {
+      "stays-symbolic-even-at-0-same-as-sinh-and-cosh": {
         "wolfram": {
           "input": "Tanh[0]",
           "output": "0",
@@ -1545,7 +1545,7 @@
       }
     },
     "Exp": {
-      "[\"Exp\",0]": {
+      "exp-0": {
         "wolfram": {
           "input": "Exp[0]",
           "output": "1",
@@ -1576,7 +1576,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Exp\",1]": {
+      "stays-the-exact-constant-rather-than": {
         "wolfram": {
           "input": "Exp[1]",
           "output": "E",
@@ -1607,7 +1607,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Exp\",[\"Ln\",5]],5]": {
+      "inverse-of-ln-e-ln-x-x": {
         "wolfram": {
           "input": "(Exp[Log[5]] == 5)",
           "output": "True",
@@ -1638,7 +1638,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Multiply\",[\"Exp\",2],[\"Exp\",3]],[\"Exp\",5]]": {
+      "e-a-e-b-e-a-b": {
         "wolfram": {
           "input": "(Times[Exp[2], Exp[3]] == Exp[5])",
           "output": "True",
@@ -1669,7 +1669,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Exp\",[\"List\",0,1]]": {
+      "threads-element-wise-over-a-list": {
         "wolfram": {
           "input": "Exp[List[0, 1]]",
           "output": "{1, E}",
@@ -1701,7 +1701,7 @@
           "note": "compute-engine's Exp threads over (or pools) the list; SymPy's takes scalars."
         }
       },
-      "[\"Exp\",[\"List\",[\"List\",0,1],[\"List\",1,0]]]": {
+      "broadcasts-element-wise-giving-begin-pmatrix-1-e": {
         "sympy": {
           "input": "exp([[0, 1], [1, 0]])",
           "output": "AttributeError: 'list' object has no attribute 'is_Number'",
@@ -1719,7 +1719,7 @@
       }
     },
     "Ln": {
-      "[\"Ln\",1]": {
+      "ln-1": {
         "wolfram": {
           "input": "Log[1]",
           "output": "0",
@@ -1750,7 +1750,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ln\",\"ExponentialE\"]": {
+      "ln-exponentiale": {
         "wolfram": {
           "input": "Log[E]",
           "output": "1",
@@ -1781,7 +1781,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ln\",0]": {
+      "ln-0": {
         "wolfram": {
           "input": "Log[0]",
           "output": "-Infinity",
@@ -1816,7 +1816,7 @@
           "note": "A pole or undefined value: compute-engine answers NegativeInfinity, SymPy gives zoo."
         }
       },
-      "[\"Equal\",[\"Ln\",[\"Exp\",5]],5]": {
+      "inverse-of-exp-ln-e-x-x": {
         "wolfram": {
           "input": "(Log[Exp[5]] == 5)",
           "output": "True",
@@ -1847,7 +1847,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Equal\",[\"Add\",[\"Ln\",2],[\"Ln\",3]],[\"Ln\",6]]": {
+      "product-rule-ln-ab-ln-a-ln-b": {
         "wolfram": {
           "input": "(Plus[Log[2], Log[3]] == Log[6])",
           "output": "True",
@@ -1880,7 +1880,7 @@
           "verdict": "agree"
         }
       },
-      "[\"Ln\",-1]": {
+      "ln-1-i-pi-the-principal-value-past-the-branch": {
         "wolfram": {
           "input": "Log[-1]",
           "output": "I*Pi",
@@ -1915,7 +1915,7 @@
       }
     },
     "Log": {
-      "[\"Log\",100]": {
+      "default-base-is-10": {
         "wolfram": {
           "input": "Log[10, 100]",
           "output": "2",
@@ -1926,7 +1926,7 @@
           }
         }
       },
-      "[\"Log\",100,10]": {
+      "same-result-written-with-an-explicit-base": {
         "wolfram": {
           "input": "Log[10, 100]",
           "output": "2",
@@ -1937,7 +1937,7 @@
           }
         }
       },
-      "[\"Log\",8,2]": {
+      "base-2-via-the-explicit-second-argument": {
         "wolfram": {
           "input": "Log[2, 8]",
           "output": "3",
@@ -1948,7 +1948,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Log\",100],[\"Log\",100,10]]": {
+      "confirms-the-default-base-is-10": {
         "wolfram": {
           "input": "(Log[10, 100] == Log[10, 100])",
           "output": "True",
@@ -1959,7 +1959,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Log\",[\"Multiply\",8,4],2],[\"Add\",[\"Log\",8,2],[\"Log\",4,2]]]": {
+      "product-rule-log-b-xy-log-b-x-log-b-y": {
         "wolfram": {
           "input": "(Log[2, Times[8, 4]] == Plus[Log[2, 8], Log[2, 4]])",
           "output": "True",
@@ -1970,7 +1970,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Log\",[\"Power\",2,5],2],[\"Multiply\",5,[\"Log\",2,2]]]": {
+      "power-rule-log-b-x-k-k-log-b-x": {
         "wolfram": {
           "input": "(Log[2, Power[2, 5]] == Times[5, Log[2, 2]])",
           "output": "True",
@@ -1981,7 +1981,7 @@
           }
         }
       },
-      "[\"Log\",0]": {
+      "log-10-0-infty": {
         "wolfram": {
           "input": "Log[10, 0]",
           "output": "-Infinity",
@@ -1992,7 +1992,7 @@
           }
         }
       },
-      "[\"Log\",-5]": {
+      "a-negative-argument-stays-symbolic-with-the": {
         "wolfram": {
           "input": "Log[10, -5]",
           "output": "(I*Pi + Log[5])/Log[10]",
@@ -2005,7 +2005,7 @@
       }
     },
     "Log2": {
-      "[\"Log2\",8]": {
+      "log2-8": {
         "wolfram": {
           "input": "Log2[8]",
           "output": "3",
@@ -2016,7 +2016,7 @@
           }
         }
       },
-      "[\"Log2\",1]": {
+      "log2-1": {
         "wolfram": {
           "input": "Log2[1]",
           "output": "0",
@@ -2027,7 +2027,7 @@
           }
         }
       },
-      "[\"Log2\",1024]": {
+      "log2-1-024": {
         "wolfram": {
           "input": "Log2[1024]",
           "output": "10",
@@ -2038,7 +2038,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Log2\",8],[\"Log\",8,2]]": {
+      "same-as-log-z-2": {
         "wolfram": {
           "input": "(Log2[8] == Log[2, 8])",
           "output": "True",
@@ -2049,7 +2049,7 @@
           }
         }
       },
-      "[\"Log2\",0.5]": {
+      "a-float-argument-folds-even-for-a-fractional": {
         "wolfram": {
           "input": "Log2[0.5]",
           "output": "-1.",
@@ -2060,7 +2060,7 @@
           }
         }
       },
-      "[\"Log2\",[\"Rational\",1,8]]": {
+      "an-exact-negative-power-of-2-folds-too-log-2": {
         "wolfram": {
           "input": "Log2[Rational[1, 8]]",
           "output": "-3",
@@ -2073,7 +2073,7 @@
       }
     },
     "Log10": {
-      "[\"Log10\",1000]": {
+      "log10-1-000": {
         "wolfram": {
           "input": "Log10[1000]",
           "output": "3",
@@ -2084,7 +2084,7 @@
           }
         }
       },
-      "[\"Log10\",1]": {
+      "log10-1": {
         "wolfram": {
           "input": "Log10[1]",
           "output": "0",
@@ -2095,7 +2095,7 @@
           }
         }
       },
-      "[\"Log10\",100000]": {
+      "log10-100-000": {
         "wolfram": {
           "input": "Log10[100000]",
           "output": "5",
@@ -2106,7 +2106,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Log10\",1000],[\"Log\",1000]]": {
+      "same-as-compute-engine-s-default-base-log": {
         "wolfram": {
           "input": "(Log10[1000] == Log[10, 1000])",
           "output": "True",
@@ -2117,7 +2117,7 @@
           }
         }
       },
-      "[\"Log10\",0.001]": {
+      "a-float-argument-folds-even-for-a-fractional": {
         "wolfram": {
           "input": "Log10[0.001]",
           "output": "-3.",
@@ -2128,7 +2128,7 @@
           }
         }
       },
-      "[\"Log10\",[\"Rational\",1,100]]": {
+      "an-exact-negative-power-of-10-folds-too-log-10": {
         "wolfram": {
           "input": "Log10[Rational[1, 100]]",
           "output": "-2",
@@ -2141,7 +2141,7 @@
       }
     },
     "Lb": {
-      "[\"Lb\",8]": {
+      "lb-8": {
         "wolfram": {
           "input": "Log2[8]",
           "output": "3",
@@ -2152,7 +2152,7 @@
           }
         }
       },
-      "[\"Lb\",1]": {
+      "lb-1": {
         "wolfram": {
           "input": "Log2[1]",
           "output": "0",
@@ -2163,7 +2163,7 @@
           }
         }
       },
-      "[\"Lb\",1024]": {
+      "lb-1-024": {
         "wolfram": {
           "input": "Log2[1024]",
           "output": "10",
@@ -2174,7 +2174,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Lb\",64],[\"Log2\",64]]": {
+      "identical-to-log2": {
         "wolfram": {
           "input": "(Log2[64] == Log2[64])",
           "output": "True",
@@ -2185,7 +2185,7 @@
           }
         }
       },
-      "[\"Lb\",[\"Rational\",1,8]]": {
+      "same-exact-negative-power-fold-as-log2-lb-frac": {
         "wolfram": {
           "input": "Log2[Rational[1, 8]]",
           "output": "-3",
@@ -2198,7 +2198,7 @@
       }
     },
     "Arccot": {
-      "[\"N\",[\"Arccot\",1]]": {
+      "pi-4-numerically-n-forces-the-fold-plain": {
         "wolfram": {
           "input": "N[Subtract[Divide[Pi, 2], ArcTan[1]]]",
           "output": "0.7853981633974483",
@@ -2209,7 +2209,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Cot\",[\"Arccot\",1]],1]": {
+      "undoes-cot-cot-arccot-x-x": {
         "wolfram": {
           "input": "(Cot[Subtract[Divide[Pi, 2], ArcTan[1]]] == 1)",
           "output": "True",
@@ -2222,7 +2222,7 @@
       }
     },
     "Arccsc": {
-      "[\"Arccsc\",1]": {
+      "arccsc-1": {
         "wolfram": {
           "input": "ArcCsc[1]",
           "output": "Pi/2",
@@ -2233,7 +2233,7 @@
           }
         }
       },
-      "[\"Arccsc\",2]": {
+      "arccsc-2": {
         "wolfram": {
           "input": "ArcCsc[2]",
           "output": "Pi/6",
@@ -2244,7 +2244,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Csc\",[\"Arccsc\",2]],2]": {
+      "undoes-csc-csc-arccsc-x-x": {
         "wolfram": {
           "input": "(Csc[ArcCsc[2]] == 2)",
           "output": "True",
@@ -2257,7 +2257,7 @@
       }
     },
     "Arcsec": {
-      "[\"Arcsec\",1]": {
+      "arcsec-1": {
         "wolfram": {
           "input": "ArcSec[1]",
           "output": "0",
@@ -2268,7 +2268,7 @@
           }
         }
       },
-      "[\"Arcsec\",2]": {
+      "arcsec-2": {
         "wolfram": {
           "input": "ArcSec[2]",
           "output": "Pi/3",
@@ -2279,7 +2279,7 @@
           }
         }
       },
-      "[\"Equal\",[\"Sec\",[\"Arcsec\",2]],2]": {
+      "undoes-sec-sec-arcsec-x-x": {
         "wolfram": {
           "input": "(Sec[ArcSec[2]] == 2)",
           "output": "True",
@@ -2292,7 +2292,7 @@
       }
     },
     "Arcoth": {
-      "[\"N\",[\"Arcoth\",2]]": {
+      "n-arcoth-2": {
         "wolfram": {
           "input": "N[ArcCoth[2]]",
           "output": "0.5493061443340549",
@@ -2305,7 +2305,7 @@
       }
     },
     "Arcsch": {
-      "[\"N\",[\"Arcsch\",2]]": {
+      "n-arcsch-2": {
         "wolfram": {
           "input": "N[ArcCsch[2]]",
           "output": "0.48121182505960347",
@@ -2318,7 +2318,7 @@
       }
     },
     "Arsech": {
-      "[\"N\",[\"Arsech\",[\"Rational\",1,2]]]": {
+      "n-arsech-1-over-2": {
         "wolfram": {
           "input": "N[ArcSech[Rational[1, 2]]]",
           "output": "1.3169578969248166",

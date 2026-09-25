@@ -51,65 +51,84 @@ export const numerals: readonly ReferenceEntry[] = [
       "Inverted by [[FromDigits]] with the same system",
     ],
     examples: [
-      { expr: ["IntegerDigits", 1234], expected: ["List", 1, 2, 3, 4] },
       {
+        id: "integerdigits-1-234",
+        expr: ["IntegerDigits", 1234],
+        expected: ["List", 1, 2, 3, 4],
+      },
+      {
+        id: "integerdigits-2-147-2",
         expr: ["IntegerDigits", 2147, 2],
         expected: ["List", 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
       },
       {
+        id: "unlike-integerstring-there-s-always-at-least-one",
         expr: ["IntegerDigits", 0],
         expected: ["List", 0],
         category: "Possible issues",
         caption: "Unlike [[IntegerString]] there's always at least one digit, even for 0",
       },
       {
+        id: "the-sign-is-discarded",
         expr: ["IntegerDigits", -3134],
         expected: ["List", 3, 1, 3, 4],
         category: "Possible issues",
         caption: "The sign is discarded",
       },
       {
+        id: "the-3-argument-form-keeps-only-the-4-least",
         expr: ["IntegerDigits", 6345354, 10, 4],
         expected: ["List", 5, 3, 5, 4],
         category: "Applications",
         caption: "The 3-argument form keeps only the 4 least-significant digits",
       },
-      { expr: ["IntegerDigits", 58127], expected: L(5, 8, 1, 2, 7) },
       {
+        id: "integerdigits-58-127",
+        expr: ["IntegerDigits", 58127],
+        expected: L(5, 8, 1, 2, 7),
+      },
+      {
+        id: "integerdigits-58-127-2",
         expr: ["IntegerDigits", 58127, 2],
         expected: L(1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1),
       },
       {
+        id: "digits-past-9-are-plain-integers-58127-e30f-16",
         expr: ["IntegerDigits", 58127, 16],
         expected: L(14, 3, 0, 15),
         category: "Scope",
         caption: "Digits past 9 are plain integers: $58127 = \\mathrm{e30f}_{16}$",
       },
       {
+        id: "a-mixed-radix-spelled-mixedradix-102-341-seconds",
         expr: ["IntegerDigits", 102341, ["MixedRadix", L(24, 60, 60)]],
         expected: L(1, 4, 25, 41),
         category: "Scope",
         caption: "a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s",
       },
       {
+        id: "the-leading-digit-is-unbounded-137-3-cdot-3-2",
         expr: ["IntegerDigits", 137, ["MixedRadix", L(3, 12)]],
         expected: L(3, 2, 5),
         category: "Scope",
         caption: "the leading digit is unbounded: $137 = (3 \\cdot 3 + 2) \\cdot 12 + 5$",
       },
       {
+        id: "a-width-longer-than-the-numeral-pads-with",
         expr: ["IntegerDigits", 5, 2, 8],
         expected: L(0, 0, 0, 0, 0, 1, 0, 1),
         category: "Scope",
         caption: "a width longer than the numeral pads with leading zeros",
       },
       {
+        id: "listable-in-the-base-one-digit-list-per-base",
         expr: ["IntegerDigits", 7, L(2, 3, 4)],
         expected: ["List", L(1, 1, 1), L(2, 1), L(1, 3)],
         category: "Scope",
         caption: "Listable in the base: one digit list per base",
       },
       {
+        id: "listable-threads-over-a-range-of-integers",
         expr: ["IntegerDigits", ["Range", 0, 7], 2],
         expected: [
           "List",
@@ -126,6 +145,7 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "Listable: threads over a range of integers",
       },
       {
+        id: "all-3-bit-words-by-threading-a-padded-form-over",
         expr: ["IntegerDigits", ["Range", 0, 7], 2, 3],
         expected: [
           "List",
@@ -142,64 +162,75 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "all 3-bit words, by threading a padded form over a range",
       },
       {
+        id: "100-has-158-digits",
         expr: ["Length", ["IntegerDigits", ["Factorial", 100]]],
         expected: 158,
         category: "Neat examples",
         caption: "$100!$ has 158 digits",
       },
       {
+        id: "threads-element-wise-over-a-list-as-wolfram-s",
         expr: ["IntegerDigits", ["List", 6, 7, 2], 2],
         expected: ["List", ["List", 1, 1, 0], ["List", 1, 1, 1], ["List", 1, 0]],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
+        id: "ordinary-base-2-as-a-system-value-same-digits-as",
         expr: ["IntegerDigits", 2147, ["PositionalNumerals", 2]],
         expected: ["List", 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
         caption: "ordinary base 2, as a system value — same digits as the native 2-argument form",
         category: "Scope",
       },
       {
+        id: "93-784-seconds-as-days-hours-minutes-seconds",
         expr: ["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]],
         expected: L(1, 2, 3, 4),
         caption: "93 784 seconds as days, hours, minutes, seconds",
       },
       {
+        id: "the-lehmer-code-of-the-6th-permutation-of-four",
         expr: ["IntegerDigits", 5, "FactorialNumerals", 4],
         expected: L(0, 2, 1, 0),
         caption: "the Lehmer code of the 6th permutation of four things",
         category: "Applications",
       },
       {
+        id: "100-89-8-3-with-no-two-adjacent-ones",
         expr: ["IntegerDigits", 100, "ZeckendorfNumerals"],
         expected: L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0),
         caption: "$100 = 89 + 8 + 3$, with no two adjacent ones",
       },
       {
+        id: "the-same-20-13-5-2-over-a-continued-fraction-s",
         expr: ["IntegerDigits", 20, ["OstrowskiNumerals", L(1, 1, 1, 1, 1, 1, 1, 1)]],
         expected: L(0, 1, 0, 1, 0, 1, 0, 0),
         caption: "the same $20 = 13 + 5 + 2$, over a continued fraction's convergents",
         category: "Scope",
       },
       {
+        id: "a-negative-integer-with-no-sign",
         expr: ["IntegerDigits", -5, ["BalancedNumerals", 3]],
         expected: L(-1, 1, 1),
         caption: "a negative integer, with no sign",
         category: "Scope",
       },
       {
+        id: "spreadsheet-column-aaa",
         expr: ["IntegerDigits", 703, ["BijectiveNumerals", 26]],
         expected: L(1, 1, 1),
         caption: "spreadsheet column AAA",
         category: "Scope",
       },
       {
+        id: "independent-residues-no-place-values",
         expr: ["IntegerDigits", 23, ["ResidueNumerals", L(3, 5, 7)]],
         expected: L(2, 3, 2),
         caption: "independent residues — no place values",
         category: "Scope",
       },
       {
+        id: "the-10-adic-truncation-a-negative-is-spelled-by",
         expr: ["IntegerDigits", -3, ["AdicNumerals", 10, 6]],
         expected: L(9, 9, 9, 9, 9, 7),
         caption:
@@ -207,12 +238,14 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "an-integer-base-is-still-the-native-handler",
         expr: ["IntegerDigits", 255, 16],
         expected: L(15, 15),
         caption: "an integer base is still the native handler",
         category: "Properties",
       },
       {
+        id: "no-numeral-for-a-negative-in-a-system-that",
         expr: ["IntegerDigits", -3, "FactorialNumerals"],
         expected: ["IntegerDigits", -3, "FactorialNumerals"],
         caption:
@@ -280,18 +313,25 @@ export const numerals: readonly ReferenceEntry[] = [
       "compute-engine's FromDigits takes a list of digits, not a digit string.",
     ],
     examples: [
-      { expr: ["FromDigits", ["List", 5, 1, 2, 8]], expected: 5128 },
       {
+        id: "fromdigits-list-5-1-2-8",
+        expr: ["FromDigits", ["List", 5, 1, 2, 8]],
+        expected: 5128,
+      },
+      {
+        id: "fromdigits-list-1-0-1-1-0-1-1-2",
         expr: ["FromDigits", ["List", 1, 0, 1, 1, 0, 1, 1], 2],
         expected: 91,
       },
       {
+        id: "fromdigits-inverts-integerdigits",
         expr: ["Equal", ["FromDigits", ["IntegerDigits", 58127]], 58127],
         expected: "True",
         category: "Properties",
         caption: "FromDigits inverts [[IntegerDigits]]",
       },
       {
+        id: "digits-the-base-carry-into-higher-place-values-7",
         expr: ["FromDigits", ["List", 7, 11, 0, 0, 0, 122]],
         expected: 810122,
         category: "Neat examples",
@@ -299,6 +339,7 @@ export const numerals: readonly ReferenceEntry[] = [
           "Digits ≥ the base carry into higher place values: $7\\times10^5+11\\times10^4+122=810122$",
       },
       {
+        id: "an-empty-digit-list-is-left-unevaluated-rather",
         expr: ["FromDigits", ["List"]],
         expected: ["FromDigits", ["List"]],
         category: "Possible issues",
@@ -308,88 +349,103 @@ export const numerals: readonly ReferenceEntry[] = [
         },
       },
       {
+        id: "the-digits-can-be-given-as-a-string-0-9-then-a-z",
         expr: ["FromDigits", "'1923'"],
         expected: 1923,
         category: "Scope",
         caption: "The digits can be given as a string, 0-9 then a-z",
       },
       {
+        id: "a-digit-string-in-a-given-base",
         expr: ["FromDigits", "'1011011'", 2],
         expected: 91,
         category: "Scope",
         caption: "a digit string in a given base",
       },
       {
+        id: "roman-numerals-with-the-base-roman",
         expr: ["FromDigits", "'XVII'", "'Roman'"],
         expected: 17,
         category: "Scope",
         caption: 'Roman numerals, with the base `"Roman"`',
       },
       {
+        id: "a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s",
         expr: ["FromDigits", L(1, 4, 25, 41), ["MixedRadix", L(24, 60, 60)]],
         expected: 102341,
         category: "Scope",
         caption: "a mixed radix, spelled `MixedRadix`: 1d 4h 25m 41s back to seconds",
       },
       {
+        id: "the-inverse-of-integerdigits-137-mixedradix-3-12",
         expr: ["FromDigits", L(3, 2, 5), ["MixedRadix", L(3, 12)]],
         expected: 137,
         category: "Scope",
         caption: "the inverse of `IntegerDigits(137, MixedRadix([3, 12]))`",
       },
       {
+        id: "digits-past-9-are-plain-integers-1-cdot-16-15",
         expr: ["FromDigits", L(1, 15), 16],
         expected: 31,
         category: "Scope",
         caption: "digits past 9 are plain integers: $1 \\cdot 16 + 15$",
       },
       {
+        id: "a-symbolic-base-gives-the-polynomial-x-2-2x-3",
         expr: ["FromDigits", L(1, 2, 3), "x"],
         expected: ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 3],
         category: "Scope",
         caption: "a symbolic base gives the polynomial $x^2 + 2x + 3$",
       },
       {
+        id: "a-negative-base-1-cdot-4-1-cdot-2-0-2",
         expr: ["FromDigits", L(1, 1, 0), -2],
         expected: 2,
         category: "Scope",
         caption: "a negative base: $1 \\cdot 4 - 1 \\cdot 2 + 0 = 2$",
       },
       {
+        id: "a-digits-exponent-pair-the-shape-realdigits",
         expr: ["FromDigits", ["List", L(1, 4, 1, 5), 1]],
         expected: ["Rational", 283, 200],
         category: "Scope",
         caption: "a `{digits, exponent}` pair — the shape `RealDigits` gives — reads as $1.415$",
       },
       {
+        id: "the-round-trip-holds-in-any-base",
         expr: ["FromDigits", ["IntegerDigits", 58127, 2], 2],
         expected: 58127,
         category: "Properties",
         caption: "the round trip holds in any base",
       },
       {
+        id: "ordinary-base-2-as-a-system-value",
         expr: ["FromDigits", L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1), ["PositionalNumerals", 2]],
         expected: 2147,
         caption: "ordinary base 2 as a system value",
         category: "Scope",
       },
       {
+        id: "1d-2h-3m-4s-back-to-seconds",
         expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadixNumerals", L(24, 60, 60)]],
         expected: 93784,
         caption: "1d 2h 3m 4s back to seconds",
       },
       {
+        id: "a-lehmer-code-back-to-its-rank",
         expr: ["FromDigits", L(0, 2, 1, 0), "FactorialNumerals"],
         expected: 5,
         caption: "a Lehmer code back to its rank",
         category: "Applications",
       },
       {
+        id: "crt-reconstruction",
         expr: ["FromDigits", L(2, 3, 2), ["ResidueNumerals", L(3, 5, 7)]],
         expected: 23,
         caption: "CRT reconstruction",
       },
       {
+        id: "two-adjacent-ones-is-not-a-numeral-so-it-denotes",
         expr: ["FromDigits", L(1, 1), "ZeckendorfNumerals"],
         expected: ["FromDigits", L(1, 1), "ZeckendorfNumerals"],
         caption: "two adjacent ones is not a numeral, so it denotes nothing",
@@ -428,19 +484,30 @@ export const numerals: readonly ReferenceEntry[] = [
       "compute-engine's second argument is always a numeric base.",
     ],
     examples: [
-      { expr: ["IntegerString", 42], expected: "'42'" },
-      { expr: ["IntegerString", 17651, 2], expected: "'100010011110011'" },
       {
+        id: "integerstring-42",
+        expr: ["IntegerString", 42],
+        expected: "'42'",
+      },
+      {
+        id: "integerstring-17-651-2",
+        expr: ["IntegerString", 17651, 2],
+        expected: "'100010011110011'",
+      },
+      {
+        id: "bases-above-10-use-letters-a-z",
         expr: ["IntegerString", 255, 16],
         expected: "'ff'",
         caption: "Bases above 10 use letters a-z",
       },
       {
+        id: "integerstring-0",
         expr: ["IntegerString", 0],
         expected: "'0'",
         category: "Possible issues",
       },
       {
+        id: "compute-engine-keeps-the-sign",
         expr: ["IntegerString", -42],
         expected: "'-42'",
         category: "Possible issues",
@@ -448,42 +515,49 @@ export const numerals: readonly ReferenceEntry[] = [
         divergence: { wolfram: "compute-engine keeps the sign; Wolfram's IntegerString drops it." },
       },
       {
+        id: "base-36-is-the-largest-with-digit-values-up-to-z",
         expr: ["IntegerString", 35, 36],
         expected: "'z'",
         category: "Scope",
         caption: "base 36 is the largest, with digit values up to z",
       },
       {
+        id: "threads-over-a-list",
         expr: ["IntegerString", L(1, 2, 3)],
         expected: ["List", "'1'", "'2'", "'3'"],
         category: "Scope",
         caption: "Threads over a list",
       },
       {
+        id: "50-in-hexadecimal-exact-past-double-precision",
         expr: ["IntegerString", ["Factorial", 50], 16],
         expected: "'49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000'",
         category: "Scope",
         caption: "$50!$ in hexadecimal: exact past double precision, via bigint arithmetic",
       },
       {
+        id: "roman-numerals-with-the-base-roman",
         expr: ["IntegerString", 1988, "'Roman'"],
         expected: "'MCMLXXXVIII'",
         category: "Scope",
         caption: 'Roman numerals, with the base `"Roman"`',
       },
       {
+        id: "a-width-pads-with-leading-zeros",
         expr: ["IntegerString", 255, 16, 4],
         expected: "'00ff'",
         category: "Scope",
         caption: "a width pads with leading zeros",
       },
       {
+        id: "a-width-shorter-than-the-numeral-keeps-the-least",
         expr: ["IntegerString", 1234567, 10, 3],
         expected: "'567'",
         category: "Scope",
         caption: "a width shorter than the numeral keeps the least-significant digits",
       },
       {
+        id: "a-third-argument-pads-with-leading-zeros-to-that",
         expr: ["IntegerString", 5, 2, 8],
         expected: "'00000101'",
         category: "Scope",
@@ -519,72 +593,85 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "digitcount-2-147",
         expr: ["DigitCount", 2147],
         expected: ["List", 1, 1, 0, 1, 0, 0, 1, 0, 0, 0],
       },
       {
+        id: "in-base-2-counts-of-digit-1-then-digit-0",
         expr: ["DigitCount", 2147, 2],
         expected: ["List", 5, 7],
         caption: "In base 2, counts of digit 1 then digit 0",
       },
       {
+        id: "the-3-argument-form-isolates-a-single-digit-s",
         expr: ["DigitCount", 2147, 10, 1],
         expected: 1,
         category: "Applications",
         caption: "The 3-argument form isolates a single digit's count",
       },
       {
+        id: "three-trailing-zeros-not-four-122000-has-digits",
         expr: ["DigitCount", 122000, 10, 0],
         expected: 3,
         category: "Possible issues",
         caption: "Three trailing zeros, not four: $122000$ has digits $1,2,2,0,0,0$",
       },
       {
+        id: "2147-100001100011-2-has-five-1-bits",
         expr: ["DigitCount", 2147, 2, 1],
         expected: 5,
         caption: "$2147 = 100001100011_2$ has five 1 bits",
       },
       {
+        id: "digitcount-122-000",
         expr: ["DigitCount", 122000],
         expected: L(1, 2, 0, 0, 0, 0, 0, 0, 0, 3),
       },
       {
+        id: "an-explicit-base-10-is-the-default",
         expr: ["DigitCount", 122000, 10],
         expected: L(1, 2, 0, 0, 0, 0, 0, 0, 0, 3),
         category: "Scope",
         caption: "an explicit base 10 is the default",
       },
       {
+        id: "the-digits-of-100-30-of-them-zeros",
         expr: ["DigitCount", ["Factorial", 100]],
         expected: L(15, 19, 10, 10, 14, 19, 7, 14, 20, 30),
         category: "Scope",
         caption: "the digits of $100!$, 30 of them zeros",
       },
       {
+        id: "a-width-counts-padding-zeros-too-000122000-has",
         expr: ["DigitCount", 122000, 10, 0, 9],
         expected: 6,
         category: "Scope",
         caption: "a width counts padding zeros too: $000122000$ has six",
       },
       {
+        id: "a-list-of-digit-values-gives-one-count-each",
         expr: ["DigitCount", 242442422, 3, L(1, 2)],
         expected: L(6, 7),
         category: "Scope",
         caption: "a list of digit values gives one count each",
       },
       {
+        id: "counts-over-the-12-least-significant-base-3",
         expr: ["DigitCount", 242442422, 3, L(1, 2), 12],
         expected: L(4, 4),
         category: "Scope",
         caption: "counts over the 12 least-significant base-3 digits",
       },
       {
+        id: "0-has-one-digit-a-zero",
         expr: ["DigitCount", 0],
         expected: L(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
         category: "Possible issues",
         caption: "0 has one digit, a zero",
       },
       {
+        id: "threads-element-wise-over-a-list-as-wolfram-s",
         expr: ["DigitCount", ["List", 23, 45]],
         expected: [
           "List",
@@ -619,18 +706,25 @@ export const numerals: readonly ReferenceEntry[] = [
       "The sign of n is discarded before summing.",
     ],
     examples: [
-      { expr: ["DigitSum", 58127], expected: 23 },
       {
+        id: "digitsum-58-127",
+        expr: ["DigitSum", 58127],
+        expected: 23,
+      },
+      {
+        id: "in-base-2-this-is-the-number-of-set-bits",
         expr: ["DigitSum", 58127, 2],
         expected: 9,
         caption: "In base 2 this is the number of set bits",
       },
       {
+        id: "digitsum-0",
         expr: ["DigitSum", 0],
         expected: 0,
         category: "Possible issues",
       },
       {
+        id: "digit-sum-n-mod-9-the-basis-of-the-classic",
         expr: ["Equal", ["Mod", ["DigitSum", 58127], 9], ["Mod", 58127, 9]],
         expected: "True",
         category: "Properties",
@@ -638,35 +732,41 @@ export const numerals: readonly ReferenceEntry[] = [
           "Digit sum ≡ n (mod 9): the basis of the classic divisibility-by-9 check and the digital root",
       },
       {
+        id: "255-ff-16-15-15",
         expr: ["DigitSum", 255, 16],
         expected: 30,
         category: "Scope",
         caption: "$255 = \\mathrm{ff}_{16}$: $15 + 15$",
       },
       {
+        id: "the-sign-is-discarded",
         expr: ["DigitSum", -123],
         expected: 6,
         category: "Possible issues",
         caption: "The sign is discarded",
       },
       {
+        id: "threads-element-wise-over-a-list-as-wolfram-s",
         expr: ["DigitSum", L(12, 345)],
         expected: L(3, 12),
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
       {
+        id: "digitsum-100-factorial",
         expr: ["DigitSum", ["Factorial", 100]],
         expected: 648,
         category: "Neat examples",
       },
       {
+        id: "the-digit-sum-of-2-1000",
         expr: ["DigitSum", ["Power", 2, 1000]],
         expected: 1366,
         category: "Neat examples",
         caption: "The digit sum of $2^{1000}$",
       },
       {
+        id: "just-the-first-4-digits-6-3-4-5-18-not-the-full",
         expr: ["DigitSum", 6345354, 10, 4],
         expected: 18,
         category: "Scope",
@@ -696,6 +796,7 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "4-and-6-share-a-factor-so-this-is-not-a",
         expr: ["NumeralSystemShape", ["ResidueNumerals", L(4, 6)]],
         expected: [
           "Dictionary",
@@ -707,6 +808,7 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "4 and 6 share a factor, so this is not a bijection",
       },
       {
+        id: "numeralsystemshape-zeckendorfnumerals",
         expr: ["NumeralSystemShape", "ZeckendorfNumerals"],
         expected: [
           "Dictionary",
@@ -718,6 +820,7 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "ordinary-base-2-in-the-same-shape-every-other",
         expr: ["NumeralSystemShape", ["PositionalNumerals", 2]],
         expected: [
           "Dictionary",
@@ -729,6 +832,7 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Scope",
       },
       {
+        id: "every-integer-negatives-included-with-no-sign",
         expr: ["NumeralSystemShape", ["BalancedNumerals", 3]],
         expected: [
           "Dictionary",
@@ -760,31 +864,40 @@ export const numerals: readonly ReferenceEntry[] = [
       "`IntegerLength(0)` is 0, unlike [[IntegerDigits]]'s one-element `{0}` — there is no shortest numeral for 0, only the empty one",
     ],
     examples: [
-      { expr: ["IntegerLength", 12345], expected: 5 },
       {
+        id: "integerlength-12-345",
+        expr: ["IntegerLength", 12345],
+        expected: 5,
+      },
+      {
+        id: "integerlength-2-pow-100",
         expr: ["IntegerLength", ["Power", 2, 100]],
         expected: 31,
         category: "Scope",
       },
       {
+        id: "255-ff-16",
         expr: ["IntegerLength", 255, 16],
         expected: 2,
         category: "Scope",
         caption: "$255 = \\mathrm{ff}_{16}$",
       },
       {
+        id: "the-sign-is-not-counted",
         expr: ["IntegerLength", -123],
         expected: 3,
         category: "Possible issues",
         caption: "the sign is not counted",
       },
       {
+        id: "0-has-length-0-unlike-its-one-element",
         expr: ["IntegerLength", 0],
         expected: 0,
         category: "Possible issues",
         caption: "0 has length 0, unlike its one-element [[IntegerDigits]]",
       },
       {
+        id: "listable",
         expr: ["IntegerLength", L(1, 10, 100)],
         expected: L(1, 2, 3),
         category: "Scope",
@@ -816,35 +929,41 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-base-10-digits-reversed",
         expr: ["IntegerReverse", 1234],
         expected: 4321,
         caption: "the base-10 digits reversed",
       },
       {
+        id: "1234-10011010010-2-reversed-is-1001011001-2-601",
         expr: ["IntegerReverse", 1234, 2],
         expected: 601,
         category: "Scope",
         caption: "$1234 = 10011010010_2$ reversed is $1001011001_2 = 601$",
       },
       {
+        id: "trailing-zeros-become-leading-zeros-and-vanish",
         expr: ["IntegerReverse", 1200],
         expected: 21,
         category: "Possible issues",
         caption: "trailing zeros become leading zeros and vanish",
       },
       {
+        id: "padded-to-5-digits-first-00123-reversed",
         expr: ["IntegerReverse", 123, 10, 5],
         expected: 32100,
         category: "Scope",
         caption: "padded to 5 digits first: $00123$ reversed",
       },
       {
+        id: "listable",
         expr: ["IntegerReverse", L(12, 345)],
         expected: L(21, 543),
         category: "Scope",
         caption: "Listable",
       },
       {
+        id: "a-palindrome-is-its-own-reversal",
         expr: ["IntegerReverse", 12321],
         expected: 12321,
         category: "Applications",
@@ -875,14 +994,20 @@ export const numerals: readonly ReferenceEntry[] = [
       "Every term carries the sign of $n$, not just the leading one",
     ],
     examples: [
-      { expr: ["NumberExpand", 1234], expected: L(1000, 200, 30, 4) },
       {
+        id: "numberexpand-1-234",
+        expr: ["NumberExpand", 1234],
+        expected: L(1000, 200, 30, 4),
+      },
+      {
+        id: "base-2-zero-terms-kept",
         expr: ["NumberExpand", 10, 2],
         expected: L(8, 0, 2, 0),
         category: "Scope",
         caption: "base 2, zero terms kept",
       },
       {
+        id: "every-term-carries-the-sign",
         expr: ["NumberExpand", -123],
         expected: L(-100, -20, -3),
         category: "Scope",
@@ -909,21 +1034,32 @@ export const numerals: readonly ReferenceEntry[] = [
       "0 is `N`, for the Latin *nulla* — Roman numerals otherwise have no zero",
     ],
     examples: [
-      { expr: ["RomanNumeral", 1988], expected: "'MCMLXXXVIII'" },
       {
+        id: "romannumeral-1-988",
+        expr: ["RomanNumeral", 1988],
+        expected: "'MCMLXXXVIII'",
+      },
+      {
+        id: "the-largest-with-standard-symbols",
         expr: ["RomanNumeral", 3999],
         expected: "'MMMCMXCIX'",
         category: "Scope",
         caption: "the largest with standard symbols",
       },
-      { expr: ["RomanNumeral", 2024], expected: "'MMXXIV'" },
       {
+        id: "romannumeral-2-024",
+        expr: ["RomanNumeral", 2024],
+        expected: "'MMXXIV'",
+      },
+      {
+        id: "listable-4-is-written-subtractively",
         expr: ["RomanNumeral", L(1, 2, 3, 4)],
         expected: ["List", "'I'", "'II'", "'III'", "'IV'"],
         category: "Scope",
         caption: "Listable; 4 is written subtractively",
       },
       {
+        id: "zero-is-written-n-for-nulla",
         expr: ["RomanNumeral", 0],
         expected: "'N'",
         category: "Possible issues",
@@ -961,44 +1097,52 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "the-repeating-block-of-1-7-0-overline-142857",
         expr: ["RealDigits", ["Rational", 1, 7]],
         expected: ["List", ["List", ["List", 1, 4, 2, 8, 5, 7]], 0],
         caption: "the repeating block of $1/7 = 0.\\overline{142857}$",
       },
       {
+        id: "19-7-2-overline-714285-one-digit-before-the",
         expr: ["RealDigits", ["Rational", 19, 7]],
         expected: ["List", ["List", 2, ["List", 7, 1, 4, 2, 8, 5]], 1],
         category: "Scope",
         caption: "$19/7 = 2.\\overline{714285}$, one digit before the point",
       },
       {
+        id: "a-terminating-rational",
         expr: ["RealDigits", ["Rational", 5, 4]],
         expected: ["List", L(1, 2, 5), 1],
         category: "Scope",
         caption: "a terminating rational",
       },
       {
+        id: "1-8-0-001-2",
         expr: ["RealDigits", ["Rational", 1, 8], 2],
         expected: ["List", L(1), -2],
         category: "Scope",
         caption: "$1/8 = 0.001_2$",
       },
       {
+        id: "the-first-10-digits-of-pi-truncated-not-rounded",
         expr: ["RealDigits", "Pi", 10, 10],
         expected: ["List", L(3, 1, 4, 1, 5, 9, 2, 6, 5, 3), 1],
         caption: "the first 10 digits of $\\pi$ (truncated, not rounded)",
       },
       {
+        id: "realdigits-sqrt-2-10-5",
         expr: ["RealDigits", ["Sqrt", 2], 10, 5],
         expected: ["List", L(1, 4, 1, 4, 2), 1],
         category: "Scope",
       },
       {
+        id: "realdigits-exponentiale-10-5",
         expr: ["RealDigits", "ExponentialE", 10, 5],
         expected: ["List", L(2, 7, 1, 8, 2), 1],
         category: "Scope",
       },
       {
+        id: "an-integer-six-digits-before-the-point",
         expr: ["RealDigits", 123456],
         expected: ["List", L(1, 2, 3, 4, 5, 6), 6],
         category: "Scope",
@@ -1035,34 +1179,40 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "6667-3-1-1-3-is-a-10-adic-integer",
         expr: ["Multiply", ["AdicNumeral", 10, ["Rational", 1, 3]], 3],
         expected: ["AdicNumeral", 10, 1],
         caption: "$…6667 × 3 = 1$: $1/3$ is a 10-adic integer",
       },
       {
+        id: "999-1-0-carrying-forever",
         expr: ["Add", ["AdicNumeral", 10, -1], 1],
         expected: ["AdicNumeral", 10, 0],
         caption: "$…999 + 1 = 0$, carrying forever",
       },
       {
+        id: "capped-the-representative-modulo-10-8",
         expr: ["AdicNumeral", 10, ["Rational", 1, 3], 8],
         expected: ["AdicNumeral", 10, 66666667, 8],
         caption: "capped: the representative modulo $10^8$",
         category: "Scope",
       },
       {
+        id: "prime-base-q-5-is-a-field-so-the-point-moves",
         expr: ["Divide", ["AdicNumeral", 5, 3], 5],
         expected: ["AdicNumeral", 5, ["Rational", 3, 5]],
         caption: "prime base: $\\mathbb{Q}_5$ is a field, so the point moves",
         category: "Scope",
       },
       {
+        id: "composite-base-2-is-not-a-unit-of-z-10-so-this",
         expr: ["Divide", ["AdicNumeral", 10, 3], 2],
         expected: ["Multiply", ["Rational", 1, 2], ["AdicNumeral", 10, 3]],
         caption: "composite base: 2 is not a unit of $\\mathbb{Z}_{10}$, so this declines",
         category: "Possible issues",
       },
       {
+        id: "adding-two-capped-numerals-keeps-only-the-weaker",
         expr: [
           "Add",
           ["AdicNumeral", 10, ["Rational", 1, 3], 8],
@@ -1073,24 +1223,28 @@ export const numerals: readonly ReferenceEntry[] = [
         caption: "Adding two capped numerals keeps only the weaker operand's precision",
       },
       {
+        id: "multiplying-by-p-2-raises-the-absolute-precision",
         expr: ["Multiply", ["AdicNumeral", 5, 3, 6], 25],
         expected: ["AdicNumeral", 5, 75, 8],
         category: "Properties",
         caption: "Multiplying by $p^2$ raises the absolute precision by 2 along with the value",
       },
       {
+        id: "a-negative-power-inverts-exactly-3-1-1-3-in-z-10",
         expr: ["Power", ["AdicNumeral", 10, 3], -1],
         expected: ["AdicNumeral", 10, ["Rational", 1, 3]],
         category: "Scope",
         caption: "A negative power inverts exactly: $3^{-1}=1/3$ in $\\mathbf{Z}_{10}$",
       },
       {
+        id: "numerals-over-different-bases-never-combine-and",
         expr: ["Add", ["AdicNumeral", 7, 2], ["AdicNumeral", 5, 2]],
         expected: ["Add", ["AdicNumeral", 7, 2], ["AdicNumeral", 5, 2]],
         category: "Possible issues",
         caption: "Numerals over different bases never combine and stay unevaluated",
       },
       {
+        id: "the-exact-zero-has-infinite-valuation",
         expr: ["AdicValuation", ["AdicNumeral", 10, 0]],
         expected: "PositiveInfinity",
         category: "Possible issues",
@@ -1098,6 +1252,7 @@ export const numerals: readonly ReferenceEntry[] = [
         group: "zero-valuation",
       },
       {
+        id: "a-capped-zero-is-only-o-b-prec-so-its-valuation",
         expr: ["AdicValuation", ["AdicNumeral", 10, 0, 8]],
         expected: 8,
         category: "Possible issues",
@@ -1134,38 +1289,45 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "adicexpansion-adicnumeral-10-1-over-3-8",
         expr: ["AdicExpansion", ["AdicNumeral", 10, ["Rational", 1, 3]], 8],
         expected: "'…66666667'",
       },
       {
+        id: "the-same-1-3-2-adically",
         expr: ["AdicExpansion", ["AdicNumeral", 2, ["Rational", 1, 3]], 8],
         expected: "'…10101011'",
         caption: "the same $1/3$, 2-adically",
       },
       {
+        id: "7-25-2-5-2-1-5-1",
         expr: ["AdicExpansion", ["AdicNumeral", 5, ["Rational", 7, 25]], 8],
         expected: "'0.12'",
         caption: "$7/25 = 2·5^{-2} + 1·5^{-1}$",
         category: "Scope",
       },
       {
+        id: "as-a-list-least-significant-first",
         expr: ["AdicDigits", ["AdicNumeral", 10, ["Rational", 1, 3]], 6],
         expected: L(7, 6, 6, 6, 6, 6),
         caption: "as a list, least significant first",
       },
       {
+        id: "a-plain-non-negative-integer-terminates-with-no",
         expr: ["AdicExpansion", ["AdicNumeral", 10, 42]],
         expected: "'42'",
         category: "Scope",
         caption: "A plain non-negative integer terminates with no infinite tail",
       },
       {
+        id: "1-is-the-all-9s-repeating-tail-since-1-999-in-z",
         expr: ["AdicExpansion", ["AdicNumeral", 10, -1], 6],
         expected: "'…999999'",
         category: "Scope",
         caption: "$-1$ is the all-9s repeating tail, since $-1=\\dots999$ in $\\mathbf{Z}_{10}$",
       },
       {
+        id: "digits-at-or-above-10-print-bracketed-as-in-15",
         expr: ["AdicExpansion", ["AdicNumeral", 16, -1], 3],
         expected: "'…[15][15][15]'",
         category: "Scope",
@@ -1173,6 +1335,7 @@ export const numerals: readonly ReferenceEntry[] = [
           "Digits at or above 10 print bracketed, as in $[15]$ for hexadecimal $-1$'s repeating digit",
       },
       {
+        id: "digits-run-least-significant-first-1-s-first",
         expr: ["AdicDigits", ["AdicNumeral", 10, -1], 4],
         expected: ["List", 9, 9, 9, 9],
         category: "Scope",
@@ -1210,10 +1373,23 @@ export const numerals: readonly ReferenceEntry[] = [
       "Wolfram's `IntegerExponent[n, p]` is the valuation on integers",
     ],
     examples: [
-      { expr: ["AdicValuation", ["AdicNumeral", 5, 75]], expected: 2 },
-      { expr: ["AdicNorm", ["AdicNumeral", 5, 75]], expected: ["Rational", 1, 25] },
-      { expr: ["AdicUnitPart", ["AdicNumeral", 5, 75]], expected: ["AdicNumeral", 5, 3] },
       {
+        id: "adicvaluation-adicnumeral-5-75",
+        expr: ["AdicValuation", ["AdicNumeral", 5, 75]],
+        expected: 2,
+      },
+      {
+        id: "adicnorm-adicnumeral-5-75",
+        expr: ["AdicNorm", ["AdicNumeral", 5, 75]],
+        expected: ["Rational", 1, 25],
+      },
+      {
+        id: "adicunitpart-adicnumeral-5-75",
+        expr: ["AdicUnitPart", ["AdicNumeral", 5, 75]],
+        expected: ["AdicNumeral", 5, 3],
+      },
+      {
+        id: "negative-in-q-5",
         expr: ["AdicValuation", ["AdicNumeral", 5, ["Rational", 3, 25]]],
         expected: -2,
         caption: "negative in $\\mathbb{Q}_5$",
@@ -1249,28 +1425,33 @@ export const numerals: readonly ReferenceEntry[] = [
     ],
     examples: [
       {
+        id: "sqrt-2-in-z-7-from-3-2-2-pmod-7",
         expr: ["HenselLift", ["Subtract", ["Power", "x", 2], 2], 3, 7, 6],
         expected: ["AdicNumeral", 7, 38181, 6],
         caption: "$\\sqrt{2}$ in $\\mathbb{Z}_7$, from $3^2 ≡ 2 \\pmod 7$",
       },
       {
+        id: "and-squaring-it-gives-2-back-to-the-same",
         expr: ["Power", ["AdicSqrt", ["AdicNumeral", 7, 2], 6], 2],
         expected: ["AdicNumeral", 7, 2, 6],
         caption: "and squaring it gives 2 back, to the same precision",
       },
       {
+        id: "a-10-adic-idempotent-e-2-e-and-e-0-1",
         expr: ["AdicExpansion", ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 5, 10, 8]],
         expected: "'…12890625 + O(10^8)'",
         caption: "a 10-adic idempotent: $e^2 = e$, and $e ≠ 0, 1$",
         category: "Applications",
       },
       {
+        id: "3-is-not-a-square-mod-7-so-it-has-no-7-adic",
         expr: ["AdicSqrt", ["AdicNumeral", 7, 3]],
         expected: ["AdicSqrt", ["AdicNumeral", 7, 3]],
         caption: "3 is not a square mod 7, so it has no 7-adic square root",
         category: "Possible issues",
       },
       {
+        id: "declines-at-a-non-simple-root-f-1-2-is-not-a",
         expr: ["HenselLift", ["Subtract", ["Power", "x", 3], "x"], 1, 2, 6],
         expected: ["HenselLift", ["Add", ["Power", "x", 3], ["Negate", "x"]], 1, 2, 6],
         category: "Possible issues",
@@ -1278,6 +1459,7 @@ export const numerals: readonly ReferenceEntry[] = [
           "Declines at a non-simple root: $f'(1)=2$ is not a unit mod 2, so Newton's step can't lift",
       },
       {
+        id: "the-two-roots-of-x-2-x-lifted-in-z-10-are",
         expr: [
           "Multiply",
           ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 5, 10, 8],
@@ -1290,6 +1472,7 @@ export const numerals: readonly ReferenceEntry[] = [
         group: "z10-idempotents",
       },
       {
+        id: "and-they-sum-to-1-splitting-z-10-via-z-10-cong-z",
         expr: [
           "Add",
           ["HenselLift", ["Subtract", ["Power", "x", 2], "x"], 5, 10, 8],

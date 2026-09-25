@@ -17,9 +17,9 @@ declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
 declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: CARRIER_TYPES });
 
 for (const entry of entries) {
-  for (const [index, example] of entry.examples.entries()) {
+  for (const example of entry.examples) {
     const label = example.aspirational ? " (gap)" : "";
-    test(`${entry.name} example ${index + 1}${label}`, () => {
+    test(`${entry.name} example/${example.id}${label}`, () => {
       const input = example.expr as unknown as Parameters<ComputeEngine["box"]>[0];
       const output = ce.box(input).evaluate().json;
       // A frontier head has no definition, so its example is a claim about what it WOULD
