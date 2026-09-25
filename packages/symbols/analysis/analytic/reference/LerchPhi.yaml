@@ -70,9 +70,9 @@ examples:
     caption: $\Phi(-1, 2, 1) = \eta(2) = \pi^2/12$ — the alternating rim, via the Euler transform
   - id: inexact-arguments-should-evaluate-numerically
     expr: [LerchPhi, 0.5, 2, 3.5]
-    expected: 0.11938622686982046
-    aspirational: true
-    caption: Inexact arguments should evaluate numerically without N(); left unevaluated today
+    expected: 0.11938622686982048
+    category: Scope
+    caption: Inexact arguments evaluate numerically without N() — a float operand means a float answer, as HurwitzZeta and Zeta already do
   - id: s-0-far-outside-the-unit-disk-1-1-49-5
     expr: [LerchPhi, 49.5, 0, 2]
     expected: { num: "-0.0206185567010309278351" }
@@ -81,9 +81,8 @@ examples:
   - id: z-1-by-analytic-continuation-phi-z-1-2-ln-1-z-z
     expr: [LerchPhi, 7.5, 1, 2]
     expected: [Complex, -0.16660981647825052, -0.05585053606381855]
-    aspirational: true
     category: Scope
-    caption: '$|z| > 1$ by analytic continuation: $\Phi(z, 1, 2) = (-\ln(1-z) - z)/z^2$ at $z = 7.5$; left unevaluated today'
+    caption: '$|z| > 1$ by analytic continuation: $\Phi(z, 1, 2) = (-\ln(1-z) - z)/z^2$ at $z = 7.5$, via the Hermite-integral continuation (lerch-continuation.ts)'
   - id: uncertainty-in-z
     expr: [LerchPhi, [Around, 0.5, 0.01], 1, 2]
     expected: [Around, 0.7725887222397811, 0.00909645111040875]
