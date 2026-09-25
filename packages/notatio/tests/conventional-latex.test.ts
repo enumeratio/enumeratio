@@ -58,7 +58,7 @@ for (const { json, parses } of FIXED) {
 }
 
 test("Lcm/Gcd naming: the native heads are all-caps (LCM/GCD), not TitleCase", () => {
-  // See packages/statistics/src/permutation.ts and design/upstreaming.md §3.5 — the
+  // See packages/symbols/combinatorics/statistics/src/permutation.ts and design/upstreaming.md §3.5 — the
   // naming incoherence this old-repo issue's "Lcm"/"Gcd" spelling predates.
   expect(!!bare.box(["LCM", 4, 6]).operatorDefinition).toBe(true);
   expect(!!bare.box(["Lcm", 4, 6]).operatorDefinition).toBe(false);

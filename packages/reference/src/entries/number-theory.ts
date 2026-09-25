@@ -2476,7 +2476,7 @@ export const numberTheory: readonly ReferenceEntry[] = [
   },
   // ── the Wolfram-sweep backlog (design/symbols.md §4, issue #113) — heads carried here from
   // packages/reference/src/backlog.json, each verified against a brute-force cross-check
-  // (packages/number-theory/tests/backlog.test.ts) rather than just the worked examples below.
+  // (packages/symbols/arithmetic/number-theory/tests/backlog.test.ts) rather than just the worked examples below.
   {
     name: "CarmichaelLambda",
     domain: "Number theory",

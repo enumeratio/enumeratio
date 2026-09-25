@@ -1,8 +1,8 @@
 # Design: carrier domains, representations, and the maps between them
 
 Status: **built, minus the lattice**. `@enumeratio/domains` mints a nominal type per carrier
-and declares a held constructor for each ([`declare.ts`](../packages/domains/src/declare.ts),
-[`types.ts`](../packages/domains/src/types.ts)), so a head declared over `permutation`
+and declares a held constructor for each ([`declare.ts`](../packages/symbols/combinatorics/domains/src/declare.ts),
+[`types.ts`](../packages/symbols/combinatorics/domains/src/types.ts)), so a head declared over `permutation`
 rejects a bare list, and the maps are declared in both engines -- the CLI session and the
 docs site -- so `CycleType(Permutation([2, 3, 1]))` evaluates in either. The statistics
 stay on bare lists there (no `domainTypes`), because a collection's rows are lists: the

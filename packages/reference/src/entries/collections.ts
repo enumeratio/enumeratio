@@ -3210,7 +3210,7 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["GeometricMean", "Mean"],
   },
-  // ── Wolfram-sweep list heads (packages/collections/src/list-ops-wolfram.ts) ──
+  // ── Wolfram-sweep list heads (packages/symbols/combinatorics/collections/src/list-ops-wolfram.ts) ──
   {
     name: "Span",
     domain: "Collections",
