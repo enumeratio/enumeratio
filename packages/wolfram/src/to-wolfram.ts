@@ -283,6 +283,26 @@ export const HEADS: Record<string, string> = {
   NoneTrue: "NoneTrue",
   Variance: "Variance",
   StandardDeviation: "StandardDeviation",
+  // Distributions (@enumeratio/statistics/src/distributions.ts): PDF/CDF/Mean/Variance
+  // above are compute-engine natives, extended in place for these — identity here already.
+  Distributed: "Distributed",
+  RandomVariate: "RandomVariate",
+  EmpiricalDistribution: "EmpiricalDistribution",
+  BetaDistribution: "BetaDistribution",
+  GammaDistribution: "GammaDistribution",
+  BinormalDistribution: "BinormalDistribution",
+  Expectation: "Expectation",
+  Probability: "Probability",
+  NormalDistribution: "NormalDistribution",
+  UniformDistribution: "UniformDistribution",
+  PoissonDistribution: "PoissonDistribution",
+  BinomialDistribution: "BinomialDistribution",
+  PDF: "PDF",
+  CDF: "CDF",
+  // Declared defensively (attaches to collections' own seeded `RandomInteger` in place once
+  // PR #185 lands, rather than colliding with a second `ce.declare`) — see
+  // `@enumeratio/statistics/src/distributions.ts`'s `wireSeedRandom`.
+  SeedRandom: "SeedRandom",
   Determinant: "Det",
   MatrixExp: "MatrixExp",
   MatrixRank: "MatrixRank",

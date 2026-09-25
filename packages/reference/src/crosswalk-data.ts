@@ -636,6 +636,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "BinomialDistribution",
+    wolfram: "BinomialDistribution",
+  },
+  {
     name: "BrauerAlgebra",
     oracle: [
       {
@@ -649,6 +653,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "CDF",
+    wolfram: "CDF",
   },
   {
     name: "CarmichaelLambda",
@@ -3439,6 +3447,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NorlundB",
   },
   {
+    name: "NormalDistribution",
+    wolfram: "NormalDistribution",
+  },
+  {
     name: "Not",
     wolfram: "Not",
   },
@@ -3469,6 +3481,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Outer",
     wolfram: "Outer",
+  },
+  {
+    name: "PDF",
+    wolfram: "PDF",
   },
   {
     name: "PadLeft",
@@ -3524,6 +3540,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Pochhammer",
     wolfram: "Pochhammer",
+  },
+  {
+    name: "PoissonDistribution",
+    wolfram: "PoissonDistribution",
   },
   {
     name: "PolyGamma",
@@ -4421,6 +4441,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Tuple",
     wolfram: "List",
+  },
+  {
+    name: "UniformDistribution",
+    wolfram: "UniformDistribution",
   },
   {
     name: "Union",

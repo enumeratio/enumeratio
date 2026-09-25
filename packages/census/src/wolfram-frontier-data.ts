@@ -137,10 +137,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 25,
   },
   {
-    head: "Distributed",
-    uses: 24,
-  },
-  {
     head: "Graphics3D",
     uses: 24,
   },
@@ -261,10 +257,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 14,
   },
   {
-    head: "RandomVariate",
-    uses: 14,
-  },
-  {
     head: "RegionPlot",
     uses: 14,
   },
@@ -325,10 +317,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 10,
   },
   {
-    head: "SeedRandom",
-    uses: 10,
-  },
-  {
     head: "BooleanConvert",
     uses: 9,
   },
@@ -381,10 +369,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "EmpiricalDistribution",
-    uses: 8,
-  },
-  {
     head: "FunctionPeriod",
     uses: 8,
   },
@@ -425,19 +409,7 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 8,
   },
   {
-    head: "BetaDistribution",
-    uses: 7,
-  },
-  {
     head: "DiscretePlot3D",
-    uses: 7,
-  },
-  {
-    head: "Expectation",
-    uses: 7,
-  },
-  {
-    head: "GammaDistribution",
     uses: 7,
   },
   {
@@ -470,10 +442,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ArrayMesh",
-    uses: 6,
-  },
-  {
-    head: "BinormalDistribution",
     uses: 6,
   },
   {
@@ -530,10 +498,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "OverHat",
-    uses: 6,
-  },
-  {
-    head: "Probability",
     uses: 6,
   },
   {

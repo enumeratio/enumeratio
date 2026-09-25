@@ -85,6 +85,14 @@ export const sources: readonly string[] = [
   "packages/symbols/combinatorics/statistics/reference/Crossings.yaml",
   "packages/symbols/combinatorics/statistics/reference/Nestings.yaml",
   "packages/symbols/combinatorics/statistics/reference/CrossingNestingTotal.yaml",
+  "packages/symbols/combinatorics/statistics/reference/Distributed.yaml",
+  "packages/symbols/combinatorics/statistics/reference/BetaDistribution.yaml",
+  "packages/symbols/combinatorics/statistics/reference/GammaDistribution.yaml",
+  "packages/symbols/combinatorics/statistics/reference/BinormalDistribution.yaml",
+  "packages/symbols/combinatorics/statistics/reference/EmpiricalDistribution.yaml",
+  "packages/symbols/combinatorics/statistics/reference/RandomVariate.yaml",
+  "packages/symbols/combinatorics/statistics/reference/Expectation.yaml",
+  "packages/symbols/combinatorics/statistics/reference/Probability.yaml",
 ];
 
 export const entries: readonly ReferenceEntry[] = [
@@ -2102,5 +2110,438 @@ export const entries: readonly ReferenceEntry[] = [
         caption: "the partition $\\{1,3\\} \\mid \\{2\\}$, as a plain list",
       },
     ],
+  },
+  {
+    name: "Distributed",
+    domain: "Statistics",
+    signature: "Distributed(x, dist)",
+    summary: "Binds a variable to a distribution, for [[Expectation]] and [[Probability]].",
+    signatures: [
+      {
+        call: "Distributed(x, dist)",
+        description:
+          "an inert binding — `x` follows `dist`. Stays itself under evaluation; only [[Expectation]]/[[Probability]] read it.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "Wolfram's own infix `x \\[Distributed] dist` parses to exactly this call. Only the second argument of [[Expectation]]/[[Probability]] is read as a `Distributed` binding — elsewhere it is just an inert expression.",
+      "The first argument is read structurally (it must be a symbol) rather than type-checked — compute-engine PINS a parameter typed literally `symbol` onto that symbol's inferred type globally, breaking later unrelated uses of the same name (confirmed empirically); typing it `any` here avoids that.",
+    ],
+    examples: [
+      {
+        id: "distributed-stays-itself",
+        expr: ["Distributed", "x", ["NormalDistribution", 0, 1]],
+        expected: ["Distributed", "x", ["NormalDistribution", 0, 1]],
+      },
+      {
+        id: "distributed-reached-through-expectation",
+        expr: ["Expectation", "x", ["Distributed", "x", ["NormalDistribution", 2, 3]]],
+        expected: 2,
+        category: "Scope",
+        caption: "Read by [[Expectation]] — see there for the general behavior",
+      },
+    ],
+    seeAlso: ["Expectation", "Probability"],
+  },
+  {
+    name: "BetaDistribution",
+    domain: "Statistics",
+    signature: "BetaDistribution(alpha, beta)",
+    summary: "The Beta distribution on $[0, 1]$ with shape parameters $\\alpha, \\beta$.",
+    signatures: [
+      {
+        call: "BetaDistribution(alpha, beta)",
+        description:
+          "an inert distribution object — carries its parameters, unevaluated. [[PDF]], [[CDF]], [[Mean]], [[Variance]] and [[RandomVariate]] all read it.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "$PDF(x) = \\dfrac{x^{\\alpha-1}(1-x)^{\\beta-1}}{B(\\alpha,\\beta)}$, via [[Beta]]. No domain clamp outside $[0,1]$ — the formula is evaluated as written there too.",
+      "$CDF(x) = I_x(\\alpha,\\beta)$ via [[BetaRegularized]], clamped to $0$ below $x=0$ and $1$ above $x=1$.",
+      "$Mean = \\dfrac{\\alpha}{\\alpha+\\beta}$, $Variance = \\dfrac{\\alpha\\beta}{(\\alpha+\\beta)^2(\\alpha+\\beta+1)}$, both exact.",
+      "[[RandomVariate]] samples via two [[GammaDistribution]] draws (Marsaglia–Tsang), $X/(X+Y)$ — see [[RandomVariate]] for the seeded-PRNG divergence from Wolfram.",
+    ],
+    examples: [
+      {
+        id: "beta-pdf-exact",
+        expr: ["PDF", ["BetaDistribution", 2, 3], ["Rational", 1, 2]],
+        expected: ["Rational", 3, 2],
+      },
+      {
+        id: "beta-cdf-exact",
+        expr: ["CDF", ["BetaDistribution", 2, 3], ["Rational", 1, 2]],
+        expected: ["BetaRegularized", ["Rational", 1, 2], 2, 3],
+        caption:
+          "$= 0.6875$, cross-checked against wolframscript's `N[CDF[BetaDistribution[2,3],1/2]]`",
+      },
+      {
+        id: "beta-mean-exact",
+        expr: ["Mean", ["BetaDistribution", 2, 3]],
+        expected: ["Rational", 2, 5],
+      },
+      {
+        id: "beta-variance-exact",
+        expr: ["Variance", ["BetaDistribution", 2, 3]],
+        expected: ["Rational", 1, 25],
+        caption:
+          "Cross-checked against wolframscript's `N[Variance[BetaDistribution[2,3]]] = 0.04`",
+      },
+      {
+        id: "beta-cdf-clamps-below-support",
+        expr: ["N", ["CDF", ["BetaDistribution", 2, 3], -1]],
+        expected: 0,
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["GammaDistribution", "PDF", "CDF", "RandomVariate"],
+  },
+  {
+    name: "GammaDistribution",
+    domain: "Statistics",
+    signature: "GammaDistribution(k, theta)",
+    summary: "The Gamma distribution with shape $k$ and scale $\\theta$.",
+    signatures: [
+      {
+        call: "GammaDistribution(k, theta)",
+        description: "an inert distribution object with shape $k$ and scale $\\theta$.",
+        library: "enumeratio-statistics",
+      },
+      {
+        call: "GammaDistribution(k)",
+        description:
+          "scale defaults to $1$. NOT a Wolfram call form — `GammaDistribution[alpha]` alone errors there (`GammaDistribution::argbu`, confirmed against wolframscript); this is our own convenience.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "$PDF(x) = \\dfrac{x^{k-1}e^{-x/\\theta}}{\\theta^k\\,\\Gamma(k)}$, via [[Gamma]]. No domain clamp outside $x \\ge 0$.",
+      "$CDF(x) = 1 - Q(k, x/\\theta)$ via the native two-argument [[GammaRegularized]] (not the three-argument generalized form `@enumeratio/analytic` adds — this has no dependency on that package), clamped to $0$ below $x=0$.",
+      "$Mean = k\\theta$, $Variance = k\\theta^2$, both exact.",
+      "[[RandomVariate]] samples via Marsaglia–Tsang (shape $\\ge 1$; boosted via a $Gamma(k+1)$ draw scaled by $U^{1/k}$ below $1$) — see [[RandomVariate]] for the seeded-PRNG divergence from Wolfram.",
+    ],
+    examples: [
+      {
+        id: "gamma-distribution-one-argument-defaults-scale",
+        expr: ["GammaDistribution", 2],
+        expected: ["GammaDistribution", 2, 1],
+        category: "Scope",
+      },
+      {
+        id: "gamma-pdf-exact",
+        expr: ["PDF", ["GammaDistribution", 2, 2], 3],
+        expected: [
+          "Divide",
+          3,
+          ["Multiply", 4, ["Gamma", 2], ["Power", "ExponentialE", ["Rational", 3, 2]]],
+        ],
+        caption:
+          "$\\approx 0.16734762011132237$, cross-checked against wolframscript's `N[PDF[GammaDistribution[2,2],3]]`",
+      },
+      {
+        id: "gamma-cdf-exact",
+        expr: ["CDF", ["GammaDistribution", 2, 2], 3],
+        expected: [
+          "Add",
+          1,
+          ["Divide", -5, ["Multiply", 2, ["Power", "ExponentialE", ["Rational", 3, 2]]]],
+        ],
+        caption:
+          "$\\approx 0.44217459962892543$, cross-checked against wolframscript's `N[CDF[GammaDistribution[2,2],3]] = 0.4421745996289253`",
+      },
+      { id: "gamma-mean-exact", expr: ["Mean", ["GammaDistribution", 2, 2]], expected: 4 },
+      { id: "gamma-variance-exact", expr: ["Variance", ["GammaDistribution", 2, 2]], expected: 8 },
+      {
+        id: "gamma-cdf-clamps-below-support",
+        expr: ["N", ["CDF", ["GammaDistribution", 2, 2], -1]],
+        expected: 0,
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["BetaDistribution", "PDF", "CDF", "RandomVariate"],
+  },
+  {
+    name: "BinormalDistribution",
+    domain: "Statistics",
+    signature: "BinormalDistribution(rho)",
+    summary: "The bivariate normal distribution over pairs $(x_1, x_2)$.",
+    signatures: [
+      {
+        call: "BinormalDistribution(rho)",
+        description: "correlation $\\rho$ only — mean $(0,0)$, unit variances.",
+        library: "enumeratio-statistics",
+      },
+      {
+        call: "BinormalDistribution({sigma1, sigma2}, rho)",
+        description: "standard deviations and correlation — mean $(0,0)$.",
+        library: "enumeratio-statistics",
+      },
+      {
+        call: "BinormalDistribution({mu1, mu2}, {sigma1, sigma2}, rho)",
+        description: "the general form — mean, standard deviations, correlation.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "[[PDF]] at a point $\\{x_1, x_2\\}$ is the usual bivariate normal density, exact.",
+      "[[CDF]] has no elementary closed form here (Owen's T / a two-dimensional integral) — [[CDF]] stays unevaluated for `BinormalDistribution`, a documented gap rather than an approximation.",
+      "[[Mean]] is the mean vector $\\{\\mu_1, \\mu_2\\}$; [[Variance]] is the covariance matrix $\\{\\{\\sigma_1^2, \\rho\\sigma_1\\sigma_2\\}, \\{\\rho\\sigma_1\\sigma_2, \\sigma_2^2\\}\\}$, both exact.",
+      "[[RandomVariate]] draws two independent standard normals and combines them ($x_1=\\mu_1+\\sigma_1 z_1$, $x_2=\\mu_2+\\sigma_2(\\rho z_1+\\sqrt{1-\\rho^2}z_2)$) — see [[RandomVariate]] for the seeded-PRNG divergence from Wolfram.",
+    ],
+    examples: [
+      {
+        id: "binormal-pdf-rho-only-form",
+        expr: ["PDF", ["BinormalDistribution", ["Rational", 1, 2]], ["List", 0, 0]],
+        expected: ["Divide", ["Sqrt", 3], ["Multiply", 3, "Pi"]],
+        caption:
+          "$\\approx 0.18377629847393068$, cross-checked against wolframscript's `N[PDF[BinormalDistribution[1/2],{0,0}]]`",
+      },
+      {
+        id: "binormal-mean-is-the-mean-vector",
+        expr: [
+          "Mean",
+          ["BinormalDistribution", ["List", 1, 2], ["List", 1, 1], ["Rational", 1, 2]],
+        ],
+        expected: ["List", 1, 2],
+      },
+      {
+        id: "binormal-variance-is-the-covariance-matrix",
+        expr: ["Variance", ["BinormalDistribution", ["Rational", 1, 2]]],
+        expected: ["List", ["List", 1, ["Rational", 1, 2]], ["List", ["Rational", 1, 2], 1]],
+      },
+      {
+        id: "binormal-cdf-has-no-closed-form",
+        expr: ["CDF", ["BinormalDistribution", ["Rational", 1, 2]], ["List", 0, 0]],
+        expected: ["CDF", ["BinormalDistribution", ["Rational", 1, 2]], ["List", 0, 0]],
+        category: "Possible issues",
+        caption: "Stays unevaluated — no closed form is implemented",
+      },
+    ],
+    seeAlso: ["NormalDistribution", "PDF", "Mean", "Variance"],
+  },
+  {
+    name: "EmpiricalDistribution",
+    domain: "Statistics",
+    signature: "EmpiricalDistribution(data)",
+    summary: "The distribution of the values actually observed in `data`.",
+    signatures: [
+      {
+        call: "EmpiricalDistribution(data)",
+        description: "an inert distribution object wrapping `data` (a list).",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "[[PDF]]/[[CDF]] at $x$ are the observed PROPORTIONS — the count of `data` equal to (resp. at most) $x$, divided by its length. Wolfram's own `PDF` is a continuous, kernel-smoothed density; this is a discrete empirical measure instead, a documented divergence.",
+      "[[Mean]]/[[Variance]] delegate to [[Mean]]/[[Variance]] of `data` itself (sample variance, $n-1$) — the same convention Wolfram's `Variance[EmpiricalDistribution[data]] = Variance[data]` uses.",
+      "[[RandomVariate]] resamples uniformly from `data`, with replacement.",
+    ],
+    examples: [
+      {
+        id: "empirical-pdf-is-the-observed-proportion",
+        expr: ["PDF", ["EmpiricalDistribution", ["List", 1, 2, 2, 3]], 2],
+        expected: ["Rational", 1, 2],
+        caption: "2 of the 4 elements are 2",
+      },
+      {
+        id: "empirical-cdf-is-the-observed-proportion-at-most",
+        expr: ["CDF", ["EmpiricalDistribution", ["List", 1, 2, 2, 3]], 2],
+        expected: ["Rational", 3, 4],
+      },
+      {
+        id: "empirical-mean-matches-mean-of-the-data",
+        expr: ["Mean", ["EmpiricalDistribution", ["List", 1, 2, 2, 3]]],
+        expected: 2,
+      },
+      {
+        id: "empirical-variance-matches-variance-of-the-data",
+        expr: ["Variance", ["EmpiricalDistribution", ["List", 1, 2, 2, 3]]],
+        expected: ["Rational", 2, 3],
+      },
+    ],
+    seeAlso: ["Mean", "Variance", "RandomVariate"],
+  },
+  {
+    name: "RandomVariate",
+    domain: "Statistics",
+    signature: "RandomVariate(dist, n)",
+    summary: "A random draw from a distribution, or a list of them.",
+    signatures: [
+      { call: "RandomVariate(dist)", description: "one draw.", library: "enumeratio-statistics" },
+      {
+        call: "RandomVariate(dist, n)",
+        description: "a list of $n$ draws.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "Seeded, not free-running — same convention as [[SeedRandom]]/`RandomInteger` in `@enumeratio/collections`: call [[SeedRandom]](seed) first for a reproducible sequence; without it, a fixed default seed makes even a bare call reproducible run to run. This file's draws are their OWN stream, independent of `RandomInteger`'s, even after the same [[SeedRandom]] call — a follow-up once collections' own seeded `RandomInteger` lands is to unify both under one engine-level generator.",
+      "The generator is our own (mulberry32, the same algorithm `RandomInteger` uses), not Wolfram's — the same seed draws a different sequence. Only the shape and (for `NormalDistribution`/`UniformDistribution`/…) approximate range of the answer are guaranteed to match.",
+      "Sampling method by distribution — [[NormalDistribution]]/[[BinormalDistribution]]: Box–Muller; [[UniformDistribution]]: inverse CDF; [[PoissonDistribution]]: Knuth's algorithm; [[BinomialDistribution]]: a sum of Bernoulli draws; [[GammaDistribution]]/[[BetaDistribution]]: Marsaglia–Tsang; [[EmpiricalDistribution]]: uniform resampling with replacement.",
+    ],
+    examples: [
+      {
+        id: "randomvariate-default-seed-is-reproducible",
+        expr: ["RandomVariate", ["NormalDistribution", 0, 1]],
+        expected: -0.956162229384149,
+        caption: "With no [[SeedRandom]] call, a fixed default seed still makes this reproducible",
+      },
+      {
+        id: "randomvariate-n-draws",
+        expr: [
+          "Last",
+          [
+            "List",
+            ["SeedRandom", 1],
+            ["RandomVariate", ["UniformDistribution", ["List", 0, 1]], 3],
+          ],
+        ],
+        expected: ["List", 0.6270739405881613, 0.002735721180215478, 0.5274470399599522],
+        category: "Scope",
+      },
+      {
+        id: "randomvariate-discrete-draw",
+        expr: ["Last", ["List", ["SeedRandom", 1], ["RandomVariate", ["PoissonDistribution", 4]]]],
+        expected: 1,
+        category: "Scope",
+      },
+      {
+        id: "randomvariate-empirical-resamples-the-data",
+        expr: [
+          "Last",
+          [
+            "List",
+            ["SeedRandom", 2],
+            ["RandomVariate", ["EmpiricalDistribution", ["List", "a", "b", "c"]]],
+          ],
+        ],
+        expected: "c",
+        category: "Scope",
+      },
+    ],
+    seeAlso: ["SeedRandom", "Distributed"],
+  },
+  {
+    name: "Expectation",
+    domain: "Statistics",
+    signature: "Expectation(f, x \\[Distributed] dist)",
+    summary: "$E[f(x)]$ — the expected value of `f` under `x`'s distribution.",
+    signatures: [
+      {
+        call: "Expectation(f, Distributed(x, dist))",
+        description:
+          "exact for `f` constant, linear or quadratic in `x`; otherwise stays unevaluated.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "Closed forms: $E[c] = c$; $E[x] = Mean(dist)$; $E[x^2] = Variance(dist) + Mean(dist)^2$; extended over `Add` and `Multiply`-by-constant by linearity — $E[2x+1] = 2\\,E[x]+1$, and so on, recursively.",
+      "Never approximated on its own — apply `N` to the result for a numeric value.",
+      "Anything past a linear/quadratic polynomial in `x` (e.g. $E[\\sin x]$) has no closed form here and stays unevaluated, rather than falling back to numeric integration.",
+    ],
+    examples: [
+      {
+        id: "expectation-of-the-bound-variable-is-the-mean",
+        expr: ["Expectation", "x", ["Distributed", "x", ["NormalDistribution", 2, 3]]],
+        expected: 2,
+      },
+      {
+        id: "expectation-of-x-squared",
+        expr: [
+          "Expectation",
+          ["Power", "x", 2],
+          ["Distributed", "x", ["NormalDistribution", 2, 3]],
+        ],
+        expected: 13,
+        caption: "$Var + Mean^2 = 9 + 4$",
+      },
+      {
+        id: "expectation-is-linear",
+        expr: [
+          "Expectation",
+          ["Add", ["Multiply", 2, "x"], 1],
+          ["Distributed", "x", ["NormalDistribution", 2, 3]],
+        ],
+        expected: 5,
+      },
+      {
+        id: "a-shape-with-no-closed-form-stays-unevaluated",
+        expr: ["Expectation", ["Sin", "x"], ["Distributed", "x", ["NormalDistribution", 2, 3]]],
+        expected: ["Expectation", ["Sin", "x"], ["Distributed", "x", ["NormalDistribution", 2, 3]]],
+        category: "Possible issues",
+      },
+    ],
+    seeAlso: ["Distributed", "Probability", "Mean"],
+  },
+  {
+    name: "Probability",
+    domain: "Statistics",
+    signature: "Probability(cond, x \\[Distributed] dist)",
+    summary: "$P(cond)$ under `x`'s distribution.",
+    signatures: [
+      {
+        call: "Probability(cond, Distributed(x, dist))",
+        description:
+          "exact for `Equal`/`Less`/`LessEqual` conditions on `x` (a chained range too); otherwise stays unevaluated.",
+        library: "enumeratio-statistics",
+      },
+    ],
+    details: [
+      "`Equal(x, k)`: [[PDF]]$(k)$ for a discrete distribution, $0$ for a continuous one.",
+      "`LessEqual(x, k)`: [[CDF]]$(k)$. `Less(x, k)`: $CDF(k) - PDF(k)$ for discrete (subtracting $P(X{=}k)$), just $CDF(k)$ for continuous (where a point has probability $0$). A constant on the LEFT (`k \\[LessEqual] x`) is the complement of the opposite strict relation.",
+      "A chained range, `a \\[LessEqual] x \\[LessEqual] b` (and the `Less`/mixed forms), and `And` of two simple relations on `x`: composed from the primitives above by inclusion–exclusion.",
+      "`Greater`/`GreaterEqual` need no separate handling — compute-engine's own canonicalization rewrites `x > k` to `Less(k, x)` before this ever sees it.",
+    ],
+    examples: [
+      {
+        id: "probability-equal-is-pdf-for-discrete",
+        expr: ["Probability", ["Equal", "x", 2], ["Distributed", "x", ["PoissonDistribution", 3]]],
+        expected: ["Divide", 9, ["Multiply", 2, ["Power", "ExponentialE", 3]]],
+      },
+      {
+        id: "probability-equal-is-zero-for-continuous",
+        expr: [
+          "Probability",
+          ["Equal", "x", 2],
+          ["Distributed", "x", ["NormalDistribution", 0, 1]],
+        ],
+        expected: 0,
+      },
+      {
+        id: "probability-lessequal-is-cdf",
+        expr: [
+          "Probability",
+          ["LessEqual", "x", 5],
+          ["Distributed", "x", ["PoissonDistribution", 3]],
+        ],
+        expected: ["Divide", 92, ["Multiply", 5, ["Power", "ExponentialE", 3]]],
+        caption:
+          "$\\approx 0.9160820579686966$, cross-checked against wolframscript's `N[CDF[PoissonDistribution[3],5]]`",
+      },
+      {
+        id: "probability-of-a-chained-range",
+        expr: [
+          "Probability",
+          ["And", ["LessEqual", 1, "x"], ["LessEqual", "x", 5]],
+          ["Distributed", "x", ["PoissonDistribution", 3]],
+        ],
+        expected: ["Divide", 87, ["Multiply", 5, ["Power", "ExponentialE", 3]]],
+        category: "Scope",
+        caption:
+          "$\\approx 0.8662949896008326$, cross-checked against wolframscript's `N[Probability[1<=x<=5, x \\[Distributed] PoissonDistribution[3]]]`",
+      },
+      {
+        id: "probability-greater-is-canonicalized-first",
+        expr: [
+          "N",
+          ["Probability", ["Greater", "x", 0], ["Distributed", "x", ["NormalDistribution", 0, 1]]],
+        ],
+        expected: 0.5,
+        category: "Scope",
+        caption: "compute-engine rewrites `x > 0` to `Less(0, x)` before this evaluator sees it",
+      },
+    ],
+    seeAlso: ["Distributed", "Expectation", "CDF"],
   },
 ];

@@ -5,6 +5,7 @@ import { expect, test } from "vite-plus/test";
 import { CARRIER_TYPES, declareCarriers } from "../scripts/carriers.ts";
 import { ALL_STATISTICS } from "../src/all.ts";
 import { declareStatistics } from "../src/declare.ts";
+import { declareDistributions } from "../src/distributions.ts";
 import { entries } from "../src/entries.ts";
 
 // The order both engines use: carriers, collections (which owns the fast permutation heads),
@@ -15,6 +16,7 @@ const ce = new ComputeEngine();
 declareCarriers(ce);
 declareCollections(ce, { permutationType: CARRIER_TYPES.Permutation });
 declareStatistics(ce, ALL_STATISTICS, { skipDeclared: true, domainTypes: CARRIER_TYPES });
+declareDistributions(ce);
 
 for (const entry of entries) {
   for (const example of entry.examples) {
