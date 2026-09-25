@@ -112,7 +112,10 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * bare engine rejects as a type error (`threadOverLists` in @enumeratio/boxed).
  * `ModularInverse` is widened to Gaussian integers (number-theory) and `PolyGamma` is
  * redeclared for complex z (analytic); a wrong-typed argument now fails in the widened
- * signature rather than the native one, so even the error differs.
+ * signature rather than the native one, so even the error differs. `LambertW` is here for
+ * exact values at algebraically nice points (0, e, -1/e, ...) that a bare engine leaves
+ * unevaluated outside `N()`, and for branches other than 0/-1 — additive in both cases, never
+ * changing a value the native handler already gave concretely.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -152,6 +155,7 @@ const OVERRIDDEN = [
   "IsSquareFree",
   "JacobiSymbol",
   "Join",
+  "LambertW",
   "Last",
   "Length",
   "Ln",
@@ -237,6 +241,11 @@ test("the Wolfram rename column is reflected from the transpiler, not copied", (
  * BesselJZero (Wolfram, mpmath) waits on the same run, and so do IntegerPartitions (Wolfram)
  * and SetPartitions (SymPy's `multiset_partitions`): the collection families read as
  * `unknown` until their entries carried examples.
+ *
+ * ExpIntegralE, InverseErfc, InverseGammaRegularized, InverseBetaRegularized, BellY,
+ * NorlundB, PrimeZetaP, HypergeometricPFQ and KleinInvariantJ are the same story: all nine
+ * are genuinely Wolfram's own names (BellY and NorlundB also have a mpmath/sympy analogue in
+ * some form), waiting on the same coverage run to fill in `elsewhere`.
  */
 const NOVEL = [
   "TimeConstrained",
@@ -263,6 +272,15 @@ const NOVEL = [
   "Hypergeometric2F1Regularized",
   "Hypergeometric3F2Regularized",
   "HypergeometricU",
+  "ExpIntegralE",
+  "InverseErfc",
+  "InverseGammaRegularized",
+  "InverseBetaRegularized",
+  "BellY",
+  "NorlundB",
+  "PrimeZetaP",
+  "HypergeometricPFQ",
+  "KleinInvariantJ",
   "Basis",
   "AlgebraSignature",
   "AlgebraDimension",

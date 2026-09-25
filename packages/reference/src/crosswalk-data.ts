@@ -420,6 +420,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "BellY",
+    wolfram: "BellY",
+  },
+  {
     name: "BernoulliB",
     fungrimEntries: [
       "03ee0b",
@@ -1599,6 +1603,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "ExpIntegralE",
+    wolfram: "ExpIntegralE",
+  },
+  {
     name: "ExponentialE",
     wolfram: "E",
   },
@@ -2256,6 +2264,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     fungrimEntries: ["6582c4", "e1797b"],
   },
   {
+    name: "HypergeometricPFQ",
+    wolfram: "HypergeometricPFQ",
+  },
+  {
     name: "HypergeometricU",
     fungrimEntries: ["6cf802", "9d3147", "c8fcc7"],
     wolfram: "HypergeometricU",
@@ -2362,6 +2374,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Intersection",
     wolfram: "Intersection",
+  },
+  {
+    name: "InverseBetaRegularized",
+    wolfram: "InverseBetaRegularized",
+  },
+  {
+    name: "InverseErfc",
+    wolfram: "InverseErfc",
+  },
+  {
+    name: "InverseGammaRegularized",
+    wolfram: "InverseGammaRegularized",
   },
   {
     name: "IsComposite",
@@ -2644,6 +2668,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Join",
     wolfram: "Join",
+  },
+  {
+    name: "KleinInvariantJ",
+    wolfram: "KleinInvariantJ",
   },
   {
     name: "KroneckerSymbol",
@@ -3202,6 +3230,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NonCommutativeMultiply",
   },
   {
+    name: "NorlundB",
+    wolfram: "NorlundB",
+  },
+  {
     name: "Not",
     wolfram: "Not",
   },
@@ -3424,6 +3456,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
         arity: 1,
       },
     ],
+  },
+  {
+    name: "PrimeZetaP",
+    wolfram: "PrimeZetaP",
   },
   {
     name: "Primes",

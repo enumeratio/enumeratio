@@ -209,10 +209,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 21,
   },
   {
-    head: "HypergeometricPFQ",
-    uses: 21,
-  },
-  {
     head: "Module",
     uses: 21,
   },
@@ -566,10 +562,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ArrayMesh",
-    uses: 6,
-  },
-  {
-    head: "BellY",
     uses: 6,
   },
   {
@@ -990,10 +982,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InverseCDF",
-    uses: 3,
-  },
-  {
-    head: "InverseErfc",
     uses: 3,
   },
   {
