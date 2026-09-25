@@ -188,3 +188,12 @@ a-lazy-range-is-counted-without-being:
     in: Length[Range[1, 20]]
   wolfram:
     in: Length[Range[1, 20]]
+length-of-association-counts-values:
+  epsil:
+    in: Length(Association(Rule(1, a), Rule(2, b), Rule(3, c)))
+    out: "3"
+  tex:
+    in: \mathrm{Length}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))
+    out: "3"
+  fullform:
+    in: Length[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]

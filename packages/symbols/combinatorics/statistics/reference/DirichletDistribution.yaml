@@ -1,0 +1,29 @@
+name: DirichletDistribution
+domain: Statistics
+signature: DirichletDistribution({alpha1, ..., alphak})
+summary: The Dirichlet distribution on the $(k-1)$-simplex with concentration parameters $\alpha_1,\ldots,\alpha_k$.
+signatures:
+  - call: DirichletDistribution({alpha1, ..., alphak})
+    description: distribution on the (k-1)-simplex, parameterised over the first k-1 coordinates.
+    library: enumeratio-statistics
+details:
+  - "Wolfram's own parameterisation is over the FIRST $k-1$ coordinates: $PDF$ takes a $(k-1)$-list $\\{x_1,\\ldots,x_{k-1}\\}$, with $x_k := 1-\\sum_{i<k} x_i$ implicit, and $Mean$/$Variance$ are each $(k-1)$-lists — $\\alpha_k$'s own coordinate is never reported directly (confirmed from Wolfram's own `DirichletDistribution` reference page: `Mean`/`Variance` examples for a 3-parameter call return length-2 lists)."
+  - $PDF(x) = \left(\prod_{i=1}^k x_i^{\alpha_i-1}\right) / B(\alpha)$, $B(\alpha) = \prod_i \Gamma(\alpha_i) / \Gamma(\sum_i \alpha_i)$.
+  - $Mean_i = \alpha_i / \sum \alpha$ for $i = 1,\ldots,k-1$.
+  - $Variance_i = \alpha_i(\sum\alpha - \alpha_i) / \left((\sum\alpha)^2(\sum\alpha+1)\right)$ for $i = 1,\ldots,k-1$.
+  - CDF and RandomVariate are not implemented for this head (out of scope for this batch) — stay unevaluated.
+examples:
+  - id: dirichlet-mean
+    expr: [Mean, [DirichletDistribution, [List, 1, 4, 5]]]
+    expected: [List, [Rational, 1, 10], [Rational, 2, 5]]
+  - id: dirichlet-variance
+    expr: [Variance, [DirichletDistribution, [List, 1, 4, 5]]]
+    expected: [List, [Rational, 9, 1100], [Rational, 6, 275]]
+  - id: dirichlet-pdf
+    expr: [PDF, [DirichletDistribution, [List, 1, 4, 5]], [List, [Rational, 1, 10], [Rational, 2, 5]]]
+    expected: [Divide, [Gamma, 10], [Multiply, 250, [Gamma, 1], [Gamma, 4], [Gamma, 5]]]
+    caption: $= 10.08$ — Gamma(1)/Gamma(4)/Gamma(5)/Gamma(10) do not auto-reduce to factorials.
+seeAlso:
+  - Mean
+  - Variance
+  - Distributed

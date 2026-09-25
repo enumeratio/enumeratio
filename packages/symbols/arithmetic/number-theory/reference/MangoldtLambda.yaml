@@ -36,6 +36,16 @@ examples:
     expected: [List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]
     category: Scope
     caption: Listable
+  - role: test
+    id: mangoldtlambda-9
+    expr: [MangoldtLambda, 9]
+    expected: [Ln, 3]
+  - role: test
+    id: n-of-a-zero-result-is-still-0
+    expr: [N, [MangoldtLambda, 6]]
+    expected: 0
+    category: Scope
+    caption: N of a zero result is still 0
 seeAlso:
   - IsPrimePower
   - FactorInteger

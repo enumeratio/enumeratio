@@ -107,6 +107,11 @@ examples:
     expected: 1
     category: Possible issues
     caption: An exact half rounds away from zero as well
+  - role: test
+    id: idempotent-round-round-x-round-x
+    expr: [Round, [Round, x]]
+    expected: [Round, x]
+    caption: 'Idempotent: $\mathrm{round}(\mathrm{round}(x)) = \mathrm{round}(x)$'
 seeAlso:
   - Floor
   - Ceil

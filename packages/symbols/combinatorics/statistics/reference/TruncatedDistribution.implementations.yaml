@@ -1,0 +1,55 @@
+truncated-uniform-pdf:
+  epsil:
+    in: PDF(TruncatedDistribution([1 / 4, 3 / 4], UniformDistribution(0, 1)), 1 / 2)
+    out: "2"
+  tex:
+    in: \operatorname{PDF}(\mathrm{TruncatedDistribution}(\bigl\lbrack\frac{1}{4}, \frac{3}{4}\bigr\rbrack, \operatorname{UniformDistribution}(0, 1)), \frac{1}{2})
+    out: "2"
+  fullform:
+    in: PDF[TruncatedDistribution[List[Rational[1, 4], Rational[3, 4]], UniformDistribution[0, 1]], Rational[1, 2]]
+  wolfram:
+    in: PDF[TruncatedDistribution[List[Rational[1, 4], Rational[3, 4]], UniformDistribution[0, 1]], Rational[1, 2]]
+truncated-uniform-pdf-outside:
+  epsil:
+    in: PDF(TruncatedDistribution([1 / 4, 3 / 4], UniformDistribution(0, 1)), 1 / 10)
+    out: "0"
+  tex:
+    in: \operatorname{PDF}(\mathrm{TruncatedDistribution}(\bigl\lbrack\frac{1}{4}, \frac{3}{4}\bigr\rbrack, \operatorname{UniformDistribution}(0, 1)), \frac{1}{10})
+    out: "0"
+  fullform:
+    in: PDF[TruncatedDistribution[List[Rational[1, 4], Rational[3, 4]], UniformDistribution[0, 1]], Rational[1, 10]]
+  wolfram:
+    in: PDF[TruncatedDistribution[List[Rational[1, 4], Rational[3, 4]], UniformDistribution[0, 1]], Rational[1, 10]]
+truncated-uniform-mean:
+  epsil:
+    in: Mean(TruncatedDistribution([1 / 4, 3 / 4], UniformDistribution(0, 1)))
+    out: 1 / 2
+  tex:
+    in: \mathrm{mean}(\mathrm{TruncatedDistribution}(\bigl\lbrack\frac{1}{4}, \frac{3}{4}\bigr\rbrack, \operatorname{UniformDistribution}(0, 1)))
+    out: \frac{1}{2}
+  fullform:
+    in: Mean[TruncatedDistribution[List[Rational[1, 4], Rational[3, 4]], UniformDistribution[0, 1]]]
+  wolfram:
+    in: Mean[TruncatedDistribution[List[Rational[1, 4], Rational[3, 4]], UniformDistribution[0, 1]]]
+truncated-normal-mean-symmetric:
+  epsil:
+    in: Mean(TruncatedDistribution([-1, 1], NormalDistribution(0, 1)))
+    out: "0"
+  tex:
+    in: \mathrm{mean}(\mathrm{TruncatedDistribution}(\bigl\lbrack-1, 1\bigr\rbrack, \operatorname{NormalDistribution}(0, 1)))
+    out: "0"
+  fullform:
+    in: Mean[TruncatedDistribution[List[-1, 1], NormalDistribution[0, 1]]]
+  wolfram:
+    in: Mean[TruncatedDistribution[List[-1, 1], NormalDistribution[0, 1]]]
+truncated-discrete-half-open-excludes-lower:
+  epsil:
+    in: PDF(TruncatedDistribution([1, 4], PoissonDistribution(2)), 1)
+    out: "0"
+  tex:
+    in: \operatorname{PDF}(\mathrm{TruncatedDistribution}(\bigl\lbrack1, 4\bigr\rbrack, \operatorname{PoissonDistribution}(2)), 1)
+    out: "0"
+  fullform:
+    in: PDF[TruncatedDistribution[List[1, 4], PoissonDistribution[2]], 1]
+  wolfram:
+    in: PDF[TruncatedDistribution[List[1, 4], PoissonDistribution[2]], 1]

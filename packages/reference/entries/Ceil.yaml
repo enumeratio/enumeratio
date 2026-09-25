@@ -104,6 +104,11 @@ examples:
     expected: 10
     category: Applications
     caption: Ten bits are enough to number 1000 items, $\lceil \log_2 1000 \rceil$
+  - role: test
+    id: idempotent-lceil-lceil-x-rceil-rceil
+    expr: [Ceil, [Ceil, x]]
+    expected: [Ceil, x]
+    caption: 'Idempotent: $\lceil\lceil x \rceil\rceil = \lceil x \rceil$'
 seeAlso:
   - Floor
   - Round

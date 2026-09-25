@@ -62,6 +62,18 @@ examples:
     expected: Missing
     category: Possible issues
     caption: An empty collection has no last element; compute-engine returns the symbol $Missing$
+  - id: last-default-ignored-when-nonempty
+    expr: [Last, [List, 1, 2, 3], 99]
+    expected: 3
+    role: test
+  - id: last-of-association-is-last-value
+    expr: [Last, [Association, [Rule, 1, a], [Rule, 2, b], [Rule, 3, c]]]
+    expected: c
+    role: test
+  - id: last-of-empty-association-falls-through
+    expr: [Last, [Association], 99]
+    expected: 99
+    role: test
 seeAlso:
   - First
   - At

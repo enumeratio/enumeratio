@@ -1,3 +1,17 @@
+chi-1-mod-5-is-principal-1-on-the-units:
+  epsil:
+    in: DirichletCharacter(5, 1, 2)
+    out: "1"
+  tex:
+    in: \mathrm{DirichletCharacter}(5, 1, 2)
+    out: "1"
+  traditional:
+    in: \chi_{5,1}(2)
+    out: "1"
+  fullform:
+    in: DirichletCharacter[5, 1, 2]
+  wolfram:
+    in: DirichletCharacter[5, 1, 2]
 the-nontrivial-character-mod-4-chi-2-3-1-this-is:
   epsil:
     in: DirichletCharacter(4, 2, 3)

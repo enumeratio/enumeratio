@@ -83,6 +83,24 @@ examples:
     expected: False
     category: Scope
     caption: "…but not in $y$ alone: $y$ appears squared"
+  - role: test
+    id: a-non-squarefree-rational
+    expr: [IsSquareFree, [Rational, 4, 3]]
+    expected: False
+    category: Scope
+    caption: A non-squarefree rational
+  - role: test
+    id: x-1-2-has-a-repeated-root
+    expr: [IsSquareFree, [Add, [Power, x, 2], [Multiply, -2, x], 1]]
+    expected: False
+    category: Scope
+    caption: $(x-1)^2$ has a repeated root
+  - role: test
+    id: x-3-y-3-has-no-repeated-factor
+    expr: [IsSquareFree, [Subtract, [Power, x, 3], [Power, y, 3]]]
+    expected: True
+    category: Scope
+    caption: $x^3-y^3$ has no repeated factor
 seeAlso:
   - MoebiusMu
   - FactorInteger

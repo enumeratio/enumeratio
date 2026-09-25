@@ -118,6 +118,61 @@ examples:
     expected: [Around, 1.1455164340491326, 0.0008799826466981091]
     category: Scope
     caption: Uncertainty propagation in the order
+  - role: test
+    id: h-1-the-first-term
+    expr: [HarmonicNumber, 1]
+    expected: 1
+  - role: test
+    id: h-10-3-exact-generalized-sum
+    expr: [HarmonicNumber, 10, 3]
+    expected: [Rational, 19164113947, 16003008000]
+  - role: test
+    id: h-5-0-sum-k-1-5-1-5
+    expr: [HarmonicNumber, 5, 0]
+    expected: 5
+    caption: $H_5^{(0)} = \sum_{k=1}^5 1 = 5$
+  - role: test
+    id: h-0-3-the-empty-sum-at-a-nonzero-order
+    expr: [HarmonicNumber, 0, 3]
+    expected: 0
+  - role: test
+    id: no-sum-below-n-0-one-argument-form
+    expr: [HarmonicNumber, -1]
+    expected: ComplexInfinity
+  - role: test
+    id: no-sum-below-n-0-two-argument-form
+    expr: [HarmonicNumber, -2, 3]
+    expected: ComplexInfinity
+  - role: test
+    id: symbolic-n-one-argument-form-stays-symbolic
+    expr: [HarmonicNumber, n]
+    expected: [HarmonicNumber, n]
+  - role: test
+    id: n-harmonicnumber-0p5
+    expr: [N, [HarmonicNumber, 0.5]]
+    expected: { num: "0.613705638880109381166" }
+  - role: test
+    id: n-harmonicnumber-complex-3-plus-2i
+    expr: [N, [HarmonicNumber, [Complex, 3, 2]]]
+    expected: [Complex, 1.9725764110447408, 0.5169611287960764]
+  - role: test
+    id: n-harmonicnumber-1-over-2-order-2
+    expr: [N, [HarmonicNumber, [Rational, 1, 2], 2]]
+    expected: { num: "0.710131866303547127053" }
+  - role: test
+    id: n-harmonicnumber-5-order-1-over-2
+    expr: [N, [HarmonicNumber, 5, [Rational, 1, 2]]]
+    expected: { num: "3.231670645876131228192" }
+  - role: test
+    id: n-harmonicnumber-2p5-order-1-not-the-zeta-1-pole
+    expr: [N, [HarmonicNumber, 2.5, 1]]
+    expected: { num: "1.680372305546776047837" }
+    caption: Order $r = 1$ given explicitly is still routed to $\psi(z+1) + \gamma$, not $\zeta(1) - \zeta(1, z+1)$'s pole
+  - role: test
+    id: h-10-1-order-1-reduces-to-the-plain-h-10
+    expr: [HarmonicNumber, 10, 1]
+    expected: [Rational, 7381, 2520]
+    caption: Order 1 given explicitly reduces to the exact plain $H_{10}$
   - id: to-exactly-30-significant-digits-not-yet-31-come
     expr: [N, [HarmonicNumber, [Rational, 1, 2]], 30]
     expected: { num: "0.613705638880109381165535757084" }
@@ -135,6 +190,10 @@ examples:
     category: Scope
     caption: At an integer, order 1 agrees exactly with the one-argument $H_{10}$.
     group: harmonic-order-one
+  - role: test
+    id: h-2-is-three-halves
+    expr: [HarmonicNumber, 2]
+    expected: [Rational, 3, 2]
 implementations:
   - origin: reference
     form: notatio

@@ -365,6 +365,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Association",
   },
   {
+    name: "AssociationThread",
+    wolfram: "AssociationThread",
+  },
+  {
     name: "Assuming",
     wolfram: "Assuming",
   },
@@ -2024,12 +2028,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "FractionalPart",
   },
   {
+    name: "FreeQ",
+    wolfram: "FreeQ",
+  },
+  {
     name: "FrobeniusNumber",
     wolfram: "FrobeniusNumber",
   },
   {
     name: "FrobeniusSolve",
     wolfram: "FrobeniusSolve",
+  },
+  {
+    name: "FromCharacterCode",
+    wolfram: "FromCharacterCode",
   },
   {
     name: "FromDigits",
@@ -3242,6 +3254,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "LetterNumber",
   },
   {
+    name: "Level",
+    wolfram: "Level",
+  },
+  {
     name: "LineGraph",
     wolfram: "LineGraph",
   },
@@ -3474,6 +3490,18 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "MapAt",
     wolfram: "MapAt",
+  },
+  {
+    name: "MapIndexed",
+    wolfram: "MapIndexed",
+  },
+  {
+    name: "MapThread",
+    wolfram: "MapThread",
+  },
+  {
+    name: "MatchQ",
+    wolfram: "MatchQ",
   },
   {
     name: "MatrixExp",
@@ -3819,6 +3847,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Pi",
     wolfram: "Pi",
+  },
+  {
+    name: "Pick",
+    wolfram: "Pick",
   },
   {
     name: "Piecewise",
@@ -4175,6 +4207,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Repeat",
     wolfram: "ConstantArray",
+  },
+  {
+    name: "Replace",
+    wolfram: "Replace",
+  },
+  {
+    name: "ReplacePart",
+    wolfram: "ReplacePart",
   },
   {
     name: "Rescale",
@@ -4587,6 +4627,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "StringLength",
+    wolfram: "StringLength",
+  },
+  {
+    name: "StringTake",
+    wolfram: "StringTake",
+  },
+  {
     name: "Subfactorial",
     wolfram: "Subfactorial",
   },
@@ -4719,8 +4767,20 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "Thread",
   },
   {
+    name: "Through",
+    wolfram: "Through",
+  },
+  {
     name: "TimeConstrained",
     wolfram: "TimeConstrained",
+  },
+  {
+    name: "ToCharacterCode",
+    wolfram: "ToCharacterCode",
+  },
+  {
+    name: "ToString",
+    wolfram: "ToString",
   },
   {
     name: "Totient",

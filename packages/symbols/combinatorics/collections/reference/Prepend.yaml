@@ -31,6 +31,18 @@ examples:
     expected: [Association, [Rule, 3, d], [Rule, 4, e], [Rule, 1, a], [Rule, 2, b]]
     category: Scope
     caption: Several rules prepended at once
+  - id: prepend-front-of-list
+    expr: [Prepend, [List, 1, 2, 3], 0]
+    expected: [List, 0, 1, 2, 3]
+    role: test
+  - id: prepend-single-element-list
+    expr: [Prepend, [List, 5], 10]
+    expected: [List, 10, 5]
+    role: test
+  - id: prepend-empty-list
+    expr: [Prepend, [List], 42]
+    expected: [List, 42]
+    role: test
 seeAlso:
   - Append
   - Join

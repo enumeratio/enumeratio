@@ -43,6 +43,12 @@ examples:
     expected: 1
     category: Possible issues
     caption: "A single argument is always 1: there's only one way to split n items into one group"
+  - role: test
+    id: a-single-symbolic-argument-is-also-1
+    expr: [Multinomial, n]
+    expected: 1
+    category: Possible issues
+    caption: A single symbolic argument is also 1
   - id: threads-element-wise-over-a-list-as-wolfram-s
     expr: [Multinomial, [List, 2, 3, 5], 3]
     expected: [List, 10, 20, 56]

@@ -64,3 +64,14 @@ terms-5-through-8:
     in: LinearRecurrence[List[1, 1], List[1, 1], List[5, 8]]
   wolfram:
     in: LinearRecurrence[List[1, 1], List[1, 1], List[5, 8]]
+linearrecurrence-stays-exact-over-rationals:
+  epsil:
+    in: LinearRecurrence([1 / 2], [4], 5)
+    out: "[4, 2, 1, 1 / 2, 1 / 4]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack\frac{1}{2}\bigr\rbrack, \bigl\lbrack4\bigr\rbrack, 5)
+    out: \bigl\lbrack4, 2, 1, \frac{1}{2}, \frac{1}{4}\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[Rational[1, 2]], List[4], 5]
+  wolfram:
+    in: LinearRecurrence[List[Rational[1, 2]], List[4], 5]

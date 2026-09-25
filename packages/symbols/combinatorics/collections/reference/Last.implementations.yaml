@@ -116,3 +116,34 @@ an-empty-collection-has-no-last-element-compute:
   wolfram:
     in: Last[List[]]
     note: Last of an empty list is the symbol Missing here; Wolfram leaves Last[{}] unevaluated (with a Last::nolast message).
+last-default-ignored-when-nonempty:
+  epsil:
+    in: Last([1, 2, 3], 99)
+    out: "3"
+  tex:
+    in: \mathrm{Last}(\bigl\lbrack1, 2, 3\bigr\rbrack, 99)
+    out: "3"
+  fullform:
+    in: Last[List[1, 2, 3], 99]
+  wolfram:
+    in: Last[List[1, 2, 3], 99]
+last-of-association-is-last-value:
+  epsil:
+    in: Last(Association(Rule(1, a), Rule(2, b), Rule(3, c)))
+    out: c
+  tex:
+    in: \mathrm{Last}(\mathrm{Association}(\mathrm{Rule}(1, a), \mathrm{Rule}(2, b), \mathrm{Rule}(3, c)))
+    out: c
+  fullform:
+    in: Last[Association[Rule[1, a], Rule[2, b], Rule[3, c]]]
+last-of-empty-association-falls-through:
+  epsil:
+    in: Last(Association(), 99)
+    out: "99"
+  tex:
+    in: \mathrm{Last}(\mathrm{Association}(), 99)
+    out: "99"
+  fullform:
+    in: Last[Association[], 99]
+  wolfram:
+    in: Last[Association[], 99]

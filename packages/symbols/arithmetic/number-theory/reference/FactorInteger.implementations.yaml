@@ -337,3 +337,42 @@ a-21-digit-prime-cubed-factors-at-once:
     in: FactorInteger[Power[100000000000000000039, 3]]
   sage:
     in: list(factor((100000000000000000039^3)))
+factorinteger-neg-12:
+  epsil:
+    in: FactorInteger(-12)
+    out: "[(-1, 1), (2, 2), (3, 1)]"
+  tex:
+    in: \mathrm{FactorInteger}(-12)
+    out: \bigl\lbrack(-1,1), (2,2), (3,1)\bigr\rbrack
+  fullform:
+    in: FactorInteger[-12]
+  wolfram:
+    in: FactorInteger[-12]
+  sage:
+    in: list(factor(-12))
+a-non-integer-real-stays-unevaluated:
+  epsil:
+    in: FactorInteger(2.5)
+    out: FactorInteger(2.5)
+  tex:
+    in: \mathrm{FactorInteger}(2.5)
+    out: \mathrm{FactorInteger}(2.5)
+  fullform:
+    in: FactorInteger[2.5]
+  wolfram:
+    in: FactorInteger[2.5]
+  sage:
+    in: list(factor(2.5))
+factorinteger-of-a-negative-rational:
+  epsil:
+    in: FactorInteger(-3 / 8)
+    out: "[(-1, 1), (2, -3), (3, 1)]"
+  tex:
+    in: \mathrm{FactorInteger}(-\frac{3}{8})
+    out: \bigl\lbrack(-1,1), (2,-3), (3,1)\bigr\rbrack
+  fullform:
+    in: FactorInteger[Rational[-3, 8]]
+  wolfram:
+    in: FactorInteger[Rational[-3, 8]]
+  sage:
+    in: list(factor((-3/8)))

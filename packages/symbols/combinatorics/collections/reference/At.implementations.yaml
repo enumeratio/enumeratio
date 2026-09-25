@@ -235,3 +235,32 @@ parts-of-any-expression-not-just-lists-the:
     out: b
   fullform:
     in: Part[Plus[a, b, c], 2]
+at-lazy-family-collection-element:
+  epsil:
+    in: KSubsets(5, 2)[1]
+    out: "[1, 2]"
+  tex:
+    in: \mathrm{KSubsets}(5, 2)[1]
+    out: \bigl\lbrack1, 2\bigr\rbrack
+  fullform:
+    in: Part[KSubsets[5, 2], 1]
+at-span-submatrix-two-levels:
+  epsil:
+    in: "[[1, 2, 3], [4, 5, 6], [7, 8, 9]][Span(2, 3), Span(1, 2)]"
+    out: "[[4, 5], [7, 8]]"
+  tex:
+    in: \bigl\lbrack\bigl\lbrack1, 2, 3\bigr\rbrack, \bigl\lbrack4, 5, 6\bigr\rbrack, \bigl\lbrack7, 8, 9\bigr\rbrack\bigr\rbrack[\mathrm{Span}(2, 3), \mathrm{Span}(1, 2)]
+    out: \bigl\lbrack\bigl\lbrack4, 5\bigr\rbrack, \bigl\lbrack7, 8\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]
+  wolfram:
+    in: Part[List[List[1, 2, 3], List[4, 5, 6], List[7, 8, 9]], Span[2, 3], Span[1, 2]]
+at-integer-without-span-unaffected:
+  epsil:
+    in: "[a, b, c][2]"
+    out: b
+  tex:
+    in: \bigl\lbrack a, b, c\bigr\rbrack[2]
+    out: b
+  fullform:
+    in: Part[List[a, b, c], 2]

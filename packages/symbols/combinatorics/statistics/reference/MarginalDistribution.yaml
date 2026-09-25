@@ -1,0 +1,33 @@
+name: MarginalDistribution
+domain: Statistics
+signature: MarginalDistribution(ProductDistribution(d1, ..., dn), k)
+summary: The $k$-th marginal factor of a [[ProductDistribution]] — or the joint marginal of several.
+signatures:
+  - call: MarginalDistribution(ProductDistribution(d1, ..., dn), k)
+    description: the k-th factor, dk, directly.
+    library: enumeratio-statistics
+  - call: MarginalDistribution(ProductDistribution(d1, ..., dn), {k1, k2, ...})
+    description: ProductDistribution(dk1, dk2, ...), the joint marginal of the named factors.
+    library: enumeratio-statistics
+details:
+  - Reduces away entirely at evaluation — the result IS the plain factor (or a [[ProductDistribution]] of the selected factors), so [[PDF]]/[[CDF]]/[[Mean]]/[[Variance]]/[[RandomVariate]] on it are just whatever that reduced distribution already answers.
+  - Only defined over a [[ProductDistribution]] base (independence is what makes "the k-th marginal" simply "the k-th factor") — any other first argument stays unevaluated.
+examples:
+  - id: marginal-single-factor
+    expr: [MarginalDistribution, [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 5, 2]], 2]
+    expected: [NormalDistribution, 5, 2]
+  - id: marginal-single-factor-mean
+    expr:
+      [Mean, [MarginalDistribution, [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 5, 2]], 2]]
+    expected: 5
+  - id: marginal-index-list
+    expr:
+      [
+        MarginalDistribution,
+        [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 5, 2], [NormalDistribution, 9, 1]],
+        [List, 1, 3],
+      ]
+    expected: [ProductDistribution, [NormalDistribution, 0, 1], [NormalDistribution, 9, 1]]
+seeAlso:
+  - ProductDistribution
+  - Mean
