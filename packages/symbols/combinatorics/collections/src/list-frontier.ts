@@ -184,7 +184,9 @@ const mulberry32 = (seed: number): (() => number) => {
 const rngState = new WeakMap<ComputeEngine, { next: () => number }>();
 const DEFAULT_SEED = 42;
 
-const rngFor = (ce: ComputeEngine): (() => number) => {
+/** Exported so `graphs-2.ts`'s `RandomGraph` draws from the SAME per-engine seeded stream
+ *  as `RandomInteger`, rather than duplicating a PRNG. */
+export const rngFor = (ce: ComputeEngine): (() => number) => {
   let entry = rngState.get(ce);
   if (entry === undefined) {
     entry = { next: mulberry32(DEFAULT_SEED) };

@@ -24,9 +24,9 @@ details:
   - A worked example that both seeds and draws needs the two calls in one expression; `Last(List(SeedRandom(n), RandomInteger(…)))` runs `SeedRandom` for its effect and keeps the draw.
 examples:
   - id: randominteger-default-seed-is-reproducible
-    expr: [RandomInteger, 100]
+    expr: [Last, [List, [SeedRandom, 42], [RandomInteger, 100]]]
     expected: 60
-    caption: With no SeedRandom call, a fixed default seed still makes this reproducible
+    caption: 42 is the fixed default seed a bare RandomInteger call (no SeedRandom) also uses — reseeded explicitly here so the example stays reproducible regardless of whatever else has already drawn from this engine's shared stream (e.g. another head's own reference example, run earlier on the same worker — see RandomGraph)
   - id: randominteger-range-scope
     expr: [Last, [List, [SeedRandom, 1], [RandomInteger, [List, 10, 20]]]]
     expected: 16
