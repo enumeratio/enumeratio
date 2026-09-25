@@ -2130,6 +2130,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "GammaRegularized",
   },
   {
+    name: "Gather",
+    wolfram: "Gather",
+  },
+  {
+    name: "GatherBy",
+    wolfram: "GatherBy",
+  },
+  {
     name: "GeometricMean",
     wolfram: "GeometricMean",
   },
@@ -3339,6 +3347,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "NonCommutativeMultiply",
   },
   {
+    name: "NoneTrue",
+    wolfram: "NoneTrue",
+  },
+  {
     name: "NorlundB",
     wolfram: "NorlundB",
   },
@@ -3373,6 +3385,14 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Outer",
     wolfram: "Outer",
+  },
+  {
+    name: "PadLeft",
+    wolfram: "PadLeft",
+  },
+  {
+    name: "PadRight",
+    wolfram: "PadRight",
   },
   {
     name: "Partition",
@@ -3731,6 +3751,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     wolfram: "ZetaZero",
   },
   {
+    name: "Riffle",
+    wolfram: "Riffle",
+  },
+  {
     name: "RomanNumeral",
     wolfram: "RomanNumeral",
   },
@@ -3998,6 +4022,22 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Sort",
     wolfram: "Sort",
+  },
+  {
+    name: "SortBy",
+    wolfram: "SortBy",
+  },
+  {
+    name: "Span",
+    wolfram: "Span",
+  },
+  {
+    name: "Split",
+    wolfram: "Split",
+  },
+  {
+    name: "SplitBy",
+    wolfram: "SplitBy",
   },
   {
     name: "Sqrt",
@@ -4273,6 +4313,10 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "UnitStep",
     wolfram: "UnitStep",
+  },
+  {
+    name: "UpTo",
+    wolfram: "UpTo",
   },
   {
     name: "Variance",
