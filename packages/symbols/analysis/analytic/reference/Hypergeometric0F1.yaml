@@ -1,0 +1,34 @@
+name: Hypergeometric0F1
+domain: Special functions
+signature: Hypergeometric0F1(b, z)
+summary: The confluent hypergeometric limit function ${}_0F_1(b; z) = \sum_{k\ge0} z^k / ((b)_k\,k!)$ — entire in $z$, related to the Bessel functions. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: Hypergeometric0F1(b, z)
+    description: ${}_0F_1(b; z)$, by its defining series.
+    library: '@enumeratio/analytic'
+details:
+  - compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).
+  - Poles at $b$ a nonpositive integer $0, -1, -2, \dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.
+examples:
+  - id: a-generic-point-checked-against-mpmath-s-hyp0f1
+    expr: [Hypergeometric0F1, 2, 0.5]
+    expected: 1.271723456312137
+    caption: a generic point, checked against mpmath's `hyp0f1`
+  - id: b-0-is-a-pole-stays-symbolic
+    expr: [Hypergeometric0F1, 0, 0.5]
+    expected: [Hypergeometric0F1, 0, 0.5]
+    category: Possible issues
+    caption: $b = 0$ is a pole — stays symbolic
+primitive: numeric
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/hypergeometric.ts
+  - origin: mapped
+    form: wolfram / mpmath
+    environment: external
+    note: Hypergeometric0F1[b,z]; mpmath.hyp0f1(b,z).
+seeAlso:
+  - Hypergeometric0F1Regularized
+  - BesselJ

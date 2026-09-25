@@ -1,4 +1,53 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
+
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/combinatorics/collections/reference/Union.yaml",
+  "packages/reference/entries/Intersection.yaml",
+  "packages/reference/entries/SetMinus.yaml",
+  "packages/symbols/combinatorics/collections/reference/First.yaml",
+  "packages/symbols/combinatorics/collections/reference/Last.yaml",
+  "packages/symbols/combinatorics/collections/reference/At.yaml",
+  "packages/reference/entries/IndexOf.yaml",
+  "packages/symbols/combinatorics/collections/reference/FirstPosition.yaml",
+  "packages/symbols/combinatorics/collections/reference/Position.yaml",
+  "packages/symbols/combinatorics/collections/reference/Sort.yaml",
+  "packages/symbols/combinatorics/collections/reference/Ordering.yaml",
+  "packages/symbols/combinatorics/collections/reference/Length.yaml",
+  "packages/symbols/combinatorics/collections/reference/Count.yaml",
+  "packages/symbols/combinatorics/collections/reference/Join.yaml",
+  "packages/symbols/combinatorics/collections/reference/Flatten.yaml",
+  "packages/reference/entries/Append.yaml",
+  "packages/symbols/combinatorics/collections/reference/Prepend.yaml",
+  "packages/symbols/combinatorics/collections/reference/Partition.yaml",
+  "packages/symbols/combinatorics/collections/reference/Mean.yaml",
+  "packages/symbols/combinatorics/collections/reference/Median.yaml",
+  "packages/reference/entries/Mode.yaml",
+  "packages/symbols/combinatorics/collections/reference/Commonest.yaml",
+  "packages/symbols/combinatorics/collections/reference/Product.yaml",
+  "packages/symbols/combinatorics/collections/reference/Nest.yaml",
+  "packages/symbols/combinatorics/collections/reference/NestList.yaml",
+  "packages/symbols/combinatorics/collections/reference/FixedPoint.yaml",
+  "packages/symbols/combinatorics/collections/reference/Outer.yaml",
+  "packages/symbols/combinatorics/collections/reference/LinearRecurrence.yaml",
+  "packages/symbols/combinatorics/collections/reference/RecurrenceTable.yaml",
+  "packages/symbols/combinatorics/collections/reference/Association.yaml",
+  "packages/symbols/combinatorics/collections/reference/GeometricMean.yaml",
+  "packages/symbols/combinatorics/collections/reference/HarmonicMean.yaml",
+  "packages/symbols/combinatorics/collections/reference/Span.yaml",
+  "packages/symbols/combinatorics/collections/reference/UpTo.yaml",
+  "packages/symbols/combinatorics/collections/reference/Riffle.yaml",
+  "packages/symbols/combinatorics/collections/reference/Gather.yaml",
+  "packages/symbols/combinatorics/collections/reference/GatherBy.yaml",
+  "packages/symbols/combinatorics/collections/reference/Split.yaml",
+  "packages/symbols/combinatorics/collections/reference/SplitBy.yaml",
+  "packages/symbols/combinatorics/collections/reference/SortBy.yaml",
+  "packages/symbols/combinatorics/collections/reference/PadLeft.yaml",
+  "packages/symbols/combinatorics/collections/reference/PadRight.yaml",
+];
 
 export const collections: readonly ReferenceEntry[] = [
   {
@@ -384,16 +433,8 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
-      {
-        id: "first-list-1-2-3",
-        expr: ["First", ["List", 1, 2, 3]],
-        expected: 1,
-      },
-      {
-        id: "first-list-10-20-30",
-        expr: ["First", ["List", 10, 20, 30]],
-        expected: 10,
-      },
+      { id: "first-list-1-2-3", expr: ["First", ["List", 1, 2, 3]], expected: 1 },
+      { id: "first-list-10-20-30", expr: ["First", ["List", 10, 20, 30]], expected: 10 },
       {
         id: "first-c-at-c-1-see-at",
         expr: ["Equal", ["First", ["List", 1, 2, 3]], ["At", ["List", 1, 2, 3], 1]],
@@ -420,11 +461,7 @@ export const collections: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "A second argument supplies a default for an empty collection",
       },
-      {
-        id: "first-list-a-b-c",
-        expr: ["First", ["List", "a", "b", "c"]],
-        expected: "a",
-      },
+      { id: "first-list-a-b-c", expr: ["First", ["List", "a", "b", "c"]], expected: "a" },
       {
         id: "of-a-matrix-the-first-row",
         expr: ["First", ["List", ["List", "a", "b"], ["List", "c", "d"]]],
@@ -482,16 +519,8 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
-      {
-        id: "last-list-1-2-3",
-        expr: ["Last", ["List", 1, 2, 3]],
-        expected: 3,
-      },
-      {
-        id: "last-list-10-20-30",
-        expr: ["Last", ["List", 10, 20, 30]],
-        expected: 30,
-      },
+      { id: "last-list-1-2-3", expr: ["Last", ["List", 1, 2, 3]], expected: 3 },
+      { id: "last-list-10-20-30", expr: ["Last", ["List", 10, 20, 30]], expected: 30 },
       {
         id: "last-c-at-c-1-see-at",
         expr: ["Equal", ["Last", ["List", 1, 2, 3]], ["At", ["List", 1, 2, 3], -1]],
@@ -506,11 +535,7 @@ export const collections: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "A second argument supplies a default for an empty collection",
       },
-      {
-        id: "last-list-a-b-c",
-        expr: ["Last", ["List", "a", "b", "c"]],
-        expected: "c",
-      },
+      { id: "last-list-a-b-c", expr: ["Last", ["List", "a", "b", "c"]], expected: "c" },
       {
         id: "of-a-matrix-the-last-row",
         expr: ["Last", ["List", ["List", "a", "b"], ["List", "c", "d"], ["List", "f", "g"]]],
@@ -601,16 +626,8 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's — Wolfram's Part reaches into any head.",
     ],
     examples: [
-      {
-        id: "list-1-2-3-4-list-2",
-        expr: ["At", ["List", 1, 2, 3, 4], 2],
-        expected: 2,
-      },
-      {
-        id: "list-1-2-3-4-list-neg-1",
-        expr: ["At", ["List", 1, 2, 3, 4], -1],
-        expected: 4,
-      },
+      { id: "list-1-2-3-4-list-2", expr: ["At", ["List", 1, 2, 3, 4], 2], expected: 2 },
+      { id: "list-1-2-3-4-list-neg-1", expr: ["At", ["List", 1, 2, 3, 4], -1], expected: 4 },
       {
         id: "list-a-b-c-d-list-neg-2",
         expr: ["At", ["List", "a", "b", "c", "d"], -2],
@@ -656,11 +673,7 @@ export const collections: readonly ReferenceEntry[] = [
             "An out-of-range index is NaN here; Wolfram leaves Part unevaluated (with a Part::partw message).",
         },
       },
-      {
-        id: "list-a-b-c-d-list-3",
-        expr: ["At", ["List", "a", "b", "c", "d"], 3],
-        expected: "c",
-      },
+      { id: "list-a-b-c-d-list-3", expr: ["At", ["List", "a", "b", "c", "d"], 3], expected: "c" },
       {
         id: "several-indices-reach-into-successive-levels-row",
         expr: ["At", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6]], 2, 3],
@@ -779,11 +792,7 @@ export const collections: readonly ReferenceEntry[] = [
       "Reports only the first occurrence, as a plain index. See [[Position]] for every occurrence.",
     ],
     examples: [
-      {
-        id: "indexof-list-1-2-3-2",
-        expr: ["IndexOf", ["List", 1, 2, 3], 2],
-        expected: 2,
-      },
+      { id: "indexof-list-1-2-3-2", expr: ["IndexOf", ["List", 1, 2, 3], 2], expected: 2 },
       {
         id: "0-signals-that-the-value-isn-t-present-since-0",
         expr: ["IndexOf", ["List", 1, 2, 3], 9],
@@ -948,11 +957,7 @@ export const collections: readonly ReferenceEntry[] = [
       "Works on the operands of any expression, not just a collection's elements.",
     ],
     examples: [
-      {
-        id: "sort-list-3-1-2",
-        expr: ["Sort", ["List", 3, 1, 2]],
-        expected: ["List", 1, 2, 3],
-      },
+      { id: "sort-list-3-1-2", expr: ["Sort", ["List", 3, 1, 2]], expected: ["List", 1, 2, 3] },
       {
         id: "sort-list-4-2-5-1-3",
         expr: ["Sort", ["List", 4, 2, 5, 1, 3]],
@@ -1190,16 +1195,8 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Count]] to count occurrences of a specific value instead of every element.",
     ],
     examples: [
-      {
-        id: "length-list-1-2-3-4",
-        expr: ["Length", ["List", 1, 2, 3, 4]],
-        expected: 4,
-      },
-      {
-        id: "length-list-1-2-3-4-5",
-        expr: ["Length", ["List", 1, 2, 3, 4, 5]],
-        expected: 5,
-      },
+      { id: "length-list-1-2-3-4", expr: ["Length", ["List", 1, 2, 3, 4]], expected: 4 },
+      { id: "length-list-1-2-3-4-5", expr: ["Length", ["List", 1, 2, 3, 4, 5]], expected: 5 },
       {
         id: "works-on-any-collection-not-just-list",
         expr: ["Length", ["Set", 1, 2, 3]],
@@ -1224,11 +1221,7 @@ export const collections: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "An atom has no parts, so its length is 0",
       },
-      {
-        id: "length-list-a-b-c-d",
-        expr: ["Length", ["List", "a", "b", "c", "d"]],
-        expected: 4,
-      },
+      { id: "length-list-a-b-c-d", expr: ["Length", ["List", "a", "b", "c", "d"]], expected: 4 },
       {
         id: "the-empty-list-has-length-0",
         expr: ["Length", ["List"]],
@@ -1302,11 +1295,7 @@ export const collections: readonly ReferenceEntry[] = [
       "A bare integer level spec counts matches at every level from 1 through it; $\\{level\\}$ counts that level only.",
     ],
     examples: [
-      {
-        id: "count-list-1-2-2-3-2-2",
-        expr: ["Count", ["List", 1, 2, 2, 3, 2], 2],
-        expected: 3,
-      },
+      { id: "count-list-1-2-2-3-2-2", expr: ["Count", ["List", 1, 2, 2, 3, 2], 2], expected: 3 },
       {
         id: "count-list-1-2-2-3-2-4-2",
         expr: ["Count", ["List", 1, 2, 2, 3, 2, 4], 2],
@@ -2269,11 +2258,7 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Mode]] for the most frequent value.",
     ],
     examples: [
-      {
-        id: "median-list-1-2-3-4-5",
-        expr: ["Median", ["List", 1, 2, 3, 4, 5]],
-        expected: 3,
-      },
+      { id: "median-list-1-2-3-4-5", expr: ["Median", ["List", 1, 2, 3, 4, 5]], expected: 3 },
       {
         id: "median-list-1-2-3-4",
         expr: ["Median", ["List", 1, 2, 3, 4]],
@@ -2362,11 +2347,7 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[Mean]] and [[Median]] for other measures of central tendency.",
     ],
     examples: [
-      {
-        id: "mode-list-1-2-2-3",
-        expr: ["Mode", ["List", 1, 2, 2, 3]],
-        expected: 2,
-      },
+      { id: "mode-list-1-2-2-3", expr: ["Mode", ["List", 1, 2, 2, 3]], expected: 2 },
       {
         id: "the-mode-occurs-exactly-as-many-times-as-the",
         expr: ["Equal", ["Count", ["List", 1, 2, 2, 3], ["Mode", ["List", 1, 2, 2, 3]]], 2],
@@ -2382,15 +2363,9 @@ export const collections: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption:
           "With a tie for most frequent, Mode returns just one; see [[Commonest]] for every tied value",
-        divergence: {
-          wolfram: "Wolfram's Commonest returns every tied mode, [1, 2], here.",
-        },
+        divergence: { wolfram: "Wolfram's Commonest returns every tied mode, [1, 2], here." },
       },
-      {
-        id: "mode-list-1-2-3-3-2-3",
-        expr: ["Mode", ["List", 1, 2, 3, 3, 2, 3]],
-        expected: 3,
-      },
+      { id: "mode-list-1-2-3-3-2-3", expr: ["Mode", ["List", 1, 2, 3, 3, 2, 3]], expected: 3 },
       {
         id: "exact-rationals",
         expr: ["Mode", ["List", ["Rational", 1, 2], 1, ["Rational", 1, 2]]],
@@ -2533,11 +2508,7 @@ export const collections: readonly ReferenceEntry[] = [
       "A symbolic bound closes in two general shapes: $\\prod i^m = (\\prod i)^m$ for $m$ free of the index (a factorial power), and $\\prod c^{f(i)} = c^{\\sum f(i)}$ for $c$ free of the index, the sum found by Faulhaber's formula for any polynomial $f$. A product with more than one `Tuple` clause reduces inner-first, so a triangular product (an inner limit depending on the outer index) closes too, once the inner reduction leaves a shape the outer sum recognises.",
     ],
     examples: [
-      {
-        id: "product-list-1-2-3-4",
-        expr: ["Product", ["List", 1, 2, 3, 4]],
-        expected: 24,
-      },
+      { id: "product-list-1-2-3-4", expr: ["Product", ["List", 1, 2, 3, 4]], expected: 24 },
       {
         id: "the-empty-product-is-1-by-convention-matching",
         expr: ["Product", ["List"]],
@@ -2737,11 +2708,7 @@ export const collections: readonly ReferenceEntry[] = [
       "See [[NestList]] for every intermediate step, and [[FixedPoint]] for iterating until the value stops changing instead of a fixed count.",
     ],
     examples: [
-      {
-        id: "nest-f-x-3",
-        expr: ["Nest", "f", "x", 3],
-        expected: ["f", ["f", ["f", "x"]]],
-      },
+      { id: "nest-f-x-3", expr: ["Nest", "f", "x", 3], expected: ["f", ["f", ["f", "x"]]] },
       {
         id: "repeated-squaring-2-2-2-2",
         expr: ["Nest", ["Function", ["Power", "_1", 2]], 2, 3],
@@ -3210,7 +3177,6 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["GeometricMean", "Mean"],
   },
-  // ── Wolfram-sweep list heads (packages/symbols/combinatorics/collections/src/list-ops-wolfram.ts) ──
   {
     name: "Span",
     domain: "Collections",

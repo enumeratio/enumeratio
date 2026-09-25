@@ -1,0 +1,44 @@
+name: EulerE
+domain: Number theory
+signature: EulerE(n, x?)
+summary: The Euler numbers $E_n$ and Euler polynomials $E_n(x)$.
+signatures:
+  - call: EulerE(n)
+    description: the $n$th Euler number
+    library: enumeratio-number-theory
+  - call: EulerE(n, x)
+    description: the $n$th Euler polynomial, evaluated at $x$
+    library: enumeratio-number-theory
+details:
+  - Odd-indexed Euler numbers past $E_0$ are 0; the even ones come from $\sum_{k=0}^{n/2}\binom{n}{2k}E_{2k}=0$.
+  - $E_n = 2^n E_n(\frac12)$ ties the numbers to the polynomials.
+  - Not to be confused with [[BernoulliB]] or [[EulerGamma]].
+examples:
+  - id: eulere-10
+    expr: [EulerE, 10]
+    expected: -50521
+  - id: eulere-8
+    expr: [EulerE, 8]
+    expected: 1385
+  - id: listable-odd-indices-vanish
+    expr: [EulerE, [List, 0, 1, 2, 3, 4]]
+    expected: [List, 1, 0, -1, 0, 5]
+    category: Scope
+    caption: Listable; odd indices vanish
+  - id: the-euler-polynomial-e-2-x-x-2-x
+    expr: [EulerE, 2, x]
+    expected: [Add, [Power, x, 2], [Negate, x]]
+    category: Scope
+    caption: the Euler polynomial $E_2(x) = x^2 - x$
+  - id: e-4-x-x-4-2x-3-x
+    expr: [EulerE, 4, x]
+    expected: [Add, [Power, x, 4], [Multiply, -2, [Power, x, 3]], x]
+    category: Scope
+    caption: $E_4(x) = x^4 - 2x^3 + x$
+  - id: e-n-2-n-e-n-frac-12-and-e-3-0
+    expr: [EulerE, 3, [Rational, 1, 2]]
+    expected: 0
+    category: Properties
+    caption: $E_n = 2^n E_n(\frac12)$, and $E_3 = 0$
+seeAlso:
+  - BernoulliB

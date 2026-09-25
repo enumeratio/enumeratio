@@ -1,0 +1,74 @@
+name: NextPrime
+domain: Number theory
+signature: NextPrime(n, k?)
+summary: The next prime strictly greater than n, or the kth prime after n.
+signatures:
+  - call: NextPrime(n)
+    description: smallest prime strictly greater than $n$.
+  - call: NextPrime(n, k)
+    description: the $k$th prime after $n$; negative $k$ walks backward.
+details:
+  - NextPrime(n) is the $(m+1)$th prime, where $m$ is the count of primes $\le n$.
+  - NextPrime(n, k) generalizes to the $(m+k)$th prime, so a negative $k$ steps backward to a prime below $n$.
+  - n need not be prime or even an integer; compute-engine simply finds the next prime above it.
+  - Threads element-wise over a list, as Wolfram's Listable heads do.
+examples:
+  - id: nextprime-10
+    expr: [NextPrime, 10]
+    expected: 11
+  - id: nextprime-100
+    expr: [NextPrime, 100]
+    expected: 101
+  - id: the-second-prime-after-10
+    expr: [NextPrime, 10, 2]
+    expected: 13
+    caption: The second prime after 10
+  - id: a-negative-k-walks-backward-giving-the-prime
+    expr: [NextPrime, 10, -1]
+    expected: 7
+    category: Possible issues
+    caption: A negative $k$ walks backward, giving the prime immediately before 10
+  - id: threads-element-wise-over-a-list-as-wolfram-s
+    expr: [NextPrime, [List, 1, 5, 10, 15]]
+    expected: [List, 2, 7, 11, 17]
+    category: Scope
+    caption: Threads element-wise over a list, as Wolfram's Listable heads do
+  - id: nextprime-6
+    expr: [NextPrime, 6]
+    expected: 7
+  - id: the-second-prime-after-50
+    expr: [NextPrime, 50, 2]
+    expected: 59
+    caption: The second prime after 50
+  - id: the-largest-prime-below-50
+    expr: [NextPrime, 50, -1]
+    expected: 47
+    caption: The largest prime below 50
+  - id: large-integers-the-first-prime-past-a-googol-is
+    expr: [NextPrime, [Power, 10, 100]]
+    expected: {num: '10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000267'}
+    category: Scope
+    caption: 'Large integers: the first prime past a googol is $10^{100}+267$'
+  - id: rational-n-the-next-prime-above-7-2
+    expr: [NextPrime, [Rational, 7, 2]]
+    expected: 5
+    category: Scope
+    caption: 'Rational $n$: the next prime above $7/2$'
+  - id: real-n-the-next-prime-above-100-5
+    expr: [NextPrime, 100.5]
+    expected: 101
+    category: Scope
+    caption: 'Real $n$: the next prime above $100.5$'
+  - id: nextprime-steps-from-p-n-to-p-n-1-see-nthprime
+    expr: [Equal, [NextPrime, [NthPrime, 20]], [NthPrime, 21]]
+    expected: True
+    category: Properties
+    caption: NextPrime steps from $p_n$ to $p_{n+1}$. See [[NthPrime]]
+  - id: negative-n-wolfram-counts-7-as-prime-and-returns
+    expr: [NextPrime, -10]
+    expected: -7
+    category: Possible issues
+    caption: 'Negative $n$: Wolfram counts $-7$ as prime and returns it'
+seeAlso:
+  - NthPrime
+  - PrimePi

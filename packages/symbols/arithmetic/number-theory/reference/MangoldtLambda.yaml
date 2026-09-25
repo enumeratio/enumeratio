@@ -1,0 +1,41 @@
+name: MangoldtLambda
+domain: Number theory
+signature: MangoldtLambda(n)
+summary: 'The von Mangoldt function: $\ln p$ if $n$ is a power of the prime $p$, else 0.'
+signatures:
+  - call: MangoldtLambda(n)
+    description: $\ln p$ for $n=p^k$, else 0
+    library: enumeratio-number-theory
+details:
+  - 'Exact: the result is a symbolic $\ln p$, not a numeric approximation — wrap in [[N]] to get one.'
+  - $\sum_{d\mid n}\Lambda(d)=\ln n$; central to the prime-counting proofs (Chebyshev's $\psi$ and $\theta$ functions).
+examples:
+  - id: 8-2-3
+    expr: [MangoldtLambda, 8]
+    expected: [Ln, 2]
+    caption: $8=2^3$
+  - id: 6-is-not-a-prime-power
+    expr: [MangoldtLambda, 6]
+    expected: 0
+    caption: 6 is not a prime power
+  - id: mangoldtlambda-7
+    expr: [MangoldtLambda, 7]
+    expected: [Ln, 7]
+  - id: lambda-1-0
+    expr: [MangoldtLambda, 1]
+    expected: 0
+    category: Possible issues
+    caption: $\Lambda(1)=0$
+  - id: numerically-ln-3
+    expr: [N, [MangoldtLambda, 9]]
+    expected: 1.0986122886681098
+    category: Scope
+    caption: Numerically, $\ln3$
+  - id: listable
+    expr: [MangoldtLambda, [List, 2, 4, 6, 25]]
+    expected: [List, [Ln, 2], [Ln, 2], 0, [Ln, 5]]
+    category: Scope
+    caption: Listable
+seeAlso:
+  - IsPrimePower
+  - FactorInteger

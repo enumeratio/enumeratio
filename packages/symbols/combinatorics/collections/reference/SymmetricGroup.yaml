@@ -1,0 +1,25 @@
+name: SymmetricGroup
+domain: Combinatorial collections
+signature: SymmetricGroup(n)
+summary: The permutations of $\{1, \dots, n\}$ as one-line words, all $n!$ of them.
+signatures:
+  - call: SymmetricGroup(n)
+    description: the $n!$ permutations of $n$ elements
+    library: enumeratio-collections
+details:
+  - Count is $n!$ (see [[Factorial]])
+  - Elements are one-line words in lexicographic order; the identity comes first
+  - Fixed-point-free permutations are [[Derangements]]; self-inverse ones are [[Involutions]]
+examples:
+  - id: '4'
+    expr: [Count, [SymmetricGroup, 4]]
+    expected: 24
+    caption: $4!$
+  - id: the-identity
+    expr: [At, [SymmetricGroup, 3], 1]
+    expected: [List, 1, 2, 3]
+    caption: the identity
+seeAlso:
+  - Derangements
+  - Involutions
+  - Factorial

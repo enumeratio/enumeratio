@@ -1,0 +1,96 @@
+name: LogBarnesG
+domain: Special functions
+signature: LogBarnesG(z)
+summary: The logarithm of the Barnes G-function, $\ln G(z)$, as an analytic continuation — the form that stays finite where $G$ itself overflows. Provided by `@enumeratio/analytic`.
+signatures:
+  - call: LogBarnesG(z)
+    description: the log-Barnes function $\ln G(z)$, analytically continued.
+    library: '@enumeratio/analytic'
+details:
+  - $\ln G(z+1) \sim \left(\tfrac{z^2}{2} - \tfrac{1}{12}\right)\ln z - \tfrac{3z^2}{4} + \tfrac{z}{2}\ln 2\pi + \zeta'(-1) + \sum_{k\ge1} \dfrac{B_{2k+2}}{4k(k+1)\,z^{2k}}$ as $\operatorname{Re}(z) \to \infty$, with $\zeta'(-1) = \tfrac{1}{12} - \ln A$ ($A$ Glaisher's constant). This is the numeric kernel, reached through $\ln G(z) = \ln G(z+n) - \sum_{k<n} \ln\Gamma(z+k)$.
+  - "It is the continuation, not $\\ln$ of the value: on the negative real axis its imaginary part is a multiple of $\\pi$ fixed by continuity from above, so $\\mathrm{LogBarnesG}(-2.5) = -2.5747\\ldots + 6\\pi i$ while $\\ln G(-2.5)$ taken literally would be real. This matches Wolfram's $\\mathrm{LogBarnesG}$."
+  - 'At positive integers it reduces through the exact superfactorial: $\ln G(4) = \ln 2$, $\ln G(3) = 0$.'
+  - $-\infty$ at the nonpositive integers, where $G$ vanishes.
+examples:
+  - id: ln-g-4-ln-2
+    expr: [LogBarnesG, 4]
+    expected: [Ln, 2]
+    caption: $\ln G(4) = \ln 2$
+  - id: ln-g-3-ln-1-0
+    expr: [LogBarnesG, 3]
+    expected: 0
+    caption: $\ln G(3) = \ln 1 = 0$
+  - id: g-0-0-so-its-logarithm-is-infty
+    expr: [LogBarnesG, 0]
+    expected: NegativeInfinity
+    category: Properties
+    caption: $G(0) = 0$, so its logarithm is $-\infty$
+  - id: numeric-for-a-floating-point-argument
+    expr: [LogBarnesG, 10.5]
+    expected: 42.2788836367952
+    caption: Numeric for a floating-point argument
+  - id: ln-g-frac-12
+    expr: [LogBarnesG, 0.5]
+    expected: -0.5054330544894583
+    caption: $\ln G(\tfrac12)$
+  - id: ln-g-0-7-negative-since-g-1-on-0-1
+    expr: [LogBarnesG, 0.7]
+    expected: -0.21458989707508636
+    caption: $\ln G(0.7)$ — negative, since $G < 1$ on $(0, 1)$
+  - id: complex-arguments
+    expr: [LogBarnesG, [Complex, 1.7, 1]]
+    expected: [Complex, 0.12137866262889929, -0.31356176133685665]
+    category: Scope
+    caption: Complex arguments
+  - id: threads-elementwise-over-an-array-infty-at-the
+    expr: [LogBarnesG, [List, [List, 4, -1], [List, 0, 3]]]
+    expected: [List, [List, [Ln, 2], NegativeInfinity], [List, NegativeInfinity, 0]]
+    category: Scope
+    caption: 'Threads elementwise over an array: $-\infty$ at the zeros of $G$'
+  - id: exact-at-the-integers-ln-g-10-ln
+    expr: [LogBarnesG, 10]
+    expected: [Add, [Multiply, 2, [Ln, 14]], [Multiply, 3, [Ln, 10]], [Multiply, 9, [Ln, 3]], [Multiply, 18, [Ln, 2]], [Ln, 5]]
+    category: Properties
+    caption: 'Exact at the integers: $\ln G(10) = \ln 5056584744960000$, split into logarithms of its factors'
+    divergence:
+      wolfram: Wolfram keeps a single logarithm, Log[5056584744960000].
+  - id: the-continuation-not-ln-of-the-value-g-2-5-0-yet
+    expr: [LogBarnesG, -2.5]
+    expected: [Complex, -2.5747484768528466, 18.84955592153876]
+    category: Possible issues
+    caption: 'The continuation, not $\ln$ of the value: $G(-2.5) > 0$, yet the imaginary part is $6\pi$'
+  - id: huge-arguments-straight-from-the-asymptotic
+    expr: [N, [LogBarnesG, [Power, 10, 1000]]]
+    expected: {num: '1.15054254649702284200899572734e2003'}
+    category: Scope
+    caption: 'Huge arguments, straight from the asymptotic series: $\ln G(10^{1000}) \approx 1.1505\times10^{2003}$; stays unevaluated (and arguments near $10^{20}$ exceed the time cap)'
+    aspirational: true
+  - id: interval-arithmetic-over-an-increasing-stretch
+    expr: [LogBarnesG, [Interval, 0.111, 0.112]]
+    expected: [Interval, -2.106284277112393, -2.096646198881469]
+    category: Scope
+    caption: Interval arithmetic over an increasing stretch
+  - id: uncertainty-propagation-through-ln-g
+    expr: [LogBarnesG, [Around, 1.2, 0.01]]
+    expected: [Around, 0.05620885559910568, 0.0016113055388623507]
+    category: Scope
+    caption: Uncertainty propagation through $\ln G$
+  - id: ln-g-infty-infty
+    expr: [LogBarnesG, PositiveInfinity]
+    expected: PositiveInfinity
+    category: Scope
+    caption: $\ln G(\infty) = \infty$
+implementations:
+  - origin: reference
+    form: notatio
+    environment: engine
+    expr: [Add, [Divide, [Multiply, [Subtract, _z, 1], [Ln, [Multiply, 2, Pi]]], 2], [Negate, [Divide, [Multiply, [Subtract, _z, 1], [Add, [Subtract, _z, 1], 1]], 2]], [Negate, [Divide, [Multiply, EulerGamma, [Power, [Subtract, _z, 1], 2]], 2]], [Sum, [Add, [Multiply, k, [Ln, [Add, 1, [Divide, [Subtract, _z, 1], k]]]], [Divide, [Power, [Subtract, _z, 1], 2], [Multiply, 2, k]], [Negate, [Subtract, _z, 1]]], [Triple, k, 1, Infinity]]]
+    note: "The Weierstrass product in logarithms. Its terms are O(w³/k²), so it converges — slowly: a few hundred terms for a dozen digits, against the kernel's asymptotic series."
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/barnes-g.ts
+seeAlso:
+  - BarnesG
+  - LogGamma
+  - Gamma

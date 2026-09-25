@@ -1,0 +1,69 @@
+name: DirichletCharacter
+domain: Special functions
+signature: DirichletCharacter(k, j, n)
+summary: 'The $j$-th Dirichlet character modulo $k$ evaluated at $n$: a completely multiplicative, $k$-periodic map $\chi_j: \mathbb{Z} \to \mathbb{C}$, zero where $\gcd(n, k) > 1$. Provided by `@enumeratio/analytic`.'
+signatures:
+  - call: DirichletCharacter(k, j, n)
+    description: the character $\chi_j \bmod k$ at $n$, for $1 \le j \le \varphi(k)$; $j = 1$ is the principal character.
+    library: '@enumeratio/analytic'
+details:
+  - There are exactly $\varphi(k)$ characters mod $k$ — the dual group of $(\mathbb{Z}/k)^\times$ — and each is determined by its values on a set of generators. $\chi_1$, the principal character, is 1 on the units and 0 elsewhere.
+  - 'Every value is a root of unity of order dividing $\varphi(k)$, or 0: $\chi_j(mn) = \chi_j(m)\chi_j(n)$ always, and $\sum_{n=1}^{k}\chi_j(n) = 0$ for $j \ne 1$.'
+  - The indexing is Wolfram's $\mathrm{DirichletCharacter}[k, j, n]$, which no published formula pins down; it is reproduced here by decomposing $(\mathbb{Z}/k)^\times$ into one cyclic factor per prime power of $k$ in ascending prime order (an odd $p^e$ contributing its least primitive root, $2^e$ contributing $\langle -1\rangle \times \langle 5 \rangle$) and reading $j - 1$ as a mixed-radix exponent vector, first component most significant. The whole table is pinned against a Wolfram kernel for every modulus up to 40.
+  - For a prime $k$ with primitive root $g$ this comes out as $\chi_j(g) = e^{2\pi i (j-1)/(k-1)}$.
+  - An out-of-range $j$ (greater than $\varphi(k)$) names no character and is left unevaluated.
+examples:
+  - id: the-nontrivial-character-mod-4-chi-2-3-1-this-is
+    expr: [DirichletCharacter, 4, 2, 3]
+    expected: -1
+    caption: 'The nontrivial character mod 4: $\chi_2(3) = -1$ (this is the one behind [[DirichletBeta]])'
+  - id: chi-2-2-i-mod-5-2-is-a-primitive-root-so-it
+    expr: [DirichletCharacter, 5, 2, 2]
+    expected: [Complex, 0, 1]
+    caption: $\chi_2(2) = i$ mod 5 — 2 is a primitive root, so it takes the generating fourth root of unity
+  - id: a-character-vanishes-where-gcd-n-k-1
+    expr: [DirichletCharacter, 5, 2, 5]
+    expected: 0
+    category: Properties
+    caption: A character vanishes where $\gcd(n, k) > 1$
+  - id: chi-3-mod-5-is-the-quadratic-character-its
+    expr: [DirichletCharacter, 5, 3, 2]
+    expected: -1
+    category: Properties
+    caption: '$\chi_3$ mod 5 is the quadratic character: its period is $1, -1, -1, 1, 0$, the Legendre symbol $\left(\tfrac{n}{5}\right)$'
+  - id: the-trivial-character-mod-1-is-1-everywhere-its
+    expr: [DirichletCharacter, 1, 1, 7]
+    expected: 1
+    category: Properties
+    caption: The trivial character mod 1 is 1 everywhere — its L-function is $\zeta$
+  - id: j-must-be-at-most-varphi-k-4-out-of-range-names
+    expr: [DirichletCharacter, 5, 9, 2]
+    expected: [DirichletCharacter, 5, 9, 2]
+    category: Possible issues
+    caption: $j$ must be at most $\varphi(k) = 4$; out of range names no character and stays unevaluated
+  - id: values-are-roots-of-unity-3-generates-z-7-times
+    expr: [DirichletCharacter, 7, 3, 3]
+    expected: [Add, [Rational, -1, 2], [Complex, 0, [Divide, [Sqrt, 3], 2]]]
+    category: Scope
+    caption: 'Values are roots of unity: 3 generates $(\mathbb{Z}/7)^\times$, and $\chi_3(3) = e^{2\pi i/3}$'
+  - id: listable-in-n-the-nontrivial-character-mod-3
+    expr: [DirichletCharacter, 3, 2, [List, 1, 2, 3, 4, 5]]
+    expected: [List, 1, -1, 0, 1, -1]
+    category: Scope
+    caption: 'Listable in $n$: the nontrivial character mod 3 over $1, \dots, 5$'
+primitive: kernel
+implementations:
+  - origin: native
+    form: typescript
+    environment: engine
+    source: packages/symbols/analysis/analytic/src/dirichlet-l.ts
+    note: A discrete logarithm against the cyclic decomposition — an algorithm over mutable state, not a tree.
+  - origin: mapped
+    form: wolfram
+    environment: external
+    note: DirichletCharacter[k, j, n], same indexing. mpmath has no character indexing at all.
+seeAlso:
+  - DirichletL
+  - DirichletBeta
+  - DirichletEta
+  - Zeta

@@ -1,0 +1,20 @@
+name: HarshadNumbers
+domain: Collections
+signature: HarshadNumbers
+summary: 'The Harshad (Niven) numbers $1, 2, 3, …, 10, 12, 18, …$: integers divisible by their own digit sum.'
+signatures:
+  - call: HarshadNumbers
+    description: the $n$ with $n \bmod \mathrm{digitSum}(n) = 0$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(HarshadNumbers) = +\infty$ -- every digit-sum-1 number (a power of 10) qualifies, so the family never thins out. OEIS A005349.'
+  - $At(HarshadNumbers, k)$ unranks by scanning forward from the last cached match -- $At(HarshadNumbers, 11) = 12$.
+  - 'Membership goes through [[Element]]: $Element(18, HarshadNumbers)$ is true (digit sum 9, $18/9=2$), $Element(11, HarshadNumbers)$ is false.'
+examples: []
+enumerate:
+  expr: Take(HarshadNumbers, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - HappyNumbers
+  - SmithNumbers

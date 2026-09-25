@@ -1,0 +1,18 @@
+name: IntegerCompositions
+domain: Combinatorial collections
+signature: IntegerCompositions(n)
+summary: 'The compositions of $n$: ordered sequences of positive parts summing to $n$.'
+signatures:
+  - call: IntegerCompositions(n)
+    description: the ordered compositions of $n$
+    library: enumeratio-collections
+details:
+  - Count is $2^{n-1}$ for $n \ge 1$
+  - Unlike [[IntegerPartitions]], order matters
+examples:
+  - id: 2-4
+    expr: [Count, [IntegerCompositions, 5]]
+    expected: 16
+    caption: $2^{4}$
+seeAlso:
+  - IntegerPartitions

@@ -1,0 +1,95 @@
+name: Flatten
+domain: Collections
+signature: Flatten(collection)
+summary: The collection with all levels of nested lists merged into one.
+signatures:
+  - call: Flatten(collection)
+    description: every level of nested lists merged into one.
+  - call: Flatten(collection, n)
+    description: flattening limited to the top `n` levels.
+  - call: Flatten(collection, PositiveInfinity)
+    description: an explicit infinite depth, the same as the default.
+    library: enumeratio-collections
+  - call: Flatten(collection, {{p1}, {p2}, …})
+    description: a permutation-shaped list of levels regroups the array's dimensions — transposing a matrix, say.
+    library: enumeratio-collections
+  - call: Flatten(expr)
+    description: nested calls of any one head flatten, not just $List$'s.
+    library: enumeratio-collections
+details:
+  - 'Undoes [[Partition]]: chunking and then re-flattening recovers the original list.'
+  - Simply deletes inner braces/levels; it doesn't otherwise reorder or transform elements.
+  - A depth argument limits flattening to that many levels, leaving deeper nesting intact.
+  - Any single head's nested calls flatten, not just $List$'s.
+examples:
+  - id: flatten-list-list-1-2-list-3-4
+    expr: [Flatten, [List, [List, 1, 2], [List, 3, 4]]]
+    expected: [List, 1, 2, 3, 4]
+  - id: flatten-list-list-1-list-2-3-list-4
+    expr: [Flatten, [List, [List, 1, [List, 2, 3]], [List, 4]]]
+    expected: [List, 1, 2, 3, 4]
+  - id: a-depth-argument-limits-flattening-to-just-that
+    expr: [Flatten, [List, [List, 1, 2], [List, 3, [List, 4]]], 1]
+    expected: [List, 1, 2, 3, [List, 4]]
+    category: Scope
+    caption: A depth argument limits flattening to just that many levels, leaving deeper nesting intact
+  - id: flatten-undoes-partition-chunking-and-re
+    expr: [Equal, [Flatten, [Partition, [List, 1, 2, 3, 4, 5, 6], 2]], [List, 1, 2, 3, 4, 5, 6]]
+    expected: True
+    category: Properties
+    caption: '$Flatten$ undoes [[Partition]]: chunking and re-flattening recovers the original list'
+  - id: flatten-list-list-a-b-list-c-list-d-f-list-g
+    expr: [Flatten, [List, [List, a, b], [List, c, [List, d], f], [List, g, [List, h, k]]]]
+    expected: [List, a, b, c, d, f, g, h, k]
+  - id: flatten-only-the-first-level
+    expr: [Flatten, [List, [List, a, b], [List, c, [List, d], f], [List, g, [List, h, k]]], 1]
+    expected: [List, a, b, c, [List, d], f, g, [List, h, k]]
+    category: Scope
+    caption: Flatten only the first level
+  - id: depth-0-leaves-the-list-unchanged
+    expr: [Flatten, [List, 0, [List, 1], [List, [List, 2, -2]], [List, [List, [List, 3], [List, -3]]], [List, [List, [List, [List, 4]]]]], 0]
+    expected: [List, 0, [List, 1], [List, [List, 2, -2]], [List, [List, [List, 3], [List, -3]]], [List, [List, [List, [List, 4]]]]]
+    category: Scope
+    caption: Depth 0 leaves the list unchanged
+  - id: depth-2-removes-two-levels-of-nesting
+    expr: [Flatten, [List, 0, [List, 1], [List, [List, 2, -2]], [List, [List, [List, 3], [List, -3]]], [List, [List, [List, [List, 4]]]]], 2]
+    expected: [List, 0, 1, 2, -2, [List, 3], [List, -3], [List, [List, 4]]]
+    category: Scope
+    caption: Depth 2 removes two levels of nesting
+  - id: depth-3
+    expr: [Flatten, [List, 0, [List, 1], [List, [List, 2, -2]], [List, [List, [List, 3], [List, -3]]], [List, [List, [List, [List, 4]]]]], 3]
+    expected: [List, 0, 1, 2, -2, 3, -3, [List, 4]]
+    category: Scope
+    caption: Depth 3
+  - id: depth-4-reaches-the-deepest-level
+    expr: [Flatten, [List, 0, [List, 1], [List, [List, 2, -2]], [List, [List, [List, 3], [List, -3]]], [List, [List, [List, [List, 4]]]]], 4]
+    expected: [List, 0, 1, 2, -2, 3, -3, 4]
+    category: Scope
+    caption: Depth 4 reaches the deepest level
+  - id: an-explicit-infinite-depth-flattens-every-level
+    expr: [Flatten, [List, 0, [List, 1], [List, [List, 2, -2]], [List, [List, [List, 3], [List, -3]]], [List, [List, [List, [List, 4]]]]], PositiveInfinity]
+    expected: [List, 0, 1, 2, -2, 3, -3, 4]
+    category: Scope
+    caption: An explicit infinite depth flattens every level, like the default
+  - id: a-list-of-levels-regroups-the-dimensions-here
+    expr: [Flatten, [List, [List, 1, 2], [List, 3, 4]], [List, [List, 2], [List, 1]]]
+    expected: [List, [List, 1, 3], [List, 2, 4]]
+    category: Scope
+    caption: A list of levels regroups the dimensions, here into a transpose
+  - id: nested-calls-of-any-one-head-flatten-not-just
+    expr: [Flatten, [f, a, [f, b, [f, c]]]]
+    expected: [f, a, b, c]
+    category: Scope
+    caption: Nested calls of any one head flatten, not just lists
+  - id: a-list-with-no-nesting-is-unchanged
+    expr: [Flatten, [List, 1, 2, 3]]
+    expected: [List, 1, 2, 3]
+    category: Properties
+    caption: A list with no nesting is unchanged
+  - id: flattening-an-m-times-n-matrix-gives-mn-elements
+    expr: [Length, [Flatten, [List, [List, 1, 2, 3], [List, 4, 5, 6]]]]
+    expected: 6
+    category: Properties
+    caption: Flattening an $m \times n$ matrix gives $mn$ elements. See [[Length]]
+seeAlso:
+  - Join

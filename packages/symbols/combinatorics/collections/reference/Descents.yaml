@@ -1,0 +1,29 @@
+name: Descents
+domain: Permutation statistics
+signature: Descents(p)
+summary: 'The number of descents of $p$: positions $i$ with $p_i > p_{i+1}$.'
+signatures:
+  - call: Descents(p)
+    description: the descent count of a one-line permutation $p$
+    library: enumeratio-collections
+details:
+  - The permutations of $\{1, \dots, n\}$ with $k$ descents are counted by the Eulerian number $\left\langle{n\atop k}\right\rangle$
+  - 'Complementary to [[Ascents]]: every adjacent pair is one or the other, so $\mathrm{Descents} + \mathrm{Ascents} = n - 1$'
+examples:
+  - id: only-3-1
+    expr: [Descents, [List, 3, 1, 2]]
+    expected: 1
+    caption: only $3 > 1$
+  - id: every-step-falls
+    expr: [Descents, [List, 3, 2, 1]]
+    expected: 2
+    caption: every step falls
+  - id: descents-and-ascents-partition-the-n-1-steps
+    expr: [Equal, [Add, [Descents, [List, 3, 1, 2]], [Ascents, [List, 3, 1, 2]]], 2]
+    expected: True
+    category: Properties
+    caption: descents and ascents partition the $n - 1$ steps
+seeAlso:
+  - Ascents
+  - MajorIndex
+  - SymmetricGroup

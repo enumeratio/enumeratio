@@ -1,0 +1,59 @@
+name: RationalReconstruction
+domain: Number theory
+signature: RationalReconstruction(a, m)
+summary: The small fraction $n/d$ whose image in $\mathbb{Z}/m$ is $a$ — the inverse of reading $n/d$ as $n \cdot d^{-1} \bmod m$.
+signatures:
+  - call: RationalReconstruction(a, m)
+    description: the $n/d$ with $n \equiv a d \pmod m$ and $|n|, d \le \sqrt{(m-1)/2}$, when there is one
+    library: enumeratio-number-theory
+  - call: RationalReconstruction(a, m, N, D)
+    description: with explicit bounds $|n| \le N$, $0 < d \le D$
+    library: enumeratio-number-theory
+details:
+  - Every residue is the image of infinitely many fractions, but at most one with $2ND < m$ — so under the default balanced bounds the answer, when it exists, is unique.
+  - "Wang's algorithm: the extended Euclidean algorithm on $(m, a)$, stopped at the first remainder $\\le N$; the remainder and its cofactor are $n$ and $d$."
+  - "Not a Wolfram built-in; the name follows SageMath's `rational_reconstruction` (Maple: `iratrecon`)."
+  - Unevaluated when no fraction within the bounds maps to $a$. Threads over lists.
+examples:
+  - id: 2-cdot-6-12-equiv-1-pmod-11
+    expr: [RationalReconstruction, 6, 11]
+    expected: [Rational, 1, 2]
+    caption: $2 \cdot 6 = 12 \equiv 1 \pmod{11}$
+  - id: a-round-trip-through-z-1000003
+    expr: [RationalReconstruction, [PowerMod, [Rational, 22, 7], 1, 1000003], 1000003]
+    expected: [Rational, 22, 7]
+    caption: a round trip through $\mathbb{Z}/1000003$
+  - id: explicit-bounds-denominators-of-1-only
+    expr: [RationalReconstruction, 5, 11, 5, 1]
+    expected: 5
+    caption: 'explicit bounds: denominators of 1 only'
+    category: Scope
+  - id: rationalreconstruction-list-6-9-10-11
+    expr: [RationalReconstruction, [List, 6, 9, 10], 11]
+    expected: [List, [Rational, 1, 2], -2, -1]
+    category: Scope
+  - id: the-harmonic-number-h-20-back-from-its-image-mod
+    expr: [RationalReconstruction, [PowerMod, [Rational, 55835135, 15519504], 1, [Subtract, [Power, 2, 61], 1]], [Subtract, [Power, 2, 61], 1]]
+    expected: [Rational, 55835135, 15519504]
+    caption: the harmonic number $H_{20}$, back from its image mod $2^{61} - 1$
+    category: Scope
+  - id: one-word-size-prime-is-not-enough-for-h-20-2nd-m
+    expr: [RationalReconstruction, [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007], 1000000007]
+    expected: [RationalReconstruction, 301316272, 1000000007]
+    caption: 'one word-size prime is not enough for $H_{20}$: $2ND < m$ needs $m$ past $1.7 \cdot 10^{15}$'
+    category: Applications
+  - id: multi-modular-arithmetic-glue-two-images-with
+    expr: [RationalReconstruction, [ChineseRemainder, [List, [PowerMod, [Rational, 55835135, 15519504], 1, 1000000007], [PowerMod, [Rational, 55835135, 15519504], 1, 1000000009]], [List, 1000000007, 1000000009]], [Multiply, 1000000007, 1000000009]]
+    expected: [Rational, 55835135, 15519504]
+    caption: 'multi-modular arithmetic: glue two images with [[ChineseRemainder]], and the product modulus is large enough'
+    category: Applications
+  - id: mod-11-the-bounds-are-n-d-le-2-and-no-such
+    expr: [RationalReconstruction, 3, 11]
+    expected: [RationalReconstruction, 3, 11]
+    caption: mod 11 the bounds are $|n|, d \le 2$, and no such fraction is $\equiv 3$
+    category: Possible issues
+seeAlso:
+  - PowerModList
+  - ChineseRemainder
+  - Rationalize
+  - ContinuedFraction

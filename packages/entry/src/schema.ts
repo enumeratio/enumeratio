@@ -91,6 +91,10 @@ const REFERENCE_EXAMPLE: JsonSchema = {
     },
     volatile: { type: "array", items: { type: "string" } },
     hidden: { type: "boolean", description: "Deprecated: superseded by role: test." },
+    group: {
+      type: "string",
+      description: "Cases of one example: those sharing a group show as one cycling card.",
+    },
     others: { type: "object", additionalProperties: OTHER_SYSTEM_RUN },
   },
   required: ["id", "expr", "expected"],

@@ -1,0 +1,12 @@
+name: CycleType
+domain: Combinatorial maps
+signature: CycleType(Permutation)
+summary: The multiset of cycle lengths, as a partition.
+details:
+  - Takes a `Permutation` and returns a `IntegerPartition` — a typed map, so a wrong carrier is a type error rather than a wrong answer.
+  - The first map here that CROSSES carriers — permutation in, integer partition out — which is the case the types exist for.
+examples:
+  - id: the-one-line-word-231
+    expr: [CycleType, [Permutation, [List, 2, 3, 1]]]
+    expected: [IntegerPartition, [List, 3]]
+    caption: the one-line word $231$

@@ -1,0 +1,47 @@
+name: UnitStep
+domain: Elementary functions
+signature: UnitStep(x1, x2, …)
+summary: 'The unit step function: 0 for x < 0 and 1 for x >= 0.'
+signatures:
+  - call: UnitStep(x)
+    description: 0 if x < 0, 1 if x >= 0.
+    library: '@enumeratio/analytic'
+  - call: UnitStep(x1, x2, …)
+    description: the product of the unit steps -- 0 as soon as any argument is negative.
+    library: '@enumeratio/analytic'
+    arity: 2
+details:
+  - 1 at exactly 0, unlike [[Heaviside]]'s $\tfrac12$ there.
+  - 'Several arguments: 0 the moment any one of them is negative, 1 otherwise -- the multivariate step used for a region like $x \ge 0 \wedge y \ge 0$.'
+  - A single list argument threads element-wise; several scalar arguments combine as above -- the two call forms are not the same shape.
+examples:
+  - id: unitstep-neg-1
+    expr: [UnitStep, -1]
+    expected: 0
+  - id: 1-at-0-unlike-heaviside-s-1-2
+    expr: [UnitStep, 0]
+    expected: 1
+    caption: 1 at 0, unlike Heaviside's 1/2
+  - id: unitstep-2p5
+    expr: [UnitStep, 2.5]
+    expected: 1
+  - id: threads-element-wise-over-a-list
+    expr: [UnitStep, [List, -1, 0, 1]]
+    expected: [List, 0, 1, 1]
+    category: Scope
+    caption: Threads element-wise over a list
+  - id: several-arguments-the-product-of-their-unit
+    expr: [UnitStep, 1, 2]
+    expected: 1
+    category: Scope
+    caption: 'Several arguments: the product of their unit steps'
+  - id: zero-as-soon-as-any-argument-is-negative
+    expr: [UnitStep, 1, -1]
+    expected: 0
+    category: Scope
+    caption: Zero as soon as any argument is negative
+  - id: exact-numeric-arguments
+    expr: [UnitStep, [Subtract, Pi, 3]]
+    expected: 1
+    category: Scope
+    caption: Exact numeric arguments

@@ -1,15 +1,18 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Elementary-function heads `@enumeratio/analytic` adds that compute-engine has no native
-// declaration for at all: CubeRoot, IntegerPart/FractionalPart, RealAbs/RealSign, UnitStep,
-// and Gudermannian. Every `expected` was produced by evaluating `expr` with compute-engine
-// 0.128.0 plus `declareAnalytic`; the reference tests re-evaluate and pin it.
-//
-// As with the other analytic entries: plain evaluation stays exact wherever an exact answer
-// exists (an exact rational, or a symbolic constant like Pi); a floating-point argument (or
-// N()) is what asks for a decimal.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const LIBRARY = "@enumeratio/analytic";
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/analysis/analytic/reference/CubeRoot.yaml",
+  "packages/symbols/analysis/analytic/reference/IntegerPart.yaml",
+  "packages/symbols/analysis/analytic/reference/FractionalPart.yaml",
+  "packages/symbols/analysis/analytic/reference/RealAbs.yaml",
+  "packages/symbols/analysis/analytic/reference/RealSign.yaml",
+  "packages/symbols/analysis/analytic/reference/UnitStep.yaml",
+  "packages/symbols/analysis/analytic/reference/Gudermannian.yaml",
+];
 
 export const analyticElementary: readonly ReferenceEntry[] = [
   {
@@ -18,7 +21,11 @@ export const analyticElementary: readonly ReferenceEntry[] = [
     signature: "CubeRoot(x)",
     summary: "The real cube root of x.",
     signatures: [
-      { call: "CubeRoot(x)", description: "the real cube root of x.", library: LIBRARY },
+      {
+        call: "CubeRoot(x)",
+        description: "the real cube root of x.",
+        library: "@enumeratio/analytic",
+      },
     ],
     details: [
       "Real-valued even at a negative x -- $\\sqrt[3]{-27} = -3$, not a complex principal root. The same real branch as [[Root]]$(x, 3)$; CubeRoot is the named special case.",
@@ -68,7 +75,11 @@ export const analyticElementary: readonly ReferenceEntry[] = [
     signature: "IntegerPart(x)",
     summary: "The integer part of x: x truncated toward 0.",
     signatures: [
-      { call: "IntegerPart(x)", description: "x truncated toward 0.", library: LIBRARY },
+      {
+        call: "IntegerPart(x)",
+        description: "x truncated toward 0.",
+        library: "@enumeratio/analytic",
+      },
     ],
     details: [
       "Truncates toward 0, unlike [[Floor]] (which rounds toward $-\\infty$): $\\mathrm{IntegerPart}(-2.4) = -2$, where $\\mathrm{Floor}(-2.4) = -3$.",
@@ -77,27 +88,15 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "$x = \\mathrm{IntegerPart}(x) + \\mathrm{FractionalPart}(x)$ always -- see [[FractionalPart]].",
     ],
     examples: [
-      {
-        id: "integerpart-2p4",
-        expr: ["IntegerPart", 2.4],
-        expected: 2,
-      },
+      { id: "integerpart-2p4", expr: ["IntegerPart", 2.4], expected: 2 },
       {
         id: "truncates-toward-0-unlike-floor",
         expr: ["IntegerPart", -2.4],
         expected: -2,
         caption: "Truncates toward 0, unlike [[Floor]]",
       },
-      {
-        id: "integerpart-7-over-2",
-        expr: ["IntegerPart", ["Rational", 7, 2]],
-        expected: 3,
-      },
-      {
-        id: "integerpart-neg-7-over-2",
-        expr: ["IntegerPart", ["Rational", -7, 2]],
-        expected: -3,
-      },
+      { id: "integerpart-7-over-2", expr: ["IntegerPart", ["Rational", 7, 2]], expected: 3 },
+      { id: "integerpart-neg-7-over-2", expr: ["IntegerPart", ["Rational", -7, 2]], expected: -3 },
       {
         id: "exact-numeric-arguments-stay-exact",
         expr: ["IntegerPart", "Pi"],
@@ -141,7 +140,7 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       {
         call: "FractionalPart(x)",
         description: "x minus [[IntegerPart]](x), with the sign of x.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -151,11 +150,7 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "Real domain -- a concretely complex argument is left unevaluated.",
     ],
     examples: [
-      {
-        id: "fractionalpart-2p5",
-        expr: ["FractionalPart", 2.5],
-        expected: 0.5,
-      },
+      { id: "fractionalpart-2p5", expr: ["FractionalPart", 2.5], expected: 0.5 },
       {
         id: "fractionalpart-7-over-2",
         expr: ["FractionalPart", ["Rational", 7, 2]],
@@ -199,7 +194,7 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       {
         call: "RealAbs(x)",
         description: "the absolute value of the real number x.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -250,7 +245,7 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       {
         call: "RealSign(x)",
         description: "-1, 0 or 1, according to the sign of the real number x.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -258,21 +253,9 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "A concretely complex argument is outside RealSign's domain and is left unevaluated.",
     ],
     examples: [
-      {
-        id: "realsign-neg-3",
-        expr: ["RealSign", -3],
-        expected: -1,
-      },
-      {
-        id: "realsign-0",
-        expr: ["RealSign", 0],
-        expected: 0,
-      },
-      {
-        id: "realsign-2p5",
-        expr: ["RealSign", 2.5],
-        expected: 1,
-      },
+      { id: "realsign-neg-3", expr: ["RealSign", -3], expected: -1 },
+      { id: "realsign-0", expr: ["RealSign", 0], expected: 0 },
+      { id: "realsign-2p5", expr: ["RealSign", 2.5], expected: 1 },
       {
         id: "threads-element-wise-over-a-list",
         expr: ["RealSign", ["List", -2, 0, 5]],
@@ -298,12 +281,12 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       {
         call: "UnitStep(x)",
         description: "0 if x < 0, 1 if x >= 0.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "UnitStep(x1, x2, …)",
         description: "the product of the unit steps -- 0 as soon as any argument is negative.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
         arity: 2,
       },
     ],
@@ -313,22 +296,14 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "A single list argument threads element-wise; several scalar arguments combine as above -- the two call forms are not the same shape.",
     ],
     examples: [
-      {
-        id: "unitstep-neg-1",
-        expr: ["UnitStep", -1],
-        expected: 0,
-      },
+      { id: "unitstep-neg-1", expr: ["UnitStep", -1], expected: 0 },
       {
         id: "1-at-0-unlike-heaviside-s-1-2",
         expr: ["UnitStep", 0],
         expected: 1,
         caption: "1 at 0, unlike Heaviside's 1/2",
       },
-      {
-        id: "unitstep-2p5",
-        expr: ["UnitStep", 2.5],
-        expected: 1,
-      },
+      { id: "unitstep-2p5", expr: ["UnitStep", 2.5], expected: 1 },
       {
         id: "threads-element-wise-over-a-list",
         expr: ["UnitStep", ["List", -1, 0, 1]],
@@ -369,7 +344,7 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       {
         call: "Gudermannian(x)",
         description: "the Gudermannian function of x.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -379,11 +354,7 @@ export const analyticElementary: readonly ReferenceEntry[] = [
       "Numeric only past the special values above, and real domain -- no reference example calls for a complex argument.",
     ],
     examples: [
-      {
-        id: "gudermannian-0",
-        expr: ["Gudermannian", 0],
-        expected: 0,
-      },
+      { id: "gudermannian-0", expr: ["Gudermannian", 0], expected: 0 },
       {
         id: "at-a-machine-precision-argument",
         expr: ["Gudermannian", 1.5],

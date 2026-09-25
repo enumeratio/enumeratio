@@ -1,18 +1,59 @@
-import { DEFINITIONS } from "@enumeratio/analytic/definitions";
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// The special functions `@enumeratio/analytic` adds beyond the zeta family: the Barnes
-// G-function and its logarithm, the log-gamma continuation, the Clausen functions, the
-// Dirichlet eta and beta functions, the Stieltjes constants, and the Dirichlet characters
-// with their L-functions. Every `expected` was
-// produced by evaluating `expr` with compute-engine 0.128.0 plus `declareAnalytic`; the
-// reference tests re-evaluate and pin it. Numeric values are validated against mpmath and
-// a Wolfram kernel in `packages/symbols/analysis/analytic/tests/special-functions.golden.json`.
-//
-// As with the zeta entries: plain evaluation reduces only where an exact closed form
-// exists; everything else stays symbolic until N() or a floating-point argument.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const LIBRARY = "@enumeratio/analytic";
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/analysis/analytic/reference/BarnesG.yaml",
+  "packages/symbols/analysis/analytic/reference/LogBarnesG.yaml",
+  "packages/symbols/analysis/analytic/reference/LogGamma.yaml",
+  "packages/symbols/analysis/analytic/reference/ClausenCl.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletEta.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletBeta.yaml",
+  "packages/symbols/analysis/analytic/reference/StieltjesGamma.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletCharacter.yaml",
+  "packages/symbols/analysis/analytic/reference/DirichletL.yaml",
+  "packages/symbols/analysis/analytic/reference/HarmonicNumber.yaml",
+  "packages/symbols/analysis/analytic/reference/BesselJZero.yaml",
+  "packages/symbols/analysis/analytic/reference/DigammaFunctionZero.yaml",
+  "packages/symbols/analysis/analytic/reference/MultiZetaValue.yaml",
+  "packages/symbols/analysis/analytic/reference/HypergeometricUStar.yaml",
+  "packages/symbols/analysis/analytic/reference/SloaneA.yaml",
+  "packages/symbols/analysis/analytic/reference/QPochhammer.yaml",
+  "packages/symbols/analysis/analytic/reference/QFactorial.yaml",
+  "packages/symbols/analysis/analytic/reference/QBinomial.yaml",
+  "packages/symbols/analysis/analytic/reference/RiemannSiegelTheta.yaml",
+  "packages/symbols/analysis/analytic/reference/RiemannSiegelZ.yaml",
+  "packages/symbols/analysis/analytic/reference/RiemannZetaZero.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric0F1.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric0F1Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric1F1Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric2F1Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/Hypergeometric3F2Regularized.yaml",
+  "packages/symbols/analysis/analytic/reference/HypergeometricU.yaml",
+  "packages/symbols/analysis/analytic/reference/Khinchin.yaml",
+  "packages/symbols/analysis/analytic/reference/Hyperfactorial.yaml",
+  "packages/symbols/analysis/analytic/reference/ExpIntegralE.yaml",
+  "packages/symbols/analysis/analytic/reference/LambertW.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseErfc.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseGammaRegularized.yaml",
+  "packages/symbols/analysis/analytic/reference/InverseBetaRegularized.yaml",
+  "packages/symbols/analysis/analytic/reference/BellY.yaml",
+  "packages/symbols/analysis/analytic/reference/NorlundB.yaml",
+  "packages/symbols/analysis/analytic/reference/PrimeZetaP.yaml",
+  "packages/symbols/analysis/analytic/reference/HypergeometricPFQ.yaml",
+  "packages/symbols/analysis/analytic/reference/KleinInvariantJ.yaml",
+  "packages/symbols/analysis/analytic/reference/ComplexExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/ExpToTrig.yaml",
+  "packages/symbols/analysis/analytic/reference/FunctionExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/PowerExpand.yaml",
+  "packages/symbols/analysis/analytic/reference/FullSimplify.yaml",
+  "packages/symbols/analysis/analytic/reference/MatrixFunction.yaml",
+  "packages/reference/entries/Interval.yaml",
+  "packages/symbols/analysis/analytic/reference/CenteredInterval.yaml",
+  "packages/symbols/analysis/analytic/reference/Around.yaml",
+];
 
 export const analyticSpecial: readonly ReferenceEntry[] = [
   {
@@ -22,7 +63,11 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     summary:
       "The Barnes G-function $G(z)$, the double-gamma function satisfying $G(z+1) = \\Gamma(z)\\,G(z)$ with $G(1) = 1$ — so $G(n) = \\prod_{k=0}^{n-2} k!$, the superfactorial, at positive integers. Provided by `@enumeratio/analytic`.",
     signatures: [
-      { call: "BarnesG(z)", description: "the Barnes G-function $G(z)$.", library: LIBRARY },
+      {
+        call: "BarnesG(z)",
+        description: "the Barnes G-function $G(z)$.",
+        library: "@enumeratio/analytic",
+      },
     ],
     details: [
       "Functional equation $G(z+1) = \\Gamma(z)\\,G(z)$, the analogue of $\\Gamma(z+1) = z\\,\\Gamma(z)$ one level up; see [[Gamma]].",
@@ -38,12 +83,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 12,
         caption: "$G(5) = 0!\\,1!\\,2!\\,3! = 12$",
       },
-      {
-        id: "g-7-34560",
-        expr: ["BarnesG", 7],
-        expected: 34560,
-        caption: "$G(7) = 34560$",
-      },
+      { id: "g-7-34560", expr: ["BarnesG", 7], expected: 34560, caption: "$G(7) = 34560$" },
       {
         id: "the-superfactorials-threaded-over-a-list",
         expr: ["BarnesG", ["List", 1, 2, 3, 4, 5, 6]],
@@ -88,12 +128,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 5056584744960000,
         caption: "$G(10) = \\prod_{k=0}^{8} k!$, exact",
       },
-      {
-        id: "g-3-0-1-1",
-        expr: ["BarnesG", 3],
-        expected: 1,
-        caption: "$G(3) = 0!\\,1! = 1$",
-      },
+      { id: "g-3-0-1-1", expr: ["BarnesG", 3], expected: 1, caption: "$G(3) = 0!\\,1! = 1$" },
       {
         id: "g-frac-12-to-machine-precision",
         expr: ["BarnesG", 0.5],
@@ -177,7 +212,31 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.BarnesG,
+        expr: [
+          "Exp",
+          [
+            "Add",
+            ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Ln", ["Multiply", 2, "Pi"]]], 2],
+            [
+              "Negate",
+              ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Add", ["Subtract", "_z", 1], 1]], 2],
+            ],
+            [
+              "Negate",
+              ["Divide", ["Multiply", "EulerGamma", ["Power", ["Subtract", "_z", 1], 2]], 2],
+            ],
+            [
+              "Sum",
+              [
+                "Add",
+                ["Multiply", "k", ["Ln", ["Add", 1, ["Divide", ["Subtract", "_z", 1], "k"]]]],
+                ["Divide", ["Power", ["Subtract", "_z", 1], 2], ["Multiply", 2, "k"]],
+                ["Negate", ["Subtract", "_z", 1]],
+              ],
+              ["Triple", "k", 1, "Infinity"],
+            ],
+          ],
+        ],
         note: "G = exp(ln G) over the Weierstrass series of [[LogBarnesG]]; see there for what it costs to evaluate.",
       },
       {
@@ -206,7 +265,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "LogBarnesG(z)",
         description: "the log-Barnes function $\\ln G(z)$, analytically continued.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -331,8 +390,29 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.LogBarnesG,
-        note: "The Weierstrass product in logarithms. Its terms are O(w\u00b3/k\u00b2), so it converges \u2014 slowly: a few hundred terms for a dozen digits, against the kernel's asymptotic series.",
+        expr: [
+          "Add",
+          ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Ln", ["Multiply", 2, "Pi"]]], 2],
+          [
+            "Negate",
+            ["Divide", ["Multiply", ["Subtract", "_z", 1], ["Add", ["Subtract", "_z", 1], 1]], 2],
+          ],
+          [
+            "Negate",
+            ["Divide", ["Multiply", "EulerGamma", ["Power", ["Subtract", "_z", 1], 2]], 2],
+          ],
+          [
+            "Sum",
+            [
+              "Add",
+              ["Multiply", "k", ["Ln", ["Add", 1, ["Divide", ["Subtract", "_z", 1], "k"]]]],
+              ["Divide", ["Power", ["Subtract", "_z", 1], 2], ["Multiply", 2, "k"]],
+              ["Negate", ["Subtract", "_z", 1]],
+            ],
+            ["Triple", "k", 1, "Infinity"],
+          ],
+        ],
+        note: "The Weierstrass product in logarithms. Its terms are O(w³/k²), so it converges — slowly: a few hundred terms for a dozen digits, against the kernel's asymptotic series.",
       },
       {
         origin: "native",
@@ -353,7 +433,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "LogGamma(z)",
         description: "the log-gamma function $\\ln\\Gamma(z)$, analytically continued.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -369,12 +449,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Ln", 2],
         caption: "$\\ln\\Gamma(3) = \\ln 2! = \\ln 2$",
       },
-      {
-        id: "ln-gamma-1-0",
-        expr: ["LogGamma", 1],
-        expected: 0,
-        caption: "$\\ln\\Gamma(1) = 0$",
-      },
+      { id: "ln-gamma-1-0", expr: ["LogGamma", 1], expected: 0, caption: "$\\ln\\Gamma(1) = 0$" },
       {
         id: "ln-gamma-frac-12-frac-12-ln-pi-from-gamma-frac",
         expr: ["LogGamma", ["Rational", 1, 2]],
@@ -511,8 +586,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.LogGamma,
-        note: "The continuation pinned by ln\u0393(1) = 0 and (ln\u0393)\u2032 = \u03c8 \u2014 which is what makes it the continuation and not Ln(Gamma(z)), whose branch differs off the positive axis.",
+        expr: ["Integrate", ["PolyGamma", 0, "t"], ["Triple", "t", 1, "_z"]],
+        note: "The continuation pinned by lnΓ(1) = 0 and (lnΓ)′ = ψ — which is what makes it the continuation and not Ln(Gamma(z)), whose branch differs off the positive axis.",
       },
       {
         origin: "native",
@@ -540,7 +615,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "ClausenCl(n, θ)",
         description:
           "the Clausen function $\\mathrm{Cl}_n(\\theta)$ of integer order $n \\ge 1$ and real $\\theta$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -603,8 +678,14 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.ClausenCl,
-        note: "Cl_n cuts Li_n(e^{i\u03b8}) in two by parity: the even orders are the sine series (its imaginary part), the odd orders the cosine series (its real part).",
+        expr: [
+          "Which",
+          ["IsEven", "_n"],
+          ["Im", ["PolyLog", "_n", ["Exp", ["Multiply", "ImaginaryUnit", "_theta"]]]],
+          "True",
+          ["Re", ["PolyLog", "_n", ["Exp", ["Multiply", "ImaginaryUnit", "_theta"]]]],
+        ],
+        note: "Cl_n cuts Li_n(e^{iθ}) in two by parity: the even orders are the sine series (its imaginary part), the odd orders the cosine series (its real part).",
       },
       {
         origin: "native",
@@ -631,7 +712,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DirichletEta(s)",
         description: "the Dirichlet eta function $\\eta(s)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -766,7 +847,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.DirichletEta,
+        expr: ["Multiply", ["Subtract", 1, ["Power", 2, ["Subtract", 1, "_s"]]], ["Zeta", "_s"]],
         note: "The defining identity — except at s = 1, where the native kernel sums the alternating series instead.",
       },
       {
@@ -794,7 +875,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DirichletBeta(s)",
         description: "the Dirichlet beta function $\\beta(s)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -915,7 +996,15 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.DirichletBeta,
+        expr: [
+          "Multiply",
+          ["Power", 4, ["Negate", "_s"]],
+          [
+            "Subtract",
+            ["HurwitzZeta", "_s", ["Rational", 1, 4]],
+            ["HurwitzZeta", "_s", ["Rational", 3, 4]],
+          ],
+        ],
       },
       {
         origin: "native",
@@ -942,13 +1031,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "StieltjesGamma(n)",
         description: "the $n$-th Stieltjes constant $\\gamma_n$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "StieltjesGamma(n, a)",
         description:
           "the generalized Stieltjes constant $\\gamma_n(a)$, from the expansion of $\\zeta(s, a)$ at $s = 1$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1080,10 +1169,6 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
           "$\\gamma_3(1) = \\gamma_3$ — order 1 at $a=1$ is just the ordinary Stieltjes constant.",
       },
     ],
-    // \u03b3\u2099(a) IS a Laurent coefficient of \u03b6(s, a) at s = 1, so its definition is a limit of an
-    // n-th derivative \u2014 and compute-engine cannot take it: the head collapses to the pole at
-    // s = 1 before `Limit` sees a limit, and the partial-sum form converges too slowly to
-    // extrapolate. Only \u03b3\u2080(a) = \u2212\u03c8(a) reduces, which the head already does.
     primitive: "numeric",
     implementations: [
       {
@@ -1112,7 +1197,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "DirichletCharacter(k, j, n)",
         description:
           "the character $\\chi_j \\bmod k$ at $n$, for $1 \\le j \\le \\varphi(k)$; $j = 1$ is the principal character.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1211,7 +1296,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DirichletL(k, j, s)",
         description: "the L-function of [[DirichletCharacter]] $\\chi_j \\bmod k$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1359,7 +1444,19 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.DirichletL,
+        expr: [
+          "Multiply",
+          [
+            "Sum",
+            [
+              "Multiply",
+              ["DirichletCharacter", "_k", "_j", "r"],
+              ["HurwitzZeta", "_s", ["Divide", "r", "_k"]],
+            ],
+            ["Triple", "r", 1, "_k"],
+          ],
+          ["Power", "_k", ["Negate", "_s"]],
+        ],
         note: "The Hurwitz decomposition — the definition the kernel evaluates, away from s = 1.",
       },
       {
@@ -1387,12 +1484,12 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "HarmonicNumber(n)",
         description: "the harmonic number $H_n = \\sum_{k=1}^n 1/k$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "HarmonicNumber(n, r)",
         description: "the generalized harmonic number $H_n^{(r)} = \\sum_{k=1}^n k^{-r}$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1591,7 +1688,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         origin: "reference",
         form: "notatio",
         environment: "engine",
-        expr: DEFINITIONS.HarmonicNumber,
+        expr: ["Add", ["PolyGamma", 0, ["Add", "_z", 1]], "EulerGamma"],
         note: "The one-argument digamma identity; exact at the integers too (ψ(n+1) + γ = Hₙ), so it doubles as the oracle at both.",
       },
       {
@@ -1619,7 +1716,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "BesselJZero(nu, k)",
         description: "the $k$-th positive zero of $J_\\nu$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1688,7 +1785,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "DigammaFunctionZero(n)",
         description: "the $n$-th real zero of $\\psi$, $n \\ge 0$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1775,7 +1872,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "MultiZetaValue(s1, s2)",
         description: "the depth-2 Euler sum $\\zeta(s_1, s_2)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1835,7 +1932,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "HypergeometricUStar(a, b, z)",
         description: "$z^a$ times Tricomi's confluent hypergeometric $U(a,b,z)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -1860,7 +1957,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       },
       {
         id: "a-generic-point-checked-against-mpmath-s-hyperu",
-        expr: ["HypergeometricUStar", 1.3, 2.7, 4.0],
+        expr: ["HypergeometricUStar", 1.3, 2.7, 4],
         expected: 1.1137052905867906,
         caption: "a generic point, checked against mpmath's `hyperu`",
       },
@@ -1900,7 +1997,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "SloaneA(id, n)",
         description: "the $n$-th term of OEIS sequence `id`.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2013,7 +2110,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "QPochhammer(a, q, n)",
         description: "the q-Pochhammer symbol $(a; q)_n$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2077,7 +2174,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "QFactorial(n, q)",
         description: "the q-factorial $[n]_q!$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2091,11 +2188,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 21,
         caption: "$[1]_2 [2]_2 [3]_2 = 1 \\cdot 3 \\cdot 7$",
       },
-      {
-        id: "qfactorial-4-2",
-        expr: ["QFactorial", 4, 2],
-        expected: 315,
-      },
+      { id: "qfactorial-4-2", expr: ["QFactorial", 4, 2], expected: 315 },
       {
         id: "qfactorial-3-1-over-2",
         expr: ["QFactorial", 3, ["Rational", 1, 2]],
@@ -2133,12 +2226,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "product of q-integers, built at canonicalization time (not evaluate) so Expand sees the tree to open up.",
       },
-      {
-        origin: "mapped",
-        form: "wolfram",
-        environment: "external",
-        note: "QFactorial[n, q].",
-      },
+      { origin: "mapped", form: "wolfram", environment: "external", note: "QFactorial[n, q]." },
     ],
     seeAlso: ["QPochhammer", "QBinomial", "Factorial"],
   },
@@ -2152,7 +2240,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "QBinomial(n, k, q)",
         description: "the Gaussian binomial coefficient $\\binom{n}{k}_q$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2204,12 +2292,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         source: "packages/symbols/analysis/analytic/src/q-series.ts",
         note: "the Pascal-like recurrence, built at canonicalization time so Expand sees the tree.",
       },
-      {
-        origin: "mapped",
-        form: "wolfram",
-        environment: "external",
-        note: "QBinomial[n, k, q].",
-      },
+      { origin: "mapped", form: "wolfram", environment: "external", note: "QBinomial[n, k, q]." },
     ],
     seeAlso: ["QPochhammer", "QFactorial", "Binomial"],
   },
@@ -2223,7 +2306,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "RiemannSiegelTheta(t)",
         description: "the Riemann–Siegel theta function $\\vartheta(t)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2277,7 +2360,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "RiemannSiegelZ(t)",
         description: "the Riemann–Siegel Z-function.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2286,16 +2369,8 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "The sign of $Z$ on the real line is what [[RiemannZetaZero]]'s zero-finder scans for.",
     ],
     examples: [
-      {
-        id: "riemannsiegelz-1p5",
-        expr: ["RiemannSiegelZ", 1.5],
-        expected: -0.595568336782887,
-      },
-      {
-        id: "riemannsiegelz-20p5",
-        expr: ["RiemannSiegelZ", 20.5],
-        expected: 0.5993287025147513,
-      },
+      { id: "riemannsiegelz-1p5", expr: ["RiemannSiegelZ", 1.5], expected: -0.595568336782887 },
+      { id: "riemannsiegelz-20p5", expr: ["RiemannSiegelZ", 20.5], expected: 0.5993287025147513 },
       {
         id: "z-0-zeta-1-2",
         expr: ["N", ["RiemannSiegelZ", 0]],
@@ -2331,7 +2406,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "RiemannZetaZero(k)",
         description: "the k-th nontrivial zero, $\\tfrac12 + i t_k$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2386,7 +2461,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric0F1(b, z)",
         description: "${}_0F_1(b; z)$, by its defining series.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2435,7 +2510,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric0F1Regularized(b, z)",
         description: "${}_0F_1(b; z) / \\Gamma(b)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2497,7 +2572,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric1F1Regularized(a, b, z)",
         description: "${}_1F_1(a,b;z) / \\Gamma(b)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2545,7 +2620,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric2F1Regularized(a, b, c, z)",
         description: "${}_2F_1(a,b,c;z) / \\Gamma(c)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2602,7 +2677,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hypergeometric3F2Regularized(a1, a2, a3, b1, b2, z)",
         description: "${}_3F_2(a_1,a_2,a_3;b_1,b_2;z) / (\\Gamma(b_1)\\Gamma(b_2))$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2652,7 +2727,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "HypergeometricU(a, b, z)",
         description: "Tricomi's confluent hypergeometric $U(a,b,z)$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2703,7 +2778,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Khinchin",
         description: "Khinchin's constant, a new mathematical-constant symbol.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2738,7 +2813,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "Hyperfactorial(n)",
         description: "the hyperfactorial of n.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2803,7 +2878,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "ExpIntegralE(n, z)",
         description: "$E_n(z)$, for any order $n$ (real, complex, or non-integer).",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2818,11 +2893,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 0.10001958240663265,
         caption: "$E_1(3/2) = \\Gamma(0, 3/2)$",
       },
-      {
-        id: "expintegrale-2-1p5",
-        expr: ["ExpIntegralE", 2, 1.5],
-        expected: 0.07310078653848084,
-      },
+      { id: "expintegrale-2-1p5", expr: ["ExpIntegralE", 2, 1.5], expected: 0.07310078653848084 },
       {
         id: "non-integer-order",
         expr: ["ExpIntegralE", 0.5, 2.5],
@@ -2874,13 +2945,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "LambertW(z)",
         description: "the principal branch $W_0(z)$ — native, extended with exact values.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "LambertW(z, k)",
         description:
           "the $k$-th branch $W_k(z)$, by Halley's iteration from the standard log-log seed (Corless et al. 1996). $k=0$ and $k=-1$ stay on compute-engine's own native handler.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -2889,11 +2960,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       "Every other branch is solved by Halley's method in the complex plane; checked against `wolframscript`'s `N[ProductLog[k, z], 16]` at several points (real and complex $z$, several $k$) to full double precision.",
     ],
     examples: [
-      {
-        id: "lambertw-0",
-        expr: ["LambertW", 0],
-        expected: 0,
-      },
+      { id: "lambertw-0", expr: ["LambertW", 0], expected: 0 },
       {
         id: "1-cdot-e-1-e",
         expr: ["LambertW", "ExponentialE"],
@@ -2966,7 +3033,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "InverseErfc(s)",
         description: "solves $\\operatorname{erfc}(y) = s$ for $y$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3060,7 +3127,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "InverseGammaRegularized(a, s)",
         description: "solves $s = Q(a, z)$ for $z$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3130,7 +3197,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "InverseBetaRegularized(s, a, b)",
         description: "solves $s = I_x(a, b)$ for $x$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3204,7 +3271,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "BellY(n, k, xs)",
         description: "$B_{n,k}(x_1, \\dots, x_{n-k+1})$, from the list `xs`.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3250,7 +3317,13 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
     signature: "NorlundB(n, a)",
     summary:
       "The Nörlund polynomial $B_n^{(a)}$, from the generating function $(t/(e^t-1))^a$. At $a=1$ it is the ordinary Bernoulli number; in general, an exact polynomial in $a$ with bigint-rational coefficients, from a power-series log/exp of the Bernoulli EGF.",
-    signatures: [{ call: "NorlundB(n, a)", description: "$B_n^{(a)}$, exact.", library: LIBRARY }],
+    signatures: [
+      {
+        call: "NorlundB(n, a)",
+        description: "$B_n^{(a)}$, exact.",
+        library: "@enumeratio/analytic",
+      },
+    ],
     details: [
       "Computed by logging the EGF $t/(e^t-1) = \\sum B_k t^k/k!$ into a power series $g(t)$ (the standard power-series-logarithm recurrence), then exponentiating $a \\cdot g(t)$ back — a genuine polynomial identity in $a$, since each convolution step contributes one more factor of $a$. Every step is exact bigint-rational arithmetic; no float is involved until $a$ itself is one.",
       "At a symbolic $a$, returns the polynomial as a MathJSON expression in $a$; at a concrete rational $a$, an exact rational number; at a float $a$, a float.",
@@ -3263,21 +3336,9 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: ["Rational", 1, 6],
         caption: "At a = 1 it is the Bernoulli number $B_2$",
       },
-      {
-        id: "norlundb-4-1",
-        expr: ["NorlundB", 4, 1],
-        expected: ["Rational", -1, 30],
-      },
-      {
-        id: "norlundb-2-2",
-        expr: ["NorlundB", 2, 2],
-        expected: ["Rational", 5, 6],
-      },
-      {
-        id: "norlundb-3-2",
-        expr: ["NorlundB", 3, 2],
-        expected: ["Rational", -1, 2],
-      },
+      { id: "norlundb-4-1", expr: ["NorlundB", 4, 1], expected: ["Rational", -1, 30] },
+      { id: "norlundb-2-2", expr: ["NorlundB", 2, 2], expected: ["Rational", 5, 6] },
+      { id: "norlundb-3-2", expr: ["NorlundB", 3, 2], expected: ["Rational", -1, 2] },
       {
         id: "a-polynomial-in-a",
         expr: ["NorlundB", 1, "a"],
@@ -3307,7 +3368,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "PrimeZetaP(s)",
         description: "$P(s)$, for $\\operatorname{Re}(s) > 1$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3322,11 +3383,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         expected: 0.4522474200410655,
         caption: "$\\sum_p 1/p^2$",
       },
-      {
-        id: "n-primezetap-3",
-        expr: ["N", ["PrimeZetaP", 3]],
-        expected: 0.17476263929944355,
-      },
+      { id: "n-primezetap-3", expr: ["N", ["PrimeZetaP", 3]], expected: 0.17476263929944355 },
       {
         id: "primezetap-2p5",
         expr: ["PrimeZetaP", 2.5],
@@ -3356,7 +3413,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "HypergeometricPFQ(a, b, z)",
         description:
           "${}_pF_q(a; b; z)$, for parameter lists `a` (length $p$) and `b` (length $q$).",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3419,7 +3476,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "KleinInvariantJ(tau)",
         description: "$J(\\tau) = j(\\tau)/1728$.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3483,7 +3540,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "ComplexExpand(expr)",
         description: "`expr`, rewritten as `Re + i·Im` with its symbols assumed real.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3559,7 +3616,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "ExpToTrig(expr)",
         description:
           "`expr` with each `Exp` rewritten via Euler's formula or its hyperbolic analogue.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3616,7 +3673,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "FunctionExpand(expr)",
         description: "`expr` with a handful of named special-function identities applied.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3710,7 +3767,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "PowerExpand(expr)",
         description: "`expr` with Ln and Power distributed over products, assuming positivity.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3763,7 +3820,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "FullSimplify(expr)",
         description: "compute-engine's own `simplify()`, plus a few extra targeted passes.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -3835,7 +3892,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "MatrixFunction(f, m)",
         description: "f applied to the square matrix m, via its eigendecomposition.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -4040,12 +4097,12 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
       {
         call: "CenteredInterval(c, r)",
         description: "the ball of radius r centered at c.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "CenteredInterval(interval)",
         description: "an [[Interval]] converted to center-radius form.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [
@@ -4102,7 +4159,7 @@ export const analyticSpecial: readonly ReferenceEntry[] = [
         call: "Around(x, dx)",
         description:
           "x with uncertainty dx, propagated as Around(f(x), |f′(x)|·dx) through a function f.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [

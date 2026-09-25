@@ -1,0 +1,24 @@
+name: SkewStandardTableaux
+domain: Collections
+signature: SkewStandardTableaux(size)
+summary: Standard Young tableaux on reduced skew shapes $\lambda/\mu$, summed over every shape with $n$ cells, as a lazy indexed family.
+signatures:
+  - call: SkewStandardTableaux(size)
+    library: enumeratio-collections
+    description: the standard fillings of every reduced skew shape $\lambda/\mu$ with `size` cells, entries $1..n$ each once, increasing along rows and down columns.
+details:
+  - A lazy indexed collection with no known closed form; the count is the cached enumeration's length, summed over every reduced skew shape from [[SkewPartitions]].
+  - Each element packs `[λ, μ, rowWord]`, where `rowWord[i]` is the 0-based row entry $i{+}1$ was placed in, in placement order; $\mu = 0$ (every row) recovers a plain standard Young tableau.
+  - Unranked by shape ([[SkewPartitions]]'s $\lambda$-then-$\mu$ order), then by row-word within a shape.
+examples:
+  - id: count-skewstandardtableaux-3-24-standard
+    expr: [Count, [SkewStandardTableaux, 3]]
+    expected: 24
+    category: Basic
+    caption: '$Count(SkewStandardTableaux(3)) = 24$: standard fillings of every skew shape of 3 cells'
+enumerate:
+  expr: SkewStandardTableaux(3)
+seeAlso:
+  - SkewPartitions
+  - Count
+  - At

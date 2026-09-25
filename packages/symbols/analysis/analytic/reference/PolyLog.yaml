@@ -1,0 +1,356 @@
+name: PolyLog
+domain: Special functions
+signature: PolyLog(s, z)
+summary: The polylogarithm $\operatorname{Li}_s(z) = \sum_{n=1}^{\infty} \dfrac{z^n}{n^s}$, the $a = 1$ slice of the Lerch transcendent.
+signatures:
+  - call: PolyLog(s, z)
+    description: the polylogarithm $\operatorname{Li}_s(z)$ at integer order $s$.
+  - call: PolyLog(s, z)
+    description: extends the same call to non-integer and complex order $s$, for $|z| \leq 1$.
+    library: '@enumeratio/analytic'
+details:
+  - $\operatorname{Li}_s(z) = z\,\Phi(z, s, 1)$ in terms of the Lerch transcendent — see [[LerchPhi]], which is how the non-integer orders are computed.
+  - '$\operatorname{Li}_s(1) = \zeta(s)$: the ordinary zeta lives on the $z = 1$ edge. See [[Zeta]].'
+  - 'Low orders are elementary: $\operatorname{Li}_0(z) = z/(1-z)$, $\operatorname{Li}_1(z) = -\ln(1-z)$, $\operatorname{Li}_{-1}(z) = z/(1-z)^2$, and every negative integer order is a rational function.'
+  - The dilogarithm $\operatorname{Li}_2$ has the special values $\operatorname{Li}_2(1) = \pi^2/6$, $\operatorname{Li}_2(-1) = -\pi^2/12$, and $\operatorname{Li}_2(\tfrac12) = \pi^2/12 - (\ln 2)^2/2$.
+  - 'Convergence: the series converges for $|z| < 1$, and on $|z| = 1$ for $\operatorname{Re}(s) > 1$. Outside the disk the function continues analytically, with a branch cut along $[1, \infty)$ — so $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ is complex.'
+  - Integer orders (including the continuation past $|z| = 1$) are compute-engine's own. `@enumeratio/analytic` adds non-integer and complex $s$ by summing the Lerch series, which reaches $|z| \leq 1$ only; outside that disk a non-integer order is left unevaluated rather than guessed.
+  - As with the other numeric heads, an exact argument stays symbolic under plain evaluation — pair with N(), or pass an inexact argument.
+examples:
+  - id: li-2-1-zeta-2-pi-2-6
+    expr: [PolyLog, 2, 1]
+    expected: [Multiply, [Rational, 1, 6], [Power, Pi, 2]]
+    caption: $\operatorname{Li}_2(1) = \zeta(2) = \pi^2/6$
+  - id: li-2-1-eta-2-pi-2-12
+    expr: [PolyLog, 2, -1]
+    expected: [Multiply, [Rational, -1, 12], [Power, Pi, 2]]
+    caption: $\operatorname{Li}_2(-1) = -\eta(2) = -\pi^2/12$
+  - id: li-4-1-zeta-4-pi-4-90
+    expr: [PolyLog, 4, 1]
+    expected: [Multiply, [Rational, 1, 90], [Power, Pi, 4]]
+    caption: $\operatorname{Li}_4(1) = \zeta(4) = \pi^4/90$
+  - id: li-1-z-ln-1-z-symbolically
+    expr: [PolyLog, 1, z]
+    expected: [Negate, [Ln, [Add, [Negate, z], 1]]]
+    category: Properties
+    caption: $\operatorname{Li}_1(z) = -\ln(1 - z)$, symbolically
+  - id: li-1-z-z-1-z-2-negative-orders-are-rational
+    expr: [PolyLog, -1, z]
+    expected: [Divide, z, [Power, [Add, [Negate, z], 1], 2]]
+    category: Properties
+    caption: $\operatorname{Li}_{-1}(z) = z/(1-z)^2$ — negative orders are rational
+  - id: li-2-1-2-pi-2-12-ln-2-2-2
+    expr: [Equal, [Add, [PolyLog, 2, 0.5], [Multiply, 0.5, [Power, [Ln, 2], 2]]], [Divide, [Power, Pi, 2], 12]]
+    expected: True
+    category: Properties
+    caption: $\operatorname{Li}_2(1/2) = \pi^2/12 - (\ln 2)^2/2$
+  - id: li-1-2-1-zeta-1-2-a-non-integer-order-from
+    expr: [PolyLog, 0.5, 1]
+    expected: {num: '-1.46035450880958681289'}
+    category: Applications
+    caption: $\operatorname{Li}_{1/2}(1) = \zeta(1/2)$ — a non-integer order, from `@enumeratio/analytic`
+    divergence:
+      wolfram: 'Li_{1/2}(1): compute-engine continues in s to ζ(1/2); Wolfram treats z = 1 as the branch point for s ≤ 1 and returns ComplexInfinity.'
+  - id: li-1-2-1-2-0-80612672-via-the-lerch-series
+    expr: [PolyLog, 0.5, 0.5]
+    expected: 0.8061267230428522
+    category: Applications
+    caption: $\operatorname{Li}_{1/2}(1/2) = 0.80612672\ldots$, via the Lerch series
+  - id: li-5-2-1-2-0-46229778-the-alternating-side-euler
+    expr: [PolyLog, 2.5, -0.5]
+    expected: -0.46229778219006346
+    category: Applications
+    caption: $\operatorname{Li}_{5/2}(-1/2) = -0.46229778\ldots$ — the alternating side, Euler-transformed
+  - id: threads-over-a-list-of-arguments
+    expr: [PolyLog, 2, [List, 0.5, 0.25]]
+    expected: [List, 0.5822405264650125, 0.2676526390827325]
+    category: Scope
+    caption: Threads over a list of arguments
+  - id: a-non-integer-order-past-z-1-is-left-unevaluated
+    expr: [PolyLog, 2.5, 2]
+    expected: [PolyLog, 2.5, 2]
+    category: Possible issues
+    caption: 'A non-integer order past $|z| = 1$ is left unevaluated: the series does not reach there and the continuation is only implemented for integer $s$'
+    divergence:
+      wolfram: Wolfram's $\mathrm{PolyLog}[5/2, 2]$ continues to a complex value; we return the expression unevaluated rather than a wrong number.
+  - id: an-exact-argument-stays-symbolic-under-plain
+    expr: [PolyLog, 2, [Rational, 1, 2]]
+    expected: [PolyLog, 2, [Rational, 1, 2]]
+    category: Possible issues
+    caption: An exact argument stays symbolic under plain evaluation -- pair with N() or pass 0.5 instead
+  - id: a-machine-precision-argument
+    expr: [PolyLog, 2, 0.9]
+    expected: 1.2997147230049588
+    caption: A machine-precision argument
+  - id: li-0-z-z-1-z-past-the-unit-disk
+    expr: [PolyLog, 0, 5.5]
+    expected: {num: '-1.222222222222222222221'}
+    caption: $\operatorname{Li}_0(z) = z/(1-z)$, past the unit disk
+  - id: li-3-1-2-frac-78-zeta-3-frac-pi-2-12-ln-2-frac
+    expr: [PolyLog, 3, [Rational, 1, 2]]
+    expected: [Add, [Multiply, [Rational, -1, 12], [Ln, 2], [Power, Pi, 2]], [Multiply, [Rational, 1, 6], [Power, [Ln, 2], 3]], [Multiply, [Rational, 7, 8], [Zeta, 3]]]
+    caption: $\operatorname{Li}_3(1/2) = \frac78\zeta(3) - \frac{\pi^2}{12}\ln 2 + \frac16\ln^3 2$
+  - id: complex-order-and-argument
+    expr: [PolyLog, [Complex, 0.2, 1], [Complex, 0.5, -0.5]]
+    expected: [Complex, 0.07032652055051603, -0.5632932625398744]
+    category: Scope
+    caption: Complex order and argument
+  - id: past-z-1-the-continuation-is-complex
+    expr: [PolyLog, 2, 2.5]
+    expected: [Complex, 2.420790806565934, -2.878612231808261]
+    category: Scope
+    caption: Past $z = 1$ the continuation is complex
+  - id: li-3-1-eta-3-frac-34-zeta-3
+    expr: [PolyLog, 3, -1]
+    expected: [Multiply, [Rational, -3, 4], [Zeta, 3]]
+    category: Scope
+    caption: $\operatorname{Li}_3(-1) = -\eta(3) = -\frac34\zeta(3)$
+  - id: li-2-2-pi-2-4-i-pi-ln-2-exactly
+    expr: [PolyLog, 2, 2]
+    expected: [Add, [Multiply, [Complex, 0, -1], Pi, [Ln, 2]], [Multiply, [Rational, 1, 4], [Power, Pi, 2]]]
+    category: Scope
+    caption: $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ exactly
+  - id: li-n-1-1-2-1-n-zeta-n-for-symbolic-n
+    expr: [PolyLog, n, -1]
+    expected: [Multiply, [Add, [Power, 2, [Add, [Negate, n], 1]], -1], [Zeta, n]]
+    category: Scope
+    caption: $\operatorname{Li}_n(-1) = -(1 - 2^{1-n})\zeta(n)$ for symbolic $n$
+  - id: li-2-z-z-1-z-1-z-3
+    expr: [PolyLog, -2, z]
+    expected: [Divide, [Multiply, z, [Add, z, 1]], [Power, [Add, [Negate, z], 1], 3]]
+    category: Scope
+    caption: $\operatorname{Li}_{-2}(z) = z(1+z)/(1-z)^3$
+  - id: interval-arithmetic
+    expr: [PolyLog, 2, [Interval, 0.7, 0.8]]
+    expected: [Interval, 0.8893776242860387, 1.0747946000082484]
+    category: Scope
+    caption: Interval arithmetic
+  - id: three-arguments-the-nielsen-generalized
+    expr: [PolyLog, 1, 2, 1]
+    expected: [Zeta, 3]
+    category: Scope
+    caption: 'Three arguments: the Nielsen generalized polylogarithm $S_{n,p}(z)$, with $S_{1,2}(1) = \zeta(3)$'
+  - id: s-2-2-1-pi-4-360
+    expr: [PolyLog, 2, 2, 1]
+    expected: [Multiply, [Rational, 1, 360], [Power, Pi, 4]]
+    category: Scope
+    caption: $S_{2,2}(1) = \pi^4/360$
+  - id: s-1-2-1-2-zeta-3-8-ln-3-2-6
+    expr: [PolyLog, 1, 2, 0.5]
+    expected: 0.0947530042301277
+    category: Scope
+    caption: $S_{1,2}(1/2) = \zeta(3)/8 - \ln^3 2/6$
+  - id: li-s-1-zeta-s-for-symbolic-s
+    expr: [PolyLog, s, 1]
+    expected: [Zeta, s]
+    category: Properties
+    caption: $\operatorname{Li}_s(1) = \zeta(s)$ for symbolic $s$
+  - id: frac-d-dx-li-n-x-li-n-1-x-x-today-the-derivative
+    expr: [D, [PolyLog, n, x], x]
+    expected: [Divide, [PolyLog, [Subtract, n, 1], x], x]
+    aspirational: true
+    category: Properties
+    caption: $\frac{d}{dx}\operatorname{Li}_n(x) = \operatorname{Li}_{n-1}(x)/x$; today the derivative stays an unapplied `Derivative`
+  - id: to-30-significant-digits-not-yet-the-requested
+    expr: [N, [PolyLog, 2, [Rational, 1, 2]], 30]
+    expected: {num: '0.582240526465012505902656320160'}
+    aspirational: true
+    category: Scope
+    caption: To 30 significant digits; not yet -- the requested precision is ignored and a double comes back
+  - hidden: true
+    id: n-polylog-2-0p5
+    expr: [N, [PolyLog, 2, 0.5]]
+    expected: 0.5822405264650125
+  - hidden: true
+    id: n-polylog-2-neg-0p5
+    expr: [N, [PolyLog, 2, -0.5]]
+    expected: -0.44841420692364636
+  - hidden: true
+    id: n-polylog-2-0p25
+    expr: [N, [PolyLog, 2, 0.25]]
+    expected: 0.2676526390827325
+  - hidden: true
+    id: n-polylog-2-0p9
+    expr: [N, [PolyLog, 2, 0.9]]
+    expected: 1.2997147230049588
+  - hidden: true
+    id: n-polylog-2-1-over-3
+    expr: [N, [PolyLog, 2, [Rational, 1, 3]]]
+    expected: 0.3662132299770634
+  - hidden: true
+    id: n-polylog-2-0p4-plus-0p3i
+    expr: [N, [PolyLog, 2, [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.40777049929509657, 0.374503158223905]
+  - hidden: true
+    id: n-polylog-3-0p5
+    expr: [N, [PolyLog, 3, 0.5]]
+    expected: 0.5372131936080403
+  - hidden: true
+    id: n-polylog-3-neg-0p5
+    expr: [N, [PolyLog, 3, -0.5]]
+    expected: -0.47259784465889704
+  - hidden: true
+    id: n-polylog-3-0p25
+    expr: [N, [PolyLog, 3, 0.25]]
+    expected: 0.25846139579657323
+  - hidden: true
+    id: n-polylog-3-0p9
+    expr: [N, [PolyLog, 3, 0.9]]
+    expected: 1.0496589501864397
+  - hidden: true
+    id: n-polylog-3-1-over-3
+    expr: [N, [PolyLog, 3, [Rational, 1, 3]]]
+    expected: 0.34882786115484005
+  - hidden: true
+    id: n-polylog-3-0p4-plus-0p3i
+    expr: [N, [PolyLog, 3, [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.40599530381987775, 0.33476183853388025]
+  - hidden: true
+    id: n-polylog-0p5-0p5
+    expr: [N, [PolyLog, 0.5, 0.5]]
+    expected: 0.8061267230428522
+  - hidden: true
+    id: n-polylog-0p5-neg-0p5
+    expr: [N, [PolyLog, 0.5, -0.5]]
+    expected: -0.373752237980973
+  - hidden: true
+    id: n-polylog-0p5-0p25
+    expr: [N, [PolyLog, 0.5, 0.25]]
+    expected: 0.3057349303992964
+  - hidden: true
+    id: n-polylog-0p5-0p9
+    expr: [N, [PolyLog, 0.5, 0.9]]
+    expected: 4.021950427473364
+  - hidden: true
+    id: n-polylog-0p5-1-over-3
+    expr: [N, [PolyLog, 0.5, [Rational, 1, 3]]]
+    expected: 0.44210883528067546
+  - hidden: true
+    id: n-polylog-0p5-0p4-plus-0p3i
+    expr: [N, [PolyLog, 0.5, [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.3799350192027693, 0.5445942552198528]
+  - hidden: true
+    id: n-polylog-1p5-0p5
+    expr: [N, [PolyLog, 1.5, 0.5]]
+    expected: 0.624837020819914
+  - hidden: true
+    id: n-polylog-1p5-neg-0p5
+    expr: [N, [PolyLog, 1.5, -0.5]]
+    expected: -0.42988732158057935
+  - hidden: true
+    id: n-polylog-1p5-0p25
+    expr: [N, [PolyLog, 1.5, 0.25]]
+    expected: 0.2757005086448229
+  - hidden: true
+    id: n-polylog-1p5-0p9
+    expr: [N, [PolyLog, 1.5, 0.9]]
+    expected: 1.614438528566339
+  - hidden: true
+    id: n-polylog-1p5-1-over-3
+    expr: [N, [PolyLog, 1.5, [Rational, 1, 3]]]
+    expected: 0.38178350786901616
+  - hidden: true
+    id: n-polylog-1p5-0p4-plus-0p3i
+    expr: [N, [PolyLog, 1.5, [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.40619397959402637, 0.41007586834837495]
+  - hidden: true
+    id: n-polylog-2p5-0p5
+    expr: [N, [PolyLog, 2.5, 0.5]]
+    expected: 0.5549972787175124
+  - hidden: true
+    id: n-polylog-2p5-neg-0p5
+    expr: [N, [PolyLog, 2.5, -0.5]]
+    expected: -0.46229778219006346
+  - hidden: true
+    id: n-polylog-2p5-0p25
+    expr: [N, [PolyLog, 2.5, 0.25]]
+    expected: 0.2621937704285516
+  - hidden: true
+    id: n-polylog-2p5-0p9
+    expr: [N, [PolyLog, 2.5, 0.9]]
+    expected: 1.1390030252021563
+  - hidden: true
+    id: n-polylog-2p5-1-over-3
+    expr: [N, [PolyLog, 2.5, [Rational, 1, 3]]]
+    expected: 0.35583074003232074
+  - hidden: true
+    id: n-polylog-2p5-0p4-plus-0p3i
+    expr: [N, [PolyLog, 2.5, [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.4072217113246216, 0.3507424837631956]
+  - hidden: true
+    id: n-polylog-neg-1-0p5
+    expr: [N, [PolyLog, -1, 0.5]]
+    expected: 2
+  - hidden: true
+    id: n-polylog-neg-1-neg-0p5
+    expr: [N, [PolyLog, -1, -0.5]]
+    expected: {num: '-0.222222222222222222222'}
+  - hidden: true
+    id: n-polylog-neg-1-0p25
+    expr: [N, [PolyLog, -1, 0.25]]
+    expected: {num: '0.444444444444444444445'}
+  - hidden: true
+    id: n-polylog-neg-1-0p9
+    expr: [N, [PolyLog, -1, 0.9]]
+    expected: 90
+  - hidden: true
+    id: n-polylog-neg-1-1-over-3
+    expr: [N, [PolyLog, -1, [Rational, 1, 3]]]
+    expected: {num: '0.74999999999999999999925'}
+  - hidden: true
+    id: n-polylog-neg-1-0p4-plus-0p3i
+    expr: [N, [PolyLog, -1, [Complex, 0.4, 0.3]]]
+    expected: [Complex, 1.9136e-16, 1.1111111111111114]
+  - hidden: true
+    id: n-polylog-2-plus-i-0p5
+    expr: [N, [PolyLog, [Complex, 2, 1], 0.5]]
+    expected: [Complex, 0.5548535453533205, -0.05804956179169715]
+  - hidden: true
+    id: n-polylog-2-plus-i-neg-0p5
+    expr: [N, [PolyLog, [Complex, 2, 1], -0.5]]
+    expected: [Complex, -0.4575315460755852, -0.03047101966980711]
+  - hidden: true
+    id: n-polylog-2-plus-i-0p25
+    expr: [N, [PolyLog, [Complex, 2, 1], 0.25]]
+    expected: [Complex, 0.26285018302723623, -0.011816971919302564]
+  - hidden: true
+    id: n-polylog-2-plus-i-0p9
+    expr: [N, [PolyLog, [Complex, 2, 1], 0.9]]
+    expected: [Complex, 1.073635898279169, -0.3065006217049299]
+  - hidden: true
+    id: n-polylog-2-plus-i-1-over-3
+    expr: [N, [PolyLog, [Complex, 2, 1], [Rational, 1, 3]]]
+    expected: [Complex, 0.3566945562007138, -0.022385462317962054]
+  - hidden: true
+    id: n-polylog-2-plus-i-0p4-plus-0p3i
+    expr: [N, [PolyLog, [Complex, 2, 1], [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.4621400230577699, 0.35056059710105836]
+  - hidden: true
+    id: n-polylog-0p5-plus-neg-1-times-i-0p5
+    expr: [N, [PolyLog, [Complex, 0.5, -1], 0.5]]
+    expected: [Complex, 0.6700397970761983, 0.23301926975771328]
+  - hidden: true
+    id: n-polylog-0p5-plus-neg-1-times-i-neg-0p5
+    expr: [N, [PolyLog, [Complex, 0.5, -1], -0.5]]
+    expected: [Complex, -0.3913103161117429, 0.06975146663327912]
+  - hidden: true
+    id: n-polylog-0p5-plus-neg-1-times-i-0p25
+    expr: [N, [PolyLog, [Complex, 0.5, -1], 0.25]]
+    expected: [Complex, 0.2884064661247059, 0.03875347060829805]
+  - hidden: true
+    id: n-polylog-0p5-plus-neg-1-times-i-0p9
+    expr: [N, [PolyLog, [Complex, 0.5, -1], 0.9]]
+    expected: [Complex, 0.580361076526937, 2.242263748000801]
+  - hidden: true
+    id: n-polylog-0p5-plus-neg-1-times-i-1-over-3
+    expr: [N, [PolyLog, [Complex, 0.5, -1], [Rational, 1, 3]]]
+    expected: [Complex, 0.4043299322379448, 0.07792572456064256]
+  - hidden: true
+    id: n-polylog-0p5-plus-neg-1-times-i-0p4-plus-0p3i
+    expr: [N, [PolyLog, [Complex, 0.5, -1], [Complex, 0.4, 0.3]]]
+    expected: [Complex, 0.24654523479288867, 0.4321567364244429]
+seeAlso:
+  - LerchPhi
+  - Zeta
+  - HurwitzZeta
+  - Ln

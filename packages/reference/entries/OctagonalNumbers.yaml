@@ -1,0 +1,21 @@
+name: OctagonalNumbers
+domain: Collections
+signature: OctagonalNumbers
+summary: The octagonal numbers $1, 8, 21, 40, …$ — $n(3n-2)$ — dots in an octagon.
+signatures:
+  - call: OctagonalNumbers
+    description: $n(3n-2)$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(OctagonalNumbers) = +\infty$, and $At(OctagonalNumbers, k) = k(3k-2)$ unranks in closed form -- $At(OctagonalNumbers, 5) = 65$.'
+  - OEIS A000567.
+  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(65, OctagonalNumbers)$ is true, $Element(64, OctagonalNumbers)$ is false.
+  - The $k$-gonal case $k=8$ of [[PolygonalNumbers]].
+examples: []
+enumerate:
+  expr: Take(OctagonalNumbers, 20)
+seeAlso:
+  - PolygonalNumbers
+  - HeptagonalNumbers
+  - Count
+  - At
+  - Element

@@ -1,0 +1,25 @@
+name: Subsets
+domain: Combinatorial collections
+signature: Subsets(n)
+summary: 'The lazy power set of $\{1, \dots, n\}$: all $2^n$ subsets as ascending index lists.'
+signatures:
+  - call: Subsets(n)
+    description: all subsets of $\{1, \dots, n\}$
+    library: enumeratio-collections
+details:
+  - There are $2^n$ subsets, so $\mathrm{Count}$ is $2^n$
+  - Subsets are ordered by the binary value of their membership mask, so the empty set comes first
+  - For a fixed size use [[KSubsets]]
+examples:
+  - id: 2-4-subsets
+    expr: [Count, [Subsets, 4]]
+    expected: 16
+    caption: $2^4$ subsets
+  - id: the-empty-subset
+    expr: [At, [Subsets, 3], 1]
+    expected: [List]
+    caption: the empty subset
+seeAlso:
+  - KSubsets
+  - Multisets
+  - Tuples

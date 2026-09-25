@@ -1,0 +1,20 @@
+name: SquarefreeSemiprimes
+domain: Collections
+signature: SquarefreeSemiprimes
+summary: 'The squarefree semiprimes $6, 10, 14, 15, 21, …$: products of two DISTINCT primes ($\tau=4$, $\mu=+1$).'
+signatures:
+  - call: SquarefreeSemiprimes
+    description: the $n = pq$ for distinct primes $p \ne q$, an infinite indexed collection.
+details:
+  - 'A lazy indexed collection: $Count(SquarefreeSemiprimes) = +\infty$; the squarefree subset of [[SemiprimeNumbers]] (which also allows $p^2$). OEIS A006881.'
+  - $At(SquarefreeSemiprimes, k)$ unranks by scanning forward, factoring each candidate -- $At(SquarefreeSemiprimes, 1) = 6$.
+  - 'Membership goes through [[Element]]: $Element(6, SquarefreeSemiprimes)$ is true ($2 \times 3$), $Element(4, SquarefreeSemiprimes)$ is false ($2^2$, not squarefree).'
+examples: []
+enumerate:
+  expr: Take(SquarefreeSemiprimes, 20)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - SemiprimeNumbers
+  - SphenicNumbers

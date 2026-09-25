@@ -1,0 +1,133 @@
+name: ContinuedFraction
+domain: The modular group
+signature: ContinuedFraction(x)
+summary: The regular continued fraction $[a_0; a_1, a_2, \dots]$ of $p/q$. Its partial quotients are the run lengths of the rational's Stern–Brocot path, and the $T$-exponents of its matrix — one object under three names.
+signatures:
+  - call: ContinuedFraction(x)
+    description: the partial quotients of a rational — compute-engine's own head
+  - call: ContinuedFraction(x)
+    description: for a quadratic irrational, the exact eventually-periodic expansion $[a_0, \overline{a_1,\dots,a_k}]$, the period written as a nested list
+    library: enumeratio-modular
+  - call: ContinuedFraction(x, n)
+    description: the first $n$ terms — exact for a quadratic irrational, certified-precision otherwise (compute-engine's own signature, extended)
+  - call: FromContinuedFraction(list)
+    description: back to the rational — compute-engine's own
+  - call: FromContinuedFraction([a0, [period]])
+    description: back to the quadratic irrational, from its periodic-tail shape
+    library: enumeratio-modular
+  - call: SternBrocotPath(p, q)
+    description: the same data as a word in $L$ and $R$
+    library: enumeratio-modular
+  - call: FareySequence(n)
+    description: every reduced $p/q$ in $[0,1]$ with $q \le n$, in order
+    library: enumeratio-modular
+details:
+  - '`ContinuedFraction` and `FromContinuedFraction` are compute-engine''s heads, extended in place rather than redeclared — pass the RATIONAL, not a numerator and denominator, since the two-argument form means "the first $n$ terms"'
+  - For a quadratic irrational $(a+b\sqrt d)/c$, the one-argument form runs the exact PQa algorithm over bigints and returns the eventually-periodic expansion; the two-argument form truncates it. Anything else irrational — $\pi$, $e$, a cube root, a sum of surds, the named `GoldenRatio` — goes through a BigDecimal extraction certified by agreement across two working precisions, so it isn't limited to double precision
+  - 'The expansion is made unique by never ending in $1$: $[\ldots, k, 1]$ is rewritten $[\ldots, k+1]$'
+  - The path is $R^{a_0}L^{a_1}R^{a_2}\cdots$ with the LAST exponent one short — the final step is the arrival, not a turn
+  - Consecutive Farey fractions satisfy $ps - qr = -1$, which is a determinant, which is a group element
+  - The Fibonacci fractions alternate $RLRL\dots$, the sense in which $\varphi$ is the most irrational number
+examples:
+  - id: pi-s-famous-convergent
+    expr: [ContinuedFraction, [Rational, 355, 113]]
+    expected: [List, 3, 7, 16]
+    caption: $\pi$'s famous convergent
+  - id: 5-3-1-1-2
+    expr: [SternBrocotPath, 5, 3]
+    expected: "'RLR'"
+    caption: $5/3 = [1; 1, 2]$
+  - id: and-back-again
+    expr: [FromSternBrocotPath, "'RLR'"]
+    expected: [Rational, 5, 3]
+    caption: and back again
+    category: Properties
+  - id: 1-cdot-2-3-cdot-1-1
+    expr: [FareyNeighbours, 1, 3, 1, 2]
+    expected: True
+    caption: $1\cdot2 - 3\cdot1 = -1$
+    category: Properties
+  - id: 47-17-2-1-1-1-3-1-4
+    expr: [ContinuedFraction, [Rational, 47, 17]]
+    expected: [List, 2, 1, 3, 4]
+    caption: $47/17 = 2 + 1/(1 + 1/(3 + 1/4))$
+  - id: the-first-20-terms-of-a-quadratic-irrational
+    expr: [ContinuedFraction, [Sqrt, 13], 20]
+    expected: [List, 3, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 1]
+    caption: the first 20 terms of a quadratic irrational — periodic after $a_0$
+  - id: e-s-pattern-1-2k-1
+    expr: [ContinuedFraction, ExponentialE, 10]
+    expected: [List, 2, 1, 2, 1, 1, 4, 1, 1, 6, 1]
+    caption: $e$'s pattern $1, 2k, 1$
+    category: Scope
+  - id: any-constant-compute-engine-can-evaluate
+    expr: [ContinuedFraction, EulerGamma, 10]
+    expected: [List, 0, 1, 1, 2, 1, 2, 1, 4, 3, 13]
+    caption: any constant compute-engine can evaluate numerically
+    category: Scope
+  - id: a-floating-point-number-read-as-the-rational-it
+    expr: [ContinuedFraction, 3.245]
+    expected: [List, 3, 4, 12, 4]
+    caption: a floating-point number, read as the rational it prints as, $649/200$
+    category: Scope
+  - id: negative-a-floor-for-a-0-then-positive-terms-3-1
+    expr: [ContinuedFraction, [Rational, -47, 17]]
+    expected: [List, -3, 4, 4]
+    caption: 'negative: a floor for $a_0$, then positive terms — $-3 + 1/(4 + 1/4)$'
+    category: Possible issues
+    divergence:
+      wolfram: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
+  - id: fromcontinuedfraction-inverts-it
+    expr: [FromContinuedFraction, [ContinuedFraction, [Rational, 47, 17]]]
+    expected: [Rational, 47, 17]
+    caption: '`FromContinuedFraction` inverts it'
+    category: Properties
+  - id: 20-terms-of-pi-past-the-13-term-double-precision
+    expr: [ContinuedFraction, Pi, 20]
+    expected: [List, 3, 7, 15, 1, 292, 1, 1, 1, 2, 1, 3, 1, 14, 2, 1, 1, 2, 2, 2, 2]
+    caption: 20 terms of $\pi$, past the 13-term double-precision wall — certified BigDecimal
+  - id: a-quadratic-irrational-s-exact-expansion-is
+    expr: [ContinuedFraction, [Sqrt, 13]]
+    expected: [List, 3, [List, 1, 1, 1, 1, 6]]
+    caption: a quadratic irrational's exact expansion is eventually periodic, written with the period as a nested list
+  - id: varphi-1-overline-1-purely-periodic-so-the
+    expr: [ContinuedFraction, [Divide, [Add, 1, [Sqrt, 5]], 2]]
+    expected: [List, 1, [List, 1]]
+    caption: $\varphi = [1; \overline{1}]$ — purely periodic, so the period is all there is
+    category: Scope
+  - id: the-named-constant-unfolded-to-1-sqrt-5-2-first
+    expr: [ContinuedFraction, GoldenRatio, 10]
+    expected: [List, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    caption: the named constant, unfolded to $(1+\sqrt5)/2$ first
+    category: Scope
+  - id: a-sum-of-surds-still-a-quadratic-irrational
+    expr: [ContinuedFraction, [Add, 1, [Sqrt, 2]], 5]
+    expected: [List, 2, 2, 2, 2, 2]
+    caption: a sum of surds — still a quadratic irrational, exact via PQa
+    category: Scope
+  - id: a-cube-root-algebraic-degree-3-not-periodic-so-a
+    expr: [ContinuedFraction, [Power, 2, [Rational, 1, 3]], 10]
+    expected: [List, 1, 3, 1, 5, 1, 1, 4, 1, 1, 8]
+    caption: a cube root, algebraic degree 3 — not periodic, so a certified BigDecimal expansion
+    category: Scope
+  - id: a-periodic-tail-rebuilds-the-quadratic
+    expr: [FromContinuedFraction, [List, 3, [List, 1, 1, 1, 1, 6]]]
+    expected: [Sqrt, 13]
+    caption: a periodic tail rebuilds the quadratic irrational
+    category: Properties
+  - id: 1-overline-2-sqrt-2
+    expr: [FromContinuedFraction, [List, 1, [List, 2]]]
+    expected: [Sqrt, 2]
+    caption: $[1; \overline{2}] = \sqrt2$
+    category: Properties
+  - id: symbolic-terms-build-the-nested-fraction-left
+    expr: [FromContinuedFraction, [List, a, b, c]]
+    expected: [Add, a, [Divide, 1, [Add, b, [Divide, 1, c]]]]
+    caption: symbolic terms build the nested fraction, left uncombined
+    category: Scope
+    divergence:
+      wolfram: Wolfram's own FromContinuedFraction[{a,b,c}] combines it into the single ratio (a + (1+ab)c)/(1+bc); we leave the nested a + 1/(b + 1/c) form, matching what a reader would write down term by term.
+seeAlso:
+  - ModularWord
+  - IntegerDigits
+  - Convergents

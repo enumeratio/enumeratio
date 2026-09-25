@@ -1,35 +1,20 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "Braids and knots";
-const B = (strands: number, ...word: number[]): MathJSON => ["Braid", strands, ["List", ...word]];
-/** A MathJSON string literal — the spelling a modular word takes. */
-const W = (word: string): MathJSON => `'${word}'`;
-/** Canonical Add order puts the highest power first, which is not how one writes it. */
-const TREFOIL: MathJSON = ["Add", ["Power", "t", 2], ["Negate", "t"], 1];
-/** Canonical form writes t⁻¹ as a Divide, so the Jones values are spelt out once here. */
-const TREFOIL_JONES: MathJSON = [
-  "Add",
-  ["Negate", ["Power", "t", -4]],
-  ["Divide", 1, "t"],
-  ["Power", "t", -3],
-];
-const FIGURE_EIGHT: MathJSON = ["Add", ["Power", "t", 2], ["Multiply", -3, "t"], 1];
-/** Wolfram's Stevedore knot 6₁ — the twist knot with two half-twists. */
-const STEVEDORE: MathJSON = ["Add", ["Multiply", 2, ["Power", "t", 2]], ["Multiply", -5, "t"], 2];
-/** The figure-eight's Jones polynomial — amphichiral, so it is its own mirror. */
-const FIGURE_EIGHT_JONES: MathJSON = [
-  "Add",
-  ["Power", "t", 2],
-  ["Negate", "t"],
-  ["Divide", -1, "t"],
-  ["Power", "t", -2],
-  1,
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/groups/braid/reference/Braid.yaml",
+  "packages/symbols/groups/braid/reference/AlexanderPolynomial.yaml",
+  "packages/symbols/groups/braid/reference/LorenzBraid.yaml",
+  "packages/symbols/groups/braid/reference/JonesPolynomial.yaml",
 ];
 
 export const braids: readonly ReferenceEntry[] = [
   {
     name: "Braid",
-    domain: DOMAIN,
+    domain: "Braids and knots",
     signature: "Braid(strands, word)",
     summary:
       "A braid in Artin's presentation: $n$ strands and a word whose letter $k$ means $\\sigma_k$ and $-k$ means $\\sigma_k^{-1}$. Closing it up names a link — and by Alexander's theorem, every link.",
@@ -61,13 +46,13 @@ export const braids: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "sigma1sigma2-cycles-the-three-strands",
-        expr: ["BraidPermutation", B(3, 1, 2)],
+        expr: ["BraidPermutation", ["Braid", 3, ["List", 1, 2]]],
         expected: ["List", 2, 3, 1],
         caption: "σ₁σ₂ cycles the three strands",
       },
       {
         id: "the-hopf-link",
-        expr: ["BraidComponents", B(2, 1, 1)],
+        expr: ["BraidComponents", ["Braid", 2, ["List", 1, 1]]],
         expected: 2,
         caption: "the Hopf link",
         category: "Properties",
@@ -81,7 +66,7 @@ export const braids: readonly ReferenceEntry[] = [
       },
       {
         id: "two-positive-crossings-and-one-negative",
-        expr: ["BraidWrithe", B(3, 1, -2, 1)],
+        expr: ["BraidWrithe", ["Braid", 3, ["List", 1, -2, 1]]],
         expected: 1,
         caption: "two positive crossings and one negative",
         category: "Scope",
@@ -91,7 +76,7 @@ export const braids: readonly ReferenceEntry[] = [
   },
   {
     name: "AlexanderPolynomial",
-    domain: DOMAIN,
+    domain: "Braids and knots",
     signature: "AlexanderPolynomial(knot)",
     summary:
       "The Alexander polynomial of a knot, computed from the reduced Burau representation over $\\mathbb{Z}[t,t^{-1}]$ and returned as an ordinary expression in $t$. Takes the knot however it is named — as $T(p,q)$, as a braid it closes from, or as a modular word.",
@@ -147,27 +132,27 @@ export const braids: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "the-trefoil",
-        expr: ["AlexanderPolynomial", B(2, 1, 1, 1)],
-        expected: TREFOIL,
+        expr: ["AlexanderPolynomial", ["Braid", 2, ["List", 1, 1, 1]]],
+        expected: ["Add", ["Power", "t", 2], ["Negate", "t"], 1],
         caption: "the trefoil",
       },
       {
         id: "the-figure-eight-knot",
-        expr: ["AlexanderPolynomial", ["BraidPower", B(3, 1, -2), 2]],
-        expected: FIGURE_EIGHT,
+        expr: ["AlexanderPolynomial", ["BraidPower", ["Braid", 3, ["List", 1, -2]], 2]],
+        expected: ["Add", ["Power", "t", 2], ["Multiply", -3, "t"], 1],
         caption: "the figure-eight knot",
       },
       {
         id: "and-under-its-own-name-twistknot-1",
         expr: ["AlexanderPolynomial", ["FigureEightKnot"]],
-        expected: FIGURE_EIGHT,
+        expected: ["Add", ["Power", "t", 2], ["Multiply", -3, "t"], 1],
         caption: "…and under its own name, TwistKnot(1)",
         category: "Scope",
       },
       {
         id: "the-stevedore-knot-61-two-half-twists",
         expr: ["AlexanderPolynomial", ["TwistKnot", 2]],
-        expected: STEVEDORE,
+        expected: ["Add", ["Multiply", 2, ["Power", "t", 2]], ["Multiply", -5, "t"], 2],
         caption: "the Stevedore knot, 6₁ — two half-twists",
         category: "Scope",
       },
@@ -194,8 +179,8 @@ export const braids: readonly ReferenceEntry[] = [
       },
       {
         id: "a-mixed-braid-has-no-bennequin-genus-so-the-call",
-        expr: ["SeifertGenus", B(3, 1, -2)],
-        expected: ["SeifertGenus", B(3, 1, -2)],
+        expr: ["SeifertGenus", ["Braid", 3, ["List", 1, -2]]],
+        expected: ["SeifertGenus", ["Braid", 3, ["List", 1, -2]]],
         caption: "a mixed braid has no Bennequin genus, so the call is left alone",
         category: "Possible issues",
       },
@@ -211,7 +196,7 @@ export const braids: readonly ReferenceEntry[] = [
   },
   {
     name: "LorenzBraid",
-    domain: DOMAIN,
+    domain: "Braids and knots",
     signature: "LorenzBraid(word)",
     summary:
       "The braid a closed geodesic of the modular flow draws. By Ghys's theorem the modular knots are exactly the periodic orbits of the Lorenz attractor, and those have a purely combinatorial positive braid.",
@@ -243,27 +228,27 @@ export const braids: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "the-shortest-knotted-geodesic-draws-a-trefoil",
-        expr: ["AlexanderPolynomial", W("LLRLR")],
-        expected: TREFOIL,
+        expr: ["AlexanderPolynomial", "'LLRLR'"],
+        expected: ["Add", ["Power", "t", 2], ["Negate", "t"], 1],
         caption: "the shortest knotted geodesic draws a trefoil",
       },
       {
         id: "braid-index-2",
-        expr: ["TripNumber", W("LLRLR")],
+        expr: ["TripNumber", "'LLRLR'"],
         expected: 2,
         caption: "braid index 2",
         category: "Properties",
       },
       {
         id: "one-hump-each-way-is-unknotted-however-long",
-        expr: ["AlexanderPolynomial", W("LLLRRRR")],
+        expr: ["AlexanderPolynomial", "'LLLRRRR'"],
         expected: 1,
         caption: "one hump each way is unknotted, however long",
         category: "Properties",
       },
       {
         id: "a-rotation-by-2-on-5-points-hence-t-2-3",
-        expr: ["LorenzPermutation", W("LLRLR")],
+        expr: ["LorenzPermutation", "'LLRLR'"],
         expected: ["List", 3, 4, 5, 1, 2],
         caption: "a rotation by 2 on 5 points — hence $T(2,3)$",
         category: "Scope",
@@ -273,7 +258,7 @@ export const braids: readonly ReferenceEntry[] = [
   },
   {
     name: "JonesPolynomial",
-    domain: DOMAIN,
+    domain: "Braids and knots",
     signature: "JonesPolynomial(knot)",
     summary:
       "The Jones polynomial $V(t)$ of a knot. A knot named $T(p,q)$ takes the closed form; anything else goes through the TEMPERLEY–LIEB algebra rather than a matrix representation, where each crossing becomes its two smoothings and each closed loop is worth $\\delta = -A^2 - A^{-2}$.",
@@ -315,35 +300,42 @@ export const braids: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "the-right-handed-trefoil",
-        expr: ["JonesPolynomial", B(2, 1, 1, 1)],
-        expected: TREFOIL_JONES,
+        expr: ["JonesPolynomial", ["Braid", 2, ["List", 1, 1, 1]]],
+        expected: ["Add", ["Negate", ["Power", "t", -4]], ["Divide", 1, "t"], ["Power", "t", -3]],
         caption: "the right-handed trefoil",
       },
       {
         id: "not-yet-an-invariant",
-        expr: ["KauffmanBracket", B(2, 1)],
+        expr: ["KauffmanBracket", ["Braid", 2, ["List", 1]]],
         expected: ["Negate", ["Power", "A", 3]],
         caption: "not yet an invariant",
         category: "Properties",
       },
       {
         id: "and-the-writhe-correction-fixes-it",
-        expr: ["BracketInvariant", B(2, 1)],
+        expr: ["BracketInvariant", ["Braid", 2, ["List", 1]]],
         expected: 1,
         caption: "…and the writhe correction fixes it",
         category: "Properties",
       },
       {
         id: "the-shortest-knotted-modular-geodesic-by-yet",
-        expr: ["JonesPolynomial", W("LLRLR")],
-        expected: TREFOIL_JONES,
+        expr: ["JonesPolynomial", "'LLRLR'"],
+        expected: ["Add", ["Negate", ["Power", "t", -4]], ["Divide", 1, "t"], ["Power", "t", -3]],
         caption: "the shortest knotted modular geodesic, by yet another route",
         category: "Applications",
       },
       {
         id: "the-figure-eight-through-the-braid-it-carries-as",
         expr: ["JonesPolynomial", ["FigureEightKnot"]],
-        expected: FIGURE_EIGHT_JONES,
+        expected: [
+          "Add",
+          ["Power", "t", 2],
+          ["Negate", "t"],
+          ["Divide", -1, "t"],
+          ["Power", "t", -2],
+          1,
+        ],
         caption: "the figure-eight, through the braid it carries as TwistKnot(1)",
         category: "Applications",
       },

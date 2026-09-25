@@ -1,0 +1,20 @@
+name: CenteredHexagonalNumbers
+domain: Collections
+signature: CenteredHexagonalNumbers
+summary: The centered hexagonal numbers $1, 7, 19, 37, …$ — $3n^2-3n+1$ — a hexagon of dots grown ring by ring around a center.
+signatures:
+  - call: CenteredHexagonalNumbers
+    description: $3n^2-3n+1$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(CenteredHexagonalNumbers) = +\infty$, and $At(CenteredHexagonalNumbers, k) = 3k^2-3k+1$ unranks in closed form -- $At(CenteredHexagonalNumbers, 5) = 61$.'
+  - OEIS A003215.
+  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(61, CenteredHexagonalNumbers)$ is true, $Element(60, CenteredHexagonalNumbers)$ is false.
+examples: []
+enumerate:
+  expr: Take(CenteredHexagonalNumbers, 20)
+seeAlso:
+  - HexagonalNumbers
+  - CenteredSquareNumbers
+  - Count
+  - At
+  - Element

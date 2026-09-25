@@ -1,0 +1,29 @@
+name: FirstPosition
+domain: Collections
+signature: FirstPosition(collection, value)
+summary: The position of the first occurrence of value, searching every level.
+signatures:
+  - call: FirstPosition(collection, value)
+    description: the position of the first occurrence of `value`, searching every level rather than just the top one.
+    library: enumeratio-collections
+details:
+  - Unlike [[IndexOf]] and [[Position]], which only look at the top level, FirstPosition descends into nested collections — depth-first, outer to inner, left to right.
+  - The empty $List$ when the value isn't found anywhere.
+examples:
+  - id: the-first-occurrence-of-b-nested-inside-the
+    expr: [FirstPosition, [List, [List, a, a, b], [List, b, a, a], [List, a, b, a]], b]
+    expected: [List, 1, 3]
+    caption: The first occurrence of $b$, nested inside the first sublist
+  - id: the-empty-list-when-the-value-isn-t-found
+    expr: [FirstPosition, [List, a, [List, a, c]], b]
+    expected: [List]
+    caption: The empty list when the value isn't found anywhere
+  - id: a-match-nested-inside-an-earlier-sublist-beats-a
+    expr: [FirstPosition, [List, a, [List, a, b], b], b]
+    expected: [List, 2, 2]
+    category: Properties
+    caption: 'A match nested inside an earlier sublist beats a plain match later at the top level: depth-first, outer to inner, left to right'
+seeAlso:
+  - IndexOf
+  - Position
+  - At

@@ -1,0 +1,108 @@
+name: Rationalize
+domain: Arithmetic
+signature: Rationalize(x, tolerance?)
+summary: Finds a simple rational number near x.
+signatures:
+  - call: Rationalize(x)
+    description: the simplest rational within about one machine epsilon of x.
+  - call: Rationalize(x, tolerance)
+    description: the simplest rational within the given tolerance of x.
+details:
+  - Finds a simple rational number near x.
+  - With one argument, it finds the simplest fraction within about one machine epsilon of x's current value; a second argument sets an explicit tolerance instead.
+  - An already-exact rational (or integer) is returned unchanged.
+  - Builds the approximation via continued fractions, the same technique behind classic approximations like $\pi \approx 355/113$.
+examples:
+  - id: rationalize-0p1
+    expr: [Rationalize, 0.1]
+    expected: [Rational, 1, 10]
+  - id: an-exact-integer-is-returned-unchanged
+    expr: [Rationalize, 2]
+    expected: 2
+    caption: An exact integer is returned unchanged
+  - id: rationalize-2p5
+    expr: [Rationalize, 2.5]
+    expected: [Rational, 5, 2]
+  - id: recognizes-a-float-that-is-to-machine-precision
+    expr: [Rationalize, 0.3333333333333333]
+    expected: [Rational, 1, 3]
+    caption: Recognizes a float that is, to machine precision, a simple fraction
+  - id: with-an-explicit-tolerance-recovers-a-classic
+    expr: [Equal, [Rationalize, Pi, 0.01], [Rational, 22, 7]]
+    expected: True
+    category: Properties
+    caption: 'With an explicit tolerance, recovers a classic approximation: 22/7 is within 0.01 of π'
+  - id: milu-zu-chongzhi-s-5th-century-approximation-of
+    expr: [Rationalize, Pi, 0.000001]
+    expected: [Rational, 355, 113]
+    category: Neat examples
+    caption: Milü, Zu Chongzhi's 5th-century approximation of π, accurate to six decimal places
+  - id: recovers-a-simple-fraction-from-a-decimal
+    expr: [Rationalize, 0.75]
+    expected: [Rational, 3, 4]
+    category: Applications
+    caption: Recovers a simple fraction from a decimal measurement
+  - id: without-enough-repeating-digits-to-reach-machine
+    expr: [Rationalize, 0.333333]
+    expected: [Rational, 333333, 1000000]
+    category: Possible issues
+    caption: Without enough repeating digits to reach machine precision, it just returns the exact decimal as a fraction rather than snapping to 1/3
+  - id: a-loose-tolerance-can-snap-to-something-far
+    expr: [Rationalize, 0.1, 0.5]
+    expected: 0
+    category: Possible issues
+    caption: A loose tolerance can snap to something far simpler -- 0 is within 0.5 of 0.1
+  - id: rationalize-6p75
+    expr: [Rationalize, 6.75]
+    expected: [Rational, 27, 4]
+  - id: a-second-argument-sets-the-tolerance
+    expr: [Rationalize, Pi, 0.01]
+    expected: [Rational, 22, 7]
+    caption: A second argument sets the tolerance
+  - id: any-exact-numeric-expression-to-any-tolerance
+    expr: [Rationalize, [Exp, [Sqrt, 2]], [Power, 2, -12]]
+    expected: [Rational, 218, 53]
+    category: Scope
+    caption: Any exact numeric expression, to any tolerance
+  - id: rationalize-sqrt-2-0p001
+    expr: [Rationalize, [Sqrt, 2], 0.001]
+    expected: [Rational, 41, 29]
+    category: Scope
+  - id: rationalize-neg-0p125
+    expr: [Rationalize, -0.125]
+    expected: [Rational, -1, 8]
+    category: Scope
+  - id: the-rational-with-the-smallest-denominator
+    expr: [Rationalize, Pi, 0.001]
+    expected: [Rational, 201, 64]
+    category: Scope
+    caption: The rational with the smallest denominator within 0.001 of $\pi$ -- $201/64$, not compute-engine's own closer-but-larger-denominator continued-fraction convergent $333/106$
+  - id: rationalizes-every-approximate-number-inside-an
+    expr: [Rationalize, [Add, 1.2, [Multiply, 6.7, x]]]
+    expected: [Add, [Multiply, [Rational, 67, 10], x], [Rational, 6, 5]]
+    category: Scope
+    caption: Rationalizes every approximate number inside an expression
+  - id: threads-element-wise-over-a-list-compute-engine
+    expr: [Rationalize, [List, 0.5, 0.25, 0.2]]
+    expected: [List, [Rational, 1, 2], [Rational, 1, 4], [Rational, 1, 5]]
+    category: Scope
+    caption: Threads element-wise over a list; compute-engine's own Rationalize takes only a single real
+  - id: a-zero-tolerance-gives-the-exact-rational-the
+    expr: [Rationalize, [N, Pi], 0]
+    expected: [Rational, 884279719003555, 281474976710656]
+    category: Scope
+    caption: A zero tolerance gives the exact rational the machine double denotes -- $N(\pi)$'s own dyadic value, $884279719003555/2^{48}$, not merely a rational within some epsilon of it
+  - id: recognizes-a-ratio-of-consecutive-fibonacci
+    expr: [Rationalize, 0.618034, 0.0001]
+    expected: [Rational, 55, 89]
+    category: Applications
+    caption: Recognizes a ratio of consecutive Fibonacci numbers in a decimal approximation of $1/\varphi$
+  - id: without-a-tolerance-a-float-with-no-simple
+    expr: [Rationalize, [N, Pi]]
+    expected: [Rational, 80143857, 25510582]
+    category: Possible issues
+    caption: Without a tolerance, a float with no simple fraction nearby still becomes a fraction with a large denominator
+    divergence:
+      wolfram: 'Wolfram returns $\mathrm{Rationalize}[N[\pi]]$ unchanged as 3.14159: no $p/q$ lies close enough to it, relative to $1/q^2$.'
+seeAlso:
+  - Round

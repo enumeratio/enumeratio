@@ -1,12 +1,19 @@
-import type { MathJSON, ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-const DOMAIN = "Incidence algebras";
-const L = (...xs: number[]): MathJSON => ["List", ...xs];
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/algebras/incidence/reference/MoebiusFunction.yaml",
+  "packages/symbols/algebras/incidence/reference/MoebiusInvert.yaml",
+  "packages/symbols/algebras/incidence/reference/PosetElements.yaml",
+];
 
 export const incidence: readonly ReferenceEntry[] = [
   {
     name: "MoebiusFunction",
-    domain: DOMAIN,
+    domain: "Incidence algebras",
     signature: "MoebiusFunction(poset, x, y)",
     summary:
       "The Möbius function $\\mu(x,y)$ of a finite poset — the inverse of the zeta function in the incidence algebra. Specialising the poset recovers number theory's $\\mu$ and inclusion–exclusion.",
@@ -40,7 +47,7 @@ export const incidence: readonly ReferenceEntry[] = [
       },
       {
         id: "1-3-inclusion-exclusion",
-        expr: ["MoebiusFunction", ["BooleanLattice", 3], L(), L(1, 2, 3)],
+        expr: ["MoebiusFunction", ["BooleanLattice", 3], ["List"], ["List", 1, 2, 3]],
         expected: -1,
         caption: "$(-1)^3$ — inclusion–exclusion",
         category: "Properties",
@@ -57,7 +64,7 @@ export const incidence: readonly ReferenceEntry[] = [
   },
   {
     name: "MoebiusInvert",
-    domain: DOMAIN,
+    domain: "Incidence algebras",
     signature: "MoebiusInvert(poset, values)",
     summary:
       "Möbius inversion: given $g(y) = \\sum_{x \\le y} f(x)$, recover $f$. The inverse of [[PosetSumDown]], and the reason the incidence algebra is worth having.",
@@ -81,14 +88,14 @@ export const incidence: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "partial-sums-along-the-chain",
-        expr: ["PosetSumDown", ["Chain", 4], L(1, 2, 3, 4)],
-        expected: L(1, 3, 6, 10),
+        expr: ["PosetSumDown", ["Chain", 4], ["List", 1, 2, 3, 4]],
+        expected: ["List", 1, 3, 6, 10],
         caption: "partial sums along the chain",
       },
       {
         id: "and-back-again",
-        expr: ["MoebiusInvert", ["Chain", 4], L(1, 3, 6, 10)],
-        expected: L(1, 2, 3, 4),
+        expr: ["MoebiusInvert", ["Chain", 4], ["List", 1, 3, 6, 10]],
+        expected: ["List", 1, 2, 3, 4],
         caption: "…and back again",
       },
       {
@@ -96,9 +103,9 @@ export const incidence: readonly ReferenceEntry[] = [
         expr: [
           "MoebiusInvert",
           ["BooleanLattice", 2],
-          ["PosetSumDown", ["BooleanLattice", 2], L(5, 1, 2, 7)],
+          ["PosetSumDown", ["BooleanLattice", 2], ["List", 5, 1, 2, 7]],
         ],
-        expected: L(5, 1, 2, 7),
+        expected: ["List", 5, 1, 2, 7],
         caption: "inclusion–exclusion, round-tripped",
         category: "Properties",
       },
@@ -107,7 +114,7 @@ export const incidence: readonly ReferenceEntry[] = [
   },
   {
     name: "PosetElements",
-    domain: DOMAIN,
+    domain: "Incidence algebras",
     signature: "PosetElements(poset)",
     summary:
       "The elements of a finite poset, in a linear extension — the order every other head here indexes values by.",
@@ -127,12 +134,12 @@ export const incidence: readonly ReferenceEntry[] = [
       {
         id: "posetelements-divisorlattice-12",
         expr: ["PosetElements", ["DivisorLattice", 12]],
-        expected: L(1, 2, 3, 4, 6, 12),
+        expected: ["List", 1, 2, 3, 4, 6, 12],
       },
       {
         id: "posetelements-chain-4",
         expr: ["PosetElements", ["Chain", 4]],
-        expected: L(1, 2, 3, 4),
+        expected: ["List", 1, 2, 3, 4],
       },
       {
         id: "3-3-intervals",

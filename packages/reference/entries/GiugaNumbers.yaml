@@ -1,0 +1,20 @@
+name: GiugaNumbers
+domain: Collections
+signature: GiugaNumbers
+summary: The Giuga numbers $30, 858, 1722, 66198, …$ -- composite $n$ with $p \mid (n/p - 1)$ for every prime $p \mid n$ -- as an indexed collection of unknown count.
+signatures:
+  - call: GiugaNumbers
+    description: the composite $n$ satisfying Giuga's divisibility condition, an indexed collection of unknown count.
+details:
+  - "$Count(GiugaNumbers) = NaN$: only a handful are known, none odd, and Giuga's conjecture (that no counterexample to Giuga's primality criterion exists, equivalently no Giuga number is a counterexample) is open -- so whether the family is finite is open too."
+  - $At$ reads off a table of the known Giuga numbers; past that table it returns unevaluated rather than scanning forever, since no predicate here could safely keep searching.
+  - OEIS A007850. Equivalently, $n$ is Giuga iff $\sum_{p \mid n} 1/p - \prod_{p \mid n} 1/p$ is a positive integer.
+  - 'Membership goes through [[Element]]: $Element(30, GiugaNumbers)$ is true ($30 = 2 \cdot 3 \cdot 5$: $2 \mid (15-1)$, $3 \mid (10-1)$, $5 \mid (6-1)$), $Element(6, GiugaNumbers)$ is false.'
+examples: []
+enumerate:
+  expr: Take(GiugaNumbers, 4)
+seeAlso:
+  - Count
+  - At
+  - Element
+  - CarmichaelNumbers

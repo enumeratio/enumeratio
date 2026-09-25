@@ -1,0 +1,79 @@
+name: Union
+domain: Collections
+signature: Union(a, b, …)
+summary: The set union of the argument collections, de-duplicated.
+signatures:
+  - call: Union(a, b, …)
+    description: the de-duplicated union of the collections, as a $Set$.
+details:
+  - Duplicates within and across all the argument collections are removed; the result is returned as a $Set$.
+  - "Commutative and idempotent: $A \\cup A = A$, and argument order doesn't affect the result."
+  - 'Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Intersection]] and [[Length]].'
+  - Sorted, matching Wolfram's Union — compute-engine's own de-duplication preserves first-seen order instead.
+examples:
+  - id: union-list-1-2-3-list-3-4
+    expr: [Union, [List, 1, 2, 3], [List, 3, 4]]
+    expected: [Set, 1, 2, 3, 4]
+  - id: union-list-1-2-list-2-3-list-3-4
+    expr: [Union, [List, 1, 2], [List, 2, 3], [List, 3, 4]]
+    expected: [Set, 1, 2, 3, 4]
+  - id: union-is-commutative-argument-order-doesn-t
+    expr: [Equal, [Union, [List, 1, 2, 3], [List, 2, 3, 4]], [Union, [List, 2, 3, 4], [List, 1, 2, 3]]]
+    expected: True
+    category: Properties
+    caption: "$Union$ is commutative: argument order doesn't matter"
+  - id: inclusion-exclusion-a-cup-b-a-b-a-cap-b-see
+    expr: [Equal, [Length, [Union, [List, 1, 2, 3], [List, 2, 3, 4]]], [Subtract, [Add, [Length, [List, 1, 2, 3]], [Length, [List, 2, 3, 4]]], [Length, [Intersection, [List, 1, 2, 3], [List, 2, 3, 4]]]]]
+    expected: True
+    category: Properties
+    caption: 'Inclusion-exclusion: $|A \cup B| = |A| + |B| - |A \cap B|$. See [[Length]] and [[Intersection]]'
+  - id: combining-the-divisors-of-10-and-15-into-one-set
+    expr: [Union, [Divisors, 10], [Divisors, 15]]
+    expected: [Set, 1, 2, 3, 5, 10, 15]
+    category: Applications
+    caption: Combining the divisors of 10 and 15 into one set
+  - id: combining-the-divisors-of-10-12-and-20-into-one
+    expr: [Union, [Divisors, 10], [Divisors, 12], [Divisors, 20]]
+    expected: [Set, 1, 2, 3, 4, 5, 6, 10, 12, 20]
+    category: Applications
+    caption: Combining the divisors of 10, 12 and 20 into one sorted set
+  - id: union-list-a-b-c-list-b-c-d
+    expr: [Union, [List, a, b, c], [List, b, c, d]]
+    expected: [Set, a, b, c, d]
+  - id: a-single-list-is-de-duplicated
+    expr: [Union, [List, 1, 2, 1, 3, 6, 2, 2]]
+    expected: [Set, 1, 2, 3, 6]
+    category: Scope
+    caption: A single list is de-duplicated
+  - id: symbolic-elements-merged-across-three-lists
+    expr: [Union, [List, a, b, a, c], [List, d, a, f, b], [List, c, a]]
+    expected: [Set, a, b, c, d, f]
+    category: Scope
+    caption: Symbolic elements, merged across three lists
+  - id: elements-can-themselves-be-lists-1-2-and-2-1
+    expr: [Union, [List, [List, 1, 2], [List, 1, 2, 3]], [List, [List, 2, 1], [List, 1, 2]], [List, [List, 3, 2, 1], [List, 1, 2, 3]]]
+    expected: [Set, [List, 1, 2], [List, 1, 2, 3], [List, 2, 1], [List, 3, 2, 1]]
+    category: Scope
+    caption: Elements can themselves be lists; $\{1, 2\}$ and $\{2, 1\}$ stay distinct
+    divergence:
+      wolfram: 'Wolfram sorts the result into canonical order, shorter lists first: {{1, 2}, {2, 1}, {1, 2, 3}, {3, 2, 1}}.'
+  - id: with-no-arguments-the-union-is-empty
+    expr: [Union]
+    expected: EmptySet
+    category: Scope
+    caption: With no arguments, the union is empty
+    divergence:
+      wolfram: Union[] is the empty list {} in Wolfram.
+  - id: the-empty-set-is-the-identity-for-union-a-cup
+    expr: [Union, [Set, 1, 2], EmptySet]
+    expected: [Set, 1, 2]
+    category: Properties
+    caption: 'The empty set is the identity for $Union$: $A \cup \varnothing = A$'
+  - id: counting-the-distinct-values-in-a-list-see
+    expr: [Length, [Union, [List, 1, 2, 1, 3, 6, 2, 2]]]
+    expected: 4
+    category: Applications
+    caption: Counting the distinct values in a list. See [[Length]]
+seeAlso:
+  - Intersection
+  - SetMinus

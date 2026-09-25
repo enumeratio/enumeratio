@@ -1,0 +1,26 @@
+name: CograssmannianPermutations
+domain: Collections
+signature: CograssmannianPermutations(n)
+summary: The permutations of $\{1, …, n\}$ with at most one ascent — the value-complement of a [[GrassmannianPermutations]] permutation — as a lazy indexed family.
+signatures:
+  - call: CograssmannianPermutations(n)
+    library: enumeratio-collections
+    description: the permutations of $\{1, …, n\}$ with at most one ascent.
+details:
+  - A lazy indexed collection; the count is the same $2^n - n$ as [[GrassmannianPermutations]] (A000325), since complementing every value $v \mapsto n+1-v$ turns each descent into an ascent and vice versa.
+  - Each element is the one-line word of the complemented permutation.
+  - $At$ unranks the Grassmannian permutation of the same rank and applies the value-complement, so it inherits that family's order (identity first, then increasing first-block size).
+examples:
+  - id: count-cograssmannianpermutations-5-2-5-5-27
+    expr: [Count, [CograssmannianPermutations, 5]]
+    expected: 27
+    category: Basic
+    caption: $Count(CograssmannianPermutations(5)) = 2^5 - 5 = 27$, A000325
+enumerate:
+  expr: CograssmannianPermutations(4)
+  columns: Ascents, Inversions
+  glyph: permutation
+seeAlso:
+  - GrassmannianPermutations
+  - Count
+  - At

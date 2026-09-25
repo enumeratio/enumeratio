@@ -1,17 +1,31 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Reference entries for @enumeratio/numerals, and compute-engine's other digit heads.
-// `IntegerDigits` and `FromDigits` are compute-engine's OWN heads — what this library adds
-// is systems in the base slot, so one entry documents both the native forms and the
-// widening rather than introducing parallel heads.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const DOMAIN = "Numeral systems";
-const L = (...xs: number[]) => ["List", ...xs];
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/arithmetic/numerals/reference/IntegerDigits.yaml",
+  "packages/symbols/arithmetic/numerals/reference/FromDigits.yaml",
+  "packages/symbols/arithmetic/numerals/reference/IntegerString.yaml",
+  "packages/symbols/arithmetic/numerals/reference/DigitCount.yaml",
+  "packages/symbols/arithmetic/numerals/reference/DigitSum.yaml",
+  "packages/symbols/arithmetic/numerals/reference/NumeralSystemShape.yaml",
+  "packages/symbols/arithmetic/numerals/reference/IntegerLength.yaml",
+  "packages/symbols/arithmetic/numerals/reference/IntegerReverse.yaml",
+  "packages/symbols/arithmetic/numerals/reference/NumberExpand.yaml",
+  "packages/symbols/arithmetic/numerals/reference/RomanNumeral.yaml",
+  "packages/symbols/arithmetic/numerals/reference/RealDigits.yaml",
+  "packages/symbols/arithmetic/numerals/reference/AdicNumeral.yaml",
+  "packages/symbols/arithmetic/numerals/reference/AdicExpansion.yaml",
+  "packages/symbols/arithmetic/numerals/reference/AdicValuation.yaml",
+  "packages/symbols/arithmetic/numerals/reference/HenselLift.yaml",
+];
 
 export const numerals: readonly ReferenceEntry[] = [
   {
     name: "IntegerDigits",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "IntegerDigits(n, base?, width?)",
     summary:
       "The digits of $n$, most significant first — base 10 by default. The base slot takes a whole numeral SYSTEM, not only an integer — factorial, Zeckendorf, Ostrowski, balanced, negative, bijective, mixed-radix, primorial, combinatorial or residue.",
@@ -51,11 +65,7 @@ export const numerals: readonly ReferenceEntry[] = [
       "Inverted by [[FromDigits]] with the same system",
     ],
     examples: [
-      {
-        id: "integerdigits-1-234",
-        expr: ["IntegerDigits", 1234],
-        expected: ["List", 1, 2, 3, 4],
-      },
+      { id: "integerdigits-1-234", expr: ["IntegerDigits", 1234], expected: ["List", 1, 2, 3, 4] },
       {
         id: "integerdigits-2-147-2",
         expr: ["IntegerDigits", 2147, 2],
@@ -85,45 +95,45 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         id: "integerdigits-58-127",
         expr: ["IntegerDigits", 58127],
-        expected: L(5, 8, 1, 2, 7),
+        expected: ["List", 5, 8, 1, 2, 7],
       },
       {
         id: "integerdigits-58-127-2",
         expr: ["IntegerDigits", 58127, 2],
-        expected: L(1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1),
+        expected: ["List", 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1],
       },
       {
         id: "digits-past-9-are-plain-integers-58127-e30f-16",
         expr: ["IntegerDigits", 58127, 16],
-        expected: L(14, 3, 0, 15),
+        expected: ["List", 14, 3, 0, 15],
         category: "Scope",
         caption: "Digits past 9 are plain integers: $58127 = \\mathrm{e30f}_{16}$",
       },
       {
         id: "a-mixed-radix-spelled-mixedradix-102-341-seconds",
-        expr: ["IntegerDigits", 102341, ["MixedRadix", L(24, 60, 60)]],
-        expected: L(1, 4, 25, 41),
+        expr: ["IntegerDigits", 102341, ["MixedRadix", ["List", 24, 60, 60]]],
+        expected: ["List", 1, 4, 25, 41],
         category: "Scope",
         caption: "a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s",
       },
       {
         id: "the-leading-digit-is-unbounded-137-3-cdot-3-2",
-        expr: ["IntegerDigits", 137, ["MixedRadix", L(3, 12)]],
-        expected: L(3, 2, 5),
+        expr: ["IntegerDigits", 137, ["MixedRadix", ["List", 3, 12]]],
+        expected: ["List", 3, 2, 5],
         category: "Scope",
         caption: "the leading digit is unbounded: $137 = (3 \\cdot 3 + 2) \\cdot 12 + 5$",
       },
       {
         id: "a-width-longer-than-the-numeral-pads-with",
         expr: ["IntegerDigits", 5, 2, 8],
-        expected: L(0, 0, 0, 0, 0, 1, 0, 1),
+        expected: ["List", 0, 0, 0, 0, 0, 1, 0, 1],
         category: "Scope",
         caption: "a width longer than the numeral pads with leading zeros",
       },
       {
         id: "listable-in-the-base-one-digit-list-per-base",
-        expr: ["IntegerDigits", 7, L(2, 3, 4)],
-        expected: ["List", L(1, 1, 1), L(2, 1), L(1, 3)],
+        expr: ["IntegerDigits", 7, ["List", 2, 3, 4]],
+        expected: ["List", ["List", 1, 1, 1], ["List", 2, 1], ["List", 1, 3]],
         category: "Scope",
         caption: "Listable in the base: one digit list per base",
       },
@@ -132,14 +142,14 @@ export const numerals: readonly ReferenceEntry[] = [
         expr: ["IntegerDigits", ["Range", 0, 7], 2],
         expected: [
           "List",
-          L(0),
-          L(1),
-          L(1, 0),
-          L(1, 1),
-          L(1, 0, 0),
-          L(1, 0, 1),
-          L(1, 1, 0),
-          L(1, 1, 1),
+          ["List", 0],
+          ["List", 1],
+          ["List", 1, 0],
+          ["List", 1, 1],
+          ["List", 1, 0, 0],
+          ["List", 1, 0, 1],
+          ["List", 1, 1, 0],
+          ["List", 1, 1, 1],
         ],
         category: "Scope",
         caption: "Listable: threads over a range of integers",
@@ -149,14 +159,14 @@ export const numerals: readonly ReferenceEntry[] = [
         expr: ["IntegerDigits", ["Range", 0, 7], 2, 3],
         expected: [
           "List",
-          L(0, 0, 0),
-          L(0, 0, 1),
-          L(0, 1, 0),
-          L(0, 1, 1),
-          L(1, 0, 0),
-          L(1, 0, 1),
-          L(1, 1, 0),
-          L(1, 1, 1),
+          ["List", 0, 0, 0],
+          ["List", 0, 0, 1],
+          ["List", 0, 1, 0],
+          ["List", 0, 1, 1],
+          ["List", 1, 0, 0],
+          ["List", 1, 0, 1],
+          ["List", 1, 1, 0],
+          ["List", 1, 1, 1],
         ],
         category: "Applications",
         caption: "all 3-bit words, by threading a padded form over a range",
@@ -184,55 +194,55 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "93-784-seconds-as-days-hours-minutes-seconds",
-        expr: ["IntegerDigits", 93784, ["MixedRadixNumerals", L(24, 60, 60)]],
-        expected: L(1, 2, 3, 4),
+        expr: ["IntegerDigits", 93784, ["MixedRadixNumerals", ["List", 24, 60, 60]]],
+        expected: ["List", 1, 2, 3, 4],
         caption: "93 784 seconds as days, hours, minutes, seconds",
       },
       {
         id: "the-lehmer-code-of-the-6th-permutation-of-four",
         expr: ["IntegerDigits", 5, "FactorialNumerals", 4],
-        expected: L(0, 2, 1, 0),
+        expected: ["List", 0, 2, 1, 0],
         caption: "the Lehmer code of the 6th permutation of four things",
         category: "Applications",
       },
       {
         id: "100-89-8-3-with-no-two-adjacent-ones",
         expr: ["IntegerDigits", 100, "ZeckendorfNumerals"],
-        expected: L(1, 0, 0, 0, 0, 1, 0, 1, 0, 0),
+        expected: ["List", 1, 0, 0, 0, 0, 1, 0, 1, 0, 0],
         caption: "$100 = 89 + 8 + 3$, with no two adjacent ones",
       },
       {
         id: "the-same-20-13-5-2-over-a-continued-fraction-s",
-        expr: ["IntegerDigits", 20, ["OstrowskiNumerals", L(1, 1, 1, 1, 1, 1, 1, 1)]],
-        expected: L(0, 1, 0, 1, 0, 1, 0, 0),
+        expr: ["IntegerDigits", 20, ["OstrowskiNumerals", ["List", 1, 1, 1, 1, 1, 1, 1, 1]]],
+        expected: ["List", 0, 1, 0, 1, 0, 1, 0, 0],
         caption: "the same $20 = 13 + 5 + 2$, over a continued fraction's convergents",
         category: "Scope",
       },
       {
         id: "a-negative-integer-with-no-sign",
         expr: ["IntegerDigits", -5, ["BalancedNumerals", 3]],
-        expected: L(-1, 1, 1),
+        expected: ["List", -1, 1, 1],
         caption: "a negative integer, with no sign",
         category: "Scope",
       },
       {
         id: "spreadsheet-column-aaa",
         expr: ["IntegerDigits", 703, ["BijectiveNumerals", 26]],
-        expected: L(1, 1, 1),
+        expected: ["List", 1, 1, 1],
         caption: "spreadsheet column AAA",
         category: "Scope",
       },
       {
         id: "independent-residues-no-place-values",
-        expr: ["IntegerDigits", 23, ["ResidueNumerals", L(3, 5, 7)]],
-        expected: L(2, 3, 2),
+        expr: ["IntegerDigits", 23, ["ResidueNumerals", ["List", 3, 5, 7]]],
+        expected: ["List", 2, 3, 2],
         caption: "independent residues — no place values",
         category: "Scope",
       },
       {
         id: "the-10-adic-truncation-a-negative-is-spelled-by",
         expr: ["IntegerDigits", -3, ["AdicNumerals", 10, 6]],
-        expected: L(9, 9, 9, 9, 9, 7),
+        expected: ["List", 9, 9, 9, 9, 9, 7],
         caption:
           "the 10-adic truncation: a negative is spelled by its digits, and the width is part of the numeral",
         category: "Scope",
@@ -240,7 +250,7 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         id: "an-integer-base-is-still-the-native-handler",
         expr: ["IntegerDigits", 255, 16],
-        expected: L(15, 15),
+        expected: ["List", 15, 15],
         caption: "an integer base is still the native handler",
         category: "Properties",
       },
@@ -257,7 +267,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "FromDigits",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "FromDigits(digits, base?)",
     summary:
       "The integer a digit string denotes, in any numeral system. The inverse of [[IntegerDigits]] — and the round trip is the whole specification of a system.",
@@ -313,11 +323,7 @@ export const numerals: readonly ReferenceEntry[] = [
       "compute-engine's FromDigits takes a list of digits, not a digit string.",
     ],
     examples: [
-      {
-        id: "fromdigits-list-5-1-2-8",
-        expr: ["FromDigits", ["List", 5, 1, 2, 8]],
-        expected: 5128,
-      },
+      { id: "fromdigits-list-5-1-2-8", expr: ["FromDigits", ["List", 5, 1, 2, 8]], expected: 5128 },
       {
         id: "fromdigits-list-1-0-1-1-0-1-1-2",
         expr: ["FromDigits", ["List", 1, 0, 1, 1, 0, 1, 1], 2],
@@ -371,42 +377,42 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "a-mixed-radix-spelled-mixedradix-1d-4h-25m-41s",
-        expr: ["FromDigits", L(1, 4, 25, 41), ["MixedRadix", L(24, 60, 60)]],
+        expr: ["FromDigits", ["List", 1, 4, 25, 41], ["MixedRadix", ["List", 24, 60, 60]]],
         expected: 102341,
         category: "Scope",
         caption: "a mixed radix, spelled `MixedRadix`: 1d 4h 25m 41s back to seconds",
       },
       {
         id: "the-inverse-of-integerdigits-137-mixedradix-3-12",
-        expr: ["FromDigits", L(3, 2, 5), ["MixedRadix", L(3, 12)]],
+        expr: ["FromDigits", ["List", 3, 2, 5], ["MixedRadix", ["List", 3, 12]]],
         expected: 137,
         category: "Scope",
         caption: "the inverse of `IntegerDigits(137, MixedRadix([3, 12]))`",
       },
       {
         id: "digits-past-9-are-plain-integers-1-cdot-16-15",
-        expr: ["FromDigits", L(1, 15), 16],
+        expr: ["FromDigits", ["List", 1, 15], 16],
         expected: 31,
         category: "Scope",
         caption: "digits past 9 are plain integers: $1 \\cdot 16 + 15$",
       },
       {
         id: "a-symbolic-base-gives-the-polynomial-x-2-2x-3",
-        expr: ["FromDigits", L(1, 2, 3), "x"],
+        expr: ["FromDigits", ["List", 1, 2, 3], "x"],
         expected: ["Add", ["Power", "x", 2], ["Multiply", 2, "x"], 3],
         category: "Scope",
         caption: "a symbolic base gives the polynomial $x^2 + 2x + 3$",
       },
       {
         id: "a-negative-base-1-cdot-4-1-cdot-2-0-2",
-        expr: ["FromDigits", L(1, 1, 0), -2],
+        expr: ["FromDigits", ["List", 1, 1, 0], -2],
         expected: 2,
         category: "Scope",
         caption: "a negative base: $1 \\cdot 4 - 1 \\cdot 2 + 0 = 2$",
       },
       {
         id: "a-digits-exponent-pair-the-shape-realdigits",
-        expr: ["FromDigits", ["List", L(1, 4, 1, 5), 1]],
+        expr: ["FromDigits", ["List", ["List", 1, 4, 1, 5], 1]],
         expected: ["Rational", 283, 200],
         category: "Scope",
         caption: "a `{digits, exponent}` pair — the shape `RealDigits` gives — reads as $1.415$",
@@ -420,34 +426,38 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "ordinary-base-2-as-a-system-value",
-        expr: ["FromDigits", L(1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1), ["PositionalNumerals", 2]],
+        expr: [
+          "FromDigits",
+          ["List", 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+          ["PositionalNumerals", 2],
+        ],
         expected: 2147,
         caption: "ordinary base 2 as a system value",
         category: "Scope",
       },
       {
         id: "1d-2h-3m-4s-back-to-seconds",
-        expr: ["FromDigits", L(1, 2, 3, 4), ["MixedRadixNumerals", L(24, 60, 60)]],
+        expr: ["FromDigits", ["List", 1, 2, 3, 4], ["MixedRadixNumerals", ["List", 24, 60, 60]]],
         expected: 93784,
         caption: "1d 2h 3m 4s back to seconds",
       },
       {
         id: "a-lehmer-code-back-to-its-rank",
-        expr: ["FromDigits", L(0, 2, 1, 0), "FactorialNumerals"],
+        expr: ["FromDigits", ["List", 0, 2, 1, 0], "FactorialNumerals"],
         expected: 5,
         caption: "a Lehmer code back to its rank",
         category: "Applications",
       },
       {
         id: "crt-reconstruction",
-        expr: ["FromDigits", L(2, 3, 2), ["ResidueNumerals", L(3, 5, 7)]],
+        expr: ["FromDigits", ["List", 2, 3, 2], ["ResidueNumerals", ["List", 3, 5, 7]]],
         expected: 23,
         caption: "CRT reconstruction",
       },
       {
         id: "two-adjacent-ones-is-not-a-numeral-so-it-denotes",
-        expr: ["FromDigits", L(1, 1), "ZeckendorfNumerals"],
-        expected: ["FromDigits", L(1, 1), "ZeckendorfNumerals"],
+        expr: ["FromDigits", ["List", 1, 1], "ZeckendorfNumerals"],
+        expected: ["FromDigits", ["List", 1, 1], "ZeckendorfNumerals"],
         caption: "two adjacent ones is not a numeral, so it denotes nothing",
         category: "Possible issues",
       },
@@ -456,7 +466,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "IntegerString",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "IntegerString(n, base?, length?)",
     summary: "The string representation of n in the given base (default 10).",
     signatures: [
@@ -484,11 +494,7 @@ export const numerals: readonly ReferenceEntry[] = [
       "compute-engine's second argument is always a numeric base.",
     ],
     examples: [
-      {
-        id: "integerstring-42",
-        expr: ["IntegerString", 42],
-        expected: "'42'",
-      },
+      { id: "integerstring-42", expr: ["IntegerString", 42], expected: "'42'" },
       {
         id: "integerstring-17-651-2",
         expr: ["IntegerString", 17651, 2],
@@ -523,7 +529,7 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "threads-over-a-list",
-        expr: ["IntegerString", L(1, 2, 3)],
+        expr: ["IntegerString", ["List", 1, 2, 3]],
         expected: ["List", "'1'", "'2'", "'3'"],
         category: "Scope",
         caption: "Threads over a list",
@@ -569,7 +575,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "DigitCount",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "DigitCount(n, base?)",
     summary: "Counts of each digit (1 through 9, then 0) occurring in n, base 10 by default.",
     signatures: [
@@ -626,19 +632,19 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         id: "digitcount-122-000",
         expr: ["DigitCount", 122000],
-        expected: L(1, 2, 0, 0, 0, 0, 0, 0, 0, 3),
+        expected: ["List", 1, 2, 0, 0, 0, 0, 0, 0, 0, 3],
       },
       {
         id: "an-explicit-base-10-is-the-default",
         expr: ["DigitCount", 122000, 10],
-        expected: L(1, 2, 0, 0, 0, 0, 0, 0, 0, 3),
+        expected: ["List", 1, 2, 0, 0, 0, 0, 0, 0, 0, 3],
         category: "Scope",
         caption: "an explicit base 10 is the default",
       },
       {
         id: "the-digits-of-100-30-of-them-zeros",
         expr: ["DigitCount", ["Factorial", 100]],
-        expected: L(15, 19, 10, 10, 14, 19, 7, 14, 20, 30),
+        expected: ["List", 15, 19, 10, 10, 14, 19, 7, 14, 20, 30],
         category: "Scope",
         caption: "the digits of $100!$, 30 of them zeros",
       },
@@ -651,22 +657,22 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "a-list-of-digit-values-gives-one-count-each",
-        expr: ["DigitCount", 242442422, 3, L(1, 2)],
-        expected: L(6, 7),
+        expr: ["DigitCount", 242442422, 3, ["List", 1, 2]],
+        expected: ["List", 6, 7],
         category: "Scope",
         caption: "a list of digit values gives one count each",
       },
       {
         id: "counts-over-the-12-least-significant-base-3",
-        expr: ["DigitCount", 242442422, 3, L(1, 2), 12],
-        expected: L(4, 4),
+        expr: ["DigitCount", 242442422, 3, ["List", 1, 2], 12],
+        expected: ["List", 4, 4],
         category: "Scope",
         caption: "counts over the 12 least-significant base-3 digits",
       },
       {
         id: "0-has-one-digit-a-zero",
         expr: ["DigitCount", 0],
-        expected: L(0, 0, 0, 0, 0, 0, 0, 0, 0, 1),
+        expected: ["List", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         category: "Possible issues",
         caption: "0 has one digit, a zero",
       },
@@ -686,7 +692,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "DigitSum",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "DigitSum(n, base?, k?)",
     summary: "The sum of the digits of n in the given base (default 10).",
     signatures: [
@@ -706,23 +712,14 @@ export const numerals: readonly ReferenceEntry[] = [
       "The sign of n is discarded before summing.",
     ],
     examples: [
-      {
-        id: "digitsum-58-127",
-        expr: ["DigitSum", 58127],
-        expected: 23,
-      },
+      { id: "digitsum-58-127", expr: ["DigitSum", 58127], expected: 23 },
       {
         id: "in-base-2-this-is-the-number-of-set-bits",
         expr: ["DigitSum", 58127, 2],
         expected: 9,
         caption: "In base 2 this is the number of set bits",
       },
-      {
-        id: "digitsum-0",
-        expr: ["DigitSum", 0],
-        expected: 0,
-        category: "Possible issues",
-      },
+      { id: "digitsum-0", expr: ["DigitSum", 0], expected: 0, category: "Possible issues" },
       {
         id: "digit-sum-n-mod-9-the-basis-of-the-classic",
         expr: ["Equal", ["Mod", ["DigitSum", 58127], 9], ["Mod", 58127, 9]],
@@ -747,8 +744,8 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "threads-element-wise-over-a-list-as-wolfram-s",
-        expr: ["DigitSum", L(12, 345)],
-        expected: L(3, 12),
+        expr: ["DigitSum", ["List", 12, 345]],
+        expected: ["List", 3, 12],
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
@@ -777,7 +774,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "NumeralSystemShape",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "NumeralSystemShape(system)",
     summary:
       "What a system's numerals look like, as a Dictionary: whether it is a bijection, which integers it spells, and with which digits.",
@@ -797,7 +794,7 @@ export const numerals: readonly ReferenceEntry[] = [
     examples: [
       {
         id: "4-and-6-share-a-factor-so-this-is-not-a",
-        expr: ["NumeralSystemShape", ["ResidueNumerals", L(4, 6)]],
+        expr: ["NumeralSystemShape", ["ResidueNumerals", ["List", 4, 6]]],
         expected: [
           "Dictionary",
           ["KeyValuePair", { str: "Bijective" }, "False"],
@@ -848,7 +845,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "IntegerLength",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "IntegerLength(n, base?)",
     summary: "The number of digits of $n$ in the given base — base 10 by default.",
     signatures: [
@@ -864,11 +861,7 @@ export const numerals: readonly ReferenceEntry[] = [
       "`IntegerLength(0)` is 0, unlike [[IntegerDigits]]'s one-element `{0}` — there is no shortest numeral for 0, only the empty one",
     ],
     examples: [
-      {
-        id: "integerlength-12-345",
-        expr: ["IntegerLength", 12345],
-        expected: 5,
-      },
+      { id: "integerlength-12-345", expr: ["IntegerLength", 12345], expected: 5 },
       {
         id: "integerlength-2-pow-100",
         expr: ["IntegerLength", ["Power", 2, 100]],
@@ -898,8 +891,8 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "listable",
-        expr: ["IntegerLength", L(1, 10, 100)],
-        expected: L(1, 2, 3),
+        expr: ["IntegerLength", ["List", 1, 10, 100]],
+        expected: ["List", 1, 2, 3],
         category: "Scope",
         caption: "Listable",
       },
@@ -908,7 +901,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "IntegerReverse",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "IntegerReverse(n, base?, len?)",
     summary: "The integer whose digits are those of $n$ in reverse order.",
     signatures: [
@@ -957,8 +950,8 @@ export const numerals: readonly ReferenceEntry[] = [
       },
       {
         id: "listable",
-        expr: ["IntegerReverse", L(12, 345)],
-        expected: L(21, 543),
+        expr: ["IntegerReverse", ["List", 12, 345]],
+        expected: ["List", 21, 543],
         category: "Scope",
         caption: "Listable",
       },
@@ -974,7 +967,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "NumberExpand",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "NumberExpand(n, base?, len?)",
     summary: "The place-value terms of $n$: each digit times its power of the base.",
     signatures: [
@@ -997,19 +990,19 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         id: "numberexpand-1-234",
         expr: ["NumberExpand", 1234],
-        expected: L(1000, 200, 30, 4),
+        expected: ["List", 1000, 200, 30, 4],
       },
       {
         id: "base-2-zero-terms-kept",
         expr: ["NumberExpand", 10, 2],
-        expected: L(8, 0, 2, 0),
+        expected: ["List", 8, 0, 2, 0],
         category: "Scope",
         caption: "base 2, zero terms kept",
       },
       {
         id: "every-term-carries-the-sign",
         expr: ["NumberExpand", -123],
-        expected: L(-100, -20, -3),
+        expected: ["List", -100, -20, -3],
         category: "Scope",
         caption: "every term carries the sign",
       },
@@ -1018,7 +1011,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "RomanNumeral",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "RomanNumeral(n)",
     summary: "The Roman numeral for a non-negative integer, as a string.",
     signatures: [
@@ -1034,11 +1027,7 @@ export const numerals: readonly ReferenceEntry[] = [
       "0 is `N`, for the Latin *nulla* — Roman numerals otherwise have no zero",
     ],
     examples: [
-      {
-        id: "romannumeral-1-988",
-        expr: ["RomanNumeral", 1988],
-        expected: "'MCMLXXXVIII'",
-      },
+      { id: "romannumeral-1-988", expr: ["RomanNumeral", 1988], expected: "'MCMLXXXVIII'" },
       {
         id: "the-largest-with-standard-symbols",
         expr: ["RomanNumeral", 3999],
@@ -1046,14 +1035,10 @@ export const numerals: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "the largest with standard symbols",
       },
-      {
-        id: "romannumeral-2-024",
-        expr: ["RomanNumeral", 2024],
-        expected: "'MMXXIV'",
-      },
+      { id: "romannumeral-2-024", expr: ["RomanNumeral", 2024], expected: "'MMXXIV'" },
       {
         id: "listable-4-is-written-subtractively",
-        expr: ["RomanNumeral", L(1, 2, 3, 4)],
+        expr: ["RomanNumeral", ["List", 1, 2, 3, 4]],
         expected: ["List", "'I'", "'II'", "'III'", "'IV'"],
         category: "Scope",
         caption: "Listable; 4 is written subtractively",
@@ -1070,7 +1055,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "RealDigits",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "RealDigits(x, base?, len?)",
     summary:
       "The digits of a real number and the position of its decimal point, with the repeating block of a rational marked as a sublist.",
@@ -1112,39 +1097,39 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         id: "a-terminating-rational",
         expr: ["RealDigits", ["Rational", 5, 4]],
-        expected: ["List", L(1, 2, 5), 1],
+        expected: ["List", ["List", 1, 2, 5], 1],
         category: "Scope",
         caption: "a terminating rational",
       },
       {
         id: "1-8-0-001-2",
         expr: ["RealDigits", ["Rational", 1, 8], 2],
-        expected: ["List", L(1), -2],
+        expected: ["List", ["List", 1], -2],
         category: "Scope",
         caption: "$1/8 = 0.001_2$",
       },
       {
         id: "the-first-10-digits-of-pi-truncated-not-rounded",
         expr: ["RealDigits", "Pi", 10, 10],
-        expected: ["List", L(3, 1, 4, 1, 5, 9, 2, 6, 5, 3), 1],
+        expected: ["List", ["List", 3, 1, 4, 1, 5, 9, 2, 6, 5, 3], 1],
         caption: "the first 10 digits of $\\pi$ (truncated, not rounded)",
       },
       {
         id: "realdigits-sqrt-2-10-5",
         expr: ["RealDigits", ["Sqrt", 2], 10, 5],
-        expected: ["List", L(1, 4, 1, 4, 2), 1],
+        expected: ["List", ["List", 1, 4, 1, 4, 2], 1],
         category: "Scope",
       },
       {
         id: "realdigits-exponentiale-10-5",
         expr: ["RealDigits", "ExponentialE", 10, 5],
-        expected: ["List", L(2, 7, 1, 8, 2), 1],
+        expected: ["List", ["List", 2, 7, 1, 8, 2], 1],
         category: "Scope",
       },
       {
         id: "an-integer-six-digits-before-the-point",
         expr: ["RealDigits", 123456],
-        expected: ["List", L(1, 2, 3, 4, 5, 6), 6],
+        expected: ["List", ["List", 1, 2, 3, 4, 5, 6], 6],
         category: "Scope",
         caption: "an integer: six digits before the point",
       },
@@ -1153,7 +1138,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "AdicNumeral",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "AdicNumeral(b, x, prec?)",
     summary:
       "A $b$-adic number: the rational $x$ read in $\\mathbb{Z}_b$ (or $\\mathbb{Q}_p$ for prime $b$), exact when built from a rational, $+ O(b^{prec})$ when capped. The ring operations work on it.",
@@ -1265,7 +1250,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "AdicExpansion",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "AdicExpansion(x, count?)",
     summary:
       "The digits of a $b$-adic number, written with the infinite end on the left: $\\ldots 6667$ for $1/3$ in $\\mathbb{Z}_{10}$, $0.12$ for $7/25$ in $\\mathbb{Q}_5$, $+ O(b^n)$ when capped.",
@@ -1309,7 +1294,7 @@ export const numerals: readonly ReferenceEntry[] = [
       {
         id: "as-a-list-least-significant-first",
         expr: ["AdicDigits", ["AdicNumeral", 10, ["Rational", 1, 3]], 6],
-        expected: L(7, 6, 6, 6, 6, 6),
+        expected: ["List", 7, 6, 6, 6, 6, 6],
         caption: "as a list, least significant first",
       },
       {
@@ -1346,7 +1331,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "AdicValuation",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "AdicValuation(x)",
     summary:
       "The $b$-adic valuation $v_b(x)$ — the power of $b$ dividing $x$ — with its companions: the norm $|x|_b = b^{-v}$ and the unit part $u$ in $x = b^v · u$.",
@@ -1400,7 +1385,7 @@ export const numerals: readonly ReferenceEntry[] = [
   },
   {
     name: "HenselLift",
-    domain: DOMAIN,
+    domain: "Numeral systems",
     signature: "HenselLift(f, seed, b, prec?)",
     summary:
       "The $b$-adic root of a polynomial that reduces to `seed` mod $b$, by Newton's iteration — Hensel's lemma made to run. `AdicSqrt` is the special case $f = x^2 − a$.",

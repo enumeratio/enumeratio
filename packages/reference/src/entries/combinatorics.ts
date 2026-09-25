@@ -1,7 +1,22 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Every `expected` was produced by evaluating `expr` with compute-engine 0.128.0
-// (the reference tests re-evaluate and pin it). See sibling domain files.
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/reference/entries/Binomial.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/Multinomial.yaml",
+  "packages/reference/entries/Factorial.yaml",
+  "packages/reference/entries/Factorial2.yaml",
+  "packages/reference/entries/CatalanNumber.yaml",
+  "packages/symbols/analysis/analytic/reference/Pochhammer.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/Subfactorial.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/StirlingS1.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/Stirling.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/BellNumber.yaml",
+];
+
 export const combinatorics: readonly ReferenceEntry[] = [
   {
     name: "Binomial",
@@ -21,21 +36,9 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "A Gaussian or otherwise complex n and/or k also evaluates, through the same Gamma-function identity: exact for an integer k, numeric otherwise.",
     ],
     examples: [
-      {
-        id: "binomial-5-2",
-        expr: ["Binomial", 5, 2],
-        expected: 10,
-      },
-      {
-        id: "binomial-10-3",
-        expr: ["Binomial", 10, 3],
-        expected: 120,
-      },
-      {
-        id: "binomial-4-2",
-        expr: ["Binomial", 4, 2],
-        expected: 6,
-      },
+      { id: "binomial-5-2", expr: ["Binomial", 5, 2], expected: 10 },
+      { id: "binomial-10-3", expr: ["Binomial", 10, 3], expected: 120 },
+      { id: "binomial-4-2", expr: ["Binomial", 4, 2], expected: 6 },
       {
         id: "choosing-none-of-n-is-always-1-way",
         expr: ["Binomial", 5, 0],
@@ -124,11 +127,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption:
           "Half-integer arguments evaluate exactly through the Gamma function: here $n - k = 1$, so the answer is just $n = \\frac{9}{2}$",
       },
-      {
-        id: "binomial-8-4",
-        expr: ["Binomial", 8, 4],
-        expected: 70,
-      },
+      { id: "binomial-8-4", expr: ["Binomial", 8, 4], expected: 70 },
       {
         id: "symbolic-n-binom-n-0-1-for-any-n",
         expr: ["Binomial", "n", 0],
@@ -295,16 +294,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "compute-engine requires all-integer arguments; a list argument is threaded over element-wise, as Wolfram's Listable heads do.",
     ],
     examples: [
-      {
-        id: "multinomial-1-2-1",
-        expr: ["Multinomial", 1, 2, 1],
-        expected: 12,
-      },
-      {
-        id: "multinomial-2-3-4",
-        expr: ["Multinomial", 2, 3, 4],
-        expected: 1260,
-      },
+      { id: "multinomial-1-2-1", expr: ["Multinomial", 1, 2, 1], expected: 12 },
+      { id: "multinomial-2-3-4", expr: ["Multinomial", 2, 3, 4], expected: 1260 },
       {
         id: "with-two-arguments-it-reduces-to-binomial-binom",
         expr: ["Equal", ["Multinomial", 7, 3], ["Binomial", 10, 3]],
@@ -435,27 +426,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "compute-engine returns ComplexInfinity at negative integers, the poles of Gamma, rather than leaving the expression unevaluated.",
     ],
     examples: [
-      {
-        id: "5-factorial",
-        expr: ["Factorial", 5],
-        expected: 120,
-      },
-      {
-        id: "6-factorial",
-        expr: ["Factorial", 6],
-        expected: 720,
-      },
+      { id: "5-factorial", expr: ["Factorial", 5], expected: 120 },
+      { id: "6-factorial", expr: ["Factorial", 6], expected: 720 },
       {
         id: "the-empty-product-is-1-by-convention",
         expr: ["Factorial", 0],
         expected: 1,
         caption: "The empty product is 1 by convention",
       },
-      {
-        id: "10-factorial",
-        expr: ["Factorial", 10],
-        expected: 3628800,
-      },
+      { id: "10-factorial", expr: ["Factorial", 10], expected: 3628800 },
       {
         id: "threads-element-wise-over-a-list",
         expr: ["Factorial", ["List", 1, 2, 3, 4]],
@@ -583,28 +562,10 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "The recurrence run downwards extends it to negative odd integers, $(-2k-1)!! = \\dfrac{(-1)^k}{(2k-1)!!}$; at negative even integers it hits a pole (a division by the $0!!$ term) and returns NaN.",
     ],
     examples: [
-      {
-        id: "7-5-3-1",
-        expr: ["Factorial2", 7],
-        expected: 105,
-        caption: "7 × 5 × 3 × 1",
-      },
-      {
-        id: "8-6-4-2",
-        expr: ["Factorial2", 8],
-        expected: 384,
-        caption: "8 × 6 × 4 × 2",
-      },
-      {
-        id: "factorial2-10",
-        expr: ["Factorial2", 10],
-        expected: 3840,
-      },
-      {
-        id: "factorial2-0",
-        expr: ["Factorial2", 0],
-        expected: 1,
-      },
+      { id: "7-5-3-1", expr: ["Factorial2", 7], expected: 105, caption: "7 × 5 × 3 × 1" },
+      { id: "8-6-4-2", expr: ["Factorial2", 8], expected: 384, caption: "8 × 6 × 4 × 2" },
+      { id: "factorial2-10", expr: ["Factorial2", 10], expected: 3840 },
+      { id: "factorial2-0", expr: ["Factorial2", 0], expected: 1 },
       {
         id: "splits-an-ordinary-factorial-into-even-and-odd",
         expr: ["Equal", ["Factorial", 8], ["Multiply", ["Factorial2", 8], ["Factorial2", 7]]],
@@ -648,11 +609,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption:
           "The recurrence $n!! = n \\cdot (n-2)!!$ run downwards extends it to negative odd integers: $(-1)!! = 1$, $(-3)!! = -1$, $(-5)!! = \\frac{1}{3}$",
       },
-      {
-        id: "factorial2-20",
-        expr: ["Factorial2", 20],
-        expected: 3715891200,
-      },
+      { id: "factorial2-20", expr: ["Factorial2", 20], expected: 3715891200 },
       {
         id: "threads-element-wise-over-a-list",
         expr: ["Factorial2", ["List", 1, 2, 3, 4, 5]],
@@ -704,9 +661,6 @@ export const combinatorics: readonly ReferenceEntry[] = [
     seeAlso: ["Factorial"],
   },
   {
-    // GOLD TEMPLATE: a thorough entry showing every feature -- categorized
-    // categories, inline $latex$, [[cross-links]], real Properties, and
-    // aspirational capability gaps. New entries should aim for this shape.
     name: "CatalanNumber",
     domain: "Combinatorics",
     signature: "CatalanNumber(n)",
@@ -720,26 +674,10 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "compute-engine defines $C_n$ on nonnegative integers; extension to real and complex arguments through the [[Binomial]] gamma-function form is not yet supported.",
     ],
     examples: [
-      {
-        id: "catalannumber-0",
-        expr: ["CatalanNumber", 0],
-        expected: 1,
-      },
-      {
-        id: "catalannumber-1",
-        expr: ["CatalanNumber", 1],
-        expected: 1,
-      },
-      {
-        id: "catalannumber-5",
-        expr: ["CatalanNumber", 5],
-        expected: 42,
-      },
-      {
-        id: "catalannumber-10",
-        expr: ["CatalanNumber", 10],
-        expected: 16796,
-      },
+      { id: "catalannumber-0", expr: ["CatalanNumber", 0], expected: 1 },
+      { id: "catalannumber-1", expr: ["CatalanNumber", 1], expected: 1 },
+      { id: "catalannumber-5", expr: ["CatalanNumber", 5], expected: 42 },
+      { id: "catalannumber-10", expr: ["CatalanNumber", 10], expected: 16796 },
       {
         id: "closed-form-c-n-frac-1-n-1-binom-2n-n-here-at-n",
         expr: ["Divide", ["Binomial", ["Multiply", 2, 5], 5], ["Add", 5, 1]],
@@ -809,11 +747,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
         caption:
           "Half-integer arguments evaluate exactly through $C_n = \\frac{\\Gamma(2n+1)}{\\Gamma(n+1)\\,\\Gamma(n+2)}$",
       },
-      {
-        id: "catalannumber-30",
-        expr: ["CatalanNumber", 30],
-        expected: 3814986502092304,
-      },
+      { id: "catalannumber-30", expr: ["CatalanNumber", 30], expected: 3814986502092304 },
       {
         id: "segner-s-recurrence-c-n-1-sum-i-0-n-c-i-c-n-i",
         expr: [
@@ -875,29 +809,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "A building block of hypergeometric series, where it appears in both numerator and denominator terms.",
     ],
     examples: [
-      {
-        id: "5-6-7",
-        expr: ["Pochhammer", 5, 3],
-        expected: 210,
-        caption: "5 × 6 × 7",
-      },
+      { id: "5-6-7", expr: ["Pochhammer", 5, 3], expected: 210, caption: "5 × 6 × 7" },
       {
         id: "an-empty-product-is-1",
         expr: ["Pochhammer", 2, 0],
         expected: 1,
         caption: "An empty product is 1",
       },
-      {
-        id: "1-5-equals-5",
-        expr: ["Pochhammer", 1, 5],
-        expected: 120,
-        caption: "(1)_5 equals 5!",
-      },
-      {
-        id: "pochhammer-3-4",
-        expr: ["Pochhammer", 3, 4],
-        expected: 360,
-      },
+      { id: "1-5-equals-5", expr: ["Pochhammer", 1, 5], expected: 120, caption: "(1)_5 equals 5!" },
+      { id: "pochhammer-3-4", expr: ["Pochhammer", 3, 4], expected: 360 },
       {
         id: "1-n-n-since-the-rising-factorial-from-1-just",
         expr: ["Equal", ["Pochhammer", 1, 5], ["Factorial", 5]],
@@ -1008,7 +928,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
       {
         id: "complex-base-and-order-evaluate-through-gamma",
         expr: ["Pochhammer", ["Complex", 2, 5], ["Complex", 0, 8]],
-        expected: ["Complex", 2.1386822918680963e-6, -1.4218737711709974e-5],
+        expected: ["Complex", 0.0000021386822918680963, -0.000014218737711709974],
         category: "Scope",
         caption: "Complex base and order evaluate through Gamma",
       },
@@ -1060,27 +980,15 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "compute-engine leaves negative arguments unevaluated rather than extending Subfactorial analytically.",
     ],
     examples: [
-      {
-        id: "subfactorial-0",
-        expr: ["Subfactorial", 0],
-        expected: 1,
-      },
+      { id: "subfactorial-0", expr: ["Subfactorial", 0], expected: 1 },
       {
         id: "a-single-object-can-t-be-deranged",
         expr: ["Subfactorial", 1],
         expected: 0,
         caption: "A single object can't be deranged",
       },
-      {
-        id: "subfactorial-4",
-        expr: ["Subfactorial", 4],
-        expected: 9,
-      },
-      {
-        id: "subfactorial-5",
-        expr: ["Subfactorial", 5],
-        expected: 44,
-      },
+      { id: "subfactorial-4", expr: ["Subfactorial", 4], expected: 9 },
+      { id: "subfactorial-5", expr: ["Subfactorial", 5], expected: 44 },
       {
         id: "recurrence-d-n-n-d-n-1-1-n",
         expr: [
@@ -1194,16 +1102,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "Threads element-wise over a list of $n$, as Wolfram's Listable heads do.",
     ],
     examples: [
-      {
-        id: "stirlings1-5-2",
-        expr: ["StirlingS1", 5, 2],
-        expected: -50,
-      },
-      {
-        id: "stirlings1-4-2",
-        expr: ["StirlingS1", 4, 2],
-        expected: 11,
-      },
+      { id: "stirlings1-5-2", expr: ["StirlingS1", 5, 2], expected: -50 },
+      { id: "stirlings1-4-2", expr: ["StirlingS1", 4, 2], expected: 11 },
       {
         id: "s-n-n-is-always-1",
         expr: ["StirlingS1", 3, 3],
@@ -1257,11 +1157,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
         category: "Scope",
         caption: "Threads element-wise over a list, as Wolfram's Listable heads do",
       },
-      {
-        id: "stirlings1-20-10",
-        expr: ["StirlingS1", 20, 10],
-        expected: 381922055502195,
-      },
+      { id: "stirlings1-20-10", expr: ["StirlingS1", 20, 10], expected: 381922055502195 },
       {
         id: "exact-for-large-n",
         expr: ["StirlingS1", 50, 2],
@@ -1326,16 +1222,8 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "The signed first-kind numbers are [[StirlingS1]]",
     ],
     examples: [
-      {
-        id: "stirling-5-2",
-        expr: ["Stirling", 5, 2],
-        expected: 15,
-      },
-      {
-        id: "stirling-6-3",
-        expr: ["Stirling", 6, 3],
-        expected: 90,
-      },
+      { id: "stirling-5-2", expr: ["Stirling", 5, 2], expected: 15 },
+      { id: "stirling-6-3", expr: ["Stirling", 6, 3], expected: 90 },
       {
         id: "one-block-means-one-partition-s-n-1-1",
         expr: ["Stirling", 5, 1],
@@ -1364,11 +1252,7 @@ export const combinatorics: readonly ReferenceEntry[] = [
         category: "Possible issues",
         caption: "The empty set has one partition (into no blocks)",
       },
-      {
-        id: "stirling-20-10",
-        expr: ["Stirling", 20, 10],
-        expected: 5917584964655,
-      },
+      { id: "stirling-20-10", expr: ["Stirling", 20, 10], expected: 5917584964655 },
       {
         id: "exact-for-large-n",
         expr: ["Stirling", 50, 2],
@@ -1482,31 +1366,11 @@ export const combinatorics: readonly ReferenceEntry[] = [
       "The two-argument form $B_n(x)$ is the Bell (Touchard) polynomial; $B_n(1) = B_n$.",
     ],
     examples: [
-      {
-        id: "bellnumber-0",
-        expr: ["BellNumber", 0],
-        expected: 1,
-      },
-      {
-        id: "bellnumber-1",
-        expr: ["BellNumber", 1],
-        expected: 1,
-      },
-      {
-        id: "bellnumber-3",
-        expr: ["BellNumber", 3],
-        expected: 5,
-      },
-      {
-        id: "bellnumber-5",
-        expr: ["BellNumber", 5],
-        expected: 52,
-      },
-      {
-        id: "bellnumber-10",
-        expr: ["BellNumber", 10],
-        expected: 115975,
-      },
+      { id: "bellnumber-0", expr: ["BellNumber", 0], expected: 1 },
+      { id: "bellnumber-1", expr: ["BellNumber", 1], expected: 1 },
+      { id: "bellnumber-3", expr: ["BellNumber", 3], expected: 5 },
+      { id: "bellnumber-5", expr: ["BellNumber", 5], expected: 52 },
+      { id: "bellnumber-10", expr: ["BellNumber", 10], expected: 115975 },
       {
         id: "recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at",
         expr: [

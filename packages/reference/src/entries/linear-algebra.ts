@@ -1,16 +1,13 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Every `expected` was produced by evaluating `expr` with compute-engine 0.128.0
-// (the reference tests re-evaluate and pin it). See sibling domain files.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const LIBRARY = "@enumeratio/analytic";
-
-const singular = ["List", ["List", 1, 2], ["List", 2, 4]];
-const threeByThree = ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]];
-const cube = [
-  "List",
-  ["List", ["List", 1, 2], ["List", 3, 4]],
-  ["List", ["List", 5, 6], ["List", 7, 8]],
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/combinatorics/collections/reference/Rank.yaml",
+  "packages/reference/entries/MatrixRank.yaml",
+  "packages/symbols/analysis/analytic/reference/MatrixExp.yaml",
 ];
 
 export const linearAlgebra: readonly ReferenceEntry[] = [
@@ -26,16 +23,8 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       "Not the rank of a matrix (its number of independent rows); that is [[MatrixRank]].",
     ],
     examples: [
-      {
-        id: "rank-5",
-        expr: ["Rank", 5],
-        expected: 0,
-      },
-      {
-        id: "rank-list-1-2-3",
-        expr: ["Rank", ["List", 1, 2, 3]],
-        expected: 1,
-      },
+      { id: "rank-5", expr: ["Rank", 5], expected: 0 },
+      { id: "rank-list-1-2-3", expr: ["Rank", ["List", 1, 2, 3]], expected: 1 },
       {
         id: "rank-list-list-1-0-list-0-1",
         expr: ["Rank", ["List", ["List", 1, 0], ["List", 0, 1]]],
@@ -43,19 +32,47 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       },
       {
         id: "rank-list-list-list-1-2-list-3-4-list-list-5-6",
-        expr: ["Rank", cube],
+        expr: [
+          "Rank",
+          [
+            "List",
+            ["List", ["List", 1, 2], ["List", 3, 4]],
+            ["List", ["List", 5, 6], ["List", 7, 8]],
+          ],
+        ],
         expected: 3,
       },
       {
         id: "the-length-of-the-array-s-shape",
-        expr: ["Equal", ["Rank", cube], ["Length", ["Shape", cube]]],
+        expr: [
+          "Equal",
+          [
+            "Rank",
+            [
+              "List",
+              ["List", ["List", 1, 2], ["List", 3, 4]],
+              ["List", ["List", 5, 6], ["List", 7, 8]],
+            ],
+          ],
+          [
+            "Length",
+            [
+              "Shape",
+              [
+                "List",
+                ["List", ["List", 1, 2], ["List", 3, 4]],
+                ["List", ["List", 5, 6], ["List", 7, 8]],
+              ],
+            ],
+          ],
+        ],
         expected: "True",
         category: "Properties",
         caption: "The length of the array's shape",
       },
       {
         id: "a-singular-2-2-matrix-still-has-rank-2-its",
-        expr: ["Rank", singular],
+        expr: ["Rank", ["List", ["List", 1, 2], ["List", 2, 4]]],
         expected: 2,
         category: "Possible issues",
         caption: "A singular 2×2 matrix still has Rank 2; its [[MatrixRank]] is 1",
@@ -143,12 +160,12 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       },
       {
         id: "matrixrank-list-list-1-2-list-2-4",
-        expr: ["MatrixRank", singular],
+        expr: ["MatrixRank", ["List", ["List", 1, 2], ["List", 2, 4]]],
         expected: 1,
       },
       {
         id: "matrixrank-list-list-1-2-3-list-4-5-6-list-7-8-9",
-        expr: ["MatrixRank", threeByThree],
+        expr: ["MatrixRank", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]],
         expected: 2,
       },
       {
@@ -164,7 +181,14 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       },
       {
         id: "row-rank-equals-column-rank",
-        expr: ["Equal", ["MatrixRank", threeByThree], ["MatrixRank", ["Transpose", threeByThree]]],
+        expr: [
+          "Equal",
+          ["MatrixRank", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]],
+          [
+            "MatrixRank",
+            ["Transpose", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]],
+          ],
+        ],
         expected: "True",
         category: "Properties",
         caption: "Row rank equals column rank",
@@ -246,7 +270,11 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       },
       {
         id: "rank-nullity-the-rank-plus-the-dimension-of-the",
-        expr: ["Add", ["MatrixRank", threeByThree], ["Length", ["Kernel", threeByThree]]],
+        expr: [
+          "Add",
+          ["MatrixRank", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]],
+          ["Length", ["Kernel", ["List", ["List", 1, 2, 3], ["List", 4, 5, 6], ["List", 7, 8, 9]]]],
+        ],
         expected: 3,
         category: "Properties",
         caption:
@@ -299,12 +327,12 @@ export const linearAlgebra: readonly ReferenceEntry[] = [
       {
         call: "MatrixExp(A)",
         description: "the matrix exponential of the square matrix `A`.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
       {
         call: "MatrixExp(A, v)",
         description: "$e^A v$: `A`'s matrix exponential applied to the vector `v`.",
-        library: LIBRARY,
+        library: "@enumeratio/analytic",
       },
     ],
     details: [

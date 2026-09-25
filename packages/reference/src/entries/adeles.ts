@@ -1,17 +1,21 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Reference entries for @enumeratio/adeles — a port of Mathé Hertogh's Sage `adeles`
-// (Computing with adèles and idèles, Leiden 2021). Three value heads (ProfiniteNumber,
-// Adele, Idele) function-expressed like AdicNumeral, so the existing arithmetic heads
-// learn them rather than new heads appearing for +, ×, Fibonacci, and so on.
+import type { ReferenceEntry } from "@enumeratio/entry";
 
-const DOMAIN = "Adèles and idèles";
-const LIBRARY = "enumeratio-adeles";
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/arithmetic/adeles/reference/ProfiniteNumber.yaml",
+  "packages/symbols/arithmetic/adeles/reference/Adele.yaml",
+  "packages/symbols/arithmetic/adeles/reference/Idele.yaml",
+  "packages/symbols/arithmetic/adeles/reference/ProfiniteDecomposition.yaml",
+  "packages/symbols/arithmetic/adeles/reference/ProfinitePlot.yaml",
+];
 
 export const adeles: readonly ReferenceEntry[] = [
   {
     name: "ProfiniteNumber",
-    domain: DOMAIN,
+    domain: "Adèles and idèles",
     signature: "ProfiniteNumber(x, m?)",
     summary:
       "A profinite number: the rational $x + m\\hat{\\mathbb{Z}}$ in $\\hat{\\mathbb{Q}} = \\hat{\\mathbb{Z}} \\otimes \\mathbb{Q}$, known modulo $m$. Modulus 0 (the default) is just the rational $x$ itself.",
@@ -19,17 +23,17 @@ export const adeles: readonly ReferenceEntry[] = [
       {
         call: "ProfiniteNumber(x, m)",
         description: "$x$ known modulo $m$ — a coset of $m\\hat{\\mathbb{Z}}$",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "ProfiniteNumber(x)",
         description: "exact: modulus 0, so just the rational $x$",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "ProfiniteNumber(list)",
         description: "glue a list of [[AdicNumeral]] values by CRT into one profinite number",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
     ],
     details: [
@@ -102,7 +106,7 @@ export const adeles: readonly ReferenceEntry[] = [
   },
   {
     name: "Adele",
-    domain: DOMAIN,
+    domain: "Adèles and idèles",
     signature: "Adele(r, z?)",
     summary:
       "An adèle: a real number $r$ beside a profinite number $z \\in \\hat{\\mathbb{Q}}$. `Adele(q)` for rational $q$ is the principal adèle, $q$ at every place.",
@@ -110,18 +114,18 @@ export const adeles: readonly ReferenceEntry[] = [
       {
         call: "Adele(r, z)",
         description: "the real $r$ beside the finite part $z$ (a [[ProfiniteNumber]])",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "Adele(q)",
         description:
           "the principal adèle of a rational $q$: $q$ at the real place and every finite one",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "Adele(idele)",
         description: "the underlying adèle of an [[Idele]]",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
     ],
     details: [
@@ -153,7 +157,7 @@ export const adeles: readonly ReferenceEntry[] = [
   },
   {
     name: "Idele",
-    domain: DOMAIN,
+    domain: "Adèles and idèles",
     signature: "Idele(r, s?, units?)",
     summary:
       "An idèle: a unit of the adèle ring — a real $r$ together with $s \\in \\mathbb{Q}^\\times$ principal everywhere except at a listed finite set of primes, where distinguished units override it.",
@@ -161,12 +165,12 @@ export const adeles: readonly ReferenceEntry[] = [
       {
         call: "Idele(r, s, units)",
         description: "real $r$, principal value $s$ at every prime not named in `units`",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "Idele(q)",
         description: "the principal idèle of a non-zero rational $q$: $q$ at every place",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
     ],
     details: [
@@ -192,7 +196,7 @@ export const adeles: readonly ReferenceEntry[] = [
   },
   {
     name: "ProfiniteDecomposition",
-    domain: DOMAIN,
+    domain: "Adèles and idèles",
     signature: "ProfiniteDecomposition(m, d?)",
     summary:
       "$\\{b, a\\}$ with $m = b \\cdot a$, $b \\in GL_n(\\hat{\\mathbb{Z}})$ and $a \\in GL_n^+(\\mathbb{Q})$ upper triangular — strong approximation for a matrix over $\\hat{\\mathbb{Q}}$.",
@@ -201,13 +205,13 @@ export const adeles: readonly ReferenceEntry[] = [
         call: "ProfiniteDecomposition(m)",
         description:
           "$m$ a square matrix (list of lists) of [[ProfiniteNumber]] or rational entries",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "ProfiniteDecomposition(m, d)",
         description:
           "with $d$ = $\\det m$ supplied explicitly rather than computed from $m$'s entries",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
     ],
     details: [
@@ -230,7 +234,7 @@ export const adeles: readonly ReferenceEntry[] = [
   },
   {
     name: "ProfinitePlot",
-    domain: DOMAIN,
+    domain: "Adèles and idèles",
     signature: "ProfinitePlot(f, x, k?)",
     summary:
       "The graph of $f: \\hat{\\mathbb{Z}} \\to \\hat{\\mathbb{Z}}$ in the variable $x$, at precision $k$ (default 5) — Lenstra's picture of a profinite function, drawn as an [[ArrayPlot]].",
@@ -238,12 +242,12 @@ export const adeles: readonly ReferenceEntry[] = [
       {
         call: "ProfinitePlot(f, x, k)",
         description: "residue classes mod $k!$ laid out by their factorial digits",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
       {
         call: "ProfinitePlot(f, x)",
         description: "default precision $k = 5$",
-        library: LIBRARY,
+        library: "enumeratio-adeles",
       },
     ],
     details: [

@@ -1,8 +1,15 @@
-import type { ReferenceEntry } from "../types.ts";
+// GENERATED from YAML by packages/reference/scripts/migrate/shims.ts -- do not edit.
+// Edit the YAML named in `sources`, then run `node packages/reference/scripts/migrate/shims.ts`.
 
-// Combinatorial number sequences (Catalan, Bell, Stirling, Subfactorial,
-// Factorial2) live in combinatorics.ts; this file keeps the recurrence-defined
-// integer/rational sequences.
+import type { ReferenceEntry } from "@enumeratio/entry";
+
+/** The YAML each entry below was generated from, in the same order. */
+export const sources: readonly string[] = [
+  "packages/symbols/arithmetic/number-theory/reference/Fibonacci.yaml",
+  "packages/symbols/arithmetic/number-theory/reference/LucasL.yaml",
+  "packages/symbols/analysis/analytic/reference/BernoulliB.yaml",
+];
+
 export const sequences: readonly ReferenceEntry[] = [
   {
     name: "Fibonacci",
@@ -34,31 +41,11 @@ export const sequences: readonly ReferenceEntry[] = [
       "A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Fibonacci polynomial.",
     ],
     examples: [
-      {
-        id: "fibonacci-0",
-        expr: ["Fibonacci", 0],
-        expected: 0,
-      },
-      {
-        id: "fibonacci-1",
-        expr: ["Fibonacci", 1],
-        expected: 1,
-      },
-      {
-        id: "fibonacci-10",
-        expr: ["Fibonacci", 10],
-        expected: 55,
-      },
-      {
-        id: "fibonacci-20",
-        expr: ["Fibonacci", 20],
-        expected: 6765,
-      },
-      {
-        id: "fibonacci-8",
-        expr: ["Fibonacci", 8],
-        expected: 21,
-      },
+      { id: "fibonacci-0", expr: ["Fibonacci", 0], expected: 0 },
+      { id: "fibonacci-1", expr: ["Fibonacci", 1], expected: 1 },
+      { id: "fibonacci-10", expr: ["Fibonacci", 10], expected: 55 },
+      { id: "fibonacci-20", expr: ["Fibonacci", 20], expected: 6765 },
+      { id: "fibonacci-8", expr: ["Fibonacci", 8], expected: 21 },
       {
         id: "exact-at-any-size-f-100-has-21-digits",
         expr: ["Fibonacci", 100],
@@ -229,26 +216,10 @@ export const sequences: readonly ReferenceEntry[] = [
       "A list of indices is threaded over element-wise; a real (non-integer) index evaluates numerically via Binet's formula, and a symbolic second argument gives the Lucas polynomial.",
     ],
     examples: [
-      {
-        id: "lucasl-0",
-        expr: ["LucasL", 0],
-        expected: 2,
-      },
-      {
-        id: "lucasl-1",
-        expr: ["LucasL", 1],
-        expected: 1,
-      },
-      {
-        id: "lucasl-5",
-        expr: ["LucasL", 5],
-        expected: 11,
-      },
-      {
-        id: "lucasl-10",
-        expr: ["LucasL", 10],
-        expected: 123,
-      },
+      { id: "lucasl-0", expr: ["LucasL", 0], expected: 2 },
+      { id: "lucasl-1", expr: ["LucasL", 1], expected: 1 },
+      { id: "lucasl-5", expr: ["LucasL", 5], expected: 11 },
+      { id: "lucasl-10", expr: ["LucasL", 10], expected: 123 },
       {
         id: "exact-at-any-size",
         expr: ["LucasL", 100],
@@ -402,36 +373,12 @@ export const sequences: readonly ReferenceEntry[] = [
       "compute-engine only defines $B_n$ for nonnegative integer $n$. With a second argument, BernoulliB(n, x) is the Bernoulli polynomial $B_n(x)$, as in Wolfram — the same as [[BernoulliPolynomial]].",
     ],
     examples: [
-      {
-        id: "bernoullib-0",
-        expr: ["BernoulliB", 0],
-        expected: 1,
-      },
-      {
-        id: "bernoullib-1",
-        expr: ["BernoulliB", 1],
-        expected: ["Rational", -1, 2],
-      },
-      {
-        id: "bernoullib-2",
-        expr: ["BernoulliB", 2],
-        expected: ["Rational", 1, 6],
-      },
-      {
-        id: "bernoullib-4",
-        expr: ["BernoulliB", 4],
-        expected: ["Rational", -1, 30],
-      },
-      {
-        id: "bernoullib-12",
-        expr: ["BernoulliB", 12],
-        expected: ["Rational", -691, 2730],
-      },
-      {
-        id: "bernoullib-10",
-        expr: ["BernoulliB", 10],
-        expected: ["Rational", 5, 66],
-      },
+      { id: "bernoullib-0", expr: ["BernoulliB", 0], expected: 1 },
+      { id: "bernoullib-1", expr: ["BernoulliB", 1], expected: ["Rational", -1, 2] },
+      { id: "bernoullib-2", expr: ["BernoulliB", 2], expected: ["Rational", 1, 6] },
+      { id: "bernoullib-4", expr: ["BernoulliB", 4], expected: ["Rational", -1, 30] },
+      { id: "bernoullib-12", expr: ["BernoulliB", 12], expected: ["Rational", -691, 2730] },
+      { id: "bernoullib-10", expr: ["BernoulliB", 10], expected: ["Rational", 5, 66] },
       {
         id: "exact-rationals-at-any-index",
         expr: ["BernoulliB", 60],
@@ -463,7 +410,6 @@ export const sequences: readonly ReferenceEntry[] = [
         id: "the-bernoulli-polynomial-at-a-rational-point-b-2",
         expr: ["BernoulliB", 2, ["Rational", 1, 2]],
         expected: ["Rational", -1, 12],
-
         category: "Scope",
         caption: "The Bernoulli polynomial at a rational point: $B_2(\\frac12) = -\\frac{1}{12}$",
       },

@@ -1,0 +1,22 @@
+name: HeptagonalNumbers
+domain: Collections
+signature: HeptagonalNumbers
+summary: The heptagonal numbers $1, 7, 18, 34, …$ — $n(5n-3)/2$ — dots in a heptagon.
+signatures:
+  - call: HeptagonalNumbers
+    description: $n(5n-3)/2$ for $n = 1, 2, 3, …$.
+details:
+  - 'A lazy indexed collection: $Count(HeptagonalNumbers) = +\infty$, and $At(HeptagonalNumbers, k) = k(5k-3)/2$ unranks in closed form -- $At(HeptagonalNumbers, 5) = 55$.'
+  - OEIS A000566.
+  - Membership goes through [[Element]] by inverting the closed form exactly -- $Element(55, HeptagonalNumbers)$ is true, $Element(54, HeptagonalNumbers)$ is false.
+  - The $k$-gonal case $k=7$ of [[PolygonalNumbers]].
+examples: []
+enumerate:
+  expr: Take(HeptagonalNumbers, 20)
+seeAlso:
+  - PolygonalNumbers
+  - HexagonalNumbers
+  - OctagonalNumbers
+  - Count
+  - At
+  - Element
