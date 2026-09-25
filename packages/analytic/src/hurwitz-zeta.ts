@@ -32,6 +32,17 @@ import { declareBesselJZero } from "./bessel-zeros.ts";
 import { declareDigammaFunctionZero } from "./digamma-zero.ts";
 import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeometric-ustar.ts";
 import { declareHypergeometric } from "./hypergeometric.ts";
+import { declareLambertW } from "./lambert-w.ts";
+import { declareInverseErfc } from "./inverse-erfc.ts";
+import {
+  declareInverseGammaRegularized,
+  declareInverseBetaRegularized,
+} from "./inverse-regularized.ts";
+import { declareNorlundB } from "./norlund.ts";
+import { declarePrimeZetaP } from "./prime-zeta.ts";
+import { declareExpIntegralE } from "./exp-integral-e.ts";
+import { declareHypergeometricPFQ } from "./hypergeometric-pfq.ts";
+import { declareBellY } from "./bell-y.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
 import { declareTaggedArithmetic } from "./declare-tagged-arithmetic.ts";
@@ -41,6 +52,16 @@ import { declarePowerExpand } from "./power-expand.ts";
 import { declareFunctionExpand } from "./function-expand.ts";
 import { declareFullSimplify } from "./full-simplify.ts";
 import { declareMatrixFunction } from "./matrix-function.ts";
+import { declareCubeRoot } from "./cube-root.ts";
+import { declareIntegerFractionalPart } from "./integer-fractional-part.ts";
+import { declareRealAbsSign } from "./real-abs-sign.ts";
+import { declareUnitStep } from "./unit-step.ts";
+import { declareGudermannian } from "./gudermannian.ts";
+import { declareKhinchin } from "./khinchin.ts";
+import { declareHyperfactorial } from "./hyperfactorial.ts";
+import { declareKeiperLi } from "./keiper-li.ts";
+import { declareQSeries } from "./q-series.ts";
+import { declareRiemannSiegel } from "./riemann-siegel.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -543,6 +564,13 @@ function evaluateLerch(
  * `CenteredInterval` (centered-interval.ts) and `Around` (around.ts) — the transformers
  * `ComplexExpand`, `ExpToTrig`, `PowerExpand`, `FunctionExpand` and `FullSimplify` (each in
  * its own file), and `MatrixFunction` (matrix-function.ts, reusing `MatrixExp`).
+ *
+ * Also declares, each in its own file: `CubeRoot` (cube-root.ts); `IntegerPart` and
+ * `FractionalPart` (integer-fractional-part.ts); `RealAbs` and `RealSign`
+ * (real-abs-sign.ts); `UnitStep` (unit-step.ts); `Gudermannian` (gudermannian.ts); the
+ * `Khinchin` constant (khinchin.ts); and `Hyperfactorial` (hyperfactorial.ts).
+ * Also, in q-series.ts, the q-analogues `QPochhammer`, `QFactorial`, `QBinomial`;
+ * and, in riemann-siegel.ts, `RiemannSiegelTheta`, `RiemannSiegelZ`, `RiemannZetaZero`.
  */
 export function declareAnalytic(ce: ComputeEngine): void {
   ce.declare("HurwitzZeta", {
@@ -658,4 +686,23 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareFunctionExpand(ce);
   declareFullSimplify(ce);
   declareMatrixFunction(ce);
+  declareLambertW(ce);
+  declareInverseErfc(ce);
+  declareInverseGammaRegularized(ce);
+  declareInverseBetaRegularized(ce);
+  declareNorlundB(ce);
+  declarePrimeZetaP(ce);
+  declareExpIntegralE(ce);
+  declareHypergeometricPFQ(ce);
+  declareBellY(ce);
+  declareCubeRoot(ce);
+  declareIntegerFractionalPart(ce);
+  declareRealAbsSign(ce);
+  declareUnitStep(ce);
+  declareGudermannian(ce);
+  declareKhinchin(ce);
+  declareHyperfactorial(ce);
+  declareKeiperLi(ce);
+  declareQSeries(ce);
+  declareRiemannSiegel(ce);
 }

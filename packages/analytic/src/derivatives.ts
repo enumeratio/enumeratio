@@ -57,6 +57,9 @@ const DERIVATIVES: Readonly<Record<string, Readonly<Record<Orders, Partial>>>> =
     "1": { params: ["z"], body: ["Multiply", ["BarnesG", "z"], LOG_BARNES_G_PRIME] },
   },
 
+  // gd′(x) = sech(x): the Gudermannian's defining property.
+  Gudermannian: { "1": { params: ["x"], body: ["Sech", "x"] } },
+
   // Cl_n′ = Cl_{n−1} for even n (sine series differentiating to the cosine one) and −Cl_{n−1}
   // for odd n. Cl₀(θ) = ½cot(θ/2) is outside the head's n ≥ 1 domain, so Cl₁′ stays symbolic.
   ClausenCl: {

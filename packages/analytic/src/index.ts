@@ -55,9 +55,21 @@ export { digammaFunctionZero } from "./digamma-zero.ts";
 export { evaluateIncompleteGamma } from "./incomplete-gamma.ts";
 export { hypergeometricUStar } from "./hypergeometric-ustar.ts";
 export { declareHypergeometric } from "./hypergeometric.ts";
+export { declareKeiperLi } from "./keiper-li.ts";
 export { evaluateLegendreP } from "./legendre.ts";
 export { lerchPhi, lerchPhiReal } from "./lerch.ts";
 export { declareModular } from "./modular.ts";
+export { declareLambertW } from "./lambert-w.ts";
+export { declareInverseErfc } from "./inverse-erfc.ts";
+export {
+  declareInverseGammaRegularized,
+  declareInverseBetaRegularized,
+} from "./inverse-regularized.ts";
+export { declareNorlundB } from "./norlund.ts";
+export { declarePrimeZetaP } from "./prime-zeta.ts";
+export { declareExpIntegralE } from "./exp-integral-e.ts";
+export { declareHypergeometricPFQ } from "./hypergeometric-pfq.ts";
+export { declareBellY } from "./bell-y.ts";
 export { declareMatrixExp, evaluateMatrixExp } from "./matrix-exp.ts";
 export { declareMatrixFunction, evaluateMatrixFunction } from "./matrix-function.ts";
 export { declareTaggedArithmetic } from "./declare-tagged-arithmetic.ts";
@@ -74,6 +86,8 @@ export { multiZetaValue } from "./multizeta.ts";
 export { digamma, polygamma, polygammaReal } from "./polygamma.ts";
 export { polyLog, polyLogReal } from "./polylog.ts";
 export { evaluateRisingFactorial } from "./rising-factorial.ts";
+export { declareQSeries } from "./q-series.ts";
+export { declareRiemannSiegel } from "./riemann-siegel.ts";
 export { landauFunction } from "./sloane-a.ts";
 export { zetaWGSL } from "./shader.ts";
 export { stieltjesGamma, stieltjesGammaReal } from "./stieltjes.ts";

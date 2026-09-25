@@ -77,10 +77,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 56,
   },
   {
-    head: "Association",
-    uses: 56,
-  },
-  {
     head: "With",
     uses: 55,
   },
@@ -115,10 +111,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "O",
     uses: 37,
-  },
-  {
-    head: "NestList",
-    uses: 35,
   },
   {
     head: "Accumulate",
@@ -181,10 +173,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 21,
   },
   {
-    head: "HypergeometricPFQ",
-    uses: 21,
-  },
-  {
     head: "Module",
     uses: 21,
   },
@@ -198,10 +186,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "DifferentialRootReduce",
-    uses: 19,
-  },
-  {
-    head: "Nest",
     uses: 19,
   },
   {
@@ -242,10 +226,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "MeijerGReduce",
-    uses: 17,
-  },
-  {
-    head: "Outer",
     uses: 17,
   },
   {
@@ -326,10 +306,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "NestWhile",
-    uses: 13,
-  },
-  {
-    head: "UnitStep",
     uses: 13,
   },
   {
@@ -497,10 +473,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 7,
   },
   {
-    head: "FractionalPart",
-    uses: 7,
-  },
-  {
     head: "GammaDistribution",
     uses: 7,
   },
@@ -538,10 +510,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ArrayMesh",
-    uses: 6,
-  },
-  {
-    head: "BellY",
     uses: 6,
   },
   {
@@ -706,10 +674,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ProbabilityDistribution",
-    uses: 5,
-  },
-  {
-    head: "RealAbs",
     uses: 5,
   },
   {
@@ -962,10 +926,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "InverseCDF",
-    uses: 3,
-  },
-  {
-    head: "InverseErfc",
     uses: 3,
   },
   {

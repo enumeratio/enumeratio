@@ -1209,7 +1209,7 @@ export const specialFunctions: readonly ReferenceEntry[] = [
         caption: "$\\zeta(s, 1) = \\zeta(s)$ for symbolic $s$",
       },
     ],
-    seeAlso: ["HurwitzZeta", "BernoulliB", "Gamma", "Digamma"],
+    seeAlso: ["HurwitzZeta", "BernoulliB", "Gamma", "Digamma", "RiemannSiegelZ", "RiemannZetaZero"],
   },
   {
     name: "HurwitzZeta",
@@ -2517,5 +2517,113 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["Beta", "GammaRegularized", "Binomial"],
+  },
+  {
+    name: "IncompleteEllipticPi",
+    domain: "Special functions",
+    signature: "IncompleteEllipticPi(n, phi, m)",
+    summary:
+      "The incomplete Legendre elliptic integral of the third kind, $\\Pi(n;\\varphi,m) = \\int_0^\\varphi \\dfrac{d\\theta}{(1-n\\sin^2\\theta)\\sqrt{1-m\\sin^2\\theta}}$, in Wolfram/mpmath's $(n,\\varphi,m)$ order with $m=k^2$.",
+    signatures: [
+      {
+        call: "IncompleteEllipticPi(n, phi, m)",
+        description:
+          "the incomplete elliptic integral of the third kind, characteristic n, amplitude φ, parameter m.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "$m = k^2$, the same convention [[EllipticE]] / [[EllipticF]] use — not the elliptic modulus k itself.",
+      "$\\varphi = \\pi/2$ is the complete integral: $\\Pi(n;\\pi/2,m) = $ [[EllipticPi]]$(n,m)$.",
+      "Built from Carlson's symmetric $R_F$/$R_J$ (DLMF 19.25.14) rather than delegating to compute-engine's native three-argument EllipticPi, which returns NaN for some complex φ inside its own stated domain.",
+      "Quasi-periodic: $\\Pi(n;\\varphi+k\\pi,m) = 2k\\,\\Pi(n,m) + \\Pi(n;\\varphi,m)$ for integer k, so any φ reduces to $[-\\pi/2,\\pi/2]$ before the Carlson evaluation.",
+      "Numeric only — a symbolic or exact argument stays unevaluated; a floating-point argument (or `N()`) evaluates directly, same as [[EllipticE]] and [[EllipticF]].",
+    ],
+    examples: [
+      { expr: ["IncompleteEllipticPi", 0.5, 0, 0.3], expected: 0, caption: "Π(n; 0, m) = 0" },
+      {
+        expr: ["N", ["IncompleteEllipticPi", 0.5, 0.4, 0.3]],
+        expected: 0.41415173682447676,
+        caption: "A floating-point argument evaluates directly to a decimal",
+      },
+      {
+        expr: ["N", ["IncompleteEllipticPi", 0, 0.4, 0.3]],
+        expected: 0.40316499194713934,
+        category: "Properties",
+        caption:
+          "n = 0 reduces to the incomplete elliptic integral of the first kind, IncompleteEllipticF(φ, m)",
+      },
+      {
+        expr: ["N", ["IncompleteEllipticPi", 0.2, ["Complex", 1.2, 0.5], 0.3]],
+        expected: ["Complex", 1.321415376117118, 0.7186657188751806],
+        category: "Scope",
+        caption:
+          "A complex amplitude φ, where native EllipticPi returns NaN even though φ is inside its own stated domain",
+      },
+      {
+        expr: ["IncompleteEllipticPi", "n", "phi", "m"],
+        expected: ["IncompleteEllipticPi", "n", "phi", "m"],
+        category: "Possible issues",
+        caption: "Symbolic arguments are left unevaluated rather than guessed at",
+      },
+    ],
+    seeAlso: ["EllipticPi", "EllipticE", "EllipticF"],
+  },
+  {
+    name: "KeiperLiLambda",
+    domain: "Special functions",
+    signature: "KeiperLiLambda(n)",
+    summary:
+      "The n-th Keiper–Li coefficient $\\lambda_n = \\dfrac{1}{(n-1)!}\\dfrac{d^n}{ds^n}\\left[s^{n-1}\\log\\xi(s)\\right]_{s=1}$, whose nonnegativity for every n is equivalent to the Riemann hypothesis.",
+    signatures: [
+      {
+        call: "KeiperLiLambda(n)",
+        description: "the n-th Keiper–Li coefficient, for a nonnegative integer n.",
+        library: "@enumeratio/analytic",
+      },
+    ],
+    details: [
+      "$\\xi(s) = \\tfrac12 s(s-1)\\pi^{-s/2}\\Gamma(s/2)\\zeta(s)$, the completed (Riemann) xi function — entire, and sharing ζ's nontrivial zeros.",
+      "$\\lambda_0 = 0$ and $\\lambda_1 = 1 + \\gamma/2 - \\tfrac12\\ln(4\\pi) \\approx 0.02310$ are closed forms; both evaluate exactly under plain evaluation, not just under N().",
+      "$n \\geq 2$ is computed by Cauchy's differentiation formula — a contour integral of $\\log\\xi$ around $s=1$ — since repeated finite differences lose too much precision by n = 2 or 3.",
+      "Numeric only for n ≥ 2: needs N() or a floating-point argument.",
+      "Declines (leaves the call unevaluated) past n = 20, where float64 rounding in the contour sum starts costing real digits, and for any negative or non-integer n.",
+      "Li's criterion: the Riemann hypothesis holds if and only if $\\lambda_n \\geq 0$ for every positive integer n.",
+    ],
+    examples: [
+      { expr: ["KeiperLiLambda", 0], expected: 0, caption: "λ₀ = 0, exact under plain evaluation" },
+      {
+        expr: ["KeiperLiLambda", 1],
+        expected: [
+          "Add",
+          1,
+          ["Multiply", ["Rational", -1, 2], ["Ln", ["Multiply", 4, "Pi"]]],
+          ["Multiply", ["Rational", 1, 2], "EulerGamma"],
+        ],
+        caption: "λ₁'s closed form, exact under plain evaluation",
+      },
+      {
+        expr: ["N", ["KeiperLiLambda", 1]],
+        expected: { num: "0.0230957089661210338135" },
+        caption: "N() forces the closed form to a decimal",
+      },
+      {
+        expr: ["N", ["KeiperLiLambda", 2]],
+        expected: 0.09234573522804794,
+        caption: "n ≥ 2 is numeric-only: the contour-integral evaluator",
+      },
+      {
+        expr: ["N", ["KeiperLiLambda", 3]],
+        expected: 0.20763892055433203,
+      },
+      {
+        expr: ["KeiperLiLambda", 21],
+        expected: ["KeiperLiLambda", 21],
+        category: "Possible issues",
+        caption:
+          "Declines past n = 20 rather than returning a value that has quietly lost precision",
+      },
+    ],
+    seeAlso: ["Zeta"],
   },
 ];
