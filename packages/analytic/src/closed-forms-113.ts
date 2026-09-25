@@ -10,6 +10,12 @@ import { declined, type EvalOptions } from "./box.ts";
 import { characterExponent } from "./dirichlet-l.ts";
 import { gammaExactValue, type Rational } from "./widened.ts";
 
+/** A wrapper's arity key doesn't filter calls; widened heads reach it with other arities. */
+const exactly =
+  (n: number, p: (ops: readonly BoxedExpression[]) => boolean) =>
+  (ops: readonly BoxedExpression[]): boolean =>
+    ops.length === n && p(ops);
+
 /**
  * Every wrapper below is a pre-check ahead of an existing numeric kernel, and several
  * of those kernels reach the exact same operator recursively while computing their OWN
@@ -55,10 +61,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["GammaLn", 1],
-    (ops) => {
+    exactly(1, (ops) => {
       const n = bigIntegerAt(ops[0]);
       return n !== undefined && n >= 1n;
-    },
+    }),
     () => (ops, options) => {
       const n = bigIntegerAt(ops[0])!;
       return finish(ce.function("Ln", [ce.function("Factorial", [intNode(ce, n - 1n)])]), options);
@@ -73,7 +79,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
-    (ops) => {
+    exactly(2, (ops) => {
       const a = bigRationalAt(ops[1]);
       return (
         ops[0] !== undefined &&
@@ -82,7 +88,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         a[0] === 1n &&
         a[1] === 2n
       );
-    },
+    }),
     () => (ops, options) => {
       const s = ops[0];
       return finish(
@@ -97,10 +103,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HurwitzZeta", 2],
-    (ops) => {
+    exactly(2, (ops) => {
       const a = bigRationalAt(ops[1]);
       return bigIntegerAt(ops[0]) === 2n && a !== undefined && a[0] === 1n && a[1] === 4n;
-    },
+    }),
     () => (_ops, options) =>
       finish(
         ce.function("Add", [
@@ -118,10 +124,13 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    (ops) =>
-      bigIntegerAt(ops[0]) === 3n &&
-      bigRationalAt(ops[1])?.[0] === 1n &&
-      bigRationalAt(ops[1])?.[1] === 2n,
+    exactly(
+      2,
+      (ops) =>
+        bigIntegerAt(ops[0]) === 3n &&
+        bigRationalAt(ops[1])?.[0] === 1n &&
+        bigRationalAt(ops[1])?.[1] === 2n,
+    ),
     () => (_ops, options) =>
       finish(
         ce.function("Add", [
@@ -144,7 +153,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyLog", 2],
-    (ops) => bigIntegerAt(ops[0]) === 2n && bigIntegerAt(ops[1]) === 2n,
+    exactly(2, (ops) => bigIntegerAt(ops[0]) === 2n && bigIntegerAt(ops[1]) === 2n),
     () => (_ops, options) =>
       finish(
         ce.function("Subtract", [
@@ -165,10 +174,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Digamma", 1],
-    (ops) => {
+    exactly(1, (ops) => {
       const q = bigRationalAt(ops[0]);
       return q !== undefined && (q[1] === 3n || q[1] === 4n) && q[0] > 0n && q[0] < q[1];
-    },
+    }),
     () => (ops, options) => {
       const [p, q] = bigRationalAt(ops[0])!;
       const ln = (n: number) => ce.function("Ln", [n]);
@@ -201,7 +210,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyGamma", 2],
-    (ops) => {
+    exactly(2, (ops) => {
       const q = bigRationalAt(ops[1]);
       return (
         bigIntegerAt(ops[0]) === 1n &&
@@ -209,7 +218,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         q[1] === 4n &&
         (q[0] === 1n || q[0] === 3n)
       );
-    },
+    }),
     () => (ops, options) => {
       const [p] = bigRationalAt(ops[1])!;
       const sign = p === 1n ? 1 : -1;
@@ -241,7 +250,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["PolyGamma", 2],
-    (ops) => bigIntegerAt(ops[0]) === 0n,
+    exactly(2, (ops) => bigIntegerAt(ops[0]) === 0n),
     (native) => (ops, options) => {
       const reduced = ce.function("Digamma", [ops[1]]).evaluate();
       if (declined(reduced, "Digamma")) return native?.(ops, options);
@@ -254,7 +263,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["StieltjesGamma", 2],
-    (ops) => bigIntegerAt(ops[1]) === 1n,
+    exactly(2, (ops) => bigIntegerAt(ops[1]) === 1n),
     () => (ops, options) => finish(ce.function("StieltjesGamma", [ops[0]]), options),
   );
 
@@ -264,7 +273,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["BetaRegularized", 3],
-    (ops) => {
+    exactly(3, (ops) => {
       const x = bigRationalAt(ops[0]);
       const a = bigIntegerAt(ops[1]);
       const b = bigIntegerAt(ops[2]);
@@ -279,7 +288,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         b >= 1n &&
         b <= 200n
       );
-    },
+    }),
     () => (ops, options) => {
       const [p, q] = bigRationalAt(ops[0])!;
       const a = bigIntegerAt(ops[1])!;
@@ -359,7 +368,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["LogGamma", 1],
-    (ops) => bigRationalAt(ops[0])?.[1] === 2n,
+    exactly(1, (ops) => bigRationalAt(ops[0])?.[1] === 2n),
     () => (ops, options) => {
       const q = bigRationalAt(ops[0])!;
       const g = gammaExactValue(ce, q);
@@ -385,10 +394,10 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["HarmonicNumber", 1],
-    (ops) => {
+    exactly(1, (ops) => {
       const q = bigRationalAt(ops[0]);
       return q !== undefined && q[0] === 1n && (q[1] === 2n || q[1] === 4n);
-    },
+    }),
     () => (ops, options) => {
       const q = bigRationalAt(ops[0])!;
       const ln2 = ce.function("Ln", [2]);
@@ -414,7 +423,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["FromContinuedFraction", 1],
-    (ops) => {
+    exactly(1, (ops) => {
       const list = ops[0];
       if (list?.operator !== "List") return false;
       const terms = operandsOf(list);
@@ -423,7 +432,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       return (
         terms.length > 0 && terms.every(plain) && terms.some((t) => symbolNameOf(t) !== undefined)
       );
-    },
+    }),
     () => (ops, options) => {
       const terms = operandsOf(ops[0]);
       let acc = terms[terms.length - 1];
@@ -443,7 +452,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["Mod", 2],
-    (ops) => {
+    exactly(2, (ops) => {
       const x = ops[0];
       const m = ops[1];
       if (x === undefined || m === undefined) return false;
@@ -456,7 +465,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
       if (!Number.isFinite(xNum)) return false;
       const ratio = xNum / mNum;
       return Math.abs(ratio - Math.round(ratio)) > 1e-6; // margin from a boundary case
-    },
+    }),
     () => (ops, options) => {
       const [x, m] = ops;
       const k = Math.floor(x.re / m.re);
@@ -479,7 +488,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
   wrapOperator(
     ce,
     ["DirichletL", 3],
-    (ops) => {
+    exactly(3, (ops) => {
       const k = bigIntegerAt(ops[0]);
       const j = bigIntegerAt(ops[1]);
       const s = bigIntegerAt(ops[2]);
@@ -497,7 +506,7 @@ export function declareClosedForms113(ce: ComputeEngine): void {
         if (!(num === 0 || 2 * num === den)) return false;
       }
       return true;
-    },
+    }),
     (native) => (ops, options) => {
       const k = bigIntegerAt(ops[0])!;
       const j = bigIntegerAt(ops[1])!;

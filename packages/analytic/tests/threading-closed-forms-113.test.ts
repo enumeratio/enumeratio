@@ -113,12 +113,8 @@ test("closed form: HurwitzZeta(2, 1/2) = π²/2 and HurwitzZeta(2, 1/4) = π² +
     ["Multiply", 8, "Catalan"],
     ["Power", "Pi", 2],
   ]);
-  // symbolic s is a different (unassigned) item and must stay untouched
-  expect(evalOf(["HurwitzZeta", "s", ["Rational", 1, 2]])).toEqual([
-    "HurwitzZeta",
-    "s",
-    ["Rational", 1, 2],
-  ]);
+  // symbolic s reduces through ζ(s, 1/2) = (2^s − 1)ζ(s) (generalized-special.ts)
+  expect(JSON.stringify(evalOf(["HurwitzZeta", "s", ["Rational", 1, 2]]))).toMatch(/^\["Multiply"/);
 });
 
 test("closed form: Li3(1/2) and Li2(2)", () => {
