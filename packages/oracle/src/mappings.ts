@@ -221,6 +221,7 @@ export const MAPPINGS: readonly Mapping[] = [
       sympy: "lerchphi($1, $2, $3)",
       mpmath: "lerchphi($1, $2, $3)",
     },
+    note: "For a + k < 0, Wolfram sums ((a+k)²)^(−s/2), the generalized-zeta convention; mpmath, SymPy and ours take (a+k)^(−s), principal.",
   },
   {
     head: "PolyLog",

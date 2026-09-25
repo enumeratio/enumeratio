@@ -21,11 +21,30 @@ type Val = number | { rat: [number, number] } | { c: [number, number] };
 const toCE = (v: Val): unknown =>
   typeof v === "number" ? v : "rat" in v ? ["Rational", ...v.rat] : ["Complex", ...v.c];
 
-const byHead: Record<string, { expr: unknown; expected: unknown; hidden: true }[]> = {};
-const add = (call: unknown[]): void => {
+interface Example {
+  expr: unknown;
+  expected: unknown;
+  hidden: true;
+  divergence?: { wolfram: string };
+}
+const byHead: Record<string, Example[]> = {};
+
+/** Wolfram's LerchPhi takes ((a+k)²)^(−s/2) where a + k < 0: a convention, said on the example. */
+const LERCH_NEGATIVE_A =
+  "For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.";
+/** One grid point. `valueOnly` keeps it only where ours evaluates — past |z| = 1, LerchPhi
+ * declines where it can't vouch for double precision, and a decline isn't a grid point. */
+const add = (call: unknown[], valueOnly = false): void => {
   const expr = ["N", call];
   const expected = ce.box(expr as never).evaluate().json;
-  (byHead[call[0] as string] ??= []).push({ expr, expected, hidden: true });
+  if (valueOnly && Array.isArray(expected) && expected[0] === call[0]) return;
+  const negativeA = call[0] === "LerchPhi" && typeof call[3] === "number" && call[3] < 0;
+  (byHead[call[0] as string] ??= []).push({
+    expr,
+    expected,
+    hidden: true,
+    ...(negativeA ? { divergence: { wolfram: LERCH_NEGATIVE_A } } : {}),
+  });
 };
 
 const sGrid: Val[] = [
@@ -81,6 +100,25 @@ for (const z of zGrid) {
   for (const s of [2, 3, 0.5, -1, { c: [2, 1] }] as Val[]) {
     for (const a of [1, 2, 0.5, { rat: [5, 2] }] as Val[]) {
       add(["LerchPhi", toCE(z), toCE(s), toCE(a)]);
+    }
+  }
+}
+
+// …and past |z| = 1, where LerchPhi is continued by its integral representation: real z on
+// the cut (either sign), complex z, a < 0 through the recurrence.
+for (const z of [
+  2,
+  -2,
+  3,
+  1.5,
+  -1.5,
+  { c: [1, 2] },
+  { c: [-1.5, 1] },
+  { c: [0.8, 0.9] },
+] as Val[]) {
+  for (const s of [2, 3, 0.5, { c: [2, 1] }] as Val[]) {
+    for (const a of [1, 2, 0.5, { rat: [5, 2] }, -2.5] as Val[]) {
+      add(["LerchPhi", toCE(z), toCE(s), toCE(a)], true);
     }
   }
 }
