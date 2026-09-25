@@ -173,7 +173,9 @@ const materializeTabulate = (
   return ce.box(["List", ...rows]);
 };
 
-/** `Join` at a level `n > 1`: recursively join corresponding sublists n-1 levels down. */
+/** `Join` at a level `n > 1`: recursively join corresponding sublists n-1 levels down. A
+ *  row missing from a shorter array (the outer lists don't all have the same length) is
+ *  simply skipped rather than treated as empty — `length` is the longest, not the first. */
 const joinAtLevel = (
   ce: ComputeEngine,
   lists: readonly BoxedExpression[],
@@ -181,7 +183,7 @@ const joinAtLevel = (
 ): BoxedExpression => {
   if (level <= 1) return ce.box(["List", ...lists.flatMap((list) => operandsOf(list))]);
   const rows = lists.map((list) => operandsOf(list));
-  const length = rows[0]?.length ?? 0;
+  const length = Math.max(0, ...rows.map((row) => row.length));
   const merged: BoxedExpression[] = [];
   for (let i = 0; i < length; i++) {
     const slice = rows
@@ -463,18 +465,19 @@ export function declareListHeads(ce: ComputeEngine): void {
       ? { lists, level }
       : undefined;
   };
+  // Join(a, b, …): any head, as long as every argument shares it — not just List or Set.
   wrapOperator(
     ce,
     ["Join", 1, 1],
     (ops) =>
       joinsAtLevel(ops) !== undefined ||
       ops.length === 0 ||
-      (ops.length >= 1 && ops.every((op) => op.operator === "Set")),
+      (ops.length >= 1 && ops.every((op) => op.operator === ops[0].operator)),
     () => (ops) => {
       const join = joinsAtLevel(ops);
       if (join !== undefined) return joinAtLevel(ce, join.lists, join.level);
       if (ops.length === 0) return ce.box(["List"]);
-      return ce.box(["Set", ...ops.flatMap((op) => operandsOf(op))]);
+      return ce.box([ops[0].operator, ...ops.flatMap((op) => operandsOf(op))]);
     },
   );
   {

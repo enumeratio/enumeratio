@@ -4,6 +4,7 @@ import { declareCallForms } from "./families/call-forms.ts";
 import { declareFamilies } from "./families/declare.ts";
 import { declareListFunctional } from "./list-functional.ts";
 import { declareListHeads } from "./list-heads.ts";
+import { declareListLevelHeads } from "./list-levels.ts";
 import { declareListOps } from "./list-ops.ts";
 import { declareListOpsWolfram } from "./list-ops-wolfram.ts";
 import { declareProducts } from "./products.ts";
@@ -26,6 +27,7 @@ export function declareCollections(ce: ComputeEngine, options: StatsOptions = {}
   declareCallForms(ce);
   declareListOps(ce);
   declareListHeads(ce);
+  declareListLevelHeads(ce);
   declareListFunctional(ce);
   declareListOpsWolfram(ce);
   declareProducts(ce);

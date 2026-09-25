@@ -28,10 +28,12 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
   // Interval/CenteredInterval/Around now genuinely diverge bare compute-engine's Sin, Cos,
-  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), moving them
-  // from "compute-engine" to "override" — the threshold tracks that, well below the current
+  // Tan, Sec, Csc, Sqrt, Sign, Exp and Arctan (enumeratio/enumeratio#113 §2), and
+  // All/Any/Count/Flatten now genuinely diverge it too (level arguments, infinite depth,
+  // dimension permutation, any-head nesting — #113 §7), moving them all from
+  // "compute-engine" to "override" — the threshold tracks that, well below the current
   // count so it still catches a real regression.
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(25);
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(20);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -168,6 +170,8 @@ const OVERRIDDEN = [
   // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
   // outer head even though the divergence is Floor's.
   "Add",
+  "All",
+  "Any",
   "Arccot",
   "Arccsc",
   "Arcsec",
@@ -188,6 +192,7 @@ const OVERRIDDEN = [
   "ContinuedFraction",
   "Cos",
   "Cosh",
+  "Count",
   "Csc",
   "Digamma",
   "DigitCount",
@@ -207,6 +212,7 @@ const OVERRIDDEN = [
   "Fibonacci",
   "First",
   "FixedPoint",
+  "Flatten",
   "Floor",
   "FromContinuedFraction",
   "FromDigits",
@@ -463,6 +469,9 @@ const NOVEL = [
   "Braid",
   "AlexanderPolynomial",
   "JonesPolynomial",
+  // FirstPosition exists in Wolfram (system-names.ts has it), but that isn't confirmed by
+  // an external kernel here -- same story as Prepend, just below.
+  "FirstPosition",
   // Prepend exists in Wolfram (crosswalk-data.ts has the alias), but that isn't confirmed
   // by an external kernel here -- collect-coverage.ts's "elsewhere" column needs
   // wolframscript/sympy/mpmath, which this offline pass doesn't have.
