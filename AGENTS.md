@@ -84,8 +84,9 @@ release. Add a tool name to select part of the graph. For example, run
 - **Advisory sweeps** — never required checks. `quickcheck.yml` samples the collection
   kernels on every push touching them and deeply each night; a failure files/reopens one
   rolling issue, `quickcheck sampling regression`, labelled `nightly-fixup`. `nightly.yml`
-  cross-checks the analytic heads against mpmath and rescans the Julia lane (Nemo +
-  Combinatorics.jl) against the committed sidecars nightly; weekly it rescans the Oscar,
+  cross-checks the analytic heads against mpmath and rescans the Julia (Nemo +
+  Combinatorics.jl) and Rust (num, primal, statrs, adic) lanes against the committed sidecars
+  nightly; weekly it rescans the Oscar,
   Mathlib, Sage (in Docker, with the adeles and adic goldens) and Wolfram lanes the same way
   and follows every crosswalk link. A lane fails when a row's verdict, classification or input
   changes, not on a float's printed digits. Wolfram runs on an on-demand license, the

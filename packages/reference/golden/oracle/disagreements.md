@@ -210,3 +210,48 @@ Counts cover mapped examples only; unmapped ones have no row.
 | `sequences/Fibonacci#8`          | `failed to synthesize instance of type class` |
 
 </details>
+
+## rust — agree 133, disagree 7, inconclusive 1, error 26
+
+| example                     | kind           | ours                               | theirs             |
+| --------------------------- | -------------- | ---------------------------------- | ------------------ |
+| `arithmetic/Sqrt#10`        | domain         | `{"re":0,"im":0.6666666666666666}` | `NaN`              |
+| `arithmetic/Sqrt#5`         | domain         | `{"re":0,"im":2}`                  | `NaN`              |
+| `arithmetic/Sqrt#9`         | domain         | `{"re":0,"im":1.4142135623730951}` | `NaN`              |
+| `combinatorics/Binomial#11` | domain         | `0`                                | `1`                |
+| `combinatorics/Binomial#12` | domain         | `15`                               | `0`                |
+| `elementary/Ln#6`           | domain         | `{"re":0,"im":3.141592653589793}`  | `NaN`              |
+| `special-functions/Gamma#1` | undefined-form | `ComplexInfinity`                  | `PositiveInfinity` |
+
+<details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
+
+| example                     | message                                                   |
+| --------------------------- | --------------------------------------------------------- |
+| `arithmetic/Abs#6`          | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Ceil#4`         | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Floor#4`        | `panic: threading: a list where the crate takes a scalar` |
+| `arithmetic/Negate#5`       | `panic: negating [1, -2, 3]`                              |
+| `combinatorics/Factorial#5` | `panic: threading: a list where the crate takes a scalar` |
+| `combinatorics/Factorial#7` | `panic: an integer, not 1/2`                              |
+| `combinatorics/Factorial#9` | `panic: a non-negative integer`                           |
+| `elementary/Cos#9`          | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Exp#6`          | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Sin#10`         | `panic: threading: a list where the crate takes a scalar` |
+| `elementary/Tan#8`          | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/GCD#8`       | `panic: threading: a list where the crate takes a scalar` |
+| `number-theory/IsPrime#8`   | `panic: threading: a list where the crate takes a scalar` |
+| `numerals/AdicNumeral#1`    | `panic: the adic crate takes a prime base, not 10`        |
+| `numerals/AdicNumeral#2`    | `panic: the adic crate takes a prime base, not 10`        |
+| `numerals/AdicNumeral#5`    | `panic: the adic crate takes a prime base, not 10`        |
+| `residues/Mod#4`            | `panic: threading: a list where the crate takes a scalar` |
+| `residues/Mod#5`            | `panic: attempt to divide by zero`                        |
+| `residues/PowerMod#10`      | `panic: an integer, not 1/2`                              |
+| `residues/PowerMod#11`      | `panic: an integer, not 2/3`                              |
+| `residues/PowerMod#18`      | `panic: an integer, not 1/2`                              |
+| `residues/PowerMod#3`       | `panic: negative exponentiation is not supported!`        |
+| `residues/PowerMod#6`       | `panic: negative exponentiation is not supported!`        |
+| `residues/PowerMod#7`       | `panic: an integer, not 1/2`                              |
+| `residues/PowerMod#8`       | `panic: threading: a list where the crate takes a scalar` |
+| `special-functions/Gamma#3` | `panic: threading: a list where the crate takes a scalar` |
+
+</details>
