@@ -707,6 +707,9 @@ importers:
       '@enumeratio/analytic':
         specifier: workspace:*
         version: link:../analytic
+      '@enumeratio/boxed':
+        specifier: workspace:*
+        version: link:../boxed
       '@enumeratio/formats':
         specifier: workspace:*
         version: link:../formats

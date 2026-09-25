@@ -20,6 +20,7 @@ export {
   serializeNotatio,
 } from "./notatio.ts";
 export type { Format, FormatOptions, ImageValue } from "./registry.ts";
+export { portableTeX } from "./tex.ts";
 export {
   allFormats,
   exportFormats,

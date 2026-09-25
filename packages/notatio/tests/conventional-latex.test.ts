@@ -35,6 +35,7 @@ const FIXED: { json: unknown[]; parses: string[] }[] = [
   { json: ["MatrixRank", "A"], parses: ["\\operatorname{rank}(A)"] },
   { json: ["Erf", "x"], parses: ["\\operatorname{erf}(x)"] },
   { json: ["Zeta", 3], parses: ["\\zeta(3)", "\\Zeta(3)"] },
+  { json: ["Beta", 2, 3], parses: ["\\mathrm{B}(2,3)", "\\Beta(2,3)"] },
 ];
 
 for (const { json, parses } of FIXED) {
@@ -67,6 +68,40 @@ test("Gcd (native GCD) was already conventional -- untouched", () => {
   record("GCD serialize", ce.box(["GCD", 4, 6]).latex);
   expect(ce.box(["GCD", 4, 6]).latex).toEqual(bare.box(["GCD", 4, 6]).latex);
   expect(ce.parse("\\gcd(4,6)").json).toEqual(["GCD", 4, 6]);
+});
+
+// Written as typed (not canonicalised), so the shape under test survives boxing.
+const WRITTEN: unknown[][] = [
+  ["Power", ["Complex", 1, 1], 2],
+  ["Square", ["Complex", 1, 1]],
+  ["Power", ["Complex", 0, 1], 2],
+  ["Power", ["Rational", 2, 3], 2],
+  ["Power", ["Factorial", "n"], 2],
+  ["Power", ["Power", "x", 2], 3],
+  ["Power", ["Add", "x", 1], 2],
+  ["Power", ["Rational", 2, 3], ["Rational", 1, 2]],
+  ["Rational", -1, 2],
+  ["Divide", ["Negate", ["Power", "Pi", 2]], 12],
+  ["Divide", "x", -4],
+  ["Negate", ["Rational", 3, 4]],
+  ["Multiply", ["Rational", -1, 2], "x"],
+  ["Add", 1, ["Rational", -1, 2]],
+  ["Log", "x"],
+  ["Log", "x", 2],
+  ["Log10", "x"],
+  ["Log2", "x"],
+  ["Lb", "x"],
+];
+
+for (const json of WRITTEN) {
+  test(`writes conventionally: ${JSON.stringify(json)}`, () => {
+    record(`written ${JSON.stringify(json)}`, ce.box(json as never, { form: "raw" }).latex);
+  });
+}
+
+test("\\mathrm{B} alone is still an upright B, and B(2, 3) is still a call to B", () => {
+  expect(ce.parse("\\mathrm{B}").json).toEqual("B_upright");
+  expect(ce.parse("B(2,3)").json).toEqual(["B", 2, 3]);
 });
 
 // Checked (a probe script, not a guess) and left alone: already conventional, and the

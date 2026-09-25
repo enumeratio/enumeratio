@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@enumeratio/analytic": "workspace:*",
+    "@enumeratio/boxed": "workspace:*",
     "@enumeratio/formats": "workspace:*",
     "@enumeratio/polytope": "workspace:*"
   },
