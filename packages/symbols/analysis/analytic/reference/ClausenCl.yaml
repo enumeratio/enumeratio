@@ -5,7 +5,7 @@ summary: 'The Clausen functions $\mathrm{Cl}_n(\theta)$: $\sum_{k\ge1} \sin(k\th
 signatures:
   - call: ClausenCl(n, θ)
     description: the Clausen function $\mathrm{Cl}_n(\theta)$ of integer order $n \ge 1$ and real $\theta$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - $\mathrm{Cl}_2(\theta) = -\int_0^\theta \ln\left|2\sin\tfrac{t}{2}\right|\,dt$ is the classical Clausen function; $\mathrm{Cl}_1(\theta) = -\ln|2\sin(\theta/2)|$, infinite at $\theta \equiv 0$.
   - "Parity alternates with the order (DLMF §25.12(ii), mpmath's `clsin` / `clcos`): even $n$ gives the odd, $2\\pi$-periodic sine series, odd $n$ the even cosine series, so that $\\mathrm{Cl}_n(\\theta) = \\operatorname{Im}\\operatorname{Li}_n(e^{i\\theta})$ or $\\operatorname{Re}\\operatorname{Li}_n(e^{i\\theta})$ respectively. See [[PolyLog]]."
@@ -49,8 +49,15 @@ implementations:
   - origin: reference
     form: notatio
     environment: engine
-    expr: [Which, [IsEven, _n], [Im, [PolyLog, _n, [Exp, [Multiply, ImaginaryUnit, _theta]]]], True, [Re, [PolyLog, _n, [Exp, [Multiply, ImaginaryUnit, _theta]]]]]
-    note: 'Cl_n cuts Li_n(e^{iθ}) in two by parity: the even orders are the sine series (its imaginary part), the odd orders the cosine series (its real part).'
+    expr:
+      [
+        Which,
+        [IsEven, _n],
+        [Im, [PolyLog, _n, [Exp, [Multiply, ImaginaryUnit, _theta]]]],
+        True,
+        [Re, [PolyLog, _n, [Exp, [Multiply, ImaginaryUnit, _theta]]]],
+      ]
+    note: "Cl_n cuts Li_n(e^{iθ}) in two by parity: the even orders are the sine series (its imaginary part), the odd orders the cosine series (its real part)."
   - origin: native
     form: typescript
     environment: engine

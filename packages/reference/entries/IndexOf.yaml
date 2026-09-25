@@ -7,7 +7,7 @@ signatures:
     description: the position of the first occurrence of `value`.
 details:
   - Returns 0 when the value isn't present, since 0 is never a valid position.
-  - 'Round-trips with [[At]]: $At(c, IndexOf(c, v)) = v$ whenever v occurs in c.'
+  - "Round-trips with [[At]]: $At(c, IndexOf(c, v)) = v$ whenever v occurs in c."
   - Reports only the first occurrence, as a plain index. See [[Position]] for every occurrence.
 examples:
   - id: indexof-list-1-2-3-2

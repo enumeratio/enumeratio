@@ -19,5 +19,36 @@
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "yaml.format.enable": false,
+  "yaml.schemas": {
+    "./packages/entry/schema/reference-entry.schema.json": [
+      "packages/reference/entries/*.yaml",
+      "packages/**/reference/*.yaml",
+      "!packages/**/reference/*.implementations.yaml",
+      "!packages/**/tests/fixtures/**"
+    ],
+    "./packages/entry/schema/head-implementations.schema.json": [
+      "packages/**/reference/*.implementations.yaml",
+      "!packages/**/tests/fixtures/**"
+    ]
   }
 }

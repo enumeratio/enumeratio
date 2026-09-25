@@ -4,10 +4,10 @@ signature: PowerExpand(expr)
 summary: Expand powers and logarithms of products in `expr` as though every variable were positive. Provided by `@enumeratio/analytic`.
 signatures:
   - call: PowerExpand(expr)
-    description: '`expr` with Ln and Power distributed over products, assuming positivity.'
-    library: '@enumeratio/analytic'
+    description: "`expr` with Ln and Power distributed over products, assuming positivity."
+    library: "@enumeratio/analytic"
 details:
-  - 'A bottom-up rewrite: Ln(xy) → Ln(x) + Ln(y), Ln(x^n) → n·Ln(x), (ab)^c → a^c·b^c, and the same two rules specialized for Sqrt.'
+  - "A bottom-up rewrite: Ln(xy) → Ln(x) + Ln(y), Ln(x^n) → n·Ln(x), (ab)^c → a^c·b^c, and the same two rules specialized for Sqrt."
   - Does not check or track positivity -- it assumes it unconditionally, same as Wolfram's default (`PowerExpand` ignores `Assumptions` unless told otherwise, which this does not model either).
 examples:
   - id: sqrt-x-2-x-for-positive-x

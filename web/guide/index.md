@@ -69,4 +69,4 @@ their own [reference](/reference/components/), and the
 The analytic special functions — Hurwitz zeta, the Lerch transcendent, the polylog and
 polygamma of `@enumeratio/analytic` — are turned over with sliders rather than explained
 at length, in the [explorations](/explore/). Running any of this outside a browser is the
-[command line](/cli/)'s job.
+[command line](/docs/cli/)'s job.

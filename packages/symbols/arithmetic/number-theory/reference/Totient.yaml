@@ -51,7 +51,7 @@ examples:
     expected: 4
   - id: large-integers-varphi-50
     expr: [Totient, [Factorial, 50]]
-    expected: {num: '42185592008858390426793121078167038417888549535744e+14'}
+    expected: { num: "42185592008858390426793121078167038417888549535744e+14" }
     category: Scope
     caption: 'Large integers: $\varphi(50!)$'
   - id: negative-n-varphi-n-varphi-n

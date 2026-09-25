@@ -73,14 +73,14 @@ examples:
   - id: negative-a-floor-for-a-0-then-positive-terms-3-1
     expr: [ContinuedFraction, [Rational, -47, 17]]
     expected: [List, -3, 4, 4]
-    caption: 'negative: a floor for $a_0$, then positive terms — $-3 + 1/(4 + 1/4)$'
+    caption: "negative: a floor for $a_0$, then positive terms — $-3 + 1/(4 + 1/4)$"
     category: Possible issues
     divergence:
       wolfram: Wolfram negates every term instead, giving {-2, -1, -3, -4}.
   - id: fromcontinuedfraction-inverts-it
     expr: [FromContinuedFraction, [ContinuedFraction, [Rational, 47, 17]]]
     expected: [Rational, 47, 17]
-    caption: '`FromContinuedFraction` inverts it'
+    caption: "`FromContinuedFraction` inverts it"
     category: Properties
   - id: 20-terms-of-pi-past-the-13-term-double-precision
     expr: [ContinuedFraction, Pi, 20]

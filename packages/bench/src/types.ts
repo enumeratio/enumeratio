@@ -81,6 +81,7 @@ export interface Plan {
     readonly precision: Precision;
     /** Soft cap for the whole measurement, in seconds. */
     readonly budget: number;
+    readonly tags?: readonly string[];
     /** The pinned answer as text, for the correctness gate; absent for sampled cases. */
     readonly expected?: string;
     readonly systems: Readonly<Partial<Record<BenchSystem, PlanCell>>>;

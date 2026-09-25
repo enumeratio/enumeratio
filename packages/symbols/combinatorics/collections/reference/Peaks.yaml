@@ -1,7 +1,7 @@
 name: Peaks
 domain: Permutation statistics
 signature: Peaks(p)
-summary: 'The number of peaks of $p$: interior positions $i$ with $p_{i-1} < p_i > p_{i+1}$.'
+summary: "The number of peaks of $p$: interior positions $i$ with $p_{i-1} < p_i > p_{i+1}$."
 signatures:
   - call: Peaks(p)
     description: the peak count of a one-line permutation $p$

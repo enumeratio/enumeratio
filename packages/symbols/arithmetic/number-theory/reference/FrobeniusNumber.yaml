@@ -21,7 +21,7 @@ examples:
     expr: [FrobeniusNumber, [List, 4, 7]]
     expected: 17
     category: Properties
-    caption: 'Two generators: $ab-a-b$'
+    caption: "Two generators: $ab-a-b$"
   - id: frobeniusnumber-list-12-16-20-27
     expr: [FrobeniusNumber, [List, 12, 16, 20, 27]]
     expected: 89
@@ -30,7 +30,7 @@ examples:
     expr: [FrobeniusNumber, [List, 2, 4]]
     expected: PositiveInfinity
     category: Possible issues
-    caption: 'Not coprime: infinitely many numbers are unreachable'
+    caption: "Not coprime: infinitely many numbers are unreachable"
 seeAlso:
   - FrobeniusSolve
   - GCD

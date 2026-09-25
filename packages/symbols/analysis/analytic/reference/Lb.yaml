@@ -30,7 +30,7 @@ examples:
     caption: 'Same exact negative power fold as [[Log2]]: $\operatorname{lb}\tfrac18 = -3$'
   - id: a-machine-precision-argument-evaluates
     expr: [Lb, 1.4142]
-    expected: {num: '0.499986164421874256467'}
+    expected: { num: "0.499986164421874256467" }
     caption: A machine-precision argument evaluates numerically
   - id: lb-2-pow-10
     expr: [Lb, [Power, 2, 10]]

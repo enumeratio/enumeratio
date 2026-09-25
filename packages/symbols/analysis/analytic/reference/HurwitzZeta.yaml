@@ -5,7 +5,7 @@ summary: The Hurwitz zeta function $\zeta(s, a) = \sum_{n=0}^{\infty} (n+a)^{-s}
 signatures:
   - call: HurwitzZeta(s, a)
     description: the Hurwitz zeta function $\zeta(s, a)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'Generalizes the Riemann zeta: $\zeta(s, 1) = \zeta(s)$, and $\zeta(s, m) = \zeta(s) - \sum_{k=1}^{m-1} k^{-s}$ for a positive integer $m$ (so $\zeta(2, 2) = \pi^2/6 - 1$).'
   - 'Nonpositive integer $s$: $\zeta(-n, a) = -B_{n+1}(a)/(n+1)$, a Bernoulli polynomial in $a$ -- so $\zeta(0, a) = \tfrac12 - a$ and $\zeta(-1, a) = -\tfrac{1}{12}(6a^2 - 6a + 1)$. See [[BernoulliB]].'
@@ -50,7 +50,7 @@ examples:
     caption: 'An inexact $a$ evaluates numerically without N(): $\zeta(3, 0.2) = 125.739\ldots$'
   - id: inside-the-critical-strip-under-n
     expr: [N, [HurwitzZeta, 0.51, 0.87]]
-    expected: {num: '-1.32015502369495837551'}
+    expected: { num: "-1.32015502369495837551" }
     caption: Inside the critical strip, under N()
   - id: a-positive-integer-a-peels-off-the-first-terms
     expr: [HurwitzZeta, 7, 5]
@@ -66,7 +66,7 @@ examples:
     expr: [HurwitzZeta, [List, 2, 3, 4], 0.5]
     expected: [List, 4.934802200544679, 8.41439832211716, 16.234848505667074]
     category: Scope
-    caption: 'Listable: threads over a list of orders'
+    caption: "Listable: threads over a list of orders"
   - id: uncertainty-in-a
     expr: [HurwitzZeta, 2, [Around, 0.5, 0.01]]
     expected: [Around, 4.934802200544679, 0.1682879664423432]
@@ -99,7 +99,17 @@ examples:
     caption: $\zeta(0, a) = \tfrac12 - a$ holds at $a = 0$ too
   - id: zeta-2-a-b-3-a-3
     expr: [HurwitzZeta, -2, a]
-    expected: [Multiply, [Rational, -1, 3], [Add, [Power, a, 3], [Multiply, [Rational, -3, 2], [Power, a, 2]], [Multiply, [Rational, 1, 2], a]]]
+    expected:
+      [
+        Multiply,
+        [Rational, -1, 3],
+        [
+          Add,
+          [Power, a, 3],
+          [Multiply, [Rational, -3, 2], [Power, a, 2]],
+          [Multiply, [Rational, 1, 2], a],
+        ],
+      ]
     category: Properties
     caption: $\zeta(-2, a) = -B_3(a)/3$
   - id: partial-a-zeta-s-a-s-zeta-s-1-a
@@ -109,29 +119,29 @@ examples:
     caption: $\partial_a\zeta(s, a) = -s\,\zeta(s+1, a)$
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [HurwitzZeta, 3, [Rational, 1, 3]], 30]
-    expected: {num: '27.5610611997008037762278779774'}
+    expected: { num: "27.5610611997008037762278779774" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
   - id: far-left-of-the-strip-all-40-digits-agree-with
     expr: [N, [HurwitzZeta, [Rational, -41, 2], [Rational, 3, 10]], 40]
-    expected: {num: '136.3619357918311441717750999363988614286'}
+    expected: { num: "136.3619357918311441717750999363988614286" }
     category: Scope
     caption: Far left of the strip, all 40 digits agree with mpmath
   - id: left-of-the-strip-at-a-non-integer-a
     expr: [N, [HurwitzZeta, -20, 0.7]]
-    expected: {num: '-80.0909738762535913363158842634494985634654608317388'}
+    expected: { num: "-80.0909738762535913363158842634494985634654608317388" }
     category: Scope
     caption: Left of the strip at a non-integer $a$
     group: left-of-strip
   - id: left-of-the-strip-at-a-non-integer-a-and-s
     expr: [N, [HurwitzZeta, -40.5, 0.4]]
-    expected: {num: '7724997484091588.75678'}
+    expected: { num: "7724997484091588.75678" }
     category: Scope
     caption: Left of the strip at a non-integer $a$ and $s$
     group: left-of-strip
   - id: a-negative-a-frac-12-5-is-real-and-so-is-the
     expr: [N, [HurwitzZeta, 5, [Rational, -1, 2]]]
-    expected: {num: '0.144760409444467716272'}
+    expected: { num: "0.144760409444467716272" }
     category: Scope
     caption: 'A negative $a$: $(-\tfrac12)^{-5}$ is real, and so is the answer'
   - id: zeta-4-2-pi-4-90-1
@@ -142,31 +152,31 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-2-1
     expr: [N, [HurwitzZeta, 2, 1]]
-    expected: {num: '1.64493406684822643647'}
+    expected: { num: "1.64493406684822643647" }
   - hidden: true
     id: n-hurwitzzeta-2-2
     expr: [N, [HurwitzZeta, 2, 2]]
-    expected: {num: '0.64493406684822643647'}
+    expected: { num: "0.64493406684822643647" }
   - hidden: true
     id: n-hurwitzzeta-2-3
     expr: [N, [HurwitzZeta, 2, 3]]
-    expected: {num: '0.39493406684822643647'}
+    expected: { num: "0.39493406684822643647" }
   - hidden: true
     id: n-hurwitzzeta-2-0p5
     expr: [N, [HurwitzZeta, 2, 0.5]]
-    expected: {num: '4.93480220054467930942'}
+    expected: { num: "4.93480220054467930942" }
   - hidden: true
     id: n-hurwitzzeta-2-0p25
     expr: [N, [HurwitzZeta, 2, 0.25]]
-    expected: {num: '17.1973291545071107393'}
+    expected: { num: "17.1973291545071107393" }
   - hidden: true
     id: n-hurwitzzeta-2-1p3
     expr: [N, [HurwitzZeta, 2, 1.3]]
-    expected: {num: '1.13425343499661935436'}
+    expected: { num: "1.13425343499661935436" }
   - hidden: true
     id: n-hurwitzzeta-2-7-over-3
     expr: [N, [HurwitzZeta, 2, [Rational, 7, 3]]]
-    expected: {num: '0.533097125427094081793'}
+    expected: { num: "0.533097125427094081793" }
   - hidden: true
     id: n-hurwitzzeta-2-1-plus-i
     expr: [N, [HurwitzZeta, 2, [Complex, 1, 1]]]
@@ -186,31 +196,31 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-3-1
     expr: [N, [HurwitzZeta, 3, 1]]
-    expected: {num: '1.2020569031595942854'}
+    expected: { num: "1.2020569031595942854" }
   - hidden: true
     id: n-hurwitzzeta-3-2
     expr: [N, [HurwitzZeta, 3, 2]]
-    expected: {num: '0.2020569031595942854'}
+    expected: { num: "0.2020569031595942854" }
   - hidden: true
     id: n-hurwitzzeta-3-3
     expr: [N, [HurwitzZeta, 3, 3]]
-    expected: {num: '0.0770569031595942854'}
+    expected: { num: "0.0770569031595942854" }
   - hidden: true
     id: n-hurwitzzeta-3-0p5
     expr: [N, [HurwitzZeta, 3, 0.5]]
-    expected: {num: '8.4143983221171599978'}
+    expected: { num: "8.4143983221171599978" }
   - hidden: true
     id: n-hurwitzzeta-3-0p25
     expr: [N, [HurwitzZeta, 3, 0.25]]
-    expected: {num: '64.6638699687684601665'}
+    expected: { num: "64.6638699687684601665" }
   - hidden: true
     id: n-hurwitzzeta-3-1p3
     expr: [N, [HurwitzZeta, 3, 1.3]]
-    expected: {num: '0.59923125732597829635'}
+    expected: { num: "0.59923125732597829635" }
   - hidden: true
     id: n-hurwitzzeta-3-7-over-3
     expr: [N, [HurwitzZeta, 3, [Rational, 7, 3]]]
-    expected: {num: '0.139186199700803776228'}
+    expected: { num: "0.139186199700803776228" }
   - hidden: true
     id: n-hurwitzzeta-3-1-plus-i
     expr: [N, [HurwitzZeta, 3, [Complex, 1, 1]]]
@@ -230,31 +240,31 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-5-1
     expr: [N, [HurwitzZeta, 5, 1]]
-    expected: {num: '1.03692775514336992633'}
+    expected: { num: "1.03692775514336992633" }
   - hidden: true
     id: n-hurwitzzeta-5-2
     expr: [N, [HurwitzZeta, 5, 2]]
-    expected: {num: '0.03692775514336992633'}
+    expected: { num: "0.03692775514336992633" }
   - hidden: true
     id: n-hurwitzzeta-5-3
     expr: [N, [HurwitzZeta, 5, 3]]
-    expected: {num: '0.00567775514336992633'}
+    expected: { num: "0.00567775514336992633" }
   - hidden: true
     id: n-hurwitzzeta-5-0p5
     expr: [N, [HurwitzZeta, 5, 0.5]]
-    expected: {num: '32.1447604094444677163'}
+    expected: { num: "32.1447604094444677163" }
   - hidden: true
     id: n-hurwitzzeta-5-0p25
     expr: [N, [HurwitzZeta, 5, 0.25]]
-    expected: {num: '1024.34897452658057223'}
+    expected: { num: "1024.34897452658057223" }
   - hidden: true
     id: n-hurwitzzeta-5-1p3
     expr: [N, [HurwitzZeta, 5, 1.3]]
-    expected: {num: '0.28855606751852655952'}
+    expected: { num: "0.28855606751852655952" }
   - hidden: true
     id: n-hurwitzzeta-5-7-over-3
     expr: [N, [HurwitzZeta, 5, [Rational, 7, 3]]]
-    expected: {num: '0.0179852769188750622369'}
+    expected: { num: "0.0179852769188750622369" }
   - hidden: true
     id: n-hurwitzzeta-5-1-plus-i
     expr: [N, [HurwitzZeta, 5, [Complex, 1, 1]]]
@@ -266,55 +276,55 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-5-neg-0p5
     expr: [N, [HurwitzZeta, 5, -0.5]]
-    expected: {num: '0.144760409444467716272'}
+    expected: { num: "0.144760409444467716272" }
   - hidden: true
     id: n-hurwitzzeta-5-neg-1p5
     expr: [N, [HurwitzZeta, 5, -1.5]]
-    expected: {num: '0.0130731666461138068073'}
+    expected: { num: "0.0130731666461138068073" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-1
     expr: [N, [HurwitzZeta, -1, 1]]
-    expected: {num: '-0.0833333333333333333333'}
+    expected: { num: "-0.0833333333333333333333" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-2
     expr: [N, [HurwitzZeta, -1, 2]]
-    expected: {num: '-1.08333333333333333333'}
+    expected: { num: "-1.08333333333333333333" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-3
     expr: [N, [HurwitzZeta, -1, 3]]
-    expected: {num: '-3.08333333333333333333'}
+    expected: { num: "-3.08333333333333333333" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-0p5
     expr: [N, [HurwitzZeta, -1, 0.5]]
-    expected: {num: '0.0416666666666666666665'}
+    expected: { num: "0.0416666666666666666665" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-0p25
     expr: [N, [HurwitzZeta, -1, 0.25]]
-    expected: {num: '0.0104166666666666666665'}
+    expected: { num: "0.0104166666666666666665" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-1p3
     expr: [N, [HurwitzZeta, -1, 1.3]]
-    expected: {num: '-0.2783333333333333333335'}
+    expected: { num: "-0.2783333333333333333335" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-7-over-3
     expr: [N, [HurwitzZeta, -1, [Rational, 7, 3]]]
-    expected: {num: '-1.6388888888888888888835'}
+    expected: { num: "-1.6388888888888888888835" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-1-plus-i
     expr: [N, [HurwitzZeta, -1, [Complex, 1, 1]]]
-    expected: [Complex, {num: '0.4166666666666666666665'}, -0.5]
+    expected: [Complex, { num: "0.4166666666666666666665" }, -0.5]
   - hidden: true
     id: n-hurwitzzeta-neg-1-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -1, [Complex, 2, -0.5]]]
-    expected: [Complex, {num: '-0.95833333333333335'}, 0.75]
+    expected: [Complex, { num: "-0.95833333333333335" }, 0.75]
   - hidden: true
     id: n-hurwitzzeta-neg-1-neg-0p5
     expr: [N, [HurwitzZeta, -1, -0.5]]
-    expected: {num: '-0.4583333333333333333335'}
+    expected: { num: "-0.4583333333333333333335" }
   - hidden: true
     id: n-hurwitzzeta-neg-1-neg-1p5
     expr: [N, [HurwitzZeta, -1, -1.5]]
-    expected: {num: '-1.9583333333333333333335'}
+    expected: { num: "-1.9583333333333333333335" }
   - hidden: true
     id: n-hurwitzzeta-neg-2-1
     expr: [N, [HurwitzZeta, -2, 1]]
@@ -334,103 +344,103 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-neg-2-0p25
     expr: [N, [HurwitzZeta, -2, 0.25]]
-    expected: {num: '-0.015624999999999999999984375'}
+    expected: { num: "-0.015624999999999999999984375" }
   - hidden: true
     id: n-hurwitzzeta-neg-2-1p3
     expr: [N, [HurwitzZeta, -2, 1.3]]
-    expected: {num: '-0.103999999999999999999896'}
+    expected: { num: "-0.103999999999999999999896" }
   - hidden: true
     id: n-hurwitzzeta-neg-2-7-over-3
     expr: [N, [HurwitzZeta, -2, [Rational, 7, 3]]]
-    expected: {num: '-1.90123456790123456787143209876543209876546'}
+    expected: { num: "-1.90123456790123456787143209876543209876546" }
   - hidden: true
     id: n-hurwitzzeta-neg-2-1-plus-i
     expr: [N, [HurwitzZeta, -2, [Complex, 1, 1]]]
-    expected: [Complex, {num: '0.4999999999999999999995'}, 0.16666666666666666]
+    expected: [Complex, { num: "0.4999999999999999999995" }, 0.16666666666666666]
   - hidden: true
     id: n-hurwitzzeta-neg-2-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -2, [Complex, 2, -0.5]]]
-    expected: [Complex, {num: '-0.624999999999999999999375'}, 1.0416666666666663]
+    expected: [Complex, { num: "-0.624999999999999999999375" }, 1.0416666666666663]
   - hidden: true
     id: n-hurwitzzeta-neg-2-neg-0p5
     expr: [N, [HurwitzZeta, -2, -0.5]]
-    expected: {num: '0.24999999999999999999975'}
+    expected: { num: "0.24999999999999999999975" }
   - hidden: true
     id: n-hurwitzzeta-neg-2-neg-1p5
     expr: [N, [HurwitzZeta, -2, -1.5]]
-    expected: {num: '2.4999999999999999999975'}
+    expected: { num: "2.4999999999999999999975" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-1
     expr: [N, [HurwitzZeta, -3, 1]]
-    expected: {num: '0.00833333333333333333333'}
+    expected: { num: "0.00833333333333333333333" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-2
     expr: [N, [HurwitzZeta, -3, 2]]
-    expected: {num: '-0.991666666666666666667'}
+    expected: { num: "-0.991666666666666666667" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-3
     expr: [N, [HurwitzZeta, -3, 3]]
-    expected: {num: '-8.99166666666666666667'}
+    expected: { num: "-8.99166666666666666667" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-0p5
     expr: [N, [HurwitzZeta, -3, 0.5]]
-    expected: {num: '-0.007291666666666666666675'}
+    expected: { num: "-0.007291666666666666666675" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-0p25
     expr: [N, [HurwitzZeta, -3, 0.25]]
-    expected: {num: '-0.000455729166666666666675'}
+    expected: { num: "-0.000455729166666666666675" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-1p3
     expr: [N, [HurwitzZeta, -3, 1.3]]
-    expected: {num: '-0.029691666666666666666675'}
+    expected: { num: "-0.029691666666666666666675" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-7-over-3
     expr: [N, [HurwitzZeta, -3, [Rational, 7, 3]]]
-    expected: {num: '-2.411419753086419753099175'}
+    expected: { num: "-2.411419753086419753099175" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-1-plus-i
     expr: [N, [HurwitzZeta, -3, [Complex, 1, 1]]]
-    expected: [Complex, {num: '0.008333333333333333333325'}, 0.5]
+    expected: [Complex, { num: "0.008333333333333333333325" }, 0.5]
   - hidden: true
     id: n-hurwitzzeta-neg-3-2-plus-neg-0p5-times-i
     expr: [N, [HurwitzZeta, -3, [Complex, 2, -0.5]]]
-    expected: [Complex, {num: '-0.194791666666666175'}, 1.3124999999999996]
+    expected: [Complex, { num: "-0.194791666666666175" }, 1.3124999999999996]
   - hidden: true
     id: n-hurwitzzeta-neg-3-neg-0p5
     expr: [N, [HurwitzZeta, -3, -0.5]]
-    expected: {num: '-0.132291666666666666666675'}
+    expected: { num: "-0.132291666666666666666675" }
   - hidden: true
     id: n-hurwitzzeta-neg-3-neg-1p5
     expr: [N, [HurwitzZeta, -3, -1.5]]
-    expected: {num: '-3.507291666666666666666675'}
+    expected: { num: "-3.507291666666666666666675" }
   - hidden: true
     id: n-hurwitzzeta-0p5-1
     expr: [N, [HurwitzZeta, 0.5, 1]]
-    expected: {num: '-1.46035450880958681289'}
+    expected: { num: "-1.46035450880958681289" }
   - hidden: true
     id: n-hurwitzzeta-0p5-2
     expr: [N, [HurwitzZeta, 0.5, 2]]
-    expected: {num: '-2.46035450880958681289'}
+    expected: { num: "-2.46035450880958681289" }
   - hidden: true
     id: n-hurwitzzeta-0p5-3
     expr: [N, [HurwitzZeta, 0.5, 3]]
-    expected: {num: '-3.167461289996134337291'}
+    expected: { num: "-3.167461289996134337291" }
   - hidden: true
     id: n-hurwitzzeta-0p5-0p5
     expr: [N, [HurwitzZeta, 0.5, 0.5]]
-    expected: {num: '-0.60489864342163037025'}
+    expected: { num: "-0.60489864342163037025" }
   - hidden: true
     id: n-hurwitzzeta-0p5-0p25
     expr: [N, [HurwitzZeta, 0.5, 0.25]]
-    expected: {num: '0.239963524495630955345'}
+    expected: { num: "0.239963524495630955345" }
   - hidden: true
     id: n-hurwitzzeta-0p5-1p3
     expr: [N, [HurwitzZeta, 0.5, 1.3]]
-    expected: {num: '-1.81458907804058390117'}
+    expected: { num: "-1.81458907804058390117" }
   - hidden: true
     id: n-hurwitzzeta-0p5-7-over-3
     expr: [N, [HurwitzZeta, 0.5, [Rational, 7, 3]]]
-    expected: {num: '-2.71615953928753765938'}
+    expected: { num: "-2.71615953928753765938" }
   - hidden: true
     id: n-hurwitzzeta-0p5-1-plus-i
     expr: [N, [HurwitzZeta, 0.5, [Complex, 1, 1]]]
@@ -450,31 +460,31 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-1p5-1
     expr: [N, [HurwitzZeta, 1.5, 1]]
-    expected: {num: '2.61237534868548834335'}
+    expected: { num: "2.61237534868548834335" }
   - hidden: true
     id: n-hurwitzzeta-1p5-2
     expr: [N, [HurwitzZeta, 1.5, 2]]
-    expected: {num: '1.61237534868548834335'}
+    expected: { num: "1.61237534868548834335" }
   - hidden: true
     id: n-hurwitzzeta-1p5-3
     expr: [N, [HurwitzZeta, 1.5, 3]]
-    expected: {num: '1.25882195809221458115'}
+    expected: { num: "1.25882195809221458115" }
   - hidden: true
     id: n-hurwitzzeta-1p5-0p5
     expr: [N, [HurwitzZeta, 1.5, 0.5]]
-    expected: {num: '4.77653794755483324857'}
+    expected: { num: "4.77653794755483324857" }
   - hidden: true
     id: n-hurwitzzeta-1p5-0p25
     expr: [N, [HurwitzZeta, 1.5, 0.25]]
-    expected: {num: '10.2130553604666007389'}
+    expected: { num: "10.2130553604666007389" }
   - hidden: true
     id: n-hurwitzzeta-1p5-1p3
     expr: [N, [HurwitzZeta, 1.5, 1.3]]
-    expected: {num: '2.15195547695787736469'}
+    expected: { num: "2.15195547695787736469" }
   - hidden: true
     id: n-hurwitzzeta-1p5-7-over-3
     expr: [N, [HurwitzZeta, 1.5, [Rational, 7, 3]]]
-    expected: {num: '1.46425424919948810837'}
+    expected: { num: "1.46425424919948810837" }
   - hidden: true
     id: n-hurwitzzeta-1p5-1-plus-i
     expr: [N, [HurwitzZeta, 1.5, [Complex, 1, 1]]]
@@ -494,31 +504,31 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-2p5-1
     expr: [N, [HurwitzZeta, 2.5, 1]]
-    expected: {num: '1.34148725725091717976'}
+    expected: { num: "1.34148725725091717976" }
   - hidden: true
     id: n-hurwitzzeta-2p5-2
     expr: [N, [HurwitzZeta, 2.5, 2]]
-    expected: {num: '0.34148725725091717976'}
+    expected: { num: "0.34148725725091717976" }
   - hidden: true
     id: n-hurwitzzeta-2p5-3
     expr: [N, [HurwitzZeta, 2.5, 3]]
-    expected: {num: '0.16471056195428029866'}
+    expected: { num: "0.16471056195428029866" }
   - hidden: true
     id: n-hurwitzzeta-2p5-0p5
     expr: [N, [HurwitzZeta, 2.5, 0.5]]
-    expected: {num: '6.24711063456881148529'}
+    expected: { num: "6.24711063456881148529" }
   - hidden: true
     id: n-hurwitzzeta-2p5-0p25
     expr: [N, [HurwitzZeta, 2.5, 0.25]]
-    expected: {num: '32.8474519546976858627'}
+    expected: { num: "32.8474519546976858627" }
   - hidden: true
     id: n-hurwitzzeta-2p5-1p3
     expr: [N, [HurwitzZeta, 2.5, 1.3]]
-    expected: {num: '0.783218553908237343364'}
+    expected: { num: "0.783218553908237343364" }
   - hidden: true
     id: n-hurwitzzeta-2p5-7-over-3
     expr: [N, [HurwitzZeta, 2.5, [Rational, 7, 3]]]
-    expected: {num: '0.257447605150205592649'}
+    expected: { num: "0.257447605150205592649" }
   - hidden: true
     id: n-hurwitzzeta-2p5-1-plus-i
     expr: [N, [HurwitzZeta, 2.5, [Complex, 1, 1]]]
@@ -538,31 +548,31 @@ examples:
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-1
     expr: [N, [HurwitzZeta, -0.5, 1]]
-    expected: {num: '-0.207886224977354566017'}
+    expected: { num: "-0.207886224977354566017" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-2
     expr: [N, [HurwitzZeta, -0.5, 2]]
-    expected: {num: '-1.207886224977354566017'}
+    expected: { num: "-1.207886224977354566017" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-3
     expr: [N, [HurwitzZeta, -0.5, 3]]
-    expected: {num: '-2.622099787350449614818689'}
+    expected: { num: "-2.622099787350449614818689" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-0p5
     expr: [N, [HurwitzZeta, -0.5, 0.5]]
-    expected: {num: '0.0608884655805949199988'}
+    expected: { num: "0.0608884655805949199988" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-0p25
     expr: [N, [HurwitzZeta, -0.5, 0.25]]
-    expected: {num: '0.0903222587612462439787'}
+    expected: { num: "0.0903222587612462439787" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-1p3
     expr: [N, [HurwitzZeta, -0.5, 1.3]]
-    expected: {num: '-0.454363742420250792944'}
+    expected: { num: "-0.454363742420250792944" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-7-over-3
     expr: [N, [HurwitzZeta, -0.5, [Rational, 7, 3]]]
-    expected: {num: '-1.63960452469900834952'}
+    expected: { num: "-1.63960452469900834952" }
   - hidden: true
     id: n-hurwitzzeta-neg-0p5-1-plus-i
     expr: [N, [HurwitzZeta, -0.5, [Complex, 1, 1]]]

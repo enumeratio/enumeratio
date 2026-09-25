@@ -21,7 +21,7 @@ examples:
   - id: several-arguments-every-pair-must-be-coprime
     expr: [IsCoprime, 2, 3, 5]
     expected: True
-    caption: 'Several arguments: every pair must be coprime'
+    caption: "Several arguments: every pair must be coprime"
   - id: pairwise-not-collectively-gcd-6-10-15-1-yet-no
     expr: [IsCoprime, 6, 10, 15]
     expected: False
@@ -31,7 +31,7 @@ examples:
     expr: [IsCoprime, [Complex, 2, 1], [Complex, 2, -1]]
     expected: True
     category: Scope
-    caption: 'Gaussian integers: $2+i$ and $2-i$ are non-associate primes'
+    caption: "Gaussian integers: $2+i$ and $2-i$ are non-associate primes"
   - id: listable
     expr: [IsCoprime, 3, [List, 4, 6]]
     expected: [List, True, False]

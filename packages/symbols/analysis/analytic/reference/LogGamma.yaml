@@ -5,7 +5,7 @@ summary: The log-gamma function $\ln\Gamma(z)$ as an analytic continuation (bran
 signatures:
   - call: LogGamma(z)
     description: the log-gamma function $\ln\Gamma(z)$, analytically continued.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - "For real $z > 0$ it is simply $\\ln\\Gamma(z)$: $\\ln\\Gamma(n) = \\ln (n-1)!$, $\\ln\\Gamma(\\tfrac12) = \\tfrac12\\ln\\pi$ -- where it agrees with compute-engine's own [[GammaLn]]."
   - "Elsewhere it is the continuation across the upper and lower half-planes, continuous off $(-\\infty, 0]$ — the convention Wolfram's $\\mathrm{LogGamma}$ and mpmath's `loggamma` share. $\\ln(\\Gamma(z))$ with a principal logarithm jumps by $2\\pi i$ wherever $\\Gamma$ crosses the negative axis; this does not. [[GammaLn]] is that principal version, so the two genuinely differ: at $z = -5/2$, GammaLn is $-0.0562$ while LogGamma is $-0.0562 - 3\\pi i$."
@@ -32,7 +32,7 @@ examples:
     caption: A pole of $\Gamma$
   - id: ln-gamma-2-5-ln-1-3293-to-the-engine-s-working
     expr: [LogGamma, 2.5]
-    expected: {num: '0.284682870472919159632'}
+    expected: { num: "0.284682870472919159632" }
     caption: "$\\ln\\Gamma(2.5) = \\ln 1.3293\\ldots$ — to the engine's working precision, not a double: right of the imaginary axis this goes through compute-engine's own [[GammaLn]]"
   - id: off-the-positive-axis-this-is-the-continuation
     expr: [LogGamma, [Complex, -2.5, 1.5]]
@@ -47,7 +47,7 @@ examples:
       wolfram: Wolfram keeps a single logarithm, Log[24].
   - id: to-the-engine-s-working-precision
     expr: [LogGamma, 2.2]
-    expected: {num: '0.096947466790638776492'}
+    expected: { num: "0.096947466790638776492" }
     category: Scope
     caption: To the engine's working precision
   - id: complex-arguments
@@ -57,7 +57,12 @@ examples:
     caption: Complex arguments
   - id: threads-elementwise-over-an-array
     expr: [LogGamma, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
-    expected: [List, [List, [Multiply, [Rational, 1, 2], [Ln, Pi]], PositiveInfinity], [List, PositiveInfinity, [Multiply, [Rational, 1, 2], [Ln, Pi]]]]
+    expected:
+      [
+        List,
+        [List, [Multiply, [Rational, 1, 2], [Ln, Pi]], PositiveInfinity],
+        [List, PositiveInfinity, [Multiply, [Rational, 1, 2], [Ln, Pi]]],
+      ]
     category: Scope
     caption: Threads elementwise over an array
   - id: on-the-negative-axis-gamma-frac-32-frac-43-sqrt
@@ -72,7 +77,8 @@ examples:
     caption: 'Half-integers past $\tfrac12$: $\ln\Gamma(\tfrac32) = \ln\tfrac{\sqrt\pi}{2}$'
   - id: exact-negative-half-integers-ln-gamma-frac-32-ln
     expr: [LogGamma, [Rational, -3, 2]]
-    expected: [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
+    expected:
+      [Add, [Multiply, [Complex, 0, -2], Pi], [Ln, [Multiply, [Rational, 4, 3], [Sqrt, Pi]]]]
     category: Scope
     caption: 'Exact negative half-integers: $\ln\Gamma(-\tfrac32) = \ln\tfrac{4\sqrt\pi}{3} - 2\pi i$'
   - id: ln-gamma-infty-infty
@@ -89,7 +95,7 @@ examples:
     expr: [LogGamma, [Interval, 0.41, 0.42]]
     expected: [Interval, 0.7468637271280142, 0.7714224633947468]
     category: Scope
-    caption: 'Interval arithmetic: decreasing here, so the endpoints swap'
+    caption: "Interval arithmetic: decreasing here, so the endpoints swap"
   - id: uncertainty-propagation-with-psi-1-2-as-the
     expr: [LogGamma, [Around, 1.2, 0.01]]
     expected: [Around, -0.08537409000331585, 0.002890398965921883]
@@ -97,7 +103,7 @@ examples:
     caption: Uncertainty propagation, with $\psi(1.2)$ as the slope
   - id: to-30-significant-digits-not-yet-the-last-digit
     expr: [N, [LogGamma, [Rational, 1, 3]], 30]
-    expected: {num: '0.985420646927767069187174036978'}
+    expected: { num: "0.985420646927767069187174036978" }
     category: Scope
     caption: To 30 significant digits, the last one correctly rounded
 implementations:

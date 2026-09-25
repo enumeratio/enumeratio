@@ -20,13 +20,13 @@ details:
   - In a fixed base the sign of n is discarded, so negative integers give the same digits as their absolute value.
   - IntegerDigits(0) is $\{0\}$ -- there's always at least one digit.
   - The 3-argument form keeps only the len least-significant digits, truncating or zero-padding as needed.
-  - 'Systems: `PositionalNumerals(b)`, `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `Radix`, `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`'
+  - "Systems: `PositionalNumerals(b)`, `MixedRadixNumerals([…])`, `FactorialNumerals`, `PrimorialNumerals`, `BalancedNumerals(b)`, `NegativeNumerals(b)`, `BijectiveNumerals(k)`, `ZeckendorfNumerals`, `OstrowskiNumerals([…])`, `CombinatorialNumerals(k)`, `ResidueNumerals([…])`, `AdicNumerals(b, prec?)` — also written `Radix`, `MixedRadix`, `Factoradic`, `PrimorialRadix`, `BalancedRadix`, `NegativeRadix`, `BijectiveRadix`, `Zeckendorf`, `Ostrowski`, `CombinatorialSystem`, `ResidueSystem`"
   - '`PositionalNumerals(b)` is ordinary base-$b$ notation, $b\ge2$ — the same digits an integer base already gives, wrapped as a system value so it can stand wherever the others do (`NumeralSystemShape`, a constant-radix `MixedRadixNumerals` comparison)'
   - "`OstrowskiNumerals([a₁, …])` is the numeral system a CONTINUED FRACTION defines: place values are the convergents' denominators, and a digit at its ceiling forbids a non-zero digit below it. All quotients 1 is $\\varphi$, and that case IS Zeckendorf"
-  - '`BalancedNumerals` and `NegativeNumerals` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead'
+  - "`BalancedNumerals` and `NegativeNumerals` represent NEGATIVE integers with no sign at all; fixed radix drops the sign instead"
   - The factoradic digits of $n$ are the Lehmer code of the $n$-th permutation, so padding to the permutation's size makes the two line up
   - An integer with no numeral in a system — anything past $\prod m_i$ in a residue system, say — leaves the call standing rather than answering
-  - 'Bijective bases have no zero DIGIT, but zero itself is the empty numeral: that is what makes the correspondence with strings a bijection'
+  - "Bijective bases have no zero DIGIT, but zero itself is the empty numeral: that is what makes the correspondence with strings a bijection"
   - Inverted by [[FromDigits]] with the same system
 examples:
   - id: integerdigits-1-234
@@ -65,7 +65,7 @@ examples:
     expr: [IntegerDigits, 102341, [MixedRadix, [List, 24, 60, 60]]]
     expected: [List, 1, 4, 25, 41]
     category: Scope
-    caption: 'a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s'
+    caption: "a mixed radix, spelled `MixedRadix`: 102 341 seconds is 1d 4h 25m 41s"
   - id: the-leading-digit-is-unbounded-137-3-cdot-3-2
     expr: [IntegerDigits, 137, [MixedRadix, [List, 3, 12]]]
     expected: [List, 3, 2, 5]
@@ -80,15 +80,37 @@ examples:
     expr: [IntegerDigits, 7, [List, 2, 3, 4]]
     expected: [List, [List, 1, 1, 1], [List, 2, 1], [List, 1, 3]]
     category: Scope
-    caption: 'Listable in the base: one digit list per base'
+    caption: "Listable in the base: one digit list per base"
   - id: listable-threads-over-a-range-of-integers
     expr: [IntegerDigits, [Range, 0, 7], 2]
-    expected: [List, [List, 0], [List, 1], [List, 1, 0], [List, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]
+    expected:
+      [
+        List,
+        [List, 0],
+        [List, 1],
+        [List, 1, 0],
+        [List, 1, 1],
+        [List, 1, 0, 0],
+        [List, 1, 0, 1],
+        [List, 1, 1, 0],
+        [List, 1, 1, 1],
+      ]
     category: Scope
-    caption: 'Listable: threads over a range of integers'
+    caption: "Listable: threads over a range of integers"
   - id: all-3-bit-words-by-threading-a-padded-form-over
     expr: [IntegerDigits, [Range, 0, 7], 2, 3]
-    expected: [List, [List, 0, 0, 0], [List, 0, 0, 1], [List, 0, 1, 0], [List, 0, 1, 1], [List, 1, 0, 0], [List, 1, 0, 1], [List, 1, 1, 0], [List, 1, 1, 1]]
+    expected:
+      [
+        List,
+        [List, 0, 0, 0],
+        [List, 0, 0, 1],
+        [List, 0, 1, 0],
+        [List, 0, 1, 1],
+        [List, 1, 0, 0],
+        [List, 1, 0, 1],
+        [List, 1, 1, 0],
+        [List, 1, 1, 1],
+      ]
     category: Applications
     caption: all 3-bit words, by threading a padded form over a range
   - id: 100-has-158-digits
@@ -142,7 +164,7 @@ examples:
   - id: the-10-adic-truncation-a-negative-is-spelled-by
     expr: [IntegerDigits, -3, [AdicNumerals, 10, 6]]
     expected: [List, 9, 9, 9, 9, 9, 7]
-    caption: 'the 10-adic truncation: a negative is spelled by its digits, and the width is part of the numeral'
+    caption: "the 10-adic truncation: a negative is spelled by its digits, and the width is part of the numeral"
     category: Scope
   - id: an-integer-base-is-still-the-native-handler
     expr: [IntegerDigits, 255, 16]

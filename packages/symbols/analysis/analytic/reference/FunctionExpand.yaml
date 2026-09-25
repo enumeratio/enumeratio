@@ -4,8 +4,8 @@ signature: FunctionExpand(expr)
 summary: Rewrite special functions in `expr` in terms of more elementary or better-known ones. Provided by `@enumeratio/analytic`.
 signatures:
   - call: FunctionExpand(expr)
-    description: '`expr` with a handful of named special-function identities applied.'
-    library: '@enumeratio/analytic'
+    description: "`expr` with a handful of named special-function identities applied."
+    library: "@enumeratio/analytic"
 details:
   - "Not a general special-function identity engine: DirichletEta and DirichletBeta rewrite in terms of the (Hurwitz) zeta this package already declares, BarnesG(½) in Glaisher's constant, and two special angles (Sin(π/15), Cos(π/24)) past compute-engine's automatic table -- each is a named identity, not a derivation."
   - The two special angles are pinned lookups at exactly those arguments, not a general nested-radical solver for an arbitrary rational multiple of π.
@@ -17,15 +17,32 @@ examples:
     caption: $\eta(s) = (1 - 2^{1-s})\zeta(s)$
   - id: beta-s-4-s-zeta-s-frac-14-zeta-s-frac-34
     expr: [FunctionExpand, [DirichletBeta, s]]
-    expected: [Multiply, [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]], [Power, 4, [Negate, s]]]
+    expected:
+      [
+        Multiply,
+        [Add, [Negate, [Zeta, s, [Rational, 3, 4]]], [Zeta, s, [Rational, 1, 4]]],
+        [Power, 4, [Negate, s]],
+      ]
     caption: $\beta(s) = 4^{-s}(\zeta(s, \tfrac14) - \zeta(s, \tfrac34))$
   - id: g-frac-12-in-glaisher-s-constant
     expr: [FunctionExpand, [BarnesG, [Rational, 1, 2]]]
-    expected: [Multiply, [Divide, 1, [Root, Pi, 4]], [Root, 2, 24], [Power, ConstGlaisher, [Rational, -3, 2]], [Root, ExponentialE, 8]]
+    expected:
+      [
+        Multiply,
+        [Divide, 1, [Root, Pi, 4]],
+        [Root, 2, 24],
+        [Power, ConstGlaisher, [Rational, -3, 2]],
+        [Root, ExponentialE, 8],
+      ]
     caption: $G(\tfrac12)$ in Glaisher's constant
   - id: radicals-past-the-automatic-special-angle-table
     expr: [FunctionExpand, [Sin, [Divide, Pi, 15]]]
-    expected: [Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]
+    expected:
+      [
+        Multiply,
+        [Rational, 1, 8],
+        [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]],
+      ]
     caption: Radicals past the automatic special-angle table
   - id: half-angle-radicals-cos-frac-pi-24-frac-12-sqrt
     expr: [FunctionExpand, [Cos, [Divide, Pi, 24]]]

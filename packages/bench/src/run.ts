@@ -7,6 +7,7 @@
 import { type ChildProcess, spawn, spawnSync } from "node:child_process";
 import { type AddressInfo, createServer } from "node:net";
 import { createInterface } from "node:readline";
+import { groupRssMb, memoryCapMb } from "@enumeratio/oracle/bounded";
 import { agrees } from "./agree.ts";
 import { PROTOCOL, QUIT } from "./protocol.ts";
 import { HARNESSES } from "./registry.ts";
@@ -40,6 +41,17 @@ export interface HarnessCommand {
   readonly prepare?: { readonly command: string; readonly args: readonly string[] };
 }
 
+/** How often the memory watchdog looks at a harness's process group. */
+const WATCH_MS = 1000;
+
+function killGroup(child: ChildProcess): void {
+  try {
+    if (child.pid !== undefined) process.kill(-child.pid, "SIGKILL");
+  } catch {
+    child.kill("SIGKILL");
+  }
+}
+
 /** Seconds past a case's budget before the coordinator kills its harness. */
 const GRACE_SECONDS = 30;
 /** Seconds a socket harness may take to start its kernel and connect. */
@@ -66,13 +78,24 @@ class Harness {
   };
 
   private launch(extra: readonly string[], stdio: "pipe" | "inherit"): ChildProcess {
+    // Its own process group, so the watchdog sees (and kills) everything a kernel spawns.
     const child = spawn(this.start.command, [...this.start.args, ...extra], {
       cwd: this.start.cwd,
       stdio: ["pipe", stdio, "inherit"],
+      detached: true,
     });
+    let overMemory = false;
+    const watchdog = setInterval(() => {
+      if (child.pid !== undefined && groupRssMb(child.pid) > memoryCapMb()) {
+        overMemory = true;
+        killGroup(child);
+      }
+    }, WATCH_MS);
     // "close", not "exit": a process can exit before its last line is read.
     child.on("close", () => {
-      for (const resolve of this.waiting.values()) resolve({ error: "harness exited" });
+      clearInterval(watchdog);
+      const error = overMemory ? `over the ${memoryCapMb()} MB memory cap` : "harness exited";
+      for (const resolve of this.waiting.values()) resolve({ error });
       this.waiting.clear();
       this.channel = undefined;
     });
@@ -122,7 +145,7 @@ class Harness {
     return new Promise((resolve) => {
       const timer = setTimeout(() => {
         this.waiting.delete(name);
-        channel.child.kill("SIGKILL");
+        killGroup(channel.child);
         resolve({ timedOut: true, error: "killed past budget" });
       }, timeoutSeconds * 1000);
       this.waiting.set(name, (reply) => {
@@ -140,7 +163,7 @@ class Harness {
     if (channel === undefined) return;
     channel.write(QUIT);
     channel.child.stdin?.end();
-    const timer = setTimeout(() => channel.child.kill("SIGKILL"), 5000);
+    const timer = setTimeout(() => killGroup(channel.child), 5000);
     await new Promise((resolve) => channel.child.once("close", resolve));
     clearTimeout(timer);
   }
@@ -179,45 +202,75 @@ export function judge(
   return { name, status, k: reply.k, samplesNs, ...summary, value };
 }
 
+export interface RunOptions {
+  /**
+   * Feed cases round-robin across every system at once, so noise lands on all alike. Every
+   * harness stays alive for the whole run, so only on a machine of its own (CI); otherwise
+   * systems run one at a time, each harness closed before the next starts.
+   */
+  readonly interleave?: boolean;
+  readonly onResult?: (system: BenchSystem, result: CaseResult) => void;
+  readonly onVersion?: (system: BenchSystem, version: string) => void;
+}
+
+function startHarness(system: BenchSystem): Harness | undefined {
+  const start = HARNESSES[system]?.();
+  if (start === undefined) return undefined;
+  if (start.prepare !== undefined) {
+    const { command, args } = start.prepare;
+    const built = spawnSync(command, [...args], { cwd: start.cwd, stdio: "inherit" });
+    if (built.status !== 0) {
+      console.error(`${system}: \`${command} ${args.join(" ")}\` failed; skipping ${system}`);
+      return undefined;
+    }
+  }
+  return new Harness(start);
+}
+
 export async function runPlan(
   plan: Plan,
   systems: readonly BenchSystem[],
-  onResult?: (system: BenchSystem, result: CaseResult) => void,
-  onVersion?: (system: BenchSystem, version: string) => void,
+  options: RunOptions = {},
 ): Promise<Map<BenchSystem, CaseResult[]>> {
-  const harnesses = new Map<BenchSystem, Harness>();
-  for (const system of systems) {
-    const start = HARNESSES[system]?.();
-    if (start === undefined) continue;
-    if (start.prepare !== undefined) {
-      const { command, args } = start.prepare;
-      const built = spawnSync(command, [...args], { cwd: start.cwd, stdio: "inherit" });
-      if (built.status !== 0) {
-        console.error(`${system}: \`${command} ${args.join(" ")}\` failed; skipping ${system}`);
-        continue;
+  const results = new Map<BenchSystem, CaseResult[]>(systems.map((s) => [s, []]));
+  const one = async (
+    system: BenchSystem,
+    harness: Harness | undefined,
+    c: Plan["cases"][number],
+  ): Promise<void> => {
+    let result = excluded(c.name, harness === undefined ? undefined : c.systems[system]);
+    if (result === undefined) {
+      const reply = await harness!.ask(c.name, c.budget * 4 + GRACE_SECONDS);
+      if (reply.version !== undefined) options.onVersion?.(system, reply.version);
+      result = judge(c.name, reply, c.expected, c.precision);
+    }
+    results.get(system)!.push(result);
+    options.onResult?.(system, result);
+  };
+
+  if (options.interleave !== true) {
+    for (const system of systems) {
+      const harness = startHarness(system);
+      try {
+        for (const c of plan.cases) await one(system, harness, c);
+      } finally {
+        await harness?.close();
       }
     }
-    harnesses.set(system, new Harness(start));
+    return results;
   }
-  const results = new Map<BenchSystem, CaseResult[]>(systems.map((s) => [s, []]));
+
+  const harnesses = new Map<BenchSystem, Harness | undefined>(
+    systems.map((s) => [s, startHarness(s)]),
+  );
   try {
     for (const [index, c] of plan.cases.entries()) {
       // Rotate the order so no system always runs first after another's case.
       const order = systems.map((_, i) => systems[(i + index) % systems.length] as BenchSystem);
-      for (const system of order) {
-        const cell = harnesses.has(system) ? c.systems[system] : undefined;
-        let result = excluded(c.name, cell);
-        if (result === undefined) {
-          const reply = await harnesses.get(system)!.ask(c.name, c.budget * 4 + GRACE_SECONDS);
-          if (reply.version !== undefined) onVersion?.(system, reply.version);
-          result = judge(c.name, reply, c.expected, c.precision);
-        }
-        results.get(system)!.push(result);
-        onResult?.(system, result);
-      }
+      for (const system of order) await one(system, harnesses.get(system), c);
     }
   } finally {
-    await Promise.all([...harnesses.values()].map((harness) => harness.close()));
+    for (const harness of harnesses.values()) await harness?.close();
   }
   return results;
 }

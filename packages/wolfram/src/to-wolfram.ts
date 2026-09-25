@@ -217,6 +217,20 @@ export const HEADS: Record<string, string> = {
   Zeta: "Zeta", // one argument is Riemann, two is Hurwitz — in both systems
   HurwitzZeta: "HurwitzZeta",
   LerchPhi: "LerchPhi",
+  // Function* real-analysis properties (function-properties.ts) — same argument
+  // order as ours in every case, so a plain rename is enough.
+  FunctionDomain: "FunctionDomain",
+  FunctionRange: "FunctionRange",
+  FunctionMonotonicity: "FunctionMonotonicity",
+  FunctionConvexity: "FunctionConvexity",
+  FunctionSign: "FunctionSign",
+  FunctionInjective: "FunctionInjective",
+  FunctionSurjective: "FunctionSurjective",
+  FunctionSingularities: "FunctionSingularities",
+  FunctionDiscontinuities: "FunctionDiscontinuities",
+  FunctionAnalytic: "FunctionAnalytic",
+  FunctionMeromorphic: "FunctionMeromorphic",
+  FunctionPeriod: "FunctionPeriod",
   PolyLog: "PolyLog",
   Digamma: "PolyGamma",
   PolyGamma: "PolyGamma",
@@ -393,6 +407,18 @@ export const HEADS: Record<string, string> = {
   CenteredInterval: "CenteredInterval",
   Around: "Around",
   HypergeometricPFQ: "HypergeometricPFQ",
+  // Same argument order both sides: LaplaceTransform[f, t, s], InverseLaplaceTransform[F, s, t].
+  LaplaceTransform: "LaplaceTransform",
+  InverseLaplaceTransform: "InverseLaplaceTransform",
+  // FourierTransform[f, t, w] / InverseFourierTransform[F, w, t]; both sides default to
+  // FourierParameters -> {0, 1}, which is all this transpiler's own heads implement.
+  FourierTransform: "FourierTransform",
+  InverseFourierTransform: "InverseFourierTransform",
+  // MeijerG[{{a..},{a..}}, {{b..},{b..}}, z] — same nested-list shape and argument order.
+  MeijerG: "MeijerG",
+  // MeijerGReduce[expr, x] — same order; Wolfram's own output may use its generalized
+  // 5-argument MeijerG (an extra scale parameter), ours always emits the plain 4-argument form.
+  MeijerGReduce: "MeijerGReduce",
   // Same λ = θ₂⁴/θ₃⁴ convention. ModularJ is unmapped: KleinInvariantJ is j/1728, and HEADS
   // can't carry a scale. EisensteinG has no Wolfram head.
   ModularLambda: "ModularLambda",
@@ -414,6 +440,22 @@ export const HEADS: Record<string, string> = {
   RealSign: "RealSign",
   UnitStep: "UnitStep",
   Gudermannian: "Gudermannian",
+  // Refine/Assuming/Piecewise/PiecewiseExpand — same name and meaning as Wolfram's; see
+  // packages/symbols/analysis/analytic/src/refine-assuming.ts and piecewise.ts for the (scoped)
+  // subset of Wolfram's semantics each one covers.
+  Refine: "Refine",
+  Assuming: "Assuming",
+  Piecewise: "Piecewise",
+  PiecewiseExpand: "PiecewiseExpand",
+  // SeriesCoefficient(f, {x, x0, n}) — the argument shape matches Wolfram's directly (see
+  // series-coefficient.ts), so this is a plain rename, not a SPECIAL reordering.
+  SeriesCoefficient: "SeriesCoefficient",
+  // compute-engine's native `BigO(g)` (the Landau remainder term `Series` emits) is
+  // Wolfram's `O` — but the exponent is spelled differently (`BigO(x^7)` vs. `O[x]^7`,
+  // a `Power` wrapping the `O[...]` object rather than sitting inside it), so the
+  // restructuring goes through SPECIAL below; this entry only exists so `REVERSE_HEADS`
+  // (built from HEADS) has an entry for Wolfram's bare `O`.
+  BigO: "O",
   // Khinchin's constant — same name and meaning as Wolfram's.
   Khinchin: "Khinchin",
   // Hyperfactorial — same name and meaning as Wolfram's.
@@ -619,6 +661,16 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // Hypergeometric3F2Regularized(a1,a2,a3,b1,b2,z) has no dedicated Wolfram head — it is the
   // 3,2 case of the generic HypergeometricPFQRegularized[{a1,a2,a3},{b1,b2},z], which takes
   // its upper and lower parameters as lists rather than flat arguments.
+  // BigO(x^n) is Wolfram's `O[x]^n` — the exponent sits OUTSIDE `O[...]` there, not
+  // inside it, so this is a restructuring, not a rename. `BigO(x)` alone (n = 1) is the
+  // bare `O[x]`, since `Power[O[x], 1]` is how Wolfram would print it anyway.
+  BigO: (a) => {
+    const arg = a[0];
+    if (Array.isArray(arg) && arg[0] === "Power") {
+      return `Power[O[${toWolfram(arg[1])}], ${toWolfram(arg[2])}]`;
+    }
+    return `O[${toWolfram(arg)}]`;
+  },
   Hypergeometric3F2Regularized: (a) =>
     `HypergeometricPFQRegularized[List[${a
       .slice(0, 3)

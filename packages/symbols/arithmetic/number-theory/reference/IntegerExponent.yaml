@@ -37,7 +37,7 @@ examples:
     expr: [IntegerExponent, 1728, 6]
     expected: 3
     category: Scope
-    caption: 'Composite base: $1728=2^6 3^3$, so $6^3$ divides it but $6^4$ does not'
+    caption: "Composite base: $1728=2^6 3^3$, so $6^3$ divides it but $6^4$ does not"
   - id: negative-integers
     expr: [IntegerExponent, -1000]
     expected: 3

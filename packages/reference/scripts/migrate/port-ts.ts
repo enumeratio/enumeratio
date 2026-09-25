@@ -15,7 +15,8 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 import { isDeepStrictEqual } from "node:util";
-import { type ReferenceEntry, stringifyYaml } from "@enumeratio/entry";
+import type { ReferenceEntry } from "@enumeratio/entry";
+import { writeYaml as write } from "@enumeratio/entry/node";
 import routes from "./routes.json" with { type: "json" };
 import { fileURLToPath } from "node:url";
 
@@ -143,9 +144,9 @@ function withJsonExamples(
   });
 }
 
-const writeYaml = (path: string, entry: ReferenceEntry): void => {
+const writeYaml = async (path: string, entry: ReferenceEntry): Promise<void> => {
   mkdirSync(dirname(`${ROOT}${path}`), { recursive: true });
-  writeFileSync(`${ROOT}${path}`, stringifyYaml(entry));
+  await write(`${ROOT}${path}`, entry);
 };
 
 const args = process.argv.slice(2);
@@ -165,7 +166,7 @@ if (args[0] === "--replay" && args.length === 3) {
     for (const entry of await entriesAt(shim.path, shim.name, lane)) {
       if (isDeepStrictEqual(before.get(entry.name), entry)) continue;
       const path = yamlPath(shim.path, entry.name);
-      writeYaml(path, plain(entry, `${shim.path} ${entry.name}`));
+      await writeYaml(path, plain(entry, `${shim.path} ${entry.name}`));
       replayed++;
       console.log(`  ${path}`);
     }

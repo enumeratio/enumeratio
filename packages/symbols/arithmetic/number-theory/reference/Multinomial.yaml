@@ -69,7 +69,12 @@ examples:
     category: Scope
     caption: 'An Around argument propagates its uncertainty through the head as one function: $\frac{(a+2)(a+1)}{2}$ at $a = 2 \pm 0.01$ is $6 \pm 0.035$'
   - id: the-factorial-form-frac-k-1-k-2-k-3-k-1-k-2-k-3
-    expr: [Equal, [Multinomial, 3, 4, 5], [Divide, [Factorial, 12], [Multiply, [Factorial, 3], [Factorial, 4], [Factorial, 5]]]]
+    expr:
+      [
+        Equal,
+        [Multinomial, 3, 4, 5],
+        [Divide, [Factorial, 12], [Multiply, [Factorial, 3], [Factorial, 4], [Factorial, 5]]],
+      ]
     expected: True
     category: Properties
     caption: The factorial form $\frac{(k_1+k_2+k_3)!}{k_1!\,k_2!\,k_3!}$. See [[Factorial]]
@@ -77,7 +82,7 @@ examples:
     expr: [Multinomial, 1, 1, 1, 1]
     expected: 24
     category: Properties
-    caption: 'All-ones parts give $n!$: every part is a single labelled item'
+    caption: "All-ones parts give $n!$: every part is a single labelled item"
   - id: the-coefficient-of-a-2-b-3-c-in-a-b-c-6
     expr: [Multinomial, 2, 3, 1]
     expected: 60

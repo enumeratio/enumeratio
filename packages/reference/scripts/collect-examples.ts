@@ -9,10 +9,10 @@
 // Regenerate after a change to the heads or the grids:
 //   node packages/reference/scripts/collect-examples.ts
 
-import { writeFileSync } from "node:fs";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import { declareAnalytic } from "@enumeratio/analytic/src";
-import { dedupeId, type ReferenceExample, stringifyYaml } from "@enumeratio/entry";
+import { dedupeId, type ReferenceExample } from "@enumeratio/entry";
+import { writeYaml } from "@enumeratio/entry/node";
 import { baseId } from "./migrate/ids.ts";
 import { loadReferenceData, PACKAGES } from "../src/node.ts";
 
@@ -174,7 +174,7 @@ for (const [head, grid] of Object.entries(byHead)) {
     taken.add(id);
     return { id, ...e } as ReferenceExample;
   });
-  writeFileSync(entryPath, stringifyYaml({ ...entry, examples: [...kept, ...points] }));
+  await writeYaml(entryPath, { ...entry, examples: [...kept, ...points] });
 }
 process.stderr.write(
   `${Object.entries(byHead)

@@ -13,11 +13,11 @@ details:
   - 'Groups: `CyclicGroup(n)` with elements $0 \dots n-1$, `DihedralGroup(n)` with elements `k` for $r^k$ and `s k` for $s r^k$, and `GroupDirectProduct(g, h)`'
   - $k[\mathbb{Z}_n]$ multiplies by adding indices mod $n$ — it is $k[x]/(x^n-1)$
   - $k[G]$ is commutative exactly when $G$ is abelian
-  - 'Dihedral relations: $r^n = 1$, $s^2 = 1$, $s r s = r^{-1}$'
+  - "Dihedral relations: $r^n = 1$, $s^2 = 1$, $s r s = r^{-1}$"
   - $\dim k[G] = |G|$, and `Basis(GroupAlgebra(group))` lists the elements
 examples:
   - id: 2-5-7-equiv-1
-    expr: [GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, '2']], [GroupBasis, [String, '5']]]
+    expr: [GroupProduct, [CyclicGroup, 6], [GroupBasis, [String, "2"]], [GroupBasis, [String, "5"]]]
     expected: [GroupBasis, "'1'"]
     caption: $2 + 5 = 7 \equiv 1$
   - id: s-2-1

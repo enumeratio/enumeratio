@@ -16,13 +16,14 @@ examples:
   - id: ascents-at-both-positions-1-2
     expr: [MinorIndex, [List, 1, 2, 3]]
     expected: 3
-    caption: 'ascents at both positions: $1 + 2$'
+    caption: "ascents at both positions: $1 + 2$"
   - id: no-ascents
     expr: [MinorIndex, [List, 3, 2, 1]]
     expected: 0
     caption: no ascents
   - id: major-and-minor-index-split-binom-n-2
-    expr: [Equal, [Add, [MajorIndex, [List, 3, 1, 2]], [MinorIndex, [List, 3, 1, 2]]], [Binomial, 3, 2]]
+    expr:
+      [Equal, [Add, [MajorIndex, [List, 3, 1, 2]], [MinorIndex, [List, 3, 1, 2]]], [Binomial, 3, 2]]
     expected: True
     category: Properties
     caption: major and minor index split $\binom{n}{2}$

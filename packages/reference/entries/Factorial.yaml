@@ -51,7 +51,7 @@ examples:
     caption: Negative integers are poles of the Gamma function, so this returns ComplexInfinity rather than staying unevaluated
   - id: factorials-grow-fast-20-already-exceeds-2-times
     expr: [Factorial, 20]
-    expected: {num: '2432902008176640000'}
+    expected: { num: "2432902008176640000" }
     category: Neat examples
     caption: 'Factorials grow fast: $20!$ already exceeds $2 \times 10^{18}$'
   - id: frac-n-n-1-simplifies-to-n-under-simplify-plain
@@ -98,7 +98,7 @@ examples:
     caption: 'The reciprocals sum to $e$: $\sum_{k \ge 0} \frac{1}{k!} = e$'
   - id: 30-has-33-digits-and-ends-in-seven-zeros
     expr: [Factorial, 30]
-    expected: {num: '26525285981219105863630848e+7'}
+    expected: { num: "26525285981219105863630848e+7" }
     category: Neat examples
     caption: $30!$ has 33 digits and ends in seven zeros
 seeAlso:

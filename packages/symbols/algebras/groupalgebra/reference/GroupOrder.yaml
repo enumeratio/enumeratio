@@ -1,14 +1,14 @@
 name: GroupOrder
 domain: Permutations
 signature: GroupOrder(group)
-summary: '$|G|$: how many elements a group has. Works over every carrier this package knows — [[CyclicGroup]], [[DihedralGroup]], [[GroupDirectProduct]], [[SymmetricGroup]] and [[PermutationGroup]].'
+summary: "$|G|$: how many elements a group has. Works over every carrier this package knows — [[CyclicGroup]], [[DihedralGroup]], [[GroupDirectProduct]], [[SymmetricGroup]] and [[PermutationGroup]]."
 signatures:
   - call: GroupOrder(group)
     description: the number of elements of `group`
     library: enumeratio-groupalgebra
 details:
   - For a `PermutationGroup`, the order comes from a breadth-first closure over its generators, not a stored table
-  - '`GroupOrder(SymmetricGroup(n))` is $n!$ without materialising all $n!$ permutations'
+  - "`GroupOrder(SymmetricGroup(n))` is $n!$ without materialising all $n!$ permutations"
 examples:
   - id: a-dihedral-group
     expr: [GroupOrder, [DihedralGroup, 100]]

@@ -66,44 +66,95 @@ def _clear():
 def _b0_0():
     return zeta(3.5)
 def _b1_0():
-    return zeta(2.5, 0.3)
+    return polylog(3, 0.25)
 def _b2_0():
-    return gamma(24.026529921218753)
+    return zeta(4.403285405947827, 2.4288888204842807)
 def _b2_1():
-    return gamma(17.407367952284403)
+    return zeta(9.448154343175702, 3.8892513725673785)
 def _b2_2():
-    return gamma(38.77917202899698)
+    return zeta(2.558750191004947, 4.493130763736554)
 def _b2_3():
-    return gamma(46.78631058672909)
+    return zeta(5.368294674553908, 4.932550377189182)
 def _b2_4():
-    return gamma(44.87958628672641)
+    return zeta(7.5256652008974925, 4.856984421564266)
 def _b2_5():
-    return gamma(6.665662877028808)
+    return zeta(1.9638558109290898, 2.9379101314581932)
 def _b2_6():
-    return gamma(49.318621157319285)
+    return zeta(7.21723051846493, 2.4472744461381812)
 def _b2_7():
-    return gamma(23.027127810637467)
+    return zeta(7.548660124186426, 1.3300802856683733)
 def _b2_8():
-    return gamma(48.55525078927167)
+    return zeta(2.662446933449246, 4.8475876000477)
 def _b2_9():
-    return gamma(35.59063852287363)
+    return zeta(5.546103833592497, 1.1366007893811914)
 def _b2_10():
-    return gamma(29.168683981057256)
+    return zeta(9.883344191475771, 2.583231095853262)
 def _b2_11():
-    return gamma(3.201277957763523)
+    return zeta(3.37750693236012, 4.0169520172989)
 def _b2_12():
-    return gamma(24.212262262008153)
+    return zeta(9.639665072201751, 2.204721057927236)
 def _b2_13():
-    return gamma(33.7944600781193)
+    return zeta(2.5927319991169497, 4.65562820143532)
 def _b2_14():
-    return gamma(12.926321253180504)
+    return zeta(7.099468858446926, 3.200434206426144)
 def _b2_15():
+    return zeta(5.566479127970524, 1.1445297228638085)
+def _b3_0():
+    return zeta(2.5, 0.3)
+def _b4_0():
+    return gamma(24.026529921218753)
+def _b4_1():
+    return gamma(17.407367952284403)
+def _b4_2():
+    return gamma(38.77917202899698)
+def _b4_3():
+    return gamma(46.78631058672909)
+def _b4_4():
+    return gamma(44.87958628672641)
+def _b4_5():
+    return gamma(6.665662877028808)
+def _b4_6():
+    return gamma(49.318621157319285)
+def _b4_7():
+    return gamma(23.027127810637467)
+def _b4_8():
+    return gamma(48.55525078927167)
+def _b4_9():
+    return gamma(35.59063852287363)
+def _b4_10():
+    return gamma(29.168683981057256)
+def _b4_11():
+    return gamma(3.201277957763523)
+def _b4_12():
+    return gamma(24.212262262008153)
+def _b4_13():
+    return gamma(33.7944600781193)
+def _b4_14():
+    return gamma(12.926321253180504)
+def _b4_15():
     return gamma(35.72455013496801)
+def _b5_0():
+    return gamma(20.5)
+def _b6_0():
+    return psi(1, 3.5)
+def _b7_0():
+    return lerchphi(0.5, 2, 0.75)
+def _b8_0():
+    return sin((24**40))
+def _b9_0():
+    return cos((10**100))
 
 CASES = {
     "Zeta/zeta-3p5-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b0_0]},
-    "HurwitzZeta/hurwitz-zeta-machine": {"precision": "machine", "budget": 10, "fns": [_b1_0]},
-    "Gamma/gamma-random-reals-machine": {"precision": "machine", "budget": 10, "fns": [_b2_0, _b2_1, _b2_2, _b2_3, _b2_4, _b2_5, _b2_6, _b2_7, _b2_8, _b2_9, _b2_10, _b2_11, _b2_12, _b2_13, _b2_14, _b2_15]},
+    "PolyLog/polylog-3-one-quarter-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b1_0]},
+    "HurwitzZeta/hurwitz-zeta-random-machine": {"precision": "machine", "budget": 10, "fns": [_b2_0, _b2_1, _b2_2, _b2_3, _b2_4, _b2_5, _b2_6, _b2_7, _b2_8, _b2_9, _b2_10, _b2_11, _b2_12, _b2_13, _b2_14, _b2_15]},
+    "HurwitzZeta/hurwitz-zeta-machine": {"precision": "machine", "budget": 10, "fns": [_b3_0]},
+    "Gamma/gamma-random-reals-machine": {"precision": "machine", "budget": 10, "fns": [_b4_0, _b4_1, _b4_2, _b4_3, _b4_4, _b4_5, _b4_6, _b4_7, _b4_8, _b4_9, _b4_10, _b4_11, _b4_12, _b4_13, _b4_14, _b4_15]},
+    "Gamma/gamma-20p5-to-100-digits": {"precision": 100, "budget": 10, "fns": [_b5_0]},
+    "PolyGamma/trigamma-3p5-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b6_0]},
+    "LerchPhi/lerchphi-half-2-three-quarters-to-30-digits": {"precision": 30, "budget": 10, "fns": [_b7_0]},
+    "Sin/sin-24-to-the-40": {"precision": "machine", "budget": 10, "fns": [_b8_0]},
+    "Cos/cos-10-to-the-100": {"precision": "machine", "budget": 10, "fns": [_b9_0]},
 }
 
 

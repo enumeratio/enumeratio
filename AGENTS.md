@@ -50,7 +50,10 @@ release. Add a tool name to select part of the graph. For example, run
 - Each head's entry is `reference/<Head>.yaml` in the package that declares it
   (`packages/reference/entries/` for compute-engine's own heads). Every example has an `id`:
   lowercase words joined by `-`, unique within the head, kept when the example is edited.
-- The YAML is read and written only through `@enumeratio/entry`'s `parseYaml`/`stringifyYaml`.
+- The YAML is read through `@enumeratio/entry`'s `parseYaml` and written through
+  `@enumeratio/entry/node`'s `writeYaml`: the strict-schema structure, laid out by oxfmt, so a
+  record is what `vp fmt` makes of it. Hand edits are fine; `vp fmt` or
+  `node packages/reference/scripts/format-records.ts` tidies them.
 - Everything reads the records through `@enumeratio/reference/node` (`referenceData`); the
   site gets them from its `virtual:reference-entries` module. Add a head by adding its file.
 

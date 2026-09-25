@@ -7,7 +7,7 @@ signatures:
     description: at most $n$ — never an error for asking for more than a collection holds. Never evaluated on its own — read by [[Take]], [[Partition]] and [[Ordering]].
     library: enumeratio-collections
 details:
-  - 'Never reduces by itself: a count specification other heads read, not a value.'
+  - "Never reduces by itself: a count specification other heads read, not a value."
   - In [[Take]], takes at most n elements with no error when fewer are available.
   - In [[Partition]], allows a shorter final chunk instead of dropping the ragged remainder.
   - In [[Ordering]], the same clamping a plain integer count already gives — at most n positions, fewer if the collection is shorter.

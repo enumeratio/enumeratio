@@ -23,7 +23,12 @@ examples:
     expected: [Set, 1, 2, 3]
     caption: Removing elements that aren't present leaves the set unchanged
   - id: a-setminus-a-setminus-b-a-cap-b-see-intersection
-    expr: [Equal, [SetMinus, [Set, 1, 2, 3, 4], [SetMinus, [Set, 1, 2, 3, 4], [Set, 2, 4]]], [Intersection, [Set, 1, 2, 3, 4], [Set, 2, 4]]]
+    expr:
+      [
+        Equal,
+        [SetMinus, [Set, 1, 2, 3, 4], [SetMinus, [Set, 1, 2, 3, 4], [Set, 2, 4]]],
+        [Intersection, [Set, 1, 2, 3, 4], [Set, 2, 4]],
+      ]
     expected: True
     category: Properties
     caption: $A \setminus (A \setminus B) = A \cap B$. See [[Intersection]]

@@ -1,7 +1,7 @@
 name: MoebiusMu
 domain: Number theory
 signature: MoebiusMu(n)
-summary: 'The Möbius function: 0 if n has a squared prime factor, else (-1)^(number of prime factors).'
+summary: "The Möbius function: 0 if n has a squared prime factor, else (-1)^(number of prime factors)."
 signatures:
   - call: MoebiusMu(n)
     description: the Möbius function $\mu(n)$.
@@ -27,7 +27,16 @@ examples:
     expected: 1
     caption: 10 = 2·5, a product of an even number of distinct primes
   - id: sum-d-mid-n-mu-d-0-for-n-1-the-identity-behind
-    expr: [Add, [MoebiusMu, 1], [MoebiusMu, 2], [MoebiusMu, 3], [MoebiusMu, 4], [MoebiusMu, 6], [MoebiusMu, 12]]
+    expr:
+      [
+        Add,
+        [MoebiusMu, 1],
+        [MoebiusMu, 2],
+        [MoebiusMu, 3],
+        [MoebiusMu, 4],
+        [MoebiusMu, 6],
+        [MoebiusMu, 12],
+      ]
     expected: 0
     category: Properties
     caption: $\sum_{d\mid n}\mu(d)=0$ for $n>1$, the identity behind Möbius inversion
@@ -47,12 +56,12 @@ examples:
     expr: [MoebiusMu, [Complex, 5, 6]]
     expected: -1
     category: Scope
-    caption: 'Gaussian integers: $5+6i$ is a Gaussian prime (norm 61)'
+    caption: "Gaussian integers: $5+6i$ is a Gaussian prime (norm 61)"
   - id: listable-threads-over-a-list
     expr: [MoebiusMu, [List, 4, 10, 17, 20]]
     expected: [List, 0, 1, -1, 0]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
   - id: listable-over-a-range
     expr: [MoebiusMu, [Range, 20]]
     expected: [List, 1, -1, -1, 0, -1, 1, -1, 0, 0, 1, -1, 0, -1, 1, 1, 0, -1, 0, -1, 0]

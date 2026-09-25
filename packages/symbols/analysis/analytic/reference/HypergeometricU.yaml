@@ -5,7 +5,7 @@ summary: Tricomi's confluent hypergeometric function $U(a,b,z)$, for $b$ not an 
 signatures:
   - call: HypergeometricU(a, b, z)
     description: Tricomi's confluent hypergeometric $U(a,b,z)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - compute-engine 0.128 references this head only inside its identity rules (relating it to `HypergeometricUStar`) but never actually declares it as an operator, so there was nothing to extend — it is declared directly here, reusing the same Kummer connection-formula kernel as `HypergeometricUStar`.
   - "$b$ at (or very near) an integer is declined, for the same reason `HypergeometricUStar` declines there: the connection formula's $\\Gamma(1-b)$ and $\\Gamma(b-1)$ blow up, and the log-case limit that resolves it is not implemented."
