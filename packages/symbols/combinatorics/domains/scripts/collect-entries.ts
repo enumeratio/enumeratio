@@ -6,7 +6,6 @@
 //   vp node packages/symbols/combinatorics/domains/scripts/collect-entries.ts
 
 import { ComputeEngine } from "@cortex-js/compute-engine";
-import { writeGeneratedEntries } from "../../../../reference/scripts/migrate/shims.ts";
 import { captionId, dedupeId } from "@enumeratio/entry";
 import { ALL_STATISTICS, declareStatistics } from "@enumeratio/statistics/src";
 import { declareDomains } from "../src/declare.ts";
@@ -128,5 +127,10 @@ ${[...MAPS.map(entryFor), ...UNDEFINED_MAPS.map(frontierEntryFor)].join("\n")}
 `;
 
 // The module text is evaluated into one YAML per entry, and src/entries.ts is its shim.
+// A computed specifier, so this package's type build doesn't pull reference's scripts in.
+const shims = new URL("../../../../reference/scripts/migrate/shims.ts", import.meta.url).href;
+const { writeGeneratedEntries } = (await import(shims)) as {
+  writeGeneratedEntries: (packageDir: string, moduleText: string) => Promise<void>;
+};
 await writeGeneratedEntries("packages/symbols/combinatorics/domains", file);
 process.stdout.write(`wrote ${MAPS.length + UNDEFINED_MAPS.length} entries\n`);
