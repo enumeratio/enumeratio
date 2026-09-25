@@ -4,6 +4,27 @@ import { runCases } from "@enumeratio/aestimatio/src/node";
 import { expect, test } from "vite-plus/test";
 import { entries } from "../src/index.ts";
 
+/** `output` with each float that is within 1e-12 (relative) of `expected`'s replaced by it:
+ * the last digits of a float differ between platforms (ARM against x86), and that is not a
+ * change in behaviour. Integers, `{num}` digits of different length and every structure still
+ * have to match exactly. */
+const settled = (output: unknown, expected: unknown): unknown => {
+  const float = (x: unknown): number | undefined =>
+    typeof x === "number" && !Number.isInteger(x)
+      ? x
+      : typeof x === "object" && x !== null && typeof (x as { num?: unknown }).num === "string"
+        ? Number((x as { num: string }).num)
+        : undefined;
+  const [a, b] = [float(output), float(expected)];
+  if (a !== undefined && b !== undefined && Number.isFinite(a) && Number.isFinite(b)) {
+    return Math.abs(a - b) <= 1e-12 * Math.max(1, Math.abs(a), Math.abs(b)) ? expected : output;
+  }
+  if (Array.isArray(output) && Array.isArray(expected) && output.length === expected.length) {
+    return output.map((item, i) => settled(item, expected[i]));
+  }
+  return output;
+};
+
 /** Blank the values of rules keyed by one of `keys`, wherever they sit in the tree. */
 const masked = (node: unknown, keys: ReadonlySet<string>): unknown => {
   if (!Array.isArray(node)) return node;
@@ -70,7 +91,7 @@ for (const entry of entries) {
         // target. If this starts matching, promote it (drop `aspirational`).
         expect(output).not.toEqual(expected);
       } else {
-        expect(output).toEqual(expected);
+        expect(settled(output, expected)).toEqual(expected);
       }
     });
   }

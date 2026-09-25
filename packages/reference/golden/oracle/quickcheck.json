@@ -1,0 +1,971 @@
+{
+  "seed": "2026-09-25",
+  "systems": ["julia", "rust"],
+  "samples": 455,
+  "findings": [
+    {
+      "system": "julia",
+      "id": "combinatorics/Binomial#9~1",
+      "expr": ["Binomial", -1, -17],
+      "ours": 1,
+      "theirs": "0",
+      "verdict": "disagree",
+      "template": "combinatorics/Binomial#9",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Factorial#1~1",
+      "expr": ["Factorial", -5],
+      "ours": "ComplexInfinity",
+      "theirs": "DomainError with -5: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Factorial#3~2",
+      "expr": ["Factorial", -1],
+      "ours": "ComplexInfinity",
+      "theirs": "DomainError with -1: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Factorial#6~2",
+      "expr": ["Equal", ["Factorial", 5], ["Multiply", 6, ["Factorial", -1]]],
+      "ours": "False",
+      "theirs": "DomainError with -1: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Factorial#8~1",
+      "expr": ["Factorial", -8],
+      "ours": "ComplexInfinity",
+      "theirs": "DomainError with -8: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#8",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/CatalanNumber#1~2",
+      "expr": ["CatalanNumber", -5],
+      "ours": ["CatalanNumber", -5],
+      "theirs": "DomainError with -5: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/CatalanNumber#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/CatalanNumber#2~1",
+      "expr": ["CatalanNumber", -3],
+      "ours": ["CatalanNumber", -3],
+      "theirs": "DomainError with -3: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/CatalanNumber#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/CatalanNumber#4~1",
+      "expr": ["CatalanNumber", -1],
+      "ours": ["CatalanNumber", -1],
+      "theirs": "DomainError with -1: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/CatalanNumber#4",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/CatalanNumber#4~2",
+      "expr": ["CatalanNumber", -2],
+      "ours": ["CatalanNumber", -2],
+      "theirs": "DomainError with -2: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/CatalanNumber#4",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#1~1",
+      "expr": ["StirlingS1", 5, -2],
+      "ours": ["StirlingS1", 5, -2],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#1",
+      "was": "disagree (convention)"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#2~1",
+      "expr": ["StirlingS1", 5, 2],
+      "ours": -50,
+      "theirs": "50",
+      "verdict": "disagree",
+      "template": "combinatorics/StirlingS1#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#2~2",
+      "expr": ["StirlingS1", 3, 7],
+      "ours": ["StirlingS1", 3, 7],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#3~1",
+      "expr": ["StirlingS1", -3, 3],
+      "ours": ["StirlingS1", -3, 3],
+      "theirs": "DomainError with -3: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/StirlingS1#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#4~2",
+      "expr": ["StirlingS1", 5, 7],
+      "ours": ["StirlingS1", 5, 7],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#4",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#6~1",
+      "expr": ["StirlingS1", 5, 4],
+      "ours": -10,
+      "theirs": "10",
+      "verdict": "disagree",
+      "template": "combinatorics/StirlingS1#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#6~2",
+      "expr": ["StirlingS1", 1, 3],
+      "ours": ["StirlingS1", 1, 3],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#7~1",
+      "expr": ["StirlingS1", 0, -1],
+      "ours": ["StirlingS1", 0, -1],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#7",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#7~2",
+      "expr": ["StirlingS1", 0, -8],
+      "ours": ["StirlingS1", 0, -8],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#7",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/StirlingS1#8~2",
+      "expr": ["StirlingS1", 23, -2],
+      "ours": ["StirlingS1", 23, -2],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/StirlingS1#8",
+      "was": "disagree (convention)"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#1~2",
+      "expr": ["Stirling", 5, -14],
+      "ours": ["Stirling", 5, -14],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/Stirling#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#2~1",
+      "expr": ["Stirling", -2, 3],
+      "ours": ["Stirling", -2, 3],
+      "theirs": "DomainError with -2: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/Stirling#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#2~2",
+      "expr": ["Stirling", -19, 3],
+      "ours": ["Stirling", -19, 3],
+      "theirs": "DomainError with -19: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/Stirling#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#3~1",
+      "expr": ["Stirling", -7, -1],
+      "ours": ["Stirling", -7, -1],
+      "theirs": "DomainError with -7: n must be nonnegative",
+      "verdict": "error",
+      "template": "combinatorics/Stirling#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#3~2",
+      "expr": ["Stirling", 5, -2],
+      "ours": ["Stirling", 5, -2],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/Stirling#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#4~1",
+      "expr": ["Stirling", 5, -5],
+      "ours": ["Stirling", 5, -5],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/Stirling#4",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#6~1",
+      "expr": ["Stirling", 0, -7],
+      "ours": ["Stirling", 0, -7],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/Stirling#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/Stirling#6~2",
+      "expr": ["Stirling", 1, 6],
+      "ours": ["Stirling", 1, 6],
+      "theirs": "0",
+      "verdict": "inconclusive",
+      "template": "combinatorics/Stirling#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/BellNumber#3~1",
+      "expr": ["BellNumber", -1],
+      "ours": ["BellNumber", -1],
+      "theirs": "DomainError with -1: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/BellNumber#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/BellNumber#3~2",
+      "expr": ["BellNumber", -3],
+      "ours": ["BellNumber", -3],
+      "theirs": "DomainError with -3: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/BellNumber#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/BellNumber#5~1",
+      "expr": ["BellNumber", -1],
+      "ours": ["BellNumber", -1],
+      "theirs": "DomainError with -1: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/BellNumber#5",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/BellNumber#5~2",
+      "expr": ["BellNumber", -3],
+      "ours": ["BellNumber", -3],
+      "theirs": "DomainError with -3: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/BellNumber#5",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "combinatorics/BellNumber#6~1",
+      "expr": [
+        "Equal",
+        ["BellNumber", 5],
+        [
+          "Add",
+          ["Multiply", ["Binomial", -18, 0], ["BellNumber", 0]],
+          ["Multiply", ["Binomial", 4, 1], ["BellNumber", -10]],
+          ["Multiply", ["Binomial", -1, -1], ["BellNumber", 1]],
+          ["Multiply", ["Binomial", 4, 3], ["BellNumber", -2]],
+          ["Multiply", ["Binomial", 4, -1], ["BellNumber", -7]]
+        ]
+      ],
+      "ours": [
+        "Equal",
+        52,
+        ["Add", 2, ["Multiply", 4, ["BellNumber", -10]], ["Multiply", 4, ["BellNumber", -2]]]
+      ],
+      "theirs": "DomainError with -10: Argument must be non-negative",
+      "verdict": "error",
+      "template": "combinatorics/BellNumber#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#1~1",
+      "expr": ["LucasL", -8],
+      "ours": 47,
+      "theirs": "DomainError with -8: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#1~2",
+      "expr": ["LucasL", -1],
+      "ours": -1,
+      "theirs": "DomainError with -1: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#2~1",
+      "expr": ["LucasL", -6],
+      "ours": 18,
+      "theirs": "DomainError with -6: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#2~2",
+      "expr": ["LucasL", -2],
+      "ours": 3,
+      "theirs": "DomainError with -2: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#4~2",
+      "expr": ["LucasL", -1],
+      "ours": -1,
+      "theirs": "DomainError with -1: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#4",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#6~1",
+      "expr": ["Equal", ["Fibonacci", -6], ["Divide", ["Add", ["LucasL", 5], ["LucasL", -11]], 6]],
+      "ours": "False",
+      "theirs": "DomainError with -11: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#6~2",
+      "expr": ["Equal", ["Fibonacci", 1], ["Divide", ["Add", ["LucasL", -18], ["LucasL", 7]], -13]],
+      "ours": "False",
+      "theirs": "DomainError with -18: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#7~1",
+      "expr": [
+        "Subtract",
+        ["Multiply", ["LucasL", 4], ["LucasL", -9]],
+        ["Power", ["LucasL", 6], 1]
+      ],
+      "ours": -550,
+      "theirs": "DomainError with -9: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#7",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#9~1",
+      "expr": ["Divide", ["LucasL", 15], ["LucasL", -26]],
+      "ours": ["Rational", 1364, 271443],
+      "theirs": "DomainError with -26: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#9",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#11~1",
+      "expr": ["LucasL", -1],
+      "ours": -1,
+      "theirs": "DomainError with -1: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#11",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "sequences/LucasL#11~2",
+      "expr": ["LucasL", -60],
+      "ours": 3461452808002,
+      "theirs": "DomainError with -60: n must be nonnegative",
+      "verdict": "error",
+      "template": "sequences/LucasL#11",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "residues/Mod#1~2",
+      "expr": ["Mod", 17, 0],
+      "ours": "NaN",
+      "theirs": "DivideError: integer division error",
+      "verdict": "error",
+      "template": "residues/Mod#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/Totient#2~1",
+      "expr": ["Totient", -2],
+      "ours": ["Totient", -2],
+      "theirs": "DomainError with -2: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/Totient#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/Totient#3~1",
+      "expr": ["Totient", -1],
+      "ours": ["Totient", -1],
+      "theirs": "DomainError with -1: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/Totient#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/Totient#4~2",
+      "expr": ["Totient", -2],
+      "ours": ["Totient", -2],
+      "theirs": "DomainError with -2: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/Totient#4",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/Totient#5~2",
+      "expr": [
+        "Add",
+        ["Totient", 2],
+        ["Totient", 2],
+        ["Totient", 3],
+        ["Totient", 4],
+        ["Totient", 12],
+        ["Totient", -4]
+      ],
+      "ours": ["Add", 10, ["Totient", -4]],
+      "theirs": "DomainError with -4: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/Totient#5",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/Totient#6~2",
+      "expr": ["Equal", ["Totient", 12], ["Multiply", ["Totient", 0], ["Totient", 3]]],
+      "ours": ["Equal", 4, ["Multiply", 2, ["Totient", 0]]],
+      "theirs": "DomainError with 0: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/Totient#6",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/MoebiusMu#1~2",
+      "expr": ["MoebiusMu", -8],
+      "ours": 0,
+      "theirs": "DomainError with -8: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/MoebiusMu#1",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/MoebiusMu#2~1",
+      "expr": ["MoebiusMu", -25],
+      "ours": 0,
+      "theirs": "DomainError with -25: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/MoebiusMu#2",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/MoebiusMu#3~1",
+      "expr": ["MoebiusMu", -12],
+      "ours": 0,
+      "theirs": "DomainError with -12: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/MoebiusMu#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/MoebiusMu#3~2",
+      "expr": ["MoebiusMu", -26],
+      "ours": 1,
+      "theirs": "DomainError with -26: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/MoebiusMu#3",
+      "was": "agree"
+    },
+    {
+      "system": "julia",
+      "id": "number-theory/MoebiusMu#5~1",
+      "expr": [
+        "Add",
+        ["MoebiusMu", 2],
+        ["MoebiusMu", 2],
+        ["MoebiusMu", -3],
+        ["MoebiusMu", 4],
+        ["MoebiusMu", -2],
+        ["MoebiusMu", -1]
+      ],
+      "ours": -3,
+      "theirs": "DomainError with -3: Argument must be positive",
+      "verdict": "error",
+      "template": "number-theory/MoebiusMu#5",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Binomial#1~1",
+      "expr": ["Binomial", 5, -2],
+      "ours": 0,
+      "theirs": "1",
+      "verdict": "disagree",
+      "template": "combinatorics/Binomial#1",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Binomial#3~1",
+      "expr": ["Binomial", -7, 2],
+      "ours": 28,
+      "theirs": "0",
+      "verdict": "disagree",
+      "template": "combinatorics/Binomial#3",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Binomial#3~2",
+      "expr": ["Binomial", 4, -1],
+      "ours": 0,
+      "theirs": "1",
+      "verdict": "disagree",
+      "template": "combinatorics/Binomial#3",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Binomial#4~2",
+      "expr": ["Binomial", 5, -1],
+      "ours": 0,
+      "theirs": "1",
+      "verdict": "disagree",
+      "template": "combinatorics/Binomial#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Binomial#5~2",
+      "expr": ["Binomial", 0, -2],
+      "ours": 0,
+      "theirs": "1",
+      "verdict": "disagree",
+      "template": "combinatorics/Binomial#5",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Factorial#1~1",
+      "expr": ["Factorial", -5],
+      "ours": "ComplexInfinity",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#1",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Factorial#3~2",
+      "expr": ["Factorial", -1],
+      "ours": "ComplexInfinity",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#3",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Factorial#6~2",
+      "expr": ["Equal", ["Factorial", 5], ["Multiply", 6, ["Factorial", -1]]],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#6",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/Factorial#8~1",
+      "expr": ["Factorial", -8],
+      "ours": "ComplexInfinity",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "combinatorics/Factorial#8",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/CatalanNumber#5~1",
+      "expr": ["Divide", ["Binomial", ["Multiply", 2, -1], 10], ["Add", 5, 1]],
+      "ours": ["Rational", 11, 6],
+      "theirs": "0",
+      "verdict": "disagree",
+      "template": "combinatorics/CatalanNumber#5",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "combinatorics/CatalanNumber#6~1",
+      "expr": ["Subtract", ["Binomial", 0, 5], ["Binomial", 10, -1]],
+      "ours": 0,
+      "theirs": "-1",
+      "verdict": "disagree",
+      "template": "combinatorics/CatalanNumber#6",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#1~1",
+      "expr": ["PowerMod", 2, 10, 0],
+      "ours": ["PowerMod", 2, 10, 0],
+      "theirs": "panic: attempt to calculate with zero modulus!",
+      "verdict": "error",
+      "template": "residues/PowerMod#1",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#2~1",
+      "expr": ["PowerMod", -2, 50, -11],
+      "ours": ["PowerMod", -2, 50, -11],
+      "theirs": "-10",
+      "verdict": "inconclusive",
+      "template": "residues/PowerMod#2",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#4~1",
+      "expr": ["PowerMod", 7, 13, -33],
+      "ours": ["PowerMod", 7, 13, -33],
+      "theirs": "-20",
+      "verdict": "inconclusive",
+      "template": "residues/PowerMod#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#4~2",
+      "expr": ["PowerMod", 7, 26, -71],
+      "ours": ["PowerMod", 7, 26, -71],
+      "theirs": "-68",
+      "verdict": "inconclusive",
+      "template": "residues/PowerMod#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#9~1",
+      "expr": ["PowerMod", ["Add", ["Power", -10, 300], 1], -1, 5],
+      "ours": 1,
+      "theirs": "panic: negative exponentiation is not supported!",
+      "verdict": "error",
+      "template": "residues/PowerMod#9",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#9~2",
+      "expr": ["PowerMod", ["Add", ["Power", -20, 600], 2], 7, 0],
+      "ours": [
+        "PowerMod",
+        {
+          "num": "4149515568880992958512407863691161151012446232242436899995657329690652811412908146399707048947103794288197886611300789182395151075411775307886874834113963687061181803401509523685376000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"
+        },
+        7,
+        0
+      ],
+      "theirs": "panic: attempt to calculate with zero modulus!",
+      "verdict": "error",
+      "template": "residues/PowerMod#9",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#16~1",
+      "expr": ["PowerMod", 8, -340, 342],
+      "ours": ["PowerMod", 8, -340, 342],
+      "theirs": "panic: negative exponentiation is not supported!",
+      "verdict": "error",
+      "template": "residues/PowerMod#16",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#16~2",
+      "expr": ["PowerMod", 2, -587, 341],
+      "ours": 8,
+      "theirs": "panic: negative exponentiation is not supported!",
+      "verdict": "error",
+      "template": "residues/PowerMod#16",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#17~1",
+      "expr": [
+        "Equal",
+        ["PowerMod", ["PowerMod", 5, 6, 0], 15, -22],
+        ["PowerMod", ["PowerMod", 10, 15, 23], 6, 2]
+      ],
+      "ours": ["Equal", ["PowerMod", ["PowerMod", 5, 6, 0], 15, -22], 1],
+      "theirs": "panic: attempt to calculate with zero modulus!",
+      "verdict": "error",
+      "template": "residues/PowerMod#17",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "residues/PowerMod#17~2",
+      "expr": [
+        "Equal",
+        ["PowerMod", ["PowerMod", 5, -2, 23], -10, 23],
+        ["PowerMod", ["PowerMod", 4, 0, 9], 6, 23]
+      ],
+      "ours": "False",
+      "theirs": "panic: negative exponentiation is not supported!",
+      "verdict": "error",
+      "template": "residues/PowerMod#17",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/PrimePi#3~1",
+      "expr": ["PrimePi", -5],
+      "ours": 0,
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/PrimePi#3",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/PrimePi#4~1",
+      "expr": ["PrimePi", -2],
+      "ours": 0,
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/PrimePi#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/IsPrime#1~2",
+      "expr": ["IsPrime", -1],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/IsPrime#1",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/IsPrime#2~2",
+      "expr": ["IsPrime", -1],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/IsPrime#2",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/IsPrime#4~2",
+      "expr": ["IsPrime", -5],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/IsPrime#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/IsPrime#5~1",
+      "expr": ["IsPrime", -2],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/IsPrime#5",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/IsPrime#5~2",
+      "expr": ["IsPrime", -1],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/IsPrime#5",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "number-theory/IsPrime#7~1",
+      "expr": ["IsPrime", -2],
+      "ours": "False",
+      "theirs": "panic: a non-negative integer",
+      "verdict": "error",
+      "template": "number-theory/IsPrime#7",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "arithmetic/Sqrt#3~2",
+      "expr": ["Sqrt", ["Rational", -1, 2]],
+      "ours": ["Complex", 0, ["Divide", ["Sqrt", 2], 2]],
+      "theirs": "NaN",
+      "verdict": "disagree",
+      "template": "arithmetic/Sqrt#3",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "arithmetic/Sqrt#4~2",
+      "expr": ["Sqrt", -1],
+      "ours": ["Complex", 0, 1],
+      "theirs": "NaN",
+      "verdict": "disagree",
+      "template": "arithmetic/Sqrt#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "elementary/Cos#7~2",
+      "expr": ["Equal", ["Cos", ["Negate", ["Divide", "Pi", 3]]], ["Cos", ["Divide", "Pi", 0]]],
+      "ours": [
+        "Error",
+        ["ErrorCode", "'incompatible-type'", "'complex'", "'~oo'"],
+        "ComplexInfinity",
+        ["ErrorTrace", ["ErrorFrame", "'Cos'", 1], ["ErrorFrame", "'Equal'", 2]]
+      ],
+      "theirs": "false",
+      "verdict": "disagree",
+      "template": "elementary/Cos#7",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "elementary/Cos#8~2",
+      "expr": [
+        "Equal",
+        ["Cos", ["Divide", "Pi", 0]],
+        ["Sin", ["Subtract", ["Divide", "Pi", 2], ["Divide", "Pi", 11]]]
+      ],
+      "ours": [
+        "Error",
+        ["ErrorCode", "'incompatible-type'", "'complex'", "'~oo'"],
+        "ComplexInfinity",
+        ["ErrorTrace", ["ErrorFrame", "'Cos'", 1], ["ErrorFrame", "'Equal'", 1]]
+      ],
+      "theirs": "false",
+      "verdict": "disagree",
+      "template": "elementary/Cos#8",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "elementary/Tan#4~2",
+      "expr": ["Tan", ["Divide", "Pi", 2]],
+      "ours": "ComplexInfinity",
+      "theirs": "1.633123935319537e16",
+      "verdict": "inconclusive",
+      "template": "elementary/Tan#4",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "elementary/Tan#6~1",
+      "expr": ["Tan", ["Negate", ["Divide", "Pi", 2]]],
+      "ours": "ComplexInfinity",
+      "theirs": "-1.633123935319537e16",
+      "verdict": "inconclusive",
+      "template": "elementary/Tan#6",
+      "was": "agree"
+    },
+    {
+      "system": "rust",
+      "id": "elementary/Ln#5~1",
+      "expr": ["Equal", ["Add", ["Ln", 0], ["Ln", 6]], ["Ln", 12]],
+      "ours": "False",
+      "theirs": "true",
+      "verdict": "disagree",
+      "template": "elementary/Ln#5",
+      "was": "agree"
+    }
+  ]
+}
