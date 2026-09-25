@@ -357,10 +357,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 13,
   },
   {
-    head: "UnitStep",
-    uses: 13,
-  },
-  {
     head: "CoprimeQ",
     uses: 12,
   },
@@ -522,10 +518,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Expectation",
-    uses: 7,
-  },
-  {
-    head: "FractionalPart",
     uses: 7,
   },
   {
@@ -734,10 +726,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ProbabilityDistribution",
-    uses: 5,
-  },
-  {
-    head: "RealAbs",
     uses: 5,
   },
   {

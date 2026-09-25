@@ -314,6 +314,14 @@ export const HEADS: Record<string, string> = {
   ModularLambda: "ModularLambda",
   // ConstGlaisher is our spelling; Wolfram's is Glaisher.
   ConstGlaisher: "Glaisher",
+  // The elementary heads `@enumeratio/analytic` adds under Wolfram's own names.
+  CubeRoot: "CubeRoot",
+  IntegerPart: "IntegerPart",
+  FractionalPart: "FractionalPart",
+  RealAbs: "RealAbs",
+  RealSign: "RealSign",
+  UnitStep: "UnitStep",
+  Gudermannian: "Gudermannian",
   // Wolfram spells map composition `Composition`, and reads it right to left as we do.
   Compose: "Composition",
 

@@ -48,6 +48,8 @@ import specialFunctionsOracle from "./entries/special-functions.oracle.json" wit
 import specialFunctionsExamples from "./entries/special-functions.examples.json" with { type: "json" };
 import { analyticSpecial } from "./entries/analytic-special.ts";
 import analyticSpecialOracle from "./entries/analytic-special.oracle.json" with { type: "json" };
+import { analyticElementary } from "./entries/analytic-elementary.ts";
+import analyticElementaryOracle from "./entries/analytic-elementary.oracle.json" with { type: "json" };
 
 /** An entry file's oracle sidecar (see `scripts/oracle-scan.ts`): kernel versions, and
  * every system's run of an example, by head then by `JSON.stringify(example.expr)`. A JSON
@@ -116,6 +118,7 @@ const SIDECARS: readonly OracleSidecar[] = [
   linearAlgebraOracle,
   specialFunctionsOracle,
   analyticSpecialOracle,
+  analyticElementaryOracle,
 ];
 
 /** Every system's kernel version, as recorded by whichever sidecar last saw a scan of it. */
@@ -150,6 +153,7 @@ export const oracleSidecars: Readonly<Record<string, OracleSidecar>> = {
   "linear-algebra": linearAlgebraOracle,
   "special-functions": specialFunctionsOracle,
   "analytic-special": analyticSpecialOracle,
+  "analytic-elementary": analyticElementaryOracle,
 };
 
 /** One domain file, its entries (with `others` attached), and the stem the scan script
@@ -172,6 +176,10 @@ export const entryFiles: readonly { stem: string; entries: readonly ReferenceEnt
     ),
   },
   { stem: "analytic-special", entries: attach(analyticSpecialOracle, analyticSpecial) },
+  {
+    stem: "analytic-elementary",
+    entries: attach(analyticElementaryOracle, analyticElementary),
+  },
   { stem: "hypercomplex", entries: attach(hypercomplexOracle, hypercomplex) },
   { stem: "diagram", entries: attach(diagramOracle, diagramAlgebras) },
   { stem: "numerals", entries: attach(numeralsOracle, numerals) },

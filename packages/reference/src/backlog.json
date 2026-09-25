@@ -119,7 +119,7 @@
   "Association": {
     "wolfram": "Association",
     "summary": "A keyed collection of rules key -> value; compute-engine's Dictionary is the nearest head, and the list heads would need to accept it.",
-    "signature": "Association(k1 -> v1, …)",
+    "signature": "Association(k1 -> v1, \u2026)",
     "home": "collections",
     "neededBy": ["Append", "Count", "First", "Join", "Last", "Length", "Ordering", "Sort"],
     "examples": [
@@ -210,7 +210,7 @@
   },
   "CenteredInterval": {
     "wolfram": "CenteredInterval",
-    "summary": "A ball c ± r with rigorous (outward-rounded) arithmetic; the complex-capable sibling of Interval.",
+    "summary": "A ball c \u00b1 r with rigorous (outward-rounded) arithmetic; the complex-capable sibling of Interval.",
     "signature": "CenteredInterval(c, r)",
     "home": "analytic",
     "neededBy": [
@@ -393,40 +393,6 @@
         ],
         "category": "Applications",
         "caption": "Convergents of $\\sqrt2$ solve Pell's equations $p^2 - 2q^2 = \\pm1$"
-      }
-    ]
-  },
-  "CubeRoot": {
-    "wolfram": "CubeRoot",
-    "summary": "The real cube root of x.",
-    "signature": "CubeRoot(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["CubeRoot", 8],
-        "expected": 2
-      },
-      {
-        "expr": ["CubeRoot", -27],
-        "expected": -3,
-        "caption": "The real root of a negative number"
-      },
-      {
-        "expr": ["CubeRoot", 2.0],
-        "expected": 1.2599210498948732
-      },
-      {
-        "expr": ["CubeRoot", ["List", -8, 27]],
-        "expected": ["List", -2, 3],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["Equal", ["CubeRoot", -64], ["Root", -64, 3]],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "The same as [[Root]] with index 3"
       }
     ]
   },
@@ -621,46 +587,6 @@
       }
     ]
   },
-  "FractionalPart": {
-    "wolfram": "FractionalPart",
-    "summary": "The fractional part of x, with the sign of x: x minus its integer part.",
-    "signature": "FractionalPart(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["FractionalPart", 2.5],
-        "expected": 0.5
-      },
-      {
-        "expr": ["FractionalPart", ["Rational", 7, 2]],
-        "expected": ["Rational", 1, 2]
-      },
-      {
-        "expr": ["FractionalPart", ["Rational", -7, 2]],
-        "expected": ["Rational", -1, 2],
-        "caption": "Keeps the sign of x, unlike compute-engine's Fract"
-      },
-      {
-        "expr": ["FractionalPart", "Pi"],
-        "expected": ["Add", -3, "Pi"],
-        "category": "Scope",
-        "caption": "Exact numeric arguments stay exact"
-      },
-      {
-        "expr": ["FractionalPart", ["List", ["Rational", 7, 2], ["Rational", -1, 3]]],
-        "expected": ["List", ["Rational", 1, 2], ["Rational", -1, 3]],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["FractionalPart", 5],
-        "expected": 0,
-        "category": "Properties",
-        "caption": "Zero exactly on the integers"
-      }
-    ]
-  },
   "FrobeniusNumber": {
     "wolfram": "FrobeniusNumber",
     "summary": "The largest integer that is not a non-negative integer combination of the given positive integers.",
@@ -698,7 +624,7 @@
   },
   "FrobeniusSolve": {
     "wolfram": "FrobeniusSolve",
-    "summary": "All non-negative integer solutions x of a·x = b, lexicographically.",
+    "summary": "All non-negative integer solutions x of a\u00b7x = b, lexicographically.",
     "signature": "FrobeniusSolve(a, b)",
     "home": "number-theory",
     "neededBy": ["FrobeniusNumber"],
@@ -967,42 +893,6 @@
       }
     ]
   },
-  "Gudermannian": {
-    "wolfram": "Gudermannian",
-    "summary": "The Gudermannian function $\\operatorname{gd}(x) = 2\\arctan(\\tanh(x/2))$, linking circular and hyperbolic functions without complex numbers.",
-    "signature": "Gudermannian(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["Gudermannian", 0],
-        "expected": 0
-      },
-      {
-        "expr": ["Gudermannian", 1.5],
-        "expected": 1.1317283452505091,
-        "caption": "At a machine-precision argument"
-      },
-      {
-        "expr": ["Gudermannian", "PositiveInfinity"],
-        "expected": ["Multiply", ["Rational", 1, 2], "Pi"],
-        "category": "Scope",
-        "caption": "Horizontal asymptote $\\pi/2$"
-      },
-      {
-        "expr": ["D", ["Gudermannian", "x"], "x"],
-        "expected": ["Sech", "x"],
-        "category": "Scope",
-        "caption": "$\\operatorname{gd}'(x) = \\operatorname{sech} x$"
-      },
-      {
-        "expr": ["Gudermannian", ["Negate", "x"]],
-        "expected": ["Negate", ["Gudermannian", "x"]],
-        "category": "Properties",
-        "caption": "An odd function"
-      }
-    ]
-  },
   "HarmonicMean": {
     "wolfram": "HarmonicMean",
     "summary": "The reciprocal of the mean of the reciprocals.",
@@ -1141,60 +1031,6 @@
         "expected": ["List", 1, 2, 3],
         "category": "Scope",
         "caption": "Listable"
-      }
-    ]
-  },
-  "IntegerPart": {
-    "wolfram": "IntegerPart",
-    "summary": "The integer part of x: x truncated toward 0.",
-    "signature": "IntegerPart(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["IntegerPart", 2.4],
-        "expected": 2
-      },
-      {
-        "expr": ["IntegerPart", -2.4],
-        "expected": -2,
-        "caption": "Truncates toward 0, unlike [[Floor]]"
-      },
-      {
-        "expr": ["IntegerPart", ["Rational", 7, 2]],
-        "expected": 3
-      },
-      {
-        "expr": ["IntegerPart", ["Rational", -7, 2]],
-        "expected": -3
-      },
-      {
-        "expr": ["IntegerPart", "Pi"],
-        "expected": 3,
-        "category": "Scope",
-        "caption": "Exact numeric arguments"
-      },
-      {
-        "expr": ["IntegerPart", ["List", 2.5, -2.5]],
-        "expected": ["List", 2, -2],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["IntegerPart", ["Complex", 2.5, 3.7]],
-        "expected": ["Complex", 2, 3],
-        "category": "Scope",
-        "caption": "Complex numbers: real and imaginary parts separately"
-      },
-      {
-        "expr": [
-          "Equal",
-          ["Add", ["IntegerPart", ["Rational", -7, 2]], ["FractionalPart", ["Rational", -7, 2]]],
-          ["Rational", -7, 2]
-        ],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "$x = \\mathrm{IntegerPart}(x) + \\mathrm{FractionalPart}(x)$"
       }
     ]
   },
@@ -1463,7 +1299,7 @@
   "IsCoprime": {
     "wolfram": "CoprimeQ",
     "summary": "Tests whether integers are pairwise relatively prime.",
-    "signature": "IsCoprime(a, b, …)",
+    "signature": "IsCoprime(a, b, \u2026)",
     "home": "number-theory",
     "neededBy": ["GCD"],
     "examples": [
@@ -1566,7 +1402,7 @@
   },
   "IsQuadraticIrrational": {
     "wolfram": "QuadraticIrrationalQ",
-    "summary": "True when x is an irrational root of a quadratic with integer coefficients — exactly the numbers with an eventually periodic continued fraction.",
+    "summary": "True when x is an irrational root of a quadratic with integer coefficients \u2014 exactly the numbers with an eventually periodic continued fraction.",
     "signature": "IsQuadraticIrrational(x)",
     "home": "modular",
     "neededBy": ["ContinuedFraction"],
@@ -1966,7 +1802,7 @@
   },
   "NorlundB": {
     "wolfram": "NorlundB",
-    "summary": "The Nörlund polynomial B_n^(a), from the generating function (t/(e^t - 1))^a.",
+    "summary": "The N\u00f6rlund polynomial B_n^(a), from the generating function (t/(e^t - 1))^a.",
     "signature": "NorlundB(n, a)",
     "home": "analytic",
     "neededBy": [],
@@ -2314,7 +2150,7 @@
           1
         ],
         "category": "Scope",
-        "caption": "A polynomial in q whose coefficients count partitions in a 2 × 2 box"
+        "caption": "A polynomial in q whose coefficients count partitions in a 2 \u00d7 2 box"
       },
       {
         "expr": ["QBinomial", 6, 3, 1],
@@ -2435,42 +2271,6 @@
       }
     ]
   },
-  "RealAbs": {
-    "wolfram": "RealAbs",
-    "summary": "The absolute value of a real number x, as a function defined only on the reals.",
-    "signature": "RealAbs(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["RealAbs", -2.5],
-        "expected": 2.5,
-        "caption": "The absolute value of a real number"
-      },
-      {
-        "expr": ["RealAbs", ["Rational", -7, 2]],
-        "expected": ["Rational", 7, 2]
-      },
-      {
-        "expr": ["RealAbs", ["List", -1, 2, -3]],
-        "expected": ["List", 1, 2, 3],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["RealAbs", ["Negate", "Pi"]],
-        "expected": "Pi",
-        "category": "Scope",
-        "caption": "Exact numeric arguments"
-      },
-      {
-        "expr": ["Equal", ["RealAbs", -5], ["Abs", -5]],
-        "expected": "True",
-        "category": "Properties",
-        "caption": "Agrees with [[Abs]] on the reals"
-      }
-    ]
-  },
   "RealDigits": {
     "wolfram": "RealDigits",
     "summary": "The digits of a real number and the position of its decimal point, with the repeating block of a rational marked as a sublist.",
@@ -2524,39 +2324,6 @@
       }
     ]
   },
-  "RealSign": {
-    "wolfram": "RealSign",
-    "summary": "The sign of a real number x: -1, 0 or 1, as a function defined only on the reals.",
-    "signature": "RealSign(x)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["RealSign", -3],
-        "expected": -1
-      },
-      {
-        "expr": ["RealSign", 0],
-        "expected": 0
-      },
-      {
-        "expr": ["RealSign", 2.5],
-        "expected": 1
-      },
-      {
-        "expr": ["RealSign", ["List", -2, 0, 5]],
-        "expected": ["List", -1, 0, 1],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["RealSign", ["Subtract", ["Sqrt", 2], 2]],
-        "expected": -1,
-        "category": "Scope",
-        "caption": "Decides the sign of an exact numeric expression"
-      }
-    ]
-  },
   "RecurrenceTable": {
     "wolfram": "RecurrenceTable",
     "summary": "A table of the values of a sequence defined by a recurrence equation and initial conditions.",
@@ -2602,7 +2369,7 @@
   },
   "RiemannSiegelTheta": {
     "wolfram": "RiemannSiegelTheta",
-    "summary": "The Riemann–Siegel theta function $\\vartheta(t) = \\operatorname{Im}\\ln\\Gamma(\\tfrac14 + \\tfrac{it}{2}) - \\tfrac{t}{2}\\ln\\pi$.",
+    "summary": "The Riemann\u2013Siegel theta function $\\vartheta(t) = \\operatorname{Im}\\ln\\Gamma(\\tfrac14 + \\tfrac{it}{2}) - \\tfrac{t}{2}\\ln\\pi$.",
     "signature": "RiemannSiegelTheta(t)",
     "home": "analytic",
     "neededBy": ["Zeta"],
@@ -2624,7 +2391,7 @@
   },
   "RiemannSiegelZ": {
     "wolfram": "RiemannSiegelZ",
-    "summary": "The Riemann–Siegel function $Z(t) = e^{i\\vartheta(t)}\\zeta(\\tfrac12 + it)$, real for real $t$.",
+    "summary": "The Riemann\u2013Siegel function $Z(t) = e^{i\\vartheta(t)}\\zeta(\\tfrac12 + it)$, real for real $t$.",
     "signature": "RiemannSiegelZ(t)",
     "home": "analytic",
     "neededBy": ["Zeta"],
@@ -2903,52 +2670,6 @@
         "expr": ["SquaresR", 8, 3],
         "expected": 448,
         "category": "Scope"
-      }
-    ]
-  },
-  "UnitStep": {
-    "wolfram": "UnitStep",
-    "summary": "The unit step function: 0 for x < 0 and 1 for x >= 0.",
-    "signature": "UnitStep(x1, x2, ...)",
-    "home": "analytic",
-    "neededBy": [],
-    "examples": [
-      {
-        "expr": ["UnitStep", -1],
-        "expected": 0
-      },
-      {
-        "expr": ["UnitStep", 0],
-        "expected": 1,
-        "caption": "1 at 0, unlike Heaviside's 1/2"
-      },
-      {
-        "expr": ["UnitStep", 2.5],
-        "expected": 1
-      },
-      {
-        "expr": ["UnitStep", ["List", -1, 0, 1]],
-        "expected": ["List", 0, 1, 1],
-        "category": "Scope",
-        "caption": "Threads element-wise over a list"
-      },
-      {
-        "expr": ["UnitStep", 1, 2],
-        "expected": 1,
-        "category": "Scope",
-        "caption": "Several arguments: the product of their unit steps"
-      },
-      {
-        "expr": ["UnitStep", 1, -1],
-        "expected": 0,
-        "category": "Scope",
-        "caption": "Zero as soon as any argument is negative"
-      },
-      {
-        "expr": ["UnitStep", ["Subtract", "Pi", 3]],
-        "expected": 1,
-        "category": "Scope",
-        "caption": "Exact numeric arguments"
       }
     ]
   },
