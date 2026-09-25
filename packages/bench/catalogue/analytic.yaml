@@ -1,0 +1,99 @@
+# Special functions, at machine precision and at a digit count. Answers with more digits than
+# a double holds are MathJSON numeric strings, `{ num: "…" }`, so YAML never rounds them.
+# Inputs to a digit-precision case must be exact in binary and decimal alike (3.5, 1/2, not
+# 0.3): mpmath reads a float's binary value, Wolfram its decimal digits, and at 30 digits
+# the two inputs would differ.
+
+Zeta:
+  # Not ζ(3): mpmath and Wolfram answer that from a stored constant.
+  - id: zeta-3p5-to-30-digits
+    role: bench
+    expr: [Zeta, 3.5]
+    expected: { num: "1.12673386731705664642781249186" }
+    bench:
+      tags: [special-functions]
+      precision: 30
+PolyLog:
+  - id: polylog-3-one-quarter-to-30-digits
+    role: bench
+    expr: [PolyLog, 3, 0.25]
+    expected: { num: "0.2584613957965733052880001298737" }
+    bench:
+      tags: [special-functions]
+      precision: 30
+  - id: polylog-3-one-half-to-30-digits
+    role: bench
+    expr: [PolyLog, 3, [Rational, 1, 2]]
+    expected: { num: "0.537213193608040200940623225595" }
+    bench:
+      tags: [special-functions]
+      source: Arb paper (arXiv:1611.02831)
+      precision: 30
+HurwitzZeta:
+  - id: hurwitz-zeta-random-machine
+    role: bench
+    expr: [HurwitzZeta, $s, $a]
+    bench:
+      tags: [special-functions]
+      precision: machine
+      sample: { seed: 20260925, count: 16, draw: { a: [real, 0.1, 5], s: [real, 1.5, 10] } }
+  - id: hurwitz-zeta-machine
+    role: bench
+    expr: [HurwitzZeta, 2.5, 0.3]
+    expected: 21.0692392022477
+    bench:
+      tags: [special-functions]
+      precision: machine
+Gamma:
+  - id: gamma-random-reals-machine
+    role: bench
+    expr: [Gamma, $x]
+    bench:
+      tags: [special-functions]
+      precision: machine
+      sample: { seed: 20260925, count: 16, draw: { x: [real, 0.5, 50] } }
+  - id: gamma-20p5-to-100-digits
+    role: bench
+    expr: [Gamma, 20.5]
+    expected:
+      {
+        num: "540624298233507504.4736873647808221412273166395781714789601948262439262966163731666261810160445254373",
+      }
+    bench:
+      tags: [special-functions]
+      source: Arb
+      precision: 100
+PolyGamma:
+  - id: trigamma-3p5-to-30-digits
+    role: bench
+    expr: [PolyGamma, 1, 3.5]
+    expected: { num: "0.3303577561002348649728010554936" }
+    bench:
+      tags: [special-functions]
+      precision: 30
+LerchPhi:
+  - id: lerchphi-half-2-three-quarters-to-30-digits
+    role: bench
+    expr: [LerchPhi, 0.5, 2, 0.75]
+    expected: { num: "1.987264297838586364287617450812" }
+    bench:
+      tags: [special-functions]
+      precision: 30
+Sin:
+  - id: sin-24-to-the-40
+    role: bench
+    expr: [Sin, [Power, 24, 40]]
+    expected: 0.400083152719766
+    bench:
+      tags: [special-functions, argument-reduction]
+      source: ours (#176)
+      precision: machine
+Cos:
+  - id: cos-10-to-the-100
+    role: bench
+    expr: [Cos, [Power, 10, 100]]
+    expected: -0.9280819050746553
+    bench:
+      tags: [special-functions, argument-reduction]
+      source: ours (#176)
+      precision: machine

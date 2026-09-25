@@ -43,11 +43,11 @@ examples:
     caption: $\sec 30^\circ = \frac{2\sqrt3}{3}$, exactly
   - id: a-machine-precision-argument-evaluates
     expr: [Sec, 1.2]
-    expected: {num: '2.75970360133240645689'}
+    expected: { num: "2.75970360133240645689" }
     caption: A machine-precision argument evaluates numerically
   - id: n-of-an-exact-argument-gives-an-arbitrary
     expr: [N, [Sec, [Rational, 6, 5]]]
-    expected: {num: '2.75970360133240645689'}
+    expected: { num: "2.75970360133240645689" }
     category: Scope
     caption: N(...) of an exact argument gives an arbitrary-precision value
   - id: evaluates-at-a-complex-argument
@@ -56,8 +56,21 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr: [Sec, [List, [List, [Multiply, 5, [Divide, Pi, 6]], 0], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 4]]]]]
-    expected: [List, [List, [Multiply, [Rational, -2, 3], [Sqrt, 3]], 1], [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], [Sqrt, 2]]]
+    expr:
+      [
+        Sec,
+        [
+          List,
+          [List, [Multiply, 5, [Divide, Pi, 6]], 0],
+          [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 4]]],
+        ],
+      ]
+    expected:
+      [
+        List,
+        [List, [Multiply, [Rational, -2, 3], [Sqrt, 3]], 1],
+        [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], [Sqrt, 2]],
+      ]
     category: Scope
     caption: Threads element-wise over a matrix
   - id: sec-pi-12-sqrt-6-sqrt-2

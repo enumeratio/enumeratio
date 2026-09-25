@@ -1,7 +1,7 @@
 name: PalindromicPrimes
 domain: Collections
 signature: PalindromicPrimes
-summary: 'The palindromic primes $2, 3, 5, 7, 11, 101, …$: primes that read the same forwards and backwards in base 10.'
+summary: "The palindromic primes $2, 3, 5, 7, 11, 101, …$: primes that read the same forwards and backwards in base 10."
 signatures:
   - call: PalindromicPrimes
     description: the prime $p$ whose decimal digits are a palindrome, an indexed collection of open infinitude.

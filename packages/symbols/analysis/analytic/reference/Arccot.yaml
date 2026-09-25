@@ -10,7 +10,7 @@ details:
 examples:
   - id: pi-4-numerically-n-forces-the-fold-plain
     expr: [N, [Arccot, 1]]
-    expected: {num: '0.785398163397448309616'}
+    expected: { num: "0.785398163397448309616" }
     caption: $\pi/4$, numerically -- N(...) forces the fold plain evaluation withholds
   - id: undoes-cot-cot-arccot-x-x
     expr: [Equal, [Cot, [Arccot, 1]], 1]
@@ -23,7 +23,7 @@ examples:
     caption: Folds to $\pi/4$ exactly, as [[Arctan]] does at 1
   - id: a-machine-precision-argument-evaluates
     expr: [Arccot, 0.5]
-    expected: {num: '1.10714871779409050302'}
+    expected: { num: "1.10714871779409050302" }
     caption: A machine-precision argument evaluates numerically
   - id: arccot-0-pi-2
     expr: [Arccot, 0]

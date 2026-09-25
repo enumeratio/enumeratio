@@ -1,7 +1,7 @@
 name: Descents
 domain: Permutation statistics
 signature: Descents(p)
-summary: 'The number of descents of $p$: positions $i$ with $p_i > p_{i+1}$.'
+summary: "The number of descents of $p$: positions $i$ with $p_i > p_{i+1}$."
 signatures:
   - call: Descents(p)
     description: the descent count of a one-line permutation $p$

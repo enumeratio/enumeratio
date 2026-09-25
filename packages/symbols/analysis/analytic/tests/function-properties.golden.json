@@ -1,0 +1,266 @@
+[
+  {
+    "id": "domain-poly",
+    "head": "FunctionDomain",
+    "args": [["Power", "x", 2], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "domain-reciprocal",
+    "head": "FunctionDomain",
+    "args": [["Divide", 1, "x"], "x"],
+    "expected": ["Or", ["Less", "x", 0], ["Less", 0, "x"]]
+  },
+  {
+    "id": "domain-two-real-poles",
+    "head": "FunctionDomain",
+    "args": [["Divide", 1, ["Add", ["Power", "x", 2], -1]], "x"],
+    "expected": ["Or", ["Less", "x", -1], ["Less", -1, "x", 1], ["Less", 1, "x"]]
+  },
+  {
+    "id": "domain-sqrt-quadratic-outside",
+    "head": "FunctionDomain",
+    "args": [["Sqrt", ["Add", ["Power", "x", 2], -1]], "x"],
+    "expected": ["Or", ["LessEqual", "x", -1], ["LessEqual", 1, "x"]]
+  },
+  {
+    "id": "domain-sqrt-quadratic-bounded",
+    "head": "FunctionDomain",
+    "args": [["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 4]], "x"],
+    "expected": ["LessEqual", -2, "x", 2]
+  },
+  {
+    "id": "domain-log-affine",
+    "head": "FunctionDomain",
+    "args": [["Ln", ["Subtract", 2, "x"]], "x"],
+    "expected": ["Less", "x", 2]
+  },
+  {
+    "id": "domain-monomial-denominator",
+    "head": "FunctionDomain",
+    "args": [["Power", "x", -3], "x"],
+    "expected": ["Or", ["Less", "x", 0], ["Less", 0, "x"]]
+  },
+  {
+    "id": "domain-tan-declines",
+    "head": "FunctionDomain",
+    "args": [["Tan", "x"], "x"],
+    "expected": ["FunctionDomain", ["Tan", "x"], "x"]
+  },
+  {
+    "id": "domain-multivariate-declines",
+    "head": "FunctionDomain",
+    "args": [["Multiply", "x", "y"], "x"],
+    "expected": ["FunctionDomain", ["Multiply", "x", "y"], "x"]
+  },
+  {
+    "id": "range-parabola",
+    "head": "FunctionRange",
+    "args": [["Power", "x", 2], "x", "y"],
+    "expected": ["LessEqual", 0, "y"]
+  },
+  {
+    "id": "range-sine",
+    "head": "FunctionRange",
+    "args": [["Sin", "x"], "x", "y"],
+    "expected": ["LessEqual", -1, "y", 1]
+  },
+  {
+    "id": "range-exp",
+    "head": "FunctionRange",
+    "args": [["Exp", "x"], "x", "y"],
+    "expected": ["Less", 0, "y"]
+  },
+  {
+    "id": "range-quadratic-denominator-declines",
+    "head": "FunctionRange",
+    "args": [["Divide", 1, ["Add", ["Power", "x", 2], -1]], "x", "y"],
+    "expected": ["FunctionRange", ["Divide", 1, ["Add", ["Power", "x", 2], -1]], "x", "y"]
+  },
+  {
+    "id": "monotonicity-cubic",
+    "head": "FunctionMonotonicity",
+    "args": [["Power", "x", 3], "x"],
+    "expected": 1
+  },
+  {
+    "id": "monotonicity-parabola-indeterminate",
+    "head": "FunctionMonotonicity",
+    "args": [["Power", "x", 2], "x"],
+    "expected": "Indeterminate"
+  },
+  {
+    "id": "monotonicity-exp",
+    "head": "FunctionMonotonicity",
+    "args": [["Exp", "x"], "x"],
+    "expected": 1
+  },
+  {
+    "id": "monotonicity-restricted-domain-indeterminate",
+    "head": "FunctionMonotonicity",
+    "args": [["Sqrt", "x"], "x"],
+    "expected": "Indeterminate"
+  },
+  {
+    "id": "convexity-parabola",
+    "head": "FunctionConvexity",
+    "args": [["Power", "x", 2], "x"],
+    "expected": 1
+  },
+  {
+    "id": "convexity-cubic-indeterminate",
+    "head": "FunctionConvexity",
+    "args": [["Power", "x", 3], "x"],
+    "expected": "Indeterminate"
+  },
+  {
+    "id": "convexity-exp",
+    "head": "FunctionConvexity",
+    "args": [["Exp", "x"], "x"],
+    "expected": 1
+  },
+  {
+    "id": "sign-square",
+    "head": "FunctionSign",
+    "args": [["Power", "x", 2], "x"],
+    "expected": 1
+  },
+  {
+    "id": "sign-cubic-indeterminate",
+    "head": "FunctionSign",
+    "args": [["Power", "x", 3], "x"],
+    "expected": "Indeterminate"
+  },
+  {
+    "id": "sign-rational-always-positive",
+    "head": "FunctionSign",
+    "args": [["Divide", 1, ["Add", ["Power", "x", 2], 1]], "x"],
+    "expected": 1
+  },
+  {
+    "id": "injective-reciprocal",
+    "head": "FunctionInjective",
+    "args": [["Divide", 1, "x"], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "injective-parabola-false",
+    "head": "FunctionInjective",
+    "args": [["Power", "x", 2], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "injective-affine",
+    "head": "FunctionInjective",
+    "args": [["Add", ["Multiply", 2, "x"], 1], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "surjective-odd-poly",
+    "head": "FunctionSurjective",
+    "args": [["Power", "x", 3], "x", "Reals"],
+    "expected": "True"
+  },
+  {
+    "id": "surjective-exp-false",
+    "head": "FunctionSurjective",
+    "args": [["Exp", "x"], "x", "Reals"],
+    "expected": "False"
+  },
+  {
+    "id": "surjective-unsupported-codomain-declines",
+    "head": "FunctionSurjective",
+    "args": [["Power", "x", 3], "x", "Integers"],
+    "expected": ["FunctionSurjective", ["Power", "x", 3], "x", "Integers"]
+  },
+  {
+    "id": "singularities-pole",
+    "head": "FunctionSingularities",
+    "args": [["Divide", 1, "x"], "x"],
+    "expected": ["Equal", "x", 0]
+  },
+  {
+    "id": "singularities-sqrt-boundary-included",
+    "head": "FunctionSingularities",
+    "args": [["Sqrt", "x"], "x"],
+    "expected": ["LessEqual", "x", 0]
+  },
+  {
+    "id": "singularities-poly-false",
+    "head": "FunctionSingularities",
+    "args": [["Power", "x", 2], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "discontinuities-tan",
+    "head": "FunctionDiscontinuities",
+    "args": [["Tan", "x"], "x"],
+    "expected": ["Equal", ["Cos", "x"], 0]
+  },
+  {
+    "id": "analytic-sine-true",
+    "head": "FunctionAnalytic",
+    "args": [["Sin", "x"], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "analytic-reciprocal-false",
+    "head": "FunctionAnalytic",
+    "args": [["Divide", 1, "x"], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "analytic-sqrt-false",
+    "head": "FunctionAnalytic",
+    "args": [["Sqrt", "x"], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "meromorphic-reciprocal-true",
+    "head": "FunctionMeromorphic",
+    "args": [["Divide", 1, "x"], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "meromorphic-tan-true",
+    "head": "FunctionMeromorphic",
+    "args": [["Tan", "x"], "x"],
+    "expected": "True"
+  },
+  {
+    "id": "meromorphic-log-false",
+    "head": "FunctionMeromorphic",
+    "args": [["Ln", "x"], "x"],
+    "expected": "False"
+  },
+  {
+    "id": "period-sine",
+    "head": "FunctionPeriod",
+    "args": [["Sin", "x"], "x"],
+    "expected": ["Multiply", 2, "Pi"]
+  },
+  {
+    "id": "period-tangent",
+    "head": "FunctionPeriod",
+    "args": [["Tan", "x"], "x"],
+    "expected": "Pi"
+  },
+  {
+    "id": "period-scaled-argument",
+    "head": "FunctionPeriod",
+    "args": [["Sin", ["Multiply", 2, "x"]], "x"],
+    "expected": "Pi"
+  },
+  {
+    "id": "period-exp-not-periodic",
+    "head": "FunctionPeriod",
+    "args": [["Exp", "x"], "x"],
+    "expected": 0
+  },
+  {
+    "id": "period-poly-not-periodic",
+    "head": "FunctionPeriod",
+    "args": [["Power", "x", 2], "x"],
+    "expected": 0
+  }
+]

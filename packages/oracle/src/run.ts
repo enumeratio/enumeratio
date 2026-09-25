@@ -194,12 +194,7 @@ async function runJulia(
 ): Promise<Result[]> {
   // A JSON string is a Julia string literal once `$` stops interpolating.
   const list = sources.map((source) => JSON.stringify(source).replace(/\$/g, "\\$")).join(",\n");
-  const program = `using ${using}
-show_oracle(x) = string(x)
-show_oracle(x::Rational) = string(Float64(x))
-show_oracle(x::QQFieldElem) = string(Float64(x))
-show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
-${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}
+  const program = `${juliaHeader(using, preamble)}
 for (i, src) in enumerate([${list}])
     try
         println("<<", i, ">>", show_oracle(Core.eval(Main, Meta.parse(src))))
@@ -213,6 +208,14 @@ end
   );
   return "out" in run ? collect(run.out, sources.length) : failAll(sources.length, run.reason);
 }
+
+/** The lines every Julia program starts with: the packages, and how a value prints for the scan. */
+const juliaHeader = (using: string, preamble?: string): string => `using ${using}
+show_oracle(x) = string(x)
+show_oracle(x::Rational) = string(Float64(x))
+show_oracle(x::QQFieldElem) = string(Float64(x))
+show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
+${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}`;
 
 /** Single-threaded, with the GC told to stay under three quarters of the cap. */
 export const juliaFlags = (project: string): string[] => [
@@ -263,17 +266,15 @@ async function runLean(sources: readonly string[]): Promise<Result[]> {
   return results;
 }
 
+const RUST_HEADER = ["#![allow(unused_parens, unused_imports)]", "use enumeratio_oracle::*;"];
+
 /** Rust: every item of the batch as one closure in `rust/src/bin/batch.rs`, built against the
  * `rust/` crate's library (its adapters) and run. A panic costs its own item (`item` catches it); a compile
  * error would cost the whole batch, so an item rustc rejects is answered with its error and
  * the rest rebuilt without it. */
 async function runRust(sources: readonly string[]): Promise<Result[]> {
   const crate = local("rust");
-  const header = [
-    "#![allow(unused_parens, unused_imports)]",
-    "use enumeratio_oracle::*;",
-    "fn main() {",
-  ];
+  const header = [...RUST_HEADER, "fn main() {"];
   const results: Result[] = failAll(sources.length, "no output");
   const live = new Set(sources.map((_, i) => i));
   for (let attempt = 0; attempt < sources.length + 1 && live.size > 0; attempt++) {
@@ -540,6 +541,68 @@ def enumeratio_max(*args):
 def enumeratio_min(*args):
     return min(_enumeratio_flatten(list(args)))
 `;
+
+export interface Prelude {
+  readonly binary: string;
+  readonly preamble: string;
+  readonly evaluate?: (source: string) => string;
+  readonly printer?: string;
+  readonly project?: string;
+}
+
+/**
+ * What a program for `system` has to start with so emitted sources mean what they mean in a
+ * scan: imports, helpers and value printers. `evaluate` wraps a source string for the Python
+ * family (Sage's preparser only runs through `sage_eval`); `printer` names the printer the scan
+ * compares with. For the benchmark harnesses (`@enumeratio/bench`), which must run the same
+ * sources the same way.
+ */
+export function preludeFor(system: System): Prelude {
+  switch (system) {
+    case "wolfram":
+      return { binary: "wolframscript", preamble: "" };
+    case "sympy":
+      return {
+        binary: "python3",
+        preamble: `from sympy import *\n${SYMPY_PREAMBLE}\n${PY_VALUE}`,
+        printer: "enumeratio_value",
+      };
+    case "mpmath":
+      return {
+        binary: "python3",
+        preamble: `from mpmath import *\nmp.dps = 30\n${PY_VALUE}`,
+        printer: "enumeratio_value",
+      };
+    case "sage":
+      return {
+        binary: "sage",
+        preamble: `from sage.misc.sage_eval import sage_eval\n${SAGE_PREAMBLE}`,
+        evaluate: (src) => `sage_eval(${src}, locals=globals())`,
+        printer: "enumeratio_value",
+      };
+    case "oscar":
+      return {
+        binary: "julia",
+        preamble: juliaHeader("Oscar", join(local("oscar"), "preamble.jl")),
+        printer: "show_oracle",
+        project: local("oscar"),
+      };
+    case "julia":
+      return {
+        binary: "julia",
+        preamble: juliaHeader("Nemo, Combinatorics"),
+        printer: "show_oracle",
+        project: local("julia"),
+      };
+    case "mathlib4":
+      return {
+        binary: "lake",
+        preamble: [...LEAN_IMPORTS.map((module) => `import ${module}`), "open Nat"].join("\n"),
+      };
+    case "rust":
+      return { binary: "cargo", preamble: RUST_HEADER.join("\n"), project: local("rust") };
+  }
+}
 
 export async function runIn(system: System, sources: readonly string[]): Promise<Result[]> {
   const results: Result[] = [];

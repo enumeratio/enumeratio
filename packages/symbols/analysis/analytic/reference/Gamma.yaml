@@ -9,7 +9,7 @@ signatures:
     description: the upper incomplete gamma function $\Gamma(s, z) = \int_z^\infty t^{s-1} e^{-t}\,dt$.
   - call: Gamma(s, z0, z1)
     description: the generalized incomplete gamma $\Gamma(s, z_0) - \Gamma(s, z_1) = \int_{z_0}^{z_1} t^{s-1} e^{-t}\,dt$; at $z_0 = 0$ the LOWER incomplete gamma $\gamma(s, z_1)$.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - 'Extends the factorial: $\Gamma(n) = (n-1)!$ for positive integers n, so [[Factorial]] is $\Gamma(n+1)$.'
   - 'Functional equation: $\Gamma(z+1) = z\,\Gamma(z)$.'
@@ -26,7 +26,7 @@ examples:
     caption: A pole of Gamma
   - id: a-floating-point-argument-evaluates-directly-to
     expr: [Gamma, 2.5]
-    expected: {num: '1.32934038817913702047'}
+    expected: { num: "1.32934038817913702047" }
     caption: A floating-point argument evaluates directly to a high-precision decimal
   - id: threads-over-a-list-so-poles-evaluate-concretely
     expr: [Gamma, [List, 0, -1]]
@@ -43,7 +43,12 @@ examples:
     category: Properties
     caption: Functional equation $\Gamma(z+1) = z\,\Gamma(z)$, here at $z = 5$
   - id: reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z
-    expr: [Equal, [Multiply, [Gamma, [Rational, 1, 3]], [Gamma, [Rational, 2, 3]]], [Divide, Pi, [Sin, [Divide, Pi, 3]]]]
+    expr:
+      [
+        Equal,
+        [Multiply, [Gamma, [Rational, 1, 3]], [Gamma, [Rational, 2, 3]]],
+        [Divide, Pi, [Sin, [Divide, Pi, 3]]],
+      ]
     expected: True
     category: Properties
     caption: Reflection formula $\Gamma(z)\Gamma(1-z) = \pi/\sin(\pi z)$, here at $z = 1/3$
@@ -97,7 +102,7 @@ examples:
     caption: "Now that $\\Gamma(2, z)$ has a closed form, the three-argument difference reduces through it too: $\\Gamma(2, 0, z) = 1 - (1+z)e^{-z}$. Wolfram's bare `Gamma[2, 0, z]` stays unevaluated (only `FunctionExpand` reaches this); this engine reduces both"
   - id: a-machine-precision-argument-gamma-4-5-11-6317
     expr: [Gamma, 4.5]
-    expected: {num: '11.6317283965674489291'}
+    expected: { num: "11.6317283965674489291" }
     caption: 'A machine-precision argument: $\Gamma(4.5) = 11.6317\ldots$'
   - id: gamma-5-4-24
     expr: [Gamma, 5]
@@ -125,7 +130,7 @@ examples:
     caption: $\Gamma(\infty) = \infty$
   - id: values-far-past-the-double-range-gamma-200-5
     expr: [Gamma, 200.5]
-    expected: {num: '5.57316894480137913364e+373'}
+    expected: { num: "5.57316894480137913364e+373" }
     category: Scope
     caption: 'Values far past the double range: $\Gamma(200.5) \approx 5.57 \times 10^{373}$'
   - id: two-arguments-the-upper-incomplete-gamma-gamma-5
@@ -145,7 +150,12 @@ examples:
     caption: $\Gamma(2, 1) = 2/e$, the same closed form at an exact argument
   - id: listable-threads-elementwise-over-a-matrix-and
     expr: [Gamma, 2, [List, [List, [Rational, 7, 2], 0], [List, 0, [Rational, 13, 2]]]]
-    expected: [List, [List, [Divide, 9, [Multiply, 2, [Power, ExponentialE, [Rational, 7, 2]]]], 1], [List, 1, [Divide, 15, [Multiply, 2, [Power, ExponentialE, [Rational, 13, 2]]]]]]
+    expected:
+      [
+        List,
+        [List, [Divide, 9, [Multiply, 2, [Power, ExponentialE, [Rational, 7, 2]]]], 1],
+        [List, 1, [Divide, 15, [Multiply, 2, [Power, ExponentialE, [Rational, 13, 2]]]]],
+      ]
     category: Scope
     caption: 'Listable: threads elementwise over a matrix, and each entry reduces ($\Gamma(2, 0) = 1$)'
   - id: interval-arithmetic-the-image-of-1-4-1-5-whose
@@ -180,12 +190,12 @@ examples:
     caption: $\Gamma'(x) = \Gamma(x)\,\psi(x)$, so the logarithmic derivative is [[Digamma]]
   - id: gamma-i-2-pi-sinh-pi-0-27203
     expr: [N, [Power, [Abs, [Gamma, ImaginaryUnit]], 2]]
-    expected: {num: '0.272029054982132823542'}
+    expected: { num: "0.272029054982132823542" }
     category: Neat examples
     caption: $|\Gamma(i)|^2 = \pi/\sinh\pi = 0.27203\ldots$
   - id: to-40-significant-digits-every-one-correctly
     expr: [N, [Gamma, [Rational, 1, 3]], 40]
-    expected: {num: '2.678938534707747633655692940974677644129'}
+    expected: { num: "2.678938534707747633655692940974677644129" }
     category: Scope
     caption: To 40 significant digits, every one correctly rounded
 seeAlso:

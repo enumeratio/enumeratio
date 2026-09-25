@@ -1,7 +1,7 @@
 name: Records
 domain: Permutation statistics
 signature: Records(p)
-summary: 'The number of records (left-to-right maxima) of $p$: positions $i$ with $p_i > p_j$ for all $j < i$.'
+summary: "The number of records (left-to-right maxima) of $p$: positions $i$ with $p_i > p_j$ for all $j < i$."
 signatures:
   - call: Records(p)
     description: the record count of a one-line permutation $p$

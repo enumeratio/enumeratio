@@ -1,14 +1,14 @@
 name: OdiousNumbers
 domain: Collections
 signature: OdiousNumbers
-summary: 'The odious numbers $1, 2, 4, 7, 8, …$: positive integers with an odd number of 1-bits.'
+summary: "The odious numbers $1, 2, 4, 7, 8, …$: positive integers with an odd number of 1-bits."
 signatures:
   - call: OdiousNumbers
     description: the $n$ with an odd binary popcount, an infinite indexed collection.
 details:
   - 'A lazy indexed collection: $Count(OdiousNumbers) = +\infty$, the complement of [[EvilNumbers]] among the positive integers. OEIS A000069.'
   - $At(OdiousNumbers, k)$ unranks by scanning forward -- $At(OdiousNumbers, 4) = 7$.
-  - 'Membership goes through [[Element]]: $Element(7, OdiousNumbers)$ is true ($111_2$, three 1-bits), $Element(6, OdiousNumbers)$ is false ([[EvilNumbers]]).'
+  - "Membership goes through [[Element]]: $Element(7, OdiousNumbers)$ is true ($111_2$, three 1-bits), $Element(6, OdiousNumbers)$ is false ([[EvilNumbers]])."
 examples: []
 enumerate:
   expr: Take(OdiousNumbers, 20)

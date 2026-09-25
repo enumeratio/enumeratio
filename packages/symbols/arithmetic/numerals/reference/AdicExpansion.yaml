@@ -10,7 +10,7 @@ signatures:
     description: the same digits as a list, LEAST significant first — the only order that lists something with no left end
     library: enumeratio-numerals
 details:
-  - 'The ellipsis marks the infinite left end and is dropped only when nothing hides there: an exact non-negative integer (times $b^v$)'
+  - "The ellipsis marks the infinite left end and is dropped only when nothing hides there: an exact non-negative integer (times $b^v$)"
   - Digits past the point are the negative-valuation places, prime bases only
   - Digits $\ge 10$ are bracketed, so base 16 reads `…[15][15][15]`
 examples:

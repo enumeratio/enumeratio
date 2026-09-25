@@ -81,6 +81,7 @@ export interface Plan {
     readonly precision: Precision;
     /** Soft cap for the whole measurement, in seconds. */
     readonly budget: number;
+    readonly tags?: readonly string[];
     /** The pinned answer as text, for the correctness gate; absent for sampled cases. */
     readonly expected?: string;
     readonly systems: Readonly<Partial<Record<BenchSystem, PlanCell>>>;
@@ -161,4 +162,23 @@ export interface Protocol {
   readonly minSampleMs: number;
   /** A single call under this is left out of cross-system comparison. */
   readonly tooFastNs: number;
+}
+
+/**
+ * `index.json` at the root of the `bench-data` branch (design/benchmarking.md §7): every run,
+ * newest last. Each run's files are `runs/<id>/plan.json` and `runs/<id>/<system>.json`.
+ */
+export interface BenchIndex {
+  readonly schema: 1;
+  readonly runs: readonly {
+    readonly id: string;
+    readonly sha: string;
+    readonly date: string;
+    readonly trigger: string;
+    readonly url?: string;
+    /** The GitHub job that produced it: systems in one job share a machine and a time window. */
+    readonly job: string;
+    readonly systems: readonly BenchSystem[];
+    readonly machine: string;
+  }[];
 }

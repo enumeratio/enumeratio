@@ -3,24 +3,39 @@ layout: home
 hero:
   name: enumeratio
   text: Mathematics, enumerated
-  tagline: A family of symbol definitions on the Cortex compute-engine and Epsil — collections, statistics and maps first, the rest of mathematics as far as it makes sense — with notatio, the notebook and explorer that lets you turn every piece over by hand.
+  tagline: Mathematics you can compute, draw and check — every object with a home, every claim with a test, all live in your browser.
   actions:
     - theme: brand
-      text: Open the notebook
-      link: /playground/notebook
+      text: Open a worksheet
+      link: /worksheet/
     - theme: alt
-      text: Symbol reference
-      link: /reference/symbol/
+      text: Explore the collections
+      link: /reference/collections/
     - theme: alt
-      text: Compute Engine
-      link: https://cortexjs.io/compute-engine/
+      text: Read the docs
+      link: /docs/
 features:
-  - title: Collections, ranked and unranked
-    details: Subsets, permutations, partitions, Dyck paths, tableaux, trees — lazy indexed families with closed-form counts, so Count and At never build the list.
-  - title: Statistics and maps
-    details: Combinatorial statistics and maps as definitions over their carriers, evaluable on any element and checked against FindStat by value.
-  - title: Checked, not claimed
-    details: Every symbol crosswalks to Wikipedia, MathWorld, the DLMF, Fungrim, the OEIS, Wolfram, Sage and more — and where a claim can be computed, it is.
-  - title: notatio
-    details: The interactive notebook, plots, glyphs and reactive prose controls — the interface side of the language, and the notation it reads and writes, in a browser tab.
+  - title: <a href="/nucleus/">nucleus</a>
+    details: The kernel. Evaluation and compilation on the <a href="https://cortexjs.io/compute-engine/">Cortex Compute Engine</a> — bounded in time and memory, isolated in workers, and compiled to <a href="/reference/formats/output/">JavaScript, GLSL and WGSL</a> down to the GPU.
+  - title: <a href="/aestimatio/">aestimatio</a>
+    details: The mathematical core — valuation and estimation. Residues, numerals and adèles, special functions to arbitrary precision, and algebras from Clifford to Hecke — every head in the <a href="/reference/symbol/">symbol reference</a>.
+  - title: <a href="/notatio/">notatio</a>
+    details: How it is written and shown. A syntax that prints back as typed, and a <a href="/reference/components/">component</a> for every head that draws — plain HTML, Vue or React — up to the <a href="/worksheet/">worksheet</a> and the <a href="/docs/cli/">command line</a>.
+  - title: <a href="/enumeratio/">enumeratio</a>
+    details: A home for every object. <a href="/reference/collections/">Collections</a> you can count and index without listing, <a href="/reference/statistics/">statistics</a> and <a href="/reference/maps/">maps</a> over them, and every claim checked against the OEIS, FindStat, the DLMF, Wolfram and Sage.
 ---
+
+<style>
+.VPFeature .title a {
+  color: inherit;
+  text-decoration: none;
+}
+.VPFeature .title a:hover {
+  color: var(--vp-c-brand-1);
+}
+.VPFeature .details a {
+  color: var(--vp-c-brand-1);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+</style>

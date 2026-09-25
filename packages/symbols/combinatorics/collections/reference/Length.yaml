@@ -10,7 +10,7 @@ signatures:
     library: enumeratio-collections
 details:
   - Works on any collection head, not just $List$ — e.g. $Set$.
-  - 'Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]].'
+  - "Additive over concatenation: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]."
   - An atom has no parts, so its length is 0 — it isn't a type error.
   - Any other expression's length is its number of top-level operands, e.g. the number of terms in a sum.
   - See [[Count]] to count occurrences of a specific value instead of every element.
@@ -26,7 +26,12 @@ examples:
     expected: 3
     caption: Works on any collection, not just $List$
   - id: length-join-a-b-length-a-length-b-see-join
-    expr: [Equal, [Length, [Join, [List, 1, 2, 3], [List, 4, 5]]], [Add, [Length, [List, 1, 2, 3]], [Length, [List, 4, 5]]]]
+    expr:
+      [
+        Equal,
+        [Length, [Join, [List, 1, 2, 3], [List, 4, 5]]],
+        [Add, [Length, [List, 1, 2, 3]], [Length, [List, 4, 5]]],
+      ]
     expected: True
     category: Properties
     caption: $Length(Join(A, B)) = Length(A) + Length(B)$. See [[Join]]
@@ -57,7 +62,7 @@ examples:
     expr: [Length, [Add, a, b, c, d]]
     expected: 4
     category: Scope
-    caption: 'Any expression: the number of terms in a sum'
+    caption: "Any expression: the number of terms in a sum"
   - id: the-number-of-arguments-of-a-call-counting-only
     expr: [Length, [f, [g, x, y], z]]
     expected: 2

@@ -1,7 +1,7 @@
 name: SmithNumbers
 domain: Collections
 signature: SmithNumbers
-summary: 'The Smith numbers $4, 22, 27, 58, 85, …$: composite integers whose digit sum equals the digit sum of their prime factors (with multiplicity).'
+summary: "The Smith numbers $4, 22, 27, 58, 85, …$: composite integers whose digit sum equals the digit sum of their prime factors (with multiplicity)."
 signatures:
   - call: SmithNumbers
     description: the composite $n$ with $\mathrm{digitSum}(n) = \sum \mathrm{digitSum}(p)$ over $n$'s prime factorisation, an infinite indexed collection.

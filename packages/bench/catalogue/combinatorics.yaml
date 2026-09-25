@@ -18,6 +18,13 @@ Factorial:
       source: GMP
       precision: exact
 Binomial:
+  - id: central-binomial-2-10-to-the-4
+    role: bench
+    expr: [Mod, [Binomial, 20000, 10000], 1000000007]
+    expected: 703593270
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact
   - id: binomial-10-to-the-5-choose-3-10-to-the-4
     role: bench
     expr: [Mod, [Binomial, 100000, 30000], 1000000007]
@@ -32,4 +39,36 @@ Fibonacci:
     expected: 911435502
     bench:
       tags: [combinatorics, big-integer]
+      precision: exact
+  - id: fibonacci-10-to-the-6
+    role: bench
+    expr: [Mod, [Fibonacci, 1000000], 1000000007]
+    expected: 918091266
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact
+LucasL:
+  - id: lucas-10-to-the-5
+    role: bench
+    expr: [Mod, [LucasL, 100000], 1000000007]
+    expected: 23800955
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact
+CatalanNumber:
+  - id: catalan-10-to-the-5
+    role: bench
+    expr: [Mod, [CatalanNumber, 100000], 1000000007]
+    expected: 945729344
+    bench:
+      tags: [combinatorics, big-integer]
+      precision: exact
+StirlingS1:
+  - id: stirling-s1-1000-500
+    role: bench
+    expr: [Mod, [StirlingS1, 1000, 500], 1000000007]
+    expected: 761367694
+    bench:
+      tags: [combinatorics, big-integer]
+      source: combinatorics staples (signed, as Wolfram)
       precision: exact

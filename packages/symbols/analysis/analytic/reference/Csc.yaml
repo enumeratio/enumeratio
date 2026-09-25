@@ -35,11 +35,11 @@ examples:
     caption: $\csc 60^\circ = \frac{2\sqrt3}{3}$, exactly
   - id: a-machine-precision-argument-evaluates
     expr: [Csc, 1.2]
-    expected: {num: '1.07291637770989722871'}
+    expected: { num: "1.07291637770989722871" }
     caption: A machine-precision argument evaluates numerically
   - id: n-of-an-exact-argument-gives-an-arbitrary
     expr: [N, [Csc, [Rational, 6, 5]]]
-    expected: {num: '1.07291637770989722871'}
+    expected: { num: "1.07291637770989722871" }
     category: Scope
     caption: N(...) of an exact argument gives an arbitrary-precision value
   - id: evaluates-at-a-complex-argument
@@ -48,8 +48,10 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix-with
-    expr: [Csc, [List, [List, [Divide, Pi, 3], Pi], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 2]]]]]
-    expected: [List, [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], ComplexInfinity], [List, 2, -1]]
+    expr:
+      [Csc, [List, [List, [Divide, Pi, 3], Pi], [List, [Divide, Pi, 6], [Negate, [Divide, Pi, 2]]]]]
+    expected:
+      [List, [List, [Multiply, [Rational, 2, 3], [Sqrt, 3]], ComplexInfinity], [List, 2, -1]]
     category: Scope
     caption: Threads element-wise over a matrix, with ComplexInfinity at the pole $\pi$
   - id: csc-pi-12-sqrt-6-sqrt-2

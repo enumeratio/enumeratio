@@ -1,7 +1,9 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, test } from "vite-plus/test";
-import { entries } from "../src/index.ts";
+import { referenceEntries } from "../src/node.ts";
+
+const entries = referenceEntries();
 import { checkImplementations } from "../src/validate.ts";
 
 const repoRoot = resolve(import.meta.dirname, "../../..");

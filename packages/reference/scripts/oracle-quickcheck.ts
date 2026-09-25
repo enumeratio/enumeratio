@@ -21,8 +21,10 @@
 import { appendFileSync, writeFileSync } from "node:fs";
 import { runCases } from "@enumeratio/aestimatio/src/node";
 import { emit, type MathJSON, runIn, type System, type Verdict } from "@enumeratio/oracle/src";
-import { entryFiles } from "../src/entries.ts";
+import { entryFiles as filesOf } from "../src/node.ts";
 import { verdictOf } from "./oracle-verdict.ts";
+
+const entryFiles = filesOf();
 
 const args = process.argv.slice(2);
 const option = (name: string): string | undefined => {

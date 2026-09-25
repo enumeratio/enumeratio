@@ -32,7 +32,19 @@ examples:
     expr: [BellNumber, 10]
     expected: 115975
   - id: recurrence-b-n-1-sum-k-0-n-binom-n-k-b-k-here-at
-    expr: [Equal, [BellNumber, 5], [Add, [Multiply, [Binomial, 4, 0], [BellNumber, 0]], [Multiply, [Binomial, 4, 1], [BellNumber, 1]], [Multiply, [Binomial, 4, 2], [BellNumber, 2]], [Multiply, [Binomial, 4, 3], [BellNumber, 3]], [Multiply, [Binomial, 4, 4], [BellNumber, 4]]]]
+    expr:
+      [
+        Equal,
+        [BellNumber, 5],
+        [
+          Add,
+          [Multiply, [Binomial, 4, 0], [BellNumber, 0]],
+          [Multiply, [Binomial, 4, 1], [BellNumber, 1]],
+          [Multiply, [Binomial, 4, 2], [BellNumber, 2]],
+          [Multiply, [Binomial, 4, 3], [BellNumber, 3]],
+          [Multiply, [Binomial, 4, 4], [BellNumber, 4]],
+        ],
+      ]
     expected: True
     category: Properties
     caption: 'Recurrence: $B_{n+1} = \sum_{k=0}^n \binom{n}{k} B_k$, here at $n = 4$'
@@ -53,12 +65,20 @@ examples:
     caption: Threads element-wise over a list, as Wolfram's Listable heads do
   - id: exact-for-large-n
     expr: [BellNumber, 30]
-    expected: {num: '846749014511809332450147'}
+    expected: { num: "846749014511809332450147" }
     category: Scope
     caption: Exact for large n
   - id: the-two-argument-form-gives-the-bell-touchard
     expr: [BellNumber, 5, x]
-    expected: [Add, [Power, x, 5], [Multiply, 10, [Power, x, 4]], [Multiply, 25, [Power, x, 3]], [Multiply, 15, [Power, x, 2]], x]
+    expected:
+      [
+        Add,
+        [Power, x, 5],
+        [Multiply, 10, [Power, x, 4]],
+        [Multiply, 25, [Power, x, 3]],
+        [Multiply, 15, [Power, x, 2]],
+        x,
+      ]
     category: Scope
     caption: The two-argument form gives the Bell (Touchard) polynomial $\sum_k S(n, k)\,x^k$
   - id: the-bell-polynomial-at-a-real-point-b-20-0-5
@@ -70,9 +90,14 @@ examples:
     expr: [BellNumber, 5, 1]
     expected: 52
     category: Properties
-    caption: 'The Bell polynomial at 1 is the Bell number: $B_n(1) = B_n$'
+    caption: "The Bell polynomial at 1 is the Bell number: $B_n(1) = B_n$"
   - id: dobinski-s-formula-b-n-frac-1-e-sum-k-ge-0-frac
-    expr: [Divide, [Sum, [Divide, [Power, k, 5], [Factorial, k]], [Tuple, k, 0, PositiveInfinity]], ExponentialE]
+    expr:
+      [
+        Divide,
+        [Sum, [Divide, [Power, k, 5], [Factorial, k]], [Tuple, k, 0, PositiveInfinity]],
+        ExponentialE,
+      ]
     expected: 52
     aspirational: true
     category: Properties

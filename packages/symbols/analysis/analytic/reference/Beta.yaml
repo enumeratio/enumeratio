@@ -7,7 +7,7 @@ signatures:
     description: the Euler beta function $B(a, b)$.
 details:
   - 'Defined via [[Gamma]]: $B(a, b) = \dfrac{\Gamma(a)\,\Gamma(b)}{\Gamma(a+b)}$.'
-  - 'Symmetric: $B(a, b) = B(b, a)$.'
+  - "Symmetric: $B(a, b) = B(b, a)$."
   - 'Integral form: $B(a, b) = \int_0^1 t^{a-1}(1-t)^{b-1}\,dt$.'
   - 'Ties to [[Binomial]]: $B(k+1, n-k+1) = \dfrac{1}{(n+1)\binom{n}{k}}$.'
   - compute-engine evaluates Beta exactly for positive-integer a and b (an exact rational result) and detects the poles at nonpositive integers, returning ComplexInfinity.
@@ -30,7 +30,7 @@ examples:
     expr: [Equal, [Beta, 2, 5], [Beta, 5, 2]]
     expected: True
     category: Properties
-    caption: 'Symmetric: $B(a, b) = B(b, a)$'
+    caption: "Symmetric: $B(a, b) = B(b, a)$"
   - id: ties-to-binomial-b-k-1-n-k-1-frac-1-n-1-binom-n
     expr: [Equal, [Multiply, 9, [Multiply, [Beta, 4, 6], [Binomial, 8, 3]]], 1]
     expected: True
@@ -38,7 +38,7 @@ examples:
     caption: 'Ties to Binomial: $B(k+1, n-k+1) = \frac{1}{(n+1)\binom{n}{k}}$, here at $n=8, k=3$. See [[Binomial]]'
   - id: b-1-2-1-2-pi-underlies-the-arcsine-distribution
     expr: [Beta, 0.5, 0.5]
-    expected: {num: '3.14159265358979323846'}
+    expected: { num: "3.14159265358979323846" }
     category: Applications
     caption: $B(1/2, 1/2) = \pi$ underlies the arcsine distribution's normalizing constant
   - id: a-nonpositive-integer-argument-is-a-pole-of-the
@@ -57,7 +57,7 @@ examples:
     caption: $B(5, 4) = \frac{4!\,3!}{8!} = \frac{1}{280}$
   - id: machine-precision-arguments
     expr: [Beta, 2.3, 3.2]
-    expected: {num: '0.0540297917483572378154'}
+    expected: { num: "0.0540297917483572378154" }
     caption: Machine-precision arguments
   - id: b-5-2-7-2-frac-3-pi-256-from-the-half-integer
     expr: [Beta, [Rational, 5, 2], [Rational, 7, 2]]
@@ -99,7 +99,7 @@ examples:
     caption: $\partial_a B(a, b) = B(a, b)\,(\psi(a) - \psi(a+b))$; today the derivative stays an unapplied `Derivative`
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Beta, [Rational, 1, 3], [Rational, 1, 4]], 30]
-    expected: {num: '6.35358648555342153052878897202'}
+    expected: { num: "6.35358648555342153052878897202" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
 seeAlso:

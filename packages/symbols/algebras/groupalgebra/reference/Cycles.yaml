@@ -9,7 +9,7 @@ signatures:
 details:
   - Fixed points (singleton cycles) are dropped on construction — $\mathrm{Cycles}(\{\{1\},\{2,3\}\})$ and $\mathrm{Cycles}(\{\{2,3\}\})$ are the same value
   - The cycles and their internal order are kept exactly as given otherwise — nothing is sorted or rotated to a canonical start
-  - '[[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one'
+  - "[[PermutationCycles]] builds one from a one-line word; [[Permute]] applies one to a list; [[InversePermutation]] reverses one"
 examples:
   - id: fixed-points-are-dropped
     expr: [Cycles, [List, [List, 1, 3, 2], [List, 5], [List, 4]]]

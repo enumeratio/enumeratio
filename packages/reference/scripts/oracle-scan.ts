@@ -38,8 +38,10 @@ import {
   type Verdict,
   wiredSystems,
 } from "@enumeratio/oracle/src";
-import { entryFiles } from "../src/entries.ts";
+import { entryFiles as filesOf } from "../src/node.ts";
 import { asksForDigits, show, verdictOf } from "./oracle-verdict.ts";
+
+const entryFiles = filesOf();
 
 interface Case {
   readonly id: string;

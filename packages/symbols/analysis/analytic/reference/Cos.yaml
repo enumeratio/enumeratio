@@ -60,11 +60,11 @@ examples:
     caption: $\cos 30^\circ$, exactly
   - id: a-machine-precision-argument-evaluates
     expr: [Cos, 1.2]
-    expected: {num: '0.362357754476673577638'}
+    expected: { num: "0.362357754476673577638" }
     caption: A machine-precision argument evaluates numerically
   - id: n-of-an-exact-argument-gives-an-arbitrary
     expr: [N, [Cos, [Rational, 6, 5]]]
-    expected: {num: '0.362357754476673577638'}
+    expected: { num: "0.362357754476673577638" }
     category: Scope
     caption: N(...) of an exact argument gives an arbitrary-precision value
   - id: evaluates-at-a-complex-argument
@@ -73,7 +73,15 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr: [Cos, [List, [List, [Multiply, 5, [Divide, Pi, 6]], 0], [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 2]]]]]
+    expr:
+      [
+        Cos,
+        [
+          List,
+          [List, [Multiply, 5, [Divide, Pi, 6]], 0],
+          [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 2]]],
+        ],
+      ]
     expected: [List, [List, [Negate, [Divide, [Sqrt, 3], 2]], 1], [List, 0, 0]]
     category: Scope
     caption: Threads element-wise over a matrix
@@ -160,7 +168,15 @@ examples:
     caption: Antiderivative
   - id: taylor-series-about-0-only-even-powers-appear
     expr: [Series, [Cos, x], x, 0, 6]
-    expected: [Add, [Multiply, [Rational, -1, 720], [Power, x, 6]], [Multiply, [Rational, 1, 24], [Power, x, 4]], [Multiply, [Rational, -1, 2], [Power, x, 2]], [BigO, [Power, x, 8]], 1]
+    expected:
+      [
+        Add,
+        [Multiply, [Rational, -1, 720], [Power, x, 6]],
+        [Multiply, [Rational, 1, 24], [Power, x, 4]],
+        [Multiply, [Rational, -1, 2], [Power, x, 2]],
+        [BigO, [Power, x, 8]],
+        1,
+      ]
     category: Scope
     caption: Taylor series about 0 -- only even powers appear
     divergence:
@@ -182,7 +198,16 @@ examples:
     caption: 'Power reduction: $\cos^2 x = \frac{1 + \cos 2x}{2}$'
   - id: euler-s-formula-cos-x-frac-e-ix-e-ix-2
     expr: [TrigToExp, [Cos, x]]
-    expected: [Multiply, [Rational, 1, 2], [Add, [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]
+    expected:
+      [
+        Multiply,
+        [Rational, 1, 2],
+        [
+          Add,
+          [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]],
+          [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]],
+        ],
+      ]
     category: Properties
     caption: "Euler's formula: $\\cos x = \\frac{e^{ix} + e^{-ix}}{2}$"
   - id: pi-24-is-past-the-automatic-special-angle-table
@@ -192,9 +217,14 @@ examples:
     caption: $\pi/24$ is past the automatic special-angle table (as in Wolfram), so this stays symbolic
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Cos, 1], 30]
-    expected: {num: '0.540302305868139717400936607443'}
+    expected: { num: "0.540302305868139717400936607443" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
+  - id: a-huge-10-100-argument-reduces-exactly-mod-2-pi
+    expr: [N, [Cos, [Power, 10, 100]]]
+    expected: { num: "-0.928081905074655343456" }
+    category: Scope
+    caption: $10^{100}$ has 101 digits; the exact argument is still reduced modulo $2\pi$ before Cos sees it, not rounded to working precision first
 seeAlso:
   - Sin
   - Tan

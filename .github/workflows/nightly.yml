@@ -113,6 +113,9 @@ jobs:
   oscar-oracle:
     name: reference ⟷ Oscar
     if: github.event.schedule == '17 3 * * 1' || inputs.weekly
+    permissions:
+      contents: write # the bench tail step pushes to bench-data
+      issues: write
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
@@ -129,6 +132,14 @@ jobs:
       - uses: ./.github/actions/oracle-drift
         with:
           system: oscar
+      # Benchmarks while the kernel is installed, with our side in the same job as the
+      # same-machine anchor (design/benchmarking.md §6).
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/bench-run
+        with:
+          systems: ts,oscar
+          job: oscar-weekly
+          token: ${{ github.token }}
 
   # The discrete heads against Lean 4 + Mathlib, weekly: the pinned toolchain from elan, and mathlib's prebuilt
   # oleans (~5 GB) from its cache, kept between runs.
@@ -160,6 +171,9 @@ jobs:
   sage-oracle:
     name: reference ⟷ Sage
     if: github.event.schedule == '17 3 * * 3' || inputs.weekly
+    permissions:
+      contents: write # the bench tail step pushes to bench-data
+      issues: write
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
@@ -183,12 +197,23 @@ jobs:
           (cd packages/symbols/arithmetic/numerals && node scripts/collect-adic-golden.ts)
           pnpm exec vp fmt packages/symbols/arithmetic/adeles/tests packages/symbols/arithmetic/numerals/tests
           git diff --exit-code --stat -- packages/symbols/arithmetic/adeles/tests packages/symbols/arithmetic/numerals/tests
+      # Benchmarks while the kernel is installed, with our side in the same job as the
+      # same-machine anchor (design/benchmarking.md §6).
+      - if: ${{ !cancelled() }}
+        uses: ./.github/actions/bench-run
+        with:
+          systems: ts,sage
+          job: sage-weekly
+          token: ${{ github.token }}
 
   # Wolfram, weekly, from the official Wolfram Engine image on an on-demand license: billed per kernel-hour against
   # the repo secret WOLFRAMSCRIPT_ENTITLEMENTID (a LicenseEntitlementObject, renewed yearly). Skips without it.
   wolfram-oracle:
     name: reference ⟷ Wolfram
     if: github.event.schedule == '17 3 * * 4' || inputs.weekly
+    permissions:
+      contents: write # the bench tail step pushes to bench-data
+      issues: write
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
@@ -207,7 +232,7 @@ jobs:
         run: |
           sudo tee /usr/local/bin/wolframscript >/dev/null <<'SH'
           #!/bin/sh
-          exec docker run --rm -i -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -w "$PWD" --entrypoint wolframscript wolframresearch/wolframengine "$@"
+          exec docker run --rm -i --network host -e WOLFRAMSCRIPT_ENTITLEMENTID --memory="${ORACLE_MEMORY_MB:-4096}m" -v "$PWD:$PWD" -w "$PWD" --entrypoint wolframscript wolframresearch/wolframengine "$@"
           SH
           sudo chmod +x /usr/local/bin/wolframscript
           wolframscript -code '$Version'
@@ -215,6 +240,14 @@ jobs:
         uses: ./.github/actions/oracle-drift
         with:
           system: wolfram
+      # Benchmarks while the kernel is installed, with our side in the same job as the
+      # same-machine anchor (design/benchmarking.md §6).
+      - if: ${{ !cancelled() && steps.licensed.outputs.yes == 'true' }}
+        uses: ./.github/actions/bench-run
+        with:
+          systems: ts,wolfram
+          job: wolfram-weekly
+          token: ${{ github.token }}
 
   # Follow every crosswalk link (Wikipedia, MathWorld, DLMF, Fungrim …) and report the ones that no longer answer.
   crosswalk-links:

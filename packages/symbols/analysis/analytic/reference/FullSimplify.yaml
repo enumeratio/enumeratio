@@ -5,11 +5,11 @@ summary: Simplify `expr` harder than Simplify, trying a wider set of transformat
 signatures:
   - call: FullSimplify(expr)
     description: compute-engine's own `simplify()`, plus a few extra targeted passes.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - Starts from compute-engine's native `simplify()`, which already folds the Pythagorean identity and a double-angle product on its own.
   - "Adds exactly four passes: the Gamma functional equation Γ(a)/Γ(b) for a concrete integer a−b; the hyperbolic Pythagorean identity cosh²(u) − sinh²(u) = 1; denesting Sqrt(a + 2·Sqrt(b)) for concrete rational a, b with a rational discriminant; and ExpToTrig everywhere in the tree (which is how a (e^x − e^(−x))/2 shows up as Sinh(x), with no separate 'looks like a hyperbolic definition' rule needed)."
-  - 'NOT a general simplifier: no broader special-function identity table beyond the one Gamma shift above, no general nested-radical denesting past the one quadratic form, and no trigonometric identities beyond what `simplify()` already has. An expression needing more than this list is left exactly as `simplify()` leaves it.'
+  - "NOT a general simplifier: no broader special-function identity table beyond the one Gamma shift above, no general nested-radical denesting past the one quadratic form, and no trigonometric identities beyond what `simplify()` already has. An expression needing more than this list is left exactly as `simplify()` leaves it."
 examples:
   - id: the-pythagorean-identity
     expr: [FullSimplify, [Add, [Power, [Sin, x], 2], [Power, [Cos, x], 2]]]
@@ -30,7 +30,11 @@ examples:
     category: Scope
     caption: The functional equation of [[Gamma]]
   - id: denests-sqrt-5-2-sqrt-6-sqrt-2-sqrt-3
-    expr: [FullSimplify, [Subtract, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]]]
+    expr:
+      [
+        FullSimplify,
+        [Subtract, [Add, [Sqrt, 2], [Sqrt, 3]], [Sqrt, [Add, 5, [Multiply, 2, [Sqrt, 6]]]]],
+      ]
     expected: 0
     category: Scope
     caption: Denests $\sqrt{5 + 2\sqrt6} = \sqrt2 + \sqrt3$

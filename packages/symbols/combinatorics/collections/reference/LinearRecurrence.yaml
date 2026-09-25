@@ -11,7 +11,7 @@ signatures:
   - call: LinearRecurrence(kernel, init, {m1, m2})
     description: the terms from index $m1$ through $m2$, inclusive.
 details:
-  - 'Exact throughout: an integer or rational $kernel$ and $init$ stay integer or rational all the way out, never floating point.'
+  - "Exact throughout: an integer or rational $kernel$ and $init$ stay integer or rational all the way out, never floating point."
 examples:
   - id: the-fibonacci-numbers-a-n-a-n-1-a-n-2
     expr: [LinearRecurrence, [List, 1, 1], [List, 1, 1], 10]
@@ -21,7 +21,7 @@ examples:
     expr: [LinearRecurrence, [List, 1, 1], [List, 2, 1], 8]
     expected: [List, 2, 1, 3, 4, 7, 11, 18, 29]
     category: Scope
-    caption: 'the Lucas numbers: same kernel, other initial values'
+    caption: "the Lucas numbers: same kernel, other initial values"
   - id: a-n-2a-n-1-a-n-2-is-arithmetic
     expr: [LinearRecurrence, [List, 2, -1], [List, 1, 3], 5]
     expected: [List, 1, 3, 5, 7, 9]

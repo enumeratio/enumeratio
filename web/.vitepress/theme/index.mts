@@ -25,6 +25,7 @@ const CliReference = defineAsyncComponent(() => import("./components/CliReferenc
 const SymbolRef = defineAsyncComponent(() => import("./components/Symbol.vue"));
 const ComponentIndex = defineAsyncComponent(() => import("./components/ComponentIndex.vue"));
 const ComponentPage = defineAsyncComponent(() => import("./components/ComponentPage.vue"));
+const BenchViewer = defineAsyncComponent(() => import("./components/bench/BenchViewer.vue"));
 const EnvironmentPreview = defineAsyncComponent(
   () => import("./components/EnvironmentPreview.vue"),
 );
@@ -51,6 +52,7 @@ export default {
     app.component("CliReference", CliReference);
     app.component("Symbol", SymbolRef);
     app.component("ComponentPage", ComponentPage);
+    app.component("BenchViewer", BenchViewer);
     registerNotatio(app);
     // Client only: register the custom elements (they call customElements.define)
     // and declare the extension libraries against the shared engine so their heads

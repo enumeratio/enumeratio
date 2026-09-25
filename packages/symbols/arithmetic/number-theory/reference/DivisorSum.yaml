@@ -20,7 +20,7 @@ examples:
   - id: only-the-odd-divisors-1-3-5-15
     expr: [DivisorSum, 30, [Function, d, d], [Function, [IsOdd, d], d]]
     expected: 24
-    caption: 'Only the odd divisors: $1+3+5+15$'
+    caption: "Only the odd divisors: $1+3+5+15$"
   - id: sum-d-mid-n-mu-d-0-for-n-1
     expr: [DivisorSum, 12, [Function, [MoebiusMu, d], d]]
     expected: 0

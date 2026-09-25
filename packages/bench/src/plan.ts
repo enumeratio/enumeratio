@@ -64,6 +64,7 @@ export function buildPlan(cases: readonly ConcreteCase[]): Plan {
       name: c.name,
       precision: c.case.bench.precision,
       budget: c.case.bench.budget ?? DEFAULT_BUDGET,
+      ...(c.case.bench.tags === undefined ? {} : { tags: c.case.bench.tags }),
       ...(c.case.expected === undefined ? {} : { expected: answerText(c.case.expected) }),
       systems: Object.fromEntries(SYSTEMS.map((s) => [s, planCell(c, s)])),
     })),

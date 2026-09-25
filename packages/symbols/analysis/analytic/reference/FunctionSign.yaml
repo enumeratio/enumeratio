@@ -1,0 +1,29 @@
+name: FunctionSign
+domain: Elementary functions
+signature: FunctionSign(f, x)
+summary: 1 if f is nonnegative over its whole domain, -1 if nonpositive, Indeterminate otherwise.
+signatures:
+  - call: FunctionSign(f, x)
+    description: the sign of f in the real variable x, when it is constant over the whole real line.
+    library: "@enumeratio/analytic"
+details:
+  - Matches Wolfram's convention that this needs domain $\mathbb R$ to answer definitively -- `FunctionSign(Sqrt(x), x)` is `Indeterminate` even though $\sqrt x\ge0$ wherever it's defined, because $\sqrt x$ isn't defined for every real x (confirmed against `wolframscript`).
+  - A polynomial's sign comes from its closed-form shape (see [[FunctionMonotonicity]]'s classifier); a rational function's sign is the product of its numerator's and denominator's, when both are individually determinate; Exp is always 1.
+examples:
+  - id: a-perfect-square-is-never-negative
+    expr: [FunctionSign, [Power, x, 2], x]
+    expected: 1
+    caption: A perfect square is never negative
+  - id: a-sum-of-a-square-and-a-positive-constant
+    expr: [FunctionSign, [Divide, 1, [Add, [Power, x, 2], 1]], x]
+    expected: 1
+    caption: 1/(x^2+1) is defined and positive for every real x
+  - id: exp-is-always-positive
+    expr: [FunctionSign, [Exp, x], x]
+    expected: 1
+    caption: Exp is always positive
+  - id: a-cubic-changes-sign
+    expr: [FunctionSign, [Power, x, 3], x]
+    expected: Indeterminate
+    category: Properties
+    caption: A cubic is negative for x<0 and positive for x>0

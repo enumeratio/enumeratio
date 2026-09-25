@@ -72,11 +72,11 @@ examples:
     caption: Degrees(d) converts to radians, so $\sin 60^\circ$ is exact
   - id: a-machine-precision-argument-evaluates
     expr: [Sin, 1.2]
-    expected: {num: '0.93203908596722634967'}
+    expected: { num: "0.93203908596722634967" }
     caption: A machine-precision argument evaluates numerically
   - id: n-of-an-exact-argument-gives-an-arbitrary
     expr: [N, [Sin, [Rational, 6, 5]]]
-    expected: {num: '0.93203908596722634967'}
+    expected: { num: "0.93203908596722634967" }
     category: Scope
     caption: N(...) of an exact argument gives an arbitrary-precision value
   - id: evaluates-at-a-complex-argument
@@ -85,7 +85,15 @@ examples:
     category: Scope
     caption: Evaluates at a complex argument
   - id: threads-element-wise-over-a-matrix
-    expr: [Sin, [List, [List, [Multiply, 5, [Divide, Pi, 6]], 0], [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 2]]]]]
+    expr:
+      [
+        Sin,
+        [
+          List,
+          [List, [Multiply, 5, [Divide, Pi, 6]], 0],
+          [List, [Multiply, 3, [Divide, Pi, 2]], [Negate, [Divide, Pi, 2]]],
+        ],
+      ]
     expected: [List, [List, [Rational, 1, 2], 0], [List, -1, -1]]
     category: Scope
     caption: Threads element-wise over a matrix
@@ -203,7 +211,16 @@ examples:
     caption: $\int \sin^3 x\,dx = -\cos x + \tfrac13\cos^3 x$; odd powers of sine are not yet integrated
   - id: taylor-series-about-0-only-odd-powers-appear
     expr: [Series, [Sin, x], x, 0, 10]
-    expected: [Add, [Multiply, [Rational, 1, 362880], [Power, x, 9]], [Multiply, [Rational, -1, 5040], [Power, x, 7]], [Multiply, [Rational, 1, 120], [Power, x, 5]], [Multiply, [Rational, -1, 6], [Power, x, 3]], x, [BigO, [Power, x, 11]]]
+    expected:
+      [
+        Add,
+        [Multiply, [Rational, 1, 362880], [Power, x, 9]],
+        [Multiply, [Rational, -1, 5040], [Power, x, 7]],
+        [Multiply, [Rational, 1, 120], [Power, x, 5]],
+        [Multiply, [Rational, -1, 6], [Power, x, 3]],
+        x,
+        [BigO, [Power, x, 11]],
+      ]
     category: Scope
     caption: Taylor series about 0 -- only odd powers appear
   - id: the-fundamental-limit-lim-x-to-0-frac-sin-x-x-1
@@ -233,7 +250,20 @@ examples:
     caption: 'Power reduction: $\sin^2 x = \frac{1 - \cos 2x}{2}$'
   - id: euler-s-formula-sin-x-frac-e-ix-e-ix-2i
     expr: [TrigToExp, [Sin, x]]
-    expected: [Add, [Multiply, [Complex, 0, [Rational, -1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]]], [Multiply, [Complex, 0, [Rational, 1, 2]], [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]]]]
+    expected:
+      [
+        Add,
+        [
+          Multiply,
+          [Complex, 0, [Rational, -1, 2]],
+          [Power, ExponentialE, [Multiply, [Complex, 0, 1], x]],
+        ],
+        [
+          Multiply,
+          [Complex, 0, [Rational, 1, 2]],
+          [Power, ExponentialE, [Multiply, [Complex, 0, -1], x]],
+        ],
+      ]
     category: Properties
     caption: "Euler's formula: $\\sin x = \\frac{e^{ix} - e^{-ix}}{2i}$"
   - id: simplify-knows-the-pythagorean-identity
@@ -253,19 +283,29 @@ examples:
     caption: $\pi/15$ has a radical form, but like Wolfram's automatic evaluation the table stops short of it -- see FunctionExpand below
   - id: a-huge-exact-argument-is-reduced-modulo-2-pi
     expr: [N, [Sin, [Power, 10, 20]]]
-    expected: {num: '-0.645251285265780844206'}
+    expected: { num: "-0.645251285265780844206" }
     category: Possible issues
     caption: A huge exact argument is reduced modulo $2\pi$ with enough working precision to get the digits right
   - id: functionexpand-gives-the-nested-radical-form
     expr: [FunctionExpand, [Sin, [Divide, Pi, 15]]]
-    expected: [Multiply, [Rational, 1, 8], [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]]]
+    expected:
+      [
+        Multiply,
+        [Rational, 1, 8],
+        [Add, [Negate, [Sqrt, 15]], [Sqrt, 3], [Sqrt, [Add, 10, [Multiply, 2, [Sqrt, 5]]]]],
+      ]
     category: Neat examples
     caption: '[[FunctionExpand]] gives the nested-radical form $\frac{\sqrt{10+2\sqrt5} - \sqrt{15} + \sqrt3}{8}$'
   - id: to-30-significant-digits-every-one-correctly
     expr: [N, [Sin, 1], 30]
-    expected: {num: '0.841470984807896506652502321630'}
+    expected: { num: "0.841470984807896506652502321630" }
     category: Scope
     caption: To 30 significant digits, every one correctly rounded
+  - id: a-huge-24-40-argument-reduces-exactly-mod-2-pi
+    expr: [N, [Sin, [Power, 24, 40]]]
+    expected: { num: "0.400083152719766047071" }
+    category: Scope
+    caption: $24^{40}$ has 55 digits; the exact argument is still reduced modulo $2\pi$ before Sin sees it, not rounded to working precision first
 seeAlso:
   - Cos
   - Tan

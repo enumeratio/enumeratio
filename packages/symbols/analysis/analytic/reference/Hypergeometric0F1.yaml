@@ -5,7 +5,7 @@ summary: The confluent hypergeometric limit function ${}_0F_1(b; z) = \sum_{k\ge
 signatures:
   - call: Hypergeometric0F1(b, z)
     description: ${}_0F_1(b; z)$, by its defining series.
-    library: '@enumeratio/analytic'
+    library: "@enumeratio/analytic"
 details:
   - compute-engine 0.128 does not declare this head at all — no `Hypergeometric1F1`-style native to extend — so it is supplied here directly, by the term-ratio recurrence (Fungrim's own `Hypergeometric0F1` identities relate it to `AiryAi`, `Sin` and `Sinc`).
   - Poles at $b$ a nonpositive integer $0, -1, -2, \dots$ stay symbolic; see [[Hypergeometric0F1Regularized]] for the entire version.

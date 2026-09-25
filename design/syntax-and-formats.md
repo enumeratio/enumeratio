@@ -107,4 +107,4 @@ The default being Epsil means most command-line input needs **no backslashes**:
 `notatio "Binomial(10, 3)"`, `notatio -f numpy "Sqrt(x^2 + 1)"`. For LaTeX, use
 `-i latex` or a `$…$` island, and either single-quote the expression or pipe a
 **quoted heredoc** (`<<'EOF'`), which is literal so the backslashes reach `notatio`
-intact. Documented in `/playground/cli`.
+intact. Documented in `/docs/cli/command-line`.

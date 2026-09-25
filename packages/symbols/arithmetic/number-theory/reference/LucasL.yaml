@@ -1,7 +1,7 @@
 name: LucasL
 domain: Sequences
 signature: LucasL(n)
-summary: 'The nth Lucas number: the Fibonacci-style recurrence started from $L_0 = 2$, $L_1 = 1$, closely related to [[Fibonacci]].'
+summary: "The nth Lucas number: the Fibonacci-style recurrence started from $L_0 = 2$, $L_1 = 1$, closely related to [[Fibonacci]]."
 signatures:
   - call: LucasL(n)
     description: the nth Lucas number $L_n$.
@@ -33,14 +33,14 @@ examples:
     expected: 123
   - id: exact-at-any-size
     expr: [LucasL, 100]
-    expected: {num: '792070839848372253127'}
+    expected: { num: "792070839848372253127" }
     category: Scope
     caption: Exact at any size
   - id: an-odd-negative-index-flips-the-sign-l-11-l-11
     expr: [LucasL, -11]
     expected: -199
     category: Scope
-    caption: 'An odd negative index flips the sign: $L_{-11} = -L_{11}$'
+    caption: "An odd negative index flips the sign: $L_{-11} = -L_{11}$"
   - id: a-real-index-uses-l-nu-varphi-nu-cos-pi-nu
     expr: [LucasL, 2.3333333333333335]
     expected: 3.2362118794916213
@@ -48,24 +48,31 @@ examples:
     caption: A real index uses $L_\nu = \varphi^\nu + \cos(\pi\nu)\,\varphi^{-\nu}$
   - id: the-two-argument-lucas-polynomial-l-7-x-from-l-n
     expr: [LucasL, 7, x]
-    expected: [Add, [Power, x, 7], [Multiply, 7, [Power, x, 5]], [Multiply, 14, [Power, x, 3]], [Multiply, 7, x]]
+    expected:
+      [
+        Add,
+        [Power, x, 7],
+        [Multiply, 7, [Power, x, 5]],
+        [Multiply, 14, [Power, x, 3]],
+        [Multiply, 7, x],
+      ]
     category: Scope
     caption: The two-argument Lucas polynomial $L_7(x)$, from $L_n(x) = x L_{n-1}(x) + L_{n-2}(x)$
   - id: the-lucas-polynomial-at-x-1-is-the-lucas-number
     expr: [LucasL, 143, 1]
-    expected: {num: '767772505664398093937756525279'}
+    expected: { num: "767772505664398093937756525279" }
     category: Scope
-    caption: 'The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$'
+    caption: "The Lucas polynomial at $x = 1$ is the Lucas number: $L_{143}(1) = L_{143}$"
   - id: special-value-of-the-lucas-polynomial-l-1-0-0
     expr: [LucasL, 1, 0]
     expected: 0
     category: Scope
-    caption: 'Special value of the Lucas polynomial: $L_1(0) = 0$'
+    caption: "Special value of the Lucas polynomial: $L_1(0) = 0$"
   - id: special-value-of-the-lucas-polynomial-l-0-0-2
     expr: [LucasL, 0, 0]
     expected: 2
     category: Scope
-    caption: 'Special value of the Lucas polynomial: $L_0(0) = 2$'
+    caption: "Special value of the Lucas polynomial: $L_0(0) = 2$"
   - id: l-2-x-x-2-2-threads-element-wise-over-a-matrix
     expr: [LucasL, 2, [List, [List, [Rational, 1, 2], -1], [List, 0, [Rational, 1, 2]]]]
     expected: [List, [List, [Rational, 9, 4], 3], [List, 2, [Rational, 9, 4]]]

@@ -60,6 +60,16 @@ export function permutationToCycles(sigma: readonly number[], includeFixed = fal
   return cycles;
 }
 
+/** Is this one-line word a permutation of 1..n (each value exactly once)? */
+export function isPermutation(word: readonly number[]): boolean {
+  const seen = new Set<number>();
+  for (const x of word) {
+    if (x < 1 || x > word.length || seen.has(x)) return false;
+    seen.add(x);
+  }
+  return true;
+}
+
 /** Are these cycles pairwise disjoint, each entry a positive integer, each cycle non-repeating? */
 export function cyclesAreValid(cycles: readonly Cycle[]): boolean {
   const seen = new Set<number>();

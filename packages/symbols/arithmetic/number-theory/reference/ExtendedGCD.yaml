@@ -65,12 +65,13 @@ examples:
     expr: [ExtendedGCD, -12, 18]
     expected: [Tuple, 6, 1, 1]
     category: Scope
-    caption: 'Negative arguments: $-12+18=6$'
+    caption: "Negative arguments: $-12+18=6$"
     divergence:
       wolfram: "Same values: ours is the flat Tuple (g, a, b), Wolfram's is {g, {a, b}}."
   - id: big-integers-the-coefficients-stay-minimal-x-b
     expr: [ExtendedGCD, [Power, 2, 100], [Power, 3, 50]]
-    expected: [Tuple, 1, {num: '208475958620489751737959'}, {num: '-368122879029235364752383564167'}]
+    expected:
+      [Tuple, 1, { num: "208475958620489751737959" }, { num: "-368122879029235364752383564167" }]
     category: Scope
     caption: Big integers; the coefficients stay minimal, $|x|<b$ and $|y|<a$
     divergence:
@@ -84,6 +85,6 @@ examples:
     expr: [ExtendedGCD, 3, [List, 5, 15]]
     expected: [List, [Tuple, 1, 2, -1], [Tuple, 3, 1, 0]]
     category: Scope
-    caption: 'Listable: threads over a list'
+    caption: "Listable: threads over a list"
 seeAlso:
   - GCD

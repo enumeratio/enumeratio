@@ -1,7 +1,7 @@
 name: KroneckerSymbol
 domain: Number theory
 signature: KroneckerSymbol(a, n)
-summary: 'The Kronecker symbol (a/n): the Jacobi symbol extended to every integer n.'
+summary: "The Kronecker symbol (a/n): the Jacobi symbol extended to every integer n."
 signatures:
   - call: KroneckerSymbol(a, n)
     description: the Kronecker symbol $\left(\frac{a}{n}\right)$.
@@ -11,7 +11,7 @@ details:
   - $\left(\frac{a}{0}\right)=1$ if $a=\pm1$, else 0; $\left(\frac{a}{-1}\right)=1$ if $a\ge0$, $-1$ if $a<0$.
   - $\left(\frac{a}{2}\right)=0$ for even $a$; $1$ if $a\equiv\pm1\pmod 8$; $-1$ if $a\equiv\pm3\pmod 8$ — this is the piece Jacobi's odd-$n$ restriction leaves out.
   - 'Completely multiplicative in $n$: $\left(\frac{a}{n_1n_2}\right)=\left(\frac{a}{n_1}\right)\left(\frac{a}{n_2}\right)$.'
-  - 'Bignum-safe: both arguments may exceed the double-precision range.'
+  - "Bignum-safe: both arguments may exceed the double-precision range."
 examples:
   - id: kroneckersymbol-17-6
     expr: [KroneckerSymbol, 17, 6]
@@ -30,9 +30,14 @@ examples:
   - id: a-2-odd-a-and-3-mod-8-3-one-of-the-two-residues
     expr: [KroneckerSymbol, 3, 2]
     expected: -1
-    caption: '(a/2): odd a, and 3 mod 8 = 3, one of the two residues giving -1'
+    caption: "(a/2): odd a, and 3 mod 8 = 3, one of the two residues giving -1"
   - id: completely-multiplicative-in-n
-    expr: [Equal, [KroneckerSymbol, 7, [Multiply, 3, 5]], [Multiply, [KroneckerSymbol, 7, 3], [KroneckerSymbol, 7, 5]]]
+    expr:
+      [
+        Equal,
+        [KroneckerSymbol, 7, [Multiply, 3, 5]],
+        [Multiply, [KroneckerSymbol, 7, 3], [KroneckerSymbol, 7, 5]],
+      ]
     expected: True
     category: Properties
     caption: Completely multiplicative in n
@@ -45,7 +50,7 @@ examples:
     expr: [KroneckerSymbol, [Add, [Power, 10, 11], 1], [NthPrime, 2000]]
     expected: -1
     category: Scope
-    caption: 'Larger arguments: $10^{11}+1$ against the 2000th prime, 17389'
+    caption: "Larger arguments: $10^{11}+1$ against the 2000th prime, 17389"
   - id: even-n-where-jacobisymbol-is-undefined-7-2-7-3-1
     expr: [KroneckerSymbol, 7, 6]
     expected: 1

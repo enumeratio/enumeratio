@@ -7,7 +7,7 @@ signatures:
     description: positions $i, i+step, \dots$ up to $j$; a negative position counts from the end. Never evaluated on its own — read by [[At]].
     library: enumeratio-collections
 details:
-  - 'Never reduces by itself: it is a part specification other heads read, the way $Range$ describes a sequence of numbers. [[At]] is the only head here that reads one.'
+  - "Never reduces by itself: it is a part specification other heads read, the way $Range$ describes a sequence of numbers. [[At]] is the only head here that reads one."
   - $step$ defaults to 1; a negative $step$ walks from $i$ down to $j$.
   - Negative $i$/$j$ count from the end, exactly as a plain negative index does in [[At]].
 examples:
@@ -28,9 +28,10 @@ examples:
     expr: [At, [List, a, b, c, d, f], [Span, -2, -1]]
     expected: [List, d, f]
     category: Scope
-    caption: 'Negative bounds: the last two elements'
+    caption: "Negative bounds: the last two elements"
   - id: spans-at-two-levels-cut-out-a-submatrix
-    expr: [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]
+    expr:
+      [At, [List, [List, 1, 2, 3], [List, 4, 5, 6], [List, 7, 8, 9]], [Span, 2, 3], [Span, 1, 2]]
     expected: [List, [List, 4, 5], [List, 7, 8]]
     category: Scope
     caption: Spans at two levels cut out a submatrix

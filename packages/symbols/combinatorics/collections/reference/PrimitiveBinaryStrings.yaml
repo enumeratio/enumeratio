@@ -15,7 +15,7 @@ examples:
     expr: [Count, [PrimitiveBinaryStrings, 6]]
     expected: 54
     category: Basic
-    caption: '$Count(PrimitiveBinaryStrings(6)) = 54$, A027375: aperiodic binary strings of length 6'
+    caption: "$Count(PrimitiveBinaryStrings(6)) = 54$, A027375: aperiodic binary strings of length 6"
 enumerate:
   expr: PrimitiveBinaryStrings(6)
   columns: Descents, Ascents

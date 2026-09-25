@@ -5,6 +5,7 @@ import { defineConfig } from "vitepress";
 import { generate } from "@enumeratio/notatio/generate";
 import { notatioMath } from "./notatio-math.ts";
 import { notatioSymbols } from "./notatio-symbols.ts";
+import { referenceDataPlugin } from "./reference-data.ts";
 import { reviewModePlugin } from "./review/plugin.ts";
 
 // The symbols as Vue components are generated here, before the theme is bundled, so
@@ -18,9 +19,17 @@ generate("vue");
 // matching src/*.ts; exports that already point at src are used as-is.
 const pkgsDir = resolve(dirname(fileURLToPath(import.meta.url)), "../../packages");
 const srcAliases: { find: RegExp; replacement: string }[] = [];
-for (const d of readdirSync(pkgsDir, { withFileTypes: true })) {
-  const manifest = resolve(pkgsDir, d.name, "package.json");
-  if (!d.isDirectory() || !existsSync(manifest)) continue;
+// Symbol packages sit a level deeper, under packages/symbols/<group>/.
+const packageDirs = readdirSync(pkgsDir).flatMap((name) =>
+  name === "symbols"
+    ? readdirSync(resolve(pkgsDir, name)).flatMap((group) =>
+        readdirSync(resolve(pkgsDir, name, group)).map((pkg) => `${name}/${group}/${pkg}`),
+      )
+    : [name],
+);
+for (const dir of packageDirs) {
+  const manifest = resolve(pkgsDir, dir, "package.json");
+  if (!existsSync(manifest)) continue;
   const pkg = JSON.parse(readFileSync(manifest, "utf8")) as {
     name?: string;
     exports?: Record<string, unknown>;
@@ -35,7 +44,7 @@ for (const d of readdirSync(pkgsDir, { withFileTypes: true })) {
         ? target
         : undefined;
     if (!srcRel) continue;
-    const abs = resolve(pkgsDir, d.name, srcRel);
+    const abs = resolve(pkgsDir, dir, srcRel);
     if (!existsSync(abs)) continue;
     const spec = sub === "." ? pkg.name : pkg.name + sub.slice(1);
     srcAliases.push({
@@ -75,11 +84,13 @@ export default defineConfig({
     // The repo's `vite` specifier resolves to vite-plus-core (see pnpm-workspace.yaml),
     // while vitepress's `plugins` field types against its own nested real `vite` --
     // two structurally-identical but nominally distinct `Plugin` types.
-    plugins: dev ? ([reviewModePlugin(webDir)] as never) : [],
+    plugins: (dev
+      ? [reviewModePlugin(webDir), referenceDataPlugin()]
+      : [referenceDataPlugin()]) as never,
   },
   title: "enumeratio",
   description:
-    "enumeratio: a family of mathematical symbol definitions on the Cortex compute-engine and Epsil, collections first. notatio: the notebook and explorer around it.",
+    "Mathematics you can compute, draw and check — every object with a home, every claim with a test, all live in your browser.",
   lang: "en-US",
   cleanUrls: true,
   // `/review` (review mode) is dev-only, same as `/speculative`.
@@ -106,14 +117,25 @@ export default defineConfig({
     },
   },
   themeConfig: {
+    // The sheets first, then the reading. The playground and the CLI are docs, not
+    // destinations: they live under Docs (and its sidebar), not in the top bar.
     nav: [
+      { text: "Worksheet", link: "/worksheet/" },
+      { text: "Explore", link: "/explore/" },
       { text: "Guides", link: "/guide/" },
       { text: "Reference", link: "/reference/" },
-      { text: "Playground", link: "/playground/" },
-      { text: "Explore", link: "/explore/" },
-      { text: "CLI", link: "/cli/" },
+      { text: "Docs", link: "/docs/" },
     ],
     sidebar: [
+      {
+        text: "The pieces",
+        items: [
+          { text: "nucleus — the kernel", link: "/nucleus/" },
+          { text: "aestimatio — the core", link: "/aestimatio/" },
+          { text: "notatio — the notation", link: "/notatio/" },
+          { text: "enumeratio — the catalogue", link: "/enumeratio/" },
+        ],
+      },
       {
         text: "Guides",
         items: [
@@ -163,7 +185,42 @@ export default defineConfig({
         ],
       },
       {
+        text: "Docs",
+        items: [
+          { text: "Overview", link: "/docs/" },
+          { text: "Worksheet", link: "/worksheet/" },
+          { text: "Notebook", link: "/notebook/" },
+          {
+            text: "Command line",
+            link: "/docs/cli/",
+            items: [
+              { text: "REPL (live)", link: "/docs/cli/repl" },
+              { text: "One-shot (live)", link: "/docs/cli/command-line" },
+            ],
+          },
+        ],
+      },
+      {
+        text: "Explore",
+        items: [
+          { text: "Overview", link: "/explore/" },
+          {
+            text: "The two-argument zeta",
+            link: "/explore/zeta/",
+            items: [
+              { text: "ζ on the GPU: a phase portrait", link: "/explore/zeta/phase-portrait" },
+            ],
+          },
+          { text: "The Lerch transcendent", link: "/explore/lerchphi/" },
+          { text: "The polylog and the polygamma", link: "/explore/polylog/" },
+          { text: "Fractals", link: "/explore/fractals/" },
+        ],
+      },
+      {
+        // Demos of the parts, one page per component -- collapsed, since they are for
+        // looking one up, not for reading through.
         text: "Playground",
+        collapsed: true,
         items: [
           { text: "Overview", link: "/playground/" },
           { text: "Notebook", link: "/playground/notebook" },
@@ -190,8 +247,7 @@ export default defineConfig({
           { text: "Manipulate", link: "/playground/manipulate" },
           { text: "Controls", link: "/playground/controls" },
           { text: "Environments", link: "/playground/environments" },
-          { text: "REPL (terminal)", link: "/playground/repl" },
-          { text: "Command line", link: "/playground/cli" },
+          { text: "Terminal", link: "/playground/terminal" },
           {
             text: "Inspirations",
             link: "/playground/inspirations/",
@@ -205,28 +261,8 @@ export default defineConfig({
           },
         ],
       },
-      {
-        text: "Explore",
-        items: [
-          { text: "Overview", link: "/explore/" },
-          {
-            text: "The two-argument zeta",
-            link: "/explore/zeta/",
-            items: [
-              { text: "ζ on the GPU: a phase portrait", link: "/explore/zeta/phase-portrait" },
-            ],
-          },
-          { text: "The Lerch transcendent", link: "/explore/lerchphi/" },
-          { text: "The polylog and the polygamma", link: "/explore/polylog/" },
-          { text: "Fractals", link: "/explore/fractals/" },
-        ],
-      },
-      {
-        text: "CLI",
-        items: [{ text: "Overview", link: "/cli/" }],
-      },
       ...(speculative.length > 0 ? [{ text: "Speculative (dev only)", items: speculative }] : []),
     ],
-    socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/notatio" }],
+    socialLinks: [{ icon: "github", link: "https://github.com/enumeratio/enumeratio" }],
   },
 });

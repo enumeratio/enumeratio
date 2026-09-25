@@ -34,7 +34,7 @@ examples:
     expr: [IsSquareFree, 1]
     expected: True
     category: Possible issues
-    caption: '1 is vacuously squarefree: it has no repeated prime factors'
+    caption: "1 is vacuously squarefree: it has no repeated prime factors"
   - id: n-is-squarefree-exactly-when-mu-n-neq-0-see
     expr: [Equal, [IsSquareFree, 10], [Not, [Equal, [MoebiusMu, 10], 0]]]
     expected: True
@@ -54,17 +54,17 @@ examples:
     expr: [IsSquareFree, [Complex, 3, 2]]
     expected: True
     category: Scope
-    caption: 'Gaussian integers: $3+2i$ is a Gaussian prime'
+    caption: "Gaussian integers: $3+2i$ is a Gaussian prime"
   - id: gaussianintegers-true-2-i-1-i-2
     expr: [IsSquareFree, 2, [KeyValuePair, GaussianIntegers, True]]
     expected: False
     category: Scope
-    caption: 'GaussianIntegers -> True: $2=-i(1+i)^2$'
+    caption: "GaussianIntegers -> True: $2=-i(1+i)^2$"
   - id: rationals-numerator-and-denominator-are-both
     expr: [IsSquareFree, [Rational, 2, 3]]
     expected: True
     category: Scope
-    caption: 'Rationals: numerator and denominator are both squarefree'
+    caption: "Rationals: numerator and denominator are both squarefree"
   - id: polynomials-x-2-6x-6-has-no-repeated-factor
     expr: [IsSquareFree, [Add, [Power, x, 2], [Multiply, 6, x], 6]]
     expected: True
@@ -74,7 +74,7 @@ examples:
     expr: [IsSquareFree, [Subtract, [Power, x, 3], [Multiply, [Power, x, 2], y]]]
     expected: False
     category: Scope
-    caption: 'Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$'
+    caption: "Multivariate: $x^3-x^2y=x^2(x-y)$, a repeated factor of $x$"
   - id: squarefree-as-a-polynomial-in-x-alone-y-is-just
     expr: [IsSquareFree, [Multiply, x, [Power, y, 2]], x]
     expected: True
@@ -84,7 +84,7 @@ examples:
     expr: [IsSquareFree, [Multiply, x, [Power, y, 2]], y]
     expected: False
     category: Scope
-    caption: '…but not in $y$ alone: $y$ appears squared'
+    caption: "…but not in $y$ alone: $y$ appears squared"
 seeAlso:
   - MoebiusMu
   - FactorInteger

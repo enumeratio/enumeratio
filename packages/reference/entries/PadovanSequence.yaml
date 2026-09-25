@@ -7,7 +7,7 @@ signatures:
     description: $a_n = a_{n-2} + a_{n-3}$, $a_0 = 1$, $a_1 = a_2 = 0$, an infinite indexed collection.
 details:
   - 'A lazy indexed collection: $Count(PadovanSequence) = +\infty$, and $At(PadovanSequence, 1) = a_0 = 1$.'
-  - 'OEIS A000931, starting exactly at its offset-0 term: $1, 0, 0, 1, 0, 1, 1, 1, 2, 2, 3, …$. The sequence dips through index 4 before climbing forever from $a_4 = 0$ on.'
+  - "OEIS A000931, starting exactly at its offset-0 term: $1, 0, 0, 1, 0, 1, 1, 1, 2, 2, 3, …$. The sequence dips through index 4 before climbing forever from $a_4 = 0$ on."
   - "Membership goes through [[Element]]: $Element(9, PadovanSequence)$ is true (it's $a_{16}$, following $…,7,9,12,…$), $Element(6, PadovanSequence)$ is false."
 examples: []
 enumerate:

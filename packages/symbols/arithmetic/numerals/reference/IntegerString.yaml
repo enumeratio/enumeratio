@@ -54,7 +54,7 @@ examples:
     expr: [IntegerString, [Factorial, 50], 16]
     expected: "'49eebc961ed279b02b1ef4f28d19a84f5973a1d2c7800000000000'"
     category: Scope
-    caption: '$50!$ in hexadecimal: exact past double precision, via bigint arithmetic'
+    caption: "$50!$ in hexadecimal: exact past double precision, via bigint arithmetic"
   - id: roman-numerals-with-the-base-roman
     expr: [IntegerString, 1988, "'Roman'"]
     expected: "'MCMLXXXVIII'"

@@ -185,19 +185,23 @@ oracle scans and the benchmarks alike.
 Each script wraps every case in a zero-argument function, **compiled once**, and times calls
 to it:
 
-| System        | Case form                                                                   | Clock                     | Notes                                                                                                                                            |
-| ------------- | --------------------------------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Wolfram       | `b[17] := <src>` (SetDelayed)                                               | `AbsoluteTime[]` deltas   | `ClearSystemCache[]` before each sample (§4.3)                                                                                                   |
-| mpmath, SymPy | `def b17(): return <src>`                                                   | `time.perf_counter_ns()`  | `mp.dps` set per case from `precision`; `sympy.core.cache.clear_cache()` before each sample                                                      |
-| Sage          | as Python, `preparse`d once at generation time                              | `time.perf_counter_ns()`  | wall time, per `sage_timeit`, since PARI and GAP run out of process                                                                              |
-| Julia / Oscar | `b17() = <src>` inside a module                                             | `time_ns()`               | literals hoisted into `const` `Ref`s and read as `r[]` in the body, the BenchmarkTools `$` idiom, so constant propagation can't fold the call    |
-| Rust          | `fn b17() -> V { <src> }`, with literals through `black_box`                | `Instant`                 | the `V` adapters (`lib.rs`) are part of the timing; they are thin, but they're the reason tiny cases are excluded (§5.1)                         |
-| TypeScript    | `ce.box(json)` once, time `boxed.evaluate()` (`.N()` for numeric precision) | `process.hrtime.bigint()` | engine configured once from `engines.ts`'s `configure`; boxing and canonicalisation are outside the timed region, like parsing is for the others |
+| System        | Case form                                                                   | Clock                     | Notes                                                                                                                                                 |
+| ------------- | --------------------------------------------------------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Wolfram       | `Hold[<src>]`, parsed when the script loads, released in the loop           | `AbsoluteTiming`          | `ClearSystemCache[]` before each sample (§4.3). wolframscript's kernel can't read our stdin, so the harness connects back to the coordinator over TCP |
+| mpmath, SymPy | `def b17(): return <src>`                                                   | `time.perf_counter_ns()`  | `mp.dps` set per case from `precision`; `sympy.core.cache.clear_cache()` before each sample                                                           |
+| Sage          | as Python, each source `sage_eval`'d into a lambda once at startup          | `time.perf_counter_ns()`  | wall time, per `sage_timeit`, since PARI and GAP run out of process                                                                                   |
+| Julia / Oscar | `b17() = <src>` inside a module                                             | `time_ns()`               | literals hoisted into `const` `Ref`s and read as `r[]` in the body, the BenchmarkTools `$` idiom, so constant propagation can't fold the call         |
+| Rust          | `fn b17() -> V { <src> }`, with literals through `black_box`                | `Instant`                 | the `V` adapters (`lib.rs`) are part of the timing; they are thin, but they're the reason tiny cases are excluded (§5.1)                              |
+| TypeScript    | `ce.box(json)` once, time `boxed.evaluate()` (`.N()` for numeric precision) | `process.hrtime.bigint()` | engine configured once from `engines.ts`'s `configure`; boxing and canonicalisation are outside the timed region, like parsing is for the others      |
 
 Boxing outside the timed region is our equivalent of the others' parse and compile step.
 compute-engine doesn't cache the result of a repeated `evaluate()` on one boxed expression. I
 checked this: `Factorial(20000)` takes about 30 ms on every repeat. A case where that breaks
 (a head that memoises in module state) is a cache question, covered in §4.3.
+
+Constant folding is real, not hypothetical. On a `gcd` case, Julia timed about 117 ns per
+call with the literals inline and about 266 ns with them hoisted into `Ref`s: its effect
+analysis had lifted the pure call out of the loop.
 
 ### 4.3 Caches
 
@@ -206,6 +210,10 @@ and our own tables (Bernoulli, partitions). The protocol clears whatever the sys
 clear before each **sample** (§5). Inner iterations inside one sample may hit a cache, and the
 report records `caches: cleared | uncleared` per system. The benchmarks that matter take more
 than 1 ms per call, so they run one call per sample and never hit a warm cache.
+
+Some answers are stored rather than computed: mpmath and Wolfram answer ζ(3) from a stored
+constant in microseconds. The catalogue avoids such points (ζ(3.5), not ζ(3)), and the
+`too-fast` floor catches the ones that slip through.
 
 ### 4.4 Precision
 
@@ -222,12 +230,25 @@ takes part:
 Which precision each mapping computes at is a new per-system column in the generator's own
 table, not in `MAPPINGS`, because that table is shared with the oracle scans and owned there.
 
+Two traps showed up in the first runs. `N[f[3.5], 30]` is machine precision in Wolfram,
+because the input is, so the generator marks decimal inputs with the target precision
+(``3.5`30``); a 17-digit double literal is marked machine precision (`` x` ``) instead, or
+Wolfram computes it as an arbitrary-precision number. And the inputs to a digit-precision case
+have to be exact in both binary and decimal (3.5, 1/2): mpmath reads a float's binary value and
+Wolfram its decimal digits.
+
 ### 4.5 Correctness gate
 
 Every script also prints each case's (reduced) value once, outside the timed region. The
-runner compares it with `expected` through the oracle's `compare`. A disagreeing or erroring
-system is recorded as `wrong` or `error` for that case, and it is **not** in the intersection
-for it.
+runner compares it with `expected`: exact answers as text, numeric ones in exact decimal
+arithmetic to the case's digits (less two). Never through a double, since at 30 digits a
+double would pass an answer that is right to only 16. A disagreeing or erroring system is
+recorded as `wrong` or `error` for that case, and it is **not** in the intersection for it.
+
+The gate earns its place straight away: compute-engine's `PolyLog(3, 1/2)` at 30 digits returns
+a double, and shows up as `wrong` rather than as a suspiciously fast time. The oracle's shared
+Python printer also rounds an mpf to a double, so the harness prints digit-precision mpmath
+answers with `nstr` instead.
 
 ## 5. Measurement protocol
 
@@ -249,7 +270,10 @@ system.
 5. **Interleave** when several systems run on one machine: the runner goes benchmark by
    benchmark, round-robin across systems (TS, Python, Julia, Rust, TS, …), rather than system
    by system. Noise that lasts a few seconds then lands on every system alike, instead of all
-   landing on one of them.
+   landing on one of them. The price is that every kernel stays resident for the whole run:
+   Julia and Oscar take several GB between them. So only CI interleaves (its runner is the
+   job's alone); a local run goes one system at a time. The first all-systems local run pushed
+   the shared dev machine 18 GB into swap.
 
 **The headline statistic is the median.** Min is reported too. Wolfram's own `RepeatedTiming`
 and pyperf both lean central rather than toward the minimum, and on a shared runner the median
@@ -289,9 +313,11 @@ holds:
   noise. If it proves too loose, the fix is a stable machine (a self-hosted runner, or Dean's
   Mac on a schedule), not more statistics. Reports carry the fingerprint, so the viewer can
   split series by machine.
-- **Locally:** `vp run bench` runs any subset on the current machine and writes the same
-  report under `.scratch/bench/`. The viewer loads a local report too. A local run of the full
-  catalogue takes the `HEAVY` lock.
+- **Locally:** `node packages/bench/scripts/bench.ts` runs any subset on the current machine
+  and writes the same report under `.scratch/bench/`. The viewer loads a local report too
+  (`?data=`). A local run of the full catalogue takes the `HEAVY` lock, runs one system at a
+  time, and won't start with more than 8 GB of swap in use. Every harness runs in its own
+  process group under the oracle's RSS watchdog (`ORACLE_MEMORY_MB`).
 
 Instruction counts (Cachegrind or CodSpeed) would steady our own trend line, but V8's JIT under
 Valgrind is slow and skewed, and nothing else in the comparison can join. So not now.
