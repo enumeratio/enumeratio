@@ -109,6 +109,95 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
    * `Number.isFinite` check. */
   const isInfinite = (e: BoxedExpression): boolean => !Number.isFinite(numAt(e));
 
+  /** Exact `(k + phaseNum/phaseDen)·π` — a periodic head's poles and critical points are both
+   * equally spaced multiples of π plus a half-integer phase, so this builds either kind of
+   * point exactly (an integer or half-integer coefficient times the exact symbol `Pi`, never
+   * a decimal), for `pointsInRange` below. */
+  const piMultiple = (k: number, phaseNum: number, phaseDen: number): BoxedExpression => {
+    const numerator = k * phaseDen + phaseNum;
+    const coefficient =
+      phaseDen === 1
+        ? ce.number(numerator)
+        : ce.function("Rational", [numerator, phaseDen]).evaluate();
+    return ce.function("Multiply", [coefficient, "Pi"]).evaluate();
+  };
+
+  /** Every point `(k + phaseNum/phaseDen)·π` in the CLOSED interval `[l, h]` (numeric bounds),
+   * for integer `k` — used for both a periodic head's poles and its critical points, which are
+   * both equally-spaced families of this shape. Inclusive (with a small tolerance) rather than
+   * strictly-interior: a pole sitting right at an endpoint is still a pole to decline on, and a
+   * critical point sitting right at an endpoint is already covered by the endpoint evaluation,
+   * so including it again is harmless. */
+  const pointsInRange = (
+    l: number,
+    h: number,
+    phaseNum: number,
+    phaseDen: number,
+  ): BoxedExpression[] => {
+    const phase = phaseNum / phaseDen;
+    const eps = 1e-9;
+    const kLow = Math.ceil(l / Math.PI - phase - eps);
+    const kHigh = Math.floor(h / Math.PI - phase + eps);
+    const points: BoxedExpression[] = [];
+    for (let k = kLow; k <= kHigh; k++) points.push(piMultiple(k, phaseNum, phaseDen));
+    return points;
+  };
+
+  /** `{head: [phaseNum, phaseDen]}` for the phase of a periodic head's POLES — all at
+   * `(k + phase)·π`. `Tan`/`Sec` at `π/2 + kπ`; `Cot`/`Csc` at `kπ`. `Sin`/`Cos` have none. */
+  const PERIODIC_POLES: Readonly<Record<string, readonly [number, number]>> = {
+    Tan: [1, 2],
+    Sec: [1, 2],
+    Cot: [0, 1],
+    Csc: [0, 1],
+  };
+
+  /** `{head: [phaseNum, phaseDen]}` for the phase of a periodic head's CRITICAL points (where
+   * its derivative is 0 or undefined-but-extremal) — `Sin` at `π/2 + kπ`, `Cos` at `kπ`,
+   * `Sec`'s extrema sit at `Cos`'s (`kπ`, where `Sec = ±1`), `Csc`'s at `Sin`'s (`π/2 + kπ`,
+   * where `Csc = ±1`). `Tan`/`Cot` have none — strictly monotonic on each branch between
+   * poles, so once a pole is ruled out, their two endpoints alone bound the image. */
+  const PERIODIC_CRITICAL: Readonly<Record<string, readonly [number, number]>> = {
+    Sin: [1, 2],
+    Cos: [0, 1],
+    Sec: [0, 1],
+    Csc: [1, 2],
+  };
+
+  /**
+   * `Sin`, `Cos`, `Tan`, `Cot`, `Sec`, `Csc` over a finite `Interval`: exact enumeration, not
+   * sampling — a periodic function can oscillate arbitrarily many times across a wide interval
+   * (`Cos(Interval(-1, 4))` spans both a maximum at 0 and a minimum at π), so `imageOverArg`'s
+   * finite-sample sign check can't be trusted for these the way it can for a smooth special
+   * function over the kind of narrow range a documented example uses. Declines outright if any
+   * pole sits in `[l, h]` (Wolfram's own answer there is a `Union` of unbounded intervals, out
+   * of scope for a single-`Interval` rule) — never a bounded interval that quietly drops the
+   * unbounded piece. Otherwise the image is exactly the min/max of the two endpoints plus
+   * every critical point in range, each evaluated exactly (endpoints stay exact when the
+   * inputs are; a critical point is an exact multiple of π either way).
+   */
+  const periodicImage = (head: string, a: BoxedExpression): BoxedExpression | undefined => {
+    const A = asInterval(a);
+    const l = lo(A);
+    const h = hi(A);
+    const lNum = numAt(l);
+    const hNum = numAt(h);
+    if (!Number.isFinite(lNum) || !Number.isFinite(hNum)) return undefined;
+    const pole = PERIODIC_POLES[head];
+    if (pole !== undefined && pointsInRange(lNum, hNum, pole[0], pole[1]).length > 0) {
+      return undefined;
+    }
+    const evaluateHeadAt = (x: BoxedExpression) => ce.function(head, [x]).evaluate();
+    const candidates = [evaluateHeadAt(l), evaluateHeadAt(h)];
+    const critical = PERIODIC_CRITICAL[head];
+    if (critical !== undefined) {
+      for (const point of pointsInRange(lNum, hNum, critical[0], critical[1])) {
+        candidates.push(evaluateHeadAt(point));
+      }
+    }
+    return interval(minOf(candidates), maxOf(candidates));
+  };
+
   /**
    * `head`'s image over `ops[argIndex]` (an [[Interval]]), via `imageOverArg`'s
    * derivative-sign-and-bisection rule — correct for a monotonic branch AND for the single
@@ -130,32 +219,13 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
   };
 
   /** `Sin`/`Cos` alone: bounded oscillation makes the image `[-1, 1]` on an infinite bound,
-   * where `imageOverArg`'s finite-endpoint derivative check can't apply at all. A finite
-   * bound falls through to the general `image` rule above. */
+   * where `periodicImage`'s finite-endpoint enumeration can't apply at all. A finite bound
+   * falls through to `periodicImage`. */
   const boundedOscillation = (a: BoxedExpression, head: string): BoxedExpression | undefined => {
     const A = asInterval(a);
     if (isInfinite(lo(A)) || isInfinite(hi(A))) return interval(-1, 1);
-    return image([a], head, 0);
+    return periodicImage(head, a);
   };
-
-  /** Does the OPEN interval `(l, h)` contain a pole at `phase + k·period` for some integer
-   * `k`? Declines `Tan`/`Cot`/`Sec`/`Csc` rather than return an interval that silently skips
-   * the unbounded piece on either side (Wolfram's own answer there is a `Union` of two
-   * unbounded intervals — out of scope for a rule that returns one `Interval`). */
-  const hasPoleBetween = (l: number, h: number, period: number, phase: number): boolean => {
-    const kLow = Math.ceil((l - phase) / period + 1e-9);
-    const kHigh = Math.floor((h - phase) / period - 1e-9);
-    return kLow <= kHigh;
-  };
-
-  const HALF_PI = Math.PI / 2;
-  /** `Tan`/`Sec` have poles at `π/2 + kπ`; `Cot`/`Csc` at `kπ`. */
-  const declinesOnPole = (
-    l: BoxedExpression,
-    h: BoxedExpression,
-    period: number,
-    phase: number,
-  ): boolean => hasPoleBetween(numAt(l), numAt(h), period, phase);
 
   /** Unary heads whose image over an `Interval` argument is exactly `image([a], head, 0)` —
    * every one checked against `derivativeAt` (see tagged-calculus.ts and .scratch/probe2.ts)
@@ -245,34 +315,22 @@ export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Re
       ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
         ? boundedOscillation(ops[0], "Cos")
         : undefined,
-    Tan: (ops) => {
-      const a = ops.length === 1 ? ops[0] : undefined;
-      if (a === undefined || !isInterval(a)) return undefined;
-      const A = asInterval(a);
-      if (declinesOnPole(lo(A), hi(A), Math.PI, HALF_PI)) return undefined;
-      return image([a], "Tan", 0);
-    },
-    Cot: (ops) => {
-      const a = ops.length === 1 ? ops[0] : undefined;
-      if (a === undefined || !isInterval(a)) return undefined;
-      const A = asInterval(a);
-      if (declinesOnPole(lo(A), hi(A), Math.PI, 0)) return undefined;
-      return image([a], "Cot", 0);
-    },
-    Sec: (ops) => {
-      const a = ops.length === 1 ? ops[0] : undefined;
-      if (a === undefined || !isInterval(a)) return undefined;
-      const A = asInterval(a);
-      if (declinesOnPole(lo(A), hi(A), Math.PI, HALF_PI)) return undefined;
-      return image([a], "Sec", 0);
-    },
-    Csc: (ops) => {
-      const a = ops.length === 1 ? ops[0] : undefined;
-      if (a === undefined || !isInterval(a)) return undefined;
-      const A = asInterval(a);
-      if (declinesOnPole(lo(A), hi(A), Math.PI, 0)) return undefined;
-      return image([a], "Csc", 0);
-    },
+    Tan: (ops) =>
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
+        ? periodicImage("Tan", ops[0])
+        : undefined,
+    Cot: (ops) =>
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
+        ? periodicImage("Cot", ops[0])
+        : undefined,
+    Sec: (ops) =>
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
+        ? periodicImage("Sec", ops[0])
+        : undefined,
+    Csc: (ops) =>
+      ops.length === 1 && ops[0] !== undefined && isInterval(ops[0])
+        ? periodicImage("Csc", ops[0])
+        : undefined,
     Sign: (ops) => {
       const a = ops.length === 1 ? ops[0] : undefined;
       if (a === undefined || !isInterval(a)) return undefined;
