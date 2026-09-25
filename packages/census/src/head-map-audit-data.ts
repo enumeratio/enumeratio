@@ -23,11 +23,4 @@ export interface AuditEntry {
   readonly reason: string;
 }
 
-export const HEAD_MAP_AUDIT: readonly AuditEntry[] = [
-  {
-    head: "VerificationTest",
-    category: "unevaluated",
-    reason:
-      'signature "(any*) -> any" gives no arm with a derivable sample — unverified, not cleared',
-  },
-];
+export const HEAD_MAP_AUDIT: readonly AuditEntry[] = [];

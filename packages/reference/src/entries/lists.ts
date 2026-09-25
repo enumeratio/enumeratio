@@ -142,4 +142,39 @@ export const lists: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["Fold"],
   },
+  {
+    name: "Contains",
+    domain: "Collections",
+    signature: "Contains(xs, v)",
+    summary: "Whether a collection has an element structurally equal to v.",
+    signatures: [
+      {
+        call: "Contains(xs, v)",
+        description: "$True$ if some element of $xs$ is structurally equal to $v$, else $False$.",
+      },
+    ],
+    examples: [
+      { expr: ["Contains", ["List", 1, 2, 3], 2], expected: "True" },
+      { expr: ["Contains", ["List", 1, 2, 3], 5], expected: "False" },
+    ],
+    seeAlso: ["Any"],
+  },
+  {
+    name: "Unique",
+    domain: "Collections",
+    signature: "Unique(xs)",
+    summary: "The elements of a collection, each kept once, in first-occurrence order.",
+    signatures: [
+      {
+        call: "Unique(xs)",
+        description: "$xs$ with every repeat of an element dropped, keeping the first occurrence.",
+      },
+    ],
+    examples: [
+      {
+        expr: ["Unique", ["List", 1, 2, 2, 3, 1]],
+        expected: ["List", 1, 2, 3],
+      },
+    ],
+  },
 ];

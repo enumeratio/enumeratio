@@ -104,6 +104,14 @@ export const HEADS: Record<string, string> = {
   Arsinh: "ArcSinh",
   Arcosh: "ArcCosh",
   Artanh: "ArcTanh",
+  // Arccot is NOT a straight rename to ArcCot — see SPECIAL: compute-engine's range is
+  // (0, π) but Wolfram's is (-π/2, π/2], which disagree at negative arguments
+  // (Arccot(-1) = 3π/4 vs ArcCot[-1] = -π/4).
+  Arccsc: "ArcCsc",
+  Arcsec: "ArcSec",
+  Arcoth: "ArcCoth",
+  Arcsch: "ArcCsch",
+  Arsech: "ArcSech",
   // combinatorics / sequences
   Binomial: "Binomial",
   Factorial: "Factorial",
@@ -126,6 +134,8 @@ export const HEADS: Record<string, string> = {
   FallingFactorial: "FactorialPower",
   // number theory
   IsPrime: "PrimeQ",
+  IsOdd: "OddQ",
+  IsEven: "EvenQ",
   IsSquareFree: "SquareFreeQ",
   Totient: "EulerPhi",
   MoebiusMu: "MoebiusMu",
@@ -231,6 +241,11 @@ export const HEADS: Record<string, string> = {
   // divides n — same relation, arguments swapped. See SPECIAL.
   Divides: "Divisible",
   IsComposite: "CompositeQ",
+  // Same (collection, value) order as Wolfram's MemberQ[list, form]; ours is a structural
+  // equality test rather than a pattern match, which agrees on any literal value.
+  Contains: "MemberQ",
+  // Both keep first-occurrence order.
+  Unique: "DeleteDuplicates",
 
   // ── heads our own libraries add that Wolfram already has, under the same meaning ──
   //
@@ -466,6 +481,17 @@ const SPECIAL: Record<string, (args: MathJson[]) => string> = {
   // since Wolfram's Scan is an unrelated side-effecting map.
   Scan: (a) =>
     a.length === 2 ? `FoldList[${toWolfram(a[1])}, ${toWolfram(a[0])}]` : call(`${CONTEXT}Scan`, a),
+  // PositionalNumerals(b) is ordinary base b wrapped as a system value (see
+  // packages/numerals) — the same digits Wolfram's own bare integer base already gives in
+  // IntegerDigits[n, b]/FromDigits[digits, b], so it unwraps to the plain number rather than
+  // a head call. One-way: a bare Wolfram base comes back bare, not rewrapped as this.
+  PositionalNumerals: (a) => toWolfram(a[0]),
+  // Arccot(x) has range (0, π) on compute-engine's side; Wolfram's ArcCot has range
+  // (-π/2, π/2], which disagrees at negative x (Arccot(-1) = 3π/4, ArcCot[-1] = -π/4). The
+  // two agree everywhere via this identity, so emit the equivalent that matches our range
+  // rather than the (sometimes wrong) rename. One-way: Wolfram's ArcCot does not reverse to
+  // this — see REVERSE_HEADS, built from HEADS, which no longer lists Arccot at all.
+  Arccot: (a) => `Subtract[Divide[Pi, 2], ArcTan[${toWolfram(a[0])}]]`,
 };
 
 /** Whether the transpiler vouches for a head — as opposed to passing it through by name. */

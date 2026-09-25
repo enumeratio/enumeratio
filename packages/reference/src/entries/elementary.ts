@@ -481,6 +481,66 @@ export const elementary: readonly ReferenceEntry[] = [
     seeAlso: ["Tan", "Arcsin", "Arccos"],
   },
   {
+    name: "Arccot",
+    domain: "Elementary functions",
+    signature: "Arccot(x)",
+    summary: "Arccotangent, the inverse of [[Cot]].",
+    signatures: [{ call: "Arccot(x)", description: "the value $y$ with $\\cot(y) = x$." }],
+    details: [
+      "Stays symbolic even at values where the reciprocal circular functions fold exactly (e.g. $x = 1$) -- wrap in N(...) for a numeric result.",
+    ],
+    examples: [
+      {
+        expr: ["N", ["Arccot", 1]],
+        expected: { num: "0.785398163397448309616" },
+        caption: "$\\pi/4$, numerically -- N(...) forces the fold plain evaluation withholds",
+      },
+      {
+        expr: ["Equal", ["Cot", ["Arccot", 1]], 1],
+        expected: "True",
+        category: "Properties",
+        caption: "Undoes [[Cot]]: $\\cot(\\text{arccot}(x)) = x$",
+      },
+    ],
+    seeAlso: ["Cot", "Arctan"],
+  },
+  {
+    name: "Arccsc",
+    domain: "Elementary functions",
+    signature: "Arccsc(x)",
+    summary: "Arccosecant, the inverse of [[Csc]].",
+    signatures: [{ call: "Arccsc(x)", description: "the value $y$ with $\\csc(y) = x$." }],
+    examples: [
+      { expr: ["Arccsc", 1], expected: ["Multiply", ["Rational", 1, 2], "Pi"] },
+      { expr: ["Arccsc", 2], expected: ["Multiply", ["Rational", 1, 6], "Pi"] },
+      {
+        expr: ["Equal", ["Csc", ["Arccsc", 2]], 2],
+        expected: "True",
+        category: "Properties",
+        caption: "Undoes [[Csc]]: $\\csc(\\text{arccsc}(x)) = x$",
+      },
+    ],
+    seeAlso: ["Csc", "Arcsin"],
+  },
+  {
+    name: "Arcsec",
+    domain: "Elementary functions",
+    signature: "Arcsec(x)",
+    summary: "Arcsecant, the inverse of [[Sec]].",
+    signatures: [{ call: "Arcsec(x)", description: "the value $y$ with $\\sec(y) = x$." }],
+    examples: [
+      { expr: ["Arcsec", 1], expected: 0 },
+      { expr: ["Arcsec", 2], expected: ["Multiply", ["Rational", 1, 3], "Pi"] },
+      {
+        expr: ["Equal", ["Sec", ["Arcsec", 2]], 2],
+        expected: "True",
+        category: "Properties",
+        caption: "Undoes [[Sec]]: $\\sec(\\text{arcsec}(x)) = x$",
+      },
+    ],
+    seeAlso: ["Sec", "Arccos"],
+  },
+  {
     name: "Sinh",
     domain: "Elementary functions",
     signature: "Sinh(x)",
@@ -595,6 +655,55 @@ export const elementary: readonly ReferenceEntry[] = [
       },
     ],
     seeAlso: ["Sinh", "Cosh"],
+  },
+  {
+    name: "Arcoth",
+    domain: "Elementary functions",
+    signature: "Arcoth(x)",
+    summary: "Inverse hyperbolic cotangent, the inverse of Coth.",
+    signatures: [{ call: "Arcoth(x)", description: "the value $y$ with $\\coth(y) = x$." }],
+    details: [
+      "Stays symbolic at plain evaluation, same as [[Arsinh]]-family functions; wrap in N(...).",
+    ],
+    examples: [
+      {
+        expr: ["N", ["Arcoth", 2]],
+        expected: { num: "0.5493061443340548457" },
+      },
+    ],
+    seeAlso: ["Artanh"],
+  },
+  {
+    name: "Arcsch",
+    domain: "Elementary functions",
+    signature: "Arcsch(x)",
+    summary: "Inverse hyperbolic cosecant, the inverse of Csch.",
+    signatures: [
+      { call: "Arcsch(x)", description: "the value $y$ with $\\operatorname{csch}(y) = x$." },
+    ],
+    examples: [
+      {
+        expr: ["N", ["Arcsch", 2]],
+        expected: { num: "0.481211825059603447495" },
+      },
+    ],
+    seeAlso: ["Arsinh"],
+  },
+  {
+    name: "Arsech",
+    domain: "Elementary functions",
+    signature: "Arsech(x)",
+    summary: "Inverse hyperbolic secant, the inverse of Sech.",
+    signatures: [
+      { call: "Arsech(x)", description: "the value $y$ with $\\operatorname{sech}(y) = x$." },
+    ],
+    examples: [
+      {
+        expr: ["N", ["Arsech", ["Rational", 1, 2]]],
+        expected: { num: "1.31695789692481670863" },
+      },
+    ],
+    seeAlso: ["Arcosh"],
   },
   {
     name: "Exp",

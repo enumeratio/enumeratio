@@ -53,6 +53,10 @@ const S = (...xs: MathJSON[]): MathJSON => ["Set", ...xs];
 
 /** Exact checks for mapped heads with no reference example: `call` must evaluate to
  *  `expected`. A lazy collection answers through `Count`, so it is probed that way. */
+/** No probe here ever carries a volatile field — `PROBES` is hand-written, not drawn from a
+ *  reference example. */
+const NONE: ReadonlySet<string> = new Set();
+
 const PROBES: Readonly<Record<string, { call: MathJSON; expected: MathJSON }>> = {
   Add: { call: ["Add", 2, 3], expected: 5 },
   Append: { call: ["Append", L(1, 2), 3], expected: L(1, 2, 3) },
@@ -136,14 +140,36 @@ const HELD_HEADS = new Set([
 const mentions = (node: unknown, head: string): boolean =>
   node === head || (Array.isArray(node) && node.some((child) => mentions(child, head)));
 
-/** The first plain reference example that uses `head`, from its own entry if it has one. */
-function referenceProbe(head: string): { call: MathJSON; expected: MathJSON } | undefined {
+/** Blank the value of any `Tuple`/`KeyValuePair` rule keyed by one of `keys`, wherever it
+ *  sits in the tree — same convention as `masked` in reference/tests/entries.test.ts, so a
+ *  run-varying field (`VerificationTest`'s `AbsoluteTimeUsed`) never lands in this file. */
+function maskVolatile(node: MathJSON, keys: ReadonlySet<string>): MathJSON {
+  if (!Array.isArray(node)) return node;
+  const key = typeof node[1] === "string" ? (node[1] as string).replace(/^'|'$/g, "") : undefined;
+  if ((node[0] === "Tuple" || node[0] === "KeyValuePair") && key !== undefined && keys.has(key)) {
+    return [node[0], node[1], "…"];
+  }
+  return node.map((child) => maskVolatile(child as MathJSON, keys));
+}
+
+/** The first plain reference example that uses `head`, from its own entry if it has one. A
+ *  `volatile` example (a field like `AbsoluteTimeUsed` that changes run to run) is still
+ *  used — its listed keys are masked on both sides before the probe compares by value,
+ *  rather than skipped outright, which would leave a head like `VerificationTest` with no
+ *  probe at all. */
+function referenceProbe(
+  head: string,
+): { call: MathJSON; expected: MathJSON; volatile: ReadonlySet<string> } | undefined {
   const own = referenceEntries.filter((entry) => entry.name === head);
   for (const entry of [...own, ...referenceEntries]) {
-    const example = entry.examples.find(
-      (e) => !e.aspirational && e.volatile === undefined && mentions(e.expr, head),
-    );
-    if (example) return { call: example.expr, expected: example.expected };
+    const example = entry.examples.find((e) => !e.aspirational && mentions(e.expr, head));
+    if (example) {
+      return {
+        call: example.expr,
+        expected: example.expected,
+        volatile: new Set(example.volatile ?? []),
+      };
+    }
   }
   return undefined;
 }
@@ -364,17 +390,20 @@ export function auditHeadMap(): AuditEntry[] {
       continue;
     }
 
-    const probe = referenceProbe(head) ?? PROBES[head];
+    const staticProbe = PROBES[head];
+    const probe = referenceProbe(head) ?? (staticProbe && { ...staticProbe, volatile: NONE });
     if (probe) {
       const sample = JSON.stringify(probe.call);
+      const volatile = probe.volatile;
       try {
-        const got = ce.box(probe.call as never).evaluate().json;
-        if (JSON.stringify(got) !== JSON.stringify(probe.expected)) {
+        const got = maskVolatile(ce.box(probe.call as never).evaluate().json, volatile);
+        const expected = maskVolatile(probe.expected, volatile);
+        if (JSON.stringify(got) !== JSON.stringify(expected)) {
           entries.push({
             head,
             category: "unevaluated",
             sample,
-            reason: `expected ${JSON.stringify(probe.expected)}, got ${JSON.stringify(got)}`,
+            reason: `expected ${JSON.stringify(expected)}, got ${JSON.stringify(got)}`,
           });
         }
       } catch (err) {

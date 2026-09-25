@@ -861,4 +861,34 @@ export const arithmetic: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["Max", "Clamp"],
   },
+  {
+    name: "IsOdd",
+    domain: "Arithmetic",
+    signature: "IsOdd(n)",
+    summary: "Whether n is an odd integer.",
+    signatures: [
+      { call: "IsOdd(n)", description: "$True$ if $n$ is an odd integer, else $False$." },
+    ],
+    examples: [
+      { expr: ["IsOdd", 3], expected: "True" },
+      { expr: ["IsOdd", 4], expected: "False" },
+      { expr: ["IsOdd", -7], expected: "True", caption: "Negative integers count too" },
+    ],
+    seeAlso: ["IsEven"],
+  },
+  {
+    name: "IsEven",
+    domain: "Arithmetic",
+    signature: "IsEven(n)",
+    summary: "Whether n is an even integer.",
+    signatures: [
+      { call: "IsEven(n)", description: "$True$ if $n$ is an even integer, else $False$." },
+    ],
+    examples: [
+      { expr: ["IsEven", 4], expected: "True" },
+      { expr: ["IsEven", 3], expected: "False" },
+      { expr: ["IsEven", 0], expected: "True", caption: "Zero is even" },
+    ],
+    seeAlso: ["IsOdd"],
+  },
 ];
