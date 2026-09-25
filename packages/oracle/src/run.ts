@@ -9,7 +9,7 @@
 // Every kernel also runs under the process-group watchdog (bounded.ts), the ceiling for the
 // kernels with no per-item cap of their own (Julia, Lean).
 
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -246,16 +246,15 @@ async function runLean(sources: readonly string[]): Promise<Result[]> {
   return results;
 }
 
-/** Rust: every item of the batch as one closure in `rust/src/main.rs`, built once in the
- * `rust/` crate and run. A panic costs its own item (`prelude::item` catches it); a compile
+/** Rust: every item of the batch as one closure in `rust/src/bin/batch.rs`, built against the
+ * `rust/` crate's library (its adapters) and run. A panic costs its own item (`item` catches it); a compile
  * error would cost the whole batch, so an item rustc rejects is answered with its error and
  * the rest rebuilt without it. */
 async function runRust(sources: readonly string[]): Promise<Result[]> {
   const crate = local("rust");
   const header = [
     "#![allow(unused_parens, unused_imports)]",
-    "mod prelude;",
-    "use prelude::*;",
+    "use enumeratio_oracle::*;",
     "fn main() {",
   ];
   const results: Result[] = failAll(sources.length, "no output");
@@ -263,7 +262,8 @@ async function runRust(sources: readonly string[]): Promise<Result[]> {
   for (let attempt = 0; attempt < sources.length + 1 && live.size > 0; attempt++) {
     const order = [...live];
     const lines = order.map((i) => `    item(${i + 1}, || ${sources[i]});`);
-    writeFileSync(join(crate, "src", "main.rs"), [...header, ...lines, "}", ""].join("\n"));
+    mkdirSync(join(crate, "src", "bin"), { recursive: true });
+    writeFileSync(join(crate, "src", "bin", "batch.rs"), [...header, ...lines, "}", ""].join("\n"));
     const build = await runBounded("cargo", ["build", "--quiet", "--message-format=short"], {
       cwd: crate,
       timeoutMs: 900_000,
@@ -287,7 +287,7 @@ async function runRust(sources: readonly string[]): Promise<Result[]> {
       }
       continue;
     }
-    const run = await transcript(join(crate, "target", "debug", "enumeratio-oracle"), [], {});
+    const run = await transcript(join(crate, "target", "debug", "batch"), [], {});
     if (!("out" in run)) return failAll(sources.length, run.reason);
     const got = collect(run.out, sources.length);
     for (const i of live) results[i] = got[i] as Result;

@@ -11,7 +11,7 @@ import { juliaFlags, runBounded } from "../src/index.ts";
 const STEPS: Record<string, () => [string, string[], { cwd?: string; env?: NodeJS.ProcessEnv }]> = {
   julia: () => ["julia", [...juliaFlags("julia"), "-e", INSTANTIATE], { env: ONE_AT_A_TIME }],
   oscar: () => ["julia", [...juliaFlags("oscar"), "-e", INSTANTIATE], { env: ONE_AT_A_TIME }],
-  // Fetches and builds the pinned crates once, so a scan batch only compiles its main.rs.
+  // Fetches and builds the pinned crates once, so a scan batch only compiles its own src/bin/batch.rs.
   rust: () => [
     "cargo",
     ["build", "--quiet"],

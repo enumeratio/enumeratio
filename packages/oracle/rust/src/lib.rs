@@ -1,4 +1,4 @@
-// What the `rust` emit templates call. An emitted expression nests arbitrarily, and Rust's
+// What the `rust` emit templates call (a scan batch, src/bin/batch.rs, uses it all). An emitted expression nests arbitrarily, and Rust's
 // types don't, so every value is a `V` — an integer, exact rational, float, boolean, list or
 // p-adic — whose operators promote the way ours do (integers stay exact, a float makes the
 // rest float). Every function is an adapter: it converts its arguments to what the crate

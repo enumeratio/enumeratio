@@ -1,5 +1,5 @@
-# The Rust oracle lane (packages/oracle/src/run.ts): each scan batch is written to
-# src/main.rs, built once and run. Crates are pinned by Cargo.lock.
+# The Rust oracle lane (packages/oracle/src/run.ts): src/lib.rs is the adapters, and each scan
+# batch is written to src/bin/batch.rs, built against them and run. Crates are pinned by Cargo.lock.
 [package]
 name = "enumeratio-oracle"
 version = "0.0.0"
