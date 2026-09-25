@@ -128,3 +128,15 @@ arccot-sqrt-3-frac-5-pi-6-past-pi-2-not-mirrored:
     back: [Subtract, [Divide, Pi, 2], [Arctan, [Negate, [Sqrt, 3]]]]
   wolfram:
     in: Subtract[Divide[Pi, 2], ArcTan[Minus[Sqrt[3]]]]
+a-generic-rational-with-no-exact-fold-stays:
+  epsil:
+    in: Arccot(2)
+    out: Arccot(2)
+  tex:
+    in: \mathrm{arcctg}(2)
+    out: \mathrm{arcctg}(2)
+  fullform:
+    in: Subtract[Divide[Pi, 2], ArcTan[2]]
+    back: [Subtract, [Divide, Pi, 2], [Arctan, 2]]
+  wolfram:
+    in: Subtract[Divide[Pi, 2], ArcTan[2]]

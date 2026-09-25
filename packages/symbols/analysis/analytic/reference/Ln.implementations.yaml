@@ -492,3 +492,20 @@ ln-frac-12-i-pi-ln-2-a-negative-rational-folded:
     in: log((-1/2))
   rust:
     in: ln(rational(n(-1), n(2)))
+n-decimalizes-ln-i-not-just-the-exact-form:
+  epsil:
+    in: N(Ln(ImaginaryUnit))
+    out: 1.570_796_326_794_896_6i
+  tex:
+    in: N(\ln(i))
+    out: 1.570\,796\,326\,794\,896\,6i
+  fullform:
+    in: N[Log[I]]
+  wolfram:
+    in: N[Log[I]]
+  sympy:
+    in: N(log(I), 30)
+  mpmath:
+    in: (log(mpc(0,1)))
+  sage:
+    in: N(log(I))
