@@ -164,6 +164,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
     ],
   },
   {
+    name: "AlgebraDimension",
+    oracle: [
+      {
+        system: "oscar",
+        call: "dim($1)",
+        arity: 1,
+      },
+    ],
+  },
+  {
     name: "And",
     wolfram: "And",
   },
@@ -594,6 +604,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "Chop",
     wolfram: "Chop",
+  },
+  {
+    name: "ClassSum",
+    oracle: [
+      {
+        system: "oscar",
+        call: "enumeratio_class_sum($1, $2)",
+        arity: 2,
+      },
+    ],
   },
   {
     name: "Complex",
@@ -1885,6 +1905,16 @@ export const crosswalk: readonly CrosswalkRecord[] = [
   {
     name: "GreaterEqual",
     wolfram: "GreaterEqual",
+  },
+  {
+    name: "GroupBasis",
+    oracle: [
+      {
+        system: "oscar",
+        call: "EnumeratioBasis($1)",
+        arity: 1,
+      },
+    ],
   },
   {
     name: "HarmonicNumber",

@@ -28,6 +28,7 @@ import { isDeepStrictEqual } from "node:util";
 import { ComputeEngine } from "@cortex-js/compute-engine";
 import {
   compare,
+  compareCombination,
   comparePythonStructured,
   compareTrees,
   emit,
@@ -194,6 +195,8 @@ for (const system of systems) {
         tree === undefined
           ? "inconclusive"
           : compareTrees(reduce(row.item.expected, leaf), tree, tolerance);
+    } else if (theirs.startsWith("combination:")) {
+      verdict = compareCombination(row.item.expected, theirs);
     } else {
       verdict = compare(show(row.item.expected), theirs, tolerance);
       if (verdict === "disagree") {

@@ -139,7 +139,7 @@ Counts cover mapped examples only; unmapped ones have no row.
 
 </details>
 
-## oscar — agree 78, disagree 0, inconclusive 0, error 9
+## oscar — agree 90, disagree 0, inconclusive 0, error 9
 
 <details><summary>errors — usually a mapping whose SHAPE is wrong</summary>
 

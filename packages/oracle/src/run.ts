@@ -168,6 +168,8 @@ async function runJulia(
   sources: readonly string[],
   project: string,
   using: string,
+  /** A Julia file of helpers the environment's emit templates call. */
+  preamble?: string,
 ): Promise<Result[]> {
   // A JSON string is a Julia string literal once `$` stops interpolating.
   const list = sources.map((source) => JSON.stringify(source).replace(/\$/g, "\\$")).join(",\n");
@@ -176,6 +178,7 @@ show_oracle(x) = string(x)
 show_oracle(x::Rational) = string(Float64(x))
 show_oracle(x::QQFieldElem) = string(Float64(x))
 show_oracle(x::AbstractVector) = "[" * join(map(show_oracle, x), ", ") * "]"
+${preamble === undefined ? "" : `include(${JSON.stringify(preamble)})`}
 for (i, src) in enumerate([${list}])
     try
         println("<<", i, ">>", show_oracle(Core.eval(Main, Meta.parse(src))))
@@ -359,7 +362,7 @@ function runBatch(system: System, sources: readonly string[]): Promise<Result[]>
         "enumeratio_value",
       );
     case "oscar":
-      return runJulia(sources, "oscar", "Oscar");
+      return runJulia(sources, "oscar", "Oscar", join(local("oscar"), "preamble.jl"));
     case "julia":
       return runJulia(sources, "julia", "Nemo, Combinatorics");
     case "mathlib4":
