@@ -27,10 +27,7 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
-  // The threshold trails the actual count on purpose (see the comment above) -- #113's
-  // combinatorics/numerals/rounding sweep moved several heads (Stirling, BellNumber,
-  // CatalanNumber, Fibonacci, LucasL, IntegerString, FromDigits, ...) from plain
-  // compute-engine into extension, so this needed to come down from its previous 40.
+  // Trails the actual count: heads move to extension as we widen them.
   expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(30);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
