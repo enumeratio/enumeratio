@@ -1,0 +1,31 @@
+name: DiracDelta
+domain: Elementary functions
+signature: DiracDelta(x1, x2, …)
+summary: "The Dirac delta generalized function: 0 for any nonzero real argument, unevaluated at 0."
+signatures:
+  - call: DiracDelta(x)
+    description: 0 if x is a nonzero real number; unevaluated (stays symbolic) at x = 0 or for a symbolic argument.
+    library: "@enumeratio/analytic"
+  - call: DiracDelta(x1, x2, …)
+    description: the multidimensional delta -- 0 as soon as any argument is a nonzero real, unevaluated otherwise.
+    library: "@enumeratio/analytic"
+    arity: 2
+details:
+  - DiracDelta has no ordinary value at 0 -- it is not a function in the usual sense, so DiracDelta(0) stays unevaluated rather than becoming Infinity or an error.
+  - D(HeavisideTheta(x), x) = DiracDelta(x) -- see [[HeavisideTheta]].
+examples:
+  - id: diracdelta-zero-unevaluated
+    expr: [DiracDelta, 0]
+    expected: [DiracDelta, 0]
+    caption: Unevaluated at 0
+  - id: diracdelta-nonzero
+    expr: [DiracDelta, 2]
+    expected: 0
+  - id: diracdelta-negative
+    expr: [DiracDelta, -3]
+    expected: 0
+  - id: diracdelta-multivariate-one-nonzero
+    expr: [DiracDelta, 0, 1]
+    expected: 0
+    category: Scope
+    caption: Zero as soon as any argument is a nonzero real

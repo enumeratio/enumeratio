@@ -502,6 +502,21 @@ export const HEADS: Record<string, string> = {
   Assuming: "Assuming",
   Piecewise: "Piecewise",
   PiecewiseExpand: "PiecewiseExpand",
+  // The signal/piecewise-waveform family declared in signals.ts -- same names and meaning
+  // as Wolfram's, boundary values included.
+  UnitBox: "UnitBox",
+  UnitTriangle: "UnitTriangle",
+  HeavisideTheta: "HeavisideTheta",
+  HeavisideLambda: "HeavisideLambda",
+  HeavisidePi: "HeavisidePi",
+  Ramp: "Ramp",
+  SawtoothWave: "SawtoothWave",
+  TriangleWave: "TriangleWave",
+  SquareWave: "SquareWave",
+  Rescale: "Rescale",
+  DiracDelta: "DiracDelta",
+  DiscreteDelta: "DiscreteDelta",
+  DiscreteShift: "DiscreteShift",
   // SeriesCoefficient(f, {x, x0, n}) — the argument shape matches Wolfram's directly (see
   // series-coefficient.ts), so this is a plain rename, not a SPECIAL reordering.
   SeriesCoefficient: "SeriesCoefficient",
@@ -637,6 +652,7 @@ export const HEADS: Record<string, string> = {
  *  the same way it excludes a plain rename. */
 export const STRUCTURAL: Record<string, string> = {
   Total: "Sum",
+  Clip: "Clamp",
 };
 
 /** The context our heads emit into when Wolfram has the name for something else.

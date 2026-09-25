@@ -1,0 +1,34 @@
+name: Rescale
+domain: Elementary functions
+signature: Rescale(x, …)
+summary: Linearly rescale a value or list from one range to another.
+signatures:
+  - call: Rescale(list)
+    description: rescale every element of list so its own minimum maps to 0 and its maximum to 1.
+    library: "@enumeratio/analytic"
+  - call: Rescale(x, {min, max})
+    description: (x - min) / (max - min) -- x rescaled from {min, max} to {0, 1}.
+    library: "@enumeratio/analytic"
+    arity: 2
+  - call: Rescale(x, {min, max}, {ymin, ymax})
+    description: x rescaled from {min, max} to {ymin, ymax}.
+    library: "@enumeratio/analytic"
+    arity: 3
+details:
+  - A bare scalar with no range to rescale against -- Rescale(x) where x is not a list -- has no sensible reading and stays unevaluated.
+  - Rescale(x, {min, max}) is Rescale(x, {min, max}, {0, 1}) with the target range left implicit.
+  - Exact rational input and bounds give an exact rational result.
+examples:
+  - id: rescale-list
+    expr: [Rescale, [List, 1, 2, 3, 4]]
+    expected: [List, 0, [Rational, 1, 3], [Rational, 2, 3], 1]
+    caption: List min -> 0, max -> 1
+  - id: rescale-with-range
+    expr: [Rescale, 5, [List, 0, 10]]
+    expected: [Rational, 1, 2]
+    category: Scope
+  - id: rescale-with-target
+    expr: [Rescale, 5, [List, 0, 10], [List, 100, 200]]
+    expected: 150
+    category: Scope
+    caption: Rescaled into an explicit target range

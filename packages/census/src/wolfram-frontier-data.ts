@@ -273,10 +273,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 23,
   },
   {
-    head: "UnitBox",
-    uses: 23,
-  },
-  {
     head: "Do",
     uses: 22,
   },
@@ -469,19 +465,11 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 15,
   },
   {
-    head: "SawtoothWave",
-    uses: 15,
-  },
-  {
     head: "SymmetrizedArray",
     uses: 15,
   },
   {
     head: "BarLegend",
-    uses: 14,
-  },
-  {
-    head: "DiracDelta",
     uses: 14,
   },
   {
@@ -502,10 +490,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "OverVector",
-    uses: 14,
-  },
-  {
-    head: "TriangleWave",
     uses: 14,
   },
   {
@@ -542,10 +526,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "ReIm",
-    uses: 13,
-  },
-  {
-    head: "SquareWave",
     uses: 13,
   },
   {
@@ -625,10 +605,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 11,
   },
   {
-    head: "HeavisideLambda",
-    uses: 11,
-  },
-  {
     head: "ImplicitRegion",
     uses: 11,
   },
@@ -678,10 +654,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "Extract",
-    uses: 10,
-  },
-  {
-    head: "HeavisideTheta",
     uses: 10,
   },
   {
@@ -793,14 +765,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 9,
   },
   {
-    head: "Ramp",
-    uses: 9,
-  },
-  {
-    head: "Rescale",
-    uses: 9,
-  },
-  {
     head: "RulePlot",
     uses: 9,
   },
@@ -838,10 +802,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "BlockRandom",
-    uses: 8,
-  },
-  {
-    head: "Clip",
     uses: 8,
   },
   {
@@ -974,14 +934,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "DateString",
-    uses: 7,
-  },
-  {
-    head: "DiscreteDelta",
-    uses: 7,
-  },
-  {
-    head: "DiscreteShift",
     uses: 7,
   },
   {
@@ -1461,10 +1413,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
     uses: 4,
   },
   {
-    head: "HeavisidePi",
-    uses: 4,
-  },
-  {
     head: "InterpolatingPolynomial",
     uses: 4,
   },
@@ -1594,10 +1542,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "TrigFactorList",
-    uses: 4,
-  },
-  {
-    head: "UnitTriangle",
     uses: 4,
   },
   {
