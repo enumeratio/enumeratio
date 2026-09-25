@@ -1543,9 +1543,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["LerchPhi", ["Rational", 1, 2], 1, 1],
         expected: ["Multiply", 2, ["Ln", 2]],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\Phi(1/2, 1, 1) = 2\\ln 2$; not yet",
+        caption:
+          "$\\Phi(1/2, 1, 1) = 2\\ln 2$ -- via $\\Phi(z,1,1) = -\\ln(1-z)/z$ and Ln's own unit-fraction fold",
       },
       {
         expr: ["LerchPhi", -1, 2, ["Rational", 1, 2]],

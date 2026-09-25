@@ -34,10 +34,13 @@ test("Digamma(n) = H_{n-1} - gamma at a positive integer n", () => {
 
 test("Ln(-q) = Ln(q) + i*pi for a positive rational q", () => {
   expect(evalJson(["Ln", -1])).toEqual(["Multiply", ["Complex", 0, 1], "Pi"]);
+  // Ln(1/2) itself now folds to -Ln(2) (elementary-remaining.ts's unit-fraction rule),
+  // so this comes back as i*pi - Ln(2) rather than i*pi + Ln(1/2) -- same value, still
+  // built from this test's own `Ln(-q) = Ln(q) + i*pi` before that further fold.
   expect(evalJson(["Ln", ["Rational", -1, 2]])).toEqual([
     "Add",
     ["Multiply", ["Complex", 0, 1], "Pi"],
-    ["Ln", ["Rational", 1, 2]],
+    ["Negate", ["Ln", 2]],
   ]);
   // A positive argument is untouched.
   expect(evalJson(["Ln", 1])).toEqual(0);

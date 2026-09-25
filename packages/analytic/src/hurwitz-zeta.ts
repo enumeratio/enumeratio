@@ -67,6 +67,7 @@ import { declareGeneralizedSpecial } from "./generalized-special.ts";
 import { declareConstantRounding } from "./constant-rounding.ts";
 import { declareTrigNormalisation } from "./trig-normalisation.ts";
 import { declareElementarySpecialValues } from "./elementary-special-values.ts";
+import { declareElementaryRemaining } from "./elementary-remaining.ts";
 import { declareThreading113 } from "./threading-113.ts";
 import { declareClosedForms113 } from "./closed-forms-113.ts";
 import { declarePrecision113 } from "./precision-113.ts";
@@ -718,6 +719,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareConstantRounding(ce);
   declareTrigNormalisation(ce);
   declareElementarySpecialValues(ce);
+  declareElementaryRemaining(ce);
   declareThreading113(ce);
   declareClosedForms113(ce);
   declarePrecision113(ce);

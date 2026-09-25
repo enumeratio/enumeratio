@@ -27,8 +27,11 @@ test("the catalogue is mostly compute-engine's, and we know which part is not", 
   // Not pinned exactly — it moves as the catalogue grows — but every head lands somewhere,
   // and an entry whose examples never call its own head cannot be classified at all.
   expect([...counts.values()].reduce((a, b) => a + b, 0)).toBe(entries.length);
-  // Trails the actual count: heads move to extension as we widen them.
-  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(30);
+  // Trails the actual count: heads move to extension (or override) as we widen them --
+  // issue #113's elementary backlog (elementary-remaining.ts) just moved Cos/Tan/Cot/Sec/
+  // Csc/Arccos/Arctan/Arcoth/Arcsch/Arsech/Log2/Log10/Lb/TrigToExp there in one pass, so
+  // this floor dropped with it (38 -> 25 on this catalogue).
+  expect(counts.get("compute-engine") ?? 0).toBeGreaterThan(15);
   expect(counts.get("extension") ?? 0).toBeGreaterThan(20);
 });
 
@@ -145,6 +148,17 @@ test("declaring our libraries changes nothing about vanilla compute-engine", () 
  * `BellNumber`'s own Touchard-polynomial form), `IntegerString`'s bigint arithmetic, and
  * `FromDigits`'s symbolic/negative base and Roman-numeral reading -- all in number-theory,
  * numerals or collections, additive in the same way: native for anything not ours.
+ * Issue #113's elementary backlog (`elementary-remaining.ts`) adds `Cos`/`Tan`/`Cot`/`Sec`/
+ * `Csc`/`Arccos`/`Arctan`/`Arcoth`/`Arcsch` for the same additive shapes `Sin`/`Sinh`/
+ * `Cosh`/`Tanh`/`Arccot`/`Arccsc`/`Arcsec` are already here for (parity, an imaginary
+ * argument, an inverse composition, a special value), `Arsech` for its value at 1 and past
+ * its real branch point, and `TrigToExp` for the logarithmic form of `Arcsin`/`Arctan`/
+ * `Arcoth`/`Arcsch` (it already had one for `Sin`/`Cos`/`Tan`/`Sinh`/`Cosh`/`Tanh`, none of
+ * which needed adding here since compute-engine's own `TrigToExp` already handled them).
+ * `Log2`/`Log10`/`Lb` (which canonicalize to `Log` at box time) are here for folding an
+ * exact rational power of the base below 1, in either direction (`Log2(1/8) = -3`) --
+ * `Log` itself picks up the same fold for an explicit non-default base -- and for
+ * `ComplexInfinity` going to `+Infinity`, the same convention `Ln` already had.
  *
  * Pinned in BOTH directions. A new name appearing here means an override nobody decided
  * on; a name disappearing means an override that has silently stopped taking effect.
@@ -155,10 +169,15 @@ const OVERRIDDEN = [
   // formula, and the decimal-digit-count identity), so Add is the corpus expression's own
   // outer head even though the divergence is Floor's.
   "Add",
+  "Arccos",
   "Arccot",
   "Arccsc",
+  "Arcoth",
+  "Arcsch",
   "Arcsec",
   "Arcsin",
+  "Arctan",
+  "Arsech",
   "At",
   "BellNumber",
   "BernoulliB",
@@ -172,7 +191,10 @@ const OVERRIDDEN = [
   "Chop",
   "Clamp",
   "ContinuedFraction",
+  "Cos",
   "Cosh",
+  "Cot",
+  "Csc",
   "Digamma",
   "DigitCount",
   "DigitSum",
@@ -209,9 +231,12 @@ const OVERRIDDEN = [
   "LCM",
   "LambertW",
   "Last",
+  "Lb",
   "LegendreSymbol",
   "Length",
   "Ln",
+  "Log10",
+  "Log2",
   "LucasL",
   "MatrixPower",
   "MatrixRank",
@@ -243,6 +268,7 @@ const OVERRIDDEN = [
   "Rank",
   "Rationalize",
   "Round",
+  "Sec",
   "Sin",
   "Sinh",
   "Sort",
@@ -254,8 +280,10 @@ const OVERRIDDEN = [
   // that used to stay unevaluated (S(1, 2), past the k > n boundary); Sum is the corpus
   // expression's own outer head, the same reason Add is here.
   "Sum",
+  "Tan",
   "Tanh",
   "Totient",
+  "TrigToExp",
   "Union",
   "Zeta",
 ];

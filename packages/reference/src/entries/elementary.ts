@@ -212,9 +212,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Arcsin", "x"]],
         expected: "x",
-        aspirational: true,
         category: "Scope",
-        caption: "$\\sin(\\arcsin x) = x$ for every $x$; not yet simplified symbolically",
+        caption: "$\\sin(\\arcsin x) = x$ for every $x$",
       },
       {
         expr: ["Sin", ["Arccos", "x"]],
@@ -225,9 +224,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sin", ["Arctan", "x"]],
         expected: ["Divide", "x", ["Sqrt", ["Add", ["Power", "x", 2], 1]]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\sin(\\arctan x) = \\frac{x}{\\sqrt{1 + x^2}}$; not yet simplified",
+        caption: "$\\sin(\\arctan x) = \\frac{x}{\\sqrt{1 + x^2}}$",
       },
       {
         expr: ["D", ["Sin", "x"], "x"],
@@ -536,38 +534,32 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Cos", ["Multiply", "ImaginaryUnit", "x"]],
         expected: ["Cosh", "x"],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "An imaginary argument should rewrite to [[Cosh]]: $\\cos(ix) = \\cosh x$; left as is",
+        caption: "An imaginary argument rewrites to [[Cosh]]: $\\cos(ix) = \\cosh x$",
       },
       {
         expr: ["Cos", ["Negate", "x"]],
         expected: ["Cos", "x"],
-        aspirational: true,
         category: "Scope",
-        caption: "Evenness should drop the sign of a symbolic argument; left as is",
+        caption: "Evenness drops the sign of a symbolic argument: $\\cos(-x) = \\cos x$",
       },
       {
         expr: ["Cos", ["Arccos", "x"]],
         expected: "x",
-        aspirational: true,
         category: "Scope",
-        caption: "$\\cos(\\arccos x) = x$; not yet simplified symbolically",
+        caption: "$\\cos(\\arccos x) = x$ for every $x$",
       },
       {
         expr: ["Cos", ["Arcsin", "x"]],
         expected: ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\cos(\\arcsin x) = \\sqrt{1 - x^2}$; not yet simplified",
+        caption: "$\\cos(\\arcsin x) = \\sqrt{1 - x^2}$",
       },
       {
         expr: ["Cos", ["Arctan", "x"]],
         expected: ["Divide", 1, ["Sqrt", ["Add", ["Power", "x", 2], 1]]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\cos(\\arctan x) = \\frac{1}{\\sqrt{1 + x^2}}$; not yet simplified",
+        caption: "$\\cos(\\arctan x) = \\frac{1}{\\sqrt{1 + x^2}}$",
       },
       {
         expr: ["D", ["Cos", "x"], "x"],
@@ -797,30 +789,26 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Tan", ["Multiply", "ImaginaryUnit", "x"]],
         expected: ["Multiply", ["Complex", 0, 1], ["Tanh", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\tan(ix) = i\\tanh x$; left as is",
+        caption: "$\\tan(ix) = i\\tanh x$",
       },
       {
         expr: ["Tan", ["Negate", "x"]],
         expected: ["Negate", ["Tan", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\tan(-x) = -\\tan x$",
       },
       {
         expr: ["Tan", ["Arctan", "x"]],
         expected: "x",
-        aspirational: true,
         category: "Scope",
-        caption: "$\\tan(\\arctan x) = x$; not yet simplified symbolically",
+        caption: "$\\tan(\\arctan x) = x$ for every $x$",
       },
       {
         expr: ["Tan", ["Arcsin", "x"]],
         expected: ["Divide", "x", ["Sqrt", ["Add", ["Negate", ["Power", "x", 2]], 1]]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\tan(\\arcsin x) = \\frac{x}{\\sqrt{1 - x^2}}$; not yet simplified",
+        caption: "$\\tan(\\arcsin x) = \\frac{x}{\\sqrt{1 - x^2}}$",
       },
       {
         expr: ["D", ["Tan", "x"], "x"],
@@ -1009,9 +997,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Cot", ["Negate", "x"]],
         expected: ["Negate", ["Cot", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\cot(-x) = -\\cot x$",
       },
       {
         expr: ["D", ["Cot", "x"], "x"],
@@ -1142,9 +1129,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sec", ["Negate", "x"]],
         expected: ["Sec", "x"],
-        aspirational: true,
         category: "Scope",
-        caption: "Evenness should drop the sign of a symbolic argument; left as is",
+        caption: "Evenness drops the sign of a symbolic argument: $\\sec(-x) = \\sec x$",
       },
       {
         expr: ["D", ["Sec", "x"], "x"],
@@ -1263,9 +1249,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Csc", ["Negate", "x"]],
         expected: ["Negate", ["Csc", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\csc(-x) = -\\csc x$",
       },
       {
         expr: ["D", ["Csc", "x"], "x"],
@@ -1421,9 +1406,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arcsin", ["Negate", "x"]],
         expected: ["Negate", ["Arcsin", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\arcsin(-x) = -\\arcsin x$",
       },
       {
         expr: ["D", ["Arcsin", "x"], "x"],
@@ -1471,10 +1455,8 @@ export const elementary: readonly ReferenceEntry[] = [
             ],
           ],
         ],
-        aspirational: true,
         category: "Properties",
-        caption:
-          "As a logarithm: $\\arcsin x = -i\\ln(ix + \\sqrt{1 - x^2})$; TrigToExp leaves inverse functions alone",
+        caption: "As a logarithm: $\\arcsin x = -i\\ln(ix + \\sqrt{1 - x^2})$",
       },
       {
         expr: ["Arcsin", ["Sin", 2]],
@@ -1614,18 +1596,16 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Arccos", ["Negate", "x"]],
-        expected: ["Subtract", "Pi", ["Arccos", "x"]],
-        aspirational: true,
+        expected: ["Add", ["Negate", ["Arccos", "x"]], "Pi"],
         category: "Properties",
-        caption: "Reflection: $\\arccos(-x) = \\pi - \\arccos x$; not applied symbolically",
+        caption: "Reflection: $\\arccos(-x) = \\pi - \\arccos x$",
       },
       {
         expr: ["Arccos", ["Cos", 4]],
-        expected: ["Subtract", ["Multiply", 2, "Pi"], 4],
-        aspirational: true,
-        category: "Possible issues",
+        expected: ["Add", -4, ["Multiply", 2, "Pi"]],
+        category: "Scope",
         caption:
-          "Not simply 4: $4$ is outside the principal range $[0, \\pi]$, so $\\arccos(\\cos 4) = 2\\pi - 4$; left symbolic",
+          "Not simply 4: $4$ is outside the principal range $[0, \\pi]$, so $\\arccos(\\cos 4) = 2\\pi - 4$",
       },
     ],
     seeAlso: ["Cos", "Arcsin", "Arctan"],
@@ -1768,9 +1748,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arctan", ["Negate", "x"]],
         expected: ["Negate", ["Arctan", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\arctan(-x) = -\\arctan x$",
       },
       {
         expr: ["D", ["Arctan", "x"], "x"],
@@ -1817,19 +1796,18 @@ export const elementary: readonly ReferenceEntry[] = [
           "Add",
           [
             "Multiply",
-            ["Complex", 0, ["Rational", 1, 2]],
-            ["Ln", ["Add", ["Multiply", ["Complex", 0, -1], "x"], 1]],
-          ],
-          [
-            "Multiply",
             ["Complex", 0, ["Rational", -1, 2]],
             ["Ln", ["Add", ["Multiply", ["Complex", 0, 1], "x"], 1]],
           ],
+          [
+            "Multiply",
+            ["Complex", 0, ["Rational", 1, 2]],
+            ["Ln", ["Add", ["Multiply", ["Complex", 0, -1], "x"], 1]],
+          ],
         ],
-        aspirational: true,
         category: "Properties",
         caption:
-          "As logarithms: $\\arctan x = \\tfrac{i}{2}\\ln(1 - ix) - \\tfrac{i}{2}\\ln(1 + ix)$; TrigToExp leaves inverse functions alone",
+          "As logarithms: $\\arctan x = \\tfrac{i}{2}\\ln(1 - ix) - \\tfrac{i}{2}\\ln(1 + ix)$",
       },
       {
         expr: ["Add", ["Arctan", ["Rational", 1, 2]], ["Arctan", ["Rational", 1, 3]]],
@@ -2155,16 +2133,14 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Sinh", ["Negate", "x"]],
         expected: ["Negate", ["Sinh", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\sinh(-x) = -\\sinh x$",
       },
       {
         expr: ["Sinh", ["Arsinh", "x"]],
         expected: "x",
-        aspirational: true,
         category: "Scope",
-        caption: "$\\sinh(\\operatorname{arsinh} x) = x$; not yet simplified",
+        caption: "$\\sinh(\\operatorname{arsinh} x) = x$ for every $x$",
       },
       {
         expr: ["D", ["Sinh", "x"], "x"],
@@ -2316,9 +2292,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Cosh", ["Negate", "x"]],
         expected: ["Cosh", "x"],
-        aspirational: true,
         category: "Scope",
-        caption: "Evenness should drop the sign of a symbolic argument; left as is",
+        caption: "Evenness drops the sign of a symbolic argument: $\\cosh(-x) = \\cosh x$",
       },
       {
         expr: ["D", ["Cosh", "x"], "x"],
@@ -2430,9 +2405,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Tanh", ["Negate", "x"]],
         expected: ["Negate", ["Tanh", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption: "Oddness pulls the sign out of a symbolic argument: $\\tanh(-x) = -\\tanh x$",
       },
       {
         expr: ["D", ["Tanh", "x"], "x"],
@@ -2463,10 +2437,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Tanh", "ComplexInfinity"],
         expected: "NaN",
-        aspirational: true,
-        category: "Possible issues",
-        caption:
-          "$\\tanh$ has no limit at complex infinity, so the answer is Indeterminate (NaN); compute-engine returns a type error",
+        category: "Scope",
+        caption: "$\\tanh$ has no limit at complex infinity, undefined from any direction: NaN",
       },
     ],
     seeAlso: ["Sinh", "Cosh"],
@@ -2501,17 +2473,16 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["TrigToExp", ["Arcoth", 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Ln", 3]],
-        aspirational: true,
         category: "Scope",
         caption:
-          "As a logarithm, $\\operatorname{arcoth} 2 = \\tfrac12\\ln\\frac{2+1}{2-1} = \\tfrac12\\ln 3$; TrigToExp leaves it alone",
+          "As a logarithm, $\\operatorname{arcoth} 2 = \\tfrac12\\ln\\frac{2+1}{2-1} = \\tfrac12\\ln 3$",
       },
       {
         expr: ["Arcoth", ["Negate", "x"]],
         expected: ["Negate", ["Arcoth", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption:
+          "Oddness pulls the sign out of a symbolic argument: $\\operatorname{arcoth}(-x) = -\\operatorname{arcoth} x$",
       },
       {
         expr: ["D", ["Arcoth", "x"], "x"],
@@ -2551,17 +2522,15 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["TrigToExp", ["Arcsch", 1]],
         expected: ["Ln", ["Add", 1, ["Sqrt", 2]]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "As a logarithm, $\\operatorname{arcsch} 1 = \\ln(1 + \\sqrt2)$; TrigToExp leaves it alone",
+        caption: "As a logarithm, $\\operatorname{arcsch} 1 = \\ln(1 + \\sqrt2)$",
       },
       {
         expr: ["Arcsch", ["Negate", "x"]],
         expected: ["Negate", ["Arcsch", "x"]],
-        aspirational: true,
         category: "Scope",
-        caption: "Oddness should pull the sign out of a symbolic argument; left as is",
+        caption:
+          "Oddness pulls the sign out of a symbolic argument: $\\operatorname{arcsch}(-x) = -\\operatorname{arcsch} x$",
       },
       {
         expr: ["D", ["Arcsch", "x"], "x"],
@@ -2593,9 +2562,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arsech", 1],
         expected: 0,
-        aspirational: true,
         category: "Scope",
-        caption: "$\\operatorname{arsech} 1 = 0$ exactly; stays symbolic",
+        caption: "$\\operatorname{arsech} 1 = 0$ exactly",
       },
       {
         expr: ["Arsech", 0],
@@ -2612,10 +2580,9 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Arsech", 2],
         expected: ["Multiply", ["Complex", 0, ["Rational", 1, 3]], "Pi"],
-        aspirational: true,
         category: "Scope",
         caption:
-          "Past 1 the value is imaginary: $\\operatorname{arsech} 2 = \\operatorname{arcosh}\\tfrac12 = i\\pi/3$; stays symbolic",
+          "Past 1 the value is imaginary: $\\operatorname{arsech} 2 = \\operatorname{arcosh}\\tfrac12 = i\\pi/3$",
       },
       {
         expr: ["D", ["Arsech", "x"], "x"],
@@ -2910,10 +2877,9 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Ln", "ComplexInfinity"],
         expected: "PositiveInfinity",
-        aspirational: true,
         category: "Scope",
         caption:
-          "$|\\ln z| \\to \\infty$ and its real part goes to $+\\infty$, so Wolfram gives $+\\infty$; compute-engine returns ComplexInfinity",
+          "$|\\ln z| \\to \\infty$ and its real part goes to $+\\infty$: $\\ln(\\tilde\\infty) = +\\infty$",
       },
       {
         expr: ["Ln", "ImaginaryUnit"],
@@ -2924,10 +2890,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Ln", ["Rational", 1, 2]],
         expected: ["Negate", ["Ln", 2]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "A unit fraction should become a negated logarithm, $\\ln\\tfrac12 = -\\ln 2$; stays as is",
+        caption: "A unit fraction becomes a negated logarithm: $\\ln\\tfrac12 = -\\ln 2$",
       },
       {
         expr: ["Ln", ["Interval", ["Rational", 1, 3], "ExponentialE"]],
@@ -3061,10 +3025,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Log", ["Rational", 1, 8], 2],
         expected: -3,
-        aspirational: true,
-        category: "Possible issues",
-        caption:
-          "$\\log_2\\tfrac18 = -3$, but an exact fraction below 1 does not reduce (see [[Log2]])",
+        category: "Scope",
+        caption: "$\\log_2\\tfrac18 = -3$; an exact negative power of the base folds too",
       },
     ],
     seeAlso: ["Ln", "Log2", "Log10", "Lb"],
@@ -3077,7 +3039,7 @@ export const elementary: readonly ReferenceEntry[] = [
     signatures: [{ call: "Log2(z)", description: "the base-2 logarithm of z, $\\log_2(z)$." }],
     details: [
       "Equivalent to Log(z, 2), and identical to [[Lb]].",
-      "Folds exactly for positive integer powers of 2, but not for exact rational powers less than 1 (e.g. $1/8$) -- only a floating-point argument reduces there.",
+      "Folds exactly for an integer power of 2 in either direction -- positive ($1024 \\to 10$) or negative ($1/8 \\to -3$).",
     ],
     examples: [
       { expr: ["Log2", 8], expected: 3 },
@@ -3097,10 +3059,9 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Log2", ["Rational", 1, 8]],
-        expected: ["Log", ["Rational", 1, 8], 2],
-        category: "Possible issues",
-        caption:
-          "The exact rational $1/8 = 2^{-3}$ doesn't reduce; pass 0.125 instead (see Applications)",
+        expected: -3,
+        category: "Scope",
+        caption: "An exact negative power of 2 folds too: $\\log_2 \\tfrac18 = -3$",
       },
       { expr: ["Log2", ["Power", 2, 10]], expected: 10 },
       {
@@ -3127,16 +3088,14 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Log2", "ComplexInfinity"],
         expected: "PositiveInfinity",
-        aspirational: true,
         category: "Scope",
-        caption: "As with [[Ln]], the logarithm of complex infinity should be $+\\infty$",
+        caption: "As with [[Ln]], the logarithm of complex infinity is $+\\infty$",
       },
       {
         expr: ["Log2", ["List", ["List", 2, 1], ["List", 0, ["Rational", 1, 2]]]],
         expected: ["List", ["List", 1, 0], ["List", "NegativeInfinity", -1]],
-        aspirational: true,
         category: "Scope",
-        caption: "Element-wise over a matrix; the exact $\\tfrac12$ entry does not reduce to $-1$",
+        caption: "Element-wise over a matrix, including the exact $\\tfrac12$ entry",
       },
       {
         expr: ["Log2", ["Interval", ["Rational", 1, 3], 2]],
@@ -3170,7 +3129,7 @@ export const elementary: readonly ReferenceEntry[] = [
     signatures: [{ call: "Log10(z)", description: "the base-10 logarithm of z, $\\log_{10}(z)$." }],
     details: [
       "Equivalent to Log(z, 10) and to compute-engine's default-base [[Log]](z).",
-      "Same fold-only-for-floats limit on fractional exact powers as [[Log2]].",
+      "Same exact-power-of-the-base fold in either direction as [[Log2]].",
     ],
     examples: [
       { expr: ["Log10", 1000], expected: 3 },
@@ -3190,9 +3149,9 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Log10", ["Rational", 1, 100]],
-        expected: ["Log", ["Rational", 1, 100], 10],
-        category: "Possible issues",
-        caption: "The exact rational $1/100$ doesn't reduce; pass 0.01 instead (see Applications)",
+        expected: -2,
+        category: "Scope",
+        caption: "An exact negative power of 10 folds too: $\\log_{10} \\tfrac1{100} = -2$",
       },
       { expr: ["Log10", 1000000], expected: 6 },
       {
@@ -3217,17 +3176,14 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Log10", ["List", ["List", 1, 100], ["List", 0, ["Rational", 1, 100]]]],
         expected: ["List", ["List", 0, 2], ["List", "NegativeInfinity", -2]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "Element-wise over a matrix; the exact $\\tfrac1{100}$ entry does not reduce to $-2$",
+        caption: "Element-wise over a matrix, including the exact $\\tfrac1{100}$ entry",
       },
       {
         expr: ["Log10", "ComplexInfinity"],
         expected: "PositiveInfinity",
-        aspirational: true,
         category: "Scope",
-        caption: "As with [[Ln]], the logarithm of complex infinity should be $+\\infty$",
+        caption: "As with [[Ln]], the logarithm of complex infinity is $+\\infty$",
       },
       {
         expr: ["Log10", ["Interval", ["Rational", 1, 3], 2]],
@@ -3276,9 +3232,9 @@ export const elementary: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Lb", ["Rational", 1, 8]],
-        expected: ["Log", ["Rational", 1, 8], 2],
-        category: "Possible issues",
-        caption: "Same exact-rational limit as [[Log2]]: $1/8$ doesn't reduce; pass 0.125 instead",
+        expected: -3,
+        category: "Scope",
+        caption: "Same exact negative power fold as [[Log2]]: $\\operatorname{lb}\\tfrac18 = -3$",
       },
       {
         expr: ["Lb", 1.4142],
@@ -3296,9 +3252,8 @@ export const elementary: readonly ReferenceEntry[] = [
       {
         expr: ["Lb", "ComplexInfinity"],
         expected: "PositiveInfinity",
-        aspirational: true,
         category: "Scope",
-        caption: "Same as [[Log2]]: the logarithm of complex infinity should be $+\\infty$",
+        caption: "Same as [[Log2]]: the logarithm of complex infinity is $+\\infty$",
       },
     ],
     seeAlso: ["Log2", "Log", "Log10"],

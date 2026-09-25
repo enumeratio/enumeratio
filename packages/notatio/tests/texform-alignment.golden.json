@@ -8374,7 +8374,7 @@
   "elementary/Log2#6": {
     "ours": {
       "input": "\\log_{2}(\\frac{1}{8})",
-      "output": "\\log_{2}(\\frac{1}{8})"
+      "output": "-3"
     },
     "wolfram": {
       "input": "\\log _2\\left(\\frac{1}{8}\\right)",
@@ -8382,7 +8382,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "elementary/Log10#1": {
@@ -8458,7 +8458,7 @@
   "elementary/Log10#6": {
     "ours": {
       "input": "\\log_{10}(\\frac{1}{100})",
-      "output": "\\log_{10}(\\frac{1}{100})"
+      "output": "-2"
     },
     "wolfram": {
       "input": "\\log _{10}\\left(\\frac{1}{100}\\right)",
@@ -8466,7 +8466,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "elementary/Lb#1": {
@@ -8528,7 +8528,7 @@
   "elementary/Lb#5": {
     "ours": {
       "input": "\\log_{2}(\\frac{1}{8})",
-      "output": "\\log_{2}(\\frac{1}{8})"
+      "output": "-3"
     },
     "wolfram": {
       "input": "\\log _2\\left(\\frac{1}{8}\\right)",
@@ -8536,7 +8536,7 @@
     },
     "same": {
       "input": true,
-      "output": false
+      "output": true
     }
   },
   "linear-algebra/Rank#1": {
