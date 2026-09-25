@@ -11,6 +11,7 @@ import {
   and,
   atLeastValue,
   atMostValue,
+  bind,
   count,
   distance,
   equals,
@@ -149,12 +150,23 @@ const iterate = (start: MathJSON, times: MathJSON): MathJSON => [
 ];
 /** The orbit of i, as the (repeating) list p(i), p²(i), …, pⁿ(i). */
 const orbit = (i: MathJSON): MathJSON => forEach(positions, iterate(i, "k"), "k");
-/** The size of i's cycle — the distinct points in its orbit. */
-const cycleLengthAt = (i: MathJSON): MathJSON => ["Length", ["Union", orbit(i)]];
-/** Positions that are the least element of their own cycle — one per cycle. */
+/** Positions that lead their own cycle. CycleCount/ReflectionLength only need the count of
+ *  these, not any length, so they read this directly rather than going through `orbitInfo`. */
 const cycleLeaders: MathJSON = where(positions, equals("i", ["Min", orbit("i")]));
-/** The length of each cycle, one entry per cycle. */
-const cycleLengths: MathJSON = ["Map", ["Function", cycleLengthAt("i"), "i"], cycleLeaders];
+
+/** [isLeader, cycleLength] for position i, reading orbit(i) once. */
+const orbitInfoAt = (i: MathJSON): MathJSON =>
+  bind("orb", orbit(i), ["List", equals(i, ["Min", "orb"]), ["Length", ["Union", "orb"]]]);
+const isLeaderFlag = (entry: MathJSON): MathJSON => at(1, entry);
+const lengthOfEntry = (entry: MathJSON): MathJSON => at(2, entry);
+const orbitInfoExpr: MathJSON = forEach(positions, orbitInfoAt("i"), "i");
+const withOrbitInfo = (body: MathJSON): MathJSON => bind("orbitInfo", orbitInfoExpr, body);
+/** Each leader's cycle length, read off `orbitInfo`. */
+const cycleLengths: MathJSON = forEach(
+  where("orbitInfo", isLeaderFlag("entry"), "entry"),
+  lengthOfEntry("entry"),
+  "entry",
+);
 
 // Patience sorting, as a fold carrying a GROWING accumulator.
 //
@@ -357,26 +369,32 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     "n minus the number of cycles — the minimum number of transpositions.",
     nonEmpty(subtract(length(), ["Count", cycleLeaders])),
   ),
-  stat("LargestCycleLength", "The size of the largest cycle.", nonEmpty(["Max", cycleLengths])),
+  stat(
+    "LargestCycleLength",
+    "The size of the largest cycle.",
+    nonEmpty(withOrbitInfo(["Max", cycleLengths])),
+  ),
   stat(
     "LongestCycleLength",
     "The size of the largest cycle (the catalog's second spelling).",
-    nonEmpty(["Max", cycleLengths]),
+    nonEmpty(withOrbitInfo(["Max", cycleLengths])),
   ),
   stat(
     "DistinctCycleLengths",
     "How many distinct cycle sizes occur.",
-    nonEmpty(["Length", ["Union", cycleLengths]]),
+    nonEmpty(withOrbitInfo(["Length", ["Union", cycleLengths]])),
   ),
   stat(
     "TwoCycleCount",
     "Cycles of size exactly two.",
-    nonEmpty(["Count", where(cycleLeaders, equals(cycleLengthAt("i"), 2))]),
+    // Filters the already-computed lengths directly — no need to touch `orbit` again the way
+    // re-deriving each leader's length from scratch would.
+    nonEmpty(withOrbitInfo(count(cycleLengths, equals("cycleLen", 2), "cycleLen"))),
   ),
   stat(
     "ThreeCycleCount",
     "Cycles of size exactly three.",
-    nonEmpty(["Count", where(cycleLeaders, equals(cycleLengthAt("i"), 3))]),
+    nonEmpty(withOrbitInfo(count(cycleLengths, equals("cycleLen", 3), "cycleLen"))),
   ),
   stat(
     "Order",
@@ -384,7 +402,7 @@ export const PERMUTATION_STATISTICS: readonly Definition[] = [
     // Spelled LCM, not Lcm — compute-engine uses all-caps for this one and TitleCase for
     // Max/Min/Mod, which is the naming incoherence upstreaming.md §3.5 is about.
     // It also takes arguments rather than a list, so the lcm of a computed list is a fold.
-    nonEmpty(fold(cycleLengths, 1, ["LCM", "a", "b"]), 1),
+    nonEmpty(withOrbitInfo(fold(cycleLengths, 1, ["LCM", "a", "b"])), 1),
   ),
 
   word(
