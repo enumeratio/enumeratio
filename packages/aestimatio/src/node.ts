@@ -16,8 +16,15 @@ const ABORTED = "Aborted";
  * later, giving that a chance to land first. When it does, the worker answers normally
  * (reused; a session keeps its bindings); the hard kill only ever catches a tight,
  * uncooperative loop the cooperative deadline couldn't reach.
+ *
+ * Generous on purpose: on a freshly spawned worker, `timeMs`'s own clock only starts once
+ * `handle()` begins running INSIDE it, after `worker_threads` has spun up the thread and
+ * imported `@cortex-js/compute-engine` -- measured at ~150-200ms cold, none of which the
+ * cooperative deadline sees but all of which counts against this margin. A warm (reused)
+ * worker pays none of that, so this only meaningfully delays killing a truly uncooperative
+ * loop on a worker's first call.
  */
-const COOPERATIVE_GRACE_MS = 200;
+const COOPERATIVE_GRACE_MS = 500;
 
 function workerUrl(name: string): URL {
   // Loading `./<name>.ts` when this module is still its TypeScript source (tests run

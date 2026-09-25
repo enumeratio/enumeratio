@@ -173,7 +173,7 @@ test("a cooperative timeMs stop keeps the pool worker reused (real worker.ts)", 
   });
   try {
     const slow = ["Sum", ["Mod", "k", 97], ["Tuple", "k", 1, 2_000_000_000]];
-    const stopped = await pool.evaluate(slow, { timeMs: 50 });
+    const stopped = await pool.evaluate(slow, { timeMs: 150 });
     expect(stopped).toBe("Aborted");
     expect(created).toHaveLength(1); // answered cooperatively -- no replacement needed
 

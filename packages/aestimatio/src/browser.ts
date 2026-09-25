@@ -20,8 +20,13 @@ const ABORTED = "Aborted";
  * later, giving that a chance to land first. When it does, the worker answers normally
  * (reused; a session keeps its bindings); the hard kill only ever catches a tight,
  * uncooperative loop the cooperative deadline couldn't reach.
+ *
+ * Generous on purpose, for the same reason as `./node.ts`'s own copy of this constant: a
+ * freshly spawned worker's module load (importing `@cortex-js/compute-engine`) happens
+ * before `timeMs`'s own clock starts, but still counts against this margin. A warm
+ * (reused) worker pays none of that.
  */
-const COOPERATIVE_GRACE_MS = 200;
+const COOPERATIVE_GRACE_MS = 500;
 
 interface WorkerMessageEvent {
   readonly data: unknown;

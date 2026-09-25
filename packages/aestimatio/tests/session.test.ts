@@ -25,7 +25,7 @@ test("a cooperative timeMs stop (compute-engine's own loop) keeps bindings: rese
     // deadline itself and stops well inside the worker's cooperative timeMs, long before
     // the host's own (much later) hard-kill timer would ever fire.
     const slow = ["Sum", ["Mod", "k", 97], ["Tuple", "k", 1, 2_000_000_000]];
-    const stopped = await session.evaluate(slow, { timeMs: 50 });
+    const stopped = await session.evaluate(slow, { timeMs: 150 });
     expect(stopped).toEqual({ value: "Aborted", reset: false });
 
     // The binding survived -- same engine, same worker.
