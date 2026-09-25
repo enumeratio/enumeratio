@@ -166,8 +166,8 @@ export function createReviewStore(source: BacklogSource = pickSource()) {
     }
   }
 
-  async function setStatus(status: ItemStatus): Promise<void> {
-    const item = selected.value;
+  /** Set an item's status: the selected one unless another is given (the list's checkboxes). */
+  async function setStatus(status: ItemStatus, item: BacklogItem | null = selected.value): Promise<void> {
     if (!item) return;
     const previous = item.status;
     item.status = status; // optimistic

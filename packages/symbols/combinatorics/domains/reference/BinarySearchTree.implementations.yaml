@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: BinarySearchTree(Permutation([2, 3, 1]))
+    out: BinaryTree([2, 0, 2])
+  tex:
+    in: \mathrm{BinarySearchTree}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{BinaryTree}(\bigl\lbrack2, 0, 2\bigr\rbrack)
+  fullform:
+    in: BinarySearchTree[Permutation[List[2, 3, 1]]]

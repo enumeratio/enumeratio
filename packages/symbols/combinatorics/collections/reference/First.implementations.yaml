@@ -1,4 +1,12 @@
 first-list-1-2-3:
+  epsil:
+    in: First([1, 2, 3])
+    out: "1"
+  tex:
+    in: \mathrm{First}(\bigl\lbrack1, 2, 3\bigr\rbrack)
+    out: "1"
+  fullform:
+    in: First[List[1, 2, 3]]
   wolfram:
     in: First[List[1, 2, 3]]
     out: "1"
@@ -6,6 +14,14 @@ first-list-1-2-3:
       in: \text{First}[\{1,2,3\}]
       out: "1"
 first-list-10-20-30:
+  epsil:
+    in: First([10, 20, 30])
+    out: "10"
+  tex:
+    in: \mathrm{First}(\bigl\lbrack10, 20, 30\bigr\rbrack)
+    out: "10"
+  fullform:
+    in: First[List[10, 20, 30]]
   wolfram:
     in: First[List[10, 20, 30]]
     out: "10"
@@ -13,6 +29,17 @@ first-list-10-20-30:
       in: \text{First}[\{10,20,30\}]
       out: "10"
 first-c-at-c-1-see-at:
+  epsil:
+    in: First([1, 2, 3]) == [1, 2, 3][1]
+    out: True
+  tex:
+    in: \mathrm{First}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[1]
+    out: \top
+  traditional:
+    in: \mathrm{First}(\bigl\lbrack1, 2, 3\bigr\rbrack)=\bigl\lbrack1, 2, 3\bigr\rbrack[1]
+    out: \mathrm{True}
+  fullform:
+    in: Equal[First[List[1, 2, 3]], Part[List[1, 2, 3], 1]]
   wolfram:
     in: (First[List[1, 2, 3]] == Part[List[1, 2, 3], 1])
     out: True
@@ -20,6 +47,14 @@ first-c-at-c-1-see-at:
       in: \text{First}[\{1,2,3\}]=\{1,2,3\}[[1]]
       out: \text{True}
 an-empty-collection-has-no-first-element-compute:
+  epsil:
+    in: First([])
+    out: Missing
+  tex:
+    in: \mathrm{First}(\bigl\lbrack \bigr\rbrack)
+    out: \mathrm{Missing}
+  fullform:
+    in: First[List[]]
   wolfram:
     in: First[List[]]
     out: First[{}]
@@ -29,3 +64,61 @@ an-empty-collection-has-no-first-element-compute:
     verdict: disagree
     kind: undefined-form
     note: First of an empty list is the symbol Missing here; Wolfram leaves First[{}] unevaluated (with a First::nofirst message).
+a-second-argument-supplies-a-default-for-an:
+  epsil:
+    in: First([], 99)
+    out: "99"
+  tex:
+    in: \mathrm{First}(\bigl\lbrack \bigr\rbrack, 99)
+    out: "99"
+  fullform:
+    in: First[List[], 99]
+  wolfram:
+    in: First[List[], 99]
+first-list-a-b-c:
+  epsil:
+    in: First([a, b, c])
+    out: a
+  tex:
+    in: \mathrm{First}(\bigl\lbrack a, b, c\bigr\rbrack)
+    out: a
+  fullform:
+    in: First[List[a, b, c]]
+of-a-matrix-the-first-row:
+  epsil:
+    in: First([[a, b], [c, d]])
+    out: "[a, b]"
+  tex:
+    in: \mathrm{First}(\bigl\lbrack\bigl\lbrack a, b\bigr\rbrack, \bigl\lbrack c, d\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack a, b\bigr\rbrack
+  fullform:
+    in: First[List[List[a, b], List[c, d]]]
+a-lazy-range-works-too:
+  epsil:
+    in: First(Range(5, 10))
+    out: "5"
+  tex:
+    in: \mathrm{First}(5..10)
+    out: "5"
+  fullform:
+    in: First[Range[5, 10]]
+  wolfram:
+    in: First[Range[5, 10]]
+any-expression-not-just-a-list-the-first-term-of:
+  epsil:
+    in: First(a ^ 2 + b ^ 2)
+    out: a ^ 2
+  tex:
+    in: \mathrm{First}(a^2+b^2)
+    out: a^2
+  fullform:
+    in: First[Plus[Power[a, 2], Power[b, 2]]]
+a-default-is-ignored-when-the-collection-has-a:
+  epsil:
+    in: First([a, b], x)
+    out: a
+  tex:
+    in: \mathrm{First}(\bigl\lbrack a, b\bigr\rbrack, x)
+    out: a
+  fullform:
+    in: First[List[a, b], x]

@@ -1,77 +1,117 @@
 sign-neg-3:
+  epsil:
+    in: Sign(-3)
+    out: "-1"
+  tex:
+    in: \mathrm{sgn}(-3)
+    out: "-1"
+  fullform:
+    in: Sign[-3]
   wolfram:
     in: Sign[-3]
     out: "-1"
     tex:
       in: \text{sgn}(-3)
       out: "-1"
-  sage:
+  sympy:
     in: sign(-3)
     out: "-1"
   mpmath:
     in: sign(-3)
     out: "-1.0"
-  sympy:
+  sage:
     in: sign(-3)
     out: "-1"
 sign-3:
+  epsil:
+    in: Sign(3)
+    out: "1"
+  tex:
+    in: \mathrm{sgn}(3)
+    out: "1"
+  fullform:
+    in: Sign[3]
   wolfram:
     in: Sign[3]
     out: "1"
     tex:
       in: \text{sgn}(3)
       out: "1"
-  sage:
+  sympy:
     in: sign(3)
     out: "1"
   mpmath:
     in: sign(3)
     out: "1.0"
-  sympy:
+  sage:
     in: sign(3)
     out: "1"
 zero-is-its-own-sign:
+  epsil:
+    in: Sign(0)
+    out: "0"
+  tex:
+    in: \mathrm{sgn}(0)
+    out: "0"
+  fullform:
+    in: Sign[0]
   wolfram:
     in: Sign[0]
     out: "0"
     tex:
       in: \text{sgn}(0)
       out: "0"
-  sage:
+  sympy:
     in: sign(0)
     out: "0"
   mpmath:
     in: sign(0)
     out: "0.0"
-  sympy:
+  sage:
     in: sign(0)
     out: "0"
 sign-neg-1-over-2:
+  epsil:
+    in: Sign(-1 / 2)
+    out: "-1"
+  tex:
+    in: \mathrm{sgn}(-\frac{1}{2})
+    out: "-1"
+  fullform:
+    in: Sign[Rational[-1, 2]]
   wolfram:
     in: Sign[Rational[-1, 2]]
     out: "-1"
     tex:
       in: \text{sgn}\left(-\frac{1}{2}\right)
       out: "-1"
-  sage:
-    in: sign((-1/2))
-    out: "-1"
   sympy:
     in: sign(Rational(-1, 2))
     out: "-1"
+  sage:
+    in: sign((-1/2))
+    out: "-1"
 the-unit-complex-number-pointing-the-same:
+  epsil:
+    in: Sign(3 + 4i)
+    out: 3 / 5 + 4 / 5 * i
+  tex:
+    in: \mathrm{sgn}(3+4i)
+    out: \frac{3}{5}+\frac{4}{5}i
+  fullform:
+    in: Sign[Complex[3, 4]]
   wolfram:
     in: Sign[Complex[3, 4]]
     out: 3/5 + (4*I)/5
     tex:
       in: \text{sgn}(3+4 i)
       out: \frac{3}{5}+\frac{4 i}{5}
-  mpmath:
-    in: sign(mpc(3, 4))
-    out: (0.6 + 0.8j)
   sympy:
     in: sign((3 + 4*I))
     out: sign(3 + 4*I)
+  mpmath:
+    in: sign(mpc(3, 4))
+    out: (0.6 + 0.8j)
   sage:
     in: sign((3 + 4*I))
     out: sgn(4*I + 3)
@@ -79,25 +119,46 @@ the-unit-complex-number-pointing-the-same:
     kind: domain
     note: A Gaussian integer here goes to Sage as a complex number in the symbolic ring, not an element of ℤ[i], so Sign over the Gaussian integers is not reached; mapping it to ℤ[i] is a follow-up.
 threads-element-wise-over-a-list:
+  epsil:
+    in: Sign([-3, 0, 7])
+    out: "[-1, 0, 1]"
+  tex:
+    in: \mathrm{sgn}(\bigl\lbrack-3, 0, 7\bigr\rbrack)
+    out: \bigl\lbrack-1, 0, 1\bigr\rbrack
+  fullform:
+    in: Sign[List[-3, 0, 7]]
   wolfram:
     in: Sign[List[-3, 0, 7]]
     out: "{-1, 0, 1}"
     tex:
       in: \text{sgn}(\{-3,0,7\})
       out: \{-1,0,1\}
-  sage:
-    in: sign([-3, 0, 7])
-    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
-    verdict: error
-    kind: threading
-    note: compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only.
   sympy:
-    in: sign([-3, 0, 7])
+    in: "[sign(-3), sign(0), sign(7)]"
     out: "AttributeError: 'list' object has no attribute 'is_Mul'"
     verdict: error
     kind: threading
     note: compute-engine's Sign threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: "[sign(-3), sign(0), sign(7)]"
+  sage:
+    in: "[sign(-3), sign(0), sign(7)]"
+    out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
+    verdict: error
+    kind: threading
+    note: compute-engine's Sign is Listable and threads over the list; Sage's takes scalars only.
 sign-z-z-z-see-abs:
+  epsil:
+    in: Sign(3 + 4i) == (3 + 4i) / Abs(3 + 4i)
+    out: True
+  tex:
+    in: \mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}
+    out: \top
+  traditional:
+    in: \mathrm{sgn}(3+4i)=\frac{3+4i}{\vert3+4i\vert}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Sign[Complex[3, 4]], Divide[Complex[3, 4], Abs[Complex[3, 4]]]]
   wolfram:
     in: (Sign[Complex[3, 4]] == Divide[Complex[3, 4], Abs[Complex[3, 4]]])
     out: True
@@ -111,41 +172,278 @@ sign-z-z-z-see-abs:
     in: bool(sign((3 + 4*I)) == ((3 + 4*I) / abs((3 + 4*I))))
     out: True
 x-cdot-sign-x-x-here-at-x-5:
+  epsil:
+    in: -5 * Sign(-5) == Abs(-5)
+    out: True
+  tex:
+    in: -5\mathrm{sgn}(-5)=\vert-5\vert
+    out: \top
+  traditional:
+    in: -5\mathrm{sgn}(-5)=\vert-5\vert
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Times[-5, Sign[-5]], Abs[-5]]
   wolfram:
     in: (Times[-5, Sign[-5]] == Abs[-5])
     out: True
     tex:
       in: -5 \text{sgn}(-5)=| -5|
       out: \text{True}
-  sage:
-    in: bool((-5 * sign(-5)) == abs(-5))
+  sympy:
+    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
     out: True
   mpmath:
     in: almosteq((-5 * sign(-5)), fabs(-5), 1e-20)
     out: True
-  sympy:
-    in: enumeratio_equal((-5 * sign(-5)), Abs(-5))
+  sage:
+    in: bool((-5 * sign(-5)) == abs(-5))
     out: True
 tells-you-the-temperature-dropped-but-not-by-how:
+  epsil:
+    in: Sign(70 - 95)
+    out: "-1"
+  tex:
+    in: \mathrm{sgn}(70-95)
+    out: "-1"
+  fullform:
+    in: Sign[Subtract[70, 95]]
   wolfram:
     in: Sign[Subtract[70, 95]]
     out: "-1"
     tex:
       in: \text{sgn}(70-95)
       out: "-1"
-  sage:
+  sympy:
     in: sign((70 - 95))
     out: "-1"
   mpmath:
     in: sign((70 - 95))
     out: "-1.0"
-  sympy:
+  sage:
     in: sign((70 - 95))
     out: "-1"
 nan-propagates-rather-than-being-treated-as-0:
+  epsil:
+    in: Sign(`NaN`)
+    out: "`NaN`"
+  tex:
+    in: \mathrm{sgn}(\operatorname{NaN})
+    out: \operatorname{NaN}
+  fullform:
+    in: Sign[Indeterminate]
   wolfram:
     in: Sign[Indeterminate]
     out: Indeterminate
     tex:
       in: \text{sgn}(\text{Indeterminate})
       out: \text{Indeterminate}
+sign-neg-2p5:
+  epsil:
+    in: Sign(-2.5)
+    out: "-1"
+  tex:
+    in: \mathrm{sgn}(-2.5)
+    out: "-1"
+  fullform:
+    in: Sign[-2.5]
+  wolfram:
+    in: Sign[-2.5]
+  sympy:
+    in: sign(-2.5)
+  mpmath:
+    in: sign(-2.5)
+  sage:
+    in: sign(-2.5)
+sign-3p14:
+  epsil:
+    in: Sign(3.14)
+    out: "1"
+  tex:
+    in: \mathrm{sgn}(3.14)
+    out: "1"
+  fullform:
+    in: Sign[3.14]
+  wolfram:
+    in: Sign[3.14]
+  sympy:
+    in: sign(3.14)
+  mpmath:
+    in: sign(3.14)
+  sage:
+    in: sign(3.14)
+a-complex-number-with-approximate-parts:
+  epsil:
+    in: Sign(1.4 + 2.3i)
+    out: 0.519_946_946_895_745_216_810_2 + 0.854_198_555_614_438_5i
+  tex:
+    in: \mathrm{sgn}(1.4+2.3i)
+    out: 0.519\,946\,946\,895\,745\,216\,81+0.854\,198\,555\,614\,438\,5i
+  fullform:
+    in: Sign[Complex[1.4, 2.3]]
+  wolfram:
+    in: Sign[Complex[1.4, 2.3]]
+  sympy:
+    in: sign((1.4 + 2.3*I))
+  mpmath:
+    in: sign(mpc(1.4, 2.3))
+  sage:
+    in: sign((1.4 + 2.3*I))
+an-exact-complex-argument-comes-back-exact-sign:
+  epsil:
+    in: Sign(1 + i)
+    out: Sqrt(2) / 2 + Sqrt(2) / 2 * i
+  tex:
+    in: \mathrm{sgn}(1+i)
+    out: \frac{\sqrt{2}}{2}+\frac{\sqrt{2}}{2}i
+  fullform:
+    in: Sign[Complex[1, 1]]
+  wolfram:
+    in: Sign[Complex[1, 1]]
+  sympy:
+    in: sign((1 + 1*I))
+  mpmath:
+    in: sign(mpc(1, 1))
+  sage:
+    in: sign((1 + 1*I))
+threads-over-a-matrix-entry-by-entry:
+  epsil:
+    in: Sign([[1 / 2, -1], [-5 / 3, 1 / 2]])
+    out: "[[1, -1], [-1, 1]]"
+  tex:
+    in: \mathrm{sgn}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack-\frac{5}{3}, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, -1\bigr\rbrack, \bigl\lbrack-1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  wolfram:
+    in: Sign[List[List[Rational[1, 2], -1], List[Rational[-5, 3], Rational[1, 2]]]]
+  sympy:
+    in: "[[sign(Rational(1, 2)), sign(-1)], [sign(Rational(-5, 3)), sign(Rational(1, 2))]]"
+  sage:
+    in: "[[sign((1/2)), sign(-1)], [sign((-5/3)), sign((1/2))]]"
+exact-numeric-constants:
+  epsil:
+    in: Sign(Pi)
+    out: "1"
+  tex:
+    in: \mathrm{sgn}(\pi)
+    out: "1"
+  fullform:
+    in: Sign[Pi]
+  wolfram:
+    in: Sign[Pi]
+  sympy:
+    in: sign(pi)
+  mpmath:
+    in: sign(pi)
+  sage:
+    in: sign(pi)
+sign-neg-exponentiale:
+  epsil:
+    in: Sign(-ExponentialE)
+    out: "-1"
+  tex:
+    in: \mathrm{sgn}(-e)
+    out: "-1"
+  fullform:
+    in: Sign[Minus[E]]
+  wolfram:
+    in: Sign[Minus[E]]
+  sympy:
+    in: sign((-E))
+  mpmath:
+    in: sign((-e))
+  sage:
+    in: sign((-e))
+sign-imaginaryunit:
+  epsil:
+    in: Sign(ImaginaryUnit)
+    out: i
+  tex:
+    in: \mathrm{sgn}(i)
+    out: i
+  fullform:
+    in: Sign[I]
+  wolfram:
+    in: Sign[I]
+  sympy:
+    in: sign(I)
+  mpmath:
+    in: sign(mpc(0,1))
+  sage:
+    in: sign(I)
+sign-positiveinfinity:
+  epsil:
+    in: Sign(PositiveInfinity)
+    out: "1"
+  tex:
+    in: \mathrm{sgn}(\infty)
+    out: "1"
+  fullform:
+    in: Sign[Infinity]
+  wolfram:
+    in: Sign[Infinity]
+an-interval-entirely-above-0-has-sign-1:
+  epsil:
+    in: Sign(Interval(1, 3))
+    out: "1"
+  tex:
+    in: \mathrm{sgn}(\mathrm{Interval}(1, 3))
+    out: "1"
+  fullform:
+    in: Sign[Interval[List[1, 3]]]
+  wolfram:
+    in: Sign[Interval[List[1, 3]]]
+decides-the-sign-of-the-exact-number-sqrt-2-2-by:
+  epsil:
+    in: Sign(Sqrt(2) - 2)
+    out: "-1"
+  tex:
+    in: \mathrm{sgn}(\sqrt{2}-2)
+    out: "-1"
+  fullform:
+    in: Sign[Subtract[Sqrt[2], 2]]
+  wolfram:
+    in: Sign[Subtract[Sqrt[2], 2]]
+  sympy:
+    in: sign((sqrt(2) - 2))
+  mpmath:
+    in: sign((sqrt(2) - 2))
+  sage:
+    in: sign((sqrt(2) - 2))
+2-sqrt-2-is-the-same-certified-decision-the:
+  epsil:
+    in: Sign(2 - Sqrt(2))
+    out: "1"
+  tex:
+    in: \mathrm{sgn}(2-\sqrt{2})
+    out: "1"
+  fullform:
+    in: Sign[Subtract[2, Sqrt[2]]]
+  wolfram:
+    in: Sign[Subtract[2, Sqrt[2]]]
+  sympy:
+    in: sign((2 - sqrt(2)))
+  mpmath:
+    in: sign((2 - sqrt(2)))
+  sage:
+    in: sign((2 - sqrt(2)))
+the-sign-of-a-nonzero-complex-number-lies-on-the:
+  epsil:
+    in: Abs(Sign(3 + 4i)) == 1
+    out: True
+  tex:
+    in: \vert\mathrm{sgn}(3+4i)\vert=1
+    out: \top
+  traditional:
+    in: \vert\mathrm{sgn}(3+4i)\vert=1
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Abs[Sign[Complex[3, 4]]], 1]
+  wolfram:
+    in: (Abs[Sign[Complex[3, 4]]] == 1)
+  sympy:
+    in: enumeratio_equal(Abs(sign((3 + 4*I))), 1)
+  mpmath:
+    in: almosteq(fabs(sign(mpc(3, 4))), 1, 1e-20)
+  sage:
+    in: bool(abs(sign((3 + 4*I))) == 1)

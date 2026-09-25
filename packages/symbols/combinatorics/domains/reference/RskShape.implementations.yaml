@@ -1,0 +1,9 @@
+the-one-line-word-231:
+  epsil:
+    in: RskShape(Permutation([2, 3, 1]))
+    out: IntegerPartition([2, 1])
+  tex:
+    in: \mathrm{RskShape}(\mathrm{Permutation}(\bigl\lbrack2, 3, 1\bigr\rbrack))
+    out: \mathrm{IntegerPartition}(\bigl\lbrack2, 1\bigr\rbrack)
+  fullform:
+    in: RskShape[Permutation[List[2, 3, 1]]]

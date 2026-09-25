@@ -1,0 +1,18 @@
+quadratic:
+  epsil:
+    in: DifferenceDelta(n ^ 2, n)
+    out: 2n + 1
+  tex:
+    in: \mathrm{DifferenceDelta}(n^2, n)
+    out: 2n+1
+  fullform:
+    in: DifferenceDelta[Power[n, 2], n]
+linear:
+  epsil:
+    in: DifferenceDelta(3n + 5, n)
+    out: "3"
+  tex:
+    in: \mathrm{DifferenceDelta}(3n+5, n)
+    out: "3"
+  fullform:
+    in: DifferenceDelta[Plus[Times[3, n], 5], n]

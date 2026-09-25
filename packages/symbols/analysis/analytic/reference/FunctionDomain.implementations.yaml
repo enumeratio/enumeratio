@@ -1,0 +1,57 @@
+a-polynomial-is-defined-everywhere:
+  epsil:
+    in: FunctionDomain(x ^ 2, x)
+    out: True
+  tex:
+    in: \mathrm{FunctionDomain}(x^2, x)
+    out: \top
+  traditional:
+    in: \mathrm{FunctionDomain}(x^2, x)
+    out: \mathrm{True}
+  fullform:
+    in: FunctionDomain[Power[x, 2], x]
+division-by-zero-excludes-the-origin:
+  epsil:
+    in: FunctionDomain(1 / x, x)
+    out: x < 0 || 0 < x
+  tex:
+    in: \mathrm{FunctionDomain}(\frac{1}{x}, x)
+    out: x\lt0\lor0\lt x
+  fullform:
+    in: FunctionDomain[Divide[1, x], x]
+a-rational-function-with-two-real-poles:
+  epsil:
+    in: FunctionDomain(1 / (x ^ 2 - 1), x)
+    out: x < -1 || -1 < x < 1 || 1 < x
+  tex:
+    in: \mathrm{FunctionDomain}(\frac{1}{x^2-1}, x)
+    out: x\lt-1\lor-1\lt x\lt1\lor1\lt x
+  fullform:
+    in: FunctionDomain[Divide[1, Plus[Power[x, 2], -1]], x]
+an-even-root-needs-a-nonnegative-radicand:
+  epsil:
+    in: FunctionDomain(Sqrt(x ^ 2 - 1), x)
+    out: x <= -1 || 1 <= x
+  tex:
+    in: \mathrm{FunctionDomain}(\sqrt{x^2-1}, x)
+    out: x\le-1\lor1\le x
+  fullform:
+    in: FunctionDomain[Sqrt[Plus[Power[x, 2], -1]], x]
+a-natural-log-needs-a-positive-argument:
+  epsil:
+    in: FunctionDomain(Ln(2 - x), x)
+    out: x < 2
+  tex:
+    in: \mathrm{FunctionDomain}(\ln(2-x), x)
+    out: x\lt2
+  fullform:
+    in: FunctionDomain[Log[Subtract[2, x]], x]
+tangent-s-domain-is-declined:
+  epsil:
+    in: FunctionDomain(Tan(x), x)
+    out: FunctionDomain(Tan(x), x)
+  tex:
+    in: \mathrm{FunctionDomain}(\tan(x), x)
+    out: \mathrm{FunctionDomain}(\tan(x), x)
+  fullform:
+    in: FunctionDomain[Tan[x], x]

@@ -1,0 +1,44 @@
+lognormal-pdf-exact:
+  epsil:
+    in: PDF(LogNormalDistribution(0, 1), 1)
+    out: Sqrt(1 / (2Pi))
+  tex:
+    in: \operatorname{PDF}(\mathrm{LogNormalDistribution}(0, 1), 1)
+    out: \sqrt{\frac{1}{2\pi}}
+  fullform:
+    in: PDF[LogNormalDistribution[0, 1], 1]
+  wolfram:
+    in: PDF[LogNormalDistribution[0, 1], 1]
+lognormal-cdf-exact:
+  epsil:
+    in: CDF(LogNormalDistribution(0, 1), 1)
+    out: 1 / 2
+  tex:
+    in: \operatorname{CDF}(\mathrm{LogNormalDistribution}(0, 1), 1)
+    out: \frac{1}{2}
+  fullform:
+    in: CDF[LogNormalDistribution[0, 1], 1]
+  wolfram:
+    in: CDF[LogNormalDistribution[0, 1], 1]
+lognormal-mean-exact:
+  epsil:
+    in: Mean(LogNormalDistribution(0, 1))
+    out: Sqrt(ExponentialE)
+  tex:
+    in: \mathrm{mean}(\mathrm{LogNormalDistribution}(0, 1))
+    out: \sqrt{e}
+  fullform:
+    in: Mean[LogNormalDistribution[0, 1]]
+  wolfram:
+    in: Mean[LogNormalDistribution[0, 1]]
+lognormal-variance-exact:
+  epsil:
+    in: Variance(LogNormalDistribution(0, 1))
+    out: ExponentialE * (-1 + ExponentialE)
+  tex:
+    in: \mathrm{Variance}(\mathrm{LogNormalDistribution}(0, 1))
+    out: e(e-1)
+  fullform:
+    in: Variance[LogNormalDistribution[0, 1]]
+  wolfram:
+    in: Variance[LogNormalDistribution[0, 1]]

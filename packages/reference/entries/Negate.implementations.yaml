@@ -1,12 +1,29 @@
 "5":
+  epsil:
+    in: "5"
+    out: "5"
+  tex:
+    in: "5"
+    out: "5"
+  fullform:
+    in: Minus[-5]
   wolfram:
     in: Minus[-5]
     out: "5"
     tex:
       in: -(-5)
       out: "5"
+  sympy:
+    in: (--5)
+    out: "5"
+  mpmath:
+    in: (--5)
+    out: "5"
   sage:
     in: (--5)
+    out: "5"
+  oscar:
+    in: (-(-5))
     out: "5"
   julia:
     in: (-(-5))
@@ -14,27 +31,35 @@
   mathlib4:
     in: (-((-5)))
     out: "5"
-  oscar:
-    in: (-(-5))
-    out: "5"
   rust:
     in: (-(n(-5)))
     out: "5"
-  mpmath:
-    in: (--5)
-    out: "5"
-  sympy:
-    in: (--5)
-    out: "5"
 neg-5:
+  epsil:
+    in: "-5"
+    out: "-5"
+  tex:
+    in: "-5"
+    out: "-5"
+  fullform:
+    in: Minus[5]
   wolfram:
     in: Minus[5]
     out: "-5"
     tex:
       in: "-5"
       out: "-5"
+  sympy:
+    in: (-5)
+    out: "-5"
+  mpmath:
+    in: (-5)
+    out: "-5"
   sage:
     in: (-5)
+    out: "-5"
+  oscar:
+    in: (-(5))
     out: "-5"
   julia:
     in: (-(5))
@@ -42,27 +67,35 @@ neg-5:
   mathlib4:
     in: (-(5))
     out: "-5"
-  oscar:
-    in: (-(5))
-    out: "-5"
   rust:
     in: (-(n(5)))
     out: "-5"
-  mpmath:
-    in: (-5)
-    out: "-5"
-  sympy:
-    in: (-5)
-    out: "-5"
 its-own-negation:
+  epsil:
+    in: "-0"
+    out: "0"
+  tex:
+    in: "0"
+    out: "0"
+  fullform:
+    in: Minus[0]
   wolfram:
     in: Minus[0]
     out: "0"
     tex:
       in: "-0"
       out: "0"
+  sympy:
+    in: (-0)
+    out: "0"
+  mpmath:
+    in: (-0)
+    out: "0"
   sage:
     in: (-0)
+    out: "0"
+  oscar:
+    in: (-(0))
     out: "0"
   julia:
     in: (-(0))
@@ -70,64 +103,79 @@ its-own-negation:
   mathlib4:
     in: (-(0))
     out: "0"
-  oscar:
-    in: (-(0))
-    out: "0"
   rust:
     in: (-(n(0)))
     out: "0"
-  mpmath:
-    in: (-0)
-    out: "0"
-  sympy:
-    in: (-0)
-    out: "0"
 neg-3-over-4:
+  epsil:
+    in: -(3 / 4)
+    out: -3 / 4
+  tex:
+    in: -\frac{3}{4}
+    out: -\frac{3}{4}
+  fullform:
+    in: Minus[Rational[3, 4]]
   wolfram:
     in: Minus[Rational[3, 4]]
     out: -3/4
     tex:
       in: -\frac{3}{4}
       out: -\frac{3}{4}
+  sympy:
+    in: (-Rational(3, 4))
+    out: -3/4
   sage:
     in: (-(3/4))
     out: -3/4
+  oscar:
+    in: (-((3 // 4)))
+    out: "-0.75"
   julia:
     in: (-((3 // 4)))
     out: "-0.75"
   mathlib4:
     in: "(-(((3 : ℚ) / 4)))"
     out: -3/4
-  oscar:
-    in: (-((3 // 4)))
-    out: "-0.75"
   rust:
     in: (-(rational(n(3), n(4))))
     out: -3/4
-  sympy:
-    in: (-Rational(3, 4))
-    out: -3/4
 threads-element-wise-over-a-list:
+  epsil:
+    in: -[1, -2, 3]
+    out: "[-1, 2, -3]"
+  tex:
+    in: -\bigl\lbrack1, -2, 3\bigr\rbrack
+    out: \bigl\lbrack-1, 2, -3\bigr\rbrack
+  fullform:
+    in: Minus[List[1, -2, 3]]
   wolfram:
     in: Minus[List[1, -2, 3]]
     out: "{-1, 2, -3}"
     tex:
       in: -\{1,-2,3\}
       out: \{-1,2,-3\}
+  sympy:
+    in: "[(-1), (--2), (-3)]"
+    out: "TypeError: bad operand type for unary -: 'list'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: "[(-1), (--2), (-3)]"
   sage:
-    in: (-[1, -2, 3])
+    in: "[(-1), (--2), (-3)]"
     out: "TypeError: bad operand type for unary -: 'list'"
     verdict: error
     kind: threading
     note: compute-engine's Negate is Listable and threads over the list; Sage's takes scalars only.
+  oscar:
+    in: (-([1, -2, 3]))
+    out: "[-1, 2, -3]"
   julia:
     in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
   mathlib4:
     in: (-([1, (-2), 3]))
-    out: "[-1, 2, -3]"
-  oscar:
-    in: (-([1, -2, 3]))
     out: "[-1, 2, -3]"
   rust:
     in: (-(list(vec![n(1), n(-2), n(3)])))
@@ -135,44 +183,157 @@ threads-element-wise-over-a-list:
     verdict: error
     kind: threading
     note: compute-engine's Negate is Listable and threads over the list; the Rust crates take scalars.
-  sympy:
-    in: (-[1, -2, 3])
-    out: "TypeError: bad operand type for unary -: 'list'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Negate threads over (or pools) the list; SymPy's takes scalars.
+double-negation-cancels-x-x:
+  epsil:
+    in: --x
+    out: x
+  tex:
+    in: --x
+    out: x
+  fullform:
+    in: Minus[Minus[x]]
+distributes-over-a-sum-a-b-a-b:
+  epsil:
+    in: -(a + b) == -a - b
+    out: True
+  tex:
+    in: -(a+b)=-a-b
+    out: \top
+  traditional:
+    in: -(a+b)=-a-b
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Minus[Plus[a, b]], Plus[Minus[a], Minus[b]]]
 recording-a-42-50-charge-as-a-negative-balance:
+  epsil:
+    in: "-42.5"
+    out: "-42.5"
+  tex:
+    in: "-42.5"
+    out: "-42.5"
+  fullform:
+    in: Minus[42.5]
   wolfram:
     in: Minus[42.5]
     out: "-42.5"
     tex:
       in: "-42.5"
       out: "-42.5"
+  sympy:
+    in: (-42.5)
+    out: "-42.5"
+  mpmath:
+    in: (-42.5)
+    out: "-42.5"
   sage:
     in: (-42.5)
     out: "-42.5000000000000"
+  oscar:
+    in: (-(42.5))
+    out: "-42.5"
   julia:
     in: (-(42.5))
     out: "-42.5"
   mathlib4:
     in: (-(42.5))
     out: "-42.500000"
-  oscar:
-    in: (-(42.5))
-    out: "-42.5"
   rust:
     in: (-(x(42.5)))
     out: "-42.5"
-  mpmath:
-    in: (-42.5)
-    out: "-42.5"
-  sympy:
-    in: (-42.5)
-    out: "-42.5"
 flips-signed-infinities-too:
+  epsil:
+    in: -PositiveInfinity
+    out: NegativeInfinity
+  tex:
+    in: -\infty
+    out: -\infty
+  fullform:
+    in: Minus[Infinity]
   wolfram:
     in: Minus[Infinity]
     out: -Infinity
     tex:
       in: -\infty
       out: -\infty
+stays-symbolic:
+  epsil:
+    in: -x
+    out: -x
+  tex:
+    in: -x
+    out: -x
+  fullform:
+    in: Minus[x]
+neg-1-plus-2i:
+  epsil:
+    in: -(1 + 2i)
+    out: -1 + -2 * i
+  tex:
+    in: -(1+2i)
+    out: -1-2i
+  fullform:
+    in: Minus[Complex[1, 2]]
+  wolfram:
+    in: Minus[Complex[1, 2]]
+  sympy:
+    in: (-(1 + 2*I))
+  mpmath:
+    in: (-mpc(1, 2))
+  sage:
+    in: (-(1 + 2*I))
+  oscar:
+    in: (-(complex(1, 2)))
+  julia:
+    in: (-(complex(1, 2)))
+threads-over-a-matrix-entry-by-entry:
+  epsil:
+    in: -[[1, -2], [3, 4]]
+    out: "[[-1, 2], [-3, -4]]"
+  tex:
+    in: -\bigl\lbrack\bigl\lbrack1, -2\bigr\rbrack, \bigl\lbrack3, 4\bigr\rbrack\bigr\rbrack
+    out: \bigl\lbrack\bigl\lbrack-1, 2\bigr\rbrack, \bigl\lbrack-3, -4\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Minus[List[List[1, -2], List[3, 4]]]
+  wolfram:
+    in: Minus[List[List[1, -2], List[3, 4]]]
+  sympy:
+    in: "[[(-1), (--2)], [(-3), (-4)]]"
+  mpmath:
+    in: "[[(-1), (--2)], [(-3), (-4)]]"
+  sage:
+    in: "[[(-1), (--2)], [(-3), (-4)]]"
+  oscar:
+    in: (-([[1, -2], [3, 4]]))
+  julia:
+    in: (-([[1, -2], [3, 4]]))
+  mathlib4:
+    in: (-([[1, (-2)], [3, 4]]))
+  rust:
+    in: (-(list(vec![list(vec![n(1), n(-2)]), list(vec![n(3), n(4)])])))
+folds-into-a-numeric-coefficient:
+  epsil:
+    in: -(2x)
+    out: -2 * x
+  tex:
+    in: -(2x)
+    out: -2x
+  fullform:
+    in: Minus[Times[2, x]]
+a-b-b-a:
+  epsil:
+    in: -(a - b)
+    out: -a + b
+  tex:
+    in: -(a-b)
+    out: b-a
+  fullform:
+    in: Minus[Subtract[a, b]]
+the-additive-inverse-x-x-0:
+  epsil:
+    in: -x + x
+    out: "0"
+  tex:
+    in: x-x
+    out: "0"
+  fullform:
+    in: Plus[Minus[x], x]

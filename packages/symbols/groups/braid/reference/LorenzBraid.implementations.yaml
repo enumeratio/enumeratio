@@ -1,0 +1,42 @@
+the-shortest-knotted-geodesic-draws-a-trefoil:
+  epsil:
+    in: AlexanderPolynomial("LLRLR")
+    out: t ^ 2 - t + 1
+  tex:
+    in: \mathrm{AlexanderPolynomial}(\text{LLRLR})
+    out: t^2-t+1
+  traditional:
+    in: \Delta_{\text{LLRLR}}(t)
+    out: t^2-t+1
+  fullform:
+    in: AlexanderPolynomial["LLRLR"]
+braid-index-2:
+  epsil:
+    in: TripNumber("LLRLR")
+    out: "2"
+  tex:
+    in: \mathrm{TripNumber}(\text{LLRLR})
+    out: "2"
+  fullform:
+    in: TripNumber["LLRLR"]
+one-hump-each-way-is-unknotted-however-long:
+  epsil:
+    in: AlexanderPolynomial("LLLRRRR")
+    out: "1"
+  tex:
+    in: \mathrm{AlexanderPolynomial}(\text{LLLRRRR})
+    out: "1"
+  traditional:
+    in: \Delta_{\text{LLLRRRR}}(t)
+    out: "1"
+  fullform:
+    in: AlexanderPolynomial["LLLRRRR"]
+a-rotation-by-2-on-5-points-hence-t-2-3:
+  epsil:
+    in: LorenzPermutation("LLRLR")
+    out: "[3, 4, 5, 1, 2]"
+  tex:
+    in: \mathrm{LorenzPermutation}(\text{LLRLR})
+    out: \bigl\lbrack3, 4, 5, 1, 2\bigr\rbrack
+  fullform:
+    in: LorenzPermutation["LLRLR"]

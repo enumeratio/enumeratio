@@ -1,0 +1,33 @@
+riemannsiegelz-1p5:
+  epsil:
+    in: RiemannSiegelZ(1.5)
+    out: -0.595_568_336_782_887
+  tex:
+    in: \mathrm{RiemannSiegelZ}(1.5)
+    out: -0.595\,568\,336\,782\,887
+  fullform:
+    in: RiemannSiegelZ[1.5]
+  wolfram:
+    in: RiemannSiegelZ[1.5]
+riemannsiegelz-20p5:
+  epsil:
+    in: RiemannSiegelZ(20.5)
+    out: 0.599_328_702_514_751_3
+  tex:
+    in: \mathrm{RiemannSiegelZ}(20.5)
+    out: 0.599\,328\,702\,514\,751\,3
+  fullform:
+    in: RiemannSiegelZ[20.5]
+  wolfram:
+    in: RiemannSiegelZ[20.5]
+z-0-zeta-1-2:
+  epsil:
+    in: N(RiemannSiegelZ(0))
+    out: -1.460_354_508_809_586_8
+  tex:
+    in: N(\mathrm{RiemannSiegelZ}(0))
+    out: -1.460\,354\,508\,809\,586\,8
+  fullform:
+    in: N[RiemannSiegelZ[0]]
+  wolfram:
+    in: N[RiemannSiegelZ[0]]

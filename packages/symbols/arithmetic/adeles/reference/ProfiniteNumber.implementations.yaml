@@ -1,0 +1,87 @@
+12-hat-z-8-hat-z-4-hat-z:
+  epsil:
+    in: ProfiniteNumber(3, 12) + ProfiniteNumber(5, 8)
+    out: ProfiniteNumber(0, 4)
+  tex:
+    in: \mathrm{ProfiniteNumber}(3, 12)+\mathrm{ProfiniteNumber}(5, 8)
+    out: \mathrm{ProfiniteNumber}(0, 4)
+  fullform:
+    in: Plus[ProfiniteNumber[3, 12], ProfiniteNumber[5, 8]]
+profinitenumber-3-12-times-profinitenumber-5-8:
+  epsil:
+    in: ProfiniteNumber(3, 12) * ProfiniteNumber(5, 8)
+    out: ProfiniteNumber(3, 12)
+  tex:
+    in: \mathrm{ProfiniteNumber}(3, 12)\mathrm{ProfiniteNumber}(5, 8)
+    out: \mathrm{ProfiniteNumber}(3, 12)
+  fullform:
+    in: Times[ProfiniteNumber[3, 12], ProfiniteNumber[5, 8]]
+equal-cosets-need-not-share-a-modulus:
+  epsil:
+    in: ProfiniteNumber(6, 20) == ProfiniteNumber(6, 40)
+    out: True
+  tex:
+    in: \mathrm{ProfiniteNumber}(6, 20)=\mathrm{ProfiniteNumber}(6, 40)
+    out: \top
+  traditional:
+    in: \mathrm{ProfiniteNumber}(6, 20)=\mathrm{ProfiniteNumber}(6, 40)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[ProfiniteNumber[6, 20], ProfiniteNumber[6, 40]]
+crt-glued-from-its-2-adic-and-3-adic-images:
+  epsil:
+    in: ProfiniteNumber([AdicNumeral(2, 20, 5), AdicNumeral(3, 7, 2)])
+    out: ProfiniteNumber(52, 288)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\bigl\lbrack\mathrm{AdicNumeral}(2, 20, 5), \mathrm{AdicNumeral}(3, 7, 2)\bigr\rbrack)
+    out: \mathrm{ProfiniteNumber}(52, 288)
+  fullform:
+    in: ProfiniteNumber[List[AdicNumeral[2, 20, 5], AdicNumeral[3, 7, 2]]]
+a-rational-value-and-a-rational-modulus:
+  epsil:
+    in: ProfiniteNumber(1 / 2, 97 / 5) + ProfiniteNumber(1 / 3, 10)
+    out: ProfiniteNumber(1 / 30, 1 / 5)
+  tex:
+    in: \mathrm{ProfiniteNumber}(\frac{1}{2}, \frac{97}{5})+\mathrm{ProfiniteNumber}(\frac{1}{3}, 10)
+    out: \mathrm{ProfiniteNumber}(\frac{1}{30}, \frac{1}{5})
+  fullform:
+    in: Plus[ProfiniteNumber[Rational[1, 2], Rational[97, 5]], ProfiniteNumber[Rational[1, 3], 10]]
+numerator-profinitenumber-2-over-3-5:
+  epsil:
+    in: Numerator(ProfiniteNumber(2 / 3, 5))
+    out: ProfiniteNumber(2, 15)
+  tex:
+    in: \mathrm{Numerator}(\mathrm{ProfiniteNumber}(\frac{2}{3}, 5))
+    out: \mathrm{ProfiniteNumber}(2, 15)
+  fullform:
+    in: Numerator[ProfiniteNumber[Rational[2, 3], 5]]
+denominator-profinitenumber-2-over-3-5:
+  epsil:
+    in: Denominator(ProfiniteNumber(2 / 3, 5))
+    out: "3"
+  tex:
+    in: \mathrm{Denominator}(\mathrm{ProfiniteNumber}(\frac{2}{3}, 5))
+    out: "3"
+  fullform:
+    in: Denominator[ProfiniteNumber[Rational[2, 3], 5]]
+lenstra-s-profinite-fibonacci-numbers:
+  epsil:
+    in: Fibonacci(ProfiniteNumber(3, 10))
+    out: ProfiniteNumber(2, 11)
+  tex:
+    in: \mathrm{Fibonacci}(\mathrm{ProfiniteNumber}(3, 10))
+    out: \mathrm{ProfiniteNumber}(2, 11)
+  traditional:
+    in: F_{\mathrm{ProfiniteNumber}(3, 10)}
+    out: \mathrm{ProfiniteNumber}(2, 11)
+  fullform:
+    in: Fibonacci[ProfiniteNumber[3, 10]]
+projecting-to-q-2:
+  epsil:
+    in: AdicNumeral(2, ProfiniteNumber(100, 24))
+    out: AdicNumeral(2, 4, 3)
+  tex:
+    in: \mathrm{AdicNumeral}(2, \mathrm{ProfiniteNumber}(100, 24))
+    out: \mathrm{AdicNumeral}(2, 4, 3)
+  fullform:
+    in: AdicNumeral[2, ProfiniteNumber[100, 24]]

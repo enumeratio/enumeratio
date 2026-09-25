@@ -1,4 +1,15 @@
 subfactorial-0:
+  epsil:
+    in: Subfactorial(0)
+    out: "1"
+  tex:
+    in: \mathrm{Subfactorial}(0)
+    out: "1"
+  traditional:
+    in: "{!}0"
+    out: "1"
+  fullform:
+    in: Subfactorial[0]
   wolfram:
     in: Subfactorial[0]
     out: "1"
@@ -6,6 +17,17 @@ subfactorial-0:
       in: \text{Subfactorial}[0]
       out: "1"
 a-single-object-can-t-be-deranged:
+  epsil:
+    in: Subfactorial(1)
+    out: "0"
+  tex:
+    in: \mathrm{Subfactorial}(1)
+    out: "0"
+  traditional:
+    in: "{!}1"
+    out: "0"
+  fullform:
+    in: Subfactorial[1]
   wolfram:
     in: Subfactorial[1]
     out: "0"
@@ -13,6 +35,17 @@ a-single-object-can-t-be-deranged:
       in: \text{Subfactorial}[1]
       out: "0"
 subfactorial-4:
+  epsil:
+    in: Subfactorial(4)
+    out: "9"
+  tex:
+    in: \mathrm{Subfactorial}(4)
+    out: "9"
+  traditional:
+    in: "{!}4"
+    out: "9"
+  fullform:
+    in: Subfactorial[4]
   wolfram:
     in: Subfactorial[4]
     out: "9"
@@ -20,6 +53,17 @@ subfactorial-4:
       in: \text{Subfactorial}[4]
       out: "9"
 subfactorial-5:
+  epsil:
+    in: Subfactorial(5)
+    out: "44"
+  tex:
+    in: \mathrm{Subfactorial}(5)
+    out: "44"
+  traditional:
+    in: "{!}5"
+    out: "44"
+  fullform:
+    in: Subfactorial[5]
   wolfram:
     in: Subfactorial[5]
     out: "44"
@@ -27,6 +71,17 @@ subfactorial-5:
       in: \text{Subfactorial}[5]
       out: "44"
 recurrence-d-n-n-d-n-1-1-n:
+  epsil:
+    in: Subfactorial(4) == 4 * Subfactorial(3) + (-1) ^ 4
+    out: True
+  tex:
+    in: \mathrm{Subfactorial}(4)=4\mathrm{Subfactorial}(3)+(-1)^4
+    out: \top
+  traditional:
+    in: "{!}4=4{!}3+(-1)^4"
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Subfactorial[4], Plus[Times[4, Subfactorial[3]], Power[-1, 4]]]
   wolfram:
     in: (Subfactorial[4] == Plus[Times[4, Subfactorial[3]], Power[-1, 4]])
     out: True
@@ -34,6 +89,17 @@ recurrence-d-n-n-d-n-1-1-n:
       in: \text{Subfactorial}[4]=4 \text{Subfactorial}[3]+(-1)^4
       out: \text{True}
 the-hat-check-problem-the-number-of-ways-6:
+  epsil:
+    in: Subfactorial(6)
+    out: "265"
+  tex:
+    in: \mathrm{Subfactorial}(6)
+    out: "265"
+  traditional:
+    in: "{!}6"
+    out: "265"
+  fullform:
+    in: Subfactorial[6]
   wolfram:
     in: Subfactorial[6]
     out: "265"
@@ -41,6 +107,17 @@ the-hat-check-problem-the-number-of-ways-6:
       in: \text{Subfactorial}[6]
       out: "265"
 a-negative-argument-is-left-unevaluated:
+  epsil:
+    in: Subfactorial(-1)
+    out: Subfactorial(-1)
+  tex:
+    in: \mathrm{Subfactorial}(-1)
+    out: \mathrm{Subfactorial}(-1)
+  traditional:
+    in: "{!}-1"
+    out: "{!}-1"
+  fullform:
+    in: Subfactorial[-1]
   wolfram:
     in: Subfactorial[-1]
     out: Subfactorial[-1]
@@ -48,9 +125,112 @@ a-negative-argument-is-left-unevaluated:
       in: \text{Subfactorial}[-1]
       out: \text{Subfactorial}[-1]
 threads-element-wise-over-a-list-as-wolfram-s:
+  epsil:
+    in: Subfactorial([1, 2, 3, 4])
+    out: "[0, 1, 2, 9]"
+  tex:
+    in: \mathrm{Subfactorial}(\bigl\lbrack1, 2, 3, 4\bigr\rbrack)
+    out: \bigl\lbrack0, 1, 2, 9\bigr\rbrack
+  fullform:
+    in: Subfactorial[List[1, 2, 3, 4]]
   wolfram:
     in: Subfactorial[List[1, 2, 3, 4]]
     out: "{0, 1, 2, 9}"
     tex:
       in: \text{Subfactorial}[\{1,2,3,4\}]
       out: \{0,1,2,9\}
+subfactorial-20:
+  epsil:
+    in: Subfactorial(20)
+    out: 895_014_631_192_902_121
+  tex:
+    in: \mathrm{Subfactorial}(20)
+    out: 895\,014\,631\,192\,902\,121
+  traditional:
+    in: "{!}20"
+    out: 895\,014\,631\,192\,902\,121
+  fullform:
+    in: Subfactorial[20]
+  wolfram:
+    in: Subfactorial[20]
+exact-for-large-n:
+  epsil:
+    in: Subfactorial(48)
+    out: 4_566_824_330_931_624_695_767_452_273_778_667_071_025_042_534_230_906_772_538_913
+  tex:
+    in: \mathrm{Subfactorial}(48)
+    out: 4\,566\,824\,330\,931\,624\,695\,767\,452\,273\,778\,667\,071\,025\,042\,534\,230\,906\,772\,538\,913
+  traditional:
+    in: "{!}48"
+    out: 4\,566\,824\,330\,931\,624\,695\,767\,452\,273\,778\,667\,071\,025\,042\,534\,230\,906\,772\,538\,913
+  fullform:
+    in: Subfactorial[48]
+  wolfram:
+    in: Subfactorial[48]
+real-arguments-evaluate-as-frac-gamma-n-1-1-e:
+  epsil:
+    in: Subfactorial(4.5)
+    out: 19.255_831_840_742_534 + 0.157_179_122_964_615_25i
+  tex:
+    in: \mathrm{Subfactorial}(4.5)
+    out: 19.255\,831\,840\,742\,534+0.157\,179\,122\,964\,615\,25i
+  traditional:
+    in: "{!}4.5"
+    out: 19.255\,831\,840\,742\,534+0.157\,179\,122\,964\,615\,25i
+  fullform:
+    in: Subfactorial[4.5]
+  wolfram:
+    in: Subfactorial[4.5]
+complex-arguments-evaluate-as-frac-gamma-n-1-1-e:
+  epsil:
+    in: Subfactorial(1.6 + i)
+    out: 0.296_830_458_177_711_8 + 0.284_208_547_251_969_9i
+  tex:
+    in: \mathrm{Subfactorial}(1.6+i)
+    out: 0.296\,830\,458\,177\,711\,8+0.284\,208\,547\,251\,969\,9i
+  traditional:
+    in: "{!}1.6+i"
+    out: 0.296\,830\,458\,177\,711\,8+0.284\,208\,547\,251\,969\,9i
+  fullform:
+    in: Subfactorial[Complex[1.6, 1]]
+  wolfram:
+    in: Subfactorial[Complex[1.6, 1]]
+threads-over-a-matrix-element-wise:
+  epsil:
+    in: Subfactorial([[2, 0], [0, 2]])
+    out: "[[1, 1], [1, 1]]"
+  tex:
+    in: \mathrm{Subfactorial}(\bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 2\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Subfactorial[List[List[2, 0], List[0, 2]]]
+  wolfram:
+    in: Subfactorial[List[List[2, 0], List[0, 2]]]
+d-n-is-frac-n-e-rounded-to-the-nearest-integer:
+  epsil:
+    in: Subfactorial(10) == Round(10! / ExponentialE)
+    out: True
+  tex:
+    in: \mathrm{Subfactorial}(10)=\mathrm{round}(\frac{10!}{e})
+    out: \top
+  traditional:
+    in: '{!}10=\mathrm{round}(\frac{10!}{e})'
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Subfactorial[10], Round[Divide[Factorial[10], E]]]
+  wolfram:
+    in: (Subfactorial[10] == Round[Divide[Factorial[10], E]])
+two-term-recurrence-d-n-1-n-d-n-d-n-1:
+  epsil:
+    in: Subfactorial(6) == 5 * (Subfactorial(5) + Subfactorial(4))
+    out: True
+  tex:
+    in: \mathrm{Subfactorial}(6)=5(\mathrm{Subfactorial}(5)+\mathrm{Subfactorial}(4))
+    out: \top
+  traditional:
+    in: "{!}6=5({!}5+{!}4)"
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Subfactorial[6], Times[5, Plus[Subfactorial[5], Subfactorial[4]]]]
+  wolfram:
+    in: (Subfactorial[6] == Times[5, Plus[Subfactorial[5], Subfactorial[4]]])

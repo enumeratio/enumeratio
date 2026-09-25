@@ -1,0 +1,66 @@
+the-fibonacci-numbers-a-n-a-n-1-a-n-2:
+  epsil:
+    in: LinearRecurrence([1, 1], [1, 1], 10)
+    out: "[1, 1, 2, 3, 5, 8, 13, 21, 34, 55]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack, 10)
+    out: \bigl\lbrack1, 1, 2, 3, 5, 8, 13, 21, 34, 55\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[1, 1], List[1, 1], 10]
+  wolfram:
+    in: LinearRecurrence[List[1, 1], List[1, 1], 10]
+the-lucas-numbers-same-kernel-other-initial:
+  epsil:
+    in: LinearRecurrence([1, 1], [2, 1], 8)
+    out: "[2, 1, 3, 4, 7, 11, 18, 29]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack2, 1\bigr\rbrack, 8)
+    out: \bigl\lbrack2, 1, 3, 4, 7, 11, 18, 29\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[1, 1], List[2, 1], 8]
+  wolfram:
+    in: LinearRecurrence[List[1, 1], List[2, 1], 8]
+a-n-2a-n-1-a-n-2-is-arithmetic:
+  epsil:
+    in: LinearRecurrence([2, -1], [1, 3], 5)
+    out: "[1, 3, 5, 7, 9]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack2, -1\bigr\rbrack, \bigl\lbrack1, 3\bigr\rbrack, 5)
+    out: \bigl\lbrack1, 3, 5, 7, 9\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[2, -1], List[1, 3], 5]
+  wolfram:
+    in: LinearRecurrence[List[2, -1], List[1, 3], 5]
+tribonacci:
+  epsil:
+    in: LinearRecurrence([1, 1, 1], [0, 0, 1], 10)
+    out: "[0, 0, 1, 1, 2, 4, 7, 13, 24, 44]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack1, 1, 1\bigr\rbrack, \bigl\lbrack0, 0, 1\bigr\rbrack, 10)
+    out: \bigl\lbrack0, 0, 1, 1, 2, 4, 7, 13, 24, 44\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[1, 1, 1], List[0, 0, 1], 10]
+  wolfram:
+    in: LinearRecurrence[List[1, 1, 1], List[0, 0, 1], 10]
+just-the-10th-term:
+  epsil:
+    in: LinearRecurrence([1, 1], [1, 1], [10])
+    out: "[55]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack10\bigr\rbrack)
+    out: \bigl\lbrack55\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[1, 1], List[1, 1], List[10]]
+  wolfram:
+    in: LinearRecurrence[List[1, 1], List[1, 1], List[10]]
+terms-5-through-8:
+  epsil:
+    in: LinearRecurrence([1, 1], [1, 1], [5, 8])
+    out: "[5, 8, 13, 21]"
+  tex:
+    in: \mathrm{LinearRecurrence}(\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack5, 8\bigr\rbrack)
+    out: \bigl\lbrack5, 8, 13, 21\bigr\rbrack
+  fullform:
+    in: LinearRecurrence[List[1, 1], List[1, 1], List[5, 8]]
+  wolfram:
+    in: LinearRecurrence[List[1, 1], List[1, 1], List[5, 8]]

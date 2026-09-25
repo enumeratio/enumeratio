@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { isCrosswalkSystem, SOURCES } from "@enumeratio/reference";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
+import { fragment, setFragment } from "../fragment.ts";
 
 // Another system's run of one example: the source it was given and what came back. Same
 // vocabulary as the implementations records (`OtherSystemRun`, packages/entry/src/types.ts).
@@ -16,6 +17,8 @@ export interface Alternative {
 const props = defineProps<{
   alternatives: Record<string, Alternative>;
   notes?: Record<string, string>;
+  /** The example's anchor: `#<anchor>=<system>` opens that system's tab. */
+  anchor?: string;
 }>();
 
 // Tabs are narrow: the short name where the crosswalk's label is long.
@@ -36,8 +39,18 @@ const TITLE: Record<Alternative["verdict"], string> = {
 
 const systems = computed(() => Object.keys(props.alternatives));
 const active = ref<string | undefined>();
+const named = (): boolean => props.anchor !== undefined && fragment.value.target === props.anchor;
+watch(
+  fragment,
+  (f) => {
+    if (named() && f.sub !== undefined && f.sub in props.alternatives) active.value = f.sub;
+  },
+  { immediate: true },
+);
 const toggle = (system: string): void => {
   active.value = active.value === system ? undefined : system;
+  // Only an example the URL already names records its tab there.
+  if (named()) setFragment(props.anchor!, active.value);
 };
 const shown = computed(() => (active.value === undefined ? undefined : props.alternatives[active.value]));
 </script>

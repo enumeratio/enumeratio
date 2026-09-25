@@ -1,7 +1,62 @@
 finishes-well-inside-the-deadline-so-the-value:
+  epsil:
+    in: TimeConstrained(Sum(k, (k, 1, 10)), 1)
+    out: "55"
+  tex:
+    in: \mathrm{TimeConstrained}(\sum_{k=1}^{10}k, 1)
+    out: "55"
+  fullform:
+    in: TimeConstrained[Sum[k, List[k, 1, 10]], 1]
   wolfram:
     in: TimeConstrained[Sum[k, List[k, 1, 10]], 1]
     out: "55"
     tex:
       in: \text{TimeConstrained}\left[\sum _{k=1}^{10} k,1\right]
       out: "55"
+factoring-a-30-digit-semiprime-outruns-a-50-ms:
+  epsil:
+    in: TimeConstrained(FactorInteger(1_001_000_000_000_040_037_000_000_000_111), 0.05)
+    out: Aborted
+  tex:
+    in: \mathrm{TimeConstrained}(\mathrm{FactorInteger}(1\,001\,000\,000\,000\,040\,037\,000\,000\,000\,111), 0.05)
+    out: \mathrm{Aborted}
+  fullform:
+    in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05]
+    back: [TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05]
+a-custom-failexpr-replaces-the-default-aborted:
+  epsil:
+    in: |-
+      TimeConstrained(
+                       FactorInteger(1_001_000_000_000_040_037_000_000_000_111),
+                       0.05,
+                       -1,
+                     )
+    out: "-1"
+  tex:
+    in: \mathrm{TimeConstrained}(\mathrm{FactorInteger}(1\,001\,000\,000\,000\,040\,037\,000\,000\,000\,111), 0.05, -1)
+    out: "-1"
+  fullform:
+    in: TimeConstrained[FactorInteger[1001000000000040037000000000111], 0.05, -1]
+    back: [TimeConstrained, [FactorInteger, 1.00100000000004e+30], 0.05, -1]
+an-infinite-time-limit-imposes-no-constraint:
+  epsil:
+    in: TimeConstrained(1 + 2, PositiveInfinity)
+    out: "3"
+  tex:
+    in: \mathrm{TimeConstrained}(1+2, \infty)
+    out: "3"
+  fullform:
+    in: TimeConstrained[Plus[1, 2], Infinity]
+  wolfram:
+    in: TimeConstrained[Plus[1, 2], Infinity]
+failexpr-is-held-it-is-never-evaluated-when-expr:
+  epsil:
+    in: TimeConstrained(2 + 3, 1, 1 / 0)
+    out: "5"
+  tex:
+    in: \mathrm{TimeConstrained}(2+3, 1, \frac{1}{0})
+    out: "5"
+  fullform:
+    in: TimeConstrained[Plus[2, 3], 1, Divide[1, 0]]
+  wolfram:
+    in: TimeConstrained[Plus[2, 3], 1, Divide[1, 0]]

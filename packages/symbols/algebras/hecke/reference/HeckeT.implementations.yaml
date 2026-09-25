@@ -1,0 +1,60 @@
+length-goes-up-so-no-q-appears:
+  epsil:
+    in: NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([1, 3, 2]))
+    out: HeckeT([2, 3, 1])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack))
+    out: \mathrm{HeckeT}(\bigl\lbrack2, 3, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(T_{213}, T_{132})
+    out: T_{231}
+  fullform:
+    in: NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]]]
+the-quadratic-relation-t-s-2-q-q-1-t-s:
+  epsil:
+    in: NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([2, 1, 3]))
+    out: q * HeckeT([1, 2, 3]) + (q - 1) * HeckeT([2, 1, 3])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack))
+    out: q\mathrm{HeckeT}(\bigl\lbrack1, 2, 3\bigr\rbrack)+(q-1)\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(T_{213}, T_{213})
+    out: qT_{123}+(q-1)T_{213}
+  fullform:
+    in: NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[2, 1, 3]]]
+t-st-tt-s-the-longest-element-of-s-3:
+  epsil:
+    in: NonCommutativeMultiply(HeckeT([2, 1, 3]), HeckeT([1, 3, 2]), HeckeT([2, 1, 3]))
+    out: HeckeT([3, 2, 1])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack))
+    out: \mathrm{HeckeT}(\bigl\lbrack3, 2, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(T_{213}, T_{132}, T_{213})
+    out: T_{321}
+  fullform:
+    in: NonCommutativeMultiply[HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]], HeckeT[List[2, 1, 3]]]
+and-t-tt-st-t-gives-the-same-which-is-the-braid:
+  epsil:
+    in: NonCommutativeMultiply(HeckeT([1, 3, 2]), HeckeT([2, 1, 3]), HeckeT([1, 3, 2]))
+    out: HeckeT([3, 2, 1])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack2, 1, 3\bigr\rbrack), \mathrm{HeckeT}(\bigl\lbrack1, 3, 2\bigr\rbrack))
+    out: \mathrm{HeckeT}(\bigl\lbrack3, 2, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(T_{132}, T_{213}, T_{132})
+    out: T_{321}
+  fullform:
+    in: NonCommutativeMultiply[HeckeT[List[1, 3, 2]], HeckeT[List[2, 1, 3]], HeckeT[List[1, 3, 2]]]
+n-the-same-basis-as-z-s-n:
+  epsil:
+    in: AlgebraDimension(HeckeAlgebra(4))
+    out: "24"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{HeckeAlgebra}(4))
+    out: "24"
+  traditional:
+    in: \dim(H_{4}(q))
+    out: "24"
+  fullform:
+    in: AlgebraDimension[HeckeAlgebra[4]]

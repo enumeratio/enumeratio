@@ -1,0 +1,27 @@
+the-principal-adele-5-at-every-place:
+  epsil:
+    in: Adele(5)
+    out: Adele(5, 5)
+  tex:
+    in: \mathrm{Adele}(5)
+    out: \mathrm{Adele}(5, 5)
+  fullform:
+    in: Adele[5]
+adele-2-profinitenumber-1-6-times-3:
+  epsil:
+    in: Adele(2, ProfiniteNumber(1, 6)) * 3
+    out: Adele(6, ProfiniteNumber(3, 18))
+  tex:
+    in: 3\mathrm{Adele}(2, \mathrm{ProfiniteNumber}(1, 6))
+    out: \mathrm{Adele}(6, \mathrm{ProfiniteNumber}(3, 18))
+  fullform:
+    in: Times[Adele[2, ProfiniteNumber[1, 6]], 3]
+the-adele-underlying-an-idele:
+  epsil:
+    in: Adele(Idele(1, 1, [AdicNumeral(3, 2, 2)]))
+    out: Adele(1, ProfiniteNumber(11, 18))
+  tex:
+    in: \mathrm{Adele}(\mathrm{Idele}(1, 1, \bigl\lbrack\mathrm{AdicNumeral}(3, 2, 2)\bigr\rbrack))
+    out: \mathrm{Adele}(1, \mathrm{ProfiniteNumber}(11, 18))
+  fullform:
+    in: Adele[Idele[1, 1, List[AdicNumeral[3, 2, 2]]]]

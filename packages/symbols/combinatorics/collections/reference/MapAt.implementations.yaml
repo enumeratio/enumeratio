@@ -1,0 +1,27 @@
+single-position:
+  epsil:
+    in: MapAt(f, [a, b, c], 2)
+    out: "[a, f(b), c]"
+  tex:
+    in: \mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, 2)
+    out: \bigl\lbrack a, f(b), c\bigr\rbrack
+  fullform:
+    in: MapAt[f, List[a, b, c], 2]
+negative-position:
+  epsil:
+    in: MapAt(f, [a, b, c], -1)
+    out: "[a, b, f(c)]"
+  tex:
+    in: \mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, -1)
+    out: \bigl\lbrack a, b, f(c)\bigr\rbrack
+  fullform:
+    in: MapAt[f, List[a, b, c], -1]
+several-positions:
+  epsil:
+    in: MapAt(f, [a, b, c], [[1], [3]])
+    out: "[f(a), b, f(c)]"
+  tex:
+    in: \mathrm{MapAt}(f, \bigl\lbrack a, b, c\bigr\rbrack, \bigl\lbrack\bigl\lbrack1\bigr\rbrack, \bigl\lbrack3\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack f(a), b, f(c)\bigr\rbrack
+  fullform:
+    in: MapAt[f, List[a, b, c], List[List[1], List[3]]]

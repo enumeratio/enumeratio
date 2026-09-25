@@ -21,6 +21,12 @@ const PARAM_CAP = Number(process.env.QUICKCHECK_PARAM_CAP ?? 7);
 // safe" — an assumption PARAM_CAP (let alone the nightly deep sample's 9) blows past:
 // GelfandTsetlin(5, 5) alone is 151,008 elements, GelfandTsetlin(9, 3) is 8.6M. Sampled at a
 // much smaller cap so they're still exercised without materializing the whole family.
+//
+// BoxedPlanePartitions was missed here (issue #90): its count() is closed-form (MacMahon's box
+// formula), so the `total <= 0` guard below never catches it, but unrank/rank still enumerate
+// the whole box through the same indexedFamily cache. Three independent params compound faster
+// than the rest of this set's one or two: BoxedPlanePartitions(7,7,7) is 3.9e16 elements, which
+// is what actually OOM'd — a 4GB heap dies partway through materializing that one box.
 const FULL_ENUMERATION_FAMILIES = new Set([
   "SemistandardTableaux",
   "GelfandTsetlin",
@@ -28,8 +34,15 @@ const FULL_ENUMERATION_FAMILIES = new Set([
   "SkewPartitions",
   "SkewStandardTableaux",
   "PlanePartitions",
+  "BoxedPlanePartitions",
 ]);
 const SMALL_PARAM_CAP = 4;
+
+// Belt-and-suspenders for the families above: even at SMALL_PARAM_CAP, (4,4,4) puts
+// BoxedPlanePartitions at 232,848 elements — an order of magnitude past its siblings' worst case.
+// If a future param cap or a new full-enumeration family turns out too generous, fail that one
+// param draw as a finding instead of materializing an OOM.
+const MAX_MATERIALIZED = 2_000_000;
 
 // ── the run ─────────────────────────────────────────────────────────────────────
 
@@ -52,7 +65,8 @@ const failures: Failure[] = [];
 let checked = 0;
 
 for (const entry of families) {
-  const paramCap = FULL_ENUMERATION_FAMILIES.has(entry.head) ? SMALL_PARAM_CAP : PARAM_CAP;
+  const fullEnumeration = FULL_ENUMERATION_FAMILIES.has(entry.head);
+  const paramCap = fullEnumeration ? SMALL_PARAM_CAP : PARAM_CAP;
   for (let attempt = 0; attempt < POINTS; attempt++) {
     const params = Array.from({ length: entry.paramCount }, () => Math.floor(draw() * (paramCap + 1)));
     let total: number;
@@ -69,6 +83,16 @@ for (const entry of families) {
       continue;
     }
     if (!Number.isFinite(total) || total <= 0) continue; // an empty family proves nothing
+    if (fullEnumeration && total > MAX_MATERIALIZED) {
+      failures.push({
+        family: entry.head,
+        property: "count",
+        params,
+        rank: -1,
+        detail: `count ${total.toLocaleString()} exceeds the ${MAX_MATERIALIZED.toLocaleString()}-element materialization guard`,
+      });
+      continue;
+    }
 
     const familyFailure = checkFamily(entry, params, draw);
     if (familyFailure !== undefined) {

@@ -1,0 +1,45 @@
+a-parabola-s-range-is-bounded-below:
+  epsil:
+    in: FunctionRange(x ^ 2, x, y)
+    out: 0 <= y
+  tex:
+    in: \mathrm{FunctionRange}(x^2, x, y)
+    out: 0\le y
+  fullform:
+    in: FunctionRange[Power[x, 2], x, y]
+a-reciprocal-never-reaches-zero:
+  epsil:
+    in: FunctionRange(1 / x, x, y)
+    out: y < 0 || 0 < y
+  tex:
+    in: \mathrm{FunctionRange}(\frac{1}{x}, x, y)
+    out: y\lt0\lor0\lt y
+  fullform:
+    in: FunctionRange[Divide[1, x], x, y]
+sine-s-range-is-the-unit-interval:
+  epsil:
+    in: FunctionRange(Sin(x), x, y)
+    out: -1 <= y <= 1
+  tex:
+    in: \mathrm{FunctionRange}(\sin(x), x, y)
+    out: -1\le y\le1
+  fullform:
+    in: FunctionRange[Sin[x], x, y]
+exp-s-range-is-the-positive-reals:
+  epsil:
+    in: FunctionRange(Exp(x), x, y)
+    out: 0 < y
+  tex:
+    in: \mathrm{FunctionRange}(e^{x}, x, y)
+    out: 0\lt y
+  fullform:
+    in: FunctionRange[Exp[x], x, y]
+a-quadratic-denominator-is-declined:
+  epsil:
+    in: FunctionRange(1 / (x ^ 2 - 1), x, y)
+    out: FunctionRange(1 / (x ^ 2 - 1), x, y)
+  tex:
+    in: \mathrm{FunctionRange}(\frac{1}{x^2-1}, x, y)
+    out: \mathrm{FunctionRange}(\frac{1}{x^2-1}, x, y)
+  fullform:
+    in: FunctionRange[Divide[1, Plus[Power[x, 2], -1]], x, y]

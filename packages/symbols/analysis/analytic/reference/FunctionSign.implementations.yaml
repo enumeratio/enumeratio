@@ -1,0 +1,36 @@
+a-perfect-square-is-never-negative:
+  epsil:
+    in: FunctionSign(x ^ 2, x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionSign}(x^2, x)
+    out: "1"
+  fullform:
+    in: FunctionSign[Power[x, 2], x]
+a-sum-of-a-square-and-a-positive-constant:
+  epsil:
+    in: FunctionSign(1 / (x ^ 2 + 1), x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionSign}(\frac{1}{x^2+1}, x)
+    out: "1"
+  fullform:
+    in: FunctionSign[Divide[1, Plus[Power[x, 2], 1]], x]
+exp-is-always-positive:
+  epsil:
+    in: FunctionSign(Exp(x), x)
+    out: "1"
+  tex:
+    in: \mathrm{FunctionSign}(e^{x}, x)
+    out: "1"
+  fullform:
+    in: FunctionSign[Exp[x], x]
+a-cubic-changes-sign:
+  epsil:
+    in: FunctionSign(x ^ 3, x)
+    out: Indeterminate
+  tex:
+    in: \mathrm{FunctionSign}(x^3, x)
+    out: \mathrm{Indeterminate}
+  fullform:
+    in: FunctionSign[Power[x, 3], x]

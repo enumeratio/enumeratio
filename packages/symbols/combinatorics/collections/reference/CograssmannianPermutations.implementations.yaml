@@ -1,0 +1,9 @@
+count-cograssmannianpermutations-5-2-5-5-27:
+  epsil:
+    in: Count(CograssmannianPermutations(5))
+    out: "27"
+  tex:
+    in: \mathrm{Count}(\mathrm{CograssmannianPermutations}(5))
+    out: "27"
+  fullform:
+    in: Count[CograssmannianPermutations[5]]

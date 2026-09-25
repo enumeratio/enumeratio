@@ -1,0 +1,11 @@
+khinchin-s-constant:
+  epsil:
+    in: N(Khinchin)
+    out: 2.685_452_001_065_306_2
+  tex:
+    in: N(\mathrm{Khinchin})
+    out: 2.685\,452\,001\,065\,306\,2
+  fullform:
+    in: N[Khinchin]
+  wolfram:
+    in: N[Khinchin]

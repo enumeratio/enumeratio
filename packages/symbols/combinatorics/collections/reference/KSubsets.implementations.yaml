@@ -1,0 +1,27 @@
+binom-5-2:
+  epsil:
+    in: Count(KSubsets(5, 2))
+    out: "10"
+  tex:
+    in: \mathrm{Count}(\mathrm{KSubsets}(5, 2))
+    out: "10"
+  fullform:
+    in: Count[KSubsets[5, 2]]
+ksubsets-5-2-list-1:
+  epsil:
+    in: KSubsets(5, 2)[1]
+    out: "[1, 2]"
+  tex:
+    in: \mathrm{KSubsets}(5, 2)[1]
+    out: \bigl\lbrack1, 2\bigr\rbrack
+  fullform:
+    in: Part[KSubsets[5, 2], 1]
+colex-not-lex-lexicographic-order-would-give-1-4:
+  epsil:
+    in: KSubsets(5, 2)[3]
+    out: "[2, 3]"
+  tex:
+    in: \mathrm{KSubsets}(5, 2)[3]
+    out: \bigl\lbrack2, 3\bigr\rbrack
+  fullform:
+    in: Part[KSubsets[5, 2], 3]

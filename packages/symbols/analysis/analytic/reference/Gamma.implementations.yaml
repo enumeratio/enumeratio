@@ -1,10 +1,27 @@
 a-pole-of-gamma:
+  epsil:
+    in: Gamma(0)
+    out: ComplexInfinity
+  tex:
+    in: \Gamma(0)
+    out: \tilde\infty
+  fullform:
+    in: Gamma[0]
   wolfram:
     in: Gamma[0]
     out: ComplexInfinity
     tex:
       in: \Gamma (0)
       out: \text{ComplexInfinity}
+  sympy:
+    in: gamma(0)
+    out: zoo
+  mpmath:
+    in: gamma(0)
+    out: "ValueError: gamma function pole"
+    verdict: error
+    kind: undefined-form
+    note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ValueError: gamma function pole."
   sage:
     in: gamma(0)
     out: Infinity
@@ -17,43 +34,58 @@ a-pole-of-gamma:
     verdict: disagree
     kind: undefined-form
     note: 'Both decline: compute-engine answers "ComplexInfinity", and Rust gives PositiveInfinity.'
-  mpmath:
-    in: gamma(0)
-    out: "ValueError: gamma function pole"
-    verdict: error
-    kind: undefined-form
-    note: "A pole or undefined value: compute-engine answers ComplexInfinity, mpmath gives ValueError: gamma function pole."
-  sympy:
-    in: gamma(0)
-    out: zoo
 a-floating-point-argument-evaluates-directly-to:
+  epsil:
+    in: Gamma(2.5)
+    out: 1.329_340_388_179_137_020_47
+  tex:
+    in: \Gamma(2.5)
+    out: 1.329\,340\,388\,179\,137\,020\,47
+  fullform:
+    in: Gamma[2.5]
   wolfram:
     in: Gamma[2.5]
     out: "1.329340388179137"
     tex:
       in: \Gamma (2.5)
       out: "1.32934"
+  sympy:
+    in: gamma(2.5)
+    out: "1.32934038817914"
+  mpmath:
+    in: gamma(2.5)
+    out: "1.32934038817913702047362561251"
   sage:
     in: gamma(2.5)
     out: "1.32934038817914"
   rust:
     in: gamma(x(2.5))
     out: "1.3293403881791408"
-  mpmath:
-    in: gamma(2.5)
-    out: "1.32934038817913702047362561251"
-  sympy:
-    in: gamma(2.5)
-    out: "1.32934038817914"
 threads-over-a-list-so-poles-evaluate-concretely:
+  epsil:
+    in: Gamma([0, -1])
+    out: "[ComplexInfinity, ComplexInfinity]"
+  tex:
+    in: \Gamma(\bigl\lbrack0, -1\bigr\rbrack)
+    out: \bigl\lbrack\tilde\infty, \tilde\infty\bigr\rbrack
+  fullform:
+    in: Gamma[List[0, -1]]
   wolfram:
     in: Gamma[List[0, -1]]
     out: "{ComplexInfinity, ComplexInfinity}"
     tex:
       in: \Gamma (\{0,-1\})
       out: \{\text{ComplexInfinity},\text{ComplexInfinity}\}
+  sympy:
+    in: "[gamma(0), gamma(-1)]"
+    out: "AttributeError: 'list' object has no attribute 'is_Number'"
+    verdict: error
+    kind: threading
+    note: compute-engine's Gamma threads over (or pools) the list; SymPy's takes scalars.
+  mpmath:
+    in: "[gamma(0), gamma(-1)]"
   sage:
-    in: gamma([0, -1])
+    in: "[gamma(0), gamma(-1)]"
     out: "TypeError: cannot coerce arguments: no canonical coercion from <class 'list'> to Symbolic Ring"
     verdict: error
     kind: threading
@@ -64,54 +96,84 @@ threads-over-a-list-so-poles-evaluate-concretely:
     verdict: error
     kind: threading
     note: compute-engine's Gamma is Listable and threads over the list; the Rust crates take scalars.
-  sympy:
-    in: gamma([0, -1])
-    out: "AttributeError: 'list' object has no attribute 'is_Number'"
-    verdict: error
-    kind: threading
-    note: compute-engine's Gamma threads over (or pools) the list; SymPy's takes scalars.
 extends-the-factorial-gamma-n-1-n-so-gamma-6-5:
+  epsil:
+    in: Gamma(6) == 5!
+    out: True
+  tex:
+    in: \Gamma(6)=5!
+    out: \top
+  traditional:
+    in: \Gamma(6)=5!
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Gamma[6], Factorial[5]]
   wolfram:
     in: (Gamma[6] == Factorial[5])
     out: True
     tex:
       in: \Gamma (6)=5!
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(gamma(6), factorial(5))
+    out: True
   sage:
     in: bool(gamma(6) == factorial(5))
     out: True
   rust:
     in: equal(gamma(n(6)), factorial(n(5)))
     out: "true"
-  sympy:
-    in: enumeratio_equal(gamma(6), factorial(5))
-    out: True
 functional-equation-gamma-z-1-z-gamma-z-here-at:
+  epsil:
+    in: Gamma(6) == 5 * Gamma(5)
+    out: True
+  tex:
+    in: \Gamma(6)=5\Gamma(5)
+    out: \top
+  traditional:
+    in: \Gamma(6)=5\Gamma(5)
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Gamma[6], Times[5, Gamma[5]]]
   wolfram:
     in: (Gamma[6] == Times[5, Gamma[5]])
     out: True
     tex:
       in: \Gamma (6)=5 \Gamma (5)
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(gamma(6), (5 * gamma(5)))
+    out: True
+  mpmath:
+    in: almosteq(gamma(6), (5 * gamma(5)), 1e-20)
+    out: True
   sage:
     in: bool(gamma(6) == (5 * gamma(5)))
     out: True
   rust:
     in: equal(gamma(n(6)), (n(5) * gamma(n(5))))
     out: "true"
-  mpmath:
-    in: almosteq(gamma(6), (5 * gamma(5)), 1e-20)
-    out: True
-  sympy:
-    in: enumeratio_equal(gamma(6), (5 * gamma(5)))
-    out: True
 reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z:
+  epsil:
+    in: Gamma(1 / 3) * Gamma(2 / 3) == Pi / Sin(Pi / 3)
+    out: True
+  tex:
+    in: \Gamma(\frac{1}{3})\Gamma(\frac{2}{3})=\frac{\pi}{\sin(\frac{\pi}{3})}
+    out: \top
+  traditional:
+    in: \Gamma(\frac{1}{3})\Gamma(\frac{2}{3})=\frac{\pi}{\sin(\frac{\pi}{3})}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Times[Gamma[Rational[1, 3]], Gamma[Rational[2, 3]]], Divide[Pi, Sin[Divide[Pi, 3]]]]
   wolfram:
     in: (Times[Gamma[Rational[1, 3]], Gamma[Rational[2, 3]]] == Divide[Pi, Sin[Divide[Pi, 3]]])
     out: Gamma[1/3]*Gamma[2/3] == (2*Pi)/Sqrt[3]
     tex:
       in: \Gamma \left(\frac{1}{3}\right) \Gamma \left(\frac{2}{3}\right)=\frac{\pi }{\sin \left(\frac{\pi }{3}\right)}
       out: \Gamma \left(\frac{1}{3}\right) \Gamma \left(\frac{2}{3}\right)=\frac{2 \pi }{\sqrt{3}}
+  sympy:
+    in: enumeratio_equal((gamma(Rational(1, 3)) * gamma(Rational(2, 3))), (S(pi) / sin((S(pi) / 3))))
+    out: True
   sage:
     in: bool((gamma((1/3)) * gamma((2/3))) == (pi / sin((pi / 3))))
     out: False
@@ -121,64 +183,108 @@ reflection-formula-gamma-z-gamma-1-z-pi-sin-pi-z:
   rust:
     in: equal((gamma(rational(n(1), n(3))) * gamma(rational(n(2), n(3)))), (x(std::f64::consts::PI) / sin((x(std::f64::consts::PI) / n(3)))))
     out: "true"
-  sympy:
-    in: enumeratio_equal((gamma(Rational(1, 3)) * gamma(Rational(2, 3))), (S(pi) / sin((S(pi) / 3))))
-    out: True
 gamma-1-2-sqrt-pi:
+  epsil:
+    in: Gamma(1 / 2) == Sqrt(Pi)
+    out: True
+  tex:
+    in: \Gamma(\frac{1}{2})=\sqrt{\pi}
+    out: \top
+  traditional:
+    in: \Gamma(\frac{1}{2})=\sqrt{\pi}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Gamma[Rational[1, 2]], Sqrt[Pi]]
   wolfram:
     in: (Gamma[Rational[1, 2]] == Sqrt[Pi])
     out: True
     tex:
       in: \Gamma \left(\frac{1}{2}\right)=\sqrt{\pi }
       out: \text{True}
+  sympy:
+    in: enumeratio_equal(gamma(Rational(1, 2)), sqrt(pi))
+    out: True
   sage:
     in: bool(gamma((1/2)) == sqrt(pi))
     out: True
   rust:
     in: equal(gamma(rational(n(1), n(2))), sqrt(x(std::f64::consts::PI)))
     out: "true"
-  sympy:
-    in: enumeratio_equal(gamma(Rational(1, 2)), sqrt(pi))
-    out: True
 the-volume-of-a-unit-4-ball-is-pi-n-2-gamma-n-2:
+  epsil:
+    in: Pi ^ 2 / Gamma(3) == Pi ^ 2 / 2
+    out: True
+  tex:
+    in: \frac{\pi^2}{\Gamma(3)}=\frac{\pi^2}{2}
+    out: \top
+  traditional:
+    in: \frac{\pi^2}{\Gamma(3)}=\frac{\pi^2}{2}
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Divide[Power[Pi, 2], Gamma[3]], Divide[Power[Pi, 2], 2]]
   wolfram:
     in: (Divide[Power[Pi, 2], Gamma[3]] == Divide[Power[Pi, 2], 2])
     out: True
     tex:
       in: \frac{\pi ^2}{\Gamma (3)}=\frac{\pi ^2}{2}
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((S((pi**2)) / gamma(3)), (S((pi**2)) / 2))
+    out: True
   sage:
     in: bool(((pi^2) / gamma(3)) == ((pi^2) / 2))
     out: True
   rust:
     in: equal((power(x(std::f64::consts::PI), n(2)) / gamma(n(3))), (power(x(std::f64::consts::PI), n(2)) / n(2)))
     out: "true"
-  sympy:
-    in: enumeratio_equal((S((pi**2)) / gamma(3)), (S((pi**2)) / 2))
-    out: True
 squaring-the-reflection-formula-at-z-1-2:
+  epsil:
+    in: Gamma(1 / 2) ^ 2 == Pi
+    out: True
+  tex:
+    in: \Gamma(1/2)^2=\pi
+    out: \top
+  traditional:
+    in: \Gamma(1/2)^2=\pi
+    out: \mathrm{True}
+  fullform:
+    in: Equal[Power[Gamma[Rational[1, 2]], 2], Pi]
   wolfram:
     in: (Power[Gamma[Rational[1, 2]], 2] == Pi)
     out: True
     tex:
       in: \Gamma \left(\frac{1}{2}\right)^2=\pi
       out: \text{True}
+  sympy:
+    in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
+    out: True
   sage:
     in: bool((gamma((1/2))^2) == pi)
     out: True
   rust:
     in: equal(power(gamma(rational(n(1), n(2))), n(2)), x(std::f64::consts::PI))
     out: "true"
-  sympy:
-    in: enumeratio_equal((gamma(Rational(1, 2))**2), pi)
-    out: True
 threads-over-a-list-and-reduces-each-integer:
+  epsil:
+    in: Gamma([1, 2, 3, 4, 5])
+    out: "[1, 1, 2, 6, 24]"
+  tex:
+    in: \Gamma(\bigl\lbrack1, 2, 3, 4, 5\bigr\rbrack)
+    out: \bigl\lbrack1, 1, 2, 6, 24\bigr\rbrack
+  fullform:
+    in: Gamma[List[1, 2, 3, 4, 5]]
+  wolfram:
+    in: Gamma[List[1, 2, 3, 4, 5]]
   sympy:
-    in: gamma([1, 2, 3, 4, 5])
+    in: "[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]"
     out: "AttributeError: 'list' object has no attribute 'is_Number'"
     verdict: error
     kind: threading
     note: compute-engine's Gamma is Listable and threads over the list; SymPy's takes scalars only.
+  mpmath:
+    in: "[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]"
+  sage:
+    in: "[gamma(1), gamma(2), gamma(3), gamma(4), gamma(5)]"
   rust:
     in: gamma(list(vec![n(1), n(2), n(3), n(4), n(5)]))
     out: "panic: threading: a list where the crate takes a scalar"
@@ -186,22 +292,38 @@ threads-over-a-list-and-reduces-each-integer:
     kind: threading
     note: compute-engine's Gamma is Listable and threads over the list; the Rust crate takes scalars only.
 gamma-5-2-frac-3-4-sqrt-pi-via-the-half-integer:
+  epsil:
+    in: Gamma(5 / 2)
+    out: 3 / 4 * Sqrt(Pi)
+  tex:
+    in: \Gamma(\frac{5}{2})
+    out: \frac{3\sqrt{\pi}}{4}
+  fullform:
+    in: Gamma[Rational[5, 2]]
   wolfram:
     in: Gamma[Rational[5, 2]]
     out: (3*Sqrt[Pi])/4
     tex:
       in: \Gamma \left(\frac{5}{2}\right)
       out: \frac{3 \sqrt{\pi }}{4}
+  sympy:
+    in: gamma(Rational(5, 2))
+    out: 3*sqrt(pi)/4
   sage:
     in: gamma((5/2))
     out: 3/4*sqrt(pi)
   rust:
     in: gamma(rational(n(5), n(2)))
     out: "1.3293403881791408"
-  sympy:
-    in: gamma(Rational(5, 2))
-    out: 3*sqrt(pi)/4
 three-arguments-the-integral-between-two-limits:
+  epsil:
+    in: Gamma(2.5, 0, 1.5)
+    out: 0.398_820_945_392_343_9
+  tex:
+    in: \Gamma(2.5, 0, 1.5)
+    out: 0.398\,820\,945\,392\,343\,9
+  fullform:
+    in: Gamma[2.5, 0, 1.5]
   wolfram:
     in: Gamma[2.5, 0, 1.5]
     out: "0.39882094539234453"
@@ -209,9 +331,305 @@ three-arguments-the-integral-between-two-limits:
       in: \Gamma (2.5,0,1.5)
       out: "0.398821"
 int-3-2-3-t-3-2-e-t-dt-gamma-5-2-3-2-gamma-5-2-3:
+  epsil:
+    in: Gamma(2.5, 1.5, 3)
+    out: 0.523_450_266_915_488_6
+  tex:
+    in: \Gamma(2.5, 1.5, 3)
+    out: 0.523\,450\,266\,915\,488\,6
+  fullform:
+    in: Gamma[2.5, 1.5, 3]
   wolfram:
     in: Gamma[2.5, 1.5, 3]
     out: "0.5234502669154895"
     tex:
       in: \Gamma (2.5,1.5,3)
       out: "0.52345"
+gamma-1-z-e-z-exact-and-symbolic-in-z:
+  epsil:
+    in: Gamma(1, z)
+    out: ExponentialE ^ (-z)
+  tex:
+    in: \Gamma(1, z)
+    out: e^{-z}
+  fullform:
+    in: Gamma[1, z]
+so-gamma-1-z-1-e-z-the-exponential-distribution:
+  epsil:
+    in: Gamma(1, 0, z)
+    out: -ExponentialE ^ (-z) + 1
+  tex:
+    in: \Gamma(1, 0, z)
+    out: 1-\exp(-z)
+  fullform:
+    in: Gamma[1, 0, z]
+now-that-gamma-2-z-has-a-closed-form-the-three:
+  epsil:
+    in: Gamma(2, 0, z)
+    out: -((z + 1) * ExponentialE ^ (-z)) + 1
+  tex:
+    in: \Gamma(2, 0, z)
+    out: 1-\frac{z+1}{e^{z}}
+  fullform:
+    in: Gamma[2, 0, z]
+a-machine-precision-argument-gamma-4-5-11-6317:
+  epsil:
+    in: Gamma(4.5)
+    out: 11.631_728_396_567_448_929_1
+  tex:
+    in: \Gamma(4.5)
+    out: 11.631\,728\,396\,567\,448\,929\,1
+  fullform:
+    in: Gamma[4.5]
+  wolfram:
+    in: Gamma[4.5]
+  sympy:
+    in: gamma(4.5)
+  mpmath:
+    in: gamma(4.5)
+  sage:
+    in: gamma(4.5)
+  rust:
+    in: gamma(x(4.5))
+gamma-5-4-24:
+  epsil:
+    in: Gamma(5)
+    out: "24"
+  tex:
+    in: \Gamma(5)
+    out: "24"
+  fullform:
+    in: Gamma[5]
+  wolfram:
+    in: Gamma[5]
+  sympy:
+    in: gamma(5)
+  mpmath:
+    in: gamma(5)
+  sage:
+    in: gamma(5)
+  rust:
+    in: gamma(n(5))
+complex-arguments-evaluate-directly:
+  epsil:
+    in: Gamma(2.3 + i)
+    out: 0.719_140_936_537_281_1 + 0.540_614_467_909_848_7i
+  tex:
+    in: \Gamma(2.3+i)
+    out: 0.719\,140\,936\,537\,281\,1+0.540\,614\,467\,909\,848\,7i
+  fullform:
+    in: Gamma[Complex[2.3, 1]]
+  wolfram:
+    in: Gamma[Complex[2.3, 1]]
+  sympy:
+    in: gamma((2.3 + 1*I))
+  mpmath:
+    in: gamma(mpc(2.3, 1))
+  sage:
+    in: gamma((2.3 + 1*I))
+half-integers-have-closed-forms-gamma-7-2-frac:
+  epsil:
+    in: Gamma(7 / 2)
+    out: 15 / 8 * Sqrt(Pi)
+  tex:
+    in: \Gamma(\frac{7}{2})
+    out: \frac{15\sqrt{\pi}}{8}
+  fullform:
+    in: Gamma[Rational[7, 2]]
+  wolfram:
+    in: Gamma[Rational[7, 2]]
+  sympy:
+    in: gamma(Rational(7, 2))
+  sage:
+    in: gamma((7/2))
+  rust:
+    in: gamma(rational(n(7), n(2)))
+including-negative-half-integers-gamma-3-2-frac:
+  epsil:
+    in: Gamma(-3 / 2)
+    out: 4 / 3 * Sqrt(Pi)
+  tex:
+    in: \Gamma(-\frac{3}{2})
+    out: \frac{4\sqrt{\pi}}{3}
+  fullform:
+    in: Gamma[Rational[-3, 2]]
+  wolfram:
+    in: Gamma[Rational[-3, 2]]
+  sympy:
+    in: gamma(Rational(-3, 2))
+  sage:
+    in: gamma((-3/2))
+  rust:
+    in: gamma(rational(n(-3), n(2)))
+gamma-infty-infty:
+  epsil:
+    in: Gamma(PositiveInfinity)
+    out: PositiveInfinity
+  tex:
+    in: \Gamma(\infty)
+    out: \infty
+  fullform:
+    in: Gamma[Infinity]
+  wolfram:
+    in: Gamma[Infinity]
+values-far-past-the-double-range-gamma-200-5:
+  epsil:
+    in: Gamma(200.5)
+    out: 557_316_894_480_137_913_364e353
+  tex:
+    in: \Gamma(200.5)
+    out: 557\,316\,894\,480\,137\,913\,364\cdot10^{353}
+  fullform:
+    in: Gamma[200.5]
+  wolfram:
+    in: Gamma[200.5]
+  sympy:
+    in: gamma(200.5)
+  mpmath:
+    in: gamma(200.5)
+  sage:
+    in: gamma(200.5)
+  rust:
+    in: gamma(x(200.5))
+two-arguments-the-upper-incomplete-gamma-gamma-5:
+  epsil:
+    in: Gamma(2.5, 1.5)
+    out: 0.930_519_442_786_793_1
+  tex:
+    in: \Gamma(2.5, 1.5)
+    out: 0.930\,519\,442\,786\,793\,1
+  fullform:
+    in: Gamma[2.5, 1.5]
+  wolfram:
+    in: Gamma[2.5, 1.5]
+an-integer-order-reduces-to-a-closed-form-gamma:
+  epsil:
+    in: Gamma(2, x)
+    out: (x + 1) * ExponentialE ^ (-x)
+  tex:
+    in: \Gamma(2, x)
+    out: (x+1)\exp(-x)
+  fullform:
+    in: Gamma[2, x]
+gamma-2-1-2-e-the-same-closed-form-at-an-exact:
+  epsil:
+    in: Gamma(2, 1)
+    out: 2 / ExponentialE
+  tex:
+    in: \Gamma(2, 1)
+    out: \frac{2}{e}
+  fullform:
+    in: Gamma[2, 1]
+  wolfram:
+    in: Gamma[2, 1]
+listable-threads-elementwise-over-a-matrix-and:
+  epsil:
+    in: Gamma(2, [[7 / 2, 0], [0, 13 / 2]])
+    out: "[[9 / (2 * ExponentialE ^ (7 / 2)), 1], [1, 15 / (2 * ExponentialE ^ (13 / 2))]]"
+  tex:
+    in: \Gamma(2, \bigl\lbrack\bigl\lbrack\frac{7}{2}, 0\bigr\rbrack, \bigl\lbrack0, \frac{13}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack(9)(2\exp(7/2))^{-1}, 1\bigr\rbrack, \bigl\lbrack1, (15)(2\exp(13/2))^{-1}\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: Gamma[2, List[List[Rational[7, 2], 0], List[0, Rational[13, 2]]]]
+  wolfram:
+    in: Gamma[2, List[List[Rational[7, 2], 0], List[0, Rational[13, 2]]]]
+interval-arithmetic-the-image-of-1-4-1-5-whose:
+  epsil:
+    in: Gamma(Interval(1.4, 1.5))
+    out: Interval(0.885_603_194_410_888_7, 0.887_263_817_503_075_3)
+  tex:
+    in: \Gamma(\mathrm{Interval}(1.4, 1.5))
+    out: \mathrm{Interval}(0.885\,603\,194\,410\,888\,7, 0.887\,263\,817\,503\,075\,3)
+  fullform:
+    in: Gamma[Interval[List[1.4, 1.5]]]
+  wolfram:
+    in: Gamma[Interval[List[1.4, 1.5]]]
+uncertainty-propagation-gamma-2-5-pm-0-01-1-3293:
+  epsil:
+    in: Gamma(Around(2.5, 0.01))
+    out: Around(1.329_340_388_179_137, 0.009_347_345_216_260_856)
+  tex:
+    in: \Gamma(\mathrm{Around}(2.5, 0.01))
+    out: \mathrm{Around}(1.329\,340\,388\,179\,137, 0.009\,347\,345\,216\,260\,856)
+  fullform:
+    in: Gamma[Around[2.5, 0.01]]
+  wolfram:
+    in: Gamma[Around[2.5, 0.01]]
+gamma-a-0-gamma-a-the-incomplete-gamma-from-zero:
+  epsil:
+    in: Gamma(a, 0)
+    out: Gamma(a)
+  tex:
+    in: \Gamma(a, 0)
+    out: \Gamma(a)
+  fullform:
+    in: Gamma[a, 0]
+gamma-0-z-e-1-z-the-exponential-integral-e-1-3-2:
+  epsil:
+    in: Gamma(0, 1.5)
+    out: 0.100_019_582_406_632_52
+  tex:
+    in: \Gamma(0, 1.5)
+    out: 0.100\,019\,582\,406\,632\,52
+  fullform:
+    in: Gamma[0, 1.5]
+  wolfram:
+    in: Gamma[0, 1.5]
+gamma-1-2-x-sqrt-pi-erfc-sqrt-x-see-erfc:
+  epsil:
+    in: Gamma(1 / 2, x)
+    out: Erfc(Sqrt(x)) * Sqrt(Pi)
+  tex:
+    in: \Gamma(\frac{1}{2}, x)
+    out: \mathrm{Erfc}(\sqrt{x})\sqrt{\pi}
+  traditional:
+    in: \Gamma(\frac{1}{2}, x)
+    out: \operatorname{erfc}(\sqrt{x})\sqrt{\pi}
+  fullform:
+    in: Gamma[Rational[1, 2], x]
+gamma-x-gamma-x-psi-x-so-the-logarithmic:
+  epsil:
+    in: D(Gamma(x), x) / Gamma(x)
+    out: Digamma(x)
+  tex:
+    in: \frac{\frac{\mathrm{d}}{\mathrm{d}x}\Gamma(x)}{\Gamma(x)}
+    out: \mathrm{Digamma}(x)
+  traditional:
+    in: \frac{\frac{\mathrm{d}}{\mathrm{d}x}\Gamma(x)}{\Gamma(x)}
+    out: \psi(x)
+  fullform:
+    in: Divide[D[Gamma[x], x], Gamma[x]]
+gamma-i-2-pi-sinh-pi-0-27203:
+  epsil:
+    in: N(Abs(Gamma(ImaginaryUnit)) ^ 2)
+    out: 0.272_029_054_982_132_823_542
+  tex:
+    in: N(\vert\Gamma(i)\vert^2)
+    out: 0.272\,029\,054\,982\,132\,823\,542
+  fullform:
+    in: N[Power[Abs[Gamma[I]], 2]]
+  wolfram:
+    in: N[Power[Abs[Gamma[I]], 2]]
+  sympy:
+    in: N((Abs(gamma(I))**2), 30)
+  mpmath:
+    in: ((fabs(gamma(mpc(0,1)))**2))
+  sage:
+    in: N((abs(gamma(I))^2))
+to-40-significant-digits-every-one-correctly:
+  epsil:
+    in: N(Gamma(1 / 3), 40)
+    out: 2.678_938_534_707_747_633_655_692_940_974_677_644_129
+  tex:
+    in: N(\Gamma(\frac{1}{3}), 40)
+    out: 2.678\,938\,534\,707\,747\,633\,66
+  fullform:
+    in: N[Gamma[Rational[1, 3]], 40]
+  wolfram:
+    in: N[Gamma[Rational[1, 3]], 40]
+  sympy:
+    in: N(gamma(Rational(1, 3)), 30)
+  sage:
+    in: N(gamma((1/3)))
+  rust:
+    in: nf(gamma(rational(n(1), n(3))))

@@ -1,0 +1,48 @@
+the-quasi-shuffle-overlap-term-included:
+  epsil:
+    in: NonCommutativeMultiply(QSymM([1]), QSymM([1]))
+    out: 2 * QSymM([1, 1]) + QSymM([2])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack))
+    out: 2\mathrm{QSymM}(\bigl\lbrack1, 1\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(M_{(1)}, M_{(1)})
+    out: 2M_{(1,1)}+M_{(2)}
+  fullform:
+    in: NonCommutativeMultiply[QSymM[List[1]], QSymM[List[1]]]
+two-interleavings-and-one-overlap:
+  epsil:
+    in: NonCommutativeMultiply(QSymM([1]), QSymM([2]))
+    out: QSymM([3]) + QSymM([1, 2]) + QSymM([2, 1])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{QSymM}(\bigl\lbrack1\bigr\rbrack), \mathrm{QSymM}(\bigl\lbrack2\bigr\rbrack))
+    out: \mathrm{QSymM}(\bigl\lbrack3\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack1, 2\bigr\rbrack)+\mathrm{QSymM}(\bigl\lbrack2, 1\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(M_{(1)}, M_{(2)})
+    out: M_{(3)}+M_{(1,2)}+M_{(2,1)}
+  fullform:
+    in: NonCommutativeMultiply[QSymM[List[1]], QSymM[List[2]]]
+nsym-just-concatenates:
+  epsil:
+    in: NonCommutativeMultiply(NSymH([2]), NSymH([1, 3]))
+    out: NSymH([2, 1, 3])
+  tex:
+    in: \mathrm{NonCommutativeMultiply}(\mathrm{NSymH}(\bigl\lbrack2\bigr\rbrack), \mathrm{NSymH}(\bigl\lbrack1, 3\bigr\rbrack))
+    out: \mathrm{NSymH}(\bigl\lbrack2, 1, 3\bigr\rbrack)
+  traditional:
+    in: \mathrm{NonCommutativeMultiply}(H_{(2)}, H_{(1,3)})
+    out: H_{(2,1,3)}
+  fullform:
+    in: NonCommutativeMultiply[NSymH[List[2]], NSymH[List[1, 3]]]
+2-4-compositions-of-5:
+  epsil:
+    in: AlgebraDimension(QSymAlgebra(5))
+    out: "16"
+  tex:
+    in: \mathrm{AlgebraDimension}(\mathrm{QSymAlgebra}(5))
+    out: "16"
+  traditional:
+    in: \dim(\mathrm{QSymAlgebra}(5))
+    out: "16"
+  fullform:
+    in: AlgebraDimension[QSymAlgebra[5]]

@@ -1,4 +1,15 @@
 eta-1-ln-2-the-alternating-harmonic-series:
+  epsil:
+    in: DirichletEta(1)
+    out: Ln(2)
+  tex:
+    in: \mathrm{DirichletEta}(1)
+    out: \ln(2)
+  traditional:
+    in: \eta(1)
+    out: \ln(2)
+  fullform:
+    in: DirichletEta[1]
   wolfram:
     in: DirichletEta[1]
     out: Log[2]
@@ -6,6 +17,17 @@ eta-1-ln-2-the-alternating-harmonic-series:
       in: \eta (1)
       out: \log (2)
 eta-2-pi-2-12:
+  epsil:
+    in: DirichletEta(2)
+    out: 1 / 12 * Pi ^ 2
+  tex:
+    in: \mathrm{DirichletEta}(2)
+    out: \frac{\pi^2}{12}
+  traditional:
+    in: \eta(2)
+    out: \frac{\pi^2}{12}
+  fullform:
+    in: DirichletEta[2]
   wolfram:
     in: DirichletEta[2]
     out: Pi^2/12
@@ -13,6 +35,17 @@ eta-2-pi-2-12:
       in: \eta (2)
       out: \frac{\pi ^2}{12}
 eta-3-frac-34-zeta-3-no-closed-form-beyond-apery:
+  epsil:
+    in: DirichletEta(3)
+    out: 3 / 4 * Zeta(3)
+  tex:
+    in: \mathrm{DirichletEta}(3)
+    out: \frac{3\zeta(3)}{4}
+  traditional:
+    in: \eta(3)
+    out: \frac{3\zeta(3)}{4}
+  fullform:
+    in: DirichletEta[3]
   wolfram:
     in: DirichletEta[3]
     out: (3*Zeta[3])/4
@@ -20,6 +53,14 @@ eta-3-frac-34-zeta-3-no-closed-form-beyond-apery:
       in: \eta (3)
       out: \frac{3 \zeta (3)}{4}
 nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1:
+  epsil:
+    in: DirichletEta([0, -1, -2, -3])
+    out: "[1 / 2, 1 / 4, 0, -1 / 8]"
+  tex:
+    in: \mathrm{DirichletEta}(\bigl\lbrack0, -1, -2, -3\bigr\rbrack)
+    out: \bigl\lbrack\frac{1}{2}, \frac{1}{4}, 0, -\frac{1}{8}\bigr\rbrack
+  fullform:
+    in: DirichletEta[List[0, -1, -2, -3]]
   wolfram:
     in: DirichletEta[List[0, -1, -2, -3]]
     out: "{1/2, 1/4, 0, -1/8}"
@@ -27,6 +68,17 @@ nonpositive-integers-eta-n-2-n-1-1-b-n-1-n-1:
       in: \eta (\{0,-1,-2,-3\})
       out: \left\{\frac{1}{2},\frac{1}{4},0,-\frac{1}{8}\right\}
 on-the-critical-line-through-1-2-1-s-zeta-s-so:
+  epsil:
+    in: DirichletEta(0.5)
+    out: 0.604_898_643_421_630_370_245
+  tex:
+    in: \mathrm{DirichletEta}(0.5)
+    out: 0.604\,898\,643\,421\,630\,370\,245
+  traditional:
+    in: \eta(0.5)
+    out: 0.604\,898\,643\,421\,630\,370\,245
+  fullform:
+    in: DirichletEta[0.5]
   wolfram:
     in: DirichletEta[0.5]
     out: "0.604898643421631"
@@ -34,6 +86,17 @@ on-the-critical-line-through-1-2-1-s-zeta-s-so:
       in: \eta (0.5)
       out: "0.604899"
 an-exact-non-integer-argument-stays-symbolic:
+  epsil:
+    in: DirichletEta(1 / 2)
+    out: DirichletEta(1 / 2)
+  tex:
+    in: \mathrm{DirichletEta}(\frac{1}{2})
+    out: \mathrm{DirichletEta}(\frac{1}{2})
+  traditional:
+    in: \eta(\frac{1}{2})
+    out: \eta(\frac{1}{2})
+  fullform:
+    in: DirichletEta[Rational[1, 2]]
   wolfram:
     in: DirichletEta[Rational[1, 2]]
     out: (1 - Sqrt[2])*Zeta[1/2]
@@ -43,7 +106,128 @@ an-exact-non-integer-argument-stays-symbolic:
     verdict: disagree
     kind: unevaluated
     note: An exact non-integer argument stays symbolic here; Wolfram rewrites it as $(1-\sqrt2)\zeta(1/2)$ instead.
+numeric-for-a-floating-point-argument:
+  epsil:
+    in: DirichletEta(1.5)
+    out: 0.765_147_024_625_407_945_367
+  tex:
+    in: \mathrm{DirichletEta}(1.5)
+    out: 0.765\,147\,024\,625\,407\,945\,367
+  traditional:
+    in: \eta(1.5)
+    out: 0.765\,147\,024\,625\,407\,945\,367
+  fullform:
+    in: DirichletEta[1.5]
+  wolfram:
+    in: DirichletEta[1.5]
+eta-4-frac-78-zeta-4-7-pi-4-720:
+  epsil:
+    in: DirichletEta(4)
+    out: 7 / 720 * Pi ^ 4
+  tex:
+    in: \mathrm{DirichletEta}(4)
+    out: \frac{7\pi^4}{720}
+  traditional:
+    in: \eta(4)
+    out: \frac{7\pi^4}{720}
+  fullform:
+    in: DirichletEta[4]
+  wolfram:
+    in: DirichletEta[4]
+complex-arguments:
+  epsil:
+    in: DirichletEta(3.5 + 2.5i)
+    out: 1.000_109_727_804_697_8 + 0.078_128_912_041_483_16i
+  tex:
+    in: \mathrm{DirichletEta}(3.5+2.5i)
+    out: 1.000\,109\,727\,804\,697\,8+0.078\,128\,912\,041\,483\,16i
+  traditional:
+    in: \eta(3.5+2.5i)
+    out: 1.000\,109\,727\,804\,697\,8+0.078\,128\,912\,041\,483\,16i
+  fullform:
+    in: DirichletEta[Complex[3.5, 2.5]]
+  wolfram:
+    in: DirichletEta[Complex[3.5, 2.5]]
 threads-elementwise-over-an-array:
+  epsil:
+    in: DirichletEta([[1 / 2, -1], [0, 1 / 2]])
+    out: "[[DirichletEta(1 / 2), 1 / 4], [1 / 2, DirichletEta(1 / 2)]]"
+  tex:
+    in: \mathrm{DirichletEta}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\mathrm{DirichletEta}(\frac{1}{2}), \frac{1}{4}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, \mathrm{DirichletEta}(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+  traditional:
+    in: \mathrm{DirichletEta}(\bigl\lbrack\bigl\lbrack\frac{1}{2}, -1\bigr\rbrack, \bigl\lbrack0, \frac{1}{2}\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack\eta(\frac{1}{2}), \frac{1}{4}\bigr\rbrack, \bigl\lbrack\frac{1}{2}, \eta(\frac{1}{2})\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: DirichletEta[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
   wolfram:
     in: DirichletEta[List[List[Rational[1, 2], -1], List[0, Rational[1, 2]]]]
     note: Wolfram also threads, but rewrites $\eta(\tfrac12)$ as $(1-\sqrt2)\zeta(\tfrac12)$.
+eta-s-to-1-as-s-to-infty:
+  epsil:
+    in: DirichletEta(PositiveInfinity)
+    out: "1"
+  tex:
+    in: \mathrm{DirichletEta}(\infty)
+    out: "1"
+  traditional:
+    in: \eta(\infty)
+    out: "1"
+  fullform:
+    in: DirichletEta[Infinity]
+  wolfram:
+    in: DirichletEta[Infinity]
+interval-arithmetic-over-an-increasing-stretch:
+  epsil:
+    in: DirichletEta(Interval(1.5, 1.6))
+    out: Interval(0.765_147_024_625_407_8, 0.777_722_726_661_128_8)
+  tex:
+    in: \mathrm{DirichletEta}(\mathrm{Interval}(1.5, 1.6))
+    out: \mathrm{Interval}(0.765\,147\,024\,625\,407\,8, 0.777\,722\,726\,661\,128\,8)
+  traditional:
+    in: \eta(\mathrm{Interval}(1.5, 1.6))
+    out: \mathrm{Interval}(0.765\,147\,024\,625\,407\,8, 0.777\,722\,726\,661\,128\,8)
+  fullform:
+    in: DirichletEta[Interval[List[1.5, 1.6]]]
+  wolfram:
+    in: DirichletEta[Interval[List[1.5, 1.6]]]
+uncertainty-propagation-eta-2-pm-0-01-0-82247-pm:
+  epsil:
+    in: DirichletEta(Around(2, 0.01))
+    out: Around(0.822_467_033_424_113_2, 0.001_013_165_781_635_045)
+  tex:
+    in: \mathrm{DirichletEta}(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.822\,467\,033\,424\,113\,2, 0.001\,013\,165\,781\,635\,045)
+  traditional:
+    in: \eta(\mathrm{Around}(2, 0.01))
+    out: \mathrm{Around}(0.822\,467\,033\,424\,113\,2, 0.001\,013\,165\,781\,635\,045)
+  fullform:
+    in: DirichletEta[Around[2, 0.01]]
+  wolfram:
+    in: DirichletEta[Around[2, 0.01]]
+rewriting-in-terms-of-zeta-eta-s-1-2-1-s-zeta-s:
+  epsil:
+    in: FunctionExpand(DirichletEta(s))
+    out: (-2 ^ (-s + 1) + 1) * Zeta(s)
+  tex:
+    in: \mathrm{FunctionExpand}(\mathrm{DirichletEta}(s))
+    out: (1-2^{1-s})\zeta(s)
+  traditional:
+    in: \mathrm{FunctionExpand}(\eta(s))
+    out: (1-2^{1-s})\zeta(s)
+  fullform:
+    in: FunctionExpand[DirichletEta[s]]
+to-30-significant-digits-not-yet-the-last-digit:
+  epsil:
+    in: N(DirichletEta(1 / 2), 30)
+    out: 0.604_898_643_421_630_370_247_265_914_236
+  tex:
+    in: N(\mathrm{DirichletEta}(\frac{1}{2}), 30)
+    out: 0.604\,898\,643\,421\,630\,370\,247
+  traditional:
+    in: N(\eta(\frac{1}{2}), 30)
+    out: 0.604\,898\,643\,421\,630\,370\,247
+  fullform:
+    in: N[DirichletEta[Rational[1, 2]], 30]
+  wolfram:
+    in: N[DirichletEta[Rational[1, 2]], 30]

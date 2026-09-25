@@ -1,0 +1,53 @@
+the-principal-square-root-of-a-diagonal-matrix:
+  epsil:
+    in: MatrixFunction(Sqrt, [[4, 0], [0, 9]])
+    out: "[[2, 0], [0, 3]]"
+  tex:
+    in: \mathrm{MatrixFunction}(\mathrm{Sqrt}, \bigl\lbrack\bigl\lbrack4, 0\bigr\rbrack, \bigl\lbrack0, 9\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack2, 0\bigr\rbrack, \bigl\lbrack0, 3\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: MatrixFunction[Sqrt, List[List[4, 0], List[0, 9]]]
+  wolfram:
+    in: MatrixFunction[Sqrt, List[List[4, 0], List[0, 9]]]
+on-a-diagonal-matrix-f-acts-on-the-diagonal:
+  epsil:
+    in: MatrixFunction(f, [[a, 0], [0, b]])
+    out: "[[f(a), 0], [0, f(b)]]"
+  tex:
+    in: \mathrm{MatrixFunction}(f, \bigl\lbrack\bigl\lbrack a, 0\bigr\rbrack, \bigl\lbrack0, b\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack f(a), 0\bigr\rbrack, \bigl\lbrack0, f(b)\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: MatrixFunction[f, List[List[a, 0], List[0, b]]]
+with-exp-it-is-matrixexp:
+  epsil:
+    in: MatrixFunction(Exp, [[0, 0], [0, 0]])
+    out: "[[1, 0], [0, 1]]"
+  tex:
+    in: \mathrm{MatrixFunction}(\mathrm{Exp}, \bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: MatrixFunction[Exp, List[List[0, 0], List[0, 0]]]
+  wolfram:
+    in: MatrixFunction[Exp, List[List[0, 0], List[0, 0]]]
+a-polynomial-f-agrees-with-the-matrix-power:
+  epsil:
+    in: MatrixFunction(Function(_1 ^ 2), [[1, 1], [0, 1]])
+    out: "[[1, 2], [0, 1]]"
+  tex:
+    in: \mathrm{MatrixFunction}(()\mapsto\operatorname{\_1}^2, \bigl\lbrack\bigl\lbrack1, 1\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 2\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: MatrixFunction[Function[Power[Slot[1], 2]], List[List[1, 1], List[0, 1]]]
+  wolfram:
+    in: MatrixFunction[Function[Power[Slot[1], 2]], List[List[1, 1], List[0, 1]]]
+matrixfunction-cos-list-list-0-0-list-0-0:
+  epsil:
+    in: MatrixFunction(Cos, [[0, 0], [0, 0]])
+    out: "[[1, 0], [0, 1]]"
+  tex:
+    in: \mathrm{MatrixFunction}(\cos, \bigl\lbrack\bigl\lbrack0, 0\bigr\rbrack, \bigl\lbrack0, 0\bigr\rbrack\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack1, 0\bigr\rbrack, \bigl\lbrack0, 1\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: MatrixFunction[Cos, List[List[0, 0], List[0, 0]]]
+  wolfram:
+    in: MatrixFunction[Cos, List[List[0, 0], List[0, 0]]]

@@ -1,4 +1,39 @@
+sparsearray-vector:
+  epsil:
+    in: SparseArray([Rule(1, x), Rule(3, y)], 4)
+    out: "[x, 0, y, 0]"
+  tex:
+    in: \mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(1, x), \mathrm{Rule}(3, y)\bigr\rbrack, 4)
+    out: \bigl\lbrack x, 0, y, 0\bigr\rbrack
+  fullform:
+    in: SparseArray[List[Rule[1, x], Rule[3, y]], 4]
+sparsearray-infers-dims:
+  epsil:
+    in: SparseArray([Rule([1, 1], 5), Rule([2, 2], 7)])
+    out: "[[5, 0], [0, 7]]"
+  tex:
+    in: \mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(\bigl\lbrack1, 1\bigr\rbrack, 5), \mathrm{Rule}(\bigl\lbrack2, 2\bigr\rbrack, 7)\bigr\rbrack)
+    out: \bigl\lbrack\bigl\lbrack5, 0\bigr\rbrack, \bigl\lbrack0, 7\bigr\rbrack\bigr\rbrack
+  fullform:
+    in: SparseArray[List[Rule[List[1, 1], 5], Rule[List[2, 2], 7]]]
+sparsearray-custom-default:
+  epsil:
+    in: SparseArray([Rule(2, 9)], 3, -1)
+    out: "[-1, 9, -1]"
+  tex:
+    in: \mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(2, 9)\bigr\rbrack, 3, -1)
+    out: \bigl\lbrack-1, 9, -1\bigr\rbrack
+  fullform:
+    in: SparseArray[List[Rule[2, 9]], 3, -1]
 sparsearray-normal-is-identity:
+  epsil:
+    in: Normal(SparseArray([Rule(1, a)], 2))
+    out: "[a, 0]"
+  tex:
+    in: \operatorname{Normal}(\mathrm{SparseArray}(\bigl\lbrack\mathrm{Rule}(1, a)\bigr\rbrack, 2))
+    out: \bigl\lbrack a, 0\bigr\rbrack
+  fullform:
+    in: Normal[SparseArray[List[Rule[1, a]], 2]]
   wolfram:
     in:
     note: Wolfram's SparseArray keeps a distinct sparse representation until Normal densifies it.

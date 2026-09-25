@@ -1,0 +1,27 @@
+one-over-s-squared:
+  epsil:
+    in: InverseLaplaceTransform(s ^ -2, s, t)
+    out: t
+  tex:
+    in: \mathrm{InverseLaplaceTransform}(\frac{1}{s^2}, s, t)
+    out: t
+  fullform:
+    in: InverseLaplaceTransform[Power[s, -2], s, t]
+one-over-s-minus-a:
+  epsil:
+    in: InverseLaplaceTransform((s - a) ^ -1, s, t)
+    out: ExponentialE ^ (a * t)
+  tex:
+    in: \mathrm{InverseLaplaceTransform}(\frac{1}{s-a}, s, t)
+    out: e^{at}
+  fullform:
+    in: InverseLaplaceTransform[Power[Plus[s, Minus[a]], -1], s, t]
+s-over-s-squared-plus-a-squared:
+  epsil:
+    in: InverseLaplaceTransform(s / (s ^ 2 + a ^ 2), s, t)
+    out: Cos(a * t)
+  tex:
+    in: \mathrm{InverseLaplaceTransform}((s)(s^2+a^2)^{-1}, s, t)
+    out: \cos(at)
+  fullform:
+    in: InverseLaplaceTransform[Divide[s, Plus[Power[s, 2], Power[a, 2]]], s, t]
