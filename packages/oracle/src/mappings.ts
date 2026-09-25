@@ -269,6 +269,7 @@ export const MAPPINGS: readonly Mapping[] = [
       mathlib4: "(Nat.choose $1 $2)",
       rust: "binomial($1, $2)",
     },
+    note: "Wolfram's (and compute-engine's) Binomial extends to negative n and k via the reflection identities in its docs (e.g. Binomial[5,-2] = 0, Binomial[-7,2] = 28, Binomial[-5,-7] = 15); the crates behind sage/oscar/julia/rust bottom out at unsigned or non-negative-only integer types and diverge there — a convention gap, not a bug on either side. Verified against wolframscript.",
   },
   {
     head: "Factorial",
