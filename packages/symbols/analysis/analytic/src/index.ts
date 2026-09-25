@@ -12,7 +12,7 @@ export { declareThreading113 } from "./threading-113.ts";
 export { declareClosedForms113 } from "./closed-forms-113.ts";
 export { barnesG, barnesGReal, logBarnesG, logBarnesGReal } from "./barnes-g.ts";
 export { besselJZero } from "./bessel-zeros.ts";
-export { declareCorrectlyRoundedN, refinementOf } from "./correctly-rounded.ts";
+export { declareCorrectlyRoundedN, enclosureOf, refinementOf } from "./correctly-rounded.ts";
 export {
   bernoulliNumber,
   bernoulliPolyAt,

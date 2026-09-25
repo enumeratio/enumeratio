@@ -15,6 +15,7 @@ details:
   - 'Convergence: the series converges for $|z| < 1$ (any $s$, $a$), and on $|z| = 1$ only for $\operatorname{Re}(s) > 1$; elsewhere it is defined by analytic continuation in $z$.'
   - Poles at $a = 0, -1, -2, \ldots$, from the singular $(n+a) = 0$ term, as for [[HurwitzZeta]].
   - Numeric evaluation sums the series directly for $|z| < 1$ (geometric convergence), routes $z = 1$ through the Euler–Maclaurin Hurwitz kernel, and sums real $z < 0$ (the $z = -1$ rim included) by a van Wijngaarden Euler transform, so the alternating $\eta(s)$ and Catalan cases reach machine precision. Past $|z| = 1$ it is continued by the Hermite-type integral representation, $\Phi = \tfrac{1}{2a^s} + z^{-a}(-\ln z)^{s-1}\Gamma(1-s, -a\ln z) - 2\int_0^\infty \frac{\sin(t\ln z - s\arctan(t/a))}{(a^2+t^2)^{s/2}(e^{2\pi t}-1)}\,dt$, with other $a$ shifted by $\Phi(z, s, a) = a^{-s} + z\Phi(z, s, a+1)$; on the cut, real $z > 1$, it takes the side below, as mpmath and Wolfram do. Where the terms cancel below double precision, or the incomplete gamma can't be trusted (near the negative real axis past $|x| \approx 20$), it stays unevaluated rather than guess.
+  - 'Certified digits: for exact real $z$, $s$ and $a$ (integers, rationals or decimals) with $0 < |z| < 1$ and $a > 0$, $\mathrm{N}(\Phi(z, s, a), d)$ is proven. The series is summed in ball arithmetic, and its tail after a term $t$ is bounded by $|t| R/(1-R)$, where $R = |z|\,e^{\max(0, -s)/(n+a)}$ bounds every later ratio of terms; the d digits are those both ends of the enclosure round to. See [[N]].'
 examples:
   - id: phi-1-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary
     expr: [LerchPhi, 1, 2, 1]
@@ -1582,6 +1583,11 @@ examples:
     expected: [Complex, -92.1275927724354, 93.92654608335769]
     divergence:
       wolfram: For a + k < 0 Wolfram's LerchPhi sums ((a+k)²)^(−s/2), the generalized-zeta convention; ours, like mpmath and SymPy, takes (a+k)^(−s) on the principal branch.
+  - id: certified-digits-phi-1-2-1-2-1-3
+    expr: [N, [LerchPhi, [Rational, 1, 2], [Rational, 1, 2], [Rational, 1, 3]], 40]
+    expected: { num: "2.452417145481526111742144156526818292226" }
+    category: Applications
+    caption: "$\\Phi(1/2, 1/2, 1/3)$ to 40 digits, proven: the series' tail is bounded, and both ends of the enclosure round to these digits"
 implementations:
   - origin: reference
     form: notatio

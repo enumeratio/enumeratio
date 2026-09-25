@@ -1,4 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
+import { lower, upper } from "./ball.ts";
+import { enclosure } from "./certified.ts";
 import { DOUBLE_DIGITS } from "./precise.ts";
 
 // `N(x, d)`: `x` to `d` significant digits, every one of them right -- the last included.
@@ -14,8 +16,16 @@ import { DOUBLE_DIGITS } from "./precise.ts";
 // `d`, and answer when they agree -- like measuring twice with finer rulers and writing down
 // only the digits both readings share. When they disagree the true value is close to a
 // boundary, so the guard `g` doubles and the loop measures again. Agreement is evidence, not
-// proof: in principle both readings could be wrong the same way. A head that knows its own
-// error bound could certify its digits instead (enumeratio/enumeratio#113, step 3 (b)).
+// proof: in principle both readings could be wrong the same way.
+//
+// A head that bounds its own error proves its digits instead (enumeratio/enumeratio#113,
+// step 3 (b); certified.ts lists them). On exact arguments its kernel returns an enclosure,
+// a ball that provably holds the value, at `d + g` digits: when both ends of it round to the
+// same `d` digits, every value between them does too, the true one among them. When they
+// don't, the guard doubles, as above; no agreement is consulted on this path. Only a value
+// within the finest ball's width of a rounding boundary -- or on one -- falls through to the
+// agreement loop, which answers without a certificate. `enclosureOf(result)` hands back the
+// enclosure a certified answer was rounded from.
 //
 // A head that ignores the working precision and answers with a double (15-17 digits, however
 // many were asked for) cannot be measured more finely, so the loop can't vouch for more digits
@@ -39,6 +49,16 @@ const MAX_DIGITS = 1000;
 
 /** The finest reading each answer was rounded from. Weak, so it lives as long as the answer. */
 const refinements = new WeakMap<BoxedExpression, BoxedExpression>();
+
+/** The enclosure each certified answer was rounded from. */
+const enclosures = new WeakMap<BoxedExpression, BoxedExpression>();
+
+/** The enclosure `result` -- an answer of `N(x, d)` -- was proven from, an `Interval` whose
+ * ends both round to `result`; `undefined` for an answer resting on agreement alone, or
+ * anything else. Its presence is the certificate. */
+export function enclosureOf(result: BoxedExpression): BoxedExpression | undefined {
+  return enclosures.get(result);
+}
 
 /** The reading `result` -- an answer of `N(x, d)` -- was rounded from, carrying the loop's extra
  * guard digits; `undefined` for anything else. Those digits agreed with a coarser reading only
@@ -91,6 +111,30 @@ function hasDoubleOnly(ce: ComputeEngine, json: unknown, precision: number): boo
   return digits >= DOUBLE_DIGITS && digits < precision - FIRST_GUARD;
 }
 
+/** `x` to `d` digits proven by its enclosure, or `undefined` when `x` has none or it can't
+ * decide them within the guard's doublings. */
+function certifiedRounding(
+  ce: ComputeEngine,
+  x: BoxedExpression,
+  d: number,
+): BoxedExpression | undefined {
+  for (let guard = FIRST_GUARD, doubling = 0; doubling <= MAX_DOUBLINGS; guard *= 2, doubling++) {
+    const ball = enclosure(x, d + guard);
+    if (ball === undefined) return undefined;
+    const answer = lower(ball).toPrecision(d);
+    if (!answer.eq(upper(ball).toPrecision(d))) continue;
+    const result = ce.box({ num: answer.toString() });
+    refinements.set(result, ce.number(ball.mid));
+    const ends = [
+      lower(ball).toPrecisionToward(d + guard, "floor"),
+      upper(ball).toPrecisionToward(d + guard, "ceiling"),
+    ];
+    enclosures.set(result, ce.box(["Interval", ...ends.map((end) => ({ num: end.toString() }))]));
+    return result;
+  }
+  return undefined;
+}
+
 /** `x` to `d` digits by Ziv's loop, or `undefined` when the loop can't vouch for them because
  * more digits are asked for than a double holds and a head in it answers with one. Leaves
  * `ce.precision` changed; the caller restores it. */
@@ -103,6 +147,8 @@ function correctlyRounded(
     ce.precision = precision;
     return x.N();
   };
+  const certified = certifiedRounding(ce, x, d);
+  if (certified !== undefined) return certified;
   const key = (v: BoxedExpression): string => JSON.stringify(roundedTree(ce, v.json, d));
   // The finer reading first: a kernel that caches what it computes at the most digits it has
   // been asked for (bigzeta.ts's coefficients, barnes-g-big.ts's ζ values) then serves the

@@ -15,6 +15,7 @@ details:
   - The dilogarithm $\operatorname{Li}_2$ has the special values $\operatorname{Li}_2(1) = \pi^2/6$, $\operatorname{Li}_2(-1) = -\pi^2/12$, and $\operatorname{Li}_2(\tfrac12) = \pi^2/12 - (\ln 2)^2/2$.
   - 'Convergence: the series converges for $|z| < 1$, and on $|z| = 1$ for $\operatorname{Re}(s) > 1$. Outside the disk the function continues analytically, with a branch cut along $[1, \infty)$ — so $\operatorname{Li}_2(2) = \pi^2/4 - i\pi\ln 2$ is complex.'
   - Integer orders (including the continuation past $|z| = 1$) are compute-engine's own. `@enumeratio/analytic` adds non-integer and complex $s$ by summing the Lerch series, which reaches $|z| \leq 1$ only; outside that disk a non-integer order is left unevaluated rather than guessed.
+  - 'Certified digits: for exact real $s$ and $z$ (integers, rationals or decimals) with $0 < |z| < 1$, $\mathrm{N}(\operatorname{Li}_s(z), d)$ is proven, not just agreed on. The Lerch series is summed in ball arithmetic with its tail bounded, and the d digits are those both ends of the enclosure round to. See [[N]].'
   - As with the other numeric heads, an exact argument stays symbolic under plain evaluation — pair with N(), or pass an inexact argument.
 examples:
   - id: li-2-1-zeta-2-pi-2-6
@@ -165,6 +166,16 @@ examples:
     expected: { num: "0.582240526465012505902656320160" }
     category: Scope
     caption: To 30 significant digits, past a double's reach
+  - id: certified-digits-li-2-1-3
+    expr: [N, [PolyLog, 2, [Rational, 1, 3]], 40]
+    expected: { num: "0.3662132299770634876167462976642627638021" }
+    category: Applications
+    caption: '$\operatorname{Li}_2(1/3)$ to 40 digits, proven: at an exact argument the series bounds its own error, and both ends of the enclosure round to these digits'
+  - id: certified-digits-li-5-2-minus-1-2
+    expr: [N, [PolyLog, [Rational, 5, 2], [Rational, -1, 2]], 40]
+    expected: { num: "-0.4622977821900634381891643232745464898869" }
+    category: Applications
+    caption: $\operatorname{Li}_{5/2}(-1/2)$ to 40 digits, proven the same way at a non-integer order
   - hidden: true
     id: n-polylog-2-0p5
     expr: [N, [PolyLog, 2, 0.5]]

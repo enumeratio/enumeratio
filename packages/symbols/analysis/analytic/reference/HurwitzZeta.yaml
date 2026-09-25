@@ -13,6 +13,7 @@ details:
   - 'Poles at $a = 0, -1, -2, \dots$: the $(n+a)=0$ term is singular. (The two-argument [[Zeta]] drops that term instead, staying finite there.)'
   - Numeric evaluation (under N()) is Euler–Maclaurin summation and supports complex $s$ and $a$; it is aligned with Wolfram's $\mathrm{HurwitzZeta}[s, a]$. Left of $\operatorname{Re}(s) = 0$, where those direct terms cancel, $a$ near the real axis goes through $\zeta(s, 1+h) = \sum_k \binom{-s}{k} h^k \zeta(s+k)$ instead, each $\zeta(s+k)$ from the functional equation.
   - That Euler–Maclaurin sum runs in arbitrary precision (as many digits as `ce.precision` asks for, checked against mpmath at 30 and 50 digits) whenever $s$ and $a$ are both real; a genuinely complex $s$ or $a$ is correct to the same number of digits internally, but the returned value is still one of compute-engine's own complex numbers, which is a pair of doubles -- so asking N() for 30 or 50 digits of a complex result gives back the same ~15-17 correct digits either way, a ceiling of compute-engine's complex-number representation rather than of this computation.
+  - 'Certified digits: for exact real $s \ne 1$ and $a > 0$ (integers, rationals or decimals), $\mathrm{N}(\zeta(s, a), d)$ is proven. The Euler–Maclaurin sum runs in ball arithmetic, and its remainder after $M$ Bernoulli pairs is bounded by $4|(s)_{2M}|\,z^{1-s-2M} / ((2\pi)^{2M}(s + 2M - 1))$, $z = N + a$ (Johansson 2015); the d digits are those both ends of the enclosure round to. See [[N]].'
 examples:
   - id: zeta-2-1-zeta-2-pi-2-6-reduces-to-the-ordinary
     expr: [HurwitzZeta, 2, 1]
@@ -149,6 +150,11 @@ examples:
     expected: [Add, -1, [Multiply, [Rational, 1, 90], [Power, Pi, 4]]]
     category: Properties
     caption: $\zeta(4, 2) = \pi^4/90 - 1$
+  - id: certified-digits-zeta-1-2-1-3
+    expr: [N, [HurwitzZeta, [Rational, 1, 2], [Rational, 1, 3]], 40]
+    expected: { num: "-0.1180833279342217190944541707941027331459" }
+    category: Applications
+    caption: '$\zeta(1/2, 1/3)$ to 40 digits, proven: the Euler–Maclaurin remainder is bounded, and both ends of the enclosure round to these digits'
   - hidden: true
     id: n-hurwitzzeta-2-1
     expr: [N, [HurwitzZeta, 2, 1]]

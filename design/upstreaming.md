@@ -581,3 +581,29 @@ round-trips. Seen once the editable components started handing the engine's own 
 the field (`packages/notatio/src/source.ts`); `Gamma` → `\Gamma` is right, this one is
 not. Patched locally for every engine we build (`packages/notatio/src/latex.ts`), alongside
 the same fix for `LCM`, `Rank` and `Erf`, pending upstreaming.
+
+## 9. Certified digits: what we would ask for
+
+`N(x, d)` proves its digits for the heads whose kernels bound their own error
+(`packages/symbols/analysis/analytic/src/certified.ts`, enumeratio/enumeratio#113 step 3 (b)).
+The proof is ball arithmetic (`src/ball.ts`) on compute-engine's BigDecimal, and it leans on
+BigDecimal only where BigDecimal promises something: `+`, `−` and `×` are exact, and
+`divToward`, `sqrtToward` and `toPrecisionToward` round in a stated direction. Where it promises
+nothing, we wrote our own. This is the running list of those, each a candidate to send
+upstream -- and, once there, to delete here.
+
+- **`exp` with a bound.** BigDecimal's `exp` documents no error. Ours (`expExact`) sums the
+  Taylor series in binary fixed point, as Arb and mpmath do, and counts its error in units of
+  the last bit: under 3 units a term, one more for each squaring. It runs at about the speed of
+  the native `exp`. The ask: an `expToward(direction)`, or a stated bound ("within 1 ulp") on
+  `exp` itself.
+- **`ln` with a bound.** Ours (`lnExact`) takes BigDecimal's `ln` as a guess y and proves it:
+  ln m = y + ln(m·e^{−y}), and the second term is tiny and bounded. That costs one of our
+  `exp`s on top of the native `ln`, which is why a non-integer power costs about three times
+  what the native `ln` and `exp` did. A `lnToward`, or a stated bound, would remove it.
+- **`pow` with a bound**, which follows from the two above.
+- **Constants with a bound.** `BigDecimal.PI` is a literal of published digits, rounded, so
+  good to half a unit; we take it at that, up to 1090 digits, and a test checks the literal
+  against mpmath. `EULER_GAMMA` is computed, with no stated error, so Barnes G's kernel takes
+  γ = γ₀(1) from our certified Stieltjes kernel instead. The ask: a stated bound on each
+  constant BigDecimal offers.
