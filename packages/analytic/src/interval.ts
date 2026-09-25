@@ -1,17 +1,18 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/boxed";
+import type { Resolver } from "./tagged-arithmetic.ts";
 
 // Interval arithmetic over compute-engine's native `Interval(a, b)` — a real set with no
 // arithmetic of its own (`Add(Interval(1,2), Interval(3,4))` is a type error out of the
-// box). This wraps the arithmetic operators Wolfram's examples actually push an interval
+// box). This covers the arithmetic operators Wolfram's examples actually push an interval
 // through: Add, Negate (which also covers Subtract — see below), Multiply, Divide, Power
 // (integer exponents), Abs, and Sin over a sub-range of one monotonic branch. Every other
 // function stays untouched — Wolfram's own interval support is comparably narrow outside
 // the elementary functions.
 //
-// `Subtract(a, b)` is not wrapped directly: compute-engine canonicalizes it to
+// `Subtract(a, b)` is not handled directly: compute-engine canonicalizes it to
 // `Add(a, Negate(b))` at box time, before any operator-level hook sees a `Subtract` head, so
-// a `Negate` wrapper plus the generic `Add` one already covers it (and reproduces the
+// a `Negate` resolver plus the generic `Add` one already covers it (and reproduces the
 // "dependency problem" example: `Interval(1,2) - Interval(1,2)` is `Interval(-1,1)`, not
 // `Interval(0,0)`, since the two copies are treated as independent quantities).
 //
@@ -19,6 +20,10 @@ import { operandsOf, wrapOperator } from "@enumeratio/boxed";
 // Interval(3, 4)` stays `Interval(4, 6)` rather than losing exactness. `numAt` (a numeric
 // approximation) only ever decides WHICH endpoint is smaller/larger — the returned
 // expression is always the exact one, never the approximation.
+//
+// Registered via tagged-arithmetic.ts's `registerTaggedHeads`, not directly: see that file
+// for why (a per-head, per-tagged-type `wrapOperator` chain cost ~4x on every Add/Multiply
+// in the engine, tagged or not).
 
 const isInterval = (e: BoxedExpression): boolean =>
   e.operator === "Interval" && operandsOf(e).length === 2;
@@ -34,7 +39,12 @@ const minOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
 const maxOf = (xs: readonly BoxedExpression[]): BoxedExpression =>
   xs.reduce((a, b) => (numAt(b) > numAt(a) ? b : a));
 
-function declareIntervalOps(ce: ComputeEngine): void {
+/** This module's resolvers, one per head it extends — see the file header. Built once per
+ * engine and merged with CenteredInterval's and Around's before a single
+ * `registerTaggedHeads` call per head (see `declare-tagged-arithmetic.ts`) — never
+ * registered here directly, so Add/Multiply/etc. are wrapped exactly once no matter how
+ * many of the three tagged types extend them. */
+export function intervalResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const add = (a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
   const neg = (a: BoxedExpression) => ce.function("Negate", [a]).evaluate();
   const mul = (a: BoxedExpression, b: BoxedExpression) =>
@@ -104,62 +114,18 @@ function declareIntervalOps(ce: ComputeEngine): void {
     return interval(ce.function("Sin", [l]).evaluate(), ce.function("Sin", [h]).evaluate());
   };
 
-  wrapOperator(
-    ce,
-    ["Negate", 1],
-    (ops) => isInterval(ops[0]),
-    () =>
-      ([a]) =>
-        intervalNegate(a),
-  );
-  wrapOperator(
-    ce,
-    ["Add", 2],
-    (ops) => ops.some(isInterval),
-    () => (ops) => ops.reduce((acc, e) => intervalAdd(acc, e)),
-  );
-  wrapOperator(
-    ce,
-    ["Multiply", 2],
-    (ops) => ops.some(isInterval),
-    () => (ops) => ops.reduce((acc, e) => intervalMul(acc, e)),
-  );
-  wrapOperator(
-    ce,
-    ["Divide", 2],
-    (ops) => ops.some(isInterval),
-    () =>
-      ([a, b]) =>
-        intervalDiv(a, b),
-  );
-  wrapOperator(
-    ce,
-    ["Power", 2],
-    (ops) => isInterval(ops[0]),
-    () =>
-      ([a, n]) =>
-        intervalPow(a, n),
-  );
-  wrapOperator(
-    ce,
-    ["Abs", 1],
-    (ops) => isInterval(ops[0]),
-    () =>
-      ([a]) =>
-        intervalAbs(a),
-  );
-  wrapOperator(
-    ce,
-    ["Sin", 1],
-    (ops) => isInterval(ops[0]),
-    () =>
-      ([a]) =>
-        intervalSin(a),
-  );
-}
-
-/** Extend compute-engine's native `Interval(a, b)` with arithmetic — see the file header.
- * `Interval` itself needs no declaration; it already exists as a real-set head. */
-export function declareInterval(ce: ComputeEngine): void {
-  declareIntervalOps(ce);
+  return {
+    Negate: ([a]) => (a !== undefined && isInterval(a) ? intervalNegate(a) : undefined),
+    Add: (ops) => (ops.some(isInterval) ? ops.reduce((acc, e) => intervalAdd(acc, e)) : undefined),
+    Multiply: (ops) =>
+      ops.some(isInterval) ? ops.reduce((acc, e) => intervalMul(acc, e)) : undefined,
+    Divide: ([a, b]) =>
+      a !== undefined && b !== undefined && (isInterval(a) || isInterval(b))
+        ? intervalDiv(a, b)
+        : undefined,
+    Power: ([a, n]) =>
+      a !== undefined && n !== undefined && isInterval(a) ? intervalPow(a, n) : undefined,
+    Abs: ([a]) => (a !== undefined && isInterval(a) ? intervalAbs(a) : undefined),
+    Sin: ([a]) => (a !== undefined && isInterval(a) ? intervalSin(a) : undefined),
+  };
 }

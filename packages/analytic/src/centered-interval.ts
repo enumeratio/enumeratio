@@ -1,5 +1,6 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/boxed";
+import type { Resolver } from "./tagged-arithmetic.ts";
 
 // CenteredInterval(c, r) — Wolfram's center-radius form of an interval, c ± r. Unlike
 // `Interval`, this is a head compute-engine has no notion of at all, so it is declared here
@@ -12,6 +13,10 @@ import { operandsOf, wrapOperator } from "@enumeratio/boxed";
 // rounding needs a kernel to pin (see backlog.json's note, and enumeratio/enumeratio#113
 // §2), so it stays out of scope here — every example this covers uses exact endpoints, where
 // there is nothing to round.
+//
+// The arithmetic resolvers are merged with Interval's and Around's and registered once per
+// head by `declare-tagged-arithmetic.ts` — see tagged-arithmetic.ts for why this doesn't
+// call `wrapOperator` itself.
 
 const isCenteredInterval = (e: BoxedExpression): boolean =>
   e.operator === "CenteredInterval" && operandsOf(e).length === 2;
@@ -19,7 +24,8 @@ const isCenteredInterval = (e: BoxedExpression): boolean =>
 const center = (e: BoxedExpression): BoxedExpression => operandsOf(e)[0];
 const radius = (e: BoxedExpression): BoxedExpression => operandsOf(e)[1];
 
-function declareCenteredIntervalOps(ce: ComputeEngine): void {
+/** This module's resolvers — see the file header. */
+export function centeredIntervalResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
   const add = (a: BoxedExpression, b: BoxedExpression) => ce.function("Add", [a, b]).evaluate();
   const neg = (a: BoxedExpression) => ce.function("Negate", [a]).evaluate();
   const mul = (a: BoxedExpression, b: BoxedExpression) =>
@@ -54,31 +60,18 @@ function declareCenteredIntervalOps(ce: ComputeEngine): void {
     return centeredInterval(mul(k, center(A)), mul(abs(k), radius(A)));
   };
 
-  wrapOperator(
-    ce,
-    ["Negate", 1],
-    (ops) => isCenteredInterval(ops[0]),
-    () =>
-      ([a]) =>
-        centeredNegate(a),
-  );
-  wrapOperator(
-    ce,
-    ["Add", 2],
-    (ops) => ops.some(isCenteredInterval),
-    () => (ops) => ops.reduce((acc, e) => centeredAdd(acc, e)),
-  );
-  wrapOperator(
-    ce,
-    ["Multiply", 2],
-    (ops) => ops.some(isCenteredInterval),
-    () => (ops) => centeredScale(ops),
-  );
+  return {
+    Negate: ([a]) => (a !== undefined && isCenteredInterval(a) ? centeredNegate(a) : undefined),
+    Add: (ops) =>
+      ops.some(isCenteredInterval) ? ops.reduce((acc, e) => centeredAdd(acc, e)) : undefined,
+    Multiply: (ops) => (ops.some(isCenteredInterval) ? centeredScale(ops) : undefined),
+  };
 }
 
 /**
- * Declare `CenteredInterval(c, r)`. One argument (an `Interval`) converts to center-radius
- * form; two arguments are the tag itself, extended with the arithmetic above.
+ * Declare `CenteredInterval(c, r)` itself. One argument (an `Interval`) converts to
+ * center-radius form; two arguments are the tag, extended with `centeredIntervalResolvers`'s
+ * arithmetic (registered separately — see the file header).
  */
 export function declareCenteredInterval(ce: ComputeEngine): void {
   ce.declare("CenteredInterval", {
@@ -94,5 +87,4 @@ export function declareCenteredInterval(ce: ComputeEngine): void {
       return undefined;
     },
   });
-  declareCenteredIntervalOps(ce);
 }

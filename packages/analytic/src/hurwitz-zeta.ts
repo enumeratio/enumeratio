@@ -34,9 +34,7 @@ import { declareHypergeometricU, declareHypergeometricUStar } from "./hypergeome
 import { declareHypergeometric } from "./hypergeometric.ts";
 import { declareMultiZetaValue } from "./multizeta.ts";
 import { declareSloaneA } from "./sloane-a.ts";
-import { declareInterval } from "./interval.ts";
-import { declareCenteredInterval } from "./centered-interval.ts";
-import { declareAround } from "./around.ts";
+import { declareTaggedArithmetic } from "./declare-tagged-arithmetic.ts";
 import { declareComplexExpand } from "./complex-expand.ts";
 import { declareExpToTrig } from "./exp-to-trig.ts";
 import { declarePowerExpand } from "./power-expand.ts";
@@ -653,9 +651,7 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareHypergeometricU(ce);
   declareHypergeometric(ce);
   declareMatrixExp(ce);
-  declareInterval(ce);
-  declareCenteredInterval(ce);
-  declareAround(ce);
+  declareTaggedArithmetic(ce);
   declareComplexExpand(ce);
   declareExpToTrig(ce);
   declarePowerExpand(ce);

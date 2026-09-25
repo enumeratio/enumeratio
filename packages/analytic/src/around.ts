@@ -1,19 +1,23 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { operandsOf, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf } from "@enumeratio/boxed";
+import type { Resolver } from "./tagged-arithmetic.ts";
 
 // Around(x, dx) — Wolfram's number-with-uncertainty, propagated to first order: `f(Around(x,
 // dx))` is `Around(f(x), |f'(x)| dx)`, and several independent uncertainties combine in
 // quadrature, `sqrt(Σ dxᵢ²)`. This is the same "first-order error propagation" every physics
 // lab does by hand; Wolfram's `Around` just automates it.
 //
-// Wired onto the heads the backlog examples actually push an `Around` through: `Add`
+// Extends the heads the backlog examples actually push an `Around` through: `Add`
 // (n-ary quadrature sum — this also covers `Subtract`, which canonicalizes to `Add` +
 // `Negate`; see interval.ts), `Multiply` (an exact scalar factor scales linearly; several
 // `Around` factors combine their RELATIVE uncertainties in quadrature, which is the same
 // quadrature rule after factoring out the center), `Power` with a concrete exponent, `Power`
 // with base `E` (`Exp`, which canonicalizes to `E^x` — the same reason `Negate` stands in for
 // `Subtract`), and `Sqrt`/`Erf` via compute-engine's own symbolic derivative (`D`), so no
-// derivative table has to be kept by hand for those.
+// derivative table has to be kept by hand for those. The Add/Multiply/Power resolvers are
+// merged with Interval's and CenteredInterval's and registered once per head by
+// `declare-tagged-arithmetic.ts` (see tagged-arithmetic.ts for why); `Sqrt`/`Erf` are
+// Around's alone, registered the same way for a consistent, low-overhead hook.
 //
 // `Multinomial(Around(x, dx), k)` — one of the backlog's own examples — is NOT covered:
 // `Multinomial` is declared over integers only, so there is no nearby point to take a
@@ -93,40 +97,21 @@ function aroundUnary(ce: ComputeEngine, head: string, a: BoxedExpression): Boxed
 
 const UNARY_HEADS = ["Sqrt", "Erf"] as const;
 
-/**
- * Declare `Around(x, dx)` and its first-order propagation through `Add`, `Multiply`,
- * `Power`, `Exp` and a few unary special functions — see the file header for scope and the
- * one example (`Multinomial`) left aspirational.
- */
-export function declareAround(ce: ComputeEngine): void {
-  wrapOperator(
-    ce,
-    ["Add", 2],
-    (ops) => ops.some(isAround),
-    () => (ops) => aroundAdd(ce, ops),
-  );
-  wrapOperator(
-    ce,
-    ["Multiply", 2],
-    (ops) => ops.some(isAround),
-    () => (ops) => aroundMultiply(ce, ops),
-  );
-  wrapOperator(
-    ce,
-    ["Power", 2],
-    (ops) => isAround(ops[0]) || (ops[0].isSame(ce.E) && isAround(ops[1])),
-    () =>
-      ([a, n]) =>
-        isAround(a) ? aroundPower(ce, a, n) : aroundExpBase(ce, n),
-  );
+/** This module's resolvers, one per head it extends — see the file header. */
+export function aroundResolvers(ce: ComputeEngine): Readonly<Record<string, Resolver>> {
+  const resolvers: Record<string, Resolver> = {
+    Add: (ops) => (ops.some(isAround) ? aroundAdd(ce, ops) : undefined),
+    Multiply: (ops) => (ops.some(isAround) ? aroundMultiply(ce, ops) : undefined),
+    Power: ([a, n]) => {
+      if (a === undefined || n === undefined) return undefined;
+      if (isAround(a)) return aroundPower(ce, a, n);
+      if (a.isSame(ce.E) && isAround(n)) return aroundExpBase(ce, n);
+      return undefined;
+    },
+  };
   for (const head of UNARY_HEADS) {
-    wrapOperator(
-      ce,
-      [head, 1],
-      (ops) => isAround(ops[0]),
-      () =>
-        ([a]) =>
-          aroundUnary(ce, head, a),
-    );
+    resolvers[head] = ([a]) =>
+      a !== undefined && isAround(a) ? aroundUnary(ce, head, a) : undefined;
   }
+  return resolvers;
 }
