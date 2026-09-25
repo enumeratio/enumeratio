@@ -8,6 +8,7 @@ import {
 } from "@enumeratio/boxed";
 import { valuation } from "@enumeratio/residues";
 import { gaussianAt, gaussianExpression, isComplexGaussian } from "./boxed-gaussian.ts";
+import { declareBacklog } from "./declare-backlog.ts";
 import { declareGaussian } from "./declare-gaussian.ts";
 import { declareWidened } from "./declare-widened.ts";
 import { gaussianPowerModList } from "./gaussian-roots.ts";
@@ -22,6 +23,7 @@ import { rationalReconstruction } from "./reconstruct.ts";
 export function declareNumberTheory(ce: ComputeEngine): void {
   declareGaussian(ce);
   declareWidened(ce);
+  declareBacklog(ce);
 
   // compute-engine's integer functions reject a list argument with a type error (or leave
   // the call unevaluated); Wolfram's thread over it: Totient([2, 4, 6]) is [1, 2, 2].
@@ -45,6 +47,8 @@ export function declareNumberTheory(ce: ComputeEngine): void {
     "BellNumber",
     "Fibonacci",
     "LucasL",
+    "CarmichaelLambda",
+    "IsPerfect",
   ]);
 
   const list = (xs: readonly bigint[]): BoxedExpression =>
