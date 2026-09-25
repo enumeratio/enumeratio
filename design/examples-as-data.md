@@ -3,10 +3,10 @@
 Status: **proposed** (2026-09-25), for sign-off before any of §8 runs.
 
 The reference examples become where enumeratio's math is tested. Unit tests stay for
-plumbing — parsers, printers, the CLI, the elements. Every example is plain data that lives
-in the package declaring its head, carries a stable id, and pins how each other system
-writes and answers it. The goldens, divergence notes and oracle dumps we keep today get
-folded into it.
+plumbing — parsers, printers, the CLI, the elements. Every example is plain data in the
+package declaring its head, with a stable id. Next to it, a second record pins how every
+implementation writes and answers it: our own forms, and each other system's. The goldens,
+divergence notes and oracle dumps we keep today fold into those two records.
 
 ## 1. Where things stand
 
@@ -20,85 +20,106 @@ About 3,100 examples over ~400 heads, split across three homes:
   hand classification (`kind`, `note`, `issue`), keyed by `JSON.stringify(expr)`. Edit an
   `expr` and its row is orphaned; `oracle-golden.test.ts` mostly exists to catch that.
 - **Goldens keyed by position** — `texform-alignment.golden.json` (`stem/Head#n`) and
-  `wolfram/tests/golden/round-trip.json` (`Head#n`) are one-row-per-example derivatives. Around
-  40 package goldens (`analytic`, `collections`, `adeles`, `numerals`, `number-theory`,
-  `modular`) pin oracle-sourced values that are examples in all but name.
+  `wolfram/tests/golden/round-trip.json` (`Head#n`) are one-row-per-example derivatives.
+  Around 40 package goldens (`analytic`, `collections`, `adeles`, `numerals`,
+  `number-theory`, `modular`) pin oracle-sourced values that are examples in all but name.
 
 Identity is an array index: the page anchors `#example-N`, `entries.test.ts` names
 `Mod example 3`, and the goldens use `#n`. Inserting an example renumbers everything
 after it.
 
-## 2. The record
+## 2. Two records per head
 
-One JSON file per head per package: `<package>/reference/<Head>.json`. It holds the whole
-entry (summary, signatures, details, references, implementations), and `examples` is an
-array in page order. A worked example, `Mod(5, 0)`, as it would land:
+Each head gets two files in the package that declares it:
 
-```json
-{
-  "id": "zero-modulus",
-  "expr": ["Mod", 5, 0],
-  "expected": "NaN",
-  "caption": "Division by a 0 modulus yields NaN rather than an error",
-  "category": "Possible issues",
-  "forms": {
-    "notatio": { "in": "Mod(5, 0)", "out": "NaN" },
-    "tex": { "in": "5\\bmod0", "out": "\\operatorname{NaN}" }
-  },
-  "systems": {
-    "wolfram": {
-      "in": "Mod[5, 0]",
-      "out": "Indeterminate",
-      "tex": { "in": "(5 \\bmod 0)", "out": "\\text{Indeterminate}" }
-    },
-    "sage": {
-      "in": "(5 % 0)",
-      "out": "ZeroDivisionError: Integer modulo by zero",
-      "verdict": "error",
-      "kind": "undefined-form",
-      "note": "Both decline: compute-engine answers NaN, Sage raises."
-    },
-    "mathlib4": {
-      "in": "((5 : ℤ) % 0)",
-      "out": "5",
-      "verdict": "inconclusive",
-      "kind": "convention",
-      "note": "Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined."
-    },
-    "rust": {
-      "in": "mod_floor(n(5), n(0))",
-      "out": "panic: attempt to divide by zero",
-      "verdict": "error",
-      "kind": "undefined-form",
-      "note": "Both decline: compute-engine answers NaN, Rust panics."
-    }
-  }
-}
+- **`reference/<Head>.yaml`** — the entry, written by hand: summary, signatures, details,
+  references, head-level implementations, and `examples` in page order. Nothing
+  machine-writes this file after the migration.
+- **`reference/<Head>.implementations.yaml`** — for each example id, every implementation's
+  rendering of it and, for other systems, their answer. Mostly generated or scanned, and
+  the classifications are written by hand.
+
+The split is by who writes what. A reviewer reads the first file. The generator and the
+scans write the second, which is big, repetitive, and churns with kernel versions and
+printer changes.
+
+### The example
+
+```yaml
+- id: zero-modulus
+  expr: [Mod, 5, 0]
+  expected: NaN
+  caption: Division by a 0 modulus yields NaN rather than an error
+  category: Possible issues
 ```
 
-| Field                                            | Written by                   | Meaning                                                                                                                                              |
-| ------------------------------------------------ | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                                             | hand (codemod once)          | §3                                                                                                                                                   |
-| `expr`, `expected`                               | hand                         | MathJSON, as today. `expected` is the pinned evaluation                                                                                              |
-| `caption`, `category`                            | hand                         | as today                                                                                                                                             |
-| `role`                                           | hand                         | `"demo"` (default) or `"test"` — §5                                                                                                                  |
-| `aspirational`                                   | hand                         | as today, plus an optional `issue`                                                                                                                   |
-| `volatile`                                       | hand                         | as today                                                                                                                                             |
-| `forms`                                          | `UPDATE_FORMS=1`             | **our** renderings of `expr` / `expected`: `notatio` (InputForm), `tex` (TeXForm), `traditional` (TraditionalForm, only where it differs from `tex`) |
-| `systems.<s>.in`                                 | `UPDATE_FORMS=1`             | what our transpiler emits for system `s` — `@enumeratio/wolfram` for Wolfram, `@enumeratio/oracle`'s `MAPPINGS` for the rest                         |
-| `systems.<s>.out`, `tex`, `verdict`              | the oracle scan (`--accept`) | what that kernel answered. `verdict` is left out when it is `agree`                                                                                  |
-| `systems.<s>.kind`, `note`, `issue`, `tolerance` | hand                         | the classification of any non-`agree` verdict, and a comparison tolerance where 1e-9 is too tight                                                    |
+| Field                 | Meaning                                                 |
+| --------------------- | ------------------------------------------------------- |
+| `id`                  | §3                                                      |
+| `expr`, `expected`    | MathJSON, as today. `expected` is the pinned evaluation |
+| `caption`, `category` | as today                                                |
+| `role`                | `demo` (default) or `test` — §5                         |
+| `aspirational`        | as today, plus an optional `issue`                      |
+| `volatile`            | as today                                                |
 
-MathJSON stays authoritative for `expr`/`expected`. It is what compute-engine consumes and
-what the scan compares. `forms.notatio` puts the readable spelling next to it, so the file
-reads as notatio and the InputForm printer gets checked against 3,000 inputs for free.
+MathJSON stays authoritative. It is what compute-engine consumes and what the scans
+compare, and in YAML's flow style it reads almost as well as Epsil does.
 
-`divergence` goes away. Its prose moves into `systems.<s>.note`, next to the answer it
-explains. A deliberate TeX difference goes in `systems.wolfram.tex.note`. The `forms.tex`
-pin is itself the record of our choice.
+### Its implementations
 
-Every non-`agree` row still needs a `kind` from `DIVERGENCE_KINDS`, and the scan carries
-classifications forward while a verdict holds and resets them when it moves, as now.
+```yaml
+zero-modulus:
+  epsil: { in: "Mod(5, 0)", out: NaN }
+  tex: { in: '5\bmod0', out: '\operatorname{NaN}' }
+  notatio: { in: "<notatio-mod>…</notatio-mod>", out: "<notatio-symbol>NaN</notatio-symbol>" }
+  wolfram:
+    in: "Mod[5, 0]"
+    out: Indeterminate
+    tex: { in: '(5 \bmod 0)', out: '\text{Indeterminate}' }
+  sage:
+    in: (5 % 0)
+    out: "ZeroDivisionError: Integer modulo by zero"
+    verdict: error
+    kind: undefined-form
+    note: "Both decline: compute-engine answers NaN, Sage raises."
+  mathlib4:
+    in: "((5 : ℤ) % 0)"
+    out: "5"
+    verdict: inconclusive
+    kind: convention
+    note: Lean defines x % 0 = x; compute-engine leaves Mod by zero undefined.
+```
+
+Our own forms are implementations too. They are how we write the example, the same way
+`wolfram` is how Wolfram writes it; they just have no answer to disagree with.
+
+| Key                                           | Written by            | Meaning                                                                                                                   |
+| --------------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `epsil`                                       | `UPDATE_FORMS=1`      | the standard form: InputForm of `expr` and `expected`, text you can retype                                                |
+| `tex`, `traditional`                          | `UPDATE_FORMS=1`      | TeXForm, and TraditionalForm where it differs from `tex`                                                                  |
+| `notatio`                                     | `UPDATE_FORMS=1`      | the vdom serialisation (`design/vdom.md`'s structural tree as markup), which drops into Markdown, Vue or MDX as it stands |
+| `<system>.in`                                 | `UPDATE_FORMS=1`      | what our transpiler emits — `@enumeratio/wolfram` for Wolfram, `@enumeratio/oracle`'s `MAPPINGS` for the rest             |
+| `<system>.out`, `tex`, `verdict`              | the scan's `--accept` | what that kernel answered. `verdict` is left out when it is `agree`                                                       |
+| `<system>.kind`, `note`, `issue`, `tolerance` | hand                  | the classification of any non-`agree` verdict, and a comparison tolerance where 1e-9 is too tight                         |
+
+Every PR checks the generated rows offline, with no kernel: our printers against `epsil`,
+`tex`, `traditional` and `notatio`, and the transpilers against each `<system>.in`. A
+printer or transpiler change shows up as a data diff in the same PR.
+
+`divergence` goes away. Its prose moves into `<system>.note`, next to the answer it
+explains. A deliberate TeX difference goes in `wolfram.tex.note`; the `tex` pin is itself
+the record of our choice. Every non-`agree` row still needs a `kind` from
+`DIVERGENCE_KINDS`, and the scan carries classifications forward while a verdict holds and
+resets them when it moves, as now.
+
+The name matches the entry's existing `implementations`, whose `mapped` rows are already
+"the equivalent call in an external system". The head-level record says what a head is
+made of, and this one says how each of those writes and answers one example.
+
+**Naming.** This uses `epsil` for the standard, retypeable form and keeps `notatio` for the
+vdom serialisation. That moves `notatio` away from "the restricted Epsil subset", which
+the Names section of `AGENTS.md` and `design/syntax-and-formats.md` still say. The rename
+should be settled and recorded in those two places before step 6 writes any keys.
 
 ## 3. Identity
 
@@ -111,7 +132,9 @@ classifications forward while a verdict holds and resets them when it moves, as 
   and it cannot collide with a section. Sections keep their plain anchors: `#signatures`,
   `#details`, `#enumeration`, `#implementation` and the category slugs (`#possible-issues`).
 - Tests are named `Mod example/zero-modulus`, and oracle case ids become
-  `Mod/zero-modulus`. Nothing is keyed by expression text or position any more.
+  `Mod/zero-modulus`. The implementations record is keyed by id. Nothing is keyed by
+  expression text or position any more, and an edited `expr` shows up as a changed `in`
+  row in the same PR rather than an orphan.
 - **No redirects** from `#example-N`. Those anchors are hours old. The step that switches
   anchors rewrites the `- link:` lines in `<git-common-dir>/lanes/REVIEW.md` (surgically,
   touching nothing else, since feedback is written there live) and anything else in the
@@ -120,22 +143,42 @@ classifications forward while a verdict holds and resets them when it moves, as 
   example can go away. Renaming one needs a `renamed` note in the PR, so a link does not
   break by accident.
 
-## 4. Storage format: JSON
+## 4. Storage format: YAML, with a strict scalar schema
 
-| Format   | Nested MathJSON                               | Prose with LaTeX                    | Diffs / merges                | Tooling here                                                                    |
-| -------- | --------------------------------------------- | ----------------------------------- | ----------------------------- | ------------------------------------------------------------------------------- |
-| CSV      | JSON inside cells, double-quoted — unreadable | fine                                | line per example, good        | none; no schema                                                                 |
-| JSONL    | fine                                          | fine                                | good, but lines of 500+ chars | `vp fmt` won't wrap                                                             |
-| YAML     | fine                                          | nicest                              | good                          | new dep; `True`, `NaN`, `No` parse as non-strings, and MathJSON is full of them |
-| **JSON** | native                                        | `\\` escapes, as the TS already has | good per head file            | `vp fmt`, JSON Schema in the editor, native `import`, no deps                   |
+| Format   | Nested MathJSON                               | Prose with LaTeX                    | Review                                |
+| -------- | --------------------------------------------- | ----------------------------------- | ------------------------------------- |
+| CSV      | JSON inside cells, double-quoted — unreadable | fine                                | line per example                      |
+| JSONL    | fine                                          | `\\` escapes                        | lines of 500+ chars                   |
+| JSON     | native                                        | `\\` escapes                        | noisy: quotes and brackets everywhere |
+| **YAML** | flow style: `[Mod, 5, 0]`                     | plain or single-quoted, no escaping | closest to reading the math           |
 
-CSV loses on the thing that matters most here: MathJSON and `systems` are trees. YAML's
-implicit typing is a trap for MathJSON in particular — `True` is a boolean in YAML 1.2
-core and a symbol in MathJSON — and it is a new dependency. JSON it is. A JSON Schema
-generated from the `@enumeratio/entry` types gives editor completion and validation.
+YAML reads best, which matters most for files people review. Its hazard is implicit
+typing: under YAML 1.2's core schema `True` is a boolean and `0o17` is 15, while in
+MathJSON `True` is a symbol. That goes away if we don't use the core schema. We parse
+with `yaml` (eemeli's, the standard one) on its `failsafe` schema plus four tags of our
+own:
 
-If anyone wants a spreadsheet, a flat TSV (`head, id, notatio in, notatio out, caption,
+- `true` and `false` only, lowercase
+- `null`
+- JSON-grammar integers
+- JSON-grammar floats
+
+Everything else is a string: `True`, `False`, `NaN`, `No`, `yes`, `.inf`, `0o17`. That is
+the JSON scalar model with YAML's syntax, so a record means exactly what its JSON would.
+The schema is about twenty lines in `@enumeratio/entry`, and it has been tried against
+`yaml@2.9`: those strings survive and records round-trip.
+
+The rules that come with it:
+
+- **One writer.** Every tool writes through a single `stringify` with that schema: flow
+  style for MathJSON, single quotes where a string needs quoting. A test fails if any
+  file differs from its own re-serialisation, which doubles as the formatter.
+- A JSON Schema generated from the `@enumeratio/entry` types gives editor completion and
+  validation, since the YAML language server reads JSON Schema.
+- If anyone wants a spreadsheet, a flat TSV (`head, id, epsil in, epsil out, caption,
 role`) can be generated from the data. It is never the source.
+
+This is easy to reverse. The loader is the only reader, and a JSON writer is one flag.
 
 **File per head, not per package.** About eight worktrees run at once, and a single file
 per domain is where their merges collide today. With one file per head, two lanes collide
@@ -143,42 +186,36 @@ only when they touch the same head.
 
 ## 5. Demonstration vs test
 
-`hidden: true` becomes `role: "test"`. The field says what the example is for, and the page
+`hidden: true` becomes `role: test`. The field says what the example is for, and the page
 skips it because of that. A test example is run by the evaluation test and the scans like
 any other. Review mode gets a toggle to show them.
 
 This is also where math moves out of unit tests. `heads.test.ts` in `number-theory`,
 `residues` and `numerals`, `hurwitz-zeta.test.ts`, and similar files are mostly
-`expect(run(expr)).toEqual(value)`. Each assertion becomes a `role: "test"` example on its
+`expect(run(expr)).toEqual(value)`. Each assertion becomes a `role: test` example on its
 head. The oracle-sourced package goldens (`analytic/*`, `adeles`, `gaussian`, `adic`,
-`kronecker`) become test examples whose `systems.<s>.out` is the value they pinned.
+`kronecker`) become test examples whose `<system>.out` is the value they pinned.
 `special-functions.examples.json` folds into its four heads.
 
 A unit test keeps a math value only when it tests a kernel below the head level (an
 internal function with no head, a property sweep, quickcheck).
 
-## 6. Oracle data: folded in, not a sidecar
+## 6. Oracle data lives in the implementations record
 
-Dean left this open. **Fold it into the example.** The alternative was keeping observed
-runs in a machine-written sidecar keyed by id. That keeps scans off the hand-edited
-files, but it splits the transpiler contract (`in`), the answer (`out`) and the
-classification (`kind`/`note`) across two files that must agree, and that disagreement is
-the bug class `oracle-golden.test.ts` polices today. With per-head files, a scan's write
-only conflicts with a lane on the same head.
+The sidecars become the implementations record: keyed by id instead of expression text,
+one per head instead of per domain, and carrying our own forms and the transpiler contract
+alongside the kernels' answers. What stays global moves to `packages/oracle/kernels.json`
+(kernel versions), and the `disagreements.md` digest is still generated.
 
-What stays separate is truly global: kernel versions move to `packages/oracle/kernels.json`,
-and the `disagreements.md` digest is still generated.
-
-The rules the scan writer has to follow:
-
-- It rewrites only `systems.<s>.{out, tex, verdict}` for the systems in the run. It works
-  through a parsed JSON rewrite, never text, and every hand field round-trips byte-for-byte
-  (a test pins that).
+- **Hand files stay hand files.** Scans write only `<Head>.implementations.yaml`, and
+  within it only `<system>.{out, tex, verdict}` for the systems in the run. The rewrite is
+  structured, never textual, and a test pins that the hand-written classifications survive
+  it.
 - Nightly lanes still fail on a changed verdict, classification or `in` rather than on
   printed digits. `--accept` is the explicit write, which is what the fixup routine's PR
   carries.
-- Every PR checks `systems.<s>.in` offline against the transpilers, with no kernel. A
-  transpiler change shows up as a data diff in the same PR.
+- Nightly jobs run one per ecosystem, so each writes disjoint keys. The routine serialises
+  their fixups as it does today.
 
 ## 7. Package layout
 
@@ -204,7 +241,7 @@ These stay at `packages/`: `boxed`, `entry`, `oracle`, `wolfram`, `formats`, `re
 `Curve3D`, the notebook, the controls. A group gets a component package the day it gets
 its first renderer, never an empty placeholder.
 
-Where each head's file goes is decided by `provenance-data.ts`'s `declared`: extensions
+Where each head's files go is decided by `provenance-data.ts`'s `declared`: extensions
 and overrides go to the declaring package. Heads that are compute-engine's own, plus the
 `unknown` provenance rows (about 130, triaged by hand in the codemod's routing table),
 live in `packages/reference/entries/` — reference is the home of the engine's heads we
@@ -223,9 +260,10 @@ Each step is one PR, keeps main green, and leaves other lanes able to work. The 
 are committed scripts under `packages/reference/scripts/migrate/` and are deleted in the
 last step.
 
-1. **Schema and loader.** Add `id`, `role`, `forms` and `systems` to `@enumeratio/entry` as
-   optional fields, generate the JSON Schema, and add a Node-only loader
-   (`@enumeratio/reference/node`) that reads `<package>/reference/*.json`. No data changes.
+1. **Schema and loader.** Add `id` and `role` to `@enumeratio/entry` as optional fields,
+   along with the implementations record type, the strict YAML schema and the single
+   writer. Generate the JSON Schema, and add a Node-only loader
+   (`@enumeratio/reference/node`) that reads `<package>/reference/*.yaml`. No data changes.
    `role` and `hidden` are both read during the transition.
 2. **Ids.** A `ts-morph` codemod inserts `id` into every example in `entries/*.ts`, in the
    three package `entries.ts` files (and into their generators) and in
@@ -237,27 +275,29 @@ last step.
 3. **Layout move.** Pure `git mv` plus the path fixes in §7. No content changes, so git's
    rename detection carries open lanes through a rebase. Land it at a quiet moment, and
    announce it to the lane coordinators first.
-4. **Data flip.** A codemod evaluates the TS entries and writes
-   `<package>/reference/<Head>.json`, routed as in §7. From then on
-   `packages/reference/src/entries/*.ts` are **generated shims** re-exporting from the JSON,
-   and a test fails if a shim is edited by hand. A lane caught mid-flight re-runs
-   `migrate/port-ts.ts` on its own branch's TS to replay its edits into the JSON.
+4. **Data flip.** A codemod evaluates the TS entries and writes `<package>/reference/<Head>.yaml`,
+   routed as in §7. From then on `packages/reference/src/entries/*.ts` are **generated
+   shims** re-exporting from the YAML, and a test fails if a shim is edited by hand. A lane
+   caught mid-flight re-runs `migrate/port-ts.ts` on its own branch's TS to replay its
+   edits into the YAML.
 5. **Consumers flip.** `web/.vitepress/data/reference.ts`, `entries.test.ts`,
    `oracle-scan.ts`, `oracle-quickcheck.ts`, the crosswalk, provenance and
    `validate-wolfram.ts` scripts, and `texform-alignment.test.ts` move onto the loader.
    Then the shims and `src/entries/` are deleted.
-6. **Forms.** The `UPDATE_FORMS=1` generator fills `forms` and `systems.<s>.in`. A test
-   pins them, and the texform-alignment golden and `round-trip.json` are retired: round
-   trip runs over every example's `systems.wolfram.in`, with a `back` pinned only for the
-   documented lossy heads.
-7. **Oracle fold.** Sidecar rows move into `systems.<s>`, `divergence` prose merges into
-   `note`, kernel versions go to `packages/oracle/kernels.json`, and the scan learns
-   `--accept`. The sidecars and `oracle-golden.test.ts`'s key checks are deleted.
-8. **Unit-test math into examples.** One PR per package, in parallel lanes after step 5,
+6. **Implementations record.** The sidecars (already keyed by id) are split per head into
+   `<Head>.implementations.yaml`, and `divergence` prose merges into `note`. The
+   `UPDATE_FORMS=1` generator fills our forms and each `<system>.in`, and a test pins them.
+   Kernel versions go to `packages/oracle/kernels.json`, the scan learns `--accept`, and
+   these are retired: the sidecars, `oracle-golden.test.ts`'s key checks, the
+   texform-alignment golden and `round-trip.json`. Round trip runs over every example's
+   `wolfram.in` instead, with a `back` pinned only for the documented lossy heads. Waits on
+   the `epsil`/`notatio` naming (§2).
+7. **Unit-test math into examples.** One PR per package, in parallel lanes after step 5,
    following §5. Each PR deletes the assertions it moved.
 
-Steps 1–2 can land as soon as this is signed off. Step 3 is independent of 4–8 and can go whenever the lanes
-are quiet. Component extraction (§7, right-hand column) is its own track, after step 3.
+Steps 1–2 can land as soon as this is signed off. Step 3 is independent of 4–7 and can go
+whenever the lanes are quiet. Component extraction (§7, right-hand column) is its own
+track, after step 3.
 
 ## 9. Risks
 
@@ -268,20 +308,20 @@ are quiet. Component extraction (§7, right-hand column) is its own track, after
   spreads, helpers). Evaluating the modules rather than parsing them flattens those
   correctly. The check: a test that the shims deep-equal the old modules before anything
   is deleted.
+- **YAML typing.** The strict schema closes the known traps, but only if everything goes
+  through the one reader and writer. A stray `yaml.parse` with defaults would quietly turn
+  `True` into `true`. A lint rule bans importing `yaml` outside `@enumeratio/entry`.
 - **`#example/<id>` in VitePress.** A `/` in a hash is legal and `getElementById` takes
   it, but CSS selectors need `CSS.escape`, and `followHash` has to see the exact string.
   Verify on the step 2 preview.
 - **Browser bundle.** `ExampleAlternatives.vue` imports `@enumeratio/reference` in the
   client. The filesystem loader must stay on the `/node` subpath or it will break the site
   build.
-- **Scan writes into hand files (§6).** A writer bug could clobber captions or
-  classifications. The mitigations are the structured rewrite plus the byte-for-byte
-  round-trip test, and `--accept` always going through a PR.
-- **File growth.** `systems` for eight lanes makes an example 10–20 lines, about 50k
-  lines of JSON in all. That is about what the sidecars are today, just moved.
-  One-line `{ "in": …, "out": … }` objects keep it scannable.
-- **Shared heads.** A head documented in two packages (`FromDigits`) has one
-  id space. The loader checks for collisions, and the codemod dedupes across packages.
+- **Scan writes.** They are now confined to the implementations record, but a writer bug
+  could still drop classifications. The mitigations are the structured rewrite, the test
+  that classifications survive it, and `--accept` always going through a PR.
+- **Shared heads.** A head documented in two packages (`FromDigits`) has one id space. The
+  loader checks for collisions, and the codemod dedupes across packages.
 - **The layout move vs `vp run -r` ordering.** Nesting does not change package names or
   dependency edges, but check `ignoreWorkspaceCycles` and `vp run -r` resolution on the
   step 3 branch before landing.
@@ -290,10 +330,13 @@ are quiet. Component extraction (§7, right-hand column) is its own track, after
 
 ## 10. For sign-off
 
-1. JSON, one file per head per package (§4).
-2. The oracle data folded into `systems` rather than kept as a sidecar (§6).
-3. `role: "test"` replacing `hidden` (§5).
-4. The grouping in §7, and one component package per group, created only when the group
+1. YAML with the strict scalar schema, two files per head per package (§2, §4).
+2. `implementations` as the name for the per-example record, sharing its vocabulary with
+   the head-level `implementations` (§2).
+3. `epsil` as the standard form and `notatio` as the vdom serialisation — a Names change
+   to record in `AGENTS.md` and `design/syntax-and-formats.md` (§2).
+4. `role: test` replacing `hidden` (§5).
+5. The grouping in §7, and one component package per group, created only when the group
    has a renderer.
-5. The engine's own heads living in `packages/reference/entries/`.
-6. The order in §8, especially the layout move before the data flip.
+6. The engine's own heads living in `packages/reference/entries/`.
+7. The order in §8, especially the layout move before the data flip.
