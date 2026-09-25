@@ -1,0 +1,23 @@
+name: FunctionDiscontinuities
+domain: Elementary functions
+signature: FunctionDiscontinuities(f, x)
+summary: Where f fails to be continuous, as a condition in x.
+signatures:
+  - call: FunctionDiscontinuities(f, x)
+    description: the set of real x where f is discontinuous (or undefined).
+    library: '@enumeratio/analytic'
+details:
+  - For every shape this file recognizes, confirmed against `wolframscript`, Wolfram's discontinuities coincide exactly with [[FunctionSingularities]] -- a rational function's poles, Sqrt/Ln's closed excluded region, Tan's `Cos(x)==0`, none for a polynomial or Exp. This file shares one implementation between the two heads on that basis; it does not attempt the general theory (a removable discontinuity, a jump discontinuity in a piecewise definition) beyond what the classifier already covers.
+examples:
+  - id: a-pole-is-a-discontinuity
+    expr: [FunctionDiscontinuities, [Divide, 1, x], x]
+    expected: [Equal, x, 0]
+    caption: A pole is a discontinuity
+  - id: tangent-s-poles
+    expr: [FunctionDiscontinuities, [Tan, x], x]
+    expected: [Equal, [Cos, x], 0]
+    caption: Tangent's poles, where cosine vanishes
+  - id: a-polynomial-is-continuous-everywhere
+    expr: [FunctionDiscontinuities, [Power, x, 2], x]
+    expected: False
+    caption: A polynomial is continuous everywhere

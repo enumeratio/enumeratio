@@ -1,0 +1,35 @@
+name: FunctionRange
+domain: Elementary functions
+signature: FunctionRange(f, x, y)
+summary: The set of values f takes as x ranges over its domain, as a condition in y.
+signatures:
+  - call: FunctionRange(f, x, y)
+    description: the range of f as a function of the real variable x, expressed as a condition in y.
+    library: '@enumeratio/analytic'
+details:
+  - Uses the same classifier as [[FunctionDomain]]. An odd-degree polynomial is onto $\mathbb R$ by the intermediate value theorem regardless of its other coefficients; a degree-2 polynomial's range comes from its vertex.
+  - 'Covers: odd-degree polynomials (True); degree-2 polynomials (from the vertex); a nonzero constant over an affine denominator ($y \ne 0$); Sqrt of an affine or quadratic argument; Ln of an affine argument (True); Exp of an affine argument ($y>0$); Sin/Cos of an affine argument ($-1\le y\le1$); Tan of an affine argument (True).'
+  - Declines for even-degree polynomials above degree 2 (no general closed-form extremum here), and for a rational function whose denominator is a quadratic (needs the same vertex analysis compounded with the reciprocal, left for later).
+examples:
+  - id: a-parabola-s-range-is-bounded-below
+    expr: [FunctionRange, [Power, x, 2], x, y]
+    expected: [LessEqual, 0, y]
+    caption: A parabola's range is bounded below by its vertex
+  - id: a-reciprocal-never-reaches-zero
+    expr: [FunctionRange, [Divide, 1, x], x, y]
+    expected: [Or, [Less, y, 0], [Less, 0, y]]
+    caption: A reciprocal never reaches zero
+  - id: sine-s-range-is-the-unit-interval
+    expr: [FunctionRange, [Sin, x], x, y]
+    expected: [LessEqual, -1, y, 1]
+    caption: Sine's range is the unit interval
+  - id: exp-s-range-is-the-positive-reals
+    expr: [FunctionRange, [Exp, x], x, y]
+    expected: [Less, 0, y]
+    category: Scope
+    caption: Exp's range is the positive reals
+  - id: a-quadratic-denominator-is-declined
+    expr: [FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]
+    expected: [FunctionRange, [Divide, 1, [Add, [Power, x, 2], -1]], x, y]
+    category: Possible issues
+    caption: A quadratic denominator's range needs its vertex value too, and stays unevaluated for now

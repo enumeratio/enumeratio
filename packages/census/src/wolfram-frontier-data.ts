@@ -21,52 +21,12 @@ export interface FrontierEntry {
 
 export const FRONTIER: readonly FrontierEntry[] = [
   {
-    head: "FunctionDomain",
-    uses: 120,
-  },
-  {
     head: "ComplexContourPlot",
     uses: 94,
   },
   {
-    head: "FunctionMonotonicity",
-    uses: 80,
-  },
-  {
     head: "PointSize",
     uses: 80,
-  },
-  {
-    head: "FunctionRange",
-    uses: 78,
-  },
-  {
-    head: "FunctionAnalytic",
-    uses: 71,
-  },
-  {
-    head: "FunctionConvexity",
-    uses: 68,
-  },
-  {
-    head: "FunctionSign",
-    uses: 68,
-  },
-  {
-    head: "FunctionInjective",
-    uses: 64,
-  },
-  {
-    head: "FunctionSingularities",
-    uses: 60,
-  },
-  {
-    head: "FunctionSurjective",
-    uses: 60,
-  },
-  {
-    head: "FunctionDiscontinuities",
-    uses: 57,
   },
   {
     head: "Around",
@@ -83,10 +43,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   {
     head: "FullForm",
     uses: 44,
-  },
-  {
-    head: "FunctionMeromorphic",
-    uses: 40,
   },
   {
     head: "Directive",
@@ -318,10 +274,6 @@ export const FRONTIER: readonly FrontierEntry[] = [
   },
   {
     head: "EmpiricalDistribution",
-    uses: 8,
-  },
-  {
-    head: "FunctionPeriod",
     uses: 8,
   },
   {

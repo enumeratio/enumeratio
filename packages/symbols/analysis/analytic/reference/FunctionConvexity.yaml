@@ -1,0 +1,30 @@
+name: FunctionConvexity
+domain: Elementary functions
+signature: FunctionConvexity(f, x)
+summary: 1 if f is convex over its whole domain, -1 if concave, 0 if affine, Indeterminate otherwise.
+signatures:
+  - call: FunctionConvexity(f, x)
+    description: the convexity of f in the real variable x over the whole real line, from the sign of its second derivative.
+    library: '@enumeratio/analytic'
+details:
+  - Same domain-first convention as [[FunctionMonotonicity]] -- a domain that isn't all of $\mathbb R$ answers `Indeterminate` (confirmed against `wolframscript`), it isn't a decline.
+  - For a polynomial, reads the sign of the second derivative in closed form; Exp of an affine argument is always convex ($a^2 e^{ax+b}>0$).
+  - Declines only where the classifier itself declines, or where a polynomial's second derivative is a genuine multi-term polynomial of degree > 2.
+examples:
+  - id: a-parabola-is-convex
+    expr: [FunctionConvexity, [Power, x, 2], x]
+    expected: 1
+    caption: A parabola is convex everywhere
+  - id: a-cubic-has-an-inflection-point
+    expr: [FunctionConvexity, [Power, x, 3], x]
+    expected: Indeterminate
+    caption: A cubic's second derivative changes sign at the inflection point
+  - id: exp-is-always-convex
+    expr: [FunctionConvexity, [Exp, x], x]
+    expected: 1
+    caption: Exp is always convex
+  - id: a-restricted-domain-answers-indeterminate
+    expr: [FunctionConvexity, [Divide, 1, x], x]
+    expected: Indeterminate
+    category: Properties
+    caption: 1/x's domain isn't all of R, so this is Indeterminate rather than a guess about its (genuinely mixed) shape
