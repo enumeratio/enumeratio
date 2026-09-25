@@ -1,6 +1,11 @@
 import type { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-import { threadOverLists, widenSignature, wrapOperator } from "@enumeratio/boxed";
+import { operandsOf, threadOverLists, widenSignature, wrapOperator } from "@enumeratio/boxed";
 import type { EvalOptions, NativeEval } from "./box.ts";
+
+/** No free variable anywhere in `expr` — a plain number, `Pi`/`ExponentialE`, or a closed
+ * call over them (`Exp(Sqrt(2))`) all qualify, even though `evaluate()` alone leaves the
+ * last one exactly as symbolic as `Add(1.2, Multiply(6.7, x))` does. */
+const isClosed = (expr: BoxedExpression): boolean => expr.freeVariables.length === 0;
 
 // #113 threading gaps: heads that reject or ignore a list/matrix argument where
 // Wolfram's Listable heads thread over it. `threadOverLists` just flips the
@@ -16,12 +21,14 @@ import type { EvalOptions, NativeEval } from "./box.ts";
 // rebuilt here rather than threaded structurally.
 
 /**
- * Recursively rationalize every inexact (float) number literal inside `expr`,
- * leaving exact numbers and symbols alone, and rebuild every compound node (List,
- * Add, Multiply, ...) around the results. A leaf is handed to the native
- * single-argument evaluator, the same handler a direct `Rationalize(0.5)` call
- * already uses, so the tolerance argument and every existing precision behavior are
- * unchanged -- only where inside the expression the leaves are found is new.
+ * Recursively rationalize every inexact number inside `expr`, leaving exact numbers and
+ * free symbols alone, and rebuild every compound node that still has a free variable in
+ * it (Add, Multiply, ...) around the results. `List` is always walked structurally, since
+ * it never itself reduces to a single number; anything else CLOSED (no free variable —
+ * see `isClosed`) is handed whole to the native single-argument evaluator, the same
+ * handler a direct `Rationalize(0.5)` call already uses, so a closed but still-symbolic
+ * value like `Exp(Sqrt(2))` reaches native's own numeric reduction (N()) rather than
+ * being walked apart into `Sqrt(2)`, which alone would rationalize to nothing useful.
  */
 function rationalizeDeep(
   ce: ComputeEngine,
@@ -30,12 +37,13 @@ function rationalizeDeep(
   tolerance: BoxedExpression | undefined,
   options: EvalOptions,
 ): BoxedExpression {
-  const ops = (expr as { ops?: readonly BoxedExpression[] }).ops;
-  if (ops === undefined) {
-    if ((expr as Partial<{ isExact: boolean }>).isExact !== false) return expr; // exact, or not a number
+  if (expr.operator !== "List" && isClosed(expr)) {
+    if ((expr as Partial<{ isExact: boolean }>).isExact !== false) return expr; // already exact
     const args = tolerance === undefined ? [expr] : [expr, tolerance];
     return native?.(args, options) ?? expr;
   }
+  const ops = operandsOf(expr);
+  if (ops.length === 0) return expr; // a bare free symbol
   const rebuilt = ops.map((op) => rationalizeDeep(ce, native, op, tolerance, options));
   return ce.function(expr.operator, rebuilt).evaluate();
 }
@@ -74,25 +82,19 @@ export function declareThreading113(ce: ComputeEngine): void {
   );
 
   // Rationalize(list) and Rationalize(expression-with-floats-inside): compute-engine's
-  // own Rationalize takes a single real and rejects both. `applies` only fires when the
-  // operand is still a COMPOUND expression at evaluate time -- a numeric sub-expression
-  // like Exp(Sqrt(2)) is already reduced to a plain number by the time Rationalize sees
-  // it, so the existing single-real path is untouched; only a List, or a genuinely
-  // symbolic expression (a free variable blocks that reduction), reaches here.
-  // Widen past the native "(number, number?) -> number" signature first, so a List or
-  // a symbolic expression even reaches `evaluate` -- otherwise boxing itself rejects
-  // the call with a type error before the wrapper below ever runs. `nativeAccepts`
-  // keeps the native path gated to an actual leaf, matching what it always accepted.
-  widenSignature(
-    ce,
-    "Rationalize",
-    "(value, number?) -> value",
-    (op) => (op as { ops?: unknown }).ops === undefined,
-  );
+  // own Rationalize takes a single real and rejects both. Widen past its native
+  // "(number, number?) -> number" signature first, so a List or a symbolic expression
+  // even reaches `evaluate` -- otherwise boxing itself rejects the call with a type
+  // error before the wrapper below ever runs. `nativeAccepts` gates the native path to
+  // a CLOSED value (`isClosed`, no free variable) exactly as it always accepted --
+  // including a compound one like `Exp(Sqrt(2))`, which native already reduces
+  // internally; only a List, or an expression with a genuine free variable in it,
+  // reaches the wrapper.
+  widenSignature(ce, "Rationalize", "(value, number?) -> value", isClosed);
   wrapOperator(
     ce,
     ["Rationalize", 1],
-    (ops) => ops[0] !== undefined && (ops[0] as { ops?: unknown }).ops !== undefined,
+    (ops) => ops[0] !== undefined && (ops[0].operator === "List" || !isClosed(ops[0])),
     (native) => (ops, options) => rationalizeDeep(ce, native, ops[0], ops[1], options),
   );
 }

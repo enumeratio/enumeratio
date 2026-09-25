@@ -141,10 +141,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Gamma", 2, 0, "z"],
-        expected: ["Gamma", 2, 0, "z"],
-        category: "Possible issues",
+        expected: [
+          "Add",
+          ["Negate", ["Multiply", ["Add", "z", 1], ["Power", "ExponentialE", ["Negate", "z"]]]],
+          1,
+        ],
+        category: "Properties",
         caption:
-          "A three-argument call whose two halves do not themselves reduce keeps its own form rather than showing the difference -- Wolfram leaves $\\mathrm{Gamma}[2, 0, z]$ the same way",
+          "A three-argument call built from two integer-order halves now reduces too, $\\gamma(2, z) = 1 - (1+z)e^{-z}$ -- Wolfram's bare kernel leaves $\\mathrm{Gamma}[2, 0, z]$ unevaluated the same way ours used to; $\\mathrm{FunctionExpand}$ gives this",
       },
       {
         expr: ["Gamma", 4.5],
@@ -2343,9 +2347,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", 2, "x"],
         expected: ["Multiply", ["Add", "x", 1], ["Power", "ExponentialE", ["Negate", "x"]]],
-        aspirational: true,
         category: "Properties",
-        caption: "$Q(2, x) = (1 + x)e^{-x}$; only order 1 reduces symbolically today",
+        caption: "$Q(2, x) = (1 + x)e^{-x}$: every positive integer order now reduces symbolically",
       },
       {
         expr: ["GammaRegularized", ["Rational", 1, 2], "x"],
