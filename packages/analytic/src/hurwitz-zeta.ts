@@ -70,6 +70,7 @@ import { declareElementarySpecialValues } from "./elementary-special-values.ts";
 import { declareThreading113 } from "./threading-113.ts";
 import { declareClosedForms113 } from "./closed-forms-113.ts";
 import { declarePrecision113 } from "./precision-113.ts";
+import { declareSpecialFunctionsRemaining } from "./special-functions-remaining.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -721,4 +722,5 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareThreading113(ce);
   declareClosedForms113(ce);
   declarePrecision113(ce);
+  declareSpecialFunctionsRemaining(ce);
 }

@@ -683,11 +683,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Erf", "ImaginaryUnit"],
-        expected: ["Multiply", "ImaginaryUnit", ["Erfi", 1]],
-        aspirational: true,
+        expected: ["Multiply", ["Complex", 0, 1], ["Erfi", 1]],
         category: "Properties",
-        caption:
-          "On the imaginary axis: $\\operatorname{erf}(i) = i\\,\\operatorname{erfi}(1)$; not yet",
+        caption: "On the imaginary axis: $\\operatorname{erf}(i) = i\\,\\operatorname{erfi}(1)$",
       },
       {
         expr: ["D", ["Erf", "x"], "x"],
@@ -800,11 +798,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["Erfc", ["Negate", "x"]],
-        expected: ["Subtract", 2, ["Erfc", "x"]],
-        aspirational: true,
+        expected: ["Add", ["Negate", ["Erfc", "x"]], 2],
         category: "Properties",
-        caption:
-          "$\\operatorname{erfc}(-x) = 2 - \\operatorname{erfc}(x)$ applied symbolically; not yet",
+        caption: "$\\operatorname{erfc}(-x) = 2 - \\operatorname{erfc}(x)$ applied symbolically",
       },
       {
         expr: ["D", ["Erfc", "x"], "x"],
@@ -1163,17 +1159,14 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["Zeta", 20, ["Rational", 1, 2]],
         expected: ["Multiply", ["Rational", 221930581, 1856156927625], ["Power", "Pi", 20]],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$\\zeta(20, 1/2) = (2^{20} - 1)\\zeta(20)$, an exact multiple of $\\pi^{20}$; not yet",
+        caption: "$\\zeta(20, 1/2) = (2^{20} - 1)\\zeta(20)$, an exact multiple of $\\pi^{20}$",
       },
       {
         expr: ["Zeta", 2, ["Rational", 1, 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\zeta(2, 1/2) = 3\\zeta(2) = \\pi^2/2$; not yet",
+        caption: "$\\zeta(2, 1/2) = 3\\zeta(2) = \\pi^2/2$",
       },
       {
         expr: ["Zeta", ["Interval", 1.1, 1.2]],
@@ -1266,9 +1259,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["HurwitzZeta", 3, 0.2],
         expected: 125.73901805721795,
-        aspirational: true,
         caption:
-          "An inexact $a$ should evaluate numerically without N(), $\\zeta(3, 0.2) = 125.739\\ldots$; left unevaluated today",
+          "An inexact $a$ evaluates numerically without N(): $\\zeta(3, 0.2) = 125.739\\ldots$",
       },
       {
         expr: ["N", ["HurwitzZeta", 0.51, 0.87]],
@@ -1527,11 +1519,10 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["LerchPhi", 1, 2, ["Rational", 1, 4]],
-        expected: ["Add", ["Power", "Pi", 2], ["Multiply", 8, "Catalan"]],
-        aspirational: true,
+        expected: ["Add", ["Multiply", 8, "Catalan"], ["Power", "Pi", 2]],
         category: "Properties",
         caption:
-          "$\\Phi(1, 2, 1/4) = \\zeta(2, 1/4) = \\pi^2 + 8G$; today it stops at the HurwitzZeta",
+          "$\\Phi(1, 2, 1/4) = \\zeta(2, 1/4) = \\pi^2 + 8G$, through HurwitzZeta's own closed form at that argument",
       },
       {
         expr: ["LerchPhi", -1, 1, 1],
@@ -1543,16 +1534,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["LerchPhi", ["Rational", 1, 2], 1, 1],
         expected: ["Multiply", 2, ["Ln", 2]],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\Phi(1/2, 1, 1) = 2\\ln 2$; not yet",
+        caption: "$\\Phi(1/2, 1, 1) = 2\\ln 2$",
       },
       {
         expr: ["LerchPhi", -1, 2, ["Rational", 1, 2]],
         expected: ["Multiply", 4, "Catalan"],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\Phi(-1, 2, 1/2) = 4G$; not yet in closed form...",
+        caption:
+          "$\\Phi(-1, 2, 1/2) = 4G$, via $\\Phi(-1, s, 1/2) = 2^s\\beta(s)$ and $\\beta(2) = G$",
       },
       {
         expr: ["N", ["LerchPhi", -1, 2, ["Rational", 1, 2]]],
@@ -1761,9 +1751,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           ["Add", ["Power", 2, ["Add", ["Negate", "n"], 1]], -1],
           ["Zeta", "n"],
         ],
-        aspirational: true,
         category: "Scope",
-        caption: "$\\operatorname{Li}_n(-1) = -(1 - 2^{1-n})\\zeta(n)$ for symbolic $n$; not yet",
+        caption: "$\\operatorname{Li}_n(-1) = -(1 - 2^{1-n})\\zeta(n)$ for symbolic $n$",
       },
       {
         expr: ["PolyLog", -2, "z"],
@@ -1772,10 +1761,8 @@ export const specialFunctions: readonly ReferenceEntry[] = [
           ["Multiply", "z", ["Add", "z", 1]],
           ["Power", ["Add", ["Negate", "z"], 1], 3],
         ],
-        aspirational: true,
         category: "Scope",
-        caption:
-          "$\\operatorname{Li}_{-2}(z) = z(1+z)/(1-z)^3$; only orders $-1, 0, 1$ reduce today",
+        caption: "$\\operatorname{Li}_{-2}(z) = z(1+z)/(1-z)^3$",
       },
       {
         expr: ["PolyLog", 2, ["Interval", 0.7, 0.8]],
@@ -1908,13 +1895,11 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["PolyGamma", 3, 5],
         expected: [
-          "Add",
-          ["Rational", -22369, 3456],
-          ["Multiply", ["Rational", 1, 15], ["Power", "Pi", 4]],
+          "Multiply",
+          ["Rational", 1, 17280],
+          ["Add", -111845, ["Multiply", 1152, ["Power", "Pi", 4]]],
         ],
-        aspirational: true,
-        caption:
-          "$\\psi^{(3)}(5) = \\pi^4/15 - 22369/3456$; not yet -- exact arguments stay symbolic",
+        caption: "$\\psi^{(3)}(5) = \\pi^4/15 - 22369/3456$",
       },
       {
         expr: ["N", ["PolyGamma", 3, 5]],
@@ -1972,17 +1957,15 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       },
       {
         expr: ["PolyGamma", 0, ["Rational", 1, 2]],
-        expected: ["Subtract", ["Negate", "EulerGamma"], ["Multiply", 2, ["Ln", 2]]],
-        aspirational: true,
+        expected: ["Add", ["Multiply", -2, ["Ln", 2]], ["Negate", "EulerGamma"]],
         category: "Properties",
-        caption: "$\\psi(1/2) = -\\gamma - 2\\ln 2$; not yet",
+        caption: "$\\psi(1/2) = -\\gamma - 2\\ln 2$",
       },
       {
         expr: ["PolyGamma", 1, ["Rational", 1, 2]],
         expected: ["Multiply", ["Rational", 1, 2], ["Power", "Pi", 2]],
-        aspirational: true,
         category: "Properties",
-        caption: "$\\psi'(1/2) = \\pi^2/2$ in closed form; not yet",
+        caption: "$\\psi'(1/2) = \\pi^2/2$ in closed form",
       },
       {
         expr: ["PolyGamma", 1, ["Rational", 1, 4]],
@@ -2275,10 +2258,9 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["GammaRegularized", 2, 0.5, 1.5],
         expected: 0.35197058919787555,
-        aspirational: true,
         category: "Scope",
         caption:
-          "...which at an integer order should equally evaluate, to $\\frac32e^{-1/2} - \\frac52e^{-3/2}$; left unevaluated today",
+          "...which at an integer order equally evaluates, to $\\frac32e^{-1/2} - \\frac52e^{-3/2}$",
       },
       {
         expr: ["GammaRegularized", 1, ["List", "NegativeInfinity", "PositiveInfinity"]],
@@ -2464,23 +2446,20 @@ export const specialFunctions: readonly ReferenceEntry[] = [
       {
         expr: ["BetaRegularized", "x", 1, 1],
         expected: "x",
-        aspirational: true,
         category: "Properties",
-        caption: "$I_x(1, 1) = x$ symbolically; not yet",
+        caption: "$I_x(1, 1) = x$ symbolically",
       },
       {
         expr: ["BetaRegularized", "x", "a", 1],
         expected: ["Power", "x", "a"],
-        aspirational: true,
         category: "Properties",
-        caption: "$I_x(a, 1) = x^a$ symbolically; not yet",
+        caption: "$I_x(a, 1) = x^a$ symbolically",
       },
       {
         expr: ["BetaRegularized", "x", 1, "b"],
-        expected: ["Subtract", 1, ["Power", ["Subtract", 1, "x"], "b"]],
-        aspirational: true,
+        expected: ["Add", ["Negate", ["Power", ["Add", ["Negate", "x"], 1], "b"]], 1],
         category: "Properties",
-        caption: "$I_x(1, b) = 1 - (1-x)^b$; not yet",
+        caption: "$I_x(1, b) = 1 - (1-x)^b$",
       },
     ],
     seeAlso: ["Beta", "GammaRegularized", "Binomial"],
