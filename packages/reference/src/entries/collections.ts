@@ -2203,4 +2203,454 @@ export const collections: readonly ReferenceEntry[] = [
     ],
     seeAlso: ["Length"],
   },
+  {
+    name: "Nest",
+    domain: "Collections",
+    signature: "Nest(f, x, n)",
+    summary: "f applied n times to x.",
+    signatures: [
+      {
+        call: "Nest(f, x, n)",
+        description: "$f$ applied to $x$, $n$ times in a row.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "$f$ can be a [[Function]] literal or a plain symbol; an undeclared symbol stays an unevaluated call, the way $Nest(f, x, 3)$ shows below.",
+      "See [[NestList]] for every intermediate step, and [[FixedPoint]] for iterating until the value stops changing instead of a fixed count.",
+    ],
+    examples: [
+      {
+        expr: ["Nest", "f", "x", 3],
+        expected: ["f", ["f", ["f", "x"]]],
+      },
+      {
+        expr: ["Nest", ["Function", ["Power", "_1", 2]], 2, 3],
+        expected: 256,
+        caption: "Repeated squaring: $((2^2)^2)^2$",
+      },
+      {
+        expr: ["Nest", "f", "x", 0],
+        expected: "x",
+        category: "Scope",
+        caption: "Zero applications leave x alone",
+      },
+      {
+        expr: ["Nest", ["Function", ["Multiply", 2, "_1"]], 1, 10],
+        expected: 1024,
+        category: "Scope",
+      },
+      {
+        expr: ["Nest", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1, 3],
+        expected: ["Rational", 577, 408],
+        category: "Applications",
+        caption: "Three Newton steps toward $\\sqrt{2}$",
+      },
+    ],
+    seeAlso: ["NestList", "FixedPoint"],
+  },
+  {
+    name: "NestList",
+    domain: "Collections",
+    signature: "NestList(f, x, n)",
+    summary: "The list of x, f(x), f(f(x)), ... up to n applications of f.",
+    signatures: [
+      {
+        call: "NestList(f, x, n)",
+        description:
+          "$x$ followed by every intermediate value up to $Nest(f, x, n)$, $n + 1$ entries in all.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ["See [[Nest]] for just the final value."],
+    examples: [
+      {
+        expr: ["NestList", "f", "x", 3],
+        expected: ["List", "x", ["f", "x"], ["f", ["f", "x"]], ["f", ["f", ["f", "x"]]]],
+      },
+      {
+        expr: ["NestList", ["Function", ["Multiply", 2, "_1"]], 1, 5],
+        expected: ["List", 1, 2, 4, 8, 16, 32],
+        caption: "Powers of 2",
+      },
+      {
+        expr: ["NestList", ["Function", ["Mod", ["Multiply", 3, "_1"], 7]], 1, 6],
+        expected: ["List", 1, 3, 2, 6, 4, 5, 1],
+        category: "Applications",
+        caption: "3 is a primitive root mod 7: its powers visit every nonzero residue",
+      },
+      {
+        expr: ["NestList", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1, 3],
+        expected: ["List", 1, ["Rational", 3, 2], ["Rational", 17, 12], ["Rational", 577, 408]],
+        category: "Applications",
+        caption: "Newton iterates converging to $\\sqrt{2}$",
+      },
+      {
+        expr: ["NestList", "f", "x", 0],
+        expected: ["List", "x"],
+        category: "Scope",
+        caption: "Zero steps: just the seed",
+      },
+    ],
+    seeAlso: ["Nest", "FixedPoint"],
+  },
+  {
+    name: "FixedPoint",
+    domain: "Collections",
+    signature: "FixedPoint(f, x)",
+    summary: "Iterates f from x until the result no longer changes.",
+    signatures: [
+      {
+        call: "FixedPoint(f, x)",
+        description: "iterates $f$ starting from $x$ until two successive values are equal.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "compute-engine declares $FixedPoint$ itself but ships no evaluator for it; this library extends that declaration rather than replacing it.",
+      "Capped at 10,000 iterations, so a sequence that never settles fails closed instead of looping forever — Wolfram's own (much larger, configurable) cap is $MaxIterations.",
+      "A floating-point iteration stops the moment two successive values are bit-for-bit equal, which a genuinely converging map (like $Cos$ below) reaches in finitely many steps.",
+    ],
+    examples: [
+      {
+        expr: ["FixedPoint", ["Function", ["Floor", ["Divide", "_1", 2]]], 100],
+        expected: 0,
+        caption: "Halving and flooring until nothing changes",
+      },
+      {
+        expr: ["FixedPoint", "Cos", 0.5],
+        expected: { num: "0.739085133250252853411" },
+        caption: "The Dottie number, the fixed point of cos",
+        divergence: {
+          wolfram:
+            "Wolfram iterates at machine (double) precision and reports 0.7390851332151607; this engine's default numeric precision is 21 digits, so its own fixed point differs from the 17th digit on — both are the Dottie number to their own precision.",
+        },
+      },
+      {
+        expr: ["FixedPoint", ["Function", ["Divide", ["Add", "_1", ["Divide", 2, "_1"]], 2]], 1.5],
+        expected: { num: "1.414213562373095048801375" },
+        category: "Applications",
+        caption: "Newton's method for $\\sqrt{2}$, run to this engine's default precision",
+        divergence: {
+          wolfram:
+            "Same precision difference as the Cos example above: Wolfram's machine-precision fixed point is 1.414213562373095.",
+        },
+      },
+    ],
+    seeAlso: ["Nest", "NestList"],
+  },
+  {
+    name: "Outer",
+    domain: "Collections",
+    signature: "Outer(f, list1, list2)",
+    summary: "The generalized outer product: f applied to every pair drawn from two lists.",
+    signatures: [
+      {
+        call: "Outer(f, list1, list2)",
+        description:
+          "the matrix whose $(i, j)$ entry is $f$ applied to $list1$'s $i$-th and $list2$'s $j$-th element.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "$Outer(List, a, b)$ is the Cartesian product of $a$ and $b$, each pair wrapped in its own [[List]].",
+    ],
+    examples: [
+      {
+        expr: ["Outer", "Multiply", ["List", 1, 2, 3], ["List", 1, 2]],
+        expected: ["List", ["List", 1, 2], ["List", 2, 4], ["List", 3, 6]],
+        caption: "The outer product of two vectors, a $3 \\times 2$ matrix",
+      },
+      {
+        expr: ["Outer", "Multiply", ["List", 1, 2, 3], ["List", "x", "y"]],
+        expected: [
+          "List",
+          ["List", "x", "y"],
+          ["List", ["Multiply", 2, "x"], ["Multiply", 2, "y"]],
+          ["List", ["Multiply", 3, "x"], ["Multiply", 3, "y"]],
+        ],
+        caption: "Symbolic entries",
+      },
+      {
+        expr: ["Outer", "Add", ["List", 1, 2], ["List", 10, 20]],
+        expected: ["List", ["List", 11, 21], ["List", 12, 22]],
+        category: "Scope",
+        caption: "Any binary function: an addition table",
+      },
+      {
+        expr: ["Outer", "Power", ["List", 2, 3], ["List", 1, 2, 3]],
+        expected: ["List", ["List", 2, 4, 8], ["List", 3, 9, 27]],
+        category: "Scope",
+        caption: "A table of powers",
+      },
+      {
+        expr: ["Outer", "List", ["List", "a", "b"], ["List", "x", "y"]],
+        expected: [
+          "List",
+          ["List", ["List", "a", "x"], ["List", "a", "y"]],
+          ["List", ["List", "b", "x"], ["List", "b", "y"]],
+        ],
+        category: "Scope",
+        caption: "$List$ gives every pair, like a Cartesian product",
+      },
+    ],
+  },
+  {
+    name: "LinearRecurrence",
+    domain: "Collections",
+    signature: "LinearRecurrence(kernel, init, n)",
+    summary:
+      "The sequence of a linear recurrence with constant coefficients, from its kernel and initial values.",
+    signatures: [
+      {
+        call: "LinearRecurrence(kernel, init, n)",
+        description:
+          "the first $n$ terms of $a_i = kernel_1 \\, a_{i-1} + \\dots + kernel_k \\, a_{i-k}$, seeded by $init$.",
+        library: "enumeratio-collections",
+      },
+      {
+        call: "LinearRecurrence(kernel, init, {m})",
+        description: "just the $m$-th term, as a one-element list.",
+      },
+      {
+        call: "LinearRecurrence(kernel, init, {m1, m2})",
+        description: "the terms from index $m1$ through $m2$, inclusive.",
+      },
+    ],
+    details: [
+      "Exact throughout: an integer or rational $kernel$ and $init$ stay integer or rational all the way out, never floating point.",
+    ],
+    examples: [
+      {
+        expr: ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], 10],
+        expected: ["List", 1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
+        caption: "the Fibonacci numbers, $a_n = a_{n-1} + a_{n-2}$",
+      },
+      {
+        expr: ["LinearRecurrence", ["List", 1, 1], ["List", 2, 1], 8],
+        expected: ["List", 2, 1, 3, 4, 7, 11, 18, 29],
+        category: "Scope",
+        caption: "the Lucas numbers: same kernel, other initial values",
+      },
+      {
+        expr: ["LinearRecurrence", ["List", 2, -1], ["List", 1, 3], 5],
+        expected: ["List", 1, 3, 5, 7, 9],
+        category: "Scope",
+        caption: "$a_n = 2a_{n-1} - a_{n-2}$ is arithmetic",
+      },
+      {
+        expr: ["LinearRecurrence", ["List", 1, 1, 1], ["List", 0, 0, 1], 10],
+        expected: ["List", 0, 0, 1, 1, 2, 4, 7, 13, 24, 44],
+        category: "Scope",
+        caption: "tribonacci",
+      },
+      {
+        expr: ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 10]],
+        expected: ["List", 55],
+        category: "Scope",
+        caption: "just the 10th term",
+      },
+      {
+        expr: ["LinearRecurrence", ["List", 1, 1], ["List", 1, 1], ["List", 5, 8]],
+        expected: ["List", 5, 8, 13, 21],
+        category: "Scope",
+        caption: "terms 5 through 8",
+      },
+    ],
+    seeAlso: ["RecurrenceTable", "Fibonacci", "LucasL"],
+  },
+  {
+    name: "RecurrenceTable",
+    domain: "Collections",
+    signature: "RecurrenceTable(eqns, a, {n, nmin, nmax})",
+    summary:
+      "A table of the values of a sequence defined by a recurrence equation and initial conditions.",
+    signatures: [
+      {
+        call: "RecurrenceTable(eqns, a, {n, nmin, nmax})",
+        description:
+          "$a(nmin), \\dots, a(nmax)$, given $eqns$: one general recurrence equation over $a$ plus its initial conditions.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "$eqns$ mixes literal-index equations (initial conditions, $a(1) = 7$) with exactly one general equation whose index mentions $n$ ($a(n+1) = 3\\,a(n)$, or plainly $a(n) = a(n-1) + a(n-2)$) — only a single recurrence order is supported, not a piecewise definition.",
+      "$a$ never needs to be declared as a head: it is read directly out of $eqns$ and resolved by walking the recurrence, not by evaluating $a(n)$ as an ordinary compute-engine call.",
+      "See [[LinearRecurrence]] for the constant-coefficient case without writing out the equations.",
+    ],
+    examples: [
+      {
+        expr: [
+          "RecurrenceTable",
+          [
+            "List",
+            ["Equal", ["a", ["Add", "n", 1]], ["Multiply", 3, ["a", "n"]]],
+            ["Equal", ["a", 1], 7],
+          ],
+          "a",
+          ["List", "n", 1, 5],
+        ],
+        expected: ["List", 7, 21, 63, 189, 567],
+        caption: "a geometric sequence",
+      },
+      {
+        expr: [
+          "RecurrenceTable",
+          [
+            "List",
+            [
+              "Equal",
+              ["a", "n"],
+              ["Add", ["a", ["Subtract", "n", 1]], ["a", ["Subtract", "n", 2]]],
+            ],
+            ["Equal", ["a", 1], 1],
+            ["Equal", ["a", 2], 1],
+          ],
+          "a",
+          ["List", "n", 1, 10],
+        ],
+        expected: ["List", 1, 1, 2, 3, 5, 8, 13, 21, 34, 55],
+        category: "Scope",
+        caption: "the Fibonacci recurrence",
+      },
+    ],
+    seeAlso: ["LinearRecurrence", "Fibonacci"],
+  },
+  {
+    name: "Association",
+    domain: "Collections",
+    signature: "Association(k1 -> v1, …)",
+    summary: "A keyed collection of rules key -> value.",
+    signatures: [
+      {
+        call: "Association(k1 -> v1, …)",
+        description: "a key -> value map, built from $Rule$ pairs.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: [
+      "Its own operator, not compute-engine's $Dictionary$: $Dictionary$'s keys are strings only, and every example here keys on a plain number.",
+      "[[Length]], [[First]], [[Last]], [[Join]] and [[Sort]] are extended to recognize an $Association$ and answer in terms of its values, falling through to their ordinary list handling otherwise.",
+      "Not a general replacement for $Dictionary$ or a full port of Wolfram's Association: only the operations the examples below exercise are implemented.",
+    ],
+    examples: [
+      {
+        expr: ["Length", ["Association", ["Rule", 1, 2], ["Rule", 3, 4]]],
+        expected: 2,
+        caption: "[[Length]] counts the key-value pairs",
+      },
+      {
+        expr: ["First", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]]],
+        expected: "a",
+        caption: "[[First]] is the first value, not the first rule",
+      },
+      {
+        expr: ["Last", ["Association", ["Rule", 1, "a"], ["Rule", 2, "b"]]],
+        expected: "b",
+        caption: "[[Last]] is the last value",
+      },
+      {
+        expr: [
+          "Join",
+          ["Association", ["Rule", "a", "b"]],
+          ["Association", ["Rule", "c", "d"], ["Rule", "a", "f"]],
+        ],
+        expected: ["Association", ["Rule", "a", "f"], ["Rule", "c", "d"]],
+        category: "Scope",
+        caption:
+          "[[Join]] merges keys; a later value for a repeated key wins, in the key's original position",
+      },
+      {
+        expr: ["Sort", ["Association", ["Rule", "a", 4], ["Rule", "b", 1], ["Rule", "c", 3]]],
+        expected: ["Association", ["Rule", "b", 1], ["Rule", "c", 3], ["Rule", "a", 4]],
+        category: "Scope",
+        caption: "[[Sort]] orders the entries by value",
+      },
+    ],
+    seeAlso: ["Length", "First", "Last", "Join", "Sort"],
+  },
+  {
+    name: "GeometricMean",
+    domain: "Collections",
+    signature: "GeometricMean(collection)",
+    summary: "The n-th root of the product of n values.",
+    signatures: [
+      {
+        call: "GeometricMean(collection)",
+        description: "$\\sqrt[n]{x_1 x_2 \\cdots x_n}$ for the $n$ elements of $collection$.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ["See [[HarmonicMean]] and [[Mean]] for the other Pythagorean means."],
+    examples: [
+      {
+        expr: ["GeometricMean", ["List", 2, 8]],
+        expected: 4,
+        caption: "$\\sqrt{2 \\cdot 8} = 4$",
+      },
+      {
+        expr: ["GeometricMean", ["List", 1, 2, 4]],
+        expected: 2,
+        caption: "$\\sqrt[3]{1 \\cdot 2 \\cdot 4} = 2$",
+      },
+      {
+        expr: ["GeometricMean", ["List", 2, 3]],
+        expected: ["Sqrt", 6],
+        category: "Scope",
+        caption: "An exact irrational result",
+      },
+      {
+        expr: ["GeometricMean", ["List", 1, 2, 3]],
+        expected: ["Root", 6, 3],
+        category: "Scope",
+        caption: "$\\sqrt[3]{6}$",
+      },
+      {
+        expr: ["GeometricMean", ["List", "a", "b"]],
+        expected: ["Sqrt", ["Multiply", "a", "b"]],
+        category: "Scope",
+        caption: "Symbolic data",
+      },
+    ],
+    seeAlso: ["HarmonicMean", "Mean"],
+  },
+  {
+    name: "HarmonicMean",
+    domain: "Collections",
+    signature: "HarmonicMean(collection)",
+    summary: "The reciprocal of the mean of the reciprocals.",
+    signatures: [
+      {
+        call: "HarmonicMean(collection)",
+        description: "$n \\big/ \\sum_{i} 1/x_i$ for the $n$ elements of $collection$.",
+        library: "enumeratio-collections",
+      },
+    ],
+    details: ["See [[GeometricMean]] and [[Mean]] for the other Pythagorean means."],
+    examples: [
+      {
+        expr: ["HarmonicMean", ["List", 1, 2, 4]],
+        expected: ["Rational", 12, 7],
+        caption: "$3 / (1 + \\frac12 + \\frac14) = \\frac{12}{7}$",
+      },
+      {
+        expr: ["HarmonicMean", ["List", 2, 3]],
+        expected: ["Rational", 12, 5],
+        caption: "$\\frac{12}{5}$",
+      },
+      {
+        expr: ["HarmonicMean", ["List", 40, 60]],
+        expected: 48,
+        category: "Applications",
+        caption: "Driving equal distances at 40 and 60 averages 48, not 50",
+      },
+      {
+        expr: ["HarmonicMean", ["List", 5, 5, 5]],
+        expected: 5,
+        category: "Properties",
+        caption: "Equal values are their own harmonic mean",
+      },
+    ],
+    seeAlso: ["GeometricMean", "Mean"],
+  },
 ];
