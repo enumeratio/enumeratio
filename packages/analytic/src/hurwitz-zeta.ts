@@ -41,6 +41,7 @@ import { declareUnitStep } from "./unit-step.ts";
 import { declareGudermannian } from "./gudermannian.ts";
 import { declareKhinchin } from "./khinchin.ts";
 import { declareHyperfactorial } from "./hyperfactorial.ts";
+import { declareKeiperLi } from "./keiper-li.ts";
 
 // Hurwitz zeta ζ(s, a) = Σ_{n≥0} (n+a)^{-s}, analytically continued, as a
 // compute-engine head. Numeric evaluation is Euler–Maclaurin: sum the first N
@@ -658,4 +659,5 @@ export function declareAnalytic(ce: ComputeEngine): void {
   declareGudermannian(ce);
   declareKhinchin(ce);
   declareHyperfactorial(ce);
+  declareKeiperLi(ce);
 }
